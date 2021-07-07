@@ -1,0 +1,4 @@
+name: Spec-Experiment
+depend:
+  standard-library
+  finset
