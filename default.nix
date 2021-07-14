@@ -27,6 +27,13 @@ agdaPackages.mkDerivation {
   pname = "simple-utxo-ledger";
   version = "0.1";
   src = ./.;
-  buildInputs = [ agda-stdlib agda-finset ];
+  buildInputs = [ agda-stdlib agda-finset texlive.combined.scheme-full ];
   everythingFile = "Ledger.lagda";
+  installPhase = ''
+    mkdir -p $out
+    agda --html --html-dir $out/html Ledger.lagda
+  	agda --only-scope-checking --latex Ledger.lagda
+  	cd latex && xelatex Ledger.tex
+  	cp Ledger.pdf $out
+  '';
 }
