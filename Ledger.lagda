@@ -82,6 +82,7 @@ open import FinSet hiding (∅) renaming (FinSet to ℙ_)
 open import DecEq
 open import FinSet.Properties.Equality
 open import FinSet.Properties
+open import Tactic.MonoidSolver
 
 module Ledger (
 \end{code}
@@ -220,8 +221,10 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \end{figure*}
 
 \begin{figure*}[h]
-\begin{code}
+\begin{code}[hide]
   data _⊢_⇀⦇_,UTXO⦈_ where
+\end{code}
+\begin{code}
     UTXO-inductive :
         txins tx ⊆ dom utxo
       → let f = txfee tx in minFee ≤ f
@@ -244,11 +247,10 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   balance-cong {utxo} {utxo'} =  indexedSum-cong {s = utxo} {s' = utxo'}
   
   open ≡-Reasoning
-  open import Tactic.MonoidSolver
 \end{code}
 
 \begin{property}[\textbf{Preserve Balance}]
-For all $\var{minFee}\in\UTxOEnv$, $\var{s},\var{s'}\in\UTxOState$, and $\var{tx}\in\Tx$, if
+For all $\var{minFee}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxOState$, and $\var{tx}\in\Tx$, if
 \begin{code}[hide]
   pov :
 \end{code}
