@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import DecEq
-open import FinSet
+open import FinSet hiding (fromList)
 open import FiniteSubset hiding (_∪_; _∩_)
 open import Data.Bool hiding (_≟_)
 open import Utilities.ListMonad hiding (return)

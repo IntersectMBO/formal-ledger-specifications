@@ -36,6 +36,7 @@ agdaPackages.mkDerivation {
   installPhase = ''
     mkdir -p $out
     agda --html --html-dir $out/html Ledger.lagda
+    agda -c --compile-dir $out/ledger HSLedger.agda
   	agda --only-scope-checking --latex Ledger.lagda
   	cd latex && xelatex Ledger.tex
   	cp Ledger.pdf $out

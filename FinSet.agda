@@ -22,7 +22,7 @@ open RawFunctor {{...}}
 open import Algebra using (CommutativeMonoid)
 open import Function
 
-open import FiniteSubset hiding (_∪_; _∩_)
+open import FiniteSubset hiding (_∪_; _∩_; fromList)
 open import DecEq
 open import Utilities.ListProperties hiding (head) renaming (_∈_ to _∈l_)
 
@@ -36,14 +36,14 @@ module _ {A : Set} {{h : DecEq A}} where
   elements : (a : FinSet A) → List A
   elements = listOf
 
+  fromList : List A → FinSet A
+  fromList l = FiniteSubset.fromList l false
+
   choose : FinSet A → Maybe A
   choose = head ∘ elements
 
-  map : {B : Set} {{_ : DecEq B}} → (A → B) → FinSet A → FinSet B
-  map f (fs-nojunk els) = fromList (Data.List.map f els) false
-
   filter : {P : A → Set} → (∀ a → Dec (P a)) → FinSet A → FinSet A
-  filter P? s = fromList (Data.List.filter P? $ elements s) false 
+  filter P? s = fromList (Data.List.filter P? $ elements s)
 
   infix 5 _∈_
   _∈_ : A → FinSet A → Set
@@ -75,7 +75,12 @@ module _ {A : Set} {{h : DecEq A}} where
   s ∩ s' = s FiniteSubset.∩ s'
 
   ∅ : FinSet A
-  ∅ = fromList [] false
+  ∅ = fromList []
+
+module _ {A : Set} {{h : DecEq A}} {B : Set} {{_ : DecEq B}} where
+
+  map : (A → B) → FinSet A → FinSet B
+  map f (fs-nojunk els) = fromList (Data.List.map f els)
 
 module _ {A : Set} {{_ : DecEq A}} {p} {{M : CommutativeMonoid 0ℓ p}} where
   open CommutativeMonoid M
@@ -85,3 +90,5 @@ module _ {A : Set} {{_ : DecEq A}} {p} {{M : CommutativeMonoid 0ℓ p}} where
 
   indexedSum : (A → Carrier) → FinSet A → Carrier
   indexedSum f (fs-nojunk els) = foldr (λ x → f x ∙_) ε els
+
+  syntax indexedSum (λ a → x) m = Σ[ a ← m ] x

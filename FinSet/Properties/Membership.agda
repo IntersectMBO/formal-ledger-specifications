@@ -5,7 +5,7 @@ open import FinSet
 open import Data.List hiding (filter)
 open import Utilities.ListProperties renaming (_∈_ to _∈l_)
 open import Function
-open import FiniteSubset hiding (_∪_; _∩_)
+open import FiniteSubset hiding (_∪_; _∩_; fromList)
 open import Data.Bool hiding (_≟_)
 open import FinSet.Core
 open import Data.Sum
@@ -33,10 +33,10 @@ private
 ∈l⇒∈ : a ∈l (elements s) → a ∈ s
 ∈l⇒∈ = id
 
-∈l⇒∈fromList : a ∈l l → a ∈ fromList l false
+∈l⇒∈fromList : a ∈l l → a ∈ fromList l
 ∈l⇒∈fromList h = ∈l→∈fromList _ _ false h
 
-∈fromList⇒∈l : a ∈ fromList l false → a ∈l l
+∈fromList⇒∈l : a ∈ fromList l → a ∈l l
 ∈fromList⇒∈l h = ∈fromList→∈l _ _ false h
 
 ∈∪⇒∈⊎ : a ∈ s ∪ s' → a ∈ s ⊎ a ∈ s'
