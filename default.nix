@@ -18,6 +18,7 @@ let
       rev = "94fad4feefc945a76aa088bb10c9aa5964b56132";
       sha256 = "1jm9y5yp21wryv12zd104xn6czvwnzg44d23g8rwgfig46wz1w5x";
     };
+    meta = {};
     libraryFile = "Finset.agda-lib";
     everythingFile = "src/README.agda";
     buildInputs = [ agda-stdlib ];
@@ -27,6 +28,7 @@ agdaPackages.mkDerivation {
   pname = "simple-utxo-ledger";
   version = "0.1";
   src = ./.;
+  meta = {};
   buildInputs = [ agda-stdlib agda-finset texlive.combined.scheme-full ];
   everythingFile = "Ledger.lagda";
   installPhase = ''
