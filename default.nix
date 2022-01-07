@@ -1,4 +1,6 @@
-{ nixpkgs ?  <nixpkgs> }: with (import <nixpkgs> {});
+{ nixpkgs ? <nixpkgs> }: with (import
+      (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/7e9b0dff974c89e070da1ad85713ff3c20b0ca97)
+      {});
 let
   agda-stdlib = agdaPackages.standard-library.overrideAttrs (oldAttrs: {
     version = "1.6";
