@@ -18,6 +18,8 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Level
 open import Function.Properties.Equivalence
 open import Data.List.Properties
+open import Function.Equivalence using (⇔-setoid)
+import Function.Related.Propositional as P
 
 module FinSet.Properties.Membership {A : Set} {{h : DecEq A}} where
 
@@ -66,18 +68,18 @@ private
 ∈×⇔∈∩ {s = s} {s'} = mk⇔ (∈×⇒∈∩ {s = s} {s' = s'}) (∈∩⇒∈× {s = s} {s' = s'})
 
 ∈-⊎↔∪≡ : (∀ a → (a ∈ s ⊎ a ∈ s') ⇔ a ∈ s'') → s ∪ s' ≡ᵉ s''
-∈-⊎↔∪≡ {s} {s'} {s''} h a = begin
-  a ∈ s ∪ s'       ≈˘⟨ ∈⊎⇔∈∪ {s = s} {s' = s'} ⟩
-  (a ∈ s ⊎ a ∈ s') ≈⟨ h a ⟩
+∈-⊎↔∪≡ {s} {s'} {s''} h a =
+  a ∈ s ∪ s'       ∼⟨ P.SK-sym (∈⊎⇔∈∪ {s = s} {s' = s'}) ⟩
+  (a ∈ s ⊎ a ∈ s') ∼⟨ h a ⟩
   a ∈ s''          ∎
-  where open SetoidReasoning (⇔-setoid 0ℓ)
+  where open P.EquationalReasoning
   
 ∈-×↔∩≡ : (∀ a → (a ∈ s × a ∈ s') ⇔ a ∈ s'') → s ∩ s' ≡ᵉ s''
-∈-×↔∩≡ {s} {s'} {s''} h a = begin
-  a ∈ s ∩ s'       ≈˘⟨ ∈×⇔∈∩ {s = s} {s' = s'} ⟩
-  (a ∈ s × a ∈ s') ≈⟨ h a ⟩
+∈-×↔∩≡ {s} {s'} {s''} h a =
+  a ∈ s ∩ s'       ∼⟨ P.SK-sym (∈×⇔∈∩ {s = s} {s' = s'}) ⟩
+  (a ∈ s × a ∈ s') ∼⟨ h a ⟩
   a ∈ s''          ∎
-  where open SetoidReasoning (⇔-setoid 0ℓ)
+  where open P.EquationalReasoning
   
 ∈→filter' : {P : A → Set} → (P? : ∀ a → Dec (P a)) → (a : A) → a ∈l l → P a → a ∈l Data.List.filter P? l
 ∈→filter' {x ∷ l} P? .x (here refl) h' rewrite filter-accept P? {xs = l} h' = here refl

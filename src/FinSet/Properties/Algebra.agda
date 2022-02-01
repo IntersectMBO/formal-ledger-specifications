@@ -11,7 +11,6 @@ open import Data.List using (List; _∷_; length; _─_; lookup)
 open import Relation.Binary hiding (_⇔_)
 open import Function.Properties.Equivalence as Eq
 open import Relation.Binary.Lattice
-open import Function.Bundles.Related
 open import Data.List.Relation.Binary.Permutation.Propositional
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Relation.Binary.Morphism

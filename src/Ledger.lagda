@@ -67,9 +67,8 @@ open import Data.Empty
 open import Data.List.Membership.Propositional
 
 open import Algebra using (CommutativeMonoid)
-open import Function hiding (id)
-open import Function.Bundles.Related hiding (⌊_⌋)
-import Function.Related
+open import Function hiding (id; _↪_) renaming (_↣_ to _↪_)
+import Function.Related.Propositional as P
 
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
@@ -83,6 +82,7 @@ open import DecEq
 open import FinSet.Properties.Equality
 open import FinSet.Properties
 open import Tactic.MonoidSolver
+open import TacticReasoning
 
 module Ledger (
 \end{code}
@@ -106,6 +106,7 @@ Finally, $\fun{txid}$ computes the transaction id of a given transaction.
 This function must produce a unique id for each unique transaction body.
 \textbf{We assume that} $\fun{txid}$ \textbf{is injective.}
 
+\AgdaTarget{Ix, TxId, Addr, Coin, TxIn, TxOut, UTxO, Tx, txins, txouts, txfee, txid}
 \begin{figure*}[h]
 \emph{Abstract types}
 \begin{code}
@@ -119,8 +120,8 @@ This function must produce a unique id for each unique transaction body.
 _≤ᵇ_ : ℕ → ℕ → Bool
 n ≤ᵇ m = ⌊ n ≤? m ⌋
 
-_⟨$⟩_ : {A B : Set} → A ↣ B → A → B
-_⟨$⟩_ = ⇒→ {k = Function.Related.injection}
+_⟨$⟩_ : {A B : Set} → A ↪ B → A → B
+_⟨$⟩_ = P.⇒→ {k = P.injection}
 
 instance
   _ = +-0-commutativeMonoid
@@ -147,7 +148,7 @@ open Tx
 module _ (
 \end{code}
 \begin{code}
-  txid : Tx ↣ TxId -- an injective function
+  txid : Tx ↪ TxId -- an injective function
 \end{code}
 \begin{code}[hide]
   ) where
@@ -173,18 +174,20 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
     The $\fun{balance}$ function calculates sum total of all the coin in a given UTxO.
 \end{itemize}
 
+\AgdaTarget{outs, balance}
 \begin{figure*}[h]
 \begin{code}
   outs : Tx → UTxO
   outs tx = mapKeys (txid ⟨$⟩ tx ,_) $ txouts tx
   
   balance : UTxO → Coin
-  balance utxo = indexedSum (λ { (_ , (_ , x)) → x }) utxo
+  balance utxo = Σ[ v ← utxo ] proj₂ (proj₂ v)
 \end{code}
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
 \end{figure*}
 
+\AgdaTarget{UTxOEnv, UTxOState, \_⊢\_⇀⦇\_,UTXO⦈\_}
 \begin{figure*}[h]
 \emph{UTxO environment}
 \begin{code}[hide]
@@ -222,6 +225,10 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
 \begin{figure*}[h]
 \begin{code}[hide]
+  infix 0 _────────────────────────────────_
+  _────────────────────────────────_ : Set → Set → Set
+  A ──────────────────────────────── B = A → B
+
   data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}
@@ -229,8 +236,8 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
         txins tx ⊆ dom utxo
       → let f = txfee tx in minFee ≤ f
       → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
-      ----------------------------------------------
-      → minFee
+      ────────────────────────────────
+      minFee
       ⊢ ⟦ utxo , fees ⟧
       ⇀⦇ tx ,UTXO⦈
         ⟦ (txins tx ⋪ utxo) ∪ outs tx , fees + txfee tx ⟧
@@ -246,7 +253,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   balance-cong : utxo ≡ᵉ utxo' → balance utxo ≡ balance utxo'
   balance-cong {utxo} {utxo'} =  indexedSum-cong {s = utxo} {s' = utxo'}
   
-  open ≡-Reasoning
+  open TacticReasoning.≡-Reasoning {_} {ℕ} (solve-macro (quoteTerm +-0-monoid))
 \end{code}
 
 \begin{property}[\textbf{Preserve Balance}]
@@ -286,13 +293,13 @@ then
         balance (txins tx ⋪ utxo) + balance (txins tx ◃ utxo)
           ≡⟨ cong (balance (txins tx ⋪ utxo) +_) x₂ ⟩
         balance (txins tx ⋪ utxo) + (balance (outs tx) + txfee tx)
-          ≡⟨ solve +-0-monoid ⟩
+          ≡t⟨⟩
         balance (txins tx ⋪ utxo) + balance (outs tx) + txfee tx
           ≡˘⟨ cong (_+ txfee tx) (balance-∪ {txins tx ⋪ utxo} {outs tx} (dom-res-∩-empty (txins tx) utxo (outs tx) h)) ⟩
         balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx ∎
     in begin
     balance utxo + fee                                        ≡⟨ cong (_+ fee) balance-eq ⟩
-    balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx + fee    ≡⟨ solve +-0-monoid ⟩
+    balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx + fee    ≡t⟨⟩
     balance ((txins tx ⋪ utxo) ∪ outs tx) + (txfee tx + fee)
               ≡˘⟨ cong (balance ((txins tx ⋪ utxo) ∪ outs tx) +_) (+-comm fee (txfee tx)) ⟩
     balance ((txins tx ⋪ utxo) ∪ outs tx) + (fee + txfee tx) ∎
@@ -326,12 +333,13 @@ We prove this by considering both cases separately. Both cases follow
 easily by comparing the proof-carrying properties with the
 computational properties.
 
+\end{document}
 \begin{figure*}[h]
 \begin{code}[hide]
   dec-true' : ∀ {P : Set} → (p? : Dec P) → P → ⌊ p? ⌋ ≡ true
   dec-true' p? h rewrite isYes≗does p? = dec-true p? h
 \end{code}
-\begin{code}
+\begin{code}[hide]
   UTXO⇒UTXO-step :
       minFee ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
     → UTXO-step minFee utxoState tx ≡ just utxoState'

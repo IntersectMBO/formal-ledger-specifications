@@ -18,6 +18,7 @@ open import Data.Product.Algebra
 import Function.Inverse as Inv
 open import FinSet.Properties
 open import Data.Empty.Polymorphic
+import Function.Related.Propositional as P
 open import Function.Related using (fromRelated; toRelated)
 import Relation.Binary.Reasoning.Preorder as P-Reasoning
 
@@ -28,7 +29,6 @@ open import FiniteSubset hiding (_∪_; _∩_)
 
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Binary.PropositionalEquality
-open import Function.Bundles.Related
 open import Function.Properties.Inverse
 
 open CommutativeMonoid {{...}}
@@ -67,23 +67,23 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
   dom-res-ex-∪ : ∀ s m → (s ⋪ m) ∪ (s ◃ m) ≡ᵉ m
   dom-res-ex-∪ s m = ∈-⊎↔∪≡ {s = s ⋪ m} {s' = s ◃ m} {s'' = m} λ a →
     (a ∈ s ⋪ m ⊎ a ∈ s ◃ m)
-      ∼⟨ SK-sym (fromRelated ((toRelated (∈filter {s = m} (λ x → ¬? (proj₁ x ∈? s)) a)) ⊎-cong (toRelated (∈filter {s = m} (λ x → proj₁ x ∈? s) a)))) ⟩
+      ∼⟨ P.SK-sym (fromRelated ((toRelated (∈filter {s = m} (λ x → ¬? (proj₁ x ∈? s)) a)) ⊎-cong (toRelated (∈filter {s = m} (λ x → proj₁ x ∈? s) a)))) ⟩
     (a ∈ m × ¬ proj₁ a ∈ s ⊎ a ∈ m × proj₁ a ∈ s)
-      ⤖⟨ SK-sym (↔⇒⤖ (×-distribˡ-⊎ 0ℓ (a ∈ m) (¬ proj₁ a ∈ s) (proj₁ a ∈ s))) ⟩
+      ⤖⟨ P.SK-sym (↔⇒⤖ (×-distribˡ-⊎ 0ℓ (a ∈ m) (¬ proj₁ a ∈ s) (proj₁ a ∈ s))) ⟩
     (a ∈ m × (¬ proj₁ a ∈ s ⊎ proj₁ a ∈ s))
       ⤖⟨ fromRelated (_×-cong_ Inv.id (toRelated (↔⇒⤖ (⊎-comm (¬ proj₁ a ∈ s) (proj₁ a ∈ s))))) ⟩
     (a ∈ m × (proj₁ a ∈ s ⊎ ¬ proj₁ a ∈ s))
       ∼⟨ fromRelated (_×-cong_ Eq.id (Eq.equivalence toDec fromDec)) ⟩
     (a ∈ m × Dec (proj₁ a ∈ s))
-      ∼⟨ mk⇔ proj₁ (λ h → (h , proj₁ a ∈? s)) ⟩
+     ∼⟨ mk⇔ proj₁ (λ h → (h , proj₁ a ∈? s)) ⟩
     (a ∈ m) ∎
-    where open EquationalReasoning
+    where open P.EquationalReasoning
 
 
   dom-res-ex-∩ : ∀ s m → (s ⋪ m) ∩ (s ◃ m) ≡ᵉ ∅
   dom-res-ex-∩ s m = ∈-×↔∩≡ {s = s ⋪ m} {s' = s ◃ m} {s'' = ∅} λ a →
     (a ∈ s ⋪ m × a ∈ s ◃ m)
-      ∼⟨ SK-sym (fromRelated (_×-cong_ (toRelated $ ∈filter {s = m} (λ x → ¬? (proj₁ x ∈? s)) a) (toRelated $ ∈filter {s = m} (λ x → proj₁ x ∈? s) a))) ⟩
+      ∼⟨ P.SK-sym (fromRelated (_×-cong_ (toRelated $ ∈filter {s = m} (λ x → ¬? (proj₁ x ∈? s)) a) (toRelated $ ∈filter {s = m} (λ x → proj₁ x ∈? s) a))) ⟩
     ((a ∈ m × (¬ proj₁ a ∈ s)) × (a ∈ m × proj₁ a ∈ s))
       ∼⟨ mk⇔ (λ { ((a₁ , a₂) , (a₃ , a₄)) → (a₁ , a₂ , a₄)}) (λ { (a₁ , a₂ , a₃) → ((a₁ , a₂) , a₁ , a₃)}) ⟩
     (a ∈ m × ¬ proj₁ a ∈ s × proj₁ a ∈ s)
@@ -93,7 +93,7 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
     ⊥
       ∼⟨ mk⇔ ⊥-elim (λ ()) ⟩
     (a ∈ ∅) ∎
-    where open EquationalReasoning
+    where open P.EquationalReasoning
 
   ⋪⇒⊆ : ∀ m → (s ⋪ m) ⊆ m
   ⋪⇒⊆ {s} m a∈s⋪m = proj₁ $ filter→∈ {s = m} (λ x → ¬? (proj₁ x ∈? s)) _ a∈s⋪m

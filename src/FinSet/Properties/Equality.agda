@@ -17,7 +17,7 @@ open import Relation.Binary
 open import Utilities.ListProperties hiding (_∈_)
 open import Utilities.Logic
 open import Data.Empty
-open import Function.Properties.Bijection
+open import Function.Properties.Bijection using (⤖⇒⇔)
 
 open import FinSet.Properties.Membership
 
