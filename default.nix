@@ -4,12 +4,12 @@ with nixpkgs; let
       https://github.com/nixos/nixpkgs/tarball/7e9b0dff974c89e070da1ad85713ff3c20b0ca97) {}); let
 
     agda-stdlib = agdaPackages.standard-library.overrideAttrs (oldAttrs: {
-      version = "1.6";
+      version = "1.7";
       src =  fetchFromGitHub {
         repo = "agda-stdlib";
         owner = "input-output-hk";
-        rev = "e17a71d045d9a7a4fb9450102ab95b81904b5370";
-        sha256 = "08h0n1j6ybqpi4nxm8cli1prsjx44hyfc99b3hlc425h1cvhrbm8";
+        rev = "ce564c90f717da8346190ad0a792cfda548b16e6";
+        sha256 = "zu1sJm5BxU9Nb5ZoLQipC/sqYQOlM0Rsl31tI56Uip8=";
       };
     });
 

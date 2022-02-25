@@ -50,14 +50,19 @@ Path = /Library/Fonts/ ,
 
 \begin{code}[hide]
 
-{-# OPTIONS --safe #-}
+--{-# OPTIONS --safe #-}
+{-# OPTIONS -v Test:101 #-}
+{-# OPTIONS -v case:101 #-}
+{-# OPTIONS -v assumption:101 #-}
+{-# OPTIONS -v reduceDec:101 #-}
+{-# OPTIONS -v tryConstrs:101 #-}
 
-open import Data.List using (List; any; foldr; sum; mapMaybe)
+open import Data.List using (List; []; _∷_; any; foldr; sum; mapMaybe)
 open import Data.List.Relation.Unary.All using (All; all?)
 open import Data.Nat using (ℕ; _+_; _≤_; _≤?_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm)
-open import Data.Maybe
-import Data.Maybe.Properties
+open import Data.Maybe hiding (_>>=_)
+open import Data.Maybe.Properties using (just-injective)
 open import Data.Maybe.Relation.Unary.Any using (dec)
 open import Data.Product
 open import Data.Product.Properties
@@ -83,6 +88,14 @@ open import FinSet.Properties.Equality
 open import FinSet.Properties
 open import Tactic.MonoidSolver
 open import TacticReasoning
+open import DeriveComp hiding (rdOpts)
+open import Tactic.Helpers
+open import Reflection hiding (_≟_)
+open import Prelude.Generics
+import Prelude.DecEq as P hiding (DecEq-ℕ; DecEq-Σ)
+open import Prelude.Decidable
+open import Agda.Builtin.Reflection using (onlyReduceDefs)
+open import Tactic.ReduceDec using (by-reduceDec'; by-reduceDecInGoal'; ReduceDecOptions)
 
 module Ledger (
 \end{code}
@@ -125,6 +138,12 @@ _⟨$⟩_ = P.⇒→ {k = P.injection}
 
 instance
   _ = +-0-commutativeMonoid
+
+  ≤-⁇ : _≤_ ⁇²
+  ≤-⁇ {x = x} {y} = ⁇ (x ≤? y)
+
+  convertDecEq : ∀ {A} ⦃ _ : DecEq A ⦄ → P.DecEq A
+  convertDecEq ⦃ dec ⦄ = record { _≟_ = _≟_ }
 
 Coin TxIn TxOut UTxO : Set
 \end{code}
@@ -210,6 +229,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
     minFee fee fee' fees fees' : Coin
     utxoState utxoState' utxoState1 utxoState2 : UTxOState
     utxoEnv : UTxOEnv
+    s s' : UTxOState
   
   ⟦_⟧ : {A : Set} → A → A
   ⟦_⟧ = Function.id
@@ -225,28 +245,26 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
 \begin{figure*}[h]
 \begin{code}[hide]
-  infix 0 _────────────────────────────────_
-  _────────────────────────────────_ : Set → Set → Set
-  A ──────────────────────────────── B = A → B
-
   data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}
     UTXO-inductive :
-        txins tx ⊆ dom utxo
+      ∀ {minFee} {s} {tx}
+      → let utxo = proj₁ s
+            fees = proj₂ s
+        in txins tx ⊆ dom utxo
       → let f = txfee tx in minFee ≤ f
       → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
       ────────────────────────────────
-      minFee
-      ⊢ ⟦ utxo , fees ⟧
-      ⇀⦇ tx ,UTXO⦈
-        ⟦ (txins tx ⋪ utxo) ∪ outs tx , fees + txfee tx ⟧
+      minFee ⊢ s ⇀⦇ tx ,UTXO⦈ ((txins tx ⋪ utxo) ∪ outs tx , fees + f)
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
 
 \begin{code}[hide]
+  unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+
   balance-∪ : utxo ∩ utxo' ≡ᵉ ∅ → balance (utxo ∪ utxo') ≡ balance utxo + balance utxo'
   balance-∪ {utxo} {utxo'} = indexedSum-∪ {s = utxo} {s' = utxo'}
   
@@ -315,54 +333,13 @@ relation.
 \begin{figure*}[h]
 \begin{code}
   UTXO-step : Coin → UTxO × Coin → Tx → Maybe (UTxO × Coin)
-  UTXO-step minFee (utxo , fees) tx =
-    if txins tx ⊆ᵇ dom utxo
-       ∧ minFee ≤ᵇ txfee tx
-       ∧ balance (txins tx ◃ utxo) ≡ᵇ (balance (outs tx) + txfee tx)
-      then just ((txins tx ⋪ utxo) ∪ outs tx , fees + txfee tx)
-      else nothing
+  UTXO-step = Computational.compute Computational-UTXO
   
   UTXO-step-computes-UTXO :
-      minFee ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-    ⇔ UTXO-step minFee utxoState tx ≡ just utxoState'
+    UTXO-step minFee utxoState tx ≡ just utxoState'
+    ⇔ minFee ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
+  UTXO-step-computes-UTXO = Computational.pf Computational-UTXO
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}
-
-We prove this by considering both cases separately. Both cases follow
-easily by comparing the proof-carrying properties with the
-computational properties.
-
-\end{document}
-\begin{figure*}[h]
-\begin{code}[hide]
-  dec-true' : ∀ {P : Set} → (p? : Dec P) → P → ⌊ p? ⌋ ≡ true
-  dec-true' p? h rewrite isYes≗does p? = dec-true p? h
-\end{code}
-\begin{code}[hide]
-  UTXO⇒UTXO-step :
-      minFee ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-    → UTXO-step minFee utxoState tx ≡ just utxoState'
-  UTXO⇒UTXO-step {minFee} {(utxo , _)} {tx} (UTXO-inductive h₁ h₂ h₃)
-    rewrite dec-true' (txins tx ⊆? dom utxo) h₁
-          | dec-true' (minFee ≤? txfee tx) h₂
-          | dec-true' (balance (txins tx ◃ utxo) ≟ (balance (outs tx) + txfee tx)) h₃
-          = refl
-  
-  UTXO-step⇒UTXO :
-      UTXO-step minFee utxoState tx ≡ just utxoState'
-    → minFee ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-  UTXO-step⇒UTXO {minFee} {(utxo , fees)} {tx} h
-    with (txins tx) ⊆? dom utxo
-       | minFee ≤? txfee tx
-       | (balance (txins tx ◃ utxo) ≟ (balance (outs tx) + txfee tx))
-       | h
-  ... | yes p₁ | yes p₂ | yes p₃ | refl = UTXO-inductive p₁ p₂ p₃
-  
-  UTXO-step-computes-UTXO =
-    mk⇔ UTXO⇒UTXO-step UTXO-step⇒UTXO
-\end{code}
-\caption{Proof of the previous claim}
-\end{figure*}
-
 \end{document}

@@ -57,11 +57,11 @@ postulate
 convertTxInj' : L.Tx ↣ Tx
 convertTxInj' = mk↣ convertTxInj
 
-UTXO-step : Coin → Pair UTxO Coin → Tx → Foreign.Haskell.Maybe (Pair UTxO Coin)
+UTXO-step : Coin → Pair UTxO Coin → Tx → Maybe (Pair UTxO Coin)
 UTXO-step Γ s tx =
-  toForeignMaybe (Data.Maybe.map
+  Data.Maybe.map
     (coerce ∘ map₁ convertUTxO')
-    (L.UTXO-step (convertTxInj' ∘-↣ txid) Γ (map₁ convertUTxO (coerce s)) (convertTx tx)))
+    (L.UTXO-step (convertTxInj' ↣-∘ txid) Γ (map₁ convertUTxO (coerce s)) (convertTx tx))
 
 {-# COMPILE GHC UTXO-step as utxoStep' #-}
 

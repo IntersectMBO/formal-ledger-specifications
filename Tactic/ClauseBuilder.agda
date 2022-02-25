@@ -5,7 +5,8 @@ open import Reflection.AST.Argument using (unArg; map-Args)
 open import Reflection.AST.Abstraction using (unAbs)
 open import Data.Bool
 open import Data.List
-open import Data.Nat.Properties using (≤-totalOrder)
+import Data.List.NonEmpty as NE
+open import Data.Nat.Properties using (≤-totalOrder; ≤-decTotalOrder)
 open import Data.List.Extrema (≤-totalOrder)
 open import Data.Nat
 open import Data.Product hiding (_<*>_)
@@ -14,6 +15,12 @@ open import Function
 open import Reflection hiding (name; _>>=_; _>>_; return; map-Args)
 open import Data.Maybe using (from-just)
 open import Category.Monad.State
+
+-- Note: using sort from Data.List.Sort directly doesn't work for
+-- metaprogramming, since it's `abstract` for whatever reason
+open import Data.List.Sort using (SortingAlgorithm)
+open import Data.List.Sort.MergeSort using (mergeSort)
+open SortingAlgorithm ≤-decTotalOrder (mergeSort ≤-decTotalOrder) public
 
 open import Prelude.Foldable
 open import Prelude.Functor
@@ -25,6 +32,7 @@ open import Prelude.Traversable
 open import Prelude.Monoid
 open import Prelude.Init
 open import Prelude.Applicative
+open import Prelude.DecEq
 
 open import PreludeExt
 open import Tactic.Helpers
@@ -95,6 +103,79 @@ varSinglePattern (arg i n) = ([ n , arg i unknown ] , arg i (` 0))
 multiSinglePattern : List String → Arg Pattern → SinglePattern
 multiSinglePattern s p = ((_, vArg unknown) <$> s) , p
 
+findIndexDefault : List ℕ → ℕ → ℕ → ℕ
+findIndexDefault l d a with filter (λ where (i , x) → x Data.Nat.≟ a) (zipWithIndex _,_ l)
+... | []          = d
+... | (i , _) ∷ _ = i
+
+singlePatternFromPattern : Arg Pattern → SinglePattern
+singlePatternFromPattern (arg i p) =
+  replicate (length (appearingIndices p)) ("" , vArg unknown) , arg i (replacePatternIndex p)
+  where
+    appearingIndices : Pattern → List ℕ
+    appearingIndicesHelper : List (Arg Pattern) → List ℕ
+    
+    appearingIndices (Pattern.con c ps) = appearingIndicesHelper ps
+    appearingIndices (Pattern.dot t) = [] -- TODO: this is probably wrong
+    appearingIndices (` x) = [ x ]
+    appearingIndices (Pattern.lit l) = []
+    appearingIndices (Pattern.proj f) = []
+    appearingIndices (Pattern.absurd x) = []
+
+    appearingIndicesHelper [] = []
+    appearingIndicesHelper (arg _ p ∷ ps) = appearingIndices p ++ appearingIndicesHelper ps
+
+    normalisedIndexList : List ℕ
+    normalisedIndexList = sort $ deduplicate Nat._≟_ $ appearingIndices p
+
+    replacePatternIndex : Pattern → Pattern
+    replacePatternIndexHelper : List (Arg Pattern) → List (Arg Pattern)
+
+    replacePatternIndex (Pattern.con c ps) = Pattern.con c (replacePatternIndexHelper ps)
+    replacePatternIndex (Pattern.dot t) = Pattern.dot t
+    replacePatternIndex (` x) = ` findIndexDefault normalisedIndexList 0 x
+    replacePatternIndex (Pattern.lit l) = Pattern.lit l
+    replacePatternIndex (Pattern.proj f) = Pattern.proj f
+    replacePatternIndex (Pattern.absurd x) = Pattern.absurd x
+
+    replacePatternIndexHelper [] = []
+    replacePatternIndexHelper (arg i p ∷ ps) = (arg i (replacePatternIndex p)) ∷ (replacePatternIndexHelper ps)
+
+ctxSinglePatterns : TC (List SinglePattern)
+ctxSinglePatterns = do
+  ctx ← getContext
+  return (singlePatternFromPattern <$> zipWithIndex (λ where k (arg i _) → arg i (` k)) ctx)
+
+-- {-# TERMINATING #-}
+-- singlePatternFromTelescope : List (String × Arg Type) → Arg Pattern → SinglePattern
+-- singlePatternFromTelescope tel (arg i p) =
+--   takeIndices normalisedIndexList tel , arg i (mapFreeVarsᵖ (findIndexDefault normalisedIndexList 0) 0 p)
+--   where
+--     appearingIndices : Pattern → List ℕ
+--     appearingIndices (Pattern.con c ps) = appearingIndices ∘ unArg =<< ps
+--     appearingIndices (Pattern.dot t) = [] -- TODO: this is probably wrong
+--     appearingIndices (` x) = [ x ]
+--     appearingIndices (Pattern.lit l) = []
+--     appearingIndices (Pattern.proj f) = []
+--     appearingIndices (Pattern.absurd x) = []
+
+--     normalisedIndexList : List ℕ
+--     normalisedIndexList = sort ≤-decTotalOrder $ deduplicate Nat._≟_ $ appearingIndices p
+
+--     lookupMaybe : List A → ℕ → Maybe A
+--     lookupMaybe [] n = nothing
+--     lookupMaybe (x ∷ l) Nat.zero = just x
+--     lookupMaybe (x ∷ l) (Nat.suc n) = lookupMaybe l n
+
+--     takeIndices : List ℕ → List A → List A
+--     takeIndices [] l = []
+--     takeIndices (x ∷ i) l = lookupMaybe l x ?∷ takeIndices i l
+
+--     findIndexDefault : ⦃ _ : DecEq A ⦄ → List A → ℕ → A → ℕ
+--     findIndexDefault l d a with filter (λ where (i , x) → x Prelude.DecEq.≟ a) (zipWithIndex _,_ l)
+--     ... | []          = d
+--     ... | (i , _) ∷ _ = i
+
 -- {-# TERMINATING #-}
 -- findMaxDB : Pattern → Maybe ℕ
 -- findMaxDB = helper nothing
@@ -119,7 +200,7 @@ multiSinglePattern s p = ((_, vArg unknown) <$> s) , p
 -- TODO: add dot patterns
 constrToPattern : Name → Type → TC SinglePattern
 constrToPattern n ty = do
-  (introTel , _) ← viewTy <$> (runAndReset $ inferType (n ◆))
+  (introTel , _) ← viewTy <$> (runAndReset $ withNormalisation true $ inferType (n ◆))
   let patternTel = zipWith (λ where (abs _ (arg i _)) k → arg i (` k)) introTel $ downFrom $ length introTel
   return (((λ where (abs s (arg i t)) → (s , arg i unknown)) <$> introTel) , (vArg $ Pattern.con n patternTel))
 
@@ -245,16 +326,16 @@ currentTyConstrPatterns = do
     where _ → lift-TB $ error "Goal type is not a forall!"
   lift-TB $ constructorPatterns' ty
 
-{-# TERMINATING #-}
-patternToTerm : List Term → Pattern → Term
-patternToTerm t (Pattern.con c ps) = con c ((λ where (arg v p) → arg v (patternToTerm t p)) <$> ps)
-patternToTerm t (Pattern.dot t') = t'
-patternToTerm t (` x) with head $ drop x t
-... | just t' = t'
-... | nothing = unknown
-patternToTerm t (Pattern.lit l) = lit l
-patternToTerm t (Pattern.proj f) = unknown
-patternToTerm t (Pattern.absurd x) = unknown
+-- {-# TERMINATING #-}
+-- patternToTerm : List Term → Pattern → Term
+-- patternToTerm t (Pattern.con c ps) = con c ((λ where (arg v p) → arg v (patternToTerm t p)) <$> ps)
+-- patternToTerm t (Pattern.dot t') = t'
+-- patternToTerm t (` x) with head $ drop x t
+-- ... | just t' = t'
+-- ... | nothing = unknown
+-- patternToTerm t (Pattern.lit l) = lit l
+-- patternToTerm t (Pattern.proj f) = unknown
+-- patternToTerm t (Pattern.absurd x) = unknown
 
 stripMetaLambdas : Term → Term
 stripMetaLambdas = helper 0
@@ -266,7 +347,7 @@ stripMetaLambdas = helper 0
 
 -- if the goal is of type (a : A) → B, return the type of the branch of pattern p and new context
 specializeType : SinglePattern → Type → TC (Type × List (Arg Type))
-specializeType p@(t , arg i _) goalTy = runAndReset $ do
+specializeType p@(t , arg i _) goalTy = noConstraints $ runAndReset do
   cls@((Clause.clause tel _ _) ∷ _) ← return $ clauseExprToClauses $ MatchExpr $
       (p , inj₂ (just unknown)) ∷
       [ varSinglePattern (arg i "_") , inj₂ (just unknown) ]
@@ -296,23 +377,56 @@ module ClauseExprM {M : Set↑} ⦃ _ : Monad M ⦄ ⦃ _ : ContextMonad M ⦄ w
   singleMatchExpr : SinglePattern → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
   singleMatchExpr p x = matchExprM [ p , x ]
 
+  singleTelescopeMatchExpr : NE.List⁺ SinglePattern → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
+  singleTelescopeMatchExpr (p ∷ ps) x = helper p ps x
+    where
+      helper : SinglePattern → List SinglePattern → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
+      helper p [] x = singleMatchExpr p x
+      helper p (p' ∷ ps) x = singleMatchExpr p $ inj₁ <$> helper p' ps x
+
   introExpr : Arg String → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
   introExpr n x = singleMatchExpr (varSinglePattern n) x
 
-  {-# TERMINATING #-}
-  introsExpr : List (Arg String) → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
-  introsExpr []       x = do
-    (inj₁ x') ← x
-      where _ → introsExpr [] x
-    return x'
-  introsExpr (n ∷ []) x = introExpr n x
-  introsExpr (n ∷ n' ∷ ns) x = introExpr n $ inj₁ <$> introsExpr (n' ∷ ns) x
+  introsExpr : NE.List⁺ (Arg String) → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
+  introsExpr (p ∷ ps) x = helper p ps x
+    where
+      helper : Arg String → List (Arg String) → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
+      helper n [] x = introExpr n x
+      helper n (n' ∷ ns) x = introExpr n $ inj₁ <$> helper n ns x
 
   contMatch : M ClauseExpr → M (ClauseExpr ⊎ Maybe Term)
   contMatch expr = inj₁ <$> expr
 
   finishMatch : M Term → M (ClauseExpr ⊎ Maybe Term)
   finishMatch t = inj₂ ∘ just <$> t
+
+clauseTelescope : Clause → List (String × Arg Type)
+clauseTelescope (Clause.clause tel _ _) = tel
+clauseTelescope (Clause.absurd-clause tel _) = tel
+
+instanciatePattern : SinglePattern → List (Arg Type)
+instanciatePattern p = proj₂ <$> (clauseTelescope $ from-just $ head $ clauseExprToClauses $ singleMatchExpr p $ finishMatch unknown)
+  where open ClauseExprM ⦃ Monad-Id ⦄ ⦃ ContextMonad-Id ⦄
+
+instanciatePatterns : List SinglePattern → Term → List Clause
+instanciatePatterns [] t = [ Clause.clause [] [] t ]
+instanciatePatterns (x ∷ ps) t = clauseExprToClauses (singleTelescopeMatchExpr (x NE.∷ ps) (finishMatch t))
+  where open ClauseExprM ⦃ Monad-Id ⦄ ⦃ ContextMonad-Id ⦄
+
+bindCtxMatchExpr : TB ClauseExpr → TB ClauseExpr
+bindCtxMatchExpr x = do
+  e ← lift-TB $ ctxSinglePatterns
+  case NE.fromList e of λ where
+    (just e') → singleTelescopeMatchExpr e' $ contMatch x
+    nothing → x
+  where open ClauseExprM {TB}
+
+ctxBindingClause : Term → TC Clause
+ctxBindingClause t = do
+  pats ← ctxSinglePatterns
+  (c ∷ _) ← return $ instanciatePatterns (reverse pats) t
+    where _ → error "Bug in ctxBindingClause"
+  return c
 
 CBId : Set↑
 CBId = WriterT ClauseInfo id

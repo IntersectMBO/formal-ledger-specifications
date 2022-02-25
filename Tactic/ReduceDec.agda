@@ -1,16 +1,18 @@
 {-# OPTIONS -v tryConstrs:101 #-}
 {-# OPTIONS -v assumption:101 #-}
+{-# OPTIONS -v reduceDec:101 #-}
 --------------------------------------------------------------------------------
 -- reduceDec: looks for proofs of P to reduce ⌊ decP ⌋
 --------------------------------------------------------------------------------
 
 module Tactic.ReduceDec where
 
-open import Agda.Builtin.Reflection using (withReconstructed)
+open import Agda.Builtin.Reflection using (withReconstructed; onlyReduceDefs; dontReduceDefs)
 open import Reflection hiding (_≟_; name; _>>=_; _>>_; return)
 open import Reflection.AST.Argument
 open import Prelude.Generics
 open import Prelude.Monad
+open import Prelude.Functor
 open import Prelude.Show
 open import Prelude.DecEq
 
@@ -31,6 +33,33 @@ open import Relation.Binary.PropositionalEquality hiding ([_])
 open import Tactic.Helpers
 open import Tactic.Constrs
 open import Tactic.Assumption
+
+private
+  variable ℓ : Agda.Primitive.Level
+           A : Set ℓ
+
+record ReduceDecOptions : Set where
+  field
+    onlyReduce : Maybe $ List Name
+    dontReduce : Maybe $ List Name
+
+  applyOnlyReduce : TC A → TC A
+  applyOnlyReduce x = case onlyReduce of λ where
+    (just r) → onlyReduceDefs r x
+    nothing → x
+
+  applyDontReduce : TC A → TC A
+  applyDontReduce x = case dontReduce of λ where
+    (just r) → dontReduceDefs r x
+    nothing → x
+
+  applyReduceDecOptions : TC A → TC A
+  applyReduceDecOptions x = applyOnlyReduce $ applyDontReduce x
+
+open ReduceDecOptions using (applyReduceDecOptions)
+
+noOptions : ReduceDecOptions
+noOptions = record { onlyReduce = nothing ; dontReduce = nothing }
 
 -- find all subterms satisfying the predicate (not under binders)
 selectSubterms : (Term → Bool) → Term → List Term
@@ -95,54 +124,65 @@ fromWitness'Type true  dec = def (quote _≡_) (hArg? ∷ hArg? ∷ def (quote i
 fromWitness'Type false dec = def (quote _≡_) (hArg? ∷ hArg? ∷ def (quote isYes) (hArg? ∷ hArg? ∷ dec ⟨∷⟩ []) ⟨∷⟩ quote false ◆ ⟨∷⟩ [])
 
 findDecRWHypWith : Tactic → Term → TC Term
-findDecRWHypWith tac dec = do
-  tac' ← quoteTC tac
-  withReconstructed $
-    catchTC (checkType (quote fromWitness'      ∙⟦ dec ∣ quote by ∙⟦ tac' ⟧ ⟧) (fromWitness'Type true  dec)) $
-    catchTC (checkType (quote fromWitnessFalse' ∙⟦ dec ∣ quote by ∙⟦ tac' ⟧ ⟧) (fromWitness'Type false dec)) $
+findDecRWHypWith tac dec =
+  helper true $ helper false $
     error "reduceDec: Could not find an equation to rewrite with!"
+  where
+    open Debug ("reduceDec" , 100)
+    helper : Bool → TC Term → TC Term
+    helper b = catchTC $ do
+      hole ← newMeta unknown
+      res ← case b of λ where
+        false → checkType (quote fromWitnessFalse' ∙⟦ dec ∣ hole ⟧) (fromWitness'Type false dec)
+        true  → checkType (quote fromWitness'      ∙⟦ dec ∣ hole ⟧) (fromWitness'Type true  dec)
+      tac hole
+      print ("Hypothesis is" <+> show b)
+      return res
 
-reduceDecTermWith : Tactic → Term → TC (Term × Term)
-reduceDecTermWith tac t = do
+reduceDecTermWith : Tactic → ReduceDecOptions → Term → TC (Term × Term)
+reduceDecTermWith tac r t = do
   print "***** reduceDec *****"
+  printTerm "of term" t
   printCurrentContext
-  T ← inferType t >>= normalise
+  T ← applyReduceDecOptions r (inferType t >>= normalise)
+  print ("Infered type:" <+> show T)
   (dec ∷ decs) ← return $ mapMaybe extractDec $ selectSubterms isIsYes T
     where _ → error "No subterms of the form 'isYes t' found!"
   let scheme = generalizeSubterms isIsYes T
+  print ("Rewrite scheme:" <+> show scheme)
   eq ← findDecRWHypWith tac dec
-  printS scheme
-  printS eq
+  printTerm "eq" eq
   return (scheme , eq)
   where open Debug ("reduceDec" , 100)
 
+reduceDecTerm : ReduceDecOptions → Term → TC (Term × Term)
 reduceDecTerm = reduceDecTermWith (tryConstrsWith' 5 assumption')
 
-reduceDec : Term → Tactic
-reduceDec t goal = do
-  (scheme , eq) ← reduceDecTerm t
-  unify goal $ quote subst ∙⟦ scheme ∣ eq ∣ t ⟧
+reduceDec' : ReduceDecOptions → Term → TC Term
+reduceDec' r t = do
+  (scheme , eq) ← reduceDecTerm r t
+  return $ quote subst ∙⟦ scheme ∣ eq ∣ t ⟧
 
-reduceDec' : Term → TC Term
-reduceDec' t = do
-  hole ← newMeta unknown
-  reduceDec t hole
-  return hole
+reduceDec : ReduceDecOptions → Term → Tactic
+reduceDec r t goal = unify goal =<< reduceDec' r t
 
-reduceDecInGoal : ∀ {a} {A : Set a} → A → Tactic
-reduceDecInGoal new goal = do
-  newGoal ← withReconstructed $ quoteTC new
-  (scheme , eq) ← reduceDecTerm goal
-  unify goal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ newGoal ⟧
-
-reduceDecInGoal' : Term → Tactic
-reduceDecInGoal' newGoal goal = do
-  (scheme , eq) ← reduceDecTerm goal
+reduceDecInGoal : ReduceDecOptions → Term → Tactic
+reduceDecInGoal r newGoal goal = do
+  (scheme , eq) ← reduceDecTerm r goal
   unify goal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ newGoal ⟧
 
 macro
-  by-reduceDec = reduceDec
-  by-reduceDecInGoal = reduceDecInGoal
+  by-reduceDec : Term → Tactic
+  by-reduceDec = reduceDec noOptions
+
+  by-reduceDecInGoal : Term → Tactic
+  by-reduceDecInGoal = reduceDecInGoal noOptions
+
+  by-reduceDec' : ReduceDecOptions → Term → Tactic
+  by-reduceDec' r t h = reduceDec r t h
+
+  by-reduceDecInGoal' : ReduceDecOptions → Term → Tactic
+  by-reduceDecInGoal' r t h = reduceDecInGoal r t h
 
 private
   module Test (A : Set) ⦃ _ : DecEq A ⦄ where

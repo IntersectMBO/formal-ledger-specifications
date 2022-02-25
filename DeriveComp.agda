@@ -2,7 +2,7 @@
 {-# OPTIONS -v case:101 #-}
 {-# OPTIONS -v assumption:101 #-}
 {-# OPTIONS -v reduceDec:101 #-}
-open import Agda.Builtin.Reflection using (withReconstructed)
+open import Agda.Builtin.Reflection using (withReconstructed; onlyReduceDefs)
 open import Reflection hiding (_≟_; name; _>>=_; _>>_; return)
 open import Reflection.AST hiding (name)
 open import Reflection.AST.Argument using (unArg; _⟨∷⟩_)
@@ -24,6 +24,7 @@ open import Data.Bool hiding (_≟_)
 open import Data.Maybe using (Maybe; just; nothing; from-just)
 open import Data.Maybe.Properties using (just-injective)
 open import Data.List
+import Data.List.NonEmpty as NE
 open import Data.Product
 open import Data.String using (String; _<+>_)
 open import Data.Nat hiding (_≟_)
@@ -35,7 +36,7 @@ open import Relation.Nullary.Decidable
 open import Relation.Binary.PropositionalEquality hiding ([_])
 open Debug ("Test" , 100)
 
-open import Tactic.ReduceDec using (reduceDec; reduceDec'; reduceDecInGoal; reduceDecInGoal'; by-reduceDec; by-reduceDecInGoal)
+open import Tactic.ReduceDec using (reduceDec; reduceDec'; reduceDecInGoal; by-reduceDec; by-reduceDecInGoal; ReduceDecOptions)
 open import Tactic.Helpers
 open import Tactic.Constrs
 open import Tactic.Case
@@ -72,8 +73,11 @@ conOrVarToPattern k (con c args) =
   Pattern.con c <$> traverseM (λ { (arg i x) → arg i <$> conOrVarToPattern k x }) args
 conOrVarToPattern _ _ = nothing
 
+getVisibility : ∀ {a} {A : Set a} → Arg A → Agda.Builtin.Reflection.Visibility
+getVisibility (arg (arg-info v _) _) = v
+
 isArg : (a : Abs (Arg Term)) → Dec _
-isArg a = ¬? (getName a ≟ "_")
+isArg a = ¬? (getVisibility (unAbs a) ≟ visible)
 
 toSTSConstr : Name × TypeView → Maybe STSConstr
 toSTSConstr (n , (cs , def f args)) with args | mapMaybe (conOrVarToPattern (length $ dropWhile isArg cs) ∘ unArg) $ take 3 args
@@ -88,6 +92,10 @@ toSTSConstr (n , (cs , def f args)) with args | mapMaybe (conOrVarToPattern (len
     ; result = mapVars (_∸ (length $ dropWhile isArg cs)) $ unArg r }
 ... | _ | _ = nothing
 toSTSConstr _ = nothing
+
+infix 0 _────────────────────────────────_
+_────────────────────────────────_ : Set → Set → Set
+A ──────────────────────────────── B = A → B
 
 errorIfNothing : ∀ {a} {A : Set a} → Maybe A → String → TC A
 errorIfNothing (just x) s = return x
@@ -124,11 +132,14 @@ generateFunction c = pat-lam (generateFunctionClause generatePred <$> c) []
 
 instance _ = Monad-TB
 
+rdOpts : ReduceDecOptions
+rdOpts = record { onlyReduce = just [ quote ⌊_⌋ ] ; dontReduce = nothing }
+
 derive⇐ : Tactic
 derive⇐ hole = runTBinHole hole $ clauseExprToPatLam <$> do
   (constrPat ∷ []) ← currentTyConstrPatterns
     where _ → lift-TB $ error "TODO: Support more than one constructor!"
-  singleMatchExpr constrPat $ finishMatch $ withGoalHole $ reduceDecInGoal' (quote refl ◆)
+  singleMatchExpr constrPat $ finishMatch $ withGoalHole $ reduceDecInGoal rdOpts (quote refl ◆)
   where open ClauseExprM {TB} ⦃ Monad-TB ⦄ ⦃ ContextMonad-TB ⦄
 
 derive⇒ : Name → Tactic
@@ -137,13 +148,13 @@ derive⇒ n hole = do
     where _ → error "TODO: support multiple constructors"
   
   runTBinHole hole $ clauseExprToPatLam <$> do
-    introsExpr ("h" ⟨∷⟩ []) $ finishMatch $
-      caseMatch (mapVars (_+ 2) $ generatePred clauses) $ matchExprM
+    introsExpr (from-just $ NE.fromList ("h" ⟨∷⟩ [])) $ finishMatch $
+      caseMatch (mapVars (_+ 1) $ generatePred clauses) $ matchExprM
         ((multiSinglePattern [ "" ] (vArg (``no  (` 0))) , finishMatch do
-          reducedHyp ← lift-TB $ reduceDec' $ ♯ 1
+          reducedHyp ← lift-TB $ reduceDec' rdOpts $ ♯ 1
           return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
          (multiSinglePattern [ "" ] (vArg (``yes (` 0))) , finishMatch do
-          reducedHyp ← lift-TB $ reduceDec' $ ♯ 1
+          reducedHyp ← lift-TB $ reduceDec' rdOpts $ ♯ 1
           ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← ask
             where ty → lift-TB $ error $ "BUG: Unexpected type:" <+> show ty
           return $ quote subst ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧ ∣ quote just-injective ∙⟦ reducedHyp ⟧ ∣
@@ -155,29 +166,40 @@ derive⇔ n hole = do
   hole⇒ ← newMeta unknown
   hole⇐ ← newMeta unknown
   unify hole $ quote mk⇔ ∙⟦ hole⇒ ∣ hole⇐ ⟧
+  printTerm "hole⇐" hole⇐
   derive⇐ hole⇐
+  printTerm "hole⇒" hole⇒
   derive⇒ n hole⇒
 
-macro
-  deriveComp : Name → Tactic
-  deriveComp definedType hole = do
-    stsConstrs ← getSTSConstrs definedType
-    goalTy ← inferType hole
-    res ← withNormalisation true $ checkType (generateFunction stsConstrs) goalTy
-    unify hole res
+deriveComp : Name → Tactic
+deriveComp definedType hole = do
+  print ("Derive computation function for" <+> show definedType)
+  stsConstrs ← getSTSConstrs definedType
+  unify hole (generateFunction stsConstrs)
 
+macro
   by-derive⇔ : Name → Tactic
   by-derive⇔ = derive⇔
 
 record Computational {C S Sig : Set} (P : C → S → Sig → S → Set) : Set where
+  constructor MkComputational
   field
     compute : C → S → Sig → Maybe S
     pf : ∀ {c s sig s'} → (compute c s sig ≡ just s') ⇔ P c s sig s'
 
 deriveComputational : Name → Name → TC ⊤
 deriveComputational n compName = do
-  declareDef (vArg compName) (quote Computational ∙⟦ n ∙ ⟧)
-  definition ← mkRecord (quote Computational) (quote deriveComp ∙⟦ n ∙ ⟧ ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ⟧ ⟨∷⟩ [])
+  let goalTy = quote Computational ∙⟦ n ∙ ⟧
+  declareDef (vArg compName) goalTy
+  compRes ← runAndReset $ do
+    compHole ← newMeta unknown
+    equivHole ← newMeta unknown
+    definition ← mkRecord (quote Computational) (compHole ⟨∷⟩ equivHole ⟨∷⟩ [])
+    _ ← checkType definition goalTy
+    deriveComp n compHole
+    reduce compHole
+  printTerm "compRes" compRes
+  definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ⟧ ⟨∷⟩ [])
   defineFun compName [ nonBindingClause definition ]
 
 private
@@ -202,9 +224,9 @@ private
     testFun c s sig = if ⌊ ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ ⌋ then just (proj₁ c) else nothing
   
     testFunPf⇒ : testFun c s sig ≡ just s' → Test c s sig s'
-    testFunPf⇒ {c} {s} {sig} h' = case ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ of λ where
-      (no ¬p) → case by-reduceDec h' of λ ()
-      (yes p) → subst (Test c s sig) (just-injective $ by-reduceDec h') (test (proj₁ p) (proj₂ p))
+    testFunPf⇒ {c} {s} {sig} h = case ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ of λ where
+      (no ¬p) → case by-reduceDec h of λ ()
+      (yes p) → subst (Test c s sig) (just-injective $ by-reduceDec h) (test (proj₁ p) (proj₂ p))
 
     testFunPf⇐ : Test c s sig s' → testFun c s sig ≡ just s'
     testFunPf⇐ {s = s} (test x x₁) = by-reduceDecInGoal (refl {x = just s})

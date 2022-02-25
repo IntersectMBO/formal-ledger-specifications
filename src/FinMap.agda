@@ -95,13 +95,13 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
     (a ∈ ∅) ∎
     where open P.EquationalReasoning
 
-  ⋪⇒⊆ : ∀ m → (s ⋪ m) ⊆ m
-  ⋪⇒⊆ {s} m a∈s⋪m = proj₁ $ filter→∈ {s = m} (λ x → ¬? (proj₁ x ∈? s)) _ a∈s⋪m
+  ⋪⇒⊆ : ∀ s m → (s ⋪ m) ⊆ m
+  ⋪⇒⊆ s m a∈s⋪m = proj₁ $ filter→∈ {s = m} (λ x → ¬? (proj₁ x ∈? s)) _ a∈s⋪m
 
   dom-res-∩-empty : ∀ s m → (m' : FinMap K V) → m ∩ m' ≡ᵉ ∅ → (s ⋪ m) ∩ m' ≡ᵉ ∅
   dom-res-∩-empty s m m' h with ∩-OrderHomomorphismˡ {K × V} {s = m'}
   ... | record { cong = _ ; mono = mono } = ∅-least {s = (s ⋪ m) ∩ m'} (begin
-    ((s ⋪ m) ∩ m') ∼⟨ mono {s ⋪ m} {m} (⋪⇒⊆ {s} m) ⟩
+    ((s ⋪ m) ∩ m') ∼⟨ mono {s ⋪ m} {m} (⋪⇒⊆ s m) ⟩
     (m ∩ m') ≈⟨ h ⟩
     FinSet.∅ ∎)
     where open P-Reasoning (⊆-Preorder' {K × V})

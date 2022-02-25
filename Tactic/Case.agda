@@ -91,6 +91,7 @@ private
     open import Data.Sum using (_⊎_)
 
     record TestType : Set where
+      constructor mkTestType
       field
         a : A
         b : B
