@@ -79,7 +79,6 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
     (a ∈ m) ∎
     where open P.EquationalReasoning
 
-
   dom-res-ex-∩ : ∀ s m → (s ⋪ m) ∩ (s ◃ m) ≡ᵉ ∅
   dom-res-ex-∩ s m = ∈-×↔∩≡ {s = s ⋪ m} {s' = s ◃ m} {s'' = ∅} λ a →
     (a ∈ s ⋪ m × a ∈ s ◃ m)
@@ -100,7 +99,7 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
 
   dom-res-∩-empty : ∀ s m → (m' : FinMap K V) → m ∩ m' ≡ᵉ ∅ → (s ⋪ m) ∩ m' ≡ᵉ ∅
   dom-res-∩-empty s m m' h with ∩-OrderHomomorphismˡ {K × V} {s = m'}
-  ... | record { cong = _ ; mono = mono } = ∅-least {s = (s ⋪ m) ∩ m'} (begin
+  ... | record { mono = mono } = ∅-least {s = (s ⋪ m) ∩ m'} (begin
     ((s ⋪ m) ∩ m') ∼⟨ mono {s ⋪ m} {m} (⋪⇒⊆ s m) ⟩
     (m ∩ m') ≈⟨ h ⟩
     FinSet.∅ ∎)

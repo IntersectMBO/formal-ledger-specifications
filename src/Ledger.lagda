@@ -51,6 +51,7 @@ Path = /Library/Fonts/ ,
 \begin{code}[hide]
 
 --{-# OPTIONS --safe #-}
+{-# OPTIONS --overlapping-instances #-}
 {-# OPTIONS -v Test:101 #-}
 {-# OPTIONS -v case:101 #-}
 {-# OPTIONS -v assumption:101 #-}
@@ -89,6 +90,7 @@ open import FinSet.Properties
 open import Tactic.MonoidSolver
 open import TacticReasoning
 open import DeriveComp hiding (rdOpts)
+open import ComputationalRelation
 open import Tactic.Helpers
 open import Reflection hiding (_≟_)
 open import Prelude.Generics
@@ -133,6 +135,9 @@ This function must produce a unique id for each unique transaction body.
 _≤ᵇ_ : ℕ → ℕ → Bool
 n ≤ᵇ m = ⌊ n ≤? m ⌋
 
+_≠_ : {A : Set} → A → A → Set
+a ≠ b = ¬ a ≡ b
+
 _⟨$⟩_ : {A B : Set} → A ↪ B → A → B
 _⟨$⟩_ = P.⇒→ {k = P.injection}
 
@@ -163,6 +168,10 @@ record Tx : Set where
 \end{code}
 \emph{Abstract functions}
 \begin{code}[hide]
+instance
+  _ : {a : ℙ TxIn} → (a ≡ ∅) ⁇
+  _ = ⁇ ≟-∅
+
 open Tx
 module _ (
 \end{code}
@@ -252,11 +261,15 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
       ∀ {minFee} {s} {tx}
       → let utxo = proj₁ s
             fees = proj₂ s
-        in txins tx ⊆ dom utxo
+        in txins tx ≠ ∅
+      → txins tx ⊆ dom utxo
       → let f = txfee tx in minFee ≤ f
       → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
       ────────────────────────────────
-      minFee ⊢ s ⇀⦇ tx ,UTXO⦈ ((txins tx ⋪ utxo) ∪ outs tx , fees + f)
+      minFee
+        ⊢ s
+        ⇀⦇ tx ,UTXO⦈
+        ((txins tx ⋪ utxo) ∪ outs tx , fees + f)
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
@@ -269,13 +282,13 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   balance-∪ {utxo} {utxo'} = indexedSum-∪ {s = utxo} {s' = utxo'}
   
   balance-cong : utxo ≡ᵉ utxo' → balance utxo ≡ balance utxo'
-  balance-cong {utxo} {utxo'} =  indexedSum-cong {s = utxo} {s' = utxo'}
+  balance-cong {utxo} {utxo'} = indexedSum-cong {s = utxo} {s' = utxo'}
   
-  open TacticReasoning.≡-Reasoning {_} {ℕ} (solve-macro (quoteTerm +-0-monoid))
+  open TacticReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 \end{code}
 
 \begin{property}[\textbf{Preserve Balance}]
-For all $\var{minFee}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxOState$, and $\var{tx}\in\Tx$, if
+For all $\var{minFee}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\Tx$, if
 \begin{code}[hide]
   pov :
 \end{code}
@@ -297,7 +310,7 @@ then
         balance utxo + fee ≡ balance utxo' + fee'
 \end{code}
 \begin{code}[hide]
-  pov {utxo} {tx} {_} {fee} h' (UTXO-inductive x x₁ x₂) =
+  pov {utxo} {tx} {_} {fee} h' (UTXO-inductive y x x₁ x₂) =
     let
       h : utxo ∩ outs tx ≡ᵉ ∅
       h = subst ((utxo ∩ outs tx) ≡ᵉ_) h' (IsEquivalence.refl ≡ᵉ-isEquivalence {utxo ∩ outs tx})
@@ -328,7 +341,7 @@ then
 Note that this is not a function, but a relation. To make this
 definition executable, we need to define a function that computes
 the transition. We also prove that this indeed computes the
-relation.
+relation. Luckily, this can be automated.
 
 \begin{figure*}[h]
 \begin{code}
@@ -338,7 +351,7 @@ relation.
   UTXO-step-computes-UTXO :
     UTXO-step minFee utxoState tx ≡ just utxoState'
     ⇔ minFee ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-  UTXO-step-computes-UTXO = Computational.pf Computational-UTXO
+  UTXO-step-computes-UTXO = Computational.≡-just⇔STS Computational-UTXO
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}

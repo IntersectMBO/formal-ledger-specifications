@@ -39,8 +39,9 @@ open Debug ("Test" , 100)
 open import Tactic.ReduceDec using (reduceDec; reduceDec'; reduceDecInGoal; by-reduceDec; by-reduceDecInGoal; ReduceDecOptions)
 open import Tactic.Helpers
 open import Tactic.Constrs
-open import Tactic.Case
 open import Tactic.ClauseBuilder
+
+open import ComputationalRelation
 
 module DeriveComp where
 
@@ -93,17 +94,15 @@ toSTSConstr (n , (cs , def f args)) with args | mapMaybe (conOrVarToPattern (len
 ... | _ | _ = nothing
 toSTSConstr _ = nothing
 
-infix 0 _────────────────────────────────_
-_────────────────────────────────_ : Set → Set → Set
-A ──────────────────────────────── B = A → B
-
 errorIfNothing : ∀ {a} {A : Set a} → Maybe A → String → TC A
 errorIfNothing (just x) s = return x
 errorIfNothing nothing s = error s
 
 getSTSConstrs : Name → TC (List STSConstr)
 getSTSConstrs n = do
-  dataDef ← getDataDef n 2
+  printCurrentContext
+  dataDef ← getDataDef n
+  printS dataDef
   errorIfNothing (traverseM toSTSConstr (DataDef.constructors dataDef)) "Error"
 
 generatePred : List Term → Term
@@ -142,14 +141,11 @@ derive⇐ hole = runTBinHole hole $ clauseExprToPatLam <$> do
   singleMatchExpr constrPat $ finishMatch $ withGoalHole $ reduceDecInGoal rdOpts (quote refl ◆)
   where open ClauseExprM {TB} ⦃ Monad-TB ⦄ ⦃ ContextMonad-TB ⦄
 
-derive⇒ : Name → Tactic
-derive⇒ n hole = do
-  record { name = stsConstrName ; clauses = clauses } ∷ [] ← getSTSConstrs n
-    where _ → error "TODO: support multiple constructors"
-  
+derive⇒ : Name → List STSConstr → Tactic
+derive⇒ n (record { name = stsConstrName ; clauses = clauses } ∷ []) hole =
   runTBinHole hole $ clauseExprToPatLam <$> do
     introsExpr (from-just $ NE.fromList ("h" ⟨∷⟩ [])) $ finishMatch $
-      caseMatch (mapVars (_+ 1) $ generatePred clauses) $ matchExprM
+      caseMatch (mapVars (_+ 2) $ generatePred clauses) $ matchExprM
         ((multiSinglePattern [ "" ] (vArg (``no  (` 0))) , finishMatch do
           reducedHyp ← lift-TB $ reduceDec' rdOpts $ ♯ 1
           return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
@@ -160,32 +156,29 @@ derive⇒ n hole = do
           return $ quote subst ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧ ∣ quote just-injective ∙⟦ reducedHyp ⟧ ∣
                                con stsConstrName (curryPredProof (length clauses) (♯ 0)) ⟧) ∷ [])
   where open ClauseExprM {TB} ⦃ Monad-TB ⦄ ⦃ ContextMonad-TB ⦄
+derive⇒ _ _ _ = error "TODO: support multiple constructors"
 
-derive⇔ : Name → Tactic
-derive⇔ n hole = do
+derive⇔ : Name → List STSConstr → Tactic
+derive⇔ n stsConstrs hole = do
   hole⇒ ← newMeta unknown
   hole⇐ ← newMeta unknown
   unify hole $ quote mk⇔ ∙⟦ hole⇒ ∣ hole⇐ ⟧
   printTerm "hole⇐" hole⇐
   derive⇐ hole⇐
   printTerm "hole⇒" hole⇒
-  derive⇒ n hole⇒
+  derive⇒ n stsConstrs hole⇒
 
 deriveComp : Name → Tactic
 deriveComp definedType hole = do
   print ("Derive computation function for" <+> show definedType)
   stsConstrs ← getSTSConstrs definedType
+  printS stsConstrs
+  printS (generateFunction stsConstrs)
   unify hole (generateFunction stsConstrs)
 
 macro
-  by-derive⇔ : Name → Tactic
+  by-derive⇔ : Name → List STSConstr → Tactic
   by-derive⇔ = derive⇔
-
-record Computational {C S Sig : Set} (P : C → S → Sig → S → Set) : Set where
-  constructor MkComputational
-  field
-    compute : C → S → Sig → Maybe S
-    pf : ∀ {c s sig s'} → (compute c s sig ≡ just s') ⇔ P c s sig s'
 
 deriveComputational : Name → Name → TC ⊤
 deriveComputational n compName = do
@@ -199,7 +192,8 @@ deriveComputational n compName = do
     deriveComp n compHole
     reduce compHole
   printTerm "compRes" compRes
-  definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ⟧ ⟨∷⟩ [])
+  stsConstrs ← quoteTC =<< getSTSConstrs n
+  definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ∣ stsConstrs ⟧ ⟨∷⟩ [])
   defineFun compName [ nonBindingClause definition ]
 
 private
@@ -232,7 +226,7 @@ private
     testFunPf⇐ {s = s} (test x x₁) = by-reduceDecInGoal (refl {x = just s})
 
     Computational-Test-Manual : Computational Test
-    Computational-Test-Manual = record { compute = testFun ; pf = mk⇔ testFunPf⇒ testFunPf⇐ }
+    Computational-Test-Manual = record { compute = testFun ; ≡-just⇔STS = mk⇔ testFunPf⇒ testFunPf⇐ }
 
     testFun≡compute : ∀ {c s sig} → testFun c s sig ≡ Computational.compute Computational-Test c s sig
     testFun≡compute = refl

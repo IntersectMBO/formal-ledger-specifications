@@ -27,16 +27,13 @@ private
     l : List A
     s s' : FinSet A {{h}}
 
-≡ᵉ⇒⊆ : s ≡ᵉ s' → s ⊆ s'
-≡ᵉ⇒⊆ s≡ᵉs' {a} = Equivalence.f (s≡ᵉs' a)
-
 ⊆-Transitive : Transitive (_⊆_ {A})
 ⊆-Transitive i⊆j j⊆k = j⊆k ∘ i⊆j
 
 ⊆-Preorder : IsPreorder _≡ᵉ_ _⊆_
 ⊆-Preorder = record
   { isEquivalence = ≡ᵉ-isEquivalence
-  ; reflexive = (λ {x y} → ≡ᵉ⇒⊆ {x} {y})
+  ; reflexive = (λ {x y} → ≡ᵉ⇒⊆ {_} {x} {y})
   ; trans = λ {x y z} → ⊆-Transitive {x} {y} {z} }
 
 ⊆-Preorder' : Preorder _ _ _
