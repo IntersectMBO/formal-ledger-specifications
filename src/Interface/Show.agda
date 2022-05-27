@@ -5,12 +5,12 @@ module Interface.Show where
 open import Data.Bool
 open import Data.List using (List; _∷_; []; [_]; length; reverse; takeWhile)
 open import Data.List.Ext
-open import Data.String hiding (length)
+open import Data.String hiding (length; show)
 open import Data.Product
 open import Data.Nat using (ℕ; _∸_)
-open import Data.Nat.Show as ℕ
+import Data.Nat.Show as ℕ
 open import Data.Maybe
-open import Data.Char as C
+import Data.Char as C
 
 open import Reflection hiding (showTerms; showTerm; showSort; showPatterns; showPattern; showClauses; showClause; showTel; visibility; showName)
 open import Reflection.AST.Argument.Information
@@ -19,6 +19,8 @@ open import Reflection.AST.Term
 
 open import Relation.Nullary.Decidable
 open import Relation.Nullary.Negation
+
+open import Interface.Default
 
 open import Function
 open import Level
@@ -31,6 +33,16 @@ record OptShow (Opts : Set ℓ) (A : Set a) : Set (ℓ ⊔ a) where
     oShow : Opts → A → String
 
 open OptShow {{...}} public
+
+record Show (A : Set a) : Set a where
+  field
+    show : A → String
+
+open Show {{...}} public
+
+instance
+  Default-Show : {Opts : Set ℓ} {A : Set a} ⦃ _ : Default Opts ⦄ ⦃ _ : OptShow Opts A ⦄ → Show A
+  Default-Show ⦃ d ⦄ .show a = oShow (Default.default d) a
 
 record HideTermOptions : Set where
   field
@@ -177,3 +189,6 @@ module _ (opts : TermShowOptions) where
 
 OptShow-Term : OptShow TermShowOptions Term
 OptShow-Term .oShow = showTerm
+
+OptShow-Abs : {O : Set ℓ} {A : Set a} → {{OptShow O A}} → OptShow O (Abs A)
+OptShow-Abs .oShow o (abs s x) = "abs" <+> s <+> oShow o x

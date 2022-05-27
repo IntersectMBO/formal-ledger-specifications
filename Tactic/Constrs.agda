@@ -3,7 +3,11 @@
 module Tactic.Constrs where
 
 open import Agda.Builtin.Reflection using (withReconstructed)
+<<<<<<< Updated upstream
 import Reflection.AST.Argument
+=======
+import Reflection.Argument
+>>>>>>> Stashed changes
 open import Data.Bool
 open import Data.List
 open import Data.Nat

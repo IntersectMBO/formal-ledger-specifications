@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 { nixpkgs ? import <nixpkgs> {} }:
 with nixpkgs; let
   agdaDeps = with (import (builtins.fetchTarball
@@ -26,6 +27,19 @@ with nixpkgs; let
       libraryFile = "Finset.agda-lib";
       everythingFile = "src/README.agda";
       buildInputs = [ agda-stdlib ];
+=======
+{ nixpkgs ? <nixpkgs> }: with (import
+      <nixpkgs>
+      { system = "x86_64-darwin"; });
+let
+  agda-stdlib = agdaPackages.standard-library.overrideAttrs (oldAttrs: {
+    version = "1.7";
+    src =  fetchFromGitHub {
+      repo = "agda-stdlib";
+      owner = "input-output-hk";
+      rev = "ce564c90f717da8346190ad0a792cfda548b16e6";
+      sha256 = "zu1sJm5BxU9Nb5ZoLQipC/sqYQOlM0Rsl31tI56Uip8=";
+>>>>>>> Stashed changes
     };
 
     deps = [ agda-stdlib agda-finset ];
@@ -90,4 +104,23 @@ in {
       cp latex/Ledger.pdf $out
     '';
   };
+<<<<<<< Updated upstream
+=======
+in
+agdaPackages.mkDerivation {
+  pname = "simple-utxo-ledger";
+  version = "0.1";
+  src = ./.;
+  meta = {};
+  buildInputs = [ agda-stdlib agda-finset ];
+  everythingFile = "Ledger.lagda";
+  installPhase = ''
+    mkdir -p $out
+    agda --html --html-dir $out/html Ledger.lagda
+    agda -c --compile-dir $out/ledger HSLedger.agda
+  	agda --only-scope-checking --latex Ledger.lagda
+  	cd latex && xelatex Ledger.tex
+  	cp Ledger.pdf $out
+  '';
+>>>>>>> Stashed changes
 }

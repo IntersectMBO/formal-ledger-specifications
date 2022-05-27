@@ -60,7 +60,7 @@ Path = /Library/Fonts/ ,
 
 open import Data.List using (List; []; _∷_; any; foldr; sum; mapMaybe)
 open import Data.List.Relation.Unary.All using (All; all?)
-open import Data.Nat using (ℕ; _+_; _≤_; _≤?_)
+open import Data.Nat using (ℕ; _+_; _*_; _≤_; _≤?_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm)
 open import Data.Maybe hiding (_>>=_)
 open import Data.Maybe.Properties using (just-injective)
@@ -68,7 +68,7 @@ open import Data.Maybe.Relation.Unary.Any using (dec)
 open import Data.Product
 open import Data.Product.Properties
 open import Data.Bool using (Bool; if_then_else_; _∧_; true; false)
-open import Data.Unit using (tt)
+open import Data.Unit using (⊤; tt)
 open import Data.Empty
 open import Data.List.Membership.Propositional
 
@@ -150,28 +150,32 @@ instance
   convertDecEq : ∀ {A} ⦃ _ : DecEq A ⦄ → P.DecEq A
   convertDecEq ⦃ dec ⦄ = record { _≟_ = _≟_ }
 
-Coin TxIn TxOut UTxO : Set
+Coin Slot TxIn TxOut UTxO : Set
 \end{code}
 \begin{code}
-Coin = ℕ
-TxIn = TxId × Ix
-TxOut = Addr × Coin
-UTxO = TxIn ↦ TxOut
+Coin    = ℕ
+Slot    = ℕ -- TODO: make this abstract?
+TxIn    = TxId × Ix
+TxOut   = Addr × Coin
+UTxO    = TxIn ↦ TxOut
+
+record PParams : Set where
+  field
+    a : ℕ
+    b : ℕ
 \end{code}
 \emph{Transaction types}
 \begin{code}
 record Tx : Set where
   field
-    txins : ℙ TxIn
+    txins  : ℙ TxIn
     txouts : Ix ↦ TxOut
-    txfee : Coin
+    txfee  : Coin
+    txvldt : Maybe ℕ × Maybe ℕ
+    txsize : ℕ
 \end{code}
 \emph{Abstract functions}
 \begin{code}[hide]
-instance
-  _ : {a : ℙ TxIn} → (a ≡ ∅) ⁇
-  _ = ⁇ ≟-∅
-
 open Tx
 module _ (
 \end{code}
@@ -207,6 +211,15 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \begin{code}
   outs : Tx → UTxO
   outs tx = mapKeys (txid ⟨$⟩ tx ,_) $ txouts tx
+
+  minfee : PParams → Tx → Coin
+  minfee pp tx = PParams.a pp * txsize tx + PParams.b pp
+
+  inInterval : Slot → Maybe Slot × Maybe Slot → Set
+  inInterval slot (just l  , just r)  = l ≤ slot × slot ≤ r
+  inInterval slot (just l  , nothing) = l ≤ slot
+  inInterval slot (nothing , just r)  = slot ≤ r
+  inInterval slot (nothing , nothing) = ⊤
   
   balance : UTxO → Coin
   balance utxo = Σ[ v ← utxo ] proj₂ (proj₂ v)
@@ -222,7 +235,8 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   UTxOEnv UTxOState : Set
 \end{code}
 \begin{code}
-  UTxOEnv = Coin -- minimum fee
+  UTxOEnv = Slot
+          × PParams
 \end{code}
 \emph{UTxO states}
 \begin{code}
@@ -235,13 +249,20 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   variable
     tx : Tx
     utxo utxo' utxo1 utxo2 : UTxO
-    minFee fee fee' fees fees' : Coin
+    fee fee' fees fees' : Coin
     utxoState utxoState' utxoState1 utxoState2 : UTxOState
-    utxoEnv : UTxOEnv
+    Γ : UTxOEnv
     s s' : UTxOState
   
   ⟦_⟧ : {A : Set} → A → A
   ⟦_⟧ = Function.id
+
+  instance
+    _ : {a : ℙ TxIn} → (a ≡ ∅) ⁇
+    _ = ⁇ ≟-∅
+
+    _ : {slot : Slot} {I : Maybe Slot × Maybe Slot} → inInterval slot I ⁇
+    _ = ?
   
   data
 \end{code}
@@ -258,15 +279,19 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \end{code}
 \begin{code}
     UTXO-inductive :
-      ∀ {minFee} {s} {tx}
-      → let utxo = proj₁ s
+      ∀ {Γ} {s} {tx}
+      → let slot = proj₁ Γ
+            pp   = proj₂ Γ
+            utxo = proj₁ s
             fees = proj₂ s
-        in txins tx ≠ ∅
+        in
+        txins tx ≠ ∅
+      → inInterval slot (txvldt tx)
       → txins tx ⊆ dom utxo
-      → let f = txfee tx in minFee ≤ f
+      → let f = txfee tx in minfee pp tx ≤ f
       → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
       ────────────────────────────────
-      minFee
+      Γ
         ⊢ s
         ⇀⦇ tx ,UTXO⦈
         ((txins tx ⋪ utxo) ∪ outs tx , fees + f)
@@ -288,7 +313,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \end{code}
 
 \begin{property}[\textbf{Preserve Balance}]
-For all $\var{minFee}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\Tx$, if
+For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\Tx$, if
 \begin{code}[hide]
   pov :
 \end{code}
@@ -300,7 +325,7 @@ and
     →
 \end{code}
 \begin{code}[inline*]
-        minFee ⊢ (utxo , fee) ⇀⦇ tx ,UTXO⦈ (utxo' , fee')
+        Γ ⊢ (utxo , fee) ⇀⦇ tx ,UTXO⦈ (utxo' , fee')
 \end{code}
 then
 \begin{code}[hide]
@@ -310,7 +335,7 @@ then
         balance utxo + fee ≡ balance utxo' + fee'
 \end{code}
 \begin{code}[hide]
-  pov {utxo} {tx} {_} {fee} h' (UTXO-inductive y x x₁ x₂) =
+  pov {utxo} {tx} {_} {fee} h' (UTXO-inductive y x z x₁ x₂) =
     let
       h : utxo ∩ outs tx ≡ᵉ ∅
       h = subst ((utxo ∩ outs tx) ≡ᵉ_) h' (IsEquivalence.refl ≡ᵉ-isEquivalence {utxo ∩ outs tx})
@@ -345,12 +370,12 @@ relation. Luckily, this can be automated.
 
 \begin{figure*}[h]
 \begin{code}
-  UTXO-step : Coin → UTxO × Coin → Tx → Maybe (UTxO × Coin)
+  UTXO-step : UTxOEnv → UTxOState → Tx → Maybe UTxOState
   UTXO-step = Computational.compute Computational-UTXO
   
   UTXO-step-computes-UTXO :
-    UTXO-step minFee utxoState tx ≡ just utxoState'
-    ⇔ minFee ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
+    UTXO-step Γ utxoState tx ≡ just utxoState'
+    ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
   UTXO-step-computes-UTXO = Computational.≡-just⇔STS Computational-UTXO
 \end{code}
 \caption{Computing the UTXO transition system}

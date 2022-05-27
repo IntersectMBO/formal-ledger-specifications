@@ -1,21 +1,10 @@
-{-# OPTIONS -v Test:101 #-}
-{-# OPTIONS -v case:101 #-}
-{-# OPTIONS -v assumption:101 #-}
-{-# OPTIONS -v reduceDec:101 #-}
+{-# OPTIONS -v allTactics:100 #-}
+{-# OPTIONS -v getDataDef:100 #-}
 open import Agda.Builtin.Reflection using (withReconstructed; onlyReduceDefs)
-open import Reflection hiding (_≟_; name; _>>=_; _>>_; return)
 open import Reflection.AST hiding (name)
 open import Reflection.AST.Argument using (unArg; _⟨∷⟩_)
 open import Reflection.AST.Abstraction using (unAbs)
-open import Prelude.Generics
-open import Prelude.Traversable
-open import Prelude.Functor
-open import Prelude.Foldable
-open import Prelude.Monad
-open import Prelude.Show
-open import Prelude.Decidable
-open import Prelude.General hiding (_⇔_)
-open import Prelude.DecEq
+import Reflection.AST.Argument.Visibility
 
 open import Function
 
@@ -30,13 +19,17 @@ open import Data.String using (String; _<+>_)
 open import Data.Nat hiding (_≟_)
 open import Data.Sum using (inj₁; inj₂)
 
+open import Prelude.Generics using (TypeView; mapVars; _∙; _∙⟦_⟧; _∙⟦_∣_⟧; _∙⟦_∣_∣_⟧; _∙⟦_∣_∣_∣_⟧; _◆; _◆⟦_⟧; `λ∅)
+open import Prelude.Decidable
+open import Prelude.DecEq.Derive using (``yes; ``no)
+open import Prelude.DecEq
+
 open import Relation.Nullary
 open import Relation.Nullary.Negation
 open import Relation.Nullary.Decidable
 open import Relation.Binary.PropositionalEquality hiding ([_])
-open Debug ("Test" , 100)
 
-open import Tactic.ReduceDec using (reduceDec; reduceDec'; reduceDecInGoal; by-reduceDec; by-reduceDecInGoal; ReduceDecOptions)
+open import Tactic.ReduceDec using (reduceDec; reduceDec'; reduceDecInGoal; by-reduceDec; by-reduceDecInGoal)
 open import Tactic.Helpers
 open import Tactic.Constrs
 open import Tactic.ClauseBuilder
@@ -44,6 +37,38 @@ open import Tactic.ClauseBuilder
 open import ComputationalRelation
 
 module DeriveComp where
+
+open import Interface.Monad
+open import Interface.MonadError hiding (MonadError-TC)
+open import Interface.MonadTC hiding (Monad-TC)
+open import Interface.MonadReader
+open import Reflection.TCI
+
+open Monad ⦃...⦄
+open MonadTC ⦃...⦄
+open MonadError ⦃...⦄
+open MonadReader ⦃...⦄
+
+instance
+  _ = Monad-TC
+  _ = MonadTC-TCI
+  _ = MonadReader-TC
+  _ = MonadError-TC
+  _ = ContextMonad-MonadTC
+
+  defaultDebugOptionsI = record defaultDebugOptions { selection = Custom helper }
+    where
+      _∉_ : String → List String → Bool
+      s ∉ l = null $ filter (Data.String._≟_ s) l
+
+      helper : List String → String
+      helper n with "getDataDef" ∉ n ∧ "getSTSConstrs" ∉ n
+      ... | true  = "allTactics"
+      ... | false = "dontDisplay"
+
+  Monad-Maybe : Monad Maybe
+  Monad-Maybe .return = just
+  Monad-Maybe ._>>=_  = Data.Maybe._>>=_
 
 record STSConstr : Set where
   field
@@ -55,30 +80,30 @@ record STSConstr : Set where
     signal  : Pattern
     result  : Term
 
-instance
-  Show-STSConstr : Show STSConstr
-  Show-STSConstr .show c = let open STSConstr c in
-    "STSConstr" <+>
-    "{ params =" <+> show params <+>
-    "; clauses =" <+> show clauses <+>
-    "; context =" <+> show context <+>
-    "; state =" <+> show state <+>
-    "; signal =" <+> show signal <+>
-    "; result =" <+> show result <+>
-    "}"
+-- instance
+--   Show-STSConstr : Show STSConstr
+--   Show-STSConstr .show c = let open STSConstr c in
+--     "STSConstr" <+>
+--     "{ params =" <+> show params <+>
+--     "; clauses =" <+> show clauses <+>
+--     "; context =" <+> show context <+>
+--     "; state =" <+> show state <+>
+--     "; signal =" <+> show signal <+>
+--     "; result =" <+> show result <+>
+--     "}"
 
 {-# TERMINATING #-}
 conOrVarToPattern : ℕ → Term → Maybe Pattern
 conOrVarToPattern k (♯ v) = just (Pattern.var (v ∸ k))
 conOrVarToPattern k (con c args) =
-  Pattern.con c <$> traverseM (λ { (arg i x) → arg i <$> conOrVarToPattern k x }) args
+  Pattern.con c <$> (traverseList (λ { (arg i x) → Data.Maybe.map (arg i) $ conOrVarToPattern k x }) args)
 conOrVarToPattern _ _ = nothing
 
 getVisibility : ∀ {a} {A : Set a} → Arg A → Agda.Builtin.Reflection.Visibility
 getVisibility (arg (arg-info v _) _) = v
 
 isArg : (a : Abs (Arg Term)) → Dec _
-isArg a = ¬? (getVisibility (unAbs a) ≟ visible)
+isArg a = ¬? (getVisibility (unAbs a) Reflection.AST.Argument.Visibility.≟ visible)
 
 toSTSConstr : Name × TypeView → Maybe STSConstr
 toSTSConstr (n , (cs , def f args)) with args | mapMaybe (conOrVarToPattern (length $ dropWhile isArg cs) ∘ unArg) $ take 3 args
@@ -86,7 +111,7 @@ toSTSConstr (n , (cs , def f args)) with args | mapMaybe (conOrVarToPattern (len
   just record
     { name = n
     ; params = takeWhile isArg cs
-    ; clauses = zipWithIndex (λ i → mapVars (_∸ i)) $ unArg ∘ unAbs <$> dropWhile isArg cs
+    ; clauses = zipWithIndex (λ i → mapVars (_∸ i)) $ (unArg ∘ unAbs) <$> dropWhile isArg cs
     ; context = c
     ; state = s
     ; signal = sig
@@ -99,11 +124,11 @@ errorIfNothing (just x) s = return x
 errorIfNothing nothing s = error s
 
 getSTSConstrs : Name → TC (List STSConstr)
-getSTSConstrs n = do
-  printCurrentContext
+getSTSConstrs n = inDebugPath "getSTSConstrs" do
   dataDef ← getDataDef n
-  printS dataDef
-  errorIfNothing (traverseM toSTSConstr (DataDef.constructors dataDef)) "Error"
+  res ← errorIfNothing (traverseList toSTSConstr (DataDef.constructors dataDef)) "Error"
+  debugLogValueNorm res
+  return res
 
 generatePred : List Term → Term
 generatePred clauses = quote ¿_¿ ∙⟦ helper clauses ⟧
@@ -121,7 +146,7 @@ curryPredProof (suc (suc (suc k))) t = quote proj₁ ∙⟦ t ⟧ ⟨∷⟩ curr
 
 generateFunctionClause : (List Term → Term) → STSConstr → Clause
 generateFunctionClause genPred c = let open STSConstr c in
-  ⟦ context ∣ state ∣ signal ⦅ fmap (λ { (abs s x) → (s , x) }) params ⦆⇒
+  ⟦ context ∣ state ∣ signal ⦅ Data.List.map (λ { (abs s x) → (s , x) }) params ⦆⇒
     quote if_then_else_ ∙⟦ quote ⌊_⌋ ∙⟦ genPred clauses ⟧ ∣
       quote just ◆⟦ result ⟧ ∣
       quote nothing ◆ ⟧ ⟧
@@ -129,69 +154,71 @@ generateFunctionClause genPred c = let open STSConstr c in
 generateFunction : List STSConstr → Term
 generateFunction c = pat-lam (generateFunctionClause generatePred <$> c) []
 
-instance _ = Monad-TB
+rdOpts : ReductionOptions
+rdOpts = onlyReduce [ quote ⌊_⌋ ]
 
-rdOpts : ReduceDecOptions
-rdOpts = record { onlyReduce = just [ quote ⌊_⌋ ] ; dontReduce = nothing }
+open ClauseExprM
 
-derive⇐ : Tactic
-derive⇐ hole = runTBinHole hole $ clauseExprToPatLam <$> do
+derive⇐ : ITactic
+derive⇐ = inDebugPath "derive⇐" do
   (constrPat ∷ []) ← currentTyConstrPatterns
-    where _ → lift-TB $ error "TODO: Support more than one constructor!"
-  singleMatchExpr constrPat $ finishMatch $ withGoalHole $ reduceDecInGoal rdOpts (quote refl ◆)
-  where open ClauseExprM {TB} ⦃ Monad-TB ⦄ ⦃ ContextMonad-TB ⦄
+    where _ → error "TODO: Support more than one constructor!"
+  debugLog1 "Constructor pattern:"
+  debugLogValueNorm constrPat
+  expr ← singleMatchExpr constrPat $ (logCurrentContext >> (finishMatch $ withGoalHole $ reduceDecInGoal rdOpts (quote refl ◆)))
+  unifyWithGoal $ clauseExprToPatLam expr
 
-derive⇒ : Name → List STSConstr → Tactic
-derive⇒ n (record { name = stsConstrName ; clauses = clauses } ∷ []) hole =
-  runTBinHole hole $ clauseExprToPatLam <$> do
-    introsExpr (from-just $ NE.fromList ("h" ⟨∷⟩ [])) $ finishMatch $
-      caseMatch (mapVars (_+ 2) $ generatePred clauses) $ matchExprM
-        ((multiSinglePattern [ "" ] (vArg (``no  (` 0))) , finishMatch do
-          reducedHyp ← lift-TB $ reduceDec' rdOpts $ ♯ 1
-          return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
-         (multiSinglePattern [ "" ] (vArg (``yes (` 0))) , finishMatch do
-          reducedHyp ← lift-TB $ reduceDec' rdOpts $ ♯ 1
-          ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← ask
-            where ty → lift-TB $ error $ "BUG: Unexpected type:" <+> show ty
-          return $ quote subst ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧ ∣ quote just-injective ∙⟦ reducedHyp ⟧ ∣
-                               con stsConstrName (curryPredProof (length clauses) (♯ 0)) ⟧) ∷ [])
-  where open ClauseExprM {TB} ⦃ Monad-TB ⦄ ⦃ ContextMonad-TB ⦄
-derive⇒ _ _ _ = error "TODO: support multiple constructors"
+derive⇒ : Name → List STSConstr → ITactic
+derive⇒ n (record { name = stsConstrName ; clauses = clauses } ∷ []) = do
+  expr ← introsExpr (from-just $ NE.fromList ("h" ⟨∷⟩ [])) $ finishMatch $
+    caseMatch (mapVars (_+ 2) $ generatePred clauses) $ matchExprM
+      ((multiSinglePattern [ "" ] (vArg (``no  (` 0))) , finishMatch do
+        reducedHyp ← reduceDec' rdOpts $ ♯ 1
+        return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
+       (multiSinglePattern [ "" ] (vArg (``yes (` 0))) , finishMatch do
+        reducedHyp ← reduceDec' rdOpts $ ♯ 1
+        ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← reader TCEnv.goal
+          where ty → error $ "BUG: Unexpected type" -- show ty
+        return $ quote subst ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧ ∣ quote just-injective ∙⟦ reducedHyp ⟧ ∣
+                             con stsConstrName (curryPredProof (length clauses) (♯ 0)) ⟧) ∷ [])
+  unifyWithGoal $ clauseExprToPatLam expr
+derive⇒ _ _ = error "TODO: support multiple constructors"
 
 derive⇔ : Name → List STSConstr → Tactic
-derive⇔ n stsConstrs hole = do
+derive⇔ n stsConstrs = initTac $ inDebugPath "derive⇔" do
   hole⇒ ← newMeta unknown
   hole⇐ ← newMeta unknown
-  unify hole $ quote mk⇔ ∙⟦ hole⇒ ∣ hole⇐ ⟧
-  printTerm "hole⇐" hole⇐
-  derive⇐ hole⇐
-  printTerm "hole⇒" hole⇒
-  derive⇒ n stsConstrs hole⇒
+  unifyWithGoal $ quote mk⇔ ∙⟦ hole⇒ ∣ hole⇐ ⟧
+  debugLog1 "hole⇐"
+  debugLogTerm hole⇐
+  runWithHole hole⇐ derive⇐
+  debugLog ("hole⇒ " ∷ᵈ hole⇒ ∷ᵈ [])
+  runWithHole hole⇒ $ derive⇒ n stsConstrs
 
-deriveComp : Name → Tactic
-deriveComp definedType hole = do
-  print ("Derive computation function for" <+> show definedType)
+deriveComp : Name → ITactic
+deriveComp definedType = do
+  debugLog ("\nDerive computation function for: " ∷ᵈ definedType ∷ᵈ [])
   stsConstrs ← getSTSConstrs definedType
-  printS stsConstrs
-  printS (generateFunction stsConstrs)
-  unify hole (generateFunction stsConstrs)
+  unifyWithGoal (generateFunction stsConstrs)
 
 macro
   by-derive⇔ : Name → List STSConstr → Tactic
   by-derive⇔ = derive⇔
 
-deriveComputational : Name → Name → TC ⊤
-deriveComputational n compName = do
+deriveComputational : Name → Name → UnquoteDecl
+deriveComputational n compName = initUnquote $ inDebugPath "deriveComputational" do
   let goalTy = quote Computational ∙⟦ n ∙ ⟧
+  debugLog (goalTy ∷ᵈ [])
   declareDef (vArg compName) goalTy
   compRes ← runAndReset $ do
     compHole ← newMeta unknown
     equivHole ← newMeta unknown
     definition ← mkRecord (quote Computational) (compHole ⟨∷⟩ equivHole ⟨∷⟩ [])
     _ ← checkType definition goalTy
-    deriveComp n compHole
+    debugLogTerm compHole
+    runWithHole compHole $ deriveComp n
     reduce compHole
-  printTerm "compRes" compRes
+  debugLog ("compRes: " ∷ᵈ compRes ∷ᵈ [])
   stsConstrs ← quoteTC =<< getSTSConstrs n
   definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ∣ stsConstrs ⟧ ⟨∷⟩ [])
   defineFun compName [ nonBindingClause definition ]

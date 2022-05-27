@@ -3,8 +3,13 @@
 module Tactic.Case where
 
 open import Agda.Builtin.Reflection using (withReconstructed)
+<<<<<<< Updated upstream
 open import Reflection.AST.Argument using (unArg)
 open import Reflection.AST.Abstraction using (unAbs)
+=======
+open import Reflection.Argument using (unArg)
+open import Reflection.Abstraction using (unAbs)
+>>>>>>> Stashed changes
 open import Data.Bool
 open import Data.List
 open import Data.Nat
@@ -91,7 +96,10 @@ private
     open import Data.Sum using (_⊎_)
 
     record TestType : Set where
+<<<<<<< Updated upstream
       constructor mkTestType
+=======
+>>>>>>> Stashed changes
       field
         a : A
         b : B

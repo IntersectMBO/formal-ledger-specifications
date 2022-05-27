@@ -1,12 +1,20 @@
 module Tactic.ClauseBuilder where
 
 open import Agda.Builtin.Reflection using (withReconstructed)
+<<<<<<< Updated upstream
 open import Reflection.AST.Argument using (unArg; map-Args)
 open import Reflection.AST.Abstraction using (unAbs)
 open import Data.Bool
 open import Data.List
 import Data.List.NonEmpty as NE
 open import Data.Nat.Properties using (≤-totalOrder; ≤-decTotalOrder)
+=======
+open import Reflection.Argument using (unArg; map-Args)
+open import Reflection.Abstraction using (unAbs)
+open import Data.Bool
+open import Data.List
+open import Data.Nat.Properties using (≤-totalOrder)
+>>>>>>> Stashed changes
 open import Data.List.Extrema (≤-totalOrder)
 open import Data.Nat
 open import Data.Product hiding (_<*>_)
@@ -16,12 +24,15 @@ open import Reflection hiding (name; _>>=_; _>>_; return; map-Args)
 open import Data.Maybe using (from-just)
 open import Category.Monad.State
 
+<<<<<<< Updated upstream
 -- Note: using sort from Data.List.Sort directly doesn't work for
 -- metaprogramming, since it's `abstract` for whatever reason
 open import Data.List.Sort using (SortingAlgorithm)
 open import Data.List.Sort.MergeSort using (mergeSort)
 open SortingAlgorithm ≤-decTotalOrder (mergeSort ≤-decTotalOrder) public
 
+=======
+>>>>>>> Stashed changes
 open import Prelude.Foldable
 open import Prelude.Functor
 open import Prelude.Generics
@@ -32,7 +43,10 @@ open import Prelude.Traversable
 open import Prelude.Monoid
 open import Prelude.Init
 open import Prelude.Applicative
+<<<<<<< Updated upstream
 open import Prelude.DecEq
+=======
+>>>>>>> Stashed changes
 
 open import PreludeExt
 open import Tactic.Helpers
@@ -103,6 +117,7 @@ varSinglePattern (arg i n) = ([ n , arg i unknown ] , arg i (` 0))
 multiSinglePattern : List String → Arg Pattern → SinglePattern
 multiSinglePattern s p = ((_, vArg unknown) <$> s) , p
 
+<<<<<<< Updated upstream
 findIndexDefault : List ℕ → ℕ → ℕ → ℕ
 findIndexDefault l d a with filter (λ where (i , x) → x Data.Nat.≟ a) (zipWithIndex _,_ l)
 ... | []          = d
@@ -192,6 +207,24 @@ ctxSinglePatterns = do
 --     helper k (lit l) = k
 --     helper k (proj f) = k
 --     helper k (absurd x) = k
+=======
+{-# TERMINATING #-}
+findMaxDB : Pattern → Maybe ℕ
+findMaxDB = helper nothing
+  where
+    _⊔'_ : Maybe ℕ → Maybe ℕ → Maybe ℕ
+    just a ⊔' just b = just (a Nat.⊔ b)
+    just a ⊔' nothing = just a
+    nothing ⊔' b = b
+
+    helper : Maybe ℕ → Pattern → Maybe ℕ
+    helper k (Meta.con c ps) = foldr (λ p acc → helper k p ⊔' acc) k (unArg <$> ps)
+    helper k (Meta.dot t) = k
+    helper k (` x) = k ⊔' (just x)
+    helper k (Meta.lit l) = k
+    helper k (Meta.proj f) = k
+    helper k (Meta.absurd x) = k
+>>>>>>> Stashed changes
 
 -- singleConstrPattern : Arg Name → List (Arg Pattern) → SinglePattern
 -- singleConstrPattern (arg i n) args = {!L.mapMaybe (findMaxDB ∘ unArg) args!} , arg i (Pattern.con n args)
@@ -200,7 +233,11 @@ ctxSinglePatterns = do
 -- TODO: add dot patterns
 constrToPattern : Name → Type → TC SinglePattern
 constrToPattern n ty = do
+<<<<<<< Updated upstream
   (introTel , _) ← viewTy <$> (runAndReset $ withNormalisation true $ inferType (n ◆))
+=======
+  (introTel , _) ← viewTy <$> (runAndReset $ inferType (n ◆))
+>>>>>>> Stashed changes
   let patternTel = zipWith (λ where (abs _ (arg i _)) k → arg i (` k)) introTel $ downFrom $ length introTel
   return (((λ where (abs s (arg i t)) → (s , arg i unknown)) <$> introTel) , (vArg $ Pattern.con n patternTel))
 
@@ -248,12 +285,15 @@ clauseInfoToClause i t with clauseInfoToClauseArgs i | t
 clauseExprToClauses : ClauseExpr → List Clause
 clauseExprToClauses e = (λ { (i , t) → clauseInfoToClause i t }) <$> clauseExprToClauseInfo e
 
+<<<<<<< Updated upstream
 nonBindingClause : Term → Clause
 nonBindingClause = Clause.clause [] []
 
 clauseExprToPatLam : ClauseExpr → Term
 clauseExprToPatLam e = pat-lam (clauseExprToClauses e) []
 
+=======
+>>>>>>> Stashed changes
 record ContextMonad (M : Set↑) ⦃ _ : Monad M ⦄ : Setω where
   field
     introPatternM : SinglePattern → M A → M A
@@ -277,6 +317,7 @@ ask = return
 runTB : Type → TB A → TC A
 runTB t x = x t
 
+<<<<<<< Updated upstream
 runTBwithHole : Hole → TB A → TC A
 runTBwithHole hole x = do
   goalTy ← inferType hole
@@ -287,6 +328,8 @@ runTBinHole hole x = do
   res ← runTBwithHole hole x
   unify hole res
 
+=======
+>>>>>>> Stashed changes
 lift-TB : TC A → TB A
 lift-TB x = const x
 
@@ -326,6 +369,7 @@ currentTyConstrPatterns = do
     where _ → lift-TB $ error "Goal type is not a forall!"
   lift-TB $ constructorPatterns' ty
 
+<<<<<<< Updated upstream
 -- {-# TERMINATING #-}
 -- patternToTerm : List Term → Pattern → Term
 -- patternToTerm t (Pattern.con c ps) = con c ((λ where (arg v p) → arg v (patternToTerm t p)) <$> ps)
@@ -336,6 +380,18 @@ currentTyConstrPatterns = do
 -- patternToTerm t (Pattern.lit l) = lit l
 -- patternToTerm t (Pattern.proj f) = unknown
 -- patternToTerm t (Pattern.absurd x) = unknown
+=======
+{-# TERMINATING #-}
+patternToTerm : List Term → Pattern → Term
+patternToTerm t (Pattern.con c ps) = con c ((λ where (arg v p) → arg v (patternToTerm t p)) <$> ps)
+patternToTerm t (Pattern.dot t') = t'
+patternToTerm t (` x) with head $ drop x t
+... | just t' = t'
+... | nothing = unknown
+patternToTerm t (Pattern.lit l) = lit l
+patternToTerm t (Pattern.proj f) = unknown
+patternToTerm t (Pattern.absurd x) = unknown
+>>>>>>> Stashed changes
 
 stripMetaLambdas : Term → Term
 stripMetaLambdas = helper 0
@@ -347,7 +403,11 @@ stripMetaLambdas = helper 0
 
 -- if the goal is of type (a : A) → B, return the type of the branch of pattern p and new context
 specializeType : SinglePattern → Type → TC (Type × List (Arg Type))
+<<<<<<< Updated upstream
 specializeType p@(t , arg i _) goalTy = noConstraints $ runAndReset do
+=======
+specializeType p@(t , arg i _) goalTy = runAndReset $ do
+>>>>>>> Stashed changes
   cls@((Clause.clause tel _ _) ∷ _) ← return $ clauseExprToClauses $ MatchExpr $
       (p , inj₂ (just unknown)) ∷
       [ varSinglePattern (arg i "_") , inj₂ (just unknown) ]
@@ -377,6 +437,7 @@ module ClauseExprM {M : Set↑} ⦃ _ : Monad M ⦄ ⦃ _ : ContextMonad M ⦄ w
   singleMatchExpr : SinglePattern → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
   singleMatchExpr p x = matchExprM [ p , x ]
 
+<<<<<<< Updated upstream
   singleTelescopeMatchExpr : NE.List⁺ SinglePattern → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
   singleTelescopeMatchExpr (p ∷ ps) x = helper p ps x
     where
@@ -393,6 +454,19 @@ module ClauseExprM {M : Set↑} ⦃ _ : Monad M ⦄ ⦃ _ : ContextMonad M ⦄ w
       helper : Arg String → List (Arg String) → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
       helper n [] x = introExpr n x
       helper n (n' ∷ ns) x = introExpr n $ inj₁ <$> helper n ns x
+=======
+  introExpr : Arg String → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
+  introExpr n x = singleMatchExpr (varSinglePattern n) x
+
+  {-# TERMINATING #-}
+  introsExpr : List (Arg String) → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
+  introsExpr []       x = do
+    (inj₁ x') ← x
+      where _ → introsExpr [] x
+    return x'
+  introsExpr (n ∷ []) x = introExpr n x
+  introsExpr (n ∷ n' ∷ ns) x = introExpr n $ inj₁ <$> introsExpr (n' ∷ ns) x
+>>>>>>> Stashed changes
 
   contMatch : M ClauseExpr → M (ClauseExpr ⊎ Maybe Term)
   contMatch expr = inj₁ <$> expr
@@ -400,6 +474,7 @@ module ClauseExprM {M : Set↑} ⦃ _ : Monad M ⦄ ⦃ _ : ContextMonad M ⦄ w
   finishMatch : M Term → M (ClauseExpr ⊎ Maybe Term)
   finishMatch t = inj₂ ∘ just <$> t
 
+<<<<<<< Updated upstream
 clauseTelescope : Clause → List (String × Arg Type)
 clauseTelescope (Clause.clause tel _ _) = tel
 clauseTelescope (Clause.absurd-clause tel _) = tel
@@ -428,6 +503,8 @@ ctxBindingClause t = do
     where _ → error "Bug in ctxBindingClause"
   return c
 
+=======
+>>>>>>> Stashed changes
 CBId : Set↑
 CBId = WriterT ClauseInfo id
 

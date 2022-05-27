@@ -1,3 +1,5 @@
+{-# OPTIONS --safe #-}
+
 module Interface.Contains where
 
 open import Level
@@ -21,4 +23,4 @@ instance
   A×BcontainsB .proj = proj₂
 
   contains-trans : ⦃ A contains B ⦄ → ⦃ B contains C ⦄ → A contains C
-  contains-trans ⦃ AcontainsB ⦄ ⦃ BcontainsC ⦄ .proj a = proj ⦃ BcontainsC ⦄ (proj a)
+  contains-trans ⦃ AcontainsB ⦄ ⦃ BcontainsC ⦄ .proj a = proj ⦃ BcontainsC ⦄ (proj ⦃ AcontainsB ⦄ a)

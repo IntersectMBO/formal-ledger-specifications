@@ -25,6 +25,7 @@ TxIn = Pair ℕ ℕ
 TxOut = Pair ℕ ℕ
 UTxO = List (Pair TxIn TxOut)
 Coin = L.Coin
+PParams = Pair ℕ ℕ
 
 Tx : Set
 Tx = Pair (List TxIn) (Pair (List (Pair Ix TxOut)) Coin)
@@ -45,11 +46,17 @@ convertUTxO' u = coerce (elements u)
 
 convertTx : Tx → L.Tx
 convertTx (txins , txouts , txfee) = record
-  { txins = fromList (coerce txins) ; txouts = fromList (coerce txouts) ; txfee = txfee }
+  { txins = fromList (coerce txins)
+  ; txouts = fromList (coerce txouts)
+  ; txfee = txfee
+  ; txsize = 0 } -- TODO
 
 convertTx' : L.Tx → Tx
 convertTx' tx = (coerce (elements txins) , coerce (elements txouts) , txfee)
   where open L.Tx tx
+
+convertPParams : PParams → L.PParams
+convertPParams (a , b) = record { a = a ; b = b }
 
 postulate
   convertTxInj : Injective _≡_ _≡_ convertTx'
@@ -57,11 +64,11 @@ postulate
 convertTxInj' : L.Tx ↣ Tx
 convertTxInj' = mk↣ convertTxInj
 
-UTXO-step : Coin → Pair UTxO Coin → Tx → Maybe (Pair UTxO Coin)
+UTXO-step : PParams → Pair UTxO Coin → Tx → Maybe (Pair UTxO Coin)
 UTXO-step Γ s tx =
   Data.Maybe.map
     (coerce ∘ map₁ convertUTxO')
-    (L.UTXO-step (convertTxInj' ↣-∘ txid) Γ (map₁ convertUTxO (coerce s)) (convertTx tx))
+    (L.UTXO-step (convertTxInj' ↣-∘ txid) (convertPParams Γ) (map₁ convertUTxO (coerce s)) (convertTx tx))
 
 {-# COMPILE GHC UTXO-step as utxoStep' #-}
 
@@ -71,8 +78,9 @@ UTXO-step Γ s tx =
   type TxIn = (Integer, Integer)
   type TxOut = (Integer, Integer)
   type UTxO = [(TxIn, TxOut)]
+  type PParams = (Integer, Integer)
   type Tx = ([TxIn], ([(Ix, TxOut)], Coin))
 
-  utxoStep :: Coin -> (UTxO, Coin) -> Tx -> Maybe (UTxO, Coin)
+  utxoStep :: PParams -> (UTxO, Coin) -> Tx -> Maybe (UTxO, Coin)
   utxoStep = utxoStep'
 #-}

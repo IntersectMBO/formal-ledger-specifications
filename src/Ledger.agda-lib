@@ -3,6 +3,6 @@ name: Agda-ledger
 --   standard-library
 --   finset
 include: .
-  ../../../../Programs/Agda-finset/src
-  ../../../../Programs/agda-stdlib/src
-  ../../../../Programs/formal-prelude
+  ../../../../../Programs/Agda-finset/src
+  ../../../../../Programs/agda-stdlib/src
+  ../../../../../Programs/formal-prelude

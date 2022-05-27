@@ -1,35 +1,19 @@
-{-# OPTIONS -v tryConstrs:101 #-}
-{-# OPTIONS -v assumption:101 #-}
-<<<<<<< Updated upstream
-{-# OPTIONS -v reduceDec:101 #-}
-=======
->>>>>>> Stashed changes
 --------------------------------------------------------------------------------
 -- reduceDec: looks for proofs of P to reduce ⌊ decP ⌋
 --------------------------------------------------------------------------------
 
 module Tactic.ReduceDec where
 
-<<<<<<< Updated upstream
 open import Agda.Builtin.Reflection using (withReconstructed; onlyReduceDefs; dontReduceDefs)
-open import Reflection hiding (_≟_; name; _>>=_; _>>_; return)
+open import Reflection using (hArg; vArg; iArg; unknown; lam; visible; abs; Term)
 open import Reflection.AST.Argument
-open import Prelude.Generics
-open import Prelude.Monad
-open import Prelude.Functor
-=======
-open import Agda.Builtin.Reflection using (withReconstructed)
-open import Reflection hiding (_≟_; name; _>>=_; _>>_; return)
-open import Reflection.Argument
-open import Prelude.Generics
-open import Prelude.Monad
->>>>>>> Stashed changes
-open import Prelude.Show
-open import Prelude.DecEq
+import Reflection.AST.Name
+open import Prelude.Generics using (mapVars; _◆)
 
 open import Function
 
 open import Data.Bool hiding (_≟_)
+import Data.Bool.Show
 open import Data.Maybe using (Maybe; just; nothing; from-just)
 open import Data.List
 open import Data.Product
@@ -41,40 +25,46 @@ open import Relation.Nullary
 open import Relation.Nullary.Decidable
 open import Relation.Binary.PropositionalEquality hiding ([_])
 
+open import Tactic.Defaults
 open import Tactic.Helpers
 open import Tactic.Constrs
 open import Tactic.Assumption
 
-<<<<<<< Updated upstream
+open import Interface.Monad
+open import Interface.MonadError hiding (MonadError-TC)
+open import Interface.MonadTC hiding (Monad-TC)
+open import Interface.MonadReader
+open import Reflection.TCI
+
+open Monad ⦃...⦄
+open MonadTC ⦃...⦄
+open MonadError ⦃...⦄
+open MonadReader ⦃...⦄
+
+instance
+  _ = Monad-TC
+  _ = MonadTC-TCI
+  _ = MonadReader-TC
+  _ = MonadError-TC
+
+-- arguments
+pattern hArg? = hArg unknown
+pattern vArg? = vArg unknown
+pattern iArg? = iArg unknown
+
+-- function application
+pattern _∙ n = def n []
+pattern _∙⟦_⟧ n x = def n (vArg x ∷ [])
+pattern _∙⟦_∣_⟧ n x y = def n (vArg x ∷ vArg y ∷ [])
+pattern _∙⟦_∣_∣_⟧ n x y z = def n (vArg x ∷ vArg y ∷ vArg z ∷ [])
+pattern _∙⟦_∣_∣_∣_⟧ n x y z w = def n (vArg x ∷ vArg y ∷ vArg z ∷ vArg w ∷ [])
+
+pattern `λ_⇒_       x     k = lam visible (abs x k)
+
 private
   variable ℓ : Agda.Primitive.Level
            A : Set ℓ
 
-record ReduceDecOptions : Set where
-  field
-    onlyReduce : Maybe $ List Name
-    dontReduce : Maybe $ List Name
-
-  applyOnlyReduce : TC A → TC A
-  applyOnlyReduce x = case onlyReduce of λ where
-    (just r) → onlyReduceDefs r x
-    nothing → x
-
-  applyDontReduce : TC A → TC A
-  applyDontReduce x = case dontReduce of λ where
-    (just r) → dontReduceDefs r x
-    nothing → x
-
-  applyReduceDecOptions : TC A → TC A
-  applyReduceDecOptions x = applyOnlyReduce $ applyDontReduce x
-
-open ReduceDecOptions using (applyReduceDecOptions)
-
-noOptions : ReduceDecOptions
-noOptions = record { onlyReduce = nothing ; dontReduce = nothing }
-
-=======
->>>>>>> Stashed changes
 -- find all subterms satisfying the predicate (not under binders)
 selectSubterms : (Term → Bool) → Term → List Term
 selectSubterms P t = if P t then [ t ] else helper t
@@ -118,7 +108,7 @@ generalizeSubterms P t = lambdas $ if P t then ♯ 0 else helper (mapVars suc t)
     lambdas t' = foldl (λ acc _ → `λ "g" ⇒ acc) t' (selectSubterms P t)
 
 isIsYes : Term → Bool
-isIsYes (def f _) = f == quote isYes
+isIsYes (def f _) = f Reflection.AST.Name.≡ᵇ quote isYes
 isIsYes _         = false
 
 extractDec : Term → Maybe Term
@@ -137,131 +127,76 @@ fromWitness'Type : Bool → Term → Term
 fromWitness'Type true  dec = def (quote _≡_) (hArg? ∷ hArg? ∷ def (quote isYes) (hArg? ∷ hArg? ∷ dec ⟨∷⟩ []) ⟨∷⟩ quote true  ◆ ⟨∷⟩ [])
 fromWitness'Type false dec = def (quote _≡_) (hArg? ∷ hArg? ∷ def (quote isYes) (hArg? ∷ hArg? ∷ dec ⟨∷⟩ []) ⟨∷⟩ quote false ◆ ⟨∷⟩ [])
 
-findDecRWHypWith : Tactic → Term → TC Term
-<<<<<<< Updated upstream
+findDecRWHypWith : ITactic → Term → TC Term
 findDecRWHypWith tac dec =
   helper true $ helper false $
     error "reduceDec: Could not find an equation to rewrite with!"
   where
-    open Debug ("reduceDec" , 100)
     helper : Bool → TC Term → TC Term
-    helper b = catchTC $ do
+    helper b x = catch (do
       hole ← newMeta unknown
       res ← case b of λ where
         false → checkType (quote fromWitnessFalse' ∙⟦ dec ∣ hole ⟧) (fromWitness'Type false dec)
         true  → checkType (quote fromWitness'      ∙⟦ dec ∣ hole ⟧) (fromWitness'Type true  dec)
-      tac hole
-      print ("Hypothesis is" <+> show b)
-      return res
+      runWithHole hole tac
+      debugLog1 ("Hypothesis is" <+> Data.Bool.Show.show b)
+      return res) (λ _ → x)
 
-reduceDecTermWith : Tactic → ReduceDecOptions → Term → TC (Term × Term)
-reduceDecTermWith tac r t = do
-  print "***** reduceDec *****"
-  printTerm "of term" t
-  printCurrentContext
-  T ← applyReduceDecOptions r (inferType t >>= normalise)
-  print ("Infered type:" <+> show T)
+reduceDecTermWith : ITactic → ReductionOptions → Term → TC (Term × Term)
+reduceDecTermWith tac r t = inDebugPath "reduceDec" do
+  T ← local (λ env → record env { reduction = r }) (inferType t >>= normalise)
+  debugLog ("Reduce dec in " ∷ᵈ t ∷ᵈ " : " ∷ᵈ T ∷ᵈ [])
   (dec ∷ decs) ← return $ mapMaybe extractDec $ selectSubterms isIsYes T
     where _ → error "No subterms of the form 'isYes t' found!"
   let scheme = generalizeSubterms isIsYes T
-  print ("Rewrite scheme:" <+> show scheme)
+  debugLog ("Rewrite scheme: " ∷ᵈ scheme ∷ᵈ [])
+  debugLog ("`isYes` to reduce: " ∷ᵈ dec ∷ᵈ [])
   eq ← findDecRWHypWith tac dec
-  printTerm "eq" eq
+  eq' ← normalise eq
+  eqT ← inferType eq
+  debugLog ("Eq: " ∷ᵈ eq' ∷ᵈ " : " ∷ᵈ eqT ∷ᵈ [])
   return (scheme , eq)
-  where open Debug ("reduceDec" , 100)
 
-reduceDecTerm : ReduceDecOptions → Term → TC (Term × Term)
+reduceDecTerm : ReductionOptions → Term → TC (Term × Term)
 reduceDecTerm = reduceDecTermWith (tryConstrsWith' 5 assumption')
 
-reduceDec' : ReduceDecOptions → Term → TC Term
+reduceDec' : ReductionOptions → Term → TC Term
 reduceDec' r t = do
   (scheme , eq) ← reduceDecTerm r t
   return $ quote subst ∙⟦ scheme ∣ eq ∣ t ⟧
 
-reduceDec : ReduceDecOptions → Term → Tactic
-reduceDec r t goal = unify goal =<< reduceDec' r t
+reduceDec : ReductionOptions → Term → ITactic
+reduceDec r t = unifyWithGoal =<< reduceDec' r t
 
-reduceDecInGoal : ReduceDecOptions → Term → Tactic
-reduceDecInGoal r newGoal goal = do
+reduceDecInGoal : ReductionOptions → Term → ITactic
+reduceDecInGoal r newGoal = do
+  goal ← reader TCEnv.goal
   (scheme , eq) ← reduceDecTerm r goal
-  unify goal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ newGoal ⟧
+  unifyWithGoal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ newGoal ⟧
 
 macro
   by-reduceDec : Term → Tactic
-  by-reduceDec = reduceDec noOptions
+  by-reduceDec t = initTac $ reduceDec reduceAll t
 
   by-reduceDecInGoal : Term → Tactic
-  by-reduceDecInGoal = reduceDecInGoal noOptions
+  by-reduceDecInGoal t = initTac $ reduceDecInGoal reduceAll t
 
-  by-reduceDec' : ReduceDecOptions → Term → Tactic
-  by-reduceDec' r t h = reduceDec r t h
+  by-reduceDec' : ReductionOptions → Term → Tactic
+  by-reduceDec' r t = initTac $ reduceDec r t
 
-  by-reduceDecInGoal' : ReduceDecOptions → Term → Tactic
-  by-reduceDecInGoal' r t h = reduceDecInGoal r t h
-=======
-findDecRWHypWith tac dec = do
-  tac' ← quoteTC tac
-  withReconstructed $
-    catchTC (checkType (quote fromWitness'      ∙⟦ dec ∣ quote by ∙⟦ tac' ⟧ ⟧) (fromWitness'Type true  dec)) $
-    catchTC (checkType (quote fromWitnessFalse' ∙⟦ dec ∣ quote by ∙⟦ tac' ⟧ ⟧) (fromWitness'Type false dec)) $
-    error "reduceDec: Could not find an equation to rewrite with!"
+  by-reduceDecInGoal' : ReductionOptions → Term → Tactic
+  by-reduceDecInGoal' r t = initTac $ reduceDecInGoal r t
 
-reduceDecTermWith : Tactic → Term → TC (Term × Term)
-reduceDecTermWith tac t = do
-  print "***** reduceDec *****"
-  printCurrentContext
-  T ← inferType t >>= normalise
-  (dec ∷ decs) ← return $ mapMaybe extractDec $ selectSubterms isIsYes T
-    where _ → error "No subterms of the form 'isYes t' found!"
-  let scheme = generalizeSubterms isIsYes T
-  eq ← findDecRWHypWith tac dec
-  printS scheme
-  printS eq
-  return (scheme , eq)
-  where open Debug ("reduceDec" , 100)
-
-reduceDecTerm = reduceDecTermWith (tryConstrsWith' 5 assumption')
-
-reduceDec : Term → Tactic
-reduceDec t goal = do
-  (scheme , eq) ← reduceDecTerm t
-  unify goal $ quote subst ∙⟦ scheme ∣ eq ∣ t ⟧
-
-reduceDec' : Term → TC Term
-reduceDec' t = do
-  hole ← newMeta unknown
-  reduceDec t hole
-  return hole
-
-reduceDecInGoal : ∀ {a} {A : Set a} → A → Tactic
-reduceDecInGoal new goal = do
-  newGoal ← withReconstructed $ quoteTC new
-  (scheme , eq) ← reduceDecTerm goal
-  unify goal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ newGoal ⟧
-
-reduceDecInGoal' : Term → Tactic
-reduceDecInGoal' newGoal goal = do
-  (scheme , eq) ← reduceDecTerm goal
-  unify goal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ newGoal ⟧
-
-macro
-  by-reduceDec = reduceDec
-  by-reduceDecInGoal = reduceDecInGoal
->>>>>>> Stashed changes
+open import Data.Unit using (⊤)
+open import DecEq
 
 private
   module Test (A : Set) ⦃ _ : DecEq A ⦄ where
     variable a b : A
              X Y Z : Set
 
-    f₁ : A → A → A
-    f₁ a b = assumption
-
-    f₂ : X → Y → Z → X
-    f₂ x y z = assumption
-
-    pf₁ : (X → ⊥) → ¬ X
-    pf₁ h = assumption
+    startDebug : ⊤
+    startDebug = byTC (debugLog ("\n\n\n\nTesting 'reduceDec'\n" ∷ᵈ []))
 
     fun : A → A → Bool
     fun a b = ⌊ a ≟ b ⌋
