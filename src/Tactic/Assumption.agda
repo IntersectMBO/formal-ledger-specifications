@@ -13,6 +13,7 @@ open import Data.Product
 open import Data.String using (String; _<+>_)
 open import Data.Bool
 open import Data.Unit
+open import Data.Sum using (inj₁; inj₂)
 
 open import Interface.Monad
 open import Interface.MonadError hiding (MonadError-TC)
@@ -35,18 +36,19 @@ instance
 
 solve : Term → Tactic
 solve t = initTac $ runSpeculative $ do
-  goal ← reader TCEnv.goal
+  inj₁ goal ← reader TCEnv.goal
+    where _ → error1 "solve: Goal is not a term!"
   metas ← findMetas <$> checkType t goal
   if null metas
     then (_, true)  <$> unify goal t
-    else (_, false) <$> error "Unsolved metavariables remaining!"
+    else (_, false) <$> error1 "Unsolved metavariables remaining!"
 
 assumption' : ITactic
 assumption' = inDebugPath "assumption" do
   c ← getContext
   foldl (λ x k → do
     catch (unifyWithGoal (♯ k) >> debugLog ("Success with: " ∷ᵈ ♯ k ∷ᵈ [])) (λ _ → x))
-    (logAndError "No valid assumption!") (downFrom $ length c)
+    (logAndError1 "No valid assumption!") (downFrom $ length c)
 
 macro
   assumption = initTac assumption'

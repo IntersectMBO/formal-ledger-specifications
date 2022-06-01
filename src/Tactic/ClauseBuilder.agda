@@ -121,7 +121,7 @@ singlePatternFromPattern (arg i p) =
     replacePatternIndexHelper [] = []
     replacePatternIndexHelper (arg i p ∷ ps) = (arg i (replacePatternIndex p)) ∷ (replacePatternIndexHelper ps)
 
-module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError String M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
+module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
 
   ctxSinglePatterns : M (List SinglePattern)
   ctxSinglePatterns = do
@@ -289,7 +289,7 @@ ContextMonad-Id .introPatternM _ a = a
 --   Monad-TB : Monad TB
 --   Monad-TB = Monad-ReaderT _ _
 
-module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError String M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
+module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
 
   refineWithSingle : (Term → Term) → M Term → M Term
   refineWithSingle ref x = do
@@ -307,7 +307,7 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
   currentTyConstrPatterns : M (List SinglePattern)
   currentTyConstrPatterns = do
     (ty ∷ _ , _) ← viewTy′ <$> goalTy
-      where _ → error "Goal type is not a forall!"
+      where _ → error1 "Goal type is not a forall!"
     constructorPatterns' ty
 
 -- {-# TERMINATING #-}
@@ -329,31 +329,31 @@ stripMetaLambdas = helper 0
     helper k (meta x as) = meta x $ map-Args (mapVars (_∸ k)) $ take (length as ∸ k) as
     helper _ _ = unknown
 
-module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError String M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
+module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
 
   -- if the goal is of type (a : A) → B, return the type of the branch of pattern p and new context
   specializeType : SinglePattern → Type → M (Type × List (Arg Type))
-  specializeType p@(t , arg i _) goalTy = noConstraints $ runAndReset do
+  specializeType p@(t , arg i _) goalTy = inDebugPath "specializeType" $ noConstraints $ runAndReset do
+    debugLog ("Goal type to specialize: " ∷ᵈ goalTy ∷ᵈ [])
     cls@((Clause.clause tel _ _) ∷ _) ← return $ clauseExprToClauses $ MatchExpr $
         (p , inj₂ (just unknown)) ∷
         [ varSinglePattern (arg i "_") , inj₂ (just unknown) ]
-      where _ → error "BUG"
-    (pat-lam ((Clause.clause tel' _ (meta x ap)) ∷ _) []) ← checkType (pat-lam cls []) goalTy
+      where _ → error1 "BUG"
+    (pat-lam (cl@(Clause.clause tel' _ (meta x ap)) ∷ _) []) ← checkType (pat-lam cls []) goalTy
       where t → debugLog ("BUG in specializeType:" ∷ᵈ t ∷ᵈ "\nWith pattern:" -- ∷ᵈ {!cls!}
                   ∷ᵈ "\nWith type:" ∷ᵈ goalTy ∷ᵈ "\nSinglePattern:" -- ∷ᵈ {!p!}
-                  ∷ᵈ []) >> error "BUG"
+                  ∷ᵈ []) >> error1 "BUG"
     let varsToUnbind = length tel' ∸ length tel
     let newCtx = take (length tel) $ proj₂ <$> tel'
     let m = meta x (map-Args (mapVars (_∸ varsToUnbind)) $ take (length ap ∸ varsToUnbind) ap)
-    -- goalTy' ← extendContext' newCtx $ inferType m
-    -- return (goalTy' , newCtx)
-    return (m , newCtx)
+    goalTy' ← extendContext' newCtx $ inferType m
+    return (goalTy' , newCtx)
 
   ContextMonad-MonadTC : ContextMonad M
   ContextMonad-MonadTC .introPatternM pat x = do
     goalTy ← goalTy
-    (newHole , newContext) ← specializeType pat goalTy
-    extendContext' newContext (runWithHole newHole x)
+    (newGoalTy , newContext) ← specializeType pat goalTy
+    extendContext' newContext (runWithGoalTy newGoalTy x)
 
 module ClauseExprM {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ _ : ContextMonad M ⦄ where
 
@@ -387,7 +387,7 @@ module ClauseExprM {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ _ :
   finishMatch : M Term → M (ClauseExpr ⊎ Maybe Term)
   finishMatch t = (inj₂ ∘ just) <$> t
 
-  bindCtxMatchExpr : ⦃ me : MonadError String M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄
+  bindCtxMatchExpr : ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄
                    → M ClauseExpr → M ClauseExpr
   bindCtxMatchExpr x = do
     e ← ctxSinglePatterns
@@ -415,5 +415,5 @@ ctxBindingClause : Term → TC Clause
 ctxBindingClause t = do
   pats ← ctxSinglePatterns
   (c ∷ _) ← return $ instanciatePatterns (reverse pats) t
-    where _ → error "Bug in ctxBindingClause"
+    where _ → error1 "Bug in ctxBindingClause"
   return c

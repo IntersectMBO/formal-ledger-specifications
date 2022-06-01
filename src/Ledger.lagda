@@ -97,7 +97,7 @@ open import Prelude.Generics
 import Prelude.DecEq as P hiding (DecEq-ℕ; DecEq-Σ)
 open import Prelude.Decidable
 open import Agda.Builtin.Reflection using (onlyReduceDefs)
-open import Tactic.ReduceDec using (by-reduceDec'; by-reduceDecInGoal'; ReduceDecOptions)
+open import Tactic.ReduceDec using (by-reduceDec'; by-reduceDecInGoal')
 
 module Ledger (
 \end{code}

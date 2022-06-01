@@ -121,7 +121,7 @@ toSTSConstr _ = nothing
 
 errorIfNothing : ∀ {a} {A : Set a} → Maybe A → String → TC A
 errorIfNothing (just x) s = return x
-errorIfNothing nothing s = error s
+errorIfNothing nothing s = error1 s
 
 getSTSConstrs : Name → TC (List STSConstr)
 getSTSConstrs n = inDebugPath "getSTSConstrs" do
@@ -162,10 +162,10 @@ open ClauseExprM
 derive⇐ : ITactic
 derive⇐ = inDebugPath "derive⇐" do
   (constrPat ∷ []) ← currentTyConstrPatterns
-    where _ → error "TODO: Support more than one constructor!"
+    where _ → error1 "TODO: Support more than one constructor!"
   debugLog1 "Constructor pattern:"
   debugLogValueNorm constrPat
-  expr ← singleMatchExpr constrPat $ (logCurrentContext >> (finishMatch $ withGoalHole $ reduceDecInGoal rdOpts (quote refl ◆)))
+  expr ← singleMatchExpr constrPat $ finishMatch $ withGoalHole $ reduceDecInGoal rdOpts (quote refl ◆)
   unifyWithGoal $ clauseExprToPatLam expr
 
 derive⇒ : Name → List STSConstr → ITactic
@@ -177,12 +177,12 @@ derive⇒ n (record { name = stsConstrName ; clauses = clauses } ∷ []) = do
         return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
        (multiSinglePattern [ "" ] (vArg (``yes (` 0))) , finishMatch do
         reducedHyp ← reduceDec' rdOpts $ ♯ 1
-        ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← reader TCEnv.goal
-          where ty → error $ "BUG: Unexpected type" -- show ty
+        ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← goalTy
+          where ty → error ("BUG: Unexpected type" ∷ᵈ ty ∷ᵈ [])
         return $ quote subst ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧ ∣ quote just-injective ∙⟦ reducedHyp ⟧ ∣
                              con stsConstrName (curryPredProof (length clauses) (♯ 0)) ⟧) ∷ [])
   unifyWithGoal $ clauseExprToPatLam expr
-derive⇒ _ _ = error "TODO: support multiple constructors"
+derive⇒ _ _ = error1 "TODO: support multiple constructors"
 
 derive⇔ : Name → List STSConstr → Tactic
 derive⇔ n stsConstrs = initTac $ inDebugPath "derive⇔" do
@@ -206,22 +206,23 @@ macro
   by-derive⇔ = derive⇔
 
 deriveComputational : Name → Name → UnquoteDecl
-deriveComputational n compName = initUnquote $ inDebugPath "deriveComputational" do
-  let goalTy = quote Computational ∙⟦ n ∙ ⟧
-  debugLog (goalTy ∷ᵈ [])
-  declareDef (vArg compName) goalTy
-  compRes ← runAndReset $ do
-    compHole ← newMeta unknown
-    equivHole ← newMeta unknown
-    definition ← mkRecord (quote Computational) (compHole ⟨∷⟩ equivHole ⟨∷⟩ [])
-    _ ← checkType definition goalTy
-    debugLogTerm compHole
-    runWithHole compHole $ deriveComp n
-    reduce compHole
-  debugLog ("compRes: " ∷ᵈ compRes ∷ᵈ [])
-  stsConstrs ← quoteTC =<< getSTSConstrs n
-  definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ∣ stsConstrs ⟧ ⟨∷⟩ [])
-  defineFun compName [ nonBindingClause definition ]
+deriveComputational n compName =
+  initUnquoteWithGoal (quoteTerm Name) $ inDebugPath "deriveComputational" do
+    let goalTy = quote Computational ∙⟦ n ∙ ⟧
+    debugLog (goalTy ∷ᵈ [])
+    declareDef (vArg compName) goalTy
+    compRes ← runAndReset $ do
+      compHole ← newMeta unknown
+      equivHole ← newMeta unknown
+      definition ← mkRecord (quote Computational) (compHole ⟨∷⟩ equivHole ⟨∷⟩ [])
+      _ ← checkType definition goalTy
+      debugLogTerm compHole
+      runWithHole compHole $ deriveComp n
+      reduce compHole
+    debugLog ("compRes: " ∷ᵈ compRes ∷ᵈ [])
+    stsConstrs ← quoteTC =<< getSTSConstrs n
+    definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ∣ stsConstrs ⟧ ⟨∷⟩ [])
+    defineFun compName [ nonBindingClause definition ]
 
 private
   module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
@@ -234,7 +235,7 @@ private
            → proj₂ c ≡ sig
            ------------------------
            → Test c s sig (proj₁ c)
-  
+
     unquoteDecl Computational-Test = deriveComputational (quote Test) Computational-Test
 
     Computational-Test' : Computational Test
@@ -243,7 +244,7 @@ private
     -- Sanity checks
     testFun : A × B → A → B → Maybe A
     testFun c s sig = if ⌊ ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ ⌋ then just (proj₁ c) else nothing
-  
+
     testFunPf⇒ : testFun c s sig ≡ just s' → Test c s sig s'
     testFunPf⇒ {c} {s} {sig} h = case ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ of λ where
       (no ¬p) → case by-reduceDec h of λ ()

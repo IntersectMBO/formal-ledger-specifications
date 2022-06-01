@@ -42,7 +42,7 @@ Monad-TC = Monad-ReaderT ⦃ Interface.MonadTC.Monad-TC ⦄
 MonadReader-TC : MonadReader TCEnv TC ⦃ Monad-TC ⦄
 MonadReader-TC = MonadReader-ReaderT ⦃ Interface.MonadTC.Monad-TC ⦄
 
-MonadError-TC : MonadError String TC
+MonadError-TC : MonadError (List ErrorPart) TC
 MonadError-TC = MonadError-ReaderT ⦃ Interface.MonadTC.Monad-TC ⦄ ⦃ Interface.MonadError.MonadError-TC ⦄
 
 applyNormalisation : TC A → TC A

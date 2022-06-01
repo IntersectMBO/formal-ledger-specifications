@@ -13,6 +13,7 @@ open import Reflection using (Term; Type; Name; data-cons; pi; abs; Abs; Arg; Cl
 open import Data.Maybe using (Maybe; just; nothing; from-just; when)
 open import Data.Unit
 open import Level
+open import Data.Sum using (inj₁; inj₂)
 
 open import Prelude.Foldable
 import Prelude.Functor as P
@@ -69,43 +70,28 @@ open MonadTC ⦃...⦄
 open MonadError ⦃...⦄
 open MonadReader ⦃...⦄
 
-record IsErrorPart (A : Set) : Set where
-  field
-    toErrorPart : A → ErrorPart
+module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
 
-open IsErrorPart ⦃...⦄
+  logAndError : List ErrorPart → M A
+  logAndError e = debugLog e >> error e
 
-instance
-  IsErrorPart-String : IsErrorPart String
-  IsErrorPart-String .toErrorPart = strErr
-
-  IsErrorPart-Term : IsErrorPart Term
-  IsErrorPart-Term .toErrorPart = ErrorPart.termErr
-
-  IsErrorPart-Name : IsErrorPart Name
-  IsErrorPart-Name .toErrorPart = ErrorPart.nameErr
-
-infixr 5 _∷ᵈ_
-_∷ᵈ_ : A → ⦃ _ : IsErrorPart A ⦄ → List ErrorPart → List ErrorPart
-e ∷ᵈ es = toErrorPart e ∷ es
-
-module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError String M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
-
-  logAndError : String → M A
-  logAndError msg = debugLog (msg ∷ᵈ []) >> error msg
+  error1 : ⦃ IsErrorPart A ⦄ → A → M B
+  error1 a = error (a ∷ᵈ [])
 
   debugLog1 : ⦃ IsErrorPart A ⦄ → A → M ⊤
   debugLog1 a = debugLog (a ∷ᵈ [])
 
+  logAndError1 : ⦃ IsErrorPart A ⦄ → A → M B
+  logAndError1 a = debugLog1 a >> error1 a
+
+  markDontFail : String → M A → M A
+  markDontFail s x = catch x λ e → logAndError (s ∷ᵈ " should never fail! This is a bug!\nError:\n" ∷ᵈ e)
+
   debugLogValue : A → M ⊤
-  debugLogValue a = do
-    t ← quoteTC a
-    debugLog (t ∷ᵈ [])
+  debugLogValue a = quoteTC a >>= debugLog1
 
   debugLogValueNorm : A → M ⊤
-  debugLogValueNorm a = do
-    t ← local (λ env → record env { normalisation = true }) $ quoteTC a
-    debugLog (t ∷ᵈ [])
+  debugLogValueNorm a = (local (λ env → record env { normalisation = true }) $ quoteTC a) >>= debugLog1
 
   debugLogTerm : Term → M ⊤
   debugLogTerm t = do
@@ -113,7 +99,21 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
     debugLog (t ∷ᵈ " : " ∷ᵈ T ∷ᵈ [])
 
   goalTy : M Type
-  goalTy = reader TCEnv.goal >>= inferType
+  goalTy = do
+    inj₁ t ← reader TCEnv.goal
+      where inj₂ T → return T
+    inferType t
+
+  logAdditionalContext : List $ Arg Type → M ⊤
+  logAdditionalContext l = withAppendDebugPath "context" do
+    debugLog1 "Additional context:"
+    helper (length l) l
+    where
+      helper : ℕ → List $ Arg Type → M ⊤
+      helper n [] = return _
+      helper n (arg _ t ∷ l) = do
+        debugLog ("  " ∷ᵈ mapVars (_∸ (n ∸ (1 + length l))) t ∷ᵈ [])
+        helper n l
 
   logContext : List $ Arg Type → M ⊤
   logContext l = withAppendDebugPath "context" do
@@ -122,7 +122,10 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
     catch (do
       goalTy ← goalTy
       debugLog ("  ⊢ " ∷ᵈ goalTy ∷ᵈ []))
-      λ _ → debugLog1 "Error while infering the goal type!"
+      λ _ → do
+        inj₁ t ← reader TCEnv.goal
+          where _ → error1 "Bug in logContext!"
+        debugLog ("Error while infering the goal type! Goal: " ∷ᵈ t ∷ᵈ [])
     where
       helper : ℕ → List $ Arg Type → M ⊤
       helper n [] = return _
@@ -131,7 +134,7 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
         debugLog ("  " ∷ᵈ ♯ (n ∸ (length l + 1)) ∷ᵈ " : " ∷ᵈ mapVars (_+ (n ∸ length l)) t ∷ᵈ [])
 
   logCurrentContext : M ⊤
-  logCurrentContext = logContext =<< getContext
+  logCurrentContext = markDontFail "logCurrentContext" (logContext =<< getContext)
 
   inDebugPath : String → M A → M A
   inDebugPath path x = withAppendDebugPath path do
@@ -157,7 +160,7 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
   getDataDef n = inDebugPath "getDataDef" do
     debugLog ("Find details for datatype: " ∷ᵈ n ∷ᵈ [])
     (data-type pars cs) ← getDefinition n -- TODO: do something with pars
-      where _ → error "Not a data definition!"
+      where _ → error1 "Not a data definition!"
     debugLog1 "Constructor names:"
     debugLogValue cs
     cs' ← traverseList (λ n → (n ,_) <$> getType' n) cs
@@ -169,7 +172,7 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
   getRecordDef : Name → M RecordDef
   getRecordDef n = do
     (record-type c fs) ← getDefinition n
-      where _ → error "Not a record definition!"
+      where _ → error1 "Not a record definition!"
     return (record { name = c ; fields = fs })
 
   try : List (M ⊤) → M ⊤ → M ⊤
@@ -182,13 +185,13 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
     cs ← case d of λ where
       (record-type c fs)  → return [ c ]
       (data-type pars cs) → return cs
-      _                   → error "Not a data or record definition!"
+      _                   → error1 "Not a data or record definition!"
     traverseList (λ n → (n ,_) <$> (normalise =<< getType n)) (List Name ∋ cs)
 
   getConstrsForType : Term → M (List (Name × Type))
   getConstrsForType ty = do
     (def n _) ← normalise ty
-      where _ → error $ P.show ty <+> "does not reduce to a definition!"
+      where _ → error (ty ∷ᵈ "does not reduce to a definition!" ∷ᵈ [])
     getConstrs n
 
   getConstrsForTerm : Term → M (List (Name × Type))
@@ -199,19 +202,31 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
   withPattern tel ps t = Clause.clause tel ps <$> extendContext' (map proj₂ tel) t
 
   unifyWithGoal : Term → M ⊤
-  unifyWithGoal t = (reader TCEnv.goal) >>= λ t' → unify t' t
+  unifyWithGoal t = do
+    inj₁ t' ← reader TCEnv.goal
+      where _ → error1 "unifyWithGoal: Goal is not a term!"
+    unify t' t
 
   runWithHole : Term → M A → M A
-  runWithHole t = local (λ env → record env { goal = t })
+  runWithHole t = local (λ env → record env { goal = inj₁ t })
 
-  withGoalHole : M ⊤ → M Term
-  withGoalHole tac = do
-    hole ← reader TCEnv.goal
-    runWithHole hole tac
-    return hole
+  runWithGoalTy : Term → M A → M A
+  runWithGoalTy t = local (λ env → record env { goal = inj₂ t })
 
   newMeta : Term → M Term
   newMeta = checkType unknown
+
+  goalHole : M Term
+  goalHole = do
+    inj₂ T ← reader TCEnv.goal
+      where inj₁ hole → return hole
+    newMeta T
+
+  withGoalHole : M ⊤ → M Term
+  withGoalHole tac = do
+    hole ← goalHole
+    runWithHole hole tac
+    return hole
 
 findMetas : Term → List Term
 findMetas' : List (Arg Term) → List Term
@@ -257,8 +272,11 @@ initTacOpts tac opts = initTacEnv (λ env → record env { debug = opts }) tac
 initTac : ⦃ DebugOptions ⦄ → ITactic → Tactic
 initTac ⦃ opts ⦄ tac = initTacOpts tac opts
 
+initUnquoteWithGoal : ⦃ DebugOptions ⦄ → Term → TC ⊤ → UnquoteDecl
+initUnquoteWithGoal ⦃ opts ⦄ g unq = (initTCEnvWithGoal g) Reflection.>>= unq ∘ (λ env → record env { debug = opts })
+
 initUnquote : ⦃ DebugOptions ⦄ → TC ⊤ → UnquoteDecl
-initUnquote ⦃ opts ⦄ unq = (initTCEnvWithGoal unknown) Reflection.>>= unq ∘ (λ env → record env { debug = opts })
+initUnquote ⦃ opts ⦄ unq = initUnquoteWithGoal ⦃ opts ⦄ unknown unq
 
 instance
   _ = Reflection.TCI.Monad-TC

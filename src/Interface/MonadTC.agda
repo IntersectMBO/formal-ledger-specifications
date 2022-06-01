@@ -9,6 +9,7 @@ open import Data.Nat
 open import Data.Product hiding (map)
 open import Data.String
 open import Data.Unit
+open import Data.Sum using (_⊎_; inj₁; inj₂)
 
 open import Level
 open import Function
@@ -30,6 +31,26 @@ private
   variable
     a f : Level
     A : Set a
+
+record IsErrorPart (A : Set) : Set where
+  field
+    toErrorPart : A → ErrorPart
+
+open IsErrorPart ⦃...⦄
+
+instance
+  IsErrorPart-String : IsErrorPart String
+  IsErrorPart-String .toErrorPart = ErrorPart.strErr
+
+  IsErrorPart-Term : IsErrorPart Term
+  IsErrorPart-Term .toErrorPart = ErrorPart.termErr
+
+  IsErrorPart-Name : IsErrorPart Name
+  IsErrorPart-Name .toErrorPart = ErrorPart.nameErr
+
+infixr 5 _∷ᵈ_
+_∷ᵈ_ : A → ⦃ _ : IsErrorPart A ⦄ → List ErrorPart → List ErrorPart
+e ∷ᵈ es = toErrorPart e ∷ es
 
 data ReductionOptions : Set where
   onlyReduce : List Name → ReductionOptions
@@ -83,7 +104,7 @@ record TCEnv : Set where
     reduction      : ReductionOptions
     globalContext  : List $ Arg Type
     localContext   : List $ Abs $ Arg Type
-    goal           : Term
+    goal           : Term ⊎ Type
     debug          : DebugOptions
 
 initTCEnvWithGoal : Term → R.TC TCEnv
@@ -94,14 +115,14 @@ initTCEnvWithGoal goal = R.getContext RS.<&> λ ctx → record
   ; reduction      = reduceAll
   ; globalContext  = ctx
   ; localContext   = []
-  ; goal           = goal
+  ; goal           = inj₁ goal
   ; debug          = defaultDebugOptions
   }
 
 initTCEnv : R.TC TCEnv
 initTCEnv = initTCEnvWithGoal unknown
 
-record MonadTC (M : ∀ {f} → Set f → Set f) ⦃ m : Monad M ⦄ ⦃ me : MonadError String M ⦄ : Setω₁ where
+record MonadTC (M : ∀ {f} → Set f → Set f) ⦃ m : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ : Setω₁ where
   field
     unify            : Term → Term → M ⊤
     typeError        : ∀ {A : Set f} → List ErrorPart → M A
@@ -155,20 +176,20 @@ record MonadTC (M : ∀ {f} → Set f → Set f) ⦃ m : Monad M ⦄ ⦃ me : Mo
     case (isD , isC) of λ where
       (true , _)      → return $ def n []
       (false , true)  → return $ con n []
-      (false , false) → error (R'.primShowQName n <+> "is neither a definition nor a constructor!")
+      (false , false) → error ((R'.primShowQName n <+> "is neither a definition nor a constructor!") ∷ᵈ [])
 
   -- apply the unique constructor of the record to the arguments
   mkRecord : Name → List (Arg Term) → M Term
   mkRecord n args = do
     (record-type c _) ← getDefinition n
-      where _ → error "Not a record!"
+      where _ → error ("Not a record!" ∷ᵈ [])
     return $ con c args
 
   declareAndDefineFun : Arg Name → Type → List Clause → M ⊤
   declareAndDefineFun (arg i n) ty cls = declareDef (arg i n) ty >> defineFun n cls
 
 module _ {M : ∀ {f} → Set f → Set f}
-  ⦃ m : Monad M ⦄ ⦃ me : MonadError String M ⦄ ⦃ mtc : MonadTC M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ where
+  ⦃ m : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mtc : MonadTC M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ where
 
   open Monad m
   open MonadError me
@@ -200,7 +221,7 @@ module _ {M : ∀ {f} → Set f → Set f}
     t' ← checkType t ty
     if isAppliedToUnknownsAndMetas t'
       then return tt
-      else error "This makes the function return false"
+      else error ("This makes the function return false" ∷ᵈ [])
     where
       isUnknownsAndMetas : List (Arg Term) → Bool
       isUnknownsAndMetas [] = true

@@ -16,6 +16,7 @@ open import Function
 open import Reflection using (Name; Type; Term; Arg; arg; unknown; con)
 open import Data.Maybe using (from-just)
 open import Data.Unit
+open import Data.Sum using (inj₁; inj₂)
 
 open import Prelude.Foldable
 open import Prelude.Generics using (argTys)
@@ -51,10 +52,11 @@ applyConstrToUnknowns n ty = con n (Data.List.map toUnknown $ argTys ty)
 
 tryConstrsWith' : ℕ → ITactic → ITactic
 tryConstrsWith' zero        tac =
-  inDebugPath "tryConstrs" $ catch tac (λ _ → error "Maximum depth reached!")
+  inDebugPath "tryConstrs" $ catch tac (λ _ → error1 "Maximum depth reached!")
 tryConstrsWith' (suc depth) tac =
   inDebugPath "tryConstrs" $ catch tac λ _ → do
-  goal ← reader TCEnv.goal
+  inj₁ goal ← reader TCEnv.goal
+    where _ → error1 "Goal is not a hole!"
   goalTy ← inferType goal
   debugLog ("Find constructor for type " ∷ᵈ goalTy ∷ᵈ [])
   constrs ← getConstrsForTerm goal
@@ -63,17 +65,17 @@ tryConstrsWith' (suc depth) tac =
       let t = uncurry applyConstrToUnknowns constr
       t' ← local (λ env → record env { reconstruction = true }) $ checkType t goalTy
       unify goal t'
-      debugLog ("Success!" ∷ᵈ [])
+      debugLog1 "Success!"
       traverseList (λ t → runWithHole t (tryConstrsWith' depth tac)) (findMetas t')
       return tt)
     constrs)
-    (logAndError "No constructors were able to solve the goal!")
+    (logAndError1 "No constructors were able to solve the goal!")
 
 macro
   tryConstrsWith = λ n tac → initTac $ tryConstrsWith' n tac
 
   tryConstrs : ℕ → Tactic
-  tryConstrs n = initTac $ tryConstrsWith' n (error "Leaf reached!")
+  tryConstrs n = initTac $ tryConstrsWith' n (error1 "Leaf reached!")
 
 private
   module Test where
@@ -83,7 +85,7 @@ private
     open import Tactic.Assumption
 
     startDebug : ⊤
-    startDebug = byTC (debugLog ("\n\n\n\nTesting 'tryConstrs'\n" ∷ᵈ []))
+    startDebug = byTC (debugLog1 "\n\n\n\nTesting 'tryConstrs'\n")
 
     test₁ : (3 ≡ 3) × (1 + 1 ≡ 2)
     test₁ = tryConstrs 2

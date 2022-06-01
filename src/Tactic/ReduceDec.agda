@@ -20,6 +20,7 @@ open import Data.Product
 open import Data.String using (String; _<+>_)
 open import Data.Nat hiding (_≟_)
 open import Data.Empty
+open import Data.Sum using (inj₁; inj₂)
 
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
@@ -130,7 +131,7 @@ fromWitness'Type false dec = def (quote _≡_) (hArg? ∷ hArg? ∷ def (quote i
 findDecRWHypWith : ITactic → Term → TC Term
 findDecRWHypWith tac dec =
   helper true $ helper false $
-    error "reduceDec: Could not find an equation to rewrite with!"
+    error1 "reduceDec: Could not find an equation to rewrite with!"
   where
     helper : Bool → TC Term → TC Term
     helper b x = catch (do
@@ -147,7 +148,7 @@ reduceDecTermWith tac r t = inDebugPath "reduceDec" do
   T ← local (λ env → record env { reduction = r }) (inferType t >>= normalise)
   debugLog ("Reduce dec in " ∷ᵈ t ∷ᵈ " : " ∷ᵈ T ∷ᵈ [])
   (dec ∷ decs) ← return $ mapMaybe extractDec $ selectSubterms isIsYes T
-    where _ → error "No subterms of the form 'isYes t' found!"
+    where _ → error1 "No subterms of the form 'isYes t' found!"
   let scheme = generalizeSubterms isIsYes T
   debugLog ("Rewrite scheme: " ∷ᵈ scheme ∷ᵈ [])
   debugLog ("`isYes` to reduce: " ∷ᵈ dec ∷ᵈ [])
@@ -170,7 +171,8 @@ reduceDec r t = unifyWithGoal =<< reduceDec' r t
 
 reduceDecInGoal : ReductionOptions → Term → ITactic
 reduceDecInGoal r newGoal = do
-  goal ← reader TCEnv.goal
+  inj₁ goal ← reader TCEnv.goal
+    where _ → error1 "Goal is not a hole!"
   (scheme , eq) ← reduceDecTerm r goal
   unifyWithGoal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ newGoal ⟧
 
@@ -187,16 +189,16 @@ macro
   by-reduceDecInGoal' : ReductionOptions → Term → Tactic
   by-reduceDecInGoal' r t = initTac $ reduceDecInGoal r t
 
-open import Data.Unit using (⊤)
-open import DecEq
-
 private
+  open import DecEq
+
   module Test (A : Set) ⦃ _ : DecEq A ⦄ where
+    open import Data.Unit using (⊤)
     variable a b : A
              X Y Z : Set
 
     startDebug : ⊤
-    startDebug = byTC (debugLog ("\n\n\n\nTesting 'reduceDec'\n" ∷ᵈ []))
+    startDebug = byTC (debugLog1 "\n\n\n\nTesting 'reduceDec'\n")
 
     fun : A → A → Bool
     fun a b = ⌊ a ≟ b ⌋
