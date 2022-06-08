@@ -1,5 +1,3 @@
-{-# OPTIONS -v allTactics:100 #-}
-{-# OPTIONS -v getDataDef:100 #-}
 open import Agda.Builtin.Reflection using (withReconstructed; onlyReduceDefs)
 open import Reflection.AST hiding (name)
 open import Reflection.AST.Argument using (unArg; _⟨∷⟩_)
@@ -19,10 +17,8 @@ open import Data.String using (String; _<+>_)
 open import Data.Nat hiding (_≟_)
 open import Data.Sum using (inj₁; inj₂)
 
-open import Prelude.Generics using (TypeView; mapVars; _∙; _∙⟦_⟧; _∙⟦_∣_⟧; _∙⟦_∣_∣_⟧; _∙⟦_∣_∣_∣_⟧; _◆; _◆⟦_⟧; `λ∅)
-open import Prelude.Decidable
-open import Prelude.DecEq.Derive using (``yes; ``no)
-open import Prelude.DecEq
+open import PreludeImports
+open DecEq
 
 open import Relation.Nullary
 open import Relation.Nullary.Negation
@@ -56,16 +52,6 @@ instance
   _ = MonadError-TC
   _ = ContextMonad-MonadTC
 
-  defaultDebugOptionsI = record defaultDebugOptions { selection = Custom helper }
-    where
-      _∉_ : String → List String → Bool
-      s ∉ l = null $ filter (Data.String._≟_ s) l
-
-      helper : List String → String
-      helper n with "getDataDef" ∉ n ∧ "getSTSConstrs" ∉ n
-      ... | true  = "allTactics"
-      ... | false = "dontDisplay"
-
   Monad-Maybe : Monad Maybe
   Monad-Maybe .return = just
   Monad-Maybe ._>>=_  = Data.Maybe._>>=_
@@ -79,18 +65,6 @@ record STSConstr : Set where
     state   : Pattern
     signal  : Pattern
     result  : Term
-
--- instance
---   Show-STSConstr : Show STSConstr
---   Show-STSConstr .show c = let open STSConstr c in
---     "STSConstr" <+>
---     "{ params =" <+> show params <+>
---     "; clauses =" <+> show clauses <+>
---     "; context =" <+> show context <+>
---     "; state =" <+> show state <+>
---     "; signal =" <+> show signal <+>
---     "; result =" <+> show result <+>
---     "}"
 
 {-# TERMINATING #-}
 conOrVarToPattern : ℕ → Term → Maybe Pattern
@@ -184,47 +158,50 @@ derive⇒ n (record { name = stsConstrName ; clauses = clauses } ∷ []) = do
   unifyWithGoal $ clauseExprToPatLam expr
 derive⇒ _ _ = error1 "TODO: support multiple constructors"
 
-derive⇔ : Name → List STSConstr → Tactic
-derive⇔ n stsConstrs = initTac $ inDebugPath "derive⇔" do
-  hole⇒ ← newMeta unknown
-  hole⇐ ← newMeta unknown
-  unifyWithGoal $ quote mk⇔ ∙⟦ hole⇒ ∣ hole⇐ ⟧
-  debugLog1 "hole⇐"
-  debugLogTerm hole⇐
-  runWithHole hole⇐ derive⇐
-  debugLog ("hole⇒ " ∷ᵈ hole⇒ ∷ᵈ [])
-  runWithHole hole⇒ $ derive⇒ n stsConstrs
+module _ ⦃ _ : DebugOptions ⦄ where
+  derive⇔ : Name → List STSConstr → Tactic
+  derive⇔ n stsConstrs = initTac $ inDebugPath "derive⇔" do
+    hole⇒ ← newMeta unknown
+    hole⇐ ← newMeta unknown
+    unifyWithGoal $ quote mk⇔ ∙⟦ hole⇒ ∣ hole⇐ ⟧
+    debugLog1 "hole⇐"
+    debugLogTerm hole⇐
+    runWithHole hole⇐ derive⇐
+    debugLog ("hole⇒ " ∷ᵈ hole⇒ ∷ᵈ [])
+    runWithHole hole⇒ $ derive⇒ n stsConstrs
 
-deriveComp : Name → ITactic
-deriveComp definedType = do
-  debugLog ("\nDerive computation function for: " ∷ᵈ definedType ∷ᵈ [])
-  stsConstrs ← getSTSConstrs definedType
-  unifyWithGoal (generateFunction stsConstrs)
+  deriveComp : Name → ITactic
+  deriveComp definedType = do
+    debugLog ("\nDerive computation function for: " ∷ᵈ definedType ∷ᵈ [])
+    stsConstrs ← getSTSConstrs definedType
+    unifyWithGoal (generateFunction stsConstrs)
 
-macro
-  by-derive⇔ : Name → List STSConstr → Tactic
-  by-derive⇔ = derive⇔
+  macro
+    by-derive⇔ : Name → List STSConstr → Tactic
+    by-derive⇔ = derive⇔
 
-deriveComputational : Name → Name → UnquoteDecl
-deriveComputational n compName =
-  initUnquoteWithGoal (quoteTerm Name) $ inDebugPath "deriveComputational" do
-    let goalTy = quote Computational ∙⟦ n ∙ ⟧
-    debugLog (goalTy ∷ᵈ [])
-    declareDef (vArg compName) goalTy
-    compRes ← runAndReset $ do
-      compHole ← newMeta unknown
-      equivHole ← newMeta unknown
-      definition ← mkRecord (quote Computational) (compHole ⟨∷⟩ equivHole ⟨∷⟩ [])
-      _ ← checkType definition goalTy
-      debugLogTerm compHole
-      runWithHole compHole $ deriveComp n
-      reduce compHole
-    debugLog ("compRes: " ∷ᵈ compRes ∷ᵈ [])
-    stsConstrs ← quoteTC =<< getSTSConstrs n
-    definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ∣ stsConstrs ⟧ ⟨∷⟩ [])
-    defineFun compName [ nonBindingClause definition ]
+  deriveComputational : Name → Name → UnquoteDecl
+  deriveComputational n compName =
+    initUnquoteWithGoal (quoteTerm Name) $ inDebugPath "deriveComputational" do
+      let goalTy = quote Computational ∙⟦ n ∙ ⟧
+      debugLog (goalTy ∷ᵈ [])
+      declareDef (vArg compName) goalTy
+      compRes ← runAndReset $ do
+        compHole ← newMeta unknown
+        equivHole ← newMeta unknown
+        definition ← mkRecord (quote Computational) (compHole ⟨∷⟩ equivHole ⟨∷⟩ [])
+        _ ← checkType definition goalTy
+        debugLogTerm compHole
+        runWithHole compHole $ deriveComp n
+        reduce compHole
+      debugLog ("compRes: " ∷ᵈ compRes ∷ᵈ [])
+      stsConstrs ← quoteTC =<< getSTSConstrs n
+      definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ∣ stsConstrs ⟧ ⟨∷⟩ [])
+      defineFun compName [ nonBindingClause definition ]
 
 private
+  open import Tactic.Defaults
+
   module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
     variable c : A × B
              s s' : A

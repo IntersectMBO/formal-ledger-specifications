@@ -2,14 +2,15 @@
 
 open import Category.Monad
 
-open import Data.Bool
-open import Data.List hiding (_++_)
+open import Data.Bool hiding (_∧_; _∨_)
+open import Data.List hiding (_++_; filter)
 open import Data.Maybe using (Maybe; just; nothing)
 open import Data.Nat
 open import Data.Product hiding (map)
-open import Data.String
-open import Data.Unit
+open import Data.String hiding (_≈_)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
+open import Relation.Nullary.Decidable using (⌊_⌋)
+open import Relation.Binary.PropositionalEquality
 
 open import Level
 open import Function
@@ -30,7 +31,7 @@ module Interface.MonadTC where
 private
   variable
     a f : Level
-    A : Set a
+    A B : Set a
 
 record IsErrorPart (A : Set) : Set where
   field
@@ -72,14 +73,49 @@ data DebugSelection : Set where
 -- If All is selected, this pragma shows all debug info
 -- {-# OPTIONS -v allTactics:100 #-}
 
+Filter : Set
+Filter = List String → Bool
+
+module Filter where
+  open import Algebra.Lattice
+  open import Data.Bool.Properties
+  import BooleanAlgebra
+
+  Filter-Alg : BooleanAlgebra _ _
+  Filter-Alg = BooleanAlgebra.hom (List String) ∨-∧-booleanAlgebra
+
+  open Algebra.Lattice.BooleanAlgebra Filter-Alg public
+
+  private
+    _≣_ : String → String → Bool
+    s ≣ s' = ⌊ s Data.String.≟ s' ⌋
+
+  contains : String → Filter
+  contains s l = foldl (λ acc s' → acc Data.Bool.∨ s ≣ s') false l
+
+  noneOf : List String → Filter
+  noneOf [] = ⊤
+  noneOf (x ∷ l) = ¬ contains x ∧ noneOf l
+
+  endsWith : String → Filter
+  endsWith s l with last l
+  ... | just x  = s ≣ x
+  ... | nothing = false
+
+  beginsWith : String → Filter
+  beginsWith s l with Data.List.head l
+  ... | just x  = s ≣ x
+  ... | nothing = false
+
 record DebugOptions : Set where
   field
     path      : List String
     selection : DebugSelection
+    filter    : Filter
     level     : ℕ
 
 defaultDebugOptions : DebugOptions
-defaultDebugOptions = record { path = []; selection = FullPath; level = 100 }
+defaultDebugOptions = record { path = []; selection = FullPath; filter = Filter.⊤; level = 100 }
 
 specializeDebugOptions : DebugOptions → DebugOptions → DebugOptions
 specializeDebugOptions record { path = path₁ } opts@record { path = path₂ } =
@@ -121,6 +157,8 @@ initTCEnvWithGoal goal = R.getContext RS.<&> λ ctx → record
 
 initTCEnv : R.TC TCEnv
 initTCEnv = initTCEnvWithGoal unknown
+
+open import Data.Unit
 
 record MonadTC (M : ∀ {f} → Set f → Set f) ⦃ m : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ : Setω₁ where
   field
@@ -199,7 +237,10 @@ module _ {M : ∀ {f} → Set f → Set f}
   debugLog : List ErrorPart → M ⊤
   debugLog es = do
     record { debug = debug } ← ask
-    debugPrint (debugOptionsPath debug) (debug .DebugOptions.level) (debugPrintPrefix debug ∷ es)
+    if debug .DebugOptions.filter (debug .DebugOptions.path)
+      then debugPrint (debugOptionsPath debug) (debug .DebugOptions.level)
+             (debugPrintPrefix debug ∷ es)
+      else return tt
 
   withDebugOptions : DebugOptions → M A → M A
   withDebugOptions opts x = local (λ where
@@ -259,6 +300,38 @@ module _ {M : ∀ {f} → Set f → Set f}
   dropContext n x = do
     ctx ← getContext
     inContext (drop n ctx) x
+
+  logAndError : List ErrorPart → M A
+  logAndError e = debugLog e >> error e
+
+  error1 : ⦃ IsErrorPart A ⦄ → A → M B
+  error1 a = error (a ∷ᵈ [])
+
+  debugLog1 : ⦃ IsErrorPart A ⦄ → A → M ⊤
+  debugLog1 a = debugLog (a ∷ᵈ [])
+
+  logAndError1 : ⦃ IsErrorPart A ⦄ → A → M B
+  logAndError1 a = debugLog1 a >> error1 a
+
+  markDontFail : String → M A → M A
+  markDontFail s x = catch x λ e → logAndError (s ∷ᵈ " should never fail! This is a bug!\nError:\n" ∷ᵈ e)
+
+  debugLogValue : A → M ⊤
+  debugLogValue a = quoteTC a >>= debugLog1
+
+  debugLogValueNorm : A → M ⊤
+  debugLogValueNorm a = (local (λ env → record env { normalisation = true }) $ quoteTC a) >>= debugLog1
+
+  debugLogTerm : Term → M ⊤
+  debugLogTerm t = do
+    T ← inferType t
+    debugLog (t ∷ᵈ " : " ∷ᵈ T ∷ᵈ [])
+
+  goalTy : M Type
+  goalTy = do
+    inj₁ t ← reader TCEnv.goal
+      where inj₂ T → return T
+    inferType t
 
 Monad-TC : Monad R.TC
 Monad-TC = record { R }

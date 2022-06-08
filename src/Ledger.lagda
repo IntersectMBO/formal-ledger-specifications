@@ -74,7 +74,7 @@ open import Data.List.Membership.Propositional
 
 open import Algebra using (CommutativeMonoid)
 open import Function hiding (id; _↪_) renaming (_↣_ to _↪_)
-import Function.Related.Propositional as P
+import Function.Related.Propositional as FP
 
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
@@ -93,11 +93,12 @@ open import DeriveComp hiding (rdOpts)
 open import ComputationalRelation
 open import Tactic.Helpers
 open import Reflection hiding (_≟_)
-open import Prelude.Generics
-import Prelude.DecEq as P hiding (DecEq-ℕ; DecEq-Σ)
-open import Prelude.Decidable
+open import PreludeImports
+module P = PreludeImports.DecEq
 open import Agda.Builtin.Reflection using (onlyReduceDefs)
 open import Tactic.ReduceDec using (by-reduceDec'; by-reduceDecInGoal')
+
+open import MyDebugOptions
 
 module Ledger (
 \end{code}
@@ -139,13 +140,13 @@ _≠_ : {A : Set} → A → A → Set
 a ≠ b = ¬ a ≡ b
 
 _⟨$⟩_ : {A B : Set} → A ↪ B → A → B
-_⟨$⟩_ = P.⇒→ {k = P.injection}
+_⟨$⟩_ = FP.⇒→ {k = FP.injection}
 
 instance
   _ = +-0-commutativeMonoid
 
-  ≤-⁇ : _≤_ ⁇²
-  ≤-⁇ {x = x} {y} = ⁇ (x ≤? y)
+  ≤-⁇ : _≤_ P.⁇²
+  ≤-⁇ {x = x} {y} = P.⁇ (x ≤? y)
 
   convertDecEq : ∀ {A} ⦃ _ : DecEq A ⦄ → P.DecEq A
   convertDecEq ⦃ dec ⦄ = record { _≟_ = _≟_ }
@@ -258,10 +259,10 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   ⟦_⟧ = Function.id
 
   instance
-    _ : {a : ℙ TxIn} → (a ≡ ∅) ⁇
-    _ = ⁇ ≟-∅
+    _ : {a : ℙ TxIn} → (a ≡ ∅) P.⁇
+    _ = P.⁇ ≟-∅
 
-    _ : {slot : Slot} {I : Maybe Slot × Maybe Slot} → inInterval slot I ⁇
+    _ : {slot : Slot} {I : Maybe Slot × Maybe Slot} → inInterval slot I P.⁇
     _ = ?
   
   data

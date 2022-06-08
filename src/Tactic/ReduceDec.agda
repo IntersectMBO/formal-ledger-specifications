@@ -8,7 +8,7 @@ open import Agda.Builtin.Reflection using (withReconstructed; onlyReduceDefs; do
 open import Reflection using (hArg; vArg; iArg; unknown; lam; visible; abs; Term)
 open import Reflection.AST.Argument
 import Reflection.AST.Name
-open import Prelude.Generics using (mapVars; _◆)
+open import PreludeImports
 
 open import Function
 
@@ -26,7 +26,6 @@ open import Relation.Nullary
 open import Relation.Nullary.Decidable
 open import Relation.Binary.PropositionalEquality hiding ([_])
 
-open import Tactic.Defaults
 open import Tactic.Helpers
 open import Tactic.Constrs
 open import Tactic.Assumption
@@ -48,20 +47,6 @@ instance
   _ = MonadReader-TC
   _ = MonadError-TC
 
--- arguments
-pattern hArg? = hArg unknown
-pattern vArg? = vArg unknown
-pattern iArg? = iArg unknown
-
--- function application
-pattern _∙ n = def n []
-pattern _∙⟦_⟧ n x = def n (vArg x ∷ [])
-pattern _∙⟦_∣_⟧ n x y = def n (vArg x ∷ vArg y ∷ [])
-pattern _∙⟦_∣_∣_⟧ n x y z = def n (vArg x ∷ vArg y ∷ vArg z ∷ [])
-pattern _∙⟦_∣_∣_∣_⟧ n x y z w = def n (vArg x ∷ vArg y ∷ vArg z ∷ vArg w ∷ [])
-
-pattern `λ_⇒_       x     k = lam visible (abs x k)
-
 private
   variable ℓ : Agda.Primitive.Level
            A : Set ℓ
@@ -72,7 +57,7 @@ selectSubterms P t = if P t then [ t ] else helper t
   where
     helper : Term → List Term
     argHelper : List (Arg Term) → List Term
-    
+
     helper (var x args)      = argHelper args
     helper (con c args)      = argHelper args
     helper (def f args)      = argHelper args
@@ -176,24 +161,28 @@ reduceDecInGoal r newGoal = do
   (scheme , eq) ← reduceDecTerm r goal
   unifyWithGoal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ newGoal ⟧
 
-macro
-  by-reduceDec : Term → Tactic
-  by-reduceDec t = initTac $ reduceDec reduceAll t
+module _ ⦃ _ : DebugOptions ⦄ where
+  macro
+    by-reduceDec : Term → Tactic
+    by-reduceDec t = initTac $ reduceDec reduceAll t
 
-  by-reduceDecInGoal : Term → Tactic
-  by-reduceDecInGoal t = initTac $ reduceDecInGoal reduceAll t
+    by-reduceDecInGoal : Term → Tactic
+    by-reduceDecInGoal t = initTac $ reduceDecInGoal reduceAll t
 
-  by-reduceDec' : ReductionOptions → Term → Tactic
-  by-reduceDec' r t = initTac $ reduceDec r t
+    by-reduceDec' : ReductionOptions → Term → Tactic
+    by-reduceDec' r t = initTac $ reduceDec r t
 
-  by-reduceDecInGoal' : ReductionOptions → Term → Tactic
-  by-reduceDecInGoal' r t = initTac $ reduceDecInGoal r t
+    by-reduceDecInGoal' : ReductionOptions → Term → Tactic
+    by-reduceDecInGoal' r t = initTac $ reduceDecInGoal r t
 
 private
   open import DecEq
 
   module Test (A : Set) ⦃ _ : DecEq A ⦄ where
+    open import Tactic.Defaults
+
     open import Data.Unit using (⊤)
+
     variable a b : A
              X Y Z : Set
 
@@ -202,7 +191,7 @@ private
 
     fun : A → A → Bool
     fun a b = ⌊ a ≟ b ⌋
-    
+
     pf : a ≡ b → fun a b ≡ false → ⊥
     pf h₁ h₂ = case true ≡ false ∋ by-reduceDec h₂ of λ ()
 

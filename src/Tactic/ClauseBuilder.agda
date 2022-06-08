@@ -21,9 +21,8 @@ open import Data.List.Sort using (SortingAlgorithm)
 open import Data.List.Sort.MergeSort using (mergeSort)
 open SortingAlgorithm ≤-decTotalOrder (mergeSort ≤-decTotalOrder) public
 
-open import Prelude.Generics using (viewTy; _◆; mapVariables; mapVars; _∙⟦_∣_⟧; viewTy′)
+open import PreludeImports
 
-open import PreludeExt
 open import Tactic.Helpers
 open import Level
 
@@ -47,9 +46,6 @@ instance
   Monad-List : Monad List
   Monad-List .return = _∷ []
   Monad-List ._>>=_  = flip concatMap
-
--- patterns
-pattern `_ x = Pattern.var x
 
 private
   variable a b : Level
@@ -154,7 +150,7 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
 --     takeIndices (x ∷ i) l = lookupMaybe l x ?∷ takeIndices i l
 
 --     findIndexDefault : ⦃ _ : DecEq A ⦄ → List A → ℕ → A → ℕ
---     findIndexDefault l d a with filter (λ where (i , x) → x Prelude.DecEq.≟ a) (zipWithIndex _,_ l)
+--     findIndexDefault l d a with filter (λ where (i , x) → x ≟ a) (zipWithIndex _,_ l)
 --     ... | []          = d
 --     ... | (i , _) ∷ _ = i
 

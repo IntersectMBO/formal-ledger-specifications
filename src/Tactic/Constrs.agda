@@ -18,13 +18,8 @@ open import Data.Maybe using (from-just)
 open import Data.Unit
 open import Data.Sum using (inj₁; inj₂)
 
-open import Prelude.Foldable
-open import Prelude.Generics using (argTys)
-open import Prelude.Lists
-open import Prelude.Show
-open import Prelude.Traversable
+open import PreludeImports
 
-open import Tactic.Defaults
 open import Tactic.Helpers
 
 open import Interface.Monad
@@ -71,18 +66,20 @@ tryConstrsWith' (suc depth) tac =
     constrs)
     (logAndError1 "No constructors were able to solve the goal!")
 
-macro
-  tryConstrsWith = λ n tac → initTac $ tryConstrsWith' n tac
+module _ ⦃ _ : DebugOptions ⦄ where
+  macro
+    tryConstrsWith = λ n tac → initTac $ tryConstrsWith' n tac
 
-  tryConstrs : ℕ → Tactic
-  tryConstrs n = initTac $ tryConstrsWith' n (error1 "Leaf reached!")
+    tryConstrs : ℕ → Tactic
+    tryConstrs n = initTac $ tryConstrsWith' n (error1 "Leaf reached!")
 
 private
   module Test where
-
-    open import Relation.Binary.PropositionalEquality
-    open import Data.Sum
     open import Tactic.Assumption
+    open import Tactic.Defaults
+
+    open import Data.Sum
+    open import Relation.Binary.PropositionalEquality
 
     startDebug : ⊤
     startDebug = byTC (debugLog1 "\n\n\n\nTesting 'tryConstrs'\n")

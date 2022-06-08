@@ -15,13 +15,7 @@ open import Data.Unit
 open import Level
 open import Data.Sum using (inj₁; inj₂)
 
-open import Prelude.Foldable
-import Prelude.Functor as P
-open import Prelude.Generics using (TypeView; viewTy; mapVars)
-open import Prelude.Lists
-import Prelude.Monad as P
-import Prelude.Show as P
-open import Prelude.Traversable
+open import PreludeImports
 
 open import Interface.MonadError hiding (MonadError-TC)
 open import Interface.MonadTC
@@ -37,7 +31,7 @@ private
            B : Set b
 
 zipWithIndex : (ℕ → A → B) → List A → List B
-zipWithIndex f l = zipWith f (indices l) l
+zipWithIndex f l = zipWith f (upTo $ length l) l
 
 record DataDef : Set where
   field
@@ -48,16 +42,6 @@ record RecordDef : Set where
   field
     name : Name
     fields : List (Arg Name)
-
-instance
-  Show-Abs : ∀ {A} → {{P.Show A}} → P.Show (Abs A)
-  Show-Abs .P.show (abs s x) = "abs" <+> s <+> P.show x
-
-  Show-DataDef : P.Show DataDef
-  Show-DataDef .P.show d = let open DataDef d in
-    "DataDef:" <+> P.show name <+> "=" <+> P.show ((map₂ P.show) P.<$> constructors)
-
-pattern ♯ n = Term.var n []
 
 pattern ⟦_∣_∣_⇒_⟧ x y z k = Clause.clause [] (vArg x ∷ vArg y ∷ vArg z ∷ []) k
 pattern ⟦_∣_∣_⦅_⦆⇒_⟧ x y z tel k = Clause.clause tel (vArg x ∷ vArg y ∷ vArg z ∷ []) k
@@ -71,38 +55,6 @@ open MonadError ⦃...⦄
 open MonadReader ⦃...⦄
 
 module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
-
-  logAndError : List ErrorPart → M A
-  logAndError e = debugLog e >> error e
-
-  error1 : ⦃ IsErrorPart A ⦄ → A → M B
-  error1 a = error (a ∷ᵈ [])
-
-  debugLog1 : ⦃ IsErrorPart A ⦄ → A → M ⊤
-  debugLog1 a = debugLog (a ∷ᵈ [])
-
-  logAndError1 : ⦃ IsErrorPart A ⦄ → A → M B
-  logAndError1 a = debugLog1 a >> error1 a
-
-  markDontFail : String → M A → M A
-  markDontFail s x = catch x λ e → logAndError (s ∷ᵈ " should never fail! This is a bug!\nError:\n" ∷ᵈ e)
-
-  debugLogValue : A → M ⊤
-  debugLogValue a = quoteTC a >>= debugLog1
-
-  debugLogValueNorm : A → M ⊤
-  debugLogValueNorm a = (local (λ env → record env { normalisation = true }) $ quoteTC a) >>= debugLog1
-
-  debugLogTerm : Term → M ⊤
-  debugLogTerm t = do
-    T ← inferType t
-    debugLog (t ∷ᵈ " : " ∷ᵈ T ∷ᵈ [])
-
-  goalTy : M Type
-  goalTy = do
-    inj₁ t ← reader TCEnv.goal
-      where inj₂ T → return T
-    inferType t
 
   logAdditionalContext : List $ Arg Type → M ⊤
   logAdditionalContext l = withAppendDebugPath "context" do

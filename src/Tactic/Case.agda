@@ -14,7 +14,7 @@ open import Relation.Nullary.Decidable
 
 open import Tactic.Helpers
 
-open import Prelude.Generics using (viewTy)
+open import PreludeImports
 
 open import Interface.Monad
 open import Interface.MonadError hiding (MonadError-TC)
@@ -42,7 +42,7 @@ matchArg n args = do
 getTypeArgs : Term → TC (List (Arg Term))
 getTypeArgs t = do
   (def _ args) ← local (λ env → record env { normalisation = true }) $ inferType t
-    where _ → logAndError $ "The type of" <+> {!show t!} <+> "does not reduce to a definition!"
+    where _ → logAndError1 $ "The type of" <+> {!show t!} <+> "does not reduce to a definition!"
   return args  
 
 -- -- return the most general pattern for the constructor (i.e. with no nested patterns)

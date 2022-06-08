@@ -18,10 +18,11 @@ open import Data.Sum using (inj₁; inj₂)
 open import Interface.Monad
 open import Interface.MonadError hiding (MonadError-TC)
 open import Interface.MonadTC hiding (Monad-TC)
-open import Tactic.Defaults
 open import Tactic.Helpers
 open import Reflection.TCI
 open import Interface.MonadReader
+
+open import PreludeImports
 
 open Monad ⦃...⦄
 open MonadTC ⦃...⦄
@@ -34,7 +35,7 @@ instance
   _ = MonadError-TC
   _ = MonadReader-TC
 
-solve : Term → Tactic
+solve : ⦃ _ : DebugOptions ⦄ → Term → Tactic
 solve t = initTac $ runSpeculative $ do
   inj₁ goal ← reader TCEnv.goal
     where _ → error1 "solve: Goal is not a term!"
@@ -50,11 +51,13 @@ assumption' = inDebugPath "assumption" do
     catch (unifyWithGoal (♯ k) >> debugLog ("Success with: " ∷ᵈ ♯ k ∷ᵈ [])) (λ _ → x))
     (logAndError1 "No valid assumption!") (downFrom $ length c)
 
-macro
-  assumption = initTac assumption'
-  assumptionOpts = initTacOpts assumption'
+module _ ⦃ _ : DebugOptions ⦄ where
+  macro
+    assumption = initTac assumption'
+    assumptionOpts = initTacOpts assumption'
 
 private
+  open import Tactic.Defaults
   module Test where
     test₁ : {A B : Set} → A → B → A
     test₁ a b = assumption

@@ -1,4 +1,3 @@
-open import Prelude renaming (Nat to ℕ) hiding (abs)
 open import Builtin.Reflection
 open import Tactic.Deriving
 open import Tactic.Deriving.Eq
