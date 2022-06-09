@@ -10,7 +10,7 @@ open import Data.Product hiding (map)
 open import Data.String using (String; _<+>_)
 open import Function
 open import Reflection using (Term; Type; Name; data-cons; pi; abs; Abs; Arg; Clause; vArg; data-type; record-type; var; con; def; lam; pat-lam; arg; agda-sort; lit; meta; unknown; Pattern; strErr; ErrorPart) public
-open import Data.Maybe using (Maybe; just; nothing; from-just; when)
+open import Data.Maybe using (Maybe; just; nothing; from-just; when; is-just)
 open import Data.Unit
 open import Level
 open import Data.Sum using (inj₁; inj₂)
@@ -113,11 +113,9 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
     debugLog ("Find details for datatype: " ∷ᵈ n ∷ᵈ [])
     (data-type pars cs) ← getDefinition n -- TODO: do something with pars
       where _ → error1 "Not a data definition!"
-    debugLog1 "Constructor names:"
-    debugLogValue cs
+    debugLogᵐ ("Constructor names:" ∷ᵈᵐ cs ᵛ ∷ᵈᵐ []ᵐ)
     cs' ← traverseList (λ n → (n ,_) <$> getType' n) cs
-    debugLog1 "Result"
-    debugLogValueNorm cs'
+    debugLogᵐ ("Result:" ∷ᵈᵐ cs' ᵛⁿ ∷ᵈᵐ []ᵐ)
     let res = record { name = n ; constructors = cs' }
     return res
 
@@ -247,6 +245,27 @@ popPis : Term → ℕ → Maybe Term
 popPis t zero = just t
 popPis (pi _ (abs _ t)) (suc k) = popPis t k
 popPis _ (ℕ.suc k) = nothing
+
+-- run a computation that returns a term, resetting the TC state but
+-- ensuring that the term doesn't contain any metavariables
+withSafeReset : TC Term → TC Term
+withSafeReset x = runAndReset $ do
+  t ← x
+  let m = findMetas t
+  if null m
+    then return t
+    else do
+      debugLogᵐ ("Remaining metavariables:" ∷ᵈᵐ m ᵛⁿ ∷ᵈᵐ []ᵐ)
+      debugLog ("In term: " ∷ᵈ t ∷ᵈ [])
+      error1 "Unsolved metavariables remaining in withSafeReset!"
+
+-- take the first result if it's a just, otherwise reset the state and
+-- run the second computation
+runSpeculativeMaybe : TC (Maybe A) → TC A → TC A
+runSpeculativeMaybe x y = do
+  nothing ← runSpeculative (< id , is-just > <$> x)
+    where just a → return a
+  y
 
 -- popPisAndLift : Term → ℕ → ℕ → Maybe Term
 -- popPisAndLift t ctxLen k = mapVars (_+ (ctxLen ∸ k)) <$> popPis t k

@@ -57,10 +57,6 @@ data ReductionOptions : Set where
   onlyReduce : List Name → ReductionOptions
   dontReduce : List Name → ReductionOptions
 
-applyReductionOptions : ReductionOptions → R.TC A → R.TC A
-applyReductionOptions (onlyReduce r) = R'.onlyReduceDefs r
-applyReductionOptions (dontReduce r) = R'.dontReduceDefs r
-
 reduceAll : ReductionOptions
 reduceAll = dontReduce []
 
@@ -234,6 +230,46 @@ module _ {M : ∀ {f} → Set f → Set f}
   open MonadTC mtc
   open MonadReader mre
 
+  record IsMErrorPart (A : Set a) : Setω where
+    field toMErrorPart : A → M (List ErrorPart)
+
+  open IsMErrorPart ⦃...⦄ public
+
+  data MErrorPartWrap : Set where
+    wrap : M (List ErrorPart) → MErrorPartWrap
+
+  IsMErrorPart-IsErrorPart : ⦃ _ : IsErrorPart A ⦄ → IsMErrorPart A
+  IsMErrorPart-IsErrorPart .toMErrorPart a = return Data.List.[ toErrorPart a ]
+
+  instance
+    IsMErrorPart-String : IsMErrorPart String
+    IsMErrorPart-String = IsMErrorPart-IsErrorPart
+
+    IsMErrorPart-Term : IsMErrorPart Term
+    IsMErrorPart-Term = IsMErrorPart-IsErrorPart
+
+    IsMErrorPart-Name : IsMErrorPart Name
+    IsMErrorPart-Name = IsMErrorPart-IsErrorPart
+
+    IsMErrorPart-MErrorPartWrap : IsMErrorPart MErrorPartWrap
+    IsMErrorPart-MErrorPartWrap .toMErrorPart (wrap a) = a
+
+  []ᵐ : M (List ErrorPart)
+  []ᵐ = return []
+
+  infixr 5 _∷ᵈᵐ_
+  _∷ᵈᵐ_ : A → ⦃ _ : IsMErrorPart A ⦄ → M (List ErrorPart) → M (List ErrorPart)
+  e ∷ᵈᵐ es = do e ← toMErrorPart e; es ← es; return (e Data.List.++ es)
+
+  _ᵛ : A → MErrorPartWrap
+  a ᵛ = wrap do a ← quoteTC a; return (a ∷ᵈ [])
+
+  _ᵛⁿ : A → MErrorPartWrap
+  a ᵛⁿ = wrap do a ← local (λ env → record env { normalisation = true }) $ quoteTC a; return (a ∷ᵈ [])
+
+  _ᵗ : Term → MErrorPartWrap
+  t ᵗ = wrap do T ← inferType t; return (t ∷ᵈ " : " ∷ᵈ T ∷ᵈ [])
+
   debugLog : List ErrorPart → M ⊤
   debugLog es = do
     record { debug = debug } ← ask
@@ -241,6 +277,12 @@ module _ {M : ∀ {f} → Set f → Set f}
       then debugPrint (debugOptionsPath debug) (debug .DebugOptions.level)
              (debugPrintPrefix debug ∷ es)
       else return tt
+
+  debugLogᵐ : M (List ErrorPart) → M ⊤
+  debugLogᵐ x = do x ← x; debugLog x
+
+  debugLog1ᵐ : A → ⦃ _ : IsMErrorPart A ⦄ → M ⊤
+  debugLog1ᵐ a = debugLogᵐ (a ∷ᵈᵐ []ᵐ)
 
   withDebugOptions : DebugOptions → M A → M A
   withDebugOptions opts x = local (λ where
@@ -315,17 +357,6 @@ module _ {M : ∀ {f} → Set f → Set f}
 
   markDontFail : String → M A → M A
   markDontFail s x = catch x λ e → logAndError (s ∷ᵈ " should never fail! This is a bug!\nError:\n" ∷ᵈ e)
-
-  debugLogValue : A → M ⊤
-  debugLogValue a = quoteTC a >>= debugLog1
-
-  debugLogValueNorm : A → M ⊤
-  debugLogValueNorm a = (local (λ env → record env { normalisation = true }) $ quoteTC a) >>= debugLog1
-
-  debugLogTerm : Term → M ⊤
-  debugLogTerm t = do
-    T ← inferType t
-    debugLog (t ∷ᵈ " : " ∷ᵈ T ∷ᵈ [])
 
   goalTy : M Type
   goalTy = do

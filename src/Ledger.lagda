@@ -52,11 +52,7 @@ Path = /Library/Fonts/ ,
 
 --{-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
-{-# OPTIONS -v Test:101 #-}
-{-# OPTIONS -v case:101 #-}
-{-# OPTIONS -v assumption:101 #-}
-{-# OPTIONS -v reduceDec:101 #-}
-{-# OPTIONS -v tryConstrs:101 #-}
+{-# OPTIONS -v allTactics:100 #-}
 
 open import Data.List using (List; []; _∷_; any; foldr; sum; mapMaybe)
 open import Data.List.Relation.Unary.All using (All; all?)
@@ -94,11 +90,12 @@ open import ComputationalRelation
 open import Tactic.Helpers
 open import Reflection hiding (_≟_)
 open import PreludeImports
-module P = PreludeImports.DecEq
+import PreludeImportsDecEq as P hiding (DecEq-Σ)
 open import Agda.Builtin.Reflection using (onlyReduceDefs)
 open import Tactic.ReduceDec using (by-reduceDec'; by-reduceDecInGoal')
 
 open import MyDebugOptions
+--open import Tactic.Defaults
 
 module Ledger (
 \end{code}
@@ -216,12 +213,13 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   minfee : PParams → Tx → Coin
   minfee pp tx = PParams.a pp * txsize tx + PParams.b pp
 
-  inInterval : Slot → Maybe Slot × Maybe Slot → Set
-  inInterval slot (just l  , just r)  = l ≤ slot × slot ≤ r
-  inInterval slot (just l  , nothing) = l ≤ slot
-  inInterval slot (nothing , just r)  = slot ≤ r
-  inInterval slot (nothing , nothing) = ⊤
-  
+  -- this has to be a type definition for inference to work
+  data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
+    both  : ∀ {l r} → l ≤ slot × slot ≤ r → inInterval slot (just l  , just r)
+    lower : ∀ {l}   → l ≤ slot            → inInterval slot (just l  , nothing)
+    upper : ∀ {r}   → slot ≤ r            → inInterval slot (nothing , just r)
+    none  :                                 inInterval slot (nothing , nothing)
+
   balance : UTxO → Coin
   balance utxo = Σ[ v ← utxo ] proj₂ (proj₂ v)
 \end{code}
@@ -262,9 +260,20 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
     _ : {a : ℙ TxIn} → (a ≡ ∅) P.⁇
     _ = P.⁇ ≟-∅
 
-    _ : {slot : Slot} {I : Maybe Slot × Maybe Slot} → inInterval slot I P.⁇
-    _ = ?
-  
+    ⁇-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → inInterval slot I P.⁇
+    ⁇-inInterval {slot} {just x  , just y } with x ≤? slot | slot ≤? y
+    ... | no ¬p₁ | no ¬p₂ = P.⁇ no λ where (both (h₁ , h₂)) → ¬p₁ h₁
+    ... | no ¬p₁ | yes p₂ = P.⁇ no λ where (both (h₁ , h₂)) → ¬p₁ h₁
+    ... | yes p₁ | no ¬p₂ = P.⁇ no λ where (both (h₁ , h₂)) → ¬p₂ h₂
+    ... | yes p₁ | yes p₂ = P.⁇ yes (both (p₁ , p₂))
+    ⁇-inInterval {slot} {just x  , nothing} with x ≤? slot
+    ... | no ¬p = P.⁇ no  (λ where (lower h) → ¬p h)
+    ... | yes p = P.⁇ yes (lower p)
+    ⁇-inInterval {slot} {nothing , just x } with slot ≤? x
+    ... | no ¬p = P.⁇ no  (λ where (upper h) → ¬p h)
+    ... | yes p = P.⁇ yes (upper p)
+    ⁇-inInterval {slot} {nothing , nothing} = P.⁇ yes none
+
   data
 \end{code}
 \begin{code}
@@ -302,14 +311,15 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \end{figure*}
 
 \begin{code}[hide]
+
   unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 
   balance-∪ : utxo ∩ utxo' ≡ᵉ ∅ → balance (utxo ∪ utxo') ≡ balance utxo + balance utxo'
   balance-∪ {utxo} {utxo'} = indexedSum-∪ {s = utxo} {s' = utxo'}
-  
+
   balance-cong : utxo ≡ᵉ utxo' → balance utxo ≡ balance utxo'
   balance-cong {utxo} {utxo'} = indexedSum-cong {s = utxo} {s' = utxo'}
-  
+
   open TacticReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 \end{code}
 
@@ -340,7 +350,7 @@ then
     let
       h : utxo ∩ outs tx ≡ᵉ ∅
       h = subst ((utxo ∩ outs tx) ≡ᵉ_) h' (IsEquivalence.refl ≡ᵉ-isEquivalence {utxo ∩ outs tx})
-    
+
       balance-eq : balance utxo ≡ balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx
       balance-eq = begin
         balance utxo
@@ -373,7 +383,7 @@ relation. Luckily, this can be automated.
 \begin{code}
   UTXO-step : UTxOEnv → UTxOState → Tx → Maybe UTxOState
   UTXO-step = Computational.compute Computational-UTXO
-  
+
   UTXO-step-computes-UTXO :
     UTXO-step Γ utxoState tx ≡ just utxoState'
     ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'

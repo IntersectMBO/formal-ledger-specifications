@@ -14,7 +14,7 @@ open import Function
 
 open import Data.Bool hiding (_≟_)
 import Data.Bool.Show
-open import Data.Maybe using (Maybe; just; nothing; from-just)
+open import Data.Maybe using (Maybe; just; nothing; from-just; is-just)
 open import Data.List
 open import Data.Product
 open import Data.String using (String; _<+>_)
@@ -93,13 +93,12 @@ generalizeSubterms P t = lambdas $ if P t then ♯ 0 else helper (mapVars suc t)
     lambdas : Term → Term
     lambdas t' = foldl (λ acc _ → `λ "g" ⇒ acc) t' (selectSubterms P t)
 
-isIsYes : Term → Bool
-isIsYes (def f _) = f Reflection.AST.Name.≡ᵇ quote isYes
-isIsYes _         = false
-
 extractDec : Term → Maybe Term
 extractDec (def (quote isYes) (_ ∷ _ ∷ t ⟨∷⟩ [])) = just t
 extractDec t = nothing
+
+isIsYes : Term → Bool
+isIsYes = is-just ∘ extractDec
 
 fromWitness' : ∀ {p} {P : Set p} (Q : Dec P) → P → ⌊ Q ⌋ ≡ true
 fromWitness' (yes p) h = refl
@@ -119,14 +118,15 @@ findDecRWHypWith tac dec =
     error1 "reduceDec: Could not find an equation to rewrite with!"
   where
     helper : Bool → TC Term → TC Term
-    helper b x = catch (do
+    helper b x = runSpeculativeMaybe (do
       hole ← newMeta unknown
       res ← case b of λ where
         false → checkType (quote fromWitnessFalse' ∙⟦ dec ∣ hole ⟧) (fromWitness'Type false dec)
         true  → checkType (quote fromWitness'      ∙⟦ dec ∣ hole ⟧) (fromWitness'Type true  dec)
-      runWithHole hole tac
-      debugLog1 ("Hypothesis is" <+> Data.Bool.Show.show b)
-      return res) (λ _ → x)
+      catch (do
+        runWithHole hole tac
+        debugLog1 ("Hypothesis is" <+> Data.Bool.Show.show b)
+        return $ just res) (λ _ → return nothing)) x
 
 reduceDecTermWith : ITactic → ReductionOptions → Term → TC (Term × Term)
 reduceDecTermWith tac r t = inDebugPath "reduceDec" do
@@ -138,9 +138,8 @@ reduceDecTermWith tac r t = inDebugPath "reduceDec" do
   debugLog ("Rewrite scheme: " ∷ᵈ scheme ∷ᵈ [])
   debugLog ("`isYes` to reduce: " ∷ᵈ dec ∷ᵈ [])
   eq ← findDecRWHypWith tac dec
-  eq' ← normalise eq
   eqT ← inferType eq
-  debugLog ("Eq: " ∷ᵈ eq' ∷ᵈ " : " ∷ᵈ eqT ∷ᵈ [])
+  debugLog ("Eq: " ∷ᵈ eq ∷ᵈ " : " ∷ᵈ eqT ∷ᵈ [])
   return (scheme , eq)
 
 reduceDecTerm : ReductionOptions → Term → TC (Term × Term)

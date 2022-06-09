@@ -18,7 +18,7 @@ open import Data.Nat hiding (_≟_)
 open import Data.Sum using (inj₁; inj₂)
 
 open import PreludeImports
-open DecEq
+open import PreludeImportsDecEq
 
 open import Relation.Nullary
 open import Relation.Nullary.Negation
@@ -101,7 +101,7 @@ getSTSConstrs : Name → TC (List STSConstr)
 getSTSConstrs n = inDebugPath "getSTSConstrs" do
   dataDef ← getDataDef n
   res ← errorIfNothing (traverseList toSTSConstr (DataDef.constructors dataDef)) "Error"
-  debugLogValueNorm res
+  debugLogᵐ (res ᵛⁿ ∷ᵈᵐ []ᵐ)
   return res
 
 generatePred : List Term → Term
@@ -137,13 +137,11 @@ derive⇐ : ITactic
 derive⇐ = inDebugPath "derive⇐" do
   (constrPat ∷ []) ← currentTyConstrPatterns
     where _ → error1 "TODO: Support more than one constructor!"
-  debugLog1 "Constructor pattern:"
-  debugLogValueNorm constrPat
   expr ← singleMatchExpr constrPat $ finishMatch $ withGoalHole $ reduceDecInGoal rdOpts (quote refl ◆)
   unifyWithGoal $ clauseExprToPatLam expr
 
 derive⇒ : Name → List STSConstr → ITactic
-derive⇒ n (record { name = stsConstrName ; clauses = clauses } ∷ []) = do
+derive⇒ n (record { name = stsConstrName ; clauses = clauses } ∷ []) = inDebugPath "derive⇒" do
   expr ← introsExpr (from-just $ NE.fromList ("h" ⟨∷⟩ [])) $ finishMatch $
     caseMatch (mapVars (_+ 2) $ generatePred clauses) $ matchExprM
       ((multiSinglePattern [ "" ] (vArg (``no  (` 0))) , finishMatch do
@@ -164,10 +162,7 @@ module _ ⦃ _ : DebugOptions ⦄ where
     hole⇒ ← newMeta unknown
     hole⇐ ← newMeta unknown
     unifyWithGoal $ quote mk⇔ ∙⟦ hole⇒ ∣ hole⇐ ⟧
-    debugLog1 "hole⇐"
-    debugLogTerm hole⇐
     runWithHole hole⇐ derive⇐
-    debugLog ("hole⇒ " ∷ᵈ hole⇒ ∷ᵈ [])
     runWithHole hole⇒ $ derive⇒ n stsConstrs
 
   deriveComp : Name → ITactic
@@ -184,14 +179,14 @@ module _ ⦃ _ : DebugOptions ⦄ where
   deriveComputational n compName =
     initUnquoteWithGoal (quoteTerm Name) $ inDebugPath "deriveComputational" do
       let goalTy = quote Computational ∙⟦ n ∙ ⟧
-      debugLog (goalTy ∷ᵈ [])
+      debugLog1 goalTy
       declareDef (vArg compName) goalTy
-      compRes ← runAndReset $ do
+      compRes ← withSafeReset $ do
         compHole ← newMeta unknown
         equivHole ← newMeta unknown
         definition ← mkRecord (quote Computational) (compHole ⟨∷⟩ equivHole ⟨∷⟩ [])
         _ ← checkType definition goalTy
-        debugLogTerm compHole
+        debugLog1ᵐ (compHole ᵗ)
         runWithHole compHole $ deriveComp n
         reduce compHole
       debugLog ("compRes: " ∷ᵈ compRes ∷ᵈ [])

@@ -45,8 +45,12 @@ MonadReader-TC = MonadReader-ReaderT ⦃ Interface.MonadTC.Monad-TC ⦄
 MonadError-TC : MonadError (List ErrorPart) TC
 MonadError-TC = MonadError-ReaderT ⦃ Interface.MonadTC.Monad-TC ⦄ ⦃ Interface.MonadError.MonadError-TC ⦄
 
+applyReductionOptions : TC A → TC A
+applyReductionOptions x r@record { reduction = onlyReduce red } = R'.onlyReduceDefs red (x r)
+applyReductionOptions x r@record { reduction = dontReduce red } = R'.dontReduceDefs red (x r)
+
 applyNormalisation : TC A → TC A
-applyNormalisation x r@record { normalisation = n } = R.withNormalisation n (x r)
+applyNormalisation x r@record { normalisation = n } = R.withNormalisation n (applyReductionOptions x r)
 
 applyReconstruction : TC A → TC A
 applyReconstruction x r@record { reconstruction = false } = x r
@@ -83,10 +87,10 @@ module MonadTCI where
   checkType         = (applyReconstruction ∘ applyNormalisation) ∘₂ liftTC2 R.checkType
 
   normalise         : Term → TC Term
-  normalise         = applyReconstruction ∘ liftTC1 R.normalise
+  normalise         = applyReductionOptions ∘ applyReconstruction ∘ liftTC1 R.normalise
 
   reduce            : Term → TC Term
-  reduce            = applyReconstruction ∘ liftTC1 R.reduce
+  reduce            = applyReductionOptions ∘ applyReconstruction ∘ liftTC1 R.reduce
 
   quoteTC           : A → TC Term
   quoteTC           = applyNormalisation ∘ liftTC1 R.quoteTC

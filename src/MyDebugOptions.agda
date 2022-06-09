@@ -8,5 +8,5 @@ instance
   defaultDebugOptionsI : DebugOptions
   defaultDebugOptionsI = record defaultDebugOptions
     { selection = All
-    ; filter = noneOf ("getDataDef" ∷ "getSTSConstrs" ∷ "assumption" ∷ "reduceDec"
-        ∷ "specializeType" ∷ "tryConstrs" ∷ []) }
+    ; filter = noneOf ("getDataDef" ∷ "getSTSConstrs" ∷ "assumption" ∷
+        "derive⇐" ∷ "derive⇒" ∷ "specializeType" ∷ []) }
