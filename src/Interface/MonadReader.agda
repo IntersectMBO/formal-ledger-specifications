@@ -2,8 +2,7 @@
 
 module Interface.MonadReader where
 
-open import Level
-open import Function
+open import Prelude
 
 open import Interface.Monad
 open import Interface.MonadError

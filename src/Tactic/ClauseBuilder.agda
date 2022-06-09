@@ -1,19 +1,12 @@
 module Tactic.ClauseBuilder where
 
-open import Data.Sum using (_⊎_; inj₁; inj₂)
-open import Reflection.AST.Argument using (unArg; map-Args)
-open import Reflection.AST.Abstraction using (unAbs)
-open import Data.Bool
-open import Data.List
+open import Prelude hiding ([_,_])
+
 import Data.List.NonEmpty as NE
+import Data.Nat
+open import Data.List using (zipWith)
 open import Data.Nat.Properties using (≤-totalOrder; ≤-decTotalOrder)
-open import Data.List.Extrema (≤-totalOrder)
-open import Data.Nat
-open import Data.Product hiding (_<*>_)
-open import Data.String using (String; _<+>_)
-open import Function
-open import Data.Maybe using (Maybe; from-just; just; nothing)
-open import Category.Monad.State
+open import Data.Product using (map₁)
 
 -- Note: using sort from Data.List.Sort directly doesn't work for
 -- metaprogramming, since it's `abstract` for whatever reason
@@ -24,13 +17,15 @@ open SortingAlgorithm ≤-decTotalOrder (mergeSort ≤-decTotalOrder) public
 open import PreludeImports
 
 open import Tactic.Helpers
-open import Level
 
 open import Interface.Monad
 open import Interface.MonadError hiding (MonadError-TC)
 open import Interface.MonadTC hiding (Monad-TC)
 open import Interface.MonadReader
+
 open import Reflection.TCI
+open import Reflection.Syntax
+open import Reflection.AST.Argument using (unArg; map-Args)
 
 open Monad ⦃...⦄
 open MonadTC ⦃...⦄
@@ -50,13 +45,6 @@ instance
 private
   variable a b : Level
            A : Set a
-
--- Semigroup-Product : (A : Set a) (B : Set b) ⦃ _ : Semigroup A ⦄ ⦃ _ : Semigroup B ⦄ → Semigroup (A × B)
--- Semigroup-Product A B ._◇_ (a₁ , b₁) (a₂ , b₂) = (a₁ ◇ a₂ , b₁ ◇ b₂)
-
--- Monoid-Product : (A : Set a) (B : Set b) ⦃ _ : Monoid A ⦄ ⦃ _ : Monoid B ⦄ → Monoid (A × B)
--- Monoid-Product A B .Monoid.smₐ = Semigroup-Product A B
--- Monoid-Product A B .ε = (ε , ε)
 
 record ClauseBuilder (M : Set → Set) : Set₁ where
   field
@@ -123,56 +111,6 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
   ctxSinglePatterns = do
     ctx ← getContext
     return (singlePatternFromPattern <$> zipWithIndex (λ where k (arg i _) → arg i (` k)) ctx)
-
--- {-# TERMINATING #-}
--- singlePatternFromTelescope : List (String × Arg Type) → Arg Pattern → SinglePattern
--- singlePatternFromTelescope tel (arg i p) =
---   takeIndices normalisedIndexList tel , arg i (mapFreeVarsᵖ (findIndexDefault normalisedIndexList 0) 0 p)
---   where
---     appearingIndices : Pattern → List ℕ
---     appearingIndices (Pattern.con c ps) = appearingIndices ∘ unArg =<< ps
---     appearingIndices (Pattern.dot t) = [] -- TODO: this is probably wrong
---     appearingIndices (` x) = [ x ]
---     appearingIndices (Pattern.lit l) = []
---     appearingIndices (Pattern.proj f) = []
---     appearingIndices (Pattern.absurd x) = []
-
---     normalisedIndexList : List ℕ
---     normalisedIndexList = sort ≤-decTotalOrder $ deduplicate Nat._≟_ $ appearingIndices p
-
---     lookupMaybe : List A → ℕ → Maybe A
---     lookupMaybe [] n = nothing
---     lookupMaybe (x ∷ l) Nat.zero = just x
---     lookupMaybe (x ∷ l) (Nat.suc n) = lookupMaybe l n
-
---     takeIndices : List ℕ → List A → List A
---     takeIndices [] l = []
---     takeIndices (x ∷ i) l = lookupMaybe l x ?∷ takeIndices i l
-
---     findIndexDefault : ⦃ _ : DecEq A ⦄ → List A → ℕ → A → ℕ
---     findIndexDefault l d a with filter (λ where (i , x) → x ≟ a) (zipWithIndex _,_ l)
---     ... | []          = d
---     ... | (i , _) ∷ _ = i
-
--- {-# TERMINATING #-}
--- findMaxDB : Pattern → Maybe ℕ
--- findMaxDB = helper nothing
---   where
---     _⊔'_ : Maybe ℕ → Maybe ℕ → Maybe ℕ
---     just a ⊔' just b = just (a Nat.⊔ b)
---     just a ⊔' nothing = just a
---     nothing ⊔' b = b
-
---     helper : Maybe ℕ → Pattern → Maybe ℕ
---     helper k (con c ps) = foldr (λ p acc → helper k p ⊔' acc) k (unArg <$> ps)
---     helper k (dot t) = k
---     helper k (` x) = k ⊔' (just x)
---     helper k (lit l) = k
---     helper k (proj f) = k
---     helper k (absurd x) = k
-
--- singleConstrPattern : Arg Name → List (Arg Pattern) → SinglePattern
--- singleConstrPattern (arg i n) args = {!L.mapMaybe (findMaxDB ∘ unArg) args!} , arg i (Pattern.con n args)
 
   -- TODO: add the ability to match initial hidden arguments
   -- TODO: add dot patterns
@@ -249,42 +187,6 @@ Monad-Id ._>>=_  = flip _$_
 ContextMonad-Id : ContextMonad id ⦃ Monad-Id ⦄
 ContextMonad-Id .introPatternM _ a = a
 
--- -- Goal and TC computation
--- TB : Set↑
--- TB = ReaderT Type TC
-
--- ask : TB Type
--- ask = return
-
--- runTB : Type → TB A → TC A
--- runTB t x = x t
-
--- <<<<<<< Updated upstream
--- runTBwithHole : Hole → TB A → TC A
--- runTBwithHole hole x = do
---   goalTy ← inferType hole
---   runTB goalTy x
-
--- runTBinHole : Hole → TB Term → TC ⊤
--- runTBinHole hole x = do
---   res ← runTBwithHole hole x
---   unify hole res
-
--- =======
--- >>>>>>> Stashed changes
--- lift-TB : TC A → TB A
--- lift-TB x = const x
-
--- goalHole : TB Hole
--- goalHole = newMeta
-
--- instance
---   Functor-TB : Functor TB
---   Functor-TB ._<$>_ f x t = f <$> x t
-
---   Monad-TB : Monad TB
---   Monad-TB = Monad-ReaderT _ _
-
 module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
 
   refineWithSingle : (Term → Term) → M Term → M Term
@@ -305,17 +207,6 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
     (ty ∷ _ , _) ← viewTy′ <$> goalTy
       where _ → error1 "Goal type is not a forall!"
     constructorPatterns' ty
-
--- {-# TERMINATING #-}
--- patternToTerm : List Term → Pattern → Term
--- patternToTerm t (Pattern.con c ps) = con c ((λ where (arg v p) → arg v (patternToTerm t p)) <$> ps)
--- patternToTerm t (Pattern.dot t') = t'
--- patternToTerm t (` x) with head $ drop x t
--- ... | just t' = t'
--- ... | nothing = unknown
--- patternToTerm t (Pattern.lit l) = lit l
--- patternToTerm t (Pattern.proj f) = unknown
--- patternToTerm t (Pattern.absurd x) = unknown
 
 stripMetaLambdas : Term → Term
 stripMetaLambdas = helper 0

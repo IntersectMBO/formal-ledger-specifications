@@ -2,14 +2,12 @@
 
 module ComputationalRelation where
 
-open import Data.Bool using (true; false)
-open import Data.Empty
-open import Data.Maybe
-open import Function
-open import Relation.Binary.PropositionalEquality
-open import Relation.Nullary
+open import Prelude
 
 open import DecEq
+
+open import Relation.Binary.PropositionalEquality
+open import Relation.Nullary
 
 infix 0 _────────────────────────────────_
 _────────────────────────────────_ : Set → Set → Set

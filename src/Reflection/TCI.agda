@@ -1,21 +1,19 @@
--- Improved TC
 {-# OPTIONS --safe --without-K #-}
+--------------------------------------------------------------------------------
+-- Improved TC
+--------------------------------------------------------------------------------
 
-open import Data.Product hiding (map)
-open import Data.Nat
-open import Data.Unit
-open import Data.String hiding (_++_)
-open import Data.Bool
-open import Data.List
-open import Data.Maybe using (Maybe; just; nothing)
-open import Function
-open import Level
+module Reflection.TCI where
 
+open import Prelude
+
+open import Data.List using (map)
+
+import Agda.Builtin.Reflection as R'
+import Reflection as R
 open import Agda.Builtin.Reflection using (ErrorPart)
 open import Reflection.AST
 open import Reflection.AST.Abstraction using (unAbs)
-import Reflection as R
-import Agda.Builtin.Reflection as R'
 
 open import Interface.Monad
 open import Interface.MonadError using (MonadError)
@@ -27,8 +25,6 @@ open import Interface.MonadTC hiding (Monad-TC)
 open import Test.GetType
 
 open Monad
-
-module Reflection.TCI where
 
 private variable a f : Level
                  A B C D : Set a

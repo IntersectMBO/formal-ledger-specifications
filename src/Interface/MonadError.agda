@@ -2,11 +2,10 @@
 
 open import Level
 
-open import Reflection using (TC; ErrorPart; typeError; catchTC; strErr)
-open import Data.String
-open import Data.List
-open import Data.Sum
+open import Prelude
+
 open import Interface.Monad
+open import Reflection using (TC; ErrorPart; typeError; catchTC; strErr)
 
 open Monad ⦃...⦄
 

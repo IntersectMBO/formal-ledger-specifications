@@ -5,27 +5,21 @@
 
 module Tactic.Constrs where
 
-open import Agda.Builtin.Reflection using (withReconstructed)
-import Reflection.AST.Argument
-open import Data.Bool
-open import Data.List
-open import Data.Nat
-open import Data.Product
-open import Data.String using (String; _<+>_)
-open import Function
-open import Reflection using (Name; Type; Term; Arg; arg; unknown; con)
-open import Data.Maybe using (from-just)
-open import Data.Unit
-open import Data.Sum using (inj₁; inj₂)
+open import Prelude
+
+import Data.List
 
 open import PreludeImports
 
 open import Tactic.Helpers
 
+import Reflection.AST.Argument
+open import Agda.Builtin.Reflection using (withReconstructed)
 open import Interface.Monad
 open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadTC hiding (Monad-TC)
 open import Interface.MonadReader
+open import Interface.MonadTC hiding (Monad-TC)
+open import Reflection using (Name; Type; Term; Arg; arg; unknown; con)
 open import Reflection.TCI
 
 open Monad ⦃...⦄

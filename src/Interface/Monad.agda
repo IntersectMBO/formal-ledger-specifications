@@ -2,8 +2,7 @@
 
 module Interface.Monad where
 
-open import Level
-open import Function
+open import Prelude
 
 private
   variable

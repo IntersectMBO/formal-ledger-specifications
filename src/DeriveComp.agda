@@ -1,21 +1,17 @@
-open import Agda.Builtin.Reflection using (withReconstructed; onlyReduceDefs)
+module DeriveComp where
+
+open import Prelude
+
+import Agda.Builtin.Reflection
 open import Reflection.AST hiding (name)
 open import Reflection.AST.Argument using (unArg; _⟨∷⟩_)
 open import Reflection.AST.Abstraction using (unAbs)
 import Reflection.AST.Argument.Visibility
 
-open import Function
-
-open import Data.Unit hiding (_≟_)
-open import Data.Bool hiding (_≟_)
-open import Data.Maybe using (Maybe; just; nothing; from-just)
-open import Data.Maybe.Properties using (just-injective)
-open import Data.List
+import Data.List
 import Data.List.NonEmpty as NE
-open import Data.Product
-open import Data.String using (String; _<+>_)
-open import Data.Nat hiding (_≟_)
-open import Data.Sum using (inj₁; inj₂)
+import Data.Maybe
+open import Data.Maybe.Properties using (just-injective)
 
 open import PreludeImports
 open import PreludeImportsDecEq
@@ -25,25 +21,21 @@ open import Relation.Nullary.Negation
 open import Relation.Nullary.Decidable
 open import Relation.Binary.PropositionalEquality hiding ([_])
 
-open import Tactic.ReduceDec using (reduceDec; reduceDec'; reduceDecInGoal; by-reduceDec; by-reduceDecInGoal)
+open import Tactic.ReduceDec using (reduceDec'; reduceDecInGoal; by-reduceDec; by-reduceDecInGoal)
 open import Tactic.Helpers
-open import Tactic.Constrs
 open import Tactic.ClauseBuilder
-
-open import ComputationalRelation
-
-module DeriveComp where
 
 open import Interface.Monad
 open import Interface.MonadError hiding (MonadError-TC)
 open import Interface.MonadTC hiding (Monad-TC)
-open import Interface.MonadReader
 open import Reflection.TCI
+open import Reflection.Syntax
+
+open import ComputationalRelation
 
 open Monad ⦃...⦄
 open MonadTC ⦃...⦄
 open MonadError ⦃...⦄
-open MonadReader ⦃...⦄
 
 instance
   _ = Monad-TC

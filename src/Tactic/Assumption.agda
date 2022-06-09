@@ -4,23 +4,16 @@
 
 module Tactic.Assumption where
 
-open import Reflection using (Term)
-
-open import Function
-
-open import Data.List
-open import Data.Product
-open import Data.String using (String; _<+>_)
-open import Data.Bool
-open import Data.Unit
-open import Data.Sum using (inj₁; inj₂)
+open import Prelude
 
 open import Interface.Monad
 open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadTC hiding (Monad-TC)
-open import Tactic.Helpers
-open import Reflection.TCI
 open import Interface.MonadReader
+open import Interface.MonadTC hiding (Monad-TC)
+
+open import Reflection using (Term)
+open import Reflection.TCI
+open import Tactic.Helpers
 
 open import PreludeImports
 

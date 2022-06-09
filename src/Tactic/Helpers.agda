@@ -1,29 +1,21 @@
-{-# OPTIONS -v Test:101 #-}
+--{-# OPTIONS --safe --without-K #-}
 module Tactic.Helpers where
 
-open import Reflection.AST.Abstraction using (unAbs)
-open import Reflection.AST.Argument using (vArg; hArg; iArg)
-open import Data.Bool
-open import Data.List
-open import Data.Nat
-open import Data.Product hiding (map)
-open import Data.String using (String; _<+>_)
-open import Function
-open import Reflection using (Term; Type; Name; data-cons; pi; abs; Abs; Arg; Clause; vArg; data-type; record-type; var; con; def; lam; pat-lam; arg; agda-sort; lit; meta; unknown; Pattern; strErr; ErrorPart) public
-open import Data.Maybe using (Maybe; just; nothing; from-just; when; is-just)
-open import Data.Unit
-open import Level
-open import Data.Sum using (inj₁; inj₂)
+open import Prelude
+
+open import Data.List using (map; zipWith)
 
 open import PreludeImports
 
-open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadTC
+import Reflection
 open import Interface.Monad
+open import Interface.MonadError hiding (MonadError-TC)
 open import Interface.MonadReader
+open import Interface.MonadTC
 open import Interface.Show
+open import Reflection.AST.Abstraction using (unAbs)
+open import Reflection.Syntax
 open import Reflection.TCI
-open import Tactic.Defaults
 
 private
   variable a b c : Level
@@ -42,12 +34,6 @@ record RecordDef : Set where
   field
     name : Name
     fields : List (Arg Name)
-
-pattern ⟦_∣_∣_⇒_⟧ x y z k = Clause.clause [] (vArg x ∷ vArg y ∷ vArg z ∷ []) k
-pattern ⟦_∣_∣_⦅_⦆⇒_⟧ x y z tel k = Clause.clause tel (vArg x ∷ vArg y ∷ vArg z ∷ []) k
-
-getName : Abs A → String
-getName (abs s x) = s
 
 open Monad ⦃...⦄
 open MonadTC ⦃...⦄
@@ -234,12 +220,13 @@ instance
   _ = MonadError-TC
   _ = MonadReader-TC
 
-macro
-  byTC : TC A → Tactic
-  byTC comp = initTac ((comp >>= quoteTC) >>= unifyWithGoal)
+module _ ⦃ _ : DebugOptions ⦄ where
+  macro
+    byTC : TC A → Tactic
+    byTC comp = initTac ((comp >>= quoteTC) >>= unifyWithGoal)
 
-  by : ITactic → Tactic
-  by = initTac
+    by : ITactic → Tactic
+    by = initTac
 
 popPis : Term → ℕ → Maybe Term
 popPis t zero = just t

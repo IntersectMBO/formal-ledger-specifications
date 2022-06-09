@@ -1,32 +1,27 @@
 {-# OPTIONS --safe --without-K #-}
 
+module Interface.MonadTC where
+
+open import Prelude hiding (⊤; _∧_; _∨_; filter)
+
 open import Category.Monad
 
-open import Data.Bool hiding (_∧_; _∨_)
+import Data.Bool
+import Data.String
 open import Data.List hiding (_++_; filter)
-open import Data.Maybe using (Maybe; just; nothing)
-open import Data.Nat
-open import Data.Product hiding (map)
-open import Data.String hiding (_≈_)
-open import Data.Sum using (_⊎_; inj₁; inj₂)
+
 open import Relation.Nullary.Decidable using (⌊_⌋)
-open import Relation.Binary.PropositionalEquality
 
-open import Level
-open import Function
-
-open import Agda.Builtin.Reflection using (ErrorPart)
-open import Reflection.AST
-open import Reflection.AST.Abstraction using (unAbs)
+import Agda.Builtin.Reflection as R'
 import Reflection as R
 import Reflection.TCM.Syntax as RS
-import Agda.Builtin.Reflection as R'
+open R using (ErrorPart)
+open import Reflection.AST
+open import Reflection.AST.Abstraction using (unAbs)
 
 open import Interface.MonadReader
 open import Interface.MonadError
 open import Interface.Monad
-
-module Interface.MonadTC where
 
 private
   variable

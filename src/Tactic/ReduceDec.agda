@@ -1,26 +1,13 @@
+{-# OPTIONS -v allTactics:100 #-}
 --------------------------------------------------------------------------------
 -- reduceDec: looks for proofs of P to reduce ⌊ decP ⌋
 --------------------------------------------------------------------------------
 
 module Tactic.ReduceDec where
 
-open import Agda.Builtin.Reflection using (withReconstructed; onlyReduceDefs; dontReduceDefs)
-open import Reflection using (hArg; vArg; iArg; unknown; lam; visible; abs; Term)
-open import Reflection.AST.Argument
-import Reflection.AST.Name
+open import Prelude
+
 open import PreludeImports
-
-open import Function
-
-open import Data.Bool hiding (_≟_)
-import Data.Bool.Show
-open import Data.Maybe using (Maybe; just; nothing; from-just; is-just)
-open import Data.List
-open import Data.Product
-open import Data.String using (String; _<+>_)
-open import Data.Nat hiding (_≟_)
-open import Data.Empty
-open import Data.Sum using (inj₁; inj₂)
 
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
@@ -32,8 +19,10 @@ open import Tactic.Assumption
 
 open import Interface.Monad
 open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadTC hiding (Monad-TC)
 open import Interface.MonadReader
+open import Interface.MonadTC hiding (Monad-TC)
+open import Reflection.AST.Argument
+open import Reflection.Syntax
 open import Reflection.TCI
 
 open Monad ⦃...⦄
@@ -125,7 +114,7 @@ findDecRWHypWith tac dec =
         true  → checkType (quote fromWitness'      ∙⟦ dec ∣ hole ⟧) (fromWitness'Type true  dec)
       catch (do
         runWithHole hole tac
-        debugLog1 ("Hypothesis is" <+> Data.Bool.Show.show b)
+        debugLogᵐ ("Hypothesis is " ∷ᵈᵐ b ᵛⁿ ∷ᵈᵐ []ᵐ)
         return $ just res) (λ _ → return nothing)) x
 
 reduceDecTermWith : ITactic → ReductionOptions → Term → TC (Term × Term)
@@ -179,8 +168,6 @@ private
 
   module Test (A : Set) ⦃ _ : DecEq A ⦄ where
     open import Tactic.Defaults
-
-    open import Data.Unit using (⊤)
 
     variable a b : A
              X Y Z : Set

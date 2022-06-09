@@ -10,7 +10,7 @@ Path = /Library/Fonts/ ,
 \newunicodechar{₂}{\ensuremath{_2}}
 
 \usepackage{float}
-\floatstyle{boxed} 
+\floatstyle{boxed}
 \restylefloat{figure}
 
 \usepackage{iohk}
@@ -54,23 +54,19 @@ Path = /Library/Fonts/ ,
 {-# OPTIONS --overlapping-instances #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Data.List using (List; []; _∷_; any; foldr; sum; mapMaybe)
-open import Data.List.Relation.Unary.All using (All; all?)
-open import Data.Nat using (ℕ; _+_; _*_; _≤_; _≤?_)
-open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm)
-open import Data.Maybe hiding (_>>=_)
-open import Data.Maybe.Properties using (just-injective)
-open import Data.Maybe.Relation.Unary.Any using (dec)
-open import Data.Product
-open import Data.Product.Properties
-open import Data.Bool using (Bool; if_then_else_; _∧_; true; false)
-open import Data.Unit using (⊤; tt)
-open import Data.Empty
-open import Data.List.Membership.Propositional
+open import Prelude
 
 open import Algebra using (CommutativeMonoid)
-open import Function hiding (id; _↪_) renaming (_↣_ to _↪_)
+
 import Function.Related.Propositional as FP
+
+open import Data.List.Membership.Propositional
+open import Data.List.Relation.Unary.All using (All; all?)
+open import Data.Maybe.Properties using (just-injective)
+open import Data.Maybe.Relation.Unary.Any using (dec)
+open import Data.Nat using (_≤?_; _≤_)
+open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm)
+open import Data.Product.Properties
 
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
@@ -78,21 +74,22 @@ open import Relation.Nullary.Product
 open import Relation.Binary
 open import Relation.Binary.PropositionalEquality
 
+open import DecEq
 open import FinMap renaming (FinMap to _↦_)
 open import FinSet hiding (∅) renaming (FinSet to ℙ_)
-open import DecEq
-open import FinSet.Properties.Equality
 open import FinSet.Properties
-open import Tactic.MonoidSolver
-open import TacticReasoning
-open import DeriveComp hiding (rdOpts)
-open import ComputationalRelation
-open import Tactic.Helpers
-open import Reflection hiding (_≟_)
+open import FinSet.Properties.Equality
+
 open import PreludeImports
 import PreludeImportsDecEq as P hiding (DecEq-Σ)
-open import Agda.Builtin.Reflection using (onlyReduceDefs)
-open import Tactic.ReduceDec using (by-reduceDec'; by-reduceDecInGoal')
+
+open import ComputationalRelation
+
+open import DeriveComp
+open import Reflection hiding (_≟_)
+open import Tactic.Helpers
+open import Tactic.MonoidSolver
+open import TacticReasoning
 
 open import MyDebugOptions
 --open import Tactic.Defaults
@@ -136,7 +133,7 @@ n ≤ᵇ m = ⌊ n ≤? m ⌋
 _≠_ : {A : Set} → A → A → Set
 a ≠ b = ¬ a ≡ b
 
-_⟨$⟩_ : {A B : Set} → A ↪ B → A → B
+_⟨$⟩_ : {A B : Set} → A ↣ B → A → B
 _⟨$⟩_ = FP.⇒→ {k = FP.injection}
 
 instance
@@ -178,7 +175,7 @@ open Tx
 module _ (
 \end{code}
 \begin{code}
-  txid : Tx ↪ TxId -- an injective function
+  txid : Tx ↣ TxId -- an injective function
 \end{code}
 \begin{code}[hide]
   ) where
@@ -252,9 +249,9 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
     utxoState utxoState' utxoState1 utxoState2 : UTxOState
     Γ : UTxOEnv
     s s' : UTxOState
-  
+
   ⟦_⟧ : {A : Set} → A → A
-  ⟦_⟧ = Function.id
+  ⟦_⟧ = id
 
   instance
     _ : {a : ℙ TxIn} → (a ≡ ∅) P.⁇
