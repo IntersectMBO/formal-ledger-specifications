@@ -89,7 +89,7 @@ open import DeriveComp
 open import Reflection hiding (_≟_)
 open import Tactic.Helpers
 open import Tactic.MonoidSolver
-open import TacticReasoning
+open import Tactic.EquationalReasoning
 
 open import MyDebugOptions
 --open import Tactic.Defaults
@@ -317,7 +317,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   balance-cong : utxo ≡ᵉ utxo' → balance utxo ≡ balance utxo'
   balance-cong {utxo} {utxo'} = indexedSum-cong {s = utxo} {s' = utxo'}
 
-  open TacticReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
+  open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 \end{code}
 
 \begin{property}[\textbf{Preserve Balance}]
@@ -355,15 +355,12 @@ then
         balance ((txins tx ⋪ utxo) ∪ (txins tx ◃ utxo))
           ≡⟨ balance-∪ {txins tx ⋪ utxo} {txins tx ◃ utxo} (dom-res-ex-∩ (txins tx) utxo) ⟩
         balance (txins tx ⋪ utxo) + balance (txins tx ◃ utxo)
-          ≡⟨ cong (balance (txins tx ⋪ utxo) +_) x₂ ⟩
-        balance (txins tx ⋪ utxo) + (balance (outs tx) + txfee tx)
-          ≡t⟨⟩
+          ≡tʳ⟨ cong (balance (txins tx ⋪ utxo) +_) x₂ ⟩
         balance (txins tx ⋪ utxo) + balance (outs tx) + txfee tx
           ≡˘⟨ cong (_+ txfee tx) (balance-∪ {txins tx ⋪ utxo} {outs tx} (dom-res-∩-empty (txins tx) utxo (outs tx) h)) ⟩
         balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx ∎
     in begin
-    balance utxo + fee                                        ≡⟨ cong (_+ fee) balance-eq ⟩
-    balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx + fee    ≡t⟨⟩
+    balance utxo + fee                                        ≡tʳ⟨ cong (_+ fee) balance-eq ⟩
     balance ((txins tx ⋪ utxo) ∪ outs tx) + (txfee tx + fee)
               ≡˘⟨ cong (balance ((txins tx ⋪ utxo) ∪ outs tx) +_) (+-comm fee (txfee tx)) ⟩
     balance ((txins tx ⋪ utxo) ∪ outs tx) + (fee + txfee tx) ∎
