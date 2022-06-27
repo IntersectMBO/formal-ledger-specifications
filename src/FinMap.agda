@@ -55,11 +55,17 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
   values : FinMap K V → List V
   values m = Data.List.map proj₂ $ elements m
 
+  values' : FinMap K V → FinSet V
+  values' = FinSet.fromList ∘ values
+
   insert : K → V → FinMap K V → FinMap K V
   insert k v m = m ∪ return {b = false} (k , v)
 
   dom : FinMap K V → FinSet K
   dom m = for x ∈ m as false , (return {b = false} $ proj₁ x)
+
+  _⟪$⟫_ : FinMap K V → FinSet K → FinSet V
+  m ⟪$⟫ ks = values' (ks ◃ m)
 
   mapKeys : {K' : Set} → {{_ : DecEq K'}} → (K → K') → FinMap K V → FinMap K' V
   mapKeys f m = for x ∈ m as false , return {b = false} (Data.Product.map₁ f x)

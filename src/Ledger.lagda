@@ -8,6 +8,7 @@ Path = /Library/Fonts/ ,
 \newunicodechar{ᵇ}{\ensuremath{^b}}
 \newunicodechar{₁}{\ensuremath{_1}}
 \newunicodechar{₂}{\ensuremath{_2}}
+\newunicodechar{σ}{\ensuremath{\sigma}}
 
 \usepackage{float}
 \floatstyle{boxed}
@@ -19,6 +20,8 @@ Path = /Library/Fonts/ ,
 \usepackage[links]{agda}
 
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\TxBody}{\type{TxBody}}
+\newcommand{\TxWitness}{\type{TxWitness}}
 \newcommand{\Tx}{\type{Tx}}
 \newcommand{\Ix}{\type{Ix}}
 \newcommand{\TxId}{\type{TxId}}
@@ -123,10 +126,12 @@ This function must produce a unique id for each unique transaction body.
   Ix           -- index
   TxId         -- transaction id
   Addr         -- address
+  VKey         -- verifying key
+  Sig          -- signature
 \end{code}
 \emph{Derived types}
 \begin{code}[hide]
-  : Set) {{_ : DecEq TxId}} {{_ : DecEq Ix}} {{_ : DecEq Addr}} where
+  : Set) {{_ : DecEq TxId}} {{_ : DecEq Ix}} {{_ : DecEq Addr}} ⦃ _ : DecEq VKey ⦄ ⦃ _ : DecEq Sig ⦄ where
 _≤ᵇ_ : ℕ → ℕ → Bool
 n ≤ᵇ m = ⌊ n ≤? m ⌋
 
@@ -161,24 +166,38 @@ record PParams : Set where
 \end{code}
 \emph{Transaction types}
 \begin{code}
-record Tx : Set where
+record TxBody : Set where
   field
     txins  : ℙ TxIn
     txouts : Ix ↦ TxOut
     txfee  : Coin
     txvldt : Maybe ℕ × Maybe ℕ
     txsize : ℕ
+
+record TxWitness : Set where
+  field
+    key : VKey ↦ Sig
+
+record Tx : Set where
+  field
+    txbody : TxBody
+    txwits : TxWitness
 \end{code}
 \emph{Abstract functions}
 \begin{code}[hide]
+open TxBody
+open TxWitness
 open Tx
-module _ (
+module _
 \end{code}
+  -- TODO: how to fix parentheses here?
 \begin{code}
-  txid : Tx ↣ TxId -- an injective function
+  (txid : TxBody ↣ TxId) -- an injective function
+  (paymentK : Addr → VKey) -- TODO: should be the hash
+  (isSigned : VKey → TxBody → Sig → Set)
 \end{code}
 \begin{code}[hide]
-  ) where
+  where
 \end{code}
 \caption{Definitions used in the UTxO transition system}
 \label{fig:defs:utxo-shelley}
@@ -201,21 +220,21 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
     The $\fun{balance}$ function calculates sum total of all the coin in a given UTxO.
 \end{itemize}
 
-\AgdaTarget{outs, balance}
+\AgdaTarget{outs, minfee, inInterval, balance}
 \begin{figure*}[h]
 \begin{code}
-  outs : Tx → UTxO
+  outs : TxBody → UTxO
   outs tx = mapKeys (txid ⟨$⟩ tx ,_) $ txouts tx
 
-  minfee : PParams → Tx → Coin
+  minfee : PParams → TxBody → Coin
   minfee pp tx = PParams.a pp * txsize tx + PParams.b pp
 
   -- this has to be a type definition for inference to work
   data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
-    both  : ∀ {l r} → l ≤ slot × slot ≤ r → inInterval slot (just l  , just r)
-    lower : ∀ {l}   → l ≤ slot            → inInterval slot (just l  , nothing)
-    upper : ∀ {r}   → slot ≤ r            → inInterval slot (nothing , just r)
-    none  :                                 inInterval slot (nothing , nothing)
+    both  : ∀ {l r} → l ≤ slot × slot ≤ r  →  inInterval slot (just l  , just r)
+    lower : ∀ {l}   → l ≤ slot             →  inInterval slot (just l  , nothing)
+    upper : ∀ {r}   → slot ≤ r             →  inInterval slot (nothing , just r)
+    none  :                                   inInterval slot (nothing , nothing)
 
   balance : UTxO → Coin
   balance utxo = Σ[ v ← utxo ] proj₂ (proj₂ v)
@@ -243,7 +262,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
 \begin{code}[hide]
   variable
-    tx : Tx
+    tx : TxBody
     utxo utxo' utxo1 utxo2 : UTxO
     fee fee' fees fees' : Coin
     utxoState utxoState' utxoState1 utxoState2 : UTxOState
@@ -274,7 +293,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   data
 \end{code}
 \begin{code}
-    _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+    _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TxBody → UTxOState → Set
 \end{code}
 \caption{UTxO transition-system types}
 \label{fig:ts-types:utxo-shelley}
@@ -321,7 +340,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \end{code}
 
 \begin{property}[\textbf{Preserve Balance}]
-For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\Tx$, if
+For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\TxBody$, if
 \begin{code}[hide]
   pov :
 \end{code}
@@ -375,14 +394,72 @@ relation. Luckily, this can be automated.
 
 \begin{figure*}[h]
 \begin{code}
-  UTXO-step : UTxOEnv → UTxOState → Tx → Maybe UTxOState
+  UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
   UTXO-step = Computational.compute Computational-UTXO
 
   UTXO-step-computes-UTXO :
     UTXO-step Γ utxoState tx ≡ just utxoState'
     ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-  UTXO-step-computes-UTXO = Computational.≡-just⇔STS Computational-UTXO
+  UTXO-step-computes-UTXO =
+    Computational.≡-just⇔STS Computational-UTXO
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}
+
+\begin{figure*}[h]
+\begin{code}
+  witsVKeyNeeded : UTxO → TxBody → ℙ VKey
+  witsVKeyNeeded utxo txb = FinSet.map (paymentK ∘ proj₁) (utxo ⟪$⟫ txins txb)
+\end{code}
+\caption{Functions used for witnessing}
+\label{fig:functions:utxow}
+\end{figure*}
+
+\begin{figure*}[h]
+\begin{code}[hide]
+  instance
+    Computational⇒DecInst : ∀ {C S Sig c s sig s'} ⦃ _ : DecEq S ⦄
+      {STS : C → S → Sig → S → Set} ⦃ comp : Computational STS ⦄ → Dec (STS c s sig s')
+    Computational⇒DecInst ⦃ comp = comp ⦄ = Computational⇒Dec comp
+
+    import Relation.Unary as U
+    FSall? : {A : Set} {P : A → Set} {P? : U.Decidable P} ⦃ _ : DecEq A ⦄ {s : FinSet.FinSet A}
+           → Dec (FinSet.All P s)
+    FSall? {P? = P?} {s} = FinSet.all? P? s
+
+  data
+\end{code}
+\begin{code}
+    _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+\end{code}
+\caption{UTxOW transition-system types}
+\label{fig:ts-types:utxow}
+\end{figure*}
+
+\begin{figure*}[h]
+\begin{code}[hide]
+  data _⊢_⇀⦇_,UTXOW⦈_ where
+\end{code}
+\begin{code}
+    UTXOW-inductive :
+      ∀ {Γ} {s} {tx} {s'}
+      → let utxo = proj₁ s
+            txb = txbody tx
+            txw = txwits tx
+            witsKeys = dom (key txw)
+        in
+        witsVKeyNeeded utxo txb ⊆ witsKeys
+      → FinSet.All (λ { (vk , σ) → isSigned vk txb σ }) (key txw)
+      → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
+\end{code}
+\caption{UTXOW inference rules}
+\label{fig:rules:utxow}
+\end{figure*}
+
+\begin{code}[hide]
+  --unquoteDecl Computational-UTXOW = deriveComputational (quote _⊢_⇀⦇_,UTXOW⦈_) Computational-UTXOW
+\end{code}
+
 \end{document}

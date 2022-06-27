@@ -55,10 +55,10 @@ module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
 
   Computational⇒Dec : ⦃ _ : DecEq S ⦄ → Dec (STS c s sig s')
   Computational⇒Dec {c} {s} {sig} {s'} with compute c s sig | ExtendedRel-compute {c} {s} {sig}
-  ... | nothing | ExSTS = false because ofⁿ (ExSTS s')
+  ... | nothing | ExSTS = no (ExSTS s')
   ... | just x  | ExSTS with x ≟ s'
-  ... | no ¬p    = false because ofⁿ λ h → ¬p $ sym $ computational⇒rightUnique h ExSTS
-  ... | yes refl = true  because ofʸ ExSTS
+  ... | no ¬p    = no  λ h → ¬p $ sym $ computational⇒rightUnique h ExSTS
+  ... | yes refl = yes ExSTS
 
 module _ {STS : C → S → Sig → S → Set} (comp comp' : Computational STS) where
 
