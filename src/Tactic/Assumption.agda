@@ -5,28 +5,16 @@
 module Tactic.Assumption where
 
 open import Prelude
+open import Meta
 
-open import Interface.Monad
-open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadReader
-open import Interface.MonadTC hiding (Monad-TC)
+open import Interface.Monad.Instance
+open import Interface.MonadError.Instance
+open import Interface.MonadReader.Instance
+open import Interface.MonadTC.Instance
 
-open import Reflection using (Term)
-open import Reflection.TCI
 open import Tactic.Helpers
 
 open import PreludeImports
-
-open Monad ⦃...⦄
-open MonadTC ⦃...⦄
-open MonadError ⦃...⦄
-open MonadReader ⦃...⦄
-
-instance
-  _ = Monad-TC
-  _ = MonadTC-TCI
-  _ = MonadError-TC
-  _ = MonadReader-TC
 
 solve : ⦃ _ : DebugOptions ⦄ → Term → Tactic
 solve t = initTac $ runSpeculative $ do

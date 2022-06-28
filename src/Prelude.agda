@@ -14,3 +14,5 @@ open import Data.Sum hiding (assocʳ; assocˡ; map; map₁; map₂; reduce; swap
 open import Data.Product hiding (assocʳ; assocˡ; map; map₁; map₂; swap) public
 open import Data.Nat hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_) public
 open import Data.String using (String; _<+>_) public
+
+open import Relation.Binary.PropositionalEquality hiding (preorder; setoid; [_]; module ≡-Reasoning) public

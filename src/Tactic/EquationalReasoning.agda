@@ -8,7 +8,6 @@ import Relation.Binary.PropositionalEquality as ≡
 open import Agda.Builtin.Reflection
 
 module ≡-Reasoning {a} {A : Set a} (tac : Term → TC ⊤) where
-  open ≡
   open ≡.≡-Reasoning public
 
   infixr 2 _≡t⟨⟩_ step-≡tˡ step-≡tʳ
@@ -28,7 +27,6 @@ module ≡-Reasoning {a} {A : Set a} (tac : Term → TC ⊤) where
 private
   module Test where
 
-    open ≡ using (_≡_; cong)
     open import Tactic.MonoidSolver
     open import Data.Nat.Properties using (+-0-monoid; +-comm)
 

@@ -6,6 +6,7 @@
 module Tactic.ReduceDec where
 
 open import Prelude
+open import Meta
 
 open import PreludeImports
 
@@ -17,24 +18,10 @@ open import Tactic.Helpers
 open import Tactic.Constrs
 open import Tactic.Assumption
 
-open import Interface.Monad
-open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadReader
-open import Interface.MonadTC hiding (Monad-TC)
-open import Reflection.AST.Argument
-open import Reflection.Syntax
-open import Reflection.TCI
-
-open Monad ⦃...⦄
-open MonadTC ⦃...⦄
-open MonadError ⦃...⦄
-open MonadReader ⦃...⦄
-
-instance
-  _ = Monad-TC
-  _ = MonadTC-TCI
-  _ = MonadReader-TC
-  _ = MonadError-TC
+open import Interface.Monad.Instance
+open import Interface.MonadError.Instance
+open import Interface.MonadReader.Instance
+open import Interface.MonadTC.Instance
 
 private
   variable ℓ : Agda.Primitive.Level

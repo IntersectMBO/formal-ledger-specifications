@@ -1,47 +1,34 @@
-module DeriveComp where
+--{-# OPTIONS --safe --without-K #-}
+module Tactic.DeriveComp where
 
 open import Prelude
+open import Meta
 
-import Agda.Builtin.Reflection
-open import Reflection.AST hiding (name)
-open import Reflection.AST.Argument using (unArg; _⟨∷⟩_)
-open import Reflection.AST.Abstraction using (unAbs)
-import Reflection.AST.Argument.Visibility
+import Reflection.AST.Argument.Visibility as Visibility
+
+open import PreludeImports
+open import PreludeImportsDecEq
 
 import Data.List
 import Data.List.NonEmpty as NE
 import Data.Maybe
 open import Data.Maybe.Properties using (just-injective)
 
-open import PreludeImports
-open import PreludeImportsDecEq
-
 open import Relation.Nullary
 open import Relation.Nullary.Negation
 open import Relation.Nullary.Decidable
-open import Relation.Binary.PropositionalEquality hiding ([_])
 
-open import Tactic.ReduceDec using (reduceDec'; reduceDecInGoal; by-reduceDec; by-reduceDecInGoal)
-open import Tactic.Helpers
 open import Tactic.ClauseBuilder
+open import Tactic.Helpers
+open import Tactic.ReduceDec
 
-open import Interface.Monad
-open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadTC hiding (Monad-TC)
-open import Reflection.TCI
-open import Reflection.Syntax
+open import Interface.Monad.Instance
+open import Interface.MonadError.Instance
+open import Interface.MonadTC.Instance
 
 open import ComputationalRelation
 
-open Monad ⦃...⦄
-open MonadTC ⦃...⦄
-open MonadError ⦃...⦄
-
 instance
-  _ = Monad-TC
-  _ = MonadTC-TCI
-  _ = MonadReader-TC
-  _ = MonadError-TC
   _ = ContextMonad-MonadTC
 
   Monad-Maybe : Monad Maybe
@@ -65,11 +52,11 @@ conOrVarToPattern k (con c args) =
   Pattern.con c <$> (traverseList (λ { (arg i x) → Data.Maybe.map (arg i) $ conOrVarToPattern k x }) args)
 conOrVarToPattern _ _ = nothing
 
-getVisibility : ∀ {a} {A : Set a} → Arg A → Agda.Builtin.Reflection.Visibility
+getVisibility : ∀ {a} {A : Set a} → Arg A → Visibility
 getVisibility (arg (arg-info v _) _) = v
 
 isArg : (a : Abs (Arg Term)) → Dec _
-isArg a = ¬? (getVisibility (unAbs a) Reflection.AST.Argument.Visibility.≟ visible)
+isArg a = ¬? (getVisibility (unAbs a) Visibility.≟ visible)
 
 toSTSConstr : Name × TypeView → Maybe STSConstr
 toSTSConstr (n , (cs , def f args)) with args | mapMaybe (conOrVarToPattern (length $ dropWhile isArg cs) ∘ unArg) $ take 3 args

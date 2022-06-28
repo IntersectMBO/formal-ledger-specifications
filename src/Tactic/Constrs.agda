@@ -6,6 +6,7 @@
 module Tactic.Constrs where
 
 open import Prelude
+open import Meta
 
 import Data.List
 
@@ -13,25 +14,10 @@ open import PreludeImports
 
 open import Tactic.Helpers
 
-import Reflection.AST.Argument
-open import Agda.Builtin.Reflection using (withReconstructed)
-open import Interface.Monad
-open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadReader
-open import Interface.MonadTC hiding (Monad-TC)
-open import Reflection using (Name; Type; Term; Arg; arg; unknown; con)
-open import Reflection.TCI
-
-open Monad ⦃...⦄
-open MonadTC ⦃...⦄
-open MonadError ⦃...⦄
-open MonadReader ⦃...⦄
-
-instance
-  _ = Monad-TC
-  _ = MonadTC-TCI
-  _ = MonadReader-TC
-  _ = MonadError-TC
+open import Interface.Monad.Instance
+open import Interface.MonadError.Instance
+open import Interface.MonadReader.Instance
+open import Interface.MonadTC.Instance
 
 applyConstrToUnknowns : Name → Type → Term
 applyConstrToUnknowns n ty = con n (Data.List.map toUnknown $ argTys ty)

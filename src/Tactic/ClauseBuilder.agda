@@ -1,6 +1,7 @@
 module Tactic.ClauseBuilder where
 
 open import Prelude hiding ([_,_])
+open import Meta
 
 import Data.List.NonEmpty as NE
 import Data.Nat
@@ -18,26 +19,12 @@ open import PreludeImports
 
 open import Tactic.Helpers
 
-open import Interface.Monad
-open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadTC hiding (Monad-TC)
-open import Interface.MonadReader
-
-open import Reflection.TCI
-open import Reflection.Syntax
-open import Reflection.AST.Argument using (unArg; map-Args)
-
-open Monad ⦃...⦄
-open MonadTC ⦃...⦄
-open MonadError ⦃...⦄
-open MonadReader ⦃...⦄
+open import Interface.Monad.Instance
+open import Interface.MonadError.Instance
+open import Interface.MonadTC.Instance
+open import Interface.MonadReader.Instance
 
 instance
-  _ = Monad-TC
-  _ = MonadTC-TCI
-  _ = MonadReader-TC
-  _ = MonadError-TC
-
   Monad-List : Monad List
   Monad-List .return = _∷ []
   Monad-List ._>>=_  = flip concatMap

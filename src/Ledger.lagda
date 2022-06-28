@@ -88,11 +88,10 @@ import PreludeImportsDecEq as P hiding (DecEq-Σ)
 
 open import ComputationalRelation
 
-open import DeriveComp
-open import Reflection hiding (_≟_)
 open import Tactic.Helpers
 open import Tactic.MonoidSolver
 open import Tactic.EquationalReasoning
+open import Tactic.DeriveComp
 
 open import MyDebugOptions
 --open import Tactic.Defaults

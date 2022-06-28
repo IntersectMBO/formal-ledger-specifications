@@ -2,20 +2,17 @@
 module Tactic.Helpers where
 
 open import Prelude
+open import Meta
 
 open import Data.List using (map; zipWith)
 
 open import PreludeImports
 
 import Reflection
-open import Interface.Monad
-open import Interface.MonadError hiding (MonadError-TC)
-open import Interface.MonadReader
-open import Interface.MonadTC
-open import Interface.Show
-open import Reflection.AST.Abstraction using (unAbs)
-open import Reflection.Syntax
-open import Reflection.TCI
+open import Interface.Monad.Instance
+open import Interface.MonadError.Instance
+open import Interface.MonadReader.Instance
+open import Interface.MonadTC.Instance
 
 private
   variable a b c : Level
@@ -34,11 +31,6 @@ record RecordDef : Set where
   field
     name : Name
     fields : List (Arg Name)
-
-open Monad ⦃...⦄
-open MonadTC ⦃...⦄
-open MonadError ⦃...⦄
-open MonadReader ⦃...⦄
 
 module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
 
@@ -213,12 +205,6 @@ initUnquoteWithGoal ⦃ opts ⦄ g unq = (initTCEnvWithGoal g) Reflection.>>= un
 
 initUnquote : ⦃ DebugOptions ⦄ → TC ⊤ → UnquoteDecl
 initUnquote ⦃ opts ⦄ unq = initUnquoteWithGoal ⦃ opts ⦄ unknown unq
-
-instance
-  _ = Reflection.TCI.Monad-TC
-  _ = MonadTC-TCI
-  _ = MonadError-TC
-  _ = MonadReader-TC
 
 module _ ⦃ _ : DebugOptions ⦄ where
   macro
