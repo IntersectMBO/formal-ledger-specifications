@@ -1,3 +1,4 @@
+{-# OPTIONS -v allTactics:100 #-}
 --{-# OPTIONS --safe --without-K #-}
 module Tactic.DeriveComp where
 
@@ -7,11 +8,8 @@ open import Meta
 import Reflection.AST.Argument.Visibility as Visibility
 
 open import PreludeImports
-open import PreludeImportsDecEq
 
-import Data.List
 import Data.List.NonEmpty as NE
-import Data.Maybe
 open import Data.Maybe.Properties using (just-injective)
 
 open import Relation.Nullary
@@ -22,7 +20,11 @@ open import Tactic.ClauseBuilder
 open import Tactic.Helpers
 open import Tactic.ReduceDec
 
+open import DecEq
+open import Interface.Decidable.Instance
+
 open import Interface.Monad.Instance
+open import Interface.MonadReader.Instance
 open import Interface.MonadError.Instance
 open import Interface.MonadTC.Instance
 
@@ -30,10 +32,6 @@ open import ComputationalRelation
 
 instance
   _ = ContextMonad-MonadTC
-
-  Monad-Maybe : Monad Maybe
-  Monad-Maybe .return = just
-  Monad-Maybe ._>>=_  = Data.Maybe._>>=_
 
 record STSConstr : Set where
   field
@@ -49,11 +47,8 @@ record STSConstr : Set where
 conOrVarToPattern : ℕ → Term → Maybe Pattern
 conOrVarToPattern k (♯ v) = just (Pattern.var (v ∸ k))
 conOrVarToPattern k (con c args) =
-  Pattern.con c <$> (traverseList (λ { (arg i x) → Data.Maybe.map (arg i) $ conOrVarToPattern k x }) args)
+  Pattern.con c <$> (traverseList (λ { (arg i x) → arg i <$> conOrVarToPattern k x }) args)
 conOrVarToPattern _ _ = nothing
-
-getVisibility : ∀ {a} {A : Set a} → Arg A → Visibility
-getVisibility (arg (arg-info v _) _) = v
 
 isArg : (a : Abs (Arg Term)) → Dec _
 isArg a = ¬? (getVisibility (unAbs a) Visibility.≟ visible)
@@ -99,7 +94,7 @@ curryPredProof (suc (suc (suc k))) t = quote proj₁ ∙⟦ t ⟧ ⟨∷⟩ curr
 
 generateFunctionClause : (List Term → Term) → STSConstr → Clause
 generateFunctionClause genPred c = let open STSConstr c in
-  ⟦ context ∣ state ∣ signal ⦅ Data.List.map (λ { (abs s x) → (s , x) }) params ⦆⇒
+  ⟦ context ∣ state ∣ signal ⦅ (λ { (abs s x) → (s , x) }) <$> params ⦆⇒
     quote if_then_else_ ∙⟦ quote ⌊_⌋ ∙⟦ genPred clauses ⟧ ∣
       quote just ◆⟦ result ⟧ ∣
       quote nothing ◆ ⟧ ⟧
@@ -144,10 +139,12 @@ module _ ⦃ _ : DebugOptions ⦄ where
     runWithHole hole⇐ derive⇐
     runWithHole hole⇒ $ derive⇒ n stsConstrs
 
-  deriveComp : Name → ITactic
+  deriveComp : Name → TC ⊤
   deriveComp definedType = do
     debugLog ("\nDerive computation function for: " ∷ᵈ definedType ∷ᵈ [])
     stsConstrs ← getSTSConstrs definedType
+    debugLog1 (generateFunction stsConstrs)
+    --return $ generateFunction stsConstrs
     unifyWithGoal (generateFunction stsConstrs)
 
   macro
@@ -174,7 +171,8 @@ module _ ⦃ _ : DebugOptions ⦄ where
       defineFun compName [ nonBindingClause definition ]
 
 private
-  open import Tactic.Defaults
+  --open import Tactic.Defaults
+  open import MyDebugOptions
 
   module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
     variable c : A × B

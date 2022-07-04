@@ -63,7 +63,7 @@ open import Algebra using (CommutativeMonoid)
 
 import Function.Related.Propositional as FP
 
-open import Data.List.Membership.Propositional
+open import Data.List.Membership.Propositional renaming (_∈_ to _∈'_)
 open import Data.List.Relation.Unary.All using (All; all?)
 open import Data.Maybe.Properties using (just-injective)
 open import Data.Maybe.Relation.Unary.Any using (dec)
@@ -78,13 +78,13 @@ open import Relation.Binary
 open import Relation.Binary.PropositionalEquality
 
 open import DecEq
+open import Interface.Decidable.Instance
 open import FinMap renaming (FinMap to _↦_)
 open import FinSet hiding (∅) renaming (FinSet to ℙ_)
 open import FinSet.Properties
 open import FinSet.Properties.Equality
 
 open import PreludeImports
-import PreludeImportsDecEq as P hiding (DecEq-Σ)
 
 open import ComputationalRelation
 
@@ -142,12 +142,10 @@ _⟨$⟩_ = FP.⇒→ {k = FP.injection}
 
 instance
   _ = +-0-commutativeMonoid
+  _ = Decidable²⇒Dec _≤?_
 
-  ≤-⁇ : _≤_ P.⁇²
-  ≤-⁇ {x = x} {y} = P.⁇ (x ≤? y)
-
-  convertDecEq : ∀ {A} ⦃ _ : DecEq A ⦄ → P.DecEq A
-  convertDecEq ⦃ dec ⦄ = record { _≟_ = _≟_ }
+  -- Sub? : ∀ {a} {A : Set a} ⦃ _ : DecEq A ⦄ → {x y : List A} → Dec (∀ {z} → z ∈' x → z ∈' y)
+  -- Sub? {x = x} {y} = {!!}
 
 Coin Slot TxIn TxOut UTxO : Set
 \end{code}
@@ -272,23 +270,20 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   ⟦_⟧ = id
 
   instance
-    _ : {a : ℙ TxIn} → (a ≡ ∅) P.⁇
-    _ = P.⁇ ≟-∅
+    _ = ≟-∅
 
-    ⁇-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → inInterval slot I P.⁇
-    ⁇-inInterval {slot} {just x  , just y } with x ≤? slot | slot ≤? y
-    ... | no ¬p₁ | no ¬p₂ = P.⁇ no λ where (both (h₁ , h₂)) → ¬p₁ h₁
-    ... | no ¬p₁ | yes p₂ = P.⁇ no λ where (both (h₁ , h₂)) → ¬p₁ h₁
-    ... | yes p₁ | no ¬p₂ = P.⁇ no λ where (both (h₁ , h₂)) → ¬p₂ h₂
-    ... | yes p₁ | yes p₂ = P.⁇ yes (both (p₁ , p₂))
-    ⁇-inInterval {slot} {just x  , nothing} with x ≤? slot
-    ... | no ¬p = P.⁇ no  (λ where (lower h) → ¬p h)
-    ... | yes p = P.⁇ yes (lower p)
-    ⁇-inInterval {slot} {nothing , just x } with slot ≤? x
-    ... | no ¬p = P.⁇ no  (λ where (upper h) → ¬p h)
-    ... | yes p = P.⁇ yes (upper p)
-    ⁇-inInterval {slot} {nothing , nothing} = P.⁇ yes none
-
+    Dec-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
+    Dec-inInterval {slot} {just x  , just y } with x ≤? slot | slot ≤? y
+    ... | no ¬p₁ | _      = no λ where (both (h₁ , h₂)) → ¬p₁ h₁
+    ... | yes p₁ | no ¬p₂ = no λ where (both (h₁ , h₂)) → ¬p₂ h₂
+    ... | yes p₁ | yes p₂ = yes (both (p₁ , p₂))
+    Dec-inInterval {slot} {just x  , nothing} with x ≤? slot
+    ... | no ¬p = no  (λ where (lower h) → ¬p h)
+    ... | yes p = yes (lower p)
+    Dec-inInterval {slot} {nothing , just x } with slot ≤? x
+    ... | no ¬p = no  (λ where (upper h) → ¬p h)
+    ... | yes p = yes (upper p)
+    Dec-inInterval {slot} {nothing , nothing} = yes none
   data
 \end{code}
 \begin{code}
@@ -312,7 +307,8 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
         in
         txins tx ≠ ∅
       → inInterval slot (txvldt tx)
-      → txins tx ⊆ dom utxo
+      -- → txins tx ⊆ dom utxo
+      -- this is currently broken because of https://github.com/agda/agda/issues/5982
       → let f = txfee tx in minfee pp tx ≤ f
       → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
       ────────────────────────────────
@@ -326,7 +322,6 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \end{figure*}
 
 \begin{code}[hide]
-
   unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 
   balance-∪ : utxo ∩ utxo' ≡ᵉ ∅ → balance (utxo ∪ utxo') ≡ balance utxo + balance utxo'
@@ -361,7 +356,7 @@ then
         balance utxo + fee ≡ balance utxo' + fee'
 \end{code}
 \begin{code}[hide]
-  pov {utxo} {tx} {_} {fee} h' (UTXO-inductive y x z x₁ x₂) =
+  pov {utxo} {tx} {_} {fee} h' (UTXO-inductive _ _ _ bal-eq) =
     let
       h : utxo ∩ outs tx ≡ᵉ ∅
       h = subst ((utxo ∩ outs tx) ≡ᵉ_) h' (IsEquivalence.refl ≡ᵉ-isEquivalence {utxo ∩ outs tx})
@@ -373,7 +368,7 @@ then
         balance ((txins tx ⋪ utxo) ∪ (txins tx ◃ utxo))
           ≡⟨ balance-∪ {txins tx ⋪ utxo} {txins tx ◃ utxo} (dom-res-ex-∩ (txins tx) utxo) ⟩
         balance (txins tx ⋪ utxo) + balance (txins tx ◃ utxo)
-          ≡tʳ⟨ cong (balance (txins tx ⋪ utxo) +_) x₂ ⟩
+          ≡tʳ⟨ cong (balance (txins tx ⋪ utxo) +_) bal-eq ⟩
         balance (txins tx ⋪ utxo) + balance (outs tx) + txfee tx
           ≡˘⟨ cong (_+ txfee tx) (balance-∪ {txins tx ⋪ utxo} {outs tx} (dom-res-∩-empty (txins tx) utxo (outs tx) h)) ⟩
         balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx ∎

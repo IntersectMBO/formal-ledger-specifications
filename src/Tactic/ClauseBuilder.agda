@@ -24,11 +24,6 @@ open import Interface.MonadError.Instance
 open import Interface.MonadTC.Instance
 open import Interface.MonadReader.Instance
 
-instance
-  Monad-List : Monad List
-  Monad-List .return = _∷ []
-  Monad-List ._>>=_  = flip concatMap
-
 private
   variable a b : Level
            A : Set a

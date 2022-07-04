@@ -14,17 +14,17 @@ open import Data.Empty
 
 module DecEq where
 
-record DecEq (A : Set) : Set where
+record DecEq {a} (A : Set a) : Set a where
   field
     _≟_ : DecidableEquality A
 
 open DecEq {{...}} public
 
-_≡ᵇ_ : ∀ {A} → {{DecEq A}} → A → A → Bool
+_≡ᵇ_ : ∀ {a} {A : Set a} → {{DecEq A}} → A → A → Bool
 a ≡ᵇ a' = ⌊ a ≟ a' ⌋
 
-≡ᵇ-refl : ∀ {A} → {{_ : DecEq A}} → {a : A} → a ≡ᵇ a ≡ true
-≡ᵇ-refl {_} {a} with a ≟ a
+≡ᵇ-refl : ∀ {ℓ} {A : Set ℓ} → {{_ : DecEq A}} → {a : A} → a ≡ᵇ a ≡ true
+≡ᵇ-refl {a = a} with a ≟ a
 ... | no ¬p = ⊥-elim (¬p refl)
 ... | yes p = refl
 
@@ -32,8 +32,8 @@ instance
   DecEq-Nat : DecEq ℕ
   DecEq-Nat = record { _≟_ = Data.Nat._≟_ }
 
-  DecEq-Maybe : ∀ {A} → {{DecEq A}} → DecEq (Maybe A)
+  DecEq-Maybe : ∀ {a} {A : Set a} → {{DecEq A}} → DecEq (Maybe A)
   DecEq-Maybe {{h}} = record { _≟_ = Data.Maybe.Properties.≡-dec (DecEq._≟_ h) }
 
-  DecEq-Product : ∀ {A B} → {{DecEq A}} → {{DecEq B}} → DecEq (A × B)
+  DecEq-Product : ∀ {a} {A B : Set a} → {{DecEq A}} → {{DecEq B}} → DecEq (A × B)
   DecEq-Product {{h}} {{h'}} = record { _≟_ = Data.Product.Properties.≡-dec (DecEq._≟_ h) (DecEq._≟_ h') }

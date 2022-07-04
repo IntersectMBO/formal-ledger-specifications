@@ -217,6 +217,9 @@ record MonadTC (M : ∀ {f} → Set f → Set f) ⦃ m : Monad M ⦄ ⦃ me : Mo
   declareAndDefineFun : Arg Name → Type → List Clause → M ⊤
   declareAndDefineFun (arg i n) ty cls = declareDef (arg i n) ty >> defineFun n cls
 
+  newMeta : Term → M Term
+  newMeta = checkType unknown
+
 module _ {M : ∀ {f} → Set f → Set f}
   ⦃ m : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mtc : MonadTC M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ where
 

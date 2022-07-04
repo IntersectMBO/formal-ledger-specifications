@@ -19,6 +19,9 @@ private
            A : Set a
            B : Set b
 
+getVisibility : ∀ {a} {A : Set a} → Arg A → Visibility
+getVisibility (arg (arg-info v _) _) = v
+
 zipWithIndex : (ℕ → A → B) → List A → List B
 zipWithIndex f l = zipWith f (upTo $ length l) l
 
@@ -140,9 +143,6 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
 
   runWithGoalTy : Term → M A → M A
   runWithGoalTy t = local (λ env → record env { goal = inj₂ t })
-
-  newMeta : Term → M Term
-  newMeta = checkType unknown
 
   goalHole : M Term
   goalHole = do
