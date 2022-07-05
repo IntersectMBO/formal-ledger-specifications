@@ -18,15 +18,11 @@ record Test (A : Set l) : Set l where
 f : (A : Set) ⦃ _ : Test A ⦄ → A
 f _ ⦃ t ⦄ = Test.a t
 
-abstract
-  g : {A : Set l} → A → A
-  g x = x
-
-pattern def₁ n a = def n (vArg a ∷ [])
-
 test : TC ⊤
-test = let t = def₁ (quote g) (def₁ (quote f) (var 1 [])) in
-  reduce t >>= λ t → debugPrint "test" 10 [ termErr t ]
+test = let t = def (quote f) (vArg (var 1 []) ∷ []) in do
+  T ← unquoteTC {A = Set} (var 1 [])
+  t' ← unquoteTC {A = T} t >>= quoteTC
+  debugPrint "test" 10 [ strErr (showTerm t') ]
 
 module _ {A : Set} ⦃ _ : Test A ⦄ where
   unquoteDecl = test
