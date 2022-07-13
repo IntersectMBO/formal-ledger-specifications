@@ -2,7 +2,7 @@ module MyDebugOptions where
 
 open import Prelude
 
-open import Interface.MonadTC
+open import Reflection.Debug
 
 instance
   defaultDebugOptionsI : DebugOptions

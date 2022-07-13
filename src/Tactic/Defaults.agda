@@ -1,6 +1,6 @@
 module Tactic.Defaults where
 
-open import Interface.MonadTC
+open import Reflection.Debug
 
 -- There should only ever be one instance, with this being convenient
 -- to tweak all at once

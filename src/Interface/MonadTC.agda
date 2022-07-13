@@ -2,15 +2,9 @@
 
 module Interface.MonadTC where
 
-open import Prelude hiding (⊤; _∧_; _∨_; filter)
+open import Prelude
 
-open import Category.Monad
-
-import Data.Bool
-import Data.String
-open import Data.List hiding (_++_; filter)
-
-open import Relation.Nullary.Decidable using (⌊_⌋)
+open import Data.List using (map)
 
 import Agda.Builtin.Reflection as R'
 import Reflection as R
@@ -19,6 +13,8 @@ open R using (ErrorPart)
 open import Reflection.AST
 open import Reflection.AST.Abstraction using (unAbs)
 
+open import Reflection.Debug
+
 open import Interface.MonadReader
 open import Interface.MonadError
 open import Interface.Monad
@@ -26,27 +22,7 @@ open import Interface.Monad
 private
   variable
     a f : Level
-    A B : Set a
-
-record IsErrorPart (A : Set) : Set where
-  field
-    toErrorPart : A → ErrorPart
-
-open IsErrorPart ⦃...⦄
-
-instance
-  IsErrorPart-String : IsErrorPart String
-  IsErrorPart-String .toErrorPart = ErrorPart.strErr
-
-  IsErrorPart-Term : IsErrorPart Term
-  IsErrorPart-Term .toErrorPart = ErrorPart.termErr
-
-  IsErrorPart-Name : IsErrorPart Name
-  IsErrorPart-Name .toErrorPart = ErrorPart.nameErr
-
-infixr 5 _∷ᵈ_
-_∷ᵈ_ : A → ⦃ _ : IsErrorPart A ⦄ → List ErrorPart → List ErrorPart
-e ∷ᵈ es = toErrorPart e ∷ es
+    A B : Set f
 
 data ReductionOptions : Set where
   onlyReduce : List Name → ReductionOptions
@@ -54,74 +30,6 @@ data ReductionOptions : Set where
 
 reduceAll : ReductionOptions
 reduceAll = dontReduce []
-
-data DebugSelection : Set where
-  FullPath : DebugSelection
-  Last     : DebugSelection
-  All      : DebugSelection
-  Custom   : (List String → String) → DebugSelection
-
--- If All is selected, this pragma shows all debug info
--- {-# OPTIONS -v allTactics:100 #-}
-
-Filter : Set
-Filter = List String → Bool
-
-module Filter where
-  open import Algebra.Lattice
-  open import Data.Bool.Properties
-  import BooleanAlgebra
-
-  Filter-Alg : BooleanAlgebra _ _
-  Filter-Alg = BooleanAlgebra.hom (List String) ∨-∧-booleanAlgebra
-
-  open Algebra.Lattice.BooleanAlgebra Filter-Alg public
-
-  private
-    _≣_ : String → String → Bool
-    s ≣ s' = ⌊ s Data.String.≟ s' ⌋
-
-  contains : String → Filter
-  contains s l = foldl (λ acc s' → acc Data.Bool.∨ s ≣ s') false l
-
-  noneOf : List String → Filter
-  noneOf [] = ⊤
-  noneOf (x ∷ l) = ¬ contains x ∧ noneOf l
-
-  endsWith : String → Filter
-  endsWith s l with last l
-  ... | just x  = s ≣ x
-  ... | nothing = false
-
-  beginsWith : String → Filter
-  beginsWith s l with Data.List.head l
-  ... | just x  = s ≣ x
-  ... | nothing = false
-
-record DebugOptions : Set where
-  field
-    path      : List String
-    selection : DebugSelection
-    filter    : Filter
-    level     : ℕ
-
-defaultDebugOptions : DebugOptions
-defaultDebugOptions = record { path = []; selection = FullPath; filter = Filter.⊤; level = 100 }
-
-specializeDebugOptions : DebugOptions → DebugOptions → DebugOptions
-specializeDebugOptions record { path = path₁ } opts@record { path = path₂ } =
-  record opts { path = path₁ Data.List.++ path₂ }
-
-debugOptionsPath : DebugOptions → String
-debugOptionsPath record { path = path ; selection = FullPath } = Data.String.intersperse "/" path
-debugOptionsPath record { path = path ; selection = Last } with last path
-... | just x  = x
-... | nothing = ""
-debugOptionsPath record { path = path ; selection = All } = "allTactics"
-debugOptionsPath record { path = path ; selection = Custom f } = f path
-
-debugPrintPrefix : DebugOptions → ErrorPart
-debugPrintPrefix record { path = path } = R.strErr (Data.String.replicate (Data.List.length path) '⎸')
 
 record TCEnv : Set where
   field
@@ -148,8 +56,6 @@ initTCEnvWithGoal goal = R.getContext RS.<&> λ ctx → record
 
 initTCEnv : R.TC TCEnv
 initTCEnv = initTCEnvWithGoal unknown
-
-open import Data.Unit
 
 record MonadTC (M : ∀ {f} → Set f → Set f) ⦃ m : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ : Setω₁ where
   field
@@ -237,7 +143,7 @@ module _ {M : ∀ {f} → Set f → Set f}
     wrap : M (List ErrorPart) → MErrorPartWrap
 
   IsMErrorPart-IsErrorPart : ⦃ _ : IsErrorPart A ⦄ → IsMErrorPart A
-  IsMErrorPart-IsErrorPart .toMErrorPart a = return Data.List.[ toErrorPart a ]
+  IsMErrorPart-IsErrorPart .toMErrorPart a = return [ toErrorPart a ]
 
   instance
     IsMErrorPart-String : IsMErrorPart String
@@ -257,7 +163,7 @@ module _ {M : ∀ {f} → Set f → Set f}
 
   infixr 5 _∷ᵈᵐ_
   _∷ᵈᵐ_ : A → ⦃ _ : IsMErrorPart A ⦄ → M (List ErrorPart) → M (List ErrorPart)
-  e ∷ᵈᵐ es = do e ← toMErrorPart e; es ← es; return (e Data.List.++ es)
+  e ∷ᵈᵐ es = do e ← toMErrorPart e; es ← es; return (e ++ es)
 
   _ᵛ : A → MErrorPartWrap
   a ᵛ = wrap do a ← quoteTC a; return (a ∷ᵈ [])
