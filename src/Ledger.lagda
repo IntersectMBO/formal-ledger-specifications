@@ -84,10 +84,6 @@ open import FinSet hiding (∅) renaming (FinSet to ℙ_)
 open import FinSet.Properties
 open import FinSet.Properties.Equality
 
-open import PreludeImports
-
-open import ComputationalRelation
-
 open import Tactic.Helpers
 open import Tactic.MonoidSolver
 open import Tactic.EquationalReasoning
@@ -95,6 +91,10 @@ open import Tactic.DeriveComp
 
 open import MyDebugOptions
 --open import Tactic.Defaults
+
+open import PreludeImports
+
+open import ComputationalRelation
 
 module Ledger (
 \end{code}

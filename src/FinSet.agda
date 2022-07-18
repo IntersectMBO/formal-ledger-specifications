@@ -18,7 +18,7 @@ open import Data.Maybe using (Maybe; just; nothing)
 open import Relation.Nullary.Decidable hiding (map)
 open import Data.Empty
 
-open import Category.Functor
+open import Effect.Functor
 open RawFunctor {{...}}
 
 open import Algebra using (CommutativeMonoid)

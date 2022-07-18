@@ -9,7 +9,7 @@ open import FiniteSubset hiding (_∪_; _∩_; fromList)
 open import Data.Bool hiding (_≟_)
 open import FinSet.Core
 open import Data.Sum
-open import Utilities.ListsAddition
+open import Utilities.ListsAddition hiding (filter)
 open import Data.Product
 open import Relation.Nullary.Decidable
 open import Relation.Binary.PropositionalEquality using (subst; sym; refl; _≡_; inspect; [_]; cong; trans)

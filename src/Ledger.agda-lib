@@ -1,8 +1,5 @@
 name: Agda-ledger
--- depend:
---   standard-library
---   finset
+depend:
+  standard-library
+  finset
 include: .
-  ../../../../../Programs/Agda-finset/src
-  ../../../../../Programs/agda-stdlib/src
-  ../../../../../Programs/formal-prelude

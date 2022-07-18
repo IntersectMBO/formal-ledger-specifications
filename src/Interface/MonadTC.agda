@@ -268,6 +268,64 @@ module _ {M : ∀ {f} → Set f → Set f}
       where inj₂ T → return T
     inferType t
 
+  -- take the first result if it's a just, otherwise reset the state and
+  -- run the second computation
+  runSpeculativeMaybe : M (Maybe A) → M A → M A
+  runSpeculativeMaybe x y = do
+    nothing ← runSpeculative (< id , is-just > <$> x)
+      where just a → return a
+    y
+
+  try : List (M ⊤) → M ⊤ → M ⊤
+  try [] e = e
+  try (x ∷ cs) e = MonadError.catch me x (λ _ → try cs e)
+
+  getConstrs : Name → M (List (Name × Type))
+  getConstrs n = do
+    d ← getDefinition n
+    cs ← case d of λ where
+      (record-type c fs)  → return [ c ]
+      (data-type pars cs) → return cs
+      _                   → error1 "Not a data or record definition!"
+    traverseList (λ n → (n ,_) <$> (normalise =<< getType n)) (List Name ∋ cs)
+
+  getConstrsForType : Term → M (List (Name × Type))
+  getConstrsForType ty = do
+    (def n _) ← normalise ty
+      where _ → error (ty ∷ᵈ "does not reduce to a definition!" ∷ᵈ [])
+    getConstrs n
+
+  getConstrsForTerm : Term → M (List (Name × Type))
+  getConstrsForTerm t = getConstrsForType =<< inferType t
+
+  -- run a TC computation to arrive at the term under the binder for the pattern
+  withPattern : List (String × Arg Type) → List (Arg Pattern) → M Term → M Clause
+  withPattern tel ps t = Clause.clause tel ps <$> extendContext' (map proj₂ tel) t
+
+  unifyWithGoal : Term → M ⊤
+  unifyWithGoal t = do
+    inj₁ t' ← reader TCEnv.goal
+      where _ → error1 "unifyWithGoal: Goal is not a term!"
+    unify t' t
+
+  runWithHole : Term → M A → M A
+  runWithHole t = local (λ env → record env { goal = inj₁ t })
+
+  runWithGoalTy : Term → M A → M A
+  runWithGoalTy t = local (λ env → record env { goal = inj₂ t })
+
+  goalHole : M Term
+  goalHole = do
+    inj₂ T ← reader TCEnv.goal
+      where inj₁ hole → return hole
+    newMeta T
+
+  withGoalHole : M ⊤ → M Term
+  withGoalHole tac = do
+    hole ← goalHole
+    runWithHole hole tac
+    return hole
+
 Monad-TC : Monad R.TC
 Monad-TC = record { R }
 

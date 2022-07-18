@@ -46,13 +46,13 @@ noDupEls {fs-nojunk els {nd}} = NoDupInd-corr2 _ (∥-∥-prop3 _ nd)
 -- ≡ˡ⇔≡ {l} {l'} = record { f = ≡ˡ⇒≡ ; g = ≡⇒≡ˡ ; cong₁ = λ { refl → refl } ; cong₂ = λ { refl → refl } }
 
 ≡ᵉ⇒⊆ : {s s' : FinSet A} → s ≡ᵉ s' → s ⊆ s'
-≡ᵉ⇒⊆ s≡ᵉs' {a} = Equivalence.f (s≡ᵉs' a)
+≡ᵉ⇒⊆ s≡ᵉs' {a} = Equivalence.to (s≡ᵉs' a)
 
 ⊆∧⊇⇒≡ᵉ : {s s' : FinSet A} → s ⊆ s' → s' ⊆ s → s ≡ᵉ s'
-⊆∧⊇⇒≡ᵉ s⊆s' s'⊆s a = record { f = s⊆s' ; g = s'⊆s ; cong₁ = λ { refl → refl } ; cong₂ = λ { refl → refl } }
+⊆∧⊇⇒≡ᵉ s⊆s' s'⊆s a = record { to = s⊆s' ; from = s'⊆s ; to-cong = λ { refl → refl } ; from-cong = λ { refl → refl } }
 
 ≡ᵉ-∈ : ∀ {x} {s s' : FinSet A} → s ≡ᵉ s' → x ∈ s → x ∈ s'
-≡ᵉ-∈ {x} h = Equivalence.f (h x)
+≡ᵉ-∈ {x} h = Equivalence.to (h x)
 
 ≡ᵉ-∅ : {s : FinSet A} → s ≡ᵉ ∅ → s ≡ ∅
 ≡ᵉ-∅ s@{fs-nojunk []} _ = refl

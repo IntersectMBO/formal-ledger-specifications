@@ -19,9 +19,6 @@ private
            A : Set a
            B : Set b
 
-getVisibility : ∀ {a} {A : Set a} → Arg A → Visibility
-getVisibility (arg (arg-info v _) _) = v
-
 zipWithIndex : (ℕ → A → B) → List A → List B
 zipWithIndex f l = zipWith f (upTo $ length l) l
 
@@ -106,87 +103,18 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
       where _ → error1 "Not a record definition!"
     return (record { name = c ; fields = fs })
 
-  try : List (M ⊤) → M ⊤ → M ⊤
-  try [] e = e
-  try (x ∷ cs) e = MonadError.catch me x (λ _ → try cs e)
-
-  getConstrs : Name → M (List (Name × Type))
-  getConstrs n = do
-    d ← getDefinition n
-    cs ← case d of λ where
-      (record-type c fs)  → return [ c ]
-      (data-type pars cs) → return cs
-      _                   → error1 "Not a data or record definition!"
-    traverseList (λ n → (n ,_) <$> (normalise =<< getType n)) (List Name ∋ cs)
-
-  getConstrsForType : Term → M (List (Name × Type))
-  getConstrsForType ty = do
-    (def n _) ← normalise ty
-      where _ → error (ty ∷ᵈ "does not reduce to a definition!" ∷ᵈ [])
-    getConstrs n
-
-  getConstrsForTerm : Term → M (List (Name × Type))
-  getConstrsForTerm t = getConstrsForType =<< inferType t
-
-  -- run a TC computation to arrive at the term under the binder for the pattern
-  withPattern : List (String × Arg Type) → List (Arg Pattern) → M Term → M Clause
-  withPattern tel ps t = Clause.clause tel ps <$> extendContext' (map proj₂ tel) t
-
-  unifyWithGoal : Term → M ⊤
-  unifyWithGoal t = do
-    inj₁ t' ← reader TCEnv.goal
-      where _ → error1 "unifyWithGoal: Goal is not a term!"
-    unify t' t
-
-  runWithHole : Term → M A → M A
-  runWithHole t = local (λ env → record env { goal = inj₁ t })
-
-  runWithGoalTy : Term → M A → M A
-  runWithGoalTy t = local (λ env → record env { goal = inj₂ t })
-
-  goalHole : M Term
-  goalHole = do
-    inj₂ T ← reader TCEnv.goal
-      where inj₁ hole → return hole
-    newMeta T
-
-  withGoalHole : M ⊤ → M Term
-  withGoalHole tac = do
-    hole ← goalHole
-    runWithHole hole tac
-    return hole
-
-findMetas : Term → List Term
-findMetas' : List (Arg Term) → List Term
-findMetasCl : List Clause → List Term
-
-findMetas (var x args) = findMetas' args
-findMetas (con c args) = findMetas' args
-findMetas (def f args) = findMetas' args
-findMetas (lam v (abs _ x)) = findMetas x
-findMetas (pat-lam cs args) = findMetasCl cs ++ findMetas' args
-findMetas (pi (arg _ a) (abs _ b)) = findMetas a ++ findMetas b
-findMetas (agda-sort s) = []
-findMetas (lit l) = []
-findMetas m@(meta x args) = m ∷ findMetas' args
-findMetas unknown = []
-
-findMetas' [] = []
-findMetas' ((arg _ t) ∷ ts) = findMetas t ++ findMetas' ts
-
-findMetasCl [] = []
-findMetasCl (Clause.clause tel ps t ∷ c) = findMetas t ++ findMetasCl c
-findMetasCl (Clause.absurd-clause tel ps ∷ c) = findMetasCl c
-
-isMeta : Term → Bool
-isMeta (meta _ _) = true
-isMeta _ = false
-
-UnquoteDecl : Set
-UnquoteDecl = Reflection.TC ⊤
-
-Tactic : Set
-Tactic = Term → Reflection.TC ⊤
+  -- run a computation that returns a term, resetting the TC state but
+  -- ensuring that the term doesn't contain any metavariables
+  withSafeReset : M Term → M Term
+  withSafeReset x = runAndReset $ do
+    t ← x
+    let m = findMetas t
+    if null m
+      then return t
+      else do
+        debugLogᵐ ("Remaining metavariables:" ∷ᵈᵐ m ᵛⁿ ∷ᵈᵐ []ᵐ)
+        debugLog ("In term: " ∷ᵈ t ∷ᵈ [])
+        error1 "Unsolved metavariables remaining in withSafeReset!"
 
 ITactic : Set
 ITactic = TC ⊤
@@ -213,32 +141,3 @@ module _ ⦃ _ : DebugOptions ⦄ where
 
     by : ITactic → Tactic
     by = initTac
-
-popPis : Term → ℕ → Maybe Term
-popPis t zero = just t
-popPis (pi _ (abs _ t)) (suc k) = popPis t k
-popPis _ (ℕ.suc k) = nothing
-
--- run a computation that returns a term, resetting the TC state but
--- ensuring that the term doesn't contain any metavariables
-withSafeReset : TC Term → TC Term
-withSafeReset x = runAndReset $ do
-  t ← x
-  let m = findMetas t
-  if null m
-    then return t
-    else do
-      debugLogᵐ ("Remaining metavariables:" ∷ᵈᵐ m ᵛⁿ ∷ᵈᵐ []ᵐ)
-      debugLog ("In term: " ∷ᵈ t ∷ᵈ [])
-      error1 "Unsolved metavariables remaining in withSafeReset!"
-
--- take the first result if it's a just, otherwise reset the state and
--- run the second computation
-runSpeculativeMaybe : TC (Maybe A) → TC A → TC A
-runSpeculativeMaybe x y = do
-  nothing ← runSpeculative (< id , is-just > <$> x)
-    where just a → return a
-  y
-
--- popPisAndLift : Term → ℕ → ℕ → Maybe Term
--- popPisAndLift t ctxLen k = mapVars (_+ (ctxLen ∸ k)) <$> popPis t k

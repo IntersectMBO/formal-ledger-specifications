@@ -40,11 +40,11 @@ module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
 
   ExtendedRel-compute : ExtendedRelSTS c s sig (compute c s sig)
   ExtendedRel-compute {c} {s} {sig} with compute c s sig | inspect (compute c s) sig
-  ... | just s' | [ eq ] = Equivalence.f ≡-just⇔STS eq
-  ... | nothing | [ eq ] = λ s' h → case trans (sym $ Equivalence.g ≡-just⇔STS h) eq of λ ()
+  ... | just s' | [ eq ] = Equivalence.to ≡-just⇔STS eq
+  ... | nothing | [ eq ] = λ s' h → case trans (sym $ Equivalence.from ≡-just⇔STS h) eq of λ ()
 
   ExtendedRel-rightUnique : ExtendedRelSTS c s sig s' → ExtendedRelSTS c s sig s'' → s' ≡ s''
-  ExtendedRel-rightUnique {s' = just x}  {just x'} h h' = trans (sym $ Equivalence.g ≡-just⇔STS h) (Equivalence.g ≡-just⇔STS h')
+  ExtendedRel-rightUnique {s' = just x}  {just x'} h h' = trans (sym $ Equivalence.from ≡-just⇔STS h) (Equivalence.from ≡-just⇔STS h')
   ExtendedRel-rightUnique {s' = just x}  {nothing} h h' = ⊥-elim $ h' x h
   ExtendedRel-rightUnique {s' = nothing} {just x'} h h' = ⊥-elim $ h x' h'
   ExtendedRel-rightUnique {s' = nothing} {nothing} h h' = refl
