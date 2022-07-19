@@ -1,15 +1,14 @@
 { nixpkgs ? import <nixpkgs> {} }:
 with nixpkgs; let
   agdaDeps = with (import (builtins.fetchTarball
-    https://github.com/nixos/nixpkgs/tarball/a7ecde854aee5c4c7cd6177f54a99d2c1ff28a31) { # 21.11
-      overlays = [ ((import (fetchFromGitHub {
+    https://github.com/nixos/nixpkgs/tarball/a7ecde854aee5c4c7cd6177f54a99d2c1ff28a31) ({ # 21.11
+      overlays = [ (import (fetchFromGitHub {
         repo = "agda";
         owner = "input-output-hk";
         rev = "d5ea03b96328f38741efef4535197076ff0e05d5";
         sha256 = "WiadZWZvPWcR49JkiXPiMKW3plRjBlR94wyg/aoEoG8=";
-      })).overlay) ];
-      system = "x86_64-darwin";
-      }); let
+      })).overlay ];
+    } // (if pkgs.system == "aarch64-darwin" then { system = "x86_64-darwin"; } else {}))); let
 
     agda-stdlib = agdaPackages.standard-library.overrideAttrs (oldAttrs: {
       version = "1.7";
@@ -71,30 +70,30 @@ with nixpkgs; let
   };
 in {
   agda-ledger = agda-ledger;
-  # agda-ledger-executable-spec = haskellPackages.callCabal2nix "agda-ledger-executable-spec" "${ledger-hs-src}" {};
+  agda-ledger-executable-spec = haskellPackages.callCabal2nix "agda-ledger-executable-spec" "${ledger-hs-src}" {};
 
-  # ledger-docs = stdenv.mkDerivation {
-  #   pname = "simple-utxo-ledger-docs";
-  #   version = "0.1";
-  #   src = "${agda-ledger}";
-  #   meta = {};
-  #   buildInputs = [ agdaWithPkgs (texlive.combine {
-  #     inherit (texlive)
-  #       scheme-small
-  #       collection-latexextra
-  #       collection-latexrecommended
-  #       collection-mathscience
-  #       bclogo
-  #       latexmk;
-  #   })];
-  #   buildPhase = ''
-  #     agda --latex Ledger.lagda
-  #     cd latex && latexmk -xelatex Ledger.tex && cd ..
-  #   '';
-  #   installPhase = ''
-  #     mkdir -p $out
-  #     agda --html --html-dir $out/html Ledger.lagda
-  #     cp latex/Ledger.pdf $out
-  #   '';
-  # };
+  ledger-docs = stdenv.mkDerivation {
+    pname = "simple-utxo-ledger-docs";
+    version = "0.1";
+    src = "${agda-ledger}";
+    meta = {};
+    buildInputs = [ agdaWithPkgs (texlive.combine {
+      inherit (texlive)
+        scheme-small
+        collection-latexextra
+        collection-latexrecommended
+        collection-mathscience
+        bclogo
+        latexmk;
+    })];
+    buildPhase = ''
+      agda --latex Ledger.lagda
+      cd latex && latexmk -xelatex Ledger.tex && cd ..
+    '';
+    installPhase = ''
+      mkdir -p $out
+      agda --html --html-dir $out/html Ledger.lagda
+      cp latex/Ledger.pdf $out
+    '';
+  };
 }
