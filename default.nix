@@ -69,6 +69,7 @@ with nixpkgs; let
     '';
   };
 in {
+  agda = agdaWithPkgs;
   agda-ledger = agda-ledger;
   agda-ledger-executable-spec = haskellPackages.callCabal2nix "agda-ledger-executable-spec" "${ledger-hs-src}" {};
 
