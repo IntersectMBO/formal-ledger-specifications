@@ -29,10 +29,11 @@ open import FinSet.Properties.Equality public
 open import FinSet.Properties.Membership public
 open import FinSet.Properties.Algebra public
 
-variable
-  a : A
-  l : List A
-  s s' : FinSet A {{h}}
+private
+  variable
+    a : A
+    l : List A
+    s s' : FinSet A {{h}}
 
 listOf-NoDupInd : NoDupInd (listOf s)
 listOf-NoDupInd {FiniteSubset.fs-nojunk els {nd}} = NoDupInd-corr2 _ (∥-∥-prop3 _ nd)

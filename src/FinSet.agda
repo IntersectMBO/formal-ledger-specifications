@@ -5,18 +5,20 @@ open import Relation.Binary.Lattice
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
 open import Relation.Nullary.Product
+open import Relation.Unary using (Pred)
 open import Level
 
 open import Data.Sum using (_⊎_)
 open import Data.Product using (_×_; proj₁; _,_)
 open import Data.List hiding (filter; sum; map)
+import Data.List.Relation.Unary.All
 open import Data.List.Instances
 open import Data.Bool using (Bool; false)
 open import Data.Maybe using (Maybe; just; nothing)
 open import Relation.Nullary.Decidable hiding (map)
 open import Data.Empty
 
-open import Category.Functor
+open import Effect.Functor
 open RawFunctor {{...}}
 
 open import Algebra using (CommutativeMonoid)
@@ -44,6 +46,12 @@ module _ {A : Set} {{h : DecEq A}} where
 
   filter : {P : A → Set} → (∀ a → Dec (P a)) → FinSet A → FinSet A
   filter P? s = fromList (Data.List.filter P? $ elements s)
+
+  All : ∀ {ℓ} → Pred A ℓ → FinSet A → Set ℓ
+  All P s = Data.List.Relation.Unary.All.All P (elements s)
+
+  all? : ∀ {ℓ} → {P : Pred A ℓ} → Relation.Unary.Decidable P → Relation.Unary.Decidable (All P)
+  all? P? s = Data.List.Relation.Unary.All.all? P? (elements s)
 
   infix 5 _∈_
   _∈_ : A → FinSet A → Set
