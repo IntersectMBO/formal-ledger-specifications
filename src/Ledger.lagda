@@ -1,8 +1,6 @@
 \documentclass{article}
 \usepackage{unicode-math}
-\setsansfont{XITSMath-Regular.otf}[
-Path = /Library/Fonts/ ,
-]
+\setsansfont{XITSMath-Regular.otf}
 
 \usepackage{newunicodechar}
 \newunicodechar{ᵇ}{\ensuremath{^b}}

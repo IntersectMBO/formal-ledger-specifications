@@ -97,6 +97,7 @@ in {
     buildInputs = [ agdaWithPkgs (texlive.combine {
       inherit (texlive)
         scheme-small
+        xits
         collection-latexextra
         collection-latexrecommended
         collection-mathscience
