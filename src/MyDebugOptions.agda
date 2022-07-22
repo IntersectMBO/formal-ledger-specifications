@@ -9,5 +9,4 @@ instance
   defaultDebugOptionsI : DebugOptions
   defaultDebugOptionsI = record defaultDebugOptions
     { selection = All
-    ; filter = Filter.noneOf ("getDataDef" ∷ "getSTSConstrs" ∷ "assumption" ∷
-        "derive⇐" ∷ "derive⇒" ∷ "specializeType" ∷ []) }
+    ; filter = Filter.⊥ }

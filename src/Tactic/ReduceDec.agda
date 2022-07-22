@@ -1,4 +1,3 @@
-{-# OPTIONS -v allTactics:100 #-}
 {-# OPTIONS --safe --without-K #-}
 --------------------------------------------------------------------------------
 -- reduceDec: looks for proofs of P to reduce ⌊ decP ⌋
