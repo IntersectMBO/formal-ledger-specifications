@@ -35,7 +35,23 @@ with nixpkgs; let
       buildInputs = [ agda-stdlib ];
     };
 
-    deps = [ agda-stdlib agda-finset ];
+    agda-stdlib-meta = agdaPackages.mkDerivation {
+      pname = "agda-stdlib-meta";
+      version = "0.1";
+      src = fetchFromGitHub {
+        repo = "stdlib-meta";
+        owner = "omelkonian";
+        rev = "dadb6a468b9cdc47442b48a47b848f8e8fbffda7";
+        sha256 = "YkUtM5Gos6xd7ZsZPqcuVy6DZqNA7n/exPfQngir+y0=";
+      };
+      patches = [ ./stdlib-meta-update-imports.patch ];
+      meta = {};
+      libraryFile = "stdlib-meta.agda-lib";
+      everythingFile = "Main.agda";
+      buildInputs = [ agda-stdlib ];
+    };
+
+    deps = [ agda-stdlib agda-finset agda-stdlib-meta ];
   in {
     agda = agda.withPackages { pkgs = deps; ghc = nixpkgs.ghc; };
     ledger = agdaPackages.mkDerivation {

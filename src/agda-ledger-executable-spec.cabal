@@ -28,8 +28,8 @@ library
         PatternSynonyms
 
     build-depends:
-        base ^>=4.14.3.0,
-        text ^>=1.2.4.1,
+        base,
+        text,
         ieee
 
     ghc-options: -Wno-overlapping-patterns

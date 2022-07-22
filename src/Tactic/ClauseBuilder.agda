@@ -1,3 +1,4 @@
+{-# OPTIONS --safe --without-K #-}
 module Tactic.ClauseBuilder where
 
 open import Prelude hiding ([_,_])

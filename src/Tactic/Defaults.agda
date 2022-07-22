@@ -1,3 +1,4 @@
+{-# OPTIONS --safe --without-K #-}
 module Tactic.Defaults where
 
 open import Reflection.Debug

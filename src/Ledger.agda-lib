@@ -2,4 +2,5 @@ name: Agda-ledger
 depend:
   standard-library
   finset
+  stdlib-meta
 include: .

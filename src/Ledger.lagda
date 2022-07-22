@@ -53,7 +53,7 @@ Path = /Library/Fonts/ ,
 
 \begin{code}[hide]
 
---{-# OPTIONS --safe #-}
+{-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 {-# OPTIONS -v allTactics:100 #-}
 
@@ -160,6 +160,7 @@ record PParams : Set where
   field
     a : ℕ
     b : ℕ
+    maxTxSize : ℕ
 \end{code}
 \emph{Transaction types}
 \begin{code}
@@ -171,19 +172,19 @@ record TxBody : Set where
     txvldt : Maybe ℕ × Maybe ℕ
     txsize : ℕ
 
-record TxWitness : Set where
+record TxWitnesses : Set where
   field
-    key : VKey ↦ Sig
+    vkSigs : VKey ↦ Sig
 
 record Tx : Set where
   field
-    txbody : TxBody
-    txwits : TxWitness
+    body : TxBody
+    wits : TxWitnesses
 \end{code}
 \emph{Abstract functions}
 \begin{code}[hide]
 open TxBody
-open TxWitness
+open TxWitnesses
 open Tx
 module _
 \end{code}
@@ -224,7 +225,8 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   outs tx = mapKeys (txid ⟨$⟩ tx ,_) $ txouts tx
 
   minfee : PParams → TxBody → Coin
-  minfee pp tx = PParams.a pp * txsize tx + PParams.b pp
+  minfee pp tx = a * txsize tx + b
+    where open PParams pp
 
   -- this has to be a type definition for inference to work
   data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -311,6 +313,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
       -- this is currently broken because of https://github.com/agda/agda/issues/5982
       → let f = txfee tx in minfee pp tx ≤ f
       → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
+      → txsize tx ≤ PParams.maxTxSize pp
       ────────────────────────────────
       Γ
         ⊢ s
@@ -356,7 +359,7 @@ then
         balance utxo + fee ≡ balance utxo' + fee'
 \end{code}
 \begin{code}[hide]
-  pov {utxo} {tx} {_} {fee} h' (UTXO-inductive _ _ _ bal-eq) =
+  pov {utxo} {tx} {_} {fee} h' (UTXO-inductive _ _ _ bal-eq _) =
     let
       h : utxo ∩ outs tx ≡ᵉ ∅
       h = subst ((utxo ∩ outs tx) ≡ᵉ_) h' (IsEquivalence.refl ≡ᵉ-isEquivalence {utxo ∩ outs tx})
@@ -438,12 +441,12 @@ relation. Luckily, this can be automated.
     UTXOW-inductive :
       ∀ {Γ} {s} {tx} {s'}
       → let utxo = proj₁ s
-            txb = txbody tx
-            txw = txwits tx
-            witsKeys = dom (key txw)
+            txb = body tx
+            txw = wits tx
+            witsKeys = dom (vkSigs txw)
         in
-        witsVKeyNeeded utxo txb ⊆ witsKeys
-      → FinSet.All (λ { (vk , σ) → isSigned vk txb σ }) (key txw)
+        FinSet.All (λ { (vk , σ) → isSigned vk txb σ }) (vkSigs txw)
+      → witsVKeyNeeded utxo txb ⊆ witsKeys
       → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

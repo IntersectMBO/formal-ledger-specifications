@@ -1,3 +1,4 @@
+{-# OPTIONS --safe --without-K #-}
 module MyDebugOptions where
 
 open import Prelude

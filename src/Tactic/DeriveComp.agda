@@ -1,5 +1,5 @@
 {-# OPTIONS -v allTactics:100 #-}
---{-# OPTIONS --safe --without-K #-}
+{-# OPTIONS --safe --without-K #-}
 module Tactic.DeriveComp where
 
 open import Prelude
@@ -43,11 +43,14 @@ record STSConstr : Set where
     signal  : Pattern
     result  : Term
 
-{-# TERMINATING #-}
 conOrVarToPattern : ℕ → Term → Maybe Pattern
 conOrVarToPattern k (♯ v) = just (Pattern.var (v ∸ k))
 conOrVarToPattern k (con c args) =
-  Pattern.con c <$> (traverseList (λ { (arg i x) → arg i <$> conOrVarToPattern k x }) args)
+  Pattern.con c <$> (sequenceList $ conOrVarToPattern′ k args)
+  where
+    conOrVarToPattern′ : ℕ → List (Arg Term) → List (Maybe (Arg Pattern))
+    conOrVarToPattern′ k [] = []
+    conOrVarToPattern′ k ((arg i x) ∷ l) = arg i <$> conOrVarToPattern k x ∷ conOrVarToPattern′ k l
 conOrVarToPattern _ _ = nothing
 
 isArg : (a : Abs (Arg Term)) → Dec _

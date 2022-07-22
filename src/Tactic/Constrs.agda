@@ -1,3 +1,4 @@
+{-# OPTIONS --safe --without-K #-}
 --------------------------------------------------------------------------------
 -- tryConstrs: Try to refine the goal with constructors recursively,
 -- applying some other tactic at the leaves
