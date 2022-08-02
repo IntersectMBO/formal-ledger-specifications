@@ -24,7 +24,7 @@ To install it locally and use that install with emacs, you can do the following:
       (setq agda2-program-name (concat my/ledger-agda-name "/bin/agda"))
     (setq agda2-program-name "agda"))
   (agda2-restart))
-(define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/toggle-ledger-agda)
+(with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/toggle-ledger-agda))
 ```
 You can then use `M-x my/toggle-ledger-agda` or `C-c C-x C-t` to switch between your regular install of Agda and the locally installed version.
 
