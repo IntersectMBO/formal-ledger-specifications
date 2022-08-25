@@ -78,8 +78,12 @@ open import Relation.Binary.PropositionalEquality
 open import DecEq
 open import Interface.Decidable.Instance
 open import FinMap renaming (FinMap to _↦_)
+open import FiniteMap
+open import FinMap.Properties
+open import FinMap.Properties.Equality
+
 open import FinSet hiding (∅) renaming (FinSet to ℙ_)
-open import FinSet.Properties
+open import FinSet.Properties hiding (indexedSum-∪; indexedSum-cong)
 open import FinSet.Properties.Equality
 
 open import Tactic.Helpers
@@ -219,8 +223,15 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \AgdaTarget{outs, minfee, inInterval, balance}
 \begin{figure*}[h]
 \begin{code}
+
   outs : TxBody → UTxO
   outs tx = mapKeys (txid ⟨$⟩ tx ,_) $ txouts tx
+
+  balance : UTxO → Coin
+  balance utxo = indexedSumᵐ (λ { (_ , (_ , x)) → x }) utxo
+
+--   balance : UTxO → Coin
+--   balance utxo = Σᵐ[ v ← utxo ] proj₂ (proj₂ v)
 
   minfee : PParams → TxBody → Coin
   minfee pp tx = a * txsize tx + b
@@ -233,9 +244,8 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
     upper : ∀ {r}   → slot ≤ r             →  inInterval slot (nothing , just r)
     none  :                                   inInterval slot (nothing , nothing)
 
-  balance : UTxO → Coin
-  balance utxo = Σ[ v ← utxo ] proj₂ (proj₂ v)
 \end{code}
+
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
 \end{figure*}
@@ -305,7 +315,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
             utxo = proj₁ s
             fees = proj₂ s
         in
-        txins tx ≠ ∅
+        txins tx ≠ FinSet.∅
       → inInterval slot (txvldt tx)
       -- → txins tx ⊆ dom utxo
       -- this is currently broken because of https://github.com/agda/agda/issues/5982
@@ -316,7 +326,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
       Γ
         ⊢ s
         ⇀⦇ tx ,UTXO⦈
-        ((txins tx ⋪ utxo) ∪ outs tx , fees + f)
+        ((txins tx ⋪ utxo) ∪ᵐ outs tx , fees + f)
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
@@ -325,11 +335,13 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \begin{code}[hide]
   unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 
-  balance-∪ : utxo ∩ utxo' ≡ᵉ ∅ → balance (utxo ∪ utxo') ≡ balance utxo + balance utxo'
-  balance-∪ {utxo} {utxo'} = indexedSum-∪ {s = utxo} {s' = utxo'}
+  open import FinSet renaming (∅ to ∅ᵉ)
 
-  balance-cong : utxo ≡ᵉ utxo' → balance utxo ≡ balance utxo'
-  balance-cong {utxo} {utxo'} = indexedSum-cong {s = utxo} {s' = utxo'}
+  balance-∪ : utxo ∩ᵖ utxo' ≡ᵐ ∅ → balance (utxo ∪ᵐ utxo') ≡ balance utxo + balance utxo'
+  balance-∪ {utxo} {utxo'} = indexedSum-∪ {m = utxo} {m' = utxo'}
+
+  balance-cong : utxo ≡ᵐ utxo' → balance utxo ≡ balance utxo'
+  balance-cong {utxo} {utxo'} = indexedSum-cong {m = utxo} {m' = utxo'}
 
   open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 \end{code}
@@ -340,7 +352,7 @@ For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\va
   pov :
 \end{code}
 \begin{code}[inline*]
-    utxo ∩ outs tx ≡ ∅
+    utxo ∩ᵖ outs tx ≡ ∅ --needed to change this
 \end{code}
 and
 \begin{code}[hide]
@@ -359,27 +371,30 @@ then
 \begin{code}[hide]
   pov {utxo} {tx} {_} {fee} h' (UTXO-inductive _ _ _ bal-eq _) =
     let
-      h : utxo ∩ outs tx ≡ᵉ ∅
-      h = subst ((utxo ∩ outs tx) ≡ᵉ_) h' (IsEquivalence.refl ≡ᵉ-isEquivalence {utxo ∩ outs tx})
+      h : utxo ∩ᵖ outs tx ≡ᵐ ∅
+      h = subst ((utxo ∩ᵖ outs tx) ≡ᵐ_) h' (IsEquivalence.refl ≡ᵐ-isEquivalence {utxo ∩ᵖ outs tx})
 
-      balance-eq : balance utxo ≡ balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx
+      balance-eq : balance utxo ≡ balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + txfee tx
       balance-eq = begin
         balance utxo
-          ≡˘⟨ balance-cong {utxo = (txins tx ⋪ utxo) ∪ (txins tx ◃ utxo)} {utxo' = utxo} (dom-res-ex-∪ (txins tx) utxo) ⟩
-        balance ((txins tx ⋪ utxo) ∪ (txins tx ◃ utxo))
-          ≡⟨ balance-∪ {txins tx ⋪ utxo} {txins tx ◃ utxo} (dom-res-ex-∩ (txins tx) utxo) ⟩
+          ≡˘⟨ balance-cong {utxo = (txins tx ⋪ utxo) ∪ᵐ (txins tx ◃ utxo)} {utxo' = utxo}
+            (dom-res-ex-∪ {_} {_} {txins tx} {utxo}) ⟩
+        balance ((txins tx ⋪ utxo) ∪ᵐ (txins tx ◃ utxo))
+          ≡⟨ balance-∪ {txins tx ⋪ utxo} {txins tx ◃ utxo} (dom-res-ex-∩ᵖ {_} {_} {txins tx} {utxo} ) ⟩
         balance (txins tx ⋪ utxo) + balance (txins tx ◃ utxo)
           ≡tʳ⟨ cong (balance (txins tx ⋪ utxo) +_) bal-eq ⟩
         balance (txins tx ⋪ utxo) + balance (outs tx) + txfee tx
-          ≡˘⟨ cong (_+ txfee tx) (balance-∪ {txins tx ⋪ utxo} {outs tx} (dom-res-∩-empty (txins tx) utxo (outs tx) h)) ⟩
-        balance ((txins tx ⋪ utxo) ∪ outs tx) + txfee tx ∎
+          ≡˘⟨ cong (_+ txfee tx) (balance-∪ {txins tx ⋪ utxo} {outs tx} (dom-res-∩ᵖ-empty {_} {_} {utxo} {outs tx} {txins tx} h)) ⟩
+        balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + txfee tx ∎
     in begin
     balance utxo + fee                                        ≡tʳ⟨ cong (_+ fee) balance-eq ⟩
-    balance ((txins tx ⋪ utxo) ∪ outs tx) + (txfee tx + fee)
-              ≡˘⟨ cong (balance ((txins tx ⋪ utxo) ∪ outs tx) +_) (+-comm fee (txfee tx)) ⟩
-    balance ((txins tx ⋪ utxo) ∪ outs tx) + (fee + txfee tx) ∎
+    balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + (txfee tx + fee)
+              ≡˘⟨ cong (balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) +_) (+-comm fee (txfee tx)) ⟩
+    balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + (fee + txfee tx) ∎
 \end{code}
+
 \end{property}
+
 
 \pagebreak
 Note that this is not a function, but a relation. To make this
@@ -443,7 +458,7 @@ relation. Luckily, this can be automated.
             txw = wits tx
             witsKeys = dom (vkSigs txw)
         in
-        FinSet.All (λ { (vk , σ) → isSigned vk txb σ }) (vkSigs txw)
+      FinMap.All (λ { (vk , σ) → isSigned vk txb σ }) (vkSigs txw)
       → witsVKeyNeeded utxo txb ⊆ witsKeys
       → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
       ────────────────────────────────
