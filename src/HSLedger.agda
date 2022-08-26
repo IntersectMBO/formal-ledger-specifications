@@ -6,6 +6,8 @@ open import Data.List
 open import Function
 open import Function.Bundles
 open import FinSet
+open import FinMap
+open import FiniteMap
 open import Function.Definitions
 open import Relation.Binary.PropositionalEquality
 open import Function.Construct.Composition
@@ -52,15 +54,15 @@ txid : TxBody ↣ TxId
 txid = mk↣ txidInj
 
 convertUTxO : UTxO → L.UTxO
-convertUTxO u = fromList (coerce u)
+convertUTxO u = fromList' (coerce u)
 
 convertUTxO' : L.UTxO → UTxO
-convertUTxO' u = coerce (elements u)
+convertUTxO' u = coerce (listOfᵐ u)
 
 convertTxBody : TxBody → L.TxBody
 convertTxBody (txins , txouts , txfee , txvldt , txsize) = record
   { txins  = fromList (coerce txins)
-  ; txouts = fromList (coerce txouts)
+  ; txouts = fromList' (coerce txouts)
   ; txfee  = txfee
   ; txvldt = coerce txvldt
   ; txsize = txsize }
@@ -68,14 +70,14 @@ convertTxBody (txins , txouts , txfee , txvldt , txsize) = record
 convertTx : Tx → L.Tx
 convertTx (txb , txw) = record
   { body = convertTxBody txb
-  ; wits = record { vkSigs = fromList (coerce txw) } }
+  ; wits = record { vkSigs = fromList' (coerce txw) } }
 
 convertTxBody' : L.TxBody → TxBody
-convertTxBody' txb = (coerce (elements txins) , coerce (elements txouts) , txfee , coerce txvldt , txsize)
+convertTxBody' txb = (coerce (elements txins) , coerce (listOfᵐ txouts) , txfee , coerce txvldt , txsize)
   where open L.TxBody txb
 
 convertTx' : L.Tx → Tx
-convertTx' tx = (convertTxBody' body , coerce (elements vkSigs))
+convertTx' tx = (convertTxBody' body , coerce (listOfᵐ vkSigs))
   where open L.Tx tx
         open L.TxWitnesses wits
 
