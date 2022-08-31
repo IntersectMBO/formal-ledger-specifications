@@ -90,6 +90,9 @@ module _ {A : Set} {{h : DecEq A}} {B : Set} {{_ : DecEq B}} where
   map : (A → B) → FinSet A → FinSet B
   map f (fs-nojunk els) = fromList (Data.List.map f els)
 
+  mapPartial : (A → Maybe B) → FinSet A → FinSet B
+  mapPartial f (fs-nojunk els) = fromList (Data.List.mapMaybe f els)
+
 module _ {A : Set} {{_ : DecEq A}} {p} {{M : CommutativeMonoid 0ℓ p}} where
   open CommutativeMonoid M
   

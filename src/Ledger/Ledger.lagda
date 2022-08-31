@@ -90,6 +90,7 @@ open import Tactic.Helpers
 open import Tactic.MonoidSolver
 open import Tactic.EquationalReasoning
 open import Tactic.DeriveComp
+import Agda.Builtin.Reflection
 
 open import MyDebugOptions
 --open import Tactic.Defaults
@@ -97,8 +98,9 @@ open import MyDebugOptions
 open import PreludeImports
 
 open import ComputationalRelation
+open import Ledger.Transaction
 
-module Ledger (
+module Ledger.Ledger (txs : TransactionStructure) where
 \end{code}
 
 \section{Transactions}
@@ -124,20 +126,12 @@ This function must produce a unique id for each unique transaction body.
 \begin{figure*}[h]
 \emph{Abstract types}
 \begin{code}
-  Ix           -- index
-  TxId         -- transaction id
-  Addr         -- address
-  VKey         -- verifying key
-  Sig          -- signature
+-- TODO
 \end{code}
 \emph{Derived types}
 \begin{code}[hide]
-  : Set) {{_ : DecEq TxId}} {{_ : DecEq Ix}} {{_ : DecEq Addr}} ⦃ _ : DecEq VKey ⦄ ⦃ _ : DecEq Sig ⦄ where
 _≤ᵇ_ : ℕ → ℕ → Bool
 n ≤ᵇ m = ⌊ n ≤? m ⌋
-
-_≠_ : {A : Set} → A → A → Set
-a ≠ b = ¬ a ≡ b
 
 _⟨$⟩_ : {A B : Set} → A ↣ B → A → B
 _⟨$⟩_ = FP.⇒→ {k = FP.injection}
@@ -146,42 +140,18 @@ instance
   _ = +-0-commutativeMonoid
   _ = Decidable²⇒Dec _≤?_
 
-  -- Sub? : ∀ {a} {A : Set a} ⦃ _ : DecEq A ⦄ → {x y : List A} → Dec (∀ {z} → z ∈' x → z ∈' y)
-  -- Sub? {x = x} {y} = {!!}
+open TransactionStructure txs
+open import Ledger.PParams Epoch
+open import Ledger.Crypto
 
-Coin Slot TxIn TxOut UTxO : Set
+Slot : Set
 \end{code}
 \begin{code}
-Coin    = ℕ
 Slot    = ℕ -- TODO: make this abstract?
-TxIn    = TxId × Ix
-TxOut   = Addr × Coin
-UTxO    = TxIn ↦ TxOut
-
-record PParams : Set where
-  field
-    a : ℕ
-    b : ℕ
-    maxTxSize : ℕ
 \end{code}
 \emph{Transaction types}
 \begin{code}
-record TxBody : Set where
-  field
-    txins  : ℙ TxIn
-    txouts : Ix ↦ TxOut
-    txfee  : Coin
-    txvldt : Maybe ℕ × Maybe ℕ
-    txsize : ℕ
-
-record TxWitnesses : Set where
-  field
-    vkSigs : VKey ↦ Sig
-
-record Tx : Set where
-  field
-    body : TxBody
-    wits : TxWitnesses
+-- TODO: Move
 \end{code}
 \emph{Abstract functions}
 \begin{code}[hide]
@@ -192,9 +162,7 @@ module _
 \end{code}
   -- TODO: how to fix parentheses here?
 \begin{code}
-  (txid : TxBody ↣ TxId) -- an injective function
-  (paymentK : Addr → VKey) -- TODO: should be the hash
-  (isSigned : VKey → TxBody → Sig → Set)
+  --(isSigned : VKey → TxBody → Sig → Set)
 \end{code}
 \begin{code}[hide]
   where
@@ -225,7 +193,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \begin{code}
 
   outs : TxBody → UTxO
-  outs tx = mapKeys (txid ⟨$⟩ tx ,_) $ txouts tx
+  outs tx = mapKeys (txid tx ,_) $ txouts tx
 
   balance : UTxO → Coin
   balance utxo = indexedSumᵐ (λ { (_ , (_ , x)) → x }) utxo
@@ -315,7 +283,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
             utxo = proj₁ s
             fees = proj₂ s
         in
-        txins tx ≠ FinSet.∅
+        txins tx ≢ FinSet.∅
       → inInterval slot (txvldt tx)
       -- → txins tx ⊆ dom utxo
       -- this is currently broken because of https://github.com/agda/agda/issues/5982
@@ -418,8 +386,9 @@ relation. Luckily, this can be automated.
 
 \begin{figure*}[h]
 \begin{code}
-  witsVKeyNeeded : UTxO → TxBody → ℙ VKey
-  witsVKeyNeeded utxo txb = FinSet.map (paymentK ∘ proj₁) (utxo ⟪$⟫ txins txb)
+  witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
+  witsVKeyNeeded utxo txb =
+    mapPartial ((λ { (inj₁ kh) → just kh ; _ → nothing }) ∘ payCred ∘ proj₁) (utxo ⟪$⟫ txins txb)
 \end{code}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}
@@ -458,8 +427,8 @@ relation. Luckily, this can be automated.
             txw = wits tx
             witsKeys = dom (vkSigs txw)
         in
-      FinMap.All (λ { (vk , σ) → isSigned vk txb σ }) (vkSigs txw)
-      → witsVKeyNeeded utxo txb ⊆ witsKeys
+      FinMap.All (λ { (vk , σ) → isSigned vk (txidBytes (txid txb)) σ }) (vkSigs txw)
+      → witsVKeyNeeded utxo txb ⊆ FinSet.map hashKey witsKeys
       → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

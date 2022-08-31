@@ -4,3 +4,4 @@ depend:
   finset
   stdlib-meta
 include: .
+flags: --safe

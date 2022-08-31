@@ -38,6 +38,12 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
   _⋪_ : FinSet K → FinMap K V → FinMap K V
   set ⋪ map = filterᵐ (λ x → ¬? (proj₁ x ∈? set)) map
 
+  _|^_ : FinMap K V → FinSet V → FinMap K V
+  map |^ set = filterᵐ (λ x → proj₂ x ∈? set) map
+
+  _|^'_ : {P : V → Set} → FinMap K V → (∀ a → Dec (P a)) → FinMap K V
+  map |^' set = filterᵐ (λ x → set (proj₂ x)) map
+
   values : FinMap K V → List V
   values m = map proj₂ $ listOfᵐ m
 
