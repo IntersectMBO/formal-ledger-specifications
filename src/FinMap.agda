@@ -71,7 +71,7 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
   All : ∀ {ℓ} → Pred (K × V) ℓ → FinMap K V → Set ℓ
   All P s = FinSet.All P (FinSet.fromList $ listOfᵐ s)
 
-module _ {K V : Set} {{_ : DecEq K}}{{_ : DecEq V}} {p} {{M : CommutativeMonoid 0ℓ p}} where
+module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} {p} {{M : CommutativeMonoid 0ℓ p}} where
   open CommutativeMonoid M
 
   indexedSumLᵐ : ((K × V) → Carrier) → List (K × V) → Carrier
@@ -80,4 +80,8 @@ module _ {K V : Set} {{_ : DecEq K}}{{_ : DecEq V}} {p} {{M : CommutativeMonoid 
   indexedSumᵐ : ((K × V) → Carrier) → FinMap K V → Carrier
   indexedSumᵐ f (fs-nojunk els) = foldr (λ x → f x ∙_) ε els
 
+  indexedSumᵐ' : (V → Carrier) → FinMap K V → Carrier
+  indexedSumᵐ' f (fs-nojunk els) = foldr (λ x → f (proj₂ x) ∙_) ε els
+
   syntax indexedSumᵐ (λ a → x) m = Σᵐ[ a ← m ] x
+  syntax indexedSumᵐ' (λ a → x) m = Σᵐ'[ a ← m ] x

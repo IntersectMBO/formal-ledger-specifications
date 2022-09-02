@@ -1,12 +1,13 @@
-\begin{document}
-\begin{code}
+\section{Scripts}
+\begin{code}[hide]
 open import Prelude
 open import DecEq
 
 module Ledger.Script (KeyHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ (_≤ᵇ_ : Slot → Slot → Bool) where
 
 open import FinSet renaming (FinSet to ℙ_)
-
+\end{code}
+\begin{code}
 data Timelock : Set where
   RequireAllOf : List Timelock → Timelock
   RequireAnyOf : List Timelock → Timelock
@@ -30,6 +31,4 @@ evalTimelock khs (just l  , _) (RequireTimeStart x)  = x ≤ᵇ l
 evalTimelock khs (nothing , _) (RequireTimeStart x)  = false
 evalTimelock khs (_ , just r ) (RequireTimeExpire x) = r ≤ᵇ x
 evalTimelock khs (_ , nothing) (RequireTimeExpire x) = false
-
 \end{code}
-\end{document}
