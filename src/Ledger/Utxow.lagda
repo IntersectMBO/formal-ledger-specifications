@@ -14,9 +14,11 @@ open import Ledger.Transaction
 
 module Ledger.Utxow (txs : TransactionStructure) where
 
-open import Ledger.Utxo txs
-
 open TransactionStructure txs
+
+open import Ledger.Utxo txs
+import Data.Nat
+open import Ledger.Script KeyHash ℕ Data.Nat._≤_ Data.Nat._≤ᵇ_
 
 open TxBody
 open TxWitnesses
@@ -28,6 +30,10 @@ open Tx
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
 witsVKeyNeeded utxo txb =
   mapPartial ((λ { (inj₁ kh) → just kh ; _ → nothing }) ∘ payCred ∘ proj₁) (utxo ⟪$⟫ txins txb)
+
+scriptsNeeded : UTxO → TxBody → ℙ ScriptHash
+scriptsNeeded utxo txb =
+  mapPartial ((λ { (inj₂ sh) → just sh ; _ → nothing }) ∘ payCred ∘ proj₁) (utxo ⟪$⟫ txins txb)
 \end{code}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}
@@ -64,10 +70,14 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     → let utxo = proj₁ s
           txb = body tx
           txw = wits tx
-          witsKeys = dom (vkSigs txw)
+          witsKeyHashes = FinSet.map hashKey (dom (vkSigs txw))
+          -- don't have hashScript for timelock yet
+          witsScriptHashes = FinSet.∅ --FinSet.map hashScript (scripts txw)
       in
     FinMap.All (λ { (vk , σ) → isSigned vk (txidBytes (txid txb)) σ }) (vkSigs txw)
-    → witsVKeyNeeded utxo txb ⊆ FinSet.map hashKey witsKeys
+    → FinSet.All (evalTimelock witsKeyHashes (txvldt txb)) (scripts txw)
+    → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
+    → scriptsNeeded utxo txb ⊆ witsScriptHashes
     → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

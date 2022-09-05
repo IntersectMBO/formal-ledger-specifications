@@ -56,7 +56,9 @@ This function must produce a unique id for each unique transaction body.
   open HashingScheme adHashingScheme renaming (THash to ADHash; hash to hashAD)
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate)
 
+  import Data.Nat
   open import Ledger.Address Network KeyHash ScriptHash public
+  open import Ledger.Script KeyHash ℕ Data.Nat._≤_ Data.Nat._≤ᵇ_
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
@@ -86,7 +88,7 @@ This function must produce a unique id for each unique transaction body.
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ↛ Sig
-          scripts  : ℙ Script
+          scripts  : ℙ Timelock
 
   record Tx : Set where
     field body  : TxBody

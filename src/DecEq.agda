@@ -1,21 +1,23 @@
 {-# OPTIONS --safe #-}
 
-open import Relation.Nullary
-open import Relation.Nullary.Decidable
-open import Relation.Binary.PropositionalEquality
-open import Relation.Binary.PropositionalEquality.WithK
-open import Relation.Binary hiding (_⇔_)
-open import Data.Bool using (Bool; true; false)
-open import Data.Nat using (ℕ)
-open import Data.Maybe using (Maybe)
-open import Data.Maybe.Properties
-open import Data.Product
+import Data.List.Properties
+import Data.Maybe.Properties
 import Data.Product.Properties
-open import Data.Empty
-open import Data.Sum
 import Data.Sum.Properties
+open import Data.Bool using (Bool; true; false)
+open import Data.Empty
+open import Data.List
+open import Data.Maybe using (Maybe)
+open import Data.Nat using (ℕ)
+open import Data.Product
+open import Data.Sum
 open import Function
 open import Level
+open import Relation.Binary hiding (_⇔_)
+open import Relation.Binary.PropositionalEquality
+open import Relation.Binary.PropositionalEquality.WithK
+open import Relation.Nullary
+open import Relation.Nullary.Decidable
 
 module DecEq where
 
@@ -52,6 +54,9 @@ instance
 
   DecEq-Maybe : ∀ {a} {A : Set a} → {{DecEq A}} → DecEq (Maybe A)
   DecEq-Maybe {{h}} = record { _≟_ = Data.Maybe.Properties.≡-dec (DecEq._≟_ h) }
+
+  DecEq-List : ∀ {a} {A : Set a} → {{DecEq A}} → DecEq (List A)
+  DecEq-List {{h}} = record { _≟_ = Data.List.Properties.≡-dec (DecEq._≟_ h) }
 
   DecEq-Product : ∀ {a} {A B : Set a} → {{DecEq A}} → {{DecEq B}} → DecEq (A × B)
   DecEq-Product {{h}} {{h'}} = record { _≟_ = Data.Product.Properties.≡-dec (DecEq._≟_ h) (DecEq._≟_ h') }

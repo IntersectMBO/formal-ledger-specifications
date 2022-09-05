@@ -9,6 +9,7 @@
 \newunicodechar{₁}{\ensuremath{_1}}
 \newunicodechar{₂}{\ensuremath{_2}}
 \newunicodechar{σ}{\ensuremath{\sigma}}
+\newunicodechar{≤}{\ensuremath{\leq}}
 
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{float}
