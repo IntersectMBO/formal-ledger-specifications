@@ -1,5 +1,7 @@
 \section{Scripts}
 \begin{code}[hide]
+{-# OPTIONS --safe #-}
+
 open import Prelude
 open import DecEq
 open import Relation.Nullary
@@ -8,9 +10,43 @@ open import Data.List.Relation.Unary.All
 open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Binary.Sublist.Propositional as S
 
-module Ledger.Script (KeyHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot → Slot → Bool) where
+module Ledger.Script (KeyHash ScriptHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot → Slot → Bool) where
 
+open import Ledger.Crypto
 open import FinSet renaming (FinSet to ℙ_) hiding (All)
+
+record P1ScriptStructure : Set₁ where
+  field P1Script : Set
+        validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Set
+        Dec-validP1Script : ∀ {khs} {I} {s} → Dec (validP1Script khs I s)
+        instance Hashable-P1Script : Hashable P1Script ScriptHash
+                 DecEq-P1Script    : DecEq P1Script
+
+record PlutusStructure : Set₁ where
+  field Dataʰ : HashableSet
+        PlutusScript ExUnits CostModel : Set
+        instance Hashable-PlutusScript : Hashable PlutusScript ScriptHash
+                 DecEq-PlutusScript    : DecEq PlutusScript
+
+  open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
+
+  field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
+        Dec-validPlutusScript : ∀ {cm} {ds} {eu} {s} → Dec (validPlutusScript cm ds eu s)
+
+record ScriptStructure : Set₁ where
+  field p1s : P1ScriptStructure
+        ps  : PlutusStructure
+
+  open P1ScriptStructure p1s public
+  open PlutusStructure ps public renaming
+    (PlutusScript to P2Script; validPlutusScript to validP2Script; Dec-validPlutusScript to Dec-validP2Script)
+
+  Script = P1Script ⊎ P2Script
+
+  instance
+    Hashable-Script : Hashable Script ScriptHash
+    Hashable-Script .hash (inj₁ s) = hash s
+    Hashable-Script .hash (inj₂ s) = hash s
 \end{code}
 We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]
@@ -127,4 +163,13 @@ instance
   DecEq-Timelock ._≟_ (RequireTimeExpire x) (RequireTimeExpire x₁) with x ≟ x₁
   ... | no ¬p    = no (λ where refl → ¬p refl)
   ... | yes refl = yes refl
+
+-- open P1ScriptStructure
+
+-- P1ScriptStructure-TL : P1ScriptStructure
+-- P1ScriptStructure-TL .P1Script = Timelock
+-- P1ScriptStructure-TL .validP1Script = evalTimelock
+-- P1ScriptStructure-TL .Dec-validP1Script = {!!}
+-- P1ScriptStructure-TL .Hashable-P1Script = {!!}
+-- P1ScriptStructure-TL .DecEq-P1Script = DecEq-Timelock
 \end{code}

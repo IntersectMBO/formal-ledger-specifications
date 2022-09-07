@@ -1,20 +1,8 @@
 {-# OPTIONS --safe #-}
 
-import Data.List.Properties
-import Data.Maybe.Properties
-import Data.Product.Properties
-import Data.Sum.Properties
-open import Data.Bool using (Bool; true; false)
-open import Data.Empty
-open import Data.List
-open import Data.Maybe using (Maybe)
-open import Data.Nat using (ℕ)
-open import Data.Product
-open import Data.Sum
-open import Function
-open import Level
+open import Prelude
+
 open import Relation.Binary hiding (_⇔_)
-open import Relation.Binary.PropositionalEquality
 open import Relation.Binary.PropositionalEquality.WithK
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
@@ -48,9 +36,22 @@ a ≡ᵇ a' = ⌊ a ≟ a' ⌋
     (from b₁ ≟ from b₂)
     where open Inverse A↔B
 
+import Data.List.Properties
+import Data.Maybe.Properties
+import Data.Product.Properties
+import Data.Sum.Properties
+import Data.Nat
+import Data.Unit
+
 instance
-  DecEq-Nat : DecEq ℕ
-  DecEq-Nat = record { _≟_ = Data.Nat._≟_ }
+  DecEq-⊥ : DecEq ⊥
+  DecEq-⊥ = record { _≟_ = λ () }
+
+  DecEq-⊤ : DecEq ⊤
+  DecEq-⊤ = record { _≟_ = Data.Unit._≟_ }
+
+  DecEq-ℕ : DecEq ℕ
+  DecEq-ℕ = record { _≟_ = Data.Nat._≟_ }
 
   DecEq-Maybe : ∀ {a} {A : Set a} → {{DecEq A}} → DecEq (Maybe A)
   DecEq-Maybe {{h}} = record { _≟_ = Data.Maybe.Properties.≡-dec (DecEq._≟_ h) }

@@ -4,6 +4,7 @@
 \subsection{Accounting}
 
 \begin{code}[hide]
+{-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 {-# OPTIONS -v allTactics:100 #-}
 

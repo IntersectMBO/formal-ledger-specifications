@@ -1,5 +1,7 @@
 \section{Addresses}
 \begin{code}[hide]
+{-# OPTIONS --safe #-}
+
 open import DecEq
 open import Relation.Nullary
 
@@ -118,5 +120,4 @@ instance
       ; from-cong = λ where refl → refl
       ; inverse   = (λ where record { net = net ; stake = stake } → refl)
                     , (λ where (net , stake) → refl) }) DecEq-Product
-
 \end{code}

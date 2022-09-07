@@ -2,14 +2,18 @@
 \label{sec:transactions}
 
 \begin{code}[hide]
+{-# OPTIONS --safe #-}
 --------------------------------------------------------------------------------
 -- NOTE: Everything in this module is part of TransactionStructure
 --------------------------------------------------------------------------------
 open import Ledger.Crypto
 import Ledger.PParams
+import Ledger.Script
 open import DecEq
 
 module Ledger.Transaction where
+open import Prelude
+import Data.Nat
 
 record TransactionStructure : Set₁ where
   field
@@ -39,7 +43,7 @@ This function must produce a unique id for each unique transaction body.
 \end{code}
 \begin{code}[hide]
         crypto                              : Crypto
-        adHashingScheme                     : HashingScheme AuxiliaryData
+        adHashingScheme                     : isHashableSet AuxiliaryData
         ppUpd                               : Ledger.PParams.PParamsDiff Epoch
         txidBytes                           : TxId → Crypto.Ser crypto
         instance DecEq-TxId : DecEq TxId
@@ -47,18 +51,19 @@ This function must produce a unique id for each unique transaction body.
                  DecEq-Netw : DecEq Network
                  DecEq-UpdT : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
+  open Crypto crypto public
+  open isHashableSet adHashingScheme renaming (THash to ADHash)
+
+  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash ℕ Data.Nat._≤_ Data.Nat._≤ᵇ_
+  open Ledger.Script.ScriptStructure ss public
+
   open import FinSet renaming (FinSet to ℙ_)
   open import FinMap renaming (FinMap to _↛_)
-  open import Prelude
   open import Ledger.PParams Epoch
 
-  open Crypto crypto public
-  open HashingScheme adHashingScheme renaming (THash to ADHash; hash to hashAD)
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate)
 
-  import Data.Nat
   open import Ledger.Address Network KeyHash ScriptHash public
-  open import Ledger.Script KeyHash ℕ Data.Nat._≤_ Data.Nat._≤ᵇ_
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
@@ -88,7 +93,7 @@ This function must produce a unique id for each unique transaction body.
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ↛ Sig
-          scripts  : ℙ Timelock
+          scripts  : ℙ Script
 
   record Tx : Set where
     field body  : TxBody

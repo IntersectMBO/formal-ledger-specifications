@@ -56,7 +56,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Script
 open import Ledger.Transaction
 
 module Ledger (txs : TransactionStructure) where
@@ -65,8 +64,10 @@ open import Ledger.Utxo txs
 open import Ledger.Utxow txs
 \end{code}
 
+\include{ledger/crypto}
 \include{ledger/address}
 \include{ledger/script}
+\include{ledger/pparams}
 \include{ledger/transaction}
 \include{ledger/utxo}
 \include{ledger/utxow}
