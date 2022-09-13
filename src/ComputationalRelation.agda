@@ -67,3 +67,7 @@ module _ {STS : C → S → Sig → S → Set} (comp comp' : Computational STS) 
 
   compute-ext≡ : compute₁ c s sig ≡ compute₂ c s sig
   compute-ext≡ = ExtendedRel-rightUnique comp (ExtendedRel-compute comp) (ExtendedRel-compute comp')
+
+Computational⇒Dec' : ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Set} ⦃ comp : Computational STS ⦄
+                      → Dec (STS c s sig s')
+Computational⇒Dec' ⦃ comp = comp ⦄ = Computational⇒Dec comp

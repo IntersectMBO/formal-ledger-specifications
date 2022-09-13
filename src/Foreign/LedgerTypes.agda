@@ -67,10 +67,11 @@ record TxWitnesses : Set where
 {-# COMPILE GHC TxWitnesses = data MAlonzo.Code.Foreign.LedgerTypes.TxWitnesses (MkTxWitnesses) #-}
 
 record Tx : Set where
-  field wits : TxWitnesses
-        txAD : ⊤
+  field body : TxBody
+        wits : TxWitnesses
+        txAD : Maybe ⊤
 
-{-# FOREIGN GHC data Tx = MkTx { wits :: TxWitnesses, txAD :: () } #-}
+{-# FOREIGN GHC data Tx = MkTx { body :: TxBody, wits :: TxWitnesses, txAD :: Maybe () } #-}
 {-# COMPILE GHC Tx = data MAlonzo.Code.Foreign.LedgerTypes.Tx (MkTx) #-}
 
 record PParams : Set where

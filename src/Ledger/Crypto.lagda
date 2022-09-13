@@ -5,6 +5,7 @@ module Ledger.Crypto where
 
 open import Prelude hiding (T)
 open import DecEq
+open import Relation.Nullary
 
 record Hashable (T THash : Set) : Set where
   field hash : T → THash
@@ -42,7 +43,8 @@ We rely on a public key signing scheme for verification of spending.
 \end{code}
 \emph{Property of signatures}
 \begin{code}[hide]
-  field isSigned-correct :
+  field isSigned? : ∀ vk d σ → Dec (isSigned vk d σ)
+        isSigned-correct :
 \end{code}
 \begin{code}
           ((sk , vk , _) : KeyPair) (d : Ser) (σ : Sig) → sign sk d ≡ σ → isSigned vk d σ

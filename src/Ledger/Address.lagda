@@ -41,8 +41,9 @@ record BaseAddr : Set where
         stake : Credential
 
 record BootstrapAddr : Set where
-  field net   : Network
-        pay   : Credential
+  field net       : Network
+        pay       : Credential
+        attrsSize : ℕ
 
 record RwdAddr : Set where
   field net   : Network
@@ -63,8 +64,9 @@ ScriptAddr = ScriptBaseAddr ⊎ ScriptBootstrapAddr
 \emph{Helper functions}
 \AgdaTarget{payCred, isVKeyAddr}
 \begin{code}
-payCred : Addr → Credential
-isVKeyAddr : Addr → Set
+payCred     : Addr → Credential
+netId       : Addr → Network
+isVKeyAddr  : Addr → Set
 \end{code}
 \end{AgdaAlign}
 \caption{Definitions used in Addresses}
@@ -74,11 +76,14 @@ isVKeyAddr : Addr → Set
 payCred (inj₁ record {pay = pay}) = pay
 payCred (inj₂ record {pay = pay}) = pay
 
+netId (inj₁ record {net = net}) = net
+netId (inj₂ record {net = net}) = net
+
 isVKeyAddr = isVKey ∘ payCred
 
 isVKey? : ∀ c → Dec (isVKey c)
 isVKey? (inj₁ h) = yes (VKeyisVKey h)
-isVKey? (inj₂ _) = no (λ ())
+isVKey? (inj₂ _) = no  (λ ())
 
 isVKeyAddr? : ∀ a → Dec (isVKeyAddr a)
 isVKeyAddr? = isVKey? ∘ payCred
@@ -100,17 +105,15 @@ instance
       ; from      = λ where record { net = net ; pay = pay ; stake = stake } → (net , pay , stake)
       ; to-cong   = λ where refl → refl
       ; from-cong = λ where refl → refl
-      ; inverse   = (λ where record { net = net ; pay = pay ; stake = stake } → refl)
-                    , (λ where (net , pay , stake) → refl) }) DecEq-Product
+      ; inverse   = (λ _ → refl) , (λ _ → refl) }) DecEq-Product
 
     DecEq-BootstrapAddr : DecEq BootstrapAddr
     DecEq-BootstrapAddr = ↔-DecEq (record
-      { to        = λ where (net , pay) → record { net = net ; pay = pay }
-      ; from      = λ where record { net = net ; pay = pay } → (net , pay)
+      { to        = λ where (net , pay , attrsSize) → record { net = net ; pay = pay ; attrsSize = attrsSize }
+      ; from      = λ where record { net = net ; pay = pay ; attrsSize = attrsSize } → (net , pay , attrsSize)
       ; to-cong   = λ where refl → refl
       ; from-cong = λ where refl → refl
-      ; inverse   = (λ where record { net = net ; pay = pay } → refl)
-                    , (λ where (net , pay) → refl) }) DecEq-Product
+      ; inverse   = (λ _ → refl) , (λ _ → refl) }) DecEq-Product
 
     DecEq-RwdAddr : DecEq RwdAddr
     DecEq-RwdAddr = ↔-DecEq (record
@@ -118,6 +121,5 @@ instance
       ; from      = λ where record { net = net ; stake = stake } → (net , stake)
       ; to-cong   = λ where refl → refl
       ; from-cong = λ where refl → refl
-      ; inverse   = (λ where record { net = net ; stake = stake } → refl)
-                    , (λ where (net , stake) → refl) }) DecEq-Product
+      ; inverse   = (λ _ → refl) , (λ _ → refl) }) DecEq-Product
 \end{code}

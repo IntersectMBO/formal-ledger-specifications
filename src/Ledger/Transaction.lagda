@@ -46,15 +46,18 @@ This function must produce a unique id for each unique transaction body.
         adHashingScheme                     : isHashableSet AuxiliaryData
         ppUpd                               : Ledger.PParams.PParamsDiff Epoch
         txidBytes                           : TxId → Crypto.Ser crypto
+        networkId                           : Network
         instance DecEq-TxId : DecEq TxId
                  DecEq-Ix   : DecEq Ix
                  DecEq-Netw : DecEq Network
                  DecEq-UpdT : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
-  open isHashableSet adHashingScheme renaming (THash to ADHash)
+  open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
   field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash ℕ Data.Nat._≤_ Data.Nat._≤ᵇ_
+        instance DecEq-ADHash : DecEq ADHash
+
   open Ledger.Script.ScriptStructure ss public
 
   open import FinSet renaming (FinSet to ℙ_)
@@ -98,7 +101,7 @@ This function must produce a unique id for each unique transaction body.
   record Tx : Set where
     field body  : TxBody
           wits  : TxWitnesses
-          txAD  : AuxiliaryData
+          txAD  : Maybe AuxiliaryData
 \end{code}
 \emph{Abstract functions}
 \begin{code}

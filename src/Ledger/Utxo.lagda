@@ -107,17 +107,16 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
 \AgdaTarget{UTxOEnv, UTxOState, \_⊢\_⇀⦇\_,UTXO⦈\_}
 \begin{figure*}[h]
 \emph{UTxO environment}
-\begin{code}[hide]
-UTxOEnv UTxOState : Set
-\end{code}
 \begin{code}
-UTxOEnv = Slot
-        × PParams
+record UTxOEnv : Set where
+  field slot    : Slot
+        pparams : PParams
 \end{code}
 \emph{UTxO states}
 \begin{code}
-UTxOState = UTxO -- UTxO
-          × Coin -- fee pot
+record UTxOState : Set where
+  field utxo : UTxO
+        fees : Coin
 \end{code}
 \emph{UTxO transitions}
 
@@ -148,6 +147,7 @@ instance
   ... | no ¬p = no  (λ where (upper h) → ¬p h)
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} = yes none
+
 data
 \end{code}
 \begin{code}
@@ -164,10 +164,10 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{code}
   UTXO-inductive :
     ∀ {Γ} {s} {tx}
-    → let slot = proj₁ Γ
-          pp   = proj₂ Γ
-          utxo = proj₁ s
-          fees = proj₂ s
+    → let slot = UTxOEnv.slot Γ
+          pp   = UTxOEnv.pparams Γ
+          utxo = UTxOState.utxo s
+          fees = UTxOState.fees s
       in
       txins tx ≢ FinSet.∅
     → inInterval slot (txvldt tx)
@@ -175,12 +175,17 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     -- this is currently broken because of https://github.com/agda/agda/issues/5982
     → let f = txfee tx in minfee pp tx ≤ f
     → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
+    -- PPUP
+    -- same with anything that uses FinSet.All
+    -- → FinSet.All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (values' (txouts tx))
+    -- → FinSet.All (λ where (a , _) → netId a ≡ networkId) (values' (txouts tx))
+    -- → FinSet.All (λ where record { net = net } → net ≡ networkId) (dom (txwdrls tx))
     → txsize tx ≤ PParams.maxTxSize pp
     ────────────────────────────────
     Γ
       ⊢ s
       ⇀⦇ tx ,UTXO⦈
-      ((txins tx ⋪ utxo) ∪ᵐ outs tx , fees + f)
+      record { utxo = (txins tx ⋪ utxo) ∪ᵐ outs tx ; fees = fees + f }
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
@@ -204,14 +209,14 @@ For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\va
 pov :
 \end{code}
 \begin{code}[inline*]
-  utxo ∩ᵖ outs tx ≡ ∅ --needed to change this
+  utxo ∩ᵖ outs tx ≡ ∅
 \end{code}
 and
 \begin{code}[hide]
   →
 \end{code}
 \begin{code}[inline*]
-      Γ ⊢ (utxo , fee) ⇀⦇ tx ,UTXO⦈ (utxo' , fee')
+      Γ ⊢ record {utxo = utxo ; fees = fee} ⇀⦇ tx ,UTXO⦈ record {utxo = utxo' ; fees = fee'}
 \end{code}
 then
 \begin{code}[hide]

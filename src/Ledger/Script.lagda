@@ -18,7 +18,7 @@ open import FinSet renaming (FinSet to ℙ_) hiding (All)
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
         validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Set
-        Dec-validP1Script : ∀ {khs} {I} {s} → Dec (validP1Script khs I s)
+        validP1Script? : ∀ khs I s → Dec (validP1Script khs I s)
         instance Hashable-P1Script : Hashable P1Script ScriptHash
                  DecEq-P1Script    : DecEq P1Script
 
@@ -31,7 +31,7 @@ record PlutusStructure : Set₁ where
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
 
   field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
-        Dec-validPlutusScript : ∀ {cm} {ds} {eu} {s} → Dec (validPlutusScript cm ds eu s)
+        validPlutusScript? : ∀ cm ds eu s → Dec (validPlutusScript cm ds eu s)
 
 record ScriptStructure : Set₁ where
   field p1s : P1ScriptStructure
@@ -39,7 +39,7 @@ record ScriptStructure : Set₁ where
 
   open P1ScriptStructure p1s public
   open PlutusStructure ps public renaming
-    (PlutusScript to P2Script; validPlutusScript to validP2Script; Dec-validPlutusScript to Dec-validP2Script)
+    (PlutusScript to P2Script; validPlutusScript to validP2Script; validPlutusScript? to validP2Script?)
 
   Script = P1Script ⊎ P2Script
 

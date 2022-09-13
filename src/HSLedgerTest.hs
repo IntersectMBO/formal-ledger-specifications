@@ -1,4 +1,4 @@
-module HSLedgerTest (module HSLedgerTest, MAlonzo.Code.HSLedger.utxoStep) where
+module HSLedgerTest (module HSLedgerTest, module MAlonzo.Code.Foreign.LedgerTypes, module MAlonzo.Code.HSLedger) where
 
 import MAlonzo.Code.HSLedger
 import MAlonzo.Code.Foreign.LedgerTypes
@@ -40,18 +40,28 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
   , txsize = s
   , txid   = stxid stxb }
 
-testTx1 :: TxBody
-testTx1 = bodyFromSimple initParams $ MkSimpleTxBody
+testTxBody1 :: TxBody
+testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
   { stxins = [(0, 0)], stxouts = [(0, (a0, 890)), (1, (a1, 100))], stxvldt = (Nothing, Just 10), stxid = 1 }
 
-testTx2 :: TxBody
-testTx2 = bodyFromSimple initParams $ MkSimpleTxBody { stxins = [(1, 1)], stxouts = [(0, (a2, 10)), (1, (a1, 80))], stxvldt = (Nothing, Just 10), stxid = 1 }
+testTx1 :: Tx
+testTx1 = MkTx { body = testTxBody1, wits = MkTxWitnesses { vkSigs = [(0, 1)], scripts = [] }, txAD = Nothing }
 
-utxoSteps :: UTxOEnv -> UTxOState -> [TxBody] -> Maybe UTxOState
-utxoSteps e s []       = Just s
-utxoSteps e s (t : ts) = do
-  s' <- utxoStep e s t
-  utxoSteps e s' ts
+testTxBody2 :: TxBody
+testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
+  { stxins = [(1, 1)], stxouts = [(0, (a2, 10)), (1, (a1, 80))], stxvldt = (Nothing, Just 10), stxid = 2 }
+
+testTx2 :: Tx
+testTx2 = MkTx { body = testTxBody2, wits = MkTxWitnesses { vkSigs = [(1, 3)], scripts = [] }, txAD = Nothing }
+
+runSteps :: (e -> s -> sig -> Maybe s) -> e -> s -> [sig] -> Maybe s
+runSteps f e s []       = Just s
+runSteps f e s (t : ts) = do
+  s' <- f e s t
+  runSteps f e s' ts
+
+utxowSteps :: UTxOEnv -> UTxOState -> [Tx] -> Maybe UTxOState
+utxowSteps = runSteps utxowStep
 
 main :: IO ()
-main = print $ utxoSteps initEnv initState [testTx1, testTx2]
+main = print $ utxowSteps initEnv initState [testTx1, testTx2]

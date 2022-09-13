@@ -2,6 +2,7 @@
 open import Prelude
 open import DecEq
 
+open import ComputationalRelation
 open import Data.Nat
 open import Data.Product
 open import Data.Maybe
@@ -32,6 +33,7 @@ HSPKKScheme .Sig              = ℕ
 HSPKKScheme .Ser              = ℕ
 HSPKKScheme .isKeyPair        = _≡_
 HSPKKScheme .isSigned         = λ a b m → a + b ≡ m
+HSPKKScheme .isSigned?        = λ a b m → a + b Data.Nat.≟ m
 HSPKKScheme .sign             = _+_
 HSPKKScheme .isSigned-correct = λ where (sk , sk , refl) _ _ h → h
 HSPKKScheme .decEq-VKey       = DecEq-ℕ
@@ -62,7 +64,7 @@ open P1ScriptStructure
 HSP1ScriptStructure : P1ScriptStructure ℕ ℕ ℕ _≤_ _≤ᵇ_
 HSP1ScriptStructure .P1Script          = ⊥
 HSP1ScriptStructure .validP1Script     = λ _ _ ()
-HSP1ScriptStructure .Dec-validP1Script {s = ()}
+HSP1ScriptStructure .validP1Script?    = λ _ _ ()
 HSP1ScriptStructure .Hashable-P1Script = record { hash = λ () }
 HSP1ScriptStructure .DecEq-P1Script    = DecEq-⊥
 
@@ -75,7 +77,7 @@ HSP2ScriptStructure .CostModel             = ⊥
 HSP2ScriptStructure .Hashable-PlutusScript = record { hash = λ () }
 HSP2ScriptStructure .DecEq-PlutusScript    = DecEq-⊥
 HSP2ScriptStructure .validPlutusScript     = λ ()
-HSP2ScriptStructure .Dec-validPlutusScript {s = ()}
+HSP2ScriptStructure .validPlutusScript?    = λ ()
 
 HSScriptStructure : ScriptStructure ℕ ℕ ℕ _≤_ _≤ᵇ_
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
@@ -95,13 +97,16 @@ module _ where
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; applyUpdate = λ p _ → p }
   HSTransactionStructure .txidBytes       = id
+  HSTransactionStructure .networkId       = tt
   HSTransactionStructure .DecEq-TxId      = DecEq-ℕ
   HSTransactionStructure .DecEq-Ix        = DecEq-ℕ
   HSTransactionStructure .DecEq-Netw      = DecEq-⊤
   HSTransactionStructure .DecEq-UpdT      = DecEq-⊤
   HSTransactionStructure .ss              = HSScriptStructure
+  HSTransactionStructure .DecEq-ADHash    = DecEq-⊤
 
 open import Ledger.Utxo HSTransactionStructure
+open import Ledger.Utxow.Properties HSTransactionStructure
 open TransactionStructure HSTransactionStructure
 
 import Foreign.LedgerTypes as F
@@ -156,6 +161,35 @@ instance
         ; txid     = txid
         }
 
+  Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
+  Convertible-TxWitnesses = record { to = to' ; from = from' }
+    where
+      to' : TxWitnesses → F.TxWitnesses
+      to' txw = let open TxWitnesses txw in record
+        { vkSigs  = to vkSigs
+        ; scripts = [] }
+
+      from' : F.TxWitnesses → TxWitnesses
+      from' txw = let open F.TxWitnesses txw in record
+        { vkSigs  = from vkSigs
+        ; scripts = FinSet.∅ }
+
+  Convertible-Tx : Convertible Tx F.Tx
+  Convertible-Tx = record { to = to' ; from = from' }
+    where
+      to' : Tx → F.Tx
+      to' tx = let open Tx tx in record
+        { body = to body
+        ; wits = to wits
+        ; txAD = to txAD }
+
+      from' : F.Tx → Tx
+      from' tx = let open F.Tx tx in record
+        { body = from body
+        ; wits = from wits
+        ; txAD = from txAD }
+
+
   Convertible-PParams : Convertible PParams F.PParams
   Convertible-PParams = record { to = to' ; from = from' }
     where
@@ -185,41 +219,32 @@ instance
   Convertible-UTxOEnv = record { to = to' ; from = from' }
     where
       to' : UTxOEnv → F.UTxOEnv
-      to' (slot , pparams) = record { slot = slot ; pparams = to pparams }
+      to' record { slot = slot ; pparams = pparams } = record { slot = slot ; pparams = to pparams }
 
       from' : F.UTxOEnv → UTxOEnv
-      from' e = let open F.UTxOEnv e in (slot , from pparams)
+      from' e = let open F.UTxOEnv e in record { slot = slot ; pparams = from pparams }
 
   Convertible-UTxOState : Convertible UTxOState F.UTxOState
   Convertible-UTxOState = record { to = to' ; from = from' }
     where
       to' : UTxOState → F.UTxOState
-      to' (utxo , fees) = record
+      to' record { utxo = utxo ; fees = fees } = record
         { utxo = to ⦃ Convertible-Map ⦃ _ ⦄ ⦃ _ ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ utxo
         ; fees = fees
         }
 
       from' : F.UTxOState → UTxOState
-      from' s =
-        ( from ⦃ Convertible-Map ⦃ _ ⦄ ⦃ _ ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
-        , F.UTxOState.fees s
-        )
+      from' s = record
+        { utxo = from ⦃ Convertible-Map ⦃ _ ⦄ ⦃ _ ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
+        ; fees = F.UTxOState.fees s
+        }
 
 utxo-step : F.UTxOEnv → F.UTxOState → F.TxBody → Maybe F.UTxOState
 utxo-step e s txb = Data.Maybe.map to (UTXO-step (from e) (from s) (from txb))
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
--- {-# FOREIGN GHC
---   type Coin = Integer
---   type Slot = Integer
---   type Ix = Integer
---   type TxIn = (Integer, Integer)
---   type TxOut = (Integer, Integer)
---   type UTxO = [(TxIn, TxOut)]
---   type PParams = (Integer, (Integer, Integer))
---   type TxBody = ([TxIn], ([(Ix, TxOut)], (Coin, ((Maybe Slot, Maybe Slot), Integer))))
+utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → Maybe F.UTxOState
+utxow-step e s tx = Data.Maybe.map to (Computational.compute Computational-UTXOW (from e) (from s) (from tx))
 
---   utxoStep :: (Slot, PParams) -> (UTxO, Coin) -> TxBody -> Maybe (UTxO, Coin)
---   utxoStep = utxoStep'
--- #-}
+{-# COMPILE GHC utxow-step as utxowStep #-}
