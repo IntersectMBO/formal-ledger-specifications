@@ -1,15 +1,15 @@
 {-# OPTIONS --safe #-}
 
-open import DecEq
+open import Interface.DecEq
 
-module FinSet.Properties.Equality {A : Set} {{h : DecEq A}} where
+module Data.FinSet.Properties.Equality {A : Set} {{h : DecEq A}} where
 
 open import Data.Product
 open import Data.List
 open import Data.List.Relation.Binary.BagAndSetEquality
 open import Data.List.Relation.Binary.Permutation.Propositional
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
-open import FinSet
+open import Data.FinSet
 open import FiniteSubset hiding (fromList)
 open import Function
 open import Function.Properties.Equivalence
@@ -21,7 +21,7 @@ open import Utilities.Logic
 open import Data.Empty
 open import Function.Properties.Bijection using (⤖⇒⇔)
 
-open import FinSet.Properties.Membership
+open import Data.FinSet.Properties.Membership
 
 noDupEls : {s : FinSet A} → NoDupInd (elements s)
 noDupEls {fs-nojunk els {nd}} = NoDupInd-corr2 _ (∥-∥-prop3 _ nd)

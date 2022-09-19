@@ -19,12 +19,12 @@ import Function.Inverse as Inv
 open import Data.Empty.Polymorphic
 open import Function.Related using (fromRelated; toRelated)
 import Relation.Binary.Reasoning.Preorder as P-Reasoning
-open import DecEq
+open import Interface.DecEq
 open import FiniteSubset hiding (_∪_; _∩_)
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Binary.PropositionalEquality
 open import Function.Related.Propositional
-open import FinSet hiding (∅; map; indexedSum)
+open import Data.FinSet hiding (∅; map; indexedSum)
 open import Function.Properties.Inverse
 open import Data.Product.Function.NonDependent.Propositional
 open import Utilities.ListProperties using (eq2in)
@@ -37,13 +37,13 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Data.List.Relation.Binary.Permutation.Propositional
 open import Algebra.Properties.CommutativeSemigroup
 
-module FinMap.Properties {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
+module Data.FinMap.Properties {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
 
 open import FiniteMap
-open import FinMap
-open import FinMap.Properties.Membership {K} {V} {{eq}} {{eq'}}
-open import FinMap.Properties.Algebra {K} {V} {{eq}} {{eq'}}
-open import FinMap.Properties.Equality {K} {V} {{eq}} {{eq'}}
+open import Data.FinMap
+open import Data.FinMap.Properties.Membership {K} {V} {{eq}} {{eq'}}
+open import Data.FinMap.Properties.Algebra {K} {V} {{eq}} {{eq'}}
+open import Data.FinMap.Properties.Equality {K} {V} {{eq}} {{eq'}}
 
 private
   variable
@@ -136,7 +136,7 @@ dom-res-∩-empty {m'} s m h with ∩ᵐ-OrderHomomorphismˡ {m = m'}
     ∅ ∎)
     where open P-Reasoning (⊆ᵐ-Preorder')
 
-open import FinSet.Properties.Algebra renaming (∅-least to ∅-leastᵏ)
+open import Data.FinSet.Properties.Algebra renaming (∅-least to ∅-leastᵏ)
 
 dom-res-∩ᵖᵏ-empty : (m ∩ᵖᵏ m') ≡ᵉ (fs-nojunk [])
                                 → ((s ⋪ m) ∩ᵖᵏ m') ≡ᵉ (fs-nojunk [])

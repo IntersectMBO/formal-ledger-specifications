@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Interface.Decidable.Instance where
 
-open import DecEq
+open import Interface.DecEq
 open import Level
 
 open import Data.Bool

@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
-open import DecEq
-open import FinSet
+open import Interface.DecEq
+open import Data.FinSet
 open import Data.Product
 open import Data.Product.Function.NonDependent.Propositional using (_×-cong_)
 open import Function
@@ -16,10 +16,10 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Relation.Binary.Morphism
 open import Function.Related
 
-open import FinSet.Properties.Equality
-open import FinSet.Properties.Membership
+open import Data.FinSet.Properties.Equality
+open import Data.FinSet.Properties.Membership
 
-module FinSet.Properties.Algebra {A : Set} {{h : DecEq A}} where
+module Data.FinSet.Properties.Algebra {A : Set} {{h : DecEq A}} where
 
 private
   variable

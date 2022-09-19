@@ -1,28 +1,21 @@
 {-# OPTIONS --safe #-}
 
-open import Data.List
-open import Data.Maybe hiding (map; _>>=_)
-open import Data.Product using (_×_; _,_; proj₁; proj₂; curry; uncurry)
-open import Data.Product.Properties
-open import Function hiding (Inverse)
-open import Relation.Nullary
-open import Utilities.ListProperties
-open import Utilities.ListsAddition hiding (filter)
-open import Utilities.Logic hiding (⊥-elim; [_]; DecEq)
-open import DecEq
+import Data.List.Relation.Unary.All as A
+
 open import Data.Bool hiding (_≟_)
-open import Agda.Builtin.Unit
-open import Data.Empty
-open import Utilities.ListMonad renaming (return to return')
-open import FiniteSubset hiding (_∪_; _∩_; fromList)
-open import Data.List.Relation.Unary.AllPairs hiding (map) renaming (_∷_ to _::_ ; head to headPair)
-open import Relation.Binary using (Decidable)
-open import Agda.Builtin.Sigma
+open import Data.List
 open import Data.List.Relation.Unary.All.Properties
-open import Relation.Binary.Definitions using (DecidableEquality)
-open import Data.List.Relation.Unary.All hiding (map)
-open import Relation.Nullary.Decidable using (⌊_⌋)
-open import FinSet using (FinSet)
+open import Data.List.Relation.Unary.AllPairs hiding (map) renaming (_∷_ to _::_ ; head to headPair)
+open import Data.Product using (_×_; _,_; proj₁; proj₂)
+open import Data.Product.Properties
+open import FiniteSubset hiding (_∪_; _∩_; fromList)
+open import Function
+open import Interface.DecEq
+open import Relation.Binary.Definitions
+open import Relation.Nullary
+open import Utilities.ListMonad renaming (return to return')
+open import Utilities.ListProperties
+open import Utilities.Logic hiding ([_]; DecEq)
 
 module FiniteMap where
 
@@ -37,11 +30,10 @@ remDupᵐ ∈? xs = foldr (λ e res → if isYes (∈? (proj₁ e) (map proj₁ 
 
 remDupCorrectᵐ : {K V : Set} → (∈?M : DecIn K) → (xs : List (K × V)) → NoDup (map proj₁ (remDupᵐ ∈?M xs))
 remDupCorrectᵐ ∈?M (x ∷ xs) x₁ x₂ with ∈?M (proj₁ x) (map proj₁ (remDupᵐ ∈?M xs))
-... | yes p with remDupCorrectᵐ ∈?M xs x₁ x₂
-... | o1 , o2 , o3 , o4 , o5 = o1 , o2 , o3 , o4 , o5
-remDupCorrectᵐ ∈?M (x ∷ xs) x₁ (here refl) | no ¬p = [] , (_ , (_≡_.refl , (λ ()) , ¬p))
+... | yes p = remDupCorrectᵐ ∈?M xs x₁ x₂
+remDupCorrectᵐ ∈?M (x ∷ xs) x₁ (here refl) | no ¬p = [] , (_ , (refl , (λ ()) , ¬p))
 remDupCorrectᵐ ∈?M (x ∷ xs) x₁ (there x₂) | no ¬p with remDupCorrectᵐ ∈?M xs x₁ x₂  | in2eq ∈?M x₁ (proj₁ x)
-... | o1 , o2 , o3 , o4 , o5 | yes refl rewrite o3 = ⊥-elim (¬p (++⁺ʳ o1 (here _≡_.refl)))
+... | o1 , o2 , o3 , o4 , o5 | yes refl rewrite o3 = ⊥-elim (¬p (++⁺ʳ o1 (here refl)))
 remDupCorrectᵐ {K} ∈? (x ∷ xs) x₁ (there x₂)
   | no ¬p₁
   | o1 , o2 , o3 , o4 , o5
@@ -49,7 +41,7 @@ remDupCorrectᵐ {K} ∈? (x ∷ xs) x₁ (there x₂)
   = ((proj₁ x) ∷ o1) , (o2 , cong (_∷_ (proj₁ x)) o3 , h (proj₁ x) x₁ ¬p o4 , o5)
   where
    h : (x x₁ : K) → ¬ x₁ ≡ x → ¬ x₁ ∈ o1  → ¬ x₁ ∈ (x ∷ o1)
-   h x1 .x1 pr1 pr2 (here refl) = pr1 _≡_.refl
+   h x1 .x1 pr1 pr2 (here refl) = pr1 refl
    h x1 x₃  pr1 pr2 (there pr) = pr2 pr
 
 remDupCompleteᵐ : {K V : Set} → (∈? : DecIn K) → (x : (K × V)) → (xs : List (K × V)) → x ∈ (remDupᵐ ∈? xs) → x ∈ xs
@@ -136,7 +128,7 @@ bindᵐ : {K V K₁ V₁ : Set}{eq : DecEq K}{eq' : DecEq V}{eq₁ : DecEq K₁}
 bindᵐ f c = fromListᵐ $ ((listOfᵐ f) >>= λ x → listOfᵐ $ c x)
 
 returnᵐ : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → K × V → FiniteMap K V eq eq'
-returnᵐ x = fs-nojunk ((x ∷ [])) {tt}
+returnᵐ x = fs-nojunk ((x ∷ [])) {_}
 
 syntax bindᵐ A (λ x → t) = for x ∈ A , t
 
@@ -222,7 +214,7 @@ FinMap=>Keys {K} {V} {eq} {eq'} (fs-nojunk els {prf}) = fs-nojunk (map proj₁ e
                      → proj₁ x ∉ map proj₁ (x₁ ∷ xs)
                      → proj₁ x ∉ map proj₁ xs
 ∉Ind x x₁ xs x₂ x₃ with ¬Any⇒All¬ (map proj₁ (x₁ ∷ xs)) x₂
-... | (px Data.List.Relation.Unary.All.All.∷ ans) = All¬⇒¬Any ans x₃
+... | (px A.∷ ans) = All¬⇒¬Any ans x₃
 
 
 filterPreserves∉ : {K V : Set} → {P : (K × V) → Set}
@@ -264,7 +256,7 @@ _∩ᵐ_ {eq = eq} {eq'} K (fs-nojunk els) = filterᵐ (λ a → eq2inᵖ eq eq'
 _∩ᵖ_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → FiniteMap K V eq eq' → FiniteMap K V eq eq' → FiniteMap K V eq eq'
 _∩ᵖ_ {eq = eq} {eq'} K (fs-nojunk els) = filterᵐ (λ (k , v) → eq2inᵐ eq k (map proj₁ els)) K
 
-_∩ᵖᵏ_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → FiniteMap K V eq eq' → FiniteMap K V eq eq' → FinSet K {{eq}}
+_∩ᵖᵏ_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → FiniteMap K V eq eq' → FiniteMap K V eq eq' → FiniteSubSet K (_≟_ {{eq}}) false
 _∩ᵖᵏ_ {eq = eq} {eq'} K V = FinMap=>Keys $ K ∩ᵖ V
 
 remDup-NoDup : {K V : Set} → (∈? : DecIn K) → (xs : List (K × V))
@@ -282,4 +274,3 @@ listOf-NoDupInd (fs-nojunk els {nd}) = NoDupInd-corr2 _ (∥-∥-prop3 _ nd)
 listOf-NoDupInd' : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → (m : FiniteMap K V eq eq') → NoDupInd (listOfᵐ m)
 listOf-NoDupInd' {eq = eq} {eq'} (fs-nojunk els {nd}) =
   NoDupInd-corr2 _ (NoDupProj=>NoDup (eq2inᵖ eq eq') els (∥-∥-prop3 _ nd))
-

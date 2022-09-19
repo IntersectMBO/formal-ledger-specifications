@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import DecEq
+open import Interface.DecEq
 open import Data.List
 open import FiniteMap
 open import Data.Product hiding (map)
@@ -20,15 +20,15 @@ open import Function.Related
 open import Data.Product.Function.NonDependent.Propositional
 open import Relation.Binary.Morphism
 open import Relation.Binary hiding (_⇔_)
-open import FinMap
-open import FinSet using (_∈_; _≡ᵉ_) renaming (∅ to ∅ᵉ)
+open import Data.FinMap
+open import Data.FinSet using (_∈_; _≡ᵉ_) renaming (∅ to ∅ᵉ)
 open import Relation.Nullary.Negation
 open import FiniteSubset
-open import FinMap.Properties.Equality using (∈-∅; ≡ᵐ-∈)
-open import FinSet.Properties.Membership using (∈-∅)
-open import FinSet.Properties.Equality
+open import Data.FinMap.Properties.Equality using (∈-∅; ≡ᵐ-∈)
+open import Data.FinSet.Properties.Membership using (∈-∅)
+open import Data.FinSet.Properties.Equality
 
-module FinMap.Properties.Membership {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
+module Data.FinMap.Properties.Membership {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
 
 private
   variable
@@ -230,7 +230,7 @@ projKeys {a} {m} = mk⇔ (projKeys← {a} {m}) (projKeys→ {a} {m})
 projEmpty← : FinMap=>Keys m ≡ᵉ ∅ᵉ -> m ≡ᵐ ∅
 projEmpty← {fs-nojunk []} x a = mk⇔ (λ x₁ → x₁) λ x₁ → x₁
 projEmpty← m@{fs-nojunk (x₁ ∷ els) {prf}} x a =
-  ⊥-elim (FinSet.Properties.Membership.∈-∅
+  ⊥-elim (Data.FinSet.Properties.Membership.∈-∅
          {K} {proj₁ x₁}
              (≡ᵉ-∈ {K} {_}
                    {FinMap=>Keys m}
@@ -240,7 +240,7 @@ projEmpty← m@{fs-nojunk (x₁ ∷ els) {prf}} x a =
 projEmpty→ : m ≡ᵐ ∅ → FinMap=>Keys m ≡ᵉ ∅ᵉ
 projEmpty→ {fs-nojunk []} x a = mk⇔ (λ x₁ → x₁) λ x₁ → x₁
 projEmpty→ m@{fs-nojunk (e ∷ els)} x a =
-  ⊥-elim (FinMap.Properties.Equality.∈-∅ {K} {V} {e}
+  ⊥-elim (Data.FinMap.Properties.Equality.∈-∅ {K} {V} {e}
     (≡ᵐ-∈ {K} {V} {m} {∅} x (here refl)))
 
 projEmpty : FinMap=>Keys m ≡ᵉ ∅ᵉ ⇔ m ≡ᵐ ∅

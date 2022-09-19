@@ -9,7 +9,7 @@
 open import Ledger.Crypto
 import Ledger.PParams
 import Ledger.Script
-open import DecEq
+open import Interface.DecEq
 
 module Ledger.Transaction where
 open import Prelude
@@ -60,8 +60,8 @@ This function must produce a unique id for each unique transaction body.
 
   open Ledger.Script.ScriptStructure ss public
 
-  open import FinSet renaming (FinSet to ℙ_)
-  open import FinMap renaming (FinMap to _↛_)
+  open import Data.FinSet renaming (FinSet to ℙ_)
+  open import Data.FinMap renaming (FinMap to _↛_)
   open import Ledger.PParams Epoch
 
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate)

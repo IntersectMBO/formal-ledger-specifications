@@ -4,7 +4,7 @@
 module Ledger.Crypto where
 
 open import Prelude hiding (T)
-open import DecEq
+open import Interface.DecEq
 open import Relation.Nullary
 
 record Hashable (T THash : Set) : Set where

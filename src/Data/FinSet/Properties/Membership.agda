@@ -1,13 +1,13 @@
 {-# OPTIONS --safe #-}
 
-open import DecEq
-open import FinSet
+open import Interface.DecEq
+open import Data.FinSet
 open import Data.List hiding (filter)
 open import Utilities.ListProperties renaming (_∈_ to _∈l_)
 open import Function
 open import FiniteSubset hiding (_∪_; _∩_; fromList)
 open import Data.Bool hiding (_≟_)
-open import FinSet.Core
+open import Data.FinSet.Core
 open import Data.Sum
 open import Utilities.ListsAddition hiding (filter)
 open import Data.Product
@@ -21,7 +21,7 @@ open import Data.List.Properties
 open import Function.Equivalence using (⇔-setoid)
 import Function.Related.Propositional as P
 
-module FinSet.Properties.Membership {A : Set} {{h : DecEq A}} where
+module Data.FinSet.Properties.Membership {A : Set} {{h : DecEq A}} where
 
 private
   variable

@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import DecEq
+open import Interface.DecEq
 
 module FinSet.Properties {A : Set} {{h : DecEq A}} where
 

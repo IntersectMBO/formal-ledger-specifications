@@ -2,7 +2,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import DecEq
+open import Interface.DecEq
 open import Relation.Nullary
 
 module Ledger.Address (
