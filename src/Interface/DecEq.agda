@@ -2,7 +2,7 @@
 
 open import Prelude
 
-open import Relation.Binary hiding (_⇔_)
+open import Relation.Binary
 open import Relation.Binary.PropositionalEquality.WithK
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
@@ -17,12 +17,12 @@ record DecEq {a} (A : Set a) : Set a where
   field
     _≟_ : DecidableEquality A
 
-open DecEq {{...}} public
+open DecEq ⦃ ... ⦄ public
 
-_≡ᵇ_ : ∀ {a} {A : Set a} → {{DecEq A}} → A → A → Bool
+_≡ᵇ_ : ∀ {a} {A : Set a} → ⦃ DecEq A ⦄ → A → A → Bool
 a ≡ᵇ a' = ⌊ a ≟ a' ⌋
 
-≡ᵇ-refl : ∀ {ℓ} {A : Set ℓ} → {{_ : DecEq A}} → {a : A} → a ≡ᵇ a ≡ true
+≡ᵇ-refl : ∀ {ℓ} {A : Set ℓ} → ⦃ _ : DecEq A ⦄ → {a : A} → a ≡ᵇ a ≡ true
 ≡ᵇ-refl {a = a} with a ≟ a
 ... | no ¬p = ⊥-elim (¬p refl)
 ... | yes p = refl
@@ -43,25 +43,29 @@ import Data.Product.Properties
 import Data.Sum.Properties
 import Data.Nat
 import Data.Unit
+import Data.Integer
 
 instance
   DecEq-⊥ : DecEq ⊥
-  DecEq-⊥ = record { _≟_ = λ () }
+  DecEq-⊥ ._≟_ = λ ()
 
   DecEq-⊤ : DecEq ⊤
-  DecEq-⊤ = record { _≟_ = Data.Unit._≟_ }
+  DecEq-⊤ ._≟_ = Data.Unit._≟_
 
   DecEq-ℕ : DecEq ℕ
-  DecEq-ℕ = record { _≟_ = Data.Nat._≟_ }
+  DecEq-ℕ ._≟_ = Data.Nat._≟_
 
-  DecEq-Maybe : ∀ {a} {A : Set a} → {{DecEq A}} → DecEq (Maybe A)
-  DecEq-Maybe {{h}} = record { _≟_ = Data.Maybe.Properties.≡-dec (DecEq._≟_ h) }
+  DecEq-ℤ : DecEq Data.Integer.ℤ
+  DecEq-ℤ ._≟_ = Data.Integer._≟_
 
-  DecEq-List : ∀ {a} {A : Set a} → {{DecEq A}} → DecEq (List A)
-  DecEq-List {{h}} = record { _≟_ = Data.List.Properties.≡-dec (DecEq._≟_ h) }
+  DecEq-Maybe : ⦃ DecEq A ⦄ → DecEq (Maybe A)
+  DecEq-Maybe ._≟_ = Data.Maybe.Properties.≡-dec _≟_
 
-  DecEq-Product : ∀ {a} {A B : Set a} → {{DecEq A}} → {{DecEq B}} → DecEq (A × B)
-  DecEq-Product {{h}} {{h'}} = record { _≟_ = Data.Product.Properties.≡-dec (DecEq._≟_ h) (DecEq._≟_ h') }
+  DecEq-List : ⦃ DecEq A ⦄ → DecEq (List A)
+  DecEq-List ._≟_ = Data.List.Properties.≡-dec _≟_
 
-  DecEq-Sum : ∀ {a} {A B : Set a} → {{DecEq A}} → {{DecEq B}} → DecEq (A ⊎ B)
-  DecEq-Sum {{h}} {{h'}} = record { _≟_ = Data.Sum.Properties.≡-dec (DecEq._≟_ h) (DecEq._≟_ h') }
+  DecEq-Product : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → DecEq (A × B)
+  DecEq-Product ._≟_ = Data.Product.Properties.≡-dec _≟_ _≟_
+
+  DecEq-Sum : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → DecEq (A ⊎ B)
+  DecEq-Sum ._≟_ = Data.Sum.Properties.≡-dec _≟_ _≟_

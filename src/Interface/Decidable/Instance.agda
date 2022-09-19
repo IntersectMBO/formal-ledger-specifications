@@ -14,15 +14,21 @@ open import Data.List.Properties
 open import Relation.Binary renaming (Decidable to Decidable²)
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
+open import Relation.Nullary.Decidable
 open import Relation.Nullary.Implication
 open import Relation.Nullary.Product
 
-private variable a b : Level
+private variable a : Level
+                 A P X Y : Set a
 
-¿_¿ : ∀ {p} (P : Set p) → ⦃ _ : Dec P ⦄ → Dec P
+¿_¿ : (P : Set a) → ⦃ Dec P ⦄ → Dec P
 ¿ _ ¿ ⦃ P? ⦄ = P?
 
-Decidable²⇒Dec : ∀ {a} {A : Set a} {_~_ : A → A → Set a} → Decidable² _~_ → {x y : A} → Dec (x ~ y)
+infix 0 ifᵈ_then_else_
+ifᵈ_then_else_ : (P : Set a) → ⦃ Dec P ⦄ → A → A → A
+ifᵈ P then t else f = if ⌊ ¿ P ¿ ⌋ then t else f
+
+Decidable²⇒Dec : {_~_ : A → A → Set a} → Decidable² _~_ → {x y : A} → Dec (x ~ y)
 Decidable²⇒Dec _~?_ {x} {y} = x ~? y
 
 instance
@@ -32,11 +38,11 @@ instance
   Dec-⊤ : Dec ⊤
   Dec-⊤ = yes tt
 
-  Dec-→ : {X Y : Set a} → ⦃ Dec X ⦄ → ⦃ Dec Y ⦄ → Dec (X → Y)
+  Dec-→ : ⦃ Dec X ⦄ → ⦃ Dec Y ⦄ → Dec (X → Y)
   Dec-→ ⦃ X? ⦄ ⦃ Y? ⦄ = X? →-dec Y?
 
-  Dec-× : {X Y : Set a} → ⦃ Dec X ⦄ → ⦃ Dec Y ⦄ → Dec (X × Y)
+  Dec-× : ⦃ Dec X ⦄ → ⦃ Dec Y ⦄ → Dec (X × Y)
   Dec-× ⦃ X? ⦄ ⦃ Y? ⦄ = X? ×-dec Y?
 
-  DecEq⇒Dec : {X : Set a} → ⦃ DecEq X ⦄ → {x y : X} → Dec (x ≡ y)
+  DecEq⇒Dec : ⦃ DecEq X ⦄ → {x y : X} → Dec (x ≡ y)
   DecEq⇒Dec ⦃ record { _≟_ = _≟_ } ⦄ {x} {y} = x ≟ y

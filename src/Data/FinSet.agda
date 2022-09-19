@@ -145,13 +145,14 @@ module _ {A : Set} {{h : DecEq A}} {B : Set} {{_ : DecEq B}} where
   mapPartial : (A → Maybe B) → FinSet A → FinSet B
   mapPartial f (fs-nojunk els) = fromList (Data.List.mapMaybe f els)
 
-module _ {A : Set} {{_ : DecEq A}} {p} {{M : CommutativeMonoid 0ℓ p}} where
+module _ {A : Set} {p} {{M : CommutativeMonoid 0ℓ p}} where
   open CommutativeMonoid M
 
   indexedSumL : (A → Carrier) → List A → Carrier
   indexedSumL f l = foldr (λ x → f x ∙_) ε l
 
-  indexedSum : (A → Carrier) → FinSet A → Carrier
+  indexedSum : {{_ : DecEq A}} → (A → Carrier) → FinSet A → Carrier
   indexedSum f (fs-nojunk els) = foldr (λ x → f x ∙_) ε els
 
+  syntax indexedSumL (λ a → x) m = Σˡ[ a ← m ] x
   syntax indexedSum (λ a → x) m = Σ[ a ← m ] x

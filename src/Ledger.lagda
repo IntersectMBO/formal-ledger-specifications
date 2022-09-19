@@ -4,12 +4,15 @@
 
 \usepackage{newunicodechar}
 \newunicodechar{ᵇ}{\ensuremath{^b}}
+\newunicodechar{ᵈ}{\ensuremath{^d}}
 \newunicodechar{ᵐ}{\ensuremath{^m}}
 \newunicodechar{ᵖ}{\ensuremath{^p}}
 \newunicodechar{₁}{\ensuremath{_1}}
 \newunicodechar{₂}{\ensuremath{_2}}
+\newunicodechar{₃}{\ensuremath{_3}}
 \newunicodechar{σ}{\ensuremath{\sigma}}
 \newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≢}{\ensuremath{\nequiv}}
 
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{float}
