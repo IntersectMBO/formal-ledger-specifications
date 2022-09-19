@@ -6,11 +6,7 @@ module Ledger.Crypto where
 open import Prelude hiding (T)
 open import Interface.DecEq
 open import Relation.Nullary
-
-record Hashable (T THash : Set) : Set where
-  field hash : T → THash
-
-open Hashable ⦃...⦄ public
+open import Interface.Hashable public
 
 record isHashableSet (T : Set) : Set₁ where
   field THash : Set
