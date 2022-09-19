@@ -3,7 +3,7 @@
 {-# OPTIONS --safe #-}
 
 open import Prelude
-open import DecEq
+open import Interface.DecEq
 open import Relation.Nullary
 
 open import Data.List.Relation.Unary.All
@@ -13,7 +13,7 @@ open import Data.List.Relation.Binary.Sublist.Propositional as S
 module Ledger.Script (KeyHash ScriptHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot → Slot → Bool) where
 
 open import Ledger.Crypto
-open import FinSet renaming (FinSet to ℙ_) hiding (All)
+open import Data.FinSet renaming (FinSet to ℙ_) hiding (All)
 
 record P1ScriptStructure : Set₁ where
   field P1Script : Set

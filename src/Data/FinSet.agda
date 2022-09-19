@@ -25,11 +25,11 @@ open import Algebra using (CommutativeMonoid)
 open import Function
 
 open import FiniteSubset hiding (_∪_; _∩_; fromList)
-open import DecEq
+open import Interface.DecEq
 open import Utilities.ListProperties hiding (head) renaming (_∈_ to _∈l_)
 import Function.Related.Propositional as P
 
-module FinSet where
+module Data.FinSet where
 
 FinSet : (A : Set) → {{h : DecEq A}} → Set
 FinSet A = FiniteSubSet A _≟_ false

@@ -1,10 +1,10 @@
 {-# OPTIONS --safe #-}
 
-module ComputationalRelation where
+module Interface.ComputationalRelation where
 
 open import Prelude
 
-open import DecEq
+open import Interface.DecEq
 
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary

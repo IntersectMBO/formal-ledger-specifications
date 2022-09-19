@@ -19,15 +19,17 @@ open import Relation.Nullary
 open import Relation.Nullary.Decidable
 open import Relation.Binary
 
-open import DecEq
+open import Interface.DecEq
 open import Interface.Decidable.Instance
-open import FinMap renaming (FinMap to _↦_)
-open import FiniteMap
-open import FinMap.Properties
-open import FinMap.Properties.Equality
+open import Interface.ComputationalRelation
 
-open import FinSet hiding (∅) renaming (FinSet to ℙ_)
-open import FinSet.Properties.Equality
+open import Data.FinMap renaming (FinMap to _↦_)
+open import FiniteMap
+open import Data.FinMap.Properties
+open import Data.FinMap.Properties.Equality
+
+open import Data.FinSet hiding (∅) renaming (FinSet to ℙ_)
+open import Data.FinSet.Properties.Equality
 
 open import Tactic.Helpers
 open import Tactic.MonoidSolver
@@ -39,7 +41,6 @@ open import MyDebugOptions
 
 open import PreludeImports
 
-open import ComputationalRelation
 open import Ledger.Transaction
 
 module Ledger.Utxo (txs : TransactionStructure) where
@@ -169,7 +170,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo = UTxOState.utxo s
           fees = UTxOState.fees s
       in
-      txins tx ≢ FinSet.∅
+      txins tx ≢ Data.FinSet.∅
     → inInterval slot (txvldt tx)
     -- → txins tx ⊆ dom utxo
     -- this is currently broken because of https://github.com/agda/agda/issues/5982
@@ -192,7 +193,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \end{figure*}
 
 \begin{code}[hide]
-open import FinSet renaming (∅ to ∅ᵉ)
+open import Data.FinSet renaming (∅ to ∅ᵉ)
 
 balance-∪ : utxo ∩ᵖ utxo' ≡ᵐ ∅ → balance (utxo ∪ᵐ utxo') ≡ balance utxo + balance utxo'
 balance-∪ {utxo} {utxo'} = indexedSum-∪ {m = utxo} {m' = utxo'}

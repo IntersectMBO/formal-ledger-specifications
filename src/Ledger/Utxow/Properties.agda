@@ -15,20 +15,20 @@ open TxWitnesses
 
 open import Prelude
 
-open import DecEq
+open import Interface.DecEq
 
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
 open import Relation.Unary hiding (⌊_⌋; _⊆_)
 open import Relation.Binary using (IsEquivalence)
 
-open import FinMap
-open import FinSet
-open import FinSet.Properties.Equality
+open import Data.FinMap
+open import Data.FinSet
+open import Data.FinSet.Properties.Equality
 
 open import Data.Maybe
 
-open import ComputationalRelation
+open import Interface.ComputationalRelation
 open Computational
 
 open import Tactic.ReduceDec
@@ -42,13 +42,13 @@ record Dec₁ {A : Set} (P : A → Set) : Set where
   field P? : Decidable P
 
 instance
-  FSall?' : {A : Set} {P : A → Set} ⦃ P? : Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : FinSet.FinSet A}
-         → Dec (FinSet.All P s)
-  FSall?' ⦃ P? = record { P? = P? } ⦄ {s} = FinSet.all? P? s
+  FSall?' : {A : Set} {P : A → Set} ⦃ P? : Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : Data.FinSet.FinSet A}
+         → Dec (Data.FinSet.All P s)
+  FSall?' ⦃ P? = record { P? = P? } ⦄ {s} = Data.FinSet.all? P? s
 
 instance
-  all?' : ∀ {K V : Set} ⦃ _ : DecEq K ⦄ ⦃ _ : DecEq V ⦄ → {P : K × V → Set} → ⦃ P? : Dec₁ P ⦄ → {m : FinMap K V} → Dec (FinMap.All P m)
-  all?' ⦃ P? = record { P? = P? } ⦄ {m} = FinMap.all? P? m
+  all?' : ∀ {K V : Set} ⦃ _ : DecEq K ⦄ ⦃ _ : DecEq V ⦄ → {P : K × V → Set} → ⦃ P? : Dec₁ P ⦄ → {m : FinMap K V} → Dec (Data.FinMap.All P m)
+  all?' ⦃ P? = record { P? = P? } ⦄ {m} = Data.FinMap.all? P? m
 
 sigCheck : Ser → (VKey × Sig) → Set
 sigCheck d = λ where (vk , σ) → isSigned vk d σ
@@ -71,10 +71,10 @@ Computational-Property s tx = let
   utxo = UTxOState.utxo s
   txb = body tx
   txw = wits tx
-  witsKeyHashes = FinSet.map hash (dom (vkSigs txw))
-  witsScriptHashes = FinSet.map hash (scripts txw)
-  in FinMap.All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw)
-     × FinSet.All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
+  witsKeyHashes = Data.FinSet.map hash (dom (vkSigs txw))
+  witsScriptHashes = Data.FinSet.map hash (scripts txw)
+  in Data.FinMap.All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw)
+     × Data.FinSet.All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
      × witsVKeyNeeded utxo txb ⊆' witsKeyHashes
      × scriptsNeeded utxo txb ≡ᵉ' witsScriptHashes
      × txADhash txb ≡ Data.Maybe.map hash (txAD tx)

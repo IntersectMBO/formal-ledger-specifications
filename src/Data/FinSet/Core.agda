@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
-open import DecEq
-open import FinSet hiding (fromList)
+open import Interface.DecEq
+open import Data.FinSet hiding (fromList)
 open import FiniteSubset hiding (_∪_; _∩_)
 open import Data.Bool hiding (_≟_)
 open import Utilities.ListMonad hiding (return)
@@ -18,7 +18,7 @@ open import Data.List.Relation.Unary.All.Properties
 open import Relation.Nullary
 open import Data.Empty
 
-module FinSet.Core where
+module Data.FinSet.Core where
 
 variable
   X Y : Set

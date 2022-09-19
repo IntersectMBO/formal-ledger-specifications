@@ -151,7 +151,7 @@ module _ ⦃ _ : DebugOptions ⦄ where
     by-reduceDecInGoal' r t = initTac $ reduceDecInGoal r t
 
 private
-  open import DecEq
+  open import Interface.DecEq
 
   module Test (A : Set) ⦃ _ : DecEq A ⦄ where
     open import Tactic.Defaults

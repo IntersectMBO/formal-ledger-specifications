@@ -57,14 +57,14 @@ record TxBody : Set where
     , txsize :: Integer
     , txid   :: TxId } deriving Show
 #-}
-{-# COMPILE GHC TxBody = data MAlonzo.Code.Foreign.LedgerTypes.TxBody (MkTxBody) #-}
+{-# COMPILE GHC TxBody = data TxBody (MkTxBody) #-}
 
 record TxWitnesses : Set where
   field vkSigs  : List (Pair ℕ ℕ)
         scripts : List Empty
 
 {-# FOREIGN GHC data TxWitnesses = MkTxWitnesses { vkSigs :: [(Integer, Integer)], scripts :: [AgdaEmpty] } #-}
-{-# COMPILE GHC TxWitnesses = data MAlonzo.Code.Foreign.LedgerTypes.TxWitnesses (MkTxWitnesses) #-}
+{-# COMPILE GHC TxWitnesses = data TxWitnesses (MkTxWitnesses) #-}
 
 record Tx : Set where
   field body : TxBody
@@ -72,7 +72,7 @@ record Tx : Set where
         txAD : Maybe ⊤
 
 {-# FOREIGN GHC data Tx = MkTx { body :: TxBody, wits :: TxWitnesses, txAD :: Maybe () } #-}
-{-# COMPILE GHC Tx = data MAlonzo.Code.Foreign.LedgerTypes.Tx (MkTx) #-}
+{-# COMPILE GHC Tx = data Tx (MkTx) #-}
 
 record PParams : Set where
   field a             : ℕ
@@ -93,18 +93,18 @@ record PParams : Set where
     , poolDeposit :: Integer
     , emax :: Integer } deriving Show
 #-}
-{-# COMPILE GHC PParams = data MAlonzo.Code.Foreign.LedgerTypes.PParams (MkPParams) #-}
+{-# COMPILE GHC PParams = data PParams (MkPParams) #-}
 
 record UTxOEnv : Set where
   field slot    : ℕ
         pparams : PParams
 
 {-# FOREIGN GHC data UTxOEnv = MkUTxOEnv { slot :: Integer, pparams :: PParams } deriving Show #-}
-{-# COMPILE GHC UTxOEnv = data MAlonzo.Code.Foreign.LedgerTypes.UTxOEnv (MkUTxOEnv) #-}
+{-# COMPILE GHC UTxOEnv = data UTxOEnv (MkUTxOEnv) #-}
 
 record UTxOState : Set where
   field utxo : UTxO
         fees : Coin
 
 {-# FOREIGN GHC data UTxOState = MkUTxOState { utxo :: UTxO, fees :: Coin } deriving Show #-}
-{-# COMPILE GHC UTxOState = data MAlonzo.Code.Foreign.LedgerTypes.UTxOState (MkUTxOState) #-}
+{-# COMPILE GHC UTxOState = data UTxOState (MkUTxOState) #-}

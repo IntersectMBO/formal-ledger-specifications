@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import DecEq
+open import Interface.DecEq
 open import Data.Product
 open import Data.Product.Function.NonDependent.Propositional using (_×-cong_)
 open import Function
@@ -16,12 +16,12 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Relation.Binary.Morphism
 open import Function.Related
 
-module FinMap.Properties.Algebra {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
+module Data.FinMap.Properties.Algebra {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
 
-open import FinMap
+open import Data.FinMap
 open import FiniteMap
-open import FinMap.Properties.Equality
-open import FinMap.Properties.Membership
+open import Data.FinMap.Properties.Equality
+open import Data.FinMap.Properties.Membership
 
 private
   variable
@@ -74,7 +74,7 @@ private
   where
     ≡ᵉ-refl = IsEquivalence.refl ≡ᵐ-isEquivalence {m}
 
-open import FinSet
+open import Data.FinSet
 
 eqHelp : m ≡ᵐ m' → FinMap=>Keys m ≡ᵉ FinMap=>Keys m'
 eqHelp m@{fs-nojunk els} m'@{fs-nojunk els₁} x a = mk⇔ (λ x₁ → ≡ᵖᵐ-∈ {K} {V} {m} {m'} {a , getValue a _ x₁} x x₁)

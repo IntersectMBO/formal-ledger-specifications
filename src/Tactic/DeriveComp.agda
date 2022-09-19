@@ -20,15 +20,14 @@ open import Tactic.ClauseBuilder
 open import Tactic.Helpers
 open import Tactic.ReduceDec
 
-open import DecEq
+open import Interface.ComputationalRelation
+open import Interface.DecEq
 open import Interface.Decidable.Instance
 
 open import Interface.Monad.Instance
 open import Interface.MonadReader.Instance
 open import Interface.MonadError.Instance
 open import Interface.MonadTC.Instance
-
-open import ComputationalRelation
 
 instance
   _ = ContextMonad-MonadTC

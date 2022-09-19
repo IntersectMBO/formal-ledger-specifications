@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import DecEq
+open import Interface.DecEq
 open import Data.List
 open import Data.List.Relation.Binary.BagAndSetEquality
 open import Data.List.Relation.Binary.Permutation.Propositional hiding (refl)
@@ -17,10 +17,10 @@ open import Function.Properties.Bijection hiding (refl)
 open import Data.Product hiding (map)
 open import Relation.Nullary
 
-module FinMap.Properties.Equality {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
+module Data.FinMap.Properties.Equality {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
 
 open import FiniteMap
-open import FinMap
+open import Data.FinMap
 
 private
   variable

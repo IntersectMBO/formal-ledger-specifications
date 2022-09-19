@@ -7,12 +7,13 @@ open import Relation.Binary.PropositionalEquality.WithK
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
 
-module DecEq where
+module Interface.DecEq where
 
 private variable a : Level
                  A B : Set a
 
 record DecEq {a} (A : Set a) : Set a where
+  infix 4 _≟_
   field
     _≟_ : DecidableEquality A
 

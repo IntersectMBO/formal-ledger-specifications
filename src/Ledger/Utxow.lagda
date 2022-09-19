@@ -10,10 +10,10 @@ open import Prelude
 
 import Data.Maybe
 import Data.Nat
-open import ComputationalRelation
-open import DecEq
-open import FinMap
-open import FinSet renaming (FinSet to ℙ_)
+open import Interface.ComputationalRelation
+open import Interface.DecEq
+open import Data.FinMap
+open import Data.FinSet renaming (FinSet to ℙ_)
 
 open TransactionStructure txs
 open import Ledger.Crypto
@@ -63,11 +63,11 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     → let utxo = UTxOState.utxo s
           txb = body tx
           txw = wits tx
-          witsKeyHashes = FinSet.map hash (dom (vkSigs txw))
-          witsScriptHashes = FinSet.map hash (scripts txw)
+          witsKeyHashes = Data.FinSet.map hash (dom (vkSigs txw))
+          witsScriptHashes = Data.FinSet.map hash (scripts txw)
       in
-    FinMap.All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw)
-    → FinSet.All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
+    Data.FinMap.All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw)
+    → Data.FinSet.All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
     → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     → scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
     -- TODO: check genesis signatures
