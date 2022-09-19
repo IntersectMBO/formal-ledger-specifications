@@ -1,13 +1,9 @@
 {-# OPTIONS --overlapping-instances #-}
 module Foreign.HSLedger where
 
-open import Prelude
-open import Interface.DecEq
-open import Interface.ComputationalRelation
+open import Ledger.Prelude
 
 open import Data.Nat using (_≤_; _≤ᵇ_)
-open import Data.FinSet
-open import Data.FinMap
 import Data.Maybe as M
 
 open import Foreign.Convertible
@@ -131,7 +127,7 @@ instance
         ; txouts   = from txouts
         ; txfee    = txfee
         ; txvldt   = coerce txvldt
-        ; txwdrls  = Data.FinMap.∅
+        ; txwdrls  = ∅ᵐ
         ; txup     = nothing
         ; txADhash = nothing
         ; txsize   = txsize
@@ -149,7 +145,7 @@ instance
       from' : F.TxWitnesses → TxWitnesses
       from' txw = let open F.TxWitnesses txw in record
         { vkSigs  = from vkSigs
-        ; scripts = Data.FinSet.∅ }
+        ; scripts = ∅ }
 
   Convertible-Tx : Convertible Tx F.Tx
   Convertible-Tx = record { to = to' ; from = from' }

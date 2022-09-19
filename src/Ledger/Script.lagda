@@ -2,9 +2,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Prelude
-open import Interface.DecEq
-open import Relation.Nullary
+open import Ledger.Prelude
 
 open import Data.List.Relation.Unary.All
 open import Data.List.Relation.Unary.Any

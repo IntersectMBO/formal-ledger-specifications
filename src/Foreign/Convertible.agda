@@ -1,12 +1,9 @@
 {-# OPTIONS --overlapping-instances #-}
 module Foreign.Convertible where
 
-open import Prelude
-open import Interface.DecEq
+open import Ledger.Prelude
 
 open import Data.List using (map)
-open import Data.FinSet
-open import Data.FinMap
 
 open import Foreign.Haskell
 open import Foreign.Haskell.Coerce
@@ -31,11 +28,11 @@ instance
   Convertible-Pair .to   (a , b) = (to a , to b)
   Convertible-Pair .from (a , b) = (from a , from b)
 
-  Convertible-FinSet : ∀ {A A'} ⦃ _ : DecEq A ⦄ → ⦃ _ : Convertible A A' ⦄ → Convertible (FinSet A) (List A')
+  Convertible-FinSet : ∀ {A A'} ⦃ _ : DecEq A ⦄ → ⦃ _ : Convertible A A' ⦄ → Convertible (ℙ A) (List A')
   Convertible-FinSet .to   s = Data.List.map to (elements s)
   Convertible-FinSet .from l = fromList (Data.List.map from l)
 
   Convertible-Map : ∀ {K K' V V'} ⦃ _ : DecEq K ⦄ ⦃ _ : DecEq V ⦄
-                  → ⦃ _ : Convertible K K' ⦄ → ⦃ _ : Convertible V V' ⦄ → Convertible (FinMap K V) (List (Pair K' V'))
+                  → ⦃ _ : Convertible K K' ⦄ → ⦃ _ : Convertible V V' ⦄ → Convertible (K ↛ V) (List (Pair K' V'))
   Convertible-Map .to   m = Data.List.map to (listOfᵐ m)
   Convertible-Map .from m = fromList' (Data.List.map from m)

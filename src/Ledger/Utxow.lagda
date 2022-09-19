@@ -6,14 +6,10 @@ open import Ledger.Transaction
 
 module Ledger.Utxow (txs : TransactionStructure) where
 
-open import Prelude
+open import Ledger.Prelude
 
-import Data.Maybe
+import Data.Maybe as M
 import Data.Nat
-open import Interface.ComputationalRelation
-open import Interface.DecEq
-open import Data.FinMap
-open import Data.FinSet renaming (FinSet to ℙ_)
 
 open TransactionStructure txs
 open import Ledger.Crypto
@@ -63,15 +59,15 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     → let utxo = UTxOState.utxo s
           txb = body tx
           txw = wits tx
-          witsKeyHashes = Data.FinSet.map hash (dom (vkSigs txw))
-          witsScriptHashes = Data.FinSet.map hash (scripts txw)
+          witsKeyHashes = mapˢ hash (dom (vkSigs txw))
+          witsScriptHashes = mapˢ hash (scripts txw)
       in
-    Data.FinMap.All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw)
-    → Data.FinSet.All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
+    ∀ᵐ (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw)
+    → ∀ˢ (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
     → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     → scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
     -- TODO: check genesis signatures
-    → txADhash txb ≡ Data.Maybe.map hash (txAD tx)
+    → txADhash txb ≡ M.map hash (txAD tx)
     → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

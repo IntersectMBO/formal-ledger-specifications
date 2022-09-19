@@ -2,8 +2,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Interface.DecEq
-open import Relation.Nullary
+open import Ledger.Prelude
 
 module Ledger.Address (
 \end{code}
@@ -18,8 +17,6 @@ We define credentials and various types of addresses here.
 \end{code}
 \begin{code}[hide]
   : Set) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
-
-open import Prelude
 \end{code}
 \emph{Derived types}
 \AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr, VKeyBaseAddr, VKeyBoostrapAddr, ScriptBaseAddr, ScriptBootstrapAddr, VKeyAddr, ScriptAddr}

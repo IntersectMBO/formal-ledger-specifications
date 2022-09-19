@@ -4,7 +4,7 @@
 
 module Ledger.PParams (Epoch : Set) where
 
-open import Prelude
+open import Ledger.Prelude
 \end{code}
 \begin{figure*}[h]
 \begin{code}

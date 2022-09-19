@@ -18,6 +18,7 @@ open import Level
 module Data.FinMap where
 
 open import FiniteMap
+open import FiniteMap using (listOfᵐ; _≡ᵐ_; _∪ᵐ_; _∩ᵐ_; _∩ᵖ_; filterᵐ) public
 
 FinMap : (K V : Set) → {{DecEq K}} → {{DecEq V}} → Set
 FinMap K V {{eq}} {{eq'}} = FiniteMap K V eq eq'
@@ -65,8 +66,6 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
 
   fromList' : List (K × V) → FinMap K V
   fromList' xs = fromListᵐ xs
-
-  open import FiniteMap using (listOfᵐ) public
 
   _⊆ᵐ_ : FinMap K V → FinMap K V → Set
   m ⊆ᵐ m' = (listOfᵐ m) SubSetOf (listOfᵐ m')
