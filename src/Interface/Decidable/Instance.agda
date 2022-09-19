@@ -17,9 +17,13 @@ open import Relation.Nullary
 open import Relation.Nullary.Decidable
 open import Relation.Nullary.Implication
 open import Relation.Nullary.Product
+open import Relation.Unary using () renaming (Decidable to Decidable¹)
 
-private variable a : Level
+private variable a b : Level
                  A P X Y : Set a
+
+record Dec₁ {a} {A : Set a} (P : A → Set b) : Set (a ⊔ b) where
+  field P? : Decidable¹ P
 
 ¿_¿ : (P : Set a) → ⦃ Dec P ⦄ → Dec P
 ¿ _ ¿ ⦃ P? ⦄ = P?

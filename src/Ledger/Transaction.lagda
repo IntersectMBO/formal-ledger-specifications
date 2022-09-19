@@ -6,14 +6,15 @@
 --------------------------------------------------------------------------------
 -- NOTE: Everything in this module is part of TransactionStructure
 --------------------------------------------------------------------------------
+module Ledger.Transaction where
+
+open import Ledger.Prelude
+
 open import Ledger.Crypto
 import Ledger.PParams
 import Ledger.Script
-open import Interface.DecEq
 
-module Ledger.Transaction where
-open import Prelude
-import Data.Nat
+import Data.Nat as N
 
 record TransactionStructure : Set₁ where
   field
@@ -55,7 +56,7 @@ This function must produce a unique id for each unique transaction body.
   open Crypto crypto public
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
-  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash ℕ Data.Nat._≤_ Data.Nat._≤ᵇ_
+  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash ℕ N._≤_ N._≤ᵇ_
         instance DecEq-ADHash : DecEq ADHash
 
   open Ledger.Script.ScriptStructure ss public

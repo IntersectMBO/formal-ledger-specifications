@@ -3,9 +3,7 @@
 {-# OPTIONS --safe #-}
 module Ledger.Crypto where
 
-open import Prelude hiding (T)
-open import Interface.DecEq
-open import Relation.Nullary
+open import Ledger.Prelude hiding (T)
 open import Interface.Hashable public
 
 record isHashableSet (T : Set) : Set₁ where

@@ -8,27 +8,19 @@
 {-# OPTIONS --overlapping-instances #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Prelude
+open import Ledger.Prelude
 
 open import Algebra using (CommutativeMonoid)
 
 open import Data.Nat using (_≤?_; _≤_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm)
 
-open import Relation.Nullary
-open import Relation.Nullary.Decidable
 open import Relation.Binary
 
-open import Interface.DecEq
 open import Interface.Decidable.Instance
-open import Interface.ComputationalRelation
 
-open import Data.FinMap renaming (FinMap to _↦_)
-open import FiniteMap
 open import Data.FinMap.Properties
 open import Data.FinMap.Properties.Equality
-
-open import Data.FinSet hiding (∅) renaming (FinSet to ℙ_)
 open import Data.FinSet.Properties.Equality
 
 open import Tactic.Helpers
@@ -170,7 +162,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo = UTxOState.utxo s
           fees = UTxOState.fees s
       in
-      txins tx ≢ Data.FinSet.∅
+      txins tx ≢ ∅
     → inInterval slot (txvldt tx)
     -- → txins tx ⊆ dom utxo
     -- this is currently broken because of https://github.com/agda/agda/issues/5982
@@ -178,9 +170,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
     -- PPUP
     -- same with anything that uses FinSet.All
-    -- → FinSet.All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (values' (txouts tx))
-    -- → FinSet.All (λ where (a , _) → netId a ≡ networkId) (values' (txouts tx))
-    -- → FinSet.All (λ where record { net = net } → net ≡ networkId) (dom (txwdrls tx))
+    -- → ∀ˢ (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (values' (txouts tx))
+    -- → ∀ˢ (λ where (a , _) → netId a ≡ networkId) (values' (txouts tx))
+    -- → ∀ˢ (λ where record { net = net } → net ≡ networkId) (dom (txwdrls tx))
     → txsize tx ≤ PParams.maxTxSize pp
     ────────────────────────────────
     Γ
@@ -193,9 +185,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \end{figure*}
 
 \begin{code}[hide]
-open import Data.FinSet renaming (∅ to ∅ᵉ)
-
-balance-∪ : utxo ∩ᵖ utxo' ≡ᵐ ∅ → balance (utxo ∪ᵐ utxo') ≡ balance utxo + balance utxo'
+balance-∪ : utxo ∩ᵖ utxo' ≡ᵐ ∅ᵐ → balance (utxo ∪ᵐ utxo') ≡ balance utxo + balance utxo'
 balance-∪ {utxo} {utxo'} = indexedSum-∪ {m = utxo} {m' = utxo'}
 
 balance-cong : utxo ≡ᵐ utxo' → balance utxo ≡ balance utxo'
@@ -210,7 +200,7 @@ For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\va
 pov :
 \end{code}
 \begin{code}[inline*]
-  utxo ∩ᵖ outs tx ≡ ∅
+  utxo ∩ᵖ outs tx ≡ ∅ᵐ
 \end{code}
 and
 \begin{code}[hide]
@@ -229,7 +219,7 @@ then
 \begin{code}[hide]
 pov {utxo} {tx} {_} {fee} h' (UTXO-inductive _ _ _ bal-eq _) =
   let
-    h : utxo ∩ᵖ outs tx ≡ᵐ ∅
+    h : utxo ∩ᵖ outs tx ≡ᵐ ∅ᵐ
     h = subst ((utxo ∩ᵖ outs tx) ≡ᵐ_) h' (IsEquivalence.refl ≡ᵐ-isEquivalence {utxo ∩ᵖ outs tx})
 
     balance-eq : balance utxo ≡ balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + txfee tx
@@ -266,11 +256,11 @@ unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈
 \end{code}
 \begin{code}
 UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
-UTXO-step = Computational.compute Computational-UTXO
+UTXO-step = compute Computational-UTXO
 
 UTXO-step-computes-UTXO :
   UTXO-step Γ utxoState tx ≡ just utxoState' ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-UTXO-step-computes-UTXO = Computational.≡-just⇔STS Computational-UTXO
+UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}
