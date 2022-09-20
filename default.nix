@@ -1,4 +1,4 @@
-{ nixpkgs ? import <nixpkgs> {} }:
+{ nixpkgs ? import <nixpkgs> { system = "aarch64-darwin"; } }:
 with nixpkgs; let
   agdaDeps = with (import (builtins.fetchTarball
     https://github.com/nixos/nixpkgs/tarball/a7ecde854aee5c4c7cd6177f54a99d2c1ff28a31) ({ # 21.11

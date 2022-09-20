@@ -53,12 +53,18 @@ module _ {A : Set} {{h : DecEq A}} where
   all? : ∀ {ℓ} → {P : Pred A ℓ} → Relation.Unary.Decidable P → Relation.Unary.Decidable (All P)
   all? P? s = Data.List.Relation.Unary.All.all? P? (elements s)
 
+
   infix 5 _∈_
-  _∈_ : A → FinSet A → Set
-  a ∈ s = a ∈l elements s
+  data _∈_ (a : A) (s : FinSet A) : Set where
+       mk∈ : a ∈l elements s → a ∈ s
+
+  decHelp : (a : A) (s : FinSet A) → ¬ a ∈l (elements s) → ¬ a ∈ s
+  decHelp a s x (mk∈ x₁) = ⊥-elim (x x₁)
 
   _∈?_ : Decidable _∈_
-  a ∈? s = Utilities.ListProperties.eq2in _≟_ a (elements s) 
+  a ∈? s@(fs-nojunk els) with Utilities.ListProperties.eq2in _≟_ a (elements s)
+  ... | no ¬p = no (decHelp a s ¬p)
+  ... | yes p = yes (mk∈ p)
 
   _∈ᵇ_ : A → FinSet A → Bool
   a ∈ᵇ s = ⌊ a ∈? s ⌋
