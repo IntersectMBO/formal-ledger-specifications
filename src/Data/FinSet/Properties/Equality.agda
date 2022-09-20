@@ -2,9 +2,8 @@
 
 open import Interface.DecEq
 
-module Data.FinSet.Properties.Equality {A : Set} {{h : DecEq A}} where
+module Data.FinSet.Properties.Equality {A : Set} ⦃ h : DecEq A ⦄ where
 
-open import Data.Product
 open import Data.List
 open import Data.List.Relation.Binary.BagAndSetEquality
 open import Data.List.Relation.Binary.Permutation.Propositional
@@ -18,45 +17,29 @@ open import Relation.Nullary
 open import Relation.Binary
 open import Utilities.ListProperties hiding (_∈_)
 open import Utilities.Logic
-open import Data.Empty
 open import Function.Properties.Bijection using (⤖⇒⇔)
 
 open import Data.FinSet.Properties.Membership
 
-noDupEls : {s : FinSet A} → NoDupInd (elements s)
+private variable
+  s s' : FinSet A
+  l l' : List A
+
+noDupEls : NoDupInd (elements s)
 noDupEls {fs-nojunk els {nd}} = NoDupInd-corr2 _ (∥-∥-prop3 _ nd)
 
-≡ˡ⇒≡' : ∀ {l l' : List A} → l ≡ l' → fromList l ≡ fromList l'
-≡ˡ⇒≡' {l} {l'} refl = refl
+≡ᵉ⇒⊆ : s ≡ᵉ s' → s ⊆ s'
+≡ᵉ⇒⊆ s≡ᵉs' = Equivalence.to (s≡ᵉs' _)
 
--- elements-fromList : (l : List A) → elements (fromList l) ≡ l
--- elements-fromList [] = refl
--- elements-fromList (x ∷ l) = {!!}
-
--- elements-surjective : (l : List A) → Σ (FinSet A) (λ s → elements s ≡ l)
--- elements-surjective l = fromList l , {!!}
-
--- ≡ˡ⇒≡ : ∀ {s s' : FinSet A} → s ≡ s' → elements s ≡ elements s'
--- ≡ˡ⇒≡ {s} {s'} refl = refl
-
--- ≡⇒≡ˡ : ∀ {s s' : FinSet A} → elements s ≡ elements s' → s ≡ s'
--- ≡⇒≡ˡ {fs-nojunk els} {fs-nojunk els₁} refl rewrite elements-fromList els = {!refl!}
-
--- ≡ˡ⇔≡ : ∀ {s s' : FinSet A} → s ≡ s' ⇔ elements s ≡ elements s'
--- ≡ˡ⇔≡ {l} {l'} = record { f = ≡ˡ⇒≡ ; g = ≡⇒≡ˡ ; cong₁ = λ { refl → refl } ; cong₂ = λ { refl → refl } }
-
-≡ᵉ⇒⊆ : {s s' : FinSet A} → s ≡ᵉ s' → s ⊆ s'
-≡ᵉ⇒⊆ s≡ᵉs' {a} = Equivalence.to (s≡ᵉs' a)
-
-⊆∧⊇⇒≡ᵉ : {s s' : FinSet A} → s ⊆ s' → s' ⊆ s → s ≡ᵉ s'
+⊆∧⊇⇒≡ᵉ : s ⊆ s' → s' ⊆ s → s ≡ᵉ s'
 ⊆∧⊇⇒≡ᵉ s⊆s' s'⊆s a = record { to = s⊆s' ; from = s'⊆s ; to-cong = λ { refl → refl } ; from-cong = λ { refl → refl } }
 
-≡ᵉ-∈ : ∀ {x} {s s' : FinSet A} → s ≡ᵉ s' → x ∈ s → x ∈ s'
-≡ᵉ-∈ {x} h = Equivalence.to (h x)
+≡ᵉ-∈ : ∀ {x} → s ≡ᵉ s' → x ∈ s → x ∈ s'
+≡ᵉ-∈ h = Equivalence.to (h _)
 
-≡ᵉ-∅ : {s : FinSet A} → s ≡ᵉ ∅ → s ≡ ∅
+≡ᵉ-∅ : s ≡ᵉ ∅ → s ≡ ∅
 ≡ᵉ-∅ s@{fs-nojunk []} _ = refl
-≡ᵉ-∅ s@{fs-nojunk (x ∷ _)} h = ⊥-elim (∈-∅ (≡ᵉ-∈ {x = x} {s = s} {s' = ∅} h (here refl)))
+≡ᵉ-∅ s@{fs-nojunk (x ∷ _)} h = ⊥-elim (∈-∅ (≡ᵉ-∈ {s = s} {s' = ∅} {x = x} h (here refl)))
 
 ≡ᵉ-isEquivalence : IsEquivalence (_≡ᵉ_ {A})
 ≡ᵉ-isEquivalence with ⇔-isEquivalence
@@ -77,12 +60,12 @@ s ≟ᵉ s' with s ⊆? s' | s' ⊆? s
 ... | yes p | no ¬p' = no λ h → ¬p' $ ≡ᵉ⇒⊆ {s'} {s} (IsEquivalence.sym ≡ᵉ-isEquivalence {s} {s'} h)
 ... | no ¬p | h'     = no λ h → ¬p $ ≡ᵉ⇒⊆ {s} {s'} h
 
-≟-∅ : ∀ {a} → Dec (a ≡ ∅)
-≟-∅ {a} with a ≟ᵉ ∅
-... | yes p = yes (≡ᵉ-∅ {s = a} p)
+≟-∅ : Dec (s ≡ ∅)
+≟-∅ {s} with s ≟ᵉ ∅
+... | yes p = yes (≡ᵉ-∅ {s = s} p)
 ... | no ¬p = no λ { refl → ¬p (λ _ → IsEquivalence.refl ⇔-isEquivalence) }
 
-module _ {s s' : FinSet A {{h}}} where
+module _ {s s' : FinSet A} where
 
   ≡ᵉ⇒∼set : s ≡ᵉ s' → (listOf s) ∼[ set ] (listOf s')
   ≡ᵉ⇒∼set s≡ᵉs' {a} = toRelated (s≡ᵉs' a)

@@ -19,7 +19,7 @@ open import Function.Related
 module Data.FinMap.Properties.Algebra {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
 
 open import Data.FinMap
-open import FiniteMap
+open import Data.FinMap.Core
 open import Data.FinMap.Properties.Equality
 open import Data.FinMap.Properties.Membership
 

@@ -19,8 +19,8 @@ open import Relation.Nullary
 
 module Data.FinMap.Properties.Equality {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
 
-open import FiniteMap
 open import Data.FinMap
+open import Data.FinMap.Core
 
 private
   variable

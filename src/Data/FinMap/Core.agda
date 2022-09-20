@@ -17,7 +17,7 @@ open import Utilities.ListMonad renaming (return to return')
 open import Utilities.ListProperties
 open import Utilities.Logic hiding ([_]; DecEq)
 
-module FiniteMap where
+module Data.FinMap.Core where
 
 data FiniteMap (K : Set)(V : Set)(eq : DecEq K)(eq' : DecEq V) : Set where
   fs-nojunk : (els : List (K × V)) → {nd :  ∥ nodupDec (_≟_ {{eq}}) (Data.List.map proj₁ els) ∥}

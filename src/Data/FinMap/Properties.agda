@@ -39,8 +39,8 @@ open import Algebra.Properties.CommutativeSemigroup
 
 module Data.FinMap.Properties {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
 
-open import FiniteMap
 open import Data.FinMap
+open import Data.FinMap.Core
 open import Data.FinMap.Properties.Membership {K} {V} {{eq}} {{eq'}}
 open import Data.FinMap.Properties.Algebra {K} {V} {{eq}} {{eq'}}
 open import Data.FinMap.Properties.Equality {K} {V} {{eq}} {{eq'}}

@@ -1,31 +1,25 @@
 {-# OPTIONS --safe #-}
 
-open import Interface.DecEq
-open import Data.FinSet
-open import Data.Product
-open import Data.Product.Function.NonDependent.Propositional using (_×-cong_)
-open import Function
-open import Data.Sum
-open import Level
-open import Data.List using (List; _∷_; length; _─_; lookup)
-open import Relation.Binary hiding (_⇔_)
-open import Function.Properties.Equivalence as Eq
-open import Relation.Binary.Lattice
-open import Data.List.Relation.Binary.Permutation.Propositional
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-open import Relation.Binary.Morphism
-open import Function.Related
-
+open import Data.FinSet
 open import Data.FinSet.Properties.Equality
 open import Data.FinSet.Properties.Membership
+open import Data.Product
+open import Data.Product.Function.NonDependent.Propositional using (_×-cong_)
+open import Data.Sum
+open import Function
+open import Function.Properties.Equivalence as Eq
+open import Function.Related
+open import Interface.DecEq
+open import Relation.Binary
+open import Relation.Binary.Lattice
+open import Relation.Binary.Morphism
 
-module Data.FinSet.Properties.Algebra {A : Set} {{h : DecEq A}} where
+module Data.FinSet.Properties.Algebra {A : Set} ⦃ h : DecEq A ⦄ where
 
-private
-  variable
-    a : A
-    l : List A
-    s s' : FinSet A {{h}}
+private variable
+  a : A
+  s s' : FinSet A ⦃ h ⦄
 
 ⊆-Transitive : Transitive (_⊆_ {A})
 ⊆-Transitive i⊆j j⊆k = j⊆k ∘ i⊆j
@@ -75,7 +69,7 @@ FinSet-BoundedJoinSemilattice = record { isJoinSemilattice = IsLattice.isJoinSem
   (a ∈ x × a ∈ u)    ≈⟨ fromRelated $ _×-cong_ (toRelated (x≡ᵉy a)) (toRelated (u≡ᵉv a)) ⟩
   (a ∈ y × a ∈ v)    ≈⟨ ∈×⇔∈∩ {s = y} {s' = v} ⟩
   (a ∈ (y ∩ v))      ∎
-  where open SetoidReasoning (⇔-setoid 0ℓ)
+  where open SetoidReasoning (⇔-setoid _)
 
 ∩-cong-⊆ : (_∩_ {A}) Preserves₂ _⊆_ ⟶ _⊆_ ⟶ _⊆_
 ∩-cong-⊆ {x} {y} {u} {v} x⊆y u⊆v a∈x∩u with ∈∩⇒∈× {s = x} {s' = u} a∈x∩u

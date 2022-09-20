@@ -1,33 +1,28 @@
 {-# OPTIONS --safe #-}
 
-open import Interface.DecEq
-open import Data.FinSet
-open import Data.List hiding (filter)
-open import Utilities.ListProperties renaming (_∈_ to _∈l_)
-open import Function
-open import FiniteSubset hiding (_∪_; _∩_; fromList)
+import Function.Related.Propositional as P
 open import Data.Bool hiding (_≟_)
+open import Data.FinSet
 open import Data.FinSet.Core
-open import Data.Sum
-open import Utilities.ListsAddition hiding (filter)
+open import Data.List hiding (filter)
+open import Data.List.Properties
 open import Data.Product
-open import Relation.Nullary.Decidable
+open import Data.Sum
+open import FiniteSubset hiding (_∪_; _∩_; fromList)
+open import Function
+open import Interface.DecEq
 open import Relation.Binary.PropositionalEquality using (subst; sym; refl; _≡_; inspect; [_]; cong; trans)
 open import Relation.Nullary
-import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-open import Level
-open import Function.Properties.Equivalence
-open import Data.List.Properties
-open import Function.Equivalence using (⇔-setoid)
-import Function.Related.Propositional as P
+open import Relation.Nullary.Decidable
+open import Utilities.ListProperties renaming (_∈_ to _∈l_)
+open import Utilities.ListsAddition hiding (filter)
 
 module Data.FinSet.Properties.Membership {A : Set} {{h : DecEq A}} where
 
-private
-  variable
-    a : A
-    l : List A
-    s s' s'' : FinSet A {{h}}
+private variable
+  a : A
+  l : List A
+  s s' s'' : FinSet A
 
 ∈⇒∈l : a ∈ s → a ∈l (elements s)
 ∈⇒∈l = id
