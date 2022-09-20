@@ -21,18 +21,18 @@ Convertible-Refl .from = id
 instance
   Coercible⇒Convertible : ∀ {A B} → ⦃ _ : Coercible A B ⦄ → Convertible A B
   Coercible⇒Convertible .to   = coerce
-  Coercible⇒Convertible .from = coerce ⦃ TrustMe ⦄ -- coercibility is symmetric
+  Coercible⇒Convertible .from = coerce ⦃ TrustMe ⦄ -- coercibility is symmetric, I promise
 
   Convertible-Pair : ∀ {A A' B B'} → ⦃ _ : Convertible A A' ⦄ → ⦃ _ : Convertible B B' ⦄
                    → Convertible (A × B) (Pair A' B')
   Convertible-Pair .to   (a , b) = (to a , to b)
   Convertible-Pair .from (a , b) = (from a , from b)
 
-  Convertible-FinSet : ∀ {A A'} ⦃ _ : DecEq A ⦄ → ⦃ _ : Convertible A A' ⦄ → Convertible (ℙ A) (List A')
-  Convertible-FinSet .to   s = Data.List.map to (elements s)
-  Convertible-FinSet .from l = fromList (Data.List.map from l)
+  Convertible-FinSet : ∀ {A A'} → ⦃ _ : Convertible A A' ⦄ → Convertible (ℙ A) (List A')
+  Convertible-FinSet .to   s = Data.List.map to s
+  Convertible-FinSet .from l = Data.List.map from l
 
-  Convertible-Map : ∀ {K K' V V'} ⦃ _ : DecEq K ⦄ ⦃ _ : DecEq V ⦄
+  Convertible-Map : ∀ {K K' V V'} ⦃ _ : DecEq K ⦄
                   → ⦃ _ : Convertible K K' ⦄ → ⦃ _ : Convertible V V' ⦄ → Convertible (K ↛ V) (List (Pair K' V'))
-  Convertible-Map .to   m = Data.List.map to (listOfᵐ m)
-  Convertible-Map .from m = fromList' (Data.List.map from m)
+  Convertible-Map .to   m = Data.List.map to (proj₁ m)
+  Convertible-Map .from m = fromListᵐ (Data.List.map from m)

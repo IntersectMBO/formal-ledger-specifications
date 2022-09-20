@@ -13,7 +13,7 @@ import Data.Nat
 
 open TransactionStructure txs
 open import Ledger.Crypto
-open import Ledger.Script KeyHash ScriptHash ℕ Data.Nat._≤_ Data.Nat._≤ᵇ_
+open import Ledger.Script KeyHash ScriptHash ℕ
 open import Ledger.Utxo txs
 
 open TxBody
@@ -59,11 +59,11 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     → let utxo = UTxOState.utxo s
           txb = body tx
           txw = wits tx
-          witsKeyHashes = mapˢ hash (dom (vkSigs txw))
-          witsScriptHashes = mapˢ hash (scripts txw)
+          witsKeyHashes = map hash (dom (vkSigs txw))
+          witsScriptHashes = map hash (scripts txw)
       in
-    ∀ᵐ (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw)
-    → ∀ˢ (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
+    Properties.All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
+    → Properties.All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
     → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     → scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
     -- TODO: check genesis signatures
