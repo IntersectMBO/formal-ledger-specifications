@@ -7,25 +7,26 @@ open import Relation.Binary.PropositionalEquality.WithK
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
 
+open import Interface.DecRel
+
 module Interface.DecEq where
 
-private variable a : Level
-                 A B : Set a
+private variable ℓ : Level
+                 A B : Set ℓ
 
-record DecEq {a} (A : Set a) : Set a where
+record DecEq (A : Set ℓ) : Set ℓ where
   infix 4 _≟_
   field
     _≟_ : DecidableEquality A
 
+  open DecRel record { _∼?_ = _≟_ } renaming (_∼ᵇ_ to _≡ᵇ_) public
+
+  ≡ᵇ-refl : {a : A} → a ≡ᵇ a ≡ true
+  ≡ᵇ-refl {a = a} with a ≟ a
+  ... | no ¬p = ⊥-elim (¬p refl)
+  ... | yes p = refl
+
 open DecEq ⦃ ... ⦄ public
-
-_≡ᵇ_ : ∀ {a} {A : Set a} → ⦃ DecEq A ⦄ → A → A → Bool
-a ≡ᵇ a' = ⌊ a ≟ a' ⌋
-
-≡ᵇ-refl : ∀ {ℓ} {A : Set ℓ} → ⦃ _ : DecEq A ⦄ → {a : A} → a ≡ᵇ a ≡ true
-≡ᵇ-refl {a = a} with a ≟ a
-... | no ¬p = ⊥-elim (¬p refl)
-... | yes p = refl
 
 ↔-DecEq : A ↔ B → DecEq A → DecEq B
 ↔-DecEq A↔B record { _≟_ = _≟_ } ._≟_ b₁ b₂ =

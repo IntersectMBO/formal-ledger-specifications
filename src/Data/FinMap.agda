@@ -1,24 +1,24 @@
 {-# OPTIONS --safe #-}
 
+module Data.FinMap where
+
+import Relation.Nullary.Decidable
+open import Algebra using (CommutativeMonoid)
+open import Data.FinMap.Core
+open import Data.FinSet hiding (∅; map; indexedSum; _∈_; All; all?)
 open import Data.List using (List; []; head; map; foldr)
 open import Data.Maybe hiding (map)
 open import Data.Product using (_×_; _,_; proj₁; proj₂; curry; uncurry)
-open import Function hiding (Inverse)
+open import FiniteSubset
+open import Function
+open import Interface.DecEq
+open import Level
 open import Relation.Nullary
-import Relation.Nullary.Decidable
 open import Relation.Nullary.Negation
 open import Relation.Unary using (Pred)
-open import Interface.DecEq
-open import FiniteSubset hiding (_∪_; _∩_)
-open import Data.FinSet hiding (∅; map; indexedSum; _∈_; All; all?)
 open import Utilities.ListProperties using (_SubSetOf_)
-open import Algebra using (CommutativeMonoid)
-open import Level
 
-module Data.FinMap where
-
-open import FiniteMap
-open import FiniteMap using (listOfᵐ; _≡ᵐ_; _∪ᵐ_; _∩ᵐ_; _∩ᵖ_; filterᵐ) public
+open import Data.FinMap.Core using (listOfᵐ; _≡ᵐ_; _∪ᵐ_; _∩ᵐ_; _∩ᵖ_; _∈ᵐ_; filterᵐ) public
 
 FinMap : (K V : Set) → {{DecEq K}} → {{DecEq V}} → Set
 FinMap K V {{eq}} {{eq'}} = FiniteMap K V eq eq'

@@ -2,7 +2,6 @@
 
 open import Interface.DecEq
 open import Data.List
-open import FiniteMap
 open import Data.Product hiding (map)
 open import Utilities.ListProperties renaming (_∈_ to _∈l_)
 open import Utilities.Logic hiding (DecEq)
@@ -21,6 +20,7 @@ open import Data.Product.Function.NonDependent.Propositional
 open import Relation.Binary.Morphism
 open import Relation.Binary hiding (_⇔_)
 open import Data.FinMap
+open import Data.FinMap.Core
 open import Data.FinSet using (_∈_; _≡ᵉ_) renaming (∅ to ∅ᵉ)
 open import Relation.Nullary.Negation
 open import FiniteSubset
@@ -232,7 +232,7 @@ projEmpty← {fs-nojunk []} x a = mk⇔ (λ x₁ → x₁) λ x₁ → x₁
 projEmpty← m@{fs-nojunk (x₁ ∷ els) {prf}} x a =
   ⊥-elim (Data.FinSet.Properties.Membership.∈-∅
          {K} {proj₁ x₁}
-             (≡ᵉ-∈ {K} {_}
+             (≡ᵉ-∈ {K}
                    {FinMap=>Keys m}
                    {fs-nojunk []}
                      x (here refl)))
