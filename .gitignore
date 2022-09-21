@@ -1,3 +1,4 @@
 *.agdai
 .DS_Store
+**/dist-newstyle/
 result*
