@@ -1,0 +1,23 @@
+name: Formal Ledger Specs
+on:
+  push:
+    branches:
+      - td/gh-workflow
+
+# permissions:
+#   contents: write
+#   deployments: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v15
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://hydra.iohk.io https://cache.nixos.org/
+      - name: Build all derivations 
+        run: nix-build
