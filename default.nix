@@ -106,6 +106,7 @@ in {
     })];
     buildPhase = ''
       agda --latex Ledger.lagda
+      ls Ledger/*.lagda | xargs -n 1 agda --latex
       cd latex && latexmk -xelatex Ledger.tex && cd ..
     '';
     installPhase = ''

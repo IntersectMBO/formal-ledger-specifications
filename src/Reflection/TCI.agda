@@ -29,7 +29,7 @@ open Monad
 private variable a f : Level
                  A B C D : Set a
 
-TC : ∀ {a} → Set a → Set a
+TC : Set a → Set a
 TC = ReaderT TCEnv R.TC
 
 Monad-TC : Monad TC
