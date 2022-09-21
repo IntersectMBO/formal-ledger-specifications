@@ -73,11 +73,30 @@ module _ {A : Set} {{h : DecEq A}} where
   _≡ᵉ_ : FinSet A → FinSet A → Set
   s ≡ᵉ s' = ∀ a → a ∈ s ⇔ a ∈ s'
 
+  --this probably shouldn't be in finset
+  -----------------------------------------------------------------
+  _≡ˡ_ : List A → List A → Set
+  xs ≡ˡ ys = ∀ a → a ∈l xs ⇔ a ∈l ys
+
+  ≡ˡ-∈ : ∀ {x} {xs ys : List A} → xs ≡ˡ ys → x ∈l xs → x ∈l ys
+  ≡ˡ-∈ {x} h = Equivalence.to (h x)
+
+  ≡ˡ-∈' : ∀ {x} {xs ys : List A} → xs ≡ˡ ys → x ∈l ys → x ∈l xs
+  ≡ˡ-∈' {x} h = Equivalence.from (h x)
+
+  ----------------------------------------------------------------
+
   _⊆_ : FinSet A → FinSet A → Set
-  s ⊆ s' = (elements s) Utilities.ListProperties.SubSetOf (elements s')
+  s ⊆ s' = ∀ {a} → a ∈ s → a ∈ s'
+
+  subHelp : (a : A) (s s' : FinSet A) → (a ∈ s → a ∈ s') → a ∈l (elements s) → a ∈l (elements s')
+  subHelp a s s' f h with f (mk∈ h)
+  ... | mk∈ x = x
 
   _⊆?_ : Decidable _⊆_
-  s ⊆? s' = Utilities.ListProperties.subset-dec _≟_ (elements s) (elements s')
+  s ⊆? s' with Utilities.ListProperties.subset-dec _≟_ (elements s) (elements s')
+  ... | no ¬p = no (λ x → ¬p (λ x₁ → subHelp _ _ _ x x₁))
+  ... | yes p = yes λ { (mk∈ x) → mk∈ (p x)}
 
   _⊆ᵇ_ : FinSet A → FinSet A → Bool
   s ⊆ᵇ s' = ⌊ s ⊆? s' ⌋

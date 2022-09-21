@@ -51,12 +51,19 @@ noDupEls {fs-nojunk els {nd}} = NoDupInd-corr2 _ (∥-∥-prop3 _ nd)
 ⊆∧⊇⇒≡ᵉ : {s s' : FinSet A} → s ⊆ s' → s' ⊆ s → s ≡ᵉ s'
 ⊆∧⊇⇒≡ᵉ s⊆s' s'⊆s a = record { to = s⊆s' ; from = s'⊆s ; to-cong = λ { refl → refl } ; from-cong = λ { refl → refl } }
 
+≡ˡ⇒≡ᵉ : ∀ {s s' : FinSet A} → (listOf s) ≡ˡ (listOf s') → s ≡ᵉ s'
+≡ˡ⇒≡ᵉ h a = mk⇔ (λ x → mk∈ (≡ˡ-∈ h (∈⇒∈l x)))
+                λ x → mk∈ (≡ˡ-∈' h (∈⇒∈l x))
+
 ≡ᵉ-∈ : ∀ {x} {s s' : FinSet A} → s ≡ᵉ s' → x ∈ s → x ∈ s'
 ≡ᵉ-∈ {x} h = Equivalence.to (h x)
 
+≡ᵉ-∈' : ∀ {x} {s s' : FinSet A} → s ≡ᵉ s' → x ∈ s' → x ∈ s
+≡ᵉ-∈' {x} h = Equivalence.from (h x)
+
 ≡ᵉ-∅ : {s : FinSet A} → s ≡ᵉ ∅ → s ≡ ∅
 ≡ᵉ-∅ s@{fs-nojunk []} _ = refl
-≡ᵉ-∅ s@{fs-nojunk (x ∷ _)} h = ⊥-elim (∈-∅ (≡ᵉ-∈ {x = x} {s = s} {s' = ∅} h (here refl)))
+≡ᵉ-∅ s@{fs-nojunk (x ∷ _)} h =  ⊥-elim (∈-∅ (≡ᵉ-∈ {x = x} {s = s} {s' = ∅} h (mk∈ (here refl))))
 
 ≡ᵉ-isEquivalence : IsEquivalence (_≡ᵉ_ {A})
 ≡ᵉ-isEquivalence with ⇔-isEquivalence
@@ -85,13 +92,17 @@ s ≟ᵉ s' with s ⊆? s' | s' ⊆? s
 module _ {s s' : FinSet A {{h}}} where
 
   ≡ᵉ⇒∼set : s ≡ᵉ s' → (listOf s) ∼[ set ] (listOf s')
-  ≡ᵉ⇒∼set s≡ᵉs' {a} = toRelated (s≡ᵉs' a)
+  ≡ᵉ⇒∼set s≡ᵉs' {a}  = toRelated (mk⇔ (λ x → ∈⇒∈l (≡ᵉ-∈ s≡ᵉs' (mk∈ x)))
+                                      λ x → ∈⇒∈l (≡ᵉ-∈'  s≡ᵉs' (mk∈ x)))
 
   ≡ᵉ⇒∼bag : s ≡ᵉ s' → (listOf s) ∼[ bag ] (listOf s')
   ≡ᵉ⇒∼bag h = unique∧set⇒bag (noDupEls {s}) (noDupEls {s'}) (≡ᵉ⇒∼set h)
 
+  ∼bag⇒≡ᵉ' : (listOf s) ∼[ bag ] (listOf s') → (listOf s) ≡ˡ (listOf s')
+  ∼bag⇒≡ᵉ' h a = ⤖⇒⇔ (fromRelated (h {a}))
+
   ∼bag⇒≡ᵉ : (listOf s) ∼[ bag ] (listOf s') → s ≡ᵉ s'
-  ∼bag⇒≡ᵉ h a = ⤖⇒⇔ (fromRelated (h {a}))
+  ∼bag⇒≡ᵉ h a = ≡ˡ⇒≡ᵉ (∼bag⇒≡ᵉ' h) a
 
   ↭⇒≡ᵉ : (listOf s) ↭ (listOf s') → s ≡ᵉ s'
   ↭⇒≡ᵉ h = ∼bag⇒≡ᵉ (↭⇒∼bag h)
