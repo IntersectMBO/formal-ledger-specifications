@@ -59,20 +59,11 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
+module MidnightExample.PDF where
 
-module Ledger (txs : TransactionStructure) where
-
-open import Ledger.Utxo txs
-open import Ledger.Utxow txs
+open import MidnightExample.Ledger
 \end{code}
 
-\include{ledger/crypto}
-\include{ledger/address}
-\include{ledger/script}
-\include{ledger/pparams}
-\include{ledger/transaction}
-\include{ledger/utxo}
-\include{ledger/utxow}
+\include{midnightexample/ledger}
 
 \end{document}

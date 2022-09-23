@@ -1,4 +1,4 @@
-module Foreign.LedgerTypes where
+module Ledger.Foreign.LedgerTypes where
 
 open import Prelude
 

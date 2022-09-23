@@ -1,5 +1,5 @@
 {-# OPTIONS --overlapping-instances #-}
-module Foreign.HSLedger where
+module Ledger.Foreign.HSLedger where
 
 open import Ledger.Prelude
 
@@ -8,7 +8,7 @@ import Data.Maybe as M
 
 open import Foreign.Convertible
 open import Foreign.Haskell.Coerce
-import Foreign.LedgerTypes as F
+import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.PParams ℕ
 open import Ledger.Crypto
