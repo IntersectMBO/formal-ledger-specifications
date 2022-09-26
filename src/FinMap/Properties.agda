@@ -121,7 +121,7 @@ dom-res-ex-∩ᵖ {keys} m@{fs-nojunk els} a = projEmpty← {(keys ⋪ m) ∩ᵖ
       (k ∈ FinMap=>Keys m × ⊥)
         ↔⟨ ×-zeroʳ 0ℓ (k ∈ FinMap=>Keys m) ⟩
       ⊥
-        ∼⟨ mk⇔ ⊥-elim (λ ()) ⟩
+        ∼⟨ mk⇔ ⊥-elim (λ { (mk∈ ())}) ⟩
       (k ∈ fs-nojunk []) ∎) a
       where open EquationalReasoning
 

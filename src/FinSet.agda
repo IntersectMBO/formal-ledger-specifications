@@ -89,13 +89,13 @@ module _ {A : Set} {{h : DecEq A}} where
   _⊆_ : FinSet A → FinSet A → Set
   s ⊆ s' = ∀ {a} → a ∈ s → a ∈ s'
 
-  subHelp : (a : A) (s s' : FinSet A) → (a ∈ s → a ∈ s') → a ∈l (elements s) → a ∈l (elements s')
-  subHelp a s s' f h with f (mk∈ h)
+  _⊆?'_ : (a : A) (s s' : FinSet A) → (a ∈ s → a ∈ s') → a ∈l (elements s) → a ∈l (elements s')
+  _⊆?'_ a s s' f h with f (mk∈ h)
   ... | mk∈ x = x
 
   _⊆?_ : Decidable _⊆_
   s ⊆? s' with Utilities.ListProperties.subset-dec _≟_ (elements s) (elements s')
-  ... | no ¬p = no (λ x → ¬p (λ x₁ → subHelp _ _ _ x x₁))
+  ... | no ¬p = no (λ x → ¬p (λ x₁ → _⊆?'_ _ _ _ x x₁))
   ... | yes p = yes λ { (mk∈ x) → mk∈ (p x)}
 
   _⊆ᵇ_ : FinSet A → FinSet A → Bool

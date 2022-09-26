@@ -77,8 +77,8 @@ private
 open import FinSet
 
 eqHelp : m ≡ᵐ m' → FinMap=>Keys m ≡ᵉ FinMap=>Keys m'
-eqHelp m@{fs-nojunk els} m'@{fs-nojunk els₁} x a = mk⇔ (λ x₁ → ≡ᵖᵐ-∈ {K} {V} {m} {m'} {a , getValue a _ x₁} x x₁)
-                                                          λ x₁ → ≡ᵖᵐ-∈ {K} {V} {m'} {m} {a , (getValue a _ x₁)} (≡ᵐ-sym x) x₁
+eqHelp m@{fs-nojunk els} m'@{fs-nojunk els₁} x a = mk⇔ (λ { (mk∈ x₁) → mk∈ (≡ᵖᵐ-∈ {K} {V} {m} {m'} {a , getValue a _ x₁} x x₁)})
+                                                      λ { (mk∈ x₁) → mk∈ (≡ᵖᵐ-∈ {K} {V} {m'} {m} {a , (getValue a _ x₁)} (≡ᵐ-sym x) x₁)}
   where ≡ᵐ-sym = IsEquivalence.sym ≡ᵐ-isEquivalence {m} {m'}
 
 ∩ᵖᵏ-cong : (_∩ᵖᵏ_ {K} {V}) Preserves₂ _≡ᵐ_ ⟶ _≡ᵐ_ ⟶ _≡ᵉ_
@@ -95,7 +95,7 @@ subHelp' : m ⊆ᵐ m' → a ∈ᵐ m → a ∈ᵐ m'
 subHelp' {fs-nojunk els} {fs-nojunk els₁} h a = h a
 
 subHelp : m ⊆ᵐ m' → FinMap=>Keys m ⊆ FinMap=>Keys m'
-subHelp m@{fs-nojunk els} m'@{fs-nojunk els₁} x x₁ = ∃-after-map _ _ proj₁ (subHelp' {m} {m'} x (getPair _ _ x₁))
+subHelp {m@(fs-nojunk els)} {m'@(fs-nojunk els₁)} x (mk∈ x₁) = mk∈ (∃-after-map _ _ proj₁ (subHelp' {m} {m'} x (getPair _ _ x₁)))
 
 ∩ᵖᵏ-cong-⊆ : (_∩ᵖᵏ_ {K} {V}) Preserves₂ _⊆ᵐ_ ⟶ _⊆ᵐ_ ⟶ _⊆_
 ∩ᵖᵏ-cong-⊆ {x} {y} {u} {v} x⊆y u⊆v a∈x∩u with ∈∩⇒∈×ᵏ {m = x} {m' = u} a∈x∩u

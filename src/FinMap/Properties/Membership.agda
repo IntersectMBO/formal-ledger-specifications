@@ -21,7 +21,7 @@ open import Data.Product.Function.NonDependent.Propositional
 open import Relation.Binary.Morphism
 open import Relation.Binary hiding (_⇔_)
 open import FinMap
-open import FinSet using (_∈_; _≡ᵉ_) renaming (∅ to ∅ᵉ)
+open import FinSet using (_∈_; _≡ᵉ_; mk∈) renaming (∅ to ∅ᵉ)
 open import Relation.Nullary.Negation
 open import FiniteSubset
 open import FinMap.Properties.Equality using (∈-∅; ≡ᵐ-∈)
@@ -123,7 +123,7 @@ filter→∈ {fs-nojunk els} P? a h = filter→∈' P? a h
 ∈filter {m} P? a = mk⇔ (λ { (h , h') → ∈→filter {m = m} P? a h h' }) (filter→∈ {m = m} P? a)
 
 key=>lst : (k : K) → k ∈ FinMap=>Keys m → k ∈l Data.List.map proj₁ (listOfᵐ m)
-key=>lst {fs-nojunk els} k x = x
+key=>lst {fs-nojunk els} k (mk∈ h) = h
 
 ∈→filterᵖ' : {P : (K × V) → Set} → (P? : ∀ a → Dec (P a))
                      → (k : K)
@@ -137,7 +137,7 @@ key=>lst {fs-nojunk els} k x = x
 ∈→filterᵖ : {P : (K × V) → Set} → (P? : ∀ a → Dec (P a)) → (k : K)
               →  Σ (k ∈ FinMap=>Keys m) (λ x → P (k , (getValue k _ (key=>lst {m} k x))))
               → k ∈  FinMap=>Keys (filterᵐ P? m)
-∈→filterᵖ {fs-nojunk els {prf}} P? k h = ∈→filterᵖ' P? k h
+∈→filterᵖ {fs-nojunk els {prf}} P? k (mk∈ x , snd) = mk∈ (∈→filterᵖ' P? k (x , snd))
 
 filter→∈ᵖ' : {P : (K × V) → Set} → (P? : ∀ a → Dec (P a)) → (k : K)
             → k ∈l map proj₁ (filter P? l)
@@ -150,7 +150,8 @@ filter→∈ᵖ' {x ∷ l} P? k (there h) | yes p = Data.Product.map (λ x₁ �
 filter→eᵖ : {P : (K × V) → Set} → (P? : ∀ a → Dec (P a)) → (k : K)
               → k ∈ FinMap=>Keys (filterᵐ P? m)
               →  Σ (k ∈ FinMap=>Keys m) (λ x → P (k , ((getValue k _ (key=>lst {m} k x)))))
-filter→eᵖ  s@{fs-nojunk els {prf}} P? k h = filter→∈ᵖ' {els} P? k h
+filter→eᵖ s@{fs-nojunk els {prf}} P? k (mk∈ h) with filter→∈ᵖ' {els} P? k h
+... | fst , snd = (mk∈ fst) , snd
 
 equivKey : {P : (K × V) → Set} → (P? : ∀ a → Dec (P a)) → (k : K) →
                                     Σ (k ∈ FinMap=>Keys m) (λ x → P (k , ((getValue k _ (key=>lst {m} k x)))))
@@ -200,19 +201,20 @@ equivKey {m} P? k = mk⇔ (λ { h → ∈→filterᵖ {m} P? k h}) (λ h → fil
   where open SetoidReasoning (⇔-setoid 0ℓ)
 
 projKeys← : a ∈ᵖᵐ m → proj₁ a ∈ FinMap=>Keys m
-projKeys← {a} {fs-nojunk els} x = x
+projKeys← {a} {fs-nojunk els} h = mk∈ h
 
 projKeys→ : proj₁ a ∈ FinMap=>Keys m → a ∈ᵖᵐ m
-projKeys→ {a} {fs-nojunk els} x = x
+projKeys→ {a} {fs-nojunk els} (mk∈ h) = h
 
 projKeys : a ∈ᵖᵐ m ⇔ proj₁ a ∈ FinMap=>Keys m
 projKeys {a} {m} = mk⇔ (projKeys← {a} {m}) (projKeys→ {a} {m})
 
 ∈×⇒∈∩ᵏ : ∀{k} → (k ∈ FinMap=>Keys m × k ∈ FinMap=>Keys  m') → k ∈ FinMap=>Keys (m ∩ᵖ m')
-∈×⇒∈∩ᵏ m@{fs-nojunk els₁} m'@{fs-nojunk els} {k} h = ∈×⇒∈∩ᵖ {m} {m'} {k} h
+∈×⇒∈∩ᵏ {m@(fs-nojunk els₁)} {m'@(fs-nojunk els)} {k} (mk∈ h , mk∈ h₁) = mk∈ (∈×⇒∈∩ᵖ {m} {m'} {k} (h , h₁))
 
 ∈∩⇒∈×ᵏ : ∀{k} → k ∈ FinMap=>Keys (m ∩ᵖ m') → (k ∈ FinMap=>Keys m × k ∈ FinMap=>Keys  m')
-∈∩⇒∈×ᵏ m@{fs-nojunk els} m'@{fs-nojunk els₁} {k} h = ∈∩⇒∈×ᵖ {m} {m'} h
+∈∩⇒∈×ᵏ {m@(fs-nojunk els)} {m'@(fs-nojunk els₁)} {k} (mk∈ h) with ∈∩⇒∈×ᵖ {m} {m'} h
+... | fst , snd = (mk∈ fst) , (mk∈ snd)
 
 ∈×⇔∈∩ᵏ : ∀{k} → (k ∈ FinMap=>Keys m × k ∈ FinMap=>Keys  m') ⇔ k ∈ FinMap=>Keys (m ∩ᵖ m')
 ∈×⇔∈∩ᵏ {m} {m'} {k} = mk⇔ (∈×⇒∈∩ᵏ {m = m} {m'}) (∈∩⇒∈×ᵏ {m} {m'})
@@ -225,7 +227,7 @@ projKeys {a} {m} = mk⇔ (projKeys← {a} {m}) (projKeys→ {a} {m})
   where open SetoidReasoning (⇔-setoid 0ℓ)
 
 ∈×⇒∈∩ᵏ' : (a : (K × V)) → ((proj₁ a) ∈ FinMap=>Keys m × (proj₁ a) ∈ FinMap=>Keys  m') → (proj₁ a) ∈ FinMap=>Keys (m ∩ᵖ m')
-∈×⇒∈∩ᵏ' m@{fs-nojunk els₁} m'@{fs-nojunk els} a h = ∈×⇒∈∩ᵖ {m} {m'} {proj₁ a} h
+∈×⇒∈∩ᵏ' {m@(fs-nojunk els₁)} {m'@(fs-nojunk els)} a (mk∈ h , mk∈ h₁) = mk∈ (∈×⇒∈∩ᵖ {m} {m'} {proj₁ a} (h , h₁))
 
 projEmpty← : FinMap=>Keys m ≡ᵉ ∅ᵉ -> m ≡ᵐ ∅
 projEmpty← {fs-nojunk []} x a = mk⇔ (λ x₁ → x₁) λ x₁ → x₁
@@ -235,7 +237,7 @@ projEmpty← m@{fs-nojunk (x₁ ∷ els) {prf}} x a =
              (≡ᵉ-∈ {K} {_}
                    {FinMap=>Keys m}
                    {fs-nojunk []}
-                     x (here refl)))
+                     x (mk∈ (here refl))))
 
 projEmpty→ : m ≡ᵐ ∅ → FinMap=>Keys m ≡ᵉ ∅ᵉ
 projEmpty→ {fs-nojunk []} x a = mk⇔ (λ x₁ → x₁) λ x₁ → x₁

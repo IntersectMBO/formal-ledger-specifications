@@ -43,7 +43,7 @@ listOf-∪-++ {s} {s'} h =
   remDup-NoDup (++⁺ (listOf-NoDupInd {s = s}) (listOf-NoDupInd {s = s'}) (tabulate (λ x∈s → ¬Any⇒All¬ (listOf s') (helper x∈s))))
   where
     helper : ∀ {x} → x ∈l listOf s → ¬ x ∈l listOf s'
-    helper {x} x∈s x∈s' = ∈-∅ {x = x} (≡ᵉ-∈ {s = s ∩ s'} {s' = ∅} h (∈×⇒∈∩ {s = s} {s' = s'} (x∈s , x∈s')))
+    helper {x} x∈s x∈s' = ∈-∅ {x = x} (≡ᵉ-∈ {s = s ∩ s'} {s' = ∅} h (∈×⇒∈∩ {s = s} {s' = s'} (mk∈ x∈s , mk∈ x∈s')))
 
 module _ {q : Level} {{M : CommutativeMonoid 0ℓ q}} {f : A → CommutativeMonoid.Carrier M} where
   open CommutativeMonoid M

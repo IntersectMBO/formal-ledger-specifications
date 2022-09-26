@@ -61,7 +61,7 @@ FinSet-Lattice = record { isPartialOrder = ⊆-PartialOrder ; supremum = ∪-sup
 -- FinSet-DistributiveLattice = {!!}
 
 ∅-minimum : Minimum (_⊆_ {A}) ∅
-∅-minimum _ ()
+∅-minimum _ = λ { (mk∈ ())}
 
 ∅-least : s ⊆ ∅ → s ≡ᵉ ∅
 ∅-least {s} s⊆∅ = ⊆-antisym {i = s} {j = ∅} s⊆∅ (∅-minimum s)
