@@ -20,6 +20,7 @@ open import Utilities.ListProperties hiding (_∈_)
 open import Utilities.Logic
 open import Data.Empty
 open import Function.Properties.Bijection using (⤖⇒⇔)
+open import ListEquality
 
 open import FinSet.Properties.Membership
 

@@ -146,8 +146,9 @@ if_thenᵐ_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V}
 if b thenᵐ c = if b then c else fs-nojunk []
 
 infix 5 _∈ᵐ_
-_∈ᵐ_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → (K × V) → FiniteMap K V eq eq' → Set
-a ∈ᵐ m = a ∈ (listOfᵐ m)
+data _∈ᵐ_ {K V : Set}{eq : DecEq K}{eq' : DecEq V}
+           (a : (K × V)) (m : FiniteMap K V eq eq') : Set where
+  mk∈ᵐ : a ∈ (listOfᵐ m) → a ∈ᵐ m
 
 _∈ᵖᵐ_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → (K × V) → FiniteMap K V eq eq' → Set
 a ∈ᵖᵐ m = proj₁ a ∈ map proj₁ (listOfᵐ m)
@@ -161,8 +162,16 @@ eqDec eq eq' = ≡-dec (_≟_ {{eq}}) (_≟_ {{eq'}})
 eq2inᵖ : {K V : Set} → (eq : DecEq K) → (eq' : DecEq V) → DecIn (K × V)
 eq2inᵖ eq eq' = eq2in (≡-dec (_≟_ {{eq}}) (_≟_ {{eq'}}))
 
+_∈ᵐ?'_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V}
+                        → (a : (K × V)) (m : FiniteMap K V eq eq')
+                        → ¬ a ∈ (listOfᵐ m)
+                        → ¬ a ∈ᵐ m
+_∈ᵐ?'_  a m h (mk∈ᵐ h₁) = ⊥-elim (h h₁)
+
 _∈ᵐ?_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → (a : (K × V)) → (m : FiniteMap K V eq eq') → Dec (a ∈ᵐ m)
-_∈ᵐ?_ {k} {v} {eq} {eq'} a s = eq2inᵖ eq eq' a (listOfᵐ s)
+_∈ᵐ?_ {k} {v} {eq} {eq'} a m with  eq2inᵖ eq eq' a (listOfᵐ m)
+... | no ¬p = no (_∈ᵐ?'_ a m ¬p)
+... | yes p = yes (mk∈ᵐ p)
 
 _∈ᵐᵖ?_ : {K V : Set}{eq : DecEq K}{eq' : DecEq V} → (a : (K × V)) → (m : FiniteMap K V eq eq') → Dec ((proj₁ a) ∈ map proj₁ (listOfᵐ m))
 _∈ᵐᵖ?_ {k} {v} {eq} {eq'} a s = (eq2in (_≟_ {{eq}})) (proj₁ a) (map proj₁ (listOfᵐ s))

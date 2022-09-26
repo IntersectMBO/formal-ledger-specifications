@@ -16,11 +16,16 @@ open import Data.Empty
 open import Function.Properties.Bijection hiding (refl)
 open import Data.Product hiding (map)
 open import Relation.Nullary
+open import FinSet using (_∈_; _≡ᵉ_; mk∈) renaming (∅ to ∅ᵉ)
+open import FinSet.Properties.Membership using (∈-∅)
+open import FinSet.Properties.Equality
+open import ListEquality
 
 module FinMap.Properties.Equality {K : Set}{V : Set}{{eq : DecEq K}}{{eq' : DecEq V}} where
 
 open import FiniteMap
 open import FinMap
+open import FinMap.Properties.Membership
 
 private
   variable
@@ -28,23 +33,26 @@ private
     l : List (K × V)
     m m' m''  : FinMap K V {{eq}} {{eq'}}
 
-noDupEls : NoDupInd (listOfᵐ m)
-noDupEls {fs-nojunk els {nd}} = NoDupInd-corr2 _ (NoDupProj=>NoDup (eq2inᵖ eq eq') _ (∥-∥-prop3 _ nd))
+noDupElsᵐ : NoDupInd (listOfᵐ m)
+noDupElsᵐ {fs-nojunk els {nd}} = NoDupInd-corr2 _ (NoDupProj=>NoDup (eq2inᵖ eq eq') _ (∥-∥-prop3 _ nd))
 
 ≡ᵐ-∈ : m ≡ᵐ m' → a ∈ᵐ m → a ∈ᵐ m'
 ≡ᵐ-∈ {m} {m'} {a} h = Equivalence.to (h a)
 
-∈-∅ : ∀ {x} → ¬ x ∈ᵐ (∅ {K} {V})
-∈-∅ ()
+≡ᵐ-∈' : m ≡ᵐ m' → a ∈ᵐ m' → a ∈ᵐ m
+≡ᵐ-∈' {m} {m'} {a} h = Equivalence.from (h a)
+
+∈ᵐ-∅ : ∀ {x} → ¬ x ∈ᵐ (∅ {K} {V})
+∈ᵐ-∅ (mk∈ᵐ ())
 
 ≡ᵐ-∅ : m ≡ᵐ ∅ → m ≡ ∅
 ≡ᵐ-∅ m@{fs-nojunk []} _ = refl
-≡ᵐ-∅ m@{fs-nojunk (x ∷ _)} h = ⊥-elim (∈-∅ (≡ᵐ-∈ {m} {∅} {x} h (here refl)))
+≡ᵐ-∅ m@{fs-nojunk (x ∷ _)} h = ⊥-elim (∈ᵐ-∅ (≡ᵐ-∈ {m} {∅} {x} h (mk∈ᵐ (here refl))))
 
 ≡ᵖᵐ-∈ : m ≡ᵐ m' → a ∈ᵖᵐ m → a ∈ᵖᵐ m'
 ≡ᵖᵐ-∈ {m} {m'} {a} h x with getPair _ _ x
-... | ans with ≡ᵐ-∈ {m} {m'} h ans
-... | an = ∃-after-map _ _ proj₁ an
+... | ans with ≡ᵐ-∈ {m} {m'} h (mk∈ᵐ ans)
+... | mk∈ᵐ h₁ = ∃-after-map _ _ proj₁ h₁
 
 ≡ᵐ-isEquivalence : IsEquivalence (_≡ᵐ_ {K} {V} {eq} {eq'})
 ≡ᵐ-isEquivalence with ⇔-isEquivalence
@@ -59,17 +67,42 @@ noDupEls {fs-nojunk els {nd}} = NoDupInd-corr2 _ (NoDupProj=>NoDup (eq2inᵖ eq 
   ; _≈_ = _≡ᵐ_
   ; isEquivalence = ≡ᵐ-isEquivalence }
 
+
 ≡ᵐ⇒∼set : m ≡ᵐ m' → (listOfᵐ m) ∼[ set ] (listOfᵐ m')
-≡ᵐ⇒∼set m≡ᵐm' {a} = toRelated (m≡ᵐm' a)
+≡ᵐ⇒∼set m≡ᵐm' {a} = toRelated (mk⇔
+                              (λ x → ∈ᵐ⇒∈l (≡ᵐ-∈ m≡ᵐm' (mk∈ᵐ x)))
+                              λ x → ∈ᵐ⇒∈l (≡ᵐ-∈' m≡ᵐm' (mk∈ᵐ x)))
 
 ≡ᵐ⇒∼bag : m ≡ᵐ m' → (listOfᵐ m) ∼[ bag ] (listOfᵐ m')
-≡ᵐ⇒∼bag {m} {m'} h = unique∧set⇒bag (noDupEls {m}) (noDupEls {m'}) (≡ᵐ⇒∼set {m} {m'} h)
+≡ᵐ⇒∼bag {m} {m'} h = unique∧set⇒bag (noDupElsᵐ {m}) (noDupElsᵐ {m'}) (≡ᵐ⇒∼set {m} {m'} h)
+
+∼bag⇒≡ᵐ' : (listOfᵐ m) ∼[ bag ] (listOfᵐ m') → (listOfᵐ m) ≡ˡ (listOfᵐ m')
+∼bag⇒≡ᵐ' h a = ⤖⇒⇔ (fromRelated h)
 
 ∼bag⇒≡ᵐ : (listOfᵐ m) ∼[ bag ] (listOfᵐ m') → m ≡ᵐ m'
-∼bag⇒≡ᵐ h a = ⤖⇒⇔ (fromRelated (h {a}))
+∼bag⇒≡ᵐ {m} {m'} h a = ≡ˡ⇒≡ᵐ (∼bag⇒≡ᵐ' {m} {m'} h) a
 
 ↭⇒≡ᵐ : (listOfᵐ m) ↭ (listOfᵐ m') → m ≡ᵐ m'
 ↭⇒≡ᵐ {m} {m'} h = ∼bag⇒≡ᵐ {m} {m'} (↭⇒∼bag h)
 
 ≡ᵐ⇒↭ : m ≡ᵐ m' → (listOfᵐ m) ↭ (listOfᵐ m')
 ≡ᵐ⇒↭ {m} {m'} m≡ᵐm' = ∼bag⇒↭ (≡ᵐ⇒∼bag {m} {m'} m≡ᵐm')
+
+projEmpty← : FinMap=>Keys m ≡ᵉ ∅ᵉ -> m ≡ᵐ ∅
+projEmpty← {fs-nojunk []} x a = mk⇔ (λ x₁ → x₁) λ x₁ → x₁
+projEmpty← m@{fs-nojunk (x₁ ∷ els) {prf}} x a =
+  ⊥-elim (FinSet.Properties.Membership.∈-∅
+         {K} {proj₁ x₁}
+             (≡ᵉ-∈ {K} {_}
+                   {FinMap=>Keys m}
+                   {fs-nojunk []}
+                     x (mk∈ (here refl))))
+
+projEmpty→ : m ≡ᵐ ∅ → FinMap=>Keys m ≡ᵉ ∅ᵉ
+projEmpty→ {fs-nojunk []} x a = mk⇔ (λ x₁ → x₁) λ x₁ → x₁
+projEmpty→ m@{fs-nojunk (e ∷ els)} x a =
+  ⊥-elim (∈ᵐ-∅ {e}
+    (≡ᵐ-∈ {m} {∅} x (mk∈ᵐ (here refl))))
+
+projEmpty : FinMap=>Keys m ≡ᵉ ∅ᵉ ⇔ m ≡ᵐ ∅
+projEmpty {m} = mk⇔ (projEmpty← {m}) (projEmpty→ {m})

@@ -58,12 +58,12 @@ module _ {A : Set} {{h : DecEq A}} where
   data _∈_ (a : A) (s : FinSet A) : Set where
        mk∈ : a ∈l elements s → a ∈ s
 
-  decHelp : (a : A) (s : FinSet A) → ¬ a ∈l (elements s) → ¬ a ∈ s
-  decHelp a s x (mk∈ x₁) = ⊥-elim (x x₁)
+  _∈?'_  : (a : A) (s : FinSet A) → ¬ a ∈l (elements s) → ¬ a ∈ s
+  _∈?'_  a s x (mk∈ x₁) = ⊥-elim (x x₁)
 
   _∈?_ : Decidable _∈_
   a ∈? s@(fs-nojunk els) with Utilities.ListProperties.eq2in _≟_ a (elements s)
-  ... | no ¬p = no (decHelp a s ¬p)
+  ... | no ¬p = no (_∈?'_ a s ¬p)
   ... | yes p = yes (mk∈ p)
 
   _∈ᵇ_ : A → FinSet A → Bool
@@ -72,19 +72,6 @@ module _ {A : Set} {{h : DecEq A}} where
   infix 4 _≡ᵉ_
   _≡ᵉ_ : FinSet A → FinSet A → Set
   s ≡ᵉ s' = ∀ a → a ∈ s ⇔ a ∈ s'
-
-  --this probably shouldn't be in finset
-  -----------------------------------------------------------------
-  _≡ˡ_ : List A → List A → Set
-  xs ≡ˡ ys = ∀ a → a ∈l xs ⇔ a ∈l ys
-
-  ≡ˡ-∈ : ∀ {x} {xs ys : List A} → xs ≡ˡ ys → x ∈l xs → x ∈l ys
-  ≡ˡ-∈ {x} h = Equivalence.to (h x)
-
-  ≡ˡ-∈' : ∀ {x} {xs ys : List A} → xs ≡ˡ ys → x ∈l ys → x ∈l xs
-  ≡ˡ-∈' {x} h = Equivalence.from (h x)
-
-  ----------------------------------------------------------------
 
   _⊆_ : FinSet A → FinSet A → Set
   s ⊆ s' = ∀ {a} → a ∈ s → a ∈ s'
