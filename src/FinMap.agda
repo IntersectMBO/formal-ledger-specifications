@@ -60,7 +60,7 @@ module _ {K V : Set} {{_ : DecEq K}} {{_ : DecEq V}} where
   fromList' xs = fromListᵐ xs
 
   _⊆ᵐ_ : FinMap K V → FinMap K V → Set
-  m ⊆ᵐ m' = (listOfᵐ m) SubSetOf (listOfᵐ m')
+  m ⊆ᵐ m' = ∀ {a} → a ∈ᵐ m → a ∈ᵐ m'
 
   All : ∀ {ℓ} → Pred (K × V) ℓ → FinMap K V → Set ℓ
   All P s = FinSet.All P (FinSet.fromList $ listOfᵐ s)

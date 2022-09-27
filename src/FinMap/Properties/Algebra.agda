@@ -50,7 +50,7 @@ private
 ⊆-antisym i⊆j j⊆i a = mk⇔ (i⊆j {a}) (j⊆i {a})
 
 ∅-minimum : Minimum (_⊆ᵐ_ {K} {V}) ∅
-∅-minimum _ ()
+∅-minimum _ (mk∈ᵐ ())
 
 ∅-least : m ⊆ᵐ ∅ → m ≡ᵐ ∅
 ∅-least {m} m⊆∅ = ⊆-antisym {i = m} {j = ∅} m⊆∅ (∅-minimum m)
@@ -95,7 +95,8 @@ subHelp' : m ⊆ᵐ m' → a ∈ᵐ m → a ∈ᵐ m'
 subHelp' {fs-nojunk els} {fs-nojunk els₁} h a = h a
 
 subHelp : m ⊆ᵐ m' → FinMap=>Keys m ⊆ FinMap=>Keys m'
-subHelp {m@(fs-nojunk els)} {m'@(fs-nojunk els₁)} x (mk∈ x₁) = mk∈ (∃-after-map _ _ proj₁ (subHelp' {m} {m'} x (getPair _ _ x₁)))
+subHelp {m@(fs-nojunk els)} {m'@(fs-nojunk els₁)} x (mk∈ x₁) = mk∈
+  (∃-after-map _ _ proj₁ (∈ᵐ⇒∈l (subHelp' {m} {m'} x (mk∈ᵐ (getPair _ _ x₁)))) )
 
 ∩ᵖᵏ-cong-⊆ : (_∩ᵖᵏ_ {K} {V}) Preserves₂ _⊆ᵐ_ ⟶ _⊆ᵐ_ ⟶ _⊆_
 ∩ᵖᵏ-cong-⊆ {x} {y} {u} {v} x⊆y u⊆v a∈x∩u with ∈∩⇒∈×ᵏ {m = x} {m' = u} a∈x∩u

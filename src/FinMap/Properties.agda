@@ -58,7 +58,7 @@ symHelpʳ (fst , snd) x₁ = fst x₁
 symHelpˡ : (¬ proj₁ a ∈ s) → (¬ proj₁ a ∈ s) × (a ∉ᵖᵐ (s ◃ m))
 symHelpˡ {a} {s} {m} x with (eq2in ((_≟_ {{eq}}))) (proj₁ a) (map proj₁ (listOfᵐ (s ◃ m)))
 ... | no ¬p = x , ¬p
-... | yes p with filter→∈ {m = m} (λ x → proj₁ x ∈? s) _ (getPair (proj₁ a) (listOfᵐ (s ◃ m)) p)
+... | yes p with filter→∈ {m = m} (λ x → proj₁ x ∈? s) _ (mk∈ᵐ (getPair (proj₁ a) (listOfᵐ (s ◃ m)) p))
 ... | fst , snd = contradiction snd x
 
 symHelp : Function._⇔_ (¬ proj₁ a ∈ s) ((¬ proj₁ a ∈ s) × (a ∉ᵖᵐ (s ◃ m)))
@@ -102,7 +102,7 @@ dom-res-ex-∩ keys m = ∈-×↔∩≡ {m = keys ⋪ m} {m' = keys ◃ m} {m'' 
     (a ∈ᵐ m × ⊥)
       ↔⟨ ×-zeroʳ 0ℓ (a ∈ᵐ m) ⟩
     ⊥
-      ∼⟨ mk⇔ ⊥-elim (λ ()) ⟩
+      ∼⟨ mk⇔ ⊥-elim (λ { (mk∈ᵐ ())}) ⟩
     (a ∈ᵐ ∅) ∎
     where open EquationalReasoning 
 
