@@ -3,7 +3,7 @@
 ## How to run the ledger in ghci
 
 ```
-nix-shell --command "cabal repl --build-depends 'agda-ledger-executable-spec'"
+nix-shell --command "cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'"
 λ> :m HSLedgerTest
 λ> main
 ```
