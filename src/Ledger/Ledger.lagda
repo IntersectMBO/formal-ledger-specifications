@@ -67,12 +67,12 @@ open import Ledger.Utxo txs
 open import Ledger.Utxow txs
 \end{code}
 
-\include{ledger/crypto}
-\include{ledger/address}
-\include{ledger/script}
-\include{ledger/pparams}
-\include{ledger/transaction}
-\include{ledger/utxo}
-\include{ledger/utxow}
+\include{Ledger/Crypto}
+\include{Ledger/Address}
+\include{Ledger/Script}
+\include{Ledger/PParams}
+\include{Ledger/Transaction}
+\include{Ledger/Utxo}
+\include{Ledger/Utxow}
 
 \end{document}
