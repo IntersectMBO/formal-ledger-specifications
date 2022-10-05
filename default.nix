@@ -113,32 +113,43 @@ rec {
 
   ledgerExecutableSpecMidnight = haskellPackages.callCabal2nix "Agda-ledger-executable-spec-midnight" "${ledgerHsSrcMidnight}" { };
 
-  ledgerDocs = stdenv.mkDerivation {
-    pname = "simple-utxo-ledger-docs";
-    version = "0.1";
-    src = "${agdaLedger}";
-    meta = { };
-    buildInputs = [
-      agdaWithPkgs
-      (texlive.combine {
-        inherit (texlive)
-          scheme-small
-          xits
-          collection-latexextra
-          collection-latexrecommended
-          collection-mathscience
-          bclogo
-          latexmk;
-      })
-    ];
-    buildPhase = ''
-      ls Ledger/*.lagda | xargs -n 1 agda --latex
-      cd latex && latexmk -xelatex Ledger/Ledger.tex && cd ..
-    '';
-    installPhase = ''
-      mkdir -p $out
-      agda --html --html-dir $out/html Ledger/Ledger.lagda
-      cp latex/Ledger.pdf $out
-    '';
+  docs = { dir, doc }:
+    stdenv.mkDerivation {
+      pname = "${dir}-docs";
+      version = "0.1";
+      src = "${agdaLedger}";
+      meta = { };
+      buildInputs = [
+        agdaWithPkgs
+        (texlive.combine {
+          inherit (texlive)
+            scheme-small
+            xits
+            collection-latexextra
+            collection-latexrecommended
+            collection-mathscience
+            bclogo
+            latexmk;
+        })
+      ];
+      buildPhase = ''
+        ls ${dir}/*.lagda | xargs -n 1 agda --latex
+        cd latex && latexmk -xelatex ${dir}/${doc}.tex && cd ..
+      '';
+      installPhase = ''
+        mkdir -p $out
+        agda --html --html-dir $out/html ${dir}/${doc}.lagda
+        cp latex/${doc}.pdf $out
+      '';
+    };
+
+  ledgerDocs = docs {
+    dir = "Ledger";
+    doc = "Ledger";
+  };
+
+  ledgerDocsMidnight = docs {
+    dir = "MidnightExample";
+    doc = "PDF";
   };
 }

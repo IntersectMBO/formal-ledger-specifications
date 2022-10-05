@@ -39,9 +39,9 @@ niv update nixpkgs -r <revision>
 
 or
 ```
-niv update nixpkgs -r <version>
+niv update nixpkgs -v <version>
 ```
 
 For example:
 `niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c`
-`niv update nixpkgs -r 21.11.337905.902d91def1e`
+`niv update nixpkgs -v 21.11.337905.902d91def1e`
