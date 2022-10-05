@@ -1,4 +1,12 @@
-{ pkgs ? import <nixpkgs> { } }: with pkgs;
+{ sources ? import ./nix/sources.nix
+, pkgs ? import sources.nixpkgs {
+    overlays = [ ];
+    config = { };
+  }
+}:
+
+with pkgs;
+
 mkShell {
   nativeBuildInputs = [
     cabal-install

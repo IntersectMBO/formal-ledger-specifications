@@ -29,3 +29,19 @@ To install it locally and use that install with emacs, you can do the following:
 You can then use `M-x my/toggle-ledger-agda` or `C-c C-x C-t` to switch between your regular install of Agda and the locally installed version.
 
 There are other options as well, but this should work with all kinds of custom emacs setups or distributions (assuming there isn't already some other stuff going on with your Agda setup).
+
+## Updating nixpkgs
+
+To update the default nixpkgs used to build the derivations, run
+```
+niv update nixpkgs -r <revision>
+```
+
+or
+```
+niv update nixpkgs -r <version>
+```
+
+For example:
+`niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c`
+`niv update nixpkgs -r 21.11.337905.902d91def1e`
