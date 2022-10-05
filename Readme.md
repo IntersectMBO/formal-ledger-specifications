@@ -1,5 +1,15 @@
 # Agda ledger
 
+## Building the derivations
+
+Run `nix-build` with the desired derivation, for example:
+
+```
+nix-build -A ledger.executableSpec
+nix-build -A ledger.docs
+nix-build -A midnight.executableSpec
+nix-build -A midnight.docs
+```
 ## How to run the ledger in ghci
 
 ```
