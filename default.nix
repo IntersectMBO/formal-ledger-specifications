@@ -69,6 +69,7 @@ let
 in
 rec {
 
+  agda = agdaWithPkgs;
   agdaLedger = customAgda.agdaPackages.mkDerivation {
     pname = "Agda-ledger";
     version = "0.1";
