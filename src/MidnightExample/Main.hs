@@ -1,4 +1,4 @@
-module MidnightExample.Main (module MidnightExample.Main, module MAlonzo.Code.MidnightExample.HSLedger) where
+module Main (module Main, module MAlonzo.Code.MidnightExample.HSLedger) where
 
 import MAlonzo.Code.MidnightExample.HSLedger
 import MAlonzo.Code.MidnightExample.Types

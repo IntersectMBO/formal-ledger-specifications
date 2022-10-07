@@ -1,0 +1,39 @@
+cabal-version:      2.4
+name:               agda-ledger-executable-spec-midnight
+version:            0.1.0.0
+synopsis:
+
+-- A longer description of the package.
+-- description:
+homepage:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+license:            NONE
+author:             Andre Knispel
+maintainer:         andre.knispel@iohk.io
+
+-- A copyright notice.
+-- copyright:
+-- category:
+extra-source-files: CHANGELOG.md
+
+library
+    exposed-modules:
+        Main
+
+    other-extensions:
+        CPP PolyKinds EmptyDataDecls EmptyCase ExistentialQuantification
+        ScopedTypeVariables NoMonomorphismRestriction RankNTypes
+        PatternSynonyms
+
+    build-depends:
+        base,
+        text,
+        ieee
+
+    ghc-options: -Wno-overlapping-patterns
+    hs-source-dirs:   .
+    default-language: Haskell2010
+-- This will be generated automatically when building with nix
+    other-modules:

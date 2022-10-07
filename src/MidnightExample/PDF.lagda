@@ -64,6 +64,6 @@ module MidnightExample.PDF where
 open import MidnightExample.Ledger
 \end{code}
 
-\include{midnightexample/ledger}
+\include{MidnightExample/Ledger}
 
 \end{document}
