@@ -3,7 +3,7 @@
 
   inputs = {
     # IMPORTANT: report any change to nixpkgs channel in nix/default.nix:
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/902d91def1efbea804f5158e5999cb113cedf04b";
     flake-utils.url = "github:numtide/flake-utils";
     agda = {
       url = "github:input-output-hk/agda/d5ea03b96328f38741efef4535197076ff0e05d5";
