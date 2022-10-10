@@ -35,9 +35,12 @@
     , ...
   }@inputs: (flake-utils.lib.eachDefaultSystem (system: let
     agdaOverlay = agda.overlay;
-    pkgs = import nixpkgs { inherit system agdaOverlay; };
-    customAgdaPkgs = import nixpkgs_customagda { };
-    agdaStdlib = pkgs.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
+    pkgs = import nixpkgs { inherit system; };
+    customAgdaPkgs = import nixpkgs_customagda {
+      inherit system pkgs;
+      overlays = [agda.overlay];
+    };
+    agdaStdlib = customAgdaPkgs.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
       version = "1.7";
       src = inputs.agdaStdlib;
     });
