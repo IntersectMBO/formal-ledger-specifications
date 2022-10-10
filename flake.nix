@@ -37,18 +37,28 @@
     agdaOverlay = agda.overlay;
     pkgs = import nixpkgs { inherit system; };
     customAgdaPkgs = import nixpkgs_customagda {
-      inherit system pkgs;
+      inherit system;
       overlays = [agda.overlay];
     };
     agdaStdlib = customAgdaPkgs.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
       version = "1.7";
-      src = inputs.agdaStdlib;
+      src = customAgdaPkgs.fetchFromGitHub {
+        repo = "agda-stdlib";
+        owner = "input-output-hk";
+        rev = "f8fdb925c74e8d3b0c88e2a5520bc11e606d34c6";
+        sha256 = "BoK/IZsOn8gnUolI8DOZa6IOoXF8E95s2e8vZyUpMZs=";
+      };
     });
 
     agdaFinset = customAgdaPkgs.agdaPackages.mkDerivation {
       pname = "agda-finset";
       version = "0.9";
-      src = inputs.agdaFinset;
+      src = customAgdaPkgs.fetchFromGitHub {
+        repo = "agda-finset";
+        owner = "input-output-hk";
+        rev = "939b2578f4f8cb4f02928b30edfc787cabeba171";
+        sha256 = "2bUMmUikzNRaEFVkH+Y8ypnNF65d/LNKei6fSJ982AY=";
+      };
       meta = { };
       libraryFile = "Finset.agda-lib";
       everythingFile = "src/README.agda";
@@ -58,7 +68,12 @@
     agdaStdlibMeta = customAgdaPkgs.agdaPackages.mkDerivation {
       pname = "agda-stdlib-meta";
       version = "0.1";
-      src = inputs.agdaStdlibMeta;
+      src = customAgdaPkgs.fetchFromGitHub {
+        repo = "stdlib-meta";
+        owner = "omelkonian";
+        rev = "dadb6a468b9cdc47442b48a47b848f8e8fbffda7";
+        sha256 = "YkUtM5Gos6xd7ZsZPqcuVy6DZqNA7n/exPfQngir+y0=";
+      };
       patches = [ ./stdlib-meta-update-imports.patch ];
       meta = { };
       libraryFile = "stdlib-meta.agda-lib";
@@ -133,7 +148,7 @@
     };
     packages = rec {
       agda = agdaWithPkgs;
-      agdaLedger = pkgs.agdaPackages.mkDerivation {
+      agdaLedger = customAgdaPkgs.agdaPackages.mkDerivation {
         pname = "Agda-ledger";
         version = "0.1";
         src = ./src;
