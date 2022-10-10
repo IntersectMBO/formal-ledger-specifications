@@ -200,10 +200,6 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 -- dom-res-ex-∩ = ?
 
 import Relation.Binary.PropositionalEquality as P
-import FiniteSubset
-open import Utilities.Logic
-open import Utilities.ListProperties hiding (_∈_; _∉_)
-open import Utilities.ListsAddition
 import Data.List
 import Data.Product
 
