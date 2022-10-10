@@ -15,7 +15,13 @@ nix build .#midnight.docs
 ## How to run the ledger in ghci
 
 ```
-nix develop -c "cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'"
+nix develop
+```
+
+Once in the shell, run
+```
+cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'
+
 λ> :m HSLedgerTest
 λ> main
 ```
