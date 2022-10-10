@@ -4,6 +4,7 @@
   inputs = {
     # IMPORTANT: report any change to nixpkgs channel in nix/default.nix:
     nixpkgs.url = "github:NixOS/nixpkgs/902d91def1efbea804f5158e5999cb113cedf04b";
+    nixpkgs_customagda.url = "github:NixOS/nixpkgs/a7ecde854aee5c4c7cd6177f54a99d2c1ff28a31";
     flake-utils.url = "github:numtide/flake-utils";
     agda = {
       url = "github:input-output-hk/agda/d5ea03b96328f38741efef4535197076ff0e05d5";
@@ -25,6 +26,7 @@
   outputs =
     { self
     , nixpkgs
+    , nixpkgs_customagda
     , flake-utils
     , agda
     , agdaStdlib
@@ -34,12 +36,13 @@
   }@inputs: (flake-utils.lib.eachDefaultSystem (system: let
     agdaOverlay = agda.overlay;
     pkgs = import nixpkgs { inherit system agdaOverlay; };
+    customAgdaPkgs = import nixpkgs_customagda { };
     agdaStdlib = pkgs.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
       version = "1.7";
       src = inputs.agdaStdlib;
     });
 
-    agdaFinset = pkgs.agdaPackages.mkDerivation {
+    agdaFinset = customAgdaPkgs.agdaPackages.mkDerivation {
       pname = "agda-finset";
       version = "0.9";
       src = inputs.agdaFinset;
@@ -49,7 +52,7 @@
       buildInputs = [ agdaStdlib ];
     };
 
-    agdaStdlibMeta = pkgs.agdaPackages.mkDerivation {
+    agdaStdlibMeta = customAgdaPkgs.agdaPackages.mkDerivation {
       pname = "agda-stdlib-meta";
       version = "0.1";
       src = inputs.agdaStdlibMeta;
@@ -61,7 +64,7 @@
     };
 
     deps = [ agdaStdlib agdaFinset agdaStdlibMeta ];
-    agdaWithPkgs = pkgs.agda.withPackages { pkgs = deps; ghc = pkgs.ghc; };
+    agdaWithPkgs = customAgdaPkgs.agda.withPackages { pkgs = deps; ghc = pkgs.ghc; };
     # a parameterized attribute set containing derivations for: 1) executable spec 2) docs
     specsDerivations = { dir, agdaLedger, agdaLedgerFile, hsMainFile, doc }:
       let
