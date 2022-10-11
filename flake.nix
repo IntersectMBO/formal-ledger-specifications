@@ -21,6 +21,7 @@
       url = "github:input-output-hk/agda-finset/939b2578f4f8cb4f02928b30edfc787cabeba171";
       flake = false;
     };
+    tullia.url = "github:input-output-hk/tullia";
   };
 
   outputs =
@@ -28,6 +29,7 @@
     , nixpkgs
     , nixpkgs_customagda
     , flake-utils
+    , tullia
     , agda
     , agdaStdlib
     , agdaStdlibMeta
@@ -172,5 +174,13 @@
         doc = "PDF";
       };
     };
-  }));
+  } //
+    tullia.fromSimple system (import ./tullia.nix self)
+  ));
+
+  nixConfig = {
+    extra-substituters = [ "https://cache.iog.io" ];
+    extra-trusted-public-keys = [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+    allow-import-from-derivation = true;
+  };
 }
