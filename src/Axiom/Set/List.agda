@@ -61,9 +61,25 @@ List-Modelᶠ = λ where
 open import Interface.DecEq
 open import Relation.Nullary.Decidable
 import Data.List.Relation.Unary.Any as Any
+open import Relation.Nullary
+import Axiom.Set.Properties
 
-module Dec {A : Type} ⦃ _ : DecEq A ⦄ where
-  open import Relation.Nullary
+private variable A : Type
+
+record Theoryᵈ : Type₁ where
+  field th : Theory
+  open Theory th public
+
+  open Axiom.Set.Properties th
+
+  field ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
+        _∈?_ : ⦃ DecEq A ⦄ → Dec₂ (_∈_ {A = A})
+        all? : {P : A → Type} (P? : Dec₁ P) ⦃ _ : DecEq A ⦄ {X : Set A} → Dec (All P X)
+
+  _∈ᵇ_ : ⦃ DecEq A ⦄ → A → Set A → Bool
+  a ∈ᵇ X = ⌊ a ∈? X ⌋
+
+module Decˡ {A : Type} ⦃ _ : DecEq A ⦄ where
   open Theory List-Model
 
   _∈?_ : Dec₂ (_∈ˡ_ {A = A})
@@ -76,10 +92,12 @@ module Dec {A : Type} ⦃ _ : DecEq A ⦄ where
   ≟-∅ {[]}    = yes refl
   ≟-∅ {x ∷ X} = no (λ ())
 
-  open Theory.Intersection List-Model (_∈? _) public
-  open import Axiom.Set.Properties List-Model
-  import Data.List.Relation.Unary.All as All
-  import Relation.Nullary.Decidable as Dec
+import Data.List.Relation.Unary.All as All
+import Relation.Nullary.Decidable as Dec
 
-  all? : {P : A → Type} (P? : Dec₁ P) ⦃ _ : DecEq A ⦄ {X : Set A} → Dec (All P X)
-  all? P? {X} = Dec.map (mk⇔ All.lookup All.tabulate) (All.all? P? X)
+List-Modelᵈ : Theoryᵈ
+List-Modelᵈ = record
+  { th = List-Model
+  ; ∈-sp = Decˡ._∈? _
+  ; _∈?_ = Decˡ._∈?_
+  ; all? = λ P? {X} → Dec.map (mk⇔ All.lookup All.tabulate) (All.all? P? X) }

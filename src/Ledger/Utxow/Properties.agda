@@ -4,7 +4,7 @@ open import Ledger.Transaction
 
 module Ledger.Utxow.Properties (txs : TransactionStructure) where
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (Dec₁)
 
 open TransactionStructure txs
 open import Ledger.Utxow txs

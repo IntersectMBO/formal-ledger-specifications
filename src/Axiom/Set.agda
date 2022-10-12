@@ -76,6 +76,9 @@ record Theory : Type₁ where
   _Preservesˢ₂_ : (Set A → Set B → Set C) → (∀ {A : Type} → Set A → Type) → Type
   f Preservesˢ₂ P = f Preserves₁₂ P ⟶ P ⟶ P
 
+  disjoint : Set A → Set A → Type
+  disjoint X Y = ∀ {a} → a ∈ X → a ∈ Y → ⊥
+
   finite : Set A → Type
   finite X = ∃[ l ] ∀ {a} → a ∈ X ⇔ a ∈ˡ l
 
@@ -164,6 +167,9 @@ record Theory : Type₁ where
                       (a ∈ Y × a ∈ X) ∼⟨ R.SK-sym ∈-filter ⟩
                       a ∈ X ∩ Y       ∎
       where open R.EquationalReasoning
+
+    disjoint' : Set A → Set A → Type
+    disjoint' X Y = X ∩ Y ≡ᵉ ∅
 
 -- finite set theories
 record Theoryᶠ : Type₁ where

@@ -92,7 +92,7 @@ filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
 filter-⊆ = proj₂ ∘ to ∈-filter
 
 filter-finite : ∀ {P : A → Type}
-               → (sp : specProperty P) → Dec₁ P → finite X → finite (filter sp X)
+              → (sp : specProperty P) → Dec₁ P → finite X → finite (filter sp X)
 filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
   a ∈ filter sp X            ∼⟨ ∈-filter ⟩
   (P a × a ∈ X)              ∼⟨ R.K-refl ×-cong hl ⟩
@@ -126,6 +126,9 @@ filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
   a ∈ˡ l ++ l' ∎
   where open R.EquationalReasoning
 
+∪-sym : X ∪ Y ≡ᵉ Y ∪ X
+∪-sym = ∪-⊆ ∪-⊆ʳ ∪-⊆ˡ , ∪-⊆ ∪-⊆ʳ ∪-⊆ˡ
+
 Set-JoinSemilattice : IsJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_
 Set-JoinSemilattice = record { isPartialOrder = ⊆-PartialOrder ; supremum = ∪-Supremum }
 
@@ -134,6 +137,12 @@ Set-BoundedJoinSemilattice = record { isJoinSemilattice = Set-JoinSemilattice ; 
 
 module Intersectionᵖ (sp-∈ : spec-∈ A) where
   open Intersection sp-∈
+
+  disjoint⇒disjoint' : disjoint X Y → disjoint' X Y
+  disjoint⇒disjoint' h = ∅-least (⊥-elim ∘ uncurry h ∘ from ∈-∩)
+
+  disjoint'⇒disjoint : disjoint' X Y → disjoint X Y
+  disjoint'⇒disjoint h a∈X a∈Y = ∉-∅ (to (to ≡ᵉ⇔≡ᵉ' h _) (to ∈-∩ (a∈X , a∈Y)))
 
   ∩-⊆ˡ : X ∩ Y ⊆ X
   ∩-⊆ˡ = proj₁ ∘ from ∈-∩

@@ -10,6 +10,7 @@ open import Prelude hiding (filter)
 
 open import Axiom.Set.Properties th
 import Data.Product
+import Data.Sum
 open import Data.Product.Properties
 open import Interface.DecEq
 open import Relation.Unary using () renaming (Decidable to Dec₁)
@@ -80,10 +81,13 @@ module Intersectionᵐ (sp-∈ : spec-∈ (A × B)) where
   _∩ᵐ_ : Map A B → Map A B → Map A B
   m ∩ᵐ m' = (proj₁ m ∩ proj₁ m' , ⊆-left-unique ∩-⊆ˡ (proj₂ m))
 
-Disjoint : Set A → Set A → Type
-Disjoint X Y = ∀ {a} → a ∈ X → a ∈ Y → ⊥
+disjoint-dom⇒disjoint : {m m' : Map A B} → disjoint (dom m) (dom m') → disjoint (proj₁ m) (proj₁ m')
+disjoint-dom⇒disjoint disj h h' = disj (to ∈-map (-, refl , h)) (to ∈-map (-, refl , h'))
 
-disj-∪ : (m m' : Map A B) → Disjoint (dom m) (dom m') → Map A B
+disjoint-sym : {X Y : Set A} → disjoint X Y → disjoint Y X
+disjoint-sym disj = flip disj
+
+disj-∪ : (m m' : Map A B) → disjoint (dom m) (dom m') → Map A B
 disj-∪ m m' disj = proj₁ m ∪ proj₁ m' , λ h h' → case from ∈-∪ h , from ∈-∪ h' of λ where
   (inj₁ hm  , inj₁ h'm)  → proj₂ m hm h'm
   (inj₂ hm' , inj₁ h'm)  → ⊥-elim $ disj (to ∈-map (_ , refl , h'm)) (to ∈-map (_ , refl , hm'))
@@ -103,6 +107,14 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
   m ∪ᵐˡ m' = disj-∪ m (filterᵐ (sp-∘ (sp-¬ (sp-∈ {X = dom m})) proj₁) m') λ h h' →
     case from ∈-map h ,′ from ∈-map h' of λ where
       ((_ , refl , hx) , (_ , refl , hy)) → proj₁ (to ∈-filter hy) (to ∈-map (_ , refl , hx))
+
+  disjoint-∪ᵐˡ-∪ : {m m' : Map A B} → (H : disjoint (dom m) (dom m')) → proj₁ (m ∪ᵐˡ m') ≡ᵉ proj₁ (disj-∪ m m' H)
+  disjoint-∪ᵐˡ-∪ disj = from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔
+    (to ∈-∪ ∘ Data.Sum.map₂ (proj₂ ∘ to ∈-filter) ∘ from ∈-∪)
+    (to ∈-∪ ∘ Data.Sum.map₂ (from ∈-filter ∘ (λ h → (flip disj (to ∈-map (_ , refl , h))) , h)) ∘ from ∈-∪)
+
+  disjoint-∪ᵐˡ-∪' : {m m' : Map A B} → disjoint (dom m) (dom m') → proj₁ (m ∪ᵐˡ m') ≡ᵉ proj₁ m ∪ proj₁ m'
+  disjoint-∪ᵐˡ-∪' {m = m} {m'} = disjoint-∪ᵐˡ-∪ {m = m} {m'}
 
 _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
 m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
@@ -139,15 +151,12 @@ module _ ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
   module _ {f : A → Carrier} where
     fold-cong↭ : ∀ {l l' : List A} → l ↭ l' → indexedSumL f l ≈ indexedSumL f l'
     fold-cong↭ refl = begin _ ∎
-    fold-cong↭ (prep x h) = ∙-congˡ (fold-cong↭ h)
+    fold-cong↭ (prep _ h) = ∙-congˡ (fold-cong↭ h)
     fold-cong↭ (swap {xs} {ys} x y h) = begin
-      f x ∙ (f y ∙ indexedSumL f xs) ≈⟨ x∙yz≈y∙xz commutativeSemigroup (f x) (f y) (indexedSumL f xs) ⟩
+      f x ∙ (f y ∙ indexedSumL f xs) ≈⟨ x∙yz≈y∙xz commutativeSemigroup _ _ _ ⟩
       f y ∙ (f x ∙ indexedSumL f xs) ≈⟨ ∙-congˡ (∙-congˡ (fold-cong↭ h)) ⟩
       f y ∙ (f x ∙ indexedSumL f ys) ∎
-    fold-cong↭ (trans {l} {l''} {l'} h h₁) = begin
-      indexedSumL f l   ≈⟨ fold-cong↭ h ⟩
-      indexedSumL f l'' ≈⟨ fold-cong↭ h₁ ⟩
-      indexedSumL f l'  ∎
+    fold-cong↭ (trans h h₁) = ≈-trans (fold-cong↭ h) (fold-cong↭ h₁)
 
   indexedSum : ⦃ _ : DecEq A ⦄ → (A → Carrier) → FinSet A → Carrier
   indexedSum f = FactorUnique.factor _≈_ (indexedSumL' f) fold-cong↭
@@ -191,14 +200,22 @@ module _ ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
     module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Dec₁ (_∈ X)) (sp-∈' : spec-∈ (A × B)) where
       open IndexedSumUnion sp-∈'
       open Intersectionᵐ sp-∈'
+      open Intersection sp-∈
       open Unionᵐ sp-∈
+      open Intersectionᵖ sp-∈'
 
-      -- TODO
-      -- indexedSumᵐ-∪ : ∀ {X Y : Map A B} {Xᶠ : finite (proj₁ X)} {Yᶠ : finite (proj₁ Y)} {f} → proj₁ (X ∩ᵐ Y) ≡ᵉ ∅
-      --   → indexedSumᵐ f (toFinMap (X ∪ᵐˡ Y) (∪-preserves-finite Xᶠ (filterᵐ-finite {m = Y} (sp-∘ (sp-¬ sp-∈) proj₁) (¬? ∘ ∈-A-dec ∘ proj₁) Yᶠ))) ≈ indexedSumᵐ f (toFinMap X Xᶠ) ∙ indexedSumᵐ f (toFinMap Y Yᶠ)
-      -- indexedSumᵐ-∪ {X = X , hX} {Y = Y , hY} {Xᶠ} {Yᶠ} {f = f} disj = ≈-trans
-      --   (indexedSum-cong {A × B} {f} {x = proj₁ ((X , hX) ∪ᵐˡ (Y , hY)) , proj₁ Xᶠ ++ proj₁ (filterᵐ-finite (sp-∘ (sp-¬ sp-∈) proj₁) (¬? ∘ ∈-A-dec ∘ proj₁) Yᶠ) , {!!}} {X ∪ Y , proj₁ Xᶠ ++ proj₁ Yᶠ , {!!}} {!!})
-      --   (indexedSum-∪ {X = X} {Y} {Xᶠ} {Yᶠ} disj)
+      _∪ᵐˡᶠ_ : FinMap A B → FinMap A B → FinMap A B
+      (_ , hX , Xᶠ) ∪ᵐˡᶠ (_ , hY , Yᶠ) = toFinMap ((_ , hX) ∪ᵐˡ (_ , hY))
+        (∪-preserves-finite Xᶠ (filterᵐ-finite {m = _ , hY} (sp-∘ (sp-¬ sp-∈) _) (¬? ∘ ∈-A-dec ∘ _) Yᶠ))
+
+      -- TODO: this is pretty ugly
+      indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f} → disjoint (dom (toMap X)) (dom (toMap Y))
+                    → indexedSumᵐ f (X ∪ᵐˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
+      indexedSumᵐ-∪ {X = X'@(X , hX , Xᶠ)} {Y'@(Y , hY , Yᶠ)} disj = ≈-trans
+        (indexedSum-cong {x = -, proj₂ (proj₂ (X' ∪ᵐˡᶠ Y'))} {_ , ∪-preserves-finite Xᶠ Yᶠ}
+          (from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔ (λ h → to ∈-∪ (Data.Sum.map₂ (proj₂ ∘ to ∈-filter) (from ∈-∪ h))) λ h →
+            to ∈-∪ (Data.Sum.map₂ (λ h' → from ∈-filter (flip disj (to ∈-map (-, Prelude.refl , h')) , h')) (from ∈-∪ h))))
+        (indexedSum-∪ {Xᶠ = Xᶠ} {Yᶠ} (disjoint⇒disjoint' (disjoint-dom⇒disjoint {m = _ , hX} {_ , hY} disj)))
 
     indexedSumᵐ' : (B → Carrier) → FinMap A B → Carrier
     indexedSumᵐ' f m = indexedSumᵐ (f ∘ proj₂) m
@@ -217,6 +234,38 @@ module Restriction (sp-∈ : spec-∈ A) where
 
   _⟪$⟫_ : Map A B → Set A → Set B
   m ⟪$⟫ X = range (m ∣ X)
+
+  res-dom : ∀ {m : Map A B} {X} → dom (m ∣ X) ⊆ X
+  res-dom a∈dom with from ∈-map a∈dom
+  ... | _ , refl , h = proj₁ $ to ∈-filter h
+
+  res-domᵐ : ∀ {m : Map A B} {X} → dom (m ∣ X) ⊆ dom m
+  res-domᵐ a∈dom with from ∈-map a∈dom
+  ... | _ , refl , h = to ∈-map (-, refl , proj₂ (to ∈-filter h))
+
+  cores-dom : ∀ {m : Map A B} {X} {a} → a ∈ dom (m ∣ X ᶜ) → a ∉ X
+  cores-dom a∈dom with from ∈-map a∈dom
+  ... | _ , refl , h = proj₁ $ to ∈-filter h
+
+  cores-domᵐ : ∀ {m : Map A B} {X} → dom (m ∣ X ᶜ) ⊆ dom m
+  cores-domᵐ a∈dom with from ∈-map a∈dom
+  ... | _ , refl , h = to ∈-map (-, refl , proj₂ (to ∈-filter h))
+
+  res-⊆ : ∀ {m : Map A B} {X} → proj₁ (m ∣ X) ⊆ proj₁ m
+  res-⊆ = proj₂ ∘ to ∈-filter
+
+  ex-⊆ : ∀ {m : Map A B} {X} → proj₁ (m ∣ X ᶜ) ⊆ proj₁ m
+  ex-⊆ = proj₂ ∘ to ∈-filter
+
+  open import Relation.Nullary
+
+  res-ex-∪ : ∀ {m : Map A B} {X} → Dec₁ (_∈ X) → proj₁ (m ∣ X) ∪ proj₁ (m ∣ X ᶜ) ≡ᵉ proj₁ m
+  res-ex-∪ {m = m} ∈X? = ∪-⊆ (res-⊆ {m = m}) (ex-⊆ {m = m}) , λ {a} h → case ∈X? (proj₁ a) of λ where
+    (yes p) → to ∈-∪ (inj₁ (from ∈-filter (p , h)))
+    (no ¬p) → to ∈-∪ (inj₂ (from ∈-filter (¬p , h)))
+
+  res-ex-disjoint : ∀ {m : Map A B} {X} → disjoint (dom (m ∣ X)) (dom (m ∣ X ᶜ))
+  res-ex-disjoint {m = m} h h' = cores-dom {m = m} h' (res-dom {m = m} h)
 
 module Corestriction (sp-∈ : spec-∈ B) where
 
