@@ -19,6 +19,7 @@ nix develop
 ```
 
 Once in the shell, run
+
 ```
 cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'
 
