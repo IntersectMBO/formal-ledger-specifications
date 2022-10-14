@@ -2,7 +2,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (All; Any)
 
 open import Data.List.Relation.Unary.All
 open import Data.List.Relation.Unary.Any

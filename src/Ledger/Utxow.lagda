@@ -62,8 +62,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
           witsKeyHashes = map hash (dom (vkSigs txw))
           witsScriptHashes = map hash (scripts txw)
       in
-    Properties.All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
-    → Properties.All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
+    All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
+    → All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
     → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     → scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
     -- TODO: check genesis signatures

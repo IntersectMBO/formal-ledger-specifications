@@ -37,7 +37,8 @@ abstract
   setFromList = id
 
 open import Axiom.Set.Rel th renaming (Map to _↛_) public
-open L.Decˡ renaming (_∈?_ to _∈ˡ?_; _∈ᵇ_ to _∈ˡᵇ_) public
+open L.Decˡ hiding (_∈?_) public
+open import Axiom.Set.Sum th public
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where
   open Restriction {A} ∈-sp public
@@ -51,7 +52,7 @@ module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   open import Algebra using (CommutativeMonoid)
 
   module _ ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
-    open IndexedSumUnionᵐ {A} {B} ∈-sp (_∈? _) ∈-sp public
+    open IndexedSumUnionᵐ {A} {B} ∈-sp (_∈? _) public
 
 module Properties where
   open import Axiom.Set.Properties th public

@@ -5,17 +5,19 @@ open import Axiom.Set
 
 module Axiom.Set.Rel (th : Theory) where
 open Theory th
+open import Axiom.Set.Factor th
+open import Axiom.Set.Properties th
 
 open import Prelude hiding (filter)
 
-open import Axiom.Set.Properties th
+import Data.List
 import Data.Product
 import Data.Sum
+open import Data.List.Ext.Properties
 open import Data.Product.Properties
 open import Interface.DecEq
-open import Relation.Unary using () renaming (Decidable to Dec₁)
 open import Relation.Nullary.Negation using (¬?)
-import Data.List
+open import Relation.Unary using () renaming (Decidable to Dec₁)
 
 open Equivalence
 
@@ -24,6 +26,7 @@ Rel A B = Set (A × B)
 
 private variable A A' B : Type
                  R R' : Rel A B
+                 X Y : Set A
 
 left-unique : Rel A B → Type
 left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
@@ -36,6 +39,8 @@ relatedˡ = map proj₁
 
 Map : Type → Type → Type
 Map A B = Σ (Rel A B) left-unique
+
+private variable m m' : Map A B
 
 ∅ᵐ : Map A B
 ∅ᵐ = ∅ , λ h _ → ⊥-elim (∉-∅ h)
@@ -55,18 +60,6 @@ fromListᵐ l = fromList (deduplicate (λ x y → proj₁ x ≟ proj₁ y) l) , 
   { (inj₁ refl) → refl ; (inj₂ (inj₁ x)) → ⊥-elim (x refl) ; (inj₂ (inj₂ x)) → ⊥-elim (x refl)}
   where open import Data.List.Relation.Unary.Unique.DecSetoid.Properties
         open import Relation.Binary.Construct.On as On
-        open import Data.List.Relation.Unary.AllPairs
-        open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
-        open import Data.List.Relation.Unary.Any
-        import Data.List.Relation.Unary.All as All
-
-        -- TODO: move to stdlib
-        AllPairs⇒≡∨R∨Rᵒᵖ : ∀ {A : Type} {R : A → A → Type} {a b} {l : List A} → AllPairs R l → a ∈ˡ l → b ∈ˡ l → a ≡ b ⊎ R a b ⊎ R b a
-        AllPairs⇒≡∨R∨Rᵒᵖ [] = λ ()
-        AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (here refl) = inj₁ refl
-        AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj₁ (All.lookup x b∈l))
-        AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (All.lookup x a∈l))
-        AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
 
 dom : Map A B → Set A
 dom m = map proj₁ (proj₁ m)
@@ -81,10 +74,10 @@ module Intersectionᵐ (sp-∈ : spec-∈ (A × B)) where
   _∩ᵐ_ : Map A B → Map A B → Map A B
   m ∩ᵐ m' = (proj₁ m ∩ proj₁ m' , ⊆-left-unique ∩-⊆ˡ (proj₂ m))
 
-disjoint-dom⇒disjoint : {m m' : Map A B} → disjoint (dom m) (dom m') → disjoint (proj₁ m) (proj₁ m')
+disjoint-dom⇒disjoint : disjoint (dom m) (dom m') → disjoint (proj₁ m) (proj₁ m')
 disjoint-dom⇒disjoint disj h h' = disj (to ∈-map (-, refl , h)) (to ∈-map (-, refl , h'))
 
-disjoint-sym : {X Y : Set A} → disjoint X Y → disjoint Y X
+disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
 
 disj-∪ : (m m' : Map A B) → disjoint (dom m) (dom m') → Map A B
@@ -97,7 +90,7 @@ disj-∪ m m' disj = proj₁ m ∪ proj₁ m' , λ h h' → case from ∈-∪ h 
 filterᵐ : {P : A × B → Type} → specProperty P → Map A B → Map A B
 filterᵐ sp-P m = filter sp-P (proj₁ m) , ⊆-left-unique filter-⊆ (proj₂ m)
 
-filterᵐ-finite : ∀ {m} {P : A × B → Type}
+filterᵐ-finite : ∀ {P : A × B → Type}
                → (sp : specProperty P) → Dec₁ P → finite (proj₁ m) → finite (proj₁ $ filterᵐ sp m)
 filterᵐ-finite = filter-finite
 
@@ -108,12 +101,12 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
     case from ∈-map h ,′ from ∈-map h' of λ where
       ((_ , refl , hx) , (_ , refl , hy)) → proj₁ (to ∈-filter hy) (to ∈-map (_ , refl , hx))
 
-  disjoint-∪ᵐˡ-∪ : {m m' : Map A B} → (H : disjoint (dom m) (dom m')) → proj₁ (m ∪ᵐˡ m') ≡ᵉ proj₁ (disj-∪ m m' H)
+  disjoint-∪ᵐˡ-∪ : (H : disjoint (dom m) (dom m')) → proj₁ (m ∪ᵐˡ m') ≡ᵉ proj₁ (disj-∪ m m' H)
   disjoint-∪ᵐˡ-∪ disj = from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔
     (to ∈-∪ ∘ Data.Sum.map₂ (proj₂ ∘ to ∈-filter) ∘ from ∈-∪)
     (to ∈-∪ ∘ Data.Sum.map₂ (from ∈-filter ∘ (λ h → (flip disj (to ∈-map (_ , refl , h))) , h)) ∘ from ∈-∪)
 
-  disjoint-∪ᵐˡ-∪' : {m m' : Map A B} → disjoint (dom m) (dom m') → proj₁ (m ∪ᵐˡ m') ≡ᵉ proj₁ m ∪ proj₁ m'
+  disjoint-∪ᵐˡ-∪' : disjoint (dom m) (dom m') → proj₁ (m ∪ᵐˡ m') ≡ᵉ proj₁ m ∪ proj₁ m'
   disjoint-∪ᵐˡ-∪' {m = m} {m'} = disjoint-∪ᵐˡ-∪ {m = m} {m'}
 
 _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
@@ -127,103 +120,6 @@ mapKeys f inj (R , uniq) = map (Data.Product.map₁ f) R , λ h h' → case from
   (((_ , _) , refl , Ha) , ((_ , _) , eqb , Hb)) → uniq Ha $
     subst (_∈ R) (sym $ ×-≡,≡→≡ $ Data.Product.map₁ inj (×-≡,≡←≡ eqb)) Hb
 
-open import Algebra using (CommutativeMonoid)
-open import Data.List.Relation.Unary.Unique.Propositional
-open import Interface.DecEq
-open import Relation.Binary
-open import Data.List.Relation.Binary.Permutation.Propositional
-open import Algebra.Properties.CommutativeSemigroup
-
-module _ ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
-  open CommutativeMonoid M renaming (trans to ≈-trans)
-  import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-  open SetoidReasoning (CommutativeMonoid.setoid M)
-  open import Data.List.Properties using (foldr-++)
-
-  indexedSumL : (A → Carrier) → List A → Carrier
-  indexedSumL f = foldr (λ x → f x ∙_) ε
-
-  syntax indexedSumL  (λ a → x) m = Σˡ[ a ← m ] x
-
-  indexedSumL' : (A → Carrier) → Σ (List A) Unique → Carrier
-  indexedSumL' f = indexedSumL f ∘ proj₁
-
-  module _ {f : A → Carrier} where
-    fold-cong↭ : ∀ {l l' : List A} → l ↭ l' → indexedSumL f l ≈ indexedSumL f l'
-    fold-cong↭ refl = begin _ ∎
-    fold-cong↭ (prep _ h) = ∙-congˡ (fold-cong↭ h)
-    fold-cong↭ (swap {xs} {ys} x y h) = begin
-      f x ∙ (f y ∙ indexedSumL f xs) ≈⟨ x∙yz≈y∙xz commutativeSemigroup _ _ _ ⟩
-      f y ∙ (f x ∙ indexedSumL f xs) ≈⟨ ∙-congˡ (∙-congˡ (fold-cong↭ h)) ⟩
-      f y ∙ (f x ∙ indexedSumL f ys) ∎
-    fold-cong↭ (trans h h₁) = ≈-trans (fold-cong↭ h) (fold-cong↭ h₁)
-
-  indexedSum : ⦃ _ : DecEq A ⦄ → (A → Carrier) → FinSet A → Carrier
-  indexedSum f = FactorUnique.factor _≈_ (indexedSumL' f) fold-cong↭
-
-  private
-    helper : ∀ m (l : List A) f → foldr (λ x → f x ∙_) m l ≈ indexedSumL f l ∙ m
-    helper m [] f = begin m ≈˘⟨ identityˡ m ⟩ ε ∙ m ∎
-    helper m (x ∷ l) f = begin
-      f x ∙ foldr (λ y → f y ∙_) m l ≈⟨ ∙-congˡ (helper m l f) ⟩
-      f x ∙ (indexedSumL f l ∙ m)    ≈˘⟨ assoc _ _ _ ⟩
-      f x ∙ indexedSumL f l ∙ m      ∎
-
-  indexedSumL-++ : {l l' : List A} {f : A → Carrier} → indexedSumL f (l ++ l') ≈ indexedSumL f l ∙ indexedSumL f l'
-  indexedSumL-++ {l = l} {l'} {f} = begin
-    indexedSumL f (l ++ l')                   ≡⟨ foldr-++ (λ x → f x ∙_) ε l l' ⟩
-    foldr (λ x → f x ∙_) (indexedSumL f l') l ≈⟨ helper (indexedSumL f l') l f ⟩
-    indexedSumL f l ∙ indexedSumL f l'        ∎
-
-  module IndexedSumUnion (sp-∈ : spec-∈ A) ⦃ _ : DecEq A ⦄ where
-    open Intersection sp-∈
-    open import Data.List.Relation.Unary.Unique.Propositional.Properties
-
-    indexedSum-∪ : ∀ {X Y : Set A} {Xᶠ : finite X} {Yᶠ : finite Y} {f}
-      → X ∩ Y ≡ᵉ ∅
-      → indexedSum f (X ∪ Y , ∪-preserves-finite Xᶠ Yᶠ) ≈ indexedSum f (X , Xᶠ) ∙ indexedSum f (Y , Yᶠ)
-    indexedSum-∪ {X = X} {Y} {Xᶠ} {Yᶠ} {f} disj =
-      FactorUnique.factor-∪' _≈_ (indexedSumL' f) fold-cong↭ sp-∈ {λ x y z → z ≈ x ∙ y} {X , Xᶠ} {Y , Yᶠ} disj
-        λ {l} {l'} disj' → ≈-trans (fold-cong↭ (dedup-++-↭ disj')) (indexedSumL-++ {l = deduplicate _≟_ l})
-
-  indexedSum-cong : ⦃ _ : DecEq A ⦄ {f : A → Carrier} → indexedSum f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
-  indexedSum-cong {f = f} {x} {y} = FactorUnique.factor-cong _≈_ (indexedSumL' f) fold-cong↭ {x = x} {y}
-
-  module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
-
-    indexedSumᵐ : (A × B → Carrier) → FinMap A B → Carrier
-    indexedSumᵐ f (m , _ , h) = indexedSum f (m , h)
-
-    indexedSumᵐ-cong : {f : A × B → Carrier} → indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
-    indexedSumᵐ-cong {x = x , _ , h} {y , _ , h'} = indexedSum-cong {x = x , h} {y , h'}
-
-    module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Dec₁ (_∈ X)) (sp-∈' : spec-∈ (A × B)) where
-      open IndexedSumUnion sp-∈'
-      open Intersectionᵐ sp-∈'
-      open Intersection sp-∈
-      open Unionᵐ sp-∈
-      open Intersectionᵖ sp-∈'
-
-      _∪ᵐˡᶠ_ : FinMap A B → FinMap A B → FinMap A B
-      (_ , hX , Xᶠ) ∪ᵐˡᶠ (_ , hY , Yᶠ) = toFinMap ((_ , hX) ∪ᵐˡ (_ , hY))
-        (∪-preserves-finite Xᶠ (filterᵐ-finite {m = _ , hY} (sp-∘ (sp-¬ sp-∈) _) (¬? ∘ ∈-A-dec ∘ _) Yᶠ))
-
-      -- TODO: this is pretty ugly
-      indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f} → disjoint (dom (toMap X)) (dom (toMap Y))
-                    → indexedSumᵐ f (X ∪ᵐˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
-      indexedSumᵐ-∪ {X = X'@(X , hX , Xᶠ)} {Y'@(Y , hY , Yᶠ)} disj = ≈-trans
-        (indexedSum-cong {x = -, proj₂ (proj₂ (X' ∪ᵐˡᶠ Y'))} {_ , ∪-preserves-finite Xᶠ Yᶠ}
-          (from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔ (λ h → to ∈-∪ (Data.Sum.map₂ (proj₂ ∘ to ∈-filter) (from ∈-∪ h))) λ h →
-            to ∈-∪ (Data.Sum.map₂ (λ h' → from ∈-filter (flip disj (to ∈-map (-, Prelude.refl , h')) , h')) (from ∈-∪ h))))
-        (indexedSum-∪ {Xᶠ = Xᶠ} {Yᶠ} (disjoint⇒disjoint' (disjoint-dom⇒disjoint {m = _ , hX} {_ , hY} disj)))
-
-    indexedSumᵐ' : (B → Carrier) → FinMap A B → Carrier
-    indexedSumᵐ' f m = indexedSumᵐ (f ∘ proj₂) m
-
-    syntax indexedSumᵐ  (λ a → x) m = Σᵐ[ a ← m ] x
-    syntax indexedSumᵐ' (λ a → x) m = Σᵐ'[ a ← m ] x
-
-
 module Restriction (sp-∈ : spec-∈ A) where
 
   _∣_ : Map A B → Set A → Map A B
@@ -235,36 +131,36 @@ module Restriction (sp-∈ : spec-∈ A) where
   _⟪$⟫_ : Map A B → Set A → Set B
   m ⟪$⟫ X = range (m ∣ X)
 
-  res-dom : ∀ {m : Map A B} {X} → dom (m ∣ X) ⊆ X
+  res-dom : dom (m ∣ X) ⊆ X
   res-dom a∈dom with from ∈-map a∈dom
   ... | _ , refl , h = proj₁ $ to ∈-filter h
 
-  res-domᵐ : ∀ {m : Map A B} {X} → dom (m ∣ X) ⊆ dom m
+  res-domᵐ : dom (m ∣ X) ⊆ dom m
   res-domᵐ a∈dom with from ∈-map a∈dom
   ... | _ , refl , h = to ∈-map (-, refl , proj₂ (to ∈-filter h))
 
-  cores-dom : ∀ {m : Map A B} {X} {a} → a ∈ dom (m ∣ X ᶜ) → a ∉ X
+  cores-dom : ∀ {a} → a ∈ dom (m ∣ X ᶜ) → a ∉ X
   cores-dom a∈dom with from ∈-map a∈dom
   ... | _ , refl , h = proj₁ $ to ∈-filter h
 
-  cores-domᵐ : ∀ {m : Map A B} {X} → dom (m ∣ X ᶜ) ⊆ dom m
+  cores-domᵐ : dom (m ∣ X ᶜ) ⊆ dom m
   cores-domᵐ a∈dom with from ∈-map a∈dom
   ... | _ , refl , h = to ∈-map (-, refl , proj₂ (to ∈-filter h))
 
-  res-⊆ : ∀ {m : Map A B} {X} → proj₁ (m ∣ X) ⊆ proj₁ m
+  res-⊆ : proj₁ (m ∣ X) ⊆ proj₁ m
   res-⊆ = proj₂ ∘ to ∈-filter
 
-  ex-⊆ : ∀ {m : Map A B} {X} → proj₁ (m ∣ X ᶜ) ⊆ proj₁ m
+  ex-⊆ : proj₁ (m ∣ X ᶜ) ⊆ proj₁ m
   ex-⊆ = proj₂ ∘ to ∈-filter
 
   open import Relation.Nullary
 
-  res-ex-∪ : ∀ {m : Map A B} {X} → Dec₁ (_∈ X) → proj₁ (m ∣ X) ∪ proj₁ (m ∣ X ᶜ) ≡ᵉ proj₁ m
+  res-ex-∪ : Dec₁ (_∈ X) → proj₁ (m ∣ X) ∪ proj₁ (m ∣ X ᶜ) ≡ᵉ proj₁ m
   res-ex-∪ {m = m} ∈X? = ∪-⊆ (res-⊆ {m = m}) (ex-⊆ {m = m}) , λ {a} h → case ∈X? (proj₁ a) of λ where
     (yes p) → to ∈-∪ (inj₁ (from ∈-filter (p , h)))
     (no ¬p) → to ∈-∪ (inj₂ (from ∈-filter (¬p , h)))
 
-  res-ex-disjoint : ∀ {m : Map A B} {X} → disjoint (dom (m ∣ X)) (dom (m ∣ X ᶜ))
+  res-ex-disjoint : disjoint (dom (m ∣ X)) (dom (m ∣ X ᶜ))
   res-ex-disjoint {m = m} h h' = cores-dom {m = m} h' (res-dom {m = m} h)
 
 module Corestriction (sp-∈ : spec-∈ B) where

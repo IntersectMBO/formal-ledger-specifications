@@ -5,14 +5,13 @@ module Axiom.Set where
 
 open import Prelude hiding (filter)
 
-import Data.Sum
 import Function.Related.Propositional as R
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.Product.Algebra using (×-comm)
-open import Function.Related
-open import Relation.Binary
+open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary
+open import Relation.Nullary.Decidable using (⌊_⌋)
 open import Relation.Nullary.Negation
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
@@ -171,6 +170,12 @@ record Theory : Type₁ where
     disjoint' : Set A → Set A → Type
     disjoint' X Y = X ∩ Y ≡ᵉ ∅
 
+  All : (A → Type) → Set A → Type
+  All P X = ∀ {a} → a ∈ X → P a
+
+  Any : (A → Type) → Set A → Type
+  Any P X = ∃[ a ] a ∈ X × P a
+
 -- finite set theories
 record Theoryᶠ : Type₁ where
   field theory : Theory
@@ -184,3 +189,17 @@ record Theoryⁱ : Type₁ where
   open Theory theory public
 
   field infinity : ∃[ Y ] ((n : ℕ) → n ∈ Y)
+
+open import Interface.DecEq
+
+-- theories with decidable properties
+record Theoryᵈ : Type₁ where
+  field th : Theory
+  open Theory th public
+
+  field ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
+        _∈?_ : ⦃ DecEq A ⦄ → Dec₂ (_∈_ {A = A})
+        all? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) {X : Set A} → Dec (All P X)
+
+  _∈ᵇ_ : ⦃ DecEq A ⦄ → A → Set A → Bool
+  a ∈ᵇ X = ⌊ a ∈? X ⌋

@@ -27,7 +27,7 @@ module _ where
 private variable A K V : Set
 
 instance
-  FSall?' : {P : A → Set} ⦃ P? : Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec (Properties.All P s)
+  FSall?' : {P : A → Set} ⦃ P? : Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec (All P s)
   FSall?' ⦃ P? = record { P? = P? } ⦄ {s} = all? P?
 
   -- all?' : ⦃ _ : DecEq K ⦄ ⦃ _ : DecEq V ⦄ → {P : K × V → Set} → ⦃ P? : Dec₁ P ⦄ → {m : K ↛ V} → Dec (∀ᵐ P m)
@@ -56,8 +56,8 @@ Computational-Property s tx = let
   txw = wits tx
   witsKeyHashes = map hash (dom (vkSigs txw))
   witsScriptHashes = map hash (scripts txw)
-  in Properties.All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
-     × Properties.All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
+  in All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
+     × All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
      × witsVKeyNeeded utxo txb ⊆ witsKeyHashes
      × scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
      × txADhash txb ≡ M.map hash (txAD tx)

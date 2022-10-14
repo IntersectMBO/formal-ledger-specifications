@@ -19,15 +19,6 @@ open import Relation.Binary
 
 open import Interface.Decidable.Instance
 
--- open import Data.FinMap.Core
--- open import Data.FinMap.Properties
--- open import Data.FinMap.Properties.Equality hiding (∈-∅)
--- open import Data.FinMap.Properties.Membership
--- open import Data.FinSet
--- open import Data.FinSet.Properties.Algebra
--- open import Data.FinSet.Properties.Equality
--- open import Data.FinSet.Properties.Membership
-
 open import Tactic.Helpers
 open import Tactic.MonoidSolver
 open import Tactic.EquationalReasoning
@@ -119,7 +110,7 @@ record UTxOState : Set where
 \emph{UTxO transitions}
 
 \begin{code}[hide]
-variable
+private variable
   tx : TxBody
   utxo utxo' utxo1 utxo2 : UTxO
   fee fee' fees fees' : Coin
@@ -247,7 +238,7 @@ pov {tx} {utxo} {_} {fee} h' (UTXO-inductive _ _ bal-eq _) =
         ≡˘⟨ balance-cong {utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)} {utxo' = utxo}
           (≡ᵉ-trans
             (disjoint-∪ᵐˡ-∪' {m = utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (disjoint-sym (res-ex-disjoint {m = utxo} {X = txins tx})))
-            (≡ᵉ-trans Properties.∪-sym (res-ex-∪ {m = utxo} {X = txins tx} (_∈? txins tx)))) ⟩
+            (≡ᵉ-trans Properties.∪-sym (res-ex-∪ {X = txins tx} {m = utxo} (_∈? txins tx)))) ⟩
       balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx))
         ≡⟨ balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip (res-ex-disjoint {m = utxo})) ⟩
       balance (utxo ∣ txins tx ᶜ) + balance (utxo ∣ txins tx)

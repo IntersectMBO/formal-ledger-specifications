@@ -9,21 +9,23 @@ open import Prelude
 open import Axiom.Set
 
 import Data.List
+import Data.List.Relation.Unary.All as All
+import Data.List.Relation.Unary.Any as Any
 import Function.Inverse as I
 import Function.Properties.Inverse as I
 import Function.Related.Propositional as R
+import Relation.Nullary.Decidable as Dec
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Membership.Propositional.Properties
-open import Data.Product using (map₂)
-open import Data.Product.Algebra using (×-comm)
+open import Data.Product
+open import Data.Product.Algebra
 open import Data.Product.Function.Dependent.Propositional using () renaming (cong to ∃-cong)
 open import Function.Equality using (_⟶_; _⟨$⟩_)
 open import Function.Related hiding (⌊_⌋)
+open import Interface.DecEq
 open import Relation.Binary using () renaming (Decidable to Dec₂)
-open import Relation.Unary using () renaming (Decidable to Dec₁)
-
--- _×-cong'_ : ∀ {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A × C) R.∼[ k ] (B × D)
--- h ×-cong' h' = fromRelated (toRelated h ×-cong toRelated h')
+open import Relation.Nullary
+open import Relation.Nullary.Decidable
 
 ∃-cong' : ∀ {k a₁ a₂ b₁ b₂}
            {A₁ : Type a₁} {A₂ : Type a₂}
@@ -58,42 +60,15 @@ List-Modelᶠ = λ where
   .finiteness → λ X → X , mk⇔ id id
     where open Theoryᶠ
 
-open import Interface.DecEq
-open import Relation.Nullary.Decidable
-import Data.List.Relation.Unary.Any as Any
-open import Relation.Nullary
-import Axiom.Set.Properties
-
-private variable A : Type
-
-record Theoryᵈ : Type₁ where
-  field th : Theory
-  open Theory th public
-
-  open Axiom.Set.Properties th
-
-  field ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
-        _∈?_ : ⦃ DecEq A ⦄ → Dec₂ (_∈_ {A = A})
-        all? : {P : A → Type} (P? : Dec₁ P) ⦃ _ : DecEq A ⦄ {X : Set A} → Dec (All P X)
-
-  _∈ᵇ_ : ⦃ DecEq A ⦄ → A → Set A → Bool
-  a ∈ᵇ X = ⌊ a ∈? X ⌋
-
 module Decˡ {A : Type} ⦃ _ : DecEq A ⦄ where
   open Theory List-Model
 
   _∈?_ : Dec₂ (_∈ˡ_ {A = A})
   _∈?_ a = Any.any? (a ≟_)
 
-  _∈ᵇ_ : A → List A → Bool
-  a ∈ᵇ l = ⌊ a ∈? l ⌋
-
   ≟-∅ : {X : Set A} → Dec (X ≡ ∅)
   ≟-∅ {[]}    = yes refl
   ≟-∅ {x ∷ X} = no (λ ())
-
-import Data.List.Relation.Unary.All as All
-import Relation.Nullary.Decidable as Dec
 
 List-Modelᵈ : Theoryᵈ
 List-Modelᵈ = record
