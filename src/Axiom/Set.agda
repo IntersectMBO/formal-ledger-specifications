@@ -50,7 +50,7 @@ record Theory : Type₁ where
   X ⊆ Y = ∀ {a} → a ∈ X → a ∈ Y
 
   -- we might want to either have all properties or decidable properties allowed for specification
-  field specification : (X : Set A) → specProperty P → ∃[ Y ] ∀ {a} → a ∈ Y ⇔ (P a × a ∈ X)
+  field specification : (X : Set A) → specProperty P → ∃[ Y ] ∀ {a} → (P a × a ∈ X) ⇔ a ∈ Y
         unions        : (X : Set (Set A)) → ∃[ Y ] ∀ {a} → (∃[ T ] (T ∈ X × a ∈ T)) ⇔ a ∈ Y
         replacement   : (f : A → B) → (X : Set A) → ∃[ Y ] ∀ {b} → (∃[ a ] b ≡ f a × a ∈ X) ⇔ b ∈ Y
         listing       : (l : List A) → ∃[ X ] ∀ {a} → a ∈ˡ l ⇔ a ∈ X -- equivalent to pairing + empty set
@@ -103,7 +103,7 @@ record Theory : Type₁ where
   -- P, you can construct a set containing exactly the elements satisfying P
   strictify : specProperty P → (∃[ Y ] ∀ {a} → P a → a ∈ Y) → ∃[ Y ] ∀ {a} → P a ⇔ a ∈ Y
   strictify sp p with specification (proj₁ p) sp
-  ... | (Y , p') = Y , (mk⇔ (λ a∈l → from p' (a∈l , proj₂ p a∈l)) (proj₁ ∘ to p'))
+  ... | (Y , p') = Y , (mk⇔ (λ a∈l → to p' (a∈l , proj₂ p a∈l)) (proj₁ ∘ from p'))
 
   map : (A → B) → Set A → Set B
   map = proj₁ ∘₂ replacement
@@ -118,7 +118,7 @@ record Theory : Type₁ where
   filter : {P : A → Type} → specProperty P → Set A → Set A
   filter = proj₁ ∘₂ flip specification
 
-  ∈-filter : ∀ {sp-P : specProperty P} {a} → a ∈ filter sp-P X ⇔ (P a × a ∈ X)
+  ∈-filter : ∀ {sp-P : specProperty P} {a} → (P a × a ∈ X) ⇔ a ∈ filter sp-P X
   ∈-filter = proj₂ $ specification _ _
 
   fromList : List A → Set A
@@ -163,7 +163,7 @@ record Theory : Type₁ where
 
     ∈-∩ : ∀ {a} → (a ∈ X × a ∈ Y) ⇔ a ∈ X ∩ Y
     ∈-∩ {X} {Y} {a} = (a ∈ X × a ∈ Y) ↔⟨ ×-comm _ _ ⟩
-                      (a ∈ Y × a ∈ X) ∼⟨ R.SK-sym ∈-filter ⟩
+                      (a ∈ Y × a ∈ X) ∼⟨ ∈-filter ⟩
                       a ∈ X ∩ Y       ∎
       where open R.EquationalReasoning
 

@@ -26,6 +26,42 @@ open Equivalence
 private variable A B C D : Type
                  X X' Y Y' Z : Set A
 
+∈-map⁺'' : ∀ {A B : Type} {f : A → B} {X} {a} → a ∈ X → f a ∈ map f X
+∈-map⁺'' h = to ∈-map (-, refl , h)
+
+∈-filter⁻' : ∀ {A : Type} {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} → a ∈ filter sp-P X → (P a × a ∈ X)
+∈-filter⁻' = from ∈-filter
+
+∈-∪⁻ : ∀ {A : Type} {X Y : Set A} {a} → a ∈ X ∪ Y → a ∈ X ⊎ a ∈ Y
+∈-∪⁻ = from ∈-∪
+
+∈-map⁻' : ∀ {A B : Type} {f : A → B} {X} {b} → b ∈ map f X → (∃[ a ] b ≡ f a × a ∈ X)
+∈-map⁻' = from ∈-map
+
+∈-fromList⁻ : ∀ {A : Type} {l : List A} {a} → a ∈ fromList l → a ∈ˡ l
+∈-fromList⁻ = from ∈-fromList
+
+∈-filter⁺' : ∀ {A : Type} {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} → (P a × a ∈ X) → a ∈ filter sp-P X
+∈-filter⁺' = to ∈-filter
+
+∈-∪⁺ : ∀ {A : Type} {X Y : Set A} {a} → a ∈ X ⊎ a ∈ Y → a ∈ X ∪ Y
+∈-∪⁺ = to ∈-∪
+
+∈-map⁺' : ∀ {A B : Type} {f : A → B} {X} {b} → (∃[ a ] b ≡ f a × a ∈ X) → b ∈ map f X
+∈-map⁺' = to ∈-map
+
+∈-fromList⁺ : ∀ {A : Type} {l : List A} {a} → a ∈ˡ l → a ∈ fromList l
+∈-fromList⁺ = to ∈-fromList
+
+open import Tactic.AnyOf
+open import Tactic.Defaults
+
+-- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
+private macro
+  ∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
+  P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+
 -- FIXME: proving this has some weird issues when making a implicit in
 -- in the definiton of _≡ᵉ'_
 ≡ᵉ⇔≡ᵉ' : X ≡ᵉ Y ⇔ X ≡ᵉ' Y
@@ -65,7 +101,7 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
   ; antisym    = _,_ }
 
 ∉-∅ : ∀ {a : A} → a ∉ ∅
-∉-∅ h = case from ∈-fromList h of λ ()
+∉-∅ h = case ∈⇔P h of λ ()
 
 ∅-minimum : Minimum (_⊆_ {A}) ∅
 ∅-minimum = λ _ → ⊥-elim ∘ ∉-∅
@@ -73,32 +109,35 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 ∅-least : X ⊆ ∅ → X ≡ᵉ ∅
 ∅-least X⊆∅ = (X⊆∅ , ∅-minimum _)
 
+∅-weakly-finite : weakly-finite {A = A} ∅
+∅-weakly-finite = [] , ⊥-elim ∘ ∉-∅
+
 filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
-filter-⊆ = proj₂ ∘ to ∈-filter
+filter-⊆ = proj₂ ∘′ ∈⇔P
 
 filter-finite : ∀ {P : A → Type}
               → (sp : specProperty P) → Dec₁ P → finite X → finite (filter sp X)
 filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
-  a ∈ filter sp X            ∼⟨ ∈-filter ⟩
+  a ∈ filter sp X            ∼⟨ R.SK-sym ∈-filter ⟩
   (P a × a ∈ X)              ∼⟨ R.K-refl ×-cong hl ⟩
   (P a × a ∈ˡ l)             ∼⟨ mk⇔ (uncurry $ flip $ ∈-filter⁺ P?) (Data.Product.swap ∘ ∈-filter⁻ P?) ⟩
   a ∈ˡ Data.List.filter P? l ∎
   where open R.EquationalReasoning
 
 ∪-⊆ˡ : X ⊆ X ∪ Y
-∪-⊆ˡ = to ∈-∪ ∘ inj₁
+∪-⊆ˡ = ∈⇔P ∘′ inj₁
 
 ∪-⊆ʳ : Y ⊆ X ∪ Y
-∪-⊆ʳ = to ∈-∪ ∘ inj₂
+∪-⊆ʳ = ∈⇔P ∘′ inj₂
 
 ∪-⊆ : X ⊆ Z → Y ⊆ Z → X ∪ Y ⊆ Z
-∪-⊆ X⊆Z Y⊆Z = λ a∈X∪Y → [ X⊆Z , Y⊆Z ]′ (from ∈-∪ a∈X∪Y)
+∪-⊆ X⊆Z Y⊆Z = λ a∈X∪Y → [ X⊆Z , Y⊆Z ]′ (∈⇔P a∈X∪Y)
 
 ∪-Supremum : Supremum (_⊆_ {A}) _∪_
 ∪-Supremum _ _ = ∪-⊆ˡ , ∪-⊆ʳ , λ _ → ∪-⊆
 
 ∪-cong-⊆ : (_∪_ {A}) Preserves₂ _⊆_ ⟶ _⊆_ ⟶ _⊆_
-∪-cong-⊆ X⊆X' Y⊆Y' a∈X∪Y = to ∈-∪ (Data.Sum.map X⊆X' Y⊆Y' (from ∈-∪ a∈X∪Y))
+∪-cong-⊆ X⊆X' Y⊆Y' = ∈⇔P ∘′ (Data.Sum.map X⊆X' Y⊆Y') ∘′ ∈⇔P
 
 ∪-cong : (_∪_ {A}) Preserves₂ _≡ᵉ_ ⟶ _≡ᵉ_ ⟶ _≡ᵉ_
 ∪-cong = cong-⊆⇒cong₂ ∪-cong-⊆
@@ -119,6 +158,9 @@ Set-JoinSemilattice = record { isPartialOrder = ⊆-PartialOrder ; supremum = �
 
 Set-BoundedJoinSemilattice : IsBoundedJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_ ∅
 Set-BoundedJoinSemilattice = record { isJoinSemilattice = Set-JoinSemilattice ; minimum = ∅-minimum }
+
+disjoint-sym : disjoint X Y → disjoint Y X
+disjoint-sym disj = flip disj
 
 module Intersectionᵖ (sp-∈ : spec-∈ A) where
   open Intersection sp-∈

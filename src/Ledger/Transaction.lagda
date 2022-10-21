@@ -111,5 +111,5 @@ This function must produce a unique id for each unique transaction body.
 
 \begin{code}
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom (utxo |^' to-sp (isVKeyAddr? ∘ proj₁))
+  txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
 \end{code}

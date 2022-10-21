@@ -41,8 +41,8 @@ List-Model = λ where
   ._∈_           → _∈ˡ_
   .sp            → Dec-SpecProperty
   .specification → λ X P? → Prelude.filter P? X , mk⇔
-    (λ a∈f → Data.Product.swap (∈-filter⁻ P? a∈f))
     (λ where (Pa , a∈X) → ∈-filter⁺ P? a∈X Pa)
+    (λ a∈f → Data.Product.swap (∈-filter⁻ P? a∈f))
   .unions        → λ X → concat X , mk⇔
     (λ where (T , T∈X , a∈T) → ∈-concat⁺′ a∈T T∈X)
     (λ a∈cX → case ∈-concat⁻′ _ a∈cX of λ where (T , a∈T , T∈X) → (T , T∈X , a∈T))

@@ -25,11 +25,11 @@ open Tx
 \begin{code}
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
 witsVKeyNeeded utxo txb =
-  mapPartial ((λ { (inj₁ kh) → just kh ; _ → nothing }) ∘ payCred ∘ proj₁) (utxo ⟪$⟫ txins txb)
+  mapPartial ((λ { (inj₁ kh) → just kh ; _ → nothing }) ∘ payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
 
 scriptsNeeded : UTxO → TxBody → ℙ ScriptHash
 scriptsNeeded utxo txb =
-  mapPartial ((λ { (inj₂ sh) → just sh ; _ → nothing }) ∘ payCred ∘ proj₁) (utxo ⟪$⟫ txins txb)
+  mapPartial ((λ { (inj₂ sh) → just sh ; _ → nothing }) ∘ payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
 
 scriptsP1 : TxWitnesses → ℙ P1Script
 scriptsP1 txw = mapPartial (λ { (inj₁ s) → just s ; _ → nothing }) (scripts txw)
@@ -59,7 +59,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     → let utxo = UTxOState.utxo s
           txb = body tx
           txw = wits tx
-          witsKeyHashes = map hash (dom (vkSigs txw))
+          witsKeyHashes = map hash (dom (vkSigs txw ˢ))
           witsScriptHashes = map hash (scripts txw)
       in
     All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)

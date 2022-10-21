@@ -54,7 +54,7 @@ Computational-Property s tx = let
   utxo = UTxOState.utxo s
   txb = body tx
   txw = wits tx
-  witsKeyHashes = map hash (dom (vkSigs txw))
+  witsKeyHashes = map hash (dom (vkSigs txw ˢ))
   witsScriptHashes = map hash (scripts txw)
   in All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
      × All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)

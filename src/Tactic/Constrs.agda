@@ -48,11 +48,12 @@ tryConstrsWith' (suc depth) tac =
     (logAndError1 "No constructors were able to solve the goal!")
 
 module _ ⦃ _ : DebugOptions ⦄ where
+  tryConstrsᵗ : ℕ → Tactic
+  tryConstrsᵗ n = initTac $ tryConstrsWith' n (error1 "Leaf reached!")
+
   macro
     tryConstrsWith = λ n tac → initTac $ tryConstrsWith' n tac
-
-    tryConstrs : ℕ → Tactic
-    tryConstrs n = initTac $ tryConstrsWith' n (error1 "Leaf reached!")
+    tryConstrs = tryConstrsᵗ
 
 private
   module Test where

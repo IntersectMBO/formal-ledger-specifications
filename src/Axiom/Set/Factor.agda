@@ -27,6 +27,13 @@ open Equivalence
 
 private variable A B : Type
 
+_ᶠ : (X : Set A) → ⦃ finite X ⦄ → FinSet A
+_ᶠ X ⦃ Xᶠ ⦄ = X , Xᶠ
+
+instance
+  ∪-preserves-finite' : {X Y : Set A} → ⦃ finite X ⦄ → ⦃ finite Y ⦄ → finite (X ∪ Y)
+  ∪-preserves-finite' ⦃ Xᶠ ⦄ ⦃ Yᶠ ⦄ = ∪-preserves-finite Xᶠ Yᶠ
+
 module Factor (_≈_ : B → B → Type) (f : List A → B) (f-cong : ∀ {l l'} → l ∼[ set ] l' → f l ≈ f l') where
 
   factor : FinSet A → B
@@ -38,9 +45,9 @@ module Factor (_≈_ : B → B → Type) (f : List A → B) (f-cong : ∀ {l l'}
     a ∈  Y  ∼⟨ hY ⟩          a ∈ˡ Yˡ ∎
     where open R.EquationalReasoning
 
-  factor-∪ : ∀ {R : B → B → B → Type} {X Y : FinSet A}
+  factor-∪ : ∀ {R : B → B → B → Type} {X Y : Set A} ⦃ Xᶠ : finite X ⦄ ⦃ Yᶠ : finite Y ⦄
            → (∀ {l l'} → R (f l) (f l') (f (l ++ l')))
-           → R (factor X) (factor Y) (factor (proj₁ X ∪ proj₁ Y , ∪-preserves-finite (proj₂ X) (proj₂ Y)))
+           → R (factor (X ᶠ)) (factor (Y ᶠ)) (factor ((X ∪ Y) ᶠ))
   factor-∪ hR = hR
 
 module FactorUnique ⦃ _ : DecEq A ⦄ (_≈_ : B → B → Type) (f : (Σ (List A) Unique) → B)
@@ -63,8 +70,8 @@ module FactorUnique ⦃ _ : DecEq A ⦄ (_≈_ : B → B → Type) (f : (Σ (Lis
 
   open Factor _≈_ ext ext-cong public
 
-  factor-∪' : ∀ {R : B → B → B → Type} {X Y : FinSet A}
-            → disjoint (proj₁ X) (proj₁ Y)
+  factor-∪' : ∀ {R : B → B → B → Type} {X Y : Set A} ⦃ Xᶠ : finite X ⦄ ⦃ Yᶠ : finite Y ⦄
+            → disjoint X Y
             → (∀ {l l'} → Disjoint l l' → R (ext l) (ext l') (ext (l ++ l')))
-            → R (factor X) (factor Y) (factor (proj₁ X ∪ proj₁ Y , ∪-preserves-finite (proj₂ X) (proj₂ Y)))
-  factor-∪' {X = _ , _ , Xᶠ} {_ , _ , Yᶠ} disj hR = hR λ where (a∈X , a∈Y) → ⊥-elim $ disj (from Xᶠ a∈X) (from Yᶠ a∈Y)
+            → R (factor (X ᶠ)) (factor (Y ᶠ)) (factor ((X ∪ Y) ᶠ))
+  factor-∪' ⦃ _ , Xᶠ ⦄ ⦃ _ , Yᶠ ⦄ disj hR = hR λ where (a∈X , a∈Y) → ⊥-elim $ disj (from Xᶠ a∈X) (from Yᶠ a∈Y)

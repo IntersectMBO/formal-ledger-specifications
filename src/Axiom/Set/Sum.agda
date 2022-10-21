@@ -11,6 +11,7 @@ open Theory th
 open import Axiom.Set.Factor th
 open import Axiom.Set.Properties th
 open import Axiom.Set.Rel th
+open import Axiom.Set.Map th
 
 import Data.Sum
 open import Algebra.Properties.CommutativeSemigroup
@@ -18,11 +19,20 @@ open import Data.List.Ext.Properties
 open import Data.List.Relation.Binary.Permutation.Propositional
 open import Data.List.Relation.Unary.Unique.Propositional
 open import Interface.DecEq
-open import Relation.Binary
+open import Relation.Binary hiding (Rel)
 open import Relation.Nullary.Negation using (¬?)
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
 open Equivalence
+
+open import Tactic.AnyOf
+open import Tactic.Defaults
+
+-- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
+private macro
+  ∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
+  P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
 private variable A B : Type
                  X Y : Set A
@@ -74,9 +84,9 @@ module _ ⦃ _ : DecEq A ⦄ {f : A → Carrier} where
   indexedSum-cong : indexedSum f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSum-cong {x} {y} = factor-cong {x = x} {y}
 
-  indexedSum-∪ : {Xᶠ : finite X} {Yᶠ : finite Y} → disjoint X Y
-    → indexedSum f (X ∪ Y , ∪-preserves-finite Xᶠ Yᶠ) ≈ indexedSum f (X , Xᶠ) ∙ indexedSum f (Y , Yᶠ)
-  indexedSum-∪ {X = X} {Y} {Xᶠ} {Yᶠ} disj = factor-∪' {λ x y z → z ≈ x ∙ y} {X , Xᶠ} {Y , Yᶠ} disj
+  indexedSum-∪ : ⦃ Xᶠ : finite X ⦄ ⦃ Yᶠ : finite Y ⦄ → disjoint X Y
+    → indexedSum f ((X ∪ Y) ᶠ) ≈ indexedSum f (X ᶠ) ∙ indexedSum f (Y ᶠ)
+  indexedSum-∪ disj = factor-∪' {λ x y z → z ≈ x ∙ y} disj
       λ {l} disj' → ≈-trans (fold-cong↭ (dedup-++-↭ disj')) (indexedSumL-++ {l = deduplicate _≟_ l})
 
 
@@ -91,17 +101,19 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Dec₁ (_∈ X)) where
     open Unionᵐ sp-∈
 
-    _∪ᵐˡᶠ_ : FinMap A B → FinMap A B → FinMap A B
-    (_ , hX , Xᶠ) ∪ᵐˡᶠ (_ , hY , Yᶠ) = toFinMap ((_ , hX) ∪ᵐˡ (_ , hY))
-      (∪-preserves-finite Xᶠ (filterᵐ-finite {m = _ , hY} (sp-∘ (sp-¬ sp-∈) _) (¬? ∘ ∈-A-dec ∘ _) Yᶠ))
+    ∪ᵐˡ-finite : {R R' : Rel A B} → finite R → finite R' → finite (R ∪ᵐˡ' R')
+    ∪ᵐˡ-finite Rᶠ R'ᶠ = ∪-preserves-finite Rᶠ (filter-finite (sp-∘ (sp-¬ sp-∈) _) (¬? ∘ ∈-A-dec ∘ _) R'ᶠ)
 
-    -- TODO: this is pretty ugly
-    indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f} → disjoint (dom (toMap X)) (dom (toMap Y))
+    _∪ᵐˡᶠ_ : FinMap A B → FinMap A B → FinMap A B
+    (_ , hX , Xᶠ) ∪ᵐˡᶠ (_ , hY , Yᶠ) = toFinMap ((_ , hX) ∪ᵐˡ (_ , hY)) (∪ᵐˡ-finite Xᶠ Yᶠ)
+
+    indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f} → disjoint (dom (toMap X ˢ)) (dom (toMap Y ˢ))
                   → indexedSumᵐ f (X ∪ᵐˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
-    indexedSumᵐ-∪ {X = X'@(X , hX , Xᶠ)} {Y'@(Y , hY , Yᶠ)} disj = ≈-trans
-      (indexedSum-cong {x = -, proj₂ (proj₂ (X' ∪ᵐˡᶠ Y'))} {_ , ∪-preserves-finite Xᶠ Yᶠ}
-        (from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔ (λ h → to ∈-∪ (Data.Sum.map₂ (proj₂ ∘ to ∈-filter) (from ∈-∪ h))) λ h →
-          to ∈-∪ (Data.Sum.map₂ (λ h' → from ∈-filter (flip disj (to ∈-map (-, Prelude.refl , h')) , h')) (from ∈-∪ h))))
-      (indexedSum-∪ {Xᶠ = Xᶠ} {Yᶠ} (disjoint-dom⇒disjoint {m = _ , hX} {_ , hY} disj))
+    indexedSumᵐ-∪ {X = X'@(X , _ , Xᶠ)} {Y'@(Y , _ , Yᶠ)} {f} disj = begin
+      indexedSumᵐ f (X' ∪ᵐˡᶠ Y')    ≈⟨ indexedSum-cong {x = -, ∪ᵐˡ-finite Xᶠ Yᶠ} {(X ∪ Y) ᶠ} (disjoint-∪ᵐˡ-∪ disj) ⟩
+      indexedSum f ((X ∪ Y) ᶠ)      ≈⟨ indexedSum-∪ (disjoint-dom⇒disjoint disj) ⟩
+      indexedSumᵐ f X' ∙ indexedSumᵐ f Y' ∎
+      where instance _ = Xᶠ
+                     _ = Yᶠ
 
   syntax indexedSumᵐ  (λ a → x) m = Σᵐ[ a ← m ] x

@@ -36,13 +36,16 @@ abstract
   setFromList : {A : Set} → List A → ℙ A
   setFromList = id
 
-open import Axiom.Set.Rel th renaming (Map to _↛_) public
+open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) public
+open import Axiom.Set.Map th renaming (Map to _↛_) public
 open L.Decˡ hiding (_∈?_) public
 open import Axiom.Set.Sum th public
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where
-  open Restriction {A} ∈-sp public
-  open Corestriction {A} ∈-sp public
+  open Restriction {A} ∈-sp hiding (_∣_; _∣_ᶜ) public
+  open Corestriction {A} ∈-sp hiding (_∣^_; _∣^_ᶜ) public
+  open Restrictionᵐ {A} ∈-sp public
+  open Corestrictionᵐ {A} ∈-sp public
   open Unionᵐ {A} ∈-sp public
   open Intersection {A} ∈-sp public
 
