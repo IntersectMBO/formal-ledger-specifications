@@ -9,6 +9,7 @@ open import Ledger.Prelude
 \begin{figure*}[h]
 \begin{code}
 Coin = ℕ
+ProtVer = ℕ × ℕ
 
 record PParams : Set where
   field a              : ℕ
@@ -18,6 +19,7 @@ record PParams : Set where
         maxHeaderSize  : ℕ
         poolDeposit    : Coin
         Emax           : Epoch
+        pv             : ProtVer
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}

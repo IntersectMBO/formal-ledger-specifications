@@ -63,7 +63,7 @@ This function must produce a unique id for each unique transaction body.
 
   open import Ledger.PParams Epoch
 
-  open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate)
+  open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
 
   open import Ledger.Address Network KeyHash ScriptHash public
 \end{code}

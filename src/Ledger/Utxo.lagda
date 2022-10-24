@@ -6,44 +6,34 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
-{-# OPTIONS -v allTactics:100 #-}
-
-open import Ledger.Prelude
-
-open import Algebra using (CommutativeMonoid)
-
-open import Data.Nat using (_≤?_; _≤_)
-open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm)
-
-open import Relation.Binary
-
-open import Interface.Decidable.Instance as I
-
-open import Tactic.Helpers
-open import Tactic.MonoidSolver
-open import Tactic.EquationalReasoning
-open import Tactic.DeriveComp
-
-open import MyDebugOptions
---open import Tactic.Defaults
-
-open import PreludeImports
 
 open import Ledger.Transaction
 
 module Ledger.Utxo (txs : TransactionStructure) where
+
+open import Ledger.Prelude hiding (Dec₁)
+
+open import Data.Nat using (_≤?_; _≤_)
+open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Interface.Decidable.Instance
+
+open import MyDebugOptions
+--open import Tactic.Defaults
+open import Tactic.DeriveComp
 
 instance
   _ = +-0-commutativeMonoid
   _ = Decidable²⇒Dec _≤?_
 
 open TransactionStructure txs
-open import Ledger.PParams Epoch
-open import Ledger.Crypto
-
 open TxBody
 open TxWitnesses
 open Tx
+
+open import Ledger.PParams Epoch
+open import Ledger.Crypto
+
+open import Ledger.PPUp
 \end{code}
 
 Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
@@ -70,11 +60,7 @@ outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
 balance : UTxO → Coin
-balance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → x) (toFinMap utxo (finiteness (proj₁ utxo)))
-
--- TODO: figure out why this syntax makes Agda loop
--- balance' : UTxO → Coin
--- balance' utxo = Σᵐ'[ v ← utxo ] proj₂ v
+balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
 
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
@@ -125,13 +111,13 @@ private variable
 instance
   _ = ≟-∅
 
-  ∈-inst : ∀ {A : Set} ⦃ _ : DecEq A ⦄ {s : ℙ A} → I.Dec₁ (_∈ s)
+  ∈-inst : ∀ {A : Set} ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec₁ (_∈ s)
   ∈-inst {s = s} .Dec₁.P? = _∈? s
 
-  all?' : ∀ {A : Set} {P : A → Set} ⦃ P? : I.Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec (All P s)
+  all?' : ∀ {A : Set} {P : A → Set} ⦃ P? : Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec (All P s)
   all?' ⦃ P? = record { P? = P? } ⦄ {s} = all? P?
 
-  netId? : ∀ {A : Set} {networkId : Network} {f : A → Network} → I.Dec₁ (λ a → f a ≡ networkId)
+  netId? : ∀ {A : Set} {networkId : Network} {f : A → Network} → Dec₁ (λ a → f a ≡ networkId)
   netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId
 
   Dec-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
@@ -186,6 +172,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
       ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f ⟧ᵘ
 \end{code}
 \begin{code}[hide]
+-- TODO: This can't be moved into Properties because it breaks. Move
+-- this once this is fixed.
 unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}

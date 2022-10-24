@@ -44,9 +44,6 @@ private variable
   Γ : UTxOEnv
   s s' : UTxOState
 
-_ᶠᵐ : {A B : Set} → A ↛ B → FinMap A B
-(R , uniq) ᶠᵐ = (R , uniq , finiteness _)
-
 balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≡ balance utxo'
 balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
 
