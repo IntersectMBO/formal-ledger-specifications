@@ -66,3 +66,6 @@ module Properties where
     open Intersectionᵖ {A} ∈-sp public
 
 open Computational public
+
+_ᶠᵐ : {A B : Set} → A ↛ B → FinMap A B
+(R , uniq) ᶠᵐ = (R , uniq , finiteness _)
