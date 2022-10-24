@@ -91,11 +91,10 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
     debugLog ("Find details for datatype: " ∷ᵈ n ∷ᵈ [])
     (data-type pars cs) ← getDefinition n -- TODO: do something with pars
       where _ → error1 "Not a data definition!"
-    debugLogᵐ ("Constructor names:" ∷ᵈᵐ cs ᵛ ∷ᵈᵐ []ᵐ)
+    debugLogᵐ ("Constructor names: " ∷ᵈᵐ cs ᵛ ∷ᵈᵐ []ᵐ)
     cs' ← traverseList (λ n → (n ,_) <$> getType' n) cs
-    debugLogᵐ ("Result:" ∷ᵈᵐ cs' ᵛⁿ ∷ᵈᵐ []ᵐ)
-    let res = record { name = n ; constructors = cs' }
-    return res
+    debugLogᵐ ("Result: " ∷ᵈᵐ cs' ᵛⁿ ∷ᵈᵐ []ᵐ)
+    return record { name = n ; constructors = cs' }
 
   getRecordDef : Name → M RecordDef
   getRecordDef n = do

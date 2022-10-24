@@ -17,7 +17,7 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm
 
 open import Relation.Binary
 
-open import Interface.Decidable.Instance
+open import Interface.Decidable.Instance as I
 
 open import Tactic.Helpers
 open import Tactic.MonoidSolver
@@ -104,6 +104,7 @@ record UTxOEnv : Set where
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Set where
+  constructor ⟦_,_⟧ᵘ
   field utxo : UTxO
         fees : Coin
 \end{code}
@@ -123,6 +124,15 @@ private variable
 
 instance
   _ = ≟-∅
+
+  ∈-inst : ∀ {A : Set} ⦃ _ : DecEq A ⦄ {s : ℙ A} → I.Dec₁ (_∈ s)
+  ∈-inst {s = s} .Dec₁.P? = _∈? s
+
+  all?' : ∀ {A : Set} {P : A → Set} ⦃ P? : I.Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec (All P s)
+  all?' ⦃ P? = record { P? = P? } ⦄ {s} = all? P?
+
+  netId? : ∀ {A : Set} {networkId : Network} {f : A → Network} → I.Dec₁ (λ a → f a ≡ networkId)
+  netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId
 
   Dec-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
   Dec-inInterval {slot} {just x  , just y } with x ≤? slot | slot ≤? y
@@ -158,121 +168,26 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo = UTxOState.utxo s
           fees = UTxOState.fees s
       in
-    --  txins tx ≢ ∅
-     inInterval slot (txvldt tx)
-    -- → txins tx ⊆ dom utxo
-    -- this is currently broken because of https://github.com/agda/agda/issues/5982
+    txins tx ≢ ∅
+    → inInterval slot (txvldt tx)
+    → txins tx ⊆ dom (utxo ˢ)
     → let f = txfee tx in minfee pp tx ≤ f
     → balance (utxo ∣ txins tx) ≡ balance (outs tx) + f
     -- PPUP
-    -- same with anything that uses FinSet.All
-    -- → ∀ˢ (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (values' (txouts tx))
-    -- → ∀ˢ (λ where (a , _) → netId a ≡ networkId) (values' (txouts tx))
-    -- → ∀ˢ (λ where record { net = net } → net ≡ networkId) (dom (txwdrls tx))
+    -- these fail with some reduceDec error
+    -- → All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (range ((txouts tx) ˢ))
+    -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
+    -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
     → txsize tx ≤ PParams.maxTxSize pp
     ────────────────────────────────
     Γ
       ⊢ s
       ⇀⦇ tx ,UTXO⦈
-      record { utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx ; fees = fees + f }
+      ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f ⟧ᵘ
 \end{code}
-\caption{UTXO inference rules}
-\label{fig:rules:utxo-shelley}
-\end{figure*}
-
-\begin{code}[hide]
-open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
-
-_ᶠᵐ : {A B : Set} → A ↛ B → FinMap A B
-(R , uniq) ᶠᵐ = (R , uniq , finiteness _)
-
-balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≡ balance utxo'
-balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
-
-balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ)) → balance (utxo ∪ᵐˡ utxo') ≡ balance utxo + balance utxo'
-balance-∪ {utxo} {utxo'} h = begin
-  balance (utxo ∪ᵐˡ utxo') ≡⟨ indexedSumᵐ-cong {x = (utxo ∪ᵐˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)} (id , id) ⟩
-  indexedSumᵐ _ ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)) ≡⟨ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h ⟩
-  balance utxo + balance utxo' ∎
-
-import Relation.Binary.PropositionalEquality as P
-import Data.List
-import Data.Product
-
-open Properties
-open Equivalence
-open import Tactic.Cong
-
-newTxid⇒disj : txid tx ∉ map proj₁ (dom (utxo ˢ)) → disjoint' (dom (utxo ˢ)) (dom ((outs tx) ˢ))
-newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map
-  (-, (case from ∈-map h' of λ where (_ , refl , h'') → case from ∈-map h'' of λ where (_ , refl , _) → refl) , h)
-\end{code}
-
-\begin{property}[\textbf{Preserve Balance}]
-For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\TxBody$, if
-\begin{code}[hide]
-pov :
-\end{code}
-\begin{code}[inline*]
-  txid tx ∉ map proj₁ (dom (utxo ˢ))
-\end{code}
-and
-\begin{code}[hide]
-  →
-\end{code}
-\begin{code}[inline*]
-      Γ ⊢ record {utxo = utxo ; fees = fee} ⇀⦇ tx ,UTXO⦈ record {utxo = utxo' ; fees = fee'}
-\end{code}
-then
-\begin{code}[hide]
-  →
-\end{code}
-\begin{code}
-      balance utxo + fee ≡ balance utxo' + fee'
-\end{code}
-\begin{code}[hide]
-pov {tx} {utxo} {_} {fee} h' (UTXO-inductive _ _ bal-eq _) =
-  let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
-      h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (cores-domᵐ h₁ , h₂)
-  in begin
-  balance utxo + fee
-    ≡tʳ⟨ cong (_+ fee) $ begin
-      balance utxo
-        ≡˘⟨ balance-cong {utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)} {utxo' = utxo}
-              (let open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to _≡ᵉ-∘_)
-               in (disjoint-∪ᵐˡ-∪ (disjoint-sym res-ex-disjoint) ≡ᵉ-∘ ∪-sym) ≡ᵉ-∘ res-ex-∪ (_∈? txins tx)) ⟩
-      balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx))
-        ≡⟨ balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip (res-ex-disjoint)) ⟩
-      balance (utxo ∣ txins tx ᶜ) + balance (utxo ∣ txins tx)
-        ≡tʳ⟨ cong (balance (utxo ∣ txins tx ᶜ) +_) bal-eq ⟩
-      balance (utxo ∣ txins tx ᶜ) + balance (outs tx) + txfee tx
-        ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
-      balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎
-    ⟩
-  balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (txfee tx + fee)
-    ≡˘⟨ cong (balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) +_) (+-comm fee (txfee tx)) ⟩
-  balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fee + txfee tx) ∎
-\end{code}
-
-\end{property}
-
-\pagebreak
-Note that this is not a function, but a relation. To make this
-definition executable, we need to define a function that computes
-the transition. We also prove that this indeed computes the
-relation. Luckily, this can be automated.
-
-\begin{figure*}[h]
 \begin{code}[hide]
 unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
-\begin{code}
-UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
-UTXO-step = compute Computational-UTXO
-
-UTXO-step-computes-UTXO :
-  UTXO-step Γ utxoState tx ≡ just utxoState' ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO
-\end{code}
-\caption{Computing the UTXO transition system}
+\caption{UTXO inference rules}
+\label{fig:rules:utxo-shelley}
 \end{figure*}

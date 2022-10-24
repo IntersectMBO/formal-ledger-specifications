@@ -11,6 +11,7 @@ open import PreludeImports
 
 import Data.List.NonEmpty as NE
 open import Data.Maybe.Properties using (just-injective)
+import Data.Nat.Show as ℕ
 
 open import Relation.Nullary
 open import Relation.Nullary.Negation
@@ -55,10 +56,10 @@ conOrVarToPattern _ _ = nothing
 isArg : (a : Abs (Arg Term)) → Dec _
 isArg a = ¬? (getVisibility (unAbs a) Visibility.≟ visible)
 
-toSTSConstr : Name × TypeView → Maybe STSConstr
-toSTSConstr (n , (cs , def f args)) with args | mapMaybe (conOrVarToPattern (length $ dropWhile isArg cs) ∘ unArg) $ take 3 args
+toSTSConstr : Name × TypeView → TC STSConstr
+toSTSConstr (n , (cs , def _ args)) with args | mapMaybe (conOrVarToPattern (length $ dropWhile isArg cs) ∘ unArg) $ take 3 args
 ... | _ ∷ _ ∷ _ ∷ r ∷ [] | c ∷ s ∷ sig ∷ [] =
-  just record
+  return record
     { name = n
     ; params = takeWhile isArg cs
     ; clauses = zipWithIndex (λ i → mapVars (_∸ i)) $ (unArg ∘ unAbs) <$> dropWhile isArg cs
@@ -66,8 +67,9 @@ toSTSConstr (n , (cs , def f args)) with args | mapMaybe (conOrVarToPattern (len
     ; state = s
     ; signal = sig
     ; result = mapVars (_∸ (length $ dropWhile isArg cs)) $ unArg r }
-... | _ | _ = nothing
-toSTSConstr _ = nothing
+... | l | l' =
+  error1 ("toSTSConstr: wrong number of arguments:" <+> ℕ.show (length l) <+> "," <+> ℕ.show (length l'))
+toSTSConstr _ = error1 "toSTSConstr: wrong constructor"
 
 errorIfNothing : ∀ {a} {A : Set a} → Maybe A → String → TC A
 errorIfNothing (just x) s = return x
@@ -76,7 +78,7 @@ errorIfNothing nothing s = error1 s
 getSTSConstrs : Name → TC (List STSConstr)
 getSTSConstrs n = inDebugPath "getSTSConstrs" do
   dataDef ← getDataDef n
-  res ← errorIfNothing (traverseList toSTSConstr (DataDef.constructors dataDef)) "Error"
+  res ← traverseList toSTSConstr (DataDef.constructors dataDef)
   debugLogᵐ (res ᵛⁿ ∷ᵈᵐ []ᵐ)
   return res
 

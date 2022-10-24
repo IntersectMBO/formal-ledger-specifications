@@ -4,9 +4,12 @@
 
 \usepackage{newunicodechar}
 \newunicodechar{ᵇ}{\ensuremath{^b}}
+\newunicodechar{ᶜ}{\ensuremath{^c}}
 \newunicodechar{ᵈ}{\ensuremath{^d}}
+\newunicodechar{ᵉ}{\ensuremath{^e}}
 \newunicodechar{ᵐ}{\ensuremath{^m}}
 \newunicodechar{ᵖ}{\ensuremath{^p}}
+\newunicodechar{ᵘ}{\ensuremath{^u}}
 \newunicodechar{₁}{\ensuremath{_1}}
 \newunicodechar{₂}{\ensuremath{_2}}
 \newunicodechar{₃}{\ensuremath{_3}}
@@ -74,5 +77,8 @@ open import Ledger.Utxow txs
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
+
+\section{Properties}
+\include{Ledger/Utxo/Properties}
 
 \end{document}
