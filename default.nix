@@ -104,7 +104,7 @@ rec {
           })
         ];
         buildPhase = ''
-          ls ${dir}/*.lagda | xargs -n 1 agda --latex
+          find ${dir} -name \*.lagda -exec agda --latex {} \;
           cd latex && latexmk -xelatex ${dir}/${doc}.tex && cd ..
         '';
         installPhase = ''

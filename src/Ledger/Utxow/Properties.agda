@@ -20,18 +20,9 @@ import Data.Maybe as M
 open import Tactic.ReduceDec
 open import MyDebugOptions
 
--- we need to hide Dec-→
-module _ where
-  open import Interface.Decidable.Instance hiding (Dec-→) public
+open import Interface.Decidable.Instance public
 
 private variable A K V : Set
-
-instance
-  FSall?' : {P : A → Set} ⦃ P? : Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec (All P s)
-  FSall?' ⦃ P? = record { P? = P? } ⦄ {s} = all? P?
-
-  -- all?' : ⦃ _ : DecEq K ⦄ ⦃ _ : DecEq V ⦄ → {P : K × V → Set} → ⦃ P? : Dec₁ P ⦄ → {m : K ↛ V} → Dec (∀ᵐ P m)
-  -- all?' ⦃ P? = record { P? = P? } ⦄ {m} = allᵐ? P? m
 
 sigCheck : Ser → (VKey × Sig) → Set
 sigCheck d = λ where (vk , σ) → isSigned vk d σ
@@ -42,12 +33,6 @@ instance
 
   valid-inst : ∀ {khs} {I} → Dec₁ (validP1Script khs I)
   valid-inst {khs} {I} .Dec₁.P? = validP1Script? khs I
-
-  ∈-inst : ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec₁ (_∈ s)
-  ∈-inst {s = s} .Dec₁.P? = _∈? s
-
-  -- Dec-≡ᵉ' : ⦃ _ : DecEq A ⦄ {s s' : ℙ A} → Dec (s ≡ᵉ' s')
-  -- Dec-≡ᵉ' {s = s} {s'} = Relation.Nullary.Decidable.map (mk⇔ ≡ᵉ⇒≡ᵉ' ≡ᵉ'⇒≡ᵉ) (s ≟ᵉ s')
 
 Computational-Property : UTxOState → Tx → Set
 Computational-Property s tx = let

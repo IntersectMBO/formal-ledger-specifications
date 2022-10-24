@@ -96,6 +96,7 @@ module _ where
   HSTransactionStructure .DecEq-ADHash    = DecEq-⊤
 
 open import Ledger.Utxo HSTransactionStructure
+open import Ledger.Utxo.Properties HSTransactionStructure
 open import Ledger.Utxow.Properties HSTransactionStructure
 open TransactionStructure HSTransactionStructure
 
