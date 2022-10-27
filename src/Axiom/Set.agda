@@ -183,6 +183,9 @@ record Theoryᶠ : Type₁ where
 
   field finiteness : (X : Set A) → finite X
 
+  lengthˢ : Set A → ℕ
+  lengthˢ X = length (proj₁ $ finiteness X)
+
 -- set theories with an infinite set (containing all natural numbers)
 record Theoryⁱ : Type₁ where
   field theory : Theory
@@ -200,6 +203,13 @@ record Theoryᵈ : Type₁ where
   field ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
         _∈?_ : ⦃ DecEq A ⦄ → Dec₂ (_∈_ {A = A})
         all? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) {X : Set A} → Dec (All P X)
+        any? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Dec (Any P X)
 
   _∈ᵇ_ : ⦃ DecEq A ⦄ → A → Set A → Bool
   a ∈ᵇ X = ⌊ a ∈? X ⌋
+
+  allᵇ : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Bool
+  allᵇ P? X = ⌊ all? P? {X} ⌋
+
+  anyᵇ : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Bool
+  anyᵇ P? X = ⌊ any? P? X ⌋

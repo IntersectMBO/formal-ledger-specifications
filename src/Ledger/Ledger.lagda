@@ -1,63 +1,4 @@
-\documentclass[11pt,a4paper,dvipsnames,twosided]{article}
-\usepackage{unicode-math}
-\setsansfont{XITSMath-Regular.otf}
-
-\usepackage{newunicodechar}
-\newunicodechar{ᵇ}{\ensuremath{^b}}
-\newunicodechar{ᶜ}{\ensuremath{^c}}
-\newunicodechar{ᵈ}{\ensuremath{^d}}
-\newunicodechar{ᵉ}{\ensuremath{^e}}
-\newunicodechar{ᵐ}{\ensuremath{^m}}
-\newunicodechar{ᵖ}{\ensuremath{^p}}
-\newunicodechar{ᵘ}{\ensuremath{^u}}
-\newunicodechar{₁}{\ensuremath{_1}}
-\newunicodechar{₂}{\ensuremath{_2}}
-\newunicodechar{₃}{\ensuremath{_3}}
-\newunicodechar{σ}{\ensuremath{\sigma}}
-\newunicodechar{≤}{\ensuremath{\leq}}
-\newunicodechar{≢}{\ensuremath{\nequiv}}
-
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{float}
-\floatstyle{boxed}
-\restylefloat{figure}
-
-\usepackage{iohk}
-
-\usepackage[hidelinks]{hyperref}
-\usepackage[links]{agda}
-
-\newcommand{\N}{\ensuremath{\mathbb{N}}}
-\newcommand{\TxBody}{\type{TxBody}}
-\newcommand{\TxWitness}{\type{TxWitness}}
-\newcommand{\Tx}{\type{Tx}}
-\newcommand{\Ix}{\type{Ix}}
-\newcommand{\TxId}{\type{TxId}}
-\newcommand{\Addr}{\type{Addr}}
-\newcommand{\UTxO}{\type{UTxO}}
-\newcommand{\Coin}{\type{Coin}}
-\newcommand{\TxIn}{\type{TxIn}}
-\newcommand{\TxOut}{\type{TxOut}}
-\newcommand{\UTxOEnv}{\type{UTxOEnv}}
-\newcommand{\UTxOState}{\ensuremath{\type{UTxOState}}}
-
-%%
-%% Functions
-%%
-\newcommand{\txins}[1]{\fun{txins}~ \var{#1}}
-\newcommand{\txouts}[1]{\fun{txouts}~ \var{#1}}
-\newcommand{\txid}[1]{\fun{txid}~ \var{#1}}
-\newcommand{\outs}[1]{\fun{outs}~ \var{#1}}
-\newcommand{\balance}[1]{\fun{balance}~ \var{#1}}
-\newcommand{\txfee}[1]{\fun{txfee}~ \var{#1}}
-
-\newcommand{\wcard}[0]{\rule[-.5mm]{2mm}{.2mm}}
-\newcommand{\leteq}{\ensuremath{\mathrel{\mathop:}=}}
-
-\newtheorem{property}{Property}[section]
-
-
-\begin{document}
+\section{Ledger State Transition}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -66,19 +7,70 @@ open import Ledger.Transaction
 
 module Ledger.Ledger (txs : TransactionStructure) where
 
+open import Ledger.Prelude
+
+open TransactionStructure txs
+open import Ledger.PParams Epoch
+
 open import Ledger.Utxo txs
 open import Ledger.Utxow txs
+open import Ledger.PPUp txs
+
+open Tx
+open TxBody
 \end{code}
+\begin{figure*}[h]
+\begin{code}
+-- Only include accounting & governance info for now
+record LEnv : Set where
+  constructor ⟦_,_,_⟧ˡᵉ
+  field slot : Slot
+        --txix : Ix
+        pparams : PParams
+        --acnt : Acnt
+        genDelegs : GenesisDelegation -- part of DPState
 
-\include{Ledger/Crypto}
-\include{Ledger/Address}
-\include{Ledger/Script}
-\include{Ledger/PParams}
-\include{Ledger/Transaction}
-\include{Ledger/Utxo}
-\include{Ledger/Utxow}
+record LState : Set where
+  constructor ⟦_,_⟧ˡ
+  field utxoSt : UTxOState
+        ppup   : PPUpdateState
+        --dpstate : DPState
+\end{code}
+\caption{Types for the LEDGER transition system}
+\end{figure*}
+\begin{code}[hide]
+private variable
+  Γ : LEnv
+  s s' s'' : LState
+  utxoSt' : UTxOState
+  ppup' : PPUpdateState
+  tx : Tx
 
-\section{Properties}
-\include{Ledger/Utxo/Properties}
+data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
+\end{code}
+\begin{figure*}[h]
+\begin{code}
+  LEDGER : let open LState s in
+    record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    → record { LEnv Γ } ⊢ ppup ⇀⦇ txup (body tx) ,PPUP⦈ ppup'
+    -- DELEGS
+    ────────────────────────────────
+    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , ppup' ⟧ˡ
+\end{code}
+\caption{LEDGER transition system}
+\end{figure*}
+\begin{code}[hide]
+data _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set where
+\end{code}
+\begin{figure*}[h]
+\begin{code}
+  LEDGERS-base : Γ ⊢ s ⇀⦇ [] ,LEDGERS⦈ s
 
-\end{document}
+  LEDGERS-ind : ∀ {txs}
+    → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+    → Γ ⊢ s' ⇀⦇ txs ,LEDGERS⦈ s''
+    ────────────────────────────────
+    Γ ⊢ s ⇀⦇ tx ∷ txs ,LEDGERS⦈ s''
+\end{code}
+\caption{LEDGERS transition system}
+\end{figure*}

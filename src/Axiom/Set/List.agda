@@ -11,11 +11,12 @@ open import Axiom.Set
 import Data.List
 import Data.List.Relation.Unary.All as All
 import Data.List.Relation.Unary.Any as Any
+import Data.List.Relation.Unary.Any.Properties as Any
 import Function.Inverse as I
 import Function.Properties.Inverse as I
 import Function.Related.Propositional as R
 import Relation.Nullary.Decidable as Dec
-open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
+open import Data.List.Membership.Propositional using (find; lose) renaming (_∈_ to _∈ˡ_)
 open import Data.List.Membership.Propositional.Properties
 open import Data.Product
 open import Data.Product.Algebra
@@ -75,4 +76,5 @@ List-Modelᵈ = record
   { th = List-Model
   ; ∈-sp = Decˡ._∈? _
   ; _∈?_ = Decˡ._∈?_
-  ; all? = λ P? {X} → Dec.map (mk⇔ All.lookup All.tabulate) (All.all? P? X) }
+  ; all? = λ P? {X} → Dec.map (mk⇔ All.lookup All.tabulate) (All.all? P? X)
+  ; any? = λ P? X → Dec.map (mk⇔ find (uncurry lose ∘ proj₂)) (Any.any? P? X) }

@@ -123,7 +123,7 @@ rec {
     dir = "Ledger";
     agdaLedgerFile = "Foreign/HSLedger.agda";
     hsMainFile = "HSLedgerTest.hs";
-    doc = "Ledger";
+    doc = "PDF";
   };
   midnight = specsDerivations {
     dir = "MidnightExample";

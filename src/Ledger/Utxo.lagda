@@ -53,9 +53,6 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \AgdaTarget{outs, minfee, inInterval, balance}
 \begin{figure*}[h]
 \begin{code}
-Slot : Set
-Slot = ℕ
-
 outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
@@ -68,10 +65,10 @@ minfee pp tx = a * txsize tx + b
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
-  both  : ∀ {l r} → l ≤ slot × slot ≤ r  →  inInterval slot (just l  , just r)
-  lower : ∀ {l}   → l ≤ slot             →  inInterval slot (just l  , nothing)
-  upper : ∀ {r}   → slot ≤ r             →  inInterval slot (nothing , just r)
-  none  :                                   inInterval slot (nothing , nothing)
+  both  : ∀ {l r} → l ≤ˢ slot × slot ≤ˢ r  →  inInterval slot (just l  , just r)
+  lower : ∀ {l}   → l ≤ˢ slot              →  inInterval slot (just l  , nothing)
+  upper : ∀ {r}   → slot ≤ˢ r              →  inInterval slot (nothing , just r)
+  none  :                                     inInterval slot (nothing , nothing)
 
 \end{code}
 
@@ -121,14 +118,14 @@ instance
   netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId
 
   Dec-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
-  Dec-inInterval {slot} {just x  , just y } with x ≤? slot | slot ≤? y
+  Dec-inInterval {slot} {just x  , just y } with x ≤ˢ? slot | slot ≤ˢ? y
   ... | no ¬p₁ | _      = no λ where (both (h₁ , h₂)) → ¬p₁ h₁
   ... | yes p₁ | no ¬p₂ = no λ where (both (h₁ , h₂)) → ¬p₂ h₂
   ... | yes p₁ | yes p₂ = yes (both (p₁ , p₂))
-  Dec-inInterval {slot} {just x  , nothing} with x ≤? slot
+  Dec-inInterval {slot} {just x  , nothing} with x ≤ˢ? slot
   ... | no ¬p = no  (λ where (lower h) → ¬p h)
   ... | yes p = yes (lower p)
-  Dec-inInterval {slot} {nothing , just x } with slot ≤? x
+  Dec-inInterval {slot} {nothing , just x } with slot ≤ˢ? x
   ... | no ¬p = no  (λ where (upper h) → ¬p h)
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} = yes none

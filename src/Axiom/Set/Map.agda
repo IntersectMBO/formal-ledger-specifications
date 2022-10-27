@@ -147,8 +147,8 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈
 
-  _|^_ : Map A B → Set B → Map A B
-  m |^ X = ⊆-map (R._∣^ X) R.cores-⊆ m
+  _∣^_ : Map A B → Set B → Map A B
+  m ∣^ X = ⊆-map (R._∣^ X) R.cores-⊆ m
 
   _∣^_ᶜ : Map A B → Set B → Map A B
   m ∣^ X ᶜ = ⊆-map (R._∣^ X ᶜ) R.coex-⊆ m
