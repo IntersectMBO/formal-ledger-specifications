@@ -4,6 +4,7 @@ module Ledger.Foreign.HSLedger where
 open import Ledger.Prelude
 
 open import Data.Nat using (_≤_; _≤ᵇ_)
+open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 import Data.Maybe as M
 
 open import Foreign.Convertible
@@ -12,6 +13,16 @@ import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.PParams ℕ
 open import Ledger.Crypto
+open import Ledger.Epoch
+
+open GlobalConstants
+HSGlobalConstants : GlobalConstants
+HSGlobalConstants .Network               = ⊤
+HSGlobalConstants .SlotsPerEpochᶜ        = 100
+HSGlobalConstants .NonZero-SlotsPerEpoch = _
+HSGlobalConstants .StabilityWindowᶜ      = 10
+HSGlobalConstants .Quorum                = 1
+HSGlobalConstants .NetworkId             = tt
 
 -- Dummy hash functions
 isHashableSelf : ∀ A → isHashableSet A
@@ -47,6 +58,10 @@ HSCrypto .ScriptHash       = ℕ
 HSCrypto .decEq-KeyHash    = DecEq-ℕ
 HSCrypto .decEq-ScriptHash = DecEq-ℕ
 
+open EpochStructure
+HSEpochStructure : EpochStructure
+HSEpochStructure = ℕEpochStructure HSGlobalConstants
+
 open import Ledger.Script
 
 -- No scripts for now
@@ -80,14 +95,13 @@ module _ where
   HSTransactionStructure : TransactionStructure
   HSTransactionStructure .Ix              = ℕ
   HSTransactionStructure .TxId            = ℕ
-  HSTransactionStructure .Epoch           = ℕ
+  HSTransactionStructure .epochStructure  = HSEpochStructure
+  HSTransactionStructure .globalConstants = HSGlobalConstants
   HSTransactionStructure .AuxiliaryData   = ⊤
-  HSTransactionStructure .Network         = ⊤
   HSTransactionStructure .crypto          = HSCrypto
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; applyUpdate = λ p _ → p }
   HSTransactionStructure .txidBytes       = id
-  HSTransactionStructure .networkId       = tt
   HSTransactionStructure .DecEq-TxId      = DecEq-ℕ
   HSTransactionStructure .DecEq-Ix        = DecEq-ℕ
   HSTransactionStructure .DecEq-Netw      = DecEq-⊤
@@ -176,6 +190,7 @@ instance
         ; maxHeaderSize = maxHeaderSize
         ; poolDeposit   = poolDeposit
         ; Emax          = Emax
+        ; pv            = coerce pv
         }
 
       from' : F.PParams → PParams
@@ -187,6 +202,7 @@ instance
         ; maxHeaderSize = maxHeaderSize
         ; poolDeposit   = poolDeposit
         ; Emax          = Emax
+        ; pv            = coerce pv
         }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv

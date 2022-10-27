@@ -13,7 +13,6 @@ import Data.Nat
 
 open TransactionStructure txs
 open import Ledger.Crypto
-open import Ledger.Script KeyHash ScriptHash ℕ
 open import Ledger.Utxo txs
 
 open TxBody

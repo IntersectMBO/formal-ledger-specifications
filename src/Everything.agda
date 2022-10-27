@@ -1,6 +1,6 @@
 module Everything where
 
-import Ledger.Ledger
+import Ledger.PDF
 import Ledger.Foreign.HSLedger
 
 import MidnightExample.Ledger

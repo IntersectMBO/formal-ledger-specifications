@@ -82,6 +82,7 @@ record PParams : Set where
         maxHeaderSize : ℕ
         poolDeposit   : Coin
         Emax          : Epoch
+        pv            : Pair ℕ ℕ
 
 {-# FOREIGN GHC
   data PParams = MkPParams

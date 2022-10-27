@@ -30,6 +30,9 @@ abstract
   finiteness : ∀ {A} (X : Theory.Set th A) → finite X
   finiteness = Theoryᶠ.finiteness List-Modelᶠ
 
+  lengthˢ : ∀ {A} (X : Theory.Set th A) → ℕ
+  lengthˢ = Theoryᶠ.lengthˢ List-Modelᶠ
+
   setToList : {A : Set} → ℙ A → List A
   setToList = id
 
