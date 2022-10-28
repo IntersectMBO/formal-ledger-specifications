@@ -56,13 +56,11 @@ This function must produce a unique id for each unique transaction body.
   open Crypto crypto public
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
-  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash ℕ N._≤_ N._≤ᵇ_
+  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash ℕ
         instance DecEq-ADHash : DecEq ADHash
 
   open Ledger.Script.ScriptStructure ss public
 
-  open import Data.FinSet renaming (FinSet to ℙ_)
-  open import Data.FinMap renaming (FinMap to _↛_)
   open import Ledger.PParams Epoch
 
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate)
@@ -113,5 +111,5 @@ This function must produce a unique id for each unique transaction body.
 
 \begin{code}
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom (utxo |^' (isVKeyAddr? ∘ proj₁))
+  txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
 \end{code}

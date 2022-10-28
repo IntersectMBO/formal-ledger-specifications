@@ -32,21 +32,6 @@ let
     };
   });
 
-  agdaFinset = customAgda.agdaPackages.mkDerivation {
-    pname = "agda-finset";
-    version = "0.9";
-    src = customAgda.fetchFromGitHub {
-      repo = "agda-finset";
-      owner = "input-output-hk";
-      rev = "939b2578f4f8cb4f02928b30edfc787cabeba171";
-      sha256 = "2bUMmUikzNRaEFVkH+Y8ypnNF65d/LNKei6fSJ982AY=";
-    };
-    meta = { };
-    libraryFile = "Finset.agda-lib";
-    everythingFile = "src/README.agda";
-    buildInputs = [ agdaStdlib ];
-  };
-
   agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
     pname = "agda-stdlib-meta";
     version = "0.1";
@@ -63,7 +48,7 @@ let
     buildInputs = [ agdaStdlib ];
   };
 
-  deps = [ agdaStdlib agdaFinset agdaStdlibMeta ];
+  deps = [ agdaStdlib agdaStdlibMeta ];
   agdaWithPkgs = customAgda.agda.withPackages { pkgs = deps; ghc = pkgs.ghc; };
 
 in

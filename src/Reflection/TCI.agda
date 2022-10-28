@@ -50,7 +50,11 @@ applyNormalisation x r@record { normalisation = n } = R.withNormalisation n (app
 
 applyReconstruction : TC A → TC A
 applyReconstruction x r@record { reconstruction = false } = x r
-applyReconstruction x r@record { reconstruction = true } = R'.withReconstructed (x r)
+applyReconstruction x r@record { reconstruction = true  } = R'.withReconstructed (x r)
+
+applyNoConstraints : TC A → TC A
+applyNoConstraints x r@record { noConstraints = false } = x r
+applyNoConstraints x r@record { noConstraints = true  } = R'.noConstraints (x r)
 
 applyExtContext : List (Arg Term) → R.TC A → R.TC A
 applyExtContext [] x       = x
@@ -71,7 +75,7 @@ private
 
 module MonadTCI where
   unify             : Term → Term → TC ⊤
-  unify             = liftTC2 R.unify
+  unify             = applyNoConstraints ∘₂ liftTC2 R.unify
 
   typeError         : List ErrorPart → TC A
   typeError         = liftTC1 R.typeError

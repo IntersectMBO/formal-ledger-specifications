@@ -51,7 +51,7 @@ open import Ledger.Script
 
 -- No scripts for now
 open P1ScriptStructure
-HSP1ScriptStructure : P1ScriptStructure ℕ ℕ ℕ _≤_ _≤ᵇ_
+HSP1ScriptStructure : P1ScriptStructure ℕ ℕ ℕ
 HSP1ScriptStructure .P1Script          = ⊥
 HSP1ScriptStructure .validP1Script     = λ _ _ ()
 HSP1ScriptStructure .validP1Script?    = λ _ _ ()
@@ -59,7 +59,7 @@ HSP1ScriptStructure .Hashable-P1Script = record { hash = λ () }
 HSP1ScriptStructure .DecEq-P1Script    = DecEq-⊥
 
 open PlutusStructure
-HSP2ScriptStructure : PlutusStructure ℕ ℕ ℕ _≤_ _≤ᵇ_
+HSP2ScriptStructure : PlutusStructure ℕ ℕ ℕ
 HSP2ScriptStructure .Dataʰ                 = record { T = ⊥ ; T-isHashable = isHashableSelf ⊥ }
 HSP2ScriptStructure .PlutusScript          = ⊥
 HSP2ScriptStructure .ExUnits               = ⊥
@@ -69,7 +69,7 @@ HSP2ScriptStructure .DecEq-PlutusScript    = DecEq-⊥
 HSP2ScriptStructure .validPlutusScript     = λ ()
 HSP2ScriptStructure .validPlutusScript?    = λ ()
 
-HSScriptStructure : ScriptStructure ℕ ℕ ℕ _≤_ _≤ᵇ_
+HSScriptStructure : ScriptStructure ℕ ℕ ℕ
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
 
 open import Ledger.Transaction
@@ -113,7 +113,7 @@ instance
     where
       to' : TxBody → F.TxBody
       to' txb = let open TxBody txb in record
-        { txins  = to ⦃ Convertible-FinSet ⦃ _ ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ txins
+        { txins  = to ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
         ; txouts = to txouts
         ; txfee  = txfee
         ; txvldt = coerce txvldt
@@ -123,7 +123,7 @@ instance
 
       from' : F.TxBody → TxBody
       from' txb = let open F.TxBody txb in record
-        { txins    = from ⦃ Convertible-FinSet ⦃ _ ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ txins
+        { txins    = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
         ; txouts   = from txouts
         ; txfee    = txfee
         ; txvldt   = coerce txvldt
@@ -202,13 +202,13 @@ instance
     where
       to' : UTxOState → F.UTxOState
       to' record { utxo = utxo ; fees = fees } = record
-        { utxo = to ⦃ Convertible-Map ⦃ _ ⦄ ⦃ _ ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ utxo
+        { utxo = to ⦃ Convertible-Map ⦃ DecEq-Product ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ utxo
         ; fees = fees
         }
 
       from' : F.UTxOState → UTxOState
       from' s = record
-        { utxo = from ⦃ Convertible-Map ⦃ _ ⦄ ⦃ _ ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
+        { utxo = from ⦃ Convertible-Map ⦃ DecEq-Product ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
         ; fees = F.UTxOState.fees s
         }
 
@@ -218,6 +218,6 @@ utxo-step e s txb = M.map to (UTXO-step (from e) (from s) (from txb))
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
 utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → Maybe F.UTxOState
-utxow-step e s tx = M.map to (Computational.compute Computational-UTXOW (from e) (from s) (from tx))
+utxow-step e s tx = M.map to (compute Computational-UTXOW (from e) (from s) (from tx))
 
 {-# COMPILE GHC utxow-step as utxowStep #-}

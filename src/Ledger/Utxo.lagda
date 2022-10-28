@@ -19,10 +19,6 @@ open import Relation.Binary
 
 open import Interface.Decidable.Instance
 
-open import Data.FinMap.Properties
-open import Data.FinMap.Properties.Equality
-open import Data.FinSet.Properties.Equality
-
 open import Tactic.Helpers
 open import Tactic.MonoidSolver
 open import Tactic.EquationalReasoning
@@ -71,10 +67,10 @@ Slot : Set
 Slot = ℕ
 
 outs : TxBody → UTxO
-outs tx = mapKeys (txid tx ,_) $ txouts tx
+outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
 balance : UTxO → Coin
-balance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → x) utxo
+balance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → x) (toFinMap utxo (finiteness (proj₁ utxo)))
 
 -- TODO: figure out why this syntax makes Agda loop
 -- balance' : UTxO → Coin
@@ -114,7 +110,7 @@ record UTxOState : Set where
 \emph{UTxO transitions}
 
 \begin{code}[hide]
-variable
+private variable
   tx : TxBody
   utxo utxo' utxo1 utxo2 : UTxO
   fee fee' fees fees' : Coin
@@ -162,12 +158,12 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo = UTxOState.utxo s
           fees = UTxOState.fees s
       in
-      txins tx ≢ ∅
-    → inInterval slot (txvldt tx)
+    --  txins tx ≢ ∅
+     inInterval slot (txvldt tx)
     -- → txins tx ⊆ dom utxo
     -- this is currently broken because of https://github.com/agda/agda/issues/5982
     → let f = txfee tx in minfee pp tx ≤ f
-    → balance (txins tx ◃ utxo) ≡ balance (outs tx) + f
+    → balance (utxo ∣ txins tx) ≡ balance (outs tx) + f
     -- PPUP
     -- same with anything that uses FinSet.All
     -- → ∀ˢ (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (values' (txouts tx))
@@ -178,20 +174,38 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     Γ
       ⊢ s
       ⇀⦇ tx ,UTXO⦈
-      record { utxo = (txins tx ⋪ utxo) ∪ᵐ outs tx ; fees = fees + f }
+      record { utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx ; fees = fees + f }
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
 
 \begin{code}[hide]
-balance-∪ : utxo ∩ᵖ utxo' ≡ᵐ ∅ᵐ → balance (utxo ∪ᵐ utxo') ≡ balance utxo + balance utxo'
-balance-∪ {utxo} {utxo'} = indexedSum-∪ {m = utxo} {m' = utxo'}
-
-balance-cong : utxo ≡ᵐ utxo' → balance utxo ≡ balance utxo'
-balance-cong {utxo} {utxo'} = indexedSum-cong {m = utxo} {m' = utxo'}
-
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
+
+_ᶠᵐ : {A B : Set} → A ↛ B → FinMap A B
+(R , uniq) ᶠᵐ = (R , uniq , finiteness _)
+
+balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≡ balance utxo'
+balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
+
+balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ)) → balance (utxo ∪ᵐˡ utxo') ≡ balance utxo + balance utxo'
+balance-∪ {utxo} {utxo'} h = begin
+  balance (utxo ∪ᵐˡ utxo') ≡⟨ indexedSumᵐ-cong {x = (utxo ∪ᵐˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)} (id , id) ⟩
+  indexedSumᵐ _ ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)) ≡⟨ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h ⟩
+  balance utxo + balance utxo' ∎
+
+import Relation.Binary.PropositionalEquality as P
+import Data.List
+import Data.Product
+
+open Properties
+open Equivalence
+open import Tactic.Cong
+
+newTxid⇒disj : txid tx ∉ map proj₁ (dom (utxo ˢ)) → disjoint' (dom (utxo ˢ)) (dom ((outs tx) ˢ))
+newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map
+  (-, (case from ∈-map h' of λ where (_ , refl , h'') → case from ∈-map h'' of λ where (_ , refl , _) → refl) , h)
 \end{code}
 
 \begin{property}[\textbf{Preserve Balance}]
@@ -200,7 +214,7 @@ For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\va
 pov :
 \end{code}
 \begin{code}[inline*]
-  utxo ∩ᵖ outs tx ≡ ∅ᵐ
+  txid tx ∉ map proj₁ (dom (utxo ˢ))
 \end{code}
 and
 \begin{code}[hide]
@@ -217,32 +231,30 @@ then
       balance utxo + fee ≡ balance utxo' + fee'
 \end{code}
 \begin{code}[hide]
-pov {utxo} {tx} {_} {fee} h' (UTXO-inductive _ _ _ bal-eq _) =
-  let
-    h : utxo ∩ᵖ outs tx ≡ᵐ ∅ᵐ
-    h = subst ((utxo ∩ᵖ outs tx) ≡ᵐ_) h' (IsEquivalence.refl ≡ᵐ-isEquivalence {utxo ∩ᵖ outs tx})
-
-    balance-eq : balance utxo ≡ balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + txfee tx
-    balance-eq = begin
-      balance utxo
-        ≡˘⟨ balance-cong {utxo = (txins tx ⋪ utxo) ∪ᵐ (txins tx ◃ utxo)} {utxo' = utxo}
-          (dom-res-ex-∪ {_} {_} {txins tx} {utxo}) ⟩
-      balance ((txins tx ⋪ utxo) ∪ᵐ (txins tx ◃ utxo))
-        ≡⟨ balance-∪ {txins tx ⋪ utxo} {txins tx ◃ utxo} (dom-res-ex-∩ᵖ {_} {_} {txins tx} {utxo} ) ⟩
-      balance (txins tx ⋪ utxo) + balance (txins tx ◃ utxo)
-        ≡tʳ⟨ cong (balance (txins tx ⋪ utxo) +_) bal-eq ⟩
-      balance (txins tx ⋪ utxo) + balance (outs tx) + txfee tx
-        ≡˘⟨ cong (_+ txfee tx) (balance-∪ {txins tx ⋪ utxo} {outs tx} (dom-res-∩ᵖ-empty {_} {_} {utxo} {outs tx} {txins tx} h)) ⟩
-      balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + txfee tx ∎
+pov {tx} {utxo} {_} {fee} h' (UTXO-inductive _ _ bal-eq _) =
+  let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
+      h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (cores-domᵐ h₁ , h₂)
   in begin
-  balance utxo + fee                                        ≡tʳ⟨ cong (_+ fee) balance-eq ⟩
-  balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + (txfee tx + fee)
-            ≡˘⟨ cong (balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) +_) (+-comm fee (txfee tx)) ⟩
-  balance ((txins tx ⋪ utxo) ∪ᵐ outs tx) + (fee + txfee tx) ∎
+  balance utxo + fee
+    ≡tʳ⟨ cong (_+ fee) $ begin
+      balance utxo
+        ≡˘⟨ balance-cong {utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)} {utxo' = utxo}
+              (let open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to _≡ᵉ-∘_)
+               in (disjoint-∪ᵐˡ-∪ (disjoint-sym res-ex-disjoint) ≡ᵉ-∘ ∪-sym) ≡ᵉ-∘ res-ex-∪ (_∈? txins tx)) ⟩
+      balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx))
+        ≡⟨ balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip (res-ex-disjoint)) ⟩
+      balance (utxo ∣ txins tx ᶜ) + balance (utxo ∣ txins tx)
+        ≡tʳ⟨ cong (balance (utxo ∣ txins tx ᶜ) +_) bal-eq ⟩
+      balance (utxo ∣ txins tx ᶜ) + balance (outs tx) + txfee tx
+        ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
+      balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎
+    ⟩
+  balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (txfee tx + fee)
+    ≡˘⟨ cong (balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) +_) (+-comm fee (txfee tx)) ⟩
+  balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fee + txfee tx) ∎
 \end{code}
 
 \end{property}
-
 
 \pagebreak
 Note that this is not a function, but a relation. To make this
