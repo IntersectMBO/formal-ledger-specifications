@@ -14,20 +14,26 @@ open import Ledger.PParams Epoch
 open import Ledger.NewPP txs
 open import Ledger.Ledger txs
 open import Ledger.PPUp txs
+open import Ledger.Utxo txs
 
 \end{code}
 \begin{figure*}[h]
 \begin{code}
+record Acnt : Set where
+  field treasury  : Coin
+        reserves  : Coin
+
 record NewEpochState : Set where
-  constructor ⟦_,_,_,_⟧ⁿᵉ
-  field lastEpoch : Epoch
-        ls        : LState
-        prevPP    : PParams
-        pparams   : PParams
+  constructor ⟦_,_,_,_,_⟧ⁿᵉ
+  field lastEpoch  : Epoch
+        acnt       : Acnt
+        ls         : LState
+        prevPP     : PParams
+        pparams    : PParams
 
 record ChainState : Set where
-  field newEpochState : NewEpochState
-        genDelegs     : GenesisDelegation
+  field newEpochState  : NewEpochState
+        genDelegs      : GenesisDelegation
 
 record Block : Set where
   field ts   : List Tx
@@ -45,22 +51,24 @@ private variable
   nes : NewEpochState
   e : Epoch
 
-open NewEpochState
-
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  NEWEPOCH-New : let ppup = LState.ppup (ls nes); pup = PPUpdateState.pup ppup in
-    e ≡ sucᵉ (lastEpoch nes)
-    → _ ⊢ ⟦ pparams nes , ppup ⟧ⁿᵖ ⇀⦇ votedValue pup (pparams nes) Quorum ,NEWPP⦈
-          ⟦ pparams' , ppup' ⟧ⁿᵖ
+  NEWEPOCH-New : let
+      open NewEpochState nes
+      open LState ls
+      pup = PPUpdateState.pup ppup
+      acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt }
+      ls' = record ls { ppup = ppup' ; utxoSt = record utxoSt { fees = 0 } }
+    in
+    e ≡ sucᵉ lastEpoch
+    → _ ⊢ ⟦ pparams , ppup ⟧ⁿᵖ ⇀⦇ votedValue pup pparams Quorum ,NEWPP⦈ ⟦ pparams' , ppup' ⟧ⁿᵖ
     ────────────────────────────────
-    _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈
-        ⟦ e , record (ls nes) { ppup = ppup' } , pparams nes , pparams' ⟧ⁿᵉ
+    _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , pparams , pparams' ⟧ⁿᵉ
 
-  NEWEPOCH-Not-New :
-    e ≢ sucᵉ (lastEpoch nes)
+  NEWEPOCH-Not-New : let open NewEpochState nes in
+    e ≢ sucᵉ lastEpoch
     ────────────────────────────────
     _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes
 \end{code}
@@ -72,7 +80,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Se
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  CHAIN : let open ChainState s; open Block b in
+  CHAIN : let open ChainState s; open Block b; open NewEpochState in
     _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     → ⟦ slot , pparams nes , genDelegs ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
