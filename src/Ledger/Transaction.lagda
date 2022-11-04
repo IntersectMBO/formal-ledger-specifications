@@ -17,6 +17,10 @@ import Ledger.Script
 
 import Data.Nat as N
 
+-- We need a tag for scripts
+data Tag : Set where
+  Spend Mint Cert Rewrd : Tag
+
 record TransactionStructure : Set₁ where
   field
 \end{code}
@@ -72,12 +76,74 @@ This function must produce a unique id for each unique transaction body.
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
 
   open import Ledger.Address Network KeyHash ScriptHash public
+
+
+  -- multiAsset
+  -----------------------------------------------------
+  AssetName : Set
+  AssetName = String --is normally bytestring
+
+  PolicyID : Set
+  PolicyID = ScriptHash
+
+  AssetID : Set
+  AssetID = PolicyID × AssetName
+
+  open import Data.Integer
+
+  Quantity : Set
+  Quantity = ℤ
+
+  -- what does the 0 in ↦₀ mean?
+    -- Whenever we need to get the quantity of a currency in a 'Value' where there
+    -- is no explicit quantity of that currency in the 'Value', then the quantity is
+    -- taken to be zero.
+
+  -- take token algebra, turn it into record, field for specifying a token algebra, in transaction
+
+  Value : Set
+  Value = AssetID ↛ Quantity
+
+  {- Value Types
+  Wdrl = P.StakingCredential × Integer
+  PolicyID = P.CurrencySymbol
+  AssetName = P.TokenName
+  Coin = Integer
+  Quantity = Integer
+  -}
+
+  -- Functions over value
+  ---------------------------
+
+  -- how do I writ this function?
+  --
+  --coin v = v AdaID
+  --inject c = AdaID ↦₀ c
+  --policies v= {pid|(pid, _) ∈ supp v}
+
+  coin : Value → Coin
+  coin v = {!!}
+
+
+  ---------------------------
+
+  -- Pointwise operations on Value
+  --------------------------
+
+  --v + w = { aid ↦ v aid + w aid | aid ∈ dom v ∪ dom w }
+
+  --v ≤ w ⇔ ∀ aid ∈ AssetID, v aid ≤ w aid
+
+  --------------------------
+
+  -----------------------------------------------------
+
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
   TxIn  = TxId × Ix
-  TxOut = Addr × Coin
+  TxOut = Addr × Value × Maybe DataHash
   UTxO  = TxIn ↛ TxOut
   Wdrl  = RwdAddr ↛ Coin
 
@@ -89,23 +155,31 @@ This function must produce a unique id for each unique transaction body.
 \begin{code}
   record TxBody : Set where
     field txins      : ℙ TxIn
+          collateral : ℙ TxIn -- new
           txouts     : Ix ↛ TxOut
           --txcerts  : List DCert
+          mint       : Value -- new
           txfee      : Coin
           txvldt     : Maybe Slot × Maybe Slot
           txwdrls    : Wdrl
           txup       : Maybe Update
+          reqSignerHashes : ℙ KeyHash -- new
+          scriptIntegrityHash : Maybe ScriptHash -- new
           txADhash   : Maybe ADHash
+          netwrk    : Maybe Network
           txsize     : ℕ
-          txid       : TxId
+          txid       : TxId -- does this need to change to tx network id
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ↛ Sig
-          scripts  : ℙ Script
+          scripts  : ScriptHash ↛ Script -- new OLD: ℙ Script
+          -- txdats : (DataHash ↦ Datum)
+          -- txrdmrs : (RdmrPtr ↦ Redeemer × ExUnits)
 
   record Tx : Set where
     field body  : TxBody
           wits  : TxWitnesses
+          IsValid : Tag -- new
           txAD  : Maybe AuxiliaryData
 \end{code}
 \emph{Abstract functions}
