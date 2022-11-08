@@ -94,15 +94,10 @@ This function must produce a unique id for each unique transaction body.
   Quantity : Set
   Quantity = ℤ
 
-  -- what does the 0 in ↦₀ mean?
-    -- Whenever we need to get the quantity of a currency in a 'Value' where there
-    -- is no explicit quantity of that currency in the 'Value', then the quantity is
-    -- taken to be zero.
-
   -- take token algebra, turn it into record, field for specifying a token algebra, in transaction
 
   Value : Set
-  Value = AssetID ↛ Quantity
+  Value = AssetID ↦ Quantity
 
   {- Value Types
   Wdrl = P.StakingCredential × Integer
@@ -143,7 +138,7 @@ This function must produce a unique id for each unique transaction body.
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
   TxIn  = TxId × Ix
-  TxOut = Addr × Value × Maybe DataHash
+  TxOut = Addr × Value × Maybe DataHash 
   UTxO  = TxIn ↛ TxOut
   Wdrl  = RwdAddr ↛ Coin
 

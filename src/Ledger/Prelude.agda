@@ -46,6 +46,7 @@ abstract
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) public
 open import Axiom.Set.Map th renaming (Map to _↛_) public
 open L.Decˡ hiding (_∈?_; ≟-∅) public
+open import Axiom.Set.TotalMap th renaming (TotalMap to _↦_) public
 open import Axiom.Set.Sum th public
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where
