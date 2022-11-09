@@ -123,8 +123,15 @@ record MonadTC (M : ∀ {f} → Set f → Set f) ⦃ m : Monad M ⦄ ⦃ me : Mo
       where _ → error ("Not a record!" ∷ᵈ [])
     return $ con c args
 
+  -- this allows mutual recursion
+  declareAndDefineFuns : List (Arg Name × Type × List Clause) → M ⊤
+  declareAndDefineFuns ds = do
+    traverseList (λ where (n , t , _) → declareDef n t) ds
+    traverseList ((λ where (arg _ n , _ , cs) → defineFun n cs)) ds
+    return _
+
   declareAndDefineFun : Arg Name → Type → List Clause → M ⊤
-  declareAndDefineFun (arg i n) ty cls = declareDef (arg i n) ty >> defineFun n cls
+  declareAndDefineFun n ty cls = declareAndDefineFuns [ (n , ty , cls) ]
 
   newMeta : Term → M Term
   newMeta = checkType unknown
