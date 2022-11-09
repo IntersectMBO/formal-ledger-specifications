@@ -104,14 +104,17 @@ record MonadTC (M : ∀ {f} → Set f → Set f) ⦃ m : Monad M ⦄ ⦃ me : Mo
       where _ → return false
     return true
 
-  termFromName : Name → M Term
-  termFromName n = do
+  nameConstr : Name → List (Arg Term) → M Term
+  nameConstr n args = do
     isD ← isDef n
     isC ← isCon n
     case (isD , isC) of λ where
-      (true , _)      → return $ def n []
-      (false , true)  → return $ con n []
+      (true , _)      → return $ def n args
+      (false , true)  → return $ con n args
       (false , false) → error ((R'.primShowQName n <+> "is neither a definition nor a constructor!") ∷ᵈ [])
+
+  termFromName : Name → M Term
+  termFromName n = nameConstr n []
 
   -- apply the unique constructor of the record to the arguments
   mkRecord : Name → List (Arg Term) → M Term

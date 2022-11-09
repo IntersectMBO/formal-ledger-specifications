@@ -5,8 +5,12 @@ open import Prelude
 open import Meta
 
 open import Data.List using (map; zipWith)
+import Data.Sum
 
 open import PreludeImports
+
+open import Relation.Nullary.Decidable hiding (map)
+open import Reflection.AST.Name
 
 import Reflection
 open import Interface.Monad.Instance
@@ -26,29 +30,31 @@ record DataDef : Set where
   field
     name : Name
     constructors : List (Name × TypeView)
+    params : List (Abs (Arg Type))
 
 record RecordDef : Set where
   field
     name : Name
     fields : List (Arg Name)
+    params : List (Abs (Arg Type))
 
 module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
 
-  logAdditionalContext : List $ Arg Type → M ⊤
-  logAdditionalContext l = withAppendDebugPath "context" do
-    debugLog1 "Additional context:"
+  logTelescope : List (Maybe String × Arg Type) → M ⊤
+  logTelescope l = withAppendDebugPath "context" do
     helper (length l) l
     where
-      helper : ℕ → List $ Arg Type → M ⊤
+      helper : ℕ → List (Maybe String × Arg Type) → M ⊤
       helper n [] = return _
-      helper n (arg _ t ∷ l) = do
-        debugLog ("  " ∷ᵈ mapVars (_∸ (n ∸ (1 + length l))) t ∷ᵈ [])
-        helper n l
+      helper n ((x , ty@(arg _ t)) ∷ l) = do
+        let name = maybe id "?" x
+        debugLog ("  " ∷ᵈ name ∷ᵈ " : "  ∷ᵈ mapVars (_∸ (n ∸ (1 + length l))) t ∷ᵈ [])
+        extendContext ty $ helper n l
 
   logContext : List $ Arg Type → M ⊤
   logContext l = withAppendDebugPath "context" do
     debugLog1 "Context:"
-    helper (length l) l
+    catch (helper (length l) l) (λ _ → debugLog1 "Error while printing the context!")
     catch (do
       goalTy ← goalTy
       debugLog ("  ⊢ " ∷ᵈ goalTy ∷ᵈ []))
@@ -89,18 +95,41 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
   getDataDef : Name → M DataDef
   getDataDef n = inDebugPath "getDataDef" do
     debugLog ("Find details for datatype: " ∷ᵈ n ∷ᵈ [])
-    (data-type pars cs) ← getDefinition n -- TODO: do something with pars
+    (data-type pars cs) ← getDefinition n
       where _ → error1 "Not a data definition!"
     debugLogᵐ ("Constructor names: " ∷ᵈᵐ cs ᵛ ∷ᵈᵐ []ᵐ)
     cs' ← traverseList (λ n → (n ,_) <$> getType' n) cs
     debugLogᵐ ("Result: " ∷ᵈᵐ cs' ᵛⁿ ∷ᵈᵐ []ᵐ)
-    return record { name = n ; constructors = cs' }
+    args ← proj₁ <$> getType' n
+    return record { name = n ; constructors = cs' ; params = take pars args }
 
   getRecordDef : Name → M RecordDef
   getRecordDef n = do
     (record-type c fs) ← getDefinition n
       where _ → error1 "Not a record definition!"
-    return (record { name = c ; fields = fs })
+    args ← proj₁ <$> getType' n
+    return (record { name = c ; fields = fs ; params = args })
+
+  getDataOrRecordDef : Name → M (DataDef ⊎ RecordDef)
+  getDataOrRecordDef n =
+    catch (inj₁ <$> getDataDef n)
+      λ _ → catch (inj₂ <$> getRecordDef n)
+      λ _ → error1 "Neither a data not a record definition!"
+
+  getParams : Name → M (List (Abs (Arg Type)))
+  getParams n = Data.Sum.[ DataDef.params , RecordDef.params ] <$> getDataOrRecordDef n
+
+  isSort : Term → M Bool
+  isSort t = do
+    (agda-sort _) ← normalise t
+      where _ → return false
+    return true
+
+  isDefT : Name → Term → M Bool
+  isDefT n t = do
+    (def n' _) ← normalise t
+      where _ → return false
+    return ⌊ n ≟ n' ⌋
 
   -- run a computation that returns a term, resetting the TC state but
   -- ensuring that the term doesn't contain any metavariables
@@ -114,6 +143,12 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
         debugLogᵐ ("Remaining metavariables:" ∷ᵈᵐ m ᵛⁿ ∷ᵈᵐ []ᵐ)
         debugLog ("In term: " ∷ᵈ t ∷ᵈ [])
         error1 "Unsolved metavariables remaining in withSafeReset!"
+
+  -- apply a list of terms to a name, picking the correct constructor & visibility
+  applyWithVisibility : Name → List Term → M Term
+  applyWithVisibility n l = do
+    (argTys , _) ← getType' n
+    nameConstr n (zipWith (λ where (abs _ (arg i _)) → arg i) argTys l)
 
 ITactic : Set
 ITactic = TC ⊤
