@@ -4,13 +4,15 @@
 
 open import Ledger.Prelude hiding (All; Any)
 
+module Ledger.Script (KeyHash ScriptHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ where
+
 open import Data.List.Relation.Unary.All
 open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Binary.Sublist.Propositional as S
 
-module Ledger.Script (KeyHash ScriptHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ where
-
 open import Ledger.Crypto
+
+open import Tactic.Derive.DecEq
 
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
@@ -98,69 +100,10 @@ module _ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot
 
   instance
     DecEq-Timelock : DecEq Timelock
-    DecEq-Timelock ._≟_ (RequireAllOf []) (RequireAllOf []) = yes refl
-    DecEq-Timelock ._≟_ (RequireAllOf []) (RequireAllOf (x ∷ x₁)) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAllOf (x ∷ x₁)) (RequireAllOf []) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAllOf (x ∷ x₁)) (RequireAllOf (x₂ ∷ x₃)) with x ≟ x₂ | RequireAllOf x₁ ≟ RequireAllOf x₃
-    ... | no ¬p    | _        = no (λ where refl → ¬p refl)
-    ... | yes refl | no ¬p    = no (λ where refl → ¬p refl)
-    ... | yes refl | yes refl = yes refl
-    DecEq-Timelock ._≟_ (RequireAllOf x) (RequireAnyOf x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAllOf x) (RequireMOf x₁ x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAllOf x) (RequireSig x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAllOf x) (RequireTimeStart x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAllOf x) (RequireTimeExpire x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAnyOf x) (RequireAllOf x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAnyOf []) (RequireAnyOf []) = yes refl
-    DecEq-Timelock ._≟_ (RequireAnyOf []) (RequireAnyOf (x ∷ x₁)) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAnyOf (x ∷ x₁)) (RequireAnyOf []) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAnyOf (x ∷ x₁)) (RequireAnyOf (x₂ ∷ x₃)) with x ≟ x₂ | RequireAnyOf x₁ ≟ RequireAnyOf x₃
-    ... | no ¬p    | _        = no (λ where refl → ¬p refl)
-    ... | yes refl | no ¬p    = no (λ where refl → ¬p refl)
-    ... | yes refl | yes refl = yes refl
-    DecEq-Timelock ._≟_ (RequireAnyOf x) (RequireMOf x₁ x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAnyOf x) (RequireSig x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAnyOf x) (RequireTimeStart x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireAnyOf x) (RequireTimeExpire x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireMOf x x₁) (RequireAllOf x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireMOf x x₁) (RequireAnyOf x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireMOf k []) (RequireMOf k₁ []) with k ≟ k₁
-    ... | no ¬p    = no (λ where refl → ¬p refl)
-    ... | yes refl = yes refl
-    DecEq-Timelock ._≟_ (RequireMOf k []) (RequireMOf k₁ (x ∷ x₁)) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireMOf k (x ∷ x₁)) (RequireMOf k₁ []) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireMOf k (x ∷ x₁)) (RequireMOf k₁ (x₂ ∷ x₃)) with k ≟ k₁ | x ≟ x₂ | RequireMOf k x₁ ≟ RequireMOf k₁ x₃
-    ... | no ¬p    | _        | _        = no (λ where refl → ¬p refl)
-    ... | yes refl | no ¬p    | _        = no (λ where refl → ¬p refl)
-    ... | yes refl | yes refl | no ¬p    = no (λ where refl → ¬p refl)
-    ... | yes refl | yes refl | yes refl = yes refl
-    DecEq-Timelock ._≟_ (RequireMOf x x₁) (RequireSig x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireMOf x x₁) (RequireTimeStart x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireMOf x x₁) (RequireTimeExpire x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireSig x) (RequireAllOf x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireSig x) (RequireAnyOf x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireSig x) (RequireMOf x₁ x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireSig x) (RequireSig x₁) with x ≟ x₁
-    ... | no ¬p    = no (λ where refl → ¬p refl)
-    ... | yes refl = yes refl
-    DecEq-Timelock ._≟_ (RequireSig x) (RequireTimeStart x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireSig x) (RequireTimeExpire x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeStart x) (RequireAllOf x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeStart x) (RequireAnyOf x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeStart x) (RequireMOf x₁ x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeStart x) (RequireSig x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeStart x) (RequireTimeStart x₁) with x ≟ x₁
-    ... | no ¬p    = no (λ where refl → ¬p refl)
-    ... | yes refl = yes refl
-    DecEq-Timelock ._≟_ (RequireTimeStart x) (RequireTimeExpire x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeExpire x) (RequireAllOf x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeExpire x) (RequireAnyOf x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeExpire x) (RequireMOf x₁ x₂) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeExpire x) (RequireSig x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeExpire x) (RequireTimeStart x₁) = no (λ ())
-    DecEq-Timelock ._≟_ (RequireTimeExpire x) (RequireTimeExpire x₁) with x ≟ x₁
-    ... | no ¬p    = no (λ where refl → ¬p refl)
-    ... | yes refl = yes refl
+  DecEq-ListTimelock : DecEq (List Timelock)
+
+  unquoteDef DecEq-Timelock DecEq-ListTimelock =
+    derive-DecEqᵐ ((quote List , DecEq-ListTimelock) ∷ (quote Timelock , DecEq-Timelock) ∷ [])
 
   open P1ScriptStructure
 

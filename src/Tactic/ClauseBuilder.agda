@@ -103,6 +103,15 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
     let patternTel = zipWith (λ where (abs _ (arg i _)) k → arg i (` k)) introTel $ downFrom $ length introTel
     return (((λ where (abs s (arg i t)) → (s , arg i unknown)) <$> introTel) , (vArg $ Pattern.con n patternTel))
 
+  -- like constrToPattern, but applied to parameters
+  constrToPatternTyped : Name → List Term → M SinglePattern
+  constrToPatternTyped n ps = do
+    t ← applyWithVisibility n ps
+    debugLogᵐ (t ᵛⁿ ∷ᵈᵐ []ᵐ)
+    (introTel , _) ← viewTy <$> (local (λ env → record env { normalisation = true }) $ inferType t)
+    let patternTel = zipWith (λ where (abs _ (arg i _)) k → arg i (` k)) introTel $ downFrom $ length introTel
+    return (((λ where (abs s (arg i t)) → (s , arg i t)) <$> introTel) , (vArg $ Pattern.con n patternTel))
+
   -- all possible patterns for an inductive type
   constructorPatterns : Arg Type → M (List SinglePattern)
   constructorPatterns (arg i ty) = do
@@ -113,16 +122,32 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
            , arg i (Pattern.con n (zipWithIndex (λ where k (abs _ (arg i _)) → arg i (` (length argInfo ∸ ℕ.suc k))) argInfo)))
 
   -- all possible patterns for an inductive type
-  constructorPatterns' : Arg Type → M (List SinglePattern)
-  constructorPatterns' (arg i ty) = do
+  constructorPatterns' : Type → M (List SinglePattern)
+  constructorPatterns' ty = do
     constrs ← getConstrsForType ty
     traverseList (λ where (n , _) → constrToPattern n ty) constrs
+
+  -- all possible patterns for an inductive type
+  constructorPatternsTyped : Type → List Type → M (List SinglePattern)
+  constructorPatternsTyped ty ps = do
+    constrs ← getConstrsForType ty
+    traverseList (λ where (n , _) → constrToPatternTyped n ps) constrs
 
 ClauseInfo : Set
 ClauseInfo = List SinglePattern
 
 data ClauseExpr : Set where
   MatchExpr : List (SinglePattern × (ClauseExpr ⊎ Maybe Term)) → ClauseExpr
+
+multiClauseExpr : List (NE.List⁺ SinglePattern × (ClauseExpr ⊎ Maybe Term)) → ClauseExpr
+multiClauseExpr = MatchExpr ∘ Data.List.map helper
+  where
+    helper' : (List SinglePattern × (ClauseExpr ⊎ Maybe Term)) → ClauseExpr ⊎ Maybe Term
+    helper' ([]     , e) = e
+    helper' (p ∷ ps , e) = inj₁ (MatchExpr [ p , helper' (ps , e) ])
+
+    helper : (NE.List⁺ SinglePattern × (ClauseExpr ⊎ Maybe Term)) → SinglePattern × (ClauseExpr ⊎ Maybe Term)
+    helper (p NE.∷ ps , e) = p , helper' (ps , e)
 
 clauseExprToClauseInfo : ClauseExpr → List (ClauseInfo × Maybe Term)
 clauseExprToClauseInfo (MatchExpr []) = []
@@ -188,8 +213,8 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
   currentTyConstrPatterns : M (List SinglePattern)
   currentTyConstrPatterns = do
     (ty ∷ _ , _) ← viewTy′ <$> goalTy
-      where _ → error1 "Goal type is not a forall!"
-    constructorPatterns' ty
+      where _ → error1 "currentTyConstrPatterns: Goal type is not a forall!"
+    constructorPatterns' (unArg ty)
 
 stripMetaLambdas : Term → Term
 stripMetaLambdas = helper 0
@@ -201,21 +226,29 @@ stripMetaLambdas = helper 0
 
 module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadError (List ErrorPart) M ⦄ ⦃ mre : MonadReader TCEnv M ⦄ ⦃ _ : MonadTC M ⦄ where
 
+  isProj : Pattern → Bool
+  isProj (Pattern.proj _) = true
+  isProj _                = false
+
   -- if the goal is of type (a : A) → B, return the type of the branch of pattern p and new context
   specializeType : SinglePattern → Type → M (Type × List (Arg Type))
-  specializeType p@(t , arg i _) goalTy = inDebugPath "specializeType" $ noConstraints $ runAndReset do
+  specializeType p@(t , arg i p') goalTy = inDebugPath "specializeType" $ noConstraints $ runAndReset do
     debugLog ("Goal type to specialize: " ∷ᵈ goalTy ∷ᵈ [])
     cls@((Clause.clause tel _ _) ∷ _) ← return $ clauseExprToClauses $ MatchExpr $
         (p , inj₂ (just unknown)) ∷
-        [ varSinglePattern (arg i "_") , inj₂ (just unknown) ]
+        (if isProj p' then [] else [ varSinglePattern (arg i "_") , inj₂ (just unknown) ])
       where _ → error1 "BUG"
+    debugLog ("With pattern: " ∷ᵈ cls ∷ᵈ [])
     (pat-lam (cl@(Clause.clause tel' _ (meta x ap)) ∷ _) []) ← checkType (pat-lam cls []) goalTy
-      where t → debugLog ("BUG in specializeType:" ∷ᵈ t ∷ᵈ "\nWith pattern:" -- ∷ᵈ {!cls!}
+      where t → debugLog ("BUG in specializeType:" ∷ᵈ t ∷ᵈ "\nWith pattern:" ∷ᵈ cls
                   ∷ᵈ "\nWith type:" ∷ᵈ goalTy ∷ᵈ "\nSinglePattern:" -- ∷ᵈ {!p!}
                   ∷ᵈ []) >> error1 "BUG"
-    let varsToUnbind = length tel' ∸ length tel
-    let newCtx = take (length tel) $ proj₂ <$> tel'
+    let varsToUnbind = 0
+    let newCtx = proj₂ <$> tel'
     let m = meta x (map-Args (mapVars (_∸ varsToUnbind)) $ take (length ap ∸ varsToUnbind) ap)
+    logCurrentContext
+    logTelescope (Data.List.map (nothing ,_) newCtx)
+    logTelescope (Data.List.map ((nothing ,_) ∘ proj₂) tel')
     goalTy' ← extendContext' newCtx $ inferType m
     return (goalTy' , newCtx)
 
@@ -230,6 +263,16 @@ module ClauseExprM {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ _ :
   -- Construct a ClauseExpr in M and extend the context appropriately
   matchExprM : List (SinglePattern × M (ClauseExpr ⊎ Maybe Term)) → M ClauseExpr
   matchExprM = _<$>_ MatchExpr ∘ traverseList (λ where (a , b) → (a ,_) <$> introPatternM a b)
+
+  multiMatchExprM : List (NE.List⁺ SinglePattern × M (ClauseExpr ⊎ Maybe Term)) → M ClauseExpr
+  multiMatchExprM = matchExprM ∘ Data.List.map helper
+    where
+      helper' : (List SinglePattern × M (ClauseExpr ⊎ Maybe Term)) → M (ClauseExpr ⊎ Maybe Term)
+      helper' ([]     , e) = e
+      helper' (p ∷ ps , e) = inj₁ <$> (matchExprM [ p , helper' (ps , e) ])
+
+      helper : (NE.List⁺ SinglePattern × M (ClauseExpr ⊎ Maybe Term)) → SinglePattern × M (ClauseExpr ⊎ Maybe Term)
+      helper (p NE.∷ ps , e) = (p , helper' (ps , e))
 
   singleMatchExpr : SinglePattern → M (ClauseExpr ⊎ Maybe Term) → M ClauseExpr
   singleMatchExpr p x = matchExprM [ p , x ]
