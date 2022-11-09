@@ -33,9 +33,21 @@ instance
   IsErrorPart-Name : IsErrorPart Name
   IsErrorPart-Name .toErrorPart = ErrorPart.nameErr
 
-infixr 5 _∷ᵈ_
+  IsErrorPart-Clause : IsErrorPart Clause
+  IsErrorPart-Clause .toErrorPart c = ErrorPart.termErr (pat-lam [ c ] [])
+
+  IsErrorPart-ListClause : IsErrorPart (List Clause)
+  IsErrorPart-ListClause .toErrorPart cs = ErrorPart.termErr (pat-lam cs [])
+
+infixr 5 _∷ᵈ_ _++ᵈ_
 _∷ᵈ_ : A → ⦃ _ : IsErrorPart A ⦄ → List ErrorPart → List ErrorPart
 e ∷ᵈ es = toErrorPart e ∷ es
+
+_++ᵈ_ : List A → ⦃ _ : IsErrorPart A ⦄ → List ErrorPart → List ErrorPart
+es ++ᵈ es' = map toErrorPart es ++ es'
+
+_ᵈ : ⦃ _ : IsErrorPart A ⦄ → List A → List ErrorPart
+_ᵈ = map toErrorPart
 
 data DebugSelection : Set where
   FullPath : DebugSelection
