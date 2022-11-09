@@ -13,6 +13,7 @@ open import Data.List.Relation.Binary.Sublist.Propositional as S
 open import Ledger.Crypto
 
 open import Tactic.Derive.DecEq
+open import MyDebugOptions
 
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
@@ -98,12 +99,7 @@ module _ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot
   evalTimelockᵇ khs (_ , just r )  (RequireTimeExpire x)  = r ≤ᵇ x
   evalTimelockᵇ khs (_ , nothing)  (RequireTimeExpire x)  = false
 
-  instance
-    DecEq-Timelock : DecEq Timelock
-  DecEq-ListTimelock : DecEq (List Timelock)
-
-  unquoteDef DecEq-Timelock DecEq-ListTimelock =
-    derive-DecEqᵐ ((quote List , DecEq-ListTimelock) ∷ (quote Timelock , DecEq-Timelock) ∷ [])
+  unquoteDecl DecEq-Timelock = derive-DecEqᵐ ((quote Timelock , DecEq-Timelock , [ quote List ]) ∷ [])
 
   open P1ScriptStructure
 
