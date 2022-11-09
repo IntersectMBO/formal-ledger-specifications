@@ -47,7 +47,10 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
       helper : ℕ → List (Maybe String × Arg Type) → M ⊤
       helper n [] = return _
       helper n ((x , ty@(arg _ t)) ∷ l) = do
-        let name = maybe id "?" x
+        let name = case x of λ where
+          nothing   → "?"
+          (just "") → "_"
+          (just x)  → x
         debugLog ("  " ∷ᵈ name ∷ᵈ " : "  ∷ᵈ mapVars (_∸ (n ∸ (1 + length l))) t ∷ᵈ [])
         extendContext ty $ helper n l
 
