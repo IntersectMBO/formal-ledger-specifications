@@ -8,6 +8,7 @@ open import Prelude
 
 open import Reflection.AST.Term using (_≟-Pattern_)
 open import Reflection.AST.Name using () renaming (_≟_ to _≟-Name_)
+open import Agda.Builtin.Reflection using (primShowQName)
 
 open import PreludeImports
 
@@ -25,7 +26,7 @@ open import Interface.DecEq
 
 open import Interface.Monad.Instance
 open import Interface.MonadReader.Instance
-open import Interface.MonadTC.Instance
+open import Interface.MonadTC.Instance hiding (Monad-TC)
 
 instance
   _ = ContextMonad-MonadTC
@@ -88,36 +89,52 @@ trueIndices : {A : Set} → List (A × Bool) → List ℕ
 trueIndices [] = []
 trueIndices (x ∷ l) = if proj₂ x then length l ∷ trueIndices l else trueIndices l
 
+modifyClassType : Maybe Name → TypeView → Type
+modifyClassType nothing  (tel , ty) = tyView (tel , quote DecEq ∙⟦ ty ⟧)
+modifyClassType (just n) (tel , ty) = tyView (tel , quote DecEq ∙⟦ n ∙⟦ ty ⟧ ⟧)
+
+genClassType : Name → Maybe Name → TC Type
+genClassType dName wName = do
+  params ← getParams dName
+  adjParams ← adjustParams params
+  debugLog1 "AdjustedParams: "
+  logTelescope (Data.List.map ((λ where (abs s x) → just s , x) ∘ proj₁) adjParams)
+  ty ← applyWithVisibility dName (Data.List.map ♯ (trueIndices adjParams))
+  return $ modifyClassType wName (Data.List.map proj₁ adjParams , ty)
+
 lookupName : List (Name × Name) → Name → Maybe Name
 lookupName [] n = nothing
 lookupName ((k , v) ∷ l) n = if ⌊ k ≟-Name n ⌋ then just v else lookupName l n
 
-deriveSingle : List (Name × Name) → Name → Name → TC (Arg Name × Type × List Clause)
-deriveSingle transName dName iName = inDebugPath "DeriveEq" do
-  params ← getParams dName
-  adjParams ← adjustParams params
-  debugLogᵐ ("AdjustedParams: " ∷ᵈᵐ []ᵐ)
-  logTelescope (Data.List.map ((λ where (abs s x) → just s , x) ∘ proj₁) adjParams)
-  ty ← applyWithVisibility dName (Data.List.map ♯ (trueIndices adjParams))
-  ps ← constructorPatterns' (dName ∙)
-  debugLog1 "Tmp"
+deriveSingle : List (Name × Name) → Maybe Name → Name → Name → TC (Arg Name × Type × List Clause)
+deriveSingle transName wName dName iName = inDebugPath "DeriveEq" do
+  goalTy ← genClassType dName wName
+  ps ← constructorPatterns' (maybe id dName wName ∙)
   debugLogᵐ ("Constrs: " ∷ᵈᵐ ps ᵛⁿ ∷ᵈᵐ []ᵐ)
-  let goalTy = tyView (Data.List.map proj₁ adjParams , quote DecEq ∙⟦ ty ⟧)
-  cs ← clauseExprToClauses <$> (local (λ c → record c { goal = inj₂ goalTy }) do
-    singleMatchExpr ([] , (iArg (Pattern.proj (quote _≟_)))) (contMatch (multiMatchExprM $ cartesianProductWith (toMapDiag (lookupName transName)) ps ps)))
-  return (iArg iName , goalTy , cs)
+  cs ← clauseExprToClauses <$> (local (λ c → record c { goal = inj₂ goalTy }) $
+    singleMatchExpr ([] , iArg (Pattern.proj (quote _≟_))) $
+      contMatch $ multiMatchExprM $ cartesianProductWith (toMapDiag (lookupName transName)) ps ps)
+  let defName = maybe (λ n → maybe vArg (iArg iName) $ lookupName transName n) (iArg iName) wName
+  return (defName , goalTy , cs)
+
+deriveMulti : Name × Name × List Name → TC (List (Arg Name × Type × List Clause))
+deriveMulti (dName , iName , hClasses) = do
+  hClassNames ← traverseList (λ cn → freshName ("DecEq-" <+> primShowQName cn <+> primShowQName dName)) hClasses
+  let transName = Data.List.zip hClasses hClassNames
+  traverseList (λ cn → deriveSingle transName cn dName iName) (nothing ∷ Data.List.map just hClasses)
 
 module _ ⦃ _ : DebugOptions ⦄ where
-  derive-DecEqᵐ : List (Name × Name) → UnquoteDecl
+  derive-DecEqᵐ : List (Name × Name × List Name) → UnquoteDecl
   derive-DecEqᵐ l = initUnquoteWithGoal (quote DecEq ∙) do
-    ds ← traverseList (uncurry (deriveSingle l)) l
+    ds ← concat <$> traverseList deriveMulti l
     debugLog ("Test: " ∷ᵈ Data.List.concatMap (λ where (arg _ n , ty , cls) → n ∷ᵈ " : " ∷ᵈ ty ∷ᵈ " = " ∷ᵈ cls ∷ᵈ []) ds)
+    traverseList (λ where (n , t , _) → declareDef n t) ds
     traverseList ((λ where (arg _ n , _ , cs) → defineFun n cs)) ds
     return _
 
   derive-DecEq : List (Name × Name) → UnquoteDecl
   derive-DecEq l = initUnquoteWithGoal (quote DecEq ∙) do
-    ds ← traverseList (uncurry (deriveSingle [])) l
+    ds ← traverseList (uncurry (deriveSingle [] nothing)) l
     traverseList (λ where (n , t , _) → declareDef n t) ds
     debugLog ("Test: " ∷ᵈ Data.List.concatMap (λ where (arg _ n , ty , cls) → n ∷ᵈ " : " ∷ᵈ ty ∷ᵈ " = " ∷ᵈ cls ∷ᵈ []) ds)
     traverseList ((λ where (arg _ n , _ , cs) → defineFun n cs)) ds
@@ -127,11 +144,7 @@ private
   open import Tactic.Derive.TestTypes
   open import MyDebugOptions
 
-  instance
-    DecEq-E3 : {A : Set} → ⦃ DecEq A ⦄ → DecEq (E3 A)
-
-  DecEq-List' : {A : Set} → ⦃ DecEq A ⦄ → DecEq (List (E3 A))
-  unquoteDef DecEq-E3 DecEq-List' = derive-DecEqᵐ ((quote List , DecEq-List') ∷ (quote E3 , DecEq-E3) ∷ [])
+  unquoteDecl DecEq-E3 = derive-DecEqᵐ ((quote E3 , DecEq-E3 , [ quote List ]) ∷ [])
 
   unquoteDecl DecEq-M₁ DecEq-M₂ = derive-DecEq $ (quote M₁ , DecEq-M₁) ∷ (quote M₂ , DecEq-M₂) ∷ []
 
