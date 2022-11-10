@@ -1,3 +1,9 @@
+-- Deriving decidable equality. This works in several cases that use
+-- mutual recursion, examples are at the bottom.
+--
+-- TODO: This breaks with mutual recursion that nests too deep. It's
+-- also untested with indexed types.
+
 {-# OPTIONS -v allTactics:100 #-}
 {-# OPTIONS --safe #-}
 open import Meta
@@ -14,6 +20,7 @@ open import PreludeImports
 
 import Data.List as L
 import Data.List.NonEmpty as NE
+open import Data.List.Relation.Unary.Unique.Propositional
 
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
@@ -26,7 +33,7 @@ open import Interface.DecEq
 
 open import Interface.Monad.Instance
 open import Interface.MonadReader.Instance
-open import Interface.MonadTC.Instance hiding (Monad-TC)
+open import Interface.MonadTC.Instance
 
 instance
   _ = ContextMonad-MonadTC
@@ -104,6 +111,19 @@ lookupName : List (Name × Name) → Name → Maybe Name
 lookupName [] n = nothing
 lookupName ((k , v) ∷ l) n = if ⌊ k ≟-Name n ⌋ then just v else lookupName l n
 
+genMutualHelper : Name → Type → Maybe Name
+genMutualHelper n (def n' args) =
+  if L.any (λ where (arg _ (def n'' _)) → ⌊ n ≟-Name n'' ⌋ ; _ → false) args
+  then just n' else nothing
+genMutualHelper n _ = nothing
+
+-- Look at the constructors of the argument and return all types that
+-- recursively contain it. This isn't very clever right now.
+genMutualHelpers : Name → TC (List Name)
+genMutualHelpers n = do
+  tys ← L.map (unArg ∘ unAbs) <$> (L.concatMap (proj₁ ∘ viewTy ∘ proj₂) <$> getConstrs n)
+  return $ deduplicate _≟-Name_ $ L.mapMaybe (genMutualHelper n) tys
+
 -- Generate the declaration & definition of a particular derivation.
 --
 -- Takes a dictionary (for mutual recursion), a wrapper (also for
@@ -130,12 +150,13 @@ deriveMulti (dName , iName , hClasses) = do
   traverseList (λ cn → deriveSingle transName cn dName iName) (nothing ∷ L.map just hClasses)
 
 module _ ⦃ _ : DebugOptions ⦄ where
-  derive-DecEqᵐ : List (Name × Name × List Name) → UnquoteDecl
-  derive-DecEqᵐ l = initUnquoteWithGoal (quote DecEq ∙) $ inDebugPath "DeriveEq" do
-    concat <$> traverseList deriveMulti l >>= declareAndDefineFuns
-
   derive-DecEq : List (Name × Name) → UnquoteDecl
-  derive-DecEq = derive-DecEqᵐ ∘ L.map (λ where (a , b) → (a , b , []))
+  derive-DecEq l = initUnquoteWithGoal (quote DecEq ∙) $ do
+    l' ← traverseList helper l
+    concat <$> traverseList deriveMulti l' >>= declareAndDefineFuns
+    where
+      helper : Name × Name → TC (Name × Name × List Name)
+      helper (a , b) = do hs ← genMutualHelpers a ; return (a , b , hs)
 
 private
   open import Tactic.Derive.TestTypes
@@ -145,7 +166,7 @@ private
   unquoteDecl DecEq-E2 = derive-DecEq [ (quote E2 , DecEq-E2) ]
 
   -- this uses mutual recursion with List E3
-  unquoteDecl DecEq-E3 = derive-DecEqᵐ ((quote E3 , DecEq-E3 , [ quote List ]) ∷ [])
+  unquoteDecl DecEq-E3 = derive-DecEq [ (quote E3 , DecEq-E3) ]
 
   unquoteDecl DecEq-R1 = derive-DecEq [ (quote R1 , DecEq-R1) ]
   unquoteDecl DecEq-R2 = derive-DecEq [ (quote R2 , DecEq-R2) ]
