@@ -16,6 +16,8 @@ import Ledger.PParams
 import Ledger.Script
 
 import Data.Nat as N
+open import Data.Integer
+
 
 -- We need a tag for scripts
 data Tag : Set where
@@ -77,9 +79,6 @@ This function must produce a unique id for each unique transaction body.
 
   open import Ledger.Address Network KeyHash ScriptHash public
 
-
-  -- multiAsset
-  -----------------------------------------------------
   AssetName : Set
   AssetName = String --is normally bytestring
 
@@ -89,12 +88,8 @@ This function must produce a unique id for each unique transaction body.
   AssetID : Set
   AssetID = PolicyID × AssetName
 
-  open import Data.Integer
-
   Quantity : Set
   Quantity = ℤ
-
-  -- take token algebra, turn it into record, field for specifying a token algebra, in transaction
 
   Value : Set
   Value = AssetID ↦ Quantity
@@ -115,10 +110,6 @@ This function must produce a unique id for each unique transaction body.
   --coin v = v AdaID
   --inject c = AdaID ↦₀ c
   --policies v= {pid|(pid, _) ∈ supp v}
-
-  coin : Value → Coin
-  coin v = {!!}
-
 
   ---------------------------
 
