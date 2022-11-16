@@ -5,7 +5,7 @@ module Ledger.TokenAlgebra where
 
 open import Ledger.Prelude hiding (T)
 open import Data.Integer
-open import Algebra
+open import Algebra using (CommutativeMonoid)
 
 record TokenAlgebra : Set₁ where
   field  PolicyId : Set
@@ -14,7 +14,7 @@ record TokenAlgebra : Set₁ where
   Coin = ℕ
   MemoryEstimate = ℕ
 
-  open CommutativeMonoid Value renaming (Carrier to ValueC) public
+  open CommutativeMonoid Value renaming (Carrier to ValueC; refl to reflValue) public
 
   field coin     : ValueC → Coin
   field inject   : Coin → ValueC
@@ -22,4 +22,5 @@ record TokenAlgebra : Set₁ where
   field size     : ValueC → MemoryEstimate
   field property : coin ∘ inject ≗ id
 
+  field instance DecEq-ValueC : DecEq ValueC
 \end{code}

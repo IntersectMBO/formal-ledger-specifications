@@ -83,30 +83,6 @@ This function must produce a unique id for each unique transaction body.
 
   open import Ledger.Address Network KeyHash ScriptHash public
 
-
-
-  -- Functions over value
-  ---------------------------
-
-  -- how do I writ this function?
-  --
-  --coin v = v AdaID
-  --inject c = AdaID ↦₀ c
-  --policies v= {pid|(pid, _) ∈ supp v}
-
-  ---------------------------
-
-  -- Pointwise operations on Value
-  --------------------------
-
-  --v + w = { aid ↦ v aid + w aid | aid ∈ dom v ∪ dom w }
-
-  --v ≤ w ⇔ ∀ aid ∈ AssetID, v aid ≤ w aid
-
-  --------------------------
-
-  -----------------------------------------------------
-
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
