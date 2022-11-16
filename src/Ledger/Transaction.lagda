@@ -12,6 +12,7 @@ open import Ledger.Prelude
 
 open import Ledger.Epoch
 open import Ledger.Crypto
+open import Ledger.TokenAlgebra
 import Ledger.PParams
 import Ledger.Script
 
@@ -59,6 +60,8 @@ This function must produce a unique id for each unique transaction body.
         adHashingScheme                     : isHashableSet AuxiliaryData
         ppUpd                               : Ledger.PParams.PParamsDiff Epoch
         txidBytes                           : TxId → Crypto.Ser crypto
+        networkId                           : Network
+        tokenAlgebra                        : TokenAlgebra
         instance DecEq-TxId  : DecEq TxId
                  DecEq-Epoch : DecEq Epoch
                  DecEq-Ix    : DecEq Ix
@@ -66,6 +69,7 @@ This function must produce a unique id for each unique transaction body.
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
+  open TokenAlgebra tokenAlgebra hiding (Coin) public
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
   field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
@@ -79,28 +83,7 @@ This function must produce a unique id for each unique transaction body.
 
   open import Ledger.Address Network KeyHash ScriptHash public
 
-  AssetName : Set
-  AssetName = String --is normally bytestring
 
-  PolicyID : Set
-  PolicyID = ScriptHash
-
-  AssetID : Set
-  AssetID = PolicyID × AssetName
-
-  Quantity : Set
-  Quantity = ℤ
-
-  Value : Set
-  Value = AssetID ↦ Quantity
-
-  {- Value Types
-  Wdrl = P.StakingCredential × Integer
-  PolicyID = P.CurrencySymbol
-  AssetName = P.TokenName
-  Coin = Integer
-  Quantity = Integer
-  -}
 
   -- Functions over value
   ---------------------------
@@ -129,7 +112,7 @@ This function must produce a unique id for each unique transaction body.
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
   TxIn  = TxId × Ix
-  TxOut = Addr × Value × Maybe DataHash 
+  TxOut = Addr × ValueC
   UTxO  = TxIn ↛ TxOut
   Wdrl  = RwdAddr ↛ Coin
 
@@ -141,16 +124,13 @@ This function must produce a unique id for each unique transaction body.
 \begin{code}
   record TxBody : Set where
     field txins      : ℙ TxIn
-          collateral : ℙ TxIn -- new
           txouts     : Ix ↛ TxOut
           --txcerts  : List DCert
-          mint       : Value -- new
+          mint       : ValueC -- new
           txfee      : Coin
           txvldt     : Maybe Slot × Maybe Slot
           txwdrls    : Wdrl
           txup       : Maybe Update
-          reqSignerHashes : ℙ KeyHash -- new
-          scriptIntegrityHash : Maybe ScriptHash -- new
           txADhash   : Maybe ADHash
           netwrk    : Maybe Network
           txsize     : ℕ
@@ -165,7 +145,6 @@ This function must produce a unique id for each unique transaction body.
   record Tx : Set where
     field body  : TxBody
           wits  : TxWitnesses
-          IsValid : Tag -- new
           txAD  : Maybe AuxiliaryData
 \end{code}
 \emph{Abstract functions}
