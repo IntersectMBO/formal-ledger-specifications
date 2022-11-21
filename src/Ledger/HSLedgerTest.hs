@@ -5,7 +5,7 @@ import MAlonzo.Code.Ledger.Foreign.LedgerTypes
 
 initParams :: PParams
 initParams = MkPParams
-  {a = 1, b = 5, maxBlockSize = 1000, maxTxSize = 100, maxHeaderSize = 100, poolDeposit = 10, emax = 10}
+  {a = 1, b = 5, maxBlockSize = 1000, maxTxSize = 100, maxHeaderSize = 100, poolDeposit = 10, emax = 10, pv = (1, 0)}
 
 initEnv :: UTxOEnv
 initEnv = MkUTxOEnv {slot = 0, pparams = initParams}
