@@ -379,7 +379,7 @@ diff --git a/Main.agda b/Main.agda
 index b8dbffc..0cd0ba2 100644
 --- a/Main.agda
 +++ b/Main.agda
-@@ -1,11 +1,21 @@
+@@ -1,7 +1,7 @@
 --- {-# OPTIONS --safe --without-K #-}
 +{-# OPTIONS --safe #-}
  module Main where
@@ -392,6 +392,12 @@ index b8dbffc..0cd0ba2 100644
 +-- open import Classes
 +-- open import Lenses
 +-- open import Tactics
+index b8dbffc..887306b 100644
+--- a/Main.agda
++++ b/Main.agda
+@@ -6,6 +6,16 @@ open import Classes
+ open import Lenses
+ open import Tactics
  
 --- TODO: incorporate into the rest
 -module Stash where
