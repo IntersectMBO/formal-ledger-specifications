@@ -15,18 +15,19 @@ open import Relation.Nullary.Decidable using (⌊_⌋)
 open import Relation.Nullary.Negation
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
-private variable A B C : Type
+private variable ℓ : Level
+                 A B C : Type ℓ
                  P : A → Type
                  l : List A
 
-_Preserves₁_⟶_ : (A → B) → (A → Type) → (B → Type) → Type
+_Preserves₁_⟶_ : {A : Type ℓ} → (A → B) → (A → Type) → (B → Type) → Type ℓ
 f Preserves₁ P ⟶ Q = ∀ {a} → P a → Q (f a)
 
-_Preserves₁₂_⟶_⟶_ : (A → B → C) → (A → Type) → (B → Type) → (C → Type) → Type
+_Preserves₁₂_⟶_⟶_ : {A B : Type ℓ} → (A → B → C) → (A → Type ℓ) → (B → Type ℓ) → (C → Type ℓ) → Type ℓ
 f Preserves₁₂ P ⟶ P' ⟶ Q = ∀ {a b} → P a → P' b → Q (f a b)
 
-record SpecProperty : Type₁ where
-  field specProperty : (A → Type) → Type
+record SpecProperty {ℓ} : Type (sucˡ ℓ) where
+  field specProperty : {A : Type ℓ} → (A → Type) → Type
         sp-∘ : specProperty P → (f : B → A) → specProperty (P ∘ f)
         sp-¬ : specProperty P → specProperty (¬_ ∘ P)
 
@@ -37,16 +38,16 @@ Dec-SpecProperty = record
   ; sp-¬         = λ P? → ¬? ∘ P?
   }
 
-record Theory : Type₁ where
+record Theory {ℓ} : Type (sucˡ ℓ) where
   infix 4 _⊆_ _≡ᵉ_ _∈_ _∉_
   infixr 6 _∪_
 
-  field Set : Type → Type
+  field Set : Type ℓ → Type ℓ
         _∈_ : A → Set A → Type
         sp  : SpecProperty
   open SpecProperty sp public
 
-  _⊆_ : Set A → Set A → Type
+  _⊆_ : Set A → Set A → Type ℓ
   X ⊆ Y = ∀ {a} → a ∈ X → a ∈ Y
 
   -- we might want to either have all properties or decidable properties allowed for specification
@@ -58,10 +59,10 @@ record Theory : Type₁ where
 
   private variable X X' Y : Set A
 
-  _≡ᵉ_ : Set A → Set A → Type
+  _≡ᵉ_ : Set A → Set A → Type ℓ
   X ≡ᵉ Y = X ⊆ Y × Y ⊆ X
 
-  _≡ᵉ'_ : Set A → Set A → Type
+  _≡ᵉ'_ : Set A → Set A → Type ℓ
   X ≡ᵉ' Y = ∀ a → a ∈ X ⇔ a ∈ Y
 
   _∉_ : A → Set A → Type
@@ -69,25 +70,25 @@ record Theory : Type₁ where
 
   open Equivalence
 
-  _Preservesˢ_ : (Set A → Set B) → (∀ {A} → Set A → Type) → Type
+  _Preservesˢ_ : (Set A → Set B) → (∀ {A} → Set A → Type) → Type ℓ
   f Preservesˢ P = f Preserves₁ P ⟶ P
 
-  _Preservesˢ₂_ : (Set A → Set B → Set C) → (∀ {A : Type} → Set A → Type) → Type
+  _Preservesˢ₂_ : (Set A → Set B → Set C) → (∀ {A : Type ℓ} → Set A → Type ℓ) → Type ℓ
   f Preservesˢ₂ P = f Preserves₁₂ P ⟶ P ⟶ P
 
-  disjoint : Set A → Set A → Type
+  disjoint : Set A → Set A → Type ℓ
   disjoint X Y = ∀ {a} → a ∈ X → a ∈ Y → ⊥
 
-  finite : Set A → Type
+  finite : Set A → Type ℓ
   finite X = ∃[ l ] ∀ {a} → a ∈ X ⇔ a ∈ˡ l
 
-  weakly-finite : Set A → Type
+  weakly-finite : Set A → Type ℓ
   weakly-finite X = ∃[ l ] ∀ {a} → a ∈ X → a ∈ˡ l
 
   ⊆-weakly-finite : X ⊆ Y → weakly-finite Y → weakly-finite X
   ⊆-weakly-finite X⊆Y (l , hl) = l , hl ∘ X⊆Y
 
-  isMaximal : Set A → Type
+  isMaximal : Set A → Type ℓ
   isMaximal {A} X = {a : A} → a ∈ X
 
   maximal-⊆ : isMaximal Y → X ⊆ Y
@@ -96,7 +97,7 @@ record Theory : Type₁ where
   maximal-unique : isMaximal X → isMaximal Y → X ≡ᵉ Y
   maximal-unique maxX maxY = maximal-⊆ maxY , maximal-⊆ maxX
 
-  FinSet : Type → Type
+  FinSet : Type ℓ → Type ℓ
   FinSet A = Σ (Set A) finite
 
   -- if you can construct a set that contains all elements satisfying
@@ -151,7 +152,7 @@ record Theory : Type₁ where
   ∈-∪ : ∀ {a} → (a ∈ X ⊎ a ∈ Y) ⇔ a ∈ X ∪ Y
   ∈-∪ = proj₂ binary-unions
 
-  spec-∈ : Type → Type
+  spec-∈ : Type ℓ → Type ℓ
   spec-∈ A = {X : Set A} → specProperty (_∈ X)
 
   -- membership needs to be a specProperty to have intersections
@@ -167,13 +168,13 @@ record Theory : Type₁ where
                       a ∈ X ∩ Y       ∎
       where open R.EquationalReasoning
 
-    disjoint' : Set A → Set A → Type
+    disjoint' : Set A → Set A → Type ℓ
     disjoint' X Y = X ∩ Y ≡ᵉ ∅
 
-  All : (A → Type) → Set A → Type
+  All : (A → Type) → Set A → Type ℓ
   All P X = ∀ {a} → a ∈ X → P a
 
-  Any : (A → Type) → Set A → Type
+  Any : (A → Type) → Set A → Type ℓ
   Any P X = ∃[ a ] a ∈ X × P a
 
 -- finite set theories
