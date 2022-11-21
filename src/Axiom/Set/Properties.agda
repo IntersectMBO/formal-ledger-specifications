@@ -3,7 +3,7 @@
 open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
 
-module Axiom.Set.Properties (th : Theory) where
+module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
 
 open import Prelude hiding (isEquivalence; trans; filter)
 open Theory th
@@ -23,34 +23,34 @@ open import Relation.Unary using () renaming (Decidable to Dec₁)
 
 open Equivalence
 
-private variable A B C D : Type
+private variable A B C D : Type ℓ
                  X X' Y Y' Z : Set A
 
-∈-map⁺'' : ∀ {A B : Type} {f : A → B} {X} {a} → a ∈ X → f a ∈ map f X
+∈-map⁺'' : ∀ {f : A → B} {X} {a} → a ∈ X → f a ∈ map f X
 ∈-map⁺'' h = to ∈-map (-, refl , h)
 
-∈-filter⁻' : ∀ {A : Type} {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} → a ∈ filter sp-P X → (P a × a ∈ X)
+∈-filter⁻' : ∀ {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} → a ∈ filter sp-P X → (P a × a ∈ X)
 ∈-filter⁻' = from ∈-filter
 
-∈-∪⁻ : ∀ {A : Type} {X Y : Set A} {a} → a ∈ X ∪ Y → a ∈ X ⊎ a ∈ Y
+∈-∪⁻ : ∀ {X Y : Set A} {a} → a ∈ X ∪ Y → a ∈ X ⊎ a ∈ Y
 ∈-∪⁻ = from ∈-∪
 
-∈-map⁻' : ∀ {A B : Type} {f : A → B} {X} {b} → b ∈ map f X → (∃[ a ] b ≡ f a × a ∈ X)
+∈-map⁻' : ∀ {f : A → B} {X} {b} → b ∈ map f X → (∃[ a ] b ≡ f a × a ∈ X)
 ∈-map⁻' = from ∈-map
 
-∈-fromList⁻ : ∀ {A : Type} {l : List A} {a} → a ∈ fromList l → a ∈ˡ l
+∈-fromList⁻ : ∀ {l : List A} {a} → a ∈ fromList l → a ∈ˡ l
 ∈-fromList⁻ = from ∈-fromList
 
-∈-filter⁺' : ∀ {A : Type} {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} → (P a × a ∈ X) → a ∈ filter sp-P X
+∈-filter⁺' : ∀ {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} → (P a × a ∈ X) → a ∈ filter sp-P X
 ∈-filter⁺' = to ∈-filter
 
-∈-∪⁺ : ∀ {A : Type} {X Y : Set A} {a} → a ∈ X ⊎ a ∈ Y → a ∈ X ∪ Y
+∈-∪⁺ : ∀ {X Y : Set A} {a} → a ∈ X ⊎ a ∈ Y → a ∈ X ∪ Y
 ∈-∪⁺ = to ∈-∪
 
-∈-map⁺' : ∀ {A B : Type} {f : A → B} {X} {b} → (∃[ a ] b ≡ f a × a ∈ X) → b ∈ map f X
+∈-map⁺' : ∀ {f : A → B} {X} {b} → (∃[ a ] b ≡ f a × a ∈ X) → b ∈ map f X
 ∈-map⁺' = to ∈-map
 
-∈-fromList⁺ : ∀ {A : Type} {l : List A} {a} → a ∈ˡ l → a ∈ fromList l
+∈-fromList⁺ : ∀ {l : List A} {a} → a ∈ˡ l → a ∈ fromList l
 ∈-fromList⁺ = to ∈-fromList
 
 open import Tactic.AnyOf

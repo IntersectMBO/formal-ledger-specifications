@@ -3,7 +3,7 @@
 open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
 
-module Axiom.Set.Factor (th : Theory) where
+module Axiom.Set.Factor (th : Theory {lzero}) where
 
 open import Prelude
 

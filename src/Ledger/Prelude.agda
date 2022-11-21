@@ -14,7 +14,7 @@ open import Axiom.Set
 open import Axiom.Set.List as L renaming (List-Model to List-Model'; List-Modelᶠ to List-Model'ᶠ; List-Modelᵈ to List-Model'ᵈ)
 
 abstract
-  List-Model : Theory
+  List-Model : Theory {0ℓ}
   List-Model = List-Model'
   List-Modelᶠ : Theoryᶠ
   List-Modelᶠ = List-Model'ᶠ
