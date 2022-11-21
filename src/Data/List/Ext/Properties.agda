@@ -21,11 +21,11 @@ open import Interface.DecEq
 module Data.List.Ext.Properties where
 
 -- TODO: stdlib?
-_×-cong_ : ∀ {a} {A B C D : Set a} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A × C) R.∼[ k ] (B × D)
+_×-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A × C) R.∼[ k ] (B × D)
 h ×-cong h' = fromRelated (toRelated h M.×-cong toRelated h')
   where open import Data.Product.Function.NonDependent.Propositional as M
 
-_⊎-cong_ : ∀ {a} {A B C D : Set a} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A ⊎ C) R.∼[ k ] (B ⊎ D)
+_⊎-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A ⊎ C) R.∼[ k ] (B ⊎ D)
 h ⊎-cong h' = fromRelated (toRelated h M.⊎-cong toRelated h')
   where open import Data.Sum.Function.Propositional as M
 

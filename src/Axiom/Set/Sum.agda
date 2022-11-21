@@ -6,7 +6,7 @@ open import Algebra using (CommutativeMonoid)
 
 open import Prelude
 
-module Axiom.Set.Sum (th : Theory) ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
+module Axiom.Set.Sum (th : Theory {lzero}) ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
 open Theory th
 open import Axiom.Set.Factor th
 open import Axiom.Set.Properties th

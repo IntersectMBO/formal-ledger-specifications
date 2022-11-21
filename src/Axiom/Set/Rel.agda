@@ -4,7 +4,7 @@
 open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
 
-module Axiom.Set.Rel (th : Theory) where
+module Axiom.Set.Rel (th : Theory {lzero}) where
 open Theory th
 open import Axiom.Set.Factor th
 open import Axiom.Set.Properties th
