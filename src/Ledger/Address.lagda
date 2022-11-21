@@ -3,6 +3,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
+open import Interface.DecEq.Ext
 
 module Ledger.Address (
 \end{code}

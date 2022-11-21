@@ -99,7 +99,7 @@ module _ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot
   evalTimelockᵇ khs (_ , just r )  (RequireTimeExpire x)  = r ≤ᵇ x
   evalTimelockᵇ khs (_ , nothing)  (RequireTimeExpire x)  = false
 
-  unquoteDecl DecEq-Timelock = derive-DecEqᵐ ((quote Timelock , DecEq-Timelock , [ quote List ]) ∷ [])
+  unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 
   open P1ScriptStructure
 

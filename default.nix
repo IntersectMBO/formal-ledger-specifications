@@ -38,8 +38,8 @@ let
     src = customAgda.fetchFromGitHub {
       repo = "stdlib-meta";
       owner = "omelkonian";
-      rev = "dadb6a468b9cdc47442b48a47b848f8e8fbffda7";
-      sha256 = "YkUtM5Gos6xd7ZsZPqcuVy6DZqNA7n/exPfQngir+y0=";
+      rev = "761f81753b588d865b45acb44683b1b4042d78c0";
+      sha256 = "iGdZv18Ku+GZ+MikQWwWYv8vs8j59OXRB1xqYTmoqAc=";
     };
     patches = [ ./stdlib-meta-update-imports.patch ];
     meta = { };

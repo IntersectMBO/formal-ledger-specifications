@@ -1,27 +1,852 @@
-diff --git a/Generics.agda b/Generics.agda
-index 4586617..c5795fe 100644
---- a/Generics.agda
-+++ b/Generics.agda
-@@ -8,14 +8,14 @@ open import Level hiding (suc)
+diff --git a/Algebra/Function.agda b/Algebra/Function.agda
+index a1e3600..6695287 100644
+--- a/Algebra/Function.agda
++++ b/Algebra/Function.agda
+@@ -1,75 +1,82 @@
+ {-# OPTIONS --safe --without-K #-}
+ 
+ open import Level
+-open import Algebra
++open import Algebra.Lattice
+ open import Data.Product
+ 
+-module Algebra.Function where
++module Algebra.Function {a b c} (A : Set a) (B : BooleanAlgebra b c) where
++  module B = BooleanAlgebra B
+ 
+-  module _ {a b c} (A : Set a) (B : BooleanAlgebra b c) where
+-    module B = BooleanAlgebra B
++  Carrier : Set (a ⊔ b)
++  Carrier = A → B.Carrier
+ 
+-    Carrier : Set (a ⊔ b)
+-    Carrier = A → B.Carrier
++  _≈_ : Carrier → Carrier → Set (a ⊔ c)
++  _≈_ f g = ∀ a → f a B.≈ g a
+ 
+-    _≈_ : Carrier → Carrier → Set (a ⊔ c)
+-    _≈_ f g = ∀ a → f a B.≈ g a
++  _∨_ : Carrier → Carrier → Carrier
++  _∨_ f g a = f a B.∨ g a
+ 
+-    _∨_ : Carrier → Carrier → Carrier
+-    _∨_ f g a = f a B.∨ g a
++  _∧_ : Carrier → Carrier → Carrier
++  _∧_ f g a = f a B.∧ g a
+ 
+-    _∧_ : Carrier → Carrier → Carrier
+-    _∧_ f g a = f a B.∧ g a
++  ¬_ : Carrier → Carrier
++  ¬_ f a = B.¬ f a
+ 
+-    ¬_ : Carrier → Carrier
+-    ¬_ f a = B.¬ f a
++  ⊤ : Carrier
++  ⊤ a = B.⊤
+ 
+-    ⊤ : Carrier
+-    ⊤ a = B.⊤
++  ⊥ : Carrier
++  ⊥ a = B.⊥
+ 
+-    ⊥ : Carrier
+-    ⊥ a = B.⊥
++  open import Function.Equality
++  open import Relation.Binary using (Setoid)
++  import Relation.Binary.Indexed.Heterogeneous.Construct.Trivial
++    as Trivial
+ 
+-    open import Function.Equality
+-    open import Relation.Binary using (Setoid)
+-    import Relation.Binary.Indexed.Heterogeneous.Construct.Trivial
+-      as Trivial
++  open IsLattice
++  isLattice' : IsLattice _≈_ _∨_ _∧_
++  isLattice' = record
++    { isEquivalence = Setoid.isEquivalence (≡-setoid A (Trivial.indexedSetoid B.setoid))
++    ; ∨-comm = λ f g a → B.isLattice .∨-comm (f a) (g a)
++    ; ∨-assoc = λ x y z a → B.isLattice .∨-assoc (x a) (y a) (z a)
++    ; ∨-cong = λ eq₁ eq₂ a → B.isLattice .∨-cong (eq₁ a) (eq₂ a)
++    ; ∧-comm = λ f g a → B.isLattice .∧-comm (f a) (g a)
++    ; ∧-assoc = λ x y z a → B.isLattice .∧-assoc (x a) (y a) (z a)
++    ; ∧-cong = λ eq₁ eq₂ a → B.isLattice .∧-cong (eq₁ a) (eq₂ a)
++    ; absorptive =
++      (λ x y a → B.isLattice .absorptive .proj₁ (x a) (y a)) ,
++      (λ x y a → B.isLattice .absorptive .proj₂ (x a) (y a))
++    }
+ 
+-    open IsLattice
+-    isLattice' : IsLattice _≈_ _∨_ _∧_
+-    isLattice' = record
+-      { isEquivalence = Setoid.isEquivalence (≡-setoid A (Trivial.indexedSetoid B.setoid))
+-      ; ∨-comm = λ f g a → B.isLattice .∨-comm (f a) (g a)
+-      ; ∨-assoc = λ x y z a → B.isLattice .∨-assoc (x a) (y a) (z a)
+-      ; ∨-cong = λ eq₁ eq₂ a → B.isLattice .∨-cong (eq₁ a) (eq₂ a)
+-      ; ∧-comm = λ f g a → B.isLattice .∧-comm (f a) (g a)
+-      ; ∧-assoc = λ x y z a → B.isLattice .∧-assoc (x a) (y a) (z a)
+-      ; ∧-cong = λ eq₁ eq₂ a → B.isLattice .∧-cong (eq₁ a) (eq₂ a)
+-      ; absorptive =
+-        (λ x y a → B.isLattice .absorptive .proj₁ (x a) (y a)) ,
+-        (λ x y a → B.isLattice .absorptive .proj₂ (x a) (y a))
+-      }
++  open IsDistributiveLattice
++  isDistributiveLattice' : IsDistributiveLattice _≈_ _∨_ _∧_
++  isDistributiveLattice' .isLattice = isLattice'
++  isDistributiveLattice' .∨-distrib-∧ =
++    (λ x y z a → B.isDistributiveLattice .∨-distrib-∧ .proj₁ (x a) (y a) (z a)) ,
++    (λ x y z a → B.isDistributiveLattice .∨-distrib-∧ .proj₂ (x a) (y a) (z a))
++  isDistributiveLattice' .∧-distrib-∨ =
++    (λ x y z a → B.isDistributiveLattice .∧-distrib-∨ .proj₁ (x a) (y a) (z a)) ,
++    (λ x y z a → B.isDistributiveLattice .∧-distrib-∨ .proj₂ (x a) (y a) (z a))
+ 
+-    open IsDistributiveLattice
+-    isDistributiveLattice' : IsDistributiveLattice _≈_ _∨_ _∧_
+-    isDistributiveLattice' .isLattice = isLattice'
+-    isDistributiveLattice' .∨-distribʳ-∧ = λ x y z a → B.isDistributiveLattice .∨-distribʳ-∧ (x a) (y a) (z a)
++  open IsBooleanAlgebra
++  isBooleanAlgebra : IsBooleanAlgebra _≈_ _∨_ _∧_ ¬_ ⊤ ⊥
++  isBooleanAlgebra .isDistributiveLattice = isDistributiveLattice'
++  isBooleanAlgebra .∨-complement =
++    (λ f a → B.isBooleanAlgebra .∨-complement .proj₁ (f a)) ,
++    (λ f a → B.isBooleanAlgebra .∨-complement .proj₂ (f a))
++  isBooleanAlgebra .∧-complement =
++    (λ f a → B.isBooleanAlgebra .∧-complement .proj₁ (f a)) ,
++    (λ f a → B.isBooleanAlgebra .∧-complement .proj₂ (f a))
++  isBooleanAlgebra .¬-cong = λ f a → B.isBooleanAlgebra .¬-cong (f a)
+ 
+-    open IsBooleanAlgebra
+-    isBooleanAlgebra : IsBooleanAlgebra _≈_ _∨_ _∧_ ¬_ ⊤ ⊥
+-    isBooleanAlgebra .isDistributiveLattice = isDistributiveLattice'
+-    isBooleanAlgebra .∨-complementʳ = λ f a → B.isBooleanAlgebra .∨-complementʳ (f a)
+-    isBooleanAlgebra .∧-complementʳ = λ f a → B.isBooleanAlgebra .∧-complementʳ (f a)
+-    isBooleanAlgebra .¬-cong = λ f a → B.isBooleanAlgebra .¬-cong (f a)
+-
+-    hom : BooleanAlgebra _ _
+-    hom = record
+-            { Carrier = Carrier
+-            ; _≈_ = _≈_
+-            ; _∨_ = _∨_
+-            ; _∧_ = _∧_
+-            ; ¬_ = ¬_
+-            ; ⊤ = ⊤
+-            ; ⊥ = ⊥
+-            ; isBooleanAlgebra = isBooleanAlgebra
+-            }
++  hom : BooleanAlgebra _ _
++  hom = record
++          { Carrier = Carrier
++          ; _≈_ = _≈_
++          ; _∨_ = _∨_
++          ; _∧_ = _∧_
++          ; ¬_ = ¬_
++          ; ⊤ = ⊤
++          ; ⊥ = ⊥
++          ; isBooleanAlgebra = isBooleanAlgebra
++          }
+diff --git a/Class/Applicative/Instances.agda b/Class/Applicative/Instances.agda
+index 3a93f03..a0c81b2 100644
+--- a/Class/Applicative/Instances.agda
++++ b/Class/Applicative/Instances.agda
+@@ -62,8 +62,8 @@ instance
+ 
+   Alternative-TC : Alternative TC
+   Alternative-TC = record {M}
+-    where import Reflection.TypeChecking.Monad.Syntax as M
++    where import Reflection.TCM.Syntax as M
+ 
+   Applicative-TC : Applicative TC
+   Applicative-TC = record {M}
+-    where import Reflection.TypeChecking.Monad.Syntax as M
++    where import Reflection.TCM.Syntax as M
+diff --git a/Class/DecEq/Instances.agda b/Class/DecEq/Instances.agda
+index 225a7ea..fb71699 100644
+--- a/Class/DecEq/Instances.agda
++++ b/Class/DecEq/Instances.agda
+@@ -89,14 +89,14 @@ instance
+   -- ** reflection
+ 
+   DecEq-Name = DecEq _ ∋ record {M}
+-    where import Reflection.Name as M
++    where import Reflection.AST.Name as M
+ 
+   DecEq-Term = DecEq _ ∋ record {M}
+-    where import Reflection.Term as M
++    where import Reflection.AST.Term as M
+ 
+   DecEq-Arg : ⦃ DecEq A ⦄ → DecEq (Arg A)
+   DecEq-Arg ._≟_ = M.≡-dec _≟_
+-    where import Reflection.Argument as M
++    where import Reflection.AST.Argument as M
+ 
+   DecEq-Vis = DecEq _ ∋ record {M}
+-    where import Reflection.Argument.Visibility as M
++    where import Reflection.AST.Argument.Visibility as M
+diff --git a/Class/Functor/Instances.agda b/Class/Functor/Instances.agda
+index c4d836a..a5fecb1 100644
+--- a/Class/Functor/Instances.agda
++++ b/Class/Functor/Instances.agda
+@@ -52,19 +52,19 @@ instance
+   Functor-Vec ._<$>_ = V.map
+ 
+   open import Reflection
+-  open import Reflection.Meta
++  open import Reflection.AST.Meta
+ 
+   Functor-TC : Functor TC
+   Functor-TC = record {R}
+-    where import Reflection.TypeChecking.Monad.Syntax as R
++    where import Reflection.TCM.Syntax as R
+ 
+   Functor-Abs : Functor  Abs
+   Functor-Abs = record {R}
+-    where import Reflection.Abstraction as R renaming (map to _<$>_)
++    where import Reflection.AST.Abstraction as R renaming (map to _<$>_)
+ 
+   Functor-Arg : Functor Arg
+   Functor-Arg = record {R}
+-    where import Reflection.Argument as R renaming (map to _<$>_)
++    where import Reflection.AST.Argument as R renaming (map to _<$>_)
+ 
+   Functor-∃Vec : Functor (∃ ∘ Vec)
+   Functor-∃Vec ._<$>_ f (_ , xs) = -, (f <$> xs)
+diff --git a/Class/Show/Instances.agda b/Class/Show/Instances.agda
+index fb9b514..12e43e8 100644
+--- a/Class/Show/Instances.agda
++++ b/Class/Show/Instances.agda
+@@ -13,8 +13,8 @@ open import Data.Float using (Float)
+ open import Data.List using (List; map)
+ open import Data.Fin as Fin using (Fin)
+ open import Reflection
+-open import Reflection.Term
+-open import Reflection.Meta
++open import Reflection.AST.Term
++open import Reflection.AST.Meta
+ 
+ open import Class.Show.Core
+ 
+diff --git a/Everything.agda b/Everything.agda
+deleted file mode 100644
+index f088b29..0000000
+--- a/Everything.agda
++++ /dev/null
+@@ -1,13 +0,0 @@
+-{-# OPTIONS --safe #-}
+-
+-module Everything where
+-
+-open import Tactic.AnyOf
+-open import Tactic.Assumption
+-open import Tactic.Case
+-open import Tactic.Constrs
+-open import Tactic.EquationalReasoning
+-open import Tactic.ReduceDec
+-
+-open import Tactic.Derive.DecEq
+-open import Tactic.Derive.Show
+diff --git a/Generics/Core.agda b/Generics/Core.agda
+index 8f30cae..1374218 100644
+--- a/Generics/Core.agda
++++ b/Generics/Core.agda
+@@ -6,7 +6,7 @@ open import Data.List using ([]; _∷_)
+ open import Data.Product using (_×_)
+ 
+ open import Reflection
+-open import Reflection.Term
++open import Reflection.AST.Term
+ 
+ -- ** Smart constructors
+ 
+diff --git a/Generics/Debug.agda b/Generics/Debug.agda
+index 08ccae8..5055ff6 100644
+--- a/Generics/Debug.agda
++++ b/Generics/Debug.agda
+@@ -15,8 +15,8 @@ open import Data.Nat using (ℕ)
+ open import Data.Fin using (Fin)
+ 
+ open import Reflection hiding (_>>_; _>>=_)
+-open import Reflection.Term
+-open import Reflection.Meta
++open import Reflection.AST.Term
++open import Reflection.AST.Meta
+ 
+ open import Class.Show.Core
+ open import Class.Show.Instances
+diff --git a/Generics/Utils.agda b/Generics/Utils.agda
+index 0d24ee4..fc7bcea 100644
+--- a/Generics/Utils.agda
++++ b/Generics/Utils.agda
+@@ -5,14 +5,14 @@ open import Level using (Level)
  open import Function
  
  open import Reflection hiding (visibility)
--open import Reflection.Term hiding (getName)
--import Reflection.Name as Name
--open import Reflection.Pattern
+-open import Reflection.Term
 -import Reflection.Abstraction as Abs
 -open import Reflection.Argument as Arg hiding (map)
+-import Reflection.Name as Name
+-open import Reflection.Pattern
 -open import Reflection.Argument.Information
 -open import Reflection.Argument.Visibility as Vis
 -open import Reflection.TypeChecking.Monad.Syntax
-+open import Reflection.AST.Term hiding (getName)
-+import Reflection.AST.Name as Name
-+open import Reflection.AST.Pattern
++open import Reflection.AST.Term
 +import Reflection.AST.Abstraction as Abs
 +open import Reflection.AST.Argument as Arg hiding (map)
++import Reflection.AST.Name as Name
++open import Reflection.AST.Pattern
 +open import Reflection.AST.Argument.Information
 +open import Reflection.AST.Argument.Visibility as Vis
 +open import Reflection.TCM.Syntax
  
  open import Data.Unit
- open import Data.Nat
+ open import Data.Product hiding (map; zip)
+diff --git a/Interface/DecEq.agda b/Interface/DecEq.agda
+index 366e594..3322dc8 100644
+--- a/Interface/DecEq.agda
++++ b/Interface/DecEq.agda
+@@ -1,6 +1,6 @@
+ {-# OPTIONS --safe --without-K #-}
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+ open import Relation.Binary
+ 
+diff --git a/Interface/Monad.agda b/Interface/Monad.agda
+index 0172b00..8c97e20 100644
+--- a/Interface/Monad.agda
++++ b/Interface/Monad.agda
+@@ -2,7 +2,7 @@
+ 
+ module Interface.Monad where
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+ private
+   variable
+diff --git a/Interface/MonadError.agda b/Interface/MonadError.agda
+index d172454..4c90c47 100644
+--- a/Interface/MonadError.agda
++++ b/Interface/MonadError.agda
+@@ -2,7 +2,7 @@
+ 
+ open import Level
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+ open import Interface.Monad
+ open import Reflection using (TC; ErrorPart; typeError; catchTC; strErr)
+diff --git a/Interface/MonadReader.agda b/Interface/MonadReader.agda
+index 12f4c3e..e4e1ffc 100644
+--- a/Interface/MonadReader.agda
++++ b/Interface/MonadReader.agda
+@@ -2,7 +2,7 @@
+ 
+ module Interface.MonadReader where
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+ open import Interface.Monad
+ open import Interface.MonadError
+diff --git a/Interface/MonadTC.agda b/Interface/MonadTC.agda
+index 677963f..812bd58 100644
+--- a/Interface/MonadTC.agda
++++ b/Interface/MonadTC.agda
+@@ -2,7 +2,7 @@
+ 
+ module Interface.MonadTC where
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+ open import Data.List using (map)
+ 
+diff --git a/Lenses/Derive.agda b/Lenses/Derive.agda
+index 933dee4..31d563c 100644
+--- a/Lenses/Derive.agda
++++ b/Lenses/Derive.agda
+@@ -11,7 +11,7 @@ open import Data.Nat using (ℕ)
+ open import Relation.Binary.PropositionalEquality using (_≡_; refl)
+ 
+ open import Reflection hiding (_>>=_; _>>_)
+-open import Reflection.Meta
++open import Reflection.AST.Meta
+ 
+ open import Generics
+ open Debug ("DeriveLenses" , 100)
+diff --git a/Main.agda b/Main.agda
+index b8dbffc..0cd0ba2 100644
+--- a/Main.agda
++++ b/Main.agda
+@@ -1,11 +1,21 @@
+--- {-# OPTIONS --safe --without-K #-}
++{-# OPTIONS --safe #-}
+ module Main where
+ 
+-open import Generics
+-open import Classes
+-open import Lenses
+-open import Tactics
++-- open import Generics
++-- open import Classes
++-- open import Lenses
++-- open import Tactics
+ 
+--- TODO: incorporate into the rest
+-module Stash where
+-  open import Everything
++-- -- TODO: incorporate into the rest
++-- module Stash where
++--   open import Everything
++
++open import Tactic.AnyOf
++open import Tactic.Assumption
++open import Tactic.Case
++open import Tactic.Constrs
++open import Tactic.EquationalReasoning
++open import Tactic.ReduceDec
++
++open import Tactic.Derive.DecEq
++open import Tactic.Derive.Show
+diff --git a/Meta.agda b/Meta.agda
+index 1fe207e..65adab8 100644
+--- a/Meta.agda
++++ b/Meta.agda
+@@ -5,7 +5,7 @@ module Meta where
+ open import Reflection.Debug public
+ open import Reflection.TCI public
+ open import Reflection.Syntax public
+-open import Reflection.Term using (vΠ[_∶_]_) public
++open import Reflection.AST.Term using (vΠ[_∶_]_) public
+ 
+ instance
+   iMonad-TC = Monad-TC
+diff --git a/Prelude.agda b/MetaPrelude.agda
+similarity index 91%
+rename from Prelude.agda
+rename to MetaPrelude.agda
+index 3ac9016..257a981 100644
+--- a/Prelude.agda
++++ b/MetaPrelude.agda
+@@ -1,6 +1,6 @@
+ {-# OPTIONS --safe --without-K #-}
+ 
+-module Prelude where
++module MetaPrelude where
+ 
+ open import Level renaming (_⊔_ to _⊔ˡ_; suc to sucˡ; zero to zeroˡ) public
+ open import Function public
+@@ -9,7 +9,7 @@ open import Data.Bool hiding (_≟_; _≤_; _≤?_; _<_; _<?_) public
+ open import Data.Empty public
+ open import Data.List hiding (align; alignWith; fromMaybe; map; zip; zipWith) public
+ open import Data.Maybe hiding (_>>=_; align; alignWith; fromMaybe; map; zip; zipWith) public
+-open import Data.Unit hiding (_≟_; decSetoid) public
++open import Data.Unit hiding (_≟_) public
+ open import Data.Sum hiding (assocʳ; assocˡ; map; map₁; map₂; reduce; swap) public
+ open import Data.Product hiding (assocʳ; assocˡ; map; map₁; map₂; swap) public
+ open import Data.Nat hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_; _≡ᵇ_) public
+diff --git a/Reflection/Debug.agda b/Reflection/Debug.agda
+index 5d7ba05..63088fe 100644
+--- a/Reflection/Debug.agda
++++ b/Reflection/Debug.agda
+@@ -2,7 +2,7 @@
+ 
+ module Reflection.Debug where
+ 
+-open import Prelude hiding (⊤; _∧_; _∨_; filter)
++open import MetaPrelude hiding (⊤; _∧_; _∨_; filter)
+ 
+ import Data.Bool
+ import Data.String
+@@ -62,14 +62,14 @@ Filter : Set
+ Filter = List String → Bool
+ 
+ module Filter where
+-  open import Algebra
++  open import Algebra.Lattice
+   open import Data.Bool.Properties
+   import Algebra.Function
+ 
+   Filter-Alg : BooleanAlgebra _ _
+   Filter-Alg = Algebra.Function.hom (List String) ∨-∧-booleanAlgebra
+ 
+-  open Algebra.BooleanAlgebra Filter-Alg public
++  open BooleanAlgebra Filter-Alg public
+ 
+   private
+     _≣_ : String → String → Bool
+diff --git a/Reflection/Syntax.agda b/Reflection/Syntax.agda
+index 4266c50..830aa19 100644
+--- a/Reflection/Syntax.agda
++++ b/Reflection/Syntax.agda
+@@ -2,18 +2,18 @@
+ 
+ module Reflection.Syntax where
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+-open import Reflection.Argument hiding (map) public
+-open import Reflection.Term hiding (_≟_; getName) public
+-open import Reflection.Name hiding (_≟_; _≈_; _≈?_) public
+-open import Reflection.Definition hiding (_≟_) public
+-open import Reflection.Meta hiding (_≟_; _≈_; _≈?_) public
+-open import Reflection.Abstraction using (unAbs) public
++open import Reflection.AST.Argument hiding (map) public
++open import Reflection.AST.Term hiding (_≟_; getName) public
++open import Reflection.AST.Name hiding (_≟_; _≈_; _≈?_) public
++open import Reflection.AST.Definition hiding (_≟_) public
++open import Reflection.AST.Meta hiding (_≟_; _≡ᵇ_; _≈_; _≈?_) public
++open import Reflection.AST.Abstraction using (unAbs) public
+ 
+-open import Reflection.Argument.Visibility using (Visibility) public
+-open import Reflection.Abstraction using (unAbs) public
+-open import Reflection.Argument using (vArg; hArg; iArg; unArg; _⟨∷⟩_; map-Args) public
++open import Reflection.AST.Argument.Visibility using (Visibility) public
++open import Reflection.AST.Abstraction using (unAbs) public
++open import Reflection.AST.Argument using (vArg; hArg; iArg; unArg; _⟨∷⟩_; map-Args) public
+ open import Reflection using (Term; Type; Name; data-cons; pi; abs; Abs; Arg; Clause; data-type; record-type; var; con; def; lam; pat-lam; arg; agda-sort; lit; meta; unknown; Pattern; strErr; ErrorPart; arg-info; visible; Definition) public
+ 
+ open import Generics using (absName; getVisibility; findMetas; isMeta; UnquoteDecl; Tactic) public
+diff --git a/Reflection/TCI.agda b/Reflection/TCI.agda
+index 79c2ffe..53b6197 100644
+--- a/Reflection/TCI.agda
++++ b/Reflection/TCI.agda
+@@ -5,7 +5,7 @@
+ 
+ module Reflection.TCI where
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+ open import Data.List using (map)
+ 
+diff --git a/Tactic/AnyOf.agda b/Tactic/AnyOf.agda
+index 6dc5a85..0aa849c 100644
+--- a/Tactic/AnyOf.agda
++++ b/Tactic/AnyOf.agda
+@@ -5,7 +5,7 @@
+ 
+ module Tactic.AnyOf where
+ 
+-open import Prelude
++open import MetaPrelude
+ open import Meta
+ 
+ import Data.List
+diff --git a/Tactic/Assumption.agda b/Tactic/Assumption.agda
+index c6c9dc5..651a8e2 100644
+--- a/Tactic/Assumption.agda
++++ b/Tactic/Assumption.agda
+@@ -5,7 +5,7 @@
+ 
+ module Tactic.Assumption where
+ 
+-open import Prelude
++open import MetaPrelude
+ open import Meta
+ 
+ open import Interface.Monad.Instance
+diff --git a/Tactic/ClauseBuilder.agda b/Tactic/ClauseBuilder.agda
+index 99c61fa..208ed88 100644
+--- a/Tactic/ClauseBuilder.agda
++++ b/Tactic/ClauseBuilder.agda
+@@ -1,7 +1,7 @@
+ {-# OPTIONS --safe --without-K #-}
+ module Tactic.ClauseBuilder where
+ 
+-open import Prelude hiding ([_,_])
++open import MetaPrelude hiding ([_,_])
+ open import Meta hiding (sort)
+ 
+ import Data.List.NonEmpty as NE
+diff --git a/Tactic/Constrs.agda b/Tactic/Constrs.agda
+index c0faa3d..42a6fc3 100644
+--- a/Tactic/Constrs.agda
++++ b/Tactic/Constrs.agda
+@@ -6,7 +6,7 @@
+ 
+ module Tactic.Constrs where
+ 
+-open import Prelude
++open import MetaPrelude
+ open import Meta
+ 
+ import Data.List
+diff --git a/Tactic/Defaults.agda b/Tactic/Defaults.agda
+index a7d15e8..b52b963 100644
+--- a/Tactic/Defaults.agda
++++ b/Tactic/Defaults.agda
+@@ -6,4 +6,4 @@ open import Reflection.Debug
+ -- There should only ever be one instance, with this being convenient
+ -- to tweak all at once
+ instance
+-  defaultDebugOptionsI = record defaultDebugOptions { selection = All }
++  defaultDebugOptionsI = record defaultDebugOptions { selection = All ; filter = Filter.⊥ }
+diff --git a/Tactic/Derive.agda b/Tactic/Derive.agda
+index 39fcab6..88dd6b9 100644
+--- a/Tactic/Derive.agda
++++ b/Tactic/Derive.agda
+@@ -19,9 +19,9 @@ open import Meta
+ 
+ module Tactic.Derive (className : Name) (projName : Name) where
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+-open import Reflection.Name using () renaming (_≟_ to _≟-Name_)
++open import Reflection.AST.Name using () renaming (_≟_ to _≟-Name_)
+ open import Agda.Builtin.Reflection using () renaming (primShowQName to showName)
+ 
+ open import Generics
+diff --git a/Tactic/Derive/DecEq.agda b/Tactic/Derive/DecEq.agda
+index 41a3f98..b59ab6e 100644
+--- a/Tactic/Derive/DecEq.agda
++++ b/Tactic/Derive/DecEq.agda
+@@ -12,9 +12,9 @@ open import Meta
+ 
+ module Tactic.Derive.DecEq where
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+-open import Reflection.Term using (_≟-Pattern_)
++open import Reflection.AST.Term using (_≟-Pattern_)
+ 
+ open import Generics
+ 
+@@ -43,9 +43,6 @@ open ClauseExprM
+ `yes x = quote _because_ ◆⟦ quote true  ◆ ∣ quote ofʸ ◆⟦ x ⟧ ⟧
+ `no  x = quote _because_ ◆⟦ quote false ◆ ∣ quote ofⁿ ◆⟦ x ⟧ ⟧
+ 
+-map' : ∀ {p q} {P : Set p} {Q : Set q} → P ⇔ Q → Dec P → Dec Q
+-map' record { f = f ; g = g } = map′ f g
+-
+ module _ (transName : Name → Maybe Name) where
+ 
+   eqFromTerm : Term → Term → Term → Term
+@@ -63,7 +60,7 @@ module _ (transName : Name → Maybe Name) where
+   mapDiag nothing          = return $ `no `λ⦅ [ ("" , vArg?) ] ⦆∅
+   mapDiag (just p@(l , _)) = let k = length l in do
+     typeList ← traverseList inferType (applyDownFrom ♯ (length l))
+-    return $ quote map' ∙⟦ genEquiv k ∣ genPf k (L.map eqFromTerm typeList) ⟧
++    return $ quote map ∙⟦ genEquiv k ∣ genPf k (L.map eqFromTerm typeList) ⟧
+     where
+       genPf : ℕ → List (Term → Term → Term) → Term
+       genPf k []      = `yes (quote tt ◆)
+diff --git a/Tactic/Derive/Show.agda b/Tactic/Derive/Show.agda
+index c8e157a..4b88959 100644
+--- a/Tactic/Derive/Show.agda
++++ b/Tactic/Derive/Show.agda
+@@ -6,7 +6,7 @@ open import Meta
+ 
+ module Tactic.Derive.Show where
+ 
+-open import Prelude
++open import MetaPrelude
+ open import Agda.Builtin.Reflection using (primShowQName)
+ 
+ open import Generics
+diff --git a/Tactic/Derive/TestTypes.agda b/Tactic/Derive/TestTypes.agda
+index 85144b1..d5b50ed 100644
+--- a/Tactic/Derive/TestTypes.agda
++++ b/Tactic/Derive/TestTypes.agda
+@@ -2,7 +2,7 @@
+ {-# OPTIONS -v allTactics:100 #-}
+ module Tactic.Derive.TestTypes where
+ 
+-open import Prelude
++open import MetaPrelude
+ open import Data.Fin
+ open import Meta
+ 
+diff --git a/Tactic/EquationalReasoning.agda b/Tactic/EquationalReasoning.agda
+index 54bb57d..7993c33 100644
+--- a/Tactic/EquationalReasoning.agda
++++ b/Tactic/EquationalReasoning.agda
+@@ -2,7 +2,7 @@
+ 
+ module Tactic.EquationalReasoning where
+ 
+-open import Prelude
++open import MetaPrelude
+ 
+ import Relation.Binary.PropositionalEquality as ≡
+ open import Agda.Builtin.Reflection
+diff --git a/Tactic/Helpers.agda b/Tactic/Helpers.agda
+index 2802245..8aa8415 100644
+--- a/Tactic/Helpers.agda
++++ b/Tactic/Helpers.agda
+@@ -1,7 +1,7 @@
+ {-# OPTIONS --safe --without-K #-}
+ module Tactic.Helpers where
+ 
+-open import Prelude
++open import MetaPrelude
+ open import Meta
+ 
+ open import Data.Nat using () renaming (_≟_ to _≟ℕ_)
+@@ -12,7 +12,7 @@ open import Generics
+ 
+ open import Relation.Nullary.Decidable hiding (map)
+ open import Reflection.Syntax
+-open import Reflection.Name using (_≟_)
++open import Reflection.AST.Name using (_≟_)
+ 
+ import Reflection
+ open import Interface.Monad.Instance
+diff --git a/Tactic/ReduceDec.agda b/Tactic/ReduceDec.agda
+index 1fea416..879d8be 100644
+--- a/Tactic/ReduceDec.agda
++++ b/Tactic/ReduceDec.agda
+@@ -5,7 +5,7 @@
+ 
+ module Tactic.ReduceDec where
+ 
+-open import Prelude
++open import MetaPrelude
+ open import Meta
+ 
+ open import Generics
+diff --git a/Tactics/Eta.agda b/Tactics/Eta.agda
+index 71927f7..67f2a8d 100644
+--- a/Tactics/Eta.agda
++++ b/Tactics/Eta.agda
+@@ -9,8 +9,8 @@ open import Data.Nat
+ open import Data.Fin
+ 
+ open import Reflection hiding (return; _>>=_; _>>_)
+-open import Reflection.Meta hiding (toℕ)
+-open import Reflection.Term
++open import Reflection.AST.Meta hiding (toℕ)
++open import Reflection.AST.Term
+ 
+ open import Generics
+ open Debug ("eta" , 100)
+diff --git a/Tactics/Existentials.agda b/Tactics/Existentials.agda
+index 022a649..3aaa969 100644
+--- a/Tactics/Existentials.agda
++++ b/Tactics/Existentials.agda
+@@ -7,7 +7,7 @@ open import Data.List as L using (reverse; upTo; length)
+ open import Data.String using (String)
+ 
+ open import Reflection hiding (return; _>>=_; _>>_; _≟_)
+-open import Reflection.Term hiding (_≟_)
++open import Reflection.AST.Term hiding (_≟_)
+ 
+ open import Generics
+ 
+@@ -31,33 +31,33 @@ macro
+   mk∃ : Name → Tactic
+   mk∃ t hole = mkExistential 0 t >>= unify hole
+ 
+-private
+-  data X : ℕ → String → ℕ → Set where
+-    mkX : X 0 "" 1
++-- private
++--   data X : ℕ → String → ℕ → Set where
++--     mkX : X 0 "" 1
+ 
+-  _ : mk∃ X
+-  _ = 0 , "" , 1 , mkX
++--   _ : mk∃ X
++--   _ = 0 , "" , 1 , mkX
+ 
+-  module _ (n : ℕ) where
+-    data Y : String → ℕ → Set where
+-      mkY : Y "" 1
++--   module _ (n : ℕ) where
++--     data Y : String → ℕ → Set where
++--       mkY : Y "" 1
+ 
+-    _ : mk∃[nest: 1 ] Y
+-    _ = "" , 1 , mkY
++--     _ : mk∃[nest: 1 ] Y
++--     _ = "" , 1 , mkY
+ 
+-    module _ (s : String) where
++--     module _ (s : String) where
+ 
+-      data Z : ℕ → Set where
+-        mkZ : Z 1
++--       data Z : ℕ → Set where
++--         mkZ : Z 1
+ 
+-      _ : mk∃[nest: 2 ] Z
+-      _ = 1 , mkZ
++--       _ : mk∃[nest: 2 ] Z
++--       _ = 1 , mkZ
+ 
+-    _ : mk∃[nest: 1 ] Z
+-    _ = "sth" , 1 , mkZ
++--     _ : mk∃[nest: 1 ] Z
++--     _ = "sth" , 1 , mkZ
+ 
+-  _ : mk∃ Y
+-  _ = 42 , "" , 1 , mkY
++--   _ : mk∃ Y
++--   _ = 42 , "" , 1 , mkY
+ 
+-  _ : mk∃ Z
+-  _ = 0 , "sth" , 1 , mkZ
++--   _ : mk∃ Z
++--   _ = 0 , "sth" , 1 , mkZ
+diff --git a/Tactics/Extra.agda b/Tactics/Extra.agda
+index 0b741da..83cadff 100644
+--- a/Tactics/Extra.agda
++++ b/Tactics/Extra.agda
+@@ -19,7 +19,7 @@ open import Data.Vec using (Vec; []; _∷_)
+ open import Relation.Binary.PropositionalEquality using (refl; _≡_)
+ 
+ open import Reflection hiding (return; _>>=_; _>>_; _≟_)
+-open import Reflection.Term hiding (_≟_)
++open import Reflection.AST.Term hiding (_≟_)
+ 
+ open import Generics
+ open Debug ("extra" , 100)
+diff --git a/Tactics/Intro.agda b/Tactics/Intro.agda
+index 4425f56..90fc15c 100644
+--- a/Tactics/Intro.agda
++++ b/Tactics/Intro.agda
+@@ -15,7 +15,7 @@ open import Class.Show
+ 
+ open import Generics
+ open import Reflection hiding (_>>=_; _>>_; return)
+-open import Reflection.Meta
++open import Reflection.AST.Meta
+ open Debug ("Generics.Intros" , 100)
+ 
+ intro : Hole → Tactic → TC ⊤
+diff --git a/Tactics/Rewrite.agda b/Tactics/Rewrite.agda
+index 74415cd..a1186ac 100644
+--- a/Tactics/Rewrite.agda
++++ b/Tactics/Rewrite.agda
+@@ -20,7 +20,7 @@ open import Relation.Nullary.Decidable
+ open import Relation.Binary.PropositionalEquality hiding ([_])
+ 
+ open import Reflection hiding (return; _>>=_; _>>_; _≟_)
+-open import Reflection.Term hiding (_≟_)
++open import Reflection.AST.Term hiding (_≟_)
+ 
+ open import Generics
+ open Debug ("rewrite" , 100)
+diff --git a/Tactics/Try.agda b/Tactics/Try.agda
+index 290cbb9..0951344 100644
+--- a/Tactics/Try.agda
++++ b/Tactics/Try.agda
+@@ -14,10 +14,10 @@ open import Relation.Nullary
+ open import Relation.Binary.PropositionalEquality using (_≡_; refl)
+ 
+ open import Reflection hiding (return; _>>=_; _>>_; _≟_)
+-open import Reflection.Meta hiding (_≟_)
+-open import Reflection.Argument hiding (map)
+-open import Reflection.Abstraction hiding (map)
+-open import Reflection.Term hiding (_≟_)
++open import Reflection.AST.Meta hiding (_≟_)
++open import Reflection.AST.Argument hiding (map)
++open import Reflection.AST.Abstraction hiding (map)
++open import Reflection.AST.Term hiding (_≟_)
+ 
+ open import Generics
+ open Debug ("try" , 100)
