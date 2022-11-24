@@ -178,7 +178,7 @@
       }
     );
   } //
-    tullia.fromSimple system (import ./tullia.nix self)
+    tullia.fromSimple system (import nix/tullia.nix)
   ));
 
   nixConfig = {
