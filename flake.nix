@@ -138,25 +138,26 @@
           extraExtensions = [ "hs" "cabal" ];
         };
       };
-    in flake-utils.lib.flattenTree (
+    in
       agdaPackages //
-      __mapAttrs (_: nixpkgs.lib.recurseIntoAttrs) {
-        ledger = specsDerivations {
+      nixpkgs.lib.mapAttrs' (k: nixpkgs.lib.nameValuePair "ledger/${k}") (
+        specsDerivations {
           inherit (agdaPackages) agdaLedger;
           dir = "Ledger";
           agdaLedgerFile = "Foreign/HSLedger.agda";
           hsMainFile = "HSLedgerTest.hs";
           doc = "Ledger";
-        };
-        midnight = specsDerivations {
+        }
+      ) //
+      nixpkgs.lib.mapAttrs' (k: nixpkgs.lib.nameValuePair "midnight/${k}") (
+        specsDerivations {
           inherit (agdaPackages) agdaLedger;
           dir = "MidnightExample";
           agdaLedgerFile = "HSLedger.agda";
           hsMainFile = "Main.hs";
           doc = "PDF";
-        };
-      }
-    );
+        }
+      );
   } //
     tullia.fromSimple system (import nix/tullia.nix)
   ));
