@@ -17,10 +17,6 @@
       url = "github:omelkonian/stdlib-meta/dadb6a468b9cdc47442b48a47b848f8e8fbffda7";
       flake = false;
     };
-    agdaFinset = {
-      url = "github:input-output-hk/agda-finset/939b2578f4f8cb4f02928b30edfc787cabeba171";
-      flake = false;
-    };
     tullia.url = "github:input-output-hk/tullia";
   };
 
@@ -33,7 +29,6 @@
     , agda
     , agdaStdlib
     , agdaStdlibMeta
-    , agdaFinset
     , ...
   }@inputs: (flake-utils.lib.eachDefaultSystem (system: let
     agdaOverlay = agda.overlay;
@@ -52,21 +47,6 @@
       };
     });
 
-    agdaFinset = customAgdaPkgs.agdaPackages.mkDerivation {
-      pname = "agda-finset";
-      version = "0.9";
-      src = customAgdaPkgs.fetchFromGitHub {
-        repo = "agda-finset";
-        owner = "input-output-hk";
-        rev = "939b2578f4f8cb4f02928b30edfc787cabeba171";
-        sha256 = "2bUMmUikzNRaEFVkH+Y8ypnNF65d/LNKei6fSJ982AY=";
-      };
-      meta = { };
-      libraryFile = "Finset.agda-lib";
-      everythingFile = "src/README.agda";
-      buildInputs = [ agdaStdlib ];
-    };
-
     agdaStdlibMeta = customAgdaPkgs.agdaPackages.mkDerivation {
       pname = "agda-stdlib-meta";
       version = "0.1";
@@ -83,7 +63,7 @@
       buildInputs = [ agdaStdlib ];
     };
 
-    deps = [ agdaStdlib agdaFinset agdaStdlibMeta ];
+    deps = [ agdaStdlib agdaStdlibMeta ];
     agdaWithPkgs = customAgdaPkgs.agda.withPackages { pkgs = deps; ghc = pkgs.ghc; };
     # a parameterized attribute set containing derivations for: 1) executable spec 2) docs
     specsDerivations = { dir, agdaLedger, agdaLedgerFile, hsMainFile, doc }: {

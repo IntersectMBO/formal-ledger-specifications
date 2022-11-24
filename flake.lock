@@ -21,23 +21,6 @@
         "type": "github"
       }
     },
-    "agdaFinset": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1658154232,
-        "narHash": "sha256-2bUMmUikzNRaEFVkH+Y8ypnNF65d/LNKei6fSJ982AY=",
-        "owner": "input-output-hk",
-        "repo": "agda-finset",
-        "rev": "939b2578f4f8cb4f02928b30edfc787cabeba171",
-        "type": "github"
-      },
-      "original": {
-        "owner": "input-output-hk",
-        "repo": "agda-finset",
-        "rev": "939b2578f4f8cb4f02928b30edfc787cabeba171",
-        "type": "github"
-      }
-    },
     "agdaStdlib": {
       "flake": false,
       "locked": {
@@ -501,7 +484,6 @@
     "root": {
       "inputs": {
         "agda": "agda",
-        "agdaFinset": "agdaFinset",
         "agdaStdlib": "agdaStdlib",
         "agdaStdlibMeta": "agdaStdlibMeta",
         "flake-utils": "flake-utils_2",
