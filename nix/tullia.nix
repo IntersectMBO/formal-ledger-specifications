@@ -28,6 +28,9 @@ rec {
       '';
       skippedDescription = lib.escapeShellArg "No nix builder available for this system";
     };
+
+    memory = 1024 * 8;
+    nomad.resources.cpu = 10000;
   };
 
   actions."formal-ledger-specifications/ci" = {
