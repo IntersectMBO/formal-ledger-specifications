@@ -71,7 +71,7 @@
         hsSrc = pkgs.stdenv.mkDerivation {
           pname = "Agda-ledger-${dir}-hs-src";
           version = "0.1";
-          src = "${agdaLedger}";
+          src = agdaLedger;
           meta = { };
           buildInputs = [ agdaWithPkgs ];
           buildPhase = "";
@@ -84,12 +84,12 @@
             find $out/MAlonzo -name "*.hs" -print | sed "s#^$out/#        #;s#\.hs##;s#/#.#g" >> $out/agda-ledger-executable-spec.cabal
           '';
         };
-      in pkgs.haskellPackages.callCabal2nix "Agda-ledger-executable-spec" "${hsSrc}" { };
+      in pkgs.haskellPackages.callCabal2nix "Agda-ledger-executable-spec" hsSrc { };
 
       docs = pkgs.stdenv.mkDerivation {
         pname = "${dir}-docs";
         version = "0.1";
-        src = "${agdaLedger}";
+        src = agdaLedger;
         meta = { };
         buildInputs = [
           agdaWithPkgs
