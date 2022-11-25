@@ -13,13 +13,23 @@ open TransactionStructure txs
 open import Ledger.PParams Epoch
 open import Relation.Binary
 open import Algebra
+open import Algebra.Literals
 import Data.Nat as ℕ
 open Semiring Slotʳ
+open import Agda.Builtin.FromNat
+open import Data.Nat.Literals
+open Semiring-Lit Slotʳ
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
 open import Relation.Nullary.Product
+import Data.Unit.Polymorphic
 
 private variable m n : ℕ
+
+instance
+  _ = Data.Nat.Literals.number
+  _ = Data.Unit.Polymorphic.tt
+
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -81,7 +91,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateCurrent : let open PPUpdateEnv Γ in
     dom (pup ˢ) ⊆ dom (genDelegs ˢ)
     → All (isViableUpdate pparams) (range (pup ˢ))
-    → (slot + ((1# + 1#) * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
+    → (slot + (2 * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
     → epoch slot ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
@@ -90,7 +100,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateFuture : let open PPUpdateEnv Γ in
     dom (pup ˢ) ⊆ dom (genDelegs ˢ)
     → All (isViableUpdate pparams) (range (pup ˢ))
-    → (slot + ((1# + 1#) * StabilityWindow)) ≥ˢ firstSlot (sucᵉ (epoch slot))
+    → (slot + (2 * StabilityWindow)) ≥ˢ firstSlot (sucᵉ (epoch slot))
     → sucᵉ (epoch slot) ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
