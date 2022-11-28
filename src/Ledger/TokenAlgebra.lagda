@@ -1,4 +1,4 @@
-\section{Cryptographic primitives}
+\section{Token Algebra}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 module Ledger.TokenAlgebra where
@@ -21,6 +21,8 @@ record TokenAlgebra : Set₁ where
   field policies : ValueC → ℙ PolicyId
   field size     : ValueC → MemoryEstimate
   field property : coin ∘ inject ≗ id
+
+  --field _≥ᵗ_ : ValueC → ValueC → Set
 
   field instance DecEq-ValueC : DecEq ValueC
 \end{code}

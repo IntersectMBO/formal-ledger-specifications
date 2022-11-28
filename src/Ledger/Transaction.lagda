@@ -122,6 +122,7 @@ This function must produce a unique id for each unique transaction body.
     field body  : TxBody
           wits  : TxWitnesses
           txAD  : Maybe AuxiliaryData
+
 \end{code}
 \emph{Abstract functions}
 \begin{code}

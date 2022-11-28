@@ -17,6 +17,8 @@ record PParams : Set where
         maxBlockSize   : ℕ
         maxTxSize      : ℕ
         maxHeaderSize  : ℕ
+        maxValSize     : ℕ -- added for ma
+        minUtxOValue   : Coin -- added for ma
         poolDeposit    : Coin
         Emax           : Epoch
         pv             : ProtVer
