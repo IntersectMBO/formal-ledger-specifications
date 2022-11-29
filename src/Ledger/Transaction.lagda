@@ -132,6 +132,9 @@ This function must produce a unique id for each unique transaction body.
 \end{figure*}
 
 \begin{code}
+  getValue : TxOut → ValueC
+  getValue (fst , snd) = snd
+
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
 \end{code}

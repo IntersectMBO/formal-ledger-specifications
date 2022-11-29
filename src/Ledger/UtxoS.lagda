@@ -33,6 +33,7 @@ open import Ledger.Transaction
 open import Ledger.TokenAlgebra
 
 -- where should I define getValue
+
 module Ledger.UtxoS (txs : TransactionStructure) where
 
 instance
@@ -47,6 +48,7 @@ open TxBody
 open TxWitnesses
 open Tx
 
+
 -- Is This Wrong
 -- getValue : TxOut → TokenAlgebra
 -- getValue (fst , snd) = {!!}
@@ -54,9 +56,9 @@ open Tx
 -- _≥ᵗ_ : TokenAlgebra → TokenAlgebra → Set
 -- m ≥ᵗ n = {!!}
 
--- this is easy to define
-getValue : TxOut → ValueC
-getValue (fst , snd) = snd
+-- this is easy to define (moved to transaction structure)
+-- getValue : TxOut → ValueC
+-- getValue (fst , snd) = snd
 
 -- is this what we want?
 --
@@ -65,14 +67,18 @@ getValue (fst , snd) = snd
 _≥ᵗ_ : ValueC → ValueC → Set
 m ≥ᵗ n = {!!}
 
-scaledMinDeposit : TokenAlgebra → Coin → Coin
-scaledMinDeposit b mv = {!!}
+--scaledMinDeposit : TokenAlgebra → Coin → Coin
+--scaledMinDeposit b mv = {!!}
+
+utxoEntrySize : TxOut → MemoryEstimate
+utxoEntrySize = {!!}
 
 -- Same issue for serSize as getValue
 --serSize : TokenAlgebra → MemoryEstimate
 --serSize v = {!!}
 --
 --
+
 serSize : ValueC → MemoryEstimate
 serSize = {!!}
 
@@ -103,6 +109,12 @@ outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
 balance : UTxO → Coin
 balance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → coin x) (toFinMap utxo (finiteness (proj₁ utxo)))
+
+
+-- Again would need to know that valueC is a map to a quantity to define this
+-- am I changing pov here
+ubalance : UTxO → ℕ
+ubalance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → {!!}) (toFinMap utxo (finiteness (proj₁ utxo)))
 
 -- TODO: figure out why this syntax makes Agda loop
 -- balance' : UTxO → Coin
@@ -201,11 +213,11 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 
     → ∀ txout → txout ∈ proj₁ (txouts tx)
     -- where is this v coming from
-              → (getValue (proj₂ txout)) ≥ᵗ (inject (scaledMinDeposit {!!} (PParams.minUtxOValue pp)))
-    -- This get changes anyway to UtxOEntrySize txout * coinsPerUTxOWord pp
+              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp)) 
 
     → ∀ txout → txout ∈ proj₁ (txouts tx)
-              → (serSize (getValue (proj₂ txout))) ≥ PParams.maxValSize pp
+              → (serSize (getValue (proj₂ txout))) ≤ PParams.maxValSize pp
+
 
     -- PPUP
     -- same with anything that uses FinSet.All
@@ -219,6 +231,105 @@ data _⊢_⇀⦇_,UTXO⦈_ where
       ⇀⦇ tx ,UTXO⦈
       record { utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx ; fees = fees + f }
 \end{code}
+
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
+\end{figure*}
+\begin{code}[hide]
+open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
+
+_ᶠᵐ : {A B : Set} → A ↛ B → FinMap A B
+(R , uniq) ᶠᵐ = (R , uniq , finiteness _)
+
+balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≡ balance utxo'
+balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
+
+balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ)) → balance (utxo ∪ᵐˡ utxo') ≡ balance utxo + balance utxo'
+balance-∪ {utxo} {utxo'} h = begin
+  balance (utxo ∪ᵐˡ utxo') ≡⟨ indexedSumᵐ-cong {x = (utxo ∪ᵐˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)} (id , id) ⟩
+  indexedSumᵐ _ ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)) ≡⟨ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h ⟩
+  balance utxo + balance utxo' ∎
+
+import Relation.Binary.PropositionalEquality as P
+import Data.List
+import Data.Product
+
+open Properties
+open Equivalence
+open import Tactic.Cong
+
+newTxid⇒disj : txid tx ∉ map proj₁ (dom (utxo ˢ)) → disjoint' (dom (utxo ˢ)) (dom ((outs tx) ˢ))
+newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map
+  (-, (case from ∈-map h' of λ where (_ , refl , h'') → case from ∈-map h'' of λ where (_ , refl , _) → refl) , h)
+\end{code}
+
+\begin{property}[\textbf{Preserve Balance}]
+For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\TxBody$, if
+\begin{code}[hide]
+pov :
+\end{code}
+\begin{code}[inline*]
+  txid tx ∉ map proj₁ (dom (utxo ˢ))
+\end{code}
+and
+\begin{code}[hide]
+  →
+\end{code}
+\begin{code}[inline*]
+      Γ ⊢ record {utxo = utxo ; fees = fee} ⇀⦇ tx ,UTXO⦈ record {utxo = utxo' ; fees = fee'}
+\end{code}
+then
+\begin{code}[hide]
+  →
+\end{code}
+\begin{code}
+      balance utxo + fee ≡ balance utxo' + fee'
+\end{code}
+\begin{code}[hide]
+pov {tx} {utxo} {_} {fee} h' (UTXO-inductive x x₁ bal-eq x₃ txout x₄ x₅ txout₁ x₆ x₇ x₈) =
+ let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
+     h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (cores-domᵐ h₁ , h₂)
+  in begin
+  balance utxo + fee
+    ≡tʳ⟨ cong (_+ fee) $ begin
+      balance utxo
+        ≡˘⟨ balance-cong {utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)} {utxo' = utxo}
+              (let open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to _≡ᵉ-∘_)
+               in (disjoint-∪ᵐˡ-∪ (disjoint-sym res-ex-disjoint) ≡ᵉ-∘ ∪-sym) ≡ᵉ-∘ res-ex-∪ (_∈? txins tx)) ⟩
+      balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx))
+        ≡⟨ balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip (res-ex-disjoint)) ⟩
+      balance (utxo ∣ txins tx ᶜ) + balance (utxo ∣ txins tx)
+        ≡tʳ⟨ cong (balance (utxo ∣ txins tx ᶜ) +_) bal-eq ⟩
+      balance (utxo ∣ txins tx ᶜ) + balance (outs tx) + txfee tx
+        ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
+      balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎
+    ⟩
+  balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (txfee tx + fee)
+    ≡˘⟨ cong (balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) +_) (+-comm fee (txfee tx)) ⟩
+  balance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fee + txfee tx) ∎
+
+\end{code}
+
+\end{property}
+
+\pagebreak
+Note that this is not a function, but a relation. To make this
+definition executable, we need to define a function that computes
+the transition. We also prove that this indeed computes the
+relation. Luckily, this can be automated.
+
+\begin{figure*}[h]
+\begin{code}[hide]
+--unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+\end{code}
+\begin{code}
+{-
+UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
+UTXO-step = compute Computational-UTXO
+
+UTXO-step-computes-UTXO :
+  UTXO-step Γ utxoState tx ≡ just utxoState' ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
+UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO -}
+\end{code}
+\caption{Computing the UTXO transition system}
 \end{figure*}
