@@ -23,6 +23,9 @@ record TokenAlgebra : Set₁ where
   field property : coin ∘ inject ≗ id
 
   --field _≥ᵗ_ : ValueC → ValueC → Set
+  -- we need laws (might be necessary)
+  -- how this relation should behave with respect to addition
+  -- needs decidablity
 
   field instance DecEq-ValueC : DecEq ValueC
 \end{code}

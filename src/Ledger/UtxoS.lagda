@@ -40,6 +40,7 @@ instance
   _ = +-0-commutativeMonoid
   _ = Decidable²⇒Dec _≤?_
 
+
 open TransactionStructure txs
 open import Ledger.PParams Epoch
 open import Ledger.Crypto
@@ -47,6 +48,10 @@ open import Ledger.Crypto
 open TxBody
 open TxWitnesses
 open Tx
+
+{-instance
+  decTx : DecEq TxIn
+  decTx = {!!} -}
 
 
 -- Is This Wrong
@@ -113,8 +118,8 @@ balance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → coin x) (toFinMap utxo 
 
 -- Again would need to know that valueC is a map to a quantity to define this
 -- am I changing pov here
-ubalance : UTxO → ℕ
-ubalance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → {!!}) (toFinMap utxo (finiteness (proj₁ utxo)))
+--ubalance : UTxO → ValueC
+--ubalance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → x) (toFinMap utxo (finiteness (proj₁ utxo)))
 
 -- TODO: figure out why this syntax makes Agda loop
 -- balance' : UTxO → Coin
