@@ -6,6 +6,7 @@ open import Prelude public
 
 open import Interface.ComputationalRelation public
 open import Interface.DecEq public
+open import Ledger.Interface.HasCoin public
 open import Relation.Nullary public
 open import Relation.Nullary.Negation
 open import Relation.Unary using () renaming (Decidable to Dec₁) public
