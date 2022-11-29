@@ -108,6 +108,7 @@ module _ where
   HSTransactionStructure .DecEq-UpdT      = DecEq-⊤
   HSTransactionStructure .ss              = HSScriptStructure
   HSTransactionStructure .DecEq-ADHash    = DecEq-⊤
+  HSTransactionStructure .DecEq-Epoch     = DecEq-ℕ
 
 open import Ledger.Utxo HSTransactionStructure
 open import Ledger.Utxo.Properties HSTransactionStructure

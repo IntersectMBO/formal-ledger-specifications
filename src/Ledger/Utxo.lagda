@@ -57,7 +57,7 @@ outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
 balance : UTxO → Coin
-balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
+balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] getCoin (proj₂ x)
 
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
@@ -70,6 +70,11 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   upper : ∀ {r}   → slot ≤ˢ r              →  inInterval slot (nothing , just r)
   none  :                                     inInterval slot (nothing , nothing)
 
+\end{code}
+\begin{code}[hide]
+instance
+  HasCoin-UTxO : HasCoin UTxO
+  HasCoin-UTxO .getCoin = balance
 \end{code}
 
 \caption{Functions used in UTxO rules}
@@ -130,6 +135,8 @@ instance
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} = yes none
 
+  HasCoin-UTxOState : HasCoin UTxOState
+  HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s) + (UTxOState.fees s)
 data
 \end{code}
 \begin{code}

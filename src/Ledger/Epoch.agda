@@ -38,8 +38,10 @@ record EpochStructure : Set₁ where
   _≤ˢ_ : Slot → Slot → Set
   _≤ˢ_ = flip _≥ˢ_
 
+  open IsStrictTotalOrder Slot-STO using () renaming (_<?_ to _<ˢ?_) public
+
   _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
-  s ≤ˢ? s' = let open IsStrictTotalOrder Slot-STO in ¬? (s' <? s)
+  s ≤ˢ? s' = ¬? (s' <ˢ? s)
 
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc
