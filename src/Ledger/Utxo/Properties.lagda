@@ -78,7 +78,7 @@ then
   →
 \end{code}
 \begin{code}
-      balance utxo + fee ≡ balance utxo' + fee'
+      getCoin ⟦ utxo , fee ⟧ᵘ ≡ getCoin ⟦ utxo' , fee' ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 pov {tx} {utxo} {_} {fee} h' (UTXO-inductive _ _ _ _ bal-eq _) =

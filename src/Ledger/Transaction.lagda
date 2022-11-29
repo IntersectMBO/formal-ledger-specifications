@@ -53,10 +53,11 @@ This function must produce a unique id for each unique transaction body.
         adHashingScheme                     : isHashableSet AuxiliaryData
         ppUpd                               : Ledger.PParams.PParamsDiff Epoch
         txidBytes                           : TxId → Crypto.Ser crypto
-        instance DecEq-TxId : DecEq TxId
-                 DecEq-Ix   : DecEq Ix
-                 DecEq-Netw : DecEq Network
-                 DecEq-UpdT : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
+        instance DecEq-TxId  : DecEq TxId
+                 DecEq-Epoch : DecEq Epoch
+                 DecEq-Ix    : DecEq Ix
+                 DecEq-Netw  : DecEq Network
+                 DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
@@ -117,4 +118,9 @@ This function must produce a unique id for each unique transaction body.
 \begin{code}
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
+\end{code}
+\begin{code}[hide]
+  instance
+    HasCoin-TxOut : HasCoin TxOut
+    HasCoin-TxOut .getCoin = proj₂
 \end{code}
