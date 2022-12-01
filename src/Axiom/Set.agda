@@ -136,6 +136,16 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   mapPartial : (A → Maybe B) → Set A → Set B
   mapPartial f X = proj₁ $ unions (map (partialToSet f) X)
 
+  singleton : A → Set A
+  singleton a = fromList [ a ]
+
+  ∈-singleton : {a b : A} → a ∈ singleton b ⇔ a ≡ b
+  ∈-singleton {_} {a} {b} =
+    a ∈ singleton b ∼⟨ R.SK-sym ∈-fromList ⟩
+    a ∈ˡ [ b ]      ∼⟨ mk⇔ (λ where (here refl) → refl) (λ where refl → here refl) ⟩
+    a ≡ b           ∎
+    where open R.EquationalReasoning
+
   binary-unions : ∃[ Y ] ∀ {a} → (a ∈ X ⊎ a ∈ X') ⇔ a ∈ Y
   binary-unions {X = X} {X'} with unions (fromList (X ∷ [ X' ]))
   ... | (Y , h) = Y , mk⇔ (λ where
