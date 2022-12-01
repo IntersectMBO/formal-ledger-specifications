@@ -32,7 +32,7 @@ private macro
 Rel : Type → Type → Type
 Rel A B = Set (A × B)
 
-private variable A A' B : Type
+private variable A A' B B' : Type
                  R R' : Rel A B
                  X : Set A
 
@@ -59,6 +59,9 @@ m ∣^' P? = filter (sp-∘ P? proj₂) m
 
 mapˡ : (A → A') → Rel A B → Rel A' B
 mapˡ f R = map (Data.Product.map₁ f) R
+
+mapʳ : (B → B') → Rel A B → Rel A B'
+mapʳ f R = map (Data.Product.map₂ f) R
 
 module Restriction (sp-∈ : spec-∈ A) where
 
