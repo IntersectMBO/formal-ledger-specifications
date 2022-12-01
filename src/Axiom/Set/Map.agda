@@ -29,7 +29,7 @@ private macro
   P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
   ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
-private variable A A' B : Type
+private variable A A' B B' : Type
                  R R' : Rel A B
                  X Y : Set A
 
@@ -105,6 +105,9 @@ filterᵐ sp-P m = filter sp-P (m ˢ) , ⊆-left-unique filter-⊆ (proj₂ m)
 filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Dec₁ P → finite (m ˢ) → finite (filterᵐ sp m ˢ)
 filterᵐ-finite = filter-finite
 
+singletonᵐ : A → B → Map A B
+singletonᵐ a b = (singleton (a , b) , (to ∈-singleton -⟨ (λ where refl refl → refl) ⟩- to ∈-singleton))
+
 module Unionᵐ (sp-∈ : spec-∈ A) where
 
   _∪ᵐˡ'_ : Rel A B → Rel A B → Rel A B
@@ -119,12 +122,22 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
     (∈-∪⁺ ∘′ Data.Sum.map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
     (∈⇔P ∘′ Data.Sum.map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
 
-mapˡ-inj : {f : A → A'} → Injective _≡_ _≡_ f → left-unique R → left-unique (mapˡ f R)
-mapˡ-inj inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
+  insert : Map A B → A → B → Map A B
+  insert m a b = singletonᵐ a b ∪ᵐˡ m
+
+mapˡ-uniq : {f : A → A'} → Injective _≡_ _≡_ f → left-unique R → left-unique (mapˡ f R)
+mapˡ-uniq inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
   ((_ , refl , Ha) , (_ , eqb , Hb)) → uniq Ha $ subst _ (sym $ ×-≡,≡→≡ $ Data.Product.map₁ inj (×-≡,≡←≡ eqb)) Hb
 
+mapʳ-uniq : {f : B → B'} → left-unique R → left-unique (mapʳ f R)
+mapʳ-uniq uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
+  ((_ , refl , Ha) , (_ , refl , Hb)) → cong _ $ uniq Ha Hb
+
 mapKeys : (f : A → A') → Injective _≡_ _≡_ f → Map A B → Map A' B
-mapKeys f inj (R , uniq) = mapˡ f R , mapˡ-inj inj uniq
+mapKeys f inj (R , uniq) = mapˡ f R , mapˡ-uniq inj uniq
+
+mapValues : (B → B') → Map A B → Map A B'
+mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
 
 _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
 m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
@@ -134,12 +147,17 @@ m ∣^' P? = filterᵐ (sp-∘ P? proj₂) m
 
 module Restrictionᵐ (sp-∈ : spec-∈ A) where
   private module R = Restriction sp-∈
+  open Unionᵐ sp-∈
 
   _∣_ : Map A B → Set A → Map A B
   m ∣ X = ⊆-map (R._∣ X) R.res-⊆ m
 
   _∣_ᶜ : Map A B → Set A → Map A B
   m ∣ X ᶜ = ⊆-map (R._∣ X ᶜ) R.ex-⊆ m
+
+  -- map only value at a
+  mapSingleValue : (B → B) → Map A B → A → Map A B
+  mapSingleValue f m a = mapValues f (m ∣ singleton a) ∪ᵐˡ m
 
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈

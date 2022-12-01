@@ -15,6 +15,7 @@ open import Ledger.Epoch
 open import Ledger.TokenAlgebra
 import Ledger.PParams
 import Ledger.Script
+import Ledger.GovernanceActions
 
 record TransactionStructure : Set₁ where
   field
@@ -71,6 +72,8 @@ This function must produce a unique id for each unique transaction body.
   open import Ledger.PParams Epoch
 
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
+  -- TODO: figure out what to do with the hash
+  open Ledger.GovernanceActions TxId Network ADHash PParamsUpdate crypto hiding (yes; no) public
 
   open import Ledger.Address Network KeyHash ScriptHash public
 \end{code}
@@ -101,6 +104,7 @@ This function must produce a unique id for each unique transaction body.
           netwrk     : Maybe Network
           txsize     : ℕ
           txid       : TxId
+          txgov      : ℙ GovProcedure
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ↛ Sig
