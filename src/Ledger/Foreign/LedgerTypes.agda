@@ -82,6 +82,7 @@ record PParams : Set where
         maxHeaderSize : ℕ
         poolDeposit   : Coin
         Emax          : Epoch
+        pv            : Pair ℕ ℕ
 
 {-# FOREIGN GHC
   data PParams = MkPParams
@@ -91,7 +92,8 @@ record PParams : Set where
     , maxTxSize :: Integer
     , maxHeaderSize :: Integer
     , poolDeposit :: Integer
-    , emax :: Integer } deriving Show
+    , emax :: Integer
+    , pv :: (Integer, Integer) } deriving Show
 #-}
 {-# COMPILE GHC PParams = data PParams (MkPParams) #-}
 

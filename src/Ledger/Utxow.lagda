@@ -13,7 +13,6 @@ import Data.Nat
 
 open TransactionStructure txs
 open import Ledger.Crypto
-open import Ledger.Script KeyHash ScriptHash ℕ
 open import Ledger.Utxo txs
 
 open TxBody
@@ -62,7 +61,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
           witsKeyHashes = map hash (dom (vkSigs txw ˢ))
           witsScriptHashes = map hash (scripts txw)
       in
-    All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
+    All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw ˢ)
     → All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
     → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     → scriptsNeeded utxo txb ≡ᵉ witsScriptHashes

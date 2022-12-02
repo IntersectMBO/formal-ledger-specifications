@@ -30,15 +30,21 @@ abstract
   finiteness : ∀ {A} (X : Theory.Set th A) → finite X
   finiteness = Theoryᶠ.finiteness List-Modelᶠ
 
+  lengthˢ : ∀ {A} (X : Theory.Set th A) → ℕ
+  lengthˢ = Theoryᶠ.lengthˢ List-Modelᶠ
+
   setToList : {A : Set} → ℙ A → List A
   setToList = id
 
   setFromList : {A : Set} → List A → ℙ A
   setFromList = id
 
+  ≟-∅ : {A : Set} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → Dec (X ≡ ∅)
+  ≟-∅ = Decˡ.≟-∅
+
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) public
 open import Axiom.Set.Map th renaming (Map to _↛_) public
-open L.Decˡ hiding (_∈?_) public
+open L.Decˡ hiding (_∈?_; ≟-∅) public
 open import Axiom.Set.Sum th public
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where
@@ -63,3 +69,6 @@ module Properties where
     open Intersectionᵖ {A} ∈-sp public
 
 open Computational public
+
+_ᶠᵐ : {A B : Set} → A ↛ B → FinMap A B
+(R , uniq) ᶠᵐ = (R , uniq , finiteness _)

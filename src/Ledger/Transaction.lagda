@@ -10,6 +10,7 @@ module Ledger.Transaction where
 
 open import Ledger.Prelude
 
+open import Ledger.Epoch
 open import Ledger.Crypto
 import Ledger.PParams
 import Ledger.Script
@@ -40,14 +41,18 @@ This function must produce a unique id for each unique transaction body.
 \emph{Abstract types}
 \AgdaTarget{Ix, TxId, Epoch, AuxiliaryData}
 \begin{code}
-        Ix TxId Epoch AuxiliaryData Network : Set
+        Ix TxId AuxiliaryData : Set
 \end{code}
 \begin{code}[hide]
-        crypto                              : Crypto
+        epochStructure                      : EpochStructure
+        globalConstants                     : GlobalConstants
+
+  open EpochStructure epochStructure public
+  open GlobalConstants globalConstants public
+  field crypto                              : Crypto
         adHashingScheme                     : isHashableSet AuxiliaryData
         ppUpd                               : Ledger.PParams.PParamsDiff Epoch
         txidBytes                           : TxId → Crypto.Ser crypto
-        networkId                           : Network
         instance DecEq-TxId : DecEq TxId
                  DecEq-Ix   : DecEq Ix
                  DecEq-Netw : DecEq Network
@@ -56,14 +61,14 @@ This function must produce a unique id for each unique transaction body.
   open Crypto crypto public
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
-  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash ℕ
+  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
         instance DecEq-ADHash : DecEq ADHash
 
   open Ledger.Script.ScriptStructure ss public
 
   open import Ledger.PParams Epoch
 
-  open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate)
+  open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
 
   open import Ledger.Address Network KeyHash ScriptHash public
 \end{code}
@@ -86,7 +91,7 @@ This function must produce a unique id for each unique transaction body.
           txouts     : Ix ↛ TxOut
           --txcerts  : List DCert
           txfee      : Coin
-          txvldt     : Maybe ℕ × Maybe ℕ
+          txvldt     : Maybe Slot × Maybe Slot
           txwdrls    : Wdrl
           txup       : Maybe Update
           txADhash   : Maybe ADHash
