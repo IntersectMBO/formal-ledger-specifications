@@ -20,7 +20,11 @@ rec {
     };
 
     command.text = config.preset.github.status.lib.reportBulk {
-      bulk.text = "nix eval .#packages --apply __attrNames --json | nix-systems -i";
+      bulk.text = ''
+        nix eval .#packages --apply __attrNames --json |
+        nix-systems -i |
+        jq 'with_entries(select(.value))' # filter out systems we cannot build for
+      '';
       each.text = ''
         nix build -L \
           .#packages."$1".agda{,Ledger} \
