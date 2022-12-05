@@ -14,7 +14,7 @@ record TokenAlgebra : Set₁ where
   Coin = ℕ
   MemoryEstimate = ℕ
 
-  open CommutativeMonoid Value renaming (Carrier to ValueC; refl to reflValue) public
+  open CommutativeMonoid Value renaming (Carrier to ValueC; refl to reflValue; _∙_ to _+ᵛ_) public
 
   field coin     : ValueC → Coin
   field inject   : Coin → ValueC
@@ -22,7 +22,7 @@ record TokenAlgebra : Set₁ where
   field size     : ValueC → MemoryEstimate
   field property : coin ∘ inject ≗ id
 
-  --field _≥ᵗ_ : ValueC → ValueC → Set
+  field _≥ᵗ_ : ValueC → ValueC → Set
   -- we need laws (might be necessary)
   -- how this relation should behave with respect to addition
   -- needs decidablity
