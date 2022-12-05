@@ -13,7 +13,7 @@
 open import Ledger.Transaction
 
 
-module Ledger.UtxoS (txs : TransactionStructure) where
+module Ledger.UtxoMA (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (Dec₁)
 
@@ -65,7 +65,7 @@ open import Ledger.PPUp
 --scaledMinDeposit b mv = {!!}
 
 utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize = {!!}
+utxoEntrySize = λ _ → zero -- fix this
 
 -- Same issue for serSize as getValue
 --serSize : TokenAlgebra → MemoryEstimate
@@ -74,7 +74,8 @@ utxoEntrySize = {!!}
 --
 
 serSize : ValueC → MemoryEstimate
-serSize = {!!}
+serSize = λ _ → zero -- fix this
+
 
 --balance : UTxO → Coin
 --balance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → coin x) (toFinMap utxo (finiteness (proj₁ utxo)))
@@ -104,13 +105,23 @@ outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 ubalance : UTxO → ValueC
 ubalance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
 
-balance : UTxO → ℕ
-balance utxo = {!indexedSumᵐ (λ where (_ , (_ , x)) → coin x) (toFinMap utxo (finiteness (proj₁ utxo)))!}
---indexedSumᵐ (λ where (_ , (_ , x)) → coin x) (toFinMap utxo (finiteness (proj₁ utxo)))
-
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
+
+-- need to add withdrawals to consumed
+consumed : PParams → UTxO → TxBody → ValueC
+consumed pp utxo txb = ubalance (utxo ∣ txins txb) +ᵛ mint txb
+                     --+ᵛ {!!}
+                     --+ inject (wbalance (txwdrls txb) + keyRefunds pp txb)
+
+-- need to add deposits to produced
+-- do I need to restrict txfee here?
+-- (I left it in utxo)
+produced : PParams → UTxO → TxBody → Coin →  ValueC
+produced pp utxo txb f = ubalance (outs txb)
+                     +ᵛ inject f
+                     --+ totalDeposits pp stpools (txcerts txb))
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -206,7 +217,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     -- → txins tx ⊆ dom utxo
     -- this is currently broken because of https://github.com/agda/agda/issues/5982
     → let f = txfee tx in minfee pp tx ≤ f
-    → balance (utxo ∣ txins tx) ≡ balance (outs tx) + f
+    → consumed pp utxo tx ≡ produced pp utxo tx f
     → coin (mint tx) ≡ 0 -- ma: tx seems to be txb according to txins tx ≢ ∅
 
 
@@ -224,6 +235,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
     -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
     → txsize tx ≤ PParams.maxTxSize pp
+    -- Add Deposits
     ────────────────────────────────
     Γ
       ⊢ s
