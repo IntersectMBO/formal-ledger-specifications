@@ -4,7 +4,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
+open import Ledger.TransactionOld
 
 module Ledger.Utxo.Properties (txs : TransactionStructure) where
 

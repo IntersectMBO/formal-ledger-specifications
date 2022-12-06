@@ -22,6 +22,10 @@ record TokenAlgebra : Set₁ where
   field size     : ValueC → MemoryEstimate
   field property : coin ∘ inject ≗ id
 
+
+
+  field relIsPropositionalEquality : ∀{v1 v2} → v1 ≈ v2 → v1 ≡ v2
+
   field _≥ᵗ_ : ValueC → ValueC → Set
   -- we need laws (might be necessary)
   -- how this relation should behave with respect to addition

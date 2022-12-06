@@ -7,7 +7,7 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
-open import Ledger.Transaction
+open import Ledger.TransactionOld
 
 module Ledger.Utxo (txs : TransactionStructure) where
 

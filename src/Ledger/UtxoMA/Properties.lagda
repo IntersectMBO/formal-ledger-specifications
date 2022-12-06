@@ -46,11 +46,25 @@ private variable
   Γ : UTxOEnv
   s s' : UTxOState
 
-balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → ubalance utxo ≡ ubalance utxo'
-balance-cong {utxo} {utxo'} with utxo ᶠᵐ
-... | ans = {!ans!}
 
---indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
+-- ≈
+-- why can't I use ≡
+-- do I need to define properties about rel in tokenalgebra?
+
+balance-cong' : proj₁ utxo ≡ᵉ proj₁ utxo' → ubalance utxo ≈ ubalance utxo'
+balance-cong' {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
+
+balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → ubalance utxo ≡ ubalance utxo'
+balance-cong {utxo} {utxo'} x = relIsPropositionalEquality (balance-cong' {utxo} {utxo'} x)
+
+{-
+proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≡ balance utxo'
+Have: (_≡ᵉ_ on proj₁) (utxo ᶠᵐ) (utxo' ᶠᵐ) →
+      (_≡_ on Axiom.Set.Sum.indexedSumᵐ th _f_7546) (utxo ᶠᵐ) (utxo' ᶠᵐ)
+-}
+
+--indexedSumᵐ-cong {_} {_} {λ x → proj₂ (proj₂ x)} {utxo ᶠᵐ} {utxo' ᶠᵐ}
+-- = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
 
 {-
 balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ)) → ubalance (utxo ∪ᵐˡ utxo') ≡ ubalance utxo + ubalance utxo'
