@@ -173,7 +173,7 @@ instance
         ; netwrk   = nothing
         ; txsize   = txsize
         ; txid     = txid
-        ; txgov    = ∅
+        ; txgov    = []
         }
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
