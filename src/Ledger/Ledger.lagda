@@ -15,6 +15,7 @@ open import Ledger.PParams Epoch
 open import Ledger.Utxo txs
 open import Ledger.Utxow txs
 open import Ledger.PPUp txs
+open import Ledger.Tally TxId Network ADHash PParamsUpdate crypto
 
 open Tx
 open TxBody
@@ -33,7 +34,8 @@ record LEnv : Set where
 record LState : Set where
   constructor ⟦_,_⟧ˡ
   field utxoSt : UTxOState
-        ppup   : PPUpdateState
+        tally  : TallyState
+        --ppup   : PPUpdateState
         --dpstate : DPState
 \end{code}
 \caption{Types for the LEDGER transition system}
@@ -43,19 +45,19 @@ private variable
   Γ : LEnv
   s s' s'' : LState
   utxoSt' : UTxOState
-  ppup' : PPUpdateState
+  tally' : TallyState
   tx : Tx
 
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  LEDGER : let open LState s in
+  LEDGER : let open LState s; txb = body tx in
     record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    → record { LEnv Γ } ⊢ ppup ⇀⦇ txup (body tx) ,PPUP⦈ ppup'
+    → txid txb ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
     -- DELEGS
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , ppup' ⟧ˡ
+    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , tally' ⟧ˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}
