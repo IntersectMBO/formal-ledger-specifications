@@ -15,7 +15,7 @@ open import Ledger.PParams Epoch
 open import Ledger.Utxo txs
 open import Ledger.Utxow txs
 open import Ledger.PPUp txs
-open import Ledger.Tally TxId Network ADHash PParamsUpdate crypto
+open import Ledger.Tally TxId Epoch Network ADHash PParamsUpdate crypto
 
 open Tx
 open TxBody
@@ -54,7 +54,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
 \begin{code}
   LEDGER : let open LState s; txb = body tx in
     record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    → txid txb ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
+    → record { txid = txid txb ; epoch = epoch (LEnv.slot Γ) } ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
     -- DELEGS
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , tally' ⟧ˡ
