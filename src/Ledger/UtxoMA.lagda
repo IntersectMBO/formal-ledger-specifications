@@ -43,42 +43,13 @@ open import Ledger.PParams Epoch
 open import Ledger.Crypto
 open import Ledger.PPUp
 
--- Is This Wrong
--- getValue : TxOut → TokenAlgebra
--- getValue (fst , snd) = {!!}
---
--- _≥ᵗ_ : TokenAlgebra → TokenAlgebra → Set
--- m ≥ᵗ n = {!!}
-
--- this is easy to define (moved to transaction structure)
--- getValue : TxOut → ValueC
--- getValue (fst , snd) = snd
-
--- is this what we want?
---
---At this point I need to know that ValueC is an AssetId mapped to a Quantity
--- Or we could add this to the abstract definition of a token algebra
---_≥ᵗ_ : ValueC → ValueC → Set
---m ≥ᵗ n = {!!}
-
---scaledMinDeposit : TokenAlgebra → Coin → Coin
---scaledMinDeposit b mv = {!!}
-
+-- fix this
 utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize = λ _ → zero -- fix this
+utxoEntrySize = λ _ → zero
 
--- Same issue for serSize as getValue
---serSize : TokenAlgebra → MemoryEstimate
---serSize v = {!!}
---
---
-
+-- fix this
 serSize : ValueC → MemoryEstimate
-serSize = λ _ → zero -- fix this
-
-
---balance : UTxO → Coin
---balance utxo = indexedSumᵐ (λ where (_ , (_ , x)) → coin x) (toFinMap utxo (finiteness (proj₁ utxo)))
+serSize = λ _ → zero
 
 \end{code}
 
@@ -118,9 +89,9 @@ consumed pp utxo txb = ubalance (utxo ∣ txins txb) +ᵛ mint txb
 -- need to add deposits to produced
 -- do I need to restrict txfee here?
 -- (I left it in utxo)
-produced : PParams → UTxO → TxBody → Coin →  ValueC
-produced pp utxo txb f = ubalance (outs txb)
-                     +ᵛ inject f
+produced : PParams → UTxO → TxBody →  ValueC
+produced pp utxo txb = ubalance (outs txb)
+                     +ᵛ inject (txfee txb)
                      --+ totalDeposits pp stpools (txcerts txb))
 
 -- this has to be a type definition for inference to work
@@ -216,8 +187,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
      inInterval slot (txvldt tx) -- ma
     -- → txins tx ⊆ dom utxo
     -- this is currently broken because of https://github.com/agda/agda/issues/5982
-    → let f = txfee tx in minfee pp tx ≤ f
-    → consumed pp utxo tx ≡ produced pp utxo tx f
+    → let f =  txfee tx in minfee pp tx ≤ f
+    → consumed pp utxo tx ≡ produced pp utxo tx
     → coin (mint tx) ≡ 0 -- ma: tx seems to be txb according to txins tx ≢ ∅
 
 

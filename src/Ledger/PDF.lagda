@@ -67,7 +67,7 @@ open import Ledger.Transaction
 module Ledger.PDF (txs : TransactionStructure) where
 
 open import Ledger.Utxo txs
-open import Ledger.Utxow txs
+-- open import Ledger.Utxow txs
 open import Ledger.Chain txs
 
 open import Ledger.Ledger.Properties

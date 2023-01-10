@@ -24,7 +24,8 @@ record TokenAlgebra : Set₁ where
 
 
 
-  field relIsPropositionalEquality : ∀{v1 v2} → v1 ≈ v2 → v1 ≡ v2
+  -- field relIsPropositionalEquality : ∀{v1 v2} → v1 ≈ v2 → v1 ≡ v2
+  field relImpliesCoinEquality : ∀{v1 v2} → v1 ≈ v2 → coin v1 ≡ coin v2
 
   field _≥ᵗ_ : ValueC → ValueC → Set
   -- we need laws (might be necessary)

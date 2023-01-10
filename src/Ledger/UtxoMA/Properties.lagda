@@ -46,16 +46,59 @@ private variable
   Γ : UTxOEnv
   s s' : UTxOState
 
-
--- ≈
--- why can't I use ≡
--- do I need to define properties about rel in tokenalgebra?
-
 balance-cong' : proj₁ utxo ≡ᵉ proj₁ utxo' → ubalance utxo ≈ ubalance utxo'
 balance-cong' {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
 
-balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → ubalance utxo ≡ ubalance utxo'
-balance-cong {utxo} {utxo'} x = relIsPropositionalEquality (balance-cong' {utxo} {utxo'} x)
+--balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → ubalance utxo ≡ ubalance utxo'
+--balance-cong {utxo} {utxo'} x = relIsPropositionalEquality (balance-cong' {utxo} {utxo'} x)
+--
+
+
+
+balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → coin (ubalance utxo) ≡ coin (ubalance utxo')
+balance-cong-coin {utxo} {utxo'} x = relImpliesCoinEquality (balance-cong' {utxo} {utxo'} x)
+
+balance-∪' : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ)) → ubalance (utxo ∪ᵐˡ utxo') ≡ ubalance utxo +ᵛ ubalance utxo'
+balance-∪' {utxo} {utxo'} h = begin
+  ubalance (utxo ∪ᵐˡ utxo') ≡⟨ {!!} ⟩
+  indexedSumᵐ {!!} ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)) ≡⟨ {!!} ⟩
+  ubalance utxo +ᵛ ubalance utxo' ∎
+
+
+balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ))
+                     → coin (ubalance (utxo ∪ᵐˡ utxo')) ≡ coin (ubalance utxo) + coin (ubalance utxo')
+balance-∪ {utxo} {utxo'} h = {!!}
+
+balance-∪'' : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ))
+                     → coin (ubalance (utxo ∪ᵐˡ utxo')) ≡ coin ((ubalance utxo) +ᵛ (ubalance utxo'))
+balance-∪'' {utxo} {utxo'} h = begin
+  coin (ubalance (utxo ∪ᵐˡ utxo')) ≡⟨ {!!} ⟩
+  coin (indexedSumᵐ {!!} ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ))) ≡⟨ {!indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h!} ⟩
+  coin (ubalance utxo +ᵛ ubalance utxo') ∎
+
+{-
+balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ)) → ubalance (utxo ∪ᵐˡ utxo') ≡ ubalance utxo +ᵛ ubalance utxo'
+balance-∪ {utxo} {utxo'} h = begin
+  ubalance (utxo ∪ᵐˡ utxo') ≡⟨ indexedSumᵐ-cong {x = (utxo ∪ᵐˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)} (id , id) ⟩
+  indexedSumᵐ _ ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)) ≡⟨ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h ⟩
+  ubalance utxo +ᵛ ubalance utxo' ∎
+-}
+
+{-
+(_≡_ on Axiom.Set.Sum.indexedSumᵐ th _f_7608)
+      ((∈-sp Unionᵐ.∪ᵐˡ utxo) utxo' ᶠᵐ)
+      ((th Axiom.Set.Sum._.IndexedSumUnionᵐ.∪ᵐˡᶠ ∈-sp)
+       (λ section → section ∈? X) (utxo ᶠᵐ) (utxo' ᶠᵐ))
+-}
+
+{-
+balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ)) → balance (utxo ∪ᵐˡ utxo') ≡ balance utxo + balance utxo'
+balance-∪ {utxo} {utxo'} h = begin
+  balance (utxo ∪ᵐˡ utxo') ≡⟨ indexedSumᵐ-cong {x = (utxo ∪ᵐˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)} (id , id) ⟩
+  indexedSumᵐ _ ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)) ≡⟨ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h ⟩
+  balance utxo + balance utxo' ∎
+-}
+
 
 {-
 proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≡ balance utxo'
@@ -72,10 +115,73 @@ balance-∪ {utxo} {utxo'} h = begin
   ubalance (utxo ∪ᵐˡ utxo') ≡⟨ indexedSumᵐ-cong {x = (utxo ∪ᵐˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)} (id , id) ⟩
   indexedSumᵐ _ ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)) ≡⟨ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h ⟩
   ubalance utxo + ubalance utxo' ∎
+-}
 
 newTxid⇒disj : txid tx ∉ map proj₁ (dom (utxo ˢ)) → disjoint' (dom (utxo ˢ)) (dom ((outs tx) ˢ))
 newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map
   (-, (case from ∈-map h' of λ where (_ , refl , h'') → case from ∈-map h'' of λ where (_ , refl , _) → refl) , h)
 
+\end{code}
+
+\begin{property}[\textbf{Preserve Balance}]
+For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\TxBody$, if
+\begin{code}[hide]
+pov :
+\end{code}
+\begin{code}[inline*]
+  txid tx ∉ map proj₁ (dom (utxo ˢ))
+\end{code}
+and
+\begin{code}[hide]
+  →
+\end{code}
+\begin{code}[inline*]
+      Γ ⊢ ⟦ utxo , fee ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fee' ⟧ᵘ
+\end{code}
+then
+\begin{code}[hide]
+  →
+\end{code}
+\begin{code}
+      coin (ubalance utxo) + fee ≡ coin (ubalance utxo') + fee'
+\end{code}
+\begin{code}[hide]
+pov {tx} {utxo} {_} {fee} h' (UTXO-inductive _ _ _ _ bal-eq _ _ _ _ _ _) =
+  let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
+      h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (cores-domᵐ h₁ , h₂)
+  in begin
+  coin (ubalance utxo) + fee
+    ≡tʳ⟨ cong (_+ fee) $ begin
+      coin (ubalance utxo)
+        ≡˘⟨ ? ⟩
+      coin (ubalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)))
+        ≡⟨ ? ⟩
+      coin (ubalance (utxo ∣ txins tx ᶜ)) +  coin (ubalance (utxo ∣ txins tx))
+        ≡tʳ⟨ ? ⟩
+      coin (ubalance (utxo ∣ txins tx ᶜ)) + coin (ubalance (outs tx)) + txfee tx
+        ≡˘⟨ ? ⟩
+      coin (ubalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx)) + txfee tx ∎
+    ⟩
+  coin (ubalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx)) + (txfee tx + fee)
+    ≡˘⟨ ? ⟩
+  coin (ubalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx)) + (fee + txfee tx) ∎
+\end{code}
+
+\end{property}
+
+Here, we state the fact that the UTxO relation is computable. This
+just follows from our automation.
+
+\begin{figure*}[h]
+\begin{code}
+{-
+UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
+UTXO-step = compute Computational-UTXO
+
+UTXO-step-computes-UTXO :
+  UTXO-step Γ utxoState tx ≡ just utxoState' ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
+UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO
 -}
 \end{code}
+\caption{Computing the UTXO transition system}
+\end{figure*}
