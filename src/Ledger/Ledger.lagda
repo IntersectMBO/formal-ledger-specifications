@@ -29,7 +29,7 @@ record LEnv : Set where
         --txix : Ix
         pparams : PParams
         --acnt : Acnt
-        genDelegs : GenesisDelegation -- part of DPState
+        roles : KeyHash ↛ GovRole -- replaces genDelegs
 
 record LState : Set where
   constructor ⟦_,_⟧ˡ
@@ -52,9 +52,9 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  LEDGER : let open LState s; txb = body tx in
+  LEDGER : let open LState s; txb = body tx; open LEnv Γ in
     record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    → record { txid = txid txb ; epoch = epoch (LEnv.slot Γ) } ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
+    → record { epoch = epoch slot ; LEnv Γ ; TxBody txb } ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
     -- DELEGS
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , tally' ⟧ˡ
