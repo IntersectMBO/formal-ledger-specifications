@@ -28,6 +28,7 @@ TallyState = GovActionID ↛ GovActionState
 record TallyEnv : Set where
   field txid  : TxId
         epoch : Epoch
+        roles : KeyHash ↛ GovRole
 \end{code}
 \begin{code}[hide]
 open GovActionState
@@ -57,9 +58,10 @@ addAction s e aid c addr a = insert s aid record
 data _⊢_⇀⦇_,TALLY⦈_ : TallyEnv → TallyState → List GovProcedure → TallyState → Set where
   TallyEmpty : Γ ⊢ s ⇀⦇ [] ,TALLY⦈ s
 
-  TallyVote :
+  TallyVote : let open TallyEnv Γ in
     Γ ⊢ s ⇀⦇ l ,TALLY⦈ s'
     → aid ∈ dom (s ˢ)
+    → (kh , role) ∈ roles ˢ
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ vote aid role kh v md ∷ l ,TALLY⦈ addVote s' aid role kh v
 

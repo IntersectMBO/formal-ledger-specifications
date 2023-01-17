@@ -33,7 +33,7 @@ record NewEpochState : Set where
 
 record ChainState : Set where
   field newEpochState  : NewEpochState
-        genDelegs      : GenesisDelegation
+        roles          : KeyHash ↛ GovRole
 
 record Block : Set where
   field ts   : List Tx
@@ -47,7 +47,7 @@ private variable
   b : Block
   ls' : LState
   pparams' : PParams
-  ppup' : PPUpdateState
+  ppup ppup' : PPUpdateState
   nes : NewEpochState
   e : Epoch
 
@@ -60,7 +60,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochSta
       open LState ls
       pup = PPUpdateState.pup ppup
       acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt }
-      ls' = record ls { ppup = ppup' ; utxoSt = record utxoSt { fees = 0 } }
+      ls' = record ls { tally = ∅ᵐ ; utxoSt = record utxoSt { fees = 0 } }
     in
     e ≡ sucᵉ lastEpoch
     → _ ⊢ ⟦ pparams , ppup ⟧ⁿᵖ ⇀⦇ votedValue pup pparams Quorum ,NEWPP⦈ ⟦ pparams' , ppup' ⟧ⁿᵖ
@@ -82,7 +82,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Se
 \begin{code}
   CHAIN : let open ChainState s; open Block b; open NewEpochState in
     _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    → ⟦ slot , pparams nes , genDelegs ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
+    → ⟦ slot , pparams nes , roles ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }
 \end{code}
