@@ -1,3 +1,5 @@
+\section{Tally}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 open import Ledger.Crypto
@@ -26,9 +28,9 @@ TallyState : Set
 TallyState = GovActionID ↛ GovActionState
 
 record TallyEnv : Set where
-  field txid  : TxId
-        epoch : Epoch
-        roles : KeyHash ↛ GovRole
+  field txid   : TxId
+        epoch  : Epoch
+        roles  : KeyHash ↛ GovRole
 \end{code}
 \begin{code}[hide]
 open GovActionState
