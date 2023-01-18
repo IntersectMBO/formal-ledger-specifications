@@ -25,6 +25,7 @@ open Tx
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
 witsVKeyNeeded utxo txb =
   mapPartial ((λ { (inj₁ kh) → just kh ; _ → nothing }) ∘ payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
+  ∪ mapPartial (λ { (vote x x₁ x₂ x₃ x₄) → just x₂ ; _ → nothing }) (setFromList $ txgov txb)
 
 scriptsNeeded : UTxO → TxBody → ℙ ScriptHash
 scriptsNeeded utxo txb =
@@ -65,7 +66,6 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     → All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
     → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     → scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
-    -- TODO: check genesis signatures
     → txADhash txb ≡ M.map hash (txAD tx)
     → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
     ────────────────────────────────
