@@ -78,9 +78,9 @@ open import Ledger.Chain txs
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
-\include{Ledger/PPUp}
+\include{Ledger/Tally}
 \include{Ledger/Ledger}
-\include{Ledger/NewPP}
+\include{Ledger/Ratify}
 \include{Ledger/Chain}
 
 \section{Properties}
