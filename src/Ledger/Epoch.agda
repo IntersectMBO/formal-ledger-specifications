@@ -32,6 +32,13 @@ record EpochStructure : Set₁ where
         StabilityWindow : Slot
         sucᵉ : Epoch → Epoch
 
+  _<ᵉ_ : Epoch → Epoch → Set
+  e₁ <ᵉ e₂ = firstSlot e₁ <ˢ firstSlot e₂
+
+  _+ᵉ_ : ℕ → Epoch → Epoch
+  zero +ᵉ e = e
+  suc n +ᵉ e = sucᵉ (n +ᵉ e)
+
   _≥ˢ_ : Slot → Slot → Set
   _≥ˢ_ = ¬_ ∘₂ _<ˢ_
 
