@@ -6,6 +6,9 @@ module Ledger.TokenAlgebra where
 open import Ledger.Prelude hiding (T)
 open import Data.Integer
 open import Algebra using (CommutativeMonoid)
+open import Algebra.Morphism
+open import Data.Nat.Properties using (+-0-commutativeMonoid)
+
 
 record TokenAlgebra : Set₁ where
   field  PolicyId : Set
@@ -26,6 +29,9 @@ record TokenAlgebra : Set₁ where
 
   -- field relIsPropositionalEquality : ∀{v1 v2} → v1 ≈ v2 → v1 ≡ v2
   field relImpliesCoinEquality : ∀{v1 v2} → v1 ≈ v2 → coin v1 ≡ coin v2
+  field coin-monoid-morphism : coin Is Value -CommutativeMonoid⟶ +-0-commutativeMonoid
+
+  --field coinEmptyIsZero : coin ε ≡ 0
 
   field _≥ᵗ_ : ValueC → ValueC → Set
   -- we need laws (might be necessary)

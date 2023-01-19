@@ -188,7 +188,13 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     -- → txins tx ⊆ dom utxo
     -- this is currently broken because of https://github.com/agda/agda/issues/5982
     → let f =  txfee tx in minfee pp tx ≤ f
+    -----------------
+    -- Will only need one of the three below
     → consumed pp utxo tx ≡ produced pp utxo tx
+    → coin (consumed pp utxo tx) ≡ coin (produced pp utxo tx)
+    → coin (ubalance (utxo ∣ txins tx)) ≡ coin (ubalance (outs tx)) + f
+    -------------------
+
     → coin (mint tx) ≡ 0 -- ma: tx seems to be txb according to txins tx ≢ ∅
 
 

@@ -2,7 +2,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
+open import Ledger.TransactionOld
 
 module Ledger.Utxow (txs : TransactionStructure) where
 
