@@ -76,6 +76,9 @@ outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 ubalance : UTxO → ValueC
 ubalance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
 
+cbalance : UTxO → Coin
+cbalance utxo = coin (ubalance utxo)
+
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
@@ -83,12 +86,9 @@ minfee pp tx = a * txsize tx + b
 -- need to add withdrawals to consumed
 consumed : PParams → UTxO → TxBody → ValueC
 consumed pp utxo txb = ubalance (utxo ∣ txins txb) +ᵛ mint txb
-                     --+ᵛ {!!}
                      --+ inject (wbalance (txwdrls txb) + keyRefunds pp txb)
 
 -- need to add deposits to produced
--- do I need to restrict txfee here?
--- (I left it in utxo)
 produced : PParams → UTxO → TxBody →  ValueC
 produced pp utxo txb = ubalance (outs txb)
                      +ᵛ inject (txfee txb)
@@ -187,20 +187,13 @@ data _⊢_⇀⦇_,UTXO⦈_ where
      inInterval slot (txvldt tx) -- ma
     -- → txins tx ⊆ dom utxo
     -- this is currently broken because of https://github.com/agda/agda/issues/5982
-    → let f =  txfee tx in minfee pp tx ≤ f
-    -----------------
-    -- Will only need one of the three below
+    → let f = txfee tx in minfee pp tx ≤ f
     → consumed pp utxo tx ≡ produced pp utxo tx
-    → coin (consumed pp utxo tx) ≡ coin (produced pp utxo tx)
-    → coin (ubalance (utxo ∣ txins tx)) ≡ coin (ubalance (outs tx)) + f
-    -------------------
-
-    → coin (mint tx) ≡ 0 -- ma: tx seems to be txb according to txins tx ≢ ∅
+    → coin (mint tx) ≡ 0
 
 
     → ∀ txout → txout ∈ proj₁ (txouts tx)
-    -- where is this v coming from
-              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp)) 
+              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp))
 
     → ∀ txout → txout ∈ proj₁ (txouts tx)
               → (serSize (getValue (proj₂ txout))) ≤ PParams.maxValSize pp
