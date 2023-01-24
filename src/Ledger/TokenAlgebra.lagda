@@ -14,6 +14,8 @@ record TokenAlgebra : Set₁ where
   field  PolicyId : Set
          Value : CommutativeMonoid 0ℓ 0ℓ
 
+  -- rename to Value-Commutative-Monoid
+
   Coin = ℕ
   MemoryEstimate = ℕ
 
@@ -26,17 +28,10 @@ record TokenAlgebra : Set₁ where
   field property : coin ∘ inject ≗ id
 
 
-
-  -- field relIsPropositionalEquality : ∀{v1 v2} → v1 ≈ v2 → v1 ≡ v2
   field relImpliesCoinEquality : ∀{v1 v2} → v1 ≈ v2 → coin v1 ≡ coin v2
   field coin-monoid-morphism : coin Is Value -CommutativeMonoid⟶ +-0-commutativeMonoid
-
-  --field coinEmptyIsZero : coin ε ≡ 0
-
   field _≥ᵗ_ : ValueC → ValueC → Set
-  -- we need laws (might be necessary)
-  -- how this relation should behave with respect to addition
-  -- needs decidablity
+
 
   field instance DecEq-ValueC : DecEq ValueC
 \end{code}

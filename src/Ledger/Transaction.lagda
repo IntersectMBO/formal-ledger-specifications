@@ -114,7 +114,7 @@ This function must produce a unique id for each unique transaction body.
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ↛ Sig
-          scripts  : ScriptHash ↛ Script -- new OLD: ℙ Script
+          scripts  : ℙ Script -- ScriptHash ↛ Script
           -- txdats : (DataHash ↦ Datum)
           -- txrdmrs : (RdmrPtr ↦ Redeemer × ExUnits)
 

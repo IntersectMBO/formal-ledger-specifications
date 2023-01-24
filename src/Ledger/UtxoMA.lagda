@@ -7,11 +7,7 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
---open import Ledger.Prelude
---open import Algebra using (CommutativeMonoid)
-
 open import Ledger.Transaction
-
 
 module Ledger.UtxoMA (txs : TransactionStructure) where
 
@@ -73,6 +69,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
+--rename to balance
 ubalance : UTxO → ValueC
 ubalance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
 

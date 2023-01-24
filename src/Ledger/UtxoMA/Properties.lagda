@@ -67,8 +67,7 @@ newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-m
 consumedCoinEquality :  ∀ {pp} → coin (mint tx) ≡ 0 → coin (consumed pp utxo tx) ≡ cbalance (utxo ∣ txins tx)
 consumedCoinEquality {tx} {utxo} h = begin
   coin (ubalance (utxo ∣ txins tx) +ᵛ mint tx) ≡⟨ IsCommutativeMonoidMorphism.∙-homo coin-monoid-morphism _ _ ⟩
-  cbalance (utxo ∣ txins tx) + coin (mint tx) ≡⟨ cong (cbalance (utxo ∣ txins tx) +_) h ⟩
-  cbalance (utxo ∣ txins tx) + 0 ≡⟨ +-identityʳ (cbalance (utxo ∣ txins tx)) ⟩
+  cbalance (utxo ∣ txins tx) + coin (mint tx) ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx) +_) h ⟩
   cbalance (utxo ∣ txins tx) ∎
 
 producedCoinEquality : ∀ {pp} → coin (produced pp utxo tx) ≡ cbalance (outs tx) + (txfee tx)
