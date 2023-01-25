@@ -11,7 +11,7 @@ open import Ledger.Prelude
 
 open TransactionStructure txs
 open import Ledger.PParams Epoch
-open import Ledger.Tally TxId Epoch Network ADHash PParamsUpdate crypto
+open import Ledger.Tally TxId Network ADHash epochStructure ppUpd crypto
 
 open import Relation.Nullary.Decidable
 
@@ -25,14 +25,14 @@ instance
 record RatifyEnv : Set where
   field stakeDistr : KeyHash ↛ Coin
         currentEpoch : Epoch
-        roles : KeyHash ↛ GovRole
+        roles : KeyHash ↛ GovRole -- TODO: only allowing one role per hash might not be desirable
 \end{code}
 \begin{figure*}[h]
 \begin{code}
 record RatifyState : Set where
   constructor ⟦_,_⟧ʳ
-  field pparams  : PParams
-        future   : List (GovActionID × GovActionState)
+  field es      : EnactState
+        future  : List (GovActionID × GovActionState)
 \end{code}
 \caption{Types and functions for the RATIFY transition system}
 \end{figure*}
@@ -73,7 +73,7 @@ expired current record { proposedIn = proposedIn } = (epochsToExpire +ᵉ propos
 private variable
   Γ : RatifyEnv
   s s' : RatifyState
-  pp newpp : PParams
+  es es' : EnactState
   upd : PParamsUpdate
   a : GovActionID × GovActionState
   f l : List (GovActionID × GovActionState)
@@ -84,8 +84,9 @@ data _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID �
 \begin{code}
   RATIFY-Accept : let open RatifyEnv Γ in
     accepted Γ (proj₂ a)
+    → _ ⊢ es ⇀⦇ GovActionState.action (proj₂ a) ,ENACT⦈ es'
     ────────────────────────────────
-    Γ ⊢ ⟦ pp , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ newpp , f ⟧ʳ
+    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ es' , f ⟧ʳ
 
   -- remove expired actions
   -- NOTE: don't have to remove actions that can never be accpted because of sufficient no votes
@@ -93,14 +94,14 @@ data _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID �
     ¬ accepted Γ (proj₂ a)
     → expired currentEpoch (proj₂ a)
     ────────────────────────────────
-    Γ ⊢ ⟦ pp , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ pp , f ⟧ʳ
+    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ es , f ⟧ʳ
 
   -- continue voting in the next epoch
   RATIFY-Continue : let open RatifyEnv Γ in
     ¬ accepted Γ (proj₂ a)
     → ¬ expired currentEpoch (proj₂ a)
     ────────────────────────────────
-    Γ ⊢ ⟦ pp , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ pp , a ∷ f ⟧ʳ
+    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ es , a ∷ f ⟧ʳ
 
   RATIFY-Base : Γ ⊢ s ⇀⦇ [] ,RATIFY⦈ s
 \end{code}
