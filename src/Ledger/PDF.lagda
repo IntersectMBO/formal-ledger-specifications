@@ -76,6 +76,7 @@ open import Ledger.Ledger.Properties
 \include{Ledger/Crypto}
 \include{Ledger/Address}
 \include{Ledger/Script}
+\include{Ledger/GovernanceActions}
 \include{Ledger/PParams}
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}

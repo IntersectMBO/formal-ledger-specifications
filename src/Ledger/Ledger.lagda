@@ -15,7 +15,7 @@ open import Ledger.PParams Epoch
 open import Ledger.Utxo txs
 open import Ledger.Utxow txs
 open import Ledger.PPUp txs
-open import Ledger.Tally TxId Epoch Network ADHash PParamsUpdate crypto
+open import Ledger.Tally TxId Network ADHash epochStructure ppUpd crypto
 
 open Tx
 open TxBody
