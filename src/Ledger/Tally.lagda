@@ -5,11 +5,16 @@
 open import Ledger.Crypto
 
 open import Ledger.Prelude hiding (yes; no)
+open import Ledger.Epoch
 
-module Ledger.Tally (TxId Epoch Network DocHash PParamsUpdate : Set)
+import Ledger.PParams as PP
+
+module Ledger.Tally (TxId Network DocHash : Set)
+                    (es : EpochStructure) (open EpochStructure es hiding (epoch))
+                    (ppd : PP.PParamsDiff Epoch)
                     (crypto : Crypto) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq TxId ⦄ where
 
-open import Ledger.GovernanceActions TxId Network DocHash PParamsUpdate crypto
+open import Ledger.GovernanceActions TxId Network DocHash es ppd crypto
 
 open Crypto crypto
 
