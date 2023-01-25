@@ -19,7 +19,7 @@ record PParams : Set where
         maxHeaderSize  : ℕ
         poolDeposit    : Coin
         Emax           : Epoch
-        pv             : ProtVer
+        pv             : ProtVer -- retired, keep for now
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}
