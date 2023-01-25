@@ -1,8 +1,7 @@
 let
   ciInputName = "GitHub event";
   repository = "input-output-hk/formal-ledger-specifications";
-in
-rec {
+in {
   tasks.ci = { config, lib, ... }: {
     preset = {
       nix.enable = true;
@@ -15,6 +14,7 @@ rec {
         # and we don't want to report a GitHub status.
         enable = config.actionRun.facts != { };
         inherit repository;
+        remote = config.preset.github.lib.readRepository ciInputName null;
         revision = config.preset.github.lib.readRevision ciInputName null;
       };
     };
@@ -34,7 +34,12 @@ rec {
     };
 
     memory = 1024 * 8;
-    nomad.resources.cpu = 10000;
+
+    nomad = {
+      resources.cpu = 10000;
+
+      driver = "exec";
+    };
   };
 
   actions."formal-ledger-specifications/ci" = {
@@ -50,8 +55,8 @@ rec {
 
       #lib.merge
       #ios: [
-        #lib.io.github_push & github,
-        { #lib.io.github_pr, github, #target_default: false },
+        { #lib.io.github_push, github, #default_branch: true },
+        { #lib.io.github_pr,   github, #target_default: false },
       ]
     '';
   };
