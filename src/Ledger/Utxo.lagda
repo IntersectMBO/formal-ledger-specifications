@@ -1,4 +1,4 @@
-\section{UTxO}
+\Section{utxo}
 \label{sec:utxo}
 
 \subsection{Accounting}
@@ -7,7 +7,7 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
-open import Ledger.TransactionOld
+open import Ledger.Transaction
 
 module Ledger.Utxo (txs : TransactionStructure) where
 
@@ -21,19 +21,31 @@ open import MyDebugOptions
 --open import Tactic.Defaults
 open import Tactic.DeriveComp
 
-instance
-  _ = +-0-commutativeMonoid
-  _ = Decidable²⇒Dec _≤?_
+open import Algebra.Structures
+open import Algebra using (CommutativeMonoid)
 
+open import Ledger.TokenAlgebra using (TokenAlgebra)
 open TransactionStructure txs
 open TxBody
 open TxWitnesses
 open Tx
 
+instance
+  _ = Decidable²⇒Dec _≤?_
+  _ = TokenAlgebra.Value tokenAlgebra
+
 open import Ledger.PParams Epoch
 open import Ledger.Crypto
-
 open import Ledger.PPUp
+
+-- fix this
+utxoEntrySize : TxOut → MemoryEstimate
+utxoEntrySize = λ _ → zero
+
+-- fix this
+serSize : ValueC → MemoryEstimate
+serSize = λ _ → zero
+
 \end{code}
 
 Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
@@ -59,9 +71,25 @@ outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 balance : UTxO → Coin
 balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] getCoin (proj₂ x)
 
+cbalance : UTxO → Coin
+cbalance utxo = coin (ubalance utxo)
+
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
+
+-- need to add withdrawals to consumed
+consumed : PParams → UTxO → TxBody → ValueC
+consumed pp utxo txb = ubalance (utxo ∣ txins txb)
+                     -- uncomment mint when derivecomp works
+                     -- +ᵛ mint txb
+                     --+ inject (wbalance (txwdrls txb) + keyRefunds pp txb)
+
+-- need to add deposits to produced
+produced : PParams → UTxO → TxBody →  ValueC
+produced pp utxo txb = ubalance (outs txb)
+                     +ᵛ inject (txfee txb)
+                     --+ totalDeposits pp stpools (txcerts txb))
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -76,6 +104,7 @@ instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = balance
 \end{code}
+
 
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
@@ -158,28 +187,37 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo = UTxOState.utxo s
           fees = UTxOState.fees s
       in
-    txins tx ≢ ∅
+     txins tx ≢ ∅
     → inInterval slot (txvldt tx)
     → txins tx ⊆ dom (utxo ˢ)
     → let f = txfee tx in minfee pp tx ≤ f
-    → balance (utxo ∣ txins tx) ≡ balance (outs tx) + f
+    → consumed pp utxo tx ≡ produced pp utxo tx
+
+    -- I need derive-comp to work with the below statement
+    -- → coin (mint tx) ≡ 0
+
+{- these also break the deriveComputational but don't matter at the moment
+  → ∀ txout → txout ∈ proj₁ (txouts tx)
+              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp))
+
+    → ∀ txout → txout ∈ proj₁ (txouts tx)
+              → (serSize (getValue (proj₂ txout))) ≤ PParams.maxValSize pp
+-}
+
     -- PPUP
     -- these fail with some reduceDec error
     -- → All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (range ((txouts tx) ˢ))
     -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
     -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
     → txsize tx ≤ PParams.maxTxSize pp
+    -- Add Deposits
     ────────────────────────────────
     Γ
       ⊢ s
       ⇀⦇ tx ,UTXO⦈
       ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f ⟧ᵘ
 \end{code}
+\begin{figure*}[h]
 \begin{code}[hide]
--- TODO: This can't be moved into Properties because it breaks. Move
--- this once this is fixed.
 unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
-\caption{UTXO inference rules}
-\label{fig:rules:utxo-shelley}
-\end{figure*}

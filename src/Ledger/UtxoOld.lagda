@@ -1,4 +1,4 @@
-\Section{utxo}
+\section{UTxO}
 \label{sec:utxo}
 
 \subsection{Accounting}
@@ -7,9 +7,9 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
-open import Ledger.Transaction
+open import Ledger.TransactionOld
 
-module Ledger.UtxoMA (txs : TransactionStructure) where
+module Ledger.UtxoOld (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (Dec₁)
 
@@ -21,32 +21,19 @@ open import MyDebugOptions
 --open import Tactic.Defaults
 open import Tactic.DeriveComp
 
-open import Algebra.Structures
-open import Algebra using (CommutativeMonoid)
-
-open import Ledger.TokenAlgebra using (TokenAlgebra)
+instance
+  _ = +-0-commutativeMonoid
+  _ = Decidable²⇒Dec _≤?_
 
 open TransactionStructure txs
 open TxBody
 open TxWitnesses
 open Tx
 
-instance
-  _ = Decidable²⇒Dec _≤?_
-  _ = TokenAlgebra.Value tokenAlgebra
-
 open import Ledger.PParams Epoch
 open import Ledger.Crypto
+
 open import Ledger.PPUp
-
--- fix this
-utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize = λ _ → zero
-
--- fix this
-serSize : ValueC → MemoryEstimate
-serSize = λ _ → zero
-
 \end{code}
 
 Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
@@ -69,27 +56,12 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
---rename to balance
-ubalance : UTxO → ValueC
-ubalance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
-
-cbalance : UTxO → Coin
-cbalance utxo = coin (ubalance utxo)
+balance : UTxO → Coin
+balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
 
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
-
--- need to add withdrawals to consumed
-consumed : PParams → UTxO → TxBody → ValueC
-consumed pp utxo txb = ubalance (utxo ∣ txins txb) +ᵛ mint txb
-                     --+ inject (wbalance (txwdrls txb) + keyRefunds pp txb)
-
--- need to add deposits to produced
-produced : PParams → UTxO → TxBody →  ValueC
-produced pp utxo txb = ubalance (outs txb)
-                     +ᵛ inject (txfee txb)
-                     --+ totalDeposits pp stpools (txcerts txb))
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -99,7 +71,6 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   none  :                                     inInterval slot (nothing , nothing)
 
 \end{code}
-
 
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
@@ -180,36 +151,28 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo = UTxOState.utxo s
           fees = UTxOState.fees s
       in
-    --  txins tx ≢ ∅
-     inInterval slot (txvldt tx) -- ma
-    -- → txins tx ⊆ dom utxo
-    -- this is currently broken because of https://github.com/agda/agda/issues/5982
+    txins tx ≢ ∅
+    → inInterval slot (txvldt tx)
+    → txins tx ⊆ dom (utxo ˢ)
     → let f = txfee tx in minfee pp tx ≤ f
-    → consumed pp utxo tx ≡ produced pp utxo tx
-    → coin (mint tx) ≡ 0
-
-
-    → ∀ txout → txout ∈ proj₁ (txouts tx)
-              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp))
-
-    → ∀ txout → txout ∈ proj₁ (txouts tx)
-              → (serSize (getValue (proj₂ txout))) ≤ PParams.maxValSize pp
-
-
+    → balance (utxo ∣ txins tx) ≡ balance (outs tx) + f
     -- PPUP
     -- these fail with some reduceDec error
     -- → All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (range ((txouts tx) ˢ))
     -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
     -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
     → txsize tx ≤ PParams.maxTxSize pp
-    -- Add Deposits
     ────────────────────────────────
     Γ
       ⊢ s
       ⇀⦇ tx ,UTXO⦈
       ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f ⟧ᵘ
 \end{code}
-\begin{figure*}[h]
 \begin{code}[hide]
---unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+-- TODO: This can't be moved into Properties because it breaks. Move
+-- this once this is fixed.
+unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
+\caption{UTXO inference rules}
+\label{fig:rules:utxo-shelley}
+\end{figure*}
