@@ -88,6 +88,31 @@ HSScriptStructure : ScriptStructure ℕ ℕ ℕ
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
 
 open import Ledger.Transaction
+open import Ledger.TokenAlgebra
+open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
+open import Data.Nat
+
+-- we could parametrise the algebra with the size
+-- policies should be the emptyset
+
+simpleTokenAlgebra : TokenAlgebra
+simpleTokenAlgebra = record
+         { PolicyId = ℕ
+         ; Value = +-0-commutativeMonoid
+         ; coin = id
+         ; inject = id
+         ; policies = λ x → ∅
+         ; size = λ x → 1
+         ; property = λ x → refl
+         ; relImpliesCoinEquality = λ { refl → refl}
+         ; coin-monoid-morphism = record { mn-homo = record
+                                                     { sm-homo = record { ⟦⟧-cong = λ z → z
+                                                       ; ∙-homo = λ x y → refl }
+                                                       ; ε-homo = refl
+                                                       } }
+         ; _≥ᵗ_ = _≥_
+         ; DecEq-ValueC = record { _≟_ = Data.Nat._≟_ }
+         }
 
 module _ where
   open TransactionStructure
@@ -102,6 +127,8 @@ module _ where
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; applyUpdate = λ p _ → p }
   HSTransactionStructure .txidBytes       = id
+  HSTransactionStructure .networkId       = tt
+  HSTransactionStructure .tokenAlgebra    = simpleTokenAlgebra
   HSTransactionStructure .DecEq-TxId      = DecEq-ℕ
   HSTransactionStructure .DecEq-Ix        = DecEq-ℕ
   HSTransactionStructure .DecEq-Netw      = DecEq-⊤
@@ -124,6 +151,7 @@ instance
   Convertible-Addr .to (inj₂ record { pay = inj₂ x }) = x
   Convertible-Addr .from n = inj₁ (record { net = _ ; pay = inj₁ n ; stake = inj₁ 0 })
 
+
   Convertible-TxBody : Convertible TxBody F.TxBody
   Convertible-TxBody = record { to = to' ; from = from' }
     where
@@ -139,16 +167,18 @@ instance
 
       from' : F.TxBody → TxBody
       from' txb = let open F.TxBody txb in record
-        { txins    = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
-        ; txouts   = from txouts
-        ; txfee    = txfee
-        ; txvldt   = coerce txvldt
-        ; txwdrls  = ∅ᵐ
-        ; txup     = nothing
-        ; txADhash = nothing
-        ; txsize   = txsize
-        ; txid     = txid
-        }
+                    { txins = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
+                    ; txouts = from txouts
+                    ; mint = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
+                    ; txfee = txfee
+                    ; txvldt = coerce txvldt
+                    ; txwdrls = ∅ᵐ
+                    ; txup = nothing
+                    ; txADhash = nothing
+                    ; netwrk = just tt
+                    ; txsize = txsize
+                    ; txid = txid
+                    }
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
   Convertible-TxWitnesses = record { to = to' ; from = from' }
@@ -189,6 +219,8 @@ instance
         ; maxBlockSize  = maxBlockSize
         ; maxTxSize     = maxTxSize
         ; maxHeaderSize = maxHeaderSize
+        ; maxValSize    = maxValSize
+        ; minUtxOValue  = minUtxOValue
         ; poolDeposit   = poolDeposit
         ; Emax          = Emax
         ; pv            = coerce pv
@@ -196,15 +228,17 @@ instance
 
       from' : F.PParams → PParams
       from' pp = let open F.PParams pp in record
-        { a             = a
-        ; b             = b
-        ; maxBlockSize  = maxBlockSize
-        ; maxTxSize     = maxTxSize
-        ; maxHeaderSize = maxHeaderSize
-        ; poolDeposit   = poolDeposit
-        ; Emax          = Emax
-        ; pv            = coerce pv
-        }
+                   { a = a
+                   ; b = b
+                   ; maxBlockSize = maxBlockSize
+                   ; maxTxSize = maxTxSize
+                   ; maxHeaderSize = maxHeaderSize
+                   ; maxValSize = maxValSize
+                   ; minUtxOValue = minUtxOValue
+                   ; poolDeposit = poolDeposit
+                   ; Emax = Emax
+                   ; pv = coerce pv
+                   }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
   Convertible-UTxOEnv = record { to = to' ; from = from' }

@@ -61,4 +61,6 @@ Computational-UTXOW .≡-just⇔STS {e} {s} {tx} {s'} =
         UTXOW-inductive x x₁ x₂ x₃ x₄ (to $ substGoal (fromWitness' comp-p p) h)
       (no ¬p) → case substGoal (fromWitnessFalse' comp-p ¬p) h of λ ())
     λ where (UTXOW-inductive x x₁ x₂ x₃ x₄ x₅) →
-              substGoal (sym $ fromWitness' comp-p (x , x₁ , x₂ , x₃ , x₄)) (from x₅)
+              substGoal (Ledger.Prelude.sym $ fromWitness' comp-p (x , x₁ , x₂ , x₃ , x₄)) (from x₅)
+
+-- NOTE: I can't find where the other sym is being imported from so am using Ledger.Prelude.sym

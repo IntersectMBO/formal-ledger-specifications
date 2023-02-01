@@ -10,6 +10,7 @@ open import Algebra.Morphism
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 
 
+--record TokenAlgebra (size : ℕ) : Set₁ where
 record TokenAlgebra : Set₁ where
   field  PolicyId : Set
          Value : CommutativeMonoid 0ℓ 0ℓ
