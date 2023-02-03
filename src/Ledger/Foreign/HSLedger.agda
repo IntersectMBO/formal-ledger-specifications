@@ -92,17 +92,14 @@ open import Ledger.TokenAlgebra
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
 open import Data.Nat
 
--- we could parametrise the algebra with the size
--- policies should be the emptyset
-
 simpleTokenAlgebra : TokenAlgebra
 simpleTokenAlgebra = record
          { PolicyId = ℕ
-         ; Value = +-0-commutativeMonoid
+         ; Value-Commutative-Monoid = +-0-commutativeMonoid
          ; coin = id
          ; inject = id
          ; policies = λ x → ∅
-         ; size = λ x → 1
+         ; size = λ x → 1 -- there is only ada in this token algebra
          ; property = λ x → refl
          ; relImpliesCoinEquality = λ { refl → refl}
          ; coin-monoid-morphism = record { mn-homo = record
@@ -111,7 +108,7 @@ simpleTokenAlgebra = record
                                                        ; ε-homo = refl
                                                        } }
          ; _≥ᵗ_ = _≥_
-         ; DecEq-ValueC = record { _≟_ = Data.Nat._≟_ }
+         ; DecEq-Value = record { _≟_ = Data.Nat._≟_ }
          }
 
 module _ where

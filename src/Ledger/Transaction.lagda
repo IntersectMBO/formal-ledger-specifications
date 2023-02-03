@@ -88,7 +88,7 @@ This function must produce a unique id for each unique transaction body.
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
   TxIn  = TxId × Ix
-  TxOut = Addr × ValueC
+  TxOut = Addr × Value
   UTxO  = TxIn ↛ TxOut
   Wdrl  = RwdAddr ↛ Coin
 
@@ -102,7 +102,7 @@ This function must produce a unique id for each unique transaction body.
     field txins      : ℙ TxIn
           txouts     : Ix ↛ TxOut
           --txcerts  : List DCert
-          mint       : ValueC -- new
+          mint       : Value -- new
           txfee      : Coin
           txvldt     : Maybe Slot × Maybe Slot
           txwdrls    : Wdrl
@@ -132,7 +132,7 @@ This function must produce a unique id for each unique transaction body.
 \end{figure*}
 
 \begin{code}
-  getValue : TxOut → ValueC
+  getValue : TxOut → Value
   getValue (fst , snd) = snd
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn

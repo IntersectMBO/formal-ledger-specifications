@@ -32,18 +32,21 @@ open Tx
 
 instance
   _ = Decidable²⇒Dec _≤?_
-  _ = TokenAlgebra.Value tokenAlgebra
+  _ = TokenAlgebra.Value-Commutative-Monoid tokenAlgebra
 
 open import Ledger.PParams Epoch
 open import Ledger.Crypto
 open import Ledger.PPUp
 
--- fix this
+-- utxoEntrySizeWithoutVal = 27 words (8 bytes)
+utxoEntrySizeWithoutVal : MemoryEstimate
+utxoEntrySizeWithoutVal = 8
+
 utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize = λ _ → zero
+utxoEntrySize (fst , v) = utxoEntrySizeWithoutVal + size v
 
 -- fix this
-serSize : ValueC → MemoryEstimate
+serSize : Value → MemoryEstimate
 serSize = λ _ → zero
 
 \end{code}
@@ -79,14 +82,14 @@ minfee pp tx = a * txsize tx + b
   where open PParams pp
 
 -- need to add withdrawals to consumed
-consumed : PParams → UTxO → TxBody → ValueC
+consumed : PParams → UTxO → TxBody → Value
 consumed pp utxo txb = ubalance (utxo ∣ txins txb)
                      -- uncomment mint when derivecomp works
                      -- +ᵛ mint txb
                      --+ inject (wbalance (txwdrls txb) + keyRefunds pp txb)
 
 -- need to add deposits to produced
-produced : PParams → UTxO → TxBody →  ValueC
+produced : PParams → UTxO → TxBody →  Value
 produced pp utxo txb = ubalance (outs txb)
                      +ᵛ inject (txfee txb)
                      --+ totalDeposits pp stpools (txcerts txb))

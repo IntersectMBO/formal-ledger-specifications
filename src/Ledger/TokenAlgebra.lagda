@@ -13,26 +13,24 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid)
 --record TokenAlgebra (size : ℕ) : Set₁ where
 record TokenAlgebra : Set₁ where
   field  PolicyId : Set
-         Value : CommutativeMonoid 0ℓ 0ℓ
-
-  -- rename to Value-Commutative-Monoid
+         Value-Commutative-Monoid : CommutativeMonoid 0ℓ 0ℓ
 
   Coin = ℕ
   MemoryEstimate = ℕ
 
-  open CommutativeMonoid Value renaming (Carrier to ValueC; refl to reflValue; _∙_ to _+ᵛ_) public
+  open CommutativeMonoid Value-Commutative-Monoid renaming (Carrier to Value; refl to reflValue; _∙_ to _+ᵛ_) public
 
-  field coin     : ValueC → Coin
-  field inject   : Coin → ValueC
-  field policies : ValueC → ℙ PolicyId
-  field size     : ValueC → MemoryEstimate
+  field coin     : Value → Coin
+  field inject   : Coin → Value
+  field policies : Value → ℙ PolicyId
+  field size     : Value → MemoryEstimate
   field property : coin ∘ inject ≗ id
 
 
   field relImpliesCoinEquality : ∀{v1 v2} → v1 ≈ v2 → coin v1 ≡ coin v2
-  field coin-monoid-morphism : coin Is Value -CommutativeMonoid⟶ +-0-commutativeMonoid
-  field _≥ᵗ_ : ValueC → ValueC → Set
+  field coin-monoid-morphism : coin Is Value-Commutative-Monoid -CommutativeMonoid⟶ +-0-commutativeMonoid
+  field _≥ᵗ_ : Value → Value → Set
 
 
-  field instance DecEq-ValueC : DecEq ValueC
+  field instance DecEq-Value : DecEq Value
 \end{code}

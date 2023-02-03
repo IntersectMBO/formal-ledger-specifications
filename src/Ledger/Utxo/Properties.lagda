@@ -36,7 +36,7 @@ open Properties
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
 instance
-  _ = TokenAlgebra.Value tokenAlgebra
+  _ = TokenAlgebra.Value-Commutative-Monoid tokenAlgebra
 
 private variable
   tx : TxBody
