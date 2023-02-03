@@ -15,6 +15,8 @@ open import Ledger.NewPP txs
 open import Ledger.Ledger txs
 open import Ledger.PPUp txs
 open import Ledger.Utxo txs
+open import Ledger.Ratify txs
+open import Ledger.Tally TxId Network ADHash epochStructure ppUpd crypto
 
 \end{code}
 \begin{figure*}[h]
@@ -23,17 +25,21 @@ record Acnt : Set where
   field treasury  : Coin
         reserves  : Coin
 
+record NewEpochEnv : Set where
+  field roles       : KeyHash ↛ GovRole
+        stakeDistr  : KeyHash ↛ Coin -- TODO: compute this from LState instead
+
 record NewEpochState : Set where
-  constructor ⟦_,_,_,_,_⟧ⁿᵉ
+  constructor ⟦_,_,_,_⟧ⁿᵉ
   field lastEpoch  : Epoch
         acnt       : Acnt
         ls         : LState
-        prevPP     : PParams
-        pparams    : PParams
+        es         : EnactState
 
 record ChainState : Set where
   field newEpochState  : NewEpochState
         roles          : KeyHash ↛ GovRole
+        stakeDistr     : KeyHash ↛ Coin -- TODO: compute this from LState instead
 
 record Block : Set where
   field ts   : List Tx
@@ -50,27 +56,31 @@ private variable
   ppup ppup' : PPUpdateState
   nes : NewEpochState
   e : Epoch
+  es' : EnactState
+  newTally : TallyState
+--  roles : KeyHash ↛ GovRole
 
-data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Set where
+data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  NEWEPOCH-New : let
+  NEWEPOCH-New : ∀ {Γ} → let
       open NewEpochState nes
       open LState ls
       pup = PPUpdateState.pup ppup
       acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt }
-      ls' = record ls { tally = ∅ᵐ ; utxoSt = record utxoSt { fees = 0 } }
+      ls' = record ls { tally = newTally ; utxoSt = record utxoSt { fees = 0 } }
     in
     e ≡ sucᵉ lastEpoch
-    → _ ⊢ ⟦ pparams , ppup ⟧ⁿᵖ ⇀⦇ votedValue pup pparams Quorum ,NEWPP⦈ ⟦ pparams' , ppup' ⟧ⁿᵖ
+    → record { currentEpoch = e ; NewEpochEnv Γ } ⊢ ⟦ es  , [] ⟧ʳ
+                    ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) ⟧ʳ
     ────────────────────────────────
-    _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , pparams , pparams' ⟧ⁿᵉ
+    Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es' ⟧ⁿᵉ
 
-  NEWEPOCH-Not-New : let open NewEpochState nes in
+  NEWEPOCH-Not-New : ∀ {Γ} → let open NewEpochState nes in
     e ≢ sucᵉ lastEpoch
     ────────────────────────────────
-    _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes
+    Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}
@@ -81,8 +91,8 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Se
 \begin{figure*}[h]
 \begin{code}
   CHAIN : let open ChainState s; open Block b; open NewEpochState in
-    _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    → ⟦ slot , pparams nes , roles ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
+    record { roles = roles ; stakeDistr = stakeDistr } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    → ⟦ slot , EnactState.pparams (es nes) , roles ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }
 \end{code}
