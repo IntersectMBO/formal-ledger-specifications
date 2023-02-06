@@ -29,7 +29,7 @@ private macro
   P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
   ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
-private variable A A' B B' : Type
+private variable A A' B B' C : Type
                  R R' : Rel A B
                  X Y : Set A
 
@@ -106,7 +106,9 @@ filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Dec₁ P 
 filterᵐ-finite = filter-finite
 
 singletonᵐ : A → B → Map A B
-singletonᵐ a b = (singleton (a , b) , (to ∈-singleton -⟨ (λ where refl refl → refl) ⟩- to ∈-singleton))
+singletonᵐ a b = (❴ (a , b) ❵ , (to ∈-singleton -⟨ (λ where refl refl → refl) ⟩- to ∈-singleton))
+
+❴_❵ᵐ = singletonᵐ
 
 module Unionᵐ (sp-∈ : spec-∈ A) where
 
@@ -157,7 +159,14 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 
   -- map only value at a
   mapSingleValue : (B → B) → Map A B → A → Map A B
-  mapSingleValue f m a = mapValues f (m ∣ singleton a) ∪ᵐˡ m
+  mapSingleValue f m a = mapValues f (m ∣ ❴ a ❵) ∪ᵐˡ m
+
+  curryᵐ : Map (A × B) C → A → Map B C
+  curryᵐ m a = R.curryʳ (m ˢ) a , λ h h' → proj₂ m (R.∈-curryʳ h) (R.∈-curryʳ h')
+
+  -- f(x,-)
+  infix 30 _⦅_,-⦆
+  _⦅_,-⦆ = curryᵐ
 
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈
@@ -167,3 +176,8 @@ module Corestrictionᵐ (sp-∈ : spec-∈ B) where
 
   _∣^_ᶜ : Map A B → Set B → Map A B
   m ∣^ X ᶜ = ⊆-map (R._∣^ X ᶜ) R.coex-⊆ m
+
+  -- f⁻¹(x)
+  infix 25 _⁻¹_
+  _⁻¹_ : ⦃ DecEq B ⦄ → Map A B → B → Set A
+  m ⁻¹ a = dom ((m ∣^ ❴ a ❵) ˢ)
