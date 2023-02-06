@@ -5,21 +5,10 @@ module Interface.ComputationalRelation where
 open import Prelude
 
 open import Interface.DecEq
+open import Interface.STS public
 
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
-
-infix -150 ∙_
-infixr -100 _∙_
-infix -50 _────────────────────────────────_
-_────────────────────────────────_ : Set → Set → Set
-A ──────────────────────────────── B = A → B
-
-_∙_ : Set → Set → Set
-A ∙ B = A → B
-
-∙_ : Set → Set
-∙ A = A
 
 private
   variable

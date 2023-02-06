@@ -11,7 +11,6 @@ open import Foreign.Convertible
 open import Foreign.Haskell.Coerce
 import Ledger.Foreign.LedgerTypes as F
 
-open import Ledger.PParams ℕ
 open import Ledger.Crypto
 open import Ledger.Epoch
 
@@ -23,6 +22,12 @@ HSGlobalConstants .NonZero-SlotsPerEpoch = _
 HSGlobalConstants .StabilityWindowᶜ      = 10
 HSGlobalConstants .Quorum                = 1
 HSGlobalConstants .NetworkId             = tt
+
+open EpochStructure
+HSEpochStructure : EpochStructure
+HSEpochStructure = ℕEpochStructure HSGlobalConstants
+
+open import Ledger.PParams HSEpochStructure
 
 -- Dummy hash functions
 isHashableSelf : ∀ A → DecEq A → isHashableSet A
@@ -56,10 +61,6 @@ HSCrypto .pkk              = HSPKKScheme
 HSCrypto .khs              = isHashableSet-ℕ
 HSCrypto .ScriptHash       = ℕ
 HSCrypto .decEq-ScriptHash = DecEq-ℕ
-
-open EpochStructure
-HSEpochStructure : EpochStructure
-HSEpochStructure = ℕEpochStructure HSGlobalConstants
 
 open import Ledger.Script
 
@@ -122,6 +123,7 @@ module _ where
   HSTransactionStructure .AuxiliaryData   = ⊤
   HSTransactionStructure .crypto          = HSCrypto
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
+  HSTransactionStructure .ppHashingScheme = isHashableSelf PParams
   HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; applyUpdate = λ p _ → p }
   HSTransactionStructure .txidBytes       = id
   HSTransactionStructure .networkId       = tt
