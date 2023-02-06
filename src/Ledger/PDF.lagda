@@ -82,6 +82,7 @@ open import Ledger.Ledger.Properties
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
 \include{Ledger/Tally}
+\include{Ledger/Deleg}
 \include{Ledger/Ledger}
 \include{Ledger/Ratify}
 \include{Ledger/Chain}
