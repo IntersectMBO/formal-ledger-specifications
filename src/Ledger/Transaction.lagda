@@ -51,7 +51,8 @@ This function must produce a unique id for each unique transaction body.
   open GlobalConstants globalConstants public
   field crypto                              : Crypto
         adHashingScheme                     : isHashableSet AuxiliaryData
-        ppUpd                               : Ledger.PParams.PParamsDiff Epoch
+        ppHashingScheme                     : isHashableSet (Ledger.PParams.PParams epochStructure)
+        ppUpd                               : Ledger.PParams.PParamsDiff epochStructure
         txidBytes                           : TxId → Crypto.Ser crypto
         networkId                           : Network
         tokenAlgebra                        : TokenAlgebra
@@ -70,11 +71,11 @@ This function must produce a unique id for each unique transaction body.
 
   open Ledger.Script.ScriptStructure ss public
 
-  open import Ledger.PParams Epoch
+  open import Ledger.PParams epochStructure
 
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
   -- TODO: figure out what to do with the hash
-  open Ledger.GovernanceActions TxId Network ADHash epochStructure ppUpd crypto hiding (yes; no) public
+  open Ledger.GovernanceActions TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto hiding (yes; no) public
 
   open import Ledger.Address Network KeyHash ScriptHash public
 \end{code}

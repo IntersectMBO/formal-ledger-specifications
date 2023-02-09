@@ -18,7 +18,7 @@ open Semiring Slotʳ
 open import Algebra.Literals
 open import Data.Nat.Properties using (m+1+n≢m)
 open import Data.Product.Properties
-open import Ledger.PParams Epoch
+open import Ledger.PParams epochStructure
 
 open import Agda.Builtin.FromNat
 open import Data.Nat.Literals
