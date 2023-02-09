@@ -10,13 +10,13 @@ module Ledger.Chain (txs : TransactionStructure) where
 open import Ledger.Prelude
 
 open TransactionStructure txs
-open import Ledger.PParams Epoch
+open import Ledger.PParams epochStructure
 open import Ledger.NewPP txs
 open import Ledger.Ledger txs
 open import Ledger.PPUp txs
 open import Ledger.Utxo txs
 open import Ledger.Ratify txs
-open import Ledger.Tally TxId Network ADHash epochStructure ppUpd crypto
+open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 
 \end{code}
 \begin{figure*}[h]

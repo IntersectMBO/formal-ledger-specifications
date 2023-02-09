@@ -26,7 +26,7 @@ open Tx
 
 open import Ledger.Crypto
 open import Ledger.PPUp
-open import Ledger.PParams Epoch
+open import Ledger.PParams epochStructure
 open import Ledger.TokenAlgebra using (TokenAlgebra)
 
 open import MyDebugOptions

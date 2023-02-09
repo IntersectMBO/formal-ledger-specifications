@@ -5,19 +5,25 @@
 
 open import Ledger.Transaction
 
+open import Ledger.Crypto
+import Ledger.PParams as PP
+
 module Ledger.Ratify (txs : TransactionStructure) where
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (_∧_)
 
 open TransactionStructure txs
-open import Ledger.PParams Epoch
-open import Ledger.Tally TxId Network ADHash epochStructure ppUpd crypto
+open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
+open PP epochStructure
 
 open import Relation.Nullary.Decidable
 
 import Data.Integer as Z
 import Data.Rational as R
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
+
+infixr 2 _∧_
+_∧_ = _×_
 
 instance
   _ = +-0-commutativeMonoid
@@ -63,7 +69,7 @@ acceptedR Γ s role t = let open RatifyEnv Γ; totalStake = totalStake role stak
 -- for now, consider a proposal as accepted if the CC and half of the SPOs agree
 accepted : RatifyEnv → GovActionState → Set
 accepted Γ s@record { votes = votes } = lengthˢ (votedYesHashes votes CC) > CCThreshold
-                                      × acceptedR Γ s SPO R.½
+                                      ∧ acceptedR Γ s SPO R.½
 
 expired : Epoch → GovActionState → Set
 expired current record { proposedIn = proposedIn } = (epochsToExpire +ᵉ proposedIn) <ᵉ current
@@ -76,9 +82,9 @@ private variable
   es es' : EnactState
   upd : PParamsUpdate
   a : GovActionID × GovActionState
-  f l : List (GovActionID × GovActionState)
+  f f' l : List (GovActionID × GovActionState)
 
-data _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID × GovActionState) → RatifyState → Set where
+data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -86,7 +92,7 @@ data _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID �
     accepted Γ (proj₂ a)
     → _ ⊢ es ⇀⦇ GovActionState.action (proj₂ a) ,ENACT⦈ es'
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ es' , f ⟧ʳ
+    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f ⟧ʳ
 
   -- remove expired actions
   -- NOTE: don't have to remove actions that can never be accpted because of sufficient no votes
@@ -94,16 +100,17 @@ data _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID �
     ¬ accepted Γ (proj₂ a)
     → expired currentEpoch (proj₂ a)
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ es , f ⟧ʳ
+    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f ⟧ʳ
 
   -- continue voting in the next epoch
   RATIFY-Continue : let open RatifyEnv Γ in
     ¬ accepted Γ (proj₂ a)
     → ¬ expired currentEpoch (proj₂ a)
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ∷ l ,RATIFY⦈ ⟦ es , a ∷ f ⟧ʳ
+    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f ⟧ʳ
 
-  RATIFY-Base : Γ ⊢ s ⇀⦇ [] ,RATIFY⦈ s
+_⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID × GovActionState) → RatifyState → Set
+_⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,RATIFY'⦈_)
 \end{code}
 \caption{RATIFY transition system}
 \end{figure*}
