@@ -11,10 +11,11 @@ import Ledger.PParams as PP
 
 module Ledger.Tally (TxId Network DocHash : Set)
                     (es : EpochStructure) (open EpochStructure es hiding (epoch))
-                    (ppd : PP.PParamsDiff Epoch)
+                    (ppd : PP.PParamsDiff es)
+                    (ppHashable : isHashableSet (PP.PParams es))
                     (crypto : Crypto) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq TxId ⦄ where
 
-open import Ledger.GovernanceActions TxId Network DocHash es ppd crypto
+open import Ledger.GovernanceActions TxId Network DocHash es ppd ppHashable crypto
 
 open Crypto crypto
 
@@ -65,21 +66,18 @@ addAction : TallyState → Epoch → GovActionID → Coin → RwdAddr → GovAct
 addAction s e aid c addr a = insert s aid record
   { votes = ∅ᵐ ; deposit = c ; returnAddr = addr ; proposedIn = e ; action = a }
 
-data _⊢_⇀⦇_,TALLY⦈_ : TallyEnv → TallyState → List GovProcedure → TallyState → Set where
-  TallyEmpty : Γ ⊢ s ⇀⦇ [] ,TALLY⦈ s
-
+data _⊢_⇀⦇_,TALLY'⦈_ : TallyEnv → TallyState → GovProcedure → TallyState → Set where
   TallyVote : let open TallyEnv Γ in
-    Γ ⊢ s ⇀⦇ l ,TALLY⦈ s'
-    → aid ∈ dom (s ˢ)
+    aid ∈ dom (s ˢ)
     → (kh , role) ∈ roles ˢ
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ vote aid role kh v md ∷ l ,TALLY⦈ addVote s' aid role kh v
+    Γ ⊢ s ⇀⦇ vote aid role kh v md ,TALLY'⦈ addVote s aid role kh v
 
   TallyPropose : let open TallyEnv Γ in
-    Γ ⊢ s ⇀⦇ l ,TALLY⦈ s'
-    ────────────────────────────────
-    Γ ⊢ s ⇀⦇ propose c addr a md ∷ l ,TALLY⦈ addAction s' epoch (txid , length l) c addr a
+    Γ ⊢ s ⇀⦇ propose c addr a md ,TALLY'⦈ addAction s epoch (txid , length l) c addr a
 
+_⊢_⇀⦇_,TALLY⦈_ : TallyEnv → TallyState → List GovProcedure → TallyState → Set
+_⊢_⇀⦇_,TALLY⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,TALLY'⦈_)
 \end{code}
 \caption{TALLY types}
 \label{defs:tally-types}

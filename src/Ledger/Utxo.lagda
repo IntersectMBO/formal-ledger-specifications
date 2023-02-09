@@ -30,7 +30,7 @@ open TxBody
 open TxWitnesses
 open Tx
 
-open import Ledger.PParams Epoch
+open import Ledger.PParams epochStructure
 open import Ledger.Crypto
 
 open import Ledger.PPUp

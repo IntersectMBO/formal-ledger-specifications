@@ -2,9 +2,12 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-module Ledger.PParams (Epoch : Set) where
+open import Ledger.Epoch
+
+module Ledger.PParams (es : EpochStructure) where
 
 open import Ledger.Prelude
+open EpochStructure es
 \end{code}
 \begin{figure*}[h]
 \begin{code}

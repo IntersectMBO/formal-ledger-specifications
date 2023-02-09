@@ -10,7 +10,7 @@ open import Ledger.Prelude hiding (_≥_; _+_; _*_)
 
 open TransactionStructure txs
 
-open import Ledger.PParams Epoch
+open import Ledger.PParams epochStructure
 open import Relation.Binary
 open import Algebra
 open import Algebra.Literals

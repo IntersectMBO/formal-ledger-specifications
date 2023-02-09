@@ -21,7 +21,7 @@ open import Tactic.MonoidSolver
 open TransactionStructure txs
 
 open import Ledger.Utxo txs
-open import Ledger.PParams Epoch
+open import Ledger.PParams epochStructure
 open import Ledger.Crypto
 
 open TxBody
