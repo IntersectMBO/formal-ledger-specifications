@@ -10,12 +10,12 @@ module Ledger.Ledger (txs : TransactionStructure) where
 open import Ledger.Prelude
 
 open TransactionStructure txs
-open import Ledger.PParams Epoch
+open import Ledger.PParams epochStructure
 
 open import Ledger.Utxo txs
 open import Ledger.Utxow txs
 open import Ledger.PPUp txs
-open import Ledger.Tally TxId Network ADHash epochStructure ppUpd crypto
+open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 
 open Tx
 open TxBody
@@ -61,18 +61,10 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}
-\begin{code}[hide]
-data _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set where
-\end{code}
 \begin{figure*}[h]
 \begin{code}
-  LEDGERS-base : Γ ⊢ s ⇀⦇ [] ,LEDGERS⦈ s
-
-  LEDGERS-ind : ∀ {txs}
-    → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-    → Γ ⊢ s' ⇀⦇ txs ,LEDGERS⦈ s''
-    ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ∷ txs ,LEDGERS⦈ s''
+_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set
+_⊢_⇀⦇_,LEDGERS⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,LEDGER⦈_)
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}

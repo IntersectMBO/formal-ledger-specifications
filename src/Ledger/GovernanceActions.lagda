@@ -12,16 +12,18 @@ import Ledger.PParams as PP
 open import Data.Rational using (ℚ)
 
 module Ledger.GovernanceActions (TxId Network DocHash : Set)
-                                (es : EpochStructure) (open EpochStructure es)
-                                (ppd : PP.PParamsDiff Epoch)
+                                (es : EpochStructure)
+                                (ppd : PP.PParamsDiff es)
+                                (ppHashable : isHashableSet (PP.PParams es))
                                 (crypto : Crypto) ⦃ _ : DecEq Network ⦄ where
 
 open Crypto crypto
 
 open import Ledger.Address Network KeyHash ScriptHash
 
-open PP Epoch
+open PP es
 open PParamsDiff ppd
+open isHashableSet ppHashable renaming (THash to PPHash)
 
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
@@ -49,7 +51,7 @@ data GovAction : Set where
   NewCommittee     : ℙ KeyHash → ℚ        → GovAction
   NewConstitution  : DocHash              → GovAction
   TriggerHF        : ProtVer              → GovAction
-  ChangePParams    : UpdateT              → GovAction
+  ChangePParams    : UpdateT → PPHash     → GovAction
   TreasuryWdrl     : (Credential ↛ Coin)  → GovAction
 
 data Vote : Set where
@@ -86,6 +88,7 @@ private variable
   mem : ℙ KeyHash
   q : ℚ
   dh : DocHash
+  h : PPHash
   v : ProtVer
 
 data
@@ -102,7 +105,14 @@ data _⊢_⇀⦇_,ENACT⦈_ where
   Enact-NewComm   : _ ⊢ s ⇀⦇ NewCommittee mem q  ,ENACT⦈  record s { cc = just (mem , q) }
   Enact-NewConst  : _ ⊢ s ⇀⦇ NewConstitution dh  ,ENACT⦈  record s { constitution = dh }
   Enact-HF        : _ ⊢ s ⇀⦇ TriggerHF v         ,ENACT⦈  record s { pv = v }
-  Enact-PParams   : _ ⊢ s ⇀⦇ ChangePParams up    ,ENACT⦈  record s { pparams = applyUpdate (s .pparams) up }
+  Enact-PParamsY  :
+    h ≡ hash (s .pparams)
+    ────────────────────────────────
+    _ ⊢ s ⇀⦇ ChangePParams up h  ,ENACT⦈  record s { pparams = applyUpdate (s .pparams) up }
+  Enact-PParamsN  : -- TODO: maybe prevent this in TALLY instead and delay enactment?
+    ¬ h ≡ hash (s .pparams)
+    ────────────────────────────────
+    _ ⊢ s ⇀⦇ ChangePParams up h  ,ENACT⦈ s
   --Enact-Wdrl      : _ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈  record s { ... }
 \end{code}
 \caption{ENACT transition system}

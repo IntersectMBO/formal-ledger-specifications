@@ -10,7 +10,7 @@ module Ledger.NewPP (txs : TransactionStructure) where
 open import Ledger.Prelude
 
 open TransactionStructure txs
-open import Ledger.PParams Epoch
+open import Ledger.PParams epochStructure
 open import Ledger.PPUp txs
 
 open import Relation.Nullary.Decidable
