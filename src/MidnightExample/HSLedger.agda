@@ -1,18 +1,16 @@
 {-# OPTIONS --overlapping-instances #-}
 module MidnightExample.HSLedger where
 
-open import Prelude hiding (_++_)
+open import Data.Integer        using (ℤ)
+open import Data.String         using (_++_)
+open import Interface.DecEq     using (DecEq)
+open import Interface.Hashable  using (Hashable; hash; Hashable₁; Hashable₂)
+open import Prelude             using (ℕ; String; List; _$_; foldr; _×_; _,_; Maybe)
 
-open import Interface.Hashable
-open import Interface.DecEq
-
-open import Data.Integer hiding (show)
 import Data.Integer.Show as Z
+import Data.List as L
+import Data.Maybe as M
 import Data.Nat.Show as N
-import Data.List
-import Data.Maybe
-open import Data.String using (_++_)
-
 import MidnightExample.Types as F
 
 Hash = ℕ
@@ -30,10 +28,11 @@ instance
   Hashable-× : Hashable₂ _×_ Hash
   Hashable-× .hash (a , b) = hash (N.show (hash a) ++ "," ++ N.show (hash b))
 
-open import MidnightExample.Ledger Hash
+open import MidnightExample.Ledger Hash using (Point; Tx; inc; dec; Header; Block; LedgerState; LEDGER-step; addBlockHash)
 
-open import Foreign.Convertible
-open import Foreign.Haskell.Coerce
+open import Foreign.Convertible using (Convertible; to; from)
+
+-- open import Foreign.Haskell.Coerce -- (It seems we're not using this...?)
 
 instance
   Convertible-Point : Convertible Point F.Point
@@ -80,12 +79,12 @@ instance
       to' : Block → F.Block
       to' p = let open Block p in record
         { header = to header
-        ; body   = Data.List.map to body }
+        ; body   = L.map to body }
 
       from' : F.Block → Block
       from' p = let open F.Block p in record
         { header = from header
-        ; body   = Data.List.map from body }
+        ; body   = L.map from body }
 
   Convertible-LedgerState : Convertible LedgerState F.LedgerState
   Convertible-LedgerState = record { to = to' ; from = from' }
@@ -105,7 +104,7 @@ instance
         ; snapshot2 = snapshot2 }
 
 ledgerStep : F.LedgerState → F.Block → Maybe F.LedgerState
-ledgerStep s b = Data.Maybe.map to (LEDGER-step _ (from s) (from b))
+ledgerStep s b = M.map to (LEDGER-step _ (from s) (from b))
 
 {-# COMPILE GHC ledgerStep as ledgerStep #-}
 

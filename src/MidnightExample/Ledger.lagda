@@ -2,24 +2,25 @@
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-open import Interface.DecEq
-open import Interface.Hashable
-
-open import Prelude hiding (_+_; _<ᵇ_; _∧_) renaming (_×_ to _∧_)
-open import Ledger.Prelude using (indexedSumL)
-open import Data.Integer hiding (_/_; _≟_)
+open import Data.Integer        using (ℤ; +_; 1ℤ; -1ℤ; 0ℤ; _+_)
+open import Interface.DecEq     using (DecEq; _≟_)
+open import Interface.Hashable  using (Hashable; Hashable₁; Hashable₂; hash)
+open import Ledger.Prelude      using (indexedSumL)
+open import Prelude             using (List; ℕ; Maybe; Bool; _/_; _∘_; _,_; if_then_else_; ⊤; _≢_; _≡_; sym; Equivalence; refl)
+                                renaming (_×_ to _∧_)
 
 module MidnightExample.Ledger (Hash : Set) ⦃ _ : DecEq Hash ⦄
   ⦃ _ : Hashable ℤ Hash ⦄ ⦃ _ : Hashable₁ List Hash ⦄ ⦃ _ : Hashable₂ _∧_ Hash ⦄ where
 
-open import Data.Integer.Properties using (+-0-commutativeMonoid; +-0-abelianGroup)
-open import Relation.Nullary
+open import Data.Integer.Properties          using (+-0-commutativeMonoid; +-0-abelianGroup)
+open import Relation.Nullary                 using (yes; no)
+open import Interface.Decidable.Instance     using (ifᵈ_then_else_)
+open import Interface.ComputationalRelation  using (_∙_; ∙_; _────────────────────────────────_; Computational)
+open import Tactic.DeriveComp                using (deriveComputational)
+open import MyDebugOptions                   using (defaultDebugOptionsI)
 
-open import Interface.Decidable.Instance
-
-open import Interface.ComputationalRelation
-open import Tactic.DeriveComp
-open import MyDebugOptions
+open Maybe
+open Bool
 
 instance
   _ = +-0-commutativeMonoid
@@ -214,7 +215,7 @@ non-zero, the proofs are identical.
 private variable s s' : LedgerState
                  b : Block
 
-open import Algebra.Properties.AbelianGroup +-0-abelianGroup
+open import Algebra.Properties.AbelianGroup +-0-abelianGroup using (identityʳ-unique) 
 \end{code}
 \begin{figure*}[h]
 \begin{code}
