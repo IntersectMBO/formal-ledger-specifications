@@ -19,8 +19,6 @@ import Ledger.Script
 import Data.Nat as N
 open import Data.Integer
 
-
--- We need a tag for scripts
 data Tag : Set where
   Spend Mint Cert Rewrd : Tag
 
@@ -102,7 +100,7 @@ This function must produce a unique id for each unique transaction body.
     field txins      : ℙ TxIn
           txouts     : Ix ↛ TxOut
           --txcerts  : List DCert
-          mint       : Value -- new
+          mint       : Value
           txfee      : Coin
           txvldt     : Maybe Slot × Maybe Slot
           txwdrls    : Wdrl
@@ -110,13 +108,11 @@ This function must produce a unique id for each unique transaction body.
           txADhash   : Maybe ADHash
           netwrk    : Maybe Network
           txsize     : ℕ
-          txid       : TxId -- does this need to change to tx network id
+          txid       : TxId
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ↛ Sig
-          scripts  : ℙ Script -- ScriptHash ↛ Script
-          -- txdats : (DataHash ↦ Datum)
-          -- txrdmrs : (RdmrPtr ↦ Redeemer × ExUnits)
+          scripts  : ℙ Script
 
   record Tx : Set where
     field body  : TxBody

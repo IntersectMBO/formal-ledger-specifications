@@ -1,4 +1,4 @@
-\Section{utxo}
+\Section{UTxO}
 \label{sec:utxo}
 
 \subsection{Accounting}
@@ -75,7 +75,7 @@ balance : UTxO → Coin
 balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] getCoin (proj₂ x)
 
 cbalance : UTxO → Coin
-cbalance utxo = coin (ubalance utxo)
+cbalance utxo = coin (balance utxo)
 
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
@@ -83,15 +83,14 @@ minfee pp tx = a * txsize tx + b
 
 -- need to add withdrawals to consumed
 consumed : PParams → UTxO → TxBody → Value
-consumed pp utxo txb = ubalance (utxo ∣ txins txb)
-                     -- uncomment mint when derivecomp works
-                     -- +ᵛ mint txb
+consumed pp utxo txb = balance (utxo ∣ txins txb)
+                       +ᵛ mint txb
                      --+ inject (wbalance (txwdrls txb) + keyRefunds pp txb)
 
 -- need to add deposits to produced
 produced : PParams → UTxO → TxBody →  Value
-produced pp utxo txb = ubalance (outs txb)
-                     +ᵛ inject (txfee txb)
+produced pp utxo txb = balance (outs txb)
+                       +ᵛ inject (txfee txb)
                      --+ totalDeposits pp stpools (txcerts txb))
 
 -- this has to be a type definition for inference to work
@@ -195,12 +194,10 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     → txins tx ⊆ dom (utxo ˢ)
     → let f = txfee tx in minfee pp tx ≤ f
     → consumed pp utxo tx ≡ produced pp utxo tx
+    → coin (mint tx) ≡ 0
 
-    -- I need derive-comp to work with the below statement
-    -- → coin (mint tx) ≡ 0
-
-{- these also break the deriveComputational but don't matter at the moment
-  → ∀ txout → txout ∈ proj₁ (txouts tx)
+{- these break deriveComputational but don't matter at the moment
+    → ∀ txout → txout ∈ proj₁ (txouts tx)
               → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp))
 
     → ∀ txout → txout ∈ proj₁ (txouts tx)
@@ -220,7 +217,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
       ⇀⦇ tx ,UTXO⦈
       ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f ⟧ᵘ
 \end{code}
-\begin{figure*}[h]
 \begin{code}[hide]
 unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
+\caption{UTXO inference rules}
+\label{fig:rules:utxo-shelley}
+\end{figure*}

@@ -92,8 +92,8 @@ open import Ledger.TokenAlgebra
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
 open import Data.Nat
 
-simpleTokenAlgebra : TokenAlgebra
-simpleTokenAlgebra = record
+coinTokenAlgebra : TokenAlgebra
+coinTokenAlgebra = record
          { PolicyId = ℕ
          ; Value-Commutative-Monoid = +-0-commutativeMonoid
          ; coin = id
@@ -101,8 +101,7 @@ simpleTokenAlgebra = record
          ; policies = λ x → ∅
          ; size = λ x → 1 -- there is only ada in this token algebra
          ; property = λ x → refl
-         ; relImpliesCoinEquality = λ { refl → refl}
-         ; coin-monoid-morphism = record { mn-homo = record
+         ; coinIsMonoidMorphism = record { mn-homo = record
                                                      { sm-homo = record { ⟦⟧-cong = λ z → z
                                                        ; ∙-homo = λ x y → refl }
                                                        ; ε-homo = refl
@@ -126,6 +125,8 @@ module _ where
   HSTransactionStructure .txidBytes       = id
   HSTransactionStructure .networkId       = tt
   HSTransactionStructure .tokenAlgebra    = simpleTokenAlgebra
+  HSTransactionStructure .networkId       = tt
+  HSTransactionStructure .tokenAlgebra    = coinTokenAlgebra
   HSTransactionStructure .DecEq-TxId      = DecEq-ℕ
   HSTransactionStructure .DecEq-Ix        = DecEq-ℕ
   HSTransactionStructure .DecEq-Netw      = DecEq-⊤

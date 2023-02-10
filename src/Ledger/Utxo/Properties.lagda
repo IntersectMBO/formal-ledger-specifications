@@ -46,49 +46,51 @@ private variable
   Γ : UTxOEnv
   s s' : UTxOState
 
-balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → ubalance utxo ≈ ubalance utxo'
+⟦⟧-cong-Coin = IsCommutativeMonoidMorphism.⟦⟧-cong coinIsMonoidMorphism
+∙-homo-Coin = IsCommutativeMonoidMorphism.∙-homo
+
+balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
 balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
 
 balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → cbalance utxo ≡ cbalance utxo'
-balance-cong-coin {utxo} {utxo'} x = relImpliesCoinEquality (balance-cong {utxo} {utxo'} x)
+balance-cong-coin {utxo} {utxo'} x = ⟦⟧-cong-Coin (balance-cong {utxo} {utxo'} x)
 
 balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ))
                      → cbalance (utxo ∪ᵐˡ utxo') ≡ cbalance utxo + cbalance utxo'
 balance-∪ {utxo} {utxo'} h = begin
-  cbalance (utxo ∪ᵐˡ utxo') ≡⟨ relImpliesCoinEquality (indexedSumᵐ-cong {x = (utxo ∪ᵐˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)} (id , id)) ⟩
-  coin (indexedSumᵐ _ ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ))) ≡⟨ relImpliesCoinEquality (indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h) ⟩
-  coin (ubalance utxo +ᵛ ubalance utxo') ≡⟨ IsCommutativeMonoidMorphism.∙-homo coin-monoid-morphism _ _ ⟩
+  cbalance (utxo ∪ᵐˡ utxo')
+    ≡⟨ ⟦⟧-cong-Coin (indexedSumᵐ-cong {x = (utxo ∪ᵐˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)} (id , id)) ⟩
+  coin (indexedSumᵐ _ ((utxo ᶠᵐ) ∪ᵐˡᶠ (utxo' ᶠᵐ)))
+    ≡⟨ ⟦⟧-cong-Coin (indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h) ⟩
+  coin (balance utxo +ᵛ balance utxo')
+    ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
   cbalance utxo + cbalance utxo' ∎
 
 newTxid⇒disj : txid tx ∉ map proj₁ (dom (utxo ˢ)) → disjoint' (dom (utxo ˢ)) (dom ((outs tx) ˢ))
 newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map
   (-, (case from ∈-map h' of λ where (_ , refl , h'') → case from ∈-map h'' of λ where (_ , refl , _) → refl) , h)
 
-{-
 consumedCoinEquality :  ∀ {pp} → coin (mint tx) ≡ 0 → coin (consumed pp utxo tx) ≡ cbalance (utxo ∣ txins tx)
 consumedCoinEquality {tx} {utxo} h = begin
-  coin (ubalance (utxo ∣ txins tx) +ᵛ mint tx) ≡⟨ IsCommutativeMonoidMorphism.∙-homo coin-monoid-morphism _ _ ⟩
+  coin (balance (utxo ∣ txins tx) +ᵛ mint tx) ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
   cbalance (utxo ∣ txins tx) + coin (mint tx) ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx) +_) h ⟩
   cbalance (utxo ∣ txins tx) ∎
--}
 
 producedCoinEquality : ∀ {pp} → coin (produced pp utxo tx) ≡ cbalance (outs tx) + (txfee tx)
 producedCoinEquality {utxo} {tx} = begin
-  coin (ubalance (outs tx) +ᵛ inject (txfee tx)) ≡⟨ IsCommutativeMonoidMorphism.∙-homo coin-monoid-morphism _ _ ⟩
-  coin (ubalance (outs tx)) + coin (inject (txfee tx)) ≡⟨ cong ((cbalance (outs tx) +_)) (property (txfee tx)) ⟩
+  coin (balance (outs tx) +ᵛ inject (txfee tx)) ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
+  coin (balance (outs tx)) + coin (inject (txfee tx)) ≡⟨ cong ((cbalance (outs tx) +_)) (property (txfee tx)) ⟩
   cbalance (outs tx) + (txfee tx) ∎
 
-{-
-balCoinValueToCbalance : ∀ {pp} → coin (mint tx) ≡ 0 → (coin (consumed pp utxo tx) ≡ coin (produced pp utxo tx)) ≡ (cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx))
-balCoinValueToCbalance {tx} {utxo} {pp} h rewrite (consumedCoinEquality {tx} {utxo} {pp} h) | producedCoinEquality {utxo} {tx} {pp} = refl
--}
+balCoinValueToCbalance : ∀ {pp} → coin (mint tx) ≡ 0 → (coin (consumed pp utxo tx) ≡ coin (produced pp utxo tx))
+                                                       ≡ (cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx))
+balCoinValueToCbalance {tx} {utxo} {pp} h rewrite (consumedCoinEquality {tx} {utxo} {pp} h)
+                                                  | producedCoinEquality {utxo} {tx} {pp} = refl
 
-balCoinValueToCbalance : ∀ {pp} → coin (mint tx) ≡ 0 → (coin (consumed pp utxo tx) ≡ coin (produced pp utxo tx)) ≡ (cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx))
-balCoinValueToCbalance {tx} {utxo} {pp} h rewrite producedCoinEquality {utxo} {tx} {pp} = refl
-
-balValueToCoin : ∀ {pp} → consumed pp utxo tx ≡ produced pp utxo tx → cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx)
-balValueToCoin {utxo} {tx} {pp} h' with cong coin h'
-... | ans rewrite producedCoinEquality {utxo} {tx} {pp} = ans
+balValueToCoin : ∀ {pp} → coin (mint tx) ≡ 0 → consumed pp utxo tx ≡ produced pp utxo tx
+                                             → cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx)
+balValueToCoin {utxo} {tx} {pp} h h' with cong coin h'
+... | ans rewrite balCoinValueToCbalance {utxo} {tx} {pp} h = ans
 
 \end{code}
 
@@ -115,7 +117,7 @@ then
       getCoin ⟦ utxo , fee ⟧ᵘ ≡ getCoin ⟦ utxo' , fee' ⟧ᵘ
 \end{code}
 \begin{code}[hide]
-pov {tx} {utxo} {_} {fee} h' (UTXO-inductive {Γ} _ _ _ _ newBal _) =
+pov {tx} {utxo} {_} {fee} h' (UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
   let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
       h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (cores-domᵐ h₁ , h₂)
   in begin
@@ -128,8 +130,7 @@ pov {tx} {utxo} {_} {fee} h' (UTXO-inductive {Γ} _ _ _ _ newBal _) =
       cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx))
         ≡⟨ balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip (res-ex-disjoint)) ⟩
       cbalance (utxo ∣ txins tx ᶜ) + cbalance (utxo ∣ txins tx)
-       -- ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_) (balValueToCoin {tx} {utxo} {UTxOEnv.pparams Γ} newBal noMintAda) ⟩
-       ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_) (balValueToCoin {utxo} {tx} {UTxOEnv.pparams Γ} newBal) ⟩
+        ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_) (balValueToCoin {tx} {utxo} {UTxOEnv.pparams Γ} noMintAda newBal) ⟩
       cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx
         ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
       cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎
