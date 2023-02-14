@@ -3,3 +3,5 @@ depend:
   standard-library
   stdlib-meta
 include: .
+flags:
+  -WnoUnsupportedIndexedMatch

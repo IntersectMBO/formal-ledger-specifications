@@ -9,26 +9,24 @@ with pkgs;
 let
   customAgda = (import
     (builtins.fetchTarball
-      https://github.com/nixos/nixpkgs/tarball/a7ecde854aee5c4c7cd6177f54a99d2c1ff28a31)
-    ({
-      # 21.11
-      overlays = [
-        (import (fetchFromGitHub {
-          repo = "agda";
-          owner = "input-output-hk";
-          rev = "d5ea03b96328f38741efef4535197076ff0e05d5";
-          sha256 = "WiadZWZvPWcR49JkiXPiMKW3plRjBlR94wyg/aoEoG8=";
-        })).overlay
-      ];
-    } // (if pkgs.system == "aarch64-darwin" then { system = "x86_64-darwin"; } else { })));
+      https://github.com/nixos/nixpkgs/tarball/7343f7630c9d7211c98f0c043f380a9037b69252)
+    { overlays = [
+        (self: super: {
+          haskellPackages = super.haskellPackages.override {
+            overrides = haskellSelf: haskellSuper: {
+              Agda = haskellSuper."Agda_2_6_3";
+            };
+          };
+        })
+      ];});
 
   agdaStdlib = customAgda.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
-    version = "1.7";
+    version = "1.7.2";
     src = customAgda.fetchFromGitHub {
       repo = "agda-stdlib";
-      owner = "input-output-hk";
-      rev = "f8fdb925c74e8d3b0c88e2a5520bc11e606d34c6";
-      sha256 = "BoK/IZsOn8gnUolI8DOZa6IOoXF8E95s2e8vZyUpMZs=";
+      owner = "agda";
+      rev = "668f0bbd498cfae253605fd7132c3b9ed52cc4ac";
+      sha256 = "4jNFpDtVWecwpuzZMtQb0kJ9s4LkjBYx+1c0n/Ft9tw=";
     };
   });
 
@@ -55,6 +53,7 @@ in
 rec {
 
   agda = agdaWithPkgs;
+  agda2 = customAgda.agda.withPackages { pkgs = [ agdaStdlib ]; ghc = pkgs.ghc; };
   agdaLedger = customAgda.agdaPackages.mkDerivation {
     pname = "Agda-ledger";
     version = "0.1";

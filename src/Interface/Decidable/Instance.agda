@@ -15,8 +15,6 @@ open import Relation.Binary renaming (Decidable to Decidable²)
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
-open import Relation.Nullary.Implication
-open import Relation.Nullary.Product
 open import Relation.Unary using () renaming (Decidable to Decidable¹)
 
 private variable a b : Level

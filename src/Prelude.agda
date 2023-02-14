@@ -10,7 +10,7 @@ open import Function public
 open import Data.Bool hiding (_≟_; _≤_; _≤?_; _<_; _<?_) public
 open import Data.Empty public
 open import Data.List hiding (align; alignWith; fromMaybe; map; zip; zipWith) public
-open import Data.Maybe hiding (_>>=_; align; alignWith; fromMaybe; map; zip; zipWith) public
+open import Data.Maybe hiding (_>>=_; align; alignWith; ap; fromMaybe; map; zip; zipWith) public
 open import Data.Unit hiding (_≟_) public
 open import Data.Sum hiding (assocʳ; assocˡ; map; map₁; map₂; reduce; swap) public
 open import Data.Product hiding (assocʳ; assocˡ; map; map₁; map₂; swap) public

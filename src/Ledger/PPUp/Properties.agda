@@ -20,7 +20,6 @@ import Data.Unit.Polymorphic
 open import Data.Product.Properties
 open import Interface.Decidable.Instance
 open import Relation.Nullary.Decidable
-open import Relation.Nullary.Product
 
 -- Ring literals
 open import Agda.Builtin.FromNat
