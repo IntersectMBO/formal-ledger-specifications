@@ -21,7 +21,6 @@ open import Data.Nat.Literals
 open Semiring-Lit Slotʳ
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
-open import Relation.Nullary.Product
 import Data.Unit.Polymorphic
 
 private variable m n : ℕ

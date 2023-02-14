@@ -144,10 +144,10 @@ index a1e3600..6695287 100644
 +          ; isBooleanAlgebra = isBooleanAlgebra
 +          }
 diff --git a/Class/Applicative/Instances.agda b/Class/Applicative/Instances.agda
-index 3a93f03..a0c81b2 100644
+index 3a93f03..2cb9c30 100644
 --- a/Class/Applicative/Instances.agda
 +++ b/Class/Applicative/Instances.agda
-@@ -62,8 +62,8 @@ instance
+@@ -62,8 +62,9 @@ instance
  
    Alternative-TC : Alternative TC
    Alternative-TC = record {M}
@@ -155,9 +155,11 @@ index 3a93f03..a0c81b2 100644
 +    where import Reflection.TCM.Syntax as M
  
    Applicative-TC : Applicative TC
-   Applicative-TC = record {M}
+-  Applicative-TC = record {M}
 -    where import Reflection.TypeChecking.Monad.Syntax as M
-+    where import Reflection.TCM.Syntax as M
++  Applicative-TC = record {M; M'}
++    where import Reflection.TCM as M
++          import Reflection.TCM.Syntax as M'
 diff --git a/Class/DecEq/Instances.agda b/Class/DecEq/Instances.agda
 index 225a7ea..fb71699 100644
 --- a/Class/DecEq/Instances.agda
@@ -209,6 +211,21 @@ index c4d836a..a5fecb1 100644
  
    Functor-∃Vec : Functor (∃ ∘ Vec)
    Functor-∃Vec ._<$>_ f (_ , xs) = -, (f <$> xs)
+diff --git a/Class/Monad/Instances.agda b/Class/Monad/Instances.agda
+index d550866..08270d8 100644
+--- a/Class/Monad/Instances.agda
++++ b/Class/Monad/Instances.agda
+@@ -40,8 +40,9 @@ instance
+     ._>>=_ → flip concatMap
+ 
+   Monad-TC : Monad TC
+-  Monad-TC = record {M}
++  Monad-TC = record {M; return = M'.pure}
+     where import Reflection as M
++          import Reflection.TCM as M'
+ 
+ {- ** Id monad: provides us with forward composition as _>=>_,
+                 but breaks instance-resolution/typeclass-inference
 diff --git a/Class/Show/Instances.agda b/Class/Show/Instances.agda
 index fb9b514..12e43e8 100644
 --- a/Class/Show/Instances.agda
@@ -257,7 +274,7 @@ index 8f30cae..1374218 100644
  -- ** Smart constructors
  
 diff --git a/Generics/Debug.agda b/Generics/Debug.agda
-index 08ccae8..5055ff6 100644
+index 08ccae8..f6d5ef9 100644
 --- a/Generics/Debug.agda
 +++ b/Generics/Debug.agda
 @@ -15,8 +15,8 @@ open import Data.Nat using (ℕ)
@@ -271,11 +288,20 @@ index 08ccae8..5055ff6 100644
  
  open import Class.Show.Core
  open import Class.Show.Instances
+@@ -77,7 +77,7 @@ module Debug (v : String × ℕ) where
+       go (i , ty) = print $ "\t" Str.++ show i Str.++ " : " Str.++ show ty
+ 
+   printCurrentContext : TC ⊤
+-  printCurrentContext = printContext =<< getContext
++  printCurrentContext = (λ l → printContext (Data.List.map proj₂ l)) =<< getContext
+ 
+   -- ** definitions
+   genSimpleDef : Name → Type → Term → TC ⊤
 diff --git a/Generics/Utils.agda b/Generics/Utils.agda
-index 0d24ee4..fc7bcea 100644
+index 0d24ee4..007499c 100644
 --- a/Generics/Utils.agda
 +++ b/Generics/Utils.agda
-@@ -5,14 +5,14 @@ open import Level using (Level)
+@@ -5,14 +5,15 @@ open import Level using (Level)
  open import Function
  
  open import Reflection hiding (visibility)
@@ -295,6 +321,7 @@ index 0d24ee4..fc7bcea 100644
 +open import Reflection.AST.Argument.Information
 +open import Reflection.AST.Argument.Visibility as Vis
 +open import Reflection.TCM.Syntax
++open import Reflection.TCM using () renaming (pure to return)
  
  open import Data.Unit
  open import Data.Product hiding (map; zip)
@@ -350,7 +377,7 @@ index 12f4c3e..e4e1ffc 100644
  open import Interface.Monad
  open import Interface.MonadError
 diff --git a/Interface/MonadTC.agda b/Interface/MonadTC.agda
-index 677963f..812bd58 100644
+index 677963f..fa072a6 100644
 --- a/Interface/MonadTC.agda
 +++ b/Interface/MonadTC.agda
 @@ -2,7 +2,7 @@
@@ -362,6 +389,24 @@ index 677963f..812bd58 100644
  
  open import Data.List using (map)
  
+@@ -23,7 +23,7 @@ private
+ 
+ instance
+   Monad-TC : Monad R.TC
+-  Monad-TC = record { R }
++  Monad-TC = record { R ; return = R.pure }
+ 
+ data ReductionOptions : Set where
+   onlyReduce : List Name → ReductionOptions
+@@ -49,7 +49,7 @@ initTCEnvWithGoal goal = R.getContext <&> λ ctx → record
+   ; reconstruction = false
+   ; noConstraints  = false
+   ; reduction      = reduceAll
+-  ; globalContext  = ctx
++  ; globalContext  = Data.List.map proj₂ ctx
+   ; localContext   = []
+   ; goal           = inj₁ goal
+   ; debug          = defaultDebugOptions
 diff --git a/Lenses/Derive.agda b/Lenses/Derive.agda
 index 933dee4..31d563c 100644
 --- a/Lenses/Derive.agda
@@ -379,7 +424,7 @@ diff --git a/Main.agda b/Main.agda
 index b8dbffc..0cd0ba2 100644
 --- a/Main.agda
 +++ b/Main.agda
-@@ -1,7 +1,7 @@
+@@ -1,11 +1,21 @@
 --- {-# OPTIONS --safe --without-K #-}
 +{-# OPTIONS --safe #-}
  module Main where
@@ -392,12 +437,6 @@ index b8dbffc..0cd0ba2 100644
 +-- open import Classes
 +-- open import Lenses
 +-- open import Tactics
-index b8dbffc..887306b 100644
---- a/Main.agda
-+++ b/Main.agda
-@@ -6,6 +6,16 @@ open import Classes
- open import Lenses
- open import Tactics
  
 --- TODO: incorporate into the rest
 -module Stash where
@@ -429,10 +468,10 @@ index 1fe207e..65adab8 100644
  instance
    iMonad-TC = Monad-TC
 diff --git a/Prelude.agda b/MetaPrelude.agda
-similarity index 91%
+similarity index 82%
 rename from Prelude.agda
 rename to MetaPrelude.agda
-index 3ac9016..257a981 100644
+index 3ac9016..01c55ad 100644
 --- a/Prelude.agda
 +++ b/MetaPrelude.agda
 @@ -1,6 +1,6 @@
@@ -443,11 +482,13 @@ index 3ac9016..257a981 100644
  
  open import Level renaming (_⊔_ to _⊔ˡ_; suc to sucˡ; zero to zeroˡ) public
  open import Function public
-@@ -9,7 +9,7 @@ open import Data.Bool hiding (_≟_; _≤_; _≤?_; _<_; _<?_) public
+@@ -8,8 +8,8 @@ open import Function public
+ open import Data.Bool hiding (_≟_; _≤_; _≤?_; _<_; _<?_) public
  open import Data.Empty public
  open import Data.List hiding (align; alignWith; fromMaybe; map; zip; zipWith) public
- open import Data.Maybe hiding (_>>=_; align; alignWith; fromMaybe; map; zip; zipWith) public
+-open import Data.Maybe hiding (_>>=_; align; alignWith; fromMaybe; map; zip; zipWith) public
 -open import Data.Unit hiding (_≟_; decSetoid) public
++open import Data.Maybe hiding (_>>=_; ap; align; alignWith; fromMaybe; map; zip; zipWith) public
 +open import Data.Unit hiding (_≟_) public
  open import Data.Sum hiding (assocʳ; assocˡ; map; map₁; map₂; reduce; swap) public
  open import Data.Product hiding (assocʳ; assocˡ; map; map₁; map₂; swap) public
@@ -516,7 +557,7 @@ index 4266c50..830aa19 100644
  
  open import Generics using (absName; getVisibility; findMetas; isMeta; UnquoteDecl; Tactic) public
 diff --git a/Reflection/TCI.agda b/Reflection/TCI.agda
-index 79c2ffe..53b6197 100644
+index 79c2ffe..c0d4a2c 100644
 --- a/Reflection/TCI.agda
 +++ b/Reflection/TCI.agda
 @@ -5,7 +5,7 @@
@@ -528,6 +569,15 @@ index 79c2ffe..53b6197 100644
  
  open import Data.List using (map)
  
+@@ -52,7 +52,7 @@ applyNoConstraints x r@record { noConstraints = true  } = R'.noConstraints (x r)
+ 
+ applyExtContext : List (Arg Term) → R.TC A → R.TC A
+ applyExtContext [] x       = x
+-applyExtContext (t ∷ ts) x = applyExtContext ts $ R.extendContext t x
++applyExtContext (t ∷ ts) x = applyExtContext ts $ R.extendContext "_" t x
+ 
+ private
+   liftTC : R.TC A → TC A
 diff --git a/Tactic/AnyOf.agda b/Tactic/AnyOf.agda
 index 6dc5a85..0aa849c 100644
 --- a/Tactic/AnyOf.agda
@@ -607,7 +657,7 @@ index 39fcab6..88dd6b9 100644
  
  open import Generics
 diff --git a/Tactic/Derive/DecEq.agda b/Tactic/Derive/DecEq.agda
-index 41a3f98..b59ab6e 100644
+index 41a3f98..07b0bd4 100644
 --- a/Tactic/Derive/DecEq.agda
 +++ b/Tactic/Derive/DecEq.agda
 @@ -12,9 +12,9 @@ open import Meta
@@ -622,27 +672,25 @@ index 41a3f98..b59ab6e 100644
  
  open import Generics
  
-@@ -43,9 +43,6 @@ open ClauseExprM
- `yes x = quote _because_ ◆⟦ quote true  ◆ ∣ quote ofʸ ◆⟦ x ⟧ ⟧
+@@ -23,7 +23,6 @@ import Data.List.NonEmpty as NE
+ 
+ open import Relation.Nullary
+ open import Relation.Nullary.Decidable
+-open import Relation.Nullary.Product
+ 
+ module _ where
+   open import Interface.DecEq hiding (DecEq-List; DecEq-ℕ; DecEq-ℤ; DecEq-⊤; DecEq-Maybe) public
+@@ -44,7 +43,7 @@ open ClauseExprM
  `no  x = quote _because_ ◆⟦ quote false ◆ ∣ quote ofⁿ ◆⟦ x ⟧ ⟧
  
--map' : ∀ {p q} {P : Set p} {Q : Set q} → P ⇔ Q → Dec P → Dec Q
+ map' : ∀ {p q} {P : Set p} {Q : Set q} → P ⇔ Q → Dec P → Dec Q
 -map' record { f = f ; g = g } = map′ f g
--
++map' record { to = to ; from = from } = map′ to from
+ 
  module _ (transName : Name → Maybe Name) where
  
-   eqFromTerm : Term → Term → Term → Term
-@@ -63,7 +60,7 @@ module _ (transName : Name → Maybe Name) where
-   mapDiag nothing          = return $ `no `λ⦅ [ ("" , vArg?) ] ⦆∅
-   mapDiag (just p@(l , _)) = let k = length l in do
-     typeList ← traverseList inferType (applyDownFrom ♯ (length l))
--    return $ quote map' ∙⟦ genEquiv k ∣ genPf k (L.map eqFromTerm typeList) ⟧
-+    return $ quote map ∙⟦ genEquiv k ∣ genPf k (L.map eqFromTerm typeList) ⟧
-     where
-       genPf : ℕ → List (Term → Term → Term) → Term
-       genPf k []      = `yes (quote tt ◆)
 diff --git a/Tactic/Derive/Show.agda b/Tactic/Derive/Show.agda
-index c8e157a..4b88959 100644
+index c8e157a..e8adc92 100644
 --- a/Tactic/Derive/Show.agda
 +++ b/Tactic/Derive/Show.agda
 @@ -6,7 +6,7 @@ open import Meta
@@ -654,6 +702,15 @@ index c8e157a..4b88959 100644
  open import Agda.Builtin.Reflection using (primShowQName)
  
  open import Generics
+@@ -17,7 +17,7 @@ open import Data.String using (fromList; toList) renaming (_++_ to _++S_)
+ import Data.Char as C
+ import Reflection
+ 
+-open import Relation.Nullary.Negation
++open import Relation.Nullary.Decidable
+ 
+ open import Interface.Show
+ 
 diff --git a/Tactic/Derive/TestTypes.agda b/Tactic/Derive/TestTypes.agda
 index 85144b1..d5b50ed 100644
 --- a/Tactic/Derive/TestTypes.agda
@@ -681,10 +738,10 @@ index 54bb57d..7993c33 100644
  import Relation.Binary.PropositionalEquality as ≡
  open import Agda.Builtin.Reflection
 diff --git a/Tactic/Helpers.agda b/Tactic/Helpers.agda
-index 2802245..8aa8415 100644
+index 2802245..aa32b23 100644
 --- a/Tactic/Helpers.agda
 +++ b/Tactic/Helpers.agda
-@@ -1,7 +1,7 @@
+@@ -1,18 +1,18 @@
  {-# OPTIONS --safe --without-K #-}
  module Tactic.Helpers where
  
@@ -693,7 +750,11 @@ index 2802245..8aa8415 100644
  open import Meta
  
  open import Data.Nat using () renaming (_≟_ to _≟ℕ_)
-@@ -12,7 +12,7 @@ open import Generics
+ open import Data.List using (map; zipWith)
+ import Data.Sum
+ 
+-open import Generics
++open import Generics hiding (error)
  
  open import Relation.Nullary.Decidable hiding (map)
  open import Reflection.Syntax
@@ -702,6 +763,33 @@ index 2802245..8aa8415 100644
  
  import Reflection
  open import Interface.Monad.Instance
+@@ -102,7 +102,7 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
+   getDataDef n = inDebugPath "getDataDef" do
+     debugLog ("Find details for datatype: " ∷ᵈ n ∷ᵈ [])
+     (data-type pars cs) ← getDefinition n
+-      where _ → error1 "Not a data definition!"
++      where _ → error (n ∷ᵈ " is not a 'data' type!" ∷ᵈ [])
+     debugLogᵐ ("Constructor names: " ∷ᵈᵐ cs ᵛ ∷ᵈᵐ []ᵐ)
+     cs' ← traverseList (λ n → (n ,_) <$> getType' n) cs
+     debugLogᵐ ("Result: " ∷ᵈᵐ cs' ᵛⁿ ∷ᵈᵐ []ᵐ)
+@@ -112,7 +112,7 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
+   getRecordDef : Name → M RecordDef
+   getRecordDef n = do
+     (record-type c fs) ← getDefinition n
+-      where _ → error1 "Not a record definition!"
++      where _ → error (n ∷ᵈ " is not a 'record' type!" ∷ᵈ [])
+     args ← proj₁ <$> getType' n
+     return (record { name = c ; fields = fs ; params = args })
+ 
+@@ -120,7 +120,7 @@ module _ {M : ∀ {a} → Set a → Set a} ⦃ _ : Monad M ⦄ ⦃ me : MonadErr
+   getDataOrRecordDef n =
+     catch (inj₁ <$> getDataDef n)
+       λ _ → catch (inj₂ <$> getRecordDef n)
+-      λ _ → error1 "Neither a data not a record definition!"
++      λ _ → error (n ∷ᵈ " is neither a 'data' not a 'record' type!" ∷ᵈ [])
+ 
+   getParams : Name → M (List (Abs (Arg Type)))
+   getParams n = Data.Sum.[ DataDef.params , RecordDef.params ] <$> getDataOrRecordDef n
 diff --git a/Tactic/ReduceDec.agda b/Tactic/ReduceDec.agda
 index 1fea416..879d8be 100644
 --- a/Tactic/ReduceDec.agda
@@ -856,3 +944,14 @@ index 290cbb9..0951344 100644
  
  open import Generics
  open Debug ("try" , 100)
+diff --git a/stdlib-meta.agda-lib b/stdlib-meta.agda-lib
+index 846d353..088d562 100644
+--- a/stdlib-meta.agda-lib
++++ b/stdlib-meta.agda-lib
+@@ -1,3 +1,5 @@
+ name: stdlib-meta
+ depend: standard-library
+ include: .
++flags:
++  -WnoUnsupportedIndexedMatch
+\ No newline at end of file

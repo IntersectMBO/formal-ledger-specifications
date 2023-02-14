@@ -20,7 +20,7 @@ open import Data.List.Relation.Binary.Permutation.Propositional
 open import Data.List.Relation.Unary.Unique.Propositional
 open import Interface.DecEq
 open import Relation.Binary hiding (Rel)
-open import Relation.Nullary.Negation using (¬?)
+open import Relation.Nullary.Decidable using (¬?)
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
 open Equivalence
