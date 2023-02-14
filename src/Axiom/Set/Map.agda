@@ -18,7 +18,7 @@ import Data.Sum
 open import Data.List.Ext.Properties
 open import Data.Product.Properties
 open import Interface.DecEq
-open import Relation.Nullary.Negation using (¬?)
+open import Relation.Nullary.Decidable using (¬?)
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
 open Equivalence
