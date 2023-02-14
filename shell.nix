@@ -7,12 +7,15 @@
 
 with pkgs;
 
-mkShell {
+let specs = callPackage ./default.nix {};
+
+in mkShell {
   nativeBuildInputs = [
+    specs.agda
     cabal-install
     (haskellPackages.ghcWithPackages (pkgs: with pkgs; [
-      (callPackage ./default.nix { }).ledger.executableSpec
-      (callPackage ./default.nix { }).midnight.executableSpec
+      specs.ledger.executableSpec
+      specs.midnight.executableSpec
     ]))
   ];
 }
