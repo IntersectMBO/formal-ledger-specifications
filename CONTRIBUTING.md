@@ -1,24 +1,8 @@
-# Agda ledger
+# Contributing to the formal ledger specifications
 
-## Building the derivations
+## Style guidelines
 
-Run `nix-build` with the desired derivation, for example:
-
-```
-nix-build -A agda
-nix-build -A agdaLedger
-nix-build -A ledger.executableSpec
-nix-build -A ledger.docs
-nix-build -A midnight.executableSpec
-nix-build -A midnight.docs
-```
-## How to run the ledger in ghci
-
-```
-nix-shell --command "cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'"
-λ> :m HSLedgerTest
-λ> main
-```
+We are currently aspiring to follow the [Agda standard library style guide](https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md) as much as reasonable. Since some of our code will be rendered into a PDF the formatting of the PDF takes priority over formatting over the code, so deviations are to be expected.
 
 ## Setup with emacs
 
@@ -41,6 +25,10 @@ To install it locally and use that install with emacs, you can do the following:
 You can then use `M-x my/toggle-ledger-agda` or `C-c C-x C-t` to switch between your regular install of Agda and the locally installed version.
 
 There are other options as well, but this should work with all kinds of custom emacs setups or distributions (assuming there isn't already some other stuff going on with your Agda setup).
+
+## Setup with nix-shell
+
+`nix-shell` provides Agda complete with the correct dependencies. So you should be able to run your preferred editor within `nix-shell` and it should see the required `agda` executable.
 
 ## Updating nixpkgs
 
