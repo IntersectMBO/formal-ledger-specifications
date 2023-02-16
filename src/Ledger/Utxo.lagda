@@ -189,7 +189,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo = UTxOState.utxo s
           fees = UTxOState.fees s
       in
-     txins tx ≢ ∅
+    txins tx ≢ ∅
     → inInterval slot (txvldt tx)
     → txins tx ⊆ dom (utxo ˢ)
     → let f = txfee tx in minfee pp tx ≤ f
