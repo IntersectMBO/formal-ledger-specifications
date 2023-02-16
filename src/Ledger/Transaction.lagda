@@ -9,18 +9,11 @@
 module Ledger.Transaction where
 
 open import Ledger.Prelude
-
 open import Ledger.Epoch
 open import Ledger.Crypto
 open import Ledger.TokenAlgebra
 import Ledger.PParams
 import Ledger.Script
-
-import Data.Nat as N
-open import Data.Integer
-
-data Tag : Set where
-  Spend Mint Cert Rewrd : Tag
 
 record TransactionStructure : Set₁ where
   field
@@ -106,7 +99,7 @@ This function must produce a unique id for each unique transaction body.
           txwdrls    : Wdrl
           txup       : Maybe Update
           txADhash   : Maybe ADHash
-          netwrk    : Maybe Network
+          netwrk     : Maybe Network
           txsize     : ℕ
           txid       : TxId
 

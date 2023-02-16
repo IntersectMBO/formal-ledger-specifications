@@ -94,21 +94,23 @@ open import Data.Nat
 
 coinTokenAlgebra : TokenAlgebra
 coinTokenAlgebra = record
-         { PolicyId = ℕ
-         ; Value-Commutative-Monoid = +-0-commutativeMonoid
-         ; coin = id
-         ; inject = id
-         ; policies = λ x → ∅
-         ; size = λ x → 1 -- there is only ada in this token algebra
-         ; property = λ x → refl
-         ; coinIsMonoidMorphism = record { mn-homo = record
-                                                     { sm-homo = record { ⟦⟧-cong = λ z → z
-                                                       ; ∙-homo = λ x y → refl }
-                                                       ; ε-homo = refl
-                                                       } }
-         ; _≥ᵗ_ = _≥_
-         ; DecEq-Value = record { _≟_ = Data.Nat._≟_ }
-         }
+  { PolicyId                 = ℕ
+  ; Value-Commutative-Monoid = +-0-commutativeMonoid
+  ; coin                     = id
+  ; inject                   = id
+  ; policies                 = λ x → ∅
+  ; size                     = λ x → 1 -- there is only ada in this token algebra
+  ; property                 = λ x → refl
+  ; coinIsMonoidMorphism     = record
+  { mn-homo = record
+    { sm-homo = record { ⟦⟧-cong = λ z → z
+    ; ∙-homo  = λ x y → refl }
+    ; ε-homo  = refl
+    }
+  }
+  ; _≥ᵗ_                     = _≥_
+  ; DecEq-Value              = record { _≟_ = Data.Nat._≟_ }
+  }
 
 module _ where
   open TransactionStructure
@@ -165,18 +167,18 @@ instance
 
       from' : F.TxBody → TxBody
       from' txb = let open F.TxBody txb in record
-                    { txins = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
-                    ; txouts = from txouts
-                    ; mint = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
-                    ; txfee = txfee
-                    ; txvldt = coerce txvldt
-                    ; txwdrls = ∅ᵐ
-                    ; txup = nothing
-                    ; txADhash = nothing
-                    ; netwrk = just tt
-                    ; txsize = txsize
-                    ; txid = txid
-                    }
+        { txins    = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
+        ; txouts   = from txouts
+        ; mint     = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
+        ; txfee    = txfee
+        ; txvldt   = coerce txvldt
+        ; txwdrls  = ∅ᵐ
+        ; txup     = nothing
+        ; txADhash = nothing
+        ; netwrk   = just tt
+        ; txsize   = txsize
+        ; txid     = txid
+        }
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
   Convertible-TxWitnesses = record { to = to' ; from = from' }
@@ -226,17 +228,17 @@ instance
 
       from' : F.PParams → PParams
       from' pp = let open F.PParams pp in record
-                   { a = a
-                   ; b = b
-                   ; maxBlockSize = maxBlockSize
-                   ; maxTxSize = maxTxSize
-                   ; maxHeaderSize = maxHeaderSize
-                   ; maxValSize = maxValSize
-                   ; minUtxOValue = minUtxOValue
-                   ; poolDeposit = poolDeposit
-                   ; Emax = Emax
-                   ; pv = coerce pv
-                   }
+        { a             = a
+        ; b             = b
+        ; maxBlockSize  = maxBlockSize
+        ; maxTxSize     = maxTxSize
+        ; maxHeaderSize = maxHeaderSize
+        ; maxValSize    = maxValSize
+        ; minUtxOValue  = minUtxOValue
+        ; poolDeposit   = poolDeposit
+        ; Emax          = Emax
+        ; pv            = coerce pv
+        }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
   Convertible-UTxOEnv = record { to = to' ; from = from' }

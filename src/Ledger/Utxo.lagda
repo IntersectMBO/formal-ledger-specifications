@@ -45,7 +45,7 @@ utxoEntrySizeWithoutVal = 8
 utxoEntrySize : TxOut → MemoryEstimate
 utxoEntrySize (fst , v) = utxoEntrySizeWithoutVal + size v
 
--- fix this
+-- TODO: fix this
 serSize : Value → MemoryEstimate
 serSize = λ _ → zero
 
@@ -218,6 +218,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
       ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f ⟧ᵘ
 \end{code}
 \begin{code}[hide]
+-- TODO: This can't be moved into Properties because it breaks. Move
 unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}

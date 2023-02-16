@@ -3,25 +3,18 @@
 
 open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
-
-module Axiom.Set.TotalMap (th : Theory) where
-open Theory th
-open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
-
 open import Prelude hiding (filter)
-
-open Equivalence
-
-open import Interface.DecEq
-
-private variable A A' B : Type
-                 R R' : Rel A B
-
-open import Axiom.Set.Map th
-
 open import Tactic.AnyOf
 open import Tactic.Defaults
+
+module Axiom.Set.TotalMap (th : Theory) where
+
+open Theory th
+open import Axiom.Set.Map th
 open import Axiom.Set.Properties th
+open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
+
+private variable A B : Type
 
 -- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
 private macro
