@@ -11,6 +11,7 @@ module Ledger.Utxo.Properties (txs : TransactionStructure) where
 open import Prelude
 open import Ledger.Prelude
 
+open import Algebra.Morphism
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm; +-identityʳ)
 open import Interface.ComputationalRelation
 open import Relation.Binary
@@ -20,11 +21,10 @@ open import Tactic.MonoidSolver
 
 open TransactionStructure txs
 
-open import Ledger.Utxo txs
-open import Ledger.PParams Epoch
 open import Ledger.Crypto
+open import Ledger.PParams Epoch
 open import Ledger.TokenAlgebra using (TokenAlgebra)
-open import Algebra.Morphism
+open import Ledger.Utxo txs
 
 open TxBody
 open TxWitnesses
@@ -36,7 +36,7 @@ open Properties
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
 instance
-  _ = TokenAlgebra.Value-Commutative-Monoid tokenAlgebra
+  _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
 
 private variable
   tx : TxBody

@@ -3,16 +3,17 @@
 
 open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
-open import Prelude hiding (filter)
-open import Tactic.AnyOf
-open import Tactic.Defaults
 
 module Axiom.Set.TotalMap (th : Theory) where
+
+open import Prelude
 
 open Theory th
 open import Axiom.Set.Map th
 open import Axiom.Set.Properties th
-open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
+open import Axiom.Set.Rel th
+open import Tactic.AnyOf
+open import Tactic.Defaults
 
 private variable A B : Type
 
@@ -29,5 +30,5 @@ total-map R = ∀ {a} → a ∈ map proj₁ R
 TotalMap : Type → Type → Type
 TotalMap A B = Σ (Rel A B) (λ R → left-unique R × total-map R)
 
-lookupMapᵗ : ∀{X Y} → TotalMap X Y → X → Y
-lookupMapᵗ (fst , fst₁ , snd) x = proj₂ (proj₁ (∈⇔P ((snd {x}))))
+lookupMapᵗ : TotalMap A B → A → B
+lookupMapᵗ (_ , _ , tot) a = proj₂ (proj₁ (∈⇔P (tot {a})))

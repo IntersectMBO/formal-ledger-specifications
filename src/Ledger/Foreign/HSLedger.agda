@@ -94,22 +94,21 @@ open import Data.Nat
 
 coinTokenAlgebra : TokenAlgebra
 coinTokenAlgebra = record
-  { PolicyId                 = ℕ
-  ; Value-Commutative-Monoid = +-0-commutativeMonoid
-  ; coin                     = id
-  ; inject                   = id
-  ; policies                 = λ x → ∅
-  ; size                     = λ x → 1 -- there is only ada in this token algebra
-  ; property                 = λ x → refl
-  ; coinIsMonoidMorphism     = record
-  { mn-homo = record
-    { sm-homo = record { ⟦⟧-cong = λ z → z
-    ; ∙-homo  = λ x y → refl }
-    ; ε-homo  = refl
+  { PolicyId                = ℕ
+  ; Value-CommutativeMonoid = +-0-commutativeMonoid
+  ; coin                    = id
+  ; inject                  = id
+  ; policies                = λ x → ∅
+  ; size                    = λ x → 1 -- there is only ada in this token algebra
+  ; property                = λ x → refl
+  ; coinIsMonoidMorphism    = record
+    { mn-homo = record
+      { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo  = λ x y → refl }
+      ; ε-homo  = refl
+      }
     }
-  }
-  ; _≥ᵗ_                     = _≥_
-  ; DecEq-Value              = record { _≟_ = Data.Nat._≟_ }
+  ; _≥ᵗ_                    = _≥_
+  ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
   }
 
 module _ where
@@ -125,8 +124,6 @@ module _ where
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; applyUpdate = λ p _ → p }
   HSTransactionStructure .txidBytes       = id
-  HSTransactionStructure .networkId       = tt
-  HSTransactionStructure .tokenAlgebra    = simpleTokenAlgebra
   HSTransactionStructure .networkId       = tt
   HSTransactionStructure .tokenAlgebra    = coinTokenAlgebra
   HSTransactionStructure .DecEq-TxId      = DecEq-ℕ
@@ -151,7 +148,6 @@ instance
   Convertible-Addr .to (inj₂ record { pay = inj₂ x }) = x
   Convertible-Addr .from n = inj₁ (record { net = _ ; pay = inj₁ n ; stake = inj₁ 0 })
 
-
   Convertible-TxBody : Convertible TxBody F.TxBody
   Convertible-TxBody = record { to = to' ; from = from' }
     where
@@ -175,7 +171,7 @@ instance
         ; txwdrls  = ∅ᵐ
         ; txup     = nothing
         ; txADhash = nothing
-        ; netwrk   = just tt
+        ; netwrk   = nothing
         ; txsize   = txsize
         ; txid     = txid
         }

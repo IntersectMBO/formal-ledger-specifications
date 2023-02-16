@@ -9,8 +9,9 @@
 module Ledger.Transaction where
 
 open import Ledger.Prelude
-open import Ledger.Epoch
+
 open import Ledger.Crypto
+open import Ledger.Epoch
 open import Ledger.TokenAlgebra
 import Ledger.PParams
 import Ledger.Script
@@ -73,7 +74,6 @@ This function must produce a unique id for each unique transaction body.
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
 
   open import Ledger.Address Network KeyHash ScriptHash public
-
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
@@ -111,7 +111,6 @@ This function must produce a unique id for each unique transaction body.
     field body  : TxBody
           wits  : TxWitnesses
           txAD  : Maybe AuxiliaryData
-
 \end{code}
 \emph{Abstract functions}
 \begin{code}
@@ -130,5 +129,5 @@ This function must produce a unique id for each unique transaction body.
 \begin{code}[hide]
   instance
     HasCoin-TxOut : HasCoin TxOut
-    HasCoin-TxOut .getCoin = proj₂
+    HasCoin-TxOut .getCoin = coin ∘ proj₂
 \end{code}

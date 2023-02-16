@@ -93,6 +93,8 @@ record PParams : Set where
     , maxBlockSize :: Integer
     , maxTxSize :: Integer
     , maxHeaderSize :: Integer
+    , maxValSize :: Integer
+    , minUtxOValue :: Integer
     , poolDeposit :: Integer
     , emax :: Integer
     , pv :: (Integer, Integer) } deriving Show

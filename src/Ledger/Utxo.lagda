@@ -1,4 +1,4 @@
-\Section{UTxO}
+\section{UTxO}
 \label{sec:utxo}
 
 \subsection{Accounting}
@@ -13,30 +13,29 @@ module Ledger.Utxo (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (Dec₁)
 
+open import Algebra using (CommutativeMonoid)
+open import Algebra.Structures
 open import Data.Nat using (_≤?_; _≤_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Interface.Decidable.Instance
 
-open import MyDebugOptions
---open import Tactic.Defaults
-open import Tactic.DeriveComp
-
-open import Algebra.Structures
-open import Algebra using (CommutativeMonoid)
-
-open import Ledger.TokenAlgebra using (TokenAlgebra)
 open TransactionStructure txs
 open TxBody
 open TxWitnesses
 open Tx
 
-instance
-  _ = Decidable²⇒Dec _≤?_
-  _ = TokenAlgebra.Value-Commutative-Monoid tokenAlgebra
-
-open import Ledger.PParams Epoch
 open import Ledger.Crypto
 open import Ledger.PPUp
+open import Ledger.PParams Epoch
+open import Ledger.TokenAlgebra using (TokenAlgebra)
+
+open import MyDebugOptions
+--open import Tactic.Defaults
+open import Tactic.DeriveComp
+
+instance
+  _ = Decidable²⇒Dec _≤?_
+  _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
@@ -71,8 +70,8 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
-balance : UTxO → Coin
-balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] getCoin (proj₂ x)
+balance : UTxO → Value
+balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
 
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
@@ -104,9 +103,8 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
 \begin{code}[hide]
 instance
   HasCoin-UTxO : HasCoin UTxO
-  HasCoin-UTxO .getCoin = balance
+  HasCoin-UTxO .getCoin = cbalance
 \end{code}
-
 
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
@@ -219,6 +217,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move
+-- this once this is fixed.
 unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}
