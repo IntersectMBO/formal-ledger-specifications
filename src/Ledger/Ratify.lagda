@@ -29,9 +29,9 @@ instance
   _ = +-0-commutativeMonoid
 
 record RatifyEnv : Set where
-  field stakeDistr : KeyHash ↛ Coin
-        currentEpoch : Epoch
-        roles : KeyHash ↛ GovRole -- TODO: only allowing one role per hash might not be desirable
+  field stakeDistr    : KeyHash ↛ (Coin × Coin)
+        currentEpoch  : Epoch
+        roles         : KeyHash ↛ GovRole -- TODO: only allowing one role per hash might not be desirable
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -49,27 +49,47 @@ CCThreshold epochsToExpire : ℕ
 CCThreshold = 3
 epochsToExpire = 10
 
+votedHashes : Vote → ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
+votedHashes v votes r = (votes ⦅ r ,-⦆) ⁻¹ v
+
 votedYesHashes : ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
-votedYesHashes votes role = flip mapPartial (votes ˢ)
-  λ { ((r , kh) , Vote.yes) → if ⌊ r ≟ role ⌋ then just kh else nothing ; _ → nothing }
+votedYesHashes = votedHashes Vote.yes
 
-acceptedStake : GovRole → (KeyHash ↛ Coin) → GovActionState → Coin
-acceptedStake role dist record { votes = votes } =
-  Σᵐ[ x ← (dist ∣ votedYesHashes votes role) ᶠᵐ ] proj₂ x
+votedPresentHashes : ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
+votedPresentHashes = votedHashes Vote.present
 
-totalStake : GovRole → (KeyHash ↛ Coin) → (KeyHash ↛ GovRole) → Coin
-totalStake role dist roles = Σᵐ[ x ← (dist ∣ dom ((roles ∣^ singleton role) ˢ)) ᶠᵐ ] proj₂ x
+getStake : GovRole → Coin × Coin → Coin
+getStake CC   = λ _ → 0
+getStake DRep = proj₂
+getStake SPO  = proj₁
+
+acceptedStake : GovRole → (KeyHash ↛ (Coin × Coin)) → GovActionState → Coin
+acceptedStake r dist record { votes = votes } =
+  Σᵐᵛ[ x ← (dist ∣ votedYesHashes votes r) ᶠᵐ ] getStake r x
+
+totalStake : GovRole → (KeyHash ↛ (Coin × Coin)) → ((GovRole × KeyHash) ↛ Vote) → Coin
+totalStake r dist votes = Σᵐᵛ[ x ← dist ∣ votedPresentHashes votes r ᶜ ᶠᵐ ] getStake r x
 
 acceptedR : RatifyEnv → GovActionState → GovRole → R.ℚ → Set
-acceptedR Γ s role t = let open RatifyEnv Γ; totalStake = totalStake role stakeDistr roles in
+acceptedR Γ s role t =
+  let open RatifyEnv Γ; open GovActionState s
+      totalStake = totalStake role stakeDistr votes
+  in
   case totalStake of λ where
     0         → ⊥ -- if there's no stake, never accept
     x@(suc _) → Z.+ acceptedStake role stakeDistr s R./ x R.> t
 
+ccSize : Maybe (ℙ KeyHash × R.ℚ) → Maybe (ℕ × R.ℚ)
+ccSize nothing         = nothing
+ccSize (just (cc , q)) = just (lengthˢ cc , q)
+
 -- for now, consider a proposal as accepted if the CC and half of the SPOs agree
-accepted : RatifyEnv → GovActionState → Set
-accepted Γ s@record { votes = votes } = lengthˢ (votedYesHashes votes CC) > CCThreshold
-                                      ∧ acceptedR Γ s SPO R.½
+accepted : RatifyEnv → EnactState → GovActionState → Set
+accepted Γ es@record { cc = cc } s@record { votes = votes } =
+  acceptedR Γ s SPO R.½
+  ∧ (case ccSize cc of λ where
+      (just (s@(suc _) , q)) → Z.+ lengthˢ (votedYesHashes votes CC) R./ s R.> q
+      _                      → ⊥)
 
 expired : Epoch → GovActionState → Set
 expired current record { proposedIn = proposedIn } = (epochsToExpire +ᵉ proposedIn) <ᵉ current
@@ -89,7 +109,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{figure*}[h]
 \begin{code}
   RATIFY-Accept : let open RatifyEnv Γ in
-    accepted Γ (proj₂ a)
+    accepted Γ es (proj₂ a)
     → _ ⊢ es ⇀⦇ GovActionState.action (proj₂ a) ,ENACT⦈ es'
     ────────────────────────────────
     Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f ⟧ʳ
@@ -97,14 +117,14 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
   -- remove expired actions
   -- NOTE: don't have to remove actions that can never be accpted because of sufficient no votes
   RATIFY-Reject : let open RatifyEnv Γ in
-    ¬ accepted Γ (proj₂ a)
+    ¬ accepted Γ es (proj₂ a)
     → expired currentEpoch (proj₂ a)
     ────────────────────────────────
     Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f ⟧ʳ
 
   -- continue voting in the next epoch
   RATIFY-Continue : let open RatifyEnv Γ in
-    ¬ accepted Γ (proj₂ a)
+    ¬ accepted Γ es (proj₂ a)
     → ¬ expired currentEpoch (proj₂ a)
     ────────────────────────────────
     Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f ⟧ʳ
