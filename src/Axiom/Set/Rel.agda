@@ -32,7 +32,7 @@ private macro
 Rel : Type → Type → Type
 Rel A B = Set (A × B)
 
-private variable A A' B B' : Type
+private variable A A' B B' C : Type
                  R R' : Rel A B
                  X : Set A
 
@@ -103,6 +103,14 @@ module Restriction (sp-∈ : spec-∈ A) where
 
   res-ex-disjoint : disjoint (dom (R ∣ X)) (dom (R ∣ X ᶜ))
   res-ex-disjoint h h' = cores-dom h' (res-dom h)
+
+  curryʳ : Rel (A × B) C → A → Rel B C
+  curryʳ R a = mapˡ proj₂ (R ∣' (sp-∘ (sp-∈ {X = ❴ a ❵}) proj₁))
+
+  ∈-curryʳ : ∀ {a} {b : B} {c : C} → (b , c) ∈ curryʳ R a → ((a , b) , c) ∈ R
+  ∈-curryʳ h = case ∈⇔P h of λ where
+    (((a , b) , c) , refl , h'') → case ∈⇔P h'' of λ where
+      (p , p') → case to ∈-singleton p of λ where refl → p'
 
 module Corestriction (sp-∈ : spec-∈ B) where
 
