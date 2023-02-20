@@ -27,7 +27,7 @@ record Acnt : Set where
 
 record NewEpochEnv : Set where
   field roles       : KeyHash ↛ GovRole
-        stakeDistr  : KeyHash ↛ Coin -- TODO: compute this from LState instead
+        stakeDistr  : KeyHash ↛ (Coin × Coin) -- TODO: compute this from LState instead
 
 record NewEpochState : Set where
   constructor ⟦_,_,_,_⟧ⁿᵉ
@@ -39,7 +39,7 @@ record NewEpochState : Set where
 record ChainState : Set where
   field newEpochState  : NewEpochState
         roles          : KeyHash ↛ GovRole
-        stakeDistr     : KeyHash ↛ Coin -- TODO: compute this from LState instead
+        stakeDistr     : KeyHash ↛ (Coin × Coin) -- TODO: compute this from LState instead
 
 record Block : Set where
   field ts   : List Tx
