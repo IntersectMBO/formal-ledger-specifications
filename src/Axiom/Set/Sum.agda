@@ -95,6 +95,9 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   indexedSumᵐ : (A × B → Carrier) → FinMap A B → Carrier
   indexedSumᵐ f (m , _ , h) = indexedSum f (m , h)
 
+  indexedSumᵐᵛ : (B → Carrier) → FinMap A B → Carrier
+  indexedSumᵐᵛ f = indexedSumᵐ (f ∘ proj₂)
+
   indexedSumᵐ-cong : {f : A × B → Carrier} → indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵐ-cong {x = x , _ , h} {y , _ , h'} = indexedSum-cong {x = x , h} {y , h'}
 
@@ -117,3 +120,4 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
                      _ = Yᶠ
 
   syntax indexedSumᵐ  (λ a → x) m = Σᵐ[ a ← m ] x
+  syntax indexedSumᵐᵛ (λ a → x) m = Σᵐᵛ[ a ← m ] x
