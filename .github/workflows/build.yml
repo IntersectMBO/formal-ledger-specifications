@@ -1,8 +1,5 @@
 name: Formal Ledger Specs
-on:
-  push:
-    branches:
-      - td/gh-workflow
+on: [push]
 
 jobs:
   build:
