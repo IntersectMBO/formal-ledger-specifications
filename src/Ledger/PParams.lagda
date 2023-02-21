@@ -14,6 +14,10 @@ open EpochStructure es
 Coin = ℕ
 ProtVer = ℕ × ℕ
 
+record Acnt : Set where
+  field treasury  : Coin
+        reserves  : Coin
+
 record PParams : Set where
   field a              : ℕ
         b              : ℕ
