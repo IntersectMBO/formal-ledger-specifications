@@ -10,19 +10,20 @@ open import Ledger.Prelude hiding (_≥_; _+_; _*_)
 
 open TransactionStructure txs
 
-open import Ledger.PParams Epoch
-open import Relation.Binary
 open import Algebra
-open import Algebra.Literals
+
 import Data.Nat as ℕ
+import Data.Unit.Polymorphic
 open Semiring Slotʳ
+open import Algebra.Literals
+open import Data.Nat.Properties using (m+1+n≢m)
+open import Data.Product.Properties
+open import Ledger.PParams Epoch
+open import Relation.Nullary.Product
+
 open import Agda.Builtin.FromNat
 open import Data.Nat.Literals
 open Semiring-Lit Slotʳ
-open import Data.Product.Properties
-open import Data.Nat.Properties using (m+1+n≢m)
-open import Relation.Nullary.Product
-import Data.Unit.Polymorphic
 
 private variable m n : ℕ
 

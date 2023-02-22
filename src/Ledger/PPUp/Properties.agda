@@ -13,28 +13,36 @@ open import Ledger.PPUp txs
 open import Tactic.ReduceDec
 open import MyDebugOptions
 
+open import Algebra
+open Semiring Slotʳ hiding (refl; sym)
+
+import Data.Unit.Polymorphic
+open import Data.Product.Properties
 open import Interface.Decidable.Instance
 open import Relation.Nullary.Decidable
 open import Relation.Nullary.Product
-open import Algebra
-import Data.Nat as ℕ
-open Semiring Slotʳ hiding (refl; sym)
-open import Data.Product.Properties
-open import Data.Maybe.Properties
+
+-- Ring literals
+open import Agda.Builtin.FromNat
+open import Algebra.Literals
+open Semiring-Lit Slotʳ
+
+instance
+  _ = Data.Unit.Polymorphic.tt
 
 private
   Current-Property : PPUpdateEnv → Update → Set
   Current-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom (pup ˢ) ⊆ dom (genDelegs ˢ)
       × All (isViableUpdate pparams) (range (pup ˢ))
-      × (slot + ((1# + 1#) * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
+      × (slot + (2 * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
       × epoch slot ≡ e
 
   Future-Property : PPUpdateEnv → Update → Set
   Future-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom (pup ˢ) ⊆ dom (genDelegs ˢ)
       × All (isViableUpdate pparams) (range (pup ˢ))
-      × (slot + ((1# + 1#) * StabilityWindow)) ≥ˢ firstSlot (sucᵉ (epoch slot))
+      × (slot + (2 * StabilityWindow)) ≥ˢ firstSlot (sucᵉ (epoch slot))
       × sucᵉ (epoch slot) ≡ e
 
 instance
