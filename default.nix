@@ -61,7 +61,10 @@ rec {
     src = ./src;
     meta = { };
     buildInputs = deps;
-    postInstall = "cp -r latex $out";
+    postInstall = ''
+      cp -r latex $out
+      sh checkTypeChecked.sh
+      '';
     extraExtensions = [ "hs" "cabal" ];
   };
 
