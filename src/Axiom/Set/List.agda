@@ -11,7 +11,6 @@ open import Axiom.Set
 import Data.List
 import Data.List.Relation.Unary.All as All
 import Data.List.Relation.Unary.Any as Any
-import Data.List.Relation.Unary.Any.Properties as Any
 import Function.Inverse as I
 import Function.Properties.Inverse as I
 import Function.Related.Propositional as R
@@ -25,7 +24,6 @@ open import Function.Equality using (_⟶_; _⟨$⟩_)
 open import Function.Related hiding (⌊_⌋)
 open import Interface.DecEq
 open import Relation.Binary using () renaming (Decidable to Dec₂)
-open import Relation.Nullary
 open import Relation.Nullary.Decidable
 
 ∃-cong' : ∀ {k a₁ a₂ b₁ b₂}

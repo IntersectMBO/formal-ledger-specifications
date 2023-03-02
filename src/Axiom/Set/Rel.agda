@@ -6,18 +6,15 @@ open import Axiom.Set
 
 module Axiom.Set.Rel (th : Theory {lzero}) where
 open Theory th
-open import Axiom.Set.Factor th
 open import Axiom.Set.Properties th
 
 open import Prelude hiding (filter)
 
-import Data.List
 import Data.Product
 import Data.Sum
 open import Data.List.Ext.Properties
 open import Data.Product.Properties
 open import Interface.DecEq
-open import Relation.Nullary.Decidable using (¬?)
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 open import Relation.Nullary
 

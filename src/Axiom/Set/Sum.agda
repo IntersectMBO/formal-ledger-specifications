@@ -13,7 +13,6 @@ open import Axiom.Set.Properties th
 open import Axiom.Set.Rel th
 open import Axiom.Set.Map th
 
-import Data.Sum
 open import Algebra.Properties.CommutativeSemigroup
 open import Data.List.Ext.Properties
 open import Data.List.Relation.Binary.Permutation.Propositional
@@ -22,8 +21,6 @@ open import Interface.DecEq
 open import Relation.Binary hiding (Rel)
 open import Relation.Nullary.Decidable using (¬?)
 open import Relation.Unary using () renaming (Decidable to Dec₁)
-
-open Equivalence
 
 open import Tactic.AnyOf
 open import Tactic.Defaults
