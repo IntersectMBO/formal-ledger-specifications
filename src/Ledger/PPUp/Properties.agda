@@ -1,7 +1,6 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Transaction
-open import Ledger.Epoch
 
 module Ledger.PPUp.Properties (txs : TransactionStructure) where
 
@@ -9,9 +8,6 @@ open TransactionStructure txs
 open import Ledger.Prelude hiding (_≥_; _+_; _*_; Dec₁)
 
 open import Ledger.PPUp txs
-
-open import Tactic.ReduceDec
-open import MyDebugOptions
 
 open import Algebra
 open Semiring Slotʳ hiding (refl; sym)

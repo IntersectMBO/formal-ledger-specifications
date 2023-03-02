@@ -12,7 +12,6 @@ open import Data.Product.Algebra using (×-comm)
 open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary
 open import Relation.Nullary.Decidable using (⌊_⌋)
-open import Relation.Nullary.Negation
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
 private variable ℓ : Level

@@ -8,17 +8,14 @@ open import Data.Bool
 open import Data.Empty
 open import Data.Product
 open import Data.Unit
-open import Data.List
-open import Data.List.Properties
 
 open import Relation.Binary renaming (Decidable to Decidable²)
 open import Relation.Binary.PropositionalEquality
-open import Relation.Nullary
 open import Relation.Nullary.Decidable
 open import Relation.Unary using () renaming (Decidable to Decidable¹)
 
 private variable a b : Level
-                 A P X Y : Set a
+                 A X Y : Set a
 
 record Dec₁ {a} {A : Set a} (P : A → Set b) : Set (a ⊔ b) where
   field P? : Decidable¹ P
