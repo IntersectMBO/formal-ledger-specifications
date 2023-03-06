@@ -1,4 +1,5 @@
 *.agdai
 .DS_Store
 **/dist-newstyle/
+.editorconfig
 result*

@@ -88,6 +88,28 @@ HSScriptStructure : ScriptStructure ℕ ℕ ℕ
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
 
 open import Ledger.Transaction
+open import Ledger.TokenAlgebra
+open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
+open import Data.Nat
+
+coinTokenAlgebra : TokenAlgebra
+coinTokenAlgebra = record
+  { PolicyId                = ℕ
+  ; Value-CommutativeMonoid = +-0-commutativeMonoid
+  ; coin                    = id
+  ; inject                  = id
+  ; policies                = λ x → ∅
+  ; size                    = λ x → 1 -- there is only ada in this token algebra
+  ; property                = λ x → refl
+  ; coinIsMonoidMorphism    = record
+    { mn-homo = record
+      { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo  = λ x y → refl }
+      ; ε-homo  = refl
+      }
+    }
+  ; _≥ᵗ_                    = _≥_
+  ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
+  }
 
 module _ where
   open TransactionStructure
@@ -102,6 +124,8 @@ module _ where
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; applyUpdate = λ p _ → p }
   HSTransactionStructure .txidBytes       = id
+  HSTransactionStructure .networkId       = tt
+  HSTransactionStructure .tokenAlgebra    = coinTokenAlgebra
   HSTransactionStructure .DecEq-TxId      = DecEq-ℕ
   HSTransactionStructure .DecEq-Ix        = DecEq-ℕ
   HSTransactionStructure .DecEq-Netw      = DecEq-⊤
@@ -141,11 +165,13 @@ instance
       from' txb = let open F.TxBody txb in record
         { txins    = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
         ; txouts   = from txouts
+        ; mint     = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
         ; txfee    = txfee
         ; txvldt   = coerce txvldt
         ; txwdrls  = ∅ᵐ
         ; txup     = nothing
         ; txADhash = nothing
+        ; netwrk   = nothing
         ; txsize   = txsize
         ; txid     = txid
         }
@@ -189,6 +215,8 @@ instance
         ; maxBlockSize  = maxBlockSize
         ; maxTxSize     = maxTxSize
         ; maxHeaderSize = maxHeaderSize
+        ; maxValSize    = maxValSize
+        ; minUtxOValue  = minUtxOValue
         ; poolDeposit   = poolDeposit
         ; Emax          = Emax
         ; pv            = coerce pv
@@ -201,6 +229,8 @@ instance
         ; maxBlockSize  = maxBlockSize
         ; maxTxSize     = maxTxSize
         ; maxHeaderSize = maxHeaderSize
+        ; maxValSize    = maxValSize
+        ; minUtxOValue  = minUtxOValue
         ; poolDeposit   = poolDeposit
         ; Emax          = Emax
         ; pv            = coerce pv

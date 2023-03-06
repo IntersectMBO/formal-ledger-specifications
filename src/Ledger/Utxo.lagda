@@ -13,27 +13,41 @@ module Ledger.Utxo (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (Dec₁)
 
+open import Algebra using (CommutativeMonoid)
+open import Algebra.Structures
 open import Data.Nat using (_≤?_; _≤_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Interface.Decidable.Instance
-
-open import MyDebugOptions
---open import Tactic.Defaults
-open import Tactic.DeriveComp
-
-instance
-  _ = +-0-commutativeMonoid
-  _ = Decidable²⇒Dec _≤?_
 
 open TransactionStructure txs
 open TxBody
 open TxWitnesses
 open Tx
 
-open import Ledger.PParams Epoch
 open import Ledger.Crypto
-
 open import Ledger.PPUp
+open import Ledger.PParams Epoch
+open import Ledger.TokenAlgebra using (TokenAlgebra)
+
+open import MyDebugOptions
+--open import Tactic.Defaults
+open import Tactic.DeriveComp
+
+instance
+  _ = Decidable²⇒Dec _≤?_
+  _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
+
+-- utxoEntrySizeWithoutVal = 27 words (8 bytes)
+utxoEntrySizeWithoutVal : MemoryEstimate
+utxoEntrySizeWithoutVal = 8
+
+utxoEntrySize : TxOut → MemoryEstimate
+utxoEntrySize (fst , v) = utxoEntrySizeWithoutVal + size v
+
+-- TODO: fix this
+serSize : Value → MemoryEstimate
+serSize = λ _ → zero
+
 \end{code}
 
 Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
@@ -56,12 +70,27 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
 
-balance : UTxO → Coin
-balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] getCoin (proj₂ x)
+balance : UTxO → Value
+balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
+
+cbalance : UTxO → Coin
+cbalance utxo = coin (balance utxo)
 
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
+
+-- need to add withdrawals to consumed
+consumed : PParams → UTxO → TxBody → Value
+consumed pp utxo txb = balance (utxo ∣ txins txb)
+                       +ᵛ mint txb
+                     --+ inject (wbalance (txwdrls txb) + keyRefunds pp txb)
+
+-- need to add deposits to produced
+produced : PParams → UTxO → TxBody →  Value
+produced pp utxo txb = balance (outs txb)
+                       +ᵛ inject (txfee txb)
+                     --+ totalDeposits pp stpools (txcerts txb))
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -74,7 +103,7 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
 \begin{code}[hide]
 instance
   HasCoin-UTxO : HasCoin UTxO
-  HasCoin-UTxO .getCoin = balance
+  HasCoin-UTxO .getCoin = cbalance
 \end{code}
 
 \caption{Functions used in UTxO rules}
@@ -162,13 +191,24 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     → inInterval slot (txvldt tx)
     → txins tx ⊆ dom (utxo ˢ)
     → let f = txfee tx in minfee pp tx ≤ f
-    → balance (utxo ∣ txins tx) ≡ balance (outs tx) + f
+    → consumed pp utxo tx ≡ produced pp utxo tx
+    → coin (mint tx) ≡ 0
+
+{- these break deriveComputational but don't matter at the moment
+    → ∀ txout → txout ∈ proj₁ (txouts tx)
+              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp))
+
+    → ∀ txout → txout ∈ proj₁ (txouts tx)
+              → (serSize (getValue (proj₂ txout))) ≤ PParams.maxValSize pp
+-}
+
     -- PPUP
     -- these fail with some reduceDec error
     -- → All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (range ((txouts tx) ˢ))
     -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
     -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
     → txsize tx ≤ PParams.maxTxSize pp
+    -- Add Deposits
     ────────────────────────────────
     Γ
       ⊢ s

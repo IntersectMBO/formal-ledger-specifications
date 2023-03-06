@@ -80,6 +80,8 @@ record PParams : Set where
         maxBlockSize  : ℕ
         maxTxSize     : ℕ
         maxHeaderSize : ℕ
+        maxValSize    : ℕ
+        minUtxOValue  : Coin
         poolDeposit   : Coin
         Emax          : Epoch
         pv            : Pair ℕ ℕ
@@ -91,6 +93,8 @@ record PParams : Set where
     , maxBlockSize :: Integer
     , maxTxSize :: Integer
     , maxHeaderSize :: Integer
+    , maxValSize :: Integer
+    , minUtxOValue :: Integer
     , poolDeposit :: Integer
     , emax :: Integer
     , pv :: (Integer, Integer) } deriving Show

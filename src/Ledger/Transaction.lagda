@@ -10,12 +10,11 @@ module Ledger.Transaction where
 
 open import Ledger.Prelude
 
-open import Ledger.Epoch
 open import Ledger.Crypto
+open import Ledger.Epoch
+open import Ledger.TokenAlgebra
 import Ledger.PParams
 import Ledger.Script
-
-import Data.Nat as N
 
 record TransactionStructure : Set₁ where
   field
@@ -53,6 +52,8 @@ This function must produce a unique id for each unique transaction body.
         adHashingScheme                     : isHashableSet AuxiliaryData
         ppUpd                               : Ledger.PParams.PParamsDiff Epoch
         txidBytes                           : TxId → Crypto.Ser crypto
+        networkId                           : Network
+        tokenAlgebra                        : TokenAlgebra
         instance DecEq-TxId  : DecEq TxId
                  DecEq-Epoch : DecEq Epoch
                  DecEq-Ix    : DecEq Ix
@@ -60,6 +61,7 @@ This function must produce a unique id for each unique transaction body.
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
+  open TokenAlgebra tokenAlgebra hiding (Coin) public
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
   field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
@@ -77,7 +79,7 @@ This function must produce a unique id for each unique transaction body.
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
   TxIn  = TxId × Ix
-  TxOut = Addr × Coin
+  TxOut = Addr × Value
   UTxO  = TxIn ↛ TxOut
   Wdrl  = RwdAddr ↛ Coin
 
@@ -91,11 +93,13 @@ This function must produce a unique id for each unique transaction body.
     field txins      : ℙ TxIn
           txouts     : Ix ↛ TxOut
           --txcerts  : List DCert
+          mint       : Value
           txfee      : Coin
           txvldt     : Maybe Slot × Maybe Slot
           txwdrls    : Wdrl
           txup       : Maybe Update
           txADhash   : Maybe ADHash
+          netwrk     : Maybe Network
           txsize     : ℕ
           txid       : TxId
 
@@ -116,11 +120,14 @@ This function must produce a unique id for each unique transaction body.
 \end{figure*}
 
 \begin{code}
+  getValue : TxOut → Value
+  getValue (fst , snd) = snd
+
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
 \end{code}
 \begin{code}[hide]
   instance
     HasCoin-TxOut : HasCoin TxOut
-    HasCoin-TxOut .getCoin = proj₂
+    HasCoin-TxOut .getCoin = coin ∘ proj₂
 \end{code}
