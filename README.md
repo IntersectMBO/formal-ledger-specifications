@@ -18,29 +18,14 @@ cd formal-ledger-specifications
 
 ### Building the spec using nix-build
 
-Build the specification and documentation. (This could take a long time.)
+Invoke the following `nix-build` commands from inside the `formal-ledger-specifications` directory.
 
 ```
-nix-build -A ledger.executableSpec
+nix-build -A ledger.executableSpec     # build the spec
+nix-build -A ledger.docs               # build the spec docs
+nix-build -A midnight.executableSpec   # build the Midnight example
+nix-build -A midnight.docs             # build the Midnight example docs
 ```
-
-![screenshot 1](.img/thumbs/nix-build-ledger-executableSpec-thumb.png)
-
-Build the spec docs.
-
-```
-nix-build -A ledger.docs
-```
-![screenshot 2](.img/thumbs/nix-build-ledger-docs-thumb.png)
-
-Build the Midnight example and its docs.
-
-```
-nix-build -A midnight.executableSpec
-nix-build -A midnight.docs
-```
-
-----------------------------------
 
 ### Test the spec using nix-shell
 
@@ -52,3 +37,5 @@ nix-shell --command "cabal repl --build-depends 'agda-ledger-executable-spec, ag
 λ> :m HSLedgerTest
 λ> main
 ```
+
+
