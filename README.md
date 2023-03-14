@@ -25,6 +25,9 @@ nix-build -A ledger.executableSpec
 ```
 
 ![screenshot 1](.img/thumbs/nix-build-ledger-executableSpec-thumb.png)] 
+
+Test
+
 <!-- (.img/nix-build-ledger-executableSpec.png) -->
 
 
