@@ -3,9 +3,7 @@
 module Ledger.Interface.HasCoin where
 
 open import Prelude
-
-private
-  Coin = ℕ
+open import Ledger.Prelude.Base
 
 record HasCoin {a} (A : Set a) : Set a where
   field getCoin : A → Coin
