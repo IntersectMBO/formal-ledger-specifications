@@ -61,7 +61,7 @@ This function must produce a unique id for each unique transaction body.
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
-  open TokenAlgebra tokenAlgebra hiding (Coin) public
+  open TokenAlgebra tokenAlgebra public
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
   field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
