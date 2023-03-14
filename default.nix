@@ -117,6 +117,7 @@ rec {
       };
     in
     {
+      executableSpecSrc = hsSrc;
       executableSpec = haskellPackages.callCabal2nix "Agda-ledger-executable-spec" "${hsSrc}" { };
       docs = docs;
     };
