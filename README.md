@@ -24,7 +24,8 @@ Build the specification and documentation. (This could take a long time.)
 nix-build -A ledger.executableSpec
 ```
 
-[![screenshot 1](.img/thumbs/nix-build-ledger-executableSpec-thumb.png)](.img/nix-build-ledger-executableSpec.png)
+![screenshot 1](.img/thumbs/nix-build-ledger-executableSpec-thumb.png)] 
+<!-- (.img/nix-build-ledger-executableSpec.png) -->
 
 
 Build the spec docs.
