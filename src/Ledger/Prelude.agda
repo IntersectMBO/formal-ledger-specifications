@@ -53,6 +53,7 @@ open import Interface.IsSet th public
 
 abstract
   open import Axiom.Set.Properties th using (card-≡ᵉ)
+
   to-sp : {A : Set} {P : A → Set} → Decidable¹ P → specProperty P
   to-sp = id
 
@@ -83,7 +84,7 @@ open import Axiom.Set.Rel th public
   hiding (_∣'_; _↾'_; dom; range)
 
 open import Axiom.Set.Map th public
-  renaming (Map to _⇀_)
+  renaming (Map to infixr 1 _⇀_)
 
 open import Axiom.Set.TotalMap th public
 open import Axiom.Set.TotalMapOn th
@@ -128,9 +129,18 @@ _ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B
 _ᶠˢ : {A : Set} → ℙ A → FinSet A
 X ᶠˢ = X , finiteness _
 
-
 filterᵐ? : ∀ {A B} {P : A × B → Set} → (∀ x → Dec (P x)) → A ⇀ B → A ⇀ B
 filterᵐ? P? = filterᵐ (to-sp P?)
 
 filterᵐᵇ : ∀ {A B} → (A × B → Bool) → A ⇀ B → A ⇀ B
 filterᵐᵇ P = filterᵐ? (λ x → P x ≟ true)
+
+open import Data.Product.Ext
+open import Interface.Hashable
+
+setToHashRel : ∀ {A B : Set} → {{Hashable A B}} -> ℙ A -> ℙ (B × A)
+setToHashRel x = mapˡ hash (mapˢ ×-dup x)
+
+setToHashMap : ∀ {A B : Set} → {{Hashable A B}} -> ℙ A → B ⇀ A
+setToHashMap x = setToHashRel x ᵐ
+  where instance _ = record { isLeftUnique = mapˡ∘map⦅×-dup⦆-uniq {inj = hashInj} }

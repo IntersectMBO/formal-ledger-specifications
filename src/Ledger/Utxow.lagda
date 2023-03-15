@@ -2,14 +2,16 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-import Data.Nat
-
 open import Ledger.Prelude
 open import Ledger.Crypto
+open import Ledger.Abstract
 open import Ledger.Transaction
 
-module Ledger.Utxow (txs : _) (open TransactionStructure txs) where
-open import Ledger.Utxo txs
+module Ledger.Utxow
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  where
+open import Ledger.Utxo txs abs
 \end{code}
 
 \begin{figure*}[h]
@@ -70,7 +72,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     →  witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     →  scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
     →  txADhash ≡ map hash txAD
-    →  Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
+    →  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 \end{code}

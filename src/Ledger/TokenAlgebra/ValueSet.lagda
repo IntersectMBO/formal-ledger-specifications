@@ -9,6 +9,7 @@ open import Agda.Primitive using () renaming (Set to Type)
 module Ledger.TokenAlgebra.ValueSet (PolicyId AssetName : Type) where
 
 open import Ledger.Prelude                         hiding (lookup ; update ; isMagma ; isEquivalence) renaming (TotalMap to _⇒_)
+open _⇒_
 open import Ledger.TokenAlgebra PolicyId           using (TokenAlgebra)
 
 open import Algebra                                using (CommutativeMonoid ; Op₂ ; IsSemigroup ; IsMonoid ; IsMagma ; IsCommutativeMonoid)
@@ -59,21 +60,21 @@ An inhabitant of `Value` is a map denoting a finite collection of quantities of 
 \begin{code}
 open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (refl ; sym ; trans)
 
-AssetId : Type
-AssetId = PolicyId × AssetName
+AssetId  = PolicyId × AssetName
+Quantity = ℕ
 
 module _
   {X : ℙ AssetId}
   {⋁A : isMaximal X}
-  ⦃ dec : DecEq (PolicyId × AssetName) ⦄
+  ⦃ DecEq-PolicyId  : DecEq PolicyId ⦄
+  ⦃ DecEq-AssetName : DecEq AssetName ⦄
+  ⦃ DecEq-Tot : DecEq (AssetId ⇒ ℕ) ⦄
+  ⦃ Dec-lookup≤ : ∀ {u v : AssetId ⇒ ℕ}
+      → Dec (∀ {a p q} → lookup u (a , p) ≤ lookup v (a , q)) ⦄
   where
 
-  open _⇒_
   open ≡-Reasoning
   open FunTot X ⋁A
-
-  Quantity : Type
-  Quantity = ℕ
 
   _⊕_ : Op₂ (AssetId ⇒ Quantity)
   u ⊕ v = Fun⇒TotalMap λ aa → (lookup u) aa + (lookup v) aa
@@ -156,27 +157,25 @@ We are now in a position to define the commutative monoid.
   Vcm .isCommutativeMonoid .isMonoid  = ≋-⊕-ι-isMonoid
   Vcm .isCommutativeMonoid .comm      = ⊕-comm
 
-  Value-TokenAlgebra :  (specialPolicy : PolicyId)
-                        (specialAsset : AssetName)
-                        (size : AssetId ⇒ Quantity → ℕ)
-                        {decTot : DecEq (AssetId ⇒ Quantity)}
-                        --------------------------------------
-                        → TokenAlgebra
-
-  Value-TokenAlgebra specialPolicy specialAsset size {decTot} =
-    record
-      { Value-CommutativeMonoid   = Vcm
-      ; coin                      = totalMap↠coin
-      ; inject                    = coin↪totalMap
-      ; policies                  = policies
-      ; size                      = size
-      ; _≤ᵗ_                      = leq
-      ; AssetName                 = AssetName
-      ; specialAsset              = specialAsset
-      ; property                  = compose-to-id
-      ; coinIsMonoidHomomorphism  = CoinMonHom
-      ; DecEq-Value               = decTot
-      }
+  Value-TokenAlgebra :
+    (specialPolicy : PolicyId)
+    (specialAsset : AssetName)
+    (size : AssetId ⇒ Quantity → ℕ)
+    --------------------------------------
+    → TokenAlgebra
+  Value-TokenAlgebra specialPolicy specialAsset size = record
+    { Value-CommutativeMonoid   = Vcm
+    ; coin                      = totalMap↠coin
+    ; inject                    = coin↪totalMap
+    ; policies                  = policies
+    ; size                      = size
+    ; _≤ᵗ_                      = leq -- leq
+    ; AssetName                 = AssetName
+    ; specialAsset              = specialAsset
+    ; property                  = compose-to-id
+    ; coinIsMonoidHomomorphism  = CoinMonHom
+    ; Dec-≤ᵗ = λ {x}{y} → Dec-lookup≤ {x}{y}
+    }
     where
 
     specId : AssetId
@@ -188,13 +187,13 @@ We are now in a position to define the commutative monoid.
     totalMap↠coin tm = lookup tm specId
 
     coin↪totalMap : Coin → AssetId ⇒ Quantity
-    coin↪totalMap c = update ⦃ dec ⦄ specId c ι
+    coin↪totalMap c = update specId c ι
 
     policies : AssetId ⇒ Quantity → ℙ PolicyId
     policies tm = mapˢ proj₁ $ dom tm
 
     leq : AssetId ⇒ Quantity → AssetId ⇒ Quantity → Type
-    leq = λ u v → ∀ {a}{p}{q} → lookup u (a , p) ≤ lookup v (a , q)
+    leq u v = ∀ {a}{p}{q} → lookup u (a , p) ≤ lookup v (a , q)
 
     compose-to-id : totalMap↠coin ∘ coin↪totalMap ≗ id
     compose-to-id _ = lookup-update-id ι

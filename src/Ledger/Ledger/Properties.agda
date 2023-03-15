@@ -1,9 +1,13 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude; open Equivalence; open Computational
 open import Ledger.Transaction
+open import Ledger.Abstract
 
-module Ledger.Ledger.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.Ledger.Properties
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  where
 
 open import Ledger.Gov govStructure
 open import Ledger.Utxo txs
@@ -64,6 +68,15 @@ instance
   HasCoin-LState .getCoin s = getCoin (LState.utxoSt s)
 
 -- ** Proof that LEDGER preserves values.
+=======
+open import Ledger.PPUp txs
+open import Ledger.Utxo txs abs
+import Ledger.Utxo.Properties txs abs as P
+open import Ledger.Utxow txs abs
+import Ledger.Utxow.Properties txs abs as PW
+open import Ledger.Ledger txs abs
+
+>>>>>>> [new feature] Alonzo-era scripts functionality
 
 private variable
   tx : Tx

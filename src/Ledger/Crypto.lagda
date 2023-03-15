@@ -10,6 +10,7 @@ record isHashableSet (T : Set) : Set₁ where
   constructor mkIsHashableSet
   field THash : Set
         ⦃ DecEq-THash ⦄ : DecEq      THash
+        ⦃ DecEq-T     ⦄ : DecEq    T
         ⦃ T-Hashable  ⦄ : Hashable T THash
 open isHashableSet
 
@@ -44,7 +45,6 @@ We rely on a public key signing scheme for verification of spending.
 \label{fig:defs:crypto}
 \end{figure*}
 \begin{code}[hide]
-        ⦃ DecEq-VKey ⦄ : DecEq VKey
         ⦃ DecEq-Sig  ⦄ : DecEq Sig
         ⦃ DecEq-Ser  ⦄ : DecEq Ser
   instance
@@ -59,7 +59,7 @@ record Crypto : Set₁ where
   field ⦃ khs ⦄    : isHashableSet VKey
         ScriptHash : Set; ⦃ DecEq-ScriptHash ⦄ : DecEq ScriptHash
 
-  open isHashableSet khs renaming (THash to KeyHash) public
+  open isHashableSet khs renaming (THash to KeyHash) hiding (DecEq-T) public
 
 -- TODO: KES and VRF
 \end{code}
