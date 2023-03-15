@@ -1,15 +1,30 @@
 {-# OPTIONS --safe #-}
 
+--------------------------------------------------------------------------------
+-- Ledger prelude
+--
+-- Re-exports modules relating to STS, set theory and other
+-- miscellaneous things used to write the ledger rules. If something
+-- is used in more than two Ledger.* modules, it should probably go
+-- here.
+--------------------------------------------------------------------------------
+
 module Ledger.Prelude where
 
 open import Prelude public
+
+open import Ledger.Prelude.Base public
 
 open import Interface.ComputationalRelation public
 open import Interface.DecEq public
 open import Ledger.Interface.HasCoin public
 open import Relation.Nullary public
-open import Relation.Nullary.Negation
 open import Relation.Unary using () renaming (Decidable to Dec₁) public
+
+open Computational public
+
+--------------------------------------------------------------------------------
+-- Set theory
 
 open import Axiom.Set
 open import Axiom.Set.List as L renaming (List-Model to List-Model'; List-Modelᶠ to List-Model'ᶠ; List-Modelᵈ to List-Model'ᵈ)
@@ -45,7 +60,7 @@ abstract
 
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) public
 open import Axiom.Set.Map th renaming (Map to _↛_) public
-open import Axiom.Set.TotalMap th
+open import Axiom.Set.TotalMap th public
 open L.Decˡ hiding (_∈?_; ≟-∅) public
 open import Axiom.Set.Sum th public
 
@@ -69,8 +84,6 @@ module Properties where
   open import Axiom.Set.Properties th public
   module _ {A : Set} ⦃ _ : DecEq A ⦄ where
     open Intersectionᵖ {A} ∈-sp public
-
-open Computational public
 
 _ᶠᵐ : {A B : Set} → A ↛ B → FinMap A B
 (R , uniq) ᶠᵐ = (R , uniq , finiteness _)

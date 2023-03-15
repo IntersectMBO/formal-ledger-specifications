@@ -14,7 +14,6 @@ record TokenAlgebra : Set₁ where
   field PolicyId : Set
         Value-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
 
-  Coin = ℕ
   MemoryEstimate = ℕ
 
   open CommutativeMonoid Value-CommutativeMonoid using (_≈_; ε)

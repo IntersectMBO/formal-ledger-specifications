@@ -8,7 +8,6 @@ open import Ledger.Prelude
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-Coin = ℕ
 ProtVer = ℕ × ℕ
 
 record PParams : Set where
