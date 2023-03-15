@@ -33,9 +33,15 @@ Ix            = ℕ
 Epoch         = ℕ
 AuxiliaryData = ⊤
 
+Hash          = ℕ
 TxIn          = Pair TxId Ix
-TxOut         = Pair Addr Coin
+TxOut         = Pair Addr $ Pair Coin $ Maybe Hash
 UTxO          = HSMap TxIn TxOut
+
+data Tag : Set where
+  Spend Mint Cert Rewrd : Tag
+
+RdmrPtr = Pair Tag Ix
 
 {-# FOREIGN GHC
   type Coin  = Integer
@@ -46,6 +52,10 @@ UTxO          = HSMap TxIn TxOut
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, Coin)
   type UTxO  = [(TxIn, TxOut)]
+  type Hash  = Integer
+
+  data Tag     = Spend | Mint | Cert | Rewrd
+  type RdmrPtr = (Tag, Ix)
 #-}
 
 record TxBody : Set where
@@ -58,6 +68,9 @@ record TxBody : Set where
         --txADhash : Maybe ADHash
         txsize   : ℕ
         txid     : TxId
+        collateral     : List TxIn
+        reqSigHash     : List Hash
+        scriptIntHash  : Maybe Hash
 
 {-# FOREIGN GHC
   data TxBody = MkTxBody
@@ -74,6 +87,8 @@ record TxBody : Set where
 record TxWitnesses : Set where
   field vkSigs  : List (Pair ℕ ℕ)
         scripts : List Empty
+        txdats  : HSMap Hash Empty
+        txrdmrs : HSMap RdmrPtr (Pair Empty ⊤)
 
 {-# FOREIGN GHC
   data TxWitnesses = MkTxWitnesses
@@ -95,43 +110,59 @@ record Tx : Set where
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}
 
 record PParams : Set where
-  field a                 : ℕ
-        b                 : ℕ
-        maxBlockSize      : ℕ
-        maxTxSize         : ℕ
-        maxHeaderSize     : ℕ
-        maxValSize        : ℕ
-        minUTxOValue      : Coin
-        poolDeposit       : Coin
-        Emax              : Epoch
-        pv                : Pair ℕ ℕ
-        votingThresholds  : ⊤ -- TODO: foreign rational numbers
-        govActionLifetime : ℕ
-        govActionDeposit  : Coin
-        drepDeposit       : Coin
-        drepActivity      : Epoch
-        ccMinSize         : ℕ
-        ccMaxTermLength   : ℕ
+  field a                   : ℕ
+        b                   : ℕ
+        maxBlockSize        : ℕ
+        maxTxSize           : ℕ
+        maxHeaderSize       : ℕ
+        maxValSize          : ℕ
+        minUTxOValue        : Coin
+        poolDeposit         : Coin
+        Emax                : Epoch
+        pv                  : Pair ℕ ℕ
+        votingThresholds    : ⊤ -- TODO: foreign rational numbers
+        govActionLifetime   : ℕ
+        govActionDeposit    : Coin
+        drepDeposit         : Coin
+        drepActivity        : Epoch
+        ccMinSize           : ℕ
+        ccMaxTermLength     : ℕ
+        minimumAVS          : Coin
+        costmdls            : Empty
+        prices              : ⊤
+        maxTxExUnits        : ⊤
+        maxBlockExUnits     : ⊤
+        coinsPerUTxOWord    : Coin
+        -- collateralPercent   : ℕ
+        maxCollateralInputs : ℕ
+
 
 {-# FOREIGN GHC
   data PParams = MkPParams
-    { a                 :: Integer
-    , b                 :: Integer
-    , maxBlockSize      :: Integer
-    , maxTxSize         :: Integer
-    , maxHeaderSize     :: Integer
-    , maxValSize        :: Integer
-    , minUTxOValue      :: Integer
-    , poolDeposit       :: Integer
-    , emax              :: Integer
-    , pv                :: (Integer, Integer)
-    , votingThresholds  :: ()
-    , govActionLifetime :: Integer
-    , govActionDeposit  :: Integer
-    , drepDeposit       :: Integer
-    , drepActivity      :: Integer
-    , ccMinSize         :: Integer
-    , ccMaxTermLength   :: Integer
+    { a                   :: Integer
+    , b                   :: Integer
+    , maxBlockSize        :: Integer
+    , maxTxSize           :: Integer
+    , maxHeaderSize       :: Integer
+    , maxValSize          :: Integer
+    , minUTxOValue        :: Integer
+    , poolDeposit         :: Integer
+    , emax                :: Integer
+    , pv                  :: (Integer, Integer)
+    , votingThresholds    :: ()
+    , govActionLifetime   :: Integer
+    , govActionDeposit    :: Integer
+    , drepDeposit         :: Integer
+    , drepActivity        :: Integer
+    , ccMinSize           :: Integer
+    , ccMaxTermLength     :: Integer
+    , minimumAVS          :: Integer
+    , costmdls            :: Empty
+    , prices              :: ()
+    , maxTxExUnits        :: ()
+    , maxBlockExUnits     :: ()
+    , coinsPerUTxOWord    :: Integer
+    , maxCollateralInputs :: Integer
     } deriving (Show, Generic)
   instance ToExpr PParams
 #-}

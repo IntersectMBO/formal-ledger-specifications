@@ -9,7 +9,6 @@ open import Ledger.GovStructure
 module Ledger.Deleg (gs : _) (open GovStructure gs) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
-
 \end{code}
 \begin{figure*}[h]
 \begin{code}

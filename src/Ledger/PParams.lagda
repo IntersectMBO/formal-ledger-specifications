@@ -8,13 +8,19 @@ such as minimum fees, maximum and minimum sizes of certain components, and more.
 
 open import Data.Rational using (ℚ)
 open import Relation.Nullary.Decidable
+
 open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude
 open import Ledger.Epoch
 open import Ledger.Crypto
+open import Ledger.Script
 
-module Ledger.PParams (es : _) (open EpochStructure es) where
+module Ledger.PParams
+  (crypto : Crypto )
+  (es     : _) (open EpochStructure es)
+  (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
+  where
 \end{code}
 \begin{figure*}[h!]
 {\small
@@ -73,6 +79,16 @@ record PParams : Set where
         ccMinSize          : ℕ
         ccMaxTermLength    : ℕ
         minimumAVS         : Coin
+
+        -- Script
+        -- costmdls            : Language →/⇀ CostModel (Does not work with DecEq)
+        costmdls            : CostModel
+        prices              : Prices
+        maxTxExUnits        : ExUnits
+        maxBlockExUnits     : ExUnits
+        coinsPerUTxOWord    : Coin
+        -- collateralPercent   : ℕ
+        maxCollateralInputs : ℕ
 
 paramsWellFormed : PParams → Bool
 paramsWellFormed pp = ¿ 0 ∉ fromList

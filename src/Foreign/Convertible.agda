@@ -18,8 +18,13 @@ Convertible₂ T U = ∀ {A B} → ⦃ Convertible A B ⦄ → Convertible₁ (T
 
 -- ** instances
 
+Functor⇒Convertible : ∀ {F : Type↑} → ⦃ Functor F ⦄ → Convertible₁ F F
+Functor⇒Convertible = λ where
+  .to   → map to
+  .from → map from
+
 Bifunctor⇒Convertible : ∀ {F} → ⦃ Bifunctor F ⦄ → Convertible₂ F F
-Bifunctor⇒Convertible ⦃ _ ⦄ ⦃ ca ⦄ ⦃ cb ⦄ = λ where
+Bifunctor⇒Convertible = λ where
   .to   → bimap to to
   .from → bimap from from
 
@@ -27,6 +32,9 @@ open import Foreign.Haskell
 open import Foreign.Haskell.Coerce using (coerce)
 
 instance
+  Convertible-Maybe : Convertible₁ Maybe Maybe
+  Convertible-Maybe = Functor⇒Convertible
+
   Convertible-× : Convertible₂ _×_ _×_
   Convertible-× = Bifunctor⇒Convertible
 

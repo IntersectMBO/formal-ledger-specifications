@@ -15,12 +15,13 @@ open import Prelude hiding (filter)
 
 open import Data.Product using (map₁)
 open import Data.Sum using (map₂)
-import Relation.Binary.PropositionalEquality as I
 open import Data.List.Ext.Properties using (AllPairs⇒≡∨R∨Rᵒᵖ)
+open import Data.Product.Ext using (×-dup)
 open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
 open import Data.Maybe.Properties using (just-injective)
 open import Interface.DecEq using (DecEq; _≟_)
 open import Relation.Unary using (Decidable)
+import Relation.Binary.PropositionalEquality as I
 
 open Equivalence
 
@@ -148,6 +149,9 @@ singletonᵐ a b = ❴ (a , b) ❵
 ❴_❵ᵐ : A × B → Map A B
 ❴ k , v ❵ᵐ = singletonᵐ k v
 
+lookupMap : {a : A} (m : Map A B) → a ∈ dom (m ˢ) → B
+lookupMap _ h = ∈-map⁻' h .proj₁ .proj₂
+
 module Unionᵐ (sp-∈ : spec-∈ A) where
   infixr 6 _∪ᵐˡ_
 
@@ -207,6 +211,15 @@ mapKeys : (f : A → A') → (m : Map A B)
   → {@(tactic by-eq) _ : InjectiveOn (dom (m ˢ)) f}
   → Map A' B
 mapKeys f (R , uniq) {inj} = mapˡ f R , mapˡ-uniq {inj = inj} uniq
+
+map⦅×-dup⦆-uniq : ∀ {x : Set A} → left-unique (mapˢ ×-dup x)
+map⦅×-dup⦆-uniq x y with ∈-map⁻' x | ∈-map⁻' y
+... | fst , refl , _ | .fst , refl , _ = refl
+
+mapˡ∘map⦅×-dup⦆-uniq : ∀ {S : Set A} {f : A → B}
+  → {@(tactic by-eq) inj : Injective _≡_ _≡_ f}
+  → left-unique $ mapˡ f (mapˢ ×-dup S)
+mapˡ∘map⦅×-dup⦆-uniq {inj = inj} = mapˡ-uniq {inj = λ _ _ → inj} map⦅×-dup⦆-uniq
 
 mapValues : (B → B') → Map A B → Map A B'
 mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq

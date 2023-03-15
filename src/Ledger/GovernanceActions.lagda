@@ -11,14 +11,16 @@ We introduce three distinct bodies that have specific functions in the new gover
 \end{enumerate}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-open import Ledger.Crypto
 
-open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
-open import Ledger.GovStructure
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
+open import Interface.Decidable.Instance
 open import Tactic.Derive.DecEq
+
+open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
+open import Ledger.Crypto
+open import Ledger.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
@@ -264,13 +266,13 @@ record EnactEnv : Set where
         epoch     : Epoch
 
 record EnactState : Set where
-  field cc            : HashProtected (Maybe (Credential ⇀ Epoch × ℚ))
+  field cc            : HashProtected (Maybe $ (Credential ⇀ Epoch) × ℚ)
         constitution  : HashProtected (DocHash × Maybe ScriptHash)
         pv            : HashProtected ProtVer
         pparams       : HashProtected PParams
         withdrawals   : RwdAddr ⇀ Coin
 
-ccCreds : HashProtected (Maybe (Credential ⇀ Epoch × ℚ)) → ℙ Credential
+ccCreds : HashProtected (Maybe $ (Credential ⇀ Epoch) × ℚ) → ℙ Credential
 ccCreds (just x  , _)  = dom (x .proj₁)
 ccCreds (nothing , _)  = ∅
 \end{code}
@@ -350,7 +352,6 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
 
 \begin{code}[hide]
 open Computational ⦃...⦄
-
 instance
   Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_
   Computational-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where

@@ -118,7 +118,7 @@ record RatifyState : Set where
         delay           : Bool
 
 CCData : Set
-CCData = Maybe (Credential ⇀ Epoch × ℚ)
+CCData = Maybe $ (Credential ⇀ Epoch) × ℚ
 
 isCC : VDeleg → Bool
 isCC (credVoter CC _)  = true
