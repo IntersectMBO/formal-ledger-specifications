@@ -9,11 +9,13 @@ open import Interface.Hashable public
 record isHashableSet (T : Set) : Set₁ where
   field THash : Set
         instance T-Hashable : Hashable T THash
+        instance DecEq-THash : DecEq THash
 open isHashableSet
 
-mkIsHashableSet : (T THash : Set) → (T → THash) → isHashableSet T
-mkIsHashableSet T THash hash .THash            = THash
-mkIsHashableSet T THash hash .T-Hashable .hash = hash
+mkIsHashableSet : (T THash : Set) → (T → THash) → (DecEq THash) → isHashableSet T
+mkIsHashableSet T THash hash eq .THash            = THash
+mkIsHashableSet T THash hash eq .T-Hashable .hash = hash
+mkIsHashableSet T THash hash eq .DecEq-THash      = eq
 
 record HashableSet : Set₁ where
   field T : Set
@@ -61,8 +63,7 @@ record Crypto : Set₁ where
 
   open isHashableSet khs renaming (THash to KeyHash) public
 
-  field instance decEq-KeyHash    : DecEq KeyHash
-                 decEq-ScriptHash : DecEq ScriptHash
+  field instance decEq-ScriptHash : DecEq ScriptHash
 
 -- TODO: KES and VRF
 \end{code}
