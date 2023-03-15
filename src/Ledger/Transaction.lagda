@@ -136,6 +136,8 @@ the transaction body are:
           isValid : Bool
           txAD    : Maybe AuxiliaryData
 \end{code}
+\emph{Abstract functions}
+\end{code}
 \end{AgdaSuppressSpace}
 \caption{Definitions used in the UTxO transition system}
 \label{fig:defs:utxo-shelley}
