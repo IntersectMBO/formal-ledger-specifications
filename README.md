@@ -6,17 +6,16 @@ This repository currently contains two specifications---the work in progress spe
 
 --------------------
 
-## Building and Testing the Formal Specification
+## Build and Test the Formal Spec
 
 Clone this repository and enter its directory.
-
 ```
 git clone https://github.com/input-output-hk/formal-ledger-specifications.git
 cd formal-ledger-specifications
 ```
 
 
-### Building the spec using nix-build
+### Build the spec using nix-build
 
 Invoke the following `nix-build` commands from inside the `formal-ledger-specifications` directory.
 
@@ -29,7 +28,6 @@ nix-build -A midnight.docs             # build the Midnight example docs
 
 ### Test the spec using nix-shell
 
-
 The `executableSpec` is a `cabal` package, which can be loaded into GHCI like this:
 
 ```
@@ -38,4 +36,10 @@ nix-shell --command "cabal repl --build-depends 'agda-ledger-executable-spec, ag
 λ> main
 ```
 
+## Contributions and Feedback
 
+If you would like more detailed information and/or you want to contribute to the Agda formalization of the spec, please see the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+Please [submit a new issue][] if you find problems with, and/or wish to comment on, this repository.
+
+[submit a new issue]: https://github.com/input-output-hk/formal-ledger-specifications/issues/new/choose
