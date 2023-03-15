@@ -30,12 +30,19 @@ record PlutusStructure : Set₁ where
 
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
 
+  -- Type aliases for Data
+  Datum    = Data
+  Redeemer = Data
+
   field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
         validPlutusScript? : ∀ cm ds eu s → Dec (validPlutusScript cm ds eu s)
 
 record ScriptStructure : Set₁ where
   field p1s : P1ScriptStructure
         ps  : PlutusStructure
+
+  -- it is not possible to define this function
+  field hashRespectsUnion : {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
 
   open P1ScriptStructure p1s public
   open PlutusStructure ps public renaming
@@ -45,8 +52,7 @@ record ScriptStructure : Set₁ where
 
   instance
     Hashable-Script : Hashable Script ScriptHash
-    Hashable-Script .hash (inj₁ s) = hash s
-    Hashable-Script .hash (inj₂ s) = hash s
+    Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
 \end{code}
 We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]

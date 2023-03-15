@@ -9,13 +9,20 @@ open import Interface.Hashable public
 record isHashableSet (T : Set) : Set₁ where
   field THash : Set
         instance T-Hashable : Hashable T THash
+        instance DecEq-T  : DecEq T
         instance DecEq-THash : DecEq THash
 open isHashableSet
 
-mkIsHashableSet : (T THash : Set) → (T → THash) → (DecEq THash) → isHashableSet T
-mkIsHashableSet T THash hash eq .THash            = THash
-mkIsHashableSet T THash hash eq .T-Hashable .hash = hash
-mkIsHashableSet T THash hash eq .DecEq-THash      = eq
+mkIsHashableSet : (T THash : Set) → (f : T → THash)
+                                  → Injective _≡_ _≡_ f
+                                  → (DecEq T)
+                                  → (DecEq THash)
+                                  → isHashableSet T
+mkIsHashableSet T THash hash hashInj eq eq' .THash               = THash
+mkIsHashableSet T THash hash hashInj eq eq' .T-Hashable .hash    = hash
+mkIsHashableSet T THash hash hashInj eq eq' .T-Hashable .hashInj = hashInj
+mkIsHashableSet T THash hash hashInj eq eq' .DecEq-T             = eq
+mkIsHashableSet T THash hash hashInj eq eq' .DecEq-THash         = eq'
 
 record HashableSet : Set₁ where
   field T : Set

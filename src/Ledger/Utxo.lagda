@@ -46,12 +46,18 @@ instance
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
 
+isTwoPhaseScriptAddress : Tx → Addr → Bool
+isTwoPhaseScriptAddress tx a = {!!}
+
+totExUnits : Tx → ExUnits
+totExUnits tx = {!!}
+
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
 
 utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize (fst , v) = utxoEntrySizeWithoutVal + size v
+utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
 
 -- TODO: fix this
 serSize : Value → MemoryEstimate
@@ -80,7 +86,7 @@ outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (txouts tx) λ where _ _ refl → refl
 
 balance : UTxO → Value
-balance utxo = Σᵐᵛ[ x ← utxo ᶠᵐ ] getValue x
+balance utxo = Σᵐᵛ[ x ← utxo ᶠᵐ ] (getValue x)
 
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
@@ -274,7 +280,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move
 -- this once this is fixed.
-unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+-- unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

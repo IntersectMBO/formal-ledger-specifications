@@ -1,8 +1,12 @@
 {-# OPTIONS --safe #-}
 module Interface.Hashable where
 
+open import Function.Definitions using (Injective)
+open import Agda.Builtin.Equality
+
 record Hashable (T THash : Set) : Set where
   field hash : T → THash
+  field hashInj : Injective _≡_ _≡_ hash
 
 open Hashable ⦃...⦄ public
 
