@@ -21,9 +21,6 @@ open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingSchem
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-record Acnt : Set where
-  field treasury  : Coin
-        reserves  : Coin
 
 record NewEpochEnv : Set where
   field roles       : KeyHash ↛ GovRole

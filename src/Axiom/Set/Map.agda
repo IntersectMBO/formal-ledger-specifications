@@ -5,7 +5,7 @@ open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
 
 module Axiom.Set.Map (th : Theory {lzero}) where
-open Theory th
+open Theory th renaming (map to mapˢ)
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
 open import Axiom.Set.Properties th
 
@@ -13,6 +13,7 @@ open import Prelude hiding (filter)
 
 import Data.Product
 import Data.Sum
+open import Data.These
 open import Data.List.Ext.Properties
 open import Data.Product.Properties
 open import Interface.DecEq
@@ -21,7 +22,9 @@ open import Relation.Unary using () renaming (Decidable to Dec₁)
 open Equivalence
 
 open import Tactic.AnyOf
+open import Tactic.Assumption
 open import Tactic.Defaults
+open import Tactic.Helpers
 
 -- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
 private macro
@@ -29,7 +32,7 @@ private macro
   P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
   ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
-private variable A A' B B' C : Type
+private variable A A' B B' C D : Type
                  R R' : Rel A B
                  X Y : Set A
 
@@ -46,8 +49,15 @@ instance
 ⊆-left-unique : R ⊆ R' → left-unique R' → left-unique R
 ⊆-left-unique R⊆R' h = R⊆R' -⟨ h ⟩- R⊆R' -- on isn't dependent enough
 
+left-unique-mapˢ : {f : A → B} (X : Set A) → left-unique (mapˢ (λ y → (y , f y)) X)
+left-unique-mapˢ _ p q with from ∈-map p | from ∈-map q
+... | _ , refl , _ | _ , refl , _ = refl
+
 Map : Type → Type → Type
 Map A B = Σ (Rel A B) left-unique
+
+_≡ᵐ_ : Map A B → Map A B → Type
+(x , _) ≡ᵐ (y , _) = x ≡ᵉ y
 
 private variable m m' : Map A B
 
@@ -141,6 +151,16 @@ mapKeys f inj (R , uniq) = mapˡ f R , mapˡ-uniq inj uniq
 mapValues : (B → B') → Map A B → Map A B'
 mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
 
+mapWithKey-uniq : {r : Rel A B} {f : A → B → B'} → left-unique r → left-unique (mapˢ (λ { (x , y) → x , f x y }) r)
+mapWithKey-uniq {f = f} uniq p q with from ∈-map p | from ∈-map q
+... | (x , y) , refl , xy∈r | (x' , y') , refl , xy'∈r = cong (f x) (uniq xy∈r xy'∈r)
+
+mapWithKey : (A → B → B') → Map A B → Map A B'
+mapWithKey f m@(r , p) = mapˢ (λ { (x , y) → x , f x y}) r , mapWithKey-uniq p
+
+mapValues-dom : {M : Map A B} {F : B → C} → dom (M ˢ) ≡ᵉ dom (mapValues F M ˢ)
+mapValues-dom {M = m , _} = mapʳ-dom
+
 _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
 m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
 
@@ -167,6 +187,15 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
   -- f(x,-)
   infix 30 _⦅_,-⦆
   _⦅_,-⦆ = curryᵐ
+
+module Lookupᵐ (sp-∈ : spec-∈ A) where
+  open import Relation.Nullary.Decidable
+  private module R = Restriction sp-∈
+  open Unionᵐ sp-∈
+  open Restriction sp-∈
+
+  lookupᵐ : (m : Map A B) → (x : A) → {@(tactic initTac assumption') _ : x ∈ dom (m ˢ)} → B
+  lookupᵐ _ _ {h} = proj₁ (to dom∈ h)
 
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈

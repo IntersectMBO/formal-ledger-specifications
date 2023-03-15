@@ -10,6 +10,9 @@ open import Ledger.Epoch
 import Ledger.PParams as PP
 
 open import Data.Rational using (ℚ)
+open import Data.Nat using (_≤_)
+open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Data.These
 
 module Ledger.GovernanceActions (TxId Network DocHash : Set)
                                 (es : EpochStructure)
@@ -41,6 +44,9 @@ data GovRole : Set where
 
 instance
   unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
+
+instance
+  _ = +-0-commutativeMonoid
 
 record GovMD : Set where
   field url   : String
@@ -79,8 +85,8 @@ record EnactState : Set where
         constitution  : DocHash
         pv            : ProtVer
         pparams       : PParams
-        -- Acnt
-        -- Rwds
+        withdrawals   : Credential ↛ Coin
+        treasury      : Coin
 \end{code}
 \begin{code}[hide]
 open EnactState
@@ -93,6 +99,16 @@ private variable
   dh : DocHash
   h : PPHash
   v : ProtVer
+  wdrl : Credential ↛ Coin
+  newTreasury : Coin
+
+addCoin : These Coin Coin → Coin
+addCoin (this x)    = x
+addCoin (that x)    = x
+addCoin (these x y) = x + y
+
+_∪⁺_ : ∀ {A} → ⦃ DecEq A ⦄ → A ↛ Coin → A ↛ Coin → A ↛ Coin
+_∪⁺_ = unionWith addCoin
 
 data
 \end{code}
@@ -117,7 +133,13 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     ¬ h ≡ hash (s .pparams)
     ────────────────────────────────
     _ ⊢ s ⇀⦇ ChangePParams up h  ,ENACT⦈ s
-  --Enact-Wdrl      : _ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈  record s { ... }
+  Enact-Wdrl      :
+    let newWdrls = Σᵐᵛ[ x ← wdrl ᶠᵐ ] x
+    in newWdrls ≤ s .treasury
+    ────────────────────────────────
+    _ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
+      record s { withdrawals = s .withdrawals ∪⁺ wdrl
+               ; treasury    = s .treasury    ∸  newWdrls }
 \end{code}
 \caption{ENACT transition system}
 \end{figure*}
