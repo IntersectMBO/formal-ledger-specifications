@@ -137,6 +137,9 @@ singletonᵐ a b = (❴ (a , b) ❵ , (from ∈-singleton -⟨ (λ where refl re
 ❴_❵ᵐ : A × B → Map A B
 ❴ k , v ❵ᵐ = singletonᵐ k v
 
+lookupMap : {a : A} → (m : Map A B) → (a ∈ dom (m ˢ)) → B
+lookupMap (fst , snd) h = proj₂ $ proj₁ (∈-map⁻' h)
+
 module Unionᵐ (sp-∈ : spec-∈ A) where
 
   _∪ᵐˡ'_ : Rel A B → Rel A B → Rel A B

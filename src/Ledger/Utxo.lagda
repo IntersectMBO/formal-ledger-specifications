@@ -37,21 +37,45 @@ open import MyDebugOptions
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
+open import Ledger.Script
+open import Relation.Nullary.Decidable using (⌊_⌋; isNo)
+open import Data.Bool using (_∧_)
+
 instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
+  _ = ExUnit-CommutativeMonoid
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
+
+isP2Script : Script → Bool
+isP2Script (inj₁ x) = false
+isP2Script (inj₂ y) = true
+
+isPhaseTwoScriptAddress : Tx → Addr → Bool
+isPhaseTwoScriptAddress tx a with isScriptAddr? a
+... | no ¬p = false
+... | yes p with getScriptHash a p
+... | scriptHash with setToHashMap $ TxWitnesses.scripts (Tx.wits tx)
+... | m with _∈?_ scriptHash (Ledger.Prelude.map proj₁ $ m ˢ)
+... | no ¬p = false
+... | yes p₁ = isP2Script (lookupMap m p₁)
+
+getRedeemers : Tx → (RdmrPtr ⇀ (Redeemer × ExUnits))
+getRedeemers tx = TxWitnesses.txrdmrs (Tx.wits tx)
+
+totExUnits : Tx → ExUnits
+totExUnits tx = Σᵐ[ x ← TxWitnesses.txrdmrs (Tx.wits tx) ᶠᵐ ] (proj₂ (proj₂ x))
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
 
 utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize (fst , v) = utxoEntrySizeWithoutVal + size v
+utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
 
 -- TODO: fix this
 serSize : Value → MemoryEstimate
@@ -80,11 +104,23 @@ outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (txouts tx) λ where _ _ refl → refl
 
 balance : UTxO → Value
-balance utxo = Σᵐᵛ[ x ← utxo ᶠᵐ ] getValue x
+balance utxo = Σᵐᵛ[ x ← utxo ᶠᵐ ] (getValue x)
 
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
 
+-- isAdaOnly : Value → Bool
+-- isAdaOnly v = ⌊ (v ∈? range inject) ⌋
+
+coinPolicies : ℙ PolicyId
+coinPolicies = policies (inject 1)
+
+isAdaOnly : Value → Bool
+isAdaOnly v = ⌊ (policies v) ≡ᵉ? coinPolicies ⌋
+
+-- add txscriptfee function
+
+-- Fix: add script free and exunits
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
@@ -113,6 +149,40 @@ certRefund _                               = nothing
 
 certRefundˢ : DCert → ℙ DepositPurpose
 certRefundˢ = partialToSet certRefund
+
+open import Relation.Nullary.Decidable using (isNo)
+
+collateralExists : Tx → Bool
+collateralExists tx = isNo (≟-∅ {_} {collateral (body tx)})
+
+-----------------------------------------------------
+-- Boolean Functions
+
+-- Boolean Implication
+_=>ᵇ_ : Bool → Bool → Bool
+_=>ᵇ_ a b = if a then b else true
+
+_≤ᵇ_ : ℕ → ℕ → Bool
+m ≤ᵇ n = ⌊ m ≤? n ⌋
+
+_≥ᵇ_ = flip _≤ᵇ_
+
+≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
+≟-∅ᵇ X = ⌊ ≟-∅ {_} {X} ⌋
+-----------------------------------------------------
+
+feesOK : PParams → Tx → UTxO → Bool
+feesOK pp tx utxo = minfee pp (body tx) ≤ᵇ txfee (body tx)
+                     ∧ (not $ ≟-∅ᵇ ((TxWitnesses.txrdmrs (Tx.wits tx)) ˢ))
+                       =>ᵇ
+                       (allᵇ (λ x → isVKeyAddr? (proj₁ x)) collateralRange
+                       ∧ isAdaOnly bal
+                       ∧ (coin bal * 100) ≥ᵇ (txfee txb * PParams.collateralPercent pp)
+                       ∧ (not $ ≟-∅ᵇ (collateral (body tx))))
+  where
+    txb               = body tx
+    collateralRange   = range $ proj₁ $ utxo ∣ collateral (body tx)
+    bal               = balance (utxo ∣ collateral (body tx))
 
 propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
 propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
@@ -274,7 +344,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move
 -- this once this is fixed.
-unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+-- unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

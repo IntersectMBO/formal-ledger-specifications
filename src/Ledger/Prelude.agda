@@ -123,3 +123,27 @@ module Properties where
 
 _ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B
 (R , uniq) ᶠᵐ = (R , uniq , finiteness _)
+
+open import Interface.Hashable
+
+isEmpty? : {A B : Set} → {{DecEq A}} → {{DecEq B}} → (m : A ⇀ B) → Dec (m ˢ ≡ ∅)
+isEmpty? {A} {B} (fst , snd) with ≟-∅ {A × B} {fst}
+... | no ¬p = no (λ x → ¬p x)
+... | yes p = yes p
+
+dupIsLeftUnique : ∀ {A : Set} → {x : ℙ A} → left-unique (map (λ x₁ → x₁ , x₁) x)
+dupIsLeftUnique {A} {x} x₁ x₂ with Properties.∈-map⁻' x₁ | Properties.∈-map⁻' x₂
+... | fst , refl , snd | .fst , refl , snd₁ = refl
+
+mapˡ-inj-dup :  ∀ {A B : Set} → (S : ℙ A)
+                            → (f : A → B)
+                            → Injective _≡_ _≡_ f
+                            → left-unique (mapˡ f (map (λ x → x , x) S))
+mapˡ-inj-dup S f x x₁ x₂ = mapˡ-uniq (λ _ _ → x) dupIsLeftUnique x₁ x₂
+
+setToHashRel : ∀ {A B : Set} → {{Hashable A B}} -> ℙ A -> ℙ (B × A)
+setToHashRel x = mapˡ hash (map (λ x₁ → x₁ , x₁) x)
+
+setToHashMap : ∀ {A B : Set} → {{Hashable A B}} -> ℙ A → B ⇀ A
+setToHashMap x with mapˡ-inj-dup x hash hashInj
+... | ans  = _ᵐ (setToHashRel x) {{record { isLeftUnique = λ x₁ x₂ → ans x₁ x₂ }}}

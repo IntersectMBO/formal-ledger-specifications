@@ -328,3 +328,10 @@ record Theoryᵈ : Type₁ where
 
   incl-set-proj₁ : ⦃ _ : DecEq A ⦄ → {X : Set A} → map proj₁ (incl-set X) ≡ᵉ X
   incl-set-proj₁ = incl-set-proj₁⊆ , incl-set-proj₁⊇
+
+  _≡ᵉ?_ : ⦃ DecEq A ⦄ → (X Y : Set A) → Dec (X ≡ᵉ Y)
+  _≡ᵉ?_ x y with all? (λ z → z ∈? y) {x} | all? (λ z → z ∈? x) {y}
+  ... | no ¬p | no ¬p₁ = no (λ z → ¬p (proj₁ z))
+  ... | no ¬p | yes p = no (λ z → ¬p (proj₁ z))
+  ... | yes p | no ¬p = no (λ z → ¬p (proj₂ z))
+  ... | yes p | yes p₁ = yes (p , p₁)

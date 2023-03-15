@@ -17,6 +17,19 @@ import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
 
+open import Tactic.Derive.DecEq
+open import MyDebugOptions
+
+data Tag : Set where
+  Spend Mint Cert Rewrd : Tag
+unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
+
+-- Is this fine
+Index = ℕ
+
+RdmrPtr : Set
+RdmrPtr = Tag × Index
+
 record TransactionStructure : Set₁ where
   field
 \end{code}
@@ -75,14 +88,15 @@ the transaction body are:
 
   open import Ledger.Address Network KeyHash ScriptHash public
   open import Ledger.Deleg crypto TxId Network ADHash epochStructure ppUpd ppHashingScheme public
+
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
-  TxIn   = TxId × Ix
-  TxOut  = Addr × Value
-  UTxO   = TxIn ⇀ TxOut
-  Wdrl   = RwdAddr ⇀ Coin
+  TxIn  = TxId × Ix
+  TxOut = Addr × Value × Maybe DataHash
+  UTxO  = TxIn ⇀ TxOut
+  Wdrl  = RwdAddr ⇀ Coin
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
@@ -107,15 +121,21 @@ the transaction body are:
           netwrk      : Maybe Network
           txsize      : ℕ
           txid        : TxId
+          collateral     : ℙ TxIn
+          reqSigHash     : ℙ KeyHash --a set of key hashes that must sign ...
+          scriptIntHash  : Maybe ScriptHash
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ⇀ Sig
           scripts  : ℙ Script
+          txdats   : (DataHash ⇀ Datum)
+          txrdmrs  : (RdmrPtr  ⇀ (Redeemer × ExUnits))
 
   record Tx : Set where
-    field body  : TxBody
-          wits  : TxWitnesses
-          txAD  : Maybe AuxiliaryData
+    field body    : TxBody
+          wits    : TxWitnesses
+          isValid : Bool
+          txAD    : Maybe AuxiliaryData
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Definitions used in the UTxO transition system}
@@ -125,7 +145,7 @@ the transaction body are:
 \begin{figure*}[h]
 \begin{code}
   getValue : TxOut → Value
-  getValue (_ , v) = v
+  getValue (l , v , h) = v
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom ((utxo ↾' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
@@ -134,5 +154,5 @@ the transaction body are:
 \begin{code}[hide]
   instance
     HasCoin-TxOut : HasCoin TxOut
-    HasCoin-TxOut .getCoin = coin ∘ proj₂
+    HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 \end{code}

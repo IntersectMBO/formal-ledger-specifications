@@ -6,14 +6,19 @@ open import Ledger.Prelude hiding (All; Any)
 
 module Ledger.Script (KeyHash ScriptHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ where
 
+open import Algebra using (CommutativeMonoid)
+open import Algebra.Morphism
 open import Data.List.Relation.Unary.All
 open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Binary.Sublist.Propositional as S
+open import Data.Nat.Properties using (+-0-commutativeMonoid)
 
 open import Ledger.Crypto
 
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
+open import Algebra using (CommutativeMonoid)
+
 
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
@@ -24,11 +29,24 @@ record P1ScriptStructure : Set₁ where
 
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet
-        PlutusScript ExUnits CostModel : Set
+        PlutusScript CostModel : Set
+        ExUnit-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
         instance Hashable-PlutusScript : Hashable PlutusScript ScriptHash
                  DecEq-PlutusScript    : DecEq PlutusScript
 
+  open CommutativeMonoid ExUnit-CommutativeMonoid using (_≈_; ε)
+       renaming (Carrier to ExUnits; refl to reflᵉ; _∙_ to _+ᵉˣ_) public
+
+  field  -- GetPair              : ExUnits → Set × Set
+         _≥ᵉ_                 : ExUnits → ExUnits → Set
+         instance DecEq-ExUnits : DecEq ExUnits
+         -- coinIsMonoidMorphism : GetPair Is ExUnit-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid
+
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
+
+  -- Type aliases for Data
+  Datum    = Data
+  Redeemer = Data
 
   field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
         validPlutusScript? : ∀ cm ds eu s → Dec (validPlutusScript cm ds eu s)
@@ -37,16 +55,23 @@ record ScriptStructure : Set₁ where
   field p1s : P1ScriptStructure
         ps  : PlutusStructure
 
+  -- it is not possible to define this function
+  field hashRespectsUnion : {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
+
   open P1ScriptStructure p1s public
   open PlutusStructure ps public renaming
     (PlutusScript to P2Script; validPlutusScript to validP2Script; validPlutusScript? to validP2Script?)
 
   Script = P1Script ⊎ P2Script
 
+  open import Data.Empty
+  open import Agda.Builtin.Equality
+  open import Relation.Binary.PropositionalEquality
+
   instance
     Hashable-Script : Hashable Script ScriptHash
-    Hashable-Script .hash (inj₁ s) = hash s
-    Hashable-Script .hash (inj₂ s) = hash s
+    Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
+
 \end{code}
 We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]

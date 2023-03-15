@@ -35,6 +35,7 @@ record TokenAlgebra : Set₁ where
 \end{code}
 \begin{code}[hide]
         instance DecEq-Value : DecEq Value
+        instance DecEq-PolicyId : DecEq PolicyId
 \end{code}
 \begin{code}
   sumᵛ : List Value → Value
