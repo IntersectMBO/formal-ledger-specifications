@@ -25,14 +25,14 @@ HSGlobalConstants .Quorum                = 1
 HSGlobalConstants .NetworkId             = tt
 
 -- Dummy hash functions
-isHashableSelf : ∀ A → isHashableSet A
-isHashableSelf A = mkIsHashableSet A A id
+isHashableSelf : ∀ A → DecEq A → isHashableSet A
+isHashableSelf A eq = mkIsHashableSet A A id eq
 
 isHashableSet-⊤ : isHashableSet ⊤
-isHashableSet-⊤ = isHashableSelf ⊤
+isHashableSet-⊤ = isHashableSelf ⊤ DecEq-⊤
 
 isHashableSet-ℕ : isHashableSet ℕ
-isHashableSet-ℕ = isHashableSelf ℕ
+isHashableSet-ℕ = isHashableSelf ℕ DecEq-ℕ
 
 -- Dummy private key crypto scheme
 open PKKScheme
@@ -55,7 +55,6 @@ HSCrypto : Crypto
 HSCrypto .pkk              = HSPKKScheme
 HSCrypto .khs              = isHashableSet-ℕ
 HSCrypto .ScriptHash       = ℕ
-HSCrypto .decEq-KeyHash    = DecEq-ℕ
 HSCrypto .decEq-ScriptHash = DecEq-ℕ
 
 open EpochStructure
@@ -75,7 +74,8 @@ HSP1ScriptStructure .DecEq-P1Script    = DecEq-⊥
 
 open PlutusStructure
 HSP2ScriptStructure : PlutusStructure ℕ ℕ ℕ
-HSP2ScriptStructure .Dataʰ                 = record { T = ⊥ ; T-isHashable = isHashableSelf ⊥ }
+HSP2ScriptStructure .Dataʰ                 =
+  record { T = ⊥ ; T-isHashable = isHashableSelf ⊥ DecEq-⊥ }
 HSP2ScriptStructure .PlutusScript          = ⊥
 HSP2ScriptStructure .ExUnits               = ⊥
 HSP2ScriptStructure .CostModel             = ⊥
@@ -131,7 +131,6 @@ module _ where
   HSTransactionStructure .DecEq-Netw      = DecEq-⊤
   HSTransactionStructure .DecEq-UpdT      = DecEq-⊤
   HSTransactionStructure .ss              = HSScriptStructure
-  HSTransactionStructure .DecEq-ADHash    = DecEq-⊤
   HSTransactionStructure .DecEq-Epoch     = DecEq-ℕ
 
 open import Ledger.Utxo HSTransactionStructure

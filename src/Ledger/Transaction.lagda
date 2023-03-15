@@ -65,7 +65,6 @@ This function must produce a unique id for each unique transaction body.
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
   field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
-        instance DecEq-ADHash : DecEq ADHash
 
   open Ledger.Script.ScriptStructure ss public
 
