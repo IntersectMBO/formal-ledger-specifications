@@ -70,6 +70,12 @@ getRedeemers tx = TxWitnesses.txrdmrs (Tx.wits tx)
 totExUnits : Tx → ExUnits
 totExUnits tx = Σᵐ[ x ← TxWitnesses.txrdmrs (Tx.wits tx) ᶠᵐ ] (proj₂ (proj₂ x))
 
+isTwoPhaseScriptAddress : Tx → Addr → Bool
+isTwoPhaseScriptAddress tx a = {!!}
+
+totExUnits : Tx → ExUnits
+totExUnits tx = ?
+
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
