@@ -8,7 +8,8 @@ This repository currently contains two specifications---the work in progress spe
 
 ## Build and Test the Formal Spec
 
-Clone this repository and enter its directory.
+### Clone this repository and enter its directory
+
 ```
 git clone https://github.com/input-output-hk/formal-ledger-specifications.git
 cd formal-ledger-specifications
