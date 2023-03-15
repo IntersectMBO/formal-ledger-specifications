@@ -127,6 +127,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-fromList : ∀ {a} → a ∈ˡ l ⇔ a ∈ fromList l
   ∈-fromList = proj₂ $ listing _
 
+  ∈-unions : {a : A} {U : Set (Set A)} → (∃[ T ] T ∈ U × a ∈ T) ⇔ a ∈ proj₁ (unions U)
+  ∈-unions = proj₂ $ unions _
+
   ∅ : Set A
   ∅ = fromList []
 
@@ -147,6 +150,29 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
     a ∈ˡ [ b ]      ∼⟨ mk⇔ (λ where (here refl) → refl) (λ where refl → here refl) ⟩
     a ≡ b           ∎
     where open R.EquationalReasoning
+
+  maybe-∘ : {f : B → C} {g : A → B} {c : B} {x : Maybe A} → f (maybe g c x) ≡ maybe (f ∘ g) (f c) x
+  maybe-∘ {x = (just x)} = refl
+  maybe-∘ {x = nothing} = refl
+
+  ∈-mapPartial : {y : B} {f : A → Maybe B} → y ∈ mapPartial f X ⇔ (∃[ x ] (x ∈ X × f x ≡ just y))
+  ∈-mapPartial {y = y} {f} = mk⇔ to' from'
+    where
+      open import Relation.Binary.PropositionalEquality
+
+      to' : y ∈ mapPartial f X → ∃[ x ] (x ∈ X × f x ≡ just y)
+      to' y∈mPfX with from ∈-unions y∈mPfX
+      ... | _ , y'∈map , y∈y' with from ∈-map y'∈map
+      ... | x' , p , x'∈X₁ with trans p (sym (maybe-∘ {f = fromList} {_∷ []} {[]} {f x'}))
+      ... | refl with f x' | inspect f x' | from ∈-fromList y∈y'
+      ... | just .y | [ eq ] | here refl = x' , x'∈X₁ , eq
+
+      from' : ∃[ x ] (x ∈ X × f x ≡ just y) → y ∈ mapPartial f X
+      from' (x , x∈X , fx≡jy) with f x | inspect f x
+      from' (x , x∈X , refl) | just x₁ | [ eq ] = to ∈-unions
+        ( maybe ❴_❵ ∅ (f x)
+        , to ∈-map (x , refl , x∈X)
+        , subst (λ z → x₁ ∈ maybe ❴_❵ ∅ z) (sym eq) (from ∈-singleton refl))
 
   binary-unions : ∃[ Y ] ∀ {a} → (a ∈ X ⊎ a ∈ X') ⇔ a ∈ Y
   binary-unions {X = X} {X'} with unions (fromList (X ∷ [ X' ]))
@@ -211,6 +237,7 @@ open import Interface.DecEq
 record Theoryᵈ : Type₁ where
   field th : Theory
   open Theory th public
+  open Equivalence
 
   field ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
         _∈?_ : ⦃ DecEq A ⦄ → Dec₂ (_∈_ {A = A})
@@ -225,3 +252,28 @@ record Theoryᵈ : Type₁ where
 
   anyᵇ : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Bool
   anyᵇ P? X = ⌊ any? P? X ⌋
+
+  incl-set' : ⦃ DecEq A ⦄ → (X : Set A) → A → Maybe (∃[ a ] a ∈ X)
+  incl-set' X x with x ∈? X
+  ... | yes p = just (x , p)
+  ... | no  p = nothing
+
+  incl-set : ⦃ DecEq A ⦄ → (X : Set A) → Set (∃[ a ] a ∈ X)
+  incl-set X = mapPartial (incl-set' X) X
+
+  incl-set-proj₁⊆ : ⦃ _ : DecEq A ⦄ → {X : Set A} → map proj₁ (incl-set X) ⊆ X
+  incl-set-proj₁⊆ x with from ∈-map x
+  ... | (_ , pf) , refl , _ = pf
+
+  incl-set-proj₁⊇ : ⦃ _ : DecEq A ⦄ → {X : Set A} → X ⊆ map proj₁ (incl-set X)
+  incl-set-proj₁⊇ {X = X} {x} x∈X with x ∈? X | inspect (_∈? X) x
+  ... | no ¬p | _  = contradiction x∈X ¬p
+  ... | yes p | eq = to ∈-map ((x , p) , refl , from (∈-mapPartial {f = incl-set' X})
+    (x , x∈X , helper (Reveal_·_is_.eq eq)))
+    where
+      helper : x ∈? X ≡ yes p → incl-set' X x ≡ just (x , p)
+      helper h with x ∈? X | h
+      ... | _ | refl = refl
+
+  incl-set-proj₁ : ⦃ _ : DecEq A ⦄ → {X : Set A} → map proj₁ (incl-set X) ≡ᵉ X
+  incl-set-proj₁ = incl-set-proj₁⊆ , incl-set-proj₁⊇

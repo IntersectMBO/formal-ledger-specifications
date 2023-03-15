@@ -63,6 +63,7 @@ open import Axiom.Set.Map th renaming (Map to _↛_) public
 open import Axiom.Set.TotalMap th public
 open L.Decˡ hiding (_∈?_; ≟-∅) public
 open import Axiom.Set.Sum th public
+open import Axiom.Set.Map.Dec List-Modelᵈ public
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where
   open Restriction {A} ∈-sp hiding (_∣_; _∣_ᶜ) public
@@ -71,6 +72,7 @@ module _ {A : Set} ⦃ _ : DecEq A ⦄ where
   open Corestrictionᵐ {A} ∈-sp public
   open Unionᵐ {A} ∈-sp public
   open Intersection {A} ∈-sp public
+  open Lookupᵐᵈ {A} ∈-sp public
 
 module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   open Intersectionᵐ {A} {B} ∈-sp public
