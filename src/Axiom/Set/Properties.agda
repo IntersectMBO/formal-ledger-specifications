@@ -11,11 +11,17 @@ open Theory th
 import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
+import Relation.Nullary.Decidable
 open import Data.List.Ext.Properties
+open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Membership.Propositional.Properties hiding (finite)
+open import Data.List.Relation.Binary.BagAndSetEquality
+open import Data.List.Relation.Binary.Permutation.Propositional.Properties
+open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
 open import Data.Product using (map₂)
 open import Function.Related using (toRelated; fromRelated)
+open import Interface.DecEq
 open import Relation.Binary
 open import Relation.Binary.Lattice
 open import Relation.Binary.Morphism
@@ -61,6 +67,9 @@ private macro
   ∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
   P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
   ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+
+_≡_⨿_ : Set A → Set A → Set A → Type ℓ
+X ≡ Y ⨿ Z = X ≡ᵉ Y ∪ Z × disjoint Y Z
 
 -- FIXME: proving this has some weird issues when making a implicit in
 -- in the definiton of _≡ᵉ'_
@@ -112,8 +121,26 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 ∅-weakly-finite : weakly-finite {A = A} ∅
 ∅-weakly-finite = [] , ⊥-elim ∘ ∉-∅
 
+card-≡ᵉ : (X Y : Σ (Set A) strongly-finite) → proj₁ X ≡ᵉ proj₁ Y → card X ≡ card Y
+card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
+  ↭-length $ ∼bag⇒↭ $ unique∧set⇒bag lXᵘ lYᵘ λ {a} → toRelated $
+    a ∈ˡ lX  ∼⟨ R.SK-sym eqX ⟩ a ∈ X ∼⟨ to ≡ᵉ⇔≡ᵉ' X≡Y a ⟩ a ∈ Y ∼⟨ eqY ⟩ a ∈ˡ lY ∎
+  where open R.EquationalReasoning
+
 filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
 filter-⊆ = proj₂ ∘′ ∈⇔P
+
+Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Dec₁ (_∈ fromList l)
+Dec-∈-fromList _ _ = Relation.Nullary.Decidable.map ∈-fromList (_∈ˡ?_ _≟_ _ _)
+
+Dec-∈-singleton : ∀ {a : A} → ⦃ DecEq A ⦄ → Dec₁ (_∈ ❴ a ❵)
+Dec-∈-singleton _ = Relation.Nullary.Decidable.map ∈-singleton (_ ≟ _)
+
+singleton-finite : ∀ {a : A} → finite ❴ a ❵
+singleton-finite {a = a} = [ a ] , λ {x} →
+  x ∈ ❴ a ❵  ∼⟨ R.SK-sym ∈-fromList ⟩
+  x ∈ˡ [ a ] ∎
+  where open R.EquationalReasoning
 
 filter-finite : ∀ {P : A → Type}
               → (sp : specProperty P) → Dec₁ P → finite X → finite (filter sp X)

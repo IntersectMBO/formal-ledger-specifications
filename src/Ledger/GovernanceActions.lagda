@@ -104,7 +104,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \end{code}
 \begin{code}
 
-  -- TODO: add hashes to everything and check them in RATIFY?
+  -- TODO: add hashes to everything except withdrawals & no ops
   Enact-NoConf    : _ ⊢ s ⇀⦇ NoConfidence        ,ENACT⦈  record s { cc = nothing }
   Enact-NewComm   : _ ⊢ s ⇀⦇ NewCommittee mem q  ,ENACT⦈  record s { cc = just (mem , q) }
   Enact-NewConst  : _ ⊢ s ⇀⦇ NewConstitution dh  ,ENACT⦈  record s { constitution = dh }
