@@ -126,8 +126,8 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
     indexedSumᵐ-partition : ∀ {m m₁ m₂ : FinMap A B} {f} → toRel m ≡ toRel m₁ ⨿ toRel m₂
                           → indexedSumᵐ f m ≈ indexedSumᵐ f m₁ ∙ indexedSumᵐ f m₂
     indexedSumᵐ-partition {m} {m₁} {m₂} {f} m≡m₁∪m₂ = begin
-      indexedSumᵐ f m ≈⟨ indexedSumᵐ-cong {x = m} {m₁ ∪ᵐˡᶠ m₂} helper ⟩
-      indexedSumᵐ f (m₁ ∪ᵐˡᶠ m₂) ≈⟨ indexedSumᵐ-∪ {X = m₁} {Y = m₂} disj-dom' ⟩
+      indexedSumᵐ f m                     ≈⟨ indexedSumᵐ-cong {x = m} {m₁ ∪ᵐˡᶠ m₂} helper ⟩
+      indexedSumᵐ f (m₁ ∪ᵐˡᶠ m₂)          ≈⟨ indexedSumᵐ-∪ {X = m₁} {Y = m₂} disj-dom' ⟩
       indexedSumᵐ f m₁ ∙ indexedSumᵐ f m₂ ∎
       where module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
             disj-dom' = disj-dom {m = toMap m} {toMap m₁} {toMap m₂} m≡m₁∪m₂

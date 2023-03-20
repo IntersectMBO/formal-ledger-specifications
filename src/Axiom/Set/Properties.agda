@@ -124,7 +124,10 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 card-≡ᵉ : (X Y : Σ (Set A) strongly-finite) → proj₁ X ≡ᵉ proj₁ Y → card X ≡ card Y
 card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
   ↭-length $ ∼bag⇒↭ $ unique∧set⇒bag lXᵘ lYᵘ λ {a} → toRelated $
-    a ∈ˡ lX  ∼⟨ R.SK-sym eqX ⟩ a ∈ X ∼⟨ to ≡ᵉ⇔≡ᵉ' X≡Y a ⟩ a ∈ Y ∼⟨ eqY ⟩ a ∈ˡ lY ∎
+    a ∈ˡ lX  ∼⟨ R.SK-sym eqX ⟩
+    a ∈ X    ∼⟨ to ≡ᵉ⇔≡ᵉ' X≡Y a ⟩
+    a ∈ Y    ∼⟨ eqY ⟩
+    a ∈ˡ lY  ∎
   where open R.EquationalReasoning
 
 filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
