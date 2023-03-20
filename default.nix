@@ -7,22 +7,11 @@
 
 with pkgs;
 let
-  customAgda = (import
-    (builtins.fetchTarball
-      https://github.com/nixos/nixpkgs/tarball/7343f7630c9d7211c98f0c043f380a9037b69252)
-    { overlays = [
-        (self: super: {
-          haskellPackages = super.haskellPackages.override {
-            overrides = haskellSelf: haskellSuper: {
-              Agda = haskellSuper."Agda_2_6_3";
-            };
-          };
-        })
-      ];});
+  customAgda = import sources.agda-nixpkgs {};
 
   agdaStdlib = customAgda.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
     version = "1.7.2";
-    src = customAgda.fetchFromGitHub {
+    src = fetchFromGitHub {
       repo = "agda-stdlib";
       owner = "agda";
       rev = "668f0bbd498cfae253605fd7132c3b9ed52cc4ac";
@@ -33,7 +22,7 @@ let
   agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
     pname = "agda-stdlib-meta";
     version = "0.1";
-    src = customAgda.fetchFromGitHub {
+    src = fetchFromGitHub {
       repo = "stdlib-meta";
       owner = "omelkonian";
       rev = "761f81753b588d865b45acb44683b1b4042d78c0";
