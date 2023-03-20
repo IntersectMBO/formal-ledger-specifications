@@ -198,7 +198,7 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
       from' (x , x∈X , refl) | just x₁ | [ eq ] = to ∈-unions
         ( maybe ❴_❵ ∅ (f x)
         , to ∈-map (x , refl , x∈X)
-        , subst (λ z → x₁ ∈ maybe ❴_❵ ∅ z) (sym eq) (from ∈-singleton refl))
+        , subst (λ z → x₁ ∈ maybe ❴_❵ ∅ z) (sym eq) (to ∈-singleton refl))
 
   binary-unions : ∃[ Y ] ∀ {a} → (a ∈ X ⊎ a ∈ X') ⇔ a ∈ Y
   binary-unions {X = X} {X'} with unions (fromList (X ∷ [ X' ]))

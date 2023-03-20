@@ -32,11 +32,11 @@ record LEnv : Set where
         roles : KeyHash ↛ GovRole -- replaces genDelegs
 
 record LState : Set where
-  constructor ⟦_,_⟧ˡ
+  constructor ⟦_,_,_⟧ˡ
   field utxoSt : UTxOState
         tally  : TallyState
         --ppup   : PPUpdateState
-        --dpstate : DPState
+        certState : CertState
 \end{code}
 \caption{Types for the LEDGER transition system}
 \end{figure*}
@@ -46,6 +46,7 @@ private variable
   s s' s'' : LState
   utxoSt' : UTxOState
   tally' : TallyState
+  certState' : CertState
   tx : Tx
 
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
@@ -53,11 +54,11 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
 \begin{figure*}[h]
 \begin{code}
   LEDGER : let open LState s; txb = body tx; open LEnv Γ in
-    record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    pparams ⊢ certState ⇀⦇ txcerts txb ,CERTS⦈ certState'
+    → record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     → record { epoch = epoch slot ; LEnv Γ ; TxBody txb } ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
-    -- DELEGS
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , tally' ⟧ˡ
+    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , tally' , certState' ⟧ˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}
