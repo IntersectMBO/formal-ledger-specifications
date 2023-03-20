@@ -81,6 +81,7 @@ module _ {A : Set} ⦃ _ : DecEq A ⦄ where
   open Corestrictionᵐ {A} ∈-sp public
   open Unionᵐ {A} ∈-sp public
   open Intersection {A} ∈-sp public
+  open Lookupᵐ {A} ∈-sp public
   open Lookupᵐᵈ {A} ∈-sp public
 
 module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where

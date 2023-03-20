@@ -15,8 +15,9 @@ open import Ledger.Prelude hiding (Dec₁)
 
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Structures
+open import Data.List as List
 open import Data.Nat using (_≤?_; _≤_)
-open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Data.Nat.Properties using (+-0-monoid)
 open import Interface.Decidable.Instance
 
 open TransactionStructure txs
@@ -36,6 +37,7 @@ open import Tactic.DeriveComp
 instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
+  _ = +-0-monoid
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
@@ -80,17 +82,28 @@ minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
 
--- need to add withdrawals to consumed
-consumed : PParams → UTxO → TxBody → Value
-consumed pp utxo txb = balance (utxo ∣ txins txb)
-                       +ᵛ mint txb
-                     --+ inject (wbalance (txwdrls txb) + keyRefunds pp txb)
+certDeposit : DCert → Maybe (Credential × Coin)
+certDeposit (delegate c _ _ v)                 = just $ c , v
+certDeposit (regpool c record { deposit = v }) = just $ c , v
+certDeposit (regdrep c v)                      = just $ c , v
+certDeposit (retirepool _ _)                   = nothing
+certDeposit (deregdrep _)                      = nothing
+certDeposit (ccreghot _ _)                     = nothing
 
--- need to add deposits to produced
-produced : PParams → UTxO → TxBody →  Value
-produced pp utxo txb = balance (outs txb)
-                       +ᵛ inject (txfee txb)
-                     --+ totalDeposits pp stpools (txcerts txb))
+txDeposits : TxBody → Credential ↛ Coin
+txDeposits = foldr _∪⁺_ ∅ᵐ ∘ List.map (f ∘ certDeposit) ∘ txcerts
+  where
+    f : Maybe (Credential × Coin) → Credential ↛ Coin
+    f (just x) = ❴ x ❵ᵐ
+    f nothing = ∅ᵐ
+
+-- TODO rewrite this using txDeposits
+totalDeposits : TxBody → Value
+totalDeposits = foldr _+ᵛ_ (inject 0) ∘ List.map (f ∘ certDeposit) ∘ txcerts
+  where
+    f : Maybe (Credential × Coin) → Value
+    f (just (_ , x)) = inject x
+    f nothing = inject 0
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -121,9 +134,37 @@ record UTxOEnv : Set where
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Set where
-  constructor ⟦_,_⟧ᵘ
+  constructor ⟦_,_,_⟧ᵘ
   field utxo : UTxO
         fees : Coin
+        deposits : Credential ↛ Coin
+
+refunded : UTxOState → TxBody → Value
+refunded st = sumᵛ ∘ List.map f ∘ txcerts
+  where
+    open UTxOState st
+    f : DCert → Value
+    f (delegate c nothing nothing x) with c ∈? dom (deposits ˢ)
+    ... | yes p = inject (lookupᵐ deposits c)
+    ... | no p = inject 0 -- TODO This shouldn't be allowed to happen
+    f (delegate c _ _ x) = inject 0
+    f (regpool _ _) = inject 0
+    f (retirepool _ _) = inject 0
+    f (regdrep _ _) = inject 0
+    f (deregdrep c) with c ∈? dom (deposits ˢ)
+    ... | yes p = inject (lookupᵐ deposits c)
+    ... | no p = inject 0
+    f (ccreghot _ _) = inject 0
+
+consumed : PParams → UTxOState → UTxO → TxBody → Value
+consumed pp st utxo txb = balance (utxo ∣ txins txb)
+                       +ᵛ mint txb
+                       +ᵛ refunded st txb
+
+produced : PParams → UTxO → TxBody → Value
+produced pp utxo txb = balance (outs txb)
+                       +ᵛ inject (txfee txb)
+                       +ᵛ totalDeposits txb
 \end{code}
 \emph{UTxO transitions}
 
@@ -135,6 +176,7 @@ private variable
   utxoState utxoState' utxoState1 utxoState2 : UTxOState
   Γ : UTxOEnv
   s s' : UTxOState
+  deposits deposits' : Credential ↛ Coin
 
 ⟦_⟧ : {A : Set} → A → A
 ⟦_⟧ = id
@@ -182,16 +224,18 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{code}
   UTXO-inductive :
     ∀ {Γ} {s} {tx}
-    → let slot = UTxOEnv.slot Γ
-          pp   = UTxOEnv.pparams Γ
-          utxo = UTxOState.utxo s
-          fees = UTxOState.fees s
+    → let slot          = UTxOEnv.slot Γ
+          pp            = UTxOEnv.pparams Γ
+          utxo          = UTxOState.utxo s
+          fees          = UTxOState.fees s
+          deposits      = UTxOState.deposits s
+          depositChange = coin (totalDeposits tx) ∸ coin (refunded s tx)
       in
     txins tx ≢ ∅
     → inInterval slot (txvldt tx)
     → txins tx ⊆ dom (utxo ˢ)
     → let f = txfee tx in minfee pp tx ≤ f
-    → consumed pp utxo tx ≡ produced pp utxo tx
+    → consumed pp s utxo tx ≡ produced pp utxo tx
     → coin (mint tx) ≡ 0
 
 {- these break deriveComputational but don't matter at the moment
@@ -208,17 +252,16 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
     -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
     → txsize tx ≤ PParams.maxTxSize pp
-    -- Add Deposits
     ────────────────────────────────
     Γ
       ⊢ s
       ⇀⦇ tx ,UTXO⦈
-      ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f ⟧ᵘ
+      ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f , deposits ∪⁺ txDeposits tx ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move
 -- this once this is fixed.
-unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+--unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

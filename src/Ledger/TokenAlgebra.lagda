@@ -29,4 +29,7 @@ record TokenAlgebra : Set₁ where
         coinIsMonoidMorphism : coin Is Value-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid
 
         instance DecEq-Value : DecEq Value
+
+  sumᵛ : List Value → Value
+  sumᵛ = foldr _+ᵛ_ (inject 0)
 \end{code}

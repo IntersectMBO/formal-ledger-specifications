@@ -76,23 +76,42 @@ consumedCoinEquality {tx} {utxo} h = begin
   cbalance (utxo ∣ txins tx) + coin (mint tx) ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx) +_) h ⟩
   cbalance (utxo ∣ txins tx) ∎
 
-producedCoinEquality : ∀ {pp} → coin (produced pp utxo tx) ≡ cbalance (outs tx) + (txfee tx)
+producedCoinEquality : ∀ {pp} → coin (produced pp utxo tx) ≡ cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx)
 producedCoinEquality {utxo} {tx} = begin
-  coin (balance (outs tx) +ᵛ inject (txfee tx)) ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
-  coin (balance (outs tx)) + coin (inject (txfee tx)) ≡⟨ cong ((cbalance (outs tx) +_)) (property (txfee tx)) ⟩
-  cbalance (outs tx) + (txfee tx) ∎
+  coin (balance (outs tx) +ᵛ inject (txfee tx) +ᵛ totalDeposits tx)             ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
+  coin (balance (outs tx) +ᵛ inject (txfee tx)) + coin (totalDeposits tx)       ≡⟨ cong (_+ coin (totalDeposits tx)) (∙-homo-Coin coinIsMonoidMorphism _ _) ⟩
+  coin (balance (outs tx)) + coin (inject (txfee tx)) + coin (totalDeposits tx) ≡⟨ cong
+                                                                                     (λ x → cbalance (outs tx) + x + coin (totalDeposits tx))
+                                                                                     (property (txfee tx))
+                                                                                ⟩
+  cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx)                     ∎
 
 balCoinValueToCbalance : ∀ {pp} → coin (mint tx) ≡ 0 → (coin (consumed pp utxo tx) ≡ coin (produced pp utxo tx))
-                                                       ≡ (cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx))
+                                                       ≡ (cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx))
 balCoinValueToCbalance {tx} {utxo} {pp} h rewrite (consumedCoinEquality {tx} {utxo} {pp} h)
                                                   | producedCoinEquality {utxo} {tx} {pp} = refl
 
 balValueToCoin : ∀ {pp} → coin (mint tx) ≡ 0 → consumed pp utxo tx ≡ produced pp utxo tx
-                                             → cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx)
+                                             → cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx)
 balValueToCoin {utxo} {tx} {pp} h h' with cong coin h'
 ... | ans rewrite balCoinValueToCbalance {utxo} {tx} {pp} h = ans
 
 \end{code}
+
+Here, we state the fact that the UTxO relation is computable. This
+just follows from our automation.
+
+\begin{figure*}[h]
+\begin{code}
+UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
+UTXO-step = compute Computational-UTXO
+
+UTXO-step-computes-UTXO :
+  UTXO-step Γ utxoState tx ≡ just utxoState' ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
+UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO
+\end{code}
+\caption{Computing the UTXO transition system}
+\end{figure*}
 
 \begin{property}[\textbf{Preserve Balance}]
 For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$, $\var{fee},\var{fee'}\in\Coin$ and $\var{tx}\in\TxBody$, if
@@ -129,11 +148,12 @@ pov {tx} {utxo} {_} {fee} h' (UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
                in (disjoint-∪ᵐˡ-∪ (disjoint-sym res-ex-disjoint) ≡ᵉ-∘ ∪-sym) ≡ᵉ-∘ res-ex-∪ (_∈? txins tx))  ⟩
       cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx))
         ≡⟨ balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip (res-ex-disjoint)) ⟩
-      cbalance (utxo ∣ txins tx ᶜ) + cbalance (utxo ∣ txins tx)
-        ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_) (balValueToCoin {tx} {utxo} {UTxOEnv.pparams Γ} noMintAda newBal) ⟩
-      cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx
-        ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
-      cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎
+      {!!}
+      --cbalance (utxo ∣ txins tx ᶜ) + cbalance (utxo ∣ txins tx)
+      --  ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_) (balValueToCoin {tx} {utxo} {UTxOEnv.pparams Γ} noMintAda newBal) ⟩
+      --cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx
+      --  ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
+      --cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎
     ⟩
   cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (txfee tx + fee)
     ≡˘⟨ cong (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) +_) (+-comm fee (txfee tx)) ⟩
@@ -142,18 +162,3 @@ pov {tx} {utxo} {_} {fee} h' (UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
 \end{code}
 
 \end{property}
-
-Here, we state the fact that the UTxO relation is computable. This
-just follows from our automation.
-
-\begin{figure*}[h]
-\begin{code}
-UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
-UTXO-step = compute Computational-UTXO
-
-UTXO-step-computes-UTXO :
-  UTXO-step Γ utxoState tx ≡ just utxoState' ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO
-\end{code}
-\caption{Computing the UTXO transition system}
-\end{figure*}

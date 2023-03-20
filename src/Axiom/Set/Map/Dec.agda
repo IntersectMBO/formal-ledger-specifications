@@ -3,6 +3,7 @@ open import Axiom.Set
 
 module Axiom.Set.Map.Dec (thᵈ : Theoryᵈ) where
 
+open import Algebra
 open import Agda.Primitive renaming (Set to Type)
 open import Data.These
 open import Interface.DecEq
@@ -18,6 +19,7 @@ open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
 open import Axiom.Set.Map th
 open import Data.List.Relation.Unary.Any
 open import Relation.Binary.PropositionalEquality
+import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 private variable A A' B B' C D : Type
                  R R' : Rel A B
@@ -47,4 +49,8 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
        helper _ _ | _ | _ | _ , _ , refl | _ , _ , refl
            | yes _ | [ eq ] | yes _ | [ eq' ] with trans (sym eq) eq'
        ... | refl = refl
+
+  _∪⁺_ : ⦃ M : Monoid 0ℓ 0ℓ ⦄ → (open Monoid M renaming (Carrier to V)) → ⦃ DecEq A ⦄ → Map A V → Map A V → Map A V
+  _∪⁺_ ⦃ M = M ⦄ = unionWith (fold id id _∙_)
+    where open Monoid M
 
