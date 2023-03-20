@@ -127,6 +127,8 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
   insert : Map A B → A → B → Map A B
   insert m a b = singletonᵐ a b ∪ᵐˡ m
 
+  open Restriction sp-∈
+
 mapˡ-uniq : {f : A → A'} → Injective _≡_ _≡_ f → left-unique R → left-unique (mapˡ f R)
 mapˡ-uniq inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
   ((_ , refl , Ha) , (_ , eqb , Hb)) → uniq Ha $ subst _ (sym $ ×-≡,≡→≡ $ Data.Product.map₁ inj (×-≡,≡←≡ eqb)) Hb
@@ -167,6 +169,14 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
   -- f(x,-)
   infix 30 _⦅_,-⦆
   _⦅_,-⦆ = curryᵐ
+
+  update : A → Maybe B → Map A B → Map A B
+  update x (just y) m = m ∪ᵐˡ (❴ x , y ❵ , helper)
+    where
+      helper : left-unique ❴ x , y ❵
+      helper r r' with to ∈-singleton r | to ∈-singleton r'
+      ...            | refl             | refl = refl
+  update x nothing  m = m ∣ ❴ x ❵ ᶜ
 
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈
