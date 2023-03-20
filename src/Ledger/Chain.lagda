@@ -57,6 +57,8 @@ private variable
   newTally : TallyState
 --  roles : KeyHash ↛ GovRole
 
+-- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:
+-- it also does what EPOCH used to do in previous eras
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set where
 \end{code}
 \begin{figure*}[h]
@@ -64,9 +66,14 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
   NEWEPOCH-New : ∀ {Γ} → let
       open NewEpochState nes
       open LState ls
+      -- TODO Wire CertState together with treasury and withdrawals
+      open CertState certState
+      open PState pState
       pup = PPUpdateState.pup ppup
       acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt }
-      ls' = record ls { tally = newTally ; utxoSt = record utxoSt { fees = 0 } }
+      retired = retiring ⁻¹ e
+      certState' = record certState { pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ } }
+      ls' = record ls { tally = newTally ; utxoSt = record utxoSt { fees = 0 } ; certState = certState' }
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; NewEpochEnv Γ } ⊢ ⟦ es  , [] ⟧ʳ
