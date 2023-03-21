@@ -85,6 +85,13 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
   ; sym = λ where (h , h') → (h' , h)
   ; trans = λ eq₁ eq₂ → ⊆-Transitive (proj₁ eq₁) (proj₁ eq₂) , ⊆-Transitive (proj₂ eq₂) (proj₂ eq₁) }
 
+≡ᵉ-Setoid : ∀ {A} → Setoid ℓ ℓ
+≡ᵉ-Setoid {A} = record
+  { Carrier = Set A
+  ; _≈_ = _≡ᵉ_
+  ; isEquivalence = ≡ᵉ-isEquivalence
+  }
+
 ⊆-isPreorder : IsPreorder (_≡ᵉ_ {A}) _⊆_
 ⊆-isPreorder = λ where
   .isEquivalence → ≡ᵉ-isEquivalence
@@ -100,7 +107,29 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
   { isPreorder = ⊆-isPreorder
   ; antisym    = _,_ }
 
-∉-∅ : ∀ {a : A} → a ∉ ∅
+∈-× : {a : A} {b : B} → (a , b) ∈ X → (a ∈ map proj₁ X × b ∈ map proj₂ X)
+∈-× {X = X} {a = a} {b = b} x = to ∈-map ((a , b) , refl , x) , to ∈-map ((a , b) , refl , x)
+
+map-⊆∘ : {f : A → B} {g : B → C} → map g (map f X) ⊆ map (g ∘ f) X
+map-⊆∘ a∘∈ with from ∈-map a∘∈
+... | b , a≡gb , b∈prfX with from ∈-map b∈prfX
+...                     | a , refl , a∈X = to ∈-map (a , a≡gb , a∈X)
+
+map-∘⊆ : {f : A → B} {g : B → C} → map (g ∘ f) X ⊆ map g (map f X)
+map-∘⊆ {f = f} a∈∘ with from ∈-map a∈∘
+... | a₁ , a₁≡gfa , a₁∈X = to ∈-map (f a₁ , a₁≡gfa , to ∈-map (a₁ , refl , a₁∈X))
+
+map-∘ : {f : A → B} {g : B → C} → map g (map f X) ≡ᵉ map (g ∘ f) X
+map-∘ = map-⊆∘ , map-∘⊆
+
+map-⊆ : {X Y : Set A} {f : A → B} → X ⊆ Y → map f X ⊆ map f Y
+map-⊆ x⊆y a∈map with from ∈-map a∈map
+... | a₁ , a≡fa₁ , a₁∈x = to ∈-map (a₁ , a≡fa₁ , x⊆y a₁∈x)
+
+map-≡ᵉ : {X Y : Set A} {f : A → B} → X ≡ᵉ Y → map f X ≡ᵉ map f Y
+map-≡ᵉ (x⊆y , y⊆x) = map-⊆ x⊆y , map-⊆ y⊆x
+
+∉-∅ : {a : A} → a ∉ ∅
 ∉-∅ h = case ∈⇔P h of λ ()
 
 ∅-minimum : Minimum (_⊆_ {A}) ∅
@@ -201,3 +230,10 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
   Set-Lattice : IsLattice _≡ᵉ_ _⊆_ _∪_ _∩_
   Set-Lattice =
     record { isPartialOrder = ⊆-PartialOrder ; supremum = ∪-Supremum ; infimum = ∩-Infimum }
+
+  ∩-sym⊆ : X ∩ Y ⊆ Y ∩ X
+  ∩-sym⊆ a∈X∩Y with from ∈-∩ a∈X∩Y
+  ... | a∈X , a∈Y = to ∈-∩ (a∈Y , a∈X)
+  
+  ∩-sym : X ∩ Y ≡ᵉ Y ∩ X
+  ∩-sym = ∩-sym⊆ , ∩-sym⊆
