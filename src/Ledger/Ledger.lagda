@@ -3,9 +3,16 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
+open import Agda.Primitive renaming (Set to Type)
 open import Ledger.Transaction
 
-module Ledger.Ledger (txs : TransactionStructure) where
+module Ledger.Ledger
+ -- TODO: determine how these three parameters should be defined in modules that depend on this one.
+ {PolicyID : Type}    -- identifies monetary policies
+ {ByteString : Type}  -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ {AdaName : ByteString} -- the asset name for Ada
+
+ (txs : TransactionStructure {PolicyID}{ByteString}{AdaName}) where
 
 open import Ledger.Prelude
 

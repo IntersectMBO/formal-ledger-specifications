@@ -76,7 +76,7 @@ abstract
   ≟-∅ = Decˡ.≟-∅
 
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) public
-open import Axiom.Set.Map th renaming (Map to _↛_) public
+open import Axiom.Set.Map th renaming (Map to _↛_ ; PartialMap to _⇀_) public
 open import Axiom.Set.TotalMap th public
 open L.Decˡ hiding (_∈?_; ≟-∅) public
 open import Axiom.Set.Sum th public

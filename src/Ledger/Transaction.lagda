@@ -6,18 +6,28 @@
 --------------------------------------------------------------------------------
 -- NOTE: Everything in this module is part of TransactionStructure
 --------------------------------------------------------------------------------
-module Ledger.Transaction where
+
+open import Agda.Primitive renaming (Set to Type)
+
+module Ledger.Transaction
+
+ -- TODO: determine how these three parameters should be defined in modules that depend on this one.
+ {PolicyID : Type}    -- identifies monetary policies
+ {ByteString : Type}  -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ {AdaName : ByteString} -- the asset name for Ada
+
+ where
 
 open import Ledger.Prelude
+open import Ledger.TokenAlgebra {PolicyID}{ByteString}{AdaName}
 
 open import Ledger.Crypto
 open import Ledger.Epoch
-open import Ledger.TokenAlgebra
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
 
-record TransactionStructure : Set₁ where
+record TransactionStructure : Type₁ where
   field
 \end{code}
 
@@ -41,7 +51,7 @@ This function must produce a unique id for each unique transaction body.
 \emph{Abstract types}
 \AgdaTarget{Ix, TxId, Epoch, AuxiliaryData}
 \begin{code}
-        Ix TxId AuxiliaryData : Set
+        Ix TxId AuxiliaryData : Type
 \end{code}
 \begin{code}[hide]
         epochStructure                      : EpochStructure
@@ -49,23 +59,29 @@ This function must produce a unique id for each unique transaction body.
 
   open EpochStructure epochStructure public
   open GlobalConstants globalConstants public
+
   field crypto                              : Crypto
         adHashingScheme                     : isHashableSet AuxiliaryData
         ppHashingScheme                     : isHashableSet (Ledger.PParams.PParams epochStructure)
         ppUpd                               : Ledger.PParams.PParamsDiff epochStructure
         txidBytes                           : TxId → Crypto.Ser crypto
         networkId                           : Network
-        tokenAlgebra                        : TokenAlgebra
+
         instance DecEq-TxId  : DecEq TxId
                  DecEq-Ix    : DecEq Ix
                  DecEq-Netw  : DecEq Network
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
-  open TokenAlgebra tokenAlgebra public
+  -- open TA
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
+
   field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
+        -- instance DecEq-ADHash : DecEq ADHash
+        tokenAlgebra : TokenAlgebra
+
+  open TokenAlgebra tokenAlgebra hiding (Coin) public
 
   open Ledger.Script.ScriptStructure ss public
 
@@ -107,11 +123,11 @@ This function must produce a unique id for each unique transaction body.
           txid       : TxId
           txgov      : List GovProcedure
 
-  record TxWitnesses : Set where
+  record TxWitnesses : Type where
     field vkSigs   : VKey ↛ Sig
           scripts  : ℙ Script
 
-  record Tx : Set where
+  record Tx : Type where
     field body  : TxBody
           wits  : TxWitnesses
           txAD  : Maybe AuxiliaryData

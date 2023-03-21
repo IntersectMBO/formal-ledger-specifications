@@ -35,6 +35,18 @@ let
     buildInputs = [ agdaStdlib ];
   };
 
+  # agdaPrelude = customAgda.agdaPackages.mkDerivation {
+  #   pname = "agda-prelude";
+  #   version = "1.0.0";
+  #   src = fetchFromGitHub {
+  #     repo = "agda-prelude";
+  #     owner = "williamdemeo";
+  #     rev = "v1.0.0";
+  #     sha256 = "03yf6731rk6v38r2xdfgwb2wkjjhj0l9hyfag3fgmwpwmq75gf10";
+  #   };
+  # };
+
+  # deps = [ agdaStdlib agdaStdlibMeta agdaPrelude ];
   deps = [ agdaStdlib agdaStdlibMeta ];
   agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
 

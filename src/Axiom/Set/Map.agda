@@ -19,6 +19,10 @@ open import Data.Product.Properties
 open import Interface.DecEq
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
+open import Relation.Binary using (REL ; _⇔_)
+
+
+
 open Equivalence
 
 open import Tactic.AnyOf
@@ -39,6 +43,10 @@ private variable A A' B B' C D : Type
 left-unique : Rel A B → Type
 left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
+-- left uniqueness defined wrt the relation type in the ASL (see: [1], [2]).
+left-unique-rel : {A B : Type} → REL A B 0ℓ → Type 0ℓ
+left-unique-rel R = ∀ {a b b'} → R a b → R a b' → b ≡ b'
+
 record IsLeftUnique (R : Rel A B) : Type where
   field isLeftUnique : left-unique R
 
@@ -55,6 +63,9 @@ left-unique-mapˢ _ p q with from ∈-map p | from ∈-map q
 
 Map : Type → Type → Type
 Map A B = Σ (Rel A B) left-unique
+
+PartialMap : Type → Type → Type₁
+PartialMap A B = Σ (REL A B 0ℓ) left-unique-rel
 
 _≡ᵐ_ : Map A B → Map A B → Type
 (x , _) ≡ᵐ (y , _) = x ≡ᵉ y
@@ -242,3 +253,7 @@ module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   infix 25 _⁻¹_
   _⁻¹_ : ⦃ DecEq B ⦄ → Map A B → B → Set A
   m ⁻¹ a = dom ((m ∣^ ❴ a ❵) ˢ)
+-----------------------------------------------------------------------------------------------------
+
+-- [1] The Agda Standard Library https://github.com/agda/agda-stdlib
+-- [2] REL (defn) https://agda.github.io/agda-stdlib/v0.17/Relation.Binary.Core.html#772

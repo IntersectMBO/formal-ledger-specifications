@@ -7,9 +7,15 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
+open import Agda.Primitive renaming (Set to Type)
 open import Ledger.Transaction
 
-module Ledger.Utxo (txs : TransactionStructure) where
+module Ledger.Utxo
+ {PolicyID : Type}    -- identifies monetary policies
+ {ByteString : Type}  -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ {AdaName : ByteString} -- the asset name for Ada
+ (txs : TransactionStructure {PolicyID}{ByteString}{AdaName})
+ where
 
 open import Ledger.Prelude hiding (Dec₁)
 
@@ -31,7 +37,7 @@ open Tx
 open import Ledger.Crypto
 open import Ledger.PPUp
 open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra using (TokenAlgebra)
+open import Ledger.TokenAlgebra {PolicyID}{ByteString}{AdaName}
 
 open import MyDebugOptions
 --open import Tactic.Defaults

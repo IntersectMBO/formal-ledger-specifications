@@ -90,14 +90,13 @@ HSScriptStructure : ScriptStructure ℕ ℕ ℕ
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
 
 open import Ledger.Transaction
-open import Ledger.TokenAlgebra
+open import Ledger.TokenAlgebra ℕ
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
 open import Data.Nat
 
 coinTokenAlgebra : TokenAlgebra
 coinTokenAlgebra = record
-  { PolicyId                = ℕ
-  ; Value-CommutativeMonoid = +-0-commutativeMonoid
+  { Value-CommutativeMonoid = +-0-commutativeMonoid
   ; coin                    = id
   ; inject                  = id
   ; policies                = λ x → ∅
@@ -109,7 +108,7 @@ coinTokenAlgebra = record
       ; ε-homo  = refl
       }
     }
-  ; _≥ᵗ_                    = _≥_
+  ; _≤ᵗ_                    = _≤_
   ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
   }
 
