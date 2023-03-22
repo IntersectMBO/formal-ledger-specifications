@@ -25,11 +25,12 @@ open Tx
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
 witsVKeyNeeded utxo txb =
   mapPartial ((λ { (inj₁ kh) → just kh ; _ → nothing }) ∘ payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
-  ∪ mapPartial (λ { (vote x x₁ x₂ x₃ x₄) → just x₂ ; _ → nothing }) (setFromList $ txgov txb)
+  ∪ mapPartial (λ { (vote _ _ (inj₁ kh) _ _) → just kh ; _ → nothing }) (setFromList $ txgov txb)
 
 scriptsNeeded : UTxO → TxBody → ℙ ScriptHash
 scriptsNeeded utxo txb =
   mapPartial ((λ { (inj₂ sh) → just sh ; _ → nothing }) ∘ payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
+  ∪ mapPartial (λ { (vote _ _ (inj₂ sh) _ _) → just sh ; _ → nothing }) (setFromList $ txgov txb)
 
 scriptsP1 : TxWitnesses → ℙ P1Script
 scriptsP1 txw = mapPartial (λ { (inj₁ s) → just s ; _ → nothing }) (scripts txw)

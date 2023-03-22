@@ -48,29 +48,30 @@ instance
 instance
   _ = +-0-commutativeMonoid
 
-record GovMD : Set where
+record Anchor : Set where
   field url   : String
         hash  : DocHash
 
 data GovAction : Set where
-  NoConfidence     : GovAction
+  NoConfidence     :                        GovAction
   NewCommittee     : ℙ KeyHash → ℚ        → GovAction
   NewConstitution  : DocHash              → GovAction
   TriggerHF        : ProtVer              → GovAction
   ChangePParams    : UpdateT → PPHash     → GovAction
   TreasuryWdrl     : (Credential ↛ Coin)  → GovAction
+  Info             :                        GovAction
 
 data Vote : Set where
   yes      : Vote
   no       : Vote
-  present  : Vote
+  abstain  : Vote
 
 instance
   unquoteDecl DecEq-Vote = derive-DecEq ((quote Vote , DecEq-Vote) ∷ [])
 
 data GovProcedure : Set where
-  vote     : GovActionID → GovRole → KeyHash → Vote → GovMD → GovProcedure
-  propose  : Coin → RwdAddr → GovAction → GovMD → GovProcedure
+  vote     : GovActionID → GovRole → Credential → Vote → Maybe Anchor → GovProcedure
+  propose  : Coin → RwdAddr → GovAction → Anchor → GovProcedure
 \end{code}
 \caption{Governance actions and votes}
 \label{defs:governance}
@@ -135,6 +136,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     _ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
       record s { withdrawals = s .withdrawals ∪⁺ wdrl
                ; treasury    = s .treasury    ∸  newWdrls }
+  Enact-Info      : _ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 \caption{ENACT transition system}
 \end{figure*}
