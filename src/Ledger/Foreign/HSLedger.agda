@@ -222,6 +222,10 @@ instance
         ; poolDeposit   = poolDeposit
         ; Emax          = Emax
         ; pv            = coerce pv
+        ; ccTermLimit   = ccTermLimit
+        ; govExpiration = govExpiration
+        ; govDeposit    = govDeposit
+        ; drepDeposit   = drepDeposit
         }
 
       from' : F.PParams → PParams
@@ -236,6 +240,10 @@ instance
         ; poolDeposit   = poolDeposit
         ; Emax          = Emax
         ; pv            = coerce pv
+        ; ccTermLimit   = ccTermLimit
+        ; govExpiration = govExpiration
+        ; govDeposit    = govDeposit
+        ; drepDeposit   = drepDeposit
         }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
