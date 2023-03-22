@@ -89,6 +89,7 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   weakly-finite : Set A → Type ℓ
   weakly-finite X = ∃[ l ] ∀ {a} → a ∈ X → a ∈ˡ l
 
+  -- there exists a list without duplicates that has exactly the members of the set
   strongly-finite : Set A → Type ℓ
   strongly-finite X = ∃[ l ] Unique l × ∀ {a} → a ∈ X ⇔ a ∈ˡ l
 
