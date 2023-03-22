@@ -40,14 +40,23 @@ abstract
 open Theoryᵈ List-Modelᵈ renaming (Set to ℙ_; filter to filterˢ) public
 
 abstract
+  open import Axiom.Set.Properties th using (card-≡ᵉ)
   to-sp : {A : Set} {P : A → Set} → Dec₁ P → specProperty P
   to-sp = id
 
   finiteness : ∀ {A} (X : Theory.Set th A) → finite X
   finiteness = Theoryᶠ.finiteness List-Modelᶠ
 
-  lengthˢ : ∀ {A} (X : Theory.Set th A) → ℕ
+  lengthˢ : ∀ {A} ⦃ _ : DecEq A ⦄ (X : Theory.Set th A) → ℕ
   lengthˢ = Theoryᶠ.lengthˢ List-Modelᶠ
+
+  lengthˢ-≡ᵉ : ∀ {A} ⦃ _ : DecEq A ⦄ (X Y : Theory.Set th A) → X ≡ᵉ Y → lengthˢ X ≡ lengthˢ Y
+  lengthˢ-≡ᵉ X Y X≡Y =
+    card-≡ᵉ (X , Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ X)
+            (Y , Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ Y) X≡Y
+
+  lengthˢ-∅ : ∀ {A} ⦃ _ : DecEq A ⦄ → lengthˢ {A} ∅ ≡ 0
+  lengthˢ-∅ = refl
 
   setToList : {A : Set} → ℙ A → List A
   setToList = id

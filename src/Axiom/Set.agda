@@ -5,10 +5,15 @@ module Axiom.Set where
 
 open import Prelude hiding (filter)
 
+import Data.List as L
 import Function.Related.Propositional as R
+open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there)
+open import Data.List.Relation.Unary.Unique.DecPropositional.Properties
+open import Data.List.Relation.Unary.Unique.Propositional
 open import Data.Product.Algebra using (×-comm)
+open import Interface.DecEq
 open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary
 open import Relation.Nullary.Decidable using (⌊_⌋)
@@ -84,6 +89,21 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   weakly-finite : Set A → Type ℓ
   weakly-finite X = ∃[ l ] ∀ {a} → a ∈ X → a ∈ˡ l
 
+  -- there exists a list without duplicates that has exactly the members of the set
+  strongly-finite : Set A → Type ℓ
+  strongly-finite X = ∃[ l ] Unique l × ∀ {a} → a ∈ X ⇔ a ∈ˡ l
+
+  DecEq∧finite⇒strongly-finite : ⦃ _ : DecEq A ⦄ → (X : Set A) → finite X → strongly-finite X
+  DecEq∧finite⇒strongly-finite ⦃ eq? ⦄ X (l , h) = let _≟_ = eq? ._≟_ in
+    deduplicate _≟_ l , deduplicate-! _≟_ l , λ {a} →
+      a ∈ X                  ∼⟨ h ⟩
+      a ∈ˡ l                 ∼⟨ ∈-dedup ⟩
+      a ∈ˡ deduplicate _≟_ l ∎
+    where open R.EquationalReasoning
+
+  card : Σ (Set A) strongly-finite → ℕ
+  card (_ , l , _) = length l
+
   ⊆-weakly-finite : X ⊆ Y → weakly-finite Y → weakly-finite X
   ⊆-weakly-finite X⊆Y (l , hl) = l , hl ∘ X⊆Y
 
@@ -133,6 +153,12 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∅ : Set A
   ∅ = fromList []
 
+  ∅-strongly-finite : strongly-finite {A} ∅
+  ∅-strongly-finite = [] , [] , R.SK-sym ∈-fromList
+
+  card-∅ : card (∅ {A} , ∅-strongly-finite) ≡ 0
+  card-∅ = refl
+
   partialToSet : (A → Maybe B) → A → Set B
   partialToSet f a = maybe (fromList ∘ [_]) ∅ (f a)
 
@@ -144,11 +170,11 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
 
   ❴_❵ = singleton
 
-  ∈-singleton : {a b : A} → a ∈ singleton b ⇔ a ≡ b
+  ∈-singleton : {a b : A} → a ≡ b ⇔ a ∈ singleton b
   ∈-singleton {_} {a} {b} =
-    a ∈ singleton b ∼⟨ R.SK-sym ∈-fromList ⟩
-    a ∈ˡ [ b ]      ∼⟨ mk⇔ (λ where (here refl) → refl) (λ where refl → here refl) ⟩
-    a ≡ b           ∎
+    a ≡ b           ∼⟨ mk⇔ (λ where refl → here refl) (λ where (here refl) → refl) ⟩
+    a ∈ˡ [ b ]      ∼⟨ ∈-fromList ⟩
+    a ∈ singleton b ∎
     where open R.EquationalReasoning
 
   maybe-∘ : {f : B → C} {g : A → B} {c : B} {x : Maybe A} → f (maybe g c x) ≡ maybe (f ∘ g) (f c) x
@@ -221,8 +247,11 @@ record Theoryᶠ : Type₁ where
 
   field finiteness : (X : Set A) → finite X
 
-  lengthˢ : Set A → ℕ
-  lengthˢ X = length (proj₁ $ finiteness X)
+  DecEq⇒strongly-finite : ⦃ DecEq A ⦄ → (X : Set A) → strongly-finite X
+  DecEq⇒strongly-finite X = DecEq∧finite⇒strongly-finite X (finiteness X)
+
+  lengthˢ : ⦃ DecEq A ⦄ → Set A → ℕ
+  lengthˢ X = card (X , DecEq⇒strongly-finite X)
 
 -- set theories with an infinite set (containing all natural numbers)
 record Theoryⁱ : Type₁ where
@@ -230,8 +259,6 @@ record Theoryⁱ : Type₁ where
   open Theory theory public
 
   field infinity : ∃[ Y ] ((n : ℕ) → n ∈ Y)
-
-open import Interface.DecEq
 
 -- theories with decidable properties
 record Theoryᵈ : Type₁ where

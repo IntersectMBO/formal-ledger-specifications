@@ -23,8 +23,8 @@ open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingSchem
 \begin{code}
 
 record NewEpochEnv : Set where
-  field roles       : KeyHash ↛ GovRole
-        stakeDistr  : KeyHash ↛ (Coin × Coin) -- TODO: compute this from LState instead
+  field roles        : KeyHash ↛ GovRole
+        stakeDistrs  : StakeDistrs -- TODO: compute this from LState instead
 
 record NewEpochState : Set where
   constructor ⟦_,_,_,_⟧ⁿᵉ
@@ -36,7 +36,7 @@ record NewEpochState : Set where
 record ChainState : Set where
   field newEpochState  : NewEpochState
         roles          : KeyHash ↛ GovRole
-        stakeDistr     : KeyHash ↛ (Coin × Coin) -- TODO: compute this from LState instead
+        stakeDistrs    : StakeDistrs -- TODO: compute this from LState instead
 
 record Block : Set where
   field ts   : List Tx
@@ -88,7 +88,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Se
 \begin{figure*}[h]
 \begin{code}
   CHAIN : let open ChainState s; open Block b; open NewEpochState in
-    record { roles = roles ; stakeDistr = stakeDistr } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    record { ChainState s } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     → ⟦ slot , EnactState.pparams (es nes) , roles ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }
