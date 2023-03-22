@@ -24,12 +24,11 @@ open TxBody
 \begin{code}
 -- Only include accounting & governance info for now
 record LEnv : Set where
-  constructor ⟦_,_,_⟧ˡᵉ
+  constructor ⟦_,_⟧ˡᵉ
   field slot : Slot
         --txix : Ix
         pparams : PParams
         --acnt : Acnt
-        roles : KeyHash ↛ GovRole -- replaces genDelegs
 
 record LState : Set where
   constructor ⟦_,_⟧ˡ

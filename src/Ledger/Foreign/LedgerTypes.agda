@@ -85,6 +85,10 @@ record PParams : Set where
         poolDeposit   : Coin
         Emax          : Epoch
         pv            : Pair ℕ ℕ
+        ccTermLimit   : ℕ
+        govExpiration : ℕ
+        govDeposit    : Coin
+        drepDeposit   : Coin
 
 {-# FOREIGN GHC
   data PParams = MkPParams
@@ -97,7 +101,11 @@ record PParams : Set where
     , minUtxOValue :: Integer
     , poolDeposit :: Integer
     , emax :: Integer
-    , pv :: (Integer, Integer) } deriving Show
+    , pv :: (Integer, Integer)
+    , ccTermLimit   :: Integer
+    , govExpiration :: Integer
+    , govDeposit    :: Integer
+    , drepDeposit   :: Integer } deriving Show
 #-}
 {-# COMPILE GHC PParams = data PParams (MkPParams) #-}
 

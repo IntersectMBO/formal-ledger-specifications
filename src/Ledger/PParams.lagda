@@ -28,6 +28,14 @@ record PParams : Set where
         poolDeposit    : Coin
         Emax           : Epoch
         pv             : ProtVer -- retired, keep for now
+
+        -- Governance group
+
+        --votingThresholds : ?
+        ccTermLimit    : ℕ
+        govExpiration  : ℕ
+        govDeposit     : Coin
+        drepDeposit    : Coin
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}
