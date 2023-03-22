@@ -36,13 +36,15 @@ let
   };
 
   deps = [ agdaStdlib agdaStdlibMeta ];
-  agdaWithPkgs = customAgda.agda.withPackages { pkgs = deps; ghc = pkgs.ghc; };
+  agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
 
 in
 rec {
 
-  agda = agdaWithPkgs;
-  agda2 = customAgda.agda.withPackages { pkgs = [ agdaStdlib ]; ghc = pkgs.ghc; };
+  agda  = agdaWithPkgs deps;
+  agda2 = agdaWithPkgs [ agdaStdlib ];           # for working on stdlib-meta
+  agda3 = agdaWithPkgs (deps ++ [ agdaLedger ]); # for using ledger as a library
+
   agdaLedger = customAgda.agdaPackages.mkDerivation {
     pname = "Agda-ledger";
     version = "0.1";
@@ -65,7 +67,7 @@ rec {
           version = "0.1";
           src = "${agdaLedger}";
           meta = { };
-          buildInputs = [ agdaWithPkgs ];
+          buildInputs = [ (agdaWithPkgs deps) ];
           buildPhase = "";
           installPhase = ''
             mkdir -p $out
@@ -82,7 +84,7 @@ rec {
         src = "${agdaLedger}";
         meta = { };
         buildInputs = [
-          agdaWithPkgs
+          (agdaWithPkgs deps)
           (texlive.combine {
             inherit (texlive)
               scheme-small
