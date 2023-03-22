@@ -67,6 +67,11 @@ _ˢ = proj₁
 _ᵐ : (R : Rel A B) → ⦃ IsLeftUnique R ⦄ → Map A B
 _ᵐ R ⦃ record { isLeftUnique = h } ⦄ = R , h
 
+infix 4 _≡ᵉᵐ_
+
+_≡ᵉᵐ_ : Map A B → Map A B → Type
+_≡ᵉᵐ_ = _≡ᵉ_ on _ˢ
+
 ⊆-map : (f : Rel A B → Rel A B) → (∀ {R} → f R ⊆ R) → Map A B → Map A B
 ⊆-map f H m = f (m ˢ) , ⊆-left-unique H (proj₂ m)
 
@@ -95,6 +100,9 @@ toFinMap (m , h) fin = m , h , fin
 toMap : FinMap A B → Map A B
 toMap (m , l , _) = m , l
 
+toRel : FinMap A B → Rel A B
+toRel (m , l , _) = m
+
 module Intersectionᵐ (sp-∈ : spec-∈ (A × B)) where
   open Intersection sp-∈
   open Intersectionᵖ sp-∈
@@ -116,9 +124,10 @@ filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Dec₁ P 
 filterᵐ-finite = filter-finite
 
 singletonᵐ : A → B → Map A B
-singletonᵐ a b = (❴ (a , b) ❵ , (to ∈-singleton -⟨ (λ where refl refl → refl) ⟩- to ∈-singleton))
+singletonᵐ a b = (❴ (a , b) ❵ , (from ∈-singleton -⟨ (λ where refl refl → refl) ⟩- from ∈-singleton))
 
-❴_❵ᵐ = singletonᵐ
+❴_❵ᵐ : A × B → Map A B
+❴ k , v ❵ᵐ = singletonᵐ k v
 
 module Unionᵐ (sp-∈ : spec-∈ A) where
 
@@ -135,7 +144,15 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
     (∈⇔P ∘′ Data.Sum.map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
 
   insert : Map A B → A → B → Map A B
-  insert m a b = singletonᵐ a b ∪ᵐˡ m
+  insert m a b = ❴ a , b ❵ᵐ ∪ᵐˡ m
+
+disj-dom : ∀ {m m₁ m₂ : Map A B} → (m ˢ) ≡ (m₁ ˢ) ⨿ (m₂ ˢ) → disjoint (dom (m₁ ˢ)) (dom (m₂ ˢ))
+disj-dom {m = m@(_ , uniq)} {m₁} {m₂} (m≡m₁∪m₂ , disj) a∈domm₁ a∈domm₂ with ∈⇔P a∈domm₁ | ∈⇔P a∈domm₂
+... | (a , b₁) , (refl , h₁) | (_ , b₂) , (refl , h₂) =
+  disj (subst _ (uniq (∈mᵢ⇒∈m (inj₁ h₁)) (∈mᵢ⇒∈m (inj₂ h₂))) h₁) h₂
+  where
+    ∈mᵢ⇒∈m : ∀ {a} → a ∈ (m₁ ˢ) ⊎ a ∈ (m₂ ˢ) → a ∈ (m ˢ)
+    ∈mᵢ⇒∈m = proj₂ m≡m₁∪m₂ ∘ to ∈-∪
 
 mapˡ-uniq : {f : A → A'} → Injective _≡_ _≡_ f → left-unique R → left-unique (mapˡ f R)
 mapˡ-uniq inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
@@ -183,6 +200,17 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 
   curryᵐ : Map (A × B) C → A → Map B C
   curryᵐ m a = R.curryʳ (m ˢ) a , λ h h' → proj₂ m (R.∈-curryʳ h) (R.∈-curryʳ h')
+
+  res-singleton : ∀ {k} → k ∈ dom (m ˢ) → ∃[ v ] m ∣ ❴ k ❵ ≡ᵉᵐ ❴ k , v ❵ᵐ
+  res-singleton {m = m@(_ , uniq)} k∈domm with ∈⇔P k∈domm
+  ... | (k , v) , (refl , h) = v
+    , (λ where a∈m∣k → to ∈-singleton $ case ∈⇔P a∈m∣k of λ where
+        (mem₁ , mem₂) → let eq = from ∈-singleton mem₁ in ×-≡,≡→≡ (eq , (uniq mem₂ (subst _ (sym eq) h))))
+    , λ a∈❴k,v❵ → subst (_∈ ((m ∣ ❴ k ❵) ˢ)) (sym $ from ∈-singleton a∈❴k,v❵) (∈⇔P (to ∈-singleton refl , h))
+
+  res-singleton' : ∀ {k v} → (k , v) ∈ m ˢ → m ∣ ❴ k ❵ ≡ᵉᵐ ❴ k , v ❵ᵐ
+  res-singleton' {m = m} kv∈m with res-singleton {m = m} (∈⇔P (-, (refl , kv∈m)))
+  ... | _ , h = subst _ (sym $ proj₂ m kv∈m (R.res-⊆ $ proj₂ h $ to ∈-singleton refl)) h
 
   -- f(x,-)
   infix 30 _⦅_,-⦆
