@@ -60,6 +60,14 @@ m ∣' P? = filter (sp-∘ P? proj₁) m
 _∣^'_ : {P : B → Type} → Rel A B → specProperty P → Rel A B
 m ∣^' P? = filter (sp-∘ P? proj₂) m
 
+impl⇒res⊆ : ∀ {X : Rel A B} {P P'} → (sp-P : specProperty P) → (sp-P' : specProperty P')
+            → (∀ {a} → P a → P' a) → X ∣' sp-P ⊆ X ∣' sp-P'
+impl⇒res⊆ sp-P sp-P' P⇒P' a∈X∣'P = ∈⇔P (Data.Product.map₁ P⇒P' (∈⇔P a∈X∣'P))
+
+impl⇒cores⊆ : ∀ {X : Rel A B} {P P'} → (sp-P : specProperty P) → (sp-P' : specProperty P')
+            → (∀ {b} → P b → P' b) → X ∣^' sp-P ⊆ X ∣^' sp-P'
+impl⇒cores⊆ sp-P sp-P' P⇒P' a∈X∣^'P = ∈⇔P (Data.Product.map₁ P⇒P' (∈⇔P a∈X∣^'P))
+
 mapˡ : (A → A') → Rel A B → Rel A' B
 mapˡ f R = map (Data.Product.map₁ f) R
 
@@ -127,13 +135,18 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-ex-disjoint : disjoint (dom (R ∣ X)) (dom (R ∣ X ᶜ))
   res-ex-disjoint h h' = cores-dom h' (res-dom h)
 
+  res-ex-disj-∪ : Dec₁ (_∈ X) → R ≡ (R ∣ X) ⨿ (R ∣ X ᶜ)
+  res-ex-disj-∪ ∈X? =
+    IsEquivalence.sym ≡ᵉ-isEquivalence (res-ex-∪ ∈X?) , disjoint-dom⇒disjoint res-ex-disjoint
+    where open import Relation.Binary using (IsEquivalence)
+
   curryʳ : Rel (A × B) C → A → Rel B C
   curryʳ R a = mapˡ proj₂ (R ∣' (sp-∘ (sp-∈ {X = ❴ a ❵}) proj₁))
 
   ∈-curryʳ : ∀ {a} {b : B} {c : C} → (b , c) ∈ curryʳ R a → ((a , b) , c) ∈ R
   ∈-curryʳ h = case ∈⇔P h of λ where
     (((a , b) , c) , refl , h'') → case ∈⇔P h'' of λ where
-      (p , p') → case to ∈-singleton p of λ where refl → p'
+      (p , p') → case from ∈-singleton p of λ where refl → p'
 
   open Intersection sp-∈
   open Intersectionᵖ sp-∈
