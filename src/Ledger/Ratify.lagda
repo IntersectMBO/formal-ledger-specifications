@@ -5,36 +5,38 @@
 
 open import Ledger.Transaction
 
-open import Ledger.Crypto
-import Ledger.PParams as PP
-
 module Ledger.Ratify (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (_∧_)
 
 open TransactionStructure txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
-open PP epochStructure
-
-open import Relation.Nullary.Decidable
+open import Ledger.PParams epochStructure
 
 import Data.Integer as Z
 import Data.Rational as R
-open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Data.Nat
+open import Data.Nat.Properties
+open import Data.Nat.Properties.Ext
+open import Data.Product using (map₂)
 
 infixr 2 _∧_
 _∧_ = _×_
 
 instance
   _ = +-0-commutativeMonoid
-
-record RatifyEnv : Set where
-  field stakeDistr    : KeyHash ↛ (Coin × Coin)
-        currentEpoch  : Epoch
-        roles         : KeyHash ↛ GovRole -- TODO: only allowing one role per hash might not be desirable
 \end{code}
 \begin{figure*}[h]
 \begin{code}
+record StakeDistrs : Set where
+  field poolStakeDistr  : KeyHash ↛ Coin
+        drepStakeDistr  : KeyHash ↛ Coin
+
+record RatifyEnv : Set where
+  field stakeDistrs   : StakeDistrs
+        currentEpoch  : Epoch
+        roles         : KeyHash ↛ GovRole -- TODO: only allowing one role per hash might not be desirable
+
 record RatifyState : Set where
   constructor ⟦_,_⟧ʳ
   field es      : EnactState
@@ -44,13 +46,70 @@ record RatifyState : Set where
 \end{figure*}
 \begin{figure*}[h]
 \begin{code}
--- TODO: turn this into protocol parameters
-CCThreshold epochsToExpire : ℕ
-CCThreshold = 3
+-- TODO: turn these into protocol parameters
+epochsToExpire coinThreshold rankThreshold : ℕ
 epochsToExpire = 10
+coinThreshold = 1000000000
+rankThreshold = 1000
+
+-- DReps with at least `c` coins
+mostStakeDRepDist : KeyHash ↛ Coin → Coin → KeyHash ↛ Coin
+mostStakeDRepDist dist c = dist ∣^' to-sp (_≥? c)
+
+-- mostStakeDRepDist-homomorphic : ∀ {dist} → Homomorphic₂ _ _ _>_ (_⊆_ on _ˢ) (mostStakeDRepDist dist)
+-- mostStakeDRepDist-homomorphic x>y = impl⇒cores⊆ _ _ {!!} --(<-trans x>y)
+
+mostStakeDRepDist-0 : ∀ {dist} → mostStakeDRepDist dist 0 ≡ᵉᵐ dist
+mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter) , λ x → Equivalence.to ∈-filter (z≤n , x)
+
+-- TODO: maybe this can be proven easier with the maximum?
+mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
+mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Properties.∅-least
+  (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
+  where
+    open ≤-Reasoning
+
+    helper : ∀ {k v} → v > Σᵐᵛ[ x ← dist ᶠᵐ ] x → ¬ (k , v) ∈ dist ˢ
+    helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
+      v
+        ≡˘⟨ indexedSum-singleton' (finiteness ❴ k , v ❵) ⟩
+      Σᵐᵛ[ x ← ❴ k , v ❵ᵐ ᶠᵐ ] x
+        ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ᵐ ᶠᵐ}
+                             (res-singleton' {m = dist} kv∈dist) ⟩
+      Σᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
+        ≤⟨ m≤m+n _ _ ⟩
+      Σᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x + Σᵐᵛ[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
+        ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ❴ k ❵) ᶠᵐ} {(dist ∣ ❴ k ❵ ᶜ) ᶠᵐ}
+                                  (res-ex-disj-∪ Properties.Dec-∈-singleton) ⟩
+      Σᵐᵛ[ x ← dist ᶠᵐ ] x
+        <⟨ v>sum ⟩
+      v ∎
+
+∃topNDRepDist : ∀ {n dist} → lengthˢ (dist ˢ) ≥ n → n > 0
+                → ∃[ c ] lengthˢ (mostStakeDRepDist dist c ˢ) ≥ n
+                       × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
+∃topNDRepDist {n} {dist} length≥n n>0 with negInduction (λ _ → _ ≥? n)
+  (subst (_≥ n) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
+  (map₂ (λ h h' → ≤⇒≯ (subst (_≥ n) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
+                     (mostStakeDRepDist-∅ {dist}))
+... | (c , h , h') = c , h , ≰⇒> h'
+
+topNDRepDist : ℕ → KeyHash ↛ Coin → KeyHash ↛ Coin
+topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
+  (_     , no  _)  → ∅ᵐ
+  (no _  , yes _)  → dist
+  (yes p , yes p₁) → mostStakeDRepDist dist (proj₁ (∃topNDRepDist {dist = dist} p p₁))
+
+-- restrict the DRep stake distribution
+restrictedDists : ℕ → ℕ → StakeDistrs → StakeDistrs
+restrictedDists coins rank dists = record dists { drepStakeDistr = restrict drepStakeDistr }
+  where open StakeDistrs dists
+        -- one always includes the other
+        restrict : KeyHash ↛ Coin → KeyHash ↛ Coin
+        restrict dist = topNDRepDist rank dist ∪ᵐˡ mostStakeDRepDist dist coins
 
 votedHashes : Vote → ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
-votedHashes v votes r = (votes ⦅ r ,-⦆) ⁻¹ v
+votedHashes v votes r = (votes ⦅ r ,-⦆)⁻¹ v
 
 votedYesHashes : ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
 votedYesHashes = votedHashes Vote.yes
@@ -58,26 +117,27 @@ votedYesHashes = votedHashes Vote.yes
 votedPresentHashes : ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
 votedPresentHashes = votedHashes Vote.present
 
-getStake : GovRole → Coin × Coin → Coin
-getStake CC   = λ _ → 0
-getStake DRep = proj₂
-getStake SPO  = proj₁
+getStakeDist : GovRole → StakeDistrs → KeyHash ↛ Coin
+getStakeDist CC   _                                = ∅ᵐ
+getStakeDist DRep record { drepStakeDistr = dist } = dist
+getStakeDist SPO  record { poolStakeDistr = dist } = dist
 
-acceptedStake : GovRole → (KeyHash ↛ (Coin × Coin)) → GovActionState → Coin
-acceptedStake r dist record { votes = votes } =
-  Σᵐᵛ[ x ← (dist ∣ votedYesHashes votes r) ᶠᵐ ] getStake r x
+acceptedStake : GovRole → StakeDistrs → GovActionState → Coin
+acceptedStake r dists record { votes = votes } =
+  Σᵐᵛ[ x ← (getStakeDist r dists ∣ votedYesHashes votes r) ᶠᵐ ] x
 
-totalStake : GovRole → (KeyHash ↛ (Coin × Coin)) → ((GovRole × KeyHash) ↛ Vote) → Coin
-totalStake r dist votes = Σᵐᵛ[ x ← dist ∣ votedPresentHashes votes r ᶜ ᶠᵐ ] getStake r x
+totalStake : GovRole → StakeDistrs → ((GovRole × KeyHash) ↛ Vote) → Coin
+totalStake r dists votes = Σᵐᵛ[ x ← getStakeDist r dists ∣ votedPresentHashes votes r ᶜ ᶠᵐ ] x
 
 acceptedR : RatifyEnv → GovActionState → GovRole → R.ℚ → Set
 acceptedR Γ s role t =
   let open RatifyEnv Γ; open GovActionState s
-      totalStake = totalStake role stakeDistr votes
+      redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
+      totalStake = totalStake role redStakeDistr votes
   in
   case totalStake of λ where
     0         → ⊥ -- if there's no stake, never accept
-    x@(suc _) → Z.+ acceptedStake role stakeDistr s R./ x R.> t
+    x@(suc _) → Z.+ acceptedStake role redStakeDistr s R./ x R.> t
 
 ccSize : Maybe (ℙ KeyHash × R.ℚ) → Maybe (ℕ × R.ℚ)
 ccSize nothing         = nothing
@@ -87,6 +147,7 @@ ccSize (just (cc , q)) = just (lengthˢ cc , q)
 accepted : RatifyEnv → EnactState → GovActionState → Set
 accepted Γ es@record { cc = cc } s@record { votes = votes } =
   acceptedR Γ s SPO R.½
+  ∧ acceptedR Γ s DRep R.½
   ∧ (case ccSize cc of λ where
       (just (s@(suc _) , q)) → Z.+ lengthˢ (votedYesHashes votes CC) R./ s R.> q
       _                      → ⊥)
