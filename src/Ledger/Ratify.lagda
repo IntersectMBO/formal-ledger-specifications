@@ -29,13 +29,12 @@ instance
 \begin{figure*}[h]
 \begin{code}
 record StakeDistrs : Set where
-  field poolStakeDistr  : KeyHash ↛ Coin
-        drepStakeDistr  : KeyHash ↛ Coin
+  field poolStakeDistr  : Credential ↛ Coin
+        drepStakeDistr  : Credential ↛ Coin
 
 record RatifyEnv : Set where
   field stakeDistrs   : StakeDistrs
         currentEpoch  : Epoch
-        roles         : KeyHash ↛ GovRole -- TODO: only allowing one role per hash might not be desirable
 
 record RatifyState : Set where
   constructor ⟦_,_⟧ʳ
@@ -46,14 +45,13 @@ record RatifyState : Set where
 \end{figure*}
 \begin{figure*}[h]
 \begin{code}
--- TODO: turn these into protocol parameters
-epochsToExpire coinThreshold rankThreshold : ℕ
-epochsToExpire = 10
+-- TODO: remove these or put them into RatifyState
+coinThreshold rankThreshold : ℕ
 coinThreshold = 1000000000
 rankThreshold = 1000
 
 -- DReps with at least `c` coins
-mostStakeDRepDist : KeyHash ↛ Coin → Coin → KeyHash ↛ Coin
+mostStakeDRepDist : Credential ↛ Coin → Coin → Credential ↛ Coin
 mostStakeDRepDist dist c = dist ∣^' to-sp (_≥? c)
 
 -- mostStakeDRepDist-homomorphic : ∀ {dist} → Homomorphic₂ _ _ _>_ (_⊆_ on _ˢ) (mostStakeDRepDist dist)
@@ -94,30 +92,31 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
                      (mostStakeDRepDist-∅ {dist}))
 ... | (c , h , h') = c , h , ≰⇒> h'
 
-topNDRepDist : ℕ → KeyHash ↛ Coin → KeyHash ↛ Coin
+topNDRepDist : ℕ → Credential ↛ Coin → Credential ↛ Coin
 topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
   (_     , no  _)  → ∅ᵐ
   (no _  , yes _)  → dist
   (yes p , yes p₁) → mostStakeDRepDist dist (proj₁ (∃topNDRepDist {dist = dist} p p₁))
 
 -- restrict the DRep stake distribution
+-- commented out for now, since we don't know if that'll actually be implemented
 restrictedDists : ℕ → ℕ → StakeDistrs → StakeDistrs
-restrictedDists coins rank dists = record dists { drepStakeDistr = restrict drepStakeDistr }
+restrictedDists coins rank dists = dists -- record dists { drepStakeDistr = restrict drepStakeDistr }
   where open StakeDistrs dists
         -- one always includes the other
-        restrict : KeyHash ↛ Coin → KeyHash ↛ Coin
+        restrict : Credential ↛ Coin → Credential ↛ Coin
         restrict dist = topNDRepDist rank dist ∪ᵐˡ mostStakeDRepDist dist coins
 
-votedHashes : Vote → ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
+votedHashes : Vote → ((GovRole × Credential) ↛ Vote) → GovRole → ℙ Credential
 votedHashes v votes r = (votes ⦅ r ,-⦆)⁻¹ v
 
-votedYesHashes : ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
+votedYesHashes : ((GovRole × Credential) ↛ Vote) → GovRole → ℙ Credential
 votedYesHashes = votedHashes Vote.yes
 
-votedPresentHashes : ((GovRole × KeyHash) ↛ Vote) → GovRole → ℙ KeyHash
-votedPresentHashes = votedHashes Vote.present
+votedAbstainHashes : ((GovRole × Credential) ↛ Vote) → GovRole → ℙ Credential
+votedAbstainHashes = votedHashes Vote.abstain
 
-getStakeDist : GovRole → StakeDistrs → KeyHash ↛ Coin
+getStakeDist : GovRole → StakeDistrs → Credential ↛ Coin
 getStakeDist CC   _                                = ∅ᵐ
 getStakeDist DRep record { drepStakeDistr = dist } = dist
 getStakeDist SPO  record { poolStakeDistr = dist } = dist
@@ -126,8 +125,8 @@ acceptedStake : GovRole → StakeDistrs → GovActionState → Coin
 acceptedStake r dists record { votes = votes } =
   Σᵐᵛ[ x ← (getStakeDist r dists ∣ votedYesHashes votes r) ᶠᵐ ] x
 
-totalStake : GovRole → StakeDistrs → ((GovRole × KeyHash) ↛ Vote) → Coin
-totalStake r dists votes = Σᵐᵛ[ x ← getStakeDist r dists ∣ votedPresentHashes votes r ᶜ ᶠᵐ ] x
+totalStake : GovRole → StakeDistrs → ((GovRole × Credential) ↛ Vote) → Coin
+totalStake r dists votes = Σᵐᵛ[ x ← getStakeDist r dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
 acceptedR : RatifyEnv → GovActionState → GovRole → R.ℚ → Set
 acceptedR Γ s role t =
@@ -153,7 +152,7 @@ accepted Γ es@record { cc = cc } s@record { votes = votes } =
       _                      → ⊥)
 
 expired : Epoch → GovActionState → Set
-expired current record { proposedIn = proposedIn } = (epochsToExpire +ᵉ proposedIn) <ᵉ current
+expired current record { expiresIn = expiresIn } = expiresIn <ᵉ current
 \end{code}
 \end{figure*}
 \begin{code}[hide]
