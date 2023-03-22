@@ -1,4 +1,16 @@
 {
+    "agda-nixpkgs": {
+        "branch": "nixpkgs-unstable",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8276a165b9fa3db1a7a4f29ee29b680e0799b9dc",
+        "sha256": "1157f8p4lvywglcb8spwk2qwcnzs6000cqyx5s9bnkj6zmwjpqwx",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/8276a165b9fa3db1a7a4f29ee29b680e0799b9dc.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "nixpkgs": {
         "branch": "release-21.05",
         "description": "Nix Packages collection",
