@@ -98,12 +98,12 @@ rec {
         ];
         buildPhase = ''
           find ${dir} -name \*.lagda -exec agda --latex {} \;
-          cd latex && latexmk -xelatex ${dir}/${doc}.tex && cd ..
+          cd latex && latexmk -xelatex ${dir}/PDF.tex && cd ..
         '';
         installPhase = ''
           mkdir -p $out
-          agda --html --html-dir $out/html ${dir}/${doc}.lagda
-          cp latex/${doc}.pdf $out
+          agda --html --html-dir $out/html ${dir}/PDF.lagda
+          cp latex/PDF.pdf $out/${doc}.pdf
         '';
       };
     in
@@ -117,12 +117,12 @@ rec {
     dir = "Ledger";
     agdaLedgerFile = "Foreign/HSLedger.agda";
     hsMainFile = "HSLedgerTest.hs";
-    doc = "PDF";
+    doc = "cardano-ledger";
   };
   midnight = specsDerivations {
     dir = "MidnightExample";
     agdaLedgerFile = "HSLedger.agda";
     hsMainFile = "Main.hs";
-    doc = "PDF";
+    doc = "midnight-example";
   };
 }
