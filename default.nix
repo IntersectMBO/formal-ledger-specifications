@@ -41,12 +41,10 @@ let
 in
 rec {
 
-  agda  = agdaWithPkgs deps;
-  agda2 = agdaWithPkgs [ agdaStdlib ];           # for working on stdlib-meta
-  agda3 = agdaWithPkgs (deps ++ [ agdaLedger ]); # for using ledger as a library
+  agda = agdaWithPkgs (deps ++ [ formalLedger ]);
 
-  agdaLedger = customAgda.agdaPackages.mkDerivation {
-    pname = "Agda-ledger";
+  formalLedger = customAgda.agdaPackages.mkDerivation {
+    pname = "formal-ledger";
     version = "0.1";
     src = ./src;
     meta = { };
@@ -63,9 +61,9 @@ rec {
     let
       hsSrc =
         stdenv.mkDerivation {
-          pname = "Agda-ledger-${dir}-hs-src";
+          pname = "formal-ledger-${dir}-hs-src";
           version = "0.1";
-          src = "${agdaLedger}";
+          src = "${formalLedger}";
           meta = { };
           buildInputs = [ (agdaWithPkgs deps) ];
           buildPhase = "";
@@ -81,7 +79,7 @@ rec {
       docs = stdenv.mkDerivation {
         pname = "${dir}-docs";
         version = "0.1";
-        src = "${agdaLedger}";
+        src = "${formalLedger}";
         meta = { };
         buildInputs = [
           (agdaWithPkgs deps)

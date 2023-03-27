@@ -1,4 +1,4 @@
-name: Agda-ledger
+name: formal-ledger
 depend:
   standard-library
   stdlib-meta
