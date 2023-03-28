@@ -41,6 +41,7 @@ let
 in
 rec {
 
+  agdaWithStdLibMeta = agdaWithPkgs deps;
   agda = agdaWithPkgs (deps ++ [ formalLedger ]);
 
   formalLedger = customAgda.agdaPackages.mkDerivation {
@@ -65,7 +66,7 @@ rec {
           version = "0.1";
           src = "${formalLedger}";
           meta = { };
-          buildInputs = [ (agdaWithPkgs deps) ];
+          buildInputs = [ agdaWithStdLibMeta ];
           buildPhase = "";
           installPhase = ''
             mkdir -p $out
@@ -82,7 +83,7 @@ rec {
         src = "${formalLedger}";
         meta = { };
         buildInputs = [
-          (agdaWithPkgs deps)
+           agdaWithStdLibMeta
           (texlive.combine {
             inherit (texlive)
               scheme-small

@@ -37,7 +37,7 @@ jobs:
       - name: Build agda
         id: agda
         run: |
-          v=$(nix-build -A agda)
+          v=$(nix-build -A agdaWithStdLibMeta)
           closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
           echo "derivation=$v" >> $GITHUB_OUTPUT
           echo "closure=$closure" >> $GITHUB_OUTPUT
