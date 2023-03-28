@@ -4,13 +4,94 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
       - uses: cachix/install-nix-action@v15
         with:
           nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.nixos.org/
-      - name: Build all derivations 
-        run: nix-build -A ledger -A midnight -j1
+
+      - name: Restore store
+        id: cache-store-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+              store
+              derivations
+          key: cache-store-${{ runner.os }}-${{github.run_id}}
+          restore-keys: |
+            cache-store-${{ runner.os }}
+
+      - name: Import cached nix store
+        continue-on-error: true
+        run: |
+          du -sh store || true
+          nix-store --import < store
+
+       # We have to build this explicitly, in order to cache it,
+       # since it's not part of the static binary agdaLedger closure
+      - name: Build agda
+        id: agda
+        run: |
+          v=$(nix-build -A agda)
+          closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
+          echo "derivation=$v" >> $GITHUB_OUTPUT
+          echo "closure=$closure" >> $GITHUB_OUTPUT
+
+      - name: Build agdaLedger
+        id: agdaLedger
+        run: |
+          v=$(nix-build -A agdaLedger)
+          closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
+          echo "derivation=$v" >> $GITHUB_OUTPUT
+          echo "closure=$closure" >> $GITHUB_OUTPUT
+
+      - name: Build ledger
+        id: ledger
+        run: |
+          v=$(nix-build -A ledger -j1 | tr '\n' ' ')
+          closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
+          echo "derivation=$v" >> $GITHUB_OUTPUT
+          echo "closure=$closure" >> $GITHUB_OUTPUT
+
+      - name: Build midnight
+        id: midnight
+        run: |
+          v=$(nix-build -A midnight -j1 | tr '\n' ' ')
+          closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
+          echo "derivation=$v" >> $GITHUB_OUTPUT
+          echo "closure=$closure" >> $GITHUB_OUTPUT
+
+      - name: Export all derivations
+        id: export-derivations
+        run: |
+          hashes="${{steps.agda.outputs.derivation}}-${{steps.agdaLedger.outputs.derivation}}-${{steps.ledger.outputs.derivation}}-${{steps.midnight.outputs.derivation}}"
+          closures="${{steps.agda.outputs.closure}} ${{steps.agdaLedger.outputs.closure}} ${{ steps.ledger.outputs.closure}} ${{steps.midnight.outputs.closure}}"
+          touch derivations
+          updated=false
+          # export only if the hashes changed or the store does not exist for some reason
+          if grep -qe "^$hashes" derivations && [[ -f store ]]
+              then
+                echo "No need to re-export the store"
+              else
+                nix-store --export $closures > store
+                echo "Exported store of size: $(du -sh store)"
+                echo "$hashes" > derivations
+                echo "Wrote new derivations hashes: $(cat derivations)"
+                updated=true
+          fi
+          echo "updated=$updated" >> $GITHUB_OUTPUT
+
+      - name: Upload nix store
+        id: cache-derivations-save
+        uses: actions/cache/save@v3
+        if: steps.export-derivations.outputs.updated == 'true'
+        with:
+          path: |
+            store
+            derivations
+          key: cache-store-${{ runner.os }}-${{github.run_id}}
