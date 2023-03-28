@@ -17,7 +17,7 @@ open import Algebra using (CommutativeMonoid)
 open import Algebra.Structures
 open import Data.List as List
 open import Data.Nat using (_≤?_; _≤_)
-open import Data.Nat.Properties using (+-0-monoid)
+open import Data.Nat.Properties using (+-0-monoid ; +-0-commutativeMonoid)
 open import Interface.Decidable.Instance
 
 open TransactionStructure txs
@@ -38,6 +38,7 @@ instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
+  _ = +-0-commutativeMonoid
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
@@ -206,8 +207,11 @@ instance
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} = yes none
 
+  HasCoin-Deposits : HasCoin (Credential ↛ Coin)
+  HasCoin-Deposits .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
+
   HasCoin-UTxOState : HasCoin UTxOState
-  HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s) + (UTxOState.fees s)
+  HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s) + (UTxOState.fees s) + getCoin (UTxOState.deposits s)
 data
 \end{code}
 \begin{code}
@@ -261,7 +265,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move
 -- this once this is fixed.
---unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

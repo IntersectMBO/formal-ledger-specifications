@@ -12,7 +12,7 @@ open import Prelude
 open import Ledger.Prelude
 
 open import Algebra.Morphism
-open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm; +-identityʳ)
+open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid; +-comm; +-identityʳ; +-assoc)
 open import Interface.ComputationalRelation
 open import Relation.Binary
 open import Tactic.Cong
@@ -43,6 +43,7 @@ private variable
   utxo utxo' utxo1 utxo2 : UTxO
   fee fee' fees fees' : Coin
   utxoState utxoState' utxoState1 utxoState2 : UTxOState
+  deposits deposits' : Credential ↛ Coin
   Γ : UTxOEnv
   s s' : UTxOState
 
@@ -70,11 +71,22 @@ newTxid⇒disj : txid tx ∉ map proj₁ (dom (utxo ˢ)) → disjoint' (dom (utx
 newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map
   (-, (case from ∈-map h' of λ where (_ , refl , h'') → case from ∈-map h'' of λ where (_ , refl , _) → refl) , h)
 
-consumedCoinEquality :  ∀ {pp} → coin (mint tx) ≡ 0 → coin (consumed pp utxo tx) ≡ cbalance (utxo ∣ txins tx)
-consumedCoinEquality {tx} {utxo} h = begin
-  coin (balance (utxo ∣ txins tx) +ᵛ mint tx) ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
-  cbalance (utxo ∣ txins tx) + coin (mint tx) ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx) +_) h ⟩
-  cbalance (utxo ∣ txins tx) ∎
+consumedCoinEquality :  ∀ {pp} → coin (mint tx) ≡ 0 → coin (consumed pp utxoState utxo tx) ≡ cbalance (utxo ∣ txins tx) + coin (refunded utxoState tx)
+consumedCoinEquality {tx} {utxoState} {utxo} h = begin
+  coin (balance (utxo ∣ txins tx) +ᵛ mint tx +ᵛ refunded utxoState tx)             ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
+  coin (balance (utxo ∣ txins tx) +ᵛ mint tx) + coin (refunded utxoState tx)       ≡⟨ cong
+                                                                                       (_+ coin (refunded utxoState tx))
+                                                                                       (∙-homo-Coin coinIsMonoidMorphism _ _)
+                                                                                   ⟩
+  coin (balance (utxo ∣ txins tx)) + coin (mint tx) + coin (refunded utxoState tx) ≡⟨ cong
+                                                                                       (_+ coin (refunded utxoState tx))
+                                                                                       (cong (cbalance (utxo ∣ txins tx) +_) h)
+                                                                                   ⟩
+  cbalance (utxo ∣ txins tx) + 0 + coin (refunded utxoState tx)                    ≡⟨ cong
+                                                                                       (_+ coin (refunded utxoState tx))
+                                                                                       (+-identityʳ (cbalance (utxo ∣ txins tx)))
+                                                                                   ⟩
+  cbalance (utxo ∣ txins tx) + coin (refunded utxoState tx)                        ∎
 
 producedCoinEquality : ∀ {pp} → coin (produced pp utxo tx) ≡ cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx)
 producedCoinEquality {utxo} {tx} = begin
@@ -86,15 +98,15 @@ producedCoinEquality {utxo} {tx} = begin
                                                                                 ⟩
   cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx)                     ∎
 
-balCoinValueToCbalance : ∀ {pp} → coin (mint tx) ≡ 0 → (coin (consumed pp utxo tx) ≡ coin (produced pp utxo tx))
-                                                       ≡ (cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx))
-balCoinValueToCbalance {tx} {utxo} {pp} h rewrite (consumedCoinEquality {tx} {utxo} {pp} h)
+balCoinValueToCbalance : ∀ {pp} → coin (mint tx) ≡ 0 → (coin (consumed pp utxoState utxo tx) ≡ coin (produced pp utxo tx))
+                                                       ≡ (cbalance (utxo ∣ txins tx) + coin (refunded utxoState tx) ≡ cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx))
+balCoinValueToCbalance {tx} {utxoState} {utxo} {pp} h rewrite (consumedCoinEquality {tx} {utxoState} {utxo} {pp} h)
                                                   | producedCoinEquality {utxo} {tx} {pp} = refl
 
-balValueToCoin : ∀ {pp} → coin (mint tx) ≡ 0 → consumed pp utxo tx ≡ produced pp utxo tx
-                                             → cbalance (utxo ∣ txins tx) ≡ cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx)
-balValueToCoin {utxo} {tx} {pp} h h' with cong coin h'
-... | ans rewrite balCoinValueToCbalance {utxo} {tx} {pp} h = ans
+balValueToCoin : ∀ {pp} → coin (mint tx) ≡ 0 → consumed pp utxoState utxo tx ≡ produced pp utxo tx
+                                             → cbalance (utxo ∣ txins tx) + coin (refunded utxoState tx) ≡ cbalance (outs tx) + (txfee tx) + coin (totalDeposits tx)
+balValueToCoin {utxoState} {utxo} {tx} {pp} h h' with cong coin h'
+... | ans rewrite balCoinValueToCbalance {utxoState} {utxo} {tx} {pp} h = ans
 
 \end{code}
 
@@ -126,20 +138,53 @@ and
   →
 \end{code}
 \begin{code}[inline*]
-      Γ ⊢ ⟦ utxo , fee ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fee' ⟧ᵘ
+      Γ ⊢ ⟦ utxo , fee , deposits ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fee' , deposits' ⟧ᵘ
 \end{code}
 then
 \begin{code}[hide]
   →
 \end{code}
 \begin{code}
-      getCoin ⟦ utxo , fee ⟧ᵘ ≡ getCoin ⟦ utxo' , fee' ⟧ᵘ
+      getCoin ⟦ utxo , fee , deposits ⟧ᵘ ≡ getCoin ⟦ utxo' , fee' , deposits' ⟧ᵘ
 \end{code}
 \begin{code}[hide]
-pov {tx} {utxo} {_} {fee} h' (UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
+pov {tx} {utxo} {_} {fee} {deposits} {utxo'} {fee'} {deposits'} h' (UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
   let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
       h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (cores-domᵐ h₁ , h₂)
+      utxoState = ⟦ utxo , fee , deposits ⟧ᵘ
+      utxoState' = ⟦ utxo' , fee' , deposits' ⟧ᵘ
   in begin
+    cbalance utxo + fee + getCoin deposits ≡⟨ cong (_+ getCoin deposits) {!!} ⟩
+    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)) + getCoin deposits ≡⟨ {!!} ⟩
+    cbalance utxo + getCoin deposits + fee ≡⟨
+      cong
+        (_+ fee)
+        (begin
+          cbalance utxo + getCoin deposits
+            ≡˘⟨ cong (_+ getCoin deposits) (balance-cong-coin {utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)} {utxo' = utxo}
+                  let open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to _≡ᵉ-∘_)
+                  in (disjoint-∪ᵐˡ-∪ (disjoint-sym res-ex-disjoint) ≡ᵉ-∘ ∪-sym) ≡ᵉ-∘ res-ex-∪ (_∈? txins tx)) ⟩
+          cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)) + getCoin deposits
+            ≡⟨ cong (_+ getCoin deposits) (balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip res-ex-disjoint)) ⟩
+          cbalance (utxo ∣ txins tx ᶜ) + cbalance (utxo ∣ txins tx) + getCoin deposits
+            ≡⟨ +-assoc (cbalance (utxo ∣ txins tx ᶜ)) (cbalance (utxo ∣ txins tx)) (getCoin deposits) ⟩
+          cbalance (utxo ∣ txins tx ᶜ) + (cbalance (utxo ∣ txins tx) + getCoin deposits)
+            ≡⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_) {!!} ⟩
+          cbalance (utxo ∣ txins tx ᶜ) + (cbalance (outs tx) + txfee tx + getCoin deposits) ≡⟨ {!!} ⟩
+          cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx + getCoin deposits
+            ≡⟨ cong
+                 (_+ getCoin deposits)
+                 (begin 
+                    cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx
+                        ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
+                    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎)
+             ⟩
+          (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + getCoin deposits ∎
+        )
+    ⟩
+    (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + getCoin deposits + fee ≡⟨ {!!} ⟩
+    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fee + txfee tx) + getCoin deposits' ∎
+{- begin
   cbalance utxo + fee
     ≡tʳ⟨ cong (_+ fee) $ begin
       cbalance utxo
@@ -149,15 +194,15 @@ pov {tx} {utxo} {_} {fee} h' (UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
       cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx))
         ≡⟨ balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip (res-ex-disjoint)) ⟩
       {!!}
-      --cbalance (utxo ∣ txins tx ᶜ) + cbalance (utxo ∣ txins tx)
-      --  ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_) (balValueToCoin {tx} {utxo} {UTxOEnv.pparams Γ} noMintAda newBal) ⟩
-      --cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx
-      --  ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
-      --cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎
+      cbalance (utxo ∣ txins tx ᶜ) + cbalance (utxo ∣ txins tx)
+        ≡tʳ⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_) (balValueToCoin {tx} {utxo} {UTxOEnv.pparams Γ} noMintAda newBal) ⟩
+      cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx
+        ≡˘⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
+      cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx ∎
     ⟩
   cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (txfee tx + fee)
     ≡˘⟨ cong (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) +_) (+-comm fee (txfee tx)) ⟩
-  cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fee + txfee tx) ∎
+  cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fee + txfee tx) ∎ -}
 
 \end{code}
 

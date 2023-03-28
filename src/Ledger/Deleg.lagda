@@ -58,7 +58,7 @@ record PState : Set where
 
 record VState : Set where
   constructor ⟦_,_⟧ᵛ
-  field dreps     : Credential ↛ Coin
+  field dreps     : ℙ Credential
         ccHotKeys : KeyHash ↛ KeyHash -- TODO: maybe replace with credential
 
 record CertState : Set where
@@ -69,7 +69,7 @@ record CertState : Set where
 
 \begin{code}[hide]
 private variable
-  dReps dReps' : Credential ↛ Coin
+  dReps dReps' : ℙ Credential
   pools : Credential ↛ PoolParams
   vDelegs sDelegs : Credential ↛ Credential
   retiring retiring' : Credential ↛ Epoch
@@ -115,14 +115,14 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set whe
 data _⊢_⇀⦇_,VDEL⦈_ : VDelEnv → VState → DCert → VState → Set where
   VDEL-regdrep : let open PParams pp in
     d ≡ poolDeposit -- TODO use drepDeposit instead
-    → c ∉ dom (dReps ˢ)
+    → c ∉ dReps
     ────────────────────────────────
     pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d ,VDEL⦈
-         ⟦ ❴ c , d ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
+         ⟦ ❴ c ❵ ∪ dReps , ccKeys ⟧ᵛ
 
   VDEL-deregdrep :
-    c ∉ dom (dReps ˢ)
-    → dReps' ≡ ❴ c , d ❵ᵐ ∪ᵐˡ dReps
+    c ∉ dReps
+    → dReps' ≡ ❴ c ❵ ∪ dReps
     ────────────────────────────────
     pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,VDEL⦈
          ⟦ dReps' , ccKeys ⟧ᵛ
@@ -151,11 +151,38 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → S
 
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = SS⇒BS λ (Γ , _) → Γ ⊢_⇀⦇_,CERT⦈_
-
---Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_
---Computational-CERTS = MkComputational
---  (λ Γ st cs → {!!})
---  {!!}
 \end{code}
 \caption{VDel rules \& definitions}
 \end{figure*}
+
+\begin{code}[hide]
+open import Interface.Decidable.Instance
+open import Data.Maybe.Properties
+
+open import Tactic.ReduceDec
+open import MyDebugOptions
+
+Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_
+Computational-DELEG .compute pp ⟦ vDelegs , sDelegs ⟧ᵈ (delegate c mc mc' d) =
+  ifᵈ d ≡ requiredDeposit pp mc ⊔ requiredDeposit pp mc'
+    then just ⟦ update c mc vDelegs , update c mc' sDelegs ⟧ᵈ
+    else nothing
+Computational-DELEG .compute Γ s _ = nothing
+Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ ⟧ᵈ} {cert} {s'} = mk⇔
+  (case cert return (λ c → compute Computational-DELEG pp ⟦ s₁ , s₂ ⟧ᵈ c ≡ just s' → pp ⊢ ⟦ s₁ , s₂ ⟧ᵈ ⇀⦇ c ,DELEG⦈ s') of λ where
+    (delegate c mc mc' d) h → case d ≟ requiredDeposit pp mc ⊔ requiredDeposit pp mc' of λ where
+      (yes p) → subst _ (just-injective $ by-reduceDec h) (DELEG-delegate {mc = mc} {mc'} {s₁} {s₂} {c} p)
+      (no ¬p) → case by-reduceDec h of λ ()
+    (regpool x x₁) → λ ()
+    (retirepool x x₁) → λ ()
+    (regdrep x x₁) → λ ()
+    (deregdrep x) → λ ()
+    (ccreghot x x₁) → λ ())
+  (λ where (DELEG-delegate {mc = mc} {mc'} {vDelegs} {sDelegs} {c} h) → by-reduceDecInGoal
+             (refl {x = just ⟦ update c mc vDelegs , update c mc' sDelegs ⟧ᵈ}))
+
+--Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_
+--Computational-CERTS .compute     = {!!}
+--Computational-CERTS .≡-just⇔STS = {!!}
+
+\end{code}
