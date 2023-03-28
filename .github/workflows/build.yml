@@ -33,7 +33,7 @@ jobs:
           nix-store --import < store
 
        # We have to build this explicitly, in order to cache it,
-       # since it's not part of the static binary agdaLedger closure
+       # since it's not part of the static binary formalLedger closure
       - name: Build agda
         id: agda
         run: |
@@ -42,10 +42,10 @@ jobs:
           echo "derivation=$v" >> $GITHUB_OUTPUT
           echo "closure=$closure" >> $GITHUB_OUTPUT
 
-      - name: Build agdaLedger
-        id: agdaLedger
+      - name: Build formalLedger
+        id: formalLedger
         run: |
-          v=$(nix-build -A agdaLedger)
+          v=$(nix-build -A formalLedger)
           closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
           echo "derivation=$v" >> $GITHUB_OUTPUT
           echo "closure=$closure" >> $GITHUB_OUTPUT
@@ -69,8 +69,8 @@ jobs:
       - name: Export all derivations
         id: export-derivations
         run: |
-          hashes="${{steps.agda.outputs.derivation}}-${{steps.agdaLedger.outputs.derivation}}-${{steps.ledger.outputs.derivation}}-${{steps.midnight.outputs.derivation}}"
-          closures="${{steps.agda.outputs.closure}} ${{steps.agdaLedger.outputs.closure}} ${{ steps.ledger.outputs.closure}} ${{steps.midnight.outputs.closure}}"
+          hashes="${{steps.agda.outputs.derivation}}-${{steps.formalLedger.outputs.derivation}}-${{steps.ledger.outputs.derivation}}-${{steps.midnight.outputs.derivation}}"
+          closures="${{steps.agda.outputs.closure}} ${{steps.formalLedger.outputs.closure}} ${{ steps.ledger.outputs.closure}} ${{steps.midnight.outputs.closure}}"
           touch derivations
           updated=false
           # export only if the hashes changed or the store does not exist for some reason
