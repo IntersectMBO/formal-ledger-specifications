@@ -29,8 +29,12 @@ jobs:
       - name: Import cached nix store
         continue-on-error: true
         run: |
-          du -sh store || true
-          nix-store --import < store
+          if [[ -f store ]]; then
+            du -sh store || true
+            nix-store --import < store
+          else
+            echo "No cached store found"
+          fi
 
        # We have to build this explicitly, in order to cache it,
        # since it's not part of the static binary formalLedger closure
