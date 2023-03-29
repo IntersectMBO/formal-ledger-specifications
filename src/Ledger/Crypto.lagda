@@ -29,8 +29,6 @@ record HashableSet : Set₁ where
   field T : Set
         T-isHashable : isHashableSet T
 
-        instance DecEq-THash : DecEq (THash T-isHashable)
-
   open isHashableSet T-isHashable public
 
 record PKKScheme : Set₁ where

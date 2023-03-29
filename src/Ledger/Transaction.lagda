@@ -23,7 +23,7 @@ open import MyDebugOptions
 data Tag : Set where
   Spend Mint Cert Rewrd : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
--- Is this fine
+
 Index = ℕ
 
 RdmrPtr : Set
