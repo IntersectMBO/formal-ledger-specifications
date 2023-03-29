@@ -11,7 +11,7 @@ import Ledger.PParams as PP
 
 open import Data.Rational using (ℚ)
 open import Data.Nat using (_≤_)
-open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Data.Nat.Properties using (+-0-commutativeMonoid ; +-0-monoid)
 open import Data.These
 
 module Ledger.GovernanceActions (TxId Network DocHash : Set)
@@ -102,13 +102,8 @@ private variable
   wdrl : Credential ↛ Coin
   newTreasury : Coin
 
-addCoin : These Coin Coin → Coin
-addCoin (this x)    = x
-addCoin (that x)    = x
-addCoin (these x y) = x + y
-
-_∪⁺_ : ∀ {A} → ⦃ DecEq A ⦄ → A ↛ Coin → A ↛ Coin → A ↛ Coin
-_∪⁺_ = unionWith addCoin
+instance
+  _ = +-0-monoid
 
 data
 \end{code}

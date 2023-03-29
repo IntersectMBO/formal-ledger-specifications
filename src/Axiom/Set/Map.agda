@@ -216,6 +216,10 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
   infix 30 _⦅_,-⦆
   _⦅_,-⦆ = curryᵐ
 
+  update : A → Maybe B → Map A B → Map A B
+  update x (just y) m = insert m x y
+  update x nothing  m = m ∣ ❴ x ❵ ᶜ
+
 module Lookupᵐ (sp-∈ : spec-∈ A) where
   open import Relation.Nullary.Decidable
   private module R = Restriction sp-∈
