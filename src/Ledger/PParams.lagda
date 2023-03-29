@@ -55,6 +55,7 @@ record PParams : Set where
         govDeposit        : Coin
         drepDeposit       : Coin
         drepActivity      : Epoch
+
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}

@@ -17,8 +17,12 @@ import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
 
+open import Tactic.Derive.DecEq
+open import MyDebugOptions
+
 data Tag : Set where
   Spend Mint Cert Rewrd : Tag
+unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 -- Is this fine
 Index = ℕ
@@ -125,10 +129,7 @@ the transaction body are:
     field vkSigs   : VKey ⇀ Sig
           scripts  : ℙ Script
           txdats   : (DataHash ⇀ Datum)
-          txrdmrs  : (RdmrPtr  ⇀ Redeemer × ExUnits)
-        -- type of map may change later
-         -- txdats   : (DataHash ↦ Datum)
-         -- txrdmrs  : (RdmrPtr  ↦ Redeemer × ExUnits)
+          txrdmrs  : (RdmrPtr  ⇀ (Redeemer × ExUnits))
 
   record Tx : Set where
     field body    : TxBody

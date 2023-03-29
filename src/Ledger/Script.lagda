@@ -6,14 +6,19 @@ open import Ledger.Prelude hiding (All; Any)
 
 module Ledger.Script (KeyHash ScriptHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ where
 
+open import Algebra using (CommutativeMonoid)
+open import Algebra.Morphism
 open import Data.List.Relation.Unary.All
 open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Binary.Sublist.Propositional as S
+open import Data.Nat.Properties using (+-0-commutativeMonoid)
 
 open import Ledger.Crypto
 
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
+open import Algebra using (CommutativeMonoid)
+
 
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
@@ -24,9 +29,18 @@ record P1ScriptStructure : Set₁ where
 
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet
-        PlutusScript ExUnits CostModel : Set
+        PlutusScript CostModel : Set
+        ExUnit-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
         instance Hashable-PlutusScript : Hashable PlutusScript ScriptHash
                  DecEq-PlutusScript    : DecEq PlutusScript
+
+  open CommutativeMonoid ExUnit-CommutativeMonoid using (_≈_; ε)
+       renaming (Carrier to ExUnits; refl to reflᵉ; _∙_ to _+ᵉˣ_) public
+
+  field  -- GetPair              : ExUnits → Set × Set
+         _≥ᵉ_                 : ExUnits → ExUnits → Set
+         instance DecEq-ExUnits : DecEq ExUnits
+         -- coinIsMonoidMorphism : GetPair Is ExUnit-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid
 
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
 

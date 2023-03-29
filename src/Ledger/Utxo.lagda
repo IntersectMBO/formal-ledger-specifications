@@ -37,11 +37,16 @@ open import MyDebugOptions
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
+open import Ledger.Script
+
+
+
 instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
+  _ = ExUnit-CommutativeMonoid
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
@@ -50,7 +55,7 @@ isTwoPhaseScriptAddress : Tx → Addr → Bool
 isTwoPhaseScriptAddress tx a = {!!}
 
 totExUnits : Tx → ExUnits
-totExUnits tx = {!!}
+totExUnits tx = Σᵐ[ x ← TxWitnesses.txrdmrs (Tx.wits tx) ᶠᵐ ] (proj₂ (proj₂ x))
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
@@ -91,6 +96,9 @@ balance utxo = Σᵐᵛ[ x ← utxo ᶠᵐ ] (getValue x)
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
 
+-- add txscriptfee function
+
+-- Fix: add script free and exunits
 minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
@@ -116,6 +124,9 @@ certRefund : DCert → Maybe DepositPurpose
 certRefund (delegate c nothing nothing x)  = just (CredentialDeposit c)
 certRefund (deregdrep c)                   = just (DRepDeposit       c)
 certRefund _                               = nothing
+
+feesOK : PParams → Tx → UTxO → Bool
+feesOK pp tx utxo = {!!}
 
 certRefundˢ : DCert → ℙ DepositPurpose
 certRefundˢ = partialToSet certRefund
