@@ -100,3 +100,30 @@ jobs:
             store
             derivations
           key: cache-store-${{ runner.os }}-${{github.run_id}}
+
+      - name: Prepare pdf files to be deployed to site
+        run: |
+          mkdir -p pdfs
+          for f in $(find -L outputs -name '*.pdf'); do
+            cp -L --force $f pdfs
+          done
+
+      - name: Build static file
+        run: |
+              touch index.html
+              cat > index.html << EOF
+              <!DOCTYPE html>
+              <html>
+              <body>
+                  <h3>Formal ledger specs</h3>
+                  <ul>
+              EOF
+              for f in pdfs/*.pdf; do
+                echo "<li><a href="$f">$(basename $f)</a></li>" >> index.html
+              done
+              cat >> index.html << EOF
+              </ul>
+              </body>
+              </html>
+              EOF
+
