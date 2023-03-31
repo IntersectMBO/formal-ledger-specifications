@@ -1,6 +1,9 @@
 name: Formal Ledger Specs
 on: [push]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -127,3 +130,18 @@ jobs:
               </html>
               EOF
 
+      - name: Add files
+        run: |
+            git config --local user.name ${{ github.actor }}
+            git add index.html
+            git add pdfs
+            git commit -m "Updated"
+
+
+      - name: Push to gh-pages
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: gh-pages
+            force: true
+            directory: .
