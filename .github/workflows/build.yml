@@ -105,6 +105,7 @@ jobs:
           key: cache-store-${{ runner.os }}-${{github.run_id}}
 
       - name: Prepare pdf files to be deployed to site
+        if: github.ref == 'refs/heads/master'
         run: |
           mkdir -p pdfs
           for f in $(find -L outputs -name '*.pdf'); do
@@ -112,6 +113,7 @@ jobs:
           done
 
       - name: Build static file
+        if: github.ref == 'refs/heads/master'
         run: |
               touch index.html
               cat > index.html << EOF
@@ -131,6 +133,8 @@ jobs:
               EOF
 
       - name: Add files
+        if: github.ref == 'refs/heads/master'
+
         run: |
             git config --local user.name ${{ github.actor }}
             git add index.html
@@ -139,6 +143,7 @@ jobs:
 
 
       - name: Push to gh-pages
+        if: github.ref == 'refs/heads/master'
         uses: ad-m/github-push-action@v0.6.0
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
