@@ -1,6 +1,9 @@
 name: Formal Ledger Specs
 on: [push]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -57,7 +60,8 @@ jobs:
       - name: Build ledger
         id: ledger
         run: |
-          v=$(nix-build -A ledger -j1 | tr '\n' ' ')
+          mkdir -p outputs
+          v=$(nix-build -A ledger -j1 -o outputs/ledger| tr '\n' ' ')
           closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
           echo "derivation=$v" >> $GITHUB_OUTPUT
           echo "closure=$closure" >> $GITHUB_OUTPUT
@@ -65,7 +69,7 @@ jobs:
       - name: Build midnight
         id: midnight
         run: |
-          v=$(nix-build -A midnight -j1 | tr '\n' ' ')
+          v=$(nix-build -A midnight -j1 -o outputs/midnight | tr '\n' ' ')
           closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
           echo "derivation=$v" >> $GITHUB_OUTPUT
           echo "closure=$closure" >> $GITHUB_OUTPUT
@@ -99,3 +103,50 @@ jobs:
             store
             derivations
           key: cache-store-${{ runner.os }}-${{github.run_id}}
+
+      - name: Prepare pdf files to be deployed to site
+        if: github.ref == 'refs/heads/master'
+        run: |
+          mkdir -p pdfs
+          for f in $(find -L outputs -name '*.pdf'); do
+            cp -L --force $f pdfs
+          done
+
+      - name: Build static file
+        if: github.ref == 'refs/heads/master'
+        run: |
+              touch index.html
+              cat > index.html << EOF
+              <!DOCTYPE html>
+              <html>
+              <body>
+                  <h3>Formal ledger specs</h3>
+                  <ul>
+              EOF
+              for f in pdfs/*.pdf; do
+                echo "<li><a href="$f">$(basename $f)</a></li>" >> index.html
+              done
+              cat >> index.html << EOF
+              </ul>
+              </body>
+              </html>
+              EOF
+
+      - name: Add files
+        if: github.ref == 'refs/heads/master'
+
+        run: |
+            git config --local user.name ${{ github.actor }}
+            git add index.html
+            git add pdfs
+            git commit -m "Updated"
+
+
+      - name: Push to gh-pages
+        if: github.ref == 'refs/heads/master'
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: gh-pages
+            force: true
+            directory: .
