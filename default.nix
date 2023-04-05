@@ -41,12 +41,11 @@ let
 in
 rec {
 
-  agda  = agdaWithPkgs deps;
-  agda2 = agdaWithPkgs [ agdaStdlib ];           # for working on stdlib-meta
-  agda3 = agdaWithPkgs (deps ++ [ agdaLedger ]); # for using ledger as a library
+  agdaWithStdLibMeta = agdaWithPkgs deps;
+  agda = agdaWithPkgs (deps ++ [ formalLedger ]);
 
-  agdaLedger = customAgda.agdaPackages.mkDerivation {
-    pname = "Agda-ledger";
+  formalLedger = customAgda.agdaPackages.mkDerivation {
+    pname = "formal-ledger";
     version = "0.1";
     src = ./src;
     meta = { };
@@ -63,11 +62,11 @@ rec {
     let
       hsSrc =
         stdenv.mkDerivation {
-          pname = "Agda-ledger-${dir}-hs-src";
+          pname = "formal-ledger-${dir}-hs-src";
           version = "0.1";
-          src = "${agdaLedger}";
+          src = "${formalLedger}";
           meta = { };
-          buildInputs = [ (agdaWithPkgs deps) ];
+          buildInputs = [ agdaWithStdLibMeta ];
           buildPhase = "";
           installPhase = ''
             mkdir -p $out
@@ -81,10 +80,10 @@ rec {
       docs = stdenv.mkDerivation {
         pname = "${dir}-docs";
         version = "0.1";
-        src = "${agdaLedger}";
+        src = "${formalLedger}";
         meta = { };
         buildInputs = [
-          (agdaWithPkgs deps)
+           agdaWithStdLibMeta
           (texlive.combine {
             inherit (texlive)
               scheme-small
@@ -98,12 +97,12 @@ rec {
         ];
         buildPhase = ''
           find ${dir} -name \*.lagda -exec agda --latex {} \;
-          cd latex && latexmk -xelatex ${dir}/${doc}.tex && cd ..
+          cd latex && latexmk -xelatex ${dir}/PDF.tex && cd ..
         '';
         installPhase = ''
           mkdir -p $out
-          agda --html --html-dir $out/html ${dir}/${doc}.lagda
-          cp latex/${doc}.pdf $out
+          agda --html --html-dir $out/html ${dir}/PDF.lagda
+          cp latex/PDF.pdf $out/${doc}.pdf
         '';
       };
     in
@@ -117,12 +116,12 @@ rec {
     dir = "Ledger";
     agdaLedgerFile = "Foreign/HSLedger.agda";
     hsMainFile = "HSLedgerTest.hs";
-    doc = "PDF";
+    doc = "cardano-ledger";
   };
   midnight = specsDerivations {
     dir = "MidnightExample";
     agdaLedgerFile = "HSLedger.agda";
     hsMainFile = "Main.hs";
-    doc = "PDF";
+    doc = "midnight-example";
   };
 }
