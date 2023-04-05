@@ -9,6 +9,11 @@ open import Algebra
 
 open PlutusStructure
 
+open import Data.Product
+
+addPair1 : (ℕ × ℕ) → (ℕ × ℕ) → (ℕ × ℕ)
+addPair1 a b = {!!}
+
 addPair : (ℕ × ℕ) → (ℕ × ℕ) → (ℕ × ℕ)
 addPair (a , b) (c , d) = (a + c) , (b + d)
 
@@ -28,6 +33,15 @@ addPairIsMonoid = record { isSemigroup = record { isMagma = record { isEquivalen
 
 addPairComm : Algebra.Commutative _≡_ addPair
 addPairComm (a , b) (c , d) rewrite +-comm a c | +-comm b d = refl
+
+ExUnitExample' : CommutativeMonoid 0ℓ 0ℓ
+ExUnitExample' = record
+                  { Carrier = ℕ × ℕ
+                  ; _≈_ =  _≡_
+                  ; _∙_ = addPair
+                  ; ε = zero , zero
+                  ; isCommutativeMonoid = record { isMonoid = {!!} ; comm = {!×-comm!} }
+                  }
 
 
 ExUnitExample : CommutativeMonoid 0ℓ 0ℓ
