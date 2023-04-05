@@ -5,7 +5,7 @@ open import Ledger.Prelude
 open import Data.Nat.Properties
 open import Algebra
 open PlutusStructure
-open import Ledger.ProductAlgebraPairProperties ℕ zero _≡_ _+_
+open import Ledger.PairOpAlgebra ℕ zero _≡_ _+_
 
 ExUnitExample : CommutativeMonoid 0ℓ 0ℓ
 ExUnitExample = record
@@ -13,7 +13,7 @@ ExUnitExample = record
                   ; _≈_ = _≈ᵖ_
                   ; _∙_ = _∙ᵖ_
                   ; ε = zero , zero
-                  ; isCommutativeMonoid = prodAddRespectsComm +-0-isCommutativeMonoid
+                  ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
                   }
 
 {-
