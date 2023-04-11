@@ -107,7 +107,7 @@ coinTokenAlgebra = record
       ; ε-homo  = refl
       }
     }
-  ; _≥ᵗ_                    = _≥_
+  ; _≤ᵗ_                    = _≤_
   ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
   }
 

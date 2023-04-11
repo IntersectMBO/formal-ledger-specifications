@@ -34,7 +34,7 @@ instance
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-GenesisDelegation = KeyHash ↛ (KeyHash × KeyHash)
+GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
 record PPUpdateState : Set where
   field pup   : ProposedPPUpdates

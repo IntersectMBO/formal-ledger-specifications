@@ -59,7 +59,7 @@ abstract
   ≟-∅ = Decˡ.≟-∅
 
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) public
-open import Axiom.Set.Map th renaming (Map to _↛_) public
+open import Axiom.Set.Map th renaming (Map to _⇀_) public
 open import Axiom.Set.TotalMap th public
 open L.Decˡ hiding (_∈?_; ≟-∅) public
 open import Axiom.Set.Sum th public
@@ -85,5 +85,5 @@ module Properties where
   module _ {A : Set} ⦃ _ : DecEq A ⦄ where
     open Intersectionᵖ {A} ∈-sp public
 
-_ᶠᵐ : {A B : Set} → A ↛ B → FinMap A B
+_ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B  -- unicode: `\rightharpoonup`
 (R , uniq) ᶠᵐ = (R , uniq , finiteness _)

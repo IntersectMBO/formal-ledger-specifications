@@ -79,10 +79,10 @@ This function must produce a unique id for each unique transaction body.
 \begin{code}
   TxIn  = TxId × Ix
   TxOut = Addr × Value
-  UTxO  = TxIn ↛ TxOut
-  Wdrl  = RwdAddr ↛ Coin
+  UTxO  = TxIn ⇀ TxOut
+  Wdrl  = RwdAddr ⇀ Coin
 
-  ProposedPPUpdates = KeyHash ↛ PParamsUpdate
+  ProposedPPUpdates = KeyHash ⇀ PParamsUpdate
   Update            = ProposedPPUpdates × Epoch
 \end{code}
 \emph{Transaction types}
@@ -90,7 +90,7 @@ This function must produce a unique id for each unique transaction body.
 \begin{code}
   record TxBody : Set where
     field txins      : ℙ TxIn
-          txouts     : Ix ↛ TxOut
+          txouts     : Ix ⇀ TxOut
           --txcerts  : List DCert
           mint       : Value
           txfee      : Coin
@@ -103,7 +103,7 @@ This function must produce a unique id for each unique transaction body.
           txid       : TxId
 
   record TxWitnesses : Set where
-    field vkSigs   : VKey ↛ Sig
+    field vkSigs   : VKey ⇀ Sig
           scripts  : ℙ Script
 
   record Tx : Set where
