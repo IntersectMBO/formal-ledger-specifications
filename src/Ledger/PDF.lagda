@@ -71,6 +71,9 @@ open import Ledger.Utxow txs
 open import Ledger.Deleg
 open import Ledger.Chain txs
 
+open import Ledger.PPUp
+open import Ledger.PPUp.Properties
+
 open import Ledger.Ledger.Properties
 \end{code}
 

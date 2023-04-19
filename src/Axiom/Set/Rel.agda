@@ -20,6 +20,7 @@ open import Data.Product.Properties
 open import Interface.DecEq
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 open import Relation.Nullary
+open import Relation.Binary hiding (Rel)
 
 open Equivalence
 
@@ -94,6 +95,9 @@ dom-mapʳ⊆ a∈dmR with to dom∈ a∈dmR
 mapʳ-dom : {f : B → B'} → dom R ≡ᵉ dom (mapʳ f R)
 mapʳ-dom = dom-⊆mapʳ , dom-mapʳ⊆
 
+dom-∅ : dom R ⊆ ∅ → R ≡ᵉ ∅
+dom-∅ dom⊆∅ = ∅-least (λ {x} x∈R → ⊥-elim $ ∉-∅ $ dom⊆∅ $ from dom∈ (-, x∈R))
+
 module Restriction (sp-∈ : spec-∈ A) where
 
   _∣_ : Rel A B → Set A → Rel A B
@@ -105,6 +109,10 @@ module Restriction (sp-∈ : spec-∈ A) where
   _⟪$⟫_ : Rel A B → Set A → Set B
   m ⟪$⟫ X = range (m ∣ X)
 
+  res-cong : (R ∣_) Preserves _≡ᵉ_ ⟶ _≡ᵉ_
+  res-cong (X⊆Y , Y⊆X) = (λ ∈R∣X → ∈⇔P (Data.Product.map₁ X⊆Y (∈⇔P ∈R∣X)))
+                       , (λ ∈R∣Y → ∈⇔P (Data.Product.map₁ Y⊆X (∈⇔P ∈R∣Y)))
+
   res-dom : dom (R ∣ X) ⊆ X
   res-dom a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = proj₁ $ ∈⇔P h
@@ -112,6 +120,10 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-domᵐ : dom (R ∣ X) ⊆ dom R
   res-domᵐ a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = ∈-map⁺'' $ proj₂ (∈⇔P h)
+
+  cores-cong : (R ∣_ᶜ) Preserves _≡ᵉ_ ⟶ _≡ᵉ_
+  cores-cong (X⊆Y , Y⊆X) = (λ ∈R∣X → ∈⇔P (Data.Product.map₁ (_∘ Y⊆X) (∈⇔P ∈R∣X)))
+                         , (λ ∈R∣Y → ∈⇔P (Data.Product.map₁ (_∘ X⊆Y) (∈⇔P ∈R∣Y)))
 
   cores-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → a ∉ X
   cores-dom a∈dom with ∈⇔P a∈dom
@@ -126,6 +138,9 @@ module Restriction (sp-∈ : spec-∈ A) where
 
   ex-⊆ : (R ∣ X ᶜ) ⊆ R
   ex-⊆ = proj₂ ∘′ ∈⇔P
+
+  res-∅ : R ∣ ∅ ≡ᵉ ∅
+  res-∅ = dom-∅ res-dom
 
   res-ex-∪ : Dec₁ (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
   res-ex-∪ ∈X? = ∪-⊆ res-⊆ ex-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where

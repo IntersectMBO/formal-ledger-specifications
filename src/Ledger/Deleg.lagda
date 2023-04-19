@@ -30,6 +30,7 @@ record PoolParams : Set where
 
 data DCert : Set where
   delegate   : Credential → Maybe Credential → Maybe Credential → Coin → DCert
+  -- ^ TODO change `nothing` to leaving things unchanged & figure out how to undelegate best
   regpool    : Credential → PoolParams → DCert
   retirepool : Credential → Epoch → DCert
   regdrep    : Credential → Coin → DCert

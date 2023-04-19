@@ -57,7 +57,6 @@ This function must produce a unique id for each unique transaction body.
         networkId                           : Network
         tokenAlgebra                        : TokenAlgebra
         instance DecEq-TxId  : DecEq TxId
-                 DecEq-Epoch : DecEq Epoch
                  DecEq-Ix    : DecEq Ix
                  DecEq-Netw  : DecEq Network
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)

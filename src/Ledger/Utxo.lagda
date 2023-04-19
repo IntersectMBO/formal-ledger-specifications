@@ -15,9 +15,11 @@ open import Ledger.Prelude hiding (Dec₁)
 
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Structures
+open import Data.Integer as ℤ using (ℤ; _⊖_; sign)
 open import Data.List as List
 open import Data.Nat using (_≤?_; _≤_)
 open import Data.Nat.Properties using (+-0-monoid ; +-0-commutativeMonoid)
+open import Data.Sign using (Sign)
 open import Interface.Decidable.Instance
 
 open TransactionStructure txs
@@ -33,12 +35,16 @@ open import Ledger.TokenAlgebra using (TokenAlgebra)
 open import MyDebugOptions
 --open import Tactic.Defaults
 open import Tactic.DeriveComp
+open import Tactic.Derive.DecEq
 
 instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
+
+  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ↛ Coin)
+  HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
@@ -83,28 +89,37 @@ minfee : PParams → TxBody → Coin
 minfee pp tx = a * txsize tx + b
   where open PParams pp
 
-certDeposit : DCert → Maybe (Credential × Coin)
-certDeposit (delegate c _ _ v)                 = just $ c , v
-certDeposit (regpool c record { deposit = v }) = just $ c , v
-certDeposit (regdrep c v)                      = just $ c , v
-certDeposit (retirepool _ _)                   = nothing
-certDeposit (deregdrep _)                      = nothing
-certDeposit (ccreghot _ _)                     = nothing
+data DepositPurpose : Set where
+  CredentialDeposit  : DepositPurpose
+  PoolDeposit        : DepositPurpose
+  DRepDeposit        : DepositPurpose
 
-txDeposits : TxBody → Credential ↛ Coin
-txDeposits = foldr _∪⁺_ ∅ᵐ ∘ List.map (f ∘ certDeposit) ∘ txcerts
-  where
-    f : Maybe (Credential × Coin) → Credential ↛ Coin
-    f (just x) = ❴ x ❵ᵐ
-    f nothing = ∅ᵐ
+instance
+  unquoteDecl DecEq-DepositPurpose = derive-DecEq ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
 
--- TODO rewrite this using txDeposits
-totalDeposits : TxBody → Value
-totalDeposits = foldr _+ᵛ_ (inject 0) ∘ List.map (f ∘ certDeposit) ∘ txcerts
-  where
-    f : Maybe (Credential × Coin) → Value
-    f (just (_ , x)) = inject x
-    f nothing = inject 0
+certDeposit : DCert → Maybe (DepositPurpose × Credential × Coin)
+certDeposit (delegate c _ _ v)                 = just (CredentialDeposit , c , v)
+certDeposit (regpool c record { deposit = v }) = just (PoolDeposit       , c , v)
+certDeposit (regdrep c v)                      = just (DRepDeposit       , c , v)
+certDeposit _                                  = nothing
+
+certDepositᵐ : DCert → (DepositPurpose × Credential) ↛ Coin
+certDepositᵐ cert = case certDeposit cert of λ where
+  (just (p , c , v)) → ❴ (p , c) , v ❵ᵐ
+  nothing            → ∅ᵐ
+
+certRefund : DCert → Maybe (DepositPurpose × Credential)
+certRefund (delegate c nothing nothing x) = just (CredentialDeposit , c)
+certRefund (deregdrep c)                  = just (DRepDeposit       , c)
+certRefund _                              = nothing
+
+certRefundˢ : DCert → ℙ (DepositPurpose × Credential)
+certRefundˢ cert = case certRefund cert of λ where
+  (just x) → ❴ x ❵
+  nothing  → ∅
+
+txDeposits : TxBody → (DepositPurpose × Credential) ↛ Coin
+txDeposits = foldr _∪⁺_ ∅ᵐ ∘ List.map certDepositᵐ ∘ txcerts
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -138,34 +153,49 @@ record UTxOState : Set where
   constructor ⟦_,_,_⟧ᵘ
   field utxo : UTxO
         fees : Coin
-        deposits : Credential ↛ Coin
+        deposits : (DepositPurpose × Credential) ↛ Coin
 
-refunded : UTxOState → TxBody → Value
-refunded st = sumᵛ ∘ List.map f ∘ txcerts
-  where
-    open UTxOState st
-    f : DCert → Value
-    f (delegate c nothing nothing x) with c ∈? dom (deposits ˢ)
-    ... | yes p = inject (lookupᵐ deposits c)
-    ... | no p = inject 0 -- TODO This shouldn't be allowed to happen
-    f (delegate c _ _ x) = inject 0
-    f (regpool _ _) = inject 0
-    f (retirepool _ _) = inject 0
-    f (regdrep _ _) = inject 0
-    f (deregdrep c) with c ∈? dom (deposits ˢ)
-    ... | yes p = inject (lookupᵐ deposits c)
-    ... | no p = inject 0
-    f (ccreghot _ _) = inject 0
+updateDeposits : List DCert → (DepositPurpose × Credential) ↛ Coin → (DepositPurpose × Credential) ↛ Coin
+updateDeposits []             deposits = deposits
+updateDeposits (cert ∷ certs) deposits =
+  ((updateDeposits certs deposits) ∪⁺ certDepositᵐ cert) ∣ certRefundˢ cert ᶜ
 
-consumed : PParams → UTxOState → UTxO → TxBody → Value
-consumed pp st utxo txb = balance (utxo ∣ txins txb)
-                       +ᵛ mint txb
-                       +ᵛ refunded st txb
+ℤtoSignedℕ : ℤ → Sign × ℕ
+ℤtoSignedℕ x = (ℤ.sign x , ℤ.∣ x ∣)
 
-produced : PParams → UTxO → TxBody → Value
-produced pp utxo txb = balance (outs txb)
-                       +ᵛ inject (txfee txb)
-                       +ᵛ totalDeposits txb
+posPart : ℤ → ℕ
+posPart x with ℤtoSignedℕ x
+... | (Sign.+ , x) = x
+... | _            = 0
+
+negPart : ℤ → ℕ
+negPart x with ℤtoSignedℕ x
+... | (Sign.- , x) = x
+... | _            = 0
+
+depositsChange : List DCert → (DepositPurpose × Credential) ↛ Coin → ℤ.ℤ
+depositsChange certs deposits = getCoin (updateDeposits certs deposits) ⊖ getCoin deposits
+
+refundedDeposits : TxBody → ℙ (DepositPurpose × Credential)
+refundedDeposits = mapPartial certRefund ∘ fromList ∘ txcerts
+
+refunded : UTxOState → TxBody → Coin
+refunded st txb = negPart $ depositsChange (txcerts txb) deposits
+  where open UTxOState st
+
+totalDeposits : UTxOState → TxBody → Coin
+totalDeposits st txb = posPart $ depositsChange (txcerts txb) deposits
+  where open UTxOState st
+
+consumed : PParams → UTxOState → TxBody → Value
+consumed pp st txb = balance (UTxOState.utxo st ∣ txins txb)
+                   +ᵛ mint txb
+                   +ᵛ inject (refunded st txb)
+
+produced : PParams → UTxOState → TxBody → Value
+produced pp st txb = balance (outs txb)
+                   +ᵛ inject (txfee txb)
+                   +ᵛ inject (totalDeposits st txb)
 \end{code}
 \emph{UTxO transitions}
 
@@ -207,9 +237,6 @@ instance
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} = yes none
 
-  HasCoin-Deposits : HasCoin (Credential ↛ Coin)
-  HasCoin-Deposits .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
-
   HasCoin-UTxOState : HasCoin UTxOState
   HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s) + (UTxOState.fees s) + getCoin (UTxOState.deposits s)
 data
@@ -233,13 +260,12 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo          = UTxOState.utxo s
           fees          = UTxOState.fees s
           deposits      = UTxOState.deposits s
-          depositChange = coin (totalDeposits tx) ∸ coin (refunded s tx)
       in
     txins tx ≢ ∅
     → inInterval slot (txvldt tx)
     → txins tx ⊆ dom (utxo ˢ)
     → let f = txfee tx in minfee pp tx ≤ f
-    → consumed pp s utxo tx ≡ produced pp utxo tx
+    → consumed pp s tx ≡ produced pp s tx
     → coin (mint tx) ≡ 0
 
 {- these break deriveComputational but don't matter at the moment
@@ -257,10 +283,10 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
     → txsize tx ≤ PParams.maxTxSize pp
     ────────────────────────────────
-    Γ
-      ⊢ s
-      ⇀⦇ tx ,UTXO⦈
-      ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx , fees + f , deposits ∪⁺ txDeposits tx ⟧ᵘ
+    Γ ⊢ s ⇀⦇ tx ,UTXO⦈
+        ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
+        , fees + f
+        , updateDeposits (txcerts tx) deposits ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move
