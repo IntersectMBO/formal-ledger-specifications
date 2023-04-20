@@ -19,14 +19,14 @@ ExUnitExample = record
 {-
 HSP2ScriptStructure : PlutusStructure ℕ ℕ ℕ
 HSP2ScriptStructure = record
-                        { Dataʰ = {!!}
-                        ; PlutusScript = {!!}
-                        ; CostModel = {!!}
-                        ; ExUnit-CommutativeMonoid = ExUnitExample
-                        ; Hashable-PlutusScript = {!!}
-                        ; DecEq-PlutusScript = {!!}
-                        ; _≥ᵉ_ = {!!}
-                        ; validPlutusScript = {!!}
-                        ; validPlutusScript? = {!!}
-                        }
+  { Dataʰ = {!!}
+    ; PlutusScript = {!!}
+    ; CostModel = {!!}
+    ; ExUnit-CommutativeMonoid = ExUnitExample
+    ; Hashable-PlutusScript = {!!}
+    ; DecEq-PlutusScript = {!!}
+    ; _≥ᵉ_ = {!!}
+    ; validPlutusScript = {!!}
+    ; validPlutusScript? = {!!}
+  }
 -}

@@ -65,10 +65,12 @@ ScriptAddr = ScriptBaseAddr ⊎ ScriptBootstrapAddr
 \emph{Helper functions}
 \AgdaTarget{payCred, isVKeyAddr}
 \begin{code}
-payCred     : Addr → Credential
-netId       : Addr → Network
-isVKeyAddr  : Addr → Set
-isVKeyAddr  = isVKey ∘ payCred
+payCred      : Addr → Credential
+netId        : Addr → Network
+isVKeyAddr   : Addr → Set
+isScriptAddr : Addr → Set
+isVKeyAddr   = isVKey ∘ payCred
+isScriptAddr = isScript ∘ payCred
 \end{code}
 \end{AgdaAlign}
 \caption{Definitions used in Addresses}
@@ -88,9 +90,21 @@ isVKey? (inj₂ _) = no  (λ ())
 isVKeyAddr? : ∀ a → Dec (isVKeyAddr a)
 isVKeyAddr? = isVKey? ∘ payCred
 
+isScript? : ∀ c → Dec (isScript c)
+isScript? (inj₁ _) = no (λ { () })
+isScript? (inj₂ y) = yes (SHisScript y)
+
+isScriptAddr? : ∀ a → Dec (isScriptAddr a)
+isScriptAddr? = isScript? ∘ payCred
+
+getScriptHash : ∀ a → isScriptAddr a → ScriptHash
+getScriptHash (inj₁ record { net = net ; pay = .(inj₂ sh) ; stake = stake }) (SHisScript sh) = sh
+getScriptHash (inj₂ record { net = net ; pay = .(inj₂ sh) ; attrsSize = attrsSize }) (SHisScript sh) = sh
+
 instance abstract
   unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RwdAddr = derive-DecEq
     ((quote BaseAddr     , DecEq-BaseAddr) ∷
     (quote BootstrapAddr , DecEq-BootstrapAddr) ∷
     (quote RwdAddr       , DecEq-RwdAddr) ∷ [])
+
 \end{code}

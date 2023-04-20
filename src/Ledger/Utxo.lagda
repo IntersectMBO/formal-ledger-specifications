@@ -52,7 +52,17 @@ instance
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
 
 isTwoPhaseScriptAddress : Tx → Addr → Bool
-isTwoPhaseScriptAddress tx a = {!!}
+isTwoPhaseScriptAddress tx a with isScriptAddr? a
+... | no ¬p = false
+... | yes p with getScriptHash a p
+... | scriptHash = {!!}
+
+-- validatorHash a ↦ s ∈ txscripts(txwits tx) ∧ s ∈ Scripts^{ph2}
+-- {{Hashable A}} -> P A -> Map Hash A
+-- could say the hash function is injective as part of the hashable class
+
+getRedeemers : Tx → (RdmrPtr ⇀ (Redeemer × ExUnits))
+getRedeemers tx = TxWitnesses.txrdmrs (Tx.wits tx)
 
 totExUnits : Tx → ExUnits
 totExUnits tx = Σᵐ[ x ← TxWitnesses.txrdmrs (Tx.wits tx) ᶠᵐ ] (proj₂ (proj₂ x))
