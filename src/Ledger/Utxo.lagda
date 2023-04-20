@@ -64,9 +64,6 @@ isPhaseTwoScriptAddress tx a with isScriptAddr? a
 ... | no ¬p = false
 ... | yes p₁ = isP2Script (lookupMap m p₁)
 
-getRedeemers : Tx → (RdmrPtr ⇀ (Redeemer × ExUnits))
-getRedeemers tx = TxWitnesses.txrdmrs (Tx.wits tx)
-
 totExUnits : Tx → ExUnits
 totExUnits tx = Σᵐ[ x ← TxWitnesses.txrdmrs (Tx.wits tx) ᶠᵐ ] (proj₂ (proj₂ x))
 
