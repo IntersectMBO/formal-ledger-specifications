@@ -4,6 +4,11 @@ This repository contains the formal ledger specifications that are intended to e
 
 This repository currently contains two specifications---the work in progress specification for Cardano (up to and including the Conway era) and a small example that was produced for the Midnight project (but is unrelated to any actual Midnight code/features). Each specification is executable and contains some documentation in the form of a PDF document. They can be built by following the steps below.
 
+Project | Formal Specification
+--------|----------------------|
+Cardano | [Ledger Spec](https://input-output-hk.github.io/formal-ledger-specifications/pdfs/cardano-ledger.pdf) |
+Midnight Example | [Ledger Spec](https://input-output-hk.github.io/formal-ledger-specifications/pdfs/midnight-example.pdf) |
+
 --------------------
 
 ## Build and Test the Formal Spec
