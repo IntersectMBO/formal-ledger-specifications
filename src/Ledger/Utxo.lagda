@@ -43,8 +43,6 @@ open import Data.Bool using (_∧_)
 
 open import Ledger.Script
 
-
-
 instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
@@ -67,6 +65,10 @@ isPhaseTwoScriptAddress tx a with isScriptAddr? a
 ... | m with _∈?_ scriptHash (Ledger.Prelude.map proj₁ $ m ˢ)
 ... | no ¬p = false
 ... | yes p₁ = isP2Script (lookupMap m p₁)
+
+-- validatorHash a ↦ s ∈ txscripts(txwits tx) ∧ s ∈ Scripts^{ph2}
+-- {{Hashable A}} -> P A -> Map Hash A
+-- could say the hash function is injective as part of the hashable class
 
 totExUnits : Tx → ExUnits
 totExUnits tx = Σᵐ[ x ← TxWitnesses.txrdmrs (Tx.wits tx) ᶠᵐ ] (proj₂ (proj₂ x))
