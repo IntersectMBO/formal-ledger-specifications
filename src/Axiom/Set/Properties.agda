@@ -157,7 +157,7 @@ map-∅ : {X : Set A} {f : A → B} → map f ∅ ≡ᵉ ∅
 map-∅ = ∅-least λ x∈map → case ∈-map⁻' x∈map of λ where (_ , _ , h) → ⊥-elim (∉-∅ h)
 
 mapPartial-∅ : {f : A → Maybe B} → mapPartial f ∅ ≡ᵉ ∅
-mapPartial-∅ {f = f} = ∅-least λ x∈map → case to (∈-mapPartial {f = f}) x∈map of λ where
+mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f = f}) x∈map of λ where
   (_ , h , _) → ⊥-elim (∉-∅ h)
 
 card-≡ᵉ : (X Y : Σ (Set A) strongly-finite) → proj₁ X ≡ᵉ proj₁ Y → card X ≡ card Y
