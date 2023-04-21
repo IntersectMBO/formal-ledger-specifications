@@ -274,6 +274,6 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
   ∩-sym⊆ : X ∩ Y ⊆ Y ∩ X
   ∩-sym⊆ a∈X∩Y with from ∈-∩ a∈X∩Y
   ... | a∈X , a∈Y = to ∈-∩ (a∈Y , a∈X)
-  
+
   ∩-sym : X ∩ Y ≡ᵉ Y ∩ X
   ∩-sym = ∩-sym⊆ , ∩-sym⊆

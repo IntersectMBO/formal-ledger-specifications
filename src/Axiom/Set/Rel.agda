@@ -121,16 +121,16 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-domᵐ a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = ∈-map⁺'' $ proj₂ (∈⇔P h)
 
-  cores-cong : (R ∣_ᶜ) Preserves _≡ᵉ_ ⟶ _≡ᵉ_
-  cores-cong (X⊆Y , Y⊆X) = (λ ∈R∣X → ∈⇔P (Data.Product.map₁ (_∘ Y⊆X) (∈⇔P ∈R∣X)))
-                         , (λ ∈R∣Y → ∈⇔P (Data.Product.map₁ (_∘ X⊆Y) (∈⇔P ∈R∣Y)))
+  res-comp-cong : (R ∣_ᶜ) Preserves _≡ᵉ_ ⟶ _≡ᵉ_
+  res-comp-cong (X⊆Y , Y⊆X) = (λ ∈R∣X → ∈⇔P (Data.Product.map₁ (_∘ Y⊆X) (∈⇔P ∈R∣X)))
+                            , (λ ∈R∣Y → ∈⇔P (Data.Product.map₁ (_∘ X⊆Y) (∈⇔P ∈R∣Y)))
 
-  cores-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → a ∉ X
-  cores-dom a∈dom with ∈⇔P a∈dom
+  res-comp-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → a ∉ X
+  res-comp-dom a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = proj₁ $ ∈⇔P h
 
-  cores-domᵐ : dom (R ∣ X ᶜ) ⊆ dom R
-  cores-domᵐ a∈dom with ∈⇔P a∈dom
+  res-comp-domᵐ : dom (R ∣ X ᶜ) ⊆ dom R
+  res-comp-domᵐ a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = ∈-map⁺'' (proj₂ (∈⇔P h))
 
   res-⊆ : (R ∣ X) ⊆ R
@@ -148,7 +148,7 @@ module Restriction (sp-∈ : spec-∈ A) where
     (no ¬p) → ∈⇔P (inj₂ (∈⇔P (¬p , h)))
 
   res-ex-disjoint : disjoint (dom (R ∣ X)) (dom (R ∣ X ᶜ))
-  res-ex-disjoint h h' = cores-dom h' (res-dom h)
+  res-ex-disjoint h h' = res-comp-dom h' (res-dom h)
 
   res-ex-disj-∪ : Dec₁ (_∈ X) → R ≡ (R ∣ X) ⨿ (R ∣ X ᶜ)
   res-ex-disj-∪ ∈X? =
@@ -182,7 +182,7 @@ module Restriction (sp-∈ : spec-∈ A) where
     dom (m ∣ dom m') ≈⟨ res-dom-comm' ⟩
     dom m ∩ dom m'   ≈˘⟨ ∩-sym ⟩
     dom m' ∩ dom m   ≈˘⟨ res-dom-comm' ⟩
-    dom (m' ∣ dom m) ∎ 
+    dom (m' ∣ dom m) ∎
     where open SetoidReasoning ≡ᵉ-Setoid
 
 module Corestriction (sp-∈ : spec-∈ B) where

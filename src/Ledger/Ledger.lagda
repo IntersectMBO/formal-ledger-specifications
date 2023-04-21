@@ -34,7 +34,6 @@ record LState : Set where
   constructor ⟦_,_,_⟧ˡ
   field utxoSt : UTxOState
         tally  : TallyState
-        --ppup   : PPUpdateState
         certState : CertState
 \end{code}
 \caption{Types for the LEDGER transition system}

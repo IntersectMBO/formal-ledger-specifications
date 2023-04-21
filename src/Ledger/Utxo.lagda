@@ -114,12 +114,10 @@ certRefund (deregdrep c)                  = just (DRepDeposit       , c)
 certRefund _                              = nothing
 
 certRefundˢ : DCert → ℙ (DepositPurpose × Credential)
-certRefundˢ cert = case certRefund cert of λ where
-  (just x) → ❴ x ❵
-  nothing  → ∅
+certRefundˢ = partialToSet certRefund
 
-txDeposits : TxBody → (DepositPurpose × Credential) ↛ Coin
-txDeposits = foldr _∪⁺_ ∅ᵐ ∘ List.map certDepositᵐ ∘ txcerts
+-- txDeposits : TxBody → (DepositPurpose × Credential) ↛ Coin
+-- txDeposits = foldr _∪⁺_ ∅ᵐ ∘ List.map certDepositᵐ ∘ txcerts
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -176,26 +174,26 @@ negPart x with ℤtoSignedℕ x
 depositsChange : List DCert → (DepositPurpose × Credential) ↛ Coin → ℤ.ℤ
 depositsChange certs deposits = getCoin (updateDeposits certs deposits) ⊖ getCoin deposits
 
-refundedDeposits : TxBody → ℙ (DepositPurpose × Credential)
-refundedDeposits = mapPartial certRefund ∘ fromList ∘ txcerts
+-- refundedDeposits : TxBody → ℙ (DepositPurpose × Credential)
+-- refundedDeposits = mapPartial certRefund ∘ fromList ∘ txcerts
 
-refunded : UTxOState → TxBody → Coin
-refunded st txb = negPart $ depositsChange (txcerts txb) deposits
+depositRefunds : UTxOState → TxBody → Coin
+depositRefunds st txb = negPart $ depositsChange (txcerts txb) deposits
   where open UTxOState st
 
-totalDeposits : UTxOState → TxBody → Coin
-totalDeposits st txb = posPart $ depositsChange (txcerts txb) deposits
+newDeposits : UTxOState → TxBody → Coin
+newDeposits st txb = posPart $ depositsChange (txcerts txb) deposits
   where open UTxOState st
 
 consumed : PParams → UTxOState → TxBody → Value
 consumed pp st txb = balance (UTxOState.utxo st ∣ txins txb)
                    +ᵛ mint txb
-                   +ᵛ inject (refunded st txb)
+                   +ᵛ inject (depositRefunds st txb)
 
 produced : PParams → UTxOState → TxBody → Value
 produced pp st txb = balance (outs txb)
                    +ᵛ inject (txfee txb)
-                   +ᵛ inject (totalDeposits st txb)
+                   +ᵛ inject (newDeposits st txb)
 \end{code}
 \emph{UTxO transitions}
 
