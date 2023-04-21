@@ -112,9 +112,23 @@ jobs:
             cp -L --force $f pdfs
           done
 
+      - name: Prepare html docs to be deployed to site
+        if: github.ref =='refs/heads/master'
+        id: html
+        run: |
+          mkdir -p html
+          cp -L -r outputs/ledger/html html/ledger
+          cp -L -r outputs/midnight/html html/midnight
+          ledger=$(nix eval -f default.nix "ledger.name")
+          midnight=$(nix eval -f default.nix "midnight.name")
+          echo "ledger=$ledger" >> $GITHUB_OUTPUT
+          echo "midnight=$midnight" >> $GITHUB_OUTPUT
+
       - name: Build static file
         if: github.ref == 'refs/heads/master'
         run: |
+              ledger="${{steps.html.outputs.ledger}}.PDF.html"
+              midnight="${{steps.html.outputs.midnight}}.PDF.html"
               touch index.html
               cat > index.html << EOF
               <!DOCTYPE html>
@@ -126,6 +140,8 @@ jobs:
               for f in pdfs/*.pdf; do
                 echo "<li><a href="$f">$(basename $f)</a></li>" >> index.html
               done
+              echo  "<li><a href="html/ledger/${ledger}">${ledger}</a></li>" >> index.html
+              echo  "<li><a href="html/midnight/${midnight}">${midnight}</a></li>" >> index.html
               cat >> index.html << EOF
               </ul>
               </body>
@@ -139,6 +155,7 @@ jobs:
             git config --local user.name ${{ github.actor }}
             git add index.html
             git add pdfs
+            git add html
             git commit -m "Updated"
 
 
