@@ -110,6 +110,7 @@ rec {
       executableSpecSrc = hsSrc;
       executableSpec = haskellPackages.callCabal2nix "Agda-ledger-executable-spec" "${hsSrc}" { };
       docs = docs;
+      name = dir;
     };
 
   ledger = specsDerivations {
