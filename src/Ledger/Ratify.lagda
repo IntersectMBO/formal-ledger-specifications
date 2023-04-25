@@ -44,7 +44,7 @@ record RatifyState : Set where
 \caption{Types and functions for the RATIFY transition system}
 \end{figure*}
 \begin{figure*}[h]
-\begin{code}
+\begin{code}[hide]
 -- TODO: remove these or put them into RatifyState
 coinThreshold rankThreshold : ℕ
 coinThreshold = 1000000000
@@ -97,7 +97,8 @@ topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
   (_     , no  _)  → ∅ᵐ
   (no _  , yes _)  → dist
   (yes p , yes p₁) → mostStakeDRepDist dist (proj₁ (∃topNDRepDist {dist = dist} p p₁))
-
+\end{code}
+\begin{code}
 -- restrict the DRep stake distribution
 -- commented out for now, since we don't know if that'll actually be implemented
 restrictedDists : ℕ → ℕ → StakeDistrs → StakeDistrs

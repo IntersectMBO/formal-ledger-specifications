@@ -32,10 +32,9 @@ record LEnv : Set where
 
 record LState : Set where
   constructor ⟦_,_,_⟧ˡ
-  field utxoSt : UTxOState
-        tally  : TallyState
-        --ppup   : PPUpdateState
-        certState : CertState
+  field utxoSt     : UTxOState
+        tally      : TallyState
+        certState  : CertState
 \end{code}
 \caption{Types for the LEDGER transition system}
 \end{figure*}

@@ -1,18 +1,21 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
 open import Agda.Primitive renaming (Set to Type)
+
 module Axiom.Set where
 
 open import Prelude hiding (filter)
 
-import Data.List as L
 import Function.Related.Propositional as R
 open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.DecPropositional.Properties
 open import Data.List.Relation.Unary.Unique.Propositional
+open import Data.Maybe.Properties.Ext
 open import Data.Product.Algebra using (×-comm)
+open import Data.Product.Properties
+open import Data.Product.Properties.Ext
 open import Interface.DecEq
 open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary
@@ -159,12 +162,6 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   card-∅ : card (∅ {A} , ∅-strongly-finite) ≡ 0
   card-∅ = refl
 
-  partialToSet : (A → Maybe B) → A → Set B
-  partialToSet f a = maybe (fromList ∘ [_]) ∅ (f a)
-
-  mapPartial : (A → Maybe B) → Set A → Set B
-  mapPartial f X = proj₁ $ unions (map (partialToSet f) X)
-
   singleton : A → Set A
   singleton a = fromList [ a ]
 
@@ -177,28 +174,34 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
     a ∈ singleton b ∎
     where open R.EquationalReasoning
 
-  maybe-∘ : {f : B → C} {g : A → B} {c : B} {x : Maybe A} → f (maybe g c x) ≡ maybe (f ∘ g) (f c) x
-  maybe-∘ {x = (just x)} = refl
-  maybe-∘ {x = nothing} = refl
+  partialToSet : (A → Maybe B) → A → Set B
+  partialToSet f a = maybe (fromList ∘ [_]) ∅ (f a)
 
-  ∈-mapPartial : {y : B} {f : A → Maybe B} → y ∈ mapPartial f X ⇔ (∃[ x ] (x ∈ X × f x ≡ just y))
-  ∈-mapPartial {y = y} {f} = mk⇔ to' from'
-    where
-      open import Relation.Binary.PropositionalEquality
+  ∈-partialToSet : ∀ {a : A} {b : B} {f} → f a ≡ just b ⇔ b ∈ partialToSet f a
+  ∈-partialToSet {a = a} {b} {f} = mk⇔
+    (λ h → subst (λ x → b ∈ maybe (fromList ∘ [_]) ∅ x) (sym h) (to ∈-singleton refl))
+    (case f a return (λ y → b ∈ maybe (λ x → fromList [ x ]) ∅ y → y ≡ just b) of λ where
+      (just x) → λ h → cong just (sym $ from ∈-singleton h)
+      nothing  → λ h → case from ∈-fromList h of λ ())
 
-      to' : y ∈ mapPartial f X → ∃[ x ] (x ∈ X × f x ≡ just y)
-      to' y∈mPfX with from ∈-unions y∈mPfX
-      ... | _ , y'∈map , y∈y' with from ∈-map y'∈map
-      ... | x' , p , x'∈X₁ with trans p (sym (maybe-∘ {f = fromList} {_∷ []} {[]} {f x'}))
-      ... | refl with f x' | inspect f x' | from ∈-fromList y∈y'
-      ... | just .y | [ eq ] | here refl = x' , x'∈X₁ , eq
+  mapPartial : (A → Maybe B) → Set A → Set B
+  mapPartial f X = proj₁ $ unions (map (partialToSet f) X)
 
-      from' : ∃[ x ] (x ∈ X × f x ≡ just y) → y ∈ mapPartial f X
-      from' (x , x∈X , fx≡jy) with f x | inspect f x
-      from' (x , x∈X , refl) | just x₁ | [ eq ] = to ∈-unions
-        ( maybe ❴_❵ ∅ (f x)
-        , to ∈-map (x , refl , x∈X)
-        , subst (λ z → x₁ ∈ maybe ❴_❵ ∅ z) (sym eq) (to ∈-singleton refl))
+  ∈-mapPartial : {y : B} {f : A → Maybe B} → (∃[ x ] x ∈ X × f x ≡ just y) ⇔ y ∈ mapPartial f X
+  ∈-mapPartial {X = X} {y} {f} =
+    (∃[ x ] x ∈ X × f x ≡ just y)
+      ∼⟨ ∃-cong′ (R.K-refl ×-cong (∈-partialToSet {f = f})) ⟩
+    (∃[ x ] x ∈ X × y ∈ partialToSet f x)
+      ∼⟨ ∃-cong′ (λ {x} → ∃-≡ (λ T → x ∈ X × y ∈ T)) ⟩
+    (∃[ x ] ∃[ T ] T ≡ partialToSet f x × x ∈ X × y ∈ T)
+      ↔⟨ ∃∃↔∃∃ (λ x T → T ≡ partialToSet f x × x ∈ X × y ∈ T) ⟩
+    (∃[ T ] ∃[ x ] T ≡ partialToSet f x × x ∈ X × y ∈ T)    ∼⟨ ∃-cong′ $ mk⇔
+      (λ where (x , p₁ , p₂ , p₃) → ((x , p₁ , p₂) , p₃))
+      (λ where ((x , p₁ , p₂) , p₃) → (x , p₁ , p₂ , p₃)) ⟩
+    (∃[ T ] (∃[ x ] T ≡ partialToSet f x × x ∈ X) × y ∈ T)  ∼⟨ ∃-cong′ (∈-map ×-cong R.K-refl) ⟩
+    (∃[ T ] T ∈ map (partialToSet f) X × y ∈ T)             ∼⟨ ∈-unions ⟩
+    y ∈ mapPartial f X ∎
+    where open R.EquationalReasoning
 
   binary-unions : ∃[ Y ] ∀ {a} → (a ∈ X ⊎ a ∈ X') ⇔ a ∈ Y
   binary-unions {X = X} {X'} with unions (fromList (X ∷ [ X' ]))
@@ -295,7 +298,7 @@ record Theoryᵈ : Type₁ where
   incl-set-proj₁⊇ : ⦃ _ : DecEq A ⦄ → {X : Set A} → X ⊆ map proj₁ (incl-set X)
   incl-set-proj₁⊇ {X = X} {x} x∈X with x ∈? X | inspect (_∈? X) x
   ... | no ¬p | _  = contradiction x∈X ¬p
-  ... | yes p | eq = to ∈-map ((x , p) , refl , from (∈-mapPartial {f = incl-set' X})
+  ... | yes p | eq = to ∈-map ((x , p) , refl , to (∈-mapPartial {f = incl-set' X})
     (x , x∈X , helper (Reveal_·_is_.eq eq)))
     where
       helper : x ∈? X ≡ yes p → incl-set' X x ≡ just (x , p)

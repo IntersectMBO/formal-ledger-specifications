@@ -150,6 +150,16 @@ map-≡ᵉ (x⊆y , y⊆x) = map-⊆ x⊆y , map-⊆ y⊆x
 ∅-weakly-finite : weakly-finite {A = A} ∅
 ∅-weakly-finite = [] , ⊥-elim ∘ ∉-∅
 
+∅-finite : finite {A = A} ∅
+∅-finite = [] , mk⇔ (⊥-elim ∘ ∉-∅) λ ()
+
+map-∅ : {X : Set A} {f : A → B} → map f ∅ ≡ᵉ ∅
+map-∅ = ∅-least λ x∈map → case ∈-map⁻' x∈map of λ where (_ , _ , h) → ⊥-elim (∉-∅ h)
+
+mapPartial-∅ : {f : A → Maybe B} → mapPartial f ∅ ≡ᵉ ∅
+mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f = f}) x∈map of λ where
+  (_ , h , _) → ⊥-elim (∉-∅ h)
+
 card-≡ᵉ : (X Y : Σ (Set A) strongly-finite) → proj₁ X ≡ᵉ proj₁ Y → card X ≡ card Y
 card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
   ↭-length $ ∼bag⇒↭ $ unique∧set⇒bag lXᵘ lYᵘ λ {a} → toRelated $
@@ -264,6 +274,6 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
   ∩-sym⊆ : X ∩ Y ⊆ Y ∩ X
   ∩-sym⊆ a∈X∩Y with from ∈-∩ a∈X∩Y
   ... | a∈X , a∈Y = to ∈-∩ (a∈Y , a∈X)
-  
+
   ∩-sym : X ∩ Y ≡ᵉ Y ∩ X
   ∩-sym = ∩-sym⊆ , ∩-sym⊆

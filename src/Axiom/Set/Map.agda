@@ -168,15 +168,15 @@ mapKeys f inj (R , uniq) = mapˡ f R , mapˡ-uniq inj uniq
 mapValues : (B → B') → Map A B → Map A B'
 mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
 
-mapWithKey-uniq : {r : Rel A B} {f : A → B → B'} → left-unique r → left-unique (mapˢ (λ { (x , y) → x , f x y }) r)
+mapWithKey-uniq : {f : A → B → B'} → left-unique R → left-unique (mapˢ (λ { (x , y) → x , f x y }) R)
 mapWithKey-uniq {f = f} uniq p q with from ∈-map p | from ∈-map q
 ... | (x , y) , refl , xy∈r | (x' , y') , refl , xy'∈r = cong (f x) (uniq xy∈r xy'∈r)
 
 mapWithKey : (A → B → B') → Map A B → Map A B'
 mapWithKey f m@(r , p) = mapˢ (λ { (x , y) → x , f x y}) r , mapWithKey-uniq p
 
-mapValues-dom : {M : Map A B} {F : B → C} → dom (M ˢ) ≡ᵉ dom (mapValues F M ˢ)
-mapValues-dom {M = m , _} = mapʳ-dom
+mapValues-dom : {f : B → C} → dom (m ˢ) ≡ᵉ dom (mapValues f m ˢ)
+mapValues-dom {m = _ , _} = mapʳ-dom
 
 _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
 m ∣' P? = filterᵐ (sp-∘ P? proj₁) m

@@ -25,24 +25,22 @@ open EpochStructure epochStructure
 \begin{figure*}[h]
 \begin{code}
 record PoolParams : Set where
-  field rewardAddr : Credential
-        deposit    : Coin
+  field rewardAddr  : Credential
+        deposit     : Coin
 
 data DCert : Set where
   delegate   : Credential → Maybe Credential → Maybe Credential → Coin → DCert
+  -- ^ TODO change `nothing` to leaving things unchanged & figure out how to undelegate best
   regpool    : Credential → PoolParams → DCert
   retirepool : Credential → Epoch → DCert
   regdrep    : Credential → Coin → DCert
   deregdrep  : Credential → DCert
   ccreghot   : Credential → KeyHash → DCert
 
-VDelEnv = PParams
-
-CertEnv = PParams
-
-DelegEnv = PParams
-
-PoolEnv = PParams
+VDelEnv   = PParams
+CertEnv   = PParams
+DelegEnv  = PParams
+PoolEnv   = PParams
 
 record DState : Set where
   constructor ⟦_,_⟧ᵈ
@@ -53,13 +51,13 @@ record DState : Set where
 
 record PState : Set where
   constructor ⟦_,_⟧ᵖ
-  field pools    : Credential ↛ PoolParams
-        retiring : Credential ↛ Epoch
+  field pools     : Credential ↛ PoolParams
+        retiring  : Credential ↛ Epoch
 
 record VState : Set where
   constructor ⟦_,_⟧ᵛ
-  field dreps     : ℙ Credential
-        ccHotKeys : KeyHash ↛ KeyHash -- TODO: maybe replace with credential
+  field dreps      : ℙ Credential
+        ccHotKeys  : KeyHash ↛ KeyHash -- TODO: maybe replace with credential
 
 record CertState : Set where
   field dState : DState
@@ -89,11 +87,15 @@ private variable
 \end{code}
 
 \begin{code}
-
 requiredDeposit : PParams → Maybe Credential → Coin
 requiredDeposit pp (just x) = PParams.poolDeposit pp
 requiredDeposit pp nothing = 0
+\end{code}
+\caption{Types \& functions used for CERTS transition system}
+\end{figure*}
 
+\begin{figure*}[h]
+\begin{code}
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
   DELEG-delegate :
     d ≡ requiredDeposit pp mc ⊔ requiredDeposit pp mc'
@@ -152,7 +154,7 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → S
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = SS⇒BS λ (Γ , _) → Γ ⊢_⇀⦇_,CERT⦈_
 \end{code}
-\caption{VDel rules \& definitions}
+\caption{CERTS rules}
 \end{figure*}
 
 \begin{code}[hide]

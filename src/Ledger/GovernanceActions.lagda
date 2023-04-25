@@ -42,15 +42,9 @@ data GovRole : Set where
   DRep  : GovRole
   SPO   : GovRole
 
-instance
-  unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
-
-instance
-  _ = +-0-commutativeMonoid
-
 record Anchor : Set where
-  field url   : String
-        hash  : DocHash
+  field  url   : String
+         hash  : DocHash
 
 data GovAction : Set where
   NoConfidence     :                        GovAction
@@ -66,12 +60,16 @@ data Vote : Set where
   no       : Vote
   abstain  : Vote
 
-instance
-  unquoteDecl DecEq-Vote = derive-DecEq ((quote Vote , DecEq-Vote) ∷ [])
-
 data GovProcedure : Set where
   vote     : GovActionID → GovRole → Credential → Vote → Maybe Anchor → GovProcedure
   propose  : Coin → RwdAddr → GovAction → Anchor → GovProcedure
+\end{code}
+\begin{code}[hide]
+
+instance
+  _ = +-0-commutativeMonoid
+  unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
+  unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
 \end{code}
 \caption{Governance actions and votes}
 \label{defs:governance}
@@ -134,8 +132,8 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     in newWdrls ≤ s .treasury
     ────────────────────────────────
     _ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
-      record s { withdrawals = s .withdrawals ∪⁺ wdrl
-               ; treasury    = s .treasury    ∸  newWdrls }
+      record s { withdrawals  = s .withdrawals  ∪⁺ wdrl
+               ; treasury     = s .treasury     ∸  newWdrls }
   Enact-Info      : _ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 \caption{ENACT transition system}

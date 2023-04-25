@@ -6,6 +6,9 @@ open import Ledger.Epoch
 
 module Ledger.PParams (es : EpochStructure) where
 
+open import Tactic.Derive.DecEq
+open import MyDebugOptions
+
 open import Ledger.Prelude
 open EpochStructure es
 \end{code}
@@ -41,6 +44,9 @@ record PParams : Set where
 \label{fig:defs:pparams}
 \end{figure*}
 \begin{code}[hide]
+instance
+  unquoteDecl DecEq-PParams = derive-DecEq ((quote PParams , DecEq-PParams) ∷ [])
+
 record PParamsDiff : Set₁ where
   field UpdateT : Set
         applyUpdate : PParams → UpdateT → PParams

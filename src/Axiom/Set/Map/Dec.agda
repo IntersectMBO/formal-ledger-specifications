@@ -3,27 +3,24 @@ open import Axiom.Set
 
 module Axiom.Set.Map.Dec (thᵈ : Theoryᵈ) where
 
-open import Algebra
+open import Prelude
+
 open import Agda.Primitive renaming (Set to Type)
+open import Algebra
+open import Data.Sum as Sum
 open import Data.These
 open import Interface.DecEq
-open import Data.Product
-open import Data.Sum as Sum
-open import Relation.Nullary.Decidable using (yes; no)
-open import Prelude hiding (filter)
-open Equivalence
+open import Relation.Binary.PropositionalEquality
+open import Relation.Nullary.Decidable
 
 open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set; incl-set-proj₁)
 open Theory th renaming (map to mapˢ)
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
 open import Axiom.Set.Map th
-open import Data.List.Relation.Unary.Any
-open import Relation.Binary.PropositionalEquality
-import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
-private variable A A' B B' C D : Type
-                 R R' : Rel A B
-                 X Y : Set A
+open Equivalence
+
+private variable A B C D : Type
 
 module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
   open Lookupᵐ sp-∈
@@ -43,8 +40,8 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
 
        helper : left-unique m''
        helper q q' with from ∈-map q | from ∈-map q'
-       ... | _ , refl , t | _ , refl , t' with to (∈-mapPartial {f = incl-set' _}) t
-                                             | to (∈-mapPartial {f = incl-set' _}) t'
+       ... | _ , refl , t | _ , refl , t' with from (∈-mapPartial {f = incl-set' _}) t
+                                             | from (∈-mapPartial {f = incl-set' _}) t'
        ... | z , _ | z' , _ with z ∈? d | inspect (_∈? d) z | z' ∈? d | inspect (_∈? d) z'
        helper _ _ | _ | _ | _ , _ , refl | _ , _ , refl
            | yes _ | [ eq ] | yes _ | [ eq' ] with trans (sym eq) eq'

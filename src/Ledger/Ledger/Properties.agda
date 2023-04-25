@@ -22,7 +22,6 @@ open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingSchem
 
 import Ledger.Utxo.Properties txs as P
 import Ledger.Utxow.Properties txs as PW
-import Ledger.PPUp.Properties txs as PP
 
 import Relation.Binary.PropositionalEquality as Eq
 
@@ -35,28 +34,32 @@ private variable
   s s' : LState
   l : List Tx
 
-module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_) where
+module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_)
+         (Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_) where
 
   instance
     HasCoin-LState : HasCoin LState
     HasCoin-LState .getCoin s = getCoin (LState.utxoSt s)
 
   private
-    helper : Maybe UTxOState × Maybe TallyState → Maybe LState
-    helper (just utxoSt' , just tally') = just ⟦ utxoSt' , tally' ⟧ˡ
-    helper _                            = nothing
+    helper : Maybe UTxOState × Maybe TallyState × Maybe CertState → Maybe LState
+    helper (just utxoSt' , just tally' , just certState') = just ⟦ utxoSt' , tally' , certState' ⟧ˡ
+    helper _                                              = nothing
 
-    Computational-Match : LEnv → LState → Tx → Maybe UTxOState × Maybe TallyState
+    Computational-Match : LEnv → LState → Tx → Maybe UTxOState × Maybe TallyState × Maybe CertState
     Computational-Match Γ s tx = let open LState s in
       (compute PW.Computational-UTXOW record { LEnv Γ } utxoSt tx
-      ,′ compute Computational-TALLY record { epoch = epoch (Γ .LEnv.slot) ; LEnv Γ ; TxBody (body tx) } tally (txgov (body tx)))
+      ,′ compute Computational-TALLY record { epoch = epoch (Γ .LEnv.slot) ; LEnv Γ ; TxBody (body tx) } tally (txgov (body tx))
+      ,′ compute Computational-CERTS (LEnv.pparams Γ) certState (txcerts (body tx)))
 
     Computational-Match-helper : helper (Computational-Match Γ s tx) ≡ just s' → let open LState in
-      proj₁ (Computational-Match Γ s tx) ≡ just (utxoSt s') ×
-      proj₂ (Computational-Match Γ s tx) ≡ just (tally s')
-    Computational-Match-helper {Γ} {s} {tx} {⟦ utxoSt , tally ⟧ˡ} h
+      proj₁        (Computational-Match Γ s tx)  ≡ just (utxoSt s') ×
+      proj₁ (proj₂ (Computational-Match Γ s tx)) ≡ just (tally s')  ×
+      proj₂ (proj₂ (Computational-Match Γ s tx)) ≡ just (certState s')
+    Computational-Match-helper {Γ} {s} {tx} {⟦ utxoSt , tally , certState ⟧ˡ} h
       with Computational-Match Γ s tx | inspect (Computational-Match Γ s) tx | h
-    ... | just x , just x₁ | Eq.[ eq ] | refl = proj₁ (×-≡,≡←≡ eq) , proj₂ (×-≡,≡←≡ eq)
+    ... | just x , just x₁ , just x₂ | Eq.[ eq ] | refl =
+      proj₁ (×-≡,≡←≡ eq) , proj₁ (×-≡,≡←≡ $ proj₂ (×-≡,≡←≡ eq)) , proj₂ (×-≡,≡←≡ $ proj₂ (×-≡,≡←≡ eq))
 
   open UTxOState
   open LState
@@ -65,17 +68,19 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_) where
   Computational-LEDGER .compute Γ s tx = helper (Computational-Match Γ s tx)
   Computational-LEDGER .≡-just⇔STS {Γ} {s} {tx} {s'} = mk⇔
     (λ h → case Computational-Match-helper {Γ = Γ} {s = s} {tx = tx} h of λ where
-      (h₁ , h₂) → LEDGER (to (≡-just⇔STS PW.Computational-UTXOW) h₁)
-                         (to (≡-just⇔STS Computational-TALLY) h₂))
-    (λ where (LEDGER x x₁) → cong helper
-               (×-≡,≡→≡ (from (≡-just⇔STS PW.Computational-UTXOW) x
-                       , from (≡-just⇔STS Computational-TALLY) x₁)))
+      (h₁ , h₂ , h₃) → LEDGER (to (≡-just⇔STS Computational-CERTS) h₃)
+                              (to (≡-just⇔STS PW.Computational-UTXOW) h₁)
+                              (to (≡-just⇔STS Computational-TALLY) h₂))
+    (λ where (LEDGER x x₁ x₂) → cong helper
+               (×-≡,≡→≡ (from (≡-just⇔STS PW.Computational-UTXOW) x₁
+               , ×-≡,≡→≡ ((from (≡-just⇔STS Computational-TALLY) x₂)
+               , (from (≡-just⇔STS Computational-CERTS) x)))))
 
   FreshTx : Tx → LState → Set
   FreshTx tx ls = txid (body tx) ∉ map proj₁ (dom (utxo (utxoSt ls) ˢ))
 
   LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-  LEDGER-pov h (LEDGER (UTXOW-inductive _ _ _ _ _ st) _) = P.pov h st
+  LEDGER-pov h (LEDGER _ (UTXOW-inductive _ _ _ _ _ st) _) = P.pov h st
 
   data FreshTxs : LEnv → LState → List Tx → Set where
     []-Fresh  : FreshTxs Γ s []
