@@ -20,6 +20,7 @@ open import Data.Product.Properties
 open import Interface.DecEq
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 open import Relation.Nullary
+open import Relation.Binary hiding (Rel)
 
 open Equivalence
 
@@ -94,6 +95,9 @@ dom-mapʳ⊆ a∈dmR with to dom∈ a∈dmR
 mapʳ-dom : {f : B → B'} → dom R ≡ᵉ dom (mapʳ f R)
 mapʳ-dom = dom-⊆mapʳ , dom-mapʳ⊆
 
+dom-∅ : dom R ⊆ ∅ → R ≡ᵉ ∅
+dom-∅ dom⊆∅ = ∅-least (λ {x} x∈R → ⊥-elim $ ∉-∅ $ dom⊆∅ $ from dom∈ (-, x∈R))
+
 module Restriction (sp-∈ : spec-∈ A) where
 
   _∣_ : Rel A B → Set A → Rel A B
@@ -105,6 +109,10 @@ module Restriction (sp-∈ : spec-∈ A) where
   _⟪$⟫_ : Rel A B → Set A → Set B
   m ⟪$⟫ X = range (m ∣ X)
 
+  res-cong : (R ∣_) Preserves _≡ᵉ_ ⟶ _≡ᵉ_
+  res-cong (X⊆Y , Y⊆X) = (λ ∈R∣X → ∈⇔P (Data.Product.map₁ X⊆Y (∈⇔P ∈R∣X)))
+                       , (λ ∈R∣Y → ∈⇔P (Data.Product.map₁ Y⊆X (∈⇔P ∈R∣Y)))
+
   res-dom : dom (R ∣ X) ⊆ X
   res-dom a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = proj₁ $ ∈⇔P h
@@ -113,12 +121,16 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-domᵐ a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = ∈-map⁺'' $ proj₂ (∈⇔P h)
 
-  cores-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → a ∉ X
-  cores-dom a∈dom with ∈⇔P a∈dom
+  res-comp-cong : (R ∣_ᶜ) Preserves _≡ᵉ_ ⟶ _≡ᵉ_
+  res-comp-cong (X⊆Y , Y⊆X) = (λ ∈R∣X → ∈⇔P (Data.Product.map₁ (_∘ Y⊆X) (∈⇔P ∈R∣X)))
+                            , (λ ∈R∣Y → ∈⇔P (Data.Product.map₁ (_∘ X⊆Y) (∈⇔P ∈R∣Y)))
+
+  res-comp-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → a ∉ X
+  res-comp-dom a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = proj₁ $ ∈⇔P h
 
-  cores-domᵐ : dom (R ∣ X ᶜ) ⊆ dom R
-  cores-domᵐ a∈dom with ∈⇔P a∈dom
+  res-comp-domᵐ : dom (R ∣ X ᶜ) ⊆ dom R
+  res-comp-domᵐ a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = ∈-map⁺'' (proj₂ (∈⇔P h))
 
   res-⊆ : (R ∣ X) ⊆ R
@@ -127,13 +139,16 @@ module Restriction (sp-∈ : spec-∈ A) where
   ex-⊆ : (R ∣ X ᶜ) ⊆ R
   ex-⊆ = proj₂ ∘′ ∈⇔P
 
+  res-∅ : R ∣ ∅ ≡ᵉ ∅
+  res-∅ = dom-∅ res-dom
+
   res-ex-∪ : Dec₁ (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
   res-ex-∪ ∈X? = ∪-⊆ res-⊆ ex-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where
     (yes p) → ∈⇔P (inj₁ (∈⇔P (p , h)))
     (no ¬p) → ∈⇔P (inj₂ (∈⇔P (¬p , h)))
 
   res-ex-disjoint : disjoint (dom (R ∣ X)) (dom (R ∣ X ᶜ))
-  res-ex-disjoint h h' = cores-dom h' (res-dom h)
+  res-ex-disjoint h h' = res-comp-dom h' (res-dom h)
 
   res-ex-disj-∪ : Dec₁ (_∈ X) → R ≡ (R ∣ X) ⨿ (R ∣ X ᶜ)
   res-ex-disj-∪ ∈X? =
@@ -167,7 +182,7 @@ module Restriction (sp-∈ : spec-∈ A) where
     dom (m ∣ dom m') ≈⟨ res-dom-comm' ⟩
     dom m ∩ dom m'   ≈˘⟨ ∩-sym ⟩
     dom m' ∩ dom m   ≈˘⟨ res-dom-comm' ⟩
-    dom (m' ∣ dom m) ∎ 
+    dom (m' ∣ dom m) ∎
     where open SetoidReasoning ≡ᵉ-Setoid
 
 module Corestriction (sp-∈ : spec-∈ B) where

@@ -7,15 +7,20 @@
 \newunicodechar{ᶜ}{\ensuremath{^c}}
 \newunicodechar{ᵈ}{\ensuremath{^d}}
 \newunicodechar{ᵉ}{\ensuremath{^e}}
+\newunicodechar{ᶠ}{\ensuremath{^f}}
 \newunicodechar{ᵐ}{\ensuremath{^m}}
 \newunicodechar{ᵖ}{\ensuremath{^p}}
 \newunicodechar{ᵘ}{\ensuremath{^u}}
+\newunicodechar{ᵛ}{\ensuremath{^v}}
+\newunicodechar{⁺}{\ensuremath{^+}}
 \newunicodechar{₁}{\ensuremath{_1}}
 \newunicodechar{₂}{\ensuremath{_2}}
 \newunicodechar{₃}{\ensuremath{_3}}
 \newunicodechar{σ}{\ensuremath{\sigma}}
 \newunicodechar{≤}{\ensuremath{\leq}}
 \newunicodechar{≢}{\ensuremath{\nequiv}}
+\newunicodechar{❴}{\ensuremath{\{}}
+\newunicodechar{❵}{\ensuremath{\}}}
 
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{float}
@@ -70,6 +75,9 @@ open import Ledger.Utxo txs
 open import Ledger.Utxow txs
 open import Ledger.Deleg
 open import Ledger.Chain txs
+
+open import Ledger.PPUp
+open import Ledger.PPUp.Properties
 
 open import Ledger.Ledger.Properties
 \end{code}

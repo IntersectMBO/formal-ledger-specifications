@@ -30,14 +30,14 @@ HSEpochStructure = ℕEpochStructure HSGlobalConstants
 open import Ledger.PParams HSEpochStructure
 
 -- Dummy hash functions
-isHashableSelf : ∀ A → DecEq A → isHashableSet A
-isHashableSelf A eq = mkIsHashableSet A A id eq
+isHashableSelf : ∀ A → ⦃ DecEq A ⦄ → isHashableSet A
+isHashableSelf A ⦃ eq ⦄ = mkIsHashableSet A A id eq
 
 isHashableSet-⊤ : isHashableSet ⊤
-isHashableSet-⊤ = isHashableSelf ⊤ DecEq-⊤
+isHashableSet-⊤ = isHashableSelf ⊤
 
 isHashableSet-ℕ : isHashableSet ℕ
-isHashableSet-ℕ = isHashableSelf ℕ DecEq-ℕ
+isHashableSet-ℕ = isHashableSelf ℕ
 
 -- Dummy private key crypto scheme
 open PKKScheme
@@ -76,7 +76,7 @@ HSP1ScriptStructure .DecEq-P1Script    = DecEq-⊥
 open PlutusStructure
 HSP2ScriptStructure : PlutusStructure ℕ ℕ ℕ
 HSP2ScriptStructure .Dataʰ                 =
-  record { T = ⊥ ; T-isHashable = isHashableSelf ⊥ DecEq-⊥ }
+  record { T = ⊥ ; T-isHashable = isHashableSelf ⊥ }
 HSP2ScriptStructure .PlutusScript          = ⊥
 HSP2ScriptStructure .ExUnits               = ⊥
 HSP2ScriptStructure .CostModel             = ⊥
@@ -133,7 +133,6 @@ module _ where
   HSTransactionStructure .DecEq-Netw      = DecEq-⊤
   HSTransactionStructure .DecEq-UpdT      = DecEq-⊤
   HSTransactionStructure .ss              = HSScriptStructure
-  HSTransactionStructure .DecEq-Epoch     = DecEq-ℕ
 
 open import Ledger.Utxo HSTransactionStructure
 open import Ledger.Utxo.Properties HSTransactionStructure
@@ -166,6 +165,7 @@ instance
       from' txb = let open F.TxBody txb in record
         { txins    = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
         ; txouts   = from txouts
+        ; txcerts  = []
         ; mint     = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
         ; txfee    = txfee
         ; txvldt   = coerce txvldt
@@ -268,6 +268,7 @@ instance
       from' s = record
         { utxo = from ⦃ Convertible-Map ⦃ DecEq-Product ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
         ; fees = F.UTxOState.fees s
+        ; deposits = ∅ᵐ
         }
 
 utxo-step : F.UTxOEnv → F.UTxOState → F.TxBody → Maybe F.UTxOState

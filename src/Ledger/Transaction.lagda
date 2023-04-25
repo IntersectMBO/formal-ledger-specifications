@@ -57,7 +57,6 @@ This function must produce a unique id for each unique transaction body.
         networkId                           : Network
         tokenAlgebra                        : TokenAlgebra
         instance DecEq-TxId  : DecEq TxId
-                 DecEq-Epoch : DecEq Epoch
                  DecEq-Ix    : DecEq Ix
                  DecEq-Netw  : DecEq Network
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
@@ -82,13 +81,13 @@ This function must produce a unique id for each unique transaction body.
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
-  TxIn  = TxId × Ix
-  TxOut = Addr × Value
-  UTxO  = TxIn ↛ TxOut
-  Wdrl  = RwdAddr ↛ Coin
+  TxIn   = TxId × Ix
+  TxOut  = Addr × Value
+  UTxO   = TxIn ↛ TxOut
+  Wdrl   = RwdAddr ↛ Coin
 
-  ProposedPPUpdates = KeyHash ↛ PParamsUpdate
-  Update            = ProposedPPUpdates × Epoch
+  ProposedPPUpdates  = KeyHash ↛ PParamsUpdate
+  Update             = ProposedPPUpdates × Epoch
 \end{code}
 \emph{Transaction types}
 \AgdaTarget{TxBody, txins, txouts, txfee, txvldt, txwdrls, txup, txADhash, txsize, txid, TxWitnesses, vkSigs, scripts, Tx, body, wits, txAD}
@@ -116,9 +115,6 @@ This function must produce a unique id for each unique transaction body.
     field body  : TxBody
           wits  : TxWitnesses
           txAD  : Maybe AuxiliaryData
-\end{code}
-\emph{Abstract functions}
-\begin{code}
 \end{code}
 \caption{Definitions used in the UTxO transition system}
 \label{fig:defs:utxo-shelley}

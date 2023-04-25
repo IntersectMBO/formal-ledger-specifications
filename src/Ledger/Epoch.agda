@@ -31,6 +31,7 @@ record EpochStructure : Set₁ where
         Slot-STO : IsStrictTotalOrder _≡_ _<ˢ_
         StabilityWindow : Slot
         sucᵉ : Epoch → Epoch
+        instance DecEq-Epoch : DecEq Epoch
 
   _<ᵉ_ : Epoch → Epoch → Set
   e₁ <ᵉ e₂ = firstSlot e₁ <ˢ firstSlot e₂
@@ -63,3 +64,4 @@ module _ (gc : GlobalConstants) where
   ℕEpochStructure .Slot-STO        = <-isStrictTotalOrder
   ℕEpochStructure .StabilityWindow = StabilityWindowᶜ
   ℕEpochStructure .sucᵉ            = suc
+  ℕEpochStructure .DecEq-Epoch     = DecEq-ℕ
