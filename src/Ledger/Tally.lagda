@@ -49,7 +49,6 @@ private
            role : GovRole
            cred : Credential
            v : Vote
-           l : List GovProcedure
            c : Coin
            addr : RwdAddr
            a : GovAction
@@ -64,19 +63,21 @@ addAction s e aid c addr a = insert s aid record
   { votes = ∅ᵐ ; deposit = c ; returnAddr = addr ; expiresIn = e ; action = a }
 
 -- x is the anchor in those two cases, which we don't do anything with
-data _⊢_⇀⦇_,TALLY'⦈_ : TallyEnv → TallyState → GovProcedure → TallyState → Set where
-  TallyVote : ∀ {x} → let open TallyEnv Γ in
+data _⊢_⇀⦇_,TALLY'⦈_ : TallyEnv × ℕ → TallyState → GovVote ⊎ GovProposal → TallyState → Set where
+  TallyVote : ∀ {x k} → let open TallyEnv Γ in
     aid ∈ dom (s ˢ)
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ vote aid role cred v x ,TALLY'⦈ addVote s aid role cred v
+    (Γ , k) ⊢ s ⇀⦇ inj₁ record { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x } ,TALLY'⦈
+              addVote s aid role cred v
 
-  TallyPropose : ∀ {x} → let open TallyEnv Γ; open PParams pparams using (govExpiration; govDeposit) in
+  TallyPropose : ∀ {x k} → let open TallyEnv Γ; open PParams pparams using (govExpiration; govDeposit) in
     c ≡ govDeposit
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ propose c addr a x ,TALLY'⦈ addAction s (govExpiration +ᵉ epoch) (txid , length l) c addr a
+    (Γ , k) ⊢ s ⇀⦇ inj₂ record { deposit = c ; returnAddr = addr ; action = a ; anchor = x } ,TALLY'⦈
+              addAction s (govExpiration +ᵉ epoch) (txid , k) c addr a
 
-_⊢_⇀⦇_,TALLY⦈_ : TallyEnv → TallyState → List GovProcedure → TallyState → Set
-_⊢_⇀⦇_,TALLY⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,TALLY'⦈_)
+_⊢_⇀⦇_,TALLY⦈_ : TallyEnv → TallyState → List (GovVote ⊎ GovProposal) → TallyState → Set
+_⊢_⇀⦇_,TALLY⦈_ = SS⇒BS (λ Γ → Γ ⊢_⇀⦇_,TALLY'⦈_)
 \end{code}
 \caption{TALLY types}
 \label{defs:tally-types}

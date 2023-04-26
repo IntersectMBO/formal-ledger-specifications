@@ -176,7 +176,8 @@ instance
         ; netwrk   = nothing
         ; txsize   = txsize
         ; txid     = txid
-        ; txgov    = []
+        ; txvote   = []
+        ; txprop   = []
         }
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
