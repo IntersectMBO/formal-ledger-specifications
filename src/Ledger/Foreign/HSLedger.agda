@@ -3,9 +3,10 @@ module Ledger.Foreign.HSLedger where
 
 open import Ledger.Prelude
 
+import Data.Maybe as M
+import Data.Rational as ℚ
 open import Data.Nat using (_≤_; _≤ᵇ_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
-import Data.Maybe as M
 
 open import Foreign.Convertible
 open import Foreign.Haskell.Coerce
@@ -124,7 +125,7 @@ module _ where
   HSTransactionStructure .crypto          = HSCrypto
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppHashingScheme = isHashableSelf PParams
-  HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; applyUpdate = λ p _ → p }
+  HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; updateGroups = λ _ → ∅ ; applyUpdate = λ p _ → p }
   HSTransactionStructure .txidBytes       = id
   HSTransactionStructure .networkId       = tt
   HSTransactionStructure .tokenAlgebra    = coinTokenAlgebra
@@ -212,38 +213,44 @@ instance
     where
       to' : PParams → F.PParams
       to' pp = let open PParams pp in record
-        { a             = a
-        ; b             = b
-        ; maxBlockSize  = maxBlockSize
-        ; maxTxSize     = maxTxSize
-        ; maxHeaderSize = maxHeaderSize
-        ; maxValSize    = maxValSize
-        ; minUtxOValue  = minUtxOValue
-        ; poolDeposit   = poolDeposit
-        ; Emax          = Emax
-        ; pv            = coerce pv
-        ; ccTermLimit   = ccTermLimit
-        ; govExpiration = govExpiration
-        ; govDeposit    = govDeposit
-        ; drepDeposit   = drepDeposit
+        { a                = a
+        ; b                = b
+        ; maxBlockSize     = maxBlockSize
+        ; maxTxSize        = maxTxSize
+        ; maxHeaderSize    = maxHeaderSize
+        ; maxValSize       = maxValSize
+        ; minUtxOValue     = minUtxOValue
+        ; poolDeposit      = poolDeposit
+        ; Emax             = Emax
+        ; pv               = coerce pv
+        ; votingThresholds = _
+        ; minCCSize        = minCCSize
+        ; ccTermLimit      = ccTermLimit
+        ; govExpiration    = govExpiration
+        ; govDeposit       = govDeposit
+        ; drepDeposit      = drepDeposit
+        ; drepActivity     = drepActivity
         }
 
       from' : F.PParams → PParams
       from' pp = let open F.PParams pp in record
-        { a             = a
-        ; b             = b
-        ; maxBlockSize  = maxBlockSize
-        ; maxTxSize     = maxTxSize
-        ; maxHeaderSize = maxHeaderSize
-        ; maxValSize    = maxValSize
-        ; minUtxOValue  = minUtxOValue
-        ; poolDeposit   = poolDeposit
-        ; Emax          = Emax
-        ; pv            = coerce pv
-        ; ccTermLimit   = ccTermLimit
-        ; govExpiration = govExpiration
-        ; govDeposit    = govDeposit
-        ; drepDeposit   = drepDeposit
+        { a                = a
+        ; b                = b
+        ; maxBlockSize     = maxBlockSize
+        ; maxTxSize        = maxTxSize
+        ; maxHeaderSize    = maxHeaderSize
+        ; maxValSize       = maxValSize
+        ; minUtxOValue     = minUtxOValue
+        ; poolDeposit      = poolDeposit
+        ; Emax             = Emax
+        ; pv               = coerce pv
+        ; votingThresholds = ℚ.0ℚ , ℚ.0ℚ -- TODO: translate once this is implemented in F.PParams
+        ; minCCSize        = minCCSize
+        ; ccTermLimit      = ccTermLimit
+        ; govExpiration    = govExpiration
+        ; govDeposit       = govDeposit
+        ; drepDeposit      = drepDeposit
+        ; drepActivity     = drepActivity
         }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
