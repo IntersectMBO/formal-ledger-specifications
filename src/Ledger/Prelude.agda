@@ -23,6 +23,14 @@ open import Relation.Unary using () renaming (Decidable to Dec₁) public
 
 open Computational public
 
+-- TODO: move this into Interface.DecEq
+open import Data.Rational
+import Data.Rational.Properties as ℚ
+
+instance
+  DecEq-ℚ : DecEq ℚ
+  DecEq-ℚ = record { _≟_ = ℚ._≟_ }
+
 --------------------------------------------------------------------------------
 -- Set theory
 

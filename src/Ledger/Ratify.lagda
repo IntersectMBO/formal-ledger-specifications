@@ -145,9 +145,10 @@ ccSize (just (cc , q)) = just (lengthˢ cc , q)
 
 -- for now, consider a proposal as accepted if the CC and half of the SPOs agree
 accepted : RatifyEnv → EnactState → GovActionState → Set
-accepted Γ es@record { cc = cc } s@record { votes = votes } =
-  acceptedR Γ s SPO R.½
-  ∧ acceptedR Γ s DRep R.½
+accepted Γ es@record { cc = cc ; pparams = record { votingThresholds = drepThreshold , spoThreshold } }
+           s@record { votes = votes } =
+  acceptedR Γ s SPO spoThreshold
+  ∧ acceptedR Γ s DRep drepThreshold
   ∧ (case ccSize cc of λ where
       (just (s@(suc _) , q)) → Z.+ lengthˢ (votedYesHashes votes CC) R./ s R.> q
       _                      → ⊥)

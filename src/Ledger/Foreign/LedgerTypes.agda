@@ -75,37 +75,44 @@ record Tx : Set where
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}
 
 record PParams : Set where
-  field a             : ℕ
-        b             : ℕ
-        maxBlockSize  : ℕ
-        maxTxSize     : ℕ
-        maxHeaderSize : ℕ
-        maxValSize    : ℕ
-        minUtxOValue  : Coin
-        poolDeposit   : Coin
-        Emax          : Epoch
-        pv            : Pair ℕ ℕ
-        ccTermLimit   : ℕ
-        govExpiration : ℕ
-        govDeposit    : Coin
-        drepDeposit   : Coin
+  field a                : ℕ
+        b                : ℕ
+        maxBlockSize     : ℕ
+        maxTxSize        : ℕ
+        maxHeaderSize    : ℕ
+        maxValSize       : ℕ
+        minUtxOValue     : Coin
+        poolDeposit      : Coin
+        Emax             : Epoch
+        pv               : Pair ℕ ℕ
+        votingThresholds : ⊤ -- TODO: foreign rational numbers
+        minCCSize        : ℕ
+        ccTermLimit      : ℕ
+        govExpiration    : ℕ
+        govDeposit       : Coin
+        drepDeposit      : Coin
+        drepActivity     : Epoch
 
 {-# FOREIGN GHC
   data PParams = MkPParams
-    { a :: Integer
-    , b :: Integer
-    , maxBlockSize :: Integer
-    , maxTxSize :: Integer
-    , maxHeaderSize :: Integer
-    , maxValSize :: Integer
-    , minUtxOValue :: Integer
-    , poolDeposit :: Integer
-    , emax :: Integer
-    , pv :: (Integer, Integer)
-    , ccTermLimit   :: Integer
-    , govExpiration :: Integer
-    , govDeposit    :: Integer
-    , drepDeposit   :: Integer } deriving Show
+    { a                :: Integer
+    , b                :: Integer
+    , maxBlockSize     :: Integer
+    , maxTxSize        :: Integer
+    , maxHeaderSize    :: Integer
+    , maxValSize       :: Integer
+    , minUtxOValue     :: Integer
+    , poolDeposit      :: Integer
+    , emax             :: Integer
+    , pv               :: (Integer, Integer)
+    , votingThresholds :: ()
+    , minCCSize        :: Integer
+    , ccTermLimit      :: Integer
+    , govExpiration    :: Integer
+    , govDeposit       :: Integer
+    , drepDeposit      :: Integer
+    , drepActivity     :: Integer
+    } deriving Show
 #-}
 {-# COMPILE GHC PParams = data PParams (MkPParams) #-}
 

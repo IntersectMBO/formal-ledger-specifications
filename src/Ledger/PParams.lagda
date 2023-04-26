@@ -6,6 +6,8 @@ open import Ledger.Epoch
 
 module Ledger.PParams (es : EpochStructure) where
 
+open import Data.Rational
+
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
 
@@ -20,25 +22,35 @@ record Acnt : Set where
   field treasury  : Coin
         reserves  : Coin
 
+data PParamGroup : Set where
+  NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup : PParamGroup
+
 record PParams : Set where
-  field a              : ℕ
-        b              : ℕ
-        maxBlockSize   : ℕ
-        maxTxSize      : ℕ
-        maxHeaderSize  : ℕ
-        maxValSize     : ℕ
-        minUtxOValue   : Coin
-        poolDeposit    : Coin
-        Emax           : Epoch
-        pv             : ProtVer -- retired, keep for now
+  field
+        -- Network group
+        maxBlockSize     : ℕ
+        maxTxSize        : ℕ
+        maxHeaderSize    : ℕ
+        maxValSize       : ℕ
+        pv               : ProtVer -- retired, keep for now
+
+        -- Economic group
+        a                : ℕ
+        b                : ℕ
+        minUtxOValue     : Coin
+        poolDeposit      : Coin
+
+        -- Technical group
+        Emax             : Epoch
 
         -- Governance group
-
-        --votingThresholds : ?
-        ccTermLimit    : ℕ
-        govExpiration  : ℕ
-        govDeposit     : Coin
-        drepDeposit    : Coin
+        votingThresholds : ℚ × ℚ -- TODO: add all the thresholds required
+        minCCSize        : ℕ
+        ccTermLimit      : ℕ
+        govExpiration    : ℕ
+        govDeposit       : Coin
+        drepDeposit      : Coin
+        drepActivity     : Epoch
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}
@@ -49,5 +61,6 @@ instance
 
 record PParamsDiff : Set₁ where
   field UpdateT : Set
+        updateGroups : UpdateT → ℙ PParamGroup
         applyUpdate : PParams → UpdateT → PParams
 \end{code}
