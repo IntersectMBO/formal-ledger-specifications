@@ -15,8 +15,8 @@ open import Ledger.PParams epochStructure
 
 import Data.Integer as Z
 import Data.Rational as R
-open import Data.Nat
-open import Data.Nat.Properties
+open import Data.Nat hiding (_≟_)
+open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 open import Data.Product using (map₂)
 
@@ -31,8 +31,7 @@ instance
 \begin{figure*}[h]
 \begin{code}
 record StakeDistrs : Set where
-  field poolStakeDistr  : Credential ↛ Coin
-        drepStakeDistr  : Credential ↛ Coin
+  field stakeDistr  : VDeleg ↛ Coin
 
 record RatifyEnv : Set where
   field stakeDistrs   : StakeDistrs
@@ -115,7 +114,8 @@ CCData : Set
 CCData = Maybe (KeyHash ↛ Epoch × R.ℚ)
 
 module _ (ce : Epoch) (ccHotKeys : KeyHash ↛ Maybe KeyHash)
-         (cc : CCData) (votes : (GovRole × Credential) ↛ Vote) where
+         (cc : CCData) (votes : (GovRole × Credential) ↛ Vote)
+         (ga : GovAction) where
 
   actualCCVote : KeyHash → Epoch → Vote
   actualCCVote kh e = case ⌊ ce ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys kh ⦃ _ ∈? _ ⦄ of λ where
@@ -127,43 +127,66 @@ module _ (ce : Epoch) (ccHotKeys : KeyHash ↛ Maybe KeyHash)
     (just (cc , _)) → mapKeys inj₁ (λ where refl → refl) $ mapWithKey actualCCVote cc
     nothing         → ∅ᵐ
 
-  actualVotes : (GovRole × Credential) ↛ Vote
-  actualVotes = mapKeys (CC ,_) (λ where refl → refl) actualCCVotes
-              ∪ᵐˡ votes -- TODO: make `actualVotes` for DRep, SPO
+  actualPDRepVotes : VDeleg ↛ Vote
+  actualPDRepVotes = ❴ abstainRep      , Vote.abstain ❵ᵐ
+                 ∪ᵐˡ ❴ noConfidenceRep , (case ga of λ where
+                                           NoConfidence → Vote.yes
+                                           _            → Vote.no) ❵ᵐ
 
-votedHashes : Vote → (GovRole × Credential) ↛ Vote → GovRole → ℙ Credential
-votedHashes v votes r = (votes ⦅ r ,-⦆)⁻¹ v
+  actualVotes : VDeleg ↛ Vote
+  actualVotes = mapKeys (credVoter CC) (λ where refl → refl) actualCCVotes
+              ∪ᵐˡ (actualPDRepVotes
+              ∪ᵐˡ mapKeys (uncurry credVoter) (λ where refl → refl) votes) -- TODO: make `actualVotes` for DRep, SPO
 
-votedYesHashes : (GovRole × Credential) ↛ Vote → GovRole → ℙ Credential
+votedHashes : Vote → (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
+votedHashes v votes r = votes ⁻¹ v
+
+votedYesHashes : (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
 votedYesHashes = votedHashes Vote.yes
 
-votedAbstainHashes : (GovRole × Credential) ↛ Vote → GovRole → ℙ Credential
+votedAbstainHashes : (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
 votedAbstainHashes = votedHashes Vote.abstain
 
-participatingHashes : (GovRole × Credential) ↛ Vote → GovRole → ℙ Credential
+participatingHashes : (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
 participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no votes r
 
-getStakeDist : GovRole → StakeDistrs → Credential ↛ Coin
-getStakeDist CC   _                                = ∅ᵐ
-getStakeDist DRep record { drepStakeDistr = dist } = dist
-getStakeDist SPO  record { poolStakeDistr = dist } = dist
+isDRep : VDeleg → Bool
+isDRep (credVoter DRep _) = true
+isDRep (credVoter _ _)    = false
+isDRep abstainRep         = true
+isDRep noConfidenceRep    = true
 
-acceptedStake : GovRole → StakeDistrs → GovActionState → Coin
-acceptedStake r dists record { votes = votes } =
+isSPO : VDeleg → Bool
+isSPO (credVoter SPO _) = true
+isSPO _                 = false
+
+isDRepProp : specProperty λ x → isDRep x ≡ true
+isDRepProp = to-sp (λ x → isDRep x ≟ true)
+
+isSPOProp : specProperty λ x → isSPO x ≡ true
+isSPOProp = to-sp (λ x → isSPO x ≟ true)
+
+getStakeDist : GovRole → StakeDistrs → VDeleg ↛ Coin
+getStakeDist CC   _                              = ∅ᵐ
+getStakeDist DRep s@record { stakeDistr = dist } = filterᵐ (sp-∘ isDRepProp proj₁) dist
+getStakeDist SPO  s@record { stakeDistr = dist } = filterᵐ (sp-∘ isSPOProp proj₁) dist
+
+acceptedStake : GovRole → StakeDistrs → (VDeleg ↛ Vote) → Coin
+acceptedStake r dists votes =
   Σᵐᵛ[ x ← (getStakeDist r dists ∣ votedYesHashes votes r) ᶠᵐ ] x
 
-totalStake : GovRole → StakeDistrs → (GovRole × Credential) ↛ Vote → Coin
+totalStake : GovRole → StakeDistrs → (VDeleg ↛ Vote) → Coin
 totalStake r dists votes = Σᵐᵛ[ x ← getStakeDist r dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
-acceptedR : RatifyEnv → GovActionState → GovRole → R.ℚ → Set
-acceptedR Γ s role t =
-  let open RatifyEnv Γ; open GovActionState s
+acceptedR : RatifyEnv → (VDeleg ↛ Vote) → GovRole → R.ℚ → Set
+acceptedR Γ votes role t =
+  let open RatifyEnv Γ
       redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
       totalStake = totalStake role redStakeDistr votes
   in
   case totalStake of λ where
     0         → ⊥ -- if there's no stake, never accept
-    x@(suc _) → Z.+ acceptedStake role redStakeDistr s R./ x R.> t
+    x@(suc _) → Z.+ acceptedStake role redStakeDistr votes R./ x R.> t
 
 ccThreshold : CCData → Maybe R.ℚ
 ccThreshold nothing         = nothing
@@ -172,10 +195,10 @@ ccThreshold (just (cc , q)) = just q
 -- for now, consider a proposal as accepted if the CC and half of the SPOs and DReps agree
 accepted : RatifyEnv → EnactState → GovActionState → Set
 accepted Γ es@record { cc = cc ; pparams = record { votingThresholds = drepThreshold , spoThreshold } }
-         s@record  { votes = votes } =
-  let open RatifyEnv Γ; votes = actualVotes currentEpoch ccHotKeys cc votes in
-  acceptedR Γ s SPO spoThreshold
-  ∧ acceptedR Γ s DRep drepThreshold
+         s@record  { votes = votes ; action = action } =
+  let open RatifyEnv Γ; votes = actualVotes currentEpoch ccHotKeys cc votes action in
+  acceptedR Γ votes SPO spoThreshold
+  ∧ acceptedR Γ votes DRep drepThreshold
   ∧ (case lengthˢ (participatingHashes votes CC) , ccThreshold cc of λ where
       (s@(suc _) , just q) → Z.+ lengthˢ (votedYesHashes votes CC) R./ s R.> q
       _                    → ⊥)

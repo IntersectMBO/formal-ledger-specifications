@@ -26,8 +26,12 @@ open Computational public
 -- TODO: move this into Interface.DecEq
 open import Data.Rational
 import Data.Rational.Properties as ℚ
+import Data.Bool.Properties as 𝔹
 
 instance
+  DecEq-Bool : DecEq Bool
+  DecEq-Bool = record { _≟_ = 𝔹._≟_ }
+
   DecEq-ℚ : DecEq ℚ
   DecEq-ℚ = record { _≟_ = ℚ._≟_ }
 

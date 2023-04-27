@@ -76,7 +76,7 @@ This function must produce a unique id for each unique transaction body.
   open Ledger.GovernanceActions TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto hiding (yes; no) public
 
   open import Ledger.Address Network KeyHash ScriptHash public
-  open import Ledger.Deleg crypto Network epochStructure public
+  open import Ledger.Deleg crypto TxId Network ADHash epochStructure ppUpd ppHashingScheme public
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
