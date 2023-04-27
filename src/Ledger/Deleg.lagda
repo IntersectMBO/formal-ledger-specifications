@@ -6,11 +6,14 @@
 open import Ledger.Prelude
 open import Ledger.Epoch
 open import Ledger.Crypto
+import Ledger.PParams as PP
 
 module Ledger.Deleg
   (crypto : Crypto)
-  (Network : Set)
+  (TxId Network DocHash : Set)
   (epochStructure : EpochStructure)
+  (ppd : PP.PParamsDiff epochStructure)
+  (ppHashable : isHashableSet (PP.PParams epochStructure))
   ⦃ _ : DecEq Network ⦄
   where
 
@@ -18,6 +21,8 @@ open Crypto crypto
 
 open import Ledger.Address Network KeyHash ScriptHash
 open import Ledger.PParams epochStructure using (PParams)
+open import Ledger.GovernanceActions TxId Network DocHash epochStructure ppd ppHashable crypto
+  using (VDeleg)
 
 open EpochStructure epochStructure
 
@@ -29,7 +34,7 @@ record PoolParams : Set where
         deposit     : Coin
 
 data DCert : Set where
-  delegate   : Credential → Maybe Credential → Maybe Credential → Coin → DCert
+  delegate   : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
   -- ^ TODO change `nothing` to leaving things unchanged & figure out how to undelegate best
   regpool    : Credential → PoolParams → DCert
   retirepool : Credential → Epoch → DCert
@@ -44,7 +49,7 @@ PoolEnv   = PParams
 
 record DState : Set where
   constructor ⟦_,_⟧ᵈ
-  field voteDelegs      : Credential ↛ Credential
+  field voteDelegs      : Credential ↛ VDeleg
   --    ^ stake credential to DRep credential
         stakeDelegs     : Credential ↛ Credential
   --    ^ stake credential to pool credential
@@ -69,12 +74,14 @@ record CertState : Set where
 private variable
   dReps dReps' : ℙ Credential
   pools : Credential ↛ PoolParams
-  vDelegs sDelegs : Credential ↛ Credential
+  vDelegs : Credential ↛ VDeleg
+  sDelegs : Credential ↛ Credential
   retiring retiring' : Credential ↛ Epoch
   ccKeys : KeyHash ↛ Maybe KeyHash
   dCert : DCert
   c c' : Credential
-  mc mc' : Maybe Credential
+  mc : Maybe Credential
+  mv : Maybe VDeleg
   d : Coin
   e : Epoch
   kh kh' : KeyHash
@@ -91,6 +98,10 @@ private variable
 requiredDeposit : PParams → Maybe Credential → Coin
 requiredDeposit pp (just x) = PParams.poolDeposit pp
 requiredDeposit pp nothing = 0
+
+requiredVDelegDeposit : PParams → Maybe VDeleg → Coin
+requiredVDelegDeposit pp (just _) = PParams.poolDeposit pp
+requiredVDelegDeposit pp nothing = 0
 \end{code}
 \caption{Types \& functions used for CERTS transition system}
 \end{figure*}
@@ -99,10 +110,10 @@ requiredDeposit pp nothing = 0
 \begin{code}
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
   DELEG-delegate :
-    d ≡ requiredDeposit pp mc ⊔ requiredDeposit pp mc'
+    d ≡ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc
     ────────────────────────────────
-    pp ⊢ ⟦ vDelegs , sDelegs ⟧ᵈ ⇀⦇ delegate c mc mc' d ,DELEG⦈
-         ⟦ update c mc vDelegs , update c mc' sDelegs ⟧ᵈ
+    pp ⊢ ⟦ vDelegs , sDelegs ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
+         ⟦ update c mv vDelegs , update c mc sDelegs ⟧ᵈ
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
@@ -167,23 +178,23 @@ open import Tactic.ReduceDec
 open import MyDebugOptions
 
 Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_
-Computational-DELEG .compute pp ⟦ vDelegs , sDelegs ⟧ᵈ (delegate c mc mc' d) =
-  ifᵈ d ≡ requiredDeposit pp mc ⊔ requiredDeposit pp mc'
-    then just ⟦ update c mc vDelegs , update c mc' sDelegs ⟧ᵈ
+Computational-DELEG .compute pp ⟦ vDelegs , sDelegs ⟧ᵈ (delegate c mv mc d) =
+  ifᵈ d ≡ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc
+    then just ⟦ update c mv vDelegs , update c mc sDelegs ⟧ᵈ
     else nothing
 Computational-DELEG .compute Γ s _ = nothing
 Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ ⟧ᵈ} {cert} {s'} = mk⇔
   (case cert return (λ c → compute Computational-DELEG pp ⟦ s₁ , s₂ ⟧ᵈ c ≡ just s' → pp ⊢ ⟦ s₁ , s₂ ⟧ᵈ ⇀⦇ c ,DELEG⦈ s') of λ where
-    (delegate c mc mc' d) h → case d ≟ requiredDeposit pp mc ⊔ requiredDeposit pp mc' of λ where
-      (yes p) → subst _ (just-injective $ by-reduceDec h) (DELEG-delegate {mc = mc} {mc'} {s₁} {s₂} {c} p)
+    (delegate c mv mc d) h → case d ≟ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc of λ where
+      (yes p) → subst _ (just-injective $ by-reduceDec h) (DELEG-delegate {mv = mv} {mc} {s₁} {s₂} {c} p)
       (no ¬p) → case by-reduceDec h of λ ()
     (regpool x x₁) → λ ()
     (retirepool x x₁) → λ ()
     (regdrep x x₁) → λ ()
     (deregdrep x) → λ ()
     (ccreghot x x₁) → λ ())
-  (λ where (DELEG-delegate {mc = mc} {mc'} {vDelegs} {sDelegs} {c} h) → by-reduceDecInGoal
-             (refl {x = just ⟦ update c mc vDelegs , update c mc' sDelegs ⟧ᵈ}))
+  (λ where (DELEG-delegate {mv = mv} {mc} {vDelegs} {sDelegs} {c} h) → by-reduceDecInGoal
+             (refl {x = just ⟦ update c mv vDelegs , update c mc sDelegs ⟧ᵈ}))
 
 --Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_
 --Computational-CERTS .compute     = {!!}

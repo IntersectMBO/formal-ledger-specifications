@@ -43,6 +43,11 @@ data GovRole : Set where
   DRep  : GovRole
   SPO   : GovRole
 
+data VDeleg : Set where
+  credVoter        : GovRole → Credential → VDeleg
+  abstainRep       : VDeleg
+  noConfidenceRep  : VDeleg
+
 record Anchor : Set where
   field  url   : String
          hash  : DocHash
@@ -80,6 +85,7 @@ instance
   _ = +-0-commutativeMonoid
   unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
   unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
+  unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 \end{code}
 \caption{Governance actions and votes}
 \label{defs:governance}
