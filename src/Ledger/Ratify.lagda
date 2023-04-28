@@ -20,6 +20,8 @@ open import Data.Nat.Properties
 open import Data.Nat.Properties.Ext
 open import Data.Product using (map₂)
 
+open import Relation.Nullary.Decidable
+
 infixr 2 _∧_
 _∧_ = _×_
 
@@ -35,6 +37,7 @@ record StakeDistrs : Set where
 record RatifyEnv : Set where
   field stakeDistrs   : StakeDistrs
         currentEpoch  : Epoch
+        ccHotKeys     : KeyHash ↛ Maybe KeyHash
 
 record RatifyState : Set where
   constructor ⟦_,_⟧ʳ
@@ -108,14 +111,37 @@ restrictedDists coins rank dists = dists -- record dists { drepStakeDistr = rest
         restrict : Credential ↛ Coin → Credential ↛ Coin
         restrict dist = topNDRepDist rank dist ∪ᵐˡ mostStakeDRepDist dist coins
 
-votedHashes : Vote → ((GovRole × Credential) ↛ Vote) → GovRole → ℙ Credential
+CCData : Set
+CCData = Maybe (KeyHash ↛ Epoch × R.ℚ)
+
+module _ (ce : Epoch) (ccHotKeys : KeyHash ↛ Maybe KeyHash)
+         (cc : CCData) (votes : (GovRole × Credential) ↛ Vote) where
+
+  actualCCVote : KeyHash → Epoch → Vote
+  actualCCVote kh e = case ⌊ ce ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys kh ⦃ _ ∈? _ ⦄ of λ where
+    (true , just (just hk)) → maybe′ id Vote.no $ lookupᵐ? votes (CC , (inj₁ hk)) ⦃ _ ∈? _ ⦄
+    _                       → Vote.abstain -- expired, no hot key or resigned
+
+  actualCCVotes : Credential ↛ Vote
+  actualCCVotes = case cc of λ where
+    (just (cc , _)) → mapKeys inj₁ (λ where refl → refl) $ mapWithKey actualCCVote cc
+    nothing         → ∅ᵐ
+
+  actualVotes : (GovRole × Credential) ↛ Vote
+  actualVotes = mapKeys (CC ,_) (λ where refl → refl) actualCCVotes
+              ∪ᵐˡ votes -- TODO: make `actualVotes` for DRep, SPO
+
+votedHashes : Vote → (GovRole × Credential) ↛ Vote → GovRole → ℙ Credential
 votedHashes v votes r = (votes ⦅ r ,-⦆)⁻¹ v
 
-votedYesHashes : ((GovRole × Credential) ↛ Vote) → GovRole → ℙ Credential
+votedYesHashes : (GovRole × Credential) ↛ Vote → GovRole → ℙ Credential
 votedYesHashes = votedHashes Vote.yes
 
-votedAbstainHashes : ((GovRole × Credential) ↛ Vote) → GovRole → ℙ Credential
+votedAbstainHashes : (GovRole × Credential) ↛ Vote → GovRole → ℙ Credential
 votedAbstainHashes = votedHashes Vote.abstain
+
+participatingHashes : (GovRole × Credential) ↛ Vote → GovRole → ℙ Credential
+participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no votes r
 
 getStakeDist : GovRole → StakeDistrs → Credential ↛ Coin
 getStakeDist CC   _                                = ∅ᵐ
@@ -126,7 +152,7 @@ acceptedStake : GovRole → StakeDistrs → GovActionState → Coin
 acceptedStake r dists record { votes = votes } =
   Σᵐᵛ[ x ← (getStakeDist r dists ∣ votedYesHashes votes r) ᶠᵐ ] x
 
-totalStake : GovRole → StakeDistrs → ((GovRole × Credential) ↛ Vote) → Coin
+totalStake : GovRole → StakeDistrs → (GovRole × Credential) ↛ Vote → Coin
 totalStake r dists votes = Σᵐᵛ[ x ← getStakeDist r dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
 acceptedR : RatifyEnv → GovActionState → GovRole → R.ℚ → Set
@@ -139,19 +165,20 @@ acceptedR Γ s role t =
     0         → ⊥ -- if there's no stake, never accept
     x@(suc _) → Z.+ acceptedStake role redStakeDistr s R./ x R.> t
 
-ccSize : Maybe (ℙ KeyHash × R.ℚ) → Maybe (ℕ × R.ℚ)
-ccSize nothing         = nothing
-ccSize (just (cc , q)) = just (lengthˢ cc , q)
+ccThreshold : CCData → Maybe R.ℚ
+ccThreshold nothing         = nothing
+ccThreshold (just (cc , q)) = just q
 
--- for now, consider a proposal as accepted if the CC and half of the SPOs agree
+-- for now, consider a proposal as accepted if the CC and half of the SPOs and DReps agree
 accepted : RatifyEnv → EnactState → GovActionState → Set
 accepted Γ es@record { cc = cc ; pparams = record { votingThresholds = drepThreshold , spoThreshold } }
-           s@record { votes = votes } =
+         s@record  { votes = votes } =
+  let open RatifyEnv Γ; votes = actualVotes currentEpoch ccHotKeys cc votes in
   acceptedR Γ s SPO spoThreshold
   ∧ acceptedR Γ s DRep drepThreshold
-  ∧ (case ccSize cc of λ where
-      (just (s@(suc _) , q)) → Z.+ lengthˢ (votedYesHashes votes CC) R./ s R.> q
-      _                      → ⊥)
+  ∧ (case lengthˢ (participatingHashes votes CC) , ccThreshold cc of λ where
+      (s@(suc _) , just q) → Z.+ lengthˢ (votedYesHashes votes CC) R./ s R.> q
+      _                    → ⊥)
 
 expired : Epoch → GovActionState → Set
 expired current record { expiresIn = expiresIn } = expiresIn <ᵉ current

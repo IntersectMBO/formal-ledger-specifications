@@ -229,6 +229,10 @@ module Lookupᵐ (sp-∈ : spec-∈ A) where
   lookupᵐ : (m : Map A B) → (x : A) → {@(tactic initTac assumption') _ : x ∈ dom (m ˢ)} → B
   lookupᵐ _ _ {h} = proj₁ (to dom∈ h)
 
+  lookupᵐ? : (m : Map A B) → (x : A) → ⦃ Dec (x ∈ dom (m ˢ)) ⦄ → Maybe B
+  lookupᵐ? _ _ ⦃ no ¬p ⦄ = nothing
+  lookupᵐ? m x ⦃ yes p ⦄ = just $ lookupᵐ m x
+
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈
 

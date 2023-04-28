@@ -33,13 +33,6 @@ record EpochStructure : Set₁ where
         sucᵉ : Epoch → Epoch
         instance DecEq-Epoch : DecEq Epoch
 
-  _<ᵉ_ : Epoch → Epoch → Set
-  e₁ <ᵉ e₂ = firstSlot e₁ <ˢ firstSlot e₂
-
-  _+ᵉ_ : ℕ → Epoch → Epoch
-  zero +ᵉ e = e
-  suc n +ᵉ e = sucᵉ (n +ᵉ e)
-
   _≥ˢ_ : Slot → Slot → Set
   _≥ˢ_ = ¬_ ∘₂ _<ˢ_
 
@@ -50,6 +43,19 @@ record EpochStructure : Set₁ where
 
   _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
   s ≤ˢ? s' = ¬? (s' <ˢ? s)
+
+  _+ᵉ_ : ℕ → Epoch → Epoch
+  zero +ᵉ e = e
+  suc n +ᵉ e = sucᵉ (n +ᵉ e)
+
+  _<ᵉ_ : Epoch → Epoch → Set
+  e <ᵉ e' = firstSlot e <ˢ firstSlot e'
+
+  _≤ᵉ_ : Epoch → Epoch → Set
+  e ≤ᵉ e' = firstSlot e ≤ˢ firstSlot e'
+
+  _≤ᵉ?_ : (e e' : Epoch) → Dec (e ≤ᵉ e')
+  e ≤ᵉ? e' = firstSlot e ≤ˢ? firstSlot e'
 
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc
