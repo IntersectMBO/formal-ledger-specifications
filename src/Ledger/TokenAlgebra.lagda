@@ -21,7 +21,34 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary using (Rel)
 open import Relation.Unary using (Pred)
 
-record TokenAlgebra {ℓ : Level} : Type (lsuc ℓ) where
+record TokenAlgebra : Type 1ℓ where
+  field Value-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
+
+  Coin : Type
+  Coin = ℕ
+
+  MemoryEstimate : Type
+  MemoryEstimate = ℕ
+
+  open CommutativeMonoid Value-CommutativeMonoid using (_≈_; ε)
+       renaming (Carrier to Value; refl to reflᵛ; _∙_ to _+ᵛ_) public
+
+  field coin     : Value → Coin
+        inject   : Coin → Value
+        policies : Value → Pred PolicyID 0ℓ
+        size     : Value → MemoryEstimate
+        _≤ᵗ_      : Rel Value 0ℓ
+
+        property             : coin ∘ inject ≗ id
+        coinIsMonoidMorphism : coin Is Value-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid
+
+        instance DecEq-Value : DecEq Value
+
+  sumᵛ : List Value → Value
+  sumᵛ = foldr _+ᵛ_ (inject 0)
+-- Derived types (See Fig 3 of Mary spec [1].) --------------------------
+
+record TokenAlgebraRel {ℓ : Level} : Type (lsuc ℓ) where
   field Value-CommutativeMonoid : CommutativeMonoid ℓ ℓ
 
   Coin : Type
@@ -47,6 +74,7 @@ record TokenAlgebra {ℓ : Level} : Type (lsuc ℓ) where
   sumᵛ : List Value → Value
   sumᵛ = foldr _+ᵛ_ (inject 0)
 -- Derived types (See Fig 3 of Mary spec [1].) --------------------------
+
 
 -- AssetName is a byte string used to distinguish different assets with the same PolicyID. Each
 AssetName : Type

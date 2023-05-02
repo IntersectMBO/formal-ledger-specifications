@@ -15,7 +15,7 @@ module Ledger.TokenAlgebra.ValueRelation
 open import Ledger.Prelude               hiding (Coin ; Rel ; _>_)
 
 open import Ledger.TokenAlgebra {PolicyID}{ByteString}{AdaName}
-                                         using (AssetID ; AssetName ; Quantity ; TokenAlgebra )
+                                         using (AssetID ; AssetName ; Quantity ; TokenAlgebraRel)
 
 open import Algebra                      using (CommutativeMonoid ; Commutative)
 open import Algebra.Core                 using (Op₂)
@@ -83,6 +83,28 @@ u ≋ v = Lift 1ℓ (proj₁ u ⇐⇒ proj₁ v)
 IsEquivalence.refl ≋-isEquivalence = lift (IsEquivalence.refl ⇐⇒-isEquivalence)
 Lift.lower (IsEquivalence.sym ≋-isEquivalence (lift xy)) = IsEquivalence.sym ⇐⇒-isEquivalence xy
 Lift.lower (IsEquivalence.trans ≋-isEquivalence (lift ij) (lift jk)) = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
+
+
+_≋'_ : Rel (Σ (REL A B 0ℓ) C) 1ℓ
+u ≋' v = Lift 1ℓ (proj₁ u ⇐⇒ proj₁ v)
+
+
+≋'-isEquivalence : IsEquivalence {A = Σ (REL A B 0ℓ) C} _≋'_
+IsEquivalence.refl ≋'-isEquivalence = lift (IsEquivalence.refl ⇐⇒-isEquivalence)
+Lift.lower (IsEquivalence.sym ≋'-isEquivalence (lift xy)) = IsEquivalence.sym ⇐⇒-isEquivalence xy
+Lift.lower (IsEquivalence.trans ≋'-isEquivalence (lift ij) (lift jk)) = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
+
+-- an alternative  equivalence
+_≈_ : Rel (REL A B 0ℓ) 1ℓ
+u ≈ v = Lift 1ℓ (u ⇐⇒ v)
+
+
+≈-isEquivalence : IsEquivalence {A = REL A B 0ℓ} _≈_
+IsEquivalence.refl ≈-isEquivalence = lift (IsEquivalence.refl ⇐⇒-isEquivalence)
+Lift.lower (IsEquivalence.sym ≈-isEquivalence (lift xy)) = IsEquivalence.sym ⇐⇒-isEquivalence xy
+Lift.lower (IsEquivalence.trans ≈-isEquivalence (lift ij) (lift jk)) = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
+
+
 
 
 ι-left : REL AssetID Quantity 0ℓ → REL AssetID Quantity 0ℓ
@@ -221,7 +243,7 @@ Lift.lower (⊕-cong {Ru , luu} {Rv , lvu} {Ru' , luu'} {Rv' , lvu'} (lift (Ru�
 
 
 -- An inhabitant of `Value` is a map denoting a finite collection of quantities of assets.
-open TokenAlgebra
+open TokenAlgebraRel
 open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (trans ; sym)
 open Algebra
 
@@ -247,7 +269,7 @@ module _
    q≡x : (VAda x hasHowMuchAda) ≡ x
    q≡x = (proj₂ (VAda x) {(AdaPolicy , AdaName)}) (proj₂ (AdaForAll (VAda x))) (_≡_.refl , _≡_.refl)
 
-  Value-TokenAlgebra : TokenAlgebra
+  Value-TokenAlgebra : TokenAlgebraRel
   Value-TokenAlgebra = record
                          { Value-CommutativeMonoid = Vcm
                          ; coin = λ R → R hasHowMuchAda
@@ -363,15 +385,8 @@ module _
     goal = [ taut , contr ]′ PQ
 
 
-  -- an alternative  equivalence
-  _≋'_ : Rel (REL A B 0ℓ) 1ℓ
-  u ≋' v = Lift 1ℓ (u ⇐⇒ v)
 
 
-  ≋'-isEquivalence : IsEquivalence {A = REL A B 0ℓ} _≋'_
-  IsEquivalence.refl ≋'-isEquivalence = lift (IsEquivalence.refl ⇐⇒-isEquivalence)
-  Lift.lower (IsEquivalence.sym ≋'-isEquivalence (lift xy)) = IsEquivalence.sym ⇐⇒-isEquivalence xy
-  Lift.lower (IsEquivalence.trans ≋'-isEquivalence (lift ij) (lift jk)) = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
 
 
 \end{code}
