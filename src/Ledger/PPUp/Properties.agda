@@ -1,13 +1,20 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
+open import Agda.Primitive renaming (Set to Type) using ()
+open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.PPUp.Properties (txs : TransactionStructure) where
+module Ledger.PPUp.Properties
+ (PolicyID : Type)       -- identifies monetary policies
+ (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ (AdaName : ByteString)  -- the asset name for Ada
+ (txs : TransactionStructure  PolicyID ByteString AdaName)
+ where
+
 
 open TransactionStructure txs
 open import Ledger.Prelude hiding (_≥_; _+_; _*_; Dec₁)
 
-open import Ledger.PPUp txs
+open import Ledger.PPUp PolicyID ByteString AdaName txs
 
 open import Algebra
 open Semiring Slotʳ hiding (refl; sym)

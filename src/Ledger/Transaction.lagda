@@ -12,14 +12,14 @@ open import Agda.Primitive renaming (Set to Type)
 module Ledger.Transaction
 
  -- TODO: determine how these three parameters should be defined in modules that depend on this one.
- {PolicyID : Type}    -- identifies monetary policies
- {ByteString : Type}  -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- {AdaName : ByteString} -- the asset name for Ada
+ (PolicyID : Type)       -- identifies monetary policies
+ (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ (AdaName : ByteString)  -- the asset name for Ada
 
  where
 
-open import Ledger.Prelude
-open import Ledger.TokenAlgebra {PolicyID}{ByteString}{AdaName}
+open import Ledger.Prelude using (DecEq ; _×_ ; _↛_ ; Coin ; ℙ_ ; List ; Maybe ; ℕ ;  _,_ ; _∩_ ; dom ; _∣^'_ ; to-sp ; _∘_ ; proj₁ ; _ˢ ; HasCoin ; proj₂)
+open import Ledger.TokenAlgebra PolicyID ByteString AdaName
 
 open import Ledger.Crypto
 open import Ledger.Epoch
@@ -79,9 +79,9 @@ This function must produce a unique id for each unique transaction body.
 
   field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
         -- instance DecEq-ADHash : DecEq ADHash
-        tokenAlgebra : TokenAlgebra
+        tokenAlgebra : TokenAlgebraRel
 
-  open TokenAlgebra tokenAlgebra hiding (Coin) public
+  open TokenAlgebraRel tokenAlgebra hiding (Coin) public
 
   open Ledger.Script.ScriptStructure ss public
 
@@ -144,6 +144,7 @@ This function must produce a unique id for each unique transaction body.
   txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
 \end{code}
 \begin{code}[hide]
+  open HasCoin
   instance
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₂

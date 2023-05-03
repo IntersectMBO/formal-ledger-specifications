@@ -3,19 +3,25 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
+open import Agda.Primitive renaming (Set to Type) using ()
+open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Chain (txs : TransactionStructure) where
+module Ledger.Chain
+ (PolicyID : Type)       -- identifies monetary policies
+ (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ (AdaName : ByteString)  -- the asset name for Ada
+ (txs : TransactionStructure  PolicyID ByteString AdaName)
+ where
 
 open import Ledger.Prelude
 
 open TransactionStructure txs
 open import Ledger.PParams epochStructure
-open import Ledger.NewPP txs
-open import Ledger.Ledger txs
-open import Ledger.PPUp txs
-open import Ledger.Utxo txs
-open import Ledger.Ratify txs
+open import Ledger.NewPP PolicyID ByteString AdaName txs
+open import Ledger.Ledger PolicyID ByteString AdaName txs
+open import Ledger.PPUp PolicyID ByteString AdaName txs
+open import Ledger.Utxo PolicyID ByteString AdaName txs
+open import Ledger.Ratify PolicyID ByteString AdaName txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 
 \end{code}

@@ -4,9 +4,15 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
+open import Agda.Primitive renaming (Set to Type) using ()
+open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Utxo.Properties (txs : TransactionStructure) where
+module Ledger.Utxo.Properties
+ (PolicyID : Type)       -- identifies monetary policies
+ (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ (AdaName : ByteString)  -- the asset name for Ada
+ (txs : TransactionStructure  PolicyID ByteString AdaName)
+ where
 
 open import Prelude
 open import Ledger.Prelude
@@ -30,8 +36,8 @@ open TransactionStructure txs
 
 open import Ledger.Crypto
 open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra using (TokenAlgebra)
-open import Ledger.Utxo txs
+open import Ledger.Utxo PolicyID ByteString AdaName txs
+open import Ledger.TokenAlgebra PolicyID ByteString AdaName using (TokenAlgebraRel)
 
 open TxBody
 open TxWitnesses
@@ -44,7 +50,7 @@ import Data.Nat.Tactic.RingSolver as ℕ
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
 instance
-  _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
+  _ = TokenAlgebraRel.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
 
 private variable
@@ -183,6 +189,11 @@ just follows from our automation.
 
 \begin{figure*}[h]
 \begin{code}
+open import MyDebugOptions
+open import Tactic.DeriveComp using (deriveComputational)
+unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+
+
 UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
 UTXO-step = compute Computational-UTXO
 

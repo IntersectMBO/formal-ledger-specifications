@@ -2,10 +2,10 @@
 
 module Data.Integer.Ext where
 
-open import Data.Integer
-open import Data.Nat
-open import Data.Product
-open import Data.Sign
+open import Data.Integer using (ℤ ; sign ; ∣_∣)
+open import Data.Nat using (ℕ)
+open import Data.Product using (_×_ ; _,_)
+open import Data.Sign using (Sign)
 
 ℤtoSignedℕ : ℤ → Sign × ℕ
 ℤtoSignedℕ x = (sign x , ∣ x ∣)

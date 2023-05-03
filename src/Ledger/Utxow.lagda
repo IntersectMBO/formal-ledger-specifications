@@ -2,9 +2,16 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
+open import Agda.Primitive renaming (Set to Type) using ()
+open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Utxow (txs : TransactionStructure) where
+module Ledger.Utxow
+ (PolicyID : Type)       -- identifies monetary policies
+ (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ (AdaName : ByteString)  -- the asset name for Ada
+ (txs : TransactionStructure  PolicyID ByteString AdaName)
+ where
+
 
 open import Ledger.Prelude
 
@@ -13,7 +20,7 @@ import Data.Nat
 
 open TransactionStructure txs
 open import Ledger.Crypto
-open import Ledger.Utxo txs
+open import Ledger.Utxo PolicyID ByteString AdaName txs
 
 open TxBody
 open TxWitnesses

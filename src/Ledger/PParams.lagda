@@ -6,12 +6,12 @@ open import Ledger.Epoch
 
 module Ledger.PParams (es : EpochStructure) where
 
-open import Data.Rational
+open import Data.Rational using (ℚ)
 
-open import Tactic.Derive.DecEq
+open import Tactic.Derive.DecEq using (derive-DecEq)
 open import MyDebugOptions
 
-open import Ledger.Prelude
+open import Ledger.Prelude using (ℕ ; _×_ ; Coin ; _,_ ; _∷_ ; [] ; ℙ_)
 open EpochStructure es
 \end{code}
 \begin{figure*}[h]

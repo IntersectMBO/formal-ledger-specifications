@@ -7,26 +7,19 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Ledger.Transaction
+open import Agda.Primitive renaming (Set to Type) using ()
+open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Utxo
- {PolicyID : Type}    -- identifies monetary policies
- {ByteString : Type}  -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- {AdaName : ByteString} -- the asset name for Ada
- (txs : TransactionStructure {PolicyID}{ByteString}{AdaName})
+ (PolicyID : Type)       -- identifies monetary policies
+ (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ (AdaName : ByteString)  -- the asset name for Ada
+ (txs : TransactionStructure  PolicyID ByteString AdaName)
  where
 
 open import Ledger.Prelude hiding (Dec₁)
 
-open import Algebra using (CommutativeMonoid)
-open import Algebra.Structures
-open import Data.Integer using (ℤ; _⊖_)
-open import Data.Integer.Ext
-open import Data.List as List
-open import Data.Nat using (_≤?_; _≤_)
-open import Data.Nat.Properties using (+-0-monoid ; +-0-commutativeMonoid)
-open import Data.Sign using (Sign)
+open import Data.Integer.Ext using (negPart ; posPart)
 open import Interface.Decidable.Instance
 
 open TransactionStructure txs
@@ -34,19 +27,19 @@ open TxBody
 open TxWitnesses
 open Tx
 
-open import Ledger.Crypto
-open import Ledger.PPUp
+-- open import Ledger.Crypto
+-- open import Ledger.PPUp
 open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra {PolicyID}{ByteString}{AdaName}
+open import Ledger.TokenAlgebra PolicyID ByteString AdaName using (TokenAlgebraRel)
 
 open import MyDebugOptions
 --open import Tactic.Defaults
-open import Tactic.DeriveComp
-open import Tactic.Derive.DecEq
+-- open import Tactic.DeriveComp using (deriveComputational)
+open import Tactic.Derive.DecEq using (derive-DecEq)
 
 instance
   _ = Decidable²⇒Dec _≤?_
-  _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
+  _ = TokenAlgebraRel.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
 
@@ -281,7 +274,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move
 -- this once this is fixed.
-unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+-- unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

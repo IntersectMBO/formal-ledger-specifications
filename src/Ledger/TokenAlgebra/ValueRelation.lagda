@@ -5,16 +5,15 @@
 open import Agda.Primitive renaming (Set to Type)
 
 module Ledger.TokenAlgebra.ValueRelation
-
-       -- TODO: determine how these three parameters should be defined in modules that depend on this one.
-       {PolicyID : Type}    -- identifies monetary policies
-       {ByteString : Type}  -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
-       {AdaName : ByteString}
+  -- TODO: determine how these three parameters should be defined in modules that depend on this one.
+ (PolicyID : Type)       -- identifies monetary policies
+ (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
+ (AdaName : ByteString)  -- the asset name for Ada
  where
 
 open import Ledger.Prelude               hiding (Coin ; Rel ; _>_)
 
-open import Ledger.TokenAlgebra {PolicyID}{ByteString}{AdaName}
+open import Ledger.TokenAlgebra PolicyID ByteString AdaName
                                          using (AssetID ; AssetName ; Quantity ; TokenAlgebraRel)
 
 open import Algebra                      using (CommutativeMonoid ; Commutative)

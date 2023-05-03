@@ -2,7 +2,9 @@
 
 module Ledger.Prelude.Base where
 
-open import Data.Nat
+open import Data.Nat using (ℕ ; _≤?_; _≤_) public
+open import Data.Nat.Properties using (+-0-monoid ; +-0-commutativeMonoid) public
+open import Data.Integer using (ℤ ; _⊖_) public
 
 Coin = ℕ
 

@@ -34,3 +34,4 @@ module _ ⦃ DecEq-A : DecEq A ⦄ where
     ; from-cong = λ _ → ≡-irrelevant _ _ }
     (from b₁ ≟ from b₂)
     where open Inverse A↔B
+

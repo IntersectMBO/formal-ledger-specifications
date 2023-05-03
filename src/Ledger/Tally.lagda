@@ -5,7 +5,7 @@
 open import Ledger.Crypto
 
 open import Ledger.Prelude hiding (yes; no)
-open import Ledger.Epoch
+open import Ledger.Epoch using (EpochStructure)
 
 import Ledger.PParams as PP
 

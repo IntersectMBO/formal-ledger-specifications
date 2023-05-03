@@ -2,10 +2,10 @@
 
 module Data.Nat.Properties.Ext where
 
-open import Data.Nat
-open import Data.Nat.Properties
-open import Ledger.Prelude
-open import Relation.Nullary.Decidable
+open import Data.Nat using (ℕ ; _<_; suc ; _≤_ ; zero)
+open import Data.Nat.Properties using (<⇒≤ ; ≤-refl)
+open import Ledger.Prelude using (∃-syntax ; Dec₁ ; ¬_ ; _×_ ; _,_ ; anyUpTo? ; _$_ ; curry ; ¬∃⟶∀¬ ; proj₂ ; contradiction)
+open import Relation.Nullary.Decidable using (decidable-stable ; _×-dec_ ; ¬? ; yes ; no)
 
 -- if P holds for 0 but not for some N, then there exists a k where the induction step fails
 negInduction : {P : ℕ → Set} → Dec₁ P → P 0 → ∃[ N ] ¬ P N → ∃[ k ] P k × ¬ P (suc k)
