@@ -60,9 +60,18 @@ data Vote : Set where
   no       : Vote
   abstain  : Vote
 
-data GovProcedure : Set where
-  vote     : GovActionID → GovRole → Credential → Vote → Maybe Anchor → GovProcedure
-  propose  : Coin → RwdAddr → GovAction → Anchor → GovProcedure
+record GovVote : Set where
+  field gid         : GovActionID
+        role        : GovRole
+        credential  : Credential
+        vote        : Vote
+        anchor      : Maybe Anchor
+
+record GovProposal : Set where
+  field deposit     : Coin
+        returnAddr  : RwdAddr
+        action      : GovAction
+        anchor      : Anchor
 \end{code}
 \begin{code}[hide]
 
