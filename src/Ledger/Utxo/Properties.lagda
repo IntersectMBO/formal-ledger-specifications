@@ -189,11 +189,6 @@ just follows from our automation.
 
 \begin{figure*}[h]
 \begin{code}
-open import MyDebugOptions
-open import Tactic.DeriveComp using (deriveComputational)
-unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
-
-
 UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
 UTXO-step = compute Computational-UTXO
 

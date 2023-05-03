@@ -34,7 +34,7 @@ open import Ledger.TokenAlgebra PolicyID ByteString AdaName using (TokenAlgebraR
 
 open import MyDebugOptions
 --open import Tactic.Defaults
--- open import Tactic.DeriveComp using (deriveComputational)
+open import Tactic.DeriveComp using (deriveComputational)
 open import Tactic.Derive.DecEq using (derive-DecEq)
 
 instance
@@ -274,7 +274,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move
 -- this once this is fixed.
--- unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
