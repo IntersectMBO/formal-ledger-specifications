@@ -105,7 +105,8 @@ This function must produce a unique id for each unique transaction body.
           netwrk     : Maybe Network
           txsize     : ℕ
           txid       : TxId
-          txgov      : List GovProcedure
+          txvote     : List GovVote
+          txprop     : List GovProposal
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ↛ Sig

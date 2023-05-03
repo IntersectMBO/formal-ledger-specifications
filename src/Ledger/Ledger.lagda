@@ -17,6 +17,8 @@ open import Ledger.Utxow txs
 open import Ledger.PPUp txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 
+import Data.List as L
+
 open Tx
 open TxBody
 \end{code}
@@ -46,6 +48,9 @@ private variable
   tally' : TallyState
   certState' : CertState
   tx : Tx
+
+txgov : TxBody → List (GovVote ⊎ GovProposal)
+txgov txb = L.map inj₁ (txvote txb) ++ L.map inj₂ (txprop txb)
 
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
 \end{code}
