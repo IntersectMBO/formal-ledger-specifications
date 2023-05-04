@@ -20,6 +20,7 @@ module Ledger.GovernanceActions (TxId Network DocHash : Set)
                                 (ppHashable : isHashableSet (PP.PParams es))
                                 (crypto : Crypto) ⦃ _ : DecEq Network ⦄ where
 
+open EpochStructure es
 open Crypto crypto
 
 open import Ledger.Address Network KeyHash ScriptHash
@@ -47,13 +48,13 @@ record Anchor : Set where
          hash  : DocHash
 
 data GovAction : Set where
-  NoConfidence     :                        GovAction
-  NewCommittee     : ℙ KeyHash → ℚ        → GovAction
-  NewConstitution  : DocHash              → GovAction
-  TriggerHF        : ProtVer              → GovAction
-  ChangePParams    : UpdateT → PPHash     → GovAction
-  TreasuryWdrl     : (Credential ↛ Coin)  → GovAction
-  Info             :                        GovAction
+  NoConfidence     :                                   GovAction
+  NewCommittee     : KeyHash ↛ Epoch → ℙ KeyHash → ℚ → GovAction
+  NewConstitution  : DocHash                          → GovAction
+  TriggerHF        : ProtVer                          → GovAction
+  ChangePParams    : UpdateT → PPHash                 → GovAction
+  TreasuryWdrl     : (Credential ↛ Coin)              → GovAction
+  Info             :                                    GovAction
 
 data Vote : Set where
   yes      : Vote
@@ -89,7 +90,7 @@ instance
 record EnactEnv : Set where
 
 record EnactState : Set where
-  field cc            : Maybe (ℙ KeyHash × ℚ)
+  field cc            : Maybe (KeyHash ↛ Epoch × ℚ)
         constitution  : DocHash
         pv            : ProtVer
         pparams       : PParams
@@ -102,7 +103,8 @@ open EnactState
 private variable
   s : EnactState
   up : UpdateT
-  mem : ℙ KeyHash
+  new : KeyHash ↛ Epoch
+  rem : ℙ KeyHash
   q : ℚ
   dh : DocHash
   h : PPHash
@@ -124,10 +126,12 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \begin{code}
 
   -- TODO: add hashes to everything except withdrawals & no ops
-  Enact-NoConf    : _ ⊢ s ⇀⦇ NoConfidence        ,ENACT⦈  record s { cc = nothing }
-  Enact-NewComm   : _ ⊢ s ⇀⦇ NewCommittee mem q  ,ENACT⦈  record s { cc = just (mem , q) }
-  Enact-NewConst  : _ ⊢ s ⇀⦇ NewConstitution dh  ,ENACT⦈  record s { constitution = dh }
-  Enact-HF        : _ ⊢ s ⇀⦇ TriggerHF v         ,ENACT⦈  record s { pv = v }
+  Enact-NoConf    : _ ⊢ s ⇀⦇ NoConfidence            ,ENACT⦈  record s { cc = nothing }
+  Enact-NewComm   : _ ⊢ s ⇀⦇ NewCommittee new rem q  ,ENACT⦈ let
+    old = maybe proj₁ ∅ᵐ (EnactState.cc s)
+    in record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) }
+  Enact-NewConst  : _ ⊢ s ⇀⦇ NewConstitution dh      ,ENACT⦈  record s { constitution = dh }
+  Enact-HF        : _ ⊢ s ⇀⦇ TriggerHF v             ,ENACT⦈  record s { pv = v }
   Enact-PParamsY  :
     h ≡ hash (s .pparams)
     ────────────────────────────────

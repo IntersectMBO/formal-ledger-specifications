@@ -35,7 +35,7 @@ data DCert : Set where
   retirepool : Credential → Epoch → DCert
   regdrep    : Credential → Coin → DCert
   deregdrep  : Credential → DCert
-  ccreghot   : Credential → KeyHash → DCert
+  ccreghot   : Credential → Maybe KeyHash → DCert
 
 VDelEnv   = PParams
 CertEnv   = PParams
@@ -57,7 +57,7 @@ record PState : Set where
 record VState : Set where
   constructor ⟦_,_⟧ᵛ
   field dreps      : ℙ Credential
-        ccHotKeys  : KeyHash ↛ KeyHash -- TODO: maybe replace with credential
+        ccHotKeys  : KeyHash ↛ Maybe KeyHash -- TODO: maybe replace with credential
 
 record CertState : Set where
   field dState : DState
@@ -71,13 +71,14 @@ private variable
   pools : Credential ↛ PoolParams
   vDelegs sDelegs : Credential ↛ Credential
   retiring retiring' : Credential ↛ Epoch
-  ccKeys : KeyHash ↛ KeyHash
+  ccKeys : KeyHash ↛ Maybe KeyHash
   dCert : DCert
   c c' : Credential
   mc mc' : Maybe Credential
   d : Coin
   e : Epoch
   kh kh' : KeyHash
+  mkh : Maybe KeyHash
   st st' : CertState
   stᵛ stᵛ' : VState
   stᵈ stᵈ' : DState
@@ -130,10 +131,11 @@ data _⊢_⇀⦇_,VDEL⦈_ : VDelEnv → VState → DCert → VState → Set whe
          ⟦ dReps' , ccKeys ⟧ᵛ
 
   VDEL-ccreghot :
-    c ≡ inj₁ kh'
+    (kh , nothing) ∉ ccKeys ˢ
+    -- TODO: Should we check if kh actually belongs to the CC?
     ────────────────────────────────
-    pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c kh ,VDEL⦈
-         ⟦ dReps , singletonᵐ kh' kh ∪ᵐˡ ccKeys ⟧ᵛ
+    pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot (inj₁ kh) mkh ,VDEL⦈
+         ⟦ dReps , singletonᵐ kh mkh ∪ᵐˡ ccKeys ⟧ᵛ
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
   CERT-deleg :

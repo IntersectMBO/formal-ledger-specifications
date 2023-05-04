@@ -73,8 +73,10 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       ls' = record ls { tally = newTally ; utxoSt = record utxoSt { fees = 0 } ; certState = certState' }
     in
     e ≡ sucᵉ lastEpoch
-    → record { currentEpoch = e ; NewEpochEnv Γ } ⊢ ⟦ es  , [] ⟧ʳ
+    → record { currentEpoch = e ; ccHotKeys = VState.ccHotKeys vState ; NewEpochEnv Γ }
+                    ⊢                               ⟦ es  , [] ⟧ʳ
                     ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) ⟧ʳ
+    -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es' ⟧ⁿᵉ
 
