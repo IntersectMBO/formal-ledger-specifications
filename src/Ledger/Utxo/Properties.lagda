@@ -4,19 +4,18 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Agda.Primitive renaming (Set to Type) using ()
 open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Utxo.Properties (txs : TransactionStructure) where
 
+open import Agda.Primitive  using () renaming (Set to Type)
 open import Prelude
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (ℤ ; _⊖_ ; 0ℤ)
 
 import Data.List as List
 import Data.Nat as ℕ
 open import Algebra.Morphism
-open import Data.Nat.Properties using
-  (+-0-commutativeMonoid; +-0-monoid; +-comm; +-identityʳ; +-assoc; +-∸-assoc; m≤n⇒m≤n+o; ≤″⇒≤; m+[n∸m]≡n)
+open import Data.Nat.Properties using (+-identityʳ; +-∸-assoc; m≤n⇒m≤n+o; ≤″⇒≤; m+[n∸m]≡n)
 open import Data.Sign using (Sign)
 open import Data.Integer as ℤ using (ℤ; _⊖_)
 open import Data.Integer.Ext
@@ -32,7 +31,7 @@ open TransactionStructure txs
 open import Ledger.Crypto
 open import Ledger.PParams epochStructure
 open import Ledger.Utxo txs
-open import Ledger.TokenAlgebra PolicyID ByteString AdaName using (TokenAlgebraRel)
+open import Ledger.TokenAlgebra globalConstants PolicyID using (TokenAlgebraRel)
 
 open TxBody
 open TxWitnesses

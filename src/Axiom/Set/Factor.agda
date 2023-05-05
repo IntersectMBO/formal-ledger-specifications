@@ -1,7 +1,7 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Axiom.Set
+open import Agda.Primitive  using (lzero) renaming (Set to Type)
+open import Axiom.Set       using (Theory)
 
 module Axiom.Set.Factor (th : Theory {lzero}) where
 

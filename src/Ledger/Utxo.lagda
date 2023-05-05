@@ -7,7 +7,6 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
-open import Agda.Primitive renaming (Set to Type) using ()
 open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Utxo (txs : TransactionStructure) where
@@ -28,7 +27,7 @@ open import Ledger.PParams epochStructure
 open import Ledger.TokenAlgebra globalConstants PolicyID using (TokenAlgebraRel)
 
 open import MyDebugOptions
-open import Tactic.Defaults
+-- open import Tactic.Defaults
 open import Tactic.DeriveComp using (deriveComputational)
 open import Tactic.Derive.DecEq using (derive-DecEq)
 

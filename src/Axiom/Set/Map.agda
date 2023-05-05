@@ -1,8 +1,8 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Axiom.Set
+open import Agda.Primitive  using (lzero) renaming (Set to Type)
+open import Axiom.Set       using (Theory)
 
 module Axiom.Set.Map (th : Theory {lzero}) where
 open Theory th renaming (map to mapˢ)

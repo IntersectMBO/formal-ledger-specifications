@@ -2,15 +2,14 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Agda.Primitive renaming (Set to Type) using ()
 open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Utxow (txs : TransactionStructure) where
 
+open import Agda.Primitive  using () renaming (Set to Type)
 open import Ledger.Prelude
 
 import Data.Maybe as M
-import Data.Nat
 
 open TransactionStructure txs
 open import Ledger.Crypto

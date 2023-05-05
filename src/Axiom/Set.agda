@@ -1,12 +1,11 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
-
 module Axiom.Set where
 
 open import Prelude hiding (filter)
 
-import Function.Related.Propositional as R
+
+open import Agda.Primitive  using () renaming (Set to Type)
 open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there)
@@ -21,6 +20,8 @@ open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary
 open import Relation.Nullary.Decidable using (⌊_⌋)
 open import Relation.Unary using () renaming (Decidable to Dec₁)
+
+import Function.Related.Propositional as R
 
 private variable ℓ : Level
                  A B C : Type ℓ

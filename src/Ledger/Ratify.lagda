@@ -4,11 +4,11 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Agda.Primitive renaming (Set to Type) using ()
 open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Ratify (txs : TransactionStructure) where
 
+open import Agda.Primitive  using () renaming (Set to Type) using ()
 open import Ledger.Prelude hiding (_∧_)
 
 open TransactionStructure txs

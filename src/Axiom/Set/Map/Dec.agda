@@ -1,11 +1,12 @@
 {-# OPTIONS --safe --no-import-sorts #-}
-open import Axiom.Set
+
+open import Axiom.Set using (Theory ; Theoryᵈ)
 
 module Axiom.Set.Map.Dec (thᵈ : Theoryᵈ) where
 
 open import Prelude
 
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive using () renaming (Set to Type)
 open import Algebra
 open import Data.Sum as Sum
 open import Data.These

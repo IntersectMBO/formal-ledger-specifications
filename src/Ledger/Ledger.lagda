@@ -4,8 +4,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Ledger.Transaction using (TransactionStructure)
+open import Ledger.Transaction  using (TransactionStructure)
 
 module Ledger.Ledger (txs : TransactionStructure) where
 

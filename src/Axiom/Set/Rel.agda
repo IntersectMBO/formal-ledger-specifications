@@ -1,12 +1,14 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Axiom.Set
+open import Agda.Primitive  using (lzero) renaming (Set to Type)
+open import Axiom.Set       using (Theory)
+
+module Axiom.Set.Rel (th : Theory {lzero}) where
+
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 import Function.Related.Propositional as R
 
-module Axiom.Set.Rel (th : Theory {lzero}) where
 open Theory th
 open import Axiom.Set.Properties th
 

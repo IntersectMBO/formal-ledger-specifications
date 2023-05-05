@@ -1,9 +1,8 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Axiom.Set
-open import Algebra using (CommutativeMonoid)
-
+open import Agda.Primitive  using (lzero) renaming (Set to Type)
+open import Algebra         using (CommutativeMonoid)
+open import Axiom.Set       using (Theory)
 open import Prelude
 
 module Axiom.Set.Sum (th : Theory {lzero}) ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where

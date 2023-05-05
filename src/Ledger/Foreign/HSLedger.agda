@@ -3,10 +3,10 @@ module Ledger.Foreign.HSLedger where
 
 open import Ledger.Prelude
 
+open import Agda.Primitive using () renaming (Set to Type)
 import Data.Maybe as M
 import Data.Rational as ℚ
-open import Data.Nat using (_≤_; _≤ᵇ_)
-open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
+open import Data.Nat using (_≤ᵇ_)
 
 open import Foreign.Convertible
 open import Foreign.Haskell.Coerce
@@ -17,6 +17,8 @@ open import Ledger.Epoch
 
 open GlobalConstants
 HSGlobalConstants : GlobalConstants
+HSGlobalConstants .ByteString            = ⊤
+HSGlobalConstants .AdaName               = tt
 HSGlobalConstants .Network               = ⊤
 HSGlobalConstants .SlotsPerEpochᶜ        = 100
 HSGlobalConstants .NonZero-SlotsPerEpoch = _
@@ -91,27 +93,30 @@ HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructur
 
 open import Ledger.Transaction
 --open import Ledger.TokenAlgebra ℕ
-open import Ledger.TokenAlgebra
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
 open import Data.Nat
 
-coinTokenAlgebra : TokenAlgebra
-coinTokenAlgebra = record
-  { Value-CommutativeMonoid = +-0-commutativeMonoid
-  ; coin                    = id
-  ; inject                  = id
-  ; policies                = λ x → ∅
-  ; size                    = λ x → 1 -- there is only ada in this token algebra
-  ; property                = λ x → refl
-  ; coinIsMonoidMorphism    = record
-    { mn-homo = record
-      { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo  = λ x y → refl }
-      ; ε-homo  = refl
+module _ {gs : GlobalConstants}{PolicyID : Type} where
+
+  open import Ledger.TokenAlgebra gs PolicyID using (TokenAlgebraRel)
+
+  coinTokenAlgebra : TokenAlgebraRel
+  coinTokenAlgebra = record
+    { Value-CommutativeMonoid = +-0-commutativeMonoid
+    ; coin                    = id
+    ; inject                  = id
+    ; policies                = λ x → λ _ → PolicyID
+    ; size                    = λ x → 1 -- there is only ada in this token algebra
+    ; property                = λ x → refl
+    ; coinIsMonoidMorphism    = record
+      { mn-homo = record
+        { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo  = λ x y → refl }
+        ; ε-homo  = refl
+        }
       }
+    ; _≤ᵗ_                    = _≤_
+    ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
     }
-  ; _≤ᵗ_                    = _≤_
-  ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
-  }
 
 module _ where
   open TransactionStructure
@@ -122,6 +127,7 @@ module _ where
   HSTransactionStructure .epochStructure  = HSEpochStructure
   HSTransactionStructure .globalConstants = HSGlobalConstants
   HSTransactionStructure .AuxiliaryData   = ⊤
+  HSTransactionStructure .PolicyID        = ⊤
   HSTransactionStructure .crypto          = HSCrypto
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppHashingScheme = isHashableSelf PParams

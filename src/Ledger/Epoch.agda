@@ -2,15 +2,10 @@
 
 module Ledger.Epoch where
 
-open import Agda.Primitive renaming (Set to Type)
-open import Ledger.Prelude hiding (compare)
-
-open import Data.Nat using (_<_)
-open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
-
-open import Algebra
-open import Relation.Binary
-open import Relation.Nullary.Negation
+open import Agda.Primitive       using () renaming (Set to Type)
+open import Algebra              using (Semiring)
+open import Ledger.Prelude       hiding (compare)
+open import Relation.Binary      using (IsStrictTotalOrder)
 
 record GlobalConstants : Type₁ where
   field ByteString : Type

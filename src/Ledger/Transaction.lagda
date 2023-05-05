@@ -9,15 +9,14 @@
 
 module Ledger.Transaction where
 
-open import Agda.Primitive renaming (Set to Type)
-
-open import Ledger.Prelude using (DecEq ; _×_ ; _↛_ ; Coin ; ℙ_ ; List ; Maybe ; ℕ ;  _,_ ; _∩_ ; dom ; _∣^'_ ; to-sp ; _∘_ ; proj₁ ; _ˢ ; HasCoin ; proj₂)
-
+open import Agda.Primitive  using () renaming (Set to Type)
 open import Ledger.Crypto
 open import Ledger.Epoch
+open import Ledger.Prelude
+
+import Ledger.GovernanceActions
 import Ledger.PParams
 import Ledger.Script
-import Ledger.GovernanceActions
 import Ledger.TokenAlgebra as TA
 
 record TransactionStructure : Type₁ where

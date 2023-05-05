@@ -1,11 +1,11 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Axiom.Set
+open import Axiom.Set using (Theory)
 
 module Axiom.Set.TotalMap (th : Theory) where
 
+open import Agda.Primitive using () renaming (Set to Type)
 open import Prelude
 
 open Theory th
