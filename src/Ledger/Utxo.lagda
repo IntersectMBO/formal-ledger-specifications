@@ -49,20 +49,22 @@ instance
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
 
+open import Axiom.Set.Properties using (∈-map⁻')
+
+lookupMap : {A B : Set}{a : A} → (m : A ⇀ B) → (a ∈ (Ledger.Prelude.map proj₁ $ m ˢ)) → B
+lookupMap (fst , snd) h with ∈-map⁻' th h
+... | (fst₁ , snd₁) , ans₁ = snd₁
+
 isTwoPhaseScriptAddress : Tx → Addr → Bool
 isTwoPhaseScriptAddress tx a with isScriptAddr? a
 ... | no ¬p = false
 ... | yes p with getScriptHash a p
 ... | scriptHash with setToHashMap $ TxWitnesses.scripts (Tx.wits tx)
-... | m with _∈ᵇ_ scriptHash (Ledger.Prelude.map proj₁ $ m ˢ)
-... | ans = ans
-
--- _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
--- m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
-
--- validatorHash a ↦ s ∈ txscripts(txwits tx) ∧ s ∈ Scripts^{ph2}
--- {{Hashable A}} -> P A -> Map Hash A
--- could say the hash function is injective as part of the hashable class
+... | m with _∈?_ scriptHash (Ledger.Prelude.map proj₁ $ m ˢ)
+... | no ¬p = false
+... | yes p₁ with lookupMap m p₁
+... | inj₁ x = false
+... | inj₂ y = true
 
 getRedeemers : Tx → (RdmrPtr ⇀ (Redeemer × ExUnits))
 getRedeemers tx = TxWitnesses.txrdmrs (Tx.wits tx)
