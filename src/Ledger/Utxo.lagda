@@ -38,6 +38,8 @@ open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
 open import Ledger.Script
+open import Relation.Nullary.Decidable using (⌊_⌋)
+open import Data.Bool using (_∧_)
 
 instance
   _ = Decidable²⇒Dec _≤?_
@@ -48,12 +50,6 @@ instance
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
-
-open import Axiom.Set.Properties using (∈-map⁻')
-
-lookupMap : {A B : Set}{a : A} → (m : A ⇀ B) → (a ∈ (Ledger.Prelude.map proj₁ $ m ˢ)) → B
-lookupMap (fst , snd) h with ∈-map⁻' th h
-... | (fst₁ , snd₁) , ans₁ = snd₁
 
 isTwoPhaseScriptAddress : Tx → Addr → Bool
 isTwoPhaseScriptAddress tx a with isScriptAddr? a
