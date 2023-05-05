@@ -41,8 +41,6 @@ open import Ledger.Script
 open import Relation.Nullary.Decidable using (⌊_⌋; isNo)
 open import Data.Bool using (_∧_)
 
-open import Ledger.Script
-
 instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
