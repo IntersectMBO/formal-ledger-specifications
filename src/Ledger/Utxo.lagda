@@ -39,8 +39,6 @@ open import Tactic.Derive.DecEq
 
 open import Ledger.Script
 
-
-
 instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
@@ -55,7 +53,12 @@ isTwoPhaseScriptAddress : Tx → Addr → Bool
 isTwoPhaseScriptAddress tx a with isScriptAddr? a
 ... | no ¬p = false
 ... | yes p with getScriptHash a p
-... | scriptHash = {!!}
+... | scriptHash with setToHashMap $ TxWitnesses.scripts (Tx.wits tx)
+... | m with _∈ᵇ_ scriptHash (Ledger.Prelude.map proj₁ $ m ˢ)
+... | ans = ans
+
+-- _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
+-- m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
 
 -- validatorHash a ↦ s ∈ txscripts(txwits tx) ∧ s ∈ Scripts^{ph2}
 -- {{Hashable A}} -> P A -> Map Hash A

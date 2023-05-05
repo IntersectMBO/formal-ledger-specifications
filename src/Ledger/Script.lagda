@@ -64,9 +64,14 @@ record ScriptStructure : Set₁ where
 
   Script = P1Script ⊎ P2Script
 
+  open import Data.Empty
+  open import Agda.Builtin.Equality
+  open import Relation.Binary.PropositionalEquality
+
   instance
     Hashable-Script : Hashable Script ScriptHash
     Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
+
 \end{code}
 We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]
