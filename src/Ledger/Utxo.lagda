@@ -10,12 +10,7 @@
 open import Agda.Primitive renaming (Set to Type) using ()
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Utxo
- (PolicyID : Type)       -- identifies monetary policies
- (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- (AdaName : ByteString)  -- the asset name for Ada
- (txs : TransactionStructure  PolicyID ByteString AdaName)
- where
+module Ledger.Utxo (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (Dec₁)
 
@@ -30,10 +25,10 @@ open Tx
 -- open import Ledger.Crypto
 -- open import Ledger.PPUp
 open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra PolicyID ByteString AdaName using (TokenAlgebraRel)
+open import Ledger.TokenAlgebra globalConstants PolicyID using (TokenAlgebraRel)
 
 open import MyDebugOptions
---open import Tactic.Defaults
+open import Tactic.Defaults
 open import Tactic.DeriveComp using (deriveComputational)
 open import Tactic.Derive.DecEq using (derive-DecEq)
 

@@ -7,28 +7,22 @@
 -- NOTE: Everything in this module is part of TransactionStructure
 --------------------------------------------------------------------------------
 
+module Ledger.Transaction where
+
 open import Agda.Primitive renaming (Set to Type)
 
-module Ledger.Transaction
-
- -- TODO: determine how these three parameters should be defined in modules that depend on this one.
- (PolicyID : Type)       -- identifies monetary policies
- (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- (AdaName : ByteString)  -- the asset name for Ada
-
- where
-
 open import Ledger.Prelude using (DecEq ; _×_ ; _↛_ ; Coin ; ℙ_ ; List ; Maybe ; ℕ ;  _,_ ; _∩_ ; dom ; _∣^'_ ; to-sp ; _∘_ ; proj₁ ; _ˢ ; HasCoin ; proj₂)
-open import Ledger.TokenAlgebra PolicyID ByteString AdaName
 
 open import Ledger.Crypto
 open import Ledger.Epoch
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
+import Ledger.TokenAlgebra as TA
 
 record TransactionStructure : Type₁ where
   field
+
 \end{code}
 
 Transactions are defined in Figure~\ref{fig:defs:utxo-shelley}.
@@ -43,15 +37,18 @@ A transaction is made up of three pieces:
   \item A transaction fee. This value will be added to the fee pot.
 \end{itemize}
 
+We also need a  policy ID that identifies monetary policies.
+
 Finally, $\fun{txid}$ computes the transaction id of a given transaction.
 This function must produce a unique id for each unique transaction body.
 \textbf{We assume that} $\fun{txid}$ \textbf{is injective.}
 
 \begin{figure*}[h]
 \emph{Abstract types}
-\AgdaTarget{Ix, TxId, Epoch, AuxiliaryData}
+\AgdaTarget{Ix, TxId, AuxiliaryData}
 \begin{code}
-        Ix TxId AuxiliaryData : Type
+        Ix TxId AuxiliaryData PolicyID : Type
+
 \end{code}
 \begin{code}[hide]
         epochStructure                      : EpochStructure
@@ -73,7 +70,7 @@ This function must produce a unique id for each unique transaction body.
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
-  -- open TA
+  open TA globalConstants PolicyID
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
 

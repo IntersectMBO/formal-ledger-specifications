@@ -1,4 +1,5 @@
 \section{Update Proposal Mechanism}
+\label{sec:update-proposal-mechanism}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -6,12 +7,7 @@
 open import Agda.Primitive renaming (Set to Type)
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.PPUp
- (PolicyID : Type)       -- identifies monetary policies
- (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- (AdaName : ByteString)  -- the asset name for Ada
- (txs : TransactionStructure  PolicyID ByteString AdaName)
- where
+module Ledger.PPUp (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (_≥_; _+_; _*_)
 

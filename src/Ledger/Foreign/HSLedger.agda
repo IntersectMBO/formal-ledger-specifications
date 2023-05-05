@@ -90,7 +90,8 @@ HSScriptStructure : ScriptStructure ℕ ℕ ℕ
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
 
 open import Ledger.Transaction
-open import Ledger.TokenAlgebra ℕ
+--open import Ledger.TokenAlgebra ℕ
+open import Ledger.TokenAlgebra
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
 open import Data.Nat
 

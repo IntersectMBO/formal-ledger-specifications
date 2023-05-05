@@ -1,23 +1,19 @@
 \subsection{Value Relation}
+\label{sec:value-relation}
+
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive  using () renaming (Set to Type)
+open import Ledger.Epoch    using (GlobalConstants)
 
 module Ledger.TokenAlgebra.ValueRelation
-  -- TODO: determine how these three parameters should be defined in modules that depend on this one.
- (PolicyID : Type)       -- identifies monetary policies
- (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- (AdaName : ByteString)  -- the asset name for Ada
- where
+  (gc        : GlobalConstants)
+  (PolicyID  : Type)
+  where
 
-open import Ledger.Prelude               hiding (Coin ; Rel ; _>_)
-
-open import Ledger.TokenAlgebra PolicyID ByteString AdaName
-                                         using (AssetID ; AssetName ; Quantity ; TokenAlgebraRel)
-
-open import Algebra                      using (CommutativeMonoid ; Commutative)
-open import Algebra.Core                 using (Op₂)
+open import Algebra                      using (CommutativeMonoid ; Commutative ; Op₂)
 open import Algebra.Morphism             using (IsMonoidMorphism ; IsSemigroupMorphism)
 open import Data.Nat                     using (ℕ ; _≤_ ; _>_)
                                          renaming (zero to 0ℕ ; _+_ to _+ℕ_)
@@ -25,6 +21,9 @@ open import Data.Nat.Properties          using ( +-identityˡ ; +-identityʳ ; +
 open import Data.Product.Base            using (swap)
 open import Data.Sum.Base                using ([_,_]′)
 
+open import Ledger.Prelude               hiding (Coin ; Rel ; _>_)
+open import Ledger.TokenAlgebra gc PolicyID
+                                         using (AssetID ; AssetName ; Quantity ; TokenAlgebraRel)
 open import Relation.Binary              using (REL ; Rel ; _⇒_ ; IsEquivalence ; Decidable)
                                          renaming (_⇔_ to _⇐⇒_ )
 open import Relation.Binary.Definitions  using (Decidable ; DecidableEquality)
@@ -37,134 +36,122 @@ private
     A B : Type
     C : REL A B 0ℓ → Type 0ℓ
 
-_⊕₁_ : Op₂ (REL AssetID Quantity 0ℓ)
-Ru ⊕₁ Rv = λ aid q → ∃[ qu ] (∃[ qv ] (Ru aid qu × Rv aid qv × (q ≡ qu +ℕ qv)))
+open ≡-Reasoning
 
-_⊕_ : Op₂ (AssetID ⇀ Quantity)
+\end{code}
 
--- the summed relation
-proj₁ ((Ru , _) ⊕ (Rv , _)) = Ru ⊕₁ Rv
+\subsection{The identity of the value monoid}
 
--- proof that the summed relation is a left-unique relation
-proj₂ ((Ru , luu) ⊕ (Rv , luv)) {aid} {q} {q'} = Goal
- where
- Goal : (Ru ⊕₁ Rv) aid q → (Ru ⊕₁ Rv) aid q' → q ≡ q'
- Goal (qu , qv , Ruqu , Rvqv , q≡quqv) (qu' , qv' , Ruqu' , Rvqv' , q'≡qu'qv') = γ
-  where
-  qu≡qu' = luu Ruqu Ruqu'
-  qv≡qv' = luv Rvqv Rvqv'
+We'll use \AgdaBound{ι} to denote the identity for the Value monoid.
 
-  quqv≡qu'qv' : qu +ℕ qv ≡ qu' +ℕ qv'
-  quqv≡qu'qv' = trans (cong (λ b → qu +ℕ b) qv≡qv') (cong (λ a → a +ℕ qv') qu≡qu')
-
-  γ : q ≡ q'
-  γ = trans q≡quqv (trans quqv≡qu'qv' (sym q'≡qu'qv'))
-
--- the identity for the Value monoid
+\begin{code}
 ι : REL AssetID Quantity 0ℓ
-ι aid q = q ≡ 0ℕ
+ι _ q = q ≡ 0
 
--- the identity is a left-unique relation
 ι-left-unique : left-unique-rel ι
-ι-left-unique {a} {b} {b'} 0b 0b' = trans 0b (sym 0b')
+ι-left-unique 0b 0b' = trans 0b (sym 0b')
 
--- the following is useful (but probably belongs somewhere else)
+ι-left : REL AssetID Quantity 0ℓ → REL AssetID Quantity 0ℓ
+ι-left R aid q = ∃[ qι ] (∃[ qu ] ι aid qι × R aid qu × q ≡ qι + qu)
+
+ι-right : REL AssetID Quantity 0ℓ → REL AssetID Quantity 0ℓ
+ι-right R aid q = ∃[ qu ] (∃[ qι ] R aid qu × ι aid qι × q ≡ qu + qι)
+
+ι-left-lemma1 : ∀{aid q}(R : REL AssetID Quantity 0ℓ)(h : ι-left R aid q) → proj₁ h ≡ 0
+ι-left-lemma1 _ h = (proj₁ (proj₂ (proj₂ h)))
+
+ι-left-lemma2 : ∀{aid q}(R : REL AssetID Quantity 0ℓ)(h : ι-left R aid q) → q ≡ proj₁ (proj₂ h)
+ι-left-lemma2 {aid}{q} R h = let qι = proj₁ h ; qu = proj₁ (proj₂ h) in
+ begin
+   q        ≡⟨ proj₂ (proj₂ (proj₂ (proj₂ h))) ⟩
+   qι + qu  ≡⟨ cong (λ x → x + qu) (ι-left-lemma1 R h) ⟩
+   0 + qu   ≡⟨ +-identityˡ qu ⟩
+   qu       ∎
+
+ι-right-lemma1 : ∀{aid q}(R : REL AssetID Quantity 0ℓ)(h : ι-right R aid q) → proj₁ (proj₂ h) ≡ 0
+ι-right-lemma1 _ h = proj₁ (proj₂ (proj₂ (proj₂ h)))
+
+ι-right-lemma2 : ∀{aid q}(R : REL AssetID Quantity 0ℓ)(h : ι-right R aid q) → q ≡ proj₁ h
+ι-right-lemma2 {aid}{q} R h = let qu = proj₁ h ; qι = proj₁ (proj₂ h) in
+ begin
+   q        ≡⟨ proj₂ (proj₂ (proj₂ (proj₂ h))) ⟩
+   qu + qι  ≡⟨ cong (λ x → qu + x) (ι-right-lemma1 R h) ⟩
+   qu + 0   ≡⟨ +-identityʳ qu ⟩
+   qu       ∎
+
+ι-left⇒R : ∀{R} → ι-left R ⇒ R
+ι-left⇒R {R} {aid} {q} h = Goal
+ where
+ qu≡q : proj₁ (proj₂ h) ≡ q
+ qu≡q = sym (ι-left-lemma2 R h)
+
+ Goal : R aid q
+ Goal = subst (λ x → R aid x) qu≡q (proj₁ (proj₂ (proj₂ (proj₂ h))))
+
+R⇒ι-left : ∀{R} → R ⇒ ι-left R
+R⇒ι-left {R} {aid} {q} Rh = 0 , q , refl , Rh , sym (+-identityˡ q)
+
+ι-right⇒R : ∀{R} → ι-right R ⇒ R
+ι-right⇒R {R} {aid} {q} h = subst (λ x → R aid x) qu≡q (proj₁ (proj₂ (proj₂ h)))
+ where
+ qu≡q : proj₁ h ≡ q
+ qu≡q = sym (ι-right-lemma2 R h)
+
+R⇒ι-right : ∀{R} → R ⇒ ι-right R
+R⇒ι-right {R} {aid} {q} Rh = q , 0 , Rh , refl , sym (+-identityʳ q)
+
+\end{code}
+
+\subsection{Equivalence on the value monoid}
+
+\begin{code}
+-- the following probably belongs somewhere else
 ⇐⇒-isEquivalence : IsEquivalence {A = REL A B 0ℓ} _⇐⇒_
 IsEquivalence.refl ⇐⇒-isEquivalence = id , id
 IsEquivalence.sym ⇐⇒-isEquivalence = swap
 proj₁ (IsEquivalence.trans ⇐⇒-isEquivalence ij jk) ixy = (proj₁ jk) ((proj₁ ij) ixy)
 proj₂ (IsEquivalence.trans ⇐⇒-isEquivalence ij jk) kxy = (proj₂ ij) ((proj₂ jk) kxy)
 
-_≋_ : Rel (Σ (REL A B 0ℓ) C) 1ℓ
-u ≋ v = Lift 1ℓ (proj₁ u ⇐⇒ proj₁ v)
+_≋_ : Rel (Σ (REL A B 0ℓ) C) 0ℓ
+u ≋ v = proj₁ u ⇐⇒ proj₁ v
 
 ≋-isEquivalence : IsEquivalence {A = Σ (REL A B 0ℓ) C} _≋_
-IsEquivalence.refl ≋-isEquivalence = lift (IsEquivalence.refl ⇐⇒-isEquivalence)
-Lift.lower (IsEquivalence.sym ≋-isEquivalence (lift xy)) = IsEquivalence.sym ⇐⇒-isEquivalence xy
-Lift.lower (IsEquivalence.trans ≋-isEquivalence (lift ij) (lift jk)) = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
+IsEquivalence.refl ≋-isEquivalence = IsEquivalence.refl ⇐⇒-isEquivalence
+IsEquivalence.sym ≋-isEquivalence xy = IsEquivalence.sym ⇐⇒-isEquivalence xy
+IsEquivalence.trans ≋-isEquivalence ij jk = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
 
-
-_≋'_ : Rel (Σ (REL A B 0ℓ) C) 1ℓ
-u ≋' v = Lift 1ℓ (proj₁ u ⇐⇒ proj₁ v)
-
-
-≋'-isEquivalence : IsEquivalence {A = Σ (REL A B 0ℓ) C} _≋'_
-IsEquivalence.refl ≋'-isEquivalence = lift (IsEquivalence.refl ⇐⇒-isEquivalence)
-Lift.lower (IsEquivalence.sym ≋'-isEquivalence (lift xy)) = IsEquivalence.sym ⇐⇒-isEquivalence xy
-Lift.lower (IsEquivalence.trans ≋'-isEquivalence (lift ij) (lift jk)) = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
-
--- an alternative  equivalence
-_≈_ : Rel (REL A B 0ℓ) 1ℓ
-u ≈ v = Lift 1ℓ (u ⇐⇒ v)
-
+_≈_ : Rel (REL A B 0ℓ) 0ℓ
+u ≈ v = u ⇐⇒ v
 
 ≈-isEquivalence : IsEquivalence {A = REL A B 0ℓ} _≈_
-IsEquivalence.refl ≈-isEquivalence = lift (IsEquivalence.refl ⇐⇒-isEquivalence)
-Lift.lower (IsEquivalence.sym ≈-isEquivalence (lift xy)) = IsEquivalence.sym ⇐⇒-isEquivalence xy
-Lift.lower (IsEquivalence.trans ≈-isEquivalence (lift ij) (lift jk)) = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
+IsEquivalence.refl ≈-isEquivalence = IsEquivalence.refl ⇐⇒-isEquivalence
+IsEquivalence.sym ≈-isEquivalence xy = IsEquivalence.sym ⇐⇒-isEquivalence xy
+IsEquivalence.trans ≈-isEquivalence ij jk = IsEquivalence.trans ⇐⇒-isEquivalence ij jk
+\end{code}
 
+\subsection{Summation of the value monoid and its properties}
 
+\begin{code}
+_⊕₁_ : Op₂ (REL AssetID Quantity 0ℓ)
+Ru ⊕₁ Rv = λ aid q → ∃[ qu ] (∃[ qv ] (Ru aid qu × Rv aid qv × (q ≡ qu + qv)))
 
-
-ι-left : REL AssetID Quantity 0ℓ → REL AssetID Quantity 0ℓ
-ι-left Ru aid q = ∃[ qι ] (∃[ qu ] ι aid qι × Ru aid qu × q ≡ qι +ℕ qu)
-
-ι-right : REL AssetID Quantity 0ℓ → REL AssetID Quantity 0ℓ
-ι-right Ru aid q = ∃[ qu ] (∃[ qι ] Ru aid qu × ι aid qι × q ≡ qu +ℕ qι)
-
-ι-left-lemma1 : ∀{Ru aid q} → (h : ι-left Ru aid q) → proj₁ h ≡ 0ℕ
-ι-left-lemma1 {aid} {q} h = (proj₁ (proj₂ (proj₂ h)))
-
-open ≡-Reasoning
-
-ι-left-lemma2 : ∀{Ru aid q} → (h : ι-left Ru aid q) → q ≡ proj₁ (proj₂ h)
-ι-left-lemma2 {Ru}{aid}{q} h = let qι = proj₁ h ; qu = proj₁ (proj₂ h) in
- begin
-   q         ≡⟨ proj₂ (proj₂ (proj₂ (proj₂ h))) ⟩
-   qι +ℕ qu  ≡⟨ cong (λ x → x +ℕ qu) (ι-left-lemma1 {Ru} h) ⟩
-   0ℕ +ℕ qu  ≡⟨ +-identityˡ qu ⟩
-   qu        ∎
-
-ι-right-lemma1 : ∀{Ru aid q} → (h : ι-right Ru aid q) → proj₁ (proj₂ h) ≡ 0ℕ
-ι-right-lemma1 {aid} {q} h = proj₁ (proj₂ (proj₂ (proj₂ h)))
-
-ι-right-lemma2 : ∀{Ru aid q} → (h : ι-right Ru aid q) → q ≡ proj₁ h
-ι-right-lemma2 {Ru}{aid}{q} h = let qu = proj₁ h ; qι = proj₁ (proj₂ h) in
- begin
-   q         ≡⟨ proj₂ (proj₂ (proj₂ (proj₂ h))) ⟩
-   qu +ℕ qι  ≡⟨ cong (λ x → qu +ℕ x) (ι-right-lemma1 {Ru} h) ⟩
-   qu +ℕ 0ℕ  ≡⟨ +-identityʳ qu ⟩
-   qu        ∎
-
-ι-left⇒Ru : ∀{Ru} → ι-left Ru ⇒ Ru
-ι-left⇒Ru {Ru} {aid} {q} h = Goal
+_⊕_ : Op₂ (AssetID ⇀ Quantity)
+proj₁ ((Ru , _) ⊕ (Rv , _)) = Ru ⊕₁ Rv
+proj₂ ((Ru , luu) ⊕ (Rv , luv)) {aid} {q} {q'} = Goal
  where
- qu≡q : proj₁ (proj₂ h) ≡ q
- qu≡q = sym (ι-left-lemma2 {Ru} h)
-
- Goal : Ru aid q
- Goal = subst (λ x → Ru aid x) qu≡q (proj₁ (proj₂ (proj₂ (proj₂ h))))
-
-Ru⇒ι-left : ∀{Ru} → Ru ⇒ ι-left Ru
-Ru⇒ι-left {Ru} {aid} {q} Ruh = 0ℕ , q , refl , Ruh , sym (+-identityˡ q)
-
-ι-right⇒Ru : ∀{Ru} → ι-right Ru ⇒ Ru
-ι-right⇒Ru {Ru} {aid} {q} h = subst (λ x → Ru aid x) qu≡q (proj₁ (proj₂ (proj₂ h)))
- where
- qu≡q : proj₁ h ≡ q
- qu≡q = sym (ι-right-lemma2 {Ru} h)
-
-Ru⇒ι-right : ∀{Ru} → Ru ⇒ ι-right Ru
-Ru⇒ι-right {Ru} {aid} {q} Ruh = q , 0ℕ , Ruh , refl , sym (+-identityʳ q)
-
+ Goal : (Ru ⊕₁ Rv) aid q → (Ru ⊕₁ Rv) aid q' → q ≡ q'
+ Goal (qu , qv , Ruqu , Rvqv , q≡quqv) (qu' , qv' , Ruqu' , Rvqv' , q'≡qu'qv') = begin
+   q           ≡⟨ q≡quqv ⟩
+   qu + qv    ≡⟨ trans (cong (λ b → qu + b) (luv Rvqv Rvqv')) (cong (λ a → a + qv') (luu Ruqu Ruqu')) ⟩
+   qu' + qv'  ≡⟨ sym q'≡qu'qv' ⟩
+   q'          ∎
 
 ι-identity : Algebra.Identity _≋_ (ι , λ{a b b'} → ι-left-unique {a}{b}{b'}) _⊕_
-Lift.lower (proj₁ ι-identity (Ru , _)) = ι-left⇒Ru {Ru} , Ru⇒ι-left {Ru}
-Lift.lower (proj₂ ι-identity (Ru , _)) = ι-right⇒Ru {Ru} , Ru⇒ι-right {Ru}
-
+proj₁ ι-identity (R , _) = ι-left⇒R {R} , R⇒ι-left {R}
+proj₂ ι-identity (R , _) = ι-right⇒R {R} , R⇒ι-right {R}
 
 ⊕-comm : Algebra.Commutative _≋_ _⊕_
-Lift.lower (⊕-comm (Ru , lu) (Rv , lv)) = i , ii
+⊕-comm (Ru , lu) (Rv , lv) = i , ii
  where
  i : (Ru ⊕₁ Rv) ⇒ (Rv ⊕₁ Ru)
  i (qu , qv , Rqu , Rqv , q≡quqv) = qv , qu , Rqv , Rqu , trans q≡quqv (+-comm qu qv)
@@ -174,7 +161,7 @@ Lift.lower (⊕-comm (Ru , lu) (Rv , lv)) = i , ii
 
 
 -- _⊕₁_ : Op₂ (REL AssetID Quantity 0ℓ)
--- Ru ⊕₁ Rv = λ aid q → ∃[ qu ] (∃[ qv ] (Ru aid qu × Rv aid qv × (q ≡ qu +ℕ qv)))
+-- Ru ⊕₁ Rv = λ aid q → ∃[ qu ] (∃[ qv ] (Ru aid qu × Rv aid qv × (q ≡ qu + qv)))
 
 ⊕₁-assoc : Algebra.Associative _⇐⇒_ _⊕₁_
 ⊕₁-assoc Ru Rv Rw = i , ii
@@ -182,70 +169,74 @@ Lift.lower (⊕-comm (Ru , lu) (Rv , lv)) = i , ii
  i : ((Ru ⊕₁ Rv) ⊕₁ Rw) ⇒ (Ru ⊕₁ (Rv ⊕₁ Rw))
  i {aid} {q} (quv , qw , (qu , qv , Ruqu , Rvqv , quv≡quqv) , Rwqw , q≡quvqw) = Goal
   where
-  assc : q ≡ qu +ℕ (qv +ℕ qw)
+  assc : q ≡ qu + (qv + qw)
   assc = begin  q                 ≡⟨ q≡quvqw ⟩
-                quv +ℕ qw         ≡⟨ cong (λ x → x +ℕ qw) quv≡quqv ⟩
-                qu +ℕ qv +ℕ qw    ≡⟨ +-assoc qu qv qw ⟩
-                qu +ℕ (qv +ℕ qw)  ∎
+                quv + qw         ≡⟨ cong (λ x → x + qw) quv≡quqv ⟩
+                qu + qv + qw    ≡⟨ +-assoc qu qv qw ⟩
+                qu + (qv + qw)  ∎
 
   Goal : (Ru ⊕₁ (Rv ⊕₁ Rw)) aid q
-  Goal = qu , qv +ℕ qw , Ruqu , (qv , qw , Rvqv , Rwqw , refl) , assc
+  Goal = qu , qv + qw , Ruqu , (qv , qw , Rvqv , Rwqw , refl) , assc
 
  ii : (Ru ⊕₁ (Rv ⊕₁ Rw)) ⇒ ((Ru ⊕₁ Rv) ⊕₁ Rw)
  ii {aid} {q} (qu , qvw , Ruqu , (qv , qw , Rvqv , Rwqw , qvw≡qvqw) , q≡quqvw) = Goal
   where
-  assc : qu +ℕ qvw ≡ qu +ℕ qv +ℕ qw
-  assc = begin  qu +ℕ qvw         ≡⟨ cong (λ x → qu +ℕ x) qvw≡qvqw ⟩
-                qu +ℕ (qv +ℕ qw)  ≡⟨ sym (+-assoc qu qv qw) ⟩
-                qu +ℕ qv +ℕ qw    ∎
+  assc : qu + qvw ≡ qu + qv + qw
+  assc = begin  qu + qvw         ≡⟨ cong (λ x → qu + x) qvw≡qvqw ⟩
+                qu + (qv + qw)  ≡⟨ sym (+-assoc qu qv qw) ⟩
+                qu + qv + qw    ∎
 
   Goal : ((Ru ⊕₁ Rv) ⊕₁ Rw) aid q
-  Goal = qu +ℕ qv , qw , (qu , qv , Ruqu , Rvqv , refl) , Rwqw , trans q≡quqvw assc
+  Goal = qu + qv , qw , (qu , qv , Ruqu , Rvqv , refl) , Rwqw , trans q≡quqvw assc
 
 
 ⊕-assoc : Algebra.Associative _≋_ _⊕_
-⊕-assoc (Ru , luu) (Rv , lvu) (Rw , lwu)  = lift (i , ii)
+⊕-assoc (Ru , luu) (Rv , lvu) (Rw , lwu)  = i , ii
  where
  i : (Ru ⊕₁ Rv) ⊕₁ Rw ⇒ Ru ⊕₁ (Rv ⊕₁ Rw)
  i {aid} {q} (quv , qw , (qu , qv , Ruqu , Rvqv , quv≡quqv) , Rwqw , q≡quvqw) = Goal
   where
-  assc : quv +ℕ qw ≡ qu +ℕ (qv +ℕ qw)
-  assc = begin  quv +ℕ qw         ≡⟨ cong (λ x → x +ℕ qw) quv≡quqv ⟩
-                qu +ℕ qv +ℕ qw    ≡⟨ +-assoc qu qv qw ⟩
-                qu +ℕ (qv +ℕ qw)  ∎
+  assc : quv + qw ≡ qu + (qv + qw)
+  assc = begin  quv + qw         ≡⟨ cong (λ x → x + qw) quv≡quqv ⟩
+                qu + qv + qw    ≡⟨ +-assoc qu qv qw ⟩
+                qu + (qv + qw)  ∎
 
   Goal : (Ru ⊕₁ (Rv ⊕₁ Rw)) aid q
-  Goal = qu , ((qv +ℕ qw) , (Ruqu , ((qv , qw , Rvqv , Rwqw , refl) , trans q≡quvqw assc )))
+  Goal = qu , ((qv + qw) , (Ruqu , ((qv , qw , Rvqv , Rwqw , refl) , trans q≡quvqw assc )))
 
 
  ii : Ru ⊕₁ (Rv ⊕₁ Rw) ⇒ (Ru ⊕₁ Rv) ⊕₁ Rw
  ii {aid} {q} (qu , qvw , Ruqu , (qv , qw , Rvqv , Rwqw , qvw≡qvqw) , q≡quqvw) = Goal
   where
-  tras : q ≡ qu +ℕ qv +ℕ qw
+  tras : q ≡ qu + qv + qw
   tras = begin  q                 ≡⟨ q≡quqvw ⟩
-                qu +ℕ qvw         ≡⟨ cong (λ x → qu +ℕ x) qvw≡qvqw ⟩
-                qu +ℕ (qv +ℕ qw)  ≡⟨ sym (+-assoc qu qv qw) ⟩
-                qu +ℕ qv +ℕ qw    ∎
+                qu + qvw         ≡⟨ cong (λ x → qu + x) qvw≡qvqw ⟩
+                qu + (qv + qw)  ≡⟨ sym (+-assoc qu qv qw) ⟩
+                qu + qv + qw    ∎
 
   Goal : ((Ru ⊕₁ Rv) ⊕₁ Rw) aid q
-  Goal = (qu +ℕ qv) , (qw , ((qu , qv , Ruqu , Rvqv , refl) , (Rwqw , tras)))
+  Goal = (qu + qv) , (qw , ((qu , qv , Ruqu , Rvqv , refl) , (Rwqw , tras)))
 
 
 ⊕-cong : Algebra.Congruent₂ _≋_ _⊕_
-Lift.lower (⊕-cong {Ru , luu} {Rv , lvu} {Ru' , luu'} {Rv' , lvu'} (lift (Ru⇒Rv , Rv⇒Ru)) (lift (Ru'⇒Rv' , Rv'⇒Ru'))) = i , ii
+⊕-cong {Ru , luu} {Rv , lvu} {Ru' , luu'} {Rv' , lvu'} (Ru⇒Rv , Rv⇒Ru) (Ru'⇒Rv' , Rv'⇒Ru') = i , ii
  where
  i : (Ru ⊕₁ Ru') ⇒ (Rv ⊕₁ Rv')
  i {aid} {q} (qu , qu' , Ruqu , Ru'qu' , q≡ququ') = qu , qu' , Ru⇒Rv Ruqu , Ru'⇒Rv' Ru'qu' , q≡ququ'
 
  ii : (Rv ⊕₁ Rv') ⇒ (Ru ⊕₁ Ru')
  ii {aid} {q} (qv , qv' , Rvqv , Rv'qv' , q≡qvqv') = qv , qv' , Rv⇒Ru Rvqv , Rv'⇒Ru' Rv'qv' , q≡qvqv'
+\end{code}
 
+\subsection{Definition of the value monoid}
 
--- An inhabitant of `Value` is a map denoting a finite collection of quantities of assets.
+An inhabitant of `Value` is a map denoting a finite collection of quantities of assets.
+
+\begin{code}
 open TokenAlgebraRel
 open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (trans ; sym)
 open Algebra
-
+open GlobalConstants gc
 module _
          {AdaPolicy : PolicyID}
          {DecEqValue : DecidableEquality (AssetID ⇀ Quantity) }
@@ -282,7 +273,7 @@ module _
                          }
    where
 
-   Vcm : CommutativeMonoid 1ℓ 1ℓ
+   Vcm : CommutativeMonoid 1ℓ 0ℓ
    Vcm = record
            { Carrier = AssetID ⇀ Quantity
            ; _≈_ = _≋_
@@ -303,6 +294,12 @@ module _
            Vm : IsMonoid _≋_ _⊕_ (ι , (λ 0b 0b' → trans 0b (sym 0b')))
            Vm = record { isSemigroup = isSemigrp ; identity = ι-identity }
 
+
+
+   private
+    I : AssetID ⇀ Quantity
+    I = ι , (λ 0b 0b' → trans 0b (sym 0b'))
+
    mh : IsMonoidMorphism (monoid Vcm) (monoid +-0-commutativeMonoid) _hasHowMuchAda
    IsSemigroupMorphism.⟦⟧-cong (IsMonoidMorphism.sm-homo mh) {R} {R'} R⇔R' = goal
     where
@@ -311,7 +308,7 @@ module _
     q' = R' hasHowMuchAda
 
     RR' : (proj₁ R) ⇐⇒ (proj₁ R')
-    RR' = Lift.lower R⇔R'
+    RR' = R⇔R'
 
     Rq : (proj₁ R) (AdaPolicy , AdaName) q
     Rq = proj₂ (AdaForAll R)
@@ -324,8 +321,6 @@ module _
 
     goal : R hasHowMuchAda ≡ R' hasHowMuchAda
     goal = proj₂ R Rq Rq'
-
-
 
    IsSemigroupMorphism.∙-homo (IsMonoidMorphism.sm-homo mh) Ru Rv = goal
     where
@@ -347,46 +342,21 @@ module _
     qvξ : qv ≡ proj₁ (proj₂ ξ)
     qvξ = proj₂ Rv (proj₂ (AdaForAll Rv)) β
 
-    γ : proj₁ ξ +ℕ proj₁ (proj₂ ξ) ≡ qu +ℕ qv
+    γ : proj₁ ξ + proj₁ (proj₂ ξ) ≡ qu + qv
     γ = begin
-         proj₁ ξ +ℕ proj₁ (proj₂ ξ)  ≡⟨ cong (λ x → proj₁ ξ + x) (sym qvξ) ⟩
-         proj₁ ξ +ℕ qv               ≡⟨ cong (λ x → x + qv ) (sym quξ) ⟩
-         qu +ℕ qv                    ∎
+         proj₁ ξ + proj₁ (proj₂ ξ)  ≡⟨ cong (λ x → proj₁ ξ + x) (sym qvξ) ⟩
+         proj₁ ξ + qv               ≡⟨ cong (λ x → x + qv ) (sym quξ) ⟩
+         qu + qv                    ∎
 
-    ξ' : q ≡ proj₁ ξ +ℕ proj₁ (proj₂ ξ)
+    ξ' : q ≡ proj₁ ξ + proj₁ (proj₂ ξ)
     ξ' = proj₂ (proj₂ (proj₂ (proj₂ ξ)))
 
-    goal : q ≡ qu +ℕ qv
+    goal : q ≡ qu + qv
     goal = trans ξ' γ
 
-   IsMonoidMorphism.ε-homo mh = goal
-    where
-    I : AssetID ⇀ Quantity
-    I = ι , (λ 0b 0b' → trans 0b (sym 0b'))
-
-    q : Quantity
-    q = I hasHowMuchAda
-
-    dichlem : ∀{q : ℕ} → q ≡ 0ℕ ⊎ ¬(q ≡ 0ℕ)
-    dichlem {zero} = inj₁ _≡_.refl
-    dichlem {suc q} = inj₂ (λ ())
-
-    PQ : q ≡ 0ℕ ⊎ ¬(q ≡ 0ℕ)
-    PQ = dichlem
-
-    taut : (q ≡ 0ℕ) → (q ≡ 0ℕ)
-    taut = λ z → z
-
-    contr : ¬ (q ≡ 0ℕ) → (q ≡ 0ℕ)
-    contr np = ι-left-unique{AdaPolicy , AdaName} (proj₂ (AdaForAll I)) _≡_.refl
-
-    goal : q ≡ 0ℕ
-    goal = [ taut , contr ]′ PQ
-
-
-
-
-
+   IsMonoidMorphism.ε-homo mh with I hasHowMuchAda ≟ 0
+   ... | yes p = p
+   ... | no _ = ι-left-unique{AdaPolicy , AdaName} (proj₂ (AdaForAll I)) _≡_.refl
 
 \end{code}
 
@@ -452,7 +422,7 @@ addAsset (NonEmpty a q₁ l r) aid q₂ = r
   -- else if (a < aid) then
   --   return NonEmpty a q₁ l (addAsset r aid q₂)
   -- else
-  --   return NonEmpty a (q₁ +ℕ q₂) l r
+  --   return NonEmpty a (q₁ + q₂) l r
 \end{code}
 
 -----------------------
@@ -476,11 +446,11 @@ mapValues : ∀{A B C} → REL A B → (B → C) → REL A C
 combineValues : Maybe Quantity × Maybe Quantity → Maybe Quantity
 combineValues (x        , nothing)  = x
 combineValues (nothing  , just y)   = just y
-combineValues (just x   , just y)   = just (x +ℕ y)
+combineValues (just x   , just y)   = just (x + y)
 
 zeroMaybe : Maybe Quantity → Quantity
 zeroMaybe (just x) = x
-zeroMaybe nothing = 0ℕ
+zeroMaybe nothing = 0
 
 contains : (AssetID ↛ Quantity) → AssetID → Type
 contains (R , _) aid = ∃[ q ] (aid , q) ∈ R

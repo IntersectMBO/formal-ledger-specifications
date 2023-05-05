@@ -5,13 +5,7 @@
 open import Agda.Primitive renaming (Set to Type) using ()
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Utxow
- (PolicyID : Type)       -- identifies monetary policies
- (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- (AdaName : ByteString)  -- the asset name for Ada
- (txs : TransactionStructure  PolicyID ByteString AdaName)
- where
-
+module Ledger.Utxow (txs : TransactionStructure) where
 
 open import Ledger.Prelude
 
@@ -20,7 +14,7 @@ import Data.Nat
 
 open TransactionStructure txs
 open import Ledger.Crypto
-open import Ledger.Utxo PolicyID ByteString AdaName txs
+open import Ledger.Utxo txs
 
 open TxBody
 open TxWitnesses

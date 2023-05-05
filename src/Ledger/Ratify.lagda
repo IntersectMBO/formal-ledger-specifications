@@ -1,4 +1,5 @@
 \section{Ratification}
+\label{sec:ratification}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -6,13 +7,7 @@
 open import Agda.Primitive renaming (Set to Type) using ()
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Ratify
- (PolicyID : Type)       -- identifies monetary policies
- (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- (AdaName : ByteString)  -- the asset name for Ada
- (txs : TransactionStructure  PolicyID ByteString AdaName)
- where
-
+module Ledger.Ratify (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (_∧_)
 

@@ -1,20 +1,22 @@
 \section{Token Algebra}
+\label{sec:token-algebra}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive  using() renaming (Set to Type)
+open import Ledger.Epoch    using (GlobalConstants)
 
 module Ledger.TokenAlgebra
- (PolicyID : Type)       -- identifies monetary policies
- (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- (AdaName : ByteString)  -- the asset name for Ada
- where
+  (gc        : GlobalConstants)
+  (PolicyID  : Type)
+  where
 
 open import Ledger.Prelude hiding (Coin ; Rel)
+open GlobalConstants gc
+
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Morphism using (IsCommutativeMonoidMorphism-syntax)
-open import Data.Integer using (ℤ)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary using (Rel)
 open import Relation.Unary using (Pred)
@@ -44,10 +46,13 @@ record TokenAlgebra : Type 1ℓ where
 
   sumᵛ : List Value → Value
   sumᵛ = foldr _+ᵛ_ (inject 0)
--- Derived types (See Fig 3 of Mary spec [1].) --------------------------
 
-record TokenAlgebraRel {ℓ : Level} : Type (lsuc ℓ) where
-  field Value-CommutativeMonoid : CommutativeMonoid ℓ ℓ
+\end{code}
+
+
+\begin{code}
+record TokenAlgebraRel {ℓ ℓ' : Level} : Type ((sucˡ ℓ) ⊔ˡ (sucˡ ℓ')) where
+  field Value-CommutativeMonoid : CommutativeMonoid ℓ ℓ'
 
   Coin : Type
   Coin = ℕ
@@ -71,31 +76,43 @@ record TokenAlgebraRel {ℓ : Level} : Type (lsuc ℓ) where
 
   sumᵛ : List Value → Value
   sumᵛ = foldr _+ᵛ_ (inject 0)
--- Derived types (See Fig 3 of Mary spec [1].) --------------------------
+\end{code}
 
+\subsection{Derived types}
 
--- AssetName is a byte string used to distinguish different assets with the same PolicyID. Each
+(See Fig 3 of the
+\href{https://github.com/input-output-hk/cardano-ledger/releases/latest/download/mary-ledger.pdf}%
+{Mary ledger specification}.)
+
+\begin{itemize}
+\item \AgdaBound{AssetName} is a byte string used to distinguish different assets with the same \AgdaBound{PolicyID}.
+\item \AgdaBound{AssetID} is a product type consisting of a \AgdaBound{PolicyId} and an \AgdaBound{AssetName}.
+\item \AgdaBound{AdaID} is the ID for the asset Ada.
+\item \AgdaBound{Quantity} is the type of amounts of assets.
+\end{itemize}
+
+In the formal ledger specification \AgdaBound{AssetID} is sometimes viewed as a direct sum type,
+the inhabitants of which belong to either \AgdaBound{AdaIDType} or the product
+\AgdaBound{PolicyId}~\AgdaBound{×}~\AgdaBound{AssetName}; if we were adhering to that point of view,
+then we would have defined
+\AgdaBound{AssetID}
+  = \AgdaBound{AdaIDType}~\AgdaBound{⊎}~(\AgdaBound{PolicyId}~\AgdaBound{×}~\AgdaBound{AssetName}).
+
+\begin{code}
 AssetName : Type
 AssetName = ByteString
 
 AssetID : Type
 AssetID = PolicyID × AssetName
-{- AssetID could be either `AdaIDType` or a pair of `PolicyId` and `AssetName`, like this,
-   ```agda
-   AssetID = AdaIDType ⊎ (PolicyId × AssetName)
-   ```
-   but here we are instead treating Ada as a generic asset. -}
 
--- AdaID is a special asset ID for Ada, different to all other asset IDs.
--- It is a term of the single-term type AdaIDType.
-record AdaIDType : Type where
-  instance constructor AdaID
-
--- `Quantity` is the type of amounts of assets.
 Quantity : Type
 Quantity = ℕ
-
 \end{code}
 
+Finally, we define a record type with a single inhabitant with which we may wish to
+represent the type of Ada (rather than viewing Ada as just another asset).
 
-[1] https://github.com/input-output-hk/cardano-ledger/releases/latest/download/mary-ledger.pdf
+\begin{code}
+record AdaIDType : Type where
+  instance constructor AdaID
+\end{code}

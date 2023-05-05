@@ -1,23 +1,19 @@
 \section{Protocol Parameters Update}
+\label{sec:protocol-parameters-update}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive renaming (Set to Type) using ()
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.NewPP
- (PolicyID : Type)       -- identifies monetary policies
- (ByteString : Type)     -- could postulate `ByteString` here, but then we'd have to drop `--safe` pragma
- (AdaName : ByteString)  -- the asset name for Ada
- (txs : TransactionStructure  PolicyID ByteString AdaName)
- where
+module Ledger.NewPP (txs : TransactionStructure) where
 
 open import Ledger.Prelude
 
 open TransactionStructure txs
 open import Ledger.PParams epochStructure
-open import Ledger.PPUp PolicyID ByteString AdaName txs
+open import Ledger.PPUp txs
 
 open import Relation.Nullary.Decidable
 
