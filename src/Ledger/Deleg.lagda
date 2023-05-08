@@ -31,7 +31,6 @@ open EpochStructure epochStructure
 \begin{code}
 record PoolParams : Set where
   field rewardAddr  : Credential
-        deposit     : Coin
 
 data DCert : Set where
   delegate   : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
@@ -117,8 +116,7 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set w
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
-    deposit ≡ poolDeposit
-    → c ∉ dom (pools ˢ)
+    c ∉ dom (pools ˢ)
     ────────────────────────────────
     pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈ ⟦ ❴ c , poolParams ❵ᵐ ∪ᵐˡ pools , retiring ⟧ᵖ
 

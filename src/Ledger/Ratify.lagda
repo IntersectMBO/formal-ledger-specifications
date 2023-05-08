@@ -124,7 +124,7 @@ module _ (ce : Epoch) (ccHotKeys : KeyHash ↛ Maybe KeyHash)
 
   actualCCVotes : Credential ↛ Vote
   actualCCVotes = case cc of λ where
-    (just (cc , _)) → mapKeys inj₁ (λ where refl → refl) $ mapWithKey actualCCVote cc
+    (just (cc , _)) → mapKeys inj₁ (mapWithKey actualCCVote cc) (λ where _ _ refl → refl)
     nothing         → ∅ᵐ
 
   actualPDRepVotes : VDeleg ↛ Vote
@@ -134,9 +134,9 @@ module _ (ce : Epoch) (ccHotKeys : KeyHash ↛ Maybe KeyHash)
                                            _            → Vote.no) ❵ᵐ
 
   actualVotes : VDeleg ↛ Vote
-  actualVotes = mapKeys (credVoter CC) (λ where refl → refl) actualCCVotes
+  actualVotes = mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
               ∪ᵐˡ (actualPDRepVotes
-              ∪ᵐˡ mapKeys (uncurry credVoter) (λ where refl → refl) votes) -- TODO: make `actualVotes` for DRep, SPO
+              ∪ᵐˡ mapKeys (uncurry credVoter) votes (λ where _ _ refl → refl)) -- TODO: make `actualVotes` for DRep, SPO
 
 votedHashes : Vote → (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
 votedHashes v votes r = votes ⁻¹ v

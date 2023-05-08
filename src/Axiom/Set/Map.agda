@@ -13,9 +13,11 @@ open import Prelude hiding (filter)
 
 import Data.Product
 import Data.Sum
+import Relation.Binary.PropositionalEquality as I
 open import Data.These
 open import Data.List.Ext.Properties
 open import Data.Product.Properties
+open import Data.Maybe.Base using () renaming (map to map?)
 open import Interface.DecEq
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
@@ -35,6 +37,10 @@ private macro
 private variable A A' B B' C D : Type
                  R R' : Rel A B
                  X Y : Set A
+                 a : A
+                 a' : A'
+                 b : B
+                 b' : B'
 
 left-unique : Rel A B → Type
 left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
@@ -154,16 +160,23 @@ disj-dom {m = m@(_ , uniq)} {m₁} {m₂} (m≡m₁∪m₂ , disj) a∈domm₁ a
     ∈mᵢ⇒∈m : ∀ {a} → a ∈ (m₁ ˢ) ⊎ a ∈ (m₂ ˢ) → a ∈ (m ˢ)
     ∈mᵢ⇒∈m = proj₂ m≡m₁∪m₂ ∘ to ∈-∪
 
-mapˡ-uniq : {f : A → A'} → Injective _≡_ _≡_ f → left-unique R → left-unique (mapˡ f R)
+InjectiveOn : Set A → (A → B) → Type
+InjectiveOn X f = ∀ {x y} → x ∈ X → y ∈ X → f x ≡ f y → x ≡ y
+
+weaken-Injective : ∀ {X : Set A} {f : A → B} → Injective _≡_ _≡_ f → InjectiveOn X f
+weaken-Injective p _ _ = p
+
+mapˡ-uniq : {f : A → A'} → InjectiveOn (dom R) f → left-unique R → left-unique (mapˡ f R)
 mapˡ-uniq inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
-  ((_ , refl , Ha) , (_ , eqb , Hb)) → uniq Ha $ subst _ (sym $ ×-≡,≡→≡ $ Data.Product.map₁ inj (×-≡,≡←≡ eqb)) Hb
+  (((_ , b) , refl , Ha) , ((_ , b') , eqb , Hb)) → uniq Ha
+    $ subst _ (sym $ ×-≡,≡→≡ $ Data.Product.map₁ (inj (from dom∈ (b , Ha)) (from dom∈ (b' , Hb))) (×-≡,≡←≡ eqb)) Hb
 
 mapʳ-uniq : {f : B → B'} → left-unique R → left-unique (mapʳ f R)
 mapʳ-uniq uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
   ((_ , refl , Ha) , (_ , refl , Hb)) → cong _ $ uniq Ha Hb
 
-mapKeys : (f : A → A') → Injective _≡_ _≡_ f → Map A B → Map A' B
-mapKeys f inj (R , uniq) = mapˡ f R , mapˡ-uniq inj uniq
+mapKeys : (f : A → A') → (m : Map A B) → InjectiveOn (dom (m ˢ)) f → Map A' B
+mapKeys f (R , uniq) inj = mapˡ f R , mapˡ-uniq inj uniq
 
 mapValues : (B → B') → Map A B → Map A B'
 mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
@@ -183,6 +196,23 @@ m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
 
 _∣^'_ : {P : B → Type} → Map A B → specProperty P → Map A B
 m ∣^' P? = filterᵐ (sp-∘ P? proj₂) m
+
+mapPartialLiftKey-just-uniq : ∀ {f : A → B → Maybe B'}
+  → left-unique R
+  → just (a , b) ∈ mapˢ (mapPartialLiftKey f) R
+  → just (a , b') ∈ mapˢ (mapPartialLiftKey f) R
+  → b ≡ b'
+mapPartialLiftKey-just-uniq {f = f} prop a∈ a'∈ with mapPartialLiftKey-map {f = f} a∈ | mapPartialLiftKey-map {f = f} a'∈
+... | _ , eq , ax∈r | _ , eq' , ax'∈r with prop ax∈r ax'∈r
+... | refl with trans eq (sym eq')
+... | refl = refl
+
+mapPartial-uniq : ∀ {r : Rel A B} {f : A → B → Maybe B' } → left-unique r → left-unique (mapPartial (mapPartialLiftKey f) r)
+mapPartial-uniq {f = f} prop {a} {b} {b'} p q with ∈-map′ p | ∈-map′ q
+... | p | q = mapPartialLiftKey-just-uniq {f = f} prop (⊆-mapPartial p) (⊆-mapPartial q)
+
+mapMaybeWithKeyᵐ : (A → B → Maybe B') → Map A B → Map A B'
+mapMaybeWithKeyᵐ f (rel , prop) = mapMaybeWithKey f rel , mapPartial-uniq {f = f} prop 
 
 module Restrictionᵐ (sp-∈ : spec-∈ A) where
   private module R = Restriction sp-∈
@@ -244,5 +274,5 @@ module Corestrictionᵐ (sp-∈ : spec-∈ B) where
 
   -- f⁻¹(x)
   infix 25 _⁻¹_
-  _⁻¹_ : ⦃ DecEq B ⦄ → Map A B → B → Set A
+  _⁻¹_ : Map A B → B → Set A
   m ⁻¹ a = dom ((m ∣^ ❴ a ❵) ˢ)
