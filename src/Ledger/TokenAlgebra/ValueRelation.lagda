@@ -44,57 +44,37 @@ We'll use \AgdaBound{ι} to denote the identity for the Value monoid.
 ι : REL AssetID Quantity 0ℓ
 ι _ q = q ≡ 0
 
-ι-left-unique : left-unique-rel ι
-ι-left-unique 0b 0b' = trans 0b (sym 0b')
+I : AssetID ⇀ Quantity
+I = ι , λ 0b 0b' → trans 0b (sym 0b')
 
-ι-left : REL AssetID Quantity 0ℓ → REL AssetID Quantity 0ℓ
-ι-left R aid q = ∃[ qι ] (∃[ qu ] ι aid qι × R aid qu × q ≡ qι + qu)
+_⊕₁_ : Op₂ (REL AssetID Quantity 0ℓ)
+Ru ⊕₁ Rv = λ aid q → ∃[ qu ] (∃[ qv ] (Ru aid qu × Rv aid qv × (q ≡ qu + qv)))
 
-ι-right : REL AssetID Quantity 0ℓ → REL AssetID Quantity 0ℓ
-ι-right R aid q = ∃[ qu ] (∃[ qι ] R aid qu × ι aid qι × q ≡ qu + qι)
-
-ι-left-lemma1 : ∀{aid q}(R : REL AssetID Quantity 0ℓ)(h : ι-left R aid q) → proj₁ h ≡ 0
-ι-left-lemma1 _ h = (proj₁ (proj₂ (proj₂ h)))
-
-ι-left-lemma2 : ∀{aid q}(R : REL AssetID Quantity 0ℓ)(h : ι-left R aid q) → q ≡ proj₁ (proj₂ h)
-ι-left-lemma2 {aid}{q} R h = let qι = proj₁ h ; qu = proj₁ (proj₂ h) in
- begin
-   q        ≡⟨ proj₂ (proj₂ (proj₂ (proj₂ h))) ⟩
-   qι + qu  ≡⟨ cong (λ x → x + qu) (ι-left-lemma1 R h) ⟩
-   0 + qu   ≡⟨ +-identityˡ qu ⟩
-   qu       ∎
-
-ι-right-lemma1 : ∀{aid q}(R : REL AssetID Quantity 0ℓ)(h : ι-right R aid q) → proj₁ (proj₂ h) ≡ 0
-ι-right-lemma1 _ h = proj₁ (proj₂ (proj₂ (proj₂ h)))
-
-ι-right-lemma2 : ∀{aid q}(R : REL AssetID Quantity 0ℓ)(h : ι-right R aid q) → q ≡ proj₁ h
-ι-right-lemma2 {aid}{q} R h = let qu = proj₁ h ; qι = proj₁ (proj₂ h) in
- begin
-   q        ≡⟨ proj₂ (proj₂ (proj₂ (proj₂ h))) ⟩
-   qu + qι  ≡⟨ cong (λ x → qu + x) (ι-right-lemma1 R h) ⟩
-   qu + 0   ≡⟨ +-identityʳ qu ⟩
-   qu       ∎
-
-ι-left⇒R : ∀{R} → ι-left R ⇒ R
-ι-left⇒R {R} {aid} {q} h = Goal
+ι-left⇒R : ∀{R} → ι ⊕₁ R ⇒ R
+ι-left⇒R {R} {aid} {q} (qι , qu , h) = subst (R aid) ι-left-lemma (proj₁ (proj₂ h))
  where
- qu≡q : proj₁ (proj₂ h) ≡ q
- qu≡q = sym (ι-left-lemma2 R h)
+ ι-left-lemma : qu ≡ q
+ ι-left-lemma = begin
+    qu       ≡˘⟨ +-identityˡ qu ⟩
+    0 + qu   ≡˘⟨ cong (λ x → x + qu) (proj₁ h) ⟩
+    qι + qu  ≡˘⟨ proj₂ (proj₂ h) ⟩
+    q        ∎
 
- Goal : R aid q
- Goal = subst (λ x → R aid x) qu≡q (proj₁ (proj₂ (proj₂ (proj₂ h))))
+R⇒ι-left : ∀{R} → R ⇒ ι ⊕₁ R
+R⇒ι-left {R} Rh = 0 , _ , refl , Rh , sym (+-identityˡ _)
 
-R⇒ι-left : ∀{R} → R ⇒ ι-left R
-R⇒ι-left {R} {aid} {q} Rh = 0 , q , refl , Rh , sym (+-identityˡ q)
-
-ι-right⇒R : ∀{R} → ι-right R ⇒ R
-ι-right⇒R {R} {aid} {q} h = subst (λ x → R aid x) qu≡q (proj₁ (proj₂ (proj₂ h)))
+ι-right⇒R : ∀{R} → R ⊕₁ ι ⇒ R
+ι-right⇒R {R} {aid} {q} (qu , qι , h) = subst (R aid) ι-right-lemma (proj₁ h)
  where
- qu≡q : proj₁ h ≡ q
- qu≡q = sym (ι-right-lemma2 R h)
+ ι-right-lemma : qu ≡ q
+ ι-right-lemma = begin
+    qu       ≡˘⟨ +-identityʳ qu ⟩
+    qu + 0   ≡˘⟨ cong (λ x → qu + x) (proj₁ (proj₂ h)) ⟩
+    qu + qι  ≡˘⟨ proj₂ (proj₂ h) ⟩
+    q        ∎
 
-R⇒ι-right : ∀{R} → R ⇒ ι-right R
-R⇒ι-right {R} {aid} {q} Rh = q , 0 , Rh , refl , sym (+-identityʳ q)
+R⇒ι-right : ∀{R} → R ⇒ R ⊕₁ ι
+R⇒ι-right {R} Rh = _ , 0 , Rh , refl , sym (+-identityʳ _)
 
 \end{code}
 
@@ -128,9 +108,6 @@ IsEquivalence.trans ≈-isEquivalence ij jk = IsEquivalence.trans ⇐⇒-isEquiv
 \subsection{Summation of the value monoid and its properties}
 
 \begin{code}
-_⊕₁_ : Op₂ (REL AssetID Quantity 0ℓ)
-Ru ⊕₁ Rv = λ aid q → ∃[ qu ] (∃[ qv ] (Ru aid qu × Rv aid qv × (q ≡ qu + qv)))
-
 _⊕_ : Op₂ (AssetID ⇀ Quantity)
 proj₁ ((Ru , _) ⊕ (Rv , _)) = Ru ⊕₁ Rv
 proj₂ ((Ru , luu) ⊕ (Rv , luv)) {aid} {q} {q'} = Goal
@@ -138,16 +115,16 @@ proj₂ ((Ru , luu) ⊕ (Rv , luv)) {aid} {q} {q'} = Goal
  Goal : (Ru ⊕₁ Rv) aid q → (Ru ⊕₁ Rv) aid q' → q ≡ q'
  Goal (qu , qv , Ruqu , Rvqv , q≡quqv) (qu' , qv' , Ruqu' , Rvqv' , q'≡qu'qv') = begin
    q           ≡⟨ q≡quqv ⟩
-   qu + qv    ≡⟨ trans (cong (λ b → qu + b) (luv Rvqv Rvqv')) (cong (λ a → a + qv') (luu Ruqu Ruqu')) ⟩
-   qu' + qv'  ≡⟨ sym q'≡qu'qv' ⟩
+   qu + qv    ≡⟨ cong₂ _+_ (luu Ruqu Ruqu') (luv Rvqv Rvqv') ⟩
+   qu' + qv'  ≡˘⟨ q'≡qu'qv' ⟩
    q'          ∎
 
-ι-identity : Algebra.Identity _≋_ (ι , λ{a b b'} → ι-left-unique {a}{b}{b'}) _⊕_
+ι-identity : Algebra.Identity _≋_ I _⊕_
 proj₁ ι-identity (R , _) = ι-left⇒R {R} , R⇒ι-left {R}
 proj₂ ι-identity (R , _) = ι-right⇒R {R} , R⇒ι-right {R}
 
 ⊕-comm : Algebra.Commutative _≋_ _⊕_
-⊕-comm (Ru , lu) (Rv , lv) = i , ii
+⊕-comm (Ru , _) (Rv , _) = i , ii
  where
  i : (Ru ⊕₁ Rv) ⇒ (Rv ⊕₁ Ru)
  i (qu , qv , Rqu , Rqv , q≡quqv) = qv , qu , Rqv , Rqu , trans q≡quqv (+-comm qu qv)
@@ -176,7 +153,7 @@ proj₂ ι-identity (R , _) = ι-right⇒R {R} , R⇒ι-right {R}
   where
   assc : qu + qvw ≡ qu + qv + qw
   assc = begin  qu + qvw        ≡⟨ cong (λ x → qu + x) qvw≡qvqw ⟩
-                qu + (qv + qw)  ≡⟨ sym (+-assoc qu qv qw) ⟩
+                qu + (qv + qw)  ≡˘⟨ +-assoc qu qv qw ⟩
                 qu + qv + qw    ∎
 
   Goal : ((Ru ⊕₁ Rv) ⊕₁ Rw) aid q
@@ -184,7 +161,7 @@ proj₂ ι-identity (R , _) = ι-right⇒R {R} , R⇒ι-right {R}
 
 
 ⊕-assoc : Algebra.Associative _≋_ _⊕_
-⊕-assoc (Ru , luu) (Rv , lvu) (Rw , lwu)  = i , ii
+⊕-assoc (Ru , _) (Rv , _) (Rw , _)  = i , ii
  where
  i : (Ru ⊕₁ Rv) ⊕₁ Rw ⇒ Ru ⊕₁ (Rv ⊕₁ Rw)
  i {aid} {q} (quv , qw , (qu , qv , Ruqu , Rvqv , quv≡quqv) , Rwqw , q≡quvqw) = Goal
@@ -204,7 +181,7 @@ proj₂ ι-identity (R , _) = ι-right⇒R {R} , R⇒ι-right {R}
   tras : q ≡ qu + qv + qw
   tras = begin  q               ≡⟨ q≡quqvw ⟩
                 qu + qvw        ≡⟨ cong (λ x → qu + x) qvw≡qvqw ⟩
-                qu + (qv + qw)  ≡⟨ sym (+-assoc qu qv qw) ⟩
+                qu + (qv + qw)  ≡˘⟨ +-assoc qu qv qw ⟩
                 qu + qv + qw    ∎
 
   Goal : ((Ru ⊕₁ Rv) ⊕₁ Rw) aid q
@@ -212,13 +189,13 @@ proj₂ ι-identity (R , _) = ι-right⇒R {R} , R⇒ι-right {R}
 
 
 ⊕-cong : Algebra.Congruent₂ _≋_ _⊕_
-⊕-cong {Ru , luu} {Rv , lvu} {Ru' , luu'} {Rv' , lvu'} (Ru⇒Rv , Rv⇒Ru) (Ru'⇒Rv' , Rv'⇒Ru') = i , ii
+⊕-cong {Ru , _} {Rv , _} {Ru' , _} {Rv' , _} (Ru⇒Rv , Rv⇒Ru) (Ru'⇒Rv' , Rv'⇒Ru') = i , ii
  where
  i : (Ru ⊕₁ Ru') ⇒ (Rv ⊕₁ Rv')
- i {aid} {q} (qu , qu' , Ruqu , Ru'qu' , q≡ququ') = qu , qu' , Ru⇒Rv Ruqu , Ru'⇒Rv' Ru'qu' , q≡ququ'
+ i (qu , qu' , Ruqu , Ru'qu' , q≡ququ') = qu , qu' , Ru⇒Rv Ruqu , Ru'⇒Rv' Ru'qu' , q≡ququ'
 
  ii : (Rv ⊕₁ Rv') ⇒ (Ru ⊕₁ Ru')
- ii {aid} {q} (qv , qv' , Rvqv , Rv'qv' , q≡qvqv') = qv , qv' , Rv⇒Ru Rvqv , Rv'⇒Ru' Rv'qv' , q≡qvqv'
+ ii (qv , qv' , Rvqv , Rv'qv' , q≡qvqv') = qv , qv' , Rv⇒Ru Rvqv , Rv'⇒Ru' Rv'qv' , q≡qvqv'
 \end{code}
 
 \subsection{Definition of the value monoid}
@@ -237,16 +214,17 @@ module _
   {AdaForAll   : (R : AssetID ⇀ Quantity) → ∃[ q ] (proj₁ R) (AdaPolicy , AdaName) q}
   where
 
+  contr : ⊥
+  contr = proj₂ $ AdaForAll ((λ _ _ → ⊥) , λ where () ())
+
   VAda : Quantity → AssetID ⇀ Quantity
-  VAda x = ((λ (p , a) q' → a ≡ AdaName × x ≡ q') , λ x y → trans (sym (proj₂ x)) (proj₂ y))
+  VAda x = ((λ a q' → a ≡ (AdaPolicy , AdaName) × x ≡ q') , λ x y → trans (sym (proj₂ x)) (proj₂ y))
 
   _hasHowMuchAda : AssetID ⇀ Quantity → Quantity
   R hasHowMuchAda = proj₁ (AdaForAll R)
 
   VAdaHasAda : ∀{x} → ((VAda x) hasHowMuchAda) ≡ x
   VAdaHasAda {x} = (proj₂ (VAda x){(AdaPolicy , AdaName)})(proj₂ (AdaForAll (VAda x)))(_≡_.refl , _≡_.refl)
-   where
-   q = proj₁ (AdaForAll (VAda x))
 
   Value-TokenAlgebra : TokenAlgebraPoly
   Value-TokenAlgebra =
@@ -264,92 +242,62 @@ module _
     where
 
     Vcm : CommutativeMonoid 1ℓ 0ℓ
-    Vcm =
-      record
+    Vcm = record
         { Carrier = AssetID ⇀ Quantity
         ; _≈_ = _≋_
         ; _∙_ = _⊕_
-        ; ε = ι , (λ 0b 0b' → trans 0b (sym 0b'))
-        ; isCommutativeMonoid = record { isMonoid = Vm ; comm = ⊕-comm }
-        }
+        ; ε = I
+        ; isCommutativeMonoid = record { isMonoid = Vm ; comm = ⊕-comm } }
         where
         isSemigrp : IsSemigroup _≋_ _⊕_
-        isSemigrp =
-          record
-            { isMagma =
-              record
+        isSemigrp = record
+            { isMagma = record
                 { isEquivalence = ≋-isEquivalence
-                ; ∙-cong = λ{u}{v}{w}{x} y z → ⊕-cong {u}{v}{w}{x} y z
-                }
-            ; assoc = ⊕-assoc
-            }
+                ; ∙-cong = λ{u}{v}{w}{x} y z → ⊕-cong {u}{v}{w}{x} y z }
+            ; assoc = ⊕-assoc }
 
-        Vm : IsMonoid _≋_ _⊕_ (ι , (λ 0b 0b' → trans 0b (sym 0b')))
+        Vm : IsMonoid _≋_ _⊕_ I
         Vm = record { isSemigroup = isSemigrp ; identity = ι-identity }
 
 
-
-    private
-     I : AssetID ⇀ Quantity
-     I = ι , (λ 0b 0b' → trans 0b (sym 0b'))
-
     mh : IsMonoidMorphism (monoid Vcm) (monoid +-0-commutativeMonoid) _hasHowMuchAda
-    IsSemigroupMorphism.⟦⟧-cong (IsMonoidMorphism.sm-homo mh) {R} {R'} R⇔R' = goal
-     where
-     q q' : Quantity
-     q = R hasHowMuchAda
-     q' = R' hasHowMuchAda
+    IsSemigroupMorphism.⟦⟧-cong (IsMonoidMorphism.sm-homo mh) {R} {R'} (_ , R'⇒R) = begin
+      R hasHowMuchAda ≡⟨ proj₂ R Rq Rq' ⟩ R' hasHowMuchAda ∎
+      where
+      q = R hasHowMuchAda
+      q' = R' hasHowMuchAda
 
-     RR' : (proj₁ R) ⇐⇒ (proj₁ R')
-     RR' = R⇔R'
+      Rq : (proj₁ R) (AdaPolicy , AdaName) q
+      Rq = proj₂ (AdaForAll R)
 
-     Rq : (proj₁ R) (AdaPolicy , AdaName) q
-     Rq = proj₂ (AdaForAll R)
+      Rq' : (proj₁ R) (AdaPolicy , AdaName) q'
+      Rq' = R'⇒R (proj₂ (AdaForAll R'))
 
-     R'q' : (proj₁ R') (AdaPolicy , AdaName) q'
-     R'q' = proj₂ (AdaForAll R')
-
-     Rq' : (proj₁ R) (AdaPolicy , AdaName) q'
-     Rq' = proj₂ RR' R'q'
-
-     goal : R hasHowMuchAda ≡ R' hasHowMuchAda
-     goal = proj₂ R Rq Rq'
-
-    IsSemigroupMorphism.∙-homo (IsMonoidMorphism.sm-homo mh) Ru Rv = goal
+    IsSemigroupMorphism.∙-homo (IsMonoidMorphism.sm-homo mh) Ru Rv = begin
+          q                          ≡⟨ proj₂ (proj₂ (proj₂ (proj₂ ξ))) ⟩
+          proj₁ ξ + proj₁ (proj₂ ξ)  ≡˘⟨ cong (proj₁ ξ +_) qvξ ⟩
+          proj₁ ξ + qv               ≡˘⟨ cong (_+ qv )     quξ ⟩
+          qu + qv                    ∎
      where
      q qu qv : Quantity
      q = (Ru ⊕ Rv) hasHowMuchAda
-     ξ : (proj₁ (Ru ⊕ Rv)) (AdaPolicy , AdaName) q
-     ξ = proj₂ (AdaForAll (Ru ⊕ Rv))
      qu = Ru hasHowMuchAda
      qv = Rv hasHowMuchAda
+
+     ξ : (proj₁ (Ru ⊕ Rv)) (AdaPolicy , AdaName) q
+     ξ = proj₂ (AdaForAll (Ru ⊕ Rv))
 
      α : proj₁ Ru (AdaPolicy , AdaName) (proj₁ ξ)
      α = proj₁ (proj₂ (proj₂ (proj₂ (AdaForAll (Ru ⊕ Rv)))))
      β : proj₁ Rv (AdaPolicy , AdaName) (proj₁ (proj₂ ξ))
      β = proj₁ (proj₂ (proj₂ (proj₂ (proj₂ (AdaForAll (Ru ⊕ Rv))))))
 
-
      quξ : qu ≡ proj₁ ξ
      quξ = proj₂ Ru (proj₂ (AdaForAll Ru)) α
      qvξ : qv ≡ proj₁ (proj₂ ξ)
      qvξ = proj₂ Rv (proj₂ (AdaForAll Rv)) β
 
-     γ : proj₁ ξ + proj₁ (proj₂ ξ) ≡ qu + qv
-     γ = begin
-          proj₁ ξ + proj₁ (proj₂ ξ)  ≡⟨ cong (λ x → proj₁ ξ + x) (sym qvξ) ⟩
-          proj₁ ξ + qv               ≡⟨ cong (λ x → x + qv ) (sym quξ) ⟩
-          qu + qv                    ∎
-
-     ξ' : q ≡ proj₁ ξ + proj₁ (proj₂ ξ)
-     ξ' = proj₂ (proj₂ (proj₂ (proj₂ ξ)))
-
-     goal : q ≡ qu + qv
-     goal = trans ξ' γ
-
-    IsMonoidMorphism.ε-homo mh with I hasHowMuchAda ≟ 0
-    ... | yes p = p
-    ... | no _ = ι-left-unique{AdaPolicy , AdaName} (proj₂ (AdaForAll I)) _≡_.refl
+    IsMonoidMorphism.ε-homo mh = proj₂ (AdaForAll I)
 
 \end{code}
 
