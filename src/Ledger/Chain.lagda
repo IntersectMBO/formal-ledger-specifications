@@ -23,7 +23,8 @@ open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingSchem
 \begin{code}
 
 record NewEpochEnv : Set where
-  field stakeDistrs  : StakeDistrs -- TODO: compute this from LState instead
+  field stakeDistrs   : StakeDistrs -- TODO: compute this from LState instead
+        drepDeposits  : Credential ↛ Coin
 
 record NewEpochState : Set where
   constructor ⟦_,_,_,_⟧ⁿᵉ
@@ -89,12 +90,21 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 \end{figure*}
 
 \begin{code}[hide]
+drepDeps : (DepositPurpose × Credential) ↛ Coin → Credential ↛ Coin
+drepDeps = mapKeys proj₂ helper ∘ filterᵐ (sp-∘ (to-sp (_≟ DRepDeposit)) (proj₁ ∘ proj₁))
+  where
+    helper : Injective _≡_ _≡_ proj₂
+    helper refl = {!!}
+
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  CHAIN : let open ChainState s; open Block b; open NewEpochState in
-    record { ChainState s } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+  CHAIN :
+    let open ChainState s; open Block b; open NewEpochState
+        drepDeposits = drepDeps ∘ UTxOState.deposits ∘ LState.utxoSt $ ls nes
+    in
+    record { drepDeposits = drepDeposits ; ChainState s } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     → ⟦ slot , EnactState.pparams (es nes) ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }

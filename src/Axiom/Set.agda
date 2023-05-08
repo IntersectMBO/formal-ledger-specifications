@@ -203,6 +203,11 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
     y ∈ mapPartial f X ∎
     where open R.EquationalReasoning
 
+  ⊆-mapPartial : ∀ {f : A → Maybe B} → map just (mapPartial f X) ⊆ map f X
+  ⊆-mapPartial {f = f} a∈m with from ∈-map a∈m
+  ... | x , refl , a∈mp with from (∈-mapPartial {f = f}) a∈mp
+  ... | x' , x'∈X , jx≡fx = to ∈-map (x' , sym jx≡fx , x'∈X)
+
   binary-unions : ∃[ Y ] ∀ {a} → (a ∈ X ⊎ a ∈ X') ⇔ a ∈ Y
   binary-unions {X = X} {X'} with unions (fromList (X ∷ [ X' ]))
   ... | (Y , h) = Y , mk⇔ (λ where

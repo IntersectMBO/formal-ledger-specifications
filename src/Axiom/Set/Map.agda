@@ -13,9 +13,11 @@ open import Prelude hiding (filter)
 
 import Data.Product
 import Data.Sum
+import Relation.Binary.PropositionalEquality as I
 open import Data.These
 open import Data.List.Ext.Properties
 open import Data.Product.Properties
+open import Data.Maybe.Base using () renaming (map to map?)
 open import Interface.DecEq
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
@@ -184,6 +186,34 @@ m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
 _∣^'_ : {P : B → Type} → Map A B → specProperty P → Map A B
 m ∣^' P? = filterᵐ (sp-∘ P? proj₂) m
 
+mapPartialLiftKey : (A → B → Maybe B') → A × B → Maybe (A × B')
+mapPartialLiftKey f (k , v) = map? (k ,_) (f k v)
+
+mapPartialLiftKey-map : ∀ {a : A} {b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
+  → just (a , b') ∈ mapˢ (mapPartialLiftKey f) r
+  → ∃[ b ] just b' ≡ f a b × (a , b) ∈ r
+mapPartialLiftKey-map {f = f} ab∈m with from ∈-map ab∈m
+... | (a' , b') , ≡ , a'b'∈r with f a' b' | inspect (f a') b'
+mapPartialLiftKey-map {f = f} ab∈m | (a' , b') , refl , a'b'∈r | just x | I.[ eq ] = b' , sym eq , a'b'∈r
+
+mapPartialLiftKey-just-uniq : ∀ {a : A} {b b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
+  → left-unique r
+  → just (a , b) ∈ mapˢ (mapPartialLiftKey f) r
+  → just (a , b') ∈ mapˢ (mapPartialLiftKey f) r
+  → b ≡ b'
+mapPartialLiftKey-just-uniq {f = f} prop a∈ a'∈ with mapPartialLiftKey-map {f = f} a∈ | mapPartialLiftKey-map {f = f} a'∈
+... | x , eq , ax∈r | x' , eq' , ax'∈r with prop ax∈r ax'∈r
+... | refl with trans eq (sym eq')
+... | refl = refl
+
+
+mapPartial-uniq : ∀ {r : Rel A B} {f : A → B → Maybe B' } → left-unique r → left-unique (mapPartial (mapPartialLiftKey f) r)
+mapPartial-uniq {r = r} {f} prop {a} {b} {b'} p q with to ∈-map ((a , b) , refl , p) | to ∈-map ((a , b') , refl , q)
+... | p | q = mapPartialLiftKey-just-uniq {f = f} prop (⊆-mapPartial p) (⊆-mapPartial q)
+
+mapMaybeᵐ : (f : A → B → Maybe B') → Map A B → Map A B'
+mapMaybeᵐ f (rel , prop) = mapPartial (mapPartialLiftKey f) rel , mapPartial-uniq {f = f} prop 
+
 module Restrictionᵐ (sp-∈ : spec-∈ A) where
   private module R = Restriction sp-∈
   open Unionᵐ sp-∈
@@ -244,5 +274,5 @@ module Corestrictionᵐ (sp-∈ : spec-∈ B) where
 
   -- f⁻¹(x)
   infix 25 _⁻¹_
-  _⁻¹_ : ⦃ DecEq B ⦄ → Map A B → B → Set A
+  _⁻¹_ : Map A B → B → Set A
   m ⁻¹ a = dom ((m ∣^ ❴ a ❵) ˢ)
