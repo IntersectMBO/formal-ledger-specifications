@@ -137,10 +137,17 @@ certRefund (deregdrep c)                   = just (DRepDeposit       c)
 certRefund _                               = nothing
 
 feesOK : PParams → Tx → UTxO → Bool
+<<<<<<< HEAD
 feesOK pp tx utxo = {!!}
 
 certRefundˢ : DCert → ℙ DepositPurpose
 certRefundˢ = partialToSet certRefund
+=======
+feesOK pp tx utxo with minfee pp (body tx) ≤? txfee (body tx)
+... | no ¬p = {!!}
+... | yes p with (TxWitnesses.txrdmrs (Tx.wits tx))
+... | fst , snd = {!(TxWitnesses.txrdmrs (Tx.wits tx))!}
+>>>>>>> ae2a97a (isEmpty? proof for maps wip)
 
 propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
 propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
