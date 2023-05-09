@@ -126,11 +126,6 @@ _ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B
 
 open import Interface.Hashable
 
-isEmpty? : {A B : Set} → {{DecEq A}} → {{DecEq B}} → (m : A ⇀ B) → Dec (m ˢ ≡ ∅)
-isEmpty? {A} {B} (fst , snd) with ≟-∅ {A × B} {fst}
-... | no ¬p = no (λ x → ¬p x)
-... | yes p = yes p
-
 dupIsLeftUnique : ∀ {A : Set} → {x : ℙ A} → left-unique (map (λ x₁ → x₁ , x₁) x)
 dupIsLeftUnique {A} {x} x₁ x₂ with Properties.∈-map⁻' x₁ | Properties.∈-map⁻' x₂
 ... | fst , refl , snd | .fst , refl , snd₁ = refl
