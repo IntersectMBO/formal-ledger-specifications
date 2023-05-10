@@ -17,14 +17,16 @@ open import Ledger.PPUp txs
 open import Ledger.Utxo txs
 open import Ledger.Ratify txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
+open Equivalence
+import Relation.Binary.PropositionalEquality as I
+open import Data.Nat.Properties using (+-0-monoid)
 
 \end{code}
 \begin{figure*}[h]
 \begin{code}
 
 record NewEpochEnv : Set where
-  field stakeDistrs   : StakeDistrs -- TODO: compute this from LState instead
-        drepDeposits  : Credential ↛ Coin
+  field stakeDistrs  : StakeDistrs -- TODO: compute this from LState instead
 
 record NewEpochState : Set where
   constructor ⟦_,_,_,_⟧ⁿᵉ
@@ -35,7 +37,6 @@ record NewEpochState : Set where
 
 record ChainState : Set where
   field newEpochState  : NewEpochState
-        stakeDistrs    : StakeDistrs -- TODO: compute this from LState instead
 
 record Block : Set where
   field ts   : List Tx
@@ -90,11 +91,39 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 \end{figure*}
 
 \begin{code}[hide]
-drepDeps : (DepositPurpose × Credential) ↛ Coin → Credential ↛ Coin
-drepDeps = mapKeys proj₂ helper ∘ filterᵐ (sp-∘ (to-sp (_≟ DRepDeposit)) (proj₁ ∘ proj₁))
-  where
-    helper : Injective _≡_ _≡_ proj₂
-    helper refl = {!!}
+maybePurpose : DepositPurpose → (DepositPurpose × Credential) → Coin → Maybe Coin
+maybePurpose prps (prps' , _) c with prps ≟ prps'
+... | yes _ = just c
+... | no _ = nothing
+
+maybePurpose-prop : ∀ {prps} {x} {y}
+  → (m : (DepositPurpose × Credential) ↛ Coin)
+  → (x , y) ∈ dom ((mapMaybeWithKeyᵐ (maybePurpose prps) m) ˢ)
+  → x ≡ prps
+maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with to dom∈ xy∈dom
+... | z , ∈mmwk with prps ≟ x | ∈-mapMaybeWithKey {f = maybePurpose prps} ∈mmwk
+... | yes refl | _ = refl
+... | no _ | _ , ()
+
+filterPurpose : DepositPurpose → (DepositPurpose × Credential) ↛ Coin → Credential ↛ Coin
+filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m) λ where
+  {x , .z} {y , z} x∈dom y∈dom refl → case maybePurpose-prop {prps = prps} m x∈dom of λ where
+    x≡prps → case maybePurpose-prop {prps = prps} m y∈dom of λ where
+      refl → cong (_, z) x≡prps
+
+instance
+  _ = +-0-monoid
+
+calculateStakeDistrs : LState → StakeDistrs
+calculateStakeDistrs ls =
+  let open LState ls; open CertState certState; open PState pState; open UTxOState utxoSt
+      spoDelegs = ∅ᵐ -- TODO
+      drepDeposits = mapKeys (credVoter DRep) (filterPurpose DRepDeposit deposits) λ {_ _ refl → refl}
+      drepDelegs = ∅ᵐ -- TODO
+  in
+  record
+    { stakeDistr = spoDelegs ∪⁺ drepDeposits ∪⁺ drepDelegs
+    }
 
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set where
 \end{code}
@@ -102,9 +131,9 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Se
 \begin{code}
   CHAIN :
     let open ChainState s; open Block b; open NewEpochState
-        drepDeposits = drepDeps ∘ UTxOState.deposits ∘ LState.utxoSt $ ls nes
+        stakeDistrs = calculateStakeDistrs (ls nes)
     in
-    record { drepDeposits = drepDeposits ; ChainState s } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    record { stakeDistrs = stakeDistrs ; ChainState s } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     → ⟦ slot , EnactState.pparams (es nes) ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }

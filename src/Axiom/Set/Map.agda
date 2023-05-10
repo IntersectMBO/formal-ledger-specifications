@@ -1,7 +1,7 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive hiding (_⊔_) renaming (Set to Type)
 open import Axiom.Set
 
 module Axiom.Set.Map (th : Theory {lzero}) where
@@ -11,6 +11,7 @@ open import Axiom.Set.Properties th
 
 open import Prelude hiding (filter)
 
+import Level using (_⊔_)
 import Data.Product
 import Data.Sum
 import Relation.Binary.PropositionalEquality as I
@@ -156,16 +157,24 @@ disj-dom {m = m@(_ , uniq)} {m₁} {m₂} (m≡m₁∪m₂ , disj) a∈domm₁ a
     ∈mᵢ⇒∈m : ∀ {a} → a ∈ (m₁ ˢ) ⊎ a ∈ (m₂ ˢ) → a ∈ (m ˢ)
     ∈mᵢ⇒∈m = proj₂ m≡m₁∪m₂ ∘ to ∈-∪
 
-mapˡ-uniq : {f : A → A'} → Injective _≡_ _≡_ f → left-unique R → left-unique (mapˡ f R)
+InjectiveOn : Set A → (A → B) → Type
+InjectiveOn X f = ∀ {x y} → x ∈ X → y ∈ X → f x ≡ f y → x ≡ y
+
+weaken-Injective : ∀ {X : Set A} {f : A → B} → Injective _≡_ _≡_ f → InjectiveOn X f
+weaken-Injective p _ _ fx≡fy with p fx≡fy
+... | q = q
+
+mapˡ-uniq : {f : A → A'} → InjectiveOn (dom R) f → left-unique R → left-unique (mapˡ f R)
 mapˡ-uniq inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
-  ((_ , refl , Ha) , (_ , eqb , Hb)) → uniq Ha $ subst _ (sym $ ×-≡,≡→≡ $ Data.Product.map₁ inj (×-≡,≡←≡ eqb)) Hb
+  (((_ , b) , refl , Ha) , ((_ , b') , eqb , Hb)) → uniq Ha
+    $ subst _ (sym $ ×-≡,≡→≡ $ Data.Product.map₁ (inj (from dom∈ (b , Ha)) (from dom∈ (b' , Hb))) (×-≡,≡←≡ eqb)) Hb
 
 mapʳ-uniq : {f : B → B'} → left-unique R → left-unique (mapʳ f R)
 mapʳ-uniq uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
   ((_ , refl , Ha) , (_ , refl , Hb)) → cong _ $ uniq Ha Hb
 
-mapKeys : (f : A → A') → Injective _≡_ _≡_ f → Map A B → Map A' B
-mapKeys f inj (R , uniq) = mapˡ f R , mapˡ-uniq inj uniq
+mapKeys : (f : A → A') → (m : Map A B) → InjectiveOn (dom (m ˢ)) f → Map A' B
+mapKeys f (R , uniq) inj = mapˡ f R , mapˡ-uniq inj uniq
 
 mapValues : (B → B') → Map A B → Map A B'
 mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
@@ -186,33 +195,22 @@ m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
 _∣^'_ : {P : B → Type} → Map A B → specProperty P → Map A B
 m ∣^' P? = filterᵐ (sp-∘ P? proj₂) m
 
-mapPartialLiftKey : (A → B → Maybe B') → A × B → Maybe (A × B')
-mapPartialLiftKey f (k , v) = map? (k ,_) (f k v)
-
-mapPartialLiftKey-map : ∀ {a : A} {b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
-  → just (a , b') ∈ mapˢ (mapPartialLiftKey f) r
-  → ∃[ b ] just b' ≡ f a b × (a , b) ∈ r
-mapPartialLiftKey-map {f = f} ab∈m with from ∈-map ab∈m
-... | (a' , b') , ≡ , a'b'∈r with f a' b' | inspect (f a') b'
-mapPartialLiftKey-map {f = f} ab∈m | (a' , b') , refl , a'b'∈r | just x | I.[ eq ] = b' , sym eq , a'b'∈r
-
 mapPartialLiftKey-just-uniq : ∀ {a : A} {b b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
   → left-unique r
   → just (a , b) ∈ mapˢ (mapPartialLiftKey f) r
   → just (a , b') ∈ mapˢ (mapPartialLiftKey f) r
   → b ≡ b'
 mapPartialLiftKey-just-uniq {f = f} prop a∈ a'∈ with mapPartialLiftKey-map {f = f} a∈ | mapPartialLiftKey-map {f = f} a'∈
-... | x , eq , ax∈r | x' , eq' , ax'∈r with prop ax∈r ax'∈r
+... | _ , eq , ax∈r | _ , eq' , ax'∈r with prop ax∈r ax'∈r
 ... | refl with trans eq (sym eq')
 ... | refl = refl
 
-
 mapPartial-uniq : ∀ {r : Rel A B} {f : A → B → Maybe B' } → left-unique r → left-unique (mapPartial (mapPartialLiftKey f) r)
-mapPartial-uniq {r = r} {f} prop {a} {b} {b'} p q with to ∈-map ((a , b) , refl , p) | to ∈-map ((a , b') , refl , q)
+mapPartial-uniq {f = f} prop {a} {b} {b'} p q with to ∈-map ((a , b) , refl , p) | to ∈-map ((a , b') , refl , q)
 ... | p | q = mapPartialLiftKey-just-uniq {f = f} prop (⊆-mapPartial p) (⊆-mapPartial q)
 
-mapMaybeᵐ : (f : A → B → Maybe B') → Map A B → Map A B'
-mapMaybeᵐ f (rel , prop) = mapPartial (mapPartialLiftKey f) rel , mapPartial-uniq {f = f} prop 
+mapMaybeWithKeyᵐ : (A → B → Maybe B') → Map A B → Map A B'
+mapMaybeWithKeyᵐ f (rel , prop) = mapMaybeWithKey f rel , mapPartial-uniq {f = f} prop 
 
 module Restrictionᵐ (sp-∈ : spec-∈ A) where
   private module R = Restriction sp-∈
