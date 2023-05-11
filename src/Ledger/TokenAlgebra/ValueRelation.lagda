@@ -233,7 +233,9 @@ proj₂ ι-identity (R , _) = ι-right⇒R {R} , R⇒ι-right {R}
  ii (qv , qv' , Rvqv , Rv'qv' , q≡qvqv') = qv , qv' , Rv⇒Ru Rvqv , Rv'⇒Ru' Rv'qv' , q≡qvqv'
 \end{code}
 
-\subsubsection{Definition of the value monoid}
+\subsection{Definition of the value monoid}
+
+An inhabitant of `Value` is a map denoting a finite collection of quantities of assets.
 
 \begin{code}
 open TokenAlgebraPoly
