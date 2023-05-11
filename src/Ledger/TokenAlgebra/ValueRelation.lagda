@@ -8,9 +8,9 @@
 open import Agda.Primitive  using () renaming (Set to Type)
 
 module Ledger.TokenAlgebra.ValueRelation
-  (ByteString : Type)
-  (PolicyID : Type)
-  (AdaName              : ByteString)
+  (ByteString  : Type)
+  (PolicyId    : Type)
+  (AdaName     : ByteString)
   where
 
 open import Algebra                      using (CommutativeMonoid ; Commutative ; Op₂)
@@ -21,7 +21,7 @@ open import Data.Nat using (_≤_)
 open import Data.Product.Base            using (swap)
 open import Data.Sum.Base                using ([_,_]′)
 open import Ledger.Prelude               hiding (Coin ; Rel ; _>_)
-open import Ledger.TokenAlgebra ByteString PolicyID AdaName using (AssetID ; Quantity ; TokenAlgebraPoly)
+open import Ledger.TokenAlgebra PolicyId using (TokenAlgebraPoly)
 open import Prelude
 open import Relation.Binary              using (REL ; Rel ; _⇒_ ; IsEquivalence ; Decidable) renaming (_⇔_ to _⇐⇒_ )
 open import Relation.Binary.Definitions  using (Decidable ; DecidableEquality)
@@ -32,23 +32,63 @@ private
     A B : Type
     C : REL A B 0ℓ → Type 0ℓ
 
-open ≡-Reasoning
-
 \end{code}
+
+\subsection{Derived types}
+
+(See Fig 3 of the
+\href{https://github.com/input-output-hk/cardano-ledger/releases/latest/download/mary-ledger.pdf}%
+{Mary ledger specification}.)
+
+\begin{itemize}
+\item \AgdaBound{AssetName} is a byte string used to distinguish different assets with the same \AgdaBound{PolicyId}.
+\item \AgdaBound{AssetId} is a product type consisting of a \AgdaBound{PolicyId} and an \AgdaBound{AssetName}.
+\item \AgdaBound{AdaId} is the Id for the asset Ada.
+\item \AgdaBound{Quantity} is the type of amounts of assets.
+\end{itemize}
+
+In the formal ledger specification \AgdaBound{AssetId} is sometimes viewed as a direct sum type,
+the inhabitants of which belong to either \AgdaBound{AdaIdType} or the product
+\AgdaBound{PolicyId}~\AgdaBound{×}~\AgdaBound{AssetName}; if we were adhering to that point of view,
+then we would have defined
+\AgdaBound{AssetId}
+  = \AgdaBound{AdaIdType}~\AgdaBound{⊎}~(\AgdaBound{PolicyId}~\AgdaBound{×}~\AgdaBound{AssetName}).
+
+\begin{code}
+AssetName : Type
+AssetName = ByteString
+
+AssetId : Type
+AssetId = PolicyId × AssetName
+
+Quantity : Type
+Quantity = ℕ
+\end{code}
+
+Finally, we define a record type with a single inhabitant with which we may wish to
+represent the type of Ada (rather than viewing Ada as just another asset).
+
+\begin{code}
+record AdaIdType : Type where
+  instance constructor AdaId
+\end{code}
+
 
 \subsection{The identity of the value monoid}
 
 We'll use \AgdaBound{ι} to denote the identity for the Value monoid.
 
 \begin{code}
-ι : REL AssetID Quantity 0ℓ
+ι : REL AssetId Quantity 0ℓ
 ι _ q = q ≡ 0
 
-I : AssetID ⇀ Quantity
+I : AssetId ⇀ Quantity
 I = ι , λ 0b 0b' → trans 0b (sym 0b')
 
-_⊕₁_ : Op₂ (REL AssetID Quantity 0ℓ)
+_⊕₁_ : Op₂ (REL AssetId Quantity 0ℓ)
 Ru ⊕₁ Rv = λ aid q → ∃[ qu ] (∃[ qv ] (Ru aid qu × Rv aid qv × (q ≡ qu + qv)))
+
+open ≡-Reasoning
 
 ι-left⇒R : ∀{R} → ι ⊕₁ R ⇒ R
 ι-left⇒R {R} {aid} {q} (qι , qu , h) = subst (R aid) ι-left-lemma (proj₁ (proj₂ h))
@@ -108,7 +148,7 @@ IsEquivalence.trans ≈-isEquivalence ij jk = IsEquivalence.trans ⇐⇒-isEquiv
 \subsection{Summation of the value monoid and its properties}
 
 \begin{code}
-_⊕_ : Op₂ (AssetID ⇀ Quantity)
+_⊕_ : Op₂ (AssetId ⇀ Quantity)
 proj₁ ((Ru , _) ⊕ (Rv , _)) = Ru ⊕₁ Rv
 proj₂ ((Ru , luu) ⊕ (Rv , luv)) {aid} {q} {q'} = Goal
  where
@@ -208,19 +248,19 @@ open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (trans ; sym)
 open Algebra
 
 module _
-  {AdaPolicy   : PolicyID}
-  {DecEqValue  : DecidableEquality (AssetID ⇀ Quantity) }
-  {Size        : AssetID ⇀ Quantity → ℕ}
-  {AdaForAll   : (R : AssetID ⇀ Quantity) → ∃[ q ] (proj₁ R) (AdaPolicy , AdaName) q}
+  {AdaPolicy   : PolicyId}
+  {DecEqValue  : DecidableEquality (AssetId ⇀ Quantity) }
+  {Size        : AssetId ⇀ Quantity → ℕ}
+  {AdaForAll   : (R : AssetId ⇀ Quantity) → ∃[ q ] (proj₁ R) (AdaPolicy , AdaName) q}
   where
 
   contr : ⊥
   contr = proj₂ $ AdaForAll ((λ _ _ → ⊥) , λ where () ())
 
-  VAda : Quantity → AssetID ⇀ Quantity
+  VAda : Quantity → AssetId ⇀ Quantity
   VAda x = ((λ a q' → a ≡ (AdaPolicy , AdaName) × x ≡ q') , λ x y → trans (sym (proj₂ x)) (proj₂ y))
 
-  _hasHowMuchAda : AssetID ⇀ Quantity → Quantity
+  _hasHowMuchAda : AssetId ⇀ Quantity → Quantity
   R hasHowMuchAda = proj₁ (AdaForAll R)
 
   VAdaHasAda : ∀{x} → ((VAda x) hasHowMuchAda) ≡ x
@@ -243,7 +283,7 @@ module _
 
     Vcm : CommutativeMonoid 1ℓ 0ℓ
     Vcm = record
-        { Carrier = AssetID ⇀ Quantity
+        { Carrier = AssetId ⇀ Quantity
         ; _≈_ = _≋_
         ; _∙_ = _⊕_
         ; ε = I
@@ -300,113 +340,5 @@ module _
     IsMonoidMorphism.ε-homo mh = proj₂ (AdaForAll I)
 
 \end{code}
-
-`Val` is a finitely supported map. If `aid` is an `AssetID` and `v : Val`, then the quantity
-of assets contained in `v` with `AssetID` `aid` is `v aid`. Elements of `Val` are also
-referred to as asset bundles.
-
-Remarks.
-
-In the fls, `Val` is assumed to be a finitely supported map.  There are a number of ways we
-could manifest this assumption.
-1. Take the domain type to be finite and let `Val` be a total function on that domain.
-2. Let `Val` be a partial function `AssetID ⇀ Quantity` and either let
-   - `Quantity = ℤ ⊎ {⊥}` and `Val aid = ⊥` for all but finitely many `aid : AssetID` OR
-   - `Quantity = Maybe ℤ` and `Val aid = nothing` for all but finitely many `aid : AssetID`
-   (The two options are equivalent.)
-3. Use the fact that the set theory, as Andre has defined it, is inherently finite.
-
-In my view the first option, with a finite domain, seems the easiest to express and work with.
-
-Here are two alternative approaches that might be better:
-
----------------------
-
-1. ValTrees
-
-Use an inductive type for vals, called ValTree, and have two constructors:
-
-  - Empty for the zero (identity) value
-  - NonEmpty : (AssetID , Quantity) → ValTree → ValTree → ValTree
-
-assuming (AssetID , Quantity) can be ordered (could just order by first component, AssetID).
-
-We would have functions for inserting a new (AssetID , Quantity) into a ValTree and for
-checking whether a ValTree contains a given (AssetID , Quantity).
-
-\begin{code}
-
-data ValTree : Type where
- Empty : ValTree
- NonEmpty : AssetID → Quantity → ValTree → ValTree → ValTree
-
-isEmpty : ValTree → Bool
-isEmpty Empty = true
-isEmpty (NonEmpty _ _ _ _ ) = false
-
-contains' : ValTree → AssetID → Bool
-contains' Empty _ = false
-contains' (NonEmpty a q l r) aid = contains' r aid
-
-  -- if (aid < a) then
-  --   return contains l aid
-  -- else if (a < aid) then
-  --   return contains r aid
-  -- else return true
-
-addAsset : ValTree → AssetID → Quantity → ValTree
-addAsset Empty aid q = NonEmpty aid q Empty Empty
-addAsset (NonEmpty a q₁ l r) aid q₂ = r
-
-  -- if (aid < a) then
-  --   return NonEmpty a q₁ (addAsset l aid q₂) r
-  -- else if (a < aid) then
-  --   return NonEmpty a q₁ l (addAsset r aid q₂)
-  -- else
-  --   return NonEmpty a (q₁ + q₂) l r
-\end{code}
-
------------------------
-
-2. Key-value pairs
-
-Viewing the Value type as a collection of key-value pairs (with "unique" keys because of the left-unique constraint),
-
-Addition could be performed with an "outer join" followed by a "map values".
-
-This might be the most performant approach.
-
-Some remarks about how this works:
-
-outerJoin : ∀{A B C} → REL A B → REL A C → REL A (Maybe B × Maybe C)
-
-mapValues : ∀{A B C} → REL A B → (B → C) → REL A C
-
-\begin{code}
-
-combineValues : Maybe Quantity × Maybe Quantity → Maybe Quantity
-combineValues (x        , nothing)  = x
-combineValues (nothing  , just y)   = just y
-combineValues (just x   , just y)   = just (x + y)
-
-zeroMaybe : Maybe Quantity → Quantity
-zeroMaybe (just x) = x
-zeroMaybe nothing = 0
-
-contains : (AssetID ↛ Quantity) → AssetID → Type
-contains (R , _) aid = ∃[ q ] (aid , q) ∈ R
-
-getQuantity : ∀{aid} → (m : AssetID ↛ Quantity) → contains m aid → Quantity
-getQuantity _ (q , _) = q
-
-makeTotal : (AssetID ↛ Quantity) → AssetID → Maybe Quantity
-makeTotal m aid = helper (contains m aid)
- where
- helper : Type → Maybe Quantity
- helper x = nothing
- -- helper false = nothing
-
-\end{code}
-
 
 [1] https://github.com/input-output-hk/cardano-ledger/releases/latest/download/mary-ledger.pdf
