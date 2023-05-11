@@ -1,7 +1,9 @@
 {-# OPTIONS --overlapping-instances #-}
-module Ledger.Foreign.HSLedger where
 
 open import Agda.Primitive using () renaming (Set to Type)
+
+module Ledger.Foreign.HSLedger (policy : Type) where
+
 open import Ledger.Prelude
 
 import Data.Maybe as M
@@ -95,9 +97,9 @@ import Ledger.TokenAlgebra as TA
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
 open import Data.Nat
 
-module _  {ByteString PolicyID : Type}{AdaName : ByteString} where
+module _ where
 
-  open TA ByteString PolicyID AdaName
+  open TA policy
   open TA.TokenAlgebra
 
   coinTokenAlgebra : TokenAlgebra
@@ -119,6 +121,7 @@ module _  {ByteString PolicyID : Type}{AdaName : ByteString} where
   DecEq-Value coinTokenAlgebra = record { _≟_ = Data.Nat._≟_ }
 
 module _ where
+
   open TransactionStructure
 
   HSTransactionStructure : TransactionStructure
@@ -127,9 +130,7 @@ module _ where
   HSTransactionStructure .epochStructure  = HSEpochStructure
   HSTransactionStructure .globalConstants = HSGlobalConstants
   HSTransactionStructure .AuxiliaryData   = ⊤
-  HSTransactionStructure .PolicyID        = ⊤
-  HSTransactionStructure .ByteString      = ⊤
-  HSTransactionStructure .AdaName         = tt
+  HSTransactionStructure .PolicyId        = policy
   HSTransactionStructure .crypto          = HSCrypto
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppHashingScheme = isHashableSelf PParams

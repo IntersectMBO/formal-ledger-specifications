@@ -39,9 +39,9 @@ This function must produce a unique id for each unique transaction body.
 
 \begin{figure*}[h]
 \emph{Abstract types}
-\AgdaTarget{Ix, TxId, Epoch, AuxiliaryData}
+\AgdaTarget{Ix, TxId, AuxiliaryData, PolicyId}
 \begin{code}
-        Ix TxId AuxiliaryData ByteString PolicyID : Set
+        Ix TxId AuxiliaryData PolicyId : Set
 \end{code}
 \begin{code}[hide]
         epochStructure                      : EpochStructure
@@ -55,20 +55,19 @@ This function must produce a unique id for each unique transaction body.
         ppUpd                               : Ledger.PParams.PParamsDiff epochStructure
         txidBytes                           : TxId → Crypto.Ser crypto
         networkId                           : Network
-        AdaName                             : ByteString
         instance DecEq-TxId  : DecEq TxId
                  DecEq-Ix    : DecEq Ix
                  DecEq-Netw  : DecEq Network
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
-  open TA  ByteString PolicyID AdaName
+  open TA PolicyId
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
   field  ss            : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
          tokenAlgebra  : TokenAlgebra
 
-  open TokenAlgebra tokenAlgebra hiding (Coin) public
+  open TokenAlgebra tokenAlgebra public
 
   open Ledger.Script.ScriptStructure ss public
 
