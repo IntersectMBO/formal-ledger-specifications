@@ -57,16 +57,18 @@ record TokenAlgebraPoly {ℓ ℓ' : Level} : Type ((sucˡ ℓ) ⊔ˡ (sucˡ ℓ'
   open CommutativeMonoid Value-CommutativeMonoid using (_≈_; ε)
        renaming (Carrier to Value; refl to reflᵛ; _∙_ to _+ᵛ_) public
 
-  field coin     : Value → Coin
-        inject   : Coin → Value
-        policies : Value → Pred PolicyId 0ℓ
-        size     : Value → MemoryEstimate
-        _≤ᵗ_      : Rel Value 0ℓ
+  field coin                  : Value → Coin
+        inject                : Coin → Value
+        -- policies              : Value → Pred PolicyId 0ℓ
+        -- (removing policies since here we take Value to be total)
+        size                  : Value → MemoryEstimate
+        _≤ᵗ_                  : Rel Value 0ℓ
+        AssetNameType         : Type
+        specialAsset          : AssetNameType
+        composeToIdentity     : coin ∘ inject ≗ id
+        coinIsMonoidMorphism  : coin Is Value-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid
 
-        property             : coin ∘ inject ≗ id
-        coinIsMonoidMorphism : coin Is Value-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid
-
-        instance DecEq-Value : DecEq Value
+        -- instance DecEq-AssetName  : DecEq AssetName
 
   sumᵛ : List Value → Value
   sumᵛ = foldr _+ᵛ_ (inject 0)
