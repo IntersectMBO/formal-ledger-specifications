@@ -150,7 +150,6 @@ open import Relation.Nullary.Decidable using (isNo)
 collateralExists : Tx → Bool
 collateralExists tx = isNo (≟-∅ {_} {collateral (body tx)})
 
------------------------------------------------------
 -- Boolean Functions
 
 -- Boolean Implication
