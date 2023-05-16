@@ -126,19 +126,10 @@ _ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B
 
 open import Interface.Hashable
 
-open import Axiom.Set.Properties
-
-emptyˡ→emptyʳ : {A B : Set} → (r : Rel A B) → relatedˡ r ≡ ∅ → r ≡ ∅
-emptyˡ→emptyʳ r x = {!!}
-
-empty→emptyˡ : {A B : Set} → (r : Rel A B) → r ≡ ∅ → relatedˡ r ≡ ∅
-empty→emptyˡ .∅ refl = {!!}
-
-isEmpty? : {A B : Set} → {{DecEq A}} → (m : A ⇀ B) → Dec (m ˢ ≡ ∅)
-isEmpty? {A} (fst , snd) with ≟-∅ {A} {relatedˡ fst}
-... | no ¬p = no λ { x → ¬p (empty→emptyˡ fst x)}
-... | yes p = yes (emptyˡ→emptyʳ fst p)
-
+isEmpty? : {A B : Set} → {{DecEq A}} → {{DecEq B}} → (m : A ⇀ B) → Dec (m ˢ ≡ ∅)
+isEmpty? {A} {B} (fst , snd) with ≟-∅ {A × B} {fst}
+... | no ¬p = no (λ x → ¬p x)
+... | yes p = yes p
 
 dupIsLeftUnique : ∀ {A : Set} → {x : ℙ A} → left-unique (map (λ x₁ → x₁ , x₁) x)
 dupIsLeftUnique {A} {x} x₁ x₂ with Properties.∈-map⁻' x₁ | Properties.∈-map⁻' x₂

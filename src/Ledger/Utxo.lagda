@@ -107,6 +107,19 @@ balance utxo = Σᵐᵛ[ x ← utxo ᶠᵐ ] (getValue x)
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
 
+-- isAdaOnly : Value → Bool
+-- isAdaOnly v = ⌊ (v ∈? range inject) ⌋
+
+coinPolicies : ℙ PolicyId
+coinPolicies = policies (inject 1)
+
+isAdaOnly : Value → Bool
+isAdaOnly v = {!!}
+
+-- ⌊ (policies v) ≟ coinPolicies ⌋
+
+--⌊ v ≟ inject (coin v) ⌋
+
 -- add txscriptfee function
 
 -- Fix: add script free and exunits
@@ -136,18 +149,12 @@ certRefund (delegate c nothing nothing x)  = just (CredentialDeposit c)
 certRefund (deregdrep c)                   = just (DRepDeposit       c)
 certRefund _                               = nothing
 
-feesOK : PParams → Tx → UTxO → Bool
-<<<<<<< HEAD
-feesOK pp tx utxo = {!!}
-
 certRefundˢ : DCert → ℙ DepositPurpose
 certRefundˢ = partialToSet certRefund
-=======
-feesOK pp tx utxo with minfee pp (body tx) ≤? txfee (body tx)
-... | no ¬p = {!!}
-... | yes p with (TxWitnesses.txrdmrs (Tx.wits tx))
-... | fst , snd = {!(TxWitnesses.txrdmrs (Tx.wits tx))!}
->>>>>>> ae2a97a (isEmpty? proof for maps wip)
+
+feesOK : PParams → Tx → UTxO → Bool
+feesOK pp tx utxo = {!!}
+
 
 propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
 propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
