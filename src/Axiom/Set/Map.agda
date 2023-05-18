@@ -6,7 +6,7 @@ open import Axiom.Set
 
 module Axiom.Set.Map (th : Theory {lzero}) where
 open Theory th renaming (map to mapˢ)
-open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
+open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) renaming (range to rangeˢ)
 open import Axiom.Set.Properties th
 
 open import Prelude hiding (filter)
@@ -27,6 +27,8 @@ open import Tactic.AnyOf
 open import Tactic.Assumption
 open import Tactic.Defaults
 open import Tactic.Helpers
+
+open import Algebra
 
 -- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
 private macro
@@ -249,6 +251,13 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
   update : A → Maybe B → Map A B → Map A B
   update x (just y) m = insert m x y
   update x nothing  m = m ∣ ❴ x ❵ ᶜ
+
+  squashToMap-uniq : (r : Rel A B) → left-unique (mapˢ (λ { (x , y) → x , rangeˢ (r R.∣ ❴ x ❵) }) r)
+  squashToMap-uniq r px py with from ∈-map px | from ∈-map py
+  ... | _ , refl , _ | _ , refl , _ = refl
+
+  squashToMap : Rel A B → Map A (Set B)
+  squashToMap r = mapˢ (λ where (x , _) → x , rangeˢ (r R.∣ ❴ x ❵)) r , squashToMap-uniq r
 
 module Lookupᵐ (sp-∈ : spec-∈ A) where
   open import Relation.Nullary.Decidable

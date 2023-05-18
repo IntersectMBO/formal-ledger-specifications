@@ -18,7 +18,7 @@ open import Ledger.Utxo txs
 open import Ledger.Ratify txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 open Equivalence
-open import Data.Nat.Properties using (+-0-monoid)
+open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 
 \end{code}
 \begin{figure*}[h]
@@ -114,10 +114,12 @@ instance
 
 calculateStakeDistrs : LState → StakeDistrs
 calculateStakeDistrs ls =
-  let open LState ls; open CertState certState; open PState pState; open UTxOState utxoSt
+  let open LState ls; open CertState certState; open PState pState; open UTxOState utxoSt; open DState dState
+      propDepRel = map (λ {record { returnAddr = a; deposit = d } → RwdAddr.stake a , d}) $ range (tally ˢ)
+      propDepMap = ?
       spoDelegs = ∅ᵐ -- TODO
       drepDeposits = mapKeys (credVoter DRep) (filterPurpose DRepDeposit deposits) λ {_ _ refl → refl}
-      drepDelegs = ∅ᵐ -- TODO
+      drepDelegs = {!!}
   in
   record
     { stakeDistr = spoDelegs ∪⁺ drepDeposits ∪⁺ drepDelegs
