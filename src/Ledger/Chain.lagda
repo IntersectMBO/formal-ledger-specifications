@@ -18,7 +18,6 @@ open import Ledger.Utxo txs
 open import Ledger.Ratify txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 open Equivalence
-import Relation.Binary.PropositionalEquality as I
 open import Data.Nat.Properties using (+-0-monoid)
 
 \end{code}
@@ -103,7 +102,6 @@ maybePurpose-prop : ∀ {prps} {x} {y}
 maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with to dom∈ xy∈dom
 ... | z , ∈mmwk with prps ≟ x | ∈-mapMaybeWithKey {f = maybePurpose prps} ∈mmwk
 ... | yes refl | _ = refl
-... | no _ | _ , ()
 
 filterPurpose : DepositPurpose → (DepositPurpose × Credential) ↛ Coin → Credential ↛ Coin
 filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m) λ where

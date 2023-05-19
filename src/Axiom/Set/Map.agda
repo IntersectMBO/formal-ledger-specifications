@@ -1,7 +1,7 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive hiding (_⊔_) renaming (Set to Type)
+open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
 
 module Axiom.Set.Map (th : Theory {lzero}) where
@@ -11,7 +11,6 @@ open import Axiom.Set.Properties th
 
 open import Prelude hiding (filter)
 
-import Level using (_⊔_)
 import Data.Product
 import Data.Sum
 import Relation.Binary.PropositionalEquality as I
@@ -38,6 +37,10 @@ private macro
 private variable A A' B B' C D : Type
                  R R' : Rel A B
                  X Y : Set A
+                 a : A
+                 a' : A'
+                 b : B
+                 b' : B'
 
 left-unique : Rel A B → Type
 left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
@@ -161,8 +164,7 @@ InjectiveOn : Set A → (A → B) → Type
 InjectiveOn X f = ∀ {x y} → x ∈ X → y ∈ X → f x ≡ f y → x ≡ y
 
 weaken-Injective : ∀ {X : Set A} {f : A → B} → Injective _≡_ _≡_ f → InjectiveOn X f
-weaken-Injective p _ _ fx≡fy with p fx≡fy
-... | q = q
+weaken-Injective p _ _ = p
 
 mapˡ-uniq : {f : A → A'} → InjectiveOn (dom R) f → left-unique R → left-unique (mapˡ f R)
 mapˡ-uniq inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
@@ -195,10 +197,10 @@ m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
 _∣^'_ : {P : B → Type} → Map A B → specProperty P → Map A B
 m ∣^' P? = filterᵐ (sp-∘ P? proj₂) m
 
-mapPartialLiftKey-just-uniq : ∀ {a : A} {b b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
-  → left-unique r
-  → just (a , b) ∈ mapˢ (mapPartialLiftKey f) r
-  → just (a , b') ∈ mapˢ (mapPartialLiftKey f) r
+mapPartialLiftKey-just-uniq : ∀ {f : A → B → Maybe B'}
+  → left-unique R
+  → just (a , b) ∈ mapˢ (mapPartialLiftKey f) R
+  → just (a , b') ∈ mapˢ (mapPartialLiftKey f) R
   → b ≡ b'
 mapPartialLiftKey-just-uniq {f = f} prop a∈ a'∈ with mapPartialLiftKey-map {f = f} a∈ | mapPartialLiftKey-map {f = f} a'∈
 ... | _ , eq , ax∈r | _ , eq' , ax'∈r with prop ax∈r ax'∈r
@@ -206,7 +208,7 @@ mapPartialLiftKey-just-uniq {f = f} prop a∈ a'∈ with mapPartialLiftKey-map {
 ... | refl = refl
 
 mapPartial-uniq : ∀ {r : Rel A B} {f : A → B → Maybe B' } → left-unique r → left-unique (mapPartial (mapPartialLiftKey f) r)
-mapPartial-uniq {f = f} prop {a} {b} {b'} p q with to ∈-map ((a , b) , refl , p) | to ∈-map ((a , b') , refl , q)
+mapPartial-uniq {f = f} prop {a} {b} {b'} p q with ∈-map′ p | ∈-map′ q
 ... | p | q = mapPartialLiftKey-just-uniq {f = f} prop (⊆-mapPartial p) (⊆-mapPartial q)
 
 mapMaybeWithKeyᵐ : (A → B → Maybe B') → Map A B → Map A B'

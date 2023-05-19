@@ -134,6 +134,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-map : ∀ {f : A → B} {b} → (∃[ a ] b ≡ f a × a ∈ X) ⇔ b ∈ map f X
   ∈-map = proj₂ $ replacement _ _
 
+  ∈-map′ : ∀ {f : A → B} {a} → a ∈ X → f a ∈ map f X
+  ∈-map′ {a = a} a∈X = to ∈-map (a , refl , a∈X)
+
   -- don't know that there's a set containing all members of a type, which this is equivalent to
   -- _⁻¹_ : (A → B) → Set B → Set A
   -- f ⁻¹ X = {!!}
