@@ -28,7 +28,7 @@ record TokenAlgebra : Set₁ where
         inject    : Coin → Value
         policies  : Value → ℙ PolicyId
         size      : Value → MemoryEstimate
-        _≥ᵗ_      : Value → Value → Set
+        _≤ᵗ_      : Value → Value → Set
 
         property             : coin ∘ inject ≗ id
         coinIsMonoidMorphism : coin Is Value-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid

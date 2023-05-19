@@ -60,15 +60,15 @@ disjoint-dom⇒disjoint disj = ∈-map⁺'' -⟨ disj ⟩- ∈-map⁺''
 _∣'_ : {P : A → Type} → Rel A B → specProperty P → Rel A B
 m ∣' P? = filter (sp-∘ P? proj₁) m
 
-_∣^'_ : {P : B → Type} → Rel A B → specProperty P → Rel A B
-m ∣^' P? = filter (sp-∘ P? proj₂) m
+_↾'_ : {P : B → Type} → Rel A B → specProperty P → Rel A B
+m ↾' P? = filter (sp-∘ P? proj₂) m
 
 impl⇒res⊆ : ∀ {X : Rel A B} {P P'} → (sp-P : specProperty P) → (sp-P' : specProperty P')
             → (∀ {a} → P a → P' a) → X ∣' sp-P ⊆ X ∣' sp-P'
 impl⇒res⊆ sp-P sp-P' P⇒P' a∈X∣'P = ∈⇔P (Data.Product.map₁ P⇒P' (∈⇔P a∈X∣'P))
 
 impl⇒cores⊆ : ∀ {X : Rel A B} {P P'} → (sp-P : specProperty P) → (sp-P' : specProperty P')
-            → (∀ {b} → P b → P' b) → X ∣^' sp-P ⊆ X ∣^' sp-P'
+            → (∀ {b} → P b → P' b) → X ↾' sp-P ⊆ X ↾' sp-P'
 impl⇒cores⊆ sp-P sp-P' P⇒P' a∈X∣^'P = ∈⇔P (Data.Product.map₁ P⇒P' (∈⇔P a∈X∣^'P))
 
 mapˡ : (A → A') → Rel A B → Rel A' B
@@ -208,14 +208,14 @@ module Restriction (sp-∈ : spec-∈ A) where
 
 module Corestriction (sp-∈ : spec-∈ B) where
 
-  _∣^_ : Rel A B → Set B → Rel A B
-  m ∣^ X = m ∣^' sp-∈ {X}
+  _↾_ : Rel A B → Set B → Rel A B
+  m ↾ X = m ↾' sp-∈ {X}
 
-  _∣^_ᶜ : Rel A B → Set B → Rel A B
-  m ∣^ X ᶜ = m ∣^' sp-¬ (sp-∈ {X})
+  _↾_ᶜ : Rel A B → Set B → Rel A B
+  m ↾ X ᶜ = m ↾' sp-¬ (sp-∈ {X})
 
-  cores-⊆ : (R ∣^ X) ⊆ R
+  cores-⊆ : (R ↾ X) ⊆ R
   cores-⊆ = proj₂ ∘′ ∈⇔P
 
-  coex-⊆ : (R ∣^ X ᶜ) ⊆ R
+  coex-⊆ : (R ↾ X ᶜ) ⊆ R
   coex-⊆ = proj₂ ∘′ ∈⇔P

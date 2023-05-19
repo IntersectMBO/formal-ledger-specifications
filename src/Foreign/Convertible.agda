@@ -33,6 +33,6 @@ instance
   Convertible-FinSet .from l = setFromList (Data.List.map from l)
 
   Convertible-Map : ∀ {K K' V V'} ⦃ _ : DecEq K ⦄
-                  → ⦃ _ : Convertible K K' ⦄ → ⦃ _ : Convertible V V' ⦄ → Convertible (K ↛ V) (List (Pair K' V'))
+                  → ⦃ _ : Convertible K K' ⦄ → ⦃ _ : Convertible V V' ⦄ → Convertible (K ⇀ V) (List (Pair K' V'))
   Convertible-Map .to   m = to (proj₁ m)
   Convertible-Map .from m = fromListᵐ (Data.List.map from m)

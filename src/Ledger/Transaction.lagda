@@ -81,10 +81,10 @@ the transaction body are:
 \begin{code}
   TxIn   = TxId × Ix
   TxOut  = Addr × Value
-  UTxO   = TxIn ↛ TxOut
-  Wdrl   = RwdAddr ↛ Coin
+  UTxO   = TxIn ⇀ TxOut
+  Wdrl   = RwdAddr ⇀ Coin
 
-  ProposedPPUpdates  = KeyHash ↛ PParamsUpdate
+  ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 \end{code}
 \emph{Transaction types}
@@ -93,7 +93,7 @@ the transaction body are:
 \begin{code}
   record TxBody : Set where
     field txins      : ℙ TxIn
-          txouts     : Ix ↛ TxOut
+          txouts     : Ix ⇀ TxOut
           txfee      : Coin
           mint       : Value
           txvldt     : Maybe Slot × Maybe Slot
@@ -108,7 +108,7 @@ the transaction body are:
           txid       : TxId
 
   record TxWitnesses : Set where
-    field vkSigs   : VKey ↛ Sig
+    field vkSigs   : VKey ⇀ Sig
           scripts  : ℙ Script
 
   record Tx : Set where
@@ -127,7 +127,7 @@ the transaction body are:
   getValue (_ , v) = v
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
+  txinsVKey txins utxo = txins ∩ dom ((utxo ↾' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
 \end{code}
 \end{figure*}
 \begin{code}[hide]

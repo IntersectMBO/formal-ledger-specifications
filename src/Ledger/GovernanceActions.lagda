@@ -54,11 +54,11 @@ record Anchor : Set where
 
 data GovAction : Set where
   NoConfidence     :                                   GovAction
-  NewCommittee     : KeyHash ↛ Epoch → ℙ KeyHash → ℚ → GovAction
+  NewCommittee     : KeyHash ⇀ Epoch → ℙ KeyHash → ℚ → GovAction
   NewConstitution  : DocHash                          → GovAction
   TriggerHF        : ProtVer                          → GovAction
   ChangePParams    : UpdateT → PPHash                 → GovAction
-  TreasuryWdrl     : (Credential ↛ Coin)              → GovAction
+  TreasuryWdrl     : (Credential ⇀ Coin)              → GovAction
   Info             :                                    GovAction
 
 data Vote : Set where
@@ -95,11 +95,11 @@ instance
 record EnactEnv : Set where
 
 record EnactState : Set where
-  field cc            : Maybe (KeyHash ↛ Epoch × ℚ)
+  field cc            : Maybe (KeyHash ⇀ Epoch × ℚ)
         constitution  : DocHash
         pv            : ProtVer
         pparams       : PParams
-        withdrawals   : Credential ↛ Coin
+        withdrawals   : Credential ⇀ Coin
         treasury      : Coin
 \end{code}
 \begin{code}[hide]
@@ -108,13 +108,13 @@ open EnactState
 private variable
   s : EnactState
   up : UpdateT
-  new : KeyHash ↛ Epoch
+  new : KeyHash ⇀ Epoch
   rem : ℙ KeyHash
   q : ℚ
   dh : DocHash
   h : PPHash
   v : ProtVer
-  wdrl : Credential ↛ Coin
+  wdrl : Credential ⇀ Coin
   newTreasury : Coin
 
 instance

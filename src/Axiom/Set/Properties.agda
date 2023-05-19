@@ -90,14 +90,15 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 
 ≡ᵉ-isEquivalence : IsEquivalence (_≡ᵉ_ {A})
 ≡ᵉ-isEquivalence = record
-  { refl = id , id
-  ; sym = λ where (h , h') → (h' , h)
-  ; trans = λ eq₁ eq₂ → ⊆-Transitive (proj₁ eq₁) (proj₁ eq₂) , ⊆-Transitive (proj₂ eq₂) (proj₂ eq₁) }
+  { refl  = id , id
+  ; sym   = λ where (h , h') → (h' , h)
+  ; trans = λ eq₁ eq₂ → ⊆-Transitive (proj₁ eq₁) (proj₁ eq₂) , ⊆-Transitive (proj₂ eq₂) (proj₂ eq₁)
+  }
 
 ≡ᵉ-Setoid : ∀ {A} → Setoid ℓ ℓ
 ≡ᵉ-Setoid {A} = record
-  { Carrier = Set A
-  ; _≈_ = _≡ᵉ_
+  { Carrier       = Set A
+  ; _≈_           = _≡ᵉ_
   ; isEquivalence = ≡ᵉ-isEquivalence
   }
 
@@ -117,7 +118,7 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
   ; antisym    = _,_ }
 
 ∈-× : {a : A} {b : B} → (a , b) ∈ X → (a ∈ map proj₁ X × b ∈ map proj₂ X)
-∈-× {X = X} {a = a} {b = b} x = to ∈-map ((a , b) , refl , x) , to ∈-map ((a , b) , refl , x)
+∈-× {a = a} {b} x = to ∈-map ((a , b) , refl , x) , to ∈-map ((a , b) , refl , x)
 
 map-⊆∘ : {f : A → B} {g : B → C} → map g (map f X) ⊆ map (g ∘ f) X
 map-⊆∘ a∘∈ with from ∈-map a∘∈
@@ -205,18 +206,18 @@ filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
 ∪-Supremum : Supremum (_⊆_ {A}) _∪_
 ∪-Supremum _ _ = ∪-⊆ˡ , ∪-⊆ʳ , λ _ → ∪-⊆
 
-∪-cong-⊆ : (_∪_ {A}) Preserves₂ _⊆_ ⟶ _⊆_ ⟶ _⊆_
+∪-cong-⊆ : _∪_ {A} Preserves₂ _⊆_ ⟶ _⊆_ ⟶ _⊆_
 ∪-cong-⊆ X⊆X' Y⊆Y' = ∈⇔P ∘′ (Data.Sum.map X⊆X' Y⊆Y') ∘′ ∈⇔P
 
-∪-cong : (_∪_ {A}) Preserves₂ _≡ᵉ_ ⟶ _≡ᵉ_ ⟶ _≡ᵉ_
+∪-cong : _∪_ {A} Preserves₂ _≡ᵉ_ ⟶ _≡ᵉ_ ⟶ _≡ᵉ_
 ∪-cong = cong-⊆⇒cong₂ ∪-cong-⊆
 
 ∪-preserves-finite : _∪_ {A} Preservesˢ₂ finite
 ∪-preserves-finite {a = X} {Y} (l , hX) (l' , hY) = (l ++ l') , λ {a} →
-  a ∈ X ∪ Y ∼⟨ R.SK-sym ∈-∪ ⟩
-  (a ∈ X ⊎ a ∈ Y) ∼⟨ hX ⊎-cong hY ⟩
+  a ∈ X ∪ Y          ∼⟨ R.SK-sym ∈-∪ ⟩
+  (a ∈ X ⊎ a ∈ Y)    ∼⟨ hX ⊎-cong hY ⟩
   (a ∈ˡ l ⊎ a ∈ˡ l') ∼⟨ mk⇔ Data.Sum.[ ∈-++⁺ˡ , ∈-++⁺ʳ _ ] (∈-++⁻ _) ⟩
-  a ∈ˡ l ++ l' ∎
+  a ∈ˡ l ++ l'       ∎
   where open R.EquationalReasoning
 
 ∪-sym : X ∪ Y ≡ᵉ Y ∪ X

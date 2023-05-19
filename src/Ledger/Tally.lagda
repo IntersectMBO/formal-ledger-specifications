@@ -25,13 +25,13 @@ open import Ledger.Address Network KeyHash ScriptHash
 \begin{figure*}[h]
 \begin{code}
 record GovActionState : Set where
-  field votes       : (GovRole × Credential) ↛ Vote
+  field votes       : (GovRole × Credential) ⇀ Vote
         returnAddr  : RwdAddr
         expiresIn   : Epoch
         action      : GovAction
 
 TallyState : Set
-TallyState = GovActionID ↛ GovActionState
+TallyState = GovActionID ⇀ GovActionState
 
 record TallyEnv : Set where
   constructor ⟦_,_,_⟧ᵗ

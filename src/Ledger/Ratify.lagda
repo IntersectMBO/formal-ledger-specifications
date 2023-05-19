@@ -32,12 +32,12 @@ instance
 \begin{figure*}[h]
 \begin{code}
 record StakeDistrs : Set where
-  field stakeDistr  : VDeleg ↛ Coin
+  field stakeDistr  : VDeleg ⇀ Coin
 
 record RatifyEnv : Set where
   field stakeDistrs   : StakeDistrs
         currentEpoch  : Epoch
-        ccHotKeys     : KeyHash ↛ Maybe KeyHash
+        ccHotKeys     : KeyHash ⇀ Maybe KeyHash
 
 record RatifyState : Set where
   constructor ⟦_,_,_⟧ʳ
@@ -55,8 +55,8 @@ coinThreshold = 1000000000
 rankThreshold = 1000
 
 -- DReps with at least `c` coins
-mostStakeDRepDist : Credential ↛ Coin → Coin → Credential ↛ Coin
-mostStakeDRepDist dist c = dist ∣^' to-sp (_≥? c)
+mostStakeDRepDist : Credential ⇀ Coin → Coin → Credential ⇀ Coin
+mostStakeDRepDist dist c = dist ↾' to-sp (_≥? c)
 
 -- mostStakeDRepDist-homomorphic : ∀ {dist} → Homomorphic₂ _ _ _>_ (_⊆_ on _ˢ) (mostStakeDRepDist dist)
 -- mostStakeDRepDist-homomorphic x>y = impl⇒cores⊆ _ _ {!!} --(<-trans x>y)
@@ -96,7 +96,7 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
                      (mostStakeDRepDist-∅ {dist}))
 ... | (c , h , h') = c , h , ≰⇒> h'
 
-topNDRepDist : ℕ → Credential ↛ Coin → Credential ↛ Coin
+topNDRepDist : ℕ → Credential ⇀ Coin → Credential ⇀ Coin
 topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
   (_     , no  _)  → ∅ᵐ
   (no _  , yes _)  → dist
@@ -109,14 +109,14 @@ restrictedDists : ℕ → ℕ → StakeDistrs → StakeDistrs
 restrictedDists coins rank dists = dists -- record dists { drepStakeDistr = restrict drepStakeDistr }
   where open StakeDistrs dists
         -- one always includes the other
-        restrict : Credential ↛ Coin → Credential ↛ Coin
+        restrict : Credential ⇀ Coin → Credential ⇀ Coin
         restrict dist = topNDRepDist rank dist ∪ᵐˡ mostStakeDRepDist dist coins
 
 CCData : Set
-CCData = Maybe (KeyHash ↛ Epoch × R.ℚ)
+CCData = Maybe (KeyHash ⇀ Epoch × R.ℚ)
 
-module _ (ce : Epoch) (ccHotKeys : KeyHash ↛ Maybe KeyHash)
-         (cc : CCData) (votes : (GovRole × Credential) ↛ Vote)
+module _ (ce : Epoch) (ccHotKeys : KeyHash ⇀ Maybe KeyHash)
+         (cc : CCData) (votes : (GovRole × Credential) ⇀ Vote)
          (ga : GovAction) where
 
   actualCCVote : KeyHash → Epoch → Vote
@@ -124,32 +124,32 @@ module _ (ce : Epoch) (ccHotKeys : KeyHash ↛ Maybe KeyHash)
     (true , just (just hk)) → maybe′ id Vote.no $ lookupᵐ? votes (CC , (inj₁ hk)) ⦃ _ ∈? _ ⦄
     _                       → Vote.abstain -- expired, no hot key or resigned
 
-  actualCCVotes : Credential ↛ Vote
+  actualCCVotes : Credential ⇀ Vote
   actualCCVotes = case cc of λ where
     (just (cc , _)) → mapKeys inj₁ (mapWithKey actualCCVote cc) (λ where _ _ refl → refl)
     nothing         → ∅ᵐ
 
-  actualPDRepVotes : VDeleg ↛ Vote
+  actualPDRepVotes : VDeleg ⇀ Vote
   actualPDRepVotes = ❴ abstainRep      , Vote.abstain ❵ᵐ
                  ∪ᵐˡ ❴ noConfidenceRep , (case ga of λ where
                                            NoConfidence → Vote.yes
                                            _            → Vote.no) ❵ᵐ
 
-  actualVotes : VDeleg ↛ Vote
+  actualVotes : VDeleg ⇀ Vote
   actualVotes = mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
               ∪ᵐˡ (actualPDRepVotes
               ∪ᵐˡ mapKeys (uncurry credVoter) votes (λ where _ _ refl → refl)) -- TODO: make `actualVotes` for DRep, SPO
 
-votedHashes : Vote → (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
+votedHashes : Vote → (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 votedHashes v votes r = votes ⁻¹ v
 
-votedYesHashes : (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
+votedYesHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 votedYesHashes = votedHashes Vote.yes
 
-votedAbstainHashes : (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
+votedAbstainHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 votedAbstainHashes = votedHashes Vote.abstain
 
-participatingHashes : (VDeleg ↛ Vote) → GovRole → ℙ VDeleg
+participatingHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no votes r
 
 isDRep : VDeleg → Bool
@@ -168,19 +168,19 @@ isDRepProp = to-sp (λ x → isDRep x ≟ true)
 isSPOProp : specProperty λ x → isSPO x ≡ true
 isSPOProp = to-sp (λ x → isSPO x ≟ true)
 
-getStakeDist : GovRole → StakeDistrs → VDeleg ↛ Coin
+getStakeDist : GovRole → StakeDistrs → VDeleg ⇀ Coin
 getStakeDist CC   _                              = ∅ᵐ
 getStakeDist DRep s@record { stakeDistr = dist } = filterᵐ (sp-∘ isDRepProp proj₁) dist
 getStakeDist SPO  s@record { stakeDistr = dist } = filterᵐ (sp-∘ isSPOProp proj₁) dist
 
-acceptedStake : GovRole → StakeDistrs → (VDeleg ↛ Vote) → Coin
+acceptedStake : GovRole → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 acceptedStake r dists votes =
   Σᵐᵛ[ x ← (getStakeDist r dists ∣ votedYesHashes votes r) ᶠᵐ ] x
 
-totalStake : GovRole → StakeDistrs → (VDeleg ↛ Vote) → Coin
+totalStake : GovRole → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 totalStake r dists votes = Σᵐᵛ[ x ← getStakeDist r dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
-acceptedR : RatifyEnv → (VDeleg ↛ Vote) → GovRole → R.ℚ → Set
+acceptedR : RatifyEnv → (VDeleg ⇀ Vote) → GovRole → R.ℚ → Set
 acceptedR Γ votes role t =
   let open RatifyEnv Γ
       redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs

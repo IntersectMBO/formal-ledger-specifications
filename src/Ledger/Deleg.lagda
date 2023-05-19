@@ -47,21 +47,22 @@ PoolEnv   = PParams
 
 record DState : Set where
   constructor ⟦_,_,_⟧ᵈ
-  field voteDelegs      : Credential ↛ VDeleg
+
+  field voteDelegs      : Credential ⇀ VDeleg
   --    ^ stake credential to DRep credential
-        stakeDelegs     : Credential ↛ Credential
+        stakeDelegs     : Credential ⇀ Credential
   --    ^ stake credential to pool credential
-        rewards         : RwdAddr ↛ Coin
+        rewards         : RwdAddr ⇀ Coin
 
 record PState : Set where
   constructor ⟦_,_⟧ᵖ
-  field pools     : Credential ↛ PoolParams
-        retiring  : Credential ↛ Epoch
+  field pools     : Credential ⇀ PoolParams
+        retiring  : Credential ⇀ Epoch
 
 record VState : Set where
   constructor ⟦_,_⟧ᵛ
   field dreps      : ℙ Credential
-        ccHotKeys  : KeyHash ↛ Maybe KeyHash -- TODO: maybe replace with credential
+        ccHotKeys  : KeyHash ⇀ Maybe KeyHash -- TODO: maybe replace with credential
 
 record CertState : Set where
   field dState : DState
@@ -73,12 +74,12 @@ record CertState : Set where
 private variable
   an : Anchor
   dReps dReps' : ℙ Credential
-  pools : Credential ↛ PoolParams
-  vDelegs : Credential ↛ VDeleg
-  sDelegs : Credential ↛ Credential
-  retiring retiring' : Credential ↛ Epoch
-  ccKeys : KeyHash ↛ Maybe KeyHash
-  rwds : RwdAddr ↛ Coin
+  pools : Credential ⇀ PoolParams
+  vDelegs : Credential ⇀ VDeleg
+  sDelegs : Credential ⇀ Credential
+  retiring retiring' : Credential ⇀ Epoch
+  ccKeys : KeyHash ⇀ Maybe KeyHash
+  rwds : RwdAddr ⇀ Coin
   dCert : DCert
   c c' : Credential
   mc : Maybe Credential
@@ -104,7 +105,7 @@ requiredVDelegDeposit : PParams → Maybe VDeleg → Coin
 requiredVDelegDeposit pp (just _) = PParams.poolDeposit pp
 requiredVDelegDeposit pp nothing = 0
 
-insertIfPresent : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ↛ B → A ↛ B
+insertIfPresent : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ⇀ B → A ⇀ B
 insertIfPresent x nothing  m = m
 insertIfPresent x (just y) m = insert m x y
 \end{code}

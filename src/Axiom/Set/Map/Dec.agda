@@ -15,7 +15,7 @@ open import Relation.Nullary.Decidable
 
 open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set; incl-set-proj₁)
 open Theory th renaming (map to mapˢ)
-open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
+open import Axiom.Set.Rel th hiding (_∣'_; _↾'_)
 open import Axiom.Set.Map th
 
 open Equivalence

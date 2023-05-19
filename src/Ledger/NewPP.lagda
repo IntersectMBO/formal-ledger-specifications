@@ -32,7 +32,7 @@ updatePPUp pparams record { fpup = fpup } with allᵇ (isViableUpdate? pparams) 
 
 votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate
 votedValue pup pparams quorum =
-  case any? (λ u → lengthˢ ((pup ∣^ fromList [ u ]) ˢ) ≥? quorum) (range (pup ˢ)) of λ where
+  case any? (λ u → lengthˢ ((pup ↾ fromList [ u ]) ˢ) ≥? quorum) (range (pup ˢ)) of λ where
     (no  _)        → nothing
     (yes (u , _))  → just u
 \end{code}
