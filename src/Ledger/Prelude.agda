@@ -49,7 +49,7 @@ abstract
   List-Modelᵈ : Theoryᵈ
   List-Modelᵈ = List-Model'ᵈ
 
-open Theoryᵈ List-Modelᵈ renaming (Set to ℙ_; filter to filterˢ) public
+open Theoryᵈ List-Modelᵈ hiding (spec-∈) renaming (Set to ℙ_; filter to filterˢ) public
 
 abstract
   open import Axiom.Set.Properties th using (card-≡ᵉ)
@@ -79,8 +79,12 @@ abstract
   ≟-∅ : {A : Set} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → Dec (X ≡ ∅)
   ≟-∅ = Decˡ.≟-∅
 
+  --∈ᶠ-sp : {A : Set} → spec-∈ A → spec-∈ᶠ A
+  --∈ᶠ-sp lm x = lm x
+
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) public
 open import Axiom.Set.Map th renaming (Map to _↛_) public
+open import Axiom.Set.Map.Sum List-Modelᶠ public
 open import Axiom.Set.TotalMap th public
 open L.Decˡ hiding (_∈?_; ≟-∅) public
 open import Axiom.Set.Sum th public
@@ -103,6 +107,7 @@ module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
 
   module _ ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
     open IndexedSumUnionᵐ {A} {B} ∈-sp (_∈? _) public
+    --open Pushforwardᵐ {A} {B} (∈ᶠ-sp ∈-sp) (∈ᶠ-sp ∈-sp) public
 
 module Properties where
   open import Axiom.Set.Properties th public

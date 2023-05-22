@@ -33,7 +33,7 @@ record PoolParams : Set where
   field rewardAddr  : Credential
 
 data DCert : Set where
-  delegate   : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
+  delegate   : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
   -- ^ TODO change `nothing` to leaving things unchanged & figure out how to undelegate best
   regpool    : Credential → PoolParams → DCert
   retirepool : Credential → Epoch → DCert
@@ -50,12 +50,12 @@ record DState : Set where
   constructor ⟦_,_⟧ᵈ
   field voteDelegs      : Credential ↛ VDeleg
   --    ^ stake credential to DRep credential
-        stakeDelegs     : Credential ↛ Credential
+        poolDelegs     : Credential ↛ KeyHash
   --    ^ stake credential to pool credential
 
 record PState : Set where
   constructor ⟦_,_⟧ᵖ
-  field pools     : Credential ↛ PoolParams
+  field pools     : KeyHash ↛ PoolParams
         retiring  : Credential ↛ Epoch
 
 record VState : Set where
@@ -72,14 +72,14 @@ record CertState : Set where
 \begin{code}[hide]
 private variable
   dReps dReps' : ℙ Credential
-  pools : Credential ↛ PoolParams
+  pools : KeyHash ↛ PoolParams
   vDelegs : Credential ↛ VDeleg
-  sDelegs : Credential ↛ Credential
+  sDelegs : Credential ↛ KeyHash
   retiring retiring' : Credential ↛ Epoch
   ccKeys : KeyHash ↛ Maybe KeyHash
   dCert : DCert
   c c' : Credential
-  mc : Maybe Credential
+  mc : Maybe KeyHash
   mv : Maybe VDeleg
   d : Coin
   e : Epoch
@@ -94,7 +94,7 @@ private variable
 \end{code}
 
 \begin{code}
-requiredDeposit : PParams → Maybe Credential → Coin
+requiredDeposit : PParams → Maybe KeyHash → Coin
 requiredDeposit pp (just x) = PParams.poolDeposit pp
 requiredDeposit pp nothing = 0
 
@@ -113,12 +113,13 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set w
     ────────────────────────────────
     pp ⊢ ⟦ vDelegs , sDelegs ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
          ⟦ update c mv vDelegs , update c mc sDelegs ⟧ᵈ
+         -- TODO make it so that nothing does not delete the entry
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
-    c ∉ dom (pools ˢ)
+    kh ∉ dom (pools ˢ)
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈ ⟦ ❴ c , poolParams ❵ᵐ ∪ᵐˡ pools , retiring ⟧ᵖ
+    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈ ⟦ ❴ kh , poolParams ❵ᵐ ∪ᵐˡ pools , retiring ⟧ᵖ
 
   POOL-retirepool : let open PoolParams poolParams in
     pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈

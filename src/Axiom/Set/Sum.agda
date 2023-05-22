@@ -61,6 +61,8 @@ fold-cong↭ (trans h h₁) = ≈-trans (fold-cong↭ h) (fold-cong↭ h₁)
 indexedSum : ⦃ _ : DecEq A ⦄ → (A → Carrier) → FinSet A → Carrier
 indexedSum f = let open FactorUnique _≈_ (indexedSumL' f) fold-cong↭ in factor
 
+syntax indexedSum (λ a → x) s = Σˢ[ a ← s ] x
+
 indexedSumL-++ : {l l' : List A} → indexedSumL f (l ++ l') ≈ indexedSumL f l ∙ indexedSumL f l'
 indexedSumL-++ {f = f} {l = l} {l'} = begin
   indexedSumL f (l ++ l')                   ≡⟨ foldr-++ (λ x → f x ∙_) ε l l' ⟩

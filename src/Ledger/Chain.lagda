@@ -111,18 +111,24 @@ filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m
 
 instance
   _ = +-0-monoid
+  _ = +-0-commutativeMonoid
+
+squashSum : ∀ {A} → ⦃ DecEq A ⦄ → Rel A Coin → A ↛ Coin
+squashSum r = mapValues (λ x → indexedSum id (x , finiteness x)) (squashToMap r)
+
+_⋆↓_ : ∀ {A A'} → ⦃ DecEq A ⦄ → ⦃ DecEq A' ⦄ → A ↛ Coin → A ↛ A' → A' ↛ Coin
+(r , p) ⋆↓ (s , q) = squashSum $ concatMapˢ (λ where (a , b) → map (_, b) (s ⟪$⟫ ❴ a ❵)) r
 
 calculateStakeDistrs : LState → StakeDistrs
 calculateStakeDistrs ls =
   let open LState ls; open CertState certState; open PState pState; open UTxOState utxoSt; open DState dState
       propDepRel = map (λ {record { returnAddr = a; deposit = d } → RwdAddr.stake a , d}) $ range (tally ˢ)
-      propDepMap = ?
+      propDepMap = squashSum propDepRel
       spoDelegs = ∅ᵐ -- TODO
-      drepDeposits = mapKeys (credVoter DRep) (filterPurpose DRepDeposit deposits) λ {_ _ refl → refl}
-      drepDelegs = {!!}
+      drepDelegs = (propDepMap ∪⁺ {!!}) ⋆↓ voteDelegs
   in
   record
-    { stakeDistr = spoDelegs ∪⁺ drepDeposits ∪⁺ drepDelegs
+    { stakeDistr = spoDelegs ∪⁺ drepDelegs
     }
 
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set where

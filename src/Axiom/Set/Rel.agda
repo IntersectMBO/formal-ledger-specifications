@@ -119,6 +119,9 @@ mapMaybeWithKey f r = mapPartial (mapPartialLiftKey f) r
 ∈-mapMaybeWithKey {a = a} {b'} {f} ab'∈ with to (∈-map {f = just}) ((a , b') , refl , ab'∈)
 ... | p = mapPartialLiftKey-map {f = f} (⊆-mapPartial p)
 
+_⁻¹ : Rel A B → Rel B A
+r ⁻¹ = map (λ (a , b) → b , a) r
+
 module Restriction (sp-∈ : spec-∈ A) where
 
   _∣_ : Rel A B → Set A → Rel A B
@@ -205,6 +208,9 @@ module Restriction (sp-∈ : spec-∈ A) where
     dom m' ∩ dom m   ≈˘⟨ res-dom-comm' ⟩
     dom (m' ∣ dom m) ∎
     where open SetoidReasoning ≡ᵉ-Setoid
+
+  _∘ˢ_ : Rel B A → Rel A C → Rel B C
+  _∘ˢ_ ab bc = concatMapˢ (λ (a , b) → map (a ,_) (range (bc ∣ ❴ b ❵))) ab
 
 module Corestriction (sp-∈ : spec-∈ B) where
 
