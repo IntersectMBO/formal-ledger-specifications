@@ -206,6 +206,9 @@ module Restriction (sp-∈ : spec-∈ A) where
     dom (m' ∣ dom m) ∎
     where open SetoidReasoning ≡ᵉ-Setoid
 
+  _⁻¹ : Rel A B → Rel B A
+  r ⁻¹ = map (λ (a , b) → b , a) r
+
 module Corestriction (sp-∈ : spec-∈ B) where
 
   _∣^_ : Rel A B → Set B → Rel A B

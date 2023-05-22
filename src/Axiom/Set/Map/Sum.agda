@@ -1,29 +1,21 @@
 {-# OPTIONS --safe --no-import-sorts #-}
-{-# OPTIONS -v allTactics:100 #-}
-
 open import Axiom.Set
-open import Agda.Primitive renaming (Set to Type)
 
 module Axiom.Set.Map.Sum (thᶠ : Theoryᶠ) where
 
-open Theoryᶠ thᶠ renaming (theory to th)
-open Theory th using () renaming (map to mapˢ)
+open import Prelude
 
-open import Prelude hiding (filter)
+open import Agda.Primitive renaming (Set to Type)
+open import Algebra
+open import Interface.DecEq
+
+open Theoryᶠ thᶠ renaming (theory to th; map to mapˢ)
 
 open import Axiom.Set.Rel th
 open import Axiom.Set.Map th
 open import Axiom.Set.Sum th
 
-open import Level
-open import Algebra
-
-open import Interface.DecEq
-
-open Equivalence
-
-private variable
-  A A' B : Type
+private variable A A' B : Type
 
 module Sumᵐ (sp-∈ : spec-∈ A) ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
   open CommutativeMonoid M renaming (Carrier to V)

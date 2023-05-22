@@ -44,10 +44,9 @@ List-Model = λ where
           open R.EquationalReasoning
 
 List-Modelᶠ : Theoryᶠ
-List-Modelᶠ = λ where
-  .theory     → List-Model
-  .finiteness → λ X → X , mk⇔ id id
-    where open Theoryᶠ
+List-Modelᶠ = record
+  { theory     = List-Model
+  ; finiteness = _, mk⇔ id id }
 
 module Decˡ {A : Type} ⦃ _ : DecEq A ⦄ where
   open Theory List-Model

@@ -17,6 +17,8 @@ open import Ledger.Utxow txs
 open import Ledger.PPUp txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 
+open import Data.Nat.Properties using (+-0-commutativeMonoid)
+
 import Data.List as L
 
 open Tx
@@ -51,6 +53,36 @@ private variable
 
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = L.map inj₁ (txvote txb) ++ L.map inj₂ (txprop txb)
+
+record Snapshot : Set where
+  field stake          : Credential ↛ Coin
+        poolDelegs     : Credential ↛ KeyHash
+        voteDelegs     : Credential ↛ VDeleg
+        poolParameters : KeyHash ↛ PoolParams
+
+instance
+  _ = +-0-commutativeMonoid
+
+aggregate₊ : ∀ {A} → ⦃ DecEq A ⦄ → Rel A Coin → A ↛ Coin
+aggregate₊ r = mapValues (λ x → indexedSum id (x , finiteness x)) (squashToMap r)
+
+_∘ˢ_ : ∀ {A B C} → ⦃ DecEq B ⦄ → Rel A B → Rel B C → Rel A C
+_∘ˢ_ {_} {B} ab bc = concatMapˢ (λ (a , b) → map (a ,_) (range (bc R.∣ ❴ b ❵))) ab
+  where module R = Restriction {B} ∈-sp
+
+stakeDistr : LState → Snapshot
+stakeDistr ls =
+  let open LState ls; open CertState certState; open DState dState; open PState pState ; open UTxOState utxoSt
+      stakeRelation : Rel Credential Coin
+      -- TODO Add rewards
+      stakeRelation = ({!!} ⁻¹) ∘ˢ utxoAda utxo
+      activeDelegs = {!!}
+  in
+  record
+    { stake = aggregate₊ stakeRelation ∣ dom activeDelegs
+    ; poolDelegs = poolDelegs
+    ; voteDelegs = voteDelegs
+    ; poolParameters = pools }
 
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
 \end{code}

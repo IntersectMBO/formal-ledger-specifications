@@ -15,12 +15,14 @@ open import Relation.Nullary.Decidable
 
 open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set; incl-set-proj₁)
 open Theory th renaming (map to mapˢ)
+
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
 open import Axiom.Set.Map th
+open import Axiom.Set.Sum th
 
 open Equivalence
 
-private variable A B C D : Type
+private variable A A' B C D : Type
 
 module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
   open Lookupᵐ sp-∈
@@ -51,4 +53,3 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
   _∪⁺_ : ⦃ M : Monoid 0ℓ 0ℓ ⦄ → (open Monoid M renaming (Carrier to V)) → ⦃ DecEq A ⦄ → Map A V → Map A V → Map A V
   _∪⁺_ ⦃ M = M ⦄ = unionWith (fold id id _∙_)
     where open Monoid M
-

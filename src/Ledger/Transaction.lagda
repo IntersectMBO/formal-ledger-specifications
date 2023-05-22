@@ -127,6 +127,13 @@ This function must produce a unique id for each unique transaction body.
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
+
+  utxoAda : UTxO → Rel Credential Coin
+  utxoAda (utxo , _) = mapPartial
+    (λ where
+      (inj₁ record {stake = c} , v) → just (c , coin v)
+      (inj₂ _ , _) → nothing)
+    (range utxo)
 \end{code}
 \begin{code}[hide]
   instance
