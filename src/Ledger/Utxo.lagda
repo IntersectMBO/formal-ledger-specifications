@@ -155,7 +155,6 @@ collateralExists tx = isNo (≟-∅ {_} {collateral (body tx)})
 -- Boolean Implication
 _=>ᵇ_ : Bool → Bool → Bool
 _=>ᵇ_ a b = if a then b else true
-
 _≤ᵇ_ : ℕ → ℕ → Bool
 m ≤ᵇ n = ⌊ m ≤? n ⌋
 
