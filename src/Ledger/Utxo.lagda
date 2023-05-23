@@ -38,7 +38,7 @@ open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
 open import Ledger.Script
-open import Relation.Nullary.Decidable using (⌊_⌋)
+open import Relation.Nullary.Decidable using (⌊_⌋; isNo)
 open import Data.Bool using (_∧_)
 
 instance
@@ -51,16 +51,18 @@ instance
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
 
-isTwoPhaseScriptAddress : Tx → Addr → Bool
-isTwoPhaseScriptAddress tx a with isScriptAddr? a
+isP2Script : Script → Bool
+isP2Script (inj₁ x) = false
+isP2Script (inj₂ y) = true
+
+isPhaseTwoScriptAddress : Tx → Addr → Bool
+isPhaseTwoScriptAddress tx a with isScriptAddr? a
 ... | no ¬p = false
 ... | yes p with getScriptHash a p
 ... | scriptHash with setToHashMap $ TxWitnesses.scripts (Tx.wits tx)
 ... | m with _∈?_ scriptHash (Ledger.Prelude.map proj₁ $ m ˢ)
 ... | no ¬p = false
-... | yes p₁ with lookupMap m p₁
-... | inj₁ x = false
-... | inj₂ y = true
+... | yes p₁ = isP2Script (lookupMap m p₁)
 
 getRedeemers : Tx → (RdmrPtr ⇀ (Redeemer × ExUnits))
 getRedeemers tx = TxWitnesses.txrdmrs (Tx.wits tx)
@@ -153,13 +155,18 @@ open import Relation.Nullary.Decidable using (isNo)
 collateralExists : Tx → Bool
 collateralExists tx = isNo (≟-∅ {_} {collateral (body tx)})
 
+-- Boolean Implication
+_=>ᵇ_ : Bool → Bool → Bool
+_=>ᵇ_ a b = if a then b else true
+
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = ⌊ minfee pp (body tx) ≤? txfee (body tx) ⌋
-                     ∧ (isNo $ isEmpty? (TxWitnesses.txrdmrs (Tx.wits tx)))
-                     ∧ allᵇ (λ x → isVKeyAddr? (proj₁ x)) collateralRange
-                     ∧ isAdaOnly bal
-                     ∧ ⌊ coin bal * 100 ≥? txfee txb * PParams.collateralPercent pp ⌋
-                     ∧ (isNo $ ≟-∅ {_} {collateral (body tx)})
+                     ∧ (isNo $ ≟-∅ {_} {(TxWitnesses.txrdmrs (Tx.wits tx)) ˢ})
+                       =>ᵇ
+                       (allᵇ (λ x → isVKeyAddr? (proj₁ x)) collateralRange
+                       ∧ isAdaOnly bal
+                       ∧ ⌊ coin bal * 100 ≥? txfee txb * PParams.collateralPercent pp ⌋
+                       ∧ (isNo $ ≟-∅ {_} {collateral (body tx)}))
   where
     txb               = body tx
     collateralRange   = range $ proj₁ $ utxo ∣ collateral (body tx)
