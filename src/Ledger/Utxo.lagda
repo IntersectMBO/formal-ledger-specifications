@@ -154,21 +154,16 @@ collateralExists : Tx → Bool
 collateralExists tx = isNo (≟-∅ {_} {collateral (body tx)})
 
 feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee≤?txfee
-                    ∧ rangeReq
-                    ∧ isAdaOnlyBal?
-                    ∧ bal≥?txfee
-                    ∧ collateralExists?
+feesOK pp tx utxo = ⌊ minfee pp (body tx) ≤? txfee (body tx) ⌋
+                     ∧ (isNo $ isEmpty? (TxWitnesses.txrdmrs (Tx.wits tx)))
+                     ∧ allᵇ (λ x → isVKeyAddr? (proj₁ x)) collateralRange
+                     ∧ isAdaOnly bal
+                     ∧ ⌊ coin bal * 100 ≥? txfee txb * PParams.collateralPercent pp ⌋
+                     ∧ (isNo $ ≟-∅ {_} {collateral (body tx)})
   where
     txb               = body tx
-    minfee≤?txfee     = ⌊ minfee pp (body tx) ≤? txfee (body tx) ⌋
-    redeemersExists?  = isNo $ isEmpty? (TxWitnesses.txrdmrs (Tx.wits tx))
     collateralRange   = range $ proj₁ $ utxo ∣ collateral (body tx)
-    rangeReq          = allᵇ (λ x → isVKeyAddr? (proj₁ x)) collateralRange
     bal               = balance (utxo ∣ collateral (body tx))
-    isAdaOnlyBal?     = isAdaOnly bal
-    bal≥?txfee        = ⌊ coin bal * 100 ≥? txfee txb * PParams.collateralPercent pp ⌋
-    collateralExists? = isNo $ ≟-∅ {_} {collateral (body tx)}
 
 propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
 propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
