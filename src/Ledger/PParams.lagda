@@ -56,6 +56,9 @@ record PParams : Set where
         drepDeposit       : Coin
         drepActivity      : Epoch
 
+        -- Script
+        collateralPercent : ℕ
+
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}
