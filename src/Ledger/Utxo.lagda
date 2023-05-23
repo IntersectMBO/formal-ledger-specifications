@@ -78,7 +78,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \begin{figure*}[h]
 \begin{code}
 outs : TxBody → UTxO
-outs tx = mapKeys (txid tx ,_) (λ where refl → refl) $ txouts tx
+outs tx = mapKeys (txid tx ,_) (txouts tx) λ where _ _ refl → refl
 
 balance : UTxO → Value
 balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
@@ -95,14 +95,14 @@ data DepositPurpose : Set where
   PoolDeposit        : DepositPurpose
   DRepDeposit        : DepositPurpose
 
-certDeposit : DCert → Maybe (DepositPurpose × Credential × Coin)
-certDeposit (delegate c _ _ v)                  = just (CredentialDeposit , c , v)
-certDeposit (regpool c record { deposit = v })  = just (PoolDeposit       , c , v)
-certDeposit (regdrep c v)                       = just (DRepDeposit       , c , v)
-certDeposit _                                   = nothing
+certDeposit : PParams → DCert → Maybe (DepositPurpose × Credential × Coin)
+certDeposit _  (delegate c _ _ v)  = just (CredentialDeposit , c , v)
+certDeposit pp (regpool c _)       = just (PoolDeposit       , c , PParams.poolDeposit pp)
+certDeposit _  (regdrep c v)       = just (DRepDeposit       , c , v)
+certDeposit _  _                   = nothing
 
-certDepositᵐ : DCert → (DepositPurpose × Credential) ↛ Coin
-certDepositᵐ cert = case certDeposit cert of λ where
+certDepositᵐ : PParams → DCert → (DepositPurpose × Credential) ↛ Coin
+certDepositᵐ pp cert = case certDeposit pp cert of λ where
   (just (p , c , v))  → ❴ (p , c) , v ❵ᵐ
   nothing             → ∅ᵐ
 
@@ -153,34 +153,34 @@ record UTxOState : Set where
         fees      : Coin
         deposits  : (DepositPurpose × Credential) ↛ Coin
 
-updateDeposits : List DCert → (DepositPurpose × Credential) ↛ Coin → (DepositPurpose × Credential) ↛ Coin
-updateDeposits []              deposits = deposits
-updateDeposits (cert ∷ certs)  deposits =
-  ((updateDeposits certs deposits) ∪⁺ certDepositᵐ cert) ∣ certRefundˢ cert ᶜ
+updateDeposits : PParams → List DCert → (DepositPurpose × Credential) ↛ Coin → (DepositPurpose × Credential) ↛ Coin
+updateDeposits _  []              deposits = deposits
+updateDeposits pp (cert ∷ certs)  deposits =
+  ((updateDeposits pp certs deposits) ∪⁺ certDepositᵐ pp cert) ∣ certRefundˢ cert ᶜ
 
-depositsChange : List DCert → (DepositPurpose × Credential) ↛ Coin → ℤ
-depositsChange certs deposits = getCoin (updateDeposits certs deposits) ⊖ getCoin deposits
+depositsChange : PParams → List DCert → (DepositPurpose × Credential) ↛ Coin → ℤ
+depositsChange pp certs deposits = getCoin (updateDeposits pp certs deposits) ⊖ getCoin deposits
 
 -- refundedDeposits : TxBody → ℙ (DepositPurpose × Credential)
 -- refundedDeposits = mapPartial certRefund ∘ fromList ∘ txcerts
 
-depositRefunds : UTxOState → TxBody → Coin
-depositRefunds st txb = negPart $ depositsChange (txcerts txb) deposits
+depositRefunds : PParams → UTxOState → TxBody → Coin
+depositRefunds pp st txb = negPart $ depositsChange pp (txcerts txb) deposits
   where open UTxOState st
 
-newDeposits : UTxOState → TxBody → Coin
-newDeposits st txb = posPart $ depositsChange (txcerts txb) deposits
+newDeposits : PParams → UTxOState → TxBody → Coin
+newDeposits pp st txb = posPart $ depositsChange pp (txcerts txb) deposits
   where open UTxOState st
 
 consumed : PParams → UTxOState → TxBody → Value
 consumed pp st txb = balance (UTxOState.utxo st ∣ txins txb)
                    +ᵛ mint txb
-                   +ᵛ inject (depositRefunds st txb)
+                   +ᵛ inject (depositRefunds pp st txb)
 
 produced : PParams → UTxOState → TxBody → Value
 produced pp st txb = balance (outs txb)
                    +ᵛ inject (txfee txb)
-                   +ᵛ inject (newDeposits st txb)
+                   +ᵛ inject (newDeposits pp st txb)
 \end{code}
 \emph{UTxO transitions}
 
@@ -270,7 +270,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     Γ ⊢ s ⇀⦇ tx ,UTXO⦈
         ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
         , fees + f
-        , updateDeposits (txcerts tx) deposits ⟧ᵘ
+        , updateDeposits pp (txcerts tx) deposits
+        ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move

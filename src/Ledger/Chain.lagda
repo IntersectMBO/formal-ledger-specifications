@@ -17,6 +17,9 @@ open import Ledger.PPUp txs
 open import Ledger.Utxo txs
 open import Ledger.Ratify txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
+open Equivalence
+open import Data.Nat.Properties using (+-0-monoid)
+open import Data.Maybe.Base using () renaming (map to map?)
 
 \end{code}
 \begin{figure*}[h]
@@ -34,7 +37,6 @@ record NewEpochState : Set where
 
 record ChainState : Set where
   field newEpochState  : NewEpochState
-        stakeDistrs    : StakeDistrs -- TODO: compute this from LState instead
 
 record Block : Set where
   field ts   : List Tx
@@ -89,12 +91,51 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 \end{figure*}
 
 \begin{code}[hide]
+maybePurpose : DepositPurpose → (DepositPurpose × Credential) → Coin → Maybe Coin
+maybePurpose prps (prps' , _) c with prps ≟ prps'
+... | yes _ = just c
+... | no _ = nothing
+
+maybePurpose-prop : ∀ {prps} {x} {y}
+  → (m : (DepositPurpose × Credential) ↛ Coin)
+  → (x , y) ∈ dom ((mapMaybeWithKeyᵐ (maybePurpose prps) m) ˢ)
+  → x ≡ prps
+maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with to dom∈ xy∈dom
+... | z , ∈mmwk with prps ≟ x | ∈-mapMaybeWithKey {f = maybePurpose prps} ∈mmwk
+... | yes refl | _ = refl
+
+filterPurpose : DepositPurpose → (DepositPurpose × Credential) ↛ Coin → Credential ↛ Coin
+filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m) λ where
+  {x , .z} {y , z} x∈dom y∈dom refl → case maybePurpose-prop {prps = prps} m x∈dom of λ where
+    x≡prps → case maybePurpose-prop {prps = prps} m y∈dom of λ where
+      refl → cong (_, z) x≡prps
+
+instance
+  _ = +-0-monoid
+
+calculateStakeDistrs : LState → StakeDistrs
+calculateStakeDistrs ls =
+  let open LState ls; open CertState certState; open PState pState; open UTxOState utxoSt; open DState dState
+      spoDelegs = ∅ᵐ -- TODO
+      drepDelegs = ∅ᵐ -- TODO
+      govActionDeposits = foldl _∪⁺_ ∅ᵐ $ setToList $
+        mapPartial
+          (λ where record { returnAddr = record {stake = c} ; deposit = v } → map? (λ vd → ❴ vd , v ❵ᵐ) (lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄))
+          (range (tally ˢ))
+  in
+  record
+    { stakeDistr = govActionDeposits
+    }
+
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  CHAIN : let open ChainState s; open Block b; open NewEpochState in
-    record { ChainState s } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+  CHAIN :
+    let open ChainState s; open Block b; open NewEpochState
+        stakeDistrs = calculateStakeDistrs (ls nes)
+    in
+    record { stakeDistrs = stakeDistrs ; ChainState s } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     → ⟦ slot , EnactState.pparams (es nes) ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }

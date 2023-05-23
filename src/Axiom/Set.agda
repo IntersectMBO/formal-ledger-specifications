@@ -134,6 +134,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-map : ∀ {f : A → B} {b} → (∃[ a ] b ≡ f a × a ∈ X) ⇔ b ∈ map f X
   ∈-map = proj₂ $ replacement _ _
 
+  ∈-map′ : ∀ {f : A → B} {a} → a ∈ X → f a ∈ map f X
+  ∈-map′ {a = a} a∈X = to ∈-map (a , refl , a∈X)
+
   -- don't know that there's a set containing all members of a type, which this is equivalent to
   -- _⁻¹_ : (A → B) → Set B → Set A
   -- f ⁻¹ X = {!!}
@@ -202,6 +205,11 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
     (∃[ T ] T ∈ map (partialToSet f) X × y ∈ T)             ∼⟨ ∈-unions ⟩
     y ∈ mapPartial f X ∎
     where open R.EquationalReasoning
+
+  ⊆-mapPartial : ∀ {f : A → Maybe B} → map just (mapPartial f X) ⊆ map f X
+  ⊆-mapPartial {f = f} a∈m with from ∈-map a∈m
+  ... | x , refl , a∈mp with from (∈-mapPartial {f = f}) a∈mp
+  ... | x' , x'∈X , jx≡fx = to ∈-map (x' , sym jx≡fx , x'∈X)
 
   binary-unions : ∃[ Y ] ∀ {a} → (a ∈ X ⊎ a ∈ X') ⇔ a ∈ Y
   binary-unions {X = X} {X'} with unions (fromList (X ∷ [ X' ]))

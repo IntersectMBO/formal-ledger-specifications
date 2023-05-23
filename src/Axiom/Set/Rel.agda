@@ -17,10 +17,12 @@ import Data.Sum
 open import Data.These hiding (map)
 open import Data.List.Ext.Properties
 open import Data.Product.Properties
+open import Data.Maybe.Base using () renaming (map to map?)
 open import Interface.DecEq
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 open import Relation.Nullary
 open import Relation.Binary hiding (Rel)
+import Relation.Binary.PropositionalEquality as I
 
 open Equivalence
 
@@ -97,6 +99,25 @@ mapʳ-dom = dom-⊆mapʳ , dom-mapʳ⊆
 
 dom-∅ : dom R ⊆ ∅ → R ≡ᵉ ∅
 dom-∅ dom⊆∅ = ∅-least (λ {x} x∈R → ⊥-elim $ ∉-∅ $ dom⊆∅ $ from dom∈ (-, x∈R))
+
+mapPartialLiftKey : (A → B → Maybe B') → A × B → Maybe (A × B')
+mapPartialLiftKey f (k , v) = map? (k ,_) (f k v)
+
+mapPartialLiftKey-map : ∀ {a : A} {b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
+  → just (a , b') ∈ map (mapPartialLiftKey f) r
+  → ∃[ b ] just b' ≡ f a b × (a , b) ∈ r
+mapPartialLiftKey-map {f = f} ab∈m with from ∈-map ab∈m
+... | (a' , b') , ≡ , a'b'∈r with f a' b' | inspect (f a') b'
+mapPartialLiftKey-map {f = f} ab∈m | (a' , b') , refl , a'b'∈r | just x | I.[ eq ] = b' , sym eq , a'b'∈r
+
+mapMaybeWithKey : (A → B → Maybe B') → Rel A B → Rel A B'
+mapMaybeWithKey f r = mapPartial (mapPartialLiftKey f) r
+
+∈-mapMaybeWithKey : ∀ {a : A} {b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
+  → (a , b') ∈ mapMaybeWithKey f r
+  → ∃[ b ] (just b' ≡ f a b × (a , b) ∈ r)
+∈-mapMaybeWithKey {a = a} {b'} {f} ab'∈ with to (∈-map {f = just}) ((a , b') , refl , ab'∈)
+... | p = mapPartialLiftKey-map {f = f} (⊆-mapPartial p)
 
 module Restriction (sp-∈ : spec-∈ A) where
 
