@@ -68,6 +68,7 @@ record PParams : Set where
 --        coinsPerUTxOWord : Coin
 --        collateralPercent : N
 --        maxCollateralInputs : N
+
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}
