@@ -145,11 +145,6 @@ certRefund _                               = nothing
 certRefundˢ : DCert → ℙ DepositPurpose
 certRefundˢ = partialToSet certRefund
 
-open import Relation.Nullary.Decidable using (isNo)
-
-collateralExists : Tx → Bool
-collateralExists tx = isNo (≟-∅ {_} {collateral (body tx)})
-
 -- Boolean Functions
 
 -- Boolean Implication
