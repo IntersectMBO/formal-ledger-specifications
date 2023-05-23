@@ -128,8 +128,8 @@ module DepositHelpers
 
   private
     dep = getCoin deposits
-    uDep = getCoin (updateDeposits pp (txcerts tx) deposits)
-    Δdep = depositsChange pp (txcerts tx) deposits
+    uDep = getCoin (updateDeposits pp tx deposits)
+    Δdep = depositsChange pp tx deposits
     ref = depositRefunds pp ⟦ utxo , fees , deposits ⟧ᵘ tx
     tot = newDeposits    pp ⟦ utxo , fees , deposits ⟧ᵘ tx
 

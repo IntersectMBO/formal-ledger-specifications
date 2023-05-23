@@ -9,6 +9,8 @@ module Ledger.Chain (txs : TransactionStructure) where
 
 open import Ledger.Prelude
 
+open import Algebra
+
 open TransactionStructure txs
 open import Ledger.PParams epochStructure
 open import Ledger.NewPP txs
@@ -41,6 +43,9 @@ record ChainState : Set where
 record Block : Set where
   field ts   : List Tx
         slot : Slot
+
+instance
+  _ = +-0-monoid
 \end{code}
 \caption{Definitions for the NEWEPOCH and CHAIN transition systems}
 \end{figure*}
@@ -55,6 +60,7 @@ private variable
   e : Epoch
   es' : EnactState
   newTally : TallyState
+  rwds : RwdAddr ↛ Coin
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:
 -- it also does what EPOCH used to do in previous eras
@@ -71,13 +77,15 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       pup = PPUpdateState.pup ppup
       acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt }
       retired = retiring ⁻¹ e
-      certState' = record certState { pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ } }
+      certState' = record certState {
+        pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ };
+        dState = record dState { rewards = DState.rewards dState ∪⁺ rwds } }
       ls' = record ls { tally = newTally ; utxoSt = record utxoSt { fees = 0 } ; certState = certState' }
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; ccHotKeys = VState.ccHotKeys vState ; NewEpochEnv Γ }
-                    ⊢                               ⟦ es  , [] ⟧ʳ
-                    ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) ⟧ʳ
+                    ⊢                               ⟦ es  , [] , ∅ᵐ ⟧ʳ
+                    ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) , rwds ⟧ʳ
     -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es' ⟧ⁿᵉ
