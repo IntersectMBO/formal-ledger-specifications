@@ -166,20 +166,21 @@ instance
 
       from' : F.TxBody → TxBody
       from' txb = let open F.TxBody txb in record
-        { txins    = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
-        ; txouts   = from txouts
-        ; txcerts  = []
-        ; mint     = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
-        ; txfee    = txfee
-        ; txvldt   = coerce txvldt
-        ; txwdrls  = ∅ᵐ
-        ; txup     = nothing
-        ; txADhash = nothing
-        ; netwrk   = nothing
-        ; txsize   = txsize
-        ; txid     = txid
-        ; txvote   = []
-        ; txprop   = []
+        { txins      = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
+        ; txouts     = from txouts
+        ; txcerts    = []
+        ; mint       = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
+        ; txfee      = txfee
+        ; txvldt     = coerce txvldt
+        ; txwdrls    = ∅ᵐ
+        ; txup       = nothing
+        ; txADhash   = nothing
+        ; netwrk     = nothing
+        ; txsize     = txsize
+        ; txid       = txid
+        ; txvote     = []
+        ; txprop     = []
+        ; txdonation = ε
         }
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
@@ -276,9 +277,10 @@ instance
 
       from' : F.UTxOState → UTxOState
       from' s = record
-        { utxo     = from ⦃ Convertible-Map ⦃ DecEq-Product ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
-        ; fees     = F.UTxOState.fees s
-        ; deposits = ∅ᵐ
+        { utxo      = from ⦃ Convertible-Map ⦃ DecEq-Product ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
+        ; fees      = F.UTxOState.fees s
+        ; deposits  = ∅ᵐ
+        ; donations = ε
         }
 
 utxo-step : F.UTxOEnv → F.UTxOState → F.TxBody → Maybe F.UTxOState

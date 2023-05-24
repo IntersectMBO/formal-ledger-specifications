@@ -153,10 +153,11 @@ record UTxOEnv : Set where
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Set where
-  constructor ⟦_,_,_⟧ᵘ
-  field utxo      : UTxO
-        fees      : Coin
-        deposits  : Deposits
+  constructor ⟦_,_,_,_⟧ᵘ
+  field utxo       : UTxO
+        fees       : Coin
+        deposits   : Deposits
+        donations  : Coin
 \end{code}
 \emph{UTxO transitions}
 
@@ -190,7 +191,7 @@ instance
   Dec-inInterval {slot} {nothing , nothing} = yes none
 
   HasCoin-UTxOState : HasCoin UTxOState
-  HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s) + (UTxOState.fees s) + getCoin (UTxOState.deposits s)
+  HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s) + (UTxOState.fees s) + getCoin (UTxOState.deposits s) + UTxOState.donations s
 data
 \end{code}
 \begin{code}
@@ -236,6 +237,7 @@ produced : PParams → UTxOState → TxBody → Value
 produced pp st txb = balance (outs txb)
                    +ᵛ inject (txfee txb)
                    +ᵛ inject (newDeposits pp st txb)
+                   +ᵛ inject (txdonation txb)
 
 \end{code}
 \caption{Functions used in UTxO rules, continued}
@@ -256,6 +258,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           utxo          = UTxOState.utxo s
           fees          = UTxOState.fees s
           deposits      = UTxOState.deposits s
+          donations     = UTxOState.donations s
       in
     txins tx ≢ ∅                           → txins tx ⊆ dom (utxo ˢ)
     → inInterval slot (txvldt tx)          → minfee pp tx ≤ txfee tx
@@ -265,6 +268,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
                         , fees + txfee tx
                         , updateDeposits pp tx deposits
+                        , donations + txdonation tx
                         ⟧ᵘ
 \end{code}
 \begin{code}[hide]
