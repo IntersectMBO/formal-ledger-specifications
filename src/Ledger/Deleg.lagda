@@ -101,6 +101,10 @@ requiredDeposit pp nothing = 0
 requiredVDelegDeposit : PParams → Maybe VDeleg → Coin
 requiredVDelegDeposit pp (just _) = PParams.poolDeposit pp
 requiredVDelegDeposit pp nothing = 0
+
+insertIfPresent : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ↛ B → A ↛ B
+insertIfPresent x nothing  m = m
+insertIfPresent x (just y) m = insert m x y
 \end{code}
 \caption{Types \& functions used for CERTS transition system}
 \end{figure*}
@@ -112,7 +116,7 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set w
     d ≡ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc
     ────────────────────────────────
     pp ⊢ ⟦ vDelegs , sDelegs ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-         ⟦ update c mv vDelegs , update c mc sDelegs ⟧ᵈ
+         ⟦ insertIfPresent c mv vDelegs , insertIfPresent c mc sDelegs ⟧ᵈ
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
@@ -178,7 +182,7 @@ open import MyDebugOptions
 Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_
 Computational-DELEG .compute pp ⟦ vDelegs , sDelegs ⟧ᵈ (delegate c mv mc d) =
   ifᵈ d ≡ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc
-    then just ⟦ update c mv vDelegs , update c mc sDelegs ⟧ᵈ
+    then just ⟦ insertIfPresent c mv vDelegs , insertIfPresent c mc sDelegs ⟧ᵈ
     else nothing
 Computational-DELEG .compute Γ s _ = nothing
 Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ ⟧ᵈ} {cert} {s'} = mk⇔
@@ -192,7 +196,7 @@ Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ ⟧ᵈ} {cert} {s'} = 
     (deregdrep x) → λ ()
     (ccreghot x x₁) → λ ())
   (λ where (DELEG-delegate {mv = mv} {mc} {vDelegs} {sDelegs} {c} h) → by-reduceDecInGoal
-             (refl {x = just ⟦ update c mv vDelegs , update c mc sDelegs ⟧ᵈ}))
+             (refl {x = just ⟦ insertIfPresent c mv vDelegs , insertIfPresent c mc sDelegs ⟧ᵈ}))
 
 --Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_
 --Computational-CERTS .compute     = {!!}
