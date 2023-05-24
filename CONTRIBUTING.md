@@ -58,6 +58,10 @@ niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c
 niv update nixpkgs -v 21.11.337905.902d91def1e
 ```
 
+## Maintainer
+
+This repository is maintained by @WhatisRT.
+
 
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
