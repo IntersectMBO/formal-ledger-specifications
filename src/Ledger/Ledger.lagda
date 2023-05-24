@@ -60,6 +60,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set where
     pparams ⊢ certState ⇀⦇ txcerts txb ,CERTS⦈ certState'
     → record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     → record { epoch = epoch slot ; LEnv Γ ; TxBody txb } ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
+    → map RwdAddr.stake (dom (txwdrls txb ˢ)) ⊆ dom (DState.voteDelegs (CertState.dState certState') ˢ)
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , tally' , certState' ⟧ˡ
 \end{code}
