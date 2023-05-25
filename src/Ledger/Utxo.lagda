@@ -155,18 +155,30 @@ open import Relation.Nullary.Decidable using (isNo)
 collateralExists : Tx → Bool
 collateralExists tx = isNo (≟-∅ {_} {collateral (body tx)})
 
+-----------------------------------------------------
+-- Boolean Functions
+
 -- Boolean Implication
 _=>ᵇ_ : Bool → Bool → Bool
 _=>ᵇ_ a b = if a then b else true
 
+_≤ᵇ_ : ℕ → ℕ → Bool
+m ≤ᵇ n = ⌊ m ≤? n ⌋
+
+_≥ᵇ_ = flip _≤ᵇ_
+
+≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
+≟-∅ᵇ X = ⌊ ≟-∅ {_} {X} ⌋
+-----------------------------------------------------
+
 feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = ⌊ minfee pp (body tx) ≤? txfee (body tx) ⌋
-                     ∧ (isNo $ ≟-∅ {_} {(TxWitnesses.txrdmrs (Tx.wits tx)) ˢ})
+feesOK pp tx utxo = minfee pp (body tx) ≤ᵇ txfee (body tx)
+                     ∧ (not $ ≟-∅ᵇ ((TxWitnesses.txrdmrs (Tx.wits tx)) ˢ))
                        =>ᵇ
                        (allᵇ (λ x → isVKeyAddr? (proj₁ x)) collateralRange
                        ∧ isAdaOnly bal
-                       ∧ ⌊ coin bal * 100 ≥? txfee txb * PParams.collateralPercent pp ⌋
-                       ∧ (isNo $ ≟-∅ {_} {collateral (body tx)}))
+                       ∧ (coin bal * 100) ≥ᵇ (txfee txb * PParams.collateralPercent pp)
+                       ∧ (not $ ≟-∅ᵇ (collateral (body tx))))
   where
     txb               = body tx
     collateralRange   = range $ proj₁ $ utxo ∣ collateral (body tx)
