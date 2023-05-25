@@ -145,11 +145,13 @@ certRefund _                               = nothing
 certRefundˢ : DCert → ℙ DepositPurpose
 certRefundˢ = partialToSet certRefund
 
+-----------------------------------------------------
 -- Boolean Functions
 
 -- Boolean Implication
 _=>ᵇ_ : Bool → Bool → Bool
 _=>ᵇ_ a b = if a then b else true
+
 _≤ᵇ_ : ℕ → ℕ → Bool
 m ≤ᵇ n = ⌊ m ≤? n ⌋
 
