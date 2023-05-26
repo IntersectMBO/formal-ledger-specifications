@@ -22,7 +22,7 @@ open Crypto crypto
 open import Ledger.Address Network KeyHash ScriptHash
 open import Ledger.PParams epochStructure using (PParams)
 open import Ledger.GovernanceActions TxId Network DocHash epochStructure ppd ppHashable crypto
-  using (VDeleg)
+  using (Anchor; VDeleg)
 
 open EpochStructure epochStructure
 
@@ -34,10 +34,9 @@ record PoolParams : Set where
 
 data DCert : Set where
   delegate   : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
-  -- ^ TODO change `nothing` to leaving things unchanged & figure out how to undelegate best
   regpool    : Credential → PoolParams → DCert
   retirepool : Credential → Epoch → DCert
-  regdrep    : Credential → Coin → DCert
+  regdrep    : Credential → Coin → Anchor → DCert
   deregdrep  : Credential → DCert
   ccreghot   : Credential → Maybe KeyHash → DCert
 
@@ -71,6 +70,7 @@ record CertState : Set where
 
 \begin{code}[hide]
 private variable
+  an : Anchor
   dReps dReps' : ℙ Credential
   pools : Credential ↛ PoolParams
   vDelegs : Credential ↛ VDeleg
@@ -133,7 +133,7 @@ data _⊢_⇀⦇_,VDEL⦈_ : VDelEnv → VState → DCert → VState → Set whe
     d ≡ poolDeposit -- TODO use drepDeposit instead
     → c ∉ dReps
     ────────────────────────────────
-    pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d ,VDEL⦈
+    pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,VDEL⦈
          ⟦ ❴ c ❵ ∪ dReps , ccKeys ⟧ᵛ
 
   VDEL-deregdrep :
@@ -192,7 +192,7 @@ Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ ⟧ᵈ} {cert} {s'} = 
       (no ¬p) → case by-reduceDec h of λ ()
     (regpool x x₁) → λ ()
     (retirepool x x₁) → λ ()
-    (regdrep x x₁) → λ ()
+    (regdrep x x₁ _) → λ ()
     (deregdrep x) → λ ()
     (ccreghot x x₁) → λ ())
   (λ where (DELEG-delegate {mv = mv} {mc} {vDelegs} {sDelegs} {c} h) → by-reduceDecInGoal

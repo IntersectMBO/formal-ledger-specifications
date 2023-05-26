@@ -98,7 +98,7 @@ data DepositPurpose : Set where
 certDeposit : PParams → DCert → Maybe (DepositPurpose × Credential × Coin)
 certDeposit _  (delegate c _ _ v)  = just (CredentialDeposit , c , v)
 certDeposit pp (regpool c _)       = just (PoolDeposit       , c , PParams.poolDeposit pp)
-certDeposit _  (regdrep c v)       = just (DRepDeposit       , c , v)
+certDeposit _  (regdrep c v _)     = just (DRepDeposit       , c , v)
 certDeposit _  _                   = nothing
 
 certDepositᵐ : PParams → DCert → (DepositPurpose × Credential) ↛ Coin
