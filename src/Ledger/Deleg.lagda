@@ -118,7 +118,7 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set w
     d ≡ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc
     ────────────────────────────────
     pp ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-         ⟦ insertIfPresent c mv vDelegs , insertIfPresent c mc sDelegs ,rwds ⟧ᵈ
+         ⟦ insertIfPresent c mv vDelegs , insertIfPresent c mc sDelegs , rwds ⟧ᵈ
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
@@ -194,7 +194,7 @@ Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ , rewards ⟧ᵈ} {cer
       (no ¬p) → case by-reduceDec h of λ ()
     (regpool x x₁) → λ ()
     (retirepool x x₁) → λ ()
-    (regdrep x x₁) → λ ()
+    (regdrep x x₁ _) → λ ()
     (deregdrep x) → λ ()
     (ccreghot x x₁) → λ ())
   (λ where (DELEG-delegate {mv = mv} {mc} {vDelegs} {sDelegs} {rwds} {c} h) → by-reduceDecInGoal

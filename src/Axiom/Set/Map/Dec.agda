@@ -24,7 +24,6 @@ private variable A B C D : Type
 
 module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
   open Lookupᵐ sp-∈
-  infixr 6 _∪⁺_
 
   unionThese : ⦃ DecEq A ⦄ → (m : Map A B) → (m' : Map A C) → (x : A) → x ∈ dom (m ˢ) ∪ dom (m' ˢ) → These B C
   unionThese m m' x dp with x ∈? dom (m ˢ) | x ∈? dom (m' ˢ)
@@ -48,7 +47,12 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
            | yes _ | [ eq ] | yes _ | [ eq' ] with trans (sym eq) eq'
        ... | refl = refl
 
-  _∪⁺_ : ⦃ M : Monoid 0ℓ 0ℓ ⦄ → (open Monoid M renaming (Carrier to V)) → ⦃ DecEq A ⦄ → Map A V → Map A V → Map A V
-  _∪⁺_ ⦃ M = M ⦄ = unionWith (fold id id _∙_)
-    where open Monoid M
-
+  module _ ⦃ M : Monoid 0ℓ 0ℓ ⦄ ⦃ _ : DecEq A ⦄ where
+    infixr 6 _∪⁺_
+    open Monoid M renaming (Carrier to V)
+    
+    _∪⁺_ : Map A V → Map A V → Map A V
+    _∪⁺_ = unionWith (fold id id _∙_)
+    
+    aggregate₊ : FinSet (A × V) → Map A V
+    aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l

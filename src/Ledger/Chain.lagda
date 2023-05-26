@@ -21,7 +21,7 @@ open import Ledger.Ratify txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 open Equivalence
 open import Data.Nat.Properties using (+-0-monoid)
-open import Data.Maybe.Base using () renaming (map to map?)
+open import Data.Maybe.Base using (_>>=_) renaming (map to map?)
 
 \end{code}
 \begin{figure*}[h]
@@ -60,7 +60,7 @@ private variable
   e : Epoch
   es' : EnactState
   newTally : TallyState
-  rwds : RwdAddr ↛ Coin
+  removed : List (GovActionID × GovActionState)
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:
 -- it also does what EPOCH used to do in previous eras
@@ -74,18 +74,32 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       -- TODO Wire CertState together with treasury and withdrawals
       open CertState certState
       open PState pState
+      removedGovActions = map GovActionDeposit (map proj₁ (fromList removed))
       pup = PPUpdateState.pup ppup
+      deposits = UTxOState.deposits utxoSt
       acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt }
       retired = retiring ⁻¹ e
+      govActionRewards' = concatMapˢ
+        (λ where
+          (gaid , gaSt) → map
+            (GovActionState.returnAddr gaSt ,_)
+            ((deposits ˢ) ⟪$⟫ ❴ GovActionDeposit gaid ❵)
+        )
+        (fromList removed)
+      govActionRewards = aggregate₊ (govActionRewards' , finiteness govActionRewards')
       certState' = record certState {
         pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ };
-        dState = record dState { rewards = DState.rewards dState ∪⁺ rwds } }
-      ls' = record ls { tally = newTally ; utxoSt = record utxoSt { fees = 0 } ; certState = certState' }
+        dState = record dState { rewards = DState.rewards dState ∪⁺ govActionRewards } }
+      utxoSt' = record utxoSt
+        { fees = 0
+        ; deposits = deposits ∣ removedGovActions ᶜ
+        }
+      ls' = record ls { tally = newTally ; utxoSt = utxoSt' ; certState = certState' }
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; ccHotKeys = VState.ccHotKeys vState ; NewEpochEnv Γ }
-                    ⊢                               ⟦ es  , [] , ∅ᵐ ⟧ʳ
-                    ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) , rwds ⟧ʳ
+                    ⊢                               ⟦ es  , [] , [] ⟧ʳ
+                    ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) , removed ⟧ʳ
     -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es' ⟧ⁿᵉ
@@ -121,18 +135,25 @@ filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m
 instance
   _ = +-0-monoid
 
+govActionDeposits : LState → VDeleg ↛ Coin
+govActionDeposits ls =
+  let open LState ls; open CertState certState; open PState pState; open UTxOState utxoSt; open DState dState
+   in foldl _∪⁺_ ∅ᵐ $ setToList $
+    mapPartial
+      (λ where (gaid , record { returnAddr = record {stake = c} }) → do
+        vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
+        dep ← lookupᵐ? deposits (GovActionDeposit gaid) ⦃ _ ∈? _ ⦄
+        just ❴ vd , dep ❵ᵐ )
+      (tally ˢ)
+
 calculateStakeDistrs : LState → StakeDistrs
 calculateStakeDistrs ls =
   let open LState ls; open CertState certState; open PState pState; open UTxOState utxoSt; open DState dState
       spoDelegs = ∅ᵐ -- TODO
       drepDelegs = ∅ᵐ -- TODO
-      govActionDeposits = foldl _∪⁺_ ∅ᵐ $ setToList $
-        mapPartial
-          (λ where record { returnAddr = record {stake = c} ; deposit = v } → map? (λ vd → ❴ vd , v ❵ᵐ) (lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄))
-          (range (tally ˢ))
   in
   record
-    { stakeDistr = govActionDeposits
+    { stakeDistr = govActionDeposits ls
     }
 
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set where

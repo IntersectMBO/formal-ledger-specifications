@@ -43,7 +43,7 @@ record RatifyState : Set where
   constructor ⟦_,_,_⟧ʳ
   field es              : EnactState
         future          : List (GovActionID × GovActionState)
-        depositReturns  : RwdAddr ↛ Coin
+        expired         : List (GovActionID × GovActionState)
 \end{code}
 \caption{Types and functions for the RATIFY transition system}
 \end{figure*}
@@ -216,8 +216,7 @@ private variable
   es es' : EnactState
   upd : PParamsUpdate
   a : GovActionID × GovActionState
-  f f' l : List (GovActionID × GovActionState)
-  rwds : RwdAddr ↛ Coin
+  f f' l removed : List (GovActionID × GovActionState)
 
 data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Set where
 \end{code}
@@ -227,7 +226,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     accepted Γ es (proj₂ a)
     → _ ⊢ es ⇀⦇ GovActionState.action (proj₂ a) ,ENACT⦈ es'
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , rwds ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f , rwds ∪⁺ ❴ returnAddr , deposit ❵ᵐ ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f , a ∷ removed ⟧ʳ
 
   -- remove expired actions
   -- NOTE: don't have to remove actions that can never be accpted because of sufficient no votes
@@ -235,14 +234,14 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     ¬ accepted Γ es (proj₂ a)
     → expired currentEpoch (proj₂ a)
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , rwds ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f , rwds ∪⁺ ❴ returnAddr , deposit ❵ᵐ ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f , a ∷ removed ⟧ʳ
 
   -- continue voting in the next epoch
   RATIFY-Continue : let open RatifyEnv Γ in
     ¬ accepted Γ es (proj₂ a)
     → ¬ expired currentEpoch (proj₂ a)
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , rwds ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f , rwds ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f , removed ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID × GovActionState) → RatifyState → Set
 _⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,RATIFY'⦈_)
