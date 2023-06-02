@@ -41,8 +41,8 @@ record ChainState : Set where
   field newEpochState  : NewEpochState
 
 record Block : Set where
-  field ts   : List Tx
-        slot : Slot
+  field ts    : List Tx
+        slot  : Slot
 
 instance
   _ = +-0-monoid
@@ -156,7 +156,17 @@ calculateStakeDistrs ls =
     { stakeDistr = govActionDeposits ls
     }
 
-data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set where
+
+data
+\end{code}
+\begin{figure*}[h]
+\begin{code}
+  _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set
+\end{code}
+\caption{Type of the CHAIN transition system}
+\end{figure*}
+\begin{code}[hide]
+  where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -164,7 +174,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Se
     let open ChainState s; open Block b; open NewEpochState
         stakeDistrs = calculateStakeDistrs (ls nes)
     in
-    record { stakeDistrs = stakeDistrs ; ChainState s } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    record { stakeDistrs = stakeDistrs } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     → ⟦ slot , EnactState.pparams (es nes) ⟧ˡᵉ ⊢ ls nes ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }

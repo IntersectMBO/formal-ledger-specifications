@@ -14,6 +14,11 @@ open import MyDebugOptions
 open import Ledger.Prelude
 open EpochStructure es
 \end{code}
+
+Adjustable parameters of the Cardano ledger. They are used in block
+validation and may affect things such as the minimum fees, maximum and
+minimum sizes of certain things and various other features.
+
 \begin{figure*}[h]
 \begin{code}
 ProtVer = ℕ × ℕ
@@ -26,31 +31,30 @@ data PParamGroup : Set where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup : PParamGroup
 
 record PParams : Set where
-  field
-        -- Network group
-        maxBlockSize     : ℕ
-        maxTxSize        : ℕ
-        maxHeaderSize    : ℕ
-        maxValSize       : ℕ
-        pv               : ProtVer -- retired, keep for now
+  field -- Network group
+        maxBlockSize      : ℕ
+        maxTxSize         : ℕ
+        maxHeaderSize     : ℕ
+        maxValSize        : ℕ
+        pv                : ProtVer -- retired, keep for now
 
         -- Economic group
-        a                : ℕ
-        b                : ℕ
-        minUtxOValue     : Coin
-        poolDeposit      : Coin
+        a                 : ℕ
+        b                 : ℕ
+        minUTxOValue      : Coin
+        poolDeposit       : Coin
 
         -- Technical group
-        Emax             : Epoch
+        Emax              : Epoch
 
         -- Governance group
-        votingThresholds : ℚ × ℚ -- TODO: add all the thresholds required
-        minCCSize        : ℕ
-        ccTermLimit      : ℕ
-        govExpiration    : ℕ
-        govDeposit       : Coin
-        drepDeposit      : Coin
-        drepActivity     : Epoch
+        votingThresholds  : ℚ × ℚ
+        minCCSize         : ℕ
+        ccTermLimit       : ℕ
+        govExpiration     : ℕ
+        govDeposit        : Coin
+        drepDeposit       : Coin
+        drepActivity      : Epoch
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}

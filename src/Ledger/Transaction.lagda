@@ -21,21 +21,19 @@ record TransactionStructure : Set₁ where
   field
 \end{code}
 
-Transactions are defined in Figure~\ref{fig:defs:utxo-shelley}.
-A transaction is made up of three pieces:
+Transactions are defined in Figure~\ref{fig:defs:utxo-shelley}. A
+transaction is made up of a transaction body, a collection of
+witnesses and some optional auxiliary data. Some key ingredients in
+the transaction body are:
 
 \begin{itemize}
-  \item A set of transaction inputs.
-    This derived type identifies an output from a previous transaction.
-    It consists of a transaction id and an index to uniquely identify the output.
+  \item A set of transaction inputs, each of which identifies an output from a previous transaction.
+    A transaction input consists of a transaction id and an index to uniquely identify the output.
   \item An indexed collection of transaction outputs.
     The $\TxOut$ type is an address paired with a coin value.
   \item A transaction fee. This value will be added to the fee pot.
+  \item The size and the hash of the serialized form of the transaction that was included in the block.
 \end{itemize}
-
-Finally, $\fun{txid}$ computes the transaction id of a given transaction.
-This function must produce a unique id for each unique transaction body.
-\textbf{We assume that} $\fun{txid}$ \textbf{is injective.}
 
 \begin{figure*}[h]
 \emph{Abstract types}
@@ -91,22 +89,23 @@ This function must produce a unique id for each unique transaction body.
 \end{code}
 \emph{Transaction types}
 \AgdaTarget{TxBody, txins, txouts, txfee, txvldt, txwdrls, txup, txADhash, txsize, txid, TxWitnesses, vkSigs, scripts, Tx, body, wits, txAD}
+\begin{AgdaSuppressSpace}
 \begin{code}
   record TxBody : Set where
     field txins      : ℙ TxIn
           txouts     : Ix ↛ TxOut
-          txcerts    : List DCert
-          mint       : Value
           txfee      : Coin
+          mint       : Value
           txvldt     : Maybe Slot × Maybe Slot
+          txcerts    : List DCert
           txwdrls    : Wdrl
+          txvote     : List GovVote
+          txprop     : List GovProposal
           txup       : Maybe Update
           txADhash   : Maybe ADHash
           netwrk     : Maybe Network
           txsize     : ℕ
           txid       : TxId
-          txvote     : List GovVote
-          txprop     : List GovProposal
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ↛ Sig
@@ -117,17 +116,20 @@ This function must produce a unique id for each unique transaction body.
           wits  : TxWitnesses
           txAD  : Maybe AuxiliaryData
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{Definitions used in the UTxO transition system}
 \label{fig:defs:utxo-shelley}
 \end{figure*}
 
+\begin{figure*}[h]
 \begin{code}
   getValue : TxOut → Value
-  getValue (fst , snd) = snd
+  getValue (_ , v) = v
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom ((utxo ∣^' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
 \end{code}
+\end{figure*}
 \begin{code}[hide]
   instance
     HasCoin-TxOut : HasCoin TxOut

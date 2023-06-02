@@ -34,6 +34,7 @@ TallyState : Set
 TallyState = GovActionID ↛ GovActionState
 
 record TallyEnv : Set where
+  constructor ⟦_,_,_⟧ᵗ
   field txid     : TxId
         epoch    : Epoch
         pparams  : PParams
