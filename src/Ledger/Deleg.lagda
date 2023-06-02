@@ -137,8 +137,8 @@ data _⊢_⇀⦇_,VDEL⦈_ : VDelEnv → VState → DCert → VState → Set whe
          ⟦ ❴ c ❵ ∪ dReps , ccKeys ⟧ᵛ
 
   VDEL-deregdrep :
-    c ∉ dReps
-    → dReps' ≡ ❴ c ❵ ∪ dReps
+    c ∉ dReps'
+    → ❴ c ❵ ∪ dReps' ≡ dReps
     ────────────────────────────────
     pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,VDEL⦈
          ⟦ dReps' , ccKeys ⟧ᵛ
