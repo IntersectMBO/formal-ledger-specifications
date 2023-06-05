@@ -74,8 +74,7 @@ record GovVote : Set where
         anchor      : Maybe Anchor
 
 record GovProposal : Set where
-  field deposit     : Coin
-        returnAddr  : RwdAddr
+  field returnAddr  : RwdAddr
         action      : GovAction
         anchor      : Anchor
 \end{code}

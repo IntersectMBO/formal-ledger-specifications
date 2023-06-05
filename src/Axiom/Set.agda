@@ -187,22 +187,35 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
       (just x) → λ h → cong just (sym $ from ∈-singleton h)
       nothing  → λ h → case from ∈-fromList h of λ ())
 
+  concatMapˢ : (A → Set B) → Set A → Set B
+  concatMapˢ f a = proj₁ $ unions (map f a)
+
+  ∈-concatMapˢ : {y : B} {f : A → Set B} → (∃[ x ] x ∈ X × y ∈ f x) ⇔ y ∈ concatMapˢ f X 
+  ∈-concatMapˢ {X = X} {y} {f} =
+    (∃[ x ] x ∈ X × y ∈ f x)
+      ∼⟨ ∃-cong′ (λ {x} → ∃-≡ (λ T → x ∈ X × y ∈ T)) ⟩
+    (∃[ x ] ∃[ T ] T ≡ f x × x ∈ X × y ∈ T)
+      ↔⟨ ∃∃↔∃∃ (λ x T → T ≡ f x × x ∈ X × y ∈ T) ⟩
+    (∃[ T ] ∃[ x ] T ≡ f x × x ∈ X × y ∈ T)
+      ∼⟨ ∃-cong′ $ mk⇔
+        (λ where (x , p₁ , p₂ , p₃) → (x , p₁ , p₂) , p₃)
+        (λ where ((x , p₁ , p₂) , p₃) → x , p₁ , p₂ , p₃) ⟩
+    (∃[ T ] (∃[ x ] T ≡ f x × x ∈ X) × y ∈ T)
+      ∼⟨ ∃-cong′ (∈-map ×-cong R.K-refl) ⟩
+    (∃[ T ] T ∈ map f X × y ∈ T)
+      ∼⟨ ∈-unions ⟩
+    y ∈ concatMapˢ f X ∎
+    where open R.EquationalReasoning
+
   mapPartial : (A → Maybe B) → Set A → Set B
-  mapPartial f X = proj₁ $ unions (map (partialToSet f) X)
+  mapPartial f = concatMapˢ (partialToSet f)
 
   ∈-mapPartial : {y : B} {f : A → Maybe B} → (∃[ x ] x ∈ X × f x ≡ just y) ⇔ y ∈ mapPartial f X
   ∈-mapPartial {X = X} {y} {f} =
     (∃[ x ] x ∈ X × f x ≡ just y)
       ∼⟨ ∃-cong′ (R.K-refl ×-cong (∈-partialToSet {f = f})) ⟩
     (∃[ x ] x ∈ X × y ∈ partialToSet f x)
-      ∼⟨ ∃-cong′ (λ {x} → ∃-≡ (λ T → x ∈ X × y ∈ T)) ⟩
-    (∃[ x ] ∃[ T ] T ≡ partialToSet f x × x ∈ X × y ∈ T)
-      ↔⟨ ∃∃↔∃∃ (λ x T → T ≡ partialToSet f x × x ∈ X × y ∈ T) ⟩
-    (∃[ T ] ∃[ x ] T ≡ partialToSet f x × x ∈ X × y ∈ T)    ∼⟨ ∃-cong′ $ mk⇔
-      (λ where (x , p₁ , p₂ , p₃) → ((x , p₁ , p₂) , p₃))
-      (λ where ((x , p₁ , p₂) , p₃) → (x , p₁ , p₂ , p₃)) ⟩
-    (∃[ T ] (∃[ x ] T ≡ partialToSet f x × x ∈ X) × y ∈ T)  ∼⟨ ∃-cong′ (∈-map ×-cong R.K-refl) ⟩
-    (∃[ T ] T ∈ map (partialToSet f) X × y ∈ T)             ∼⟨ ∈-unions ⟩
+      ∼⟨ ∈-concatMapˢ ⟩
     y ∈ mapPartial f X ∎
     where open R.EquationalReasoning
 
