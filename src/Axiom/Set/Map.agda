@@ -19,6 +19,7 @@ open import Data.List.Ext.Properties
 open import Data.Product.Properties
 open import Data.Maybe.Base using () renaming (map to map?)
 open import Interface.DecEq
+open import Relation.Binary using (REL)
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
 open Equivalence
@@ -45,6 +46,9 @@ private variable A A' B B' C D : Type
 left-unique : Rel A B → Type
 left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
+left-unique-rel : {A B : Type} → REL A B 0ℓ → Type 0ℓ
+left-unique-rel R = ∀ {a b b'} → R a b → R a b' → b ≡ b'
+
 record IsLeftUnique (R : Rel A B) : Type where
   field isLeftUnique : left-unique R
 
@@ -61,6 +65,9 @@ left-unique-mapˢ _ p q with from ∈-map p | from ∈-map q
 
 Map : Type → Type → Type
 Map A B = Σ (Rel A B) left-unique
+
+PartialMap : Type → Type → Type₁
+PartialMap A B = Σ (REL A B 0ℓ) left-unique-rel
 
 _≡ᵐ_ : Map A B → Map A B → Type
 (x , _) ≡ᵐ (y , _) = x ≡ᵉ y

@@ -1,5 +1,8 @@
 {-# OPTIONS --overlapping-instances #-}
-module Ledger.Foreign.HSLedger where
+
+open import Agda.Primitive using () renaming (Set to Type)
+
+module Ledger.Foreign.HSLedger (policy : Type) where
 
 open import Ledger.Prelude
 
@@ -90,30 +93,35 @@ HSScriptStructure : ScriptStructure ℕ ℕ ℕ
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
 
 open import Ledger.Transaction
-open import Ledger.TokenAlgebra
+import Ledger.TokenAlgebra as TA
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
 open import Data.Nat
 
-coinTokenAlgebra : TokenAlgebra
-coinTokenAlgebra = record
-  { PolicyId                = ℕ
-  ; Value-CommutativeMonoid = +-0-commutativeMonoid
-  ; coin                    = id
-  ; inject                  = id
-  ; policies                = λ x → ∅
-  ; size                    = λ x → 1 -- there is only ada in this token algebra
-  ; property                = λ x → refl
-  ; coinIsMonoidMorphism    = record
-    { mn-homo = record
-      { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo  = λ x y → refl }
-      ; ε-homo  = refl
+module _ where
+
+  open TA policy
+  open TA.TokenAlgebra
+
+  coinTokenAlgebra : TokenAlgebra
+  Value-CommutativeMonoid coinTokenAlgebra = +-0-commutativeMonoid
+  coin coinTokenAlgebra = id
+  inject coinTokenAlgebra = id
+  policies coinTokenAlgebra = λ x → ∅
+  size coinTokenAlgebra = λ x → 1
+  _≤ᵗ_ coinTokenAlgebra = _≤_
+  property coinTokenAlgebra = λ x → refl
+  coinIsMonoidMorphism coinTokenAlgebra =
+    record
+      { mn-homo =
+        record
+          { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo = λ x y → refl }
+          ; ε-homo = refl
+          }
       }
-    }
-  ; _≥ᵗ_                    = _≥_
-  ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
-  }
+  DecEq-Value coinTokenAlgebra = record { _≟_ = Data.Nat._≟_ }
 
 module _ where
+
   open TransactionStructure
 
   HSTransactionStructure : TransactionStructure
@@ -122,6 +130,7 @@ module _ where
   HSTransactionStructure .epochStructure  = HSEpochStructure
   HSTransactionStructure .globalConstants = HSGlobalConstants
   HSTransactionStructure .AuxiliaryData   = ⊤
+  HSTransactionStructure .PolicyId        = policy
   HSTransactionStructure .crypto          = HSCrypto
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppHashingScheme = isHashableSelf PParams

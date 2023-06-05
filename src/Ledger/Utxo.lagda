@@ -91,30 +91,35 @@ minfee pp tx = a * txsize tx + b
   where open PParams pp
 
 data DepositPurpose : Set where
-  CredentialDeposit  : DepositPurpose
-  PoolDeposit        : DepositPurpose
-  DRepDeposit        : DepositPurpose
+  CredentialDeposit  : Credential  → DepositPurpose
+  PoolDeposit        : Credential  → DepositPurpose
+  DRepDeposit        : Credential  → DepositPurpose
+  GovActionDeposit   : GovActionID → DepositPurpose
 
-certDeposit : PParams → DCert → Maybe (DepositPurpose × Credential × Coin)
-certDeposit _  (delegate c _ _ v)  = just (CredentialDeposit , c , v)
-certDeposit pp (regpool c _)       = just (PoolDeposit       , c , PParams.poolDeposit pp)
-certDeposit _  (regdrep c v _)     = just (DRepDeposit       , c , v)
+certDeposit : PParams → DCert → Maybe (DepositPurpose × Coin)
+certDeposit _  (delegate c _ _ v)  = just (CredentialDeposit c , v)
+certDeposit pp (regpool c _)       = just (PoolDeposit       c , PParams.poolDeposit pp)
+certDeposit _  (regdrep c v _)     = just (DRepDeposit       c , v)
 certDeposit _  _                   = nothing
 
-certDepositᵐ : PParams → DCert → (DepositPurpose × Credential) ↛ Coin
+certDepositᵐ : PParams → DCert → DepositPurpose ↛ Coin
 certDepositᵐ pp cert = case certDeposit pp cert of λ where
-  (just (p , c , v))  → ❴ (p , c) , v ❵ᵐ
-  nothing             → ∅ᵐ
+  (just (p , v))  → ❴ p , v ❵ᵐ
+  nothing         → ∅ᵐ
 
-certRefund : DCert → Maybe (DepositPurpose × Credential)
-certRefund (delegate c nothing nothing x)  = just (CredentialDeposit , c)
-certRefund (deregdrep c)                   = just (DRepDeposit       , c)
+certRefund : DCert → Maybe DepositPurpose
+certRefund (delegate c nothing nothing x)  = just (CredentialDeposit c)
+certRefund (deregdrep c)                   = just (DRepDeposit       c)
 certRefund _                               = nothing
 
-certRefundˢ : DCert → ℙ (DepositPurpose × Credential)
+certRefundˢ : DCert → ℙ DepositPurpose
 certRefundˢ = partialToSet certRefund
 
--- txDeposits : TxBody → (DepositPurpose × Credential) ↛ Coin
+propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ↛ Coin
+propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
+  = ❴ GovActionDeposit gaid , PParams.govDeposit pp ❵ᵐ
+
+-- txDeposits : TxBody → DepositPurpose ↛ Coin
 -- txDeposits = foldr _∪⁺_ ∅ᵐ ∘ List.map certDepositᵐ ∘ txcerts
 
 -- this has to be a type definition for inference to work
@@ -151,26 +156,39 @@ record UTxOState : Set where
   constructor ⟦_,_,_⟧ᵘ
   field utxo      : UTxO
         fees      : Coin
-        deposits  : (DepositPurpose × Credential) ↛ Coin
+        deposits  : DepositPurpose ↛ Coin
 
-updateDeposits : PParams → List DCert → (DepositPurpose × Credential) ↛ Coin → (DepositPurpose × Credential) ↛ Coin
-updateDeposits _  []              deposits = deposits
-updateDeposits pp (cert ∷ certs)  deposits =
-  ((updateDeposits pp certs deposits) ∪⁺ certDepositᵐ pp cert) ∣ certRefundˢ cert ᶜ
+updateCertDeposits : PParams → List DCert → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateCertDeposits _  []              deposits = deposits
+updateCertDeposits pp (cert ∷ certs)  deposits =
+  ((updateCertDeposits pp certs deposits) ∪⁺ certDepositᵐ pp cert) ∣ certRefundˢ cert ᶜ
 
-depositsChange : PParams → List DCert → (DepositPurpose × Credential) ↛ Coin → ℤ
-depositsChange pp certs deposits = getCoin (updateDeposits pp certs deposits) ⊖ getCoin deposits
+updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateProposalDeposits pp _    []             deposits = deposits
+updateProposalDeposits pp txid (prop ∷ props) deposits
+  = updateProposalDeposits pp txid props deposits
+  ∪⁺ propDepositᵐ pp (txid , length props) prop
+
+updateDeposits : PParams → TxBody → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateDeposits pp txb
+  = updateCertDeposits pp (txcerts txb)
+  ∘ updateProposalDeposits pp (txid txb) (txprop txb)
+
+depositsChange : PParams → TxBody → DepositPurpose ↛ Coin → ℤ
+depositsChange pp txb deposits = getCoin (updateDeposits pp txb deposits) ⊖ getCoin deposits
 
 -- refundedDeposits : TxBody → ℙ (DepositPurpose × Credential)
 -- refundedDeposits = mapPartial certRefund ∘ fromList ∘ txcerts
 
 depositRefunds : PParams → UTxOState → TxBody → Coin
-depositRefunds pp st txb = negPart $ depositsChange pp (txcerts txb) deposits
+depositRefunds pp st txb = negPart $ depositsChange pp txb deposits
   where open UTxOState st
 
 newDeposits : PParams → UTxOState → TxBody → Coin
-newDeposits pp st txb = posPart $ depositsChange pp (txcerts txb) deposits
-  where open UTxOState st
+newDeposits pp st txb = certDeposits
+  where
+    open UTxOState st
+    certDeposits = posPart $ depositsChange pp txb deposits
 
 consumed : PParams → UTxOState → TxBody → Value
 consumed pp st txb = balance (UTxOState.utxo st ∣ txins txb)
@@ -270,8 +288,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     Γ ⊢ s ⇀⦇ tx ,UTXO⦈
         ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
         , fees + f
-        , updateDeposits pp (txcerts tx) deposits
-        ⟧ᵘ
+        , updateDeposits pp tx deposits ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move

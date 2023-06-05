@@ -27,6 +27,7 @@ _∧_ = _×_
 
 instance
   _ = +-0-commutativeMonoid
+  _ = +-0-monoid
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -39,9 +40,10 @@ record RatifyEnv : Set where
         ccHotKeys     : KeyHash ↛ Maybe KeyHash
 
 record RatifyState : Set where
-  constructor ⟦_,_⟧ʳ
-  field es      : EnactState
-        future  : List (GovActionID × GovActionState)
+  constructor ⟦_,_,_⟧ʳ
+  field es              : EnactState
+        future          : List (GovActionID × GovActionState)
+        expired         : List (GovActionID × GovActionState)
 \end{code}
 \caption{Types and functions for the RATIFY transition system}
 \end{figure*}
@@ -214,32 +216,32 @@ private variable
   es es' : EnactState
   upd : PParamsUpdate
   a : GovActionID × GovActionState
-  f f' l : List (GovActionID × GovActionState)
+  f f' l removed : List (GovActionID × GovActionState)
 
 data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  RATIFY-Accept : let open RatifyEnv Γ in
+  RATIFY-Accept : let open RatifyEnv Γ; open GovActionState (proj₂ a) in
     accepted Γ es (proj₂ a)
     → _ ⊢ es ⇀⦇ GovActionState.action (proj₂ a) ,ENACT⦈ es'
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f , a ∷ removed ⟧ʳ
 
   -- remove expired actions
   -- NOTE: don't have to remove actions that can never be accpted because of sufficient no votes
-  RATIFY-Reject : let open RatifyEnv Γ in
+  RATIFY-Reject : let open RatifyEnv Γ; open GovActionState (proj₂ a) in
     ¬ accepted Γ es (proj₂ a)
     → expired currentEpoch (proj₂ a)
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f , a ∷ removed ⟧ʳ
 
   -- continue voting in the next epoch
   RATIFY-Continue : let open RatifyEnv Γ in
     ¬ accepted Γ es (proj₂ a)
     → ¬ expired currentEpoch (proj₂ a)
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f , removed ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID × GovActionState) → RatifyState → Set
 _⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,RATIFY'⦈_)

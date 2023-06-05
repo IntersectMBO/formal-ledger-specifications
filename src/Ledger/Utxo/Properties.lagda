@@ -52,7 +52,7 @@ private variable
   utxo utxo' utxo1 utxo2 : UTxO
   fee fee' fees fees' : Coin
   utxoState utxoState' utxoState1 utxoState2 : UTxOState
-  deposits deposits' : (DepositPurpose × Credential) ↛ Coin
+  deposits deposits' : DepositPurpose ↛ Coin
   Γ : UTxOEnv
   s s' : UTxOState
 
@@ -124,12 +124,12 @@ posPart-negPart≡x {ℤ.+_ n}     = refl
 posPart-negPart≡x {ℤ.negsuc n} = refl
 
 module DepositHelpers
-  (utxo : UTxO) (fees : Coin) (deposits : (DepositPurpose × Credential) ↛ Coin) (tx : TxBody) (pp : PParams) where
+  (utxo : UTxO) (fees : Coin) (deposits : DepositPurpose ↛ Coin) (tx : TxBody) (pp : PParams) where
 
   private
     dep = getCoin deposits
-    uDep = getCoin (updateDeposits pp (txcerts tx) deposits)
-    Δdep = depositsChange pp (txcerts tx) deposits
+    uDep = getCoin (updateDeposits pp tx deposits)
+    Δdep = depositsChange pp tx deposits
     ref = depositRefunds pp ⟦ utxo , fees , deposits ⟧ᵘ tx
     tot = newDeposits    pp ⟦ utxo , fees , deposits ⟧ᵘ tx
 

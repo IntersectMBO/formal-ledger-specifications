@@ -80,14 +80,15 @@ abstract
   ≟-∅ = Decˡ.≟-∅
 
 open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_) public
-open import Axiom.Set.Map th renaming (Map to _↛_) public
+open import Axiom.Set.Map th renaming (Map to _↛_ ; PartialMap to _⇀_) public
 open import Axiom.Set.TotalMap th public
 open L.Decˡ hiding (_∈?_; ≟-∅) public
 open import Axiom.Set.Sum th public
 open import Axiom.Set.Map.Dec List-Modelᵈ public
+open import Axiom.Set.Factor List-Model public
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where
-  open Restriction {A} ∈-sp hiding (_∣_; _∣_ᶜ) public
+  open Restriction {A} ∈-sp renaming (_∣_ to _∣ʳ_; _∣_ᶜ to _∣ʳ_ᶜ) public
   open Corestriction {A} ∈-sp hiding (_∣^_; _∣^_ᶜ) public
   open Restrictionᵐ {A} ∈-sp public
   open Corestrictionᵐ {A} ∈-sp public
