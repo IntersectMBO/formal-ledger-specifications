@@ -22,7 +22,7 @@ open Crypto crypto
 open import Ledger.Address Network KeyHash ScriptHash
 open import Ledger.PParams epochStructure using (PParams)
 open import Ledger.GovernanceActions TxId Network DocHash epochStructure ppd ppHashable crypto
-  using (Anchor; VDeleg)
+  using (Anchor; VDeleg; GovVote; GovRole)
 
 open EpochStructure epochStructure
 
@@ -40,8 +40,13 @@ data DCert : Set where
   deregdrep  : Credential → DCert
   ccreghot   : Credential → Maybe KeyHash → DCert
 
-VDelEnv   = PParams
-CertEnv   = PParams
+record CertEnv : Set where
+  constructor ⟦_,_,_⟧ᶜ
+  field epoch  : Epoch
+        pp     : PParams
+        votes  : List GovVote
+
+VDelEnv   = CertEnv
 DelegEnv  = PParams
 PoolEnv   = PParams
 
@@ -61,7 +66,7 @@ record PState : Set where
 
 record VState : Set where
   constructor ⟦_,_⟧ᵛ
-  field dreps      : ℙ Credential
+  field dreps      : Credential ⇀ Epoch
         ccHotKeys  : KeyHash ⇀ Maybe KeyHash -- TODO: maybe replace with credential
 
 record CertState : Set where
@@ -73,7 +78,7 @@ record CertState : Set where
 \begin{code}[hide]
 private variable
   an : Anchor
-  dReps dReps' : ℙ Credential
+  dReps dReps' : Credential ⇀ Epoch
   pools : Credential ⇀ PoolParams
   vDelegs : Credential ⇀ VDeleg
   sDelegs : Credential ⇀ Credential
@@ -92,7 +97,9 @@ private variable
   stᵛ stᵛ' : VState
   stᵈ stᵈ' : DState
   stᵖ stᵖ' : PState
+  Γ : CertEnv
   pp : PParams
+  vs : List GovVote
   poolParams : PoolParams
 \end{code}
 
@@ -133,41 +140,50 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set whe
 
 data _⊢_⇀⦇_,VDEL⦈_ : VDelEnv → VState → DCert → VState → Set where
   VDEL-regdrep : let open PParams pp in
-    d ≡ poolDeposit -- TODO use drepDeposit instead
-    → c ∉ dReps
+    (d ≡ drepDeposit × c ∉ dom (dReps ˢ)) ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ))
     ────────────────────────────────
-    pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,VDEL⦈
-         ⟦ ❴ c ❵ ∪ dReps , ccKeys ⟧ᵛ
+    ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,VDEL⦈
+                       ⟦ ❴ c , e +ᵉ' drepActivity ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
 
   VDEL-deregdrep :
-    c ∉ dReps'
-    → ❴ c ❵ ∪ dReps' ≡ dReps
+    c ∈ dom (dReps ˢ)
     ────────────────────────────────
-    pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,VDEL⦈
-         ⟦ dReps' , ccKeys ⟧ᵛ
+    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,VDEL⦈
+        ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   VDEL-ccreghot :
     (kh , nothing) ∉ ccKeys ˢ
     -- TODO: Should we check if kh actually belongs to the CC?
     ────────────────────────────────
-    pp ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot (inj₁ kh) mkh ,VDEL⦈
-         ⟦ dReps , singletonᵐ kh mkh ∪ᵐˡ ccKeys ⟧ᵛ
+    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot (inj₁ kh) mkh ,VDEL⦈
+        ⟦ dReps , singletonᵐ kh mkh ∪ᵐˡ ccKeys ⟧ᵛ
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
   CERT-deleg :
     pp ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
     ────────────────────────────────
-    pp ⊢ st ⇀⦇ dCert ,CERT⦈ record st { dState = stᵈ' }
+    ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { dState = stᵈ' }
 
   CERT-vdel :
-    pp ⊢ stᵛ ⇀⦇ dCert ,VDEL⦈ stᵛ'
+    Γ ⊢ stᵛ ⇀⦇ dCert ,VDEL⦈ stᵛ'
     ────────────────────────────────
-    pp ⊢ st ⇀⦇ dCert ,CERT⦈ record st { vState = stᵛ' }
+    Γ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { vState = stᵛ' }
 
   CERT-pool :
     pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
     ────────────────────────────────
-    pp ⊢ st ⇀⦇ dCert ,CERT⦈ record st { pState = stᵖ' }
+    ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { pState = stᵖ' }
+
+data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set where
+  CERT-base :
+    let open PParams pp; open CertState st; open VState vState
+        refresh = mapPartial (λ v → let open GovVote v in case role of λ where
+          GovRole.DRep → just credential
+          _    → nothing) (fromList vs)
+    in ⊤ -- TODO: check that the withdrawals are correct here
+    ────────────────────────────────
+    ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st { vState = record vState
+                         { dreps = constMap refresh (e +ᵉ' drepActivity) ∪ᵐˡ dreps } }
 
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = SS⇒BS λ (Γ , _) → Γ ⊢_⇀⦇_,CERT⦈_

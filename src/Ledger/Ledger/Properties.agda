@@ -61,7 +61,7 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_)
       ,′ compute Computational-TALLY record { epoch = epoch (Γ .LEnv.slot) ; LEnv Γ ; TxBody (body tx) } tally (txgov (body tx))
       ,′ maybe (λ certState' →
         just certState' ,′ ⌊ ¿ map RwdAddr.stake (dom (txwdrls (body tx) ˢ)) ⊆ dom (DState.voteDelegs (CertState.dState certState') ˢ) ¿ ⌋)
-        (nothing ,′ false) (compute Computational-CERTS (LEnv.pparams Γ) certState (txcerts (body tx))))
+        (nothing ,′ false) (compute Computational-CERTS ⟦ epoch (LEnv.slot Γ) , LEnv.pparams Γ , txvote (body tx) ⟧ᶜ certState (txcerts (body tx))))
 
     helper₁ : ∀ {X Z : Set} {x : Z → X} {y : X} {z : Maybe Z} → proj₁ (maybe′ (λ w → just w ,′ x w) (nothing ,′ y) z) ≡ z
     helper₁ {z = just x}  = refl
@@ -78,7 +78,7 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_)
       eq₁ , eqs = ×-≡,≡←≡ eq
       eq₂ , eqs' = ×-≡,≡←≡ eqs
       eq₃ , eq₄ = ×-≡,≡←≡ eqs'
-      comp = compute Computational-CERTS (LEnv.pparams Γ) (LState.certState s) (txcerts (body tx))
+      comp = compute Computational-CERTS ⟦ epoch (LEnv.slot Γ) , LEnv.pparams Γ , txvote (body tx) ⟧ᶜ (LState.certState s) (txcerts (body tx))
       prop = λ s → ¿ map RwdAddr.stake (dom (txwdrls (body tx) ˢ)) ⊆ dom (DState.voteDelegs (CertState.dState s) ˢ) ¿
       p = (case comp return (λ x → comp ≡ x → x ≡ just certState) of
              λ x h → trans (trans (sym h) (sym (helper₁))) eq₃) refl
