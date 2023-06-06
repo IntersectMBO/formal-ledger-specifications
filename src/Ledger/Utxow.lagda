@@ -22,18 +22,24 @@ open Tx
 
 \begin{figure*}[h]
 \begin{code}
+getVKeys : ℙ Credential → ℙ KeyHash
+getVKeys = mapPartial isInj₁
+
+getScripts : ℙ Credential → ℙ ScriptHash
+getScripts = mapPartial isInj₂
+
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded utxo txb =
-  mapPartial ((λ { (inj₁ kh) → just kh ; _ → nothing }) ∘ payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
-  ∪ mapPartial (λ { record { credential = inj₁ kh } → just kh ; _ → nothing }) (setFromList $ txvote txb)
+witsVKeyNeeded utxo txb = getVKeys $
+    map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
+  ∪ map GovVote.credential (setFromList $ txvote txb)
 
 scriptsNeeded : UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded utxo txb =
-  mapPartial ((λ { (inj₂ sh) → just sh ; _ → nothing }) ∘ payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
-  ∪ mapPartial (λ { record { credential = inj₂ sh } → just sh ; _ → nothing }) (setFromList $ txvote txb)
+scriptsNeeded utxo txb = getScripts $
+    map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
+  ∪ map GovVote.credential (setFromList $ txvote txb)
 
 scriptsP1 : TxWitnesses → ℙ P1Script
-scriptsP1 txw = mapPartial (λ { (inj₁ s) → just s ; _ → nothing }) (scripts txw)
+scriptsP1 txw = mapPartial isInj₁ (scripts txw)
 \end{code}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}
@@ -52,6 +58,8 @@ data
 
 \begin{figure*}[h]
 \begin{code}[hide]
+All′ = All
+syntax All′ (λ x → P) l = ∀[ x ∈ l ] P
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
@@ -63,8 +71,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
           witsKeyHashes = map hash (dom (vkSigs txw ˢ))
           witsScriptHashes = map hash (scripts txw)
       in
-    All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (vkSigs txw ˢ)
-    → All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
+    ∀[ (vk , σ) ∈ vkSigs txw ˢ ] isSigned vk (txidBytes (txid txb)) σ
+    → ∀[ s ∈ scriptsP1 txw ] validP1Script witsKeyHashes (txvldt txb) s
     → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     → scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
     → txADhash txb ≡ M.map hash (txAD tx)

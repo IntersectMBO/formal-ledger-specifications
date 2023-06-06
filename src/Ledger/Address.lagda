@@ -37,18 +37,18 @@ data isScript : Credential → Set where
 \begin{code}
 
 record BaseAddr : Set where
-  field net   : Network
-        pay   : Credential
-        stake : Credential
+  field net    : Network
+        pay    : Credential
+        stake  : Credential
 
 record BootstrapAddr : Set where
-  field net       : Network
-        pay       : Credential
-        attrsSize : ℕ
+  field net        : Network
+        pay        : Credential
+        attrsSize  : ℕ
 
 record RwdAddr : Set where
-  field net   : Network
-        stake : Credential
+  field net    : Network
+        stake  : Credential
 
 Addr = BaseAddr ⊎ BootstrapAddr
 
@@ -61,13 +61,14 @@ ScriptBootstrapAddr = Σ[ addr ∈ BootstrapAddr  ] isScript (BootstrapAddr.pay 
 VKeyAddr   = VKeyBaseAddr   ⊎ VKeyBootstrapAddr
 ScriptAddr = ScriptBaseAddr ⊎ ScriptBootstrapAddr
 \end{code}
-\end{AgdaSuppressSpace}
+\end{AgdaSuppressSpace} \\
 \emph{Helper functions}
 \AgdaTarget{payCred, isVKeyAddr}
 \begin{code}
 payCred     : Addr → Credential
 netId       : Addr → Network
 isVKeyAddr  : Addr → Set
+isVKeyAddr  = isVKey ∘ payCred
 \end{code}
 \end{AgdaAlign}
 \caption{Definitions used in Addresses}
@@ -79,8 +80,6 @@ payCred (inj₂ record {pay = pay}) = pay
 
 netId (inj₁ record {net = net}) = net
 netId (inj₂ record {net = net}) = net
-
-isVKeyAddr = isVKey ∘ payCred
 
 isVKey? : ∀ c → Dec (isVKey c)
 isVKey? (inj₁ h) = yes (VKeyisVKey h)

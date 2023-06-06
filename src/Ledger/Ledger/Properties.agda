@@ -92,21 +92,21 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_)
   Computational-LEDGER .compute Γ s tx = helper (Computational-Match Γ s tx)
   Computational-LEDGER .≡-just⇔STS {Γ} {s} {tx} {s'} = mk⇔
     (λ h → case Computational-Match-helper {Γ = Γ} {s = s} {tx = tx} h of λ where
-      (h₁ , h₂ , h₃ , h₄) → LEDGER (to (≡-just⇔STS Computational-CERTS) (trans (sym helper₁) h₃))
-                                   (to (≡-just⇔STS Computational-UTXOW) h₁)
+      (h₁ , h₂ , h₃ , h₄) → LEDGER (to (≡-just⇔STS Computational-UTXOW) h₁)
+                                   (to (≡-just⇔STS Computational-CERTS) (trans (sym helper₁) h₃))
                                    (to (≡-just⇔STS Computational-TALLY) h₂)
                                    h₄)
     (λ where (LEDGER x x₁ x₂ x₃) → cong helper
-               (×-≡,≡→≡ (from (≡-just⇔STS Computational-UTXOW) x₁
+               (×-≡,≡→≡ (from (≡-just⇔STS Computational-UTXOW) x
                , ×-≡,≡→≡ ((from (≡-just⇔STS Computational-TALLY) x₂)
-               , subst (λ x → maybe _ _ x ≡ _) (sym (from (≡-just⇔STS Computational-CERTS) x))
+               , subst (λ x → maybe _ _ x ≡ _) (sym (from (≡-just⇔STS Computational-CERTS) x₁))
                  (×-≡,≡→≡ (refl , fromWitness' _ x₃))))))
 
   FreshTx : Tx → LState → Set
   FreshTx tx ls = txid (body tx) ∉ map proj₁ (dom (utxo (utxoSt ls) ˢ))
 
   LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-  LEDGER-pov h (LEDGER _ (UTXOW-inductive _ _ _ _ _ st) _ _) = P.pov h st
+  LEDGER-pov h (LEDGER (UTXOW-inductive _ _ _ _ _ st) _ _ _) = P.pov h st
 
   data FreshTxs : LEnv → LState → List Tx → Set where
     []-Fresh  : FreshTxs Γ s []

@@ -29,7 +29,6 @@ open TxWitnesses
 open Tx
 
 open import Ledger.Crypto
-open import Ledger.PPUp
 open import Ledger.PParams epochStructure
 open import Ledger.TokenAlgebra using (TokenAlgebra)
 
@@ -81,7 +80,7 @@ outs : TxBody → UTxO
 outs tx = mapKeys (txid tx ,_) (txouts tx) λ where _ _ refl → refl
 
 balance : UTxO → Value
-balance utxo = Σᵐ[ x ← utxo ᶠᵐ ] proj₂ (proj₂ x)
+balance utxo = Σᵐᵛ[ x ← utxo ᶠᵐ ] getValue x
 
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
@@ -97,10 +96,10 @@ data DepositPurpose : Set where
   GovActionDeposit   : GovActionID → DepositPurpose
 
 certDeposit : PParams → DCert → Maybe (DepositPurpose × Coin)
-certDeposit _  (delegate c _ _ v)  = just (CredentialDeposit c , v)
-certDeposit pp (regpool c _)       = just (PoolDeposit       c , PParams.poolDeposit pp)
-certDeposit _  (regdrep c v _)     = just (DRepDeposit       c , v)
-certDeposit _  _                   = nothing
+certDeposit _   (delegate c _ _ v)  = just (CredentialDeposit c , v)
+certDeposit pp  (regpool c _)       = just (PoolDeposit       c , PParams.poolDeposit pp)
+certDeposit _   (regdrep c v _)     = just (DRepDeposit       c , v)
+certDeposit _   _                   = nothing
 
 certDepositᵐ : PParams → DCert → DepositPurpose ↛ Coin
 certDepositᵐ pp cert = case certDeposit pp cert of λ where
@@ -118,9 +117,6 @@ certRefundˢ = partialToSet certRefund
 propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ↛ Coin
 propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
   = ❴ GovActionDeposit gaid , PParams.govDeposit pp ❵ᵐ
-
--- txDeposits : TxBody → DepositPurpose ↛ Coin
--- txDeposits = foldr _∪⁺_ ∅ᵐ ∘ List.map certDepositᵐ ∘ txcerts
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
@@ -144,6 +140,10 @@ instance
 
 \AgdaTarget{UTxOEnv, UTxOState, \_⊢\_⇀⦇\_,UTXO⦈\_}
 \begin{figure*}[h]
+\emph{Derived types}
+\begin{code}
+Deposits = DepositPurpose ↛ Coin
+\end{code}
 \emph{UTxO environment}
 \begin{code}
 record UTxOEnv : Set where
@@ -156,62 +156,11 @@ record UTxOState : Set where
   constructor ⟦_,_,_⟧ᵘ
   field utxo      : UTxO
         fees      : Coin
-        deposits  : DepositPurpose ↛ Coin
-
-updateCertDeposits : PParams → List DCert → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
-updateCertDeposits _  []              deposits = deposits
-updateCertDeposits pp (cert ∷ certs)  deposits =
-  ((updateCertDeposits pp certs deposits) ∪⁺ certDepositᵐ pp cert) ∣ certRefundˢ cert ᶜ
-
-updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
-updateProposalDeposits pp _    []             deposits = deposits
-updateProposalDeposits pp txid (prop ∷ props) deposits
-  = updateProposalDeposits pp txid props deposits
-  ∪⁺ propDepositᵐ pp (txid , length props) prop
-
-updateDeposits : PParams → TxBody → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
-updateDeposits pp txb
-  = updateCertDeposits pp (txcerts txb)
-  ∘ updateProposalDeposits pp (txid txb) (txprop txb)
-
-depositsChange : PParams → TxBody → DepositPurpose ↛ Coin → ℤ
-depositsChange pp txb deposits = getCoin (updateDeposits pp txb deposits) ⊖ getCoin deposits
-
--- refundedDeposits : TxBody → ℙ (DepositPurpose × Credential)
--- refundedDeposits = mapPartial certRefund ∘ fromList ∘ txcerts
-
-depositRefunds : PParams → UTxOState → TxBody → Coin
-depositRefunds pp st txb = negPart $ depositsChange pp txb deposits
-  where open UTxOState st
-
-newDeposits : PParams → UTxOState → TxBody → Coin
-newDeposits pp st txb = certDeposits
-  where
-    open UTxOState st
-    certDeposits = posPart $ depositsChange pp txb deposits
-
-consumed : PParams → UTxOState → TxBody → Value
-consumed pp st txb = balance (UTxOState.utxo st ∣ txins txb)
-                   +ᵛ mint txb
-                   +ᵛ inject (depositRefunds pp st txb)
-
-produced : PParams → UTxOState → TxBody → Value
-produced pp st txb = balance (outs txb)
-                   +ᵛ inject (txfee txb)
-                   +ᵛ inject (newDeposits pp st txb)
+        deposits  : Deposits
 \end{code}
 \emph{UTxO transitions}
 
 \begin{code}[hide]
-private variable
-  tx : TxBody
-  utxo utxo' utxo1 utxo2 : UTxO
-  fee fee' fees fees' : Coin
-  utxoState utxoState' utxoState1 utxoState2 : UTxOState
-  Γ : UTxOEnv
-  s s' : UTxOState
-  deposits deposits' : Credential ↛ Coin
-
 ⟦_⟧ : {A : Set} → A → A
 ⟦_⟧ = id
 
@@ -251,8 +200,52 @@ data
 \label{fig:ts-types:utxo-shelley}
 \end{figure*}
 
+\begin{figure*}
+\begin{code}
+updateCertDeposits : PParams → List DCert → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateCertDeposits _  []              deposits = deposits
+updateCertDeposits pp (cert ∷ certs)  deposits =
+  ((updateCertDeposits pp certs deposits) ∪⁺ certDepositᵐ pp cert) ∣ certRefundˢ cert ᶜ
+
+updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateProposalDeposits pp _    []             deposits = deposits
+updateProposalDeposits pp txid (prop ∷ props) deposits =
+  updateProposalDeposits pp txid props deposits ∪⁺ propDepositᵐ pp (txid , length props) prop
+
+updateDeposits : PParams → TxBody → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateDeposits pp txb = updateCertDeposits pp (txcerts txb)
+                      ∘ updateProposalDeposits pp (txid txb) (txprop txb)
+
+depositsChange : PParams → TxBody → DepositPurpose ↛ Coin → ℤ
+depositsChange pp txb deposits = getCoin (updateDeposits pp txb deposits) ⊖ getCoin deposits
+
+depositRefunds : PParams → UTxOState → TxBody → Coin
+depositRefunds pp st txb = negPart $ depositsChange pp txb deposits
+  where open UTxOState st
+
+newDeposits : PParams → UTxOState → TxBody → Coin
+newDeposits pp st txb = posPart $ depositsChange pp txb deposits
+  where open UTxOState st
+
+consumed : PParams → UTxOState → TxBody → Value
+consumed pp st txb = balance (UTxOState.utxo st ∣ txins txb)
+                   +ᵛ mint txb
+                   +ᵛ inject (depositRefunds pp st txb)
+
+produced : PParams → UTxOState → TxBody → Value
+produced pp st txb = balance (outs txb)
+                   +ᵛ inject (txfee txb)
+                   +ᵛ inject (newDeposits pp st txb)
+
+\end{code}
+\caption{Functions used in UTxO rules, continued}
+\label{fig:functions:utxo-2}
+\end{figure*}
+
 \begin{figure*}[h]
 \begin{code}[hide]
+open PParams
+
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}
@@ -264,31 +257,15 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           fees          = UTxOState.fees s
           deposits      = UTxOState.deposits s
       in
-    txins tx ≢ ∅
-    → inInterval slot (txvldt tx)
-    → txins tx ⊆ dom (utxo ˢ)
-    → let f = txfee tx in minfee pp tx ≤ f
-    → consumed pp s tx ≡ produced pp s tx
-    → coin (mint tx) ≡ 0
-
-{- these break deriveComputational but don't matter at the moment
-    → ∀ txout → txout ∈ proj₁ (txouts tx)
-              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp))
-
-    → ∀ txout → txout ∈ proj₁ (txouts tx)
-              → (serSize (getValue (proj₂ txout))) ≤ PParams.maxValSize pp
--}
-
-    -- TODO: these fail with some reduceDec error and should be part of well-formedness
-    -- → All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (range ((txouts tx) ˢ))
-    -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
-    -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
-    → txsize tx ≤ PParams.maxTxSize pp
+    txins tx ≢ ∅                           → txins tx ⊆ dom (utxo ˢ)
+    → inInterval slot (txvldt tx)          → minfee pp tx ≤ txfee tx
+    → consumed pp s tx ≡ produced pp s tx  → coin (mint tx) ≡ 0
+    → txsize tx ≤ maxTxSize pp
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ,UTXO⦈
-        ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
-        , fees + f
-        , updateDeposits pp tx deposits ⟧ᵘ
+    Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
+                        , fees + txfee tx
+                        , updateDeposits pp tx deposits
+                        ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 -- TODO: This can't be moved into Properties because it breaks. Move

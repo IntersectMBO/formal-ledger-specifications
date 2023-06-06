@@ -220,7 +220,7 @@ instance
         ; maxTxSize        = maxTxSize
         ; maxHeaderSize    = maxHeaderSize
         ; maxValSize       = maxValSize
-        ; minUtxOValue     = minUtxOValue
+        ; minUTxOValue     = minUTxOValue
         ; poolDeposit      = poolDeposit
         ; Emax             = Emax
         ; pv               = coerce pv
@@ -241,7 +241,7 @@ instance
         ; maxTxSize        = maxTxSize
         ; maxHeaderSize    = maxHeaderSize
         ; maxValSize       = maxValSize
-        ; minUtxOValue     = minUtxOValue
+        ; minUTxOValue     = minUTxOValue
         ; poolDeposit      = poolDeposit
         ; Emax             = Emax
         ; pv               = coerce pv

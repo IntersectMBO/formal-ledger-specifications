@@ -13,6 +13,8 @@
 \newunicodechar{ᵘ}{\ensuremath{^u}}
 \newunicodechar{ᵛ}{\ensuremath{^v}}
 \newunicodechar{⁺}{\ensuremath{^+}}
+\newunicodechar{⁻}{\ensuremath{^-}}
+\newunicodechar{¹}{\ensuremath{^1}}
 \newunicodechar{₁}{\ensuremath{_1}}
 \newunicodechar{₂}{\ensuremath{_2}}
 \newunicodechar{₃}{\ensuremath{_3}}
@@ -21,6 +23,12 @@
 \newunicodechar{≢}{\ensuremath{\nequiv}}
 \newunicodechar{❴}{\ensuremath{\{}}
 \newunicodechar{❵}{\ensuremath{\}}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⇀}{\ensuremath{\rightharpoonup}}
+-- TODO: replace the map arrow in the Agda code, and figure something out for the parentheses
+\newunicodechar{↛}{\ensuremath{\rightharpoonup}}
+\newunicodechar{⦇}{\ensuremath{(}}
+\newunicodechar{⦈}{\ensuremath{)}}
 
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{float}
@@ -56,13 +64,11 @@
 \newcommand{\balance}[1]{\fun{balance}~ \var{#1}}
 \newcommand{\txfee}[1]{\fun{txfee}~ \var{#1}}
 
-\newcommand{\wcard}[0]{\rule[-.5mm]{2mm}{.2mm}}
-\newcommand{\leteq}{\ensuremath{\mathrel{\mathop:}=}}
-
 \newtheorem{property}{Property}[section]
 
 
 \begin{document}
+\tableofcontents
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -70,6 +76,9 @@
 open import Ledger.Transaction
 
 module Ledger.PDF (txs : TransactionStructure) where
+
+open import Ledger.BaseTypes
+open import Ledger.Introduction
 
 open import Ledger.Utxo txs
 open import Ledger.Utxow txs
@@ -82,7 +91,10 @@ open import Ledger.PPUp.Properties
 open import Ledger.Ledger.Properties
 \end{code}
 
+\include{Ledger/Introduction}
 \include{Ledger/Crypto}
+\include{Ledger/BaseTypes}
+\include{Ledger/TokenAlgebra}
 \include{Ledger/Address}
 \include{Ledger/Script}
 \include{Ledger/GovernanceActions}
@@ -97,6 +109,6 @@ open import Ledger.Ledger.Properties
 \include{Ledger/Chain}
 
 \section{Properties}
-\include{Ledger/Utxo/Properties}
+\input{Ledger/Utxo/Properties}
 
 \end{document}
