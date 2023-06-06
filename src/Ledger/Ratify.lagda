@@ -43,7 +43,7 @@ record RatifyState : Set where
   constructor ⟦_,_,_⟧ʳ
   field es              : EnactState
         future          : List (GovActionID × GovActionState)
-        expired         : List (GovActionID × GovActionState)
+        removed         : List (GovActionID × GovActionState)
 \end{code}
 \caption{Types and functions for the RATIFY transition system}
 \end{figure*}

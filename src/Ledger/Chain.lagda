@@ -77,24 +77,27 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       removedGovActions = map GovActionDeposit (map proj₁ (fromList removed))
       pup = PPUpdateState.pup ppup
       deposits = UTxOState.deposits utxoSt
-      acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt }
       retired = retiring ⁻¹ e
-      govActionRewards' = concatMapˢ
+      govActionReturns' = concatMapˢ
         (λ where
           (gaid , gaSt) → map
             (GovActionState.returnAddr gaSt ,_)
             ((deposits ˢ) ⟪$⟫ ❴ GovActionDeposit gaid ❵)
         )
         (fromList removed)
-      govActionRewards = aggregate₊ (govActionRewards' , finiteness govActionRewards')
+      govActionReturns = aggregate₊ (govActionReturns' , finiteness govActionReturns')
+      rewards = DState.rewards dState
+      refunds   = govActionReturns ∣ dom (rewards ˢ)
+      unclaimed = govActionReturns ∣ dom (rewards ˢ) ᶜ
       certState' = record certState {
         pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ };
-        dState = record dState { rewards = DState.rewards dState ∪⁺ govActionRewards } }
+        dState = record dState { rewards = rewards ∪⁺ refunds } }
       utxoSt' = record utxoSt
         { fees = 0
         ; deposits = deposits ∣ removedGovActions ᶜ
         }
       ls' = record ls { tally = newTally ; utxoSt = utxoSt' ; certState = certState' }
+      acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt + getCoin unclaimed }
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; ccHotKeys = VState.ccHotKeys vState ; NewEpochEnv Γ }
