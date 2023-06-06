@@ -3,7 +3,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
+open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Ledger (txs : TransactionStructure) where
 
@@ -12,10 +12,10 @@ open import Ledger.Prelude
 open TransactionStructure txs
 open import Ledger.PParams epochStructure
 
-open import Ledger.Utxo txs
-open import Ledger.Utxow txs
 open import Ledger.PPUp txs
 open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
+open import Ledger.Utxo txs
+open import Ledger.Utxow txs
 
 import Data.List as L
 

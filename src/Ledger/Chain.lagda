@@ -119,14 +119,14 @@ maybePurpose prps (prps' , _) c with prps ≟ prps'
 ... | no _ = nothing
 
 maybePurpose-prop : ∀ {prps} {x} {y}
-  → (m : (DepositPurpose × Credential) ↛ Coin)
+  → (m : (DepositPurpose × Credential) ⇀ Coin)
   → (x , y) ∈ dom ((mapMaybeWithKeyᵐ (maybePurpose prps) m) ˢ)
   → x ≡ prps
 maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with to dom∈ xy∈dom
 ... | z , ∈mmwk with prps ≟ x | ∈-mapMaybeWithKey {f = maybePurpose prps} ∈mmwk
 ... | yes refl | _ = refl
 
-filterPurpose : DepositPurpose → (DepositPurpose × Credential) ↛ Coin → Credential ↛ Coin
+filterPurpose : DepositPurpose → (DepositPurpose × Credential) ⇀ Coin → Credential ⇀ Coin
 filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m) λ where
   {x , .z} {y , z} x∈dom y∈dom refl → case maybePurpose-prop {prps = prps} m x∈dom of λ where
     x≡prps → case maybePurpose-prop {prps = prps} m y∈dom of λ where
@@ -135,7 +135,7 @@ filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m
 instance
   _ = +-0-monoid
 
-govActionDeposits : LState → VDeleg ↛ Coin
+govActionDeposits : LState → VDeleg ⇀ Coin
 govActionDeposits ls =
   let open LState ls; open CertState certState; open PState pState; open UTxOState utxoSt; open DState dState
    in foldl _∪⁺_ ∅ᵐ $ setToList $

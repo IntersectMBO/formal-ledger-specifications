@@ -5,11 +5,13 @@ open import Ledger.Prelude
 
 import Data.Maybe as M
 import Data.Rational as ℚ
+
 open import Data.Nat using (_≤_; _≤ᵇ_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 
 open import Foreign.Convertible
 open import Foreign.Haskell.Coerce
+
 import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Crypto
@@ -89,10 +91,10 @@ HSP2ScriptStructure .validPlutusScript?    = λ ()
 HSScriptStructure : ScriptStructure ℕ ℕ ℕ
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
 
-open import Ledger.Transaction
-open import Ledger.TokenAlgebra
-open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
 open import Data.Nat
+open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
+open import Ledger.TokenAlgebra
+open import Ledger.Transaction
 
 coinTokenAlgebra : TokenAlgebra
 coinTokenAlgebra = record
@@ -109,7 +111,7 @@ coinTokenAlgebra = record
       ; ε-homo  = refl
       }
     }
-  ; _≥ᵗ_                    = _≥_
+  ; _≤ᵗ_                    = _≤_
   ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
   }
 
@@ -274,8 +276,8 @@ instance
 
       from' : F.UTxOState → UTxOState
       from' s = record
-        { utxo = from ⦃ Convertible-Map ⦃ DecEq-Product ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
-        ; fees = F.UTxOState.fees s
+        { utxo     = from ⦃ Convertible-Map ⦃ DecEq-Product ⦄ ⦃ Coercible⇒Convertible ⦄ ⦄ (F.UTxOState.utxo s)
+        ; fees     = F.UTxOState.fees s
         ; deposits = ∅ᵐ
         }
 

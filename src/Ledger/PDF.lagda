@@ -25,8 +25,7 @@
 \newunicodechar{❵}{\ensuremath{\}}}
 \newunicodechar{⊢}{\ensuremath{\vdash}}
 \newunicodechar{⇀}{\ensuremath{\rightharpoonup}}
--- TODO: replace the map arrow in the Agda code, and figure something out for the parentheses
-\newunicodechar{↛}{\ensuremath{\rightharpoonup}}
+% TODO: figure something out for the parentheses - the font doesn't support those in one place
 \newunicodechar{⦇}{\ensuremath{(}}
 \newunicodechar{⦈}{\ensuremath{)}}
 

@@ -6,7 +6,7 @@
 open import Ledger.Transaction
 
 module Ledger.PPUp (txs : TransactionStructure) where
-open import Ledger.Prelude hiding (_≥_; _+_; _*_)
+open import Ledger.Prelude hiding (_+_; _*_)
 
 open TransactionStructure txs
 
@@ -34,7 +34,7 @@ instance
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-GenesisDelegation = KeyHash ↛ (KeyHash × KeyHash)
+GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
 record PPUpdateState : Set where
   field pup   : ProposedPPUpdates
@@ -101,7 +101,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateFuture : let open PPUpdateEnv Γ in
     dom (pup ˢ) ⊆ dom (genDelegs ˢ)
     → All (isViableUpdate pparams) (range (pup ˢ))
-    → (slot + (2 * StabilityWindow)) ≥ˢ firstSlot (sucᵉ (epoch slot))
+    → firstSlot (sucᵉ (epoch slot)) ≤ˢ (slot + (2 * StabilityWindow))
     → sucᵉ (epoch slot) ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈

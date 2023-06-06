@@ -5,7 +5,7 @@ open import Ledger.Transaction
 module Ledger.PPUp.Properties (txs : TransactionStructure) where
 
 open TransactionStructure txs
-open import Ledger.Prelude hiding (_≥_; _+_; _*_; Dec₁)
+open import Ledger.Prelude hiding (_+_; _*_; Dec₁)
 
 open import Ledger.PPUp txs
 
@@ -37,7 +37,7 @@ private
   Future-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom (pup ˢ) ⊆ dom (genDelegs ˢ)
       × All (isViableUpdate pparams) (range (pup ˢ))
-      × (slot + (2 * StabilityWindow)) ≥ˢ firstSlot (sucᵉ (epoch slot))
+      × firstSlot (sucᵉ (epoch slot)) ≤ˢ (slot + (2 * StabilityWindow))
       × sucᵉ (epoch slot) ≡ e
 
 instance

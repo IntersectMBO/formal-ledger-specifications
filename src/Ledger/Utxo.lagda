@@ -43,7 +43,7 @@ instance
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
 
-  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ↛ Coin)
+  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
@@ -101,7 +101,7 @@ certDeposit pp  (regpool c _)       = just (PoolDeposit       c , PParams.poolDe
 certDeposit _   (regdrep c v _)     = just (DRepDeposit       c , v)
 certDeposit _   _                   = nothing
 
-certDepositᵐ : PParams → DCert → DepositPurpose ↛ Coin
+certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
 certDepositᵐ pp cert = case certDeposit pp cert of λ where
   (just (p , v))  → ❴ p , v ❵ᵐ
   nothing         → ∅ᵐ
@@ -114,7 +114,7 @@ certRefund _                               = nothing
 certRefundˢ : DCert → ℙ DepositPurpose
 certRefundˢ = partialToSet certRefund
 
-propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ↛ Coin
+propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
 propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
   = ❴ GovActionDeposit gaid , PParams.govDeposit pp ❵ᵐ
 
@@ -142,7 +142,7 @@ instance
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{code}
-Deposits = DepositPurpose ↛ Coin
+Deposits = DepositPurpose ⇀ Coin
 \end{code}
 \emph{UTxO environment}
 \begin{code}
@@ -202,21 +202,21 @@ data
 
 \begin{figure*}
 \begin{code}
-updateCertDeposits : PParams → List DCert → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateCertDeposits _  []              deposits = deposits
 updateCertDeposits pp (cert ∷ certs)  deposits =
   ((updateCertDeposits pp certs deposits) ∪⁺ certDepositᵐ pp cert) ∣ certRefundˢ cert ᶜ
 
-updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateProposalDeposits pp _    []             deposits = deposits
 updateProposalDeposits pp txid (prop ∷ props) deposits =
   updateProposalDeposits pp txid props deposits ∪⁺ propDepositᵐ pp (txid , length props) prop
 
-updateDeposits : PParams → TxBody → DepositPurpose ↛ Coin → DepositPurpose ↛ Coin
+updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateDeposits pp txb = updateCertDeposits pp (txcerts txb)
                       ∘ updateProposalDeposits pp (txid txb) (txprop txb)
 
-depositsChange : PParams → TxBody → DepositPurpose ↛ Coin → ℤ
+depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
 depositsChange pp txb deposits = getCoin (updateDeposits pp txb deposits) ⊖ getCoin deposits
 
 depositRefunds : PParams → UTxOState → TxBody → Coin
