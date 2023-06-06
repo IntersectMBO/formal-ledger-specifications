@@ -76,7 +76,7 @@ data
 \begin{code}
   LEDGER : let open LState s; txb = body tx; open LEnv Γ in
     record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    → pparams ⊢ certState ⇀⦇ txcerts txb ,CERTS⦈ certState'
+    → ⟦ epoch slot , pparams , txvote txb ⟧ᶜ ⊢ certState ⇀⦇ txcerts txb ,CERTS⦈ certState'
     → ⟦ txid txb , epoch slot , pparams ⟧ᵗ ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
     → map stake (dom (txwdrls txb ˢ)) ⊆ dom (voteDelegs (dState certState') ˢ)
     ────────────────────────────────

@@ -20,7 +20,7 @@ open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 open import Data.Product using (map₂)
 
-open import Relation.Nullary.Decidable
+open import Relation.Nullary.Decidable using (⌊_⌋)
 
 infixr 2 _∧_
 _∧_ = _×_
@@ -37,6 +37,7 @@ record StakeDistrs : Set where
 record RatifyEnv : Set where
   field stakeDistrs   : StakeDistrs
         currentEpoch  : Epoch
+        dreps         : Credential ⇀ Epoch
         ccHotKeys     : KeyHash ⇀ Maybe KeyHash
 
 record RatifyState : Set where
@@ -115,12 +116,15 @@ restrictedDists coins rank dists = dists -- record dists { drepStakeDistr = rest
 CCData : Set
 CCData = Maybe (KeyHash ⇀ Epoch × R.ℚ)
 
-module _ (ce : Epoch) (ccHotKeys : KeyHash ⇀ Maybe KeyHash)
-         (cc : CCData) (votes : (GovRole × Credential) ⇀ Vote)
-         (ga : GovAction) where
+module _ (Γ : RatifyEnv) (cc : CCData) (votes : (GovRole × Credential) ⇀ Vote) (ga : GovAction) where
+
+  open RatifyEnv Γ
+
+  roleVotes : GovRole → (GovRole × Credential) ⇀ Vote
+  roleVotes r = filterᵐ (to-sp ((r ≟_) ∘ proj₁ ∘ proj₁)) votes
 
   actualCCVote : KeyHash → Epoch → Vote
-  actualCCVote kh e = case ⌊ ce ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys kh ⦃ _ ∈? _ ⦄ of λ where
+  actualCCVote kh e = case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys kh ⦃ _ ∈? _ ⦄ of λ where
     (true , just (just hk)) → maybe′ id Vote.no $ lookupᵐ? votes (CC , (inj₁ hk)) ⦃ _ ∈? _ ⦄
     _                       → Vote.abstain -- expired, no hot key or resigned
 
@@ -135,10 +139,17 @@ module _ (ce : Epoch) (ccHotKeys : KeyHash ⇀ Maybe KeyHash)
                                            NoConfidence → Vote.yes
                                            _            → Vote.no) ❵ᵐ
 
+  actualDRepVotes : VDeleg ⇀ Vote
+  actualDRepVotes = mapKeys (uncurry credVoter) (roleVotes GovRole.DRep) (λ where _ _ refl → refl)
+                  ∪ᵐˡ constMap (map (credVoter DRep) activeDReps) Vote.no
+    where
+      activeDReps : ℙ Credential
+      activeDReps = dom (filterᵐ (to-sp (currentEpoch ≤ᵉ?_ ∘ proj₂)) dreps ˢ)
+
   actualVotes : VDeleg ⇀ Vote
   actualVotes = mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
-              ∪ᵐˡ (actualPDRepVotes
-              ∪ᵐˡ mapKeys (uncurry credVoter) votes (λ where _ _ refl → refl)) -- TODO: make `actualVotes` for DRep, SPO
+              ∪ᵐˡ (actualPDRepVotes ∪ᵐˡ (actualDRepVotes
+              ∪ᵐˡ mapKeys (uncurry credVoter) votes (λ where _ _ refl → refl))) -- TODO: make `actualVotes` for SPO
 
 votedHashes : Vote → (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 votedHashes v votes r = votes ⁻¹ v
@@ -195,10 +206,10 @@ ccThreshold nothing         = nothing
 ccThreshold (just (cc , q)) = just q
 
 -- for now, consider a proposal as accepted if the CC and half of the SPOs and DReps agree
-accepted : RatifyEnv → EnactState → GovActionState → Set
-accepted Γ es@record { cc = cc ; pparams = record { votingThresholds = drepThreshold , spoThreshold } }
+accepted' : RatifyEnv → EnactState → GovActionState → Set
+accepted' Γ es@record { cc = cc ; pparams = record { votingThresholds = drepThreshold , spoThreshold } }
          s@record  { votes = votes ; action = action } =
-  let open RatifyEnv Γ; votes = actualVotes currentEpoch ccHotKeys cc votes action in
+  let open RatifyEnv Γ; votes = actualVotes Γ cc votes action in
   acceptedR Γ votes SPO spoThreshold
   ∧ acceptedR Γ votes DRep drepThreshold
   ∧ (case lengthˢ (participatingHashes votes CC) , ccThreshold cc of λ where
@@ -218,28 +229,34 @@ private variable
   a : GovActionID × GovActionState
   f f' l removed : List (GovActionID × GovActionState)
 
+-- having `accepted` abstract speeds up type checking of RATIFY' a lot
+abstract
+  accepted : RatifyEnv → EnactState → GovActionState → Set
+  accepted = accepted'
+
 data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Set where
+
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  RATIFY-Accept : let open RatifyEnv Γ; open GovActionState (proj₂ a) in
-    accepted Γ es (proj₂ a)
-    → _ ⊢ es ⇀⦇ GovActionState.action (proj₂ a) ,ENACT⦈ es'
+  RATIFY-Accept : let st = proj₂ a in
+    accepted Γ es st
+    → _ ⊢ es ⇀⦇ GovActionState.action st ,ENACT⦈ es'
     ────────────────────────────────
     Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f , a ∷ removed ⟧ʳ
 
   -- remove expired actions
   -- NOTE: don't have to remove actions that can never be accpted because of sufficient no votes
-  RATIFY-Reject : let open RatifyEnv Γ; open GovActionState (proj₂ a) in
-    ¬ accepted Γ es (proj₂ a)
-    → expired currentEpoch (proj₂ a)
+  RATIFY-Reject : let open RatifyEnv Γ; st = proj₂ a in
+    ¬ accepted Γ es st
+    → expired currentEpoch st
     ────────────────────────────────
     Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f , a ∷ removed ⟧ʳ
 
   -- continue voting in the next epoch
-  RATIFY-Continue : let open RatifyEnv Γ in
-    ¬ accepted Γ es (proj₂ a)
-    → ¬ expired currentEpoch (proj₂ a)
+  RATIFY-Continue : let open RatifyEnv Γ; st = proj₂ a in
+    ¬ accepted Γ es st
+    → ¬ expired currentEpoch st
     ────────────────────────────────
     Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f , removed ⟧ʳ
 

@@ -199,6 +199,10 @@ m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
 _↾'_ : {P : B → Type} → Map A B → specProperty P → Map A B
 m ↾' P? = filterᵐ (sp-∘ P? proj₂) m
 
+constMap : Set A → B → Map A B
+constMap X b = mapˢ (_, b) X , λ x x₁ → trans (proj₂ $ ×-≡,≡←≡ $ proj₁ $ proj₂ (∈⇔P x))
+                                              (sym $ proj₂ $ ×-≡,≡←≡ $ proj₁ $ proj₂ (∈⇔P x₁))
+
 mapPartialLiftKey-just-uniq : ∀ {f : A → B → Maybe B'}
   → left-unique R
   → just (a , b) ∈ mapˢ (mapPartialLiftKey f) R

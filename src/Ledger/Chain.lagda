@@ -100,7 +100,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt + getCoin unclaimed }
     in
     e ≡ sucᵉ lastEpoch
-    → record { currentEpoch = e ; ccHotKeys = VState.ccHotKeys vState ; NewEpochEnv Γ }
+    → record { currentEpoch = e ; VState vState ; NewEpochEnv Γ }
                     ⊢                               ⟦ es  , [] , [] ⟧ʳ
                     ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) , removed ⟧ʳ
     -- TODO: remove keys that aren't in the CC from the hot key map
