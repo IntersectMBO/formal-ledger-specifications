@@ -92,20 +92,21 @@ the transaction body are:
 \begin{AgdaSuppressSpace}
 \begin{code}
   record TxBody : Set where
-    field txins      : ℙ TxIn
-          txouts     : Ix ⇀ TxOut
-          txfee      : Coin
-          mint       : Value
-          txvldt     : Maybe Slot × Maybe Slot
-          txcerts    : List DCert
-          txwdrls    : Wdrl
-          txvote     : List GovVote
-          txprop     : List GovProposal
-          txup       : Maybe Update
-          txADhash   : Maybe ADHash
-          netwrk     : Maybe Network
-          txsize     : ℕ
-          txid       : TxId
+    field txins       : ℙ TxIn
+          txouts      : Ix ⇀ TxOut
+          txfee       : Coin
+          mint        : Value
+          txvldt      : Maybe Slot × Maybe Slot
+          txcerts     : List DCert
+          txwdrls     : Wdrl
+          txvote      : List GovVote
+          txprop      : List GovProposal
+          txdonation  : ℕ
+          txup        : Maybe Update
+          txADhash    : Maybe ADHash
+          netwrk      : Maybe Network
+          txsize      : ℕ
+          txid        : TxId
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ⇀ Sig

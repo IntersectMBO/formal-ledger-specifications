@@ -30,7 +30,7 @@ open TransactionStructure txs
 
 open import Ledger.PParams epochStructure
 open import Ledger.TokenAlgebra using (TokenAlgebra)
-open import Ledger.Utxo txs
+open import Ledger.Utxo txs renaming (Computational-UTXO to Computational-UTXO')
 
 open TxBody
 open TxWitnesses
@@ -52,8 +52,14 @@ private variable
   fee fee' fees fees' : Coin
   utxoState utxoState' utxoState1 utxoState2 : UTxOState
   deposits deposits' : DepositPurpose ⇀ Coin
+  donation donations donations' : Coin
   Γ : UTxOEnv
   s s' : UTxOState
+  A : Set
+
+abstract
+  Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
+  Computational-UTXO = Computational-UTXO'
 
 ⟦⟧-cong-Coin = IsCommutativeMonoidMorphism.⟦⟧-cong coinIsMonoidMorphism
 ∙-homo-Coin = IsCommutativeMonoidMorphism.∙-homo
@@ -96,41 +102,88 @@ consumedCoinEquality {tx} {utxoState} {pp} h = let utxo = UTxOState.utxo utxoSta
   cbalance (utxo ∣ txins tx) + depositRefunds pp utxoState tx                        ∎
 
 producedCoinEquality : ∀ {pp} → coin (produced pp utxoState tx)
-                              ≡ cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx
+                              ≡ cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx + txdonation tx
 producedCoinEquality {utxoState} {tx} {pp} = begin
-  coin (balance (outs tx) +ᵛ inject (txfee tx) +ᵛ inject (newDeposits pp utxoState tx))
+  coin (balance (outs tx) +ᵛ inject (txfee tx) +ᵛ inject (newDeposits pp utxoState tx) +ᵛ inject (txdonation tx))
     ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
-  coin (balance (outs tx) +ᵛ inject (txfee tx)) + coin (inject (newDeposits pp utxoState tx))
-    ≡⟨ cong! (property _) ⟩
-  coin (balance (outs tx) +ᵛ inject (txfee tx)) + newDeposits pp utxoState tx
-    ≡⟨ cong! (∙-homo-Coin coinIsMonoidMorphism _ _) ⟩
-  coin (balance (outs tx)) + coin (inject (txfee tx)) + newDeposits pp utxoState tx
-    ≡⟨ cong (λ x → cbalance (outs tx) + x + newDeposits pp utxoState tx) (property (txfee tx)) ⟩
-  cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx                     ∎
+  coin (balance (outs tx) +ᵛ inject (txfee tx) +ᵛ inject (newDeposits pp utxoState tx)) + coin (inject (txdonation tx))
+    ≡⟨ cong (_+ coin (inject (txdonation tx))) (begin
+      coin (balance (outs tx) +ᵛ inject (txfee tx) +ᵛ inject (newDeposits pp utxoState tx))
+        ≡⟨ ∙-homo-Coin coinIsMonoidMorphism _ _ ⟩
+      coin (balance (outs tx) +ᵛ inject (txfee tx)) + coin (inject (newDeposits pp utxoState tx))
+        ≡⟨ cong! (property _) ⟩
+      coin (balance (outs tx) +ᵛ inject (txfee tx)) + newDeposits pp utxoState tx
+        ≡⟨ cong! (∙-homo-Coin coinIsMonoidMorphism _ _) ⟩
+      coin (balance (outs tx)) + coin (inject (txfee tx)) + newDeposits pp utxoState tx
+        ≡⟨ cong (λ x → cbalance (outs tx) + x + newDeposits pp utxoState tx) (property (txfee tx)) ⟩
+      cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx                     ∎
+    )⟩
+  cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx + coin (inject (txdonation tx))
+    ≡⟨ cong (cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx +_) (property _) ⟩
+  cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx + txdonation tx
+    ∎
 
 balValueToCoin : ∀ {pp} → coin (mint tx) ≡ 0 → consumed pp utxoState tx ≡ produced pp utxoState tx
                → cbalance ((UTxOState.utxo utxoState) ∣ txins tx) + depositRefunds pp utxoState tx
-               ≡ cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx
+               ≡ cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx + txdonation tx
 balValueToCoin {tx} {utxoState} {pp} h h' = begin
   cbalance ((UTxOState.utxo utxoState) ∣ txins tx) + depositRefunds pp utxoState tx
     ≡˘⟨ consumedCoinEquality {tx} {utxoState} {pp} h ⟩
   coin (consumed pp utxoState tx) ≡⟨ cong! h' ⟩
   coin (produced pp utxoState tx) ≡⟨ producedCoinEquality {utxoState} {tx} {pp} ⟩
-  cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx ∎
+  cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx + txdonation tx ∎
 
 posPart-negPart≡x : ∀ {x} → posPart x ⊖ negPart x ≡ x
 posPart-negPart≡x {ℤ.+_ n}     = refl
 posPart-negPart≡x {ℤ.negsuc n} = refl
 
 module DepositHelpers
-  (utxo : UTxO) (fees : Coin) (deposits : DepositPurpose ⇀ Coin) (tx : TxBody) (pp : PParams) where
+  {utxo utxo' : UTxO}
+  {fees fees' : Coin}
+  {deposits deposits' : DepositPurpose ⇀ Coin}
+  {donations donations' : Coin}
+  {tx : TxBody}
+  {Γ : UTxOEnv}
+  (step : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ)
+  (h' : txid tx ∉ map proj₁ (dom (utxo ˢ)))
+  where
 
   private
+    pp : PParams
+    pp = UTxOEnv.pparams Γ
+    dep : Coin
     dep = getCoin deposits
+    uDep : Coin
     uDep = getCoin (updateDeposits pp tx deposits)
+    Δdep : ℤ
     Δdep = depositsChange pp tx deposits
-    ref = depositRefunds pp ⟦ utxo , fees , deposits ⟧ᵘ tx
-    tot = newDeposits    pp ⟦ utxo , fees , deposits ⟧ᵘ tx
+    utxoSt : UTxOState
+    utxoSt = ⟦ utxo , fees , deposits , donations ⟧ᵘ
+    ref : Coin
+    ref = depositRefunds pp utxoSt tx
+    tot : Coin
+    tot = newDeposits    pp utxoSt tx
+    h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
+    h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (res-comp-domᵐ h₁ , h₂)
+    newBal'
+      : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+      → consumed pp utxoSt tx ≡ produced pp utxoSt tx
+    newBal' (UTXO-inductive _ _ _ _ x _ _) = x
+    newBal : consumed pp utxoSt tx ≡ produced pp utxoSt tx
+    newBal = newBal' step
+    noMintAda'
+      : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+      → coin (mint tx) ≡ 0
+    noMintAda' (UTXO-inductive _ _ _ _ _ x _) = x
+    noMintAda : coin (mint tx) ≡ 0
+    noMintAda = noMintAda' step
+    remDepTot : Coin
+    remDepTot = getCoin deposits ∸ ref
+
+  uDep≡
+    : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+    → deposits' ≡ updateDeposits pp tx deposits
+  uDep≡ (UTXO-inductive _ _ _ _ _ _ _) = refl
 
   deposits-change' : Δdep ≡ tot ⊖ ref
   deposits-change' = sym posPart-negPart≡x
@@ -175,6 +228,53 @@ module DepositHelpers
     (dep + tot) ⊖ ref                         ≡⟨ ℤ.⊖-≥ (m≤n⇒m≤n+o tot ref≤dep) ⟩
     ℤ.+_ (dep + tot ∸ ref) ∎
 
+  utxo-ref-prop :
+    cbalance utxo + ref ≡
+    (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + txdonation tx + tot
+  utxo-ref-prop = begin
+    cbalance utxo + ref
+      ≡˘⟨ cong (_+ ref) (balance-cong-coin {utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)} {utxo' = utxo}
+          let open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to _≡ᵉ-∘_)
+          in (disjoint-∪ᵐˡ-∪ (disjoint-sym res-ex-disjoint) ≡ᵉ-∘ ∪-sym) ≡ᵉ-∘ res-ex-∪ (_∈? txins tx)) ⟩
+    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)) + ref
+      ≡⟨ cong (_+ ref) (balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip res-ex-disjoint)) ⟩
+    cbalance (utxo ∣ txins tx ᶜ) + cbalance (utxo ∣ txins tx) + ref ≡t⟨⟩
+    cbalance (utxo ∣ txins tx ᶜ) + (cbalance (utxo ∣ txins tx) + ref)
+      ≡⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_)
+         (balValueToCoin {tx} {utxoSt} {UTxOEnv.pparams Γ} noMintAda newBal) ⟩
+    cbalance (utxo ∣ txins tx ᶜ) + (cbalance (outs tx) + txfee tx + tot + txdonation tx) ≡t⟨⟩
+    (cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx) + tot + txdonation tx
+      ≡˘⟨ cong (λ x → (x + txfee tx) + tot + txdonation tx) (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
+    (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + tot + txdonation tx ≡t⟨⟩
+    (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + (tot + txdonation tx)
+      ≡⟨ cong ((cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) +_) (+-comm tot (txdonation tx)) ⟩
+    (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + (txdonation tx + tot) ≡t⟨⟩
+    (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + txdonation tx + tot ∎
+
+  rearrange0 : txfee tx + txdonation tx + (tot + remDepTot) + fees ≡
+        fees + txfee tx + getCoin deposits' + txdonation tx
+  rearrange0 = begin
+    txfee tx + txdonation tx + (tot + remDepTot) + fees
+      ≡⟨ +-comm (txfee tx + txdonation tx + (tot + remDepTot)) fees ⟩
+    fees + (txfee tx + txdonation tx + (tot + remDepTot)) ≡t⟨⟩
+    (fees + txfee tx) + (txdonation tx + (tot + remDepTot))
+      ≡⟨ cong ((fees + txfee tx) +_) (+-comm (txdonation tx) (tot + remDepTot)) ⟩
+    (fees + txfee tx) + ((tot + remDepTot) + txdonation tx) ≡t⟨⟩
+    (fees + txfee tx) + (tot + remDepTot) + txdonation tx
+      ≡⟨ cong (λ x → (fees + txfee tx) + x + txdonation tx) (
+        begin
+          tot + (dep ∸ ref) ≡˘⟨ +-∸-assoc tot ref≤dep ⟩
+          (tot + dep) ∸ ref ≡⟨ cong (_∸ ref) (+-comm tot dep) ⟩
+          (dep + tot) ∸ ref ≡˘⟨ deposits-change ⟩
+          uDep ≡⟨ cong getCoin (sym $ uDep≡ step) ⟩
+          getCoin deposits' ∎
+      )⟩
+    (fees + txfee tx) + getCoin deposits' + txdonation tx ∎
+
+  rearrange1 : cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (txfee tx + txdonation tx + (tot + remDepTot) + fees)
+          ≡ cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + ((fees + txfee tx) + getCoin deposits' + txdonation tx)
+  rearrange1 = cong (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) +_) rearrange0
+
 \end{code}
 
 Here, we state the fact that the UTxO relation is computable. This
@@ -206,70 +306,41 @@ and
   →
 \end{code}
 \begin{code}[inline*]
-      Γ ⊢ ⟦ utxo , fees , deposits ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' ⟧ᵘ
+      Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
 \end{code}
 then
 \begin{code}[hide]
   →
 \end{code}
 \begin{code}
-      getCoin ⟦ utxo , fees , deposits ⟧ᵘ ≡ getCoin ⟦ utxo' , fees' , deposits' ⟧ᵘ
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ ≡ getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
 \end{code}
 \begin{code}[hide]
-pov {tx} {utxo} {_} {fees} {deposits} {utxo'} {fees'} {deposits'} h' (UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
+pov {tx} {utxo} {_} {fees} {deposits} {donations} {utxo'} {fees'} {deposits'} {donations'} h' step@(UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
   let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
       h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (res-comp-domᵐ h₁ , h₂)
-      utxoSt = ⟦ utxo , fees , deposits ⟧ᵘ
+      utxoSt = ⟦ utxo , fees , deposits , donations ⟧ᵘ
       pp = UTxOEnv.pparams Γ
       ref = depositRefunds pp utxoSt tx
-      totDep = newDeposits pp utxoSt tx
-      remDepTot = getCoin deposits ∸ ref
+      tot = newDeposits pp utxoSt tx
       dep = getCoin deposits
-      open DepositHelpers utxo fees deposits tx
+      remDepTot = getCoin deposits ∸ ref
+      open DepositHelpers step h'
   in begin
-    cbalance utxo + fees + dep   ≡tˡ⟨ cong (cbalance utxo +_) (+-comm fees _) ⟩
-    cbalance utxo + (dep + fees) ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) (m+[n∸m]≡n (ref≤dep pp)) ⟩
-    cbalance utxo + ((ref + remDepTot) + fees) ≡t⟨⟩
-    cbalance utxo + ref + (remDepTot + fees) ≡⟨
-      cong (_+ (remDepTot + fees))
-        (begin
-          cbalance utxo + ref
-            ≡˘⟨ cong (_+ ref) (balance-cong-coin {utxo = (utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)} {utxo' = utxo}
-                  let open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to _≡ᵉ-∘_)
-                  in (disjoint-∪ᵐˡ-∪ (disjoint-sym res-ex-disjoint) ≡ᵉ-∘ ∪-sym) ≡ᵉ-∘ res-ex-∪ (_∈? txins tx)) ⟩
-          cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ (utxo ∣ txins tx)) + ref
-            ≡⟨ cong! (balance-∪ {utxo ∣ txins tx ᶜ} {utxo ∣ txins tx} (flip res-ex-disjoint)) ⟩
-          cbalance (utxo ∣ txins tx ᶜ) + cbalance (utxo ∣ txins tx) + ref ≡t⟨⟩
-          cbalance (utxo ∣ txins tx ᶜ) + (cbalance (utxo ∣ txins tx) + ref)
-            ≡⟨ cong (cbalance (utxo ∣ txins tx ᶜ) +_)
-                    (balValueToCoin {tx} {utxoSt} {UTxOEnv.pparams Γ} noMintAda newBal) ⟩
-          cbalance (utxo ∣ txins tx ᶜ) + (cbalance (outs tx) + txfee tx + totDep) ≡t⟨⟩
-          (cbalance (utxo ∣ txins tx ᶜ) + cbalance (outs tx) + txfee tx) + totDep
-            ≡˘⟨ cong (λ x → (x + txfee tx) + totDep) (balance-∪ {utxo ∣ txins tx ᶜ} {outs tx} h) ⟩
-          (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + totDep ∎
-        )
-    ⟩
-    (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + totDep + (remDepTot + fees) ≡t⟨⟩
-    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + ((txfee tx + totDep + remDepTot) + fees)
-      ≡⟨ cong (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) +_) (+-comm (txfee tx + totDep + remDepTot) fees) ⟩
-    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + (txfee tx + totDep + remDepTot))
-      ≡⟨ cong (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) +_)
-              (begin fees + (txfee tx + totDep + remDepTot)
-                       ≡⟨ cong (fees +_) (+-assoc (txfee tx) totDep remDepTot) ⟩
-                     fees + (txfee tx + (totDep + remDepTot))
-                       ≡˘⟨ +-assoc fees (txfee tx) (totDep + remDepTot) ⟩
-                     fees + txfee tx + (totDep + remDepTot) ∎) ⟩
-    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx + (totDep + remDepTot))
-      ≡˘⟨ +-assoc (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx)) (fees + txfee tx) (totDep + remDepTot) ⟩
-    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx) + (totDep + remDepTot)
-      ≡⟨ cong (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx) +_) $ begin
-           totDep + (dep ∸ ref) ≡˘⟨ +-∸-assoc totDep (ref≤dep pp) ⟩
-           (totDep + dep) ∸ ref ≡⟨ cong (_∸ ref) (+-comm totDep dep) ⟩
-           (dep + totDep) ∸ ref ∎ ⟩
-    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx) + ((dep + totDep) ∸ ref)
-      ≡˘⟨ cong (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx) +_) (deposits-change pp) ⟩
-    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx) + getCoin deposits' ∎
-
+    cbalance utxo + fees + dep + donations   ≡⟨ cong (_+ donations) (
+        begin
+          cbalance utxo + fees + dep ≡tˡ⟨ cong (cbalance utxo +_) (+-comm fees dep) ⟩
+          cbalance utxo + (dep + fees) ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) (m+[n∸m]≡n ref≤dep) ⟩
+          cbalance utxo + ((ref + remDepTot) + fees) ≡t⟨⟩
+          cbalance utxo + ref + (remDepTot + fees) ≡⟨ cong (_+ (remDepTot + fees)) utxo-ref-prop ⟩
+          (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + txfee tx) + txdonation tx + tot + (remDepTot + fees) ≡t⟨⟩
+          cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (txfee tx + txdonation tx + (tot + remDepTot) + fees) ≡⟨ rearrange1 ⟩
+          cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + ((fees + txfee tx) + getCoin deposits' + txdonation tx) ∎
+      )⟩
+    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + ((fees + txfee tx) + getCoin deposits' + txdonation tx) + donations ≡t⟨⟩
+    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx) + getCoin deposits' + (txdonation tx + donations)
+      ≡⟨ cong (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx) + getCoin deposits' +_) (+-comm (txdonation tx) donations) ⟩
+    cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) + (fees + txfee tx) + getCoin deposits' + (donations + txdonation tx) ∎
 \end{code}
 
 \end{property}

@@ -68,9 +68,7 @@ Agda functions.
 
 \begin{figure*}[h]
 \begin{code}[hide]
-module _ (ℙ_ : Set → Set)
-         (_↛_ : Set → Set → Set)
-         (_∈_ : ∀ {A : Set} → A → ℙ A → Set) where
+module _ (ℙ_ : Set → Set) (_∈_ : ∀ {A : Set} → A → ℙ A → Set) where
 \end{code}
 \begin{code}
   _⊆_ : {A : Set} → ℙ A → ℙ A → Set
@@ -85,7 +83,7 @@ module _ (ℙ_ : Set → Set)
   left-unique : {A B : Set} → Rel A B → Set
   left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
-  Map : Set → Set → Set
-  Map A B = Σ (Rel A B) left-unique
+  _⇀_ : Set → Set → Set
+  A ⇀ B = Σ (Rel A B) left-unique
 \end{code}
 \end{figure*}
