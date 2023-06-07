@@ -16,6 +16,9 @@ module Ledger.Tally (TxId Network DocHash : Set)
                     (ppHashable : isHashableSet PParams)
                     (crypto : Crypto) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq TxId ⦄ where
 
+import Data.List as L
+open import Relation.Nullary.Decidable
+
 open import Ledger.GovernanceActions TxId Network DocHash es ppd ppHashable crypto
 
 open Crypto crypto
@@ -32,7 +35,7 @@ record GovActionState : Set where
         prevAction  : NeedsHash action
 
 TallyState : Set
-TallyState = GovActionID ⇀ GovActionState
+TallyState = List (GovActionID × GovActionState)
 
 record TallyEnv : Set where
   constructor ⟦_,_,_⟧ᵗ
@@ -56,18 +59,23 @@ private
            prev : NeedsHash a
 \end{code}
 \begin{code}
+-- could be implemented using a function of type ∀ {a} {A : Set a} → (A → Maybe A) → List A → List A
+modifyMatch : ∀ {a} {A : Set a} → (A → Bool) → (A → A) → List A → List A
+modifyMatch P f = L.map (λ x → if P x then f x else x)
+
 addVote : TallyState → GovActionID → GovRole → Credential → Vote → TallyState
 addVote s aid r kh v =
-  mapSingleValue (λ s' → record s' { votes = insert (votes s') (r , kh) v }) s aid
+  modifyMatch (λ x → ⌊ aid ≟ proj₁ x ⌋)
+              (λ where (gid , s') → gid , record s' { votes = insert (votes s') (r , kh) v }) s
 
 addAction : TallyState → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a → TallyState
-addAction s e aid addr a prev = insert s aid record
-  { votes = ∅ᵐ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev }
+addAction s e aid addr a prev = s ∷ʳ (aid , record
+  { votes = ∅ᵐ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
 -- x is the anchor in those two cases, which we don't do anything with
 data _⊢_⇀⦇_,TALLY'⦈_ : TallyEnv × ℕ → TallyState → GovVote ⊎ GovProposal → TallyState → Set where
   TallyVote : ∀ {x k} → let open TallyEnv Γ in
-    aid ∈ dom (s ˢ)
+    aid ∈ setFromList (L.map proj₁ s)
     ────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ inj₁ record { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x } ,TALLY'⦈
               addVote s aid role cred v
