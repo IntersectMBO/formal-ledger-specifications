@@ -1,21 +1,22 @@
 {-# OPTIONS --overlapping-instances #-}
+
+open import Agda.Primitive using () renaming (Set to Type)
+
 module Ledger.Foreign.HSLedger where
 
+open import Algebra.Morphism        using ( IsCommutativeMonoidMorphism )
+open import Data.Nat                using ( _≤_ ; _≤ᵇ_)
+open import Data.Nat.Properties     using ( +-*-semiring ; <-isStrictTotalOrder )
+open import Foreign.Convertible
+open import Foreign.Haskell.Coerce  using (coerce)
+open import Ledger.Crypto           using (isHashableSet ; mkIsHashableSet ; PKKScheme ; Crypto)
+open import Ledger.Epoch            using (GlobalConstants ; EpochStructure ; ℕEpochStructure )
 open import Ledger.Prelude
 
 import Data.Maybe as M
 import Data.Rational as ℚ
-
-open import Data.Nat using (_≤_; _≤ᵇ_)
-open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
-
-open import Foreign.Convertible
-open import Foreign.Haskell.Coerce
-
 import Ledger.Foreign.LedgerTypes as F
 
-open import Ledger.Crypto
-open import Ledger.Epoch
 
 open GlobalConstants
 HSGlobalConstants : GlobalConstants
@@ -93,27 +94,31 @@ HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructur
 
 open import Data.Nat
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
-open import Ledger.TokenAlgebra
+open import Ledger.TokenAlgebra using (TokenAlgebra)
 open import Ledger.Transaction
 
-coinTokenAlgebra : TokenAlgebra
-coinTokenAlgebra = record
-  { PolicyId                = ℕ
-  ; Value-CommutativeMonoid = +-0-commutativeMonoid
-  ; coin                    = id
-  ; inject                  = id
-  ; policies                = λ x → ∅
-  ; size                    = λ x → 1 -- there is only ada in this token algebra
-  ; property                = λ x → refl
-  ; coinIsMonoidMorphism    = record
-    { mn-homo = record
-      { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo  = λ x y → refl }
-      ; ε-homo  = refl
-      }
-    }
-  ; _≤ᵗ_                    = _≤_
-  ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
-  }
+
+module _ where
+  open TokenAlgebra
+  open IsCommutativeMonoidMorphism
+  coinTokenAlgebra : TokenAlgebra
+  coinTokenAlgebra .Value-CommutativeMonoid  = +-0-commutativeMonoid
+  coinTokenAlgebra .coin = id
+  coinTokenAlgebra .inject = id
+  coinTokenAlgebra .size = λ _ → 1
+  coinTokenAlgebra ._≤ᵗ_ = _≤_
+  coinTokenAlgebra .AssetNameType = ℕ
+  coinTokenAlgebra .property = λ _ → refl
+  coinTokenAlgebra .coinIsMonoidMorphism .mn-homo =
+    -- record
+    --   { mn-homo =
+          record
+            { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo  = λ x y → refl }
+            ; ε-homo = refl
+            }
+
+  --    }
+  coinTokenAlgebra .DecEq-Value = record { _≟_ = Data.Nat._≟_ }
 
 module _ where
   open TransactionStructure
@@ -121,21 +126,24 @@ module _ where
   HSTransactionStructure : TransactionStructure
   HSTransactionStructure .Ix              = ℕ
   HSTransactionStructure .TxId            = ℕ
+  HSTransactionStructure .AuxiliaryData   = ⊤
+  HSTransactionStructure .PolicyIdType    = ℕ
+  HSTransactionStructure .AssetNameType   = ℕ
   HSTransactionStructure .epochStructure  = HSEpochStructure
   HSTransactionStructure .globalConstants = HSGlobalConstants
-  HSTransactionStructure .AuxiliaryData   = ⊤
   HSTransactionStructure .crypto          = HSCrypto
   HSTransactionStructure .adHashingScheme = isHashableSet-⊤
   HSTransactionStructure .ppHashingScheme = isHashableSelf PParams
   HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; updateGroups = λ _ → ∅ ; applyUpdate = λ p _ → p }
   HSTransactionStructure .txidBytes       = id
   HSTransactionStructure .networkId       = tt
-  HSTransactionStructure .tokenAlgebra    = coinTokenAlgebra
   HSTransactionStructure .DecEq-TxId      = DecEq-ℕ
   HSTransactionStructure .DecEq-Ix        = DecEq-ℕ
   HSTransactionStructure .DecEq-Netw      = DecEq-⊤
   HSTransactionStructure .DecEq-UpdT      = DecEq-⊤
+  HSTransactionStructure .tokenAlgebra    = coinTokenAlgebra
   HSTransactionStructure .ss              = HSScriptStructure
+
 
 open import Ledger.Utxo HSTransactionStructure
 open import Ledger.Utxo.Properties HSTransactionStructure
@@ -166,20 +174,20 @@ instance
 
       from' : F.TxBody → TxBody
       from' txb = let open F.TxBody txb in record
-        { txins      = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
-        ; txouts     = from txouts
-        ; txcerts    = []
-        ; mint       = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
-        ; txfee      = txfee
-        ; txvldt     = coerce txvldt
-        ; txwdrls    = ∅ᵐ
-        ; txup       = nothing
-        ; txADhash   = nothing
-        ; netwrk     = nothing
-        ; txsize     = txsize
-        ; txid       = txid
-        ; txvote     = []
-        ; txprop     = []
+        { txins    = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
+        ; txouts   = from txouts
+        ; txcerts  = []
+        ; mint     = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
+        ; txfee    = txfee
+        ; txvldt   = coerce txvldt
+        ; txwdrls  = ∅ᵐ
+        ; txup     = nothing
+        ; txADhash = nothing
+        ; netwrk   = nothing
+        ; txsize   = txsize
+        ; txid     = txid
+        ; txvote   = []
+        ; txprop   = []
         ; txdonation = ε
         }
 
@@ -223,7 +231,7 @@ instance
         ; maxTxSize        = maxTxSize
         ; maxHeaderSize    = maxHeaderSize
         ; maxValSize       = maxValSize
-        ; minUTxOValue     = minUTxOValue
+        ; minUtxOValue     = minUtxOValue
         ; poolDeposit      = poolDeposit
         ; Emax             = Emax
         ; pv               = coerce pv
@@ -244,7 +252,7 @@ instance
         ; maxTxSize        = maxTxSize
         ; maxHeaderSize    = maxHeaderSize
         ; maxValSize       = maxValSize
-        ; minUTxOValue     = minUTxOValue
+        ; minUtxOValue     = minUtxOValue
         ; poolDeposit      = poolDeposit
         ; Emax             = Emax
         ; pv               = coerce pv

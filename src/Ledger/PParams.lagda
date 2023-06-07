@@ -32,20 +32,20 @@ data PParamGroup : Set where
 
 record PParams : Set where
   field -- Network group
-        maxBlockSize      : ℕ
-        maxTxSize         : ℕ
-        maxHeaderSize     : ℕ
-        maxValSize        : ℕ
-        pv                : ProtVer -- retired, keep for now
+        maxBlockSize     : ℕ
+        maxTxSize        : ℕ
+        maxHeaderSize    : ℕ
+        maxValSize       : ℕ
+        pv               : ProtVer -- retired, keep for now
 
         -- Economic group
-        a                 : ℕ
-        b                 : ℕ
-        minUTxOValue      : Coin
-        poolDeposit       : Coin
+        a                : ℕ
+        b                : ℕ
+        minUtxOValue     : Coin
+        poolDeposit      : Coin
 
         -- Technical group
-        Emax              : Epoch
+        Emax             : Epoch
 
         -- Governance group
         votingThresholds  : ℚ × ℚ

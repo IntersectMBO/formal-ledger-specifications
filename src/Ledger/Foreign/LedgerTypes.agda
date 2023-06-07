@@ -81,7 +81,7 @@ record PParams : Set where
         maxTxSize        : ℕ
         maxHeaderSize    : ℕ
         maxValSize       : ℕ
-        minUTxOValue     : Coin
+        minUtxOValue     : Coin
         poolDeposit      : Coin
         Emax             : Epoch
         pv               : Pair ℕ ℕ
@@ -101,7 +101,7 @@ record PParams : Set where
     , maxTxSize        :: Integer
     , maxHeaderSize    :: Integer
     , maxValSize       :: Integer
-    , minUTxOValue     :: Integer
+    , minUtxOValue     :: Integer
     , poolDeposit      :: Integer
     , emax             :: Integer
     , pv               :: (Integer, Integer)

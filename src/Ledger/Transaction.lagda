@@ -12,10 +12,10 @@ open import Ledger.Prelude
 
 open import Ledger.Crypto
 open import Ledger.Epoch
-open import Ledger.TokenAlgebra
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
+import Ledger.TokenAlgebra as TA
 
 record TransactionStructure : Set₁ where
   field
@@ -35,11 +35,15 @@ the transaction body are:
   \item The size and the hash of the serialized form of the transaction that was included in the block.
 \end{itemize}
 
+Finally, $\fun{txid}$ computes the transaction id of a given transaction.
+This function must produce a unique id for each unique transaction body.
+\textbf{We assume that} $\fun{txid}$ \textbf{is injective.}
+
 \begin{figure*}[h]
 \emph{Abstract types}
-\AgdaTarget{Ix, TxId, Epoch, AuxiliaryData}
+\AgdaTarget{Ix, TxId, Epoch, AuxiliaryData, PolicyIdType, AssetNameType}
 \begin{code}
-        Ix TxId AuxiliaryData : Set
+        Ix TxId AuxiliaryData PolicyIdType AssetNameType : Set
 \end{code}
 \begin{code}[hide]
         epochStructure                      : EpochStructure
@@ -53,17 +57,19 @@ the transaction body are:
         ppUpd                               : Ledger.PParams.PParamsDiff epochStructure
         txidBytes                           : TxId → Crypto.Ser crypto
         networkId                           : Network
-        tokenAlgebra                        : TokenAlgebra
         instance DecEq-TxId  : DecEq TxId
                  DecEq-Ix    : DecEq Ix
                  DecEq-Netw  : DecEq Network
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
-  open TokenAlgebra tokenAlgebra public
+  open TA
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
-  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
+  field  ss            : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
+         tokenAlgebra  : TokenAlgebra
+
+  open TokenAlgebra tokenAlgebra public
 
   open Ledger.Script.ScriptStructure ss public
 
