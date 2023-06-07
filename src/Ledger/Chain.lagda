@@ -31,11 +31,11 @@ record NewEpochEnv : Set where
   field stakeDistrs  : StakeDistrs -- TODO: compute this from LState instead
 
 record NewEpochState : Set where
-  constructor ⟦_,_,_,_⟧ⁿᵉ
+  constructor ⟦_,_,_,_,_⟧ⁿᵉ
   field lastEpoch  : Epoch
         acnt       : Acnt
         ls         : LState
-        es         : EnactState
+        es esFut   : EnactState
 
 record ChainState : Set where
   field newEpochState  : NewEpochState
@@ -69,7 +69,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 \begin{figure*}[h]
 \begin{code}
   NEWEPOCH-New : ∀ {Γ} → let
-      open NewEpochState nes
+      open NewEpochState nes hiding (es) renaming (esFut to es) -- this rolls over esFut into es
       open LState ls
       -- TODO Wire CertState together with treasury and withdrawals
       open CertState certState
@@ -105,7 +105,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
                     ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) , removed ⟧ʳ
     -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
-    Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es' ⟧ⁿᵉ
+    Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , es' ⟧ⁿᵉ
 
   NEWEPOCH-Not-New : ∀ {Γ} → let open NewEpochState nes in
     e ≢ sucᵉ lastEpoch
