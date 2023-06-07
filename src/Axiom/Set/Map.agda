@@ -138,6 +138,7 @@ singletonᵐ a b = (❴ (a , b) ❵ , (from ∈-singleton -⟨ (λ where refl re
 ❴ k , v ❵ᵐ = singletonᵐ k v
 
 module Unionᵐ (sp-∈ : spec-∈ A) where
+  infixr 6 _∪ᵐˡ_
 
   _∪ᵐˡ'_ : Rel A B → Rel A B → Rel A B
   m ∪ᵐˡ' m' = m ∪ filter (sp-∘ (sp-¬ (sp-∈ {dom m})) proj₁) m'

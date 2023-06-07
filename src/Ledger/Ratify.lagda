@@ -148,8 +148,8 @@ module _ (Γ : RatifyEnv) (cc : CCData) (votes : (GovRole × Credential) ⇀ Vot
 
   actualVotes : VDeleg ⇀ Vote
   actualVotes = mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
-              ∪ᵐˡ (actualPDRepVotes ∪ᵐˡ (actualDRepVotes
-              ∪ᵐˡ mapKeys (uncurry credVoter) votes (λ where _ _ refl → refl))) -- TODO: make `actualVotes` for SPO
+              ∪ᵐˡ actualPDRepVotes ∪ᵐˡ actualDRepVotes
+              ∪ᵐˡ mapKeys (uncurry credVoter) votes (λ where _ _ refl → refl) -- TODO: make `actualVotes` for SPO
 
 votedHashes : Vote → (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 votedHashes v votes r = votes ⁻¹ v
@@ -207,7 +207,7 @@ ccThreshold (just (cc , q)) = just q
 
 -- for now, consider a proposal as accepted if the CC and half of the SPOs and DReps agree
 accepted' : RatifyEnv → EnactState → GovActionState → Set
-accepted' Γ es@record { cc = cc ; pparams = record { votingThresholds = drepThreshold , spoThreshold } }
+accepted' Γ es@record { cc = cc , _ ; pparams = record { votingThresholds = drepThreshold , spoThreshold } , _ }
          s@record  { votes = votes ; action = action } =
   let open RatifyEnv Γ; votes = actualVotes Γ cc votes action in
   acceptedR Γ votes SPO spoThreshold
@@ -218,6 +218,15 @@ accepted' Γ es@record { cc = cc ; pparams = record { votingThresholds = drepThr
 
 expired : Epoch → GovActionState → Set
 expired current record { expiresIn = expiresIn } = expiresIn <ᵉ current
+
+verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Set
+verifyPrev NoConfidence         h es = let open EnactState es in h ≡ proj₂ cc
+verifyPrev (NewCommittee _ _ _) h es = let open EnactState es in h ≡ proj₂ cc
+verifyPrev (NewConstitution _)  h es = let open EnactState es in h ≡ proj₂ constitution
+verifyPrev (TriggerHF _)        h es = let open EnactState es in h ≡ proj₂ pv
+verifyPrev (ChangePParams _ _)  h es = let open EnactState es in h ≡ proj₂ pparams
+verifyPrev (TreasuryWdrl _)     _ _  = ⊤
+verifyPrev Info                 _ _  = ⊤
 \end{code}
 \end{figure*}
 \begin{code}[hide]
@@ -239,9 +248,10 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  RATIFY-Accept : let st = proj₂ a in
+  RATIFY-Accept : let st = proj₂ a; open GovActionState st in
     accepted Γ es st
-    → _ ⊢ es ⇀⦇ GovActionState.action st ,ENACT⦈ es'
+    → verifyPrev action prevAction es
+    → ⟦ proj₁ a ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
     ────────────────────────────────
     Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f , a ∷ removed ⟧ʳ
 
@@ -254,9 +264,8 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f , a ∷ removed ⟧ʳ
 
   -- continue voting in the next epoch
-  RATIFY-Continue : let open RatifyEnv Γ; st = proj₂ a in
-    ¬ accepted Γ es st
-    → ¬ expired currentEpoch st
+  RATIFY-Continue : let open RatifyEnv Γ; st = proj₂ a; open GovActionState st in
+    ¬ accepted Γ es st × ¬ expired currentEpoch st ⊎ ¬ verifyPrev action prevAction es
     ────────────────────────────────
     Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f , removed ⟧ʳ
 
