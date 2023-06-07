@@ -61,6 +61,7 @@ private variable
   es' : EnactState
   newTally : TallyState
   removed : List (GovActionID × GovActionState)
+  d : Bool
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:
 -- it also does what EPOCH used to do in previous eras
@@ -101,8 +102,8 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; VState vState ; NewEpochEnv Γ }
-                    ⊢                               ⟦ es  , [] , [] ⟧ʳ
-                    ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) , removed ⟧ʳ
+                    ⊢                               ⟦ es  , [] , [] , false ⟧ʳ
+                    ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) , removed , d ⟧ʳ
     -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , es' ⟧ⁿᵉ

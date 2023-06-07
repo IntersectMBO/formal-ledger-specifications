@@ -41,10 +41,11 @@ record RatifyEnv : Set where
         ccHotKeys     : KeyHash ⇀ Maybe KeyHash
 
 record RatifyState : Set where
-  constructor ⟦_,_,_⟧ʳ
+  constructor ⟦_,_,_,_⟧ʳ
   field es              : EnactState
         future          : List (GovActionID × GovActionState)
         removed         : List (GovActionID × GovActionState)
+        delay           : Bool
 \end{code}
 \caption{Types and functions for the RATIFY transition system}
 \end{figure*}
@@ -227,6 +228,18 @@ verifyPrev (TriggerHF _)        h es = let open EnactState es in h ≡ proj₂ p
 verifyPrev (ChangePParams _ _)  h es = let open EnactState es in h ≡ proj₂ pparams
 verifyPrev (TreasuryWdrl _)     _ _  = ⊤
 verifyPrev Info                 _ _  = ⊤
+
+delayingAction : GovAction → Bool
+delayingAction NoConfidence         = true
+delayingAction (NewCommittee _ _ _) = true
+delayingAction (NewConstitution _)  = true
+delayingAction (TriggerHF _)        = true
+delayingAction (ChangePParams _ _)  = false
+delayingAction (TreasuryWdrl _)     = false
+delayingAction Info                 = false
+
+delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Set
+delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 \end{code}
 \end{figure*}
 \begin{code}[hide]
@@ -237,6 +250,7 @@ private variable
   upd : PParamsUpdate
   a : GovActionID × GovActionState
   f f' l removed : List (GovActionID × GovActionState)
+  d : Bool
 
 -- having `accepted` abstract speeds up type checking of RATIFY' a lot
 abstract
@@ -250,10 +264,10 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{code}
   RATIFY-Accept : let st = proj₂ a; open GovActionState st in
     accepted Γ es st
-    → verifyPrev action prevAction es
+    → ¬ delayed action prevAction es d
     → ⟦ proj₁ a ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f , a ∷ removed ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f , a ∷ removed , delayingAction action ⟧ʳ
 
   -- remove expired actions
   -- NOTE: don't have to remove actions that can never be accpted because of sufficient no votes
@@ -261,13 +275,13 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     ¬ accepted Γ es st
     → expired currentEpoch st
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f , a ∷ removed ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f , a ∷ removed , d ⟧ʳ
 
   -- continue voting in the next epoch
   RATIFY-Continue : let open RatifyEnv Γ; st = proj₂ a; open GovActionState st in
-    ¬ accepted Γ es st × ¬ expired currentEpoch st ⊎ ¬ verifyPrev action prevAction es
+    ¬ accepted Γ es st × ¬ expired currentEpoch st ⊎ delayed action prevAction es d
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , removed ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f , removed ⟧ʳ
+    Γ ⊢ ⟦ es , f , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f , removed , d ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → List (GovActionID × GovActionState) → RatifyState → Set
 _⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,RATIFY'⦈_)
