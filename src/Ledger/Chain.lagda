@@ -102,8 +102,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; VState vState ; NewEpochEnv Γ }
-                    ⊢                               ⟦ es  , [] , [] , false ⟧ʳ
-                    ⇀⦇ setToList (tally ˢ) ,RATIFY⦈ ⟦ es' , setToList (newTally ˢ) , removed , d ⟧ʳ
+        ⊢ ⟦ es  , [] , [] , false ⟧ʳ ⇀⦇ tally ,RATIFY⦈ ⟦ es' , newTally , removed , d ⟧ʳ
     -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , es' ⟧ⁿᵉ
@@ -148,7 +147,7 @@ govActionDeposits ls =
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
         dep ← lookupᵐ? deposits (GovActionDeposit gaid) ⦃ _ ∈? _ ⦄
         just ❴ vd , dep ❵ᵐ )
-      (tally ˢ)
+      (setFromList tally)
 
 calculateStakeDistrs : LState → StakeDistrs
 calculateStakeDistrs ls =

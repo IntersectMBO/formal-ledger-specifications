@@ -153,7 +153,6 @@ data _⊢_⇀⦇_,VDEL⦈_ : VDelEnv → VState → DCert → VState → Set whe
 
   VDEL-ccreghot :
     (kh , nothing) ∉ ccKeys ˢ
-    -- TODO: Should we check if kh actually belongs to the CC?
     ────────────────────────────────
     Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot (inj₁ kh) mkh ,VDEL⦈
         ⟦ dReps , singletonᵐ kh mkh ∪ᵐˡ ccKeys ⟧ᵛ
@@ -185,6 +184,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
     ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st { vState = record vState
                          { dreps = constMap refresh (e +ᵉ' drepActivity) ∪ᵐˡ dreps } }
 
+-- TODO: use CERTBASE by modifying SS⇒BS to allow for a base case
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = SS⇒BS λ (Γ , _) → Γ ⊢_⇀⦇_,CERT⦈_
 \end{code}
