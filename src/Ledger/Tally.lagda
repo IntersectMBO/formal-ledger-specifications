@@ -29,6 +29,7 @@ record GovActionState : Set where
         returnAddr  : RwdAddr
         expiresIn   : Epoch
         action      : GovAction
+        prevAction  : NeedsHash action
 
 TallyState : Set
 TallyState = GovActionID ⇀ GovActionState
@@ -52,15 +53,16 @@ private
            c : Coin
            addr : RwdAddr
            a : GovAction
+           prev : NeedsHash a
 \end{code}
 \begin{code}
 addVote : TallyState → GovActionID → GovRole → Credential → Vote → TallyState
 addVote s aid r kh v =
   mapSingleValue (λ s' → record s' { votes = insert (votes s') (r , kh) v }) s aid
 
-addAction : TallyState → Epoch → GovActionID → RwdAddr → GovAction → TallyState
-addAction s e aid addr a = insert s aid record
-  { votes = ∅ᵐ ; returnAddr = addr ; expiresIn = e ; action = a }
+addAction : TallyState → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a → TallyState
+addAction s e aid addr a prev = insert s aid record
+  { votes = ∅ᵐ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev }
 
 -- x is the anchor in those two cases, which we don't do anything with
 data _⊢_⇀⦇_,TALLY'⦈_ : TallyEnv × ℕ → TallyState → GovVote ⊎ GovProposal → TallyState → Set where
@@ -71,8 +73,8 @@ data _⊢_⇀⦇_,TALLY'⦈_ : TallyEnv × ℕ → TallyState → GovVote ⊎ Go
               addVote s aid role cred v
 
   TallyPropose : ∀ {x k} → let open TallyEnv Γ; open PParams pparams using (govExpiration; govDeposit) in
-    (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x } ,TALLY'⦈
-              addAction s (govExpiration +ᵉ epoch) (txid , k) addr a
+    (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; prevAction = prev } ,TALLY'⦈
+              addAction s (govExpiration +ᵉ epoch) (txid , k) addr a prev
 
 _⊢_⇀⦇_,TALLY⦈_ : TallyEnv → TallyState → List (GovVote ⊎ GovProposal) → TallyState → Set
 _⊢_⇀⦇_,TALLY⦈_ = SS⇒BS (λ Γ → Γ ⊢_⇀⦇_,TALLY'⦈_)

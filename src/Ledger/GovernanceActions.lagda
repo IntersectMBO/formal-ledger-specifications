@@ -61,6 +61,15 @@ data GovAction : Set where
   TreasuryWdrl     : (Credential ⇀ Coin)              → GovAction
   Info             :                                    GovAction
 
+NeedsHash : GovAction → Set
+NeedsHash NoConfidence         = GovActionID
+NeedsHash (NewCommittee _ _ _) = GovActionID
+NeedsHash (NewConstitution _)  = GovActionID
+NeedsHash (TriggerHF _)        = GovActionID
+NeedsHash (ChangePParams _ _)  = GovActionID
+NeedsHash (TreasuryWdrl _)     = ⊤
+NeedsHash Info                 = ⊤
+
 data Vote : Set where
   yes      : Vote
   no       : Vote
@@ -76,6 +85,7 @@ record GovVote : Set where
 record GovProposal : Set where
   field returnAddr  : RwdAddr
         action      : GovAction
+        prevAction  : NeedsHash action
         anchor      : Anchor
 \end{code}
 \begin{code}[hide]
@@ -92,13 +102,18 @@ instance
 
 \begin{figure*}[h]
 \begin{code}
+HashProtected : Set → Set
+HashProtected A = A × GovActionID
+
 record EnactEnv : Set where
+  constructor ⟦_⟧ᵉ
+  field gid  : GovActionID
 
 record EnactState : Set where
-  field cc            : Maybe (KeyHash ⇀ Epoch × ℚ)
-        constitution  : DocHash
-        pv            : ProtVer
-        pparams       : PParams
+  field cc            : HashProtected (Maybe (KeyHash ⇀ Epoch × ℚ))
+        constitution  : HashProtected DocHash
+        pv            : HashProtected ProtVer
+        pparams       : HashProtected PParams
         withdrawals   : Credential ⇀ Coin
         treasury      : Coin
 \end{code}
@@ -116,6 +131,7 @@ private variable
   v : ProtVer
   wdrl : Credential ⇀ Coin
   newTreasury : Coin
+  gid : GovActionID
 
 instance
   _ = +-0-monoid
@@ -130,29 +146,22 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \end{code}
 \begin{code}
 
-  -- TODO: add hashes to everything except withdrawals & no ops
-  Enact-NoConf    : _ ⊢ s ⇀⦇ NoConfidence            ,ENACT⦈  record s { cc = nothing }
-  Enact-NewComm   : _ ⊢ s ⇀⦇ NewCommittee new rem q  ,ENACT⦈ let
-    old = maybe proj₁ ∅ᵐ (EnactState.cc s)
-    in record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) }
-  Enact-NewConst  : _ ⊢ s ⇀⦇ NewConstitution dh      ,ENACT⦈  record s { constitution = dh }
-  Enact-HF        : _ ⊢ s ⇀⦇ TriggerHF v             ,ENACT⦈  record s { pv = v }
-  Enact-PParamsY  :
-    h ≡ hash (s .pparams)
-    ────────────────────────────────
-    _ ⊢ s ⇀⦇ ChangePParams up h  ,ENACT⦈  record s { pparams = applyUpdate (s .pparams) up }
-  Enact-PParamsN  : -- TODO: maybe prevent this in TALLY instead and delay enactment?
-    ¬ h ≡ hash (s .pparams)
-    ────────────────────────────────
-    _ ⊢ s ⇀⦇ ChangePParams up h  ,ENACT⦈ s
+  Enact-NoConf    : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NoConfidence            ,ENACT⦈  record s { cc = nothing , gid }
+  Enact-NewComm   : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q  ,ENACT⦈ let
+    old = maybe proj₁ ∅ᵐ (proj₁ (EnactState.cc s))
+    in record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
+  Enact-NewConst  : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh      ,ENACT⦈  record s { constitution = dh , gid }
+  Enact-HF        : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v             ,ENACT⦈  record s { pv = v , gid }
+  Enact-PParams   :
+    ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up h  ,ENACT⦈  record s { pparams = applyUpdate (proj₁ (s .pparams)) up , gid }
   Enact-Wdrl      :
     let newWdrls = Σᵐᵛ[ x ← wdrl ᶠᵐ ] x
     in newWdrls ≤ s .treasury
     ────────────────────────────────
-    _ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
+    ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
       record s { withdrawals  = s .withdrawals  ∪⁺ wdrl
                ; treasury     = s .treasury     ∸  newWdrls }
-  Enact-Info      : _ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
+  Enact-Info      : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 \caption{ENACT transition system}
 \end{figure*}
