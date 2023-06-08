@@ -29,7 +29,7 @@ open import Tactic.MonoidSolver
 open TransactionStructure txs
 
 open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra using (TokenAlgebra)
+open import Ledger.TokenAlgebra.Base using (TokenAlgebra)
 open import Ledger.Utxo txs renaming (Computational-UTXO to Computational-UTXO')
 
 open TxBody

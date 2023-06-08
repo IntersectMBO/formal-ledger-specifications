@@ -88,6 +88,11 @@ open import Ledger.PPUp
 open import Ledger.PPUp.Properties
 
 open import Ledger.Ledger.Properties
+-- TODO: once holes are filled in `Ledger.TokenAlgebra.ValueSet`
+--       replace the next two lines with `open import Ledger.Tokenalgebra`
+open import Ledger.TokenAlgebra.Base
+open import Ledger.TokenAlgebra.ValueRelation
+
 \end{code}
 
 \include{Ledger/Introduction}

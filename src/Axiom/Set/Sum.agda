@@ -1,6 +1,6 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive using (lzero) renaming (Set to Type)
 open import Axiom.Set
 open import Algebra using (CommutativeMonoid)
 

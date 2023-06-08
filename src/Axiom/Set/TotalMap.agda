@@ -1,19 +1,19 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
 
 module Axiom.Set.TotalMap (th : Theory) where
 
-open import Prelude
-
-open Theory th
+open import Agda.Primitive using () renaming (Set to Type)
 open import Axiom.Set.Map th
 open import Axiom.Set.Properties th
 open import Axiom.Set.Rel th
+open import Prelude
 open import Tactic.AnyOf
 open import Tactic.Defaults
+
+open Theory th
 
 private variable A B : Type
 

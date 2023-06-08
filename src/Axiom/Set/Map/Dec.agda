@@ -3,13 +3,12 @@ open import Axiom.Set
 
 module Axiom.Set.Map.Dec (thᵈ : Theoryᵈ) where
 
-open import Prelude
-
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive using () renaming (Set to Type)
 open import Algebra
 open import Data.Sum as Sum
 open import Data.These
 open import Interface.DecEq
+open import Prelude
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary.Decidable
 

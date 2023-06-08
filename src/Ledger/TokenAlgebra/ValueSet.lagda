@@ -1,7 +1,12 @@
 n\subsection{Value Set}
 \begin{code}[hide]
-{-# OPTIONS --safe --no-import-sorts #-}
-{-# OPTIONS -v allTactics:100 #-}
+
+-- !!!!!!! TODO: REMOVE THE NEXT LINE WHEN ALL HOLES ARE FILLED!!!!!!!!
+{-# OPTIONS --allow-unsolved-metas #-}
+
+-- !!!!!!! TODO: UNCOMMENT THE NEXT TWO LINES WHEN ALL HOLES ARE FILLED!!!!!!!!
+-- {-# OPTIONS --safe --no-import-sorts #-}
+-- {-# OPTIONS -v allTactics:100 #-}
 
 open import Agda.Primitive using (lzero) renaming (Set to Type)
 open import Axiom.Set using (Theory)
@@ -19,15 +24,15 @@ open import Data.Nat                      using (ℕ ; _≤_ ; _+_)
 open import Data.Nat.Properties           using (+-0-commutativeMonoid)
 
 open import Ledger.Prelude                using ( DecEq )
-open import Ledger.TokenAlgebra PolicyId  using ( TokenAlgebra )
+open import Ledger.TokenAlgebra.Base      using ( TokenAlgebra ; Quantity)
 
 open import Prelude                       using ( _,_ ; _×_ ; module Equivalence; _∘_ ; _≗_ ; id )
 open import Prelude                       using ( _≡_ ; refl ; 0ℓ; trans ; sym)
 
 open import Relation.Binary               using (IsEquivalence )
 
-open Theory th                            using (_∈_ ; spec-∈ ; Set ; singleton ; ∈-singleton)
-                                          renaming (map to mapˢ)
+open Theory th                            using (_∈_ ; spec-∈ ; singleton ; ∈-singleton)
+                                          renaming (map to mapˢ ; Set to Set' )
 open import Relation.Binary.PropositionalEquality.Core using ( module ≡-Reasoning )
 import Relation.Binary.Core  as stdlib
 
@@ -52,11 +57,6 @@ the inhabitants of which belong to either \AgdaBound{AdaIdType} or the product
 then we would have defined
 \AgdaBound{AssetId}
   = \AgdaBound{AdaIdType}~\AgdaBound{⊎}~(\AgdaBound{PolicyId}~\AgdaBound{×}~\AgdaBound{AssetName}).
-
-\begin{code}
-Quantity : Type
-Quantity = ℕ
-\end{code}
 
 Finally, we define a record type with a single inhabitant with which we may wish to
 represent the type of Ada (rather than viewing Ada as just another asset).
@@ -164,7 +164,7 @@ Value-TokenAlgebra assetNameType isTotal specialPolicy specialAsset decEqVal sz 
     u ⊕ v = m , lu
       where
 
-      m : Set(AssetId × Quantity)
+      m : Set'(AssetId × Quantity)
       m = {!!}
       -- PROBLEM/QUESTION.
       -- I want an `m` such that `lookupᵐ m a` is the function:
@@ -238,7 +238,7 @@ Value-TokenAlgebra assetNameType isTotal specialPolicy specialAsset decEqVal sz 
 
   ------------------------------------------------------------------------------------------------------
   -- odds and ends -------------------------------------------------------------------------------------
-  coinQzeroAsSet : Set(AssetId × Quantity)
+  coinQzeroAsSet : Set'(AssetId × Quantity)
   coinQzeroAsSet = singleton (specId , 0)
 
 

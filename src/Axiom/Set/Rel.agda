@@ -1,33 +1,33 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive using(lzero) renaming (Set to Type)
 open import Axiom.Set
-import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-import Function.Related.Propositional as R
 
 module Axiom.Set.Rel (th : Theory {lzero}) where
-open Theory th
-open import Axiom.Set.Properties th
 
+open import Axiom.Set.Properties th
+open import Data.List.Ext.Properties
+open import Data.Maybe.Base using () renaming (map to map?)
+open import Data.Product.Properties
+open import Data.These hiding (map)
+open import Interface.DecEq
 open import Prelude hiding (filter)
+open import Relation.Binary hiding (Rel)
+open import Relation.Nullary
+open import Relation.Unary using () renaming (Decidable to Dec₁)
+open import Tactic.AnyOf
+open import Tactic.Defaults
 
 import Data.Product
 import Data.Sum
-open import Data.These hiding (map)
-open import Data.List.Ext.Properties
-open import Data.Product.Properties
-open import Data.Maybe.Base using () renaming (map to map?)
-open import Interface.DecEq
-open import Relation.Unary using () renaming (Decidable to Dec₁)
-open import Relation.Nullary
-open import Relation.Binary hiding (Rel)
+import Function.Related.Propositional as R
 import Relation.Binary.PropositionalEquality as I
+import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
+open Theory th
 open Equivalence
 
-open import Tactic.AnyOf
-open import Tactic.Defaults
 
 -- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
 private macro

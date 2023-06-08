@@ -1,9 +1,8 @@
 {-# OPTIONS --overlapping-instances #-}
 
-open import Agda.Primitive using () renaming (Set to Type)
-
 module Ledger.Foreign.HSLedger where
 
+open import Agda.Primitive          using () renaming (Set to Type)
 open import Algebra.Morphism        using ( IsCommutativeMonoidMorphism )
 open import Data.Nat                using ( _≤_ ; _≤ᵇ_)
 open import Data.Nat.Properties     using ( +-*-semiring ; <-isStrictTotalOrder )
@@ -94,7 +93,7 @@ HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructur
 
 open import Data.Nat
 open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
-open import Ledger.TokenAlgebra using (TokenAlgebra)
+open import Ledger.TokenAlgebra.Base using (TokenAlgebra)
 open import Ledger.Transaction
 
 

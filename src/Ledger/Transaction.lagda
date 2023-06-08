@@ -15,7 +15,7 @@ open import Ledger.Epoch
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
-import Ledger.TokenAlgebra as TA
+import Ledger.TokenAlgebra.Base as TA
 
 record TransactionStructure : Set₁ where
   field

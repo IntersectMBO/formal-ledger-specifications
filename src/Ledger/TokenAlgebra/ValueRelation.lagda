@@ -1,4 +1,4 @@
-n\subsection{Value Relation}
+\subsection{Value Relation}
 \label{sec:value-relation}
 
 \begin{code}[hide]
@@ -17,7 +17,7 @@ open import Data.Nat using (_≤_)
 open import Data.Product.Base            using (swap)
 open import Data.Sum.Base                using ([_,_]′)
 open import Ledger.Prelude               hiding (Rel ; _>_ )
-open import Ledger.TokenAlgebra PolicyId using (TokenAlgebraPoly)
+open import Ledger.TokenAlgebra.Base     using (TokenAlgebraPoly ; Quantity)
 open import Prelude
 open import Relation.Binary              using (REL ; Rel ; _⇒_ ; IsEquivalence ; Decidable) renaming (_⇔_ to _⇐⇒_ )
 open import Relation.Binary.Definitions  using (Decidable ; DecidableEquality)
@@ -50,19 +50,6 @@ the inhabitants of which belong to either \AgdaBound{AdaIdType} or the product
 then we would have defined
 \AgdaBound{AssetId}
   = \AgdaBound{AdaIdType}~\AgdaBound{⊎}~(\AgdaBound{PolicyId}~\AgdaBound{×}~\AgdaBound{AssetName}).
-
-\begin{code}
-Quantity : Type
-Quantity = ℕ
-\end{code}
-
-Finally, we define a record type with a single inhabitant with which we may wish to
-represent the type of Ada (rather than viewing Ada as just another asset).
-
-\begin{code}
-record AdaIdType : Type where
-  instance constructor AdaId
-\end{code}
 
 
 
@@ -100,7 +87,7 @@ open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (refl ; sym ; trans)
 open Algebra
 
 
-Value-TokenAlgebra :  (specialPolicy  : PolicyId)
+Value-TokenAlgebraPoly :  (specialPolicy  : PolicyId)
                       (assetNameType  : Type)
                       (specialAsset   : assetNameType)
                       (sz             : ((PolicyId × assetNameType) → Quantity) → ℕ)
@@ -108,7 +95,7 @@ Value-TokenAlgebra :  (specialPolicy  : PolicyId)
                       ---------------------------------------------------
  →                    TokenAlgebraPoly
 
-Value-TokenAlgebra specialPolicy assetNameType specialAsset₁ sz dec-eq =
+Value-TokenAlgebraPoly specialPolicy assetNameType specialAsset₁ sz dec-eq =
   record
     { Value-CommutativeMonoid = Vcm
     ; coin = λ u → u (specialPolicy , specialAsset₁)

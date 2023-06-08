@@ -1,6 +1,6 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive using () renaming (Set to Type)
 
 module Axiom.Set where
 

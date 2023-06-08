@@ -1,17 +1,15 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
-
-open import Prelude hiding (isEquivalence; trans; filter)
-open Theory th
 
 import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
+
+open import Agda.Primitive using () renaming (Set to Type)
 open import Data.List.Ext.Properties
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
@@ -22,11 +20,13 @@ open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
 open import Data.Product using (map₂)
 open import Function.Related using (toRelated; fromRelated)
 open import Interface.DecEq
+open import Prelude hiding (isEquivalence; trans; filter)
 open import Relation.Binary
 open import Relation.Binary.Lattice
 open import Relation.Binary.Morphism
 open import Relation.Unary using () renaming (Decidable to Dec₁)
 
+open Theory th
 open Equivalence
 
 private variable A B C D : Type ℓ

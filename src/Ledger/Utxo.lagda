@@ -30,7 +30,7 @@ open Tx
 
 open import Ledger.Crypto
 open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra using (TokenAlgebra)
+open import Ledger.TokenAlgebra.Base using (TokenAlgebra)
 
 open import MyDebugOptions
 --open import Tactic.Defaults
