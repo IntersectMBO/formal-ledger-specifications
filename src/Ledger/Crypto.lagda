@@ -18,12 +18,11 @@ mkIsHashableSet : (T THash : Set) → (f : T → THash)
                                   → (DecEq T)
                                   → (DecEq THash)
                                   → isHashableSet T
-
-mkIsHashableSet T THash hash hashInj eq eq' .THash               = THash
-mkIsHashableSet T THash hash hashInj eq eq' .T-Hashable .hash    = hash
+mkIsHashableSet T THash hash hashInj eq eq' .THash            = THash
+mkIsHashableSet T THash hash hashInj eq eq' .T-Hashable .hash = hash
 mkIsHashableSet T THash hash hashInj eq eq' .T-Hashable .hashInj = hashInj
-mkIsHashableSet T THash hash hashInj eq eq' .DecEq-T             = eq
-mkIsHashableSet T THash hash hashInj eq eq' .DecEq-THash         = eq'
+mkIsHashableSet T THash hash hashInj eq eq' .DecEq-T          = eq
+mkIsHashableSet T THash hash hashInj eq eq' .DecEq-THash      = eq'
 
 record HashableSet : Set₁ where
   field T : Set

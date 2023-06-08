@@ -59,6 +59,15 @@ record PParams : Set where
         -- Script
         collateralPercent : ℕ
 
+-- New Protocol Parameters
+--        costmdls : (Language → CostModel)
+--        prices : Prices
+--        maxTxExUnits : ExUnits
+--        maxBlockExUnits : ExUnits
+--        maxValSize : N
+--        coinsPerUTxOWord : Coin
+--        collateralPercent : N
+--        maxCollateralInputs : N
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}

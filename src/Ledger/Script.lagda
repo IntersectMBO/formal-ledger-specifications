@@ -29,7 +29,7 @@ record P1ScriptStructure : Set₁ where
 
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet
-        PlutusScript CostModel : Set
+        PlutusScript CostModel Prices : Set
         ExUnit-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
         instance Hashable-PlutusScript : Hashable PlutusScript ScriptHash
                  DecEq-PlutusScript    : DecEq PlutusScript
