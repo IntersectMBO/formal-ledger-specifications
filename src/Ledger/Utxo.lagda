@@ -115,14 +115,15 @@ cbalance utxo = coin (balance utxo)
 coinPolicies : ℙ PolicyId
 coinPolicies = policies (inject 1)
 
-isAdaOnly : Value → Bool
-isAdaOnly v = ⌊ (policies v) ≡ᵉ? coinPolicies ⌋
+isAdaOnlyᵇ : Value → Bool
+isAdaOnlyᵇ v = ⌊ (policies v) ≡ᵉ? coinPolicies ⌋
 
--- add txscriptfee function
+txscriptfee : Prices → ExUnits → Coin
+txscriptfee = {!!}
 
 -- Fix: add script free and exunits
-minfee : PParams → TxBody → Coin
-minfee pp tx = a * txsize tx + b
+minfee : PParams → Tx → Coin
+minfee pp tx = a * txsize {!!} + b + txscriptfee {!!} (totExUnits tx)
   where open PParams pp
 
 data DepositPurpose : Set where
@@ -172,11 +173,11 @@ _≥ᵇ_ = flip _≤ᵇ_
 -----------------------------------------------------
 
 feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee pp (body tx) ≤ᵇ txfee (body tx)
+feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee (body tx)
                      ∧ (not $ ≟-∅ᵇ ((TxWitnesses.txrdmrs (Tx.wits tx)) ˢ))
                        =>ᵇ
                        (allᵇ (λ x → isVKeyAddr? (proj₁ x)) collateralRange
-                       ∧ isAdaOnly bal
+                       ∧ isAdaOnlyᵇ bal
                        ∧ (coin bal * 100) ≥ᵇ (txfee txb * PParams.collateralPercent pp)
                        ∧ (not $ ≟-∅ᵇ (collateral (body tx))))
   where
@@ -329,16 +330,32 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           fees          = UTxOState.fees s
           deposits      = UTxOState.deposits s
           donations     = UTxOState.donations s
+          txb           = body tx
       in
-    txins tx ≢ ∅                           → txins tx ⊆ dom (utxo ˢ)
-    → inInterval slot (txvldt tx)          → minfee pp tx ≤ txfee tx
-    → consumed pp s tx ≡ produced pp s tx  → coin (mint tx) ≡ 0
-    → txsize tx ≤ maxTxSize pp
+    txins txb ≢ ∅                           → txins txb ⊆ dom (utxo ˢ)
+    → inInterval slot (txvldt txb)          → minfee pp tx ≤ txfee txb
+    → consumed pp s txb ≡ produced pp s txb  → coin (mint txb) ≡ 0
+
+{- these break deriveComputational but don't matter at the moment
+    → ∀ txout → txout ∈ proj₁ (txouts tx)
+              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp))
+
+    → ∀ txout → txout ∈ proj₁ (txouts tx)
+              → (serSize (getValue (proj₂ txout))) ≤ PParams.maxValSize pp
+-}
+
+    -- PPUP
+    -- these fail with some reduceDec error
+    -- → All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (range ((txouts tx) ˢ))
+    -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
+    -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
+    → txsize txb ≤ PParams.maxTxSize pp
+    -- Add Deposits
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
-                        , fees + txfee tx
-                        , updateDeposits pp tx deposits
-                        , donations + txdonation tx
+    Γ ⊢ s ⇀⦇ txb ,UTXO⦈  ⟦ (utxo ∣ txins txb ᶜ) ∪ᵐˡ outs txb
+                        , fees + txfee txb
+                        , updateDeposits pp txb deposits
+                        , donations + txdonation txb
                         ⟧ᵘ
 \end{code}
 \begin{code}[hide]
