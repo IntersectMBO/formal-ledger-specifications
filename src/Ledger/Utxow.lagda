@@ -3,8 +3,9 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Transaction
+open import Ledger.Abstract
 
-module Ledger.Utxow (txs : TransactionStructure) where
+module Ledger.Utxow (txs : TransactionStructure)(abs : AbstractFunctions txs) where
 
 open import Ledger.Prelude
 
@@ -13,7 +14,7 @@ import Data.Nat
 
 open TransactionStructure txs
 open import Ledger.Crypto
-open import Ledger.Utxo txs
+open import Ledger.Utxo txs abs
 
 open TxBody
 open TxWitnesses

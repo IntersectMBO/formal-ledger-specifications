@@ -6,22 +6,24 @@
 open import Ledger.Prelude
 open import Ledger.Epoch
 open import Ledger.Crypto
+open import Ledger.Script
 import Ledger.PParams as PP
 
 module Ledger.Deleg
   (crypto : Crypto)
   (TxId Network DocHash : Set)
   (epochStructure : EpochStructure)
-  (ppd : PP.PParamsDiff epochStructure)
-  (ppHashable : isHashableSet (PP.PParams epochStructure))
+  (ss : ScriptStructure crypto epochStructure)
+  (ppd : PP.PParamsDiff crypto epochStructure ss)
+  (ppHashable : isHashableSet (PP.PParams crypto epochStructure ss))
   ⦃ _ : DecEq Network ⦄
   where
 
 open Crypto crypto
 
 open import Ledger.Address Network KeyHash ScriptHash
-open import Ledger.PParams epochStructure using (PParams)
-open import Ledger.GovernanceActions TxId Network DocHash epochStructure ppd ppHashable crypto
+open import Ledger.PParams crypto epochStructure ss using (PParams)
+open import Ledger.GovernanceActions TxId Network DocHash crypto epochStructure ss ppd ppHashable
   using (Anchor; VDeleg)
 
 open EpochStructure epochStructure

@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------------
 -- Ledger prelude
 --
--- Re-exports modules relating to STS, set theory and other
+-- Re-exports modules relating to STS, se theory and other
 -- miscellaneous things used to write the ledger rules. If something
 -- is used in more than two Ledger.* modules, it should probably go
 -- here.
@@ -53,6 +53,8 @@ open Theoryᵈ List-Modelᵈ renaming (Set to ℙ_; filter to filterˢ) public
 
 abstract
   open import Axiom.Set.Properties th using (card-≡ᵉ)
+  open import Data.List.Membership.Propositional using (mapWith∈)
+
   to-sp : {A : Set} {P : A → Set} → Dec₁ P → specProperty P
   to-sp = id
 
@@ -75,9 +77,6 @@ abstract
 
   setFromList : {A : Set} → List A → ℙ A
   setFromList = id
-
-  ≟-∅ : {A : Set} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → Dec (X ≡ ∅)
-  ≟-∅ = Decˡ.≟-∅
 
 open import Axiom.Set.Rel th public
   hiding (_∣'_; _↾'_)
@@ -142,3 +141,4 @@ setToHashRel x = mapˡ hash (map (λ x₁ → x₁ , x₁) x)
 setToHashMap : ∀ {A B : Set} → {{Hashable A B}} -> ℙ A → B ⇀ A
 setToHashMap x with mapˡ-inj-dup x hash hashInj
 ... | ans  = _ᵐ (setToHashRel x) {{record { isLeftUnique = λ x₁ x₂ → ans x₁ x₂ }}}
+

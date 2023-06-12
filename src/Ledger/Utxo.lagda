@@ -8,8 +8,9 @@
 {-# OPTIONS --overlapping-instances #-}
 
 open import Ledger.Transaction
+open import Ledger.Abstract
 
-module Ledger.Utxo (txs : TransactionStructure) where
+module Ledger.Utxo (txs : TransactionStructure)(abs : AbstractFunctions txs) where
 
 open import Ledger.Prelude hiding (Dec₁)
 
@@ -27,9 +28,10 @@ open TransactionStructure txs
 open TxBody
 open TxWitnesses
 open Tx
+open AbstractFunctions abs
 
 open import Ledger.Crypto
-open import Ledger.PParams epochStructure
+open import Ledger.PParams crypto epochStructure ss
 open import Ledger.TokenAlgebra using (TokenAlgebra)
 
 open import MyDebugOptions
@@ -74,10 +76,6 @@ utxoEntrySizeWithoutVal = 8
 utxoEntrySize : TxOut → MemoryEstimate
 utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
 
--- TODO: fix this
-serSize : Value → MemoryEstimate
-serSize = λ _ → zero
-
 \end{code}
 
 Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
@@ -112,12 +110,9 @@ coinPolicies = policies (inject 1)
 isAdaOnlyᵇ : Value → Bool
 isAdaOnlyᵇ v = ⌊ (policies v) ≡ᵉ? coinPolicies ⌋
 
-txscriptfee : Prices → ExUnits → Coin
-txscriptfee = {!!}
-
 -- Fix: add script free and exunits
 minfee : PParams → Tx → Coin
-minfee pp tx = a * txsize {!!} + b + txscriptfee {!!} (totExUnits tx)
+minfee pp tx = a * txsize (body tx) + b + txscriptfee prices (totExUnits tx)
   where open PParams pp
 
 data DepositPurpose : Set where
@@ -325,20 +320,21 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     → inInterval slot (txvldt txb)          → minfee pp tx ≤ txfee txb
     → consumed pp s txb ≡ produced pp s txb  → coin (mint txb) ≡ 0
 
-{- these break deriveComputational but don't matter at the moment
-    → ∀ txout → txout ∈ proj₁ (txouts tx)
-              → (getValue (proj₂ txout)) ≥ᵗ (inject (utxoEntrySize (proj₂ txout) * PParams.minUtxOValue pp))
 
-    → ∀ txout → txout ∈ proj₁ (txouts tx)
-              → (serSize (getValue (proj₂ txout))) ≤ PParams.maxValSize pp
--}
+{- these break deriveComputational but don't matter at the moment -}
+    → ∀ txout → txout ∈ proj₁ (txouts txb)
+              → ((inject (utxoEntrySize (proj₂ txout) * minUTxOValue pp))
+              ≤ᵗ getValue (proj₂ txout))
+
+    → ∀ txout → txout ∈ proj₁ (txouts txb)
+              → (serSize (getValue (proj₂ txout))) ≤ maxValSize pp
 
     -- PPUP
     -- these fail with some reduceDec error
     -- → All (λ { (inj₂ a , _) → BootstrapAddr.attrsSize a ≤ 64 ; _ → ⊤ }) (range ((txouts tx) ˢ))
     -- → All (λ a → netId (proj₁ a) ≡ networkId) (range ((txouts tx) ˢ))
     -- → All (λ a → RwdAddr.net a ≡ networkId) (dom ((txwdrls tx) ˢ))
-    → txsize txb ≤ PParams.maxTxSize pp
+    → txsize txb ≤ maxTxSize pp
     -- Add Deposits
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ txb ,UTXO⦈  ⟦ (utxo ∣ txins txb ᶜ) ∪ᵐˡ outs txb

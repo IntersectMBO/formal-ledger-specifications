@@ -71,6 +71,7 @@ isVKeyAddr   : Addr → Set
 isScriptAddr : Addr → Set
 isVKeyAddr   = isVKey ∘ payCred
 isScriptAddr = isScript ∘ payCred
+isScriptRwdAddr = isScript ∘ RwdAddr.stake
 \end{code}
 \end{AgdaAlign}
 \caption{Definitions used in Addresses}
@@ -96,6 +97,9 @@ isScript? (inj₂ y) = yes (SHisScript y)
 
 isScriptAddr? : ∀ a → Dec (isScriptAddr a)
 isScriptAddr? = isScript? ∘ payCred
+
+isScriptRwdAddr? : ∀ a → Dec (isScriptRwdAddr a)
+isScriptRwdAddr? = isScript? ∘ RwdAddr.stake
 
 getScriptHash : ∀ a → isScriptAddr a → ScriptHash
 getScriptHash (inj₁ record { net = net ; pay = .(inj₂ sh) ; stake = stake }) (SHisScript sh) = sh
