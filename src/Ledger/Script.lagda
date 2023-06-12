@@ -3,8 +3,10 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (All; Any)
+open import Ledger.Epoch
+open import Ledger.Crypto
 
-module Ledger.Script (KeyHash ScriptHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ where
+module Ledger.Script (crypto : Crypto)(es : EpochStructure) where
 
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Morphism
@@ -13,12 +15,12 @@ open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Binary.Sublist.Propositional as S
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 
-open import Ledger.Crypto
-
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
 open import Algebra using (CommutativeMonoid)
 
+open Crypto crypto
+open EpochStructure es
 
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
@@ -40,6 +42,7 @@ record PlutusStructure : Set₁ where
   field  -- GetPair              : ExUnits → Set × Set
          _≥ᵉ_                 : ExUnits → ExUnits → Set
          instance DecEq-ExUnits : DecEq ExUnits
+         instance DecEQ-Prices  : DecEq Prices
          -- coinIsMonoidMorphism : GetPair Is ExUnit-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid
 
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public

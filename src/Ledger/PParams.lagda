@@ -2,9 +2,15 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
+open import Ledger.Crypto
 open import Ledger.Epoch
+open import Ledger.Script
+open import Ledger.Prelude hiding (All; Any)
 
-module Ledger.PParams (es : EpochStructure) where
+
+module Ledger.PParams (crypto : Crypto )
+                      (es     : EpochStructure)
+                      (ss     : ScriptStructure crypto es) where
 
 open import Data.Rational
 
@@ -13,6 +19,7 @@ open import MyDebugOptions
 
 open import Ledger.Prelude
 open EpochStructure es
+open ScriptStructure ss
 \end{code}
 
 Adjustable parameters of the Cardano ledger. They are used in block
@@ -58,12 +65,12 @@ record PParams : Set where
 
         -- Script
         collateralPercent : ℕ
+        prices            : Prices
+        maxTxExUnits      : ExUnits
+        maxBlockExUnits   : ExUnits
 
 -- New Protocol Parameters
 --        costmdls : (Language → CostModel)
---        prices : Prices
---        maxTxExUnits : ExUnits
---        maxBlockExUnits : ExUnits
 --        maxValSize : N
 --        coinsPerUTxOWord : Coin
 --        collateralPercent : N

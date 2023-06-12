@@ -60,9 +60,13 @@ the transaction body are:
   open EpochStructure epochStructure public
   open GlobalConstants globalConstants public
   field crypto                              : Crypto
+
+  open Crypto crypto public
+
+  field ss                                  : Ledger.Script.ScriptStructure crypto epochStructure
         adHashingScheme                     : isHashableSet AuxiliaryData
-        ppHashingScheme                     : isHashableSet (Ledger.PParams.PParams epochStructure)
-        ppUpd                               : Ledger.PParams.PParamsDiff epochStructure
+        ppHashingScheme                     : isHashableSet (Ledger.PParams.PParams crypto epochStructure ss)
+        ppUpd                               : Ledger.PParams.PParamsDiff crypto epochStructure ss
         txidBytes                           : TxId → Crypto.Ser crypto
         networkId                           : Network
         tokenAlgebra                        : TokenAlgebra
@@ -71,22 +75,19 @@ the transaction body are:
                  DecEq-Netw  : DecEq Network
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
-  open Crypto crypto public
   open TokenAlgebra tokenAlgebra public
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
-  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
-
   open Ledger.Script.ScriptStructure ss public
 
-  open import Ledger.PParams epochStructure
+  open import Ledger.PParams crypto epochStructure ss
 
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
   -- TODO: figure out what to do with the hash
-  open Ledger.GovernanceActions TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto hiding (yes; no) public
+  open Ledger.GovernanceActions TxId Network ADHash crypto epochStructure ss ppUpd ppHashingScheme hiding (yes; no) public
 
   open import Ledger.Address Network KeyHash ScriptHash public
-  open import Ledger.Deleg crypto TxId Network ADHash epochStructure ppUpd ppHashingScheme public
+  open import Ledger.Deleg crypto TxId Network ADHash epochStructure ss ppUpd ppHashingScheme public
 
 \end{code}
 \emph{Derived types}
