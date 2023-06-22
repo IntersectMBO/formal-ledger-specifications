@@ -134,7 +134,7 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
   zeroMap = Function⇒TotalMapOn zeroFun X
 
 
-  open Unionᵗᵐ {A = AssetId} {B = Quantity} ⦃ dec ⦄
+  open Unionᵗᵐ ⦃ dec ⦄
 
   inj : Coin → X ⇒ Quantity
   inj c = updateOn specId c zeroMap
@@ -150,7 +150,6 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
       q                                                 ∎
 
 
-  open Algebra
 
   Vcm : CommutativeMonoid 0ℓ 0ℓ
   Vcm =
@@ -168,12 +167,12 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
     open IsEquivalence
     ≋-isEquivalence : IsEquivalence {0ℓ} _≋_
     refl ≋-isEquivalence = ≡.refl
-    IsEquivalence.sym ≋-isEquivalence {x} {y} x≋y {a} = ≡.sym x≋y
+    IsEquivalence.sym ≋-isEquivalence x≋y = ≡.sym x≋y
     IsEquivalence.trans ≋-isEquivalence x y = ≡.trans x y
 
 
     _⊕_ : Op₂ (X ⇒ Quantity)
-    u ⊕ v = FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄}{X = X} 0 f+g
+    u ⊕ v = FunOn⇒TotalMapOn ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄}{X = X} 0 f+g
       where
       f g f+g : Σ AssetId (_∈ X) → Quantity
       f = TotalMapOn⇒FunOn u
@@ -184,13 +183,9 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
      →      TotalMapOn⇒FunOn (u ⊕ v) aa ≡ TotalMapOn⇒FunOn u aa + TotalMapOn⇒FunOn v aa
     lemma {u} {v} (a , a∈X) = begin
       TotalMapOn⇒FunOn (u ⊕ v) (a , a∈X) ≡⟨ {!!} ⟩
-      TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄ } {X = X} 0 (λ x → TotalMapOn⇒FunOn u x + TotalMapOn⇒FunOn v x)) (a , a∈X) ≡⟨ {!!} ⟩
-      -- TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {X = X} 0 ((TotalMapOn⇒FunOn u) (a , a∈X)) + ((TotalMapOn⇒FunOn v) (a , a∈X))) ≡⟨ {!!} ⟩
-      proj₁ (to dom∈ ((proj₂ (proj₂ (u ⊕ v))) a∈X)) ≡⟨ {!!} ⟩
+      TotalMapOn⇒FunOn (FunOn⇒TotalMapOn ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄ } 0 (λ x → TotalMapOn⇒FunOn u x + TotalMapOn⇒FunOn v x)) (a , a∈X) ≡⟨ {!!} ⟩
       proj₁ (to dom∈ ((proj₂ (proj₂ (u ⊕ v))) a∈X)) ≡⟨ {!!} ⟩
       TotalMapOn⇒FunOn u (a , a∈X) + TotalMapOn⇒FunOn v (a , a∈X) ∎
-      -- TotalMapOn⇒FunOn (u ⊕ v) aa ≡⟨ {!!} ⟩
-      -- TotalMapOn⇒FunOn u aa + TotalMapOn⇒FunOn v aa ∎
 
 
     ⊕-comm : Algebra.Commutative _≋_ _⊕_
@@ -229,7 +224,7 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
 
 
     ι : X ⇒ Quantity
-    ι = FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0 (λ _ → 0)
+    ι = FunOn⇒TotalMapOn ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0 (λ _ → 0)
 
 
     ι-identity : Algebra.Identity _≋_ ι _⊕_
@@ -248,10 +243,10 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
                  ≡ TotalMapOn⇒FunOn ι aa + TotalMapOn⇒FunOn tm aa
       subgoal = {!!}   -- proj₁ (to dom∈ ((proj₂ (proj₂ (ι ⊕ tm))) a∈X)) ≡⟨ {!≡.refl!} ⟩
 
-      ≡ιf+tmf : TotalMapOn⇒FunOn{X = X} (ι ⊕ tm) aa ≡ ιf+tmf aa
+      ≡ιf+tmf : TotalMapOn⇒FunOn (ι ⊕ tm) aa ≡ ιf+tmf aa
       ≡ιf+tmf = begin
-        TotalMapOn⇒FunOn{X = X} (ι ⊕ tm) aa ≡⟨  subgoal ⟩
-        TotalMapOn⇒FunOn{X = X} ι aa + TotalMapOn⇒FunOn{X = X} tm aa ≡⟨ ≡.refl ⟩
+        TotalMapOn⇒FunOn (ι ⊕ tm) aa ≡⟨  subgoal ⟩
+        TotalMapOn⇒FunOn ι aa + TotalMapOn⇒FunOn tm aa ≡⟨ ≡.refl ⟩
         ιf+tmf aa ∎
 
       lid : lookupOn (ι ⊕ tm) aa ≡ lookupOn tm aa
@@ -283,10 +278,11 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
 
   open CommutativeMonoid Vcm renaming ( rawMonoid to Vcm-mon ) using ()
   open CommutativeMonoid +-0-commutativeMonoid renaming ( rawMonoid to ℕ-mon) using ( _≈_ )
+  open Algebra using (module RawMonoid)
   open RawMonoid Vcm-mon renaming ( _∙_ to _∙_ ; ε to ι )
   open RawMonoid ℕ-mon renaming ( _≈_ to _≈ℕ_ ; _∙_ to _◦_ )
 
-  open IsMagmaHomomorphism
+  open IsMagmaHomomorphism using ( isRelHomomorphism ; homo )
   open MonoidMorphisms Vcm-mon ℕ-mon using ( IsMonoidHomomorphism )
   open IsMonoidHomomorphism using ( isMagmaHomomorphism ; ε-homo )
 
@@ -305,7 +301,7 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
 
   ------------------------------------------------------------------------------------------------------
   -- odds and ends -------------------------------------------------------------------------------------
-  coinQzeroAsSet : Set(AssetId × Quantity)
+  coinQzeroAsSet : Set (AssetId × Quantity)
   coinQzeroAsSet = singleton (specId , 0)
 
   P : AssetId × Quantity → Type
