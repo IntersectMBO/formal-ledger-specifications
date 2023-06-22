@@ -265,9 +265,6 @@ _≡ᵗᵐˢ_ : {X : Set A} → TotalMapOn X B → TotalMapOn X B → Type
 _≡ᵗᵐ_ : {X : Set A} → TotalMapOn X B → TotalMapOn X B → Type
 u ≡ᵗᵐ v = ∀{x} → (lookupOn u) x ≡ (lookupOn v) x 
 
-_ˢ : TotalMap A B → Rel A B
-t ˢ = proj₁ t
-
 _ᵗᵐ : (R : Rel A B) → ⦃ IsTotalMap R ⦄ → TotalMap A B
 _ᵗᵐ R  ⦃ record { isLeftUnique = Rlu ; isTotal = Rt } ⦄ = R , Rlu , Rt
 
