@@ -183,7 +183,7 @@ module _  {A B : Type}
       tot₂R {a} a∈X = ff a , ∈-map′ a∈X
 
 
-  FunOn⇒TotalMapOn : {X : Set A} → (z : B) → (Σ A (_∈ X) → B) → TotalMapOn X B
+  FunOn⇒TotalMapOn : {X : Set A} → B → (Σ A (_∈ X) → B) → TotalMapOn X B
   FunOn⇒TotalMapOn {X = X} z f = TotalMapOn₂⇒TotalMapOn (FunOn⇒TotalMapOn₂ z f)
 
 
@@ -232,15 +232,15 @@ lookupIsValid : (tm : TotalMap A B)(a : A) → (a , lookup tm a) ∈ proj₁ tm
 lookupIsValid (_ , _ , totR) _ = proj₂ (to dom∈ totR)
 
 -- total map on X to function on X
-TotalMapOn⇒FunctionOn
+TotalMapOn⇒FunOn
   lookupOn             : {X : Set A} → TotalMapOn X B → Σ A (_∈ X) → B
 
-TotalMapOn⇒FunctionOn (R , luR , totR) (a , a∈X) = proj₁ ξ
+TotalMapOn⇒FunOn (R , luR , totR) (a , a∈X) = proj₁ ξ
   where
   ξ : ∃[ b ] (a , b) ∈ R
   ξ = to dom∈ (totR a∈X)
 
-lookupOn = TotalMapOn⇒FunctionOn  -- just an alias
+lookupOn = TotalMapOn⇒FunOn  -- just an alias
 
 
 lookupOnIsValid : (X : Set A){tm : TotalMapOn X B}{a : A}(a∈X : a ∈ X) → (a , lookupOn tm (a , a∈X)) ∈ proj₁ tm
@@ -248,12 +248,12 @@ lookupOnIsValid X {(R , luR , totR)} a∈X = proj₂ (to dom∈ (totR a∈X))
 
 
 -- total map (alt representation) to function
-TotalMapOn₂⇒FunctionOn
+TotalMapOn₂⇒FunOn
   lookupOn₂             : {X : Set A} → TotalMapOn₂ X B → Σ A (_∈ X) → B
 
-TotalMapOn₂⇒FunctionOn (_ , _ , tot) (_ , a∈X) = proj₁ (tot a∈X)
+TotalMapOn₂⇒FunOn (_ , _ , tot) (_ , a∈X) = proj₁ (tot a∈X)
 
-lookupOn₂ = TotalMapOn₂⇒FunctionOn
+lookupOn₂ = TotalMapOn₂⇒FunOn
 
 
 ----------------------------
