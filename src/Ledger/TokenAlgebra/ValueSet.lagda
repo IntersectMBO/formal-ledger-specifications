@@ -11,8 +11,12 @@ open import Axiom.Set using ( Theory )
 module Ledger.TokenAlgebra.ValueSet (PolicyId : Type)(th : Theory) where
 
 
-open import Algebra                 using     ( CommutativeMonoid ; Op₂ ; IsSemigroup ; IsMonoid )
-open import Algebra.Morphism        using     ( module MonoidMorphisms ; IsMagmaHomomorphism )
+open import Prelude                 using     ( _,_ ; _×_ ; module Equivalence; _∘_ ; _≗_ ; id )
+open import Prelude                 using     ( _≡_ ; 0ℓ; trans ; sym ; proj₁ ; proj₂ ; Σ)
+
+open import Ledger.Prelude          using     ( DecEq ; Coin ; cong ; ∈-sp ; Dec₁)
+open import Ledger.TokenAlgebra     using     ( TokenAlgebra ; Quantity)
+
 open import Axiom.Set.Map th        using     ( module Lookupᵐ ; singletonᵐ ; ❴_❵ᵐ ; left-unique )
                                     renaming  ( Map to _⇀_ ; _ˢ to _ᵐ )
 
@@ -21,19 +25,16 @@ open import Axiom.Set.TotalMap th   using     ( Function⇒TotalMapOn ; FunOn⇒
                                               ; total ; Function⇒TotalMapOn₂ ; TotalMapOn₂⇒TotalMapOn ; _≡ᵗᵐ_
                                               ; lookupOn ; TotalMapOn⇒FunOn )
                                     renaming  ( TotalMapOn to _⇒_ )
-open import Data.Nat                using     ( ℕ ; _≤_ ; _+_ )
-open import Data.Nat.Properties     using     ( +-0-commutativeMonoid ; +-comm )
 
-open import Ledger.Prelude          using     ( DecEq ; Coin ; cong ; ∈-sp ; Dec₁)
-open import Ledger.TokenAlgebra     using     ( TokenAlgebra ; Quantity)
-open import Prelude                 using     ( _,_ ; _×_ ; module Equivalence; _∘_ ; _≗_ ; id )
-open import Prelude                 using     ( _≡_ ; 0ℓ; trans ; sym ; proj₁ ; proj₂ ; Σ)
-
-open import Relation.Binary         using     ( IsEquivalence ) renaming (Decidable to Dec₂)
 open Theory th                      using     ( _∈_ ; singleton ; ∈-singleton ; spec-∈ ; Set)
                                     renaming  ( map to mapˢ )
 
-open import Relation.Binary         using     (IsEquivalence )
+
+open import Algebra                 using     ( CommutativeMonoid ; Op₂ ; IsSemigroup ; IsMonoid )
+open import Algebra.Morphism        using     ( module MonoidMorphisms ; IsMagmaHomomorphism )
+open import Data.Nat                using     ( ℕ ; _≤_ ; _+_ )
+open import Data.Nat.Properties     using     ( +-0-commutativeMonoid ; +-comm )
+open import Relation.Binary         using     ( IsEquivalence ) renaming (Decidable to Dec₂)
 
 open import Relation.Binary.PropositionalEquality.Core using ( module ≡-Reasoning )
 
