@@ -111,7 +111,7 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
   AssetId : Type
   AssetId = PolicyId × AssetName
 
-  specId : PolicyId × AssetName
+  specId : AssetId
   specId = specialPolicy , specialAsset
 
   -- sp∈ : spec-∈ AssetId
@@ -132,7 +132,7 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
   zeroMap = Function⇒TotalMapOn zeroFun X
 
 
-  open Unionᵗᵐ {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄
+  open Unionᵗᵐ {A = AssetId} {B = Quantity} ⦃ dec ⦄
 
   inj : Coin → X ⇒ Quantity
   inj c = updateOn specId c zeroMap
@@ -171,28 +171,24 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
 
 
     _⊕_ : Op₂ (X ⇒ Quantity)
-    u ⊕ v = FunOn⇒TotalMapOn {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄}{X = X} 0 f+g
+    u ⊕ v = FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄}{X = X} 0 f+g
       where
-      f g f+g : Σ (PolicyId × AssetName) (_∈ X) → Quantity
+      f g f+g : Σ AssetId (_∈ X) → Quantity
       f = TotalMapOn⇒FunOn u
       g = TotalMapOn⇒FunOn v
       f+g aa = f aa + g aa
 
-    lemma : ∀{u v} → (aa : Σ (PolicyId × AssetName) (_∈ X))
+    lemma : ∀{u v} → (aa : Σ AssetId (_∈ X))
      →      TotalMapOn⇒FunOn (u ⊕ v) aa ≡ TotalMapOn⇒FunOn u aa + TotalMapOn⇒FunOn v aa
     lemma {u} {v} (a , a∈X) = begin
       TotalMapOn⇒FunOn (u ⊕ v) (a , a∈X) ≡⟨ {!!} ⟩
-      TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄ } {X = X} 0 (λ x → TotalMapOn⇒FunOn u x + TotalMapOn⇒FunOn v x)) (a , a∈X) ≡⟨ {!!} ⟩
+      TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄ } {X = X} 0 (λ x → TotalMapOn⇒FunOn u x + TotalMapOn⇒FunOn v x)) (a , a∈X) ≡⟨ {!!} ⟩
       -- TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {X = X} 0 ((TotalMapOn⇒FunOn u) (a , a∈X)) + ((TotalMapOn⇒FunOn v) (a , a∈X))) ≡⟨ {!!} ⟩
       proj₁ (to dom∈ ((proj₂ (proj₂ (u ⊕ v))) a∈X)) ≡⟨ {!!} ⟩
       proj₁ (to dom∈ ((proj₂ (proj₂ (u ⊕ v))) a∈X)) ≡⟨ {!!} ⟩
       TotalMapOn⇒FunOn u (a , a∈X) + TotalMapOn⇒FunOn v (a , a∈X) ∎
       -- TotalMapOn⇒FunOn (u ⊕ v) aa ≡⟨ {!!} ⟩
       -- TotalMapOn⇒FunOn u aa + TotalMapOn⇒FunOn v aa ∎
--- TotalMapOn⇒FunOn (R , luR , totR) (a , a∈X) = proj₁ ξ
---   where
---   ξ : ∃[ b ] (a , b) ∈ R
---   ξ = to dom∈ (totR a∈X)
 
 
     ⊕-comm : Algebra.Commutative _≋_ _⊕_
@@ -202,17 +198,17 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
       Goal = begin
         lookupOn (u ⊕ v) aa ≡⟨ ≡.refl ⟩
         TotalMapOn⇒FunOn (u ⊕ v) aa ≡⟨ ≡.refl ⟩
-        TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} {X = X} 0 (λ x → (TotalMapOn⇒FunOn{X = X} u x) + (TotalMapOn⇒FunOn{X = X} v x))) aa ≡⟨ goal ⟩
-        TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0 (λ x → (TotalMapOn⇒FunOn v x) + (TotalMapOn⇒FunOn u x))) aa ≡⟨ ≡.refl ⟩
+        TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} {X = X} 0 (λ x → (TotalMapOn⇒FunOn{X = X} u x) + (TotalMapOn⇒FunOn{X = X} v x))) aa ≡⟨ goal ⟩
+        TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0 (λ x → (TotalMapOn⇒FunOn v x) + (TotalMapOn⇒FunOn u x))) aa ≡⟨ ≡.refl ⟩
         lookupOn (v ⊕ u) aa ∎
         where
         goal : TotalMapOn⇒FunOn
-                (FunOn⇒TotalMapOn {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0
+                (FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0
                     (λ x → TotalMapOn⇒FunOn u x + TotalMapOn⇒FunOn v x)) aa
-                 ≡ TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0
+                 ≡ TotalMapOn⇒FunOn (FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0
                        (λ x → TotalMapOn⇒FunOn v x + TotalMapOn⇒FunOn u x)) aa
         goal = {!!} -- cong (λ z → TotalMapOn⇒FunOn
-                -- (FunOn⇒TotalMapOn {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄ 0 z) aa) {!!} -- (cong (λ x xx → {! _  + TotalMapOn⇒FunOn u x!}) {!!})
+                -- (FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄ 0 z) aa) {!!} -- (cong (λ x xx → {! _  + TotalMapOn⇒FunOn u x!}) {!!})
 -- cong (λ k → TotalMapOn⇒FunOn
 --                  (FunOn⇒TotalMapOn'{X = X} 0 k) aa) {!+-comm!}
 -- +-comm (lookupOn u aa) (lookupOn v aa)
@@ -228,17 +224,17 @@ Value-TokenAlgebra AssetName specialPolicy specialAsset X spec∈X size {decTot}
     ⊕-cong {x} {y} {u} {v} xy uv {a , a∈X} = {!!}
 
     ι : X ⇒ Quantity
-    ι = FunOn⇒TotalMapOn {A = (PolicyId × AssetName)} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0 (λ _ → 0)
+    ι = FunOn⇒TotalMapOn {A = AssetId} {B = Quantity} ⦃ dec ⦄{ _∈?_ ⦃ dec ⦄} 0 (λ _ → 0)
 
 
     ι-identity : Algebra.Identity _≋_ ι _⊕_
     proj₁ ι-identity tm {(a , a∈X)} = lid
       where
-      ιf : Σ (PolicyId × AssetName) (_∈ X) → Quantity
+      ιf : Σ AssetId (_∈ X) → Quantity
       ιf (a , a∈X) = TotalMapOn⇒FunOn ι (a , a∈X)
-      tmf : Σ (PolicyId × AssetName) (_∈ X) → Quantity
+      tmf : Σ AssetId (_∈ X) → Quantity
       tmf (a , a∈X) = TotalMapOn⇒FunOn tm (a , a∈X)
-      ιf+tmf : Σ (PolicyId × AssetName) (_∈ X) → Quantity
+      ιf+tmf : Σ AssetId (_∈ X) → Quantity
       ιf+tmf (a , a∈X) = ιf (a , a∈X) + tmf (a , a∈X)
 
       ≡ιf+tmf : TotalMapOn⇒FunOn{X = X} (ι ⊕ tm) (a , a∈X) ≡ ιf+tmf (a , a∈X)
