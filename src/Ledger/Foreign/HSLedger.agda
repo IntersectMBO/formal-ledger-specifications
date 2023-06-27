@@ -117,25 +117,30 @@ coinTokenAlgebra = record
 
 module _ where
   open TransactionStructure
+  open PParamsDiff
 
   HSTransactionStructure : TransactionStructure
-  HSTransactionStructure .Ix              = ℕ
-  HSTransactionStructure .TxId            = ℕ
-  HSTransactionStructure .epochStructure  = HSEpochStructure
-  HSTransactionStructure .globalConstants = HSGlobalConstants
-  HSTransactionStructure .AuxiliaryData   = ⊤
-  HSTransactionStructure .crypto          = HSCrypto
-  HSTransactionStructure .adHashingScheme = isHashableSet-⊤
-  HSTransactionStructure .ppHashingScheme = isHashableSelf PParams
-  HSTransactionStructure .ppUpd           = record { UpdateT = ⊤ ; updateGroups = λ _ → ∅ ; applyUpdate = λ p _ → p }
-  HSTransactionStructure .txidBytes       = id
-  HSTransactionStructure .networkId       = tt
-  HSTransactionStructure .tokenAlgebra    = coinTokenAlgebra
-  HSTransactionStructure .DecEq-TxId      = DecEq-ℕ
-  HSTransactionStructure .DecEq-Ix        = DecEq-ℕ
-  HSTransactionStructure .DecEq-Netw      = DecEq-⊤
-  HSTransactionStructure .DecEq-UpdT      = DecEq-⊤
-  HSTransactionStructure .ss              = HSScriptStructure
+  HSTransactionStructure .Ix                      = ℕ
+  HSTransactionStructure .TxId                    = ℕ
+  HSTransactionStructure .epochStructure          = HSEpochStructure
+  HSTransactionStructure .globalConstants         = HSGlobalConstants
+  HSTransactionStructure .AuxiliaryData           = ⊤
+  HSTransactionStructure .crypto                  = HSCrypto
+  HSTransactionStructure .adHashingScheme         = isHashableSet-⊤
+  HSTransactionStructure .ppHashingScheme         = isHashableSelf PParams
+  HSTransactionStructure .ppUpd .UpdateT          = ⊤
+  HSTransactionStructure .ppUpd .updateGroups     = λ _ → ∅
+  HSTransactionStructure .ppUpd .applyUpdate      = λ p _ → p
+  HSTransactionStructure .ppUpd .ppdWellFormed    = λ _ → true
+  HSTransactionStructure .ppUpd .ppdWellFormed⇒WF = λ _ _ x → x
+  HSTransactionStructure .txidBytes               = id
+  HSTransactionStructure .networkId               = tt
+  HSTransactionStructure .tokenAlgebra            = coinTokenAlgebra
+  HSTransactionStructure .DecEq-TxId              = DecEq-ℕ
+  HSTransactionStructure .DecEq-Ix                = DecEq-ℕ
+  HSTransactionStructure .DecEq-Netw              = DecEq-⊤
+  HSTransactionStructure .DecEq-UpdT              = DecEq-⊤
+  HSTransactionStructure .ss                      = HSScriptStructure
 
 open import Ledger.Utxo HSTransactionStructure
 open import Ledger.Utxo.Properties HSTransactionStructure
@@ -238,23 +243,24 @@ instance
 
       from' : F.PParams → PParams
       from' pp = let open F.PParams pp in record
-        { a                = a
-        ; b                = b
-        ; maxBlockSize     = maxBlockSize
-        ; maxTxSize        = maxTxSize
-        ; maxHeaderSize    = maxHeaderSize
-        ; maxValSize       = maxValSize
-        ; minUTxOValue     = minUTxOValue
-        ; poolDeposit      = poolDeposit
-        ; Emax             = Emax
-        ; pv               = coerce pv
-        ; votingThresholds = ℚ.0ℚ , ℚ.0ℚ -- TODO: translate once this is implemented in F.PParams
-        ; minCCSize        = minCCSize
-        ; ccTermLimit      = ccTermLimit
-        ; govExpiration    = govExpiration
-        ; govDeposit       = govDeposit
-        ; drepDeposit      = drepDeposit
-        ; drepActivity     = drepActivity
+        { a                 = a
+        ; b                 = b
+        ; maxBlockSize      = maxBlockSize
+        ; maxTxSize         = maxTxSize
+        ; maxHeaderSize     = maxHeaderSize
+        ; maxValSize        = maxValSize
+        ; minUTxOValue      = minUTxOValue
+        ; poolDeposit       = poolDeposit
+        ; Emax              = Emax
+        ; collateralPercent = 0
+        ; pv                = coerce pv
+        ; votingThresholds  = ℚ.0ℚ , ℚ.0ℚ -- TODO: translate once this is implemented in F.PParams
+        ; minCCSize         = minCCSize
+        ; ccTermLimit       = ccTermLimit
+        ; govExpiration     = govExpiration
+        ; govDeposit        = govDeposit
+        ; drepDeposit       = drepDeposit
+        ; drepActivity      = drepActivity
         }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
