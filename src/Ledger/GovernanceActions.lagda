@@ -61,6 +61,10 @@ data GovAction : Set where
   TreasuryWdrl     : (Credential ⇀ Coin)              → GovAction
   Info             :                                    GovAction
 
+actionWellFormed : GovAction → Bool
+actionWellFormed (ChangePParams x _) = ppdWellFormed x
+actionWellFormed _                   = true
+
 NeedsHash : GovAction → Set
 NeedsHash NoConfidence         = GovActionID
 NeedsHash (NewCommittee _ _ _) = GovActionID

@@ -81,6 +81,8 @@ data _⊢_⇀⦇_,TALLY'⦈_ : TallyEnv × ℕ → TallyState → GovVote ⊎ Go
               addVote s aid role cred v
 
   TallyPropose : ∀ {x k} → let open TallyEnv Γ; open PParams pparams using (govExpiration; govDeposit) in
+    actionWellFormed a ≡ true
+    ────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; prevAction = prev } ,TALLY'⦈
               addAction s (govExpiration +ᵉ epoch) (txid , k) addr a prev
 

@@ -6,12 +6,13 @@ open import Ledger.Epoch
 
 module Ledger.PParams (es : EpochStructure) where
 
-open import Data.Rational
-
-open import Tactic.Derive.DecEq
-open import MyDebugOptions
-
 open import Ledger.Prelude
+
+open import Data.Rational using (ℚ)
+open import MyDebugOptions
+open import Relation.Nullary.Decidable
+open import Tactic.Derive.DecEq
+
 open EpochStructure es
 \end{code}
 
@@ -46,6 +47,7 @@ record PParams : Set where
 
         -- Technical group
         Emax              : Epoch
+        collateralPercent : ℕ
 
         -- Governance group
         votingThresholds  : ℚ × ℚ
@@ -55,6 +57,12 @@ record PParams : Set where
         govDeposit        : Coin
         drepDeposit       : Coin
         drepActivity      : Epoch
+
+paramsWellFormed : PParams → Bool
+paramsWellFormed pp = ⌊ ¬? (0 ∈? setFromList
+  (maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
+  ∷ collateralPercent ∷ ccTermLimit ∷ govExpiration ∷ govDeposit ∷ drepDeposit ∷ [])) ⌋
+  where open PParams pp
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}
@@ -67,4 +75,8 @@ record PParamsDiff : Set₁ where
   field UpdateT : Set
         updateGroups : UpdateT → ℙ PParamGroup
         applyUpdate : PParams → UpdateT → PParams
+        ppdWellFormed : UpdateT → Bool
+        ppdWellFormed⇒WF : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
+                         → paramsWellFormed pp ≡ true
+                         → paramsWellFormed (applyUpdate pp u) ≡ true
 \end{code}
