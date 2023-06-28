@@ -254,7 +254,12 @@ instance
         ; Emax              = Emax
         ; collateralPercent = 0
         ; pv                = coerce pv
-        ; votingThresholds  = ℚ.0ℚ , ℚ.0ℚ -- TODO: translate once this is implemented in F.PParams
+         -- TODO: translate these once they are implemented in F.PParams
+        ; drepThresholds    = record
+          { P1  = ℚ.½ ; P2a = ℚ.½ ; P2b = ℚ.½ ; P3  = ℚ.½ ; P4 = ℚ.½
+          ; P5a = ℚ.½ ; P5b = ℚ.½ ; P5c = ℚ.½ ; P5d = ℚ.½ ; P6 = ℚ.½}
+        ; poolThresholds    = record
+          { Q1 = ℚ.½ ; Q2a = ℚ.½ ; Q2b = ℚ.½ ; Q4 = ℚ.½ }
         ; minCCSize         = minCCSize
         ; ccTermLimit       = ccTermLimit
         ; govExpiration     = govExpiration

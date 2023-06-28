@@ -31,6 +31,12 @@ record Acnt : Set where
 data PParamGroup : Set where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup : PParamGroup
 
+record DrepThresholds : Set where
+  field P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
+
+record PoolThresholds : Set where
+  field Q1 Q2a Q2b Q4 : ℚ
+
 record PParams : Set where
   field -- Network group
         maxBlockSize      : ℕ
@@ -50,7 +56,8 @@ record PParams : Set where
         collateralPercent : ℕ
 
         -- Governance group
-        votingThresholds  : ℚ × ℚ
+        drepThresholds    : DrepThresholds
+        poolThresholds    : PoolThresholds
         minCCSize         : ℕ
         ccTermLimit       : ℕ
         govExpiration     : ℕ
@@ -69,7 +76,9 @@ paramsWellFormed pp = ⌊ ¬? (0 ∈? setFromList
 \end{figure*}
 \begin{code}[hide]
 instance
-  unquoteDecl DecEq-PParams = derive-DecEq ((quote PParams , DecEq-PParams) ∷ [])
+  unquoteDecl DecEq-DrepThresholds = derive-DecEq ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
+  unquoteDecl DecEq-PoolThresholds = derive-DecEq ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
+  unquoteDecl DecEq-PParams        = derive-DecEq ((quote PParams , DecEq-PParams) ∷ [])
 
 record PParamsDiff : Set₁ where
   field UpdateT : Set

@@ -9,10 +9,9 @@ open import Ledger.Epoch
 
 import Ledger.PParams as PP
 
-open import Data.Rational using (ℚ)
 open import Data.Nat using (_≤_)
-open import Data.Nat.Properties using (+-0-commutativeMonoid ; +-0-monoid)
-open import Data.These
+open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
+open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 module Ledger.GovernanceActions (TxId Network DocHash : Set)
                                 (es : EpochStructure)
@@ -31,6 +30,8 @@ open isHashableSet ppHashable renaming (THash to PPHash)
 
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
+
+2ℚ = 1ℚ Data.Rational.+ 1ℚ
 
 \end{code}
 \begin{figure*}[h]
@@ -53,8 +54,8 @@ record Anchor : Set where
          hash  : DocHash
 
 data GovAction : Set where
-  NoConfidence     :                                   GovAction
-  NewCommittee     : KeyHash ⇀ Epoch → ℙ KeyHash → ℚ → GovAction
+  NoConfidence     :                                    GovAction
+  NewCommittee     : KeyHash ⇀ Epoch → ℙ KeyHash → ℚ  → GovAction
   NewConstitution  : DocHash                          → GovAction
   TriggerHF        : ProtVer                          → GovAction
   ChangePParams    : UpdateT → PPHash                 → GovAction
@@ -64,6 +65,44 @@ data GovAction : Set where
 actionWellFormed : GovAction → Bool
 actionWellFormed (ChangePParams x _) = ppdWellFormed x
 actionWellFormed _                   = true
+
+maximum : ℙ ℚ → ℚ
+maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
+
+module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
+  open PParams pp
+  open DrepThresholds drepThresholds
+  open PoolThresholds poolThresholds
+
+  -- Here, 2 can just be any number strictly greater than one. It just
+  -- means that a threshold can never be cleared, i.e. that the action
+  -- cannot be enacted.
+
+  private
+    ccThreshold : ℚ
+    ccThreshold = case ccThreshold' of λ where
+      (just x) → x
+      nothing  → 2ℚ
+
+    pparamThreshold : PParamGroup → ℚ
+    pparamThreshold NetworkGroup    = P5a
+    pparamThreshold EconomicGroup   = P5b
+    pparamThreshold TechnicalGroup  = P5c
+    pparamThreshold GovernanceGroup = P5d
+
+    P5 : UpdateT → ℚ
+    P5 ppu = maximum $ map pparamThreshold (updateGroups ppu)
+
+  threshold : GovAction → GovRole → ℚ
+  threshold NoConfidence         = λ { CC → 0ℚ          ; DRep → P1   ; SPO → Q1 }
+  threshold (NewCommittee _ _ _) = case ccThreshold' of λ where
+                        (just _) → λ { CC → 0ℚ          ; DRep → P2a  ; SPO → Q2a }
+                        nothing  → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
+  threshold (NewConstitution _)  = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
+  threshold (TriggerHF _)        = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
+  threshold (ChangePParams x _)  = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
+  threshold (TreasuryWdrl _)     = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
+  threshold Info                 = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
 
 NeedsHash : GovAction → Set
 NeedsHash NoConfidence         = GovActionID

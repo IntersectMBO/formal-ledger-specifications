@@ -14,6 +14,7 @@ open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingSchem
 open import Ledger.PParams epochStructure
 
 import Data.Integer as Z
+import Data.Maybe
 import Data.Rational as R
 open import Data.Nat hiding (_≟_)
 open import Data.Nat.Properties hiding (_≟_)
@@ -164,6 +165,10 @@ votedAbstainHashes = votedHashes Vote.abstain
 participatingHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no votes r
 
+isCC : VDeleg → Bool
+isCC (credVoter CC _) = true
+isCC _                = false
+
 isDRep : VDeleg → Bool
 isDRep (credVoter DRep _) = true
 isDRep (credVoter _ _)    = false
@@ -174,48 +179,43 @@ isSPO : VDeleg → Bool
 isSPO (credVoter SPO _) = true
 isSPO _                 = false
 
+isCCProp : specProperty λ x → isCC x ≡ true
+isCCProp = to-sp (λ x → isCC x ≟ true)
+
 isDRepProp : specProperty λ x → isDRep x ≡ true
 isDRepProp = to-sp (λ x → isDRep x ≟ true)
 
 isSPOProp : specProperty λ x → isSPO x ≡ true
 isSPOProp = to-sp (λ x → isSPO x ≟ true)
 
-getStakeDist : GovRole → StakeDistrs → VDeleg ⇀ Coin
-getStakeDist CC   _                              = ∅ᵐ
-getStakeDist DRep s@record { stakeDistr = dist } = filterᵐ (sp-∘ isDRepProp proj₁) dist
-getStakeDist SPO  s@record { stakeDistr = dist } = filterᵐ (sp-∘ isSPOProp proj₁) dist
+getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
+getStakeDist CC   cc _                            = constMap (filterˢ isCCProp cc) 1
+getStakeDist DRep _  record { stakeDistr = dist } = filterᵐ (sp-∘ isDRepProp proj₁) dist
+getStakeDist SPO  _  record { stakeDistr = dist } = filterᵐ (sp-∘ isSPOProp proj₁) dist
 
-acceptedStake : GovRole → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-acceptedStake r dists votes =
-  Σᵐᵛ[ x ← (getStakeDist r dists ∣ votedYesHashes votes r) ᶠᵐ ] x
+acceptedStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
+acceptedStake r cc dists votes =
+  Σᵐᵛ[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ] x
 
-totalStake : GovRole → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-totalStake r dists votes = Σᵐᵛ[ x ← getStakeDist r dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
-
-acceptedR : RatifyEnv → (VDeleg ⇀ Vote) → GovRole → R.ℚ → Set
-acceptedR Γ votes role t =
-  let open RatifyEnv Γ
-      redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
-      totalStake = totalStake role redStakeDistr votes
-  in
-  case totalStake of λ where
-    0         → ⊥ -- if there's no stake, never accept
-    x@(suc _) → Z.+ acceptedStake role redStakeDistr votes R./ x R.> t
-
-ccThreshold : CCData → Maybe R.ℚ
-ccThreshold nothing         = nothing
-ccThreshold (just (cc , q)) = just q
+totalStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
+totalStake r cc dists votes = Σᵐᵛ[ x ← getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
 -- for now, consider a proposal as accepted if the CC and half of the SPOs and DReps agree
 accepted' : RatifyEnv → EnactState → GovActionState → Set
-accepted' Γ es@record { cc = cc , _ ; pparams = record { votingThresholds = drepThreshold , spoThreshold } , _ }
-         s@record  { votes = votes ; action = action } =
-  let open RatifyEnv Γ; votes = actualVotes Γ cc votes action in
-  acceptedR Γ votes SPO spoThreshold
-  ∧ acceptedR Γ votes DRep drepThreshold
-  ∧ (case lengthˢ (participatingHashes votes CC) , ccThreshold cc of λ where
-      (s@(suc _) , just q) → Z.+ lengthˢ (votedYesHashes votes CC) R./ s R.> q
-      _                    → ⊥)
+accepted' Γ es@record { cc = cc , _    ; pparams = pparams , _ }
+            s@record  { votes = votes' ; action = action } =
+  acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO
+  where
+    open RatifyEnv Γ
+    votes = actualVotes Γ cc votes' action
+    cc' = dom (votes ˢ)
+    redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
+
+    acceptedBy : GovRole → Set
+    acceptedBy role = let t = threshold pparams (Data.Maybe.map proj₂ cc) action role in
+      case totalStake role cc' redStakeDistr votes of λ where
+        0         → t ≡ R.0ℚ -- if there's no stake, accept only if the threshold is zero
+        x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes R./ x R.≥ t
 
 expired : Epoch → GovActionState → Set
 expired current record { expiresIn = expiresIn } = expiresIn <ᵉ current
