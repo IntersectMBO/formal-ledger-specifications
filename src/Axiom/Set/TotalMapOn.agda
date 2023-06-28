@@ -10,6 +10,7 @@ open import Prelude hiding ( lookup )
 
 open Theory th
 open import Axiom.Set.Map th using ( left-unique ; Map ; mapWithKey-uniq)
+open import Axiom.Set.TotalMap th using (total-map)
 open import Axiom.Set.Rel th
 
 open import Interface.DecEq
@@ -21,10 +22,6 @@ open import Relation.Unary using () renaming (Decidable to Dec₁)
 open Equivalence
 
 private variable A B : Type
-
-total-map : Rel A B → Type
-total-map R = ∀ {a} → a ∈ map proj₁ R
-
 
 _TotalOn_ : Rel A B → Set A → Type
 R TotalOn X = X ⊆ dom R
@@ -60,19 +57,19 @@ record TotalMapOn {A : Type}(X : Set A)(B : Type) : Type where
     alu∈rel = proj₂ (to dom∈ (total (proj₂ aa)))
 
 
-module Unionᵗᵐ  {B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
+module Unionᵗᵐᵒ  {B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
 
   updateFn : A × B → A → B → B
   updateFn (a , b) x y with (x ≟ a)
   ... | yes _ = b
   ... | no _ = y
 
-
   open TotalMapOn
-  mapWithKeyTotalOn :  (X : Set A){B' : Type}{f : A → B → B'}{R : Rel A B}
+
+  mapWithKeyTotalOn :  {X : Set A}{B' : Type}{f : A → B → B'}{R : Rel A B}
     →                  R TotalOn X → (map (λ { (x , y) → x , f x y }) R) TotalOn X
 
-  mapWithKeyTotalOn X {B'}{f}{R} tot {a} a∈X = Goal
+  mapWithKeyTotalOn {B' = B'}{f}{R} tot {a} a∈X = Goal
     where
     R' : Rel A B'
     R' = map (λ { (x , y) → x , f x y }) R
@@ -87,9 +84,9 @@ module Unionᵗᵐ  {B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
     Goal = ∈-map′ (proj₂ h')
 
   mapWithKeyOn : {X : Set A}{B' : Type} → (A → B → B') → TotalMapOn X B → TotalMapOn X B'
-  mapWithKeyOn {X} f tm .rel = map (λ { (x , y) → x , f x y}) (rel tm)
-  mapWithKeyOn _ tm .lun = mapWithKey-uniq (lun tm)
-  mapWithKeyOn {X} _ tm .total = mapWithKeyTotalOn X (total tm)
+  mapWithKeyOn f tm .rel    = map (λ { (x , y) → x , f x y}) (rel tm)
+  mapWithKeyOn _ tm .lun    = mapWithKey-uniq (lun tm)
+  mapWithKeyOn _ tm .total  = mapWithKeyTotalOn (total tm)
 
   updateOn : {X : Set A} → A → B → TotalMapOn X B → TotalMapOn X B
   updateOn a b t = mapWithKeyOn (updateFn (a , b)) t
