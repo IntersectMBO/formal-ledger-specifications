@@ -47,6 +47,39 @@ private variable A A' B B' C D : Type
 left-unique : Rel A B → Type
 left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
+  -- mapOn : {A B : Type ℓ}{X : Set A} → ((Σ A (_∈ X)) × B → A × B) → Set (A × B) → Set(A × B)
+  -- mapOn = proj₁ ∘₂ replacementOn
+
+-- open I.≡-Reasoning
+-- left-unique-mapOn : {X : Set A} {f : (Σ A (_∈ X)) × B → A × B}{R : Set (A × B)} → ∈-irrelevant X → left-unique (mapOn (λ (aab : Σ A (_∈ X) × B) → f aab) R)
+-- left-unique-mapOn {A} {B} {X} {f} {R} ∈-uip {a} {b} {b'} ab∈ ab'∈ with (from ∈-mapOn ab∈) | (from ∈-mapOn ab'∈)
+-- ... | ((a₀ , a₀∈X) , b₀) , p , ab∈R | ((a₁ , a₁∈X) , b₁) , q , ab'∈R = goal
+--   where
+
+--   aa₀ : a ≡ a₀
+--   aa₀ = begin
+--     a ≡⟨ {!!} ⟩
+--     proj₁ (a , b)  ≡⟨ refl ⟩
+--     proj₁ (a , proj₂ (f ((a₀ , a₀∈X) , b₀)))  ≡⟨ cong (λ x → proj₁ x) {!!} ⟩
+--     proj₁ (f ((a₀ , a₀∈X) , b₀))  ≡⟨ {!!} ⟩
+--     a₀ ∎
+--   goal : b ≡ b' -- f (a , a∈X) ≡ f (a , a∈X')
+--   goal = {!!}  -- cong f ?  -- uip
+
+  -- ∈-mapOn : ∀ {A B : Type ℓ}{X : Set A}{f : ((Σ A (_∈ X)) × B → A × B)}{R : Set (A × B)}{ab} → (∃[ aab ] ab ≡ f aab × (proj₁ (proj₁ aab) , proj₂ aab) ∈ R) ⇔ (ab ∈ mapOn f R)
+  -- ∈-mapOn = proj₂ $ replacementOn _ _
+
+
+-- {a} {b} {b'} p q = ?
+-- with (from (∈-mapOn X) p) | (from (∈-mapOn X) q)
+-- ... | (.a , a∈X) , refl , c | (.a , a∈X') , refl , d = goal
+--   where
+--   uip : (a , a∈X) ≡ (a , a∈X')
+--   uip = Σ-≡,≡→≡ (refl , (∈-uip a∈X a∈X'))
+--   goal : f (a , a∈X) ≡ f (a , a∈X')
+--   goal = cong f uip
+
+
 record IsLeftUnique (R : Rel A B) : Type where
   field isLeftUnique : left-unique R
 

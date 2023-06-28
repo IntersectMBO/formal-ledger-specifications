@@ -61,6 +61,7 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   field specification : (X : Set A) → specProperty P → ∃[ Y ] ∀ {a} → (P a × a ∈ X) ⇔ a ∈ Y
         unions        : (X : Set (Set A)) → ∃[ Y ] ∀ {a} → (∃[ T ] (T ∈ X × a ∈ T)) ⇔ a ∈ Y
         replacement   : (f : A → B) → (X : Set A) → ∃[ Y ] ∀ {b} → (∃[ a ] b ≡ f a × a ∈ X) ⇔ b ∈ Y
+        replacementOn : {A B : Type ℓ}{X : Set A}(f : Σ A (_∈ X) × B → A × B) → (R : Set (A × B)) → ∃[ Y ] ∀ {b} → (∃[ aa ] b ≡ f aa × (proj₁ (proj₁ aa) , proj₂ aa) ∈ R) ⇔ b ∈ Y
         listing       : (l : List A) → ∃[ X ] ∀ {a} → a ∈ˡ l ⇔ a ∈ X -- equivalent to pairing + empty set
         -- power-set     : (X : Set A) → ∃[ Y ] ∀ {T} → T ⊆ X → T ∈ Y
 
@@ -74,6 +75,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
 
   _∉_ : A → Set A → Type
   _∉_ = ¬_ ∘₂ _∈_
+
+  ∈-irrelevant : Set A → Type ℓ
+  ∈-irrelevant X = ∀ {a} (p q : a ∈ X) → p ≡ q
 
   open Equivalence
 
@@ -136,6 +140,12 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
 
   ∈-map′ : ∀ {f : A → B} {a} → a ∈ X → f a ∈ map f X
   ∈-map′ {a = a} a∈X = to ∈-map (a , refl , a∈X)
+
+  mapOn : {A B : Type ℓ}{X : Set A} → ((Σ A (_∈ X)) × B → A × B) → Set (A × B) → Set(A × B)
+  mapOn = proj₁ ∘₂ replacementOn
+
+  ∈-mapOn : ∀ {A B : Type ℓ}{X : Set A}{f : ((Σ A (_∈ X)) × B → A × B)}{R : Set (A × B)}{ab} → (∃[ aab ] ab ≡ f aab × (proj₁ (proj₁ aab) , proj₂ aab) ∈ R) ⇔ (ab ∈ mapOn f R)
+  ∈-mapOn = proj₂ $ replacementOn _ _
 
   -- don't know that there's a set containing all members of a type, which this is equivalent to
   -- _⁻¹_ : (A → B) → Set B → Set A

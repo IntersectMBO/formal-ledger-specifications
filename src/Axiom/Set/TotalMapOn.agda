@@ -62,7 +62,7 @@ record TotalMapOn {A : Type}(X : Set A)(B : Type) : Type where
   lookupLemma-Σ {aa} = lookupLemma {proj₁ aa}{proj₂ aa}
 
 
-module Unionᵗᵐᵒ  {B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
+module Union-tm  {B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
 
   updateFn : A × B → A → B → B
   updateFn (a , b) x y with (x ≟ a)
