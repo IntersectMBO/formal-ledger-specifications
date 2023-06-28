@@ -8,16 +8,24 @@ module Axiom.Set.TotalMapOn (th : Theory) where
 
 open import Prelude hiding ( lookup )
 
-open Theory th
-open import Axiom.Set.Map th using ( left-unique ; Map ; mapWithKey-uniq)
-open import Axiom.Set.TotalMap th using (total-map)
-open import Axiom.Set.Rel th
+open import Algebra                using ( Op₂ )
+open Theory th                     using ( Set ; _⊆_ ; _∈_ ; map ; ∈-map′ ; spec-∈ ; mapOn)
+open import Axiom.Set.Map th       using ( left-unique ; Map ; mapWithKey-uniq ; module Lookupᵐ ; module Unionᵐ )
+open import Axiom.Set.TotalMap th  using ( total-map )
+open import Axiom.Set.Rel th       using ( Rel ; dom ; dom∈ ; module Restriction)
+open import Axiom.Set.Properties th
+open import Interface.DecEq        using (DecEq ; _≟_)
 
-open import Interface.DecEq
-open import Relation.Binary.PropositionalEquality using ( _≡_ ; cong ; module ≡-Reasoning )
-open import Relation.Binary using () renaming (Decidable to Dec₂)
-open import Relation.Nullary.Decidable using (Dec ; yes ; no)
-open import Relation.Unary using () renaming (Decidable to Dec₁)
+open import Relation.Binary             using ( ) renaming ( Decidable to Dec₂ )
+open import Relation.Binary.PropositionalEquality
+                                        using ( _≡_ ; cong ; module ≡-Reasoning )
+open import Relation.Nullary.Decidable  using ( Dec ; yes ; no )
+open import Relation.Unary              using ( ) renaming ( Decidable to Dec₁ )
+
+open import Tactic.AnyOf
+open import Tactic.Assumption
+open import Tactic.Defaults
+open import Tactic.Helpers
 
 open Equivalence
 
@@ -50,11 +58,8 @@ record TotalMapOn {A : Type}(X : Set A)(B : Type) : Type where
     alu∈rel : (a , lookup (a , a∈dom)) ∈ rel
     alu∈rel = proj₂ (to dom∈ (total a∈dom))
 
-  lookupLemma' : {aa : Σ A (_∈ domain)} {b : B} → (proj₁ aa , b) ∈ rel → lookup aa ≡ b
-  lookupLemma' {aa} ab∈rel = sym (lun ab∈rel alu∈rel)
-    where
-    alu∈rel : (proj₁ aa , lookup aa) ∈ rel
-    alu∈rel = proj₂ (to dom∈ (total (proj₂ aa)))
+  lookupLemma-Σ : {aa : Σ A (_∈ domain)} {b : B} → (proj₁ aa , b) ∈ rel → lookup aa ≡ b
+  lookupLemma-Σ {aa} = lookupLemma {proj₁ aa}{proj₂ aa}
 
 
 module Unionᵗᵐᵒ  {B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
@@ -88,5 +93,7 @@ module Unionᵗᵐᵒ  {B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   mapWithKeyOn _ tm .lun    = mapWithKey-uniq (lun tm)
   mapWithKeyOn _ tm .total  = mapWithKeyTotalOn (total tm)
 
-  updateOn : {X : Set A} → A → B → TotalMapOn X B → TotalMapOn X B
-  updateOn a b t = mapWithKeyOn (updateFn (a , b)) t
+  update : {X : Set A} → A → B → TotalMapOn X B → TotalMapOn X B
+  update a b t = mapWithKeyOn (updateFn (a , b)) t
+
+

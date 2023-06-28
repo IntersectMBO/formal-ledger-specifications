@@ -36,11 +36,6 @@ private macro
 total-map : Rel A B → Type
 total-map R = ∀ {a} → a ∈ map proj₁ R
 
--- TotalMap : Type → Type → Type
--- TotalMap A B = Σ (Rel A B) (λ R → left-unique R × total-map R)
-
--- lookupMapᵗ : TotalMap A B → A → B
--- lookupMapᵗ (_ , _ , tot) a = proj₂ (proj₁ (∈⇔P (tot {a})))
 
 record TotalMap (A B : Type) : Type where
   field  rel : Set (A × B)
@@ -68,6 +63,7 @@ record TotalMap (A B : Type) : Type where
     where
     alu∈rel : (a , lookup a) ∈ rel
     alu∈rel = proj₂ (to dom∈ tot)
+
 
 module Unionᵗᵐ {B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
 
