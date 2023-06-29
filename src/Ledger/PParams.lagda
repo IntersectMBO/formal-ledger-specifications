@@ -64,6 +64,7 @@ record PParams : Set where
         govDeposit        : Coin
         drepDeposit       : Coin
         drepActivity      : Epoch
+        minimumAVS        : Coin
 
 paramsWellFormed : PParams → Bool
 paramsWellFormed pp = ⌊ ¬? (0 ∈? setFromList

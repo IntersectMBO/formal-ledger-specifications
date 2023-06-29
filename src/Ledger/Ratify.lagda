@@ -200,16 +200,24 @@ acceptedStake r cc dists votes =
 totalStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 totalStake r cc dists votes = Σᵐᵛ[ x ← getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
+activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
+activeVotingStake cc dists votes = Σᵐᵛ[ x ← getStakeDist DRep cc dists ∣ dom (votes ˢ) ᶜ ᶠᵐ ] x
+
 -- for now, consider a proposal as accepted if the CC and half of the SPOs and DReps agree
 accepted' : RatifyEnv → EnactState → GovActionState → Set
 accepted' Γ es@record { cc = cc , _    ; pparams = pparams , _ }
             s@record  { votes = votes' ; action = action } =
-  acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO
+  acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO ∧ meetsMinAVS
   where
     open RatifyEnv Γ
+    open PParams pparams
+
     votes = actualVotes Γ cc votes' action
     cc' = dom (votes ˢ)
     redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
+
+    meetsMinAVS : Set
+    meetsMinAVS = activeVotingStake cc' redStakeDistr votes ≥ minimumAVS
 
     acceptedBy : GovRole → Set
     acceptedBy role = let t = threshold pparams (Data.Maybe.map proj₂ cc) action role in
