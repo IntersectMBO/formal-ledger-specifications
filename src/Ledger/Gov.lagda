@@ -1,4 +1,4 @@
-\section{Tally}
+\section{Governance}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -9,12 +9,12 @@ open import Ledger.Epoch
 
 import Ledger.PParams as PP
 
-module Ledger.Tally (TxId Network DocHash : Set)
-                    (es : EpochStructure) (open EpochStructure es hiding (epoch))
-                    (open PP es)
-                    (ppd : PParamsDiff)
-                    (ppHashable : isHashableSet PParams)
-                    (crypto : Crypto) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq TxId ⦄ where
+module Ledger.Gov (TxId Network DocHash : Set)
+                  (es : EpochStructure) (open EpochStructure es hiding (epoch))
+                  (open PP es)
+                  (ppd : PParamsDiff)
+                  (ppHashable : isHashableSet PParams)
+                  (crypto : Crypto) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq TxId ⦄ where
 
 import Data.List as L
 open import Relation.Nullary.Decidable
@@ -34,10 +34,10 @@ record GovActionState : Set where
         action      : GovAction
         prevAction  : NeedsHash action
 
-TallyState : Set
-TallyState = List (GovActionID × GovActionState)
+GovState : Set
+GovState = List (GovActionID × GovActionState)
 
-record TallyEnv : Set where
+record GovEnv : Set where
   constructor ⟦_,_,_⟧ᵗ
   field txid     : TxId
         epoch    : Epoch
@@ -47,8 +47,8 @@ record TallyEnv : Set where
 open GovActionState
 
 private
-  variable Γ : TallyEnv
-           s s' : TallyState
+  variable Γ : GovEnv
+           s s' : GovState
            aid : GovActionID
            role : GovRole
            cred : Credential
@@ -63,31 +63,31 @@ private
 modifyMatch : ∀ {a} {A : Set a} → (A → Bool) → (A → A) → List A → List A
 modifyMatch P f = L.map (λ x → if P x then f x else x)
 
-addVote : TallyState → GovActionID → GovRole → Credential → Vote → TallyState
+addVote : GovState → GovActionID → GovRole → Credential → Vote → GovState
 addVote s aid r kh v =
   modifyMatch (λ x → ⌊ aid ≟ proj₁ x ⌋)
               (λ where (gid , s') → gid , record s' { votes = insert (votes s') (r , kh) v }) s
 
-addAction : TallyState → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a → TallyState
+addAction : GovState → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a → GovState
 addAction s e aid addr a prev = s ∷ʳ (aid , record
   { votes = ∅ᵐ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
 -- x is the anchor in those two cases, which we don't do anything with
-data _⊢_⇀⦇_,TALLY'⦈_ : TallyEnv × ℕ → TallyState → GovVote ⊎ GovProposal → TallyState → Set where
-  TallyVote : ∀ {x k} → let open TallyEnv Γ in
+data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Set where
+  GOV-Vote : ∀ {x k} → let open GovEnv Γ in
     aid ∈ setFromList (L.map proj₁ s)
     ────────────────────────────────
-    (Γ , k) ⊢ s ⇀⦇ inj₁ record { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x } ,TALLY'⦈
+    (Γ , k) ⊢ s ⇀⦇ inj₁ record { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x } ,GOV'⦈
               addVote s aid role cred v
 
-  TallyPropose : ∀ {x k} → let open TallyEnv Γ; open PParams pparams using (govExpiration; govDeposit) in
+  GOV-Propose : ∀ {x k} → let open GovEnv Γ; open PParams pparams using (govExpiration; govDeposit) in
     actionWellFormed a ≡ true
     ────────────────────────────────
-    (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; prevAction = prev } ,TALLY'⦈
+    (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; prevAction = prev } ,GOV'⦈
               addAction s (govExpiration +ᵉ epoch) (txid , k) addr a prev
 
-_⊢_⇀⦇_,TALLY⦈_ : TallyEnv → TallyState → List (GovVote ⊎ GovProposal) → TallyState → Set
-_⊢_⇀⦇_,TALLY⦈_ = SS⇒BS (λ Γ → Γ ⊢_⇀⦇_,TALLY'⦈_)
+_⊢_⇀⦇_,GOV⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
+_⊢_⇀⦇_,GOV⦈_ = SS⇒BS (λ Γ → Γ ⊢_⇀⦇_,GOV'⦈_)
 \end{code}
 \caption{TALLY types}
 \label{defs:tally-types}

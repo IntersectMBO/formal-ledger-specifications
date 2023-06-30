@@ -13,7 +13,7 @@ open TransactionStructure txs
 open import Ledger.PParams epochStructure
 
 open import Ledger.PPUp txs
-open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
+open import Ledger.Gov TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 open import Ledger.Utxo txs
 open import Ledger.Utxow txs
 
@@ -37,7 +37,7 @@ record LEnv : Set where
 record LState : Set where
   constructor ⟦_,_,_⟧ˡ
   field utxoSt     : UTxOState
-        tally      : TallyState
+        govSt      : GovState
         certState  : CertState
 
 txgov : TxBody → List (GovVote ⊎ GovProposal)
@@ -50,7 +50,7 @@ private variable
   Γ : LEnv
   s s' s'' : LState
   utxoSt' : UTxOState
-  tally' : TallyState
+  govSt' : GovState
   certState' : CertState
   tx : Tx
 \end{code}
@@ -77,10 +77,10 @@ data
   LEDGER : let open LState s; txb = body tx; open LEnv Γ in
     record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     → ⟦ epoch slot , pparams , txvote txb ⟧ᶜ ⊢ certState ⇀⦇ txcerts txb ,CERTS⦈ certState'
-    → ⟦ txid txb , epoch slot , pparams ⟧ᵗ ⊢ tally ⇀⦇ txgov txb ,TALLY⦈ tally'
+    → ⟦ txid txb , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
     → map stake (dom (txwdrls txb ˢ)) ⊆ dom (voteDelegs (dState certState') ˢ)
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , tally' , certState' ⟧ˡ
+    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}

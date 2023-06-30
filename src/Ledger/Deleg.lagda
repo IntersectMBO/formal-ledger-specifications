@@ -33,12 +33,12 @@ record PoolParams : Set where
   field rewardAddr  : Credential
 
 data DCert : Set where
-  delegate   : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
-  regpool    : Credential → PoolParams → DCert
-  retirepool : Credential → Epoch → DCert
-  regdrep    : Credential → Coin → Anchor → DCert
-  deregdrep  : Credential → DCert
-  ccreghot   : Credential → Maybe KeyHash → DCert
+  delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
+  regpool     : Credential → PoolParams → DCert
+  retirepool  : Credential → Epoch → DCert
+  regdrep     : Credential → Coin → Anchor → DCert
+  deregdrep   : Credential → DCert
+  ccreghot    : Credential → Maybe KeyHash → DCert
 
 record CertEnv : Set where
   constructor ⟦_,_,_⟧ᶜ
@@ -46,9 +46,9 @@ record CertEnv : Set where
         pp     : PParams
         votes  : List GovVote
 
-VDelEnv   = CertEnv
-DelegEnv  = PParams
-PoolEnv   = PParams
+GovCertEnv  = CertEnv
+DelegEnv    = PParams
+PoolEnv     = PParams
 
 record DState : Set where
   constructor ⟦_,_,_⟧ᵈ
@@ -64,7 +64,7 @@ record PState : Set where
   field pools     : Credential ⇀ PoolParams
         retiring  : Credential ⇀ Epoch
 
-record VState : Set where
+record GState : Set where
   constructor ⟦_,_⟧ᵛ
   field dreps      : Credential ⇀ Epoch
         ccHotKeys  : KeyHash ⇀ Maybe KeyHash -- TODO: maybe replace with credential
@@ -72,7 +72,7 @@ record VState : Set where
 record CertState : Set where
   field dState : DState
         pState : PState
-        vState : VState
+        gState : GState
 \end{code}
 
 \begin{code}[hide]
@@ -94,7 +94,7 @@ private variable
   kh kh' : KeyHash
   mkh : Maybe KeyHash
   st st' : CertState
-  stᵛ stᵛ' : VState
+  stᵍ stᵍ' : GState
   stᵈ stᵈ' : DState
   stᵖ stᵖ' : PState
   Γ : CertEnv
@@ -138,23 +138,23 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set whe
     pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈
          ⟦ pools , ❴ c , e ❵ᵐ ∪ᵐˡ retiring ⟧ᵖ
 
-data _⊢_⇀⦇_,VDEL⦈_ : VDelEnv → VState → DCert → VState → Set where
-  VDEL-regdrep : let open PParams pp in
+data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set where
+  GOVCERT-regdrep : let open PParams pp in
     (d ≡ drepDeposit × c ∉ dom (dReps ˢ)) ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ))
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,VDEL⦈
+    ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
                        ⟦ ❴ c , e +ᵉ' drepActivity ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
 
-  VDEL-deregdrep :
+  GOVCERT-deregdrep :
     c ∈ dom (dReps ˢ)
     ────────────────────────────────
-    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,VDEL⦈
+    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈
         ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
-  VDEL-ccreghot :
+  GOVCERT-ccreghot :
     (kh , nothing) ∉ ccKeys ˢ
     ────────────────────────────────
-    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot (inj₁ kh) mkh ,VDEL⦈
+    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot (inj₁ kh) mkh ,GOVCERT⦈
         ⟦ dReps , singletonᵐ kh mkh ∪ᵐˡ ccKeys ⟧ᵛ
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
@@ -164,9 +164,9 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → S
     ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { dState = stᵈ' }
 
   CERT-vdel :
-    Γ ⊢ stᵛ ⇀⦇ dCert ,VDEL⦈ stᵛ'
+    Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
     ────────────────────────────────
-    Γ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { vState = stᵛ' }
+    Γ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { gState = stᵍ' }
 
   CERT-pool :
     pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
@@ -175,13 +175,13 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → S
 
 data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set where
   CERT-base :
-    let open PParams pp; open CertState st; open VState vState
+    let open PParams pp; open CertState st; open GState gState
         refresh = mapPartial (λ v → let open GovVote v in case role of λ where
           GovRole.DRep → just credential
           _    → nothing) (fromList vs)
     in ⊤ -- TODO: check that the withdrawals are correct here
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st { vState = record vState
+    ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st { gState = record gState
                          { dreps = constMap refresh (e +ᵉ' drepActivity) ∪ᵐˡ dreps } }
 
 -- TODO: use CERTBASE by modifying SS⇒BS to allow for a base case
