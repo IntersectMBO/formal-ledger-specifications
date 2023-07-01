@@ -7,10 +7,11 @@ module Axiom.Set.TotalMap (th : Theory) where
 open import Prelude hiding (lookup)
 
 open import Agda.Primitive              using () renaming (Set to Type)
+open import Relation.Nullary.Decidable  using (yes ; no)
+
 open import Axiom.Set.Map th            using (left-unique; Map ; mapWithKey-uniq)
 open import Axiom.Set.Rel th            using (Rel ; dom ; dom∈)
 open import Interface.DecEq             using (DecEq ; _≟_)
-open import Relation.Nullary.Decidable  using (yes ; no)
 
 open Theory th    using (_∈_ ; map ; Set ; ∈-map ; ∈-map′)
 open Equivalence  using (to ; from)
