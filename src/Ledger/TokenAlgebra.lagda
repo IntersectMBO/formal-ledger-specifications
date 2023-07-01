@@ -1,40 +1,48 @@
 \section{Token algebras}
+\label{sec:token-algebra}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-module Ledger.TokenAlgebra where
+
+module Ledger.TokenAlgebra (PolicyId : Set) where
 
 open import Ledger.Prelude
 
-open import Algebra using (CommutativeMonoid)
-open import Algebra.Morphism
-open import Data.Integer
-open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Algebra              using (CommutativeMonoid ; Monoid)
+open import Algebra.Morphism     using (module MonoidMorphisms )
+open import Data.Nat.Properties  using (+-0-monoid)
+open import Relation.Binary      using (Rel)
+open import Relation.Unary       using (Pred)
 \end{code}
 
 \begin{figure*}
 \begin{code}
 record TokenAlgebra : Set₁ where
-  field PolicyId : Set
-        Value-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
+  field  Value-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
 
+  MemoryEstimate : Set
   MemoryEstimate = ℕ
 \end{code}
 \begin{code}[hide]
-  open CommutativeMonoid Value-CommutativeMonoid using (_≈_; ε)
-       renaming (Carrier to Value; refl to reflᵛ; _∙_ to _+ᵛ_) public
+  open CommutativeMonoid Value-CommutativeMonoid public
+    using (_≈_ ; ε ; monoid ; rawMonoid)
+    renaming (Carrier to Value ; refl to reflᵛ ; _∙_ to _+ᵛ_)
+
+  open MonoidMorphisms (rawMonoid) (Monoid.rawMonoid +-0-monoid) public
 \end{code}
 \begin{code}
-  field coin      : Value → Coin
-        inject    : Coin → Value
-        policies  : Value → ℙ PolicyId
-        size      : Value → MemoryEstimate
-        _≤ᵗ_      : Value → Value → Set
-
-        property             : coin ∘ inject ≗ id
-        coinIsMonoidMorphism : coin Is Value-CommutativeMonoid -CommutativeMonoid⟶ +-0-commutativeMonoid
+  field  coin                      : Value → Coin
+         inject                    : Coin → Value
+         policies                  : Value → ℙ PolicyId
+         size                      : Value → MemoryEstimate
+         _≤ᵗ_                      : Value → Value → Set
+         AssetName                 : Set
+         specialAsset              : AssetName
+         property                  : coin ∘ inject ≗ id
+         coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 \end{code}
 \begin{code}[hide]
-        instance DecEq-Value : DecEq Value
+         instance DecEq-Value : DecEq Value
 \end{code}
 \begin{code}
   sumᵛ : List Value → Value

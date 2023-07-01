@@ -12,10 +12,10 @@ open import Ledger.Prelude
 
 open import Ledger.Crypto
 open import Ledger.Epoch
-open import Ledger.TokenAlgebra
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
+import Ledger.TokenAlgebra as TA
 
 record TransactionStructure : Set₁ where
   field
@@ -53,17 +53,19 @@ the transaction body are:
         ppUpd                               : Ledger.PParams.PParamsDiff epochStructure
         txidBytes                           : TxId → Crypto.Ser crypto
         networkId                           : Network
-        tokenAlgebra                        : TokenAlgebra
         instance DecEq-TxId  : DecEq TxId
                  DecEq-Ix    : DecEq Ix
                  DecEq-Netw  : DecEq Network
                  DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
 
   open Crypto crypto public
-  open TokenAlgebra tokenAlgebra public
+  open TA ScriptHash
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
-  field ss : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
+  field  ss            : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
+         tokenAlgebra  : TokenAlgebra
+
+  open TokenAlgebra tokenAlgebra public
 
   open Ledger.Script.ScriptStructure ss public
 
