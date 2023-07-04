@@ -18,7 +18,7 @@ open import Ledger.Ledger txs
 open import Ledger.PPUp txs
 open import Ledger.Utxo txs
 open import Ledger.Ratify txs
-open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
+open import Ledger.Gov TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 open Equivalence
 open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Maybe.Base using (_>>=_) renaming (map to map?)
@@ -59,7 +59,7 @@ private variable
   nes : NewEpochState
   e : Epoch
   es' : EnactState
-  newTally : TallyState
+  govSt' : GovState
   removed : List (GovActionID × GovActionState)
   d : Bool
 
@@ -97,12 +97,12 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
         { fees = 0
         ; deposits = deposits ∣ removedGovActions ᶜ
         }
-      ls' = record ls { tally = newTally ; utxoSt = utxoSt' ; certState = certState' }
+      ls' = record ls { govSt = govSt' ; utxoSt = utxoSt' ; certState = certState' }
       acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt + getCoin unclaimed }
     in
     e ≡ sucᵉ lastEpoch
-    → record { currentEpoch = e ; VState vState ; NewEpochEnv Γ }
-        ⊢ ⟦ es  , [] , [] , false ⟧ʳ ⇀⦇ tally ,RATIFY⦈ ⟦ es' , newTally , removed , d ⟧ʳ
+    → record { currentEpoch = e ; GState gState ; NewEpochEnv Γ }
+        ⊢ ⟦ es  , [] , [] , false ⟧ʳ ⇀⦇ govSt ,RATIFY⦈ ⟦ es' , govSt' , removed , d ⟧ʳ
     -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , es' ⟧ⁿᵉ
@@ -147,7 +147,7 @@ govActionDeposits ls =
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
         dep ← lookupᵐ? deposits (GovActionDeposit gaid) ⦃ _ ∈? _ ⦄
         just ❴ vd , dep ❵ᵐ )
-      (setFromList tally)
+      (setFromList govSt)
 
 calculateStakeDistrs : LState → StakeDistrs
 calculateStakeDistrs ls =

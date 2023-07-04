@@ -18,7 +18,7 @@ open import Ledger.Utxo txs
 open import Ledger.Ledger txs
 open import Ledger.Utxow txs
 open import Ledger.PPUp txs
-open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
+open import Ledger.Gov TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 
 import Ledger.Utxo.Properties txs as P
 import Ledger.Utxow.Properties txs as PW
@@ -38,7 +38,7 @@ private variable
   s s' : LState
   l : List Tx
 
-module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_)
+module _ (Computational-TALLY : Computational _⊢_⇀⦇_,GOV⦈_)
          (Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_) where
 
   instance
@@ -46,7 +46,7 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_)
     HasCoin-LState .getCoin s = getCoin (LState.utxoSt s)
 
   private
-    helper : Maybe UTxOState × Maybe TallyState × Maybe CertState × Bool → Maybe LState
+    helper : Maybe UTxOState × Maybe GovState × Maybe CertState × Bool → Maybe LState
     helper (just utxoSt' , just tally' , just certState' , true) = just ⟦ utxoSt' , tally' , certState' ⟧ˡ
     helper _                                                     = nothing
 
@@ -55,10 +55,10 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_)
       Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_
       Computational-UTXOW = PW.Computational-UTXOW
 
-    Computational-Match : LEnv → LState → Tx → Maybe UTxOState × Maybe TallyState × Maybe CertState × Bool
+    Computational-Match : LEnv → LState → Tx → Maybe UTxOState × Maybe GovState × Maybe CertState × Bool
     Computational-Match Γ s tx = let open LState s in
       (compute Computational-UTXOW record { LEnv Γ } utxoSt tx
-      ,′ compute Computational-TALLY record { epoch = epoch (Γ .LEnv.slot) ; LEnv Γ ; TxBody (body tx) } tally (txgov (body tx))
+      ,′ compute Computational-TALLY record { epoch = epoch (Γ .LEnv.slot) ; LEnv Γ ; TxBody (body tx) } govSt (txgov (body tx))
       ,′ maybe (λ certState' →
         just certState' ,′ ⌊ ¿ map RwdAddr.stake (dom (txwdrls (body tx) ˢ)) ⊆ dom (DState.voteDelegs (CertState.dState certState') ˢ) ¿ ⌋)
         (nothing ,′ false) (compute Computational-CERTS ⟦ epoch (LEnv.slot Γ) , LEnv.pparams Γ , txvote (body tx) ⟧ᶜ certState (txcerts (body tx))))
@@ -69,7 +69,7 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,TALLY⦈_)
 
     Computational-Match-helper : helper (Computational-Match Γ s tx) ≡ just s' → let open LState in
       proj₁        (Computational-Match Γ s tx)  ≡ just (utxoSt s') ×
-      proj₁ (proj₂ (Computational-Match Γ s tx)) ≡ just (tally s')  ×
+      proj₁ (proj₂ (Computational-Match Γ s tx)) ≡ just (govSt s')  ×
       proj₁ (proj₂ (proj₂ (Computational-Match Γ s tx))) ≡ just (certState s') ×
       map RwdAddr.stake (dom (txwdrls (body tx) ˢ)) ⊆ dom (DState.voteDelegs (CertState.dState $ certState s') ˢ)
     Computational-Match-helper {Γ} {s} {tx} {⟦ utxoSt , tally , certState ⟧ˡ} h

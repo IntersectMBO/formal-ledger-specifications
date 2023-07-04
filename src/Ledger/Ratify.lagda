@@ -10,7 +10,7 @@ module Ledger.Ratify (txs : TransactionStructure) where
 open import Ledger.Prelude hiding (_∧_)
 
 open TransactionStructure txs
-open import Ledger.Tally TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
+open import Ledger.Gov TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 open import Ledger.PParams epochStructure
 
 import Data.Integer as Z

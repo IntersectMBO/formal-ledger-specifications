@@ -86,6 +86,7 @@ open import Axiom.Set.Map th public
   renaming (Map to _⇀_)
 
 open import Axiom.Set.TotalMap th public
+open import Axiom.Set.TotalMapOn th public
 
 open L.Decˡ public
   hiding (_∈?_; ≟-∅)
