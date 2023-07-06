@@ -64,17 +64,14 @@ record PParams : Set where
         drepActivity      : Epoch
 
         -- Script
-        collateralPercent : ℕ
-        prices            : Prices
-        maxTxExUnits      : ExUnits
-        maxBlockExUnits   : ExUnits
+        -- costmdls            : Language → CostModel
+        prices              : Prices
+        maxTxExUnits        : ExUnits
+        maxBlockExUnits     : ExUnits
+        coinsPerUTxOWord    : Coin
+        collateralPercent   : ℕ
+        maxCollateralInputs : ℕ
 
--- New Protocol Parameters
---        costmdls : (Language → CostModel)
---        maxValSize : N
---        coinsPerUTxOWord : Coin
---        collateralPercent : N
---        maxCollateralInputs : N
 \end{code}
 \caption{Definitions used for protocol parameters}
 \label{fig:defs:pparams}

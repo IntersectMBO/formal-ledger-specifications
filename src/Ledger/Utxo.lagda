@@ -117,7 +117,7 @@ txscriptfee = {!!}
 
 -- Fix: add script free and exunits
 minfee : PParams → Tx → Coin
-minfee pp tx = a * txsize {!!} + b + txscriptfee {!!} (totExUnits tx)
+minfee pp tx = a * txsize (body tx) + b + txscriptfee prices (totExUnits tx)
   where open PParams pp
 
 data DepositPurpose : Set where

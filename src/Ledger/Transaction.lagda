@@ -49,7 +49,7 @@ the transaction body are:
 
 \begin{figure*}[h]
 \emph{Abstract types}
-\AgdaTarget{Ix, TxId, Epoch, AuxiliaryData}
+\AgdaTarget{Ix, TxId, Epoch, AuxilaryData}
 \begin{code}
         Ix TxId AuxiliaryData : Set
 \end{code}
@@ -138,6 +138,9 @@ the transaction body are:
           txAD    : Maybe AuxiliaryData
 \end{code}
 \emph{Abstract functions}
+\begin{code}
+--  record Abstract : Set where
+--    field txscriptfee : Prices → ExUnits → Coin
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Definitions used in the UTxO transition system}
