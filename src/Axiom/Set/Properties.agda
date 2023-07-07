@@ -88,6 +88,10 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 ⊆-Transitive : Transitive (_⊆_ {A})
 ⊆-Transitive X⊆Y Y⊆Z = Y⊆Z ∘ X⊆Y
 
+∈-⊆ : {A : Type ℓ}{a : A}{X Y : Set A} → a ∈ X → X ⊆ Y → a ∈ Y
+∈-⊆ a∈X X⊆Y = X⊆Y a∈X
+
+
 ≡ᵉ-isEquivalence : IsEquivalence (_≡ᵉ_ {A})
 ≡ᵉ-isEquivalence = record
   { refl  = id , id

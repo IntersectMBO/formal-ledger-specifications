@@ -75,6 +75,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   _∉_ : A → Set A → Type
   _∉_ = ¬_ ∘₂ _∈_
 
+  ∈-irrelevant : Set A → Type ℓ
+  ∈-irrelevant X = ∀ {a} (p q : a ∈ X) → p ≡ q
+
   open Equivalence
 
   _Preservesˢ_ : (Set A → Set B) → (∀ {A} → Set A → Type) → Type ℓ
@@ -131,6 +134,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   map : (A → B) → Set A → Set B
   map = proj₁ ∘₂ replacement
 
+  -- mapOn : {X : Set A} → (Σ A (_∈ X) → B) → Set (Σ A (_∈ X)) → Set B
+  -- mapOn = proj₁ ∘₂ replacement
+
   ∈-map : ∀ {f : A → B} {b} → (∃[ a ] b ≡ f a × a ∈ X) ⇔ b ∈ map f X
   ∈-map = proj₂ $ replacement _ _
 
@@ -140,6 +146,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   -- don't know that there's a set containing all members of a type, which this is equivalent to
   -- _⁻¹_ : (A → B) → Set B → Set A
   -- f ⁻¹ X = {!!}
+  ≡∈ : {X : Set A}{a a' : A} → a ∈ X → a ≡ a' → a' ∈ X
+  ≡∈ {a = a}{.a}a∈X refl = a∈X
+
 
   filter : {P : A → Type} → specProperty P → Set A → Set A
   filter = proj₁ ∘₂ flip specification

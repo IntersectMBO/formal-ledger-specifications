@@ -6,6 +6,9 @@ open import Ledger.Prelude
 import Data.Maybe as M
 import Data.Rational as ℚ
 
+open import Algebra              using (CommutativeMonoid)
+open import Algebra.Morphism     using (module MonoidMorphisms)
+open import Data.Nat.Properties  using (+-0-monoid)
 open import Data.Nat using (_≤_; _≤ᵇ_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 
@@ -91,29 +94,31 @@ HSP2ScriptStructure .validPlutusScript?    = λ ()
 HSScriptStructure : ScriptStructure ℕ ℕ ℕ
 HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
 
-open import Data.Nat
-open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
-open import Ledger.TokenAlgebra
 open import Ledger.Transaction
+import Ledger.TokenAlgebra as TA
+open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
+open import Data.Nat
 
-coinTokenAlgebra : TokenAlgebra
-coinTokenAlgebra = record
-  { PolicyId                = ℕ
-  ; Value-CommutativeMonoid = +-0-commutativeMonoid
-  ; coin                    = id
-  ; inject                  = id
-  ; policies                = λ x → ∅
-  ; size                    = λ x → 1 -- there is only ada in this token algebra
-  ; property                = λ x → refl
-  ; coinIsMonoidMorphism    = record
-    { mn-homo = record
-      { sm-homo = record { ⟦⟧-cong = λ z → z ; ∙-homo  = λ x y → refl }
-      ; ε-homo  = refl
+module _ where
+
+  open TA ℕ
+  open TA.TokenAlgebra
+  coinTokenAlgebra : TokenAlgebra
+  Value-CommutativeMonoid coinTokenAlgebra    = +-0-commutativeMonoid
+  coin coinTokenAlgebra                       = id
+  inject coinTokenAlgebra                     = id
+  policies coinTokenAlgebra                   = λ _ → ∅
+  size coinTokenAlgebra                       = λ x → 1 -- there is only ada in this token algebra
+  _≤ᵗ_ coinTokenAlgebra                       = _≤_
+  AssetName coinTokenAlgebra                  = String
+  specialAsset coinTokenAlgebra               = "Ada"
+  property coinTokenAlgebra                   = λ _ → refl
+  coinTokenAlgebra .coinIsMonoidHomomorphism  =
+    record
+      { isMagmaHomomorphism  = record { isRelHomomorphism = record { cong = id } ; homo = λ _ _ → refl }
+      ; ε-homo               = refl
       }
-    }
-  ; _≤ᵗ_                    = _≤_
-  ; DecEq-Value             = record { _≟_ = Data.Nat._≟_ }
-  }
+  DecEq-Value coinTokenAlgebra                = record { _≟_ = Data.Nat._≟_ }
 
 module _ where
   open TransactionStructure

@@ -61,6 +61,13 @@ left-unique-mapˢ : {f : A → B} (X : Set A) → left-unique (mapˢ (λ y → (
 left-unique-mapˢ _ p q with from ∈-map p | from ∈-map q
 ... | _ , refl , _ | _ , refl , _ = refl
 
+-- Set⇒DSet : (X : Set A) → Set(Σ A (_∈ X))
+-- Set⇒DSet X = proj₁ (dreplacement X id)
+
+-- left-unique-mapOn : (X : Set A)(∈-uip : ∈-irrelevant X){f : Σ A (_∈ X) → B} → left-unique (mapˢ (λ x → proj₁ x , f x) (Set⇒DSet X))
+-- left-unique-mapOn _ ∈-uip {f} p q with from ∈-map p | from ∈-map q
+-- ... | (_ , a∈X) , refl , aa∈ | (_ , a∈X') , refl , aa'∈ = cong f (Σ-≡,≡→≡ (refl , ∈-uip a∈X a∈X'))
+
 Map : Type → Type → Type
 Map A B = Σ (Rel A B) left-unique
 
