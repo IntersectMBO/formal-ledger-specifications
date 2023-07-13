@@ -60,10 +60,10 @@ record indexOf : Set where
 indexOfImplementation : indexOf
 indexOfImplementation = {!!}
 
-open indexOf indexOfImplementation
-
 ixToPtr : Ix → RdmrPtr
 ixToPtr ix = {!!}
+
+open indexOf indexOfImplementation
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb (Cert h) = map ixToPtr (indexOfDCert h (txcerts txb))
@@ -71,16 +71,41 @@ rdptr txb (Rewrd h) = map ixToPtr (indexOfRwdAddr h (txwdrls txb))
 rdptr txb (Mint h) = map ixToPtr (indexOfPolicyId h (policies (mint txb)))
 rdptr txb (Spend h) = map ixToPtr (indexOfTxIn h (txins txb))
 
-
 -- Do we need a theorem for
 -- if (rdptr body tx) then r ∈ txrdmrs (txwitx tx)
 -- or can this function just fail
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
-indexedRdmrs tx sp with rdptr (body tx) sp
-... | just x = lookupᵐ? (txrdmrs (wits tx)) x ⦃ _ ∈? _ ⦄
-... | nothing = nothing
+indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (txrdmrs (wits tx)) x ⦃ _ ∈? _ ⦄)
+                            nothing
+                            (rdptr (body tx) sp)
 
 -- Abstract Script Validation Functions
 
+-- epochInfoSlotToUTCTime : EpochInfo → SystemStart → Slot → -- UTCTime? Translate slot number to system time or fail
+
+-- runPLCScript : CostModel → Scriptplc → ExUnits → Data∗ → IsValid
+-- Validate a Plutus script, taking resource limits into account
+
 -- Notation
+
+-- Script functions
+
+getDatum : Tx → UTxO → ScriptPurpose → List Datum
+getDatum tx utxo (Cert x) = []
+getDatum tx utxo (Rewrd x) = []
+getDatum tx utxo (Mint x) = []
+getDatum tx utxo (Spend txin) with lookupᵐ? utxo txin ⦃ _ ∈? _ ⦄
+... | nothing = []
+... | just (fst , fst₁ , nothing)  = []
+... | just (fst , fst₁ , just x) with lookupᵐ? (txdats (wits tx)) x ⦃ _ ∈? _ ⦄
+... | just x₁ = [ x₁ ]
+... | nothing = []
+
+
+-- utxo : Rel TxIn TxOut
+-- txdats (wits tx) : DataHash ⇀ Datum
+-- getDatum looks for a datum associated with a given script purpose. Note that only an TxIn-type script purpose can result in finding an associated datum hash. If no datum is found, an empty list is returned. A list containing the found datum is returned otherwise.
+
+-- [d] sp ↦ (_,_,hᵈ) ∈ utxo,hᵈ ↦ d ∈ txdats (txwits tx)
+-- ϵ otherwise
