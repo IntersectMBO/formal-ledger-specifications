@@ -266,6 +266,7 @@ instance
         ; govDeposit        = govDeposit
         ; drepDeposit       = drepDeposit
         ; drepActivity      = drepActivity
+        ; minimumAVS        = 0
         }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
