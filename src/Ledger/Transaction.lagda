@@ -24,11 +24,6 @@ data Tag : Set where
   Spend Mint Cert Rewrd : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
-Index = ℕ
-
-RdmrPtr : Set
-RdmrPtr = Tag × Index
-
 record TransactionStructure : Set₁ where
   field
 \end{code}
@@ -97,6 +92,11 @@ the transaction body are:
   TxOut = Addr × Value × Maybe DataHash
   UTxO  = TxIn ⇀ TxOut
   Wdrl  = RwdAddr ⇀ Coin
+
+  Index = Ix
+
+  RdmrPtr : Set
+  RdmrPtr = Tag × Ix
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch

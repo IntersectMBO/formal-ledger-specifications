@@ -5,7 +5,7 @@ open import Ledger.Transaction
 
 module Ledger.ScriptValidation (txs : TransactionStructure) where
 
-open import Ledger.Prelude hiding (Dec₁; map)
+open import Ledger.Prelude hiding (Dec₁) renaming (map to mapSet)
 
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Structures
@@ -36,7 +36,17 @@ open import Ledger.Script
 open import Relation.Nullary.Decidable using (⌊_⌋; isNo)
 open import Data.Bool using (_∧_)
 
+
 -- Global Constants
+--TODO:
+-- Necessary for UTXOS definition:
+  -- Define scriptsNeeded function
+
+-- Non-Urgent:
+  -- Add EpochInfo and SystemStart
+  -- Add POSIXTIME for TxInfo
+  -- Add lemma for indexedRdmrs showing if (rdptr body tx) then r ∈ txrdmrs (txwitx tx)
+
 
 -- Abstract Types
 
@@ -60,20 +70,13 @@ record indexOf : Set where
 indexOfImplementation : indexOf
 indexOfImplementation = {!!}
 
-ixToPtr : Ix → RdmrPtr
-ixToPtr ix = {!!}
-
 open indexOf indexOfImplementation
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
-rdptr txb (Cert h) = map ixToPtr (indexOfDCert h (txcerts txb))
-rdptr txb (Rewrd h) = map ixToPtr (indexOfRwdAddr h (txwdrls txb))
-rdptr txb (Mint h) = map ixToPtr (indexOfPolicyId h (policies (mint txb)))
-rdptr txb (Spend h) = map ixToPtr (indexOfTxIn h (txins txb))
-
--- Do we need a theorem for
--- if (rdptr body tx) then r ∈ txrdmrs (txwitx tx)
--- or can this function just fail
+rdptr txb (Cert h) = map (λ x → Cert , x) (indexOfDCert h (txcerts txb))
+rdptr txb (Rewrd h) = map (λ x → Rewrd , x) (indexOfRwdAddr h (txwdrls txb))
+rdptr txb (Mint h) = map (λ x → Mint , x) (indexOfPolicyId h (policies (mint txb)))
+rdptr txb (Spend h) = map (λ x → Spend , x) (indexOfTxIn h (txins txb))
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (txrdmrs (wits tx)) x ⦃ _ ∈? _ ⦄)
@@ -92,20 +95,48 @@ indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (txrdmrs (wits tx)) x ⦃ _ ∈?
 -- Script functions
 
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
-getDatum tx utxo (Cert x) = []
-getDatum tx utxo (Rewrd x) = []
-getDatum tx utxo (Mint x) = []
-getDatum tx utxo (Spend txin) with lookupᵐ? utxo txin ⦃ _ ∈? _ ⦄
-... | nothing = []
-... | just (fst , fst₁ , nothing)  = []
-... | just (fst , fst₁ , just x) with lookupᵐ? (txdats (wits tx)) x ⦃ _ ∈? _ ⦄
-... | just x₁ = [ x₁ ]
-... | nothing = []
+getDatum tx utxo (Spend txin) = maybe (λ { (_ , _ , just x) → maybe (λ x₁ → [ x₁ ])
+                                                              []
+                                                              (lookupᵐ? (txdats (wits tx)) x ⦃ _ ∈? _ ⦄)
+                                          ; (_ , _ , nothing) → []})
+                                          []
+                                          ((lookupᵐ? utxo txin ⦃ _ ∈? _ ⦄))
+getDatum tx utxo _ = []
 
 
--- utxo : Rel TxIn TxOut
--- txdats (wits tx) : DataHash ⇀ Datum
--- getDatum looks for a datum associated with a given script purpose. Note that only an TxIn-type script purpose can result in finding an associated datum hash. If no datum is found, an empty list is returned. A list containing the found datum is returned otherwise.
+record TxInfo : Set where
+  field realizedInputs : TxIn -- just to stop unification error for now
+        txouts  : Ix ⇀ TxOut
+        fee     : Value
+        mint    : Value
+        txcerts : List DCert
+        txwdrls : Wdrl
+        txvldt  : Maybe Slot × Maybe Slot
+        vkKey   : ℙ KeyHash
+        txdats  : DataHash ⇀ Datum
+        txid    : TxId
 
--- [d] sp ↦ (_,_,hᵈ) ∈ utxo,hᵈ ↦ d ∈ txdats (txwits tx)
--- ϵ otherwise
+txInfo : Language → PParams
+                  → UTxO
+                  → Tx
+                  → TxInfo
+txInfo l pp utxo tx = record
+                        { realizedInputs = {!!}
+                        ; txouts = txouts txb
+                        ; fee = inject (txfee txb)
+                        ; mint = mint txb
+                        ; txcerts = txcerts txb
+                        ; txwdrls = txwdrls txb
+                        ; txvldt = txvldt txb
+                        ; vkKey = reqSigHash txb
+                        ; txdats = txdats (wits tx)
+                        ; txid = txid txb
+                        }
+  where
+    txb = body tx
+
+collectPhaseTwoScriptInputs : PParams → Tx
+                                      → UTxO
+                                      → List (Script × List Data × ExUnits × CostModel)
+collectPhaseTwoScriptInputs pp tx utxo with getDatum tx utxo {!!}
+... | ans = {!!}
