@@ -8,12 +8,12 @@ open import Prelude hiding (lookup)
 
 open import Agda.Primitive              using () renaming (Set to Type)
 open import Relation.Nullary.Decidable  using (yes ; no)
-
-open import Axiom.Set.Map th            using (left-unique; Map ; mapWithKey-uniq)
+open import Function.Related.TypeIsomorphisms  using (Σ-≡,≡→≡)
+open import Axiom.Set.Map th            using (left-unique; Map ; mapWithKey-uniq ; left-unique-mapˢ)
 open import Axiom.Set.Rel th            using (Rel ; dom ; dom∈)
 open import Interface.DecEq             using (DecEq ; _≟_)
 
-open Theory th    using (_∈_ ; map ; Set ; ∈-map ; ∈-map′)
+open Theory th    using (_∈_ ; map ; Set ; ∈-map ; ∈-map′ ; isMaximal)
 open Equivalence  using (to ; from)
 
 private variable A B : Type
@@ -40,8 +40,8 @@ record TotalMap (A B : Type) : Type where
   lookup∈rel = proj₂ (to dom∈ total-rel)
 
   -- this is useful for proving equalities involving lookup
-  rel⇒lookup : {a : A}{b : B} → (a , b) ∈ rel → lookup a ≡ b
-  rel⇒lookup ab∈rel = sym (left-unique-rel ab∈rel (proj₂ (to dom∈ total-rel)))
+  ∈-rel⇒lookup-≡ : {a : A}{b : B} → (a , b) ∈ rel → lookup a ≡ b
+  ∈-rel⇒lookup-≡ ab∈rel = sym (left-unique-rel ab∈rel (proj₂ (to dom∈ total-rel)))
 
 
 module Update {B : Type} ⦃ _ : DecEq A ⦄ where
@@ -52,6 +52,12 @@ module Update {B : Type} ⦃ _ : DecEq A ⦄ where
     ... | yes  _ = b
     ... | no   _ = y
 
+  updateFn-id : {a : A}{b b' : B} → b ≡ updateFn (a , b) a b'
+  updateFn-id {a = a} with (a ≟ a)
+  ... | yes _ = refl
+  ... | no ¬p = ⊥-elim (¬p refl)
+
+
   open TotalMap
 
   mapWithKey : {B' : Type} → (A → B → B') → TotalMap A B → TotalMap A B'
@@ -61,3 +67,45 @@ module Update {B : Type} ⦃ _ : DecEq A ⦄ where
 
   update : A → B → TotalMap A B → TotalMap A B
   update a b = mapWithKey (updateFn (a , b))
+
+
+
+module LookupUpdate
+  {X : Set A}
+  {a : A} {a∈X : a ∈ X}
+  {b : B}
+  ⦃ decEqA : DecEq A ⦄ where
+
+  open TotalMap
+  open Update
+
+  ∈-rel-update  : (tm : TotalMap A B) → (a , b) ∈ rel (update a b tm)
+  ∈-rel-update tm = to ∈-map ((a , lookup tm a) , Σ-≡,≡→≡ (refl , updateFn-id {A = A}) , lookup∈rel tm)
+
+  lookup-update-id  : (tm : TotalMap A B) → lookup (update a b tm) a ≡ b
+  lookup-update-id tm = ∈-rel⇒lookup-≡ (update _ _ tm) (∈-rel-update tm)
+
+
+
+------------------------------------------------------
+-- Correspondences between total maps and functions --
+
+module FunTot (X : Set A) (⋁A≡X : isMaximal X) where
+  open TotalMap
+
+  Fun⇒Map : ∀ {A B} {f : A → B} (X : Set A) → Map A B
+  Fun⇒Map {f = f} X = map (λ x → (x , f x)) X , left-unique-mapˢ X
+
+
+  Fun⇒TotalMap : (f : A → B) → TotalMap A B
+  Fun⇒TotalMap f .rel              = map (λ x → (x , f x)) X
+  Fun⇒TotalMap _ .left-unique-rel  = left-unique-mapˢ X
+  Fun⇒TotalMap _ .total-rel        = ∈-map′ (∈-map′ ⋁A≡X)
+
+  Fun∈TotalMap  : {f : A → B}{a : A}
+                → a ∈ X → (a , f a) ∈ rel (Fun⇒TotalMap f)
+  Fun∈TotalMap a∈X = ∈-map′ a∈X
+
+  lookup∘Fun⇒TotalMap-id  : {f : A → B}{a : A}
+                          → lookup (Fun⇒TotalMap f) a ≡ f a
+  lookup∘Fun⇒TotalMap-id {f = f} = ∈-rel⇒lookup-≡ ((Fun⇒TotalMap f)) (Fun∈TotalMap ⋁A≡X)

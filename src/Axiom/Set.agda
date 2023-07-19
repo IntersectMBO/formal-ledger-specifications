@@ -75,6 +75,14 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   _∉_ : A → Set A → Type
   _∉_ = ¬_ ∘₂ _∈_
 
+  ≡→∈ : {X : Set A}{a a' : A} → a ∈ X → a ≡ a' → a' ∈ X
+  ≡→∈ a∈X refl = a∈X
+
+  -- The following is useful in case we have `(a , p)` and `(a , q)`, where `p`
+  -- and `q` are proofs of `a ∈ X`, and we want to prove `(a , p) ≡ (a , q)`.
+  ∈-irrelevant : Set A → Type ℓ
+  ∈-irrelevant X = ∀ {a} (p q : a ∈ X) → p ≡ q
+
   open Equivalence
 
   _Preservesˢ_ : (Set A → Set B) → (∀ {A} → Set A → Type) → Type ℓ
