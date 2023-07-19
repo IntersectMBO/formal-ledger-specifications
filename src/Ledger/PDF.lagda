@@ -88,6 +88,8 @@ open import Ledger.PPUp
 open import Ledger.PPUp.Properties
 
 open import Ledger.Ledger.Properties
+
+open import Ledger.TokenAlgebra.ValueSet
 \end{code}
 
 \include{Ledger/Introduction}
