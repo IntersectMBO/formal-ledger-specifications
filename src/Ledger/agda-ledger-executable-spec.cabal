@@ -25,12 +25,13 @@ library
     other-extensions:
         CPP PolyKinds EmptyDataDecls EmptyCase ExistentialQuantification
         ScopedTypeVariables NoMonomorphismRestriction RankNTypes
-        PatternSynonyms
+        PatternSynonyms DeriveGeneric
 
     build-depends:
         base,
         text,
-        ieee
+        ieee,
+        tree-diff
 
     ghc-options: -Wno-overlapping-patterns
     hs-source-dirs:   .
