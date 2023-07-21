@@ -139,8 +139,6 @@ the transaction body are:
 \end{code}
 \emph{Abstract functions}
 \begin{code}
---  record Abstract : Set where
---    field txscriptfee : Prices → ExUnits → Coin
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Definitions used in the UTxO transition system}

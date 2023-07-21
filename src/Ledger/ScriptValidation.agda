@@ -140,3 +140,4 @@ collectPhaseTwoScriptInputs : PParams → Tx
                                       → List (Script × List Data × ExUnits × CostModel)
 collectPhaseTwoScriptInputs pp tx utxo with getDatum tx utxo {!!}
 ... | ans = {!!}
+

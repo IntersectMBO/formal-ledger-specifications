@@ -64,7 +64,8 @@ record PParams : Set where
         drepActivity      : Epoch
 
         -- Script
-        -- costmdls            : Language → CostModel
+        -- costmdls            : Language → CostModel (Does not work with DecEq)
+        costmdls            : CostModel
         prices              : Prices
         maxTxExUnits        : ExUnits
         maxBlockExUnits     : ExUnits
