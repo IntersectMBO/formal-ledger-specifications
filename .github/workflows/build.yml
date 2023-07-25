@@ -157,7 +157,7 @@ jobs:
             git add index.html
             git add pdfs
             git add html
-            git commit -m "Updated"
+            git commit -m "Updated for ${{ github.sha }}"
 
 
       - name: Push to gh-pages
