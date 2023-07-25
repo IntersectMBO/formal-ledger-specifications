@@ -1,4 +1,5 @@
 \section{Governance actions}
+\label{sec:governance-actions}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -34,6 +35,30 @@ open import MyDebugOptions
 2ℚ = 1ℚ Data.Rational.+ 1ℚ
 
 \end{code}
+
+\newcommand{\defn}[1]{\textit{#1}}
+A \defn{Governance action}, defined by the \AgdaBound{GovAction} type shown in Figure~\ref{defs:governance},
+is one of the following:
+
+\begin{itemize}
+  \item \AgdaBound{NoConfidence}. A vote of \textit{no confidence}.
+  \item \AgdaBound{NewCommittee}.  A \textit{new committee} requires a map from \AgdaBound{KeyHash} to \AgdaBound{Epoch}, a set of key hashes (of type \AgdaBound{ℙ KeyHash}, and a rational number.
+  \item \AgdaBound{NewConstitution}.  A \textit{new constitution} requires a document hash (of type \AgdaBound{DocHash}).
+  \item \AgdaBound{TriggerHF}. ... requires a protocol version (of type \AgdaBound{ProtVer}) ...
+  \item \AgdaBound{ChangePParams}. A \textit{change of protocol parameters} (\AgdaBound{PParams}) requires an update (of type \AgdaBound{UpdateT}) and a protocol parameter hash (of type \AgdaBound{PPHash}).
+  \item \AgdaBound{TreasuryWdrl}. A \textit{treasury withdrawal} requires a map from \AgdaBound{Credential} to \AgdaBound{Coin}.
+  \item \AgdaBound{Info}.
+\end{itemize}
+
+Associated with each governance action are the following data:
+\begin{itemize}
+  \item a \defn{identifier} (\AgdaBound{GovActionId})---a pair consisting of a transaction id (of type \AgdaBound{TxId}) and a natural number.
+  \item a \defn{role} (\AgdaBound{GovRole}), which is either \AgdaBound{CC}, \AgdaBound{DRep}, or \AgdaBound{SPO}.
+  \item a \defn{vote delegation type} (\AgdaBound{VDeleg}), which is either \AgdaBound{credVoter}, \AgdaBound{abstainRep}, or \AgdaBound{noConfidenceRep}.
+  \item an \defn{anchor} (\AgdaBound{Anchor}) consisting of a url (\AgdaBound{String}) and a document hash (\AgdaBound{DocHash}).
+\end{itemize}
+
+
 \begin{figure*}[h]
 \begin{code}
 GovActionID : Set
@@ -61,10 +86,15 @@ data GovAction : Set where
   ChangePParams    : UpdateT → PPHash                 → GovAction
   TreasuryWdrl     : (Credential ⇀ Coin)              → GovAction
   Info             :                                    GovAction
+\end{code}
+\caption{Governance actions}
+\label{defs:governance}
+\end{figure*}
 
+\begin{code}[hide]
 actionWellFormed : GovAction → Bool
-actionWellFormed (ChangePParams x _) = ppdWellFormed x
-actionWellFormed _                   = true
+actionWellFormed (ChangePParams x _)  = ppdWellFormed x
+actionWellFormed _                    = true
 
 maximum : ℙ ℚ → ℚ
 maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
@@ -85,10 +115,10 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
       nothing  → 2ℚ
 
     pparamThreshold : PParamGroup → ℚ
-    pparamThreshold NetworkGroup    = P5a
-    pparamThreshold EconomicGroup   = P5b
-    pparamThreshold TechnicalGroup  = P5c
-    pparamThreshold GovernanceGroup = P5d
+    pparamThreshold NetworkGroup     = P5a
+    pparamThreshold EconomicGroup    = P5b
+    pparamThreshold TechnicalGroup   = P5c
+    pparamThreshold GovernanceGroup  = P5d
 
     P5 : UpdateT → ℚ
     P5 ppu = maximum $ map pparamThreshold (updateGroups ppu)
@@ -112,7 +142,20 @@ NeedsHash (TriggerHF _)        = GovActionID
 NeedsHash (ChangePParams _ _)  = GovActionID
 NeedsHash (TreasuryWdrl _)     = ⊤
 NeedsHash Info                 = ⊤
+\end{code}
 
+A \defn{governance action proposal} is recorded in a \AgdaBound{GovProposal} record which includes
+an address (of type \AgdaBound{RwdAddr}), the proposed governance action (of type \AgdaBound{GovAction}),
+a hash of the previous governance action, and an anchor. (See Figure~\ref{defs:governance-votes}.)
+
+There are three ways to vote on a governance action: ``yes,'' ``no,'' or ``abstain.''
+
+Each vote is recorded (in the \AgdaBound{GovVote} record) along with a
+governance action identifier (\AgdaBound{GovActionID}), a role (\AgdaBound{GovRole}),
+a credential (\AgdaBound{Credential}), and possibly an anchor (\AgdaBound{Anchor}).
+(See Figure~\ref{defs:governance-votes}.)
+
+\begin{code}
 data Vote : Set where
   yes      : Vote
   no       : Vote
@@ -131,17 +174,23 @@ record GovProposal : Set where
         prevAction  : NeedsHash action
         anchor      : Anchor
 \end{code}
-\begin{code}[hide]
+\caption{Governance action proposals and votes}
+\label{defs:governance-votes}
+\end{figure*}
 
+\begin{code}[hide]
 instance
   _ = +-0-commutativeMonoid
   unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
   unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 \end{code}
-\caption{Governance actions and votes}
-\label{defs:governance}
-\end{figure*}
+
+\defn{Enactment} of a governance action is carried out as an \defn{enact transition}
+which requires an \defn{enact environment} (\AgdaBound{EnactEnv}), an \defn{enact state}
+(\AgdaBound{EnactState}), the voted on governance action (that achieved a passing vote to enact),
+and the state that results from enacting the given governance action (\AgdaBound{EnactState}).
+(See Figure~\ref{fig:enact-transition-system}.)
 
 \begin{figure*}[h]
 \begin{code}
@@ -207,4 +256,5 @@ data _⊢_⇀⦇_,ENACT⦈_ where
   Enact-Info      : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 \caption{ENACT transition system}
+\label{fig:enact-transition-system}
 \end{figure*}
