@@ -2,8 +2,9 @@
 {-# OPTIONS --overlapping-instances #-}
 
 open import Ledger.Transaction
+open import Ledger.Abstract
 
-module Ledger.ScriptValidation (txs : TransactionStructure) where
+module Ledger.ScriptValidation (txs : TransactionStructure)(abs : AbstractFunctions txs)where
 
 open import Ledger.Prelude hiding (Dec₁) renaming (map to mapSet)
 
@@ -36,41 +37,14 @@ open import Ledger.Script
 open import Relation.Nullary.Decidable using (⌊_⌋; isNo)
 open import Data.Bool using (_∧_)
 
-
--- Global Constants
---TODO:
--- Necessary for UTXOS definition:
-  -- Define scriptsNeeded function
-
--- Non-Urgent:
-  -- Add EpochInfo and SystemStart
-  -- Add POSIXTIME for TxInfo
-  -- Add lemma for indexedRdmrs showing if (rdptr body tx) then r ∈ txrdmrs (txwitx tx)
-
-
--- Abstract Types
-
--- Derived Types
+open AbstractFunctions abs
+open indexOf indexOfImp
 
 data ScriptPurpose : Set where
   Cert  : DCert → ScriptPurpose
   Rewrd : RwdAddr → ScriptPurpose
   Mint  : PolicyId → ScriptPurpose
   Spend : TxIn → ScriptPurpose
-
--- Abstract Functions
-
-record indexOf : Set where
-  field
-    indexOfDCert    : DCert → List DCert → Maybe Ix
-    indexOfRwdAddr  : RwdAddr → Wdrl → Maybe Ix
-    indexOfTxIn     : TxIn → ℙ TxIn → Maybe Ix
-    indexOfPolicyId : PolicyId → ℙ PolicyId → Maybe Ix
-
-indexOfImplementation : indexOf
-indexOfImplementation = {!!}
-
-open indexOf indexOfImplementation
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb (Cert h) = map (λ x → Cert , x) (indexOfDCert h (txcerts txb))
@@ -91,8 +65,6 @@ indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (txrdmrs (wits tx)) x ⦃ _ ∈?
 -- Validate a Plutus script, taking resource limits into account
 
 -- Notation
-
--- Script functions
 
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
 getDatum tx utxo (Spend txin) = maybe (λ { (_ , _ , just x) → maybe (λ x₁ → [ x₁ ])
