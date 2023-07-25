@@ -3,6 +3,7 @@
 \setsansfont{XITSMath-Regular.otf}
 
 \usepackage{newunicodechar}
+\usepackage{longtable}
 \newunicodechar{ᵇ}{\ensuremath{^b}}
 \newunicodechar{ᶜ}{\ensuremath{^c}}
 \newunicodechar{ᵈ}{\ensuremath{^d}}
