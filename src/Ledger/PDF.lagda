@@ -65,6 +65,11 @@
 
 \newtheorem{property}{Property}[section]
 
+%% -- DEFINITIONS ----------------------------------------------------
+%% Set the desired typeface of defined terms here and, at the
+%% first occurrence of such a term, enclose it in `\defn{...}`.
+\newcommand{\defn}[1]{\textit{#1}}   %  defined terms are typeset in italics
+%% \newcommand{\defn}[1]{\textbf{#1}}   %  defined terms are typeset in bold
 
 \begin{document}
 \tableofcontents
