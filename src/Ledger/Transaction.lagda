@@ -136,6 +136,7 @@ the transaction body are:
           wits    : TxWitnesses
           isValid : Bool
           txAD    : Maybe AuxiliaryData
+
 \end{code}
 \emph{Abstract functions}
 \begin{code}
@@ -152,6 +153,20 @@ the transaction body are:
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom ((utxo ↾' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
+
+  open import Relation.Nullary.Decidable using (⌊_⌋)
+
+  isScriptAddrUTxO : TxIn × TxOut → Bool
+  isScriptAddrUTxO (fst , addr , snd) = ⌊ isScriptAddr? addr ⌋
+
+  isScriptAddrUTxOProp : specProperty λ x → isScriptAddrUTxO x ≡ true
+  isScriptAddrUTxOProp = to-sp (λ x → isScriptAddrUTxO x ≟ true)
+
+  scriptOuts : UTxO → UTxO
+  scriptOuts utxo = filterᵐ (sp-∘ isScriptAddrUTxOProp λ z → z) utxo
+
+  txinsScript : ℙ TxIn → UTxO → ℙ TxIn
+  txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 \end{code}
 \end{figure*}
 \begin{code}[hide]

@@ -107,9 +107,16 @@ txInfo l pp utxo tx = record
   where
     txb = body tx
 
+-- Figure 11
+scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
+scriptsNeeded utxo txb with txins txb
+... | ans = {!!}
+
 collectPhaseTwoScriptInputs : PParams → Tx
                                       → UTxO
                                       → List (Script × List Data × ExUnits × CostModel)
-collectPhaseTwoScriptInputs pp tx utxo with getDatum tx utxo {!!}
-... | ans = {!!}
+collectPhaseTwoScriptInputs pp tx utxo = {!scriptsNeeded!}
 
+
+{- with getDatum tx utxo {!!}
+... | ans = {!!} -}
