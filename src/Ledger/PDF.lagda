@@ -3,6 +3,7 @@
 \setsansfont{XITSMath-Regular.otf}
 
 \usepackage{newunicodechar}
+\usepackage{longtable}
 \newunicodechar{ᵇ}{\ensuremath{^b}}
 \newunicodechar{ᶜ}{\ensuremath{^c}}
 \newunicodechar{ᵈ}{\ensuremath{^d}}
@@ -65,11 +66,14 @@
 
 \newtheorem{property}{Property}[section]
 
-%% -- DEFINITIONS ----------------------------------------------------
+%% -- DEFINITIONS -----------------------------------------------------------
 %% Set the desired typeface of defined terms here and, at the
 %% first occurrence of such a term, enclose it in `\defn{...}`.
 \newcommand{\defn}[1]{\textit{#1}}   %  defined terms are typeset in italics
 %% \newcommand{\defn}[1]{\textbf{#1}}   %  defined terms are typeset in bold
+
+%% -- For typesetting an Agda field name along with its type -----------------
+\newcommand{\FieldTyped}[2]{\AgdaField{#1}\,\AgdaSymbol{:}\,\AgdaDatatype{#2}}
 
 \begin{document}
 \tableofcontents
