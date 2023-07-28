@@ -127,7 +127,8 @@
 }
 \newcommand{\AgdaStringFontStyle}[1]{\texttt{#1}}
 \newcommand{\AgdaCommentFontStyle}[1]{\texttt{#1}}
-\newcommand{\AgdaBoundFontStyle}[1]{\textit{#1}}
+%\newcommand{\AgdaBoundFontStyle}[1]{\textit{#1}}
+\newcommand{\AgdaBoundFontStyle}[1]{\textsf{#1}}
 
 % ----------------------------------------------------------------------
 % Colours.
@@ -358,8 +359,8 @@
 % ----------------------------------------------------------------------
 % The code environment.
 
-\newcommand{\AgdaCodeStyle}{}
-% \newcommand{\AgdaCodeStyle}{\tiny}
+%\newcommand{\AgdaCodeStyle}{}
+\newcommand{\AgdaCodeStyle}{\small}
 
 \ifdefined\mathindent
   {}

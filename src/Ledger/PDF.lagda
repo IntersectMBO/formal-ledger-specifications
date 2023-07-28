@@ -75,6 +75,8 @@
 %% -- For typesetting an Agda field name along with its type -----------------
 \newcommand{\FieldTyped}[2]{\AgdaField{#1}\,\AgdaSymbol{:}\,\AgdaDatatype{#2}}
 
+\usepackage{pifont}  %% needed for checkmark (\ding{51}).
+
 \begin{document}
 \tableofcontents
 

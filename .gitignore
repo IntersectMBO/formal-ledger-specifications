@@ -3,3 +3,16 @@
 **/dist-newstyle/
 .editorconfig
 result*
+cardano-ledger.pdf
+*.orig
+.auctex-auto
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.ptb
+*.toc
+*.xdv
+src/latex/Ledger
+src/latex/PDF.pdf
