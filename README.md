@@ -39,7 +39,7 @@ nix-build -A midnight.docs             # build the Midnight example docs
 The `executableSpec` is a `cabal` package, which can be loaded into GHCI like this:
 
 ```
-nix-shell --command "cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'"
+nix-shell -A run --command "cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'"
 λ> :m HSLedgerTest
 λ> main
 ```

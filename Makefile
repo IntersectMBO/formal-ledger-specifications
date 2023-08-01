@@ -1,4 +1,4 @@
-tex_files := Introduction.tex BaseTypes.tex TokenAlgebra.tex Crypto.tex Address.tex Script.tex GovernanceActions.tex PParams.tex Transaction.tex Utxo.tex Utxow.tex Tally.tex Deleg.tex Ledger.tex Ratify.tex Chain.tex Utxo/Properties.tex PDF.tex
+tex_files := Introduction.tex BaseTypes.tex TokenAlgebra.tex Crypto.tex Address.tex Script.tex GovernanceActions.tex PParams.tex Transaction.tex Utxo.tex Utxow.tex Gov.tex Deleg.tex Ledger.tex Ratify.tex Chain.tex Utxo/Properties.tex PDF.tex
 
 tex_files2 := $(addprefix src/latex/Ledger/, $(tex_files))
 
