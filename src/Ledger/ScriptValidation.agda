@@ -42,13 +42,13 @@ open indexOf indexOfImp
 
 data ScriptPurpose : Set where
   Cert  : DCert → ScriptPurpose
-  Rewrd : RwdAddr → ScriptPurpose
+  Rwrd : RwdAddr → ScriptPurpose
   Mint  : PolicyId → ScriptPurpose
   Spend : TxIn → ScriptPurpose
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb (Cert h) = map (λ x → Cert , x) (indexOfDCert h (txcerts txb))
-rdptr txb (Rewrd h) = map (λ x → Rewrd , x) (indexOfRwdAddr h (txwdrls txb))
+rdptr txb (Rwrd h) = map (λ x → Rewrd , x) (indexOfRwdAddr h (txwdrls txb))
 rdptr txb (Mint h) = map (λ x → Mint , x) (indexOfPolicyId h (policies (mint txb)))
 rdptr txb (Spend h) = map (λ x → Spend , x) (indexOfTxIn h (txins txb))
 
@@ -107,16 +107,35 @@ txInfo l pp utxo tx = record
   where
     txb = body tx
 
--- Figure 11
-scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
-scriptsNeeded utxo txb with txins txb
-... | ans = {!!}
+
+
+DelegateOrDeReg : DCert → Set
+DelegateOrDeReg (delegate x x₁ x₂ x₃) = ⊤
+DelegateOrDeReg (regpool x x₁) = ⊥
+DelegateOrDeReg (retirepool x x₁) = ⊥
+DelegateOrDeReg (regdrep x x₁ x₂) = ⊥
+DelegateOrDeReg (deregdrep x) = ⊤
+DelegateOrDeReg (ccreghot x x₁) = ⊥
+
+DelegateOrDeReg? : ∀ x → Dec (DelegateOrDeReg x)
+DelegateOrDeReg? (delegate x x₁ x₂ x₃) = yes tt
+DelegateOrDeReg? (regpool x x₁) = no (λ { ()})
+DelegateOrDeReg? (retirepool x x₁) = no (λ { ()})
+DelegateOrDeReg? (regdrep x x₁ x₂) = no (λ { ()})
+DelegateOrDeReg? (deregdrep x) = yes tt
+DelegateOrDeReg? (ccreghot x x₁) = no (λ { ()})
+
+-- Need to add ScriptHash
+--
+scriptsNeeded' : UTxO → TxBody → ℙ (ScriptPurpose)
+scriptsNeeded' utxo txb = mapSet (λ x → Spend x) (txinsScript (txins txb) utxo)
+                          ∪ mapSet (λ x → Rwrd x)
+                            (dom $ proj₁ $ (txwdrls txb) ∣' to-sp λ x → isScriptRwdAddr? x)
+                          ∪ mapSet (λ x → Cert x) (setFromList $ filter DelegateOrDeReg? (txcerts txb))
+                            -- , c ∈ cwitnedd cert ∩ AddrScript
+                          ∪ mapSet (λ x → Mint x) (policies (mint txb))
 
 collectPhaseTwoScriptInputs : PParams → Tx
                                       → UTxO
                                       → List (Script × List Data × ExUnits × CostModel)
-collectPhaseTwoScriptInputs pp tx utxo = {!scriptsNeeded!}
-
-
-{- with getDatum tx utxo {!!}
-... | ans = {!!} -}
+collectPhaseTwoScriptInputs pp tx utxo = {!!}
