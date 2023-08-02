@@ -44,6 +44,17 @@ rec {
   agdaWithStdLibMeta = agdaWithPkgs deps;
   agda = agdaWithPkgs (deps ++ [ formalLedger ]);
 
+  latex = texlive.combine {
+    inherit (texlive)
+      scheme-small
+      xits
+      collection-latexextra
+      collection-latexrecommended
+      collection-mathscience
+      bclogo
+      latexmk;
+  };
+
   formalLedger = customAgda.agdaPackages.mkDerivation {
     pname = "formal-ledger";
     version = "0.1";
@@ -82,19 +93,7 @@ rec {
         version = "0.1";
         src = "${formalLedger}";
         meta = { };
-        buildInputs = [
-           agdaWithStdLibMeta
-          (texlive.combine {
-            inherit (texlive)
-              scheme-small
-              xits
-              collection-latexextra
-              collection-latexrecommended
-              collection-mathscience
-              bclogo
-              latexmk;
-          })
-        ];
+        buildInputs = [ agdaWithStdLibMeta latex ];
         buildPhase = ''
           find ${dir} -name \*.lagda -exec agda --latex {} \;
           cd latex && latexmk -xelatex ${dir}/PDF.tex && cd ..
