@@ -6,8 +6,8 @@ tex_files2 := $(addprefix src/latex/Ledger/, $(tex_files))
 src/latex/Ledger/%.tex: src/Ledger/%.lagda
 	cd src && agda --only-scope-checking --latex ../$<
 all: $(tex_files2)
-	cd src/latex && xelatex Ledger/PDF.tex
-	cp src/latex/PDF.pdf .
+	cd src/latex && latexmk -xelatex Ledger/PDF.tex
+	cp src/latex/PDF.pdf cardano-ledger.pdf
 clean:
 	rm -rf src/latex
 	rm -rf src/MAlonzo
