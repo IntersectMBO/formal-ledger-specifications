@@ -40,6 +40,14 @@ To install Agda locally and use that install with emacs, you can do the followin
 
 `nix-shell` provides Agda complete with the correct dependencies. So you should be able to run your preferred editor within `nix-shell` and it should see the required `agda` executable.
 
+## Building the PDF quickly
+
+The Makefile can be used to build the PDF without having to build everything else. Either run `make` from within `nix-shell`, or use
+```
+nix-shell --command make
+```
+to run `make` without launching an interactive shell.
+
 ## Updating nixpkgs
 
 To update the default nixpkgs used to build the derivations, run
