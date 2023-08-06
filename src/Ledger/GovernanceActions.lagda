@@ -101,7 +101,7 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \AgdaInductiveConstructor{NewConstitution}         & a modification to the off-chain Constitution, recorded as an on-chain hash of the text document \\[10pt]
 \AgdaInductiveConstructor{TriggerHF}\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\[10pt]
 \AgdaInductiveConstructor{ChangePParams}           & a change to \textit{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\[10pt]
-\AgdaInductiveConstructor{TreasuryWdrl}            & movements from the treasury, sub-categorized into small, medium or large withdrawals (based on the amount of Lovelace to be withdrawn)\\[10pt]
+\AgdaInductiveConstructor{TreasuryWdrl}            & movements from the treasury\\[10pt]
 \AgdaInductiveConstructor{Info}                    & an action that has no effect on-chain, other than an on-chain record
 \end{longtable}
 \caption{Types of governance actions}
@@ -135,24 +135,24 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
       nothing  → 2ℚ
 
     pparamThreshold : PParamGroup → ℚ
-    pparamThreshold NetworkGroup    = P5a
-    pparamThreshold EconomicGroup   = P5b
-    pparamThreshold TechnicalGroup  = P5c
-    pparamThreshold GovernanceGroup = P5d
+    pparamThreshold NetworkGroup     = P5a
+    pparamThreshold EconomicGroup    = P5b
+    pparamThreshold TechnicalGroup   = P5c
+    pparamThreshold GovernanceGroup  = P5d
 
     P5 : UpdateT → ℚ
     P5 ppu = maximum $ map pparamThreshold (updateGroups ppu)
 
   threshold : GovAction → GovRole → ℚ
-  threshold NoConfidence         = λ { CC → 0ℚ          ; DRep → P1   ; SPO → Q1 }
-  threshold (NewCommittee _ _ _) = case ccThreshold' of λ where
-                        (just _) → λ { CC → 0ℚ          ; DRep → P2a  ; SPO → Q2a }
-                        nothing  → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
-  threshold (NewConstitution _)  = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
-  threshold (TriggerHF _)        = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
-  threshold (ChangePParams x _)  = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
-  threshold (TreasuryWdrl _)     = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
-  threshold Info                 = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
+  threshold NoConfidence          = λ { CC → 0ℚ          ; DRep → P1   ; SPO → Q1 }
+  threshold (NewCommittee _ _ _)  = case ccThreshold' of λ where
+                        (just _)  → λ { CC → 0ℚ          ; DRep → P2a  ; SPO → Q2a }
+                        nothing   → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
+  threshold (NewConstitution _)   = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
+  threshold (TriggerHF _)         = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
+  threshold (ChangePParams x _)   = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
+  threshold (TreasuryWdrl _)      = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
+  threshold Info                  = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
 \end{code}
 \subsection{Voting and ratification}
 \label{sec:voting-and-ratification}
@@ -163,13 +163,13 @@ Ratified actions are then \defn{enacted} on-chain, following a set of rules (see
 {\small
 \begin{code}
 NeedsHash : GovAction → Set
-NeedsHash NoConfidence         = GovActionID
-NeedsHash (NewCommittee _ _ _) = GovActionID
-NeedsHash (NewConstitution _)  = GovActionID
-NeedsHash (TriggerHF _)        = GovActionID
-NeedsHash (ChangePParams _ _)  = GovActionID
-NeedsHash (TreasuryWdrl _)     = ⊤
-NeedsHash Info                 = ⊤
+NeedsHash NoConfidence          = GovActionID
+NeedsHash (NewCommittee _ _ _)  = GovActionID
+NeedsHash (NewConstitution _)   = GovActionID
+NeedsHash (TriggerHF _)         = GovActionID
+NeedsHash (ChangePParams _ _)   = GovActionID
+NeedsHash (TreasuryWdrl _)      = ⊤
+NeedsHash Info                  = ⊤
 
 HashProtected : Set → Set
 HashProtected A = A × GovActionID
@@ -186,7 +186,7 @@ attached to the action we want to ratify.
   \defn{Ratification}. An action is said to be \defn{ratified} when it gathers enough votes in its favor
   (according to the rules described in Section~\ref{sec:ratification}).
 \item
-  \defn{Expiration}. An action that doesn't collect sufficient `yes' votes before its deadline is said to have \defn{expired}.
+  \defn{Expiration}. An action that doesn't collect sufficient \AgdaInductiveConstructor{yes} votes before its deadline is said to have \defn{expired}.
 \item
   \defn{Enactment}. An action that has been ratified is said to be \defn{enacted} once it has been activated on the network.
 \end{itemize}
@@ -217,7 +217,7 @@ record GovProposal : Set where
 \caption{Governance action proposals and votes}
 \label{defs:governance-votes}
 \end{figure*}
-The data type \AgdaDatatype{Vote} represents the different voting options: `yes', `no', or `abstain'.
+The data type \AgdaDatatype{Vote} represents the different voting options: \AgdaInductiveConstructor{yes}, \AgdaInductiveConstructor{no}, or \AgdaInductiveConstructor{abstain}.
 Each \AgdaField{vote} is recorded in a \AgdaRecord{GovVote} record along with the following data:
 a governance action ID, a role, a credential, and an anchor (of types \AgdaDatatype{GovActionID}, \AgdaDatatype{GovRole}, \AgdaDatatype{Credential}, and \AgdaDatatype{Maybe~Anchor}, respectively).
 
