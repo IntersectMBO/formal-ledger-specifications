@@ -25,8 +25,8 @@ let
     src = fetchFromGitHub {
       repo = "stdlib-meta";
       owner = "input-output-hk";
-      rev = "df22309128f16569afbef3e3dc1231e5b5918a39";
-      sha256 = "lnV8l6cO1LPFFzTe+y1zcLtQWGsitook1njx8XVe9Ew=";
+      rev = "897555aefd77c83e88492255641da3bcc4879461";
+      sha256 = "EIKcLjGdnI/6nSCI18v7kPxoojAWsz8O5d9wwol2M0w=";
     };
     meta = { };
     libraryFile = "stdlib-meta.agda-lib";
