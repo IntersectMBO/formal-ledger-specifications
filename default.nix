@@ -24,11 +24,10 @@ let
     version = "0.1";
     src = fetchFromGitHub {
       repo = "stdlib-meta";
-      owner = "omelkonian";
-      rev = "761f81753b588d865b45acb44683b1b4042d78c0";
-      sha256 = "iGdZv18Ku+GZ+MikQWwWYv8vs8j59OXRB1xqYTmoqAc=";
+      owner = "input-output-hk";
+      rev = "df22309128f16569afbef3e3dc1231e5b5918a39";
+      sha256 = "lnV8l6cO1LPFFzTe+y1zcLtQWGsitook1njx8XVe9Ew=";
     };
-    patches = [ ./stdlib-meta-update-imports.patch ];
     meta = { };
     libraryFile = "stdlib-meta.agda-lib";
     everythingFile = "Main.agda";
