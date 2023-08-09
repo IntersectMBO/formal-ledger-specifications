@@ -13,9 +13,9 @@ let
     version = "1.7.2";
     src = fetchFromGitHub {
       repo = "agda-stdlib";
-      owner = "agda";
-      rev = "668f0bbd498cfae253605fd7132c3b9ed52cc4ac";
-      sha256 = "4jNFpDtVWecwpuzZMtQb0kJ9s4LkjBYx+1c0n/Ft9tw=";
+      owner = "input-output-hk";
+      rev = "bdfab77b179c937856c49d72321ca26e2a27d568";
+      sha256 = "+PMZjmMK5xz+3Va7RN1ErtQghzpUlzsc9JBUoL+iasc=";
     };
   });
 
