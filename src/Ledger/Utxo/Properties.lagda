@@ -25,8 +25,8 @@ open import Tactic.MonoidSolver         using (solve-macro)
 
 open TransactionStructure txs
 
-open import Ledger.PParams epochStructure using (PParams)
-open import Ledger.TokenAlgebra ScriptHash using (TokenAlgebra)
+open import Ledger.PParams epochStructure
+open import Ledger.TokenAlgebra ScriptHash
 open import Ledger.Utxo txs renaming (Computational-UTXO to Computational-UTXO')
 
 open TxBody
@@ -86,11 +86,11 @@ consumedCoinEquality {tx} {utxoState} {pp} h = let utxo = UTxOState.utxo utxoSta
     ≡⟨ ∙-homo-Coin _ _ ⟩
   coin (balance (utxo ∣ txins tx) + mint tx) + coin (inject $ depositRefunds pp utxoState tx)
     ≡⟨ cong (coin (balance (utxo ∣ txins tx) + mint tx) +_) (property _) ⟩
-  coin (balance (utxo ∣ txins tx) +ᵛ mint tx) ℕ.+ depositRefunds pp utxoState tx
+  coin (balance (utxo ∣ txins tx) + mint tx) ℕ.+ depositRefunds pp utxoState tx
     ≡⟨ cong! (∙-homo-Coin _ _) ⟩
-  coin (balance (utxo ∣ txins tx)) ℕ.+ coin (mint tx) ℕ.+ depositRefunds pp utxoState tx
+  coin (balance (utxo ∣ txins tx)) + coin (mint tx) ℕ.+ depositRefunds pp utxoState tx
     ≡⟨ cong (λ x → cbalance (utxo ∣ txins tx) + x + depositRefunds pp utxoState tx) h ⟩
-  cbalance (utxo ∣ txins tx) ℕ.+ 0 ℕ.+ depositRefunds pp utxoState tx
+  cbalance (utxo ∣ txins tx) + 0 ℕ.+ depositRefunds pp utxoState tx
     ≡⟨ cong! (+-identityʳ (cbalance (utxo ∣ txins tx))) ⟩
   cbalance (utxo ∣ txins tx) ℕ.+ depositRefunds pp utxoState tx                        ∎
 
@@ -107,7 +107,7 @@ producedCoinEquality {utxoState} {tx} {pp} = begin
         ≡⟨ cong! (property _) ⟩
       coin (balance (outs tx) +ᵛ inject (txfee tx)) ℕ.+ newDeposits pp utxoState tx
         ≡⟨ cong! (∙-homo-Coin _ _) ⟩
-      coin (balance (outs tx)) ℕ.+ coin (inject (txfee tx)) ℕ.+ newDeposits pp utxoState tx
+      coin (balance (outs tx)) + coin (inject (txfee tx)) ℕ.+ newDeposits pp utxoState tx
         ≡⟨ cong (λ x → cbalance (outs tx) + x + newDeposits pp utxoState tx) (property (txfee tx)) ⟩
       cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx                     ∎
     )⟩
@@ -185,10 +185,10 @@ module DepositHelpers
   dep-ref tot≡0 = ℤ.+-injective $ begin
     ℤ.+_ (uDep + ref)          ≡⟨ ℤ.pos-+ uDep ref ⟩
     ℤ.+_ uDep ℤ.+ (ref ⊖ 0)    ≡˘⟨ cong! tot≡0 ⟩
-    ℤ.+_ uDep ℤ.+ (ref ⊖ tot)  ≡⟨ cong ((ℤ.+ uDep) +_) (ℤ.⊖-swap ref tot) ⟩
+    ℤ.+_ uDep ℤ.+ (ref ⊖ tot)  ≡⟨ cong (ℤ._+_ (ℤ.+ uDep)) (ℤ.⊖-swap ref tot) ⟩
     ℤ.+_ uDep ℤ.- (tot ⊖ ref)  ≡˘⟨ cong! deposits-change' ⟩
-    ℤ.+_ uDep ℤ.- Δdep         ≡˘⟨ cong ((ℤ.+ uDep) +_) (ℤ.⊖-swap dep uDep) ⟩
-    ℤ.+_ uDep + (dep ⊖ uDep)   ≡⟨ ℤ.distribʳ-⊖-+-pos uDep dep uDep ⟩
+    ℤ.+_ uDep ℤ.- Δdep         ≡˘⟨ cong (ℤ._+_ (ℤ.+ uDep)) (ℤ.⊖-swap dep uDep) ⟩
+    ℤ.+_ uDep ℤ.+ (dep ⊖ uDep) ≡⟨ ℤ.distribʳ-⊖-+-pos uDep dep uDep ⟩
     (uDep + dep) ⊖ uDep        ≡⟨ cong (_⊖ uDep) (+-comm uDep dep) ⟩
     (dep + uDep) ⊖ uDep        ≡˘⟨ ℤ.distribʳ-⊖-+-pos dep uDep uDep ⟩
     ℤ.+_ dep ℤ.+ (uDep ⊖ uDep) ≡⟨ cong! (ℤ.n⊖n≡0 uDep) ⟩

@@ -25,6 +25,10 @@ open import Data.Nat.Literals
 import Data.Unit.Polymorphic
 open Semiring-Lit Slotʳ
 
+open import Interface.HasStrictTotalOrder
+open import Interface.HasStrictTotalOrder.Instance using (module epochSTO)
+open epochSTO epochStructure
+
 private variable m n : ℕ
 
 instance
@@ -92,7 +96,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateCurrent : let open PPUpdateEnv Γ in
     dom (pup ˢ) ⊆ dom (genDelegs ˢ)
     → All (isViableUpdate pparams) (range (pup ˢ))
-    → (slot + (2 * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
+    → (slot + (2 * StabilityWindow)) < firstSlot (sucᵉ (epoch slot))
     → epoch slot ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
