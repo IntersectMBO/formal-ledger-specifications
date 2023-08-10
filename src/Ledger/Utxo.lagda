@@ -46,6 +46,7 @@ instance
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
 
+
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
@@ -230,14 +231,14 @@ newDeposits pp st txb = posPart $ depositsChange pp txb deposits
 
 consumed : PParams → UTxOState → TxBody → Value
 consumed pp st txb = balance (UTxOState.utxo st ∣ txins txb)
-                   +ᵛ mint txb
-                   +ᵛ inject (depositRefunds pp st txb)
+                   + mint txb
+                   + inject (depositRefunds pp st txb)
 
 produced : PParams → UTxOState → TxBody → Value
 produced pp st txb = balance (outs txb)
-                   +ᵛ inject (txfee txb)
-                   +ᵛ inject (newDeposits pp st txb)
-                   +ᵛ inject (txdonation txb)
+                   + inject (txfee txb)
+                   + inject (newDeposits pp st txb)
+                   + inject (txdonation txb)
 
 \end{code}
 \caption{Functions used in UTxO rules, continued}

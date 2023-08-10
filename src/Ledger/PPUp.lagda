@@ -6,7 +6,7 @@
 open import Ledger.Transaction
 
 module Ledger.PPUp (txs : TransactionStructure) where
-open import Ledger.Prelude hiding (_+_; _*_)
+open import Ledger.Prelude hiding (_*_)
 
 open TransactionStructure txs
 
@@ -14,7 +14,7 @@ open import Algebra
 
 import Data.Nat as ℕ
 import Data.Unit.Polymorphic
-open Semiring Slotʳ
+open Semiring Slotʳ using (_*_)
 open import Algebra.Literals
 open import Data.Nat.Properties using (m+1+n≢m)
 open import Data.Product.Properties
@@ -50,8 +50,8 @@ record PPUpdateEnv : Set where
 \begin{figure*}[h]
 \begin{code}
 data pvCanFollow : ProtVer → ProtVer → Set where
-  canFollowMajor : pvCanFollow (m , n) (m ℕ.+ 1 , 0)
-  canFollowMinor : pvCanFollow (m , n) (m , n ℕ.+ 1)
+  canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
+  canFollowMinor : pvCanFollow (m , n) (m , n + 1)
 
 viablePParams : PParams → Set
 viablePParams pp = ⊤ -- TODO: block size check
@@ -73,7 +73,7 @@ viablePParams? : Dec₁ viablePParams
 viablePParams? pp = yes _
 
 pvCanFollow? : ∀ pv pv' → Dec (pvCanFollow pv pv')
-pvCanFollow? (m , n) pv with pv ≟ (m ℕ.+ 1 , 0) | pv ≟ (m , n ℕ.+ 1)
+pvCanFollow? (m , n) pv with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
 ... | no ¬p | no ¬p₁ = no (λ { canFollowMajor → ¬p _≡_.refl ; canFollowMinor → ¬p₁ _≡_.refl })
 ... | no ¬p | yes refl = yes canFollowMinor
 ... | yes refl | no ¬p = yes canFollowMajor
