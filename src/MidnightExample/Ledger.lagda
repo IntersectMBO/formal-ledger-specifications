@@ -5,7 +5,7 @@
 open import Interface.DecEq
 open import Interface.Hashable
 
-open import Prelude hiding (_+_; _<ᵇ_; _∧_) renaming (_×_ to _∧_)
+open import Prelude hiding (_<ᵇ_; _∧_) renaming (_×_ to _∧_)
 open import Ledger.Prelude using (indexedSumL)
 open import Data.Integer hiding (_/_; _≟_)
 

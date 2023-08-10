@@ -83,7 +83,7 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
                              (res-singleton' {m = dist} kv∈dist) ⟩
       Σᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
         ≤⟨ m≤m+n _ _ ⟩
-      Σᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x + Σᵐᵛ[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
+      Σᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x +ℕ Σᵐᵛ[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
         ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ❴ k ❵) ᶠᵐ} {(dist ∣ ❴ k ❵ ᶜ) ᶠᵐ}
                                   (res-ex-disj-∪ Properties.Dec-∈-singleton) ⟩
       Σᵐᵛ[ x ← dist ᶠᵐ ] x

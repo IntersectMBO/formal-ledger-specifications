@@ -6,6 +6,7 @@
 open import Ledger.Prelude
 open import Ledger.Epoch
 open import Ledger.Crypto
+
 import Ledger.PParams as PP
 
 module Ledger.Deleg
@@ -147,7 +148,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → S
     (d ≡ drepDeposit × c ∉ dom (dReps ˢ)) ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ))
     ────────────────────────────────
     ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                       ⟦ ❴ c , e +ᵉ' drepActivity ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
+                       ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     c ∈ dom (dReps ˢ)
@@ -186,7 +187,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
     in ⊤ -- TODO: check that the withdrawals are correct here
     ────────────────────────────────
     ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st { gState = record gState
-                         { dreps = constMap refresh (e +ᵉ' drepActivity) ∪ᵐˡ dreps } }
+                         { dreps = constMap refresh (e + drepActivity) ∪ᵐˡ dreps } }
 
 -- TODO: use CERTBASE by modifying SS⇒BS to allow for a base case
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
