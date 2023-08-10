@@ -11,17 +11,15 @@ module Ledger.Utxo.Properties (txs : TransactionStructure) where
 open import Prelude
 open import Ledger.Prelude
 
-import Data.List as List
 import Data.Nat as ℕ
 open import Algebra.Morphism
-open import Data.Nat.Properties using
-  (+-0-commutativeMonoid; +-0-monoid; +-comm; +-identityʳ; +-assoc; +-∸-assoc; m≤n⇒m≤n+o; ≤″⇒≤; m+[n∸m]≡n)
+open import Data.Nat.Properties hiding (_≟_)
 open import Data.Sign using (Sign)
 open import Data.Integer as ℤ using (ℤ; _⊖_)
-open import Data.Integer.Ext
+open import Data.Integer.Ext           using (posPart ; negPart)
 import Data.Integer.Properties as ℤ
-open import Interface.ComputationalRelation
-open import Relation.Binary
+-- open import Interface.ComputationalRelation
+open import Relation.Binary         using (IsEquivalence)
 open import Tactic.Cong
 open import Tactic.EquationalReasoning
 open import Tactic.MonoidSolver
@@ -39,24 +37,19 @@ open Tx
 open Equivalence
 open Properties
 
-import Data.Nat.Tactic.RingSolver as ℕ
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
 
-
 private variable
-  tx : TxBody
-  utxo utxo' utxo1 utxo2 : UTxO
-  fee fee' fees fees' : Coin
-  utxoState utxoState' utxoState1 utxoState2 : UTxOState
-  deposits deposits' : DepositPurpose ⇀ Coin
-  donation donations donations' : Coin
-  Γ : UTxOEnv
-  s s' : UTxOState
-  A : Set
+  tx                               : TxBody
+  utxo utxo'                       : UTxO
+  Γ                                : UTxOEnv
+  utxoState utxoState'             : UTxOState
+  fees fees' donations donations'  : Coin
+  deposits deposits'               : DepositPurpose ⇀ Coin
 
 abstract
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
