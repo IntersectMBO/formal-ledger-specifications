@@ -40,6 +40,19 @@ open import Data.Bool using (_∧_)
 open AbstractFunctions abs
 open indexOf indexOfImp
 
+open Properties
+
+open import Tactic.AnyOf
+open import Tactic.Assumption
+open import Tactic.Defaults
+open import Tactic.Helpers
+
+-- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
+private macro
+  ∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
+  P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+
 data ScriptPurpose : Set where
   Cert  : DCert → ScriptPurpose
   Rwrd : RwdAddr → ScriptPurpose
@@ -135,7 +148,113 @@ scriptsNeeded' utxo txb = mapSet (λ x → Spend x) (txinsScript (txins txb) utx
                             -- , c ∈ cwitnedd cert ∩ AddrScript
                           ∪ mapSet (λ x → Mint x) (policies (mint txb))
 
+{-
+scriptOuts' : UTxO → UTxO × ScriptHash
+scriptOuts' utxo = mapSet ? (filterᵐ (sp-∘ (to-sp isScriptAddr?)
+                             λ { (fst , addr , snd) → addr}) utxo)
+-}
+
+UTxOSH  = TxIn ⇀ (TxOut × ScriptHash)
+
+scriptOuts' : UTxO → UTxOSH
+scriptOuts' utxo = mapValues (λ x → x , (getScriptHash (proj₁ x) (proj₁ (∈-filter⁻' {!!}))))
+                             (filterᵐ (sp-∘ (to-sp isScriptAddr?) λ { (fst , addr , snd) → addr}) utxo)
+
+scriptOuts''' : UTxO → UTxOSH
+scriptOuts''' utxo = {!setMapWith∈!}
+
+open import Data.List
+open import Data.List.Membership.Propositional.Properties
+open import Data.List.Membership.Propositional renaming (_∈_ to _∈'_)
+
+funExample' : ∀ {xs} → (x : ℕ) → (x ∈' xs) → ℕ
+funExample' = {!!}
+
+funExample : List ℕ → List ℕ
+funExample xs = mapWith∈ xs (λ x → funExample' _ x)
+
+{-
+mapWith∈ : ∀ {b} {B : Set b}
+           (xs : List A) → (∀ {x} → x ∈ xs → B) → List B
+mapWith∈ []       f = []
+mapWith∈ (x ∷ xs) f = f (here refl) ∷ mapWith∈ xs (f ∘ there)
+-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+txinsScript' : ℙ TxIn → UTxO → ℙ (TxIn × ScriptHash)
+txinsScript' txins utxo = {!!}
+
+
+scriptOuts'' : TxOut → UTxOSH
+scriptOuts'' (addr , _ , _) with isScriptAddr? addr
+... | no ¬p = {!!}
+... | yes p = {!!}
+
+
+helpMe'' : UTxO →  Set
+helpMe'' utxo with (filterᵐ (sp-∘ (to-sp isScriptAddr?) λ { (fst , addr , snd) → addr}) utxo)
+... | ans = {!!}
+
+
+-- mapSet ? (filterᵐ (sp-∘ (to-sp isScriptAddr?)
+--                             λ { (fst , addr , snd) → addr}) utxo)
+
+helperTxIn : UTxO → TxIn → (ScriptPurpose × ScriptHash)
+helperTxIn utxo txin with lookupMap utxo {!!}
+... | fst , fst₁ , snd = (Spend txin) , getScriptHash fst (proj₁ (∈⇒P {!!}))
+
+{-
+∈-filter⁻'
+
+∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
+  P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇔P
+
+  scriptOuts : UTxO → UTxO
+  scriptOuts utxo = filterᵐ (sp-∘ (to-sp isScriptAddr?)
+                             λ { (fst , addr , snd) → addr}) utxo
+
+  txinsScript : ℙ TxIn → UTxO → ℙ TxIn
+  txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
+-}
+
+
+-- two problems
+-- 1 we need to retain the information about scripthashes from the utxo set
+-- 2 we need to retain the information about txin being in the utxo set
+--
+--
+--
+-- txins ∩ dom (proj₁ (scriptOuts utxo))
+
+scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
+scriptsNeeded utxo txb = mapSet (λ { (fst , snd) → (Spend fst) , snd}) (txinsScript' (txins txb) utxo)
+                          ∪ {!!}
+
+
 collectPhaseTwoScriptInputs : PParams → Tx
                                       → UTxO
                                       → List (Script × List Data × ExUnits × CostModel)
 collectPhaseTwoScriptInputs pp tx utxo = {!!}
+
+helpMe : Addr → Set
+helpMe = {!!}
