@@ -89,33 +89,28 @@ paramsWellFormed pp = ⌊ ¬? (0 ∈? setFromList
 \caption{Protocol parameter declarations}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
-The \AgdaDatatype{ProtVer} type represents the protocol version used in the Cardano ledger.
+The \ProtVer is \acl{ProtVer}.
 It is a pair of natural numbers, the first of which represents the major version, the second
 represents the minor version.
 
-The \AgdaRecord{PParam} type is a record containing parameters used in the Cardano ledger, which we group according
-to the general purpose that each parameter serves.
+\PParams is \acl{PParams}; depending on what purpose it serves, we associate each parameter with
+one of the following parameter groups: \NetworkGroup (network settings),
+\EconomicGroup (economic aspects of the ledger), \TechnicalGroup (technical aspects of the ledger),
+\GovernanceGroup (governance settings).  The first three of these four groups contain protocol
+parameters that were introduced during the Shelley, Alonzo and Babbage eras.
+The new protocol parameters introduced in the Conway era (CIP-1694) belong to \GovernanceGroup and are
+declared in Figure~\ref{fig:protocol-parameter-declarations}; they denote the following concepts:
 \begin{itemize}
-  \item \AgdaInductiveConstructor{NetworkGroup}: parameters related to the network settings;
-  \item \AgdaInductiveConstructor{EconomicGroup}: parameters related to the economic aspects of the ledger;
-  \item \AgdaInductiveConstructor{TechnicalGroup}: parameters related to technical settings;
-  \item \AgdaInductiveConstructor{GovernanceGroup}: parameters related to governance settings.
-\end{itemize}
-The \emph{Network}, \emph{Economic}, and \emph{Technical} parameter groups contain protocol parameters that
-were already introduced during the Shelley, Alonzo and Babbage eras.
-The new protocol parameters introduced in the Conway era (CIP-1694) belong to the \emph{Governance} group.
-These new parameters are declared in Figure~\ref{fig:protocol-parameter-declarations} and denote the following concepts.
-\begin{itemize}
-  \item \AgdaField{drepThresholds}: governance thresholds for DReps; these are rational numbers
-  named \AgdaField{P1}, \AgdaField{P2a}, \AgdaField{P2b}, \AgdaField{P3}, \AgdaField{P4}, \AgdaField{P5a}, \AgdaField{P5b}, \AgdaField{P5c}, \AgdaField{P5d}, and \AgdaField{P6};
-  \item \AgdaField{poolThresholds}: pool-related governance thresholds; these are rational numbers named \AgdaField{Q1}, \AgdaField{Q2a}, \AgdaField{Q2b}, and \AgdaField{Q4};
-  \item \AgdaField{minCCSize}: minimum constitutional committee size;
-  \item \AgdaField{ccTermLimit}: maximum term limit (in epochs) of constitutional committee members;
-  \item \AgdaField{govExpiration}: governance action expiration;
-  \item \AgdaField{govDeposit}: governance action deposit;
-  \item \AgdaField{drepDeposit}: DRep deposit amount;
-  \item \AgdaField{drepActivity}: DRep activity period;
-  \item \AgdaField{minimumAVS}: the minimum active voting threshold.
+  \item \drepThresholds are \acl{drepThresholds}; these are rational numbers
+  named \acs{P1}, \acs{P2a}, \acs{P2b}, \acs{P3}, \acs{P4}, \acs{P5a}, \acs{P5b}, \acs{P5c}, \acs{P5d}, and \acs{P6};
+  \item \poolThresholds are \acl{poolThresholds}; these are rational numbers named \acs{Q1}, \acs{Q2a}, \acs{Q2b}, and \acs{Q4};
+  \item \minCCSize is \acl{minCCSize};
+  \item \ccTermLimit is \acl{ccTermLimit};
+  \item \govExpiration is \acl{govExpiration};
+  \item \govDeposit is \acl{govDeposit};
+  \item \drepDeposit is \acl{drepDeposit};
+  \item \drepActivity is \acl{drepActivity};
+  \item \minimumAVS is \acl{minimumAVS}.
 \end{itemize}
 
 \begin{code}[hide]

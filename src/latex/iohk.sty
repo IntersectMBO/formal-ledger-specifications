@@ -6,32 +6,213 @@
 \RequirePackage{slashed}
 \RequirePackage[tikz]{bclogo}
 \RequirePackage{stmaryrd}
+\RequirePackage{xspace}
+
+%% -- DEFINITIONS -----------------------------------------------------------
+%% Set the desired typeface of defined terms here and, at the
+%% first occurrence of such a term, enclose it in `\defn{...}`.
+\newcommand{\defn}[1]{\textit{#1}}   %  defined terms are typeset in italics
+%% \newcommand{\defn}[1]{\textbf{#1}}   %  defined terms are typeset in bold
+
+%% -- For typesetting an Agda field name along with its type -----------------
+\newcommand{\FieldTyped}[2]{\AgdaField{#1}\,\AgdaSymbol{:}\,\AgdaDatatype{#2}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Acronyms
+   \RequirePackage[smaller]{acronym}
+%% The `smaller` option makes the capital letters in acronyms a bit smaller than,
+%% standard capital letters.  Imho, this is more natural looking than mere capitals
+%% since the latter are rendered (in most fonts) in a size that is too large to
+%% fit nicely in mid-sentence.
+%%
+%% Alternative import:  \RequirePackage[acronym, shortcuts]{glossaries}
 
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\range}{range}
 
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+
+\newcommand{\abstain}{\acs{abstain}\xspace}
+\newcommand{\abstainRep}{\acs{abstainRep}\xspace}
+\newcommand{\accepted}{\acs{accepted}\xspace}
+\newcommand{\acceptedStake}{\acs{acceptedStake}\xspace}
+\newcommand{\Acnt}{\acs{Acnt}\xspace}
+\newcommand{\activeDReps}{\acs{activeDReps}\xspace}
+\newcommand{\activeVotingStake}{\acs{activeVotingStake}\xspace}
+\newcommand{\actualCCVote}{\acs{actualCCVote}\xspace}
+\newcommand{\actualCCVotes}{\acs{actualCCVotes}\xspace}
+\newcommand{\actualPDRepVotes}{\acs{actualPDRepVotes}\xspace}
+\newcommand{\actualDRepVotes}{\acs{actualDRepVotes}\xspace}
+\newcommand{\actualVotes}{\acs{actualVotes}\xspace}
+\newcommand{\Addr}{\acs{Addr}\xspace}
+\newcommand{\Anchor}{\acs{Anchor}\xspace}
+
+
+
+\newcommand{\CC}{\acs{CC}\xspace}
+\newcommand{\cc}{\acs{cc}\xspace}
+\newcommand{\CCData}{\acs{CCData}\xspace}
+\newcommand{\ccTermLimit}{\acs{ccTermLimit}\xspace}
+\newcommand{\ccHotKeys}{\acs{ccHotKeys}\xspace}
+\newcommand{\ChangePParams}{\acs{ChangePParams}\xspace}
+\newcommand{\Coin}{\acs{Coin}\xspace}
+\newcommand{\Credential}{\acs{Credential}\xspace}
+\newcommand{\credVoter}{\acs{credVoter}\xspace}
+\newcommand{\currentEpoch}{\acs{currentEpoch}\xspace}
+
+\newcommand{\delayed}{\acs{delayed}\xspace}
+\newcommand{\delayingAction}{\acs{delayingAction}\xspace}
+\newcommand{\DRep}{\acs{DRep}\xspace}
+\newcommand{\DReps}{\acsp{DRep}\xspace}
+\newcommand{\DrepThresholds}{\acs{DrepThresholds}\xspace}
+\newcommand{\drepActivity}{\acs{drepActivity}\xspace}
+\newcommand{\drepDeposit}{\acs{drepDeposit}\xspace}
+\newcommand{\drepThresholds}{\acs{drepThresholds}\xspace}
+
+\newcommand{\EconomicGroup}{\acs{EconomicGroup}\xspace}
+\newcommand{\EnactEnv}{\acs{EnactEnv}\xspace}
+\newcommand{\EnactState}{\acs{EnactState}\xspace}
+\newcommand{\ENACTactionsyntax}{\acs{ENACTactionsyntax}\xspace}
+\newcommand{\ENACTsyntax}{\acs{ENACTsyntax}\xspace}
+\newcommand{\Epoch}{\acs{Epoch}\xspace}
+\newcommand{\epoch}{\acs{epoch}\xspace}
+\newcommand{\EpochStructure}{\acs{EpochStructure}\xspace}
+\newcommand{\es}{\acs{es}\xspace}
+\newcommand{\esp}{\acs{esp}\xspace}
+\newcommand{\expired}{\acs{expired}\xspace}
+
+\newcommand{\fls}{\acs{fls}\xspace}
+
+\newcommand{\ga}{\acs{ga}\xspace}
+\newcommand{\Gam}{\acs{Gam}\xspace}
+\newcommand{\getStakeDist}{\acs{getStakeDist}\xspace}
+\newcommand{\GovAction}{\acs{GovAction}\xspace}
+\newcommand{\GovActions}{\acsp{GovAction}\xspace}
+\newcommand{\GovActionID}{\acs{GovActionID}\xspace}
+\newcommand{\govDeposit}{\acs{govDeposit}\xspace}
+\newcommand{\GovernanceGroup}{\acs{GovernanceGroup}\xspace}
+\newcommand{\govExpiration}{\acs{govExpiration}\xspace}
+\newcommand{\GovProposal}{\acs{GovProposal}\xspace}
+\newcommand{\GovRole}{\acs{GovRole}\xspace}
+\newcommand{\GovRoleDRep}{\acs{GovRoleDRep}\xspace}
+\newcommand{\GovVote}{\acs{GovVote}\xspace}
+
+\newcommand{\Info}{\acs{Info}\xspace}
+\newcommand{\isCC}{\acs{isCC}\xspace}
+\newcommand{\isCCProp}{\acs{isCCProp}\xspace}
+\newcommand{\isDRep}{\acs{isDRep}\xspace}
+\newcommand{\isDRepProp}{\acs{isDRepProp}\xspace}
+\newcommand{\isHashableSet}{\acs{isHashableSet}\xspace}
+\newcommand{\isSPO}{\acs{isSPO}\xspace}
+\newcommand{\isSPOProp}{\acs{isSPOProp}\xspace}
+\newcommand{\Ix}{\type{Ix}\xspace}
+
+\newcommand{\KeyHash}{\acs{KeyHash}\xspace}
+
+\newcommand{\MaybeAnchor}{\acs{MaybeAnchor}\xspace}
+\newcommand{\meetsMinAVS}{\acs{meetsMinAVS}\xspace}
+\newcommand{\minCCSize}{\acs{minCCSize}\xspace}
+\newcommand{\minimumAVS}{\acs{minimumAVS}\xspace}
+
+\newcommand{\NeedsHash}{\acs{NeedsHash}\xspace}
+\newcommand{\NetworkGroup}{\acs{NetworkGroup}\xspace}
+\newcommand{\NewCommittee}{\acs{NewCommittee}\xspace}
+\newcommand{\NewConstitution}{\acs{NewConstitution}\xspace}
+\newcommand{\No}{\acs{no}\xspace}
+\newcommand{\no}{\acs{no}\xspace}
+\newcommand{\NoConfidence}{\acs{NoConfidence}\xspace}
+\newcommand{\noConfidenceRep}{\acs{noConfidenceRep}\xspace}
+
+\newcommand{\participatingHashes}{\acs{participatingHashes}\xspace}
+\newcommand{\PoolThresholds}{\acs{PoolThresholds}\xspace}
+\newcommand{\poolThresholds}{\acs{poolThresholds}\xspace}
+\newcommand{\PParams}{\acs{PParams}\xspace}
+\newcommand{\PParamGroup}{\acs{PParamGroup}\xspace}
+\newcommand{\ProtVer}{\acs{ProtVer}\xspace}
+
+\newcommand{\RATIFYAccept}{\acs{RATIFY-Accept}\xspace}
+\newcommand{\RATIFYContinue}{\acs{RATIFY-Continue}\xspace}
+\newcommand{\RatifyEnv}{\acs{RatifyEnv}\xspace}
+\newcommand{\RatifyState}{\acs{RatifyState}\xspace}
+\newcommand{\RATIFYprimesyntax}{\acs{RATIFYpsyntax}\xspace}
+\newcommand{\RATIFYprimeasyntax}{\acs{RATIFYpasyntax}\xspace}
+\newcommand{\RATIFYsyntax}{\acs{RATIFYsyntax}\xspace}
+\newcommand{\RATIFYasyntax}{\acs{RATIFYasyntax}\xspace}
+\newcommand{\RATIFYpasyntax}{\acs{RATIFYpasyntax}\xspace}
+\newcommand{\RATIFYReject}{\acs{RATIFY-Reject}\xspace}
+\newcommand{\reserves}{\acs{reserves}\xspace}
+\newcommand{\roleVotes}{\acs{roleVotes}\xspace}
+
+\newcommand{\SStoBS}{\acs{SStoBS}\xspace}
+\newcommand{\SPO}{\acs{SPO}\xspace}
+\newcommand{\SPOs}{\acsp{SPO}\xspace}
+\newcommand{\st}{\acs{st}\xspace}
+\newcommand{\StakeDistrs}{\acs{StakeDistrs}\xspace}
+\newcommand{\stakeDistr}{\acs{stakeDistr}\xspace}
+
+\newcommand{\TechnicalGroup}{\acs{TechnicalGroup}\xspace}
+\newcommand{\totalStake}{\acs{totalStake}\xspace}
+\newcommand{\treasury}{\acs{treasury}\xspace}
+\newcommand{\TreasuryWdrl}{\acs{TreasuryWdrl}\xspace}
+\newcommand{\TriggerHF}{\acs{TriggerHF}\xspace}
+\newcommand{\Tx}{\acs{Tx}\xspace}
+\newcommand{\TxBody}{\acs{TxBody}\xspace}
+\newcommand{\TxId}{\acs{TxId}\xspace}
+\newcommand{\TxIn}{\acs{TxIn}\xspace}
+\newcommand{\TxOut}{\acs{TxOut}\xspace}
+\newcommand{\TxWitness}{\acs{TxWitness}\xspace}
+
+\newcommand{\UTxO}{\acs{UTxO}\xspace}
+\newcommand{\utxo}{\acs{UTxO}\xspace}
+\newcommand{\UTxOEnv}{\acs{UTxOEnv}\xspace}
+\newcommand{\UTxOState}{\acs{UTxOState}\xspace}
+
+\newcommand{\VDeleg}{\acs{VDeleg}\xspace}
+\newcommand{\verifyPrev}{\acs{verifyPrev}\xspace}
+\newcommand{\Vote}{\acs{Vote}\xspace}
+\newcommand{\votedAbstainHashes}{\acs{votedAbstainHashes}\xspace}
+\newcommand{\votedHashes}{\acs{votedHashes}\xspace}
+\newcommand{\votedYesHashes}{\acs{votedYesHashes}\xspace}
+\newcommand{\votes}{\acs{votes}\xspace}
+\newcommand{\vote}{\acs{vote}\xspace}
+
+\newcommand{\Yes}{\acs{yes}\xspace}
+\newcommand{\yes}{\acs{yes}\xspace}
+
+%%
+%% Functions
+%%
+\newcommand{\txins}[1]{\fun{txins}~ \var{#1}}
+\newcommand{\txouts}[1]{\fun{txouts}~ \var{#1}}
+\newcommand{\txid}[1]{\fun{txid}~ \var{#1}}
+\newcommand{\outs}[1]{\fun{outs}~ \var{#1}}
+\newcommand{\balance}[1]{\fun{balance}~ \var{#1}}
+\newcommand{\txfee}[1]{\fun{txfee}~ \var{#1}}
+
+
+\newcommand{\fun}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\nextdef}{\ensuremath{\\[1em]}}
 \newcommand{\powerset}[1]{\ensuremath{\mathbb{P}~#1}}
 \newcommand{\restrictdom}{\ensuremath{\lhd}}
-\newcommand{\subtractdom}{\ensuremath{\mathbin{\slashed{\restrictdom}}}}
 \newcommand{\restrictrange}{\ensuremath{\rhd}}
-\newcommand{\subtractrange}{\ensuremath{\mathbin{\slashed{\restrictrange}}}}
-\newcommand{\union}{\ensuremath{\cup}}
-\newcommand{\unionoverrideRight}{\ensuremath{\mathbin{\underrightarrow\cup}}}
-\newcommand{\unionoverrideLeft}{\ensuremath{\mathbin{\underleftarrow\cup}}}
-\newcommand{\unionoverridePlus}{\ensuremath{\mathbin{\cup_{+}}}}
-\newcommand{\unionoverrideZero}{\ensuremath{\mathbin{\cup_{0}}}}
-\newcommand{\uniondistinct}{\ensuremath{\uplus}}
-\newcommand{\var}[1]{\ensuremath{\mathit{#1}}}
-\newcommand{\fun}[1]{\ensuremath{\mathsf{#1}}}
-\newcommand{\type}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\seqof}[1]{\ensuremath{#1^{*}}}
 \newcommand{\signed}[2]{\ensuremath{\llbracket #1 \rrbracket_{#2}}}
 \newcommand{\size}[1]{\ensuremath{\left| #1 \right|}}
+\newcommand{\subtractdom}{\ensuremath{\mathbin{\slashed{\restrictdom}}}}
+\newcommand{\subtractrange}{\ensuremath{\mathbin{\slashed{\restrictrange}}}}
 \newcommand{\trans}[2]{\ensuremath{\xlongrightarrow[\textsc{#1}]{#2}}}
-\newcommand{\seqof}[1]{\ensuremath{#1^{*}}}
-\newcommand{\nextdef}{\ensuremath{\\[1em]}}
-\newcommand{\where}{\ensuremath{~ ~ \mathbf{where}~ ~ }}
-
+\newcommand{\type}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\union}{\ensuremath{\cup}}
+\newcommand{\uniondistinct}{\ensuremath{\uplus}}
+\newcommand{\unionoverrideLeft}{\ensuremath{\mathbin{\underleftarrow\cup}}}
+\newcommand{\unionoverridePlus}{\ensuremath{\mathbin{\cup_{+}}}}
+\newcommand{\unionoverrideRight}{\ensuremath{\mathbin{\underrightarrow\cup}}}
+\newcommand{\unionoverrideZero}{\ensuremath{\mathbin{\cup_{0}}}}
+\newcommand{\var}[1]{\ensuremath{\mathit{#1}}}
 \newcommand{\varUpdate}[1]{\boldsymbol{\color{Violet}#1}}
+
+\newcommand{\where}{\ensuremath{~ ~ \mathbf{where}~ ~ }}
 
 \newenvironment{question}
   {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}

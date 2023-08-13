@@ -8,21 +8,20 @@ Depending on the type of governance action, an action will thus be ratified when
 a combination of the following occurs:
 \begin{itemize}
 \item
-  the constitutional committee approves of the action (the number of
-  members who vote `yes' meets the threshold of the constitutional
-  committee)
+  the \CC approves of the action (the number of
+  members who vote \yes meets the threshold of the \CC)
 \item
-  the DReps approve of the action (the stake controlled by the DReps who
-  vote `yes' meets a certain threshold of the total active voting stake)
+  the \DRep approve of the action (the stake controlled by the \DReps who
+  vote \yes meets a certain threshold of the total active voting stake)
 \item
-  the SPOs approve of the action (the stake controlled by the SPOs who
-  vote `yes' meets a certain threshold over the total registered voting
+  the \SPOs approve of the action (the stake controlled by the \SPOs who
+  vote \yes meets a certain threshold over the total registered voting
   stake)
 \end{itemize}
-\textbf{Warning}. Different stake distributions apply to DReps and SPOs.
+\textbf{Warning}. Different stake distributions apply to \DReps and \SPOs.
 \\[4pt]
 A successful motion of no-confidence, election of a new constitutional
-committee, a constitutional change or a hard-fork delays ratification of
+committee, a constitutional change, or a hard-fork delays ratification of
 all other governance actions until the first epoch after their
 enactment. This gives a new constitutional committee enough time to vote
 on current proposals, re-evaluate existing proposals with respect to a
@@ -33,23 +32,18 @@ consequences in combination with other actions.
 \subsection{Ratification requirements}
 \label{sec:ratification-requirements}
 Figure~\ref{fig:ratification-requirements} details the ratification requirements for each
-governance action scenario. The columns represent:
+governance action scenario. The columns represent
 \begin{itemize}
 \item
-  \textbf{Governance action type}. The type of governance action. Note
-  that the protocol parameter updates are grouped into three categories.
+  \ac{GovAction};
 \item
-  \textbf{Constitutional committee (CC)}. A value of \ding{51} indicates
-  that the constitutional committee must approve this action.
-  A value of - means that constitutional committee votes do not apply.
+  \ac{CC}: a \ding{51} indicates that the constitutional committee must approve this action;
+  a - means that constitutional committee votes do not apply.
 \item
-  \textbf{DReps}. The DRep vote threshold that must be met as a
-  percentage of \emph{active voting stake}. A value of - means that
-  DReps votes do not apply.
+  \ac{DRep}: the \DRep vote threshold that must be met as a percentage of \activeVotingStake.
 \item
-  \textbf{SPOs}. The SPO vote threshold which must be met as a percentage
-  of the stake held by all stake pools. A value of - means that SPO
-  votes do not apply.
+  \ac{SPO}: the \SPO vote threshold that must be met as a percentage of the stake held by
+  all stake pools; a - means that \SPO votes do not apply.
 \end{itemize}
 \begin{figure*}[h!]
 \begin{longtable}[]{@{}
@@ -57,49 +51,32 @@ governance action scenario. The columns represent:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.11}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}@{}}
-\textbf{Action}  & \textbf{CC}  &  \textbf{DRep} & \textbf{SPO} \\
+\GovAction  & \CC  &  \DRep & \SPO \\
 \hline
 \endhead
-1. Motion of no-confidence & - & \AgdaField{P1} & \AgdaField{Q1} \\
-2a. New committee/threshold (\emph{normal state}) & - & \AgdaField{P2a} & \AgdaField{Q2a} \\
-2b. New committee/threshold (\emph{state of no-confidence}) & - & \AgdaField{P2b} & \AgdaField{Q2b} \\
-3. Update to the Constitution & \ding{51} & \AgdaField{P3} & - \\
-4. Hard-fork initiation & \ding{51} & \AgdaField{P4} & \AgdaField{Q4} \\
-5a. Protocol parameter changes, network group & \ding{51} & \AgdaField{P5a} & - \\
-5b. Protocol parameter changes, economic group & \ding{51} & \AgdaField{P5b} & - \\
-5c. Protocol parameter changes, technical group & \ding{51} & \AgdaField{P5c} & - \\
-5d. Protocol parameter changes, governance group & \ding{51} & \AgdaField{P5d} & - \\
-6. Treasury withdrawal & \ding{51} & \AgdaField{P6} & - \\
+1. Motion of no-confidence & - & \acs{P1} & \acs{Q1} \\
+2a. New committee/threshold (\emph{normal state}) & - & \acs{P2a} & \acs{Q2a} \\
+2b. New committee/threshold (\emph{state of no-confidence}) & - & \acs{P2b} & \acs{Q2b} \\
+3. Update to the Constitution & \ding{51} & \acs{P3} & - \\
+4. Hard-fork initiation & \ding{51} & \acs{P4} & \acs{Q4} \\
+5a. Changes to protocol parameters in the \NetworkGroup & \ding{51} & \acs{P5a} & - \\
+5b. Changes to protocol parameters in the \EconomicGroup & \ding{51} & \acs{P5b} & - \\
+5c. Changes to protocol parameters in the \TechnicalGroup & \ding{51} & \acs{P5c} & - \\
+5d. Changes to protocol parameters in the \GovernanceGroup & \ding{51} & \acs{P5d} & - \\
+6. Treasury withdrawal & \ding{51} & \acs{P6} & - \\
 7. Info & \ding{51} & \(100\) & \(100\) \\
 \end{longtable}
 \caption{Retification requirements}
 \label{fig:ratification-requirements}
 \end{figure*}
 Each of these thresholds is a governance parameter. The initial thresholds should be chosen by
-the Cardano community as a whole. The two thresholds for the \AgdaInductiveConstructor{Info}
+the Cardano community as a whole. The two thresholds for the \Info
 action are set to 100\% since setting it any lower would result in not being able to poll
 above the threshold.
-\\[4pt]
-\textbf{Remarks}.
-\begin{enumerate}
-\item It may make sense for some or all thresholds to be adaptive with respect
-to the Lovelace that is actively registered to vote. For example, a threshold
-could vary between 51\% for a high level of registration and 75\% for a low
-level registration. Moreover, the treasury threshold could also be adaptive,
-depending on the total Lovelace that is being withdrawn, or different thresholds
-could be set for different levels of withdrawal.
-\item To achieve legitimacy, the minimum acceptable threshold should be no less
-than 50\% of the delegated stake.
-\end{enumerate}
 
 \subsection{Ratification restrictions}
 \label{sec:ratification-restrictions}
-Apart from \emph{Treasury withdrawals} and \emph{Infos}, we include a mechanism for ensuring
-that governance actions of the same type do not accidentally clash with each other in an unexpected way.
-
-Each governance action must include a \defn{governance action identifier} %%% (\AgdaSymbol{:}\,\AgdaDatatype{GovActionId})
-for the most recently enacted action of its given type. This means that two actions of the same type can
-be enacted at the same time, but they must be \emph{deliberately} designed to do so.
+%% Apart from \TreasuryWdrl and \Info, we include a mechanism for ensuring that governance actions of the same type do not accidentally clash with each other in an unexpected way.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -152,11 +129,14 @@ record RatifyState : Set where
 } %% end small
 \caption{Types and functions for the RATIFY transition system}
 \end{figure*}
+As mentioned earlier, each \GovAction must include a \GovActionID
+for the most recently enacted action of its given type. Consequently, two actions of the
+same type can be enacted at the same time, but they must be \emph{deliberately}
+designed to do so.
 \begin{itemize}
-\item \AgdaRecord{StakeDistrs} represents a map from voting delegate to quantity of Ada.
-\item \AgdaRecord{RatifyEnv} has four fields, a \AgdaField{stakeDistr}, the \AgdaField{currentEpoch}, a \AgdaField{dreps} relation,
-and a \AgdaField{ccHotKeys} relation (TODO: explain \AgdaField{ccHotKeys}).
-\item \AgdaRecord{RatifyState} has four fields, an enact state, a future list of action-state pairs, a removed list of action-state pairs, and a delay indicator.
+\item \StakeDistrs is \acl{StakeDistrs};
+\item \RatifyEnv is \acl{RatifyEnv};
+\item \RatifyState is \acl{RatifyState}.
 \end{itemize}
 \begin{code}[hide]
 -- TODO: remove these or put them into RatifyState
@@ -273,32 +253,41 @@ Types and proofs for the ratification of governance actions}
 \end{figure*}
 The code in Figure~\ref{fig:defs:ratify-i} defines some of the types required for ratification of a governance action.
 \begin{itemize}
-  \item Module parameters: \AgdaBound{Γ} is a ratification environment, \AgdaBound{cc} contains constitutional committee data,
-  \AgdaBound{votes} is a relation associating each role-credential pair with the vote cast by the individual denoted by that pair,
-  and \AgdaBound{ga} represents the governance action being voted upon.
 
-\item \AgdaBound{roleVotes} %%% is a map from \AgdaDatatype{GovRole}~\AgdaSymbol{→}~(\AgdaDatatype{GovRole}~\AgdaDatatype{×}~\AgdaDatatype{Credential})~\AgdaDatatype{⇀}~\AgdaDatatype{Vote}
-  takes a governance role and returns a partial function mapping (governance role, credential) pairs to votes.
-  It filters the votes function based on the given governance role.
+  \item Assuming a ratification environment \Gam,
+  \begin{itemize}
+    \item \cc denotes \acl{cc};
+    \item \votes denotes \acl{votes};
+    \item \ga denotes \acl{ga}.
+  \end{itemize}
 
-  \item \AgdaBound{actualCCVote} takes a key hash and an epoch and returns the corresponding vote based on various conditions.
-  It checks if the current epoch is less than or equal to the given epoch and whether the key hash exists in the \AgdaField{ccHotKeys} data.
-  Depending on the conditions, it returns `no', `yes', or `abstain'.
+  \item \roleVotes is \acl{roleVotes}; more precisely, it
+  filters the votes function based on the given governance role.
 
-  \item \AgdaBound{actualCCVotes}         %%% of type \AgdaDatatype{Credential}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote}
-  is a partial function that maps credentials to votes. It uses the \AgdaDatatype{actualCCVote} function on each element of \AgdaDatatype{cc} to compute the votes.
+  \item \actualCCVote is \acl{actualCCVote};
+  technically speaking, we check whether the \currentEpoch is less than or equal to the given
+  epoch and whether the key hash exists in the \ccHotKeys data; depending on these
+  conditions, \actualCCVote returns either \no, \yes, or \abstain;
+  specifically, if a \CC member has not yet registered a hot key, has expired, or has resigned, then
+  \actualCCVote returns \abstain;
+  if those none of these conditions is met, then
+  \begin{itemize}
+    \item if the \CC member has voted, that vote is returned;
+    \item if the \CC member has not voted, then the default value of \no is returned.
+  \end{itemize}
 
-  \item \AgdaBound{actualPDRepVotes}      %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote}
-  is a partial function that maps a delegate to a vote. It consists of a set of pairs, where \AgdaDatatype{abstainRep} is mapped to `abstain',
-  and \AgdaDatatype{noConfidenceRep} is mapped to either `yes' or `no', depending on the value of \AgdaDatatype{ga}.
+  \item \actualCCVotes is \acl{actualCCVotes}; it relies upon \actualCCVote to determine
+  how each committee member's vote shall be counted.
 
-  \item \AgdaBound{actualDRepVotes}       %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote}
-  is a partial function that maps a delegate to a vote. It computes the votes based on the \AgdaDatatype{activeDReps},
-  which are delegates whose credentials are present in \AgdaDatatype{dreps}. It uses the \AgdaDatatype{roleVotes} function with \AgdaDatatype{GovRole.DRep} to get the votes.
+  \item \actualPDRepVotes is \acl{actualPDRepVotes}; it consists of a set of pairs, where
+  \abstainRep is mapped to \abstain, and \noConfidenceRep is mapped to either \yes or
+  \no, depending on the value of \ga.
 
-  \item \AgdaBound{actualVotes}           %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote}.
-  is a partial function that maps a delegate to a vote. It combines the votes for CC members, DReps, and SPOs, using the functions
-  \AgdaDatatype{actualCCVotes}, \AgdaDatatype{actualPDRepVotes}, and \AgdaDatatype{actualDRepVotes}.
+  \item \actualDRepVotes is \acl{actualDRepVotes}; it uses \roleVotes and \GovRoleDRep to get the votes
+  of \activeDReps, which are \acl{activeDReps}.
+
+  \item \actualVotes is \acl{actualVotes}; it combines the votes for the \CC, \DReps, and \SPOs,
+  using the functions \actualCCVotes, \actualPDRepVotes, and \actualDRepVotes.
 \end{itemize}
 \begin{figure*}[h!]
 {\small
@@ -328,7 +317,8 @@ isDRep noConfidenceRep    = true
 isSPO : VDeleg → Bool
 isSPO (credVoter SPO _) = true
 isSPO _                 = false
-
+\end{code}
+\begin{code}[hide]
 isCCProp : specProperty λ x → isCC x ≡ true
 isCCProp = to-sp (λ x → isCC x ≟ true)
 
@@ -345,35 +335,13 @@ More types and proofs for the ratification of governance actions}
 \end{figure*}
 The code in Figure~\ref{fig:defs:ratify-ii} defines more types required for ratification of a governance action.
 \begin{itemize}
-  \item \AgdaBound{votedHashes}          %%% of type \AgdaDatatype{Vote}~\AgdaDatatype{→}~(\AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote})~\AgdaDatatype{→}~\AgdaDatatype{GovRole}~\AgdaDatatype{→}~\AgdaDatatype{ℙ}~\AgdaDatatype{VDeleg}:
-  takes a vote, `v', a mapping of delegates to votes, and a governance role and returns the set of delegates who voted `v' on the given governance role.
-
-  \item \AgdaBound{votedYesHashes}       %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote})~\AgdaDatatype{→}~\AgdaDatatype{GovRole}~\AgdaDatatype{→}~\AgdaDatatype{ℙ}~\AgdaDatatype{VDeleg}
-  takes a mapping of delegates to votes and a governance role and returns the set of delegates who voted `yes' on the given governance role.
-
-  \item \AgdaBound{votedAbstainHashes}   %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote})~\AgdaDatatype{→}~\AgdaDatatype{GovRole}~\AgdaDatatype{→}~\AgdaDatatype{ℙ}~\AgdaDatatype{VDeleg}
-  takes a mapping of delegates to votes and a governance role and returns the set of delegates who voted `abstain' on the given governance role.
-
-  \item \AgdaBound{participatingHashes}  %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote})~\AgdaDatatype{→}~\AgdaDatatype{GovRole}~\AgdaDatatype{→}~\AgdaDatatype{ℙ}~\AgdaDatatype{VDeleg}
-  takes a mapping of delegates to votes and a governance role and returns the set of delegates who voted on the given governance role, including both `yes' and `no' votes.
-
-  \item \AgdaBound{isCC}                 %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{→}~\AgdaDatatype{Bool}
-  returns `true' if the given delegate is a constitutional committee member and `false' otherwise.
-
-  \item \AgdaBound{isDRep}               %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{→}~\AgdaDatatype{Bool}
-  returns `true' if the given delegate is a DRep and `false` otherwise.
-
-  \item \AgdaBound{isSPO}                %%% of type \AgdaDatatype{VDeleg}~\AgdaDatatype{→}~\AgdaDatatype{Bool}
-  returns `true' if the given delegate is an SPO and `false' otherwise.
-
-  \item \AgdaBound{isCCProp}             %%% of type \AgdaDatatype{specProperty}~\AgdaDatatype{λ}~\AgdaDatatype{x}~\AgdaDatatype{→}~\AgdaDatatype{isCC}~\AgdaDatatype{x}~\AgdaDatatype{≡}~`true'
-  is a specification property asserting that the given delegate is a constitutional committee member.
-
-  \item \AgdaBound{isDRepProp}           %%% of type \AgdaDatatype{specProperty}~\AgdaDatatype{λ}~\AgdaDatatype{x}~\AgdaDatatype{→}~\AgdaDatatype{isDRep}~\AgdaDatatype{x}~\AgdaDatatype{≡}~`true'
-  is a specification property asserting that the given delegate is a DRep.
-
-  \item \AgdaBound{isSPOProp}            %%% of type \AgdaDatatype{specProperty}~\AgdaDatatype{λ}~\AgdaDatatype{x}~\AgdaDatatype{→}~\AgdaDatatype{isSPO}~\AgdaDatatype{x}~\AgdaDatatype{≡}~`true'
-  is a specification property asserting that the given delegate is an SPO.
+  \item \votedHashes is \acl{votedHashes};
+  \item \votedYesHashes is \acl{votedYesHashes};
+  \item \votedAbstainHashes is \acl{votedAbstainHashes};
+  \item \participatingHashes is \acl{participatingHashes};
+  \item \isCC is \acl{isCC};
+  \item \isDRep is \acl{isDRep};
+  \item \isSPO is \acl{isSPO}.
 \end{itemize}
 \begin{figure*}[h!]
 {\small
@@ -426,25 +394,14 @@ Yet more types and proofs for the ratification of governance actions}
 \end{figure*}
 The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for ratification of a governance action.
 \begin{itemize}
-  \item \AgdaBound{getStakeDist}         %%% of type \AgdaDatatype{GovRole}~\AgdaDatatype{→}~\AgdaDatatype{ℙ}~\AgdaDatatype{VDeleg}~\AgdaDatatype{→}~\AgdaDatatype{StakeDistrs}~\AgdaDatatype{→}~\AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Coin}:
-  is a partial function that maps a delegate to a \AgdaDatatype{Coin} representing the stake distribution.
-  It takes a governance role, a set of delegates, and a stake distribution record and computes the stake distribution based on the given governance role and the corresponding delegations.
-
-  \item \AgdaBound{acceptedStake}       %%% of type \AgdaDatatype{GovRole}~\AgdaDatatype{→}~\AgdaDatatype{ℙ}~\AgdaDatatype{VDeleg}~\AgdaDatatype{→}~\AgdaDatatype{StakeDistrs}~\AgdaDatatype{→}~(\AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote})~\AgdaDatatype{→}~\AgdaDatatype{Coin}:
-  computes the total accepted stake for a given governance role, CC, stake distribution, and votes mapping. It calculates the sum of stakes for all delegations that voted `yes' for the specified role.
-
-  \item \AgdaBound{totalStake}          %%% of type \AgdaDatatype{GovRole}~\AgdaDatatype{→}~\AgdaDatatype{ℙ}~\AgdaDatatype{VDeleg}~\AgdaDatatype{→}~\AgdaDatatype{StakeDistrs}~\AgdaDatatype{→}~(\AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote})~\AgdaDatatype{→}~\AgdaDatatype{Coin}:
-  computes the total stake for a given governance role, CC, stake distribution, and votes mapping. It calculates the sum of stakes for all delegations that voted `abstain' for the specified role.
-
-  \item \AgdaBound{activeVotingStake}   %%% of type \AgdaDatatype{ℙ}~\AgdaDatatype{VDeleg}~\AgdaDatatype{→}~\AgdaDatatype{StakeDistrs}~\AgdaDatatype{→}~(\AgdaDatatype{VDeleg}~\AgdaDatatype{⇀}~\AgdaDatatype{Vote})~\AgdaDatatype{→}~\AgdaDatatype{Coin}
-  computes the total stake for the role of DRep for active voting. It calculates the sum of stakes for all active delegates that have not voted (i.e., their delegation is present in CC but not in the votes mapping).
-
-  \item \AgdaBound{accepted}           %%% of type \AgdaDatatype{RatifyEnv}~\AgdaDatatype{→}~\AgdaDatatype{EnactState}~\AgdaDatatype{→}~\AgdaDatatype{GovActionState}~\AgdaDatatype{→}~\AgdaDatatype{Set}
-  takes three records as input and returns a set. It checks if an action is accepted for the CC, DRep, and SPO roles and whether it meets the minimum active voting stake (\AgdaDatatype{meetsMinAVS}).
-  The \AgdaDatatype{actualVotes} function is used to compute the votes based on the provided records.
-
-  \item \AgdaBound{expired}            %%% of type \AgdaDatatype{Epoch}~\AgdaDatatype{→}~\AgdaDatatype{GovActionState}~\AgdaDatatype{→}~\AgdaDatatype{Set}:
-  takes an epoch and a governance action state record and returns a set. It checks if the given epoch is greater than the \AgdaDatatype{expiresIn} field in the record.
+  \item \getStakeDist is \acl{getStakeDist};
+  \item \acceptedStake is \acl{acceptedStake}; it calculates the total stake of all delegations that voted \yes for the given role;
+  \item \totalStake is \acl{totalStake}; it calculates the sum of stakes for all delegations that
+  didn't vote \abstain for the given role;
+  \item \activeVotingStake is \acl{activeVotingStake};
+  \item \meetsMinAVS is \acl{meetsMinAVS};
+  \item \accepted is \acl{accepted} (i.e., whether \meetsMinAVS holds);
+  \item \expired is \acl{expired}.
 \end{itemize}
 \begin{figure*}[h!]
 {\small
@@ -477,16 +434,9 @@ Sill more types and proofs for the ratification of governance actions}
 \end{figure*}
 The code in Figure~\ref{fig:defs:ratify-iv} defines still more types required for ratification of a governance action.
 \begin{itemize}
-  \item \AgdaBound{verifyPrev}         %%% of type (\AgdaBound{a}~\AgdaDatatype{:}~\AgdaDatatype{GovAction})~\AgdaDatatype{→}~\AgdaDatatype{NeedsHash}~\AgdaBound{a}~\AgdaDatatype{→}~\AgdaDatatype{EnactState}~\AgdaDatatype{→}~\AgdaDatatype{Set}:
-  checks if a given governance action has been previously verified. It takes the given governance action, its corresponding \AgdaDatatype{NeedsHash}, and an \AgdaDatatype{EnactState} record as input and returns a set,
-  which is empty if the verification passes or, in case the verification fails, a disjoint union of the hash check (\AgdaDatatype{NeedsHash}) and a boolean check (\AgdaDatatype{d}).
-
-  \item \AgdaBound{delayingAction}     %%% of type \AgdaDatatype{GovAction}~\AgdaDatatype{→}~\AgdaDatatype{Bool}:
-  takes a governance action and returns `true' if it is a ``delaying action,'' which includes actions like \AgdaDatatype{NoConfidence}, \AgdaDatatype{NewCommittee}, \AgdaDatatype{NewConstitution}, and \AgdaDatatype{TriggerHF}, and returns `false' otherwise.
-
-  \item \AgdaBound{delayed}            %%% of type (\AgdaBound{a}~\AgdaDatatype{:}~\AgdaDatatype{GovAction})~\AgdaDatatype{→}~\AgdaDatatype{NeedsHash}~\AgdaBound{a}~\AgdaDatatype{→}~\AgdaDatatype{EnactState}~\AgdaDatatype{→}~\AgdaDatatype{Bool}~\AgdaDatatype{→}~\AgdaDatatype{Set}:
-  checks if a given governance action is delayed. It takes a governance action, its corresponding \AgdaDatatype{NeedsHash}, an \AgdaDatatype{EnactState} record, and a boolean flag \AgdaDatatype{d} and returns a set,
-  which is empty if the action is not delayed and, if the action is delayed, a disjoint union of the hash check (\AgdaDatatype{NeedsHash}) and the boolean check (\AgdaDatatype{d}).
+  \item \verifyPrev is \acl{verifyPrev}; it takes the given governance action, its corresponding \NeedsHash, and an \EnactState record as input and returns a set;
+  \item \delayingAction is \acl{delayingAction};
+  \item \delayed is \acl{delayed}; it takes a governance action, its corresponding \NeedsHash, an \EnactState record, and a boolean flag \AgdaDatatype{d} and returns a set.
 \end{itemize}
 \begin{code}[hide]
 private variable
@@ -537,20 +487,30 @@ _⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,RATIFY'�
 \caption{RATIFY transition system}
 \label{fig:ratify-transition-system}
 \end{figure*}
-Finally, Figure~\ref{fig:ratify-transition-system} defines three functions: \AgdaFunction{RATIFY-Accept}, \AgdaFunction{RATIFY-Reject}, and \AgdaFunction{RATIFY-Continue}, along with the syntax \verb!_⊢_⇀⦇_,RATIFY⦈_!.
-The syntax \verb!_⊢_⇀⦇_,RATIFY⦈_! is a wrapper around another function, represented by \AgdaDatatype{SS⇒BS}, which is a transformation from some source state (\AgdaDatatype{SS}) to a binary state (\AgdaDatatype{BS}).
+Figure~\ref{fig:ratify-transition-system} defines three functions;
 \begin{itemize}
-  \item \AgdaFunction{RATIFY-Accept} represents an action related to the ratification of a governance action. It takes some context \AgdaDatatype{Γ} a list of actions \AgdaDatatype{es}, and a state \AgdaDatatype{st}
-  (extracted from \AgdaBound{a}) from a governance action state.
-        and checks if the action represented by \AgdaDatatype{st} is accepted in the given context \AgdaDatatype{Γ}. Additionally, it verifies that the action is not delayed (based on some previous action),
-        and then applies some transformation represented by \AgdaDatatype{⇀⦇}~\AgdaDatatype{action}~\AgdaDatatype{,ENACT⦈} to the list of actions \AgdaDatatype{es} to produce a new list \AgdaDatatype{es'}.
-        The conclusion states that if the action is accepted and not delayed, then applying the transformation \AgdaDatatype{⇀⦇}~\AgdaDatatype{action}~\AgdaDatatype{,ENACT⦈} to the modified list of actions should yield a new state.
+  \item \RATIFYAccept is \acl{RATIFY-Accept};
+  \item \RATIFYReject is \acl{RATIFY-Reject};
+  \item \RATIFYContinue is \acl{RATIFY-Continue}.
+\end{itemize}
+Finally, Figure~\ref{fig:ratify-transition-system} defines the relation \RATIFYsyntax.
+This is a wrapper around another function, represented by \SStoBS, which is a \acs{SStoBS}.
+\begin{itemize}
+  \item  \acs{RATIFY-Accept} \acl{RATIFY-Accept}. It takes some ratification environment \Gam, a list of actions
+    \es, and a state \st (extracted from \AgdaBound{a}) from a governance action state,
+    and checks if the action represented by \st is accepted in the given context \Gam.
+    Additionally, it verifies that the action is not delayed (based on some previous action)
+    and then applies some transformation represented by \ENACTactionsyntax
+    to the list of actions \es to produce a new list \esp.
+    The conclusion states that if the action is accepted and not delayed, then applying the
+    transformation \ENACTactionsyntax to the modified list of actions
+    should yield a new state.
 
-  \item \AgdaFunction{RATIFY-Reject} handles the rejection of an governance action. It takes some context \AgdaDatatype{Γ}, a list of actions \AgdaDatatype{es}, and a state \AgdaDatatype{st} (extracted from \AgdaBound{a}) from a \AgdaRecord{RatifyEnv}
-        and checks if the action represented by \AgdaDatatype{st} is not accepted and if the current \AgdaDatatype{epoch} is expired. If both conditions hold, it applies a transformation represented by \AgdaDatatype{⇀⦇}~\AgdaBound{a}~\AgdaDatatype{,RATIFY'⦈} to the list of actions \AgdaDatatype{es} to produce a new list \AgdaDatatype{es'}.
-        The conclusion states that if the action is not accepted and the epoch is expired, then applying the transformation \AgdaDatatype{⇀⦇}~\AgdaBound{a}~\AgdaDatatype{,RATIFY'⦈} to the modified list of actions should yield a new state.
+  \item \acs{RATIFY-Reject} is \acl{RATIFY-Reject}. It takes some context \Gam, a list of actions
+    \es, and a state \st (extracted from \AgdaBound{a}) from a \RatifyEnv
+    and checks if the action represented by \st is not accepted and if the current \epoch is expired. If both conditions hold, it applies a transformation represented by \RATIFYasyntax to the list of actions \es to produce a new list \esp.
+        The conclusion states that if the action is not accepted and the epoch is expired, then applying the transformation \RATIFYpasyntax to the modified list of actions should yield a new state.
 
-  \item \AgdaFunction{RATIFY-Continue} handles the case in which the ratification process is neither accepted nor rejected, and the epoch is not expired. It takes some context \AgdaDatatype{Γ}, a list of actions \AgdaDatatype{es}, and a state \AgdaDatatype{st} (extracted from \AgdaBound{a}) from a \AgdaRecord{RatifyEnv}
-        and checks that the action is neither accepted nor expired, or it is delayed based on the previous action. If any of these conditions hold, it applies the transformation \AgdaDatatype{⇀⦇}~\AgdaBound{a}~\AgdaDatatype{,RATIFY'⦈} to the list of actions \AgdaDatatype{es} to produce a new list \AgdaDatatype{es'}.
-        The conclusion states that if the action is not accepted and not expired, or it is delayed, then applying the transformation \AgdaDatatype{⇀⦇}~\AgdaBound{a}~\AgdaDatatype{,RATIFY'⦈} to the modified list of actions should yield a new state.
+  \item \acs{RATIFY-Continue} handles the case in which the ratification process is neither accepted nor rejected, and the epoch is not expired. It takes some context \Gam, a list of actions \es, and a state \st (extracted from \AgdaBound{a}) from a \RatifyEnv and checks that the action is neither accepted nor expired, or it is delayed based on the previous action. If any of these conditions hold, it applies the transformation \RATIFYpasyntax to the list of actions \es to produce a new list \AgdaDatatype{es'}.
+        The conclusion states that if the action is not accepted and not expired, or it is delayed, then applying the transformation \RATIFYpasyntax to the modified list of actions should yield a new state.
 \end{itemize}
