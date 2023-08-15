@@ -5,7 +5,9 @@ module Tactic.DeriveComp where
 open import Prelude
 open import Meta
 
+import Reflection as R
 import Reflection.AST.Argument.Visibility as Visibility
+open import Reflection.AST.DeBruijn
 
 open import PreludeImports
 
@@ -20,6 +22,7 @@ open import Relation.Nullary.Decidable
 open import Tactic.ClauseBuilder
 open import Tactic.Helpers
 open import Tactic.ReduceDec
+open import Generics.Core
 
 open import Interface.ComputationalRelation
 open import Interface.DecEq
@@ -90,18 +93,28 @@ generatePred clauses = quote ¿_¿ ∙⟦ helper clauses ⟧
     helper (x ∷ []) = x
     helper (x ∷ x₁ ∷ l) = quote _×_ ∙⟦ x ∣ helper (x₁ ∷ l) ⟧
 
+predWitness : ℕ → Term
+predWitness 0 = quoteTerm tt
+predWitness (suc n) = helper n
+  where
+    helper : ℕ → Term
+    helper 0 = ♯ 0
+    helper (suc n) = quote _,_ ◆⟦ ♯ (suc n) ∣ helper n ⟧
+
 curryPredProof : ℕ → Term → List (Arg Term)
 curryPredProof 0 t = []
 curryPredProof 1 t = [ vArg t ]
 curryPredProof 2 t = quote proj₁ ∙⟦ t ⟧ ⟨∷⟩ quote proj₂ ∙⟦ t ⟧ ⟨∷⟩ []
 curryPredProof (suc (suc (suc k))) t = quote proj₁ ∙⟦ t ⟧ ⟨∷⟩ curryPredProof (suc (suc k)) (quote proj₂ ∙⟦ t ⟧)
 
+computeFunctionBody : Term → Term → Term
+computeFunctionBody g result =
+  quote if_then_else_ ∙⟦ g ∣ quote just ◆⟦ result ⟧ ∣ quote nothing ◆ ⟧
+
 generateFunctionClause : (List Term → Term) → STSConstr → Clause
 generateFunctionClause genPred c = let open STSConstr c in
   ⟦ context ∣ state ∣ signal ⦅ (λ { (abs s x) → (s , x) }) <$> params ⦆⇒
-    quote if_then_else_ ∙⟦ quote ⌊_⌋ ∙⟦ genPred clauses ⟧ ∣
-      quote just ◆⟦ result ⟧ ∣
-      quote nothing ◆ ⟧ ⟧
+    computeFunctionBody (quote ⌊_⌋ ∙⟦ genPred clauses ⟧) result ⟧
 
 generateFunction : List STSConstr → Term
 generateFunction c = pat-lam (generateFunctionClause generatePred <$> c) []
@@ -111,25 +124,43 @@ rdOpts = onlyReduce [ quote ⌊_⌋ ]
 
 open ClauseExprM
 
-derive⇐ : ITactic
-derive⇐ = inDebugPath "derive⇐" do
+derive⇐ : List STSConstr → ITactic
+derive⇐ (record { clauses = clauses; result = result } ∷ []) = inDebugPath "derive⇐" do
   (constrPat ∷ []) ← currentTyConstrPatterns
     where _ → error1 "TODO: Support more than one constructor!"
-  expr ← singleMatchExpr constrPat $ finishMatch $ withGoalHole $ reduceDecInGoal rdOpts (quote refl ◆)
+  expr ← singleMatchExpr constrPat $ finishMatch $ withGoalHole $ do
+    let n = 1 + length clauses
+        pred = weaken n $ generatePred clauses
+        scheme = `λ "g" ⇒ (quote _≡_ ∙⟦ computeFunctionBody (♯ 0) (weaken (1 + n) result)
+                                      ∣ quote just ◆⟦ weaken (1 + n) result ⟧ ⟧)
+        eq = quote fromWitness' ∙⟦ pred ∣ predWitness (length clauses) ⟧
+    unifyWithGoal $ quote subst ∙⟦ scheme ∣ quote sym ∙⟦ eq ⟧ ∣ quote refl ◆ ⟧
   unifyWithGoal $ clauseExprToPatLam expr
+derive⇐ _ = error1 "TODO: support multiple constructors"
+
+extendRawContext : {A : Set} → List (String × Arg Type) → TC A → TC A
+extendRawContext [] m = m
+extendRawContext ((x , ty) ∷ tys) m = R.extendContext x ty ∘ extendRawContext tys m
 
 derive⇒ : Name → List STSConstr → ITactic
-derive⇒ n (record { name = stsConstrName ; clauses = clauses } ∷ []) = inDebugPath "derive⇒" do
+derive⇒ n (record { name = stsConstrName ; clauses = clauses; result = result } ∷ []) = inDebugPath "derive⇒" do
+  let pred = weaken 3 (generatePred clauses)
   expr ← introsExpr (from-just $ NE.fromList ("h" ⟨∷⟩ [])) $ finishMatch $
     caseMatch (mapVars (_+ 2) $ generatePred clauses) $ matchExprM
       ((multiSinglePattern [ "" ] (vArg (``no  (` 0))) , finishMatch do
-        reducedHyp ← reduceDec' rdOpts $ ♯ 1
-        return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
+         let reducedHyp = quote subst ∙⟦ `λ "g" ⇒ (quote _≡_ ∙⟦ computeFunctionBody (♯ 0) (weaken 4 result)
+                                                               ∣ quote just ◆⟦ ♯ 3 ⟧ ⟧)
+                                       ∣ quote fromWitnessFalse' ∙⟦ pred ∣ ♯ 0 ⟧
+                                       ∣ ♯ 1 ⟧
+         return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
        (multiSinglePattern [ "" ] (vArg (``yes (` 0))) , finishMatch do
-        reducedHyp ← reduceDec' rdOpts $ ♯ 1
-        ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← goalTy
-          where ty → error ("BUG: Unexpected type" ∷ᵈ ty ∷ᵈ [])
-        return $ quote subst ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧ ∣ quote just-injective ∙⟦ reducedHyp ⟧ ∣
+         let reducedHyp = quote subst ∙⟦ `λ "g" ⇒ (quote _≡_ ∙⟦ computeFunctionBody (♯ 0) (weaken 4 result)
+                                                               ∣ quote just ◆⟦ ♯ 3 ⟧ ⟧)
+                                       ∣ quote fromWitness' ∙⟦ pred ∣ ♯ 0 ⟧
+                                       ∣ ♯ 1 ⟧
+         ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← goalTy
+           where ty → error ("BUG: Unexpected type" ∷ᵈ ty ∷ᵈ [])
+         return $ quote subst ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧ ∣ quote just-injective ∙⟦ reducedHyp ⟧ ∣
                              con stsConstrName (curryPredProof (length clauses) (♯ 0)) ⟧) ∷ [])
   unifyWithGoal $ clauseExprToPatLam expr
 derive⇒ _ _ = error1 "TODO: support multiple constructors"
@@ -140,20 +171,13 @@ module _ ⦃ _ : DebugOptions ⦄ where
     hole⇒ ← newMeta unknown
     hole⇐ ← newMeta unknown
     unifyWithGoal $ quote mk⇔ ∙⟦ hole⇒ ∣ hole⇐ ⟧
-    runWithHole hole⇐ derive⇐
+    runWithHole hole⇐ $ derive⇐ stsConstrs
     runWithHole hole⇒ $ derive⇒ n stsConstrs
 
-  deriveComp : Name → TC ⊤
-  deriveComp definedType = do
+  deriveComp : Name → List STSConstr → TC ⊤
+  deriveComp definedType stsConstrs = do
     debugLog ("\nDerive computation function for: " ∷ᵈ definedType ∷ᵈ [])
-    stsConstrs ← getSTSConstrs definedType
-    debugLog1 (generateFunction stsConstrs)
-    --return $ generateFunction stsConstrs
     unifyWithGoal (generateFunction stsConstrs)
-
-  macro
-    by-derive⇔ : Name → List STSConstr → Tactic
-    by-derive⇔ = derive⇔
 
   deriveComputational : Name → Name → UnquoteDecl
   deriveComputational n compName =
@@ -161,21 +185,27 @@ module _ ⦃ _ : DebugOptions ⦄ where
       let goalTy = quote Computational ∙⟦ n ∙ ⟧
       debugLog1 goalTy
       declareDef (vArg compName) goalTy
+      stsConstrs ← getSTSConstrs n
       compRes ← withSafeReset $ do
         compHole ← newMeta unknown
         equivHole ← newMeta unknown
         definition ← mkRecord (quote Computational) (compHole ⟨∷⟩ equivHole ⟨∷⟩ [])
         _ ← checkType definition goalTy
         debugLog1ᵐ (compHole ᵗ)
-        runWithHole compHole $ deriveComp n
+        runWithHole compHole $ deriveComp n stsConstrs
         reduce compHole
       debugLog ("compRes: " ∷ᵈ compRes ∷ᵈ [])
-      stsConstrs ← quoteTC =<< getSTSConstrs n
-      definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ quote by-derive⇔ ∙⟦ n ∙ ∣ stsConstrs ⟧ ⟨∷⟩ [])
+      cTy   ← newMeta unknown
+      sTy   ← newMeta unknown
+      sigTy ← newMeta unknown
+      let isoCxt = ("c" , hArg cTy) ∷ ("s" , hArg (weaken 1 sTy)) ∷ ("sig" , hArg (weaken 2 sigTy)) ∷ ("s'" , hArg (weaken 3 sTy)) ∷ []
+      iso ← extendRawContext isoCxt $ newMeta unknown
+      let isolam = `λ⟅ "c" ⟆⇒ `λ⟅ "s" ⟆⇒ `λ⟅ "sig" ⟆⇒ `λ⟅ "s'" ⟆⇒ iso
+      definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ isolam ⟨∷⟩ [])
       defineFun compName [ nonBindingClause definition ]
+      extendRawContext isoCxt $ λ _ → derive⇔ n stsConstrs iso
 
 private
-  --open import Tactic.Defaults
   open import MyDebugOptions
 
   module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
