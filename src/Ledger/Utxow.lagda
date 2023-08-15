@@ -28,15 +28,17 @@ getVKeys = mapPartial isInj₁
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isInj₂
 
-witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded utxo txb = getVKeys $
+credsNeeded : UTxO → TxBody → ℙ Credential
+credsNeeded utxo txb =
     map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
+  ∪ map cwitness (setFromList $ txcerts txb)
   ∪ map GovVote.credential (setFromList $ txvote txb)
 
+witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
+witsVKeyNeeded utxo = getVKeys ∘ credsNeeded utxo
+
 scriptsNeeded : UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded utxo txb = getScripts $
-    map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
-  ∪ map GovVote.credential (setFromList $ txvote txb)
+scriptsNeeded utxo = getScripts ∘ credsNeeded utxo
 
 scriptsP1 : TxWitnesses → ℙ P1Script
 scriptsP1 txw = mapPartial isInj₁ (scripts txw)
