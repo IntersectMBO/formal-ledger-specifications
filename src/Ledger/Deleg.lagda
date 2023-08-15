@@ -40,6 +40,14 @@ data DCert : Set where
   deregdrep   : Credential → DCert
   ccreghot    : Credential → Maybe KeyHash → DCert
 
+cwitness : DCert → Credential
+cwitness (delegate c _ _ _)  = c
+cwitness (regpool c _)       = c
+cwitness (retirepool c _)    = c
+cwitness (regdrep c _ _)     = c
+cwitness (deregdrep c)       = c
+cwitness (ccreghot c _)      = c
+
 record CertEnv : Set where
   constructor ⟦_,_,_⟧ᶜ
   field epoch  : Epoch
