@@ -53,7 +53,7 @@ private
            role : GovRole
            cred : Credential
            v : Vote
-           c : Coin
+           c d : Coin
            addr : RwdAddr
            a : GovAction
            prev : NeedsHash a
@@ -82,8 +82,9 @@ data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovPropo
 
   GOV-Propose : ∀ {x k} → let open GovEnv Γ; open PParams pparams using (govExpiration; govDeposit) in
     actionWellFormed a ≡ true
+    → d ≡ govDeposit
     ────────────────────────────────
-    (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; prevAction = prev } ,GOV'⦈
+    (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; deposit = d ; prevAction = prev } ,GOV'⦈
               addAction s (govExpiration +ᵉ epoch) (txid , k) addr a prev
 
 _⊢_⇀⦇_,GOV⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set

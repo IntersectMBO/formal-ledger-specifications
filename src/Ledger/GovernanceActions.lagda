@@ -211,6 +211,7 @@ record GovProposal : Set where
   field returnAddr  : RwdAddr
         action      : GovAction
         prevAction  : NeedsHash action
+        deposit     : Coin
         anchor      : Anchor
 \end{code}
 } %% end small
