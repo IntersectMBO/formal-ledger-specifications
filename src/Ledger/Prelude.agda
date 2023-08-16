@@ -78,22 +78,6 @@ abstract
   setFromList : {A : Set} → List A → ℙ A
   setFromList = id
 
-  setMapWith∈ : ∀ {A B : Set} → (xs : ℙ A) → (∀ {x} → x ∈ xs → B) → ℙ B
-  setMapWith∈ xs f = mapWith∈ xs f
-
-  open import Data.List.Relation.Unary.Any hiding (map)
-
-  mapʳWith∈ : ∀ {A B B' : Set} → (xs : ℙ (A × B)) → (∀ {x} → x ∈ xs → B') → ℙ (A × B')
-  mapʳWith∈ [] f = []
-  mapʳWith∈ (x ∷ xs) f = (proj₁ x , f (here refl)) ∷ mapʳWith∈ xs (f ∘ there)
-
-  mapʳ' : ∀ {A B B' : Set} → (B → B') → ℙ (A × B) → ℙ (A × B')
-  mapʳ' f [] = []
-  mapʳ' f (x ∷ xs) = ((proj₁ x) , f (proj₂ x)) ∷ mapʳ' f xs
-
-  ≟-∅ : {A : Set} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → Dec (X ≡ ∅)
-  ≟-∅ = Decˡ.≟-∅
-
 open import Axiom.Set.Rel th public
   hiding (_∣'_; _↾'_)
 
@@ -158,37 +142,3 @@ setToHashMap : ∀ {A B : Set} → {{Hashable A B}} -> ℙ A → B ⇀ A
 setToHashMap x with mapˡ-inj-dup x hash hashInj
 ... | ans  = _ᵐ (setToHashRel x) {{record { isLeftUnique = λ x₁ x₂ → ans x₁ x₂ }}}
 
-{-
-mapʳ-uniq : {f : B → B'} → left-unique R → left-unique (mapʳ f R)
-mapʳ-uniq uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
-  ((_ , refl , Ha) , (_ , refl , Hb)) → cong _ $ uniq Ha Hb
-
-
-∈-map : ∀ {f : A → B} {b} → (∃[ a ] b ≡ f a × a ∈ X) ⇔ b ∈ map f X
-∈-map = proj₂ $ replacement _ _
-
-∈-map⁻' : ∀ {f : A → B} {X} {b} → b ∈ map f X → (∃[ a ] b ≡ f a × a ∈ X)
-∈-map⁻' = from ∈-map
-
-∈-map′ : ∀ {f : A → B} {a} → a ∈ X → f a ∈ map f X
-∈-map′ {a = a} a∈X = to ∈-map (a , refl , a∈X)
-
--}
-
-open import Data.List.Membership.Propositional.Properties using (map-mapWith∈)
-
-
--- mapWith∈≗map
--- ∈-map⁻
-
-mapʳWith∈-uniq : ∀ {A B B' : Set}
-                   {R : Rel A B}
-                   {f : ∀ {x} → x ∈ R → B'}
-                   → left-unique R
-                   → left-unique (mapʳWith∈ R f)
-mapʳWith∈-uniq uniq h h' = {!!}
-
-mapValues' : ∀ {A B B' : Set} → (m : A ⇀ B) → (∀ {x} → x ∈ (proj₁ m) → B') → A ⇀ B'
-mapValues' (R , uniq) f = (mapʳWith∈ R f) , {!mapʳWith∈-uniq' ?!}
-
--- mapʳWith∈-uniq uniq
