@@ -163,9 +163,19 @@ spendScripts txin utxo with txin ∈? dom (utxo ˢ)
 ... | no ¬p = nothing
 ... | yes p = just ((Spend txin) , (proj₂ (lookupMap utxo p)))
 
+rwdScripts : RwdAddr → Maybe (ScriptPurpose × ScriptHash)
+rwdScripts a with isScriptRwdAddr? a
+... | no ¬p = nothing
+... | yes (SHisScript sh) = just (Rwrd a , sh)
+
+certScripts : Set
+certScripts = {!!}
+
 scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
 scriptsNeeded utxo txb = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) (txins txb)
-                          ∪ {!!}
+                         ∪ mapPartial (λ x → rwdScripts x) (dom $ proj₁ $ (txwdrls txb))
+                         ∪ {!!}
+                         ∪ mapSet (λ x → (Mint x) , {!!}) (policies (mint txb))
 
 
 collectPhaseTwoScriptInputs : PParams → Tx
