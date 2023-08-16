@@ -13,9 +13,9 @@ let
     version = "1.7.2";
     src = fetchFromGitHub {
       repo = "agda-stdlib";
-      owner = "agda";
-      rev = "668f0bbd498cfae253605fd7132c3b9ed52cc4ac";
-      sha256 = "4jNFpDtVWecwpuzZMtQb0kJ9s4LkjBYx+1c0n/Ft9tw=";
+      owner = "input-output-hk";
+      rev = "bdfab77b179c937856c49d72321ca26e2a27d568";
+      sha256 = "+PMZjmMK5xz+3Va7RN1ErtQghzpUlzsc9JBUoL+iasc=";
     };
   });
 
@@ -24,11 +24,10 @@ let
     version = "0.1";
     src = fetchFromGitHub {
       repo = "stdlib-meta";
-      owner = "omelkonian";
-      rev = "761f81753b588d865b45acb44683b1b4042d78c0";
-      sha256 = "iGdZv18Ku+GZ+MikQWwWYv8vs8j59OXRB1xqYTmoqAc=";
+      owner = "input-output-hk";
+      rev = "897555aefd77c83e88492255641da3bcc4879461";
+      sha256 = "EIKcLjGdnI/6nSCI18v7kPxoojAWsz8O5d9wwol2M0w=";
     };
-    patches = [ ./stdlib-meta-update-imports.patch ];
     meta = { };
     libraryFile = "stdlib-meta.agda-lib";
     everythingFile = "Main.agda";
@@ -43,6 +42,17 @@ rec {
 
   agdaWithStdLibMeta = agdaWithPkgs deps;
   agda = agdaWithPkgs (deps ++ [ formalLedger ]);
+
+  latex = texlive.combine {
+    inherit (texlive)
+      scheme-small
+      xits
+      collection-latexextra
+      collection-latexrecommended
+      collection-mathscience
+      bclogo
+      latexmk;
+  };
 
   formalLedger = customAgda.agdaPackages.mkDerivation {
     pname = "formal-ledger";
@@ -82,19 +92,7 @@ rec {
         version = "0.1";
         src = "${formalLedger}";
         meta = { };
-        buildInputs = [
-           agdaWithStdLibMeta
-          (texlive.combine {
-            inherit (texlive)
-              scheme-small
-              xits
-              collection-latexextra
-              collection-latexrecommended
-              collection-mathscience
-              bclogo
-              latexmk;
-          })
-        ];
+        buildInputs = [ agdaWithStdLibMeta latex ];
         buildPhase = ''
           find ${dir} -name \*.lagda -exec agda --latex {} \;
           cd latex && latexmk -xelatex ${dir}/PDF.tex && cd ..

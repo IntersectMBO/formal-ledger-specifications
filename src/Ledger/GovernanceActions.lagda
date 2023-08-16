@@ -1,26 +1,21 @@
-\section{Governance actions\protect\footnotemark}
+\section{Governance actions}
 \label{sec:governance-actions}
-\footnotetext{See also: \href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-1694}{github.com/cardano-foundation/CIPs/CIP-1694}}
-%%\textit{Any Cardano user} will be allowed to submit a \defn{governance action}.
 We introduce three distinct bodies that have specific functions in the new governance framework:
 \begin{enumerate}
 \item
-  a constitutional committee
+  a constitutional committee (henceforth called \CC);
 \item
-  a group of delegate representatives (henceforth called \defn{DReps})
+  a group of delegate representatives (henceforth called \DReps);
 \item
-  the stake pool operators (henceforth called \defn{SPOs})
+  a group of stake pool operators (henceforth called \SPOs).
 \end{enumerate}
-Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
-The type of action and the state of the governance system determines which bodies must ratify it.
-Ratified actions are then \defn{enacted} on-chain, following a set of well-defined rules.
-\\[4pt]
-As with stake pools, any Ada holder may register to be a DRep and so choose to represent themselves and/or others.
-Also, as with stake pools, Ada holders may instead delegate their voting rights to any other DRep.
-Voting rights will be based on the total Ada that is delegated, as a whole number of Lovelace.
-\\[4pt]
-The most crucial aspect of this proposal is the notion of ``\textit{one Lovelace = one vote}''.
-
+%Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
+%The type of action and the state of the governance system determines which bodies must ratify it.
+%Ratified actions are then \defn{enacted} on-chain, following a set of well-defined rules.
+%\\[4pt]
+%As with stake pools, any Ada holder may register to be a DRep and so choose to represent themselves and/or others.
+%Also, as with stake pools, Ada holders may instead delegate their voting rights to any other DRep.
+%Voting rights will be based on the total Ada that is delegated, as a whole number of Lovelace.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 open import Ledger.Crypto
@@ -54,53 +49,8 @@ open import MyDebugOptions
 
 2ℚ = 1ℚ Data.Rational.+ 1ℚ
 \end{code}
-
-Figure~\ref{defs:governance} defines several data types used to represent governance actions including:
-\begin{itemize}
-  \item %%% \defn{identifier} (\AgdaSymbol{:}\,
-        \AgdaDatatype{GovActionId}---a pair consisting of a transaction id (\AgdaSymbol{:}\,\AgdaDatatype{TxId}) and a natural number (\AgdaSymbol{:}\,\AgdaDatatype{ℕ});
-  \item %%% \defn{role} (\AgdaSymbol{:}\,
-        \AgdaDatatype{GovRole}---enumerates the available voter roles: \AgdaInductiveConstructor{CC}, \AgdaInductiveConstructor{DRep}, \AgdaInductiveConstructor{SPO};
-  \item %%% \defn{voter delegation type} (\AgdaSymbol{:}\,
-        \AgdaDatatype{VDeleg}---enumerates the available ways to delegate votes: by a credential
-        (\AgdaInductiveConstructor{credVoter}), abstention (\AgdaInductiveConstructor{abstainRep}), or expressing no confidence (\AgdaInductiveConstructor{noConfidenceRep});
-  \item %%% \defn{anchor} (\AgdaSymbol{:}\,
-        \AgdaRecord{Anchor}---an anchor with fields \AgdaField{url} (\AgdaSymbol{:}\,\AgdaDatatype{String}) and a document \AgdaField{hash} (\AgdaSymbol{:}\,\AgdaDatatype{DocHash});
-  \item %%% \defn{governance action} (\AgdaSymbol{:}\,
-        \AgdaDatatype{GovAction}---enumerates the available governance actions
-        (\AgdaInductiveConstructor{NoConfidence}, \AgdaInductiveConstructor{NewCommittee},
-        \AgdaInductiveConstructor{NewConstitution}, \AgdaInductiveConstructor{TriggerHF},
-        \AgdaInductiveConstructor{ChangePParams}, \AgdaInductiveConstructor{TreasuryWdrl}, or
-        \AgdaInductiveConstructor{Info}).
-\end{itemize}
-The \AgdaDatatype{GovAction} type represents the seven available \defn{governance actions} described in Table~\ref{fig:types-of-governance-actions}.
-\begin{table}[h]
-\begin{longtable}[]{@{}
- >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.35}}
- >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.35}}
- >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.15}}@{}}
-\hline
-\textbf{Action}  & \textbf{Description}  &  \textbf{Agda type}\\
-\hline
-\endhead
-1. Motion of no-confidence & A motion to create a \defn{state of no-confidence} in the current constitutional committee & \AgdaInductiveConstructor{NoConfidence}\\
-2. New constitutional committee and/or threshold and/or term limits & Changes to the members of the constitutional committee and/or to its signature threshold and/or term limits & \AgdaInductiveConstructor{NewCommittee}\\
-3. Updates to the Constitution & A modification to the off-chain Constitution, recorded as an on-chain hash of the text document & \AgdaInductiveConstructor{NewConstitution}\\
-4. Hard fork\footnotemark &
-  Initiation triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade & \AgdaInductiveConstructor{TriggerHF} \\
-5. Protocol Parameter Changes & Any change to \textit{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'') & \AgdaInductiveConstructor{ChangePParams}\\
-6. Treasury Withdrawals & Movements from the treasury, sub-categorized into small, medium or large withdrawals (based on the amount of Lovelace to be withdrawn). The thresholds for treasury withdrawals are discussed below. & \AgdaInductiveConstructor{TreasuryWdrl} \\
-7. Info & An action that has no effect on-chain, other than an on-chain record. & \AgdaInductiveConstructor{Info}\\
-\hline
-\end{longtable}
-\caption{Types of governance actions}
-\label{tab:types-of-governance-actions}
-\end{table}
-\footnotetext{There are many varying definitions of the term ``hard fork'' in the blockchain industry. Hard forks typically refer
-  to non-backwards compatible updates of a network. In Cardano, we formalize the definition slightly more by calling any upgrade that
-  would lead to \emph{more blocks} being validated a ``hard fork'' and force nodes to comply with the new protocol version, effectively
-  obsoleting nodes that are unable to handle the upgrade.}
 \begin{figure*}[h]
+{\small
 \begin{code}
 GovActionID : Set
 GovActionID = TxId × ℕ
@@ -128,10 +78,40 @@ data GovAction : Set where
   TreasuryWdrl     : (Credential ⇀ Coin)              → GovAction
   Info             :                                    GovAction
 \end{code}
+} %% end small
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
-
+Figure~\ref{defs:governance} defines several data types used to represent governance actions including:
+\begin{itemize}
+  \item \GovActionID is \acl{GovActionID}; specifically, it is a pair consisting of \ac{TxId} and a natural number;
+  \item \GovRole is \acl{GovRole}; it denotes one of three available voter roles defined above (\CC, \DRep, \SPO);
+  \item \VDeleg is \acl{VDeleg}; is denotes one of three ways to delegate votes: \credVoter, \abstainRep, or \noConfidenceRep;
+  \item \Anchor is \acl{Anchor}---a url and a document hash;
+  \item \GovAction is \acl{GovAction}---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
+\end{itemize}
+\begin{figure*}[h]
+\begin{longtable}[]{@{}
+>{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2}}
+>{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.75}}@{}}
+\GovAction  & description\\[4pt]
+\hline
+\endhead
+\NoConfidence            & \acl{NoConfidence}\\
+\NewCommittee            & \acl{NewCommittee}\\
+\NewConstitution         & \acl{NewConstitution}\\
+\TriggerHF               & \acl{TriggerHF}; requires a prior software upgrade\footnotemark  \\
+\ChangePParams           & \acl{ChangePParams}; excludes changes to major protocol versions (``hard forks'')\\
+\TreasuryWdrl            & \acl{TreasuryWdrl}\\
+\Info                    & \acl{Info} apart from the on-chain record
+\end{longtable}
+\caption{Types of governance actions}
+\label{fig:types-of-governance-actions}
+\end{figure*}
+\footnotetext{There are many varying definitions of the term ``hard fork'' in the blockchain industry. Hard forks typically refer
+  to non-backwards compatible updates of a network. In Cardano, we formalize the definition slightly more by calling any upgrade that
+  would lead to \emph{more blocks} being validated a ``hard fork'' and force nodes to comply with the new protocol version, effectively
+  obsoleting nodes that are unable to handle the upgrade.}
 \begin{code}[hide]
 actionWellFormed : GovAction → Bool
 actionWellFormed (ChangePParams x _) = ppdWellFormed x
@@ -156,74 +136,65 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
       nothing  → 2ℚ
 
     pparamThreshold : PParamGroup → ℚ
-    pparamThreshold NetworkGroup    = P5a
-    pparamThreshold EconomicGroup   = P5b
-    pparamThreshold TechnicalGroup  = P5c
-    pparamThreshold GovernanceGroup = P5d
+    pparamThreshold NetworkGroup     = P5a
+    pparamThreshold EconomicGroup    = P5b
+    pparamThreshold TechnicalGroup   = P5c
+    pparamThreshold GovernanceGroup  = P5d
 
     P5 : UpdateT → ℚ
     P5 ppu = maximum $ map pparamThreshold (updateGroups ppu)
 
   threshold : GovAction → GovRole → ℚ
-  threshold NoConfidence         = λ { CC → 0ℚ          ; DRep → P1   ; SPO → Q1 }
-  threshold (NewCommittee _ _ _) = case ccThreshold' of λ where
-                        (just _) → λ { CC → 0ℚ          ; DRep → P2a  ; SPO → Q2a }
-                        nothing  → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
-  threshold (NewConstitution _)  = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
-  threshold (TriggerHF _)        = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
-  threshold (ChangePParams x _)  = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
-  threshold (TreasuryWdrl _)     = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
-  threshold Info                 = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
-
-NeedsHash : GovAction → Set
-NeedsHash NoConfidence         = GovActionID
-NeedsHash (NewCommittee _ _ _) = GovActionID
-NeedsHash (NewConstitution _)  = GovActionID
-NeedsHash (TriggerHF _)        = GovActionID
-NeedsHash (ChangePParams _ _)  = GovActionID
-NeedsHash (TreasuryWdrl _)     = ⊤
-NeedsHash Info                 = ⊤
+  threshold NoConfidence          = λ { CC → 0ℚ          ; DRep → P1   ; SPO → Q1 }
+  threshold (NewCommittee _ _ _)  = case ccThreshold' of λ where
+                        (just _)  → λ { CC → 0ℚ          ; DRep → P2a  ; SPO → Q2a }
+                        nothing   → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
+  threshold (NewConstitution _)   = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
+  threshold (TriggerHF _)         = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
+  threshold (ChangePParams x _)   = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
+  threshold (TreasuryWdrl _)      = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
+  threshold Info                  = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
 \end{code}
+\subsection{Voting and ratification}
+\label{sec:voting-and-ratification}
+Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
+The type of action and the state of the governance system determines which bodies must ratify it.
+Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
+\begin{figure*}[h]
+{\small
+\begin{code}
+NeedsHash : GovAction → Set
+NeedsHash NoConfidence          = GovActionID
+NeedsHash (NewCommittee _ _ _)  = GovActionID
+NeedsHash (NewConstitution _)   = GovActionID
+NeedsHash (TriggerHF _)         = GovActionID
+NeedsHash (ChangePParams _ _)   = GovActionID
+NeedsHash (TreasuryWdrl _)      = ⊤
+NeedsHash Info                  = ⊤
 
-A governance action is an on-chain event that is triggered by a transaction, and there is a deadline after which
-the governance action cannot be enacted.
+HashProtected : Set → Set
+HashProtected A = A × GovActionID
+\end{code}
+} %% end small
+\caption{NeedsHash and HashProtected types}
+\label{fig:needshash-and-hashprotected-types}
+\end{figure*}
+Figure~\ref{fig:needshash-and-hashprotected-types} defines types that are used in
+ratification (for \verifyPrev) where we check that the stored hash matches the one
+attached to the action we want to ratify.
 \begin{itemize}
 \item
-  \defn{Ratification}. An action is said to be \defn{ratified} when it gathers enough votes in its favor (through the rules and parameters that are detailed
-  below).
+  \defn{Ratification}. An action is said to be \defn{ratified} when it gathers enough votes in its favor
+  (according to the rules described in Section~\ref{sec:ratification}).
 \item
-  \defn{Expiration}. An action that doesn't collect sufficient \AgdaField{yes} votes before its deadline is said to have \defn{expired}.
+  \defn{Expiration}. An action that doesn't collect sufficient \yes votes before its deadline is said to have \defn{expired}.
 \item
   \defn{Enactment}. An action that has been ratified is said to be \defn{enacted} once it has been activated on the network.
 \end{itemize}
+See Section~\ref{sec:ratification} for more on the ratification process.
 
-
-\subsection{Voting and ratification}
-\label{sec:voting-and-ratification}
-A governance action is an on-chain event that is triggered by a transaction. There is a deadline after which
-the governance action cannot be enacted.
-\begin{itemize}
-\item
-  A governance action is said to be \defn{ratified} when it gathers enough votes in its favor
-  (through the rules and parameters that are detailed elsewhere [TODO: insert reference]).
-\item
-  A governance action is said to have \defn{expired} if it does not collect sufficient \AgdaField{yes} votes before the deadline.
-\item
-  An action that has been ratified is said to be \defn{enacted} once it has been activated on the network.
-\end{itemize}
-
-The data type \AgdaDatatype{Vote} represents the different voting options: \AgdaInductiveConstructor{yes}, \AgdaInductiveConstructor{no}, or \AgdaInductiveConstructor{abstain}.
-Each \AgdaField{vote} is recorded in a \AgdaRecord{GovVote} record along with the following meta-data:
-\begin{itemize}
-\item \FieldTyped{gid}{GovActionID} (governance action identifier),
-\item \FieldTyped{role}{GovRole},
-\item \FieldTyped{credential}{Credential},
-\item \FieldTyped{anchor}{Maybe~Anchor}.
-\end{itemize}
-A \defn{governance action proposal} is recorded in a \AgdaRecord{GovProposal} record which includes fields for
-a return address (\FieldTyped{returnAddr}{RwdAddr}), the proposed governance action (\FieldTyped{action}{GovAction}),
-a hash of the previous governance action (\FieldTyped{prevAction}{NeedsHash action}), and an anchor. (See Figure~\ref{defs:governance-votes}.)
 \begin{figure*}[h]
+{\small
 \begin{code}
 data Vote : Set where
   yes      : Vote
@@ -243,13 +214,23 @@ record GovProposal : Set where
         prevAction  : NeedsHash action
         anchor      : Anchor
 \end{code}
+} %% end small
 \caption{Governance action proposals and votes}
 \label{defs:governance-votes}
 \end{figure*}
-\emph{Any Ada holder} can submit a governance action to the chain.
-They must provide a deposit of \AgdaBound{govDeposit} Lovelace, which will be returned when the action is finalized (whether it is \defn{ratified} or has \defn{expired}).
-The deposit amount will be added to the \defn{deposit pot}, similar to stake key deposits. It will also be counted towards the stake of the reward address it will be paid
-back to, to not reduce the submitter's voting power to vote on their own (and competing) actions.
+The data type \Vote represents the different voting options: \yes, \no, or \abstain.
+Each \vote is recorded in a \GovVote record along with the following data:
+a governance action identifier, a role, a credential, and an anchor (of types \GovActionID, \GovRole, \Credential, and \MaybeAnchor, respectively).
+
+
+A \defn{governance action proposal} is recorded in a \GovProposal record which includes fields for
+a return address, the proposed governance action, a hash of the previous governance action, and an anchor (see Figure~\ref{defs:governance-votes}).
+
+To submit a governance action to the chain one must provide a deposit which will be returned when
+the action is finalized (whether it is \defn{ratified} or has \defn{expired}).
+The deposit amount will be added to the \defn{deposit pot}, similar to stake key deposits. It will also be
+counted towards the stake of the reward address it will be paid back to, to not reduce the submitter's
+voting power to vote on their own (and competing) actions.
 \\[4pt]
 \textbf{Remarks}.
 \begin{enumerate}
@@ -265,27 +246,29 @@ instance
   unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 \end{code}
 
-See Section~\ref{sec:ratification} for more on the ratification process.
+\subsection{Protocol parameters and governance actions}
+\label{sec:protocol-parameters-and-governance-actions}
+Recall from Section~\ref{sec:protocol-parameters}, parameters used in the Cardano ledger are grouped according to
+the general purpose that each parameter serves (see Figure~\ref{fig:protocol-parameter-declarations}).
+Specifically, the groups are as follows: \NetworkGroup, \EconomicGroup, \TechnicalGroup, and \GovernanceGroup.
+This allows voting/ratification thresholds to be set by group, though we do not require that each protocol
+parameter governance action be confined to a single group. In case a governance action carries updates
+for multiple parameters from different groups, the maximum threshold of all the groups involved will
+apply to any given such governance action.
 
 \subsection{Enactment}
 \label{sec:enactment}
-\defn{Enactment} of a governance action is carried out as an \defn{enact transition}
-which requires an \defn{enact environment} (\AgdaSymbol{:}\,\AgdaRecord{EnactEnv}), an \defn{enact state}
-(\AgdaSymbol{:}\,\AgdaRecord{EnactState}) representing the existing state (prior to enactment), the voted on
-governance action (that achieved enough votes to enact), and the state that results from enacting the given
-governance action (\AgdaSymbol{:}\,\AgdaRecord{EnactState}). (See Figure~\ref{fig:enactment-types}.)
+\defn{Enactment} of a governance action is carried out as an \defn{enact transition} which requires an
+\defn{enact environment} an \defn{enact state} representing the existing state (prior to enactment),
+the voted on governance action (that achieved enough votes to enact), and the state that results from
+enacting the given governance action (see Figure~\ref{fig:enactment-types}).
 
-The \AgdaRecord{EnactEnv} record type represents the environment for enacting a governance action. %; the type has only one field, \FieldTyped{gid}{GovActionID}.
-
-The \AgdaRecord{EnactState} record type represents the state for enacting a governance action.
-It contains various fields such as \AgdaField{cc} (constitutional committee), \AgdaField{constitution},
-\AgdaField{pv} (protocol version), \AgdaField{pparams} (protocol parameters), \AgdaField{withdrawals}
-(withdrawals from treasury), and \AgdaField{treasury} (treasury balance).
+The type \EnactEnv is \acl{EnactEnv}, while \EnactState is \acl{EnactState}.
+The latter contains fields for the constitutional committee, constitution,
+protocol version, protocol parameters, withdrawals from treasury, and treasury balance.
 \begin{figure*}[h]
+{\small
 \begin{code}
-HashProtected : Set → Set
-HashProtected A = A × GovActionID
-
 record EnactEnv : Set where
   constructor ⟦_⟧ᵉ
   field gid  : GovActionID
@@ -298,6 +281,7 @@ record EnactState : Set where
         withdrawals   : Credential ⇀ Coin
         treasury      : Coin
 \end{code}
+} %% end small
 \caption{Enactment types}
 \label{fig:enactment-types}
 \end{figure*}
@@ -319,16 +303,17 @@ private variable
 
 instance
   _ = +-0-monoid
+
+data
 \end{code}
 
-The data type \verb!_⊢_⇀⦇_,ENACT⦈_! defines the transition relation for enacting a governance action.
-It represents how the \AgdaBound{EnactState} changes when a specific governance action is enacted.
-(See Figure~\ref{fig:enact-transition-system}.)
-
+The relation \ENACTsyntax defines the transition relation for enacting a governance action.
+It represents how the \EnactState changes when a specific governance action is enacted
+(see Figure~\ref{fig:enact-transition-system}).
 \begin{figure*}[h]
 {\small
 \begin{code}
-data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
+  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
   Enact-NoConf    : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈  record s { cc = nothing , gid }
   Enact-NewComm   : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈ let
     old = maybe proj₁ ∅ᵐ (proj₁ (EnactState.cc s))
@@ -346,7 +331,7 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
                ; treasury     = s .treasury     ∸  newWdrls }
   Enact-Info      : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
+} %% end small
 \caption{ENACT transition system}
 \label{fig:enact-transition-system}
-}
 \end{figure*}

@@ -13,6 +13,7 @@ in {
   shell = mkShell {
     nativeBuildInputs = [
       specs.agdaWithStdLibMeta
+      specs.latex
     ];
   };
 

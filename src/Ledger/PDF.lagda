@@ -35,49 +35,18 @@
 \floatstyle{boxed}
 \restylefloat{figure}
 
-\usepackage{iohk}
+\usepackage{iohk}  %% (we moved some custom macros to `latex/iohk.sty` and `latex/fls-macros.tex`)
 
 \usepackage[hidelinks]{hyperref}
 \usepackage[links]{agda}
-
-\newcommand{\N}{\ensuremath{\mathbb{N}}}
-\newcommand{\TxBody}{\type{TxBody}}
-\newcommand{\TxWitness}{\type{TxWitness}}
-\newcommand{\Tx}{\type{Tx}}
-\newcommand{\Ix}{\type{Ix}}
-\newcommand{\TxId}{\type{TxId}}
-\newcommand{\Addr}{\type{Addr}}
-\newcommand{\UTxO}{\type{UTxO}}
-\newcommand{\Coin}{\type{Coin}}
-\newcommand{\TxIn}{\type{TxIn}}
-\newcommand{\TxOut}{\type{TxOut}}
-\newcommand{\UTxOEnv}{\type{UTxOEnv}}
-\newcommand{\UTxOState}{\ensuremath{\type{UTxOState}}}
-
-%%
-%% Functions
-%%
-\newcommand{\txins}[1]{\fun{txins}~ \var{#1}}
-\newcommand{\txouts}[1]{\fun{txouts}~ \var{#1}}
-\newcommand{\txid}[1]{\fun{txid}~ \var{#1}}
-\newcommand{\outs}[1]{\fun{outs}~ \var{#1}}
-\newcommand{\balance}[1]{\fun{balance}~ \var{#1}}
-\newcommand{\txfee}[1]{\fun{txfee}~ \var{#1}}
+\usepackage{pifont}  %% (needed for checkmark, `\ding{51}`)
 
 \newtheorem{property}{Property}[section]
 
-%% -- DEFINITIONS -----------------------------------------------------------
-%% Set the desired typeface of defined terms here and, at the
-%% first occurrence of such a term, enclose it in `\defn{...}`.
-\newcommand{\defn}[1]{\textit{#1}}   %  defined terms are typeset in italics
-%% \newcommand{\defn}[1]{\textbf{#1}}   %  defined terms are typeset in bold
-
-%% -- For typesetting an Agda field name along with its type -----------------
-\newcommand{\FieldTyped}[2]{\AgdaField{#1}\,\AgdaSymbol{:}\,\AgdaDatatype{#2}}
-
-\usepackage{pifont}  %% needed for checkmark (\ding{51}).
-
 \begin{document}
+
+\input{acronyms}
+
 \tableofcontents
 
 \begin{code}[hide]
@@ -114,7 +83,7 @@ open import Ledger.TokenAlgebra.ValueSet
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
-\include{Ledger/Tally}
+%\include{Ledger/Tally}
 \include{Ledger/Deleg}
 \include{Ledger/Ledger}
 \include{Ledger/Ratify}

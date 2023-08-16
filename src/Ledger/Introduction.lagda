@@ -9,6 +9,11 @@ open import Prelude
 
 Repository: https://github.com/input-output-hk/formal-ledger-specifications
 
+This document describes the formalization of the Cardano ledger specification in the Agda programming
+language and proof assistant. The specification formalized here is that of the Conway era, described
+in detail in the Cardano Improvement Proposal (CIP) 1694,
+\href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-1694}{github.com/cardano-foundation/CIPs/CIP-1694}.
+
 \subsection{Separation of concerns}
 
 The \emph{Cardano Node} consists of three pieces:
