@@ -68,7 +68,7 @@ data GovAction : Set where
   NewConstitution  : DocHash                          → GovAction
   TriggerHF        : ProtVer                          → GovAction
   ChangePParams    : UpdateT → PPHash                 → GovAction
-  TreasuryWdrl     : (Credential ⇀ Coin)              → GovAction
+  TreasuryWdrl     : (RwdAddr ⇀ Coin)                 → GovAction
   Info             :                                    GovAction
 \end{code}
 } %% end small
@@ -281,7 +281,7 @@ record EnactState : Set where
         constitution  : HashProtected DocHash
         pv            : HashProtected ProtVer
         pparams       : HashProtected PParams
-        withdrawals   : Credential ⇀ Coin
+        withdrawals   : RwdAddr ⇀ Coin
         treasury      : Coin
 \end{code}
 } %% end small
@@ -300,7 +300,7 @@ private variable
   dh : DocHash
   h : PPHash
   v : ProtVer
-  wdrl : Credential ⇀ Coin
+  wdrl : RwdAddr ⇀ Coin
   newTreasury : Coin
   gid : GovActionID
 
