@@ -112,17 +112,13 @@ private variable
 \end{code}
 
 \begin{code}
-requiredDeposit : PParams → Maybe Credential → Coin
-requiredDeposit pp (just x) = PParams.poolDeposit pp
+requiredDeposit : {A : Set} → PParams → Maybe A → Coin
+requiredDeposit pp (just _) = PParams.poolDeposit pp
 requiredDeposit pp nothing = 0
 
-requiredVDelegDeposit : PParams → Maybe VDeleg → Coin
-requiredVDelegDeposit pp (just _) = PParams.poolDeposit pp
-requiredVDelegDeposit pp nothing = 0
-
-insertIfPresent : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ⇀ B → A ⇀ B
-insertIfPresent x nothing  m = m
-insertIfPresent x (just y) m = insert m x y
+insertIfJust : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ⇀ B → A ⇀ B
+insertIfJust x nothing  m = m
+insertIfJust x (just y) m = insert m x y
 \end{code}
 \caption{Types \& functions used for CERTS transition system}
 \end{figure*}
@@ -131,10 +127,10 @@ insertIfPresent x (just y) m = insert m x y
 \begin{code}
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
   DELEG-delegate :
-    d ≡ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc
+    d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc
     ────────────────────────────────
     pp ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-         ⟦ insertIfPresent c mv vDelegs , insertIfPresent c mc sDelegs , rwds ⟧ᵈ
+         ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ⟧ᵈ
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
@@ -208,13 +204,13 @@ open import MyDebugOptions
 
 Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_
 Computational-DELEG .compute pp ⟦ vDelegs , sDelegs , rewards ⟧ᵈ (delegate c mv mc d) =
-  ifᵈ d ≡ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc
-    then just ⟦ insertIfPresent c mv vDelegs , insertIfPresent c mc sDelegs , rewards ⟧ᵈ
+  ifᵈ d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc
+    then just ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rewards ⟧ᵈ
     else nothing
 Computational-DELEG .compute Γ s _ = nothing
 Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ , rewards ⟧ᵈ} {cert} {s'} = mk⇔
   (case cert return (λ c → compute Computational-DELEG pp ⟦ s₁ , s₂ , rewards ⟧ᵈ c ≡ just s' → pp ⊢ ⟦ s₁ , s₂ , rewards ⟧ᵈ ⇀⦇ c ,DELEG⦈ s') of λ where
-    (delegate c mv mc d) h → case d ≟ requiredVDelegDeposit pp mv ⊔ requiredDeposit pp mc of λ where
+    (delegate c mv mc d) h → case d ≟ requiredDeposit pp mv ⊔ requiredDeposit pp mc of λ where
       (yes p) → subst _ (just-injective $ by-reduceDec h) (DELEG-delegate {mv = mv} {mc} {s₁} {s₂} {rewards} {c} p)
       (no ¬p) → case by-reduceDec h of λ ()
     (regpool x x₁) → λ ()
@@ -223,7 +219,7 @@ Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ , rewards ⟧ᵈ} {cer
     (deregdrep x) → λ ()
     (ccreghot x x₁) → λ ())
   (λ where (DELEG-delegate {mv = mv} {mc} {vDelegs} {sDelegs} {rwds} {c} h) → by-reduceDecInGoal
-             (refl {x = just ⟦ insertIfPresent c mv vDelegs , insertIfPresent c mc sDelegs , rewards ⟧ᵈ}))
+             (refl {x = just ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rewards ⟧ᵈ}))
 
 --Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_
 --Computational-CERTS .compute     = {!!}
