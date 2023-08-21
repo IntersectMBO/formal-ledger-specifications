@@ -30,8 +30,9 @@ defined transition systems.
 \begin{figure*}[h]
 \begin{code}
 record LEnv : Set where
-  constructor ⟦_,_⟧ˡᵉ
+  constructor ⟦_,_,_⟧ˡᵉ
   field slot     : Slot
+        ppolicy  : Maybe ScriptHash
         pparams  : PParams
 
 record LState : Set where
