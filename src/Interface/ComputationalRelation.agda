@@ -10,6 +10,9 @@ open import Interface.STS public
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
 
+import Data.Maybe as Maybe
+open import Data.Maybe.Properties using (map-nothing)
+
 private
   variable
     C S Sig : Set
@@ -28,6 +31,32 @@ module _ (STS : C → S → Sig → S → Set) where
   ExtendedRel : C → S → Sig → Maybe S → Set
   ExtendedRel c s sig (just s') = STS c s sig s'
   ExtendedRel c s sig nothing   = ∀ s' → ¬ STS c s sig s'
+
+  record Computational' : Set where
+    constructor MkComputational'
+    field
+      computeProof   : (c : C) (s : S) (sig : Sig) → Maybe (∃[ s' ] STS c s sig s')
+
+    compute : C → S → Sig → Maybe S
+    compute c s sig = Maybe.map proj₁ (computeProof c s sig)
+
+    field
+      completeness : (c : C) (s : S) (sig : Sig) (s' : S) → STS c s sig s' → compute c s sig ≡ just s'
+
+module _ {STS : C → S → Sig → S → Set} (comp' : Computational' STS) where
+
+  open Computational' comp'
+  open ≡-Reasoning
+
+  fromComputational' : Computational STS
+  fromComputational' .Computational.compute = compute
+  fromComputational' .Computational.≡-just⇔STS {c} {s} {sig} {s'} with computeProof c s sig in eq
+  ... | just (s'' , h) = mk⇔ (λ where refl → h) λ h' → begin just s''        ≡˘⟨ completeness _ _ _ _ h ⟩
+                                                             compute c s sig ≡⟨ completeness _ _ _ _ h' ⟩
+                                                             just s' ∎
+  ... | nothing        = mk⇔ (λ ()) λ h → begin nothing         ≡˘⟨ map-nothing eq ⟩
+                                                compute c s sig ≡⟨ completeness _ _ _ _ h ⟩
+                                                just s' ∎
 
 module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
 
