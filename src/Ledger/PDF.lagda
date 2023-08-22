@@ -36,7 +36,7 @@
 \restylefloat{figure}
 
 \usepackage{iohk}
-\usepackage{agda-macros}
+\usepackage{fls-macros}
 \usepackage[hidelinks]{hyperref}
 \usepackage[links]{agda}
 
