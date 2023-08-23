@@ -7,33 +7,25 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
-open import Ledger.Transaction
+open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Utxo (txs : TransactionStructure) where
 
 open import Ledger.Prelude hiding (Dec₁)
 
-open import Algebra using (CommutativeMonoid)
-open import Algebra.Structures
-open import Data.Integer using (ℤ; _⊖_)
-open import Data.Integer.Ext
-open import Data.List as List
-open import Data.Nat using (_≤?_; _≤_)
-open import Data.Nat.Properties using (+-0-monoid ; +-0-commutativeMonoid)
-open import Data.Sign using (Sign)
-open import Interface.Decidable.Instance
+open import Algebra                        using (CommutativeMonoid)
+open import Data.Integer.Ext               using (posPart; negPart)
+open import Data.Nat                       using (_≤?_; _≤_)
+open import Data.Nat.Properties            using (+-0-monoid; +-0-commutativeMonoid)
+open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁)
 
 open TransactionStructure txs
 open TxBody
-open TxWitnesses
-open Tx
 
-open import Ledger.Crypto
-open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra using (TokenAlgebra)
+open import Ledger.PParams epochStructure  using (PParams)
+open import Ledger.TokenAlgebra            using (TokenAlgebra)
 
 open import MyDebugOptions
---open import Tactic.Defaults
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
@@ -45,19 +37,6 @@ instance
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
-
-
--- utxoEntrySizeWithoutVal = 27 words (8 bytes)
-utxoEntrySizeWithoutVal : MemoryEstimate
-utxoEntrySizeWithoutVal = 8
-
-utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize (fst , v) = utxoEntrySizeWithoutVal + size v
-
--- TODO: fix this
-serSize : Value → MemoryEstimate
-serSize = λ _ → zero
-
 \end{code}
 
 Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
