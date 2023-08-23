@@ -25,8 +25,8 @@ open import Tactic.MonoidSolver         using (solve-macro)
 
 open TransactionStructure txs
 
-open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra ScriptHash
+open import Ledger.PParams epochStructure using (PParams)
+open import Ledger.TokenAlgebra ScriptHash using (TokenAlgebra)
 open import Ledger.Utxo txs renaming (Computational-UTXO to Computational-UTXO')
 
 open TxBody
