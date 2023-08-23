@@ -12,27 +12,24 @@ open import Prelude
 open import Ledger.Prelude
 
 import Data.Nat as ℕ
-open import Algebra.Morphism
-open import Data.Nat.Properties hiding (_≟_)
-open import Data.Sign using (Sign)
-open import Data.Integer as ℤ using (ℤ; _⊖_)
-open import Data.Integer.Ext           using (posPart ; negPart)
+open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
+open import Data.Nat.Properties         hiding (_≟_)
+open import Data.Sign                   using (Sign)
+open import Data.Integer as ℤ           using (ℤ; _⊖_)
+open import Data.Integer.Ext            using (posPart; negPart)
 import Data.Integer.Properties as ℤ
--- open import Interface.ComputationalRelation
-open import Relation.Binary         using (IsEquivalence)
-open import Tactic.Cong
-open import Tactic.EquationalReasoning
-open import Tactic.MonoidSolver
+open import Relation.Binary             using (IsEquivalence)
+open import Tactic.Cong                 using (cong!)
+open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
+open import Tactic.MonoidSolver         using (solve-macro)
 
 open TransactionStructure txs
 
-open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra ScriptHash
+open import Ledger.PParams epochStructure using (PParams)
+open import Ledger.TokenAlgebra ScriptHash using (TokenAlgebra)
 open import Ledger.Utxo txs renaming (Computational-UTXO to Computational-UTXO')
 
 open TxBody
-open TxWitnesses
-open Tx
 
 open Equivalence
 open Properties
