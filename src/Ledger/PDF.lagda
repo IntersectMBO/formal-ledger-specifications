@@ -36,26 +36,11 @@
 \restylefloat{figure}
 
 \usepackage{iohk}
-\usepackage{fls-macros}
+\usepackage{agda-latex-macros}
 \usepackage[hidelinks]{hyperref}
 \usepackage[links]{agda}
 
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
-
-%% -- These are now defined in agda-macros.sty --------------------
-%% \newcommand{\TxBody}{\type{TxBody}}
-%% \newcommand{\TxWitness}{\type{TxWitness}}
-%% \newcommand{\Tx}{\type{Tx}}
-%% \newcommand{\Ix}{\type{Ix}}
-%% \newcommand{\TxId}{\type{TxId}}
-%% \newcommand{\Addr}{\type{Addr}}
-%% \newcommand{\UTxO}{\type{UTxO}}
-%% \newcommand{\Coin}{\type{Coin}}
-%% \newcommand{\TxIn}{\type{TxIn}}
-%% \newcommand{\TxOut}{\type{TxOut}}
-%% \newcommand{\UTxOEnv}{\type{UTxOEnv}}
-%% \newcommand{\UTxOState}{\ensuremath{\type{UTxOState}}}
-%% ----------------------------------------------------------------------
 
 %%
 %% Functions
