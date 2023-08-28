@@ -198,7 +198,7 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   concatMapˢ : (A → Set B) → Set A → Set B
   concatMapˢ f a = proj₁ $ unions (map f a)
 
-  ∈-concatMapˢ : {y : B} {f : A → Set B} → (∃[ x ] x ∈ X × y ∈ f x) ⇔ y ∈ concatMapˢ f X 
+  ∈-concatMapˢ : {y : B} {f : A → Set B} → (∃[ x ] x ∈ X × y ∈ f x) ⇔ y ∈ concatMapˢ f X
   ∈-concatMapˢ {X = X} {y} {f} =
     (∃[ x ] x ∈ X × y ∈ f x)
       ∼⟨ ∃-cong′ (λ {x} → ∃-≡ (λ T → x ∈ X × y ∈ T)) ⟩
@@ -305,6 +305,10 @@ record Theoryᵈ : Type₁ where
 
   _∈ᵇ_ : ⦃ DecEq A ⦄ → A → Set A → Bool
   a ∈ᵇ X = ⌊ a ∈? X ⌋
+
+  instance
+    Dec-∈ : ∀ {A} → ⦃ DecEq A ⦄ → {x : A} {X : Set A} → Dec (x ∈ X)
+    Dec-∈ {x = x} {X} = x ∈? X
 
   allᵇ : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Bool
   allᵇ P? X = ⌊ all? P? {X} ⌋
