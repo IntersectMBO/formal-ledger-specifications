@@ -97,3 +97,23 @@ module _ {STS : C → S → Sig → S → Set} (comp comp' : Computational STS) 
 Computational⇒Dec' : ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Set} ⦃ comp : Computational STS ⦄
                       → Dec (STS c s sig s')
 Computational⇒Dec' ⦃ comp = comp ⦄ = Computational⇒Dec comp
+
+module _ {STS : C → S → Sig → S → Set} ⦃ comp : Computational' STS ⦄ where
+
+  open Computational' ⦃...⦄
+
+  instance
+    Computational'-SS⇒BS : Computational' (SS⇒BS (STS ∘ proj₁))
+    Computational'-SS⇒BS .computeProof c s [] = just (s , BS-base)
+    Computational'-SS⇒BS .computeProof c s (sig ∷ sigs) = do
+      s₁ , h  ← computeProof c s sig
+      s₂ , hs ← computeProof c s₁ sigs
+      just (s₂ , BS-ind h hs)
+      where open import Data.Maybe
+    Computational'-SS⇒BS .completeness c s [] s' BS-base = refl
+    Computational'-SS⇒BS .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
+      with computeProof c s sig | completeness _ _ _ _ h
+    ... | just (s₁ , _) | refl with computeProof c s₁ sigs | completeness _ _ _ _ hs
+    ...   | just _ | refl = refl
+
+    Computational-SS⇒BS = fromComputational' Computational'-SS⇒BS

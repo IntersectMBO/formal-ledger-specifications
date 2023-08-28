@@ -79,6 +79,7 @@ record GState : Set where
         ccHotKeys  : KeyHash ⇀ Maybe KeyHash -- TODO: maybe replace with credential
 
 record CertState : Set where
+  constructor ⟦_,_,_⟧ᶜ
   field dState : DState
         pState : PState
         gState : GState
@@ -139,7 +140,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set whe
     ────────────────────────────────
     pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈ ⟦ ❴ c , poolParams ❵ᵐ ∪ᵐˡ pools , retiring ⟧ᵖ
 
-  POOL-retirepool : let open PoolParams poolParams in
+  POOL-retirepool :
     pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈
          ⟦ pools , ❴ c , e ❵ᵐ ∪ᵐˡ retiring ⟧ᵖ
 
@@ -166,17 +167,17 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → S
   CERT-deleg :
     pp ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { dState = stᵈ' }
-
-  CERT-vdel :
-    Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
-    ────────────────────────────────
-    Γ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { gState = stᵍ' }
+    ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜ
 
   CERT-pool :
     pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ dCert ,CERT⦈ record st { pState = stᵖ' }
+    ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜ
+
+  CERT-vdel :
+    Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
+    ────────────────────────────────
+    Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ
 
 data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set where
   CERT-base :
@@ -203,27 +204,103 @@ open import Data.Maybe.Properties
 open import Tactic.ReduceDec
 open import MyDebugOptions
 
-Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_
-Computational-DELEG .compute pp ⟦ vDelegs , sDelegs , rewards ⟧ᵈ (delegate c mv mc d) =
-  ifᵈ d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc
-    then just ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rewards ⟧ᵈ
-    else nothing
-Computational-DELEG .compute Γ s _ = nothing
-Computational-DELEG .≡-just⇔STS {pp} {⟦ s₁ , s₂ , rewards ⟧ᵈ} {cert} {s'} = mk⇔
-  (case cert return (λ c → compute Computational-DELEG pp ⟦ s₁ , s₂ , rewards ⟧ᵈ c ≡ just s' → pp ⊢ ⟦ s₁ , s₂ , rewards ⟧ᵈ ⇀⦇ c ,DELEG⦈ s') of λ where
-    (delegate c mv mc d) h → case d ≟ requiredDeposit pp mv ⊔ requiredDeposit pp mc of λ where
-      (yes p) → subst _ (just-injective $ by-reduceDec h) (DELEG-delegate {mv = mv} {mc} {s₁} {s₂} {rewards} {c} p)
-      (no ¬p) → case by-reduceDec h of λ ()
-    (regpool x x₁) → λ ()
-    (retirepool x x₁) → λ ()
-    (regdrep x x₁ _) → λ ()
-    (deregdrep x) → λ ()
-    (ccreghot x x₁) → λ ())
-  (λ where (DELEG-delegate {mv = mv} {mc} {vDelegs} {sDelegs} {rwds} {c} h) → by-reduceDecInGoal
-             (refl {x = just ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rewards ⟧ᵈ}))
+open Computational' ⦃...⦄
 
---Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_
---Computational-CERTS .compute     = {!!}
---Computational-CERTS .≡-just⇔STS = {!!}
+instance
+  Computational'-DELEG : Computational' _⊢_⇀⦇_,DELEG⦈_
+  Computational'-DELEG .computeProof pp ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ (delegate c mv mc d) =
+    case d ≟ requiredDeposit pp mv ⊔ requiredDeposit pp mc of λ where
+      (yes p) → just (_ , DELEG-delegate p)
+      (no _) → nothing
+  Computational'-DELEG .computeProof pp _ _ = nothing
+  Computational'-DELEG .completeness pp s (delegate c mv mc d) s' (DELEG-delegate p)
+    with d ≟ requiredDeposit pp mv ⊔ requiredDeposit pp mc
+  ... | yes _ = refl
+  ... | no ¬p = ⊥-elim (¬p p)
+
+  Computational-DELEG = fromComputational' Computational'-DELEG
+
+instance
+  Computational'-POOL : Computational' _⊢_⇀⦇_,POOL⦈_
+  Computational'-POOL .computeProof pp ⟦ pools , retiring ⟧ᵖ (regpool c poolParams) =
+    case c ∈? dom (pools ˢ) of λ where
+      (yes _) → nothing
+      (no p)  →  just (_ , POOL-regpool p)
+  Computational'-POOL .computeProof pp ⟦ pools , retiring ⟧ᵖ (retirepool c e) =
+    just (_ , POOL-retirepool {pools = pools} {retiring})
+  Computational'-POOL .computeProof pp s _ = nothing
+  Computational'-POOL .completeness pp ⟦ pools , retiring ⟧ᵖ (regpool c poolParams) s' (POOL-regpool ¬p)
+    with c ∈? dom (pools ˢ)
+  ... | yes p = ⊥-elim (¬p p)
+  ... | no _  = refl
+  Computational'-POOL .completeness pp s (retirepool c e) s' POOL-retirepool = refl
+
+  Computational-POOL = fromComputational' Computational'-POOL
+
+instance
+  Computational'-GOVCERT : Computational' _⊢_⇀⦇_,GOVCERT⦈_
+  Computational'-GOVCERT .computeProof ⟦ e , pp , vs ⟧ᶜ ⟦ dReps , ccKeys ⟧ᵛ (regdrep c d an) =
+    let open PParams pp in
+    case ¿ (d ≡ drepDeposit × c ∉ dom (dReps ˢ)) ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ)) ¿ of λ where
+      (yes p) → just (_ , GOVCERT-regdrep p)
+      (no _)  → nothing
+  Computational'-GOVCERT .computeProof pp ⟦ dReps , ccKeys ⟧ᵛ (deregdrep c) =
+    case c ∈? dom (dReps ˢ) of λ where
+      (yes p) → just (_ , GOVCERT-deregdrep p)
+      (no _)  → nothing
+  Computational'-GOVCERT .computeProof pp ⟦ dReps , ccKeys ⟧ᵛ (ccreghot (inj₁ kh) mkh) =
+    case (kh , nothing) ∈? (ccKeys ˢ) of λ where
+      (yes _) → nothing
+      (no p) → just (_ , GOVCERT-ccreghot p)
+  Computational'-GOVCERT .computeProof pp _ _ = nothing
+  Computational'-GOVCERT .completeness ⟦ e , pp , vs ⟧ᶜ ⟦ dReps , ccKeys ⟧ᵛ (regdrep c d an) s' (GOVCERT-regdrep p)
+    with (let open PParams pp in ¿ (d ≡ drepDeposit × c ∉ dom (dReps ˢ)) ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ)) ¿)
+  ... | yes _ = refl
+  ... | no ¬p = ⊥-elim (¬p p)
+  Computational'-GOVCERT .completeness ⟦ e , pp , vs ⟧ᶜ ⟦ dReps , ccKeys ⟧ᵛ (deregdrep c) s' (GOVCERT-deregdrep p)
+    with c ∈? dom (dReps ˢ)
+  ... | yes _ = refl
+  ... | no ¬p = ⊥-elim (¬p p)
+  Computational'-GOVCERT .completeness ⟦ e , pp , vs ⟧ᶜ ⟦ dReps , ccKeys ⟧ᵛ (ccreghot (inj₁ kh) mkh) s' (GOVCERT-ccreghot ¬p)
+    with (kh , nothing) ∈? (ccKeys ˢ)
+  ... | yes p = ⊥-elim (¬p p)
+  ... | no _  = refl
+
+  Computational-GOVCERT = fromComputational' Computational'-GOVCERT
+
+instance
+  Computational'-CERT : Computational' _⊢_⇀⦇_,CERT⦈_
+  Computational'-CERT .computeProof Γ@(⟦ e , pp , vs ⟧ᶜ) ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert
+    with computeProof pp stᵈ dCert | computeProof pp stᵖ dCert | computeProof Γ stᵍ dCert
+  ... | just (_ , h) | _            | _            = just (_ , CERT-deleg h)
+  ... | nothing      | just (_ , h) | _            = just (_ , CERT-pool h)
+  ... | nothing      | nothing      | just (_ , h) = just (_ , CERT-vdel h)
+  ... | nothing      | nothing      | nothing      = nothing
+  Computational'-CERT .completeness ⟦ _ , pp , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜ (CERT-deleg h)
+    with computeProof pp stᵈ dCert | completeness _ _ _ _ h
+  ... | just _ | refl = refl
+  Computational'-CERT .completeness ⟦ _ , pp , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(regpool c poolParams) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜ (CERT-pool h)
+    with computeProof pp stᵖ dCert | completeness _ _ _ _ h
+  ... | just _ | refl = refl
+  Computational'-CERT .completeness ⟦ _ , pp , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(retirepool c e) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜ (CERT-pool h)
+    with completeness _ _ _ _ h
+  ... | refl = refl
+  Computational'-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(regdrep c d an) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
+    with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
+  ... | just _ | refl = refl
+  Computational'-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(deregdrep c) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
+    with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
+  ... | just _ | refl = refl
+  Computational'-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(ccreghot (inj₁ kh) mkh) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
+    with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
+  ... | just _ | refl = refl
+
+  Computational-CERT = fromComputational' Computational'-CERT
+
+Computational'-CERTS : Computational' _⊢_⇀⦇_,CERTS⦈_
+Computational'-CERTS = it
+
+Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_
+Computational-CERTS = it
 
 \end{code}
