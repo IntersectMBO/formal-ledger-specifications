@@ -9,5 +9,8 @@ all: $(tex_files2)
 	cd src/latex && latexmk -xelatex Ledger/PDF.tex
 	cp src/latex/PDF.pdf cardano-ledger.pdf
 clean:
-	rm -rf src/latex
+	rm -rf src/latex/{.auctex-auto,PDF.*}
+	rm -rf src/MAlonzo
+wipe:
+	rm -rf src/latex/{.auctex-auto,Ledger,PDF.*}
 	rm -rf src/MAlonzo

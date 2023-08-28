@@ -36,7 +36,7 @@
 \restylefloat{figure}
 
 \usepackage{iohk}
-
+\usepackage{fls-macros}
 \usepackage[hidelinks]{hyperref}
 \usepackage[links]{agda}
 
@@ -112,7 +112,6 @@ open import Ledger.TokenAlgebra.ValueSet
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
-\include{Ledger/Tally}
 \include{Ledger/Deleg}
 \include{Ledger/Ledger}
 \include{Ledger/Ratify}
