@@ -27,6 +27,8 @@ open import Generics.Core
 open import Interface.ComputationalRelation
 open import Interface.DecEq
 open import Interface.Decidable.Instance
+open import Interface.HasAdd
+open import Interface.HasAdd.Instance
 
 open import Interface.Monad.Instance
 open import Interface.MonadReader.Instance

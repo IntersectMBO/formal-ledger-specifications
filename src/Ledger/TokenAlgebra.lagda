@@ -43,6 +43,12 @@ record TokenAlgebra : Set₁ where
 \end{code}
 \begin{code}[hide]
          instance DecEq-Value : DecEq Value
+
+  instance
+    addValue : HasAdd Value
+    addValue = record { _+_ = _+ᵛ_ }
+
+
 \end{code}
 \begin{code}
   sumᵛ : List Value → Value

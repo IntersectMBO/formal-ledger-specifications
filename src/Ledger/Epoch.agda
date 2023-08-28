@@ -48,9 +48,9 @@ record EpochStructure : Set₁ where
   zero +ᵉ e = e
   suc n +ᵉ e = sucᵉ (n +ᵉ e)
 
+  open Semiring Slotʳ renaming (_+_ to _+ˢ_)
   _+ᵉ'_ : Epoch → Epoch → Epoch
   e +ᵉ' e' = epoch (firstSlot e +ˢ firstSlot e')
-    where open Semiring Slotʳ renaming (_+_ to _+ˢ_)
 
   _<ᵉ_ : Epoch → Epoch → Set
   e <ᵉ e' = firstSlot e <ˢ firstSlot e'
@@ -60,6 +60,13 @@ record EpochStructure : Set₁ where
 
   _≤ᵉ?_ : (e e' : Epoch) → Dec (e ≤ᵉ e')
   e ≤ᵉ? e' = firstSlot e ≤ˢ? firstSlot e'
+
+  instance
+    addSlot : HasAdd Slot
+    addSlot = record { _+_ = _+ˢ_ }
+
+    addEpoch : HasAdd Epoch
+    addEpoch = record { _+_ = _+ᵉ'_ }
 
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc
