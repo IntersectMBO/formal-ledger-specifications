@@ -17,7 +17,7 @@ open import Algebra                        using (CommutativeMonoid)
 open import Data.Integer.Ext               using (posPart; negPart)
 open import Data.Nat                       using (_≤?_; _≤_)
 open import Data.Nat.Properties            using (+-0-monoid; +-0-commutativeMonoid)
-open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁)
+open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁; ¿_¿)
 
 open TransactionStructure txs
 open TxBody
@@ -264,9 +264,33 @@ data _⊢_⇀⦇_,UTXO⦈_ where
                         ⟧ᵘ
 \end{code}
 \begin{code}[hide]
--- TODO: This can't be moved into Properties because it breaks. Move
--- this once this is fixed.
-unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+
+instance
+  Computational'-UTXO : Computational' _⊢_⇀⦇_,UTXO⦈_
+  Computational'-UTXO .Computational'.computeProof Γ s tx =
+    case ¿ txins tx ≢ ∅
+         × txins tx ⊆ dom (UTxOState.utxo s ˢ)
+         × inInterval (UTxOEnv.slot Γ) (txvldt tx)
+         × minfee (UTxOEnv.pparams Γ) tx ≤ txfee tx
+         × consumed (UTxOEnv.pparams Γ) s tx ≡ produced (UTxOEnv.pparams Γ) s tx
+         × coin (mint tx) ≡ 0
+         × txsize tx ≤ maxTxSize (UTxOEnv.pparams Γ) ¿ of λ where
+      (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆)) → just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆)
+      (no _) → nothing
+  Computational'-UTXO .Computational'.completeness Γ s tx s' h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆)
+    with  ¿ txins tx ≢ ∅
+          × txins tx ⊆ dom (UTxOState.utxo s ˢ)
+          × inInterval (UTxOEnv.slot Γ) (txvldt tx)
+          × minfee (UTxOEnv.pparams Γ) tx ≤ txfee tx
+          × consumed (UTxOEnv.pparams Γ) s tx ≡ produced (UTxOEnv.pparams Γ) s tx
+          × coin (mint tx) ≡ 0
+          × txsize tx ≤ maxTxSize (UTxOEnv.pparams Γ) ¿
+       | "work around mysterious Agda bug"
+  ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | _ = refl
+  ... | no q | _ = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
+
+  Computational-UTXO = fromComputational' Computational'-UTXO
+
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
