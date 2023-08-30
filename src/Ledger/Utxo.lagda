@@ -37,6 +37,17 @@ instance
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
+
+-- utxoEntrySizeWithoutVal = 27 words (8 bytes)
+utxoEntrySizeWithoutVal : MemoryEstimate
+utxoEntrySizeWithoutVal = 8
+
+utxoEntrySize : TxOut → MemoryEstimate
+utxoEntrySize (fst , v) = utxoEntrySizeWithoutVal + size v
+
+-- TODO: fix this
+serSize : Value → MemoryEstimate
+serSize = λ _ → zero
 \end{code}
 
 Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
