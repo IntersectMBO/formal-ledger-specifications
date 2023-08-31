@@ -63,13 +63,13 @@ record Anchor : Set where
          hash  : DocHash
 
 data GovAction : Set where
-  NoConfidence     :                                    GovAction
-  NewCommittee     : KeyHash ⇀ Epoch → ℙ KeyHash → ℚ  → GovAction
-  NewConstitution  : DocHash → Maybe ScriptHash       → GovAction
-  TriggerHF        : ProtVer                          → GovAction
-  ChangePParams    : UpdateT → PPHash                 → GovAction
-  TreasuryWdrl     : (RwdAddr ⇀ Coin)                 → GovAction
-  Info             :                                    GovAction
+  NoConfidence     :                                          GovAction
+  NewCommittee     : Credential ⇀ Epoch → ℙ Credential → ℚ  → GovAction
+  NewConstitution  : DocHash → Maybe ScriptHash             → GovAction
+  TriggerHF        : ProtVer                                → GovAction
+  ChangePParams    : UpdateT                                → GovAction
+  TreasuryWdrl     : (RwdAddr ⇀ Coin)                       → GovAction
+  Info             :                                          GovAction
 \end{code}
 } %% end small
 \caption{Governance actions}
@@ -108,8 +108,8 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   obsoleting nodes that are unable to handle the upgrade.}
 \begin{code}[hide]
 actionWellFormed : GovAction → Bool
-actionWellFormed (ChangePParams x _) = ppdWellFormed x
-actionWellFormed _                   = true
+actionWellFormed (ChangePParams x) = ppdWellFormed x
+actionWellFormed _                 = true
 
 maximum : ℙ ℚ → ℚ
 maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
@@ -145,7 +145,7 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
                         nothing   → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
   threshold (NewConstitution _ _) = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
   threshold (TriggerHF _)         = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
-  threshold (ChangePParams x _)   = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
+  threshold (ChangePParams x)     = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
   threshold (TreasuryWdrl _)      = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
   threshold Info                  = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
 \end{code}
@@ -162,7 +162,7 @@ NeedsHash NoConfidence          = GovActionID
 NeedsHash (NewCommittee _ _ _)  = GovActionID
 NeedsHash (NewConstitution _ _) = GovActionID
 NeedsHash (TriggerHF _)         = GovActionID
-NeedsHash (ChangePParams _ _)   = GovActionID
+NeedsHash (ChangePParams _)     = GovActionID
 NeedsHash (TreasuryWdrl _)      = ⊤
 NeedsHash Info                  = ⊤
 
@@ -272,7 +272,7 @@ record EnactEnv : Set where
   field gid  : GovActionID
 
 record EnactState : Set where
-  field cc            : HashProtected (Maybe (KeyHash ⇀ Epoch × ℚ))
+  field cc            : HashProtected (Maybe (Credential ⇀ Epoch × ℚ))
         constitution  : HashProtected (DocHash × Maybe ScriptHash)
         pv            : HashProtected ProtVer
         pparams       : HashProtected PParams
@@ -289,8 +289,8 @@ open EnactState
 private variable
   s : EnactState
   up : UpdateT
-  new : KeyHash ⇀ Epoch
-  rem : ℙ KeyHash
+  new : Credential ⇀ Epoch
+  rem : ℙ Credential
   q : ℚ
   dh : DocHash
   sh : Maybe ScriptHash
@@ -319,7 +319,7 @@ It represents how the \agdaboundEnactState changes when a specific governance ac
     in record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
   Enact-NewConst  : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈  record s { constitution = (dh , sh) , gid }
   Enact-HF        : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈  record s { pv = v , gid }
-  Enact-PParams   : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up h  ,ENACT⦈
+  Enact-PParams   : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
     record s { pparams = applyUpdate (proj₁ (s .pparams)) up , gid }
   Enact-Wdrl      :
     let newWdrls = Σᵐᵛ[ x ← wdrl ᶠᵐ ] x

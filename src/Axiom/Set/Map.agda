@@ -231,9 +231,13 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
   _∣_ᶜ : Map A B → Set A → Map A B
   m ∣ X ᶜ = ⊆-map (R._∣ X ᶜ) R.ex-⊆ m
 
+  -- map only values in X
+  mapValueRestricted : (B → B) → Map A B → Set A → Map A B
+  mapValueRestricted f m X = mapValues f (m ∣ X) ∪ᵐˡ m
+
   -- map only value at a
   mapSingleValue : (B → B) → Map A B → A → Map A B
-  mapSingleValue f m a = mapValues f (m ∣ ❴ a ❵) ∪ᵐˡ m
+  mapSingleValue f m a = mapValueRestricted f m ❴ a ❵
 
   curryᵐ : Map (A × B) C → A → Map B C
   curryᵐ m a = R.curryʳ (m ˢ) a , λ h h' → proj₂ m (R.∈-curryʳ h) (R.∈-curryʳ h')
