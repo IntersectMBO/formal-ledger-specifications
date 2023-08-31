@@ -121,6 +121,10 @@ requiredDeposit pp nothing = 0
 insertIfJust : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ⇀ B → A ⇀ B
 insertIfJust x nothing  m = m
 insertIfJust x (just y) m = insert m x y
+
+getDRepVote : GovVote → Maybe Credential
+getDRepVote record { role = GovRole.DRep ; credential = credential } = just credential
+getDRepVote _                                                        = nothing
 \end{code}
 \caption{Types \& functions used for CERTS transition system}
 \end{figure*}
@@ -182,17 +186,14 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → S
 data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set where
   CERT-base :
     let open PParams pp; open CertState st; open GState gState
-        refresh = mapPartial (λ v → let open GovVote v in case role of λ where
-          GovRole.DRep → just credential
-          _    → nothing) (fromList vs)
+        refresh = mapPartial getDRepVote (fromList vs)
     in ⊤ -- TODO: check that the withdrawals are correct here
     ────────────────────────────────
     ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st { gState = record gState
                          { dreps = constMap refresh (e + drepActivity) ∪ᵐˡ dreps } }
 
--- TODO: use CERTBASE by modifying SS⇒BS to allow for a base case
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
-_⊢_⇀⦇_,CERTS⦈_ = SS⇒BS λ (Γ , _) → Γ ⊢_⇀⦇_,CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_ = SS⇒BSᵇ _⊢_⇀⦇ tt ,CERTBASE⦈_ λ (Γ , _) → Γ ⊢_⇀⦇_,CERT⦈_
 \end{code}
 \caption{CERTS rules}
 \end{figure*}
@@ -296,6 +297,14 @@ instance
   ... | just _ | refl = refl
 
   Computational-CERT = fromComputational' Computational'-CERT
+
+  Computational'-CERTBASE : Computational' _⊢_⇀⦇_,CERTBASE⦈_
+  Computational'-CERTBASE .computeProof ⟦ e , pp , vs ⟧ᶜ st _ = just (newSt , CERT-base _)
+    where
+    open PParams pp; open CertState st; open GState gState
+    refresh = mapPartial getDRepVote (fromList vs)
+    newSt = record st { gState = record gState { dreps = constMap refresh (e + drepActivity) ∪ᵐˡ dreps } }
+  Computational'-CERTBASE .completeness ⟦ e , pp , vs ⟧ᶜ st _ st' (CERT-base _) = refl
 
 Computational'-CERTS : Computational' _⊢_⇀⦇_,CERTS⦈_
 Computational'-CERTS = it

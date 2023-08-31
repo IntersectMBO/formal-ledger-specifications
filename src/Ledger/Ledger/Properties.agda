@@ -113,6 +113,6 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,GOV⦈_)
     ∷-Fresh : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → FreshTxs Γ s' l → FreshTxs Γ s (tx ∷ l)
 
   LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
-  LEDGERS-pov _ BS-base = refl
+  LEDGERS-pov _ (BS-base refl) = refl
   LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) = trans (LEDGER-pov h x)
     (LEDGERS-pov (subst (λ s → FreshTxs Γ s l) (sym $ computational⇒rightUnique Computational-LEDGER x h₁) h₂) st)

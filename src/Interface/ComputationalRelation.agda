@@ -98,22 +98,37 @@ Computational⇒Dec' : ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Set}
                       → Dec (STS c s sig s')
 Computational⇒Dec' ⦃ comp = comp ⦄ = Computational⇒Dec comp
 
+module _ {BSTS : C → S → ⊤ → S → Set} {STS : C → S → Sig → S → Set}
+         ⦃ bcomp : Computational' BSTS ⦄ ⦃ comp : Computational' STS ⦄ where
+
+  open Computational' ⦃...⦄
+
+  instance
+    Computational'-SS⇒BSᵇ : Computational' (SS⇒BSᵇ (λ Γ s → BSTS Γ s tt) (STS ∘ proj₁))
+    Computational'-SS⇒BSᵇ .computeProof c s [] =
+      Maybe.map (λ where (s' , p) → s' , BS-base p) (computeProof c s tt)
+    Computational'-SS⇒BSᵇ .computeProof c s (sig ∷ sigs) = do
+      s₁ , h  ← computeProof c s sig
+      s₂ , hs ← computeProof c s₁ sigs
+      just (s₂ , BS-ind h hs)
+      where open import Data.Maybe
+    Computational'-SS⇒BSᵇ .completeness c s [] s' (BS-base p) with computeProof c s tt | completeness _ _ _ _ p
+    ... | just x | p' = p'
+    Computational'-SS⇒BSᵇ .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
+      with computeProof c s sig | completeness _ _ _ _ h
+    ... | just (s₁ , _) | refl with computeProof ⦃ Computational'-SS⇒BSᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
+    ...   | just (s₂ , _) | p = p
+
+    Computational-SS⇒BSᵇ = fromComputational' Computational'-SS⇒BSᵇ
+
 module _ {STS : C → S → Sig → S → Set} ⦃ comp : Computational' STS ⦄ where
 
   open Computational' ⦃...⦄
 
   instance
     Computational'-SS⇒BS : Computational' (SS⇒BS (STS ∘ proj₁))
-    Computational'-SS⇒BS .computeProof c s [] = just (s , BS-base)
-    Computational'-SS⇒BS .computeProof c s (sig ∷ sigs) = do
-      s₁ , h  ← computeProof c s sig
-      s₂ , hs ← computeProof c s₁ sigs
-      just (s₂ , BS-ind h hs)
-      where open import Data.Maybe
-    Computational'-SS⇒BS .completeness c s [] s' BS-base = refl
-    Computational'-SS⇒BS .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
-      with computeProof c s sig | completeness _ _ _ _ h
-    ... | just (s₁ , _) | refl with computeProof c s₁ sigs | completeness _ _ _ _ hs
-    ...   | just _ | refl = refl
+    Computational'-SS⇒BS = Computational'-SS⇒BSᵇ ⦃ bcomp = λ where
+      .computeProof → λ c s _ → just (-, refl)
+      .completeness → λ where c s _ _ refl → refl ⦄
 
     Computational-SS⇒BS = fromComputational' Computational'-SS⇒BS

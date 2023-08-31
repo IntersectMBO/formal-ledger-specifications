@@ -30,11 +30,13 @@ private
 
 -- small-step to big-step transformer
 
-module _ (_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Set) where
+module _ (_⊢_⇀_ : C → S → S → Set) (_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Set) where
   data _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Set where
 
     BS-base :
-      Γ ⊢ s ⇀⟦ [] ⟧* s
+      ∙ Γ ⊢ s ⇀ s'
+      ───────────────────────────────────────
+      Γ ⊢ s ⇀⟦ [] ⟧* s'
 
     BS-ind :
       ∙ (Γ , length sigs) ⊢ s  ⇀⟦ sig  ⟧  s'
@@ -42,4 +44,9 @@ module _ (_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Set) where
       ───────────────────────────────────────
       Γ ⊢ s ⇀⟦ sig ∷ sigs ⟧* s''
 
-SS⇒BS = _⊢_⇀⟦_⟧*_
+-- with a trivial base case
+SS⇒BS : (C × ℕ → S → Sig → S → Set) → C → S → List Sig → S → Set
+SS⇒BS {C} {S} {Sig} = _⊢_⇀⟦_⟧*_ {C} {S} {Sig} (λ _ → _≡_)
+
+-- with a given base case
+SS⇒BSᵇ = _⊢_⇀⟦_⟧*_
