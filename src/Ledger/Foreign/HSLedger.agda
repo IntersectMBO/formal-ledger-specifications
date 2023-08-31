@@ -2,7 +2,7 @@
 
 module Ledger.Foreign.HSLedger where
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (_≤_)
 
 import Data.Maybe as M
 import Data.Rational as ℚ
@@ -10,7 +10,7 @@ import Data.Rational as ℚ
 open import Algebra              using (CommutativeMonoid)
 open import Algebra.Morphism     using (module MonoidMorphisms)
 open import Data.Nat.Properties  using (+-0-monoid)
-open import Data.Nat using (_≤_; _≤ᵇ_)
+open import Data.Nat using (_≤ᵇ_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 open import Relation.Binary.Morphism.Structures
 

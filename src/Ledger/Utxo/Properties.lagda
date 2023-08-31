@@ -25,8 +25,8 @@ open import Tactic.MonoidSolver         using (solve-macro)
 
 open TransactionStructure txs
 
-open import Ledger.PParams epochStructure
-open import Ledger.TokenAlgebra ScriptHash
+open import Ledger.PParams epochStructure using (PParams)
+open import Ledger.TokenAlgebra ScriptHash using (TokenAlgebra)
 open import Ledger.Utxo txs renaming (Computational-UTXO to Computational-UTXO')
 
 open TxBody
@@ -185,10 +185,10 @@ module DepositHelpers
   dep-ref tot≡0 = ℤ.+-injective $ begin
     ℤ.+_ (uDep + ref)          ≡⟨ ℤ.pos-+ uDep ref ⟩
     ℤ.+_ uDep ℤ.+ (ref ⊖ 0)    ≡˘⟨ cong! tot≡0 ⟩
-    ℤ.+_ uDep ℤ.+ (ref ⊖ tot)  ≡⟨ cong (ℤ._+_ (ℤ.+ uDep)) (ℤ.⊖-swap ref tot) ⟩
+    ℤ.+_ uDep ℤ.+ (ref ⊖ tot)  ≡⟨ cong ((ℤ.+ uDep) +_) (ℤ.⊖-swap ref tot) ⟩
     ℤ.+_ uDep ℤ.- (tot ⊖ ref)  ≡˘⟨ cong! deposits-change' ⟩
-    ℤ.+_ uDep ℤ.- Δdep         ≡˘⟨ cong (ℤ._+_ (ℤ.+ uDep)) (ℤ.⊖-swap dep uDep) ⟩
-    ℤ.+_ uDep ℤ.+ (dep ⊖ uDep) ≡⟨ ℤ.distribʳ-⊖-+-pos uDep dep uDep ⟩
+    ℤ.+_ uDep ℤ.- Δdep         ≡˘⟨ cong ((ℤ.+ uDep) +_) (ℤ.⊖-swap dep uDep) ⟩
+    ℤ.+_ uDep + (dep ⊖ uDep)   ≡⟨ ℤ.distribʳ-⊖-+-pos uDep dep uDep ⟩
     (uDep + dep) ⊖ uDep        ≡⟨ cong (_⊖ uDep) (+-comm uDep dep) ⟩
     (dep + uDep) ⊖ uDep        ≡˘⟨ ℤ.distribʳ-⊖-+-pos dep uDep uDep ⟩
     ℤ.+_ dep ℤ.+ (uDep ⊖ uDep) ≡⟨ cong! (ℤ.n⊖n≡0 uDep) ⟩

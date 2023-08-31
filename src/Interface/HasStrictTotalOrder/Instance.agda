@@ -2,7 +2,7 @@
 
 module Interface.HasStrictTotalOrder.Instance where
 
-open import Prelude                  using (_≡_)
+open import Relation.Binary.PropositionalEquality using (_≡_)
 open import Data.Nat                 using (ℕ) renaming (_<_ to _<ℕ_)
 open import Data.Nat.Properties      using ( ) renaming (<-isStrictTotalOrder to <ℕ-isStrictTotalOrder)
 open import Data.Integer             using (ℤ) renaming (_<_ to _<ℤ_)

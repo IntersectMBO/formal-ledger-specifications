@@ -2,10 +2,17 @@
 
 module Data.Nat.Properties.Ext where
 
-open import Data.Nat
-open import Data.Nat.Properties
+open import Data.Nat                 using (ℕ) renaming (_<_ to _<ℕ_)
+open import Data.Nat.Properties      using (<⇒≤ ; ≤-refl) renaming (<-isStrictTotalOrder to <ℕ-isStrictTotalOrder)
 open import Ledger.Prelude
 open import Relation.Nullary.Decidable
+open import Interface.HasStrictTotalOrder
+open import Interface.HasPartialOrder.Instance
+
+instance
+  stoℕ : HasStrictTotalOrder ℕ _≡_
+  stoℕ = record { _<_ = _<ℕ_ ; isStrictTotalOrder = <ℕ-isStrictTotalOrder }
+
 
 -- if P holds for 0 but not for some N, then there exists a k where the induction step fails
 negInduction : {P : ℕ → Set} → Dec₁ P → P 0 → ∃[ N ] ¬ P N → ∃[ k ] P k × ¬ P (suc k)

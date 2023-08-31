@@ -83,7 +83,7 @@ open import Ledger.Transaction
 
 module Ledger.Ratify (txs : TransactionStructure) where
 
-open import Ledger.Prelude hiding (_∧_)
+open import Ledger.Prelude hiding (_∧_ ; _<_)
 
 open TransactionStructure txs
 open import Ledger.Gov TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto

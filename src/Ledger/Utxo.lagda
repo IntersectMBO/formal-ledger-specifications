@@ -15,7 +15,7 @@ open import Ledger.Prelude hiding (Dec₁)
 
 open import Algebra                        using (CommutativeMonoid)
 open import Data.Integer.Ext               using (posPart; negPart)
-open import Data.Nat                       using (_≤?_; _≤_)
+open import Data.Nat                       using (_≤?_)
 open import Data.Nat.Properties            using (+-0-monoid; +-0-commutativeMonoid)
 open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁)
 
@@ -28,6 +28,9 @@ open import Ledger.TokenAlgebra            using (TokenAlgebra)
 open import MyDebugOptions
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
+
+open import Interface.HasPartialOrder.Instance
+open epochPO epochStructure
 
 instance
   _ = Decidable²⇒Dec _≤?_
@@ -111,9 +114,9 @@ propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
-  both  : ∀ {l r} → l ≤ˢ slot × slot ≤ˢ r  →  inInterval slot (just l  , just r)
-  lower : ∀ {l}   → l ≤ˢ slot              →  inInterval slot (just l  , nothing)
-  upper : ∀ {r}   → slot ≤ˢ r              →  inInterval slot (nothing , just r)
+  both  : ∀ {l r} → l ≤ slot × slot ≤ r  →  inInterval slot (just l  , just r)
+  lower : ∀ {l}   → l ≤ slot              →  inInterval slot (just l  , nothing)
+  upper : ∀ {r}   → slot ≤ r              →  inInterval slot (nothing , just r)
   none  :                                     inInterval slot (nothing , nothing)
 
 \end{code}
