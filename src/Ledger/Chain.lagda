@@ -34,7 +34,8 @@ record NewEpochState : Set where
   field lastEpoch  : Epoch
         acnt       : Acnt
         ls         : LState
-        es esFut   : EnactState
+        es         : EnactState
+        fut        : RatifyState
 
 record ChainState : Set where
   field newEpochState  : NewEpochState
@@ -54,8 +55,8 @@ private variable
   e : Epoch
   es' : EnactState
   govSt' : GovState
-  removed : List (GovActionID × GovActionState)
   d : Bool
+  fut' : RatifyState
 
 instance
   _ = +-0-monoid
@@ -67,32 +68,38 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 \begin{figure*}[h]
 \begin{code}
   NEWEPOCH-New : ∀ {Γ} → let
-      open NewEpochState nes hiding (es) renaming (esFut to es) -- this rolls over esFut into es
+      open NewEpochState nes hiding (es)
+      open RatifyState fut using (es; removed) -- this rolls over the future enact state into es
       open LState ls
       -- TODO Wire CertState together with treasury and withdrawals
       open CertState certState
       open PState pState
-      removedGovActions = map GovActionDeposit (map proj₁ (fromList removed))
-      deposits = UTxOState.deposits utxoSt
+
       donations = UTxOState.donations utxoSt
-      retired = retiring ⁻¹ e
-      govActionReturns' = concatMapˢ
-        (λ where
-          (gaid , gaSt) → map
-            (GovActionState.returnAddr gaSt ,_)
-            ((deposits ˢ) ⟪$⟫ ❴ GovActionDeposit gaid ❵)
-        )
-        (fromList removed)
-      govActionReturns = aggregate₊ (govActionReturns' , finiteness govActionReturns')
+      deposits = UTxOState.deposits utxoSt
+
+      removedGovActions = flip concatMapˢ removed
+        (λ where (gaid , gaSt) → map
+                   (GovActionState.returnAddr gaSt ,_)
+                   ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ))
+
+      govActionReturns =
+        aggregate₊ (map (λ where (a , _ , d) → a , d) removedGovActions , finiteness _)
+
       rewards = DState.rewards dState
       refunds   = govActionReturns ∣ dom (rewards ˢ)
       unclaimed = govActionReturns ∣ dom (rewards ˢ) ᶜ
+
+      govSt' = filter (¬? ∘ (_∈? map proj₁ removed) ∘ proj₁) govSt
+
+      retired = retiring ⁻¹ e
+
       certState' = record certState {
         pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ };
         dState = record dState { rewards = rewards ∪⁺ refunds } }
       utxoSt' = record utxoSt
         { fees = 0
-        ; deposits = deposits ∣ removedGovActions ᶜ
+        ; deposits = deposits ∣ map (proj₁ ∘ proj₂) removedGovActions ᶜ
         ; donations = 0
         }
       ls' = record ls { govSt = govSt' ; utxoSt = utxoSt' ; certState = certState' }
@@ -100,10 +107,10 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; GState gState ; NewEpochEnv Γ }
-        ⊢ ⟦ es  , [] , [] , false ⟧ʳ ⇀⦇ govSt ,RATIFY⦈ ⟦ es' , govSt' , removed , d ⟧ʳ
+        ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
-    Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , es' ⟧ⁿᵉ
+    Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , fut' ⟧ⁿᵉ
 
   NEWEPOCH-Not-New : ∀ {Γ} → let open NewEpochState nes in
     e ≢ sucᵉ lastEpoch
