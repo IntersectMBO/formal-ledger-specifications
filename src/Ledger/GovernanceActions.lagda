@@ -332,7 +332,7 @@ It represents how the \AgdaBound{EnactState} changes when a specific governance 
     ────────────────────────────────
     ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
       record s { withdrawals  = s .withdrawals  ∪⁺ wdrl
-               ; treasury     = s .treasury     ∸  newWdrls }
+               ; treasury     = s .treasury     -  newWdrls }
   Enact-Info      : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 } %% end small
