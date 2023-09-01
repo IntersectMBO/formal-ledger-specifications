@@ -9,9 +9,8 @@ import Data.Rational as ℚ
 
 open import Algebra              using (CommutativeMonoid)
 open import Algebra.Morphism     using (module MonoidMorphisms)
-open import Data.Nat.Properties  using (+-0-monoid)
-open import Data.Nat using (_≤_; _≤ᵇ_)
-open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
+open import Data.Nat.Properties  using (+-0-commutativeMonoid) renaming (_≟_ to _≟ℕ_)
+open import Data.Nat.Properties  using (+-*-semiring; <-isStrictTotalOrder)
 open import Relation.Binary.Morphism.Structures
 
 open import Foreign.Convertible
@@ -21,6 +20,8 @@ import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Crypto
 open import Ledger.Epoch
+
+open import Interface.HasRawPartialOrder.Instance
 
 open GlobalConstants
 HSGlobalConstants : GlobalConstants
@@ -98,8 +99,6 @@ HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructur
 
 open import Ledger.Transaction
 import Ledger.TokenAlgebra as TA
-open import Data.Nat.Properties using (+-0-commutativeMonoid; _≟_)
-open import Data.Nat
 
 module _ where
 
@@ -127,7 +126,7 @@ module _ where
                     .homo                      = λ _ _ → refl
   coinTokenAlgebra  .coinIsMonoidHomomorphism
                     .ε-homo                    = refl
-  coinTokenAlgebra  .DecEq-Value               = record { _≟_ = Data.Nat._≟_ }
+  coinTokenAlgebra  .DecEq-Value               = record { _≟_ = _≟ℕ_ }
 
 module _ where
   open TransactionStructure
