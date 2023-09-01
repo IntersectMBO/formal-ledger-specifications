@@ -36,6 +36,8 @@ open Properties
 
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
+open import Interface.HasOrder.Instance
+
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
@@ -86,11 +88,11 @@ consumedCoinEquality {tx} {utxoState} {pp} h = let utxo = UTxOState.utxo utxoSta
     ≡⟨ ∙-homo-Coin _ _ ⟩
   coin (balance (utxo ∣ txins tx) + mint tx) + coin (inject $ depositRefunds pp utxoState tx)
     ≡⟨ cong (coin (balance (utxo ∣ txins tx) + mint tx) +_) (property _) ⟩
-  coin (balance (utxo ∣ txins tx) +ᵛ mint tx) ℕ.+ depositRefunds pp utxoState tx
+  coin (balance (utxo ∣ txins tx) + mint tx) ℕ.+ depositRefunds pp utxoState tx
     ≡⟨ cong! (∙-homo-Coin _ _) ⟩
-  coin (balance (utxo ∣ txins tx)) ℕ.+ coin (mint tx) ℕ.+ depositRefunds pp utxoState tx
+  coin (balance (utxo ∣ txins tx)) + coin (mint tx) ℕ.+ depositRefunds pp utxoState tx
     ≡⟨ cong (λ x → cbalance (utxo ∣ txins tx) + x + depositRefunds pp utxoState tx) h ⟩
-  cbalance (utxo ∣ txins tx) ℕ.+ 0 ℕ.+ depositRefunds pp utxoState tx
+  cbalance (utxo ∣ txins tx) + 0 ℕ.+ depositRefunds pp utxoState tx
     ≡⟨ cong! (+-identityʳ (cbalance (utxo ∣ txins tx))) ⟩
   cbalance (utxo ∣ txins tx) ℕ.+ depositRefunds pp utxoState tx                        ∎
 
@@ -107,7 +109,7 @@ producedCoinEquality {utxoState} {tx} {pp} = begin
         ≡⟨ cong! (property _) ⟩
       coin (balance (outs tx) +ᵛ inject (txfee tx)) ℕ.+ newDeposits pp utxoState tx
         ≡⟨ cong! (∙-homo-Coin _ _) ⟩
-      coin (balance (outs tx)) ℕ.+ coin (inject (txfee tx)) ℕ.+ newDeposits pp utxoState tx
+      coin (balance (outs tx)) + coin (inject (txfee tx)) ℕ.+ newDeposits pp utxoState tx
         ≡⟨ cong (λ x → cbalance (outs tx) + x + newDeposits pp utxoState tx) (property (txfee tx)) ⟩
       cbalance (outs tx) + (txfee tx) + newDeposits pp utxoState tx                     ∎
     )⟩

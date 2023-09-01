@@ -15,7 +15,7 @@ open import Ledger.Prelude hiding (Dec₁)
 
 open import Algebra                        using (CommutativeMonoid)
 open import Data.Integer.Ext               using (posPart; negPart)
-open import Data.Nat                       using (_≤?_; _≤_)
+open import Data.Nat as ℕ                  using (_≤?_)
 open import Data.Nat.Properties            using (+-0-monoid; +-0-commutativeMonoid)
 open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁; ¿_¿)
 
@@ -111,10 +111,10 @@ propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
-  both  : ∀ {l r} → l ≤ˢ slot × slot ≤ˢ r  →  inInterval slot (just l  , just r)
-  lower : ∀ {l}   → l ≤ˢ slot              →  inInterval slot (just l  , nothing)
-  upper : ∀ {r}   → slot ≤ˢ r              →  inInterval slot (nothing , just r)
-  none  :                                     inInterval slot (nothing , nothing)
+  both  : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
+  lower : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
+  upper : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)
+  none  :                                    inInterval slot (nothing  , nothing)
 
 \end{code}
 \begin{code}[hide]
@@ -271,10 +271,10 @@ instance
     case ¿ txins tx ≢ ∅
          × txins tx ⊆ dom (UTxOState.utxo s ˢ)
          × inInterval (UTxOEnv.slot Γ) (txvldt tx)
-         × minfee (UTxOEnv.pparams Γ) tx ≤ txfee tx
+         × minfee (UTxOEnv.pparams Γ) tx ℕ.≤ txfee tx
          × consumed (UTxOEnv.pparams Γ) s tx ≡ produced (UTxOEnv.pparams Γ) s tx
          × coin (mint tx) ≡ 0
-         × txsize tx ≤ maxTxSize (UTxOEnv.pparams Γ) ¿ of λ where
+         × txsize tx ℕ.≤ maxTxSize (UTxOEnv.pparams Γ) ¿ of λ where
       (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆)) → just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆)
       (no _) → nothing
   Computational'-UTXO .Computational'.completeness Γ s tx s' h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆)
