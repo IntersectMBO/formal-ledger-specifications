@@ -37,7 +37,7 @@ private
   Future-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom (pup ˢ) ⊆ dom (genDelegs ˢ)
       × All (isViableUpdate pparams) (range (pup ˢ))
-      × firstSlot (sucᵉ (epoch slot)) ≤ˢ (slot + (2 * StabilityWindow))
+      × firstSlot (sucᵉ (epoch slot)) ≤ (slot + (2 * StabilityWindow))
       × sucᵉ (epoch slot) ≡ e
 
 instance

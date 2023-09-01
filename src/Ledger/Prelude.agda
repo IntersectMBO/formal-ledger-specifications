@@ -22,6 +22,7 @@ open import Interface.HasAdd public
 open import Interface.HasAdd.Instance public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
+open import Interface.HasPartialOrder public
 open import Relation.Nullary public
 open import Relation.Unary using () renaming (Decidable to Dec₁) public
 open Computational public
