@@ -119,10 +119,9 @@ record RatifyEnv : Set where
         ccHotKeys     : Credential ⇀ Maybe Credential
 
 record RatifyState : Set where
-  constructor ⟦_,_,_,_⟧ʳ
+  constructor ⟦_,_,_⟧ʳ
   field es              : EnactState
-        future          : List (GovActionID × GovActionState)
-        removed         : List (GovActionID × GovActionState)
+        removed         : ℙ (GovActionID × GovActionState)
         delay           : Bool
 
 CCData : Set
@@ -434,11 +433,9 @@ The code in Figure~\ref{fig:defs:ratify-iv} defines still more types required fo
 \begin{code}[hide]
 private variable
   Γ : RatifyEnv
-  s s' : RatifyState
   es es' : EnactState
-  upd : PParamsUpdate
   a : GovActionID × GovActionState
-  f f' l removed : List (GovActionID × GovActionState)
+  removed : ℙ (GovActionID × GovActionState)
   d : Bool
 
 -- having `accepted` abstract speeds up type checking of RATIFY' a lot
@@ -457,7 +454,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     → ¬ delayed action prevAction es d
     → ⟦ proj₁ a ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , f , a ∷ removed , delayingAction action ⟧ʳ
+    Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧ʳ
 
   -- remove expired actions
   -- NOTE:  We don't have to remove actions that can never be accpted because of
@@ -467,14 +464,14 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     ¬ accepted Γ es st
     → expired currentEpoch st
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , f , a ∷ removed , d ⟧ʳ
+    Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 
   -- Continue voting in the next epoch
 
   RATIFY-Continue : let open RatifyEnv Γ; st = proj₂ a; open GovActionState st in
     ¬ accepted Γ es st × ¬ expired currentEpoch st ⊎ delayed action prevAction es d
     ────────────────────────────────
-    Γ ⊢ ⟦ es , f , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , a ∷ f , removed , d ⟧ʳ
+    Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_ :  RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                    → RatifyState → Set
