@@ -18,7 +18,6 @@ open import Ledger.Epoch
 
 import Ledger.PParams as PP
 
-open import Data.Nat using (_≤_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
@@ -39,6 +38,8 @@ open isHashableSet ppHashable renaming (THash to PPHash)
 
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
+
+open import Interface.HasRawPartialOrder.Instance
 
 2ℚ = 1ℚ Data.Rational.+ 1ℚ
 \end{code}

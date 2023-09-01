@@ -68,6 +68,12 @@ record EpochStructure : Set₁ where
     addEpoch : HasAdd Epoch
     addEpoch = record { _+_ = _+ᵉ'_ }
 
+    rpoSlot : HasRawPartialOrder Slot
+    rpoSlot = record { _≤_ = _≤ˢ_ }
+
+    rpoEpoch : HasRawPartialOrder Epoch
+    rpoEpoch = record { _≤_ = _≤ᵉ_ }
+
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc
   open EpochStructure
