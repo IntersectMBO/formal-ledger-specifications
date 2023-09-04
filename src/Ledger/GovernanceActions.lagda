@@ -65,7 +65,7 @@ record Anchor : Set where
 data GovAction : Set where
   NoConfidence     :                                    GovAction
   NewCommittee     : KeyHash ⇀ Epoch → ℙ KeyHash → ℚ  → GovAction
-  NewConstitution  : DocHash                          → GovAction
+  NewConstitution  : DocHash → Maybe ScriptHash       → GovAction
   TriggerHF        : ProtVer                          → GovAction
   ChangePParams    : UpdateT → PPHash                 → GovAction
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                 → GovAction
@@ -144,15 +144,15 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
     P5 ppu = maximum $ map pparamThreshold (updateGroups ppu)
 
   threshold : GovAction → GovRole → ℚ
-  threshold NoConfidence         = λ { CC → 0ℚ          ; DRep → P1   ; SPO → Q1 }
-  threshold (NewCommittee _ _ _) = case ccThreshold' of λ where
-                        (just _) → λ { CC → 0ℚ          ; DRep → P2a  ; SPO → Q2a }
-                        nothing  → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
-  threshold (NewConstitution _)  = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
-  threshold (TriggerHF _)        = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
-  threshold (ChangePParams x _)  = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
-  threshold (TreasuryWdrl _)     = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
-  threshold Info                 = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
+  threshold NoConfidence          = λ { CC → 0ℚ          ; DRep → P1   ; SPO → Q1 }
+  threshold (NewCommittee _ _ _)  = case ccThreshold' of λ where
+                        (just _)  → λ { CC → 0ℚ          ; DRep → P2a  ; SPO → Q2a }
+                        nothing   → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
+  threshold (NewConstitution _ _) = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
+  threshold (TriggerHF _)         = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
+  threshold (ChangePParams x _)   = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
+  threshold (TreasuryWdrl _)      = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
+  threshold Info                  = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
 \end{code}
 \subsection{Voting and ratification}
 \label{sec:voting-and-ratification}
@@ -163,13 +163,13 @@ Ratified actions are then \defn{enacted} on-chain, following a set of rules (see
 {\small
 \begin{code}
 NeedsHash : GovAction → Set
-NeedsHash NoConfidence         = GovActionID
-NeedsHash (NewCommittee _ _ _) = GovActionID
-NeedsHash (NewConstitution _)  = GovActionID
-NeedsHash (TriggerHF _)        = GovActionID
-NeedsHash (ChangePParams _ _)  = GovActionID
-NeedsHash (TreasuryWdrl _)     = ⊤
-NeedsHash Info                 = ⊤
+NeedsHash NoConfidence          = GovActionID
+NeedsHash (NewCommittee _ _ _)  = GovActionID
+NeedsHash (NewConstitution _ _) = GovActionID
+NeedsHash (TriggerHF _)         = GovActionID
+NeedsHash (ChangePParams _ _)   = GovActionID
+NeedsHash (TreasuryWdrl _)      = ⊤
+NeedsHash Info                  = ⊤
 
 HashProtected : Set → Set
 HashProtected A = A × GovActionID
@@ -279,7 +279,7 @@ record EnactEnv : Set where
 
 record EnactState : Set where
   field cc            : HashProtected (Maybe (KeyHash ⇀ Epoch × ℚ))
-        constitution  : HashProtected DocHash
+        constitution  : HashProtected (DocHash × Maybe ScriptHash)
         pv            : HashProtected ProtVer
         pparams       : HashProtected PParams
         withdrawals   : RwdAddr ⇀ Coin
@@ -299,6 +299,7 @@ private variable
   rem : ℙ KeyHash
   q : ℚ
   dh : DocHash
+  sh : Maybe ScriptHash
   h : PPHash
   v : ProtVer
   wdrl : RwdAddr ⇀ Coin
@@ -322,7 +323,7 @@ It represents how the \AgdaBound{EnactState} changes when a specific governance 
   Enact-NewComm   : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈ let
     old = maybe proj₁ ∅ᵐ (proj₁ (EnactState.cc s))
     in record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
-  Enact-NewConst  : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh ,ENACT⦈  record s { constitution = dh , gid }
+  Enact-NewConst  : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈  record s { constitution = (dh , sh) , gid }
   Enact-HF        : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈  record s { pv = v , gid }
   Enact-PParams   : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up h  ,ENACT⦈
     record s { pparams = applyUpdate (proj₁ (s .pparams)) up , gid }

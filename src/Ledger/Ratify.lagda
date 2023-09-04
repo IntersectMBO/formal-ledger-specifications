@@ -401,7 +401,7 @@ The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for
 verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Set
 verifyPrev NoConfidence          h es = let open EnactState es in h ≡ proj₂ cc
 verifyPrev (NewCommittee _ _ _)  h es = let open EnactState es in h ≡ proj₂ cc
-verifyPrev (NewConstitution _)   h es = let open EnactState es in h ≡ proj₂ constitution
+verifyPrev (NewConstitution _ _) h es = let open EnactState es in h ≡ proj₂ constitution
 verifyPrev (TriggerHF _)         h es = let open EnactState es in h ≡ proj₂ pv
 verifyPrev (ChangePParams _ _)   h es = let open EnactState es in h ≡ proj₂ pparams
 verifyPrev (TreasuryWdrl _)      _ _  = ⊤
@@ -410,7 +410,7 @@ verifyPrev Info                  _ _  = ⊤
 delayingAction : GovAction → Bool
 delayingAction NoConfidence          = true
 delayingAction (NewCommittee _ _ _)  = true
-delayingAction (NewConstitution _)   = true
+delayingAction (NewConstitution _ _) = true
 delayingAction (TriggerHF _)         = true
 delayingAction (ChangePParams _ _)   = false
 delayingAction (TreasuryWdrl _)      = false
