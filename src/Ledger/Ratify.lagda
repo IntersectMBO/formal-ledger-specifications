@@ -55,16 +55,16 @@ governance action scenario. The columns represent
 \GovAction  & \CC  &  \DRep & \SPO \\
 \hline
 \endhead
-1. Motion of no-confidence & - & \AgdaField{P1} & \AgdaField{Q1} \\
-2a. New committee/threshold (\emph{normal state}) & - & \AgdaField{P2a} & \AgdaField{Q2a} \\
-2b. New committee/threshold (\emph{state of no-confidence}) & - & \AgdaField{P2b} & \AgdaField{Q2b} \\
-3. Update to the Constitution & \ding{51} & \AgdaField{P3} & - \\
-4. Hard-fork initiation & \ding{51} & \AgdaField{P4} & \AgdaField{Q4} \\
-5a. Changes to protocol parameters in the \NetworkGroup & \ding{51} & \AgdaField{P5a} & - \\
-5b. Changes to protocol parameters in the \EconomicGroup & \ding{51} & \AgdaField{P5b} & - \\
-5c. Changes to protocol parameters in the \TechnicalGroup & \ding{51} & \AgdaField{P5c} & - \\
-5d. Changes to protocol parameters in the \GovernanceGroup & \ding{51} & \AgdaField{P5d} & - \\
-6. Treasury withdrawal & \ding{51} & \AgdaField{P6} & - \\
+1. Motion of no-confidence & - & \Pone & \Qone \\
+2a. New committee/threshold (\emph{normal state}) & - & \Ptwoa & \Qtwoa \\
+2b. New committee/threshold (\emph{state of no-confidence}) & - & \Ptwob & \Qtwob \\
+3. Update to the Constitution & \ding{51} & \Pthree & - \\
+4. Hard-fork initiation & \ding{51} & \Pfour & \Qfour \\
+5a. Changes to protocol parameters in the \NetworkGroup & \ding{51} & \Pfivea & - \\
+5b. Changes to protocol parameters in the \EconomicGroup & \ding{51} & \Pfiveb & - \\
+5c. Changes to protocol parameters in the \TechnicalGroup & \ding{51} & \Pfivec & - \\
+5d. Changes to protocol parameters in the \GovernanceGroup & \ding{51} & \Pfived & - \\
+6. Treasury withdrawal & \ding{51} & \Psix & - \\
 7. Info & \ding{51} & \(100\) & \(100\) \\
 \end{longtable}
 \caption{Retification requirements}
@@ -265,9 +265,9 @@ The code in Figure~\ref{fig:defs:ratify-i} defines some of the types required fo
 \begin{itemize}
   \item Assuming a ratification environment \AgdaPostulate{Γ},
   \begin{itemize}
-    \item \cc contains constitutional committee data;
-    \item \votes is a relation associating each role-credential pair with the vote cast by the individual denoted by that pair;
-    \item \ga denotes the governance action being voted upon.
+    \item \agdaboundcc contains constitutional committee data;
+    \item \agdaboundvotes is a relation associating each role-credential pair with the vote cast by the individual denoted by that pair;
+    \item \agdaboundga denotes the governance action being voted upon.
   \end{itemize}
 
   \item \roleVotes filters the votes based on the given governance role.
@@ -284,7 +284,7 @@ The code in Figure~\ref{fig:defs:ratify-i} defines some of the types required fo
 
   \item \actualPDRepVotes determines how the votes will be counted for \DReps;
   here, \abstainRep is mapped to \abstain and \noConfidenceRep is mapped to either \yes or \no,
-  depending on the value of \ga.
+  depending on the value of \agdaboundga.
 
   \item \actualDRepVotes determines how the votes of \DReps will be counted; \activeDReps that didn't vote count as a \no.
 
@@ -391,7 +391,7 @@ The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for
   \item \acceptedStake calculates the sum of stakes for all delegations that voted \yes for the specified role;
   \item \totalStake calculates the sum of stakes for all delegations that didn't vote \abstain for the given role;
   \item \activeVotingStake computes the total stake for the role of \DRep for active voting; it calculates the sum of
-  stakes for all active delegates that have not voted (i.e., their delegation is present in \CC but not in the \votes mapping);
+  stakes for all active delegates that have not voted (i.e., their delegation is present in \CC but not in the \agdaboundvotes mapping);
   \item \accepted checks if an action is accepted for the \CC, \DRep, and \SPO roles and whether it meets the minimum active voting stake (\meetsMinAVS);
   \item \expired checks whether a governance action is expired in a given epoch.
 \end{itemize}
