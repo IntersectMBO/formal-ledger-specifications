@@ -21,8 +21,6 @@ import Ledger.Foreign.LedgerTypes as F
 open import Ledger.Crypto
 open import Ledger.Epoch
 
-open import Interface.HasRawPartialOrder.Instance
-
 open GlobalConstants
 HSGlobalConstants : GlobalConstants
 HSGlobalConstants .Network               = ⊤

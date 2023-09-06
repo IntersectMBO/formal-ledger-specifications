@@ -29,8 +29,6 @@ open import MyDebugOptions
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
-open import Interface.HasRawPartialOrder.Instance
-
 instance
   _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra

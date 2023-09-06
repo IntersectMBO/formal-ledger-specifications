@@ -39,8 +39,6 @@ open isHashableSet ppHashable renaming (THash to PPHash)
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
 
-open import Interface.HasRawPartialOrder.Instance
-
 2ℚ = 1ℚ Data.Rational.+ 1ℚ
 \end{code}
 \begin{figure*}[h]
