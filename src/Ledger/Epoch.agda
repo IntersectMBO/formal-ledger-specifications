@@ -2,7 +2,7 @@
 
 module Ledger.Epoch where
 
-open import Ledger.Prelude hiding (compare)
+open import Ledger.Prelude hiding (compare ; isEquivalence ; isPartialOrder ) renaming (refl to ≡-refl ; trans to ≡-trans)
 
 open import Data.Nat using (_<_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
@@ -10,6 +10,8 @@ open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 open import Algebra
 open import Relation.Binary
 open import Relation.Nullary.Negation
+
+import Relation.Binary.Construct.StrictToNonStrict as StrictToNonStrict
 
 record GlobalConstants : Set₁ where
   field Network : Set
@@ -33,16 +35,33 @@ record EpochStructure : Set₁ where
         sucᵉ : Epoch → Epoch
         instance DecEq-Epoch : DecEq Epoch
 
-  _≥ˢ_ : Slot → Slot → Set
-  _≥ˢ_ = ¬_ ∘₂ _<ˢ_
+  open StrictToNonStrict _≡_ _<ˢ_
 
   _≤ˢ_ : Slot → Slot → Set
-  _≤ˢ_ = flip _≥ˢ_
+  x ≤ˢ y = (x <ˢ y) ⊎ (x ≡ y)
+
+  ≤ˢ-isTotalOrder : IsTotalOrder _≡_ _≤ˢ_
+  ≤ˢ-isTotalOrder = isTotalOrder Slot-STO
+
+  ≤ˢ-isDecTotalOrder : IsDecTotalOrder _≡_ _≤ˢ_
+  ≤ˢ-isDecTotalOrder = isDecTotalOrder Slot-STO
+
+  ≤ˢ-isPartialOrder : IsPartialOrder _≡_ _≤ˢ_
+  ≤ˢ-isPartialOrder = IsTotalOrder.isPartialOrder ≤ˢ-isTotalOrder
+
+  ≤ˢ-isPreorder : IsPreorder _≡_ _≤ˢ_
+  ≤ˢ-isPreorder = IsPartialOrder.isPreorder ≤ˢ-isPartialOrder
+
+  ≤ˢ-isTransitive : Transitive _≤ˢ_
+  ≤ˢ-isTransitive = IsPreorder.trans ≤ˢ-isPreorder
+
+  ≤ˢ-isAntisymmetric : Antisymmetric _≡_ _≤ˢ_
+  ≤ˢ-isAntisymmetric = IsPartialOrder.antisym ≤ˢ-isPartialOrder
 
   open IsStrictTotalOrder Slot-STO using () renaming (_<?_ to _<ˢ?_) public
 
   _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
-  s ≤ˢ? s' = ¬? (s' <ˢ? s)
+  _≤ˢ?_ = IsDecTotalOrder._≤?_ ≤ˢ-isDecTotalOrder
 
   _+ᵉ_ : ℕ → Epoch → Epoch
   zero +ᵉ e = e
@@ -68,11 +87,16 @@ record EpochStructure : Set₁ where
     addEpoch : HasAdd Epoch
     addEpoch = record { _+_ = _+ᵉ'_ }
 
-    rpoSlot : HasRawPartialOrder Slot
-    rpoSlot = record { _≤_ = _≤ˢ_ }
+    rpoSlot : HasPartialOrder Slot _≡_
+    rpoSlot = record { _≤_ = _≤ˢ_ ; isPartialOrder = ≤ˢ-isPartialOrder }
 
-    rpoEpoch : HasRawPartialOrder Epoch
-    rpoEpoch = record { _≤_ = _≤ᵉ_ }
+    rpreoEpoch : HasPreorder Epoch _≡_
+    rpreoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = rpreo }
+      where
+      rpreo : IsPreorder _≡_ _≤ᵉ_
+      IsPreorder.isEquivalence rpreo = Ledger.Prelude.isEquivalence
+      IsPreorder.reflexive rpreo ≡-refl = inj₂ ≡-refl
+      IsPreorder.trans rpreo ij jk = ≤ˢ-isTransitive ij jk
 
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc
