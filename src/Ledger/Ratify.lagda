@@ -127,6 +127,30 @@ record RatifyState : Set where
 
 CCData : Set
 CCData = Maybe (Credential ⇀ Epoch × R.ℚ)
+
+isCC : VDeleg → Bool
+isCC (credVoter CC _)  = true
+isCC _                 = false
+
+isDRep : VDeleg → Bool
+isDRep (credVoter DRep _)  = true
+isDRep (credVoter _ _)     = false
+isDRep abstainRep          = true
+isDRep noConfidenceRep     = true
+
+isSPO : VDeleg → Bool
+isSPO (credVoter SPO _)  = true
+isSPO _                  = false
+\end{code}
+\begin{code}[hide]
+isCCProp : specProperty λ x → isCC x ≡ true
+isCCProp = to-sp (λ x → isCC x ≟ true)
+
+isDRepProp : specProperty λ x → isDRep x ≡ true
+isDRepProp = to-sp (λ x → isDRep x ≟ true)
+
+isSPOProp : specProperty λ x → isSPO x ≡ true
+isSPOProp = to-sp (λ x → isSPO x ≟ true)
 \end{code}
 } %% end small
 \caption{Types and functions for the RATIFY transition system}
@@ -137,12 +161,13 @@ for the most recently enacted action of its given type. Consequently, two action
 same type can be enacted at the same time, but they must be \emph{deliberately}
 designed to do so.
 
-Figure~\ref{fig:types-and-functions-for-the-ratify-transition-system} defines three more types used in the ratification transition system.
+Figure~\ref{fig:types-and-functions-for-the-ratify-transition-system} defines three more types and some helper functions used in the ratification transition system.
 \begin{itemize}
 \item \StakeDistrs represents a map relating each voting delegate to an amount of stake;
 \item \RatifyEnv denotes an environment with data required for ratification;
 \item \RatifyState denotes an enactment state that exists during ratification;
 \item \CCData stores data about the constitutional committee.
+\item \isCC, \isDRep, and \isSPO, which return \true if the given delegate is a \CC member, a \DRep, or an \SPO (resp.) and \false otherwise.
 \end{itemize}
 \begin{code}[hide]
 -- TODO: remove these or put them into RatifyState
@@ -226,8 +251,9 @@ module _
   open RatifyEnv Γ
 \end{code}
 \begin{code}
-  roleVotes : GovRole → (GovRole × Credential) ⇀ Vote
-  roleVotes r = filterᵐ (to-sp ((r ≟_) ∘ proj₁ ∘ proj₁)) votes
+  roleVotes : GovRole → VDeleg ⇀ Vote
+  roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (to-sp ((r ≟_) ∘ proj₁ ∘ proj₁)) votes)
+                        (λ where _ _ refl → refl)
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys c ⦃ _ ∈? _ ⦄ of λ where
@@ -254,18 +280,30 @@ module _
                  ∪ᵐˡ ❴ noConfidenceRep , (case ga of λ where
                                            NoConfidence → Vote.yes
                                            _            → Vote.no) ❵ᵐ
+
   actualDRepVotes : VDeleg ⇀ Vote
-  actualDRepVotes = mapKeys (uncurry credVoter) (roleVotes GovRole.DRep) (λ where _ _ refl → refl)
+  actualDRepVotes = roleVotes GovRole.DRep
                   ∪ᵐˡ constMap (map (credVoter DRep) activeDReps) Vote.no
     where
       activeDReps : ℙ Credential
       activeDReps = dom (filterᵐ (to-sp (currentEpoch ≤ᵉ?_ ∘ proj₂)) dreps ˢ)
 
+  actualSPOVotes : VDeleg ⇀ Vote
+  actualSPOVotes = roleVotes GovRole.SPO
+                 ∪ᵐˡ constMap spos (if isHF then Vote.no else Vote.abstain)
+    where
+      spos : ℙ VDeleg
+      spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs ˢ)
+
+      isHF : Bool
+      isHF = case ga of λ where
+        (TriggerHF _) → true
+        _             → false
+
   actualVotes : VDeleg ⇀ Vote
   actualVotes = mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
               ∪ᵐˡ actualPDRepVotes ∪ᵐˡ actualDRepVotes
-              ∪ᵐˡ mapKeys (uncurry credVoter) votes (λ where _ _ refl → refl)
-              -- TODO: make `actualVotes` for SPO
+              ∪ᵐˡ actualSPOVotes
 \end{code}
 } %% end small
 \caption{%Ratify i:
@@ -316,37 +354,13 @@ votedAbstainHashes = votedHashes Vote.abstain
 
 participatingHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no votes r
-
-isCC : VDeleg → Bool
-isCC (credVoter CC _)  = true
-isCC _                 = false
-
-isDRep : VDeleg → Bool
-isDRep (credVoter DRep _)  = true
-isDRep (credVoter _ _)     = false
-isDRep abstainRep          = true
-isDRep noConfidenceRep     = true
-
-isSPO : VDeleg → Bool
-isSPO (credVoter SPO _)  = true
-isSPO _                  = false
 \end{code}
 } %% end small
 \caption{Calculation of the votes as they will be counted}
 \label{fig:defs:ratify-ii}
 \end{figure*}
-\begin{code}[hide]
-isCCProp : specProperty λ x → isCC x ≡ true
-isCCProp = to-sp (λ x → isCC x ≟ true)
 
-isDRepProp : specProperty λ x → isDRep x ≡ true
-isDRepProp = to-sp (λ x → isDRep x ≟ true)
-
-isSPOProp : specProperty λ x → isSPO x ≡ true
-isSPOProp = to-sp (λ x → isSPO x ≟ true)
-\end{code}
-The code in Figure~\ref{fig:defs:ratify-ii} defines \votedHashes, which returns the set of delegates who voted a certain way on the given governance role,
-as well as \isCC, \isDRep, and \isSPO, which return \true if the given delegate is a \CC member, a \DRep, or an \SPO (resp.) and \false otherwise.
+The code in Figure~\ref{fig:defs:ratify-ii} defines \votedHashes, which returns the set of delegates who voted a certain way on the given governance role.
 \begin{figure*}[h!]
 {\small
 \begin{code}
