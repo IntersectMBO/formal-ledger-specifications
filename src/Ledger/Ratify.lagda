@@ -116,7 +116,7 @@ record RatifyEnv : Set where
   field stakeDistrs   : StakeDistrs
         currentEpoch  : Epoch
         dreps         : Credential ⇀ Epoch
-        ccHotKeys     : KeyHash ⇀ Maybe KeyHash
+        ccHotKeys     : Credential ⇀ Maybe Credential
 
 record RatifyState : Set where
   constructor ⟦_,_,_,_⟧ʳ
@@ -126,7 +126,7 @@ record RatifyState : Set where
         delay           : Bool
 
 CCData : Set
-CCData = Maybe (KeyHash ⇀ Epoch × R.ℚ)
+CCData = Maybe (Credential ⇀ Epoch × R.ℚ)
 \end{code}
 } %% end small
 \caption{Types and functions for the RATIFY transition system}
@@ -228,14 +228,14 @@ module _
   roleVotes : GovRole → (GovRole × Credential) ⇀ Vote
   roleVotes r = filterᵐ (to-sp ((r ≟_) ∘ proj₁ ∘ proj₁)) votes
 
-  actualCCVote : KeyHash → Epoch → Vote
-  actualCCVote kh e = case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys kh ⦃ _ ∈? _ ⦄ of λ where
-    (true , just (just hk)) → maybe′ id Vote.no $ lookupᵐ? votes (CC , (inj₁ hk)) ⦃ _ ∈? _ ⦄
+  actualCCVote : Credential → Epoch → Vote
+  actualCCVote c e = case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys c ⦃ _ ∈? _ ⦄ of λ where
+    (true , just (just c')) → maybe′ id Vote.no $ lookupᵐ? votes (CC , c') ⦃ _ ∈? _ ⦄
     _                       → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : Credential ⇀ Vote
   actualCCVotes = case cc of λ where
-    (just (cc , _)) → mapKeys inj₁ (mapWithKey actualCCVote cc) (λ where _ _ refl → refl)
+    (just (cc , _)) → mapWithKey actualCCVote cc
     nothing         → ∅ᵐ
 
   actualPDRepVotes : VDeleg ⇀ Vote
@@ -399,22 +399,22 @@ The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for
 {\small
 \begin{code}
 verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Set
-verifyPrev NoConfidence          h es = let open EnactState es in h ≡ proj₂ cc
-verifyPrev (NewCommittee _ _ _)  h es = let open EnactState es in h ≡ proj₂ cc
-verifyPrev (NewConstitution _ _) h es = let open EnactState es in h ≡ proj₂ constitution
-verifyPrev (TriggerHF _)         h es = let open EnactState es in h ≡ proj₂ pv
-verifyPrev (ChangePParams _ _)   h es = let open EnactState es in h ≡ proj₂ pparams
-verifyPrev (TreasuryWdrl _)      _ _  = ⊤
-verifyPrev Info                  _ _  = ⊤
+verifyPrev NoConfidence           h es = let open EnactState es in h ≡ proj₂ cc
+verifyPrev (NewCommittee _ _ _)   h es = let open EnactState es in h ≡ proj₂ cc
+verifyPrev (NewConstitution _ _)  h es = let open EnactState es in h ≡ proj₂ constitution
+verifyPrev (TriggerHF _)          h es = let open EnactState es in h ≡ proj₂ pv
+verifyPrev (ChangePParams _)      h es = let open EnactState es in h ≡ proj₂ pparams
+verifyPrev (TreasuryWdrl _)       _ _  = ⊤
+verifyPrev Info                   _ _  = ⊤
 
 delayingAction : GovAction → Bool
-delayingAction NoConfidence          = true
-delayingAction (NewCommittee _ _ _)  = true
-delayingAction (NewConstitution _ _) = true
-delayingAction (TriggerHF _)         = true
-delayingAction (ChangePParams _ _)   = false
-delayingAction (TreasuryWdrl _)      = false
-delayingAction Info                  = false
+delayingAction NoConfidence           = true
+delayingAction (NewCommittee _ _ _)   = true
+delayingAction (NewConstitution _ _)  = true
+delayingAction (TriggerHF _)          = true
+delayingAction (ChangePParams _)      = false
+delayingAction (TreasuryWdrl _)       = false
+delayingAction Info                   = false
 
 delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Set
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true

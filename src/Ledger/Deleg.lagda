@@ -39,7 +39,7 @@ data DCert : Set where
   retirepool  : Credential → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → DCert
-  ccreghot    : Credential → Maybe KeyHash → DCert
+  ccreghot    : Credential → Maybe Credential → DCert
 
 cwitness : DCert → Credential
 cwitness (delegate c _ _ _)  = c
@@ -76,7 +76,7 @@ record PState : Set where
 record GState : Set where
   constructor ⟦_,_⟧ᵛ
   field dreps      : Credential ⇀ Epoch
-        ccHotKeys  : KeyHash ⇀ Maybe KeyHash -- TODO: maybe replace with credential
+        ccHotKeys  : Credential ⇀ Maybe Credential
 
 record CertState : Set where
   constructor ⟦_,_,_⟧ᶜ
@@ -93,7 +93,7 @@ private variable
   vDelegs : Credential ⇀ VDeleg
   sDelegs : Credential ⇀ Credential
   retiring retiring' : Credential ⇀ Epoch
-  ccKeys : KeyHash ⇀ Maybe KeyHash
+  ccKeys : Credential ⇀ Maybe Credential
   rwds : RwdAddr ⇀ Coin
   dCert : DCert
   c c' : Credential
@@ -162,10 +162,10 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → S
         ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
-    (kh , nothing) ∉ ccKeys ˢ
+    (c , nothing) ∉ ccKeys ˢ
     ────────────────────────────────
-    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot (inj₁ kh) mkh ,GOVCERT⦈
-        ⟦ dReps , singletonᵐ kh mkh ∪ᵐˡ ccKeys ⟧ᵛ
+    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈
+        ⟦ dReps , singletonᵐ c mc ∪ᵐˡ ccKeys ⟧ᵛ
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
   CERT-deleg :
@@ -190,7 +190,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
     in ⊤ -- TODO: check that the withdrawals are correct here
     ────────────────────────────────
     ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st { gState = record gState
-                         { dreps = constMap refresh (e + drepActivity) ∪ᵐˡ dreps } }
+                         { dreps = mapValueRestricted (const (e + drepActivity)) dreps refresh } }
 
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = SS⇒BSᵇ _⊢_⇀⦇ tt ,CERTBASE⦈_ λ (Γ , _) → Γ ⊢_⇀⦇_,CERT⦈_
@@ -249,8 +249,8 @@ instance
     case c ∈? dom (dReps ˢ) of λ where
       (yes p) → just (_ , GOVCERT-deregdrep p)
       (no _)  → nothing
-  Computational'-GOVCERT .computeProof pp ⟦ dReps , ccKeys ⟧ᵛ (ccreghot (inj₁ kh) mkh) =
-    case (kh , nothing) ∈? (ccKeys ˢ) of λ where
+  Computational'-GOVCERT .computeProof pp ⟦ dReps , ccKeys ⟧ᵛ (ccreghot c mkh) =
+    case (c , nothing) ∈? (ccKeys ˢ) of λ where
       (yes _) → nothing
       (no p) → just (_ , GOVCERT-ccreghot p)
   Computational'-GOVCERT .computeProof pp _ _ = nothing
@@ -262,8 +262,8 @@ instance
     with c ∈? dom (dReps ˢ)
   ... | yes _ = refl
   ... | no ¬p = ⊥-elim (¬p p)
-  Computational'-GOVCERT .completeness ⟦ e , pp , vs ⟧ᶜ ⟦ dReps , ccKeys ⟧ᵛ (ccreghot (inj₁ kh) mkh) s' (GOVCERT-ccreghot ¬p)
-    with (kh , nothing) ∈? (ccKeys ˢ)
+  Computational'-GOVCERT .completeness ⟦ e , pp , vs ⟧ᶜ ⟦ dReps , ccKeys ⟧ᵛ (ccreghot c mkh) s' (GOVCERT-ccreghot ¬p)
+    with (c , nothing) ∈? (ccKeys ˢ)
   ... | yes p = ⊥-elim (¬p p)
   ... | no _  = refl
 
@@ -292,18 +292,14 @@ instance
   Computational'-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(deregdrep c) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | just _ | refl = refl
-  Computational'-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(ccreghot (inj₁ kh) mkh) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
+  Computational'-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert@(ccreghot c mkh) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | just _ | refl = refl
 
   Computational-CERT = fromComputational' Computational'-CERT
 
   Computational'-CERTBASE : Computational' _⊢_⇀⦇_,CERTBASE⦈_
-  Computational'-CERTBASE .computeProof ⟦ e , pp , vs ⟧ᶜ st _ = just (newSt , CERT-base _)
-    where
-    open PParams pp; open CertState st; open GState gState
-    refresh = mapPartial getDRepVote (fromList vs)
-    newSt = record st { gState = record gState { dreps = constMap refresh (e + drepActivity) ∪ᵐˡ dreps } }
+  Computational'-CERTBASE .computeProof ⟦ e , pp , vs ⟧ᶜ st _ = just (_ , CERT-base _)
   Computational'-CERTBASE .completeness ⟦ e , pp , vs ⟧ᶜ st _ st' (CERT-base _) = refl
 
 Computational'-CERTS : Computational' _⊢_⇀⦇_,CERTS⦈_
