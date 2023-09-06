@@ -13,12 +13,13 @@ open import Ledger.TokenAlgebra PolicyId           using (TokenAlgebra)
 
 open import Algebra                                using (CommutativeMonoid ; Op₂ ; IsSemigroup ; IsMonoid ; IsMagma ; IsCommutativeMonoid)
 open import Algebra.Morphism                       using (IsMonoidHomomorphism ; IsMagmaHomomorphism)
+import Data.Nat as ℕ
 open import Data.Nat.Properties                    using (+-comm ; +-assoc ; +-identityʳ ; +-0-commutativeMonoid)
 open import Function.Related.TypeIsomorphisms      using (Σ-≡,≡→≡)
 open import Relation.Binary                        using (IsEquivalence)
 open import Relation.Binary.Morphism               using (IsRelHomomorphism)
 open import Relation.Binary.PropositionalEquality  using (module ≡-Reasoning)
-open import Interface.HasRawPartialOrder.Instance
+-- open import Interface.HasOrder.Instance
 
 import Relation.Binary.PropositionalEquality as ≡
 import Relation.Binary.Core  as stdlib
@@ -196,7 +197,7 @@ We are now in a position to define the commutative monoid.
     policies tm = dom (dom (rel tm))
 
     leq : AssetId ⇒ Quantity → AssetId ⇒ Quantity → Type
-    leq u v = ∀ {a}{p}{q} → lookup u (a , p) ≤ lookup v (a , q)
+    leq u v = ∀ {a}{p}{q} → lookup u (a , p) ℕ.≤ lookup v (a , q)
 
     compose-to-id : totalMap↠coin ∘ coin↪totalMap ≗ id
     compose-to-id _ = lookup-update-id ι

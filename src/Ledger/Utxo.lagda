@@ -15,7 +15,7 @@ open import Ledger.Prelude hiding (Dec₁)
 
 open import Algebra                        using (CommutativeMonoid)
 open import Data.Integer.Ext               using (posPart; negPart)
-open import Data.Nat                       using (_≤?_)
+open import Data.Nat   as ℕ                    using (_≤?_)
 open import Data.Nat.Properties            using (+-0-monoid; +-0-commutativeMonoid)
 open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁)
 
@@ -29,7 +29,8 @@ open import MyDebugOptions
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
-open import Interface.HasRawPartialOrder.Instance
+open import Interface.HasOrder
+open import Interface.HasOrder.Instance
 
 instance
   _ = Decidable²⇒Dec _≤?_
@@ -113,9 +114,9 @@ propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
-  both  : ∀ {l r} → l ≤ slot × slot ≤ r  →  inInterval slot (just l  , just r)
-  lower : ∀ {l}   → l ≤ slot              →  inInterval slot (just l  , nothing)
-  upper : ∀ {r}   → slot ≤ r              →  inInterval slot (nothing , just r)
+  both  : ∀ {l r} → l ≤ˢ slot × slot ≤ˢ r  →  inInterval slot (just l  , just r)
+  lower : ∀ {l}   → l ≤ˢ slot              →  inInterval slot (just l  , nothing)
+  upper : ∀ {r}   → slot ≤ˢ r              →  inInterval slot (nothing , just r)
   none  :                                     inInterval slot (nothing , nothing)
 
 \end{code}
@@ -254,9 +255,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           donations     = UTxOState.donations s
       in
     txins tx ≢ ∅                           → txins tx ⊆ dom (utxo ˢ)
-    → inInterval slot (txvldt tx)          → minfee pp tx ≤ txfee tx
+    → inInterval slot (txvldt tx)          → minfee pp tx ℕ.≤ txfee tx
     → consumed pp s tx ≡ produced pp s tx  → coin (mint tx) ≡ 0
-    → txsize tx ≤ maxTxSize pp
+    → txsize tx ℕ.≤ maxTxSize pp
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
                         , fees + txfee tx

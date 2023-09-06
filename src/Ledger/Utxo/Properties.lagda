@@ -36,7 +36,7 @@ open Properties
 
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
-open import Interface.HasRawPartialOrder.Instance
+open import Interface.HasOrder.Instance
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
@@ -202,7 +202,7 @@ module DepositHelpers
   ... | ℤ.+_ n     = ⊥-elim (ref≢0 refl)
   ... | ℤ.negsuc n = refl
 
-  ref≤dep : ref ≤ dep
+  ref≤dep : ref ℕ.≤ dep
   ref≤dep with ref ≟ 0
   ... | no ¬p = ≤″⇒≤ $ less-than-or-equal $ begin
     ref + uDep ≡⟨ +-comm ref uDep ⟩

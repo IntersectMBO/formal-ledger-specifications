@@ -10,6 +10,7 @@ import Data.Rational as ℚ
 open import Algebra              using (CommutativeMonoid)
 open import Algebra.Morphism     using (module MonoidMorphisms)
 open import Data.Nat.Properties  using (+-0-commutativeMonoid) renaming (_≟_ to _≟ℕ_)
+import Data.Nat as ℕ
 open import Data.Nat.Properties  using (+-*-semiring; <-isStrictTotalOrder)
 open import Relation.Binary.Morphism.Structures
 
@@ -21,7 +22,7 @@ import Ledger.Foreign.LedgerTypes as F
 open import Ledger.Crypto
 open import Ledger.Epoch
 
-open import Interface.HasRawPartialOrder.Instance
+open import Interface.HasOrder.Instance
 
 open GlobalConstants
 HSGlobalConstants : GlobalConstants
@@ -113,7 +114,7 @@ module _ where
   coinTokenAlgebra  .inject                    = id
   coinTokenAlgebra  .policies                  = λ _ → ∅
   coinTokenAlgebra  .size                      = λ x → 1 -- there is only ada in this token algebra
-  coinTokenAlgebra  ._≤ᵗ_                      = _≤_
+  coinTokenAlgebra  ._≤ᵗ_                      = ℕ._≤_
   coinTokenAlgebra  .AssetName                 = String
   coinTokenAlgebra  .specialAsset              = "Ada"
   coinTokenAlgebra  .property                  = λ _ → refl

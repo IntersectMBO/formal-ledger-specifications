@@ -17,7 +17,7 @@ open import Ledger.Prelude hiding (yes; no)
 open import Ledger.Epoch
 
 import Ledger.PParams as PP
-
+import Data.Nat as ℕ
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
@@ -38,8 +38,6 @@ open isHashableSet ppHashable renaming (THash to PPHash)
 
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
-
-open import Interface.HasRawPartialOrder.Instance
 
 2ℚ = 1ℚ Data.Rational.+ 1ℚ
 \end{code}
@@ -329,7 +327,7 @@ It represents how the \AgdaBound{EnactState} changes when a specific governance 
     record s { pparams = applyUpdate (proj₁ (s .pparams)) up , gid }
   Enact-Wdrl      :
     let newWdrls = Σᵐᵛ[ x ← wdrl ᶠᵐ ] x
-    in newWdrls ≤ s .treasury
+    in newWdrls ℕ.≤ s .treasury
     ────────────────────────────────
     ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
       record s { withdrawals  = s .withdrawals  ∪⁺ wdrl
