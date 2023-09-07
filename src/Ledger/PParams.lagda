@@ -81,7 +81,8 @@ record PParams : Set where
 paramsWellFormed : PParams → Bool
 paramsWellFormed pp = ⌊ ¬? (0 ∈? setFromList
   (maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
-  ∷ collateralPercent ∷ ccTermLimit ∷ govExpiration ∷ govDeposit ∷ drepDeposit ∷ [])) ⌋
+  ∷ collateralPercent ∷ ccTermLimit ∷ govExpiration ∷ govDeposit ∷ drepDeposit ∷ [])) ⌋ ∧
+  ⌊ (ℕtoEpoch govExpiration) ≤ᵉ? drepActivity ⌋
   where open PParams pp
 \end{code}
 \end{AgdaAlign}
