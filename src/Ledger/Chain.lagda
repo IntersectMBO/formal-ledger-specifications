@@ -94,9 +94,12 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 
       retired = retiring ⁻¹ e
 
-      certState' = record certState {
-        pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ };
-        dState = record dState { rewards = rewards ∪⁺ refunds } }
+      certState' = record certState
+        { pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ }
+        ; dState = record dState { rewards = rewards ∪⁺ refunds } }
+        ; gState = if not (null govSt')
+                     then gState
+                     else record gState { dreps = mapValues sucᵉ (GState.dreps gState) }
       utxoSt' = record utxoSt
         { fees = 0
         ; deposits = deposits ∣ map (proj₁ ∘ proj₂) removedGovActions ᶜ

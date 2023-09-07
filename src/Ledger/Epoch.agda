@@ -44,6 +44,10 @@ record EpochStructure : Set₁ where
   _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
   s ≤ˢ? s' = ¬? (s' <ˢ? s)
 
+  ℕtoEpoch : ℕ → Epoch
+  ℕtoEpoch zero    = epoch (Semiring.0# Slotʳ)
+  ℕtoEpoch (suc n) = sucᵉ (ℕtoEpoch n)
+
   _+ᵉ_ : ℕ → Epoch → Epoch
   zero +ᵉ e = e
   suc n +ᵉ e = sucᵉ (n +ᵉ e)
