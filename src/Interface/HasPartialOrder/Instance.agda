@@ -16,12 +16,12 @@ instance
   leqNat : HasPartialOrder ℕ _≡_
   leqNat = record { _≤_ = _≤ℕ_ ; isPartialOrder = ≤ℕ-isPartialOrder }
 
-open import Ledger.Epoch using (EpochStructure)
+-- open import Ledger.Epoch using (EpochStructure)
 
-module epochPO (es : EpochStructure) where
+-- module epochPO (es : EpochStructure) where
 
-  open EpochStructure es
+--   open EpochStructure es
 
-  instance
-    poSlot : HasPartialOrder Slot _≡_
-    poSlot = record { _≤_ = _≤ˢ_ ; isPartialOrder = ≤ˢ-isPartialOrder }
+--   instance
+--     poSlot : HasPartialOrder Slot _≡_
+--     poSlot = record { _≤_ = _≤ˢ_ ; isPartialOrder = ≤ˢ-isPartialOrder }

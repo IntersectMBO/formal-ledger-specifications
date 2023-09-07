@@ -29,8 +29,8 @@ open import MyDebugOptions
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
-open import Interface.HasPartialOrder.Instance
-open epochPO epochStructure
+-- open import Interface.HasPartialOrder.Instance
+-- open epochPO epochStructure
 
 instance
   _ = Decidable²⇒Dec _≤?_

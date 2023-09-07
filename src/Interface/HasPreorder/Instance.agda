@@ -11,21 +11,21 @@ open import Relation.Binary.PropositionalEquality  using (_≡_)
 open import Interface.HasPreorder
 
 instance
-  stoℕ : HasPreorder ℕ _≡_
-  stoℕ = record { _≤_ = _≤ℕ_ ; isPreorder = ≤ℕ-isPreorder }
+  preoℕ : HasPreorder ℕ _≡_
+  preoℕ = record { _≤_ = _≤ℕ_ ; isPreorder = ≤ℕ-isPreorder }
 
-  stoℤ : HasPreorder ℤ _≡_
-  stoℤ = record { _≤_ = _≤ℤ_ ; isPreorder = ≤ℤ-isPreorder }
+  preoℤ : HasPreorder ℤ _≡_
+  preoℤ = record { _≤_ = _≤ℤ_ ; isPreorder = ≤ℤ-isPreorder }
 
-open import Ledger.Epoch using (EpochStructure)
+-- open import Ledger.Epoch using (EpochStructure)
 
-module epochPreorder (es : EpochStructure) where
+-- module epochPreorder (es : EpochStructure) where
 
-  open EpochStructure es
+--   open EpochStructure es
 
-  instance
-    preoSlot : HasPreorder Slot _≡_
-    preoSlot = record { _≤_ = _≤ˢ_ ; isPreorder = ≤ˢ-isPreorder }
+--   instance
+--     preoSlot : HasPreorder Slot _≡_
+--     preoSlot = record { _≤_ = _≤ˢ_ ; isPreorder = ≤ˢ-isPreorder }
 
-    preoEpoch : HasPreorder Epoch _≡_
-    preoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = ≤ᵉ-isPreorder }
+--     preoEpoch : HasPreorder Epoch _≡_
+--     preoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = ≤ᵉ-isPreorder }

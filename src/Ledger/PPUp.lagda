@@ -25,9 +25,9 @@ open import Data.Nat.Literals
 import Data.Unit.Polymorphic
 open Semiring-Lit Slotʳ
 
-open import Interface.HasStrictTotalOrder
-open import Interface.HasStrictTotalOrder.Instance using (module epochSTO)
-open epochSTO epochStructure
+-- open import Interface.HasStrictTotalOrder
+-- open import Interface.HasStrictTotalOrder.Instance using (module epochSTO)
+-- open epochSTO epochStructure
 
 private variable m n : ℕ
 

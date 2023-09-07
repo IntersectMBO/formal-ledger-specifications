@@ -12,4 +12,4 @@ record HasPreorder {a ℓ ℓ₂} (A : Set a) (_≈_ : Rel A ℓ) : Set (a ⊔ �
     _≤_ : Rel A ℓ₂
     isPreorder : IsPreorder {A = A} _≈_ _≤_
 
-open HasPreorder ⦃ ... ⦄ public
+-- open HasPreorder ⦃ ... ⦄ public

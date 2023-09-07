@@ -108,6 +108,16 @@ record EpochStructure : Set₁ where
     addEpoch : HasAdd Epoch
     addEpoch = record { _+_ = _+ᵉ'_ }
 
+    poSlot : HasPartialOrder Slot _≡_
+    poSlot = record { _≤_ = _≤ˢ_ ; isPartialOrder = ≤ˢ-isPartialOrder }
+
+    preoEpoch : HasPreorder Epoch _≡_
+    preoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = ≤ᵉ-isPreorder }
+
+    spoSlot : HasStrictTotalOrder Slot _≡_
+    spoSlot = record { _<_ = _<ˢ_ ; isStrictTotalOrder = Slot-STO }
+
+
 
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc

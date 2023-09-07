@@ -23,11 +23,11 @@ open import Relation.Nullary.Decidable
 open import Agda.Builtin.FromNat
 open import Algebra.Literals
 open Semiring-Lit Slotʳ
-open import Interface.HasPartialOrder.Instance using (module epochPO)
-open import Interface.HasStrictTotalOrder.Instance using (module epochSTO)
+-- open import Interface.HasPartialOrder.Instance using (module epochPO)
+-- open import Interface.HasStrictTotalOrder.Instance using (module epochSTO)
 
-open epochSTO (TransactionStructure.epochStructure txs)
-open epochPO (TransactionStructure.epochStructure txs)
+-- open epochSTO (TransactionStructure.epochStructure txs)
+-- open epochPO (TransactionStructure.epochStructure txs)
 
 instance
   _ = Data.Unit.Polymorphic.tt

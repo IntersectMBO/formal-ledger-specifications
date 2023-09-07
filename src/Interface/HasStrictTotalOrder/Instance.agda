@@ -17,12 +17,12 @@ instance
   stoℤ : HasStrictTotalOrder ℤ _≡_
   stoℤ = record { _<_ = _<ℤ_ ; isStrictTotalOrder = <ℤ-isStrictTotalOrder }
 
-open import Ledger.Epoch using (EpochStructure)
+-- open import Ledger.Epoch using (EpochStructure)
 
-module epochSTO (es : EpochStructure) where
+-- module epochSTO (es : EpochStructure) where
 
-  open EpochStructure es
+--   open EpochStructure es
 
-  instance
-    spoSlot : HasStrictTotalOrder Slot _≡_
-    spoSlot = record { _<_ = _<ˢ_ ; isStrictTotalOrder = Slot-STO }
+--   instance
+--     spoSlot : HasStrictTotalOrder Slot _≡_
+--     spoSlot = record { _<_ = _<ˢ_ ; isStrictTotalOrder = Slot-STO }
