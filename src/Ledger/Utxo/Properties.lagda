@@ -171,7 +171,7 @@ module DepositHelpers
     noMintAda : coin (mint tx) ≡ 0
     noMintAda = noMintAda' step
     remDepTot : Coin
-    remDepTot = getCoin deposits ∸ ref
+    remDepTot = getCoin deposits - ref
 
   uDep≡
     : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
@@ -200,7 +200,7 @@ module DepositHelpers
   ... | ℤ.+_ n     = ⊥-elim (ref≢0 refl)
   ... | ℤ.negsuc n = refl
 
-  ref≤dep : ref ℕ.≤ dep
+  ref≤dep : ref ≤ dep
   ref≤dep with ref ≟ 0
   ... | no ¬p = ≤″⇒≤ $ less-than-or-equal $ begin
     ref + uDep ≡⟨ +-comm ref uDep ⟩
@@ -208,7 +208,7 @@ module DepositHelpers
     dep        ∎
   ... | yes p rewrite p = z≤n
 
-  deposits-change : uDep ≡ dep + tot ∸ ref
+  deposits-change : uDep ≡ dep + tot - ref
   deposits-change = ℤ.+-injective $ begin
     ℤ.+_ uDep                                 ≡˘⟨ ℤ.+-identityʳ _ ⟩
     ℤ.+_ uDep ℤ.+ ℤ.0ℤ                        ≡˘⟨ cong! (ℤ.+-inverseˡ (ℤ.+_ dep)) ⟩
@@ -219,7 +219,7 @@ module DepositHelpers
     (ℤ.+_ dep) ℤ.+ Δdep                       ≡⟨ cong! deposits-change' ⟩
     (ℤ.+_ dep) ℤ.+ (tot ⊖ ref)                ≡⟨ ℤ.distribʳ-⊖-+-pos dep tot ref ⟩
     (dep + tot) ⊖ ref                         ≡⟨ ℤ.⊖-≥ (m≤n⇒m≤n+o tot ref≤dep) ⟩
-    ℤ.+_ (dep + tot ∸ ref) ∎
+    ℤ.+_ (dep + tot - ref) ∎
 
   utxo-ref-prop :
     cbalance utxo + ref ≡
@@ -256,9 +256,9 @@ module DepositHelpers
     (fees + txfee tx) ℕ.+ (tot + remDepTot) ℕ.+ txdonation tx
       ≡⟨ cong (λ x → (fees + txfee tx) + x + txdonation tx) (
         begin
-          tot + (dep ∸ ref) ≡˘⟨ +-∸-assoc tot ref≤dep ⟩
-          (tot + dep) ∸ ref ≡⟨ cong (_∸ ref) (+-comm tot dep) ⟩
-          (dep + tot) ∸ ref ≡˘⟨ deposits-change ⟩
+          tot + (dep - ref) ≡˘⟨ +-∸-assoc tot ref≤dep ⟩
+          (tot + dep) - ref ≡⟨ cong (_- ref) (+-comm tot dep) ⟩
+          (dep + tot) - ref ≡˘⟨ deposits-change ⟩
           uDep ≡⟨ cong getCoin (sym $ uDep≡ step) ⟩
           getCoin deposits' ∎
       )⟩
@@ -317,13 +317,13 @@ pov {tx} {utxo} {_} {fees} {deposits} {donations} {utxo'} {fees'} {deposits'} {d
       ref = depositRefunds pp utxoSt tx
       tot = newDeposits pp utxoSt tx
       dep = getCoin deposits
-      remDepTot = getCoin deposits ∸ ref
+      remDepTot = getCoin deposits - ref
       open DepositHelpers step h'
   in begin
     cbalance utxo + fees + dep + donations   ≡⟨ cong (_+ donations) (
         begin
           cbalance utxo ℕ.+ fees ℕ.+ dep ≡tˡ⟨ cong (cbalance utxo ℕ.+_) (+-comm fees dep) ⟩
-          cbalance utxo ℕ.+ (dep + fees) ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) (m+[n∸m]≡n ref≤dep) ⟩
+          cbalance utxo + (dep + fees) ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) (m+[n∸m]≡n ref≤dep) ⟩
           cbalance utxo ℕ.+ ((ref ℕ.+ remDepTot) ℕ.+ fees) ≡t⟨⟩
           cbalance utxo ℕ.+ ref ℕ.+ (remDepTot ℕ.+ fees) ≡⟨ cong (_+ (remDepTot + fees)) utxo-ref-prop ⟩
           (cbalance ((utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx) ℕ.+ txfee tx) ℕ.+ txdonation tx ℕ.+ tot ℕ.+ (remDepTot ℕ.+ fees) ≡t⟨⟩

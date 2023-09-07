@@ -86,7 +86,6 @@ record EpochStructure : Set₁ where
   suc n +ᵉ e = sucᵉ (n +ᵉ e)
 
   open Semiring Slotʳ renaming (_+_ to _+ˢ_)
-
   _+ᵉ'_ : Epoch → Epoch → Epoch
   e +ᵉ' e' = epoch (firstSlot e +ˢ firstSlot e')
 

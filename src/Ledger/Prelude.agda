@@ -11,7 +11,7 @@
 
 module Ledger.Prelude where
 
-open import Prelude hiding (isPartialOrder ; isPreorder) public
+open import Prelude public
 
 open import Ledger.Prelude.Base public
 
@@ -20,6 +20,8 @@ open import Interface.DecEq public
 open import Ledger.Interface.HasCoin public
 open import Interface.HasAdd public
 open import Interface.HasAdd.Instance public
+open import Interface.HasSubtract public
+open import Interface.HasSubtract.Instance public
 open import Interface.HasPreorder public
 open import Interface.HasPartialOrder public
 open import Interface.HasPartialOrder.Instance public
