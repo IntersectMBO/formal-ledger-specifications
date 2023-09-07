@@ -138,16 +138,27 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
     P5 : UpdateT → ℚ
     P5 ppu = maximum $ map pparamThreshold (updateGroups ppu)
 
-  threshold : GovAction → GovRole → ℚ
-  threshold NoConfidence          = λ { CC → 0ℚ          ; DRep → P1   ; SPO → Q1 }
-  threshold (NewCommittee _ _ _)  = case ccThreshold' of λ where
-                        (just _)  → λ { CC → 0ℚ          ; DRep → P2a  ; SPO → Q2a }
-                        nothing   → λ { CC → 0ℚ          ; DRep → P2b  ; SPO → Q2b }
-  threshold (NewConstitution _ _) = λ { CC → ccThreshold ; DRep → P3   ; SPO → 0ℚ }
-  threshold (TriggerHF _)         = λ { CC → ccThreshold ; DRep → P4   ; SPO → Q4 }
-  threshold (ChangePParams x)     = λ { CC → ccThreshold ; DRep → P5 x ; SPO → 0ℚ }
-  threshold (TreasuryWdrl _)      = λ { CC → ccThreshold ; DRep → P6   ; SPO → 0ℚ }
-  threshold Info                  = λ { CC → 2ℚ          ; DRep → 2ℚ   ; SPO → 2ℚ }
+    noVote : Maybe ℚ
+    noVote = nothing
+
+    vote : ℚ → Maybe ℚ
+    vote = just
+
+  threshold : GovAction → GovRole → Maybe ℚ
+  threshold NoConfidence           = λ { CC → noVote           ; DRep → vote P1     ; SPO → vote Q1 }
+  threshold (NewCommittee _ _ _)   = case ccThreshold' of λ where
+                        (just _)   → λ { CC → noVote           ; DRep → vote P2a    ; SPO → vote Q2a }
+                        nothing    → λ { CC → noVote           ; DRep → vote P2b    ; SPO → vote Q2b }
+  threshold (NewConstitution _ _)  = λ { CC → vote ccThreshold ; DRep → vote P3     ; SPO → noVote }
+  threshold (TriggerHF _)          = λ { CC → vote ccThreshold ; DRep → vote P4     ; SPO → vote Q4 }
+  threshold (ChangePParams x)      = λ { CC → vote ccThreshold ; DRep → vote (P5 x) ; SPO → noVote }
+  threshold (TreasuryWdrl _)       = λ { CC → vote ccThreshold ; DRep → vote P6     ; SPO → noVote }
+  threshold Info                   = λ { CC → vote 2ℚ          ; DRep → vote 2ℚ     ; SPO → vote 2ℚ }
+
+-- TODO: this doesn't actually depend on PParams so we could remove that argument,
+--       but we don't have a default ATM
+canVote : PParams → GovAction → GovRole → Set
+canVote pp a r = Is-just (threshold pp nothing a r)
 \end{code}
 \subsection{Voting and ratification}
 \label{sec:voting-and-ratification}
