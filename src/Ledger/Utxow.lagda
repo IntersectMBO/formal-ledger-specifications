@@ -28,17 +28,18 @@ getVKeys = mapPartial isInj₁
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isInj₂
 
-credsNeeded : UTxO → TxBody → ℙ Credential
-credsNeeded utxo txb =
+credsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ Credential
+credsNeeded ppolicy utxo txb =
     map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
   ∪ map cwitness (setFromList $ txcerts txb)
   ∪ map GovVote.credential (setFromList $ txvote txb)
+  ∪ mapPartial (const (M.map inj₂ ppolicy)) (setFromList $ txprop txb)
 
-witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded utxo = getVKeys ∘ credsNeeded utxo
+witsVKeyNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ KeyHash
+witsVKeyNeeded sh utxo = getVKeys ∘ credsNeeded sh utxo
 
-scriptsNeeded : UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded utxo = getScripts ∘ credsNeeded utxo
+scriptsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ ScriptHash
+scriptsNeeded sh utxo = getScripts ∘ credsNeeded sh utxo
 
 scriptsP1 : TxWitnesses → ℙ P1Script
 scriptsP1 txw = mapPartial isInj₁ (scripts txw)
@@ -68,6 +69,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
   UTXOW-inductive :
     ∀ {Γ} {s} {tx} {s'}
     → let utxo = UTxOState.utxo s
+          ppolicy = UTxOEnv.ppolicy Γ
           txb = body tx
           txw = wits tx
           witsKeyHashes = map hash (dom (vkSigs txw ˢ))
@@ -75,8 +77,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
       in
     ∀[ (vk , σ) ∈ vkSigs txw ˢ ] isSigned vk (txidBytes (txid txb)) σ
     → ∀[ s ∈ scriptsP1 txw ] validP1Script witsKeyHashes (txvldt txb) s
-    → witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    → scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
+    → witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
+    → scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
     → txADhash txb ≡ M.map hash (txAD tx)
     → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
     ────────────────────────────────

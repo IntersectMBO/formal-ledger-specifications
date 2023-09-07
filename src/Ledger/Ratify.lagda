@@ -55,16 +55,16 @@ governance action scenario. The columns represent
 \GovAction  & \CC  &  \DRep & \SPO \\
 \hline
 \endhead
-1. Motion of no-confidence & - & \AgdaField{P1} & \AgdaField{Q1} \\
-2a. New committee/threshold (\emph{normal state}) & - & \AgdaField{P2a} & \AgdaField{Q2a} \\
-2b. New committee/threshold (\emph{state of no-confidence}) & - & \AgdaField{P2b} & \AgdaField{Q2b} \\
-3. Update to the Constitution & \ding{51} & \AgdaField{P3} & - \\
-4. Hard-fork initiation & \ding{51} & \AgdaField{P4} & \AgdaField{Q4} \\
-5a. Changes to protocol parameters in the \NetworkGroup & \ding{51} & \AgdaField{P5a} & - \\
-5b. Changes to protocol parameters in the \EconomicGroup & \ding{51} & \AgdaField{P5b} & - \\
-5c. Changes to protocol parameters in the \TechnicalGroup & \ding{51} & \AgdaField{P5c} & - \\
-5d. Changes to protocol parameters in the \GovernanceGroup & \ding{51} & \AgdaField{P5d} & - \\
-6. Treasury withdrawal & \ding{51} & \AgdaField{P6} & - \\
+1. Motion of no-confidence & - & \Pone & \Qone \\
+2a. New committee/threshold (\emph{normal state}) & - & \Ptwoa & \Qtwoa \\
+2b. New committee/threshold (\emph{state of no-confidence}) & - & \Ptwob & \Qtwob \\
+3. Update to the Constitution & \ding{51} & \Pthree & - \\
+4. Hard-fork initiation & \ding{51} & \Pfour & \Qfour \\
+5a. Changes to protocol parameters in the \NetworkGroup & \ding{51} & \Pfivea & - \\
+5b. Changes to protocol parameters in the \EconomicGroup & \ding{51} & \Pfiveb & - \\
+5c. Changes to protocol parameters in the \TechnicalGroup & \ding{51} & \Pfivec & - \\
+5d. Changes to protocol parameters in the \GovernanceGroup & \ding{51} & \Pfived & - \\
+6. Treasury withdrawal & \ding{51} & \Psix & - \\
 7. Info & \ding{51} & \(100\) & \(100\) \\
 \end{longtable}
 \caption{Retification requirements}
@@ -116,7 +116,7 @@ record RatifyEnv : Set where
   field stakeDistrs   : StakeDistrs
         currentEpoch  : Epoch
         dreps         : Credential ⇀ Epoch
-        ccHotKeys     : KeyHash ⇀ Maybe KeyHash
+        ccHotKeys     : Credential ⇀ Maybe Credential
 
 record RatifyState : Set where
   constructor ⟦_,_,_,_⟧ʳ
@@ -126,7 +126,7 @@ record RatifyState : Set where
         delay           : Bool
 
 CCData : Set
-CCData = Maybe (KeyHash ⇀ Epoch × R.ℚ)
+CCData = Maybe (Credential ⇀ Epoch × R.ℚ)
 \end{code}
 } %% end small
 \caption{Types and functions for the RATIFY transition system}
@@ -228,14 +228,14 @@ module _
   roleVotes : GovRole → (GovRole × Credential) ⇀ Vote
   roleVotes r = filterᵐ (to-sp ((r ≟_) ∘ proj₁ ∘ proj₁)) votes
 
-  actualCCVote : KeyHash → Epoch → Vote
-  actualCCVote kh e = case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys kh ⦃ _ ∈? _ ⦄ of λ where
-    (true , just (just hk)) → maybe′ id Vote.no $ lookupᵐ? votes (CC , (inj₁ hk)) ⦃ _ ∈? _ ⦄
+  actualCCVote : Credential → Epoch → Vote
+  actualCCVote c e = case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys c ⦃ _ ∈? _ ⦄ of λ where
+    (true , just (just c')) → maybe′ id Vote.no $ lookupᵐ? votes (CC , c') ⦃ _ ∈? _ ⦄
     _                       → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : Credential ⇀ Vote
   actualCCVotes = case cc of λ where
-    (just (cc , _)) → mapKeys inj₁ (mapWithKey actualCCVote cc) (λ where _ _ refl → refl)
+    (just (cc , _)) → mapWithKey actualCCVote cc
     nothing         → ∅ᵐ
 
   actualPDRepVotes : VDeleg ⇀ Vote
@@ -265,9 +265,9 @@ The code in Figure~\ref{fig:defs:ratify-i} defines some of the types required fo
 \begin{itemize}
   \item Assuming a ratification environment \AgdaPostulate{Γ},
   \begin{itemize}
-    \item \cc contains constitutional committee data;
-    \item \votes is a relation associating each role-credential pair with the vote cast by the individual denoted by that pair;
-    \item \ga denotes the governance action being voted upon.
+    \item \agdaboundcc contains constitutional committee data;
+    \item \agdaboundvotes is a relation associating each role-credential pair with the vote cast by the individual denoted by that pair;
+    \item \agdaboundga denotes the governance action being voted upon.
   \end{itemize}
 
   \item \roleVotes filters the votes based on the given governance role.
@@ -284,7 +284,7 @@ The code in Figure~\ref{fig:defs:ratify-i} defines some of the types required fo
 
   \item \actualPDRepVotes determines how the votes will be counted for \DReps;
   here, \abstainRep is mapped to \abstain and \noConfidenceRep is mapped to either \yes or \no,
-  depending on the value of \ga.
+  depending on the value of \agdaboundga.
 
   \item \actualDRepVotes determines how the votes of \DReps will be counted; \activeDReps that didn't vote count as a \no.
 
@@ -391,7 +391,7 @@ The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for
   \item \acceptedStake calculates the sum of stakes for all delegations that voted \yes for the specified role;
   \item \totalStake calculates the sum of stakes for all delegations that didn't vote \abstain for the given role;
   \item \activeVotingStake computes the total stake for the role of \DRep for active voting; it calculates the sum of
-  stakes for all active delegates that have not voted (i.e., their delegation is present in \CC but not in the \votes mapping);
+  stakes for all active delegates that have not voted (i.e., their delegation is present in \CC but not in the \agdaboundvotes mapping);
   \item \accepted checks if an action is accepted for the \CC, \DRep, and \SPO roles and whether it meets the minimum active voting stake (\meetsMinAVS);
   \item \expired checks whether a governance action is expired in a given epoch.
 \end{itemize}
@@ -399,22 +399,22 @@ The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for
 {\small
 \begin{code}
 verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Set
-verifyPrev NoConfidence          h es = let open EnactState es in h ≡ proj₂ cc
-verifyPrev (NewCommittee _ _ _)  h es = let open EnactState es in h ≡ proj₂ cc
-verifyPrev (NewConstitution _)   h es = let open EnactState es in h ≡ proj₂ constitution
-verifyPrev (TriggerHF _)         h es = let open EnactState es in h ≡ proj₂ pv
-verifyPrev (ChangePParams _ _)   h es = let open EnactState es in h ≡ proj₂ pparams
-verifyPrev (TreasuryWdrl _)      _ _  = ⊤
-verifyPrev Info                  _ _  = ⊤
+verifyPrev NoConfidence           h es = let open EnactState es in h ≡ proj₂ cc
+verifyPrev (NewCommittee _ _ _)   h es = let open EnactState es in h ≡ proj₂ cc
+verifyPrev (NewConstitution _ _)  h es = let open EnactState es in h ≡ proj₂ constitution
+verifyPrev (TriggerHF _)          h es = let open EnactState es in h ≡ proj₂ pv
+verifyPrev (ChangePParams _)      h es = let open EnactState es in h ≡ proj₂ pparams
+verifyPrev (TreasuryWdrl _)       _ _  = ⊤
+verifyPrev Info                   _ _  = ⊤
 
 delayingAction : GovAction → Bool
-delayingAction NoConfidence          = true
-delayingAction (NewCommittee _ _ _)  = true
-delayingAction (NewConstitution _)   = true
-delayingAction (TriggerHF _)         = true
-delayingAction (ChangePParams _ _)   = false
-delayingAction (TreasuryWdrl _)      = false
-delayingAction Info                  = false
+delayingAction NoConfidence           = true
+delayingAction (NewCommittee _ _ _)   = true
+delayingAction (NewConstitution _ _)  = true
+delayingAction (TriggerHF _)          = true
+delayingAction (ChangePParams _)      = false
+delayingAction (TreasuryWdrl _)       = false
+delayingAction Info                   = false
 
 delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Set
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true

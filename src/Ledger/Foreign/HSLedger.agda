@@ -291,6 +291,7 @@ instance
 
       from' : F.UTxOEnv → UTxOEnv
       from' e = let open F.UTxOEnv e in record { slot = slot ; pparams = from pparams }
+      -- from' e = let open F.UTxOEnv e in record { slot = slot ; ppolicy = nothing ; pparams = from pparams }
 
   Convertible-UTxOState : Convertible UTxOState F.UTxOState
   Convertible-UTxOState = record { to = to' ; from = from' }

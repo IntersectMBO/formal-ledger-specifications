@@ -35,6 +35,9 @@ open import Interface.MonadReader.Instance
 open import Interface.MonadError.Instance
 open import Interface.MonadTC.Instance
 
+open import Interface.HasSubtract
+open import Interface.HasSubtract.Instance
+
 instance
   _ = ContextMonad-MonadTC
 
@@ -49,7 +52,7 @@ record STSConstr : Set where
     result  : Term
 
 conOrVarToPattern : ℕ → Term → Maybe Pattern
-conOrVarToPattern k (♯ v) = just (Pattern.var (v ∸ k))
+conOrVarToPattern k (♯ v) = just (Pattern.var (v - k))
 conOrVarToPattern k (con c args) =
   Pattern.con c <$> (sequenceList $ conOrVarToPattern′ k args)
   where
@@ -67,11 +70,11 @@ toSTSConstr (n , (cs , def _ args)) with args | mapMaybe (conOrVarToPattern (len
   return record
     { name = n
     ; params = takeWhile isArg cs
-    ; clauses = zipWithIndex (λ i → mapVars (_∸ i)) $ (unArg ∘ unAbs) <$> dropWhile isArg cs
+    ; clauses = zipWithIndex (λ i → mapVars (_- i)) $ (unArg ∘ unAbs) <$> dropWhile isArg cs
     ; context = c
     ; state = s
     ; signal = sig
-    ; result = mapVars (_∸ (length $ dropWhile isArg cs)) $ unArg r }
+    ; result = mapVars (_- (length $ dropWhile isArg cs)) $ unArg r }
 ... | l | l' =
   error1 ("toSTSConstr: wrong number of arguments:" <+> ℕ.show (length l) <+> "," <+> ℕ.show (length l'))
 toSTSConstr _ = error1 "toSTSConstr: wrong constructor"

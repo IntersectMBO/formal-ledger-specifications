@@ -17,7 +17,7 @@ open import Algebra                        using (CommutativeMonoid)
 open import Data.Integer.Ext               using (posPart; negPart)
 open import Data.Nat   as ℕ                    using (_≤?_)
 open import Data.Nat.Properties            using (+-0-monoid; +-0-commutativeMonoid)
-open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁)
+open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁; ¿_¿)
 
 open TransactionStructure txs
 open TxBody
@@ -114,9 +114,9 @@ propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
-  both  : ∀ {l r} → l ≤ˢ slot × slot ≤ˢ r  →  inInterval slot (just l  , just r)
-  lower : ∀ {l}   → l ≤ˢ slot              →  inInterval slot (just l  , nothing)
-  upper : ∀ {r}   → slot ≤ˢ r              →  inInterval slot (nothing , just r)
+  both  : ∀ {l r} → l ≤ slot × slot ≤ r  →  inInterval slot (just l  , just r)
+  lower : ∀ {l}   → l ≤ slot              →  inInterval slot (just l  , nothing)
+  upper : ∀ {r}   → slot ≤ r              →  inInterval slot (nothing , just r)
   none  :                                     inInterval slot (nothing , nothing)
 
 \end{code}
@@ -142,6 +142,7 @@ Deposits = DepositPurpose ⇀ Coin
 \begin{code}
 record UTxOEnv : Set where
   field slot     : Slot
+        ppolicy  : Maybe ScriptHash
         pparams  : PParams
 \end{code}
 \emph{UTxO states}
@@ -255,9 +256,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           donations     = UTxOState.donations s
       in
     txins tx ≢ ∅                           → txins tx ⊆ dom (utxo ˢ)
-    → inInterval slot (txvldt tx)          → minfee pp tx ℕ.≤ txfee tx
+    → inInterval slot (txvldt tx)          → minfee pp tx ≤ txfee tx
     → consumed pp s tx ≡ produced pp s tx  → coin (mint tx) ≡ 0
-    → txsize tx ℕ.≤ maxTxSize pp
+    → txsize tx ≤ maxTxSize pp
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
                         , fees + txfee tx
@@ -266,9 +267,33 @@ data _⊢_⇀⦇_,UTXO⦈_ where
                         ⟧ᵘ
 \end{code}
 \begin{code}[hide]
--- TODO: This can't be moved into Properties because it breaks. Move
--- this once this is fixed.
-unquoteDecl Computational-UTXO = deriveComputational (quote _⊢_⇀⦇_,UTXO⦈_) Computational-UTXO
+
+instance
+  Computational'-UTXO : Computational' _⊢_⇀⦇_,UTXO⦈_
+  Computational'-UTXO .Computational'.computeProof Γ s tx =
+    case ¿ txins tx ≢ ∅
+         × txins tx ⊆ dom (UTxOState.utxo s ˢ)
+         × inInterval (UTxOEnv.slot Γ) (txvldt tx)
+         × minfee (UTxOEnv.pparams Γ) tx ≤ txfee tx
+         × consumed (UTxOEnv.pparams Γ) s tx ≡ produced (UTxOEnv.pparams Γ) s tx
+         × coin (mint tx) ≡ 0
+         × txsize tx ≤ maxTxSize (UTxOEnv.pparams Γ) ¿ of λ where
+      (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆)) → just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆)
+      (no _) → nothing
+  Computational'-UTXO .Computational'.completeness Γ s tx s' h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆)
+    with  ¿ txins tx ≢ ∅
+          × txins tx ⊆ dom (UTxOState.utxo s ˢ)
+          × inInterval (UTxOEnv.slot Γ) (txvldt tx)
+          × minfee (UTxOEnv.pparams Γ) tx ≤ txfee tx
+          × consumed (UTxOEnv.pparams Γ) s tx ≡ produced (UTxOEnv.pparams Γ) s tx
+          × coin (mint tx) ≡ 0
+          × txsize tx ≤ maxTxSize (UTxOEnv.pparams Γ) ¿
+       | "work around mysterious Agda bug"
+  ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | _ = refl
+  ... | no q | _ = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
+
+  Computational-UTXO = fromComputational' Computational'-UTXO
+
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

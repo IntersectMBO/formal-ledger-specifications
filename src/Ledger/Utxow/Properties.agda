@@ -34,26 +34,27 @@ instance
   valid-inst : ∀ {khs} {I} → Dec₁ (validP1Script khs I)
   valid-inst {khs} {I} .Dec₁.P? = validP1Script? khs I
 
-Computational-Property : UTxOState → Tx → Set
-Computational-Property s tx = let
+Computational-Property : UTxOEnv → UTxOState → Tx → Set
+Computational-Property Γ s tx = let
   utxo = UTxOState.utxo s
+  ppolicy = UTxOEnv.ppolicy Γ
   txb = body tx
   txw = wits tx
   witsKeyHashes = map hash (dom (vkSigs txw ˢ))
   witsScriptHashes = map hash (scripts txw)
   in All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
      × All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
-     × witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-     × scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
+     × witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
+     × scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
      × txADhash txb ≡ M.map hash (txAD tx)
 
 Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_
-Computational-UTXOW .compute    e s tx = ifᵈ Computational-Property s tx
+Computational-UTXOW .compute    e s tx = ifᵈ Computational-Property e s tx
        then compute Computational-UTXO e s (body tx)
        else nothing
 Computational-UTXOW .≡-just⇔STS {e} {s} {tx} {s'} =
   let substGoal = subst (λ b → (if b then compute Computational-UTXO e s (body tx) else nothing) ≡ just s')
-      comp-p = ¿ Computational-Property s tx ¿
+      comp-p = ¿ Computational-Property e s tx ¿
       open Equivalence (≡-just⇔STS Computational-UTXO)
   in mk⇔
     (λ h → case comp-p of λ where

@@ -23,7 +23,6 @@ open import Relation.Binary.PropositionalEquality  using (module ≡-Reasoning)
 
 import Relation.Binary.PropositionalEquality as ≡
 import Relation.Binary.Core  as stdlib
-
 \end{code}
 
 \subsubsection{Derived types}
