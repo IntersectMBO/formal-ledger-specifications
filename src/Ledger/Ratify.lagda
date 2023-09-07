@@ -371,7 +371,7 @@ accepted' Γ es@record { cc = cc , _    ; pparams = pparams , _ }
     meetsMinAVS = activeVotingStake cc' redStakeDistr votes ≥ minimumAVS
 
     acceptedBy : GovRole → Set
-    acceptedBy role = let t = threshold pparams (Data.Maybe.map proj₂ cc) action role in
+    acceptedBy role = let t = maybe id R.0ℚ (threshold pparams (Data.Maybe.map proj₂ cc) action role) in
       case totalStake role cc' redStakeDistr votes of λ where
         0          → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
         x@(suc _)  → Z.+ acceptedStake role cc' redStakeDistr votes R./ x R.≥ t
