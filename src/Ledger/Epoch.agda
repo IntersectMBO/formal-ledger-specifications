@@ -75,6 +75,9 @@ record EpochStructure : Set₁ where
   ≤ˢ-isTransitive : Transitive _≤ˢ_
   ≤ˢ-isTransitive = IsPreorder.trans ≤ˢ-isPreorder
 
+  ≤ˢ-isAntisymmetric : Antisymmetric _≡_ _≤ˢ_
+  ≤ˢ-isAntisymmetric = IsPartialOrder.antisym ≤ˢ-isPartialOrder
+
   _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
   _≤ˢ?_ = IsDecTotalOrder._≤?_ ≤ˢ-isDecTotalOrder  -- old proof: s ≤ˢ? s' = ¬? (s' <ˢ? s)
 
