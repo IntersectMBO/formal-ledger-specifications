@@ -2,9 +2,9 @@
 
 module Ledger.Epoch where
 
-open import Ledger.Prelude hiding (compare)
+open import Ledger.Prelude hiding (compare) renaming (refl to ≡-refl)
 
-import Data.Nat as ℕ
+open import Data.Nat using (_<_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 
 open import Algebra
@@ -125,7 +125,7 @@ module _ (gc : GlobalConstants) where
   ℕEpochStructure .Epoch           = ℕ
   ℕEpochStructure .epoch     slot  = slot / SlotsPerEpochᶜ
   ℕEpochStructure .firstSlot e     = e * SlotsPerEpochᶜ
-  ℕEpochStructure ._<ˢ_            = _<ℕ_
+  ℕEpochStructure ._<ˢ_            = _<_
   ℕEpochStructure .Slot-STO        = <-isStrictTotalOrder
   ℕEpochStructure .StabilityWindow = StabilityWindowᶜ
   ℕEpochStructure .sucᵉ            = suc
