@@ -36,6 +36,8 @@ open Properties
 
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
+open import Interface.HasOrder.Instance
+
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid

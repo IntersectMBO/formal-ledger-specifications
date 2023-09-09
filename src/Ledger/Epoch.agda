@@ -2,9 +2,9 @@
 
 module Ledger.Epoch where
 
-open import Ledger.Prelude hiding (compare) renaming (refl to ≡-refl)
+open import Ledger.Prelude hiding (compare)
 
-open import Data.Nat using () renaming (_<_ to _<ℕ_)
+import Data.Nat as ℕ
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 
 open import Algebra

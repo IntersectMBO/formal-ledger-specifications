@@ -11,7 +11,7 @@
 
 module Ledger.Prelude where
 
-open import Prelude public
+open import Prelude public hiding (isPreorder)
 
 open import Ledger.Prelude.Base public
 
