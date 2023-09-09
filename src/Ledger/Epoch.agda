@@ -119,8 +119,6 @@ record EpochStructure : Set₁ where
     spoSlot : HasStrictTotalOrder Slot _≡_
     spoSlot = record { _<_ = _<ˢ_ ; isStrictTotalOrder = Slot-STO }
 
-
-
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc
   open EpochStructure
