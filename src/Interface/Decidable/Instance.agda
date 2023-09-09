@@ -47,7 +47,5 @@ instance
   DecEq⇒Dec : ⦃ DecEq X ⦄ → {x y : X} → Dec (x ≡ y)
   DecEq⇒Dec ⦃ record { _≟_ = _≟_ } ⦄ {x} {y} = x ≟ y
 
-  Dec-⊎ : ∀ {a b} {A : Set a} {B : Set b} → ⦃ Dec A ⦄ → ⦃ Dec B ⦄ → Dec (A ⊎ B)
-  Dec-⊎ ⦃ yes p ⦄ ⦃ _     ⦄ = yes (inj₁ p)
-  Dec-⊎ ⦃ no _  ⦄ ⦃ yes q ⦄ = yes (inj₂ q)
-  Dec-⊎ ⦃ no ¬p ⦄ ⦃ no ¬q ⦄ = no λ { (inj₁ p) → ¬p p; (inj₂ q) → ¬q q }
+  -- Moved `Dec-⊎` to where it is used (in `Deleg` module); otherwise it conflicts with
+  -- one of the `_≤_` instances that we want Agda to use in the `PPUp.Properties` module.

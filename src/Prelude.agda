@@ -19,4 +19,4 @@ open import Data.Integer as ℤ using (ℤ; _⊖_) renaming (_+_ to _+ℤ_) publ
 open import Data.String using (String; _<+>_) public
 
 open import Relation.Nullary.Negation public
-open import Relation.Binary.PropositionalEquality hiding (preorder; isPartialOrder ; setoid; [_]; module ≡-Reasoning) public
+open import Relation.Binary.PropositionalEquality hiding (preorder; isPreorder; isPartialOrder; setoid; [_]; module ≡-Reasoning) public

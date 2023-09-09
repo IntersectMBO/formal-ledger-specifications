@@ -239,6 +239,11 @@ instance
   Computational-POOL = fromComputational' Computational'-POOL
 
 instance
+  Dec-⊎ : ∀ {a b} {A : Set a} {B : Set b} → ⦃ Dec A ⦄ → ⦃ Dec B ⦄ → Dec (A ⊎ B)
+  Dec-⊎ ⦃ yes p ⦄ ⦃ _     ⦄ = yes (inj₁ p)
+  Dec-⊎ ⦃ no _  ⦄ ⦃ yes q ⦄ = yes (inj₂ q)
+  Dec-⊎ ⦃ no ¬p ⦄ ⦃ no ¬q ⦄ = no λ { (inj₁ p) → ¬p p; (inj₂ q) → ¬q q }
+
   Computational'-GOVCERT : Computational' _⊢_⇀⦇_,GOVCERT⦈_
   Computational'-GOVCERT .computeProof ⟦ e , pp , vs ⟧ᶜ ⟦ dReps , ccKeys ⟧ᵛ (regdrep c d an) =
     let open PParams pp in

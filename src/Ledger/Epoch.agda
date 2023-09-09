@@ -2,9 +2,9 @@
 
 module Ledger.Epoch where
 
-open import Ledger.Prelude hiding (compare ; isEquivalence ; isPartialOrder ) renaming (refl to ≡-refl ; trans to ≡-trans)
+open import Ledger.Prelude hiding (compare) renaming (refl to ≡-refl)
 
-open import Data.Nat using (_<_)
+open import Data.Nat using () renaming (_<_ to _<ℕ_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 
 open import Algebra
@@ -35,16 +35,36 @@ record EpochStructure : Set₁ where
         sucᵉ : Epoch → Epoch
         instance DecEq-Epoch : DecEq Epoch
 
-  open StrictToNonStrict _≡_ _<ˢ_
+  _>ˢ_ : Slot → Slot → Set
+  _>ˢ_ = flip _<ˢ_
+
+  _≥ˢ_ : Slot → Slot → Set
+  x ≥ˢ y = (x >ˢ y) ⊎ (x ≡ y)   -- old def: ¬_ ∘₂ _<ˢ_
 
   _≤ˢ_ : Slot → Slot → Set
-  x ≤ˢ y = (x <ˢ y) ⊎ (x ≡ y)
+  x ≤ˢ y = (x <ˢ y) ⊎ (x ≡ y)   -- old def: flip _≥ˢ_
 
-  ≤ˢ-isTotalOrder : IsTotalOrder _≡_ _≤ˢ_
-  ≤ˢ-isTotalOrder = isTotalOrder Slot-STO
+  tri : Trichotomous _≡_ _<ˢ_
+  tri = IsStrictTotalOrder.compare Slot-STO
+
+  ≤ˢ⇒¬>ˢ-mp : {x y : Slot} → x ≤ˢ y → Tri (x <ˢ y) (x ≡ y) (x >ˢ y) → ¬ (x >ˢ y)
+  ≤ˢ⇒¬>ˢ-mp _           (tri< _     _     ¬x>y)  x>y  = ¬x>y x>y
+  ≤ˢ⇒¬>ˢ-mp _           (tri≈ _     _     ¬x>y)  x>y  = ¬x>y x>y
+  ≤ˢ⇒¬>ˢ-mp (inj₁ x<y)  (tri> ¬x<y  _     _)     _    = ¬x<y x<y
+  ≤ˢ⇒¬>ˢ-mp (inj₂ x≡y)  (tri> _     ¬x≡y  _)     _    = ¬x≡y x≡y
+
+  ≤ˢ⇒¬>ˢ : {x y : Slot} → x ≤ˢ y → ¬ (x >ˢ y)
+  ≤ˢ⇒¬>ˢ x≤y x>y = ≤ˢ⇒¬>ˢ-mp x≤y (tri _ _) x>y
+
+  open IsStrictTotalOrder Slot-STO using () renaming (_<?_ to _<ˢ?_) public
+
+  open StrictToNonStrict _≡_ _<ˢ_
 
   ≤ˢ-isDecTotalOrder : IsDecTotalOrder _≡_ _≤ˢ_
   ≤ˢ-isDecTotalOrder = isDecTotalOrder Slot-STO
+
+  ≤ˢ-isTotalOrder : IsTotalOrder _≡_ _≤ˢ_
+  ≤ˢ-isTotalOrder = isTotalOrder Slot-STO
 
   ≤ˢ-isPartialOrder : IsPartialOrder _≡_ _≤ˢ_
   ≤ˢ-isPartialOrder = IsTotalOrder.isPartialOrder ≤ˢ-isTotalOrder
@@ -58,10 +78,8 @@ record EpochStructure : Set₁ where
   ≤ˢ-isAntisymmetric : Antisymmetric _≡_ _≤ˢ_
   ≤ˢ-isAntisymmetric = IsPartialOrder.antisym ≤ˢ-isPartialOrder
 
-  open IsStrictTotalOrder Slot-STO using () renaming (_<?_ to _<ˢ?_) public
-
   _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
-  _≤ˢ?_ = IsDecTotalOrder._≤?_ ≤ˢ-isDecTotalOrder
+  _≤ˢ?_ = IsDecTotalOrder._≤?_ ≤ˢ-isDecTotalOrder  -- old proof: s ≤ˢ? s' = ¬? (s' <ˢ? s)
 
   _+ᵉ_ : ℕ → Epoch → Epoch
   zero +ᵉ e = e
@@ -80,6 +98,11 @@ record EpochStructure : Set₁ where
   _≤ᵉ?_ : (e e' : Epoch) → Dec (e ≤ᵉ e')
   e ≤ᵉ? e' = firstSlot e ≤ˢ? firstSlot e'
 
+  ≤ᵉ-isPreorder : IsPreorder _≡_ _≤ᵉ_
+  IsPreorder.isEquivalence ≤ᵉ-isPreorder = Ledger.Prelude.isEquivalence
+  IsPreorder.reflexive ≤ᵉ-isPreorder ≡-refl = inj₂ ≡-refl
+  IsPreorder.trans ≤ᵉ-isPreorder ij jk = ≤ˢ-isTransitive ij jk
+
   instance
     addSlot : HasAdd Slot
     addSlot = record { _+_ = _+ˢ_ }
@@ -87,16 +110,11 @@ record EpochStructure : Set₁ where
     addEpoch : HasAdd Epoch
     addEpoch = record { _+_ = _+ᵉ'_ }
 
-    rpoSlot : HasPartialOrder Slot _≡_
-    rpoSlot = record { _≤_ = _≤ˢ_ ; isPartialOrder = ≤ˢ-isPartialOrder }
+    poSlot : HasPartialOrder Slot _≡_
+    poSlot = record { _≤_ = _≤ˢ_ ; isPartialOrder = ≤ˢ-isPartialOrder }
 
-    rpreoEpoch : HasPreorder Epoch _≡_
-    rpreoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = rpreo }
-      where
-      rpreo : IsPreorder _≡_ _≤ᵉ_
-      IsPreorder.isEquivalence rpreo = Ledger.Prelude.isEquivalence
-      IsPreorder.reflexive rpreo ≡-refl = inj₂ ≡-refl
-      IsPreorder.trans rpreo ij jk = ≤ˢ-isTransitive ij jk
+    preoEpoch : HasPreorder Epoch _≡_
+    preoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = ≤ᵉ-isPreorder }
 
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc
@@ -107,7 +125,7 @@ module _ (gc : GlobalConstants) where
   ℕEpochStructure .Epoch           = ℕ
   ℕEpochStructure .epoch     slot  = slot / SlotsPerEpochᶜ
   ℕEpochStructure .firstSlot e     = e * SlotsPerEpochᶜ
-  ℕEpochStructure ._<ˢ_            = _<_
+  ℕEpochStructure ._<ˢ_            = _<ℕ_
   ℕEpochStructure .Slot-STO        = <-isStrictTotalOrder
   ℕEpochStructure .StabilityWindow = StabilityWindowᶜ
   ℕEpochStructure .sucᵉ            = suc

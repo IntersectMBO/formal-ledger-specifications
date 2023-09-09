@@ -4,7 +4,7 @@ open import Ledger.Transaction
 
 module Ledger.PPUp.Properties (txs : TransactionStructure) where
 
-open TransactionStructure txs
+open TransactionStructure txs hiding (Dec-⊎)
 open import Ledger.Prelude hiding (_+_; _*_; Dec₁)
 
 open import Ledger.PPUp txs
@@ -55,6 +55,8 @@ instance
   Dec-Current-Property : ∀ {Γ u} → Dec (Current-Property Γ u)
   Dec-Current-Property {Γ} = ¿ _ ¿ ×-dec all?' ⦃ Dec₁-isViableUpdate {Γ} ⦄ ×-dec ¿ _ ¿ ×-dec _ ≟ _
 
+  _ = Decidable²⇒Dec _≤ˢ?_
+
   Dec-Future-Property : ∀ {Γ u} → Dec (Future-Property Γ u)
   Dec-Future-Property {Γ} = ¿ _ ¿ ×-dec all?' ⦃ Dec₁-isViableUpdate {Γ} ⦄ ×-dec ¿ _ ¿ ×-dec _ ≟ _
 
@@ -63,7 +65,7 @@ private
   helper (no _  , no  _) record { pup = pupˢ ; fpup = fpupˢ } = nothing
   helper {u = (pup , _)} (no _  , yes _) record { pup = pupˢ ; fpup = fpupˢ } = just record { pup = pupˢ ; fpup = pup ∪ᵐˡ fpupˢ }
   helper {u = (pup , _)} (yes _ , no  _) record { pup = pupˢ ; fpup = fpupˢ } = just record { pup = pup ∪ᵐˡ pupˢ ; fpup = fpupˢ }
-  helper (yes (_ , _ , p , _) , yes (_ , _ , p' , _)) _       = case p' p of λ ()
+  helper (yes (_ , _ , p , _) , yes (_ , _ , p' , _)) _       = ⊥-elim (≤ˢ⇒¬>ˢ p' p) -- case p' p of λ ()
 
 Computational-PPUP : Computational _⊢_⇀⦇_,PPUP⦈_
 Computational-PPUP .compute Γ s (just x@(pup , _)) =
@@ -76,18 +78,18 @@ Computational-PPUP .≡-just⇔STS {Γ} {s} {e} {s'} = mk⇔
       return (λ x → helper {Γ} {e} x s ≡ just s' → Γ ⊢ s ⇀⦇ just e ,PPUP⦈ s')
       of λ where (no _                   , yes (x , x₁ , x₂ , x₃)) refl → PPUpdateFuture x x₁ x₂ x₃
                  (yes (x , x₁ , x₂ , x₃) , no                   _) refl → PPUpdateCurrent x x₁ x₂ x₃
-                 (yes (_ , _ , p , _)    , yes (_ , _ , ¬p , _))        → contradiction p ¬p)
+                 (yes (_ , _ , p , _)    , yes (_ , _ , ¬p , _))        → contradiction p (≤ˢ⇒¬>ˢ ¬p))
   (λ where
     PPUpdateEmpty → refl
     (PPUpdateCurrent {pup = pup} {e} {pupˢ} {fpupˢ} x x₁ x₂ x₃) → subst
       (λ a → helper {Γ} {pup , e} a record { pup = pupˢ ; fpup = fpupˢ } ≡
                just record { pup = pup ∪ᵐˡ pupˢ ; fpup = fpupˢ })
       (sym $ (×-≡,≡→≡ ((proj₂ $ dec-yes (Dec-Current-Property {Γ} {pup , e}) (x , x₁ , x₂ , x₃)) ,′
-                       (dec-no (Dec-Future-Property {Γ} {pup , e}) λ where (_ , _ , p , _) → contradiction x₂ p))))
+                       (dec-no (Dec-Future-Property {Γ} {pup , e}) λ where (_ , _ , p , _) → contradiction x₂ (≤ˢ⇒¬>ˢ p)))))
       refl
     (PPUpdateFuture {pup = pup} {e} {pupˢ} {fpupˢ} x x₁ x₂ x₃) → subst
       (λ a → helper {Γ} {pup , e} a record { pup = pupˢ ; fpup = fpupˢ } ≡
                just record { pup = pupˢ ; fpup = pup ∪ᵐˡ fpupˢ })
-      (sym $ (×-≡,≡→≡ ((dec-no (Dec-Current-Property {Γ} {pup , e}) λ where (_ , _ , p , _) → contradiction p x₂) ,′
+      (sym $ (×-≡,≡→≡ ((dec-no (Dec-Current-Property {Γ} {pup , e}) λ where (_ , _ , p , _) → contradiction p (≤ˢ⇒¬>ˢ x₂)) ,′
                        (proj₂ $ dec-yes (Dec-Future-Property {Γ} {pup , e}) (x , x₁ , x₂ , x₃)))))
       refl)
