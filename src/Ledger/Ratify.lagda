@@ -117,6 +117,7 @@ record RatifyEnv : Set where
         currentEpoch  : Epoch
         dreps         : Credential ⇀ Epoch
         ccHotKeys     : Credential ⇀ Maybe Credential
+        treasury      : Coin
 
 record RatifyState : Set where
   constructor ⟦_,_,_⟧ʳ
@@ -460,10 +461,10 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{figure*}[h!]
 {\small
 \begin{code}
-  RATIFY-Accept : let st = proj₂ a; open GovActionState st in
+  RATIFY-Accept : let open RatifyEnv Γ; st = proj₂ a; open GovActionState st in
     accepted Γ es st
     → ¬ delayed action prevAction es d
-    → ⟦ proj₁ a ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+    → ⟦ proj₁ a , treasury ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
     ────────────────────────────────
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧ʳ
 
@@ -480,7 +481,10 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
   -- Continue voting in the next epoch
 
   RATIFY-Continue : let open RatifyEnv Γ; st = proj₂ a; open GovActionState st in
-    ¬ accepted Γ es st × ¬ expired currentEpoch st ⊎ delayed action prevAction es d
+    ¬ accepted Γ es st × ¬ expired currentEpoch st
+    ⊎ delayed action prevAction es d
+    ⊎ accepted Γ es st × ¬ delayed action prevAction es d
+      × (∀ es' → ¬ ⟦ proj₁ a , treasury ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es')
     ────────────────────────────────
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 

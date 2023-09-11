@@ -79,6 +79,9 @@ module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
   computational⇒rightUnique h h' with ExtendedRel-rightUnique h h'
   ... | refl = refl
 
+  nothing⇒∀¬STS : compute c s sig ≡ nothing → ∀ s' → ¬ STS c s sig s'
+  nothing⇒∀¬STS comp≡nothing s' h rewrite Equivalence.from ≡-just⇔STS h = case comp≡nothing of λ ()
+
   Computational⇒Dec : ⦃ _ : DecEq S ⦄ → Dec (STS c s sig s')
   Computational⇒Dec {c} {s} {sig} {s'} with compute c s sig | ExtendedRel-compute {c} {s} {sig}
   ... | nothing | ExSTS = no (ExSTS s')

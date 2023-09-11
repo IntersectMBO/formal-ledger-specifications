@@ -109,7 +109,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt + getCoin unclaimed + donations }
     in
     e ≡ sucᵉ lastEpoch
-    → record { currentEpoch = e ; GState gState ; NewEpochEnv Γ }
+    → record { currentEpoch = e ; treasury = Acnt.treasury acnt ; GState gState ; NewEpochEnv Γ }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
