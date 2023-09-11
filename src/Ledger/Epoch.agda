@@ -2,14 +2,13 @@
 
 module Ledger.Epoch where
 
-open import Ledger.Prelude hiding (compare) renaming (refl to ≡-refl)
+open import Ledger.Prelude
 
 open import Data.Nat using (_<_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 
-open import Algebra
+open import Algebra using (Semiring)
 open import Relation.Binary
-open import Relation.Nullary.Negation
 
 import Relation.Binary.Construct.StrictToNonStrict as StrictToNonStrict
 
@@ -39,10 +38,10 @@ record EpochStructure : Set₁ where
   _>ˢ_ = flip _<ˢ_
 
   _≥ˢ_ : Slot → Slot → Set
-  x ≥ˢ y = (x >ˢ y) ⊎ (x ≡ y)   -- old def: ¬_ ∘₂ _<ˢ_
+  x ≥ˢ y = (x >ˢ y) ⊎ (x ≡ y)
 
   _≤ˢ_ : Slot → Slot → Set
-  x ≤ˢ y = (x <ˢ y) ⊎ (x ≡ y)   -- old def: flip _≥ˢ_
+  x ≤ˢ y = (x <ˢ y) ⊎ (x ≡ y)
 
   tri : Trichotomous _≡_ _<ˢ_
   tri = IsStrictTotalOrder.compare Slot-STO
@@ -79,7 +78,7 @@ record EpochStructure : Set₁ where
   ≤ˢ-isAntisymmetric = IsPartialOrder.antisym ≤ˢ-isPartialOrder
 
   _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
-  _≤ˢ?_ = IsDecTotalOrder._≤?_ ≤ˢ-isDecTotalOrder  -- old proof: s ≤ˢ? s' = ¬? (s' <ˢ? s)
+  _≤ˢ?_ = IsDecTotalOrder._≤?_ ≤ˢ-isDecTotalOrder
 
   _+ᵉ_ : ℕ → Epoch → Epoch
   zero +ᵉ e = e
@@ -99,9 +98,9 @@ record EpochStructure : Set₁ where
   e ≤ᵉ? e' = firstSlot e ≤ˢ? firstSlot e'
 
   ≤ᵉ-isPreorder : IsPreorder _≡_ _≤ᵉ_
-  IsPreorder.isEquivalence ≤ᵉ-isPreorder = Ledger.Prelude.isEquivalence
-  IsPreorder.reflexive ≤ᵉ-isPreorder ≡-refl = inj₂ ≡-refl
-  IsPreorder.trans ≤ᵉ-isPreorder ij jk = ≤ˢ-isTransitive ij jk
+  ≤ᵉ-isPreorder .IsPreorder.isEquivalence     = Ledger.Prelude.isEquivalence
+  ≤ᵉ-isPreorder .IsPreorder.reflexive refl    = inj₂ Ledger.Prelude.refl
+  ≤ᵉ-isPreorder .IsPreorder.trans ij jk       = ≤ˢ-isTransitive ij jk
 
   instance
     addSlot : HasAdd Slot
