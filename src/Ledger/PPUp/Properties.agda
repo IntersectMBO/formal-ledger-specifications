@@ -62,10 +62,11 @@ instance
 
 private
   helper : ∀ {Γ u} → Dec (Current-Property Γ u) × Dec (Future-Property Γ u) → PPUpdateState → Maybe PPUpdateState
-  helper (no _  , no  _) record { pup = pupˢ ; fpup = fpupˢ } = nothing
-  helper {u = (pup , _)} (no _  , yes _) record { pup = pupˢ ; fpup = fpupˢ } = just record { pup = pupˢ ; fpup = pup ∪ᵐˡ fpupˢ }
-  helper {u = (pup , _)} (yes _ , no  _) record { pup = pupˢ ; fpup = fpupˢ } = just record { pup = pup ∪ᵐˡ pupˢ ; fpup = fpupˢ }
-  helper (yes (_ , _ , p , _) , yes (_ , _ , p' , _)) _       = ⊥-elim (≤ˢ⇒¬>ˢ p' p) -- case p' p of λ ()
+  helper                  (no _                 , no _                  ) _                                     = nothing
+  helper {u = (pup , _)}  (no _                 , yes _                 ) record { pup = pupˢ ; fpup = fpupˢ }  = just record { pup = pupˢ ; fpup = pup ∪ᵐˡ fpupˢ }
+  helper {u = (pup , _)}  (yes _                , no _                  ) record { pup = pupˢ ; fpup = fpupˢ }  = just record { pup = pup ∪ᵐˡ pupˢ ; fpup = fpupˢ }
+  helper                  (yes (_ , _ , p , _)  , yes (_ , _ , p' , _)  ) _                                     = contradiction p (≤ˢ⇒¬>ˢ p')
+
 
 Computational-PPUP : Computational _⊢_⇀⦇_,PPUP⦈_
 Computational-PPUP .compute Γ s (just x@(pup , _)) =
@@ -76,9 +77,9 @@ Computational-PPUP .≡-just⇔STS {Γ} {s} {e} {s'} = mk⇔
     nothing  refl → PPUpdateEmpty
     (just e)      → case (Dec-Current-Property {Γ} {e} ,′ Dec-Future-Property {Γ} {e})
       return (λ x → helper {Γ} {e} x s ≡ just s' → Γ ⊢ s ⇀⦇ just e ,PPUP⦈ s')
-      of λ where (no _                   , yes (x , x₁ , x₂ , x₃)) refl → PPUpdateFuture x x₁ x₂ x₃
-                 (yes (x , x₁ , x₂ , x₃) , no                   _) refl → PPUpdateCurrent x x₁ x₂ x₃
-                 (yes (_ , _ , p , _)    , yes (_ , _ , ¬p , _))        → contradiction p (≤ˢ⇒¬>ˢ ¬p))
+      of λ where (no _                    , yes (x , x₁ , x₂ , x₃)  ) refl  → PPUpdateFuture x x₁ x₂ x₃
+                 (yes (x , x₁ , x₂ , x₃)  , no _                    ) refl  → PPUpdateCurrent x x₁ x₂ x₃
+                 (yes (_ , _ , p , _)     , yes (_ , _ , ¬p , _)    )       → contradiction p (≤ˢ⇒¬>ˢ ¬p))
   (λ where
     PPUpdateEmpty → refl
     (PPUpdateCurrent {pup = pup} {e} {pupˢ} {fpupˢ} x x₁ x₂ x₃) → subst

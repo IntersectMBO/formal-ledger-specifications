@@ -92,6 +92,8 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateCurrent : let open PPUpdateEnv Γ in
     dom (pup ˢ) ⊆ dom (genDelegs ˢ)
     → All (isViableUpdate pparams) (range (pup ˢ))
+    -- I would like to remove the `ˢ` decoration from `<ˢ`, but I believe we need a *strict*
+    -- order type class for that and including such a type class was voted down.
     → (slot + (2 * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
     → epoch slot ≡ e
     ────────────────────────────────
@@ -101,7 +103,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateFuture : let open PPUpdateEnv Γ in
     dom (pup ˢ) ⊆ dom (genDelegs ˢ)
     → All (isViableUpdate pparams) (range (pup ˢ))
-    → firstSlot (sucᵉ (epoch slot)) ≤ˢ (slot + (2 * StabilityWindow))
+    → firstSlot (sucᵉ (epoch slot)) ≤ (slot + (2 * StabilityWindow))
     → sucᵉ (epoch slot) ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
