@@ -279,8 +279,9 @@ protocol version, protocol parameters, withdrawals from treasury, and treasury b
 {\small
 \begin{code}
 record EnactEnv : Set where
-  constructor ⟦_⟧ᵉ
-  field gid  : GovActionID
+  constructor ⟦_,_⟧ᵉ
+  field gid       : GovActionID
+        treasury  : Coin
 
 record EnactState : Set where
   field cc            : HashProtected (Maybe (Credential ⇀ Epoch × ℚ))
@@ -288,7 +289,6 @@ record EnactState : Set where
         pv            : HashProtected ProtVer
         pparams       : HashProtected PParams
         withdrawals   : RwdAddr ⇀ Coin
-        treasury      : Coin
 \end{code}
 } %% end small
 \caption{Enactment types}
@@ -308,7 +308,7 @@ private variable
   h : PPHash
   v : ProtVer
   wdrl : RwdAddr ⇀ Coin
-  newTreasury : Coin
+  t : Coin
   gid : GovActionID
 
 instance
@@ -324,22 +324,27 @@ It represents how the \agdaboundEnactState changes when a specific governance ac
 {\small
 \begin{code}
   _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
-  Enact-NoConf    : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈  record s { cc = nothing , gid }
-  Enact-NewComm   : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈ let
-    old = maybe proj₁ ∅ᵐ (proj₁ (EnactState.cc s))
-    in record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
-  Enact-NewConst  : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈  record s { constitution = (dh , sh) , gid }
-  Enact-HF        : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈  record s { pv = v , gid }
-  Enact-PParams   : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
+
+  Enact-NoConf    : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈  record s { cc = nothing , gid }
+
+  Enact-NewComm   : let old = maybe proj₁ ∅ᵐ (proj₁ (EnactState.cc s)) in
+    ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈
+      record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
+
+  Enact-NewConst  : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈  record s { constitution = (dh , sh) , gid }
+
+  Enact-HF        : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈  record s { pv = v , gid }
+
+  Enact-PParams   : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
     record s { pparams = applyUpdate (proj₁ (s .pparams)) up , gid }
-  Enact-Wdrl      :
-    let newWdrls = Σᵐᵛ[ x ← wdrl ᶠᵐ ] x
-    in newWdrls ≤ s .treasury
+
+  Enact-Wdrl      : let newWdrls = s .withdrawals ∪⁺ wdrl in
+    Σᵐᵛ[ x ← newWdrls ᶠᵐ ] x ≤ t
     ────────────────────────────────
-    ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
-      record s { withdrawals  = s .withdrawals  ∪⁺ wdrl
-               ; treasury     = s .treasury     -  newWdrls }
-  Enact-Info      : ⟦ gid ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
+    ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
+      record s { withdrawals  = newWdrls }
+
+  Enact-Info      : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 } %% end small
 \caption{ENACT transition system}
