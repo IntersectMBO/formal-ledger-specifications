@@ -281,10 +281,10 @@ instance
     with  ¿ txins tx ≢ ∅
           × txins tx ⊆ dom (UTxOState.utxo s ˢ)
           × inInterval (UTxOEnv.slot Γ) (txvldt tx)
-          × minfee (UTxOEnv.pparams Γ) tx ℕ.≤ txfee tx
+          × minfee (UTxOEnv.pparams Γ) tx ≤ txfee tx
           × consumed (UTxOEnv.pparams Γ) s tx ≡ produced (UTxOEnv.pparams Γ) s tx
           × coin (mint tx) ≡ 0
-          × txsize tx ℕ.≤ maxTxSize (UTxOEnv.pparams Γ) ¿
+          × txsize tx ≤ maxTxSize (UTxOEnv.pparams Γ) ¿
        | "work around mysterious Agda bug"
   ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | _ = refl
   ... | no q | _ = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
