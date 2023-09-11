@@ -9,7 +9,7 @@ import Data.Rational as ℚ
 
 open import Algebra              using (CommutativeMonoid)
 open import Algebra.Morphism     using (module MonoidMorphisms)
-open import Data.Nat.Properties  using (+-0-commutativeMonoid) renaming (_≟_ to _≟ℕ_)
+open import Data.Nat.Properties  using (+-0-commutativeMonoid) -- ; _≟_) --  to _≟ℕ_)
 open import Data.Nat.Properties  using (+-*-semiring; <-isStrictTotalOrder)
 open import Relation.Binary.Morphism.Structures
 
@@ -124,7 +124,7 @@ module _ where
                     .homo                      = λ _ _ → refl
   coinTokenAlgebra  .coinIsMonoidHomomorphism
                     .ε-homo                    = refl
-  coinTokenAlgebra  .DecEq-Value               = record { _≟_ = _≟ℕ_ }
+  coinTokenAlgebra  .DecEq-Value               = record { _≟_ = _≟_ }
 
 module _ where
   open TransactionStructure
