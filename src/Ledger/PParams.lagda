@@ -6,18 +6,15 @@ such as minimum fees, maximum and minimum sizes of certain components, and more.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Epoch
-
-module Ledger.PParams (es : EpochStructure) where
-
-open import Ledger.Prelude
-
 open import Data.Rational using (ℚ)
-open import MyDebugOptions
 open import Relation.Nullary.Decidable
 open import Tactic.Derive.DecEq
 
-open EpochStructure es
+open import Ledger.Prelude
+open import Ledger.Epoch
+open import Ledger.Crypto
+
+module Ledger.PParams (⋯ : _) (open EpochStructure ⋯) where
 \end{code}
 \begin{figure*}[h!]
 {\small
@@ -121,9 +118,12 @@ These new parameters are declared in Figure~\ref{fig:protocol-parameter-declarat
 
 \begin{code}[hide]
 instance
-  unquoteDecl DecEq-DrepThresholds = derive-DecEq ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
-  unquoteDecl DecEq-PoolThresholds = derive-DecEq ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
-  unquoteDecl DecEq-PParams        = derive-DecEq ((quote PParams , DecEq-PParams) ∷ [])
+  unquoteDecl DecEq-DrepThresholds = derive-DecEq
+    ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
+  unquoteDecl DecEq-PoolThresholds = derive-DecEq
+    ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
+  unquoteDecl DecEq-PParams        = derive-DecEq
+    ((quote PParams , DecEq-PParams) ∷ [])
 
 record PParamsDiff : Set₁ where
   field UpdateT : Set
@@ -133,4 +133,11 @@ record PParamsDiff : Set₁ where
         ppdWellFormed⇒WF : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
                          → paramsWellFormed pp ≡ true
                          → paramsWellFormed (applyUpdate pp u) ≡ true
+
+record GovParams : Set₁ where
+  field ppUpd : PParamsDiff
+  open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
+  field ppHashingScheme : isHashableSet PParams
+  open isHashableSet ppHashingScheme renaming (THash to PPHash) public
+  field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
 \end{code}

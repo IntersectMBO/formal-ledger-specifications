@@ -2,37 +2,28 @@
 
 module Ledger.Epoch where
 
-open import Ledger.Prelude hiding (compare)
-
-open import Data.Nat using (_<_)
-open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
-
 open import Algebra
 open import Relation.Binary
 open import Relation.Nullary.Negation
+open import Data.Nat using (_<_)
+open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
+
 open import Interface.Decidable.Instance
 
-record GlobalConstants : Set₁ where
-  field Network : Set
-        SlotsPerEpochᶜ : ℕ
-        instance NonZero-SlotsPerEpoch : NonZero SlotsPerEpochᶜ
-        StabilityWindowᶜ : ℕ
-        Quorum : ℕ
-        NetworkId : Network
+open import Ledger.Prelude hiding (compare)
 
 record EpochStructure : Set₁ where
   field Slotʳ : Semiring 0ℓ 0ℓ
-        Epoch : Set
+        Epoch : Set; ⦃ DecEq-Epoch ⦄ : DecEq Epoch
 
   Slot = Semiring.Carrier Slotʳ
 
-  field epoch : Slot → Epoch
-        firstSlot : Epoch → Slot
-        _<ˢ_ : Slot → Slot → Set
-        Slot-STO : IsStrictTotalOrder _≡_ _<ˢ_
+  field epoch           : Slot → Epoch
+        firstSlot       : Epoch → Slot
+        _<ˢ_            : Slot → Slot → Set
+        Slot-STO        : IsStrictTotalOrder _≡_ _<ˢ_
         StabilityWindow : Slot
-        sucᵉ : Epoch → Epoch
-        instance DecEq-Epoch : DecEq Epoch
+        sucᵉ            : Epoch → Epoch
 
   _≥ˢ_ : Slot → Slot → Set
   _≥ˢ_ = ¬_ ∘₂ _<ˢ_
@@ -76,17 +67,25 @@ record EpochStructure : Set₁ where
     Dec-≤ᵉ : ∀ {n m} → Dec (n ≤ᵉ m)
     Dec-≤ᵉ = Decidable²⇒Dec _≤ᵉ?_
 
-module _ (gc : GlobalConstants) where
-  open GlobalConstants gc
-  open EpochStructure
+record GlobalConstants : Set₁ where
+  field Network : Set; ⦃ DecEq-Netw ⦄ : DecEq Network
+        SlotsPerEpochᶜ : ℕ
+        ⦃ NonZero-SlotsPerEpoch ⦄ : NonZero SlotsPerEpochᶜ
+        StabilityWindowᶜ : ℕ
+        Quorum : ℕ
+        NetworkId : Network
 
   ℕEpochStructure : EpochStructure
-  ℕEpochStructure .Slotʳ           = +-*-semiring
-  ℕEpochStructure .Epoch           = ℕ
-  ℕEpochStructure .epoch     slot  = slot / SlotsPerEpochᶜ
-  ℕEpochStructure .firstSlot e     = e * SlotsPerEpochᶜ
-  ℕEpochStructure ._<ˢ_            = _<_
-  ℕEpochStructure .Slot-STO        = <-isStrictTotalOrder
-  ℕEpochStructure .StabilityWindow = StabilityWindowᶜ
-  ℕEpochStructure .sucᵉ            = suc
-  ℕEpochStructure .DecEq-Epoch     = DecEq-ℕ
+  ℕEpochStructure = λ where
+    .Slotʳ           → +-*-semiring
+    .Epoch           → ℕ
+    .epoch     slot  → slot / SlotsPerEpochᶜ
+    .firstSlot e     → e * SlotsPerEpochᶜ
+    ._<ˢ_            → _<_
+    .Slot-STO        → <-isStrictTotalOrder
+    .StabilityWindow → StabilityWindowᶜ
+    .sucᵉ            → suc
+    .DecEq-Epoch     → DecEq-ℕ
+   where open EpochStructure
+
+open GlobalConstants using (ℕEpochStructure) public

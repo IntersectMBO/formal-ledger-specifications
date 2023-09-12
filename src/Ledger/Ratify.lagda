@@ -79,16 +79,6 @@ above the threshold.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
-
-module Ledger.Ratify (txs : TransactionStructure) where
-
-open import Ledger.Prelude hiding (_∧_)
-
-open TransactionStructure txs
-open import Ledger.Gov TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
-open import Ledger.PParams epochStructure
-
 import Data.Integer as Z
 import Data.Maybe
 import Data.Rational as R
@@ -96,8 +86,14 @@ open import Data.Nat hiding (_≟_)
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 open import Data.Product using (map₂)
-
 open import Relation.Nullary.Decidable using (⌊_⌋)
+
+open import Ledger.Prelude hiding (_∧_)
+open import Ledger.Transaction
+
+module Ledger.Ratify (⋯ : _) (open TransactionStructure ⋯) where
+
+open import Ledger.Gov govStructure
 
 infixr 2 _∧_
 _∧_ = _×_
@@ -183,7 +179,8 @@ mostStakeDRepDist dist c = dist ↾' to-sp (_≥? c)
 -- mostStakeDRepDist-homomorphic x>y = impl⇒cores⊆ _ _ {!!} --(<-trans x>y)
 
 mostStakeDRepDist-0 : ∀ {dist} → mostStakeDRepDist dist 0 ≡ᵉᵐ dist
-mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter) , λ x → Equivalence.to ∈-filter (z≤n , x)
+mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
+                    , λ x → Equivalence.to ∈-filter (z≤n , x)
 
 -- TODO: maybe this can be proven easier with the maximum?
 mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
@@ -195,15 +192,15 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
     helper : ∀ {k v} → v > Σᵐᵛ[ x ← dist ᶠᵐ ] x → ¬ (k , v) ∈ dist ˢ
     helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
       v
-        ≡˘⟨ indexedSum-singleton' (finiteness ❴ k , v ❵) ⟩
+        ≡˘⟨ indexedSum-singleton' $ finiteness ❴ k , v ❵ ⟩
       Σᵐᵛ[ x ← ❴ k , v ❵ᵐ ᶠᵐ ] x
         ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ᵐ ᶠᵐ}
-                             (res-singleton' {m = dist} kv∈dist) ⟩
+          $ res-singleton' {m = dist} kv∈dist ⟩
       Σᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
         ≤⟨ m≤m+n _ _ ⟩
       Σᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x +ℕ Σᵐᵛ[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
         ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ❴ k ❵) ᶠᵐ} {(dist ∣ ❴ k ❵ ᶜ) ᶠᵐ}
-                                  (res-ex-disj-∪ Properties.Dec-∈-singleton) ⟩
+          $ res-ex-disj-∪ Properties.Dec-∈-singleton ⟩
       Σᵐᵛ[ x ← dist ᶠᵐ ] x
         <⟨ v>sum ⟩
       v ∎
@@ -226,7 +223,8 @@ topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
 -- restrict the DRep stake distribution
 -- commented out for now, since we don't know if that'll actually be implemented
 restrictedDists : ℕ → ℕ → StakeDistrs → StakeDistrs
-restrictedDists coins rank dists = dists -- record dists { drepStakeDistr = restrict drepStakeDistr }
+restrictedDists coins rank dists = dists
+  -- record dists { drepStakeDistr = restrict drepStakeDistr }
   where open StakeDistrs dists
         -- one always includes the other
         restrict : Credential ⇀ Coin → Credential ⇀ Coin
@@ -281,16 +279,15 @@ module _
                                            NoConfidence → Vote.yes
                                            _            → Vote.no) ❵ᵐ
 
-  actualDRepVotes : VDeleg ⇀ Vote
-  actualDRepVotes = roleVotes GovRole.DRep
-                  ∪ᵐˡ constMap (map (credVoter DRep) activeDReps) Vote.no
+  actualDRepVotes actualSPOVotes actualVotes : VDeleg ⇀ Vote
+  actualDRepVotes  =    roleVotes GovRole.DRep
+                   ∪ᵐˡ  constMap (map (credVoter DRep) activeDReps) Vote.no
     where
       activeDReps : ℙ Credential
       activeDReps = dom (filterᵐ (to-sp (currentEpoch ≤ᵉ?_ ∘ proj₂)) dreps ˢ)
 
-  actualSPOVotes : VDeleg ⇀ Vote
-  actualSPOVotes = roleVotes GovRole.SPO
-                 ∪ᵐˡ constMap spos (if isHF then Vote.no else Vote.abstain)
+  actualSPOVotes =    roleVotes GovRole.SPO
+                 ∪ᵐˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
     where
       spos : ℙ VDeleg
       spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs ˢ)
@@ -300,10 +297,9 @@ module _
         (TriggerHF _) → true
         _             → false
 
-  actualVotes : VDeleg ⇀ Vote
-  actualVotes = mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
-              ∪ᵐˡ actualPDRepVotes ∪ᵐˡ actualDRepVotes
-              ∪ᵐˡ actualSPOVotes
+  actualVotes =    mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
+              ∪ᵐˡ  actualPDRepVotes ∪ᵐˡ actualDRepVotes
+              ∪ᵐˡ  actualSPOVotes
 \end{code}
 } %% end small
 \caption{%Ratify i:

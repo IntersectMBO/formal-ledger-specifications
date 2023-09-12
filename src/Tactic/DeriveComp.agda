@@ -9,8 +9,6 @@ import Reflection as R
 import Reflection.AST.Argument.Visibility as Visibility
 open import Reflection.AST.DeBruijn
 
-open import PreludeImports
-
 import Data.List.NonEmpty as NE
 open import Data.Maybe.Properties using (just-injective)
 import Data.Nat.Show as ℕ
@@ -23,7 +21,7 @@ open import Tactic.ClauseBuilder
 open import Tactic.Helpers
 open import Tactic.ReduceDec
 open import Generics.Core
-
+open import Generics hiding (error; mkRecord)
 open import Interface.ComputationalRelation
 open import Interface.DecEq
 open import Interface.Decidable.Instance
@@ -37,6 +35,9 @@ open import Interface.MonadTC.Instance
 
 open import Interface.HasSubtract
 open import Interface.HasSubtract.Instance
+
+pattern ``yes x = quote _because_ ◇⟦ quote true ◇  ∣ quote ofʸ ◇⟦ x ⟧ ⟧
+pattern ``no x  = quote _because_ ◇⟦ quote false ◇ ∣ quote ofⁿ ◇⟦ x ⟧ ⟧
 
 instance
   _ = ContextMonad-MonadTC
@@ -57,26 +58,31 @@ conOrVarToPattern k (con c args) =
   Pattern.con c <$> (sequenceList $ conOrVarToPattern′ k args)
   where
     conOrVarToPattern′ : ℕ → List (Arg Term) → List (Maybe (Arg Pattern))
-    conOrVarToPattern′ k [] = []
-    conOrVarToPattern′ k ((arg i x) ∷ l) = arg i <$> conOrVarToPattern k x ∷ conOrVarToPattern′ k l
+    conOrVarToPattern′ k = λ where
+      [] → []
+      ((arg i x) ∷ l) → arg i <$> conOrVarToPattern k x ∷ conOrVarToPattern′ k l
 conOrVarToPattern _ _ = nothing
 
 isArg : (a : Abs (Arg Term)) → Dec _
 isArg a = ¬? (getVisibility (unAbs a) Visibility.≟ visible)
 
 toSTSConstr : Name × TypeView → TC STSConstr
-toSTSConstr (n , (cs , def _ args)) with args | mapMaybe (conOrVarToPattern (length $ dropWhile isArg cs) ∘ unArg) $ take 3 args
+toSTSConstr (n , (cs , def _ args))
+  with args | mapMaybe (conOrVarToPattern (length $ dropWhile isArg cs) ∘ unArg)
+                       (take 3 args)
 ... | _ ∷ _ ∷ _ ∷ r ∷ [] | c ∷ s ∷ sig ∷ [] =
   return record
     { name = n
     ; params = takeWhile isArg cs
-    ; clauses = zipWithIndex (λ i → mapVars (_- i)) $ (unArg ∘ unAbs) <$> dropWhile isArg cs
+    ; clauses = zipWithIndex (λ i → mapVars (_- i))
+              $ (unArg ∘ unAbs) <$> dropWhile isArg cs
     ; context = c
     ; state = s
     ; signal = sig
     ; result = mapVars (_- (length $ dropWhile isArg cs)) $ unArg r }
 ... | l | l' =
-  error1 ("toSTSConstr: wrong number of arguments:" <+> ℕ.show (length l) <+> "," <+> ℕ.show (length l'))
+  error1 ("toSTSConstr: wrong number of arguments:"
+    <+> ℕ.show (length l) <+> "," <+> ℕ.show (length l'))
 toSTSConstr _ = error1 "toSTSConstr: wrong constructor"
 
 errorIfNothing : ∀ {a} {A : Set a} → Maybe A → String → TC A
@@ -110,7 +116,8 @@ curryPredProof : ℕ → Term → List (Arg Term)
 curryPredProof 0 t = []
 curryPredProof 1 t = [ vArg t ]
 curryPredProof 2 t = quote proj₁ ∙⟦ t ⟧ ⟨∷⟩ quote proj₂ ∙⟦ t ⟧ ⟨∷⟩ []
-curryPredProof (suc (suc (suc k))) t = quote proj₁ ∙⟦ t ⟧ ⟨∷⟩ curryPredProof (suc (suc k)) (quote proj₂ ∙⟦ t ⟧)
+curryPredProof (suc (suc (suc k))) t =
+  quote proj₁ ∙⟦ t ⟧ ⟨∷⟩ curryPredProof (suc (suc k)) (quote proj₂ ∙⟦ t ⟧)
 
 computeFunctionBody : Term → Term → Term
 computeFunctionBody g result =
@@ -148,26 +155,35 @@ extendRawContext [] m = m
 extendRawContext ((x , ty) ∷ tys) m = R.extendContext x ty ∘ extendRawContext tys m
 
 derive⇒ : Name → List STSConstr → ITactic
-derive⇒ n (record { name = stsConstrName ; clauses = clauses; result = result } ∷ []) = inDebugPath "derive⇒" do
-  let pred = weaken 3 (generatePred clauses)
-  expr ← introsExpr (from-just $ NE.fromList ("h" ⟨∷⟩ [])) $ finishMatch $
-    caseMatch (mapVars (_+ 2) $ generatePred clauses) $ matchExprM
-      ((multiSinglePattern [ "" ] (vArg (``no  (` 0))) , finishMatch do
-         let reducedHyp = quote subst ∙⟦ `λ "g" ⇒ (quote _≡_ ∙⟦ computeFunctionBody (♯ 0) (weaken 4 result)
-                                                               ∣ quote just ◆⟦ ♯ 3 ⟧ ⟧)
-                                       ∣ quote fromWitnessFalse' ∙⟦ pred ∣ ♯ 0 ⟧
-                                       ∣ ♯ 1 ⟧
-         return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
-       (multiSinglePattern [ "" ] (vArg (``yes (` 0))) , finishMatch do
-         let reducedHyp = quote subst ∙⟦ `λ "g" ⇒ (quote _≡_ ∙⟦ computeFunctionBody (♯ 0) (weaken 4 result)
-                                                               ∣ quote just ◆⟦ ♯ 3 ⟧ ⟧)
-                                       ∣ quote fromWitness' ∙⟦ pred ∣ ♯ 0 ⟧
-                                       ∣ ♯ 1 ⟧
-         ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← goalTy
-           where ty → error ("BUG: Unexpected type" ∷ᵈ ty ∷ᵈ [])
-         return $ quote subst ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧ ∣ quote just-injective ∙⟦ reducedHyp ⟧ ∣
-                             con stsConstrName (curryPredProof (length clauses) (♯ 0)) ⟧) ∷ [])
-  unifyWithGoal $ clauseExprToPatLam expr
+derive⇒ n
+  (record { name = stsConstrName ; clauses = clauses; result = result } ∷ [])
+  = inDebugPath "derive⇒" do
+    let pred = weaken 3 (generatePred clauses)
+    expr ← introsExpr (from-just $ NE.fromList ("h" ⟨∷⟩ [])) $ finishMatch $
+      caseMatch (mapVars (_+ 2) $ generatePred clauses) $ matchExprM
+        ((multiSinglePattern [ "" ] (vArg (``no  (` 0))) , finishMatch do
+          let reducedHyp = quote subst
+                ∙⟦ `λ "g" ⇒ (quote _≡_ ∙⟦ computeFunctionBody (♯ 0) (weaken 4 result)
+                                        ∣ quote just ◆⟦ ♯ 3 ⟧ ⟧)
+                 ∣ quote fromWitnessFalse' ∙⟦ pred ∣ ♯ 0 ⟧
+                 ∣ ♯ 1
+                 ⟧
+          return $ quote case_of_ ∙⟦ reducedHyp ∣ `λ∅ ⟧) ∷
+        (multiSinglePattern [ "" ] (vArg (``yes (` 0))) , finishMatch do
+          let reducedHyp = quote subst
+                ∙⟦ `λ "g" ⇒ (quote _≡_ ∙⟦ computeFunctionBody (♯ 0) (weaken 4 result)
+                                        ∣ quote just ◆⟦ ♯ 3 ⟧ ⟧)
+                 ∣ quote fromWitness' ∙⟦ pred ∣ ♯ 0 ⟧
+                 ∣ ♯ 1
+                 ⟧
+          ty ∙⟦ c ∣ s ∣ sig ∣ s' ⟧ ← goalTy
+            where ty → error ("BUG: Unexpected type" ∷ᵈ ty ∷ᵈ [])
+          return $ quote subst
+            ∙⟦ ty ∙⟦ c ∣ s ∣ sig ⟧
+             ∣ quote just-injective ∙⟦ reducedHyp ⟧
+             ∣ con stsConstrName (curryPredProof (length clauses) (♯ 0))
+             ⟧) ∷ [])
+    unifyWithGoal $ clauseExprToPatLam expr
 derive⇒ _ _ = error1 "TODO: support multiple constructors"
 
 module _ ⦃ _ : DebugOptions ⦄ where
@@ -203,46 +219,50 @@ module _ ⦃ _ : DebugOptions ⦄ where
       cTy   ← newMeta unknown
       sTy   ← newMeta unknown
       sigTy ← newMeta unknown
-      let isoCxt = ("c" , hArg cTy) ∷ ("s" , hArg (weaken 1 sTy)) ∷ ("sig" , hArg (weaken 2 sigTy)) ∷ ("s'" , hArg (weaken 3 sTy)) ∷ []
+      let isoCxt = ("c" , hArg cTy)
+                 ∷ ("s" , hArg (weaken 1 sTy))
+                 ∷ ("sig" , hArg (weaken 2 sigTy))
+                 ∷ ("s'" , hArg (weaken 3 sTy))
+                 ∷ []
       iso ← extendRawContext isoCxt $ newMeta unknown
       let isolam = `λ⟅ "c" ⟆⇒ `λ⟅ "s" ⟆⇒ `λ⟅ "sig" ⟆⇒ `λ⟅ "s'" ⟆⇒ iso
       definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ isolam ⟨∷⟩ [])
       defineFun compName [ nonBindingClause definition ]
       extendRawContext isoCxt $ λ _ → derive⇔ n stsConstrs iso
 
-private
+private module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   open import MyDebugOptions
 
-  module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
-    variable c : A × B
-             s s' : A
-             sig : B
+  variable
+    c : A × B
+    s s' : A
+    sig : B
 
-    data Test : A × B → A → B → A → Set where
-      test : proj₁ c ≡ s
-           → proj₂ c ≡ sig
-           ------------------------
-           → Test c s sig (proj₁ c)
+  data Test : A × B → A → B → A → Set where
+    test : proj₁ c ≡ s
+         → proj₂ c ≡ sig
+         ------------------------
+         → Test c s sig (proj₁ c)
 
-    unquoteDecl Computational-Test = deriveComputational (quote Test) Computational-Test
+  unquoteDecl Computational-Test = deriveComputational (quote Test) Computational-Test
 
-    Computational-Test' : Computational Test
-    Computational-Test' = Computational-Test
+  -- Sanity checks
+  testFun : A × B → A → B → Maybe A
+  testFun c s sig =
+    if ⌊ ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ ⌋ then just (proj₁ c) else nothing
 
-    -- Sanity checks
-    testFun : A × B → A → B → Maybe A
-    testFun c s sig = if ⌊ ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ ⌋ then just (proj₁ c) else nothing
+  testFunPf⇒ : testFun c s sig ≡ just s' → Test c s sig s'
+  testFunPf⇒ {c} {s} {sig} h = case ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ of λ where
+    (no ¬p) → case by-reduceDec h of λ ()
+    (yes p) → subst (Test c s sig) (just-injective $ by-reduceDec h)
+            $ test (proj₁ p) (proj₂ p)
 
-    testFunPf⇒ : testFun c s sig ≡ just s' → Test c s sig s'
-    testFunPf⇒ {c} {s} {sig} h = case ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ of λ where
-      (no ¬p) → case by-reduceDec h of λ ()
-      (yes p) → subst (Test c s sig) (just-injective $ by-reduceDec h) (test (proj₁ p) (proj₂ p))
+  testFunPf⇐ : Test c s sig s' → testFun c s sig ≡ just s'
+  testFunPf⇐ {s = s} (test x x₁) = by-reduceDecInGoal (refl {x = just s})
 
-    testFunPf⇐ : Test c s sig s' → testFun c s sig ≡ just s'
-    testFunPf⇐ {s = s} (test x x₁) = by-reduceDecInGoal (refl {x = just s})
+  Computational-Test-Manual : Computational Test
+  Computational-Test-Manual = record
+    { compute = testFun ; ≡-just⇔STS = mk⇔ testFunPf⇒ testFunPf⇐ }
 
-    Computational-Test-Manual : Computational Test
-    Computational-Test-Manual = record { compute = testFun ; ≡-just⇔STS = mk⇔ testFunPf⇒ testFunPf⇐ }
-
-    testFun≡compute : ∀ {c s sig} → testFun c s sig ≡ Computational.compute Computational-Test c s sig
-    testFun≡compute = refl
+  _ : ∀ {c s sig} → testFun c s sig ≡ Computational.compute Computational-Test c s sig
+  _ = refl

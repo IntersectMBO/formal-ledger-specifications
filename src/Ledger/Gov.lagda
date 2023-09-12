@@ -2,35 +2,22 @@
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-open import Ledger.Crypto
-
-open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
-open import Ledger.Epoch
-
-import Ledger.PParams as PP
-
-module Ledger.Gov (TxId Network DocHash : Set)
-                  (es : EpochStructure) (open EpochStructure es hiding (epoch))
-                  (open PP es)
-                  (ppd : PParamsDiff)
-                  (ppHashable : isHashableSet PParams)
-                  (crypto : Crypto) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq TxId ⦄ where
 
 import Data.List as L
-open import Relation.Nullary.Decidable renaming (map to mapᵈ)
-
-open import Ledger.GovernanceActions TxId Network DocHash es ppd ppHashable crypto
-
 open import Data.List.Membership.Propositional renaming (_∈_ to _∈ˡ_)
 open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Unary.Any renaming (Any to Anyˡ; any? to decAny)
 open import Function.Related using (fromRelated)
 open import Function.Related.Propositional using (⤖⇒)
-open import Interface.Decidable.Instance
+open import Relation.Nullary.Decidable renaming (map to mapᵈ)
 
-open Crypto crypto
+open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
+open import Ledger.Crypto
+open import Ledger.GovStructure
 
-open import Ledger.Address Network KeyHash ScriptHash
+module Ledger.Gov (⋯ : _) (open GovStructure ⋯ hiding (epoch)) where
+
+open import Ledger.GovernanceActions ⋯
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -53,48 +40,57 @@ record GovEnv : Set where
 \begin{code}[hide]
 open GovActionState
 
-private
-  variable Γ : GovEnv
-           s s' : GovState
-           aid : GovActionID
-           role : GovRole
-           cred : Credential
-           v : Vote
-           c d : Coin
-           addr : RwdAddr
-           a : GovAction
-           prev : NeedsHash a
+private variable
+  Γ : GovEnv
+  s s' : GovState
+  aid : GovActionID
+  role : GovRole
+  cred : Credential
+  v : Vote
+  c d : Coin
+  addr : RwdAddr
+  a : GovAction
+  prev : NeedsHash a
 \end{code}
 \begin{code}
--- could be implemented using a function of type ∀ {a} {A : Set a} → (A → Maybe A) → List A → List A
+-- could be implemented using a function of type:
+--   ∀ {a} {A : Set a} → (A → Maybe A) → List A → List A
 modifyMatch : ∀ {a} {A : Set a} → (A → Bool) → (A → A) → List A → List A
 modifyMatch P f = L.map (λ x → if P x then f x else x)
 
 addVote : GovState → GovActionID → GovRole → Credential → Vote → GovState
 addVote s aid r kh v =
-  modifyMatch (λ x → ⌊ aid ≟ proj₁ x ⌋)
-              (λ where (gid , s') → gid , record s' { votes = insert (votes s') (r , kh) v }) s
+  modifyMatch
+    (λ x → ⌊ aid ≟ proj₁ x ⌋)
+    (λ (gid , s') → gid , record s' { votes = insert (votes s') (r , kh) v }) s
 
-addAction : GovState → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a → GovState
+addAction : GovState
+          → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
+          → GovState
 addAction s e aid addr a prev = s ∷ʳ (aid , record
   { votes = ∅ᵐ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
 -- x is the anchor in those two cases, which we don't do anything with
 data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Set where
+
   GOV-Vote : ∀ {x k ast} → let open GovEnv Γ in
     (aid , ast) ∈ fromList s
     → canVote pparams (action ast) role
     ────────────────────────────────
-    (Γ , k) ⊢ s ⇀⦇ inj₁ record { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x } ,GOV'⦈
-              addVote s aid role cred v
+    let sig = inj₁ record { gid = aid ; role = role ; credential = cred
+                          ; vote = v ; anchor = x }
+    in (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid role cred v
 
-  GOV-Propose : ∀ {x k} → let open GovEnv Γ; open PParams pparams hiding (a) in
+  GOV-Propose : ∀ {x k} (open GovEnv Γ) → let open PParams pparams hiding (a) in
     actionWellFormed a ≡ true
     → d ≡ govActionDeposit
     → (∀ {new rem q} → a ≡ NewCommittee new rem q → ∀[ e ∈ range (new ˢ) ] epoch <ᵉ e × dom (new ˢ) ∩ rem ≡ᵉ ∅)
     ────────────────────────────────
-    (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; deposit = d ; prevAction = prev } ,GOV'⦈
-              addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+    let sig = inj₂ record { returnAddr = addr ; action = a ; anchor = x
+                          ; deposit = d ; prevAction = prev }
+        s'  = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+    in
+    (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ s'
 
 _⊢_⇀⦇_,GOV⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
 _⊢_⇀⦇_,GOV⦈_ = SS⇒BS (λ Γ → Γ ⊢_⇀⦇_,GOV'⦈_)

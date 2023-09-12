@@ -3,22 +3,17 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction using (TransactionStructure)
-
-module Ledger.Ledger (txs : TransactionStructure) where
-
-open import Ledger.Prelude
-
-open TransactionStructure txs
-open import Ledger.PParams epochStructure
-
-open import Ledger.PPUp txs
-open import Ledger.Gov TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
-open import Ledger.Utxo txs
-open import Ledger.Utxow txs
-
 import Data.List as L
 
+open import Ledger.Prelude
+open import Ledger.Transaction using (TransactionStructure)
+
+module Ledger.Ledger (⋯ : _) (open TransactionStructure ⋯) where
+
+open import Ledger.Gov govStructure
+open import Ledger.PPUp  ⋯
+open import Ledger.Utxo  ⋯
+open import Ledger.Utxow ⋯
 open Tx
 open TxBody
 \end{code}

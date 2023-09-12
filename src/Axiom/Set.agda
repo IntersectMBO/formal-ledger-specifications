@@ -20,17 +20,18 @@ open import Interface.DecEq
 open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary
 open import Relation.Nullary.Decidable using (⌊_⌋)
-open import Relation.Unary using () renaming (Decidable to Dec₁)
+open import Relation.Unary using (Pred) renaming (Decidable to Decidable¹)
 
-private variable ℓ : Level
-                 A B C : Type ℓ
-                 P : A → Type
-                 l : List A
+private variable
+  ℓ : Level
+  A B C : Type ℓ
+  P : A → Type
+  l : List A
 
-_Preserves₁_⟶_ : {A : Type ℓ} → (A → B) → (A → Type) → (B → Type) → Type ℓ
+_Preserves₁_⟶_ : {A : Type ℓ} → (A → B) → Pred A 0ℓ → Pred B 0ℓ → Type ℓ
 f Preserves₁ P ⟶ Q = ∀ {a} → P a → Q (f a)
 
-_Preserves₁₂_⟶_⟶_ : {A B : Type ℓ} → (A → B → C) → (A → Type ℓ) → (B → Type ℓ) → (C → Type ℓ) → Type ℓ
+_Preserves₁₂_⟶_⟶_ : {A B : Type ℓ} → (A → B → C) → Pred A ℓ → Pred B ℓ → Pred C ℓ → Type ℓ
 f Preserves₁₂ P ⟶ P' ⟶ Q = ∀ {a b} → P a → P' b → Q (f a b)
 
 record SpecProperty {ℓ} : Type (sucˡ ℓ) where
@@ -40,7 +41,7 @@ record SpecProperty {ℓ} : Type (sucˡ ℓ) where
 
 Dec-SpecProperty : SpecProperty
 Dec-SpecProperty = record
-  { specProperty = Dec₁
+  { specProperty = Decidable¹
   ; sp-∘         = λ P? → P? ∘_
   ; sp-¬         = λ P? → ¬? ∘ P?
   }
@@ -57,11 +58,17 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   _⊆_ : Set A → Set A → Type ℓ
   X ⊆ Y = ∀ {a} → a ∈ X → a ∈ Y
 
-  -- we might want to either have all properties or decidable properties allowed for specification
-  field specification : (X : Set A) → specProperty P → ∃[ Y ] ∀ {a} → (P a × a ∈ X) ⇔ a ∈ Y
-        unions        : (X : Set (Set A)) → ∃[ Y ] ∀ {a} → (∃[ T ] (T ∈ X × a ∈ T)) ⇔ a ∈ Y
-        replacement   : (f : A → B) → (X : Set A) → ∃[ Y ] ∀ {b} → (∃[ a ] b ≡ f a × a ∈ X) ⇔ b ∈ Y
-        listing       : (l : List A) → ∃[ X ] ∀ {a} → a ∈ˡ l ⇔ a ∈ X -- equivalent to pairing + empty set
+  -- we might want to either have all properties or
+  -- decidable properties allowed for specification
+  field specification : (X : Set A)
+                      → specProperty P → ∃[ Y ] ∀ {a} → (P a × a ∈ X) ⇔ a ∈ Y
+        unions        : (X : Set (Set A))
+                      → ∃[ Y ] ∀ {a} → (∃[ T ] (T ∈ X × a ∈ T)) ⇔ a ∈ Y
+        replacement   : (f : A → B) (X : Set A)
+                      → ∃[ Y ] ∀ {b} → (∃[ a ] b ≡ f a × a ∈ X) ⇔ b ∈ Y
+        listing       : (l : List A)
+                      → ∃[ X ] ∀ {a} → a ∈ˡ l ⇔ a ∈ X
+                      -- ^ equivalent to pairing + empty set
         -- power-set     : (X : Set A) → ∃[ Y ] ∀ {T} → T ⊆ X → T ∈ Y
 
   private variable X X' Y : Set A
@@ -104,7 +111,8 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   strongly-finite : Set A → Type ℓ
   strongly-finite X = ∃[ l ] Unique l × ∀ {a} → a ∈ X ⇔ a ∈ˡ l
 
-  DecEq∧finite⇒strongly-finite : ⦃ _ : DecEq A ⦄ → (X : Set A) → finite X → strongly-finite X
+  DecEq∧finite⇒strongly-finite : ⦃ _ : DecEq A ⦄ (X : Set A) →
+    finite X → strongly-finite X
   DecEq∧finite⇒strongly-finite ⦃ eq? ⦄ X (l , h) = let _≟_ = eq? ._≟_ in
     deduplicate _≟_ l , deduplicate-! _≟_ l , λ {a} →
       a ∈ X                  ∼⟨ h ⟩
@@ -191,14 +199,15 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-partialToSet : ∀ {a : A} {b : B} {f} → f a ≡ just b ⇔ b ∈ partialToSet f a
   ∈-partialToSet {a = a} {b} {f} = mk⇔
     (λ h → subst (λ x → b ∈ maybe (fromList ∘ [_]) ∅ x) (sym h) (to ∈-singleton refl))
-    (case f a return (λ y → b ∈ maybe (λ x → fromList [ x ]) ∅ y → y ≡ just b) of λ where
-      (just x) → λ h → cong just (sym $ from ∈-singleton h)
-      nothing  → λ h → case from ∈-fromList h of λ ())
+    (case f a return (λ y → b ∈ maybe (λ x → fromList [ x ]) ∅ y → y ≡ just b) of
+      λ where (just x) → λ h → cong just (sym $ from ∈-singleton h)
+              nothing  → λ h → case from ∈-fromList h of λ ())
 
   concatMapˢ : (A → Set B) → Set A → Set B
   concatMapˢ f a = proj₁ $ unions (map f a)
 
-  ∈-concatMapˢ : {y : B} {f : A → Set B} → (∃[ x ] x ∈ X × y ∈ f x) ⇔ y ∈ concatMapˢ f X
+  ∈-concatMapˢ : {y : B} {f : A → Set B} →
+    (∃[ x ] x ∈ X × y ∈ f x) ⇔ y ∈ concatMapˢ f X
   ∈-concatMapˢ {X = X} {y} {f} =
     (∃[ x ] x ∈ X × y ∈ f x)
       ∼⟨ ∃-cong′ (λ {x} → ∃-≡ (λ T → x ∈ X × y ∈ T)) ⟩
@@ -218,7 +227,8 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   mapPartial : (A → Maybe B) → Set A → Set B
   mapPartial f = concatMapˢ (partialToSet f)
 
-  ∈-mapPartial : {y : B} {f : A → Maybe B} → (∃[ x ] x ∈ X × f x ≡ just y) ⇔ y ∈ mapPartial f X
+  ∈-mapPartial : {y : B} {f : A → Maybe B} →
+    (∃[ x ] x ∈ X × f x ≡ just y) ⇔ y ∈ mapPartial f X
   ∈-mapPartial {X = X} {y} {f} =
     (∃[ x ] x ∈ X × f x ≡ just y)
       ∼⟨ ∃-cong′ (R.K-refl ×-cong (∈-partialToSet {f = f})) ⟩
@@ -237,7 +247,7 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ... | (Y , h) = Y , mk⇔ (λ where
     (inj₁ a∈X)  → to h (X  , to ∈-fromList (here refl)         , a∈X)
     (inj₂ a∈X') → to h (X' , to ∈-fromList (there (here refl)) , a∈X'))
-    (λ a∈Y → case from h a∈Y of λ where (T , H , a∈T) → case from ∈-fromList H of λ where
+    (λ a∈Y → case from h a∈Y of λ (T , H , a∈T) → case from ∈-fromList H of λ where
       (here refl) → inj₁ a∈T
       (there (here refl)) → inj₂ a∈T)
 
@@ -298,53 +308,56 @@ record Theoryᵈ : Type₁ where
   open Theory th public
   open Equivalence
 
-  field ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
-        _∈?_ : ⦃ DecEq A ⦄ → Dec₂ (_∈_ {A = A})
-        all? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) {X : Set A} → Dec (All P X)
-        any? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Dec (Any P X)
+  field
+    ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
+    _∈?_ : ⦃ DecEq A ⦄ → Dec₂ (_∈_ {A = A})
+    all? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Decidable¹ P) {X : Set A} → Dec (All P X)
+    any? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Decidable¹ P) (X : Set A) → Dec (Any P X)
 
   _∈ᵇ_ : ⦃ DecEq A ⦄ → A → Set A → Bool
   a ∈ᵇ X = ⌊ a ∈? X ⌋
 
-  instance
-    Dec-∈ : ⦃ DecEq A ⦄ → {x : A} {X : Set A} → Dec (x ∈ X)
-    Dec-∈ {x = x} {X} = x ∈? X
+  module _ {A : Type} ⦃ _ : DecEq A ⦄ where
 
-  allᵇ : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Bool
-  allᵇ P? X = ⌊ all? P? {X} ⌋
+    instance
+      Dec-∈ : {x : A} {X : Set A} → Dec (x ∈ X)
+      Dec-∈ {x = x} {X} = x ∈? X
 
-  instance
-    Dec-All : ⦃ DecEq A ⦄ → {P : A → Type} ⦃ P? : ∀ {x} → Dec (P x) ⦄ {X : Set A} → Dec (All P X)
-    Dec-All = all? λ x → it
+    module _ {P : A → Type} ⦃ P? : ∀ {x} → Dec (P x) ⦄ {X : Set A} where instance
+      Dec-All : Dec (All P X)
+      Dec-All = all? λ x → it
 
-  anyᵇ : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Bool
-  anyᵇ P? X = ⌊ any? P? X ⌋
+      Dec-Any : Dec (Any P X)
+      Dec-Any = any? (λ x → it) _
 
-  instance
-    Dec-Any : ⦃ DecEq A ⦄ → {P : A → Type} ⦃ P? : ∀ {x} → Dec (P x) ⦄ {X : Set A} → Dec (Any P X)
-    Dec-Any = any? (λ x → it) _
+    module _ {P : A → Type} (P? : Decidable¹ P) where
+      allᵇ anyᵇ : (X : Set A) → Bool
+      allᵇ X = ⌊ all? P? {X} ⌋
+      anyᵇ X = ⌊ any? P? X   ⌋
 
-  incl-set' : ⦃ DecEq A ⦄ → (X : Set A) → A → Maybe (∃[ a ] a ∈ X)
-  incl-set' X x with x ∈? X
-  ... | yes p = just (x , p)
-  ... | no  p = nothing
+    incl-set' : (X : Set A) → A → Maybe (∃[ a ] a ∈ X)
+    incl-set' X x with x ∈? X
+    ... | yes p = just (x , p)
+    ... | no  p = nothing
 
-  incl-set : ⦃ DecEq A ⦄ → (X : Set A) → Set (∃[ a ] a ∈ X)
-  incl-set X = mapPartial (incl-set' X) X
+    incl-set : (X : Set A) → Set (∃[ a ] a ∈ X)
+    incl-set X = mapPartial (incl-set' X) X
 
-  incl-set-proj₁⊆ : ⦃ _ : DecEq A ⦄ → {X : Set A} → map proj₁ (incl-set X) ⊆ X
-  incl-set-proj₁⊆ x with from ∈-map x
-  ... | (_ , pf) , refl , _ = pf
+    module _ {X : Set A} where
+      incl-set-proj₁⊆ : map proj₁ (incl-set X) ⊆ X
+      incl-set-proj₁⊆ x with from ∈-map x
+      ... | (_ , pf) , refl , _ = pf
 
-  incl-set-proj₁⊇ : ⦃ _ : DecEq A ⦄ → {X : Set A} → X ⊆ map proj₁ (incl-set X)
-  incl-set-proj₁⊇ {X = X} {x} x∈X with x ∈? X | inspect (_∈? X) x
-  ... | no ¬p | _  = contradiction x∈X ¬p
-  ... | yes p | eq = to ∈-map ((x , p) , refl , to (∈-mapPartial {f = incl-set' X})
-    (x , x∈X , helper (Reveal_·_is_.eq eq)))
-    where
-      helper : x ∈? X ≡ yes p → incl-set' X x ≡ just (x , p)
-      helper h with x ∈? X | h
-      ... | _ | refl = refl
+      incl-set-proj₁⊇ : X ⊆ map proj₁ (incl-set X)
+      incl-set-proj₁⊇ {x} x∈X with x ∈? X in eq
+      ... | no ¬p = contradiction x∈X ¬p
+      ... | yes p = to ∈-map
+        $ (x , p)
+        , refl
+        , to (∈-mapPartial {f = incl-set' X}) (x , x∈X , helper eq)
+        where helper : x ∈? X ≡ yes p → incl-set' X x ≡ just (x , p)
+              helper h with x ∈? X | h
+              ... | _ | refl = refl
 
-  incl-set-proj₁ : ⦃ _ : DecEq A ⦄ → {X : Set A} → map proj₁ (incl-set X) ≡ᵉ X
-  incl-set-proj₁ = incl-set-proj₁⊆ , incl-set-proj₁⊇
+      incl-set-proj₁ : map proj₁ (incl-set X) ≡ᵉ X
+      incl-set-proj₁ = incl-set-proj₁⊆ , incl-set-proj₁⊇

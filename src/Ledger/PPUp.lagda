@@ -3,26 +3,21 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
+open import Algebra
+open import Algebra.Literals
+import Data.Unit.Polymorphic
+open import Agda.Builtin.FromNat
+import Data.Nat as ℕ
+open import Data.Nat.Properties using (m+1+n≢m)
+open import Data.Nat.Literals
+open import Data.Product.Properties
+
+open import Ledger.Prelude hiding (_*_)
 open import Ledger.Transaction
 
-module Ledger.PPUp (txs : TransactionStructure) where
-open import Ledger.Prelude hiding (_*_)
+module Ledger.PPUp (⋯ : _) (open TransactionStructure ⋯) where
 
-open TransactionStructure txs
-
-open import Algebra
-
-import Data.Nat as ℕ
-import Data.Unit.Polymorphic
 open Semiring Slotʳ using (_*_)
-open import Algebra.Literals
-open import Data.Nat.Properties using (m+1+n≢m)
-open import Data.Product.Properties
-open import Ledger.PParams epochStructure
-
-open import Agda.Builtin.FromNat
-open import Data.Nat.Literals
-import Data.Unit.Polymorphic
 open Semiring-Lit Slotʳ
 
 private variable m n : ℕ
@@ -30,7 +25,6 @@ private variable m n : ℕ
 instance
   _ = Data.Nat.Literals.number
   _ = Data.Unit.Polymorphic.tt
-
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -69,21 +63,23 @@ private variable
   e : Epoch
   pup pupˢ fpupˢ : ProposedPPUpdates
 
-viablePParams? : Dec₁ viablePParams
+viablePParams? : Decidable¹ viablePParams
 viablePParams? pp = yes _
 
 pvCanFollow? : ∀ pv pv' → Dec (pvCanFollow pv pv')
 pvCanFollow? (m , n) pv with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
-... | no ¬p | no ¬p₁ = no (λ { canFollowMajor → ¬p _≡_.refl ; canFollowMinor → ¬p₁ _≡_.refl })
-... | no ¬p | yes refl = yes canFollowMinor
-... | yes refl | no ¬p = yes canFollowMajor
-... | yes refl | yes p = ⊥-elim (case proj₁ (×-≡,≡←≡ p) of m+1+n≢m m)
+... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
+                                         canFollowMinor → ¬p₁ refl
+... | no ¬p    | yes refl = yes canFollowMinor
+... | yes refl | no ¬p    = yes canFollowMajor
+... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
+
 
 instance
   Dec-pvCanFollow : ∀ {pv pv'} → Dec (pvCanFollow pv pv')
   Dec-pvCanFollow = pvCanFollow? _ _
 
-isViableUpdate? : ∀ pparams → Dec₁ (isViableUpdate pparams)
+isViableUpdate? : ∀ pparams → Decidable¹ (isViableUpdate pparams)
 isViableUpdate? pp pup with applyUpdate pp pup
 ... | pp' = pvCanFollow? (PParams.pv pp) (PParams.pv pp') ×-dec viablePParams? pp'
 

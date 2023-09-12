@@ -6,7 +6,7 @@ open import Interface.DecEq
 open import Interface.Hashable
 
 open import Prelude hiding (_<ᵇ_; _∧_) renaming (_×_ to _∧_)
-open import Ledger.Prelude using (indexedSumL)
+open import Ledger.Prelude -- using (indexedSumL)
 open import Data.Integer hiding (_/_; _≟_)
 
 module MidnightExample.Ledger (Hash : Set) ⦃ _ : DecEq Hash ⦄
@@ -15,11 +15,7 @@ module MidnightExample.Ledger (Hash : Set) ⦃ _ : DecEq Hash ⦄
 open import Data.Integer.Properties using (+-0-commutativeMonoid; +-0-abelianGroup)
 open import Relation.Nullary
 
-open import Interface.Decidable.Instance
-
-open import Interface.ComputationalRelation
 open import Tactic.DeriveComp
-open import MyDebugOptions
 
 instance
   _ = +-0-commutativeMonoid

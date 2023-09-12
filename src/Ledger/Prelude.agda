@@ -16,48 +16,37 @@ open import Prelude public
 open import Ledger.Prelude.Base public
 
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
-open import Interface.ComputationalRelation public
-open import Interface.DecEq public
-open import Ledger.Interface.HasCoin public
+open import Relation.Nullary public
+open import Relation.Unary using () renaming (Decidable to Decidable¹) public
+open import Interface.DecEq.Ext public
 open import Interface.HasAdd public
 open import Interface.HasAdd.Instance public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
-open import Relation.Nullary public
-open import Relation.Unary using () renaming (Decidable to Dec₁) public
-open Computational public
-
--- TODO: move this into Interface.DecEq
-open import Data.Rational
-import Data.Rational.Properties as ℚ
-import Data.Bool.Properties as 𝔹
-
-instance
-  DecEq-Bool : DecEq Bool
-  DecEq-Bool = record { _≟_ = 𝔹._≟_ }
-
-  DecEq-ℚ : DecEq ℚ
-  DecEq-ℚ = record { _≟_ = ℚ._≟_ }
+open import Interface.Decidable.Instance public
+open import Interface.ComputationalRelation public; open Computational public
+open import Ledger.Interface.HasCoin public
+open import MyDebugOptions public
 
 --------------------------------------------------------------------------------
 -- Set theory
 
 open import Axiom.Set
-open import Axiom.Set.List as L renaming (List-Model to List-Model'; List-Modelᶠ to List-Model'ᶠ; List-Modelᵈ to List-Model'ᵈ)
+import Axiom.Set.List as L
 
 abstract
   List-Model : Theory {0ℓ}
-  List-Model = List-Model'
+  List-Model = L.List-Model
   List-Modelᶠ : Theoryᶠ
-  List-Modelᶠ = List-Model'ᶠ
+  List-Modelᶠ = L.List-Modelᶠ
   List-Modelᵈ : Theoryᵈ
-  List-Modelᵈ = List-Model'ᵈ
+  List-Modelᵈ = L.List-Modelᵈ
 
 open Theoryᵈ List-Modelᵈ renaming (Set to ℙ_; filter to filterˢ) public
 
 abstract
   open import Axiom.Set.Properties th using (card-≡ᵉ)
-  to-sp : {A : Set} {P : A → Set} → Dec₁ P → specProperty P
+  to-sp : {A : Set} {P : A → Set} → Decidable¹ P → specProperty P
   to-sp = id
 
   finiteness : ∀ {A} (X : Theory.Set th A) → finite X
@@ -66,7 +55,9 @@ abstract
   lengthˢ : ∀ {A} ⦃ _ : DecEq A ⦄ (X : Theory.Set th A) → ℕ
   lengthˢ = Theoryᶠ.lengthˢ List-Modelᶠ
 
-  lengthˢ-≡ᵉ : ∀ {A} ⦃ _ : DecEq A ⦄ (X Y : Theory.Set th A) → X ≡ᵉ Y → lengthˢ X ≡ lengthˢ Y
+  lengthˢ-≡ᵉ : ∀ {A} ⦃ _ : DecEq A ⦄ (X Y : Theory.Set th A)
+    → X ≡ᵉ Y
+    → lengthˢ X ≡ lengthˢ Y
   lengthˢ-≡ᵉ X Y X≡Y =
     card-≡ᵉ (X , Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ X)
             (Y , Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ Y) X≡Y
@@ -78,7 +69,7 @@ abstract
   setToList = id
 
   ≟-∅ : {A : Set} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → Dec (X ≡ ∅)
-  ≟-∅ = Decˡ.≟-∅
+  ≟-∅ = L.Decˡ.≟-∅
 
 open import Axiom.Set.Rel th public
   hiding (_∣'_; _↾'_)

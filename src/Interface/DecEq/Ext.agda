@@ -13,8 +13,20 @@ module Interface.DecEq.Ext where
 
 open import Interface.DecEq public
 
-private variable ℓ : Level
-                 A B : Set ℓ
+open import Data.Rational using (ℚ)
+import Data.Rational.Properties as ℚ
+import Data.Bool.Properties as 𝔹
+
+instance
+  DecEq-Bool : DecEq Bool
+  DecEq-Bool ._≟_ = 𝔹._≟_
+
+  DecEq-ℚ : DecEq ℚ
+  DecEq-ℚ ._≟_ = ℚ._≟_
+
+private variable
+  ℓ : Level
+  A B : Set ℓ
 
 module _ ⦃ DecEq-A : DecEq A ⦄ where
 

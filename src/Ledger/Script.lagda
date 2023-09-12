@@ -13,14 +13,13 @@ open import Data.List.Relation.Binary.Sublist.Propositional as S
 open import Ledger.Crypto
 
 open import Tactic.Derive.DecEq
-open import MyDebugOptions
 
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
         validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Set
         validP1Script? : ∀ khs I s → Dec (validP1Script khs I s)
-        instance Hashable-P1Script : Hashable P1Script ScriptHash
-                 DecEq-P1Script    : DecEq P1Script
+        ⦃ Hashable-P1Script ⦄ : Hashable P1Script ScriptHash
+        ⦃ DecEq-P1Script    ⦄ : DecEq P1Script
   instance
     Dec-ValidP1Script : ∀ {khs I s} → Dec (validP1Script khs I s)
     Dec-ValidP1Script = validP1Script? _ _ _
@@ -28,8 +27,8 @@ record P1ScriptStructure : Set₁ where
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet
         PlutusScript ExUnits CostModel : Set
-        instance Hashable-PlutusScript : Hashable PlutusScript ScriptHash
-                 DecEq-PlutusScript    : DecEq PlutusScript
+        ⦃ Hashable-PlutusScript ⦄ : Hashable PlutusScript ScriptHash
+        ⦃ DecEq-PlutusScript    ⦄ : DecEq PlutusScript
 
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
 
@@ -41,8 +40,11 @@ record ScriptStructure : Set₁ where
         ps  : PlutusStructure
 
   open P1ScriptStructure p1s public
-  open PlutusStructure ps public renaming
-    (PlutusScript to P2Script; validPlutusScript to validP2Script; validPlutusScript? to validP2Script?)
+  open PlutusStructure ps public
+    renaming ( PlutusScript       to P2Script
+             ; validPlutusScript  to validP2Script
+             ; validPlutusScript? to validP2Script?
+             )
 
   Script = P1Script ⊎ P2Script
 
@@ -71,36 +73,44 @@ module _ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot
                    a l r : Slot
 \end{code}
 \begin{code}
-  data evalTimelock (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) : Timelock → Set where
-    evalAll : All (evalTimelock khs I) ss → evalTimelock khs I (RequireAllOf ss)
-    evalAny : Any (evalTimelock khs I) ss → evalTimelock khs I (RequireAnyOf ss)
-    evalMOf : ss' S.⊆ ss → All (evalTimelock khs I) ss' → evalTimelock khs I (RequireMOf (length ss') ss)
-    evalSig : x ∈ khs → evalTimelock khs I (RequireSig x)
-    evalTSt : proj₁ I ≡ just l → a ≤ l → evalTimelock khs I (RequireTimeStart a)
-    evalTEx : proj₂ I ≡ just r → r ≤ a → evalTimelock khs I (RequireTimeStart a)
+  module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where
+    data evalTimelock : Timelock → Set where
+      evalAll  : All evalTimelock ss
+               → evalTimelock (RequireAllOf ss)
+      evalAny  : Any evalTimelock ss
+               → evalTimelock (RequireAnyOf ss)
+      evalMOf  : ss' S.⊆ ss → All evalTimelock ss'
+               → evalTimelock (RequireMOf (length ss') ss)
+      evalSig  : x ∈ khs
+               → evalTimelock (RequireSig x)
+      evalTSt  : proj₁ I ≡ just l → a ≤ l
+               → evalTimelock (RequireTimeStart a)
+      evalTEx  : proj₂ I ≡ just r → r ≤ a
+               → evalTimelock (RequireTimeStart a)
 \end{code}
 \caption{Timelock scripts and their evaluation}
 \label{fig:defs:timelock}
 \end{figure*}
 
 \begin{code}[hide]
-  evalTimelockᵇ : ℙ KeyHash → (Maybe Slot × Maybe Slot) → Timelock → Bool
-  evalTimelockᵇ khs I (RequireAllOf [])                   = true
-  evalTimelockᵇ khs I (RequireAllOf (x ∷ xs))             =
-    evalTimelockᵇ khs I x ∧ evalTimelockᵇ khs I (RequireAllOf xs)
-  evalTimelockᵇ khs I (RequireAnyOf [])                   = false
-  evalTimelockᵇ khs I (RequireAnyOf (x ∷ xs))             =
-    evalTimelockᵇ khs I x ∨ evalTimelockᵇ khs I (RequireAllOf xs)
-  evalTimelockᵇ khs I (RequireMOf zero _)                 = true
-  evalTimelockᵇ khs I (RequireMOf (suc _) [])             = false
-  evalTimelockᵇ khs I (RequireMOf (suc m) (x ∷ xs))       = if evalTimelockᵇ khs I x
-    then  evalTimelockᵇ khs I (RequireMOf m xs)
-    else  evalTimelockᵇ khs I (RequireMOf (suc m) xs)
-  evalTimelockᵇ khs I (RequireSig x)                      = x ∈ᵇ khs
-  evalTimelockᵇ khs (just l  , _)  (RequireTimeStart x)   = x ≤ᵇ l
-  evalTimelockᵇ khs (nothing , _)  (RequireTimeStart x)   = false
-  evalTimelockᵇ khs (_ , just r )  (RequireTimeExpire x)  = r ≤ᵇ x
-  evalTimelockᵇ khs (_ , nothing)  (RequireTimeExpire x)  = false
+  module _ (khs : ℙ KeyHash) where
+    evalTimelockᵇ : (Maybe Slot × Maybe Slot) → Timelock → Bool
+    evalTimelockᵇ I (RequireAllOf [])                   = true
+    evalTimelockᵇ I (RequireAllOf (x ∷ xs))             =
+      evalTimelockᵇ I x ∧ evalTimelockᵇ I (RequireAllOf xs)
+    evalTimelockᵇ I (RequireAnyOf [])                   = false
+    evalTimelockᵇ I (RequireAnyOf (x ∷ xs))             =
+      evalTimelockᵇ I x ∨ evalTimelockᵇ I (RequireAllOf xs)
+    evalTimelockᵇ I (RequireMOf zero _)                 = true
+    evalTimelockᵇ I (RequireMOf (suc _) [])             = false
+    evalTimelockᵇ I (RequireMOf (suc m) (x ∷ xs))       = if evalTimelockᵇ I x
+      then  evalTimelockᵇ I (RequireMOf m xs)
+      else  evalTimelockᵇ I (RequireMOf (suc m) xs)
+    evalTimelockᵇ I (RequireSig x)                      = x ∈ᵇ khs
+    evalTimelockᵇ (just l  , _)  (RequireTimeStart x)   = x ≤ᵇ l
+    evalTimelockᵇ (nothing , _)  (RequireTimeStart x)   = false
+    evalTimelockᵇ (_ , just r )  (RequireTimeExpire x)  = r ≤ᵇ x
+    evalTimelockᵇ (_ , nothing)  (RequireTimeExpire x)  = false
 
   unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 

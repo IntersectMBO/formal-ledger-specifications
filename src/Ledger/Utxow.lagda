@@ -2,24 +2,20 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
-
-module Ledger.Utxow (txs : TransactionStructure) where
-
-open import Ledger.Prelude
-
 import Data.Maybe as M
 import Data.Nat
 
-open TransactionStructure txs
-open import Ledger.Crypto
-open import Ledger.Utxo txs
-
 open import Interface.Decidable.Instance
 
+open import Ledger.Prelude
+open import Ledger.Crypto
+open import Ledger.Transaction
+
+module Ledger.Utxow (⋯ : _) (open TransactionStructure ⋯) where
 open TxBody
 open TxWitnesses
 open Tx
+open import Ledger.Utxo ⋯
 \end{code}
 
 \begin{figure*}[h]
@@ -68,18 +64,16 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \begin{code}
   UTXOW-inductive :
     ∀ {Γ} {s} {tx} {s'}
-    → let utxo = UTxOState.utxo s
-          ppolicy = UTxOEnv.ppolicy Γ
-          txb = body tx
-          txw = wits tx
-          witsKeyHashes = map hash (dom (vkSigs txw ˢ))
-          witsScriptHashes = map hash (scripts txw)
+    → let open UTxOState s; open UTxOEnv Γ
+          txb = tx .body; txw = tx .wits
+          witsKeyHashes    = map hash (dom (txw .vkSigs ˢ))
+          witsScriptHashes = map hash (txw .scripts )
       in
-    ∀[ (vk , σ) ∈ vkSigs txw ˢ ] isSigned vk (txidBytes (txid txb)) σ
-    → ∀[ s ∈ scriptsP1 txw ] validP1Script witsKeyHashes (txvldt txb) s
+    ∀[ (vk , σ) ∈ txw .vkSigs ˢ ] isSigned vk (txb .txid .txidBytes) σ
+    → ∀[ s ∈ scriptsP1 txw ] validP1Script witsKeyHashes (txb .txvldt) s
     → witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     → scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
-    → txADhash txb ≡ M.map hash (txAD tx)
+    → txb .txADhash ≡ M.map hash (tx .txAD)
     → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

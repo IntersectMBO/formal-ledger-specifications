@@ -42,7 +42,7 @@ record TokenAlgebra : Set₁ where
          coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 \end{code}
 \begin{code}[hide]
-         instance DecEq-Value : DecEq Value
+         ⦃ DecEq-Value ⦄ : DecEq Value
 
   instance
     addValue : HasAdd Value
