@@ -15,6 +15,8 @@ open TransactionStructure txs
 open import Ledger.Crypto
 open import Ledger.Utxo txs
 
+open import Interface.Decidable.Instance
+
 open TxBody
 open TxWitnesses
 open Tx
