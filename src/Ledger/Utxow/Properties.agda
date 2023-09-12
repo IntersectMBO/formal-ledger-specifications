@@ -22,44 +22,36 @@ open import MyDebugOptions
 
 open import Interface.Decidable.Instance public
 
-private variable A K V : Set
+open Computational' ⦃...⦄
 
-sigCheck : Ser → (VKey × Sig) → Set
-sigCheck d = λ where (vk , σ) → isSigned vk d σ
+private
+  UTXOW-premiss : ∀ Γ s tx → Set
+  UTXOW-premiss Γ s tx =
+    let utxo             = UTxOState.utxo s
+        ppolicy          = UTxOEnv.ppolicy Γ
+        txb              = body tx
+        txw              = wits tx
+        witsKeyHashes    = map hash (dom (vkSigs txw ˢ))
+        witsScriptHashes = map hash (scripts txw)
+    in
+      ∀[ (vk , σ) ∈ vkSigs txw ˢ ] isSigned vk (txidBytes (txid txb)) σ
+    × ∀[ s ∈ scriptsP1 txw ] validP1Script witsKeyHashes (txvldt txb) s
+    × witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
+    × scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
+    × txADhash txb ≡ M.map hash (txAD tx)
 
 instance
-  sig-inst : ∀ {d} → Dec₁ (sigCheck d)
-  sig-inst {d} .Dec₁.P? = λ where (vk , σ) → isSigned? vk d σ
+  Computational'-UTXOW : Computational' _⊢_⇀⦇_,UTXOW⦈_
+  Computational'-UTXOW .computeProof Γ s tx =
+    case ¿ UTXOW-premiss Γ s tx ¿ of λ where
+      (yes (p₁ , p₂ , p₃ , p₄ , p₅)) → case computeProof Γ s (body tx) of λ where
+        (just (s' , h)) → just (s' , UTXOW-inductive p₁ p₂ p₃ p₄ p₅ h)
+        nothing → nothing
+      _ → nothing
+  Computational'-UTXOW .completeness Γ s tx s' (UTXOW-inductive p₁ p₂ p₃ p₄ p₅ h)
+    with ¿ UTXOW-premiss Γ s tx ¿ | "dumb Agda bug"
+  ... | no ¬p | _ = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄ , p₅))
+  ... | yes (p₁ , p₂ , p₃ , p₄ , p₅) | _ with computeProof {STS = _⊢_⇀⦇_,UTXO⦈_} Γ s (body tx) | completeness _ _ _ _ h
+  ...   | just h | refl = refl
 
-  valid-inst : ∀ {khs} {I} → Dec₁ (validP1Script khs I)
-  valid-inst {khs} {I} .Dec₁.P? = validP1Script? khs I
-
-Computational-Property : UTxOEnv → UTxOState → Tx → Set
-Computational-Property Γ s tx = let
-  utxo = UTxOState.utxo s
-  ppolicy = UTxOEnv.ppolicy Γ
-  txb = body tx
-  txw = wits tx
-  witsKeyHashes = map hash (dom (vkSigs txw ˢ))
-  witsScriptHashes = map hash (scripts txw)
-  in All (λ where (vk , σ) → isSigned vk (txidBytes (txid txb)) σ) (proj₁ $ vkSigs txw)
-     × All (validP1Script witsKeyHashes (txvldt txb)) (scriptsP1 txw)
-     × witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
-     × scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
-     × txADhash txb ≡ M.map hash (txAD tx)
-
-Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_
-Computational-UTXOW .compute    e s tx = ifᵈ Computational-Property e s tx
-       then compute Computational-UTXO e s (body tx)
-       else nothing
-Computational-UTXOW .≡-just⇔STS {e} {s} {tx} {s'} =
-  let substGoal = subst (λ b → (if b then compute Computational-UTXO e s (body tx) else nothing) ≡ just s')
-      comp-p = ¿ Computational-Property e s tx ¿
-      open Equivalence (≡-just⇔STS Computational-UTXO)
-  in mk⇔
-    (λ h → case comp-p of λ where
-      (yes p@(x , x₁ , x₂ , x₃ , x₄)) →
-        UTXOW-inductive x x₁ x₂ x₃ x₄ (to $ substGoal (fromWitness' comp-p p) h)
-      (no ¬p) → case substGoal (fromWitnessFalse' comp-p ¬p) h of λ ())
-    λ where (UTXOW-inductive x x₁ x₂ x₃ x₄ x₅) →
-              substGoal (sym $ fromWitness' comp-p (x , x₁ , x₂ , x₃ , x₄)) (from x₅)
+  Computational-UTXOW = fromComputational' Computational'-UTXOW
