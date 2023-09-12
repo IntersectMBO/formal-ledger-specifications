@@ -3,17 +3,14 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Transaction
-
-module Ledger.NewPP (txs : TransactionStructure) where
+open import Relation.Nullary.Decidable
 
 open import Ledger.Prelude
+open import Ledger.Transaction
 
-open TransactionStructure txs
-open import Ledger.PParams epochStructure
-open import Ledger.PPUp txs
+module Ledger.NewPP (⋯ : _) (open TransactionStructure ⋯) where
 
-open import Relation.Nullary.Decidable
+open import Ledger.PPUp ⋯
 
 record NewPParamEnv : Set where
 --  field
@@ -26,7 +23,8 @@ record NewPParamState : Set where
         ppup     : PPUpdateState
 
 updatePPUp : PParams → PPUpdateState → PPUpdateState
-updatePPUp pparams record { fpup = fpup } with allᵇ (isViableUpdate? pparams) (range (fpup ˢ))
+updatePPUp pparams record { fpup = fpup }
+  with allᵇ (isViableUpdate? pparams) (range (fpup ˢ))
 ... | false  = record { pup = ∅ᵐ    ; fpup = ∅ᵐ }
 ... | true   = record { pup = fpup  ; fpup = ∅ᵐ }
 

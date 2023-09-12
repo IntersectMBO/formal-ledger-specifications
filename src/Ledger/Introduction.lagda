@@ -19,7 +19,7 @@ in detail in the Cardano Improvement Proposal (CIP) 1694,
 The \emph{Cardano Node} consists of three pieces:
 
 \begin{itemize}
-  \item Networking layer, which deals with sending messages accross the internet
+  \item Networking layer, which deals with sending messages across the internet
   \item Consensus layer, which establishes a common order of valid blocks
   \item Ledger layer, which decides whether a sequence of blocks is valid
 \end{itemize}
@@ -30,7 +30,7 @@ Because of this separation, the ledger gets to be a state machine:
 More generally, we will consider state machines with an environment:
 \[ Γ ⊢ s \xrightarrow[X]{b} s' \]
 
-These are modeled as 4-ary relations between the environment \(Γ\), an
+These are modelled as 4-ary relations between the environment \(Γ\), an
 initial state \(s\), a signal \(b\) and a final state \(s'\). The ledger consists of
 25-ish (depending on the version) such relations that depend on each
 other, forming a directed graph that is almost a tree.
@@ -43,10 +43,11 @@ should be computable by functions. This is captured by the following
 record, which is parametrized over the step relation.
 
 \begin{code}[hide]
-private variable C S Sig : Set
-                 Γ : C
-                 s s' : S
-                 b : Sig
+private variable
+  C S Sig : Set
+  Γ : C
+  s s' : S
+  b : Sig
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -60,7 +61,7 @@ record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Set) : Set 
 \subsection{Sets \& maps}
 
 The ledger heavily uses set theory. For various reasons it was
-necessary to implement our own set theory (there'll be a paper on this
+necessary to implement our own set theory (there will be a paper on this
 some time in the future). Crucially, the set theory is completely
 abstract (in a technical sense - Agda has an abstract keyword) meaning
 that implementation details of the set theory are

@@ -2,12 +2,12 @@
 module Interface.HasAdd.Instance where
 
 open import Interface.HasAdd
-open import Data.Integer using (ℤ) renaming (_+_ to _+ℤ_)
-open import Data.Nat using (ℕ) renaming (_+_ to _+ℕ_)
+open import Data.Integer as ℤ using (ℤ)
+open import Data.Nat     as ℕ using (ℕ)
 
 instance
   addInt : HasAdd ℤ
-  addInt = record { _+_ = _+ℤ_ }
+  addInt ._+_ = ℤ._+_
 
   addNat : HasAdd ℕ
-  addNat = record { _+_ = _+ℕ_ }
+  addNat ._+_ = ℕ._+_

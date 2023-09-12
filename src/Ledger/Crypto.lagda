@@ -7,20 +7,15 @@ open import Ledger.Prelude hiding (T)
 open import Interface.Hashable public
 
 record isHashableSet (T : Set) : Set₁ where
+  constructor mkIsHashableSet
   field THash : Set
-        instance T-Hashable : Hashable T THash
-        instance DecEq-THash : DecEq THash
+        ⦃ DecEq-THash ⦄ : DecEq      THash
+        ⦃ T-Hashable  ⦄ : Hashable T THash
 open isHashableSet
 
-mkIsHashableSet : (T THash : Set) → (T → THash) → (DecEq THash) → isHashableSet T
-mkIsHashableSet T THash hash eq .THash            = THash
-mkIsHashableSet T THash hash eq .T-Hashable .hash = hash
-mkIsHashableSet T THash hash eq .DecEq-THash      = eq
-
 record HashableSet : Set₁ where
-  field T : Set
-        T-isHashable : isHashableSet T
-
+  constructor mkHashableSet
+  field T : Set; ⦃ T-isHashable ⦄ : isHashableSet T
   open isHashableSet T-isHashable public
 
 record PKKScheme : Set₁ where
@@ -49,9 +44,9 @@ We rely on a public key signing scheme for verification of spending.
 \label{fig:defs:crypto}
 \end{figure*}
 \begin{code}[hide]
-        instance decEq-VKey : DecEq VKey
-                 decEq-Sig  : DecEq Sig
-                 decEq-Ser  : DecEq Ser
+        ⦃ DecEq-VKey ⦄ : DecEq VKey
+        ⦃ DecEq-Sig  ⦄ : DecEq Sig
+        ⦃ DecEq-Ser  ⦄ : DecEq Ser
   instance
     Dec-isSigned : ∀ {vk d σ} → Dec (isSigned vk d σ)
     Dec-isSigned = isSigned? _ _ _
@@ -61,12 +56,10 @@ record Crypto : Set₁ where
 
   open PKKScheme pkk public
 
-  field khs        : isHashableSet VKey
-        ScriptHash : Set
+  field ⦃ khs ⦄    : isHashableSet VKey
+        ScriptHash : Set; ⦃ DecEq-ScriptHash ⦄ : DecEq ScriptHash
 
   open isHashableSet khs renaming (THash to KeyHash) public
-
-  field instance decEq-ScriptHash : DecEq ScriptHash
 
 -- TODO: KES and VRF
 \end{code}

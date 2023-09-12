@@ -25,48 +25,58 @@ open import Interface.DecEq
 open import Relation.Binary
 open import Relation.Binary.Lattice
 open import Relation.Binary.Morphism
-open import Relation.Unary using () renaming (Decidable to Dec₁)
+open import Relation.Unary using () renaming (Decidable to Decidable¹)
 
 open Equivalence
 
-private variable A B C D : Type ℓ
-                 X X' Y Y' Z : Set A
+private variable
+  A B C D : Type ℓ
+  X X' Y Y' Z : Set A
+
+module _ {f : A → B} {X} {b} where
+  ∈-map⁻' : b ∈ map f X → (∃[ a ] b ≡ f a × a ∈ X)
+  ∈-map⁻' = from ∈-map
+
+  ∈-map⁺' : (∃[ a ] b ≡ f a × a ∈ X) → b ∈ map f X
+  ∈-map⁺' = to ∈-map
 
 ∈-map⁺'' : ∀ {f : A → B} {X} {a} → a ∈ X → f a ∈ map f X
 ∈-map⁺'' h = to ∈-map (-, refl , h)
 
-∈-filter⁻' : ∀ {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} → a ∈ filter sp-P X → (P a × a ∈ X)
-∈-filter⁻' = from ∈-filter
+module _ {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} where
+  ∈-filter⁻' : a ∈ filter sp-P X → (P a × a ∈ X)
+  ∈-filter⁻' = from ∈-filter
 
-∈-∪⁻ : ∀ {X Y : Set A} {a} → a ∈ X ∪ Y → a ∈ X ⊎ a ∈ Y
-∈-∪⁻ = from ∈-∪
+  ∈-filter⁺' : (P a × a ∈ X) → a ∈ filter sp-P X
+  ∈-filter⁺' = to ∈-filter
 
-∈-map⁻' : ∀ {f : A → B} {X} {b} → b ∈ map f X → (∃[ a ] b ≡ f a × a ∈ X)
-∈-map⁻' = from ∈-map
+module _ {X Y : Set A} {a} where
+  ∈-∪⁻ : a ∈ X ∪ Y → a ∈ X ⊎ a ∈ Y
+  ∈-∪⁻ = from ∈-∪
 
-∈-fromList⁻ : ∀ {l : List A} {a} → a ∈ fromList l → a ∈ˡ l
-∈-fromList⁻ = from ∈-fromList
+  ∈-∪⁺ : a ∈ X ⊎ a ∈ Y → a ∈ X ∪ Y
+  ∈-∪⁺ = to ∈-∪
 
-∈-filter⁺' : ∀ {X : Set A} {P : A → Type} {sp-P : specProperty P} {a} → (P a × a ∈ X) → a ∈ filter sp-P X
-∈-filter⁺' = to ∈-filter
+module _ {l : List A} {a} where
+  ∈-fromList⁻ : a ∈ fromList l → a ∈ˡ l
+  ∈-fromList⁻ = from ∈-fromList
 
-∈-∪⁺ : ∀ {X Y : Set A} {a} → a ∈ X ⊎ a ∈ Y → a ∈ X ∪ Y
-∈-∪⁺ = to ∈-∪
-
-∈-map⁺' : ∀ {f : A → B} {X} {b} → (∃[ a ] b ≡ f a × a ∈ X) → b ∈ map f X
-∈-map⁺' = to ∈-map
-
-∈-fromList⁺ : ∀ {l : List A} {a} → a ∈ˡ l → a ∈ fromList l
-∈-fromList⁺ = to ∈-fromList
+  ∈-fromList⁺ : ∀ {l : List A} {a} → a ∈ˡ l → a ∈ fromList l
+  ∈-fromList⁺ = to ∈-fromList
 
 open import Tactic.AnyOf
 open import Tactic.Defaults
 
--- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
+-- Because of missing macro hygiene, we have to copy&paste this.
+-- c.f. https://github.com/agda/agda/issues/3819
 private macro
-  ∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
-  P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
-  ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇒P = anyOfⁿᵗ
+    (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
+  P⇒∈ = anyOfⁿᵗ
+    (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇔P = anyOfⁿᵗ
+    ( quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻
+    ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
 _≡_⨿_ : Set A → Set A → Set A → Type ℓ
 X ≡ Y ⨿ Z = X ≡ᵉ Y ∪ Z × disjoint Y Z
@@ -83,7 +93,8 @@ cong-⊆⇒cong h X≡ᵉX' = h (proj₁ X≡ᵉX') , h (proj₂ X≡ᵉX')
 
 cong-⊆⇒cong₂ : {f : Set A → Set B → Set C}
              → f Preserves₂ _⊆_ ⟶ _⊆_ ⟶ _⊆_ → f Preserves₂ _≡ᵉ_ ⟶ _≡ᵉ_ ⟶ _≡ᵉ_
-cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡ᵉY') , h (proj₂ X≡ᵉX') (proj₂ Y≡ᵉY')
+cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡ᵉY')
+                           , h (proj₂ X≡ᵉX') (proj₂ Y≡ᵉY')
 
 ⊆-Transitive : Transitive (_⊆_ {A})
 ⊆-Transitive X⊆Y Y⊆Z = Y⊆Z ∘ X⊆Y
@@ -92,7 +103,8 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 ≡ᵉ-isEquivalence = record
   { refl  = id , id
   ; sym   = λ where (h , h') → (h' , h)
-  ; trans = λ eq₁ eq₂ → ⊆-Transitive (proj₁ eq₁) (proj₁ eq₂) , ⊆-Transitive (proj₂ eq₂) (proj₂ eq₁)
+  ; trans = λ eq₁ eq₂ → ⊆-Transitive (proj₁ eq₁) (proj₁ eq₂)
+                      , ⊆-Transitive (proj₂ eq₂) (proj₂ eq₁)
   }
 
 ≡ᵉ-Setoid : ∀ {A} → Setoid ℓ ℓ
@@ -110,7 +122,8 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
     where open IsPreorder
 
 ⊆-Preorder : {A} → Preorder _ _ _
-⊆-Preorder {A} = record { Carrier = Set A ; _≈_ = _≡ᵉ_ ; _∼_ = _⊆_ ; isPreorder = ⊆-isPreorder }
+⊆-Preorder {A} = record
+  { Carrier = Set A ; _≈_ = _≡ᵉ_ ; _∼_ = _⊆_ ; isPreorder = ⊆-isPreorder }
 
 ⊆-PartialOrder : IsPartialOrder (_≡ᵉ_ {A}) _⊆_
 ⊆-PartialOrder = record
@@ -120,17 +133,18 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 ∈-× : {a : A} {b : B} → (a , b) ∈ X → (a ∈ map proj₁ X × b ∈ map proj₂ X)
 ∈-× {a = a} {b} x = to ∈-map ((a , b) , refl , x) , to ∈-map ((a , b) , refl , x)
 
-map-⊆∘ : {f : A → B} {g : B → C} → map g (map f X) ⊆ map (g ∘ f) X
-map-⊆∘ a∘∈ with from ∈-map a∘∈
-... | b , a≡gb , b∈prfX with from ∈-map b∈prfX
-...                     | a , refl , a∈X = to ∈-map (a , a≡gb , a∈X)
+module _ {f : A → B} {g : B → C} where
+  map-⊆∘ : map g (map f X) ⊆ map (g ∘ f) X
+  map-⊆∘ a∘∈ with from ∈-map a∘∈
+  ... | b , a≡gb , b∈prfX with from ∈-map b∈prfX
+  ...                     | a , refl , a∈X = to ∈-map (a , a≡gb , a∈X)
 
-map-∘⊆ : {f : A → B} {g : B → C} → map (g ∘ f) X ⊆ map g (map f X)
-map-∘⊆ {f = f} a∈∘ with from ∈-map a∈∘
-... | a₁ , a₁≡gfa , a₁∈X = to ∈-map (f a₁ , a₁≡gfa , to ∈-map (a₁ , refl , a₁∈X))
+  map-∘⊆ : map (g ∘ f) X ⊆ map g (map f X)
+  map-∘⊆ a∈∘ with from ∈-map a∈∘
+  ... | a₁ , a₁≡gfa , a₁∈X = to ∈-map (f a₁ , a₁≡gfa , to ∈-map (a₁ , refl , a₁∈X))
 
-map-∘ : {f : A → B} {g : B → C} → map g (map f X) ≡ᵉ map (g ∘ f) X
-map-∘ = map-⊆∘ , map-∘⊆
+  map-∘ : map g (map f X) ≡ᵉ map (g ∘ f) X
+  map-∘ = map-⊆∘ , map-∘⊆
 
 map-⊆ : {X Y : Set A} {f : A → B} → X ⊆ Y → map f X ⊆ map f Y
 map-⊆ x⊆y a∈map with from ∈-map a∈map
@@ -173,10 +187,10 @@ card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
 filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
 filter-⊆ = proj₂ ∘′ ∈⇔P
 
-Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Dec₁ (_∈ fromList l)
+Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Decidable¹ (_∈ fromList l)
 Dec-∈-fromList _ _ = Relation.Nullary.Decidable.map ∈-fromList (_∈ˡ?_ _≟_ _ _)
 
-Dec-∈-singleton : ∀ {a : A} → ⦃ DecEq A ⦄ → Dec₁ (_∈ ❴ a ❵)
+Dec-∈-singleton : ∀ {a : A} → ⦃ DecEq A ⦄ → Decidable¹ (_∈ ❴ a ❵)
 Dec-∈-singleton _ = Relation.Nullary.Decidable.map ∈-singleton (_ ≟ _)
 
 singleton-finite : ∀ {a : A} → finite ❴ a ❵
@@ -186,11 +200,12 @@ singleton-finite {a = a} = [ a ] , λ {x} →
   where open R.EquationalReasoning
 
 filter-finite : ∀ {P : A → Type}
-              → (sp : specProperty P) → Dec₁ P → finite X → finite (filter sp X)
+              → (sp : specProperty P) → Decidable¹ P → finite X → finite (filter sp X)
 filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
   a ∈ filter sp X            ∼⟨ R.SK-sym ∈-filter ⟩
   (P a × a ∈ X)              ∼⟨ R.K-refl ×-cong hl ⟩
-  (P a × a ∈ˡ l)             ∼⟨ mk⇔ (uncurry $ flip $ ∈-filter⁺ P?) (Data.Product.swap ∘ ∈-filter⁻ P?) ⟩
+  (P a × a ∈ˡ l)             ∼⟨ mk⇔ (uncurry $ flip $ ∈-filter⁺ P?)
+                                    (Data.Product.swap ∘ ∈-filter⁻ P?) ⟩
   a ∈ˡ Data.List.filter P? l ∎
   where open R.EquationalReasoning
 
@@ -224,10 +239,12 @@ filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
 ∪-sym = ∪-⊆ ∪-⊆ʳ ∪-⊆ˡ , ∪-⊆ ∪-⊆ʳ ∪-⊆ˡ
 
 Set-JoinSemilattice : IsJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_
-Set-JoinSemilattice = record { isPartialOrder = ⊆-PartialOrder ; supremum = ∪-Supremum }
+Set-JoinSemilattice = record
+  { isPartialOrder = ⊆-PartialOrder ; supremum = ∪-Supremum }
 
 Set-BoundedJoinSemilattice : IsBoundedJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_ ∅
-Set-BoundedJoinSemilattice = record { isJoinSemilattice = Set-JoinSemilattice ; minimum = ∅-minimum }
+Set-BoundedJoinSemilattice = record
+  { isJoinSemilattice = Set-JoinSemilattice ; minimum = ∅-minimum }
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
@@ -266,11 +283,12 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
   ∩-OrderHomomorphismʳ = record { cong = ∩-cong (id , id) ; mono = ∩-cong-⊆ id }
 
   ∩-OrderHomomorphismˡ : ∀ {X} → IsOrderHomomorphism _≡ᵉ_ _≡ᵉ_ _⊆_ _⊆_ (_∩ X)
-  ∩-OrderHomomorphismˡ = record { cong = flip ∩-cong (id , id) ; mono = flip ∩-cong-⊆ id }
+  ∩-OrderHomomorphismˡ = record
+    { cong = flip ∩-cong (id , id) ; mono = flip ∩-cong-⊆ id }
 
   Set-Lattice : IsLattice _≡ᵉ_ _⊆_ _∪_ _∩_
-  Set-Lattice =
-    record { isPartialOrder = ⊆-PartialOrder ; supremum = ∪-Supremum ; infimum = ∩-Infimum }
+  Set-Lattice = record
+    { isPartialOrder = ⊆-PartialOrder ; supremum = ∪-Supremum ; infimum = ∩-Infimum }
 
   ∩-sym⊆ : X ∩ Y ⊆ Y ∩ X
   ∩-sym⊆ a∈X∩Y with from ∈-∩ a∈X∩Y

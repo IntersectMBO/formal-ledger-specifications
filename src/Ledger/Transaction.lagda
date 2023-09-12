@@ -12,10 +12,13 @@ open import Ledger.Prelude
 
 open import Ledger.Crypto
 open import Ledger.Epoch
+open import Ledger.GovStructure
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
-import Ledger.TokenAlgebra as TA
+import Ledger.Deleg
+import Ledger.TokenAlgebra
+import Ledger.Address
 
 record TransactionStructure : Set₁ where
   field
@@ -42,41 +45,44 @@ the transaction body are:
         Ix TxId AuxiliaryData : Set
 \end{code}
 \begin{code}[hide]
-        epochStructure                      : EpochStructure
-        globalConstants                     : GlobalConstants
-
-  open EpochStructure epochStructure public
-  open GlobalConstants globalConstants public
-  field crypto                              : Crypto
-        adHashingScheme                     : isHashableSet AuxiliaryData
-        ppHashingScheme                     : isHashableSet (Ledger.PParams.PParams epochStructure)
-        ppUpd                               : Ledger.PParams.PParamsDiff epochStructure
-        txidBytes                           : TxId → Crypto.Ser crypto
-        networkId                           : Network
-        instance DecEq-TxId  : DecEq TxId
-                 DecEq-Ix    : DecEq Ix
-                 DecEq-Netw  : DecEq Network
-                 DecEq-UpdT  : DecEq (Ledger.PParams.PParamsDiff.UpdateT ppUpd)
-
-  open Crypto crypto public
-  open TA ScriptHash
+        ⦃ DecEq-Ix   ⦄ : DecEq Ix
+        ⦃ DecEq-TxId ⦄ : DecEq TxId
+        adHashingScheme : isHashableSet AuxiliaryData
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
-  field  ss            : Ledger.Script.ScriptStructure KeyHash ScriptHash Slot
-         tokenAlgebra  : TokenAlgebra
+  field globalConstants : _
+  open GlobalConstants globalConstants public
 
+  field epochStructure : _
+  open EpochStructure epochStructure public
+  open Ledger.PParams epochStructure public
+
+  field govParams : _
+  open GovParams govParams public
+
+  field crypto : _
+  open Crypto crypto public -- renaming (DecEq-THash to DecEq-ScriptHash)
+
+  field txidBytes : TxId → Ser
+        networkId : Network
+
+  open Ledger.Address Network KeyHash ScriptHash public
+  open Ledger.Script  KeyHash ScriptHash Slot public
+  open Ledger.TokenAlgebra ScriptHash public
+
+  field ss           : ScriptStructure
+        tokenAlgebra : TokenAlgebra
+  open ScriptStructure ss        public
   open TokenAlgebra tokenAlgebra public
 
-  open Ledger.Script.ScriptStructure ss public
-
-  open import Ledger.PParams epochStructure
-
-  open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
-  -- TODO: figure out what to do with the hash
-  open Ledger.GovernanceActions TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto hiding (yes; no) public
-
-  open import Ledger.Address Network KeyHash ScriptHash public
-  open import Ledger.Deleg crypto TxId Network ADHash epochStructure ppUpd ppHashingScheme public
+  govStructure : GovStructure
+  govStructure = record
+    -- TODO: figure out what to do with the hash
+    { TxId = TxId; Network = Network; DocHash = ADHash
+    ; epochStructure = epochStructure; govParams = govParams; crypto = crypto
+    }
+  open Ledger.GovernanceActions govStructure hiding (yes; no) public
+  open Ledger.Deleg             govStructure public
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}

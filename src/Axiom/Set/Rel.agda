@@ -19,7 +19,7 @@ open import Data.List.Ext.Properties
 open import Data.Product.Properties
 open import Data.Maybe.Base using () renaming (map to map?)
 open import Interface.DecEq
-open import Relation.Unary using () renaming (Decidable to Dec₁)
+open import Relation.Unary using () renaming (Decidable to Decidable¹)
 open import Relation.Nullary
 open import Relation.Binary hiding (Rel)
 import Relation.Binary.PropositionalEquality as I
@@ -29,11 +29,16 @@ open Equivalence
 open import Tactic.AnyOf
 open import Tactic.Defaults
 
--- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
+-- Because of missing macro hygiene, we have to copy&paste this.
+-- c.f. https://github.com/agda/agda/issues/3819
 private macro
-  ∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
-  P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
-  ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇒P = anyOfⁿᵗ
+    (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
+  P⇒∈ = anyOfⁿᵗ
+    (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇔P = anyOfⁿᵗ
+    ( quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻
+    ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
 Rel : Type → Type → Type
 Rel A B = Set (A × B)
@@ -63,11 +68,11 @@ m ∣' P? = filter (sp-∘ P? proj₁) m
 _↾'_ : {P : B → Type} → Rel A B → specProperty P → Rel A B
 m ↾' P? = filter (sp-∘ P? proj₂) m
 
-impl⇒res⊆ : ∀ {X : Rel A B} {P P'} → (sp-P : specProperty P) → (sp-P' : specProperty P')
-            → (∀ {a} → P a → P' a) → X ∣' sp-P ⊆ X ∣' sp-P'
+impl⇒res⊆ : ∀ {X : Rel A B} {P P'} (sp-P : specProperty P) (sp-P' : specProperty P')
+          → (∀ {a} → P a → P' a) → X ∣' sp-P ⊆ X ∣' sp-P'
 impl⇒res⊆ sp-P sp-P' P⇒P' a∈X∣'P = ∈⇔P (Data.Product.map₁ P⇒P' (∈⇔P a∈X∣'P))
 
-impl⇒cores⊆ : ∀ {X : Rel A B} {P P'} → (sp-P : specProperty P) → (sp-P' : specProperty P')
+impl⇒cores⊆ : ∀ {X : Rel A B} {P P'} (sp-P : specProperty P) (sp-P' : specProperty P')
             → (∀ {b} → P b → P' b) → X ↾' sp-P ⊆ X ↾' sp-P'
 impl⇒cores⊆ sp-P sp-P' P⇒P' a∈X∣^'P = ∈⇔P (Data.Product.map₁ P⇒P' (∈⇔P a∈X∣^'P))
 
@@ -81,7 +86,7 @@ dom∈ : ∀ {a} → a ∈ dom R ⇔ (∃[ b ] (a , b) ∈ R)
 dom∈ {R = R} {a} =
   a ∈ dom R                       ∼⟨ R.SK-sym ∈-map ⟩
   (∃[ a₁ ] a ≡ proj₁ a₁ × a₁ ∈ R) ∼⟨ mk⇔ (λ { ((_ , y) , refl , ay∈R) → y , ay∈R })
-                                          (λ { (x , ax∈R) → (a , x) , refl , ax∈R }) ⟩
+                                         (λ (x , ax∈R) → (a , x) , refl , ax∈R) ⟩
   (∃[ b ] (a , b) ∈ R)            ∎
   where open R.EquationalReasoning
 
@@ -106,9 +111,12 @@ mapPartialLiftKey f (k , v) = map? (k ,_) (f k v)
 mapPartialLiftKey-map : ∀ {a : A} {b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
   → just (a , b') ∈ map (mapPartialLiftKey f) r
   → ∃[ b ] just b' ≡ f a b × (a , b) ∈ r
-mapPartialLiftKey-map {f = f} ab∈m with from ∈-map ab∈m
-... | (a' , b') , ≡ , a'b'∈r with f a' b' | inspect (f a') b'
-mapPartialLiftKey-map {f = f} ab∈m | (a' , b') , refl , a'b'∈r | just x | I.[ eq ] = b' , sym eq , a'b'∈r
+mapPartialLiftKey-map {f = f} ab∈m
+  with from ∈-map ab∈m
+... | (a' , b') , ≡ , a'b'∈r
+  with f a' b' in eq
+mapPartialLiftKey-map {f = f} ab∈m | (a' , b') , refl , a'b'∈r | just x
+  = b' , sym eq , a'b'∈r
 
 mapMaybeWithKey : (A → B → Maybe B') → Rel A B → Rel A B'
 mapMaybeWithKey f r = mapPartial (mapPartialLiftKey f) r
@@ -116,8 +124,12 @@ mapMaybeWithKey f r = mapPartial (mapPartialLiftKey f) r
 ∈-mapMaybeWithKey : ∀ {a : A} {b' : B'} {f : A → B → Maybe B'} {r : Rel A B}
   → (a , b') ∈ mapMaybeWithKey f r
   → ∃[ b ] (just b' ≡ f a b × (a , b) ∈ r)
-∈-mapMaybeWithKey {a = a} {b'} {f} ab'∈ with to (∈-map {f = just}) ((a , b') , refl , ab'∈)
-... | p = mapPartialLiftKey-map {f = f} (⊆-mapPartial p)
+∈-mapMaybeWithKey {a = a} {b'} {f} ab'∈
+  -- with p ← to (∈-map {f = just}) ((a , b') , refl , ab'∈)
+  -- = mapPartialLiftKey-map {f = f} (⊆-mapPartial p)
+  = mapPartialLiftKey-map {f = f}
+  $ ⊆-mapPartial
+  $ to (∈-map {f = just}) ((a , b') , refl , ab'∈)
 
 module Restriction (sp-∈ : spec-∈ A) where
 
@@ -163,7 +175,7 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-∅ : R ∣ ∅ ≡ᵉ ∅
   res-∅ = dom-∅ res-dom
 
-  res-ex-∪ : Dec₁ (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
+  res-ex-∪ : Decidable¹ (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
   res-ex-∪ ∈X? = ∪-⊆ res-⊆ ex-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where
     (yes p) → ∈⇔P (inj₁ (∈⇔P (p , h)))
     (no ¬p) → ∈⇔P (inj₂ (∈⇔P (¬p , h)))
@@ -171,9 +183,9 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-ex-disjoint : disjoint (dom (R ∣ X)) (dom (R ∣ X ᶜ))
   res-ex-disjoint h h' = res-comp-dom h' (res-dom h)
 
-  res-ex-disj-∪ : Dec₁ (_∈ X) → R ≡ (R ∣ X) ⨿ (R ∣ X ᶜ)
-  res-ex-disj-∪ ∈X? =
-    IsEquivalence.sym ≡ᵉ-isEquivalence (res-ex-∪ ∈X?) , disjoint-dom⇒disjoint res-ex-disjoint
+  res-ex-disj-∪ : Decidable¹ (_∈ X) → R ≡ (R ∣ X) ⨿ (R ∣ X ᶜ)
+  res-ex-disj-∪ ∈X? = IsEquivalence.sym ≡ᵉ-isEquivalence (res-ex-∪ ∈X?)
+                    , disjoint-dom⇒disjoint res-ex-disjoint
     where open import Relation.Binary using (IsEquivalence)
 
   curryʳ : Rel (A × B) C → A → Rel B C

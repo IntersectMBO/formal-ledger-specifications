@@ -2,6 +2,9 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
+open import Interface.DecEq.Ext
+open import Tactic.Derive.DecEq
+
 open import Ledger.Prelude
 
 module Ledger.Address (
@@ -17,13 +20,10 @@ We define credentials and various types of addresses here.
 \end{code}
 \begin{code}[hide]
   : Set) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
-
-open import Interface.DecEq.Ext
-open import Tactic.Derive.DecEq
-open import MyDebugOptions
 \end{code}
 \emph{Derived types}
-\AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr, VKeyBaseAddr, VKeyBoostrapAddr, ScriptBaseAddr, ScriptBootstrapAddr, VKeyAddr, ScriptAddr}
+\AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
+VKeyBaseAddr, VKeyBoostrapAddr, ScriptBaseAddr, ScriptBootstrapAddr, VKeyAddr, ScriptAddr}
 \begin{AgdaSuppressSpace}
 \begin{code}
 Credential = KeyHash ⊎ ScriptHash

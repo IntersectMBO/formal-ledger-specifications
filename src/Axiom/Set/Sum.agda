@@ -20,19 +20,25 @@ open import Data.List.Relation.Unary.Unique.Propositional
 open import Interface.DecEq
 open import Relation.Binary hiding (Rel)
 open import Relation.Nullary.Decidable using (¬?)
-open import Relation.Unary using () renaming (Decidable to Dec₁)
+open import Relation.Unary using () renaming (Decidable to Decidable¹)
 
 open import Tactic.AnyOf
 open import Tactic.Defaults
 
--- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
+-- Because of missing macro hygiene, we have to copy&paste this.
+-- c.f. https://github.com/agda/agda/issues/3819
 private macro
-  ∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
-  P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
-  ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇒P = anyOfⁿᵗ
+    (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
+  P⇒∈ = anyOfⁿᵗ
+    (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+  ∈⇔P = anyOfⁿᵗ
+    ( quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻
+    ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
-private variable A B : Type
-                 X Y : Set A
+private variable
+  A B : Type
+  X Y : Set A
 
 open CommutativeMonoid M renaming (trans to ≈-trans)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
@@ -49,7 +55,9 @@ syntax indexedSumL (λ a → x) m = Σˡ[ a ← m ] x
 indexedSumL' : (A → Carrier) → Σ (List A) Unique → Carrier
 indexedSumL' f = indexedSumL f ∘ proj₁
 
-fold-cong↭ : ∀ {l l' : List A} → l ↭ l' → foldr (λ x → f x ∙_) ε l ≈ foldr (λ x → f x ∙_) ε l'
+fold-cong↭ : ∀ {l l' : List A}
+  → l ↭ l'
+  → foldr (λ x → f x ∙_) ε l ≈ foldr (λ x → f x ∙_) ε l'
 fold-cong↭ refl = begin _ ∎
 fold-cong↭ (prep _ h) = ∙-congˡ (fold-cong↭ h)
 fold-cong↭ {f = f} (swap {xs} {ys} x y h) = begin
@@ -61,7 +69,8 @@ fold-cong↭ (trans h h₁) = ≈-trans (fold-cong↭ h) (fold-cong↭ h₁)
 indexedSum : ⦃ _ : DecEq A ⦄ → (A → Carrier) → FinSet A → Carrier
 indexedSum f = let open FactorUnique _≈_ (indexedSumL' f) fold-cong↭ in factor
 
-indexedSumL-++ : {l l' : List A} → indexedSumL f (l ++ l') ≈ indexedSumL f l ∙ indexedSumL f l'
+indexedSumL-++ : {l l' : List A} →
+  indexedSumL f (l ++ l') ≈ indexedSumL f l ∙ indexedSumL f l'
 indexedSumL-++ {f = f} {l = l} {l'} = begin
   indexedSumL f (l ++ l')                   ≡⟨ foldr-++ (λ x → f x ∙_) ε l l' ⟩
   foldr (λ x → f x ∙_) (indexedSumL f l') l ≈⟨ helper (indexedSumL f l') l f ⟩
@@ -87,14 +96,17 @@ module _ ⦃ _ : DecEq A ⦄ {f : A → Carrier} where
   indexedSum-∪ : ⦃ Xᶠ : finite X ⦄ ⦃ Yᶠ : finite Y ⦄ → disjoint X Y
     → indexedSum f ((X ∪ Y) ᶠ) ≈ indexedSum f (X ᶠ) ∙ indexedSum f (Y ᶠ)
   indexedSum-∪ disj = factor-∪' {λ x y z → z ≈ x ∙ y} disj
-      λ {l} disj' → ≈-trans (fold-cong↭ (dedup-++-↭ disj')) (indexedSumL-++ {l = deduplicate _≟_ l})
+      λ {l} disj' → ≈-trans (fold-cong↭ (dedup-++-↭ disj'))
+                            (indexedSumL-++ {l = deduplicate _≟_ l})
 
   indexedSum-singleton : ∀ {x} → indexedSum f (❴ x ❵ , singleton-finite) ≈ f x
   indexedSum-singleton = identityʳ _
 
-  indexedSum-singleton' : ∀ {x} → (pf : finite ❴ x ❵) → indexedSum f (❴ x ❵ , pf) ≈ f x
+  indexedSum-singleton' : ∀ {x} → (pf : finite ❴ x ❵) →
+    indexedSum f (❴ x ❵ , pf) ≈ f x
   indexedSum-singleton' {x = x} pf =
-    ≈-trans (indexedSum-cong {x = -, pf} {y = -, singleton-finite} ≡ᵉ.refl) indexedSum-singleton
+    ≈-trans (indexedSum-cong {x = -, pf} {y = -, singleton-finite} ≡ᵉ.refl)
+            indexedSum-singleton
     where module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
 
 module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
@@ -105,22 +117,27 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   indexedSumᵐᵛ : (B → Carrier) → FinMap A B → Carrier
   indexedSumᵐᵛ f = indexedSumᵐ (f ∘ proj₂)
 
-  indexedSumᵐ-cong : {f : A × B → Carrier} → indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
+  indexedSumᵐ-cong : {f : A × B → Carrier} →
+    indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵐ-cong {x = x , _ , h} {y , _ , h'} = indexedSum-cong {x = x , h} {y , h'}
 
-  module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Dec₁ (_∈ X)) where
+  module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Decidable¹ (_∈ X)) where
     open Unionᵐ sp-∈
 
     ∪ᵐˡ-finite : {R R' : Rel A B} → finite R → finite R' → finite (R ∪ᵐˡ' R')
-    ∪ᵐˡ-finite Rᶠ R'ᶠ = ∪-preserves-finite Rᶠ (filter-finite (sp-∘ (sp-¬ sp-∈) _) (¬? ∘ ∈-A-dec ∘ _) R'ᶠ)
+    ∪ᵐˡ-finite Rᶠ R'ᶠ = ∪-preserves-finite Rᶠ
+                      $ filter-finite (sp-∘ (sp-¬ sp-∈) _) (¬? ∘ ∈-A-dec ∘ _) R'ᶠ
 
     _∪ᵐˡᶠ_ : FinMap A B → FinMap A B → FinMap A B
-    (_ , hX , Xᶠ) ∪ᵐˡᶠ (_ , hY , Yᶠ) = toFinMap ((_ , hX) ∪ᵐˡ (_ , hY)) (∪ᵐˡ-finite Xᶠ Yᶠ)
+    (_ , hX , Xᶠ) ∪ᵐˡᶠ (_ , hY , Yᶠ) =
+      toFinMap ((_ , hX) ∪ᵐˡ (_ , hY)) (∪ᵐˡ-finite Xᶠ Yᶠ)
 
-    indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f} → disjoint (dom (toRel X)) (dom (toRel Y))
-                  → indexedSumᵐ f (X ∪ᵐˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
+    indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f}
+      → disjoint (dom (toRel X)) (dom (toRel Y))
+      → indexedSumᵐ f (X ∪ᵐˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
     indexedSumᵐ-∪ {X = X'@(X , _ , Xᶠ)} {Y'@(Y , _ , Yᶠ)} {f} disj = begin
-      indexedSumᵐ f (X' ∪ᵐˡᶠ Y')    ≈⟨ indexedSum-cong {x = -, ∪ᵐˡ-finite Xᶠ Yᶠ} {(X ∪ Y) ᶠ} (disjoint-∪ᵐˡ-∪ disj) ⟩
+      indexedSumᵐ f (X' ∪ᵐˡᶠ Y')    ≈⟨ indexedSum-cong {x = -, ∪ᵐˡ-finite Xᶠ Yᶠ} {(X ∪ Y) ᶠ}
+                                         $ disjoint-∪ᵐˡ-∪ disj ⟩
       indexedSum f ((X ∪ Y) ᶠ)      ≈⟨ indexedSum-∪ (disjoint-dom⇒disjoint disj) ⟩
       indexedSumᵐ f X' ∙ indexedSumᵐ f Y' ∎
       where instance _ = Xᶠ

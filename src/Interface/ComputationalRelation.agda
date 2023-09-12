@@ -35,13 +35,14 @@ module _ (STS : C → S → Sig → S → Set) where
   record Computational' : Set where
     constructor MkComputational'
     field
-      computeProof   : (c : C) (s : S) (sig : Sig) → Maybe (∃[ s' ] STS c s sig s')
+      computeProof : (c : C) (s : S) (sig : Sig) → Maybe (∃[ s' ] STS c s sig s')
 
     compute : C → S → Sig → Maybe S
     compute c s sig = Maybe.map proj₁ (computeProof c s sig)
 
     field
-      completeness : (c : C) (s : S) (sig : Sig) (s' : S) → STS c s sig s' → compute c s sig ≡ just s'
+      completeness : (c : C) (s : S) (sig : Sig) (s' : S) →
+        STS c s sig s' → compute c s sig ≡ just s'
 
 module _ {STS : C → S → Sig → S → Set} (comp' : Computational' STS) where
 
@@ -50,13 +51,16 @@ module _ {STS : C → S → Sig → S → Set} (comp' : Computational' STS) wher
 
   fromComputational' : Computational STS
   fromComputational' .Computational.compute = compute
-  fromComputational' .Computational.≡-just⇔STS {c} {s} {sig} {s'} with computeProof c s sig in eq
-  ... | just (s'' , h) = mk⇔ (λ where refl → h) λ h' → begin just s''        ≡˘⟨ completeness _ _ _ _ h ⟩
-                                                             compute c s sig ≡⟨ completeness _ _ _ _ h' ⟩
-                                                             just s' ∎
-  ... | nothing        = mk⇔ (λ ()) λ h → begin nothing         ≡˘⟨ map-nothing eq ⟩
-                                                compute c s sig ≡⟨ completeness _ _ _ _ h ⟩
-                                                just s' ∎
+  fromComputational' .Computational.≡-just⇔STS {c} {s} {sig} {s'}
+    with computeProof c s sig in eq
+  ... | just (s'' , h) = mk⇔ (λ where refl → h) λ h' →
+    begin just s''        ≡˘⟨ completeness _ _ _ _ h ⟩
+          compute c s sig ≡⟨ completeness _ _ _ _ h' ⟩
+          just s'         ∎
+  ... | nothing = mk⇔ (λ ()) λ h →
+    begin nothing         ≡˘⟨ map-nothing eq ⟩
+          compute c s sig ≡⟨ completeness _ _ _ _ h ⟩
+          just s'         ∎
 
 module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
 
@@ -65,12 +69,13 @@ module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
   ExtendedRelSTS = ExtendedRel STS
 
   ExtendedRel-compute : ExtendedRelSTS c s sig (compute c s sig)
-  ExtendedRel-compute {c} {s} {sig} with compute c s sig | inspect (compute c s) sig
-  ... | just s' | [ eq ] = Equivalence.to ≡-just⇔STS eq
-  ... | nothing | [ eq ] = λ s' h → case trans (sym $ Equivalence.from ≡-just⇔STS h) eq of λ ()
+  ExtendedRel-compute {c} {s} {sig} with compute c s sig in eq
+  ... | just s' = Equivalence.to ≡-just⇔STS eq
+  ... | nothing = λ s' h → case trans (sym $ Equivalence.from ≡-just⇔STS h) eq of λ ()
 
   ExtendedRel-rightUnique : ExtendedRelSTS c s sig s' → ExtendedRelSTS c s sig s'' → s' ≡ s''
-  ExtendedRel-rightUnique {s' = just x}  {just x'} h h' = trans (sym $ Equivalence.from ≡-just⇔STS h) (Equivalence.from ≡-just⇔STS h')
+  ExtendedRel-rightUnique {s' = just x}  {just x'} h h' =
+    trans (sym $ Equivalence.from ≡-just⇔STS h) (Equivalence.from ≡-just⇔STS h')
   ExtendedRel-rightUnique {s' = just x}  {nothing} h h' = ⊥-elim $ h' x h
   ExtendedRel-rightUnique {s' = nothing} {just x'} h h' = ⊥-elim $ h x' h'
   ExtendedRel-rightUnique {s' = nothing} {nothing} h h' = refl
@@ -83,7 +88,8 @@ module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
   nothing⇒∀¬STS comp≡nothing s' h rewrite Equivalence.from ≡-just⇔STS h = case comp≡nothing of λ ()
 
   Computational⇒Dec : ⦃ _ : DecEq S ⦄ → Dec (STS c s sig s')
-  Computational⇒Dec {c} {s} {sig} {s'} with compute c s sig | ExtendedRel-compute {c} {s} {sig}
+  Computational⇒Dec {c} {s} {sig} {s'}
+    with compute c s sig | ExtendedRel-compute {c} {s} {sig}
   ... | nothing | ExSTS = no (ExSTS s')
   ... | just x  | ExSTS with x ≟ s'
   ... | no ¬p    = no  λ h → ¬p $ sym $ computational⇒rightUnique h ExSTS
@@ -95,10 +101,12 @@ module _ {STS : C → S → Sig → S → Set} (comp comp' : Computational STS) 
   open Computational comp' renaming (compute to compute₂)
 
   compute-ext≡ : compute₁ c s sig ≡ compute₂ c s sig
-  compute-ext≡ = ExtendedRel-rightUnique comp (ExtendedRel-compute comp) (ExtendedRel-compute comp')
+  compute-ext≡ = ExtendedRel-rightUnique comp
+    (ExtendedRel-compute comp) (ExtendedRel-compute comp')
 
-Computational⇒Dec' : ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Set} ⦃ comp : Computational STS ⦄
-                      → Dec (STS c s sig s')
+Computational⇒Dec' :
+  ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Set} ⦃ comp : Computational STS ⦄ →
+  Dec (STS c s sig s')
 Computational⇒Dec' ⦃ comp = comp ⦄ = Computational⇒Dec comp
 
 module _ {BSTS : C → S → ⊤ → S → Set} {STS : C → S → Sig → S → Set}
@@ -115,12 +123,14 @@ module _ {BSTS : C → S → ⊤ → S → Set} {STS : C → S → Sig → S →
       s₂ , hs ← computeProof c s₁ sigs
       just (s₂ , BS-ind h hs)
       where open import Data.Maybe
-    Computational'-SS⇒BSᵇ .completeness c s [] s' (BS-base p) with computeProof c s tt | completeness _ _ _ _ p
+    Computational'-SS⇒BSᵇ .completeness c s [] s' (BS-base p)
+      with computeProof c s tt | completeness _ _ _ _ p
     ... | just x | p' = p'
     Computational'-SS⇒BSᵇ .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
       with computeProof c s sig | completeness _ _ _ _ h
-    ... | just (s₁ , _) | refl with computeProof ⦃ Computational'-SS⇒BSᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
-    ...   | just (s₂ , _) | p = p
+    ... | just (s₁ , _) | refl
+      with computeProof ⦃ Computational'-SS⇒BSᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
+    ... | just (s₂ , _) | p = p
 
     Computational-SS⇒BSᵇ = fromComputational' Computational'-SS⇒BSᵇ
 

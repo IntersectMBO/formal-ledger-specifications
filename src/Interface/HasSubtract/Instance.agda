@@ -4,12 +4,12 @@ module Interface.HasSubtract.Instance where
 
 open import Interface.HasSubtract
 
-open import Data.Integer  using (ℤ) renaming (_-_ to _-ℤ_)
-open import Data.Nat      using (ℕ) renaming (_∸_ to _-ℕ_)
+open import Data.Integer as ℤ using (ℤ)
+open import Data.Nat     as ℕ using (ℕ)
 
 instance
   subtractInt : HasSubtract ℤ
-  subtractInt = record { _-_ = _-ℤ_ }
+  subtractInt ._-_ = ℤ._-_
 
   subtractNat : HasSubtract ℕ
-  subtractNat = record { _-_ = _-ℕ_ }
+  subtractNat ._-_ = ℕ._∸_

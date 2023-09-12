@@ -14,31 +14,17 @@ We introduce three distinct bodies that have specific functions in the new gover
 open import Ledger.Crypto
 
 open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
-open import Ledger.Epoch
-
-import Ledger.PParams as PP
+open import Ledger.GovStructure
 
 open import Data.Nat using (_≤_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
-module Ledger.GovernanceActions (TxId Network DocHash : Set)
-                                (es : EpochStructure)
-                                (ppd : PP.PParamsDiff es)
-                                (ppHashable : isHashableSet (PP.PParams es))
-                                (crypto : Crypto) ⦃ _ : DecEq Network ⦄ where
-
-open EpochStructure es
-open Crypto crypto
-
-open import Ledger.Address Network KeyHash ScriptHash
-
-open PP es
-open PParamsDiff ppd
-open isHashableSet ppHashable renaming (THash to PPHash)
+open import Relation.Nullary.Decidable using (dec-yes)
 
 open import Tactic.Derive.DecEq
-open import MyDebugOptions
+
+module Ledger.GovernanceActions (⋯ : _) (open GovStructure ⋯) where
 
 2ℚ = 1ℚ Data.Rational.+ 1ℚ
 \end{code}
@@ -67,7 +53,7 @@ data GovAction : Set where
   NewCommittee     : Credential ⇀ Epoch → ℙ Credential → ℚ  → GovAction
   NewConstitution  : DocHash → Maybe ScriptHash             → GovAction
   TriggerHF        : ProtVer                                → GovAction
-  ChangePParams    : UpdateT                                → GovAction
+  ChangePParams    : PParamsUpdate                          → GovAction
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                       → GovAction
   Info             :                                          GovAction
 \end{code}
@@ -135,7 +121,7 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
     pparamThreshold TechnicalGroup  = P5c
     pparamThreshold GovernanceGroup = P5d
 
-    P5 : UpdateT → ℚ
+    P5 : PParamsUpdate → ℚ
     P5 ppu = maximum $ map pparamThreshold (updateGroups ppu)
 
     noVote : Maybe ℚ
@@ -145,15 +131,21 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
     vote = just
 
   threshold : GovAction → GovRole → Maybe ℚ
-  threshold NoConfidence           = λ { CC → noVote           ; DRep → vote P1     ; SPO → vote Q1 }
-  threshold (NewCommittee _ _ _)   = case ccThreshold' of λ where
-                        (just _)   → λ { CC → noVote           ; DRep → vote P2a    ; SPO → vote Q2a }
-                        nothing    → λ { CC → noVote           ; DRep → vote P2b    ; SPO → vote Q2b }
-  threshold (NewConstitution _ _)  = λ { CC → vote ccThreshold ; DRep → vote P3     ; SPO → noVote }
-  threshold (TriggerHF _)          = λ { CC → vote ccThreshold ; DRep → vote P4     ; SPO → vote Q4 }
-  threshold (ChangePParams x)      = λ { CC → vote ccThreshold ; DRep → vote (P5 x) ; SPO → noVote }
-  threshold (TreasuryWdrl _)       = λ { CC → vote ccThreshold ; DRep → vote P6     ; SPO → noVote }
-  threshold Info                   = λ { CC → vote 2ℚ          ; DRep → vote 2ℚ     ; SPO → vote 2ℚ }
+  threshold = λ where
+    NoConfidence
+               → λ { CC → noVote           ; DRep → vote P1     ; SPO → vote Q1 }
+    (NewCommittee _ _ _) → case ccThreshold' of λ where
+      (just _) → λ { CC → noVote           ; DRep → vote P2a    ; SPO → vote Q2a }
+      nothing  → λ { CC → noVote           ; DRep → vote P2b    ; SPO → vote Q2b }
+    (NewConstitution _ _)
+               → λ { CC → vote ccThreshold ; DRep → vote P3     ; SPO → noVote }
+    (TriggerHF _)
+               → λ { CC → vote ccThreshold ; DRep → vote P4     ; SPO → vote Q4 }
+    (ChangePParams x)
+               → λ { CC → vote ccThreshold ; DRep → vote (P5 x) ; SPO → noVote }
+    (TreasuryWdrl _)
+               → λ { CC → vote ccThreshold ; DRep → vote P6     ; SPO → noVote }
+    Info       → λ { CC → vote 2ℚ          ; DRep → vote 2ℚ     ; SPO → vote 2ℚ }
 
 -- TODO: this doesn't actually depend on PParams so we could remove that argument,
 --       but we don't have a default ATM
@@ -304,7 +296,7 @@ open EnactState
 
 private variable
   s : EnactState
-  up : UpdateT
+  up : PParamsUpdate
   new : Credential ⇀ Epoch
   rem : ℙ Credential
   q : ℚ
@@ -317,10 +309,7 @@ private variable
   gid : GovActionID
   e : Epoch
 
-instance
-  _ = +-0-monoid
-
-data
+instance _ = +-0-monoid
 \end{code}
 
 The relation \ENACTsyntax is the transition relation for enacting a governance action.
@@ -329,30 +318,38 @@ It represents how the \agdaboundEnactState changes when a specific governance ac
 \begin{figure*}[h]
 {\small
 \begin{code}
-  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
+data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
 
-  Enact-NoConf    : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈  record s { cc = nothing , gid }
+  Enact-NoConf :
+    ⟦ gid , t , e ⟧ᵉ ⊢   s ⇀⦇ NoConfidence ,ENACT⦈
+                 record  s { cc = nothing , gid }
 
-  Enact-NewComm   : let old = maybe proj₁ ∅ᵐ (proj₁ (s .cc)) in
-    ∀[ term ∈ range (new ˢ) ] term ≤ᵉ (proj₁ (s .pparams) .PParams.ccMaxTermLength +ᵉ e)
+  Enact-NewComm : let old = maybe proj₁ ∅ᵐ (s .EnactState.cc .proj₁) in
+    ∀[ term ∈ range (new ˢ) ] term ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)
     ────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈
-      record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
+    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewCommittee new rem q ,ENACT⦈
+                record  s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
 
-  Enact-NewConst  : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈  record s { constitution = (dh , sh) , gid }
+  Enact-NewConst :
+    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewConstitution dh sh ,ENACT⦈
+                record  s { constitution = (dh , sh) , gid }
 
-  Enact-HF        : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈  record s { pv = v , gid }
+  Enact-HF :
+    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ TriggerHF v ,ENACT⦈
+                 record s { pv = v , gid }
 
-  Enact-PParams   : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
-    record s { pparams = applyUpdate (proj₁ (s .pparams)) up , gid }
+  Enact-PParams :
+    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ ChangePParams up ,ENACT⦈
+                record  s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
 
-  Enact-Wdrl      : let newWdrls = s .withdrawals ∪⁺ wdrl in
+  Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
     Σᵐᵛ[ x ← newWdrls ᶠᵐ ] x ≤ t
     ────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
-      record s { withdrawals  = newWdrls }
+    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
+                record  s { withdrawals  = newWdrls }
 
-  Enact-Info      : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
+  Enact-Info :
+    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 } %% end small
 \caption{ENACT transition system}
@@ -360,39 +357,42 @@ It represents how the \agdaboundEnactState changes when a specific governance ac
 \end{figure*}
 
 \begin{code}[hide]
-private module _ where
-  open import Interface.Decidable.Instance using (¿_¿; Dec-≤) public
 open Computational' ⦃...⦄
-
 
 instance
   Computational'-ENACT : Computational' _⊢_⇀⦇_,ENACT⦈_
-  Computational'-ENACT .computeProof Γ s NoConfidence = just (_ , Enact-NoConf)
-  Computational'-ENACT .computeProof ⟦ _ , _ , e ⟧ᵉ s (NewCommittee new rem q) = case
-    ¿ ∀[ term ∈ range (new ˢ) ] term ≤ᵉ (proj₁ (s .pparams) .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
-      (yesᵈ p) → just (_ , Enact-NewComm p)
+  Computational'-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where
+    NoConfidence             → just (_ , Enact-NoConf)
+    (NewCommittee new rem q) →
+      case ¿ ∀[ term ∈ range (new ˢ) ]
+               term ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
+      (yesᵈ p) → just (-, Enact-NewComm p)
       (noᵈ ¬p) → nothing
-  Computational'-ENACT .computeProof Γ s (NewConstitution dh sh) = just (_ , Enact-NewConst)
-  Computational'-ENACT .computeProof Γ s (TriggerHF v) = just (_ , Enact-HF)
-  Computational'-ENACT .computeProof Γ s (ChangePParams up) = just (_ , Enact-PParams)
-  Computational'-ENACT .computeProof ⟦ _ , t , _ ⟧ᵉ s (TreasuryWdrl wdrl) =
-    case ¿ Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t ¿ of λ where
-      (yesᵈ p) → just (_ , Enact-Wdrl p)
-      (noᵈ _) → nothing
-  Computational'-ENACT .computeProof Γ s Info = just (s , Enact-Info)
-  Computational'-ENACT .completeness Γ s NoConfidence s' Enact-NoConf = refl
-  Computational'-ENACT .completeness ⟦ _ , _ , e ⟧ᵉ s (NewCommittee new rem q) s' (Enact-NewComm h)
-    with ¿ ∀[ term ∈ range (new ˢ) ] term ≤ᵉ (proj₁ (s .pparams) .PParams.ccMaxTermLength +ᵉ e) ¿ | "bug"
-  ... | yesᵈ _ | _ = refl
-  ... | noᵈ ¬p | _ = ⊥-elim (¬p h)
-  Computational'-ENACT .completeness Γ s (NewConstitution dh sh) s' Enact-NewConst = refl
-  Computational'-ENACT .completeness Γ s (TriggerHF v) s' Enact-HF = refl
-  Computational'-ENACT .completeness Γ s (ChangePParams up) s' Enact-PParams = refl
-  Computational'-ENACT .completeness ⟦ _ , t , _ ⟧ᵉ s (TreasuryWdrl wdrl) s' (Enact-Wdrl p)
-    with ¿ (Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿ | "bug"
+    (NewConstitution dh sh)  → just (-, Enact-NewConst)
+    (TriggerHF v)            → just (-, Enact-HF)
+    (ChangePParams up)       → just (-, Enact-PParams)
+    Info                     → just (-, Enact-Info)
+    (TreasuryWdrl wdrl) →
+      case ¿ Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t ¿ of λ where
+        (yesᵈ p)             → just (-, Enact-Wdrl p)
+        (noᵈ _)              → nothing
+  Computational'-ENACT .completeness ⟦ _ , t , e ⟧ᵉ s action _ p
+    with action | p
+  ... | .NoConfidence           | Enact-NoConf   = refl
+  ... | .NewCommittee new rem q | Enact-NewComm p
+    rewrite dec-yes
+      (¿ ∀[ term ∈ range (new ˢ) ] term
+           ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿)
+      p .proj₂
+      = refl
+  ... | .NewConstitution dh sh  | Enact-NewConst = refl
+  ... | .TriggerHF v            | Enact-HF       = refl
+  ... | .ChangePParams up       | Enact-PParams  = refl
+  ... | .Info                   | Enact-Info     = refl
+  ... | .TreasuryWdrl wdrl      | Enact-Wdrl p
+      with ¿ (Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿ | "bug"
   ... | yesᵈ p | _ = refl
   ... | noᵈ ¬p | _ = ⊥-elim (¬p p)
-  Computational'-ENACT .completeness Γ s Info s' Enact-Info = refl
 
   Computational-ENACT = fromComputational' Computational'-ENACT
 \end{code}
