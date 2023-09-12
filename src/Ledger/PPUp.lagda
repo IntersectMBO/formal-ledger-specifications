@@ -79,6 +79,10 @@ pvCanFollow? (m , n) pv with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
 ... | yes refl | no ¬p = yes canFollowMajor
 ... | yes refl | yes p = ⊥-elim (case proj₁ (×-≡,≡←≡ p) of m+1+n≢m m)
 
+instance
+  Dec-pvCanFollow : ∀ {pv pv'} → Dec (pvCanFollow pv pv')
+  Dec-pvCanFollow = pvCanFollow? _ _
+
 isViableUpdate? : ∀ pparams → Dec₁ (isViableUpdate pparams)
 isViableUpdate? pp pup with applyUpdate pp pup
 ... | pp' = pvCanFollow? (PParams.pv pp) (PParams.pv pp') ×-dec viablePParams? pp'
