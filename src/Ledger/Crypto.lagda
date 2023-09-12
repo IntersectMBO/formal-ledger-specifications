@@ -52,6 +52,9 @@ We rely on a public key signing scheme for verification of spending.
         instance decEq-VKey : DecEq VKey
                  decEq-Sig  : DecEq Sig
                  decEq-Ser  : DecEq Ser
+  instance
+    Dec-isSigned : ∀ {vk d σ} → Dec (isSigned vk d σ)
+    Dec-isSigned = isSigned? _ _ _
 
 record Crypto : Set₁ where
   field pkk : PKKScheme

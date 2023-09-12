@@ -307,14 +307,22 @@ record Theoryᵈ : Type₁ where
   a ∈ᵇ X = ⌊ a ∈? X ⌋
 
   instance
-    Dec-∈ : ∀ {A} → ⦃ DecEq A ⦄ → {x : A} {X : Set A} → Dec (x ∈ X)
+    Dec-∈ : ⦃ DecEq A ⦄ → {x : A} {X : Set A} → Dec (x ∈ X)
     Dec-∈ {x = x} {X} = x ∈? X
 
   allᵇ : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Bool
   allᵇ P? X = ⌊ all? P? {X} ⌋
 
+  instance
+    Dec-All : ⦃ DecEq A ⦄ → {P : A → Type} ⦃ P? : ∀ {x} → Dec (P x) ⦄ {X : Set A} → Dec (All P X)
+    Dec-All = all? λ x → it
+
   anyᵇ : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Dec₁ P) (X : Set A) → Bool
   anyᵇ P? X = ⌊ any? P? X ⌋
+
+  instance
+    Dec-Any : ⦃ DecEq A ⦄ → {P : A → Type} ⦃ P? : ∀ {x} → Dec (P x) ⦄ {X : Set A} → Dec (Any P X)
+    Dec-Any = any? (λ x → it) _
 
   incl-set' : ⦃ DecEq A ⦄ → (X : Set A) → A → Maybe (∃[ a ] a ∈ X)
   incl-set' X x with x ∈? X
