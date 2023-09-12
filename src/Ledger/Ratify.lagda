@@ -213,10 +213,11 @@ module _
 \end{code}
 \begin{code}
   -- Module Parameters:
-  (Γ      : RatifyEnv)                      -- ratification environment
-  (cc     : CCData)                         -- constitutional committee data
-  (votes  : (GovRole × Credential) ⇀ Vote)  -- the map relating delegates to their votes
-  (ga     : GovAction)                      -- the governance action that was voted on
+  (Γ       : RatifyEnv)                      -- ratification environment
+  (cc      : CCData)                         -- constitutional committee data
+  (votes   : (GovRole × Credential) ⇀ Vote)  -- the map relating delegates to their votes
+  (ga      : GovAction)                      -- the governance action that was voted on
+  (pparams : PParams)                        -- current protocol parameters
 \end{code}
 \begin{code}[hide]
   where
@@ -232,10 +233,20 @@ module _
     (true , just (just c')) → maybe′ id Vote.no $ lookupᵐ? votes (CC , c') ⦃ _ ∈? _ ⦄
     _                       → Vote.abstain -- expired, no hot key or resigned
 
+  activeCC : ℙ Credential
+  activeCC = case cc of λ where
+    (just (cc , _)) →
+      let activeCCHotKeys = ccHotKeys ∣ dom (cc ˢ)
+       in dom (filterᵐ (to-sp (λ {(_ , x) → is-just x ≟ true})) activeCCHotKeys ˢ)
+    nothing → ∅
+
   actualCCVotes : Credential ⇀ Vote
-  actualCCVotes = case cc of λ where
-    (just (cc , _)) → mapWithKey actualCCVote cc
-    nothing         → ∅ᵐ
+  actualCCVotes = let open PParams pparams
+    in case cc of λ where
+      (just (cc , _)) → case lengthˢ activeCC ≥? minCCSize of λ where
+        (yes _) → mapWithKey actualCCVote cc
+        (no _) → constMap (dom (cc ˢ)) Vote.no
+      nothing → ∅ᵐ
 
   actualPDRepVotes : VDeleg ⇀ Vote
   actualPDRepVotes = ❴ abstainRep      , Vote.abstain ❵ᵐ
@@ -363,7 +374,7 @@ accepted' Γ es@record { cc = cc , _    ; pparams = pparams , _ }
     open RatifyEnv Γ
     open PParams pparams
 
-    votes = actualVotes Γ cc votes' action
+    votes = actualVotes Γ cc votes' action pparams
     cc' = dom (votes ˢ)
     redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
 
