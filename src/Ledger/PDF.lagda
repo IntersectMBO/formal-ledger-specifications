@@ -86,6 +86,7 @@ open import Ledger.PPUp.Properties
 
 open import Ledger.Ledger.Properties
 open import Ledger.Ratify.Properties
+open import Ledger.Chain.Properties
 
 open import Ledger.TokenAlgebra.ValueSet
 \end{code}
