@@ -5,12 +5,18 @@
 open import Interface.DecEq
 open import Interface.Hashable
 
-open import Prelude hiding (_<ᵇ_; _∧_) renaming (_×_ to _∧_)
-open import Ledger.Prelude -- using (indexedSumL)
-open import Data.Integer hiding (_/_; _≟_)
+open import Ledger.Prelude as Prelude
+  hiding (_<ᵇ_; _∧_)
+  renaming (_×_ to _∧_)
+open import Data.Integer using (+_; 0ℤ; 1ℤ; -1ℤ)
 
-module MidnightExample.Ledger (Hash : Set) ⦃ _ : DecEq Hash ⦄
-  ⦃ _ : Hashable ℤ Hash ⦄ ⦃ _ : Hashable₁ List Hash ⦄ ⦃ _ : Hashable₂ _∧_ Hash ⦄ where
+module MidnightExample.Ledger
+  (Hash : Set)
+  ⦃ _ : DecEq Hash ⦄
+  ⦃ _ : Hashable ℤ Hash ⦄
+  ⦃ _ : Hashable₁ List Hash ⦄
+  ⦃ _ : Hashable₂ _∧_ Hash ⦄
+  where
 
 open import Data.Integer.Properties using (+-0-commutativeMonoid; +-0-abelianGroup)
 open import Relation.Nullary
@@ -173,13 +179,13 @@ relation. As an example, we also provide a function that does the same
 computation explicitly.
 
 \begin{code}[hide]
-unquoteDecl Computational-LEDGER = deriveComputational (quote _⊢_⇀⦇_,LEDGER⦈_) Computational-LEDGER
-open Computational Computational-LEDGER
+unquoteDecl Computational-LEDGER =
+  deriveComputational (quote _⊢_⇀⦇_,LEDGER⦈_) Computational-LEDGER
 \end{code}
 \begin{figure*}[h]
 \begin{code}
 LEDGER-step : ⊤ → LedgerState → Block → Maybe LedgerState
-LEDGER-step = compute
+LEDGER-step = compute Computational-LEDGER
 
 applyBlockTo : Block → LedgerState → Maybe LedgerState
 applyBlockTo b st = let acc = Σˡ[ x ← Block.body b ] txDelta x in
@@ -207,8 +213,9 @@ obtained fact that the sum of changes induced by transactions is
 non-zero, the proofs are identical.
 
 \begin{code}[hide]
-private variable s s' : LedgerState
-                 b : Block
+private variable
+  s s' : LedgerState
+  b : Block
 
 open import Algebra.Properties.AbelianGroup +-0-abelianGroup
 \end{code}
@@ -221,8 +228,9 @@ LEDGER-property₁ : _ ⊢ s ⇀⦇ b ,LEDGER⦈ s' → count s ≢ count s'
 LEDGER-property₁ (LEDGER-inductive acc≢0 _) = lemma acc≢0
 
 LEDGER-property₂ : LEDGER-step _ s b ≡ just s' → count s ≢ count s'
-LEDGER-property₂ {s} {b} eq with Equivalence.to (≡-just⇔STS {s = s} {sig = b}) eq
-... | (LEDGER-inductive acc≢0 _) = lemma acc≢0
+LEDGER-property₂ {s} {b} eq
+  = LEDGER-property₁
+  $ Equivalence.to (≡-just⇔STS Computational-LEDGER {s = s} {sig = b}) eq
 
 LEDGER-property₃ : applyBlockTo b s ≡ just s' → count s ≢ count s'
 LEDGER-property₃ {b = b} h with
