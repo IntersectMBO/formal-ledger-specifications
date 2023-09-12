@@ -17,7 +17,7 @@ open import Algebra                        using (CommutativeMonoid)
 open import Data.Integer.Ext               using (posPart; negPart)
 open import Data.Nat                       using (_≤?_; _≤_)
 open import Data.Nat.Properties            using (+-0-monoid; +-0-commutativeMonoid)
-open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁; ¿_¿)
+open import Interface.Decidable.Instance   using (Dec₁; ¿_¿)
 
 open TransactionStructure txs
 open TxBody
@@ -30,7 +30,6 @@ open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
 instance
-  _ = Decidable²⇒Dec _≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
@@ -159,12 +158,6 @@ record UTxOState : Set where
 
 instance
   _ = ≟-∅
-
-  ∈-inst : ∀ {A : Set} ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec₁ (_∈ s)
-  ∈-inst {s = s} .Dec₁.P? = _∈? s
-
-  all?' : ∀ {A : Set} {P : A → Set} ⦃ P? : Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec (All P s)
-  all?' ⦃ P? = record { P? = P? } ⦄ {s} = all? P?
 
   netId? : ∀ {A : Set} {networkId : Network} {f : A → Network} → Dec₁ (λ a → f a ≡ networkId)
   netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId

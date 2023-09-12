@@ -21,6 +21,9 @@ record P1ScriptStructure : Set₁ where
         validP1Script? : ∀ khs I s → Dec (validP1Script khs I s)
         instance Hashable-P1Script : Hashable P1Script ScriptHash
                  DecEq-P1Script    : DecEq P1Script
+  instance
+    Dec-ValidP1Script : ∀ {khs I s} → Dec (validP1Script khs I s)
+    Dec-ValidP1Script = validP1Script? _ _ _
 
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet

@@ -4,7 +4,8 @@ module Interface.Decidable.Instance where
 open import Interface.DecEq
 open import Level
 
-open import Data.Bool
+open import Data.Nat using (ℕ; _≤_; _≤?_)
+open import Data.Bool using (Bool; if_then_else_)
 open import Data.Empty
 open import Data.Product
 open import Data.Unit
@@ -51,3 +52,6 @@ instance
   Dec-⊎ ⦃ yes p ⦄ ⦃ _     ⦄ = yes (inj₁ p)
   Dec-⊎ ⦃ no _  ⦄ ⦃ yes q ⦄ = yes (inj₂ q)
   Dec-⊎ ⦃ no ¬p ⦄ ⦃ no ¬q ⦄ = no λ { (inj₁ p) → ¬p p; (inj₂ q) → ¬q q }
+
+  Dec-≤ : ∀ {n m} → Dec (n ≤ m)
+  Dec-≤ = Decidable²⇒Dec _≤?_
