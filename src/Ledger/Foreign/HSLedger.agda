@@ -185,7 +185,6 @@ instance
       ; txsize = txsize
       ; txid   = txid
       }
-
     .from txb → let open F.TxBody txb in record
       { txins      = from ⦃ Convertible-FinSet ⦃ Coercible⇒Convertible ⦄ ⦄ txins
       ; txouts     = from txouts
@@ -209,7 +208,6 @@ instance
     .to txw → let open TxWitnesses txw in record
       { vkSigs  = to vkSigs
       ; scripts = [] }
-
     .from txw → let open F.TxWitnesses txw in record
       { vkSigs  = from vkSigs
       ; scripts = ∅ }
@@ -220,7 +218,6 @@ instance
       { body = to body
       ; wits = to wits
       ; txAD = to txAD }
-
     .from tx → let open F.Tx tx in record
       { body = from body
       ; wits = from wits
