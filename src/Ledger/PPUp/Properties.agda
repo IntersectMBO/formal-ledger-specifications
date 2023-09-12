@@ -40,54 +40,27 @@ private
       × firstSlot (sucᵉ (epoch slot)) ≤ˢ (slot + (2 * StabilityWindow))
       × sucᵉ (epoch slot) ≡ e
 
+open Computational' ⦃...⦄
+
 instance
-  ∈-inst : ∀ {A : Set} ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec₁ (_∈ s)
-  ∈-inst {s = s} .Dec₁.P? = _∈? s
-
-  all?' : ∀ {A : Set} {P : A → Set} ⦃ P? : Dec₁ P ⦄ ⦃ _ : DecEq A ⦄ {s : ℙ A} → Dec (All P s)
-  all?' ⦃ P? = record { P? = P? } ⦄ {s} = all? P?
-
-  Dec₁-isViableUpdate : ∀ {Γ} → Dec₁ (λ z → isViableUpdate (PPUpdateEnv.pparams Γ) z)
-  Dec₁-isViableUpdate {Γ} .Dec₁.P? = isViableUpdate? (PPUpdateEnv.pparams Γ)
-
   _ = Decidable²⇒Dec _<ˢ?_
 
-  Dec-Current-Property : ∀ {Γ u} → Dec (Current-Property Γ u)
-  Dec-Current-Property {Γ} = ¿ _ ¿ ×-dec all?' ⦃ Dec₁-isViableUpdate {Γ} ⦄ ×-dec ¿ _ ¿ ×-dec _ ≟ _
+  Computational'-PPUP : Computational' _⊢_⇀⦇_,PPUP⦈_
+  Computational'-PPUP .computeProof Γ s (just (pup , e)) =
+    case ¿ Current-Property Γ (pup , e) ¿ ,′ ¿ Future-Property Γ (pup , e) ¿ of λ where
+      (yes (p₁ , p₂ , p₃ , p₄) , _) → just (_ , PPUpdateCurrent p₁ p₂ p₃ p₄)
+      (_ , yes (p₁ , p₂ , p₃ , p₄)) → just (_ , PPUpdateFuture p₁ p₂ p₃ p₄)
+      _ → nothing
+  Computational'-PPUP .computeProof Γ s nothing = just (_ , PPUpdateEmpty)
+  Computational'-PPUP .completeness Γ s (just (pup , e)) s' (PPUpdateCurrent p₁ p₂ p₃ p₄)
+    with ¿ Current-Property Γ (pup , e) ¿ | "bug"
+  ... | yes p | _ = refl
+  ... | no ¬p | _ = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄))
+  Computational'-PPUP .completeness Γ s (just (pup , e)) s' (PPUpdateFuture p₁ p₂ p₃ p₄)
+    with ¿ Current-Property Γ (pup , e) ¿ | ¿ Future-Property Γ (pup , e) ¿ | "bug"
+  ... | yes (q₁ , q₂ , q₃ , q₄) | _ | _ = ⊥-elim (p₃ q₃)
+  ... | no _ | yes p | _ = refl
+  ... | no _ | no ¬p | _ = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄))
+  Computational'-PPUP .completeness Γ s nothing s' PPUpdateEmpty = refl
 
-  Dec-Future-Property : ∀ {Γ u} → Dec (Future-Property Γ u)
-  Dec-Future-Property {Γ} = ¿ _ ¿ ×-dec all?' ⦃ Dec₁-isViableUpdate {Γ} ⦄ ×-dec ¿ _ ¿ ×-dec _ ≟ _
-
-private
-  helper : ∀ {Γ u} → Dec (Current-Property Γ u) × Dec (Future-Property Γ u) → PPUpdateState → Maybe PPUpdateState
-  helper (no _  , no  _) record { pup = pupˢ ; fpup = fpupˢ } = nothing
-  helper {u = (pup , _)} (no _  , yes _) record { pup = pupˢ ; fpup = fpupˢ } = just record { pup = pupˢ ; fpup = pup ∪ᵐˡ fpupˢ }
-  helper {u = (pup , _)} (yes _ , no  _) record { pup = pupˢ ; fpup = fpupˢ } = just record { pup = pup ∪ᵐˡ pupˢ ; fpup = fpupˢ }
-  helper (yes (_ , _ , p , _) , yes (_ , _ , p' , _)) _       = case p' p of λ ()
-
-Computational-PPUP : Computational _⊢_⇀⦇_,PPUP⦈_
-Computational-PPUP .compute Γ s (just x@(pup , _)) =
-  helper {Γ} {x} (Dec-Current-Property {Γ} {x} ,′ Dec-Future-Property {Γ} {x}) s
-Computational-PPUP .compute Γ s nothing = just s
-Computational-PPUP .≡-just⇔STS {Γ} {s} {e} {s'} = mk⇔
-  (case e return (λ e → compute Computational-PPUP Γ s e ≡ just s' → Γ ⊢ s ⇀⦇ e ,PPUP⦈ s') of λ where
-    nothing  refl → PPUpdateEmpty
-    (just e)      → case (Dec-Current-Property {Γ} {e} ,′ Dec-Future-Property {Γ} {e})
-      return (λ x → helper {Γ} {e} x s ≡ just s' → Γ ⊢ s ⇀⦇ just e ,PPUP⦈ s')
-      of λ where (no _                   , yes (x , x₁ , x₂ , x₃)) refl → PPUpdateFuture x x₁ x₂ x₃
-                 (yes (x , x₁ , x₂ , x₃) , no                   _) refl → PPUpdateCurrent x x₁ x₂ x₃
-                 (yes (_ , _ , p , _)    , yes (_ , _ , ¬p , _))        → contradiction p ¬p)
-  (λ where
-    PPUpdateEmpty → refl
-    (PPUpdateCurrent {pup = pup} {e} {pupˢ} {fpupˢ} x x₁ x₂ x₃) → subst
-      (λ a → helper {Γ} {pup , e} a record { pup = pupˢ ; fpup = fpupˢ } ≡
-               just record { pup = pup ∪ᵐˡ pupˢ ; fpup = fpupˢ })
-      (sym $ (×-≡,≡→≡ ((proj₂ $ dec-yes (Dec-Current-Property {Γ} {pup , e}) (x , x₁ , x₂ , x₃)) ,′
-                       (dec-no (Dec-Future-Property {Γ} {pup , e}) λ where (_ , _ , p , _) → contradiction x₂ p))))
-      refl
-    (PPUpdateFuture {pup = pup} {e} {pupˢ} {fpupˢ} x x₁ x₂ x₃) → subst
-      (λ a → helper {Γ} {pup , e} a record { pup = pupˢ ; fpup = fpupˢ } ≡
-               just record { pup = pupˢ ; fpup = pup ∪ᵐˡ fpupˢ })
-      (sym $ (×-≡,≡→≡ ((dec-no (Dec-Current-Property {Γ} {pup , e}) λ where (_ , _ , p , _) → contradiction p x₂) ,′
-                       (proj₂ $ dec-yes (Dec-Future-Property {Γ} {pup , e}) (x , x₁ , x₂ , x₃)))))
-      refl)
+  Computational-PPUP = fromComputational' Computational'-PPUP
