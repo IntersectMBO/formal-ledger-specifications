@@ -15,7 +15,6 @@ open import Ledger.PPUp  ⋯
 open import Ledger.Utxo  ⋯
 open import Ledger.Utxow ⋯
 open Tx
-open TxBody
 \end{code}
 
 The entire state transformation of the ledger state caused by a valid
@@ -37,7 +36,8 @@ record LState : Set where
         certState  : CertState
 
 txgov : TxBody → List (GovVote ⊎ GovProposal)
-txgov txb = L.map inj₁ (txvote txb) ++ L.map inj₂ (txprop txb)
+txgov txb = let open TxBody txb in
+  L.map inj₁ txvote ++ L.map inj₂ txprop
 \end{code}
 \caption{Types and functions for the LEDGER transition system}
 \end{figure*}
@@ -70,11 +70,11 @@ data
 
 \begin{figure*}[h]
 \begin{code}
-  LEDGER : let open LState s; txb = body tx; open LEnv Γ in
+  LEDGER : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    → ⟦ epoch slot , pparams , txvote txb ⟧ᶜ ⊢ certState ⇀⦇ txcerts txb ,CERTS⦈ certState'
-    → ⟦ txid txb , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
-    → map stake (dom (txwdrls txb ˢ)) ⊆ dom (voteDelegs (dState certState') ˢ)
+    → ⟦ epoch slot , pparams , txvote ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    → ⟦ txid , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    → map stake (dom (txwdrls ˢ)) ⊆ dom (certState' .dState .voteDelegs ˢ)
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}
@@ -83,7 +83,7 @@ data
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set
-_⊢_⇀⦇_,LEDGERS⦈_ = SS⇒BS (λ where (Γ , _) → Γ ⊢_⇀⦇_,LEDGER⦈_)
+_⊢_⇀⦇_,LEDGERS⦈_ = SS⇒BS λ (Γ , _) → Γ ⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}

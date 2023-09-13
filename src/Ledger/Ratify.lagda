@@ -67,7 +67,7 @@ governance action scenario. The columns represent
 6. Treasury withdrawal & \ding{51} & \Psix & - \\
 7. Info & \ding{51} & \(100\) & \(100\) \\
 \end{longtable}
-\caption{Retification requirements}
+\caption{Ratification requirements}
 \label{fig:ratification-requirements}
 \end{figure*}
 Each of these thresholds is a governance parameter.  The two thresholds for the \Info
@@ -86,6 +86,7 @@ open import Data.Nat hiding (_≟_)
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 open import Data.Product using (map₂)
+open import Data.Singleton
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 open import Ledger.Prelude hiding (_∧_)
@@ -237,11 +238,16 @@ module _
 \end{code}
 \begin{code}
   -- Module Parameters:
-  (Γ       : RatifyEnv)                      -- ratification environment
-  (cc      : CCData)                         -- constitutional committee data
-  (votes   : (GovRole × Credential) ⇀ Vote)  -- the map relating delegates to their votes
-  (ga      : GovAction)                      -- the governance action that was voted on
-  (pparams : PParams)                        -- current protocol parameters
+  (Γ        : RatifyEnv)
+  -- ^ ratification environment
+  (cc       : CCData)
+  -- ^ constitutional committee data
+  (votes    : (GovRole × Credential) ⇀ Vote)
+  -- ^ the map relating delegates to their votes
+  (ga       : GovAction)
+  -- ^ the governance action that was voted on
+  (pparams  : PParams)
+  -- ^ current protocol parameters
 \end{code}
 \begin{code}[hide]
   where
@@ -254,9 +260,10 @@ module _
                         (λ where _ _ refl → refl)
 
   actualCCVote : Credential → Epoch → Vote
-  actualCCVote c e = case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys c ⦃ _ ∈? _ ⦄ of λ where
-    (true , just (just c')) → maybe′ id Vote.no $ lookupᵐ? votes (CC , c') ⦃ _ ∈? _ ⦄
-    _                       → Vote.abstain -- expired, no hot key or resigned
+  actualCCVote c e =
+    case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys c of λ where
+      (true , just (just c'))  → maybe′ id Vote.no $ lookupᵐ? votes (CC , c')
+      _                        → Vote.abstain -- expired, no hot key or resigned
 
   activeCC : ℙ Credential
   activeCC = case cc of λ where
@@ -273,21 +280,24 @@ module _
         (no _) → constMap (dom (cc ˢ)) Vote.no
       nothing → ∅ᵐ
 
-  actualPDRepVotes : VDeleg ⇀ Vote
-  actualPDRepVotes = ❴ abstainRep      , Vote.abstain ❵ᵐ
-                 ∪ᵐˡ ❴ noConfidenceRep , (case ga of λ where
-                                           NoConfidence → Vote.yes
-                                           _            → Vote.no) ❵ᵐ
+  actualPDRepVotes actualDRepVotes actualSPOVotes actualVotes : VDeleg ⇀ Vote
 
-  actualDRepVotes actualSPOVotes actualVotes : VDeleg ⇀ Vote
-  actualDRepVotes  =    roleVotes GovRole.DRep
-                   ∪ᵐˡ  constMap (map (credVoter DRep) activeDReps) Vote.no
+  actualPDRepVotes
+    =    ❴ abstainRep       , Vote.abstain ❵ᵐ
+    ∪ᵐˡ  ❴ noConfidenceRep  , (case ga of λ where
+                                                NoConfidence  → Vote.yes
+                                                _             → Vote.no) ❵ᵐ
+
+  actualDRepVotes
+    =    roleVotes GovRole.DRep
+    ∪ᵐˡ  constMap (map (credVoter DRep) activeDReps) Vote.no
     where
       activeDReps : ℙ Credential
       activeDReps = dom (filterᵐ (to-sp (currentEpoch ≤ᵉ?_ ∘ proj₂)) dreps ˢ)
 
-  actualSPOVotes =    roleVotes GovRole.SPO
-                 ∪ᵐˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
+  actualSPOVotes
+    =    roleVotes GovRole.SPO
+    ∪ᵐˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
     where
       spos : ℙ VDeleg
       spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs ˢ)
@@ -297,9 +307,10 @@ module _
         (TriggerHF _) → true
         _             → false
 
-  actualVotes =    mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
-              ∪ᵐˡ  actualPDRepVotes ∪ᵐˡ actualDRepVotes
-              ∪ᵐˡ  actualSPOVotes
+  actualVotes
+    =    mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
+    ∪ᵐˡ  actualPDRepVotes ∪ᵐˡ actualDRepVotes
+    ∪ᵐˡ  actualSPOVotes
 \end{code}
 } %% end small
 \caption{%Ratify i:
@@ -345,10 +356,8 @@ votedHashes v votes r = votes ⁻¹ v
 votedYesHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 votedYesHashes = votedHashes Vote.yes
 
-votedAbstainHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
+votedAbstainHashes participatingHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 votedAbstainHashes = votedHashes Vote.abstain
-
-participatingHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no votes r
 \end{code}
 } %% end small
@@ -361,42 +370,45 @@ The code in Figure~\ref{fig:defs:ratify-ii} defines \votedHashes, which returns 
 {\small
 \begin{code}
 getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
-getStakeDist CC    cc  _                             = constMap (filterˢ isCCProp cc) 1
-getStakeDist DRep  _   record { stakeDistr = dist }  = filterᵐ (sp-∘ isDRepProp proj₁) dist
-getStakeDist SPO   _   record { stakeDistr = dist }  = filterᵐ (sp-∘ isSPOProp proj₁) dist
+getStakeDist role cc record { stakeDistr = dist } = case role of λ where
+  CC    → constMap (filterˢ isCCProp cc) 1
+  DRep  → filterᵐ (sp-∘ isDRepProp  proj₁) dist
+  SPO   → filterᵐ (sp-∘ isSPOProp   proj₁) dist
 
 acceptedStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 acceptedStake r cc dists votes =
   Σᵐᵛ[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ] x
 
 totalStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-totalStake r cc dists votes = Σᵐᵛ[ x ← getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
+totalStake r cc dists votes = Σᵐᵛ[ x  ← getStakeDist r cc dists
+                                      ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
 activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-activeVotingStake cc dists votes = Σᵐᵛ[ x ← getStakeDist DRep cc dists ∣ dom (votes ˢ) ᶜ ᶠᵐ ] x
+activeVotingStake cc dists votes = Σᵐᵛ[ x  ← getStakeDist DRep cc dists
+                                           ∣ dom (votes ˢ) ᶜ ᶠᵐ ] x
 
 -- For now, consider a proposal as accepted if the CC and half of the SPOs
 -- and DReps agree.
 accepted' : RatifyEnv → EnactState → GovActionState → Set
-accepted' Γ es@record { cc = cc , _    ; pparams = pparams , _ }
-            s@record  { votes = votes' ; action = action } =
-  acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO ∧ meetsMinAVS
-  where
-    open RatifyEnv Γ
-    open PParams pparams
+accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
+  let
+    open RatifyEnv Γ; open GovActionState gs; open PParams pparams
 
-    votes = actualVotes Γ cc votes' action pparams
-    cc' = dom (votes ˢ)
+    votes' = actualVotes Γ cc votes action pparams
+    cc' = dom (votes' ˢ)
     redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
 
     meetsMinAVS : Set
-    meetsMinAVS = activeVotingStake cc' redStakeDistr votes ≥ minimumAVS
+    meetsMinAVS = activeVotingStake cc' redStakeDistr votes' ≥ minimumAVS
 
     acceptedBy : GovRole → Set
-    acceptedBy role = let t = maybe id R.0ℚ (threshold pparams (Data.Maybe.map proj₂ cc) action role) in
-      case totalStake role cc' redStakeDistr votes of λ where
-        0          → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
-        x@(suc _)  → Z.+ acceptedStake role cc' redStakeDistr votes R./ x R.≥ t
+    acceptedBy role =
+      let t = maybe id R.0ℚ $ threshold pparams (Data.Maybe.map proj₂ cc) action role in
+      case totalStake role cc' redStakeDistr votes' of λ where
+        0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
+        x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
+  in
+    acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO ∧ meetsMinAVS
 
 expired : Epoch → GovActionState → Set
 expired current record { expiresIn = expiresIn } = expiresIn <ᵉ current
@@ -420,22 +432,25 @@ The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for
 {\small
 \begin{code}
 verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Set
-verifyPrev NoConfidence           h es = let open EnactState es in h ≡ proj₂ cc
-verifyPrev (NewCommittee _ _ _)   h es = let open EnactState es in h ≡ proj₂ cc
-verifyPrev (NewConstitution _ _)  h es = let open EnactState es in h ≡ proj₂ constitution
-verifyPrev (TriggerHF _)          h es = let open EnactState es in h ≡ proj₂ pv
-verifyPrev (ChangePParams _)      h es = let open EnactState es in h ≡ proj₂ pparams
-verifyPrev (TreasuryWdrl _)       _ _  = ⊤
-verifyPrev Info                   _ _  = ⊤
+verifyPrev action h es = go where
+  open EnactState es; go : _; go with ⟫ action | ⟫ h
+  ... | ⟫ NoConfidence         | _ = h ≡ cc .proj₂
+  ... | ⟫ NewCommittee _ _ _   | _ = h ≡ cc .proj₂
+  ... | ⟫ NewConstitution _ _  | _ = h ≡ constitution .proj₂
+  ... | ⟫ TriggerHF _          | _ = h ≡ pv .proj₂
+  ... | ⟫ ChangePParams _      | _ = h ≡ pparams .proj₂
+  ... | ⟫ TreasuryWdrl _       | _ = ⊤
+  ... | ⟫ Info                 | _ = ⊤
 
 delayingAction : GovAction → Bool
-delayingAction NoConfidence           = true
-delayingAction (NewCommittee _ _ _)   = true
-delayingAction (NewConstitution _ _)  = true
-delayingAction (TriggerHF _)          = true
-delayingAction (ChangePParams _)      = false
-delayingAction (TreasuryWdrl _)       = false
-delayingAction Info                   = false
+delayingAction = λ where
+  NoConfidence           → true
+  (NewCommittee _ _ _)   → true
+  (NewConstitution _ _)  → true
+  (TriggerHF _)          → true
+  (ChangePParams _)      → false
+  (TreasuryWdrl _)       → false
+  Info                   → false
 
 delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Set
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
@@ -471,16 +486,17 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{figure*}[h!]
 {\small
 \begin{code}
-  RATIFY-Accept : let open RatifyEnv Γ; st = proj₂ a; open GovActionState st in
+  RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
     accepted Γ es st
     → ¬ delayed action prevAction es d
-    → ⟦ proj₁ a , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+    → ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
     ────────────────────────────────
-    Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧ʳ
+    Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
+         ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 
   -- remove expired actions
-  -- NOTE:  We don't have to remove actions that can never be accpted because of
-  --        sufficient no votes.
+  -- NOTE:  We don't have to remove actions that can never be accepted
+  --        because of sufficient no votes.
 
   RATIFY-Reject : let open RatifyEnv Γ; st = proj₂ a in
     ¬ accepted Γ es st

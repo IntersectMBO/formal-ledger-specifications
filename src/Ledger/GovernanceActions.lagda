@@ -35,9 +35,7 @@ GovActionID : Set
 GovActionID = TxId × ℕ
 
 data GovRole : Set where
-  CC    : GovRole
-  DRep  : GovRole
-  SPO   : GovRole
+  CC DRep SPO : GovRole
 
 data VDeleg : Set where
   credVoter        : GovRole → Credential → VDeleg
@@ -161,13 +159,14 @@ Ratified actions are then \defn{enacted} on-chain, following a set of rules (see
 {\small
 \begin{code}
 NeedsHash : GovAction → Set
-NeedsHash NoConfidence          = GovActionID
-NeedsHash (NewCommittee _ _ _)  = GovActionID
-NeedsHash (NewConstitution _ _) = GovActionID
-NeedsHash (TriggerHF _)         = GovActionID
-NeedsHash (ChangePParams _)     = GovActionID
-NeedsHash (TreasuryWdrl _)      = ⊤
-NeedsHash Info                  = ⊤
+NeedsHash = λ where
+  NoConfidence           → GovActionID
+  (NewCommittee _ _ _)   → GovActionID
+  (NewConstitution _ _)  → GovActionID
+  (TriggerHF _)          → GovActionID
+  (ChangePParams _)      → GovActionID
+  (TreasuryWdrl _)       → ⊤
+  Info                   → ⊤
 
 HashProtected : Set → Set
 HashProtected A = A × GovActionID
@@ -194,9 +193,7 @@ See Section~\ref{sec:ratification} for more on the ratification process.
 {\small
 \begin{code}
 data Vote : Set where
-  yes      : Vote
-  no       : Vote
-  abstain  : Vote
+  yes no abstain  : Vote
 
 record GovVote : Set where
   field gid         : GovActionID

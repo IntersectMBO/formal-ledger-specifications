@@ -12,9 +12,6 @@ open import Ledger.Crypto
 open import Ledger.Transaction
 
 module Ledger.Utxow (⋯ : _) (open TransactionStructure ⋯) where
-open TxBody
-open TxWitnesses
-open Tx
 open import Ledger.Utxo ⋯
 \end{code}
 
@@ -26,21 +23,19 @@ getVKeys = mapPartial isInj₁
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isInj₂
 
-credsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ Credential
-credsNeeded ppolicy utxo txb =
-    map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
-  ∪ map cwitness (fromList $ txcerts txb)
-  ∪ map GovVote.credential (fromList $ txvote txb)
-  ∪ mapPartial (const (M.map inj₂ ppolicy)) (fromList $ txprop txb)
+module _ (ppolicy : Maybe ScriptHash) (utxo : UTxO) (txb : _) (open TxBody txb) where
 
-witsVKeyNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded sh utxo = getVKeys ∘ credsNeeded sh utxo
+  credsNeeded : ℙ Credential
+  credsNeeded  =  map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins)
+               ∪  map cwitness (fromList txcerts)
+               ∪  map GovVote.credential (fromList txvote)
+               ∪  mapPartial (const (M.map inj₂ ppolicy)) (fromList txprop)
 
-scriptsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded sh utxo = getScripts ∘ credsNeeded sh utxo
+  witsVKeyNeeded : ℙ KeyHash
+  witsVKeyNeeded = getVKeys credsNeeded
 
-scriptsP1 : TxWitnesses → ℙ P1Script
-scriptsP1 txw = mapPartial isInj₁ (scripts txw)
+  scriptsNeeded  : ℙ ScriptHash
+  scriptsNeeded = getScripts credsNeeded
 \end{code}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}
@@ -64,16 +59,16 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \begin{code}
   UTXOW-inductive :
     ∀ {Γ} {s} {tx} {s'}
-    → let open UTxOState s; open UTxOEnv Γ
-          txb = tx .body; txw = tx .wits
-          witsKeyHashes    = map hash (dom (txw .vkSigs ˢ))
-          witsScriptHashes = map hash (txw .scripts )
+    → let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+          open UTxOState s; open UTxOEnv Γ
+          witsKeyHashes     = map hash (dom (vkSigs ˢ))
+          witsScriptHashes  = map hash scripts
       in
-    ∀[ (vk , σ) ∈ txw .vkSigs ˢ ] isSigned vk (txb .txid .txidBytes) σ
-    → ∀[ s ∈ scriptsP1 txw ] validP1Script witsKeyHashes (txb .txvldt) s
+    ∀[ (vk , σ) ∈ vkSigs ˢ ] isSigned vk (txidBytes txid) σ
+    → ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
     → witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     → scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
-    → txb .txADhash ≡ M.map hash (tx .txAD)
+    → txADhash ≡ M.map hash txAD
     → Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

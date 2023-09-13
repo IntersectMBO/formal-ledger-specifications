@@ -181,6 +181,8 @@ computation explicitly.
 \begin{code}[hide]
 unquoteDecl Computational-LEDGER =
   deriveComputational (quote _⊢_⇀⦇_,LEDGER⦈_) Computational-LEDGER
+
+open Computational
 \end{code}
 \begin{figure*}[h]
 \begin{code}

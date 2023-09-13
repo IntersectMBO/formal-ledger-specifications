@@ -24,32 +24,18 @@ data DCert : Set where
   deregdrep   : Credential → DCert
   ccreghot    : Credential → Maybe Credential → DCert
 
-cwitness : DCert → Credential
-cwitness (delegate c _ _ _)  = c
-cwitness (regpool c _)       = c
-cwitness (retirepool c _)    = c
-cwitness (regdrep c _ _)     = c
-cwitness (deregdrep c)       = c
-cwitness (ccreghot c _)      = c
-
 record CertEnv : Set where
   constructor ⟦_,_,_⟧ᶜ
   field epoch  : Epoch
         pp     : PParams
         votes  : List GovVote
 
-GovCertEnv  = CertEnv
-DelegEnv    = PParams
-PoolEnv     = PParams
-
 record DState : Set where
   constructor ⟦_,_,_⟧ᵈ
-
-  field voteDelegs      : Credential ⇀ VDeleg
-  --    ^ stake credential to DRep credential
-        stakeDelegs     : Credential ⇀ Credential
-  --    ^ stake credential to pool credential
-        rewards         : RwdAddr ⇀ Coin
+  field
+    voteDelegs   : Credential ⇀ VDeleg      -- stake credential to DRep credential
+    stakeDelegs  : Credential ⇀ Credential  -- stake credential to pool credential
+    rewards      : RwdAddr ⇀ Coin
 
 record PState : Set where
   constructor ⟦_,_⟧ᵖ
@@ -66,8 +52,15 @@ record CertState : Set where
   field dState : DState
         pState : PState
         gState : GState
-\end{code}
 
+GovCertEnv  = CertEnv
+DelegEnv    = PParams
+PoolEnv     = PParams
+\end{code}
+\caption{Types used for CERTS transition system}
+\end{figure*}
+
+\begin{figure*}[h]
 \begin{code}[hide]
 private variable
   an : Anchor
@@ -95,21 +88,31 @@ private variable
   vs : List GovVote
   poolParams : PoolParams
 \end{code}
-
 \begin{code}
+cwitness : DCert → Credential
+cwitness = λ where
+  (delegate c _ _ _)  → c
+  (regpool c _)       → c
+  (retirepool c _)    → c
+  (regdrep c _ _)     → c
+  (deregdrep c)       → c
+  (ccreghot c _)      → c
+
 requiredDeposit : {A : Set} → PParams → Maybe A → Coin
-requiredDeposit pp (just _) = PParams.poolDeposit pp
-requiredDeposit pp nothing = 0
+requiredDeposit pp = let open PParams pp in λ where
+  (just _)  → poolDeposit
+  nothing   → 0
 
 insertIfJust : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ⇀ B → A ⇀ B
-insertIfJust x nothing  m = m
-insertIfJust x (just y) m = insert m x y
+insertIfJust x nothing  m  = m
+insertIfJust x (just y) m  = insert m x y
 
 getDRepVote : GovVote → Maybe Credential
-getDRepVote record { role = GovRole.DRep ; credential = credential } = just credential
-getDRepVote _                                                        = nothing
+getDRepVote = λ where
+  record { role = GovRole.DRep ; credential = credential }  → just credential
+  _                                                         → nothing
 \end{code}
-\caption{Types \& functions used for CERTS transition system}
+\caption{Functions used for CERTS transition system}
 \end{figure*}
 
 \begin{figure*}[h]
@@ -118,39 +121,44 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set w
   DELEG-delegate :
     d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc
     ────────────────────────────────
-    pp ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-         ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ⟧ᵈ
+    pp ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
+          ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ⟧ᵈ
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
     c ∉ dom (pools ˢ)
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
-         ⟦ ❴ c , poolParams ❵ᵐ ∪ᵐˡ pools , retiring ⟧ᵖ
+    pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
+          ⟦ ❴ c , poolParams ❵ᵐ ∪ᵐˡ pools , retiring ⟧ᵖ
 
   POOL-retirepool :
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈
-         ⟦ pools , ❴ c , e ❵ᵐ ∪ᵐˡ retiring ⟧ᵖ
+    pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈
+          ⟦ pools , ❴ c , e ❵ᵐ ∪ᵐˡ retiring ⟧ᵖ
 
 data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set where
   GOVCERT-regdrep : let open PParams pp in
     (d ≡ drepDeposit × c ∉ dom (dReps ˢ)) ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ))
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                       ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
+    ⟦ e , pp , vs ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+                        ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     c ∈ dom (dReps ˢ)
     ────────────────────────────────
-    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈
-        ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+    Γ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈
+         ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
     (c , nothing) ∉ ccKeys ˢ
     ────────────────────────────────
-    Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈
-        ⟦ dReps , singletonᵐ c mc ∪ᵐˡ ccKeys ⟧ᵛ
+    Γ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈
+         ⟦ dReps , singletonᵐ c mc ∪ᵐˡ ccKeys ⟧ᵛ
+\end{code}
+\caption{Auxiliary DELEG and POOL rules}
+\end{figure*}
 
+\begin{figure*}[h]
+\begin{code}
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
   CERT-deleg :
     pp ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'

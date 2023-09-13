@@ -24,8 +24,7 @@ ProtVer : Set
 ProtVer = ℕ × ℕ
 
 record Acnt : Set where
-  field treasury  : Coin
-        reserves  : Coin
+  field treasury reserves : Coin
 
 data PParamGroup : Set where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup : PParamGroup
@@ -76,10 +75,13 @@ record PParams : Set where
         minimumAVS         : Coin
 
 paramsWellFormed : PParams → Bool
-paramsWellFormed pp = ⌊ ¬? (0 ∈? fromList
-  (maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
-  ∷ collateralPercent ∷ ccMaxTermLength ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [])) ⌋ ∧
-  ⌊ (ℕtoEpoch govActionLifetime) ≤ᵉ? drepActivity ⌋
+paramsWellFormed pp =
+  ⌊ ¿ ¬ (0  ∈ fromList
+    ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue
+    ∷ poolDeposit ∷ collateralPercent ∷ ccMaxTermLength
+    ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit
+    ∷ []))
+  ¿ ⌋ ∧ ⌊ ℕtoEpoch govActionLifetime ≤ᵉ? drepActivity ⌋
   where open PParams pp
 \end{code}
 \end{AgdaAlign}
@@ -88,8 +90,8 @@ paramsWellFormed pp = ⌊ ¬? (0 ∈? fromList
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
 \ProtVer represents the protocol version used in the Cardano ledger.
-It is a pair of natural numbers, the first of which represents the major version, the second
-represents the minor version.
+It is a pair of natural numbers, representing the major and minor version,
+respectively.
 
 \PParams contains parameters used in the Cardano ledger, which we group according
 to the general purpose that each parameter serves.

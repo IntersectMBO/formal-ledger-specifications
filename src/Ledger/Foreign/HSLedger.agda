@@ -2,7 +2,7 @@
 
 module Ledger.Foreign.HSLedger where
 
-open import Ledger.Prelude
+open import Ledger.Prelude; open Computational
 
 import Data.Maybe    as M
 import Data.Rational as ℚ

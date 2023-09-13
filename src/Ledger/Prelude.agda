@@ -24,7 +24,7 @@ open import Interface.HasAdd.Instance public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
 open import Interface.Decidable.Instance public
-open import Interface.ComputationalRelation public; open Computational public
+open import Interface.ComputationalRelation public
 open import Ledger.Interface.HasCoin public
 open import MyDebugOptions public
 

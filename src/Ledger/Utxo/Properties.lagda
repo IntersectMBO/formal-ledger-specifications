@@ -20,7 +20,7 @@ open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
 open import Tactic.MonoidSolver         using (solve-macro)
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
-open import Ledger.Prelude; open Properties
+open import Ledger.Prelude; open Properties; open Computational
 open import Ledger.Transaction
 
 module Ledger.Utxo.Properties (⋯ : _) (open TransactionStructure ⋯) where
@@ -311,35 +311,42 @@ just follows from our automation.
 UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
 UTXO-step = compute Computational-UTXO
 
-UTXO-step-computes-UTXO :
-  UTXO-step Γ utxoState tx ≡ just utxoState' ⇔ Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
+UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ just utxoState'
+                         ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
 UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}
 
-\begin{property}[\textbf{Preserve Balance}]
-For all $\var{env}\in\UTxOEnv$, $\var{utxo},\var{utxo'}\in\UTxO$,
-$\var{fees},\var{fees'}\in\Coin$ and $\var{tx}\in\TxBody$, if
+\begin{property}[\textbf{Preserve Balance}]~\\
+\noindent
+For all $\var{env}\in$ \UTxOEnv, $\var{utxo},\var{utxo'}\in$ \UTxO,
+$\var{fees},\var{fees'}\in$ \Coin and $\var{tx}\in$ \TxBody,
+
+if
 \begin{code}[hide]
 pov :
 \end{code}
-\begin{code}[inline*]
+\begin{code}
   txid tx ∉ map proj₁ (dom (utxo ˢ))
 \end{code}
+
 and
 \begin{code}[hide]
   →
 \end{code}
-\begin{code}[inline*]
-      Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+\begin{code}
+  Γ ⊢  ⟦ utxo   , fees   , deposits   , donations   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
+       ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 \end{code}
+
 then
 \begin{code}[hide]
   →
 \end{code}
 \begin{code}
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ ≡ getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+         getCoin ⟦ utxo   , fees   , deposits   , donations   ⟧ᵘ
+      ≡  getCoin ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
