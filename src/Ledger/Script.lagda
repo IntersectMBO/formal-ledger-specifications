@@ -83,9 +83,9 @@ module _ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot
                → evalTimelock (RequireMOf (length ss') ss)
       evalSig  : x ∈ khs
                → evalTimelock (RequireSig x)
-      evalTSt  : proj₁ I ≡ just l → a ≤ l
+      evalTSt  : I .proj₁ ≡ just l → a ≤ l
                → evalTimelock (RequireTimeStart a)
-      evalTEx  : proj₂ I ≡ just r → r ≤ a
+      evalTEx  : I .proj₂ ≡ just r → r ≤ a
                → evalTimelock (RequireTimeStart a)
 \end{code}
 \caption{Timelock scripts and their evaluation}

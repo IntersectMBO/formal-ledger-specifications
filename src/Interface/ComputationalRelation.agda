@@ -28,6 +28,10 @@ module _ (STS : C → S → Sig → S → Set) where
       compute : C → S → Sig → Maybe S
       ≡-just⇔STS : compute c s sig ≡ just s' ⇔ STS c s sig s'
 
+    nothing⇒∀¬STS : compute c s sig ≡ nothing → ∀ s' → ¬ STS c s sig s'
+    nothing⇒∀¬STS comp≡nothing s' h rewrite ≡-just⇔STS .Equivalence.from h =
+      case comp≡nothing of λ ()
+
   ExtendedRel : C → S → Sig → Maybe S → Set
   ExtendedRel c s sig (just s') = STS c s sig s'
   ExtendedRel c s sig nothing   = ∀ s' → ¬ STS c s sig s'
@@ -83,9 +87,6 @@ module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
   computational⇒rightUnique : STS c s sig s' → STS c s sig s'' → s' ≡ s''
   computational⇒rightUnique h h' with ExtendedRel-rightUnique h h'
   ... | refl = refl
-
-  nothing⇒∀¬STS : compute c s sig ≡ nothing → ∀ s' → ¬ STS c s sig s'
-  nothing⇒∀¬STS comp≡nothing s' h rewrite Equivalence.from ≡-just⇔STS h = case comp≡nothing of λ ()
 
   Computational⇒Dec : ⦃ _ : DecEq S ⦄ → Dec (STS c s sig s')
   Computational⇒Dec {c} {s} {sig} {s'}

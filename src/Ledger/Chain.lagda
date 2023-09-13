@@ -21,7 +21,8 @@ open import Ledger.Utxo ⋯
 \begin{code}
 
 record NewEpochEnv : Set where
-  field stakeDistrs  : StakeDistrs -- TODO: compute this from LState instead
+  field stakeDistrs : StakeDistrs
+   -- TODO: compute this from LState instead
 
 record NewEpochState : Set where
   constructor ⟦_,_,_,_,_⟧ⁿᵉ
@@ -62,38 +63,33 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 \begin{code}
   NEWEPOCH-New : ∀ {Γ} → let
       open NewEpochState nes hiding (es)
-      open RatifyState fut using (removed) renaming (es to esW)
+      open RatifyState fut using (removed) renaming (es to esW); open EnactState esW
       -- ^ this rolls over the future enact state into es
       open LState ls; open UTxOState utxoSt
       open CertState certState; open PState pState; open DState dState; open GState gState
       open Acnt acnt
 
-      trWithdrawals  = EnactState.withdrawals esW
-      totWithdrawals = Σᵐᵛ[ x ← trWithdrawals ᶠᵐ ] x
-      es             = record esW { withdrawals = ∅ᵐ }
-
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         map (GovActionState.returnAddr gaSt ,_)
             ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+      govActionReturns = aggregate₊ $
+        map (λ (a , _ , d) → a , d) removedGovActions , finiteness _
 
-      govActionReturns =
-        aggregate₊ (map (λ (a , _ , d) → a , d) removedGovActions , finiteness _)
-
+      es        = record esW { withdrawals = ∅ᵐ }
       retired   = retiring ⁻¹ e
-      refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ)
-      unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ) ᶜ
+      refunds   = govActionReturns ∪⁺ withdrawals ∣ dom (rewards ˢ)
+      unclaimed = govActionReturns ∪⁺ withdrawals ∣ dom (rewards ˢ) ᶜ
 
       govSt' = filter (¬? ∘ (_∈? map proj₁ removed) ∘ proj₁) govSt
 
-      gState' = record gState
-        { ccHotKeys = ccHotKeys ∣ ccCreds (EnactState.cc es) }
+      gState' = record gState { ccHotKeys = ccHotKeys ∣ ccCreds cc }
 
       certState' = record certState {
         pState = record pState
           { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ };
         dState = record dState
           { rewards = rewards ∪⁺ refunds };
-        gState = if not (null govSt') then gState else record gState
+        gState = if not (null govSt') then gState' else record gState'
           { dreps = mapValues sucᵉ dreps }
         }
       utxoSt' = record utxoSt
@@ -101,9 +97,11 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
         ; deposits = deposits ∣ map (proj₁ ∘ proj₂) removedGovActions ᶜ
         ; donations = 0
         }
-      ls' = record ls { govSt = govSt' ; utxoSt = utxoSt' ; certState = certState' }
+      ls' = record ls
+        { govSt = govSt' ; utxoSt = utxoSt' ; certState = certState' }
       acnt' = record acnt
-        { treasury = treasury + fees + getCoin unclaimed + donations ∸ totWithdrawals }
+        { treasury = treasury + fees + getCoin unclaimed + donations
+                   ∸ Σᵐᵛ[ x ← withdrawals ᶠᵐ ] x }
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
@@ -177,11 +175,11 @@ data
 \begin{figure*}[h]
 \begin{code}
   CHAIN :
-    let open ChainState s; open Block b; open NewEpochState; open EnactState (nes .es)
-        stakeDistrs = calculateStakeDistrs (nes .ls)
-    in
-    record { stakeDistrs = stakeDistrs } ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    → ⟦ slot , proj₂ (proj₁ constitution) , proj₁ pparams ⟧ˡᵉ ⊢ nes .ls ⇀⦇ ts ,LEDGERS⦈ ls'
+    let open ChainState s; open Block b; open NewEpochState nes; open EnactState es in
+       record { stakeDistrs = calculateStakeDistrs ls }
+         ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ ⟧ˡᵉ
+         ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }
 \end{code}

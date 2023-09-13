@@ -50,16 +50,14 @@ record RwdAddr : Set where
   field net    : Network
         stake  : Credential
 
-Addr = BaseAddr ⊎ BootstrapAddr
+VKeyBaseAddr         = ∃ (isVKey    ∘ BaseAddr.pay)
+VKeyBootstrapAddr    = ∃ (isVKey    ∘ BootstrapAddr.pay)
+ScriptBaseAddr       = ∃ (isScript  ∘ BaseAddr.pay)
+ScriptBootstrapAddr  = ∃ (isScript  ∘ BootstrapAddr.pay)
 
-VKeyBaseAddr        = Σ[ addr ∈ BaseAddr       ] isVKey   (BaseAddr.pay       addr)
-VKeyBootstrapAddr   = Σ[ addr ∈ BootstrapAddr  ] isVKey   (BootstrapAddr.pay  addr)
-
-ScriptBaseAddr      = Σ[ addr ∈ BaseAddr       ] isScript (BaseAddr.pay       addr)
-ScriptBootstrapAddr = Σ[ addr ∈ BootstrapAddr  ] isScript (BootstrapAddr.pay  addr)
-
-VKeyAddr   = VKeyBaseAddr   ⊎ VKeyBootstrapAddr
-ScriptAddr = ScriptBaseAddr ⊎ ScriptBootstrapAddr
+Addr        = BaseAddr        ⊎ BootstrapAddr
+VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
+ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
 \end{code}
 \end{AgdaSuppressSpace} \\
 \emph{Helper functions}
