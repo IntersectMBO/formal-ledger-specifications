@@ -357,26 +357,26 @@ open Computational' ⦃...⦄
 
 instance
   Computational'-ENACT : Computational' _⊢_⇀⦇_,ENACT⦈_
-  Computational'-ENACT .computeProof ⟦ gid ⟧ᵉ s NoConfidence = just (_ , Enact-NoConf)
-  Computational'-ENACT .computeProof ⟦ gid ⟧ᵉ s (NewCommittee new rem q) = just (_ , Enact-NewComm)
-  Computational'-ENACT .computeProof ⟦ gid ⟧ᵉ s (NewConstitution dh sh) = just (_ , Enact-NewConst)
-  Computational'-ENACT .computeProof ⟦ gid ⟧ᵉ s (TriggerHF v) = just (_ , Enact-HF)
-  Computational'-ENACT .computeProof ⟦ gid ⟧ᵉ s (ChangePParams up) = just (_ , Enact-PParams)
-  Computational'-ENACT .computeProof ⟦ gid ⟧ᵉ s (TreasuryWdrl wdrl) =
-    case ¿ Σᵐᵛ[ x ← wdrl ᶠᵐ ] x ≤ s .treasury ¿ of λ where
+  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s NoConfidence = just (_ , Enact-NoConf)
+  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (NewCommittee new rem q) = just (_ , Enact-NewComm)
+  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (NewConstitution dh sh) = just (_ , Enact-NewConst)
+  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (TriggerHF v) = just (_ , Enact-HF)
+  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (ChangePParams up) = just (_ , Enact-PParams)
+  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (TreasuryWdrl wdrl) =
+    case ¿ Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t ¿ of λ where
       (yesᵈ p) → just (_ , Enact-Wdrl p)
       (noᵈ _) → nothing
-  Computational'-ENACT .computeProof ⟦ gid ⟧ᵉ s Info = just (s , Enact-Info)
-  Computational'-ENACT .completeness ⟦ gid ⟧ᵉ s NoConfidence s' Enact-NoConf = refl
-  Computational'-ENACT .completeness ⟦ gid ⟧ᵉ s (NewCommittee new rem q) s' Enact-NewComm = refl
-  Computational'-ENACT .completeness ⟦ gid ⟧ᵉ s (NewConstitution dh sh) s' Enact-NewConst = refl
-  Computational'-ENACT .completeness ⟦ gid ⟧ᵉ s (TriggerHF v) s' Enact-HF = refl
-  Computational'-ENACT .completeness ⟦ gid ⟧ᵉ s (ChangePParams up) s' Enact-PParams = refl
-  Computational'-ENACT .completeness ⟦ gid ⟧ᵉ s (TreasuryWdrl wdrl) s' (Enact-Wdrl p)
-    with ¿ (Σᵐᵛ[ x ← wdrl ᶠᵐ ] x) ≤ s .treasury ¿ | "bug"
+  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s Info = just (s , Enact-Info)
+  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s NoConfidence s' Enact-NoConf = refl
+  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (NewCommittee new rem q) s' Enact-NewComm = refl
+  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (NewConstitution dh sh) s' Enact-NewConst = refl
+  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (TriggerHF v) s' Enact-HF = refl
+  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (ChangePParams up) s' Enact-PParams = refl
+  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (TreasuryWdrl wdrl) s' (Enact-Wdrl p)
+    with ¿ (Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿ | "bug"
   ... | yesᵈ p | _ = refl
   ... | noᵈ ¬p | _ = ⊥-elim (¬p p)
-  Computational'-ENACT .completeness ⟦ gid ⟧ᵉ s Info s' Enact-Info = refl
+  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s Info s' Enact-Info = refl
 
   Computational-ENACT = fromComputational' Computational'-ENACT
 \end{code}
