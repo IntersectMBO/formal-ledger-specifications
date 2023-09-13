@@ -289,6 +289,10 @@ record EnactState : Set where
         pv            : HashProtected ProtVer
         pparams       : HashProtected PParams
         withdrawals   : RwdAddr ⇀ Coin
+
+ccCreds : HashProtected (Maybe (Credential ⇀ Epoch × ℚ)) → ℙ Credential
+ccCreds (just x  , _) = dom (proj₁ x ˢ)
+ccCreds (nothing , _) = ∅
 \end{code}
 } %% end small
 \caption{Enactment types}

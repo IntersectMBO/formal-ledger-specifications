@@ -34,14 +34,16 @@ module _ (accepted? : ∀ Γ es st → Dec (accepted Γ es st))
                  → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,NEWEPOCH⦈ s'
   NEWEPOCH-total {Γ} {nes} {e} =
     let open NewEpochState nes hiding (es)
-        open RatifyState fut using (es; removed)
+        open RatifyState fut using (removed) renaming (es to esW)
         open LState ls
         open CertState certState
         open Acnt acnt
 
+        es = record esW { withdrawals = ∅ᵐ }
+
         govSt' = filter (¬? ∘ (_∈? map proj₁ removed) ∘ proj₁) govSt
 
-        (fut' , pFut) = RATIFY-total accepted? expired? delayed? Computational-ENACT
+        (_ , pFut) = RATIFY-total accepted? expired? delayed? Computational-ENACT
           {record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }}
           {⟦ es , ∅ , false ⟧ʳ} {govSt'}
     in

@@ -13,7 +13,7 @@ open TransactionStructure txs
 
 open import Algebra
 open import Data.Maybe using (_>>=_)
-open import Data.Nat.Properties using (+-0-monoid)
+open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Ledger.Gov TxId Network ADHash epochStructure ppUpd ppHashingScheme crypto
 open import Ledger.Ledger txs
 open import Ledger.PParams epochStructure
@@ -60,6 +60,7 @@ private variable
 
 instance
   _ = +-0-monoid
+  _ = +-0-commutativeMonoid
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:
 -- it also does what EPOCH used to do in previous eras
@@ -69,14 +70,18 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 \begin{code}
   NEWEPOCH-New : ∀ {Γ} → let
       open NewEpochState nes hiding (es)
-      open RatifyState fut using (es; removed) -- this rolls over the future enact state into es
+      open RatifyState fut using (removed) renaming (es to esW) -- this rolls over the future enact state into es
       open LState ls
-      -- TODO Wire CertState together with treasury and withdrawals
       open CertState certState
       open PState pState
+      open Acnt acnt
 
       donations = UTxOState.donations utxoSt
       deposits = UTxOState.deposits utxoSt
+
+      trWithdrawals = EnactState.withdrawals esW
+      totWithdrawals = Σᵐᵛ[ x ← trWithdrawals ᶠᵐ ] x
+      es = record esW { withdrawals = ∅ᵐ }
 
       removedGovActions = flip concatMapˢ removed
         (λ where (gaid , gaSt) → map
@@ -86,13 +91,15 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       govActionReturns =
         aggregate₊ (map (λ where (a , _ , d) → a , d) removedGovActions , finiteness _)
 
-      rewards = DState.rewards dState
+      rewards = DState.rewards dState ∪⁺ trWithdrawals
       refunds   = govActionReturns ∣ dom (rewards ˢ)
       unclaimed = govActionReturns ∣ dom (rewards ˢ) ᶜ
 
       govSt' = filter (¬? ∘ (_∈? map proj₁ removed) ∘ proj₁) govSt
 
       retired = retiring ⁻¹ e
+
+      gState' = record gState { ccHotKeys = GState.ccHotKeys gState ∣ ccCreds (EnactState.cc es) }
 
       certState' = record certState
         { pState = record pState { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ }
@@ -106,12 +113,12 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
         ; donations = 0
         }
       ls' = record ls { govSt = govSt' ; utxoSt = utxoSt' ; certState = certState' }
-      acnt' = record acnt { treasury = Acnt.treasury acnt + UTxOState.fees utxoSt + getCoin unclaimed + donations }
+      acnt' = record acnt { treasury = treasury + UTxOState.fees utxoSt
+                                     + getCoin unclaimed + donations ∸ totWithdrawals }
     in
     e ≡ sucᵉ lastEpoch
-    → record { currentEpoch = e ; treasury = Acnt.treasury acnt ; GState gState ; NewEpochEnv Γ }
+    → record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
-    -- TODO: remove keys that aren't in the CC from the hot key map
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , fut' ⟧ⁿᵉ
 
