@@ -34,8 +34,8 @@ private
         witsKeyHashes    = map hash (dom (vkSigs txw ˢ))
         witsScriptHashes = map hash (scripts txw)
     in
-      ∀[ (vk , σ) ∈ vkSigs txw ˢ ] isSigned vk (txidBytes (txid txb)) σ
-    × ∀[ s ∈ scriptsP1 txw ] validP1Script witsKeyHashes (txvldt txb) s
+      (∀[ (vk , σ) ∈ vkSigs txw ˢ ] isSigned vk (txidBytes (txid txb)) σ)
+    × (∀[ s ∈ scriptsP1 txw ] validP1Script witsKeyHashes (txvldt txb) s)
     × witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     × scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
     × txADhash txb ≡ M.map hash (txAD tx)

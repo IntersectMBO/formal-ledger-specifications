@@ -96,43 +96,43 @@ record Tx : Set where
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}
 
 record PParams : Set where
-  field a                : ℕ
-        b                : ℕ
-        maxBlockSize     : ℕ
-        maxTxSize        : ℕ
-        maxHeaderSize    : ℕ
-        maxValSize       : ℕ
-        minUTxOValue     : Coin
-        poolDeposit      : Coin
-        Emax             : Epoch
-        pv               : Pair ℕ ℕ
-        votingThresholds : ⊤ -- TODO: foreign rational numbers
-        minCCSize        : ℕ
-        ccTermLimit      : ℕ
-        govExpiration    : ℕ
-        govDeposit       : Coin
-        drepDeposit      : Coin
-        drepActivity     : Epoch
+  field a                 : ℕ
+        b                 : ℕ
+        maxBlockSize      : ℕ
+        maxTxSize         : ℕ
+        maxHeaderSize     : ℕ
+        maxValSize        : ℕ
+        minUTxOValue      : Coin
+        poolDeposit       : Coin
+        Emax              : Epoch
+        pv                : Pair ℕ ℕ
+        votingThresholds  : ⊤ -- TODO: foreign rational numbers
+        govActionLifetime : ℕ
+        govActionDeposit  : Coin
+        drepDeposit       : Coin
+        drepActivity      : Epoch
+        ccMinSize         : ℕ
+        ccMaxTermLength   : ℕ
 
 {-# FOREIGN GHC
   data PParams = MkPParams
-    { a                :: Integer
-    , b                :: Integer
-    , maxBlockSize     :: Integer
-    , maxTxSize        :: Integer
-    , maxHeaderSize    :: Integer
-    , maxValSize       :: Integer
-    , minUTxOValue     :: Integer
-    , poolDeposit      :: Integer
-    , emax             :: Integer
-    , pv               :: (Integer, Integer)
-    , votingThresholds :: ()
-    , minCCSize        :: Integer
-    , ccTermLimit      :: Integer
-    , govExpiration    :: Integer
-    , govDeposit       :: Integer
-    , drepDeposit      :: Integer
-    , drepActivity     :: Integer
+    { a                 :: Integer
+    , b                 :: Integer
+    , maxBlockSize      :: Integer
+    , maxTxSize         :: Integer
+    , maxHeaderSize     :: Integer
+    , maxValSize        :: Integer
+    , minUTxOValue      :: Integer
+    , poolDeposit       :: Integer
+    , emax              :: Integer
+    , pv                :: (Integer, Integer)
+    , votingThresholds  :: ()
+    , govActionLifetime :: Integer
+    , govActionDeposit  :: Integer
+    , drepDeposit       :: Integer
+    , drepActivity      :: Integer
+    , ccMinSize         :: Integer
+    , ccMaxTermLength   :: Integer
     } deriving (Show, Generic)
   instance ToExpr PParams
 #-}

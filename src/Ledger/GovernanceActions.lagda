@@ -279,9 +279,10 @@ protocol version, protocol parameters, withdrawals from treasury, and treasury b
 {\small
 \begin{code}
 record EnactEnv : Set where
-  constructor ⟦_,_⟧ᵉ
+  constructor ⟦_,_,_⟧ᵉ
   field gid       : GovActionID
         treasury  : Coin
+        epoch     : Epoch
 
 record EnactState : Set where
   field cc            : HashProtected (Maybe (Credential ⇀ Epoch × ℚ))
@@ -314,6 +315,7 @@ private variable
   wdrl : RwdAddr ⇀ Coin
   t : Coin
   gid : GovActionID
+  e : Epoch
 
 instance
   _ = +-0-monoid
@@ -329,26 +331,28 @@ It represents how the \agdaboundEnactState changes when a specific governance ac
 \begin{code}
   _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
 
-  Enact-NoConf    : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈  record s { cc = nothing , gid }
+  Enact-NoConf    : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈  record s { cc = nothing , gid }
 
-  Enact-NewComm   : let old = maybe proj₁ ∅ᵐ (proj₁ (EnactState.cc s)) in
-    ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈
+  Enact-NewComm   : let old = maybe proj₁ ∅ᵐ (proj₁ (s .cc)) in
+    ∀[ term ∈ range (new ˢ) ] term ≤ᵉ (proj₁ (s .pparams) .PParams.ccMaxTermLength +ᵉ e)
+    ────────────────────────────────
+    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈
       record s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
 
-  Enact-NewConst  : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈  record s { constitution = (dh , sh) , gid }
+  Enact-NewConst  : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈  record s { constitution = (dh , sh) , gid }
 
-  Enact-HF        : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈  record s { pv = v , gid }
+  Enact-HF        : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈  record s { pv = v , gid }
 
-  Enact-PParams   : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
+  Enact-PParams   : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
     record s { pparams = applyUpdate (proj₁ (s .pparams)) up , gid }
 
   Enact-Wdrl      : let newWdrls = s .withdrawals ∪⁺ wdrl in
     Σᵐᵛ[ x ← newWdrls ᶠᵐ ] x ≤ t
     ────────────────────────────────
-    ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
+    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
       record s { withdrawals  = newWdrls }
 
-  Enact-Info      : ⟦ gid , t ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
+  Enact-Info      : ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 } %% end small
 \caption{ENACT transition system}
@@ -356,31 +360,39 @@ It represents how the \agdaboundEnactState changes when a specific governance ac
 \end{figure*}
 
 \begin{code}[hide]
-open import Interface.Decidable.Instance
+private module _ where
+  open import Interface.Decidable.Instance using (¿_¿; Dec-≤) public
 open Computational' ⦃...⦄
+
 
 instance
   Computational'-ENACT : Computational' _⊢_⇀⦇_,ENACT⦈_
-  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s NoConfidence = just (_ , Enact-NoConf)
-  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (NewCommittee new rem q) = just (_ , Enact-NewComm)
-  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (NewConstitution dh sh) = just (_ , Enact-NewConst)
-  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (TriggerHF v) = just (_ , Enact-HF)
-  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (ChangePParams up) = just (_ , Enact-PParams)
-  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s (TreasuryWdrl wdrl) =
+  Computational'-ENACT .computeProof Γ s NoConfidence = just (_ , Enact-NoConf)
+  Computational'-ENACT .computeProof ⟦ _ , _ , e ⟧ᵉ s (NewCommittee new rem q) = case
+    ¿ ∀[ term ∈ range (new ˢ) ] term ≤ᵉ (proj₁ (s .pparams) .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
+      (yesᵈ p) → just (_ , Enact-NewComm p)
+      (noᵈ ¬p) → nothing
+  Computational'-ENACT .computeProof Γ s (NewConstitution dh sh) = just (_ , Enact-NewConst)
+  Computational'-ENACT .computeProof Γ s (TriggerHF v) = just (_ , Enact-HF)
+  Computational'-ENACT .computeProof Γ s (ChangePParams up) = just (_ , Enact-PParams)
+  Computational'-ENACT .computeProof ⟦ _ , t , _ ⟧ᵉ s (TreasuryWdrl wdrl) =
     case ¿ Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t ¿ of λ where
       (yesᵈ p) → just (_ , Enact-Wdrl p)
       (noᵈ _) → nothing
-  Computational'-ENACT .computeProof ⟦ gid , t ⟧ᵉ s Info = just (s , Enact-Info)
-  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s NoConfidence s' Enact-NoConf = refl
-  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (NewCommittee new rem q) s' Enact-NewComm = refl
-  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (NewConstitution dh sh) s' Enact-NewConst = refl
-  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (TriggerHF v) s' Enact-HF = refl
-  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (ChangePParams up) s' Enact-PParams = refl
-  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s (TreasuryWdrl wdrl) s' (Enact-Wdrl p)
+  Computational'-ENACT .computeProof Γ s Info = just (s , Enact-Info)
+  Computational'-ENACT .completeness Γ s NoConfidence s' Enact-NoConf = refl
+  Computational'-ENACT .completeness ⟦ _ , _ , e ⟧ᵉ s (NewCommittee new rem q) s' (Enact-NewComm h)
+    with ¿ ∀[ term ∈ range (new ˢ) ] term ≤ᵉ (proj₁ (s .pparams) .PParams.ccMaxTermLength +ᵉ e) ¿ | "bug"
+  ... | yesᵈ _ | _ = refl
+  ... | noᵈ ¬p | _ = ⊥-elim (¬p h)
+  Computational'-ENACT .completeness Γ s (NewConstitution dh sh) s' Enact-NewConst = refl
+  Computational'-ENACT .completeness Γ s (TriggerHF v) s' Enact-HF = refl
+  Computational'-ENACT .completeness Γ s (ChangePParams up) s' Enact-PParams = refl
+  Computational'-ENACT .completeness ⟦ _ , t , _ ⟧ᵉ s (TreasuryWdrl wdrl) s' (Enact-Wdrl p)
     with ¿ (Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿ | "bug"
   ... | yesᵈ p | _ = refl
   ... | noᵈ ¬p | _ = ⊥-elim (¬p p)
-  Computational'-ENACT .completeness ⟦ gid , t ⟧ᵉ s Info s' Enact-Info = refl
+  Computational'-ENACT .completeness Γ s Info s' Enact-Info = refl
 
   Computational-ENACT = fromComputational' Computational'-ENACT
 \end{code}

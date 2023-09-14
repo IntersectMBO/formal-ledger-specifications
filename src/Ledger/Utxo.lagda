@@ -106,7 +106,7 @@ certRefundˢ = partialToSet certRefund
 
 propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
 propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
-  = ❴ GovActionDeposit gaid , PParams.govDeposit pp ❵ᵐ
+  = ❴ GovActionDeposit gaid , PParams.govActionDeposit pp ❵ᵐ
 
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where

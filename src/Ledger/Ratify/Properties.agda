@@ -28,9 +28,10 @@ module _ (accepted? : ∀ Γ es st → Dec (accepted Γ es st))
     case accepted? Γ es st , expired? currentEpoch st , delayed? action prevAction es d of λ where
       (no ¬p , no ¬p₁ , _) → -, RATIFY-Continue (inj₁ (¬p , ¬p₁))
       (no ¬p , yes p , _) → -, RATIFY-Reject ¬p p
-      (yes p , _ , no ¬p₁) → caseEq (compute Computational-ENACT ⟦ proj₁ sig , treasury ⟧ᵉ es action) of λ where
-        (just x) eq → -, RATIFY-Accept p ¬p₁ (Equivalence.to (≡-just⇔STS Computational-ENACT) eq)
-        nothing eq  → -, RATIFY-Continue (inj₂ (inj₂ (p , ¬p₁ , nothing⇒∀¬STS Computational-ENACT eq)))
+      (yes p , _ , no ¬p₁) → caseEq
+        (compute Computational-ENACT ⟦ proj₁ sig , treasury , currentEpoch ⟧ᵉ es action) of λ where
+          (just x) eq → -, RATIFY-Accept p ¬p₁ (Equivalence.to (≡-just⇔STS Computational-ENACT) eq)
+          nothing eq  → -, RATIFY-Continue (inj₂ (inj₂ (p , ¬p₁ , nothing⇒∀¬STS Computational-ENACT eq)))
       (yes p , _ , yes p₁) → -, RATIFY-Continue (inj₂ (inj₁ p₁))
 
   RATIFY-total : ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s'
