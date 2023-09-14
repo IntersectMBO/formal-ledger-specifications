@@ -81,12 +81,12 @@ data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovPropo
     (Γ , k) ⊢ s ⇀⦇ inj₁ record { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x } ,GOV'⦈
               addVote s aid role cred v
 
-  GOV-Propose : ∀ {x k} → let open GovEnv Γ; open PParams pparams using (govExpiration; govDeposit) in
+  GOV-Propose : ∀ {x k} → let open GovEnv Γ; open PParams pparams hiding (a) in
     actionWellFormed a ≡ true
-    → d ≡ govDeposit
+    → d ≡ govActionDeposit
     ────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; deposit = d ; prevAction = prev } ,GOV'⦈
-              addAction s (govExpiration +ᵉ epoch) (txid , k) addr a prev
+              addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
 
 _⊢_⇀⦇_,GOV⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
 _⊢_⇀⦇_,GOV⦈_ = SS⇒BS (λ Γ → Γ ⊢_⇀⦇_,GOV'⦈_)

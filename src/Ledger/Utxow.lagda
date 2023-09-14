@@ -63,8 +63,6 @@ data
 
 \begin{figure*}[h]
 \begin{code}[hide]
-All′ = All
-syntax All′ (λ x → P) l = ∀[ x ∈ l ] P
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}

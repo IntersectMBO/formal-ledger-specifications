@@ -236,23 +236,23 @@ instance
     where
       to' : PParams → F.PParams
       to' pp = let open PParams pp in record
-        { a                = a
-        ; b                = b
-        ; maxBlockSize     = maxBlockSize
-        ; maxTxSize        = maxTxSize
-        ; maxHeaderSize    = maxHeaderSize
-        ; maxValSize       = maxValSize
-        ; minUTxOValue     = minUTxOValue
-        ; poolDeposit      = poolDeposit
-        ; Emax             = Emax
-        ; pv               = coerce pv
-        ; votingThresholds = _
-        ; minCCSize        = minCCSize
-        ; ccTermLimit      = ccTermLimit
-        ; govExpiration    = govExpiration
-        ; govDeposit       = govDeposit
-        ; drepDeposit      = drepDeposit
-        ; drepActivity     = drepActivity
+        { a                 = a
+        ; b                 = b
+        ; maxBlockSize      = maxBlockSize
+        ; maxTxSize         = maxTxSize
+        ; maxHeaderSize     = maxHeaderSize
+        ; maxValSize        = maxValSize
+        ; minUTxOValue      = minUTxOValue
+        ; poolDeposit       = poolDeposit
+        ; Emax              = Emax
+        ; pv                = coerce pv
+        ; votingThresholds  = _
+        ; govActionLifetime = govActionLifetime
+        ; govActionDeposit        = govActionDeposit
+        ; drepDeposit       = drepDeposit
+        ; drepActivity      = drepActivity
+        ; ccMinSize         = ccMinSize
+        ; ccMaxTermLength   = ccMaxTermLength
         }
 
       from' : F.PParams → PParams
@@ -274,12 +274,12 @@ instance
           ; P5a = ℚ.½ ; P5b = ℚ.½ ; P5c = ℚ.½ ; P5d = ℚ.½ ; P6 = ℚ.½}
         ; poolThresholds    = record
           { Q1 = ℚ.½ ; Q2a = ℚ.½ ; Q2b = ℚ.½ ; Q4 = ℚ.½ }
-        ; minCCSize         = minCCSize
-        ; ccTermLimit       = ccTermLimit
-        ; govExpiration     = govExpiration
-        ; govDeposit        = govDeposit
+        ; govActionLifetime = govActionLifetime
+        ; govActionDeposit  = govActionDeposit
         ; drepDeposit       = drepDeposit
         ; drepActivity      = drepActivity
+        ; ccMinSize         = ccMinSize
+        ; ccMaxTermLength   = ccMaxTermLength
         ; minimumAVS        = 0
         }
 

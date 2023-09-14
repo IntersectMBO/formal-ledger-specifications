@@ -66,23 +66,23 @@ record PParams : Set where
         collateralPercent  : ℕ
 \end{code}
 \emph{Governance group}
-\AgdaTarget{drepThresholds, poolThresholds, minCCSize, ccTermLimit, govExpiration, govDeposit, drepDeposit, drepActivity, minimumAVS}
+\AgdaTarget{drepThresholds, poolThresholds, minCCSize, ccTermLimit, govExpiration, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
 \begin{code}
         drepThresholds     : DrepThresholds
         poolThresholds     : PoolThresholds
-        minCCSize          : ℕ
-        ccTermLimit        : ℕ
-        govExpiration      : ℕ
-        govDeposit         : Coin
+        govActionLifetime  : ℕ
+        govActionDeposit   : Coin
         drepDeposit        : Coin
         drepActivity       : Epoch
+        ccMinSize          : ℕ
+        ccMaxTermLength    : ℕ
         minimumAVS         : Coin
 
 paramsWellFormed : PParams → Bool
 paramsWellFormed pp = ⌊ ¬? (0 ∈? setFromList
   (maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
-  ∷ collateralPercent ∷ ccTermLimit ∷ govExpiration ∷ govDeposit ∷ drepDeposit ∷ [])) ⌋ ∧
-  ⌊ (ℕtoEpoch govExpiration) ≤ᵉ? drepActivity ⌋
+  ∷ collateralPercent ∷ ccMaxTermLength ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [])) ⌋ ∧
+  ⌊ (ℕtoEpoch govActionLifetime) ≤ᵉ? drepActivity ⌋
   where open PParams pp
 \end{code}
 \end{AgdaAlign}

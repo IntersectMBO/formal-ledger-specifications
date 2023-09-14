@@ -10,6 +10,7 @@ open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 open import Algebra
 open import Relation.Binary
 open import Relation.Nullary.Negation
+open import Interface.Decidable.Instance
 
 record GlobalConstants : Set₁ where
   field Network : Set
@@ -71,6 +72,9 @@ record EpochStructure : Set₁ where
 
     addEpoch : HasAdd Epoch
     addEpoch = record { _+_ = _+ᵉ'_ }
+
+    Dec-≤ᵉ : ∀ {n m} → Dec (n ≤ᵉ m)
+    Dec-≤ᵉ = Decidable²⇒Dec _≤ᵉ?_
 
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc

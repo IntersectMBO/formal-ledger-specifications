@@ -270,7 +270,7 @@ module _
   actualCCVotes : Credential ⇀ Vote
   actualCCVotes = let open PParams pparams
     in case cc of λ where
-      (just (cc , _)) → case lengthˢ activeCC ≥? minCCSize of λ where
+      (just (cc , _)) → case lengthˢ activeCC ≥? ccMinSize of λ where
         (yes _) → mapWithKey actualCCVote cc
         (no _) → constMap (dom (cc ˢ)) Vote.no
       nothing → ∅ᵐ
@@ -478,7 +478,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
   RATIFY-Accept : let open RatifyEnv Γ; st = proj₂ a; open GovActionState st in
     accepted Γ es st
     → ¬ delayed action prevAction es d
-    → ⟦ proj₁ a , treasury ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+    → ⟦ proj₁ a , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
     ────────────────────────────────
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧ʳ
 
@@ -498,7 +498,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     ¬ accepted Γ es st × ¬ expired currentEpoch st
     ⊎ delayed action prevAction es d
     ⊎ accepted Γ es st × ¬ delayed action prevAction es d
-      × (∀ es' → ¬ ⟦ proj₁ a , treasury ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es')
+      × (∀ es' → ¬ ⟦ proj₁ a , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es')
     ────────────────────────────────
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 

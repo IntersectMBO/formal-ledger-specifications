@@ -127,3 +127,8 @@ module Properties where
 
 _ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B
 (R , uniq) ᶠᵐ = (R , uniq , finiteness _)
+
+
+infix 2 All-syntax
+All-syntax = All
+syntax All-syntax (λ x → P) l = ∀[ x ∈ l ] P
