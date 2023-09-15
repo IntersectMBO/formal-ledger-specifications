@@ -81,7 +81,6 @@ above the threshold.
 
 import Data.Integer as Z
 import Data.Rational as R
-open import Data.Nat hiding (_≟_)
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 

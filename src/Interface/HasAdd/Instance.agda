@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Interface.HasAdd.Instance where
 
-open import Interface.HasAdd
+open import Interface.HasAdd  -- public
 open import Data.Integer as ℤ using (ℤ)
 open import Data.Nat     as ℕ using (ℕ)
 

@@ -23,6 +23,8 @@ open import Ledger.GovStructure
 open import Ledger.Script
 open import Ledger.Transaction
 
+open import Interface.HasOrder.Instance
+
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id
@@ -89,6 +91,7 @@ HSEpochStructure  = EpochStructure  ∋ ℕEpochStructure HSGlobalConstants
 open import Ledger.PParams HSEpochStructure
 
 -- Dummy private key crypto scheme
+-- open PKKScheme
 HSPKKScheme : PKKScheme
 HSPKKScheme = record
   { Implementation
@@ -98,6 +101,7 @@ HSPKKScheme = record
   ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
   }
 
+-- open Crypto
 HSCrypto : Crypto
 HSCrypto = record
   { Implementation
@@ -105,6 +109,7 @@ HSCrypto = record
   }
 
 -- No scripts for now
+-- open P1ScriptStructure
 HSP1ScriptStructure : P1ScriptStructure ℕ ℕ ℕ
 HSP1ScriptStructure = record
   { Implementation
@@ -112,6 +117,7 @@ HSP1ScriptStructure = record
   ; validP1Script? = λ _ _ ()
   }
 
+-- open PlutusStructure
 HSP2ScriptStructure : PlutusStructure ℕ ℕ ℕ
 HSP2ScriptStructure = record
   { Implementation

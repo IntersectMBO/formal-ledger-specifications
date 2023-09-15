@@ -3,7 +3,7 @@
 open import Ledger.Prelude hiding (_+_; _*_); open Computational' ⦃...⦄
 open import Ledger.Transaction
 
-module Ledger.PPUp.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.PPUp.Properties (txs : _) (open TransactionStructure txs  {- hiding (Dec-⊎) -}) where
 
 open import Ledger.PPUp txs
 
@@ -30,6 +30,7 @@ private
 
 instance
   _ = Decidable²⇒Dec _<ˢ?_
+  -- _ = Decidable²⇒Dec _≤ˢ?_
 
   Computational'-PPUP : Computational' _⊢_⇀⦇_,PPUP⦈_
   Computational'-PPUP .computeProof Γ s = λ where
