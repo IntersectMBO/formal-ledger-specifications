@@ -4,7 +4,7 @@ module Ledger.Epoch where
 
 open import Ledger.Prelude
 
-open import Data.Nat using () renaming (_<_ to _<ℕ_)
+-- open import Data.Nat using () renaming (_<_ to _<ℕ_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 
 open import Algebra using (Semiring)
@@ -33,6 +33,10 @@ record EpochStructure : Set₁ where
         StabilityWindow : Slot
         sucᵉ : Epoch → Epoch
         instance DecEq-Epoch : DecEq Epoch
+
+  instance
+    stoSlot : HasStrictTotalOrder Slot _≡_
+    stoSlot = record { _<_ = _<ˢ_ ; isStrictTotalOrder = Slot-STO }
 
   _>ˢ_ : Slot → Slot → Set
   _>ˢ_ = flip _<ˢ_
@@ -68,6 +72,10 @@ record EpochStructure : Set₁ where
   ≤ˢ-isPartialOrder : IsPartialOrder _≡_ _≤ˢ_
   ≤ˢ-isPartialOrder = IsTotalOrder.isPartialOrder ≤ˢ-isTotalOrder
 
+  instance
+    poSlot : HasPartialOrder Slot _≡_
+    poSlot = record { _≤_ = _≤ˢ_ ; isPartialOrder = ≤ˢ-isPartialOrder }
+
   ≤ˢ-isPreorder : IsPreorder _≡_ _≤ˢ_
   ≤ˢ-isPreorder = IsPartialOrder.isPreorder ≤ˢ-isPartialOrder
 
@@ -80,17 +88,13 @@ record EpochStructure : Set₁ where
   _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
   _≤ˢ?_ = IsDecTotalOrder._≤?_ ≤ˢ-isDecTotalOrder
 
+  instance
+    decpoSlot : HasDecPartialOrder Slot _≡_
+    decpoSlot = record { _≤_ = _≤ˢ_ ; _≤?_ = _≤ˢ?_ }
+
   ℕtoEpoch : ℕ → Epoch
   ℕtoEpoch zero    = epoch (Semiring.0# Slotʳ)
   ℕtoEpoch (suc n) = sucᵉ (ℕtoEpoch n)
-
-  _+ᵉ_ : ℕ → Epoch → Epoch
-  zero +ᵉ e = e
-  suc n +ᵉ e = sucᵉ (n +ᵉ e)
-
-  open Semiring Slotʳ renaming (_+_ to _+ˢ_)
-  _+ᵉ'_ : Epoch → Epoch → Epoch
-  e +ᵉ' e' = epoch (firstSlot e +ˢ firstSlot e')
 
   _<ᵉ_ : Epoch → Epoch → Set
   e <ᵉ e' = firstSlot e <ˢ firstSlot e'
@@ -107,17 +111,25 @@ record EpochStructure : Set₁ where
   ≤ᵉ-isPreorder .IsPreorder.trans ij jk       = ≤ˢ-isTransitive ij jk
 
   instance
+    preoEpoch : HasPreorder Epoch _≡_
+    preoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = ≤ᵉ-isPreorder }
+
+  open Semiring Slotʳ renaming (_+_ to _+ˢ_)
+
+  _+ᵉ'_ : Epoch → Epoch → Epoch
+  e +ᵉ' e' = epoch (firstSlot e +ˢ firstSlot e')
+
+  instance
     addSlot : HasAdd Slot
     addSlot = record { _+_ = _+ˢ_ }
 
     addEpoch : HasAdd Epoch
     addEpoch = record { _+_ = _+ᵉ'_ }
 
-    poSlot : HasPartialOrder Slot _≡_
-    poSlot = record { _≤_ = _≤ˢ_ ; isPartialOrder = ≤ˢ-isPartialOrder }
+  _+ᵉ_ : ℕ → Epoch → Epoch
+  zero +ᵉ e = e
+  suc n +ᵉ e = sucᵉ (n +ᵉ e)
 
-    preoEpoch : HasPreorder Epoch _≡_
-    preoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = ≤ᵉ-isPreorder }
 
 module _ (gc : GlobalConstants) where
   open GlobalConstants gc
@@ -128,7 +140,7 @@ module _ (gc : GlobalConstants) where
   ℕEpochStructure .Epoch           = ℕ
   ℕEpochStructure .epoch     slot  = slot / SlotsPerEpochᶜ
   ℕEpochStructure .firstSlot e     = e * SlotsPerEpochᶜ
-  ℕEpochStructure ._<ˢ_            = _<ℕ_
+  ℕEpochStructure ._<ˢ_            = _<_
   ℕEpochStructure .Slot-STO        = <-isStrictTotalOrder
   ℕEpochStructure .StabilityWindow = StabilityWindowᶜ
   ℕEpochStructure .sucᵉ            = suc

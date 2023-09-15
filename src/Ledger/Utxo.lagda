@@ -15,7 +15,7 @@ open import Ledger.Prelude hiding (Dec₁)
 
 open import Algebra                        using (CommutativeMonoid)
 open import Data.Integer.Ext               using (posPart; negPart)
-open import Data.Nat as ℕ                  using (_≤?_)
+import Data.Nat as ℕ     --              using (_≤?_)
 open import Data.Nat.Properties            using (+-0-monoid; +-0-commutativeMonoid)
 open import Interface.Decidable.Instance   using (Decidable²⇒Dec; Dec₁; ¿_¿)
 
@@ -29,8 +29,9 @@ open import MyDebugOptions
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
 
+
 instance
-  _ = Decidable²⇒Dec _≤?_
+  _ = Decidable²⇒Dec ℕ._≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
@@ -157,6 +158,7 @@ record UTxOState : Set where
 ⟦_⟧ : {A : Set} → A → A
 ⟦_⟧ = id
 
+open HasDecPartialOrder ⦃ ... ⦄
 instance
   _ = ≟-∅
 
@@ -170,14 +172,14 @@ instance
   netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId
 
   Dec-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
-  Dec-inInterval {slot} {just x  , just y } with x ≤ˢ? slot | slot ≤ˢ? y
+  Dec-inInterval {slot} {just x  , just y } with x ≤? slot | slot ≤? y
   ... | no ¬p₁ | _      = no λ where (both (h₁ , h₂)) → ¬p₁ h₁
   ... | yes p₁ | no ¬p₂ = no λ where (both (h₁ , h₂)) → ¬p₂ h₂
   ... | yes p₁ | yes p₂ = yes (both (p₁ , p₂))
-  Dec-inInterval {slot} {just x  , nothing} with x ≤ˢ? slot
+  Dec-inInterval {slot} {just x  , nothing} with x ≤? slot
   ... | no ¬p = no  (λ where (lower h) → ¬p h)
   ... | yes p = yes (lower p)
-  Dec-inInterval {slot} {nothing , just x } with slot ≤ˢ? x
+  Dec-inInterval {slot} {nothing , just x } with slot ≤? x
   ... | no ¬p = no  (λ where (upper h) → ¬p h)
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} = yes none
@@ -253,9 +255,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
           donations     = UTxOState.donations s
       in
     txins tx ≢ ∅                           → txins tx ⊆ dom (utxo ˢ)
-    → inInterval slot (txvldt tx)          → minfee pp tx ≤ txfee tx
+    → inInterval slot (txvldt tx)          → minfee pp tx ℕ.≤ txfee tx
     → consumed pp s tx ≡ produced pp s tx  → coin (mint tx) ≡ 0
-    → txsize tx ≤ maxTxSize pp
+    → txsize tx ℕ.≤ maxTxSize pp
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins tx ᶜ) ∪ᵐˡ outs tx
                         , fees + txfee tx
@@ -281,10 +283,10 @@ instance
     with  ¿ txins tx ≢ ∅
           × txins tx ⊆ dom (UTxOState.utxo s ˢ)
           × inInterval (UTxOEnv.slot Γ) (txvldt tx)
-          × minfee (UTxOEnv.pparams Γ) tx ≤ txfee tx
+          × minfee (UTxOEnv.pparams Γ) tx ℕ.≤ txfee tx
           × consumed (UTxOEnv.pparams Γ) s tx ≡ produced (UTxOEnv.pparams Γ) s tx
           × coin (mint tx) ≡ 0
-          × txsize tx ≤ maxTxSize (UTxOEnv.pparams Γ) ¿
+          × txsize tx ℕ.≤ maxTxSize (UTxOEnv.pparams Γ) ¿
        | "work around mysterious Agda bug"
   ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | _ = refl
   ... | no q | _ = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))

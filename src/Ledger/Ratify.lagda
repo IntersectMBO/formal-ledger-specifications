@@ -92,7 +92,6 @@ open import Ledger.PParams epochStructure
 import Data.Integer as Z
 import Data.Maybe
 import Data.Rational as R
-open import Data.Nat hiding (_≟_)
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 open import Data.Product using (map₂)

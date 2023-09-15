@@ -2,7 +2,6 @@
 
 module Data.Nat.Properties.Ext where
 
-open import Data.Nat as ℕ using (ℕ ; _<_)
 open import Data.Nat.Properties
 open import Ledger.Prelude
 open import Relation.Nullary.Decidable
@@ -21,6 +20,6 @@ negInduction {P = P} P? P0 (N , ¬PN) with anyUpTo? (λ x → P? x ×-dec ¬? (P
     k<N⇒P'k {zero}  k<N = helper k<N P0
     k<N⇒P'k {suc k} k<N = helper k<N (proj₂ $ k<N⇒P'k {k} (<⇒≤ k<N))
 
-    k≤N⇒Pk : ∀ {k} → k ℕ.≤ N → P k
+    k≤N⇒Pk : ∀ {k} → k ≤ N → P k
     k≤N⇒Pk {zero}  k≤N = P0
     k≤N⇒Pk {suc k} k≤N = proj₂ $ k<N⇒P'k k≤N
