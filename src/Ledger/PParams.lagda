@@ -79,7 +79,7 @@ record PParams : Set where
         minimumAVS         : Coin
 
 paramsWellFormed : PParams → Bool
-paramsWellFormed pp = ⌊ ¬? (0 ∈? setFromList
+paramsWellFormed pp = ⌊ ¬? (0 ∈? fromList
   (maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
   ∷ collateralPercent ∷ ccTermLimit ∷ govExpiration ∷ govDeposit ∷ drepDeposit ∷ [])) ⌋ ∧
   ⌊ (ℕtoEpoch govExpiration) ≤ᵉ? drepActivity ⌋

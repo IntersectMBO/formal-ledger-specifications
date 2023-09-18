@@ -75,7 +75,7 @@ addAction s e aid addr a prev = s ∷ʳ (aid , record
 -- x is the anchor in those two cases, which we don't do anything with
 data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Set where
   GOV-Vote : ∀ {x k ast} → let open GovEnv Γ in
-    (aid , ast) ∈ setFromList s
+    (aid , ast) ∈ fromList s
     → canVote pparams (action ast) role
     ────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ inj₁ record { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x } ,GOV'⦈
