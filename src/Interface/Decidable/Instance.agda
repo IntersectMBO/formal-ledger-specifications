@@ -10,6 +10,8 @@ open import Data.Empty
 open import Data.Product
 open import Data.Unit
 open import Data.Sum
+open import Data.Maybe
+open import Data.Maybe.Relation.Unary.Any
 
 open import Relation.Binary renaming (Decidable to Decidable²)
 open import Relation.Binary.PropositionalEquality
@@ -55,3 +57,7 @@ instance
 
   Dec-≤ : ∀ {n m} → Dec (n ≤ m)
   Dec-≤ = Decidable²⇒Dec _≤?_
+
+  Dec-IsJust : ∀ {a} {A : Set a} {x : Maybe A} → Dec (Is-just x)
+  Dec-IsJust {x = just x} = yes (just _)
+  Dec-IsJust {x = nothing} = no λ ()
