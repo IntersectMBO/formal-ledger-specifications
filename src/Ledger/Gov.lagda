@@ -4,7 +4,7 @@
 {-# OPTIONS --safe #-}
 open import Ledger.Crypto
 
-open import Ledger.Prelude hiding (yes; no)
+open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
 open import Ledger.Epoch
 
 import Ledger.PParams as PP
@@ -17,9 +17,13 @@ module Ledger.Gov (TxId Network DocHash : Set)
                   (crypto : Crypto) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq TxId ⦄ where
 
 import Data.List as L
-open import Relation.Nullary.Decidable
+open import Relation.Nullary.Decidable renaming (map to mapᵈ)
 
 open import Ledger.GovernanceActions TxId Network DocHash es ppd ppHashable crypto
+
+open import Data.List.Relation.Unary.Any renaming (Any to Anyˡ; any? to decAny)
+open import Data.List.Membership.Propositional renaming (_∈_ to _∈ˡ_)
+open import Interface.Decidable.Instance
 
 open Crypto crypto
 
@@ -94,3 +98,46 @@ _⊢_⇀⦇_,GOV⦈_ = SS⇒BS (λ Γ → Γ ⊢_⇀⦇_,GOV'⦈_)
 \caption{TALLY types}
 \label{defs:tally-types}
 \end{figure*}
+
+\begin{code}[hide]
+open Computational' ⦃...⦄
+
+private
+  open Equivalence
+
+  any⇔∃ : ∀ {A : Set} {P : A → Set} {xs : List A} → Anyˡ P xs ⇔ (∃[ x ] x ∈ˡ xs × P x)
+  any⇔∃ .to   (here px)            = _ , here refl , px
+  any⇔∃ .to   (there p)            = let x , mem , px = any⇔∃ .to p in x , there mem , px
+  any⇔∃ .from (x , here refl , px) = here px
+  any⇔∃ .from (x , there mem , px) = there (any⇔∃ .from (x , mem , px))
+  any⇔∃ .to-cong   = cong (any⇔∃ .to)
+  any⇔∃ .from-cong = cong (any⇔∃ .from)
+
+  lookupActionId : (pparams : PParams) (role : GovRole) (aid : GovActionID) (s : GovState) →
+                   Dec (Anyˡ (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role) s)
+  lookupActionId pparams role aid = decAny λ _ → ¿ _ ¿
+
+instance
+  Computational'-GOV' : Computational' _⊢_⇀⦇_,GOV'⦈_
+  Computational'-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
+    case lookupActionId pparams role aid s of λ where
+      (yesᵈ p) →
+        case any⇔∃ .to p of λ where
+          (_ , mem , refl , cV) → just (_ , GOV-Vote (∈-fromList .to mem) cV)
+      (noᵈ _)  → nothing
+  Computational'-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) =
+    case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govDeposit ¿ of λ where
+      (yesᵈ (wf , dep)) → just (_ , GOV-Propose wf dep)
+      (noᵈ _)           → nothing
+  Computational'-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
+    with lookupActionId pparams role aid s | "bug"
+  ... | noᵈ ¬p | _ = ⊥-elim (¬p (any⇔∃ .from (_ , ∈-fromList .from mem , refl , cV)))
+  ... | yesᵈ p | _ with any⇔∃ .to p
+  ...   | (_ , mem , refl , cV) = refl
+  Computational'-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep)
+    with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govDeposit ¿ | "bug"
+  ... | yesᵈ _ | _ = refl
+  ... | noᵈ ¬p | _ = ⊥-elim (¬p (wf , dep))
+
+  Computational-GOV' = fromComputational' Computational'-GOV'
+\end{code}
