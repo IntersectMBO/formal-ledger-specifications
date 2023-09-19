@@ -8,12 +8,12 @@ import Data.List as L
 open import Ledger.Prelude
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Ledger (⋯ : _) (open TransactionStructure ⋯) where
+module Ledger.Ledger (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Gov govStructure
-open import Ledger.PPUp  ⋯
-open import Ledger.Utxo  ⋯
-open import Ledger.Utxow ⋯
+open import Ledger.PPUp txs
+open import Ledger.Utxo txs
+open import Ledger.Utxow txs
 open Tx
 \end{code}
 
@@ -71,12 +71,12 @@ data
 \begin{figure*}[h]
 \begin{code}
   LEDGER : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
-    record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    → ⟦ epoch slot , pparams , txvote ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    → ⟦ txid , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
-    → map stake (dom (txwdrls ˢ)) ⊆ dom (certState' .dState .voteDelegs ˢ)
-    ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+       record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    →  ⟦ epoch slot , pparams , txvote ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    →  ⟦ txid , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    →  map stake (dom (txwdrls ˢ)) ⊆ dom (certState' .dState .voteDelegs ˢ)
+       ────────────────────────────────
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}

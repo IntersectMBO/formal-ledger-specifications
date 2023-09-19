@@ -69,8 +69,8 @@ fold-cong↭ (trans h h₁) = ≈-trans (fold-cong↭ h) (fold-cong↭ h₁)
 indexedSum : ⦃ _ : DecEq A ⦄ → (A → Carrier) → FinSet A → Carrier
 indexedSum f = let open FactorUnique _≈_ (indexedSumL' f) fold-cong↭ in factor
 
-indexedSumL-++ : {l l' : List A} →
-  indexedSumL f (l ++ l') ≈ indexedSumL f l ∙ indexedSumL f l'
+indexedSumL-++ : {l l' : List A}
+  → indexedSumL f (l ++ l') ≈ indexedSumL f l ∙ indexedSumL f l'
 indexedSumL-++ {f = f} {l = l} {l'} = begin
   indexedSumL f (l ++ l')                   ≡⟨ foldr-++ (λ x → f x ∙_) ε l l' ⟩
   foldr (λ x → f x ∙_) (indexedSumL f l') l ≈⟨ helper (indexedSumL f l') l f ⟩
@@ -102,8 +102,8 @@ module _ ⦃ _ : DecEq A ⦄ {f : A → Carrier} where
   indexedSum-singleton : ∀ {x} → indexedSum f (❴ x ❵ , singleton-finite) ≈ f x
   indexedSum-singleton = identityʳ _
 
-  indexedSum-singleton' : ∀ {x} → (pf : finite ❴ x ❵) →
-    indexedSum f (❴ x ❵ , pf) ≈ f x
+  indexedSum-singleton' : ∀ {x} → (pf : finite ❴ x ❵)
+    → indexedSum f (❴ x ❵ , pf) ≈ f x
   indexedSum-singleton' {x = x} pf =
     ≈-trans (indexedSum-cong {x = -, pf} {y = -, singleton-finite} ≡ᵉ.refl)
             indexedSum-singleton
@@ -117,8 +117,8 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   indexedSumᵐᵛ : (B → Carrier) → FinMap A B → Carrier
   indexedSumᵐᵛ f = indexedSumᵐ (f ∘ proj₂)
 
-  indexedSumᵐ-cong : {f : A × B → Carrier} →
-    indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
+  indexedSumᵐ-cong : {f : A × B → Carrier}
+    → indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵐ-cong {x = x , _ , h} {y , _ , h'} = indexedSum-cong {x = x , h} {y , h'}
 
   module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Decidable¹ (_∈ X)) where

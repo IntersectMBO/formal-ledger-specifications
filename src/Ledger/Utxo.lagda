@@ -19,7 +19,7 @@ open import Tactic.Derive.DecEq
 open import Ledger.Prelude
 open import Ledger.Transaction
 
-module Ledger.Utxo (⋯ : _) (open TransactionStructure ⋯) where
+module Ledger.Utxo (txs : _) (open TransactionStructure txs) where
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
@@ -81,21 +81,20 @@ module _ (open TxBody) where
     DRepDeposit        : Credential   → DepositPurpose
     GovActionDeposit   : GovActionID  → DepositPurpose
 
-  module _ (pp : PParams) where
-    certDeposit : DCert → Maybe (DepositPurpose × Coin)
-    certDeposit (delegate c _ _ v)  = just (CredentialDeposit c , v)
-    certDeposit (regpool c _)       = just (PoolDeposit       c , pp .poolDeposit)
-    certDeposit (regdrep c v _)     = just (DRepDeposit       c , v)
-    certDeposit _                   = nothing
+  certDeposit : PParams → DCert → Maybe (DepositPurpose × Coin)
+  certDeposit pp (delegate c _ _ v)  = just (CredentialDeposit c , v)
+  certDeposit pp (regpool c _)       = just (PoolDeposit       c , pp .poolDeposit)
+  certDeposit pp (regdrep c v _)     = just (DRepDeposit       c , v)
+  certDeposit pp _                   = nothing
 
-    certDepositᵐ : DCert → DepositPurpose ⇀ Coin
-    certDepositᵐ cert = case certDeposit cert of λ where
-      (just (p , v))  → ❴ p , v ❵ᵐ
-      nothing         → ∅ᵐ
+  certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
+  certDepositᵐ pp cert = case certDeposit pp cert of λ where
+    (just (p , v))  → ❴ p , v ❵ᵐ
+    nothing         → ∅ᵐ
 
-    propDepositᵐ : GovActionID → GovProposal → DepositPurpose ⇀ Coin
-    propDepositᵐ gaid record { returnAddr = record { stake = c } }
-      = ❴ GovActionDeposit gaid , pp .govDeposit ❵ᵐ
+  propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
+  propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
+    = ❴ GovActionDeposit gaid , pp .govDeposit ❵ᵐ
 
   certRefund : DCert → Maybe DepositPurpose
   certRefund (delegate c nothing nothing x)  = just (CredentialDeposit c)
@@ -157,8 +156,8 @@ record UTxOState : Set where
 instance
   _ = ≟-∅
 
-  netId? : ∀ {A : Set} {networkId : Network} {f : A → Network} →
-    Dec₁ (λ a → f a ≡ networkId)
+  netId? : ∀ {A : Set} {networkId : Network} {f : A → Network}
+    → Dec₁ (λ a → f a ≡ networkId)
   netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId
 
   Dec-inInterval : ∀ {slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
@@ -190,44 +189,49 @@ data
 
 \begin{figure*}
 \begin{code}
-module _ (pp : PParams) where
-  updateCertDeposits : List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updateCertDeposits = flip go where go = λ deposits → λ where
-    [] → deposits
-    (cert ∷ certs)  →  ((updateCertDeposits certs deposits) ∪⁺ certDepositᵐ pp cert)
-                    ∣  certRefundˢ cert ᶜ
+\end{code}
+\begin{code}[hide]
+module _ (let open UTxOState; open TxBody) where
+\end{code}
+\begin{code}
+  updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin
+    → DepositPurpose ⇀ Coin
+  updateCertDeposits pp [] deposits = deposits
+  updateCertDeposits pp (cert ∷ certs) deposits
+    =  updateCertDeposits pp certs deposits ∪⁺ certDepositᵐ pp cert
+    ∣  certRefundˢ cert ᶜ
 
-  updateProposalDeposits :
-    TxId → List GovProposal → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updateProposalDeposits txid = flip go where go = λ deposits → λ where
-    [] → deposits
-    (prop ∷ props)  →   updateProposalDeposits txid props deposits
-                    ∪⁺  propDepositᵐ pp (txid , length props) prop
+  updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ⇀ Coin
+    → DepositPurpose ⇀ Coin
+  updateProposalDeposits pp txid [] deposits = deposits
+  updateProposalDeposits pp txid (prop ∷ props) deposits
+    =   updateProposalDeposits pp txid props deposits
+    ∪⁺  propDepositᵐ pp (txid , length props) prop
 
-  module _ (txb : _) (open TxBody txb) where
-    updateDeposits : DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-    updateDeposits  =  updateCertDeposits txcerts
-                    ∘  updateProposalDeposits txid txprop
+  updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+  updateDeposits pp txb
+    =  updateCertDeposits pp (txb .txcerts)
+    ∘  updateProposalDeposits pp (txb .txid) (txb .txprop)
 
-    depositsChange : DepositPurpose ⇀ Coin → ℤ
-    depositsChange deposits  =  getCoin (updateDeposits deposits)
-                             ⊖  getCoin deposits
+  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
+  depositsChange pp txb deposits
+    =  getCoin (updateDeposits pp txb deposits)
+    ⊖  getCoin deposits
 
-  module _ (st : _) (open UTxOState st) (txb : _) (open TxBody txb) where
-    private dc = depositsChange txb deposits
+  depositRefunds newDeposits : PParams → UTxOState → TxBody → Coin
+  depositRefunds  pp st txb = negPart  $ depositsChange pp txb (st .deposits)
+  newDeposits     pp st txb = posPart  $ depositsChange pp txb (st .deposits)
 
-    depositRefunds newDeposits : Coin
-    depositRefunds  = negPart  dc
-    newDeposits     = posPart  dc
-
-    consumed produced : Value
-    consumed  = balance (utxo ∣ txins)
-              + mint
-              + inject depositRefunds
-    produced  = balance (outs txb)
-              + inject txfee
-              + inject newDeposits
-              + inject txdonation
+  consumed produced : PParams → UTxOState → TxBody → Value
+  consumed pp st txb
+    =  balance (st .utxo ∣ txb .txins)
+    +  txb .mint
+    +  inject (depositRefunds pp st txb)
+  produced pp st txb
+    =  balance (outs txb)
+    +  inject (txb .txfee)
+    +  inject (newDeposits pp st txb)
+    +  inject (txb .txdonation)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-2}
@@ -250,12 +254,12 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     →  inInterval slot txvldt               → minfee pp tx ≤ txfee
     →  consumed pp s tx ≡ produced pp s tx  → coin mint ≡ 0
     →  txsize ≤ maxTxSize pp
-    ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ᵐˡ (outs tx)
-                        , fees + txfee
-                        , updateDeposits pp tx deposits
-                        , donations + txdonation
-                        ⟧ᵘ
+       ────────────────────────────────
+       Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ᵐˡ (outs tx)
+                           , fees + txfee
+                           , updateDeposits pp tx deposits
+                           , donations + txdonation
+                           ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 open Computational'

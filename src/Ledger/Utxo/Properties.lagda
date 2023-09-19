@@ -23,10 +23,10 @@ open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm 
 open import Ledger.Prelude; open Properties; open Computational
 open import Ledger.Transaction
 
-module Ledger.Utxo.Properties (⋯ : _) (open TransactionStructure ⋯) where
+module Ledger.Utxo.Properties (txs : _) (open TransactionStructure txs) where
 
 open TxBody
-open import Ledger.Utxo ⋯ renaming (Computational-UTXO to Computational-UTXO')
+open import Ledger.Utxo txs renaming (Computational-UTXO to Computational-UTXO')
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra

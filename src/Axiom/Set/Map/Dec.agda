@@ -25,8 +25,8 @@ private variable A B C D : Type
 module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
   open Lookupᵐ sp-∈
 
-  unionThese : ⦃ DecEq A ⦄ → (m : Map A B) (m' : Map A C) (x : A) →
-    x ∈ dom (m ˢ) ∪ dom (m' ˢ) → These B C
+  unionThese : ⦃ DecEq A ⦄ → (m : Map A B) (m' : Map A C) (x : A)
+    → x ∈ dom (m ˢ) ∪ dom (m' ˢ) → These B C
   unionThese m m' x dp with x ∈? dom (m ˢ) | x ∈? dom (m' ˢ)
   ... | yes mr | yes mr' = these (lookupᵐ m x) (lookupᵐ m' x)
   ... | yes mr | no  mr' = this  (lookupᵐ m x)

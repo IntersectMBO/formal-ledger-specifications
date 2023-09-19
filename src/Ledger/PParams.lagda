@@ -14,7 +14,7 @@ open import Ledger.Prelude
 open import Ledger.Epoch
 open import Ledger.Crypto
 
-module Ledger.PParams (⋯ : _) (open EpochStructure ⋯) where
+module Ledger.PParams (es : _) (open EpochStructure es) where
 \end{code}
 \begin{figure*}[h!]
 {\small

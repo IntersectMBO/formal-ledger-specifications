@@ -135,9 +135,10 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 
 module _ {f : A → B} {g : B → C} where
   map-⊆∘ : map g (map f X) ⊆ map (g ∘ f) X
-  map-⊆∘ a∘∈ with from ∈-map a∘∈
-  ... | b , a≡gb , b∈prfX with from ∈-map b∈prfX
-  ...                     | a , refl , a∈X = to ∈-map (a , a≡gb , a∈X)
+  map-⊆∘ a∘∈
+    with b , a≡gb , b∈prfX ← from ∈-map a∘∈
+    with a , refl , a∈X    ← from ∈-map b∈prfX
+    = to ∈-map (a , a≡gb , a∈X)
 
   map-∘⊆ : map (g ∘ f) X ⊆ map g (map f X)
   map-∘⊆ a∈∘ with from ∈-map a∈∘

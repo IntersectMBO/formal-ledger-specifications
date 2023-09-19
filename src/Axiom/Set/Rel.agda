@@ -125,8 +125,6 @@ mapMaybeWithKey f r = mapPartial (mapPartialLiftKey f) r
   → (a , b') ∈ mapMaybeWithKey f r
   → ∃[ b ] (just b' ≡ f a b × (a , b) ∈ r)
 ∈-mapMaybeWithKey {a = a} {b'} {f} ab'∈
-  -- with p ← to (∈-map {f = just}) ((a , b') , refl , ab'∈)
-  -- = mapPartialLiftKey-map {f = f} (⊆-mapPartial p)
   = mapPartialLiftKey-map {f = f}
   $ ⊆-mapPartial
   $ to (∈-map {f = just}) ((a , b') , refl , ab'∈)

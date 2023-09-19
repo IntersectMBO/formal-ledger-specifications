@@ -2,15 +2,13 @@
 
 module Ledger.Epoch where
 
+open import Ledger.Prelude hiding (compare)
+
 open import Algebra
 open import Relation.Binary
 open import Relation.Nullary.Negation
 open import Data.Nat using (_<_)
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
-
-open import Interface.Decidable.Instance
-
-open import Ledger.Prelude hiding (compare)
 
 record EpochStructure : Set₁ where
   field Slotʳ : Semiring 0ℓ 0ℓ

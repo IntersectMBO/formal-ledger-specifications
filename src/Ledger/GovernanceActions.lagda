@@ -24,7 +24,7 @@ open import Relation.Nullary.Decidable using (dec-yes)
 
 open import Tactic.Derive.DecEq
 
-module Ledger.GovernanceActions (⋯ : _) (open GovStructure ⋯) where
+module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
 2ℚ = 1ℚ Data.Rational.+ 1ℚ
 \end{code}
@@ -159,14 +159,13 @@ Ratified actions are then \defn{enacted} on-chain, following a set of rules (see
 {\small
 \begin{code}
 NeedsHash : GovAction → Set
-NeedsHash = λ where
-  NoConfidence           → GovActionID
-  (NewCommittee _ _ _)   → GovActionID
-  (NewConstitution _ _)  → GovActionID
-  (TriggerHF _)          → GovActionID
-  (ChangePParams _)      → GovActionID
-  (TreasuryWdrl _)       → ⊤
-  Info                   → ⊤
+NeedsHash NoConfidence           = GovActionID
+NeedsHash (NewCommittee _ _ _)   = GovActionID
+NeedsHash (NewConstitution _ _)  = GovActionID
+NeedsHash (TriggerHF _)          = GovActionID
+NeedsHash (ChangePParams _)      = GovActionID
+NeedsHash (TreasuryWdrl _)       = ⊤
+NeedsHash Info                   = ⊤
 
 HashProtected : Set → Set
 HashProtected A = A × GovActionID
@@ -281,8 +280,8 @@ record EnactState : Set where
         withdrawals   : RwdAddr ⇀ Coin
 
 ccCreds : HashProtected (Maybe (Credential ⇀ Epoch × ℚ)) → ℙ Credential
-ccCreds (just x  , _) = dom (proj₁ x ˢ)
-ccCreds (nothing , _) = ∅
+ccCreds (just x  , _)  = dom (x .proj₁ ˢ)
+ccCreds (nothing , _)  = ∅
 \end{code}
 } %% end small
 \caption{Enactment types}
@@ -332,8 +331,8 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
                 record  s { constitution = (dh , sh) , gid }
 
   Enact-HF :
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ TriggerHF v ,ENACT⦈
-                 record s { pv = v , gid }
+    ⟦ gid , t , e ⟧ᵉ ⊢   s ⇀⦇ TriggerHF v ,ENACT⦈
+                 record  s { pv = v , gid }
 
   Enact-PParams :
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ ChangePParams up ,ENACT⦈
