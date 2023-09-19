@@ -1,27 +1,25 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Axiom.Set
+open import Agda.Primitive using (lzero) renaming (Set to Type)
+open import Axiom.Set using (Theory)
+
+module Axiom.Set.Rel (th : Theory {lzero}) where
+
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 import Function.Related.Propositional as R
 
-module Axiom.Set.Rel (th : Theory {lzero}) where
 open Theory th
 open import Axiom.Set.Properties th
 
 open import Prelude hiding (filter)
 
 import Data.Product
-import Data.Sum
 open import Data.These hiding (map)
-open import Data.List.Ext.Properties
-open import Data.Product.Properties
 open import Data.Maybe.Base using () renaming (map to map?)
-open import Interface.DecEq
-open import Relation.Unary using () renaming (Decidable to Decidable¹)
-open import Relation.Nullary
-open import Relation.Binary hiding (Rel)
+open import Relation.Unary using (Decidable)
+open import Relation.Nullary using (yes; no)
+open import Relation.Binary using (_Preserves_⟶_)
 import Relation.Binary.PropositionalEquality as I
 
 open Equivalence
@@ -173,7 +171,7 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-∅ : R ∣ ∅ ≡ᵉ ∅
   res-∅ = dom-∅ res-dom
 
-  res-ex-∪ : Decidable¹ (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
+  res-ex-∪ : Decidable (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
   res-ex-∪ ∈X? = ∪-⊆ res-⊆ ex-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where
     (yes p) → ∈⇔P (inj₁ (∈⇔P (p , h)))
     (no ¬p) → ∈⇔P (inj₂ (∈⇔P (¬p , h)))
@@ -181,7 +179,7 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-ex-disjoint : disjoint (dom (R ∣ X)) (dom (R ∣ X ᶜ))
   res-ex-disjoint h h' = res-comp-dom h' (res-dom h)
 
-  res-ex-disj-∪ : Decidable¹ (_∈ X) → R ≡ (R ∣ X) ⨿ (R ∣ X ᶜ)
+  res-ex-disj-∪ : Decidable (_∈ X) → R ≡ (R ∣ X) ⨿ (R ∣ X ᶜ)
   res-ex-disj-∪ ∈X? = IsEquivalence.sym ≡ᵉ-isEquivalence (res-ex-∪ ∈X?)
                     , disjoint-dom⇒disjoint res-ex-disjoint
     where open import Relation.Binary using (IsEquivalence)

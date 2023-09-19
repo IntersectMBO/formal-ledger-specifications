@@ -7,18 +7,17 @@ module Axiom.Set where
 open import Prelude hiding (filter)
 
 import Function.Related.Propositional as R
-open import Data.List.Ext.Properties
+open import Data.List.Ext.Properties using (∈-dedup; _×-cong_)
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there)
-open import Data.List.Relation.Unary.Unique.DecPropositional.Properties
-open import Data.List.Relation.Unary.Unique.Propositional
-open import Data.Maybe.Properties.Ext
+open import Data.List.Relation.Unary.Unique.DecPropositional.Properties using (deduplicate-!)
+open import Data.List.Relation.Unary.Unique.Propositional using (Unique; [])
 open import Data.Product.Algebra using (×-comm)
-open import Data.Product.Properties
-open import Data.Product.Properties.Ext
-open import Interface.DecEq
+open import Data.Product.Properties using (∃∃↔∃∃)
+open import Data.Product.Properties.Ext using (∃-cong′; ∃-≡)
+open import Interface.DecEq using (DecEq; _≟_)
 open import Relation.Binary using () renaming (Decidable to Dec₂)
-open import Relation.Nullary
+open import Relation.Nullary using (¬?; Dec; yes; no)
 open import Relation.Nullary.Decidable using (⌊_⌋)
 open import Relation.Unary using (Pred) renaming (Decidable to Decidable¹)
 
