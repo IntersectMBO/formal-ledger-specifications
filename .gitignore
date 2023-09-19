@@ -3,3 +3,7 @@
 **/dist-newstyle/
 .editorconfig
 result*
+
+*.pdf
+src/latex/Ledger/*
+src/latex/MidnightExample/*

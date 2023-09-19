@@ -117,7 +117,8 @@ computeBlockHash b = hash (slotNo , blockNo , prev , body)
   where open Block b
 
 addBlockHash : Block → Block
-addBlockHash b = record b { header = record header { blockHash = computeBlockHash b } }
+addBlockHash b = record b
+  { header = record header { blockHash = computeBlockHash b } }
   where open Block b
 \end{code}
 \caption{Blocks and functions related to them}
