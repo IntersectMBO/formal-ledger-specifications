@@ -7,10 +7,10 @@ open import Ledger.Prelude; open Computational' ⦃...⦄
 open import Ledger.Crypto
 open import Ledger.Transaction
 
-module Ledger.Utxow.Properties (⋯ : _) (open TransactionStructure ⋯) where
+module Ledger.Utxow.Properties (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.Utxow ⋯
-open import Ledger.Utxo  ⋯
+open import Ledger.Utxow txs
+open import Ledger.Utxo txs
 
 private
   UTXOW-premise : ∀ Γ s tx → Set

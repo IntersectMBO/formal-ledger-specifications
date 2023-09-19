@@ -15,7 +15,7 @@ open import Data.Product.Properties
 open import Ledger.Prelude hiding (_*_)
 open import Ledger.Transaction
 
-module Ledger.PPUp (⋯ : _) (open TransactionStructure ⋯) where
+module Ledger.PPUp (txs : _) (open TransactionStructure txs) where
 
 open Semiring Slotʳ using (_*_)
 open Semiring-Lit Slotʳ

@@ -1,8 +1,9 @@
 {-# OPTIONS --overlapping-instances #-}
 module Foreign.Convertible where
 
-open import Data.List using (map)
 open import Ledger.Prelude hiding (map)
+
+open import Data.List using (map)
 
 open import Foreign.Haskell
 open import Foreign.Haskell.Coerce

@@ -49,11 +49,15 @@ record BootstrapAddr : Set where
 record RwdAddr : Set where
   field net    : Network
         stake  : Credential
-
-VKeyBaseAddr         = ∃ (isVKey    ∘ BaseAddr.pay)
-VKeyBootstrapAddr    = ∃ (isVKey    ∘ BootstrapAddr.pay)
-ScriptBaseAddr       = ∃ (isScript  ∘ BaseAddr.pay)
-ScriptBootstrapAddr  = ∃ (isScript  ∘ BootstrapAddr.pay)
+\end{code}
+\begin{code}[hide]
+open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
+\end{code}
+\begin{code}
+VKeyBaseAddr         = Σ[ addr ∈ BaseAddr       ] isVKey    (addr .pay)
+VKeyBootstrapAddr    = Σ[ addr ∈ BootstrapAddr  ] isVKey    (addr .pay)
+ScriptBaseAddr       = Σ[ addr ∈ BaseAddr       ] isScript  (addr .pay)
+ScriptBootstrapAddr  = Σ[ addr ∈ BootstrapAddr  ] isScript  (addr .pay)
 
 Addr        = BaseAddr        ⊎ BootstrapAddr
 VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr

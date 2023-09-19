@@ -6,9 +6,9 @@
 open import Ledger.Prelude
 open import Ledger.GovStructure
 
-module Ledger.Deleg (⋯ : _) (open GovStructure ⋯) where
+module Ledger.Deleg (gs : _) (open GovStructure gs) where
 
-open import Ledger.GovernanceActions ⋯ using (Anchor; VDeleg; GovVote; GovRole)
+open import Ledger.GovernanceActions gs hiding (yes; no)
 
 \end{code}
 \begin{figure*}[h]
@@ -87,30 +87,29 @@ private variable
   pp : PParams
   vs : List GovVote
   poolParams : PoolParams
+
+module _ (open PParams) where
 \end{code}
 \begin{code}
-cwitness : DCert → Credential
-cwitness = λ where
-  (delegate c _ _ _)  → c
-  (regpool c _)       → c
-  (retirepool c _)    → c
-  (regdrep c _ _)     → c
-  (deregdrep c)       → c
-  (ccreghot c _)      → c
+  cwitness : DCert → Credential
+  cwitness (delegate c _ _ _)  = c
+  cwitness (regpool c _)       = c
+  cwitness (retirepool c _)    = c
+  cwitness (regdrep c _ _)     = c
+  cwitness (deregdrep c)       = c
+  cwitness (ccreghot c _)      = c
 
-requiredDeposit : {A : Set} → PParams → Maybe A → Coin
-requiredDeposit pp = let open PParams pp in λ where
-  (just _)  → poolDeposit
-  nothing   → 0
+  requiredDeposit : {A : Set} → PParams → Maybe A → Coin
+  requiredDeposit pp (just _)  = pp .poolDeposit
+  requiredDeposit pp nothing   = 0
 
-insertIfJust : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ⇀ B → A ⇀ B
-insertIfJust x nothing  m  = m
-insertIfJust x (just y) m  = insert m x y
+  insertIfJust : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ⇀ B → A ⇀ B
+  insertIfJust x nothing  m  = m
+  insertIfJust x (just y) m  = insert m x y
 
-getDRepVote : GovVote → Maybe Credential
-getDRepVote = λ where
-  record { role = GovRole.DRep ; credential = credential }  → just credential
-  _                                                         → nothing
+  getDRepVote : GovVote → Maybe Credential
+  getDRepVote record { role = DRep ; credential = credential }  = just credential
+  getDRepVote _                                                 = nothing
 \end{code}
 \caption{Functions used for CERTS transition system}
 \end{figure*}

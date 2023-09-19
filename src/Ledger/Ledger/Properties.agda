@@ -10,20 +10,20 @@ open import Tactic.ReduceDec using (fromWitness')
 open import Ledger.Prelude; open Equivalence; open Computational
 open import Ledger.Transaction
 
-module Ledger.Ledger.Properties (⋯ : _) (open TransactionStructure ⋯) where
+module Ledger.Ledger.Properties (txs : _) (open TransactionStructure txs) where
 
 open TxBody
 open TxWitnesses
 open Tx
 
 open import Ledger.Gov govStructure
-open import Ledger.Utxo   ⋯
-open import Ledger.Ledger ⋯
-open import Ledger.Utxow  ⋯
-open import Ledger.PPUp   ⋯
+open import Ledger.Utxo txs
+open import Ledger.Ledger txs
+open import Ledger.Utxow txs
+open import Ledger.PPUp txs
 
-import Ledger.Utxo.Properties  ⋯ as P
-import Ledger.Utxow.Properties ⋯ as PW
+import Ledger.Utxo.Properties txs as P
+import Ledger.Utxow.Properties txs as PW
 
 private variable
   tx : Tx

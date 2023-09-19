@@ -10,12 +10,12 @@ open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
 
-module Ledger.Chain (⋯ : _) (open TransactionStructure ⋯) where
+module Ledger.Chain (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Gov govStructure
-open import Ledger.Ledger ⋯
-open import Ledger.Ratify ⋯
-open import Ledger.Utxo ⋯
+open import Ledger.Ledger txs
+open import Ledger.Ratify txs
+open import Ledger.Utxo txs
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -55,19 +55,22 @@ private variable
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
--- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:
--- it also does what EPOCH used to do in previous eras
+-- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:t also does what EPOCH used to do in previous eras
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
   NEWEPOCH-New : ∀ {Γ} → let
       open NewEpochState nes hiding (es)
-      open RatifyState fut using (removed) renaming (es to esW); open EnactState esW
+      open RatifyState fut using (removed) renaming (es to esW)
       -- ^ this rolls over the future enact state into es
       open LState ls; open UTxOState utxoSt
-      open CertState certState; open PState pState; open DState dState; open GState gState
+      open CertState certState
+      open PState pState; open DState dState; open GState gState
       open Acnt acnt
+
+      trWithdrawals   = esW .EnactState.withdrawals
+      totWithdrawals  = Σᵐᵛ[ x ← trWithdrawals ᶠᵐ ] x
 
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         map (GovActionState.returnAddr gaSt ,_)
@@ -77,12 +80,12 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 
       es        = record esW { withdrawals = ∅ᵐ }
       retired   = retiring ⁻¹ e
-      refunds   = govActionReturns ∪⁺ withdrawals ∣ dom (rewards ˢ)
-      unclaimed = govActionReturns ∪⁺ withdrawals ∣ dom (rewards ˢ) ᶜ
+      refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ)
+      unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ) ᶜ
 
       govSt' = filter (¬? ∘ (_∈? map proj₁ removed) ∘ proj₁) govSt
 
-      gState' = record gState { ccHotKeys = ccHotKeys ∣ ccCreds cc }
+      gState' = record gState { ccHotKeys = ccHotKeys ∣ ccCreds (es .EnactState.cc) }
 
       certState' = record certState {
         pState = record pState
@@ -100,8 +103,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       ls' = record ls
         { govSt = govSt' ; utxoSt = utxoSt' ; certState = certState' }
       acnt' = record acnt
-        { treasury = treasury + fees + getCoin unclaimed + donations
-                   ∸ Σᵐᵛ[ x ← withdrawals ᶠᵐ ] x }
+        { treasury = treasury + fees + getCoin unclaimed + donations ∸ totWithdrawals }
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }

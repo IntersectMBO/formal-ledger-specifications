@@ -138,8 +138,8 @@ disj-∪ m m' disj = m ˢ ∪ m' ˢ , λ h h' → case ∈⇔P h , ∈⇔P h' of
 filterᵐ : {P : A × B → Type} → specProperty P → Map A B → Map A B
 filterᵐ sp-P m = filter sp-P (m ˢ) , ⊆-left-unique filter-⊆ (proj₂ m)
 
-filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Decidable¹ P →
-  finite (m ˢ) → finite (filterᵐ sp m ˢ)
+filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Decidable¹ P
+  → finite (m ˢ) → finite (filterᵐ sp m ˢ)
 filterᵐ-finite = filter-finite
 
 singletonᵐ : A → B → Map A B

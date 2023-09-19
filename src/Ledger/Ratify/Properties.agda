@@ -3,10 +3,10 @@
 open import Ledger.Prelude
 open import Ledger.Transaction
 
-module Ledger.Ratify.Properties (⋯ : _) (open TransactionStructure ⋯) where
+module Ledger.Ratify.Properties (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Gov govStructure
-open import Ledger.Ratify ⋯
+open import Ledger.Ratify txs
 
 caseEq_of_ : ∀ {a b} {A : Set a} {B : Set b} → (a : A) → ((a' : A) → a ≡ a' → B) → B
 caseEq a of f = f a refl

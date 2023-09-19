@@ -6,7 +6,7 @@
 \tableofcontents
 
 \begin{code}[hide]
-{-# OPTIONS  #-}
+{-# OPTIONS --safe #-}
 
 module Ledger.PDF where
 

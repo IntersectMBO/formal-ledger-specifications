@@ -15,9 +15,9 @@ open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
 open import Ledger.Crypto
 open import Ledger.GovStructure
 
-module Ledger.Gov (⋯ : _) (open GovStructure ⋯ hiding (epoch)) where
+module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
-open import Ledger.GovernanceActions ⋯
+open import Ledger.GovernanceActions gs
 \end{code}
 \begin{figure*}[h]
 \begin{code}

@@ -111,8 +111,8 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   strongly-finite : Set A → Type ℓ
   strongly-finite X = ∃[ l ] Unique l × ∀ {a} → a ∈ X ⇔ a ∈ˡ l
 
-  DecEq∧finite⇒strongly-finite : ⦃ _ : DecEq A ⦄ (X : Set A) →
-    finite X → strongly-finite X
+  DecEq∧finite⇒strongly-finite : ⦃ _ : DecEq A ⦄ (X : Set A)
+    → finite X → strongly-finite X
   DecEq∧finite⇒strongly-finite ⦃ eq? ⦄ X (l , h) = let _≟_ = eq? ._≟_ in
     deduplicate _≟_ l , deduplicate-! _≟_ l , λ {a} →
       a ∈ X                  ∼⟨ h ⟩
@@ -206,8 +206,8 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   concatMapˢ : (A → Set B) → Set A → Set B
   concatMapˢ f a = proj₁ $ unions (map f a)
 
-  ∈-concatMapˢ : {y : B} {f : A → Set B} →
-    (∃[ x ] x ∈ X × y ∈ f x) ⇔ y ∈ concatMapˢ f X
+  ∈-concatMapˢ : {y : B} {f : A → Set B}
+    → (∃[ x ] x ∈ X × y ∈ f x) ⇔ y ∈ concatMapˢ f X
   ∈-concatMapˢ {X = X} {y} {f} =
     (∃[ x ] x ∈ X × y ∈ f x)
       ∼⟨ ∃-cong′ (λ {x} → ∃-≡ (λ T → x ∈ X × y ∈ T)) ⟩
@@ -227,8 +227,8 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   mapPartial : (A → Maybe B) → Set A → Set B
   mapPartial f = concatMapˢ (partialToSet f)
 
-  ∈-mapPartial : {y : B} {f : A → Maybe B} →
-    (∃[ x ] x ∈ X × f x ≡ just y) ⇔ y ∈ mapPartial f X
+  ∈-mapPartial : {y : B} {f : A → Maybe B}
+    → (∃[ x ] x ∈ X × f x ≡ just y) ⇔ y ∈ mapPartial f X
   ∈-mapPartial {X = X} {y} {f} =
     (∃[ x ] x ∈ X × f x ≡ just y)
       ∼⟨ ∃-cong′ (R.K-refl ×-cong (∈-partialToSet {f = f})) ⟩
@@ -314,10 +314,10 @@ record Theoryᵈ : Type₁ where
     all? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Decidable¹ P) {X : Set A} → Dec (All P X)
     any? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Decidable¹ P) (X : Set A) → Dec (Any P X)
 
-  _∈ᵇ_ : ⦃ DecEq A ⦄ → A → Set A → Bool
-  a ∈ᵇ X = ⌊ a ∈? X ⌋
-
   module _ {A : Type} ⦃ _ : DecEq A ⦄ where
+
+    _∈ᵇ_ : A → Set A → Bool
+    a ∈ᵇ X = ⌊ a ∈? X ⌋
 
     instance
       Dec-∈ : {x : A} {X : Set A} → Dec (x ∈ X)
@@ -352,9 +352,10 @@ record Theoryᵈ : Type₁ where
       incl-set-proj₁⊇ {x} x∈X with x ∈? X in eq
       ... | no ¬p = contradiction x∈X ¬p
       ... | yes p = to ∈-map
-        $ (x , p)
+        ( (x , p)
         , refl
         , to (∈-mapPartial {f = incl-set' X}) (x , x∈X , helper eq)
+        )
         where helper : x ∈? X ≡ yes p → incl-set' X x ≡ just (x , p)
               helper h with x ∈? X | h
               ... | _ | refl = refl

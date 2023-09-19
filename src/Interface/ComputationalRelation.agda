@@ -45,8 +45,8 @@ module _ (STS : C → S → Sig → S → Set) where
     compute c s sig = Maybe.map proj₁ (computeProof c s sig)
 
     field
-      completeness : (c : C) (s : S) (sig : Sig) (s' : S) →
-        STS c s sig s' → compute c s sig ≡ just s'
+      completeness : (c : C) (s : S) (sig : Sig) (s' : S)
+        → STS c s sig s' → compute c s sig ≡ just s'
 
 module _ {STS : C → S → Sig → S → Set} (comp' : Computational' STS) where
 
@@ -106,8 +106,8 @@ module _ {STS : C → S → Sig → S → Set} (comp comp' : Computational STS) 
     (ExtendedRel-compute comp) (ExtendedRel-compute comp')
 
 Computational⇒Dec' :
-  ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Set} ⦃ comp : Computational STS ⦄ →
-  Dec (STS c s sig s')
+  ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Set} ⦃ comp : Computational STS ⦄
+  → Dec (STS c s sig s')
 Computational⇒Dec' ⦃ comp = comp ⦄ = Computational⇒Dec comp
 
 module _ {BSTS : C → S → ⊤ → S → Set} {STS : C → S → Sig → S → Set}
