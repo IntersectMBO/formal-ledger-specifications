@@ -1,7 +1,7 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Agda.Primitive renaming (Set to Type)
+open import Agda.Primitive using (lzero) renaming (Set to Type)
 open import Axiom.Set using (Theory)
 
 module Axiom.Set.Map (th : Theory {lzero}) where
@@ -13,16 +13,14 @@ open import Axiom.Set.Properties th
 
 open import Prelude hiding (filter)
 
-import Data.Product
-import Data.Sum
+open import Data.Product using (map₁)
+open import Data.Sum using (map₂)
 import Relation.Binary.PropositionalEquality as I
-open import Data.These
-open import Data.List.Ext.Properties
-open import Data.Product.Properties
-open import Data.Maybe.Base using () renaming (map to map?)
+open import Data.List.Ext.Properties using (AllPairs⇒≡∨R∨Rᵒᵖ)
+open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
 open import Data.Maybe.Properties using (just-injective)
-open import Interface.DecEq
-open import Relation.Unary using () renaming (Decidable to Decidable¹)
+open import Interface.DecEq using (DecEq; _≟_)
+open import Relation.Unary using (Decidable)
 
 open Equivalence
 
@@ -138,7 +136,7 @@ disj-∪ m m' disj = m ˢ ∪ m' ˢ , λ h h' → case ∈⇔P h , ∈⇔P h' of
 filterᵐ : {P : A × B → Type} → specProperty P → Map A B → Map A B
 filterᵐ sp-P m = filter sp-P (m ˢ) , ⊆-left-unique filter-⊆ (proj₂ m)
 
-filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Decidable¹ P
+filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Decidable P
   → finite (m ˢ) → finite (filterᵐ sp m ˢ)
 filterᵐ-finite = filter-finite
 
@@ -161,8 +159,8 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
 
   disjoint-∪ᵐˡ-∪ : (H : disjoint (dom R) (dom R')) → R ∪ᵐˡ' R' ≡ᵉ R ∪ R'
   disjoint-∪ᵐˡ-∪ disj = from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔
-    (∈-∪⁺ ∘′ Data.Sum.map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
-    (∈⇔P ∘′ Data.Sum.map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
+    (∈-∪⁺ ∘′ map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
+    (∈⇔P ∘′ map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
 
   insert : Map A B → A → B → Map A B
   insert m a b = ❴ a , b ❵ᵐ ∪ᵐˡ m
@@ -191,7 +189,7 @@ mapˡ-uniq inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
   (((_ , b) , refl , Ha) , ((_ , b') , eqb , Hb)) → uniq Ha
     $ subst _ ( sym
               $ ×-≡,≡→≡
-              $ Data.Product.map₁ (inj (from dom∈ (b , Ha)) (from dom∈ (b' , Hb)))
+              $ map₁ (inj (from dom∈ (b , Ha)) (from dom∈ (b' , Hb)))
                                   (×-≡,≡←≡ eqb))
               Hb
 

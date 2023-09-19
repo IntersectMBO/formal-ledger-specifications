@@ -1,7 +1,7 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
-open import Axiom.Set
+open import Agda.Primitive using (lzero) renaming (Set to Type)
+open import Axiom.Set using (Theory)
 open import Algebra using (CommutativeMonoid)
 
 open import Prelude
@@ -13,14 +13,14 @@ open import Axiom.Set.Properties th
 open import Axiom.Set.Rel th
 open import Axiom.Set.Map th
 
-open import Algebra.Properties.CommutativeSemigroup
-open import Data.List.Ext.Properties
+open import Algebra.Properties.CommutativeSemigroup using (x∙yz≈y∙xz)
+open import Data.List.Ext.Properties using (dedup-++-↭)
 open import Data.List.Relation.Binary.Permutation.Propositional
-open import Data.List.Relation.Unary.Unique.Propositional
-open import Interface.DecEq
-open import Relation.Binary hiding (Rel)
+open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
+open import Interface.DecEq using (DecEq; _≟_)
+open import Relation.Binary using (_Preserves_⟶_; IsEquivalence)
 open import Relation.Nullary.Decidable using (¬?)
-open import Relation.Unary using () renaming (Decidable to Decidable¹)
+open import Relation.Unary using (Decidable)
 
 open import Tactic.AnyOf
 open import Tactic.Defaults
@@ -121,7 +121,7 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
     → indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵐ-cong {x = x , _ , h} {y , _ , h'} = indexedSum-cong {x = x , h} {y , h'}
 
-  module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Decidable¹ (_∈ X)) where
+  module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Decidable (_∈ X)) where
     open Unionᵐ sp-∈
 
     ∪ᵐˡ-finite : {R R' : Rel A B} → finite R → finite R' → finite (R ∪ᵐˡ' R')

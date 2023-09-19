@@ -10,6 +10,10 @@
 
 module Ledger.PDF where
 
+open import Data.Maybe.Properties.Ext
+-- ^ This module is not used but we import it here for now
+--   so that the CI doesn't complain about an unused module.
+
 open import Ledger.BaseTypes
 open import Ledger.Introduction
 open import Ledger.Crypto

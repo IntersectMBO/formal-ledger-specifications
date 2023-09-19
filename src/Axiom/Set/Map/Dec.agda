@@ -1,21 +1,20 @@
 {-# OPTIONS --safe --no-import-sorts #-}
-open import Axiom.Set
+open import Axiom.Set using (Theoryᵈ; Theory)
 
 module Axiom.Set.Map.Dec (thᵈ : Theoryᵈ) where
 
 open import Prelude
 
 open import Agda.Primitive renaming (Set to Type)
-open import Algebra
-open import Data.Sum as Sum
-open import Data.These
-open import Interface.DecEq
-open import Relation.Binary.PropositionalEquality
-open import Relation.Nullary.Decidable
+open import Algebra using (Monoid)
+import Data.Sum as Sum
+open import Data.These hiding (map)
+open import Interface.DecEq using (DecEq)
+open import Relation.Nullary.Decidable using (yes; no)
 
-open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set; incl-set-proj₁)
-open Theory th renaming (map to mapˢ)
-open import Axiom.Set.Rel th hiding (_∣'_; _↾'_)
+open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set)
+open Theory th
+open import Axiom.Set.Rel th using (dom)
 open import Axiom.Set.Map th
 
 open Equivalence
@@ -38,7 +37,7 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
   unionWith f m@(r , p) m'@(r' , p') = m'' , helper
      where
        d = dom r ∪ dom r'
-       m'' = mapˢ (λ (x , p) → x , f (unionThese m m' x p)) (incl-set d)
+       m'' = map (λ (x , p) → x , f (unionThese m m' x p)) (incl-set d)
 
        helper : left-unique m''
        helper q q'
