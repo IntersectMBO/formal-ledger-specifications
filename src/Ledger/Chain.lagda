@@ -91,9 +91,9 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       govActionReturns =
         aggregate₊ (map (λ where (a , _ , d) → a , d) removedGovActions , finiteness _)
 
-      rewards = DState.rewards dState ∪⁺ trWithdrawals
-      refunds   = govActionReturns ∣ dom (rewards ˢ)
-      unclaimed = govActionReturns ∣ dom (rewards ˢ) ᶜ
+      rewards = DState.rewards dState
+      refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ)
+      unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ) ᶜ
 
       govSt' = filter (¬? ∘ (_∈? map proj₁ removed) ∘ proj₁) govSt
 

@@ -248,7 +248,7 @@ instance
         ; pv                = coerce pv
         ; votingThresholds  = _
         ; govActionLifetime = govActionLifetime
-        ; govActionDeposit        = govActionDeposit
+        ; govActionDeposit  = govActionDeposit
         ; drepDeposit       = drepDeposit
         ; drepActivity      = drepActivity
         ; ccMinSize         = ccMinSize
