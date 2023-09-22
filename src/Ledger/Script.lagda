@@ -60,6 +60,7 @@ record PlutusStructure : Set₁ where
   field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
         validPlutusScript? : ∀ cm ds eu s → Dec (validPlutusScript cm ds eu s)
         language : PlutusScript → Language
+        toData : ∀ {A : Set} → A → Data
 
 record ScriptStructure : Set₁ where
   field p1s : P1ScriptStructure

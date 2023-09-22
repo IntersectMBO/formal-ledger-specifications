@@ -17,6 +17,7 @@ open import Ledger.Crypto
 open import Ledger.Epoch
 open import Ledger.Address
 open import Ledger.Script
+open import Ledger.ScriptValidation
 open import Ledger.PParams
 
 open import Ledger.GovStructure

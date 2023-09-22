@@ -48,7 +48,9 @@ module Implementation where
   ScriptHash = ℕ
 
   P1Script     = ⊥; Hashable-P1Script = mkHashable⊥
-  Dataʰ        = mkHashableSet ⊥
+  Data         = ⊤
+  Dataʰ        = mkHashableSet Data
+  postulate toData : ∀ {A : Set} → A → Data
   PlutusScript = ⊥; Hashable-PlutusScript = mkHashable⊥
   ExUnits      = ⊤
   ExUnit-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
