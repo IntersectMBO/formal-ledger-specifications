@@ -1,13 +1,6 @@
 {-# OPTIONS --safe #-}
 {-# OPTIONS --overlapping-instances #-}
 
-open import Ledger.Transaction
-open import Ledger.Abstract
-
-module Ledger.ScriptValidation (txs : TransactionStructure)(abs : AbstractFunctions txs)where
-
-open import Ledger.Prelude hiding (Dec₁) renaming (map to mapSet)
-
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Structures
 open import Data.Integer using (ℤ; _⊖_)
@@ -17,35 +10,31 @@ open import Data.Maybe
 open import Data.Nat using (_≤?_; _≤_)
 open import Data.Nat.Properties using (+-0-monoid ; +-0-commutativeMonoid)
 open import Data.Sign using (Sign)
-open import Interface.Decidable.Instance
-
-open TransactionStructure txs
-open TxBody
-open TxWitnesses
-open Tx
-
-open import Ledger.Crypto
-open import Ledger.PParams crypto epochStructure ss
-open import Ledger.TokenAlgebra using (TokenAlgebra)
-
-open import MyDebugOptions
---open import Tactic.Defaults
-open import Tactic.DeriveComp
-open import Tactic.Derive.DecEq
-
-open import Ledger.Script
-open import Relation.Nullary.Decidable using (⌊_⌋; isNo)
 open import Data.Bool using (_∧_)
+open import Relation.Nullary.Decidable using (⌊_⌋)
 
-open AbstractFunctions abs
-open indexOf indexOfImp
-
-open Properties
-
+open import Interface.Decidable.Instance
 open import Tactic.AnyOf
 open import Tactic.Assumption
 open import Tactic.Defaults
 open import Tactic.Helpers
+
+open import Ledger.Prelude renaming (map to mapSet)
+open import Ledger.Transaction
+open import Ledger.Abstract
+open import Ledger.Script
+open import Ledger.Crypto
+
+open Properties
+
+module Ledger.ScriptValidation
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
+  where
+
+open TxBody
+open TxWitnesses
+open Tx
 
 -- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
 private macro
@@ -170,9 +159,6 @@ scriptsNeeded utxo txb = mapPartial (λ x → spendScripts x (scriptOutsWithHash
                          ∪ mapPartial (λ x → certScripts x) (setFromList $ txcerts txb)
                          ∪ mapSet (λ x → (Mint x) , x) (policies (mint txb))
 
-toData : ∀{A : Set} → A → Data
-toData = {!!}
-
 -- We need to add toData to define this
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
@@ -181,7 +167,6 @@ valContext txinfo sp = toData (txinfo , sp)
 scriptHashInTx : ScriptHash → Tx → Bool
 scriptHashInTx sh tx = ⌊ any? (λ s → hash s ≟ sh) (tx .Tx.wits .TxWitnesses.scripts) ⌋
 
--- Need to be able to define the toData function
 -- need to get map from language script ↦ cm
 -- need to update costmodels to add the language map in order to check
 -- (Language ↦ CostModel) ∈ costmdls ↦ (Language ↦ CostModel)
