@@ -6,7 +6,7 @@ open import Data.Rational using (½)
 
 open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
-open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 
 open import Foreign.Convertible
@@ -52,15 +52,14 @@ module Implementation where
   Dataʰ        = mkHashableSet Data
   postulate toData : ∀ {A : Set} → A → Data
   PlutusScript = ⊥; Hashable-PlutusScript = mkHashable⊥
-  ExUnits      = ⊤
-  ExUnit-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
-  ExUnit-CommutativeMonoid = record
+  ExUnits      = ℕ × ℕ
+  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ∋ record
     { Carrier = ExUnits
-    ; _≈_ = _≡_
-    ; _∙_ = λ tt tt → tt
-    ; ε = tt
-    ; isCommutativeMonoid = isCommMonoid
-    } where postulate isCommMonoid : _
+    ; _≈_ = _≈ᵖ_
+    ; _∙_ = _∙ᵖ_
+    ; ε = zero , zero
+    ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
+    } where open import Algebra.PairOp ℕ zero _≡_ _+_
   _≥ᵉ_ : ExUnits → ExUnits → Set
   _≥ᵉ_ = _≡_
   CostModel    = ⊥

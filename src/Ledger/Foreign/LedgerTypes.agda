@@ -42,6 +42,7 @@ data Tag : Set where
   Spend Mint Cert Rewrd : Tag
 
 RdmrPtr = Pair Tag Ix
+ExUnits = ℕ × ℕ
 
 {-# FOREIGN GHC
   type Coin  = Integer
@@ -56,6 +57,7 @@ RdmrPtr = Pair Tag Ix
 
   data Tag     = Spend | Mint | Cert | Rewrd
   type RdmrPtr = (Tag, Ix)
+  type ExUnits = (Integer, Integer)
 #-}
 
 record TxBody : Set where
@@ -130,8 +132,8 @@ record PParams : Set where
         minimumAVS          : Coin
         costmdls            : Empty
         prices              : ⊤
-        maxTxExUnits        : ⊤
-        maxBlockExUnits     : ⊤
+        maxTxExUnits        : ExUnits
+        maxBlockExUnits     : ExUnits
         coinsPerUTxOWord    : Coin
         -- collateralPercent   : ℕ
         maxCollateralInputs : ℕ
@@ -159,8 +161,8 @@ record PParams : Set where
     , minimumAVS          :: Integer
     , costmdls            :: Empty
     , prices              :: ()
-    , maxTxExUnits        :: ()
-    , maxBlockExUnits     :: ()
+    , maxTxExUnits        :: ExUnits
+    , maxBlockExUnits     :: ExUnits
     , coinsPerUTxOWord    :: Integer
     , maxCollateralInputs :: Integer
     } deriving (Show, Generic)
