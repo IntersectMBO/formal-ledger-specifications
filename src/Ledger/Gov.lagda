@@ -21,8 +21,11 @@ open import Relation.Nullary.Decidable renaming (map to mapᵈ)
 
 open import Ledger.GovernanceActions TxId Network DocHash es ppd ppHashable crypto
 
-open import Data.List.Relation.Unary.Any renaming (Any to Anyˡ; any? to decAny)
 open import Data.List.Membership.Propositional renaming (_∈_ to _∈ˡ_)
+open import Data.List.Membership.Propositional.Properties
+open import Data.List.Relation.Unary.Any renaming (Any to Anyˡ; any? to decAny)
+open import Function.Related using (fromRelated)
+open import Function.Related.Propositional using (⤖⇒)
 open import Interface.Decidable.Instance
 
 open Crypto crypto
@@ -105,14 +108,6 @@ open Computational' ⦃...⦄
 private
   open Equivalence
 
-  any⇔∃ : ∀ {A : Set} {P : A → Set} {xs : List A} → Anyˡ P xs ⇔ (∃[ x ] x ∈ˡ xs × P x)
-  any⇔∃ .to   (here px)            = _ , here refl , px
-  any⇔∃ .to   (there p)            = let x , mem , px = any⇔∃ .to p in x , there mem , px
-  any⇔∃ .from (x , here refl , px) = here px
-  any⇔∃ .from (x , there mem , px) = there (any⇔∃ .from (x , mem , px))
-  any⇔∃ .to-cong   = cong (any⇔∃ .to)
-  any⇔∃ .from-cong = cong (any⇔∃ .from)
-
   lookupActionId : (pparams : PParams) (role : GovRole) (aid : GovActionID) (s : GovState) →
                    Dec (Anyˡ (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role) s)
   lookupActionId pparams role aid = decAny λ _ → ¿ _ ¿
@@ -122,7 +117,7 @@ instance
   Computational'-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
     case lookupActionId pparams role aid s of λ where
       (yesᵈ p) →
-        case any⇔∃ .to p of λ where
+        case ⤖⇒ (fromRelated Any↔) .from p of λ where
           (_ , mem , refl , cV) → just (_ , GOV-Vote (∈-fromList .to mem) cV)
       (noᵈ _)  → nothing
   Computational'-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) =
@@ -131,8 +126,8 @@ instance
       (noᵈ _)           → nothing
   Computational'-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
     with lookupActionId pparams role aid s | "bug"
-  ... | noᵈ ¬p | _ = ⊥-elim (¬p (any⇔∃ .from (_ , ∈-fromList .from mem , refl , cV)))
-  ... | yesᵈ p | _ with any⇔∃ .to p
+  ... | noᵈ ¬p | _ = ⊥-elim (¬p (⤖⇒ (fromRelated Any↔) .to (_ , ∈-fromList .from mem , refl , cV)))
+  ... | yesᵈ p | _ with ⤖⇒ (fromRelated Any↔) .from p
   ...   | (_ , mem , refl , cV) = refl
   Computational'-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep)
     with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govDeposit ¿ | "bug"
