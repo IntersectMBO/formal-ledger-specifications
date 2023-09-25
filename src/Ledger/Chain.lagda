@@ -158,7 +158,7 @@ govActionDeposits ls =
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
         dep ← lookupᵐ? deposits (GovActionDeposit gaid) ⦃ _ ∈? _ ⦄
         just ❴ vd , dep ❵ᵐ )
-      (setFromList govSt)
+      (fromList govSt)
 
 calculateStakeDistrs : LState → StakeDistrs
 calculateStakeDistrs ls =

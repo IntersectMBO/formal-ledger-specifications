@@ -15,6 +15,7 @@ open import Prelude public
 
 open import Ledger.Prelude.Base public
 
+open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Interface.ComputationalRelation public
 open import Interface.DecEq public
 open import Ledger.Interface.HasCoin public
@@ -75,9 +76,6 @@ abstract
 
   setToList : {A : Set} → ℙ A → List A
   setToList = id
-
-  setFromList : {A : Set} → List A → ℙ A
-  setFromList = id
 
   ≟-∅ : {A : Set} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → Dec (X ≡ ∅)
   ≟-∅ = Decˡ.≟-∅

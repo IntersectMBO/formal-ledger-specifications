@@ -33,9 +33,9 @@ getScripts = mapPartial isInj₂
 credsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ Credential
 credsNeeded ppolicy utxo txb =
     map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins txb)
-  ∪ map cwitness (setFromList $ txcerts txb)
-  ∪ map GovVote.credential (setFromList $ txvote txb)
-  ∪ mapPartial (const (M.map inj₂ ppolicy)) (setFromList $ txprop txb)
+  ∪ map cwitness (fromList $ txcerts txb)
+  ∪ map GovVote.credential (fromList $ txvote txb)
+  ∪ mapPartial (const (M.map inj₂ ppolicy)) (fromList $ txprop txb)
 
 witsVKeyNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ KeyHash
 witsVKeyNeeded sh utxo = getVKeys ∘ credsNeeded sh utxo
