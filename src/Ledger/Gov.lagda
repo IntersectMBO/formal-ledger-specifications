@@ -88,10 +88,10 @@ data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovPropo
     (Γ , k) ⊢ s ⇀⦇ inj₁ record { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x } ,GOV'⦈
               addVote s aid role cred v
 
-  GOV-Propose : ∀ {x k new rem q} → let open GovEnv Γ; open PParams pparams hiding (a) in
+  GOV-Propose : ∀ {x k} → let open GovEnv Γ; open PParams pparams hiding (a) in
     actionWellFormed a ≡ true
     → d ≡ govActionDeposit
-    → (a ≡ NewCommittee new rem q → ∀[ e ∈ range (new ˢ) ] epoch <ᵉ e × dom (new ˢ) ∩ rem ≡ᵉ ∅)
+    → (∀ {new rem q} → a ≡ NewCommittee new rem q → ∀[ e ∈ range (new ˢ) ] epoch <ᵉ e × dom (new ˢ) ∩ rem ≡ᵉ ∅)
     ────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ inj₂ record { returnAddr = addr ; action = a ; anchor = x ; deposit = d ; prevAction = prev } ,GOV'⦈
               addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
@@ -113,6 +113,19 @@ private
                    Dec (Anyˡ (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role) s)
   lookupActionId pparams role aid = decAny λ _ → ¿ _ ¿
 
+  isNewCommittee : (a : GovAction) → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ NewCommittee new rem q)
+  isNewCommittee NoConfidence             = noᵈ λ()
+  isNewCommittee (NewCommittee new rem q) = yesᵈ (new , rem , q , refl)
+  isNewCommittee (NewConstitution x x₁)   = noᵈ λ()
+  isNewCommittee (TriggerHF x)            = noᵈ λ()
+  isNewCommittee (ChangePParams x)        = noᵈ λ()
+  isNewCommittee (TreasuryWdrl x)         = noᵈ λ()
+  isNewCommittee Info                     = noᵈ λ()
+
+  instance
+    _ : ∀ {s s₁} → Dec (s <ˢ s₁)
+    _ = _ <ˢ? _
+
 instance
   Computational'-GOV' : Computational' _⊢_⇀⦇_,GOV'⦈_
   Computational'-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
@@ -121,19 +134,27 @@ instance
         case ⤖⇒ (fromRelated Any↔) .from p of λ where
           (_ , mem , refl , cV) → just (_ , GOV-Vote (∈-fromList .to mem) cV)
       (noᵈ _)  → nothing
-  Computational'-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) =
-    case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govDeposit ¿ of λ where
-      (yesᵈ (wf , dep)) → just (_ , GOV-Propose wf dep)
-      (noᵈ _)           → nothing
+  Computational'-GOV' .computeProof (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) =
+    case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿
+         ,′ isNewCommittee a of λ where
+      (yesᵈ (wf , dep) , yesᵈ (new , rem , q , refl)) →
+        case ¿ ∀[ e ∈ range (new ˢ) ] epoch <ᵉ e × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ of λ where
+          (yesᵈ newOk) → just (_ , GOV-Propose wf dep λ where refl → newOk)
+          (noᵈ _)      → nothing
+      (yesᵈ (wf , dep) , noᵈ notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
+      _ → nothing
   Computational'-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
     with lookupActionId pparams role aid s | "bug"
   ... | noᵈ ¬p | _ = ⊥-elim (¬p (⤖⇒ (fromRelated Any↔) .to (_ , ∈-fromList .from mem , refl , cV)))
   ... | yesᵈ p | _ with ⤖⇒ (fromRelated Any↔) .from p
   ...   | (_ , mem , refl , cV) = refl
-  Computational'-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep)
-    with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govDeposit ¿ | "bug"
-  ... | yesᵈ _ | _ = refl
+  Computational'-GOV' .completeness (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep newOk)
+    with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿ | isNewCommittee a
   ... | noᵈ ¬p | _ = ⊥-elim (¬p (wf , dep))
+  ... | yesᵈ _ | noᵈ notNewComm = refl
+  ... | yesᵈ _ | yesᵈ (new , rem , q , refl) with ¿ ∀[ e ∈ range (new ˢ) ] epoch <ᵉ e × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ | ""
+  ...    | yesᵈ newOk | _ = refl
+  ...    | noᵈ notOk  | _ = ⊥-elim (notOk (newOk refl))
 
   Computational-GOV' = fromComputational' Computational'-GOV'
 \end{code}
