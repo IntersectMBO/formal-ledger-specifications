@@ -14,6 +14,8 @@ To install Agda locally and use that install with emacs, you can do the followin
 
    *Note*. You need not have built/installed Agda prior to invoking this `nix-build` command (though it's okay if you have).
 
+   *Note*. To instruct the `Makefile` to use this local Agda binary, invoke it like so: `AGDA=~/IOHK/ledger-agda make -C src/`
+
 -  Put the following into your init file (highlight and `M-x eval-region` to load it without restarting emacs).
 
    ```
@@ -44,9 +46,19 @@ To install Agda locally and use that install with emacs, you can do the followin
 
 The Makefile can be used to build the PDF without having to build everything else. Either run `make` from within `nix-shell`, or use
 ```
-nix-shell --command make
+nix-shell --command 'make docs'
 ```
 to run `make` without launching an interactive shell.
+
+This combines well with the ability to invoke the TeX backend of Agda within Emacs,
+which is much faster when you have already loaded an Agda file/interface.
+
+## Building other artifacts
+
+Apart from the PDF specification, the `Makefile` can be used to also generate the following:
+- `make html`: generate HTML under `dist/html/`
+- `make codeGen`: generate Haskell code under `dist/MAlonzo/`
+- `make hsBuild`: run the Haskell test of each Agda formmalisation
 
 ## Updating nixpkgs
 

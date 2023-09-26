@@ -14,8 +14,7 @@ import Data.Maybe
 open import Data.String using (_++_)
 
 import MidnightExample.Types as F
-
-Hash = ℕ
+open F using (Hash)
 
 instance
   Hashable-String = Hashable String Hash ∋ λ where .hash → F.hash

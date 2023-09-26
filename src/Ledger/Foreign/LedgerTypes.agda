@@ -32,7 +32,6 @@ TxId          = ℕ
 Ix            = ℕ
 Epoch         = ℕ
 AuxiliaryData = ⊤
-Network       = ⊤
 
 TxIn          = Pair TxId Ix
 TxOut         = Pair Addr Coin
