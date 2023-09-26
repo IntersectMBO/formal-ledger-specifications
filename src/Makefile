@@ -1,40 +1,83 @@
-LATEX=latexmk -xelatex -shell-escape -halt-on-error
+# Constants
+AGDA?=agda
+OUT_DIR?=../dist
+LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
 PRE=$(addprefix $(LATEX_DIR)/, \
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex)
-AGDA=/home/omelkonian/IOHK/agdaWithStdLibMeta/bin/agda \
-  --latex --latex-dir=$(LATEX_DIR) # --only-scope-checking
+HTML_DIR=$(OUT_DIR)/html
+HS_DIR=$(OUT_DIR)/MAlonzo
+HS_DIR_LEDGER=$(HS_DIR)/Ledger
+HS_DIR_MIDNIGHT=$(HS_DIR)/MidnightExample
 
-.PHONY: default clean all
+.PHONY: default clean all docs html codeGen hsBuild
 default: all
 
-all: $(latexFiles)
-
-# Compile a literate Agda file to LaTeX.
+# Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex, \
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 $(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
-	$(AGDA) $<
+	$(AGDA) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
 
-../cardano-ledger.pdf: $(LATEX_DIR)/Ledger/PDF.tex $(latexFiles) $(PRE)
+$(OUT_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/Ledger/PDF.tex $(latexFiles) $(PRE)
 	@echo "Generating $@"
 	cd $(LATEX_DIR) && $(LATEX) $(subst $(LATEX_DIR)/,, $<)
 	mv $(LATEX_DIR)/PDF.pdf $@
 
-../midnight-example.pdf: $(LATEX_DIR)/MidnightExample/PDF.tex $(latexFiles) $(PRE)
+$(OUT_DIR)/midnight-example.pdf: $(LATEX_DIR)/MidnightExample/PDF.tex $(latexFiles) $(PRE)
 	@echo "Generating $@"
 	cd $(LATEX_DIR) && $(LATEX) $(subst $(LATEX_DIR)/,, $<)
 	mv $(LATEX_DIR)/PDF.pdf $@
 
-all:
-	$(MAKE) ../cardano-ledger.pdf
-	$(MAKE) ../midnight-example.pdf
+# Agda -> HTML
+$(HTML_DIR)/Ledger.PDF.html : Ledger/PDF.lagda
+	@echo "Generating $@"
+	$(AGDA) --html --html-dir $(HTML_DIR) $<
+$(HTML_DIR)/MidnightExample.PDF.html : MidnightExample/PDF.lagda
+	@echo "Generating $@"
+	$(AGDA) --html --html-dir $(HTML_DIR) $<
+
+# Agda -> Haskell
+LEDGER_CABAL=cardano-ledger.cabal
+$(HS_DIR_LEDGER)/Foreign/HSLedger.hs: Ledger/Foreign/HSLedger.agda
+	@echo "Generating $@"
+	mkdir -p $(HS_DIR_LEDGER)
+	cp Ledger/*.hs $(HS_DIR_LEDGER)/
+	cp Ledger/$(LEDGER_CABAL) $(HS_DIR_LEDGER)/
+	$(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIR_LEDGER) $<
+	find $(HS_DIR_LEDGER)/MAlonzo -name "*.hs" -print \
+	  | sed "s#^$(HS_DIR_LEDGER)/#        #;s#\.hs##;s#/#.#g" \
+	  >> $(HS_DIR_LEDGER)/$(LEDGER_CABAL)
+
+MIDNIGHT_CABAL=midnight-example.cabal
+$(HS_DIR_MIDNIGHT)/HSLedger.hs: MidnightExample/HSLedger.agda
+	mkdir -p $(HS_DIR_MIDNIGHT)
+	@echo "Generating $@"
+	cp MidnightExample/*.hs $(HS_DIR_MIDNIGHT)/
+	cp MidnightExample/$(MIDNIGHT_CABAL) $(HS_DIR_MIDNIGHT)/
+	$(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIR_MIDNIGHT) $<
+	find $(HS_DIR_MIDNIGHT)/MAlonzo -name "*.hs" -print \
+	  | sed "s#^$(HS_DIR_MIDNIGHT)/#        #;s#\.hs##;s#/#.#g" \
+	  >> $(HS_DIR_MIDNIGHT)/$(MIDNIGHT_CABAL)
+
+# User commands
+docs:
+	$(MAKE) $(OUT_DIR)/cardano-ledger.pdf
+	$(MAKE) $(OUT_DIR)/midnight-example.pdf
+html:
+	$(MAKE) $(HTML_DIR)/Ledger.PDF.html
+	$(MAKE) $(HTML_DIR)/MidnightExample.PDF.html
+codeGen:
+	$(MAKE) $(HS_DIR_LEDGER)/Foreign/HSLedger.hs
+	$(MAKE) $(HS_DIR_MIDNIGHT)/HSLedger.hs
+hsBuild: $(HS_DIR_LEDGER)/Main.hs $(HS_DIR_MIDNIGHT)/Main.hs
+	cd $(HS_DIR_LEDGER)   && cabal run -- main
+	cd $(HS_DIR_MIDNIGHT) && cabal run -- main
+all: docs html codeGen hsBuild
 
 clean:
-	rm -rf $(LATEX_DIR)/Ledger/ $(LATEX_DIR)/MidnightExample \
-	       ../cardano-ledger.pdf ../midnight-example.pdf
+	rm -rf $(LATEX_DIR)/Ledger/ $(LATEX_DIR)/MidnightExample $(LATEX_DIR)/PDF.* \
+	       $(OUT_DIR)/
 
-# TODO: Agda HTML generation
-# TODO: Haskell code generation
-# TODO: use this into `default.nix` instead of repeating the same kind of commands
+# TODO: integrate into `default.nix` to remove duplication

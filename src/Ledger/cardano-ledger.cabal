@@ -1,5 +1,5 @@
 cabal-version:      2.4
-name:               agda-ledger-executable-spec-midnight
+name:               cardano-ledger
 version:            0.1.0.0
 synopsis:
 
@@ -18,22 +18,31 @@ maintainer:         andre.knispel@iohk.io
 -- category:
 extra-source-files: CHANGELOG.md
 
-library
-    exposed-modules:
-        Main
-
-    other-extensions:
-        CPP PolyKinds EmptyDataDecls EmptyCase ExistentialQuantification
-        ScopedTypeVariables NoMonomorphismRestriction RankNTypes
-        PatternSynonyms
-
+executable main
+    main-is: Main.hs
+    ghc-options: -Wno-missing-home-modules
     build-depends:
         base,
         text,
-        ieee
+        ieee,
+        tree-diff,
+        cardano-ledger
 
-    ghc-options: -Wno-overlapping-patterns
-    hs-source-dirs:   .
+library
+    exposed-modules:
+        Lib
+    build-depends:
+        base,
+        text,
+        ieee,
+        tree-diff
+    hs-source-dirs: .
     default-language: Haskell2010
+    ghc-options:
+        -Wno-overlapping-patterns
+    other-extensions:
+        CPP PolyKinds EmptyDataDecls EmptyCase ExistentialQuantification
+        ScopedTypeVariables NoMonomorphismRestriction RankNTypes
+        PatternSynonyms DeriveGeneric
 -- This will be generated automatically when building with nix
     other-modules:
