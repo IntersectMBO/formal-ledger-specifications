@@ -98,14 +98,14 @@ data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovPropo
     (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ s'
 
 _⊢_⇀⦇_,GOV⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
-_⊢_⇀⦇_,GOV⦈_ = SS⇒BS (λ Γ → Γ ⊢_⇀⦇_,GOV'⦈_)
+_⊢_⇀⦇_,GOV⦈_ = SS⇒BSᵢ _⊢_⇀⦇_,GOV'⦈_
 \end{code}
 \caption{TALLY types}
 \label{defs:tally-types}
 \end{figure*}
 
 \begin{code}[hide]
-open Computational' ⦃...⦄
+open Computational ⦃...⦄
 
 private
   open Equivalence
@@ -128,14 +128,14 @@ private
     _ = _ ≤ˢ? _
 
 instance
-  Computational'-GOV' : Computational' _⊢_⇀⦇_,GOV'⦈_
-  Computational'-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
+  Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_
+  Computational-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
     case lookupActionId pparams role aid s of λ where
       (yesᵈ p) →
         case ⤖⇒ (fromRelated Any↔) .from p of λ where
           (_ , mem , refl , cV) → just (_ , GOV-Vote (∈-fromList .to mem) cV)
       (noᵈ _)  → nothing
-  Computational'-GOV' .computeProof (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) =
+  Computational-GOV' .computeProof (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) =
     case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿
          ,′ isNewCommittee a of λ where
       (yesᵈ (wf , dep) , yesᵈ (new , rem , q , refl)) →
@@ -144,18 +144,18 @@ instance
           (noᵈ _)      → nothing
       (yesᵈ (wf , dep) , noᵈ notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
       _ → nothing
-  Computational'-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
-    with lookupActionId pparams role aid s | "bug"
+  Computational-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
+    with lookupActionId pparams role aid s | "agda#6868"
   ... | noᵈ ¬p | _ = ⊥-elim (¬p (⤖⇒ (fromRelated Any↔) .to (_ , ∈-fromList .from mem , refl , cV)))
   ... | yesᵈ p | _ with ⤖⇒ (fromRelated Any↔) .from p
   ...   | (_ , mem , refl , cV) = refl
-  Computational'-GOV' .completeness (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep newOk)
+  Computational-GOV' .completeness (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep newOk)
     with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿ | isNewCommittee a
   ... | noᵈ ¬p | _ = ⊥-elim (¬p (wf , dep))
   ... | yesᵈ _ | noᵈ notNewComm = refl
-  ... | yesᵈ _ | yesᵈ (new , rem , q , refl) with ¿ ∀[ e ∈ range (new ˢ) ] epoch < e × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ | ""
-  ...    | yesᵈ newOk | _ = refl
-  ...    | noᵈ notOk  | _ = ⊥-elim (notOk (newOk refl))
+  ... | yesᵈ _ | yesᵈ (new , rem , q , refl)
+    rewrite dec-yes ¿ ∀[ e ∈ range (new ˢ) ] epoch < e × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
 
-  Computational-GOV' = fromComputational' Computational'-GOV'
+Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_
+Computational-GOV = it
 \end{code}

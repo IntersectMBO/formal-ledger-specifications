@@ -262,8 +262,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}[hide]
 instance
-  Computational'-UTXO : Computational' _⊢_⇀⦇_,UTXO⦈_
-  Computational'-UTXO = record {go} where module go Γ s tx where
+  Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
+  Computational-UTXO = record {go} where module go Γ s tx where
     open TxBody tx
     open UTxOEnv Γ renaming (pparams to pp)
     open UTxOState s
@@ -294,8 +294,6 @@ instance
       QED with UTXO-premises?
       ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) = refl
       ... | no q = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
-
-  Computational-UTXO = fromComputational' Computational'-UTXO
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

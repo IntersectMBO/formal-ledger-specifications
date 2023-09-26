@@ -35,4 +35,4 @@ module _ (accepted? : ∀ Γ es st → Dec (accepted Γ es st))
         (yes q) → -, RATIFY-Continue (inj₂ (inj₁ q))
 
   RATIFY-total : ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s'
-  RATIFY-total = SS-total⇒BS-total RATIFY'-total
+  RATIFY-total = SS⇒BS-total RATIFY'-total
