@@ -175,20 +175,27 @@ data _⊢_⇀⦇_,LEDGER⦈_ : ⊤ → LedgerState → Block → LedgerState →
 \caption{The LEDGER transition system}
 \end{figure*}
 
-We also have automation that generates a step function for this
-relation. As an example, we also provide a function that does the same
-computation explicitly.
+We can prove that this relation is a partial function and the proof gives us a step function.
+As an example we also provide a function that does the same computation explicitly.
 
 \begin{code}[hide]
-unquoteDecl Computational-LEDGER =
-  deriveComputational (quote _⊢_⇀⦇_,LEDGER⦈_) Computational-LEDGER
-
-open Computational
+open Computational ⦃...⦄
+instance
+  Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_
+  Computational-LEDGER .computeProof Γ s b =
+    let open Block b
+        acc = Σˡ[ x ← body ] txDelta x
+    in case ¿ acc ≢ 0ℤ ∧ computeBlockHash b ≡ blockHash ¿ of λ where
+      (yes (p , p₁)) → just (_ , LEDGER-inductive p p₁)
+      (no _) → nothing
+  Computational-LEDGER .completeness Γ s b s' (LEDGER-inductive p p₁)
+    rewrite (let open Block b; acc = Σˡ[ x ← body ] txDelta x
+             in dec-yes ¿ acc ≢ 0ℤ ∧ computeBlockHash b ≡ blockHash ¿ (p , p₁) .proj₂) = refl
 \end{code}
 \begin{figure*}[h]
 \begin{code}
 LEDGER-step : ⊤ → LedgerState → Block → Maybe LedgerState
-LEDGER-step = compute Computational-LEDGER
+LEDGER-step = compute
 
 applyBlockTo : Block → LedgerState → Maybe LedgerState
 applyBlockTo b st = let acc = Σˡ[ x ← Block.body b ] txDelta x in
@@ -233,7 +240,7 @@ LEDGER-property₁ (LEDGER-inductive acc≢0 _) = lemma acc≢0
 LEDGER-property₂ : LEDGER-step _ s b ≡ just s' → count s ≢ count s'
 LEDGER-property₂ {s} {b} eq
   = LEDGER-property₁
-  $ Equivalence.to (≡-just⇔STS Computational-LEDGER {s = s} {sig = b}) eq
+  $ Equivalence.to (≡-just⇔STS {s = s} {sig = b}) eq
 
 LEDGER-property₃ : applyBlockTo b s ≡ just s' → count s ≢ count s'
 LEDGER-property₃ {b = b} h with

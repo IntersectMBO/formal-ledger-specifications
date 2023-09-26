@@ -230,39 +230,39 @@ module _ ⦃ _ : DebugOptions ⦄ where
       defineFun compName [ nonBindingClause definition ]
       extendRawContext isoCxt $ λ _ → derive⇔ n stsConstrs iso
 
-private module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
-  open import MyDebugOptions
+-- private module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
+--   open import MyDebugOptions
 
-  variable
-    c : A × B
-    s s' : A
-    sig : B
+--   variable
+--     c : A × B
+--     s s' : A
+--     sig : B
 
-  data Test : A × B → A → B → A → Set where
-    test : proj₁ c ≡ s
-         → proj₂ c ≡ sig
-         ------------------------
-         → Test c s sig (proj₁ c)
+--   data Test : A × B → A → B → A → Set where
+--     test : proj₁ c ≡ s
+--          → proj₂ c ≡ sig
+--          ------------------------
+--          → Test c s sig (proj₁ c)
 
-  unquoteDecl Computational-Test = deriveComputational (quote Test) Computational-Test
+--   unquoteDecl Computational-Test = deriveComputational (quote Test) Computational-Test
 
-  -- Sanity checks
-  testFun : A × B → A → B → Maybe A
-  testFun c s sig =
-    if ⌊ ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ ⌋ then just (proj₁ c) else nothing
+--   -- Sanity checks
+--   testFun : A × B → A → B → Maybe A
+--   testFun c s sig =
+--     if ⌊ ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ ⌋ then just (proj₁ c) else nothing
 
-  testFunPf⇒ : testFun c s sig ≡ just s' → Test c s sig s'
-  testFunPf⇒ {c} {s} {sig} h = case ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ of λ where
-    (no ¬p) → case by-reduceDec h of λ ()
-    (yes p) → subst (Test c s sig) (just-injective $ by-reduceDec h)
-            $ test (proj₁ p) (proj₂ p)
+--   testFunPf⇒ : testFun c s sig ≡ just s' → Test c s sig s'
+--   testFunPf⇒ {c} {s} {sig} h = case ¿ proj₁ c ≡ s × proj₂ c ≡ sig ¿ of λ where
+--     (no ¬p) → case by-reduceDec h of λ ()
+--     (yes p) → subst (Test c s sig) (just-injective $ by-reduceDec h)
+--             $ test (proj₁ p) (proj₂ p)
 
-  testFunPf⇐ : Test c s sig s' → testFun c s sig ≡ just s'
-  testFunPf⇐ {s = s} (test x x₁) = by-reduceDecInGoal (refl {x = just s})
+--   testFunPf⇐ : Test c s sig s' → testFun c s sig ≡ just s'
+--   testFunPf⇐ {s = s} (test x x₁) = by-reduceDecInGoal (refl {x = just s})
 
-  Computational-Test-Manual : Computational Test
-  Computational-Test-Manual = record
-    { compute = testFun ; ≡-just⇔STS = mk⇔ testFunPf⇒ testFunPf⇐ }
+--   Computational-Test-Manual : Computational Test
+--   Computational-Test-Manual = record
+--     { compute = testFun ; ≡-just⇔STS = mk⇔ testFunPf⇒ testFunPf⇐ }
 
-  _ : ∀ {c s sig} → testFun c s sig ≡ Computational.compute Computational-Test c s sig
-  _ = refl
+--   _ : ∀ {c s sig} → testFun c s sig ≡ Computational.compute Computational-Test c s sig
+--   _ = refl

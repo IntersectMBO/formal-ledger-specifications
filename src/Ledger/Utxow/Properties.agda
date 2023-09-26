@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude; open Computational' ⦃...⦄
+open import Ledger.Prelude; open Computational ⦃...⦄
 open import Ledger.Crypto
 open import Ledger.Transaction
 
@@ -25,17 +25,13 @@ private
 
 open Tx
 instance
-  Computational'-UTXOW : Computational' _⊢_⇀⦇_,UTXOW⦈_
-  Computational'-UTXOW .computeProof Γ s tx@(record {body = txb}) =
+  Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_
+  Computational-UTXOW .computeProof Γ s tx@(record {body = txb}) =
     case ¿ UTXOW-premise Γ s tx ¿ of λ where
       (yes (p₁ , p₂ , p₃ , p₄ , p₅)) →
         map₂′ (UTXOW-inductive p₁ p₂ p₃ p₄ p₅) <$> computeProof Γ s (tx .body)
       (no _) → nothing
-  Computational'-UTXOW .completeness Γ s tx s' (UTXOW-inductive p₁ p₂ p₃ p₄ p₅ h)
-    with ¿ UTXOW-premise Γ s tx ¿ | "dumb Agda bug"
-  ... | no ¬p | _ = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄ , p₅))
-  ... | yes _ | _
+  Computational-UTXOW .completeness Γ s tx s' (UTXOW-inductive p₁ p₂ p₃ p₄ p₅ h)
+    rewrite dec-yes ¿ UTXOW-premise Γ s tx ¿ (p₁ , p₂ , p₃ , p₄ , p₅) .proj₂
     with computeProof Γ s (tx .body) | completeness _ _ _ _ h
   ...   | just h | refl = refl
-
-  Computational-UTXOW = fromComputational' Computational'-UTXOW

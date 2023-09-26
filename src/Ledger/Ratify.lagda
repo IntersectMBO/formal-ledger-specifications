@@ -516,7 +516,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 
 _⊢_⇀⦇_,RATIFY⦈_ :  RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                    → RatifyState → Set
-_⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS λ (Γ , _) → Γ ⊢_⇀⦇_,RATIFY'⦈_
+_⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS _⊢_⇀⦇_,RATIFY'⦈_
 \end{code}
 } %% end small
 \caption{The RATIFY transition system}

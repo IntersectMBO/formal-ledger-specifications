@@ -349,11 +349,11 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
 \end{figure*}
 
 \begin{code}[hide]
-open Computational' ⦃...⦄
+open Computational ⦃...⦄
 
 instance
-  Computational'-ENACT : Computational' _⊢_⇀⦇_,ENACT⦈_
-  Computational'-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where
+  Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_
+  Computational-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where
     NoConfidence             → just (_ , Enact-NoConf)
     (NewCommittee new rem q) →
       case ¿ ∀[ term ∈ range (new ˢ) ]
@@ -368,7 +368,7 @@ instance
       case ¿ Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t ¿ of λ where
         (yesᵈ p)             → just (-, Enact-Wdrl p)
         (noᵈ _)              → nothing
-  Computational'-ENACT .completeness ⟦ _ , t , e ⟧ᵉ s action _ p
+  Computational-ENACT .completeness ⟦ _ , t , e ⟧ᵉ s action _ p
     with action | p
   ... | .NoConfidence           | Enact-NoConf   = refl
   ... | .NewCommittee new rem q | Enact-NewComm p
@@ -383,6 +383,4 @@ instance
   ... | .TreasuryWdrl wdrl      | Enact-Wdrl p
     rewrite dec-yes (¿ (Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿) p .proj₂
     = refl
-
-  Computational-ENACT = fromComputational' Computational'-ENACT
 \end{code}

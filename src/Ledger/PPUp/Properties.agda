@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_+_; _*_); open Computational' ⦃...⦄; open HasDecPartialOrder ⦃...⦄
+open import Ledger.Prelude hiding (_+_; _*_); open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
 open import Ledger.Transaction
 
 module Ledger.PPUp.Properties (txs : _) (open TransactionStructure txs) where
@@ -29,8 +29,8 @@ private
       × sucᵉ (epoch slot) ≡ e
 
 instance
-  Computational'-PPUP : Computational' _⊢_⇀⦇_,PPUP⦈_
-  Computational'-PPUP .computeProof Γ s = λ where
+  Computational-PPUP : Computational _⊢_⇀⦇_,PPUP⦈_
+  Computational-PPUP .computeProof Γ s = λ where
     (just (pup , e)) →
       case ¿ Current-Property Γ (pup , e) ¿
         ,′ ¿ Future-Property Γ (pup , e) ¿ of λ where
@@ -39,16 +39,12 @@ instance
         (no _ , no _)                 → nothing
     nothing → just (-, PPUpdateEmpty)
 
-  Computational'-PPUP .completeness Γ _ .nothing  _     PPUpdateEmpty = refl
-  Computational'-PPUP .completeness Γ _ (just up) _ p   with p
-  Computational'-PPUP .completeness Γ _ (just up) _ _ | PPUpdateCurrent p₁ p₂ p₃ p₄
-    with ¿ Current-Property Γ up ¿ | "bug"
-  ... | yes p | _ = refl
-  ... | no ¬p | _ = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄))
-  Computational'-PPUP .completeness Γ _ (just up) _ _ | PPUpdateFuture p₁ p₂ p₃ p₄
-    with ¿ Current-Property Γ up ¿ | ¿ Future-Property Γ up ¿ | "bug"
+  Computational-PPUP .completeness Γ _ .nothing  _     PPUpdateEmpty = refl
+  Computational-PPUP .completeness Γ _ (just up) _ p   with p
+  Computational-PPUP .completeness Γ _ (just up) _ _ | PPUpdateCurrent p₁ p₂ p₃ p₄
+    rewrite dec-yes ¿ Current-Property Γ up ¿ (p₁ , p₂ , p₃ , p₄) .proj₂ = refl
+  Computational-PPUP .completeness Γ _ (just up) _ _ | PPUpdateFuture p₁ p₂ p₃ p₄
+    with ¿ Current-Property Γ up ¿ | ¿ Future-Property Γ up ¿ | "agda#6868"
   ... | yes (_ , _ , (p₃˘ , ≢_ ) , _) | _ | _ = ⊥-elim $ ≢ ≤ˢ-isAntisymmetric p₃˘ p₃
   ... | no _ | yes p | _ = refl
   ... | no _ | no ¬p | _ = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄))
-
-  Computational-PPUP = fromComputational' Computational'-PPUP
