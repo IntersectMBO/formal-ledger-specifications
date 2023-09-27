@@ -4,7 +4,6 @@
 {-# OPTIONS --safe #-}
 
 import Data.List as L
-open import Data.List.Membership.Propositional renaming (_∈_ to _∈ˡ_)
 open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Unary.Any renaming (Any to Anyˡ; any? to decAny)
 open import Function.Related using (fromRelated)

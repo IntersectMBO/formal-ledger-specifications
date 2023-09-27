@@ -2,7 +2,6 @@
 
 open import Data.Product.Properties
 
-open import Relation.Nullary.Decidable hiding (map)
 import Relation.Binary.PropositionalEquality as Eq
 
 open import Tactic.ReduceDec using (fromWitness')

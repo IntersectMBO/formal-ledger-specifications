@@ -15,9 +15,7 @@ open import Prelude public
 
 open import Ledger.Prelude.Base public
 
-open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
-open import Relation.Nullary public
-open import Relation.Unary using () renaming (Decidable to Decidable¹) public
+open import Data.Maybe.Properties.Ext public
 open import Interface.DecEq.Ext public
 open import Interface.HasAdd public
 open import Interface.HasAdd.Instance public

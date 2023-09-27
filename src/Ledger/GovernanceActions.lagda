@@ -20,8 +20,6 @@ open import Data.Nat using (_≤_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
-open import Relation.Nullary.Decidable using (dec-yes)
-
 open import Tactic.Derive.DecEq
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
@@ -378,17 +376,15 @@ instance
   ... | .NewCommittee new rem q | Enact-NewComm p
     rewrite dec-yes
       (¿ ∀[ term ∈ range (new ˢ) ] term
-           ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿)
-      p .proj₂
+           ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿) p .proj₂
       = refl
   ... | .NewConstitution dh sh  | Enact-NewConst = refl
   ... | .TriggerHF v            | Enact-HF       = refl
   ... | .ChangePParams up       | Enact-PParams  = refl
   ... | .Info                   | Enact-Info     = refl
   ... | .TreasuryWdrl wdrl      | Enact-Wdrl p
-      with ¿ (Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿ | "bug"
-  ... | yesᵈ p | _ = refl
-  ... | noᵈ ¬p | _ = ⊥-elim (¬p p)
+    rewrite dec-yes (¿ (Σᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿) p .proj₂
+    = refl
 
   Computational-ENACT = fromComputational' Computational'-ENACT
 \end{code}

@@ -23,52 +23,57 @@ record EpochStructure : Set₁ where
         StabilityWindow : Slot
         sucᵉ            : Epoch → Epoch
 
-  _≥ˢ_ : Slot → Slot → Set
-  _≥ˢ_ = ¬_ ∘₂ _<ˢ_
+  -- inequality
 
-  _≤ˢ_ : Slot → Slot → Set
+  _≥ˢ_ _≤ˢ_ : Slot → Slot → Set
+  _≥ˢ_ = ¬_ ∘₂ _<ˢ_
   _≤ˢ_ = flip _≥ˢ_
+
+  _<ᵉ_ _≤ᵉ_ : Epoch → Epoch → Set
+  _<ᵉ_ = _<ˢ_ on firstSlot
+  _≤ᵉ_ = _≤ˢ_ on firstSlot
 
   open IsStrictTotalOrder Slot-STO using () renaming (_<?_ to _<ˢ?_) public
 
-  _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
+  _≤ˢ?_ : ∀ s s' → Dec (s ≤ˢ s')
   s ≤ˢ? s' = ¬? (s' <ˢ? s)
 
-  ℕtoEpoch : ℕ → Epoch
-  ℕtoEpoch zero    = epoch (Semiring.0# Slotʳ)
-  ℕtoEpoch (suc n) = sucᵉ (ℕtoEpoch n)
-
-  _+ᵉ_ : ℕ → Epoch → Epoch
-  zero +ᵉ e = e
-  suc n +ᵉ e = sucᵉ (n +ᵉ e)
-
-  open Semiring Slotʳ renaming (_+_ to _+ˢ_)
-  _+ᵉ'_ : Epoch → Epoch → Epoch
-  e +ᵉ' e' = epoch (firstSlot e +ˢ firstSlot e')
-
-  _<ᵉ_ : Epoch → Epoch → Set
-  e <ᵉ e' = firstSlot e <ˢ firstSlot e'
-
-  _≤ᵉ_ : Epoch → Epoch → Set
-  e ≤ᵉ e' = firstSlot e ≤ˢ firstSlot e'
-
-  _≤ᵉ?_ : (e e' : Epoch) → Dec (e ≤ᵉ e')
+  _≤ᵉ?_ : ∀ e e' → Dec (e ≤ᵉ e')
   e ≤ᵉ? e' = firstSlot e ≤ˢ? firstSlot e'
 
   instance
+    Dec-<ˢ : ∀ {n m} → Dec (n <ˢ m)
+    Dec-<ˢ = Decidable²⇒Dec _<ˢ?_
+
+  _ = (∀ {n m} → Dec (n ≤ˢ m)) ∋ it
+  _ = (∀ {n m} → Dec (n <ᵉ m)) ∋ it
+  _ = (∀ {n m} → Dec (n ≤ᵉ m)) ∋ it
+
+  -- addition
+
+  open Semiring Slotʳ renaming (_+_ to _+ˢ_)
+
+  ℕtoEpoch : ℕ → Epoch
+  ℕtoEpoch zero    = epoch 0#
+  ℕtoEpoch (suc n) = sucᵉ (ℕtoEpoch n)
+
+  _+ᵉ_ : ℕ → Epoch → Epoch
+  zero  +ᵉ e = e
+  suc n +ᵉ e = sucᵉ (n +ᵉ e)
+
+  _+ᵉ'_ : Epoch → Epoch → Epoch
+  e +ᵉ' e' = epoch (firstSlot e +ˢ firstSlot e')
+
+  instance
     addSlot : HasAdd Slot
-    addSlot = record { _+_ = _+ˢ_ }
+    addSlot ._+_ = _+ˢ_
 
     addEpoch : HasAdd Epoch
-    addEpoch = record { _+_ = _+ᵉ'_ }
-
-    Dec-≤ᵉ : ∀ {n m} → Dec (n ≤ᵉ m)
-    Dec-≤ᵉ = Decidable²⇒Dec _≤ᵉ?_
+    addEpoch ._+_ = _+ᵉ'_
 
 record GlobalConstants : Set₁ where
   field Network : Set; ⦃ DecEq-Netw ⦄ : DecEq Network
-        SlotsPerEpochᶜ : ℕ
-        ⦃ NonZero-SlotsPerEpoch ⦄ : NonZero SlotsPerEpochᶜ
+        SlotsPerEpochᶜ : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
         StabilityWindowᶜ : ℕ
         Quorum : ℕ
         NetworkId : Network

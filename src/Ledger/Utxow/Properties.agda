@@ -20,8 +20,8 @@ private
         witsKeyHashes     = map hash (dom (vkSigs ˢ))
         witsScriptHashes  = map hash scripts
     in
-      ∀[ (vk , σ) ∈ vkSigs ˢ ] isSigned vk (txidBytes txid) σ
-    × ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
+      (∀[ (vk , σ) ∈ vkSigs ˢ ] isSigned vk (txidBytes txid) σ)
+    × (∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s)
     × witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     × scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
     × txADhash ≡ M.map hash txAD

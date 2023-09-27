@@ -86,7 +86,6 @@ open import Data.Nat hiding (_≟_)
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 open import Data.Product using (map₂)
-open import Relation.Nullary.Decidable using (⌊_⌋)
 
 open import Ledger.Prelude hiding (_∧_)
 open import Ledger.Transaction

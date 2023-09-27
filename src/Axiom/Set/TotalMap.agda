@@ -7,7 +7,6 @@ module Axiom.Set.TotalMap (th : Theory) where
 open import Prelude hiding (lookup)
 
 open import Agda.Primitive              using () renaming (Set to Type)
-open import Relation.Nullary.Decidable  using (yes ; no)
 open import Function.Related.TypeIsomorphisms  using (Σ-≡,≡→≡)
 open import Axiom.Set.Map th            using (left-unique; Map ; mapWithKey-uniq ; left-unique-mapˢ)
 open import Axiom.Set.Rel th            using (Rel ; dom ; dom∈)
