@@ -10,7 +10,6 @@ open import Algebra using (Monoid)
 import Data.Sum as Sum
 open import Data.These hiding (map)
 open import Interface.DecEq using (DecEq)
-open import Relation.Nullary.Decidable using (yes; no)
 
 open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set)
 open Theory th

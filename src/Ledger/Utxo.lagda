@@ -94,7 +94,7 @@ module _ (open TxBody) where
 
   propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
   propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
-    = ❴ GovActionDeposit gaid , pp .govDeposit ❵ᵐ
+    = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵ᵐ
 
   certRefund : DCert → Maybe DepositPurpose
   certRefund (delegate c nothing nothing x)  = just (CredentialDeposit c)

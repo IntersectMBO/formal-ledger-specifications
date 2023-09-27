@@ -62,7 +62,7 @@ record PParams : Set where
         collateralPercent  : ℕ
 \end{code}
 \emph{Governance group}
-\AgdaTarget{drepThresholds, poolThresholds, minCCSize, ccTermLimit, govExpiration, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
+\AgdaTarget{drepThresholds, poolThresholds, ccMinSize, ccTermLimit, govActionLifetime, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
 \begin{code}
         drepThresholds     : DrepThresholds
         poolThresholds     : PoolThresholds
@@ -109,10 +109,10 @@ These new parameters are declared in Figure~\ref{fig:protocol-parameter-declarat
   \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
   named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
   \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, and \Qfour;
-  \item \minCCSize: minimum constitutional committee size;
+  \item \ccMinSize: minimum constitutional committee size;
   \item \ccTermLimit: maximum term limit (in epochs) of constitutional committee members;
-  \item \govExpiration: governance action expiration;
-  \item \govDeposit: governance action deposit;
+  \item \govActionLifetime: governance action expiration;
+  \item \govActionDeposit: governance action deposit;
   \item \drepDeposit: \DRep deposit amount;
   \item \drepActivity: \DRep activity period;
   \item \minimumAVS: the minimum active voting threshold.

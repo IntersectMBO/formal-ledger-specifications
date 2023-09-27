@@ -1,6 +1,8 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
+open import Prelude hiding (filter)
+
 open import Agda.Primitive using (lzero) renaming (Set to Type)
 open import Axiom.Set using (Theory)
 
@@ -11,8 +13,6 @@ import Function.Related.Propositional as R
 
 open Theory th
 open import Axiom.Set.Properties th
-
-open import Prelude hiding (filter)
 
 import Data.Product
 open import Data.These hiding (map)

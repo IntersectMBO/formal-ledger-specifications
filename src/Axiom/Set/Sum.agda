@@ -19,7 +19,6 @@ open import Data.List.Relation.Binary.Permutation.Propositional
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Interface.DecEq using (DecEq; _≟_)
 open import Relation.Binary using (_Preserves_⟶_; IsEquivalence)
-open import Relation.Nullary.Decidable using (¬?)
 open import Relation.Unary using (Decidable)
 
 open import Tactic.AnyOf
@@ -121,7 +120,9 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
     → indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵐ-cong {x = x , _ , h} {y , _ , h'} = indexedSum-cong {x = x , h} {y , h'}
 
-  module IndexedSumUnionᵐ (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Decidable (_∈ X)) where
+  module IndexedSumUnionᵐ
+    (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Decidable¹ (_∈ X)) where
+
     open Unionᵐ sp-∈
 
     ∪ᵐˡ-finite : {R R' : Rel A B} → finite R → finite R' → finite (R ∪ᵐˡ' R')
