@@ -73,17 +73,17 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       totWithdrawals  = Σᵐᵛ[ x ← trWithdrawals ᶠᵐ ] x
 
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
-        map (GovActionState.returnAddr gaSt ,_)
-            ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+        mapˢ (GovActionState.returnAddr gaSt ,_)
+             ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ $
-        map (λ (a , _ , d) → a , d) removedGovActions , finiteness _
+        mapˢ (λ (a , _ , d) → a , d) removedGovActions , finiteness _
 
       es        = record esW { withdrawals = ∅ᵐ }
       retired   = retiring ⁻¹ e
       refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ)
       unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ) ᶜ
 
-      govSt' = filter (¬? ∘ (_∈? map proj₁ removed) ∘ proj₁) govSt
+      govSt' = filter (¬? ∘ (_∈? mapˢ proj₁ removed) ∘ proj₁) govSt
 
       gState' = record gState { ccHotKeys = ccHotKeys ∣ ccCreds (es .EnactState.cc) }
 
@@ -97,7 +97,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
         }
       utxoSt' = record utxoSt
         { fees = 0
-        ; deposits = deposits ∣ map (proj₁ ∘ proj₂) removedGovActions ᶜ
+        ; deposits = deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
         ; donations = 0
         }
       ls' = record ls

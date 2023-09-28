@@ -72,7 +72,7 @@ balance-∪ {utxo} {utxo'} h = begin
   cbalance utxo + cbalance utxo'
     ∎
 
-newTxid⇒disj : txid tx ∉ map proj₁ (dom (utxo ˢ))
+newTxid⇒disj : txid tx ∉ mapˢ proj₁ (dom (utxo ˢ))
              → disjoint' (dom (utxo ˢ)) (dom ((outs tx) ˢ))
 newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map
   (-, (case from ∈-map h' of λ where
@@ -158,7 +158,7 @@ module DepositHelpers
   {Γ : UTxOEnv}
   (step : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
               ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ)
-  (h' : txid tx ∉ map proj₁ (dom (utxo ˢ)))
+  (h' : txid tx ∉ mapˢ proj₁ (dom (utxo ˢ)))
   where
 
   private
@@ -328,7 +328,7 @@ if
 pov :
 \end{code}
 \begin{code}
-  txid tx ∉ map proj₁ (dom (utxo ˢ))
+  txid tx ∉ mapˢ proj₁ (dom (utxo ˢ))
 \end{code}
 
 and

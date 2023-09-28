@@ -25,7 +25,7 @@ module _ (accepted? : ∀ Γ es st → Dec (accepted Γ es st))
         open RatifyState fut using (removed) renaming (es to esW)
         open LState ls; open CertState certState; open Acnt acnt
         es         = record esW { withdrawals = ∅ᵐ }
-        govSt'     = filter (¬? ∘ (_∈? map proj₁ removed) ∘ proj₁) govSt
+        govSt'     = filter (¬? ∘ (_∈? mapˢ proj₁ removed) ∘ proj₁) govSt
         (_ , pFut) = RATIFY-total accepted? expired? delayed? Computational-ENACT
           {record { currentEpoch = e ; treasury = treasury
                   ; GState gState ; NewEpochEnv Γ }} {⟦ es , ∅ , false ⟧ʳ} {govSt'}

@@ -16,6 +16,7 @@ open import Prelude public
 open import Ledger.Prelude.Base public
 
 open import Data.Maybe.Properties.Ext public
+open import Interface.Functor public
 open import Interface.DecEq.Ext public
 open import Interface.HasAdd public
 open import Interface.HasAdd.Instance public
@@ -40,7 +41,7 @@ abstract
   List-Modelᵈ : Theoryᵈ
   List-Modelᵈ = L.List-Modelᵈ
 
-open Theoryᵈ List-Modelᵈ renaming (Set to ℙ_; filter to filterˢ) public
+open Theoryᵈ List-Modelᵈ renaming (Set to ℙ_; filter to filterˢ; map to mapˢ) public
 
 abstract
   open import Axiom.Set.Properties th using (card-≡ᵉ)

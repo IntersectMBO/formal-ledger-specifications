@@ -57,7 +57,7 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,GOV⦈_)
            govSt (txgov (tx .body))
       ,′ maybe
            (λ certState' → just certState' ,′
-             ⌊ ¿ map RwdAddr.stake (dom (tx .body .txwdrls ˢ))
+             ⌊ ¿ mapˢ RwdAddr.stake (dom (tx .body .txwdrls ˢ))
                ⊆ dom (DState.voteDelegs (CertState.dState certState') ˢ) ¿ ⌋)
            (nothing ,′ false)
            (compute Computational-CERTS
@@ -75,7 +75,7 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,GOV⦈_)
       in us ≡ just (s' .utxoSt)
        × gs ≡ just (s' .govSt)
        × cs ≡ just (s' .certState)
-       × map RwdAddr.stake (dom (tx .body .txwdrls ˢ)) ⊆
+       × mapˢ RwdAddr.stake (dom (tx .body .txwdrls ˢ)) ⊆
          dom (DState.voteDelegs (CertState.dState $ certState s') ˢ)
     Computational-Match-helper {Γ} {s} {tx} {⟦ utxoSt , tally , certState ⟧ˡ} h
       with Computational-Match Γ s tx | inspect (Computational-Match Γ s) tx | h
@@ -87,7 +87,7 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,GOV⦈_)
                ⟦ epoch (LEnv.slot Γ) , LEnv.pparams Γ , tx .body .txvote ⟧ᶜ
                (LState.certState s)
                (tx .body .txcerts)
-      prop = λ s → ¿ map RwdAddr.stake (dom (txwdrls (tx .body) ˢ))
+      prop = λ s → ¿ mapˢ RwdAddr.stake (dom (txwdrls (tx .body) ˢ))
                    ⊆ dom (DState.voteDelegs (CertState.dState s) ˢ) ¿
       p = (case comp return (λ x → comp ≡ x → x ≡ just certState) of
              λ x h → trans (trans (sym h) (sym (helper₁))) eq₃) refl
@@ -118,7 +118,7 @@ module _ (Computational-TALLY : Computational _⊢_⇀⦇_,GOV⦈_)
                     (×-≡,≡→≡ (refl , fromWitness' _ x₃))))))
 
   FreshTx : Tx → LState → Set
-  FreshTx tx ls = tx .body .txid ∉ map proj₁ (dom (ls .utxoSt .utxo ˢ))
+  FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo ˢ))
 
   LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
   LEDGER-pov h (LEDGER (UTXOW-inductive _ _ _ _ _ st) _ _ _) = P.pov h st

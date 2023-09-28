@@ -3,8 +3,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-import Data.List as L
-
 open import Ledger.Prelude
 open import Ledger.Transaction using (TransactionStructure)
 
@@ -36,8 +34,9 @@ record LState : Set where
         certState  : CertState
 
 txgov : TxBody → List (GovVote ⊎ GovProposal)
-txgov txb = let open TxBody txb in
-  L.map inj₁ txvote ++ L.map inj₂ txprop
+txgov txb = map inj₁ txvote ++ map inj₂ txprop
+  where open TxBody txb
+
 \end{code}
 \caption{Types and functions for the LEDGER transition system}
 \end{figure*}
@@ -74,7 +73,7 @@ data
        record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     →  ⟦ epoch slot , pparams , txvote ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     →  ⟦ txid , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
-    →  map stake (dom (txwdrls ˢ)) ⊆ dom (certState' .dState .voteDelegs ˢ)
+    →  mapˢ stake (dom (txwdrls ˢ)) ⊆ dom (certState' .dState .voteDelegs ˢ)
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}
