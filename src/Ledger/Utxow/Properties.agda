@@ -1,7 +1,5 @@
 {-# OPTIONS --safe #-}
 
-open import Data.Product using (map₂)
-
 open import Ledger.Prelude; open Computational' ⦃...⦄
 open import Ledger.Crypto
 open import Ledger.Transaction
@@ -31,7 +29,7 @@ instance
   Computational'-UTXOW .computeProof Γ s tx@(record {body = txb}) =
     case ¿ UTXOW-premise Γ s tx ¿ of λ where
       (yes (p₁ , p₂ , p₃ , p₄ , p₅)) →
-        map₂ (UTXOW-inductive p₁ p₂ p₃ p₄ p₅) <$> computeProof Γ s (tx .body)
+        map₂′ (UTXOW-inductive p₁ p₂ p₃ p₄ p₅) <$> computeProof Γ s (tx .body)
       (no _) → nothing
   Computational'-UTXOW .completeness Γ s tx s' (UTXOW-inductive p₁ p₂ p₃ p₄ p₅ h)
     with ¿ UTXOW-premise Γ s tx ¿ | "dumb Agda bug"
