@@ -118,7 +118,7 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
     pparamThreshold GovernanceGroup = P5d
 
     P5 : PParamsUpdate → ℚ
-    P5 ppu = maximum $ map pparamThreshold (updateGroups ppu)
+    P5 ppu = maximum $ mapˢ pparamThreshold (updateGroups ppu)
 
     noVote : Maybe ℚ
     noVote = nothing

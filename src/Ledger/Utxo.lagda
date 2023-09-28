@@ -11,7 +11,6 @@ open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
 open import Data.Nat             using (_≤?_; _≤_)
 open import Data.Nat.Properties  using (+-0-monoid; +-0-commutativeMonoid)
-import Data.Maybe as M
 
 open import Tactic.DeriveComp
 open import Tactic.Derive.DecEq
@@ -287,7 +286,7 @@ instance
     open TxBody tx
     open UTxOEnv Γ renaming (pparams to pp)
     open UTxOState s
-    QED : M.map proj₁ (computeProof Computational'-UTXO Γ s tx) ≡ just s'
+    QED : map proj₁ (computeProof Computational'-UTXO Γ s tx) ≡ just s'
     QED with ¿ txins ≢ ∅
              × txins ⊆ dom (utxo ˢ)
              × inInterval slot txvldt

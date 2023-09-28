@@ -2,10 +2,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-import Data.Maybe as M
 import Data.Nat
-
-open import Interface.Decidable.Instance
 
 open import Ledger.Prelude
 open import Ledger.Crypto
@@ -27,10 +24,10 @@ getScripts = mapPartial isInj₂
 
 credsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ Credential
 credsNeeded sh utxo txb
-  =  map (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins)
-  ∪  map cwitness (fromList txcerts)
-  ∪  map GovVote.credential (fromList txvote)
-  ∪  mapPartial (const (M.map inj₂ sh)) (fromList txprop)
+  =  mapˢ (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins)
+  ∪  mapˢ cwitness (fromList txcerts)
+  ∪  mapˢ GovVote.credential (fromList txvote)
+  ∪  mapPartial (const (inj₂ <$> sh)) (fromList txprop)
   where open TxBody txb
 
 witsVKeyNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ KeyHash
@@ -63,14 +60,14 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∀ {Γ} {s} {tx} {s'}
     → let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
           open UTxOState s; open UTxOEnv Γ
-          witsKeyHashes     = map hash (dom (vkSigs ˢ))
-          witsScriptHashes  = map hash scripts
+          witsKeyHashes     = mapˢ hash (dom (vkSigs ˢ))
+          witsScriptHashes  = mapˢ hash scripts
       in
        ∀[ (vk , σ) ∈ vkSigs ˢ ] isSigned vk (txidBytes txid) σ
     →  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
     →  witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     →  scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
-    →  txADhash ≡ M.map hash txAD
+    →  txADhash ≡ map hash txAD
     →  Γ ⊢ s ⇀⦇ txb ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

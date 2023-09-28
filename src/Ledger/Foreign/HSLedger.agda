@@ -4,8 +4,7 @@ module Ledger.Foreign.HSLedger where
 
 open import Ledger.Prelude; open Computational
 
-import Data.Maybe    as M
-import Data.Rational as ℚ
+open import Data.Rational using (½)
 
 open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
@@ -259,10 +258,10 @@ instance
       ; pv                = coerce pv
         -- TODO: translate these once they are implemented in F.PParams
       ; drepThresholds    = record
-        { P1  = ℚ.½ ; P2a = ℚ.½ ; P2b = ℚ.½ ; P3  = ℚ.½ ; P4 = ℚ.½
-        ; P5a = ℚ.½ ; P5b = ℚ.½ ; P5c = ℚ.½ ; P5d = ℚ.½ ; P6 = ℚ.½}
+        { P1  = ½ ; P2a = ½ ; P2b = ½ ; P3  = ½ ; P4 = ½
+        ; P5a = ½ ; P5b = ½ ; P5c = ½ ; P5d = ½ ; P6 = ½}
       ; poolThresholds    = record
-        { Q1 = ℚ.½ ; Q2a = ℚ.½ ; Q2b = ℚ.½ ; Q4 = ℚ.½ }
+        { Q1 = ½ ; Q2a = ½ ; Q2b = ½ ; Q4 = ½ }
       ; govActionLifetime = govActionLifetime
       ; govActionDeposit  = govActionDeposit
       ; drepDeposit       = drepDeposit
@@ -293,11 +292,11 @@ instance
          conv-utxo = Convertible-Map ⦃ DecEq-Product ⦄ ⦃ Coercible⇒Convertible ⦄
 
 utxo-step : F.UTxOEnv → F.UTxOState → F.TxBody → Maybe F.UTxOState
-utxo-step e s txb = M.map to (UTXO-step (from e) (from s) (from txb))
+utxo-step e s txb = to <$> UTXO-step (from e) (from s) (from txb)
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
 utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → Maybe F.UTxOState
-utxow-step e s tx = M.map to (compute Computational-UTXOW (from e) (from s) (from tx))
+utxow-step e s tx = to <$> compute Computational-UTXOW (from e) (from s) (from tx)
 
 {-# COMPILE GHC utxow-step as utxowStep #-}

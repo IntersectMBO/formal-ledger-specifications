@@ -5,20 +5,20 @@ module Interface.ComputationalRelation where
 open import Prelude
 
 open import Interface.DecEq
+open import Interface.Functor
 open import Interface.STS public
 
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
 
-import Data.Maybe as Maybe
+open import Data.Product using (map₂)
 open import Data.Maybe.Properties using (map-nothing)
 
-private
-  variable
-    C S Sig : Set
-    c : C
-    s s' s'' : S
-    sig : Sig
+private variable
+  C S Sig : Set
+  c : C
+  s s' s'' : S
+  sig : Sig
 
 module _ (STS : C → S → Sig → S → Set) where
 
@@ -42,7 +42,7 @@ module _ (STS : C → S → Sig → S → Set) where
       computeProof : (c : C) (s : S) (sig : Sig) → Maybe (∃[ s' ] STS c s sig s')
 
     compute : C → S → Sig → Maybe S
-    compute c s sig = Maybe.map proj₁ (computeProof c s sig)
+    compute c s sig = proj₁ <$> computeProof c s sig
 
     field
       completeness : (c : C) (s : S) (sig : Sig) (s' : S)
@@ -118,7 +118,7 @@ module _ {BSTS : C → S → ⊤ → S → Set} {STS : C → S → Sig → S →
   instance
     Computational'-SS⇒BSᵇ : Computational' (SS⇒BSᵇ (λ Γ s → BSTS Γ s tt) (STS ∘ proj₁))
     Computational'-SS⇒BSᵇ .computeProof c s [] =
-      Maybe.map (λ where (s' , p) → s' , BS-base p) (computeProof c s tt)
+      map (map₂ BS-base) (computeProof c s tt)
     Computational'-SS⇒BSᵇ .computeProof c s (sig ∷ sigs) = do
       s₁ , h  ← computeProof c s sig
       s₂ , hs ← computeProof c s₁ sigs

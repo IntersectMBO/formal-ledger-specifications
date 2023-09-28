@@ -80,7 +80,6 @@ above the threshold.
 {-# OPTIONS --safe #-}
 
 import Data.Integer as Z
-import Data.Maybe
 import Data.Rational as R
 open import Data.Nat hiding (_≟_)
 open import Data.Nat.Properties hiding (_≟_)
@@ -288,7 +287,7 @@ module _
 
   actualDRepVotes
     =    roleVotes GovRole.DRep
-    ∪ᵐˡ  constMap (map (credVoter DRep) activeDReps) Vote.no
+    ∪ᵐˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
     where
       activeDReps : ℙ Credential
       activeDReps = dom (filterᵐ (to-sp (currentEpoch ≤ᵉ?_ ∘ proj₂)) dreps ˢ)
@@ -401,7 +400,7 @@ accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
 
     acceptedBy : GovRole → Set
     acceptedBy role =
-      let t = maybe id R.0ℚ $ threshold pparams (Data.Maybe.map proj₂ cc) action role in
+      let t = maybe id R.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
       case totalStake role cc' redStakeDistr votes' of λ where
         0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
         x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t

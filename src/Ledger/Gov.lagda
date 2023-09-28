@@ -3,9 +3,10 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-import Data.List as L
 open import Data.List.Membership.Propositional.Properties
-open import Data.List.Relation.Unary.Any renaming (Any to Anyˡ; any? to decAny)
+open import Data.List.Relation.Unary.Any
+  hiding (map)
+  renaming (Any to Anyˡ; any? to decAny)
 open import Function.Related using (fromRelated)
 open import Function.Related.Propositional using (⤖⇒)
 open import Relation.Nullary.Decidable renaming (map to mapᵈ)
@@ -55,7 +56,7 @@ private variable
 -- could be implemented using a function of type:
 --   ∀ {a} {A : Set a} → (A → Maybe A) → List A → List A
 modifyMatch : ∀ {a} {A : Set a} → (A → Bool) → (A → A) → List A → List A
-modifyMatch P f = L.map (λ x → if P x then f x else x)
+modifyMatch P f = map (λ x → if P x then f x else x)
 
 addVote : GovState → GovActionID → GovRole → Credential → Vote → GovState
 addVote s aid r kh v =
