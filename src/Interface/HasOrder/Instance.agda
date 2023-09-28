@@ -2,28 +2,29 @@
 
 module Interface.HasOrder.Instance where
 
-open import Prelude                  using (_≡_)
+open import Prelude            using (_≡_)
+open import Data.Integer as ℤ  using (ℤ)
+open import Data.Nat as ℕ      using (ℕ)
+open import Interface.HasOrder
 
-open import Data.Integer             using (ℤ) renaming  ( _≤_           to _≤ℤ_ )
-open import Data.Integer.Properties  using ( ) renaming  ( ≤-isPreorder  to ≤ℤ-isPreorder
-                                                         ; ≤-antisym     to ≤ℤ-antisym
-                                                         ; _≟_           to _≟ℤ_ )
-open import Data.Nat                 using (ℕ) renaming  ( _≤_           to _≤ℕ_ )
-open import Data.Nat.Properties      using ( ) renaming  ( ≤-isPreorder  to ≤ℕ-isPreorder
-                                                         ; ≤-antisym     to ≤ℕ-antisym
-                                                         ; _≟_           to _≟ℕ_ )
-open import Interface.HasOrder       public
-
+import Data.Integer.Properties as IntProp
+import Data.Nat.Properties as NatProp
 
 instance
   preoInt : HasPreorder ℤ _≡_
-  preoInt = hasPreorderFromNonStrict ℤ _≡_ _≤ℤ_ _≟ℤ_ ≤ℤ-isPreorder
+  preoInt = record { _≤_ = ℤ._≤_; isPreorder = IntProp.≤-isPreorder }
 
   leqInt : HasPartialOrder ℤ _≡_
-  leqInt = record { hasPreorder = preoInt; antisym = ≤ℤ-antisym }
+  leqInt = record { hasPreorder = preoInt; antisym = IntProp.≤-antisym }
+
+  DecLeqInt : HasDecPartialOrder ℤ _≡_
+  DecLeqInt = record { hasPartialOrder = leqInt ; _≤?_ = ℤ._≤?_ }
 
   preoNat : HasPreorder ℕ _≡_
-  preoNat = hasPreorderFromNonStrict ℕ _≡_ _≤ℕ_ _≟ℕ_ ≤ℕ-isPreorder
+  preoNat = record { _≤_ = ℕ._≤_; isPreorder = NatProp.≤-isPreorder }
 
   leqNat : HasPartialOrder ℕ _≡_
-  leqNat = record { hasPreorder = preoNat; antisym = ≤ℕ-antisym }
+  leqNat = record { hasPreorder = preoNat; antisym = NatProp.≤-antisym }
+
+  DecLeqNat : HasDecPartialOrder ℕ _≡_
+  DecLeqNat = record { hasPartialOrder = leqNat ; _≤?_ = ℕ._≤?_ }

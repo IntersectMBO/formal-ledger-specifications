@@ -40,4 +40,4 @@ open import Relation.Unary public
 open import Relation.Binary public
   using () renaming (Decidable to Decidable²)
 open import Relation.Binary.PropositionalEquality public
-  hiding (preorder; setoid; [_]; module ≡-Reasoning)
+  hiding (preorder; isPreorder; setoid; [_]; module ≡-Reasoning)

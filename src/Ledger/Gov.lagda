@@ -84,7 +84,8 @@ data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovPropo
   GOV-Propose : ∀ {x k} (open GovEnv Γ) → let open PParams pparams hiding (a) in
     actionWellFormed a ≡ true
     → d ≡ govActionDeposit
-    → (∀ {new rem q} → a ≡ NewCommittee new rem q → ∀[ e ∈ range (new ˢ) ] epoch <ᵉ e × dom (new ˢ) ∩ rem ≡ᵉ ∅)
+    →  (∀ {new rem q} → a ≡ NewCommittee new rem q
+       → ∀[ e ∈ range (new ˢ) ] epoch ≤ᵉ e × ¬ (epoch ≡ e) × dom (new ˢ) ∩ rem ≡ᵉ ∅)
     ────────────────────────────────
     let sig = inj₂ record { returnAddr = addr ; action = a ; anchor = x
                           ; deposit = d ; prevAction = prev }
@@ -119,8 +120,8 @@ private
   isNewCommittee Info                     = noᵈ λ()
 
   instance
-    _ : ∀ {s s₁} → Dec (s <ˢ s₁)
-    _ = _ <ˢ? _
+    _ : ∀ {s s₁} → Dec (s ≤ˢ s₁)
+    _ = _ ≤ˢ? _
 
 instance
   Computational'-GOV' : Computational' _⊢_⇀⦇_,GOV'⦈_
@@ -134,7 +135,7 @@ instance
     case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿
          ,′ isNewCommittee a of λ where
       (yesᵈ (wf , dep) , yesᵈ (new , rem , q , refl)) →
-        case ¿ ∀[ e ∈ range (new ˢ) ] epoch <ᵉ e × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ of λ where
+        case ¿ ∀[ e ∈ range (new ˢ) ] epoch ≤ᵉ e × ¬ (epoch ≡ e) × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ of λ where
           (yesᵈ newOk) → just (_ , GOV-Propose wf dep λ where refl → newOk)
           (noᵈ _)      → nothing
       (yesᵈ (wf , dep) , noᵈ notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
@@ -148,7 +149,7 @@ instance
     with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿ | isNewCommittee a
   ... | noᵈ ¬p | _ = ⊥-elim (¬p (wf , dep))
   ... | yesᵈ _ | noᵈ notNewComm = refl
-  ... | yesᵈ _ | yesᵈ (new , rem , q , refl) with ¿ ∀[ e ∈ range (new ˢ) ] epoch <ᵉ e × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ | ""
+  ... | yesᵈ _ | yesᵈ (new , rem , q , refl) with ¿ ∀[ e ∈ range (new ˢ) ] epoch ≤ᵉ e × ¬ (epoch ≡ e) × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ | ""
   ...    | yesᵈ newOk | _ = refl
   ...    | noᵈ notOk  | _ = ⊥-elim (notOk (newOk refl))
 

@@ -81,6 +81,7 @@ above the threshold.
 
 import Data.Integer as Z
 import Data.Rational as R
+open import Data.Nat using (_≥_; _<_)
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 
@@ -409,7 +410,7 @@ accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
         x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
 
 expired : Epoch → GovActionState → Set
-expired current record { expiresIn = expiresIn } = expiresIn <ᵉ current
+expired current record { expiresIn = expiresIn } = expiresIn ≤ current × ¬ (expiresIn ≡ current)
 \end{code}
 } %% end small
 \caption{%%Ratify iii:

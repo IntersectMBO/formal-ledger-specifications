@@ -2,6 +2,7 @@
 
 module Data.Nat.Properties.Ext where
 
+open import Data.Nat using (_<_)
 open import Data.Nat.Properties
 open import Ledger.Prelude
 open import Relation.Nullary.Decidable

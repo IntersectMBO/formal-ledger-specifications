@@ -9,7 +9,7 @@
 
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
-open import Data.Nat             using (_≤?_; _≤_)
+import Data.Nat    as ℕ
 open import Data.Nat.Properties  using (+-0-monoid; +-0-commutativeMonoid)
 
 open import Tactic.DeriveComp
@@ -21,7 +21,6 @@ open import Ledger.Transaction
 module Ledger.Utxo (txs : _) (open TransactionStructure txs) where
 
 instance
-  _ = Decidable²⇒Dec ℕ._≤?_
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
@@ -82,10 +81,10 @@ module _ (open TxBody) where
     GovActionDeposit   : GovActionID  → DepositPurpose
 
   certDeposit : PParams → DCert → Maybe (DepositPurpose × Coin)
-  certDeposit pp (delegate c _ _ v)  = just (CredentialDeposit c , v)
+  certDeposit _  (delegate c _ _ v)  = just (CredentialDeposit c , v)
   certDeposit pp (regpool c _)       = just (PoolDeposit       c , pp .poolDeposit)
-  certDeposit pp (regdrep c v _)     = just (DRepDeposit       c , v)
-  certDeposit pp _                   = nothing
+  certDeposit _  (regdrep c v _)     = just (DRepDeposit       c , v)
+  certDeposit _  _                   = nothing
 
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
@@ -107,9 +106,9 @@ module _ (open TxBody) where
   -- this has to be a type definition for inference to work
   data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
     both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
-    lower  : ∀ {l}    → l ≤ slot              →  inInterval slot (just l   , nothing)
-    upper  : ∀ {r}    → slot ≤ r              →  inInterval slot (nothing  , just r)
-    none   :                                      inInterval slot (nothing  , nothing)
+    lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
+    upper  : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)
+    none   :                                    inInterval slot (nothing  , nothing)
 
 \end{code}
 \begin{code}[hide]
@@ -274,10 +273,10 @@ instance
     case ¿ txins ≢ ∅
          × txins ⊆ dom (utxo ˢ)
          × inInterval slot txvldt
-         × minfee pp tx ≤ txfee
+         × minfee pp tx ℕ.≤ txfee
          × consumed pp s tx ≡ produced pp s tx
          × coin mint ≡ 0
-         × txsize ≤ maxTxSize pp
+         × txsize ℕ.≤ maxTxSize pp
          ¿ of λ where
       (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆)) →
         just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆)
@@ -295,7 +294,7 @@ instance
              × minfee pp tx ≤ txfee
              × consumed pp s tx ≡ produced pp s tx
              × coin mint ≡ 0
-             × txsize ≤ maxTxSize pp ¿ | "work around mysterious Agda bug"
+             × txsize ℕ.≤ maxTxSize pp ¿ | "work around mysterious Agda bug"
     ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | _ = refl
     ... | no q | _ = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
 
