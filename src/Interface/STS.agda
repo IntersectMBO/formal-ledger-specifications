@@ -4,7 +4,7 @@ module Interface.STS where
 
 open import Prelude
 
-open import Data.Product using (map₂)
+open import Interface.Bifunctor
 
 infix -150 ∙_
 infixr -100 _∙_
@@ -56,7 +56,7 @@ SS-total⇒BS-total : {_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Set}
 SS-total⇒BS-total SS-total {Γ} {s} {[]} = s , BS-base refl
 SS-total⇒BS-total SS-total {Γ} {s} {x ∷ sig} =
   case SS-total {Γ , length sig} {s} {x} of λ where
-    (s' , Ps') → map₂ (BS-ind Ps') $ SS-total⇒BS-total SS-total {Γ} {s'} {sig}
+    (s' , Ps') → map₂′ (BS-ind Ps') $ SS-total⇒BS-total SS-total {Γ} {s'} {sig}
 
 -- with a given base case
 SS⇒BSᵇ = _⊢_⇀⟦_⟧*_

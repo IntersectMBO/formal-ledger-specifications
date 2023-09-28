@@ -6,12 +6,12 @@ open import Prelude
 
 open import Interface.DecEq
 open import Interface.Functor
+open import Interface.Bifunctor
 open import Interface.STS public
 
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
 
-open import Data.Product using (map₂)
 open import Data.Maybe.Properties using (map-nothing)
 
 private variable
@@ -118,7 +118,7 @@ module _ {BSTS : C → S → ⊤ → S → Set} {STS : C → S → Sig → S →
   instance
     Computational'-SS⇒BSᵇ : Computational' (SS⇒BSᵇ (λ Γ s → BSTS Γ s tt) (STS ∘ proj₁))
     Computational'-SS⇒BSᵇ .computeProof c s [] =
-      map (map₂ BS-base) (computeProof c s tt)
+      map (map₂′ BS-base) (computeProof c s tt)
     Computational'-SS⇒BSᵇ .computeProof c s (sig ∷ sigs) = do
       s₁ , h  ← computeProof c s sig
       s₂ , hs ← computeProof c s₁ sigs

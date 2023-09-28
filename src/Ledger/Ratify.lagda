@@ -84,7 +84,6 @@ import Data.Rational as R
 open import Data.Nat hiding (_≟_)
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
-open import Data.Product using (map₂)
 
 open import Ledger.Prelude hiding (_∧_)
 open import Ledger.Transaction
@@ -206,11 +205,16 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
 ∃topNDRepDist : ∀ {n dist} → lengthˢ (dist ˢ) ≥ n → n > 0
                 → ∃[ c ] lengthˢ (mostStakeDRepDist dist c ˢ) ≥ n
                        × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
-∃topNDRepDist {n} {dist} length≥n n>0 with negInduction (λ _ → _ ≥? n)
-  (subst (_≥ n) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
-  (map₂ (λ h h' → ≤⇒≯ (subst (_≥ n) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
-                     (mostStakeDRepDist-∅ {dist}))
-... | (c , h , h') = c , h , ≰⇒> h'
+∃topNDRepDist {n} {dist} length≥n n>0 =
+  let
+    c , h , h' =
+      negInduction (λ _ → _ ≥? n)
+        (subst (_≥ n) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
+        (map₂′ (λ h h'
+                  → ≤⇒≯ (subst (_≥ n) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
+               (mostStakeDRepDist-∅ {dist}))
+  in
+   c , h , ≰⇒> h'
 
 topNDRepDist : ℕ → Credential ⇀ Coin → Credential ⇀ Coin
 topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
