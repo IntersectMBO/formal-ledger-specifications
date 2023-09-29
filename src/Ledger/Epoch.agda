@@ -14,7 +14,7 @@ open import Data.Nat.Properties using (+-*-semiring; ≤-isTotalOrder)
 import Data.Nat as ℕ
 
 record EpochStructure : Set₁ where
-  infix 4 _≤ˢ_
+  infix 4 _≤ˢ_ _<ˢ_
   field Slotʳ : Semiring 0ℓ 0ℓ
         Epoch : Set; ⦃ DecEq-Epoch ⦄ : DecEq Epoch
 
@@ -26,7 +26,10 @@ record EpochStructure : Set₁ where
         Slot-TO         : IsTotalOrder _≡_ _≤ˢ_
         StabilityWindow : Slot
         sucᵉ            : Epoch → Epoch
-        _≡ˢ?_          : (s s' : Slot) → Dec(s ≡ s')
+        ⦃ DecEq-Slot ⦄  : DecEq Slot
+
+  _≡ˢ?_ : (s s' : Slot) → Dec(s ≡ s')
+  _ ≡ˢ? _ = it
 
   _<ˢ_ : Rel Slot _
   s <ˢ s' = s ≤ˢ s' × ¬ (s ≡ s')
@@ -48,14 +51,12 @@ record EpochStructure : Set₁ where
   ≤ˢ-isTotal : Total _≤ˢ_
   ≤ˢ-isTotal = IsTotalOrder.total Slot-TO
 
-
   instance
     preoSlot : HasPreorder Slot _≡_
     preoSlot = record { _≤_ = _≤ˢ_ ; isPreorder = ≤ˢ-isPreorder }
 
     poSlot : HasPartialOrder Slot _≡_
     poSlot = record { hasPreorder = preoSlot ; antisym = ≤ˢ-isAntisymmetric }
-
 
   Dec≡⋀TotAntisym≤⇒Dec≤ : Decidable _≡_ → Antisymmetric _≡_ _≤ˢ_ → Total _≤ˢ_ → Decidable _≤ˢ_
   Dec≡⋀TotAntisym≤⇒Dec≤ dec≡ antisym≤ tot≤ x y with dec≡ x y | tot≤ x y
@@ -70,10 +71,10 @@ record EpochStructure : Set₁ where
   ≤ˢ-isDecTotalOrder : IsDecTotalOrder _≡_ _≤ˢ_
   ≤ˢ-isDecTotalOrder = record { isTotalOrder = Slot-TO ; _≟_ = _≡ˢ?_ ; _≤?_ = _≤ˢ?_ }
 
-
   instance
     Dec-≤ˢ : ∀ {n m} → Dec (n ≤ˢ m)
     Dec-≤ˢ = Decidable²⇒Dec _≤ˢ?_
+
     decpoSlot : HasDecPartialOrder Slot _≡_
     decpoSlot = record { hasPartialOrder = poSlot ; _≤?_ = _≤ˢ?_ }
 
@@ -90,6 +91,10 @@ record EpochStructure : Set₁ where
   ≤ᵉ-isPreorder .IsPreorder.isEquivalence     = Ledger.Prelude.isEquivalence
   ≤ᵉ-isPreorder .IsPreorder.reflexive refl    = ≤ᵉ-isReflexive
   ≤ᵉ-isPreorder .IsPreorder.trans ij jk       = ≤ˢ-isTransitive ij jk
+
+  _ = (∀ {n m} → Dec (n <ˢ m)) ∋ it
+  _ = (∀ {n m} → Dec (n ≤ˢ m)) ∋ it
+  _ = (∀ {n m} → Dec (n ≤ᵉ m)) ∋ it
 
   instance
     preoEpoch : HasPreorder Epoch _≡_
@@ -134,7 +139,6 @@ record GlobalConstants : Set₁ where
     .Slot-TO → ≤-isTotalOrder
     .StabilityWindow → StabilityWindowᶜ
     .sucᵉ → suc
-    ._≡ˢ?_ → DecEq-ℕ ._≟_
 
    where open EpochStructure
 
