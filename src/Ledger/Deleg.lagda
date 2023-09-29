@@ -212,11 +212,6 @@ instance
   Computational-DELEG = fromComputational' Computational'-DELEG
 
 instance
-  Dec-⊎ : ∀ {a b} {A : Set a} {B : Set b} → ⦃ Dec A ⦄ → ⦃ Dec B ⦄ → Dec (A ⊎ B)
-  Dec-⊎ ⦃ yes p ⦄ ⦃ _     ⦄ = yes (inj₁ p)
-  Dec-⊎ ⦃ no _  ⦄ ⦃ yes q ⦄ = yes (inj₂ q)
-  Dec-⊎ ⦃ no ¬p ⦄ ⦃ no ¬q ⦄ = no λ { (inj₁ p) → ¬p p; (inj₂ q) → ¬q q }
-
   Computational'-POOL : Computational' _⊢_⇀⦇_,POOL⦈_
   Computational'-POOL .computeProof _ ⟦ pools , _ ⟧ᵖ (regpool c _) =
     case c ∈? dom (pools ˢ) of λ where

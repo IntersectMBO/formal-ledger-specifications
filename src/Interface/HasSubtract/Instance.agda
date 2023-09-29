@@ -2,7 +2,7 @@
 
 module Interface.HasSubtract.Instance where
 
-open import Interface.HasSubtract public
+open import Interface.HasSubtract
 
 open import Data.Integer as ℤ using (ℤ)
 open import Data.Nat     as ℕ using (ℕ)

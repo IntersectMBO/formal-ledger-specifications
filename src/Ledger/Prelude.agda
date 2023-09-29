@@ -70,9 +70,6 @@ abstract
   setToList : {A : Set} → ℙ A → List A
   setToList = id
 
-  -- setFromList : {A : Set} → List A → ℙ A
-  -- setFromList = id
-
   ≟-∅ : {A : Set} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → Dec (X ≡ ∅)
   ≟-∅ = L.Decˡ.≟-∅
 
