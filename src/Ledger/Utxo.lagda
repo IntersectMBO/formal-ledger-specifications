@@ -9,7 +9,6 @@
 
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
-import Data.Nat    as ℕ
 open import Data.Nat.Properties  using (+-0-monoid; +-0-commutativeMonoid)
 
 open import Tactic.DeriveComp
@@ -262,41 +261,39 @@ data _⊢_⇀⦇_,UTXO⦈_ where
                            ⟧ᵘ
 \end{code}
 \begin{code}[hide]
-open Computational'
 instance
   Computational'-UTXO : Computational' _⊢_⇀⦇_,UTXO⦈_
-  Computational'-UTXO .computeProof Γ s tx =
-    let open TxBody tx
-        open UTxOEnv Γ renaming (pparams to pp)
-        open UTxOState s
-    in
-    case ¿ txins ≢ ∅
-         × txins ⊆ dom (utxo ˢ)
-         × inInterval slot txvldt
-         × minfee pp tx ℕ.≤ txfee
-         × consumed pp s tx ≡ produced pp s tx
-         × coin mint ≡ 0
-         × txsize ℕ.≤ maxTxSize pp
-         ¿ of λ where
-      (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆)) →
-        just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆)
-      (no _) → nothing
-  Computational'-UTXO .completeness Γ s tx s'
-    h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆) = QED
-    where
+  Computational'-UTXO = record {go} where module go Γ s tx where
     open TxBody tx
     open UTxOEnv Γ renaming (pparams to pp)
     open UTxOState s
-    QED : map proj₁ (computeProof Computational'-UTXO Γ s tx) ≡ just s'
-    QED with ¿ txins ≢ ∅
-             × txins ⊆ dom (utxo ˢ)
-             × inInterval slot txvldt
-             × minfee pp tx ≤ txfee
-             × consumed pp s tx ≡ produced pp s tx
-             × coin mint ≡ 0
-             × txsize ℕ.≤ maxTxSize pp ¿ | "work around mysterious Agda bug"
-    ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | _ = refl
-    ... | no q | _ = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
+
+    UTXO-premises : Set
+    UTXO-premises
+      = txins ≢ ∅
+      × txins ⊆ dom (utxo ˢ)
+      × inInterval slot txvldt
+      × minfee pp tx ≤ txfee
+      × consumed pp s tx ≡ produced pp s tx
+      × coin mint ≡ 0
+      × txsize ≤ maxTxSize pp
+
+    UTXO-premises? : Dec UTXO-premises
+    UTXO-premises? = ¿ UTXO-premises ¿
+
+    computeProof =
+      case UTXO-premises? of λ where
+        (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆)) →
+          just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆)
+        (no _) → nothing
+
+    completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
+    completeness s' h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆) = QED
+      where
+      QED : map proj₁ computeProof ≡ just s'
+      QED with UTXO-premises?
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) = refl
+      ... | no q = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
 
   Computational-UTXO = fromComputational' Computational'-UTXO
 \end{code}
