@@ -81,7 +81,7 @@ above the threshold.
 
 import Data.Integer as Z
 import Data.Rational as R
-open import Data.Nat using (_≥_; _<_)
+open import Data.Nat using (_≥_)
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 
@@ -204,7 +204,7 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
 
 ∃topNDRepDist : ∀ {n dist} → lengthˢ (dist ˢ) ≥ n → n > 0
                 → ∃[ c ] lengthˢ (mostStakeDRepDist dist c ˢ) ≥ n
-                       × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
+                       × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) Data.Nat.< n
 ∃topNDRepDist {n} {dist} length≥n n>0 =
   let
     c , h , h' =
@@ -234,83 +234,59 @@ restrictedDists coins rank dists = dists
 \end{code}
 \begin{figure*}[h!]
 {\small
-\begin{code}[hide]
-module _
-\end{code}
 \begin{code}
-  -- Module Parameters:
-  (Γ        : RatifyEnv)
-  -- ^ ratification environment
-  (cc       : CCData)
-  -- ^ constitutional committee data
-  (votes    : (GovRole × Credential) ⇀ Vote)
-  -- ^ the map relating delegates to their votes
-  (ga       : GovAction)
-  -- ^ the governance action that was voted on
-  (pparams  : PParams)
-  -- ^ current protocol parameters
-\end{code}
-\begin{code}[hide]
+actualVotes : RatifyEnv → CCData → (GovRole × Credential) ⇀ Vote → GovAction → PParams
+            → VDeleg ⇀ Vote
+actualVotes Γ cc votes ga pparams
+  =    mapKeys (credVoter CC) actualCCVotes
+  ∪ᵐˡ  actualPDRepVotes ∪ᵐˡ actualDRepVotes
+  ∪ᵐˡ  actualSPOVotes
   where
+    open RatifyEnv Γ
+    open PParams pparams
 
-  open RatifyEnv Γ
-\end{code}
-\begin{code}
-  roleVotes : GovRole → VDeleg ⇀ Vote
-  roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (to-sp ((r ≟_) ∘ proj₁ ∘ proj₁)) votes)
+    roleVotes : GovRole → VDeleg ⇀ Vote
+    roleVotes r = mapKeys (uncurry credVoter) (filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes)
 
-  actualCCVote : Credential → Epoch → Vote
-  actualCCVote c e =
-    case ⌊ currentEpoch ≤ᵉ? e ⌋ ,′ lookupᵐ? ccHotKeys c of λ where
-      (true , just (just c'))  → maybe′ id Vote.no $ lookupᵐ? votes (CC , c')
-      _                        → Vote.abstain -- expired, no hot key or resigned
+    activeCC activeDReps : ℙ Credential
+    activeCC = case cc of λ where
+      (just (cc , _))  → dom (filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom (cc ˢ)) ˢ)
+      nothing          → ∅
 
-  activeCC : ℙ Credential
-  activeCC =
-    case cc of λ where
-      (just (cc , _)) → let activeCCHotKeys = ccHotKeys ∣ dom (cc ˢ) in
-        dom (filterᵐ (to-sp (λ {(_ , x) → is-just x ≟ true})) activeCCHotKeys ˢ)
-      nothing → ∅
+    activeDReps = dom (filterᵐ? (currentEpoch ≤ᵉ?_ ∘ proj₂) dreps ˢ)
 
-  actualCCVotes : Credential ⇀ Vote
-  actualCCVotes =
-    case cc of λ where
-      (just (cc , _)) → case lengthˢ activeCC ≥? ccMinSize of λ where
-        (yes _) → mapWithKey actualCCVote cc
-        (no _) → constMap (dom (cc ˢ)) Vote.no
-      nothing → ∅ᵐ
-    where open PParams pparams
+    actualCCVote : Credential → Epoch → Vote
+    actualCCVote c e =
+      case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of λ where
+        (true , just (just c'))  → maybe id Vote.no $ lookupᵐ? votes (CC , c')
+        _                        → Vote.abstain -- expired, no hot key or resigned
 
-  actualPDRepVotes actualDRepVotes actualSPOVotes actualVotes : VDeleg ⇀ Vote
+    actualCCVotes : Credential ⇀ Vote
+    actualCCVotes = case cc , ¿ ccMinSize ≤ lengthˢ activeCC ¿ᵇ of λ where
+      (just (cc , _)  , true)   → mapWithKey actualCCVote cc
+      (just (cc , _)  , false)  → constMap (dom (cc ˢ)) Vote.no
+      (nothing        , _)      → ∅ᵐ
 
-  actualPDRepVotes
-    =    ❴ abstainRep       , Vote.abstain ❵ᵐ
-    ∪ᵐˡ  ❴ noConfidenceRep  , (case ga of λ where  NoConfidence  → Vote.yes
-                                                   _             → Vote.no) ❵ᵐ
+    actualPDRepVotes
+      =    ❴ abstainRep       , Vote.abstain ❵ᵐ
+      ∪ᵐˡ  ❴ noConfidenceRep  , (case ga of λ where  NoConfidence  → Vote.yes
+                                                     _             → Vote.no) ❵ᵐ
 
-  actualDRepVotes
-    =    roleVotes GovRole.DRep
-    ∪ᵐˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
-    where
-      activeDReps : ℙ Credential
-      activeDReps = dom (filterᵐ (to-sp (currentEpoch ≤ᵉ?_ ∘ proj₂)) dreps ˢ)
+    actualDRepVotes
+      =    roleVotes GovRole.DRep
+      ∪ᵐˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
-  actualSPOVotes
-    =    roleVotes GovRole.SPO
-    ∪ᵐˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
-    where
-      spos : ℙ VDeleg
-      spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs ˢ)
+    actualSPOVotes
+      =    roleVotes GovRole.SPO
+      ∪ᵐˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
+      where
+        spos : ℙ VDeleg
+        spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs ˢ)
 
-      isHF : Bool
-      isHF = case ga of λ where
-        (TriggerHF _) → true
-        _             → false
-
-  actualVotes
-    =    mapKeys (credVoter CC) actualCCVotes
-    ∪ᵐˡ  actualPDRepVotes ∪ᵐˡ actualDRepVotes
-    ∪ᵐˡ  actualSPOVotes
+        isHF : Bool
+        isHF = case ga of λ where
+          (TriggerHF _)  → true
+          _              → false
 \end{code}
 } %% end small
 \caption{%Ratify i:
@@ -386,8 +362,6 @@ activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 activeVotingStake cc dists votes =
   Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom (votes ˢ) ᶜ ᶠᵐ ] x
 
--- For now, consider a proposal as accepted if the CC and half of the SPOs
--- and DReps agree.
 accepted' : RatifyEnv → EnactState → GovActionState → Set
 accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
   acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO ∧ meetsMinAVS
@@ -409,7 +383,13 @@ accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
         x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
 
 expired : Epoch → GovActionState → Set
-expired current record { expiresIn = expiresIn } = expiresIn ≤ current × ¬ (expiresIn ≡ current)
+expired current record { expiresIn = expiresIn } = expiresIn < current
+\end{code}
+\begin{code}[hide]
+  where -- FIXME: this should be part of a typeclass
+    infix 4 _<_
+    _<_ : Epoch → Epoch → Set
+    a < b = a ≤ b × a ≢ b
 \end{code}
 } %% end small
 \caption{%%Ratify iii:
@@ -492,17 +472,11 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
             ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 
-  -- remove expired actions
-  -- NOTE:  We don't have to remove actions that can never be accepted
-  --        because of sufficient no votes.
-
   RATIFY-Reject : let open RatifyEnv Γ; st = a .proj₂ in
        ¬ accepted Γ es st
     →  expired currentEpoch st
        ────────────────────────────────
        Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
-
-  -- Continue voting in the next epoch
 
   RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        ¬ accepted Γ es st × ¬ expired currentEpoch st
@@ -513,19 +487,31 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     ────────────────────────────────
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 
-_⊢_⇀⦇_,RATIFY⦈_ :  RatifyEnv → RatifyState → List (GovActionID × GovActionState)
-                   → RatifyState → Set
+_⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
+                 → RatifyState → Set
 _⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS _⊢_⇀⦇_,RATIFY'⦈_
 \end{code}
 } %% end small
 \caption{The RATIFY transition system}
 \label{fig:ratify-transition-system}
 \end{figure*}
-Figure~\ref{fig:ratify-transition-system} defines three rules, \RATIFYAccept, \RATIFYReject, and \RATIFYContinue, along with the relation \RATIFYsyntax.
-The latter is the transition relation for ratification of a \GovAction.  The three rules are briefly described here, followed by more details about how they work.
+Figure~\ref{fig:ratify-transition-system} defines three rules,
+\RATIFYAccept, \RATIFYReject, and \RATIFYContinue, along with the relation \RATIFYsyntax.
+The latter is the transition relation for ratification of a \GovAction.
 \begin{itemize}
-  \item \RATIFYAccept asserts that the votes for a given \GovAction meets the threshold required for acceptance; the action is accepted and not delayed,
-  and \RATIFYAccept ratifies the action.
-  \item \RATIFYReject asserts that the given \GovAction is not \accepted and \expired; it removes the governance action.
+  \item \RATIFYAccept checks if the votes for a given \GovAction meet the threshold required for
+        acceptance, that the action is accepted and not delayed,
+        and \RATIFYAccept ratifies the action.
+
+  \item \RATIFYReject asserts that the given \GovAction is not \accepted and \expired;
+        it removes the governance action.
   \item \RATIFYContinue covers the remaining cases and keeps the \GovAction around for further voting.
 \end{itemize}
+
+Note that all governance actions eventually either get accepted and enacted via \RATIFYAccept or
+rejected via \RATIFYReject. If an action satisfies all criteria to be accepted but cannot be
+enacted anyway, it is kept around and tried again at the next epoch boundary.
+
+We never remove actions that do not attract sufficient \yes votes before they expire, even if it
+is clear to an outside observer that this action will never be enacted. Such an action will simply
+keep getting checked every epoch until it expires.

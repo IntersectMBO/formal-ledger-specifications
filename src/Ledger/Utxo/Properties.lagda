@@ -350,7 +350,7 @@ then
 \end{code}
 \begin{code}[hide]
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
-    {deposits' = deposits'} h' step@(UTXO-inductive {Γ} _ _ _ _ newBal noMintAda _) =
+    {deposits' = deposits'} h' step@(UTXO-inductive {Γ = Γ} _ _ _ _ newBal noMintAda _) =
   let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
       h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (res-comp-domᵐ h₁ , h₂)
       utxoSt = ⟦ utxo , fees , deposits , donations ⟧ᵘ

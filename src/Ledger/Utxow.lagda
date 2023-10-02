@@ -13,8 +13,6 @@ open import Ledger.Utxo txs
 \end{code}
 
 \begin{figure*}[h]
-\begin{code}[hide]
-\end{code}
 \begin{code}
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isInj₁
@@ -53,15 +51,19 @@ data
 
 \begin{figure*}[h]
 \begin{code}[hide]
+private variable
+  Γ : UTxOEnv
+  s s' : UTxOState
+  tx : Tx
+
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
-    ∀ {Γ} {s} {tx} {s'}
-    → let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-          open UTxOState s; open UTxOEnv Γ
-          witsKeyHashes     = mapˢ hash (dom (vkSigs ˢ))
-          witsScriptHashes  = mapˢ hash scripts
+    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+        open UTxOState s; open UTxOEnv Γ
+        witsKeyHashes     = mapˢ hash (dom (vkSigs ˢ))
+        witsScriptHashes  = mapˢ hash scripts
       in
        ∀[ (vk , σ) ∈ vkSigs ˢ ] isSigned vk (txidBytes txid) σ
     →  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s

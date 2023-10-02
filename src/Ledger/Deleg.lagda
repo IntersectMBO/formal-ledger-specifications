@@ -103,10 +103,6 @@ module _ (open PParams) where
   requiredDeposit pp (just _)  = pp .poolDeposit
   requiredDeposit pp nothing   = 0
 
-  insertIfJust : ∀ {A B} → ⦃ DecEq A ⦄ → A → Maybe B → A ⇀ B → A ⇀ B
-  insertIfJust x nothing  m  = m
-  insertIfJust x (just y) m  = insert m x y
-
   getDRepVote : GovVote → Maybe Credential
   getDRepVote record { role = DRep ; credential = credential }  = just credential
   getDRepVote _                                                 = nothing
