@@ -55,10 +55,11 @@ open import Ledger.Chain
 \include{Ledger/Script}
 \include{Ledger/GovernanceActions}
 \include{Ledger/PParams}
+\include{Ledger/Gov}
+\include{Ledger/Deleg}
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
-\include{Ledger/Deleg}
 \include{Ledger/Ledger}
 \include{Ledger/Ratify}
 \include{Ledger/Chain}

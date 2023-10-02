@@ -23,6 +23,10 @@ open import Tactic.Derive.DecEq
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
 2ℚ = 1ℚ Data.Rational.+ 1ℚ
+
+-- TODO: this could be generic
+maximum : ℙ ℚ → ℚ
+maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
 \begin{figure*}[h]
 {\small
@@ -50,6 +54,10 @@ data GovAction : Set where
   ChangePParams    : PParamsUpdate                          → GovAction
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                       → GovAction
   Info             :                                          GovAction
+
+actionWellFormed : GovAction → Bool
+actionWellFormed (ChangePParams x) = ppdWellFormed x
+actionWellFormed _                 = true
 \end{code}
 } %% end small
 \caption{Governance actions}
@@ -86,34 +94,43 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   to non-backwards compatible updates of a network. In Cardano, we formalize the definition slightly more by calling any upgrade that
   would lead to \emph{more blocks} being validated a ``hard fork'' and force nodes to comply with the new protocol version, effectively
   obsoleting nodes that are unable to handle the upgrade.}
+\begin{figure*}[h]
 \begin{code}[hide]
-actionWellFormed : GovAction → Bool
-actionWellFormed (ChangePParams x) = ppdWellFormed x
-actionWellFormed _                 = true
+private
+  ⟨_,_,_⟩ : {A : Set} → A → A → A → GovRole → A
+  ⟨ q₁ , q₂ , q₃ ⟩ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
+\end{code}
+\begin{code}
+threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
+threshold pp ccThreshold' = λ where
+    NoConfidence           → ⟨ noVote            , vote P1      , vote Q1 ⟩
+    (NewCommittee _ _ _)   → case ccThreshold' of λ where
+      (just _)             → ⟨ noVote            , vote P2a     , vote Q2a ⟩
+      nothing              → ⟨ noVote            , vote P2b     , vote Q2b ⟩
+    (NewConstitution _ _)  → ⟨ vote ccThreshold  , vote P3      , noVote ⟩
+    (TriggerHF _)          → ⟨ vote ccThreshold  , vote P4      , vote Q4 ⟩
+    (ChangePParams x)      → ⟨ vote ccThreshold  , vote (P5 x)  , noVote ⟩
+    (TreasuryWdrl _)       → ⟨ vote ccThreshold  , vote P6      , noVote ⟩
+    Info                   → ⟨ vote 2ℚ           , vote 2ℚ      , vote 2ℚ ⟩
+  where
+    open PParams pp
+    open DrepThresholds drepThresholds
+    open PoolThresholds poolThresholds
 
-maximum : ℙ ℚ → ℚ
-maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
+    -- Here, 2 can just be any number strictly greater than one. It just
+    -- means that a threshold can never be cleared, i.e. that the action
+    -- cannot be enacted.
 
-module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
-  open PParams pp
-  open DrepThresholds drepThresholds
-  open PoolThresholds poolThresholds
-
-  -- Here, 2 can just be any number strictly greater than one. It just
-  -- means that a threshold can never be cleared, i.e. that the action
-  -- cannot be enacted.
-
-  private
     ccThreshold : ℚ
     ccThreshold = case ccThreshold' of λ where
-      (just x) → x
-      nothing  → 2ℚ
+      (just x)  → x
+      nothing   → 2ℚ
 
     pparamThreshold : PParamGroup → ℚ
-    pparamThreshold NetworkGroup    = P5a
-    pparamThreshold EconomicGroup   = P5b
-    pparamThreshold TechnicalGroup  = P5c
-    pparamThreshold GovernanceGroup = P5d
+    pparamThreshold NetworkGroup     = P5a
+    pparamThreshold EconomicGroup    = P5b
+    pparamThreshold TechnicalGroup   = P5c
+    pparamThreshold GovernanceGroup  = P5d
 
     P5 : PParamsUpdate → ℚ
     P5 ppu = maximum $ mapˢ pparamThreshold (updateGroups ppu)
@@ -124,28 +141,14 @@ module _ (pp : PParams) (ccThreshold' : Maybe ℚ) where
     vote : ℚ → Maybe ℚ
     vote = just
 
-  threshold : GovAction → GovRole → Maybe ℚ
-  threshold = λ where
-    NoConfidence
-               → λ { CC → noVote           ; DRep → vote P1     ; SPO → vote Q1 }
-    (NewCommittee _ _ _) → case ccThreshold' of λ where
-      (just _) → λ { CC → noVote           ; DRep → vote P2a    ; SPO → vote Q2a }
-      nothing  → λ { CC → noVote           ; DRep → vote P2b    ; SPO → vote Q2b }
-    (NewConstitution _ _)
-               → λ { CC → vote ccThreshold ; DRep → vote P3     ; SPO → noVote }
-    (TriggerHF _)
-               → λ { CC → vote ccThreshold ; DRep → vote P4     ; SPO → vote Q4 }
-    (ChangePParams x)
-               → λ { CC → vote ccThreshold ; DRep → vote (P5 x) ; SPO → noVote }
-    (TreasuryWdrl _)
-               → λ { CC → vote ccThreshold ; DRep → vote P6     ; SPO → noVote }
-    Info       → λ { CC → vote 2ℚ          ; DRep → vote 2ℚ     ; SPO → vote 2ℚ }
-
 -- TODO: this doesn't actually depend on PParams so we could remove that argument,
 --       but we don't have a default ATM
 canVote : PParams → GovAction → GovRole → Set
 canVote pp a r = Is-just (threshold pp nothing a r)
 \end{code}
+\caption{Functions related to voting}
+\label{fig:voting-defs}
+\end{figure*}
 \subsection{Voting and ratification}
 \label{sec:voting-and-ratification}
 Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
@@ -229,14 +232,6 @@ voting power to vote on their own (and competing) actions.
 \item A \emph{single} governance action might contain \emph{multiple} protocol parameter updates. Many parameters are inter-connected and might require moving in lockstep.
 \end{enumerate}
 
-\begin{code}[hide]
-instance
-  _ = +-0-commutativeMonoid
-  unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
-  unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
-  unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
-\end{code}
-
 \subsection{Protocol parameters and governance actions}
 \label{sec:protocol-parameters-and-governance-actions}
 Recall from Section~\ref{sec:protocol-parameters}, parameters used in the Cardano ledger are grouped according to
@@ -301,7 +296,12 @@ private variable
   gid : GovActionID
   e : Epoch
 
-instance _ = +-0-monoid
+instance
+  _ = +-0-monoid
+  _ = +-0-commutativeMonoid
+  unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
+  unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
+  unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 \end{code}
 
 The relation \ENACTsyntax is the transition relation for enacting a governance action.
@@ -317,7 +317,7 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
                  record  s { cc = nothing , gid }
 
   Enact-NewComm : let old = maybe proj₁ ∅ᵐ (s .EnactState.cc .proj₁) in
-    ∀[ term ∈ range (new ˢ) ] term ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)
+    ∀[ term ∈ range (new ˢ) ] term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)
     ────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewCommittee new rem q ,ENACT⦈
                 record  s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }

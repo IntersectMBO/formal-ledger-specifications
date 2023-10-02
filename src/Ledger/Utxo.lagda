@@ -78,10 +78,10 @@ module _ (open TxBody) where
     GovActionDeposit   : GovActionID  → DepositPurpose
 
   certDeposit : PParams → DCert → Maybe (DepositPurpose × Coin)
-  certDeposit _  (delegate c _ _ v)  = just (CredentialDeposit c , v)
-  certDeposit pp (regpool c _)       = just (PoolDeposit       c , pp .poolDeposit)
-  certDeposit _  (regdrep c v _)     = just (DRepDeposit       c , v)
-  certDeposit _  _                   = nothing
+  certDeposit _   (delegate c _ _ v)  = just (CredentialDeposit c , v)
+  certDeposit pp  (regpool c _)       = just (PoolDeposit       c , pp .poolDeposit)
+  certDeposit _   (regdrep c v _)     = just (DRepDeposit       c , v)
+  certDeposit _   _                   = nothing
 
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
@@ -183,8 +183,6 @@ data
 \end{figure*}
 
 \begin{figure*}
-\begin{code}
-\end{code}
 \begin{code}[hide]
 module _ (let open UTxOState; open TxBody) where
 \end{code}
@@ -213,15 +211,19 @@ module _ (let open UTxOState; open TxBody) where
     =  getCoin (updateDeposits pp txb deposits)
     ⊖  getCoin deposits
 
-  depositRefunds newDeposits : PParams → UTxOState → TxBody → Coin
-  depositRefunds  pp st txb = negPart  $ depositsChange pp txb (st .deposits)
-  newDeposits     pp st txb = posPart  $ depositsChange pp txb (st .deposits)
+  depositRefunds : PParams → UTxOState → TxBody → Coin
+  depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
 
-  consumed produced : PParams → UTxOState → TxBody → Value
+  newDeposits : PParams → UTxOState → TxBody → Coin
+  newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
+
+  consumed : PParams → UTxOState → TxBody → Value
   consumed pp st txb
     =  balance (st .utxo ∣ txb .txins)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
+
+  produced : PParams → UTxOState → TxBody → Value
   produced pp st txb
     =  balance (outs txb)
     +  inject (txb .txfee)
@@ -236,14 +238,18 @@ module _ (let open UTxOState; open TxBody) where
 \begin{code}[hide]
 open PParams
 
+private variable
+  Γ : UTxOEnv
+  s : UTxOState
+  tx : TxBody
+
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}
   UTXO-inductive :
-    ∀ {Γ} {s} {tx}
-    → let open TxBody tx
-          open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
+    let open TxBody tx
+        open UTxOEnv Γ renaming (pparams to pp)
+        open UTxOState s
       in
        txins ≢ ∅                            → txins ⊆ dom (utxo ˢ)
     →  inInterval slot txvldt               → minfee pp tx ≤ txfee

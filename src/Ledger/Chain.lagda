@@ -75,15 +75,14 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         mapˢ (GovActionState.returnAddr gaSt ,_)
              ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
-      govActionReturns = aggregate₊ $
-        mapˢ (λ (a , _ , d) → a , d) removedGovActions , finiteness _
+      govActionReturns = aggregate₊ $ mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ
 
       es        = record esW { withdrawals = ∅ᵐ }
       retired   = retiring ⁻¹ e
       refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ)
       unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ) ᶜ
 
-      govSt' = filter (¬? ∘ (_∈? mapˢ proj₁ removed) ∘ proj₁) govSt
+      govSt' = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
       gState' = record gState { ccHotKeys = ccHotKeys ∣ ccCreds (es .EnactState.cc) }
 
@@ -120,6 +119,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 \end{figure*}
 
 \begin{code}[hide]
+-- TODO: do we still need this for anything?
 maybePurpose : DepositPurpose → (DepositPurpose × Credential) → Coin → Maybe Coin
 maybePurpose prps (prps' , _) c with prps ≟ prps'
 ... | yes _ = just c

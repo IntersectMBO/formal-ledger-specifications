@@ -109,7 +109,7 @@ the transaction body are:
           txwdrls     : Wdrl
           txvote      : List GovVote
           txprop      : List GovProposal
-          txdonation  : ℕ
+          txdonation  : Coin
           txup        : Maybe Update
           txADhash    : Maybe ADHash
           netwrk      : Maybe Network

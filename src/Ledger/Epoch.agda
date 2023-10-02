@@ -112,15 +112,12 @@ record EpochStructure : Set₁ where
   zero  +ᵉ e = e
   suc n +ᵉ e = sucᵉ (n +ᵉ e)
 
-  _+ᵉ'_ : Epoch → Epoch → Epoch
-  e +ᵉ' e' = epoch (firstSlot e +ˢ firstSlot e')
-
   instance
     addSlot : HasAdd Slot
     addSlot ._+_ = _+ˢ_
 
     addEpoch : HasAdd Epoch
-    addEpoch ._+_ = _+ᵉ'_
+    addEpoch ._+_ e e' = epoch (firstSlot e +ˢ firstSlot e')
 
 record GlobalConstants : Set₁ where
   field Network : Set; ⦃ DecEq-Netw ⦄ : DecEq Network

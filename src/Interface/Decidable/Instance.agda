@@ -27,6 +27,9 @@ record Dec₁ {a} {A : Set a} (P : A → Set b) : Set (a ⊔ b) where
 ¿_¿ : (P : Set a) → ⦃ Dec P ⦄ → Dec P
 ¿ _ ¿ ⦃ P? ⦄ = P?
 
+¿_¿ᵇ : (P : Set a) → ⦃ Dec P ⦄ → Bool
+¿ _ ¿ᵇ ⦃ P? ⦄ = ⌊ P? ⌋
+
 infix 0 ifᵈ_then_else_
 ifᵈ_then_else_ : (P : Set a) → ⦃ Dec P ⦄ → A → A → A
 ifᵈ P then t else f = if ⌊ ¿ P ¿ ⌋ then t else f

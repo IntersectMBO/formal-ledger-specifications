@@ -121,7 +121,17 @@ module Properties where
 _ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B
 (R , uniq) ᶠᵐ = (R , uniq , finiteness _)
 
+_ᶠˢ : {A : Set} → ℙ A → FinSet A
+X ᶠˢ = X , finiteness _
+
 
 infix 2 All-syntax
 All-syntax = All
 syntax All-syntax (λ x → P) l = ∀[ x ∈ l ] P
+
+
+filterᵐ? : ∀ {A B} {P : A × B → Set} → (∀ x → Dec (P x)) → A ⇀ B → A ⇀ B
+filterᵐ? P? = filterᵐ (to-sp P?)
+
+filterᵐᵇ : ∀ {A B} → (A × B → Bool) → A ⇀ B → A ⇀ B
+filterᵐᵇ P = filterᵐ? (λ x → P x ≟ true)

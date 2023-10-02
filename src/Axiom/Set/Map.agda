@@ -166,6 +166,10 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
   insert : Map A B → A → B → Map A B
   insert m a b = ❴ a , b ❵ᵐ ∪ᵐˡ m
 
+  insertIfJust : ⦃ DecEq A ⦄ → A → Maybe B → Map A B → Map A B
+  insertIfJust x nothing  m  = m
+  insertIfJust x (just y) m  = insert m x y
+
 disj-dom : ∀ {m m₁ m₂ : Map A B}
   → (m ˢ) ≡ (m₁ ˢ) ⨿ (m₂ ˢ)
   → disjoint (dom (m₁ ˢ)) (dom (m₂ ˢ))
