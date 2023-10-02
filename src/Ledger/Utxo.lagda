@@ -23,6 +23,8 @@ module Ledger.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.ScriptValidation txs abs
+
 instance
   _ = +-0-monoid
 
@@ -285,11 +287,96 @@ module _ (let open UTxOState; open TxBody) where
 
 \begin{figure*}[h]
 \begin{code}[hide]
+
 open PParams
+data
+  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+
+data _⊢_⇀⦇_,UTXOS⦈_ where
+  Scripts-Yes :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        evalScripts tx sLst ≡ true
+        -- add NewPP
+        -- Add refund
+        -- Add deposits
+       ────────────────────────────────
+       Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+                           , fees + txfee
+                           , updateDeposits pp txb deposits
+                           , donations + txdonation
+                           ⟧ᵘ
+
+  Scripts-No :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        evalScripts tx sLst ≡ false
+        -- add NewPP
+        -- Add refund
+        -- Add deposits
+       ────────────────────────────────
+       Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
+                           , fees + cbalance (utxo ∣ collateral)
+                           , deposits
+                           , donations + txdonation
+                           ⟧ᵘ
+
+open import Data.Bool.Properties using ()
+open import Relation.Nullary.Decidable using ()
+
+excludedMiddleBool : {b b1 : Bool} → ¬ (b ≡ b1) → b ≡ (not b1)
+excludedMiddleBool {false} {false} x = ⊥-elim (x refl)
+excludedMiddleBool {false} {true} x = refl
+excludedMiddleBool {true} {false} x = refl
+excludedMiddleBool {true} {true} x = ⊥-elim (x refl)
+
+boolElim : ∀ {b} → (b ≡ true) → b ≡ false → ⊥
+boolElim {.true} refl ()
+
+instance
+  Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_
+  Computational-UTXOS = record {go} where module go Γ s tx where
+    open Tx tx renaming (body to txb); open TxBody txb
+    open UTxOEnv Γ renaming (pparams to pp)
+    open UTxOState s
+    sLst = collectPhaseTwoScriptInputs pp tx utxo
+
+    UTXOS-premises : Set
+    UTXOS-premises
+      = evalScripts tx sLst ≡ true
+        -- add NewPP
+        -- Add refund
+        -- Add deposits
+
+    UTXOS-premises? : Dec UTXOS-premises
+    UTXOS-premises? = ¿ UTXOS-premises ¿
+
+    computeProof =
+      case UTXOS-premises? of λ where
+        (no ¬p) → just (_ , (Scripts-No (excludedMiddleBool ¬p)))
+        (yes p) → just (_ , (Scripts-Yes p))
+
+    completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → M.map proj₁ computeProof ≡ just s'
+    completeness _ (Scripts-Yes x)
+      with UTXOS-premises?
+    ... | yes p = refl
+    ... | no ¬p = ⊥-elim (¬p x)
+    completeness _ (Scripts-No x)
+      with UTXOS-premises?
+    ... | yes p = ⊥-elim (boolElim p x)
+    ... | no ¬p = refl
 
 private variable
   Γ : UTxOEnv
-  s : UTxOState
+  s s' : UTxOState
   tx : Tx
 
 data _⊢_⇀⦇_,UTXO⦈_ where
@@ -313,6 +400,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txouts ]  netId a         ≡ networkId
     ∙ ∀[ a ∈ dom  txwdrls ]        a .RwdAddr.net  ≡ networkId
+    ∙ (Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s')
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ outs txb
                           , fees + txfee
@@ -324,6 +412,98 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r
       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
+
+open import Data.Bool.Properties using ()
+open import Relation.Nullary.Decidable using ()
+
+excludedMiddleBool : {b b1 : Bool} → ¬ (b ≡ b1) → b ≡ (not b1)
+excludedMiddleBool {false} {false} x = ⊥-elim (x refl)
+excludedMiddleBool {false} {true} x = refl
+excludedMiddleBool {true} {false} x = refl
+excludedMiddleBool {true} {true} x = ⊥-elim (x refl)
+
+boolElim : ∀ {b} → (b ≡ true) → b ≡ false → ⊥
+boolElim {.true} refl ()
+
+{-
+helpMe' : (Γ : UTxOEnv) → (s : UTxOState) → (tx : Tx) → (s' : UTxOState) → (Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s') → Set
+helpMe' Γ s tx _ (Scripts-Yes x) = {!!}
+helpMe' Γ s tx _ (Scripts-No x)
+ with ¿ arbFunc tx ≡ true
+      ¿ | "work around mysterious Agda bug"
+... | yes p | _ = ⊥-elim (boolElim p x)
+... | no ¬p | _ = {!!}
+-}
+
+{-
+instance
+  Computational'-UTXOS : Computational' _⊢_⇀⦇_,UTXOS⦈_
+  Computational'-UTXOS .computeProof  Γ s tx =
+    let open Tx tx renaming (body to txb); open TxBody txb
+        open UTxOEnv Γ renaming (pparams to pp)
+        open UTxOState s
+        sLst = collectPhaseTwoScriptInputs pp tx utxo
+    in
+      case ¿ evalScripts tx sLst ≡ true
+           ¿ of λ where
+      (no ¬p) → just (_ , (Scripts-No (excludedMiddleBool ¬p)))
+      (yes p) → just (_ , (Scripts-Yes p))
+  Computational'-UTXOS .completeness Γ s tx _ (Scripts-Yes x)
+    with ¿ evalScripts tx (collectPhaseTwoScriptInputs (UTxOEnv.pparams Γ) tx (UTxOState.utxo s)) ≡ true
+         ¿ | "work around mysterious Agda bug"
+  ... | yes p | _ = refl
+  ... | no ¬p | _ = ⊥-elim (¬p x)
+  Computational'-UTXOS .completeness Γ s tx _ (Scripts-No x)
+    with ¿ evalScripts tx (collectPhaseTwoScriptInputs (UTxOEnv.pparams Γ) tx (UTxOState.utxo s)) ≡ true
+         ¿ | "work around mysterious Agda bug"
+  ... | yes p | _ = ⊥-elim (boolElim p x)
+  ... | no ¬p | _ = refl
+-}
+
+{-
+instance
+  Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
+  Computational-UTXO = record {go} where module go Γ s tx where
+    open Tx tx renaming (body to txb); open TxBody txb
+    open UTxOEnv Γ renaming (pparams to pp)
+    open UTxOState s
+
+    UTXO-premises : Set
+    UTXO-premises
+      = txins ≢ ∅
+      × txins ⊆ dom utxo
+      × inInterval slot txvldt
+      × minfee pp tx ≤ txfee
+      × consumed pp s txb ≡ produced pp s txb
+      × coin mint ≡ 0
+      × txsize ≤ maxTxSize pp
+      × All (λ txout →  inject (utxoEntrySize (txout .proj₂) * minUTxOValue pp)
+                    ≤ᵗ getValue (txout .proj₂))
+            (txouts .proj₁)
+      × All (λ txout → serSize (getValue $ txout .proj₂) ≤ maxValSize pp)
+            (txouts .proj₁)
+      × All (Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) ∘ proj₁)
+            (range (txouts ˢ))
+      × All (λ a → netId (a .proj₁) ≡ networkId) (range (txouts ˢ))
+      × All (λ a → a .RwdAddr.net   ≡ networkId) (dom  (txwdrls ˢ))
+
+    UTXO-premises? : Dec UTXO-premises
+    UTXO-premises? = ¿ UTXO-premises ¿
+
+    open Computational Computational-UTXOS
+      renaming (computeProof to computeProof'; completeness to completeness')
+
+    computeProof =
+      case UTXO-premises? of λ where
+        (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁)) →
+         map₂′ (UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁) <$> computeProof' Γ s tx
+        (no _) → nothing
+
+    completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → M.map proj₁ computeProof ≡ just s'
+    completeness s' (UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆ q₇ q₈ q₉ q₁₀ q₁₁ h)
+      rewrite dec-yes ¿ UTXO-premises ¿ (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆ , q₇ , q₈ , q₉ , q₁₀ , q₁₁) .proj₂
+      with computeProof' Γ s tx | completeness' _ _ _ _ h
+    ... | just _ | refl = refl
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

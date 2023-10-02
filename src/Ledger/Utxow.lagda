@@ -73,6 +73,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
       in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  All (validP1Script witsKeyHashes txvldt) (toSet scriptsP1)
+    -- ∀[ s ∈ scriptsP1 ] (evalTimelockᵇ witsKeyHashes txvldt ≡ true)
     ∙  witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     ∙  scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
     ∙  txADhash ≡ map hash txAD

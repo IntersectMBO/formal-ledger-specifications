@@ -73,7 +73,15 @@ the transaction body are:
   open EpochStructure epochStructure public
   open Ledger.Script crypto epochStructure public
 
-  field scriptStructure : ScriptStructure
+  field p1s : Hashable Timelock ScriptHash
+  field ps : PlutusStructure
+  field hashRespectsUnion : {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
+
+  scriptStructure : ScriptStructure
+  scriptStructure = record { p1s = P1ScriptStructure-TL p1s ; 
+                              ps = ps ;
+                              hashRespectsUnion = hashRespectsUnion }
+
   open ScriptStructure scriptStructure public
   open Ledger.PParams crypto epochStructure scriptStructure public
 

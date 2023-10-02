@@ -91,16 +91,15 @@ data Timelock : Set where
   RequireTimeExpire  : Slot               → Timelock
 \end{code}
 \begin{code}[hide]
-module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
-  private variable
-    s : Timelock
-    ss ss' : List Timelock
-    k m : ℕ
-    x : KeyHash
-    a l r : Slot
+private variable
+  s : Timelock
+  ss ss' : List Timelock
+  k : ℕ
+  x : KeyHash
+  a l r : Slot
 
-  open import Data.List.Relation.Binary.Sublist.Ext
-  import Data.Maybe.Relation.Unary.Any as M
+open import Data.List.Relation.Binary.Sublist.Ext
+import Data.Maybe.Relation.Unary.Any as M
 \end{code}
 \begin{code}
   module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where
@@ -170,10 +169,84 @@ module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
           (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
           (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
 
-
+  open P1ScriptStructure
   unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 
-  open P1ScriptStructure
+  import Data.List.Relation.Binary.Sublist.Heterogeneous as Heterogeneous
+  import Data.List.Relation.Binary.Sublist.Heterogeneous.Core
+    as HeterogeneousCore
+  import Data.List.Relation.Binary.Sublist.Heterogeneous.Properties
+    as HeterogeneousProperties
+
+  []⊆xs : {A : Set} → (xs : List A) → [] S.⊆ xs
+  []⊆xs [] = HeterogeneousCore.[]
+  []⊆xs (x ∷ xs) = x HeterogeneousCore.∷ʳ []⊆xs xs
+
+  subLemma' : (ss xs : List Timelock) → (x : Timelock) → ss S.⊆ (x ∷ xs) → ¬ (x ∈ˡ ss) → (ss S.⊆ xs)
+  subLemma' ss xs x (.x HeterogeneousCore.∷ʳ p) ¬p1 = p
+  subLemma' .(x ∷ _) xs x (refl HeterogeneousCore.∷ p) ¬p1 = ⊥-elim (¬p1 (here refl))
+
+  subLemma : {ss xs : List Timelock}{x : Timelock} → ss S.⊆ (x ∷ xs) → (x ∈ˡ ss) ⊎ (ss S.⊆ xs)
+  subLemma {ss} {xs} {x} x₁ with Data.List.Relation.Unary.Any.any? (x ≟_) ss
+  ... | yes p = inj₁ p
+  ... | no ¬p = inj₂ (subLemma' ss xs x x₁ ¬p)
+
+  module _ (khs : ℙ KeyHash) where
+
+    evalTimelockHelper' : ∀ {I ss x} → All (evalTimelock khs I) ss → Any (_≡_ x) ss → evalTimelock khs I x
+    evalTimelockHelper' (px ∷ x₁) (here refl) = px
+    evalTimelockHelper' (px ∷ x₁) (there x₂) = evalTimelockHelper' x₁ x₂
+
+    evalTimelockHelper : ∀ {I n x xs} → ¬ evalTimelock khs I x
+                                          →  ¬ evalTimelock khs I (RequireMOf (suc n) xs)
+                                          → evalTimelock khs I (RequireMOf (suc n) (x ∷ xs))
+                                          → ⊥
+    evalTimelockHelper ¬p ¬p₁ (evalMOf {ss} {xs} x x₁ x₂) with subLemma x
+    ... | inj₁ p = ¬p (evalTimelockHelper' x₁ p)
+    ... | inj₂ y = ¬p₁ (evalMOf y x₁ x₂)
+
+    evalTimelock? : (I : Maybe Slot × Maybe Slot)(s : Timelock) → Dec (evalTimelock khs I s)
+    evalTimelock? I (RequireAllOf []) = yes (evalAll [])
+    evalTimelock? I (RequireAllOf (x ∷ xs)) with evalTimelock? I x | evalTimelock? I (RequireAllOf xs)
+    ... | no ¬p | yes p = no (λ { (evalAll (px ∷ x)) → ¬p px})
+    ... | no ¬p | no ¬p₁ = no (λ { (evalAll (px ∷ x)) → ¬p px})
+    ... | yes p | no ¬p₁ = no (λ { (evalAll (px ∷ x)) → ¬p₁ (evalAll x)})
+    ... | yes p | yes (evalAll x₁) = yes (evalAll (p ∷ x₁))
+    evalTimelock? I (RequireAnyOf []) = no λ { (evalAny ())}
+    evalTimelock? I (RequireAnyOf (x ∷ xs)) with evalTimelock? I x | evalTimelock? I (RequireAnyOf xs)
+    ... | no ¬p | yes (evalAny x₁) = yes (evalAny (there x₁))
+    ... | no ¬p | no ¬p₁ = no (λ { (evalAny (here px)) → ¬p px ; (evalAny (there x)) → ¬p₁ (evalAny x)})
+    ... | yes p | no ¬p₁ = yes (evalAny (here p))
+    ... | yes p | yes p₁ = yes (evalAny (here p))
+    evalTimelock? I (RequireMOf zero x₁) = yes (evalMOf ([]⊆xs x₁) [] refl)
+    evalTimelock? I (RequireMOf (suc n) []) = no λ { (evalMOf HeterogeneousCore.[] x₁ ())}
+    evalTimelock? I (RequireMOf (suc n) (x ∷ xs)) with evalTimelock? I x | evalTimelock? I (RequireMOf n xs) |  evalTimelock? I (RequireMOf (suc n) xs)
+    ... | no ¬p | no ¬p₁ | no ¬p₂ = no (λ { (evalMOf {ss'} x (px ∷ x₁) refl) → ¬p₁ (evalMOf (HeterogeneousProperties.∷⁻ x) x₁ refl)})
+    ... | no ¬p | yes p | no ¬p₁ = no (λ x₁ → evalTimelockHelper ¬p ¬p₁ x₁)
+    ... | yes p | no ¬p | no ¬p₁ = no (λ { (evalMOf {ss'} x (px ∷ x₁) refl) → ¬p (evalMOf (HeterogeneousProperties.∷⁻ x) x₁ refl)})
+    ... | yes p | yes (evalMOf {ss'} x₁ x₂ refl) | no ¬p = yes (evalMOf (refl HeterogeneousCore.∷ x₁) (p ∷ x₂) refl)
+    ... | _     | _     | yes (evalMOf x₁ x₂ x₃) = yes (evalMOf (x HeterogeneousCore.∷ʳ x₁) x₂ x₃)
+    evalTimelock? I (RequireSig x) with x ∈? khs
+    ... | no ¬p = no λ { (evalSig x) → ¬p x}
+    ... | yes p = yes (evalSig p)
+    evalTimelock? (just l , snd) (RequireTimeStart x) with ¿ x ≤ l ¿
+    ... | no ¬p = no (λ { (evalTSt refl x₁) → ¬p x₁})
+    ... | yes p = yes (evalTSt refl p)
+    evalTimelock? (nothing , snd) (RequireTimeStart x) = no λ { (evalTSt () x₁)}
+    evalTimelock? (fst , just r) (RequireTimeExpire x) with ¿ r ≤ x ¿
+    ... | no ¬p = no (λ { (evalTEx refl x₁) → ¬p x₁})
+    ... | yes p = yes (evalTEx refl p)
+    evalTimelock? (fst , nothing) (RequireTimeExpire x) = no (λ { (evalTEx () x₁)})
+
+    evalTimelockᵇ : (Maybe Slot × Maybe Slot) → Timelock → Bool
+    evalTimelockᵇ I s = ⌊ evalTimelock? I s ⌋
+
+  -- P1ScriptStructure-TL : Hashable Timelock ScriptHash → P1ScriptStructure
+  -- P1ScriptStructure-TL h .P1Script = Timelock
+  -- P1ScriptStructure-TL h .validP1Script = evalTimelock
+  -- P1ScriptStructure-TL h .validP1Script? = evalTimelock?
+  -- P1ScriptStructure-TL h .Hashable-P1Script = h
+  -- P1ScriptStructure-TL h .DecEq-P1Script = DecEq-Timelock
 
   P1ScriptStructure-TL : Hashable Timelock ScriptHash → P1ScriptStructure
   P1ScriptStructure-TL h .P1Script = Timelock

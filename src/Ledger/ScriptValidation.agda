@@ -8,7 +8,6 @@ open import Tactic.Assumption
 open import Ledger.Prelude; open Properties
 open import Ledger.Transaction
 open import Ledger.Abstract
-open import Ledger.Script
 open import Ledger.Crypto
 
 
@@ -17,11 +16,8 @@ module Ledger.ScriptValidation
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
--- Because of missing macro hygiene, we have to copy&paste this. https://github.com/agda/agda/issues/3819
-private macro
-  ∈⇒P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ [])
-  P⇒∈ = anyOfⁿᵗ (quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
-  ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
+instance
+  _ = DecEq-Slot
 
 data ScriptPurpose : Set where
   Cert     : DCert        → ScriptPurpose
@@ -44,15 +40,6 @@ rdptr txb = λ where
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x) nothing (rdptr body sp)
   where open Tx tx; open TxWitnesses wits
-
--- Abstract Script Validation Functions
-
--- epochInfoSlotToUTCTime : EpochInfo → SystemStart → Slot → -- UTCTime? Translate slot number to system time or fail
-
--- runPLCScript : CostModel → Scriptplc → ExUnits → Data∗ → IsValid
--- Validate a Plutus script, taking resource limits into account
-
--- Notation
 
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
 getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
@@ -157,34 +144,48 @@ private
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
     where open TxBody txb
 
-
--- We need to add toData to define this
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
-
 
 -- need to get map from language script ↦ cm
 -- need to update costmodels to add the language map in order to check
 -- (Language ↦ CostModel) ∈ costmdls ↦ (Language ↦ CostModel)
 
-collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
-  → Maybe (Script × List Data × ExUnits × CostModel)
-collectPhaseTwoScriptInputs' pp tx utxo (sp , sh)
-  with lookupScriptHash sh tx
-... | nothing = nothing
-... | just s
-  with isInj₂ s | indexedRdmrs tx sp
-... | just p2s | just (rdmr , eu)
-    = just (s ,
-        ( (getDatum tx utxo sp ++ rdmr ∷ valContext (txInfo (language p2s) pp utxo tx) sp ∷ [])
-        , eu
-        , PParams.costmdls pp)
-      )
-... | x | y = nothing
+abstract
 
-collectPhaseTwoScriptInputs : PParams → Tx → UTxO
-  → List (Script × List Data × ExUnits × CostModel)
-collectPhaseTwoScriptInputs pp tx utxo
-  = setToList
-  $ mapPartial (collectPhaseTwoScriptInputs' pp tx utxo)
-  $ scriptsNeeded utxo (tx .Tx.body)
+  collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
+    → Maybe (Script × List Data × ExUnits × CostModel)
+  collectPhaseTwoScriptInputs' pp tx utxo (sp , sh)
+    with lookupScriptHash sh tx
+  ... | nothing = nothing
+  ... | just s
+    with isInj₂ s | indexedRdmrs tx sp
+  ... | just p2s | just (rdmr , eu)
+      = just (s ,
+          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (txInfo (language p2s) pp utxo tx) sp ∷ [])
+          , eu
+          , PParams.costmdls pp)
+        )
+  ... | x | y = nothing
+
+  collectPhaseTwoScriptInputs : PParams → Tx → UTxO
+    → List (Script × List Data × ExUnits × CostModel)
+  collectPhaseTwoScriptInputs pp tx utxo
+    = setToList
+    $ mapPartial (collectPhaseTwoScriptInputs' pp tx utxo)
+    $ scriptsNeeded utxo (tx .Tx.body)
+
+open TxBody
+open Tx
+
+⟦_⟧,_,_,_ : P2Script → CostModel → ExUnits → List Data → Bool
+⟦ s ⟧, cm , eu , d = runPLCScript cm s eu d
+
+evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
+evalScripts tx [] = true
+evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) = evalTimelockᵇ
+                                                 (reqSigHash (body tx))
+                                                 (txvldt (body tx))
+                                                 tl
+                                                 ∧ evalScripts tx Γ
+evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ
