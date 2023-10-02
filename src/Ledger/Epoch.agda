@@ -131,14 +131,14 @@ record GlobalConstants : Set₁ where
 
   ℕEpochStructure : EpochStructure
   ℕEpochStructure = λ where
-    .Slotʳ → +-*-semiring
-    .Epoch → ℕ
-    .epoch slot → slot / SlotsPerEpochᶜ
-    .firstSlot e → e * SlotsPerEpochᶜ
-    ._≤ˢ_ → ℕ._≤_
-    .Slot-TO → ≤-isTotalOrder
+    .Slotʳ           → +-*-semiring
+    .Epoch           → ℕ
+    .epoch slot      → slot / SlotsPerEpochᶜ
+    .firstSlot e     → e * SlotsPerEpochᶜ
+    ._≤ˢ_            → ℕ._≤_
+    .Slot-TO         → ≤-isTotalOrder
     .StabilityWindow → StabilityWindowᶜ
-    .sucᵉ → suc
+    .sucᵉ            → suc
 
    where open EpochStructure
 

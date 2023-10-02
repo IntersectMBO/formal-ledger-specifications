@@ -51,6 +51,10 @@ private variable
   addr : RwdAddr
   a : GovAction
   prev : NeedsHash a
+
+private -- FIXME: this should be part of a typeclass
+  _<_ : Epoch → Epoch → Set
+  a < b = a ≤ b × a ≢ b
 \end{code}
 \begin{code}
 -- could be implemented using a function of type:
@@ -85,7 +89,7 @@ data _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovPropo
     actionWellFormed a ≡ true
     → d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q
-       → ∀[ e ∈ range (new ˢ) ] epoch ≤ᵉ e × ¬ (epoch ≡ e) × dom (new ˢ) ∩ rem ≡ᵉ ∅)
+       → ∀[ e ∈ range (new ˢ) ] epoch < e × dom (new ˢ) ∩ rem ≡ᵉ ∅)
     ────────────────────────────────
     let sig = inj₂ record { returnAddr = addr ; action = a ; anchor = x
                           ; deposit = d ; prevAction = prev }
@@ -135,7 +139,7 @@ instance
     case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿
          ,′ isNewCommittee a of λ where
       (yesᵈ (wf , dep) , yesᵈ (new , rem , q , refl)) →
-        case ¿ ∀[ e ∈ range (new ˢ) ] epoch ≤ᵉ e × ¬ (epoch ≡ e) × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ of λ where
+        case ¿ ∀[ e ∈ range (new ˢ) ] epoch < e × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ of λ where
           (yesᵈ newOk) → just (_ , GOV-Propose wf dep λ where refl → newOk)
           (noᵈ _)      → nothing
       (yesᵈ (wf , dep) , noᵈ notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
@@ -149,7 +153,7 @@ instance
     with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿ | isNewCommittee a
   ... | noᵈ ¬p | _ = ⊥-elim (¬p (wf , dep))
   ... | yesᵈ _ | noᵈ notNewComm = refl
-  ... | yesᵈ _ | yesᵈ (new , rem , q , refl) with ¿ ∀[ e ∈ range (new ˢ) ] epoch ≤ᵉ e × ¬ (epoch ≡ e) × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ | ""
+  ... | yesᵈ _ | yesᵈ (new , rem , q , refl) with ¿ ∀[ e ∈ range (new ˢ) ] epoch < e × dom (new ˢ) ∩ rem ≡ᵉ ∅ ¿ | ""
   ...    | yesᵈ newOk | _ = refl
   ...    | noᵈ notOk  | _ = ⊥-elim (notOk (newOk refl))
 

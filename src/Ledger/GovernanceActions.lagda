@@ -349,7 +349,6 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
 \end{figure*}
 
 \begin{code}[hide]
--- open import Interface.Decidable.Instance
 open Computational' ⦃...⦄
 
 instance
