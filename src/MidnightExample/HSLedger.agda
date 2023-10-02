@@ -1,4 +1,3 @@
-{-# OPTIONS --overlapping-instances #-}
 module MidnightExample.HSLedger where
 
 open import Prelude hiding (_++_)
@@ -28,7 +27,6 @@ instance
 open import MidnightExample.Ledger Hash
 
 open import Foreign.Convertible
-open import Foreign.Haskell.Coerce
 
 instance
   Convertible-Point : Convertible Point F.Point

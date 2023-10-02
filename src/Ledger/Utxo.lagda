@@ -5,7 +5,6 @@
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-{-# OPTIONS --overlapping-instances #-}
 
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
@@ -153,8 +152,6 @@ record UTxOState : Set where
 
 open HasDecPartialOrder ⦃ ... ⦄
 instance
-  _ = ≟-∅
-
   netId? : ∀ {A : Set} {networkId : Network} {f : A → Network}
     → Dec₁ (λ a → f a ≡ networkId)
   netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId
