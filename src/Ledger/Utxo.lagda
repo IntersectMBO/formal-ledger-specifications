@@ -9,7 +9,6 @@
 
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
-open import Data.Nat             using (_≤?_; _≤_)
 open import Data.Nat.Properties  using (+-0-monoid; +-0-commutativeMonoid)
 
 open import Tactic.DeriveComp
@@ -81,10 +80,10 @@ module _ (open TxBody) where
     GovActionDeposit   : GovActionID  → DepositPurpose
 
   certDeposit : PParams → DCert → Maybe (DepositPurpose × Coin)
-  certDeposit pp (delegate c _ _ v)  = just (CredentialDeposit c , v)
+  certDeposit _  (delegate c _ _ v)  = just (CredentialDeposit c , v)
   certDeposit pp (regpool c _)       = just (PoolDeposit       c , pp .poolDeposit)
-  certDeposit pp (regdrep c v _)     = just (DRepDeposit       c , v)
-  certDeposit pp _                   = nothing
+  certDeposit _  (regdrep c v _)     = just (DRepDeposit       c , v)
+  certDeposit _  _                   = nothing
 
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
@@ -105,10 +104,10 @@ module _ (open TxBody) where
 
   -- this has to be a type definition for inference to work
   data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
-    both   : ∀ {l r}  → l ≤ˢ slot × slot ≤ˢ r  →  inInterval slot (just l   , just r)
-    lower  : ∀ {l}    → l ≤ˢ slot              →  inInterval slot (just l   , nothing)
-    upper  : ∀ {r}    → slot ≤ˢ r              →  inInterval slot (nothing  , just r)
-    none   :                                      inInterval slot (nothing  , nothing)
+    both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
+    lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
+    upper  : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)
+    none   :                                    inInterval slot (nothing  , nothing)
 
 \end{code}
 \begin{code}[hide]
@@ -152,6 +151,7 @@ record UTxOState : Set where
 ⟦_⟧ : {A : Set} → A → A
 ⟦_⟧ = id
 
+open HasDecPartialOrder ⦃ ... ⦄
 instance
   _ = ≟-∅
 
@@ -159,15 +159,15 @@ instance
     → Dec₁ (λ a → f a ≡ networkId)
   netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId
 
-  Dec-inInterval : ∀ {slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
-  Dec-inInterval {slot} {just x  , just y } with x ≤ˢ? slot | slot ≤ˢ? y
+  Dec-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
+  Dec-inInterval {slot} {just x  , just y } with x ≤? slot | slot ≤? y
   ... | no ¬p₁ | _      = no λ where (both (h₁ , h₂)) → ¬p₁ h₁
   ... | yes p₁ | no ¬p₂ = no λ where (both (h₁ , h₂)) → ¬p₂ h₂
   ... | yes p₁ | yes p₂ = yes (both (p₁ , p₂))
-  Dec-inInterval {slot} {just x  , nothing} with x ≤ˢ? slot
+  Dec-inInterval {slot} {just x  , nothing} with x ≤? slot
   ... | no ¬p = no  (λ where (lower h) → ¬p h)
   ... | yes p = yes (lower p)
-  Dec-inInterval {slot} {nothing , just x } with slot ≤ˢ? x
+  Dec-inInterval {slot} {nothing , just x } with slot ≤? x
   ... | no ¬p = no  (λ where (upper h) → ¬p h)
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} = yes none
@@ -261,41 +261,39 @@ data _⊢_⇀⦇_,UTXO⦈_ where
                            ⟧ᵘ
 \end{code}
 \begin{code}[hide]
-open Computational'
 instance
   Computational'-UTXO : Computational' _⊢_⇀⦇_,UTXO⦈_
-  Computational'-UTXO .computeProof Γ s tx =
-    let open TxBody tx
-        open UTxOEnv Γ renaming (pparams to pp)
-        open UTxOState s
-    in
-    case ¿ txins ≢ ∅
-         × txins ⊆ dom (utxo ˢ)
-         × inInterval slot txvldt
-         × minfee pp tx ≤ txfee
-         × consumed pp s tx ≡ produced pp s tx
-         × coin mint ≡ 0
-         × txsize ≤ maxTxSize pp
-         ¿ of λ where
-      (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆)) →
-        just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆)
-      (no _) → nothing
-  Computational'-UTXO .completeness Γ s tx s'
-    h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆) = QED
-    where
+  Computational'-UTXO = record {go} where module go Γ s tx where
     open TxBody tx
     open UTxOEnv Γ renaming (pparams to pp)
     open UTxOState s
-    QED : map proj₁ (computeProof Computational'-UTXO Γ s tx) ≡ just s'
-    QED with ¿ txins ≢ ∅
-             × txins ⊆ dom (utxo ˢ)
-             × inInterval slot txvldt
-             × minfee pp tx ≤ txfee
-             × consumed pp s tx ≡ produced pp s tx
-             × coin mint ≡ 0
-             × txsize ≤ maxTxSize pp ¿ | "work around mysterious Agda bug"
-    ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | _ = refl
-    ... | no q | _ = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
+
+    UTXO-premises : Set
+    UTXO-premises
+      = txins ≢ ∅
+      × txins ⊆ dom (utxo ˢ)
+      × inInterval slot txvldt
+      × minfee pp tx ≤ txfee
+      × consumed pp s tx ≡ produced pp s tx
+      × coin mint ≡ 0
+      × txsize ≤ maxTxSize pp
+
+    UTXO-premises? : Dec UTXO-premises
+    UTXO-premises? = ¿ UTXO-premises ¿
+
+    computeProof =
+      case UTXO-premises? of λ where
+        (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆)) →
+          just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆)
+        (no _) → nothing
+
+    completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
+    completeness s' h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆) = QED
+      where
+      QED : map proj₁ computeProof ≡ just s'
+      QED with UTXO-premises?
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆) = refl
+      ... | no q = ⊥-elim (q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆))
 
   Computational-UTXO = fromComputational' Computational'-UTXO
 \end{code}

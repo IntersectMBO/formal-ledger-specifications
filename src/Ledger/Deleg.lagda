@@ -225,7 +225,6 @@ instance
 
   Computational-POOL = fromComputational' Computational'-POOL
 
-instance
   Computational'-GOVCERT : Computational' _⊢_⇀⦇_,GOVCERT⦈_
   Computational'-GOVCERT .computeProof ⟦ _ , pp , _ ⟧ᶜ ⟦ dReps , _ ⟧ᵛ (regdrep c d _) =
     let open PParams pp in

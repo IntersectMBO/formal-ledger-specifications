@@ -8,7 +8,6 @@ open import Data.Rational using (½)
 
 open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
-open import Data.Nat            using (_≤_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 
@@ -22,6 +21,8 @@ open import Ledger.Epoch
 open import Ledger.GovStructure
 open import Ledger.Script
 open import Ledger.Transaction
+
+open import Interface.HasOrder.Instance
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A

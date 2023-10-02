@@ -13,7 +13,6 @@ open import Ledger.TokenAlgebra PolicyId           using (TokenAlgebra)
 
 open import Algebra                                using (CommutativeMonoid ; Op₂ ; IsSemigroup ; IsMonoid ; IsMagma ; IsCommutativeMonoid)
 open import Algebra.Morphism                       using (IsMonoidHomomorphism ; IsMagmaHomomorphism)
-open import Data.Nat                               using (_≤_)
 open import Data.Nat.Properties                    using (+-comm ; +-assoc ; +-identityʳ ; +-0-commutativeMonoid)
 open import Function.Related.TypeIsomorphisms      using (Σ-≡,≡→≡)
 open import Relation.Binary                        using (IsEquivalence)

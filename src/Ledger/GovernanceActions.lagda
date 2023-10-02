@@ -15,8 +15,6 @@ open import Ledger.Crypto
 
 open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
 open import Ledger.GovStructure
-
-open import Data.Nat using (_≤_)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
