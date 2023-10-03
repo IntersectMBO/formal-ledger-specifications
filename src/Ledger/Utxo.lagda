@@ -60,7 +60,7 @@ module _ (open TxBody) where
 \end{code}
 \begin{code}
   outs : TxBody → UTxO
-  outs tx = mapKeys (tx .txid ,_) (tx .txouts) λ where _ _ refl → refl
+  outs tx = mapKeys (tx .txid ,_) (tx .txouts)
 
   balance : UTxO → Value
   balance utxo = Σᵐᵛ[ x ← utxo ᶠᵐ ] getValue x

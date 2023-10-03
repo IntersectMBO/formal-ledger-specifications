@@ -134,10 +134,10 @@ maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with to dom∈ xy∈dom
 ... | yes refl | _ = refl
 
 filterPurpose : DepositPurpose → (DepositPurpose × Credential) ⇀ Coin → Credential ⇀ Coin
-filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m) λ where
-  x∈dom y∈dom refl → cong (_, _) $
-    trans (maybePurpose-prop {prps = prps} m x∈dom)
-    (sym $ maybePurpose-prop {prps = prps} m y∈dom)
+filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m)
+  {λ where x∈dom y∈dom refl → cong (_, _)
+                            $ trans (maybePurpose-prop {prps = prps} m x∈dom)
+                            $ sym   (maybePurpose-prop {prps = prps} m y∈dom)}
 
 govActionDeposits : LState → VDeleg ⇀ Coin
 govActionDeposits ls =
