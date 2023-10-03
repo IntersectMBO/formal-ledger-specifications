@@ -29,6 +29,7 @@ open import Interface.Decidable.Instance public
 open import Interface.ComputationalRelation public
 open import Ledger.Interface.HasCoin public
 open import MyDebugOptions public
+open import Tactic.DeriveComp public
 
 --------------------------------------------------------------------------------
 -- Set theory
