@@ -258,7 +258,6 @@ module _
 \begin{code}
   roleVotes : GovRole → VDeleg ⇀ Vote
   roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (to-sp ((r ≟_) ∘ proj₁ ∘ proj₁)) votes)
-                        (λ where _ _ refl → refl)
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e =
@@ -309,7 +308,7 @@ module _
         _             → false
 
   actualVotes
-    =    mapKeys (credVoter CC) actualCCVotes (λ where _ _ refl → refl)
+    =    mapKeys (credVoter CC) actualCCVotes
     ∪ᵐˡ  actualPDRepVotes ∪ᵐˡ actualDRepVotes
     ∪ᵐˡ  actualSPOVotes
 \end{code}

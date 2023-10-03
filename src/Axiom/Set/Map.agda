@@ -28,6 +28,7 @@ open import Tactic.AnyOf
 open import Tactic.Assumption
 open import Tactic.Defaults
 open import Tactic.Helpers
+open import Tactic.ByEq
 
 -- Because of missing macro hygiene, we have to copy&paste this.
 -- c.f. https://github.com/agda/agda/issues/3819
@@ -182,10 +183,11 @@ InjectiveOn X f = ∀ {x y} → x ∈ X → y ∈ X → f x ≡ f y → x ≡ y
 weaken-Injective : ∀ {X : Set A} {f : A → B} → Injective _≡_ _≡_ f → InjectiveOn X f
 weaken-Injective p _ _ = p
 
-mapˡ-uniq : {f : A → A'} → InjectiveOn (dom R) f
+mapˡ-uniq : {f : A → A'}
+  → {@(tactic by-eq) inj : InjectiveOn (dom R) f}
   → left-unique R
   → left-unique (mapˡ f R)
-mapˡ-uniq inj uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
+mapˡ-uniq {inj = inj} uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
   (((_ , b) , refl , Ha) , ((_ , b') , eqb , Hb)) → uniq Ha
     $ subst _ ( sym
               $ ×-≡,≡→≡
@@ -197,8 +199,10 @@ mapʳ-uniq : {f : B → B'} → left-unique R → left-unique (mapʳ f R)
 mapʳ-uniq uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ where
   ((_ , refl , Ha) , (_ , refl , Hb)) → cong _ $ uniq Ha Hb
 
-mapKeys : (f : A → A') → (m : Map A B) → InjectiveOn (dom (m ˢ)) f → Map A' B
-mapKeys f (R , uniq) inj = mapˡ f R , mapˡ-uniq inj uniq
+mapKeys : (f : A → A') → (m : Map A B)
+  → {@(tactic by-eq) _ : InjectiveOn (dom (m ˢ)) f}
+  → Map A' B
+mapKeys f (R , uniq) {inj} = mapˡ f R , mapˡ-uniq {inj = inj} uniq
 
 mapValues : (B → B') → Map A B → Map A B'
 mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
