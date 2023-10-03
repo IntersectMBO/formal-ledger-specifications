@@ -21,8 +21,6 @@ module MidnightExample.Ledger
 open import Data.Integer.Properties using (+-0-commutativeMonoid; +-0-abelianGroup)
 open import Relation.Nullary
 
-open import Tactic.DeriveComp
-
 instance
   _ = +-0-commutativeMonoid
 

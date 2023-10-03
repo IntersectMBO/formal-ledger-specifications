@@ -42,12 +42,14 @@ module _ (STS : C → S → Sig → S → Set) where
 
     ≡-just⇔STS : compute c s sig ≡ just s' ⇔ STS c s sig s'
     ≡-just⇔STS {c} {s} {sig} {s'} with computeProof c s sig in eq
-    ... | just (s'' , h) = mk⇔ (λ where refl → h) λ h' → begin just s''       ≡˘⟨ completeness _ _ _ _ h ⟩
-                                                              compute c s sig ≡⟨ completeness _ _ _ _ h' ⟩
-                                                              just s' ∎
-    ... | nothing        = mk⇔ (λ ()) λ h → begin nothing         ≡˘⟨ map-nothing eq ⟩
-                                                  compute c s sig ≡⟨ completeness _ _ _ _ h ⟩
-                                                  just s' ∎
+    ... | just (s'' , h) = mk⇔ (λ where refl → h) λ h' →
+      begin just s''        ≡˘⟨ completeness _ _ _ _ h ⟩
+            compute c s sig ≡⟨ completeness _ _ _ _ h' ⟩
+            just s'         ∎
+    ... | nothing = mk⇔ (λ ()) λ h →
+      begin nothing         ≡˘⟨ map-nothing eq ⟩
+            compute c s sig ≡⟨ completeness _ _ _ _ h ⟩
+            just s'         ∎
 
     nothing⇒∀¬STS : compute c s sig ≡ nothing → ∀ s' → ¬ STS c s sig s'
     nothing⇒∀¬STS comp≡nothing s' h rewrite ≡-just⇔STS .Equivalence.from h =
@@ -104,10 +106,8 @@ instance
   Computational-Id .computeProof _ s _ = just (s , Id-nop)
   Computational-Id .completeness _ _ _ _ Id-nop = refl
 
-module _ {BSTS : C → S → ⊤ → S → Set} {STS : C → S → Sig → S → Set}
-         ⦃ bcomp : Computational BSTS ⦄ ⦃ comp : Computational STS ⦄ where
-
-  instance
+module _ {BSTS : C → S → ⊤ → S → Set} ⦃ _ : Computational BSTS ⦄ where
+  module _ {STS : C → S → Sig → S → Set} ⦃ _ : Computational STS ⦄ where instance
     Computational-SS⇒BSᵇ : Computational (SS⇒BSᵇ BSTS STS)
     Computational-SS⇒BSᵇ .computeProof c s [] =
       map (map₂′ BS-base) (computeProof c s tt)
@@ -125,10 +125,7 @@ module _ {BSTS : C → S → ⊤ → S → Set} {STS : C → S → Sig → S →
       with computeProof ⦃ Computational-SS⇒BSᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
     ... | just (s₂ , _) | p = p
 
-module _ {BSTS : C → S → ⊤ → S → Set} {STS : C × ℕ → S → Sig → S → Set}
-         ⦃ bcomp : Computational BSTS ⦄ ⦃ comp : Computational STS ⦄ where
-
-  instance
+  module _ {STS : C × ℕ → S → Sig → S → Set} ⦃ _ : Computational STS ⦄ where instance
     Computational-SS⇒BSᵢᵇ : Computational (SS⇒BSᵢᵇ BSTS STS)
     Computational-SS⇒BSᵢᵇ .computeProof c s [] =
       map (map₂′ BS-base) (computeProof c s tt)
@@ -137,7 +134,8 @@ module _ {BSTS : C → S → ⊤ → S → Set} {STS : C × ℕ → S → Sig �
       s₂ , hs ← computeProof c s₁ sigs
       just (s₂ , BS-ind h hs)
       where open import Data.Maybe
-    Computational-SS⇒BSᵢᵇ .completeness c s [] s' (BS-base p) with computeProof {STS = BSTS} c s tt | completeness _ _ _ _ p
+    Computational-SS⇒BSᵢᵇ .completeness c s [] s' (BS-base p)
+      with computeProof {STS = BSTS} c s tt | completeness _ _ _ _ p
     ... | just x | p' = p'
     Computational-SS⇒BSᵢᵇ .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
       with computeProof {STS = STS} (c , length sigs) s sig | completeness _ _ _ _ h
@@ -145,8 +143,10 @@ module _ {BSTS : C → S → ⊤ → S → Set} {STS : C × ℕ → S → Sig �
       with computeProof ⦃ Computational-SS⇒BSᵢᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
     ...   | just (s₂ , _) | p = p
 
-Computational-SS⇒BS : {STS : C → S → Sig → S → Set} → ⦃ Computational STS ⦄ → Computational (SS⇒BS STS)
+Computational-SS⇒BS : {STS : C → S → Sig → S → Set} → ⦃ Computational STS ⦄
+  → Computational (SS⇒BS STS)
 Computational-SS⇒BS = it
 
-Computational-SS⇒BSᵢ : {STS : C × ℕ → S → Sig → S → Set} ⦃ comp : Computational STS ⦄ → Computational (SS⇒BSᵢ STS)
+Computational-SS⇒BSᵢ : {STS : C × ℕ → S → Sig → S → Set} → ⦃ Computational STS ⦄
+  → Computational (SS⇒BSᵢ STS)
 Computational-SS⇒BSᵢ = it
