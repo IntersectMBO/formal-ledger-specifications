@@ -24,13 +24,13 @@ record NewPParamState : Set where
 
 updatePPUp : PParams → PPUpdateState → PPUpdateState
 updatePPUp pparams record { fpup = fpup }
-  with allᵇ (isViableUpdate? pparams) (range (fpup ˢ))
+  with allᵇ (isViableUpdate? pparams) (range fpup)
 ... | false  = record { pup = ∅ᵐ    ; fpup = ∅ᵐ }
 ... | true   = record { pup = fpup  ; fpup = ∅ᵐ }
 
 votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate
 votedValue pup pparams quorum =
-  case any? (λ u → lengthˢ ((pup ↾ fromList [ u ]) ˢ) ≥? quorum) (range (pup ˢ)) of λ where
+  case any? (λ u → lengthˢ (pup ↾ fromList [ u ]) ≥? quorum) (range pup) of λ where
     (no  _)        → nothing
     (yes (u , _))  → just u
 \end{code}

@@ -45,7 +45,11 @@ abstract
   List-Modelᵈ : Theoryᵈ
   List-Modelᵈ = L.List-Modelᵈ
 
-open Theoryᵈ List-Modelᵈ renaming (Set to ℙ_; filter to filterˢ; map to mapˢ) public
+open Theoryᵈ List-Modelᵈ public
+  renaming (Set to ℙ_; filter to filterˢ; map to mapˢ)
+  hiding (_∈_; _∉_)
+
+open import Interface.IsSet th public
 
 abstract
   open import Axiom.Set.Properties th using (card-≡ᵉ)
@@ -55,13 +59,13 @@ abstract
   finiteness : ∀ {A} (X : Theory.Set th A) → finite X
   finiteness = Theoryᶠ.finiteness List-Modelᶠ
 
-  lengthˢ : ∀ {A} ⦃ _ : DecEq A ⦄ (X : Theory.Set th A) → ℕ
-  lengthˢ = Theoryᶠ.lengthˢ List-Modelᶠ
+  lengthˢ : ∀ {A X} ⦃ _ : DecEq A ⦄ ⦃ _ : IsSet X A ⦄ → X → ℕ
+  lengthˢ X = Theoryᶠ.lengthˢ List-Modelᶠ (toSet X)
 
-  lengthˢ-≡ᵉ : ∀ {A} ⦃ _ : DecEq A ⦄ (X Y : Theory.Set th A)
-    → X ≡ᵉ Y
+  lengthˢ-≡ᵉ : ∀ {A Z} ⦃ _ : DecEq A ⦄ ⦃ _ : IsSet Z A ⦄ (X Y : Z)
+    → toSet X ≡ᵉ toSet Y
     → lengthˢ X ≡ lengthˢ Y
-  lengthˢ-≡ᵉ X Y X≡Y =
+  lengthˢ-≡ᵉ X Y X≡Y = let X = toSet X; Y = toSet Y in
     card-≡ᵉ (X , Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ X)
             (Y , Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ Y) X≡Y
 
@@ -76,7 +80,7 @@ abstract
     DecEq-ℙ = L.Decˡ.DecEq-Set
 
 open import Axiom.Set.Rel th public
-  hiding (_∣'_; _↾'_)
+  hiding (_∣'_; _↾'_; dom; range)
 
 open import Axiom.Set.Map th public
   renaming (Map to _⇀_)
@@ -123,11 +127,6 @@ _ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B
 
 _ᶠˢ : {A : Set} → ℙ A → FinSet A
 X ᶠˢ = X , finiteness _
-
-
-infix 2 All-syntax
-All-syntax = All
-syntax All-syntax (λ x → P) l = ∀[ x ∈ l ] P
 
 
 filterᵐ? : ∀ {A B} {P : A × B → Set} → (∀ x → Dec (P x)) → A ⇀ B → A ⇀ B

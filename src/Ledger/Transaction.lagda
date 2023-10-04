@@ -139,7 +139,7 @@ the transaction body are:
   getValue (_ , v) = v
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom ((utxo ↾' to-sp (isVKeyAddr? ∘ proj₁)) ˢ)
+  txinsVKey txins utxo = txins ∩ dom (utxo ↾' to-sp (isVKeyAddr? ∘ proj₁))
 \end{code}
 \end{figure*}
 \begin{code}[hide]

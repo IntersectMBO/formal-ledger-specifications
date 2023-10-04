@@ -191,7 +191,7 @@ We are now in a position to define the commutative monoid.
     coin↪totalMap c = update ⦃ dec ⦄ specId c ι
 
     policies : AssetId ⇒ Quantity → ℙ PolicyId
-    policies tm = dom (dom (rel tm))
+    policies tm = mapˢ proj₁ $ dom tm
 
     leq : AssetId ⇒ Quantity → AssetId ⇒ Quantity → Type
     leq = λ u v → ∀ {a}{p}{q} → lookup u (a , p) ≤ lookup v (a , q)

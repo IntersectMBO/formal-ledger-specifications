@@ -34,8 +34,8 @@ instance
 
       module _ (cs : CertState) where
         LEDGER-premises : Set
-        LEDGER-premises = mapˢ RwdAddr.stake (dom (txwdrls ˢ))
-                        ⊆ dom (cs .CertState.dState .DState.voteDelegs ˢ)
+        LEDGER-premises = mapˢ RwdAddr.stake (dom txwdrls)
+                        ⊆ dom (cs .CertState.dState .DState.voteDelegs)
 
         LEDGER-premises? = ¿ LEDGER-premises ¿
 
@@ -72,7 +72,7 @@ private variable
   l : List Tx
 
 FreshTx : Tx → LState → Set
-FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo ˢ))
+FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
   where open Tx; open TxBody; open UTxOState; open LState
 
 LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'

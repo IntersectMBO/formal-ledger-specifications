@@ -56,7 +56,7 @@ open MonoidMorphisms.IsMonoidHomomorphism
 private
   ∙-homo-Coin = IsMagmaHomomorphism.homo (isMagmaHomomorphism coinIsMonoidHomomorphism)
 
-balance-∪ : disjoint (dom (utxo ˢ)) (dom (utxo' ˢ))
+balance-∪ : disjoint (dom utxo) (dom utxo')
                      → cbalance (utxo ∪ᵐˡ utxo') ≡ cbalance utxo + cbalance utxo'
 balance-∪ {utxo} {utxo'} h = begin
   cbalance (utxo ∪ᵐˡ utxo')
@@ -72,8 +72,8 @@ balance-∪ {utxo} {utxo'} h = begin
   cbalance utxo + cbalance utxo'
     ∎
 
-newTxid⇒disj : txid tx ∉ mapˢ proj₁ (dom (utxo ˢ))
-             → disjoint' (dom (utxo ˢ)) (dom ((outs tx) ˢ))
+newTxid⇒disj : txid tx ∉ mapˢ proj₁ (dom utxo)
+             → disjoint' (dom utxo) (dom (outs tx))
 newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map
   (-, (case from ∈-map h' of λ where
         (_ , refl , h'') → case from ∈-map h'' of λ where (_ , refl , _) → refl) , h)
@@ -158,7 +158,7 @@ module DepositHelpers
   {Γ : UTxOEnv}
   (step : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
               ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ)
-  (h' : txid tx ∉ mapˢ proj₁ (dom (utxo ˢ)))
+  (h' : txid tx ∉ mapˢ proj₁ (dom utxo))
   where
 
   private
@@ -176,7 +176,7 @@ module DepositHelpers
     ref = depositRefunds pp utxoSt tx
     tot : Coin
     tot = newDeposits    pp utxoSt tx
-    h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
+    h : disjoint (dom (utxo ∣ txins tx ᶜ)) (dom (outs tx))
     h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h')
                       $ to ∈-∩ (res-comp-domᵐ h₁ , h₂)
     newBal' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
@@ -328,7 +328,7 @@ if
 pov :
 \end{code}
 \begin{code}
-  txid tx ∉ mapˢ proj₁ (dom (utxo ˢ))
+  txid tx ∉ mapˢ proj₁ (dom utxo)
 \end{code}
 
 and
@@ -351,7 +351,7 @@ then
 \begin{code}[hide]
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
     {deposits' = deposits'} h' step@(UTXO-inductive {Γ = Γ} _ _ _ _ newBal noMintAda _) =
-  let h : disjoint (dom ((utxo ∣ txins tx ᶜ) ˢ)) (dom (outs tx ˢ))
+  let h : disjoint (dom (utxo ∣ txins tx ᶜ)) (dom (outs tx))
       h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {tx = tx} {utxo} h') $ to ∈-∩ (res-comp-domᵐ h₁ , h₂)
       utxoSt = ⟦ utxo , fees , deposits , donations ⟧ᵘ
       pp = UTxOEnv.pparams Γ

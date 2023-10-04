@@ -186,7 +186,7 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
   where
     open ≤-Reasoning
 
-    helper : ∀ {k v} → v > Σᵐᵛ[ x ← dist ᶠᵐ ] x → ¬ (k , v) ∈ dist ˢ
+    helper : ∀ {k v} → v > Σᵐᵛ[ x ← dist ᶠᵐ ] x → (k , v) ∉ dist
     helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
       v
         ≡˘⟨ indexedSum-singleton' $ finiteness ❴ k , v ❵ ⟩
@@ -250,10 +250,10 @@ actualVotes Γ cc votes ga pparams
 
     activeCC activeDReps : ℙ Credential
     activeCC = case cc of λ where
-      (just (cc , _))  → dom (filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom (cc ˢ)) ˢ)
+      (just (cc , _))  → dom (filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc))
       nothing          → ∅
 
-    activeDReps = dom (filterᵐ? (currentEpoch ≤ᵉ?_ ∘ proj₂) dreps ˢ)
+    activeDReps = dom (filterᵐ? (currentEpoch ≤ᵉ?_ ∘ proj₂) dreps)
 
     actualCCVote : Credential → Epoch → Vote
     actualCCVote c e =
@@ -264,7 +264,7 @@ actualVotes Γ cc votes ga pparams
     actualCCVotes : Credential ⇀ Vote
     actualCCVotes = case cc , ¿ ccMinSize ≤ lengthˢ activeCC ¿ᵇ of λ where
       (just (cc , _)  , true)   → mapWithKey actualCCVote cc
-      (just (cc , _)  , false)  → constMap (dom (cc ˢ)) Vote.no
+      (just (cc , _)  , false)  → constMap (dom cc) Vote.no
       (nothing        , _)      → ∅ᵐ
 
     actualPDRepVotes
@@ -281,7 +281,7 @@ actualVotes Γ cc votes ga pparams
       ∪ᵐˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
       where
         spos : ℙ VDeleg
-        spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs ˢ)
+        spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
 
         isHF : Bool
         isHF = case ga of λ where
@@ -360,7 +360,7 @@ totalStake r cc dists votes =
 
 activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 activeVotingStake cc dists votes =
-  Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom (votes ˢ) ᶜ ᶠᵐ ] x
+  Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
 accepted' : RatifyEnv → EnactState → GovActionState → Set
 accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
@@ -369,7 +369,7 @@ accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
     open RatifyEnv Γ; open GovActionState gs; open PParams pparams
 
     votes' = actualVotes Γ cc votes action pparams
-    cc' = dom (votes' ˢ)
+    cc' = dom votes'
     redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
 
     meetsMinAVS : Set
