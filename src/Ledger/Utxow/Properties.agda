@@ -14,10 +14,10 @@ private
   UTXOW-premise Γ s tx =
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s; open UTxOEnv Γ
-        witsKeyHashes     = mapˢ hash (dom (vkSigs ˢ))
+        witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
     in
-      (∀[ (vk , σ) ∈ vkSigs ˢ ] isSigned vk (txidBytes txid) σ)
+      (∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ)
     × (∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s)
     × witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     × scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes

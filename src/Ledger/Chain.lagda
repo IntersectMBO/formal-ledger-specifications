@@ -79,10 +79,10 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 
       es        = record esW { withdrawals = ∅ᵐ }
       retired   = retiring ⁻¹ e
-      refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ)
-      unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom (rewards ˢ) ᶜ
+      refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards
+      unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards ᶜ
 
-      govSt' = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
+      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
 
       gState' = record gState { ccHotKeys = ccHotKeys ∣ ccCreds (es .EnactState.cc) }
 

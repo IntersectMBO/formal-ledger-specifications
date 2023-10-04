@@ -16,15 +16,15 @@ private
 
   Current-Property : PPUpdateEnv → Update → Set
   Current-Property Γ (pup , e) = let open PPUpdateEnv Γ in
-      dom (pup ˢ) ⊆ dom (genDelegs ˢ)
-      × All (isViableUpdate pparams) (range (pup ˢ))
+      dom pup ⊆ dom genDelegs
+      × All (isViableUpdate pparams) (range pup)
       × (slot + (2 * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
       × epoch slot ≡ e
 
   Future-Property : PPUpdateEnv → Update → Set
   Future-Property Γ (pup , e) = let open PPUpdateEnv Γ in
-      dom (pup ˢ) ⊆ dom (genDelegs ˢ)
-      × All (isViableUpdate pparams) (range (pup ˢ))
+      dom pup ⊆ dom genDelegs
+      × All (isViableUpdate pparams) (range pup)
       × firstSlot (sucᵉ (epoch slot)) ≤ˢ (slot + (2 * StabilityWindow))
       × sucᵉ (epoch slot) ≡ e
 

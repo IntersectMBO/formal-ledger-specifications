@@ -271,7 +271,7 @@ record EnactState : Set where
         withdrawals   : RwdAddr ⇀ Coin
 
 ccCreds : HashProtected (Maybe (Credential ⇀ Epoch × ℚ)) → ℙ Credential
-ccCreds (just x  , _)  = dom (x .proj₁ ˢ)
+ccCreds (just x  , _)  = dom (x .proj₁)
 ccCreds (nothing , _)  = ∅
 \end{code}
 } %% end small
@@ -317,7 +317,7 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
                  record  s { cc = nothing , gid }
 
   Enact-NewComm : let old = maybe proj₁ ∅ᵐ (s .EnactState.cc .proj₁) in
-    ∀[ term ∈ range (new ˢ) ] term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)
+    ∀[ term ∈ range new ] term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)
     ────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewCommittee new rem q ,ENACT⦈
                 record  s { cc = just ((new ∪ᵐˡ old) ∣ rem ᶜ , q) , gid }
@@ -356,7 +356,7 @@ instance
   Computational-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where
     NoConfidence             → just (_ , Enact-NoConf)
     (NewCommittee new rem q) →
-      case ¿ ∀[ term ∈ range (new ˢ) ]
+      case ¿ ∀[ term ∈ range new ]
                term ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
       (yesᵈ p) → just (-, Enact-NewComm p)
       (noᵈ ¬p) → nothing
@@ -373,7 +373,7 @@ instance
   ... | .NoConfidence           | Enact-NoConf   = refl
   ... | .NewCommittee new rem q | Enact-NewComm p
     rewrite dec-yes
-      (¿ ∀[ term ∈ range (new ˢ) ] term
+      (¿ ∀[ term ∈ range new ] term
            ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿) p .proj₂
       = refl
   ... | .NewConstitution dh sh  | Enact-NewConst = refl

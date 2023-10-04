@@ -251,7 +251,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
       in
-       txins ≢ ∅                            → txins ⊆ dom (utxo ˢ)
+       txins ≢ ∅                            → txins ⊆ dom utxo
     →  inInterval slot txvldt               → minfee pp tx ≤ txfee
     →  consumed pp s tx ≡ produced pp s tx  → coin mint ≡ 0
     →  txsize ≤ maxTxSize pp
@@ -273,7 +273,7 @@ instance
     UTXO-premises : Set
     UTXO-premises
       = txins ≢ ∅
-      × txins ⊆ dom (utxo ˢ)
+      × txins ⊆ dom utxo
       × inInterval slot txvldt
       × minfee pp tx ≤ txfee
       × consumed pp s tx ≡ produced pp s tx

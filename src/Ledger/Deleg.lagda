@@ -121,7 +121,7 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set w
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
-    c ∉ dom (pools ˢ)
+    c ∉ dom pools
     ────────────────────────────────
     pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
           ⟦ ❴ c , poolParams ❵ᵐ ∪ᵐˡ pools , retiring ⟧ᵖ
@@ -132,19 +132,19 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set whe
 
 data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set where
   GOVCERT-regdrep : let open PParams pp in
-    (d ≡ drepDeposit × c ∉ dom (dReps ˢ)) ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ))
+    (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
     ────────────────────────────────
     ⟦ e , pp , vs ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
                         ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
-    c ∈ dom (dReps ˢ)
+    c ∈ dom dReps
     ────────────────────────────────
     Γ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈
          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
-    (c , nothing) ∉ ccKeys ˢ
+    (c , nothing) ∉ ccKeys
     ────────────────────────────────
     Γ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈
          ⟦ dReps , singletonᵐ c mc ∪ᵐˡ ccKeys ⟧ᵛ
@@ -208,24 +208,24 @@ instance
 instance
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_
   Computational-POOL .computeProof _ ⟦ pools , _ ⟧ᵖ (regpool c _) =
-    case c ∈? dom (pools ˢ) of λ where
+    case c ∈? dom pools of λ where
       (yes _) → nothing
       (no p)  →  just (-, POOL-regpool p)
   Computational-POOL .computeProof _ _ (retirepool c e) = just (-, POOL-retirepool)
   Computational-POOL .computeProof _ _ _ = nothing
   Computational-POOL .completeness _ ⟦ pools , _ ⟧ᵖ (regpool c _) _ (POOL-regpool ¬p)
-    rewrite dec-no (c ∈? dom (pools ˢ)) ¬p = refl
+    rewrite dec-no (c ∈? dom pools) ¬p = refl
   Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
 
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_
   Computational-GOVCERT .computeProof ⟦ _ , pp , _ ⟧ᶜ ⟦ dReps , _ ⟧ᵛ (regdrep c d _) =
     let open PParams pp in
-    case ¿ (d ≡ drepDeposit × c ∉ dom (dReps ˢ))
-         ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ)) ¿ of λ where
+    case ¿ (d ≡ drepDeposit × c ∉ dom dReps)
+         ⊎ (d ≡ 0 × c ∈ dom dReps) ¿ of λ where
       (yes p) → just (-, GOVCERT-regdrep p)
       (no _)  → nothing
   Computational-GOVCERT .computeProof _ ⟦ dReps , _ ⟧ᵛ (deregdrep c) =
-    case c ∈? dom (dReps ˢ) of λ where
+    case c ∈? dom dReps of λ where
       (yes p) → just (-, GOVCERT-deregdrep p)
       (no _)  → nothing
   Computational-GOVCERT .computeProof _ ⟦ _ , ccKeys ⟧ᵛ (ccreghot c _) =
@@ -237,11 +237,11 @@ instance
     (regdrep c d _) _ (GOVCERT-regdrep p)
     rewrite dec-yes
       ¿ (let open PParams pp in
-        (d ≡ drepDeposit × c ∉ dom (dReps ˢ)) ⊎ (d ≡ 0 × c ∈ dom (dReps ˢ)))
+        (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps))
       ¿ p .proj₂ = refl
   Computational-GOVCERT .completeness _ ⟦ dReps , _ ⟧ᵛ
     (deregdrep c) _ (GOVCERT-deregdrep p)
-    rewrite dec-yes (c ∈? dom (dReps ˢ)) p .proj₂ = refl
+    rewrite dec-yes (c ∈? dom dReps) p .proj₂ = refl
   Computational-GOVCERT .completeness _ ⟦ _ , ccKeys ⟧ᵛ
     (ccreghot c _) _ (GOVCERT-ccreghot ¬p)
     rewrite dec-no ((c , nothing) ∈? (ccKeys ˢ)) ¬p = refl

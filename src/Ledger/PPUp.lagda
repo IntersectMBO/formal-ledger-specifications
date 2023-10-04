@@ -90,8 +90,8 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateEmpty : Γ ⊢ s ⇀⦇ nothing ,PPUP⦈ s
 
   PPUpdateCurrent : let open PPUpdateEnv Γ in
-    dom (pup ˢ) ⊆ dom (genDelegs ˢ)
-    → All (isViableUpdate pparams) (range (pup ˢ))
+    dom pup ⊆ dom genDelegs
+    → All (isViableUpdate pparams) (range pup)
     → (slot + (2 * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
     → epoch slot ≡ e
     ────────────────────────────────
@@ -99,8 +99,8 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
         record { pup = pup ∪ᵐˡ pupˢ ; fpup = fpupˢ }
 
   PPUpdateFuture : let open PPUpdateEnv Γ in
-    dom (pup ˢ) ⊆ dom (genDelegs ˢ)
-    → All (isViableUpdate pparams) (range (pup ˢ))
+    dom pup ⊆ dom genDelegs
+    → All (isViableUpdate pparams) (range pup)
     → firstSlot (sucᵉ (epoch slot)) ≤ (slot + (2 * StabilityWindow))
     → sucᵉ (epoch slot) ≡ e
     ────────────────────────────────

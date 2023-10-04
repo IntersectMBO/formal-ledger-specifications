@@ -73,7 +73,7 @@ data
        record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     →  ⟦ epoch slot , pparams , txvote ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     →  ⟦ txid , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
-    →  mapˢ stake (dom (txwdrls ˢ)) ⊆ dom (certState' .dState .voteDelegs ˢ)
+    →  mapˢ stake (dom txwdrls) ⊆ dom (certState' .dState .voteDelegs)
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}
