@@ -71,8 +71,9 @@ abstract
   setToList : {A : Set} → ℙ A → List A
   setToList = id
 
-  ≟-∅ : {A : Set} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → Dec (X ≡ ∅)
-  ≟-∅ = L.Decˡ.≟-∅
+  instance
+    DecEq-ℙ : {A : Set} ⦃ _ : DecEq A ⦄ → DecEq (ℙ A)
+    DecEq-ℙ = L.Decˡ.DecEq-Set
 
 open import Axiom.Set.Rel th public
   hiding (_∣'_; _↾'_)
@@ -84,7 +85,7 @@ open import Axiom.Set.TotalMap th public
 open import Axiom.Set.TotalMapOn th
 
 open L.Decˡ public
-  hiding (_∈?_; ≟-∅)
+  hiding (_∈?_; DecEq-Set)
 
 open import Axiom.Set.Sum th public
 open import Axiom.Set.Map.Dec List-Modelᵈ public
