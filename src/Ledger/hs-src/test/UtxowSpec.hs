@@ -1,4 +1,11 @@
-module Main where
+{-# LANGUAGE StandaloneDeriving #-}
+{-# OPTIONS -Wno-orphans -Wno-missing-fields #-}
+module UtxowSpec (spec) where
+
+import Control.Monad ( foldM )
+
+import Test.Hspec ( Spec, describe, it )
+import Test.HUnit ( (@?=) )
 
 import Lib
 
@@ -41,26 +48,38 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
 
 testTxBody1 :: TxBody
 testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins = [(0, 0)], stxouts = [(0, (a0, 890)), (1, (a1, 100))], stxvldt = (Nothing, Just 10), stxid = 1 }
+  { stxins  = [(0, 0)]
+  , stxouts = [(0, (a0, 890)), (1, (a1, 100))]
+  , stxvldt = (Nothing, Just 10), stxid = 1 }
 
 testTx1 :: Tx
-testTx1 = MkTx { body = testTxBody1, wits = MkTxWitnesses { vkSigs = [(0, 1)], scripts = [] }, txAD = Nothing }
+testTx1 = MkTx
+  { body = testTxBody1
+  , wits = MkTxWitnesses { vkSigs = [(0, 1)], scripts = [] }
+  , txAD = Nothing }
 
 testTxBody2 :: TxBody
 testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins = [(1, 1)], stxouts = [(0, (a2, 10)), (1, (a1, 80))], stxvldt = (Nothing, Just 10), stxid = 2 }
+  { stxins = [(1, 1)]
+  , stxouts = [(0, (a2, 10)), (1, (a1, 80))]
+  , stxvldt = (Nothing, Just 10), stxid = 2 }
 
 testTx2 :: Tx
-testTx2 = MkTx { body = testTxBody2, wits = MkTxWitnesses { vkSigs = [(1, 3)], scripts = [] }, txAD = Nothing }
-
-runSteps :: (e -> s -> sig -> Maybe s) -> e -> s -> [sig] -> Maybe s
-runSteps f e s []       = Just s
-runSteps f e s (t : ts) = do
-  s' <- f e s t
-  runSteps f e s' ts
+testTx2 = MkTx
+  { body = testTxBody2
+  , wits = MkTxWitnesses { vkSigs = [(1, 3)], scripts = [] }
+  , txAD = Nothing }
 
 utxowSteps :: UTxOEnv -> UTxOState -> [Tx] -> Maybe UTxOState
-utxowSteps = runSteps utxowStep
+utxowSteps = foldM . utxowStep
 
-main :: IO ()
-main = print $ utxowSteps initEnv initState [testTx1, testTx2]
+deriving instance Eq UTxOState
+
+spec :: Spec
+spec = do
+  describe "utxowSteps" $
+    it "results in the expected state" $
+      utxowSteps initEnv initState [testTx1, testTx2] @?= Just (MkUTxOState
+        { utxo = [((1,0),(0,890)),((2,0),(2,10)),((2,1),(1,80))]
+        , fees = 20
+        })

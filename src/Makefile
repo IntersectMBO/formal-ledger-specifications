@@ -10,7 +10,7 @@ HS_DIR=$(OUT_DIR)/MAlonzo
 HS_DIR_LEDGER=$(HS_DIR)/Ledger
 HS_DIR_MIDNIGHT=$(HS_DIR)/MidnightExample
 
-.PHONY: default clean all docs html codeGen hsBuild
+.PHONY: default clean all docs html hsGen hsTest
 default: all
 
 # Agda -> LaTeX -> PDF
@@ -43,8 +43,8 @@ LEDGER_CABAL=cardano-ledger.cabal
 $(HS_DIR_LEDGER)/Foreign/HSLedger.hs: Ledger/Foreign/HSLedger.agda
 	@echo "Generating $@"
 	mkdir -p $(HS_DIR_LEDGER)
-	cp Ledger/*.hs $(HS_DIR_LEDGER)/
-	cp Ledger/$(LEDGER_CABAL) $(HS_DIR_LEDGER)/
+	cp -r Ledger/hs-src/* $(HS_DIR_LEDGER)/
+	cp Ledger/hs-src/$(LEDGER_CABAL) $(HS_DIR_LEDGER)/
 	$(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIR_LEDGER) $<
 	find $(HS_DIR_LEDGER)/MAlonzo -name "*.hs" -print \
 	  | sed "s#^$(HS_DIR_LEDGER)/#        #;s#\.hs##;s#/#.#g" \
@@ -54,8 +54,8 @@ MIDNIGHT_CABAL=midnight-example.cabal
 $(HS_DIR_MIDNIGHT)/HSLedger.hs: MidnightExample/HSLedger.agda
 	mkdir -p $(HS_DIR_MIDNIGHT)
 	@echo "Generating $@"
-	cp MidnightExample/*.hs $(HS_DIR_MIDNIGHT)/
-	cp MidnightExample/$(MIDNIGHT_CABAL) $(HS_DIR_MIDNIGHT)/
+	cp -r MidnightExample/hs-src/* $(HS_DIR_MIDNIGHT)/
+	cp MidnightExample/hs-src/$(MIDNIGHT_CABAL) $(HS_DIR_MIDNIGHT)/
 	$(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIR_MIDNIGHT) $<
 	find $(HS_DIR_MIDNIGHT)/MAlonzo -name "*.hs" -print \
 	  | sed "s#^$(HS_DIR_MIDNIGHT)/#        #;s#\.hs##;s#/#.#g" \
@@ -68,12 +68,12 @@ docs:
 html:
 	$(MAKE) $(HTML_DIR)/Ledger.PDF.html
 	$(MAKE) $(HTML_DIR)/MidnightExample.PDF.html
-codeGen:
+hsGen:
 	$(MAKE) $(HS_DIR_LEDGER)/Foreign/HSLedger.hs
 	$(MAKE) $(HS_DIR_MIDNIGHT)/HSLedger.hs
-hsBuild: $(HS_DIR_LEDGER)/Main.hs $(HS_DIR_MIDNIGHT)/Main.hs
-	cd $(HS_DIR_LEDGER)   && cabal run -- main
-	cd $(HS_DIR_MIDNIGHT) && cabal run -- main
+hsTest: $(HS_DIR_LEDGER)/test/ $(HS_DIR_MIDNIGHT)/test/
+	cd $(HS_DIR_LEDGER)   && cabal run test
+	cd $(HS_DIR_MIDNIGHT) && cabal run test
 all: docs html codeGen hsBuild
 
 clean:
