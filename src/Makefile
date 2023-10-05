@@ -5,10 +5,9 @@ LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
 PRE=$(addprefix $(LATEX_DIR)/, \
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex)
+PDF_DIR=$(OUT_DIR)/pdfs
 HTML_DIR=$(OUT_DIR)/html
-HS_DIR=$(OUT_DIR)/MAlonzo
-HS_DIR_LEDGER=$(HS_DIR)/Ledger
-HS_DIR_MIDNIGHT=$(HS_DIR)/MidnightExample
+HS_DIR=$(OUT_DIR)/haskell
 
 .PHONY: default clean all docs html hsGen hsTest
 default: all
@@ -19,65 +18,64 @@ latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex, \
 $(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
 	$(AGDA) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
-
-$(OUT_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/Ledger/PDF.tex $(latexFiles) $(PRE)
-	@echo "Generating $@"
-	cd $(LATEX_DIR) && $(LATEX) $(subst $(LATEX_DIR)/,, $<)
-	mv $(LATEX_DIR)/PDF.pdf $@
-
-$(OUT_DIR)/midnight-example.pdf: $(LATEX_DIR)/MidnightExample/PDF.tex $(latexFiles) $(PRE)
-	@echo "Generating $@"
-	cd $(LATEX_DIR) && $(LATEX) $(subst $(LATEX_DIR)/,, $<)
-	mv $(LATEX_DIR)/PDF.pdf $@
+define latexToPdf =
+    @echo "Generating $@"
+    $(eval PDF=$(notdir $@))
+    mkdir -p $(dir $@)
+    cd $(LATEX_DIR) && $(LATEX) -jobname=$(PDF:.pdf=) $(subst $(LATEX_DIR)/,, $<)
+    mv $(LATEX_DIR)/$(PDF) $@
+endef
+$(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/Ledger/PDF.tex $(latexFiles) $(PRE)
+	$(latexToPdf)
+$(PDF_DIR)/midnight-example.pdf: $(LATEX_DIR)/MidnightExample/PDF.tex $(latexFiles) $(PRE)
+	$(latexToPdf)
 
 # Agda -> HTML
+define agdaToHtml =
+    @echo "Generating $@"
+    $(AGDA) --html --html-dir $(HTML_DIR) $<
+endef
 $(HTML_DIR)/Ledger.PDF.html : Ledger/PDF.lagda
-	@echo "Generating $@"
-	$(AGDA) --html --html-dir $(HTML_DIR) $<
+	$(agdaToHtml)
 $(HTML_DIR)/MidnightExample.PDF.html : MidnightExample/PDF.lagda
-	@echo "Generating $@"
-	$(AGDA) --html --html-dir $(HTML_DIR) $<
+	$(agdaToHtml)
 
 # Agda -> Haskell
-LEDGER_CABAL=cardano-ledger.cabal
+define agdaToHs =
+    @echo "Generating $@"
+    $(eval CABAL_FILE=$(1).cabal)
+    $(eval PROJECT=$(firstword $(subst /, ,$(@:$(HS_DIR)/%=%))))
+    $(eval HS_DIST=$(HS_DIR)/$(PROJECT))
+    mkdir -p $(HS_DIST)
+    cp -r $(PROJECT)/hs-src/* $(HS_DIST)/
+    cp $(PROJECT)/hs-src/$(CABAL_FILE) $(HS_DIST)/
+    $(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIST) $<
+    find $(HS_DIST)/MAlonzo -name "*.hs" -print \
+      | sed "s#^$(HS_DIST)/#        #;s#\.hs##;s#/#.#g" \
+      >> $(HS_DIST)/$(CABAL_FILE)
+endef
+HS_DIR_LEDGER=$(HS_DIR)/Ledger
+HS_DIR_MIDNIGHT=$(HS_DIR)/MidnightExample
 $(HS_DIR_LEDGER)/Foreign/HSLedger.hs: Ledger/Foreign/HSLedger.agda
-	@echo "Generating $@"
-	mkdir -p $(HS_DIR_LEDGER)
-	cp -r Ledger/hs-src/* $(HS_DIR_LEDGER)/
-	cp Ledger/hs-src/$(LEDGER_CABAL) $(HS_DIR_LEDGER)/
-	$(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIR_LEDGER) $<
-	find $(HS_DIR_LEDGER)/MAlonzo -name "*.hs" -print \
-	  | sed "s#^$(HS_DIR_LEDGER)/#        #;s#\.hs##;s#/#.#g" \
-	  >> $(HS_DIR_LEDGER)/$(LEDGER_CABAL)
-
-MIDNIGHT_CABAL=midnight-example.cabal
+	$(call agdaToHs,cardano-ledger)
 $(HS_DIR_MIDNIGHT)/HSLedger.hs: MidnightExample/HSLedger.agda
-	mkdir -p $(HS_DIR_MIDNIGHT)
-	@echo "Generating $@"
-	cp -r MidnightExample/hs-src/* $(HS_DIR_MIDNIGHT)/
-	cp MidnightExample/hs-src/$(MIDNIGHT_CABAL) $(HS_DIR_MIDNIGHT)/
-	$(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIR_MIDNIGHT) $<
-	find $(HS_DIR_MIDNIGHT)/MAlonzo -name "*.hs" -print \
-	  | sed "s#^$(HS_DIR_MIDNIGHT)/#        #;s#\.hs##;s#/#.#g" \
-	  >> $(HS_DIR_MIDNIGHT)/$(MIDNIGHT_CABAL)
+	$(call agdaToHs,midnight-example)
 
 # User commands
 docs:
-	$(MAKE) $(OUT_DIR)/cardano-ledger.pdf
-	$(MAKE) $(OUT_DIR)/midnight-example.pdf
+	$(MAKE) $(PDF_DIR)/cardano-ledger.pdf $(PDF_DIR)/midnight-example.pdf
 html:
-	$(MAKE) $(HTML_DIR)/Ledger.PDF.html
-	$(MAKE) $(HTML_DIR)/MidnightExample.PDF.html
+	$(MAKE) $(HTML_DIR)/Ledger.PDF.html $(HTML_DIR)/MidnightExample.PDF.html
 hsGen:
-	$(MAKE) $(HS_DIR_LEDGER)/Foreign/HSLedger.hs
-	$(MAKE) $(HS_DIR_MIDNIGHT)/HSLedger.hs
-hsTest: $(HS_DIR_LEDGER)/test/ $(HS_DIR_MIDNIGHT)/test/
+	$(MAKE) $(HS_DIR_LEDGER)/Foreign/HSLedger.hs $(HS_DIR_MIDNIGHT)/HSLedger.hs
+hsTest: $(HS_DIR_LEDGER)/Foreign/HSLedger.hs $(HS_DIR_MIDNIGHT)/HSLedger.hs
 	cd $(HS_DIR_LEDGER)   && cabal run test
 	cd $(HS_DIR_MIDNIGHT) && cabal run test
-all: docs html codeGen hsBuild
+all: docs html hsGen hsTest
 
 clean:
-	rm -rf $(LATEX_DIR)/Ledger/ $(LATEX_DIR)/MidnightExample $(LATEX_DIR)/PDF.* \
+	rm -rf $(LATEX_DIR)/Ledger/ $(LATEX_DIR)/MidnightExample \
+	       $(LATEX_DIR)/cardano-ledger.* $(LATEX_DIR)/midnight-example.* \
 	       $(OUT_DIR)/
 
 # TODO: integrate into `default.nix` to remove duplication
