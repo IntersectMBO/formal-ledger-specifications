@@ -12,19 +12,19 @@ import Data.Nat.Properties as NatProp
 
 instance
   preoInt : HasPreorder ℤ _≡_
-  preoInt = record { _≤_ = ℤ._≤_; isPreorder = IntProp.≤-isPreorder }
+  preoInt = hasPreorderFromNonStrict ℤ _≡_ ℤ._≤_ IntProp.≤-isPreorder IntProp._≟_
 
   leqInt : HasPartialOrder ℤ _≡_
-  leqInt = record { hasPreorder = preoInt; antisym = IntProp.≤-antisym }
+  leqInt = record { hasPreorder = preoInt ; ≤-antisym = IntProp.≤-antisym }
 
   DecLeqInt : HasDecPartialOrder ℤ _≡_
   DecLeqInt = record { hasPartialOrder = leqInt ; _≤?_ = ℤ._≤?_ }
 
   preoNat : HasPreorder ℕ _≡_
-  preoNat = record { _≤_ = ℕ._≤_; isPreorder = NatProp.≤-isPreorder }
+  preoNat = hasPreorderFromNonStrict ℕ _≡_ ℕ._≤_ NatProp.≤-isPreorder NatProp._≟_
 
   leqNat : HasPartialOrder ℕ _≡_
-  leqNat = record { hasPreorder = preoNat; antisym = NatProp.≤-antisym }
+  leqNat = record { hasPreorder = preoNat ; ≤-antisym = NatProp.≤-antisym }
 
   DecLeqNat : HasDecPartialOrder ℕ _≡_
   DecLeqNat = record { hasPartialOrder = leqNat ; _≤?_ = ℕ._≤?_ }

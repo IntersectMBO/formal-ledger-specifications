@@ -7,98 +7,108 @@ open import Ledger.Prelude hiding (compare; Rel)
 open import Algebra using (Semiring)
 open import Relation.Binary
 open import Relation.Binary.Definitions using (Total)
-open import Relation.Binary.Consequences using (tri⇒irr)
+open import Relation.Binary.Consequences -- using (tri⇒irr)
 open import Relation.Nullary.Negation
-open import Data.Nat.Properties using (+-*-semiring; ≤-isTotalOrder)
-
+open import Data.Nat.Properties as NatProp using (+-*-semiring; ≤-isTotalOrder; <-isStrictTotalOrder)
 import Data.Nat as ℕ
 
 record EpochStructure : Set₁ where
-  infix 4 _≤ˢ_ _<ˢ_
+  infix 4 _<ˢ_
   field Slotʳ : Semiring 0ℓ 0ℓ
-        Epoch : Set; ⦃ DecEq-Epoch ⦄ : DecEq Epoch
+        Epoch : Set
+        ⦃ DecEq-Epoch ⦄ : DecEq Epoch
+
+  _≡ᵉ?_ : (e e' : Epoch) → Dec(e ≡ e')
+  _ ≡ᵉ? _ = it
 
   Slot = Semiring.Carrier Slotʳ
 
-  field epoch           : Slot → Epoch
-        firstSlot       : Epoch → Slot
-        _≤ˢ_            : Rel Slot 0ℓ
-        Slot-TO         : IsTotalOrder _≡_ _≤ˢ_
-        StabilityWindow : Slot
-        sucᵉ            : Epoch → Epoch
-        ⦃ DecEq-Slot ⦄  : DecEq Slot
+  field epoch            : Slot → Epoch
+        firstSlot        : Epoch → Slot
+        _<ˢ_             : Rel Slot 0ℓ
+        Slot-STO         : IsStrictTotalOrder _≡_ _<ˢ_
+        StabilityWindow  : Slot
+        sucᵉ             : Epoch → Epoch
+        ⦃ DecEq-Slot ⦄   : DecEq Slot
 
   _≡ˢ?_ : (s s' : Slot) → Dec(s ≡ s')
   _ ≡ˢ? _ = it
 
-  _<ˢ_ : Rel Slot _
-  s <ˢ s' = s ≤ˢ s' × ¬ (s ≡ s')
-
-  -- partial order
-
-  ≤ˢ-isPartialOrder : IsPartialOrder _≡_ _≤ˢ_
-  ≤ˢ-isPartialOrder = IsTotalOrder.isPartialOrder Slot-TO
-
-  ≤ˢ-isPreorder : IsPreorder _≡_ _≤ˢ_
-  ≤ˢ-isPreorder = IsPartialOrder.isPreorder ≤ˢ-isPartialOrder
-
-  ≤ˢ-isAntisymmetric : Antisymmetric _≡_ _≤ˢ_
-  ≤ˢ-isAntisymmetric = IsPartialOrder.antisym ≤ˢ-isPartialOrder
-
-  ≤ˢ-isTransitive : Transitive _≤ˢ_
-  ≤ˢ-isTransitive = IsPreorder.trans ≤ˢ-isPreorder
-
-  ≤ˢ-isTotal : Total _≤ˢ_
-  ≤ˢ-isTotal = IsTotalOrder.total Slot-TO
+  -- preorders and partial orders
 
   instance
     preoSlot : HasPreorder Slot _≡_
-    preoSlot = record { _≤_ = _≤ˢ_ ; isPreorder = ≤ˢ-isPreorder }
+    preoSlot = hasPreorderFromStrictTotalOrder Slot _≡_ _<ˢ_ Slot-STO
 
     poSlot : HasPartialOrder Slot _≡_
-    poSlot = record { hasPreorder = preoSlot ; antisym = ≤ˢ-isAntisymmetric }
-
-  Dec≡⋀TotAntisym≤⇒Dec≤ : Decidable _≡_ → Antisymmetric _≡_ _≤ˢ_ → Total _≤ˢ_ → Decidable _≤ˢ_
-  Dec≡⋀TotAntisym≤⇒Dec≤ dec≡ antisym≤ tot≤ x y with dec≡ x y | tot≤ x y
-  ... | yes refl | _ = true because ofʸ (IsPartialOrder.reflexive ≤ˢ-isPartialOrder refl)
-  ... | no ¬p | inj₁ x≤y = true because ofʸ x≤y
-  ... | no ¬p | inj₂ y≤x = false because (ofⁿ (λ x≤y → ¬p (antisym≤ x≤y y≤x)))
-
-
-  _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
-  _≤ˢ?_ = Dec≡⋀TotAntisym≤⇒Dec≤ _≡ˢ?_ ≤ˢ-isAntisymmetric ≤ˢ-isTotal
-
-  ≤ˢ-isDecTotalOrder : IsDecTotalOrder _≡_ _≤ˢ_
-  ≤ˢ-isDecTotalOrder = record { isTotalOrder = Slot-TO ; _≟_ = _≡ˢ?_ ; _≤?_ = _≤ˢ?_ }
-
-  instance
-    Dec-≤ˢ : ∀ {n m} → Dec (n ≤ˢ m)
-    Dec-≤ˢ = Decidable²⇒Dec _≤ˢ?_
+    poSlot = hasPartialOrderFromStrictTotalOrder Slot _≡_ _<ˢ_ Slot-STO
 
     decpoSlot : HasDecPartialOrder Slot _≡_
-    decpoSlot = record { hasPartialOrder = poSlot ; _≤?_ = _≤ˢ?_ }
+    decpoSlot = hasDecPartialOrderFromStrictTotalOrder Slot _≡_ _<ˢ_ Slot-STO
+
+  infix 4 _≤ˢ_
+  _≤ˢ_ : Rel Slot _
+  _≤ˢ_ = _≤_
+
+  ≤ˢ-antisym : Antisymmetric _≡_ _≤ˢ_
+  ≤ˢ-antisym = ≤-antisym
+
+  ≤ˢ-isPreorder : IsPreorder _≡_ _≤ˢ_
+  ≤ˢ-isPreorder = ≤-isPreorder
+
+  ≤ˢ-reflexive : Reflexive _≤ˢ_
+  ≤ˢ-reflexive = IsPreorder.reflexive ≤ˢ-isPreorder refl
+
+  ≤ˢ-transitive : Transitive _≤ˢ_
+  ≤ˢ-transitive = IsPreorder.trans ≤-isPreorder
+
+  ≤ˢ-isTotalOrder : IsTotalOrder _≡_ _≤ˢ_
+  ≤ˢ-isTotalOrder = <-STO⇒≤-isTotalOrder Slot _≡_ _<ˢ_ Slot-STO
+
+  ≤ˢ-total : Total _≤ˢ_
+  ≤ˢ-total = IsTotalOrder.total ≤ˢ-isTotalOrder
+
+  _≤ˢ?_ : (s s' : Slot) → Dec (s ≤ˢ s')
+  _≤ˢ?_ = _≤?_
+
+  ≤ˢ-isDecTotalOrder : IsDecTotalOrder _≡_ _≤ˢ_
+  ≤ˢ-isDecTotalOrder = record { isTotalOrder = ≤ˢ-isTotalOrder ; _≟_ = _≡ˢ?_ ; _≤?_ = _≤ˢ?_ }
+
+  instance
+    Dec-<ˢ : ∀ {n m : Slot} → Dec (n <ˢ m)
+    Dec-<ˢ = Decidable²⇒Dec (IsStrictTotalOrder._<?_ Slot-STO)
 
   _≤ᵉ_ : Epoch → Epoch → Set
-  e ≤ᵉ e' = firstSlot e ≤ˢ firstSlot e'
+  e ≤ᵉ e' = firstSlot e ≤ firstSlot e'
 
-  ≤ᵉ-isReflexive : Reflexive _≤ᵉ_
-  ≤ᵉ-isReflexive = IsPreorder.reflexive ≤ˢ-isPreorder refl
-
-  _≤ᵉ?_ : ∀ e e' → Dec (e ≤ᵉ e')
-  e ≤ᵉ? e' = firstSlot e ≤ˢ? firstSlot e'
+  ≤ᵉ-reflexive : Reflexive _≤ᵉ_
+  ≤ᵉ-reflexive = ≤ˢ-reflexive
 
   ≤ᵉ-isPreorder : IsPreorder _≡_ _≤ᵉ_
   ≤ᵉ-isPreorder .IsPreorder.isEquivalence     = Ledger.Prelude.isEquivalence
-  ≤ᵉ-isPreorder .IsPreorder.reflexive refl    = ≤ᵉ-isReflexive
-  ≤ᵉ-isPreorder .IsPreorder.trans ij jk       = ≤ˢ-isTransitive ij jk
-
-  _ = (∀ {n m} → Dec (n <ˢ m)) ∋ it
-  _ = (∀ {n m} → Dec (n ≤ˢ m)) ∋ it
-  _ = (∀ {n m} → Dec (n ≤ᵉ m)) ∋ it
+  ≤ᵉ-isPreorder .IsPreorder.reflexive refl    = ≤ᵉ-reflexive
+  ≤ᵉ-isPreorder .IsPreorder.trans ij jk       = ≤ˢ-transitive ij jk
 
   instance
     preoEpoch : HasPreorder Epoch _≡_
-    preoEpoch = record { _≤_ = _≤ᵉ_ ; isPreorder = ≤ᵉ-isPreorder }
+    preoEpoch = hasPreorderFromNonStrict Epoch _≡_ _≤ᵉ_ ≤ᵉ-isPreorder _≡ᵉ?_
+
+  _<ᵉ_ : Rel Epoch _
+  _<ᵉ_ = _<_
+
+  _ = ({s s' : Slot} → Dec (s < s')) ∋ it
+  _ = ({s s' : Slot} → Dec (s ≤ s')) ∋ it
+  _ = ({e e' : Epoch} → Dec (e < e')) ∋ it
+  _ = ({e e' : Epoch} → Dec (e ≤ e')) ∋ it
+
+  _≤ᵉ?_ : ∀ e e' → Dec (e ≤ᵉ e')
+  e ≤ᵉ? e' = firstSlot e ≤? firstSlot e'
+
+  -- instance
+  --   Dec-≤ᵉ : ∀ {e e' : Epoch} → Dec (e ≤ᵉ e')
+  --   Dec-≤ᵉ = Decidable²⇒Dec _≤ᵉ?_
+
+
 
   -- addition
 
@@ -117,7 +127,7 @@ record EpochStructure : Set₁ where
     addSlot ._+_ = _+ˢ_
 
     addEpoch : HasAdd Epoch
-    addEpoch ._+_ e e' = epoch (firstSlot e +ˢ firstSlot e')
+    addEpoch ._+_ e e' = epoch (firstSlot e + firstSlot e')
 
 record GlobalConstants : Set₁ where
   field Network : Set; ⦃ DecEq-Netw ⦄ : DecEq Network
@@ -132,8 +142,8 @@ record GlobalConstants : Set₁ where
     .Epoch           → ℕ
     .epoch slot      → slot / SlotsPerEpochᶜ
     .firstSlot e     → e * SlotsPerEpochᶜ
-    ._≤ˢ_            → ℕ._≤_
-    .Slot-TO         → ≤-isTotalOrder
+    ._<ˢ_            → ℕ._<_
+    .Slot-STO         → <-isStrictTotalOrder
     .StabilityWindow → StabilityWindowᶜ
     .sucᵉ            → suc
 

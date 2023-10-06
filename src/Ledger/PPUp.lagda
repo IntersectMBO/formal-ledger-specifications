@@ -74,7 +74,6 @@ pvCanFollow? (m , n) pv with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
 ... | yes refl | no ¬p    = yes canFollowMajor
 ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
 
-
 instance
   Dec-pvCanFollow : ∀ {pv pv'} → Dec (pvCanFollow pv pv')
   Dec-pvCanFollow = pvCanFollow? _ _
@@ -92,7 +91,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateCurrent : let open PPUpdateEnv Γ in
     dom pup ⊆ dom genDelegs
     → All (isViableUpdate pparams) (range pup)
-    → (slot + (2 * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
+    → (slot + (2 * StabilityWindow)) < (firstSlot (sucᵉ (epoch slot)))
     → epoch slot ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈

@@ -9,7 +9,6 @@
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
 open import Data.Nat.Properties  using (+-0-monoid; +-0-commutativeMonoid)
-
 open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude
@@ -149,7 +148,6 @@ record UTxOState : Set where
 ⟦_⟧ : {A : Set} → A → A
 ⟦_⟧ = id
 
-open HasDecPartialOrder ⦃ ... ⦄
 instance
   netId? : ∀ {A : Set} {networkId : Network} {f : A → Network}
     → Dec₁ (λ a → f a ≡ networkId)
