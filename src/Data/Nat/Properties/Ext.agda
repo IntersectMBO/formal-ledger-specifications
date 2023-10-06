@@ -2,7 +2,7 @@
 
 module Data.Nat.Properties.Ext where
 
-open import Data.Nat using (_<_)
+import Data.Nat as ℕ
 open import Data.Nat.Properties
 open import Ledger.Prelude
 open import Relation.Nullary.Decidable
@@ -17,11 +17,11 @@ negInduction {P = P} P? P0 (N , ¬PN)
 ... | yes (k , _ , h) = k , h
 ... | no ¬p           = contradiction (k≤N⇒Pk ≤-refl) ¬PN
   where
-    helper : ∀ {k} → k < N → P k → P k × P (suc k)
+    helper : ∀ {k} → k ℕ.< N → P k → P k × P (suc k)
     helper {k} k<N Pk =
       Pk , decidable-stable (P? _) (curry (curry (¬∃⟶∀¬ ¬p k) k<N) Pk)
 
-    k<N⇒P'k : ∀ {k} → k < N → P k × P (suc k)
+    k<N⇒P'k : ∀ {k} → k ℕ.< N → P k × P (suc k)
     k<N⇒P'k {zero}  k<N = helper k<N P0
     k<N⇒P'k {suc k} k<N = helper k<N (proj₂ $ k<N⇒P'k {k} (<⇒≤ k<N))
 

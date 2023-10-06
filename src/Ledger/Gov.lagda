@@ -9,9 +9,9 @@ open import Data.List.Relation.Unary.Any
   renaming (Any to Anyˡ; any? to decAny)
 open import Function.Related using (fromRelated)
 open import Function.Related.Propositional using (⤖⇒)
+open import Relation.Binary using (Rel)
 open import Relation.Nullary.Decidable renaming (map to mapᵈ)
-
-open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
+open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ) hiding (Rel)
 open import Ledger.Crypto
 open import Ledger.GovStructure
 
@@ -63,10 +63,6 @@ private variable
   prev : NeedsHash a
   k : ℕ
 
-private -- FIXME: this should be part of a typeclass
-  _<_ : Epoch → Epoch → Set
-  a < b = a ≤ b × a ≢ b
-
 -- could be implemented using a function of type:
 --   ∀ {a} {A : Set a} → (A → Maybe A) → List A → List A
 modifyMatch : ∀ {a} {A : Set a} → (A → Bool) → (A → A) → List A → List A
@@ -107,7 +103,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     actionWellFormed a ≡ true
     → d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q
-       → ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅)
+       → ∀[ e ∈ range new ] (epoch <ᵉ e) × dom new ∩ rem ≡ᵉ ∅)
     ────────────────────────────────
     let sig = inj₂ record { returnAddr = addr ; action = a ; anchor = x
                           ; deposit = d ; prevAction = prev }
@@ -140,10 +136,6 @@ private
   isNewCommittee (TreasuryWdrl x)         = noᵈ λ()
   isNewCommittee Info                     = noᵈ λ()
 
-  instance
-    _ : ∀ {s s₁} → Dec (s ≤ˢ s₁)
-    _ = _ ≤ˢ? _
-
 instance
   Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_
   Computational-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
@@ -156,7 +148,7 @@ instance
     case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿
          ,′ isNewCommittee a of λ where
       (yesᵈ (wf , dep) , yesᵈ (new , rem , q , refl)) →
-        case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
+        case ¿ ∀[ e ∈ range new ] epoch <ᵉ e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
           (yesᵈ newOk) → just (_ , GOV-Propose wf dep λ where refl → newOk)
           (noᵈ _)      → nothing
       (yesᵈ (wf , dep) , noᵈ notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
@@ -171,7 +163,7 @@ instance
   ... | noᵈ ¬p | _ = ⊥-elim (¬p (wf , dep))
   ... | yesᵈ _ | noᵈ notNewComm = refl
   ... | yesᵈ _ | yesᵈ (new , rem , q , refl)
-    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
+    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch <ᵉ e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
 
 Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_
 Computational-GOV = it
