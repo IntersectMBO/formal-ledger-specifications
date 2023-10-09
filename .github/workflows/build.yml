@@ -56,35 +56,43 @@ jobs:
       - name: Build agda
         id: agda
         run: |
-          v=$(nix-build -A agdaWithStdLibMeta)
-          closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
-          echo "derivation=$v" >> $GITHUB_OUTPUT
-          echo "closure=$closure" >> $GITHUB_OUTPUT
+          d=$(nix-build -A agdaWithStdLibMeta)
+          dRet=$(echo "$d" | tr '\n' ' ')
+          closure=$(nix-store --query --requisites --include-outputs $dRet)
+          cRet=$(echo "$closure" | tr '\n' ' ')
+          echo "derivation=$dRet" >> $GITHUB_OUTPUT
+          echo "closure=$cRet" >> $GITHUB_OUTPUT
 
       - name: Build formalLedger
         id: formalLedger
         run: |
-          v=$(nix-build -A formalLedger)
-          closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
-          echo "derivation=$v" >> $GITHUB_OUTPUT
-          echo "closure=$closure" >> $GITHUB_OUTPUT
+          d=$(nix-build -A formalLedger)
+          dRet=$(echo "$d" | tr '\n' ' ')
+          closure=$(nix-store --query --requisites --include-outputs $dRet)
+          cRet=$(echo "$closure" | tr '\n' ' ')
+          echo "derivation=$dRet" >> $GITHUB_OUTPUT
+          echo "closure=$cRet" >> $GITHUB_OUTPUT
 
       - name: Build ledger
         id: ledger
         run: |
           mkdir -p outputs
-          v=$(nix-build -A ledger -j1 -o outputs/ledger| tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
-          echo "derivation=$v" >> $GITHUB_OUTPUT
-          echo "closure=$closure" >> $GITHUB_OUTPUT
+          d=$(nix-build -A ledger -j1 -o outputs/ledger)
+          dRet=$(echo "$d" | tr '\n' ' ')
+          closure=$(nix-store --query --requisites --include-outputs $dRet)
+          cRet=$(echo "$closure" | tr '\n' ' ')
+          echo "derivation=$dRet" >> $GITHUB_OUTPUT
+          echo "closure=$cRet" >> $GITHUB_OUTPUT
 
       - name: Build midnight
         id: midnight
         run: |
-          v=$(nix-build -A midnight -j1 -o outputs/midnight | tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $v | tr '\n' ' ')
-          echo "derivation=$v" >> $GITHUB_OUTPUT
-          echo "closure=$closure" >> $GITHUB_OUTPUT
+          d=$(nix-build -A midnight -j1 -o outputs/midnight)
+          dRet=$(echo "$d"| tr '\n' ' ')
+          closure=$(nix-store --query --requisites --include-outputs $dRet)
+          cRet=$(echo "$closure" | tr '\n' ' ')
+          echo "derivation=$dRet" >> $GITHUB_OUTPUT
+          echo "closure=$cRet" >> $GITHUB_OUTPUT
 
       - name: Export all derivations
         id: export-derivations
