@@ -59,6 +59,9 @@ instance
       ... | just (govSt' , _) | refl
         rewrite dec-yes (LEDGER-premises? certSt') h .proj₂ = refl
 
+Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_
+Computational-LEDGERS = it
+
 instance
   HasCoin-LState : HasCoin LState
   HasCoin-LState .getCoin s = getCoin (LState.utxoSt s)

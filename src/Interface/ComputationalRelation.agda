@@ -55,6 +55,9 @@ module _ (STS : C → S → Sig → S → Set) where
     nothing⇒∀¬STS comp≡nothing s' h rewrite ≡-just⇔STS .Equivalence.from h =
       case comp≡nothing of λ ()
 
+    recomputeProof : ∀ {Γ s sig s'} → STS Γ s sig s' → Maybe (∃[ s'' ] STS Γ s sig s'')
+    recomputeProof _ = computeProof _ _ _
+
 module _ {STS : C → S → Sig → S → Set} (comp : Computational STS) where
 
   open Computational comp
