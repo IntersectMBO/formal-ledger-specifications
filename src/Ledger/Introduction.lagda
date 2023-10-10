@@ -5,6 +5,9 @@
 module Ledger.Introduction where
 
 open import Prelude
+import Data.Maybe as Maybe
+open import Data.Maybe.Properties
+open import Relation.Binary.PropositionalEquality
 \end{code}
 
 Repository: https://github.com/input-output-hk/formal-ledger-specifications
@@ -39,7 +42,7 @@ other, forming a directed graph that is almost a tree.
 
 Since all such state machines need to be evaluated by the node and all
 nodes should compute the same states, the relations specified by them
-should be computable by functions. This is captured by the following
+should be computable by functions. This can be captured by the following
 record, which is parametrized over the step relation.
 
 \begin{code}[hide]
@@ -55,8 +58,14 @@ record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Set) : Set 
   field
     compute     : C → S → Sig → Maybe S
     ≡-just⇔STS  : compute Γ s b ≡ just s' ⇔ Γ ⊢ s ⇀⦇ b ,X⦈ s'
+
+  nothing⇒∀¬STS : compute Γ s b ≡ nothing → ∀ s' → ¬ Γ ⊢ s ⇀⦇ b ,X⦈ s'
 \end{code}
 \end{figure*}
+\begin{code}[hide]
+  nothing⇒∀¬STS comp≡nothing s' h rewrite ≡-just⇔STS .Equivalence.from h =
+    case comp≡nothing of λ ()
+\end{code}
 
 \subsection{Sets \& maps}
 
