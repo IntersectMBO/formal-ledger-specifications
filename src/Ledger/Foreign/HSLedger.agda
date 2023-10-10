@@ -50,7 +50,9 @@ module Implementation where
   P1Script     = ⊥; Hashable-P1Script = mkHashable⊥
   Data         = ⊤
   Dataʰ        = mkHashableSet Data
-  postulate toData : ∀ {A : Set} → A → Data
+  toData : ∀ {A : Set} → A → Data
+  toData _ = tt
+
   PlutusScript = ⊥; Hashable-PlutusScript = mkHashable⊥
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ∋ record
@@ -87,10 +89,10 @@ module Implementation where
          open Algebra.Morphism.IsMonoidHomomorphism
          open Algebra.Morphism.IsMagmaHomomorphism
 
-  TxId    = ℕ
-  Ix      = ℕ
+  TxId            = ℕ
+  Ix              = ℕ
   AuxiliaryData   = ⊤
-  DocHash = ⊤
+  DocHash         = ℕ
   networkId       = tt
   tokenAlgebra    = coinTokenAlgebra
 
@@ -195,9 +197,13 @@ HSAbstractFunctions = record
   { Implementation
   ; txscriptfee = λ tt y → 0
   ; serSize     = λ v → v
-  ; indexOfImp  = ix
+  ; indexOfImp  = record
+    { indexOfDCert    = λ _ _ → nothing
+    ; indexOfRwdAddr  = λ _ _ → nothing
+    ; indexOfTxIn     = λ _ _ → nothing
+    ; indexOfPolicyId = λ _ _ → nothing
+    }
   }
-  where postulate ix : indexOf
 instance _ = HSAbstractFunctions
 
 open TransactionStructure it hiding (PParams)
@@ -206,6 +212,9 @@ open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it
 
 instance
+  _ = Convertible-Refl {⊤}
+  _ = Convertible-Refl {ℕ}
+
   -- Since the foreign address is just a number, we do bad stuff here
   Convertible-Addr : Convertible Addr F.Addr
   Convertible-Addr = λ where
@@ -214,10 +223,6 @@ instance
                   (inj₂ record { pay = inj₁ x }) → x
                   (inj₂ record { pay = inj₂ x }) → x
     .from n → inj₁ record { net = _ ; pay = inj₁ n ; stake = inj₁ 0 }
-
-  postulate
-    _ : Convertible DataHash F.Hash
-    _ : Convertible KeyHash F.Hash
 
   Convertible-TxBody : Convertible TxBody F.TxBody
   Convertible-TxBody = λ where
@@ -253,12 +258,11 @@ instance
       ; scriptIntHash = nothing
       }
 
-  postulate
-    _ : Convertible ⊥ F.Empty
-    _ : Convertible Datum F.Empty
-    _ : Convertible Tag F.Tag
-    _ : Convertible ExUnits ⊤
-    _ : Convertible AuxiliaryData ⊤
+  Convertible-Tag : Convertible Tag F.Tag
+  Convertible-Tag = λ where
+    .to   → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd }
+    .from → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd }
+   where open F.Tag
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
   Convertible-TxWitnesses = λ where
@@ -285,6 +289,9 @@ instance
       { body = from body
       ; wits = from wits
       ; txAD = from txAD }
+
+  Convertible-⊥ : Convertible ⊥ F.Empty
+  Convertible-⊥ = λ where .to (); .from ()
 
   Convertible-PParams : Convertible PParams F.PParams
   Convertible-PParams = λ where
