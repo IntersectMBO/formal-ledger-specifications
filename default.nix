@@ -7,7 +7,9 @@
 
 with pkgs;
 let
-  customAgda = import sources.agda-nixpkgs {};
+  customAgda = import sources.agda-nixpkgs {
+    inherit (pkgs) system;
+  };
 
   agdaStdlib = customAgda.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
     version = "1.7.2";
