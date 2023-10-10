@@ -8,10 +8,24 @@
     inherit (pkgs) lib;
   in {
     hydraJobs = lib.genAttrs systems (system: let
-      jobs = import ./. {
+      exposed = import ./. {
         inherit sources;
         pkgs = import sources.nixpkgs { inherit system; };
       };
+
+      specsDerivationsPackages = key: lib.mapAttrs'
+        (k: lib.nameValuePair "${key}-${k}")
+        (lib.filterAttrs (k: v: builtins.elem k [ "docs" "executableSpec" ]) exposed.${key});
+
+      jobs = {
+        inherit (exposed)
+          agda
+          agdaWithStdLibMeta
+          latex
+          formalLedger;
+      } //
+        specsDerivationsPackages "ledger" //
+        specsDerivationsPackages "midnight";
     in jobs // {
       required = pkgs.releaseTools.aggregate {
         name = "required";
