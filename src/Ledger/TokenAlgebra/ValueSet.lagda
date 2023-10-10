@@ -19,7 +19,6 @@ open import Relation.Binary                        using (IsEquivalence)
 open import Relation.Binary.Morphism               using (IsRelHomomorphism)
 open import Relation.Binary.PropositionalEquality  using (module ≡-Reasoning)
 
-import Data.Nat as ℕ
 import Relation.Binary.PropositionalEquality as ≡
 import Relation.Binary.Core  as stdlib
 \end{code}

@@ -19,6 +19,7 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 open import Tactic.Derive.DecEq
+
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
 2ℚ = 1ℚ Data.Rational.+ 1ℚ

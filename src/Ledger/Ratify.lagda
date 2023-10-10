@@ -81,7 +81,6 @@ above the threshold.
 
 import Data.Integer as Z
 import Data.Rational as R
-import Data.Nat as ℕ
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.Nat.Properties.Ext
 
@@ -204,7 +203,7 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
 
 ∃topNDRepDist : ∀ {n dist} → lengthˢ (dist ˢ) ≥ n → n > 0
                 → ∃[ c ] lengthˢ (mostStakeDRepDist dist c ˢ) ≥ n
-                       × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) ℕ.< n
+                       × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
 ∃topNDRepDist {n} {dist} length≥n n>0 =
   let
     c , h , h' =
@@ -383,7 +382,7 @@ accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
         x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
 
 expired : Epoch → GovActionState → Set
-expired current record { expiresIn = expiresIn } = expiresIn <ᵉ current
+expired current record { expiresIn = expiresIn } = expiresIn < current
 \end{code}
 } %% end small
 \caption{%%Ratify iii:

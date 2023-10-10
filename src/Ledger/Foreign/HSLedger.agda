@@ -8,7 +8,7 @@ open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
-import Data.Nat as ℕ
+-- import Data.Nat as ℕ
 
 open import Foreign.Convertible
 
@@ -62,7 +62,7 @@ module Implementation where
     .inject                    → id
     .policies                  → λ _ → ∅
     .size                      → λ x → 1 -- there is only ada in this token algebra
-    ._≤ᵗ_                      → ℕ._≤_
+    ._≤ᵗ_                      → _≤_
     .AssetName                 → String
     .specialAsset              → "Ada"
     .property                  → λ _ → refl

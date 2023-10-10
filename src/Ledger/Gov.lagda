@@ -103,7 +103,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     actionWellFormed a ≡ true
     → d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q
-       → ∀[ e ∈ range new ] (epoch <ᵉ e) × dom new ∩ rem ≡ᵉ ∅)
+       → ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅)
     ────────────────────────────────
     let sig = inj₂ record { returnAddr = addr ; action = a ; anchor = x
                           ; deposit = d ; prevAction = prev }
@@ -148,7 +148,7 @@ instance
     case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿
          ,′ isNewCommittee a of λ where
       (yesᵈ (wf , dep) , yesᵈ (new , rem , q , refl)) →
-        case ¿ ∀[ e ∈ range new ] epoch <ᵉ e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
+        case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
           (yesᵈ newOk) → just (_ , GOV-Propose wf dep λ where refl → newOk)
           (noᵈ _)      → nothing
       (yesᵈ (wf , dep) , noᵈ notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
@@ -163,7 +163,7 @@ instance
   ... | noᵈ ¬p | _ = ⊥-elim (¬p (wf , dep))
   ... | yesᵈ _ | noᵈ notNewComm = refl
   ... | yesᵈ _ | yesᵈ (new , rem , q , refl)
-    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch <ᵉ e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
+    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
 
 Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_
 Computational-GOV = it
