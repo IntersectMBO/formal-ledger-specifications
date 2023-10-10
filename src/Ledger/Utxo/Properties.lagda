@@ -20,7 +20,7 @@ open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
 open import Tactic.MonoidSolver         using (solve-macro)
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
-open import Ledger.Prelude; open Properties; open Computational
+open import Ledger.Prelude; open Properties; open Computational ⦃...⦄
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -309,17 +309,16 @@ module DepositHelpers
       ∎
 \end{code}
 
-Here, we state the fact that the UTxO relation is computable. This
-just follows from our automation.
+Here, we state the fact that the UTxO relation is computable.
 
 \begin{figure*}[h]
 \begin{code}
 UTXO-step : UTxOEnv → UTxOState → Tx → Maybe UTxOState
-UTXO-step = compute Computational-UTXO
+UTXO-step = compute
 
 UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ just utxoState'
                          ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO
+UTXO-step-computes-UTXO = ≡-just⇔STS
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}

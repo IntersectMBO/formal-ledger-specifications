@@ -11,6 +11,8 @@ open import Data.Maybe using (Maybe; just; nothing; Is-just)
 open import Data.Maybe.Relation.Unary.Any using (just)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.Sum.Relation.Unary.All using (inj₁; inj₂) renaming (All to All⊎)
+import Data.Rational as ℚ using (_≤_)
+import Data.Rational.Properties as ℚ using (_≤?_)
 
 open import Relation.Binary renaming (Decidable to Decidable²)
 open import Relation.Binary.PropositionalEquality using (_≡_)
@@ -87,3 +89,6 @@ instance
     with ¿ Q y ¿
   ... | yes qy = yes (inj₂ qy)
   ... | no ¬qy = no  λ where (inj₂ qy) → ¬qy qy
+
+  Dec-ℚ≤ : ∀ {q r} → Dec (q ℚ.≤ r)
+  Dec-ℚ≤ = Decidable²⇒Dec ℚ._≤?_
