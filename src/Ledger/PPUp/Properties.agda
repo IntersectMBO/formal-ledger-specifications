@@ -28,7 +28,7 @@ private
       × firstSlot (sucᵉ (epoch slot)) ≤ (slot + (2 * StabilityWindow))
       × sucᵉ (epoch slot) ≡ e
 
-
+instance
   Computational-PPUP : Computational _⊢_⇀⦇_,PPUP⦈_
   Computational-PPUP .computeProof Γ s = λ where
     (just (pup , e)) →
