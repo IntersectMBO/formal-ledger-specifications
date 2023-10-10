@@ -362,12 +362,13 @@ activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 activeVotingStake cc dists votes =
   Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
-accepted : RatifyEnv → EnactState → GovActionState → Set
-accepted Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
-  acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO ∧ meetsMinAVS
+module _ (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState)
+         (let record{ cc = cc , _; pparams = pparams , _ } = es)
   where
-    open RatifyEnv Γ; open GovActionState gs; open PParams pparams
 
+  open RatifyEnv Γ; open GovActionState gs; open PParams pparams
+
+  private
     votes' = actualVotes Γ cc votes action pparams
     cc' = dom votes'
     redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
@@ -375,12 +376,15 @@ accepted Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
     meetsMinAVS : Set
     meetsMinAVS = activeVotingStake cc' redStakeDistr votes' ≥ minimumAVS
 
-    acceptedBy : GovRole → Set
-    acceptedBy role =
-      let t = maybe id R.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
-      case totalStake role cc' redStakeDistr votes' of λ where
-        0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
-        x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
+  acceptedBy : GovRole → Set
+  acceptedBy role =
+    let t = maybe id R.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
+    case totalStake role cc' redStakeDistr votes' of λ where
+      0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
+      x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
+
+  accepted : Set
+  accepted = acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO ∧ meetsMinAVS
 
 expired : Epoch → GovActionState → Set
 expired current record { expiresIn = expiresIn } = expiresIn < current
@@ -475,10 +479,9 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 
   RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        ¬ accepted Γ es st × ¬ expired currentEpoch st
-    ⊎  delayed action prevAction es d
     ⊎  accepted Γ es st
-       × ¬ delayed action prevAction es d
-       × (∀ es' → ¬ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es')
+       × (delayed action prevAction es d ⊎
+          (∀ es' → ¬ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'))
     ────────────────────────────────
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 
