@@ -12,6 +12,8 @@ open import Data.Unit
 open import Data.Sum
 open import Data.Maybe
 open import Data.Maybe.Relation.Unary.Any
+import Data.Rational as ℚ
+import Data.Rational.Properties as ℚ
 
 open import Relation.Binary renaming (Decidable to Decidable²)
 open import Relation.Binary.PropositionalEquality
@@ -64,3 +66,6 @@ instance
   Dec-IsJust : ∀ {a} {A : Set a} {x : Maybe A} → Dec (Is-just x)
   Dec-IsJust {x = just x} = yes (just _)
   Dec-IsJust {x = nothing} = no λ ()
+
+  Dec-ℚ≤ : ∀ {q r} → Dec (q ℚ.≤ r)
+  Dec-ℚ≤ = Decidable²⇒Dec ℚ._≤?_
