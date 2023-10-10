@@ -33,10 +33,12 @@ Ix            = ℕ
 Epoch         = ℕ
 AuxiliaryData = ⊤
 
-Hash          = ℕ
+DataHash      = ⊤
 TxIn          = Pair TxId Ix
-TxOut         = Pair Addr $ Pair Coin $ Maybe Hash
+TxOut         = Pair Addr $ Pair Coin $ Maybe DataHash
 UTxO          = HSMap TxIn TxOut
+
+Hash          = ℕ
 
 data Tag : Set where
   Spend Mint Cert Rewrd : Tag
@@ -89,8 +91,8 @@ record TxBody : Set where
 record TxWitnesses : Set where
   field vkSigs  : List (Pair ℕ ℕ)
         scripts : List Empty
-        txdats  : HSMap Hash Empty
-        txrdmrs : HSMap RdmrPtr (Pair Empty ⊤)
+        txdats  : HSMap DataHash ⊤
+        txrdmrs : HSMap RdmrPtr (Pair ⊤ ExUnits)
 
 {-# FOREIGN GHC
   data TxWitnesses = MkTxWitnesses
