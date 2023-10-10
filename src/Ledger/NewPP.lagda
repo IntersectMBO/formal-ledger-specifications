@@ -40,7 +40,6 @@ votedValue pup pparams quorum =
 private variable
   Γ : NewPParamEnv
   s s' : NewPParamState
-  newpp : PParams
   upd : PParamsUpdate
 
 data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsUpdate → NewPParamState → Set where
@@ -52,8 +51,8 @@ data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsU
     ────────────────────────────────
     Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧ⁿᵖ
 
-  NEWPP-Reject : ∀ {Γ} → let open NewPParamState s in
-    Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ ⟦ pparams , updatePPUp newpp ppup ⟧ⁿᵖ
+  NEWPP-Reject : ∀ {Γ} →
+    Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s
 \end{code}
 \caption{NEWPP transition system}
 \end{figure*}
