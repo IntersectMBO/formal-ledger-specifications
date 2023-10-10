@@ -2,14 +2,21 @@
   outputs = _: let
     systems = [ "x86_64-linux" ];
 
-    genAttrs = names: f: builtins.listToAttrs (map (name: {
-      inherit name;
-      value = f name;
-    }) names);
+    # let's use niv instead of flake inputs
+    sources = import nix/sources.nix;
+    pkgs = import sources.nixpkgs { system = builtins.head systems; };
+    inherit (pkgs) lib;
   in {
-    hydraJobs = genAttrs systems (system: import ./. rec {
-      sources = import nix/sources.nix;
-      pkgs = import sources.nixpkgs { inherit system; };
+    hydraJobs = lib.genAttrs systems (system: let
+      jobs = import ./. {
+        inherit sources;
+        pkgs = import sources.nixpkgs { inherit system; };
+      };
+    in jobs // {
+      required = pkgs.releaseTools.aggregate {
+        name = "required";
+        constituents = lib.collect lib.isDerivation jobs;
+      };
     });
   };
 }
