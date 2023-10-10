@@ -20,7 +20,7 @@ open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
 open import Tactic.MonoidSolver         using (solve-macro)
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
-open import Ledger.Prelude; open Properties; open Computational
+open import Ledger.Prelude; open Properties; open Computational ⦃...⦄
 open import Ledger.Transaction
 
 module Ledger.Utxo.Properties (txs : _) (open TransactionStructure txs) where
@@ -39,10 +39,6 @@ private variable
   utxoState utxoState'             : UTxOState
   fees fees' donations donations'  : Coin
   deposits deposits'               : DepositPurpose ⇀ Coin
-
-abstract
-  Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
-  Computational-UTXO = Computational-UTXO'
 
 balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
 balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
@@ -303,17 +299,16 @@ module DepositHelpers
       ∎
 \end{code}
 
-Here, we state the fact that the UTxO relation is computable. This
-just follows from our automation.
+Here, we state the fact that the UTxO relation is computable.
 
 \begin{figure*}[h]
 \begin{code}
 UTXO-step : UTxOEnv → UTxOState → TxBody → Maybe UTxOState
-UTXO-step = compute Computational-UTXO
+UTXO-step = compute
 
 UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ just utxoState'
                          ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-UTXO-step-computes-UTXO = ≡-just⇔STS Computational-UTXO
+UTXO-step-computes-UTXO = ≡-just⇔STS
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}

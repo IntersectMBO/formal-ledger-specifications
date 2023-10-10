@@ -362,8 +362,8 @@ activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 activeVotingStake cc dists votes =
   Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
-accepted' : RatifyEnv → EnactState → GovActionState → Set
-accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
+accepted : RatifyEnv → EnactState → GovActionState → Set
+accepted Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
   acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO ∧ meetsMinAVS
   where
     open RatifyEnv Γ; open GovActionState gs; open PParams pparams
@@ -452,11 +452,6 @@ private variable
   a : GovActionID × GovActionState
   removed : ℙ (GovActionID × GovActionState)
   d : Bool
-
--- having `accepted` abstract speeds up type checking of RATIFY' a lot
-abstract
-  accepted : RatifyEnv → EnactState → GovActionState → Set
-  accepted = accepted'
 
 data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Set where
 
