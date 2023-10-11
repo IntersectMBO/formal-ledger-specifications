@@ -42,7 +42,7 @@ other, forming a directed graph that is almost a tree.
 
 Since all such state machines need to be evaluated by the node and all
 nodes should compute the same states, the relations specified by them
-should be computable by functions. This is captured by the following
+should be computable by functions. This can be captured by the following
 record, which is parametrized over the step relation.
 
 \begin{code}[hide]
@@ -56,27 +56,13 @@ private variable
 \begin{code}
 record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Set) : Set where
   field
-    computeProof : ∀ Γ s b → Maybe (∃[ s' ] Γ ⊢ s ⇀⦇ b ,X⦈ s')
+    compute     : C → S → Sig → Maybe S
+    ≡-just⇔STS  : compute Γ s b ≡ just s' ⇔ Γ ⊢ s ⇀⦇ b ,X⦈ s'
 
-  compute : C → S → Sig → Maybe S
-  compute Γ s b = Maybe.map proj₁ (computeProof Γ s b)
-
-  field
-    completeness  : ∀ Γ s b s' → Γ ⊢ s ⇀⦇ b ,X⦈ s' → compute Γ s b ≡ just s'
-
-  ≡-just⇔STS     : compute Γ s b ≡ just s' ⇔ Γ ⊢ s ⇀⦇ b ,X⦈ s'
-  nothing⇒∀¬STS  : compute Γ s b ≡ nothing → ∀ s' → ¬ Γ ⊢ s ⇀⦇ b ,X⦈ s'
+  nothing⇒∀¬STS : compute Γ s b ≡ nothing → ∀ s' → ¬ Γ ⊢ s ⇀⦇ b ,X⦈ s'
 \end{code}
 \end{figure*}
 \begin{code}[hide]
-  open ≡-Reasoning
-  ≡-just⇔STS {c} {s} {sig} {s'} with computeProof c s sig in eq
-  ... | just (s'' , h) = mk⇔ (λ where refl → h) λ h' → begin just s''       ≡˘⟨ completeness _ _ _ _ h ⟩
-                                                            compute c s sig ≡⟨ completeness _ _ _ _ h' ⟩
-                                                            just s' ∎
-  ... | nothing        = mk⇔ (λ ()) λ h → begin nothing         ≡˘⟨ map-nothing eq ⟩
-                                                compute c s sig ≡⟨ completeness _ _ _ _ h ⟩
-                                                just s' ∎
   nothing⇒∀¬STS comp≡nothing s' h rewrite ≡-just⇔STS .Equivalence.from h =
     case comp≡nothing of λ ()
 \end{code}
