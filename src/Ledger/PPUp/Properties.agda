@@ -45,6 +45,6 @@ instance
     rewrite dec-yes ¿ Current-Property Γ up ¿ (p₁ , p₂ , p₃ , p₄) .proj₂ = refl
   Computational-PPUP .completeness Γ _ (just up) _ _ | PPUpdateFuture p₁ p₂ p₃ p₄
     with ¿ Current-Property Γ up ¿ | ¿ Future-Property Γ up ¿ | "agda#6868"
-  ... | yes (_ , _ , ¬p₃ , _) | _ | _ = ⊥-elim (<⇒¬>⊎≈ ¬p₃ p₃)
+  ... | yes (_ , _ , ¬p₃ , _) | _ | _ = ⊥-elim $ <⇒¬>⊎≈ ¬p₃ (≤⇔<∨≈ .Equivalence.to p₃)
   ... | no _ | yes p | _ = refl
   ... | no _ | no ¬p | _ = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄))

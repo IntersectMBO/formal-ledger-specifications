@@ -9,9 +9,9 @@ open import Data.List.Relation.Unary.Any
   renaming (Any to Anyˡ; any? to decAny)
 open import Function.Related using (fromRelated)
 open import Function.Related.Propositional using (⤖⇒)
-open import Relation.Binary using (Rel)
+
 open import Relation.Nullary.Decidable renaming (map to mapᵈ)
-open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ) hiding (Rel)
+open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
 open import Ledger.Crypto
 open import Ledger.GovStructure
 
