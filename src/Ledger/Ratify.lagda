@@ -362,29 +362,19 @@ activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
 activeVotingStake cc dists votes =
   Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
-module _ (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState)
-         (let record{ cc = cc , _; pparams = pparams , _ } = es)
-  where
+acceptedBy : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → GovRole → Set
+acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
+  let open RatifyEnv Γ; open GovActionState gs; open PParams pparams
+      votes'         = actualVotes Γ cc votes action pparams
+      cc'            = dom votes'
+      redStakeDistr  = restrictedDists coinThreshold rankThreshold stakeDistrs
+      t              = maybe id R.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
+  case totalStake role cc' redStakeDistr votes' of λ where
+    0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
+    x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
 
-  open RatifyEnv Γ; open GovActionState gs; open PParams pparams
-
-  private
-    votes' = actualVotes Γ cc votes action pparams
-    cc' = dom votes'
-    redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
-
-    meetsMinAVS : Set
-    meetsMinAVS = activeVotingStake cc' redStakeDistr votes' ≥ minimumAVS
-
-  acceptedBy : GovRole → Set
-  acceptedBy role =
-    let t = maybe id R.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
-    case totalStake role cc' redStakeDistr votes' of λ where
-      0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
-      x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
-
-  accepted : Set
-  accepted = acceptedBy CC ∧ acceptedBy DRep ∧ acceptedBy SPO ∧ meetsMinAVS
+accepted : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → Set
+accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
 
 expired : Epoch → GovActionState → Set
 expired current record { expiresIn = expiresIn } = expiresIn < current
