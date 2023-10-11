@@ -9,86 +9,31 @@ open import Relation.Binary
 open import Data.Nat.Properties using (+-*-semiring; <-isStrictTotalOrder)
 
 record EpochStructure : Set₁ where
-  infix 4 _<ˢ_
   field Slotʳ : Semiring 0ℓ 0ℓ
         Epoch : Set; ⦃ DecEq-Epoch ⦄ : DecEq Epoch
 
   Slot = Semiring.Carrier Slotʳ
-
-  field epoch            : Slot → Epoch
-        firstSlot        : Epoch → Slot
-        _<ˢ_             : Rel Slot 0ℓ
-        Slot-STO         : IsStrictTotalOrder _≡_ _<ˢ_
-        StabilityWindow  : Slot
-        sucᵉ             : Epoch → Epoch
+  field ⦃ poSlot ⦄       : HasDecPartialOrder≡ Slot
         ⦃ DecEq-Slot ⦄   : DecEq Slot
 
-  _≡ˢ?_ : (s s' : Slot) → Dec(s ≡ s')
-  _ ≡ˢ? _ = it
+        epoch            : Slot → Epoch
+        firstSlot        : Epoch → Slot
+        StabilityWindow  : Slot
+        sucᵉ             : Epoch → Epoch
 
   -- preorders and partial orders
 
   instance
-    preoSlot : HasPreorder≡ Slot
-    preoSlot = hasPreorderFromStrictTotalOrder Slot _≡_ _<ˢ_ Slot-STO
-
-    poSlot : HasPartialOrder≡ Slot
-    poSlot = hasPartialOrderFromStrictTotalOrder Slot _≡_ _<ˢ_ Slot-STO
-
-    decpoSlot : HasDecPartialOrder≡ Slot
-    decpoSlot = hasDecPartialOrderFromStrictTotalOrder Slot _≡_ _<ˢ_ Slot-STO
-
-  _<ᵉ_ : Epoch → Epoch → Set
-  e <ᵉ e' = firstSlot e < firstSlot e'
-
-  <ᵉ-irrefl : Irreflexive _≡_ _<ᵉ_
-  <ᵉ-irrefl refl x<y = HasPreorder.<-irrefl preoSlot refl x<y
-
-  <ᵉ-resp-≡ : _<ᵉ_ Respects₂ _≡_
-  <ᵉ-resp-≡ = i , ii
-    where
-    i : _<ᵉ_ Respectsʳ _≡_
-    i refl x<y = x<y
-    ii : _<ᵉ_ Respectsˡ _≡_
-    ii refl y<x = y<x
-
-  instance
     preoEpoch : HasPreorder≡ Epoch
-    preoEpoch = hasPreorderFromStrictPreorder Epoch _≡_ _<ᵉ_ isEquivalence <ᵉ-irrefl <-trans <ᵉ-resp-≡
+    preoEpoch = SPO⇒HasPreorder {_<_ = _<_ on firstSlot} record
+      { isEquivalence = isEquivalence
+      ; irrefl = λ where refl → <-irrefl refl
+      ; trans  = <-trans
+      ; <-resp-≈ = (λ where refl → id) , (λ where refl → id)
+      }
 
-  ≤ˢ-transitive : Transitive _≤_
-  ≤ˢ-transitive = IsPreorder.trans ≤-isPreorder
-
-  ≤ˢ-isTotalOrder : IsTotalOrder _≡_ _≤_
-  ≤ˢ-isTotalOrder = <-STO⇒≤-isTotalOrder Slot _≡_ _<_ Slot-STO
-
-  ≤ˢ-total : Total _≤_
-  ≤ˢ-total = IsTotalOrder.total ≤ˢ-isTotalOrder
-
-  ≤ˢ-isDecTotalOrder : IsDecTotalOrder _≡_ _≤_
-  ≤ˢ-isDecTotalOrder = record { isTotalOrder = ≤ˢ-isTotalOrder ; _≟_ = _≟_ ; _≤?_ = _≤?_ }
-
-  _≤ᵉ_ : Epoch → Epoch → Set
-  e ≤ᵉ e' = firstSlot e ≤ firstSlot e'
-
-  ≤ᵉ-reflexive : Reflexive _≤ᵉ_
-  ≤ᵉ-reflexive = IsPreorder.reflexive ≤-isPreorder refl
-
-  ≤ᵉ-isPreorder : IsPreorder _≡_ _≤ᵉ_
-  ≤ᵉ-isPreorder .IsPreorder.isEquivalence   = Ledger.Prelude.isEquivalence
-  ≤ᵉ-isPreorder .IsPreorder.reflexive refl  = ≤ᵉ-reflexive
-  ≤ᵉ-isPreorder .IsPreorder.trans ij jk     = ≤ˢ-transitive ij jk
-
-  _≤ᵉ?_ : (e e' : Epoch) → Dec (e ≤ᵉ e')
-  e ≤ᵉ? e' = firstSlot e ≤? firstSlot e'
-
-
-  instance
-    Dec-<ˢ : ∀ {n m : Slot} → Dec (n <ˢ m)
-    Dec-<ˢ = Decidable²⇒Dec (IsStrictTotalOrder._<?_ Slot-STO)
-
-  _ = ({s s' : Slot} → Dec (s < s')) ∋ it
-  _ = ({s s' : Slot} → Dec (s ≤ s')) ∋ it
+  _ = ({s s' : Slot}  → Dec (s < s')) ∋ it
+  _ = ({s s' : Slot}  → Dec (s ≤ s')) ∋ it
   _ = ({e e' : Epoch} → Dec (e < e')) ∋ it
   _ = ({e e' : Epoch} → Dec (e ≤ e')) ∋ it
 
@@ -124,8 +69,6 @@ record GlobalConstants : Set₁ where
     .Epoch           → ℕ
     .epoch slot      → slot / SlotsPerEpochᶜ
     .firstSlot e     → e * SlotsPerEpochᶜ
-    ._<ˢ_            → _<_
-    .Slot-STO        → <-isStrictTotalOrder
     .StabilityWindow → StabilityWindowᶜ
     .sucᵉ            → suc
 

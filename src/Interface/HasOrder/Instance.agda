@@ -2,53 +2,52 @@
 
 module Interface.HasOrder.Instance where
 
-open import Prelude            using (_≡_; mk⇔; id; case_of_; yes; no; inj₁; inj₂; _,_; proj₁; _⊎_; _⇔_)
-open import Data.Integer as ℤ  using (ℤ)
-open import Data.Nat as ℕ      using (ℕ)
+open import Prelude
+
+private module Nat where
+  open import Data.Nat public
+  open import Data.Nat.Properties public
+
+private module Int where
+  open import Data.Integer public
+  open import Data.Integer.Properties public
+
+open import Interface.DecEq
+open import Interface.Decidable.Instance
 open import Interface.HasOrder
 
-open import Data.Integer.Properties as IntProp renaming (_≟_ to _≟ℤ_)
-open import Data.Nat.Properties as NatProp renaming (_≟_ to _≟ℕ_)
-
 instance
-  preoInt : HasPreorder ℤ _≡_
-  preoInt = record
-    { _≤_ = ℤ._≤_
-    ; _<_ = ℤ._<_
-    ; ≤-isPreorder = IntProp.≤-isPreorder
-    ; <-irrefl = IntProp.<-irrefl
-    ; ≤⇔<∨≈ =  λ {a b} → mk⇔
-               (λ a≤b → case (a ≟ℤ b) of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (IntProp.≤∧≢⇒< a≤b ¬p))
-               λ where (inj₁ a<b) → IntProp.<⇒≤ a<b ; (inj₂ a≡b) → IntProp.≤-reflexive a≡b
+  HasPreorder-ℕ = HasPreorder ℕ _≡_ ∋ record
+    { Nat
+    ; ≤⇔<∨≈ = λ {a b} → mk⇔
+      (λ a≤b → case a ≟ b of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (Nat.≤∧≢⇒< a≤b ¬p))
+      (λ where (inj₁ a<b) → Nat.<⇒≤ a<b ; (inj₂ a≡b) → Nat.≤-reflexive a≡b)
     }
 
-  leqInt : HasPartialOrder ℤ _≡_
-  leqInt = record { hasPreorder = preoInt ; ≤-antisym = IntProp.≤-antisym }
+  HasPartialOrder-ℕ = HasPartialOrder ℕ _≡_ ∋ record
+    { ≤-antisym = Nat.≤-antisym }
 
-  DecLeqInt : HasDecPartialOrder ℤ _≡_
-  DecLeqInt = record
-    { hasPartialOrder = leqInt
-    ; _<?_ = ℤ._<?_
-    ; _≤?_ = ℤ._≤?_
+  Dec-≤ℕ = Decidable²⇒Dec Nat._≤?_; Dec-<ℕ = Decidable²⇒Dec Nat._<?_
+  HasDecPartialOrder-ℕ = HasDecPartialOrder ℕ _≡_ ∋ record {}
+
+  HasPreorder-ℤ = HasPreorder ℤ _≡_ ∋ record
+    { Int
+    ; ≤⇔<∨≈ = λ {a b} → mk⇔
+      (λ a≤b → case a ≟ b of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (Int.≤∧≢⇒< a≤b ¬p))
+      (λ where (inj₁ a<b) → Int.<⇒≤ a<b ; (inj₂ a≡b) → Int.≤-reflexive a≡b)
     }
+  HasPartialOrder-ℤ = HasPartialOrder ℤ _≡_ ∋ record
+    { ≤-antisym = Int.≤-antisym }
 
-  preoNat : HasPreorder ℕ _≡_
-  preoNat = record
-    { _≤_ = ℕ._≤_
-    ; _<_ = ℕ._<_
-    ; ≤-isPreorder = NatProp.≤-isPreorder
-    ; <-irrefl = NatProp.<-irrefl
-    ; ≤⇔<∨≈ =  λ {a b} → mk⇔
-               (λ a≤b → case (a ≟ℕ b) of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (NatProp.≤∧≢⇒< a≤b ¬p))
-               λ where (inj₁ a<b) → NatProp.<⇒≤ a<b ; (inj₂ a≡b) → NatProp.≤-reflexive a≡b
-    }
+  Dec-≤ℤ = Decidable²⇒Dec Int._≤?_; Dec-<ℤ = Decidable²⇒Dec Int._<?_
+  HasDecPartialOrder-ℤ = HasDecPartialOrder ℤ _≡_ ∋ record {}
 
-  leqNat : HasPartialOrder ℕ _≡_
-  leqNat = record { hasPreorder = preoNat ; ≤-antisym = NatProp.≤-antisym }
+_ = Dec² Nat._≤_ ∋ it
+_ = Dec² Nat._<_ ∋ it
+_ = Dec² Int._≤_ ∋ it
+_ = Dec² Int._<_ ∋ it
 
-  DecLeqNat : HasDecPartialOrder ℕ _≡_
-  DecLeqNat = record
-    { hasPartialOrder = leqNat
-    ; _<?_ = ℕ._<?_
-    ; _≤?_ = ℕ._≤?_
-    }
+_ = Decidable² Nat._≤_ ∋ _≤?_
+_ = Decidable² Nat._<_ ∋ _<?_
+_ = Decidable² Int._≤_ ∋ _≤?_
+_ = Decidable² Int._<_ ∋ _<?_

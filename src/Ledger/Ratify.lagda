@@ -81,7 +81,7 @@ above the threshold.
 
 import Data.Integer as Z
 import Data.Rational as R
-open import Data.Nat.Properties hiding (_≟_)
+open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
 open import Ledger.Prelude hiding (_∧_)
@@ -252,7 +252,7 @@ actualVotes Γ cc votes ga pparams
       (just (cc , _))  → dom (filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc))
       nothing          → ∅
 
-    activeDReps = dom (filterᵐ? (currentEpoch ≤ᵉ?_ ∘ proj₂) dreps)
+    activeDReps = dom (filterᵐ? (currentEpoch ≤?_ ∘ proj₂) dreps)
 
     actualCCVote : Credential → Epoch → Vote
     actualCCVote c e =
