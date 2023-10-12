@@ -8,101 +8,90 @@ module Ledger.Ratify.Properties (txs : _) (open TransactionStructure txs) where
 open import Ledger.Gov govStructure
 open import Ledger.Ratify txs
 
-open Computational ⦃...⦄
+open Computational ⦃...⦄ hiding (computeProof; completeness)
 
-caseEq_of_ : ∀ {a b} {A : Set a} {B : Set b} → (a : A) → ((a' : A) → a ≡ a' → B) → B
-caseEq a of f = f a refl
+module _ {a b} {A : Set a} {B : Set b} where
+  caseMaybe_∣_∣_ : (ma : Maybe A) → (∀ {a} → ma ≡ just a → B) → (ma ≡ nothing → B) → B
+  caseMaybe ma ∣ f ∣ g with ma
+  ... | just _  = f refl
+  ... | nothing = g refl
 
-verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
-verifyPrev? NoConfidence           h es = it
-verifyPrev? (NewCommittee x x₁ x₂) h es = it
-verifyPrev? (NewConstitution x x₁) h es = it
-verifyPrev? (TriggerHF x)          h es = it
-verifyPrev? (ChangePParams x)      h es = it
-verifyPrev? (TreasuryWdrl x)       h es = it
-verifyPrev? Info                   h es = it
+  caseMaybe-just : ∀ {a} {ma : Maybe A} {f : ∀ {a} → ma ≡ just a → B} {g : ma ≡ nothing → B}
+    → (eq : ma ≡ just a)
+    → caseMaybe ma ∣ f ∣ g ≡ f eq
+  caseMaybe-just refl = refl
 
-delayed? : ∀ a h es d → Dec (delayed a h es d)
-delayed? a h es d = let instance _ = verifyPrev? a h es in it
+  caseMaybe-nothing : ∀ {ma : Maybe A} {f : ∀ {a} → ma ≡ just a → B} {g : ma ≡ nothing → B}
+    → (eq : ma ≡ nothing)
+    → caseMaybe ma ∣ f ∣ g ≡ g eq
+  caseMaybe-nothing refl = refl
 
-acceptedBy? : ∀ Γ es st role → Dec (acceptedBy Γ es st role)
-acceptedBy? Γ record{ cc = cc , _ ; pparams = pparams , _ } st role
-  with (let open RatifyEnv Γ; open GovActionState st; open PParams pparams
-            votes' = actualVotes Γ cc votes action pparams
-            cc' = dom votes'
-            redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
-        in totalStake role cc' redStakeDistr votes')
-... | zero  = it
-... | suc n = it
+pattern RATIFY-Continue₁  x y = RATIFY-Continue (inj₁ (x , y))
+pattern RATIFY-Continue₂  x y = RATIFY-Continue (inj₂ (x , y))
+pattern RATIFY-Continue₂₁ x y = RATIFY-Continue₂ x (inj₁ y)
+pattern RATIFY-Continue₂₂ x y = RATIFY-Continue₂ x (inj₂ y)
 
-accepted? : ∀ Γ es st → Dec (accepted Γ es st)
-accepted? Γ es st =
-  let instance _ = λ {role} → acceptedBy? Γ es st role
-  in it
-
--- We abstract over the accepted/expired/delayed checks and the enact step to make the completeness proof
--- a little cleaner, and because the normal form of `accepted` is very big, making using `with` impractical.
-module _ {Γ : RatifyEnv} {s : RatifyState} {sig : GovActionID × GovActionState}
-         (let open RatifyEnv Γ; st = proj₂ sig; open GovActionState st)
-         (let ⟦ es , removed , d ⟧ʳ = s)
+private
+  module Implementation
+    Γ (s : RatifyState) (sig : _ × _)
+    (let ⟦ es , removed , d ⟧ʳ = s)
+    (let gid , st = sig)
     where
+    open RatifyEnv Γ; open GovActionState st
+    es'  = compute ⟦ gid , treasury , currentEpoch ⟧ᵉ es action
+    acc? = accepted? Γ es st
+    exp? = expired? currentEpoch st
+    del? = delayed? action prevAction es d
 
-  RATIFY'-total-helper :
-    (accepted? : Dec (accepted Γ es st))
-    (expired? : Dec (expired currentEpoch st))
-    (delayed? : Dec (delayed action prevAction es d))
-    (enact : Maybe EnactState)
-    (eq : compute ⟦ sig .proj₁ , treasury , currentEpoch ⟧ᵉ es action ≡ enact) →
-    ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY'⦈ s'
-  RATIFY'-total-helper (no ¬acc) (no ¬exp) delayed? enact    eq = _ , RATIFY-Continue (inj₁ (¬acc , ¬exp))
-  RATIFY'-total-helper (no ¬acc) (yes exp) delayed? enact    eq = _ , RATIFY-Reject ¬acc exp
-  RATIFY'-total-helper (yes acc) expired? (no ¬del) (just x) eq = _ , RATIFY-Accept acc ¬del (≡-just⇔STS .Equivalence.to eq)
-  RATIFY'-total-helper (yes acc) expired? (no ¬del) nothing  eq = _ , RATIFY-Continue (inj₂ (acc , inj₂ (nothing⇒∀¬STS eq)))
-  RATIFY'-total-helper (yes acc) expired? (yes del) enact    eq = _ , RATIFY-Continue (inj₂ (acc , inj₁ del))
+    RATIFY'-total : ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY'⦈ s'
+    RATIFY'-total
+      with acc? | exp? | del?
+    ... | no ¬acc | no ¬exp | _ = -, RATIFY-Continue₁ ¬acc ¬exp
+    ... | no ¬acc | yes exp | _ = -, RATIFY-Reject ¬acc exp
+    ... | yes acc | _ | yes del = -, RATIFY-Continue₂₁ acc del
+    ... | yes acc | _ | no ¬del
+      = caseMaybe es'
+        ∣ (λ eq → -, RATIFY-Accept acc ¬del (≡-just⇔STS .Equivalence.to eq))
+        ∣ (λ eq → -, RATIFY-Continue₂₂ acc (nothing⇒∀¬STS eq))
 
-  RATIFY'-completeness-helper :
-    (accepted? : Dec (accepted Γ es st))
-    (expired? : Dec (expired currentEpoch st))
-    (delayed? : Dec (delayed action prevAction es d))
-    (enact : Maybe EnactState)
-    (eq : compute ⟦ sig .proj₁ , treasury , currentEpoch ⟧ᵉ es action ≡ enact) →
-    ∀ s' → Γ ⊢ s ⇀⦇ sig ,RATIFY'⦈ s' → RATIFY'-total-helper accepted? expired? delayed? enact eq .proj₁ ≡ s'
-  RATIFY'-completeness-helper (no _) (no _) _ _ _ _          (RATIFY-Continue _)   = refl
-  RATIFY'-completeness-helper (no _) (yes _) _ _ _ _         (RATIFY-Reject _ _)   = refl
-  RATIFY'-completeness-helper (yes _) _ (no _) (just _) eq _ (RATIFY-Accept _ _ h) = case trans (sym eq) (completeness _ _ _ _ h) of λ where refl → refl
-  RATIFY'-completeness-helper (yes _) _ (no _) nothing _ _   (RATIFY-Continue _)   = refl
-  RATIFY'-completeness-helper (yes _) _ (yes _) _ _ _        (RATIFY-Continue _)   = refl
+    computeProof = just RATIFY'-total
 
-  RATIFY'-completeness-helper (no ¬acc) _ _ _ _ _ (RATIFY-Accept acc _ _)                 = ⊥-elim (¬acc acc)
-  RATIFY'-completeness-helper _ _ (yes del) _ _ _ (RATIFY-Accept _ ¬del _)                = ⊥-elim (¬del del)
-  RATIFY'-completeness-helper _ _ _ nothing eq _  (RATIFY-Accept _ _ h)                   = ⊥-elim (nothing⇒∀¬STS eq _ h)
-  RATIFY'-completeness-helper (yes acc) _ _ _ _ _ (RATIFY-Reject ¬acc _)                  = ⊥-elim (¬acc acc)
-  RATIFY'-completeness-helper _ (no ¬exp) _ _ _ _ (RATIFY-Reject _ exp)                   = ⊥-elim (¬exp exp)
-  RATIFY'-completeness-helper (yes acc) _ _ _ _ _ (RATIFY-Continue (inj₁ (¬acc , _)))     = ⊥-elim (¬acc acc)
-  RATIFY'-completeness-helper _ (yes exp) _ _ _ _ (RATIFY-Continue (inj₁ (_ , ¬exp)))     = ⊥-elim (¬exp exp)
-  RATIFY'-completeness-helper (no ¬acc) _ _ _ _ _ (RATIFY-Continue (inj₂ (acc , _)))      = ⊥-elim (¬acc acc)
-  RATIFY'-completeness-helper _ _ (no ¬del) _ _ _ (RATIFY-Continue (inj₂ (_ , inj₁ del))) = ⊥-elim (¬del del)
-  RATIFY'-completeness-helper _ _ _ (just _) eq _ (RATIFY-Continue (inj₂ (_ , inj₂ h)))   = ⊥-elim (h _ (≡-just⇔STS .Equivalence.to eq))
+    RATIFY'-completeness : ∀ s' → Γ ⊢ s ⇀⦇ sig ,RATIFY'⦈ s' → RATIFY'-total .proj₁ ≡ s'
+    RATIFY'-completeness s' (RATIFY-Continue₁ ¬acc ¬exp)
+      rewrite dec-no acc? ¬acc | dec-no exp? ¬exp = refl
+    RATIFY'-completeness s' (RATIFY-Reject ¬acc exp)
+      rewrite dec-no acc? ¬acc | dec-yes exp? exp .proj₂ = refl
+    RATIFY'-completeness s' (RATIFY-Continue₂₁ acc del)
+      rewrite dec-yes acc? acc .proj₂ | dec-yes del? del .proj₂ = refl
+    RATIFY'-completeness s' (RATIFY-Accept acc ¬del eq)
+      rewrite dec-yes acc? acc .proj₂ | dec-no del? ¬del
+      = cong proj₁
+      $ caseMaybe-just
+      $ Computational-ENACT .Computational.completeness _ _ _ _ eq
+    RATIFY'-completeness s' (RATIFY-Continue₂₂ acc h)
+      with del?
+    ... | yes del
+      rewrite dec-yes acc? acc .proj₂ | dec-yes del? del .proj₂ = refl
+    ... | no ¬del
+      rewrite dec-yes acc? acc .proj₂ | dec-no del? ¬del
+      = cong proj₁
+      $ caseMaybe-nothing
+      $ caseMaybe es'
+        ∣ ⊥-elim ∘ h _ ∘ ≡-just⇔STS .Equivalence.to
+        ∣ id
 
-RATIFY'-total : ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY'⦈ s'
-RATIFY'-total {Γ} {⟦ es , removed , d ⟧ʳ} {sig} =
-  let open RatifyEnv Γ; st = proj₂ sig; open GovActionState st
-  in RATIFY'-total-helper (accepted? Γ es st) (¿ expired currentEpoch st ¿) (delayed? action prevAction es d)
-                          (compute ⟦ sig .proj₁ , treasury , currentEpoch ⟧ᵉ es action) refl
+    completeness = cong just ∘₂ RATIFY'-completeness
 
 instance
   Computational-RATIFY' : Computational _⊢_⇀⦇_,RATIFY'⦈_
-  Computational-RATIFY' .computeProof Γ s a = just RATIFY'-total
-  Computational-RATIFY' .completeness Γ ⟦ es , removed , d ⟧ʳ a s' h =
-    let open RatifyEnv Γ; st = proj₂ a; open GovActionState st in
-    cong just (RATIFY'-completeness-helper (accepted? Γ es st) ¿ expired currentEpoch st ¿ (delayed? action prevAction es d)
-                                           (compute ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ es action) refl s' h)
+  Computational-RATIFY' = record {Implementation}
 
 Computational-RATIFY : Computational _⊢_⇀⦇_,RATIFY⦈_
 Computational-RATIFY = it
 
 RATIFY-total : ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s'
-RATIFY-total = SS⇒BS-total RATIFY'-total
+RATIFY-total = SS⇒BS-total (Implementation.RATIFY'-total _ _ _)
 
-RATIFY-complete : ∀ {Γ s sig s'} → Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s' → RATIFY-total {Γ} {s} {sig} .proj₁ ≡ s'
-RATIFY-complete h = computational⇒rightUnique it (RATIFY-total .proj₂) h
+RATIFY-complete : ∀ {Γ s sig s'} →
+  Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s' → RATIFY-total {Γ} {s} {sig} .proj₁ ≡ s'
+RATIFY-complete = computational⇒rightUnique it (RATIFY-total .proj₂)

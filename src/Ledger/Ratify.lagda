@@ -344,46 +344,49 @@ participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no vot
 The code in Figure~\ref{fig:defs:ratify-ii} defines \votedHashes, which returns the set of delegates who voted a certain way on the given governance role.
 \begin{figure*}[h!]
 {\small
+\begin{code}[hide]
+abstract
+\end{code}
 \begin{code}
-getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
-getStakeDist CC    cc  _                             = constMap (filterˢ isCCProp cc) 1
-getStakeDist DRep  _   record { stakeDistr = dist }  = filterᵐ (sp-∘ isDRepProp  proj₁) dist
-getStakeDist SPO   _   record { stakeDistr = dist }  = filterᵐ (sp-∘ isSPOProp   proj₁) dist
+  getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
+  getStakeDist CC    cc  _                             = constMap (filterˢ isCCProp cc) 1
+  getStakeDist DRep  _   record { stakeDistr = dist }  = filterᵐ (sp-∘ isDRepProp  proj₁) dist
+  getStakeDist SPO   _   record { stakeDistr = dist }  = filterᵐ (sp-∘ isSPOProp   proj₁) dist
 
-acceptedStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-acceptedStake r cc dists votes =
-  Σᵐᵛ[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ] x
+  acceptedStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
+  acceptedStake r cc dists votes =
+    Σᵐᵛ[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ] x
 
-totalStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-totalStake r cc dists votes =
-  Σᵐᵛ[ x  ← getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
+  totalStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
+  totalStake r cc dists votes =
+    Σᵐᵛ[ x  ← getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
-activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-activeVotingStake cc dists votes =
-  Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
+  activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
+  activeVotingStake cc dists votes =
+    Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
-acceptedBy : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → GovRole → Set
-acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
-  let open RatifyEnv Γ; open GovActionState gs; open PParams pparams
-      votes'         = actualVotes Γ cc votes action pparams
-      cc'            = dom votes'
-      redStakeDistr  = restrictedDists coinThreshold rankThreshold stakeDistrs
-      t              = maybe id R.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
-  case totalStake role cc' redStakeDistr votes' of λ where
-    0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
-    x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
+  acceptedBy : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → GovRole → Set
+  acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
+    let open RatifyEnv Γ; open GovActionState gs; open PParams pparams
+        votes'         = actualVotes Γ cc votes action pparams
+        cc'            = dom votes'
+        redStakeDistr  = restrictedDists coinThreshold rankThreshold stakeDistrs
+        t              = maybe id R.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
+    case totalStake role cc' redStakeDistr votes' of λ where
+      0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
+      x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
 
-accepted : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → Set
-accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
+  accepted : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → Set
+  accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
 
-expired : Epoch → GovActionState → Set
-expired current record { expiresIn = expiresIn } = expiresIn < current
+  expired : Epoch → GovActionState → Set
+  expired current record { expiresIn = expiresIn } = expiresIn < current
 \end{code}
 \begin{code}[hide]
-  where -- FIXME: this should be part of a typeclass
-    infix 4 _<_
-    _<_ : Epoch → Epoch → Set
-    a < b = a ≤ b × a ≢ b
+    where -- FIXME: this should be part of a typeclass
+      infix 4 _<_
+      _<_ : Epoch → Epoch → Set
+      a < b = a ≤ b × a ≢ b
 \end{code}
 } %% end small
 \caption{%%Ratify iii:
@@ -426,6 +429,38 @@ delayingAction Info                   = false
 
 delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Set
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
+\end{code}
+\begin{code}[hide]
+abstract
+  verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
+  verifyPrev? NoConfidence           h es = it
+  verifyPrev? (NewCommittee x x₁ x₂) h es = it
+  verifyPrev? (NewConstitution x x₁) h es = it
+  verifyPrev? (TriggerHF x)          h es = it
+  verifyPrev? (ChangePParams x)      h es = it
+  verifyPrev? (TreasuryWdrl x)       h es = it
+  verifyPrev? Info                   h es = it
+
+  delayed? : ∀ a h es d → Dec (delayed a h es d)
+  delayed? a h es d = let instance _ = verifyPrev? a h es in it
+
+  acceptedBy? : ∀ Γ es st role → Dec (acceptedBy Γ es st role)
+  acceptedBy? Γ record{ cc = cc , _ ; pparams = pparams , _ } st role
+    with (let open RatifyEnv Γ; open GovActionState st; open PParams pparams
+              votes' = actualVotes Γ cc votes action pparams
+              cc' = dom votes'
+              redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
+          in totalStake role cc' redStakeDistr votes')
+  ... | zero  = it
+  ... | suc n = it
+
+  accepted? : ∀ Γ es st → Dec (accepted Γ es st)
+  accepted? Γ es st =
+    let instance _ = λ {role} → acceptedBy? Γ es st role
+    in it
+
+  expired? : ∀ e st → Dec (expired e st)
+  expired? e st = ¿ expired e st ¿
 \end{code}
 } %% end small
 \caption{%Ratify iv:
