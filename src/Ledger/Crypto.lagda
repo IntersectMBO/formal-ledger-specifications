@@ -4,7 +4,6 @@
 module Ledger.Crypto where
 
 open import Ledger.Prelude hiding (T)
-open import Interface.Hashable public
 
 record isHashableSet (T : Set) : Set₁ where
   constructor mkIsHashableSet

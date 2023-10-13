@@ -17,7 +17,7 @@ open import Data.List public
 open import Data.List.Membership.Propositional public
   using () renaming (_∈_ to _∈ˡ_)
 open import Data.Maybe public
-  hiding (_>>=_; align; alignWith; ap; fromMaybe; map; zip; zipWith) public
+  hiding (_>>=_; align; alignWith; ap; fromMaybe; map; zip; zipWith)
 open import Data.Unit public
   hiding (_≟_)
 open import Data.Sum public
@@ -25,9 +25,11 @@ open import Data.Sum public
 open import Data.Product public
   hiding (assocʳ; assocˡ; map; map₁; map₂; map₂′; swap)
 open import Data.Nat public
-  hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_; _≡ᵇ_) renaming (_+_ to _+ℕ_)
+  hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_; _≡ᵇ_)
+  renaming (_+_ to _+ℕ_)
 open import Data.Integer as ℤ public
-  using (ℤ; _⊖_) renaming (_+_ to _+ℤ_)
+  using (ℤ; _⊖_)
+  renaming (_+_ to _+ℤ_)
 open import Data.String public
   using (String; _<+>_)
 
