@@ -255,8 +255,10 @@ instance
 
   postulate
     _ : Convertible ⊥ F.Empty
+    _ : Convertible Datum F.Empty
     _ : Convertible Tag F.Tag
     _ : Convertible ExUnits ⊤
+    _ : Convertible AuxiliaryData ⊤
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
   Convertible-TxWitnesses = λ where

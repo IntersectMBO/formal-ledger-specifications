@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude; open Equivalence; open Computational
+open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
 open import Ledger.Abstract
 
@@ -10,11 +10,12 @@ module Ledger.Ledger.Properties
   where
 
 open import Ledger.Gov govStructure
-open import Ledger.Utxo txs
-import Ledger.Utxo.Properties txs as P
-open import Ledger.Utxow txs
-import Ledger.Utxow.Properties txs as PW
-open import Ledger.Ledger txs
+open import Ledger.PPUp txs
+open import Ledger.Utxo txs abs
+import Ledger.Utxo.Properties txs abs as P
+open import Ledger.Utxow txs abs
+import Ledger.Utxow.Properties txs abs as PW
+open import Ledger.Ledger txs abs
 
 -- ** Proof that LEDGER is computational.
 
@@ -68,15 +69,6 @@ instance
   HasCoin-LState .getCoin s = getCoin (LState.utxoSt s)
 
 -- ** Proof that LEDGER preserves values.
-=======
-open import Ledger.PPUp txs
-open import Ledger.Utxo txs abs
-import Ledger.Utxo.Properties txs abs as P
-open import Ledger.Utxow txs abs
-import Ledger.Utxow.Properties txs abs as PW
-open import Ledger.Ledger txs abs
-
->>>>>>> [new feature] Alonzo-era scripts functionality
 
 private variable
   tx : Tx

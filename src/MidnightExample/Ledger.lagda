@@ -2,9 +2,6 @@
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-open import Interface.DecEq
-open import Interface.Hashable
-
 open import Ledger.Prelude as Prelude
   hiding (_<ᵇ_; _∧_)
   renaming (_×_ to _∧_)

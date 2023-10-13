@@ -182,8 +182,10 @@ the transaction body are:
 
   lookupScriptHash : ScriptHash → Tx → Maybe Script
   lookupScriptHash sh tx
-    = M.map proj₁
-    $ decToMaybe $ any? (λ s → hash s ≟ sh) (tx .Tx.wits .TxWitnesses.scripts)
+    = M.map (lookupMap m)
+    $ decToMaybe
+    $ sh ∈? mapˢ proj₁ (m ˢ)
+    where m = setToHashMap $ tx .Tx.wits .TxWitnesses.scripts
 
   isP2Script : Script → Bool
   isP2Script = is-just ∘ isInj₂
