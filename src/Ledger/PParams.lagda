@@ -41,49 +41,40 @@ record PParams : Set where
 \emph{Network group}
 \AgdaTarget{maxBlockSize, maxTxSize, maxHeaderSize, maxValSize, pv}
 \begin{code}
-        maxBlockSize       : ℕ
-        maxTxSize          : ℕ
-        maxHeaderSize      : ℕ
-        maxValSize         : ℕ
-        pv                 : ProtVer -- retired, keep for now
+        maxBlockSize maxTxSize maxHeaderSize maxValSize  : ℕ
+        pv                                               : ProtVer -- retired, keep for now
 \end{code}
 \emph{Economic group}
 \AgdaTarget{a, b, minUTxOValue, poolDeposit}
 \begin{code}
-        a                  : ℕ
-        b                  : ℕ
-        minUTxOValue       : Coin
-        poolDeposit        : Coin
+        a b                                              : ℕ
+        minUTxOValue poolDeposit                         : Coin
 \end{code}
 \emph{Technical group}
 \AgdaTarget{Emax, collateralPercent}
 \begin{code}
-        Emax               : Epoch
-        collateralPercent  : ℕ
+        Emax                                             : Epoch
+        collateralPercent                                : ℕ
 \end{code}
 \emph{Governance group}
 \AgdaTarget{drepThresholds, poolThresholds, ccMinSize, ccMaxTermLength, govActionLifetime, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
 \begin{code}
-        drepThresholds     : DrepThresholds
-        poolThresholds     : PoolThresholds
-        govActionLifetime  : ℕ
-        govActionDeposit   : Coin
-        drepDeposit        : Coin
-        drepActivity       : Epoch
-        ccMinSize          : ℕ
-        ccMaxTermLength    : ℕ
-        minimumAVS         : Coin
+        drepThresholds                                   : DrepThresholds
+        poolThresholds                                   : PoolThresholds
+        govActionLifetime ccMinSize ccMaxTermLength      : ℕ
+        govActionDeposit drepDeposit minimumAVS          : Coin
+        drepActivity                                     : Epoch
 
-paramsWellFormed : PParams → Bool
-paramsWellFormed pp = ¿ 0 ∉ fromList
-    ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
-    ∷ collateralPercent ∷ ccMaxTermLength ∷ govActionLifetime ∷ govActionDeposit
-    ∷ drepDeposit ∷ [])
-  × ℕtoEpoch govActionLifetime ≤ drepActivity ¿ᵇ
+paramsWellFormed : PParams → Set
+paramsWellFormed pp =
+  0 ∉ fromList (maxBlockSize  ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue
+                              ∷ poolDeposit ∷ collateralPercent ∷ ccMaxTermLength
+                              ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [])
+  × ℕtoEpoch govActionLifetime ≤ drepActivity
   where open PParams pp
 \end{code}
 \end{AgdaAlign}
-} %% End: small
+} % (end small)
 \caption{Protocol parameter declarations}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
@@ -131,8 +122,8 @@ record PParamsDiff : Set₁ where
         applyUpdate : PParams → UpdateT → PParams
         ppdWellFormed : UpdateT → Bool
         ppdWellFormed⇒WF : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
-                         → paramsWellFormed pp ≡ true
-                         → paramsWellFormed (applyUpdate pp u) ≡ true
+                         → paramsWellFormed pp
+                         → paramsWellFormed (applyUpdate pp u)
 
 record GovParams : Set₁ where
   field ppUpd : PParamsDiff
