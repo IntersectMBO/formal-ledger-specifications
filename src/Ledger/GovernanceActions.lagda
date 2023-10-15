@@ -65,12 +65,12 @@ actionWellFormed _                 = true
 \end{figure*}
 Figure~\ref{defs:governance} defines several data types used to represent governance actions including:
 \begin{itemize}
-  \item \defn{identifier}---a pair consisting of
-        a \TxId (transaction ID) and a natural number;
-  \item \defn{role}---one of three available voter roles defined above (\CC, \DRep, \SPO);
-  \item \defn{voter delegation type}---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
-  \item \defn{anchor}---a url and a document hash;
-  \item \defn{governance action}---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
+  \item \GovActionID (\defn{governance action identifier})---a pair consisting of
+        a \TxId (\defn{transaction ID}) and a natural number;
+  \item \GovRole (\defn{governance role})---one of three available voter roles defined above (\CC, \DRep, \SPO);
+  \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
+  \item \Anchor---a url and a document hash;
+  \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
 \end{itemize}
 \begin{figure*}[h]
 \begin{longtable}[]{@{}
