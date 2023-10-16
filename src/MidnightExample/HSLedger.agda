@@ -5,6 +5,7 @@ open import Prelude hiding (_++_)
 open import Interface.Hashable
 open import Interface.DecEq
 open import Interface.Functor
+open import Interface.Show
 
 open import Data.Integer hiding (show)
 import Data.Integer.Show as Z
@@ -14,15 +15,31 @@ open import Data.String using (_++_)
 import MidnightExample.Types as F
 open F using (Hash)
 
+private variable A B : Set
 instance
-  Hashable-String = Hashable String Hash ∋ λ where .hash → F.hash
-  Hashable-ℤ      = Hashable ℤ Hash      ∋ λ where .hash → hash ∘ Z.show
+  _ : Hashable String Hash
+  _ = λ where
+    .hash → F.hash
+    .hashInj → F.hash-inj
+private
+  Show⇒Hashable : ⦃ Show A ⦄ → Hashable A Hash
+  Show⇒Hashable .hash = hash ∘ show
+  Show⇒Hashable .hashInj = hash-inj where postulate hash-inj : _
+instance
+  Show-ℕ = Show ℕ ∋ λ where .show → N.show
+  Show-ℤ = Show ℤ ∋ λ where .show → Z.show
 
-  Hashable-List : Hashable₁ List Hash
-  Hashable-List .hash x = hash $ foldr (λ a acc → N.show (hash a) ++ "," ++ acc) "" x
+  Show-List : ⦃ Hashable A Hash ⦄ → Show (List A)
+  Show-List .show = foldr (λ a acc → show (hash a) ++ "," ++ acc) ""
 
-  Hashable-× : Hashable₂ _×_ Hash
-  Hashable-× .hash (a , b) = hash $ N.show (hash a) ++ "," ++ N.show (hash b)
+  Show-× : ⦃ Hashable A Hash ⦄ → ⦃ Hashable B Hash ⦄ → Show (A × B)
+  Show-× .show (a , b) = show (hash a) ++ "," ++ show (hash b)
+
+  _ = Hashable ℤ Hash ∋ Show⇒Hashable
+  _ : Hashable₁ List Hash
+  _ = Show⇒Hashable
+  _ : Hashable₂ _×_ Hash
+  _ = Show⇒Hashable
 
 open import MidnightExample.Ledger Hash
 

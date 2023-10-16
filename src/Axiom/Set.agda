@@ -318,6 +318,15 @@ record Theoryᵈ : Type₁ where
       Dec-∈ : {x : A} {X : Set A} → Dec (x ∈ X)
       Dec-∈ {x = x} {X} = x ∈? X
 
+    _≡ᵉ?_ : (X Y : Set A) → Dec (X ≡ᵉ Y)
+    _≡ᵉ?_ x y
+      with all? (λ z → z ∈? y) {x}
+    ... | no ¬p = no (¬p ∘ proj₁)
+    ... | yes p
+      with all? (λ z → z ∈? x) {y}
+    ... | no ¬p = no (¬p ∘ proj₂)
+    ... | yes q = yes (p , q)
+
     module _ {P : A → Type} ⦃ P? : ∀ {x} → Dec (P x) ⦄ {X : Set A} where instance
       Dec-All : Dec (All P X)
       Dec-All = all? λ x → it

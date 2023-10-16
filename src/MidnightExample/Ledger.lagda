@@ -2,9 +2,6 @@
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-open import Interface.DecEq
-open import Interface.Hashable
-
 open import Ledger.Prelude as Prelude
   hiding (_<ᵇ_; _∧_)
   renaming (_×_ to _∧_)
@@ -18,14 +15,15 @@ module MidnightExample.Ledger
   ⦃ _ : Hashable₂ _∧_ Hash ⦄
   where
 
-open import Data.Integer.Properties using (+-0-commutativeMonoid; +-0-abelianGroup)
+import Data.Integer.Properties as ℤ
 open import Relation.Nullary
 
 instance
-  _ = +-0-commutativeMonoid
+  _ = ℤ.+-0-commutativeMonoid
 
   Hashable-ℕ : Hashable ℕ Hash
   Hashable-ℕ .hash n = hash (+ n)
+  Hashable-ℕ .hashInj = ℤ.+-injective ∘ hashInj
 
 _<ᵇ_ : Maybe ℕ → Maybe ℕ → Bool
 just a  <ᵇ just b  = a Prelude.<ᵇ b
@@ -82,11 +80,16 @@ data Tx : Set where
 txDelta : Tx → ℤ
 txDelta inc  = 1ℤ
 txDelta dec  = -1ℤ
+
 \end{code}
 \begin{code}[hide]
+txDelta-injective : Injective _≡_ _≡_ txDelta
+txDelta-injective {inc} {inc} refl = refl
+txDelta-injective {dec} {dec} refl = refl
 instance
   Hashable-Tx : Hashable Tx Hash
   Hashable-Tx .hash = hash ∘ txDelta
+  Hashable-Tx .hashInj = txDelta-injective ∘ hashInj
 \end{code}
 \caption{Transactions}
 \end{figure*}
@@ -225,7 +228,7 @@ private variable
   s s' : LedgerState
   b : Block
 
-open import Algebra.Properties.AbelianGroup +-0-abelianGroup
+open import Algebra.Properties.AbelianGroup ℤ.+-0-abelianGroup
 \end{code}
 \begin{figure*}[h]
 \begin{code}

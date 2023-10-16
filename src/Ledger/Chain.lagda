@@ -9,13 +9,17 @@ open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
+open import Ledger.Abstract
 
-module Ledger.Chain (txs : _) (open TransactionStructure txs) where
+module Ledger.Chain
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  where
 
 open import Ledger.Gov govStructure
-open import Ledger.Ledger txs
+open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
-open import Ledger.Utxo txs
+open import Ledger.Utxo txs abs
 \end{code}
 \begin{figure*}[h]
 \begin{code}

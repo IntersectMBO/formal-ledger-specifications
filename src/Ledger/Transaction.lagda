@@ -8,6 +8,8 @@
 --------------------------------------------------------------------------------
 module Ledger.Transaction where
 
+import Data.Maybe.Base as M
+
 open import Ledger.Prelude
 
 open import Ledger.Crypto
@@ -19,6 +21,15 @@ import Ledger.GovernanceActions
 import Ledger.Deleg
 import Ledger.TokenAlgebra
 import Ledger.Address
+
+
+open import Tactic.Derive.DecEq
+open import MyDebugOptions
+open import Relation.Nullary.Decidable using (⌊_⌋)
+
+data Tag : Set where
+  Spend Mint Cert Rewrd : Tag
+unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Set₁ where
   field
@@ -53,44 +64,51 @@ the transaction body are:
   field globalConstants : _
   open GlobalConstants globalConstants public
 
+  field crypto : _
+  open Crypto crypto public
+  open Ledger.TokenAlgebra ScriptHash public
+  open Ledger.Address Network KeyHash ScriptHash public
+
   field epochStructure : _
   open EpochStructure epochStructure public
-  open Ledger.PParams epochStructure public
+  open Ledger.Script crypto epochStructure public
+
+  field scriptStructure : ScriptStructure
+  open ScriptStructure scriptStructure public
+  open Ledger.PParams crypto epochStructure scriptStructure public
 
   field govParams : _
   open GovParams govParams public
 
-  field crypto : _
-  open Crypto crypto public -- renaming (DecEq-THash to DecEq-ScriptHash)
+  field tokenAlgebra : TokenAlgebra
+  open TokenAlgebra tokenAlgebra public
 
   field txidBytes : TxId → Ser
         networkId : Network
-
-  open Ledger.Address Network KeyHash ScriptHash public
-  open Ledger.Script  KeyHash ScriptHash Slot public
-  open Ledger.TokenAlgebra ScriptHash public
-
-  field ss           : ScriptStructure
-        tokenAlgebra : TokenAlgebra
-  open ScriptStructure ss        public
-  open TokenAlgebra tokenAlgebra public
 
   govStructure : GovStructure
   govStructure = record
     -- TODO: figure out what to do with the hash
     { TxId = TxId; Network = Network; DocHash = ADHash
-    ; epochStructure = epochStructure; govParams = govParams; crypto = crypto
+    ; crypto = crypto
+    ; epochStructure = epochStructure
+    ; scriptStructure = scriptStructure
+    ; govParams = govParams
     }
+
   open Ledger.GovernanceActions govStructure hiding (yes; no) public
   open Ledger.Deleg             govStructure public
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
-  TxIn   = TxId × Ix
-  TxOut  = Addr × Value
-  UTxO   = TxIn ⇀ TxOut
-  Wdrl   = RwdAddr ⇀ Coin
+  TxIn  = TxId × Ix
+  TxOut = Addr × Value × Maybe DataHash
+  UTxO  = TxIn ⇀ TxOut
+  Wdrl  = RwdAddr ⇀ Coin
+
+  RdmrPtr : Set
+  RdmrPtr = Tag × Ix
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
@@ -100,33 +118,43 @@ the transaction body are:
 \begin{AgdaSuppressSpace}
 \begin{code}
   record TxBody : Set where
-    field txins       : ℙ TxIn
-          txouts      : Ix ⇀ TxOut
-          txfee       : Coin
-          mint        : Value
-          txvldt      : Maybe Slot × Maybe Slot
-          txcerts     : List DCert
-          txwdrls     : Wdrl
-          txvote      : List GovVote
-          txprop      : List GovProposal
-          txdonation  : Coin
-          txup        : Maybe Update
-          txADhash    : Maybe ADHash
-          netwrk      : Maybe Network
-          txsize      : ℕ
-          txid        : TxId
+    field txins          : ℙ TxIn
+          txouts         : Ix ⇀ TxOut
+          txfee          : Coin
+          mint           : Value
+          txvldt         : Maybe Slot × Maybe Slot
+          txcerts        : List DCert
+          txwdrls        : Wdrl
+          txvote         : List GovVote
+          txprop         : List GovProposal
+          txdonation     : Coin
+          txup           : Maybe Update
+          txADhash       : Maybe ADHash
+          netwrk         : Maybe Network
+          txsize         : ℕ
+          txid           : TxId
+          collateral     : ℙ TxIn
+          reqSigHash     : ℙ KeyHash
+          scriptIntHash  : Maybe ScriptHash
 
   record TxWitnesses : Set where
     field vkSigs   : VKey ⇀ Sig
           scripts  : ℙ Script
+          txdats   : DataHash ⇀ Datum
+          txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
 
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
 
   record Tx : Set where
-    field body  : TxBody
-          wits  : TxWitnesses
-          txAD  : Maybe AuxiliaryData
+    field body     : TxBody
+          wits     : TxWitnesses
+          -- isValid  : Bool
+          txAD     : Maybe AuxiliaryData
+
+\end{code}
+\emph{Abstract functions}
+\begin{code}
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Definitions used in the UTxO transition system}
@@ -136,14 +164,32 @@ the transaction body are:
 \begin{figure*}[h]
 \begin{code}
   getValue : TxOut → Value
-  getValue (_ , v) = v
+  getValue (_ , v , _) = v
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom (utxo ↾' to-sp (isVKeyAddr? ∘ proj₁))
+
+  scriptOuts : UTxO → UTxO
+  scriptOuts utxo = filterᵐ (sp-∘ (to-sp isScriptAddr?)
+                             λ { (_ , addr , _) → addr}) utxo
+
+  txinsScript : ℙ TxIn → UTxO → ℙ TxIn
+  txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
+
+  lookupScriptHash : ScriptHash → Tx → Maybe Script
+  lookupScriptHash sh tx =
+    ifᵈ sh ∈ mapˢ proj₁ (m ˢ) then
+      just $ lookupᵐ m sh
+    else
+      nothing
+    where m = setToHashMap $ tx .Tx.wits .TxWitnesses.scripts
+
+  isP2Script : Script → Bool
+  isP2Script = is-just ∘ isInj₂
 \end{code}
 \end{figure*}
 \begin{code}[hide]
   instance
     HasCoin-TxOut : HasCoin TxOut
-    HasCoin-TxOut .getCoin = coin ∘ proj₂
+    HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 \end{code}

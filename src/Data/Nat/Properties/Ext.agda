@@ -2,9 +2,9 @@
 
 module Data.Nat.Properties.Ext where
 
-open import Data.Nat using (_<_)
+open import Data.Nat
 open import Data.Nat.Properties
-open import Ledger.Prelude
+open import Prelude
 open import Relation.Nullary.Decidable
 
 -- if P holds for 0 but not for some N, then there exists a k where the induction step fails

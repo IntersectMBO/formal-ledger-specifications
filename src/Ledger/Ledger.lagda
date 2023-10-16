@@ -3,15 +3,22 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
+import Data.List as L
+
 open import Ledger.Prelude
+open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Ledger (txs : _) (open TransactionStructure txs) where
+module Ledger.Ledger
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  where
 
 open import Ledger.Gov govStructure
 open import Ledger.PPUp txs
-open import Ledger.Utxo txs
-open import Ledger.Utxow txs
+open import Ledger.Utxo txs abs
+open import Ledger.Utxow txs abs
+
 open Tx
 \end{code}
 

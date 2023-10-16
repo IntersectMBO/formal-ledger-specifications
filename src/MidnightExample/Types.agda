@@ -11,6 +11,7 @@ Hash = ℕ
 #-}
 
 postulate hash : String → Hash
+          hash-inj : Injective _≡_ _≡_ hash
 -- TODO: where do I get a hash function from?
 {-# COMPILE GHC hash = fromIntegral . T.length #-}
 

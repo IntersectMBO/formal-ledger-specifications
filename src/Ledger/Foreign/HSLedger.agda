@@ -1,35 +1,35 @@
 module Ledger.Foreign.HSLedger where
 
-open import Ledger.Prelude; open Computational
+open import Ledger.Prelude hiding (fromList); open Computational
 
 open import Data.Rational using (½)
 
 open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
-open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 
 open import Foreign.Convertible
 
+import Foreign.Haskell as F
 import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Crypto
 open import Ledger.Epoch
 open import Ledger.GovStructure
-open import Ledger.Script
 open import Ledger.Transaction
 
 open import Interface.HasOrder.Instance
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
-  ∀Hashable = λ where .hash → id
+  ∀Hashable = λ where .hash → id; .hashInj refl → refl
 
   ∀isHashableSet : isHashableSet A
   ∀isHashableSet = mkIsHashableSet A
 
 mkHashable⊥ : {A : Set} → Hashable ⊥ A
-mkHashable⊥ = record { hash = λ () }
+mkHashable⊥ {A} = λ where .hash → ⊥-elim; .hashInj refl → refl
 
 module Implementation where
   Network          = ⊤
@@ -48,11 +48,26 @@ module Implementation where
   ScriptHash = ℕ
 
   P1Script     = ⊥; Hashable-P1Script = mkHashable⊥
-  Dataʰ        = mkHashableSet ⊥
-  PlutusScript = ⊥; Hashable-PlutusScript = mkHashable⊥
-  ExUnits      = ⊥
-  CostModel    = ⊥
+  Data         = ⊤
+  Dataʰ        = mkHashableSet Data
+  toData : ∀ {A : Set} → A → Data
+  toData _ = tt
 
+  PlutusScript = ⊥; Hashable-PlutusScript = mkHashable⊥
+  ExUnits      = ℕ × ℕ
+  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ∋ record
+    { Carrier = ExUnits
+    ; _≈_ = _≈ᵖ_
+    ; _∙_ = _∙ᵖ_
+    ; ε = zero , zero
+    ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
+    } where open import Algebra.PairOp ℕ zero _≡_ _+_
+  _≥ᵉ_ : ExUnits → ExUnits → Set
+  _≥ᵉ_ = _≡_
+  CostModel    = ⊥
+  Language     = ⊤
+  LangDepView  = ⊤
+  Prices       = ⊤
   open import Ledger.TokenAlgebra ℕ
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
@@ -74,51 +89,68 @@ module Implementation where
          open Algebra.Morphism.IsMonoidHomomorphism
          open Algebra.Morphism.IsMagmaHomomorphism
 
-  TxId    = ℕ
-  Ix      = ℕ
+  TxId            = ℕ
+  Ix              = ℕ
   AuxiliaryData   = ⊤
-  DocHash = ⊤
+  DocHash         = ℕ
   networkId       = tt
   tokenAlgebra    = coinTokenAlgebra
 
 HSGlobalConstants = GlobalConstants ∋ record {Implementation}
 HSEpochStructure  = EpochStructure  ∋ ℕEpochStructure HSGlobalConstants
-
-open import Ledger.PParams HSEpochStructure
-
--- Dummy private key crypto scheme
-HSPKKScheme : PKKScheme
-HSPKKScheme = record
-  { Implementation
-  ; isSigned         = λ a b m → a + b ≡ m
-  ; isSigned?        = λ a b m → a + b ≟ m
-  ; sign             = _+_
-  ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
-  }
+instance _ = HSEpochStructure
 
 HSCrypto : Crypto
 HSCrypto = record
   { Implementation
   ; pkk = HSPKKScheme
   }
+  where
+  -- Dummy private key crypto scheme
+  HSPKKScheme : PKKScheme
+  HSPKKScheme = record
+    { Implementation
+    ; isSigned         = λ a b m → a + b ≡ m
+    ; isSigned?        = λ a b m → a + b ≟ m
+    ; sign             = _+_
+    ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
+    }
+
+instance _ = HSCrypto
 
 -- No scripts for now
-HSP1ScriptStructure : P1ScriptStructure ℕ ℕ ℕ
-HSP1ScriptStructure = record
-  { Implementation
-  ; validP1Script  = λ _ _ ()
-  ; validP1Script? = λ _ _ ()
-  }
 
-HSP2ScriptStructure : PlutusStructure ℕ ℕ ℕ
-HSP2ScriptStructure = record
-  { Implementation
-  ; validPlutusScript  = λ ()
-  ; validPlutusScript? = λ ()
-  }
+open import Ledger.Script it it
 
-HSScriptStructure : ScriptStructure ℕ ℕ ℕ
-HSScriptStructure = record { p1s = HSP1ScriptStructure ; ps = HSP2ScriptStructure }
+HSScriptStructure : ScriptStructure
+HSScriptStructure = record
+  { p1s = HSP1ScriptStructure
+  ; ps = HSP2ScriptStructure
+  ; hashRespectsUnion = hashRespectsUnion
+  }
+  where
+  HSP1ScriptStructure : P1ScriptStructure
+  HSP1ScriptStructure = record
+    { Implementation
+    ; validP1Script  = λ _ _ ()
+    ; validP1Script? = λ _ _ ()
+    }
+
+  HSP2ScriptStructure : PlutusStructure
+  HSP2ScriptStructure = record
+    { Implementation
+    ; validPlutusScript = λ ()
+    ; validPlutusScript? = λ ()
+    }
+
+  postulate
+    hashRespectsUnion : ∀ {A B ℍ}
+      → Hashable A ℍ → Hashable B ℍ
+      → Hashable (A ⊎ B) ℍ
+
+instance _ = HSScriptStructure
+
+open import Ledger.PParams it it it
 
 HsGovParams : GovParams
 HsGovParams = record
@@ -139,10 +171,11 @@ HSGovStructure = record
   ; govParams      = HsGovParams
   ; crypto         = HSCrypto
   }
+instance _ = HSGovStructure
 
-open import Ledger.GovernanceActions HSGovStructure
-open import Ledger.Deleg             HSGovStructure
-open import Ledger.Gov               HSGovStructure
+open import Ledger.GovernanceActions it
+open import Ledger.Deleg it
+open import Ledger.Gov it
 
 HSTransactionStructure : TransactionStructure
 HSTransactionStructure = record
@@ -153,17 +186,34 @@ HSTransactionStructure = record
   ; crypto          = HSCrypto
   ; govParams       = HsGovParams
   ; txidBytes       = id
-  ; ss              = HSScriptStructure
+  ; scriptStructure = HSScriptStructure
   }
+instance _ = HSTransactionStructure
 
-open import Ledger.Utxo             HSTransactionStructure
-open import Ledger.Utxo.Properties  HSTransactionStructure
-open import Ledger.Utxow.Properties HSTransactionStructure
-open TransactionStructure           HSTransactionStructure
-  hiding (PParams)
+open import Ledger.Abstract it
+
+HSAbstractFunctions : AbstractFunctions
+HSAbstractFunctions = record
+  { Implementation
+  ; txscriptfee = λ tt y → 0
+  ; serSize     = λ v → v
+  ; indexOfImp  = record
+    { indexOfDCert    = λ _ _ → nothing
+    ; indexOfRwdAddr  = λ _ _ → nothing
+    ; indexOfTxIn     = λ _ _ → nothing
+    ; indexOfPolicyId = λ _ _ → nothing
+    }
+  }
+instance _ = HSAbstractFunctions
+
+open TransactionStructure it hiding (PParams)
+open import Ledger.Utxo it it
+open import Ledger.Utxo.Properties it it
+open import Ledger.Utxow.Properties it it
 
 instance
-  _ = Convertible-Refl
+  _ = Convertible-Refl {⊤}
+  _ = Convertible-Refl {ℕ}
 
   -- Since the foreign address is just a number, we do bad stuff here
   Convertible-Addr : Convertible Addr F.Addr
@@ -183,12 +233,15 @@ instance
       ; txvldt = to txvldt
       ; txsize = txsize
       ; txid   = txid
+      ; collateral = to collateral
+      ; reqSigHash = to reqSigHash
+      ; scriptIntHash = nothing
       }
     .from txb → let open F.TxBody txb in record
       { txins      = from txins
       ; txouts     = from txouts
       ; txcerts    = []
-      ; mint       = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
+      ; mint       = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
       ; txfee      = txfee
       ; txvldt     = from txvldt
       ; txwdrls    = ∅ᵐ
@@ -200,16 +253,31 @@ instance
       ; txvote     = []
       ; txprop     = []
       ; txdonation = ε
+      ; collateral    = from collateral
+      ; reqSigHash    = from reqSigHash
+      ; scriptIntHash = nothing
       }
+
+  Convertible-Tag : Convertible Tag F.Tag
+  Convertible-Tag = λ where
+    .to   → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd }
+    .from → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd }
+   where open F.Tag
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
   Convertible-TxWitnesses = λ where
     .to txw → let open TxWitnesses txw in record
       { vkSigs  = to vkSigs
-      ; scripts = [] }
+      ; scripts = []
+      ; txdats  = to txdats
+      ; txrdmrs = to txrdmrs
+      }
     .from txw → let open F.TxWitnesses txw in record
       { vkSigs  = from vkSigs
-      ; scripts = ∅ }
+      ; scripts = ∅
+      ; txdats  = from txdats
+      ; txrdmrs = from txrdmrs
+      }
 
   Convertible-Tx : Convertible Tx F.Tx
   Convertible-Tx = λ where
@@ -222,27 +290,37 @@ instance
       ; wits = from wits
       ; txAD = from txAD }
 
+  Convertible-⊥ : Convertible ⊥ F.Empty
+  Convertible-⊥ = λ where .to (); .from ()
 
   Convertible-PParams : Convertible PParams F.PParams
   Convertible-PParams = λ where
     .to pp → let open PParams pp in record
-      { a                 = a
-      ; b                 = b
-      ; maxBlockSize      = maxBlockSize
-      ; maxTxSize         = maxTxSize
-      ; maxHeaderSize     = maxHeaderSize
-      ; maxValSize        = maxValSize
-      ; minUTxOValue      = minUTxOValue
-      ; poolDeposit       = poolDeposit
-      ; Emax              = Emax
-      ; pv                = to pv
-      ; votingThresholds  = _
-      ; govActionLifetime = govActionLifetime
-      ; govActionDeposit  = govActionDeposit
-      ; drepDeposit       = drepDeposit
-      ; drepActivity      = drepActivity
-      ; ccMinSize         = ccMinSize
-      ; ccMaxTermLength   = ccMaxTermLength
+      { a                   = a
+      ; b                   = b
+      ; maxBlockSize        = maxBlockSize
+      ; maxTxSize           = maxTxSize
+      ; maxHeaderSize       = maxHeaderSize
+      ; maxValSize          = maxValSize
+      ; minUTxOValue        = minUTxOValue
+      ; poolDeposit         = poolDeposit
+      ; Emax                = Emax
+      ; pv                  = to pv
+      -- ; pv                  = to pv
+      ; votingThresholds    = _
+      ; govActionLifetime   = govActionLifetime
+      ; govActionDeposit    = govActionDeposit
+      ; drepDeposit         = drepDeposit
+      ; drepActivity        = drepActivity
+      ; ccMinSize           = ccMinSize
+      ; ccMaxTermLength     = ccMaxTermLength
+      ; minimumAVS          = minimumAVS
+      ; costmdls            = to costmdls
+      ; prices              = prices
+      ; maxTxExUnits        = to maxTxExUnits
+      ; maxBlockExUnits     = to maxBlockExUnits
+      ; coinsPerUTxOWord    = coinsPerUTxOWord
+      ; maxCollateralInputs = maxCollateralInputs
       }
     .from pp → let open F.PParams pp in record
       { a                 = a
@@ -269,6 +347,12 @@ instance
       ; ccMinSize         = ccMinSize
       ; ccMaxTermLength   = ccMaxTermLength
       ; minimumAVS        = 0
+      ; costmdls            = from costmdls
+      ; prices              = prices
+      ; maxTxExUnits        = from maxTxExUnits
+      ; maxBlockExUnits     = from maxBlockExUnits
+      ; coinsPerUTxOWord    = coinsPerUTxOWord
+      ; maxCollateralInputs = maxCollateralInputs
       }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
@@ -289,8 +373,8 @@ instance
       ; donations = ε
       }
 
-utxo-step : F.UTxOEnv → F.UTxOState → F.TxBody → Maybe F.UTxOState
-utxo-step e s txb = to <$> UTXO-step (from e) (from s) (from txb)
+utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → Maybe F.UTxOState
+utxo-step e s tx = to <$> UTXO-step (from e) (from s) (from tx)
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 

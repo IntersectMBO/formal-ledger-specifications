@@ -4,13 +4,17 @@ open import Data.Nat.Properties hiding (_≟_)
 
 open import Ledger.Prelude
 open import Ledger.Transaction
+open import Ledger.Abstract
 
-module Ledger.Chain.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.Chain.Properties
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  where
 
 open import Ledger.Ratify txs
-open import Ledger.Chain txs
-open import Ledger.Ledger txs
 open import Ledger.Ratify.Properties txs
+open import Ledger.Chain txs abs
+open import Ledger.Ledger txs abs
 
 -- TODO: get rid of all of those arguments once we have them globally
 

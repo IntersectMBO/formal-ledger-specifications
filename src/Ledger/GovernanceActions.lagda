@@ -11,14 +11,16 @@ We introduce three distinct bodies that have specific functions in the new gover
 \end{enumerate}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-open import Ledger.Crypto
 
-open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
-open import Ledger.GovStructure
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
+open import Interface.Decidable.Instance
 open import Tactic.Derive.DecEq
+
+open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
+open import Ledger.Crypto
+open import Ledger.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
@@ -65,12 +67,12 @@ actionWellFormed _                 = true
 \end{figure*}
 Figure~\ref{defs:governance} defines several data types used to represent governance actions including:
 \begin{itemize}
-  \item \defn{identifier}---a pair consisting of
-        a \TxId (transaction ID) and a natural number;
-  \item \defn{role}---one of three available voter roles defined above (\CC, \DRep, \SPO);
-  \item \defn{voter delegation type}---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
-  \item \defn{anchor}---a url and a document hash;
-  \item \defn{governance action}---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
+  \item \GovActionID (\defn{governance action identifier})---a pair consisting of
+        a \TxId (\defn{transaction ID}) and a natural number;
+  \item \GovRole (\defn{governance role})---one of three available voter roles defined above (\CC, \DRep, \SPO);
+  \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
+  \item \Anchor---a url and a document hash;
+  \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
 \end{itemize}
 \begin{figure*}[h]
 \begin{longtable}[]{@{}
@@ -264,13 +266,13 @@ record EnactEnv : Set where
         epoch     : Epoch
 
 record EnactState : Set where
-  field cc            : HashProtected (Maybe (Credential ⇀ Epoch × ℚ))
+  field cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
         constitution  : HashProtected (DocHash × Maybe ScriptHash)
         pv            : HashProtected ProtVer
         pparams       : HashProtected PParams
         withdrawals   : RwdAddr ⇀ Coin
 
-ccCreds : HashProtected (Maybe (Credential ⇀ Epoch × ℚ)) → ℙ Credential
+ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x  , _)  = dom (x .proj₁)
 ccCreds (nothing , _)  = ∅
 \end{code}
@@ -350,14 +352,13 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
 
 \begin{code}[hide]
 open Computational ⦃...⦄
-
 instance
   Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_
   Computational-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where
     NoConfidence             → just (_ , Enact-NoConf)
     (NewCommittee new rem q) →
       case ¿ ∀[ term ∈ range new ]
-               term ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
+               term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
       (yesᵈ p) → just (-, Enact-NewComm p)
       (noᵈ ¬p) → nothing
     (NewConstitution dh sh)  → just (-, Enact-NewConst)
@@ -374,7 +375,7 @@ instance
   ... | .NewCommittee new rem q | Enact-NewComm p
     rewrite dec-yes
       (¿ ∀[ term ∈ range new ] term
-           ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿) p .proj₂
+           ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿) p .proj₂
       = refl
   ... | .NewConstitution dh sh  | Enact-NewConst = refl
   ... | .TriggerHF v            | Enact-HF       = refl

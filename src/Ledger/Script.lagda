@@ -2,17 +2,23 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (All; Any)
-
-module Ledger.Script (KeyHash ScriptHash Slot : Set) ⦃ _ : DecEq KeyHash ⦄ where
-
+open import Algebra using (CommutativeMonoid)
+open import Algebra.Morphism
 open import Data.List.Relation.Unary.All
 open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Binary.Sublist.Propositional as S
-
-open import Ledger.Crypto
+open import Data.Nat.Properties using (+-0-commutativeMonoid)
 
 open import Tactic.Derive.DecEq
+
+open import Ledger.Prelude hiding (All; Any)
+open import Ledger.Epoch
+open import Ledger.Crypto
+
+module Ledger.Script
+  (crypto : _) (open Crypto crypto)
+  (es     : _) (open EpochStructure es)
+  where
 
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
@@ -26,18 +32,42 @@ record P1ScriptStructure : Set₁ where
 
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet
-        PlutusScript ExUnits CostModel : Set
+        Language PlutusScript CostModel Prices LangDepView : Set
+        ExUnit-CommutativeMonoid  : CommutativeMonoid 0ℓ 0ℓ
         ⦃ Hashable-PlutusScript ⦄ : Hashable PlutusScript ScriptHash
         ⦃ DecEq-PlutusScript    ⦄ : DecEq PlutusScript
+        ⦃ DecEq-CostModel       ⦄ : DecEq CostModel
+        ⦃ DecEq-LangDepView     ⦄ : DecEq LangDepView
+
+  open CommutativeMonoid ExUnit-CommutativeMonoid public
+    using ()
+    renaming (_≈_ to _≈ᵉ_; ε to εᵉ; Carrier to ExUnits; refl to reflᵉ; _∙_ to _+ᵉˣ_)
+
+
+  field  _≥ᵉ_              : ExUnits → ExUnits → Set
+         ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
+         ⦃ DecEQ-Prices  ⦄ : DecEq Prices
+         -- GetPair              : ExUnits → Set × Set
+         -- coinIsMonoidMorphism : GetPair Is ExUnit-CommutativeMonoid
+         --                          -CommutativeMonoid⟶ +-0-commutativeMonoid
 
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
 
+  -- Type aliases for Data
+  Datum    = Data
+  Redeemer = Data
+
   field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
         validPlutusScript? : ∀ cm ds eu s → Dec (validPlutusScript cm ds eu s)
+        language : PlutusScript → Language
+        toData : ∀ {A : Set} → A → Data
 
 record ScriptStructure : Set₁ where
   field p1s : P1ScriptStructure
         ps  : PlutusStructure
+
+  -- it is not possible to define this function
+  field hashRespectsUnion : {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
 
   open P1ScriptStructure p1s public
   open PlutusStructure ps public
@@ -48,10 +78,13 @@ record ScriptStructure : Set₁ where
 
   Script = P1Script ⊎ P2Script
 
+  open import Data.Empty
+  open import Agda.Builtin.Equality
+  open import Relation.Binary.PropositionalEquality
+
   instance
     Hashable-Script : Hashable Script ScriptHash
-    Hashable-Script .hash (inj₁ s) = hash s
-    Hashable-Script .hash (inj₂ s) = hash s
+    Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
 \end{code}
 We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]
@@ -65,12 +98,13 @@ data Timelock : Set where
   RequireTimeExpire  : Slot               → Timelock
 \end{code}
 \begin{code}[hide]
-module _ ⦃ _ : DecEq Slot ⦄ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot → Slot → Bool) where
-  private variable s : Timelock
-                   ss ss' : List Timelock
-                   k : ℕ
-                   x : KeyHash
-                   a l r : Slot
+module _ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot → Slot → Bool) where
+  private variable
+    s : Timelock
+    ss ss' : List Timelock
+    k : ℕ
+    x : KeyHash
+    a l r : Slot
 \end{code}
 \begin{code}
   module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where

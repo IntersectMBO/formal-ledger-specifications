@@ -1,16 +1,21 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
+open import Ledger.Abstract
 
-module Ledger.Ledger.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.Ledger.Properties
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  where
 
 open import Ledger.Gov govStructure
-open import Ledger.Utxo txs
-import Ledger.Utxo.Properties txs as P
-open import Ledger.Utxow txs
-import Ledger.Utxow.Properties txs as PW
-open import Ledger.Ledger txs
+open import Ledger.PPUp txs
+open import Ledger.Utxo txs abs
+import Ledger.Utxo.Properties txs abs as P
+open import Ledger.Utxow txs abs
+import Ledger.Utxow.Properties txs abs as PW
+open import Ledger.Ledger txs abs
 
 -- ** Proof that LEDGER is computational.
 
