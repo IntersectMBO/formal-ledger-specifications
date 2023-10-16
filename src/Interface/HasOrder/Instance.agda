@@ -2,29 +2,62 @@
 
 module Interface.HasOrder.Instance where
 
-open import Prelude            using (_≡_)
-open import Data.Integer as ℤ  using (ℤ)
-open import Data.Nat as ℕ      using (ℕ)
+open import Prelude
+
+private module Nat where
+  open import Data.Nat public
+  open import Data.Nat.Properties public
+
+private module Int where
+  open import Data.Integer public
+  open import Data.Integer.Properties public
+
+open import Interface.DecEq
+open import Interface.Decidable.Instance
 open import Interface.HasOrder
 
-import Data.Integer.Properties as IntProp
-import Data.Nat.Properties as NatProp
-
 instance
-  preoInt : HasPreorder ℤ _≡_
-  preoInt = record { _≤_ = ℤ._≤_; isPreorder = IntProp.≤-isPreorder }
+  ℕ-hasPreorder : HasPreorder
+  ℕ-hasPreorder = record
+    { Nat
+    ; ≤⇔<∨≈ = λ {a b} → mk⇔
+              (λ a≤b → case (a ≟ b) of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (Nat.≤∧≢⇒< a≤b ¬p))
+               λ where (inj₁ a<b) → Nat.<⇒≤ a<b ; (inj₂ a≡b) → Nat.≤-reflexive a≡b
+    }
 
-  leqInt : HasPartialOrder ℤ _≡_
-  leqInt = record { hasPreorder = preoInt; antisym = IntProp.≤-antisym }
+  ℕ-hasPartialOrder : HasPartialOrder
+  ℕ-hasPartialOrder = record { hasPreorder = ℕ-hasPreorder ; ≤-antisym = Nat.≤-antisym }
 
-  DecLeqInt : HasDecPartialOrder ℤ _≡_
-  DecLeqInt = record { hasPartialOrder = leqInt ; _≤?_ = ℤ._≤?_ }
+  ℕ-Dec-≤ = Decidable²⇒Dec Nat._≤?_
+  ℕ-Dec-< = Decidable²⇒Dec Nat._<?_
 
-  preoNat : HasPreorder ℕ _≡_
-  preoNat = record { _≤_ = ℕ._≤_; isPreorder = NatProp.≤-isPreorder }
+  ℕ-hasDecPartialOrder : HasDecPartialOrder {A = ℕ}
+  ℕ-hasDecPartialOrder = record {}
 
-  leqNat : HasPartialOrder ℕ _≡_
-  leqNat = record { hasPreorder = preoNat; antisym = NatProp.≤-antisym }
+  ℤ-hasPreorder : HasPreorder
+  ℤ-hasPreorder = record
+    { Int
+    ; ≤⇔<∨≈ =  λ {a b} → mk⇔
+               (λ a≤b → case (a ≟ b) of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (Int.≤∧≢⇒< a≤b ¬p))
+               λ where (inj₁ a<b) → Int.<⇒≤ a<b ; (inj₂ a≡b) → Int.≤-reflexive a≡b
+    }
 
-  DecLeqNat : HasDecPartialOrder ℕ _≡_
-  DecLeqNat = record { hasPartialOrder = leqNat ; _≤?_ = ℕ._≤?_ }
+  ℤ-hasPartialOrder : HasPartialOrder
+  ℤ-hasPartialOrder = record { ≤-antisym = Int.≤-antisym }
+
+  ℤ-Dec-≤ = Decidable²⇒Dec Int._≤?_
+  ℤ-Dec-< = Decidable²⇒Dec Int._<?_
+
+  ℤ-hasDecPartialOrder : HasDecPartialOrder {A = ℤ}
+  ℤ-hasDecPartialOrder = record {}
+
+_ = Dec² Nat._≤_ ∋ it
+_ = Dec² Nat._<_ ∋ it
+_ = Dec² Int._≤_ ∋ it
+_ = Dec² Int._<_ ∋ it
+
+_ = Decidable² Nat._≤_ ∋ _≤?_
+_ = Decidable² Nat._<_ ∋ _<?_
+_ = Decidable² Int._≤_ ∋ _≤?_
+_ = Decidable² Int._<_ ∋ _<?_
+

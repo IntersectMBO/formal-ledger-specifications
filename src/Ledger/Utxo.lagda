@@ -149,7 +149,6 @@ record UTxOState : Set where
 ⟦_⟧ : {A : Set} → A → A
 ⟦_⟧ = id
 
-open HasDecPartialOrder ⦃ ... ⦄
 instance
   netId? : ∀ {A : Set} {networkId : Network} {f : A → Network}
     → Dec₁ (λ a → f a ≡ networkId)

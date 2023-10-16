@@ -357,7 +357,7 @@ instance
     NoConfidence             → just (_ , Enact-NoConf)
     (NewCommittee new rem q) →
       case ¿ ∀[ term ∈ range new ]
-               term ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
+               term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
       (yesᵈ p) → just (-, Enact-NewComm p)
       (noᵈ ¬p) → nothing
     (NewConstitution dh sh)  → just (-, Enact-NewConst)
@@ -374,7 +374,7 @@ instance
   ... | .NewCommittee new rem q | Enact-NewComm p
     rewrite dec-yes
       (¿ ∀[ term ∈ range new ] term
-           ≤ᵉ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿) p .proj₂
+           ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿) p .proj₂
       = refl
   ... | .NewConstitution dh sh  | Enact-NewConst = refl
   ... | .TriggerHF v            | Enact-HF       = refl

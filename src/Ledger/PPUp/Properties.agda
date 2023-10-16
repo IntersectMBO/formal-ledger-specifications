@@ -18,14 +18,14 @@ private
   Current-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom pup ⊆ dom genDelegs
       × All (isViableUpdate pparams) (range pup)
-      × (slot + (2 * StabilityWindow)) <ˢ firstSlot (sucᵉ (epoch slot))
+      × (slot + (2 * StabilityWindow)) < firstSlot (sucᵉ (epoch slot))
       × epoch slot ≡ e
 
   Future-Property : PPUpdateEnv → Update → Set
   Future-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom pup ⊆ dom genDelegs
       × All (isViableUpdate pparams) (range pup)
-      × firstSlot (sucᵉ (epoch slot)) ≤ˢ (slot + (2 * StabilityWindow))
+      × firstSlot (sucᵉ (epoch slot)) ≤ (slot + (2 * StabilityWindow))
       × sucᵉ (epoch slot) ≡ e
 
 instance
@@ -45,6 +45,6 @@ instance
     rewrite dec-yes ¿ Current-Property Γ up ¿ (p₁ , p₂ , p₃ , p₄) .proj₂ = refl
   Computational-PPUP .completeness Γ _ (just up) _ _ | PPUpdateFuture p₁ p₂ p₃ p₄
     with ¿ Current-Property Γ up ¿ | ¿ Future-Property Γ up ¿ | "agda#6868"
-  ... | yes (_ , _ , (p₃˘ , ≢_ ) , _) | _ | _ = ⊥-elim $ ≢ ≤ˢ-isAntisymmetric p₃˘ p₃
+  ... | yes (_ , _ , ¬p₃ , _) | _ | _ = ⊥-elim $ <⇒¬>⊎≈ ¬p₃ (≤⇔<∨≈ .Equivalence.to p₃)
   ... | no _ | yes p | _ = refl
   ... | no _ | no ¬p | _ = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄))

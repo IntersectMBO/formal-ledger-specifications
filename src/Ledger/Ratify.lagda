@@ -79,10 +79,9 @@ above the threshold.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-import Data.Integer as Z
-import Data.Rational as R
-open import Data.Nat using (_≥_)
-open import Data.Nat.Properties hiding (_≟_)
+import Data.Integer as ℤ
+open import Data.Rational as ℚ using (ℚ; 0ℚ)
+open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
 open import Ledger.Prelude hiding (_∧_)
@@ -119,7 +118,7 @@ record RatifyState : Set where
         delay           : Bool
 
 CCData : Set
-CCData = Maybe (Credential ⇀ Epoch × R.ℚ)
+CCData = Maybe (Credential ⇀ Epoch × ℚ)
 
 isCC : VDeleg → Bool
 isCC (credVoter CC _)  = true
@@ -204,7 +203,7 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
 
 ∃topNDRepDist : ∀ {n dist} → lengthˢ (dist ˢ) ≥ n → n > 0
                 → ∃[ c ] lengthˢ (mostStakeDRepDist dist c ˢ) ≥ n
-                       × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) Data.Nat.< n
+                       × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
 ∃topNDRepDist {n} {dist} length≥n n>0 =
   let
     c , h , h' =
@@ -253,7 +252,7 @@ actualVotes Γ cc votes ga pparams
       (just (cc , _))  → dom (filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc))
       nothing          → ∅
 
-    activeDReps = dom (filterᵐ? (currentEpoch ≤ᵉ?_ ∘ proj₂) dreps)
+    activeDReps = dom (filterᵐ? (λ x → currentEpoch ≤? (proj₂ x)) dreps)
 
     actualCCVote : Credential → Epoch → Vote
     actualCCVote c e =
@@ -377,19 +376,13 @@ accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
 
     acceptedBy : GovRole → Set
     acceptedBy role =
-      let t = maybe id R.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
+      let t = maybe id 0ℚ $ threshold pparams (proj₂ <$> cc) action role in
       case totalStake role cc' redStakeDistr votes' of λ where
-        0 → t ≡ R.0ℚ -- if there's no stake, accept only if threshold is zero
-        x@(suc _) → Z.+ acceptedStake role cc' redStakeDistr votes' R./ x R.≥ t
+        0 → t ≡ 0ℚ -- if there's no stake, accept only if threshold is zero
+        x@(suc _) → ℤ.+ acceptedStake role cc' redStakeDistr votes' ℚ./ x ℚ.≥ t
 
 expired : Epoch → GovActionState → Set
 expired current record { expiresIn = expiresIn } = expiresIn < current
-\end{code}
-\begin{code}[hide]
-  where -- FIXME: this should be part of a typeclass
-    infix 4 _<_
-    _<_ : Epoch → Epoch → Set
-    a < b = a ≤ b × a ≢ b
 \end{code}
 } %% end small
 \caption{%%Ratify iii:

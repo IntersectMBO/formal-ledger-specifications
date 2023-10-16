@@ -63,10 +63,6 @@ private variable
   prev : NeedsHash a
   k : ℕ
 
-private -- FIXME: this should be part of a typeclass
-  _<_ : Epoch → Epoch → Set
-  a < b = a ≤ b × a ≢ b
-
 -- could be implemented using a function of type:
 --   ∀ {a} {A : Set a} → (A → Maybe A) → List A → List A
 modifyMatch : ∀ {a} {A : Set a} → (A → Bool) → (A → A) → List A → List A
@@ -139,10 +135,6 @@ private
   isNewCommittee (ChangePParams x)        = noᵈ λ()
   isNewCommittee (TreasuryWdrl x)         = noᵈ λ()
   isNewCommittee Info                     = noᵈ λ()
-
-  instance
-    _ : ∀ {s s₁} → Dec (s ≤ˢ s₁)
-    _ = _ ≤ˢ? _
 
 instance
   Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_
