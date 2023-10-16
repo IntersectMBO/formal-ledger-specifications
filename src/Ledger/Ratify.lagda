@@ -234,25 +234,32 @@ restrictedDists coins rank dists = dists
 \begin{figure*}[h!]
 {\small
 \begin{code}
-actualVotes : RatifyEnv → CCData → (GovRole × Credential) ⇀ Vote → GovAction → PParams
-            → VDeleg ⇀ Vote
-actualVotes Γ cc votes ga pparams
-  =    mapKeys (credVoter CC) actualCCVotes
-  ∪ᵐˡ  actualPDRepVotes ∪ᵐˡ actualDRepVotes
-  ∪ᵐˡ  actualSPOVotes
-  where
-    open RatifyEnv Γ
-    open PParams pparams
+module _ (Γ : RatifyEnv)(pparams : PParams) where
+
+  open RatifyEnv Γ
+  open PParams pparams
+
+  activeDReps : ℙ Credential
+  activeDReps = dom (filterᵐ? (λ x → currentEpoch ≤? (proj₂ x)) dreps)
+
+  activeCC : CCData → ℙ Credential
+  activeCC (just (cc , _))  = dom (filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc))
+  activeCC nothing          = ∅
+
+  spos : ℙ VDeleg
+  spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
+
+  module _ (votes : (GovRole × Credential) ⇀ Vote) where
 
     roleVotes : GovRole → VDeleg ⇀ Vote
     roleVotes r = mapKeys (uncurry credVoter) (filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes)
 
-    activeCC activeDReps : ℙ Credential
-    activeCC = case cc of λ where
-      (just (cc , _))  → dom (filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc))
-      nothing          → ∅
+    actualPDRepVotes actualSPOVotes : GovAction → VDeleg ⇀ Vote
+    actualPDRepVotes NoConfidence = ❴ abstainRep , Vote.abstain ❵ᵐ ∪ᵐˡ ❴ noConfidenceRep , Vote.yes ❵ᵐ
+    actualPDRepVotes _ = ❴ abstainRep , Vote.abstain ❵ᵐ ∪ᵐˡ ❴ noConfidenceRep , Vote.no ❵ᵐ
 
-    activeDReps = dom (filterᵐ? (λ x → currentEpoch ≤? (proj₂ x)) dreps)
+    actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ᵐˡ constMap spos Vote.no
+    actualSPOVotes _              = roleVotes GovRole.SPO ∪ᵐˡ constMap spos Vote.abstain
 
     actualCCVote : Credential → Epoch → Vote
     actualCCVote c e =
@@ -260,32 +267,20 @@ actualVotes Γ cc votes ga pparams
         (true , just (just c'))  → maybe id Vote.no $ lookupᵐ? votes (CC , c')
         _                        → Vote.abstain -- expired, no hot key or resigned
 
-    actualCCVotes : Credential ⇀ Vote
-    actualCCVotes = case cc , ¿ ccMinSize ≤ lengthˢ activeCC ¿ᵇ of λ where
-      (just (cc , _)  , true)   → mapWithKey actualCCVote cc
-      (just (cc , _)  , false)  → constMap (dom cc) Vote.no
-      (nothing        , _)      → ∅ᵐ
+    actualCCVotes : CCData → Credential ⇀ Vote
+    actualCCVotes (just (cc , q))  =  case ¿ ccMinSize ≤ lengthˢ (activeCC (just (cc , q))) ¿ᵇ of λ where
+                                      true → mapWithKey actualCCVote cc
+                                      false → constMap (dom cc) Vote.no
+    actualCCVotes nothing          = ∅ᵐ
 
-    actualPDRepVotes
-      =    ❴ abstainRep       , Vote.abstain ❵ᵐ
-      ∪ᵐˡ  ❴ noConfidenceRep  , (case ga of λ where  NoConfidence  → Vote.yes
-                                                     _             → Vote.no) ❵ᵐ
+    module _ (cc : CCData) where
 
-    actualDRepVotes
-      =    roleVotes GovRole.DRep
-      ∪ᵐˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
+      actualDRepVotes : VDeleg ⇀ Vote
+      actualDRepVotes = roleVotes GovRole.DRep ∪ᵐˡ constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
-    actualSPOVotes
-      =    roleVotes GovRole.SPO
-      ∪ᵐˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
-      where
-        spos : ℙ VDeleg
-        spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
 
-        isHF : Bool
-        isHF = case ga of λ where
-          (TriggerHF _)  → true
-          _              → false
+      actualVotes : GovAction → VDeleg ⇀ Vote
+      actualVotes ga = mapKeys (credVoter CC) (actualCCVotes cc) ∪ᵐˡ actualPDRepVotes ga ∪ᵐˡ actualDRepVotes ∪ᵐˡ actualSPOVotes ga
 \end{code}
 } %% end small
 \caption{%Ratify i:
@@ -367,7 +362,7 @@ accepted' Γ (record { cc = cc , _ ; pparams = pparams , _ }) gs =
   where
     open RatifyEnv Γ; open GovActionState gs; open PParams pparams
 
-    votes' = actualVotes Γ cc votes action pparams
+    votes' = actualVotes Γ pparams votes cc action
     cc' = dom votes'
     redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
 
