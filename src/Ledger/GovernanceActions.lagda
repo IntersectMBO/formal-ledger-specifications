@@ -266,13 +266,13 @@ record EnactEnv : Set where
         epoch     : Epoch
 
 record EnactState : Set where
-  field cc            : HashProtected (Maybe $ (Credential ⇀ Epoch) × ℚ)
+  field cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
         constitution  : HashProtected (DocHash × Maybe ScriptHash)
         pv            : HashProtected ProtVer
         pparams       : HashProtected PParams
         withdrawals   : RwdAddr ⇀ Coin
 
-ccCreds : HashProtected (Maybe $ (Credential ⇀ Epoch) × ℚ) → ℙ Credential
+ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x  , _)  = dom (x .proj₁)
 ccCreds (nothing , _)  = ∅
 \end{code}

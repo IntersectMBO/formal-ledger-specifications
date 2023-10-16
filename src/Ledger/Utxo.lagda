@@ -132,20 +132,21 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
 
 -----------------------------------------------------
 -- Boolean Functions
-open HasDecPartialOrder ⦃...⦄ -- remove after #237 is merged
 
 -- Boolean Implication
 _=>ᵇ_ : Bool → Bool → Bool
 a =>ᵇ b = if a then b else true
 
 _≤ᵇ_ _≥ᵇ_ : ℕ → ℕ → Bool
-m ≤ᵇ n = ⌊ m ≤? n ⌋
+m ≤ᵇ n = ¿ m ≤ n ¿ᵇ
 _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
 
 -----------------------------------------------------
+
+-- TODO: this could be a regular property
 
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
@@ -302,20 +303,19 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
-       txins ≢ ∅                             → txins ⊆ dom utxo
-    →  inInterval slot txvldt                → minfee pp tx ≤ txfee
-    →  consumed pp s txb ≡ produced pp s txb → coin mint ≡ 0
+       txins ≢ ∅                              → txins ⊆ dom utxo
+    →  inInterval slot txvldt                 → minfee pp tx ≤ txfee
+    →  consumed pp s txb ≡ produced pp s txb  → coin mint ≡ 0
     →  txsize ≤ maxTxSize pp
 
-    → All (λ txout →  inject (utxoEntrySize (txout .proj₂) * minUTxOValue pp)
-                   ≤ᵗ getValue (txout .proj₂))
-          (txouts .proj₁)
-    → All (λ txout → serSize (getValue $ txout .proj₂) ≤ maxValSize pp)
-          (txouts .proj₁)
-    → All (Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) ∘ proj₁)
-          (range (txouts ˢ))
-    → All (λ a → netId (a .proj₁) ≡ networkId) (range (txouts ˢ))
-    → All (λ a → a .RwdAddr.net   ≡ networkId) (dom  (txwdrls ˢ))
+    → ∀[ (_ , txout) ∈ txouts .proj₁ ]
+        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
+    → ∀[ (_ , txout) ∈ txouts .proj₁ ]
+        serSize (getValue txout) ≤ maxValSize pp
+    → ∀[ (a , _) ∈ range txouts ]
+        Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
+    → ∀[ (a , _) ∈ range txouts ] netId a        ≡ networkId
+    → ∀[ a ∈ dom  txwdrls ]       a .RwdAddr.net ≡ networkId
     -- Add deposits
 
        ────────────────────────────────

@@ -95,11 +95,9 @@ the transaction body are:
     ; scriptStructure = scriptStructure
     ; govParams = govParams
     }
+
   open Ledger.GovernanceActions govStructure hiding (yes; no) public
   open Ledger.Deleg             govStructure public
-
-  _ : Value → Value → Set
-  _ = _≈_
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
@@ -136,7 +134,7 @@ the transaction body are:
           txsize         : ℕ
           txid           : TxId
           collateral     : ℙ TxIn
-          reqSigHash     : ℙ KeyHash --a set of key hashes that must sign ...
+          reqSigHash     : ℙ KeyHash
           scriptIntHash  : Maybe ScriptHash
 
   record TxWitnesses : Set where
@@ -173,16 +171,15 @@ the transaction body are:
 
   scriptOuts : UTxO → UTxO
   scriptOuts utxo = filterᵐ (sp-∘ (to-sp isScriptAddr?)
-                             λ { (fst , addr , snd) → addr}) utxo
+                             λ { (_ , addr , _) → addr}) utxo
 
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
   lookupScriptHash : ScriptHash → Tx → Maybe Script
-  lookupScriptHash sh tx
-    = M.map (lookupMap m)
-    $ decToMaybe
-    $ sh ∈? mapˢ proj₁ (m ˢ)
+  lookupScriptHash sh tx = case sh ∈? mapˢ proj₁ (m ˢ) of λ where
+      (no _)  → nothing
+      (yes _) → just $ lookupᵐ m sh
     where m = setToHashMap $ tx .Tx.wits .TxWitnesses.scripts
 
   isP2Script : Script → Bool

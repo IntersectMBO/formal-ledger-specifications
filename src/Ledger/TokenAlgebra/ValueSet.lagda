@@ -169,7 +169,7 @@ We are now in a position to define the commutative monoid.
     ; inject                    = coin↪totalMap
     ; policies                  = policies
     ; size                      = size
-    ; _≤ᵗ_                      = leq -- leq
+    ; _≤ᵗ_                      = leq
     ; AssetName                 = AssetName
     ; specialAsset              = specialAsset
     ; property                  = compose-to-id
