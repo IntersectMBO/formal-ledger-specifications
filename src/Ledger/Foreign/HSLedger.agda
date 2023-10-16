@@ -8,7 +8,6 @@ open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
--- import Data.Nat as ℕ
 
 open import Foreign.Convertible
 
