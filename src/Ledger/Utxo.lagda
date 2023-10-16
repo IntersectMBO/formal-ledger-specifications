@@ -33,14 +33,17 @@ instance
   HasCoin-Map .getCoin s = Σᵐᵛ[ x ← s ᶠᵐ ] x
 
 isPhaseTwoScriptAddress : Tx → Addr → Bool
-isPhaseTwoScriptAddress tx a with isScriptAddr? a
-... | no ¬p = false
-... | yes p with lookupScriptHash (getScriptHash a p) tx
+isPhaseTwoScriptAddress tx a
+  with isScriptAddr? a
+... | no  _ = false
+... | yes p
+  with lookupScriptHash (getScriptHash a p) tx
 ... | nothing = false
-... | just s = isP2Script s
+... | just s  = isP2Script s
 
 totExUnits : Tx → ExUnits
-totExUnits tx = Σᵐ[ x ← TxWitnesses.txrdmrs (Tx.wits tx) ᶠᵐ ] (proj₂ (proj₂ x))
+totExUnits tx = Σᵐ[ x ← tx .wits .txrdmrs ᶠᵐ ] (x .proj₂ .proj₂)
+  where open Tx; open TxWitnesses
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
@@ -133,11 +136,10 @@ open HasDecPartialOrder ⦃...⦄ -- remove after #237 is merged
 
 -- Boolean Implication
 _=>ᵇ_ : Bool → Bool → Bool
-_=>ᵇ_ a b = if a then b else true
+a =>ᵇ b = if a then b else true
 
-_≤ᵇ_ : ℕ → ℕ → Bool
+_≤ᵇ_ _≥ᵇ_ : ℕ → ℕ → Bool
 m ≤ᵇ n = ⌊ m ≤? n ⌋
-
 _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
@@ -147,15 +149,14 @@ _≥ᵇ_ = flip _≤ᵇ_
 
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
-                  ∧ not (≟-∅ᵇ ((TxWitnesses.txrdmrs wits) ˢ))
+                  ∧ not (≟-∅ᵇ (txrdmrs ˢ))
                   =>ᵇ ( allᵇ (isVKeyAddr? ∘ proj₁) collateralRange
                       ∧ isAdaOnlyᵇ bal
                       ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercent)
                       ∧ not (≟-∅ᵇ collateral)
                       )
   where
-    open Tx tx; open TxBody body
-    open PParams pp
+    open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange = range $ (utxo ∣ collateral) .proj₁
     bal             = balance (utxo ∣ collateral)
 \end{code}

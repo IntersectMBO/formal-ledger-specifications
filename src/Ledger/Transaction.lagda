@@ -109,8 +109,6 @@ the transaction body are:
   UTxO  = TxIn ⇀ TxOut
   Wdrl  = RwdAddr ⇀ Coin
 
-  Index = Ix
-
   RdmrPtr : Set
   RdmrPtr = Tag × Ix
 

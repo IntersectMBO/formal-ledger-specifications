@@ -67,13 +67,14 @@ ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
 \emph{Helper functions}
 \AgdaTarget{payCred, isVKeyAddr}
 \begin{code}
-payCred      : Addr → Credential
-netId        : Addr → Network
-isVKeyAddr   : Addr → Set
-isScriptAddr : Addr → Set
-isVKeyAddr   = isVKey ∘ payCred
-isScriptAddr = isScript ∘ payCred
-isScriptRwdAddr = isScript ∘ RwdAddr.stake
+payCred       : Addr → Credential
+netId         : Addr → Network
+isVKeyAddr    : Addr → Set
+isScriptAddr  : Addr → Set
+
+isVKeyAddr       = isVKey ∘ payCred
+isScriptAddr     = isScript ∘ payCred
+isScriptRwdAddr  = isScript ∘ RwdAddr.stake
 \end{code}
 \end{AgdaAlign}
 \caption{Definitions used in Addresses}
