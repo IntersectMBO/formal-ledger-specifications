@@ -100,18 +100,18 @@ DelegateOrDeReg (ccreghot x x₁) = ⊥
 
 DelegateOrDeReg? : ∀ x → Dec (DelegateOrDeReg x)
 DelegateOrDeReg? (delegate x x₁ x₂ x₃) = yes tt
-DelegateOrDeReg? (regpool x x₁) = no (λ { ()})
-DelegateOrDeReg? (retirepool x x₁) = no (λ { ()})
-DelegateOrDeReg? (regdrep x x₁ x₂) = no (λ { ()})
+DelegateOrDeReg? (regpool x x₁) = no λ ()
+DelegateOrDeReg? (retirepool x x₁) = no λ ()
+DelegateOrDeReg? (regdrep x x₁ x₂) = no λ ()
 DelegateOrDeReg? (deregdrep x) = yes tt
-DelegateOrDeReg? (ccreghot x x₁) = no (λ { ()})
+DelegateOrDeReg? (ccreghot x x₁) = no λ ()
 
 UTxOSH  = TxIn ⇀ (TxOut × ScriptHash)
 
 scriptOutWithHash : TxIn → TxOut → Maybe (TxOut × ScriptHash)
-scriptOutWithHash txin (addr , snd) with isScriptAddr? addr
+scriptOutWithHash txin (addr , r) with isScriptAddr? addr
 ... | no ¬p = nothing
-... | yes p = just ((addr , snd) , (getScriptHash addr p))
+... | yes p = just ((addr , r) , getScriptHash addr p)
 
 scriptOutsWithHash : UTxO → UTxOSH
 scriptOutsWithHash utxo = mapMaybeWithKeyᵐ scriptOutWithHash utxo
@@ -119,7 +119,7 @@ scriptOutsWithHash utxo = mapMaybeWithKeyᵐ scriptOutWithHash utxo
 spendScripts : TxIn → UTxOSH → Maybe (ScriptPurpose × ScriptHash)
 spendScripts txin utxo with txin ∈? dom (utxo ˢ)
 ... | no ¬p = nothing
-... | yes p = just ((Spend txin) , (proj₂ (lookupMap utxo p)))
+... | yes p = just (Spend txin , proj₂ (lookupᵐ utxo txin))
 
 rwdScripts : RwdAddr → Maybe (ScriptPurpose × ScriptHash)
 rwdScripts a with isScriptRwdAddr? a
@@ -129,10 +129,10 @@ rwdScripts a with isScriptRwdAddr? a
 certScripts : DCert → Maybe (ScriptPurpose × ScriptHash)
 certScripts d with DelegateOrDeReg? d
 ... | no ¬p = nothing
-certScripts (delegate (inj₁ x) x₁ x₂ x₃) | yes p = nothing
-certScripts (delegate (inj₂ y) x₁ x₂ x₃) | yes p = just (Cert (delegate (inj₂ y) x₁ x₂ x₃) , y)
-certScripts (deregdrep (inj₁ x)) | yes p = nothing
-certScripts (deregdrep (inj₂ y)) | yes p = just (Cert (deregdrep (inj₂ y)) , y)
+certScripts (delegate  (inj₁ x) x₁ x₂ x₃) | yes p = nothing
+certScripts (delegate  (inj₂ y) x₁ x₂ x₃) | yes p = just (Cert (delegate (inj₂ y) x₁ x₂ x₃) , y)
+certScripts (deregdrep (inj₁ x))          | yes p = nothing
+certScripts (deregdrep (inj₂ y))          | yes p = just (Cert (deregdrep (inj₂ y)) , y)
 
 scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
 scriptsNeeded utxo txb
@@ -147,10 +147,6 @@ scriptsNeeded utxo txb
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
 
-
-scriptHashInTx : ScriptHash → Tx → Bool
-scriptHashInTx sh tx = ⌊ sh ∈? mapˢ proj₁ (m ˢ) ⌋
-  where m = setToHashMap $ TxWitnesses.scripts (Tx.wits tx)
 
 -- need to get map from language script ↦ cm
 -- need to update costmodels to add the language map in order to check

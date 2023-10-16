@@ -149,9 +149,6 @@ singletonᵐ a b = ❴ (a , b) ❵
 ❴_❵ᵐ : A × B → Map A B
 ❴ k , v ❵ᵐ = singletonᵐ k v
 
-lookupMap : {a : A} (m : Map A B) → a ∈ dom (m ˢ) → B
-lookupMap _ h = ∈-map⁻' h .proj₁ .proj₂
-
 module Unionᵐ (sp-∈ : spec-∈ A) where
   infixr 6 _∪ᵐˡ_
 
