@@ -16,7 +16,11 @@ open import Ledger.Epoch
 open import Ledger.Crypto
 open import Ledger.Script
 
-module Ledger.PParams (es : _) (open EpochStructure es) where
+module Ledger.PParams
+  (crypto : Crypto )
+  (es     : _) (open EpochStructure es)
+  (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
+  where
 \end{code}
 \begin{figure*}[h!]
 {\small
@@ -86,7 +90,7 @@ record PParams : Set where
         -- collateralPercent   : ℕ
         maxCollateralInputs : ℕ
 
-paramsWellFormed : PParams → Bool
+paramsWellFormed : PParams → Set
 paramsWellFormed pp = 0 ∉ fromList
     ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
     ∷ collateralPercent ∷ ccMaxTermLength ∷ govActionLifetime ∷ govActionDeposit
