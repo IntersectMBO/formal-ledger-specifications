@@ -74,12 +74,12 @@ record PParams : Set where
         ccMaxTermLength    : ℕ
         minimumAVS         : Coin
 
-paramsWellFormed : PParams → Bool
-paramsWellFormed pp = ¿ 0 ∉ fromList
+paramsWellFormed : PParams → Set
+paramsWellFormed pp = 0 ∉ fromList
     ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
     ∷ collateralPercent ∷ ccMaxTermLength ∷ govActionLifetime ∷ govActionDeposit
-    ∷ drepDeposit ∷ [])
-  × ℕtoEpoch govActionLifetime ≤ drepActivity ¿ᵇ
+    ∷ drepDeposit ∷ [] )
+  × ℕtoEpoch govActionLifetime ≤ drepActivity
   where open PParams pp
 \end{code}
 \end{AgdaAlign}
