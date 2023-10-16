@@ -177,9 +177,11 @@ the transaction body are:
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
   lookupScriptHash : ScriptHash → Tx → Maybe Script
-  lookupScriptHash sh tx = case sh ∈? mapˢ proj₁ (m ˢ) of λ where
-      (no _)  → nothing
-      (yes _) → just $ lookupᵐ m sh
+  lookupScriptHash sh tx =
+    ifᵈ sh ∈ mapˢ proj₁ (m ˢ) then
+      just $ lookupᵐ m sh
+    else
+      nothing
     where m = setToHashMap $ tx .Tx.wits .TxWitnesses.scripts
 
   isP2Script : Script → Bool
