@@ -241,7 +241,7 @@ instance
       { txins      = from txins
       ; txouts     = from txouts
       ; txcerts    = []
-      ; mint       = ε -- since simpleTokenAlgebra only contains ada mint will always be empty
+      ; mint       = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
       ; txfee      = txfee
       ; txvldt     = from txvldt
       ; txwdrls    = ∅ᵐ
@@ -349,8 +349,8 @@ instance
       ; minimumAVS        = 0
       ; costmdls            = from costmdls
       ; prices              = prices
-      ; maxTxExUnits        = maxTxExUnits
-      ; maxBlockExUnits     = maxBlockExUnits
+      ; maxTxExUnits        = from maxTxExUnits
+      ; maxBlockExUnits     = from maxBlockExUnits
       ; coinsPerUTxOWord    = coinsPerUTxOWord
       ; maxCollateralInputs = maxCollateralInputs
       }
