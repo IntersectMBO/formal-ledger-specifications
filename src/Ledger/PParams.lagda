@@ -90,12 +90,12 @@ record PParams : Set where
         -- collateralPercent   : ℕ
         maxCollateralInputs : ℕ
 
-paramsWellFormed : PParams → Bool
-paramsWellFormed pp = ¿ 0 ∉ fromList
+paramsWellFormed : PParams → Set
+paramsWellFormed pp = 0 ∉ fromList
     ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
     ∷ collateralPercent ∷ ccMaxTermLength ∷ govActionLifetime ∷ govActionDeposit
-    ∷ drepDeposit ∷ [])
-  × ℕtoEpoch govActionLifetime ≤ drepActivity ¿ᵇ
+    ∷ drepDeposit ∷ [] )
+  × ℕtoEpoch govActionLifetime ≤ drepActivity
   where open PParams pp
 \end{code}
 \end{AgdaAlign}
@@ -147,8 +147,8 @@ record PParamsDiff : Set₁ where
         applyUpdate : PParams → UpdateT → PParams
         ppdWellFormed : UpdateT → Bool
         ppdWellFormed⇒WF : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
-                         → paramsWellFormed pp ≡ true
-                         → paramsWellFormed (applyUpdate pp u) ≡ true
+                         → paramsWellFormed pp
+                         → paramsWellFormed (applyUpdate pp u)
 
 record GovParams : Set₁ where
   field ppUpd : PParamsDiff
