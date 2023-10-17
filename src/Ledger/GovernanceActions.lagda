@@ -40,26 +40,26 @@ data GovRole : Set where
   CC DRep SPO : GovRole
 
 data VDeleg : Set where
-  credVoter        : GovRole → Credential → VDeleg
-  abstainRep       : VDeleg
-  noConfidenceRep  : VDeleg
+  credVoter        : GovRole → Credential →  VDeleg
+  abstainRep       :                         VDeleg
+  noConfidenceRep  :                         VDeleg
 
 record Anchor : Set where
   field  url   : String
          hash  : DocHash
 
 data GovAction : Set where
-  NoConfidence     :                                          GovAction
-  NewCommittee     : Credential ⇀ Epoch → ℙ Credential → ℚ  → GovAction
-  NewConstitution  : DocHash → Maybe ScriptHash             → GovAction
-  TriggerHF        : ProtVer                                → GovAction
-  ChangePParams    : PParamsUpdate                          → GovAction
-  TreasuryWdrl     : (RwdAddr ⇀ Coin)                       → GovAction
-  Info             :                                          GovAction
+  NoConfidence     :                                           GovAction
+  NewCommittee     : Credential ⇀ Epoch → ℙ Credential → ℚ  →  GovAction
+  NewConstitution  : DocHash → Maybe ScriptHash             →  GovAction
+  TriggerHF        : ProtVer                                →  GovAction
+  ChangePParams    : PParamsUpdate                          →  GovAction
+  TreasuryWdrl     : (RwdAddr ⇀ Coin)                       →  GovAction
+  Info             :                                           GovAction
 
 actionWellFormed : GovAction → Bool
-actionWellFormed (ChangePParams x) = ppdWellFormed x
-actionWellFormed _                 = true
+actionWellFormed (ChangePParams x)  = ppdWellFormed x
+actionWellFormed _                  = true
 \end{code}
 } %% end small
 \caption{Governance actions}

@@ -54,6 +54,7 @@ record RwdAddr : Set where
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
 \end{code}
 \begin{code}
+
 VKeyBaseAddr         = Σ[ addr ∈ BaseAddr       ] isVKey    (addr .pay)
 VKeyBootstrapAddr    = Σ[ addr ∈ BootstrapAddr  ] isVKey    (addr .pay)
 ScriptBaseAddr       = Σ[ addr ∈ BaseAddr       ] isScript  (addr .pay)
