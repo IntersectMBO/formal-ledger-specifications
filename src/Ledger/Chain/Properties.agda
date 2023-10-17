@@ -5,6 +5,7 @@ open import Data.Nat.Properties hiding (_≟_)
 open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract
+import Data.Maybe
 
 module Ledger.Chain.Properties
   (txs : _) (open TransactionStructure txs)
@@ -12,28 +13,50 @@ module Ledger.Chain.Properties
   where
 
 open import Ledger.Ratify txs
+open import Ledger.Ledger.Properties txs abs
 open import Ledger.Ratify.Properties txs
 open import Ledger.Chain txs abs
 open import Ledger.Ledger txs abs
 
--- TODO: get rid of all of those arguments once we have them globally
+open Computational ⦃...⦄
 
-module _ (accepted? : ∀ Γ es st → Dec (accepted Γ es st))
-         (expired? : ∀ e st → Dec (expired e st))
-         (delayed? : ∀ a p es d → Dec (delayed a p es d))
-         (Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_) where
+module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
 
-  NEWEPOCH-total : ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,NEWEPOCH⦈ s'
-  NEWEPOCH-total {Γ} {nes} {e} =
-    let open NewEpochState nes hiding (es)
-        open RatifyState fut using (removed) renaming (es to esW)
-        open LState ls; open CertState certState; open Acnt acnt
-        es         = record esW { withdrawals = ∅ᵐ }
-        govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
-        (_ , pFut) = RATIFY-total accepted? expired? delayed? Computational-ENACT
-          {record { currentEpoch = e ; treasury = treasury
-                  ; GState gState ; NewEpochEnv Γ }} {⟦ es , ∅ , false ⟧ʳ} {govSt'}
-    in
+  open NewEpochState nes hiding (es)
+  open RatifyState fut using (removed) renaming (es to esW)
+  open LState ls; open CertState certState; open Acnt acnt
+  es         = record esW { withdrawals = ∅ᵐ }
+  govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
+
+  NEWEPOCH-total : ∃[ nes' ] Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes'
+  NEWEPOCH-total =
     case e ≟ sucᵉ lastEpoch of λ where
       (no ¬p) → -, NEWEPOCH-Not-New ¬p
-      (yes p) → -, NEWEPOCH-New p pFut
+      (yes p) → -, NEWEPOCH-New p (pFut .proj₂)
+    where pFut = RATIFY-total {record { currentEpoch = e ; treasury = treasury
+                                      ; GState gState ; NewEpochEnv Γ }}
+                              {⟦ es , ∅ , false ⟧ʳ} {govSt'}
+
+  NEWEPOCH-complete : ∀ nes' → Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes' → NEWEPOCH-total .proj₁ ≡ nes'
+  NEWEPOCH-complete nes' h with h | e ≟ sucᵉ lastEpoch
+  ... | NEWEPOCH-New next _    | no ¬next = ⊥-elim (¬next next)
+  ... | NEWEPOCH-Not-New _     | no _     = refl
+  ... | NEWEPOCH-New _ h       | yes _    = cong ⟦ _ , _ , _ , _ ,_⟧ⁿᵉ (RATIFY-complete h)
+  ... | NEWEPOCH-Not-New ¬next | yes next = ⊥-elim (¬next next)
+
+instance
+  Computational-NEWEPOCH : Computational _⊢_⇀⦇_,NEWEPOCH⦈_
+  Computational-NEWEPOCH .computeProof Γ s sig = just NEWEPOCH-total
+  Computational-NEWEPOCH .completeness Γ s sig s' h = cong just (NEWEPOCH-complete s' h)
+
+  Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_
+  Computational-CHAIN .computeProof Γ s b = do
+    _ , neStep ← computeProof _ _ _
+    _ , lsStep ← computeProof _ _ _
+    just (_ , CHAIN neStep lsStep)
+    where open Data.Maybe using (_>>=_)
+  Computational-CHAIN .completeness Γ s b s' (CHAIN neStep lsStep)
+    with recomputeProof neStep | completeness _ _ _ _ neStep
+  ... | _      | refl
+    with recomputeProof lsStep | completeness _ _ _ _ lsStep
+  ... | just _ | refl = refl
