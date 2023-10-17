@@ -32,8 +32,8 @@ record CertEnv : Set where
 record DState : Set where
   constructor ⟦_,_,_⟧ᵈ
   field
-    voteDelegs   : Credential ⇀ VDeleg      -- stake credential to DRep credential
-    stakeDelegs  : Credential ⇀ Credential  -- stake credential to pool credential
+    voteDelegs   : Credential ⇀ VDeleg
+    stakeDelegs  : Credential ⇀ Credential
     rewards      : RwdAddr ⇀ Coin
 
 record PState : Set where
