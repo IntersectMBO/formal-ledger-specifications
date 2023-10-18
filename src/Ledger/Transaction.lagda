@@ -28,7 +28,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Set where
-  Spend Mint Cert Rewrd : Tag
+  Spend Mint Cert Rewrd Vote Propose : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Set₁ where
