@@ -379,7 +379,7 @@ abstract
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs
-        votes'  = actualVotes Γ cc votes action pparams
+        votes'  = actualVotes Γ pparams cc action votes
         t       = maybe id ℚ.0ℚ $ threshold pparams (proj₂ <$> cc) action role
     in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ℚ.≥ t
 
