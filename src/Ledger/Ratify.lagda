@@ -345,37 +345,38 @@ The code in Figure~\ref{fig:defs:ratify-ii} defines \votedHashes, which returns 
 {\small
 \begin{code}[hide]
 abstract
+  -- unused, keep until we know for sure that there'll be no minimum AVS
+  -- activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
+  -- activeVotingStake cc dists votes =
+  --   Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
+
+  -- TODO: explain this notation in the prose and it's purpose:
+  -- if there's no stake, accept only if threshold is zero
+  _/₀_ : ℕ → ℕ → ℚ
+  x /₀ 0 = ℚ.0ℚ
+  x /₀ y@(suc _) = ℤ.+ x ℚ./ y
 \end{code}
 \begin{code}
   getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
   getStakeDist CC    cc  _                             = constMap (filterˢ isCCProp cc) 1
-  getStakeDist DRep  _   record { stakeDistr = dist }  = filterᵐ (sp-∘ isDRepProp  proj₁) dist
-  getStakeDist SPO   _   record { stakeDistr = dist }  = filterᵐ (sp-∘ isSPOProp   proj₁) dist
+  getStakeDist DRep  _   record { stakeDistr = dist }  = filterKeys isDRepProp dist
+  getStakeDist SPO   _   record { stakeDistr = dist }  = filterKeys isSPOProp  dist
 
-  acceptedStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-  acceptedStake r cc dists votes =
-    Σᵐᵛ[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ] x
+  acceptedStakeRatio : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → ℚ
+  acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
+    where
+      acceptedStake totalStake : Coin
+      acceptedStake = Σᵐᵛ[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ]      x
+      totalStake    = Σᵐᵛ[ x ←  getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
-  totalStake : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-  totalStake r cc dists votes =
-    Σᵐᵛ[ x  ← getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
-
-  activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-  activeVotingStake cc dists votes =
-    Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
-
-  acceptedBy : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → GovRole → Set
+  acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
-    let open RatifyEnv Γ; open GovActionState gs; open PParams pparams
-        votes'         = actualVotes Γ cc votes action pparams
-        cc'            = dom votes'
-        redStakeDistr  = restrictedDists coinThreshold rankThreshold stakeDistrs
-        t              = maybe id ℚ.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
-    case totalStake role cc' redStakeDistr votes' of λ where
-      0 → t ≡ ℚ.0ℚ -- if there's no stake, accept only if threshold is zero
-      x@(suc _) → ℤ.+ acceptedStake role cc' redStakeDistr votes' ℚ./ x ℚ.≥ t
+    let open GovActionState gs
+        votes'  = actualVotes Γ cc votes action pparams
+        t       = maybe id ℚ.0ℚ $ threshold pparams (proj₂ <$> cc) action role
+    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ℚ.≥ t
 
-  accepted : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → Set
+  accepted : RatifyEnv → EnactState → GovActionState → Set
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
 
   expired : Epoch → GovActionState → Set
@@ -438,14 +439,7 @@ abstract
   delayed? a h es d = let instance _ = verifyPrev? a h es in it
 
   acceptedBy? : ∀ Γ es st role → Dec (acceptedBy Γ es st role)
-  acceptedBy? Γ record{ cc = cc , _ ; pparams = pparams , _ } st role
-    with (let open RatifyEnv Γ; open GovActionState st; open PParams pparams
-              votes' = actualVotes Γ cc votes action pparams
-              cc' = dom votes'
-              redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
-          in totalStake role cc' redStakeDistr votes')
-  ... | zero  = it
-  ... | suc n = it
+  acceptedBy? Γ record{ cc = cc , _ ; pparams = pparams , _ } st role = _ ℚ.≤? _
 
   accepted? : ∀ Γ es st → Dec (accepted Γ es st)
   accepted? Γ es st =
