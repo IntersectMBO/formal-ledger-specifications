@@ -95,7 +95,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
     → epoch slot ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
-        record { pup = pup ∪ᵐˡ pupˢ ; fpup = fpupˢ }
+        record { pup = pup ∪ˡ pupˢ ; fpup = fpupˢ }
 
   PPUpdateFuture : let open PPUpdateEnv Γ in
     dom pup ⊆ dom genDelegs
@@ -104,7 +104,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
     → sucᵉ (epoch slot) ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
-        record { pup = pupˢ ; fpup = pup ∪ᵐˡ fpupˢ }
+        record { pup = pupˢ ; fpup = pup ∪ˡ fpupˢ }
 \end{code}
 \caption{PPUP inference rules}
 \end{figure*}

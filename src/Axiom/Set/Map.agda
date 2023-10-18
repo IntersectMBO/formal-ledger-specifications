@@ -153,22 +153,22 @@ singletonᵐ a b = ❴ (a , b) ❵
 ❴ k , v ❵ᵐ = singletonᵐ k v
 
 module Unionᵐ (sp-∈ : spec-∈ A) where
-  infixr 6 _∪ᵐˡ_
+  infixr 6 _∪ˡ_
 
-  _∪ᵐˡ'_ : Rel A B → Rel A B → Rel A B
-  m ∪ᵐˡ' m' = m ∪ filter (sp-∘ (sp-¬ (sp-∈ {dom m})) proj₁) m'
+  _∪ˡ'_ : Rel A B → Rel A B → Rel A B
+  m ∪ˡ' m' = m ∪ filter (sp-∘ (sp-¬ (sp-∈ {dom m})) proj₁) m'
 
-  _∪ᵐˡ_ : Map A B → Map A B → Map A B
-  m ∪ᵐˡ m' = disj-∪ m (filterᵐ (sp-∘ (sp-¬ sp-∈) proj₁) m')
+  _∪ˡ_ : Map A B → Map A B → Map A B
+  m ∪ˡ m' = disj-∪ m (filterᵐ (sp-∘ (sp-¬ sp-∈) proj₁) m')
       (∈⇔P -⟨ (λ where x (_ , refl , hy) → proj₁ (∈⇔P hy) (∈⇔P x)) ⟩- ∈⇔P)
 
-  disjoint-∪ᵐˡ-∪ : (H : disjoint (dom R) (dom R')) → R ∪ᵐˡ' R' ≡ᵉ R ∪ R'
-  disjoint-∪ᵐˡ-∪ disj = from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔
+  disjoint-∪ˡ-∪ : (H : disjoint (dom R) (dom R')) → R ∪ˡ' R' ≡ᵉ R ∪ R'
+  disjoint-∪ˡ-∪ disj = from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔
     (∈-∪⁺ ∘′ map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
     (∈⇔P ∘′ map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
 
   insert : Map A B → A → B → Map A B
-  insert m a b = ❴ a , b ❵ᵐ ∪ᵐˡ m
+  insert m a b = ❴ a , b ❵ᵐ ∪ˡ m
 
   insertIfJust : ⦃ DecEq A ⦄ → A → Maybe B → Map A B → Map A B
   insertIfJust x nothing  m  = m
@@ -281,7 +281,7 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 
   -- map only values in X
   mapValueRestricted : (B → B) → Map A B → Set A → Map A B
-  mapValueRestricted f m X = mapValues f (m ∣ X) ∪ᵐˡ m
+  mapValueRestricted f m X = mapValues f (m ∣ X) ∪ˡ m
 
   -- map only value at a
   mapSingleValue : (B → B) → Map A B → A → Map A B
