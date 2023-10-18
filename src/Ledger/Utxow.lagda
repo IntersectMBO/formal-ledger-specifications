@@ -8,10 +8,11 @@ open import Ledger.Abstract
 open import Ledger.Transaction
 
 module Ledger.Utxow
-  (txs : _) (open TransactionStructure txs)
+  (txs : _) (open TransactionStructure txs hiding (Vote))
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Utxo txs abs
+open import Ledger.ScriptValidation txs abs
 \end{code}
 
 \begin{figure*}[h]
@@ -22,19 +23,23 @@ getVKeys = mapPartial isInj₁
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isInj₂
 
-credsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ Credential
-credsNeeded sh utxo txb
-  =  mapˢ (payCred ∘ proj₁) ((utxo ˢ) ⟪$⟫ txins)
-  ∪  mapˢ cwitness (fromList txcerts)
-  ∪  mapˢ GovVote.credential (fromList txvote)
-  ∪  mapPartial (const (inj₂ <$> sh)) (fromList txprop)
+credsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ (ScriptPurpose × Credential)
+credsNeeded p utxo txb
+  =  mapˢ (λ (i , o) → (Spend i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
+  ∪  mapˢ (λ a → (Rwrd a , RwdAddr.stake a)) (dom $ txwdrls .proj₁)
+  ∪  mapˢ (λ c → (Cert c , cwitness c)) (fromList txcerts)
+  ∪  mapˢ (λ x → (Mint x , inj₂ x)) (policies mint)
+  ∪  mapˢ (λ v → (Vote v , GovVote.credential v)) (fromList txvote)
+  ∪  (case p of λ where
+       (just sh)  → mapˢ (λ p → (Propose p , inj₂ sh)) (fromList txprop)
+       nothing    → ∅)
   where open TxBody txb
 
 witsVKeyNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded sh = getVKeys ∘₂ credsNeeded sh
+witsVKeyNeeded sh = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded sh
 
 scriptsNeeded  : Maybe ScriptHash → UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded sh = getScripts ∘₂ credsNeeded sh
+scriptsNeeded sh = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded sh
 \end{code}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}

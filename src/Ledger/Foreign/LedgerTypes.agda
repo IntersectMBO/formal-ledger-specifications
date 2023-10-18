@@ -43,7 +43,7 @@ UTxO          = HSMap TxIn TxOut
 
 Hash          = ℕ
 
-data Tag : Set where Spend Mint Cert Rewrd : Tag
+data Tag : Set where Spend Mint Cert Rewrd Vote Propose : Tag
 RdmrPtr = Pair Tag Ix
 ExUnits = Pair ℕ ℕ
 
@@ -65,12 +65,12 @@ ExUnits = Pair ℕ ℕ
   type UTxO  = [(TxIn, TxOut)]
   type Hash  = Integer
 
-  data Tag     = Spend | Mint | Cert | Rewrd deriving (Show, Generic)
+  data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic)
   instance ToExpr Tag
   type RdmrPtr = (Tag, Ix)
   type ExUnits = (Integer, Integer)
 #-}
-{-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd) #-}
+{-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
 
 record TxBody : Set where
   field txins    : List TxIn

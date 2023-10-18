@@ -85,7 +85,7 @@ open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
 open import Ledger.Prelude hiding (_∧_)
-open import Ledger.Transaction
+open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
 

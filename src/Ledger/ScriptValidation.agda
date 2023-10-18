@@ -16,7 +16,7 @@ open import Ledger.Crypto
 
 
 module Ledger.ScriptValidation
-  (txs : _) (open TransactionStructure txs)
+  (txs : _) (open TransactionStructure txs hiding (Vote))
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
@@ -27,17 +27,21 @@ private macro
   ∈⇔P = anyOfⁿᵗ (quote ∈-filter⁻' ∷ quote ∈-∪⁻ ∷ quote ∈-map⁻' ∷ quote ∈-fromList⁻ ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
 data ScriptPurpose : Set where
-  Cert  : DCert      → ScriptPurpose
-  Rwrd  : RwdAddr    → ScriptPurpose
-  Mint  : ScriptHash → ScriptPurpose
-  Spend : TxIn       → ScriptPurpose
+  Cert     : DCert        → ScriptPurpose
+  Rwrd     : RwdAddr      → ScriptPurpose
+  Mint     : ScriptHash   → ScriptPurpose
+  Spend    : TxIn         → ScriptPurpose
+  Vote     : GovVote      → ScriptPurpose
+  Propose  : GovProposal  → ScriptPurpose
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
-  (Cert h)  → M.map (Cert  ,_) $ indexOfDCert    h txcerts
-  (Rwrd h)  → M.map (Rewrd ,_) $ indexOfRwdAddr  h txwdrls
-  (Mint h)  → M.map (Mint  ,_) $ indexOfPolicyId h (policies mint)
-  (Spend h) → M.map (Spend ,_) $ indexOfTxIn     h txins
+  (Cert h)     → M.map (Cert    ,_) $ indexOfDCert    h txcerts
+  (Rwrd h)     → M.map (Rewrd   ,_) $ indexOfRwdAddr  h txwdrls
+  (Mint h)     → M.map (Mint    ,_) $ indexOfPolicyId h (policies mint)
+  (Spend h)    → M.map (Spend   ,_) $ indexOfTxIn     h txins
+  (Vote h)     → M.map (Vote    ,_) $ indexOfVote     h txvote
+  (Propose h)  → M.map (Propose ,_) $ indexOfProposal h txprop
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
@@ -117,7 +121,7 @@ scriptOutsWithHash : UTxO → UTxOSH
 scriptOutsWithHash utxo = mapMaybeWithKeyᵐ scriptOutWithHash utxo
 
 spendScripts : TxIn → UTxOSH → Maybe (ScriptPurpose × ScriptHash)
-spendScripts txin utxo with txin ∈? dom (utxo ˢ)
+spendScripts txin utxo with txin ∈? dom utxo
 ... | no ¬p = nothing
 ... | yes p = just (Spend txin , proj₂ (lookupᵐ utxo txin))
 
@@ -134,13 +138,14 @@ certScripts (delegate  (inj₂ y) x₁ x₂ x₃) | yes p = just (Cert (delegate
 certScripts (deregdrep (inj₁ x))          | yes p = nothing
 certScripts (deregdrep (inj₂ y))          | yes p = just (Cert (deregdrep (inj₂ y)) , y)
 
-scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
-scriptsNeeded utxo txb
-  = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) txins
-  ∪ mapPartial (λ x → rwdScripts x) (dom $ txwdrls .proj₁)
-  ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
-  ∪ mapˢ (λ x → Mint x , x) (policies mint)
-  where open TxBody txb
+private
+  scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
+  scriptsNeeded utxo txb
+    = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) txins
+    ∪ mapPartial (λ x → rwdScripts x) (dom $ txwdrls .proj₁)
+    ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
+    ∪ mapˢ (λ x → Mint x , x) (policies mint)
+    where open TxBody txb
 
 
 -- We need to add toData to define this
