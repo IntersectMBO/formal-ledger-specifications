@@ -319,7 +319,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     -- Add deposits
 
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ᵐˡ (outs txb)
+       Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ outs txb
                            , fees + txfee
                            , updateDeposits pp txb deposits
                            , donations + txdonation

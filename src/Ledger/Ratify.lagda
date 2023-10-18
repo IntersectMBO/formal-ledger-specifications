@@ -229,7 +229,7 @@ restrictedDists coins rank dists = dists
   where open StakeDistrs dists
         -- one always includes the other
         restrict : Credential ⇀ Coin → Credential ⇀ Coin
-        restrict dist = topNDRepDist rank dist ∪ᵐˡ mostStakeDRepDist dist coins
+        restrict dist = topNDRepDist rank dist ∪ˡ mostStakeDRepDist dist coins
 \end{code}
 \begin{figure*}[h!]
 {\small
@@ -237,9 +237,9 @@ restrictedDists coins rank dists = dists
 actualVotes : RatifyEnv → CCData → (GovRole × Credential) ⇀ Vote → GovAction → PParams
             → VDeleg ⇀ Vote
 actualVotes Γ cc votes ga pparams
-  =    mapKeys (credVoter CC) actualCCVotes
-  ∪ᵐˡ  actualPDRepVotes ∪ᵐˡ actualDRepVotes
-  ∪ᵐˡ  actualSPOVotes
+  =   mapKeys (credVoter CC) actualCCVotes
+  ∪ˡ  actualPDRepVotes ∪ˡ actualDRepVotes
+  ∪ˡ  actualSPOVotes
   where
     open RatifyEnv Γ
     open PParams pparams
@@ -267,17 +267,17 @@ actualVotes Γ cc votes ga pparams
       (nothing        , _)      → ∅ᵐ
 
     actualPDRepVotes
-      =    ❴ abstainRep       , Vote.abstain ❵ᵐ
-      ∪ᵐˡ  ❴ noConfidenceRep  , (case ga of λ where  NoConfidence  → Vote.yes
-                                                     _             → Vote.no) ❵ᵐ
+      =   ❴ abstainRep       , Vote.abstain ❵ᵐ
+      ∪ˡ  ❴ noConfidenceRep  , (case ga of λ where  NoConfidence  → Vote.yes
+                                                    _             → Vote.no) ❵ᵐ
 
     actualDRepVotes
-      =    roleVotes GovRole.DRep
-      ∪ᵐˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
+      =   roleVotes GovRole.DRep
+      ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
     actualSPOVotes
-      =    roleVotes GovRole.SPO
-      ∪ᵐˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
+      =   roleVotes GovRole.SPO
+      ∪ˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
       where
         spos : ℙ VDeleg
         spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
