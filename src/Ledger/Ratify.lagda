@@ -79,12 +79,12 @@ above the threshold.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-import Data.Integer as ℤ
-open import Data.Rational as ℚ using (ℚ; 0ℚ)
+open import Data.Integer using () renaming (+_ to _ᶻ)
+open import Data.Rational as ℚ using (ℚ; 0ℚ; _/_; _≥_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_)
+open import Ledger.Prelude hiding (_∧_; _/_; _≥_)
 open import Ledger.Transaction
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -201,16 +201,16 @@ mostStakeDRepDist-∅ {dist} = suc (Σᵐᵛ[ x ← dist ᶠᵐ ] x) , Propertie
         <⟨ v>sum ⟩
       v ∎
 
-∃topNDRepDist : ∀ {n dist} → lengthˢ (dist ˢ) ≥ n → n > 0
-                → ∃[ c ] lengthˢ (mostStakeDRepDist dist c ˢ) ≥ n
+∃topNDRepDist : ∀ {n dist} → n ≤ lengthˢ (dist ˢ) → n > 0
+                → ∃[ c ] n ≤ lengthˢ (mostStakeDRepDist dist c ˢ)
                        × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
 ∃topNDRepDist {n} {dist} length≥n n>0 =
   let
     c , h , h' =
       negInduction (λ _ → _ ≥? n)
-        (subst (_≥ n) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
+        (subst (n ≤_) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
         (map₂′ (λ h h'
-                  → ≤⇒≯ (subst (_≥ n) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
+                  → ≤⇒≯ (subst (n ≤_) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
                (mostStakeDRepDist-∅ {dist}))
   in
    c , h , ≰⇒> h'
@@ -364,22 +364,40 @@ abstract
   activeVotingStake cc dists votes =
     Σᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
-  acceptedBy : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → GovRole → Set
-  acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
-    let open RatifyEnv Γ; open GovActionState gs; open PParams pparams
-        votes'         = actualVotes Γ cc votes action pparams
-        cc'            = dom votes'
-        redStakeDistr  = restrictedDists coinThreshold rankThreshold stakeDistrs
-        t              = maybe id ℚ.0ℚ $ threshold pparams (proj₂ <$> cc) action role in
-    case totalStake role cc' redStakeDistr votes' of λ where
-      0 → t ≡ ℚ.0ℚ -- if there's no stake, accept only if threshold is zero
-      x@(suc _) → ℤ.+ acceptedStake role cc' redStakeDistr votes' ℚ./ x ℚ.≥ t
-
-  accepted : (Γ : RatifyEnv) (es : EnactState) (gs : GovActionState) → Set
-  accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
-
   expired : Epoch → GovActionState → Set
   expired current record { expiresIn = expiresIn } = expiresIn < current
+
+  acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
+  acceptedBy Γ es gs role = stakeFilter (totalStake role cc' redStakeDistr votes')
+    where
+    open RatifyEnv Γ
+    open GovActionState gs
+    open EnactState es renaming (cc to 𝕔𝕔; pparams to 𝕡𝕡)
+    cc : Maybe ((Credential ⇀ Epoch) × ℚ)
+    cc = proj₁ 𝕔𝕔
+
+    pparams : PParams
+    pparams = proj₁ 𝕡𝕡
+
+    votes' : Σ (Rel VDeleg Vote) left-unique
+    votes' = actualVotes Γ cc votes action pparams
+
+    cc' : ℙ VDeleg
+    cc' = dom votes'
+
+    redStakeDistr : StakeDistrs
+    redStakeDistr = restrictedDists coinThreshold rankThreshold stakeDistrs
+
+    t : ℚ
+    t = maybe id ℚ.0ℚ $ threshold pparams (proj₂ <$> cc) action role
+
+    stakeFilter : Coin → Set
+    stakeFilter zero = t ≡ ℚ.0ℚ
+    stakeFilter (suc x) = (acceptedStake role cc' redStakeDistr votes')ᶻ / suc x ≥ t
+
+  accepted : RatifyEnv → EnactState → GovActionState → Set
+  accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
+
 \end{code}
 } %% end small
 \caption{%%Ratify iii:
