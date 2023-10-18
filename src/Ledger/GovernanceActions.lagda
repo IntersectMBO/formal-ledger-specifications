@@ -24,7 +24,8 @@ open import Ledger.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
-2ℚ = 1ℚ Data.Rational.+ 1ℚ
+DENIED : ℚ
+DENIED = 1ℚ Data.Rational.+ 1ℚ
 
 -- TODO: this could be generic
 maximum : ℙ ℚ → ℚ
@@ -99,56 +100,58 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \begin{figure*}[h]
 \begin{code}[hide]
 private
-  ⟨_,_,_⟩ : {A : Set} → A → A → A → GovRole → A
-  ⟨ q₁ , q₂ , q₃ ⟩ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
+  ∣_∣_∣_∣ : {A : Set} → A → A → A → GovRole → A
+  ∣ q₁ ∣ q₂ ∣ q₃ ∣ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
 \end{code}
 \begin{code}
 threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
-threshold pp ccThreshold' = λ where
-    NoConfidence           → ⟨ noVote            , vote P1      , vote Q1 ⟩
-    (NewCommittee _ _ _)   → case ccThreshold' of λ where
-      (just _)             → ⟨ noVote            , vote P2a     , vote Q2a ⟩
-      nothing              → ⟨ noVote            , vote P2b     , vote Q2b ⟩
-    (NewConstitution _ _)  → ⟨ vote ccThreshold  , vote P3      , noVote ⟩
-    (TriggerHF _)          → ⟨ vote ccThreshold  , vote P4      , vote Q4 ⟩
-    (ChangePParams x)      → ⟨ vote ccThreshold  , vote (P5 x)  , noVote ⟩
-    (TreasuryWdrl _)       → ⟨ vote ccThreshold  , vote P6      , noVote ⟩
-    Info                   → ⟨ vote 2ℚ           , vote 2ℚ      , vote 2ℚ ⟩
+threshold pp x ga = threshold'
   where
-    open PParams pp
-    open DrepThresholds drepThresholds
-    open PoolThresholds poolThresholds
+  open PParams pp
+  open DrepThresholds drepThresholds
+  open PoolThresholds poolThresholds
 
-    -- Here, 2 can just be any number strictly greater than one. It just
-    -- means that a threshold can never be cleared, i.e. that the action
-    -- cannot be enacted.
+  ccThreshold? P2 Q2 : Maybe ℚ → ℚ
 
-    ccThreshold : ℚ
-    ccThreshold = case ccThreshold' of λ where
-      (just x)  → x
-      nothing   → 2ℚ
+  ccThreshold? (just t)  = t
+  ccThreshold? nothing   = DENIED
 
+  P2 (just _)  = P2a
+  P2 nothing   = P2b
+
+  Q2 (just _)  = Q2a
+  Q2 nothing   = Q2b
+
+  ccThreshold : ℚ
+  ccThreshold = ccThreshold? x
+
+  P5 : PParamsUpdate → ℚ
+  P5 ppu = maximum $ mapˢ pparamThreshold (updateGroups ppu)
+    where
     pparamThreshold : PParamGroup → ℚ
-    pparamThreshold NetworkGroup     = P5a
-    pparamThreshold EconomicGroup    = P5b
-    pparamThreshold TechnicalGroup   = P5c
-    pparamThreshold GovernanceGroup  = P5d
+    pparamThreshold pg = case pg of λ where
+      NetworkGroup     → P5a
+      EconomicGroup    → P5b
+      TechnicalGroup   → P5c
+      GovernanceGroup  → P5d
 
-    P5 : PParamsUpdate → ℚ
-    P5 ppu = maximum $ mapˢ pparamThreshold (updateGroups ppu)
+  noVote = nothing
+  vote = just
 
-    noVote : Maybe ℚ
-    noVote = nothing
+  threshold' : GovRole → Maybe ℚ
+  threshold' = case ga of λ where
+    NoConfidence           → ∣ noVote            ∣ vote P1      ∣ vote Q1      ∣
+    (NewCommittee _ _ _)   → ∣ noVote            ∣ vote (P2 x)  ∣ vote (Q2 x)  ∣
+    (NewConstitution _ _)  → ∣ vote ccThreshold  ∣ vote P3      ∣ noVote       ∣
+    (TriggerHF _)          → ∣ vote ccThreshold  ∣ vote P4      ∣ vote Q4      ∣
+    (ChangePParams x)      → ∣ vote ccThreshold  ∣ vote (P5 x)  ∣ noVote       ∣
+    (TreasuryWdrl _)       → ∣ vote ccThreshold  ∣ vote P6      ∣ noVote       ∣
+    Info                   → ∣ vote DENIED       ∣ vote DENIED  ∣ vote DENIED  ∣
 
-    vote : ℚ → Maybe ℚ
-    vote = just
-
--- TODO: this doesn't actually depend on PParams so we could remove that argument,
---       but we don't have a default ATM
 canVote : PParams → GovAction → GovRole → Set
 canVote pp a r = Is-just (threshold pp nothing a r)
 \end{code}
-\caption{Functions related to voting}
+\caption{Functions related to voting; (\DENIED is a number $> 1$---an unattainable threshold)}
 \label{fig:voting-defs}
 \end{figure*}
 \subsection{Voting and ratification}
