@@ -142,6 +142,9 @@ filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Decidable
   → finite (m ˢ) → finite (filterᵐ sp m ˢ)
 filterᵐ-finite = filter-finite
 
+filterKeys : {P : A → Type} → specProperty P → Map A B → Map A B
+filterKeys sp-P = filterᵐ (sp-∘ sp-P proj₁)
+
 singletonᵐ : A → B → Map A B
 singletonᵐ a b = ❴ (a , b) ❵
                , (from ∈-singleton -⟨ (λ where refl refl → refl) ⟩- from ∈-singleton)
