@@ -83,6 +83,7 @@ jobs:
           cRet=$(echo "$closure" | tr '\n' ' ')
           echo "derivation=$dRet" >> $GITHUB_OUTPUT
           echo "closure=$cRet" >> $GITHUB_OUTPUT
+          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
 
       - name: Build midnight
         id: midnight
@@ -93,6 +94,7 @@ jobs:
           cRet=$(echo "$closure" | tr '\n' ' ')
           echo "derivation=$dRet" >> $GITHUB_OUTPUT
           echo "closure=$cRet" >> $GITHUB_OUTPUT
+          rsync -r --exclude={'**/nix-support','**/lib'} outputs/midnight*/* docs/
 
       - name: Export all derivations
         id: export-derivations
@@ -124,11 +126,16 @@ jobs:
             derivations
           key: cache-store-${{ runner.os }}-${{ github.run_id }}
 
+      - name: Upload PDF artifacts
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDF specs
+          path: docs/pdfs/*.pdf
+
       - name: Generate main website
         if: github.ref == 'refs/heads/master'
         run: |
-          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
-          rsync -r --exclude={'**/nix-support','**/lib'} outputs/midnight*/* docs/
           echo "** Generated PDF files:"; find -L docs/ -name '*.pdf'
           echo "** Generated HTML files:"; find -L docs/ -name '*.html'
           echo "** Generated Haskell files:"; find -L docs/ -name '*.hs'
