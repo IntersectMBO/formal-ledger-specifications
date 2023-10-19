@@ -24,7 +24,8 @@ open import Ledger.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
-2ℚ = 1ℚ Data.Rational.+ 1ℚ
+defer : ℚ
+defer = 1ℚ Data.Rational.+ 1ℚ
 
 -- TODO: this could be generic
 maximum : ℙ ℚ → ℚ
@@ -99,34 +100,30 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \begin{figure*}[h]
 \begin{code}[hide]
 private
-  ⟨_,_,_⟩ : {A : Set} → A → A → A → GovRole → A
-  ⟨ q₁ , q₂ , q₃ ⟩ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
+  ∣_∣_∣_∣ : {A : Set} → A → A → A → GovRole → A
+  ∣ q₁ ∣ q₂ ∣ q₃ ∣ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
 \end{code}
 \begin{code}
 threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
 threshold pp ccThreshold' = λ where
-    NoConfidence           → ⟨ noVote            , vote P1      , vote Q1 ⟩
+    NoConfidence           → ∣ noVote            ∣ vote P1      ∣ vote Q1      ∣
     (NewCommittee _ _ _)   → case ccThreshold' of λ where
-      (just _)             → ⟨ noVote            , vote P2a     , vote Q2a ⟩
-      nothing              → ⟨ noVote            , vote P2b     , vote Q2b ⟩
-    (NewConstitution _ _)  → ⟨ vote ccThreshold  , vote P3      , noVote ⟩
-    (TriggerHF _)          → ⟨ vote ccThreshold  , vote P4      , vote Q4 ⟩
-    (ChangePParams x)      → ⟨ vote ccThreshold  , vote (P5 x)  , noVote ⟩
-    (TreasuryWdrl _)       → ⟨ vote ccThreshold  , vote P6      , noVote ⟩
-    Info                   → ⟨ vote 2ℚ           , vote 2ℚ      , vote 2ℚ ⟩
+      (just _)             → ∣ noVote            ∣ vote P2a     ∣ vote Q2a     ∣
+      nothing              → ∣ noVote            ∣ vote P2b     ∣ vote Q2b     ∣
+    (NewConstitution _ _)  → ∣ vote ccThreshold  ∣ vote P3      ∣ noVote       ∣
+    (TriggerHF _)          → ∣ vote ccThreshold  ∣ vote P4      ∣ vote Q4      ∣
+    (ChangePParams x)      → ∣ vote ccThreshold  ∣ vote (P5 x)  ∣ noVote       ∣
+    (TreasuryWdrl _)       → ∣ vote ccThreshold  ∣ vote P6      ∣ noVote       ∣
+    Info                   → ∣ vote defer        ∣ vote defer   ∣ vote defer   ∣
   where
     open PParams pp
     open DrepThresholds drepThresholds
     open PoolThresholds poolThresholds
 
-    -- Here, 2 can just be any number strictly greater than one. It just
-    -- means that a threshold can never be cleared, i.e. that the action
-    -- cannot be enacted.
-
     ccThreshold : ℚ
     ccThreshold = case ccThreshold' of λ where
       (just x)  → x
-      nothing   → 2ℚ
+      nothing   → defer   -- (defer > 1 ⇒ unreachable threshold ⇒ not yet enactable)
 
     pparamThreshold : PParamGroup → ℚ
     pparamThreshold NetworkGroup     = P5a
@@ -143,8 +140,8 @@ threshold pp ccThreshold' = λ where
     vote : ℚ → Maybe ℚ
     vote = just
 
--- TODO: this doesn't actually depend on PParams so we could remove that argument,
---       but we don't have a default ATM
+-- TODO: this doesn't actually depend on PParams so we could remove that
+--       argument, but we don't have a default ATM
 canVote : PParams → GovAction → GovRole → Set
 canVote pp a r = Is-just (threshold pp nothing a r)
 \end{code}
