@@ -8,7 +8,7 @@ open import Ledger.Abstract
 open import Ledger.Transaction
 
 module Ledger.Utxow
-  (txs : _) (open TransactionStructure txs hiding (Vote))
+  (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Utxo txs abs

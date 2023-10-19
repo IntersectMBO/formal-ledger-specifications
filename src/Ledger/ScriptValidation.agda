@@ -16,7 +16,7 @@ open import Ledger.Crypto
 
 
 module Ledger.ScriptValidation
-  (txs : _) (open TransactionStructure txs hiding (Vote))
+  (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 

@@ -96,7 +96,7 @@ the transaction body are:
     ; govParams = govParams
     }
 
-  open Ledger.GovernanceActions govStructure hiding (yes; no) public
+  open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
   open Ledger.Deleg             govStructure public
 \end{code}
 \emph{Derived types}

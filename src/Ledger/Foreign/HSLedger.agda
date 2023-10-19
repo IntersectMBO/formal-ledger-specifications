@@ -173,7 +173,7 @@ HSGovStructure = record
   }
 instance _ = HSGovStructure
 
-open import Ledger.GovernanceActions it
+open import Ledger.GovernanceActions it hiding (Vote)
 open import Ledger.Deleg it
 open import Ledger.Gov it
 
@@ -262,8 +262,8 @@ instance
 
   Convertible-Tag : Convertible Tag F.Tag
   Convertible-Tag = λ where
-    .to   → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd; Vote → F.Vote; Propose → Propose }
-    .from → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd; Vote → Tag.Vote; Propose → Propose }
+    .to   → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd; Vote → Vote; Propose → Propose }
+    .from → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd; Vote → Vote; Propose → Propose }
    where open F.Tag
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses

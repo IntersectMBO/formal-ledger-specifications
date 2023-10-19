@@ -89,6 +89,7 @@ open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
 
+open import Ledger.GovernanceActions govStructure using (Vote)
 open import Ledger.Gov govStructure
 
 infixr 2 _∧_
