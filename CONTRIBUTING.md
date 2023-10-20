@@ -57,8 +57,15 @@ which is much faster when you have already loaded an Agda file/interface.
 
 Apart from the PDF specification, the `Makefile` can be used to also generate the following:
 - `make html`: generate HTML under `dist/html/`
-- `make codeGen`: generate Haskell code under `dist/MAlonzo/`
-- `make hsBuild`: run the Haskell test of each Agda formmalisation
+- `make hs`: generate Haskell code under `dist/MAlonzo/`
+- `make hsTest`: run the Haskell tests of each Agda formalisation
+- `make staticWebsite`: gather all resources above in a central webpage `dist/index.html`
+
+If you only want to command to affect a single project, prefix with `<project>.`, e.g.
+```
+$ make ledger.html
+$ make midnight.hs
+```
 
 ## Updating nixpkgs
 

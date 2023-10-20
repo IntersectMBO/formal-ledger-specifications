@@ -28,21 +28,25 @@ cd formal-ledger-specifications
 Invoke the following `nix-build` commands from inside the `formal-ledger-specifications` directory.
 
 ```
-nix-build -A ledger.executableSpec     # build the spec
-nix-build -A ledger.docs               # build the spec docs
-nix-build -A midnight.executableSpec   # build the Midnight example
-nix-build -A midnight.docs             # build the Midnight example docs
+nix-build -A ledger.docs      # generate the PDF spec of the Cardano ledger
+nix-build -A midnight.docs    # generate the PDF spec of the Midnight example
+nix-build -A ledger.hsSrc     # extract the Haskell code of the Cardano ledger
+nix-build -A midnight.hsSrc   # extract the Haskell code of the Midnight example
 ```
 
 ### Test the spec using nix-shell
 
-The `executableSpec` is a `cabal` package, which can be loaded into GHCI like this:
+The `hsExe` is a `cabal` package, which can be loaded into GHCI like this:
 
 ```
-nix-shell -A run --command "cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'"
-λ> :m HSLedgerTest
-λ> main
+nix-shell -A run --command "cabal repl --build-depends 'cardano-ledger'"
+λ> :m Lib
+λ> :i UTxOState
 ```
+
+Building the `hsExe` derivation will also run the test suite, which you can manually do using `cabal test`.
+
+
 
 ## Contributions and Feedback
 
