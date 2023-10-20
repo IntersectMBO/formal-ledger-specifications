@@ -231,7 +231,11 @@ restrictedDists coins rank dists = dists
         -- one always includes the other
         restrict : Credential ⇀ Coin → Credential ⇀ Coin
         restrict dist = topNDRepDist rank dist ∪ˡ mostStakeDRepDist dist coins
-
+\end{code}
+\begin{figure*}[h!]
+\begin{AgdaAlign}
+{\small
+\begin{code}
 actualPDRepVotes : GovAction → VDeleg ⇀ Vote
 actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵ᵐ
                                ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵ᵐ
