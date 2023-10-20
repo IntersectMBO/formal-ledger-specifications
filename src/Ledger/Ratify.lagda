@@ -232,7 +232,7 @@ restrictedDists coins rank dists = dists
         restrict dist = topNDRepDist rank dist ∪ᵐˡ mostStakeDRepDist dist coins
 \end{code}
 \begin{code}[hide]
-module _ (Γ : RatifyEnv)(pparams : PParams) where
+module _ (Γ : RatifyEnv) (pparams : PParams) where
 
   open RatifyEnv Γ
   open PParams pparams
@@ -256,10 +256,10 @@ module _ (Γ : RatifyEnv)(pparams : PParams) where
                                     ∪ᵐˡ ❴ noConfidenceRep , Vote.no ❵ᵐ
 
   actualVotes : CCData → GovAction → (GovRole × Credential) ⇀ Vote → VDeleg ⇀ Vote
-  actualVotes cc ga votes  =  mapKeys (credVoter CC) (actualCCVotes cc)
-                              ∪ᵐˡ actualPDRepVotes ga
-                              ∪ᵐˡ actualDRepVotes
-                              ∪ᵐˡ actualSPOVotes ga
+  actualVotes cc ga votes  =    mapKeys (credVoter CC) (actualCCVotes cc)
+                           ∪ᵐˡ  actualPDRepVotes ga
+                           ∪ᵐˡ  actualDRepVotes
+                           ∪ᵐˡ  actualSPOVotes ga
     where
     spos : ℙ VDeleg
     spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
@@ -271,11 +271,10 @@ module _ (Γ : RatifyEnv)(pparams : PParams) where
                _                        → Vote.abstain -- expired, no hot key or resigned
 
     actualCCVotes : CCData → Credential ⇀ Vote
-    actualCCVotes nothing          = ∅ᵐ
-    actualCCVotes (just (cc , q))  =
-      case ¿ ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)) ¿ᵇ of
-      λ where  true   → mapWithKey actualCCVote cc
-               false  → constMap (dom cc) Vote.no
+    actualCCVotes nothing          =  ∅ᵐ
+    actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
+                                      then mapWithKey actualCCVote cc
+                                      else constMap (dom cc) Vote.no
 
     roleVotes : GovRole → VDeleg ⇀ Vote
     roleVotes r = mapKeys (uncurry credVoter) $ filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes
