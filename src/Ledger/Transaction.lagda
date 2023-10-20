@@ -28,7 +28,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Set where
-  Spend Mint Cert Rewrd : Tag
+  Spend Mint Cert Rewrd Vote Propose : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Set₁ where
@@ -96,7 +96,7 @@ the transaction body are:
     ; govParams = govParams
     }
 
-  open Ledger.GovernanceActions govStructure hiding (yes; no) public
+  open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
   open Ledger.Deleg             govStructure public
 \end{code}
 \emph{Derived types}
