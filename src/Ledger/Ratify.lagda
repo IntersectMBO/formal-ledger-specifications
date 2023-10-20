@@ -230,18 +230,23 @@ restrictedDists coins rank dists = dists
         -- one always includes the other
         restrict : Credential ⇀ Coin → Credential ⇀ Coin
         restrict dist = topNDRepDist rank dist ∪ˡ mostStakeDRepDist dist coins
-\end{code}
-\begin{code}[hide]
-module _ (Γ : RatifyEnv) (pparams : PParams) where
 
+actualPDRepVotes : GovAction → VDeleg ⇀ Vote
+actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵ᵐ
+                               ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵ᵐ
+actualPDRepVotes _             =   ❴ abstainRep , Vote.abstain ❵ᵐ
+                               ∪ˡ  ❴ noConfidenceRep , Vote.no ❵ᵐ
+
+actualVotes  : RatifyEnv → PParams → CCData → GovAction
+             → GovRole × Credential ⇀ Vote → VDeleg ⇀ Vote
+actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc)
+                                   ∪ˡ  actualPDRepVotes ga
+                                   ∪ˡ  actualDRepVotes
+                                   ∪ˡ  actualSPOVotes ga
+  where
   open RatifyEnv Γ
   open PParams pparams
-\end{code}
 
-\begin{figure*}[h!]
-\begin{AgdaAlign}
-{\small
-\begin{code}
   activeDReps : ℙ Credential
   activeDReps = dom $ filterᵐ? (λ x → currentEpoch ≤? (proj₂ x)) dreps
 
@@ -249,43 +254,30 @@ module _ (Γ : RatifyEnv) (pparams : PParams) where
   activeCC (just (cc , _))  = dom $ filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
   activeCC nothing          = ∅
 
-  actualPDRepVotes : GovAction → VDeleg ⇀ Vote
-  actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵ᵐ
-                                 ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵ᵐ
-  actualPDRepVotes _             =   ❴ abstainRep , Vote.abstain ❵ᵐ
-                                 ∪ˡ  ❴ noConfidenceRep , Vote.no ❵ᵐ
+  spos : ℙ VDeleg
+  spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
 
-  actualVotes : CCData → GovAction → (GovRole × Credential) ⇀ Vote → VDeleg ⇀ Vote
-  actualVotes cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc)
-                           ∪ˡ  actualPDRepVotes ga
-                           ∪ˡ  actualDRepVotes
-                           ∪ˡ  actualSPOVotes ga
-    where
-    spos : ℙ VDeleg
-    spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
+  actualCCVote : Credential → Epoch → Vote
+  actualCCVote c e = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
+    λ where  (true , just (just c'))  → maybe id Vote.no $ lookupᵐ? votes (CC , c')
+             _                        → Vote.abstain -- expired, no hot key or resigned
 
-    actualCCVote : Credential → Epoch → Vote
-    actualCCVote c e =
-      case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
-      λ where  (true , just (just c'))  → maybe id Vote.no $ lookupᵐ? votes (CC , c')
-               _                        → Vote.abstain -- expired, no hot key or resigned
+  actualCCVotes : CCData → Credential ⇀ Vote
+  actualCCVotes nothing          =  ∅ᵐ
+  actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
+                                    then mapWithKey actualCCVote cc
+                                    else constMap (dom cc) Vote.no
 
-    actualCCVotes : CCData → Credential ⇀ Vote
-    actualCCVotes nothing          =  ∅ᵐ
-    actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
-                                      then mapWithKey actualCCVote cc
-                                      else constMap (dom cc) Vote.no
+  roleVotes : GovRole → VDeleg ⇀ Vote
+  roleVotes r = mapKeys (uncurry credVoter) $ filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes
 
-    roleVotes : GovRole → VDeleg ⇀ Vote
-    roleVotes r = mapKeys (uncurry credVoter) $ filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes
+  actualSPOVotes : GovAction → VDeleg ⇀ Vote
+  actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.no
+  actualSPOVotes _              = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.abstain
 
-    actualSPOVotes : GovAction → VDeleg ⇀ Vote
-    actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.no
-    actualSPOVotes _              = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.abstain
-
-    actualDRepVotes : VDeleg ⇀ Vote
-    actualDRepVotes  =  roleVotes GovRole.DRep
-                     ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
+  actualDRepVotes : VDeleg ⇀ Vote
+  actualDRepVotes  =   roleVotes GovRole.DRep
+                   ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 \end{code}
 } % End: small
 \end{AgdaAlign}
