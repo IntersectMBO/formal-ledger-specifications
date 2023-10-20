@@ -229,7 +229,7 @@ restrictedDists coins rank dists = dists
   where open StakeDistrs dists
         -- one always includes the other
         restrict : Credential ⇀ Coin → Credential ⇀ Coin
-        restrict dist = topNDRepDist rank dist ∪ᵐˡ mostStakeDRepDist dist coins
+        restrict dist = topNDRepDist rank dist ∪ˡ mostStakeDRepDist dist coins
 \end{code}
 \begin{code}[hide]
 module _ (Γ : RatifyEnv) (pparams : PParams) where

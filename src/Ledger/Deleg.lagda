@@ -123,18 +123,18 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set whe
     c ∉ dom pools
     ────────────────────────────────
     pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
-          ⟦ ❴ c , poolParams ❵ᵐ ∪ᵐˡ pools , retiring ⟧ᵖ
+          ⟦ ❴ c , poolParams ❵ᵐ ∪ˡ pools , retiring ⟧ᵖ
 
   POOL-retirepool :
     pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈
-          ⟦ pools , ❴ c , e ❵ᵐ ∪ᵐˡ retiring ⟧ᵖ
+          ⟦ pools , ❴ c , e ❵ᵐ ∪ˡ retiring ⟧ᵖ
 
 data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set where
   GOVCERT-regdrep : let open PParams pp in
     (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
     ────────────────────────────────
     ⟦ e , pp , vs ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                        ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ᵐˡ dReps , ccKeys ⟧ᵛ
+                        ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     c ∈ dom dReps
@@ -146,7 +146,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → S
     (c , nothing) ∉ ccKeys
     ────────────────────────────────
     Γ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈
-         ⟦ dReps , singletonᵐ c mc ∪ᵐˡ ccKeys ⟧ᵛ
+         ⟦ dReps , singletonᵐ c mc ∪ˡ ccKeys ⟧ᵛ
 \end{code}
 \caption{Auxiliary DELEG and POOL rules}
 \end{figure*}

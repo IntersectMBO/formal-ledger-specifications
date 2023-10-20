@@ -125,20 +125,20 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
 
     open Unionᵐ sp-∈
 
-    ∪ᵐˡ-finite : {R R' : Rel A B} → finite R → finite R' → finite (R ∪ᵐˡ' R')
-    ∪ᵐˡ-finite Rᶠ R'ᶠ = ∪-preserves-finite Rᶠ
+    ∪ˡ-finite : {R R' : Rel A B} → finite R → finite R' → finite (R ∪ˡ' R')
+    ∪ˡ-finite Rᶠ R'ᶠ = ∪-preserves-finite Rᶠ
                       $ filter-finite (sp-∘ (sp-¬ sp-∈) _) (¬? ∘ ∈-A-dec ∘ _) R'ᶠ
 
-    _∪ᵐˡᶠ_ : FinMap A B → FinMap A B → FinMap A B
-    (_ , hX , Xᶠ) ∪ᵐˡᶠ (_ , hY , Yᶠ) =
-      toFinMap ((_ , hX) ∪ᵐˡ (_ , hY)) (∪ᵐˡ-finite Xᶠ Yᶠ)
+    _∪ˡᶠ_ : FinMap A B → FinMap A B → FinMap A B
+    (_ , hX , Xᶠ) ∪ˡᶠ (_ , hY , Yᶠ) =
+      toFinMap ((_ , hX) ∪ˡ (_ , hY)) (∪ˡ-finite Xᶠ Yᶠ)
 
     indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f}
       → disjoint (dom (toRel X)) (dom (toRel Y))
-      → indexedSumᵐ f (X ∪ᵐˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
+      → indexedSumᵐ f (X ∪ˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
     indexedSumᵐ-∪ {X = X'@(X , _ , Xᶠ)} {Y'@(Y , _ , Yᶠ)} {f} disj = begin
-      indexedSumᵐ f (X' ∪ᵐˡᶠ Y')    ≈⟨ indexedSum-cong {x = -, ∪ᵐˡ-finite Xᶠ Yᶠ} {(X ∪ Y) ᶠ}
-                                         $ disjoint-∪ᵐˡ-∪ disj ⟩
+      indexedSumᵐ f (X' ∪ˡᶠ Y')    ≈⟨ indexedSum-cong {x = -, ∪ˡ-finite Xᶠ Yᶠ} {(X ∪ Y) ᶠ}
+                                         $ disjoint-∪ˡ-∪ disj ⟩
       indexedSum f ((X ∪ Y) ᶠ)      ≈⟨ indexedSum-∪ (disjoint-dom⇒disjoint disj) ⟩
       indexedSumᵐ f X' ∙ indexedSumᵐ f Y' ∎
       where instance _ = Xᶠ
@@ -147,14 +147,14 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
     indexedSumᵐ-partition : ∀ {m m₁ m₂ : FinMap A B} {f} → toRel m ≡ toRel m₁ ⨿ toRel m₂
                           → indexedSumᵐ f m ≈ indexedSumᵐ f m₁ ∙ indexedSumᵐ f m₂
     indexedSumᵐ-partition {m} {m₁} {m₂} {f} m≡m₁∪m₂ = begin
-      indexedSumᵐ f m                     ≈⟨ indexedSumᵐ-cong {x = m} {m₁ ∪ᵐˡᶠ m₂} helper ⟩
-      indexedSumᵐ f (m₁ ∪ᵐˡᶠ m₂)          ≈⟨ indexedSumᵐ-∪ {X = m₁} {Y = m₂} disj-dom' ⟩
-      indexedSumᵐ f m₁ ∙ indexedSumᵐ f m₂ ∎
+      indexedSumᵐ f m                     ≈⟨ indexedSumᵐ-cong {x = m} {m₁ ∪ˡᶠ m₂} helper ⟩
+      indexedSumᵐ f (m₁ ∪ˡᶠ m₂)           ≈⟨ indexedSumᵐ-∪ {X = m₁} {Y = m₂} disj-dom' ⟩
+      indexedSumᵐ f m₁ ∙ indexedSumᵐ f m₂  ∎
       where module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
             disj-dom' = disj-dom {m = toMap m} {toMap m₁} {toMap m₂} m≡m₁∪m₂
 
-            helper : toRel m ≡ᵉ toRel (m₁ ∪ᵐˡᶠ m₂)
-            helper = ≡ᵉ.trans (proj₁ m≡m₁∪m₂) (≡ᵉ.sym $ disjoint-∪ᵐˡ-∪ disj-dom')
+            helper : toRel m ≡ᵉ toRel (m₁ ∪ˡᶠ m₂)
+            helper = ≡ᵉ.trans (proj₁ m≡m₁∪m₂) (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj-dom')
 
   syntax indexedSumᵐ  (λ a → x) m = Σᵐ[ a ← m ] x
   syntax indexedSumᵐᵛ (λ a → x) m = Σᵐᵛ[ a ← m ] x
