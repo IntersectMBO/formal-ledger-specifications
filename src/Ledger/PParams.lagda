@@ -21,14 +21,13 @@ module Ledger.PParams
   (es     : _) (open EpochStructure es)
   (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
   where
+ProtVer : Set
+ProtVer = ℕ × ℕ
 \end{code}
 \begin{figure*}[h!]
 {\small
 \begin{AgdaAlign}
 \begin{code}
-ProtVer : Set
-ProtVer = ℕ × ℕ
-
 record Acnt : Set where
   field treasury reserves : Coin
 
@@ -47,55 +46,49 @@ record PParams : Set where
 \emph{Network group}
 \AgdaTarget{maxBlockSize, maxTxSize, maxHeaderSize, maxValSize, pv}
 \begin{code}
-        maxBlockSize       : ℕ
-        maxTxSize          : ℕ
-        maxHeaderSize      : ℕ
-        maxValSize         : ℕ
-        pv                 : ProtVer -- retired, keep for now
+        maxBlockSize maxTxSize        : ℕ
+        maxHeaderSize maxValSize      : ℕ
+        pv                            : ProtVer -- retired, keep for now
 \end{code}
 \emph{Economic group}
 \AgdaTarget{a, b, minUTxOValue, poolDeposit}
 \begin{code}
-        a                  : ℕ
-        b                  : ℕ
-        minUTxOValue       : Coin
-        poolDeposit        : Coin
+        a b                           : ℕ
+        minUTxOValue poolDeposit      : Coin
 \end{code}
 \emph{Technical group}
 \AgdaTarget{Emax, collateralPercent}
 \begin{code}
-        Emax               : Epoch
-        collateralPercent  : ℕ
+        Emax                          : Epoch
+        collateralPercent             : ℕ
 \end{code}
 \emph{Governance group}
 \AgdaTarget{drepThresholds, poolThresholds, ccMinSize, ccMaxTermLength, govActionLifetime, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
 \begin{code}
-        drepThresholds     : DrepThresholds
-        poolThresholds     : PoolThresholds
-        govActionLifetime  : ℕ
-        govActionDeposit   : Coin
-        drepDeposit        : Coin
-        drepActivity       : Epoch
-        ccMinSize          : ℕ
-        ccMaxTermLength    : ℕ
-        minimumAVS         : Coin
+        drepThresholds                : DrepThresholds
+        poolThresholds                : PoolThresholds
+        govActionLifetime             : ℕ
+        govActionDeposit drepDeposit  : Coin
+        drepActivity                  : Epoch
+        ccMinSize ccMaxTermLength     : ℕ
+        minimumAVS                    : Coin
 
-        -- Script
-        -- costmdls            : Language →/⇀ CostModel (Does not work with DecEq)
-        costmdls            : CostModel
-        prices              : Prices
-        maxTxExUnits        : ExUnits
-        maxBlockExUnits     : ExUnits
-        coinsPerUTxOWord    : Coin
-        -- collateralPercent   : ℕ
-        maxCollateralInputs : ℕ
+  -- Script group
+        -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
+        costmdls                      : CostModel
+        prices                        : Prices
+        maxTxExUnits                  : ExUnits
+        maxBlockExUnits               : ExUnits
+        coinsPerUTxOWord              : Coin
+        -- collateralPercent          : ℕ
+        maxCollateralInputs           : ℕ
 
 paramsWellFormed : PParams → Set
-paramsWellFormed pp = 0 ∉ fromList
-    ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
-    ∷ collateralPercent ∷ ccMaxTermLength ∷ govActionLifetime ∷ govActionDeposit
-    ∷ drepDeposit ∷ [] )
-  × ℕtoEpoch govActionLifetime ≤ drepActivity
+paramsWellFormed pp =
+     0 ∉ fromList  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
+                   ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercent ∷ ccMaxTermLength
+                   ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+  ×  ℕtoEpoch govActionLifetime ≤ drepActivity
   where open PParams pp
 \end{code}
 \end{AgdaAlign}
@@ -103,9 +96,10 @@ paramsWellFormed pp = 0 ∉ fromList
 \caption{Protocol parameter declarations}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
-\ProtVer represents the protocol version used in the Cardano ledger.
-It is a pair of natural numbers, representing the major and minor version,
-respectively.
+% Retiring ProtVer's documentation since ProtVer is retired.
+% \ProtVer represents the protocol version used in the Cardano ledger.
+% It is a pair of natural numbers, representing the major and minor version,
+% respectively.
 
 \PParams contains parameters used in the Cardano ledger, which we group according
 to the general purpose that each parameter serves.
