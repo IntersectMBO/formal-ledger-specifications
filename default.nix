@@ -16,7 +16,7 @@ let
     src = fetchFromGitHub {
       repo = "agda-stdlib";
       owner = "input-output-hk";
-      rev = "bdfab77b179c937856c49d72321ca26e2a27d568";
+      rev = "cb72ba52dfbd4f83d1034e352eb88550a3e1f681";
       sha256 = "+PMZjmMK5xz+3Va7RN1ErtQghzpUlzsc9JBUoL+iasc=";
     };
   });
@@ -27,7 +27,7 @@ let
     src = fetchFromGitHub {
       repo = "stdlib-meta";
       owner = "input-output-hk";
-      rev = "897555aefd77c83e88492255641da3bcc4879461";
+      rev = "f434542c4baf667805161eeb35e5ec772233e180";
       sha256 = "EIKcLjGdnI/6nSCI18v7kPxoojAWsz8O5d9wwol2M0w=";
     };
     meta = { };
