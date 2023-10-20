@@ -250,16 +250,16 @@ module _ (Γ : RatifyEnv) (pparams : PParams) where
   activeCC nothing          = ∅
 
   actualPDRepVotes : GovAction → VDeleg ⇀ Vote
-  actualPDRepVotes NoConfidence  =  ❴ abstainRep , Vote.abstain ❵ᵐ
-                                    ∪ᵐˡ ❴ noConfidenceRep , Vote.yes ❵ᵐ
-  actualPDRepVotes _             =  ❴ abstainRep , Vote.abstain ❵ᵐ
-                                    ∪ᵐˡ ❴ noConfidenceRep , Vote.no ❵ᵐ
+  actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵ᵐ
+                                 ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵ᵐ
+  actualPDRepVotes _             =   ❴ abstainRep , Vote.abstain ❵ᵐ
+                                 ∪ˡ  ❴ noConfidenceRep , Vote.no ❵ᵐ
 
   actualVotes : CCData → GovAction → (GovRole × Credential) ⇀ Vote → VDeleg ⇀ Vote
-  actualVotes cc ga votes  =    mapKeys (credVoter CC) (actualCCVotes cc)
-                           ∪ᵐˡ  actualPDRepVotes ga
-                           ∪ᵐˡ  actualDRepVotes
-                           ∪ᵐˡ  actualSPOVotes ga
+  actualVotes cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc)
+                           ∪ˡ  actualPDRepVotes ga
+                           ∪ˡ  actualDRepVotes
+                           ∪ˡ  actualSPOVotes ga
     where
     spos : ℙ VDeleg
     spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
@@ -280,12 +280,12 @@ module _ (Γ : RatifyEnv) (pparams : PParams) where
     roleVotes r = mapKeys (uncurry credVoter) $ filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes
 
     actualSPOVotes : GovAction → VDeleg ⇀ Vote
-    actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ᵐˡ constMap spos Vote.no
-    actualSPOVotes _              = roleVotes GovRole.SPO ∪ᵐˡ constMap spos Vote.abstain
+    actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.no
+    actualSPOVotes _              = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.abstain
 
     actualDRepVotes : VDeleg ⇀ Vote
     actualDRepVotes  =  roleVotes GovRole.DRep
-                        ∪ᵐˡ constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
+                     ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 \end{code}
 } % End: small
 \end{AgdaAlign}
