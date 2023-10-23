@@ -233,76 +233,76 @@ restrictedDists coins rank dists = dists
         restrict dist = topNDRepDist rank dist ∪ˡ mostStakeDRepDist dist coins
 \end{code}
 \begin{figure*}[h!]
+\begin{AgdaAlign}
 {\small
 \begin{code}
-actualVotes : RatifyEnv → CCData → (GovRole × Credential) ⇀ Vote → GovAction → PParams
-            → VDeleg ⇀ Vote
-actualVotes Γ cc votes ga pparams
-  =   mapKeys (credVoter CC) actualCCVotes
-  ∪ˡ  actualPDRepVotes ∪ˡ actualDRepVotes
-  ∪ˡ  actualSPOVotes
+actualPDRepVotes : GovAction → VDeleg ⇀ Vote
+actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵ᵐ
+                               ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵ᵐ
+actualPDRepVotes _             =   ❴ abstainRep , Vote.abstain ❵ᵐ
+                               ∪ˡ  ❴ noConfidenceRep , Vote.no ❵ᵐ
+
+actualVotes  : RatifyEnv → PParams → CCData → GovAction
+             → GovRole × Credential ⇀ Vote → VDeleg ⇀ Vote
+actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc)
+                                   ∪ˡ  actualPDRepVotes ga
+                                   ∪ˡ  actualDRepVotes
+                                   ∪ˡ  actualSPOVotes ga
   where
-    open RatifyEnv Γ
-    open PParams pparams
+  open RatifyEnv Γ
+  open PParams pparams
 
-    roleVotes : GovRole → VDeleg ⇀ Vote
-    roleVotes r = mapKeys (uncurry credVoter) (filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes)
+  activeDReps : ℙ Credential
+  activeDReps = dom $ filterᵐ? (λ x → currentEpoch ≤? (proj₂ x)) dreps
 
-    activeCC activeDReps : ℙ Credential
-    activeCC = case cc of λ where
-      (just (cc , _))  → dom (filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc))
-      nothing          → ∅
+  activeCC : CCData → ℙ Credential
+  activeCC (just (cc , _))  = dom $ filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
+  activeCC nothing          = ∅
 
-    activeDReps = dom (filterᵐ? (λ x → currentEpoch ≤? (proj₂ x)) dreps)
+  spos : ℙ VDeleg
+  spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
 
-    actualCCVote : Credential → Epoch → Vote
-    actualCCVote c e =
-      case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of λ where
-        (true , just (just c'))  → maybe id Vote.no $ lookupᵐ? votes (CC , c')
-        _                        → Vote.abstain -- expired, no hot key or resigned
+  actualCCVote : Credential → Epoch → Vote
+  actualCCVote c e = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
+    λ where  (true , just (just c'))  → maybe id Vote.no $ lookupᵐ? votes (CC , c')
+             _                        → Vote.abstain -- expired, no hot key or resigned
 
-    actualCCVotes : Credential ⇀ Vote
-    actualCCVotes = case cc , ¿ ccMinSize ≤ lengthˢ activeCC ¿ᵇ of λ where
-      (just (cc , _)  , true)   → mapWithKey actualCCVote cc
-      (just (cc , _)  , false)  → constMap (dom cc) Vote.no
-      (nothing        , _)      → ∅ᵐ
+  actualCCVotes : CCData → Credential ⇀ Vote
+  actualCCVotes nothing          =  ∅ᵐ
+  actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
+                                    then mapWithKey actualCCVote cc
+                                    else constMap (dom cc) Vote.no
 
-    actualPDRepVotes
-      =   ❴ abstainRep       , Vote.abstain ❵ᵐ
-      ∪ˡ  ❴ noConfidenceRep  , (case ga of λ where  NoConfidence  → Vote.yes
-                                                    _             → Vote.no) ❵ᵐ
+  roleVotes : GovRole → VDeleg ⇀ Vote
+  roleVotes r = mapKeys (uncurry credVoter) $ filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes
 
-    actualDRepVotes
-      =   roleVotes GovRole.DRep
-      ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
+  actualSPOVotes : GovAction → VDeleg ⇀ Vote
+  actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.no
+  actualSPOVotes _              = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.abstain
 
-    actualSPOVotes
-      =   roleVotes GovRole.SPO
-      ∪ˡ  constMap spos (if isHF then Vote.no else Vote.abstain)
-      where
-        spos : ℙ VDeleg
-        spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
-
-        isHF : Bool
-        isHF = case ga of λ where
-          (TriggerHF _)  → true
-          _              → false
+  actualDRepVotes : VDeleg ⇀ Vote
+  actualDRepVotes  =   roleVotes GovRole.DRep
+                   ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 \end{code}
-} %% end small
+} % End: small
+\end{AgdaAlign}
 \caption{%Ratify i:
 Types and proofs for the ratification of governance actions}
 \label{fig:defs:ratify-i}
 \end{figure*}
-The code in Figure~\ref{fig:defs:ratify-i} defines some of the types required for ratification of a governance action.
+The code in Figure~\ref{fig:defs:ratify-i} defines some of the functions required for ratification of a governance action.
 \begin{itemize}
-  \item Assuming a ratification environment \AgdaPostulate{Γ},
+  \item We assume a ratification environment \AgdaPostulate{Γ} and define essential vote-counting functions whose behaviors
+  depend on \AgdaPostulate{Γ} as well as other inputs such as
   \begin{itemize}
-    \item \agdaboundcc contains constitutional committee data;
-    \item \agdaboundvotes is a relation associating each role-credential pair with the vote cast by the individual denoted by that pair;
-    \item \agdaboundga denotes the governance action being voted upon.
+    \item \agdaboundcc (of type \CCData), constitutional committee data;
+    \item \agdaboundvotes, a relation associating each role-credential pair with the vote cast by the individual denoted by that pair;
+    \item \agdaboundga (of type \GovAction), the governance action being voted upon.
   \end{itemize}
 
-  \item \roleVotes filters the votes based on the given governance role.
+  \item \actualPDRepVotes determines how the votes will be counted for \DReps;
+  here, \abstainRep is mapped to \abstain and \noConfidenceRep is mapped to either \yes or \no,
+  depending on the value of \agdaboundga.
 
   \item \actualCCVote determines how the vote of each \CC member will be counted; specifically, if a \CC member has not yet registered a hot key, has
   \expired, or has resigned, then \actualCCVote returns \abstain;
@@ -314,14 +314,16 @@ The code in Figure~\ref{fig:defs:ratify-i} defines some of the types required fo
 
   \item \actualCCVotes uses \actualCCVote to determine how the votes of all \CC members will be counted.
 
-  \item \actualPDRepVotes determines how the votes will be counted for \DReps;
-  here, \abstainRep is mapped to \abstain and \noConfidenceRep is mapped to either \yes or \no,
-  depending on the value of \agdaboundga.
+  \item \roleVotes filters the votes based on the given governance role and is essentially a helper function for
+  \actualSPOVotes and \actualDRepVotes.
+
+  \item \actualSPOVotes determines how the votes of \SPOs will be counted; \SPOs that didn't vote count as
+  \abstain, unless the action to be voted upon is a hard-fork in which case the default vote is \no.
 
   \item \actualDRepVotes determines how the votes of \DReps will be counted; \activeDReps that didn't vote count as a \no.
 
   \item \actualVotes is a partial function relating delegates to the actual vote that will be counted on their behalf;
-  it accomplishes this by aggregating the results of \actualCCVotes, \actualPDRepVotes, and \actualDRepVotes.
+  it accomplishes this by aggregating the results of \actualCCVotes, \actualPDRepVotes, \actualSPOVotes, and \actualDRepVotes.
 \end{itemize}
 \begin{figure*}[h!]
 {\small
@@ -373,7 +375,7 @@ abstract
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs
-        votes'  = actualVotes Γ cc votes action pparams
+        votes'  = actualVotes Γ pparams cc action votes
         t       = maybe id ℚ.0ℚ $ threshold pparams (proj₂ <$> cc) action role
     in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ℚ.≥ t
 
