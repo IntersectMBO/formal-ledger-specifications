@@ -21,13 +21,14 @@ module Ledger.PParams
   (es     : _) (open EpochStructure es)
   (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
   where
-ProtVer : Set
-ProtVer = ℕ × ℕ
 \end{code}
 \begin{figure*}[h!]
 {\small
 \begin{AgdaAlign}
 \begin{code}
+ProtVer : Set
+ProtVer = ℕ × ℕ
+
 record Acnt : Set where
   field treasury reserves : Coin
 
@@ -43,26 +44,26 @@ record PoolThresholds : Set where
 record PParams : Set where
   field
 \end{code}
-\emph{Network group}
+\emph{Network group}\vskip-3mm
 \AgdaTarget{maxBlockSize, maxTxSize, maxHeaderSize, maxValSize, pv}
 \begin{code}
         maxBlockSize maxTxSize        : ℕ
         maxHeaderSize maxValSize      : ℕ
         pv                            : ProtVer -- retired, keep for now
 \end{code}
-\emph{Economic group}
+\emph{Economic group}\vskip-3mm
 \AgdaTarget{a, b, minUTxOValue, poolDeposit}
 \begin{code}
         a b                           : ℕ
         minUTxOValue poolDeposit      : Coin
 \end{code}
-\emph{Technical group}
+\emph{Technical group}\vskip-3mm
 \AgdaTarget{Emax, collateralPercent}
 \begin{code}
         Emax                          : Epoch
         collateralPercent             : ℕ
 \end{code}
-\emph{Governance group}
+\emph{Governance group}\vskip-3mm
 \AgdaTarget{drepThresholds, poolThresholds, ccMinSize, ccMaxTermLength, govActionLifetime, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
 \begin{code}
         drepThresholds                : DrepThresholds
@@ -72,13 +73,14 @@ record PParams : Set where
         drepActivity                  : Epoch
         ccMinSize ccMaxTermLength     : ℕ
         minimumAVS                    : Coin
-
-  -- Script group
+\end{code}
+\emph{Other}\vskip-3mm
+\AgdaTarget{costmdls, prices, maxTxExUnits, maxBlockExUnits, coinsPerUTxOWord, maxCollateralInputs}
+\begin{code}
         -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
         costmdls                      : CostModel
         prices                        : Prices
-        maxTxExUnits                  : ExUnits
-        maxBlockExUnits               : ExUnits
+        maxTxExUnits maxBlockExUnits  : ExUnits
         coinsPerUTxOWord              : Coin
         -- collateralPercent          : ℕ
         maxCollateralInputs           : ℕ
