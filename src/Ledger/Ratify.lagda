@@ -100,7 +100,6 @@ instance
   _ = +-0-monoid
 \end{code}
 \begin{figure*}[h!]
-{\small
 \begin{code}
 record StakeDistrs : Set where
   field stakeDistr  : VDeleg ⇀ Coin
@@ -145,7 +144,6 @@ isDRepProp = to-sp (λ x → isDRep x ≟ true)
 isSPOProp : specProperty λ x → isSPO x ≡ true
 isSPOProp = to-sp (λ x → isSPO x ≟ true)
 \end{code}
-} %% end small
 \caption{Types and functions for the RATIFY transition system}
 \label{fig:types-and-functions-for-the-ratify-transition-system}
 \end{figure*}
@@ -234,7 +232,6 @@ restrictedDists coins rank dists = dists
 \end{code}
 \begin{figure*}[h!]
 \begin{AgdaAlign}
-{\small
 \begin{code}
 actualPDRepVotes : GovAction → VDeleg ⇀ Vote
 actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵ᵐ
@@ -284,7 +281,6 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
   actualDRepVotes  =   roleVotes GovRole.DRep
                    ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 \end{code}
-} % End: small
 \end{AgdaAlign}
 \caption{%Ratify i:
 Types and proofs for the ratification of governance actions}
@@ -326,7 +322,6 @@ The code in Figure~\ref{fig:defs:ratify-i} defines some of the functions require
   it accomplishes this by aggregating the results of \actualCCVotes, \actualPDRepVotes, \actualSPOVotes, and \actualDRepVotes.
 \end{itemize}
 \begin{figure*}[h!]
-{\small
 \begin{code}
 votedHashes : Vote → (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
 votedHashes v votes r = votes ⁻¹ v
@@ -338,14 +333,12 @@ votedAbstainHashes participatingHashes : (VDeleg ⇀ Vote) → GovRole → ℙ V
 votedAbstainHashes = votedHashes Vote.abstain
 participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no votes r
 \end{code}
-} %% end small
 \caption{Calculation of the votes as they will be counted}
 \label{fig:defs:ratify-ii}
 \end{figure*}
 
 The code in Figure~\ref{fig:defs:ratify-ii} defines \votedHashes, which returns the set of delegates who voted a certain way on the given governance role.
 \begin{figure*}[h!]
-{\small
 \begin{code}[hide]
 abstract
   -- unused, keep until we know for sure that there'll be no minimum AVS
@@ -385,7 +378,6 @@ abstract
   expired : Epoch → GovActionState → Set
   expired current record { expiresIn = expiresIn } = expiresIn < current
 \end{code}
-} %% end small
 \caption{%%Ratify iii:
 Calculation of stake distributions}
 \label{fig:defs:ratify-iii}
@@ -401,7 +393,6 @@ The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for
   \item \expired checks whether a governance action is expired in a given epoch.
 \end{itemize}
 \begin{figure*}[h!]
-{\small
 \begin{code}[hide]
 open EnactState
 \end{code}
@@ -452,7 +443,6 @@ abstract
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
 \end{code}
-} %% end small
 \caption{%Ratify iv:
 Determination of the status of ratification of the governance action}
 \label{fig:defs:ratify-iv}
@@ -476,7 +466,6 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 
 \end{code}
 \begin{figure*}[h!]
-{\small
 \begin{code}
   RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        accepted Γ es st
@@ -504,7 +493,6 @@ _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × Go
                  → RatifyState → Set
 _⊢_⇀⦇_,RATIFY⦈_ = SS⇒BS _⊢_⇀⦇_,RATIFY'⦈_
 \end{code}
-} %% end small
 \caption{The RATIFY transition system}
 \label{fig:ratify-transition-system}
 \end{figure*}
