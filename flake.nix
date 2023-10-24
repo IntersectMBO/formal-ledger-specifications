@@ -15,7 +15,7 @@
 
       specsDerivationsPackages = key: lib.mapAttrs'
         (k: lib.nameValuePair "${key}-${k}")
-        (lib.filterAttrs (k: v: builtins.elem k [ "docs" "executableSpec" ]) exposed.${key});
+        (lib.filterAttrs (k: v: builtins.elem k [ "docs" "hsExe" ]) exposed.${key});
 
       jobs = {
         inherit (exposed)
