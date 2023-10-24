@@ -5,7 +5,7 @@ This repository contains the formal ledger specifications that are intended to e
 This repository currently contains two specifications---the work in progress specification for Cardano (up to and including the Conway era) and a small example that was produced for the Midnight project (but is unrelated to any actual Midnight code/features). Each specification is executable and contains some documentation in the form of a PDF document. They can be built by following the steps below.
 
 Formal Specification | HTML Version | Haskell Tests |
---------|----------------------|--------------|---------------|
+----------------------|--------------|---------------|
 [Cardano Ledger](https://input-output-hk.github.io/formal-ledger-specifications/pdfs/cardano-ledger.pdf) | [Ledger.PDF](https://input-output-hk.github.io/formal-ledger-specifications/html/Ledger.PDF.html) | [UTXOW test](https://input-output-hk.github.io/formal-ledger-specifications/haskell/Ledger/test/UtxowSpec.hs) |
 [Midnight Example](https://input-output-hk.github.io/formal-ledger-specifications/pdfs/midnight-example.pdf) | [MidnightExample.PDF](https://input-output-hk.github.io/formal-ledger-specifications/html/MidnightExample.PDF.html) | [LEDGER test](https://input-output-hk.github.io/formal-ledger-specifications/haskell/MidnightExample/test/LedgerSpec.hs) |
 
