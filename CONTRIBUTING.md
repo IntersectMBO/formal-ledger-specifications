@@ -4,6 +4,8 @@
 
 We are currently aspiring to follow the [Agda standard library style guide][] as much as reasonable. Since some of our code will be rendered into a PDF, the formatting of the PDF takes priority over formatting of the code, so deviations are to be expected.
 
+We also have a separate style guide for formatting the PDF: [PDF style guide](PDF-style-guide.md).
+
 ## Setup with emacs
 
 We use Agda version 2.6.3 and a patched version of the Agda Standard Library; this makes setup more difficult. You can install the correct version of Agda and the stdlib using `nix-env -iA agda -f .`, but this is a global install which you may not want if you also have other Agda projects.
