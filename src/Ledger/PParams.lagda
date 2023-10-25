@@ -49,19 +49,25 @@ record PParams : Set where
 \begin{code}
         maxBlockSize maxTxSize        : ℕ
         maxHeaderSize maxValSize      : ℕ
+        maxCollateralInputs           : ℕ
         pv                            : ProtVer -- retired, keep for now
+        maxTxExUnits maxBlockExUnits  : ExUnits
 \end{code}
 \emph{Economic group}\vskip-3mm
 \AgdaTarget{a, b, minUTxOValue, poolDeposit}
 \begin{code}
         a b                           : ℕ
         minUTxOValue poolDeposit      : Coin
+        coinsPerUTxOWord              : Coin
+        prices                        : Prices
 \end{code}
 \emph{Technical group}\vskip-3mm
-\AgdaTarget{Emax, collateralPercent}
+\AgdaTarget{Emax, collateralPercentage}
 \begin{code}
         Emax                          : Epoch
-        collateralPercent             : ℕ
+        collateralPercentage          : ℕ
+        -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
+        costmdls                      : CostModel
 \end{code}
 \emph{Governance group}\vskip-3mm
 \AgdaTarget{drepThresholds, poolThresholds, ccMinSize, ccMaxTermLength, govActionLifetime, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
@@ -73,22 +79,11 @@ record PParams : Set where
         drepActivity                  : Epoch
         ccMinSize ccMaxTermLength     : ℕ
         minimumAVS                    : Coin
-\end{code}
-\emph{Other}\vskip-3mm
-\AgdaTarget{costmdls, prices, maxTxExUnits, maxBlockExUnits, coinsPerUTxOWord, maxCollateralInputs}
-\begin{code}
-        -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
-        costmdls                      : CostModel
-        prices                        : Prices
-        maxTxExUnits maxBlockExUnits  : ExUnits
-        coinsPerUTxOWord              : Coin
-        -- collateralPercent          : ℕ
-        maxCollateralInputs           : ℕ
 
 paramsWellFormed : PParams → Set
 paramsWellFormed pp =
      0 ∉ fromList  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
-                   ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercent ∷ ccMaxTermLength
+                   ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                    ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
   ×  ℕtoEpoch govActionLifetime ≤ drepActivity
   where open PParams pp

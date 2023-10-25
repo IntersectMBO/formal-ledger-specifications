@@ -325,17 +325,17 @@ instance
       ; maxCollateralInputs = maxCollateralInputs
       }
     .from pp → let open F.PParams pp in record
-      { a                 = a
-      ; b                 = b
-      ; maxBlockSize      = maxBlockSize
-      ; maxTxSize         = maxTxSize
-      ; maxHeaderSize     = maxHeaderSize
-      ; maxValSize        = maxValSize
-      ; minUTxOValue      = minUTxOValue
-      ; poolDeposit       = poolDeposit
-      ; Emax              = Emax
-      ; collateralPercent = 0
-      ; pv                = from pv
+      { a                    = a
+      ; b                    = b
+      ; maxBlockSize         = maxBlockSize
+      ; maxTxSize            = maxTxSize
+      ; maxHeaderSize        = maxHeaderSize
+      ; maxValSize           = maxValSize
+      ; minUTxOValue         = minUTxOValue
+      ; poolDeposit          = poolDeposit
+      ; Emax                 = Emax
+      ; collateralPercentage = 0
+      ; pv                   = from pv
         -- TODO: translate these once they are implemented in F.PParams
       ; drepThresholds    = record
         { P1  = ½ ; P2a = ½ ; P2b = ½ ; P3  = ½ ; P4 = ½
