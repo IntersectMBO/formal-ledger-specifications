@@ -32,7 +32,6 @@ maximum : ℙ ℚ → ℚ
 maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
 \begin{figure*}[h]
-{\small
 \begin{code}
 GovActionID : Set
 GovActionID = TxId × ℕ
@@ -62,7 +61,6 @@ actionWellFormed : GovAction → Bool
 actionWellFormed (ChangePParams x)  = ppdWellFormed x
 actionWellFormed _                  = true
 \end{code}
-} %% end small
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
@@ -154,7 +152,6 @@ Every governance action must be ratified by at least two of these three bodies u
 The type of action and the state of the governance system determines which bodies must ratify it.
 Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
 \begin{figure*}[h]
-{\small
 \begin{code}
 NeedsHash : GovAction → Set
 NeedsHash NoConfidence           = GovActionID
@@ -168,7 +165,6 @@ NeedsHash Info                   = ⊤
 HashProtected : Set → Set
 HashProtected A = A × GovActionID
 \end{code}
-} %% end small
 \caption{NeedsHash and HashProtected types}
 \label{fig:needshash-and-hashprotected-types}
 \end{figure*}
@@ -187,7 +183,6 @@ attached to the action we want to ratify.
 See Section~\ref{sec:ratification} for more on the ratification process.
 
 \begin{figure*}[h]
-{\small
 \begin{code}
 data Vote : Set where
   yes no abstain  : Vote
@@ -206,7 +201,6 @@ record GovProposal : Set where
         deposit     : Coin
         anchor      : Anchor
 \end{code}
-} %% end small
 \caption{Governance action proposals and votes}
 \label{defs:governance-votes}
 \end{figure*}
@@ -254,7 +248,6 @@ A record of type \EnactState represents the state for enacting a governance acti
 The latter contains fields for the constitutional committee, constitution,
 protocol version, protocol parameters, withdrawals from treasury, and treasury balance.
 \begin{figure*}[h]
-{\small
 \begin{code}
 record EnactEnv : Set where
   constructor ⟦_,_,_⟧ᵉ
@@ -273,7 +266,6 @@ ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credenti
 ccCreds (just x  , _)  = dom (x .proj₁)
 ccCreds (nothing , _)  = ∅
 \end{code}
-} %% end small
 \caption{Enactment types}
 \label{fig:enactment-types}
 \end{figure*}
@@ -307,7 +299,6 @@ The relation \ENACTsyntax is the transition relation for enacting a governance a
 It represents how the \agdaboundEnactState changes when a specific governance action is enacted
 (see Figure~\ref{fig:enact-transition-system}).
 \begin{figure*}[h]
-{\small
 \begin{code}
 data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
 
@@ -342,7 +333,6 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
   Enact-Info :
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
-} %% end small
 \caption{ENACT transition system}
 \label{fig:enact-transition-system}
 \end{figure*}

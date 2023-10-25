@@ -1,5 +1,11 @@
 name: Formal Ledger Specs
-on: [push]
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
 
 permissions:
   contents: write
@@ -83,6 +89,7 @@ jobs:
           cRet=$(echo "$closure" | tr '\n' ' ')
           echo "derivation=$dRet" >> $GITHUB_OUTPUT
           echo "closure=$cRet" >> $GITHUB_OUTPUT
+          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
 
       - name: Build midnight
         id: midnight
@@ -93,12 +100,13 @@ jobs:
           cRet=$(echo "$closure" | tr '\n' ' ')
           echo "derivation=$dRet" >> $GITHUB_OUTPUT
           echo "closure=$cRet" >> $GITHUB_OUTPUT
+          rsync -r --exclude={'**/nix-support','**/lib'} outputs/midnight*/* docs/
 
       - name: Export all derivations
         id: export-derivations
         run: |
           hashes="${{steps.agda.outputs.derivation}}-${{steps.formalLedger.outputs.derivation}}-${{steps.ledger.outputs.derivation}}-${{steps.midnight.outputs.derivation}}"
-          closures="${{steps.agda.outputs.closure}} ${{steps.formalLedger.outputs.closure}} ${{ steps.ledger.outputs.closure}} ${{steps.midnight.outputs.closure}}"
+          closures="${{steps.agda.outputs.closure}} ${{steps.formalLedger.outputs.closure}} ${{steps.ledger.outputs.closure}} ${{steps.midnight.outputs.closure}}"
           touch derivations
           updated=false
           # export only if the hashes changed or the store does not exist for some reason
@@ -122,59 +130,29 @@ jobs:
           path: |
             store
             derivations
-          key: cache-store-${{ runner.os }}-${{github.run_id}}
+          key: cache-store-${{ runner.os }}-${{ github.run_id }}
 
-      - name: Prepare pdf files to be deployed to site
+      - name: Upload PDF artifacts
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDF specs
+          path: docs/pdfs/*.pdf
+
+      - name: Generate main website
         if: github.ref == 'refs/heads/master'
         run: |
-          mkdir -p pdfs
-          for f in $(find -L outputs -name '*.pdf'); do
-            cp -L --force $f pdfs
-          done
-
-      - name: Prepare html docs to be deployed to site
-        if: github.ref =='refs/heads/master'
-        id: html
-        run: |
-          mkdir -p html
-          cp -L -r outputs/ledger/html html/ledger
-          cp -L -r outputs/midnight/html html/midnight
-          ledger=$(nix eval -f default.nix "ledger.name")
-          midnight=$(nix eval -f default.nix "midnight.name")
-          echo "ledger=$ledger" >> $GITHUB_OUTPUT
-          echo "midnight=$midnight" >> $GITHUB_OUTPUT
-
-      - name: Build static file
-        if: github.ref == 'refs/heads/master'
-        run: |
-              ledger="${{steps.html.outputs.ledger}}.PDF.html"
-              midnight="${{steps.html.outputs.midnight}}.PDF.html"
-              touch index.html
-              cat > index.html << EOF
-              <!DOCTYPE html>
-              <html>
-              <body>
-                  <h3>Formal ledger specs</h3>
-                  <ul>
-              EOF
-              for f in pdfs/*.pdf; do
-                echo "<li><a href="$f">$(basename $f)</a></li>" >> index.html
-              done
-              echo  "<li><a href="html/ledger/${ledger}">${ledger}</a></li>" >> index.html
-              echo  "<li><a href="html/midnight/${midnight}">${midnight}</a></li>" >> index.html
-              cat >> index.html << EOF
-              </ul>
-              </body>
-              </html>
-              EOF
+          echo "** Generated PDF files:"; find -L docs/ -name '*.pdf'
+          echo "** Generated HTML files:"; find -L docs/ -name '*.html'
+          echo "** Generated Haskell files:"; find -L docs/ -name '*.hs'
+          OUT_DIR=../docs/ make staticWebsite
 
       - name: Add files
         if: github.ref == 'refs/heads/master'
-
         run: |
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git add -f index.html pdfs/ html/
+            git add -f docs/
             git commit -m "Updated for ${{ github.sha }}"
 
       - name: Push to gh-pages

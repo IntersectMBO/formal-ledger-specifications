@@ -22,8 +22,8 @@ in {
       specs.agda
       cabal-install
       (haskellPackages.ghcWithPackages (pkgs: with pkgs; [
-        specs.ledger.executableSpec
-        specs.midnight.executableSpec
+        specs.ledger.hsExe
+        specs.midnight.hsExe
       ]))
     ];
   };

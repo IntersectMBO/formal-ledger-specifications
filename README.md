@@ -4,10 +4,10 @@ This repository contains the formal ledger specifications that are intended to e
 
 This repository currently contains two specifications---the work in progress specification for Cardano (up to and including the Conway era) and a small example that was produced for the Midnight project (but is unrelated to any actual Midnight code/features). Each specification is executable and contains some documentation in the form of a PDF document. They can be built by following the steps below.
 
-Project | Formal Specification | HTML Version |
---------|----------------------|--------------|
-Cardano | [Ledger Spec](https://input-output-hk.github.io/formal-ledger-specifications/pdfs/cardano-ledger.pdf) | [HTML](https://input-output-hk.github.io/formal-ledger-specifications/html/ledger/Ledger.PDF.html) |
-Midnight Example | [Ledger Spec](https://input-output-hk.github.io/formal-ledger-specifications/pdfs/midnight-example.pdf) | [HTML](https://input-output-hk.github.io/formal-ledger-specifications/html/midnight/MidnightExample.PDF.html) |
+Formal Specification | HTML Version | Haskell Tests |
+----------------------|--------------|---------------|
+[Cardano Ledger](https://input-output-hk.github.io/formal-ledger-specifications/pdfs/cardano-ledger.pdf) | [Ledger.PDF](https://input-output-hk.github.io/formal-ledger-specifications/html/Ledger.PDF.html) | [UTXOW test](https://input-output-hk.github.io/formal-ledger-specifications/haskell/Ledger/test/UtxowSpec.hs) |
+[Midnight Example](https://input-output-hk.github.io/formal-ledger-specifications/pdfs/midnight-example.pdf) | [MidnightExample.PDF](https://input-output-hk.github.io/formal-ledger-specifications/html/MidnightExample.PDF.html) | [LEDGER test](https://input-output-hk.github.io/formal-ledger-specifications/haskell/MidnightExample/test/LedgerSpec.hs) |
 
 Note: the HTML versions of the specifications are interactive, but many modules currently contain LaTeX code which is used to generate the PDF. We intend to fix this eventually.
 
@@ -28,21 +28,25 @@ cd formal-ledger-specifications
 Invoke the following `nix-build` commands from inside the `formal-ledger-specifications` directory.
 
 ```
-nix-build -A ledger.executableSpec     # build the spec
-nix-build -A ledger.docs               # build the spec docs
-nix-build -A midnight.executableSpec   # build the Midnight example
-nix-build -A midnight.docs             # build the Midnight example docs
+nix-build -A ledger.docs      # generate the PDF spec of the Cardano ledger
+nix-build -A midnight.docs    # generate the PDF spec of the Midnight example
+nix-build -A ledger.hsSrc     # extract the Haskell code of the Cardano ledger
+nix-build -A midnight.hsSrc   # extract the Haskell code of the Midnight example
 ```
 
 ### Test the spec using nix-shell
 
-The `executableSpec` is a `cabal` package, which can be loaded into GHCI like this:
+The `hsExe` is a `cabal` package, which can be loaded into GHCI like this:
 
 ```
-nix-shell -A run --command "cabal repl --build-depends 'agda-ledger-executable-spec, agda-ledger-executable-spec-midnight'"
-λ> :m HSLedgerTest
-λ> main
+nix-shell -A run --command "cabal repl --build-depends 'cardano-ledger'"
+λ> :m Lib
+λ> :i UTxOState
 ```
+
+Building the `hsExe` derivation will also run the test suite, which you can manually do using `cabal test`.
+
+
 
 ## Contributions and Feedback
 

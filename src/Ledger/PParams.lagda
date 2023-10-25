@@ -23,7 +23,6 @@ module Ledger.PParams
   where
 \end{code}
 \begin{figure*}[h!]
-{\small
 \begin{AgdaAlign}
 \begin{code}
 ProtVer : Set
@@ -89,7 +88,6 @@ paramsWellFormed pp =
   where open PParams pp
 \end{code}
 \end{AgdaAlign}
-} %% End: small
 \caption{Protocol parameter declarations}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
