@@ -43,67 +43,58 @@ record PoolThresholds : Set where
 record PParams : Set where
   field
 \end{code}
-\emph{Network group}
+\emph{Network group}\vskip-3mm
 \AgdaTarget{maxBlockSize, maxTxSize, maxHeaderSize, maxValSize, pv}
 \begin{code}
-        maxBlockSize       : ℕ
-        maxTxSize          : ℕ
-        maxHeaderSize      : ℕ
-        maxValSize         : ℕ
-        pv                 : ProtVer -- retired, keep for now
+        maxBlockSize maxTxSize        : ℕ
+        maxHeaderSize maxValSize      : ℕ
+        maxCollateralInputs           : ℕ
+        pv                            : ProtVer -- retired, keep for now
+        maxTxExUnits maxBlockExUnits  : ExUnits
 \end{code}
-\emph{Economic group}
+\emph{Economic group}\vskip-3mm
 \AgdaTarget{a, b, minUTxOValue, poolDeposit}
 \begin{code}
-        a                  : ℕ
-        b                  : ℕ
-        minUTxOValue       : Coin
-        poolDeposit        : Coin
+        a b                           : ℕ
+        minUTxOValue poolDeposit      : Coin
+        coinsPerUTxOWord              : Coin
+        prices                        : Prices
 \end{code}
-\emph{Technical group}
-\AgdaTarget{Emax, collateralPercent}
+\emph{Technical group}\vskip-3mm
+\AgdaTarget{Emax, collateralPercentage}
 \begin{code}
-        Emax               : Epoch
-        collateralPercent  : ℕ
+        Emax                          : Epoch
+        collateralPercentage          : ℕ
+        -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
+        costmdls                      : CostModel
 \end{code}
-\emph{Governance group}
+\emph{Governance group}\vskip-3mm
 \AgdaTarget{drepThresholds, poolThresholds, ccMinSize, ccMaxTermLength, govActionLifetime, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
 \begin{code}
-        drepThresholds     : DrepThresholds
-        poolThresholds     : PoolThresholds
-        govActionLifetime  : ℕ
-        govActionDeposit   : Coin
-        drepDeposit        : Coin
-        drepActivity       : Epoch
-        ccMinSize          : ℕ
-        ccMaxTermLength    : ℕ
-        minimumAVS         : Coin
-
-        -- Script
-        -- costmdls            : Language →/⇀ CostModel (Does not work with DecEq)
-        costmdls            : CostModel
-        prices              : Prices
-        maxTxExUnits        : ExUnits
-        maxBlockExUnits     : ExUnits
-        coinsPerUTxOWord    : Coin
-        -- collateralPercent   : ℕ
-        maxCollateralInputs : ℕ
+        drepThresholds                : DrepThresholds
+        poolThresholds                : PoolThresholds
+        govActionLifetime             : ℕ
+        govActionDeposit drepDeposit  : Coin
+        drepActivity                  : Epoch
+        ccMinSize ccMaxTermLength     : ℕ
+        minimumAVS                    : Coin
 
 paramsWellFormed : PParams → Set
-paramsWellFormed pp = 0 ∉ fromList
-    ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ minUTxOValue ∷ poolDeposit
-    ∷ collateralPercent ∷ ccMaxTermLength ∷ govActionLifetime ∷ govActionDeposit
-    ∷ drepDeposit ∷ [] )
-  × ℕtoEpoch govActionLifetime ≤ drepActivity
+paramsWellFormed pp =
+     0 ∉ fromList  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
+                   ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
+                   ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+  ×  ℕtoEpoch govActionLifetime ≤ drepActivity
   where open PParams pp
 \end{code}
 \end{AgdaAlign}
 \caption{Protocol parameter declarations}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
-\ProtVer represents the protocol version used in the Cardano ledger.
-It is a pair of natural numbers, representing the major and minor version,
-respectively.
+% Retiring ProtVer's documentation since ProtVer is retired.
+% \ProtVer represents the protocol version used in the Cardano ledger.
+% It is a pair of natural numbers, representing the major and minor version,
+% respectively.
 
 \PParams contains parameters used in the Cardano ledger, which we group according
 to the general purpose that each parameter serves.

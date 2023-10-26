@@ -153,7 +153,7 @@ feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
                   ∧ not (≟-∅ᵇ (txrdmrs ˢ))
                   =>ᵇ ( allᵇ (isVKeyAddr? ∘ proj₁) collateralRange
                       ∧ isAdaOnlyᵇ bal
-                      ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercent)
+                      ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
                       ∧ not (≟-∅ᵇ collateral)
                       )
   where
