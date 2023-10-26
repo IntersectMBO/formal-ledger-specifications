@@ -33,7 +33,7 @@ instance
       (s : LState) (let ⟦ utxoSt , govSt , certSt ⟧ˡ = s)
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
-      utxoΓ = UTxOEnv ∋ record{ LEnv Γ }
+      utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
       govΓ  = GovEnv  ∋ ⟦ txid , epoch slot , pparams ⟧ᵗ
 

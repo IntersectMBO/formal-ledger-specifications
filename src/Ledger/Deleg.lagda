@@ -123,7 +123,7 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set w
     → mc ∈ mapˢ just (dom pools)
     ────────────────────────────────
     ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-                       ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ⟧ᵈ
+                        ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ⟧ᵈ
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
@@ -141,7 +141,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → S
     (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
     ────────────────────────────────
     ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                               ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ˡ dReps , ccKeys ⟧ᵛ
+                                ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     c ∈ dom dReps
@@ -208,7 +208,7 @@ instance
     (delegate c mv mc d) →
       case ¿ d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc × mc ∈ mapˢ just (dom pools) ¿ of λ where
         (yes (p₁ , p₂)) → just (-, DELEG-delegate p₁ p₂)
-        _  → nothing
+        _               → nothing
     _ → nothing
   Computational-DELEG .completeness ⟦ pp , pools ⟧ᵈᵉ s (delegate c mv mc d) s' (DELEG-delegate p₁ p₂)
     rewrite dec-yes (¿ d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc × mc ∈ mapˢ just (dom pools) ¿)
