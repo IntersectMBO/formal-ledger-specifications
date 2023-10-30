@@ -1,15 +1,23 @@
 # PDF spec guidelines
 
 The purpose of the PDF specs is to be readable by a wide range of people. They should not assume
-- knowledge of common (functional) programming syntax and idioms or
+- knowledge of specific (as opposed to general) concepts, notations or syntax or
 - familiarity with another Cardano-specific resource, other than other specifications.
 
-## Haskell/Agda-isms
+## Notation
 
 We want to avoid syntax that is not commonly used outside of the
 languages we use. While this is really inconvenient sometimes, the
 more we use such notations the more we need to introduce them,
 increasing the barrier to entry.
+
+| Concept                                       | Examples                                                 |                                                                                |
+|-----------------------------------------------|----------------------------------------------------------|--------------------------------------------------------------------------------|
+| General concepts                              | sets, functions, products                                | Should not be explained.                                                       |
+| Functional programming concepts               | lambdas, pattern matching, inductive data types          | May be worth introducing briefly.                                              |
+| Advanced or unusual FP concepts               | dependent types, `with`, copatterns                      | Should be avoided.                                                             |
+| Functional programming names/notations/syntax | `_$_`, `map`, `fold`, `module`, `open`                   | Has to be explained. Avoid if reasonably possible.                             |
+| Notation                                      | inference rules, concrete notations for general concepts | May or may not need an explanation, depending on how standard the notation is. |
 
 ## Hiding pieces of code
 
