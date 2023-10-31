@@ -1,5 +1,5 @@
 cabal-version:      2.4
-name:               cardano-ledger
+name:               cardano-ledger-executable-spec
 version:            0.1.0.0
 synopsis:
 
@@ -35,7 +35,7 @@ test-suite test
     other-modules:
         UtxowSpec
     build-depends:
-        cardano-ledger,
+        cardano-ledger-executable-spec,
         hspec,
         HUnit
     build-tool-depends: hspec-discover:hspec-discover
