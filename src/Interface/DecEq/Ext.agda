@@ -8,6 +8,7 @@ open import Relation.Nullary
 open import Relation.Nullary.Decidable
 
 open import Interface.DecRel
+open import Interface.Decidable.Instance
 
 module Interface.DecEq.Ext where
 
@@ -36,6 +37,14 @@ module _ ⦃ DecEq-A : DecEq A ⦄ where
   ≡ᵇ-refl {a = a} with a ≟ a
   ... | no ¬p = ⊥-elim (¬p refl)
   ... | yes p = refl
+
+  open import Data.List.Membership.DecPropositional (_≟_ {A = A}) public
+    using () renaming (_∈?_ to _∈ˡ?_; _∉?_ to _∉ˡ?_)
+
+  instance Dec-∈ˡ = Decidable²⇒Dec _∈ˡ?_
+
+  _∈ᵇ_ : A → List A → Bool
+  _∈ᵇ_ = ⌊_⌋ ∘₂ _∈ˡ?_
 
 ↔-DecEq : A ↔ B → DecEq A → DecEq B
 ↔-DecEq A↔B record { _≟_ = _≟_ } ._≟_ b₁ b₂ =

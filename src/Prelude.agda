@@ -15,7 +15,7 @@ open import Data.Empty public
 open import Data.List public
   hiding (align; alignWith; fromMaybe; map; zip; zipWith)
 open import Data.List.Membership.Propositional public
-  using () renaming (_∈_ to _∈ˡ_)
+  using () renaming (_∈_ to _∈ˡ_; _∉_ to _∉ˡ_)
 open import Data.Maybe public
   hiding (_>>=_; align; alignWith; ap; fromMaybe; map; zip; zipWith)
 open import Data.Unit public

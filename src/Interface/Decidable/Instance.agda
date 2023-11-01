@@ -48,10 +48,10 @@ Dec¹ P = ∀ {x} → Dec (P x)
 Decidable¹⇒Dec : ∀ {P : X → Set a} → Decidable¹ P → Dec¹ P
 Decidable¹⇒Dec P = P _
 
-Dec² : (X → X → Set a) → Set _
+Dec² : (X → Y → Set a) → Set _
 Dec² _~_ = ∀ {x y} → Dec (x ~ y)
 
-Decidable²⇒Dec : {_~_ : X → X → Set a} → Decidable² _~_ → Dec² _~_
+Decidable²⇒Dec : {_~_ : X → Y → Set a} → Decidable² _~_ → Dec² _~_
 Decidable²⇒Dec _~?_ {x} {y} = x ~? y
 
 instance
