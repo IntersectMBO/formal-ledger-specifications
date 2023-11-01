@@ -29,8 +29,8 @@ record EpochStructure : Set₁ where
     preoEpoch = hasPreorderFromStrictPartialOrder {_<_ = _<_ on firstSlot}
       record
         { isEquivalence = isEquivalence
-        ; irrefl = λ where refl → <-irrefl refl
-        ; trans  = <-trans
+        ; irrefl = λ where refl → <-irrefl {A = Slot} refl
+        ; trans  = <-trans {A = Slot}
         ; <-resp-≈ = (λ where refl → id) , (λ where refl → id)
         }
 

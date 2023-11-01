@@ -154,9 +154,9 @@ instance
       (yesᵈ (wf , dep) , noᵈ notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
       _ → nothing
   Computational-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
-    with lookupActionId pparams role aid s | "agda#6868"
-  ... | noᵈ ¬p | _ = ⊥-elim (¬p (⤖⇒ (fromRelated Any↔) .to (_ , ∈-fromList .from mem , refl , cV)))
-  ... | yesᵈ p | _ with ⤖⇒ (fromRelated Any↔) .from p
+    with lookupActionId pparams role aid s
+  ... | noᵈ ¬p = ⊥-elim (¬p (⤖⇒ (fromRelated Any↔) .to (_ , ∈-fromList .from mem , refl , cV)))
+  ... | yesᵈ p with ⤖⇒ (fromRelated Any↔) .from p
   ...   | (_ , mem , refl , cV) = refl
   Computational-GOV' .completeness (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep newOk)
     with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿ | isNewCommittee a
