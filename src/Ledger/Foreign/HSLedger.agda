@@ -156,11 +156,12 @@ HsGovParams : GovParams
 HsGovParams = record
   { Implementation
   ; ppUpd = let open PParamsDiff in λ where
-      .UpdateT          → ⊤
-      .updateGroups     → λ _ → ∅
-      .applyUpdate      → λ p _ → p
-      .ppdWellFormed    → λ _ → true
-      .ppdWellFormed⇒WF → λ _ _ x → x
+      .UpdateT                → ⊤
+      .updateGroups           → λ _ → ∅
+      .applyUpdate            → λ p _ → p
+      .ppdWellFormed          → λ _ → false
+      .ppdWellFormed⇒hasGroup → λ ()
+      .ppdWellFormed⇒WF       → λ _ _ x → x
   ; ppHashingScheme = it
   }
 
