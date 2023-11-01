@@ -46,6 +46,8 @@ open import Ledger.Gov
 open import Ledger.Ratify
 
 open import Ledger.Chain
+
+open import Ledger.EssentialAgda
 \end{code}
 
 \include{Ledger/Introduction}
@@ -67,5 +69,12 @@ open import Ledger.Chain
 
 \section{Properties}
 \input{Ledger/Utxo/Properties}
+
+\clearpage
+
+\appendix
+
+\section{Appendix: Agda essentials}
+\input{Ledger/EssentialAgda}
 
 \end{document}
