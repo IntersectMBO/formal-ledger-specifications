@@ -8,7 +8,7 @@ PRE=$(addprefix $(LATEX_DIR)/,\
 PDF_DIR=$(OUT_DIR)/pdfs
 HTML_DIR=$(OUT_DIR)/html
 HS_DIR=$(OUT_DIR)/haskell
-MALONZO_DIR=MAlonzo/Code
+MALONZO_DIR=src/MAlonzo/Code
 CABAL_TEST=cabal run test
 LEDGER=Ledger
 MIDNIGHT=MidnightExample
@@ -50,8 +50,8 @@ define agdaToHs =
     mkdir -p $(HS_DIST)
     cp -r $(PROJECT)/hs-src/* $(HS_DIST)/
     cp $(PROJECT)/hs-src/$(CABAL_FILE) $(HS_DIST)/
-    $(AGDA) --transliterate -c --ghc-dont-call-ghc --compile-dir $(HS_DIST) $<
-    find $(HS_DIST)/MAlonzo -name "*.hs" -print\
+    $(AGDA) --transliterate -c --ghc-dont-call-ghc --compile-dir $(HS_DIST)/src $<
+    find $(HS_DIST)/src/MAlonzo -name "*.hs" -print\
       | sed "s#^$(HS_DIST)/#        #;s#\.hs##;s#/#.#g"\
       >> $(HS_DIST)/$(CABAL_FILE)
 endef

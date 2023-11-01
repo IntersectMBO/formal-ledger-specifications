@@ -71,7 +71,7 @@ rec {
 
   mkSpecDerivation = { project, main }: rec {
     docs = stdenv.mkDerivation {
-      pname = "docs";
+      pname = "${project}-docs";
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
@@ -87,7 +87,7 @@ rec {
     };
 
     html = stdenv.mkDerivation {
-      pname = "html";
+      pname = "${project}-html";
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
@@ -103,7 +103,7 @@ rec {
     };
 
     hsSrc = stdenv.mkDerivation {
-      pname = "hs-src";
+      pname = "${project}-hs-src";
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
@@ -122,7 +122,10 @@ rec {
         test -n "$(find $out/haskell/ -type f -name '*.hs')"
         # OUT_DIR=$out make "${project}".hsTest
       '';
-      dontInstall = true;
+      installPhase = ''
+        mv $out/haskell/${main}/* $out
+        rm -rf $out/haskell
+      '';
     };
 
     # hsDocs = stdenv.mkDerivation {
@@ -144,7 +147,7 @@ rec {
     #   dontInstall = true;
     # };
 
-    hsExe = haskellPackages.callCabal2nix "${project}" "${hsSrc}/haskell/${main}" { };
+    hsExe = haskellPackages.callCabal2nix "${project}" "${hsSrc}" { };
 
   };
 

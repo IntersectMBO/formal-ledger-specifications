@@ -47,12 +47,12 @@ test-suite test
 
 library
     import: globalOptions
-    hs-source-dirs: .
-    exposed-modules:
-        Lib
+    hs-source-dirs: src
     build-depends:
         text,
         ieee,
         tree-diff
+    exposed-modules:
+      MAlonzo.Code.Ledger.Foreign.API
 -- This will be generated automatically when building with nix
     other-modules:
