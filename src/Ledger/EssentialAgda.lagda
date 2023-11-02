@@ -12,7 +12,7 @@ open import Data.Nat
 
 \subsection{Record types}
 
-A \defn{record} in Agda is similar to a structure or a class in other languages.  It provides a way to
+A \defn{record} is a product with named accessors for the individual fields.  It provides a way to
 define a type that groups together inhabitants of other types.\\[6pt]
 \textbf{Syntax}.\\[4pt]
 %
