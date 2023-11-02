@@ -89,7 +89,7 @@ jobs:
           cRet=$(echo "$closure" | tr '\n' ' ')
           echo "derivation=$dRet" >> $GITHUB_OUTPUT
           echo "closure=$cRet" >> $GITHUB_OUTPUT
-          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
+          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/ledger/
 
       - name: Build midnight
         id: midnight
@@ -100,7 +100,7 @@ jobs:
           cRet=$(echo "$closure" | tr '\n' ' ')
           echo "derivation=$dRet" >> $GITHUB_OUTPUT
           echo "closure=$cRet" >> $GITHUB_OUTPUT
-          rsync -r --exclude={'**/nix-support','**/lib'} outputs/midnight*/* docs/
+          rsync -r --exclude={'**/nix-support','**/lib'} outputs/midnight*/* docs/midnight/
 
       - name: Export all derivations
         id: export-derivations
