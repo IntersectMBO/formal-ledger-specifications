@@ -24,10 +24,11 @@ data DCert : Set where
   ccreghot    : Credential → Maybe Credential → DCert
 
 record CertEnv : Set where
-  constructor ⟦_,_,_⟧ᶜ
+  constructor ⟦_,_,_,_⟧ᶜ
   field epoch  : Epoch
         pp     : PParams
         votes  : List GovVote
+        wdrls  : RwdAddr ⇀ Coin
 
 record DState : Set where
   constructor ⟦_,_,_⟧ᵈ
@@ -47,13 +48,17 @@ record GState : Set where
         ccHotKeys  : Credential ⇀ Maybe Credential
 
 record CertState : Set where
-  constructor ⟦_,_,_⟧ᶜ
+  constructor ⟦_,_,_⟧ᶜˢ
   field dState : DState
         pState : PState
         gState : GState
 
+record DelegEnv : Set where
+  constructor ⟦_,_⟧ᵈᵉ
+  field pparams  : PParams
+        pools    : Credential ⇀ PoolParams
+
 GovCertEnv  = CertEnv
-DelegEnv    = PParams
 PoolEnv     = PParams
 \end{code}
 \caption{Types used for CERTS transition system}
@@ -86,6 +91,7 @@ private variable
   pp : PParams
   vs : List GovVote
   poolParams : PoolParams
+  wdrls  : RwdAddr ⇀ Coin
 
 module _ (open PParams) where
 \end{code}
@@ -114,9 +120,10 @@ module _ (open PParams) where
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
   DELEG-delegate :
     d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc
+    → mc ∈ mapˢ just (dom pools)
     ────────────────────────────────
-    pp ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-          ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ⟧ᵈ
+    ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
+                        ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ⟧ᵈ
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
@@ -133,8 +140,8 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → S
   GOVCERT-regdrep : let open PParams pp in
     (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                        ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ˡ dReps , ccKeys ⟧ᵛ
+    ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+                                ⟦ ❴ c , e + drepActivity ❵ᵐ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     c ∈ dom dReps
@@ -155,29 +162,31 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → S
 \begin{code}
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
   CERT-deleg :
-    pp ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜ
+    ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜ
+    ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
     ────────────────────────────────
-    Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ
+    Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
 
 data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set where
   CERT-base :
-    let open PParams pp; open CertState st; open GState gState
+    let open PParams pp; open CertState st; open GState gState; open DState dState
         refresh = mapPartial getDRepVote (fromList vs)
-    in ⊤ -- TODO: check that the withdrawals are correct here
+    in mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs
+    → wdrls ˢ ⊆ rewards ˢ
     ────────────────────────────────
-    ⟦ e , pp , vs ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st
+    ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st
       { gState = record gState
-        { dreps = mapValueRestricted (const (e + drepActivity)) dreps refresh } }
+        { dreps = mapValueRestricted (const (e + drepActivity)) dreps refresh }
+      ; dState = record dState { rewards = constMap (dom wdrls) 0 ∪ˡ rewards } }
 
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = SS⇒BSᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
@@ -195,16 +204,16 @@ open Computational ⦃...⦄
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_
-  Computational-DELEG .computeProof pp _ = λ where
+  Computational-DELEG .computeProof ⟦ pp , pools ⟧ᵈᵉ _ = λ where
     (delegate c mv mc d) →
-      case d ≟ requiredDeposit pp mv ⊔ requiredDeposit pp mc of λ where
-        (yes p) → just (-, DELEG-delegate p)
-        (no _)  → nothing
+      case ¿ d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc × mc ∈ mapˢ just (dom pools) ¿ of λ where
+        (yes (p₁ , p₂)) → just (-, DELEG-delegate p₁ p₂)
+        _               → nothing
     _ → nothing
-  Computational-DELEG .completeness pp s (delegate c mv mc d) s' (DELEG-delegate p)
-    rewrite dec-yes (d ≟ requiredDeposit pp mv ⊔ requiredDeposit pp mc) p .proj₂ = refl
+  Computational-DELEG .completeness ⟦ pp , pools ⟧ᵈᵉ s (delegate c mv mc d) s' (DELEG-delegate p₁ p₂)
+    rewrite dec-yes (¿ d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc × mc ∈ mapˢ just (dom pools) ¿)
+                    (p₁ , p₂) .proj₂ = refl
 
-instance
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_
   Computational-POOL .computeProof _ ⟦ pools , _ ⟧ᵖ (regpool c _) =
     case c ∈? dom pools of λ where
@@ -217,7 +226,7 @@ instance
   Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
 
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_
-  Computational-GOVCERT .computeProof ⟦ _ , pp , _ ⟧ᶜ ⟦ dReps , _ ⟧ᵛ (regdrep c d _) =
+  Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ dReps , _ ⟧ᵛ (regdrep c d _) =
     let open PParams pp in
     case ¿ (d ≡ drepDeposit × c ∉ dom dReps)
          ⊎ (d ≡ 0 × c ∈ dom dReps) ¿ of λ where
@@ -232,7 +241,7 @@ instance
       (yes _) → nothing
       (no p)  → just (-, GOVCERT-ccreghot p)
   Computational-GOVCERT .computeProof _ _ _ = nothing
-  Computational-GOVCERT .completeness ⟦ _ , pp , _ ⟧ᶜ ⟦ dReps , _ ⟧ᵛ
+  Computational-GOVCERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ dReps , _ ⟧ᵛ
     (regdrep c d _) _ (GOVCERT-regdrep p)
     rewrite dec-yes
       ¿ (let open PParams pp in
@@ -245,43 +254,51 @@ instance
     (ccreghot c _) _ (GOVCERT-ccreghot ¬p)
     rewrite dec-no ((c , nothing) ∈? (ccKeys ˢ)) ¬p = refl
 
-instance
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_
-  Computational-CERT .computeProof Γ@(⟦ e , pp , vs ⟧ᶜ) ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ dCert
-    with computeProof pp stᵈ dCert | computeProof pp stᵖ dCert | computeProof Γ stᵍ dCert
+  Computational-CERT .computeProof Γ@(⟦ e , pp , vs , _ ⟧ᶜ) ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ dCert
+    with computeProof ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ stᵈ dCert
+       | computeProof pp stᵖ dCert | computeProof Γ stᵍ dCert
   ... | just (_ , h) | _            | _            = just (-, CERT-deleg h)
   ... | nothing      | just (_ , h) | _            = just (-, CERT-pool h)
   ... | nothing      | nothing      | just (_ , h) = just (-, CERT-vdel h)
   ... | nothing      | nothing      | nothing      = nothing
-  Computational-CERT .completeness ⟦ _ , pp , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ
-    dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜ (CERT-deleg h)
-    with computeProof pp stᵈ dCert | completeness _ _ _ _ h
+  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
+    with computeProof ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
   ... | just _ | refl = refl
-  Computational-CERT .completeness ⟦ _ , pp , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ
-    dCert@(regpool c poolParams) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜ (CERT-pool h)
+  Computational-CERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(regpool c poolParams) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
     with computeProof pp stᵖ dCert | completeness _ _ _ _ h
   ... | just _ | refl = refl
-  Computational-CERT .completeness ⟦ _ , pp , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ
-    dCert@(retirepool c e) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜ (CERT-pool h)
+  Computational-CERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(retirepool c e) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
     with completeness _ _ _ _ h
   ... | refl = refl
-  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
     dCert@(regdrep c d an)
-    ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
+    ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | just _ | refl = refl
-  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ
-    dCert@(deregdrep c) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(deregdrep c) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | just _ | refl = refl
-  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜ
-    dCert@(ccreghot c mkh) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜ (CERT-vdel h)
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(ccreghot c mkh) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | just _ | refl = refl
 
   Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_
-  Computational-CERTBASE .computeProof ⟦ e , pp , vs ⟧ᶜ st _ = just (-, CERT-base _)
-  Computational-CERTBASE .completeness ⟦ e , pp , vs ⟧ᶜ st _ st' (CERT-base _) = refl
+  Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls ⟧ᶜ st _ =
+    let open PParams pp; open CertState st; open GState gState; open DState dState
+        refresh = mapPartial getDRepVote (fromList vs)
+    in case ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × wdrls ˢ ⊆ rewards ˢ ¿ of λ where
+      (yes (p₁ , p₂)) → just (-, CERT-base p₁ p₂)
+      (no ¬p)         → nothing
+  Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls ⟧ᶜ st _ st' (CERT-base p₁ p₂)
+    rewrite let dState = CertState.dState st; open DState dState in
+      dec-yes ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × wdrls ˢ ⊆ rewards ˢ ¿
+        (p₁ , p₂) .proj₂ = refl
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_
 Computational-CERTS = it

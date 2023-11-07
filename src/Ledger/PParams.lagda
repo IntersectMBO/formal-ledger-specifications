@@ -135,9 +135,10 @@ record PParamsDiff : Set₁ where
         updateGroups : UpdateT → ℙ PParamGroup
         applyUpdate : PParams → UpdateT → PParams
         ppdWellFormed : UpdateT → Bool
-        ppdWellFormed⇒WF : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
-                         → paramsWellFormed pp
-                         → paramsWellFormed (applyUpdate pp u)
+        ppdWellFormed⇒hasGroup : ∀ {u} → ppdWellFormed u ≡ true → updateGroups u ≢ ∅
+        ppdWellFormed⇒WF       : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
+                               → paramsWellFormed pp
+                               → paramsWellFormed (applyUpdate pp u)
 
 record GovParams : Set₁ where
   field ppUpd : PParamsDiff
