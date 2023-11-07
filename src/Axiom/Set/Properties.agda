@@ -20,7 +20,6 @@ open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
-open import Function.Related using (toRelated; fromRelated)
 open import Interface.DecEq using (DecEq; _≟_)
 open import Relation.Binary
 open import Relation.Binary.Lattice
@@ -123,7 +122,7 @@ cong-⊆⇒cong₂ h X≡ᵉX' Y≡ᵉY' = h (proj₁ X≡ᵉX') (proj₁ Y≡�
 
 ⊆-Preorder : {A} → Preorder _ _ _
 ⊆-Preorder {A} = record
-  { Carrier = Set A ; _≈_ = _≡ᵉ_ ; _∼_ = _⊆_ ; isPreorder = ⊆-isPreorder }
+  { Carrier = Set A ; _≈_ = _≡ᵉ_ ; _≲_ = _⊆_ ; isPreorder = ⊆-isPreorder }
 
 ⊆-PartialOrder : IsPartialOrder (_≡ᵉ_ {A}) _⊆_
 ⊆-PartialOrder = record
@@ -178,7 +177,7 @@ mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f =
 
 card-≡ᵉ : (X Y : Σ (Set A) strongly-finite) → proj₁ X ≡ᵉ proj₁ Y → card X ≡ card Y
 card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
-  ↭-length $ ∼bag⇒↭ $ unique∧set⇒bag lXᵘ lYᵘ λ {a} → toRelated $
+  ↭-length $ ∼bag⇒↭ $ unique∧set⇒bag lXᵘ lYᵘ λ {a} →
     a ∈ˡ lX  ∼⟨ R.SK-sym eqX ⟩
     a ∈ X    ∼⟨ to ≡ᵉ⇔≡ᵉ' X≡Y a ⟩
     a ∈ Y    ∼⟨ eqY ⟩
