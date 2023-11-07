@@ -156,5 +156,5 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
             helper : toRel m ≡ᵉ toRel (m₁ ∪ˡᶠ m₂)
             helper = ≡ᵉ.trans (proj₁ m≡m₁∪m₂) (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj-dom')
 
-  syntax indexedSumᵐ  (λ a → x) m = Σᵐ[ a ← m ] x
-  syntax indexedSumᵐᵛ (λ a → x) m = Σᵐᵛ[ a ← m ] x
+  syntax indexedSumᵐ  (λ a → x) m = ∑ᵐ[ a ← m ] x
+  syntax indexedSumᵐᵛ (λ a → x) m = ∑ᵐᵛ[ a ← m ] x
