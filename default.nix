@@ -7,6 +7,14 @@
 
 with pkgs;
 let
+  locales = {
+    LANG = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+    LOCALE_ARCHIVE = if pkgs.system == "x86_64-linux"
+                     then "${pkgs.glibcLocales}/lib/locale/locale-archive"
+                     else "";
+  };
+
   customAgda = import sources.agda-nixpkgs {
     inherit (pkgs) system;
   };
@@ -22,6 +30,7 @@ let
   });
 
   agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-meta";
     version = "0.1";
     src = fetchFromGitHub {
@@ -57,6 +66,7 @@ rec {
   };
 
   formalLedger = customAgda.agdaPackages.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "formal-ledger";
     version = "0.1";
     src = ./src;
@@ -71,6 +81,7 @@ rec {
 
   mkSpecDerivation = { project, main }: rec {
     docs = stdenv.mkDerivation {
+      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
       pname = "docs";
       version = "0.1";
       src = "${formalLedger}";
@@ -87,6 +98,7 @@ rec {
     };
 
     html = stdenv.mkDerivation {
+      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
       pname = "html";
       version = "0.1";
       src = "${formalLedger}";
@@ -103,6 +115,7 @@ rec {
     };
 
     hsSrc = stdenv.mkDerivation {
+      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
       pname = "hs-src";
       version = "0.1";
       src = "${formalLedger}";
@@ -111,9 +124,6 @@ rec {
       configurePhase = ''
         export HOME=$TMP
       '';
-      LANG = "en_US.UTF-8";
-      LC_ALL = "en_US.UTF-8";
-      LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
       buildPhase = ''
         OUT_DIR=$out make "${project}".hs
       '';
