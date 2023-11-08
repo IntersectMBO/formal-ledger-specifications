@@ -40,7 +40,7 @@ module _ ⦃ DecEq-A : DecEq A ⦄ where
 ↔-DecEq : A ↔ B → DecEq A → DecEq B
 ↔-DecEq A↔B record { _≟_ = _≟_ } ._≟_ b₁ b₂ =
   Relation.Nullary.Decidable.map record
-    { to = λ fb₁≡fb₂ → trans (sym $ inverseˡ b₁) (trans (cong to fb₁≡fb₂) (inverseˡ b₂))
+    { to = λ fb₁≡fb₂ → trans (sym $ inverseˡ refl) (inverseˡ fb₁≡fb₂)
     ; from = from-cong
     ; to-cong = λ _ → ≡-irrelevant _ _
     ; from-cong = λ _ → ≡-irrelevant _ _ }

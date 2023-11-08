@@ -7,8 +7,6 @@ open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Unary.Any
   hiding (map)
   renaming (Any to Anyˡ; any? to decAny)
-open import Function.Related using (fromRelated)
-open import Function.Related.Propositional using (⤖⇒)
 open import Relation.Nullary.Decidable renaming (map to mapᵈ)
 
 open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
@@ -122,6 +120,7 @@ open Computational ⦃...⦄
 
 private
   open Equivalence
+  open Inverse
 
   lookupActionId : (pparams : PParams) (role : GovRole) (aid : GovActionID) (s : GovState) →
                    Dec (Anyˡ (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role) s)
@@ -141,7 +140,7 @@ instance
   Computational-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
     case lookupActionId pparams role aid s of λ where
       (yesᵈ p) →
-        case ⤖⇒ (fromRelated Any↔) .from p of λ where
+        case Any↔ .from p of λ where
           (_ , mem , refl , cV) → just (_ , GOV-Vote (∈-fromList .to mem) cV)
       (noᵈ _)  → nothing
   Computational-GOV' .computeProof (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) =
@@ -155,8 +154,8 @@ instance
       _ → nothing
   Computational-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
     with lookupActionId pparams role aid s
-  ... | noᵈ ¬p = ⊥-elim (¬p (⤖⇒ (fromRelated Any↔) .to (_ , ∈-fromList .from mem , refl , cV)))
-  ... | yesᵈ p with ⤖⇒ (fromRelated Any↔) .from p
+  ... | noᵈ ¬p = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
+  ... | yesᵈ p with Any↔ .from p
   ...   | (_ , mem , refl , cV) = refl
   Computational-GOV' .completeness (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep newOk)
     with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿ | isNewCommittee a
