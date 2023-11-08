@@ -160,8 +160,8 @@ feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
                       )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange = range $ (utxo ∣ collateral) .proj₁
-    bal             = balance (utxo ∣ collateral)
+    collateralRange  = range    (utxo ∣ collateral)
+    bal              = balance  (utxo ∣ collateral)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo2}
