@@ -93,7 +93,7 @@ unquoteDecl LEDGER-premises = genPremises LEDGER-premises (quote LEDGER)
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set
-_⊢_⇀⦇_,LEDGERS⦈_ = SS⇒BS _⊢_⇀⦇_,LEDGER⦈_
+_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}
