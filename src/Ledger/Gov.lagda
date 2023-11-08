@@ -89,24 +89,29 @@ addAction s e aid addr a prev = s ∷ʳ (aid , record
 data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
 \begin{code}
-  GOV-Vote : ∀ {x ast} → let open GovEnv Γ in
+  GOV-Vote : ∀ {x ast} →  let  open GovEnv Γ
+                               sig = inj₁ record  { gid = aid ; role = role
+                                                  ; credential = cred
+                                                  ; vote = v ; anchor = x }
+                          in
     (aid , ast) ∈ fromList s
     → canVote pparams (action ast) role
-    ────────────────────────────────
-    let sig = inj₁ record { gid = aid ; role = role ; credential = cred
-                          ; vote = v ; anchor = x }
-    in (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid role cred v
+    ───────────────────────────────────────
+    (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid role cred v
 
-  GOV-Propose : ∀ {x} → let open GovEnv Γ; open PParams pparams hiding (a) in
-    actionWellFormed a ≡ true
-    → d ≡ govActionDeposit
+  GOV-Propose : ∀ {x} →  let  open GovEnv Γ
+                              open PParams pparams hiding (a)
+                              sig = inj₂ record  { returnAddr = addr ; action = a
+                                                 ; anchor = x ; deposit = d
+                                                 ; prevAction = prev }
+                              s' = addAction  s (govActionLifetime +ᵉ epoch)
+                                              (txid , k) addr a prev
+                         in
+       actionWellFormed a ≡ true
+    →  d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q
-       → ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅)
-    ────────────────────────────────
-    let sig = inj₂ record { returnAddr = addr ; action = a ; anchor = x
-                          ; deposit = d ; prevAction = prev }
-        s'  = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
-    in
+        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
+    ───────────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ s'
 
 _⊢_⇀⦇_,GOV⦈_ = SS⇒BSᵢ _⊢_⇀⦇_,GOV'⦈_
