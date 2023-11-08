@@ -111,7 +111,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     in
     (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ s'
 
-_⊢_⇀⦇_,GOV⦈_ = SS⇒BSᵢ _⊢_⇀⦇_,GOV'⦈_
+_⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 \end{code}
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}

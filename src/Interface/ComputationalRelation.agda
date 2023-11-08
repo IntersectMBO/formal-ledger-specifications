@@ -111,45 +111,45 @@ instance
 
 module _ {BSTS : C → S → ⊤ → S → Set} ⦃ _ : Computational BSTS ⦄ where
   module _ {STS : C → S → Sig → S → Set} ⦃ _ : Computational STS ⦄ where instance
-    Computational-SS⇒BSᵇ : Computational (SS⇒BSᵇ BSTS STS)
-    Computational-SS⇒BSᵇ .computeProof c s [] =
+    Computational-ReflexiveTransitiveClosureᵇ : Computational (ReflexiveTransitiveClosureᵇ BSTS STS)
+    Computational-ReflexiveTransitiveClosureᵇ .computeProof c s [] =
       map (map₂′ BS-base) (computeProof c s tt)
-    Computational-SS⇒BSᵇ .computeProof c s (sig ∷ sigs) = do
+    Computational-ReflexiveTransitiveClosureᵇ .computeProof c s (sig ∷ sigs) = do
       s₁ , h  ← computeProof c s sig
       s₂ , hs ← computeProof c s₁ sigs
       just (s₂ , BS-ind h hs)
       where open import Data.Maybe
-    Computational-SS⇒BSᵇ .completeness c s [] s' (BS-base p)
+    Computational-ReflexiveTransitiveClosureᵇ .completeness c s [] s' (BS-base p)
       with computeProof {STS = BSTS} c s tt | completeness _ _ _ _ p
     ... | just x | p' = p'
-    Computational-SS⇒BSᵇ .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
+    Computational-ReflexiveTransitiveClosureᵇ .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
       with computeProof c s sig | completeness _ _ _ _ h
     ... | just (s₁ , _) | refl
-      with computeProof ⦃ Computational-SS⇒BSᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
+      with computeProof ⦃ Computational-ReflexiveTransitiveClosureᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
     ... | just (s₂ , _) | p = p
 
   module _ {STS : C × ℕ → S → Sig → S → Set} ⦃ _ : Computational STS ⦄ where instance
-    Computational-SS⇒BSᵢᵇ : Computational (SS⇒BSᵢᵇ BSTS STS)
-    Computational-SS⇒BSᵢᵇ .computeProof c s [] =
+    Computational-ReflexiveTransitiveClosureᵢᵇ : Computational (ReflexiveTransitiveClosureᵢᵇ BSTS STS)
+    Computational-ReflexiveTransitiveClosureᵢᵇ .computeProof c s [] =
       map (map₂′ BS-base) (computeProof c s tt)
-    Computational-SS⇒BSᵢᵇ .computeProof c s (sig ∷ sigs) = do
+    Computational-ReflexiveTransitiveClosureᵢᵇ .computeProof c s (sig ∷ sigs) = do
       s₁ , h  ← computeProof (c , length sigs) s sig
       s₂ , hs ← computeProof c s₁ sigs
       just (s₂ , BS-ind h hs)
       where open import Data.Maybe
-    Computational-SS⇒BSᵢᵇ .completeness c s [] s' (BS-base p)
+    Computational-ReflexiveTransitiveClosureᵢᵇ .completeness c s [] s' (BS-base p)
       with computeProof {STS = BSTS} c s tt | completeness _ _ _ _ p
     ... | just x | p' = p'
-    Computational-SS⇒BSᵢᵇ .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
+    Computational-ReflexiveTransitiveClosureᵢᵇ .completeness c s (sig ∷ sigs) s' (BS-ind h hs)
       with computeProof {STS = STS} (c , length sigs) s sig | completeness _ _ _ _ h
     ... | just (s₁ , _) | refl
-      with computeProof ⦃ Computational-SS⇒BSᵢᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
+      with computeProof ⦃ Computational-ReflexiveTransitiveClosureᵢᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
     ...   | just (s₂ , _) | p = p
 
-Computational-SS⇒BS : {STS : C → S → Sig → S → Set} → ⦃ Computational STS ⦄
-  → Computational (SS⇒BS STS)
-Computational-SS⇒BS = it
+Computational-ReflexiveTransitiveClosure : {STS : C → S → Sig → S → Set} → ⦃ Computational STS ⦄
+  → Computational (ReflexiveTransitiveClosure STS)
+Computational-ReflexiveTransitiveClosure = it
 
-Computational-SS⇒BSᵢ : {STS : C × ℕ → S → Sig → S → Set} → ⦃ Computational STS ⦄
-  → Computational (SS⇒BSᵢ STS)
-Computational-SS⇒BSᵢ = it
+Computational-ReflexiveTransitiveClosureᵢ : {STS : C × ℕ → S → Sig → S → Set} → ⦃ Computational STS ⦄
+  → Computational (ReflexiveTransitiveClosureᵢ STS)
+Computational-ReflexiveTransitiveClosureᵢ = it

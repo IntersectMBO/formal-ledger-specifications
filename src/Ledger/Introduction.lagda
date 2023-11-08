@@ -47,45 +47,42 @@ initial state \(s\), a signal \(b\) and a final state \(s'\). The ledger consist
 25-ish (depending on the version) such relations that depend on each
 other, forming a directed graph that is almost a tree.
 
-\subsection{Small-step to big-step}
+\subsection{Reflexive-transitive closure}
 
 Some STS relations need to be applied as many times as they can to
 arrive at a final state. Since we use this pattern multiple times, we
-define a small-step to big-step transformer which takes a STS relation
-and applies it as many times as possible. In some cases we also need
-to supply a base case, which this transformer handles as well.
+define a closure operation which takes a STS relation and applies it
+as many times as possible.
 
-The transformer is defined in Figure \ref{fig:ss-to-bs}, assuming a
-base relation \SSToBSB and a step relation \SSToBSS. In the remainder
-of the text, it is called \SSToBS.
+The closure is defined in Figure \ref{fig:rt-closure}, assuming a
+relation \RTCB. In the remainder of the text, the closure operation is
+called \RTC.
 
 \begin{figure*}[h!]
 \begin{code}[hide]
-module _ (_⊢_⇀ᵇ_ : C → S → S → Set) (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Set) where
+module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Set) where
   data
 \end{code}
-\emph{Small-step to big-step transformer type}
+\emph{Closure type}
 \begin{code}
     _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Set
 \end{code}
 \begin{code}[hide]
     where
 \end{code}
-\emph{Small-step to big-step transformer rules}
+\emph{Closure rules}
 \begin{code}
-    BS-base :
-      ∙ Γ ⊢ s ⇀ᵇ s'
-      ───────────────────────────────────────
-      Γ ⊢ s ⇀⟦ [] ⟧* s'
+    RTC-base :
+      Γ ⊢ s ⇀⟦ [] ⟧* s
 
-    BS-ind :
+    RTC-ind :
       ∙ Γ ⊢ s  ⇀⟦ sig  ⟧  s'
       ∙ Γ ⊢ s' ⇀⟦ sigs ⟧* s''
       ───────────────────────────────────────
       Γ ⊢ s ⇀⟦ sig ∷ sigs ⟧* s''
 \end{code}
-\caption{Small-step to big step transformer}
-\label{fig:ss-to-bs}
+\caption{Reflexive transitive closure}
+\label{fig:rt-closure}
 \end{figure*}
 
 \subsection{Computational}

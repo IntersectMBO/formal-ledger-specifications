@@ -64,28 +64,28 @@ data IdSTS {C S} : C → S → ⊤ → S → Set where
   Id-nop : IdSTS Γ s _ s
 
 -- with a trivial base case
-SS⇒BS : (C → S → Sig → S → Set) → C → S → List Sig → S → Set
-SS⇒BS {C} {S} {Sig} = _⊢_⇀⟦_⟧*_ {C} {S} {Sig} IdSTS
+ReflexiveTransitiveClosure : (C → S → Sig → S → Set) → C → S → List Sig → S → Set
+ReflexiveTransitiveClosure {C} {S} {Sig} = _⊢_⇀⟦_⟧*_ {C} {S} {Sig} IdSTS
 
-SS⇒BS-total : {_⊢_⇀⟦_⟧_ : C → S → Sig → S → Set}
+ReflexiveTransitiveClosure-total : {_⊢_⇀⟦_⟧_ : C → S → Sig → S → Set}
             → (∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⟦ sig ⟧ s')
-            → (∀ {Γ s sig} → ∃[ s' ] SS⇒BS _⊢_⇀⟦_⟧_ Γ s sig s')
-SS⇒BS-total SS-total {Γ} {s} {[]} = s , BS-base Id-nop
-SS⇒BS-total SS-total {Γ} {s} {x ∷ sig} =
+            → (∀ {Γ s sig} → ∃[ s' ] ReflexiveTransitiveClosure _⊢_⇀⟦_⟧_ Γ s sig s')
+ReflexiveTransitiveClosure-total SS-total {Γ} {s} {[]} = s , BS-base Id-nop
+ReflexiveTransitiveClosure-total SS-total {Γ} {s} {x ∷ sig} =
   case SS-total {Γ} {s} {x} of λ where
-    (s' , Ps') → map₂′ (BS-ind Ps') $ SS⇒BS-total SS-total {Γ} {s'} {sig}
+    (s' , Ps') → map₂′ (BS-ind Ps') $ ReflexiveTransitiveClosure-total SS-total {Γ} {s'} {sig}
 
-SS⇒BSᵢ : (C × ℕ → S → Sig → S → Set) → C → S → List Sig → S → Set
-SS⇒BSᵢ {C} {S} {Sig} = _⊢_⇀⟦_⟧ᵢ*_ {C} {S} {Sig} IdSTS
+ReflexiveTransitiveClosureᵢ : (C × ℕ → S → Sig → S → Set) → C → S → List Sig → S → Set
+ReflexiveTransitiveClosureᵢ {C} {S} {Sig} = _⊢_⇀⟦_⟧ᵢ*_ {C} {S} {Sig} IdSTS
 
-SS⇒BSᵢ-total : {_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Set}
+ReflexiveTransitiveClosureᵢ-total : {_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Set}
              → (∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⟦ sig ⟧ s')
-             → (∀ {Γ s sig} → ∃[ s' ] SS⇒BSᵢ _⊢_⇀⟦_⟧_ Γ s sig s')
-SS⇒BSᵢ-total SS-total {Γ} {s} {[]} = s , BS-base Id-nop
-SS⇒BSᵢ-total SS-total {Γ} {s} {x ∷ sig} =
+             → (∀ {Γ s sig} → ∃[ s' ] ReflexiveTransitiveClosureᵢ _⊢_⇀⟦_⟧_ Γ s sig s')
+ReflexiveTransitiveClosureᵢ-total SS-total {Γ} {s} {[]} = s , BS-base Id-nop
+ReflexiveTransitiveClosureᵢ-total SS-total {Γ} {s} {x ∷ sig} =
   case SS-total {Γ , length sig} {s} {x} of λ where
-    (s' , Ps') → map₂′ (BS-ind Ps') $ SS⇒BSᵢ-total SS-total {Γ} {s'} {sig}
+    (s' , Ps') → map₂′ (BS-ind Ps') $ ReflexiveTransitiveClosureᵢ-total SS-total {Γ} {s'} {sig}
 
 -- with a given base case
-SS⇒BSᵢᵇ = _⊢_⇀⟦_⟧ᵢ*_
-SS⇒BSᵇ  = _⊢_⇀⟦_⟧*_
+ReflexiveTransitiveClosureᵢᵇ = _⊢_⇀⟦_⟧ᵢ*_
+ReflexiveTransitiveClosureᵇ  = _⊢_⇀⟦_⟧*_
