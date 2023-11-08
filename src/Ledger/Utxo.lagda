@@ -303,19 +303,19 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
-       txins ≢ ∅                              → txins ⊆ dom utxo
-    →  inInterval slot txvldt                 → minfee pp tx ≤ txfee
-    →  consumed pp s txb ≡ produced pp s txb  → coin mint ≡ 0
-    →  txsize ≤ maxTxSize pp
+    ∙  txins ≢ ∅                              ∙ txins ⊆ dom utxo
+    ∙  inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
+    ∙  consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙  txsize ≤ maxTxSize pp
 
-    → ∀[ (_ , txout) ∈ txouts .proj₁ ]
+    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
-    → ∀[ (_ , txout) ∈ txouts .proj₁ ]
+    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         serSize (getValue txout) ≤ maxValSize pp
-    → ∀[ (a , _) ∈ range txouts ]
+    ∙ ∀[ (a , _) ∈ range txouts ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    → ∀[ (a , _) ∈ range txouts ] netId a        ≡ networkId
-    → ∀[ a ∈ dom  txwdrls ]       a .RwdAddr.net ≡ networkId
+    ∙ ∀[ (a , _) ∈ range txouts ] netId a        ≡ networkId
+    ∙ ∀[ a ∈ dom  txwdrls ]       a .RwdAddr.net ≡ networkId
     -- Add deposits
 
        ────────────────────────────────
@@ -327,49 +327,26 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 
 \end{code}
 \begin{code}[hide]
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r)
+unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
+
 instance
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
-  Computational-UTXO = record {go} where module go Γ s tx where
-    open Tx tx renaming (body to txb); open TxBody txb
-    open UTxOEnv Γ renaming (pparams to pp)
-    open UTxOState s
+  Computational-UTXO = record {Go}
+    where module Go Γ s tx (let H , H? = UTXO-premises {tx}{Γ}{s}) where
 
-    UTXO-premises : Set
-    UTXO-premises
-      = txins ≢ ∅
-      × txins ⊆ dom utxo
-      × inInterval slot txvldt
-      × minfee pp tx ≤ txfee
-      × consumed pp s txb ≡ produced pp s txb
-      × coin mint ≡ 0
-      × txsize ≤ maxTxSize pp
-      × All (λ txout →  inject (utxoEntrySize (txout .proj₂) * minUTxOValue pp)
-                    ≤ᵗ getValue (txout .proj₂))
-            (txouts .proj₁)
-      × All (λ txout → serSize (getValue $ txout .proj₂) ≤ maxValSize pp)
-            (txouts .proj₁)
-      × All (Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) ∘ proj₁)
-            (range (txouts ˢ))
-      × All (λ a → netId (a .proj₁) ≡ networkId) (range (txouts ˢ))
-      × All (λ a → a .RwdAddr.net   ≡ networkId) (dom  (txwdrls ˢ))
-
-    UTXO-premises? : Dec UTXO-premises
-    UTXO-premises? = ¿ UTXO-premises ¿
-
-    computeProof =
-      case UTXO-premises? of λ where
-        (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁)) →
-          just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁)
-        (no _) → nothing
+    computeProof = case H? of λ where
+      (yes p) → just (-, UTXO-inductive p)
+      (no _)  → nothing
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
-    completeness s' h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆ q₇ q₈ q₉ q₁₀ q₁₁) = QED
+    completeness s' (UTXO-inductive p) = QED
       where
       QED : map proj₁ computeProof ≡ just s'
-      QED with UTXO-premises?
+      QED with H?
       ... | yes _ = refl
-      ... | no q = ⊥-elim
-                 $ q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆ , q₇ , q₈ , q₉ , q₁₀ , q₁₁)
+      ... | no ¬p = ⊥-elim $ ¬p p
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

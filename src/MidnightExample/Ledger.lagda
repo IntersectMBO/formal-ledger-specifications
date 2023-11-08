@@ -180,18 +180,22 @@ We can prove that this relation is a partial function and the proof gives us a s
 As an example we also provide a function that does the same computation explicitly.
 
 \begin{code}[hide]
-open Computational ⦃...⦄
+pattern LEDGER-inductive⋯ x y = LEDGER-inductive (x , y)
+unquoteDecl LEDGER-inductive-premises =
+  genPremises LEDGER-inductive-premises (quote LEDGER-inductive)
+
 instance
   Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_
-  Computational-LEDGER .computeProof Γ s b =
-    let open Block b
-        acc = Σˡ[ x ← body ] txDelta x
-    in case ¿ acc ≢ 0ℤ ∧ computeBlockHash b ≡ blockHash ¿ of λ where
-      (yes (p , p₁)) → just (_ , LEDGER-inductive p p₁)
-      (no _) → nothing
-  Computational-LEDGER .completeness Γ s b s' (LEDGER-inductive p p₁)
-    rewrite (let open Block b; acc = Σˡ[ x ← body ] txDelta x
-             in dec-yes ¿ acc ≢ 0ℤ ∧ computeBlockHash b ≡ blockHash ¿ (p , p₁) .proj₂) = refl
+  Computational-LEDGER = record {Go}
+    where module Go Γ s b (let H , H? = LEDGER-inductive-premises {b}) where
+      computeProof = case H? of λ where
+        (yes p) → just (-, LEDGER-inductive p)
+        (no _)  → nothing
+
+      completeness : _
+      completeness s' (LEDGER-inductive p) rewrite dec-yes H? p .proj₂ = refl
+
+open Computational ⦃...⦄
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -236,7 +240,7 @@ lemma : ∀ {x y} → y ≢ 0ℤ → x ≢ x + y
 lemma y≢0 eq = y≢0 (identityʳ-unique _ _ (sym eq))
 
 LEDGER-property₁ : _ ⊢ s ⇀⦇ b ,LEDGER⦈ s' → count s ≢ count s'
-LEDGER-property₁ (LEDGER-inductive acc≢0 _) = lemma acc≢0
+LEDGER-property₁ (LEDGER-inductive⋯ acc≢0 _) = lemma acc≢0
 
 LEDGER-property₂ : LEDGER-step _ s b ≡ just s' → count s ≢ count s'
 LEDGER-property₂ {s} {b} eq

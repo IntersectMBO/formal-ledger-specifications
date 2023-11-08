@@ -1,11 +1,11 @@
 {-# OPTIONS --safe #-}
 module Interface.Decidable.Instance where
 
-open import Level using (Level; _⊔_)
+open import Agda.Primitive using (Level; _⊔_; lsuc)
 
 open import Data.Bool using (Bool; if_then_else_)
 open import Data.Empty using (⊥)
-open import Data.Product using (_×_)
+open import Data.Product using (_×_; Σ)
 open import Data.Unit using (⊤; tt)
 open import Data.Maybe using (Maybe; just; nothing; Is-just)
 open import Data.Maybe.Relation.Unary.Any using (just)
@@ -21,6 +21,9 @@ open import Relation.Nullary.Decidable
 open import Relation.Unary using () renaming (Decidable to Decidable¹)
 
 open import Interface.DecEq
+
+∃Dec : ∀ {ℓ} → Set (lsuc ℓ)
+∃Dec {ℓ} = Σ (Set ℓ) Dec
 
 record Dec₁ {a p} {A : Set a} (P : A → Set p) : Set (a ⊔ p) where
   field P? : Decidable¹ P

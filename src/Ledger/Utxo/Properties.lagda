@@ -187,13 +187,13 @@ module DepositHelpers
     newBal' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                   ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
             → consumed pp utxoSt txb ≡ produced pp utxoSt txb
-    newBal' (UTXO-inductive _ _ _ _ x _ _ _ _ _ _ _) = x
+    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ x _ _ _ _ _ _ _) = x
     newBal : consumed pp utxoSt txb ≡ produced pp utxoSt txb
     newBal = newBal' step
     noMintAda' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                      ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
                → coin (mint) ≡ 0
-    noMintAda' (UTXO-inductive _ _ _ _ _ x _ _ _ _ _ _) = x
+    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _) = x
     noMintAda : coin mint ≡ 0
     noMintAda = noMintAda' step
     remDepTot : Coin
@@ -202,7 +202,7 @@ module DepositHelpers
   uDep≡ : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
               ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
         → deposits' ≡ updateDeposits pp txb deposits
-  uDep≡ (UTXO-inductive _ _ _ _ _ _ _ _ _ _ _ _) = refl
+  uDep≡ (UTXO-inductive _) = refl
 
   deposits-change' : Δdep ≡ tot ⊖ ref
   deposits-change' = sym posPart-negPart≡x
@@ -356,7 +356,7 @@ then
 \begin{code}[hide]
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
     {deposits' = deposits'} h'
-    step@(UTXO-inductive {Γ = Γ} _ _ _ _ newBal noMintAda _ _ _ _ _ _) =
+    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _) =
   let open Tx tx renaming (body to txb); open TxBody txb
       h : disjoint (dom (utxo ∣ txins ᶜ)) (dom (outs txb))
       h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {txb = txb} {utxo} h')
