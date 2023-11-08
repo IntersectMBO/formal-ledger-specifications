@@ -31,6 +31,7 @@ open import Interface.Hashable public
 open import Interface.ComputationalRelation public
 open import MyDebugOptions public
 open import Tactic.DeriveComp public
+open import Tactic.Premises public
 
 open import Ledger.Interface.HasCoin public
 open import Ledger.Set public

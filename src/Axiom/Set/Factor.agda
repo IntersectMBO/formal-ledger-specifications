@@ -19,7 +19,6 @@ open import Data.List.Relation.Binary.Permutation.Propositional
 open import Data.List.Relation.Unary.Unique.DecPropositional.Properties
 open import Data.List.Relation.Unary.Unique.Propositional
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
-open import Function.Related using (toRelated; fromRelated)
 open import Interface.DecEq
 open import Relation.Binary
 
@@ -40,7 +39,7 @@ module Factor (_≈_ : B → B → Type) (f : List A → B) (f-cong : ∀ {l l'}
   factor (_ , l , _) = f l
 
   factor-cong : factor Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
-  factor-cong {X , Xˡ , hX} {Y , Yˡ , hY} X≡ᵉY = f-cong λ {a} → toRelated $
+  factor-cong {X , Xˡ , hX} {Y , Yˡ , hY} X≡ᵉY = f-cong λ {a} →
     a ∈ˡ Xˡ ∼⟨ R.SK-sym hX ⟩ a ∈  X  ∼⟨ to ≡ᵉ⇔≡ᵉ' X≡ᵉY _ ⟩
     a ∈  Y  ∼⟨ hY ⟩          a ∈ˡ Yˡ ∎
     where open R.EquationalReasoning
@@ -54,7 +53,7 @@ module FactorUnique ⦃ _ : DecEq A ⦄ (_≈_ : B → B → Type) (f : (Σ (Lis
                     (f-cong : ∀ {l l'} → proj₁ l ↭ proj₁ l' → f l ≈ f l') where
 
   f-cong' : ∀ {l l'} → (∀ {a} → a ∈ˡ proj₁ l ⇔ a ∈ˡ proj₁ l') → f l ≈ f l'
-  f-cong' {l} {l'} h = f-cong (∼bag⇒↭ (unique∧set⇒bag (proj₂ l) (proj₂ l') (toRelated h)))
+  f-cong' {l} {l'} h = f-cong (∼bag⇒↭ (unique∧set⇒bag (proj₂ l) (proj₂ l') h))
 
   deduplicate-Σ : List A → Σ (List A) Unique
   deduplicate-Σ l = (deduplicate _≟_ l , deduplicate-! _≟_ _)
@@ -64,7 +63,7 @@ module FactorUnique ⦃ _ : DecEq A ⦄ (_≈_ : B → B → Type) (f : (Σ (Lis
 
   ext-cong : ∀ {l l'} → l ∼[ set ] l' → ext l ≈ ext l'
   ext-cong {l} {l'} h = f-cong' λ {a} →
-    a ∈ˡ deduplicate _≟_ l  ∼⟨ R.SK-sym ∈-dedup ⟩ a ∈ˡ l                  ∼⟨ fromRelated h ⟩
+    a ∈ˡ deduplicate _≟_ l  ∼⟨ R.SK-sym ∈-dedup ⟩ a ∈ˡ l                  ∼⟨ h ⟩
     a ∈ˡ l'                 ∼⟨ ∈-dedup ⟩          a ∈ˡ deduplicate _≟_ l' ∎
     where open R.EquationalReasoning
 
