@@ -135,7 +135,8 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
   upper  : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)
   none   :                                    inInterval slot (nothing  , nothing)
-
+\end{code}
+\begin{code}[hide]
 -- Boolean implication
 _=>ᵇ_ : Bool → Bool → Bool
 a =>ᵇ b = if a then b else true
@@ -147,7 +148,8 @@ _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
-
+\end{code}
+\begin{code}
 -- TODO: this could be a regular property
 
 feesOK : PParams → Tx → UTxO → Bool
