@@ -21,15 +21,15 @@ module Ledger.PParams
   (es     : _) (open EpochStructure es)
   (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
   where
+
+record Acnt : Set where
+  field treasury reserves : Coin
 \end{code}
 \begin{figure*}[h!]
 \begin{AgdaAlign}
 \begin{code}
 ProtVer : Set
 ProtVer = ℕ × ℕ
-
-record Acnt : Set where
-  field treasury reserves : Coin
 
 data PParamGroup : Set where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup : PParamGroup
