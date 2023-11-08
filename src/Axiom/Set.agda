@@ -194,7 +194,7 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-partialToSet : ∀ {a : A} {b : B} {f} → f a ≡ just b ⇔ b ∈ partialToSet f a
   ∈-partialToSet {a = a} {b} {f} = mk⇔
     (λ h → subst (λ x → b ∈ maybe (fromList ∘ [_]) ∅ x) (sym h) (to ∈-singleton refl))
-    (case f a return (λ y → b ∈ maybe (λ x → fromList [ x ]) ∅ y → y ≡ just b) of
+    (case f a returning (λ y → b ∈ maybe (λ x → fromList [ x ]) ∅ y → y ≡ just b) of
       λ where (just x) → λ h → cong just (sym $ from ∈-singleton h)
               nothing  → λ h → case from ∈-fromList h of λ ())
 

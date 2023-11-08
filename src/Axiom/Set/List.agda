@@ -4,13 +4,14 @@ open import Agda.Primitive renaming (Set to Type)
 
 module Axiom.Set.List where
 
-open import Prelude
+open import Prelude hiding (find)
 
 open import Axiom.Set
 
 import Data.List
 import Data.List.Relation.Unary.All as All
 import Data.List.Relation.Unary.Any as Any
+import Function
 import Function.Properties.Inverse as I
 import Function.Related.Propositional as R
 import Relation.Nullary.Decidable as Dec
@@ -19,7 +20,7 @@ open import Data.List.Membership.Propositional.Properties
 open import Data.Product
 open import Data.Product.Algebra
 open import Data.Product.Properties.Ext
-open import Function.Related hiding (⌊_⌋)
+-- open import Function.Related hiding (⌊_⌋)
 open import Interface.DecEq
 open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary.Decidable
@@ -36,8 +37,8 @@ List-Model = λ where
     (λ where (T , T∈X , a∈T) → ∈-concat⁺′ a∈T T∈X)
     (λ a∈cX → case ∈-concat⁻′ _ a∈cX of λ where (T , a∈T , T∈X) → (T , T∈X , a∈T))
   .replacement   → λ f X → Data.List.map f X , λ {b} →
-    (∃[ a ] b ≡ f a × a ∈ˡ X) ∼⟨ ∃-cong′ (R.⤖⇒ (I.↔⇒⤖ (×-comm _ _))) ⟩
-    (∃[ a ] a ∈ˡ X × b ≡ f a) ⤖⟨ fromRelated (map-∈↔ f) ⟩
+    (∃[ a ] b ≡ f a × a ∈ˡ X) ∼⟨ ∃-cong′ (I.↔⇒⇔ (×-comm _ _)) ⟩
+    (∃[ a ] a ∈ˡ X × b ≡ f a) ⤖⟨ I.↔⇒⤖ (map-∈↔ f) ⟩
     b ∈ˡ Data.List.map f X    ∎
   .listing → λ l → l , mk⇔ id id
     where open Theory

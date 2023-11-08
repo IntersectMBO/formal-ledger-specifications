@@ -77,19 +77,23 @@ data
 \begin{figure*}[h]
 \begin{code}
   LEDGER : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
-       record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    →  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    →  ⟦ txid , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
-    →  mapˢ stake (dom txwdrls) ⊆ dom (certState' .dState .voteDelegs)
+    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙  ⟦ txid , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  mapˢ stake (dom txwdrls) ⊆ dom (certState' .dState .voteDelegs)
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}
+\begin{code}[hide]
+pattern LEDGER⋯ x y z w = LEDGER (x , y , z , w)
+unquoteDecl LEDGER-premises = genPremises LEDGER-premises (quote LEDGER)
+\end{code}
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set
-_⊢_⇀⦇_,LEDGERS⦈_ = SS⇒BS _⊢_⇀⦇_,LEDGER⦈_
+_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}

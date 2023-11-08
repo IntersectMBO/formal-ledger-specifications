@@ -72,15 +72,21 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
       in
-       ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    →  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
-    →  witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
-    →  scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
-    →  txADhash ≡ map hash txAD
-    →  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
+    ∙  All (validP1Script witsKeyHashes txvldt) (toSet scriptsP1)
+    ∙  witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
+    ∙  scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
+    ∙  txADhash ≡ map hash txAD
+    ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 \end{code}
 \caption{UTXOW inference rules}
 \label{fig:rules:utxow}
 \end{figure*}
+\begin{code}[hide]
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , h)
+unquoteDecl UTXOW-inductive-premises =
+  genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
+\end{code}

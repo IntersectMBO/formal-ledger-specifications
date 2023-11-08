@@ -90,7 +90,7 @@ Computational-RATIFY : Computational _⊢_⇀⦇_,RATIFY⦈_
 Computational-RATIFY = it
 
 RATIFY-total : ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s'
-RATIFY-total = SS⇒BS-total (Implementation.RATIFY'-total _ _ _)
+RATIFY-total = ReflexiveTransitiveClosure-total (Implementation.RATIFY'-total _ _ _)
 
 RATIFY-complete : ∀ {Γ s sig s'} →
   Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s' → RATIFY-total {Γ} {s} {sig} .proj₁ ≡ s'
