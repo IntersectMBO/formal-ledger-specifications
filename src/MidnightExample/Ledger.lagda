@@ -166,7 +166,7 @@ that the hash in the header is correct.
 data _⊢_⇀⦇_,LEDGER⦈_ : ⊤ → LedgerState → Block → LedgerState → Set where
   LEDGER-inductive : ∀ {Γ} {s} {b} →
     let open Block b
-        acc = Σˡ[ x ← body ] txDelta x
+        acc = ∑ˡ[ x ← body ] txDelta x
         s'  = tickLedgerState slotNo s
     in ∙ acc ≢ 0ℤ        ∙ computeBlockHash b ≡ blockHash
     ────────────────────────────────
@@ -203,7 +203,7 @@ LEDGER-step : ⊤ → LedgerState → Block → Maybe LedgerState
 LEDGER-step = compute
 
 applyBlockTo : Block → LedgerState → Maybe LedgerState
-applyBlockTo b st = let acc = Σˡ[ x ← Block.body b ] txDelta x in
+applyBlockTo b st = let acc = ∑ˡ[ x ← Block.body b ] txDelta x in
   ifᵈ acc ≢ 0ℤ ∧ computeBlockHash b ≡ Block.blockHash b
     then just record st { tip = blockPoint b ; count = count st + acc }
     else nothing
@@ -249,7 +249,7 @@ LEDGER-property₂ {s} {b} eq
 
 LEDGER-property₃ : applyBlockTo b s ≡ just s' → count s ≢ count s'
 LEDGER-property₃ {b = b} h with
-  (Σˡ[ x ← Block.body b ] txDelta x) ≟ 0ℤ | computeBlockHash b ≟ Block.blockHash b | h
+  (∑ˡ[ x ← Block.body b ] txDelta x) ≟ 0ℤ | computeBlockHash b ≟ Block.blockHash b | h
 ... | no acc≢0 | yes _ | refl = lemma acc≢0
 ... | no _     | no _  | ()
 ... | yes _    | _     | ()

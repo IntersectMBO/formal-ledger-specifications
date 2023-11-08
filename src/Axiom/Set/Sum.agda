@@ -49,7 +49,7 @@ private variable f : A → Carrier
 indexedSumL : (A → Carrier) → List A → Carrier
 indexedSumL f = foldr (λ x → f x ∙_) ε
 
-syntax indexedSumL (λ a → x) m = Σˡ[ a ← m ] x
+syntax indexedSumL (λ a → x) m = ∑ˡ[ a ← m ] x
 
 indexedSumL' : (A → Carrier) → Σ (List A) Unique → Carrier
 indexedSumL' f = indexedSumL f ∘ proj₁
