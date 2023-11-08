@@ -121,9 +121,6 @@ rec {
       src = "${formalLedger}";
       meta = { };
       buildInputs = [ agdaWithStdLibMeta ];
-      configurePhase = ''
-        export HOME=$TMP
-      '';
       buildPhase = ''
         OUT_DIR=$out make "${project}".hs
       '';

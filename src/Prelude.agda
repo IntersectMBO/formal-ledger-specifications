@@ -23,7 +23,7 @@ open import Data.Unit public
 open import Data.Sum public
   hiding (assocʳ; assocˡ; map; map₁; map₂; reduce; swap)
 open import Data.Product public
-  hiding (assocʳ; assocˡ; map; map₁; map₂; map₂′; swap)
+  hiding (assocʳ; assocˡ; map; map₁; map₂; map₂′; swap; _<*>_)
 open import Data.Nat public
   hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_; _≡ᵇ_)
   renaming (_+_ to _+ℕ_)

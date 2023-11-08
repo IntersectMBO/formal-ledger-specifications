@@ -2,11 +2,9 @@
 module Tactic.ByEq where
 
 open import Prelude
-open import Interface.Functor using (map; _<&>_)
-
-open import Agda.Builtin.Reflection using (clause; dot)
-open import Reflection
-open import Generics
+open import PreludeMeta
+open import Class.Functor.Core; open import Class.Functor.Instances
+open import Class.Monad.Core; open import Class.Monad.Instances
 
 -- Introduce as many arguments as possible and then:
 --   1. for those of type `_ ≡ _`, unify with  `refl`
@@ -16,7 +14,7 @@ by-eq : Hole → TC ⊤
 by-eq hole = do
   ty ← withNormalisation true $ inferType hole
   let ps : Args Pattern
-      ps = argTys ty <&> map λ {(def (quote _≡_) _) → quote refl ◇; _ → dot unknown}
+      ps = argTys ty <&> fmap λ {(def (quote _≡_) _) → quote refl ◇; _ → dot unknown}
   unify hole $ pat-lam [ clause [] ps (quote refl ◆) ] []
 
 macro $by-eq = by-eq
