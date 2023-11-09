@@ -3,14 +3,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Data.List.Membership.Propositional.Properties
-open import Data.List.Relation.Unary.Any
-  hiding (map)
-  renaming (Any to Anyˡ; any? to decAny)
-open import Relation.Nullary.Decidable renaming (map to mapᵈ)
-
-open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
-open import Ledger.Crypto
+open import Ledger.Prelude
 open import Ledger.GovStructure
 
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
@@ -119,56 +112,3 @@ _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}
 \end{figure*}
-
-\begin{code}[hide]
-open Computational ⦃...⦄
-
-private
-  open Equivalence
-  open Inverse
-
-  lookupActionId : (pparams : PParams) (role : GovRole) (aid : GovActionID) (s : GovState) →
-                   Dec (Anyˡ (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role) s)
-  lookupActionId pparams role aid = decAny λ _ → ¿ _ ¿
-
-  isNewCommittee : (a : GovAction) → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ NewCommittee new rem q)
-  isNewCommittee NoConfidence             = noᵈ λ()
-  isNewCommittee (NewCommittee new rem q) = yesᵈ (new , rem , q , refl)
-  isNewCommittee (NewConstitution x x₁)   = noᵈ λ()
-  isNewCommittee (TriggerHF x)            = noᵈ λ()
-  isNewCommittee (ChangePParams x)        = noᵈ λ()
-  isNewCommittee (TreasuryWdrl x)         = noᵈ λ()
-  isNewCommittee Info                     = noᵈ λ()
-
-instance
-  Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_
-  Computational-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
-    case lookupActionId pparams role aid s of λ where
-      (yesᵈ p) →
-        case Any↔ .from p of λ where
-          (_ , mem , refl , cV) → just (_ , GOV-Vote (∈-fromList .to mem) cV)
-      (noᵈ _)  → nothing
-  Computational-GOV' .computeProof (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) =
-    case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿
-         ,′ isNewCommittee a of λ where
-      (yesᵈ (wf , dep) , yesᵈ (new , rem , q , refl)) →
-        case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
-          (yesᵈ newOk) → just (_ , GOV-Propose wf dep λ where refl → newOk)
-          (noᵈ _)      → nothing
-      (yesᵈ (wf , dep) , noᵈ notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
-      _ → nothing
-  Computational-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
-    with lookupActionId pparams role aid s
-  ... | noᵈ ¬p = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
-  ... | yesᵈ p with Any↔ .from p
-  ...   | (_ , mem , refl , cV) = refl
-  Computational-GOV' .completeness (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ record { action = a ; deposit = d }) s' (GOV-Propose wf dep newOk)
-    with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿ | isNewCommittee a
-  ... | noᵈ ¬p | _ = ⊥-elim (¬p (wf , dep))
-  ... | yesᵈ _ | noᵈ notNewComm = refl
-  ... | yesᵈ _ | yesᵈ (new , rem , q , refl)
-    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
-
-Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_
-Computational-GOV = it
-\end{code}
