@@ -3,38 +3,23 @@
 module Tactic.DeriveComp where
 
 open import Prelude
-open import Meta
-
-import Reflection as R
-import Reflection.AST.Argument.Visibility as Visibility
-open import Reflection.AST.DeBruijn
+open import PreludeMeta hiding (TC) renaming (TCI to TC)
 
 import Data.List.NonEmpty as NE
 open import Data.Maybe.Properties using (just-injective)
-import Data.Nat.Show as ℕ
 
-open import Relation.Nullary
-open import Relation.Nullary.Negation
-open import Relation.Nullary.Decidable
+open import Class.Show.Core; open import Class.Show.Instances
+open import Interface.Monad.Instance
+open import Interface.ComputationalRelation
+open import Interface.DecEq.Ext
+open import Interface.Decidable.Instance
+open import Interface.HasAdd; open import Interface.HasAdd.Instance
+open import Interface.HasSubtract; open import Interface.HasSubtract.Instance
 
+open import Reflection.Ext using (extendContextTel′)
 open import Tactic.ClauseBuilder
 open import Tactic.Helpers
 open import Tactic.ReduceDec
-open import Generics.Core
-open import Generics hiding (error; mkRecord)
-open import Interface.ComputationalRelation
-open import Interface.DecEq
-open import Interface.Decidable.Instance
-open import Interface.HasAdd
-open import Interface.HasAdd.Instance
-
-open import Interface.Monad.Instance
-open import Interface.MonadReader.Instance
-open import Interface.MonadError.Instance
-open import Interface.MonadTC.Instance
-
-open import Interface.HasSubtract
-open import Interface.HasSubtract.Instance
 
 pattern ``yes x = quote _because_ ◇⟦ quote true ◇  ∣ quote ofʸ ◇⟦ x ⟧ ⟧
 pattern ``no x  = quote _because_ ◇⟦ quote false ◇ ∣ quote ofⁿ ◇⟦ x ⟧ ⟧
@@ -64,7 +49,7 @@ conOrVarToPattern k (con c args) =
 conOrVarToPattern _ _ = nothing
 
 isArg : (a : Abs (Arg Term)) → Dec _
-isArg a = ¬? (getVisibility (unAbs a) Visibility.≟ visible)
+isArg a = ¬? (getVisibility (unAbs a) ≟ visible)
 
 toSTSConstr : Name × TypeView → TC STSConstr
 toSTSConstr (n , (cs , def _ args))
@@ -82,7 +67,7 @@ toSTSConstr (n , (cs , def _ args))
     ; result = mapVars (_- (length $ dropWhile isArg cs)) $ unArg r }
 ... | l | l' =
   error1 ("toSTSConstr: wrong number of arguments:"
-    <+> ℕ.show (length l) <+> "," <+> ℕ.show (length l'))
+    <+> show (length l) <+> "," <+> show (length l'))
 toSTSConstr _ = error1 "toSTSConstr: wrong constructor"
 
 errorIfNothing : ∀ {a} {A : Set a} → Maybe A → String → TC A
@@ -150,10 +135,6 @@ derive⇐ (record { clauses = clauses; result = result } ∷ []) = inDebugPath "
   unifyWithGoal $ clauseExprToPatLam expr
 derive⇐ _ = error1 "TODO: support multiple constructors"
 
-extendRawContext : {A : Set} → List (String × Arg Type) → TC A → TC A
-extendRawContext [] m = m
-extendRawContext ((x , ty) ∷ tys) m = R.extendContext x ty ∘ extendRawContext tys m
-
 derive⇒ : Name → List STSConstr → ITactic
 derive⇒ n
   (record { name = stsConstrName ; clauses = clauses; result = result } ∷ [])
@@ -219,16 +200,16 @@ module _ ⦃ _ : DebugOptions ⦄ where
       cTy   ← newMeta unknown
       sTy   ← newMeta unknown
       sigTy ← newMeta unknown
-      let isoCxt = ("c" , hArg cTy)
+      let isoCxt = Telescope ∋ ("c" , hArg cTy)
                  ∷ ("s" , hArg (weaken 1 sTy))
                  ∷ ("sig" , hArg (weaken 2 sigTy))
                  ∷ ("s'" , hArg (weaken 3 sTy))
                  ∷ []
-      iso ← extendRawContext isoCxt $ newMeta unknown
+      iso ← extendContextTel′ isoCxt $ newMeta unknown
       let isolam = `λ⟅ "c" ⟆⇒ `λ⟅ "s" ⟆⇒ `λ⟅ "sig" ⟆⇒ `λ⟅ "s'" ⟆⇒ iso
       definition ← mkRecord (quote Computational) (compRes ⟨∷⟩ isolam ⟨∷⟩ [])
       defineFun compName [ nonBindingClause definition ]
-      extendRawContext isoCxt $ λ _ → derive⇔ n stsConstrs iso
+      extendContextTel′ isoCxt $ λ _ → derive⇔ n stsConstrs iso
 
 -- private module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
 --   open import MyDebugOptions

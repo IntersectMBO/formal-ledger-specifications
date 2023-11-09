@@ -44,6 +44,9 @@ record Block : Set where
         slot  : Slot
 \end{code}
 \caption{Definitions for the NEWEPOCH and CHAIN transition systems}
+The \AgdaRecord{Acnt} record has two fields, \AgdaField{treasury} and \AgdaField{reserves}, so
+the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the total assets that
+remain in treasury and reserves.
 \end{figure*}
 \begin{code}[hide]
 private variable
@@ -74,7 +77,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       open Acnt acnt
 
       trWithdrawals   = esW .EnactState.withdrawals
-      totWithdrawals  = Σᵐᵛ[ x ← trWithdrawals ᶠᵐ ] x
+      totWithdrawals  = ∑ᵐᵛ[ x ← trWithdrawals ᶠᵐ ] x
 
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         mapˢ (GovActionState.returnAddr gaSt ,_)

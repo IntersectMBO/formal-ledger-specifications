@@ -15,18 +15,18 @@ open import Data.List.Relation.Binary.Permutation.Propositional
 open import Data.List.Relation.Unary.AllPairs
 open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
-open import Function.Related using (toRelated; fromRelated)
+open import Function.Bundles
 open import Interface.DecEq
 
 module Data.List.Ext.Properties where
 
 -- TODO: stdlib?
 _×-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A × C) R.∼[ k ] (B × D)
-h ×-cong h' = fromRelated (toRelated h M.×-cong toRelated h')
+h ×-cong h' = (h M.×-cong h')
   where open import Data.Product.Function.NonDependent.Propositional as M
 
 _⊎-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A ⊎ C) R.∼[ k ] (B ⊎ D)
-h ⊎-cong h' = fromRelated (toRelated h M.⊎-cong toRelated h')
+h ⊎-cong h' = (h M.⊎-cong h')
   where open import Data.Sum.Function.Propositional as M
 
 module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
@@ -44,7 +44,7 @@ module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
   -- TODO: stdlib?
   dedup-++-↭ : {l l' : List A} → Disjoint l l' → deduplicate≡ (l ++ l') ↭ deduplicate≡ l ++ deduplicate≡ l'
   dedup-++-↭ {l = l} {l'} disj = let dedup-unique = λ {l} → deduplicate-! l in ∼bag⇒↭ $
-    unique∧set⇒bag dedup-unique (++⁺ dedup-unique dedup-unique (disj-on-dedup disj)) λ {a} → toRelated $
+    unique∧set⇒bag dedup-unique (++⁺ dedup-unique dedup-unique (disj-on-dedup disj)) λ {a} →
       a ∈ deduplicate≡ (l ++ l')                 ∼⟨ R.SK-sym ∈-dedup ⟩
       a ∈ l ++ l'                                ∼⟨ helper ⟩
       (a ∈ l ⊎ a ∈ l')                           ∼⟨ ∈-dedup ⊎-cong ∈-dedup ⟩

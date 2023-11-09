@@ -55,7 +55,7 @@ utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
 open PParams
 \end{code}
 
-Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
+Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
 Figure~\ref{fig:ts-types:utxo-shelley} defines the types needed for the UTxO transition system.
 The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
@@ -123,29 +123,33 @@ module _ (let open Tx; open TxBody) where
   certRefundˢ : DCert → ℙ DepositPurpose
   certRefundˢ = partialToSet certRefund
 
+\end{code}
+\caption{Functions used in UTxO rules}
+\label{fig:functions:utxo}
+\end{figure*}
+\begin{figure*}
+\begin{code}
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
   upper  : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)
   none   :                                    inInterval slot (nothing  , nothing)
-
------------------------------------------------------
--- Boolean Functions
-
--- Boolean Implication
+\end{code}
+\begin{code}[hide]
+-- Boolean implication
 _=>ᵇ_ : Bool → Bool → Bool
 a =>ᵇ b = if a then b else true
 
+-- Boolean-valued inequalities on natural numbers
 _≤ᵇ_ _≥ᵇ_ : ℕ → ℕ → Bool
 m ≤ᵇ n = ¿ m ≤ n ¿ᵇ
 _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
-
------------------------------------------------------
-
+\end{code}
+\begin{code}
 -- TODO: this could be a regular property
 
 feesOK : PParams → Tx → UTxO → Bool
@@ -158,9 +162,12 @@ feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
                       )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange = range $ (utxo ∣ collateral) .proj₁
-    bal             = balance (utxo ∣ collateral)
+    collateralRange  = range    (utxo ∣ collateral)
+    bal              = balance  (utxo ∣ collateral)
 \end{code}
+\caption{Functions used in UTxO rules, continued}
+\label{fig:functions:utxo2}
+\end{figure*}
 \begin{code}[hide]
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
@@ -169,10 +176,6 @@ instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
 \end{code}
-
-\caption{Functions used in UTxO rules}
-\label{fig:functions:utxo}
-\end{figure*}
 
 \AgdaTarget{UTxOEnv, UTxOState, \_⊢\_⇀⦇\_,UTXO⦈\_}
 \begin{figure*}[h]
@@ -303,19 +306,19 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
-       txins ≢ ∅                              → txins ⊆ dom utxo
-    →  inInterval slot txvldt                 → minfee pp tx ≤ txfee
-    →  consumed pp s txb ≡ produced pp s txb  → coin mint ≡ 0
-    →  txsize ≤ maxTxSize pp
+    ∙  txins ≢ ∅                              ∙ txins ⊆ dom utxo
+    ∙  inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
+    ∙  consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙  txsize ≤ maxTxSize pp
 
-    → ∀[ (_ , txout) ∈ txouts .proj₁ ]
+    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
-    → ∀[ (_ , txout) ∈ txouts .proj₁ ]
+    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         serSize (getValue txout) ≤ maxValSize pp
-    → ∀[ (a , _) ∈ range txouts ]
+    ∙ ∀[ (a , _) ∈ range txouts ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    → ∀[ (a , _) ∈ range txouts ] netId a        ≡ networkId
-    → ∀[ a ∈ dom  txwdrls ]       a .RwdAddr.net ≡ networkId
+    ∙ ∀[ (a , _) ∈ range txouts ] netId a        ≡ networkId
+    ∙ ∀[ a ∈ dom  txwdrls ]       a .RwdAddr.net ≡ networkId
     -- Add deposits
 
        ────────────────────────────────
@@ -327,49 +330,26 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 
 \end{code}
 \begin{code}[hide]
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r)
+unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
+
 instance
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
-  Computational-UTXO = record {go} where module go Γ s tx where
-    open Tx tx renaming (body to txb); open TxBody txb
-    open UTxOEnv Γ renaming (pparams to pp)
-    open UTxOState s
+  Computational-UTXO = record {Go}
+    where module Go Γ s tx (let H , H? = UTXO-premises {tx}{Γ}{s}) where
 
-    UTXO-premises : Set
-    UTXO-premises
-      = txins ≢ ∅
-      × txins ⊆ dom utxo
-      × inInterval slot txvldt
-      × minfee pp tx ≤ txfee
-      × consumed pp s txb ≡ produced pp s txb
-      × coin mint ≡ 0
-      × txsize ≤ maxTxSize pp
-      × All (λ txout →  inject (utxoEntrySize (txout .proj₂) * minUTxOValue pp)
-                    ≤ᵗ getValue (txout .proj₂))
-            (txouts .proj₁)
-      × All (λ txout → serSize (getValue $ txout .proj₂) ≤ maxValSize pp)
-            (txouts .proj₁)
-      × All (Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) ∘ proj₁)
-            (range (txouts ˢ))
-      × All (λ a → netId (a .proj₁) ≡ networkId) (range (txouts ˢ))
-      × All (λ a → a .RwdAddr.net   ≡ networkId) (dom  (txwdrls ˢ))
-
-    UTXO-premises? : Dec UTXO-premises
-    UTXO-premises? = ¿ UTXO-premises ¿
-
-    computeProof =
-      case UTXO-premises? of λ where
-        (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁)) →
-          just (_ , UTXO-inductive p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁)
-        (no _) → nothing
+    computeProof = case H? of λ where
+      (yes p) → just (-, UTXO-inductive p)
+      (no _)  → nothing
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
-    completeness s' h@(UTXO-inductive q₀ q₁ q₂ q₃ q₄ q₅ q₆ q₇ q₈ q₉ q₁₀ q₁₁) = QED
+    completeness s' (UTXO-inductive p) = QED
       where
       QED : map proj₁ computeProof ≡ just s'
-      QED with UTXO-premises?
+      QED with H?
       ... | yes _ = refl
-      ... | no q = ⊥-elim
-                 $ q (q₀ , q₁ , q₂ , q₃ , q₄ , q₅ , q₆ , q₇ , q₈ , q₉ , q₁₀ , q₁₁)
+      ... | no ¬p = ⊥-elim $ ¬p p
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

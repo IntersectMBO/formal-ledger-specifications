@@ -1,9 +1,7 @@
 {-# OPTIONS --safe --without-K #-}
 module MyDebugOptions where
 
-open import Prelude
-
-open import Reflection.Debug
+open import PreludeMeta
 
 instance
   defaultDebugOptionsI : DebugOptions

@@ -1,5 +1,5 @@
 # Constants
-AGDA?=agda
+AGDA?=agda --transliterate
 OUT_DIR?=../dist
 LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
@@ -50,7 +50,7 @@ define agdaToHs =
     mkdir -p $(HS_DIST)
     cp -r $(PROJECT)/hs-src/* $(HS_DIST)/
     cp $(PROJECT)/hs-src/$(CABAL_FILE) $(HS_DIST)/
-    $(AGDA) --transliterate -c --ghc-dont-call-ghc --compile-dir $(HS_DIST) $<
+    $(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIST) $<
     find $(HS_DIST)/MAlonzo -name "*.hs" -print\
       | sed "s#^$(HS_DIST)/#        #;s#\.hs##;s#/#.#g"\
       >> $(HS_DIST)/$(CABAL_FILE)
