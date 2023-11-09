@@ -77,7 +77,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       open Acnt acnt
 
       trWithdrawals   = esW .EnactState.withdrawals
-      totWithdrawals  = Σᵐᵛ[ x ← trWithdrawals ᶠᵐ ] x
+      totWithdrawals  = ∑ᵐᵛ[ x ← trWithdrawals ᶠᵐ ] x
 
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         mapˢ (GovActionState.returnAddr gaSt ,_)
