@@ -55,7 +55,7 @@ utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
 open PParams
 \end{code}
 
-Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
+Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
 Figure~\ref{fig:ts-types:utxo-shelley} defines the types needed for the UTxO transition system.
 The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
@@ -123,29 +123,33 @@ module _ (let open Tx; open TxBody) where
   certRefundˢ : DCert → ℙ DepositPurpose
   certRefundˢ = partialToSet certRefund
 
+\end{code}
+\caption{Functions used in UTxO rules}
+\label{fig:functions:utxo}
+\end{figure*}
+\begin{figure*}
+\begin{code}
 -- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
   upper  : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)
   none   :                                    inInterval slot (nothing  , nothing)
-
------------------------------------------------------
--- Boolean Functions
-
--- Boolean Implication
+\end{code}
+\begin{code}[hide]
+-- Boolean implication
 _=>ᵇ_ : Bool → Bool → Bool
 a =>ᵇ b = if a then b else true
 
+-- Boolean-valued inequalities on natural numbers
 _≤ᵇ_ _≥ᵇ_ : ℕ → ℕ → Bool
 m ≤ᵇ n = ¿ m ≤ n ¿ᵇ
 _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
-
------------------------------------------------------
-
+\end{code}
+\begin{code}
 -- TODO: this could be a regular property
 
 feesOK : PParams → Tx → UTxO → Bool
@@ -158,9 +162,12 @@ feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
                       )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange = range $ (utxo ∣ collateral) .proj₁
-    bal             = balance (utxo ∣ collateral)
+    collateralRange  = range    (utxo ∣ collateral)
+    bal              = balance  (utxo ∣ collateral)
 \end{code}
+\caption{Functions used in UTxO rules, continued}
+\label{fig:functions:utxo2}
+\end{figure*}
 \begin{code}[hide]
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
@@ -169,10 +176,6 @@ instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
 \end{code}
-
-\caption{Functions used in UTxO rules}
-\label{fig:functions:utxo}
-\end{figure*}
 
 \AgdaTarget{UTxOEnv, UTxOState, \_⊢\_⇀⦇\_,UTXO⦈\_}
 \begin{figure*}[h]
