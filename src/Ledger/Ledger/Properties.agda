@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude; open Equivalence
+open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract
 
@@ -9,13 +9,14 @@ module Ledger.Ledger.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Deleg.Properties govStructure
 open import Ledger.Gov govStructure
-open import Ledger.PPUp txs
-open import Ledger.Utxo txs abs
-import Ledger.Utxo.Properties txs abs as P
-open import Ledger.Utxow txs abs
-import Ledger.Utxow.Properties txs abs as PW
+open import Ledger.Gov.Properties govStructure
 open import Ledger.Ledger txs abs
+open import Ledger.Utxo txs abs
+open import Ledger.Utxo.Properties txs abs
+open import Ledger.Utxow txs abs
+open import Ledger.Utxow.Properties txs abs
 
 -- ** Proof that LEDGER is computational.
 
@@ -79,7 +80,7 @@ FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
   where open Tx; open TxBody; open UTxOState; open LState
 
 LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-LEDGER-pov h (LEDGER⋯ (UTXOW-inductive⋯ _ _ _ _ _ st) _ _ _) = P.pov h st
+LEDGER-pov h (LEDGER⋯ (UTXOW-inductive⋯ _ _ _ _ _ st) _ _ _) = pov h st
 
 data FreshTxs : LEnv → LState → List Tx → Set where
   []-Fresh : FreshTxs Γ s []
