@@ -303,34 +303,41 @@ It represents how the \agdaboundEnactState changes when a specific governance ac
 data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
 
   Enact-NoConf :
+    ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢   s ⇀⦇ NoConfidence ,ENACT⦈
                  record  s { cc = nothing , gid }
 
-  Enact-NewComm : let old = maybe proj₁ ∅ᵐ (s .EnactState.cc .proj₁) in
-    ∀[ term ∈ range new ] term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)
-    ────────────────────────────────
+  Enact-NewComm : let old      = maybe proj₁ ∅ᵐ (s .EnactState.cc .proj₁)
+                      maxTerm  = s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e
+                  in
+    ∀[ term ∈ range new ] term ≤ maxTerm
+    ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewCommittee new rem q ,ENACT⦈
                 record  s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
 
   Enact-NewConst :
+    ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewConstitution dh sh ,ENACT⦈
                 record  s { constitution = (dh , sh) , gid }
 
   Enact-HF :
+    ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢   s ⇀⦇ TriggerHF v ,ENACT⦈
                  record  s { pv = v , gid }
 
   Enact-PParams :
+    ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ ChangePParams up ,ENACT⦈
                 record  s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
 
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
     ∑ᵐᵛ[ x ← newWdrls ᶠᵐ ] x ≤ t
-    ────────────────────────────────
+    ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
                 record  s { withdrawals  = newWdrls }
 
   Enact-Info :
+    ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ Info  ,ENACT⦈ s
 \end{code}
 \caption{ENACT transition system}
