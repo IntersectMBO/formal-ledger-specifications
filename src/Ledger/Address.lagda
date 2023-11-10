@@ -9,8 +9,10 @@ open import Ledger.Prelude
 
 module Ledger.Address (
 \end{code}
-We define credentials and various types of addresses here.
-\begin{figure*}[h]
+We define credentials and various types of addresses here.  In particular, \isVKey
+represents public verifying keys constructed from credentials and key hashes;
+similarly, \isScript represents scripts constructed from credentials and script hashes.
+\begin{figure*}[h!]
 \begin{AgdaAlign}
 \emph{Abstract types}
 \begin{code}
@@ -64,7 +66,13 @@ Addr        = BaseAddr        ⊎ BootstrapAddr
 VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
 ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
 \end{code}
-\end{AgdaSuppressSpace} \\
+\end{AgdaSuppressSpace}
+\end{AgdaAlign}
+\caption{Definitions used in Addresses}
+\label{fig:defs:addresses}
+\end{figure*}
+\begin{figure*}[h!]
+\begin{AgdaAlign}
 \emph{Helper functions}
 \AgdaTarget{payCred, isVKeyAddr}
 \begin{code}
@@ -78,8 +86,8 @@ isScriptAddr     = isScript ∘ payCred
 isScriptRwdAddr  = isScript ∘ RwdAddr.stake
 \end{code}
 \end{AgdaAlign}
-\caption{Definitions used in Addresses}
-\label{fig:defs:addresses}
+\caption{Definitions used in Addresses, continued}
+\label{fig:defs:addresses-cont}
 \end{figure*}
 \begin{code}[hide]
 payCred (inj₁ record {pay = pay}) = pay
