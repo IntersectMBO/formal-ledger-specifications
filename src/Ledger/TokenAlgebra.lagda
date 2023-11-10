@@ -15,7 +15,8 @@ open import Relation.Binary      using (Rel)
 open import Relation.Unary       using (Pred)
 \end{code}
 
-\begin{figure*}
+\begin{figure*}[h!]
+\begin{AgdaAlign}
 \begin{code}
 record TokenAlgebra : Set₁ where
   field  Value-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
@@ -53,5 +54,6 @@ record TokenAlgebra : Set₁ where
   sumᵛ : List Value → Value
   sumᵛ = foldr _+ᵛ_ (inject 0)
 \end{code}
-\caption{Token algebras, used for multi-assets}
+\end{AgdaAlign}
+\caption{Token algebras, used for multi-assets; \AgdaBound{PolicyId} specifies a type (e.g., with natural numbers) used to represent policy identifiers.}
 \end{figure*}
