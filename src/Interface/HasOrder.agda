@@ -23,11 +23,11 @@ module _ {a} {A : Set a} where
         renaming (isEquivalence to ≈-isEquivalence; refl to ≤-refl; trans to ≤-trans)
 
 
-      _≤?_ : ⦃ ∀ {x y : A} → Dec (x ≤ y) ⦄ → Decidable _≤_
-      _ ≤? _ = it
+      _≤?_ : ⦃ _≤_ ⁇² ⦄ → Decidable _≤_
+      _≤?_ = dec²
 
-      _<?_ : ⦃ _ : ∀ {x y : A} → Dec (x < y) ⦄ → Decidable _<_
-      _ <? _ = it
+      _<?_ : ⦃ _<_ ⁇² ⦄ → Decidable _<_
+      _<?_ = dec²
 
       infix 4 _<?_ _≤?_
 
@@ -47,8 +47,8 @@ module _ {a} {A : Set a} where
 
     record HasDecPreorder : Set (sucˡ a) where
       field ⦃ hasPreorder ⦄ : HasPreorder
-            ⦃ dec-≤ ⦄ : ∀ {x y} → Dec (x ≤ y)
-            ⦃ dec-< ⦄ : ∀ {x y} → Dec (x < y)
+            ⦃ dec-≤ ⦄ : _≤_ ⁇²
+            ⦃ dec-< ⦄ : _<_ ⁇²
 
     record HasPartialOrder : Set (sucˡ a) where
       field
@@ -78,8 +78,8 @@ module _ {a} {A : Set a} where
     record HasDecPartialOrder : Set (sucˡ a) where
       field
         ⦃ hasPartialOrder ⦄ : HasPartialOrder
-        ⦃ dec-≤ ⦄ : ∀ {x y} → Dec (x ≤ y)
-        ⦃ dec-< ⦄ : ∀ {x y} → Dec (x < y)
+        ⦃ dec-≤ ⦄ : _≤_ ⁇²
+        ⦃ dec-< ⦄ : _<_ ⁇²
 
   HasPreorder≡ = HasPreorder {_≈_ = _≡_}
   HasDecPreorder≡ = HasDecPreorder {_≈_ = _≡_}
@@ -96,7 +96,7 @@ module _ {a} {A : Set a} {_≈_ : Rel A a} where
     import Relation.Binary.Construct.NonStrictToStrict _≈_ _≤_ as SNS
 
     module _ (≤-isPreorder : IsPreorder _≈_ _≤_)
-             (_≈?_ : ∀ a b → Dec (a ≈ b)) where
+             (_≈?_ : Decidable² _≈_) where
 
       hasPreorderFromNonStrict : HasPreorder
       hasPreorderFromNonStrict = record
@@ -148,4 +148,3 @@ module _ {a} {A : Set a} {_≈_ : Rel A a} where
 
       hasPartialOrderFromStrictTotalOrder : HasPartialOrder
       hasPartialOrderFromStrictTotalOrder = hasPartialOrderFromStrictPartialOrder spo
-

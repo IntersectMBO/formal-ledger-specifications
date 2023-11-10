@@ -20,8 +20,7 @@ open import Data.List.Membership.Propositional.Properties
 open import Data.Product
 open import Data.Product.Algebra
 open import Data.Product.Properties.Ext
--- open import Function.Related hiding (⌊_⌋)
-open import Interface.DecEq
+open import Class.DecEq
 open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary.Decidable
 

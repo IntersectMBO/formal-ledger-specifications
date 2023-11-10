@@ -421,24 +421,22 @@ delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 \begin{code}[hide]
 abstract
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
-  verifyPrev? NoConfidence           h es = it
-  verifyPrev? (NewCommittee x x₁ x₂) h es = it
-  verifyPrev? (NewConstitution x x₁) h es = it
-  verifyPrev? (TriggerHF x)          h es = it
-  verifyPrev? (ChangePParams x)      h es = it
-  verifyPrev? (TreasuryWdrl x)       h es = it
-  verifyPrev? Info                   h es = it
+  verifyPrev? NoConfidence           h es = dec
+  verifyPrev? (NewCommittee x x₁ x₂) h es = dec
+  verifyPrev? (NewConstitution x x₁) h es = dec
+  verifyPrev? (TriggerHF x)          h es = dec
+  verifyPrev? (ChangePParams x)      h es = dec
+  verifyPrev? (TreasuryWdrl x)       h es = dec
+  verifyPrev? Info                   h es = dec
 
   delayed? : ∀ a h es d → Dec (delayed a h es d)
-  delayed? a h es d = let instance _ = verifyPrev? a h es in it
+  delayed? a h es d = let instance _ = ⁇ verifyPrev? a h es in dec
 
   acceptedBy? : ∀ Γ es st role → Dec (acceptedBy Γ es st role)
   acceptedBy? Γ record{ cc = cc , _ ; pparams = pparams , _ } st role = _ ℚ.≤? _
 
   accepted? : ∀ Γ es st → Dec (accepted Γ es st)
-  accepted? Γ es st =
-    let instance _ = λ {role} → acceptedBy? Γ es st role
-    in it
+  accepted? Γ es st = let instance _ = ⁇¹ acceptedBy? Γ es st in dec
 
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿

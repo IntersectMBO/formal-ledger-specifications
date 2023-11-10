@@ -19,7 +19,7 @@ open import Data.List.Relation.Binary.Permutation.Propositional
 open import Data.List.Relation.Unary.Unique.DecPropositional.Properties
 open import Data.List.Relation.Unary.Unique.Propositional
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
-open import Interface.DecEq
+open import Class.DecEq
 open import Relation.Binary
 
 open Equivalence

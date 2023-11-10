@@ -3,16 +3,8 @@
 module Interface.ComputationalRelation where
 
 open import Prelude
-
-open import Interface.DecEq
-open import Interface.Functor
-open import Interface.Bifunctor
-open import Interface.STS public
-
-open import Relation.Binary.PropositionalEquality
-open import Relation.Nullary
-
 open import Data.Maybe.Properties using (map-nothing)
+open import Interface.STS public
 
 private variable
   C S Sig : Set
@@ -118,7 +110,6 @@ module _ {BSTS : C → S → ⊤ → S → Set} ⦃ _ : Computational BSTS ⦄ w
       s₁ , h  ← computeProof c s sig
       s₂ , hs ← computeProof c s₁ sigs
       just (s₂ , BS-ind h hs)
-      where open import Data.Maybe
     Computational-ReflexiveTransitiveClosureᵇ .completeness c s [] s' (BS-base p)
       with computeProof {STS = BSTS} c s tt | completeness _ _ _ _ p
     ... | just x | p' = p'
@@ -136,7 +127,6 @@ module _ {BSTS : C → S → ⊤ → S → Set} ⦃ _ : Computational BSTS ⦄ w
       s₁ , h  ← computeProof (c , length sigs) s sig
       s₂ , hs ← computeProof c s₁ sigs
       just (s₂ , BS-ind h hs)
-      where open import Data.Maybe
     Computational-ReflexiveTransitiveClosureᵢᵇ .completeness c s [] s' (BS-base p)
       with computeProof {STS = BSTS} c s tt | completeness _ _ _ _ p
     ... | just x | p' = p'

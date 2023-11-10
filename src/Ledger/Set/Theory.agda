@@ -3,8 +3,6 @@
 module Ledger.Set.Theory where
 
 open import Prelude
-open import Interface.DecEq
-open import Interface.DecEq.Ext
 
 open import Axiom.Set
 import Axiom.Set.List as L

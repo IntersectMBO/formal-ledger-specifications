@@ -3,7 +3,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 open import Ledger.Prelude as Prelude
-  hiding (_<ᵇ_; _∧_)
+  hiding (_<ᵇ_; _∧_; dec)
   renaming (_×_ to _∧_)
 open import Data.Integer using (+_; 0ℤ; 1ℤ; -1ℤ)
 
@@ -187,7 +187,7 @@ unquoteDecl LEDGER-inductive-premises =
 instance
   Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_
   Computational-LEDGER = record {Go}
-    where module Go Γ s b (let H , H? = LEDGER-inductive-premises {b}) where
+    where module Go Γ s b (let H , ⁇ H? = LEDGER-inductive-premises {b}) where
       computeProof = case H? of λ where
         (yes p) → just (-, LEDGER-inductive p)
         (no _)  → nothing

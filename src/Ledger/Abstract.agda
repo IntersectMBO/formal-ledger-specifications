@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (Dec₁)
+open import Ledger.Prelude
 open import Ledger.Transaction
 
 module Ledger.Abstract (txs : TransactionStructure) where

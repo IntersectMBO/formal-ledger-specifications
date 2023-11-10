@@ -34,7 +34,7 @@ We rely on a public key signing scheme for verification of spending.
 \end{code}
 \emph{Property of signatures}
 \begin{code}[hide]
-  field isSigned? : ∀ vk d σ → Dec (isSigned vk d σ)
+  field ⦃ Dec-isSigned ⦄ : isSigned ⁇³
         isSigned-correct :
 \end{code}
 \begin{code}
@@ -46,9 +46,6 @@ We rely on a public key signing scheme for verification of spending.
 \begin{code}[hide]
         ⦃ DecEq-Sig  ⦄ : DecEq Sig
         ⦃ DecEq-Ser  ⦄ : DecEq Ser
-  instance
-    Dec-isSigned : ∀ {vk d σ} → Dec (isSigned vk d σ)
-    Dec-isSigned = isSigned? _ _ _
 
 record Crypto : Set₁ where
   field pkk : PKKScheme

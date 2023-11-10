@@ -3,61 +3,23 @@
 module Interface.HasOrder.Instance where
 
 open import Prelude
-
-private module Nat where
-  open import Data.Nat public
-  open import Data.Nat.Properties public
-
-private module Int where
-  open import Data.Integer public
-  open import Data.Integer.Properties public
-
-open import Interface.DecEq
-open import Interface.Decidable.Instance
+open import Class.DecEq
 open import Interface.HasOrder
 
 instance
-  ℕ-hasPreorder : HasPreorder
-  ℕ-hasPreorder = record
-    { Nat
-    ; ≤⇔<∨≈ = λ {a b} → mk⇔
-              (λ a≤b → case (a ≟ b) of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (Nat.≤∧≢⇒< a≤b ¬p))
-               λ where (inj₁ a<b) → Nat.<⇒≤ a<b ; (inj₂ a≡b) → Nat.≤-reflexive a≡b
-    }
+  import Data.Sum as ⊎
 
-  ℕ-hasPartialOrder : HasPartialOrder
-  ℕ-hasPartialOrder = record { hasPreorder = ℕ-hasPreorder ; ≤-antisym = Nat.≤-antisym }
+  import Data.Nat.Properties as Nat hiding (_≟_)
+  ℕ-hasPreorder = HasPreorder ∋ record {Nat; ≤⇔<∨≈ = let open Nat in mk⇔
+    (λ a≤b → case _ ≟ _ of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (≤∧≢⇒< a≤b ¬p))
+    ⊎.[ <⇒≤ , ≤-reflexive ] }
+  ℕ-hasPartialOrder = HasPartialOrder ∋ record
+    { ≤-antisym = Nat.≤-antisym }
+  ℕ-hasDecPartialOrder = HasDecPartialOrder {A = ℕ} ∋ record {}
 
-  ℕ-Dec-≤ = Decidable²⇒Dec Nat._≤?_
-  ℕ-Dec-< = Decidable²⇒Dec Nat._<?_
-
-  ℕ-hasDecPartialOrder : HasDecPartialOrder {A = ℕ}
-  ℕ-hasDecPartialOrder = record {}
-
-  ℤ-hasPreorder : HasPreorder
-  ℤ-hasPreorder = record
-    { Int
-    ; ≤⇔<∨≈ =  λ {a b} → mk⇔
-               (λ a≤b → case (a ≟ b) of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (Int.≤∧≢⇒< a≤b ¬p))
-               λ where (inj₁ a<b) → Int.<⇒≤ a<b ; (inj₂ a≡b) → Int.≤-reflexive a≡b
-    }
-
-  ℤ-hasPartialOrder : HasPartialOrder
-  ℤ-hasPartialOrder = record { ≤-antisym = Int.≤-antisym }
-
-  ℤ-Dec-≤ = Decidable²⇒Dec Int._≤?_
-  ℤ-Dec-< = Decidable²⇒Dec Int._<?_
-
-  ℤ-hasDecPartialOrder : HasDecPartialOrder {A = ℤ}
-  ℤ-hasDecPartialOrder = record {}
-
-_ = Dec² Nat._≤_ ∋ it
-_ = Dec² Nat._<_ ∋ it
-_ = Dec² Int._≤_ ∋ it
-_ = Dec² Int._<_ ∋ it
-
-_ = Decidable² Nat._≤_ ∋ _≤?_
-_ = Decidable² Nat._<_ ∋ _<?_
-_ = Decidable² Int._≤_ ∋ _≤?_
-_ = Decidable² Int._<_ ∋ _<?_
-
+  import Data.Integer.Properties as Int hiding (_≟_)
+  ℤ-hasPreorder = HasPreorder ∋ record {Int; ≤⇔<∨≈ = let open Int in mk⇔
+    (λ a≤b → case _ ≟ _ of λ where (yes p) → inj₂ p ; (no ¬p) → inj₁ (≤∧≢⇒< a≤b ¬p))
+    ⊎.[ <⇒≤ , ≤-reflexive ] }
+  ℤ-hasPartialOrder = HasPartialOrder ∋ record { ≤-antisym = Int.≤-antisym }
+  ℤ-hasDecPartialOrder = HasDecPartialOrder {A = ℤ} ∋ record {}

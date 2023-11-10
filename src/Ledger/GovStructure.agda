@@ -2,7 +2,7 @@
 
 module Ledger.GovStructure where
 
-open import Interface.DecEq
+open import Class.DecEq
 open import Ledger.Epoch
 open import Ledger.Crypto
 open import Ledger.Script

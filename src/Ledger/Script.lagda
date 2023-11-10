@@ -23,12 +23,9 @@ module Ledger.Script
 record P1ScriptStructure : Set₁ where
   field P1Script : Set
         validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Set
-        validP1Script? : ∀ khs I s → Dec (validP1Script khs I s)
+        ⦃ Dec-validP1Script ⦄ : validP1Script ⁇³
         ⦃ Hashable-P1Script ⦄ : Hashable P1Script ScriptHash
         ⦃ DecEq-P1Script    ⦄ : DecEq P1Script
-  instance
-    Dec-ValidP1Script : ∀ {khs I s} → Dec (validP1Script khs I s)
-    Dec-ValidP1Script = validP1Script? _ _ _
 
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet
@@ -58,7 +55,7 @@ record PlutusStructure : Set₁ where
   Redeemer = Data
 
   field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
-        validPlutusScript? : ∀ cm ds eu s → Dec (validPlutusScript cm ds eu s)
+        ⦃ Dec-validPlutusScript ⦄ : ∀ {x} → (validPlutusScript x ⁇³)
         language : PlutusScript → Language
         toData : ∀ {A : Set} → A → Data
 
@@ -73,7 +70,6 @@ record ScriptStructure : Set₁ where
   open PlutusStructure ps public
     renaming ( PlutusScript       to P2Script
              ; validPlutusScript  to validP2Script
-             ; validPlutusScript? to validP2Script?
              )
 
   Script = P1Script ⊎ P2Script
