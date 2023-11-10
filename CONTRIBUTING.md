@@ -12,7 +12,7 @@ We use Agda version 2.6.3 and a patched version of the Agda Standard Library; th
 
 To install Agda locally and use that install with emacs, you can do the following:
 
--  Build `agda` and `agda-mode` binaries by invoking the following: `nix-build -A agda -o ~/IOHK/ledger-agda`
+-  Build `agda` and `agda-mode` binaries by invoking the following: `nix-build -A agdaWithDeps -o ~/IOHK/ledger-agda`
 
    *Note*. You need not have built/installed Agda prior to invoking this `nix-build` command (though it's okay if you have).
 

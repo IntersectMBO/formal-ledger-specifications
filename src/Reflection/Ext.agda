@@ -5,14 +5,7 @@ open import Prelude
 open import PreludeMeta
 open import Data.Nat using (_≤ᵇ_)
 
-open import Class.Show.Core; open import Class.Show.Instances
-open import Class.Semigroup.Core; open import Class.Semigroup.Instances
-open import Class.Monad.Core; open import Class.Monad.Instances
-open import Class.Applicative.Core; open import Class.Applicative.Instances
-
-open import Interface.Functor using (map; _<$>_; Type↑; Functor)
-
-open import Generics
+open import Class.Core using (Type↑)
 
 private variable ℓ : Level; A B : Set ℓ
 
@@ -107,23 +100,6 @@ telescopeAbs = map $ uncurry abs
 
 showAbsTel = show ⦃ Show-Tel ⦄ ∘ absTelescope
 
--- Common monadic operations.
-module _ {M : Type↑} ⦃ _ : Functor M ⦄ ⦃ _ : Monad M ⦄ where
-
-  filterM : (A → M Bool) → List A → M (List A)
-  filterM P? [] = return []
-  filterM P? (x ∷ xs) = do
-    b ← P? x
-    xs ← filterM P? xs
-    return $ if b then x ∷ xs else xs
-
-  mapM : (A → M B) → List A → M (List B)
-  mapM f []       = return []
-  mapM f (x ∷ xs) = do y ← f x; y ∷_ <$> mapM f xs
-
-  forM : List A → (A → M B) → M (List B)
-  forM = flip mapM
-
 -- Check that a type has an instance.
 hasInstance : Type → TC Bool
 hasInstance = isSuccessful ∘ checkType (quote it ∙)
@@ -132,13 +108,6 @@ hasInstance = isSuccessful ∘ checkType (quote it ∙)
 
 open import Class.Semigroup.Core
 open import Class.Monoid.Core
-
--- A folding action on monoids.
-fold : ∀ {ℓ} {A : Set ℓ} ⦃ _ : Monoid A ⦄ → List A → A
-fold = λ where
-  [] → ε
-  (x ∷ []) → x
-  (x ∷ xs@(_ ∷ _)) → x ◇ fold xs
 
 Semigroup-Term-× = Semigroup Term ∋ λ where ._◇_ → quote _×_ ∙⟦_∣_⟧
 Semigroup-Term-⊎ = Semigroup Term ∋ λ where ._◇_ → quote _⊎_ ∙⟦_∣_⟧

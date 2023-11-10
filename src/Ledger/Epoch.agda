@@ -34,10 +34,10 @@ record EpochStructure : Set₁ where
         ; <-resp-≈ = (λ where refl → id) , (λ where refl → id)
         }
 
-  _ = ({s s' : Slot}  → Dec (s < s')) ∋ it
-  _ = ({s s' : Slot}  → Dec (s ≤ s')) ∋ it
-  _ = ({e e' : Epoch} → Dec (e < e')) ∋ it
-  _ = ({e e' : Epoch} → Dec (e ≤ e')) ∋ it
+  _ = _<_ {A = Slot}  ⁇² ∋ it
+  _ = _≤_ {A = Slot}  ⁇² ∋ it
+  _ = _<_ {A = Epoch} ⁇² ∋ it
+  _ = _≤_ {A = Epoch} ⁇² ∋ it
 
   -- addition
 

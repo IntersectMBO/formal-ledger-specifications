@@ -12,7 +12,7 @@ let specs = callPackage ./default.nix {};
 in {
   shell = mkShell {
     nativeBuildInputs = [
-      specs.agdaWithStdLibMeta
+      specs.agdaWithDeps
       specs.latex
     ];
   };

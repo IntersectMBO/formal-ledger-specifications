@@ -2,11 +2,8 @@
 
 import Data.Maybe as M
 
-open import Interface.Decidable.Instance
 open import Tactic.AnyOf
 open import Tactic.Assumption
-open import Tactic.Defaults
-open import Tactic.Helpers
 
 open import Ledger.Prelude; open Properties
 open import Ledger.Transaction
@@ -45,7 +42,7 @@ rdptr txb = λ where
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
-indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x ⦃ _ ∈? _ ⦄) nothing (rdptr body sp)
+indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x) nothing (rdptr body sp)
   where open Tx tx; open TxWitnesses wits
 
 -- Abstract Script Validation Functions
@@ -60,12 +57,10 @@ indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x ⦃ _ ∈? _ ⦄) noth
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
 getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
   maybe
-    (λ { (_ , _ , just x) →
-         maybe (λ x₁ → [ x₁ ]) [] (lookupᵐ? txdats x ⦃ _ ∈? _ ⦄)
-       ; (_ , _ , nothing) → []
-       })
+    (λ { (_ , _ , just x)  → maybe [_] [] (lookupᵐ? txdats x)
+       ; (_ , _ , nothing) → [] })
     []
-    (lookupᵐ? utxo txin ⦃ _ ∈? _ ⦄)
+    (lookupᵐ? utxo txin)
 getDatum tx utxo _ = []
 
 

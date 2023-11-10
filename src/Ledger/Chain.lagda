@@ -4,7 +4,6 @@
 {-# OPTIONS --safe #-}
 
 open import Algebra
-open import Data.Maybe using (_>>=_)
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 
 open import Ledger.Prelude; open Equivalence
@@ -153,8 +152,8 @@ govActionDeposits ls =
    in foldl _∪⁺_ ∅ $ setToList $
     mapPartial
       (λ where (gaid , record { returnAddr = record {stake = c} }) → do
-        vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
-        dep ← lookupᵐ? deposits (GovActionDeposit gaid) ⦃ _ ∈? _ ⦄
+        vd ← lookupᵐ? voteDelegs c
+        dep ← lookupᵐ? deposits (GovActionDeposit gaid)
         just ❴ vd , dep ❵ )
       (fromList govSt)
 

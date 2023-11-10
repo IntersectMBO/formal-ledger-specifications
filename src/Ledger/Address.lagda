@@ -2,10 +2,9 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Interface.DecEq.Ext
-open import Tactic.Derive.DecEq
-
 open import Ledger.Prelude
+
+open import Tactic.Derive.DecEq
 
 module Ledger.Address (
 \end{code}

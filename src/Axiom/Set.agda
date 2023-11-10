@@ -4,7 +4,7 @@ open import Agda.Primitive renaming (Set to Type)
 
 module Axiom.Set where
 
-open import Prelude hiding (filter)
+open import Prelude hiding (filter; map)
 
 import Function.Related.Propositional as R
 open import Data.List.Ext.Properties using (∈-dedup; _×-cong_)
@@ -14,7 +14,7 @@ open import Data.List.Relation.Unary.Unique.Propositional using (Unique; [])
 open import Data.Product.Algebra using (×-comm)
 open import Data.Product.Properties using (∃∃↔∃∃)
 open import Data.Product.Properties.Ext using (∃-cong′; ∃-≡)
-open import Interface.DecEq using (DecEq; _≟_)
+open import Class.DecEq using (DecEq; _≟_)
 open import Relation.Binary using () renaming (Decidable to Dec₂)
 
 private variable
@@ -315,29 +315,24 @@ record Theoryᵈ : Type₁ where
     a ∈ᵇ X = ⌊ a ∈? X ⌋
 
     instance
-      Dec-∈ : {x : A} {X : Set A} → Dec (x ∈ X)
-      Dec-∈ {x = x} {X} = x ∈? X
+      Dec-∈ : _∈_ {A = A} ⁇²
+      Dec-∈ = ⁇² _∈?_
 
-    _≡ᵉ?_ : (X Y : Set A) → Dec (X ≡ᵉ Y)
-    _≡ᵉ?_ x y
-      with all? (λ z → z ∈? y) {x}
-    ... | no ¬p = no (¬p ∘ proj₁)
-    ... | yes p
-      with all? (λ z → z ∈? x) {y}
-    ... | no ¬p = no (¬p ∘ proj₂)
-    ... | yes q = yes (p , q)
+    module _ {P : A → Type} ⦃ _ : P ⁇¹ ⦄ where instance
+      Dec-Allˢ : All P ⁇¹
+      Dec-Allˢ = ⁇¹ λ x → all? dec¹ {x}
 
-    module _ {P : A → Type} ⦃ P? : ∀ {x} → Dec (P x) ⦄ {X : Set A} where instance
-      Dec-All : Dec (All P X)
-      Dec-All = all? λ x → it
-
-      Dec-Any : Dec (Any P X)
-      Dec-Any = any? (λ x → it) _
+      Dec-Anyˢ : Any P ⁇¹
+      Dec-Anyˢ = ⁇¹ any? dec¹
 
     module _ {P : A → Type} (P? : Decidable¹ P) where
       allᵇ anyᵇ : (X : Set A) → Bool
       allᵇ X = ⌊ all? P? {X} ⌋
       anyᵇ X = ⌊ any? P? X   ⌋
+
+    _ = _∈_  {A = A} ⁇² ∋ it
+    _ = _⊆_  {A = A} ⁇² ∋ it
+    _ = _≡ᵉ_ {A = A} ⁇² ∋ it
 
     incl-set' : (X : Set A) → A → Maybe (∃[ a ] a ∈ X)
     incl-set' X x with x ∈? X

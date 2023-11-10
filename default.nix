@@ -24,34 +24,50 @@ let
     src = fetchFromGitHub {
       repo = "agda-stdlib";
       owner = "agda";
-      rev = "a7d23029ac94ba446d2cf2a6f4bf3859d7aa9506";
+      rev = "v2.0-rc1";
       sha256 = "tGY7FEcKKW2jSuzniAJpNGxLiL/RRzsOvrajZgKqzRc=";
     };
   });
 
-  agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
+  agdaStdlibClasses = customAgda.agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-    pname = "agda-stdlib-meta";
-    version = "0.1";
+    pname = "agda-stdlib-classes";
+    version = "2.0-rc1";
     src = fetchFromGitHub {
-      repo = "stdlib-meta";
-      owner = "input-output-hk";
-      rev = "8ccdb763214e50e830a271b1e5ff57e429c3607b";
-      sha256 = "p5fNQzosNhgOR39ZVm9kwvzp6hB2563F1NSRlZSCoWo=";
+      repo = "agda-stdlib-classes";
+      owner = "omelkonian";
+      rev = "v2.0-rc1";
+      sha256 = "4ujdQv38u6BybFhRup9PMR0xpI59J/Naz/kaBtQQ9aY=";
     };
     meta = { };
-    libraryFile = "stdlib-meta.agda-lib";
-    everythingFile = "Main.agda";
+    libraryFile = "agda-stdlib-classes.agda-lib";
+    everythingFile = "Classes.agda";
     buildInputs = [ agdaStdlib ];
   };
 
-  deps = [ agdaStdlib agdaStdlibMeta ];
+  agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    pname = "agda-stdlib-meta";
+    version = "2.0-rc1";
+    src = fetchFromGitHub {
+      repo = "agda-stdlib-meta";
+      owner = "omelkonian";
+      rev = "v2.0-rc1";
+      sha256 = "k9hQrNfLa3v0i0UXKrdVoasDm6GZflTweUuwykUE5pU=";
+    };
+    meta = { };
+    libraryFile = "agda-stdlib-meta.agda-lib";
+    everythingFile = "Main.agda";
+    buildInputs = [ agdaStdlib agdaStdlibClasses ];
+  };
+
+  deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta ];
   agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
 
 in
 rec {
 
-  agdaWithStdLibMeta = agdaWithPkgs deps;
+  agdaWithDeps = agdaWithPkgs deps;
   agda = agdaWithPkgs (deps ++ [ formalLedger ]);
 
   latex = texlive.combine {
@@ -89,7 +105,7 @@ rec {
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
-      buildInputs = [ agdaWithStdLibMeta latex ];
+      buildInputs = [ agdaWithDeps latex ];
       buildPhase = ''
         OUT_DIR=$out make "${project}".docs
       '';
@@ -106,7 +122,7 @@ rec {
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
-      buildInputs = [ agdaWithStdLibMeta ];
+      buildInputs = [ agdaWithDeps ];
       buildPhase = ''
         OUT_DIR=$out make "${project}".html
       '';
@@ -123,7 +139,7 @@ rec {
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
-      buildInputs = [ agdaWithStdLibMeta ];
+      buildInputs = [ agdaWithDeps ];
       buildPhase = ''
         OUT_DIR=$out make "${project}".hs
       '';
@@ -140,7 +156,7 @@ rec {
     #   version = "0.1";
     #   src = "${formalLedger}";
     #   meta = { };
-    #   buildInputs = [ agdaWithStdLibMeta ];
+    #   buildInputs = [ agdaWithDeps ];
     #   configurePhase = ''
     #     export HOME=$TMP
     #   '';

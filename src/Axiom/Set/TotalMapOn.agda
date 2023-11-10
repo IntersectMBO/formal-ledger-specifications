@@ -4,12 +4,12 @@ open import Axiom.Set using (Theory)
 
 module Axiom.Set.TotalMapOn (th : Theory) where
 
-open import Prelude hiding (lookup)
+open import Prelude hiding (lookup; map)
 
-open import Agda.Primitive              using () renaming (Set to Type)
-open import Axiom.Set.Map th            using (left-unique ; Map ; mapWithKey-uniq)
-open import Axiom.Set.Rel th            using (Rel ; dom ; dom∈)
-open import Interface.DecEq             using (DecEq ; _≟_)
+open import Agda.Primitive   using () renaming (Set to Type)
+open import Axiom.Set.Map th using (left-unique ; Map ; mapWithKey-uniq)
+open import Axiom.Set.Rel th using (Rel ; dom ; dom∈)
+open import Class.DecEq      using (DecEq ; _≟_)
 
 open Theory th    using ( Set ; _⊆_ ; _∈_ ; map ; ∈-map′ )
 open Equivalence  using (to)

@@ -1,15 +1,10 @@
 module MidnightExample.HSLedger where
 
-open import Prelude hiding (_++_)
+open import Prelude hiding (_++_; dec)
 
 open import Interface.Hashable
-open import Interface.DecEq
-open import Interface.Functor
-open import Interface.Show
 
 open import Data.Integer hiding (show)
-import Data.Integer.Show as Z
-import Data.Nat.Show as N
 open import Data.String using (_++_)
 
 import MidnightExample.Types as F
@@ -18,22 +13,17 @@ open F using (Hash)
 private variable A B : Set
 instance
   _ : Hashable String Hash
-  _ = λ where
-    .hash → F.hash
-    .hashInj → F.hash-inj
+  _ = λ where .hash → F.hash; .hashInj → F.hash-inj
 private
   Show⇒Hashable : ⦃ Show A ⦄ → Hashable A Hash
   Show⇒Hashable .hash = hash ∘ show
   Show⇒Hashable .hashInj = hash-inj where postulate hash-inj : _
 instance
-  Show-ℕ = Show ℕ ∋ λ where .show → N.show
-  Show-ℤ = Show ℤ ∋ λ where .show → Z.show
+  _ : ⦃ Hashable A Hash ⦄ → Show (List A)
+  _ = λ where .show → foldr (λ a acc → show (hash a) ++ "," ++ acc) ""
 
-  Show-List : ⦃ Hashable A Hash ⦄ → Show (List A)
-  Show-List .show = foldr (λ a acc → show (hash a) ++ "," ++ acc) ""
-
-  Show-× : ⦃ Hashable A Hash ⦄ → ⦃ Hashable B Hash ⦄ → Show (A × B)
-  Show-× .show (a , b) = show (hash a) ++ "," ++ show (hash b)
+  _ : ⦃ Hashable A Hash ⦄ → ⦃ Hashable B Hash ⦄ → Show (A × B)
+  _ = λ where .show (a , b) → show (hash a) ++ "," ++ show (hash b)
 
   _ = Hashable ℤ Hash ∋ Show⇒Hashable
   _ : Hashable₁ List Hash

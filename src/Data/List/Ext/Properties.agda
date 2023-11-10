@@ -16,7 +16,7 @@ open import Data.List.Relation.Unary.AllPairs
 open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
 open import Function.Bundles
-open import Interface.DecEq
+open import Class.DecEq
 
 module Data.List.Ext.Properties where
 
