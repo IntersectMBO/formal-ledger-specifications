@@ -1,3 +1,5 @@
+\section{Appendix: Agda essentials}
+\label{sec:appendix-agda-essentials}
 Here we describe some of the essential concepts and syntax of the Agda programming language and proof assistant.
 The goal is to provide some background for readers who are not already familiar with Agda, to help them
 understand the other sections of the specification.
@@ -49,4 +51,4 @@ p24 = record p23 { snd = 4 }
 This results a new record, \AgdaFunction{p24}, which denotes the pair
 \AgdaInductiveConstructor{⦅}~\AgdaNumber{2}~\AgdaInductiveConstructor{,}~\AgdaNumber{4}~\AgdaInductiveConstructor{⦆}.
 \\[6pt]
-See also \agdartdlang{record-types}.
+See also \href{https://agda.readthedocs.io/en/v2.6.4/language/record-types}{\texttt{https://agda.readthedocs.io/en/v2.6.4/language/record-types}}.

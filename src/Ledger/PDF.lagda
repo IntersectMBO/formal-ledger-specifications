@@ -74,7 +74,6 @@ open import Ledger.EssentialAgda
 
 \appendix
 
-\section{Appendix: Agda essentials}
 \input{Ledger/EssentialAgda}
 
 \end{document}
