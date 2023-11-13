@@ -15,11 +15,9 @@ We introduce three distinct bodies that have specific functions in the new gover
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
-open import Interface.Decidable.Instance
 open import Tactic.Derive.DecEq
 
-open import Ledger.Prelude renaming (yes to yesᵈ; no to noᵈ)
-open import Ledger.Crypto
+open import Ledger.Prelude hiding (yes; no)
 open import Ledger.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
@@ -343,39 +341,3 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
 \caption{ENACT transition system}
 \label{fig:enact-transition-system}
 \end{figure*}
-
-\begin{code}[hide]
-open Computational ⦃...⦄
-instance
-  Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_
-  Computational-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where
-    NoConfidence             → just (_ , Enact-NoConf)
-    (NewCommittee new rem q) →
-      case ¿ ∀[ term ∈ range new ]
-               term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿ of λ where
-      (yesᵈ p) → just (-, Enact-NewComm p)
-      (noᵈ ¬p) → nothing
-    (NewConstitution dh sh)  → just (-, Enact-NewConst)
-    (TriggerHF v)            → just (-, Enact-HF)
-    (ChangePParams up)       → just (-, Enact-PParams)
-    Info                     → just (-, Enact-Info)
-    (TreasuryWdrl wdrl) →
-      case ¿ ∑ᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t ¿ of λ where
-        (yesᵈ p)             → just (-, Enact-Wdrl p)
-        (noᵈ _)              → nothing
-  Computational-ENACT .completeness ⟦ _ , t , e ⟧ᵉ s action _ p
-    with action | p
-  ... | .NoConfidence           | Enact-NoConf   = refl
-  ... | .NewCommittee new rem q | Enact-NewComm p
-    rewrite dec-yes
-      (¿ ∀[ term ∈ range new ] term
-           ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e) ¿) p .proj₂
-      = refl
-  ... | .NewConstitution dh sh  | Enact-NewConst = refl
-  ... | .TriggerHF v            | Enact-HF       = refl
-  ... | .ChangePParams up       | Enact-PParams  = refl
-  ... | .Info                   | Enact-Info     = refl
-  ... | .TreasuryWdrl wdrl      | Enact-Wdrl p
-    rewrite dec-yes (¿ (∑ᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿) p .proj₂
-    = refl
-\end{code}
