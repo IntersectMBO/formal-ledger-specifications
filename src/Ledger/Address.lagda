@@ -9,7 +9,11 @@ open import Ledger.Prelude
 
 module Ledger.Address (
 \end{code}
-We define credentials and various types of addresses here.
+
+We define credentials and various types of addresses here. A
+credential contains a hash, either of a verifying (public) key
+(\isVKey) or of a (\isScript).
+
 \begin{figure*}[h!]
 \begin{AgdaAlign}
 \emph{Abstract types}
