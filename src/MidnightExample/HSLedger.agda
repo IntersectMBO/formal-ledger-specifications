@@ -1,6 +1,6 @@
 module MidnightExample.HSLedger where
 
-open import Prelude hiding (_++_; dec)
+open import Prelude hiding (_++_; dec; Show-List; Show-×)
 
 open import Interface.Hashable
 
@@ -19,11 +19,11 @@ private
   Show⇒Hashable .hash = hash ∘ show
   Show⇒Hashable .hashInj = hash-inj where postulate hash-inj : _
 instance
-  _ : ⦃ Hashable A Hash ⦄ → Show (List A)
-  _ = λ where .show → foldr (λ a acc → show (hash a) ++ "," ++ acc) ""
+  Show-List : ⦃ Hashable A Hash ⦄ → Show (List A)
+  Show-List .show = foldr (λ a acc → show (hash a) ++ "," ++ acc) ""
 
-  _ : ⦃ Hashable A Hash ⦄ → ⦃ Hashable B Hash ⦄ → Show (A × B)
-  _ = λ where .show (a , b) → show (hash a) ++ "," ++ show (hash b)
+  Show-× : ⦃ Hashable A Hash ⦄ → ⦃ Hashable B Hash ⦄ → Show (A × B)
+  Show-× .show (a , b) = show (hash a) ++ "," ++ show (hash b)
 
   _ = Hashable ℤ Hash ∋ Show⇒Hashable
   _ : Hashable₁ List Hash
