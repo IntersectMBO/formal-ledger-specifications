@@ -1,11 +1,18 @@
 \section{Token algebras}
 \label{sec:token-algebra}
-
+\begin{figure*}[h]
+\begin{AgdaAlign}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-module Ledger.TokenAlgebra (PolicyId : Set) where
-
+module Ledger.TokenAlgebra (
+\end{code}
+\emph{Abstract types}
+\begin{code}
+  PolicyId
+\end{code}
+\begin{code}[hide]
+  : Set) where
 open import Ledger.Prelude
 
 open import Algebra              using (CommutativeMonoid ; Monoid)
@@ -14,15 +21,16 @@ open import Data.Nat.Properties  using (+-0-monoid)
 open import Relation.Binary      using (Rel)
 open import Relation.Unary       using (Pred)
 \end{code}
-
-\begin{figure*}[h!]
-\begin{AgdaAlign}
+\emph{Derived types}
+\AgdaTarget{TokenAlgebra}
+\begin{AgdaSuppressSpace}
 \begin{code}
 record TokenAlgebra : Set₁ where
   field  Value-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
 
   MemoryEstimate : Set
   MemoryEstimate = ℕ
+
 \end{code}
 \begin{code}[hide]
   open CommutativeMonoid Value-CommutativeMonoid public
@@ -42,6 +50,7 @@ record TokenAlgebra : Set₁ where
          property                  : coin ∘ inject ≗ id
          coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 \end{code}
+\end{AgdaSuppressSpace}
 \begin{code}[hide]
          ⦃ DecEq-Value ⦄ : DecEq Value
          ⦃ Dec-≤ᵗ ⦄      : ∀ {v v′} → Dec (v ≤ᵗ v′)
@@ -50,10 +59,12 @@ record TokenAlgebra : Set₁ where
     addValue : HasAdd Value
     addValue = record { _+_ = _+ᵛ_ }
 \end{code}
+\emph{Helper functions}
+\AgdaTarget{sumᵛ}
 \begin{code}
   sumᵛ : List Value → Value
   sumᵛ = foldr _+ᵛ_ (inject 0)
 \end{code}
 \end{AgdaAlign}
-\caption{Token algebras, used for multi-assets; \AgdaBound{PolicyId} specifies a type (e.g., with natural numbers) used to represent policy identifiers.}
+\caption{Token algebras, used for multi-assets}
 \end{figure*}

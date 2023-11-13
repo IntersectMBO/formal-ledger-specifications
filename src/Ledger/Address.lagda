@@ -10,7 +10,7 @@ open import Ledger.Prelude
 module Ledger.Address (
 \end{code}
 We define credentials and various types of addresses here.
-\begin{figure*}[h]
+\begin{figure*}[h!]
 \begin{AgdaAlign}
 \emph{Abstract types}
 \begin{code}
