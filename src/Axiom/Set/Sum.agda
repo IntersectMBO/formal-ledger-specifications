@@ -98,11 +98,11 @@ module _ ⦃ _ : DecEq A ⦄ {f : A → Carrier} where
       λ {l} disj' → ≈-trans (fold-cong↭ (dedup-++-↭ disj'))
                             (indexedSumL-++ {l = deduplicate _≟_ l})
 
-  indexedSum-singleton : ∀ {x} → indexedSum f (❴ x ❵ , singleton-finite) ≈ f x
+  indexedSum-singleton : ∀ {x} → indexedSum f (﹛ x ﹜ , singleton-finite) ≈ f x
   indexedSum-singleton = identityʳ _
 
-  indexedSum-singleton' : ∀ {x} → (pf : finite ❴ x ❵)
-    → indexedSum f (❴ x ❵ , pf) ≈ f x
+  indexedSum-singleton' : ∀ {x} → (pf : finite ﹛ x ﹜)
+    → indexedSum f (﹛ x ﹜ , pf) ≈ f x
   indexedSum-singleton' {x = x} pf =
     ≈-trans (indexedSum-cong {x = -, pf} {y = -, singleton-finite} ≡ᵉ.refl)
             indexedSum-singleton

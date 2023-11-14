@@ -187,14 +187,14 @@ mostStakeDRepDist-∅ {dist} = suc (∑ᵐᵛ[ x ← dist ᶠᵐ ] x) , Properti
     helper : ∀ {k v} → v > ∑ᵐᵛ[ x ← dist ᶠᵐ ] x → (k , v) ∉ dist
     helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
       v
-        ≡˘⟨ indexedSum-singleton' $ finiteness ❴ k , v ❵ ⟩
-      ∑ᵐᵛ[ x ← ❴ k , v ❵ᵐ ᶠᵐ ] x
-        ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ᵐ ᶠᵐ}
+        ≡˘⟨ indexedSum-singleton' $ finiteness ﹛ k , v ﹜ ⟩
+      ∑ᵐᵛ[ x ← ❴ k , v ❵ ᶠᵐ ] x
+        ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ﹛ k ﹜) ᶠᵐ} {y = ❴ k , v ❵ ᶠᵐ}
           $ res-singleton' {m = dist} kv∈dist ⟩
-      ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
+      ∑ᵐᵛ[ x ← (dist ∣ ﹛ k ﹜) ᶠᵐ ] x
         ≤⟨ m≤m+n _ _ ⟩
-      ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x +ℕ ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
-        ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ❴ k ❵) ᶠᵐ} {(dist ∣ ❴ k ❵ ᶜ) ᶠᵐ}
+      ∑ᵐᵛ[ x ← (dist ∣ ﹛ k ﹜) ᶠᵐ ] x +ℕ ∑ᵐᵛ[ x ← (dist ∣ ﹛ k ﹜ ᶜ) ᶠᵐ ] x
+        ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ﹛ k ﹜) ᶠᵐ} {(dist ∣ ﹛ k ﹜ ᶜ) ᶠᵐ}
           $ res-ex-disj-∪ Properties.Dec-∈-singleton ⟩
       ∑ᵐᵛ[ x ← dist ᶠᵐ ] x
         <⟨ v>sum ⟩
@@ -234,10 +234,10 @@ restrictedDists coins rank dists = dists
 \begin{AgdaAlign}
 \begin{code}
 actualPDRepVotes : GovAction → VDeleg ⇀ Vote
-actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵ᵐ
-                               ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵ᵐ
-actualPDRepVotes _             =   ❴ abstainRep , Vote.abstain ❵ᵐ
-                               ∪ˡ  ❴ noConfidenceRep , Vote.no ❵ᵐ
+actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵
+                               ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵
+actualPDRepVotes _             =   ❴ abstainRep , Vote.abstain ❵
+                               ∪ˡ  ❴ noConfidenceRep , Vote.no ❵
 
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → GovRole × Credential ⇀ Vote → VDeleg ⇀ Vote
@@ -471,22 +471,23 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
        accepted Γ es st
     →  ¬ delayed action prevAction es d
     →  ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
-       ────────────────────────────────
+       ───────────────────────────────────────
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
-            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
+            ⟦ es'  , ﹛ a ﹜ ∪ removed  , delayingAction action  ⟧ʳ
 
   RATIFY-Reject : let open RatifyEnv Γ; st = a .proj₂ in
        ¬ accepted Γ es st
     →  expired currentEpoch st
-       ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
+       ───────────────────────────────────────
+       Γ ⊢  ⟦ es , removed          , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈
+            ⟦ es , ﹛ a ﹜ ∪ removed  , d ⟧ʳ
 
   RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        ¬ accepted Γ es st × ¬ expired currentEpoch st
     ⊎  accepted Γ es st
        × ( delayed action prevAction es d
          ⊎ (∀ es' → ¬ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'))
-    ────────────────────────────────
+    ───────────────────────────────────────
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)

@@ -81,7 +81,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         mapˢ (GovActionState.returnAddr gaSt ,_)
-             ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+             ((deposits ∣ ﹛ GovActionDeposit gaid ﹜) ˢ)
       govActionReturns = aggregate₊ $ mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ
 
       es        = record esW { withdrawals = ∅ᵐ }
@@ -155,7 +155,7 @@ govActionDeposits ls =
       (λ where (gaid , record { returnAddr = record {stake = c} }) → do
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
         dep ← lookupᵐ? deposits (GovActionDeposit gaid) ⦃ _ ∈? _ ⦄
-        just ❴ vd , dep ❵ᵐ )
+        just ❴ vd , dep ❵ )
       (fromList govSt)
 
 calculateStakeDistrs : LState → StakeDistrs
