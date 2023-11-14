@@ -329,7 +329,7 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
                 record  s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
 
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
-    ∑ᵐᵛ[ x ← newWdrls ᶠᵐ ] x ≤ t
+    ∑[ x ← newWdrls ᶠᵐ ] x ≤ t
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
                 record  s { withdrawals  = newWdrls }

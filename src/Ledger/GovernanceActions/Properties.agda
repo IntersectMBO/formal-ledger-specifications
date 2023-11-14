@@ -30,7 +30,7 @@ instance
     (ChangePParams up)       → just (-, Enact-PParams)
     Info                     → just (-, Enact-Info)
     (TreasuryWdrl wdrl) →
-      case ¿ ∑ᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t ¿ of λ where
+      case ¿ ∑[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t ¿ of λ where
         (yes p)             → just (-, Enact-Wdrl p)
         (no _)              → nothing
   Computational-ENACT .completeness ⟦ _ , t , e ⟧ᵉ s action _ p
@@ -46,5 +46,5 @@ instance
   ... | .ChangePParams up       | Enact-PParams  = refl
   ... | .Info                   | Enact-Info     = refl
   ... | .TreasuryWdrl wdrl      | Enact-Wdrl p
-    rewrite dec-yes (¿ (∑ᵐᵛ[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿) p .proj₂
+    rewrite dec-yes (¿ (∑[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x) ≤ t ¿) p .proj₂
     = refl
