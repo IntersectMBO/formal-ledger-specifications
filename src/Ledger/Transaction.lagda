@@ -170,8 +170,7 @@ the transaction body are:
   txinsVKey txins utxo = txins ∩ dom (utxo ↾' to-sp (isVKeyAddr? ∘ proj₁))
 
   scriptOuts : UTxO → UTxO
-  scriptOuts utxo = filterᵐ (sp-∘ (to-sp isScriptAddr?)
-                             λ { (_ , addr , _) → addr}) utxo
+  scriptOuts utxo =  utxo ⊨ sp-∘ (to-sp isScriptAddr?) λ { (_ , addr , _) → addr}
 
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))

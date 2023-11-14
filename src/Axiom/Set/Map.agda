@@ -138,8 +138,11 @@ disj-∪ m m' disj = m ˢ ∪ m' ˢ , λ h h' → case ∈⇔P h , ∈⇔P h' of
 filterᵐ : {P : A × B → Type} → specProperty P → Map A B → Map A B
 filterᵐ sp-P m = filter sp-P (m ˢ) , ⊆-left-unique filter-⊆ (proj₂ m)
 
+syntax filterᵐ sp m = m ⊨ sp
+infix 40 filterᵐ
+
 filterᵐ-finite : {P : A × B → Type} → (sp : specProperty P) → Decidable P
-  → finite (m ˢ) → finite (filterᵐ sp m ˢ)
+  → finite (m ˢ) → finite (m ⊨ sp ˢ)
 filterᵐ-finite = filter-finite
 
 filterKeys : {P : A → Type} → specProperty P → Map A B → Map A B
@@ -159,7 +162,7 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
   m ∪ˡ' m' = m ∪ filter (sp-∘ (sp-¬ (sp-∈ {dom m})) proj₁) m'
 
   _∪ˡ_ : Map A B → Map A B → Map A B
-  m ∪ˡ m' = disj-∪ m (filterᵐ (sp-∘ (sp-¬ sp-∈) proj₁) m')
+  m ∪ˡ m' = disj-∪ m (m' ⊨ sp-∘ (sp-¬ sp-∈) proj₁)
       (∈⇔P -⟨ (λ where x (_ , refl , hy) → proj₁ (∈⇔P hy) (∈⇔P x)) ⟩- ∈⇔P)
 
   disjoint-∪ˡ-∪ : (H : disjoint (dom R) (dom R')) → R ∪ˡ' R' ≡ᵉ R ∪ R'
@@ -237,10 +240,10 @@ mapValues-dom : {f : B → C} → dom (m ˢ) ≡ᵉ dom (mapValues f m ˢ)
 mapValues-dom {m = _ , _} = mapʳ-dom
 
 _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
-m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
+m ∣' P? = m ⊨ sp-∘ P? proj₁
 
 _↾'_ : {P : B → Type} → Map A B → specProperty P → Map A B
-m ↾' P? = filterᵐ (sp-∘ P? proj₂) m
+m ↾' P? = m ⊨ sp-∘ P? proj₂
 
 constMap : Set A → B → Map A B
 constMap X b = mapˢ (_, b) X , λ x x₁ →

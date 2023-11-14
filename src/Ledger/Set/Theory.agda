@@ -102,7 +102,7 @@ _ᶠˢ : {A : Set} → ℙ A → FinSet A
 X ᶠˢ = X , finiteness _
 
 filterᵐ? : ∀ {A B} {P : A × B → Set} → (∀ x → Dec (P x)) → A ⇀ B → A ⇀ B
-filterᵐ? P? = filterᵐ (to-sp P?)
+filterᵐ? P? = λ m → m ⊨ (to-sp P?)
 
 filterᵐᵇ : ∀ {A B} → (A × B → Bool) → A ⇀ B → A ⇀ B
 filterᵐᵇ P = filterᵐ? (λ x → P x ≟ true)
