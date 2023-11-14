@@ -262,7 +262,7 @@ record EnactState : Set where
 
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x  , _)  = dom (x .proj₁)
-ccCreds (nothing , _)  = ⟦⟧
+ccCreds (nothing , _)  = ﹛﹜
 \end{code}
 \caption{Enactment types}
 \label{fig:enactment-types}

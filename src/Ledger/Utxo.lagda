@@ -147,7 +147,7 @@ m ≤ᵇ n = ¿ m ≤ n ¿ᵇ
 _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
-≟-∅ᵇ X = ¿ X ≡ ⟦⟧ ¿ᵇ
+≟-∅ᵇ X = ¿ X ≡ ﹛﹜ ¿ᵇ
 \end{code}
 \begin{code}
 -- TODO: this could be a regular property
@@ -306,7 +306,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
-    ∙  txins ≢ ⟦⟧                              ∙ txins ⊆ dom utxo
+    ∙  txins ≢ ﹛﹜                              ∙ txins ⊆ dom utxo
     ∙  inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
     ∙  consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙  txsize ≤ maxTxSize pp

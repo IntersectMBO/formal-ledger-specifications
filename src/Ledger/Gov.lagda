@@ -103,7 +103,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
        actionWellFormed a ≡ true
     →  d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q
-        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ⟦⟧)
+        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ﹛﹜)
     ───────────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ s'
 

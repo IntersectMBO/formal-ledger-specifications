@@ -35,7 +35,7 @@ module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
       (yes p) → -, NEWEPOCH-New p (pFut .proj₂)
     where pFut = RATIFY-total {record { currentEpoch = e ; treasury = treasury
                                       ; GState gState ; NewEpochEnv Γ }}
-                              {⟦ es , ⟦⟧ , false ⟧ʳ} {govSt'}
+                              {⟦ es , ﹛﹜ , false ⟧ʳ} {govSt'}
 
   NEWEPOCH-complete : ∀ nes' → Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes' → NEWEPOCH-total .proj₁ ≡ nes'
   NEWEPOCH-complete nes' h with h | e ≟ sucᵉ lastEpoch

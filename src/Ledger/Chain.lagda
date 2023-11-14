@@ -113,7 +113,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
-        ⊢ ⟦ es , ⟦⟧ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
+        ⊢ ⟦ es , ﹛﹜ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , fut' ⟧ⁿᵉ
 

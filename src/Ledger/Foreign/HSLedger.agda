@@ -74,7 +74,7 @@ module Implementation where
     .Value-CommutativeMonoid   → +-0-commutativeMonoid
     .coin                      → id
     .inject                    → id
-    .policies                  → λ _ → ⟦⟧
+    .policies                  → λ _ → ﹛﹜
     .size                      → λ x → 1 -- there is only ada in this token algebra
     ._≤ᵗ_                      → _≤_
     .AssetName                 → String
@@ -157,7 +157,7 @@ HsGovParams = record
   { Implementation
   ; ppUpd = let open PParamsDiff in λ where
       .UpdateT                → ⊤
-      .updateGroups           → λ _ → ⟦⟧
+      .updateGroups           → λ _ → ﹛﹜
       .applyUpdate            → λ p _ → p
       .ppdWellFormed          → λ _ → false
       .ppdWellFormed⇒hasGroup → λ ()
@@ -277,7 +277,7 @@ instance
       }
     .from txw → let open F.TxWitnesses txw in record
       { vkSigs  = from vkSigs
-      ; scripts = ⟦⟧
+      ; scripts = ﹛﹜
       ; txdats  = from txdats
       ; txrdmrs = from txrdmrs
       }

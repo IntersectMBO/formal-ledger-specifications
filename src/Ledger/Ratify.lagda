@@ -178,7 +178,7 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
                     , λ x → Equivalence.to ∈-filter (z≤n , x)
 
 -- TODO: maybe this can be proven easier with the maximum?
-mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ⟦⟧
+mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ﹛﹜
 mostStakeDRepDist-∅ {dist} = suc (∑ᵐᵛ[ x ← dist ᶠᵐ ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
   where
@@ -254,7 +254,7 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
 
   activeCC : CCData → ℙ Credential
   activeCC (just (cc , _))  = dom $ filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
-  activeCC nothing          = ⟦⟧
+  activeCC nothing          = ﹛﹜
 
   spos : ℙ VDeleg
   spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)

@@ -42,7 +42,7 @@ abstract
     card-≡ᵉ (-, Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ (toSet X))
             (-, Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ (toSet Y)) X≡Y
 
-  lengthˢ-∅ : ∀ {A} ⦃ _ : DecEq A ⦄ → lengthˢ {A} ⟦⟧ ≡ 0
+  lengthˢ-∅ : ∀ {A} ⦃ _ : DecEq A ⦄ → lengthˢ {A} ﹛﹜ ≡ 0
   lengthˢ-∅ = refl
 
   setToList : {A : Set} → ℙ A → List A
