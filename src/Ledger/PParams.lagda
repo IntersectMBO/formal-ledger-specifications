@@ -135,7 +135,7 @@ record PParamsDiff : Set₁ where
         updateGroups : UpdateT → ℙ PParamGroup
         applyUpdate : PParams → UpdateT → PParams
         ppdWellFormed : UpdateT → Bool
-        ppdWellFormed⇒hasGroup : ∀ {u} → ppdWellFormed u ≡ true → updateGroups u ≢ ∅
+        ppdWellFormed⇒hasGroup : ∀ {u} → ppdWellFormed u ≡ true → updateGroups u ≢ ⟦⟧
         ppdWellFormed⇒WF       : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
                                → paramsWellFormed pp
                                → paramsWellFormed (applyUpdate pp u)

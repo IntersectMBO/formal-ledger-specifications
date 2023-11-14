@@ -178,7 +178,7 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
                     , λ x → Equivalence.to ∈-filter (z≤n , x)
 
 -- TODO: maybe this can be proven easier with the maximum?
-mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
+mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ⟦⟧
 mostStakeDRepDist-∅ {dist} = suc (∑ᵐᵛ[ x ← dist ᶠᵐ ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
   where
@@ -216,7 +216,7 @@ mostStakeDRepDist-∅ {dist} = suc (∑ᵐᵛ[ x ← dist ᶠᵐ ] x) , Properti
 
 topNDRepDist : ℕ → Credential ⇀ Coin → Credential ⇀ Coin
 topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
-  (_     , no  _)  → ∅ᵐ
+  (_     , no  _)  → ∅
   (no _  , yes _)  → dist
   (yes p , yes p₁) → mostStakeDRepDist dist (proj₁ (∃topNDRepDist {dist = dist} p p₁))
 
@@ -254,7 +254,7 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
 
   activeCC : CCData → ℙ Credential
   activeCC (just (cc , _))  = dom $ filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
-  activeCC nothing          = ∅
+  activeCC nothing          = ⟦⟧
 
   spos : ℙ VDeleg
   spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
@@ -265,7 +265,7 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
              _                        → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : CCData → Credential ⇀ Vote
-  actualCCVotes nothing          =  ∅ᵐ
+  actualCCVotes nothing          =  ∅
   actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
                                     then mapWithKey actualCCVote cc
                                     else constMap (dom cc) Vote.no

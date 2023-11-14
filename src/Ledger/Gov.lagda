@@ -71,7 +71,7 @@ addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
 addAction s e aid addr a prev = s ∷ʳ (aid , record
-  { votes = ∅ᵐ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+  { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
 \end{code}
 \caption{Types and functions used in the GOV transition system}
@@ -103,7 +103,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
        actionWellFormed a ≡ true
     →  d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q
-        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
+        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ⟦⟧)
     ───────────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ s'
 

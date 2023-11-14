@@ -167,13 +167,13 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-unions : {a : A} {U : Set (Set A)} → (∃[ T ] T ∈ U × a ∈ T) ⇔ a ∈ proj₁ (unions U)
   ∈-unions = proj₂ $ unions _
 
-  ∅ : Set A
-  ∅ = fromList []
+  ⟦⟧ : Set A
+  ⟦⟧ = fromList []
 
-  ∅-strongly-finite : strongly-finite {A} ∅
+  ∅-strongly-finite : strongly-finite {A} ⟦⟧
   ∅-strongly-finite = [] , [] , R.SK-sym ∈-fromList
 
-  card-∅ : card (∅ {A} , ∅-strongly-finite) ≡ 0
+  card-∅ : card (⟦⟧ {A} , ∅-strongly-finite) ≡ 0
   card-∅ = refl
 
   singleton : A → Set A
@@ -189,12 +189,12 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
     where open R.EquationalReasoning
 
   partialToSet : (A → Maybe B) → A → Set B
-  partialToSet f a = maybe (fromList ∘ [_]) ∅ (f a)
+  partialToSet f a = maybe (fromList ∘ [_]) ⟦⟧ (f a)
 
   ∈-partialToSet : ∀ {a : A} {b : B} {f} → f a ≡ just b ⇔ b ∈ partialToSet f a
   ∈-partialToSet {a = a} {b} {f} = mk⇔
-    (λ h → subst (λ x → b ∈ maybe (fromList ∘ [_]) ∅ x) (sym h) (to ∈-singleton refl))
-    (case f a returning (λ y → b ∈ maybe (λ x → fromList [ x ]) ∅ y → y ≡ just b) of
+    (λ h → subst (λ x → b ∈ maybe (fromList ∘ [_]) ⟦⟧ x) (sym h) (to ∈-singleton refl))
+    (case f a returning (λ y → b ∈ maybe (λ x → fromList [ x ]) ⟦⟧ y → y ≡ just b) of
       λ where (just x) → λ h → cong just (sym $ from ∈-singleton h)
               nothing  → λ h → case from ∈-fromList h of λ ())
 
@@ -269,7 +269,7 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
       where open R.EquationalReasoning
 
     disjoint' : Set A → Set A → Type ℓ
-    disjoint' X Y = X ∩ Y ≡ᵉ ∅
+    disjoint' X Y = X ∩ Y ≡ᵉ ⟦⟧
 
   All : (A → Type) → Set A → Type ℓ
   All P X = ∀ {a} → a ∈ X → P a

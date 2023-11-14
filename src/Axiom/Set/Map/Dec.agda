@@ -57,4 +57,4 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
     _∪⁺_ = unionWith (fold id id _∙_)
 
     aggregate₊ : FinSet (A × V) → Map A V
-    aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l
+    aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ l

@@ -153,25 +153,25 @@ map-⊆ x⊆y a∈map with from ∈-map a∈map
 map-≡ᵉ : {X Y : Set A} {f : A → B} → X ≡ᵉ Y → map f X ≡ᵉ map f Y
 map-≡ᵉ (x⊆y , y⊆x) = map-⊆ x⊆y , map-⊆ y⊆x
 
-∉-∅ : {a : A} → a ∉ ∅
+∉-∅ : {a : A} → a ∉ ⟦⟧
 ∉-∅ h = case ∈⇔P h of λ ()
 
-∅-minimum : Minimum (_⊆_ {A}) ∅
+∅-minimum : Minimum (_⊆_ {A}) ⟦⟧
 ∅-minimum = λ _ → ⊥-elim ∘ ∉-∅
 
-∅-least : X ⊆ ∅ → X ≡ᵉ ∅
+∅-least : X ⊆ ⟦⟧ → X ≡ᵉ ⟦⟧
 ∅-least X⊆∅ = (X⊆∅ , ∅-minimum _)
 
-∅-weakly-finite : weakly-finite {A = A} ∅
+∅-weakly-finite : weakly-finite {A = A} ⟦⟧
 ∅-weakly-finite = [] , ⊥-elim ∘ ∉-∅
 
-∅-finite : finite {A = A} ∅
+∅-finite : finite {A = A} ⟦⟧
 ∅-finite = [] , mk⇔ (⊥-elim ∘ ∉-∅) λ ()
 
-map-∅ : {X : Set A} {f : A → B} → map f ∅ ≡ᵉ ∅
+map-∅ : {X : Set A} {f : A → B} → map f ⟦⟧ ≡ᵉ ⟦⟧
 map-∅ = ∅-least λ x∈map → case ∈-map⁻' x∈map of λ where (_ , _ , h) → ⊥-elim (∉-∅ h)
 
-mapPartial-∅ : {f : A → Maybe B} → mapPartial f ∅ ≡ᵉ ∅
+mapPartial-∅ : {f : A → Maybe B} → mapPartial f ⟦⟧ ≡ᵉ ⟦⟧
 mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f = f}) x∈map of λ where
   (_ , h , _) → ⊥-elim (∉-∅ h)
 
@@ -242,7 +242,7 @@ Set-JoinSemilattice : IsJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_
 Set-JoinSemilattice = record
   { isPartialOrder = ⊆-PartialOrder ; supremum = ∪-Supremum }
 
-Set-BoundedJoinSemilattice : IsBoundedJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_ ∅
+Set-BoundedJoinSemilattice : IsBoundedJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_ ⟦⟧
 Set-BoundedJoinSemilattice = record
   { isJoinSemilattice = Set-JoinSemilattice ; minimum = ∅-minimum }
 

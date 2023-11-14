@@ -42,7 +42,7 @@ instance
     case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit ¿
          ,′ isNewCommittee a of λ where
       (yes (wf , dep) , yes (new , rem , q , refl)) →
-        case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
+        case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ⟦⟧ ¿ of λ where
           (yes newOk) → just (_ , GOV-Propose wf dep λ where refl → newOk)
           (no _)      → nothing
       (yes (wf , dep) , no notNewComm) → just (_ , GOV-Propose wf dep λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm)))
@@ -57,7 +57,7 @@ instance
   ... | no ¬p | _ = ⊥-elim (¬p (wf , dep))
   ... | yes _ | no notNewComm = refl
   ... | yes _ | yes (new , rem , q , refl)
-    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
+    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ⟦⟧ ¿ (newOk refl) .proj₂ = refl
 
 Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_
 Computational-GOV = it

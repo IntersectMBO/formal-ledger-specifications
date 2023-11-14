@@ -49,7 +49,7 @@ relatedˡ : Rel A B → Set A
 relatedˡ = map proj₁
 
 ∅ʳ : Rel A B
-∅ʳ = ∅
+∅ʳ = ⟦⟧
 
 dom : Rel A B → Set A
 dom = map proj₁
@@ -100,7 +100,7 @@ dom-mapʳ⊆ a∈dmR with to dom∈ a∈dmR
 mapʳ-dom : {f : B → B'} → dom R ≡ᵉ dom (mapʳ f R)
 mapʳ-dom = dom-⊆mapʳ , dom-mapʳ⊆
 
-dom-∅ : dom R ⊆ ∅ → R ≡ᵉ ∅
+dom-∅ : dom R ⊆ ⟦⟧ → R ≡ᵉ ⟦⟧
 dom-∅ dom⊆∅ = ∅-least (λ {x} x∈R → ⊥-elim $ ∉-∅ $ dom⊆∅ $ from dom∈ (-, x∈R))
 
 mapPartialLiftKey : (A → B → Maybe B') → A × B → Maybe (A × B')
@@ -168,7 +168,7 @@ module Restriction (sp-∈ : spec-∈ A) where
   ex-⊆ : (R ∣ X ᶜ) ⊆ R
   ex-⊆ = proj₂ ∘′ ∈⇔P
 
-  res-∅ : R ∣ ∅ ≡ᵉ ∅
+  res-∅ : R ∣ ⟦⟧ ≡ᵉ ⟦⟧
   res-∅ = dom-∅ res-dom
 
   res-ex-∪ : Decidable (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R

@@ -89,7 +89,7 @@ module _ ⦃ _ : DecEq A ⦄ {f : A → Carrier} where
   indexedSum-cong : indexedSum f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSum-cong {x} {y} = factor-cong {x = x} {y}
 
-  indexedSum-∅ : indexedSum f (∅ , ∅-finite) ≈ ε
+  indexedSum-∅ : indexedSum f (⟦⟧ , ∅-finite) ≈ ε
   indexedSum-∅ = begin _ ∎
 
   indexedSum-∪ : ⦃ Xᶠ : finite X ⦄ ⦃ Yᶠ : finite Y ⦄ → disjoint X Y
