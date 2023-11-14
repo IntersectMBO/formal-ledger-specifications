@@ -68,13 +68,7 @@ Addr        = BaseAddr        ⊎ BootstrapAddr
 VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
 ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
 \end{code}
-\end{AgdaSuppressSpace}
-\end{AgdaAlign}
-\caption{Definitions used in Addresses}
-\label{fig:defs:addresses}
-\end{figure*}
-\begin{figure*}[h!]
-\begin{AgdaAlign}
+\end{AgdaSuppressSpace} \\
 \emph{Helper functions}
 \AgdaTarget{payCred, isVKeyAddr}
 \begin{code}
@@ -88,8 +82,8 @@ isScriptAddr     = isScript ∘ payCred
 isScriptRwdAddr  = isScript ∘ RwdAddr.stake
 \end{code}
 \end{AgdaAlign}
-\caption{Definitions used in Addresses, continued}
-\label{fig:defs:addresses-cont}
+\caption{Definitions used in Addresses}
+\label{fig:defs:addresses}
 \end{figure*}
 \begin{code}[hide]
 payCred (inj₁ record {pay = pay}) = pay
