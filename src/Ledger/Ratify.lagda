@@ -80,11 +80,11 @@ above the threshold.
 {-# OPTIONS --safe #-}
 
 import Data.Integer as ℤ
-open import Data.Rational as ℚ using (ℚ; 0ℚ)
+open import Data.Rational as ℚ using (ℚ; 0ℚ; _≥_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_)
+open import Ledger.Prelude hiding (_∧_; _≥_)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -200,16 +200,16 @@ mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅
         <⟨ v>sum ⟩
       v ∎
 
-∃topNDRepDist : ∀ {n dist} → lengthˢ (dist ˢ) ≥ n → n > 0
-                → ∃[ c ] lengthˢ (mostStakeDRepDist dist c ˢ) ≥ n
+∃topNDRepDist : ∀ {n dist} → n ≤ lengthˢ (dist ˢ) → n > 0
+                → ∃[ c ] n ≤ lengthˢ (mostStakeDRepDist dist c ˢ)
                        × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
 ∃topNDRepDist {n} {dist} length≥n n>0 =
   let
     c , h , h' =
       negInduction (λ _ → _ ≥? n)
-        (subst (_≥ n) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
+        (subst (n ≤_) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
         (map₂′ (λ h h'
-                  → ≤⇒≯ (subst (_≥ n) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
+                  → ≤⇒≯ (subst (n ≤_) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
                (mostStakeDRepDist-∅ {dist}))
   in
    c , h , ≰⇒> h'
@@ -349,7 +349,7 @@ abstract
   -- TODO: explain this notation in the prose and it's purpose:
   -- if there's no stake, accept only if threshold is zero
   _/₀_ : ℕ → ℕ → ℚ
-  x /₀ 0 = ℚ.0ℚ
+  x /₀ 0 = 0ℚ
   x /₀ y@(suc _) = ℤ.+ x ℚ./ y
 \end{code}
 \begin{code}
@@ -369,8 +369,8 @@ abstract
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs
         votes'  = actualVotes Γ pparams cc action votes
-        t       = maybe id ℚ.0ℚ $ threshold pparams (proj₂ <$> cc) action role
-    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ℚ.≥ t
+        t       = maybe id 0ℚ $ threshold pparams (proj₂ <$> cc) action role
+    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ≥ t
 
   accepted : RatifyEnv → EnactState → GovActionState → Set
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
