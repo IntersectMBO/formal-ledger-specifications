@@ -80,11 +80,11 @@ above the threshold.
 {-# OPTIONS --safe #-}
 
 import Data.Integer as ℤ
-open import Data.Rational as ℚ using (ℚ; 0ℚ)
+open import Data.Rational as ℚ using (ℚ; 0ℚ; _≥_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_)
+open import Ledger.Prelude hiding (_∧_; _≥_)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -178,45 +178,45 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
                     , λ x → Equivalence.to ∈-filter (z≤n , x)
 
 -- TODO: maybe this can be proven easier with the maximum?
-mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ﹛﹜
-mostStakeDRepDist-∅ {dist} = suc (∑ᵐᵛ[ x ← dist ᶠᵐ ] x) , Properties.∅-least
+mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
+mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
   where
     open ≤-Reasoning
 
-    helper : ∀ {k v} → v > ∑ᵐᵛ[ x ← dist ᶠᵐ ] x → (k , v) ∉ dist
+    helper : ∀ {k v} → v > ∑[ x ← dist ᶠᵐ ] x → (k , v) ∉ dist
     helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
       v
         ≡˘⟨ indexedSum-singleton' $ finiteness ❴ k , v ❵ ⟩
-      ∑ᵐᵛ[ x ← ❴ k , v ❵ᵐ ᶠᵐ ] x
+      ∑[ x ← ❴ k , v ❵ᵐ ᶠᵐ ] x
         ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ᵐ ᶠᵐ}
           $ res-singleton' {m = dist} kv∈dist ⟩
-      ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
+      ∑[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
         ≤⟨ m≤m+n _ _ ⟩
-      ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x +ℕ ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
+      ∑[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x +ℕ ∑[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
         ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ❴ k ❵) ᶠᵐ} {(dist ∣ ❴ k ❵ ᶜ) ᶠᵐ}
           $ res-ex-disj-∪ Properties.Dec-∈-singleton ⟩
-      ∑ᵐᵛ[ x ← dist ᶠᵐ ] x
+      ∑[ x ← dist ᶠᵐ ] x
         <⟨ v>sum ⟩
       v ∎
 
-∃topNDRepDist : ∀ {n dist} → lengthˢ (dist ˢ) ≥ n → n > 0
-                → ∃[ c ] lengthˢ (mostStakeDRepDist dist c ˢ) ≥ n
+∃topNDRepDist : ∀ {n dist} → n ≤ lengthˢ (dist ˢ) → n > 0
+                → ∃[ c ] n ≤ lengthˢ (mostStakeDRepDist dist c ˢ)
                        × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
 ∃topNDRepDist {n} {dist} length≥n n>0 =
   let
     c , h , h' =
       negInduction (λ _ → _ ≥? n)
-        (subst (_≥ n) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
+        (subst (n ≤_) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
         (map₂′ (λ h h'
-                  → ≤⇒≯ (subst (_≥ n) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
+                  → ≤⇒≯ (subst (n ≤_) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
                (mostStakeDRepDist-∅ {dist}))
   in
    c , h , ≰⇒> h'
 
 topNDRepDist : ℕ → Credential ⇀ Coin → Credential ⇀ Coin
 topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
-  (_     , no  _)  → ∅
+  (_     , no  _)  → ∅ᵐ
   (no _  , yes _)  → dist
   (yes p , yes p₁) → mostStakeDRepDist dist (proj₁ (∃topNDRepDist {dist = dist} p p₁))
 
@@ -254,7 +254,7 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
 
   activeCC : CCData → ℙ Credential
   activeCC (just (cc , _))  = dom $ filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
-  activeCC nothing          = ﹛﹜
+  activeCC nothing          = ∅
 
   spos : ℙ VDeleg
   spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
@@ -265,7 +265,7 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
              _                        → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : CCData → Credential ⇀ Vote
-  actualCCVotes nothing          =  ∅
+  actualCCVotes nothing          =  ∅ᵐ
   actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
                                     then mapWithKey actualCCVote cc
                                     else constMap (dom cc) Vote.no
@@ -344,12 +344,12 @@ abstract
   -- unused, keep until we know for sure that there'll be no minimum AVS
   -- activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
   -- activeVotingStake cc dists votes =
-  --   ∑ᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
+  --   ∑[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
   -- TODO: explain this notation in the prose and it's purpose:
   -- if there's no stake, accept only if threshold is zero
   _/₀_ : ℕ → ℕ → ℚ
-  x /₀ 0 = ℚ.0ℚ
+  x /₀ 0 = 0ℚ
   x /₀ y@(suc _) = ℤ.+ x ℚ./ y
 \end{code}
 \begin{code}
@@ -362,15 +362,15 @@ abstract
   acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
     where
       acceptedStake totalStake : Coin
-      acceptedStake = ∑ᵐᵛ[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ]      x
-      totalStake    = ∑ᵐᵛ[ x ←  getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
+      acceptedStake = ∑[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ]      x
+      totalStake    = ∑[ x ←  getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs
         votes'  = actualVotes Γ pparams cc action votes
-        t       = maybe id ℚ.0ℚ $ threshold pparams (proj₂ <$> cc) action role
-    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ℚ.≥ t
+        t       = maybe id 0ℚ $ threshold pparams (proj₂ <$> cc) action role
+    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ≥ t
 
   accepted : RatifyEnv → EnactState → GovActionState → Set
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO

@@ -15,17 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: |
-          sudo apt-get update
-      - name: Free disk space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          android: true
-          dotnet: true
-          haskell: false
-          large-packages: false
-          docker-images: true
-          swap-storage: true
+      - run: sudo apt-get update
 
       - uses: actions/checkout@v3
 
