@@ -26,16 +26,6 @@ jobs:
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
 
-      - name: Import cached nix store
-        continue-on-error: true
-        run: |
-          if [[ -f store ]]; then
-            du -sh store || true
-            nix-store --import < store
-          else
-            echo "No cached store found"
-          fi
-
        # We have to build this explicitly, in order to cache it,
        # since it's not part of the static binary formalLedger closure
       - name: Build agda
