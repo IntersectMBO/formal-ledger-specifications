@@ -179,24 +179,24 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
 
 -- TODO: maybe this can be proven easier with the maximum?
 mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
-mostStakeDRepDist-∅ {dist} = suc (∑ᵐᵛ[ x ← dist ᶠᵐ ] x) , Properties.∅-least
+mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
   where
     open ≤-Reasoning
 
-    helper : ∀ {k v} → v > ∑ᵐᵛ[ x ← dist ᶠᵐ ] x → (k , v) ∉ dist
+    helper : ∀ {k v} → v > ∑[ x ← dist ᶠᵐ ] x → (k , v) ∉ dist
     helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
       v
         ≡˘⟨ indexedSum-singleton' $ finiteness ❴ k , v ❵ ⟩
-      ∑ᵐᵛ[ x ← ❴ k , v ❵ᵐ ᶠᵐ ] x
+      ∑[ x ← ❴ k , v ❵ᵐ ᶠᵐ ] x
         ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ᵐ ᶠᵐ}
           $ res-singleton' {m = dist} kv∈dist ⟩
-      ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
+      ∑[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
         ≤⟨ m≤m+n _ _ ⟩
-      ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x +ℕ ∑ᵐᵛ[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
+      ∑[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x +ℕ ∑[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
         ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ❴ k ❵) ᶠᵐ} {(dist ∣ ❴ k ❵ ᶜ) ᶠᵐ}
           $ res-ex-disj-∪ Properties.Dec-∈-singleton ⟩
-      ∑ᵐᵛ[ x ← dist ᶠᵐ ] x
+      ∑[ x ← dist ᶠᵐ ] x
         <⟨ v>sum ⟩
       v ∎
 
@@ -344,7 +344,7 @@ abstract
   -- unused, keep until we know for sure that there'll be no minimum AVS
   -- activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
   -- activeVotingStake cc dists votes =
-  --   ∑ᵐᵛ[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
+  --   ∑[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
   -- TODO: explain this notation in the prose and it's purpose:
   -- if there's no stake, accept only if threshold is zero
@@ -362,8 +362,8 @@ abstract
   acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
     where
       acceptedStake totalStake : Coin
-      acceptedStake = ∑ᵐᵛ[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ]      x
-      totalStake    = ∑ᵐᵛ[ x ←  getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
+      acceptedStake = ∑[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ]      x
+      totalStake    = ∑[ x ←  getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
 
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
