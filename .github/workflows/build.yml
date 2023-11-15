@@ -26,17 +26,6 @@ jobs:
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
 
-      - name: Restore store
-        id: cache-store-restore
-        uses: actions/cache/restore@v3
-        with:
-          path: |
-              store
-              derivations
-          key: cache-store-${{ runner.os }}-${{github.run_id}}
-          restore-keys: |
-            cache-store-${{ runner.os }}
-
       - name: Import cached nix store
         continue-on-error: true
         run: |
@@ -111,16 +100,6 @@ jobs:
                 updated=true
           fi
           echo "updated=$updated" >> $GITHUB_OUTPUT
-
-      - name: Upload nix store
-        id: cache-derivations-save
-        uses: actions/cache/save@v3
-        if: steps.export-derivations.outputs.updated == 'true'
-        with:
-          path: |
-            store
-            derivations
-          key: cache-store-${{ runner.os }}-${{ github.run_id }}
 
       - name: Upload PDF artifacts
         if: github.event_name == 'pull_request'
