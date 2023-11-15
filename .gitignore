@@ -10,3 +10,5 @@ src/latex/MidnightExample/*
 src/latex/bclogo.sty
 
 dist/
+
+*.time
