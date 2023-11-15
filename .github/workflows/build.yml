@@ -30,66 +30,24 @@ jobs:
        # since it's not part of the static binary formalLedger closure
       - name: Build agda
         id: agda
-        run: |
-          d=$(nix-build -A agdaWithStdLibMeta)
-          dRet=$(echo "$d" | tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $dRet)
-          cRet=$(echo "$closure" | tr '\n' ' ')
-          echo "derivation=$dRet" >> $GITHUB_OUTPUT
-          echo "closure=$cRet" >> $GITHUB_OUTPUT
+        run: nix-build -A agdaWithStdLibMeta
 
       - name: Build formalLedger
         id: formalLedger
-        run: |
-          d=$(nix-build -A formalLedger)
-          dRet=$(echo "$d" | tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $dRet)
-          cRet=$(echo "$closure" | tr '\n' ' ')
-          echo "derivation=$dRet" >> $GITHUB_OUTPUT
-          echo "closure=$cRet" >> $GITHUB_OUTPUT
+        run: nix-build -A formalLedger
 
       - name: Build ledger
         id: ledger
         run: |
           mkdir -p outputs
-          d=$(nix-build -A ledger -j1 -o outputs/ledger)
-          dRet=$(echo "$d" | tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $dRet)
-          cRet=$(echo "$closure" | tr '\n' ' ')
-          echo "derivation=$dRet" >> $GITHUB_OUTPUT
-          echo "closure=$cRet" >> $GITHUB_OUTPUT
+          nix-build -A ledger -j1 -o outputs/ledger
           rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
 
       - name: Build midnight
         id: midnight
         run: |
-          d=$(nix-build -A midnight -j1 -o outputs/midnight)
-          dRet=$(echo "$d"| tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $dRet)
-          cRet=$(echo "$closure" | tr '\n' ' ')
-          echo "derivation=$dRet" >> $GITHUB_OUTPUT
-          echo "closure=$cRet" >> $GITHUB_OUTPUT
+          nix-build -A midnight -j1 -o outputs/midnight
           rsync -r --exclude={'**/nix-support','**/lib'} outputs/midnight*/* docs/
-
-      - name: Export all derivations
-        id: export-derivations
-        run: |
-          hashes="${{steps.agda.outputs.derivation}}-${{steps.formalLedger.outputs.derivation}}-${{steps.ledger.outputs.derivation}}-${{steps.midnight.outputs.derivation}}"
-          closures="${{steps.agda.outputs.closure}} ${{steps.formalLedger.outputs.closure}} ${{steps.ledger.outputs.closure}} ${{steps.midnight.outputs.closure}}"
-          touch derivations
-          updated=false
-          # export only if the hashes changed or the store does not exist for some reason
-          if grep -qe "^$hashes" derivations && [[ -f store ]]
-              then
-                echo "No need to re-export the store"
-              else
-                nix-store --export $closures > store
-                echo "Exported store of size: $(du -sh store)"
-                echo "$hashes" > derivations
-                echo "Wrote new derivations hashes: $(cat derivations)"
-                updated=true
-          fi
-          echo "updated=$updated" >> $GITHUB_OUTPUT
 
       - name: Upload PDF artifacts
         if: github.event_name == 'pull_request'
