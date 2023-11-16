@@ -62,17 +62,18 @@ jobs:
       - name: Build formalLedger
         id: formalLedger
         run: |
-          d=$(nix-build -A formalLedger)
+          mkdir -p outputs
+          d=$(nix-build -A formalLedger -j1 -o outputs/formalLedger)
           dRet=$(echo "$d" | tr '\n' ' ')
           closure=$(nix-store --query --requisites --include-outputs $dRet)
           cRet=$(echo "$closure" | tr '\n' ' ')
           echo "derivation=$dRet" >> $GITHUB_OUTPUT
           echo "closure=$cRet" >> $GITHUB_OUTPUT
+          rsync -r --include={'**/*.time'} outputs/formalLedger*/* docs/
 
       - name: Build ledger
         id: ledger
         run: |
-          mkdir -p outputs
           d=$(nix-build -A ledger -j1 -o outputs/ledger)
           dRet=$(echo "$d" | tr '\n' ' ')
           closure=$(nix-store --query --requisites --include-outputs $dRet)
@@ -128,6 +129,13 @@ jobs:
         with:
           name: PDF specs
           path: docs/pdfs/*.pdf
+
+      - name: Upload typechecking times
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Typechecking durations
+          path: docs/*.time
 
       - name: Generate main website
         if: github.ref == 'refs/heads/master'

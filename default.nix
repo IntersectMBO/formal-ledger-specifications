@@ -72,10 +72,13 @@ rec {
     src = ./src;
     meta = { };
     buildInputs = deps;
+    buildPhase = ''
+      bash typeCheck.sh
+    '';
     postInstall = ''
-      cp -r latex/ Makefile $out
+      cp -r latex/ Makefile typecheck.time $out
       sh checkTypeChecked.sh
-      '';
+    '';
     extraExtensions = [ "hs" "cabal" ];
   };
 
