@@ -21,6 +21,12 @@ open import Ledger.Transaction
 
 open import Interface.HasOrder.Instance
 
+instance
+  _ : {A : Set} → HasEmptySet (ℙ A)
+  _ = record { ∅ = ∅ˢ }
+  _ : {A B : Set} → HasEmptySet (A ⇀ B)
+  _ = record { ∅ = ∅ᵐ }
+
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id; .hashInj refl → refl
@@ -88,9 +94,6 @@ module Implementation where
    where open TokenAlgebra
          open Algebra.Morphism.IsMonoidHomomorphism
          open Algebra.Morphism.IsMagmaHomomorphism
-         instance
-           _ : HasEmptySet (ℙ Coin)
-           _ = record { ∅ = ∅ˢ }
 
   TxId            = ℕ
   Ix              = ℕ
@@ -166,11 +169,7 @@ HsGovParams = record
       .ppdWellFormed⇒hasGroup → λ ()
       .ppdWellFormed⇒WF       → λ _ _ x → x
   ; ppHashingScheme = it
-  } where
-    instance
-      _ : HasEmptySet (ℙ PParamGroup)
-      _ = record { ∅ = ∅ˢ }
-
+  }
 
 HSGovStructure : GovStructure
 HSGovStructure = record
@@ -266,11 +265,7 @@ instance
       ; collateral    = from collateral
       ; reqSigHash    = from reqSigHash
       ; scriptIntHash = nothing
-      } where
-        instance
-          _ : HasEmptySet (RwdAddr ⇀ Coin)
-          _ = record { ∅ = ∅ᵐ }
-
+      }
 
   Convertible-Tag : Convertible Tag F.Tag
   Convertible-Tag = λ where
@@ -291,11 +286,7 @@ instance
       ; scripts = ∅
       ; txdats  = from txdats
       ; txrdmrs = from txrdmrs
-      } where
-        instance
-          _ : HasEmptySet (ℙ Script)
-          _ = record { ∅ = ∅ˢ }
-
+      }
 
   Convertible-Tx : Convertible Tx F.Tx
   Convertible-Tx = λ where

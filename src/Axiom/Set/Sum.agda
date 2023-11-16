@@ -25,12 +25,6 @@ open import Relation.Unary using (Decidable)
 open import Tactic.AnyOf
 open import Tactic.Defaults
 
-open import Interface.HasEmptySet th
-
-instance
-  _ : {A : Type} → HasEmptySet (Set A)
-  _ = record {∅ = ∅ˢ}
-
 -- Because of missing macro hygiene, we have to copy&paste this.
 -- c.f. https://github.com/agda/agda/issues/3819
 private macro
@@ -95,7 +89,7 @@ module _ ⦃ _ : DecEq A ⦄ {f : A → Carrier} where
   indexedSum-cong : indexedSum f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSum-cong {x} {y} = factor-cong {x = x} {y}
 
-  indexedSum-∅ : indexedSum f (∅ , ∅-finite) ≈ ε
+  indexedSum-∅ : indexedSum f (∅ˢ , ∅-finite) ≈ ε
   indexedSum-∅ = begin _ ∎
 
   indexedSum-∪ : ⦃ Xᶠ : finite X ⦄ ⦃ Yᶠ : finite Y ⦄ → disjoint X Y

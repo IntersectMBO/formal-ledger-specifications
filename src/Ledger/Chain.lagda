@@ -64,9 +64,7 @@ private variable
 instance
   _ : HasEmptySet (ℙ (GovActionID × GovActionState))
   _ = record { ∅ = ∅ˢ }
-  _ : HasEmptySet (RwdAddr ⇀ Coin)
-  _ = record { ∅ = ∅ᵐ }
-  _ : HasEmptySet (VDeleg ⇀ Coin)
+  _ : {A B : Set} → HasEmptySet (A ⇀ B)
   _ = record { ∅ = ∅ᵐ }
   _ = +-0-monoid; _ = +-0-commutativeMonoid
 
