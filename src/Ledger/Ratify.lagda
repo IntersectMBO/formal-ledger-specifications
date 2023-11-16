@@ -100,6 +100,10 @@ _∧_ = _×_
 instance
   _ = +-0-commutativeMonoid
   _ = +-0-monoid
+  _ : HasEmptySet (ℙ Credential)
+  _ = record { ∅ = ∅ˢ }
+  _ : HasEmptySet (Credential ⇀ Vote)
+  _ = record { ∅ = ∅ᵐ }
 
 \end{code}
 \begin{figure*}[h!]
@@ -259,14 +263,6 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
   activeCC : CCData → ℙ Credential
   activeCC (just (cc , _))  = dom $ filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
   activeCC nothing          = ∅
-\end{code}
-\begin{code}[hide]
-    where
-    instance
-      _ : HasEmptySet (ℙ Credential)
-      _ = record { ∅ = ∅ˢ }
-\end{code}
-\begin{code}
 
   spos : ℙ VDeleg
   spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
@@ -278,14 +274,7 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
 
   actualCCVotes : CCData → Credential ⇀ Vote
   actualCCVotes nothing          =  ∅
-\end{code}
-\begin{code}[hide]
-    where
-    instance
-      _ : {A B : Set} → HasEmptySet (A ⇀ B)
-      _ = record { ∅ = ∅ᵐ }
-\end{code}
-\begin{code}
+
   actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
                                     then mapWithKey actualCCVote cc
                                     else constMap (dom cc) Vote.no

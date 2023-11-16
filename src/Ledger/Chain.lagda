@@ -67,6 +67,8 @@ instance
   _ = record { ∅ = ∅ˢ }
   _ : HasEmptySet (RwdAddr ⇀ Coin)
   _ = record { ∅ = ∅ᵐ }
+  _ : HasEmptySet (VDeleg ⇀ Coin)
+  _ = record { ∅ = ∅ᵐ }
   _ = +-0-monoid; _ = +-0-commutativeMonoid
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:t also does what EPOCH used to do in previous eras
@@ -152,10 +154,6 @@ filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m
   {λ where x∈dom y∈dom refl → cong (_, _)
                             $ trans (maybePurpose-prop {prps = prps} m x∈dom)
                             $ sym   (maybePurpose-prop {prps = prps} m y∈dom)}
-
-instance
-  _ : HasEmptySet (VDeleg ⇀ Coin)
-  _ = record { ∅ = ∅ᵐ }
 
 govActionDeposits : LState → VDeleg ⇀ Coin
 govActionDeposits ls =

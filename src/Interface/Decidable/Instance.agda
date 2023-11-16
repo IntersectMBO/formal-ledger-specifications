@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --without-K #-}
+{-# OPTIONS --safe #-}
 module Interface.Decidable.Instance where
 
 open import Agda.Primitive using (Level; _⊔_; lsuc)

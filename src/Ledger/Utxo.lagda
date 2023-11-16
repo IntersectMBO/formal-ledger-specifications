@@ -30,6 +30,10 @@ instance
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
   _ = ExUnit-CommutativeMonoid
+  _ : {A : Set} → HasEmptySet (ℙ A)
+  _ = record { ∅ = ∅ˢ }
+  _ : {A B : Set} → HasEmptySet (A ⇀ B)
+  _ = record { ∅ = ∅ᵐ }
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = indexedSumᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)
@@ -76,10 +80,6 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \begin{figure*}[h]
 \begin{code}[hide]
 module _ (let open Tx; open TxBody) where
-  instance
-    _ : {A B : Set} → HasEmptySet (A ⇀ B)
-    _ = record { ∅ = ∅ᵐ }
-
 \end{code}
 \begin{code}
   outs : TxBody → UTxO
@@ -155,14 +155,7 @@ _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
-\end{code}
-\begin{code}[hide]
-  where
-  instance
-    _ : {A : Set} → HasEmptySet (ℙ A)
-    _ = record { ∅ = ∅ˢ }
-\end{code}
-\begin{code}
+
 -- TODO: this could be a regular property
 
 feesOK : PParams → Tx → UTxO → Bool
@@ -313,10 +306,6 @@ private variable
 
 \end{code}
 \begin{code}[hide]
-instance
-  _ : {A : Set} → HasEmptySet (ℙ A)
-  _ = record { ∅ = ∅ˢ }
-
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}

@@ -14,7 +14,7 @@ open import Ledger.PPUp txs
 
 open HasEmptySet ⦃...⦄
 instance
-  _ : {A B : Set} → HasEmptySet (A ⇀ B)
+  _ : HasEmptySet ProposedPPUpdates
   _ = record { ∅ = ∅ᵐ }
 
 record NewPParamEnv : Set where

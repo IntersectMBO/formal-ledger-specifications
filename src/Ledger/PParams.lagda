@@ -22,6 +22,8 @@ module Ledger.PParams
   (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
   where
 
+open HasEmptySet ⦃...⦄
+
 record Acnt : Set where
   field treasury reserves : Coin
 \end{code}
@@ -130,12 +132,16 @@ instance
   unquoteDecl DecEq-PParams        = derive-DecEq
     ((quote PParams , DecEq-PParams) ∷ [])
 
+  _ : HasEmptySet (ℙ PParamGroup)
+  _ = record { ∅ = ∅ˢ }
+
+
 record PParamsDiff : Set₁ where
   field UpdateT : Set
         updateGroups : UpdateT → ℙ PParamGroup
         applyUpdate : PParams → UpdateT → PParams
         ppdWellFormed : UpdateT → Bool
-        ppdWellFormed⇒hasGroup : ∀ {u} → ppdWellFormed u ≡ true → updateGroups u ≢ ∅ˢ
+        ppdWellFormed⇒hasGroup : ∀ {u} → ppdWellFormed u ≡ true → updateGroups u ≢ ∅
         ppdWellFormed⇒WF       : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
                                → paramsWellFormed pp
                                → paramsWellFormed (applyUpdate pp u)

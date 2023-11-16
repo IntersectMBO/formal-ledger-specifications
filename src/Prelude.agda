@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --cubical-compatible --without-K #-}
+{-# OPTIONS --safe --without-K #-}
 
 module Prelude where
 

@@ -16,7 +16,7 @@ open import Ledger.ScriptValidation txs abs
 
 open HasEmptySet ⦃...⦄
 instance
-  _ : {A : Set} → HasEmptySet (ℙ A)
+  _ : HasEmptySet (ℙ (ScriptPurpose × Credential))
   _ = record { ∅ = ∅ˢ }
 \end{code}
 

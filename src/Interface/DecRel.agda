@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --cubical-compatible #-}
+{-# OPTIONS --safe #-}
 
 open import Relation.Binary
 
