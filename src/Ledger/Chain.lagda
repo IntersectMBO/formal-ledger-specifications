@@ -20,6 +20,8 @@ open import Ledger.Gov govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
+open HasEmptySet ⦃...⦄
+
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -60,10 +62,11 @@ private variable
   d : Bool
   fut' : RatifyState
 
-open HasEmptySet ⦃...⦄
 instance
-  _ : {A : Set} → HasEmptySet A
+  _ : HasEmptySet (ℙ (GovActionID × GovActionState))
   _ = record { ∅ = ∅ˢ }
+  _ : HasEmptySet (RwdAddr ⇀ Coin)
+  _ = record { ∅ = ∅ᵐ }
   _ = +-0-monoid; _ = +-0-commutativeMonoid
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:t also does what EPOCH used to do in previous eras
@@ -88,7 +91,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
              ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ $ mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ
 
-      es        = record esW { withdrawals = ∅ᵐ }
+      es        = record esW { withdrawals = ∅ }
       retired   = retiring ⁻¹ e
       refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards
       unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards ᶜ
@@ -150,11 +153,15 @@ filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m
                             $ trans (maybePurpose-prop {prps = prps} m x∈dom)
                             $ sym   (maybePurpose-prop {prps = prps} m y∈dom)}
 
+instance
+  _ : HasEmptySet (VDeleg ⇀ Coin)
+  _ = record { ∅ = ∅ᵐ }
+
 govActionDeposits : LState → VDeleg ⇀ Coin
 govActionDeposits ls =
   let open LState ls; open CertState certState; open PState pState
       open UTxOState utxoSt; open DState dState
-   in foldl _∪⁺_ ∅ᵐ $ setToList $
+   in foldl _∪⁺_ ∅ $ setToList $
     mapPartial
       (λ where (gaid , record { returnAddr = record {stake = c} }) → do
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄

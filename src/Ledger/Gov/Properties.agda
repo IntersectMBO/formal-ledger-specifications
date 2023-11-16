@@ -12,6 +12,7 @@ open import Ledger.Gov gs
 open import Ledger.GovernanceActions gs hiding (yes; no)
 
 open Computational ⦃...⦄
+open HasEmptySet ⦃...⦄
 open Equivalence
 open GovActionState
 open Inverse
@@ -30,9 +31,8 @@ private
   isNewCommittee (TreasuryWdrl x)         = no λ()
   isNewCommittee Info                     = no λ()
 
-open HasEmptySet ⦃...⦄
 instance
-  _ : HasEmptySet Credential
+  _ : HasEmptySet (ℙ Credential)
   _ = record { ∅ = ∅ˢ }
 
   Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_

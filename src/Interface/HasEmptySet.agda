@@ -2,11 +2,12 @@
 
 open import Axiom.Set using (Theory)
 
-module Interface.HasEmptySet {ℓ} (th : Theory {ℓ}) where
+module Interface.HasEmptySet (th : Theory) where
 
-open Theory th using () renaming (Set to ℙ_)
+open Theory th renaming (Set to ℙ_)
+open import Axiom.Set.Map th
 
-record HasEmptySet (A : Set ℓ) : Set ℓ where
+record HasEmptySet (A : Set) : Set where
   field
     ∅ : A
 

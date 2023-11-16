@@ -23,12 +23,6 @@ open Theoryᵈ List-Modelᵈ public
 
 open import Interface.IsSet th public
 
-open import Interface.HasEmptySet th
-open HasEmptySet ⦃...⦄
-instance
-  _ : {A : Set} → HasEmptySet A
-  _ = record { ∅ = ∅ˢ }
-
 abstract
   open import Axiom.Set.Properties th using (card-≡ᵉ)
 
@@ -48,7 +42,7 @@ abstract
     card-≡ᵉ (-, Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ (toSet X))
             (-, Theoryᶠ.DecEq⇒strongly-finite List-Modelᶠ (toSet Y)) X≡Y
 
-  lengthˢ-∅ : ∀ {A} ⦃ _ : DecEq A ⦄ → lengthˢ {A} ∅ ≡ 0
+  lengthˢ-∅ : ∀ {A} ⦃ _ : DecEq A ⦄ → lengthˢ {A} ∅ˢ ≡ 0
   lengthˢ-∅ = refl
 
   setToList : {A : Set} → ℙ A → List A

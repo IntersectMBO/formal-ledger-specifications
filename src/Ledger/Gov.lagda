@@ -10,6 +10,8 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs
 
+open HasEmptySet ⦃...⦄
+
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -76,9 +78,8 @@ addAction s e aid addr a prev = s ∷ʳ (aid , record
 \end{code}
 \begin{code}[hide]
   where
-  open HasEmptyMap ⦃...⦄
   instance
-    _ : HasEmptyMap (GovRole × Credential) Vote
+    _ : HasEmptySet ((GovRole × Credential) ⇀ Vote)
     _ = record { ∅ = ∅ᵐ }
 \end{code}
 \caption{Types and functions used in the GOV transition system}
@@ -86,9 +87,8 @@ addAction s e aid addr a prev = s ∷ʳ (aid , record
 \end{figure*}
 \begin{figure*}
 \begin{code}[hide]
-open HasEmptySet ⦃...⦄
 instance
-  _ : HasEmptySet Credential
+  _ : HasEmptySet (ℙ Credential)
   _ = record { ∅ = ∅ˢ }
 
 data _⊢_⇀⦇_,GOV'⦈_ where

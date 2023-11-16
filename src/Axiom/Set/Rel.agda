@@ -12,7 +12,6 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 import Function.Related.Propositional as R
 
 open Theory th
-open import Interface.HasEmptySet th
 open import Axiom.Set.Properties th
 
 import Data.Product
@@ -49,13 +48,8 @@ private variable A A' B B' C : Type
 relatedˡ : Rel A B → Set A
 relatedˡ = map proj₁
 
-open HasEmptySet ⦃ ... ⦄
-instance
-  _ : HasEmptySet A
-  _ = record { ∅ = ∅ˢ }
-
 ∅ʳ : Rel A B
-∅ʳ = ∅
+∅ʳ = ∅ˢ
 
 dom : Rel A B → Set A
 dom = map proj₁
@@ -106,7 +100,7 @@ dom-mapʳ⊆ a∈dmR with to dom∈ a∈dmR
 mapʳ-dom : {f : B → B'} → dom R ≡ᵉ dom (mapʳ f R)
 mapʳ-dom = dom-⊆mapʳ , dom-mapʳ⊆
 
-dom-∅ : dom R ⊆ ∅ → R ≡ᵉ ∅
+dom-∅ : dom R ⊆ ∅ˢ → R ≡ᵉ ∅ˢ
 dom-∅ dom⊆∅ = ∅-least (λ {x} x∈R → ⊥-elim $ ∉-∅ $ dom⊆∅ $ from dom∈ (-, x∈R))
 
 mapPartialLiftKey : (A → B → Maybe B') → A × B → Maybe (A × B')
@@ -174,7 +168,7 @@ module Restriction (sp-∈ : spec-∈ A) where
   ex-⊆ : (R ∣ X ᶜ) ⊆ R
   ex-⊆ = proj₂ ∘′ ∈⇔P
 
-  res-∅ : R ∣ ∅ ≡ᵉ ∅
+  res-∅ : R ∣ ∅ˢ ≡ᵉ ∅ˢ
   res-∅ = dom-∅ res-dom
 
   res-ex-∪ : Decidable (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R

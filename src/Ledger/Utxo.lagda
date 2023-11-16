@@ -18,6 +18,8 @@ open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
 
+open HasEmptySet ⦃...⦄
+
 module Ledger.Utxo
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
@@ -74,9 +76,8 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \begin{figure*}[h]
 \begin{code}[hide]
 module _ (let open Tx; open TxBody) where
-  open HasEmptyMap ⦃...⦄
   instance
-    _ : {A B : Set} → HasEmptyMap A B
+    _ : {A B : Set} → HasEmptySet (A ⇀ B)
     _ = record { ∅ = ∅ᵐ }
 
 \end{code}
@@ -157,9 +158,8 @@ _≥ᵇ_ = flip _≤ᵇ_
 \end{code}
 \begin{code}[hide]
   where
-  open HasEmptySet ⦃...⦄
   instance
-    _ : {A : Set} → HasEmptySet A
+    _ : {A : Set} → HasEmptySet (ℙ A)
     _ = record { ∅ = ∅ˢ }
 \end{code}
 \begin{code}
@@ -313,9 +313,8 @@ private variable
 
 \end{code}
 \begin{code}[hide]
-open HasEmptySet ⦃...⦄
 instance
-  _ : {A : Set} → HasEmptySet A
+  _ : {A : Set} → HasEmptySet (ℙ A)
   _ = record { ∅ = ∅ˢ }
 
 data _⊢_⇀⦇_,UTXO⦈_ where

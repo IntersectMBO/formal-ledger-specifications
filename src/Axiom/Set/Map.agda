@@ -7,7 +7,6 @@ open import Axiom.Set using (Theory)
 module Axiom.Set.Map (th : Theory {lzero}) where
 
 open Theory th renaming (map to mapˢ)
-open import Interface.HasEmptySet th
 
 open import Axiom.Set.Rel th hiding (_∣'_; _↾'_)
 open import Axiom.Set.Properties th
@@ -58,12 +57,8 @@ left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 record IsLeftUnique (R : Rel A B) : Type where
   field isLeftUnique : left-unique R
 
-open HasEmptySet ⦃ ... ⦄
 instance
-  _ : HasEmptySet A
-  _ = record { ∅ = ∅ˢ }
-
-  ∅-left-unique : IsLeftUnique {A = A} {B = B} ∅
+  ∅-left-unique : IsLeftUnique {A = A} {B = B} ∅ˢ
   ∅-left-unique .IsLeftUnique.isLeftUnique h h' = ⊥-elim $ ∉-∅ h
 
 ⊆-left-unique : R ⊆ R' → left-unique R' → left-unique R
@@ -102,7 +97,7 @@ instance
   _ = ˢ-left-unique
 
 ∅ᵐ : Map A B
-∅ᵐ = _ᵐ ∅ ⦃ ∅-left-unique ⦄
+∅ᵐ = _ᵐ ∅ˢ ⦃ ∅-left-unique ⦄
 
 fromListᵐ : ⦃ _ : DecEq A ⦄ → List (A × B) → Map A B
 fromListᵐ l = fromList (deduplicate (λ x y → proj₁ x ≟ proj₁ y) l) ,

@@ -20,6 +20,7 @@ open import Ledger.GovStructure
 open import Ledger.Transaction
 
 open import Interface.HasOrder.Instance
+open HasEmptySet ⦃...⦄
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
@@ -88,11 +89,9 @@ module Implementation where
    where open TokenAlgebra
          open Algebra.Morphism.IsMonoidHomomorphism
          open Algebra.Morphism.IsMagmaHomomorphism
-         open HasEmptySet ⦃...⦄
          instance
-           _ : {A : Set} → HasEmptySet A
+           _ : HasEmptySet (ℙ Coin)
            _ = record { ∅ = ∅ˢ }
-
 
   TxId            = ℕ
   Ix              = ℕ
@@ -169,9 +168,8 @@ HsGovParams = record
       .ppdWellFormed⇒WF       → λ _ _ x → x
   ; ppHashingScheme = it
   } where
-    open HasEmptySet ⦃...⦄
     instance
-      _ : {A : Set} → HasEmptySet A
+      _ : HasEmptySet (ℙ PParamGroup)
       _ = record { ∅ = ∅ˢ }
 
 
@@ -270,9 +268,8 @@ instance
       ; reqSigHash    = from reqSigHash
       ; scriptIntHash = nothing
       } where
-        open HasEmptyMap ⦃...⦄
         instance
-          _ : HasEmptyMap RwdAddr Coin
+          _ : HasEmptySet (RwdAddr ⇀ Coin)
           _ = record { ∅ = ∅ᵐ }
 
 
@@ -296,9 +293,8 @@ instance
       ; txdats  = from txdats
       ; txrdmrs = from txrdmrs
       } where
-        open HasEmptySet ⦃...⦄
         instance
-          _ : HasEmptySet Script
+          _ : HasEmptySet (ℙ Script)
           _ = record { ∅ = ∅ˢ }
 
 

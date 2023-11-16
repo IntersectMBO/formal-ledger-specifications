@@ -84,19 +84,13 @@ indexedSumL-++ {f = f} {l = l} {l'} = begin
       f x ∙ (indexedSumL f l ∙ m)    ≈˘⟨ assoc _ _ _ ⟩
       f x ∙ indexedSumL f l ∙ m      ∎
 
-
-open HasEmptySet ⦃ ... ⦄
-instance
-  _ : HasEmptySet A
-  _ = record { ∅ = ∅ˢ }
-
 module _ ⦃ _ : DecEq A ⦄ {f : A → Carrier} where
   open FactorUnique _≈_ (indexedSumL' f) fold-cong↭
 
   indexedSum-cong : indexedSum f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSum-cong {x} {y} = factor-cong {x = x} {y}
 
-  indexedSum-∅ : indexedSum f (∅ , ∅-finite) ≈ ε
+  indexedSum-∅ : indexedSum f (∅ˢ , ∅-finite) ≈ ε
   indexedSum-∅ = begin _ ∎
 
   indexedSum-∪ : ⦃ Xᶠ : finite X ⦄ ⦃ Yᶠ : finite Y ⦄ → disjoint X Y

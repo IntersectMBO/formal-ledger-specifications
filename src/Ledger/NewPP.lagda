@@ -12,9 +12,9 @@ module Ledger.NewPP (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.PPUp txs
 
-open HasEmptyMap ⦃...⦄
+open HasEmptySet ⦃...⦄
 instance
-  _ : {A B : Set} → HasEmptyMap A B
+  _ : {A B : Set} → HasEmptySet (A ⇀ B)
   _ = record { ∅ = ∅ᵐ }
 
 record NewPParamEnv : Set where

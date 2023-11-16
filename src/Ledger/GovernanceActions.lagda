@@ -22,6 +22,8 @@ open import Ledger.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
+open HasEmptySet ⦃...⦄
+
 defer : ℚ
 defer = 1ℚ Data.Rational.+ 1ℚ
 
@@ -262,13 +264,12 @@ record EnactState : Set where
 
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x  , _)  = dom (x .proj₁)
-ccCreds (nothing , _)  = ∅
+ccCreds (nothing , _)  = ∅ˢ
 \end{code}
 \begin{code}[hide]
   where
-  open HasEmptySet ⦃...⦄
   instance
-    _ : HasEmptySet Credential
+    _ : HasEmptySet (ℙ Credential)
     _ = record { ∅ = ∅ˢ }
 \end{code}
 \caption{Enactment types}
@@ -292,9 +293,8 @@ private variable
   gid : GovActionID
   e : Epoch
 
-open HasEmptyMap ⦃ ... ⦄
 instance
-  _ : HasEmptyMap Credential Epoch
+  _ : HasEmptySet (Credential ⇀ Epoch)
   _ = record { ∅ = ∅ᵐ }
 
   _ = +-0-monoid

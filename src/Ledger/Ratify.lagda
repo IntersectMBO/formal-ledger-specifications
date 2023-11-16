@@ -92,6 +92,8 @@ module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
 open import Ledger.GovernanceActions govStructure using (Vote)
 open import Ledger.Gov govStructure
 
+open HasEmptySet ⦃...⦄
+
 infixr 2 _∧_
 _∧_ = _×_
 
@@ -260,9 +262,8 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
 \end{code}
 \begin{code}[hide]
     where
-    open HasEmptySet ⦃...⦄
     instance
-      _ : {A : Set} → HasEmptySet A
+      _ : HasEmptySet (ℙ Credential)
       _ = record { ∅ = ∅ˢ }
 \end{code}
 \begin{code}
@@ -280,9 +281,8 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
 \end{code}
 \begin{code}[hide]
     where
-    open HasEmptyMap ⦃...⦄
     instance
-      _ : {A B : Set} → HasEmptyMap A B
+      _ : {A B : Set} → HasEmptySet (A ⇀ B)
       _ = record { ∅ = ∅ᵐ }
 \end{code}
 \begin{code}
