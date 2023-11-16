@@ -190,12 +190,12 @@ filter-⊆ = proj₂ ∘′ ∈⇔P
 Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Decidable¹ (_∈ fromList l)
 Dec-∈-fromList _ _ = Relation.Nullary.Decidable.map ∈-fromList (_∈ˡ?_ _≟_ _ _)
 
-Dec-∈-singleton : ∀ {a : A} → ⦃ DecEq A ⦄ → Decidable¹ (_∈ ﹛ a ﹜)
+Dec-∈-singleton : ∀ {a : A} → ⦃ DecEq A ⦄ → Decidable¹ (_∈ ❴ a ❵)
 Dec-∈-singleton _ = Relation.Nullary.Decidable.map ∈-singleton (_ ≟ _)
 
-singleton-finite : ∀ {a : A} → finite ﹛ a ﹜
+singleton-finite : ∀ {a : A} → finite ❴ a ❵
 singleton-finite {a = a} = [ a ] , λ {x} →
-  x ∈ ﹛ a ﹜  ∼⟨ R.SK-sym ∈-fromList ⟩
+  x ∈ ❴ a ❵ ∼⟨ R.SK-sym ∈-fromList ⟩
   x ∈ˡ [ a ] ∎
   where open R.EquationalReasoning
 
