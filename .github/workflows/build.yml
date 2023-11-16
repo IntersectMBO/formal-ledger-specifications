@@ -15,8 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: sudo apt-get update
-
       - uses: actions/checkout@v3
 
       - uses: cachix/install-nix-action@v20
@@ -26,101 +24,24 @@ jobs:
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
 
-      - name: Restore store
-        id: cache-store-restore
-        uses: actions/cache/restore@v3
-        with:
-          path: |
-              store
-              derivations
-          key: cache-store-${{ runner.os }}-${{github.run_id}}
-          restore-keys: |
-            cache-store-${{ runner.os }}
-
-      - name: Import cached nix store
-        continue-on-error: true
-        run: |
-          if [[ -f store ]]; then
-            du -sh store || true
-            nix-store --import < store
-          else
-            echo "No cached store found"
-          fi
-
-       # We have to build this explicitly, in order to cache it,
-       # since it's not part of the static binary formalLedger closure
-      - name: Build agda
-        id: agda
-        run: |
-          d=$(nix-build -A agdaWithStdLibMeta)
-          dRet=$(echo "$d" | tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $dRet)
-          cRet=$(echo "$closure" | tr '\n' ' ')
-          echo "derivation=$dRet" >> $GITHUB_OUTPUT
-          echo "closure=$cRet" >> $GITHUB_OUTPUT
-
       - name: Build formalLedger
         id: formalLedger
         run: |
-          d=$(nix-build -A formalLedger)
-          dRet=$(echo "$d" | tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $dRet)
-          cRet=$(echo "$closure" | tr '\n' ' ')
-          echo "derivation=$dRet" >> $GITHUB_OUTPUT
-          echo "closure=$cRet" >> $GITHUB_OUTPUT
+          mkdir -p outputs
+          nix-build -A formalLedger -j1 -o outputs/formalLedger
+          rsync -r --include={'**/*.time'} outputs/formalLedger*/* docs/
 
       - name: Build ledger
         id: ledger
         run: |
-          mkdir -p outputs
-          d=$(nix-build -A ledger -j1 -o outputs/ledger)
-          dRet=$(echo "$d" | tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $dRet)
-          cRet=$(echo "$closure" | tr '\n' ' ')
-          echo "derivation=$dRet" >> $GITHUB_OUTPUT
-          echo "closure=$cRet" >> $GITHUB_OUTPUT
+          nix-build -A ledger -j1 -o outputs/ledger
           rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
 
       - name: Build midnight
         id: midnight
         run: |
-          d=$(nix-build -A midnight -j1 -o outputs/midnight)
-          dRet=$(echo "$d"| tr '\n' ' ')
-          closure=$(nix-store --query --requisites --include-outputs $dRet)
-          cRet=$(echo "$closure" | tr '\n' ' ')
-          echo "derivation=$dRet" >> $GITHUB_OUTPUT
-          echo "closure=$cRet" >> $GITHUB_OUTPUT
+          nix-build -A midnight -j1 -o outputs/midnight
           rsync -r --exclude={'**/nix-support','**/lib'} outputs/midnight*/* docs/
-
-      - name: Export all derivations
-        id: export-derivations
-        run: |
-          hashes="${{steps.agda.outputs.derivation}}-${{steps.formalLedger.outputs.derivation}}-${{steps.ledger.outputs.derivation}}-${{steps.midnight.outputs.derivation}}"
-          closures="${{steps.agda.outputs.closure}} ${{steps.formalLedger.outputs.closure}} ${{steps.ledger.outputs.closure}} ${{steps.midnight.outputs.closure}}"
-          touch derivations
-          updated=false
-          # export only if the hashes changed or the store does not exist for some reason
-          if grep -qe "^$hashes" derivations && [[ -f store ]]
-              then
-                echo "No need to re-export the store"
-              else
-                nix-store --export $closures > store
-                echo "Exported store of size: $(du -sh store)"
-                echo "$hashes" > derivations
-                echo "Wrote new derivations hashes: $(cat derivations)"
-                updated=true
-          fi
-          echo "updated=$updated" >> $GITHUB_OUTPUT
-
-      - name: Upload nix store
-        id: cache-derivations-save
-        uses: actions/cache/save@v3
-        if: steps.export-derivations.outputs.updated == 'true'
-        with:
-          path: |
-            store
-            derivations
-          key: cache-store-${{ runner.os }}-${{ github.run_id }}
 
       - name: Upload PDF artifacts
         if: github.event_name == 'pull_request'
@@ -128,6 +49,13 @@ jobs:
         with:
           name: PDF specs
           path: docs/pdfs/*.pdf
+
+      - name: Upload typechecking times
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Typechecking durations
+          path: docs/*.time
 
       - name: Generate main website
         if: github.ref == 'refs/heads/master'
