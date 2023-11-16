@@ -30,7 +30,7 @@ private
   isNewCommittee (TreasuryWdrl x)         = no λ()
   isNewCommittee Info                     = no λ()
 
-open import Interface.HasEmptySet th
+open HasEmptySet ⦃...⦄
 instance
   _ : HasEmptySet Credential
   _ = record { ∅ = ∅ˢ }

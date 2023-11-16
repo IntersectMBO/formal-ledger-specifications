@@ -9,5 +9,3 @@ open Theory th using () renaming (Set to ℙ_)
 record HasEmptySet (A : Set ℓ) : Set ℓ where
   field
     ∅ : ℙ A
-
-open HasEmptySet ⦃...⦄ public

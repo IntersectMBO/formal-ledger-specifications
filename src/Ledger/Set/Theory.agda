@@ -24,6 +24,7 @@ open Theoryᵈ List-Modelᵈ public
 open import Interface.IsSet th public
 
 open import Interface.HasEmptySet th
+open HasEmptySet ⦃...⦄
 instance
   _ : {A : Set} → HasEmptySet A
   _ = record { ∅ = ∅ˢ }

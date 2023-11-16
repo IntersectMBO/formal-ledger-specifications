@@ -14,7 +14,7 @@ module Ledger.Utxow
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
 
-open import Interface.HasEmptySet th
+open HasEmptySet ⦃...⦄
 instance
   _ : {A : Set} → HasEmptySet A
   _ = record { ∅ = ∅ˢ }

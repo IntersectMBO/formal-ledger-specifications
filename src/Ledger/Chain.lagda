@@ -60,7 +60,7 @@ private variable
   d : Bool
   fut' : RatifyState
 
-open import Interface.HasEmptySet th
+open HasEmptySet ⦃...⦄
 instance
   _ : {A : Set} → HasEmptySet A
   _ = record { ∅ = ∅ˢ }

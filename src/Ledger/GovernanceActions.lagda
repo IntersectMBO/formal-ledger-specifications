@@ -266,7 +266,7 @@ ccCreds (nothing , _)  = ∅
 \end{code}
 \begin{code}[hide]
   where
-  open import Interface.HasEmptySet th
+  open HasEmptySet ⦃...⦄
   instance
     _ : HasEmptySet Credential
     _ = record { ∅ = ∅ˢ }
@@ -292,7 +292,7 @@ private variable
   gid : GovActionID
   e : Epoch
 
-open import Interface.HasEmptyMap th
+open HasEmptyMap ⦃ ... ⦄
 instance
   _ : HasEmptyMap Credential Epoch
   _ = record { ∅ = ∅ᵐ }

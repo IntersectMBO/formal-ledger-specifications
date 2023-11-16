@@ -49,6 +49,7 @@ private variable A A' B B' C : Type
 relatedˡ : Rel A B → Set A
 relatedˡ = map proj₁
 
+open HasEmptySet ⦃ ... ⦄
 instance
   _ : HasEmptySet A
   _ = record { ∅ = ∅ˢ }

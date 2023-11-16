@@ -33,6 +33,8 @@ private variable
   A B C : Type ℓ
   X Y Z : Set A
 
+open HasEmptySet ⦃...⦄
+
 instance
   _ : HasEmptySet A
   _ = record { ∅ = ∅ˢ }

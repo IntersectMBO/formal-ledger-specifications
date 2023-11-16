@@ -10,4 +10,3 @@ record HasEmptyMap (A B : Set) : Set where
   field
     ∅ : Map A B
 
-open HasEmptyMap ⦃...⦄ public

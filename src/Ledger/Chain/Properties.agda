@@ -20,11 +20,6 @@ open import Ledger.Ledger txs abs
 
 open Computational ⦃...⦄
 
-open import Interface.HasEmptySet th
-instance
-  _ : {A : Set} → HasEmptySet A
-  _ = record { ∅ = ∅ˢ }
-
 module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
 
   open NewEpochState nes hiding (es)
@@ -40,7 +35,7 @@ module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
       (yes p) → -, NEWEPOCH-New p (pFut .proj₂)
     where pFut = RATIFY-total {record { currentEpoch = e ; treasury = treasury
                                       ; GState gState ; NewEpochEnv Γ }}
-                              {⟦ es , ∅ , false ⟧ʳ} {govSt'}
+                              {⟦ es , ∅ˢ , false ⟧ʳ} {govSt'}
 
   NEWEPOCH-complete : ∀ nes' → Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes' → NEWEPOCH-total .proj₁ ≡ nes'
   NEWEPOCH-complete nes' h with h | e ≟ sucᵉ lastEpoch

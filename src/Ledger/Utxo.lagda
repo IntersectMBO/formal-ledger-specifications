@@ -54,10 +54,6 @@ utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
 
 open PParams
 
-open import Interface.HasEmptySet th
-instance
-  _ : {A : Set} → HasEmptySet A
-  _ = record { ∅ = ∅ˢ }
 \end{code}
 
 Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
@@ -78,6 +74,11 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \begin{figure*}[h]
 \begin{code}[hide]
 module _ (let open Tx; open TxBody) where
+  open HasEmptyMap ⦃...⦄
+  instance
+    _ : {A B : Set} → HasEmptyMap A B
+    _ = record { ∅ = ∅ᵐ }
+
 \end{code}
 \begin{code}
   outs : TxBody → UTxO
@@ -114,7 +115,7 @@ module _ (let open Tx; open TxBody) where
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
     (just (p , v))  → ❴ p , v ❵ᵐ
-    nothing         → ∅ᵐ
+    nothing         → ∅
 
   propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
   propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
@@ -153,6 +154,13 @@ _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
+\end{code}
+\begin{code}[hide]
+  where
+  open HasEmptySet ⦃...⦄
+  instance
+    _ : {A : Set} → HasEmptySet A
+    _ = record { ∅ = ∅ˢ }
 \end{code}
 \begin{code}
 -- TODO: this could be a regular property
@@ -302,6 +310,13 @@ private variable
   Γ : UTxOEnv
   s : UTxOState
   tx : Tx
+
+\end{code}
+\begin{code}[hide]
+open HasEmptySet ⦃...⦄
+instance
+  _ : {A : Set} → HasEmptySet A
+  _ = record { ∅ = ∅ˢ }
 
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}

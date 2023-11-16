@@ -95,14 +95,9 @@ open import Ledger.Gov govStructure
 infixr 2 _∧_
 _∧_ = _×_
 
-open import Interface.HasEmptySet th
-
 instance
   _ = +-0-commutativeMonoid
   _ = +-0-monoid
-
-  _ : {A : Set} → HasEmptySet A
-  _ = record { ∅ = ∅ˢ }
 
 \end{code}
 \begin{figure*}[h!]
@@ -185,7 +180,7 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
 
 -- TODO: maybe this can be proven easier with the maximum?
 
-mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
+mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅ˢ
 mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
   where
@@ -262,6 +257,15 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
   activeCC : CCData → ℙ Credential
   activeCC (just (cc , _))  = dom $ filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
   activeCC nothing          = ∅
+\end{code}
+\begin{code}[hide]
+    where
+    open HasEmptySet ⦃...⦄
+    instance
+      _ : {A : Set} → HasEmptySet A
+      _ = record { ∅ = ∅ˢ }
+\end{code}
+\begin{code}
 
   spos : ℙ VDeleg
   spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
@@ -272,7 +276,16 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
              _                        → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : CCData → Credential ⇀ Vote
-  actualCCVotes nothing          =  ∅ᵐ
+  actualCCVotes nothing          =  ∅
+\end{code}
+\begin{code}[hide]
+    where
+    open HasEmptyMap ⦃...⦄
+    instance
+      _ : {A B : Set} → HasEmptyMap A B
+      _ = record { ∅ = ∅ᵐ }
+\end{code}
+\begin{code}
   actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
                                     then mapWithKey actualCCVote cc
                                     else constMap (dom cc) Vote.no

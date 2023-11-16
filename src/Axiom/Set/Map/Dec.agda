@@ -17,6 +17,7 @@ open import Axiom.Set.Rel th using (dom)
 open import Axiom.Set.Map th
 
 open import Interface.HasEmptyMap th
+open HasEmptyMap ⦃...⦄
 
 open Equivalence
 

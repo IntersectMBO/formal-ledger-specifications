@@ -85,6 +85,7 @@ indexedSumL-++ {f = f} {l = l} {l'} = begin
       f x ∙ indexedSumL f l ∙ m      ∎
 
 
+open HasEmptySet ⦃ ... ⦄
 instance
   _ : HasEmptySet A
   _ = record { ∅ = ∅ˢ }

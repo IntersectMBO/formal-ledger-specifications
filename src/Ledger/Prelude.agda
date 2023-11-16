@@ -35,3 +35,5 @@ open import Tactic.Premises public
 
 open import Ledger.Interface.HasCoin public
 open import Ledger.Set public
+open import Interface.HasEmptySet th public
+open import Interface.HasEmptyMap th public

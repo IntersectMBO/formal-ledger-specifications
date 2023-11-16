@@ -58,6 +58,7 @@ left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 record IsLeftUnique (R : Rel A B) : Type where
   field isLeftUnique : left-unique R
 
+open HasEmptySet ⦃ ... ⦄
 instance
   _ : HasEmptySet A
   _ = record { ∅ = ∅ˢ }
