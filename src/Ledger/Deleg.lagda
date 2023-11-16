@@ -9,6 +9,13 @@ open import Ledger.GovStructure
 module Ledger.Deleg (gs : _) (open GovStructure gs) where
 
 open import Ledger.GovernanceActions gs
+
+instance
+  _ : {A : Set} → HasSingleton A (ℙ A)
+  _ = record { ❴_❵ = singleton }
+  _ : {A B : Set} → HasSingleton (A × B) (A ⇀ B)
+  _ = record { ❴_❵ = ❴_❵ᵐ }
+
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -130,7 +137,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set whe
     c ∉ dom pools
     ────────────────────────────────
     pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
-          ⟦ ❴ c , poolParams ❵ᵐ ∪ˡ pools , retiring ⟧ᵖ
+          ⟦ ❴ c , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
 
   POOL-retirepool :
     pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈

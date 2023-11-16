@@ -60,7 +60,12 @@ private variable
   d : Bool
   fut' : RatifyState
 
-instance _ = +-0-monoid; _ = +-0-commutativeMonoid
+instance
+  _ = +-0-monoid; _ = +-0-commutativeMonoid
+  _ : {A : Set} → HasSingleton A (ℙ A)
+  _ = record { ❴_❵ = singleton }
+  _ : {A B : Set} → HasSingleton (A × B) (A ⇀ B)
+  _ = record { ❴_❵ = ❴_❵ᵐ }
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:t also does what EPOCH used to do in previous eras
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set where
@@ -155,7 +160,7 @@ govActionDeposits ls =
       (λ where (gaid , record { returnAddr = record {stake = c} }) → do
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
         dep ← lookupᵐ? deposits (GovActionDeposit gaid) ⦃ _ ∈? _ ⦄
-        just ❴ vd , dep ❵ᵐ )
+        just ❴ vd , dep ❵ )
       (fromList govSt)
 
 calculateStakeDistrs : LState → StakeDistrs

@@ -28,6 +28,8 @@ instance
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
   _ = ExUnit-CommutativeMonoid
+  _ : {A B : Set} → HasSingleton (A × B) (A ⇀ B)
+  _ = record { ❴_❵ = ❴_❵ᵐ }
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = indexedSumᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)
@@ -108,12 +110,12 @@ module _ (let open Tx; open TxBody) where
 
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
-    (just (p , v))  → ❴ p , v ❵ᵐ
+    (just (p , v))  → ❴ p , v ❵
     nothing         → ∅ᵐ
 
   propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
   propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
-    = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵ᵐ
+    = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
 
   certRefund : DCert → Maybe DepositPurpose
   certRefund (delegate c nothing nothing x)  = just (CredentialDeposit c)
