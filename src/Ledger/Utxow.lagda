@@ -13,6 +13,11 @@ module Ledger.Utxow
   where
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
+
+open import Interface.HasEmptySet th
+instance
+  _ : {A : Set} → HasEmptySet A
+  _ = record { ∅ = ∅ˢ }
 \end{code}
 
 \begin{figure*}[h]
@@ -32,7 +37,7 @@ credsNeeded p utxo txb
   ∪  mapˢ (λ v → (Vote v , GovVote.credential v)) (fromList txvote)
   ∪  (case p of λ where
        (just sh)  → mapˢ (λ p → (Propose p , inj₂ sh)) (fromList txprop)
-       nothing    → ﹛﹜)
+       nothing    → ∅)
   where open TxBody txb
 
 witsVKeyNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ KeyHash

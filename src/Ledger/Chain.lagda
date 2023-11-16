@@ -60,7 +60,11 @@ private variable
   d : Bool
   fut' : RatifyState
 
-instance _ = +-0-monoid; _ = +-0-commutativeMonoid
+open import Interface.HasEmptySet th
+instance
+  _ : {A : Set} → HasEmptySet A
+  _ = record { ∅ = ∅ˢ }
+  _ = +-0-monoid; _ = +-0-commutativeMonoid
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:t also does what EPOCH used to do in previous eras
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set where
@@ -84,7 +88,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
              ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ $ mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ
 
-      es        = record esW { withdrawals = ∅ }
+      es        = record esW { withdrawals = ∅ᵐ }
       retired   = retiring ⁻¹ e
       refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards
       unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards ᶜ
@@ -113,7 +117,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
-        ⊢ ⟦ es , ﹛﹜ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
+        ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , fut' ⟧ⁿᵉ
 
@@ -150,7 +154,7 @@ govActionDeposits : LState → VDeleg ⇀ Coin
 govActionDeposits ls =
   let open LState ls; open CertState certState; open PState pState
       open UTxOState utxoSt; open DState dState
-   in foldl _∪⁺_ ∅ $ setToList $
+   in foldl _∪⁺_ ∅ᵐ $ setToList $
     mapPartial
       (λ where (gaid , record { returnAddr = record {stake = c} }) → do
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄

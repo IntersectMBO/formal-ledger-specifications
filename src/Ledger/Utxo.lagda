@@ -53,6 +53,11 @@ utxoEntrySize : TxOut → MemoryEstimate
 utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
 
 open PParams
+
+open import Interface.HasEmptySet th
+instance
+  _ : {A : Set} → HasEmptySet A
+  _ = record { ∅ = ∅ˢ }
 \end{code}
 
 Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
@@ -109,7 +114,7 @@ module _ (let open Tx; open TxBody) where
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
     (just (p , v))  → ❴ p , v ❵ᵐ
-    nothing         → ∅
+    nothing         → ∅ᵐ
 
   propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
   propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
@@ -147,7 +152,7 @@ m ≤ᵇ n = ¿ m ≤ n ¿ᵇ
 _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
-≟-∅ᵇ X = ¿ X ≡ ﹛﹜ ¿ᵇ
+≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
 \end{code}
 \begin{code}
 -- TODO: this could be a regular property
@@ -306,7 +311,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
-    ∙  txins ≢ ﹛﹜                              ∙ txins ⊆ dom utxo
+    ∙  txins ≢ ∅                              ∙ txins ⊆ dom utxo
     ∙  inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
     ∙  consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙  txsize ≤ maxTxSize pp

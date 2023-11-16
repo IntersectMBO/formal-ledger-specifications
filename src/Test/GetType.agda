@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --without-K #-}
+{-# OPTIONS --safe --without-K --cubical-compatible #-}
 
 open import Agda.Builtin.Reflection
 open import Relation.Binary.PropositionalEquality

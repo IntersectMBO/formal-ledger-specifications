@@ -262,7 +262,14 @@ record EnactState : Set where
 
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x  , _)  = dom (x .proj₁)
-ccCreds (nothing , _)  = ﹛﹜
+ccCreds (nothing , _)  = ∅
+\end{code}
+\begin{code}[hide]
+  where
+  open import Interface.HasEmptySet th
+  instance
+    _ : HasEmptySet Credential
+    _ = record { ∅ = ∅ˢ }
 \end{code}
 \caption{Enactment types}
 \label{fig:enactment-types}
@@ -285,12 +292,17 @@ private variable
   gid : GovActionID
   e : Epoch
 
+open import Interface.HasEmptyMap th
 instance
+  _ : HasEmptyMap Credential Epoch
+  _ = record { ∅ = ∅ᵐ }
+
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
   unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
   unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
+
 \end{code}
 
 The relation \ENACTsyntax is the transition relation for enacting a governance action.

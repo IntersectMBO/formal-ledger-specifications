@@ -16,12 +16,18 @@ open Theory th
 open import Axiom.Set.Rel th using (dom)
 open import Axiom.Set.Map th
 
+open import Interface.HasEmptyMap th
+
 open Equivalence
 
 private variable A B C D : Type
 
 module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
   open Lookupᵐ sp-∈
+
+  instance
+    _ : HasEmptyMap A B
+    _ = record { ∅ = ∅ᵐ }
 
   unionThese : ⦃ DecEq A ⦄ → (m : Map A B) (m' : Map A C) (x : A)
     → x ∈ dom (m ˢ) ∪ dom (m' ˢ) → These B C

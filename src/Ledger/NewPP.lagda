@@ -25,8 +25,8 @@ record NewPParamState : Set where
 updatePPUp : PParams → PPUpdateState → PPUpdateState
 updatePPUp pparams record { fpup = fpup }
   with allᵇ (isViableUpdate? pparams) (range fpup)
-... | false  = record { pup = ∅    ; fpup = ∅ }
-... | true   = record { pup = fpup  ; fpup = ∅ }
+... | false  = record { pup = ∅ᵐ    ; fpup = ∅ᵐ }
+... | true   = record { pup = fpup  ; fpup = ∅ᵐ }
 
 votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate
 votedValue pup pparams quorum =

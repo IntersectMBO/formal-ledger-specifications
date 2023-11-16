@@ -95,9 +95,15 @@ open import Ledger.Gov govStructure
 infixr 2 _∧_
 _∧_ = _×_
 
+open import Interface.HasEmptySet th
+
 instance
   _ = +-0-commutativeMonoid
   _ = +-0-monoid
+
+  _ : {A : Set} → HasEmptySet A
+  _ = record { ∅ = ∅ˢ }
+
 \end{code}
 \begin{figure*}[h!]
 \begin{code}
@@ -178,6 +184,7 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
                     , λ x → Equivalence.to ∈-filter (z≤n , x)
 
 -- TODO: maybe this can be proven easier with the maximum?
+
 mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
 mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
