@@ -113,8 +113,8 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   indexedSumᵐ : (A × B → Carrier) → FinMap A B → Carrier
   indexedSumᵐ f (m , _ , h) = indexedSum f (m , h)
 
-  indexedSumᵐᵛ : (B → Carrier) → FinMap A B → Carrier
-  indexedSumᵐᵛ f = indexedSumᵐ (f ∘ proj₂)
+  indexedSumᵛ : (B → Carrier) → FinMap A B → Carrier
+  indexedSumᵛ f = indexedSumᵐ (f ∘ proj₂)
 
   indexedSumᵐ-cong : {f : A × B → Carrier}
     → indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
@@ -156,5 +156,5 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
             helper : toRel m ≡ᵉ toRel (m₁ ∪ˡᶠ m₂)
             helper = ≡ᵉ.trans (proj₁ m≡m₁∪m₂) (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj-dom')
 
-  syntax indexedSumᵐ  (λ a → x) m = ∑ᵐ[ a ← m ] x
-  syntax indexedSumᵐᵛ (λ a → x) m = ∑ᵐᵛ[ a ← m ] x
+  -- syntax indexedSumᵐ (λ a → x) m = ∑ᵐ[ a ← m ] x  -- (not used; leave for now?)
+  syntax indexedSumᵛ (λ a → x) m = ∑[ a ← m ] x

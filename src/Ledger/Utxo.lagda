@@ -30,7 +30,7 @@ instance
   _ = ExUnit-CommutativeMonoid
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = indexedSumᵐᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)
+  HasCoin-Map .getCoin s = indexedSumᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)
 
 isPhaseTwoScriptAddress : Tx → Addr → Bool
 isPhaseTwoScriptAddress tx a
@@ -79,7 +79,7 @@ module _ (let open Tx; open TxBody) where
   outs tx = mapKeys (tx .txid ,_) (tx .txouts)
 
   balance : UTxO → Value
-  balance utxo = indexedSumᵐᵛ ⦃ Value-CommutativeMonoid ⦄ getValue (utxo ᶠᵐ)
+  balance utxo = indexedSumᵛ ⦃ Value-CommutativeMonoid ⦄ getValue (utxo ᶠᵐ)
 
   cbalance : UTxO → Coin
   cbalance utxo = coin (balance utxo)
