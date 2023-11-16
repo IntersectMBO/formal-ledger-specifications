@@ -20,7 +20,6 @@ open import Ledger.GovStructure
 open import Ledger.Transaction
 
 open import Interface.HasOrder.Instance
-open HasEmptySet ⦃...⦄
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A

@@ -19,7 +19,7 @@ open import Ledger.Chain txs abs
 open import Ledger.Ledger txs abs
 
 open Computational ⦃...⦄
-open HasEmptySet ⦃...⦄
+
 instance
   _ : {A : Set} → HasEmptySet (ℙ A)
   _ = record { ∅ = ∅ˢ }

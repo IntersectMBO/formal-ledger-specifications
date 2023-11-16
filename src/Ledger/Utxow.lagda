@@ -14,7 +14,6 @@ module Ledger.Utxow
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
 
-open HasEmptySet ⦃...⦄
 instance
   _ : HasEmptySet (ℙ (ScriptPurpose × Credential))
   _ = record { ∅ = ∅ˢ }

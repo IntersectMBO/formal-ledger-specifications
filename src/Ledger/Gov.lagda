@@ -10,8 +10,6 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs
 
-open HasEmptySet ⦃...⦄
-
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}

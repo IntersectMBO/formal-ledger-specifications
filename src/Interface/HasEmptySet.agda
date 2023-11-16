@@ -17,3 +17,5 @@ instance
 
   _ : {A B : Set} → HasEmptySet (Map A B)
   _ = record { ∅ = ∅ᵐ }
+
+open HasEmptySet ⦃...⦄ public

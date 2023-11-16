@@ -22,8 +22,6 @@ module Ledger.PParams
   (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
   where
 
-open HasEmptySet ⦃...⦄
-
 record Acnt : Set where
   field treasury reserves : Coin
 \end{code}
@@ -134,7 +132,6 @@ instance
 
   _ : HasEmptySet (ℙ PParamGroup)
   _ = record { ∅ = ∅ˢ }
-
 
 record PParamsDiff : Set₁ where
   field UpdateT : Set

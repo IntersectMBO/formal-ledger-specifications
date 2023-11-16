@@ -18,8 +18,6 @@ open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
 
-open HasEmptySet ⦃...⦄
-
 module Ledger.Utxo
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)

@@ -26,7 +26,7 @@ open import Tactic.AnyOf
 open import Tactic.Defaults
 
 open import Interface.HasEmptySet th
-open HasEmptySet ⦃...⦄
+
 instance
   _ : {A : Type} → HasEmptySet (Set A)
   _ = record {∅ = ∅ˢ}

@@ -12,7 +12,6 @@ module Ledger.NewPP (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.PPUp txs
 
-open HasEmptySet ⦃...⦄
 instance
   _ : HasEmptySet ProposedPPUpdates
   _ = record { ∅ = ∅ᵐ }

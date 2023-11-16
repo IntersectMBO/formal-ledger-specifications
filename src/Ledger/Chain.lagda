@@ -20,7 +20,6 @@ open import Ledger.Gov govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
-open HasEmptySet ⦃...⦄
 
 \end{code}
 \begin{figure*}[h]

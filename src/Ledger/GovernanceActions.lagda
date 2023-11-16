@@ -22,8 +22,6 @@ open import Ledger.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
-open HasEmptySet ⦃...⦄
-
 defer : ℚ
 defer = 1ℚ Data.Rational.+ 1ℚ
 

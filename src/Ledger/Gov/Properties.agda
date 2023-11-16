@@ -12,7 +12,7 @@ open import Ledger.Gov gs
 open import Ledger.GovernanceActions gs hiding (yes; no)
 
 open Computational ⦃...⦄
-open HasEmptySet ⦃...⦄
+
 open Equivalence
 open GovActionState
 open Inverse

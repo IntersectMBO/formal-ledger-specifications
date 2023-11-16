@@ -92,8 +92,6 @@ module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
 open import Ledger.GovernanceActions govStructure using (Vote)
 open import Ledger.Gov govStructure
 
-open HasEmptySet ⦃...⦄
-
 infixr 2 _∧_
 _∧_ = _×_
 
