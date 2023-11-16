@@ -8,7 +8,6 @@ open import Prelude
 
 module Axiom.Set.Sum (th : Theory {lzero}) ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
 open Theory th
-
 open import Axiom.Set.Factor th
 open import Axiom.Set.Properties th
 open import Axiom.Set.Rel th

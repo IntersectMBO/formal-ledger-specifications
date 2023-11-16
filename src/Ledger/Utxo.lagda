@@ -57,7 +57,6 @@ utxoEntrySize : TxOut → MemoryEstimate
 utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
 
 open PParams
-
 \end{code}
 
 Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
@@ -153,7 +152,8 @@ _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
-
+\end{code}
+\begin{code}
 -- TODO: this could be a regular property
 
 feesOK : PParams → Tx → UTxO → Bool
@@ -302,8 +302,6 @@ private variable
   s : UTxOState
   tx : Tx
 
-\end{code}
-\begin{code}[hide]
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}

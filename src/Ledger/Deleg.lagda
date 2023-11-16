@@ -10,7 +10,7 @@ module Ledger.Deleg (gs : _) (open GovStructure gs) where
 
 open import Ledger.GovernanceActions gs
 \end{code}
-\begin{figure*}[h]
+\begin{figure*}[h!]
 \begin{code}
 record PoolParams : Set where
   field rewardAddr : Credential

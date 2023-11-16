@@ -183,7 +183,6 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
                     , λ x → Equivalence.to ∈-filter (z≤n , x)
 
 -- TODO: maybe this can be proven easier with the maximum?
-
 mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅ˢ
 mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
@@ -272,7 +271,6 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
 
   actualCCVotes : CCData → Credential ⇀ Vote
   actualCCVotes nothing          =  ∅
-
   actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
                                     then mapWithKey actualCCVote cc
                                     else constMap (dom cc) Vote.no
