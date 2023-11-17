@@ -122,9 +122,9 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes
 \end{code}
-\caption{NEWEPOCH transition system}
+\caption{NEWEPOCH transition system\protect\footnotemark}
 \end{figure*}
-
+\footnotetext{The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.}
 \begin{code}[hide]
 -- TODO: do we still need this for anything?
 maybePurpose : DepositPurpose → (DepositPurpose × Credential) → Coin → Maybe Coin
