@@ -109,7 +109,7 @@ module _ (let open Tx; open TxBody) where
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
     (just (p , v))  → ❴ p , v ❵ᵐ
-    nothing         → ∅ᵐ
+    nothing         → ∅
 
   propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
   propDepositᵐ pp gaid record { returnAddr = record { stake = c } }

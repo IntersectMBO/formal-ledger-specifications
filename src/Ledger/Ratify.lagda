@@ -265,7 +265,7 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
              _                        → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : CCData → Credential ⇀ Vote
-  actualCCVotes nothing          =  ∅ᵐ
+  actualCCVotes nothing          =  ∅
   actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
                                     then mapWithKey actualCCVote cc
                                     else constMap (dom cc) Vote.no

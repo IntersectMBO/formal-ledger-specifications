@@ -25,7 +25,7 @@ module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
   open NewEpochState nes hiding (es)
   open RatifyState fut using (removed) renaming (es to esW)
   open LState ls; open CertState certState; open Acnt acnt
-  es         = record esW { withdrawals = ∅ᵐ }
+  es         = record esW { withdrawals = ∅ }
   govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   NEWEPOCH-total : ∃[ nes' ] Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes'

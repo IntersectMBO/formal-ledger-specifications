@@ -151,10 +151,6 @@ the transaction body are:
           wits     : TxWitnesses
           -- isValid  : Bool
           txAD     : Maybe AuxiliaryData
-
-\end{code}
-\emph{Abstract functions}
-\begin{code}
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Definitions used in the UTxO transition system}
@@ -162,6 +158,7 @@ the transaction body are:
 \end{figure*}
 
 \begin{figure*}[h]
+\emph{Abstract functions}
 \begin{code}
   getValue : TxOut → Value
   getValue (_ , v , _) = v
@@ -187,6 +184,8 @@ the transaction body are:
   isP2Script : Script → Bool
   isP2Script = is-just ∘ isInj₂
 \end{code}
+\caption{Definitions used in the UTxO transition system, continued}
+\label{fig:defs:utxo-shelley-cont}
 \end{figure*}
 \begin{code}[hide]
   instance
