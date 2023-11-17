@@ -43,10 +43,6 @@ record PPUpdateEnv : Set where
 \end{figure*}
 \begin{figure*}[h]
 \begin{code}
-data pvCanFollow : ProtVer → ProtVer → Set where
-  canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
-  canFollowMinor : pvCanFollow (m , n) (m , n + 1)
-
 viablePParams : PParams → Set
 viablePParams pp = ⊤ -- TODO: block size check
 
