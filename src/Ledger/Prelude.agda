@@ -20,8 +20,8 @@ open import Data.Maybe.Properties.Ext public
 open import Interface.Functor public
 open import Interface.Bifunctor public
 open import Interface.DecEq.Ext public
-open import Interface.HasAdd public
-open import Interface.HasAdd.Instance public
+open import Interface.HasAggregate public
+open import Interface.HasAggregate.Instance public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
 open import Interface.HasOrder public

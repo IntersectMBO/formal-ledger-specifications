@@ -52,11 +52,14 @@ record EpochStructure : Set₁ where
   suc n +ᵉ e = sucᵉ (n +ᵉ e)
 
   instance
-    addSlot : HasAdd Slot
+    addSlot : HasAggregate Slot
     addSlot ._+_ = _+ˢ_
 
-    addEpoch : HasAdd Epoch
+    addEpoch : HasAggregate Epoch
     addEpoch ._+_ e e' = epoch (firstSlot e + firstSlot e')
+
+    addNatEpoch : HasAggregate Epoch {ℕ}
+    addNatEpoch ._+_ = λ e n → n +ᵉ e
 
 record GlobalConstants : Set₁ where
   field  Network : Set; ⦃ DecEq-Netw ⦄ : DecEq Network

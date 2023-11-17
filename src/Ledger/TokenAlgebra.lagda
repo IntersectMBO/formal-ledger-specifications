@@ -56,7 +56,7 @@ record TokenAlgebra : Set₁ where
          ⦃ Dec-≤ᵗ ⦄      : ∀ {v v′} → Dec (v ≤ᵗ v′)
 
   instance
-    addValue : HasAdd Value
+    addValue : HasAggregate Value
     addValue = record { _+_ = _+ᵛ_ }
 \end{code}
 \emph{Helper functions}

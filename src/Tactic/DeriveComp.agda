@@ -13,7 +13,7 @@ open import Interface.Monad.Instance
 open import Interface.ComputationalRelation
 open import Interface.DecEq.Ext
 open import Interface.Decidable.Instance
-open import Interface.HasAdd; open import Interface.HasAdd.Instance
+open import Interface.HasAggregate; open import Interface.HasAggregate.Instance
 open import Interface.HasSubtract; open import Interface.HasSubtract.Instance
 
 open import Reflection.Ext using (extendContextTel′)

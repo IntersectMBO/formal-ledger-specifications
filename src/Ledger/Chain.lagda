@@ -99,7 +99,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
         dState = record dState
           { rewards = rewards ∪⁺ refunds };
         gState = if not (null govSt') then gState' else record gState'
-          { dreps = mapValues sucᵉ dreps }
+          { dreps = mapValues (_+ 1) dreps }
         }
       utxoSt' = record utxoSt
         { fees = 0
@@ -111,14 +111,14 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       acnt' = record acnt
         { treasury = treasury + fees + getCoin unclaimed + donations ∸ totWithdrawals }
     in
-    e ≡ sucᵉ lastEpoch
+    e ≡ lastEpoch + 1
     → record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , fut' ⟧ⁿᵉ
 
   NEWEPOCH-Not-New : ∀ {Γ} → let open NewEpochState nes in
-    e ≢ sucᵉ lastEpoch
+    e ≢ lastEpoch + 1
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes
 \end{code}
