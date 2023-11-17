@@ -28,10 +28,6 @@ instance
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
   _ = ExUnit-CommutativeMonoid
-  _ : {A : Set} → HasEmptySet (ℙ A)
-  _ = record { ∅ = ∅ˢ }
-  _ : {A B : Set} → HasEmptySet (A ⇀ B)
-  _ = record { ∅ = ∅ᵐ }
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = indexedSumᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)

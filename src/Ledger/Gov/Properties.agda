@@ -31,9 +31,6 @@ private
   isNewCommittee Info                     = no λ()
 
 instance
-  _ : HasEmptySet (ℙ Credential)
-  _ = record { ∅ = ∅ˢ }
-
   Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_
   Computational-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
     case lookupActionId pparams role aid s of λ where

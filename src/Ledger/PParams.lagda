@@ -130,9 +130,6 @@ instance
   unquoteDecl DecEq-PParams        = derive-DecEq
     ((quote PParams , DecEq-PParams) ∷ [])
 
-  _ : HasEmptySet (ℙ PParamGroup)
-  _ = record { ∅ = ∅ˢ }
-
 record PParamsDiff : Set₁ where
   field UpdateT : Set
         updateGroups : UpdateT → ℙ PParamGroup

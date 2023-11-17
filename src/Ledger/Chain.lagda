@@ -60,12 +60,7 @@ private variable
   d : Bool
   fut' : RatifyState
 
-instance
-  _ : HasEmptySet (ℙ (GovActionID × GovActionState))
-  _ = record { ∅ = ∅ˢ }
-  _ : {A B : Set} → HasEmptySet (A ⇀ B)
-  _ = record { ∅ = ∅ᵐ }
-  _ = +-0-monoid; _ = +-0-commutativeMonoid
+instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:t also does what EPOCH used to do in previous eras
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set where

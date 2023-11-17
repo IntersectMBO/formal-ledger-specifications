@@ -20,12 +20,6 @@ open import Ledger.Ledger txs abs
 
 open Computational ⦃...⦄
 
-instance
-  _ : {A : Set} → HasEmptySet (ℙ A)
-  _ = record { ∅ = ∅ˢ }
-  _ : HasEmptySet (RwdAddr ⇀ Coin)
-  _ = record { ∅ = ∅ᵐ }
-
 module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
 
   open NewEpochState nes hiding (es)

@@ -21,12 +21,6 @@ open import Ledger.Transaction
 
 open import Interface.HasOrder.Instance
 
-instance
-  _ : {A : Set} → HasEmptySet (ℙ A)
-  _ = record { ∅ = ∅ˢ }
-  _ : {A B : Set} → HasEmptySet (A ⇀ B)
-  _ = record { ∅ = ∅ᵐ }
-
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id; .hashInj refl → refl

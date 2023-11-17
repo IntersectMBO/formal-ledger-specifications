@@ -12,10 +12,6 @@ module Ledger.NewPP (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.PPUp txs
 
-instance
-  _ : HasEmptySet ProposedPPUpdates
-  _ = record { ∅ = ∅ᵐ }
-
 record NewPParamEnv : Set where
 --  field
 \end{code}
@@ -29,7 +25,7 @@ record NewPParamState : Set where
 updatePPUp : PParams → PPUpdateState → PPUpdateState
 updatePPUp pparams record { fpup = fpup }
   with allᵇ (isViableUpdate? pparams) (range fpup)
-... | false  = record { pup = ∅    ; fpup = ∅ }
+... | false  = record { pup = ∅     ; fpup = ∅ }
 ... | true   = record { pup = fpup  ; fpup = ∅ }
 
 votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate

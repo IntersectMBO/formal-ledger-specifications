@@ -34,5 +34,5 @@ open import Tactic.DeriveComp public
 open import Tactic.Premises public
 
 open import Ledger.Interface.HasCoin public
-open import Ledger.Set public
+open import Ledger.Set renaming (∅ to ∅ˢ) public
 open import Interface.HasEmptySet th public

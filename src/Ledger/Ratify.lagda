@@ -98,11 +98,6 @@ _∧_ = _×_
 instance
   _ = +-0-commutativeMonoid
   _ = +-0-monoid
-  _ : HasEmptySet (ℙ Credential)
-  _ = record { ∅ = ∅ˢ }
-  _ : HasEmptySet (Credential ⇀ Vote)
-  _ = record { ∅ = ∅ᵐ }
-
 \end{code}
 \begin{figure*}[h!]
 \begin{code}
@@ -183,7 +178,7 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
                     , λ x → Equivalence.to ∈-filter (z≤n , x)
 
 -- TODO: maybe this can be proven easier with the maximum?
-mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅ˢ
+mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
 mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
   where

@@ -9,11 +9,6 @@ open import Ledger.GovStructure
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs
-
-instance
-  _ : HasEmptySet ((GovRole × Credential) ⇀ Vote)
-  _ = record { ∅ = ∅ᵐ }
-
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -83,10 +78,6 @@ addAction s e aid addr a prev = s ∷ʳ (aid , record
 \end{figure*}
 \begin{figure*}
 \begin{code}[hide]
-instance
-  _ : HasEmptySet (ℙ Credential)
-  _ = record { ∅ = ∅ˢ }
-
 data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
 \begin{code}

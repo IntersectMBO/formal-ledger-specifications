@@ -13,10 +13,6 @@ module Ledger.Utxow
   where
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
-
-instance
-  _ : HasEmptySet (ℙ (ScriptPurpose × Credential))
-  _ = record { ∅ = ∅ˢ }
 \end{code}
 
 \begin{figure*}[h]
