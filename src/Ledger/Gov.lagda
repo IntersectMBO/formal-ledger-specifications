@@ -28,6 +28,24 @@ record GovEnv : Set where
   field txid     : TxId
         epoch    : Epoch
         pparams  : PParams
+
+connects : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
+connects [] aid₁ aid₂ = aid₁ ≡ aid₂
+connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
+
+enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID × GovActionID) → Set
+enactable e (aid , as) s = case getHashES e (GovActionState.action as) of λ where
+  nothing → ⊤
+  (just aid') → ∃[ t ] (fromList t ⊆ s × connects t aid' aid)
+
+allEnactable : EnactState → GovState → Set
+allEnactable e s = ∀[ p ∈ fromList s ] enactable e p s'
+  where
+    s' : ℙ (GovActionID × GovActionID)
+    s' = mapPartial (λ (aid , as) → (aid ,_) <$> getHash (GovActionState.prevAction as)) $ fromList s
+
+allEnactable? : ∀ e s → Dec (allEnactable e s)
+allEnactable? e s = {!!}
 \end{code}
 \emph{Transition relation types}
 \begin{code}[hide]

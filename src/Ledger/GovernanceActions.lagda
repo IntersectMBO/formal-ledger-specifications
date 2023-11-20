@@ -261,6 +261,26 @@ record EnactState : Set where
         withdrawals   : RwdAddr ⇀ Coin
 
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
+getHash : ∀ {a} → NeedsHash a → Maybe GovActionID
+getHash {NoConfidence}         h = just h
+getHash {NewCommittee _ _ _}   h = just h
+getHash {NewConstitution _ _}  h = just h
+getHash {TriggerHF _}          h = just h
+getHash {ChangePParams _}      h = just h
+getHash {TreasuryWdrl _}       _ = nothing
+getHash {Info}                 _ = nothing
+
+open EnactState
+
+getHashES : EnactState → GovAction → Maybe GovActionID
+getHashES es NoConfidence           = just $ es .cc .proj₂
+getHashES es (NewCommittee _ _ _)   = just $ es .cc .proj₂
+getHashES es (NewConstitution _ _)  = just $ es .constitution .proj₂
+getHashES es (TriggerHF _)          = just $ es .pv .proj₂
+getHashES es (ChangePParams _)      = just $ es .pparams .proj₂
+getHashES es (TreasuryWdrl _)       = nothing
+getHashES es Info                   = nothing
+
 ccCreds (just x  , _)  = dom (x .proj₁)
 ccCreds (nothing , _)  = ∅
 \end{code}
@@ -268,8 +288,6 @@ ccCreds (nothing , _)  = ∅
 \label{fig:enactment-types}
 \end{figure*}
 \begin{code}[hide]
-open EnactState
-
 private variable
   s : EnactState
   up : PParamsUpdate

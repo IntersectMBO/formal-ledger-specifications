@@ -397,15 +397,6 @@ The code in Figure~\ref{fig:defs:ratify-iii} defines yet more types required for
 open EnactState
 \end{code}
 \begin{code}
-verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Set
-verifyPrev NoConfidence           h es  = h ≡ es .cc .proj₂
-verifyPrev (NewCommittee _ _ _)   h es  = h ≡ es .cc .proj₂
-verifyPrev (NewConstitution _ _)  h es  = h ≡ es .constitution .proj₂
-verifyPrev (TriggerHF _)          h es  = h ≡ es .pv .proj₂
-verifyPrev (ChangePParams _)      h es  = h ≡ es .pparams .proj₂
-verifyPrev (TreasuryWdrl _)       _ _   = ⊤
-verifyPrev Info                   _ _   = ⊤
-
 delayingAction : GovAction → Bool
 delayingAction NoConfidence           = true
 delayingAction (NewCommittee _ _ _)   = true
@@ -416,7 +407,7 @@ delayingAction (TreasuryWdrl _)       = false
 delayingAction Info                   = false
 
 delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Set
-delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
+delayed a h es d = getHash h ≢ getHashES es a ⊎ d ≡ true
 \end{code}
 \begin{code}[hide]
 abstract
