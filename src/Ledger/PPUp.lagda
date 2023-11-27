@@ -1,7 +1,7 @@
 \section{Update Proposal Mechanism}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 open import Algebra
 open import Algebra.Literals

@@ -1,5 +1,3 @@
-{-# OPTIONS --safe #-}
-
 import Data.Maybe as M
 
 open import Interface.Decidable.Instance

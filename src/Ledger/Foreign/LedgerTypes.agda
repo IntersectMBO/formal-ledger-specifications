@@ -67,7 +67,7 @@ ExUnits = Pair ℕ ℕ
   type UTxO  = [(TxIn, TxOut)]
   type Hash  = Integer
 
-  data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic)
+  data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic, Enum, Eq, Ord)
   instance ToExpr Tag
   type RdmrPtr = (Tag, Ix)
   type ExUnits = (Integer, Integer)

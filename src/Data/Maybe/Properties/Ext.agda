@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 module Data.Maybe.Properties.Ext where
 

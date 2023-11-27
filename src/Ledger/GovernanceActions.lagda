@@ -10,7 +10,7 @@ We introduce three distinct bodies that have specific functions in the new gover
   the stake pool operators (henceforth called \SPOs)
 \end{enumerate}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)

@@ -1,6 +1,6 @@
 \section{Scripts}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Morphism

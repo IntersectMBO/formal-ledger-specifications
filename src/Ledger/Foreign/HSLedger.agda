@@ -197,7 +197,7 @@ HSAbstractFunctions : AbstractFunctions
 HSAbstractFunctions = record
   { Implementation
   ; txscriptfee = λ tt y → 0
-  ; serSize     = λ v → v
+  ; serSize     = λ _ → 0 -- TODO Make a better implementation
   ; indexOfImp  = record
     { indexOfDCert    = λ _ _ → nothing
     ; indexOfRwdAddr  = λ _ _ → nothing

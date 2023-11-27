@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 -- {-# OPTIONS -v tactic.premises:100 #-}
 module Tactic.Premises where
 

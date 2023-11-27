@@ -2,7 +2,7 @@
 \label{sec:utxo-properties}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
 import Data.Nat as ℕ

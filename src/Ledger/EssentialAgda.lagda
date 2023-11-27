@@ -5,7 +5,7 @@ The goal is to provide some background for readers who are not already familiar 
 understand the other sections of the specification.
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 module Ledger.EssentialAgda where
 

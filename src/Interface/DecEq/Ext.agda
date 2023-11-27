@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 open import Prelude
 

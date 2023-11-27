@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --without-K #-}
+{-# OPTIONS --without-K #-}
 
 module Interface.Bifunctor where
 

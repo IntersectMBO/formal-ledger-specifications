@@ -1,6 +1,6 @@
 \section{Introduction}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 module Ledger.Introduction where
 

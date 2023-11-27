@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 module Interface.HasSubtract.Instance where
 

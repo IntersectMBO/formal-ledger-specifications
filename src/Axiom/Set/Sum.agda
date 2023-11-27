@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --no-import-sorts #-}
+{-# OPTIONS --no-import-sorts #-}
 
 open import Agda.Primitive using (lzero) renaming (Set to Type)
 open import Axiom.Set using (Theory)

@@ -1,5 +1,4 @@
 {-# OPTIONS -v allTactics:100 #-}
-{-# OPTIONS --safe #-}
 module Tactic.DeriveComp where
 
 open import Prelude

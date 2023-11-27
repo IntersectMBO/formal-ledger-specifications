@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 open import Prelude
 open import Data.Product.Ext

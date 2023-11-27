@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Reflection.Ext where
 
 open import Prelude

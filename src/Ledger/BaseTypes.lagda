@@ -1,6 +1,6 @@
 \section{Base types}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 module Ledger.BaseTypes where
 

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
 

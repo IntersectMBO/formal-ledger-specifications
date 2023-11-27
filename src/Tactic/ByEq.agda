@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --without-K #-}
+{-# OPTIONS --without-K #-}
 module Tactic.ByEq where
 
 open import Prelude

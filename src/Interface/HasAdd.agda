@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --cubical-compatible #-}
+{-# OPTIONS --cubical-compatible #-}
 module Interface.HasAdd where
 
 record HasAdd (A : Set) : Set where

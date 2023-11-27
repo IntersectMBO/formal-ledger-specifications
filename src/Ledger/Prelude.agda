@@ -1,5 +1,3 @@
-{-# OPTIONS --safe #-}
-
 --------------------------------------------------------------------------------
 -- Ledger prelude
 --
@@ -36,3 +34,13 @@ open import Tactic.Premises public
 open import Ledger.Interface.HasCoin public
 open import Ledger.Set renaming (∅ to ∅ˢ) public
 open import Interface.HasEmptySet th public
+
+open import Agda.Builtin.String as Builtin
+
+{-# FOREIGN GHC
+  import Prelude
+  import qualified Data.Text as T
+#-}
+postulate
+  error : ∀ {ℓ : Level} {a : Set ℓ} → Builtin.String → a
+{-# COMPILE GHC error = \_ _ -> error . T.unpack #-}

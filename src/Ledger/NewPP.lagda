@@ -1,7 +1,7 @@
 \section{Protocol Parameters Update}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 open import Relation.Nullary.Decidable
 

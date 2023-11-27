@@ -3,7 +3,6 @@
 \begin{figure*}[h]
 \begin{AgdaAlign}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
 
 module Ledger.TokenAlgebra (
 \end{code}

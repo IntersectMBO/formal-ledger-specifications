@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 module Ledger.Interface.HasCoin where
 

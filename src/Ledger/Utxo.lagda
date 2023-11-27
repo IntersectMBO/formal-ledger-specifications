@@ -4,7 +4,6 @@
 \subsection{Accounting}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
 
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
@@ -17,6 +16,9 @@ open import Tactic.Derive.DecEq
 open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
+
+open import Data.String.Base renaming (_++_ to _+ˢ_) using ()
+open import Data.Nat.Show
 
 module Ledger.Utxo
   (txs : _) (open TransactionStructure txs)
@@ -335,6 +337,11 @@ pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r
       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 
+dm : ∀{P Q : Set} → ⦃ Dec P ⦄ → ⦃ Dec Q ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
+dm ⦃ no ¬p ⦄ ⦃ _ ⦄ ¬pq = inj₁ ¬p
+dm ⦃ _ ⦄ ⦃ no ¬q ⦄ ¬pq = inj₂ ¬q
+dm ⦃ yes p ⦄ ⦃ yes q ⦄ ¬pq = contradiction (p , q) ¬pq
+
 instance
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
   Computational-UTXO = record {Go}
@@ -342,7 +349,45 @@ instance
 
     computeProof = case H? of λ where
       (yes p) → just (-, UTXO-inductive p)
-      (no _)  → nothing
+      (no ¬p)  → case dm ¬p of λ where
+        (inj₁ a) → error "¬ TxBody.txins (Tx.body tx) ≢ ∅"
+        (inj₂ b) → case dm b of λ where
+          (inj₁ a₁) → error "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
+          (inj₂ b₁) → case dm b₁ of λ where
+            (inj₁ a₂) → error "¬ inInterval (UTxOEnv.slot Γ) (txvldt (Tx.body tx))"
+            (inj₂ b₂) → case dm b₂ of λ where
+              (inj₁ a₃) → error "¬(minfee (UTxOEnv.pparams Γ) tx ≤ txfee (Tx.body tx))"
+              (inj₂ b₃) → case dm b₃ of λ where
+                (inj₁ a₄) →
+                  let
+                    pp = UTxOEnv.pparams Γ
+                    txb = Tx.body tx
+                    con = consumed pp s txb
+                    prod = produced pp s txb
+                    showValue = show ∘ coin
+                  in error
+                       ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
+                      +ˢ "\n  consumed =\t\t" +ˢ showValue con
+                      +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
+                      +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
+                      +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
+                      +ˢ "\n  produced =\t\t" +ˢ showValue prod
+                      +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
+                      +ˢ "\n    fee  =\t\t" +ˢ show (txb .TxBody.txfee)
+                      +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
+                      +ˢ "\n    donation  =\t\t" +ˢ show (txb .TxBody.txdonation)
+                       )
+                (inj₂ b₄) → case dm b₄ of λ where
+                  (inj₁ a₅) → error "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
+                  (inj₂ b₅) → case dm b₅ of λ where
+                    (inj₁ a₆) → error "¬(TxBody.txsize (Tx.body tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
+                    (inj₂ b₆) → case dm b₆ of λ where
+                      (inj₁ a₇) → error "∀[ (_ , txout) ∈ txouts .proj₁ ] inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout"
+                      (inj₂ b₇) → case dm b₇ of λ where
+                        (inj₁ a₈) → error "∀[ (_ , txout) ∈ txouts .proj₁ ] serSize (getValue txout) ≤ maxValSize pp"
+                        (inj₂ b₈) → case dm b₈ of λ where
+                          (inj₁ a₉) → error "∀[ (a , _) ∈ range txouts ] Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a"
+                          (inj₂ b₉) → error "something else broke"
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
     completeness s' (UTXO-inductive p) = QED

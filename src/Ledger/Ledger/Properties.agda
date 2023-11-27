@@ -1,5 +1,3 @@
-{-# OPTIONS --safe #-}
-
 open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract

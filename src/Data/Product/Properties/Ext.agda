@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 module Data.Product.Properties.Ext where
 

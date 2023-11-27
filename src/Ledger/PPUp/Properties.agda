@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (_+_; _*_); open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
 open import Ledger.Transaction

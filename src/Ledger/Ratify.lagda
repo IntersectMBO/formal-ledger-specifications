@@ -77,7 +77,7 @@ above the threshold.
 \subsection{Ratification restrictions}
 \label{sec:ratification-restrictions}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 import Data.Integer as ℤ
 open import Data.Rational as ℚ using (ℚ; 0ℚ; _≥_)

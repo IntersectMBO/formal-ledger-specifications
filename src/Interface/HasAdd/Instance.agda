@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Interface.HasAdd.Instance where
 
 open import Interface.HasAdd

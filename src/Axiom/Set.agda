@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --no-import-sorts #-}
+{-# OPTIONS --no-import-sorts #-}
 
 open import Agda.Primitive renaming (Set to Type)
 

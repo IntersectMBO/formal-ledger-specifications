@@ -4,7 +4,7 @@
 -- Properties of unique lists (setoid equality) using K
 ------------------------------------------------------------------------
 
-{-# OPTIONS --safe --with-K #-}
+{-# OPTIONS --with-K #-}
 
 module Data.List.Relation.Unary.Unique.Propositional.Properties.WithK where
 

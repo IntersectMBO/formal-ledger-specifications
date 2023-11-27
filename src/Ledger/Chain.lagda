@@ -1,7 +1,7 @@
 \section{Blockchain layer}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 open import Algebra
 open import Data.Maybe using (_>>=_)

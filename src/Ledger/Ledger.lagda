@@ -1,7 +1,7 @@
 \section{Ledger State Transition}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 import Data.List as L
 

@@ -1,5 +1,3 @@
-{-# OPTIONS --safe #-}
-
 open import Ledger.Prelude hiding (Dec₁)
 open import Ledger.Transaction
 

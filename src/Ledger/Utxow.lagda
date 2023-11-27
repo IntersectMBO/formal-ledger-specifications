@@ -1,6 +1,6 @@
 \subsection{Witnessing}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 open import Ledger.Prelude
 open import Ledger.Crypto

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Interface.Hashable where
 
 open import Agda.Builtin.Equality

@@ -1,5 +1,3 @@
-{-# OPTIONS --safe #-}
-
 module Ledger.GovStructure where
 
 open import Interface.DecEq

@@ -2,7 +2,7 @@
 \label{sec:tokenalgebra-valueset}
 
 \begin{code}[hide]
-{-# OPTIONS --safe --no-import-sorts #-}
+
 
 open import Agda.Primitive using () renaming (Set to Type)
 

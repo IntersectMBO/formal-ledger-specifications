@@ -1,6 +1,5 @@
 \section{Addresses}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
 
 open import Interface.DecEq.Ext
 open import Tactic.Derive.DecEq

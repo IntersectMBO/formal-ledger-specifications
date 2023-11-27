@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --cubical-compatible #-}
+{-# OPTIONS --cubical-compatible #-}
 module Interface.HasSubtract where
 
 record HasSubtract (A : Set) : Set where

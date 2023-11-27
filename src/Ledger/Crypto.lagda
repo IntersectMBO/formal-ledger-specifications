@@ -1,6 +1,5 @@
 \section{Cryptographic primitives}
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
 module Ledger.Crypto where
 
 open import Ledger.Prelude hiding (T)

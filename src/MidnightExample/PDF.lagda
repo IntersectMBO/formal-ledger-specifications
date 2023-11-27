@@ -7,7 +7,7 @@
 \tableofcontents
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 module MidnightExample.PDF where
 

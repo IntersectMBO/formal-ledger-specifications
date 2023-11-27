@@ -2,7 +2,6 @@
 \label{sec:transactions}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
 --------------------------------------------------------------------------------
 -- NOTE: Everything in this module is part of TransactionStructure
 --------------------------------------------------------------------------------

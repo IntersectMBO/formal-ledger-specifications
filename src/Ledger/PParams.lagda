@@ -4,7 +4,7 @@ This section defines the adjustable protocol parameters of the Cardano ledger.
 These parameters are used in block validation and can affect various features of the system,
 such as minimum fees, maximum and minimum sizes of certain components, and more.
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+
 
 open import Data.Rational using (ℚ)
 open import Relation.Nullary.Decidable

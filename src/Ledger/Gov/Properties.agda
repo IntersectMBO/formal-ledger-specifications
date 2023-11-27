@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 
 open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Unary.Any
