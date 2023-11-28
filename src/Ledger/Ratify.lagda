@@ -98,10 +98,6 @@ _∧_ = _×_
 instance
   _ = +-0-commutativeMonoid
   _ = +-0-monoid
-  _ : {A : Set} → HasSingleton A (ℙ A)
-  _ = record { ❴_❵ = singleton }
-  _ : {A B : Set} → HasSingleton (A × B) (A ⇀ B)
-  _ = record { ❴_❵ = ❴_❵ᵐ }
 \end{code}
 \begin{figure*}[h!]
 \begin{code}

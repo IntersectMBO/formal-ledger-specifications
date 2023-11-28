@@ -28,8 +28,6 @@ instance
   _ = +-0-monoid
   _ = +-0-commutativeMonoid
   _ = ExUnit-CommutativeMonoid
-  _ : {A B : Set} → HasSingleton (A × B) (A ⇀ B)
-  _ = record { ❴_❵ = ❴_❵ᵐ }
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = indexedSumᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)
@@ -111,7 +109,7 @@ module _ (let open Tx; open TxBody) where
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
     (just (p , v))  → ❴ p , v ❵
-    nothing         → ∅ᵐ
+    nothing         → ∅
 
   propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
   propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
@@ -167,9 +165,10 @@ feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
     collateralRange  = range    (utxo ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
 \end{code}
-\caption{Functions used in UTxO rules, continued}
+\caption{Functions used in UTxO rules, continued\protect\footnotemark}
 \label{fig:functions:utxo2}
 \end{figure*}
+\footnotetext{\AgdaBound{m}~\AgdaFunction{∣}~\AgdaBound{X} denotes the restriction of the map \AgdaBound{m} to the subset \AgdaBound{X} of its domain.}
 \begin{code}[hide]
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq

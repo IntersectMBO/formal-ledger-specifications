@@ -4,7 +4,7 @@ open import Axiom.Set using (Theory)
 
 module Interface.HasSingleton (th : Theory) where
 
-open Theory th renaming (Set to ℙ_)
+open Theory th renaming (Set to ℙ_; ❴_❵ to ❴_❵ˢ)
 open import Axiom.Set.Map th
 open import Data.Product using (_×_)
 
@@ -13,10 +13,10 @@ record HasSingleton (A B : Set) : Set where
     ❴_❵ : A → B
 
 instance
-  _ : {A : Set} → HasSingleton A (ℙ A)
-  _ = record { ❴_❵ = singleton }
+  HasSingletonSet-Set : {A : Set} → HasSingleton A (ℙ A)
+  HasSingletonSet-Set = record { ❴_❵ = ❴_❵ˢ }
 
-  _ : {A B : Set} → HasSingleton (A × B) (Map A B)
-  _ = record { ❴_❵ = ❴_❵ᵐ }
+  HasSingletonSet-Map : {A B : Set} → HasSingleton (A × B) (Map A B)
+  HasSingletonSet-Map = record { ❴_❵ = ❴_❵ᵐ }
 
 open HasSingleton ⦃...⦄ public

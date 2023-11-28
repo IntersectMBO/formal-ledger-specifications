@@ -179,6 +179,8 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   singleton : A → Set A
   singleton a = fromList [ a ]
 
+  ❴_❵ = singleton
+
   ∈-singleton : {a b : A} → a ≡ b ⇔ a ∈ singleton b
   ∈-singleton {_} {a} {b} =
     a ≡ b           ∼⟨ mk⇔ (λ where refl → here refl) (λ where (here refl) → refl) ⟩

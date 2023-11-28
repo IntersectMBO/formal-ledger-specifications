@@ -146,7 +146,7 @@ filterKeys : {P : A → Type} → specProperty P → Map A B → Map A B
 filterKeys sp-P = filterᵐ (sp-∘ sp-P proj₁)
 
 singletonᵐ : A → B → Map A B
-singletonᵐ a b = singleton (a , b)
+singletonᵐ a b = ❴ (a , b) ❵
                , (from ∈-singleton -⟨ (λ where refl refl → refl) ⟩- from ∈-singleton)
 
 ❴_❵ᵐ : A × B → Map A B
@@ -285,25 +285,25 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 
   -- map only value at a
   mapSingleValue : (B → B) → Map A B → A → Map A B
-  mapSingleValue f m a = mapValueRestricted f m (singleton a)
+  mapSingleValue f m a = mapValueRestricted f m ❴ a ❵
 
   curryᵐ : Map (A × B) C → A → Map B C
   curryᵐ m a = R.curryʳ (m ˢ) a , λ h h' → proj₂ m (R.∈-curryʳ h) (R.∈-curryʳ h')
 
-  res-singleton : ∀ {k} → k ∈ dom (m ˢ) → ∃[ v ] m ∣ (singleton k) ≡ᵉᵐ ❴ k , v ❵ᵐ
+  res-singleton : ∀ {k} → k ∈ dom (m ˢ) → ∃[ v ] m ∣ ❴ k ❵ ≡ᵉᵐ ❴ k , v ❵ᵐ
   res-singleton {m = m@(_ , uniq)} k∈domm
     with (k , v) , (refl , h) ← ∈⇔P k∈domm
     = v
     , (λ a∈m∣k → to ∈-singleton $ case ∈⇔P a∈m∣k of λ (mem₁ , mem₂) →
          let eq = from ∈-singleton mem₁
          in  ×-≡,≡→≡ (eq , (uniq mem₂ (subst _ (sym eq) h))))
-    , λ a∈❴k,v❵ → subst (_∈ (m ∣ singleton k) ˢ)
+    , λ a∈❴k,v❵ → subst (_∈ ((m ∣ ❴ k ❵) ˢ))
                         (sym $ from ∈-singleton a∈❴k,v❵)
                         (∈⇔P (to ∈-singleton refl , h))
 
-  res-singleton' : ∀ {k v} → (k , v) ∈ m ˢ → m ∣ (singleton k) ≡ᵉᵐ ❴ k , v ❵ᵐ
+  res-singleton' : ∀ {k v} → (k , v) ∈ m ˢ → m ∣ ❴ k ❵ ≡ᵉᵐ ❴ k , v ❵ᵐ
   res-singleton' {m = m} kv∈m
-    with _ , h ← res-singleton {m = m} (∈⇔P (-, refl , kv∈m))
+    with _ , h ← res-singleton {m = m} (∈⇔P (-, (refl , kv∈m)))
     = subst _ (sym $ proj₂ m kv∈m (R.res-⊆ $ proj₂ h $ to ∈-singleton refl)) h
 
   -- f(x,-)
@@ -312,7 +312,7 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 
   update : A → Maybe B → Map A B → Map A B
   update x (just y) m = insert m x y
-  update x nothing  m = m ∣ (singleton x) ᶜ
+  update x nothing  m = m ∣ ❴ x ❵ ᶜ
 
 module Lookupᵐ (sp-∈ : spec-∈ A) where
   open import Relation.Nullary.Decidable
@@ -340,4 +340,4 @@ module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   -- f⁻¹(x)
   infix 25 _⁻¹_
   _⁻¹_ : Map A B → B → Set A
-  m ⁻¹ a = dom ((m ↾ singleton a) ˢ)
+  m ⁻¹ a = dom ((m ↾ ❴ a ❵) ˢ)

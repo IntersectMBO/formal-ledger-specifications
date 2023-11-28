@@ -185,7 +185,7 @@ module Restriction (sp-∈ : spec-∈ A) where
     where open import Relation.Binary using (IsEquivalence)
 
   curryʳ : Rel (A × B) C → A → Rel B C
-  curryʳ R a = mapˡ proj₂ (R ∣' (sp-∘ (sp-∈ {X = singleton a}) proj₁))
+  curryʳ R a = mapˡ proj₂ (R ∣' (sp-∘ (sp-∈ {X = ❴ a ❵}) proj₁))
 
   ∈-curryʳ : ∀ {a} {b : B} {c : C} → (b , c) ∈ curryʳ R a → ((a , b) , c) ∈ R
   ∈-curryʳ h = case ∈⇔P h of λ where
