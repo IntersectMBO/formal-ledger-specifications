@@ -305,7 +305,7 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
     ⟦ gid , t , e ⟧ᵉ ⊢   s ⇀⦇ NoConfidence ,ENACT⦈
                  record  s { cc = nothing , gid }
 
-  Enact-NewComm : let old      = maybe proj₁ ∅ᵐ (s .EnactState.cc .proj₁)
+  Enact-NewComm : let old      = maybe proj₁ ∅ (s .EnactState.cc .proj₁)
                       maxTerm  = s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm

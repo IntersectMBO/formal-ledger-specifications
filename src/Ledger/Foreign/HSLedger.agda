@@ -247,7 +247,7 @@ instance
       ; mint       = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
       ; txfee      = txfee
       ; txvldt     = from txvldt
-      ; txwdrls    = ∅ᵐ
+      ; txwdrls    = ∅
       ; txup       = nothing
       ; txADhash   = nothing
       ; netwrk     = nothing

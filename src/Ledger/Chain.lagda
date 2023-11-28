@@ -89,7 +89,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
              ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ $ mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ
 
-      es        = record esW { withdrawals = ∅ᵐ }
+      es        = record esW { withdrawals = ∅ }
       retired   = retiring ⁻¹ e
       refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards
       unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards ᶜ
@@ -127,9 +127,9 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
     ────────────────────────────────
     Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes
 \end{code}
-\caption{NEWEPOCH transition system}
+\caption{NEWEPOCH transition system\protect\footnotemark}
 \end{figure*}
-
+\footnotetext{The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.}
 \begin{code}[hide]
 -- TODO: do we still need this for anything?
 maybePurpose : DepositPurpose → (DepositPurpose × Credential) → Coin → Maybe Coin
@@ -155,7 +155,7 @@ govActionDeposits : LState → VDeleg ⇀ Coin
 govActionDeposits ls =
   let open LState ls; open CertState certState; open PState pState
       open UTxOState utxoSt; open DState dState
-   in foldl _∪⁺_ ∅ᵐ $ setToList $
+   in foldl _∪⁺_ ∅ $ setToList $
     mapPartial
       (λ where (gaid , record { returnAddr = record {stake = c} }) → do
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
@@ -167,8 +167,8 @@ calculateStakeDistrs : LState → StakeDistrs
 calculateStakeDistrs ls =
   let open LState ls; open CertState certState; open PState pState
       open UTxOState utxoSt; open DState dState
-      spoDelegs = ∅ᵐ -- TODO
-      drepDelegs = ∅ᵐ -- TODO
+      spoDelegs = ∅ -- TODO
+      drepDelegs = ∅ -- TODO
   in
   record
     { stakeDistr = govActionDeposits ls

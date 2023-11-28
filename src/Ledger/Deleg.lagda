@@ -17,7 +17,7 @@ instance
   _ = record { ❴_❵ = ❴_❵ᵐ }
 
 \end{code}
-\begin{figure*}[h]
+\begin{figure*}[h!]
 \begin{code}
 record PoolParams : Set where
   field rewardAddr : Credential

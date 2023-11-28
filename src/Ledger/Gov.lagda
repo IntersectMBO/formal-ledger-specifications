@@ -71,12 +71,12 @@ addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
 addAction s e aid addr a prev = s ∷ʳ (aid , record
-  { votes = ∅ᵐ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
-
+  { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 \end{code}
-\caption{Types and functions used in the GOV transition system}
+\caption{Types and functions used in the GOV transition system\protect\footnotemark}
 \label{defs:gov-defs}
 \end{figure*}
+\footnotetext{\AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends element \AgdaBound{x} to list \AgdaBound{l}.}
 \begin{figure*}
 \begin{code}[hide]
 data _⊢_⇀⦇_,GOV'⦈_ where
