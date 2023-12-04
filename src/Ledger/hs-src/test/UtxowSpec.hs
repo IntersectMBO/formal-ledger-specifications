@@ -46,10 +46,11 @@ initState :: UTxOState
 initState = MkUTxOState {utxo = initUTxO, fees = 0}
 
 data SimpleTxBody = MkSimpleTxBody
-  { stxins  :: [TxIn]
-  , stxouts :: [(Ix, TxOut)]
-  , stxvldt :: (Maybe Integer, Maybe Integer)
-  , stxid   :: TxId }
+  { stxins   :: [TxIn]
+  , stxouts  :: [(Ix, TxOut)]
+  , stxvldt  :: (Maybe Integer, Maybe Integer)
+  , stxid    :: TxId 
+  , stxcerts :: [TxCert]}
 
 bodyFromSimple :: PParams -> SimpleTxBody -> TxBody
 bodyFromSimple pp stxb = let s = 5 in MkTxBody
@@ -58,15 +59,17 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
   , txfee  = (a pp) * s + (b pp)
   , txvldt = stxvldt stxb
   , txsize = s
-  , txid   = stxid stxb }
+  , txid   = stxid stxb 
+  , txcerts = stxcerts stxb}
 
 testTxBody1 :: TxBody
 testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins  = [(0, 0)]
-  , stxouts = [ 0 .-> (a0, (890, Nothing))
-              , 1 .-> (a1, (100, Nothing)) ]
-  , stxvldt = (Nothing, Just 10)
-  , stxid   = 1 }
+  { stxins   = [(0, 0)]
+  , stxouts  = [ 0 .-> (a0, (890, Nothing))
+               , 1 .-> (a1, (100, Nothing)) ]
+  , stxvldt  = (Nothing, Just 10)
+  , stxid    = 1 
+  , stxcerts = []}
 
 testTx1 :: Tx
 testTx1 = MkTx
@@ -80,7 +83,8 @@ testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
   , stxouts = [ 0 .-> (a2, (10, Nothing))
               , 1 .-> (a1, (80, Nothing)) ]
   , stxvldt = (Nothing, Just 10)
-  , stxid = 2 }
+  , stxid = 2 
+  , stxcerts = []}
 
 testTx2 :: Tx
 testTx2 = MkTx

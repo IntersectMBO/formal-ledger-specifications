@@ -108,12 +108,12 @@ module _ (let open Tx; open TxBody) where
 
   certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
   certDepositᵐ pp cert = case certDeposit pp cert of λ where
-    (just (p , v))  → ❴ p , v ❵ᵐ
+    (just (p , v))  → ❴ p , v ❵
     nothing         → ∅
 
   propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
   propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
-    = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵ᵐ
+    = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
 
   certRefund : DCert → Maybe DepositPurpose
   certRefund (delegate c nothing nothing x)  = just (CredentialDeposit c)

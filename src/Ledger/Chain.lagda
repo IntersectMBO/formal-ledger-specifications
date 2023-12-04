@@ -155,7 +155,7 @@ govActionDeposits ls =
       (λ where (gaid , record { returnAddr = record {stake = c} }) → do
         vd ← lookupᵐ? voteDelegs c ⦃ _ ∈? _ ⦄
         dep ← lookupᵐ? deposits (GovActionDeposit gaid) ⦃ _ ∈? _ ⦄
-        just ❴ vd , dep ❵ᵐ )
+        just ❴ vd , dep ❵ )
       (fromList govSt)
 
 calculateStakeDistrs : LState → StakeDistrs

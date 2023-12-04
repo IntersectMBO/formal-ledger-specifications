@@ -62,3 +62,8 @@ instance
   Convertible-Map = λ where
     .to   → to        ∘ proj₁
     .from → fromListᵐ ∘ map from
+
+  Convertible-List : Convertible₁ List List
+  Convertible-List = λ where
+    .to   → map to
+    .from → map from
