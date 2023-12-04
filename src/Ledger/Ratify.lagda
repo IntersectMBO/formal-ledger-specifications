@@ -188,8 +188,8 @@ mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅
     helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
       v
         ≡˘⟨ indexedSum-singleton' $ finiteness ❴ k , v ❵ ⟩
-      ∑[ x ← ❴ k , v ❵ᵐ ᶠᵐ ] x
-        ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ᵐ ᶠᵐ}
+      ∑[ x ← ❴ k , v ❵ ᶠᵐ ] x
+        ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ ᶠᵐ}
           $ res-singleton' {m = dist} kv∈dist ⟩
       ∑[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
         ≤⟨ m≤m+n _ _ ⟩
@@ -234,10 +234,10 @@ restrictedDists coins rank dists = dists
 \begin{AgdaAlign}
 \begin{code}
 actualPDRepVotes : GovAction → VDeleg ⇀ Vote
-actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵ᵐ
-                               ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵ᵐ
-actualPDRepVotes _             =   ❴ abstainRep , Vote.abstain ❵ᵐ
-                               ∪ˡ  ❴ noConfidenceRep , Vote.no ❵ᵐ
+actualPDRepVotes NoConfidence  =   ❴ abstainRep , Vote.abstain ❵
+                               ∪ˡ  ❴ noConfidenceRep , Vote.yes ❵
+actualPDRepVotes _             =   ❴ abstainRep , Vote.abstain ❵
+                               ∪ˡ  ❴ noConfidenceRep , Vote.no ❵
 
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → GovRole × Credential ⇀ Vote → VDeleg ⇀ Vote
