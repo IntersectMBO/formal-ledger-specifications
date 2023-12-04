@@ -150,7 +150,7 @@ HSScriptStructure = record
 
 instance _ = HSScriptStructure
 
-open import Ledger.PParams it it it
+open import Ledger.PParams it it it hiding (PParams)
 
 HsGovParams : GovParams
 HsGovParams = record
@@ -174,8 +174,8 @@ HSGovStructure = record
   }
 instance _ = HSGovStructure
 
-open import Ledger.GovernanceActions it hiding (Vote)
-open import Ledger.Deleg it
+open import Ledger.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
+open import Ledger.Deleg it hiding (PoolParams; DCert)
 open import Ledger.Gov it
 
 HSTransactionStructure : TransactionStructure
@@ -209,7 +209,7 @@ HSAbstractFunctions = record
   }
 instance _ = HSAbstractFunctions
 
-open TransactionStructure it hiding (PParams)
+open TransactionStructure it
 open import Ledger.Utxo it it
 open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it
@@ -227,6 +227,56 @@ instance
                   (inj₂ record { pay = inj₂ x }) → x
     .from n → inj₁ record { net = _ ; pay = inj₁ n ; stake = inj₁ 0 }
 
+  Convertible-Credential : Convertible Credential F.Credential
+  Convertible-Credential = λ where
+    .to (inj₁ x) → F.KeyHashObj (to x)
+    .to (inj₂ y) → F.ScriptObj (to y)
+    .from (F.ScriptObj x) → inj₁ (from x)
+    .from (F.KeyHashObj x) → inj₂ (from x)
+
+  Convertible-GovRole : Convertible GovRole F.GovRole
+  Convertible-GovRole = λ where
+    .to CC → F.CC
+    .to DRep → F.DRep
+    .to SPO → F.SPO
+    .from F.CC → GovRole.CC
+    .from F.DRep → GovRole.DRep
+    .from F.SPO → GovRole.SPO
+
+  Convertible-VDeleg : Convertible VDeleg F.VDeleg
+  Convertible-VDeleg = λ where
+    .to (credVoter x x₁) → F.CredVoter (to x) (to x₁)
+    .to abstainRep → F.AbstainRep
+    .to noConfidenceRep → F.NoConfidenceRep
+    .from (F.CredVoter x x₁) → VDeleg.credVoter (from x) (from x₁)
+    .from F.AbstainRep → VDeleg.abstainRep
+    .from F.NoConfidenceRep → VDeleg.noConfidenceRep
+
+  Convertible-PoolParams : Convertible PoolParams F.PoolParams
+  Convertible-PoolParams = λ where
+    .to → to ∘ PoolParams.rewardAddr
+    .from x → record { rewardAddr = from x }
+
+  Convertible-Anchor : Convertible Anchor F.Anchor
+  Convertible-Anchor = λ where
+    .to _ → tt
+    .from tt → record { url = "bogus" ; hash = tt }
+
+  Convertible-DCert : Convertible DCert F.TxCert
+  Convertible-DCert = λ where
+    .to (delegate x x₁ x₂ x₃) → F.Delegate (to x) (to x₁) (to x₂) (to x₃)
+    .to (regpool x x₁) → F.RegPool (to x) (to x₁)
+    .to (retirepool x x₁) → F.RetirePool (to x) (to x₁)
+    .to (regdrep x x₁ x₂) → F.RegDRep (to x) (to x₁) (to x₂)
+    .to (deregdrep x) → F.DeRegDRep (to x)
+    .to (ccreghot x x₁) → F.CCRegHot (to x) (to x₁)
+    .from (F.Delegate x x₁ x₂ x₃) → DCert.delegate (from x) (from x₁) (from x₂) (from x₃)
+    .from (F.RegPool x x₁) → DCert.regpool (from x) (from x₁)
+    .from (F.RetirePool x x₁) → DCert.retirepool (from x) (from x₁)
+    .from (F.RegDRep x x₁ x₂) → DCert.regdrep (from x) (from x₁) (from x₂)
+    .from (F.DeRegDRep x) → DCert.deregdrep (from x)
+    .from (F.CCRegHot x x₁) → DCert.ccreghot (from x) (from x₁)
+
   Convertible-TxBody : Convertible TxBody F.TxBody
   Convertible-TxBody = λ where
     .to txb → let open TxBody txb in record
@@ -239,11 +289,12 @@ instance
       ; collateral = to collateral
       ; reqSigHash = to reqSigHash
       ; scriptIntHash = nothing
+      ; txcerts = to txcerts
       }
     .from txb → let open F.TxBody txb in record
       { txins      = from txins
       ; txouts     = from txouts
-      ; txcerts    = []
+      ; txcerts    = from txcerts
       ; mint       = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
       ; txfee      = txfee
       ; txvldt     = from txvldt

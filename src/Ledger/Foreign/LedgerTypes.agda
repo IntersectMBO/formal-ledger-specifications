@@ -36,6 +36,7 @@ AuxiliaryData = ⊤
 DataHash      = ⊤
 Datum         = ⊤
 Redeemer      = ⊤
+Anchor        = ⊤
 
 TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Maybe DataHash
@@ -51,14 +52,15 @@ ExUnits = Pair ℕ ℕ
   type Coin  = Integer
   type Addr  = Integer
 
-  type TxId  = Integer
-  type Ix    = Integer
-  type Epoch = Integer
+  type TxId    = Integer
+  type Ix      = Integer
+  type Epoch   = Integer
 
   type AuxiliaryData = ()
   type DataHash      = ()
   type Datum         = ()
   type Redeemer      = ()
+  type Anchor        = ()
 
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, (Coin, Maybe DataHash))
@@ -71,6 +73,68 @@ ExUnits = Pair ℕ ℕ
   type ExUnits = (Integer, Integer)
 #-}
 {-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
+
+{-# FOREIGN GHC
+  data Credential
+    = ScriptObj Integer
+    | KeyHashObj Integer
+    deriving (Show, Eq, Generic)
+  instance ToExpr Credential
+#-}
+data Credential : Set where
+  ScriptObj  : Hash → Credential
+  KeyHashObj : Hash → Credential
+{-# COMPILE GHC Credential = data Credential (ScriptObj | KeyHashObj) #-}
+
+PoolParams = Credential
+
+{-# FOREIGN GHC
+  type PoolParams = Credential
+
+  data GovRole
+    = CC
+    | DRep
+    | SPO
+    deriving (Show, Eq, Generic)
+  instance ToExpr GovRole
+#-}
+data GovRole : Set where
+  CC DRep SPO : GovRole
+{-# COMPILE GHC GovRole = data GovRole (CC | DRep | SPO) #-}
+
+{-# FOREIGN GHC
+  data VDeleg
+    = CredVoter GovRole Credential
+    | AbstainRep
+    | NoConfidenceRep
+    deriving (Show, Eq, Generic)
+  instance ToExpr VDeleg
+#-}
+data VDeleg : Set where
+  CredVoter        : GovRole → Credential →  VDeleg
+  AbstainRep       :                         VDeleg
+  NoConfidenceRep  :                         VDeleg
+{-# COMPILE GHC VDeleg = data VDeleg (CredVoter | AbstainRep | NoConfidenceRep) #-}
+
+{-# FOREIGN GHC
+  data TxCert
+    = Delegate Credential (Maybe VDeleg) (Maybe Credential) Coin
+    | RegPool Credential PoolParams
+    | RetirePool Credential Epoch
+    | RegDRep Credential Coin Anchor
+    | DeRegDRep Credential
+    | CCRegHot Credential (Maybe Credential)
+    deriving (Show, Eq, Generic)
+  instance ToExpr TxCert
+#-}
+data TxCert : Set where
+  Delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → TxCert
+  RegPool     : Credential → PoolParams → TxCert
+  RetirePool  : Credential → Epoch → TxCert
+  RegDRep     : Credential → Coin → Anchor → TxCert
+  DeRegDRep   : Credential → TxCert
+  CCRegHot    : Credential → Maybe Credential → TxCert
+{-# COMPILE GHC TxCert = data TxCert (Delegate | RegPool | RetirePool | RegDRep | DeRegDRep | CCRegHot) #-}
 
 record TxBody : Set where
   field txins    : List TxIn
@@ -85,6 +149,7 @@ record TxBody : Set where
         collateral     : List TxIn
         reqSigHash     : List Hash
         scriptIntHash  : Maybe Hash
+        txcerts : List TxCert
 {-# FOREIGN GHC
   data TxBody = MkTxBody
     { txins  :: [TxIn]
@@ -96,6 +161,7 @@ record TxBody : Set where
     , collateral    :: [TxIn]
     , reqSigHash    :: [Hash]
     , scriptIntHash :: Maybe Hash
+    , txcerts :: [TxCert]
     } deriving (Show, Generic)
   instance ToExpr TxBody
 #-}
