@@ -90,45 +90,51 @@ txInfo l pp utxo tx = record
   } where open Tx tx; open TxBody body
 
 DelegateOrDeReg : DCert → Set
-DelegateOrDeReg (delegate x x₁ x₂ x₃) = ⊤
-DelegateOrDeReg (dereg x) = ⊤
-DelegateOrDeReg (regpool x x₁) = ⊥
-DelegateOrDeReg (retirepool x x₁) = ⊥
-DelegateOrDeReg (regdrep x x₁ x₂) = ⊤
-DelegateOrDeReg (deregdrep x) = ⊤
-DelegateOrDeReg (ccreghot x x₁) = ⊥
+DelegateOrDeReg = λ where
+  (delegate _ _ _ _) → ⊤
+  (dereg _)          → ⊤
+  (regpool _ _)      → ⊥
+  (retirepool _ _)   → ⊥
+  (regdrep _ _ _)    → ⊤
+  (deregdrep _)      → ⊤
+  (ccreghot _ _)     → ⊥
 
-DelegateOrDeReg? : ∀ x → Dec (DelegateOrDeReg x)
-DelegateOrDeReg? (delegate x x₁ x₂ x₃) = yes tt
-DelegateOrDeReg? (dereg x) = yes tt
-DelegateOrDeReg? (regpool x x₁) = no λ ()
-DelegateOrDeReg? (retirepool x x₁) = no λ ()
-DelegateOrDeReg? (regdrep x x₁ x₂) = yes tt
-DelegateOrDeReg? (deregdrep x) = yes tt
-DelegateOrDeReg? (ccreghot x x₁) = no λ ()
+instance
+  Dec-DelegateOrDeReg : DelegateOrDeReg ⁇¹
+  Dec-DelegateOrDeReg {dc} .dec with dc
+  ... | delegate _ _ _ _ = yes tt
+  ... | dereg _          = yes tt
+  ... | regpool _ _      = no λ ()
+  ... | retirepool _ _   = no λ ()
+  ... | regdrep _ _ _    = yes tt
+  ... | deregdrep _      = yes tt
+  ... | ccreghot _ _     = no λ ()
 
 UTxOSH  = TxIn ⇀ (TxOut × ScriptHash)
 
 scriptOutWithHash : TxIn → TxOut → Maybe (TxOut × ScriptHash)
-scriptOutWithHash txin (addr , r) with isScriptAddr? addr
-... | no ¬p = nothing
-... | yes p = just ((addr , r) , getScriptHash addr p)
+scriptOutWithHash txin (addr , r) =
+  isScriptAddr addr
+    ？ (λ {p} → just ((addr , r) , getScriptHash addr p))
+    ∶ nothing
 
 scriptOutsWithHash : UTxO → UTxOSH
 scriptOutsWithHash utxo = mapMaybeWithKeyᵐ scriptOutWithHash utxo
 
 spendScripts : TxIn → UTxOSH → Maybe (ScriptPurpose × ScriptHash)
-spendScripts txin utxo with txin ∈? dom utxo
-... | no ¬p = nothing
-... | yes p = just (Spend txin , proj₂ (lookupᵐ utxo txin))
+spendScripts txin utxo =
+  txin ∈ dom utxo
+    ？ (λ {p} → just (Spend txin , proj₂ (lookupᵐ utxo txin)))
+    ∶ nothing
 
 rwdScripts : RwdAddr → Maybe (ScriptPurpose × ScriptHash)
-rwdScripts a with isScriptRwdAddr? a
-... | no ¬p = nothing
-... | yes (SHisScript sh) = just (Rwrd a , sh)
+rwdScripts a =
+  isScriptRwdAddr a
+    ？ (λ where {SHisScript sh} → just (Rwrd a , sh))
+    ∶ nothing
 
 certScripts : DCert → Maybe (ScriptPurpose × ScriptHash)
-certScripts d with DelegateOrDeReg? d
+certScripts d with ¿ DelegateOrDeReg d ¿
 ... | no ¬p = nothing
 certScripts c@(delegate  (inj₁ x) _ _ _) | yes p = nothing
 certScripts c@(delegate  (inj₂ y) _ _ _) | yes p = just (Cert c , y)

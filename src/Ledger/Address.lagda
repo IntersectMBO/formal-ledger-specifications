@@ -91,22 +91,22 @@ payCred (inj₂ record {pay = pay}) = pay
 netId (inj₁ record {net = net}) = net
 netId (inj₂ record {net = net}) = net
 
-isVKey? : ∀ c → Dec (isVKey c)
-isVKey? (inj₁ h) = yes (VKeyisVKey h)
-isVKey? (inj₂ _) = no  (λ ())
+instance
+  Dec-isVKey : isVKey ⁇¹
+  Dec-isVKey {x = c} .dec with c
+  ... | inj₁ h = yes (VKeyisVKey h)
+  ... | inj₂ _ = no  λ ()
 
-isVKeyAddr? : ∀ a → Dec (isVKeyAddr a)
-isVKeyAddr? = isVKey? ∘ payCred
+  Dec-isScript : isScript ⁇¹
+  Dec-isScript {x = x} .dec with x
+  ... | inj₁ _ = no λ ()
+  ... | inj₂ y = yes (SHisScript y)
 
-isScript? : ∀ c → Dec (isScript c)
-isScript? (inj₁ _) = no λ ()
-isScript? (inj₂ y) = yes (SHisScript y)
-
-isScriptAddr? : ∀ a → Dec (isScriptAddr a)
-isScriptAddr? = isScript? ∘ payCred
-
-isScriptRwdAddr? : ∀ a → Dec (isScriptRwdAddr a)
-isScriptRwdAddr? = isScript? ∘ RwdAddr.stake
+_ = isVKey ⁇¹ ∋ it
+_ = isVKeyAddr ⁇¹ ∋ it
+_ = isScript ⁇¹ ∋ it
+_ = isScriptAddr ⁇¹ ∋ it
+_ = isScriptRwdAddr ⁇¹ ∋ it
 
 getScriptHash : ∀ a → isScriptAddr a → ScriptHash
 getScriptHash (inj₁ _) (SHisScript sh) = sh
@@ -114,7 +114,8 @@ getScriptHash (inj₂ _) (SHisScript sh) = sh
 
 instance abstract
   unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RwdAddr = derive-DecEq
-    ((quote BaseAddr     , DecEq-BaseAddr) ∷
-    (quote BootstrapAddr , DecEq-BootstrapAddr) ∷
-    (quote RwdAddr       , DecEq-RwdAddr) ∷ [])
+    ( (quote BaseAddr      , DecEq-BaseAddr)
+    ∷ (quote BootstrapAddr , DecEq-BootstrapAddr)
+    ∷ (quote RwdAddr       , DecEq-RwdAddr)
+    ∷ [] )
 \end{code}

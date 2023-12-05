@@ -48,7 +48,7 @@ governance action scenario. The columns represent
 \end{itemize}
 \begin{figure*}[h!]
 \begin{longtable}[]{@{}
-   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.65}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.65}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.11}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}@{}}
@@ -80,11 +80,11 @@ above the threshold.
 {-# OPTIONS --safe #-}
 
 import Data.Integer as ℤ
-open import Data.Rational as ℚ using (ℚ; 0ℚ; _≥_)
+open import Data.Rational as ℚ using (ℚ; 0ℚ)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_; _≥_)
+open import Ledger.Prelude hiding (_∧_)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -120,29 +120,15 @@ record RatifyState : Set where
 CCData : Set
 CCData = Maybe ((Credential ⇀ Epoch) × ℚ)
 
-isCC : VDeleg → Bool
-isCC (credVoter CC _)  = true
-isCC _                 = false
+govRole : VDeleg → GovRole
+govRole (credVoter gv _)  = gv
+govRole abstainRep        = DRep
+govRole noConfidenceRep   = DRep
 
-isDRep : VDeleg → Bool
-isDRep (credVoter DRep _)  = true
-isDRep (credVoter _ _)     = false
-isDRep abstainRep          = true
-isDRep noConfidenceRep     = true
-
-isSPO : VDeleg → Bool
-isSPO (credVoter SPO _)  = true
-isSPO _                  = false
-\end{code}
-\begin{code}[hide]
-isCCProp : specProperty λ x → isCC x ≡ true
-isCCProp = to-sp (λ x → isCC x ≟ true)
-
-isDRepProp : specProperty λ x → isDRep x ≡ true
-isDRepProp = to-sp (λ x → isDRep x ≟ true)
-
-isSPOProp : specProperty λ x → isSPO x ≡ true
-isSPOProp = to-sp (λ x → isSPO x ≟ true)
+IsCC IsDRep IsSPO : VDeleg → Set
+IsCC    v = govRole v ≡ CC
+IsDRep  v = govRole v ≡ DRep
+IsSPO   v = govRole v ≡ SPO
 \end{code}
 \caption{Types and functions for the RATIFY transition system}
 \label{fig:types-and-functions-for-the-ratify-transition-system}
@@ -158,9 +144,11 @@ Figure~\ref{fig:types-and-functions-for-the-ratify-transition-system} defines th
 \item \RatifyEnv denotes an environment with data required for ratification;
 \item \RatifyState denotes an enactment state that exists during ratification;
 \item \CCData stores data about the constitutional committee.
-\item \isCC, \isDRep, and \isSPO, which return \true if the given delegate is a \CC member, a \DRep, or an \SPO (resp.) and \false otherwise.
+\item \IsCC, \IsDRep, and \IsSPO, which hold if the given delegate is a \CC member, a \DRep, or an \SPO (resp.), computed via \govRole.
 \end{itemize}
 \begin{code}[hide]
+open StakeDistrs
+
 -- TODO: remove these or put them into RatifyState
 coinThreshold rankThreshold : ℕ
 coinThreshold = 1000000000
@@ -168,7 +156,7 @@ rankThreshold = 1000
 
 -- DReps with at least `c` coins
 mostStakeDRepDist : Credential ⇀ Coin → Coin → Credential ⇀ Coin
-mostStakeDRepDist dist c = dist ↾' to-sp (_≥? c)
+mostStakeDRepDist dist c = dist ↾' (_≥ c)
 
 -- mostStakeDRepDist-homomorphic : ∀ {dist} → Homomorphic₂ _ _ _>_ (_⊆_ on _ˢ) (mostStakeDRepDist dist)
 -- mostStakeDRepDist-homomorphic x>y = impl⇒cores⊆ _ _ {!!} --(<-trans x>y)
@@ -250,14 +238,14 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
   open PParams pparams
 
   activeDReps : ℙ Credential
-  activeDReps = dom $ filterᵐ? (λ x → currentEpoch ≤? (proj₂ x)) dreps
+  activeDReps = dom $ filterᵐ (λ x → currentEpoch ≤ (proj₂ x)) dreps
 
   activeCC : CCData → ℙ Credential
-  activeCC (just (cc , _))  = dom $ filterᵐᵇ (is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
+  activeCC (just (cc , _))  = dom $ filterᵐ (Is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
   activeCC nothing          = ∅
 
   spos : ℙ VDeleg
-  spos = filterˢ isSPOProp $ dom (StakeDistrs.stakeDistr stakeDistrs)
+  spos = filterˢ IsSPO $ dom (stakeDistr stakeDistrs)
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
@@ -271,7 +259,7 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
                                     else constMap (dom cc) Vote.no
 
   roleVotes : GovRole → VDeleg ⇀ Vote
-  roleVotes r = mapKeys (uncurry credVoter) $ filterᵐ? ((r ≟_) ∘ proj₁ ∘ proj₁) votes
+  roleVotes r = mapKeys (uncurry credVoter) $ filterᵐ ((r ≡_) ∘ proj₁ ∘ proj₁) votes
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
   actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.no
@@ -354,9 +342,9 @@ abstract
 \end{code}
 \begin{code}
   getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
-  getStakeDist CC    cc  _                             = constMap (filterˢ isCCProp cc) 1
-  getStakeDist DRep  _   record { stakeDistr = dist }  = filterKeys isDRepProp dist
-  getStakeDist SPO   _   record { stakeDistr = dist }  = filterKeys isSPOProp  dist
+  getStakeDist CC    cc  sd  = constMap (filterˢ IsCC cc) 1
+  getStakeDist DRep  _   sd  = filterKeys IsDRep (sd .stakeDistr)
+  getStakeDist SPO   _   sd  = filterKeys IsSPO  (sd .stakeDistr)
 
   acceptedStakeRatio : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → ℚ
   acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
@@ -370,7 +358,7 @@ abstract
     let open GovActionState gs
         votes'  = actualVotes Γ pparams cc action votes
         t       = maybe id 0ℚ $ threshold pparams (proj₂ <$> cc) action role
-    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ≥ t
+    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ℚ.≥ t
 
   accepted : RatifyEnv → EnactState → GovActionState → Set
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO

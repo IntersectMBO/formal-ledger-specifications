@@ -19,7 +19,11 @@ open import Data.List.Membership.Propositional public
 open import Data.Maybe public
   hiding (_>>=_; align; alignWith; ap; fromMaybe; map; zip; zipWith)
 open import Data.Unit public
-  hiding (_≟_)
+  using (⊤; tt)
+open import Data.Unit.Polymorphic public
+  using ()
+  renaming (⊤ to ⊤↑; tt to tt↑)
+instance Poly-tt = tt↑
 open import Data.Sum public
   hiding (assocʳ; assocˡ; map; map₁; map₂; reduce; swap)
 open import Data.Product public

@@ -54,19 +54,13 @@ private variable
   a : GovAction
   prev : NeedsHash a
   k : ℕ
-
--- could be implemented using a function of type:
---   ∀ {a} {A : Set a} → (A → Maybe A) → List A → List A
-modifyMatch : ∀ {a} {A : Set a} → (A → Bool) → (A → A) → List A → List A
-modifyMatch P f = map (λ x → if P x then f x else x)
 \end{code}
 \emph{Functions used in the GOV rules}
 \begin{code}
 addVote : GovState → GovActionID → GovRole → Credential → Vote → GovState
-addVote s aid r kh v =
-  modifyMatch
-    (λ (x , _) → aid ≡ᵇ x)
-    (λ (gid , s') → gid , record s' { votes = insert (votes s') (r , kh) v }) s
+addVote s aid r kh v = map modifyVotes s
+  where modifyVotes = λ (gid , s') → gid , record s'
+          { votes = gid ≡ aid ？ insert (votes s') (r , kh) v ∶ votes s'}
 
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
