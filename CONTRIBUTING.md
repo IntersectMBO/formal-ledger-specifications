@@ -8,11 +8,11 @@ We also have a separate style guide for formatting the PDF: [PDF style guide](PD
 
 ## Setup with emacs
 
-We use Agda version 2.6.3 and a patched version of the Agda Standard Library; this makes setup more difficult. You can install the correct version of Agda and the stdlib using `nix-env -iA agda -f .`, but this is a global install which you may not want if you also have other Agda projects.
+We use Agda version 2.6.4 and various dependencies. You can install the correct version of Agda and the dependencies using `nix-env -iA agda -f .`, but this is a global install which you may not want if you also have other Agda projects.
 
 To install Agda locally and use that install with emacs, you can do the following:
 
--  Build `agda` and `agda-mode` binaries by invoking the following: `nix-build -A agdaWithDeps -o ~/IOHK/ledger-agda`
+-  Build `agda` and `agda-mode` binaries by invoking the following: `nix-build -A agdaWithDeps -o ~/IOHK/ledger-agda`. You can replace `~/IOHK/ledger-agda` with whatever path you like, just make sure to replace it in `my/agda-versions` below as well.
 
    *Note*. You need not have built/installed Agda prior to invoking this `nix-build` command (though it's okay if you have).
 
@@ -21,19 +21,36 @@ To install Agda locally and use that install with emacs, you can do the followin
 -  Put the following into your init file (highlight and `M-x eval-region` to load it without restarting emacs).
 
    ```
-   (setq my/ledger-agda-name "~/IOHK/ledger-agda")
-   (defun my/toggle-ledger-agda ()
-     (interactive)
-     (if (string-equal agda2-program-name "agda")
-         (setq agda2-version      "2.6.3"
-               agda2-program-name (concat my/ledger-agda-name "/bin/agda"))
-       (setq agda2-version      "2.6.2.2"
-             agda2-program-name "agda"))
+   ;; Defines a function `my/switch-agda' that switches between different
+   ;; `agda' executables defined in `my/agda-versions'. The first entry of
+   ;; `my/agda-versions' is assumed to be the default Agda.
+   ;;
+   ;; If there are two entries in `my/agda-versions', `my/switch-agda' toggles
+   ;; between the two. If there are more entries, it will ask which one
+   ;; to choose.
+
+   (setq my/agda-versions `(("Agda"        "2.6.3" "agda")
+                            ("Ledger Agda" "2.6.4" "~/IOHK/ledger-agda/bin/agda")))
+
+   (setq my/selected-agda (caar my/agda-versions))
+
+   (defun my/switch-agda (name version path)
+     (interactive
+      (cond ((> (length my/agda-versions) 2)
+             (assoc (completing-read "Agda" my/agda-versions '(lambda (x) 't) 't) my/agda-versions))
+            ((= (length my/agda-versions) 2)
+             (car (seq-filter '(lambda (x) (not (string= my/selected-agda (car x)))) my/agda-versions)))
+            (t (error "my/agda-versions needs to have at least two elements!"))))
+     (message "Selecting %s, version %s" name version)
+     (setq my/selected-agda   name
+           agda2-version      version
+           agda2-program-name path)
      (agda2-restart))
-   (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/toggle-ledger-agda))
+
+   (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
    ```
 
-   *Note*. This assumes that your regular install of Agda is in your path with the name `agda` and version `2.6.2.2`, otherwise you'll have to edit these variables.
+   *Note*. This assumes that your regular install of Agda is in your path with the name `agda` and version `2.6.3`, otherwise you'll have to edit `my/agda-versions`.
 
    You can then use `M-x my/toggle-ledger-agda`, or `C-c C-x C-t`, to switch between your regular install of Agda and the locally installed version.
 
