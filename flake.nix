@@ -20,7 +20,7 @@
       jobs = {
         inherit (exposed)
           agda
-          agdaWithStdLibMeta
+          agdaWithDeps
           latex
           formalLedger;
       } //

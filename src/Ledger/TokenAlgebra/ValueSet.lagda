@@ -68,8 +68,8 @@ module _
   ⦃ DecEq-PolicyId  : DecEq PolicyId ⦄
   ⦃ DecEq-AssetName : DecEq AssetName ⦄
   ⦃ DecEq-Tot : DecEq (AssetId ⇒ ℕ) ⦄
-  ⦃ Dec-lookup≤ : ∀ {u v : AssetId ⇒ ℕ}
-      → Dec (∀ {a p q} → lookup u (a , p) ≤ lookup v (a , q)) ⦄
+  (Dec-lookup≤ : ∀ {u v : AssetId ⇒ ℕ}
+    → (∀ {a p q} → lookup u (a , p) ≤ lookup v (a , q)) ⁇)
   where
 
   open ≡-Reasoning

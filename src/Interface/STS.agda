@@ -4,7 +4,7 @@ module Interface.STS where
 
 open import Prelude
 
-open import Interface.Bifunctor
+open import Class.Bifunctor
 
 infix -150 ∙_
 infixr -100 _∙_

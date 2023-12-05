@@ -1,6 +1,7 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_+_; _*_); open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
+open import Ledger.Prelude hiding (_+_; _*_)
+open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
 open import Ledger.Transaction
 
 module Ledger.PPUp.Properties (txs : _) (open TransactionStructure txs) where
@@ -45,6 +46,7 @@ instance
     rewrite dec-yes ¿ Current-Property Γ up ¿ (p₁ , p₂ , p₃ , p₄) .proj₂ = refl
   Computational-PPUP .completeness Γ _ (just up) _ _ | PPUpdateFuture p₁ p₂ p₃ p₄
     with ¿ Current-Property Γ up ¿ | ¿ Future-Property Γ up ¿
-  ... | yes (_ , _ , ¬p₃ , _) | _ = ⊥-elim $ <⇒¬>⊎≈ {A = Slot} ¬p₃ (≤⇔<∨≈ .Equivalence.to p₃)
+  ... | yes (_ , _ , ¬p₃ , _) | _ = ⊥-elim
+                                  $ <⇒¬>⊎≈ {A = Slot} ¬p₃ (≤⇔<∨≈ .Equivalence.to p₃)
   ... | no _ | yes p = refl
   ... | no _ | no ¬p = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄))

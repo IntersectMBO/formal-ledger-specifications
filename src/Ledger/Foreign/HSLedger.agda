@@ -1,6 +1,6 @@
 module Ledger.Foreign.HSLedger where
 
-open import Ledger.Prelude hiding (fromList); open Computational
+open import Ledger.Prelude hiding (fromList; ε); open Computational
 
 open import Data.Rational using (½)
 
@@ -28,8 +28,9 @@ module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀isHashableSet : isHashableSet A
   ∀isHashableSet = mkIsHashableSet A
 
-mkHashable⊥ : {A : Set} → Hashable ⊥ A
-mkHashable⊥ {A} = λ where .hash → ⊥-elim; .hashInj refl → refl
+instance
+  Hashable-⊤ : Hashable ⊤ ℕ
+  Hashable-⊤ = λ where .hash tt → 0; .hashInj _ → refl
 
 module Implementation where
   Network          = ⊤
@@ -47,13 +48,13 @@ module Implementation where
   sign       = _+_
   ScriptHash = ℕ
 
-  P1Script     = ⊥; Hashable-P1Script = mkHashable⊥
+  P1Script     = ⊤
   Data         = ⊤
   Dataʰ        = mkHashableSet Data
   toData : ∀ {A : Set} → A → Data
   toData _ = tt
 
-  PlutusScript = ⊥; Hashable-PlutusScript = mkHashable⊥
+  PlutusScript = ⊤
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ∋ record
     { Carrier = ExUnits
@@ -111,7 +112,6 @@ HSCrypto = record
   HSPKKScheme = record
     { Implementation
     ; isSigned         = λ a b m → a + b ≡ m
-    ; isSigned?        = λ a b m → a + b ≟ m
     ; sign             = _+_
     ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
     }
@@ -132,15 +132,13 @@ HSScriptStructure = record
   HSP1ScriptStructure : P1ScriptStructure
   HSP1ScriptStructure = record
     { Implementation
-    ; validP1Script  = λ _ _ ()
-    ; validP1Script? = λ _ _ ()
+    ; validP1Script = λ _ _ _ → ⊤
     }
 
   HSP2ScriptStructure : PlutusStructure
   HSP2ScriptStructure = record
     { Implementation
-    ; validPlutusScript = λ ()
-    ; validPlutusScript? = λ ()
+    ; validPlutusScript = λ _ _ _ _ → ⊤
     }
 
   postulate

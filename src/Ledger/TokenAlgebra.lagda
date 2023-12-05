@@ -53,7 +53,7 @@ record TokenAlgebra : Set₁ where
 \end{AgdaSuppressSpace}
 \begin{code}[hide]
          ⦃ DecEq-Value ⦄ : DecEq Value
-         ⦃ Dec-≤ᵗ ⦄      : ∀ {v v′} → Dec (v ≤ᵗ v′)
+         ⦃ Dec-≤ᵗ ⦄      : _≤ᵗ_ ⁇²
 
   instance
     addValue : HasAdd Value

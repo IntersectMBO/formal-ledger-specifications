@@ -1,6 +1,6 @@
 module MidnightExample.Types where
 
-open import Prelude
+open import Prelude hiding (dec)
 open import Data.Integer
 
 Hash = ℕ

@@ -63,24 +63,14 @@ private variable
   e : Epoch
   pup pupˢ fpupˢ : ProposedPPUpdates
 
-viablePParams? : Decidable¹ viablePParams
-viablePParams? pp = yes _
-
-pvCanFollow? : ∀ pv pv' → Dec (pvCanFollow pv pv')
-pvCanFollow? (m , n) pv with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
-... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
-                                         canFollowMinor → ¬p₁ refl
-... | no ¬p    | yes refl = yes canFollowMinor
-... | yes refl | no ¬p    = yes canFollowMajor
-... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
-
 instance
-  Dec-pvCanFollow : ∀ {pv pv'} → Dec (pvCanFollow pv pv')
-  Dec-pvCanFollow = pvCanFollow? _ _
-
-isViableUpdate? : ∀ pparams → Decidable¹ (isViableUpdate pparams)
-isViableUpdate? pp pup with applyUpdate pp pup
-... | pp' = pvCanFollow? (PParams.pv pp) (PParams.pv pp') ×-dec viablePParams? pp'
+  Dec-pvCanFollow : pvCanFollow ⁇²
+  Dec-pvCanFollow {(m , n)} {pv} .dec with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
+  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
+                                           canFollowMinor → ¬p₁ refl
+  ... | no ¬p    | yes refl = yes canFollowMinor
+  ... | yes refl | no ¬p    = yes canFollowMajor
+  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
 
 data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → PPUpdateState → Set where
 \end{code}

@@ -88,7 +88,7 @@ module _ (let open Tx; open TxBody) where
   coinPolicies = policies (inject 1)
 
   isAdaOnlyᵇ : Value → Bool
-  isAdaOnlyᵇ v = ⌊ (policies v) ≡ᵉ? coinPolicies ⌋
+  isAdaOnlyᵇ v = ¿ (policies v) ≡ᵉ coinPolicies ¿ᵇ
 
   minfee : PParams → Tx → Coin
   minfee pp tx  = pp .a * tx .body .txsize + pp .b
@@ -207,22 +207,18 @@ record UTxOState : Set where
 ⟦_⟧ = id
 
 instance
-  netId? : ∀ {A : Set} {networkId : Network} {f : A → Network}
-    → Dec₁ (λ a → f a ≡ networkId)
-  netId? {_} {networkId} {f} .Dec₁.P? a = f a ≟ networkId
-
-  Dec-inInterval : {slot : Slot} {I : Maybe Slot × Maybe Slot} → Dec (inInterval slot I)
-  Dec-inInterval {slot} {just x  , just y } with x ≤? slot | slot ≤? y
+  Dec-inInterval : inInterval ⁇²
+  Dec-inInterval {slot} {just x  , just y } .dec with x ≤? slot | slot ≤? y
   ... | no ¬p₁ | _      = no λ where (both (h₁ , h₂)) → ¬p₁ h₁
   ... | yes p₁ | no ¬p₂ = no λ where (both (h₁ , h₂)) → ¬p₂ h₂
   ... | yes p₁ | yes p₂ = yes (both (p₁ , p₂))
-  Dec-inInterval {slot} {just x  , nothing} with x ≤? slot
+  Dec-inInterval {slot} {just x  , nothing} .dec with x ≤? slot
   ... | no ¬p = no  (λ where (lower h) → ¬p h)
   ... | yes p = yes (lower p)
-  Dec-inInterval {slot} {nothing , just x } with slot ≤? x
+  Dec-inInterval {slot} {nothing , just x } .dec with slot ≤? x
   ... | no ¬p = no  (λ where (upper h) → ¬p h)
   ... | yes p = yes (upper p)
-  Dec-inInterval {slot} {nothing , nothing} = yes none
+  Dec-inInterval {slot} {nothing , nothing} .dec = yes none
 
   HasCoin-UTxOState : HasCoin UTxOState
   HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s)
@@ -338,7 +334,7 @@ unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 instance
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
   Computational-UTXO = record {Go}
-    where module Go Γ s tx (let H , H? = UTXO-premises {tx}{Γ}{s}) where
+    where module Go Γ s tx (let H , ⁇ H? = UTXO-premises {tx}{Γ}{s}) where
 
     computeProof = case H? of λ where
       (yes p) → just (-, UTXO-inductive p)

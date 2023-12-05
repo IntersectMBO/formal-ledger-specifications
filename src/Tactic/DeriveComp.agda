@@ -4,28 +4,25 @@ module Tactic.DeriveComp where
 
 open import Prelude
 open import PreludeMeta hiding (TC) renaming (TCI to TC)
+open import MetaPrelude using (zipWithIndex)
+open import Class.Traversable
 
 import Data.List.NonEmpty as NE
 open import Data.Maybe.Properties using (just-injective)
 
-open import Class.Show.Core; open import Class.Show.Instances
-open import Interface.Monad.Instance
 open import Interface.ComputationalRelation
-open import Interface.DecEq.Ext
-open import Interface.Decidable.Instance
 open import Interface.HasAdd; open import Interface.HasAdd.Instance
 open import Interface.HasSubtract; open import Interface.HasSubtract.Instance
 
 open import Reflection.Ext using (extendContextTel′)
 open import Tactic.ClauseBuilder
-open import Tactic.Helpers
 open import Tactic.ReduceDec
+open import MyDebugOptions
 
 pattern ``yes x = quote _because_ ◇⟦ quote true ◇  ∣ quote ofʸ ◇⟦ x ⟧ ⟧
 pattern ``no x  = quote _because_ ◇⟦ quote false ◇ ∣ quote ofⁿ ◇⟦ x ⟧ ⟧
 
-instance
-  _ = ContextMonad-MonadTC
+instance _ = ContextMonad-MonadTC
 
 record STSConstr : Set where
   field
@@ -40,12 +37,12 @@ record STSConstr : Set where
 conOrVarToPattern : ℕ → Term → Maybe Pattern
 conOrVarToPattern k (♯ v) = just (Pattern.var (v - k))
 conOrVarToPattern k (con c args) =
-  Pattern.con c <$> (sequenceList $ conOrVarToPattern′ k args)
+  Pattern.con c <$> (sequence $ conOrVarToPattern′ k args)
   where
     conOrVarToPattern′ : ℕ → List (Arg Term) → List (Maybe (Arg Pattern))
     conOrVarToPattern′ k = λ where
       [] → []
-      ((arg i x) ∷ l) → arg i <$> conOrVarToPattern k x ∷ conOrVarToPattern′ k l
+      ((arg i x) ∷ l) → (arg i <$> conOrVarToPattern k x) ∷ conOrVarToPattern′ k l
 conOrVarToPattern _ _ = nothing
 
 isArg : (a : Abs (Arg Term)) → Dec _
@@ -77,7 +74,7 @@ errorIfNothing nothing s = error1 s
 getSTSConstrs : Name → TC (List STSConstr)
 getSTSConstrs n = inDebugPath "getSTSConstrs" do
   dataDef ← getDataDef n
-  res ← traverseList toSTSConstr (DataDef.constructors dataDef)
+  res ← traverse toSTSConstr (DataDef.constructors dataDef)
   debugLogᵐ (res ᵛⁿ ∷ᵈᵐ []ᵐ)
   return res
 
@@ -212,8 +209,6 @@ module _ ⦃ _ : DebugOptions ⦄ where
       extendContextTel′ isoCxt $ λ _ → derive⇔ n stsConstrs iso
 
 -- private module _ {A B : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
---   open import MyDebugOptions
-
 --   variable
 --     c : A × B
 --     s s' : A

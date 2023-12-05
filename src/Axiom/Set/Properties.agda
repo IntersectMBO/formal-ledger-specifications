@@ -5,7 +5,7 @@ open import Axiom.Set using (Theory)
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
 
-open import Prelude hiding (isEquivalence; trans; filter)
+open import Prelude hiding (isEquivalence; trans; filter; map)
 open Theory th
 
 import Data.List
@@ -20,7 +20,7 @@ open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
-open import Interface.DecEq using (DecEq; _≟_)
+open import Class.DecEq using (DecEq; _≟_)
 open import Relation.Binary
 open import Relation.Binary.Lattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)

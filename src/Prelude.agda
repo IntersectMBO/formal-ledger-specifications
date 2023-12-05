@@ -37,9 +37,25 @@ open import Relation.Nullary public
 open import Relation.Nullary.Negation public
 open import Relation.Nullary.Decidable public
   using (Dec; yes; no; dec-yes; dec-no; ⌊_⌋; ¬?; toWitness; fromWitness)
+  renaming (map′ to mapDec)
 open import Relation.Unary public
   using (Pred) renaming (Decidable to Decidable¹)
 open import Relation.Binary public
   using () renaming (Decidable to Decidable²)
 open import Relation.Binary.PropositionalEquality public
-  hiding (preorder; isPreorder; setoid; [_]; module ≡-Reasoning)
+  hiding (preorder; isPreorder; setoid; [_])
+
+open import Class.Core public
+  using (Type↑)
+open import Class.Functor public
+  renaming (fmap to map)
+open import Class.Bifunctor public
+open import Class.Semigroup public
+open import Class.Monoid public
+open import Class.Applicative public
+open import Class.Monad public
+open import Class.DecEq public; instance DecEq-×′ = DecEq-×
+open import Class.Decidable public
+∃⁇ : ∀ {ℓ} → Set (sucˡ ℓ)
+∃⁇ {ℓ} = Σ (Set ℓ) _⁇
+open import Class.Show public

@@ -33,7 +33,7 @@ instance
       (Γ : LEnv)   (let ⟦ slot , ppolicy , pparams ⟧ˡᵉ = Γ)
       (s : LState) (let ⟦ utxoSt , govSt , certSt ⟧ˡ = s)
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
-      (let H? = λ {certSt'} → LEDGER-premises {tx}{certSt'} .proj₂)
+      (let H? = λ {certSt'} → LEDGER-premises {tx}{certSt'} .proj₂ .dec)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
@@ -47,7 +47,6 @@ instance
         case H? {certSt'} of λ where
           (yes h) → just (_ , LEDGER⋯ utxoStep certStep govStep h)
           (no _)  → nothing
-        where open import Data.Maybe hiding (map)
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ just s'
       completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ

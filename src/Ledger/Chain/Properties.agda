@@ -1,11 +1,8 @@
 {-# OPTIONS --safe #-}
 
-open import Data.Nat.Properties hiding (_≟_)
-
 open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract
-import Data.Maybe
 
 module Ledger.Chain.Properties
   (txs : _) (open TransactionStructure txs)
@@ -51,10 +48,9 @@ instance
 
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_
   Computational-CHAIN .computeProof Γ s b = do
-    _ , neStep ← computeProof _ _ _
+    _ , neStep ← computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
     _ , lsStep ← computeProof _ _ _
     just (_ , CHAIN neStep lsStep)
-    where open Data.Maybe using (_>>=_)
   Computational-CHAIN .completeness Γ s b s' (CHAIN neStep lsStep)
     with recomputeProof neStep | completeness _ _ _ _ neStep
   ... | _      | refl

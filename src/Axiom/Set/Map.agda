@@ -13,22 +13,22 @@ open import Axiom.Set.Properties th
 
 open import Prelude hiding (filter)
 
-open import Data.Product using (map₁)
-open import Data.Sum using (map₂)
+import Data.Sum as ⊎
 open import Data.List.Ext.Properties using (AllPairs⇒≡∨R∨Rᵒᵖ)
 open import Data.Product.Ext using (×-dup)
 open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
 open import Data.Maybe.Properties using (just-injective)
-open import Interface.DecEq using (DecEq; _≟_)
 open import Relation.Unary using (Decidable)
 import Relation.Binary.PropositionalEquality as I
 
 open Equivalence
 
+open import Class.DecEq using (DecEq; _≟_)
+
+open import Reflection.Tactic using (initTac)
 open import Tactic.AnyOf
 open import Tactic.Assumption
 open import Tactic.Defaults
-open import Tactic.Helpers
 open import Tactic.ByEq
 
 -- Because of missing macro hygiene, we have to copy&paste this.
@@ -164,8 +164,8 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
 
   disjoint-∪ˡ-∪ : (H : disjoint (dom R) (dom R')) → R ∪ˡ' R' ≡ᵉ R ∪ R'
   disjoint-∪ˡ-∪ disj = from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔
-    (∈-∪⁺ ∘′ map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
-    (∈⇔P ∘′ map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
+    (∈-∪⁺ ∘′ ⊎.map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
+    (∈⇔P ∘′ ⊎.map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
 
   insert : Map A B → A → B → Map A B
   insert m a b = ❴ a , b ❵ᵐ ∪ˡ m
@@ -324,9 +324,9 @@ module Lookupᵐ (sp-∈ : spec-∈ A) where
     lookupᵐ : {@(tactic initTac assumption') _ : x ∈ dom (m ˢ)} → B
     lookupᵐ {h} = proj₁ (to dom∈ h)
 
-    lookupᵐ? : ⦃ Dec (x ∈ dom (m ˢ)) ⦄ → Maybe B
-    lookupᵐ? ⦃ no ¬p ⦄ = nothing
-    lookupᵐ? ⦃ yes p ⦄ = just lookupᵐ
+    lookupᵐ? : ⦃ (x ∈ dom (m ˢ)) ⁇ ⦄ → Maybe B
+    lookupᵐ? ⦃ ⁇ no  _ ⦄ = nothing
+    lookupᵐ? ⦃ ⁇ yes _ ⦄ = just lookupᵐ
 
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈
