@@ -9,6 +9,8 @@ open import Ledger.GovStructure
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs
+open import Relation.Nullary.Reflects using (invert)
+open import Relation.Nullary.Decidable.Core using (From-no; fromWitnessFalse )
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
