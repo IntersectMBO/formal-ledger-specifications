@@ -36,6 +36,12 @@ connects : List (GovActionID × GovActionID) → GovActionID → GovActionID →
 connects [] aid₁ aid₂ = aid₁ ≡ aid₂
 connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
 
+-- _∧_ = _×_
+
+connects? : List (GovActionID × GovActionID) → GovActionID → GovActionID → Bool
+connects? [] aid₁ aid₂ = aid₁ == aid₂
+connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ = (connects? s aid₁ a₁) ∧ (a₂ == aid₂)
+
 {- original definitions (by @WhatisRT)
 enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID × GovActionID) → Set
 enactable e (aid , as) s = case getHashES e (GovActionState.action as) of λ where
@@ -53,23 +59,18 @@ allEnactable? e s = {!!}
 -}
 
 {- verbose definitions and scratch work (by @williamdemeo) ---------------------------------}
-_⋀_ = _×_
 
 enactable : EnactState → GovActionID → GovActionState → ℙ (GovActionID × GovActionID) → Set
-enactable eState aid aState aidPairSet =
-  case getHashES eState (GovActionState.action aState) of λ where
+enactable eState aid (record { action = actn }) aidPairs =
+  case getHashES eState actn of λ where
   nothing      → ⊤
-  (just aid')  → ∃[ aidPairList ] (fromList aidPairList ⊆ aidPairSet) ⋀ (connects aidPairList aid' aid)
+  (just aid')  → ∃[ aidPairList ] (fromList aidPairList ⊆ aidPairs) × (connects aidPairList aid' aid)
   -- example: the proof ([] , p , refl) works if aid' ≡ aid)
 
 -- aidPairSet takes a list of (aid, aState) : (GovActionID × GovActionState) pairs and converts it
 -- to a set of hashes of the corresponding pairs (aid, prevAction aState).
 aidPairSet : GovState → ℙ (GovActionID × GovActionID)
 aidPairSet aid×stateList = let open GovActionState in
-  -- mapPartial : (A → Maybe B) → Set A → Set B
-  -- getHash : ∀ {a} → NeedsHash a → Maybe GovActionID
-  -- getHash is a functor: _<$>_ : (A → B) → getHash A → getHash B, so if
-  --                       f : A → B, then f <$> getHash a yeilds getHash (f a)
   mapPartial ( λ ((aid , aState) : GovActionID × GovActionState)
                →     (λ (s : GovActionID) → (aid , s)) <$> getHash (prevAction aState) )
 
