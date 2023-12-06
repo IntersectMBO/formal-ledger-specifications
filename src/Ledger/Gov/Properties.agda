@@ -43,30 +43,33 @@ private
   hasPrev record { action = Info }                  v = no λ ()
 
   instance
-    validHFAction? : ∀ {p s} → validHFAction p s ⁇
+    validHFAction? : ∀ {p s e} → validHFAction p s e ⁇
     validHFAction? {record { action = NoConfidence }} = Dec-⊤
     validHFAction? {record { action = NewCommittee _ _ _ }} = Dec-⊤
     validHFAction? {record { action = NewConstitution _ _ }} = Dec-⊤
-    validHFAction? {record { action = TriggerHF v ; prevAction = prev }} {s}
-      with any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
-    ... | yes p with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p = ⁇ yes
-      (x , v , to ∈-fromList x∈xs , h)
-    ... | no ¬p = ⁇ no λ { (s , v , (h₁ , h₂ , h₃)) →
-      ¬p $ ∃∈-Any ((prev , s) , (from ∈-fromList h₁ , refl , (v , h₂ , h₃))) }
+    validHFAction? {record { action = TriggerHF v ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
+      with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
+    ... | yes p | _ = ⁇ yes (inj₁ p)
+    ... | no _ | yes p with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p = ⁇ yes (inj₂
+      (x , v , to ∈-fromList x∈xs , h))
+    ... | no ¬p₁ | no ¬p₂ = ⁇ no λ
+      { (inj₁ x) → ¬p₁ x
+      ; (inj₂ (s , v , (h₁ , h₂ , h₃))) → ¬p₂ $
+        ∃∈-Any ((prev , s) , (from ∈-fromList h₁ , refl , (v , h₂ , h₃))) }
     validHFAction? {record { action = ChangePParams _ }} = Dec-⊤
     validHFAction? {record { action = TreasuryWdrl _ }} = Dec-⊤
     validHFAction? {record { action = Info }} = Dec-⊤
 
 instance
   Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_
-  Computational-GOV' .computeProof (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) =
+  Computational-GOV' .computeProof (⟦ _ , _ , pparams , _ ⟧ᵍ , k) s (inj₁ record { gid = aid ; role = role }) =
     case lookupActionId pparams role aid s of λ where
       (yes p) →
         case Any↔ .from p of λ where
           (_ , mem , refl , cV) → just (_ , GOV-Vote (∈-fromList .to mem) cV)
       (no _)  → nothing
-  Computational-GOV' .computeProof (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ prop@(record { action = a ; deposit = d })) =
-    case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s ¿
+  Computational-GOV' .computeProof (⟦ _ , epoch , pparams , e ⟧ᵍ , k) s (inj₂ prop@(record { action = a ; deposit = d })) =
+    case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e ¿
          ,′ isNewCommittee a of λ where
       (yes (wf , dep , vHFA) , yes (new , rem , q , refl)) →
         case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
@@ -74,13 +77,13 @@ instance
           (no _)      → nothing
       (yes (wf , dep , vHFA) , no notNewComm) → just (_ , GOV-Propose wf dep (λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm))) vHFA)
       _ → nothing
-  Computational-GOV' .completeness (⟦ _ , _ , pparams ⟧ᵗ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
+  Computational-GOV' .completeness (⟦ _ , _ , pparams , _ ⟧ᵍ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
     with lookupActionId pparams role aid s
   ... | no ¬p = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
   ... | yes p with Any↔ .from p
   ...   | (_ , mem , refl , cV) = refl
-  Computational-GOV' .completeness (⟦ _ , epoch , pparams ⟧ᵗ , k) s (inj₂ prop@(record { action = a ; deposit = d })) s' (GOV-Propose wf dep newOk vHFA)
-    with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s ¿ | isNewCommittee a
+  Computational-GOV' .completeness (⟦ _ , epoch , pparams , e ⟧ᵍ , k) s (inj₂ prop@(record { action = a ; deposit = d })) s' (GOV-Propose wf dep newOk vHFA)
+    with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e ¿ | isNewCommittee a
   ... | no ¬p | _ = ⊥-elim (¬p (wf , dep , vHFA))
   ... | yes _ | no notNewComm = refl
   ... | yes _ | yes (new , rem , q , refl)

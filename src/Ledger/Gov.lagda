@@ -24,10 +24,11 @@ GovState : Set
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Set where
-  constructor ⟦_,_,_⟧ᵗ
-  field txid     : TxId
-        epoch    : Epoch
-        pparams  : PParams
+  constructor ⟦_,_,_,_⟧ᵍ
+  field txid        : TxId
+        epoch       : Epoch
+        pparams     : PParams
+        enactState  : EnactState
 \end{code}
 \emph{Transition relation types}
 \begin{code}[hide]
@@ -73,10 +74,11 @@ addAction : GovState
 addAction s e aid addr a prev = s ∷ʳ (aid , record
   { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
-validHFAction : GovProposal → GovState → Set
-validHFAction (record { action = TriggerHF v ; prevAction = prev }) s =
-  ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
-validHFAction _ _ = ⊤
+validHFAction : GovProposal → GovState → EnactState → Set
+validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
+  (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
+  ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
+validHFAction _ _ _ = ⊤
 \end{code}
 \caption{Types and functions used in the GOV transition system\protect\footnotemark}
 \label{defs:gov-defs}
@@ -131,7 +133,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     →  d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q
         → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
-    →  validHFAction prop s
+    →  validHFAction prop s enactState
     ───────────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
