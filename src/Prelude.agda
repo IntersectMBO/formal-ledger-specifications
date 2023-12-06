@@ -25,7 +25,7 @@ open import Data.Sum public
 open import Data.Product public
   hiding (assocʳ; assocˡ; map; map₁; map₂; map₂′; swap; _<*>_)
 open import Data.Nat public
-  hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_; _≡ᵇ_)
+  hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_; _≡ᵇ_; less-than-or-equal)
   renaming (_+_ to _+ℕ_)
 open import Data.Integer as ℤ public
   using (ℤ; _⊖_)
@@ -59,3 +59,10 @@ open import Class.Decidable public
 ∃⁇ : ∀ {ℓ} → Set (sucˡ ℓ)
 ∃⁇ {ℓ} = Σ (Set ℓ) _⁇
 open import Class.Show public
+
+∃₂-syntax : ∀ {a b c} {A : Set a} {B : Set b}
+     (C : A → B → Set c) → Set _
+∃₂-syntax C = ∃ λ a → ∃ λ b → C a b
+
+infix 2 ∃₂-syntax
+syntax ∃₂-syntax (λ x y → C) = ∃₂[ x , y ] C

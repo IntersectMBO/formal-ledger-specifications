@@ -6,6 +6,8 @@ such as minimum fees, maximum and minimum sizes of certain components, and more.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
+open import Data.Product.Properties
+open import Data.Nat.Properties using (m+1+n≢m)
 open import Data.Rational using (ℚ)
 open import Relation.Nullary.Decidable
 
@@ -22,6 +24,9 @@ module Ledger.PParams
   (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
   where
 
+private variable
+  m n : ℕ
+
 record Acnt : Set where
   field treasury reserves : Coin
 \end{code}
@@ -30,6 +35,10 @@ record Acnt : Set where
 \begin{code}
 ProtVer : Set
 ProtVer = ℕ × ℕ
+
+data pvCanFollow : ProtVer → ProtVer → Set where
+  canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
+  canFollowMinor : pvCanFollow (m , n) (m , n + 1)
 
 data PParamGroup : Set where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup : PParamGroup
@@ -129,6 +138,15 @@ instance
     ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
   unquoteDecl DecEq-PParams        = derive-DecEq
     ((quote PParams , DecEq-PParams) ∷ [])
+
+instance
+  pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
+  pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
+  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
+                                           canFollowMinor → ¬p₁ refl
+  ... | no ¬p    | yes refl = yes canFollowMinor
+  ... | yes refl | no ¬p    = yes canFollowMajor
+  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
 
 record PParamsDiff : Set₁ where
   field UpdateT : Set

@@ -29,10 +29,11 @@ defined transition systems.
 \begin{figure*}[h]
 \begin{code}
 record LEnv : Set where
-  constructor ⟦_,_,_⟧ˡᵉ
-  field slot     : Slot
-        ppolicy  : Maybe ScriptHash
-        pparams  : PParams
+  constructor ⟦_,_,_,_⟧ˡᵉ
+  field slot        : Slot
+        ppolicy     : Maybe ScriptHash
+        pparams     : PParams
+        enactState  : EnactState
 
 record LState : Set where
   constructor ⟦_,_,_⟧ˡ
@@ -79,7 +80,7 @@ data
   LEDGER : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams ⟧ᵗ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  ⟦ txid , epoch slot , pparams , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
     ∙  mapˢ stake (dom txwdrls) ⊆ dom (certState' .dState .voteDelegs)
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
