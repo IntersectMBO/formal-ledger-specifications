@@ -17,6 +17,7 @@ record PoolParams : Set where
 
 data DCert : Set where
   delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
+  dereg       : Credential → DCert
   regpool     : Credential → PoolParams → DCert
   retirepool  : Credential → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
@@ -35,7 +36,7 @@ record DState : Set where
   field
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ Credential
-    rewards      : RwdAddr ⇀ Coin
+    rewards      : Credential ⇀ Coin
 
 record PState : Set where
   constructor ⟦_,_⟧ᵖ
@@ -74,7 +75,7 @@ private variable
   sDelegs : Credential ⇀ Credential
   retiring retiring' : Credential ⇀ Epoch
   ccKeys : Credential ⇀ Maybe Credential
-  rwds : RwdAddr ⇀ Coin
+  rwds : Credential ⇀ Coin
   dCert : DCert
   c c' : Credential
   mc : Maybe Credential
@@ -98,15 +99,12 @@ module _ (open PParams) where
 \begin{code}
   cwitness : DCert → Credential
   cwitness (delegate c _ _ _)  = c
+  cwitness (dereg c)           = c
   cwitness (regpool c _)       = c
   cwitness (retirepool c _)    = c
   cwitness (regdrep c _ _)     = c
   cwitness (deregdrep c)       = c
   cwitness (ccreghot c _)      = c
-
-  requiredDeposit : {A : Set} → PParams → Maybe A → Coin
-  requiredDeposit pp (just _)  = pp .poolDeposit
-  requiredDeposit pp nothing   = 0
 
   getDRepVote : GovVote → Maybe Credential
   getDRepVote record { role = DRep ; credential = credential }  = just credential
@@ -119,11 +117,18 @@ module _ (open PParams) where
 \begin{code}
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
   DELEG-delegate :
-    d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc
+    (c ∉ dom rwds → d ≡ pp .PParams.poolDeposit)
+    → (c ∈ dom rwds → d ≡ 0)
     → mc ∈ mapˢ just (dom pools)
     ────────────────────────────────
     ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-                        ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ⟧ᵈ
+                        ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+
+  DELEG-dereg :
+    (c , 0) ∈ rwds
+    ────────────────────────────────
+    ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c ,DELEG⦈
+                        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool : let open PParams pp ; open PoolParams poolParams in
@@ -153,7 +158,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → S
     (c , nothing) ∉ ccKeys
     ────────────────────────────────
     Γ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈
-         ⟦ dReps , singletonᵐ c mc ∪ˡ ccKeys ⟧ᵛ
+         ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
 \caption{Auxiliary DELEG and POOL rules}
 \end{figure*}
@@ -180,13 +185,14 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
   CERT-base :
     let open PParams pp; open CertState st; open GState gState; open DState dState
         refresh = mapPartial getDRepVote (fromList vs)
-    in mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs
-    → wdrls ˢ ⊆ rewards ˢ
+        wdrlCreds = mapˢ RwdAddr.stake (dom wdrls)
+    in wdrlCreds ⊆ dom voteDelegs
+    → mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ
     ────────────────────────────────
     ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ st ⇀⦇ _ ,CERTBASE⦈ record st
       { gState = record gState
         { dreps = mapValueRestricted (const (e + drepActivity)) dreps refresh }
-      ; dState = record dState { rewards = constMap (dom wdrls) 0 ∪ˡ rewards } }
+      ; dState = record dState { rewards = constMap wdrlCreds 0 ∪ˡ rewards } }
 
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
