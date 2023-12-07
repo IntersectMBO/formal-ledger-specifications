@@ -34,13 +34,6 @@ connects : List (GovActionID × GovActionID) → GovActionID → GovActionID →
 connects [] aid₁ aid₂ = aid₁ ≡ aid₂
 connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
 
-connects? : (l : List (GovActionID × GovActionID))(aid aid' : GovActionID) → Dec(connects l aid aid')
-connects? [] = _≟_
-connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects? s aid₁ a₁
-...| yes p  | yes q  = yes (q , p)
-...| _      | no ¬q  = no λ (q , _) → ¬q q
-...| no ¬p  | _      = no λ (_ , p) → ¬p p
-
 enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID × GovActionID) → Set
 enactable eState (aid , record { action = actn }) aidPairs =
   case getHashES eState actn of λ where
@@ -52,16 +45,23 @@ aidPairSet aid×stateList =
   mapPartial (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ fromList aid×stateList
   where open GovActionState
 
-enactable? : ∀ x y z → Dec(enactable x y z)
-enactable? eState (aid , record { action = actn} ) aidPairs with getHashES eState actn
-...| nothing = yes tt
-...| (just aid')  with any? (λ as → all? (_∈? aidPairs) ×-dec (connects? as aid' aid)) {!!}
-...               | yes (pairs , _ , prsConx) = yes (pairs , prsConx)
-...               | no ¬p = no λ (x , y , z) → ¬p (x , {!!} , y , z)
-
 allEnactable : EnactState → GovState → Set
 allEnactable eState aid×states =
   ∀[ (aid , aState) ∈ fromList aid×states ] enactable eState (aid , aState) (aidPairSet aid×states)
+
+connects? : (l : List (GovActionID × GovActionID))(aid aid' : GovActionID) → Dec(connects l aid aid')
+connects? [] = _≟_
+connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects? s aid₁ a₁
+...| yes p  | yes q  = yes (q , p)
+...| _      | no ¬q  = no λ (q , _) → ¬q q
+...| no ¬p  | _      = no λ (_ , p) → ¬p p
+
+enactable? : ∀ x y z → Dec(enactable x y z)
+enactable? eState (aid , record { action = actn} ) aidPairs with getHashES eState actn
+...| nothing = yes tt
+...| (just aid')  with any? (λ as → all? (_∈? aidPairs){X = fromList as} ×-dec (connects? as aid' aid)) {!!}
+...               | yes (prs , _ , prsConx) = yes (prs , prsConx)
+...               | no ¬p = no λ (x , y , z) → ¬p (x , {!!} , y , z)
 
 allEnactable? : ∀ eState aid×stateList → Dec (allEnactable eState aid×stateList)
 allEnactable? eState aid×stateList = all? λ pr → enactable? eState pr (aidPairSet aid×stateList)
