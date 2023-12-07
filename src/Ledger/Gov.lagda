@@ -57,8 +57,17 @@ connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects?
 ...| no ¬p  | _      = no λ (_ , p) → ¬p p
 
 -- TODO: convert a subset S of GovActionID × GovActionID to the set of all of lists of elements in S.
+allSublists' : List (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
+allSublists' [] = ∅
+allSublists' (x ∷ xs) = proj₁ (binary-unions {X = fullList}{X' = headAndTail})
+  where
+  fullList : ℙ List (GovActionID × GovActionID)
+  fullList = singleton (x ∷ xs)
+  headAndTail : ℙ List (GovActionID × GovActionID)
+  headAndTail = proj₁ (binary-unions {X = singleton [ x ]}{X' = allSublists' xs})
+
 allSublists : ℙ (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
-allSublists = {!!}
+allSublists a = {!allSublists' (proj₁ (replacement (λ x → [ x ]) a))!}
 
 -- TODO: show that every list of elements in aidPairs belongs to the collection of lists returned by `allSublists aidPiars`.
 allSublistsLemma :  {aidPairs : ℙ (GovActionID × GovActionID)}
