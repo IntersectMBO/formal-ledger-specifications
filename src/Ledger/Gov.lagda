@@ -3,33 +3,12 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-import Data.List.Membership.Propositional as P
-open import Data.List.Membership.Propositional.Properties
--- open import Data.List.Relation.Unary.Any renaming (map to mapᵘ)
-
-open import Ledger.Prelude -- hiding (Any; any?)
+open import Ledger.Prelude
 open import Ledger.GovStructure
-
--- open import Ledger.Prelude hiding (yes; no)
--- open import Ledger.GovStructure
 
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
--- open import Ledger.Gov gs
 open import Ledger.GovernanceActions gs hiding (yes; no)
-
-open Computational ⦃...⦄
-open Equivalence
--- open GovActionState
-open Inverse
-
-
--- open import Ledger.GovernanceActions gs hiding (yes; no)
-open import Data.Fin hiding (_<_ ; _≟_)
-open import Relation.Nullary.Reflects using (invert)
-open import Relation.Nullary.Decidable.Core using (From-no; fromWitnessFalse; yes; no )
-open Computational ⦃...⦄
-open _⁇
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -50,27 +29,6 @@ record GovEnv : Set where
         epoch    : Epoch
         pparams  : PParams
 
-{- original definitions (by @WhatisRT)
-
-connects : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
-connects [] aid₁ aid₂ = aid₁ ≡ aid₂
-connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
-
-enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID × GovActionID) → Set
-enactable e (aid , as) s = case getHashES e (GovActionState.action as) of λ where
-  nothing → ⊤
-  (just aid') → ∃[ t ] (fromList t ⊆ s × connects t aid' aid)
-
-allEnactable : EnactState → GovState → Set
-allEnactable e s = ∀[ p ∈ fromList s ] enactable e p s'
-  where
-    s' : ℙ (GovActionID × GovActionID)
-    s' = mapPartial (λ (aid , as) → (aid ,_) <$> getHash (GovActionState.prevAction as)) $ fromList s
-
-allEnactable? : ∀ e s → Dec (allEnactable e s)
-allEnactable? e s = {!!}
--}
-
 connects : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
 connects [] aid₁ aid₂ = aid₁ ≡ aid₂
 connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
@@ -78,9 +36,9 @@ connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ �
 connects? : (l : List (GovActionID × GovActionID))(aid aid' : GovActionID) → Dec(connects l aid aid')
 connects? [] = _≟_
 connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects? s aid₁ a₁
-...| yes p | yes q = true because ofʸ (q , p)
-...| _ | no ¬q = false because ofⁿ λ (q , _) → ¬q q
-...| no ¬p | _ = false because ofⁿ λ (_ , p) → ¬p p
+...| yes p  | yes q  = yes (q , p)
+...| _      | no ¬q  = no λ (q , _) → ¬q q
+...| no ¬p  | _      = no λ (_ , p) → ¬p p
 
 enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID × GovActionID) → Set
 enactable eState (aid , record { action = actn }) aidPairs =
@@ -191,59 +149,3 @@ _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}
 \end{figure*}
-
-
-
-
-Π : (ℕ → Bool) → ℕ → Bool
-Π P zero = P 0
-Π P (suc n) = P (suc n) ∧ Π P n
-
--- If we can decide A and B then we can decide their product
--- infixr 2 _×-reflects_
--- _×-reflects_ : ∀ {a b} → Reflects A a → Reflects B b →
---                Reflects (A × B) (a ∧ b)
--- ofʸ  a ×-reflects ofʸ  b = ofʸ (a , b)
--- ofʸ  a ×-reflects ofⁿ ¬b = ofⁿ (¬b ∘ proj₂)
--- ofⁿ ¬a ×-reflects _      = ofⁿ (¬a ∘ proj₁)
-
--- Π-reflects : (P : ℕ → Bool) → ((n : ℕ)(a : Bool) → Reflects (P n) a) → (a : Bool) → Reflects (∀ n → P n) a
--- Π-reflects = ?
-
--- lemma1 : ∀ {ℓ : Level} (P : Pred ℕ ℓ) → (∀ x → Dec(P x)) → (N : ℕ) → Dec(∀ n → n < N → P n)
--- does  (lemma1 P ∀xPx? N) = Π (λ n → does (∀xPx? n)) N
--- proof (lemma1 P ∀xPx? N) = proof ((Π (λ n → does (∀xPx? n)) N) because proof (lemma1 P ∀xPx? N))
-
-lemma1 : ∀ {ℓ : Level} (P : Pred ℕ ℓ) → (∀ n → Dec(P n)) → (n : ℕ) → Dec(P n)
-lemma1 P ∀nDecP = ∀nDecP
-
-lemma01 : ∀ {ℓ : Level} (P : Pred ℕ ℓ) → (∀ n → Dec(P n)) → Dec(P 0 × P 1)
-lemma01 P ∀nDecP = (∀nDecP 0) ×-dec (∀nDecP 1)
--- does  (lemma1 P ∀xPx? n) = does (∀xPx? n)
--- proof (lemma1 P ∀xPx? n) = proof (∀xPx? n)
-
--- _×-dec_ : Dec A → Dec B → Dec (A × B)
--- does  (a? ×-dec b?) = does a? ∧ does b?
--- proof (a? ×-dec b?) = proof a? ×-reflects proof b?
--- open Fin renaming (zero to 0Fin)
--- X-dec : (n : ℕ)(𝒜 : Fin n → Set) → (∀ k → Dec(𝒜 k)) → Dec(∀ k → 𝒜 k)
--- does (X-dec 0 𝒜 x) = does (x {!0Fin!})
--- does (X-dec (suc n) 𝒜 x) = {!!}
--- proof (X-dec n 𝒜 x) = {!!}
-
--- lemma2 : ∀ {ℓ : Level} {A : Set ℓ}{P : Pred A ℓ} → Dec(∀ x → P x) → (∀ x → Dec(P x))
--- lemma2 (false because ofⁿ ¬p) = {!!}
--- lemma2 (true because p) x = true because ofʸ ((invert p) x)
-
-
-
-
--- mapPartial : (A → Maybe B) → ℙ A → ℙ B
---
--- If  A = GovActionID × GovActionState and
---     B = GovActionID × GovActionID,
---
--- then mapPartial takes
--- -  1. a function from GovActionID × GovActionState to Maybe (GovActionID × GovActionID),
--- -  2. a subset of GovActionID × GovActionState, namely, (fromList aid×stateListpair),
--- and returns a subset of GovActionID × GovActionID.
