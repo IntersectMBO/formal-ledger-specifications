@@ -4,11 +4,13 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
+open import Data.List renaming (map to lmap)
 open import Ledger.GovStructure
-
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
+open import Level using (Level)
+private variable ℓ : Level
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -45,6 +47,11 @@ aidPairSet aid×stateList =
   mapPartial (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ fromList aid×stateList
   where open GovActionState
 
+-- TODO: show the set returned by aidPairSet is finite
+aidPairSetIsFinite : ∀{x} → finite (aidPairSet x)
+aidPairSetIsFinite {[]} = [] , λ {a} → mk⇔ {!!} {!!}
+aidPairSetIsFinite {x ∷ xs} = {!!}
+
 allEnactable : EnactState → GovState → Set
 allEnactable eState aid×states =
   ∀[ (aid , aState) ∈ fromList aid×states ] enactable eState (aid , aState) (aidPairSet aid×states)
@@ -56,36 +63,52 @@ connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects?
 ...| _      | no ¬q  = no λ (q , _) → ¬q q
 ...| no ¬p  | _      = no λ (_ , p) → ¬p p
 
--- TODO: convert a subset S of GovActionID × GovActionID to the set of all of lists of elements in S.
-allSublists' : List (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
-allSublists' [] = ∅
-allSublists' (x ∷ xs) = proj₁ (binary-unions {X = fullList}{X' = headAndTail})
-  where
-  fullList : ℙ List (GovActionID × GovActionID)
-  fullList = singleton (x ∷ xs)
-  headAndTail : ℙ List (GovActionID × GovActionID)
-  headAndTail = proj₁ (binary-unions {X = singleton [ x ]}{X' = allSublists' xs})
 
-allSublists : ℙ (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
-allSublists a = {!allSublists' (proj₁ (replacement (λ x → [ x ]) a))!}
+asList[_∣_] : (S : ℙ (GovActionID × GovActionID)) → finite S
+ →       List (GovActionID × GovActionID)
+asList[ S ∣ (l , _) ] = l
 
--- TODO: show that every list of elements in aidPairs belongs to the collection of lists returned by `allSublists aidPiars`.
-allSublistsLemma :  {aidPairs : ℙ (GovActionID × GovActionID)}
+-- insert a at every position of the input list
+_inserts_ : ∀{A : Set ℓ} → List A → A → List (List A)
+[] inserts a = (a ∷ []) ∷ []
+(x ∷ xs) inserts a = (a ∷ (x ∷ xs)) ∷ (lmap (λ l → x ∷ l) (xs inserts a))
+
+-- insert a at every position of every input list
+foreach_inserts_ : ∀{A : Set ℓ} → List (List A) → A → List (List A)
+foreach [] inserts a = [] inserts a
+foreach (l ∷ []) inserts a = l inserts a
+foreach (l ∷ ls) inserts a = (l inserts a) ++ (foreach ls inserts a)
+
+permutations : ∀{A : Set ℓ} → List A → List (List A)
+permutations [] = []
+permutations (x ∷ xs) = foreach (permutations xs) inserts x
+
+asSingletonLists : ℙ (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
+asSingletonLists a = proj₁ (replacement (λ x → [ x ]) a)
+
+allSublists : List (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
+allSublists l = fromList (permutations l)
+
+allSublistsFin : (S : ℙ (GovActionID × GovActionID)) → finite S → ℙ List (GovActionID × GovActionID)
+allSublistsFin S (l , _) = allSublists l
+
+-- TODO: show every list of elements in aidPairs belongs to collection of lists returned by `allSublistsFin`.
+allSublistsLemma :  {aidPairs : ℙ (GovActionID × GovActionID)}(fin : finite aidPairs)
                     {l : List (GovActionID × GovActionID)}
-                    → fromList l ⊆ aidPairs → l ∈ allSublists aidPairs
+                    → fromList l ⊆ aidPairs → l ∈ (allSublistsFin aidPairs fin)
 
-allSublistsLemma = {!!}
+allSublistsLemma {aidPairs} fin {l} x = {!!}
 
-enactable? : ∀ x y z → Dec(enactable x y z)
-enactable? eState (aid , record { action = actn} ) aidPairs with getHashES eState actn
+enactable? : ∀ x y aidPairs → finite aidPairs → Dec(enactable x y aidPairs)
+enactable? eState (aid , record { action = actn} ) aidPairs fin with getHashES eState actn
 ...| nothing = yes tt
-...| (just aid')  with any? (λ as → all? (_∈? aidPairs){X = fromList as} ×-dec (connects? as aid' aid)) (allSublists aidPairs)
+...| (just aid')  with any? (λ as → all? (_∈? aidPairs){X = fromList as} ×-dec (connects? as aid' aid)) (allSublistsFin aidPairs fin)
 ...               | yes (prs , _ , prsConx) = yes (prs , prsConx)
-...               | no ¬p = no λ (x , y , z) → ¬p (x , allSublistsLemma y , y , z)
+...               | no ¬p = no λ (x , y , z) → ¬p (x , allSublistsLemma fin y , y , z)
 
 allEnactable? : ∀ eState aid×stateList → Dec (allEnactable eState aid×stateList)
-allEnactable? eState aid×stateList = all? λ pr → enactable? eState pr (aidPairSet aid×stateList)
-
+allEnactable? eState aid×stateList =
+  all? λ pr → enactable? eState pr (aidPairSet aid×stateList) aidPairSetIsFinite
 \end{code}
 \emph{Transition relation types}
 \begin{code}[hide]
@@ -199,3 +222,24 @@ _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}
 \end{figure*}
+
+
+\begin{comment}
+-- insert a at the given position in the input list
+-- _insert_at_ : ∀{A : Set ℓ} → List A → A → ℕ → Maybe (List A)
+-- [] insert a at 0 = just [ a ]
+-- [] insert a at (suc n) = nothing
+-- l insert a at 0 = just (a ∷ l)
+-- (x ∷ xs) insert a at (suc n) with (xs insert a at n)
+-- ...| nothing = nothing
+-- ...| just l = just (x ∷ l)
+--
+-- -- TESTS --
+-- _ : permutations (1 ∷ (2 ∷ [])) ≡ (1 ∷ (2 ∷ [])) ∷ ((2 ∷ (1 ∷ [])) ∷ [])
+-- _ = refl
+
+-- _ : permutations (1 ∷ (2 ∷ (3 ∷ []))) ≡ (1 ∷ (2 ∷ (3 ∷ []))) ∷ (2 ∷ (1 ∷ (3 ∷ [])))
+--                                         ∷ (2 ∷ (3 ∷ (1 ∷ []))) ∷ (1 ∷ (3 ∷ (2 ∷ [])))
+--                                         ∷ (3 ∷ (1 ∷ (2 ∷ []))) ∷ (3 ∷ (2 ∷ (1 ∷ []))) ∷ []
+-- _ = refl
+\end{comment}
