@@ -263,12 +263,14 @@ instance
   Convertible-DCert : Convertible DCert F.TxCert
   Convertible-DCert = λ where
     .to (delegate x x₁ x₂ x₃) → F.Delegate (to x) (to x₁) (to x₂) (to x₃)
+    .to (dereg x) → F.Dereg (to x)
     .to (regpool x x₁) → F.RegPool (to x) (to x₁)
     .to (retirepool x x₁) → F.RetirePool (to x) (to x₁)
     .to (regdrep x x₁ x₂) → F.RegDRep (to x) (to x₁) (to x₂)
     .to (deregdrep x) → F.DeRegDRep (to x)
     .to (ccreghot x x₁) → F.CCRegHot (to x) (to x₁)
     .from (F.Delegate x x₁ x₂ x₃) → DCert.delegate (from x) (from x₁) (from x₂) (from x₃)
+    .from (F.Dereg x) → DCert.dereg (from x)
     .from (F.RegPool x x₁) → DCert.regpool (from x) (from x₁)
     .from (F.RetirePool x x₁) → DCert.retirepool (from x) (from x₁)
     .from (F.RegDRep x x₁ x₂) → DCert.regdrep (from x) (from x₁) (from x₂)

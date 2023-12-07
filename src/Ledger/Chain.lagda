@@ -85,8 +85,9 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 
       es        = record esW { withdrawals = ∅ }
       retired   = retiring ⁻¹ e
-      refunds   = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards
-      unclaimed = govActionReturns ∪⁺ trWithdrawals ∣ dom rewards ᶜ
+      payout    = govActionReturns ∪⁺ trWithdrawals
+      refunds   = pullbackMap payout (λ x → record { net = NetworkId ; stake = x }) (dom rewards)
+      unclaimed = getCoin payout ∸ getCoin refunds
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
 
@@ -108,7 +109,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       ls' = record ls
         { govSt = govSt' ; utxoSt = utxoSt' ; certState = certState' }
       acnt' = record acnt
-        { treasury = treasury + fees + getCoin unclaimed + donations ∸ totWithdrawals }
+        { treasury = treasury + fees + unclaimed + donations ∸ totWithdrawals }
     in
     e ≡ sucᵉ lastEpoch
     → record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }

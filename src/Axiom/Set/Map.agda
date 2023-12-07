@@ -221,8 +221,14 @@ mapˡ∘map⦅×-dup⦆-uniq : ∀ {S : Set A} {f : A → B}
   → left-unique $ mapˡ f (mapˢ ×-dup S)
 mapˡ∘map⦅×-dup⦆-uniq {inj = inj} = mapˡ-uniq {inj = λ _ _ → inj} map⦅×-dup⦆-uniq
 
+idMap : Set A → Map A A
+idMap s = -, map⦅×-dup⦆-uniq {x = s}
+
 mapValues : (B → B') → Map A B → Map A B'
 mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
+
+mapFromFun : (A → B) → Set A → Map A B
+mapFromFun f s = mapValues f (idMap s)
 
 mapWithKey-uniq : {f : A → B → B'}
   → left-unique R
@@ -327,6 +333,9 @@ module Lookupᵐ (sp-∈ : spec-∈ A) where
     lookupᵐ? : ⦃ (x ∈ dom (m ˢ)) ⁇ ⦄ → Maybe B
     lookupᵐ? ⦃ ⁇ no  _ ⦄ = nothing
     lookupᵐ? ⦃ ⁇ yes _ ⦄ = just lookupᵐ
+
+  pullbackMap : (m : Map A B) → ⦃ ∀ {x} → (x ∈ dom (m ˢ)) ⁇ ⦄ → (A' → A) → Set A' → Map A' B
+  pullbackMap m f s = mapMaybeWithKeyᵐ (λ a _ → lookupᵐ? m (f a)) (idMap s)
 
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈

@@ -17,15 +17,22 @@ open Computational ⦃...⦄
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_
-  Computational-DELEG .computeProof ⟦ pp , pools ⟧ᵈᵉ _ = λ where
-    (delegate c mv mc d) →
-      case ¿ d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc × mc ∈ mapˢ just (dom pools) ¿ of λ where
-        (yes (p₁ , p₂)) → just (-, DELEG-delegate p₁ p₂)
-        _               → nothing
+  Computational-DELEG .computeProof ⟦ pp , pools ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ = λ where
+    (delegate c mv mc d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.poolDeposit)
+                                × (c ∈ dom rwds → d ≡ 0)
+                                × mc ∈ mapˢ just (dom pools) ¿ of λ where
+      (yes (p₁ , p₂ , p₃)) → just (-, DELEG-delegate p₁ p₂ p₃)
+      _ → nothing
+    (dereg c) → case ¿ (c , 0) ∈ rwds ¿ of λ where
+      (yes p) → just (-, DELEG-dereg p)
+      _       → nothing
     _ → nothing
-  Computational-DELEG .completeness ⟦ pp , pools ⟧ᵈᵉ s (delegate c mv mc d) s' (DELEG-delegate p₁ p₂)
-    rewrite dec-yes (¿ d ≡ requiredDeposit pp mv ⊔ requiredDeposit pp mc × mc ∈ mapˢ just (dom pools) ¿)
-                    (p₁ , p₂) .proj₂ = refl
+  Computational-DELEG .completeness ⟦ pp , pools ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (delegate c mv mc d)
+    s' (DELEG-delegate p₁ p₂ p₃) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.poolDeposit)
+                                × (c ∈ dom rwds → d ≡ 0)
+                                × mc ∈ mapˢ just (dom pools) ¿) (p₁ , p₂ , p₃) .proj₂ = refl
+  Computational-DELEG .completeness ⟦ _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c) _ (DELEG-dereg p)
+    rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_
   Computational-POOL .computeProof _ ⟦ pools , _ ⟧ᵖ (regpool c _) =
@@ -79,6 +86,10 @@ instance
     dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
     with computeProof ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
   ... | just _ | refl = refl
+  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(dereg c) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
+    with computeProof ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
+  ... | just _ | refl = refl
   Computational-CERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
     dCert@(regpool c poolParams) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
     with computeProof pp stᵖ dCert | completeness _ _ _ _ h
@@ -105,12 +116,13 @@ instance
   Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls ⟧ᶜ st _ =
     let open PParams pp; open CertState st; open GState gState; open DState dState
         refresh = mapPartial getDRepVote (fromList vs)
-    in case ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × wdrls ˢ ⊆ rewards ˢ ¿ of λ where
+        wdrlCreds = mapˢ RwdAddr.stake (dom wdrls)
+    in case ¿ wdrlCreds ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
       (yes (p₁ , p₂)) → just (-, CERT-base p₁ p₂)
       (no ¬p)         → nothing
   Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls ⟧ᶜ st _ st' (CERT-base p₁ p₂)
     rewrite let dState = CertState.dState st; open DState dState in
-      dec-yes ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × wdrls ˢ ⊆ rewards ˢ ¿
+      dec-yes ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
         (p₁ , p₂) .proj₂ = refl
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_

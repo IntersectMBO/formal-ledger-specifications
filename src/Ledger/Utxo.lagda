@@ -116,9 +116,9 @@ module _ (let open Tx; open TxBody) where
     = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
 
   certRefund : DCert → Maybe DepositPurpose
-  certRefund (delegate c nothing nothing x)  = just (CredentialDeposit c)
-  certRefund (deregdrep c)                   = just (DRepDeposit       c)
-  certRefund _                               = nothing
+  certRefund (dereg c)      = just (CredentialDeposit c)
+  certRefund (deregdrep c)  = just (DRepDeposit       c)
+  certRefund _              = nothing
 
   certRefundˢ : DCert → ℙ DepositPurpose
   certRefundˢ = partialToSet certRefund

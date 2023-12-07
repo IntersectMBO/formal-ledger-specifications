@@ -91,17 +91,19 @@ txInfo l pp utxo tx = record
 
 DelegateOrDeReg : DCert → Set
 DelegateOrDeReg (delegate x x₁ x₂ x₃) = ⊤
+DelegateOrDeReg (dereg x) = ⊤
 DelegateOrDeReg (regpool x x₁) = ⊥
 DelegateOrDeReg (retirepool x x₁) = ⊥
-DelegateOrDeReg (regdrep x x₁ x₂) = ⊥
+DelegateOrDeReg (regdrep x x₁ x₂) = ⊤
 DelegateOrDeReg (deregdrep x) = ⊤
 DelegateOrDeReg (ccreghot x x₁) = ⊥
 
 DelegateOrDeReg? : ∀ x → Dec (DelegateOrDeReg x)
 DelegateOrDeReg? (delegate x x₁ x₂ x₃) = yes tt
+DelegateOrDeReg? (dereg x) = yes tt
 DelegateOrDeReg? (regpool x x₁) = no λ ()
 DelegateOrDeReg? (retirepool x x₁) = no λ ()
-DelegateOrDeReg? (regdrep x x₁ x₂) = no λ ()
+DelegateOrDeReg? (regdrep x x₁ x₂) = yes tt
 DelegateOrDeReg? (deregdrep x) = yes tt
 DelegateOrDeReg? (ccreghot x x₁) = no λ ()
 
@@ -128,10 +130,14 @@ rwdScripts a with isScriptRwdAddr? a
 certScripts : DCert → Maybe (ScriptPurpose × ScriptHash)
 certScripts d with DelegateOrDeReg? d
 ... | no ¬p = nothing
-certScripts (delegate  (inj₁ x) x₁ x₂ x₃) | yes p = nothing
-certScripts (delegate  (inj₂ y) x₁ x₂ x₃) | yes p = just (Cert (delegate (inj₂ y) x₁ x₂ x₃) , y)
-certScripts (deregdrep (inj₁ x))          | yes p = nothing
-certScripts (deregdrep (inj₂ y))          | yes p = just (Cert (deregdrep (inj₂ y)) , y)
+certScripts c@(delegate  (inj₁ x) _ _ _) | yes p = nothing
+certScripts c@(delegate  (inj₂ y) _ _ _) | yes p = just (Cert c , y)
+certScripts c@(dereg     (inj₁ x))       | yes p = nothing
+certScripts c@(dereg     (inj₂ y))       | yes p = just (Cert c , y)
+certScripts c@(regdrep   (inj₁ x) _ _)   | yes p = nothing
+certScripts c@(regdrep   (inj₂ y) _ _)   | yes p = just (Cert c , y)
+certScripts c@(deregdrep (inj₁ x))       | yes p = nothing
+certScripts c@(deregdrep (inj₂ y))       | yes p = just (Cert c , y)
 
 private
   scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
