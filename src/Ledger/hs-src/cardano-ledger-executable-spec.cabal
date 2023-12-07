@@ -37,7 +37,8 @@ test-suite test
     build-depends:
         cardano-ledger-executable-spec,
         hspec,
-        HUnit
+        HUnit,
+        text
     build-tool-depends: hspec-discover:hspec-discover
     type: exitcode-stdio-1.0
     ghc-options:

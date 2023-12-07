@@ -34,3 +34,8 @@ open import Tactic.Premises public
 open import Ledger.Set renaming (∅ to ∅ˢ; ❴_❵ to ❴_❵ˢ) public
 open import Interface.HasSingleton th public
 open import Interface.HasEmptySet th public
+
+dec-de-morgan : ∀{P Q : Set} → ⦃ P ⁇ ⦄ → ⦃ Q ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
+dec-de-morgan ⦃ ⁇ no ¬p ⦄ ⦃ _ ⦄ ¬pq = inj₁ ¬p
+dec-de-morgan ⦃ _ ⦄ ⦃ ⁇ no ¬q ⦄ ¬pq = inj₂ ¬q
+dec-de-morgan ⦃ ⁇ yes p ⦄ ⦃ ⁇ yes q ⦄ ¬pq = contradiction (p , q) ¬pq

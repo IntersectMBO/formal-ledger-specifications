@@ -11,14 +11,14 @@ open import Ledger.PPUp txs
 open import Ledger.NewPP txs
 
 instance
-  Computational-NEWPP : Computational _⊢_⇀⦇_,NEWPP⦈_
+  Computational-NEWPP : Computational _⊢_⇀⦇_,NEWPP⦈_ String
   Computational-NEWPP = record {M} where module M Γ s (open NewPParamState s) where
     computeProof = λ where
-      nothing → just (_ , NEWPP-Reject)
+      nothing → success (_ , NEWPP-Reject)
       (just upd) → let newpp = applyUpdate pparams upd in
         case ¿ viablePParams newpp ¿ of λ where
-          (yes p) → just (_ , NEWPP-Accept p)
-          (no _)  → nothing
+          (yes p) → success (_ , NEWPP-Accept p)
+          (no _)  → failure "Failed in NEWPP"
 
     completeness : _
     completeness sig s' h with sig | h
