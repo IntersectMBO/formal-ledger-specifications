@@ -52,6 +52,7 @@ library
         Lib
     build-depends:
         text,
+        tree-diff,
         ieee
 -- This will be generated automatically when building with nix
     other-modules:

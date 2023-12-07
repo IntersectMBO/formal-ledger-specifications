@@ -11,6 +11,7 @@ open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ; _⊖_)
 open import Data.Integer.Ext            using (posPart; negPart)
 import Data.Integer.Properties as ℤ
+open import Data.String.Base            renaming (_++_ to _+ˢ_) using ()
 open import Relation.Binary             using (IsEquivalence)
 
 open import Prelude; open Equivalence
@@ -20,23 +21,83 @@ open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
 open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
-open import Ledger.Prelude; open Properties; open Computational ⦃...⦄
+open import Ledger.Prelude; open Properties 
 open import Ledger.Abstract
 open import Ledger.Transaction
+open import Interface.ComputationalRelation 
 
 module Ledger.Utxo.Properties
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Utxo txs abs renaming (Computational-UTXO to Computational-UTXO')
+open import Ledger.Utxo txs abs
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
+  _ = Functor-ComputationResult
+
+instance
+  Computational-UTXO' : Computational _⊢_⇀⦇_,UTXO⦈_ String
+  Computational-UTXO' = record {Go}
+    where
+      module Go Γ s tx (let H , ⁇ H? = UTXO-premises {tx}{Γ}{s}) where
+
+        computeProof = case H? of λ where
+          (yes p) → success (-, UTXO-inductive p)
+          (no ¬p) → failure $ case dec-de-morgan ¬p of λ where
+            (inj₁ a) → "¬ TxBody.txins (Tx.body tx) ≢ ∅"
+            (inj₂ b) → case dec-de-morgan b of λ where
+              (inj₁ a₁) → "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
+              (inj₂ b₁) → case dec-de-morgan b₁ of λ where
+                  (inj₁ a₂) → "¬ inInterval (UTxOEnv.slot Γ) (txvldt (Tx.body tx))"
+                  (inj₂ b₂) → case dec-de-morgan b₂ of λ where
+                    (inj₁ a₃) → "¬(minfee (UTxOEnv.pparams Γ) tx ≤ txfee (Tx.body tx))"
+                    (inj₂ b₃) → case dec-de-morgan b₃ of λ where
+                        (inj₁ a₄) →
+                          let
+                            pp = UTxOEnv.pparams Γ
+                            txb = Tx.body tx
+                            con = consumed pp s txb
+                            prod = produced pp s txb
+                            showValue = show ∘ coin
+                          in 
+                            ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
+                            +ˢ "\n  consumed =\t\t" +ˢ showValue con
+                            +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
+                            +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
+                            +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
+                            +ˢ "\n  produced =\t\t" +ˢ showValue prod
+                            +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
+                            +ˢ "\n    fee  =\t\t" +ˢ show (txb .TxBody.txfee)
+                            +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
+                            +ˢ "\n    donation  =\t\t" +ˢ show (txb .TxBody.txdonation)
+                            )
+                        (inj₂ b₄) → case dec-de-morgan b₄ of λ where
+                          (inj₁ a₅) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
+                          (inj₂ b₅) → case dec-de-morgan b₅ of λ where
+                              (inj₁ a₆) → "¬(TxBody.txsize (Tx.body tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
+                              (inj₂ b₆) → case dec-de-morgan b₆ of λ where
+                                (inj₁ a₇) → "∀[ (_ , txout) ∈ txouts .proj₁ ] inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout"
+                                (inj₂ b₇) → case dec-de-morgan b₇ of λ where
+                                    (inj₁ a₈) → "∀[ (_ , txout) ∈ txouts .proj₁ ] serSize (getValue txout) ≤ maxValSize pp"
+                                    (inj₂ b₈) → case dec-de-morgan b₈ of λ where
+                                      (inj₁ a₉) → "∀[ (a , _) ∈ range txouts ] Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a"
+                                      (inj₂ _) → "something else broke"
+
+        completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
+        completeness s' (UTXO-inductive p) = QED
+          where
+            QED : map proj₁ computeProof ≡ success s'
+            QED with H?
+            ... | yes _ = refl
+            ... | no ¬p = ⊥-elim $ ¬p p
+
+open Computational ⦃...⦄
 
 abstract
-  Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
+  Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_ String
   Computational-UTXO = Computational-UTXO'
 
 private variable
@@ -313,12 +374,12 @@ Here, we state the fact that the UTxO relation is computable.
 
 \begin{figure*}[h]
 \begin{code}
-UTXO-step : UTxOEnv → UTxOState → Tx → Maybe UTxOState
+UTXO-step : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
 UTXO-step = compute
 
-UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ just utxoState'
+UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ success utxoState'
                          ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-UTXO-step-computes-UTXO = ≡-just⇔STS
+UTXO-step-computes-UTXO = ≡-success⇔STS
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}

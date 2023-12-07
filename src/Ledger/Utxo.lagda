@@ -331,23 +331,6 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r
       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
-
-instance
-  Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
-  Computational-UTXO = record {Go}
-    where module Go Γ s tx (let H , ⁇ H? = UTXO-premises {tx}{Γ}{s}) where
-
-    computeProof = case H? of λ where
-      (yes p) → just (-, UTXO-inductive p)
-      (no _)  → nothing
-
-    completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
-    completeness s' (UTXO-inductive p) = QED
-      where
-      QED : map proj₁ computeProof ≡ just s'
-      QED with H?
-      ... | yes _ = refl
-      ... | no ¬p = ⊥-elim $ ¬p p
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

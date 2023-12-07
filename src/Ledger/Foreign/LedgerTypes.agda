@@ -1,6 +1,7 @@
 module Ledger.Foreign.LedgerTypes where
 {-# FOREIGN GHC
   {-# LANGUAGE DeriveGeneric #-}
+  {-# LANGUAGE DeriveFunctor #-}
   {-# LANGUAGE EmptyDataDeriving #-}
 #-}
 
@@ -20,6 +21,28 @@ data Empty : Set where
   data AgdaEmpty deriving (Show, Generic)
   instance ToExpr AgdaEmpty
 #-}
+
+data ComputationResult E A : Set where
+  Success : A → ComputationResult E A
+  Failure : E → ComputationResult E A
+{-# FOREIGN GHC
+  data ComputationResult e a = Success a | Failure e
+    deriving (Functor, Eq, Show, Generic)
+
+  instance Applicative (ComputationResult e) where
+    pure = Success
+    (Success f) <*> x = f <$> x
+    (Failure e) <*> _ = Failure e
+
+  instance Monad (ComputationResult e) where
+    return = pure
+    (Success a) >>= m = m a
+    (Failure e) >>= _ = Failure e
+
+  instance (ToExpr e, ToExpr a) => ToExpr (ComputationResult e a)
+#-}
+{-# COMPILE GHC ComputationResult = data ComputationResult (Success | Failure) #-}
+
 {-# COMPILE GHC Empty = data AgdaEmpty () #-}
 
 HSMap : Set → Set → Set

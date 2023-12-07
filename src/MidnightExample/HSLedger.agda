@@ -3,6 +3,7 @@ module MidnightExample.HSLedger where
 open import Prelude hiding (_++_; dec; Show-List; Show-×)
 
 open import Interface.Hashable
+open import Interface.ComputationalRelation
 
 open import Data.Integer hiding (show)
 open import Data.String using (_++_)
@@ -90,7 +91,7 @@ instance
       ; snapshot2 = snapshot2 }
 
 ledgerStep : F.LedgerState → F.Block → Maybe F.LedgerState
-ledgerStep s b = to <$> LEDGER-step _ (from s) (from b)
+ledgerStep s b = to ∘ success-maybe $ LEDGER-step _ (from s) (from b)
 
 {-# COMPILE GHC ledgerStep as ledgerStep #-}
 

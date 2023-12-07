@@ -16,22 +16,22 @@ instance
 
 open Computational ⦃...⦄
 instance
-  Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_
+  Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_ String
   Computational-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where
-    NoConfidence             → just (_ , Enact-NoConf)
+    NoConfidence             → success (_ , Enact-NoConf)
     (NewCommittee new rem q) →
       case ¿ ∀[ term ∈ range new ]
                term ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e ¿ of λ where
-      (yes p) → just (-, Enact-NewComm p)
-      (no ¬p) → nothing
-    (NewConstitution dh sh)  → just (-, Enact-NewConst)
-    (TriggerHF v)            → just (-, Enact-HF)
-    (ChangePParams up)       → just (-, Enact-PParams)
-    Info                     → just (-, Enact-Info)
+      (yes p) → success (-, Enact-NewComm p)
+      (no ¬p) → failure "ENACT failed at ∀[ term ∈ range new ] term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)"
+    (NewConstitution dh sh)  → success (-, Enact-NewConst)
+    (TriggerHF v)            → success (-, Enact-HF)
+    (ChangePParams up)       → success (-, Enact-PParams)
+    Info                     → success (-, Enact-Info)
     (TreasuryWdrl wdrl) →
       case ¿ ∑[ x ← s .withdrawals ∪⁺ wdrl ] x ≤ t ¿ of λ where
-        (yes p)             → just (-, Enact-Wdrl p)
-        (no _)              → nothing
+        (yes p)             → success (-, Enact-Wdrl p)
+        (no _)              → failure "ENACT failed at ∑[ x ← (s .withdrawals ∪⁺ wdrl) ᶠᵐ ] x ≤ t"
   Computational-ENACT .completeness ⟦ _ , t , e ⟧ᵉ s action _ p
     with action | p
   ... | .NoConfidence           | Enact-NoConf   = refl

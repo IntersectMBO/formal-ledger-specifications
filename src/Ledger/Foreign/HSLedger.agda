@@ -214,6 +214,7 @@ open import Ledger.Utxow.Properties it it
 instance
   _ = Convertible-Refl {⊤}
   _ = Convertible-Refl {ℕ}
+  _ = Convertible-Refl {String}
 
   -- Since the foreign address is just a number, we do bad stuff here
   Convertible-Addr : Convertible Addr F.Addr
@@ -426,12 +427,22 @@ instance
       ; donations = ε
       }
 
-utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → Maybe F.UTxOState
-utxo-step e s tx = to <$> UTXO-step (from e) (from s) (from tx)
+  Convertible-ComputationResult : ∀ {e e' a a'}
+    → ⦃ Convertible e e' ⦄
+    → ⦃ Convertible a a' ⦄
+    → Convertible (ComputationResult e a) (F.ComputationResult e' a')
+  Convertible-ComputationResult = λ where
+    .to (success a) → F.Success (to a)
+    .to (failure a) → F.Failure (to a)
+    .from (F.Success a) → success (from a)
+    .from (F.Failure a) → failure (from a)
+
+utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxo-step e s tx = to $ UTXO-step (from e) (from s) (from tx)
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
-utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → Maybe F.UTxOState
-utxow-step e s tx = to <$> compute Computational-UTXOW (from e) (from s) (from tx)
+utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxow-step e s tx = to $ compute Computational-UTXOW (from e) (from s) (from tx)
 
 {-# COMPILE GHC utxow-step as utxowStep #-}

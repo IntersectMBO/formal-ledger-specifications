@@ -41,9 +41,9 @@ module _ {Γ : NewEpochEnv} {eps : EpochState} {e : Epoch} where
     EPOCH-complete' = EPOCH-complete
 
 instance
-  Computational-EPOCH : Computational _⊢_⇀⦇_,EPOCH⦈_
-  Computational-EPOCH .computeProof Γ s sig = just EPOCH-total'
-  Computational-EPOCH .completeness Γ s sig s' h = cong just (EPOCH-complete' s' h)
+  Computational-EPOCH : Computational _⊢_⇀⦇_,EPOCH⦈_ ⊥
+  Computational-EPOCH .computeProof Γ s sig = success EPOCH-total'
+  Computational-EPOCH .completeness Γ s sig s' h = cong success (EPOCH-complete' s' h)
 
 module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
 
@@ -62,6 +62,6 @@ module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
   ... | no ¬p | NEWEPOCH-Not-New x = refl
 
 instance
-  Computational-NEWEPOCH : Computational _⊢_⇀⦇_,NEWEPOCH⦈_
-  Computational-NEWEPOCH .computeProof Γ s sig = just NEWEPOCH-total
-  Computational-NEWEPOCH .completeness Γ s sig s' h = cong just (NEWEPOCH-complete s' h)
+  Computational-NEWEPOCH : Computational _⊢_⇀⦇_,NEWEPOCH⦈_ ⊥
+  Computational-NEWEPOCH .computeProof Γ s sig = success NEWEPOCH-total
+  Computational-NEWEPOCH .completeness Γ s sig s' h = cong success (NEWEPOCH-complete s' h)
