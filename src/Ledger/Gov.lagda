@@ -56,12 +56,23 @@ connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects?
 ...| _      | no ¬q  = no λ (q , _) → ¬q q
 ...| no ¬p  | _      = no λ (_ , p) → ¬p p
 
+-- TODO: convert a subset S of GovActionID × GovActionID to the set of all of lists of elements in S.
+allSublists : ℙ (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
+allSublists = {!!}
+
+-- TODO: show that every list of elements in aidPairs belongs to the collection of lists returned by `allSublists aidPiars`.
+allSublistsLemma :  {aidPairs : ℙ (GovActionID × GovActionID)}
+                    {l : List (GovActionID × GovActionID)}
+                    → fromList l ⊆ aidPairs → l ∈ allSublists aidPairs
+
+allSublistsLemma = {!!}
+
 enactable? : ∀ x y z → Dec(enactable x y z)
 enactable? eState (aid , record { action = actn} ) aidPairs with getHashES eState actn
 ...| nothing = yes tt
-...| (just aid')  with any? (λ as → all? (_∈? aidPairs){X = fromList as} ×-dec (connects? as aid' aid)) {!!}
+...| (just aid')  with any? (λ as → all? (_∈? aidPairs){X = fromList as} ×-dec (connects? as aid' aid)) (allSublists aidPairs)
 ...               | yes (prs , _ , prsConx) = yes (prs , prsConx)
-...               | no ¬p = no λ (x , y , z) → ¬p (x , {!!} , y , z)
+...               | no ¬p = no λ (x , y , z) → ¬p (x , allSublistsLemma y , y , z)
 
 allEnactable? : ∀ eState aid×stateList → Dec (allEnactable eState aid×stateList)
 allEnactable? eState aid×stateList = all? λ pr → enactable? eState pr (aidPairSet aid×stateList)
