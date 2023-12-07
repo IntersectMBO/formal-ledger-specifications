@@ -228,7 +228,7 @@ module DepositHelpers
 
   ref≤dep : ref ≤ dep
   ref≤dep with ref ≟ 0
-  ... | no ¬p = ≤″⇒≤ $ less-than-or-equal $ begin
+  ... | no ¬p = ≤″⇒≤ $ ℕ.less-than-or-equal $ begin
     ref + uDep ≡⟨ +-comm ref uDep ⟩
     uDep + ref ≡⟨ dep-ref $ ref-tot-0 ¬p ⟩
     dep        ∎

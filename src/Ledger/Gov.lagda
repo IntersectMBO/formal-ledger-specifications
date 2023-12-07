@@ -24,10 +24,11 @@ GovState : Set
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Set where
-  constructor ⟦_,_,_⟧ᵗ
-  field txid     : TxId
-        epoch    : Epoch
-        pparams  : PParams
+  constructor ⟦_,_,_,_⟧ᵍ
+  field txid        : TxId
+        epoch       : Epoch
+        pparams     : PParams
+        enactState  : EnactState
 
 connects : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
 connects [] aid₁ aid₂ = aid₁ ≡ aid₂
@@ -109,11 +110,39 @@ addAction : GovState
           → GovState
 addAction s e aid addr a prev = s ∷ʳ (aid , record
   { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+
+validHFAction : GovProposal → GovState → EnactState → Set
+validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
+  (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
+  ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
+validHFAction _ _ _ = ⊤
 \end{code}
 \caption{Types and functions used in the GOV transition system\protect\footnotemark}
 \label{defs:gov-defs}
 \end{figure*}
 \footnotetext{\AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends element \AgdaBound{x} to list \AgdaBound{l}.}
+
+\GovActionState is the state of an individual governance action. It
+contains the individual votes, its lifetime, and information necessary
+to enact the action and to repay the deposit.
+
+\GovState behaves similar to a queue. New proposals are appended at
+the end, but any proposal can be removed at the epoch
+boundary. However, for the purposes of enactment, earlier proposals
+take priority.
+
+\begin{itemize}
+\item \addVote inserts (and potentially overrides) a vote made for a
+particular governance action (identified by its ID) by a credential with a role.
+
+\item \addAction adds a new proposed action at the end of a given \GovState.
+
+\item \validHFAction is the property whether a given proposal, if it is a
+\TriggerHF action, can potentially be enacted in the future. For this to be the
+case, its \prevAction needs to exist, be another \TriggerHF action and have a
+compatible version.
+\end{itemize}
+
 \begin{figure*}
 \begin{code}[hide]
 data _⊢_⇀⦇_,GOV'⦈_ where
@@ -131,9 +160,9 @@ data _⊢_⇀⦇_,GOV'⦈_ where
 
   GOV-Propose : ∀ {x} →  let  open GovEnv Γ
                               open PParams pparams hiding (a)
-                              sig = inj₂ record  { returnAddr = addr ; action = a
-                                                 ; anchor = x ; deposit = d
-                                                 ; prevAction = prev }
+                              prop = record  { returnAddr = addr ; action = a
+                                             ; anchor = x ; deposit = d
+                                             ; prevAction = prev }
                               s' = addAction  s (govActionLifetime +ᵉ epoch)
                                               (txid , k) addr a prev
                          in
@@ -141,8 +170,9 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     →  d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q
         → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
+    →  validHFAction prop s enactState
     ───────────────────────────────────────
-    (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ s'
+    (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
 _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 \end{code}
