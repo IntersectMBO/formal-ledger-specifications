@@ -3,15 +3,33 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+import Data.List.Membership.Propositional as P
+open import Data.List.Membership.Propositional.Properties
+-- open import Data.List.Relation.Unary.Any renaming (map to mapᵘ)
+
+open import Ledger.Prelude -- hiding (Any; any?)
 open import Ledger.GovStructure
+
+-- open import Ledger.Prelude hiding (yes; no)
+-- open import Ledger.GovStructure
 
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
-open import Ledger.GovernanceActions gs
-open import Data.Fin hiding (_<_)
+-- open import Ledger.Gov gs
+open import Ledger.GovernanceActions gs hiding (yes; no)
+
+open Computational ⦃...⦄
+open Equivalence
+-- open GovActionState
+open Inverse
+
+
+-- open import Ledger.GovernanceActions gs hiding (yes; no)
+open import Data.Fin hiding (_<_ ; _≟_)
 open import Relation.Nullary.Reflects using (invert)
-open import Relation.Nullary.Decidable.Core using (From-no; fromWitnessFalse )
+open import Relation.Nullary.Decidable.Core using (From-no; fromWitnessFalse; yes; no )
+open Computational ⦃...⦄
+open _⁇
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -32,17 +50,12 @@ record GovEnv : Set where
         epoch    : Epoch
         pparams  : PParams
 
+{- original definitions (by @WhatisRT)
+
 connects : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
 connects [] aid₁ aid₂ = aid₁ ≡ aid₂
 connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
 
--- _∧_ = _×_
-
-connects? : List (GovActionID × GovActionID) → GovActionID → GovActionID → Bool
-connects? [] aid₁ aid₂ = aid₁ == aid₂
-connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ = (connects? s aid₁ a₁) ∧ (a₂ == aid₂)
-
-{- original definitions (by @WhatisRT)
 enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID × GovActionID) → Set
 enactable e (aid , as) s = case getHashES e (GovActionState.action as) of λ where
   nothing → ⊤
@@ -59,6 +72,19 @@ allEnactable? e s = {!!}
 -}
 
 {- verbose definitions and scratch work (by @williamdemeo) ---------------------------------}
+
+connects : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
+connects [] aid₁ aid₂ = aid₁ ≡ aid₂
+connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
+
+connects? : (l : List (GovActionID × GovActionID))(aid aid' : GovActionID) → Dec(connects l aid aid')
+connects? [] aid₁ aid₂ with (aid₁ ≟ aid₂)
+...| yes p = true because ofʸ p
+...| no ¬p = false because ofⁿ ¬p
+connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects? s aid₁ a₁
+...| yes p | yes q = true because ofʸ (q , p)
+...| _ | no ¬q = false because ofⁿ λ (q , _) → ¬q q
+...| no ¬p | _ = false because ofⁿ λ (_ , p) → ¬p p
 
 enactable : EnactState → GovActionID → GovActionState → ℙ (GovActionID × GovActionID) → Set
 enactable eState aid (record { action = actn }) aidPairs =
@@ -80,9 +106,14 @@ aidPairSet aid×stateList = let open GovActionState in
 
                      ( fromList aid×stateList )  -- : ℙ (GovActionID × GovActionState)
 
-enactable? : ∀ eState aid aState aid×stateList → Dec(enactable eState aid aState (aidPairSet aid×stateList))
-does (enactable? eState aid aState aid×stateList) = {!!}
-proof (enactable? eState aid aState aid×stateList) = {!!}
+enactable? : ∀ eState aid aState aidPairs → Dec(enactable eState aid aState aidPairs)
+enactable? eState aid aState aidPairs with getHashES eState (GovActionState.action aState)
+...| nothing = true because {!!}
+...| (just aid') with any? ( λ aidPairList → {!!} -- (fromList aidPairList ⊆? aidPairs) -- (∀ x → ⁇ ()
+                                          ×-dec (connects? aidPairList aid' aid))  {!aidPairs!}
+... | yes (pairs , _ , pairsConnected) = true because (ofʸ (pairs , pairsConnected))
+... | no ¬p = false because (ofⁿ (λ (x , v , y) → ¬p (x , {!!} , v , y) ))
+
 
 allEnactable : EnactState → GovState → Set
 allEnactable eState aid×stateList = ∀[ (aid , aState) ∈ fromList aid×stateList ]
@@ -118,15 +149,15 @@ lemma01 P ∀nDecP = (∀nDecP 0) ×-dec (∀nDecP 1)
 -- _×-dec_ : Dec A → Dec B → Dec (A × B)
 -- does  (a? ×-dec b?) = does a? ∧ does b?
 -- proof (a? ×-dec b?) = proof a? ×-reflects proof b?
-open Fin renaming (zero to 0Fin)
-X-dec : (n : ℕ)(𝒜 : Fin n → Set) → (∀ k → Dec(𝒜 k)) → Dec(∀ k → 𝒜 k)
-does (X-dec 0 𝒜 x) = does (x {!0Fin!})
-does (X-dec (suc n) 𝒜 x) = {!!}
-proof (X-dec n 𝒜 x) = {!!}
+-- open Fin renaming (zero to 0Fin)
+-- X-dec : (n : ℕ)(𝒜 : Fin n → Set) → (∀ k → Dec(𝒜 k)) → Dec(∀ k → 𝒜 k)
+-- does (X-dec 0 𝒜 x) = does (x {!0Fin!})
+-- does (X-dec (suc n) 𝒜 x) = {!!}
+-- proof (X-dec n 𝒜 x) = {!!}
 
-lemma2 : ∀ {ℓ : Level} {A : Set ℓ}{P : Pred A ℓ} → Dec(∀ x → P x) → (∀ x → Dec(P x))
-lemma2 (false because ofⁿ ¬p) = {!!}
-lemma2 (true because p) x = true because ofʸ ((invert p) x)
+-- lemma2 : ∀ {ℓ : Level} {A : Set ℓ}{P : Pred A ℓ} → Dec(∀ x → P x) → (∀ x → Dec(P x))
+-- lemma2 (false because ofⁿ ¬p) = {!!}
+-- lemma2 (true because p) x = true because ofʸ ((invert p) x)
 
 allEnactable? : ∀ eState aid×stateList → Dec (allEnactable eState aid×stateList)
 allEnactable? eState aid×stateList = {!!}

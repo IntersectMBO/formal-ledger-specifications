@@ -23,7 +23,9 @@ open import Data.Product.Properties.Ext
 open import Class.DecEq
 open import Relation.Binary using () renaming (Decidable to Dec₂)
 open import Relation.Nullary.Decidable
+open import Level using (Level)
 
+private variable  ℓ : Level
 List-Model : Theory
 List-Model = λ where
   .Set           → List
@@ -53,7 +55,10 @@ module Decˡ {A : Type} ⦃ _ : DecEq A ⦄ where
   open Theory List-Model
 
   _∈?_ : Dec₂ (_∈ˡ_ {A = A})
-  _∈?_ a = Any.any? (a ≟_)
+  x ∈? ys = Any.any? (λ y → x ≟ y) ys
+
+  -- _⊆?_ : Dec₂ (_⊆ˡ_ {A = A})
+  -- xs ⊆? ys = {!!} -- All.all? (λ x → x ∈? ys) ?
 
   DecEq-Set : DecEq (Set A)
   DecEq-Set = DecEq-List
@@ -63,5 +68,6 @@ List-Modelᵈ = record
   { th = List-Model
   ; ∈-sp = Decˡ._∈? _
   ; _∈?_ = Decˡ._∈?_
+  -- ; _⊆?_ = Decˡ._⊆?_
   ; all? = λ P? {X} → Dec.map (mk⇔ All.lookup All.tabulate) (All.all? P? X)
   ; any? = λ P? X → Dec.map (mk⇔ find (uncurry lose ∘ proj₂)) (Any.any? P? X) }

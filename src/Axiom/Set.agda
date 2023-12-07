@@ -306,6 +306,7 @@ record Theoryᵈ : Type₁ where
   field
     ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
     _∈?_ : ⦃ DecEq A ⦄ → Decidable² (_∈_ {A = A})
+    -- _⊆?_ : ⦃ DecEq A ⦄ → Decidable² (_⊆_ {A = A})
     all? : {P : A → Type} (P? : Decidable¹ P) {X : Set A} → Dec (All P X)
     any? : {P : A → Type} (P? : Decidable¹ P) (X : Set A) → Dec (Any P X)
 
