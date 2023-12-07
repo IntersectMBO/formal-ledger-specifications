@@ -71,59 +71,41 @@ allEnactable? : ∀ e s → Dec (allEnactable e s)
 allEnactable? e s = {!!}
 -}
 
-{- verbose definitions and scratch work (by @williamdemeo) ---------------------------------}
-
 connects : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
 connects [] aid₁ aid₂ = aid₁ ≡ aid₂
 connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
 
 connects? : (l : List (GovActionID × GovActionID))(aid aid' : GovActionID) → Dec(connects l aid aid')
-connects? [] aid₁ aid₂ = (aid₁ ≟ aid₂)
+connects? [] = _≟_
 connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects? s aid₁ a₁
 ...| yes p | yes q = true because ofʸ (q , p)
 ...| _ | no ¬q = false because ofⁿ λ (q , _) → ¬q q
 ...| no ¬p | _ = false because ofⁿ λ (_ , p) → ¬p p
 
-enactable : EnactState → GovActionID → GovActionState → ℙ (GovActionID × GovActionID) → Set
-enactable eState aid (record { action = actn }) aidPairs =
+enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID × GovActionID) → Set
+enactable eState (aid , record { action = actn }) aidPairs =
   case getHashES eState actn of λ where
   nothing      → ⊤
   (just aid')  → ∃[ aidPairList ] (fromList aidPairList ⊆ aidPairs) × (connects aidPairList aid' aid)
-  -- example: the proof ([] , p , refl) works if aid' ≡ aid)
 
--- aidPairSet takes a list of (aid, aState) : (GovActionID × GovActionState) pairs and converts it
--- to a set of hashes of the corresponding pairs (aid, prevAction aState).
 aidPairSet : GovState → ℙ (GovActionID × GovActionID)
-aidPairSet aid×stateList = let open GovActionState in
+aidPairSet aid×stateList =
+  mapPartial (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ fromList aid×stateList
+  where open GovActionState
 
-  mapPartial ( λ ((aid , aState) : GovActionID × GovActionState)
-               →     (λ (s : GovActionID) → (aid , s)) <$> getHash (prevAction aState) )
-
-             ( fromList aid×stateList )  -- : ℙ (GovActionID × GovActionState)
-
-  --     f : GovActionID → GovActionID²   getHash prevActionId
-  --    ------------------------------------------------------- <$>    S = GovActionState
-  --         getHash (aid , (prevAction aState))
-
-enactable? : ∀ eState aid aState aidPairs → Dec(enactable eState aid aState aidPairs)
-enactable? eState aid aState aidPairs with getHashES eState (GovActionState.action aState)
-...| nothing = true because ofʸ tt
-...| (just aid') with any? (λ aidPairList → goal aidPairList ×-dec (connects? aidPairList aid' aid)) {!!}
-  where
-  goal : (aidPairList : List (GovActionID × GovActionID)) → Dec ({a : Σ (Σ TxId (λ x → ℕ)) (λ x → Σ TxId (λ x₁ → ℕ))} →
-         (a ∈ (proj₁ (listing aidPairList))) → (a ∈ aidPairs))
-  goal aidPairList = all? (_∈? aidPairs)
-... | yes (pairs , _ , pairsConnected) = true because (ofʸ (pairs , pairsConnected))
-... | no ¬p = false because (ofⁿ (λ (x , v , y) → ¬p (x , {!v!} , v , y) ))
+enactable? : ∀ x y z → Dec(enactable x y z)
+enactable? eState (aid , record { action = actn} ) aidPairs with getHashES eState actn
+...| nothing = yes tt
+...| (just aid')  with any? (λ as → all? (_∈? aidPairs) ×-dec (connects? as aid' aid)) {!!}
+...               | yes (pairs , _ , prsConx) = yes (pairs , prsConx)
+...               | no ¬p = no λ (x , y , z) → ¬p (x , {!!} , y , z)
 
 allEnactable : EnactState → GovState → Set
-allEnactable eState aid×stateList = ∀[ (aid , aState) ∈ fromList aid×stateList ]
-                                    enactable eState aid aState (aidPairSet aid×stateList)
+allEnactable eState aid×states =
+  ∀[ (aid , aState) ∈ fromList aid×states ] enactable eState (aid , aState) (aidPairSet aid×states)
 
 allEnactable? : ∀ eState aid×stateList → Dec (allEnactable eState aid×stateList)
-allEnactable? eState aid×stateList = {!!}
-{------------------------------------------------------------------------------------}
-
+allEnactable? eState aid×stateList = all? λ pr → enactable? eState pr (aidPairSet aid×stateList)
 
 \end{code}
 \emph{Transition relation types}
