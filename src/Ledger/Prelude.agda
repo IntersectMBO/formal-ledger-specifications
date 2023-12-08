@@ -15,21 +15,22 @@ open import Prelude public
 
 open import Ledger.Prelude.Base public
 
-open import Data.Product.Ext public
 open import Data.Maybe.Properties.Ext public
-open import Interface.ToBool public
+open import Data.Product.Ext public
+open import Interface.ComputationalRelation public
 open import Interface.HasAdd public
 open import Interface.HasAdd.Instance public
-open import Interface.HasSubtract public
-open import Interface.HasSubtract.Instance public
 open import Interface.HasOrder public
 open import Interface.HasOrder.Instance public
+open import Interface.HasSubtract public
+open import Interface.HasSubtract.Instance public
 open import Interface.Hashable public
-open import Interface.ComputationalRelation public
+open import Interface.IsCommutativeMonoid public
+open import Interface.ToBool public
+open import Ledger.Interface.HasCoin public
 open import MyDebugOptions public
 open import Tactic.Premises public
 
-open import Ledger.Interface.HasCoin public
 open import Ledger.Set renaming (∅ to ∅ˢ; ❴_❵ to ❴_❵ˢ) public
 open import Interface.HasSingleton th public
 open import Interface.HasEmptySet th public

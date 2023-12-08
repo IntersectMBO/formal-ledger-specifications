@@ -8,7 +8,7 @@
 
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
-open import Data.Nat.Properties  using (+-0-monoid; +-0-commutativeMonoid)
+open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
@@ -24,13 +24,10 @@ module Ledger.Utxo
   where
 
 instance
-  _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
-  _ = +-0-commutativeMonoid
-  _ = ExUnit-CommutativeMonoid
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = indexedSumᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)
+  HasCoin-Map .getCoin s = ∑[ x ← s ] x
 
 isPhaseTwoScriptAddress : Tx → Addr → Bool
 isPhaseTwoScriptAddress tx a =
@@ -42,7 +39,7 @@ isPhaseTwoScriptAddress tx a =
     false
 
 totExUnits : Tx → ExUnits
-totExUnits tx = indexedSumᵐ ⦃ ExUnit-CommutativeMonoid ⦄ (λ x → x .proj₂ .proj₂) (tx .wits .txrdmrs ᶠᵐ)
+totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
   where open Tx; open TxWitnesses
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
@@ -79,7 +76,7 @@ module _ (let open Tx; open TxBody) where
   outs tx = mapKeys (tx .txid ,_) (tx .txouts)
 
   balance : UTxO → Value
-  balance utxo = indexedSumᵛ ⦃ Value-CommutativeMonoid ⦄ getValue (utxo ᶠᵐ)
+  balance utxo = ∑[ x ← utxo ] getValue x
 
   cbalance : UTxO → Coin
   cbalance utxo = coin (balance utxo)

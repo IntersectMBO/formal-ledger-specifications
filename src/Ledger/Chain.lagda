@@ -4,7 +4,7 @@
 {-# OPTIONS --safe #-}
 
 open import Algebra
-open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
+open import Data.Nat.Properties using (+-0-monoid)
 
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
@@ -59,7 +59,7 @@ private variable
   d : Bool
   fut' : RatifyState
 
-instance _ = +-0-monoid; _ = +-0-commutativeMonoid
+instance _ = +-0-monoid
 
 -- The NEWEPOCH rule is actually multiple rules in one for the sake of simplicity:t also does what EPOCH used to do in previous eras
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set where
@@ -76,7 +76,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
       open Acnt acnt
 
       trWithdrawals   = esW .EnactState.withdrawals
-      totWithdrawals  = ∑[ x ← trWithdrawals ᶠᵐ ] x
+      totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         mapˢ (GovActionState.returnAddr gaSt ,_)

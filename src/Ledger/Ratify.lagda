@@ -97,7 +97,6 @@ _∧_ = _×_
 
 instance
   _ = +-0-commutativeMonoid
-  _ = +-0-monoid
 \end{code}
 \begin{figure*}[h!]
 \begin{code}
@@ -167,24 +166,24 @@ mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
 
 -- TODO: maybe this can be proven easier with the maximum?
 mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
-mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ᶠᵐ ] x) , Properties.∅-least
+mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ] x) , Properties.∅-least
   (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
   where
     open ≤-Reasoning
 
-    helper : ∀ {k v} → v > ∑[ x ← dist ᶠᵐ ] x → (k , v) ∉ dist
+    helper : ∀ {k v} → v > ∑[ x ← dist ] x → (k , v) ∉ dist
     helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
       v
         ≡˘⟨ indexedSum-singleton' $ finiteness ❴ k , v ❵ ⟩
-      ∑[ x ← ❴ k , v ❵ ᶠᵐ ] x
+      ∑[ x ← ❴ k , v ❵ ] x
         ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ ᶠᵐ}
           $ res-singleton' {m = dist} kv∈dist ⟩
-      ∑[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x
+      ∑[ x ← (dist ∣ ❴ k ❵) ] x
         ≤⟨ m≤m+n _ _ ⟩
-      ∑[ x ← (dist ∣ ❴ k ❵) ᶠᵐ ] x +ℕ ∑[ x ← (dist ∣ ❴ k ❵ ᶜ) ᶠᵐ ] x
+      ∑[ x ← (dist ∣ ❴ k ❵) ] x +ℕ ∑[ x ← (dist ∣ ❴ k ❵ ᶜ) ] x
         ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ❴ k ❵) ᶠᵐ} {(dist ∣ ❴ k ❵ ᶜ) ᶠᵐ}
           $ res-ex-disj-∪ Properties.Dec-∈-singleton ⟩
-      ∑[ x ← dist ᶠᵐ ] x
+      ∑[ x ← dist ] x
         <⟨ v>sum ⟩
       v ∎
 
@@ -350,8 +349,8 @@ abstract
   acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
     where
       acceptedStake totalStake : Coin
-      acceptedStake = ∑[ x ← (getStakeDist r cc dists ∣ votedYesHashes votes r) ᶠᵐ ]      x
-      totalStake    = ∑[ x ←  getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ᶠᵐ ] x
+      acceptedStake = ∑[ x ←  getStakeDist r cc dists ∣ votedYesHashes votes r ]       x
+      totalStake    = ∑[ x ←  getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ] x
 
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =

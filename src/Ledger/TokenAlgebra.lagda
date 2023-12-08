@@ -37,6 +37,10 @@ record TokenAlgebra : Set₁ where
     using (_≈_ ; ε ; monoid ; rawMonoid)
     renaming (Carrier to Value ; refl to reflᵛ ; _∙_ to _+ᵛ_)
 
+  instance
+    CommMonoid'-Value : IsCommutativeMonoid' _ _ Value
+    CommMonoid'-Value = toCommMonoid' Value-CommutativeMonoid
+
   open MonoidMorphisms (rawMonoid) (Monoid.rawMonoid +-0-monoid) public
 \end{code}
 \begin{code}

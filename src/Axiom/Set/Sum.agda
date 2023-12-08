@@ -6,6 +6,7 @@ open import Algebra using (CommutativeMonoid)
 
 open import Prelude hiding (ε)
 
+-- FIXME: this presents a much nicer interface if we use IsCommutativeMonoid' instead
 module Axiom.Set.Sum (th : Theory {lzero}) ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
 open Theory th
 open import Axiom.Set.Factor th
@@ -155,6 +156,3 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
 
             helper : toRel m ≡ᵉ toRel (m₁ ∪ˡᶠ m₂)
             helper = ≡ᵉ.trans (proj₁ m≡m₁∪m₂) (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj-dom')
-
-  -- syntax indexedSumᵐ (λ a → x) m = ∑ᵐ[ a ← m ] x  -- (not used; leave for now?)
-  syntax indexedSumᵛ (λ a → x) m = ∑[ a ← m ] x
