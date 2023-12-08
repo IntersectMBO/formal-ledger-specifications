@@ -4,7 +4,7 @@ import Data.List.Membership.Propositional as P
 open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Unary.Any
 
-open import Ledger.Prelude hiding (Any; any?)
+open import Ledger.Prelude hiding (Any) renaming (any? to any?ˢ)
 open import Ledger.GovStructure
 
 module Ledger.Gov.Properties (gs : _) (open GovStructure gs hiding (epoch)) where
@@ -91,3 +91,35 @@ instance
 
 Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_
 Computational-GOV = it
+
+
+-- TESTS --
+_ : sublists (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
+_ = refl
+
+_ : sublists (1 ∷ 2 ∷ 3 ∷ [])  ≡  (1 ∷ 2 ∷ 3 ∷ [])
+                                  ∷ (1 ∷ 2 ∷ []) ∷ (1 ∷ 3 ∷ [])
+                                  ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ [])
+                                  ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
+_ = refl
+
+_ : permutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ []
+_ = refl
+
+_ : permutations (1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                    ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                    ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ []) ∷ []
+_ = refl
+
+-- TESTS --
+_ : subpermutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
+_ = refl
+
+_ : subpermutations (1 ∷ 2 ∷ 3 ∷ [])  ≡  (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                         ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                         ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ [])
+                                         ∷ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ [])
+                                         ∷ (1 ∷ 3 ∷ []) ∷ (3 ∷ 1 ∷ [])
+                                         ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ []) ∷ (3 ∷ 2 ∷ [])
+                                         ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
+_ = refl

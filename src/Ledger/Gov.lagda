@@ -64,14 +64,21 @@ connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects?
 ...| no ¬p  | _      = no λ (_ , p) → ¬p p
 
 
-asList[_∣_] : (S : ℙ (GovActionID × GovActionID)) → finite S
- →       List (GovActionID × GovActionID)
-asList[ S ∣ (l , _) ] = l
+-- prepend a to every list in the given list of lists
+_+++_ : ∀{A : Set ℓ} → A → List (List A) → List (List A)
+a +++ [] = [ a ∷ [] ]
+a +++ (l ∷ ls) = (a ∷ l) ∷ (a +++ ls)
+
+sublists : ∀{A : Set ℓ} → List A → List (List A)
+sublists [] = []
+sublists (x ∷ xs) =  x +++ sublists xs  -- sublists including x
+                     ++ sublists xs        -- sublists omitting x
+-- (sublists is tested in Gov.Properties)
 
 -- insert a at every position of the input list
 _inserts_ : ∀{A : Set ℓ} → List A → A → List (List A)
 [] inserts a = (a ∷ []) ∷ []
-(x ∷ xs) inserts a = (a ∷ (x ∷ xs)) ∷ (lmap (λ l → x ∷ l) (xs inserts a))
+(x ∷ xs) inserts a = (a ∷ x ∷ xs) ∷ lmap (λ l → x ∷ l) (xs inserts a)
 
 -- insert a at every position of every input list
 foreach_inserts_ : ∀{A : Set ℓ} → List (List A) → A → List (List A)
@@ -82,29 +89,35 @@ foreach (l ∷ ls) inserts a = (l inserts a) ++ (foreach ls inserts a)
 permutations : ∀{A : Set ℓ} → List A → List (List A)
 permutations [] = []
 permutations (x ∷ xs) = foreach (permutations xs) inserts x
+-- (permutations is tested in Gov.Properties)
 
-asSingletonLists : ℙ (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
-asSingletonLists a = proj₁ (replacement (λ x → [ x ]) a)
+allPermutations : ∀{A : Set ℓ} → List (List A) → List (List A)
+allPermutations [] = []
+allPermutations (l ∷ ls) = permutations l ++ allPermutations ls
 
-allSublists : List (GovActionID × GovActionID) → ℙ List (GovActionID × GovActionID)
-allSublists l = fromList (permutations l)
+subpermutations : ∀{A : Set ℓ} → List A → List (List A)
+subpermutations = allPermutations ∘ sublists
+-- (subpermutations is tested in Gov.Properties)
 
-allSublistsFin : (S : ℙ (GovActionID × GovActionID)) → finite S → ℙ List (GovActionID × GovActionID)
-allSublistsFin S (l , _) = allSublists l
+subpermutationsOfFinSet  : (S : ℙ (GovActionID × GovActionID))
+                         → finite S → ℙ List (GovActionID × GovActionID)
+subpermutationsOfFinSet _ (l , _) = fromList (subpermutations l)
 
--- TODO: show every list of elements in aidPairs belongs to collection of lists returned by `allSublistsFin`.
-allSublistsLemma :  {aidPairs : ℙ (GovActionID × GovActionID)}(fin : finite aidPairs)
-                    {l : List (GovActionID × GovActionID)}
-                    → fromList l ⊆ aidPairs → l ∈ (allSublistsFin aidPairs fin)
+-- TODO:  show every list of elements in aidPairs belongs to collection of lists
+--        returned by `allSublistsFin`.
+allSubpermsLemma  :  {aidPairs : ℙ (GovActionID × GovActionID)}(fin : finite aidPairs)
+                     {l : List (GovActionID × GovActionID)}
+                  →  fromList l ⊆ aidPairs → l ∈ (subpermutationsOfFinSet aidPairs fin)
 
-allSublistsLemma {aidPairs} fin {l} x = {!!}
+allSubpermsLemma {aidPairs} fin {l} x = {!!}
 
 enactable? : ∀ x y aidPairs → finite aidPairs → Dec(enactable x y aidPairs)
 enactable? eState (aid , record { action = actn} ) aidPairs fin with getHashES eState actn
 ...| nothing = yes tt
-...| (just aid')  with any? (λ as → all? (_∈? aidPairs){X = fromList as} ×-dec (connects? as aid' aid)) (allSublistsFin aidPairs fin)
+...| (just aid')  with any?  ( λ as → all? (_∈? aidPairs){X = fromList as} ×-dec (connects? as aid' aid) )
+                             ( subpermutationsOfFinSet aidPairs fin )
 ...               | yes (prs , _ , prsConx) = yes (prs , prsConx)
-...               | no ¬p = no λ (x , y , z) → ¬p (x , allSublistsLemma fin y , y , z)
+...               | no ¬p = no λ (x , y , z) → ¬p (x , allSubpermsLemma fin y , y , z)
 
 allEnactable? : ∀ eState aid×stateList → Dec (allEnactable eState aid×stateList)
 allEnactable? eState aid×stateList =
@@ -234,12 +247,4 @@ _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 -- ...| nothing = nothing
 -- ...| just l = just (x ∷ l)
 --
--- -- TESTS --
--- _ : permutations (1 ∷ (2 ∷ [])) ≡ (1 ∷ (2 ∷ [])) ∷ ((2 ∷ (1 ∷ [])) ∷ [])
--- _ = refl
-
--- _ : permutations (1 ∷ (2 ∷ (3 ∷ []))) ≡ (1 ∷ (2 ∷ (3 ∷ []))) ∷ (2 ∷ (1 ∷ (3 ∷ [])))
---                                         ∷ (2 ∷ (3 ∷ (1 ∷ []))) ∷ (1 ∷ (3 ∷ (2 ∷ [])))
---                                         ∷ (3 ∷ (1 ∷ (2 ∷ []))) ∷ (3 ∷ (2 ∷ (1 ∷ []))) ∷ []
--- _ = refl
 \end{comment}
