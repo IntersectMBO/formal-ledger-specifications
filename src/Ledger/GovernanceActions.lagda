@@ -12,7 +12,7 @@ We introduce three distinct bodies that have specific functions in the new gover
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-monoid)
+open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 open import Tactic.Derive.DecEq
@@ -287,7 +287,6 @@ private variable
 
 instance
   _ = +-0-monoid
-  _ = +-0-commutativeMonoid
   unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
   unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
@@ -329,7 +328,7 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
                 record  s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
 
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
-    ∑[ x ← newWdrls ᶠᵐ ] x ≤ t
+    ∑[ x ← newWdrls ] x ≤ t
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
                 record  s { withdrawals  = newWdrls }

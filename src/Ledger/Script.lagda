@@ -42,6 +42,9 @@ record PlutusStructure : Set₁ where
     using ()
     renaming (_≈_ to _≈ᵉ_; ε to εᵉ; Carrier to ExUnits; refl to reflᵉ; _∙_ to _+ᵉˣ_)
 
+  instance
+    CommMonoid'-ExUnits : IsCommutativeMonoid' _ _ ExUnits
+    CommMonoid'-ExUnits = toCommMonoid' ExUnit-CommutativeMonoid
 
   field  _≥ᵉ_              : ExUnits → ExUnits → Set
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
