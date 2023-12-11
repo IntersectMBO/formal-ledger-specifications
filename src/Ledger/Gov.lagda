@@ -4,7 +4,6 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Data.List renaming (map to lmap)
 open import Data.List.Ext.Properties
 open import Ledger.GovStructure
 open import Data.List.Relation.Unary.Any using (here; there) renaming (Any to ∃any)
@@ -12,8 +11,6 @@ open import Data.List.Relation.Unary.Any using (here; there) renaming (Any to �
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
-open import Level using (Level)
-private variable ℓ : Level
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -205,16 +202,3 @@ _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}
 \end{figure*}
-
-
-\begin{comment}
--- insert a at the given position in the input list
--- _insert_at_ : ∀{A : Set ℓ} → List A → A → ℕ → Maybe (List A)
--- [] insert a at 0 = just [ a ]
--- [] insert a at (suc n) = nothing
--- l insert a at 0 = just (a ∷ l)
--- (x ∷ xs) insert a at (suc n) with (xs insert a at n)
--- ...| nothing = nothing
--- ...| just l = just (x ∷ l)
---
-\end{comment}

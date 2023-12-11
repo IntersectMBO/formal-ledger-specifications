@@ -4,7 +4,7 @@ import Data.List.Membership.Propositional as P
 open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Unary.Any
 
-open import Ledger.Prelude hiding (Any) renaming (any? to any?ˢ)
+open import Ledger.Prelude hiding (Any; any?)
 open import Ledger.GovStructure
 
 module Ledger.Gov.Properties (gs : _) (open GovStructure gs hiding (epoch)) where
