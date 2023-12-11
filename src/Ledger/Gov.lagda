@@ -40,19 +40,13 @@ enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID ×
 enactable eState (aid , record { action = actn }) aidPairs =
   case getHashES eState actn of λ where
   nothing      → ⊤
-  (just aid')  → ∃[ aidPairList ] (fromList aidPairList ⊆ aidPairs) × (connects aidPairList aid' aid)
-
-mapᶠ : {A B : Set} → (A → FinSet B) → ℙ A → ℙ B
-mapᶠ f a = proj₁ (unions (mapˢ (proj₁ ∘ f) a))
+  (just aid')  → ∃[ aidPairList ] (fromList aidPairList ⊆ aidPairs) × connects aidPairList aid' aid
 
 aidPairList : GovState → List (GovActionID × GovActionID)
-aidPairList aid×stateList = mapMaybe {B = GovActionID × GovActionID} f aid×stateList
+aidPairList aid×stateList =
+  mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×stateList
   where
   open GovActionState
-  f : GovActionID × GovActionState → Maybe (GovActionID × GovActionID)
-  f (aid , aState) with getHash (prevAction aState)
-  ...| nothing = nothing
-  ...| (just h) = just (aid , h)
 
 allEnactable : EnactState → GovState → Set
 allEnactable eState aid×states =
@@ -64,7 +58,6 @@ connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects?
 ...| yes p  | yes q  = yes (q , p)
 ...| _      | no ¬q  = no λ (q , _) → ¬q q
 ...| no ¬p  | _      = no λ (_ , p) → ¬p p
-
 
 subpermutationsOfFinSet  : (S : ℙ (GovActionID × GovActionID))
                          → finite S → ℙ List (GovActionID × GovActionID)
