@@ -6,6 +6,8 @@
 open import Ledger.Prelude
 open import Data.List renaming (map to lmap)
 open import Ledger.GovStructure
+open import Data.List.Relation.Unary.Any using (here; there) renaming (Any to ∃any)
+
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
@@ -47,10 +49,26 @@ aidPairSet aid×stateList =
   mapPartial (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ fromList aid×stateList
   where open GovActionState
 
+mapᶠ : {A B : Set} → (A → FinSet B) → ℙ A → ℙ B
+mapᶠ f a = proj₁ (unions (mapˢ (proj₁ ∘ f) a))
+
+concatMapᶠˢ : {A B : Set} → (A → FinSet B) → ℙ A → FinSet B
+concatMapᶠˢ {A}{B} f a = (mapᶠ f a) , {!fl!} , {!!}
+  where
+  fl : ℙ List _
+  fl = (proj₁ ∘₂ replacement) (proj₁ ∘ proj₂ ∘ f) a
+
+mapPartialFin : ∀{A B : Set} → (A → Maybe B) → ℙ A → FinSet B
+mapPartialFin f = concatMapᶠˢ (partialToFinSet f)
+
+aidPairFinSet : GovState → FinSet (GovActionID × GovActionID)
+aidPairFinSet aid×stateList =
+  mapPartialFin{B = GovActionID × GovActionID} (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ fromList aid×stateList
+  where open GovActionState
+
 -- TODO: show the set returned by aidPairSet is finite
-aidPairSetIsFinite : ∀{x} → finite (aidPairSet x)
-aidPairSetIsFinite {[]} = [] , λ {a} → mk⇔ {!!} {!!}
-aidPairSetIsFinite {x ∷ xs} = {!!}
+aidPairSetIsFinite : ∀{x : GovState} → finite (aidPairSet x)
+aidPairSetIsFinite {x} = {!!} -- proj₂ (aidPairFinSet x)
 
 allEnactable : EnactState → GovState → Set
 allEnactable eState aid×states =
@@ -63,19 +81,19 @@ connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects?
 ...| _      | no ¬q  = no λ (q , _) → ¬q q
 ...| no ¬p  | _      = no λ (_ , p) → ¬p p
 
-
--- prepend a to every list in the given list of lists
+-- prepend a to every input list
 _+++_ : ∀{A : Set ℓ} → A → List (List A) → List (List A)
 a +++ [] = [ a ∷ [] ]
 a +++ (l ∷ ls) = (a ∷ l) ∷ (a +++ ls)
 
+-- return all sublists of the given list
 sublists : ∀{A : Set ℓ} → List A → List (List A)
 sublists [] = []
 sublists (x ∷ xs) =  x +++ sublists xs  -- sublists including x
-                     ++ sublists xs        -- sublists omitting x
+                     ++ sublists xs     -- sublists omitting x
 -- (sublists is tested in Gov.Properties)
 
--- insert a at every position of the input list
+-- insert a at every position of the given list
 _inserts_ : ∀{A : Set ℓ} → List A → A → List (List A)
 [] inserts a = (a ∷ []) ∷ []
 (x ∷ xs) inserts a = (a ∷ x ∷ xs) ∷ lmap (λ l → x ∷ l) (xs inserts a)
@@ -86,15 +104,18 @@ foreach [] inserts a = [] inserts a
 foreach (l ∷ []) inserts a = l inserts a
 foreach (l ∷ ls) inserts a = (l inserts a) ++ (foreach ls inserts a)
 
+-- return all permutations of the given list
 permutations : ∀{A : Set ℓ} → List A → List (List A)
 permutations [] = []
 permutations (x ∷ xs) = foreach (permutations xs) inserts x
 -- (permutations is tested in Gov.Properties)
 
+-- return all permutations of every input list
 allPermutations : ∀{A : Set ℓ} → List (List A) → List (List A)
 allPermutations [] = []
 allPermutations (l ∷ ls) = permutations l ++ allPermutations ls
 
+-- return all permutations of every sublist of the given list
 subpermutations : ∀{A : Set ℓ} → List A → List (List A)
 subpermutations = allPermutations ∘ sublists
 -- (subpermutations is tested in Gov.Properties)
