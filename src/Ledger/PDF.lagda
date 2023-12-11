@@ -14,13 +14,13 @@ module Ledger.PDF where
 open import Ledger.BaseTypes
 open import Ledger.Introduction
 open import Ledger.Crypto
-open import Ledger.Epoch
+open import Ledger.Types.Epoch
 open import Ledger.Address
 open import Ledger.Script
 open import Ledger.ScriptValidation
 open import Ledger.PParams
 
-open import Ledger.GovStructure
+open import Ledger.Types.GovStructure
 open import Ledger.GovernanceActions
 open import Ledger.Deleg
 

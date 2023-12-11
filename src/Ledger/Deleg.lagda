@@ -4,7 +4,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.GovStructure
+open import Ledger.Types.GovStructure
 
 module Ledger.Deleg (gs : _) (open GovStructure gs) where
 

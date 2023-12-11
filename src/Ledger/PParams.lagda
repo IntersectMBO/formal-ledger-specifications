@@ -14,9 +14,9 @@ open import Relation.Nullary.Decidable
 open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude
-open import Ledger.Epoch
 open import Ledger.Crypto
 open import Ledger.Script
+open import Ledger.Types.Epoch
 
 module Ledger.PParams
   (crypto : Crypto )
