@@ -33,13 +33,13 @@ instance
   HasCoin-Map .getCoin s = indexedSumᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)
 
 isPhaseTwoScriptAddress : Tx → Addr → Bool
-isPhaseTwoScriptAddress tx a
-  with isScriptAddr? a
-... | no  _ = false
-... | yes p
-  with lookupScriptHash (getScriptHash a p) tx
-... | nothing = false
-... | just s  = isP2Script s
+isPhaseTwoScriptAddress tx a =
+  if isScriptAddr a then
+    (λ {p} → if lookupScriptHash (getScriptHash a p) tx
+                 then (λ {s} → isP2Script s)
+                 else false)
+  else
+    false
 
 totExUnits : Tx → ExUnits
 totExUnits tx = indexedSumᵐ ⦃ ExUnit-CommutativeMonoid ⦄ (λ x → x .proj₂ .proj₂) (tx .wits .txrdmrs ᶠᵐ)
@@ -88,7 +88,11 @@ module _ (let open Tx; open TxBody) where
   coinPolicies = policies (inject 1)
 
   isAdaOnlyᵇ : Value → Bool
-  isAdaOnlyᵇ v = ¿ (policies v) ≡ᵉ coinPolicies ¿ᵇ
+  isAdaOnlyᵇ v =
+    if (policies v) ≡ᵉ coinPolicies then
+      true
+    else
+      false
 
   minfee : PParams → Tx → Coin
   minfee pp tx  = pp .a * tx .body .txsize + pp .b
@@ -155,7 +159,7 @@ _≥ᵇ_ = flip _≤ᵇ_
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
                   ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                  =>ᵇ ( allᵇ (isVKeyAddr? ∘ proj₁) collateralRange
+                  =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
                       ∧ isAdaOnlyᵇ bal
                       ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
                       ∧ not (≟-∅ᵇ collateral)

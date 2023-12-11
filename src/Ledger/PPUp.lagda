@@ -3,14 +3,10 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra
-open import Algebra.Literals
-import Data.Unit.Polymorphic
 open import Agda.Builtin.FromNat
-import Data.Nat as ℕ
-open import Data.Nat.Properties using (m+1+n≢m)
-open import Data.Nat.Literals
-open import Data.Product.Properties
+open import Algebra; open import Algebra.Literals
+import Data.Product.Properties as ×
+import Data.Nat as ℕ; import Data.Nat.Properties as ℕ; import Data.Nat.Literals as ℕ
 
 open import Ledger.Prelude hiding (_*_)
 open import Ledger.Transaction
@@ -22,9 +18,7 @@ open Semiring-Lit Slotʳ
 
 private variable m n : ℕ
 
-instance
-  _ = Data.Nat.Literals.number
-  _ = Data.Unit.Polymorphic.tt
+instance _ = ℕ.number
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -66,7 +60,7 @@ instance
                                            canFollowMinor → ¬p₁ refl
   ... | no ¬p    | yes refl = yes canFollowMinor
   ... | yes refl | no ¬p    = yes canFollowMajor
-  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
+  ... | yes refl | yes p    = ⊥-elim $ ℕ.m+1+n≢m m $ ×.×-≡,≡←≡ p .proj₁
 
 data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → PPUpdateState → Set where
 \end{code}
