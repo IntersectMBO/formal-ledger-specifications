@@ -174,9 +174,10 @@ the transaction body are:
 
   lookupScriptHash : ScriptHash → Tx → Maybe Script
   lookupScriptHash sh tx =
-    sh ∈ mapˢ proj₁ (m ˢ)
-      ？ just (lookupᵐ m sh)
-      ∶ nothing
+    if sh ∈ mapˢ proj₁ (m ˢ) then
+      just (lookupᵐ m sh)
+    else
+      nothing
     where m = setToHashMap $ tx .Tx.wits .TxWitnesses.scripts
 
   isP2Script : Script → Bool

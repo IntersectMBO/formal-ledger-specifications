@@ -10,7 +10,7 @@ open import Level public
 open import Function public
 
 open import Data.Bool public
-  hiding (_≟_; _≤_; _≤?_; _<_; _<?_)
+  hiding (_≟_; _≤_; _≤?_; _<_; _<?_; if_then_else_)
 open import Data.Empty public
 open import Data.List public
   hiding (align; alignWith; fromMaybe; map; zip; zipWith)

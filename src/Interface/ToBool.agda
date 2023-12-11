@@ -10,14 +10,15 @@ private variable
 record ToBool′ (A : Set ℓ) (P 𝕋 𝔽 : A → Set ℓ′) : Set (ℓ ⊔ˡ ℓ′) where
   field decide : (a : A) → ⦃ P a ⦄ → 𝕋 a ⊎ 𝔽 a
 
-  infix -10 _？_∶_
-  _？_∶_ : (a : A) ⦃ _ : P a ⦄ → ({𝕋 a} → X) → ({𝔽 a} → X) → X
-  (a ？ t ∶ f) with decide a
-  ... | inj₁ 𝕥 = t {𝕥}
-  ... | inj₂ 𝕗 = f {𝕗}
+  infix -10 if_then_else_
+  if_then_else_ : (a : A) ⦃ _ : P a ⦄ → ({𝕋 a} → X) → ({𝔽 a} → X) → X
+  if a then t else f =
+    case decide a of λ where
+      (inj₁ 𝕥) → t {𝕥}
+      (inj₂ 𝕗) → f {𝕗}
 
   toBool : (a : A) ⦃ _ : P a ⦄ → Bool
-  toBool a = a ？ true ∶ false
+  toBool a = if a then true else false
 open ToBool′ ⦃...⦄ public
 
 ToBool : (A : Set ℓ) (𝕋 𝔽 : A → Set ℓ′) → Set (ℓ ⊔ˡ ℓ′)

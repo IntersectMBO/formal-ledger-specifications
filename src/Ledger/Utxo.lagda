@@ -34,11 +34,12 @@ instance
 
 isPhaseTwoScriptAddress : Tx → Addr → Bool
 isPhaseTwoScriptAddress tx a =
-  isScriptAddr a
-    ？ (λ {p} → lookupScriptHash (getScriptHash a p) tx
-                 ？ (λ {s} → isP2Script s)
-                 ∶ false)
-    ∶ false
+  if isScriptAddr a then
+    (λ {p} → if lookupScriptHash (getScriptHash a p) tx
+                 then (λ {s} → isP2Script s)
+                 else false)
+  else
+    false
 
 totExUnits : Tx → ExUnits
 totExUnits tx = indexedSumᵐ ⦃ ExUnit-CommutativeMonoid ⦄ (λ x → x .proj₂ .proj₂) (tx .wits .txrdmrs ᶠᵐ)
@@ -88,9 +89,10 @@ module _ (let open Tx; open TxBody) where
 
   isAdaOnlyᵇ : Value → Bool
   isAdaOnlyᵇ v =
-    (policies v) ≡ᵉ coinPolicies
-      ？ true
-      ∶ false
+    if (policies v) ≡ᵉ coinPolicies then
+      true
+    else
+      false
 
   minfee : PParams → Tx → Coin
   minfee pp tx  = pp .a * tx .body .txsize + pp .b

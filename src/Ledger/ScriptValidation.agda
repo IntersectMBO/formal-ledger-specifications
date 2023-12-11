@@ -114,24 +114,27 @@ UTxOSH  = TxIn ⇀ (TxOut × ScriptHash)
 
 scriptOutWithHash : TxIn → TxOut → Maybe (TxOut × ScriptHash)
 scriptOutWithHash txin (addr , r) =
-  isScriptAddr addr
-    ？ (λ {p} → just ((addr , r) , getScriptHash addr p))
-    ∶ nothing
+  if isScriptAddr addr then
+    (λ {p} → just ((addr , r) , getScriptHash addr p))
+  else
+    nothing
 
 scriptOutsWithHash : UTxO → UTxOSH
 scriptOutsWithHash utxo = mapMaybeWithKeyᵐ scriptOutWithHash utxo
 
 spendScripts : TxIn → UTxOSH → Maybe (ScriptPurpose × ScriptHash)
 spendScripts txin utxo =
-  txin ∈ dom utxo
-    ？ (λ {p} → just (Spend txin , proj₂ (lookupᵐ utxo txin)))
-    ∶ nothing
+  if txin ∈ dom utxo then
+    (λ {p} → just (Spend txin , proj₂ (lookupᵐ utxo txin)))
+  else
+    nothing
 
 rwdScripts : RwdAddr → Maybe (ScriptPurpose × ScriptHash)
 rwdScripts a =
-  isScriptRwdAddr a
-    ？ (λ where {SHisScript sh} → just (Rwrd a , sh))
-    ∶ nothing
+  if isScriptRwdAddr a then
+    (λ where {SHisScript sh} → just (Rwrd a , sh))
+  else
+    nothing
 
 certScripts : DCert → Maybe (ScriptPurpose × ScriptHash)
 certScripts d with ¿ DelegateOrDeReg d ¿

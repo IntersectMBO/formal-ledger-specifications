@@ -60,7 +60,7 @@ private variable
 addVote : GovState → GovActionID → GovRole → Credential → Vote → GovState
 addVote s aid r kh v = map modifyVotes s
   where modifyVotes = λ (gid , s') → gid , record s'
-          { votes = gid ≡ aid ？ insert (votes s') (r , kh) v ∶ votes s'}
+          { votes = if gid ≡ aid then insert (votes s') (r , kh) v else votes s'}
 
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
