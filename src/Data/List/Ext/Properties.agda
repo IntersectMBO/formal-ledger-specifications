@@ -6,6 +6,7 @@ import Data.List.Relation.Unary.All as All
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
+open import Data.List using () renaming (map to lmap)
 open import Data.List.Membership.Propositional
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Membership.Propositional.Properties
@@ -62,3 +63,78 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (here refl) = inj₁ refl
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj₁ (All.lookup x b∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (All.lookup x a∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
+
+
+-- Permutations of lists (used, e.g., in Ledger.Gov module) ---------------------------------
+
+-- prepend a to every input list
+_+++_ : ∀{ℓ}{A : Set ℓ} → A → List (List A) → List (List A)
+a +++ [] = [ a ∷ [] ]
+a +++ (l ∷ ls) = (a ∷ l) ∷ (a +++ ls)
+
+-- return all sublists of the given list
+sublists : ∀{ℓ}{A : Set ℓ} → List A → List (List A)
+sublists [] = []
+sublists (x ∷ xs) =  x +++ sublists xs  -- sublists including x
+                     ++ sublists xs     -- sublists omitting x
+-- (sublists is tested in Gov.Properties)
+
+-- insert a at every position of the given list
+_inserts_ : ∀{ℓ}{A : Set ℓ} → List A → A → List (List A)
+[] inserts a = (a ∷ []) ∷ []
+(x ∷ xs) inserts a = (a ∷ x ∷ xs) ∷ lmap (λ l → x ∷ l) (xs inserts a)
+
+-- insert a at every position of every input list
+foreach_inserts_ : ∀{ℓ}{A : Set ℓ} → List (List A) → A → List (List A)
+foreach [] inserts a = [] inserts a
+foreach (l ∷ []) inserts a = l inserts a
+foreach (l ∷ ls) inserts a = (l inserts a) ++ (foreach ls inserts a)
+
+-- return all permutations of the given list
+permutations : ∀{ℓ}{A : Set ℓ} → List A → List (List A)
+permutations [] = []
+permutations (x ∷ xs) = foreach (permutations xs) inserts x
+-- (permutations is tested in Gov.Properties)
+
+
+-- return all permutations of every input list
+allPermutations : ∀{ℓ}{A : Set ℓ} → List (List A) → List (List A)
+allPermutations [] = []
+allPermutations (l ∷ ls) = permutations l ++ allPermutations ls
+
+-- return all permutations of every sublist of the given list
+subpermutations : ∀{ℓ}{A : Set ℓ} → List A → List (List A)
+subpermutations = allPermutations ∘ sublists
+-- (subpermutations is tested in Gov.Properties)
+
+
+-- TESTS --
+_ : sublists (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
+_ = refl
+
+_ : sublists (1 ∷ 2 ∷ 3 ∷ [])  ≡  (1 ∷ 2 ∷ 3 ∷ [])
+                                  ∷ (1 ∷ 2 ∷ []) ∷ (1 ∷ 3 ∷ [])
+                                  ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ [])
+                                  ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
+_ = refl
+
+_ : permutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ []
+_ = refl
+
+_ : permutations (1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                    ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                    ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ []) ∷ []
+_ = refl
+
+-- TESTS --
+_ : subpermutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
+_ = refl
+
+_ : subpermutations (1 ∷ 2 ∷ 3 ∷ [])  ≡  (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                         ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                         ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ [])
+                                         ∷ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ [])
+                                         ∷ (1 ∷ 3 ∷ []) ∷ (3 ∷ 1 ∷ [])
+                                         ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ []) ∷ (3 ∷ 2 ∷ [])
+                                         ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
+_ = refl
