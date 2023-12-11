@@ -65,6 +65,7 @@ open import Ledger.EssentialAgda
 \include{Ledger/Utxow}
 \include{Ledger/Ledger}
 \include{Ledger/Ratify}
+\include{Ledger/Epoch}
 \include{Ledger/Chain}
 
 \section{Properties}
