@@ -17,7 +17,7 @@ open import Prelude; open Equivalence
 
 open import Tactic.Cong                 using (cong!)
 open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
-open import Tactic.MonoidSolver         using (solve-macro)
+open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
 open import Ledger.Prelude; open Properties; open Computational ⦃...⦄

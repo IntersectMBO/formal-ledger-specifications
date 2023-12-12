@@ -11,12 +11,15 @@ module _ {a} {A : Set a} where
   module _ {_≈_ : Rel A a} where
 
     record HasPreorder : Set (sucˡ a) where
-      infix 4 _≤_ _<_
+      infix 4 _≤_ _<_ _≥_ _>_
       field
         _≤_ _<_       : Rel A a
         ≤-isPreorder  : IsPreorder _≈_ _≤_
         <-irrefl      : Irreflexive _≈_ _<_
         ≤⇔<∨≈         : ∀ {x y} → x ≤ y ⇔ (x < y ⊎ x ≈ y)
+
+      _≥_ = flip _≤_
+      _>_ = flip _<_
 
       open IsPreorder ≤-isPreorder public
         using ()
