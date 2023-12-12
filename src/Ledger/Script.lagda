@@ -1,6 +1,8 @@
 \section{Scripts}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
+{-# OPTIONS -v tc.unquote:10 #-}
+{-# OPTIONS -v tactic.inline:100 #-}
 
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Morphism
@@ -11,8 +13,9 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 open import Data.List.Relation.Unary.MOf
 
 open import Tactic.Derive.DecEq
+open import Tactic.Inline
 
-open import Ledger.Prelude hiding (All; Any; all?; _∷ʳ_; uncons; _⊆_)
+open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Epoch
 open import Ledger.Crypto
 
@@ -154,12 +157,23 @@ module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
           → MOf m go xs
         evalMOf˘ (evalMOf p) = p
 
+        go? : Decidable¹ go
+        go? = λ where
+          (RequireAllOf ss)     → mapDec evalAll evalAll˘ (all-go? ss)
+          (RequireAnyOf ss)     → mapDec evalAny evalAny˘ (any-go? ss)
+          (RequireSig x)        → mapDec evalSig evalSig˘ dec
+          (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
+          (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
+          (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
+
         -- ** inlining `MOf?` here to please the termination checker
-        MOf?' : ∀ m xs → Dec (MOf m go xs)
-        MOf?' zero        _        = yes (mOf [] refl []⊆ [])
-        MOf?' (suc _)     []       = no λ where (mOf (_ ∷ _) len≡ () _)
-        MOf?' m@(suc m-1) (x ∷ xs)
-          with MOf?' m xs
+        MOf-go? : ∀ m xs → Dec (MOf m go xs)
+        -- ** `inline` tactic does not currently work with `with`-statements
+        -- unquoteDef MOf-go? = inline MOf-go? (quoteTerm (MOf? go?))
+        MOf-go? zero        _        = yes (mOf [] refl []⊆ [])
+        MOf-go? (suc _)     []       = no λ where (mOf (_ ∷ _) len≡ () _)
+        MOf-go? m@(suc m-1) (x ∷ xs)
+          with MOf-go? m xs
         ... | yes (mOf _ len≡ ⊆xs        Pxs')
             = yes (mOf _ len≡ (x ∷ʳ ⊆xs) Pxs')
         ... | no ¬p
@@ -175,28 +189,15 @@ module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
                         → mOf _ (suc-injective len≡) ⊆xs Pxs'
                        (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs)
                         → ⊥-elim $ ¬p (mOf _ len≡ ⊆xs Pxs))
-              (MOf?' m-1 xs)
+              (MOf-go? m-1 xs)
 
         -- ** inlining `all?` here to please the termination checker
-        all?' : Decidable¹ (All go)
-        all?' []       = yes []
-        all?' (x ∷ xs) = mapDec (uncurry _∷_) uncons (go? x ×-dec all?' xs)
+        all-go? : Decidable¹ (All go)
+        unquoteDef all-go? = inline all-go? (quoteTerm (all? go?))
 
         -- ** inlining `any?` here to please the termination checker
-        any?' : Decidable¹ (Any go)
-        any?' []       = no λ()
-        any?' (x ∷ xs) = mapDec fromSum toSum (go? x ⊎-dec any?' xs)
-
-        -- ** TODO: meta-program that does the above inlining for us
-
-        go? : ∀ tl → Dec (go tl)
-        go? = λ where
-          (RequireAllOf ss)     → mapDec evalAll evalAll˘ (all?' ss)
-          (RequireAnyOf ss)     → mapDec evalAny evalAny˘ (any?' ss)
-          (RequireSig x)        → mapDec evalSig evalSig˘ dec
-          (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
-          (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
-          (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf?' m xs)
+        any-go? : Decidable¹ (Any go)
+        unquoteDef any-go? = inline any-go? (quoteTerm (any? go?))
 
   unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 
