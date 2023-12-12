@@ -3,11 +3,12 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (_∈?_; any?; all?; All; Any)
 open import Data.List.Ext.Properties
+open import Data.List.Relation.Unary.Any using (here; there; any?; Any)
+open import Data.List.Relation.Unary.All using (all?; All)
 open import Ledger.GovStructure
-open import Data.List.Relation.Unary.Any using (here; there) renaming (Any to ∃any)
-
+-- open import Data.List.Membership.DecPropositional _≟_
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
@@ -36,52 +37,37 @@ connects : List (GovActionID × GovActionID) → GovActionID → GovActionID →
 connects [] aid₁ aid₂ = aid₁ ≡ aid₂
 connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
 
-enactable : EnactState → GovActionID × GovActionState → ℙ (GovActionID × GovActionID) → Set
+enactable : EnactState → GovActionID × GovActionState → List (GovActionID × GovActionID) → Set
 enactable eState (aid , record { action = actn }) aidPairs =
   case getHashES eState actn of λ where
   nothing      → ⊤
-  (just aid')  → ∃[ aidPairList ] (fromList aidPairList ⊆ aidPairs) × connects aidPairList aid' aid
+  (just aid')  → Any (λ l → connects l aid' aid) (subpermutations aidPairs)
 
-aidPairList : GovState → List (GovActionID × GovActionID)
-aidPairList aid×stateList =
+aidPairs : GovState → List (GovActionID × GovActionID)
+aidPairs aid×stateList =
   mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×stateList
   where
   open GovActionState
 
 allEnactable : EnactState → GovState → Set
-allEnactable eState aid×states =
-  ∀[ (aid , aState) ∈ fromList aid×states ] enactable eState (aid , aState) (fromList (aidPairList aid×states))
+allEnactable eState aid×stateList =
+  All (λ as → enactable eState as (aidPairs aid×stateList)) aid×stateList
 
-connects? : (l : List (GovActionID × GovActionID))(aid aid' : GovActionID) → Dec(connects l aid aid')
+connects? : ∀ l aid aid' → Dec(connects l aid aid')
 connects? [] = _≟_
 connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects? s aid₁ a₁
 ...| yes p  | yes q  = yes (q , p)
 ...| _      | no ¬q  = no λ (q , _) → ¬q q
 ...| no ¬p  | _      = no λ (_ , p) → ¬p p
 
-subpermutationsOfFinSet  : (S : ℙ (GovActionID × GovActionID))
-                         → finite S → ℙ List (GovActionID × GovActionID)
-subpermutationsOfFinSet _ (l , _) = fromList (subpermutations l)
-
--- TODO:  show every list of elements in aidPairs belongs to collection of lists
---        returned by `allSublistsFin`.
-allSubpermsLemma  :  {aidPairs : ℙ (GovActionID × GovActionID)}(fin : finite aidPairs)
-                     {l : List (GovActionID × GovActionID)}
-                  →  fromList l ⊆ aidPairs → l ∈ (subpermutationsOfFinSet aidPairs fin)
-
-allSubpermsLemma {aidPairs} fin {l} x = {!!}
-
-enactable? : ∀ x y aidPairs → finite aidPairs → Dec(enactable x y aidPairs)
-enactable? eState (aid , record { action = actn} ) aidPairs fin with getHashES eState actn
+enactable? : ∀ estate aid → (aidPairList : List (GovActionID × GovActionID)) → Dec(enactable estate aid aidPairList)
+enactable? eState (aid , record { action = actn} ) aidPairList with getHashES eState actn
 ...| nothing = yes tt
-...| (just aid')  with any?  ( λ as → all? (_∈? aidPairs){X = fromList as} ×-dec (connects? as aid' aid) )
-                             ( subpermutationsOfFinSet aidPairs fin )
-...               | yes (prs , _ , prsConx) = yes (prs , prsConx)
-...               | no ¬p = no λ (x , y , z) → ¬p (x , allSubpermsLemma fin y , y , z)
+...| (just aid') = any? (λ as → connects? as aid' aid) (subpermutations aidPairList)
 
 allEnactable? : ∀ eState aid×stateList → Dec (allEnactable eState aid×stateList)
-allEnactable? eState aid×stateList =
-  all? λ pr → enactable? eState pr (fromList (aidPairList aid×stateList)) fromList-finite
+allEnactable? eState aid×stateList = all? (λ x → enactable? eState x (aidPairs aid×stateList)) aid×stateList
+
 \end{code}
 \emph{Transition relation types}
 \begin{code}[hide]

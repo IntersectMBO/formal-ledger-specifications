@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
-open import Prelude
+open import Prelude hiding (any; all)
 
-import Data.List.Relation.Unary.All as All
+-- import Data.List.Relation.Unary.All as All
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
@@ -14,6 +14,7 @@ open import Data.List.Relation.Binary.BagAndSetEquality
 open import Data.List.Relation.Binary.Disjoint.Propositional
 open import Data.List.Relation.Binary.Permutation.Propositional
 open import Data.List.Relation.Unary.AllPairs
+open import Data.List.Relation.Unary.All as All
 open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
 open import Function.Bundles
@@ -54,6 +55,9 @@ module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
     where open R.EquationalReasoning
           helper : ∀ {l l' a} → a ∈ l ++ l' ⇔ (a ∈ l ⊎ a ∈ l')
           helper = mk⇔ (∈-++⁻ _) Data.Sum.[ ∈-++⁺ˡ , ∈-++⁺ʳ _ ]
+
+  _∈?_ : (x : A) → (l : List A) → Dec(x ∈ˡ l)
+  x ∈? l = any? (x ≟_) l
 
 -- TODO: stdlib?
 AllPairs⇒≡∨R∨Rᵒᵖ : ∀ {ℓ ℓ'} {A : Set ℓ} {R : A → A → Set ℓ'} {a b l}
@@ -138,3 +142,4 @@ _ : subpermutations (1 ∷ 2 ∷ 3 ∷ [])  ≡  (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 �
                                          ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ []) ∷ (3 ∷ 2 ∷ [])
                                          ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
 _ = refl
+
