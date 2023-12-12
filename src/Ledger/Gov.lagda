@@ -3,14 +3,17 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_∈?_; any?; all?; All; Any)
-open import Data.List.Ext.Properties
-open import Data.List.Relation.Unary.Any using (any?; Any)
-open import Data.List.Relation.Unary.All using (all?; All)
 open import Ledger.GovStructure
+
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
+open import Ledger.Prelude hiding (_∈?_; any?; all?; All; Any)
 open import Ledger.GovernanceActions gs hiding (yes; no)
+
+open import Data.List.Ext.Properties using (subpermutations)
+open import Data.List.Relation.Unary.Any using (any?; Any)
+open import Data.List.Relation.Unary.All using (all?; All)
+
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
