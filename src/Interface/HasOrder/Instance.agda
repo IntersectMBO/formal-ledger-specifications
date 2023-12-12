@@ -23,3 +23,13 @@ instance
     ⊎.[ <⇒≤ , ≤-reflexive ] }
   ℤ-hasPartialOrder = HasPartialOrder ∋ record { ≤-antisym = Int.≤-antisym }
   ℤ-hasDecPartialOrder = HasDecPartialOrder {A = ℤ} ∋ record {}
+
+  open import Data.Rational using (ℚ)
+  import Data.Rational.Properties as Rat hiding (_≟_)
+
+  ℚ-Dec-≤ = ⁇² Rat._≤?_
+  ℚ-Dec-< = ⁇² Rat._<?_
+
+  ℚ-hasPreorder = hasPreorderFromNonStrict Rat.≤-isPreorder _≟_
+  ℚ-hasPartialOrder = HasPartialOrder ∋ record { ≤-antisym = Rat.≤-antisym }
+  ℚ-hasDecPartialOrder = HasDecPartialOrder {A = ℚ} ∋ record {}
