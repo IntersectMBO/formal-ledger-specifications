@@ -164,19 +164,18 @@ the transaction body are:
   getValue (_ , v , _) = v
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom (utxo ↾' to-sp (isVKeyAddr? ∘ proj₁))
+  txinsVKey txins utxo = txins ∩ dom (utxo ↾' (isVKeyAddr ∘ proj₁))
 
   scriptOuts : UTxO → UTxO
-  scriptOuts utxo = filterᵐ (sp-∘ (to-sp isScriptAddr?)
-                             λ { (_ , addr , _) → addr}) utxo
+  scriptOuts utxo = filterᵐ (λ (_ , addr , _) → isScriptAddr addr) utxo
 
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
   lookupScriptHash : ScriptHash → Tx → Maybe Script
   lookupScriptHash sh tx =
-    ifᵈ sh ∈ mapˢ proj₁ (m ˢ) then
-      just $ lookupᵐ m sh
+    if sh ∈ mapˢ proj₁ (m ˢ) then
+      just (lookupᵐ m sh)
     else
       nothing
     where m = setToHashMap $ tx .Tx.wits .TxWitnesses.scripts

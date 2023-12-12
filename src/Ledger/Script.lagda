@@ -4,14 +4,15 @@
 
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Morphism
-open import Data.List.Relation.Unary.All
+open import Data.List.Relation.Unary.All using (All; []; _∷_; all?; uncons)
 open import Data.List.Relation.Unary.Any
-open import Data.List.Relation.Binary.Sublist.Propositional as S
-open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
+
+open import Data.List.Relation.Unary.MOf
 
 open import Tactic.Derive.DecEq
 
-open import Ledger.Prelude hiding (All; Any)
+open import Ledger.Prelude hiding (All; Any; all?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Epoch
 open import Ledger.Crypto
 
@@ -94,13 +95,16 @@ data Timelock : Set where
   RequireTimeExpire  : Slot               → Timelock
 \end{code}
 \begin{code}[hide]
-module _ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot → Slot → Bool) where
+module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
   private variable
     s : Timelock
     ss ss' : List Timelock
-    k : ℕ
+    k m : ℕ
     x : KeyHash
     a l r : Slot
+
+  open import Data.List.Relation.Binary.Sublist.Ext
+  import Data.Maybe.Relation.Unary.Any as M
 \end{code}
 \begin{code}
   module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where
@@ -109,47 +113,97 @@ module _ (_≤_ : Slot → Slot → Set) (_≤ᵇ_ : Slot → Slot → Bool) whe
                → evalTimelock (RequireAllOf ss)
       evalAny  : Any evalTimelock ss
                → evalTimelock (RequireAnyOf ss)
-      evalMOf  : ss' S.⊆ ss → All evalTimelock ss'
-               → evalTimelock (RequireMOf (length ss') ss)
+      evalMOf  : MOf m evalTimelock ss
+               → evalTimelock (RequireMOf m ss)
       evalSig  : x ∈ khs
                → evalTimelock (RequireSig x)
-      evalTSt  : I .proj₁ ≡ just l → a ≤ l
+      evalTSt  : M.Any (a ≤_) (I .proj₁)
                → evalTimelock (RequireTimeStart a)
-      evalTEx  : I .proj₂ ≡ just r → r ≤ a
-               → evalTimelock (RequireTimeStart a)
+      evalTEx  : M.Any (_≤ a) (I .proj₂)
+               → evalTimelock (RequireTimeExpire a)
 \end{code}
 \caption{Timelock scripts and their evaluation}
 \label{fig:defs:timelock}
 \end{figure*}
 
 \begin{code}[hide]
-  module _ (khs : ℙ KeyHash) where
-    evalTimelockᵇ : (Maybe Slot × Maybe Slot) → Timelock → Bool
-    evalTimelockᵇ I (RequireAllOf [])                   = true
-    evalTimelockᵇ I (RequireAllOf (x ∷ xs))             =
-      evalTimelockᵇ I x ∧ evalTimelockᵇ I (RequireAllOf xs)
-    evalTimelockᵇ I (RequireAnyOf [])                   = false
-    evalTimelockᵇ I (RequireAnyOf (x ∷ xs))             =
-      evalTimelockᵇ I x ∨ evalTimelockᵇ I (RequireAllOf xs)
-    evalTimelockᵇ I (RequireMOf zero _)                 = true
-    evalTimelockᵇ I (RequireMOf (suc _) [])             = false
-    evalTimelockᵇ I (RequireMOf (suc m) (x ∷ xs))       = if evalTimelockᵇ I x
-      then  evalTimelockᵇ I (RequireMOf m xs)
-      else  evalTimelockᵇ I (RequireMOf (suc m) xs)
-    evalTimelockᵇ I (RequireSig x)                      = x ∈ᵇ khs
-    evalTimelockᵇ (just l  , _)  (RequireTimeStart x)   = x ≤ᵇ l
-    evalTimelockᵇ (nothing , _)  (RequireTimeStart x)   = false
-    evalTimelockᵇ (_ , just r )  (RequireTimeExpire x)  = r ≤ᵇ x
-    evalTimelockᵇ (_ , nothing)  (RequireTimeExpire x)  = false
+  instance
+    Dec-evalTimelock : evalTimelock ⁇³
+    Dec-evalTimelock {khs} {I} {tl} .dec = go? tl
+      where mutual
+        go = evalTimelock khs I
+
+        -- ** inversion principles for `evalTimelock`
+        evalAll˘ : ∀ {ss} → go (RequireAllOf ss) → All go ss
+        evalAll˘ (evalAll p) = p
+
+        evalAny˘ : ∀ {ss} → go (RequireAnyOf ss) → Any go ss
+        evalAny˘ (evalAny p) = p
+
+        evalTSt˘ : go (RequireTimeStart a) → M.Any (a ≤_) (I .proj₁)
+        evalTSt˘ (evalTSt p) = p
+
+        evalTEx˘ : go (RequireTimeExpire a) → M.Any (_≤ a) (I .proj₂)
+        evalTEx˘ (evalTEx p) = p
+
+        evalSig˘ : go (RequireSig x) → x ∈ khs
+        evalSig˘ (evalSig p) = p
+
+        evalMOf˘ : ∀ {m xs}
+          → go (RequireMOf m xs)
+          → MOf m go xs
+        evalMOf˘ (evalMOf p) = p
+
+        -- ** inlining `MOf?` here to please the termination checker
+        MOf?' : ∀ m xs → Dec (MOf m go xs)
+        MOf?' zero        _        = yes (mOf [] refl []⊆ [])
+        MOf?' (suc _)     []       = no λ where (mOf (_ ∷ _) len≡ () _)
+        MOf?' m@(suc m-1) (x ∷ xs)
+          with MOf?' m xs
+        ... | yes (mOf _ len≡ ⊆xs        Pxs')
+            = yes (mOf _ len≡ (x ∷ʳ ⊆xs) Pxs')
+        ... | no ¬p
+          with go? x
+        ... | no ¬Px
+            = no λ where (mOf _ _    (refl ∷ _) (Px ∷ _)) → ¬Px Px
+                         (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs')     → ¬p (mOf _  len≡ ⊆xs Pxs')
+        ... | yes Px
+            = mapDec
+              (λ where (mOf _ len≡ ⊆xs Pxs')
+                        → mOf _ (cong suc len≡) (refl ∷ ⊆xs) (Px ∷ Pxs'))
+              (λ where (mOf _ len≡ (_ ∷  ⊆xs) (_ ∷ Pxs'))
+                        → mOf _ (suc-injective len≡) ⊆xs Pxs'
+                       (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs)
+                        → ⊥-elim $ ¬p (mOf _ len≡ ⊆xs Pxs))
+              (MOf?' m-1 xs)
+
+        -- ** inlining `all?` here to please the termination checker
+        all?' : Decidable¹ (All go)
+        all?' []       = yes []
+        all?' (x ∷ xs) = mapDec (uncurry _∷_) uncons (go? x ×-dec all?' xs)
+
+        -- ** inlining `any?` here to please the termination checker
+        any?' : Decidable¹ (Any go)
+        any?' []       = no λ()
+        any?' (x ∷ xs) = mapDec fromSum toSum (go? x ⊎-dec any?' xs)
+
+        -- ** TODO: meta-program that does the above inlining for us
+
+        go? : ∀ tl → Dec (go tl)
+        go? = λ where
+          (RequireAllOf ss)     → mapDec evalAll evalAll˘ (all?' ss)
+          (RequireAnyOf ss)     → mapDec evalAny evalAny˘ (any?' ss)
+          (RequireSig x)        → mapDec evalSig evalSig˘ dec
+          (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
+          (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
+          (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf?' m xs)
 
   unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 
   open P1ScriptStructure
 
-  -- P1ScriptStructure-TL : Hashable Timelock ScriptHash → P1ScriptStructure
-  -- P1ScriptStructure-TL h .P1Script = Timelock
-  -- P1ScriptStructure-TL h .validP1Script = evalTimelock
-  -- P1ScriptStructure-TL h .validP1Script? = {!!}
-  -- P1ScriptStructure-TL h .Hashable-P1Script = h
-  -- P1ScriptStructure-TL h .DecEq-P1Script = DecEq-Timelock
+  P1ScriptStructure-TL : Hashable Timelock ScriptHash → P1ScriptStructure
+  P1ScriptStructure-TL h .P1Script = Timelock
+  P1ScriptStructure-TL h .validP1Script = evalTimelock
+  P1ScriptStructure-TL h .Hashable-P1Script = h
 \end{code}

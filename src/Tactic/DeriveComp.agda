@@ -104,6 +104,7 @@ curryPredProof (suc (suc (suc k))) t =
 computeFunctionBody : Term → Term → Term
 computeFunctionBody g result =
   quote if_then_else_ ∙⟦ g ∣ quote just ◆⟦ result ⟧ ∣ quote nothing ◆ ⟧
+  where open import Data.Bool
 
 generateFunctionClause : (List Term → Term) → STSConstr → Clause
 generateFunctionClause genPred c = let open STSConstr c in

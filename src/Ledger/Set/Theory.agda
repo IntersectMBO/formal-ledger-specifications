@@ -16,7 +16,7 @@ abstract
   List-Modelᵈ = L.List-Modelᵈ
 
 open Theoryᵈ List-Modelᵈ public
-  renaming (Set to ℙ_; filter to filterˢ; map to mapˢ)
+  renaming (Set to ℙ_; filter to filterˢ?; map to mapˢ)
   hiding (_∈_; _∉_)
 
 open import Interface.IsSet th public
@@ -24,8 +24,8 @@ open import Interface.IsSet th public
 abstract
   open import Axiom.Set.Properties th using (card-≡ᵉ)
 
-  to-sp : {A : Set} {P : A → Set} → Decidable¹ P → specProperty P
-  to-sp = id
+  to-sp : {A : Set} (P : A → Set) → ⦃ P ⁇¹ ⦄ → specProperty P
+  to-sp _ = dec¹
 
   finiteness : ∀ {A} (X : Theory.Set th A) → finite X
   finiteness = Theoryᶠ.finiteness List-Modelᶠ
@@ -54,7 +54,8 @@ open import Axiom.Set.Rel th public
   hiding (_∣'_; _↾'_; dom; range)
 
 open import Axiom.Set.Map th public
-  renaming (Map to infixr 1 _⇀_)
+  renaming ( Map to infixr 1 _⇀_
+           ; filterᵐ to filterᵐ?; filterKeys to filterKeys?; _↾'_ to _↾'?_ )
 
 open import Axiom.Set.TotalMap th public
 open import Axiom.Set.TotalMapOn th
@@ -93,14 +94,22 @@ module Properties where
   module _ {A : Set} ⦃ _ : DecEq A ⦄ where
     open Intersectionᵖ {A} ∈-sp public
 
-_ᶠᵐ : {A B : Set} → A ⇀ B → FinMap A B
+private variable A B : Set
+
+_ᶠᵐ : A ⇀ B → FinMap A B
 (R , uniq) ᶠᵐ = (R , uniq , finiteness _)
 
-_ᶠˢ : {A : Set} → ℙ A → FinSet A
+_ᶠˢ : ℙ A → FinSet A
 X ᶠˢ = X , finiteness _
 
-filterᵐ? : ∀ {A B} {P : A × B → Set} → (∀ x → Dec (P x)) → A ⇀ B → A ⇀ B
-filterᵐ? P? = filterᵐ (to-sp P?)
+filterˢ : (P : A → Set) ⦃ _ : P ⁇¹ ⦄ → ℙ A → ℙ A
+filterˢ P = filterˢ? (to-sp P)
 
-filterᵐᵇ : ∀ {A B} → (A × B → Bool) → A ⇀ B → A ⇀ B
-filterᵐᵇ P = filterᵐ? (λ x → P x ≟ true)
+filterᵐ : (P : A × B → Set) ⦃ _ : P ⁇¹ ⦄ → (A ⇀ B) → (A ⇀ B)
+filterᵐ P = filterᵐ? (to-sp P)
+
+filterKeys : (P : A → Set) ⦃ _ : P ⁇¹ ⦄ → (A ⇀ B) → (A ⇀ B)
+filterKeys P = filterKeys? (to-sp P)
+
+_↾'_ : A ⇀ B → (P : B → Set) ⦃ _ : P ⁇¹ ⦄ → A ⇀ B
+s ↾' P = s ↾'? to-sp P

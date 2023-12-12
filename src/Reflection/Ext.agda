@@ -4,6 +4,7 @@ module Reflection.Ext where
 open import Prelude
 open import PreludeMeta
 open import Data.Nat using (_≤ᵇ_)
+open import Data.Bool using (if_then_else_)
 
 open import Class.Core using (Type↑)
 

@@ -119,6 +119,7 @@ data VDeleg : Set where
 {-# FOREIGN GHC
   data TxCert
     = Delegate Credential (Maybe VDeleg) (Maybe Credential) Coin
+    | Dereg Credential
     | RegPool Credential PoolParams
     | RetirePool Credential Epoch
     | RegDRep Credential Coin Anchor
@@ -129,12 +130,13 @@ data VDeleg : Set where
 #-}
 data TxCert : Set where
   Delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → TxCert
+  Dereg       : Credential → TxCert
   RegPool     : Credential → PoolParams → TxCert
   RetirePool  : Credential → Epoch → TxCert
   RegDRep     : Credential → Coin → Anchor → TxCert
   DeRegDRep   : Credential → TxCert
   CCRegHot    : Credential → Maybe Credential → TxCert
-{-# COMPILE GHC TxCert = data TxCert (Delegate | RegPool | RetirePool | RegDRep | DeRegDRep | CCRegHot) #-}
+{-# COMPILE GHC TxCert = data TxCert (Delegate | Dereg | RegPool | RetirePool | RegDRep | DeRegDRep | CCRegHot) #-}
 
 record TxBody : Set where
   field txins    : List TxIn

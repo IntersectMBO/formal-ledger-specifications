@@ -13,7 +13,6 @@ private
   open import Agda.Builtin.FromNat
   open import Algebra; open Semiring Slotʳ hiding (refl)
   open import Algebra.Literals; open Semiring-Lit Slotʳ
-  import Data.Unit.Polymorphic as Poly⊤; instance _ = Poly⊤.tt
 
   Current-Property : PPUpdateEnv → Update → Set
   Current-Property Γ (pup , e) = let open PPUpdateEnv Γ in

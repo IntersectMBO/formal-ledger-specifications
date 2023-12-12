@@ -30,9 +30,8 @@ credsNeeded p utxo txb
   ∪  mapˢ (λ c → (Cert c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x → (Mint x , inj₂ x)) (policies mint)
   ∪  mapˢ (λ v → (Vote v , GovVote.credential v)) (fromList txvote)
-  ∪  (case p of λ where
-       (just sh)  → mapˢ (λ p → (Propose p , inj₂ sh)) (fromList txprop)
-       nothing    → ∅)
+  ∪  (if p then (λ {sh} → mapˢ (λ p → (Propose p , inj₂ sh)) (fromList txprop))
+      else ∅)
   where open TxBody txb
 
 witsVKeyNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ KeyHash
