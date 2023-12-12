@@ -9,7 +9,7 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.Prelude hiding (_∈?_; any?; all?; All; Any)
 open import Ledger.GovernanceActions gs hiding (yes; no)
-open import Data.List.Ext.Properties using (subpermutations)
+open import Data.List.Ext using (subpermutations)
 open import Data.List.Relation.Unary.Any using (any?; Any)
 open import Data.List.Relation.Unary.All using (all?; All)
 

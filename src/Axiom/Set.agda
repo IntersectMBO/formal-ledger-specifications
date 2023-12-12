@@ -167,17 +167,8 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-unions : {a : A} {U : Set (Set A)} → (∃[ T ] T ∈ U × a ∈ T) ⇔ a ∈ proj₁ (unions U)
   ∈-unions = proj₂ $ unions _
 
-  fromList-finite : ∀ {l : List A} → finite (fromList l)
-  fromList-finite {l = l} = l , mk⇔ (from ∈-fromList) (to ∈-fromList)
-
   ∅ : Set A
   ∅ = fromList []
-
-  ¬a∈[] : ∀ {a : A} → a ∈ˡ [] → ⊥
-  ¬a∈[] = λ ()
-
-  ¬a∈∅ : ∀ {a : A} → a ∈ ∅ → ⊥
-  ¬a∈∅ a∈∅ = ¬a∈[] (from ∈-fromList a∈∅)
 
   ∅-strongly-finite : strongly-finite {A} ∅
   ∅-strongly-finite = [] , [] , R.SK-sym ∈-fromList

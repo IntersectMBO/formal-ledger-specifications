@@ -187,6 +187,9 @@ card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
 filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
 filter-⊆ = proj₂ ∘′ ∈⇔P
 
+fromList-finite : ∀ {l : List A} → finite (fromList l)
+fromList-finite {l = l} = l , mk⇔ (from ∈-fromList) (to ∈-fromList)
+
 Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Decidable¹ (_∈ fromList l)
 Dec-∈-fromList _ _ = Relation.Nullary.Decidable.map ∈-fromList (_∈ˡ?_ _≟_ _ _)
 

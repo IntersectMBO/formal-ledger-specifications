@@ -5,7 +5,7 @@ open import Prelude hiding (any; all; lookup)
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
-open import Data.List using () renaming (map to lmap)
+open import Data.List.Ext
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
@@ -53,9 +53,6 @@ module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
           helper : ∀ {l l' a} → a ∈ l ++ l' ⇔ (a ∈ l ⊎ a ∈ l')
           helper = mk⇔ (∈-++⁻ _) Data.Sum.[ ∈-++⁺ˡ , ∈-++⁺ʳ _ ]
 
-  _∈?_ : (x : A) → (l : List A) → Dec(x ∈ˡ l)
-  x ∈? l = any? (x ≟_) l
-
 -- TODO: stdlib?
 AllPairs⇒≡∨R∨Rᵒᵖ : ∀ {ℓ ℓ'} {A : Set ℓ} {R : A → A → Set ℓ'} {a b l}
                  → AllPairs R l → a ∈ˡ l → b ∈ˡ l → a ≡ b ⊎ R a b ⊎ R b a
@@ -64,49 +61,6 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (here refl) = inj₁ refl
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj₁ (lookup x b∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (lookup x a∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
-
-
--- Permutations of lists (used, e.g., in Ledger.Gov module) ---------------------------------
-
--- prepend a to every input list
-_+++_ : ∀{ℓ}{A : Set ℓ} → A → List (List A) → List (List A)
-a +++ [] = [ a ∷ [] ]
-a +++ (l ∷ ls) = (a ∷ l) ∷ (a +++ ls)
-
--- return all sublists of the given list
-sublists : ∀{ℓ}{A : Set ℓ} → List A → List (List A)
-sublists [] = []
-sublists (x ∷ xs) =  x +++ sublists xs  -- sublists including x
-                     ++ sublists xs     -- sublists omitting x
--- (sublists is tested in Gov.Properties)
-
--- insert a at every position of the given list
-_inserts_ : ∀{ℓ}{A : Set ℓ} → List A → A → List (List A)
-[] inserts a = (a ∷ []) ∷ []
-(x ∷ xs) inserts a = (a ∷ x ∷ xs) ∷ lmap (λ l → x ∷ l) (xs inserts a)
-
--- insert a at every position of every input list
-foreach_inserts_ : ∀{ℓ}{A : Set ℓ} → List (List A) → A → List (List A)
-foreach [] inserts a = [] inserts a
-foreach (l ∷ []) inserts a = l inserts a
-foreach (l ∷ ls) inserts a = (l inserts a) ++ (foreach ls inserts a)
-
--- return all permutations of the given list
-permutations : ∀{ℓ}{A : Set ℓ} → List A → List (List A)
-permutations [] = []
-permutations (x ∷ xs) = foreach (permutations xs) inserts x
--- (permutations is tested in Gov.Properties)
-
-
--- return all permutations of every input list
-allPermutations : ∀{ℓ}{A : Set ℓ} → List (List A) → List (List A)
-allPermutations [] = []
-allPermutations (l ∷ ls) = permutations l ++ allPermutations ls
-
--- return all permutations of every sublist of the given list
-subpermutations : ∀{ℓ}{A : Set ℓ} → List A → List (List A)
-subpermutations = allPermutations ∘ sublists
--- (subpermutations is tested in Gov.Properties)
 
 
 -- TESTS --
