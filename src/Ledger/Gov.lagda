@@ -9,7 +9,6 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.Prelude hiding (_∈?_; any?; all?; All; Any)
 open import Ledger.GovernanceActions gs hiding (yes; no)
-
 open import Data.List.Ext.Properties using (subpermutations)
 open import Data.List.Relation.Unary.Any using (any?; Any)
 open import Data.List.Relation.Unary.All using (all?; All)
@@ -35,41 +34,40 @@ record GovEnv : Set where
         pparams     : PParams
         enactState  : EnactState
 
-connects : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
-connects [] aid₁ aid₂ = aid₁ ≡ aid₂
-connects ((a₁ , a₂) ∷ s) aid₁ aid₂ = connects s aid₁ a₁ × a₂ ≡ aid₂
+-- getAidPairs returns a list of (aid , aidₚ), where aid is an action id and
+-- aidₚ is the id of the previous action.
+getAidPairs : GovState → List (GovActionID × GovActionID)
+getAidPairs aid×stateList =
+  mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×stateList
+  where open GovActionState
+
+connects : List (GovActionID × GovActionID) → GovActionID × GovActionID → Set
+connects [] (aid , aidₚ) = aid ≡ aidₚ
+connects ((a , aₚ) ∷ s) (aid , aidₚ) = connects s (a , aid) × aₚ ≡ aidₚ
+
+connects? : ∀ l aidPair → Dec (connects l aidPair)
+connects? [] (aid , aidₚ) = aid ≟ aidₚ
+connects? ((a , aₚ) ∷ s) (aid , aidₚ) with connects? s (a , aid) | (aₚ ≟ aidₚ)
+...| yes p  | yes q  = yes (p , q)
+...| _      | no ¬q  = no λ (_ , q) → ¬q q
+...| no ¬p  | _      = no λ (p , _) → ¬p p
 
 enactable : EnactState → GovActionID × GovActionState → List (GovActionID × GovActionID) → Set
-enactable eState (aid , record { action = actn }) aidPairs =
-  case getHashES eState actn of λ where
+enactable eState (aid , record { action = action }) aidPairs =
+  case getHashES eState action of λ where
   nothing      → ⊤
-  (just aid')  → Any (λ l → connects l aid' aid) (subpermutations aidPairs)
+  (just aidₚ)  → Any (λ l → connects l (aid , aidₚ)) (subpermutations aidPairs)
 
-aidPairs : GovState → List (GovActionID × GovActionID)
-aidPairs aid×stateList =
-  mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×stateList
-  where
-  open GovActionState
+enactable? : ∀ estate aid aidPairs → Dec (enactable estate aid aidPairs)
+enactable? eState (aid , record { action = action} ) aidPairs with getHashES eState action
+...| nothing = yes tt
+...| (just aidₚ) = any? (λ as → connects? as (aid , aidₚ)) (subpermutations aidPairs)
 
 allEnactable : EnactState → GovState → Set
-allEnactable eState aid×stateList =
-  All (λ as → enactable eState as (aidPairs aid×stateList)) aid×stateList
+allEnactable eState aid×states = All (λ as → enactable eState as $ getAidPairs aid×states) aid×states
 
-connects? : ∀ l aid aid' → Dec(connects l aid aid')
-connects? [] = _≟_
-connects? ((a₁ , a₂) ∷ s) aid₁ aid₂ with (a₂ ≟ aid₂) | connects? s aid₁ a₁
-...| yes p  | yes q  = yes (q , p)
-...| _      | no ¬q  = no λ (q , _) → ¬q q
-...| no ¬p  | _      = no λ (_ , p) → ¬p p
-
-enactable? : ∀ estate aid → (aidPairList : List (GovActionID × GovActionID)) → Dec(enactable estate aid aidPairList)
-enactable? eState (aid , record { action = actn} ) aidPairList with getHashES eState actn
-...| nothing = yes tt
-...| (just aid') = any? (λ as → connects? as aid' aid) (subpermutations aidPairList)
-
-allEnactable? : ∀ eState aid×stateList → Dec (allEnactable eState aid×stateList)
-allEnactable? eState aid×stateList = all? (λ x → enactable? eState x (aidPairs aid×stateList)) aid×stateList
-
+allEnactable? : ∀ eState aid×states → Dec (allEnactable eState aid×states)
+allEnactable? eState aid×states = all? (λ aid → enactable? eState aid (getAidPairs aid×states)) aid×states
 \end{code}
 \emph{Transition relation types}
 \begin{code}[hide]

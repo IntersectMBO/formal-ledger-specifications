@@ -1,11 +1,13 @@
 {-# OPTIONS --safe #-}
 
-open import Prelude hiding (any; all; lookup; map)
+open import Prelude hiding (any; all; lookup)
 
+import Data.Product
+import Data.Sum
+import Function.Related.Propositional as R
 open import Data.List using () renaming (map to lmap)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties
-  using (∈-deduplicate⁻; ∈-deduplicate⁺; ∈-++⁻; ∈-++⁺ʳ; ∈-++⁺ˡ)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Disjoint.Propositional using (Disjoint)
 open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_)
@@ -14,18 +16,15 @@ open import Data.List.Relation.Unary.All using (lookup)
 open import Data.List.Relation.Unary.Any using (any?; here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
   using (unique∧set⇒bag)
-open import Data.Product using (map)
-open import Data.Sum using () renaming ([_,_] to ⟦_,_⟧)
-open import Function.Related.Propositional using (_∼[_]_; module EquationalReasoning; SK-sym)
 
 module Data.List.Ext.Properties where
 
 -- TODO: stdlib?
-_×-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A ∼[ k ] B → C ∼[ k ] D → (A × C) ∼[ k ] (B × D)
+_×-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A × C) R.∼[ k ] (B × D)
 h ×-cong h' = (h M.×-cong h')
   where open import Data.Product.Function.NonDependent.Propositional as M
 
-_⊎-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A ∼[ k ] B → C ∼[ k ] D → (A ⊎ C) ∼[ k ] (B ⊎ D)
+_⊎-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A ⊎ C) R.∼[ k ] (B ⊎ D)
 h ⊎-cong h' = (h M.⊎-cong h')
   where open import Data.Sum.Function.Propositional as M
 
@@ -36,7 +35,7 @@ module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
   deduplicate≡ = deduplicate _≟_
 
   disj-on-dedup : ∀ {l l'} → Disjoint l l' → Disjoint (deduplicate≡ l) (deduplicate≡ l')
-  disj-on-dedup = _∘ map (∈-deduplicate⁻ _≟_ _) (∈-deduplicate⁻ _≟_ _)
+  disj-on-dedup = _∘ Data.Product.map (∈-deduplicate⁻ _≟_ _) (∈-deduplicate⁻ _≟_ _)
 
   ∈-dedup : ∀ {l a} → a ∈ l ⇔ a ∈ deduplicate≡ l
   ∈-dedup = mk⇔ (∈-deduplicate⁺ _≟_) (∈-deduplicate⁻ _≟_ _)
@@ -45,14 +44,14 @@ module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
   dedup-++-↭ : {l l' : List A} → Disjoint l l' → deduplicate≡ (l ++ l') ↭ deduplicate≡ l ++ deduplicate≡ l'
   dedup-++-↭ {l = l} {l'} disj = let dedup-unique = λ {l} → deduplicate-! l in ∼bag⇒↭ $
     unique∧set⇒bag dedup-unique (++⁺ dedup-unique dedup-unique (disj-on-dedup disj)) λ {a} →
-      a ∈ deduplicate≡ (l ++ l')                 ∼⟨ SK-sym ∈-dedup ⟩
+      a ∈ deduplicate≡ (l ++ l')                 ∼⟨ R.SK-sym ∈-dedup ⟩
       a ∈ l ++ l'                                ∼⟨ helper ⟩
       (a ∈ l ⊎ a ∈ l')                           ∼⟨ ∈-dedup ⊎-cong ∈-dedup ⟩
-      (a ∈ deduplicate≡ l ⊎ a ∈ deduplicate≡ l') ∼⟨ SK-sym helper ⟩
+      (a ∈ deduplicate≡ l ⊎ a ∈ deduplicate≡ l') ∼⟨ R.SK-sym helper ⟩
       a ∈ deduplicate≡ l ++ deduplicate≡ l'       ∎
-    where open EquationalReasoning
+    where open R.EquationalReasoning
           helper : ∀ {l l' a} → a ∈ l ++ l' ⇔ (a ∈ l ⊎ a ∈ l')
-          helper = mk⇔ (∈-++⁻ _) ⟦ ∈-++⁺ˡ , ∈-++⁺ʳ _ ⟧
+          helper = mk⇔ (∈-++⁻ _) Data.Sum.[ ∈-++⁺ˡ , ∈-++⁺ʳ _ ]
 
   _∈?_ : (x : A) → (l : List A) → Dec(x ∈ˡ l)
   x ∈? l = any? (x ≟_) l
@@ -110,9 +109,7 @@ subpermutations = allPermutations ∘ sublists
 -- (subpermutations is tested in Gov.Properties)
 
 
-
-
--- TESTS ---------------------------------------------------------------------------
+-- TESTS --
 _ : sublists (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
 _ = refl
 
@@ -125,9 +122,9 @@ _ = refl
 _ : permutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ []
 _ = refl
 
-_ : permutations (1 ∷ 2 ∷ 3 ∷ []) ≡  (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
-                                     ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
-                                     ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ []) ∷ []
+_ : permutations (1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                    ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                    ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ []) ∷ []
 _ = refl
 
 -- TESTS --
@@ -142,3 +139,4 @@ _ : subpermutations (1 ∷ 2 ∷ 3 ∷ [])  ≡  (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 �
                                          ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ []) ∷ (3 ∷ 2 ∷ [])
                                          ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
 _ = refl
+

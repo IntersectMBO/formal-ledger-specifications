@@ -91,5 +91,3 @@ instance
 
 Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_
 Computational-GOV = it
-
-
