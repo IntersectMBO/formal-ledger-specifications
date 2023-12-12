@@ -21,38 +21,40 @@ open import Ledger.Utxo txs abs
 \end{code}
 \begin{figure*}[h]
 \begin{code}
+record EpochState : Set where
+  constructor ⟦_,_,_,_⟧ᵉ'
+  field acnt       : Acnt
+        ls         : LState
+        es         : EnactState
+        fut        : RatifyState
 
 record NewEpochEnv : Set where
   field stakeDistrs : StakeDistrs
    -- TODO: compute this from LState instead
 
 record NewEpochState : Set where
-  constructor ⟦_,_,_,_,_⟧ⁿᵉ
-  field lastEpoch  : Epoch
-        acnt       : Acnt
-        ls         : LState
-        es         : EnactState
-        fut        : RatifyState
+  constructor ⟦_,_⟧ⁿᵉ
+  field lastEpoch   : Epoch
+        epochState  : EpochState
 \end{code}
-\caption{Definitions for the NEWEPOCH transition system}
-The \AgdaRecord{Acnt} record has two fields, \AgdaField{treasury} and \AgdaField{reserves}, so
-the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the total assets that
-remain in treasury and reserves.
+\caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]
 private variable
-  nes : NewEpochState
-  e : Epoch
+  nes nes' : NewEpochState
+  e lastEpoch : Epoch
   fut' : RatifyState
+  eps eps' : EpochState
+  Γ : NewEpochEnv
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
-data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set where
+data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  NEWEPOCH-New : ∀ {Γ} → let
-      open NewEpochState nes hiding (es)
+  EPOCH : let
+      open EpochState eps hiding (es)
       open RatifyState fut using (removed) renaming (es to esW)
       -- ^ this rolls over the future enact state into es
       open LState ls; open UTxOState utxoSt
@@ -76,37 +78,49 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → New
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
 
-      gState' = record gState { ccHotKeys = ccHotKeys ∣ ccCreds (es .EnactState.cc) }
+      certState' =
+        ⟦ record dState { rewards = rewards ∪⁺ refunds }
+        , ⟦ pools ∣ retired ᶜ , retiring ∣ retired ᶜ ⟧ᵖ
+        , ⟦ if null govSt' then mapValues sucᵉ dreps else dreps
+          , ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
 
-      certState' = record certState {
-        pState = record pState
-          { pools = pools ∣ retired ᶜ ; retiring = retiring ∣ retired ᶜ };
-        dState = record dState
-          { rewards = rewards ∪⁺ refunds };
-        gState = if not (null govSt') then gState' else record gState'
-          { dreps = mapValues sucᵉ dreps }
-        }
-      utxoSt' = record utxoSt
-        { fees = 0
-        ; deposits = deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
-        ; donations = 0
-        }
-      ls' = record ls
-        { govSt = govSt' ; utxoSt = utxoSt' ; certState = certState' }
+      utxoSt' = ⟦ utxo , 0 , deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
+
+      ls' = ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+
       acnt' = record acnt
         { treasury = treasury + fees + unclaimed + donations ∸ totWithdrawals }
     in
-    e ≡ sucᵉ lastEpoch
-    → record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
+    record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     ────────────────────────────────
-    Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , acnt' , ls' , es , fut' ⟧ⁿᵉ
-
-  NEWEPOCH-Not-New : ∀ {Γ} → let open NewEpochState nes in
-    e ≢ sucᵉ lastEpoch
-    ────────────────────────────────
-    Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes
+    Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
 \end{code}
-\caption{NEWEPOCH transition system\protect\footnotemark}
+\caption{EPOCH transition system\protect\footnotemark}
 \end{figure*}
 \footnotetext{The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.}
+
+\begin{figure*}[h]
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+  NEWEPOCH-New :
+    e ≡ sucᵉ lastEpoch
+    → Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+    ────────────────────────────────
+    Γ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' ⟧ⁿᵉ
+
+  NEWEPOCH-Not-New :
+    e ≢ sucᵉ lastEpoch
+    ────────────────────────────────
+    Γ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps ⟧ⁿᵉ
+\end{code}
+\caption{NEWEPOCH transition system}
+\end{figure*}

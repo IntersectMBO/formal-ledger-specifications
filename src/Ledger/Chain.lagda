@@ -5,7 +5,6 @@
 
 open import Algebra
 open import Data.Nat.Properties using (+-0-monoid)
---open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
@@ -102,13 +101,16 @@ data
 \begin{figure*}[h]
 \begin{code}
   CHAIN :
-    let open ChainState s; open Block b; open NewEpochState newEpochState; open EnactState es in
+    let open ChainState s; open Block b; open NewEpochState newEpochState
+        open EpochState epochState; open EnactState es
+    in
        record { stakeDistrs = calculateStakeDistrs ls }
          ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es ⟧ˡᵉ
-         ⊢ nes .NewEpochState.ls ⇀⦇ ts ,LEDGERS⦈ ls'
+         ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
-    _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s { newEpochState = record nes { ls = ls' } }
+    _ ⊢ s ⇀⦇ b ,CHAIN⦈
+        record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
 \end{code}
 \caption{CHAIN transition system}
 \end{figure*}

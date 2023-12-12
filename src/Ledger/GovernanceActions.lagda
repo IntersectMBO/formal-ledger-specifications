@@ -278,7 +278,6 @@ private variable
   q : ℚ
   dh : DocHash
   sh : Maybe ScriptHash
-  h : PPHash
   v : ProtVer
   wdrl : RwdAddr ⇀ Coin
   t : Coin

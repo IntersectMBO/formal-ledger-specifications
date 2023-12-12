@@ -26,13 +26,18 @@ module Ledger.PParams
 
 private variable
   m n : ℕ
-
-record Acnt : Set where
-  field treasury reserves : Coin
 \end{code}
+
+The \AgdaRecord{Acnt} record has two fields, \AgdaField{treasury} and \AgdaField{reserves}, so
+the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the total assets that
+remain in treasury and reserves.
+
 \begin{figure*}[h!]
 \begin{AgdaAlign}
 \begin{code}
+record Acnt : Set where
+  field treasury reserves : Coin
+
 ProtVer : Set
 ProtVer = ℕ × ℕ
 
