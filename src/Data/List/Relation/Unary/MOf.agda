@@ -10,12 +10,15 @@ open import Data.List.Relation.Unary.All using (All; []; _∷_)
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Nat.Properties using (suc-injective)
 
-open import Relation.Nullary using (Dec; yes; no)
+open import Relation.Nullary using (Dec; yes; no; ¬_)
 open import Relation.Nullary.Decidable using () renaming (map′ to mapDec)
 open import Relation.Unary using (Decidable; Pred)
 open import Relation.Binary.PropositionalEquality using (_≡_; refl; cong)
 
 open import Data.List.Relation.Binary.Sublist.Ext
+
+open import Interface.ToBool
+open import Data.Unit.Polymorphic using () renaming (tt to tt↑); instance _ = tt↑
 
 -- States that "m-of-n" elements of a n-element list satisfy a given predicate.
 data MOf {ℓ ℓ′}{A : Set ℓ} (m : ℕ) (P : Pred A ℓ′) (xs : List A) : Set (ℓ ⊔ ℓ′) where
@@ -25,25 +28,34 @@ data MOf {ℓ ℓ′}{A : Set ℓ} (m : ℕ) (P : Pred A ℓ′) (xs : List A) :
     → All P ys
     → MOf m P xs
 
+private module _ {ℓ ℓ′} {A : Set ℓ} {P : Pred A ℓ′} where
+  cons : ∀ {x xs m} → P x → MOf m P xs → MOf (suc m) P (x ∷ xs)
+  cons p (mOf ys refl sub ps) = mOf (_ ∷ ys) refl (refl ∷ sub) (p ∷ ps)
+
+  skip : ∀ {x xs m} → MOf m P xs → MOf m P (x ∷ xs)
+  skip (mOf ys len sub ps) = mOf ys len (_ ∷ʳ sub) ps
+
+  done : ∀ {xs} → MOf 0 P xs
+  done = mOf [] refl []⊆ []
+
+  wk : ∀ {m xs} → MOf (suc m) P xs → MOf m P xs
+  wk (mOf (_ ∷ ys) refl (_ ∷ sub) (_ ∷ ps)) = mOf ys refl (_ ∷ʳ sub) ps
+  wk (mOf ys len (_ ∷ʳ sub) ps) = skip (wk (mOf ys len sub ps))
+
+  uncons : ∀ {m x xs} → MOf (suc m) P (x ∷ xs) → MOf m P xs
+  uncons (mOf ys len (_ ∷ʳ sub) ps) = wk $ mOf ys len sub ps
+  uncons (mOf (_ ∷ ys) refl (_ ∷ sub) (_ ∷ ps)) = mOf ys refl sub ps
+
+  unskip : ∀ {m x xs} → ¬ P x → MOf (suc m) P (x ∷ xs) → MOf (suc m) P xs
+  unskip ¬px (mOf ys len (_ ∷ʳ sub) ps) = mOf ys len sub ps
+  unskip ¬px (mOf ys len (refl ∷ sub) (px ∷ ps)) = ⊥-elim $ ¬px px
+
 module _ {ℓ ℓ′} {A : Set ℓ} {P : Pred A ℓ′} (P? : Decidable P) where
   MOf? : ∀ m xs → Dec (MOf m P xs)
-  MOf? zero        _        = yes (mOf [] refl []⊆ [])
-  MOf? (suc _)     []       = no λ where (mOf (_ ∷ _) len≡ () _)
-  MOf? m@(suc m-1) (x ∷ xs)
-    with MOf? m xs
-  ... | yes (mOf _ len≡ ⊆xs        Pxs')
-      = yes (mOf _ len≡ (x ∷ʳ ⊆xs) Pxs')
-  ... | no ¬p
-    with P? x
-  ... | no ¬Px
-      = no λ where (mOf _ _    (refl ∷ _) (Px ∷ _)) → ¬Px Px
-                   (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs')     → ¬p (mOf _  len≡ ⊆xs Pxs')
-  ... | yes Px
-      = mapDec
-        (λ where (mOf _ len≡ ⊆xs Pxs')
-                  → mOf _ (cong suc len≡) (refl ∷ ⊆xs) (Px ∷ Pxs'))
-        (λ where (mOf _ len≡ (_ ∷  ⊆xs) (_ ∷ Pxs'))
-                  → mOf _ (suc-injective len≡) ⊆xs Pxs'
-                 (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs)
-                  → ⊥-elim $ ¬p (mOf _ len≡ ⊆xs Pxs))
-        (MOf? m-1 xs)
+  MOf? zero    xs = yes done
+  MOf? (suc m) [] = no λ where (mOf (_ ∷ _) len≡ () _)
+  MOf? (suc m) (x ∷ xs) =
+    if (P? x) then
+      (λ {px} → mapDec (cons px) uncons (MOf? m xs))
+    else
+      (λ {¬px} → mapDec skip (unskip ¬px) (MOf? (suc m) xs))

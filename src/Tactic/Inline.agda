@@ -4,8 +4,9 @@
 
 module Tactic.Inline where
 
-open import Prelude hiding (_∷ʳ_)
-open import Data.Bool using (if_then_else_)
+open import Prelude hiding (_∷ʳ_; uncons)
+open import Interface.ToBool
+-- open import Data.Bool using (if_then_else_)
 import Data.Nat as ℕ; import Data.Nat.Properties as ℕ
 import Data.List as L
 import Data.Fin as F
@@ -43,8 +44,8 @@ private
   $inline genType n' `e = withReconstructed true $ do
     e@(def n xs) ← return `e
       where _ → _IMPOSSIBLE_
-    if genType then (declareDef (vArg n') =<< inferType e) else return tt
     printLn $ "** Inlining " ◇ show n ◇ "(" ◇ show xs ◇ ")"
+    if genType then (declareDef (vArg n') =<< inferType e) else return tt
     function cs ← getDefinition n
       where _ → _IMPOSSIBLE_
     print $ show n ◇ "'s clauses: "
@@ -235,43 +236,22 @@ private
   _ = toOdds (0 ∷ 1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 1 ∷ [])
     ∋ refl
 
-  -- (6) test with `MOf?`
-  open import Data.List.Relation.Unary.MOf
-  open import Data.List.Relation.Binary.Sublist.Ext
+  -- (6) test for `MOf?`
+  open import Data.List.Relation.Unary.MOf using (MOf; mOf; MOf?)
 
-  -- ** [NOT WORKING] 3x unsolved metas
-  -- unquoteDecl mOf-even? = inlineDecl mOf-even? (quoteTerm (MOf? even?))
+  unquoteDecl MOf-even? = inlineDecl MOf-even? (quoteTerm (MOf? even?))
+  {-
+  MOf?-even? : ∀ m xs → Dec (MOf m Even xs)
+  MOf?-even? zero    xs = yes done
+  MOf?-even? (suc m) [] = no λ where (mOf (_ ∷ _) len≡ () _)
+  MOf?-even? (suc m) (x ∷ xs) =
+    if even? x then
+      (λ {px} → mapDec (cons px) uncons (MOf?-even? m xs))
+    else
+      (λ {¬px} → mapDec skip (unskip ¬px) (MOf?-even? (suc m) xs))
+  -}
 
-  -- _ = mOf-even? 2 (0 ∷ 1 ∷ 2 ∷ 3 ∷ [])
-  --   ≡ yes (mOf (0 ∷ 2 ∷ []) refl (refl ∷ 1 ∷ʳ refl ∷ 3 ∷ʳ [])  (zero ∷ suc zero ∷ []))
-  --   ∋ refl
-
-  -- (7) test with non-`with` variant of `MOf?`
-
-  module _ {ℓ ℓ′} {A : Set ℓ} {P : Pred A ℓ′} (P? : Decidable¹ P) where
-    MOf?' : ∀ m xs → Dec (MOf m P xs)
-    MOf?' zero        _        = yes (mOf [] refl []⊆ [])
-    MOf?' (suc _)     []       = no λ where (mOf (_ ∷ _) len≡ () _)
-    MOf?' m@(suc m-1) (x ∷ xs) = case MOf?' m xs of λ where
-      (yes (mOf _ len≡ ⊆xs        Pxs')) →
-       yes (mOf _ len≡ (x ∷ʳ ⊆xs) Pxs')
-      (no ¬p) → case P? x of λ where
-        (no ¬Px) →
-         no λ where (mOf _ _    (refl ∷ _) (Px ∷ _)) → ¬Px Px
-                    (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs')     → ¬p (mOf _  len≡ ⊆xs Pxs')
-        (yes Px) →
-         mapDec
-          (λ where (mOf _ len≡ ⊆xs Pxs')
-                    → mOf _ (cong suc len≡) (refl ∷ ⊆xs) (Px ∷ Pxs'))
-          (λ where (mOf _ len≡ (_ ∷  ⊆xs) (_ ∷ Pxs'))
-                    → mOf _ (ℕ.suc-injective len≡) ⊆xs Pxs'
-                   (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs)
-                    → ⊥-elim $ ¬p (mOf _ len≡ ⊆xs Pxs))
-          (MOf?' m-1 xs)
-
-  -- ** [NOT WORKING] 3x unsolved metas
-  -- unquoteDecl mOf'-even? = inlineDecl mOf'-even? (quoteTerm (MOf?' even?))
-
-  -- _ = mOf'-even? 2 (0 ∷ 1 ∷ 2 ∷ 3 ∷ [])
-  --   ≡ yes (mOf' (0 ∷ 2 ∷ []) refl (refl ∷ 1 ∷ʳ refl ∷ 3 ∷ʳ [])  (zero ∷ suc zero ∷ []))
-  --   ∋ refl
+  _ = MOf-even? 2 (0 ∷ 1 ∷ 2 ∷ 3 ∷ [])
+    ≡ yes (mOf (0 ∷ 2 ∷ []) refl (refl ∷ 1 ∷ʳ refl ∷ 3 ∷ʳ []) (zero ∷ suc zero ∷ []))
+    ∋ refl
+    where open import Data.List.Relation.Binary.Sublist.Ext

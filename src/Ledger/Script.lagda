@@ -168,28 +168,7 @@ module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
 
         -- ** inlining `MOf?` here to please the termination checker
         MOf-go? : ∀ m xs → Dec (MOf m go xs)
-        -- ** `inline` tactic does not currently work with `with`-statements
-        -- unquoteDef MOf-go? = inline MOf-go? (quoteTerm (MOf? go?))
-        MOf-go? zero        _        = yes (mOf [] refl []⊆ [])
-        MOf-go? (suc _)     []       = no λ where (mOf (_ ∷ _) len≡ () _)
-        MOf-go? m@(suc m-1) (x ∷ xs)
-          with MOf-go? m xs
-        ... | yes (mOf _ len≡ ⊆xs        Pxs')
-            = yes (mOf _ len≡ (x ∷ʳ ⊆xs) Pxs')
-        ... | no ¬p
-          with go? x
-        ... | no ¬Px
-            = no λ where (mOf _ _    (refl ∷ _) (Px ∷ _)) → ¬Px Px
-                         (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs')     → ¬p (mOf _  len≡ ⊆xs Pxs')
-        ... | yes Px
-            = mapDec
-              (λ where (mOf _ len≡ ⊆xs Pxs')
-                        → mOf _ (cong suc len≡) (refl ∷ ⊆xs) (Px ∷ Pxs'))
-              (λ where (mOf _ len≡ (_ ∷  ⊆xs) (_ ∷ Pxs'))
-                        → mOf _ (suc-injective len≡) ⊆xs Pxs'
-                       (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs)
-                        → ⊥-elim $ ¬p (mOf _ len≡ ⊆xs Pxs))
-              (MOf-go? m-1 xs)
+        unquoteDef MOf-go? = inline MOf-go? (quoteTerm (MOf? go?))
 
         -- ** inlining `all?` here to please the termination checker
         all-go? : Decidable¹ (All go)
