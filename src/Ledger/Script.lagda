@@ -1,8 +1,6 @@
 \section{Scripts}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-{-# OPTIONS -v tc.unquote:10 #-}
-{-# OPTIONS -v tactic.inline:100 #-}
 
 open import Algebra using (CommutativeMonoid)
 open import Algebra.Morphism

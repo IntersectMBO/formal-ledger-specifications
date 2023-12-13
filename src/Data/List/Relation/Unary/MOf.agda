@@ -2,7 +2,7 @@
 module Data.List.Relation.Unary.MOf where
 
 open import Level using (Level; _⊔_) renaming (suc to lsuc)
-open import Function using (_$_)
+open import Function using (_$_; case_of_)
 
 open import Data.Empty using (⊥-elim)
 open import Data.List using (List; []; _∷_; length)
@@ -16,9 +16,6 @@ open import Relation.Unary using (Decidable; Pred)
 open import Relation.Binary.PropositionalEquality using (_≡_; refl; cong)
 
 open import Data.List.Relation.Binary.Sublist.Ext
-
-open import Interface.ToBool
-open import Data.Unit.Polymorphic using () renaming (tt to tt↑); instance _ = tt↑
 
 -- States that "m-of-n" elements of a n-element list satisfy a given predicate.
 data MOf {ℓ ℓ′}{A : Set ℓ} (m : ℕ) (P : Pred A ℓ′) (xs : List A) : Set (ℓ ⊔ ℓ′) where
@@ -55,7 +52,6 @@ module _ {ℓ ℓ′} {A : Set ℓ} {P : Pred A ℓ′} (P? : Decidable P) where
   MOf? zero    xs = yes done
   MOf? (suc m) [] = no λ where (mOf (_ ∷ _) len≡ () _)
   MOf? (suc m) (x ∷ xs) =
-    if (P? x) then
-      (λ {px} → mapDec (cons px) uncons (MOf? m xs))
-    else
-      (λ {¬px} → mapDec skip (unskip ¬px) (MOf? (suc m) xs))
+    case (P? x) of λ where
+      (yes px) → mapDec (cons px) uncons (MOf? m xs)
+      (no ¬px) → mapDec skip (unskip ¬px) (MOf? (suc m) xs)

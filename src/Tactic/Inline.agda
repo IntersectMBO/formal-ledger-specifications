@@ -10,6 +10,8 @@ import Data.List as L
 import Data.Fin as F
 open import PreludeMeta hiding (All)
 open import Interface.ToBool
+open import Data.List.Ext using (_⁉_)
+open import Reflection.Ext using (apply∗)
 
 open Debug ("tactic.inline" , 100)
 open import Class.Show
@@ -17,19 +19,7 @@ open import Class.Show
 open import Algebra.Core using (Op₁)
 
 private
-  _⁉_ : ∀ {A : Set} → List A → ℕ → Maybe A
-  [] ⁉ _ = nothing
-  (x ∷ _)  ⁉ zero  = just x
-  (_ ∷ xs) ⁉ suc n = xs ⁉ n
-
-  apply∗ : Term → Args Term → Term
-  apply∗ f xs = case f of λ where
-    (def n as)      → def n (as ++ xs)
-    (con c as)      → con c (as ++ xs)
-    (var x as)      → var x (as ++ xs)
-    (pat-lam cs as) → pat-lam cs (as ++ xs)
-    (meta x as)     → meta x (as ++ xs)
-    f               → f
+  pattern `case_of_ x y = quote case_of_ ∙⟦ x ∣ y ⟧
 
   $inline : Bool → Name → Term → TC ⊤
   $inline genType n' `e = do
@@ -75,6 +65,8 @@ private
         (con c as) → con c (go∗ lvl as)
         (pi (arg i ty) (abs x t)) → pi (arg i $ go lvl ty) (abs x $ go (suc lvl) t)
         (lam v (abs x t)) → lam v (abs x $ go (suc lvl) t)
+        (pat-lam cs (vArg a ∷ [])) → `case go lvl a of pat-lam (goCls lvl cs) []
+        -- ^ use case_of_ for single-argument pattern lambdas (c.f. example 7)
         (pat-lam cs as) → pat-lam (goCls lvl cs) (go∗ lvl as)
         (agda-sort s) → agda-sort (goSort lvl s)
         (meta x as) → meta x (go∗ lvl as)
@@ -258,22 +250,15 @@ private
     ∋ refl
     where open import Data.List.Relation.Binary.Sublist.Ext
 
-  -- (7) [LIMITATION] does not work well with pattern lambdas
+  -- (7) works on pattern lambdas arising from `case_of_`
   refl? : ℕ → Set
   refl? n = case n ≟ n of λ where
     (yes p) → ⊤
     (no ¬p) → ⊥
 
-  -- unquoteDecl refl42 = inlineDecl refl42 (quoteTerm (refl? 42))
+  unquoteDecl refl42 = inlineDecl refl42 (quoteTerm (refl? 42))
   {-
   refl42
-    = (λ { (true because ofʸ p) → ⊤ ; (false because ofⁿ ¬p) → ⊥ })
-      (42 Data.Nat.Properties.≟ 42)
-  -}
-  -- [ERROR] 3x unsolved metas
-  {-
-  Sort _712
-  _713 : _712
-  _715 : _713
-  _717 : Set
+    = case 42 ℕ.≟ 42 of
+      (λ { (true because ofʸ p) → ⊤ ; (false because ofⁿ ¬p) → ⊥ })
   -}
