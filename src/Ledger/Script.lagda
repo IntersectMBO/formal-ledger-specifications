@@ -157,6 +157,17 @@ module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
           → MOf m go xs
         evalMOf˘ (evalMOf p) = p
 
+        -- ** inlining recursive decision procedures to please the termination checker
+        MOf-go? : ∀ m xs → Dec (MOf m go xs)
+        unquoteDef MOf-go? = inline MOf-go? (quoteTerm (MOf? go?))
+
+        all-go? : Decidable¹ (All go)
+        unquoteDef all-go? = inline all-go? (quoteTerm (all? go?))
+
+        any-go? : Decidable¹ (Any go)
+        unquoteDef any-go? = inline any-go? (quoteTerm (any? go?))
+
+        -- ** the actual decision procedure
         go? : Decidable¹ go
         go? = λ where
           (RequireAllOf ss)     → mapDec evalAll evalAll˘ (all-go? ss)
@@ -166,17 +177,6 @@ module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
           (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
           (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
 
-        -- ** inlining `MOf?` here to please the termination checker
-        MOf-go? : ∀ m xs → Dec (MOf m go xs)
-        unquoteDef MOf-go? = inline MOf-go? (quoteTerm (MOf? go?))
-
-        -- ** inlining `all?` here to please the termination checker
-        all-go? : Decidable¹ (All go)
-        unquoteDef all-go? = inline all-go? (quoteTerm (all? go?))
-
-        -- ** inlining `any?` here to please the termination checker
-        any-go? : Decidable¹ (Any go)
-        unquoteDef any-go? = inline any-go? (quoteTerm (any? go?))
 
   unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 

@@ -4,44 +4,35 @@
 
 module Tactic.Inline where
 
-open import Prelude hiding (_∷ʳ_; uncons)
-open import Interface.ToBool
--- open import Data.Bool using (if_then_else_)
+open import Prelude hiding (_∷ʳ_)
 import Data.Nat as ℕ; import Data.Nat.Properties as ℕ
 import Data.List as L
 import Data.Fin as F
 open import PreludeMeta hiding (All)
+open import Interface.ToBool
 
 open Debug ("tactic.inline" , 100)
 open import Class.Show
 
-private variable ℓ : Level; A B : Set ℓ; F : Type↑
-
 open import Algebra.Core using (Op₁)
 
--- ** Utilities
-
-_⁉_ : ∀ {A : Set} → List A → ℕ → Maybe A
-[] ⁉ _ = nothing
-(x ∷ _)  ⁉ zero  = just x
-(_ ∷ xs) ⁉ suc n = xs ⁉ n
-
-apply∗ : Term → Args Term → Term
-apply∗ f xs = case f of λ where
-  (def n as)      → def n (as ++ xs)
-  (con c as)      → con c (as ++ xs)
-  (var x as)      → var x (as ++ xs)
-  (pat-lam cs as) → pat-lam cs (as ++ xs)
-  (meta x as)     → meta x (as ++ xs)
-  f               → f
-
--- ** Inlining
-
-open import Agda.Builtin.Reflection using (withExpandLast; withReconstructed)
-
 private
+  _⁉_ : ∀ {A : Set} → List A → ℕ → Maybe A
+  [] ⁉ _ = nothing
+  (x ∷ _)  ⁉ zero  = just x
+  (_ ∷ xs) ⁉ suc n = xs ⁉ n
+
+  apply∗ : Term → Args Term → Term
+  apply∗ f xs = case f of λ where
+    (def n as)      → def n (as ++ xs)
+    (con c as)      → con c (as ++ xs)
+    (var x as)      → var x (as ++ xs)
+    (pat-lam cs as) → pat-lam cs (as ++ xs)
+    (meta x as)     → meta x (as ++ xs)
+    f               → f
+
   $inline : Bool → Name → Term → TC ⊤
-  $inline genType n' `e = withReconstructed true $ do
+  $inline genType n' `e = do
     e@(def n xs) ← return `e
       where _ → _IMPOSSIBLE_
     printLn $ "** Inlining " ◇ show n ◇ "(" ◇ show xs ◇ ")"
@@ -56,7 +47,9 @@ private
     void $ forM cs' λ c → print $ " - " ◇ show c
     print ""
     defineFun n' cs'
+
    where module _ (n n' : Name) (xs : Args Term) (let ∣xs∣ = length xs) where
+
     lookupVar : ℕ → ℕ → Maybe Term
     lookupVar lvl x
       with x ℕ.<? lvl
@@ -65,18 +58,21 @@ private
       let k , _ = ℕ.≤⇒≤″ (ℕ.≮⇒≥ x≮)
       in unArg <$> xs ⁉ (∣xs∣ ∸ suc k)
 
+    -- (B) recursively substitute free variables for the values in given `xs`
     mutual
       go : ℕ →  Op₁ Term
       go lvl = λ where
+        -- * (B1) substitute free variables
         (var x as) → let as′ = go∗ lvl as in case lookupVar lvl x of λ where
           nothing  → var x as′
           (just t) → apply∗ t as′
-        (con c as) → con c (go∗ lvl as)
+        -- * (B2) rename (& instantiate) recursive calls
         (def 𝕟 as) → let as′ = go∗ lvl as in
           if 𝕟 == n then
             def n' (drop ∣xs∣ as′)
           else
             def 𝕟 as′
+        (con c as) → con c (go∗ lvl as)
         (pi (arg i ty) (abs x t)) → pi (arg i $ go lvl ty) (abs x $ go (suc lvl) t)
         (lam v (abs x t)) → lam v (abs x $ go (suc lvl) t)
         (pat-lam cs as) → pat-lam (goCls lvl cs) (go∗ lvl as)
@@ -116,7 +112,6 @@ private
         (var x) → case lookupVar lvl x of λ where
           nothing → var x
           (just t) → dot t
-        -- (absurd x) → {!!}
         p → p
 
       goPs : ℕ → Op₁ (Args Pattern)
@@ -129,22 +124,27 @@ private
         [] → []
         ((x , arg i t) ∷ tel) → (x , arg i (go lvl t)) ∷ goTel (suc lvl) tel
 
-    instTel : Op₁ Telescope
-    instTel = goTel 0 ∘ drop ∣xs∣
-
-    instPs : ℕ → Op₁ (Args Pattern)
-    instPs n = goPs n ∘ drop ∣xs∣
-
+    -- ** Entrypoint (A): instantiating the clauses of a definition
     goᶜ : Clause → Clause
     goᶜ = λ where
       (clause tel ps t) → let n = length tel ∸ ∣xs∣ in
         clause (instTel tel) (instPs n ps) (go n t)
       (absurd-clause tel ps) → let n = length tel ∸ ∣xs∣ in
         absurd-clause (instTel tel) (instPs n ps)
+     where
+      -- (A1) instantiating a clause's telescope
+      instTel : Op₁ Telescope
+      instTel = goTel 0 ∘ drop ∣xs∣
+
+      -- (A2) instantiating a clause's parameters
+      instPs : ℕ → Op₁ (Args Pattern)
+      instPs n = goPs n ∘ drop ∣xs∣
 
 inline inlineDecl : Name → Term → TC ⊤
 inline     = $inline false -- for use with `unquoteDef`
 inlineDecl = $inline true  -- for use with `unquoteDecl`
+
+-- ** Tests
 
 private
   -- (1) specializing the function to be applied by `map`
@@ -211,7 +211,7 @@ private
     _ = mevens? (0 ∷ 2 ∷ []) ≡ yes (zero ∷ suc zero ∷ [])
       ∋ refl
 
-    -- [BUG] `_ = ⋯ ∋ ⋯` doesn't work here!
+    -- [AGDA BUG] cannot use _∋_ (c.f. Agda issue #7028)
     _ : modds? (1 ∷ 3 ∷ []) ≡ yes (one ∷ suc one ∷ [])
     _ = refl
 
@@ -224,14 +224,16 @@ private
   toOdd : ℕ → Maybe ℕ
   toOdd = proj₂ ∘ toEvenOdd
 
-
   unquoteDecl toOdds = inlineDecl toOdds (quoteTerm (L.mapMaybe toOdd))
   {-
   toOdds : List ℕ → List ℕ
   toOdds []       = []
   toOdds (x ∷ xs) with toOdd x
-  ... | just y  = y ∷ toOdds xs
-  ... | nothing = toOdds xs
+  -- ** [LIMITATION] does not recursively inline `with`-statements
+  -- ... | just y  = y ∷ toOdds xs
+  -- ... | nothing = toOdds xs
+  ... | just y  = y ∷ mapMaybe toOdd xs
+  ... | nothing = mapMaybe toOdd xs
   -}
   _ = toOdds (0 ∷ 1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 1 ∷ [])
     ∋ refl
