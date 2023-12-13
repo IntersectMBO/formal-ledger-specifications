@@ -31,20 +31,12 @@ record P1ScriptStructure : Set₁ where
 
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet
-        Language PlutusScript CostModel Prices LangDepView : Set
-        ExUnit-CommutativeMonoid  : CommutativeMonoid 0ℓ 0ℓ
-        ⦃ Hashable-PlutusScript ⦄ : Hashable PlutusScript ScriptHash
-        ⦃ DecEq-PlutusScript    ⦄ : DecEq PlutusScript
-        ⦃ DecEq-CostModel       ⦄ : DecEq CostModel
-        ⦃ DecEq-LangDepView     ⦄ : DecEq LangDepView
-
-  open CommutativeMonoid ExUnit-CommutativeMonoid public
-    using ()
-    renaming (_≈_ to _≈ᵉ_; ε to εᵉ; Carrier to ExUnits; refl to reflᵉ; _∙_ to _+ᵉˣ_)
-
-  instance
-    CommMonoid'-ExUnits : IsCommutativeMonoid' _ _ ExUnits
-    CommMonoid'-ExUnits = toCommMonoid' ExUnit-CommutativeMonoid
+        Language PlutusScript CostModel Prices LangDepView ExUnits : Set
+        ⦃ ExUnit-CommutativeMonoid ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ ExUnits
+        ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
+        ⦃ DecEq-PlutusScript       ⦄ : DecEq PlutusScript
+        ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
+        ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
 
   field  _≥ᵉ_              : ExUnits → ExUnits → Set
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits

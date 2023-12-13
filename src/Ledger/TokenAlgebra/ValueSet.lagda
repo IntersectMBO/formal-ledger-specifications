@@ -156,6 +156,8 @@ We are now in a position to define the commutative monoid.
   Vcm .isCommutativeMonoid .isMonoid  = ≋-⊕-ι-isMonoid
   Vcm .isCommutativeMonoid .comm      = ⊕-comm
 
+  instance _ = toCommMonoid' Vcm
+
   Value-TokenAlgebra :
     (specialPolicy : PolicyId)
     (specialAsset : AssetName)
@@ -163,8 +165,7 @@ We are now in a position to define the commutative monoid.
     --------------------------------------
     → TokenAlgebra
   Value-TokenAlgebra specialPolicy specialAsset size = record
-    { Value-CommutativeMonoid   = Vcm
-    ; coin                      = totalMap↠coin
+    { coin                      = totalMap↠coin
     ; inject                    = coin↪totalMap
     ; policies                  = policies
     ; size                      = size

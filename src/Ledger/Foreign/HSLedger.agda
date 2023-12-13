@@ -56,13 +56,13 @@ module Implementation where
 
   PlutusScript = ⊤
   ExUnits      = ℕ × ℕ
-  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ∋ record
+  ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
     { Carrier = ExUnits
     ; _≈_ = _≈ᵖ_
     ; _∙_ = _∙ᵖ_
     ; ε = zero , zero
     ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
-    } where open import Algebra.PairOp ℕ zero _≡_ _+_
+    }) where open import Algebra.PairOp ℕ zero _≡_ _+_
   _≥ᵉ_ : ExUnits → ExUnits → Set
   _≥ᵉ_ = _≡_
   CostModel    = ⊥
@@ -72,23 +72,22 @@ module Implementation where
   open import Ledger.TokenAlgebra ℕ
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
-    .Value-CommutativeMonoid   → +-0-commutativeMonoid
-    .coin                      → id
-    .inject                    → id
-    .policies                  → λ _ → ∅
-    .size                      → λ x → 1 -- there is only ada in this token algebra
-    ._≤ᵗ_                      → _≤_
-    .AssetName                 → String
-    .specialAsset              → "Ada"
-    .property                  → λ _ → refl
-    .coinIsMonoidHomomorphism → λ where
-      .isMagmaHomomorphism → λ where
-        .isRelHomomorphism → record {cong = id}
-        .homo → λ _ _ → refl
-      .ε-homo → refl
+    .Value                      → ℕ
+    .Value-IsCommutativeMonoid' → it
+      -- ^ Agda bug? Without this line, `coinIsMonoidHomomorphism` doesn't type check anymore
+    .coin                       → id
+    .inject                     → id
+    .policies                   → λ _ → ∅
+    .size                       → λ x → 1 -- there is only ada in this token algebra
+    ._≤ᵗ_                       → _≤_
+    .AssetName                  → String
+    .specialAsset               → "Ada"
+    .property                   → λ _ → refl
+    .coinIsMonoidHomomorphism   → Id.isMonoidHomomorphism _ refl
    where open TokenAlgebra
          open Algebra.Morphism.IsMonoidHomomorphism
          open Algebra.Morphism.IsMagmaHomomorphism
+         import Algebra.Morphism.Construct.Identity as Id
 
   TxId            = ℕ
   Ix              = ℕ
