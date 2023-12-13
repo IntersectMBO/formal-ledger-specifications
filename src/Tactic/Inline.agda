@@ -257,3 +257,23 @@ private
     ≡ yes (mOf (0 ∷ 2 ∷ []) refl (refl ∷ 1 ∷ʳ refl ∷ 3 ∷ʳ []) (zero ∷ suc zero ∷ []))
     ∋ refl
     where open import Data.List.Relation.Binary.Sublist.Ext
+
+  -- (7) [LIMITATION] does not work well with pattern lambdas
+  refl? : ℕ → Set
+  refl? n = case n ≟ n of λ where
+    (yes p) → ⊤
+    (no ¬p) → ⊥
+
+  -- unquoteDecl refl42 = inlineDecl refl42 (quoteTerm (refl? 42))
+  {-
+  refl42
+    = (λ { (true because ofʸ p) → ⊤ ; (false because ofⁿ ¬p) → ⊥ })
+      (42 Data.Nat.Properties.≟ 42)
+  -}
+  -- [ERROR] 3x unsolved metas
+  {-
+  Sort _712
+  _713 : _712
+  _715 : _713
+  _717 : Set
+  -}
