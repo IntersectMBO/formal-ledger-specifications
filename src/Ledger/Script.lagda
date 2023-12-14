@@ -11,8 +11,9 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 open import Data.List.Relation.Unary.MOf
 
 open import Tactic.Derive.DecEq
+open import Tactic.Inline
 
-open import Ledger.Prelude hiding (All; Any; all?; _∷ʳ_; uncons; _⊆_)
+open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Epoch
 open import Ledger.Crypto
 
@@ -154,49 +155,26 @@ module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
           → MOf m go xs
         evalMOf˘ (evalMOf p) = p
 
-        -- ** inlining `MOf?` here to please the termination checker
-        MOf?' : ∀ m xs → Dec (MOf m go xs)
-        MOf?' zero        _        = yes (mOf [] refl []⊆ [])
-        MOf?' (suc _)     []       = no λ where (mOf (_ ∷ _) len≡ () _)
-        MOf?' m@(suc m-1) (x ∷ xs)
-          with MOf?' m xs
-        ... | yes (mOf _ len≡ ⊆xs        Pxs')
-            = yes (mOf _ len≡ (x ∷ʳ ⊆xs) Pxs')
-        ... | no ¬p
-          with go? x
-        ... | no ¬Px
-            = no λ where (mOf _ _    (refl ∷ _) (Px ∷ _)) → ¬Px Px
-                         (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs')     → ¬p (mOf _  len≡ ⊆xs Pxs')
-        ... | yes Px
-            = mapDec
-              (λ where (mOf _ len≡ ⊆xs Pxs')
-                        → mOf _ (cong suc len≡) (refl ∷ ⊆xs) (Px ∷ Pxs'))
-              (λ where (mOf _ len≡ (_ ∷  ⊆xs) (_ ∷ Pxs'))
-                        → mOf _ (suc-injective len≡) ⊆xs Pxs'
-                       (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs)
-                        → ⊥-elim $ ¬p (mOf _ len≡ ⊆xs Pxs))
-              (MOf?' m-1 xs)
+        -- ** inlining recursive decision procedures to please the termination checker
+        MOf-go? : ∀ m xs → Dec (MOf m go xs)
+        unquoteDef MOf-go? = inline MOf-go? (quoteTerm (MOf? go?))
 
-        -- ** inlining `all?` here to please the termination checker
-        all?' : Decidable¹ (All go)
-        all?' []       = yes []
-        all?' (x ∷ xs) = mapDec (uncurry _∷_) uncons (go? x ×-dec all?' xs)
+        all-go? : Decidable¹ (All go)
+        unquoteDef all-go? = inline all-go? (quoteTerm (all? go?))
 
-        -- ** inlining `any?` here to please the termination checker
-        any?' : Decidable¹ (Any go)
-        any?' []       = no λ()
-        any?' (x ∷ xs) = mapDec fromSum toSum (go? x ⊎-dec any?' xs)
+        any-go? : Decidable¹ (Any go)
+        unquoteDef any-go? = inline any-go? (quoteTerm (any? go?))
 
-        -- ** TODO: meta-program that does the above inlining for us
-
-        go? : ∀ tl → Dec (go tl)
+        -- ** the actual decision procedure
+        go? : Decidable¹ go
         go? = λ where
-          (RequireAllOf ss)     → mapDec evalAll evalAll˘ (all?' ss)
-          (RequireAnyOf ss)     → mapDec evalAny evalAny˘ (any?' ss)
+          (RequireAllOf ss)     → mapDec evalAll evalAll˘ (all-go? ss)
+          (RequireAnyOf ss)     → mapDec evalAny evalAny˘ (any-go? ss)
           (RequireSig x)        → mapDec evalSig evalSig˘ dec
           (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
           (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
-          (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf?' m xs)
+          (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
+
 
   unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 
