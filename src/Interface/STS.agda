@@ -4,8 +4,6 @@ module Interface.STS where
 
 open import Prelude
 
-open import Class.Bifunctor
-
 infix -150 ∙_
 infixr -100 _∙_
 
@@ -73,27 +71,35 @@ data IdSTS {C S} : C → S → ⊤ → S → Set where
 
 -- with a trivial base case
 ReflexiveTransitiveClosure : (C → S → Sig → S → Set) → C → S → List Sig → S → Set
-ReflexiveTransitiveClosure {C} {S} {Sig} = _⊢_⇀⟦_⟧*_ {C} {S} {Sig} IdSTS
+ReflexiveTransitiveClosure = _⊢_⇀⟦_⟧*_ IdSTS
 
 ReflexiveTransitiveClosure-total : {_⊢_⇀⟦_⟧_ : C → S → Sig → S → Set}
             → (∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⟦ sig ⟧ s')
             → (∀ {Γ s sig} → ∃[ s' ] ReflexiveTransitiveClosure _⊢_⇀⟦_⟧_ Γ s sig s')
 ReflexiveTransitiveClosure-total SS-total {Γ} {s} {[]} = s , BS-base Id-nop
 ReflexiveTransitiveClosure-total SS-total {Γ} {s} {x ∷ sig} =
-  case SS-total {Γ} {s} {x} of λ where
-    (s' , Ps') → map₂′ (BS-ind Ps') $ ReflexiveTransitiveClosure-total SS-total {Γ} {s'} {sig}
+  case SS-total of λ where
+    (s' , Ps') → map₂′ (BS-ind Ps') $ ReflexiveTransitiveClosure-total SS-total
 
 ReflexiveTransitiveClosureᵢ : (C × ℕ → S → Sig → S → Set) → C → S → List Sig → S → Set
-ReflexiveTransitiveClosureᵢ {C} {S} {Sig} = _⊢_⇀⟦_⟧ᵢ*_ {C} {S} {Sig} IdSTS
+ReflexiveTransitiveClosureᵢ = _⊢_⇀⟦_⟧ᵢ*_ IdSTS
 
 ReflexiveTransitiveClosureᵢ-total : {_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Set}
              → (∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⟦ sig ⟧ s')
              → (∀ {Γ s sig} → ∃[ s' ] ReflexiveTransitiveClosureᵢ _⊢_⇀⟦_⟧_ Γ s sig s')
-ReflexiveTransitiveClosureᵢ-total SS-total {Γ} {s} {[]} = s , BS-base Id-nop
-ReflexiveTransitiveClosureᵢ-total SS-total {Γ} {s} {x ∷ sig} =
-  case SS-total {Γ , length sig} {s} {x} of λ where
-    (s' , Ps') → map₂′ (BS-ind Ps') $ ReflexiveTransitiveClosureᵢ-total SS-total {Γ} {s'} {sig}
+ReflexiveTransitiveClosureᵢ-total SS-total {s = s} {[]} = s , BS-base Id-nop
+ReflexiveTransitiveClosureᵢ-total SS-total {s = s} {x ∷ sig} =
+  case SS-total of λ where
+    (s' , Ps') → map₂′ (BS-ind Ps') $ ReflexiveTransitiveClosureᵢ-total SS-total
 
 -- with a given base case
 ReflexiveTransitiveClosureᵢᵇ = _⊢_⇀⟦_⟧ᵢ*_
 ReflexiveTransitiveClosureᵇ  = _⊢_⇀⟦_⟧*_
+
+LedgerInvariant : (C → S → Sig → S → Set) → (S → Set) → Set
+LedgerInvariant STS P = ∀ {c s sig s'} → STS c s sig s' → P s → P s'
+
+RTC-preserves-inv : ∀ {STS : C → S → Sig → S → Set} {P}
+                  → LedgerInvariant STS P → LedgerInvariant (ReflexiveTransitiveClosure STS) P
+RTC-preserves-inv inv (BS-base Id-nop) = id
+RTC-preserves-inv inv (BS-ind p₁ p₂)   = RTC-preserves-inv inv p₂ ∘ inv p₁
