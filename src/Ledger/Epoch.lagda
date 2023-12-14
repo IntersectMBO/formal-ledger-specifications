@@ -96,9 +96,8 @@ data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochStat
     ────────────────────────────────
     Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
 \end{code}
-\caption{EPOCH transition system\protect\footnotemark}
+\caption{EPOCH transition system}
 \end{figure*}
-\footnotetext{The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.}
 
 \begin{figure*}[h]
 \begin{code}[hide]

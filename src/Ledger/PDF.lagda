@@ -13,6 +13,7 @@ module Ledger.PDF where
 
 open import Ledger.BaseTypes
 open import Ledger.Introduction
+open import Ledger.Notation
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
 open import Ledger.Address
@@ -51,6 +52,7 @@ open import Ledger.EssentialAgda
 \end{code}
 
 \include{Ledger/Introduction}
+\include{Ledger/Notation}
 \include{Ledger/Crypto}
 \include{Ledger/BaseTypes}
 \include{Ledger/TokenAlgebra}

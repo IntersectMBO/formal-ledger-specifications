@@ -11,7 +11,7 @@ module Ledger.Address (
 
 We define credentials and various types of addresses here. A
 credential contains a hash, either of a verifying (public) key
-(\isVKey) or of a (\isScript).  (The \coproduct symbol denotes disjoint union.)
+(\isVKey) or of a (\isScript).
 
 \begin{figure*}[h!]
 \begin{AgdaAlign}

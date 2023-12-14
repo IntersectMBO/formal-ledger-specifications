@@ -166,10 +166,9 @@ feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
     collateralRange  = range    (utxo ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
 \end{code}
-\caption{Functions used in UTxO rules, continued\protect\footnotemark}
+\caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo2}
 \end{figure*}
-\footnotetext{\AgdaBound{m}~\AgdaFunction{∣}~\AgdaBound{X} denotes the restriction of the map \AgdaBound{m} to the subset \AgdaBound{X} of its domain.}
 \begin{code}[hide]
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
