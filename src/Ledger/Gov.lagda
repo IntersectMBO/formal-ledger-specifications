@@ -35,9 +35,8 @@ record GovEnv : Set where
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Set
-
-_⊢_⇀⦇_,GOV⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
+  _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Set
+_⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
 \end{code}
 \begin{code}[hide]
 open GovActionState
@@ -105,24 +104,22 @@ compatible version.
 data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
 \begin{code}
-  GOV-Vote : ∀ {x ast} →  let  open GovEnv Γ
-                               sig = inj₁ record  { gid = aid ; role = role
-                                                  ; credential = cred
-                                                  ; vote = v ; anchor = x }
-                          in
-    (aid , ast) ∈ fromList s
-    → canVote pparams (action ast) role
+  GOV-Vote : ∀ {x ast} → let
+    open GovEnv Γ
+    sig = inj₁ record
+      { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x }
+    in
+       (aid , ast) ∈ fromList s
+    →  canVote pparams (action ast) role
     ───────────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid role cred v
 
-  GOV-Propose : ∀ {x} →  let  open GovEnv Γ
-                              open PParams pparams hiding (a)
-                              prop = record  { returnAddr = addr ; action = a
-                                             ; anchor = x ; deposit = d
-                                             ; prevAction = prev }
-                              s' = addAction  s (govActionLifetime +ᵉ epoch)
-                                              (txid , k) addr a prev
-                         in
+  GOV-Propose : ∀ {x} → let
+    open GovEnv Γ; open PParams pparams hiding (a)
+    prop = record
+      { returnAddr = addr ; action = a ; anchor = x ; deposit = d ; prevAction = prev }
+    s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+    in
        actionWellFormed a ≡ true
     →  d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q

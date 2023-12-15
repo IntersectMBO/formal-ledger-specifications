@@ -237,28 +237,28 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
   open PParams pparams
 
   activeDReps : ℙ Credential
-  activeDReps = dom $ filterᵐ (λ x → currentEpoch ≤ (proj₂ x)) dreps
+  activeDReps = dom (filterᵐ (λ x → currentEpoch ≤ (proj₂ x)) dreps)
 
   activeCC : CCData → ℙ Credential
-  activeCC (just (cc , _))  = dom $ filterᵐ (Is-just ∘ proj₂) (ccHotKeys ∣ dom cc)
+  activeCC (just (cc , _))  = dom (filterᵐ (Is-just ∘ proj₂) (ccHotKeys ∣ dom cc))
   activeCC nothing          = ∅
 
   spos : ℙ VDeleg
-  spos = filterˢ IsSPO $ dom (stakeDistr stakeDistrs)
+  spos = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
-    λ where  (true , just (just c'))  → maybe id Vote.no $ lookupᵐ? votes (CC , c')
+    λ where  (true , just (just c'))  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
              _                        → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : CCData → Credential ⇀ Vote
   actualCCVotes nothing          =  ∅
-  actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC $ just (cc , q)))
+  actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC (just (cc , q))))
                                     then mapWithKey actualCCVote cc
                                     else constMap (dom cc) Vote.no
 
   roleVotes : GovRole → VDeleg ⇀ Vote
-  roleVotes r = mapKeys (uncurry credVoter) $ filterᵐ ((r ≡_) ∘ proj₁ ∘ proj₁) votes
+  roleVotes r = mapKeys (uncurry credVoter) (filterᵐ ((r ≡_) ∘ proj₁ ∘ proj₁) votes)
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
   actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.no
@@ -310,15 +310,13 @@ The code in Figure~\ref{fig:defs:ratify-i} defines some of the functions require
 \end{itemize}
 \begin{figure*}[h!]
 \begin{code}
-votedHashes : Vote → (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
-votedHashes v votes r = votes ⁻¹ v
+votedHashes : Vote → (VDeleg ⇀ Vote) → ℙ VDeleg
+votedHashes v votes = votes ⁻¹ v
 
-votedYesHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
-votedYesHashes = votedHashes Vote.yes
-
-votedAbstainHashes participatingHashes : (VDeleg ⇀ Vote) → GovRole → ℙ VDeleg
-votedAbstainHashes = votedHashes Vote.abstain
-participatingHashes votes r = votedYesHashes votes r ∪ votedHashes Vote.no votes r
+votedYesHashes votedAbstainHashes participatingHashes : (VDeleg ⇀ Vote) → ℙ VDeleg
+votedYesHashes       votes = votedHashes Vote.yes      votes
+votedAbstainHashes   votes = votedHashes Vote.abstain  votes
+participatingHashes  votes = votedYesHashes votes ∪ votedHashes Vote.no votes
 \end{code}
 \caption{Calculation of the votes as they will be counted}
 \label{fig:defs:ratify-ii}
@@ -342,22 +340,22 @@ abstract
 \begin{code}
   getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
   getStakeDist CC    cc  sd  = constMap (filterˢ IsCC cc) 1
-  getStakeDist DRep  _   sd  = filterKeys IsDRep (sd .stakeDistr)
-  getStakeDist SPO   _   sd  = filterKeys IsSPO  (sd .stakeDistr)
+  getStakeDist DRep  _   sd  = filterKeys IsDRep  (sd .stakeDistr)
+  getStakeDist SPO   _   sd  = filterKeys IsSPO   (sd .stakeDistr)
 
   acceptedStakeRatio : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → ℚ
   acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
     where
       acceptedStake totalStake : Coin
-      acceptedStake = ∑[ x ←  getStakeDist r cc dists ∣ votedYesHashes votes r ]       x
-      totalStake    = ∑[ x ←  getStakeDist r cc dists ∣ votedAbstainHashes votes r ᶜ ] x
+      acceptedStake  = ∑[ x ← getStakeDist r cc dists ∣ votedYesHashes      votes    ] x
+      totalStake     = ∑[ x ← getStakeDist r cc dists ∣ votedAbstainHashes  votes ᶜ  ] x
 
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs
         votes'  = actualVotes Γ pparams cc action votes
-        t       = maybe id 0ℚ $ threshold pparams (proj₂ <$> cc) action role
-    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ℚ.≥ t
+        t       = maybe id 0ℚ (threshold pparams (proj₂ <$> cc) action role)
+    in acceptedStakeRatio role (dom votes') (RatifyEnv.stakeDistrs Γ) votes' ≥ t
 
   accepted : RatifyEnv → EnactState → GovActionState → Set
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO

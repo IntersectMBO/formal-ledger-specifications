@@ -128,7 +128,7 @@ threshold pp ccThreshold' = λ where
     pparamThreshold GovernanceGroup  = P5d
 
     P5 : PParamsUpdate → ℚ
-    P5 ppu = maximum $ mapˢ pparamThreshold (updateGroups ppu)
+    P5 ppu = maximum (mapˢ pparamThreshold (updateGroups ppu))
 
     noVote : Maybe ℚ
     noVote = nothing
@@ -261,8 +261,8 @@ record EnactState : Set where
         withdrawals   : RwdAddr ⇀ Coin
 
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
-ccCreds (just x  , _)  = dom (x .proj₁)
-ccCreds (nothing , _)  = ∅
+ccCreds (just x   , _)  = dom (x .proj₁)
+ccCreds (nothing  , _)  = ∅
 \end{code}
 \caption{Enactment types}
 \label{fig:enactment-types}

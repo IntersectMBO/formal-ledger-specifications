@@ -25,10 +25,10 @@ We rely on a public key signing scheme for verification of spending.
 \begin{figure*}[h]
 \emph{Types \& functions}
 \begin{code}
-        SKey VKey Sig Ser : Set
-        isKeyPair : SKey → VKey → Set
-        isSigned : VKey → Ser → Sig → Set
-        sign : SKey → Ser → Sig
+        SKey VKey Sig Ser  : Set
+        isKeyPair          : SKey → VKey → Set
+        isSigned           : VKey → Ser → Sig → Set
+        sign               : SKey → Ser → Sig
 
   KeyPair = Σ[ sk ∈ SKey ] Σ[ vk ∈ VKey ] isKeyPair sk vk
 \end{code}

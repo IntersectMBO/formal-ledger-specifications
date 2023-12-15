@@ -58,20 +58,23 @@ open import Ledger.EssentialAgda
 \include{Ledger/TokenAlgebra}
 \include{Ledger/Address}
 \include{Ledger/Script}
-\include{Ledger/GovernanceActions}
 \include{Ledger/PParams}
-\include{Ledger/Gov}
-\include{Ledger/Deleg}
+\include{Ledger/GovernanceActions}
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
 \include{Ledger/Ledger}
+\include{Ledger/Gov}
+\include{Ledger/Deleg}
 \include{Ledger/Ratify}
 \include{Ledger/Epoch}
 \include{Ledger/Chain}
 
 \section{Properties}
 \input{Ledger/Utxo/Properties}
+
+\bibliographystyle{abbrv}
+\bibliography{references}
 
 \clearpage
 

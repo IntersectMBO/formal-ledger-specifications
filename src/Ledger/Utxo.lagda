@@ -85,11 +85,7 @@ module _ (let open Tx; open TxBody) where
   coinPolicies = policies (inject 1)
 
   isAdaOnlyᵇ : Value → Bool
-  isAdaOnlyᵇ v =
-    if (policies v) ≡ᵉ coinPolicies then
-      true
-    else
-      false
+  isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 
   minfee : PParams → Tx → Coin
   minfee pp tx  = pp .a * tx .body .txsize + pp .b
@@ -130,7 +126,6 @@ module _ (let open Tx; open TxBody) where
 \end{figure*}
 \begin{figure*}
 \begin{code}
--- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
@@ -138,6 +133,8 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   none   :                                    inInterval slot (nothing  , nothing)
 \end{code}
 \begin{code}[hide]
+-- Note: inInterval has to be a type definition for inference to work
+
 -- Boolean implication
 _=>ᵇ_ : Bool → Bool → Bool
 a =>ᵇ b = if a then b else true
@@ -149,10 +146,10 @@ _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
+
+-- TODO: this could be a regular property
 \end{code}
 \begin{code}
--- TODO: this could be a regular property
-
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
                   ∧ not (≟-∅ᵇ (txrdmrs ˢ))
@@ -303,10 +300,10 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
-    ∙  txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙  inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
-    ∙  consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
-    ∙  txsize ≤ maxTxSize pp
+    ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
+    ∙ inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
+    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ txsize ≤ maxTxSize pp
 
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
@@ -314,17 +311,14 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         serSize (getValue txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txouts ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txouts ] netId a        ≡ networkId
-    ∙ ∀[ a ∈ dom  txwdrls ]       a .RwdAddr.net ≡ networkId
-    -- Add deposits
-
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ outs txb
-                           , fees + txfee
-                           , updateDeposits pp txb deposits
-                           , donations + txdonation
-                           ⟧ᵘ
-
+    ∙ ∀[ (a , _) ∈ range txouts ]  netId a         ≡ networkId
+    ∙ ∀[ a ∈ dom  txwdrls ]        a .RwdAddr.net  ≡ networkId
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ outs txb
+                          , fees + txfee
+                          , updateDeposits pp txb deposits
+                          , donations + txdonation
+                          ⟧ᵘ
 \end{code}
 \begin{code}[hide]
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r

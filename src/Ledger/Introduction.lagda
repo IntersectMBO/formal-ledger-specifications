@@ -19,12 +19,41 @@ private variable
   sigs : List Sig
 \end{code}
 
-Repository: https://github.com/input-output-hk/formal-ledger-specifications
+\begin{center}
+Repository: \url{https://github.com/IntersectMBO/formal-ledger-specifications}
+\end{center}
+This is the work-in-progress specification of the Cardano ledger. The
+current status of each individual era is described in Table \ref{fig:eras-progress}.
 
-This document describes the formalization of the Cardano ledger specification in the Agda programming
-language and proof assistant. The specification formalized here is that of the Conway era, described
-in detail in the Cardano Improvement Proposal (CIP) 1694,
-\href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-1694}{github.com/cardano-foundation/CIPs/CIP-1694}.
+\begin{longtable}[h!]{|l l l l|}
+\hline
+Era  & Figures & Prose & Cleanup \\
+\hline
+\endhead
+Shelley & Partial & Partial & Not started \\
+Shelley-MA & Partial & Partial & Not started \\
+Alonzo & Partial & Partial & Not started \\
+Babbage & Not started & Not started & Not started \\
+Conway \cite{cip1694} & Complete & Partial & Partial \\
+\hline
+\caption{Specification progress}
+\label{fig:eras-progress}
+\end{longtable}
+
+\subsection{A note on Agda}
+
+This specification is written using the Agda programming language and
+proof assistant \cite{agda2023}. We have spent a lot of time on making
+this document readable for people unfamiliar with Agda (or other proof
+assistants, functional programming languages, etc.). However, by the
+nature of working in a formal language we have to play by its rules,
+meaning that some instances of uncommon notation are very difficult or
+impossible to replace. Some are explained in
+Section~\ref{sec:notation}, but there is no guarantee that this
+section is complete. Anyone who is confused by the meaning of an
+expression, please feel free to open an issue in our
+\href{https://github.com/input-output-hk/formal-ledger-specifications/issues}{repository}
+with the `notation' label.
 
 \subsection{Separation of concerns}
 

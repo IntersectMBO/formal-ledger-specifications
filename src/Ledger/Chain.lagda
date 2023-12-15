@@ -30,9 +30,6 @@ record Block : Set where
         slot  : Slot
 \end{code}
 \caption{Definitions CHAIN transition system}
-The \AgdaRecord{Acnt} record has two fields, \AgdaField{treasury} and \AgdaField{reserves}, so
-the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the total assets that
-remain in treasury and reserves.
 \end{figure*}
 \begin{code}[hide]
 private variable
