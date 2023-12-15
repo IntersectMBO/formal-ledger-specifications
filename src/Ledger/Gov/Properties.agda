@@ -5,7 +5,7 @@ open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Unary.Any
 
 open import Ledger.Prelude hiding (Any; any?)
-open import Ledger.GovStructure
+open import Ledger.Types.GovStructure
 
 module Ledger.Gov.Properties (gs : _) (open GovStructure gs hiding (epoch)) where
 

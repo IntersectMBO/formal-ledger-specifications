@@ -18,7 +18,7 @@ open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude hiding (yes; no)
-open import Ledger.GovStructure
+open import Ledger.Types.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
@@ -47,13 +47,13 @@ record Anchor : Set where
          hash  : DocHash
 
 data GovAction : Set where
-  NoConfidence     :                                           GovAction
-  NewCommittee     : Credential ⇀ Epoch → ℙ Credential → ℚ  →  GovAction
-  NewConstitution  : DocHash → Maybe ScriptHash             →  GovAction
-  TriggerHF        : ProtVer                                →  GovAction
-  ChangePParams    : PParamsUpdate                          →  GovAction
-  TreasuryWdrl     : (RwdAddr ⇀ Coin)                       →  GovAction
-  Info             :                                           GovAction
+  NoConfidence     :                                             GovAction
+  NewCommittee     : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
+  NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction
+  TriggerHF        : ProtVer                                  →  GovAction
+  ChangePParams    : PParamsUpdate                            →  GovAction
+  TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction
+  Info             :                                             GovAction
 
 actionWellFormed : GovAction → Bool
 actionWellFormed (ChangePParams x)  = ppdWellFormed x
@@ -278,7 +278,6 @@ private variable
   q : ℚ
   dh : DocHash
   sh : Maybe ScriptHash
-  h : PPHash
   v : ProtVer
   wdrl : RwdAddr ⇀ Coin
   t : Coin

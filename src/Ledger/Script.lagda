@@ -14,8 +14,8 @@ open import Tactic.Derive.DecEq
 open import Tactic.Inline
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
-open import Ledger.Epoch
 open import Ledger.Crypto
+open import Ledger.Types.Epoch
 
 module Ledger.Script
   (crypto : _) (open Crypto crypto)

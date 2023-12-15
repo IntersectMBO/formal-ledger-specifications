@@ -13,8 +13,8 @@ import Data.Maybe.Base as M
 open import Ledger.Prelude
 
 open import Ledger.Crypto
-open import Ledger.Epoch
-open import Ledger.GovStructure
+open import Ledger.Types.Epoch
+open import Ledger.Types.GovStructure
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions

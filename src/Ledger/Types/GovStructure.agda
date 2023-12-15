@@ -1,11 +1,11 @@
 {-# OPTIONS --safe #-}
 
-module Ledger.GovStructure where
+module Ledger.Types.GovStructure where
 
 open import Class.DecEq
-open import Ledger.Epoch
 open import Ledger.Crypto
 open import Ledger.Script
+open import Ledger.Types.Epoch
 import Ledger.PParams
 
 record GovStructure : Set₁ where

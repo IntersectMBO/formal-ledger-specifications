@@ -15,9 +15,9 @@ import Foreign.Haskell as F
 import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Crypto
-open import Ledger.Epoch
-open import Ledger.GovStructure
 open import Ledger.Transaction
+open import Ledger.Types.Epoch
+open import Ledger.Types.GovStructure
 
 open import Interface.HasOrder.Instance
 
