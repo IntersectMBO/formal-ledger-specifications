@@ -102,10 +102,10 @@ the transaction body are:
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
-  TxIn  = TxId × Ix
-  TxOut = Addr × Value × Maybe DataHash
-  UTxO  = TxIn ⇀ TxOut
-  Wdrl  = RwdAddr ⇀ Coin
+  TxIn   = TxId × Ix
+  TxOut  = Addr × Value × Maybe DataHash
+  UTxO   = TxIn ⇀ TxOut
+  Wdrl   = RwdAddr ⇀ Coin
 
   RdmrPtr : Set
   RdmrPtr = Tag × Ix
@@ -178,7 +178,7 @@ the transaction body are:
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap $ tx .Tx.wits .TxWitnesses.scripts
+    where m = setToHashMap (tx .Tx.wits .TxWitnesses.scripts)
 
   isP2Script : Script → Bool
   isP2Script = is-just ∘ isInj₂

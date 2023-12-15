@@ -57,8 +57,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochStat
       open EpochState eps hiding (es)
       open RatifyState fut using (removed) renaming (es to esW)
       -- ^ this rolls over the future enact state into es
-      open LState ls; open UTxOState utxoSt
-      open CertState certState
+      open LState ls; open UTxOState utxoSt; open CertState certState
       open PState pState; open DState dState; open GState gState
       open Acnt acnt
 
@@ -68,7 +67,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochStat
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         mapˢ (GovActionState.returnAddr gaSt ,_)
              ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
-      govActionReturns = aggregate₊ $ mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ
+      govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
       es        = record esW { withdrawals = ∅ }
       retired   = retiring ⁻¹ e

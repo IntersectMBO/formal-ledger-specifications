@@ -4,7 +4,7 @@ OUT_DIR?=../dist
 LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
 PRE=$(addprefix $(LATEX_DIR)/,\
-  agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex)
+  agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex references.bib)
 PDF_DIR=$(OUT_DIR)/pdfs
 HTML_DIR=$(OUT_DIR)/html
 HS_DIR=$(OUT_DIR)/haskell
