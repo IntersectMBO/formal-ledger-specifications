@@ -13,7 +13,7 @@ Note: the HTML versions of the specifications are interactive, but many modules 
 
 --------------------
 
-## Build and Test the Formal Spec
+## Build and Test the Formal Spec 
 
 ### Clone this repository and enter its directory
 
