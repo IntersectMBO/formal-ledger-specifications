@@ -7,12 +7,14 @@ open import Ledger.GovStructure
 open import Agda.Primitive renaming (Set to Type)
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
-open import Ledger.Prelude hiding (_∈?_) -- ; All; Any; any?; all?)
+open import Ledger.Prelude
 open import Ledger.GovernanceActions gs hiding (yes; no)
-open import Data.List.Ext using (subpermutations; emptylem; Subperm)
+open import Data.List.Ext using (subpermutations)
+open import Data.List.Ext.Subperm using (Subperm; subperm?)
 open import Data.List.Relation.Unary.Any using (here; there; satisfiable) renaming (any? to any?ˡ; Any to Anyˡ)
 open import Data.List.Relation.Unary.All using () renaming (all? to all?ˡ; All to Allˡ)
-open import Relation.Nullary.Decidable using (map′)
+open import Relation.Nullary.Decidable using (map′; _×-dec_)
+
 open import Relation.Unary using (Satisfiable) renaming (_∈_ to _∈'_)
 \end{code}
 \begin{figure*}[h]
@@ -75,7 +77,7 @@ enactablePerm eState aidPairs (aid , as) =
 enactablePerm? : ∀ eState aidPairs aid×st → Dec(enactablePerm eState aidPairs aid×st)
 enactablePerm? eState aidPairs (aid , as) with (getHashES eState (GovActionState.action as))
 ...| nothing = yes tt
-...| (just aidₚ) = any?ˡ {!!} {!!}
+...| (just aidₚ) = any?ˡ (λ x → subperm? x aidPairs ×-dec (x connects? aid to aidₚ)) {!!}
 
 enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
 enactable e aidPairs = λ (aid , as) → case getHashES e (GovActionState.action as) of λ where
@@ -106,25 +108,6 @@ satisfiableˡ (x' , there x∈l , Px) = there (satisfiableˡ (x' , x∈l , Px))
   ¬a∈[] : {a : GovActionID × GovActionID} → a ∈ˡ [] → ⊥
   ¬a∈[] = λ ()
 
-[]∈subperms[]' : ∀ {l : List (GovActionID × GovActionID)} → Allˡ (_∈ˡ l) []
-[]∈subperms[]' = Allˡ.[]
-
-[]∈subperms[]'' : ∀ {l : List (List (GovActionID × GovActionID))} → Allˡ (_∈ˡ l) [ [] ]
-[]∈subperms[]'' = {!!}
-
-[]∈subperms[] : ∀ {l : List (GovActionID × GovActionID)} → l ≡ [] → l ∈ˡ subpermutations []
-[]∈subperms[] x = {!!}
-
-lemma2 : {l t : List (GovActionID × GovActionID)} → fromList t ⊆ fromList l → t ∈ˡ subpermutations l
-lemma2 {[]} {t} x = goal
-  where
-  t[] : t ≡ []
-  t[] = ¬l⊆fromList[] x
-  goal : t ∈ˡ subpermutations []
-  goal = []∈subperms[] t[]
-lemma2 {x₁ ∷ l} {[]} x = {!!}
-lemma2 {x₁ ∷ l} {x₂ ∷ t} x = {!!}
-
 enactable⇔enactableList : ∀ eState → ∀{aidPairs}{aid×st} →
   enactable eState aidPairs aid×st ⇔ enactableList eState aidPairs aid×st
 enactable⇔enactableList eState {aprs} {(aid , as)} with (getHashES eState (GovActionState.action as))
@@ -132,7 +115,19 @@ enactable⇔enactableList eState {aprs} {(aid , as)} with (getHashES eState (Gov
 ...| (just aidₚ) = mk⇔ ⇒ ⇐perms𝒞
   where
   ⇒ : ∃[ t ] (fromList t ⊆ fromList aprs × t connects aid to aidₚ) → Anyˡ (_connects aid to aidₚ) (subpermutations aprs)
-  ⇒ (l , l⊆aprs , h) = satisfiableˡ (l , ((lemma2 l⊆aprs) , h))
+  ⇒ (l , l⊆aprs , h) = satisfiableˡ (l , lem l⊆aprs , h)
+    where
+    lem : {l t : List (GovActionID × GovActionID)} → fromList t ⊆ fromList l → t ∈ˡ subpermutations l
+    lem {[]} {t} x = goal
+      where
+      []∈subperms[] : ∀ {l : List (GovActionID × GovActionID)} → l ≡ [] → l ∈ˡ subpermutations []
+      []∈subperms[] x = {!!}
+      t[] : t ≡ []
+      t[] = ¬l⊆fromList[] x
+      goal : t ∈ˡ subpermutations []
+      goal = []∈subperms[] t[]
+    lem {x₁ ∷ l} {[]} x = {!!}
+    lem {x₁ ∷ l} {x₂ ∷ t} x = {!!}
 
 
 DecEnactList→DecEnact  : ∀ eState {aidPairs} {aid×st}
