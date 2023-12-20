@@ -114,7 +114,18 @@ satisfiableˡ (x' , there x∈l , Px) = there (satisfiableˡ (x' , x∈l , Px))
 ⇐Subperms𝒞 :  ∀ {gen : List (GovActionID × GovActionID)}{aid aid' : GovActionID}
            → ∃[ t ]((Subperm t gen) × (t connects aid to aid'))
            → ∃[ t ]((fromList t ⊆ fromList gen) × (t connects aid to aid'))
-⇐Subperms𝒞 {gen} {aid} {aid'} (t , Sptgen , tConx) = t , (Subperm→SetIncl Sptgen , tConx)
+⇐Subperms𝒞 (t , Sptgen , tConx) = t , Subperm→SetIncl Sptgen , tConx
+
+Subperms𝒞⇒ :  ∀ {gen : List (GovActionID × GovActionID)}{aid aid' : GovActionID}
+           → ∃[ t ]((fromList t ⊆ fromList gen) × (t connects aid to aid'))
+           → ∃[ t ]((Subperm t gen) × (t connects aid to aid'))
+Subperms𝒞⇒ (t , Sptgen , tConx) = t , SetIncl→Subperm Sptgen , tConx
+
+enactable⇔enactablePerm : ∀ eState → ∀{aidPairs}{aid×st} →
+  enactable eState aidPairs aid×st ⇔ enactablePerm eState aidPairs aid×st
+enactable⇔enactablePerm eState {aid×st = (_ , as)} with (getHashES eState (GovActionState.action as))
+...| nothing = mk⇔ id id
+...| (just aidₚ) = mk⇔ Subperms𝒞⇒ ⇐Subperms𝒞
 
 enactable⇔enactableList : ∀ eState → ∀{aidPairs}{aid×st} →
   enactable eState aidPairs aid×st ⇔ enactableList eState aidPairs aid×st
