@@ -24,10 +24,11 @@ GovState : Set
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Set where
-  constructor ⟦_,_,_,_⟧ᵍ
+  constructor ⟦_,_,_,_,_⟧ᵍ
   field txid        : TxId
         epoch       : Epoch
         pparams     : PParams
+        ppolicy     : Maybe ScriptHash
         enactState  : EnactState
 \end{code}
 \emph{Transition relation types}
@@ -53,6 +54,7 @@ private variable
   a : GovAction
   prev : NeedsHash a
   k : ℕ
+  p : Maybe ScriptHash
 \end{code}
 \emph{Functions used in the GOV rules}
 \begin{code}
@@ -105,28 +107,30 @@ data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
 \begin{code}
   GOV-Vote : ∀ {x ast} → let
-    open GovEnv Γ
-    sig = inj₁ record
-      { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x }
+      open GovEnv Γ
+      sig = inj₁ record
+        { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x }
     in
-       (aid , ast) ∈ fromList s
-    →  canVote pparams (action ast) role
-    ───────────────────────────────────────
-    (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid role cred v
+    ∙ (aid , ast) ∈ fromList s
+    ∙ canVote pparams (action ast) role
+      ───────────────────────────────────────
+      (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid role cred v
 
   GOV-Propose : ∀ {x} → let
-    open GovEnv Γ; open PParams pparams hiding (a)
-    prop = record
-      { returnAddr = addr ; action = a ; anchor = x ; deposit = d ; prevAction = prev }
-    s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+      open GovEnv Γ; open PParams pparams hiding (a)
+      prop = record
+        { returnAddr = addr ; action = a ; anchor = x
+        ; policy = p ; deposit = d ; prevAction = prev }
+      s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-       actionWellFormed a ≡ true
-    →  d ≡ govActionDeposit
-    →  (∀ {new rem q} → a ≡ NewCommittee new rem q
-        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
-    →  validHFAction prop s enactState
-    ───────────────────────────────────────
-    (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
+    ∙ actionWellFormed a ≡ true
+    ∙ d ≡ govActionDeposit
+    ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
+    ∙ (∀ {new rem q} → a ≡ NewCommittee new rem q
+       → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
+    ∙ validHFAction prop s enactState
+      ───────────────────────────────────────
+      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
 _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 \end{code}
