@@ -61,28 +61,6 @@ _connects?_to_ : ∀ l aid aid' → Dec (l connects aid to aid')
 ...| no ¬q = no (λ (q , _) → ¬q q)
 ...| yes q = yes (q , p)
 
-enactableList : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
-enactableList eState aidPairs (aid , as) =
-  case getHashES eState (GovActionState.action as) of λ where
-  nothing      → ⊤
-  (just aidₚ)  → Any (_connects aid to aidₚ) (subpermutations aidPairs)
-
-enactableList? : ∀ eState aidPairs aid×st → Dec(enactableList eState aidPairs aid×st)
-enactableList? eState aidPairs (aid , as) with (getHashES eState (GovActionState.action as))
-...| nothing = yes tt
-...| (just aidₚ) = any? (_connects? aid to aidₚ) (subpermutations aidPairs)
-
--- enactablePerm : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
--- enactablePerm eState aidPairs (aid , as) =
---   case getHashES eState (GovActionState.action as) of λ where
---   nothing      → ⊤
---   (just aidₚ)  → Anyˡ (λ t → Subperm t aidPairs × t connects aid to aidₚ) {!!}
-
--- enactablePerm? : ∀ eState aidPairs aid×st → Dec(enactablePerm eState aidPairs aid×st)
--- enactablePerm? eState aidPairs (aid , as) with (getHashES eState (GovActionState.action as))
--- ...| nothing = yes tt
--- ...| (just aidₚ) = any?ˡ (λ x → subperm? x aidPairs ×-dec (x connects? aid to aidₚ)) {!!}
-
 enactablePerm : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
 enactablePerm eState aidPairs (aid , as) =
   case getHashES eState (GovActionState.action as) of λ where
@@ -106,11 +84,6 @@ satisfiableˡ : {A : Type}{l : List A}{P : Pred A 0ℓ} → Satisfiable (P ⋂ l
 satisfiableˡ {l = x ∷ _} (.x , here refl , Px) = here Px
 satisfiableˡ (x' , there x∈l , Px) = there (satisfiableˡ (x' , x∈l , Px))
 
-⇐perms𝒞 :  ∀ {gen : List (GovActionID × GovActionID)}{aid aid' : GovActionID}
-           → Any (_connects aid to aid') (subpermutations gen)
-           → ∃[ t ]((fromList t ⊆ fromList gen) × (t connects aid to aid'))
-⇐perms𝒞 {gen}{aid}{aid'} x = {!!}
-
 ⇐Subperms𝒞 :  ∀ {gen : List (GovActionID × GovActionID)}{aid aid' : GovActionID}
            → ∃[ t ]((Subperm t gen) × (t connects aid to aid'))
            → ∃[ t ]((fromList t ⊆ fromList gen) × (t connects aid to aid'))
@@ -127,37 +100,16 @@ enactable⇔enactablePerm eState {aid×st = (_ , as)} with (getHashES eState (Go
 ...| nothing = mk⇔ id id
 ...| (just aidₚ) = mk⇔ Subperms𝒞⇒ ⇐Subperms𝒞
 
-enactable⇔enactableList : ∀ eState → ∀{aidPairs}{aid×st} →
-  enactable eState aidPairs aid×st ⇔ enactableList eState aidPairs aid×st
-enactable⇔enactableList eState {aprs} {(aid , as)} with (getHashES eState (GovActionState.action as))
-...| nothing = mk⇔ id id
-...| (just aidₚ) = mk⇔ ⇒ ⇐perms𝒞
-  where
-  ⇒ : ∃[ t ] (fromList t ⊆ fromList aprs × t connects aid to aidₚ) → Any (_connects aid to aidₚ) (subpermutations aprs)
-  ⇒ (l , l⊆aprs , h) = satisfiableˡ (l , lem l⊆aprs , h)
-    where
-    lem : {l t : List (GovActionID × GovActionID)} → fromList t ⊆ fromList l → t ∈ˡ subpermutations l
-    lem {[]} {t} x = goal
-      where
-      []∈subperms[] : ∀ {l : List (GovActionID × GovActionID)} → l ≡ [] → l ∈ˡ subpermutations []
-      []∈subperms[] x = {!!}
-      t[] : t ≡ []
-      t[] = l⊆[] x
-      goal : t ∈ˡ subpermutations []
-      goal = []∈subperms[] t[]
-    lem {x₁ ∷ l} {[]} x = {!!}
-    lem {x₁ ∷ l} {x₂ ∷ t} x = {!!}
-
-DecEnactList→DecEnact  : ∀ eState {aidPairs} {aid×st}
-                       → Dec(enactableList eState aidPairs aid×st)
+DecEnactPerm→DecEnact  : ∀ eState {aidPairs} {aid×st}
+                       → Dec(enactablePerm eState aidPairs aid×st)
                        → Dec(enactable eState aidPairs aid×st)
 
-DecEnactList→DecEnact eState = map′ (from (enactable⇔enactableList eState))
-                                    (to (enactable⇔enactableList eState))
+DecEnactPerm→DecEnact eState = map′ (from (enactable⇔enactablePerm eState))
+                                    (to (enactable⇔enactablePerm eState))
   where open Equivalence
 
 enactable? : ∀ eState aidPairs aid×st → Dec(enactable eState aidPairs aid×st)
-enactable? eState aidPairs aid×st = DecEnactList→DecEnact eState (enactableList? eState aidPairs aid×st)
+enactable? eState aidPairs aid×st = DecEnactPerm→DecEnact eState (enactablePerm? eState aidPairs aid×st)
 
 allEnactable : EnactState → GovState → Set
 allEnactable e aid×states = All (λ p → enactable e (getAidPairsList aid×states) p) aid×states
