@@ -20,8 +20,9 @@ module _ {a}{A : Set a} where
     tight : ∀ {x xs ys} → x ∈ ys → Subperm xs ys → Subperm (x ∷ xs) ys
 
   Subperm⁻¹ : {x : A}{xs l : List A} → Subperm (x ∷ xs) l → x ∈ l × Subperm xs l
-  Subperm⁻¹ (loose sp) = there (proj₁ $ Subperm⁻¹ sp) , loose (proj₂ $ Subperm⁻¹ sp)
   Subperm⁻¹ (tight x∈l xsSPl) = x∈l , xsSPl
+  Subperm⁻¹ (loose sp) = there (proj₁ SP) , loose (proj₂ SP)
+    where SP = Subperm⁻¹ sp
 
   Subperm[] : {l : List A} → Subperm [] l
   Subperm[] {[]} = []
