@@ -2,15 +2,11 @@
 
 module Data.List.Ext where
 
-open import Level using (Level; 0ℓ)
-open import Data.List renaming (map to lmap)
-open import Prelude
-open import Data.List.Relation.Unary.All using (All; all?)
-open import Data.List.Relation.Unary.Any using (here; there; satisfiable; any?; Any)
-open import Relation.Binary.Definitions using (Decidable)
-open import Relation.Binary.PropositionalEquality using (_≡_; refl; cong; cong₂)
+open import Data.List
 open import Data.List.Membership.Propositional using (_∈_)
-open import Function using (_∘_)
+open import Data.List.Relation.Unary.All using (All)
+open import Level using (Level; 0ℓ)
+open import Prelude hiding (map)
 open All
 
 module _ {ℓ : Level}{A : Set ℓ} where
@@ -31,7 +27,7 @@ module _ {ℓ : Level}{A : Set ℓ} where
   -- insert a at every position of the given list
   _inserts_ : List A → A → List (List A)
   [] inserts a = (a ∷ []) ∷ []
-  (x ∷ xs) inserts a = (a ∷ x ∷ xs) ∷ lmap (λ l → x ∷ l) (xs inserts a)
+  (x ∷ xs) inserts a = (a ∷ x ∷ xs) ∷ map (x ∷_) (xs inserts a)
 
   -- insert a at every position of every input list
   foreach_inserts_ : List (List A) → A → List (List A)

@@ -12,9 +12,9 @@ open import Data.List.Properties using (∷-injective)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Disjoint.Propositional using (Disjoint)
 open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_)
-open import Data.List.Relation.Binary.Sublist.Heterogeneous.Core
+open import Data.List.Relation.Binary.Sublist.Heterogeneous.Core using (Sublist; []; _∷_)
 open import Data.List.Relation.Unary.AllPairs using (AllPairs; []; _∷_)
-open import Data.List.Relation.Unary.All using (lookup; All; all?)
+open import Data.List.Relation.Unary.All using (lookup; All)
 open import Data.List.Relation.Unary.Any using (any?; here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
   using (unique∧set⇒bag)
@@ -69,7 +69,7 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒
 
 module _ {ℓ}{A : Set ℓ}  where
   open All
-  -- some properties --
+  -- properties of +++ --
   headPrepend : {l : List A}{ls : List (List A)}{a : A} → l ∈ a +++ ls → l ≡ [] ⊎ head l ≡ just a
   headPrepend {[]} x = inj₁ refl
   headPrepend {_ ∷ _} {[]} (here px) = inj₂ (cong just (proj₁ (∷-injective px)))
@@ -80,45 +80,34 @@ module _ {ℓ}{A : Set ℓ}  where
   a∈+++ {[]} = here refl ∷ []
   a∈+++ {_ ∷ ls}{a} = (here refl) ∷ a∈+++
 
-  inllem : {l l' : List A}{x : A} → x ∈ l → x ∈ l ++ l'
-  inllem (here px) = here px
-  inllem (there y) = there (inllem y)
+  inl++ : {l l' : List A}{a : A} → a ∈ l → a ∈ l ++ l'
+  inl++ (here px) = here px
+  inl++ (there y) = there (inl++ y)
 
-  prependlem : {l : List A}{ll : List (List A)}{a : A} → l ∈ ll → a ∷ l ∈ a +++ ll
-  prependlem (here px) = here (cong (_ ∷_) px)
-  prependlem (there l∈xs) = there (prependlem l∈xs)
+  prepend+++ : {l : List A}{ll : List (List A)}{a : A} → l ∈ ll → a ∷ l ∈ a +++ ll
+  prepend+++ (here px) = here (cong (_ ∷_) px)
+  prepend+++ (there l∈xs) = there (prepend+++ l∈xs)
 
-  headlem : {l L : List A}{a : A} → l ⊆ L → l ⊆ (a ∷ L)
-  headlem [] = []
-  headlem (px ∷ pxs) = there px ∷ headlem pxs
+  addhead⊆ : {l L : List A}{a : A} → l ⊆ L → l ⊆ (a ∷ L)
+  addhead⊆ [] = []
+  addhead⊆ (px ∷ pxs) = there px ∷ addhead⊆ pxs
 
 module _ {ℓ}{A : Set ℓ}  where
+  open All
+  -- properties of sublists --
+  sublists-expansive : {xs : List A}{x : A} → x ∷ xs ∈ sublists (x ∷ xs)
+  sublists-expansive {[]} = here refl
+  sublists-expansive {_ ∷ _} = inl++ $ prepend+++ sublists-expansive
 
-  l∈sublists : {xs : List A}{x : A} → x ∷ xs ∈ sublists (x ∷ xs)
-  l∈sublists {[]} = here refl
-  l∈sublists {x ∷ l} = inllem (prependlem l∈sublists)
+  -- properties of Sublists --
+  Sublist-expansive : {l : List A} → Sublist _≡_ l l
+  Sublist-expansive {[]} = []
+  Sublist-expansive {_ ∷ _} = refl ∷ Sublist-expansive
 
-  Sublist-refl : {l : List A} → Sublist _≡_ l l
-  Sublist-refl {[]} = []
-  Sublist-refl {_ ∷ _} = refl ∷ Sublist-refl
-
-  sublist→⊆ : {l L : List A} → Sublist _≡_ l L → l ⊆ L
-  sublist→⊆ [] = All.[] -- []
-  sublist→⊆ (y Sublist.∷ʳ s) = headlem (sublist→⊆ s)
-  sublist→⊆ (x≡y Sublist.∷ xsSLys) = (here x≡y) All.∷ (headlem (sublist→⊆ xsSLys))
-
-
-
-
-
-
-
-
-
-
-
-
-
+  Sublist→⊆ : {x y : List A} → Sublist _≡_ x y → x ⊆ y
+  Sublist→⊆ [] = []
+  Sublist→⊆ (_ Sublist.∷ʳ s) = addhead⊆ $ Sublist→⊆ s
+  Sublist→⊆ (x≡y Sublist.∷ xsSLys) = (here x≡y) ∷ (addhead⊆ $ Sublist→⊆ xsSLys)
 
 
 
