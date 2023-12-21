@@ -99,29 +99,20 @@ module _ (let open Tx; open TxBody) where
     DRepDeposit        : Credential   → DepositPurpose
     GovActionDeposit   : GovActionID  → DepositPurpose
 
-  certDeposit : PParams → DCert → Maybe (DepositPurpose × Coin)
-  certDeposit _   (delegate c _ _ v)  = just (CredentialDeposit c , v)
-  certDeposit pp  (regpool c _)       = just (PoolDeposit       c , pp .poolDeposit)
-  certDeposit _   (regdrep c v _)     = just (DRepDeposit       c , v)
-  certDeposit _   _                   = nothing
+  certDeposit : PParams → DCert → DepositPurpose ⇀ Coin
+  certDeposit _   (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
+  certDeposit pp  (regpool c _)       = ❴ PoolDeposit       c , pp .poolDeposit  ❵
+  certDeposit _   (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
+  certDeposit _   _                   = ∅
 
-  certDepositᵐ : PParams → DCert → DepositPurpose ⇀ Coin
-  certDepositᵐ pp cert = case certDeposit pp cert of λ where
-    (just (p , v))  → ❴ p , v ❵
-    nothing         → ∅
-
-  propDepositᵐ : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
-  propDepositᵐ pp gaid record { returnAddr = record { stake = c } }
+  propDeposit : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
+  propDeposit pp gaid record { returnAddr = record { stake = c } }
     = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
 
-  certRefund : DCert → Maybe DepositPurpose
-  certRefund (dereg c)      = just (CredentialDeposit c)
-  certRefund (deregdrep c)  = just (DRepDeposit       c)
-  certRefund _              = nothing
-
-  certRefundˢ : DCert → ℙ DepositPurpose
-  certRefundˢ = partialToSet certRefund
-
+  certRefund : DCert → ℙ DepositPurpose
+  certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+  certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+  certRefund _              = ∅
 \end{code}
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
@@ -239,17 +230,16 @@ module _ (let open UTxOState; open TxBody) where
 \begin{code}
   updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin
     → DepositPurpose ⇀ Coin
-  updateCertDeposits pp [] deposits = deposits
-  updateCertDeposits pp (cert ∷ certs) deposits
-    =  updateCertDeposits pp certs deposits ∪⁺ certDepositᵐ pp cert
-    ∣  certRefundˢ cert ᶜ
+  updateCertDeposits pp []              deposits = deposits
+  updateCertDeposits pp (cert ∷ certs)  deposits
+    = updateCertDeposits pp certs deposits ∪⁺ certDeposit pp cert ∣ certRefund cert ᶜ
 
   updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ⇀ Coin
     → DepositPurpose ⇀ Coin
   updateProposalDeposits pp txid [] deposits = deposits
   updateProposalDeposits pp txid (prop ∷ props) deposits
     =   updateProposalDeposits pp txid props deposits
-    ∪⁺  propDepositᵐ pp (txid , length props) prop
+    ∪⁺  propDeposit pp (txid , length props) prop
 
   updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
   updateDeposits pp txb
@@ -258,8 +248,7 @@ module _ (let open UTxOState; open TxBody) where
 
   depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
   depositsChange pp txb deposits
-    =  getCoin (updateDeposits pp txb deposits)
-    ⊖  getCoin deposits
+    = getCoin (updateDeposits pp txb deposits) ⊖ getCoin deposits
 
   depositRefunds : PParams → UTxOState → TxBody → Coin
   depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))

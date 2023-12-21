@@ -21,16 +21,16 @@ instance
     (delegate c mv mc d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.poolDeposit)
                                 × (c ∈ dom rwds → d ≡ 0)
                                 × mc ∈ mapˢ just (dom pools) ¿ of λ where
-      (yes (p₁ , p₂ , p₃)) → success (-, DELEG-delegate p₁ p₂ p₃)
+      (yes p) → success (-, DELEG-delegate p)
       _ → failure "Failed in DELEG at delegate"
     (dereg c) → case ¿ (c , 0) ∈ rwds ¿ of λ where
       (yes p) → success (-, DELEG-dereg p)
       _       → failure "Failed in DELEG at (c , 0) ∈ rwds"
     _ → failure "Unexpected certificate in DELEG"
   Computational-DELEG .completeness ⟦ pp , pools ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (delegate c mv mc d)
-    s' (DELEG-delegate p₁ p₂ p₃) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.poolDeposit)
+    s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.poolDeposit)
                                 × (c ∈ dom rwds → d ≡ 0)
-                                × mc ∈ mapˢ just (dom pools) ¿) (p₁ , p₂ , p₃) .proj₂ = refl
+                                × mc ∈ mapˢ just (dom pools) ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c) _ (DELEG-dereg p)
     rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
 
@@ -118,12 +118,12 @@ instance
         refresh = mapPartial getDRepVote (fromList vs)
         wdrlCreds = mapˢ RwdAddr.stake (dom wdrls)
     in case ¿ wdrlCreds ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-      (yes (p₁ , p₂)) → success (-, CERT-base p₁ p₂)
-      (no ¬p)         → failure "CERTBASE Failed at (mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × wdrls ˢ ⊆ rewards ˢ)"
-  Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls ⟧ᶜ st _ st' (CERT-base p₁ p₂)
+      (yes p) → success (-, CERT-base p)
+      (no ¬p) → failure "CERTBASE Failed at (mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × wdrls ˢ ⊆ rewards ˢ)"
+  Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls ⟧ᶜ st _ st' (CERT-base p)
     rewrite let dState = CertState.dState st; open DState dState in
       dec-yes ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
-        (p₁ , p₂) .proj₂ = refl
+        p .proj₂ = refl
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ (String ⊎ String)
 Computational-CERTS = it
