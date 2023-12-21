@@ -10,7 +10,7 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 open import Ledger.Prelude hiding (any?; Any; all?; All)
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Data.List.Ext using (subpermutations)
-open import Data.List.Ext.Subperm using (Subperm; subperm?)
+open import Data.List.Ext.Subperm using (Subperm; subperm?) renaming (any? to any?ᵖ)
 open import Data.List.Ext.Subperm.Properties
 open import Data.List.Relation.Unary.Any using (here; there; satisfiable; any?; Any)
 open import Data.List.Relation.Unary.All using (all?; All)
@@ -61,6 +61,28 @@ _connects?_to_ : ∀ l aid aid' → Dec (l connects aid to aid')
 ...| no ¬q = no (λ (q , _) → ¬q q)
 ...| yes q = yes (q , p)
 
+enactableList : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
+enactableList eState aidPairs (aid , as) =
+  case getHashES eState (GovActionState.action as) of λ where
+  nothing      → ⊤
+  (just aidₚ)  → Any (_connects aid to aidₚ) (subpermutations aidPairs)
+
+enactableList? : ∀ eState aidPairs aid×st → Dec(enactableList eState aidPairs aid×st)
+enactableList? eState aidPairs (aid , as) with (getHashES eState (GovActionState.action as))
+...| nothing = yes tt
+...| (just aidₚ) = any? (_connects? aid to aidₚ) (subpermutations aidPairs)
+
+-- enactablePerm : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
+-- enactablePerm eState aidPairs (aid , as) =
+--   case getHashES eState (GovActionState.action as) of λ where
+--   nothing      → ⊤
+--   (just aidₚ)  → Anyˡ (λ t → Subperm t aidPairs × t connects aid to aidₚ) {!!}
+
+-- enactablePerm? : ∀ eState aidPairs aid×st → Dec(enactablePerm eState aidPairs aid×st)
+-- enactablePerm? eState aidPairs (aid , as) with (getHashES eState (GovActionState.action as))
+-- ...| nothing = yes tt
+-- ...| (just aidₚ) = any?ˡ (λ x → subperm? x aidPairs ×-dec (x connects? aid to aidₚ)) {!!}
+
 enactablePerm : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
 enactablePerm eState aidPairs (aid , as) =
   case getHashES eState (GovActionState.action as) of λ where
@@ -70,7 +92,7 @@ enactablePerm eState aidPairs (aid , as) =
 enactablePerm? : ∀ eState aidPairs aid×st → Dec(enactablePerm eState aidPairs aid×st)
 enactablePerm? eState aidPairs (aid , as) with (getHashES eState (GovActionState.action as))
 ...| nothing = yes tt
-...| (just aidₚ) = {!!}
+...| (just aidₚ) = {!any?ᵖ (λ t → t connects? aid to aidₚ)!}
 
 enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
 enactable e aidPairs = λ (aid , as) → case getHashES e (GovActionState.action as) of λ where
