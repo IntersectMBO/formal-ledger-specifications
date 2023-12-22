@@ -19,7 +19,6 @@ record EpochStructure : Set₁ where
 
         epoch           : Slot → Epoch
         firstSlot       : Epoch → Slot
-        _<ˢ_            : Slot → Slot → Set
         StabilityWindow : Slot
         sucᵉ            : Epoch → Epoch
 
@@ -72,7 +71,6 @@ record GlobalConstants : Set₁ where
     .Epoch           → ℕ
     .epoch slot      → slot / SlotsPerEpochᶜ
     .firstSlot e     → e * SlotsPerEpochᶜ
-    ._<ˢ_            → _<_
     .StabilityWindow → StabilityWindowᶜ
     .sucᵉ            → suc
 
