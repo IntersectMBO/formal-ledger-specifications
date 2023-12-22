@@ -42,15 +42,6 @@ instance
 open import Data.Bool.Properties using ()
 open import Relation.Nullary.Decidable using ()
 
-excludedMiddleBool : {b b1 : Bool} → ¬ (b ≡ b1) → b ≡ (not b1)
-excludedMiddleBool {false} {false} x = ⊥-elim (x refl)
-excludedMiddleBool {false} {true} x = refl
-excludedMiddleBool {true} {false} x = refl
-excludedMiddleBool {true} {true} x = ⊥-elim (x refl)
-
-boolElim : ∀ {b} → (b ≡ true) → b ≡ false → ⊥
-boolElim {.true} refl ()
-
 instance
   Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_ String
   Computational-UTXOS = record {go} where
