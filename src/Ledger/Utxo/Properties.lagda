@@ -423,26 +423,9 @@ module DepositHelpers
     (fees + txfee) + getCoin deposits' + txdonation
       ∎
 
-  rearrange1 : cbalance (utxo ∣ collateral) + txdonation + getCoin deposits + fees
-               ≡ fees + cbalance (utxo ∣ collateral) + getCoin deposits + txdonation
-  rearrange1 =   begin
-    cbalance (utxo ∣ collateral) + txdonation + getCoin deposits + fees
-      ≡⟨ +-comm _ fees ⟩
-    fees ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ txdonation ℕ.+ getCoin deposits)
-      ≡t⟨⟩
-    (fees ℕ.+ cbalance (utxo ∣ collateral)) ℕ.+ (txdonation ℕ.+ getCoin deposits)
-      ≡⟨ cong ((fees + cbalance (utxo ∣ collateral)) +_) $ +-comm txdonation (getCoin deposits) ⟩
-    (fees + cbalance (utxo ∣ collateral)) ℕ.+ ((getCoin deposits) ℕ.+ txdonation)
-      ≡t⟨⟩
-    (fees + cbalance (utxo ∣ collateral)) ℕ.+ (getCoin deposits) ℕ.+ txdonation
-      ≡⟨ refl ⟩
-    (fees + cbalance (utxo ∣ collateral)) + getCoin deposits + txdonation
-      ∎
-
   utxo-ref-prop' :
     cbalance utxo ≡
-     (cbalance (utxo ∣ collateral ᶜ)
-            + cbalance (utxo ∣ collateral)) + txdonation
+    cbalance (utxo ∣ collateral ᶜ) + cbalance (utxo ∣ collateral)
   utxo-ref-prop' = begin
     cbalance utxo
       ≡˘⟨ balance-cong-coin {utxo = (utxo ∣ collateral ᶜ) ∪ˡ (utxo ∣ collateral)}{utxo}
@@ -452,9 +435,7 @@ module DepositHelpers
     cbalance ((utxo ∣ collateral ᶜ) ∪ˡ (utxo ∣ collateral))
       ≡⟨ (balance-∪ {utxo ∣ collateral ᶜ} {utxo ∣ collateral}
          $ flip res-ex-disjoint) ⟩
-    (cbalance (utxo ∣ collateral ᶜ)) ℕ.+ cbalance (utxo ∣ collateral)
-      ≡⟨ {!!} ⟩
-    (cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral))) ℕ.+ txdonation
+    cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral))
       ∎ where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
 \end{code}
 
@@ -574,24 +555,19 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations}
           cbalance utxo ℕ.+ (dep ℕ.+ fees)
             ≡⟨ cong (_+ (dep + fees)) utxo-ref-prop' ⟩
           cbalance (utxo ∣ collateral ᶜ)
-            ℕ.+ cbalance (utxo ∣ collateral) ℕ.+ txdonation ℕ.+ (dep ℕ.+ fees)
+            ℕ.+ cbalance (utxo ∣ collateral) ℕ.+ (dep ℕ.+ fees)
             ≡t⟨⟩
           cbalance (utxo ∣ collateral ᶜ)
-            ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ txdonation ℕ.+ dep ℕ.+ fees)
-            ≡⟨ cong ((cbalance (utxo ∣ collateral ᶜ)) +_) rearrange1 ⟩
+            ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ dep ℕ.+ fees)
+            ≡⟨ cong ((cbalance (utxo ∣ collateral ᶜ)) +_) (+-comm _ fees) ⟩
           cbalance (utxo ∣ collateral ᶜ)
-            + ((fees + cbalance (utxo ∣ collateral)) + getCoin deposits' + txdonation)
+            ℕ.+ (fees ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ getCoin deposits'))
             ∎ ⟩
     cbalance (utxo ∣ collateral ᶜ)
-      ℕ.+ ((fees + cbalance (utxo ∣ collateral)) ℕ.+ getCoin deposits' ℕ.+ txdonation) ℕ.+ donations
+      ℕ.+ (fees ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ getCoin deposits')) ℕ.+ donations
       ≡t⟨⟩
     cbalance (utxo ∣ collateral ᶜ)
-      ℕ.+ (fees + cbalance (utxo ∣ collateral)) ℕ.+ getCoin deposits' ℕ.+ (txdonation ℕ.+ donations)
-      ≡⟨ (cong (cbalance (utxo ∣ collateral ᶜ)
-                + (fees + cbalance (utxo ∣ collateral)) + getCoin deposits' ℕ.+_)
-       $ +-comm txdonation donations ) ⟩
-    cbalance (utxo ∣ collateral ᶜ)
-      + (fees + cbalance (utxo ∣ collateral)) + getCoin deposits' + (donations + txdonation)
+      ℕ.+ (fees ℕ.+ cbalance (utxo ∣ collateral)) ℕ.+ getCoin deposits' ℕ.+ donations
       ∎
 \end{code}
 

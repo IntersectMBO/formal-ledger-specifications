@@ -326,7 +326,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
        Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
                            , fees + cbalance (utxo ∣ collateral)
                            , deposits
-                           , donations + txdonation
+                           , donations
                            ⟧ᵘ
 
 private variable
