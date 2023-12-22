@@ -48,7 +48,6 @@ module Implementation where
   sign       = _+_
   ScriptHash = ℕ
 
-  P1Script     = ⊤
   Data         = ⊤
   Dataʰ        = mkHashableSet Data
   toData : ∀ {A : Set} → A → Data
@@ -123,27 +122,21 @@ open import Ledger.Script it it
 
 HSScriptStructure : ScriptStructure
 HSScriptStructure = record
-  { p1s = HSP1ScriptStructure
-  ; ps = HSP2ScriptStructure
-  ; hashRespectsUnion = hashRespectsUnion
-  }
+  { hashRespectsUnion = hashRespectsUnion
+  ; ps = HSP2ScriptStructure }
   where
-  HSP1ScriptStructure : P1ScriptStructure
-  HSP1ScriptStructure = record
-    { Implementation
-    ; validP1Script = λ _ _ _ → ⊤
-    }
+  postulate
+    instance Hashable-Timelock : Hashable Timelock ℕ
+
+    hashRespectsUnion : ∀ {A B ℍ}
+      → Hashable A ℍ → Hashable B ℍ
+      → Hashable (A ⊎ B) ℍ
 
   HSP2ScriptStructure : PlutusStructure
   HSP2ScriptStructure = record
     { Implementation
     ; validPlutusScript = λ _ _ _ _ → ⊤
     }
-
-  postulate
-    hashRespectsUnion : ∀ {A B ℍ}
-      → Hashable A ℍ → Hashable B ℍ
-      → Hashable (A ⊎ B) ℍ
 
 instance _ = HSScriptStructure
 
@@ -203,6 +196,7 @@ HSAbstractFunctions = record
     ; indexOfVote     = λ _ _ → nothing
     ; indexOfProposal = λ _ _ → nothing
     }
+  ; runPLCScript = λ _ _ _ _ → false
   }
 instance _ = HSAbstractFunctions
 

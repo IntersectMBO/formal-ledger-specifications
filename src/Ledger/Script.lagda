@@ -55,29 +55,6 @@ record PlutusStructure : Set₁ where
         ⦃ Dec-validPlutusScript ⦄ : ∀ {x} → (validPlutusScript x ⁇³)
         language : PlutusScript → Language
         toData : ∀ {A : Set} → A → Data
-
-record ScriptStructure : Set₁ where
-  field p1s : P1ScriptStructure
-        ps  : PlutusStructure
-
-  -- it is not possible to define this function
-  field hashRespectsUnion : {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
-
-  open P1ScriptStructure p1s public
-  open PlutusStructure ps public
-    renaming ( PlutusScript       to P2Script
-             ; validPlutusScript  to validP2Script
-             )
-
-  Script = P1Script ⊎ P2Script
-
-  open import Data.Empty
-  open import Agda.Builtin.Equality
-  open import Relation.Binary.PropositionalEquality
-
-  instance
-    Hashable-Script : Hashable Script ScriptHash
-    Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
 \end{code}
 We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]
@@ -91,6 +68,8 @@ data Timelock : Set where
   RequireTimeExpire  : Slot               → Timelock
 \end{code}
 \begin{code}[hide]
+unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
+
 private variable
   s : Timelock
   ss ss' : List Timelock
@@ -170,8 +149,37 @@ instance
         (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
         (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
 
+P1ScriptStructure-TL : ⦃ Hashable Timelock ScriptHash ⦄ → P1ScriptStructure
+P1ScriptStructure-TL = record
+  { P1Script = Timelock
+  ; validP1Script = evalTimelock }
+
+record ScriptStructure : Set₁ where
+  field hashRespectsUnion :
+          {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
+        ⦃ Hash-Timelock ⦄ : Hashable Timelock ScriptHash
+
+  p1s : P1ScriptStructure
+  p1s = P1ScriptStructure-TL
+  open P1ScriptStructure p1s public
+
+  field ps : PlutusStructure
+  open PlutusStructure ps public
+    renaming ( PlutusScript       to P2Script
+             ; validPlutusScript  to validP2Script
+             )
+
+  Script = P1Script ⊎ P2Script
+
+  open import Data.Empty
+  open import Agda.Builtin.Equality
+  open import Relation.Binary.PropositionalEquality
+
+  instance
+    Hashable-Script : Hashable Script ScriptHash
+    Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
+
 open P1ScriptStructure
-unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 
 import Data.List.Relation.Binary.Sublist.Heterogeneous as Heterogeneous
 import Data.List.Relation.Binary.Sublist.Heterogeneous.Core
@@ -191,9 +199,4 @@ subLemma : {ss xs : List Timelock}{x : Timelock} → ss S.⊆ (x ∷ xs) → (x 
 subLemma {ss} {xs} {x} x₁ with Data.List.Relation.Unary.Any.any? (x ≟_) ss
 ... | yes p = inj₁ p
 ... | no ¬p = inj₂ (subLemma' ss xs x x₁ ¬p)
-
-P1ScriptStructure-TL : Hashable Timelock ScriptHash → P1ScriptStructure
-P1ScriptStructure-TL h .P1Script = Timelock
-P1ScriptStructure-TL h .validP1Script = evalTimelock
-P1ScriptStructure-TL h .Hashable-P1Script = h
 \end{code}
