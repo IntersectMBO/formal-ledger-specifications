@@ -76,25 +76,21 @@ txInfo l pp utxo tx = record
   ; vkKey = reqSigHash
   } where open Tx tx; open TxBody body
 
-DelegateOrDeReg : DCert → Set
-DelegateOrDeReg = λ where
-  (delegate _ _ _ _) → ⊤
-  (dereg _)          → ⊤
-  (regpool _ _)      → ⊥
-  (retirepool _ _)   → ⊥
-  (regdrep _ _ _)    → ⊤
-  (deregdrep _)      → ⊤
-  (ccreghot _ _)     → ⊥
+data DelegateOrDeReg : DCert → Set where instance
+  delegate  : ∀ {x y z w} → DelegateOrDeReg (delegate x y z w)
+  dereg     : ∀ {x} →       DelegateOrDeReg (dereg x)
+  regdrep   : ∀ {x y z} →   DelegateOrDeReg (regdrep x y z)
+  deregdrep : ∀ {x} →       DelegateOrDeReg (deregdrep x)
 
 instance
   Dec-DelegateOrDeReg : DelegateOrDeReg ⁇¹
   Dec-DelegateOrDeReg {dc} .dec with dc
-  ... | delegate _ _ _ _ = yes tt
-  ... | dereg _          = yes tt
+  ... | delegate _ _ _ _ = yes it
+  ... | dereg _          = yes it
+  ... | regdrep _ _ _    = yes it
+  ... | deregdrep _      = yes it
   ... | regpool _ _      = no λ ()
   ... | retirepool _ _   = no λ ()
-  ... | regdrep _ _ _    = yes tt
-  ... | deregdrep _      = yes tt
   ... | ccreghot _ _     = no λ ()
 
 UTxOSH  = TxIn ⇀ (TxOut × ScriptHash)
@@ -183,9 +179,6 @@ open Tx
 
 evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
 evalScripts tx [] = true
-evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) = evalTimelockᵇ
-                                                 (reqSigHash (body tx))
-                                                 (txvldt (body tx))
-                                                 tl
-                                                 ∧ evalScripts tx Γ
+evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) =
+  ¿ evalTimelock (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
 evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ
