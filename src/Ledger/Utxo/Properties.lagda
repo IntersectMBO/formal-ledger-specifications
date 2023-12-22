@@ -53,36 +53,30 @@ boolElim {.true} refl ()
 
 instance
   Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_ String
-  Computational-UTXOS = record {go} where module go Γ s tx where
-    open Tx tx renaming (body to txb); open TxBody txb
-    open UTxOEnv Γ renaming (pparams to pp)
-    open UTxOState s
-    sLst = collectPhaseTwoScriptInputs pp tx utxo
+  Computational-UTXOS = record {go} where
+    module go Γ s tx
+      (let H-Yes , ⁇ H-Yes? = Scripts-Yes-premises {Γ} {s} {tx})
+      (let H-No  , ⁇ H-No?  = Scripts-No-premises {Γ} {s} {tx}) where
+      open Tx tx renaming (body to txb); open TxBody txb
+      open UTxOEnv Γ renaming (pparams to pp)
+      open UTxOState s
+      sLst = collectPhaseTwoScriptInputs pp tx utxo
 
-    UTXOS-premises : Set
-    UTXOS-premises
-      = evalScripts tx sLst ≡ true
-        -- add NewPP
-        -- Add refund
-        -- Add deposits
+      computeProof =
+        case H-Yes? ,′ H-No? of λ where
+          (yes p , no _ ) → success (_ , (Scripts-Yes p))
+          (no _  , yes p) → success (_ , (Scripts-No p))
+          (_     , _    ) → failure "isValid check failed"
 
-    UTXOS-premises? : Dec UTXOS-premises
-    UTXOS-premises? = ¿ UTXOS-premises ¿
-
-    computeProof =
-      case UTXOS-premises? of λ where
-        (no ¬p) → success (_ , (Scripts-No (excludedMiddleBool ¬p)))
-        (yes p) → success (_ , (Scripts-Yes p))
-
-    completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
-    completeness _ (Scripts-Yes x)
-      with UTXOS-premises?
-    ... | yes p = refl
-    ... | no ¬p = ⊥-elim (¬p x)
-    completeness _ (Scripts-No x)
-      with UTXOS-premises?
-    ... | yes p = ⊥-elim (boolElim p x)
-    ... | no ¬p = refl
+      completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
+      completeness _ (Scripts-Yes p) rewrite dec-yes H-Yes? p .proj₂ with H-No?
+      ... | no            _ = refl
+      ... | yes (p₁ , refl) with proj₂ p
+      ... | ()
+      completeness _ (Scripts-No p) rewrite dec-yes H-No? p .proj₂ with H-Yes?
+      ... | no            _ = refl
+      ... | yes (p₁ , refl) with proj₂ p
+      ... | ()
 
 instance
   Computational-UTXO' : Computational _⊢_⇀⦇_,UTXO⦈_ String
@@ -486,7 +480,7 @@ then
 \begin{code}[hide]
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
     {deposits' = deposits'} h'
-    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ (Scripts-Yes x)) =
+    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ (Scripts-Yes _)) =
   let open Tx tx renaming (body to txb); open TxBody txb
       h : disjoint (dom (utxo ∣ txins ᶜ)) (dom (outs txb))
       h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {txb = txb} {utxo} h')

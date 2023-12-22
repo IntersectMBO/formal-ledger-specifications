@@ -149,7 +149,7 @@ the transaction body are:
   record Tx : Set where
     field body     : TxBody
           wits     : TxWitnesses
-          -- isValid  : Bool
+          isValid  : Bool
           txAD     : Maybe AuxiliaryData
 \end{code}
 \end{AgdaSuppressSpace}

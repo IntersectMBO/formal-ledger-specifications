@@ -334,9 +334,10 @@ instance
       ; wits = to wits
       ; txAD = to txAD }
     .from tx → let open F.Tx tx in record
-      { body = from body
-      ; wits = from wits
-      ; txAD = from txAD }
+      { body    = from body
+      ; wits    = from wits
+      ; isValid = true
+      ; txAD    = from txAD }
 
   Convertible-⊥ : Convertible ⊥ F.Empty
   Convertible-⊥ = λ where .to (); .from ()

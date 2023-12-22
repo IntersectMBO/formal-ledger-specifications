@@ -300,16 +300,14 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
-        evalScripts tx sLst ≡ true
-        -- add NewPP
-        -- Add refund
-        -- Add deposits
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
-                           , fees + txfee
-                           , updateDeposits pp txb deposits
-                           , donations + txdonation
-                           ⟧ᵘ
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ true
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+                              , fees + txfee
+                              , updateDeposits pp txb deposits
+                              , donations + txdonation
+                              ⟧ᵘ
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -318,16 +316,17 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
-        evalScripts tx sLst ≡ false
-        -- add NewPP
-        -- Add refund
-        -- Add deposits
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
-                           , fees + cbalance (utxo ∣ collateral)
-                           , deposits
-                           , donations
-                           ⟧ᵘ
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ false
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
+                              , fees + cbalance (utxo ∣ collateral)
+                              , deposits
+                              , donations
+                              ⟧ᵘ
+
+unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
+unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
 private variable
   Γ : UTxOEnv
