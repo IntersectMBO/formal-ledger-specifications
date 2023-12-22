@@ -530,45 +530,21 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations}
     cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
       + (fees + txfee) + getCoin deposits' + (donations + txdonation)
       ∎
-pov {tx}{utxo}{_}{fees}{deposits}{donations}
-    {deposits' = deposits'} h'
-    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ (Scripts-No x)) =
+
+pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
+    step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
   let open Tx tx renaming (body to txb); open TxBody txb
-      h : disjoint (dom (utxo ∣ txins ᶜ)) (dom (outs txb))
-      h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {txb = txb} {utxo} h')
-                  $ to ∈-∩ (res-comp-domᵐ h₁ , h₂)
-      utxoSt = ⟦ utxo , fees , deposits , donations ⟧ᵘ
-      pp = UTxOEnv.pparams Γ
-      ref = depositRefunds pp utxoSt txb
-      tot = newDeposits pp utxoSt txb
       dep = getCoin deposits
-      remDepTot = getCoin deposits - ref
       open DepositHelpers step h'
-  in begin
-    cbalance utxo + fees + dep + donations
-      ≡⟨ cong (_+ donations)
-       $ begin
-          cbalance utxo ℕ.+ fees ℕ.+ dep
-            ≡tˡ⟨ cong (cbalance utxo ℕ.+_) $ +-comm fees dep ⟩
-          cbalance utxo + (dep + fees)
-            ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) refl ⟩
-          cbalance utxo ℕ.+ (dep ℕ.+ fees)
-            ≡⟨ cong (_+ (dep + fees)) utxo-ref-prop' ⟩
-          cbalance (utxo ∣ collateral ᶜ)
-            ℕ.+ cbalance (utxo ∣ collateral) ℕ.+ (dep ℕ.+ fees)
-            ≡t⟨⟩
-          cbalance (utxo ∣ collateral ᶜ)
-            ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ dep ℕ.+ fees)
-            ≡⟨ cong ((cbalance (utxo ∣ collateral ᶜ)) +_) (+-comm _ fees) ⟩
-          cbalance (utxo ∣ collateral ᶜ)
-            ℕ.+ (fees ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ getCoin deposits'))
-            ∎ ⟩
-    cbalance (utxo ∣ collateral ᶜ)
-      ℕ.+ (fees ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ getCoin deposits')) ℕ.+ donations
-      ≡t⟨⟩
-    cbalance (utxo ∣ collateral ᶜ)
-      ℕ.+ (fees ℕ.+ cbalance (utxo ∣ collateral)) ℕ.+ getCoin deposits' ℕ.+ donations
-      ∎
+  in cong (λ x → x + dep + donations) $ begin
+       cbalance utxo ℕ.+ fees
+         ≡⟨ cong (_+ fees) utxo-ref-prop' ⟩
+       cbalance (utxo ∣ collateral ᶜ) ℕ.+ cbalance (utxo ∣ collateral) ℕ.+ fees
+         ≡t⟨⟩
+       cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ fees)
+         ≡⟨ cong (cbalance (utxo ∣ collateral ᶜ) +_) (+-comm _ fees) ⟩
+       cbalance (utxo ∣ collateral ᶜ) ℕ.+ (fees ℕ.+ cbalance (utxo ∣ collateral))
+         ∎
 \end{code}
 
 \end{property}
