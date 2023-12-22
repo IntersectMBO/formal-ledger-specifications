@@ -20,3 +20,4 @@ record AbstractFunctions : Set where
   field txscriptfee : Prices → ExUnits → Coin
         serSize     : Value → MemoryEstimate
         indexOfImp  : indexOf
+        runPLCScript : CostModel → P2Script → ExUnits → List Data → Bool

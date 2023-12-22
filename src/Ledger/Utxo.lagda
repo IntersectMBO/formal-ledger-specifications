@@ -23,6 +23,8 @@ module Ledger.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.ScriptValidation txs abs
+
 instance
   _ = +-0-monoid
 
@@ -285,11 +287,50 @@ module _ (let open UTxOState; open TxBody) where
 
 \begin{figure*}[h]
 \begin{code}[hide]
+
 open PParams
+data
+  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+
+data _⊢_⇀⦇_,UTXOS⦈_ where
+  Scripts-Yes :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ true
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+                              , fees + txfee
+                              , updateDeposits pp txb deposits
+                              , donations + txdonation
+                              ⟧ᵘ
+
+  Scripts-No :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ false
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
+                              , fees + cbalance (utxo ∣ collateral)
+                              , deposits
+                              , donations
+                              ⟧ᵘ
+
+unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
+unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
 private variable
   Γ : UTxOEnv
-  s : UTxOState
+  s s' : UTxOState
   tx : Tx
 
 data _⊢_⇀⦇_,UTXO⦈_ where
@@ -313,16 +354,13 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txouts ]  netId a         ≡ networkId
     ∙ ∀[ a ∈ dom  txwdrls ]        a .RwdAddr.net  ≡ networkId
+    ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ outs txb
-                          , fees + txfee
-                          , updateDeposits pp txb deposits
-                          , donations + txdonation
-                          ⟧ᵘ
+      Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

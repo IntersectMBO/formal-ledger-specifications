@@ -73,7 +73,7 @@ the transaction body are:
   open EpochStructure epochStructure public
   open Ledger.Script crypto epochStructure public
 
-  field scriptStructure : ScriptStructure
+  field scriptStructure : _
   open ScriptStructure scriptStructure public
   open Ledger.PParams crypto epochStructure scriptStructure public
 
@@ -149,7 +149,7 @@ the transaction body are:
   record Tx : Set where
     field body     : TxBody
           wits     : TxWitnesses
-          -- isValid  : Bool
+          isValid  : Bool
           txAD     : Maybe AuxiliaryData
 \end{code}
 \end{AgdaSuppressSpace}

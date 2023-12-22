@@ -21,10 +21,10 @@ open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
 open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
-open import Ledger.Prelude; open Properties 
+open import Ledger.Prelude; open Properties
 open import Ledger.Abstract
 open import Ledger.Transaction
-open import Interface.ComputationalRelation 
+open import Interface.ComputationalRelation
 
 module Ledger.Utxo.Properties
   (txs : _) (open TransactionStructure txs)
@@ -32,11 +32,42 @@ module Ledger.Utxo.Properties
   where
 
 open import Ledger.Utxo txs abs
+open import Ledger.ScriptValidation txs abs
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = Functor-ComputationResult
+
+open import Data.Bool.Properties using ()
+open import Relation.Nullary.Decidable using ()
+
+instance
+  Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_ String
+  Computational-UTXOS = record {go} where
+    module go Γ s tx
+      (let H-Yes , ⁇ H-Yes? = Scripts-Yes-premises {Γ} {s} {tx})
+      (let H-No  , ⁇ H-No?  = Scripts-No-premises {Γ} {s} {tx}) where
+      open Tx tx renaming (body to txb); open TxBody txb
+      open UTxOEnv Γ renaming (pparams to pp)
+      open UTxOState s
+      sLst = collectPhaseTwoScriptInputs pp tx utxo
+
+      computeProof =
+        case H-Yes? ,′ H-No? of λ where
+          (yes p , no _ ) → success (_ , (Scripts-Yes p))
+          (no _  , yes p) → success (_ , (Scripts-No p))
+          (_     , _    ) → failure "isValid check failed"
+
+      completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
+      completeness _ (Scripts-Yes p) rewrite dec-yes H-Yes? p .proj₂ with H-No?
+      ... | no            _ = refl
+      ... | yes (p₁ , refl) with proj₂ p
+      ... | ()
+      completeness _ (Scripts-No p) rewrite dec-yes H-No? p .proj₂ with H-Yes?
+      ... | no            _ = refl
+      ... | yes (p₁ , refl) with proj₂ p
+      ... | ()
 
 instance
   Computational-UTXO' : Computational _⊢_⇀⦇_,UTXO⦈_ String
@@ -44,8 +75,12 @@ instance
     where
       module Go Γ s tx (let H , ⁇ H? = UTXO-premises {tx}{Γ}{s}) where
 
+        open Computational Computational-UTXOS
+          renaming (computeProof to computeProof'; completeness to completeness')
+
         computeProof = case H? of λ where
-          (yes p) → success (-, UTXO-inductive p)
+          (yes (x , y , z , e , k , l , m , n , o , p , q , r)) →
+            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m n o p q r) <$> computeProof' Γ s tx
           (no ¬p) → failure $ case dec-de-morgan ¬p of λ where
             (inj₁ a) → "¬ TxBody.txins (Tx.body tx) ≢ ∅"
             (inj₂ b) → case dec-de-morgan b of λ where
@@ -62,7 +97,7 @@ instance
                             con = consumed pp s txb
                             prod = produced pp s txb
                             showValue = show ∘ coin
-                          in 
+                          in
                             ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
                             +ˢ "\n  consumed =\t\t" +ˢ showValue con
                             +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
@@ -87,12 +122,14 @@ instance
                                       (inj₂ _) → "something else broke"
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
-        completeness s' (UTXO-inductive p) = QED
+        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m n o p q r h) = QED
           where
-            QED : map proj₁ computeProof ≡ success s'
-            QED with H?
-            ... | yes _ = refl
-            ... | no ¬p = ⊥-elim $ ¬p p
+          QED : map proj₁ computeProof ≡ success s'
+          QED with H?
+          ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , n , o , p , q , r)
+          ... | yes _
+            with computeProof' Γ s tx | completeness' _ _ _ _ h
+          ... | success _ | refl = refl
 
 open Computational ⦃...⦄
 
@@ -223,12 +260,17 @@ module DepositHelpers
   {donations donations' : Coin}
   {tx : Tx} (let open Tx tx renaming (body to txb); open TxBody txb)
   {Γ : UTxOEnv}
-  (step : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-              ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ)
+  (step  : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
+               ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ)
   (h' : txid ∉ mapˢ proj₁ (dom utxo))
   where
 
   private
+    stepS : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ᵘ ⇀⦇ tx ,UTXOS⦈
+                ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+    stepS = case step of λ where
+      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
+
     pp : PParams
     pp = UTxOEnv.pparams Γ
     dep : Coin
@@ -248,22 +290,17 @@ module DepositHelpers
     newBal' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                   ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
             → consumed pp utxoSt txb ≡ produced pp utxoSt txb
-    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ x _ _ _ _ _ _ _) = x
+    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _) = x
     newBal : consumed pp utxoSt txb ≡ produced pp utxoSt txb
     newBal = newBal' step
     noMintAda' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                      ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
                → coin (mint) ≡ 0
-    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _) = x
+    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _) = x
     noMintAda : coin mint ≡ 0
     noMintAda = noMintAda' step
     remDepTot : Coin
     remDepTot = getCoin deposits - ref
-
-  uDep≡ : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-              ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
-        → deposits' ≡ updateDeposits pp txb deposits
-  uDep≡ (UTXO-inductive _) = refl
 
   deposits-change' : Δdep ≡ tot ⊖ ref
   deposits-change' = sym posPart-negPart≡x
@@ -348,9 +385,11 @@ module DepositHelpers
       ℕ.+ txdonation ℕ.+ tot
       ∎ where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
 
-  rearrange0 : txfee + txdonation + (tot + remDepTot) + fees
-             ≡ fees + txfee + getCoin deposits' + txdonation
-  rearrange0 = begin
+  rearrange0 :
+      deposits' ≡ updateDeposits pp txb deposits
+    → txfee + txdonation + (tot + remDepTot) + fees
+    ≡ fees + txfee + getCoin deposits' + txdonation
+  rearrange0 h = begin
     txfee + txdonation + (tot + remDepTot) + fees
       ≡⟨ +-comm _ fees ⟩
     fees ℕ.+ (txfee ℕ.+ txdonation ℕ.+ (tot ℕ.+ remDepTot))
@@ -364,10 +403,25 @@ module DepositHelpers
        $ begin tot + (dep - ref) ≡˘⟨ +-∸-assoc tot ref≤dep ⟩
                (tot + dep) - ref ≡⟨ cong (_- ref) $ +-comm tot dep ⟩
                (dep + tot) - ref ≡˘⟨ deposits-change ⟩
-               uDep              ≡⟨ cong getCoin $ sym $ uDep≡ step ⟩
+               uDep              ≡⟨ cong getCoin $ sym h ⟩
                getCoin deposits' ∎ ⟩
     (fees + txfee) + getCoin deposits' + txdonation
       ∎
+
+  utxo-ref-prop' :
+    cbalance utxo ≡
+    cbalance (utxo ∣ collateral ᶜ) + cbalance (utxo ∣ collateral)
+  utxo-ref-prop' = begin
+    cbalance utxo
+      ≡˘⟨ balance-cong-coin {utxo = (utxo ∣ collateral ᶜ) ∪ˡ (utxo ∣ collateral)}{utxo}
+          $    disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
+          ≡ᵉ-∘ ∪-sym
+          ≡ᵉ-∘ res-ex-∪ (_∈? collateral) ⟩
+    cbalance ((utxo ∣ collateral ᶜ) ∪ˡ (utxo ∣ collateral))
+      ≡⟨ (balance-∪ {utxo ∣ collateral ᶜ} {utxo ∣ collateral}
+         $ flip res-ex-disjoint) ⟩
+    cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral))
+      ∎ where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
 \end{code}
 
 Here, we state the fact that the UTxO relation is computable.
@@ -375,11 +429,11 @@ Here, we state the fact that the UTxO relation is computable.
 \begin{figure*}[h]
 \begin{code}
 UTXO-step : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
-UTXO-step = compute
+UTXO-step = compute ⦃ Computational-UTXO ⦄
 
 UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ success utxoState'
                          ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
-UTXO-step-computes-UTXO = ≡-success⇔STS
+UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
 \end{code}
 \caption{Computing the UTXO transition system}
 \end{figure*}
@@ -417,7 +471,7 @@ then
 \begin{code}[hide]
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
     {deposits' = deposits'} h'
-    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _) =
+    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ (Scripts-Yes _)) =
   let open Tx tx renaming (body to txb); open TxBody txb
       h : disjoint (dom (utxo ∣ txins ᶜ)) (dom (outs txb))
       h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {txb = txb} {utxo} h')
@@ -434,9 +488,9 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations}
       ≡⟨ cong (_+ donations)
        $ begin
           cbalance utxo ℕ.+ fees ℕ.+ dep
-            ≡tˡ⟨ cong (cbalance utxo ℕ.+_) (+-comm fees dep) ⟩
+            ≡tˡ⟨ cong (cbalance utxo ℕ.+_) $ +-comm fees dep ⟩
           cbalance utxo + (dep + fees)
-            ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) (m+[n∸m]≡n ref≤dep) ⟩
+            ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) $ m+[n∸m]≡n ref≤dep ⟩
           cbalance utxo ℕ.+ ((ref ℕ.+ remDepTot) ℕ.+ fees)
             ≡t⟨⟩
           cbalance utxo ℕ.+ ref ℕ.+ (remDepTot ℕ.+ fees)
@@ -446,7 +500,7 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations}
             ≡t⟨⟩
           cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
             ℕ.+ (txfee ℕ.+ txdonation ℕ.+ (tot ℕ.+ remDepTot) ℕ.+ fees)
-            ≡⟨ cong (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) +_) rearrange0 ⟩
+            ≡⟨ cong (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) +_) $ rearrange0 refl ⟩
           cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
             + ((fees + txfee) + getCoin deposits' + txdonation)
             ∎ ⟩
@@ -461,6 +515,21 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations}
     cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
       + (fees + txfee) + getCoin deposits' + (donations + txdonation)
       ∎
+
+pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
+    step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
+  let open Tx tx renaming (body to txb); open TxBody txb
+      dep = getCoin deposits
+      open DepositHelpers step h'
+  in cong (λ x → x + dep + donations) $ begin
+       cbalance utxo ℕ.+ fees
+         ≡⟨ cong (_+ fees) utxo-ref-prop' ⟩
+       cbalance (utxo ∣ collateral ᶜ) ℕ.+ cbalance (utxo ∣ collateral) ℕ.+ fees
+         ≡t⟨⟩
+       cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ fees)
+         ≡⟨ cong (cbalance (utxo ∣ collateral ᶜ) +_) (+-comm _ fees) ⟩
+       cbalance (utxo ∣ collateral ᶜ) ℕ.+ (fees ℕ.+ cbalance (utxo ∣ collateral))
+         ∎
 \end{code}
 
 \end{property}
