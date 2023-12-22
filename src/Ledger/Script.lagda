@@ -178,25 +178,4 @@ record ScriptStructure : Set₁ where
   instance
     Hashable-Script : Hashable Script ScriptHash
     Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
-
-open P1ScriptStructure
-
-import Data.List.Relation.Binary.Sublist.Heterogeneous as Heterogeneous
-import Data.List.Relation.Binary.Sublist.Heterogeneous.Core
-  as HeterogeneousCore
-import Data.List.Relation.Binary.Sublist.Heterogeneous.Properties
-  as HeterogeneousProperties
-
-[]⊆xs : {A : Set} → (xs : List A) → [] S.⊆ xs
-[]⊆xs [] = HeterogeneousCore.[]
-[]⊆xs (x ∷ xs) = x HeterogeneousCore.∷ʳ []⊆xs xs
-
-subLemma' : (ss xs : List Timelock) → (x : Timelock) → ss S.⊆ (x ∷ xs) → ¬ (x ∈ˡ ss) → (ss S.⊆ xs)
-subLemma' ss xs x (.x HeterogeneousCore.∷ʳ p) ¬p1 = p
-subLemma' .(x ∷ _) xs x (refl HeterogeneousCore.∷ p) ¬p1 = ⊥-elim (¬p1 (here refl))
-
-subLemma : {ss xs : List Timelock}{x : Timelock} → ss S.⊆ (x ∷ xs) → (x ∈ˡ ss) ⊎ (ss S.⊆ xs)
-subLemma {ss} {xs} {x} x₁ with Data.List.Relation.Unary.Any.any? (x ≟_) ss
-... | yes p = inj₁ p
-... | no ¬p = inj₂ (subLemma' ss xs x x₁ ¬p)
 \end{code}
