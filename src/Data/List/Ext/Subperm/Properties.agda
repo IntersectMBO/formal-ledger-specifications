@@ -14,6 +14,8 @@ open Sublist
 
 module _ {A : Set} where
 
+  open Subperm {A = A}
+
   open Equivalence
   l⊆[] : {l : List A} → fromList l ⊆ fromList [] → l ≡ []
   l⊆[] {[]} _ = refl
