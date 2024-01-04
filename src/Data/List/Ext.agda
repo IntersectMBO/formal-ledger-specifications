@@ -1,29 +1,29 @@
 {-# OPTIONS --safe #-}
 module Data.List.Ext where
 
-open import Agda.Builtin.List using (List; []; _∷_)
-open import Agda.Builtin.Maybe using (Maybe; nothing; just)
-open import Agda.Builtin.Nat using (Nat; zero; suc)
 open import Data.List using (List; [_]; _++_; map)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Relation.Unary.All using (All)
+open import Data.Maybe using (Maybe)
+open import Data.Nat using (ℕ)
 open import Function using (_∘_)
 open import Level using (Level)
+
+open Maybe; open List; open ℕ
 
 private variable
   ℓ : Level
   A : Set ℓ
 
 -- Looking up an index into the list; fails when out-of-bounds.
-_⁉_ : ∀ {a}{A : Set a} → List A → Nat → Maybe A
+_⁉_ : ∀ {a}{A : Set a} → List A → ℕ → Maybe A
 []       ⁉ _     = nothing
 (x ∷ _)  ⁉ zero  = just x
 (_ ∷ xs) ⁉ suc n = xs ⁉ n
 
-
 -- LIST OPERATIONS --
 
--- all elements of one list occur in another
+-- every element in the first list occurs in the second list
 _⊆_ : (l l' : List A) → Set _
 l ⊆ l' = All (_∈ l') l
 
@@ -39,22 +39,22 @@ sublists (x ∷ xs) = x +:: sublists xs  -- sublists including x
                     ++ sublists xs     -- sublists omitting x
 
 -- insert a at each index of the given list
-insert_allOver_ : A → List A → List (List A)
-insert a allOver [] = []
-insert a allOver (x ∷ []) = (a ∷ x ∷ []) ∷ (x ∷ a ∷ []) ∷ []
-insert a allOver (x ∷ xs) = (a ∷ x ∷ xs) ∷ map (x ∷_) (insert a allOver xs)
+insert_everywhereIn_ : A → List A → List (List A)
+insert a everywhereIn [] = []
+insert a everywhereIn (x ∷ []) = (a ∷ x ∷ []) ∷ (x ∷ a ∷ []) ∷ []
+insert a everywhereIn (x ∷ xs) = (a ∷ x ∷ xs) ∷ map (x ∷_) (insert a everywhereIn xs)
 
 -- insert a at each index of each list of the given list of lists
-insert_allOverAll_ : A → List (List A) → List (List A)
-insert a allOverAll [] = []
-insert a allOverAll (l ∷ []) = insert a allOver l
-insert a allOverAll (l ∷ ls) = (insert a allOver l) ++ (insert a allOverAll ls)
+insert_everywhereInAll_ : A → List (List A) → List (List A)
+insert a everywhereInAll [] = []
+insert a everywhereInAll (l ∷ []) = insert a everywhereIn l
+insert a everywhereInAll (l ∷ ls) = (insert a everywhereIn l) ++ (insert a everywhereInAll ls)
 
 -- return all permutations of the given list
 permutations : List A → List (List A)
 permutations [] = []
 permutations (a ∷ []) = (a ∷ []) ∷ []
-permutations (a ∷ as) = insert a allOverAll (permutations as)
+permutations (a ∷ as) = insert a everywhereInAll (permutations as)
 
 -- return all permutations of every list in the given list of lists
 allPermutations : List (List A) → List (List A)
