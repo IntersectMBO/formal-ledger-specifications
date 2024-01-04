@@ -65,6 +65,8 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj�
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
 
 module _ {a}{A : Set a} where
+  ¬∈[] : ∀{x : A} → ¬ (x ∈ˡ [])
+  ¬∈[] = λ ()
 
   _⊆ˡ_ : (l L : List A) → Set _
   l ⊆ˡ L = All (_∈ˡ L) l

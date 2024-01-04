@@ -3,7 +3,8 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (any?; Any; all?; All; Rel)
+open import Axiom.Set.Properties using (∉-∅; ∃?-sublist-⇔)
+open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup)
 open import Ledger.Types.GovStructure
 
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
@@ -11,12 +12,11 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 open import Ledger.GovernanceActions gs hiding (yes; no)
 
 open import Data.List.Ext.Properties using (_⊆ˡ_; ⊆ˡ-id)
-open import Data.List.Relation.Unary.All using (all?; All)
+open import Data.List.Relation.Unary.All using (all?; All; lookup)
+open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
--- open import Relation.Nullary.Decidable.Core using (map′)
 
 -- imports which may be helpful in filling remaining holes:
---   open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
 --   open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist; [])
 
 \end{code}
@@ -66,26 +66,17 @@ _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionI
 [] connects aidNew to aidOld = aidNew ≡ aidOld
 ((aid , aidPrev) ∷ s) connects aidNew to aidOld = aid ≡ aidNew × s connects aidPrev to aidOld
                                                   ⊎ s connects aidNew to aidOld
---   aid₁ → aid₂ → aid₃ → aid₄ → aid₅
--- Let     l := (aid₅, aid₄) (aid₄, aid₃) (aid₃, aid₂) (aid₂, aid₁)
--- Check:  l connects aid₅ to aid₂ :
---   ((aid₅, aid₄) ∷ s) connects aid₅ to aid₂ = aid₅ ≡ aid₅ × s connects aid₄ to aid₂
+-- TODO: delete these notes (and possibly add them to docs) after confirming they're correct.
+--   Suppose:  aid₁ → aid₂ → aid₃ → aid₄ → aid₅.
+--   And let:  l := (aid₅, aid₄) (aid₄, aid₃) (aid₃, aid₂) (aid₂, aid₁)
+--   Check:    l connects aid₅ to aid₂ :
+--               ((aid₅, aid₄) ∷ s) connects aid₅ to aid₂ = aid₅ ≡ aid₅ × s connects aid₄ to aid₂
 
 [_connects_to_?] : ∀ l aidNew aidOld → Dec (l connects aidNew to aidOld)
 [ [] connects aidNew to aidOld ?] = aidNew ≟ aidOld
 
 [ (aid , aidPrev) ∷ s connects aidNew to aidOld ?] =
   ((aid ≟ aidNew) ×-dec [ s connects aidPrev to aidOld ?]) ⊎-dec [ s connects aidNew to aidOld ?]
-
-module _ {A : Set}{L : List A}{ℓ : Level}{P : Pred (List A) ℓ} where
-  -- sublist-⇔ : (l : List A)→ ((fromList l ⊆ fromList L) × P l) ⇔ l ⊆ˡ L × P l
-  -- sublist-⇔ = {!!}
-
-  ∃-sublist-⇔ : (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ (∃[ l ](l ⊆ˡ L × P l))
-  ∃-sublist-⇔ = {!!}
-
-  ∃?-sublist-⇔ : Dec (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ Dec (∃[ l ](l ⊆ˡ L × P l))
-  ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
 
 enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
 enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of λ where
@@ -102,8 +93,7 @@ open Equivalence
 enactable? : ∀ eState aidPairs aidNew×st → Dec(enactable eState aidPairs aidNew×st)
 enactable? eState aidPairs (aidNew , as) with (getHashES eState (GovActionState.action as))
 ... | nothing = yes tt
-... | just aidOld = from (∃?-sublist-⇔ {P = _connects aidNew to aidOld})
-                         (∃?-connecting-subset aidPairs)
+... | just aidOld = from (∃?-sublist-⇔ th) (∃?-connecting-subset aidPairs)
 
 allEnactable : EnactState → GovState → Set
 allEnactable e aid×states = All (λ p → enactable e (getAidPairsList aid×states) p) aid×states
