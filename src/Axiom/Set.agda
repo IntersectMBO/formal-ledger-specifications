@@ -164,6 +164,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-fromList : ∀ {a} → a ∈ˡ l ⇔ a ∈ fromList l
   ∈-fromList = proj₂ $ listing _
 
+  ∈-fromList-tail : ∀ {a x} → a ∈ fromList l → a ∈ fromList (x ∷ l)
+  ∈-fromList-tail a∈l = to ∈-fromList (there (from ∈-fromList a∈l))
+
   ∈-unions : {a : A} {U : Set (Set A)} → (∃[ T ] T ∈ U × a ∈ T) ⇔ a ∈ proj₁ (unions U)
   ∈-unions = proj₂ $ unions _
 
@@ -306,8 +309,8 @@ record Theoryᵈ : Type₁ where
   field
     ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
     _∈?_ : ⦃ DecEq A ⦄ → Decidable² (_∈_ {A = A})
-    all? : {P : A → Type} (P? : Decidable¹ P) {X : Set A} → Dec (All P X)
-    any? : {P : A → Type} (P? : Decidable¹ P) (X : Set A) → Dec (Any P X)
+    all? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Decidable¹ P) {X : Set A} → Dec (All P X)
+    any? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Decidable¹ P) (X : Set A) → Dec (Any P X)
 
   module _ {A : Type} ⦃ _ : DecEq A ⦄ where
 

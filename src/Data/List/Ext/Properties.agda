@@ -1,31 +1,25 @@
 {-# OPTIONS --safe #-}
 
-open import Prelude hiding (any; all; lookup)
+open import Prelude
 
+import Data.List.Relation.Unary.All as All
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
-open import Function.Bundles using (Inverse)
-open import Data.List.Membership.Propositional using (_∈_)
-open import Data.List.Membership.Propositional.Properties
-open import Data.List.Properties -- == using (∷-injective)
-open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
-open import Data.List.Relation.Binary.Disjoint.Propositional using (Disjoint)
-open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_)
-open import Data.List.Relation.Binary.Sublist.Heterogeneous.Core using (Sublist; []; _∷_)
-open import Data.List.Relation.Unary.AllPairs using (AllPairs; []; _∷_)
-open import Data.List.Relation.Unary.All using (lookup; All)
-open import Data.List.Relation.Unary.Any using (Any; any?; here; there)
-open import Data.List.Relation.Unary.Any.Properties
-open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
-  using (unique∧set⇒bag)
-
 open import Data.List.Ext
+open import Data.List.Membership.Propositional
+open import Data.List.Membership.Propositional.Properties
+open import Data.List.Relation.Binary.BagAndSetEquality
+open import Data.List.Relation.Binary.Disjoint.Propositional
+open import Data.List.Relation.Binary.Permutation.Propositional
+open import Data.List.Relation.Unary.AllPairs
+open import Data.List.Relation.Unary.Any using (here; there)
+open import Data.List.Relation.Unary.All using (all?; All)
+open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
+open import Class.DecEq
+
 
 module Data.List.Ext.Properties where
-
-private variable
-  a p : Level
 
 -- TODO: stdlib?
 _×-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A × C) R.∼[ k ] (B × D)
@@ -66,66 +60,35 @@ AllPairs⇒≡∨R∨Rᵒᵖ : ∀ {ℓ ℓ'} {A : Set ℓ} {R : A → A → Set
                  → AllPairs R l → a ∈ˡ l → b ∈ˡ l → a ≡ b ⊎ R a b ⊎ R b a
 AllPairs⇒≡∨R∨Rᵒᵖ [] = λ ()
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (here refl) = inj₁ refl
-AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj₁ (lookup x b∈l))
-AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (lookup x a∈l))
+AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj₁ (All.lookup x b∈l))
+AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (All.lookup x a∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
 
-open All
-module _ {A : Set a}  -- properties of +++ --
-  where
-  headPrepend : {l : List A}{ls : List (List A)}{a : A} → l ∈ a ::: ls → l ≡ [] ⊎ head l ≡ just a
-  headPrepend {[]} x = inj₁ refl
-  headPrepend {_ ∷ _} {[]} (here px) = inj₂ (cong just (proj₁ (∷-injective px)))
-  headPrepend {_ ∷ _} {_ ∷ _} (here px) = inj₂ (cong just (proj₁ (∷-injective px)))
-  headPrepend {_ ∷ _} {_ ∷ _} (there h) = headPrepend h
+module _ {a}{A : Set a} where
+  ¬∈[] : ∀{x : A} → ¬ (x ∈ˡ [])
+  ¬∈[] = λ ()
 
-  a∈+++ : {ls : List (List A)}{a : A} → All (a ∈_) (a ::: ls)
-  a∈+++ {[]} = here refl ∷ []
-  a∈+++ {_ ∷ ls}{a} = (here refl) ∷ a∈+++
+  _⊆ˡ_ : (l L : List A) → Set _
+  l ⊆ˡ L = All (_∈ˡ L) l
 
-  inl++ : {l l' : List A}{a : A} → a ∈ l → a ∈ l ++ l'
-  inl++ (here px) = here px
-  inl++ (there y) = there (inl++ y)
+  addhead⊆ : {l L : List A}{a : A} → l ⊆ˡ L → l ⊆ˡ (a ∷ L)
+  addhead⊆ All.[] = All.[]
+  addhead⊆ (px All.∷ pxs) = there px All.∷ addhead⊆ pxs
 
-  prepend+++ : {l : List A}{ll : List (List A)}{a : A} → l ∈ ll → a ∷ l ∈ a ::: ll
-  prepend+++ (here px) = here (cong (_ ∷_) px)
-  prepend+++ (there l∈xs) = there (prepend+++ l∈xs)
+  ⊆ˡ-id : {l : List A} → l ⊆ˡ l
+  ⊆ˡ-id {[]} = All.[]
+  ⊆ˡ-id {x ∷ xs} = All._∷_ (here refl) (addhead⊆ ⊆ˡ-id)
 
-  addhead⊆ : {l L : List A}{a : A} → l ⊆ L → l ⊆ (a ∷ L)
-  addhead⊆ [] = []
-  addhead⊆ (px ∷ pxs) = there px ∷ addhead⊆ pxs
+  module _ ⦃ _ : DecEq A ⦄ where
+    open import Data.List.Membership.DecPropositional {a} {A} _≟_ renaming (_∈?_ to _∈ˡ?_)
+    _⊆ˡ?_ : (l L : List A) → Dec(l ⊆ˡ L)
+    l ⊆ˡ? L = all? (_∈ˡ? L) l
 
-module _ {A : Set a} -- properties of Sublist and sublists --
-  where
-  sublists-expansive : {xs : List A} → {x : A} → x ∷ xs ∈ sublists (x ∷ xs)
-  sublists-expansive {[]} = here refl
-  sublists-expansive {_ ∷ _} = inl++ $ prepend+++ sublists-expansive
-
-  Sublist-expansive : {xs : List A} → Sublist _≡_ xs xs
-  Sublist-expansive {[]} = []
-  Sublist-expansive {_ ∷ _} = refl ∷ Sublist-expansive
-
-  Sublist→⊆ : {xs : List A}{ys : List A} → Sublist _≡_ xs ys → xs ⊆ ys
-  Sublist→⊆ [] = []
-  Sublist→⊆ (_ Sublist.∷ʳ s) = addhead⊆ $ Sublist→⊆ s
-  Sublist→⊆ (x≡y Sublist.∷ xsSLys) = (here x≡y) ∷ (addhead⊆ $ Sublist→⊆ xsSLys)
-
-  toSum : {xs : List A}{ys : List A}{P : Pred A p} → Any P (xs ++ ys) → Any P xs ⊎ Any P ys
-  toSum {xs = xs} = ++⁻ xs
-
-  fromSum : {xs : List A}{ys : List A}{P : Pred A p} → Any P xs ⊎ Any P ys → Any P (xs ++ ys)
-  fromSum = Inverse.to ++↔
-
--- module _ {A : Set a} -- properties of Sublist and sublists --
---   where
---   []∉sublists : {xs : List A} → ¬ [] ∈ sublists xs
---   []∉sublists {[]} = λ()
---   []∉sublists {x ∷ xs} p with (toSum{xs = x ::: sublists xs}{ys = sublists xs} p)
---   ... | inj₁ q with q
---   ... | here w = ?
---   ... | there w = ?
---   ... | inj₂ q = []∉sublists{xs = xs} q
--- p  : [] ∈ˡ (x +++ sublists xs) ++ sublists xs
+  -- unused, but could be useful later:
+  -- open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist)
+  -- []⊆ : {l : List A} → Sublist _≡_ [] l
+  -- []⊆ {[]} = ˢˡ[]
+  -- []⊆ {_ ∷ _} = _ ˢˡ∷ʳ []⊆
 
 -- TESTS --
 _ : sublists (1 ∷ []) ≡ (1 ∷ []) ∷ []
@@ -134,14 +97,13 @@ _ = refl
 _ : sublists (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
 _ = refl
 
-
 _ : {a : Level}{A : Set a} → sublists{a}{A} [] ≡ []
 _ = refl
 
-_ : sublists (1 ∷ 2 ∷ 3 ∷ [])  ≡  (1 ∷ 2 ∷ 3 ∷ [])
-                                  ∷ (1 ∷ 2 ∷ []) ∷ (1 ∷ 3 ∷ [])
-                                  ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ [])
-                                  ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
+_ : sublists (1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 2 ∷ 3 ∷ [])
+                                ∷ (1 ∷ 2 ∷ []) ∷ (1 ∷ 3 ∷ [])
+                                ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ [])
+                                ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
 _ = refl
 
 _ : permutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ []
@@ -152,15 +114,24 @@ _ : permutations (1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 
                                     ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ []) ∷ []
 _ = refl
 
--- TESTS --
+_ : allPermutations ((1 ∷ 2 ∷ []) ∷ (5 ∷ 6 ∷ []) ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ [])
+                                                         ∷ (5 ∷ 6 ∷ []) ∷ (6 ∷ 5 ∷ []) ∷ []
+_ = refl
+
+_ : allPermutations ((1 ∷ 2 ∷ 3 ∷ []) ∷ (4 ∷ 5 ∷ []) ∷ []) ≡ (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                                             ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                                             ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ [])
+                                                             ∷ (4 ∷ 5 ∷ []) ∷ (5 ∷ 4 ∷ []) ∷ []
+_ = refl
+
 _ : subpermutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
 _ = refl
 
-_ : subpermutations (1 ∷ 2 ∷ 3 ∷ [])  ≡  (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
-                                         ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
-                                         ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ [])
-                                         ∷ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ [])
-                                         ∷ (1 ∷ 3 ∷ []) ∷ (3 ∷ 1 ∷ [])
-                                         ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ []) ∷ (3 ∷ 2 ∷ [])
-                                         ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
+_ : subpermutations (1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 2 ∷ 3 ∷ []) ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                        ∷ (2 ∷ 3 ∷ 1 ∷ []) ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                        ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ [])
+                                        ∷ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ [])
+                                        ∷ (1 ∷ 3 ∷ []) ∷ (3 ∷ 1 ∷ [])
+                                        ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ []) ∷ (3 ∷ 2 ∷ [])
+                                        ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
 _ = refl
