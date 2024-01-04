@@ -1,23 +1,23 @@
 {-# OPTIONS --safe #-}
 
-open import Prelude
+open import Prelude hiding (lookup)
 
-import Data.List.Relation.Unary.All as All
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
-open import Data.List.Ext
-open import Data.List.Membership.Propositional
+open import Data.List.Ext using (sublists; permutations; allPermutations; subpermutations)
+open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties
-open import Data.List.Relation.Binary.BagAndSetEquality
-open import Data.List.Relation.Binary.Disjoint.Propositional
-open import Data.List.Relation.Binary.Permutation.Propositional
-open import Data.List.Relation.Unary.AllPairs
+  using (∈-deduplicate⁻; ∈-deduplicate⁺; ∈-++⁻; ∈-++⁺ˡ; ∈-++⁺ʳ)
+open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
+open import Data.List.Relation.Binary.Disjoint.Propositional using (Disjoint)
+open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_)
+open import Data.List.Relation.Unary.AllPairs using (AllPairs)
+open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (here; there)
-open import Data.List.Relation.Unary.All using (all?; All)
-open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK
-open import Class.DecEq
+open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 
+open AllPairs
 
 module Data.List.Ext.Properties where
 
@@ -60,8 +60,8 @@ AllPairs⇒≡∨R∨Rᵒᵖ : ∀ {ℓ ℓ'} {A : Set ℓ} {R : A → A → Set
                  → AllPairs R l → a ∈ˡ l → b ∈ˡ l → a ≡ b ⊎ R a b ⊎ R b a
 AllPairs⇒≡∨R∨Rᵒᵖ [] = λ ()
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (here refl) = inj₁ refl
-AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj₁ (All.lookup x b∈l))
-AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (All.lookup x a∈l))
+AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj₁ (lookup x b∈l))
+AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (lookup x a∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
 
 module _ {a}{A : Set a} where
