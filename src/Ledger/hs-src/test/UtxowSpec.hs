@@ -4,6 +4,8 @@ module UtxowSpec (spec) where
 
 import Control.Monad ( foldM )
 
+import Data.Text
+
 import Test.Hspec ( Spec, describe, it )
 import Test.HUnit ( (@?=) )
 
@@ -92,7 +94,7 @@ testTx2 = MkTx
   , wits = MkTxWitnesses { vkSigs = [(1, 3)], scripts = [] }
   , txAD = Nothing }
 
-utxowSteps :: UTxOEnv -> UTxOState -> [Tx] -> Maybe UTxOState
+utxowSteps :: UTxOEnv -> UTxOState -> [Tx] -> ComputationResult Text UTxOState
 utxowSteps = foldM . utxowStep
 
 deriving instance Eq UTxOState
@@ -101,7 +103,7 @@ spec :: Spec
 spec = do
   describe "utxowSteps" $
     it "results in the expected state" $
-      utxowSteps initEnv initState [testTx1, testTx2] @?= Just (MkUTxOState
+      utxowSteps initEnv initState [testTx1, testTx2] @?= Success (MkUTxOState
         { utxo = [ (1,0) .-> (a0, (890, Nothing))
                  , (2,0) .-> (a2, (10,  Nothing))
                  , (2,1) .-> (a1, (80,  Nothing)) ]

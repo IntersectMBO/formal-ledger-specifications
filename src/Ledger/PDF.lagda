@@ -13,14 +13,15 @@ module Ledger.PDF where
 
 open import Ledger.BaseTypes
 open import Ledger.Introduction
+open import Ledger.Notation
 open import Ledger.Crypto
-open import Ledger.Epoch
+open import Ledger.Types.Epoch
 open import Ledger.Address
 open import Ledger.Script
 open import Ledger.ScriptValidation
 open import Ledger.PParams
 
-open import Ledger.GovStructure
+open import Ledger.Types.GovStructure
 open import Ledger.GovernanceActions
 open import Ledger.Deleg
 
@@ -51,24 +52,29 @@ open import Ledger.EssentialAgda
 \end{code}
 
 \include{Ledger/Introduction}
+\include{Ledger/Notation}
 \include{Ledger/Crypto}
 \include{Ledger/BaseTypes}
 \include{Ledger/TokenAlgebra}
 \include{Ledger/Address}
 \include{Ledger/Script}
-\include{Ledger/GovernanceActions}
 \include{Ledger/PParams}
-\include{Ledger/Gov}
-\include{Ledger/Deleg}
+\include{Ledger/GovernanceActions}
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
 \include{Ledger/Ledger}
+\include{Ledger/Gov}
+\include{Ledger/Deleg}
 \include{Ledger/Ratify}
+\include{Ledger/Epoch}
 \include{Ledger/Chain}
 
 \section{Properties}
 \input{Ledger/Utxo/Properties}
+
+\bibliographystyle{abbrv}
+\bibliography{references}
 
 \clearpage
 

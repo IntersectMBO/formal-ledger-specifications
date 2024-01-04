@@ -13,8 +13,8 @@ import Data.Maybe.Base as M
 open import Ledger.Prelude
 
 open import Ledger.Crypto
-open import Ledger.Epoch
-open import Ledger.GovStructure
+open import Ledger.Types.Epoch
+open import Ledger.Types.GovStructure
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
@@ -73,7 +73,7 @@ the transaction body are:
   open EpochStructure epochStructure public
   open Ledger.Script crypto epochStructure public
 
-  field scriptStructure : ScriptStructure
+  field scriptStructure : _
   open ScriptStructure scriptStructure public
   open Ledger.PParams crypto epochStructure scriptStructure public
 
@@ -102,10 +102,10 @@ the transaction body are:
 \emph{Derived types}
 \AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
-  TxIn  = TxId × Ix
-  TxOut = Addr × Value × Maybe DataHash
-  UTxO  = TxIn ⇀ TxOut
-  Wdrl  = RwdAddr ⇀ Coin
+  TxIn   = TxId × Ix
+  TxOut  = Addr × Value × Maybe DataHash
+  UTxO   = TxIn ⇀ TxOut
+  Wdrl   = RwdAddr ⇀ Coin
 
   RdmrPtr : Set
   RdmrPtr = Tag × Ix
@@ -149,7 +149,7 @@ the transaction body are:
   record Tx : Set where
     field body     : TxBody
           wits     : TxWitnesses
-          -- isValid  : Bool
+          isValid  : Bool
           txAD     : Maybe AuxiliaryData
 \end{code}
 \end{AgdaSuppressSpace}
@@ -178,7 +178,7 @@ the transaction body are:
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap $ tx .Tx.wits .TxWitnesses.scripts
+    where m = setToHashMap (tx .Tx.wits .TxWitnesses.scripts)
 
   isP2Script : Script → Bool
   isP2Script = is-just ∘ isInj₂

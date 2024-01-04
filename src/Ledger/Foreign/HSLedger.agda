@@ -15,9 +15,9 @@ import Foreign.Haskell as F
 import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Crypto
-open import Ledger.Epoch
-open import Ledger.GovStructure
 open import Ledger.Transaction
+open import Ledger.Types.Epoch
+open import Ledger.Types.GovStructure
 
 open import Interface.HasOrder.Instance
 
@@ -48,7 +48,6 @@ module Implementation where
   sign       = _+_
   ScriptHash = ℕ
 
-  P1Script     = ⊤
   Data         = ⊤
   Dataʰ        = mkHashableSet Data
   toData : ∀ {A : Set} → A → Data
@@ -56,13 +55,13 @@ module Implementation where
 
   PlutusScript = ⊤
   ExUnits      = ℕ × ℕ
-  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ∋ record
+  ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
     { Carrier = ExUnits
     ; _≈_ = _≈ᵖ_
     ; _∙_ = _∙ᵖ_
     ; ε = zero , zero
     ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
-    } where open import Algebra.PairOp ℕ zero _≡_ _+_
+    }) where open import Algebra.PairOp ℕ zero _≡_ _+_
   _≥ᵉ_ : ExUnits → ExUnits → Set
   _≥ᵉ_ = _≡_
   CostModel    = ⊥
@@ -72,23 +71,22 @@ module Implementation where
   open import Ledger.TokenAlgebra ℕ
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
-    .Value-CommutativeMonoid   → +-0-commutativeMonoid
-    .coin                      → id
-    .inject                    → id
-    .policies                  → λ _ → ∅
-    .size                      → λ x → 1 -- there is only ada in this token algebra
-    ._≤ᵗ_                      → _≤_
-    .AssetName                 → String
-    .specialAsset              → "Ada"
-    .property                  → λ _ → refl
-    .coinIsMonoidHomomorphism → λ where
-      .isMagmaHomomorphism → λ where
-        .isRelHomomorphism → record {cong = id}
-        .homo → λ _ _ → refl
-      .ε-homo → refl
+    .Value                      → ℕ
+    .Value-IsCommutativeMonoid' → it
+      -- ^ Agda bug? Without this line, `coinIsMonoidHomomorphism` doesn't type check anymore
+    .coin                       → id
+    .inject                     → id
+    .policies                   → λ _ → ∅
+    .size                       → λ x → 1 -- there is only ada in this token algebra
+    ._≤ᵗ_                       → _≤_
+    .AssetName                  → String
+    .specialAsset               → "Ada"
+    .property                   → λ _ → refl
+    .coinIsMonoidHomomorphism   → Id.isMonoidHomomorphism _ refl
    where open TokenAlgebra
          open Algebra.Morphism.IsMonoidHomomorphism
          open Algebra.Morphism.IsMagmaHomomorphism
+         import Algebra.Morphism.Construct.Identity as Id
 
   TxId            = ℕ
   Ix              = ℕ
@@ -124,27 +122,21 @@ open import Ledger.Script it it
 
 HSScriptStructure : ScriptStructure
 HSScriptStructure = record
-  { p1s = HSP1ScriptStructure
-  ; ps = HSP2ScriptStructure
-  ; hashRespectsUnion = hashRespectsUnion
-  }
+  { hashRespectsUnion = hashRespectsUnion
+  ; ps = HSP2ScriptStructure }
   where
-  HSP1ScriptStructure : P1ScriptStructure
-  HSP1ScriptStructure = record
-    { Implementation
-    ; validP1Script = λ _ _ _ → ⊤
-    }
+  postulate
+    instance Hashable-Timelock : Hashable Timelock ℕ
+
+    hashRespectsUnion : ∀ {A B ℍ}
+      → Hashable A ℍ → Hashable B ℍ
+      → Hashable (A ⊎ B) ℍ
 
   HSP2ScriptStructure : PlutusStructure
   HSP2ScriptStructure = record
     { Implementation
     ; validPlutusScript = λ _ _ _ _ → ⊤
     }
-
-  postulate
-    hashRespectsUnion : ∀ {A B ℍ}
-      → Hashable A ℍ → Hashable B ℍ
-      → Hashable (A ⊎ B) ℍ
 
 instance _ = HSScriptStructure
 
@@ -204,6 +196,7 @@ HSAbstractFunctions = record
     ; indexOfVote     = λ _ _ → nothing
     ; indexOfProposal = λ _ _ → nothing
     }
+  ; runPLCScript = λ _ _ _ _ → false
   }
 instance _ = HSAbstractFunctions
 
@@ -215,6 +208,7 @@ open import Ledger.Utxow.Properties it it
 instance
   _ = Convertible-Refl {⊤}
   _ = Convertible-Refl {ℕ}
+  _ = Convertible-Refl {String}
 
   -- Since the foreign address is just a number, we do bad stuff here
   Convertible-Addr : Convertible Addr F.Addr
@@ -340,9 +334,10 @@ instance
       ; wits = to wits
       ; txAD = to txAD }
     .from tx → let open F.Tx tx in record
-      { body = from body
-      ; wits = from wits
-      ; txAD = from txAD }
+      { body    = from body
+      ; wits    = from wits
+      ; isValid = true
+      ; txAD    = from txAD }
 
   Convertible-⊥ : Convertible ⊥ F.Empty
   Convertible-⊥ = λ where .to (); .from ()
@@ -427,12 +422,22 @@ instance
       ; donations = ε
       }
 
-utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → Maybe F.UTxOState
-utxo-step e s tx = to <$> UTXO-step (from e) (from s) (from tx)
+  Convertible-ComputationResult : ∀ {e e' a a'}
+    → ⦃ Convertible e e' ⦄
+    → ⦃ Convertible a a' ⦄
+    → Convertible (ComputationResult e a) (F.ComputationResult e' a')
+  Convertible-ComputationResult = λ where
+    .to (success a) → F.Success (to a)
+    .to (failure a) → F.Failure (to a)
+    .from (F.Success a) → success (from a)
+    .from (F.Failure a) → failure (from a)
+
+utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxo-step e s tx = to $ UTXO-step (from e) (from s) (from tx)
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
-utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → Maybe F.UTxOState
-utxow-step e s tx = to <$> compute Computational-UTXOW (from e) (from s) (from tx)
+utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxow-step e s tx = to $ compute Computational-UTXOW (from e) (from s) (from tx)
 
 {-# COMPILE GHC utxow-step as utxowStep #-}

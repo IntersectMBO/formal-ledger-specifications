@@ -18,10 +18,14 @@ open import Ledger.Utxo.Properties txs abs
 open import Ledger.Utxow txs abs
 open import Ledger.Utxow.Properties txs abs
 
+open import Interface.ComputationalRelation
+
 -- ** Proof that LEDGER is computational.
 
 instance
-  Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_
+  _ = Monad-ComputationResult
+
+  Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_ String
   Computational-LEDGER = record {go}
     where
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
@@ -39,27 +43,27 @@ instance
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
       govΓ  = GovEnv  ∋ ⟦ txid , epoch slot , pparams , enactState ⟧ᵍ
 
-      computeProof : Maybe (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
+      computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
       computeProof = do
         (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
-        (certSt' , certStep) ← computeCerts certΓ certSt txcerts
-        (govSt'  , govStep)  ← computeGov   govΓ  govSt  (txgov txb)
+        (certSt' , certStep) ← map₁ (λ where (inj₁ x) → x; (inj₂ x) → x) $ computeCerts certΓ certSt txcerts
+        (govSt'  , govStep)  ← map₁ (λ where (inj₁ ()); (inj₂ x) → x) $ computeGov   govΓ  govSt  (txgov txb)
         case H? {certSt'} of λ where
-          (yes h) → just (_ , LEDGER⋯ utxoStep certStep govStep h)
-          (no _)  → nothing
+          (yes h) → success (_ , LEDGER⋯ utxoStep certStep govStep h)
+          (no f)  → failure "Failed at LEDGER"
 
-      completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ just s'
+      completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ success s'
       completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ
                    (LEDGER⋯ utxoStep certStep govStep h)
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
-      ... | just (utxoSt' , _) | refl
+      ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certSt txcerts | complete _ _ _ _ certStep
-      ... | just (certSt' , _) | refl
+      ... | success (certSt' , _) | refl
         with computeGov govΓ govSt (txgov txb) | complete _ _ _ _ govStep
-      ... | just (govSt' , _) | refl
+      ... | success (govSt' , _) | refl
         rewrite dec-yes (H? {certSt'}) h .proj₂ = refl
 
-Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_
+Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ (⊥ ⊎ String)
 Computational-LEDGERS = it
 
 instance

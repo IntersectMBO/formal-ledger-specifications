@@ -29,15 +29,15 @@ private
       × sucᵉ (epoch slot) ≡ e
 
 instance
-  Computational-PPUP : Computational _⊢_⇀⦇_,PPUP⦈_
+  Computational-PPUP : Computational _⊢_⇀⦇_,PPUP⦈_ String
   Computational-PPUP .computeProof Γ s = λ where
     (just (pup , e)) →
       case ¿ Current-Property Γ (pup , e) ¿
         ,′ ¿ Future-Property Γ (pup , e) ¿ of λ where
-        (yes (p₁ , p₂ , p₃ , p₄) , _) → just (-, PPUpdateCurrent p₁ p₂ p₃ p₄)
-        (_ , yes (p₁ , p₂ , p₃ , p₄)) → just (-, PPUpdateFuture p₁ p₂ p₃ p₄)
-        (no _ , no _)                 → nothing
-    nothing → just (-, PPUpdateEmpty)
+        (yes (p₁ , p₂ , p₃ , p₄) , _) → success (-, PPUpdateCurrent p₁ p₂ p₃ p₄)
+        (_ , yes (p₁ , p₂ , p₃ , p₄)) → success (-, PPUpdateFuture p₁ p₂ p₃ p₄)
+        (no _ , no _)                 → failure "Failed in PPUP"
+    nothing → success (-, PPUpdateEmpty)
 
   Computational-PPUP .completeness Γ _ .nothing  _     PPUpdateEmpty = refl
   Computational-PPUP .completeness Γ _ (just up) _ p   with p

@@ -26,7 +26,7 @@ getScripts = mapPartial isInj₂
 credsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded p utxo txb
   =  mapˢ (λ (i , o) → (Spend i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  mapˢ (λ a → (Rwrd a , RwdAddr.stake a)) (dom $ txwdrls .proj₁)
+  ∪  mapˢ (λ a → (Rwrd a , RwdAddr.stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c → (Cert c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x → (Mint x , inj₂ x)) (policies mint)
   ∪  mapˢ (λ v → (Vote v , GovVote.credential v)) (fromList txvote)
@@ -72,7 +72,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         witsScriptHashes  = mapˢ hash scripts
       in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  All (validP1Script witsKeyHashes txvldt) (toSet scriptsP1)
+    ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
     ∙  scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
     ∙  txADhash ≡ map hash txAD

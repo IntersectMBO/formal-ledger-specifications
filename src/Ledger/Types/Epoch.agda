@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-module Ledger.Epoch where
+module Ledger.Types.Epoch where
 
 open import Ledger.Prelude hiding (compare; Rel)
 
@@ -17,10 +17,10 @@ record EpochStructure : Set₁ where
   field ⦃ DecPo-Slot ⦄   : HasDecPartialOrder≡ {A = Slot}
         ⦃ DecEq-Slot ⦄   : DecEq Slot
 
-        epoch            : Slot → Epoch
-        firstSlot        : Epoch → Slot
-        StabilityWindow  : Slot
-        sucᵉ             : Epoch → Epoch
+        epoch           : Slot → Epoch
+        firstSlot       : Epoch → Slot
+        StabilityWindow : Slot
+        sucᵉ            : Epoch → Epoch
 
   -- preorders and partial orders
 

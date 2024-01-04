@@ -81,3 +81,8 @@ Other notes:
   things, they define things (ex: '`feesOK` defines what conditions
   the transaction fees must satisfy', not '`feesOK` computes whether
   the conditions that the fees must satisfy are being met')
+
+## Other points
+
+- Don't include an empty line before `\end{code}`. This will add an
+  additional line in the PDF, which looks odd.

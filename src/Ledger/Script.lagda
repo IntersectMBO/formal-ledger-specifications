@@ -11,10 +11,11 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 open import Data.List.Relation.Unary.MOf
 
 open import Tactic.Derive.DecEq
+open import Tactic.Inline
 
-open import Ledger.Prelude hiding (All; Any; all?; _∷ʳ_; uncons; _⊆_)
-open import Ledger.Epoch
+open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Crypto
+open import Ledger.Types.Epoch
 
 module Ledger.Script
   (crypto : _) (open Crypto crypto)
@@ -30,17 +31,12 @@ record P1ScriptStructure : Set₁ where
 
 record PlutusStructure : Set₁ where
   field Dataʰ : HashableSet
-        Language PlutusScript CostModel Prices LangDepView : Set
-        ExUnit-CommutativeMonoid  : CommutativeMonoid 0ℓ 0ℓ
-        ⦃ Hashable-PlutusScript ⦄ : Hashable PlutusScript ScriptHash
-        ⦃ DecEq-PlutusScript    ⦄ : DecEq PlutusScript
-        ⦃ DecEq-CostModel       ⦄ : DecEq CostModel
-        ⦃ DecEq-LangDepView     ⦄ : DecEq LangDepView
-
-  open CommutativeMonoid ExUnit-CommutativeMonoid public
-    using ()
-    renaming (_≈_ to _≈ᵉ_; ε to εᵉ; Carrier to ExUnits; refl to reflᵉ; _∙_ to _+ᵉˣ_)
-
+        Language PlutusScript CostModel Prices LangDepView ExUnits : Set
+        ⦃ ExUnit-CommutativeMonoid ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ ExUnits
+        ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
+        ⦃ DecEq-PlutusScript       ⦄ : DecEq PlutusScript
+        ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
+        ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
 
   field  _≥ᵉ_              : ExUnits → ExUnits → Set
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
@@ -59,15 +55,115 @@ record PlutusStructure : Set₁ where
         ⦃ Dec-validPlutusScript ⦄ : ∀ {x} → (validPlutusScript x ⁇³)
         language : PlutusScript → Language
         toData : ∀ {A : Set} → A → Data
+\end{code}
+We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
+\begin{figure*}[h]
+\begin{code}
+data Timelock : Set where
+  RequireAllOf       : List Timelock      → Timelock
+  RequireAnyOf       : List Timelock      → Timelock
+  RequireMOf         : ℕ → List Timelock  → Timelock
+  RequireSig         : KeyHash            → Timelock
+  RequireTimeStart   : Slot               → Timelock
+  RequireTimeExpire  : Slot               → Timelock
+\end{code}
+\begin{code}[hide]
+unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
+
+private variable
+  s : Timelock
+  ss ss' : List Timelock
+  m : ℕ
+  x : KeyHash
+  a l r : Slot
+
+open import Data.List.Relation.Binary.Sublist.Ext
+open import Data.List.Relation.Binary.Sublist.Propositional as S
+import Data.Maybe.Relation.Unary.Any as M
+\end{code}
+\begin{code}
+module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where
+  data evalTimelock : Timelock → Set where
+    evalAll  : All evalTimelock ss
+             → evalTimelock (RequireAllOf ss)
+    evalAny  : Any evalTimelock ss
+             → evalTimelock (RequireAnyOf ss)
+    evalMOf  : MOf m evalTimelock ss
+             → evalTimelock (RequireMOf m ss)
+    evalSig  : x ∈ khs
+             → evalTimelock (RequireSig x)
+    evalTSt  : M.Any (a ≤_) (I .proj₁)
+             → evalTimelock (RequireTimeStart a)
+    evalTEx  : M.Any (_≤ a) (I .proj₂)
+             → evalTimelock (RequireTimeExpire a)
+\end{code}
+\caption{Timelock scripts and their evaluation}
+\label{fig:defs:timelock}
+\end{figure*}
+
+\begin{code}[hide]
+instance
+  Dec-evalTimelock : evalTimelock ⁇³
+  Dec-evalTimelock {khs} {I} {tl} .dec = go? tl
+    where mutual
+      go = evalTimelock khs I
+
+      -- ** inversion principles for `evalTimelock`
+      evalAll˘ : ∀ {ss} → go (RequireAllOf ss) → All go ss
+      evalAll˘ (evalAll p) = p
+
+      evalAny˘ : ∀ {ss} → go (RequireAnyOf ss) → Any go ss
+      evalAny˘ (evalAny p) = p
+
+      evalTSt˘ : go (RequireTimeStart a) → M.Any (a ≤_) (I .proj₁)
+      evalTSt˘ (evalTSt p) = p
+
+      evalTEx˘ : go (RequireTimeExpire a) → M.Any (_≤ a) (I .proj₂)
+      evalTEx˘ (evalTEx p) = p
+
+      evalSig˘ : go (RequireSig x) → x ∈ khs
+      evalSig˘ (evalSig p) = p
+
+      evalMOf˘ : ∀ {m xs}
+        → go (RequireMOf m xs)
+        → MOf m go xs
+      evalMOf˘ (evalMOf p) = p
+
+      -- ** inlining recursive decision procedures to please the termination checker
+      MOf-go? : ∀ m xs → Dec (MOf m go xs)
+      unquoteDef MOf-go? = inline MOf-go? (quoteTerm (MOf? go?))
+
+      all-go? : Decidable¹ (All go)
+      unquoteDef all-go? = inline all-go? (quoteTerm (all? go?))
+
+      any-go? : Decidable¹ (Any go)
+      unquoteDef any-go? = inline any-go? (quoteTerm (any? go?))
+
+      -- ** the actual decision procedure
+      go? : Decidable¹ go
+      go? = λ where
+        (RequireAllOf ss)     → mapDec evalAll evalAll˘ (all-go? ss)
+        (RequireAnyOf ss)     → mapDec evalAny evalAny˘ (any-go? ss)
+        (RequireSig x)        → mapDec evalSig evalSig˘ dec
+        (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
+        (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
+        (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
+
+P1ScriptStructure-TL : ⦃ Hashable Timelock ScriptHash ⦄ → P1ScriptStructure
+P1ScriptStructure-TL = record
+  { P1Script = Timelock
+  ; validP1Script = evalTimelock }
 
 record ScriptStructure : Set₁ where
-  field p1s : P1ScriptStructure
-        ps  : PlutusStructure
+  field hashRespectsUnion :
+          {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
+        ⦃ Hash-Timelock ⦄ : Hashable Timelock ScriptHash
 
-  -- it is not possible to define this function
-  field hashRespectsUnion : {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
-
+  p1s : P1ScriptStructure
+  p1s = P1ScriptStructure-TL
   open P1ScriptStructure p1s public
+
+  field ps : PlutusStructure
   open PlutusStructure ps public
     renaming ( PlutusScript       to P2Script
              ; validPlutusScript  to validP2Script
@@ -82,128 +178,4 @@ record ScriptStructure : Set₁ where
   instance
     Hashable-Script : Hashable Script ScriptHash
     Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
-\end{code}
-We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
-\begin{figure*}[h]
-\begin{code}
-data Timelock : Set where
-  RequireAllOf       : List Timelock      → Timelock
-  RequireAnyOf       : List Timelock      → Timelock
-  RequireMOf         : ℕ → List Timelock  → Timelock
-  RequireSig         : KeyHash            → Timelock
-  RequireTimeStart   : Slot               → Timelock
-  RequireTimeExpire  : Slot               → Timelock
-\end{code}
-\begin{code}[hide]
-module _ (_≤_ : Slot → Slot → Set) ⦃ _ : _≤_ ⁇² ⦄ where
-  private variable
-    s : Timelock
-    ss ss' : List Timelock
-    k m : ℕ
-    x : KeyHash
-    a l r : Slot
-
-  open import Data.List.Relation.Binary.Sublist.Ext
-  import Data.Maybe.Relation.Unary.Any as M
-\end{code}
-\begin{code}
-  module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where
-    data evalTimelock : Timelock → Set where
-      evalAll  : All evalTimelock ss
-               → evalTimelock (RequireAllOf ss)
-      evalAny  : Any evalTimelock ss
-               → evalTimelock (RequireAnyOf ss)
-      evalMOf  : MOf m evalTimelock ss
-               → evalTimelock (RequireMOf m ss)
-      evalSig  : x ∈ khs
-               → evalTimelock (RequireSig x)
-      evalTSt  : M.Any (a ≤_) (I .proj₁)
-               → evalTimelock (RequireTimeStart a)
-      evalTEx  : M.Any (_≤ a) (I .proj₂)
-               → evalTimelock (RequireTimeExpire a)
-\end{code}
-\caption{Timelock scripts and their evaluation}
-\label{fig:defs:timelock}
-\end{figure*}
-
-\begin{code}[hide]
-  instance
-    Dec-evalTimelock : evalTimelock ⁇³
-    Dec-evalTimelock {khs} {I} {tl} .dec = go? tl
-      where mutual
-        go = evalTimelock khs I
-
-        -- ** inversion principles for `evalTimelock`
-        evalAll˘ : ∀ {ss} → go (RequireAllOf ss) → All go ss
-        evalAll˘ (evalAll p) = p
-
-        evalAny˘ : ∀ {ss} → go (RequireAnyOf ss) → Any go ss
-        evalAny˘ (evalAny p) = p
-
-        evalTSt˘ : go (RequireTimeStart a) → M.Any (a ≤_) (I .proj₁)
-        evalTSt˘ (evalTSt p) = p
-
-        evalTEx˘ : go (RequireTimeExpire a) → M.Any (_≤ a) (I .proj₂)
-        evalTEx˘ (evalTEx p) = p
-
-        evalSig˘ : go (RequireSig x) → x ∈ khs
-        evalSig˘ (evalSig p) = p
-
-        evalMOf˘ : ∀ {m xs}
-          → go (RequireMOf m xs)
-          → MOf m go xs
-        evalMOf˘ (evalMOf p) = p
-
-        -- ** inlining `MOf?` here to please the termination checker
-        MOf?' : ∀ m xs → Dec (MOf m go xs)
-        MOf?' zero        _        = yes (mOf [] refl []⊆ [])
-        MOf?' (suc _)     []       = no λ where (mOf (_ ∷ _) len≡ () _)
-        MOf?' m@(suc m-1) (x ∷ xs)
-          with MOf?' m xs
-        ... | yes (mOf _ len≡ ⊆xs        Pxs')
-            = yes (mOf _ len≡ (x ∷ʳ ⊆xs) Pxs')
-        ... | no ¬p
-          with go? x
-        ... | no ¬Px
-            = no λ where (mOf _ _    (refl ∷ _) (Px ∷ _)) → ¬Px Px
-                         (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs')     → ¬p (mOf _  len≡ ⊆xs Pxs')
-        ... | yes Px
-            = mapDec
-              (λ where (mOf _ len≡ ⊆xs Pxs')
-                        → mOf _ (cong suc len≡) (refl ∷ ⊆xs) (Px ∷ Pxs'))
-              (λ where (mOf _ len≡ (_ ∷  ⊆xs) (_ ∷ Pxs'))
-                        → mOf _ (suc-injective len≡) ⊆xs Pxs'
-                       (mOf _ len≡ (_ ∷ʳ ⊆xs) Pxs)
-                        → ⊥-elim $ ¬p (mOf _ len≡ ⊆xs Pxs))
-              (MOf?' m-1 xs)
-
-        -- ** inlining `all?` here to please the termination checker
-        all?' : Decidable¹ (All go)
-        all?' []       = yes []
-        all?' (x ∷ xs) = mapDec (uncurry _∷_) uncons (go? x ×-dec all?' xs)
-
-        -- ** inlining `any?` here to please the termination checker
-        any?' : Decidable¹ (Any go)
-        any?' []       = no λ()
-        any?' (x ∷ xs) = mapDec fromSum toSum (go? x ⊎-dec any?' xs)
-
-        -- ** TODO: meta-program that does the above inlining for us
-
-        go? : ∀ tl → Dec (go tl)
-        go? = λ where
-          (RequireAllOf ss)     → mapDec evalAll evalAll˘ (all?' ss)
-          (RequireAnyOf ss)     → mapDec evalAny evalAny˘ (any?' ss)
-          (RequireSig x)        → mapDec evalSig evalSig˘ dec
-          (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
-          (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
-          (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf?' m xs)
-
-  unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
-
-  open P1ScriptStructure
-
-  P1ScriptStructure-TL : Hashable Timelock ScriptHash → P1ScriptStructure
-  P1ScriptStructure-TL h .P1Script = Timelock
-  P1ScriptStructure-TL h .validP1Script = evalTimelock
-  P1ScriptStructure-TL h .Hashable-P1Script = h
 \end{code}

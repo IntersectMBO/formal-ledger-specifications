@@ -3,21 +3,12 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.GovStructure
-open import Agda.Primitive renaming (Set to Type)
+open import Ledger.Prelude
+open import Ledger.Types.GovStructure
+
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
-open import Ledger.Prelude hiding (any?; Any; all?; All)
-open import Ledger.GovernanceActions gs hiding (yes; no)
-open import Data.List.Ext using (subpermutations)
-open import Data.List.Ext.Subperm
-  -- using -- (Subperm; Subperms; subperm?; anySubpermOf?; AnySubpermOf)
-open import Data.List.Ext.Subperm.Properties
-open import Data.List.Relation.Unary.Any using (here; there; satisfiable; any?; Any)
-open import Data.List.Relation.Unary.All using (all?; All)
-open import Relation.Nullary.Decidable using (map′; _×-dec_)
-
-open import Relation.Unary using (Satisfiable) renaming (_∈_ to _∈'_)
+open import Ledger.GovernanceActions gs
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -168,9 +159,8 @@ allEnactable? eState aid×states = all? (λ aid×st → enactable? eState (getAi
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOV'⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Set
-
-_⊢_⇀⦇_,GOV⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
+  _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Set
+_⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
 \end{code}
 \begin{code}[hide]
 open GovActionState
@@ -238,24 +228,22 @@ compatible version.
 data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
 \begin{code}
-  GOV-Vote : ∀ {x ast} →  let  open GovEnv Γ
-                               sig = inj₁ record  { gid = aid ; role = role
-                                                  ; credential = cred
-                                                  ; vote = v ; anchor = x }
-                          in
-    (aid , ast) ∈ fromList s
-    → canVote pparams (action ast) role
+  GOV-Vote : ∀ {x ast} → let
+    open GovEnv Γ
+    sig = inj₁ record
+      { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x }
+    in
+       (aid , ast) ∈ fromList s
+    →  canVote pparams (action ast) role
     ───────────────────────────────────────
     (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid role cred v
 
-  GOV-Propose : ∀ {x} →  let  open GovEnv Γ
-                              open PParams pparams hiding (a)
-                              prop = record  { returnAddr = addr ; action = a
-                                             ; anchor = x ; deposit = d
-                                             ; prevAction = prev }
-                              s' = addAction  s (govActionLifetime +ᵉ epoch)
-                                              (txid , k) addr a prev
-                         in
+  GOV-Propose : ∀ {x} → let
+    open GovEnv Γ; open PParams pparams hiding (a)
+    prop = record
+      { returnAddr = addr ; action = a ; anchor = x ; deposit = d ; prevAction = prev }
+    s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+    in
        actionWellFormed a ≡ true
     →  d ≡ govActionDeposit
     →  (∀ {new rem q} → a ≡ NewCommittee new rem q

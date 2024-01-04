@@ -29,6 +29,16 @@ reduceDef = λ where
   t@(def _ _) → reduce t
   t           → return t
 
+-- Applying a list of arguments to a term of any shape.
+apply∗ : Term → Args Term → Term
+apply∗ f xs = case f of λ where
+  (def n as)      → def n (as ++ xs)
+  (con c as)      → con c (as ++ xs)
+  (var x as)      → var x (as ++ xs)
+  (pat-lam cs as) → pat-lam cs (as ++ xs)
+  (meta x as)     → meta x (as ++ xs)
+  f               → f
+
 -- Constructing list of quoted names without having to use `quote`.
 macro
   infixr 4 _`∷_

@@ -5,7 +5,7 @@ open import Data.List.Membership.Propositional.Properties
 open import Data.List.Relation.Unary.Any
 
 open import Ledger.Prelude hiding (Any; any?)
-open import Ledger.GovStructure
+open import Ledger.Types.GovStructure
 
 module Ledger.Gov.Properties (gs : _) (open GovStructure gs hiding (epoch)) where
 
@@ -61,22 +61,22 @@ private
     validHFAction? {record { action = Info }} = Dec-⊤
 
 instance
-  Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_
+  Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_ String
   Computational-GOV' .computeProof (⟦ _ , _ , pparams , _ ⟧ᵍ , k) s (inj₁ record { gid = aid ; role = role }) =
     case lookupActionId pparams role aid s of λ where
       (yes p) →
         case Any↔ .from p of λ where
-          (_ , mem , refl , cV) → just (_ , GOV-Vote (∈-fromList .to mem) cV)
-      (no _)  → nothing
+          (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem) cV)
+      (no _)  → failure "Failed at GOV'"
   Computational-GOV' .computeProof (⟦ _ , epoch , pparams , e ⟧ᵍ , k) s (inj₂ prop@(record { action = a ; deposit = d })) =
     case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e ¿
          ,′ isNewCommittee a of λ where
       (yes (wf , dep , vHFA) , yes (new , rem , q , refl)) →
         case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
-          (yes newOk) → just (_ , GOV-Propose wf dep (λ where refl → newOk) vHFA)
-          (no _)      → nothing
-      (yes (wf , dep , vHFA) , no notNewComm) → just (_ , GOV-Propose wf dep (λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm))) vHFA)
-      _ → nothing
+          (yes newOk) → success (_ , GOV-Propose wf dep (λ where refl → newOk) vHFA)
+          (no _)      → failure "GOV' failed at ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅"
+      (yes (wf , dep , vHFA) , no notNewComm) → success (_ , GOV-Propose wf dep (λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm))) vHFA)
+      _ → failure "GOV' failed at actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e"
   Computational-GOV' .completeness (⟦ _ , _ , pparams , _ ⟧ᵍ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
     with lookupActionId pparams role aid s
   ... | no ¬p = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
@@ -89,5 +89,5 @@ instance
   ... | yes _ | yes (new , rem , q , refl)
    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
 
-Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_
+Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ (⊥ ⊎ String)
 Computational-GOV = it

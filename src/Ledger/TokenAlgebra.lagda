@@ -26,16 +26,18 @@ open import Relation.Unary       using (Pred)
 \begin{AgdaSuppressSpace}
 \begin{code}
 record TokenAlgebra : Set₁ where
-  field  Value-CommutativeMonoid : CommutativeMonoid 0ℓ 0ℓ
+  field  Value : Set
+         ⦃ Value-IsCommutativeMonoid' ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ Value
 
   MemoryEstimate : Set
   MemoryEstimate = ℕ
 
 \end{code}
 \begin{code}[hide]
+  Value-CommutativeMonoid = fromCommMonoid' Value-IsCommutativeMonoid'
   open CommutativeMonoid Value-CommutativeMonoid public
     using (_≈_ ; ε ; monoid ; rawMonoid)
-    renaming (Carrier to Value ; refl to reflᵛ ; _∙_ to _+ᵛ_)
+    renaming (_∙_ to _+ᵛ_)
 
   open MonoidMorphisms (rawMonoid) (Monoid.rawMonoid +-0-monoid) public
 \end{code}

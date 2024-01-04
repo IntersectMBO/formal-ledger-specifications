@@ -1,7 +1,6 @@
 {-# OPTIONS --safe #-}
 
 import Data.Maybe as M
-open import Data.Product using (map₂)
 
 open import Ledger.Prelude
 open import Ledger.Crypto
@@ -15,25 +14,26 @@ module Ledger.Utxow.Properties
 
 open import Ledger.Utxow txs abs
 open import Ledger.Utxo txs abs
+open import Ledger.Utxo.Properties txs abs
 
 instance
-  Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_
+  Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String
   Computational-UTXOW = record {Go}
     where module Go Γ s tx (let H , ⁇ H? = UTXOW-inductive-premises {tx}{s}{Γ}) where
 
     open Computational Computational-UTXO
       renaming (computeProof to computeProof'; completeness to completeness')
 
-    computeProof : Maybe $ ∃ (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈_)
+    computeProof : ComputationResult String (∃ (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈_))
     computeProof =
       case H? of λ where
         (yes (p₁ , p₂ , p₃ , p₄ , p₅)) →
-          map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅) <$> computeProof' Γ s tx
-        (no _) → nothing
+          map (map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅)) (computeProof' Γ s tx)
+        (no _) → failure "Failed in UTXOW"
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-      → M.map proj₁ computeProof ≡ just s'
+      → map proj₁ computeProof ≡ success s'
     completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ h)
       rewrite dec-yes H? (p₁ , p₂ , p₃ , p₄ , p₅) .proj₂
       with computeProof' Γ s tx | completeness' _ _ _ _ h
-    ... | just _ | refl = refl
+    ... | success _ | refl = refl

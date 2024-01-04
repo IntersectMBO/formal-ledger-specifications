@@ -185,12 +185,12 @@ unquoteDecl LEDGER-inductive-premises =
   genPremises LEDGER-inductive-premises (quote LEDGER-inductive)
 
 instance
-  Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_
+  Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_ ⊤
   Computational-LEDGER = record {Go}
     where module Go Γ s b (let H , ⁇ H? = LEDGER-inductive-premises {b}) where
       computeProof = case H? of λ where
-        (yes p) → just (-, LEDGER-inductive p)
-        (no _)  → nothing
+        (yes p) → success (-, LEDGER-inductive p)
+        (no _)  → failure tt
 
       completeness : _
       completeness s' (LEDGER-inductive p) rewrite dec-yes H? p .proj₂ = refl
@@ -199,7 +199,7 @@ open Computational ⦃...⦄
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-LEDGER-step : ⊤ → LedgerState → Block → Maybe LedgerState
+LEDGER-step : ⊤ → LedgerState → Block → ComputationResult ⊤ LedgerState
 LEDGER-step = compute
 
 applyBlockTo : Block → LedgerState → Maybe LedgerState
@@ -242,10 +242,10 @@ lemma y≢0 eq = y≢0 (identityʳ-unique _ _ (sym eq))
 LEDGER-property₁ : _ ⊢ s ⇀⦇ b ,LEDGER⦈ s' → count s ≢ count s'
 LEDGER-property₁ (LEDGER-inductive⋯ acc≢0 _) = lemma acc≢0
 
-LEDGER-property₂ : LEDGER-step _ s b ≡ just s' → count s ≢ count s'
+LEDGER-property₂ : LEDGER-step _ s b ≡ success s' → count s ≢ count s'
 LEDGER-property₂ {s} {b} eq
   = LEDGER-property₁
-  $ Equivalence.to (≡-just⇔STS {s = s} {sig = b}) eq
+  $ Equivalence.to (≡-success⇔STS {s = s} {sig = b}) eq
 
 LEDGER-property₃ : applyBlockTo b s ≡ just s' → count s ≢ count s'
 LEDGER-property₃ {b = b} h with

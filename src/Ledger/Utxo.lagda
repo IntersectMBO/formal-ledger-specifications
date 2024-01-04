@@ -8,7 +8,7 @@
 
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
-open import Data.Nat.Properties  using (+-0-monoid; +-0-commutativeMonoid)
+open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
@@ -23,14 +23,13 @@ module Ledger.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.ScriptValidation txs abs
+
 instance
-  _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
-  _ = +-0-commutativeMonoid
-  _ = ExUnit-CommutativeMonoid
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = indexedSumᵛ ⦃ +-0-commutativeMonoid ⦄ id (s ᶠᵐ)
+  HasCoin-Map .getCoin s = ∑[ x ← s ] x
 
 isPhaseTwoScriptAddress : Tx → Addr → Bool
 isPhaseTwoScriptAddress tx a =
@@ -42,7 +41,7 @@ isPhaseTwoScriptAddress tx a =
     false
 
 totExUnits : Tx → ExUnits
-totExUnits tx = indexedSumᵐ ⦃ ExUnit-CommutativeMonoid ⦄ (λ x → x .proj₂ .proj₂) (tx .wits .txrdmrs ᶠᵐ)
+totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
   where open Tx; open TxWitnesses
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
@@ -79,7 +78,7 @@ module _ (let open Tx; open TxBody) where
   outs tx = mapKeys (tx .txid ,_) (tx .txouts)
 
   balance : UTxO → Value
-  balance utxo = indexedSumᵛ ⦃ Value-CommutativeMonoid ⦄ getValue (utxo ᶠᵐ)
+  balance utxo = ∑[ x ← utxo ] getValue x
 
   cbalance : UTxO → Coin
   cbalance utxo = coin (balance utxo)
@@ -88,11 +87,7 @@ module _ (let open Tx; open TxBody) where
   coinPolicies = policies (inject 1)
 
   isAdaOnlyᵇ : Value → Bool
-  isAdaOnlyᵇ v =
-    if (policies v) ≡ᵉ coinPolicies then
-      true
-    else
-      false
+  isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 
   minfee : PParams → Tx → Coin
   minfee pp tx  = pp .a * tx .body .txsize + pp .b
@@ -133,7 +128,6 @@ module _ (let open Tx; open TxBody) where
 \end{figure*}
 \begin{figure*}
 \begin{code}
--- this has to be a type definition for inference to work
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
@@ -141,6 +135,8 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   none   :                                    inInterval slot (nothing  , nothing)
 \end{code}
 \begin{code}[hide]
+-- Note: inInterval has to be a type definition for inference to work
+
 -- Boolean implication
 _=>ᵇ_ : Bool → Bool → Bool
 a =>ᵇ b = if a then b else true
@@ -152,10 +148,10 @@ _≥ᵇ_ = flip _≤ᵇ_
 
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
+
+-- TODO: this could be a regular property
 \end{code}
 \begin{code}
--- TODO: this could be a regular property
-
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
                   ∧ not (≟-∅ᵇ (txrdmrs ˢ))
@@ -169,10 +165,9 @@ feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
     collateralRange  = range    (utxo ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
 \end{code}
-\caption{Functions used in UTxO rules, continued\protect\footnotemark}
+\caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo2}
 \end{figure*}
-\footnotetext{\AgdaBound{m}~\AgdaFunction{∣}~\AgdaBound{X} denotes the restriction of the map \AgdaBound{m} to the subset \AgdaBound{X} of its domain.}
 \begin{code}[hide]
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
@@ -292,11 +287,50 @@ module _ (let open UTxOState; open TxBody) where
 
 \begin{figure*}[h]
 \begin{code}[hide]
+
 open PParams
+data
+  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+
+data _⊢_⇀⦇_,UTXOS⦈_ where
+  Scripts-Yes :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ true
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+                              , fees + txfee
+                              , updateDeposits pp txb deposits
+                              , donations + txdonation
+                              ⟧ᵘ
+
+  Scripts-No :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ false
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
+                              , fees + cbalance (utxo ∣ collateral)
+                              , deposits
+                              , donations
+                              ⟧ᵘ
+
+unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
+unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
 private variable
   Γ : UTxOEnv
-  s : UTxOState
+  s s' : UTxOState
   tx : Tx
 
 data _⊢_⇀⦇_,UTXO⦈_ where
@@ -307,10 +341,10 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
-    ∙  txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙  inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
-    ∙  consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
-    ∙  txsize ≤ maxTxSize pp
+    ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
+    ∙ inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
+    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ txsize ≤ maxTxSize pp
 
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
@@ -318,39 +352,16 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         serSize (getValue txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txouts ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txouts ] netId a        ≡ networkId
-    ∙ ∀[ a ∈ dom  txwdrls ]       a .RwdAddr.net ≡ networkId
-    -- Add deposits
-
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,UTXO⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ outs txb
-                           , fees + txfee
-                           , updateDeposits pp txb deposits
-                           , donations + txdonation
-                           ⟧ᵘ
-
+    ∙ ∀[ (a , _) ∈ range txouts ]  netId a         ≡ networkId
+    ∙ ∀[ a ∈ dom  txwdrls ]        a .RwdAddr.net  ≡ networkId
+    ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
-
-instance
-  Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_
-  Computational-UTXO = record {Go}
-    where module Go Γ s tx (let H , ⁇ H? = UTXO-premises {tx}{Γ}{s}) where
-
-    computeProof = case H? of λ where
-      (yes p) → just (-, UTXO-inductive p)
-      (no _)  → nothing
-
-    completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
-    completeness s' (UTXO-inductive p) = QED
-      where
-      QED : map proj₁ computeProof ≡ just s'
-      QED with H?
-      ... | yes _ = refl
-      ... | no ¬p = ⊥-elim $ ¬p p
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
