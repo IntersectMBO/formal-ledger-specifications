@@ -12,6 +12,8 @@ open import Ledger.GovernanceActions gs hiding (yes; no)
 
 open import Data.List.Ext.Properties using (_⊆ˡ_; ⊆ˡ-id)
 open import Data.List.Relation.Unary.All using (all?; All)
+open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
+-- open import Relation.Nullary.Decidable.Core using (map′)
 
 -- imports which may be helpful in filling remaining holes:
 --   open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
@@ -76,11 +78,14 @@ _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionI
   ((aid ≟ aidNew) ×-dec [ s connects aidPrev to aidOld ?]) ⊎-dec [ s connects aidNew to aidOld ?]
 
 module _ {A : Set}{L : List A}{ℓ : Level}{P : Pred (List A) ℓ} where
-  -- ∃-sublist-⇔ : (l : List A)→ ((fromList l ⊆ fromList L) × P l) ⇔ l ⊆ˡ L × P l
-  -- ∃-sublist-⇔ = {!!}
+  -- sublist-⇔ : (l : List A)→ ((fromList l ⊆ fromList L) × P l) ⇔ l ⊆ˡ L × P l
+  -- sublist-⇔ = {!!}
+
+  ∃-sublist-⇔ : (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ (∃[ l ](l ⊆ˡ L × P l))
+  ∃-sublist-⇔ = {!!}
 
   ∃?-sublist-⇔ : Dec (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ Dec (∃[ l ](l ⊆ˡ L × P l))
-  ∃?-sublist-⇔ = {!!}
+  ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
 
 enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
 enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of λ where
