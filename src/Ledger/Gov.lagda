@@ -3,12 +3,20 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (any?; Any; all?; All; Rel)
 open import Ledger.Types.GovStructure
 
 module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
-open import Ledger.GovernanceActions gs
+open import Ledger.GovernanceActions gs hiding (yes; no)
+
+open import Data.List.Ext.Properties using (_⊆ˡ_; ⊆ˡ-id)
+open import Data.List.Relation.Unary.All using (all?; All)
+
+-- imports which may be helpful in filling remaining holes:
+--   open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
+--   open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist; [])
+
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -40,6 +48,64 @@ _⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal
 \end{code}
 \begin{code}[hide]
 open GovActionState
+
+-- convert list of (GovActionID,GovActionState)-pairs to list GovActionID pairs.
+getAidPairsList : GovState → List (GovActionID × GovActionID)
+getAidPairsList aid×states =
+  mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×states
+
+-- convert list of (GovActionID,GovActionState)-pairs to SET of GovActionID pairs.
+getAidPairsSet : GovState → ℙ (GovActionID × GovActionID)
+getAidPairsSet aid×states =
+  mapPartial (λ (aid , as) → (aid ,_) <$> getHash (prevAction as)) $ fromList aid×states
+
+-- a list of GovActionID pairs connects the first GovActionID to the second
+_connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
+[] connects aidNew to aidOld = aidNew ≡ aidOld
+((aid , aidPrev) ∷ s) connects aidNew to aidOld = aid ≡ aidNew × s connects aidPrev to aidOld
+                                                  ⊎ s connects aidNew to aidOld
+--   aid₁ → aid₂ → aid₃ → aid₄ → aid₅
+-- Let     l := (aid₅, aid₄) (aid₄, aid₃) (aid₃, aid₂) (aid₂, aid₁)
+-- Check:  l connects aid₅ to aid₂ :
+--   ((aid₅, aid₄) ∷ s) connects aid₅ to aid₂ = aid₅ ≡ aid₅ × s connects aid₄ to aid₂
+
+[_connects_to_?] : ∀ l aidNew aidOld → Dec (l connects aidNew to aidOld)
+[ [] connects aidNew to aidOld ?] = aidNew ≟ aidOld
+
+[ (aid , aidPrev) ∷ s connects aidNew to aidOld ?] =
+  ((aid ≟ aidNew) ×-dec [ s connects aidPrev to aidOld ?]) ⊎-dec [ s connects aidNew to aidOld ?]
+
+module _ {A : Set}{L : List A}{ℓ : Level}{P : Pred (List A) ℓ} where
+  -- ∃-sublist-⇔ : (l : List A)→ ((fromList l ⊆ fromList L) × P l) ⇔ l ⊆ˡ L × P l
+  -- ∃-sublist-⇔ = {!!}
+
+  ∃?-sublist-⇔ : Dec (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ Dec (∃[ l ](l ⊆ˡ L × P l))
+  ∃?-sublist-⇔ = {!!}
+
+enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
+enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of λ where
+  nothing → ⊤
+  (just aidOld) → ∃[ t ](fromList t ⊆ fromList aidPairs × t connects aidNew to aidOld)
+
+open Equivalence
+
+∃?-connecting-subset : ∀ L {u}{v} → Dec (∃[ l ](l ⊆ˡ L) × (l connects u to v))
+∃?-connecting-subset L {u}{v} with [ L connects u to v ?]
+... | yes p = yes (L , (⊆ˡ-id , p))
+... | no ¬q = {!!}
+
+enactable? : ∀ eState aidPairs aidNew×st → Dec(enactable eState aidPairs aidNew×st)
+enactable? eState aidPairs (aidNew , as) with (getHashES eState (GovActionState.action as))
+... | nothing = yes tt
+... | just aidOld = from (∃?-sublist-⇔ {P = _connects aidNew to aidOld})
+                         (∃?-connecting-subset aidPairs)
+
+allEnactable : EnactState → GovState → Set
+allEnactable e aid×states = All (λ p → enactable e (getAidPairsList aid×states) p) aid×states
+
+allEnactable? : ∀ eState aid×states → Dec (allEnactable eState aid×states)
+allEnactable? eState aid×states =
+  all? (λ aid×st → enactable? eState (getAidPairsList aid×states) aid×st) aid×states
 
 private variable
   Γ : GovEnv
