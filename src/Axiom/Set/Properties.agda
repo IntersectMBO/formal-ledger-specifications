@@ -5,7 +5,7 @@ open import Axiom.Set using (Theory)
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
 
-open import Prelude hiding (isEquivalence; trans; filter; map; lookup)
+open import Prelude hiding (isEquivalence; trans; filter; map; lookup; _∷ʳ_)
 open Theory th
 
 import Data.List
@@ -14,12 +14,15 @@ import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
 open import Data.List.Ext using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
+open import Data.List.Ext.Subperm
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
+open import Data.List.Relation.Binary.Sublist.Heterogeneous.Core using (Sublist; _∷ʳ_)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Unary.All using (All; lookup; [])
-open import Data.List.Relation.Unary.Any using (here)
+open import Data.List.Relation.Unary.Any using (here; there)
+open import Data.List.Relation.Unary.Any.Properties using (¬Any[])
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
 open import Relation.Binary hiding (_⇔_)
@@ -300,7 +303,7 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
   ∩-sym = ∩-sym⊆ , ∩-sym⊆
 
 -- Additional properties of lists and sets.
-module _ {L : List A}{ℓ : Level}{P : Pred (List A) ℓ} where
+module _ {L : List A} where
   open Equivalence
 
   sublist-⇔ : {l : List A} → ((fromList l ⊆ fromList L) ⇔ (l ⊆ˡ L))
@@ -318,9 +321,42 @@ module _ {L : List A}{ℓ : Level}{P : Pred (List A) ℓ} where
     ii : (x ∷ xs) ⊆ˡ L → ({a : A} → a ∈ (fromList (x ∷ xs)) → a ∈ (fromList L))
     ii l⊆L {a} a∈l  = to ∈-fromList (lookup l⊆L (from ∈-fromList a∈l))
 
-  ∃-sublist-⇔ : (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ (∃[ l ](l ⊆ˡ L × P l))
-  ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
-                    (λ (l , l⊆L , Pl) → l , from sublist-⇔ l⊆L , Pl)
+  module _ {ℓ : Level}{P : Pred (List A) ℓ} where
 
-  ∃?-sublist-⇔ : Dec (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ Dec (∃[ l ](l ⊆ˡ L × P l))
-  ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
+    ∃-sublist-⇔ : (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ (∃[ l ](l ⊆ˡ L × P l))
+    ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
+                      (λ (l , l⊆L , Pl) → l , from sublist-⇔ l⊆L , Pl)
+
+    ∃?-sublist-⇔ : Dec (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ Dec (∃[ l ](l ⊆ˡ L × P l))
+    ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
+
+-- Properties of sets and subpermutations.
+open Subperm
+
+open Equivalence
+l⊆[] : {l : List A} → fromList l ⊆ fromList [] → l ≡ []
+l⊆[] {l = []} _ = refl
+l⊆[] {l = _ ∷ _} x = ⊥-elim $ (λ ()) $ from ∈-fromList $ x (to ∈-fromList $ here refl)
+
+SetIncl→Subperm : ∀ {l L : List A} → fromList l ⊆ fromList L → Subperm l L
+SetIncl→Subperm {l = []} {_} _ = Subperm[]
+SetIncl→Subperm {L = []} x = subst (λ l → Subperm l []) (sym (l⊆[] x)) []
+SetIncl→Subperm {l = _ ∷ _} {L = _ ∷ _} h =
+  tight (from ∈-fromList $ h (to ∈-fromList $ here refl))
+        (SetIncl→Subperm $ ⊆-Transitive (λ u → to ∈-fromList $ there (from ∈-fromList u)) h)
+
+Subperm→SetIncl : ∀ {l L : List A} → Subperm l L → fromList l ⊆ fromList L
+Subperm→SetIncl [] {a} a∈l = ⊥-elim $ ¬Any[] (from ∈-fromList a∈l)
+
+Subperm→SetIncl (loose Sp) a∈l = to ∈-fromList $ there (from ∈-fromList $ Subperm→SetIncl Sp a∈l)
+Subperm→SetIncl {l = _ ∷ _} {L} (tight x∈L Sp) a∈l with from ∈-fromList a∈l
+...| here p = to ∈-fromList $ subst (_∈ˡ L) (sym p) x∈L
+...| there ps = to ∈-fromList (from ∈-fromList $ Subperm→SetIncl Sp (to ∈-fromList ps))
+
+sublists⊆subpermutations : {l x : List A} → Sublist _≡_ x l → Subperm x l
+sublists⊆subpermutations Sublist.[] = []
+sublists⊆subpermutations (Sublist._∷ʳ_ _ x⊆l) = loose (sublists⊆subpermutations x⊆l)
+sublists⊆subpermutations (Sublist._∷_ x x⊆l) = tight (here x) (loose $ sublists⊆subpermutations x⊆l)
+
+Subperm⇔⊆ : ∀{l L : List A} → Subperm l L ⇔ l ⊆ˡ L
+Subperm⇔⊆ {l = l} {L} = mk⇔ (λ h → to sublist-⇔ (Subperm→SetIncl h)) λ h → SetIncl→Subperm (from sublist-⇔ h)
