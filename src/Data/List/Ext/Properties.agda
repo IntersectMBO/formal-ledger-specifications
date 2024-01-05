@@ -5,7 +5,7 @@ open import Prelude hiding (lookup)
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
-open import Data.List.Ext using (sublists; permutations; allPermutations; subpermutations)
+open import Data.List.Ext using (sublists; permutations; allPermutations; subpermutations; _⊆_)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties
   using (∈-deduplicate⁻; ∈-deduplicate⁺; ∈-++⁻; ∈-++⁺ˡ; ∈-++⁺ʳ)
@@ -14,7 +14,8 @@ open import Data.List.Relation.Binary.Disjoint.Propositional using (Disjoint)
 open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_)
 open import Data.List.Relation.Unary.AllPairs using (AllPairs)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
-open import Data.List.Relation.Unary.Any using (here; there)
+open import Data.List.Relation.Unary.Any using (Any; here; there)
+open import Data.List.Relation.Unary.Any.Properties using (¬Any[])
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 
 open AllPairs
@@ -30,6 +31,23 @@ _⊎-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} �
 h ⊎-cong h' = (h M.⊎-cong h')
   where open import Data.Sum.Function.Propositional as M
 
+module _ {a}{A : Set a} where
+
+  addhead⊆ : {l L : List A}{a : A} → l ⊆ L → l ⊆ (a ∷ L)
+  addhead⊆ All.[] = All.[]
+  addhead⊆ (px All.∷ pxs) = there px All.∷ addhead⊆ pxs
+
+  ⊆-id : {l : List A} → l ⊆ l
+  ⊆-id {[]} = All.[]
+  ⊆-id {x ∷ xs} = All._∷_ (here refl) (addhead⊆ ⊆-id)
+
+  ⊆-[] : {l : List A} → l ⊆ [] → l ≡ []
+  ⊆-[] {[]} _ = refl
+  ⊆-[] {x ∷ xs} (px All.∷ l⊆[]) = ⊥-elim (¬Any[] px)
+
+  ¬⊆-[] : {x : A}{xs : List A} → ¬ (x ∷ xs) ⊆ []
+  ¬⊆-[] {x} {xs} (px All.∷ h) = ¬Any[] px
+
 module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
   open import Data.List.Relation.Unary.Unique.DecPropositional.Properties {A = A} _≟_
 
@@ -41,6 +59,21 @@ module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
 
   ∈-dedup : ∀ {l a} → a ∈ l ⇔ a ∈ deduplicate≡ l
   ∈-dedup = mk⇔ (∈-deduplicate⁺ _≟_) (∈-deduplicate⁻ _≟_ _)
+
+  ∈-head-⊆-tail : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l → x ∈ l × xs ⊆ l
+  ∈-head-⊆-tail {x} {xs} {[]} h = ⊥-elim (¬⊆-[] h)
+  ∈-head-⊆-tail {x} {xs} {y ∷ ys} (px All.∷ h) = px , h
+
+  ⊆-dedup : ∀{l l'} → l ⊆ l' ⇔ l ⊆ deduplicate≡ l'
+  ⊆-dedup {[]} {l'} = mk⇔ (λ _ → All.[])(λ _ → All.[])
+  ⊆-dedup {x ∷ xs} {[]} = mk⇔ (⊥-elim ∘ ¬⊆-[])(⊥-elim ∘ ¬⊆-[])
+  ⊆-dedup {x ∷ xs} {y ∷ ys} = mk⇔ i ii
+    where
+    open Equivalence
+    i : ((x ∷ xs) ⊆ (y ∷ ys)) → ((x ∷ xs) ⊆ deduplicate≡ (y ∷ ys))
+    i h = to ∈-dedup (proj₁ (∈-head-⊆-tail h)) All.∷ to ⊆-dedup (proj₂ (∈-head-⊆-tail h))
+    ii : ((x ∷ xs) ⊆ deduplicate≡ (y ∷ ys)) → ((x ∷ xs) ⊆ (y ∷ ys))
+    ii h = (from ∈-dedup (proj₁ (∈-head-⊆-tail h))) All.∷ from ⊆-dedup (proj₂ (∈-head-⊆-tail h))
 
   -- TODO: stdlib?
   dedup-++-↭ : {l l' : List A} → Disjoint l l' → deduplicate≡ (l ++ l') ↭ deduplicate≡ l ++ deduplicate≡ l'
@@ -64,27 +97,27 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj�
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (lookup x a∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
 
-module _ {a}{A : Set a} where
-  ¬∈[] : ∀{x : A} → ¬ (x ∈ˡ [])
-  ¬∈[] = λ ()
-
-  _⊆ˡ_ : (l L : List A) → Set _
-  l ⊆ˡ L = All (_∈ˡ L) l
-
-  addhead⊆ : {l L : List A}{a : A} → l ⊆ˡ L → l ⊆ˡ (a ∷ L)
-  addhead⊆ All.[] = All.[]
-  addhead⊆ (px All.∷ pxs) = there px All.∷ addhead⊆ pxs
-
-  ⊆ˡ-id : {l : List A} → l ⊆ˡ l
-  ⊆ˡ-id {[]} = All.[]
-  ⊆ˡ-id {x ∷ xs} = All._∷_ (here refl) (addhead⊆ ⊆ˡ-id)
-
-  module _ ⦃ _ : DecEq A ⦄ where
-    open import Data.List.Membership.DecPropositional {a} {A} _≟_ renaming (_∈?_ to _∈ˡ?_)
-    _⊆ˡ?_ : (l L : List A) → Dec(l ⊆ˡ L)
-    l ⊆ˡ? L = all? (_∈ˡ? L) l
+module _ {a}{A : Set a} ⦃ _ : DecEq A ⦄ where
+  open import Data.List.Membership.DecPropositional {a} {A} _≟_ using (_∈?_)
+  _⊆?_ : (l L : List A) → Dec(l ⊆ L)
+  l ⊆? L = all? (_∈? L) l
 
   -- unused, but could be useful later:
+  -- subperm⇔⊆ : {x : A}{xs L : List A} → ((x ∷ xs) ⊆ L) ⇔ x ∷ xs ∈ subpermutations L
+  -- subperm⇔⊆ {x}{xs} {[]} = mk⇔ i ii
+  --   where
+  --   i : All (_∈ []) (x ∷ xs) → Any (_≡_ (x ∷ xs)) (subpermutations [])
+  --   i l⊆L = ⊥-elim (¬Any[] (lookup l⊆L (here refl)))
+  --   ii : Any (_≡_ (x ∷ xs)) (subpermutations []) → All (_∈ []) (x ∷ xs)
+  --   ii h = ⊥-elim (¬Any[] h)
+
+  -- subperm⇔⊆ {x} {xs} {y ∷ ys} = mk⇔ i ii
+  --   where
+  --   i : All (_∈ (y ∷ ys)) (x ∷ xs) → Any (_≡_ (x ∷ xs)) (subpermutations (y ∷ ys))
+  --   i h = {!!}
+  --   ii : Any (_≡_ (x ∷ xs)) (subpermutations (y ∷ ys)) → All (_∈ (y ∷ ys)) (x ∷ xs)
+  --   ii = {!!}
+
   -- open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist)
   -- []⊆ : {l : List A} → Sublist _≡_ [] l
   -- []⊆ {[]} = ˢˡ[]

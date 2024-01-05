@@ -7,6 +7,7 @@ open import Ledger.Prelude hiding (_∷ʳ_) renaming (_∈_ to _∈ˢ_)
 open import Data.List.Relation.Binary.Sublist.Heterogeneous.Core using (Sublist; _∷ʳ_)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Relation.Unary.Any using (any?; here; there)
+open import Data.List.Relation.Unary.Any.Properties using (¬Any[])
 open import Axiom.Set.Properties using (⊆-Transitive)
 open import Function.Bundles using (Equivalence)
 open import Data.List.Ext.Subperm
@@ -29,10 +30,8 @@ module _ {A : Set} where
           (SetIncl→Subperm $ (⊆-Transitive th) (λ u → to ∈-fromList $ there (from ∈-fromList u)) h)
 
   Subperm→SetIncl : ∀ {l L : List A} → Subperm l L → fromList l ⊆ fromList L
-  Subperm→SetIncl [] {a} a∈l = ⊥-elim $ ¬∈[] (from ∈-fromList a∈l)
-    where
-    ¬∈[] : ¬ a ∈ []
-    ¬∈[] = λ()
+  Subperm→SetIncl [] {a} a∈l = ⊥-elim $ ¬Any[] (from ∈-fromList a∈l)
+
   Subperm→SetIncl (loose Sp) a∈l = to ∈-fromList $ there (from ∈-fromList $ Subperm→SetIncl Sp a∈l)
   Subperm→SetIncl {_ ∷ _} {L} (tight x∈L Sp) a∈l with from ∈-fromList a∈l
   ...| here p = to ∈-fromList $ subst (_∈ L) (sym p) x∈L

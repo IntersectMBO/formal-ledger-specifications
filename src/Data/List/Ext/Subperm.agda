@@ -5,12 +5,13 @@ module Data.List.Ext.Subperm where
 open import Class.DecEq using (DecEq; _≟_)
 open import Data.Empty
 open import Data.List hiding (_∷ʳ_; drop)
-open import Data.List.Ext using (subpermutations)
+open import Data.List.Ext using (subpermutations; _⊆_)
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-empty-inv; ¬x∷xs↭[])
 open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist) renaming (minimum to minˡ)
 open import Data.List.Relation.Unary.Any using (Any; here; there) renaming (any? to any?ˡ)
+open import Data.List.Relation.Unary.Any.Properties using (¬Any[])
 open import Data.Product using (_×_; _,_; proj₁; proj₂; ∃-syntax; Σ-syntax)
 open import Data.Sum.Base as Sum using (_⊎_; inj₁; inj₂)
 open import Level using (Level; _⊔_)
@@ -26,9 +27,6 @@ open import Relation.Unary using (Pred; Decidable; _∈_)
 private variable a p : Level
 
 module _ {A : Set a} where
-
-  ¬x∈[] : {x : A} → ¬ x ∈ˡ []
-  ¬x∈[] = λ()
 
   open Sublist
   Sublist[] : {l : List A} → Sublist _≡_ [] l
@@ -57,12 +55,8 @@ module Subperm {A : Set a} where
   Subperm[] {l} = minimum l
 
   ¬Subperm[] : ∀{x xs} → ¬ Subperm (x ∷ xs) []
-  ¬Subperm[](tight x∈[] p) = ⊥-elim (¬x∈[] x∈[])
+  ¬Subperm[](tight x∈[] p) = ⊥-elim (¬Any[] x∈[])
 
-  data SubpermOf (l : List A) : Pred (List A) a where
-    empty : SubpermOf l []
-    keep  : ∀ {xs} → Subperm xs l → SubpermOf l xs
-    add   : ∀ {x xs} → x ∈ˡ l → Subperm xs l → SubpermOf l (x ∷ xs)
 
   Subperm⁻¹ : {x : A}{xs l : List A} → Subperm (x ∷ xs) l → x ∈ˡ l × Subperm xs l
   Subperm⁻¹ (tight x∈l xsSPl) = x∈l , xsSPl
@@ -83,25 +77,21 @@ module Subperm {A : Set a} where
   ... | no ¬p = no (¬p ∘ proj₂ ∘ Subperm⁻¹)
   ... | yes p = yes (tight x∈ p)
 
+  data AnySubpermOf (P : Pred (List A) p) (l : List A) : Pred (List(List A)) (a ⊔ p) where
+    here  : ∀ {xs xss} (pxs  : P xs) → Subperm xs l → AnySubpermOf P l (xs ∷ xss)
+    there : ∀ {xs xss} (pxss : AnySubpermOf P l xss) → AnySubpermOf P l (xs ∷ xss)
 
-  data AnySubpermOf (l : List A) (P : Pred (List A) p) : Pred (List(List A)) (a ⊔ p) where
-    here  : ∀ {xs xss} (pxs  : P xs) → Subperm xs l → AnySubpermOf l P (xs ∷ xss)
-    there : ∀ {xs xss} (pxss : AnySubpermOf l P xss) → AnySubpermOf l P (xs ∷ xss)
-
-  data AnySubpermOf' (l : List A) (P : Pred (List A) p) : Pred (Pred(List A) a) (a ⊔ p) where
-    indeed : ∀ {xs} (_ : P xs) → Subperms l xs → AnySubpermOf' l P (Subperms l)
 
   module _ {l : List A}{P : Pred (List A) p} {xs : List A} {xss : List (List A)} where
-    toSum : AnySubpermOf l P (xs ∷ xss) → (P xs × Subperm xs l) ⊎ AnySubpermOf l P xss
+    toSum : AnySubpermOf P l (xs ∷ xss) → (P xs × Subperm xs l) ⊎ AnySubpermOf P l xss
     toSum (here pxs Spxsl) = inj₁ (pxs , Spxsl)
     toSum (there pxss) = inj₂ pxss
 
-    fromSum : (P xs × Subperm xs l) ⊎ AnySubpermOf l P xss → AnySubpermOf l P (xs ∷ xss)
+    fromSum : (P xs × Subperm xs l) ⊎ AnySubpermOf P l xss → AnySubpermOf P l (xs ∷ xss)
     fromSum (inj₁ (pxs , Spxsl))  = here pxs Spxsl
     fromSum (inj₂ pxss) = there pxss
 
-
-  anySubpermOf? : ⦃ _ : DecEq A ⦄ → (l : List A)(P : Pred (List A) p) → Decidable P → Decidable(AnySubpermOf l P)
+  anySubpermOf? : ⦃ _ : DecEq A ⦄ → (l : List A)(P : Pred (List A) p) → Decidable P → Decidable(AnySubpermOf P l)
   anySubpermOf? l P P? [] = no λ()
   anySubpermOf? l P P? (xs ∷ xss) = map′ fromSum toSum ((P? xs ×-dec subperm? xs l) ⊎-dec anySubpermOf? l P P? xss)
 
@@ -140,20 +130,25 @@ module SubPerm {A : Set a} where
   SubPerm-empty-inv {[]} p = refl
   SubPerm-empty-inv {x ∷ l} p = ⊥-elim (¬SubPerm[] p)
 
-module _ {A : Set a} where
+  -- data SubpermOf (l : List A) : Pred (List A) a where
+  --   empty : SubpermOf l []
+  --   keep  : ∀ {xs} → Subperm xs l → SubpermOf l xs
+  --   add   : ∀ {x xs} → x ∈ˡ l → Subperm xs l → SubpermOf l (x ∷ xs)
 
-  data Subperm' : Rel (List A) a where
-    []    : Subperm' [] []
-    incl : ∀ {xs ys y} → Subperm' xs ys → Subperm' xs (y ∷ ys)
-    more : ∀ {x xs ys} → Subperm' xs ys → Subperm' (x ∷ xs) (x ∷ ys)
 
-  Subperms' : List A → Pred (List A) a
-  Subperms' l = λ x → Subperm' x l
+-- module _ {A : Set a} where
 
-  lemma' : ∀{x xs} → ¬ Subperm' (x ∷ xs) []
-  lemma' = λ ()
+--   data Subperm' : Rel (List A) a where
+--     []    : Subperm' [] []
+--     incl : ∀ {xs ys y} → Subperm' xs ys → Subperm' xs (y ∷ ys)
+--     more : ∀ {x xs ys} → Subperm' xs ys → Subperm' (x ∷ xs) (x ∷ ys)
 
-  Subperm'[] : {l : List A} → Subperm' [] l
-  Subperm'[] {[]} = []
-  Subperm'[] {x ∷ l} = incl Subperm'[]
+--   Subperms' : List A → Pred (List A) a
+--   Subperms' l = λ x → Subperm' x l
 
+--   lemma' : ∀{x xs} → ¬ Subperm' (x ∷ xs) []
+--   lemma' = λ ()
+
+--   Subperm'[] : {l : List A} → Subperm' [] l
+--   Subperm'[] {[]} = []
+--   Subperm'[] {x ∷ l} = incl Subperm'[]

@@ -11,7 +11,8 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
 
-open import Data.List.Ext.Properties using (_⊆ˡ_; ⊆ˡ-id)
+open import Data.List.Ext renaming (_⊆_ to _⊆ˡ_)
+open import Data.List.Ext.Properties using (⊆-id)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
@@ -87,7 +88,7 @@ open Equivalence
 
 ∃?-connecting-subset : ∀ L {u}{v} → Dec (∃[ l ](l ⊆ˡ L) × (l connects u to v))
 ∃?-connecting-subset L {u}{v} with [ L connects u to v ?]
-... | yes p = yes (L , (⊆ˡ-id , p))
+... | yes p = yes (L , (⊆-id , p))
 ... | no ¬q = {!!}
 
 enactable? : ∀ eState aidPairs aidNew×st → Dec(enactable eState aidPairs aidNew×st)

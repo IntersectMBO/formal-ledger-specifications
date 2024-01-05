@@ -12,7 +12,8 @@ import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
-open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_; _⊆ˡ_)
+open import Data.List.Ext using () renaming (_⊆_ to _⊆ˡ_)
+open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
@@ -24,6 +25,7 @@ open import Data.Product using (map₂)
 open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
+-- open import Relation.Unary using () renaming (Decidable to Decidable¹)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 
 open Equivalence
