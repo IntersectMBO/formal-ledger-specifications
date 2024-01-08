@@ -1,5 +1,6 @@
 # Constants
-AGDA?=agda --transliterate
+AGDA?=agda
+AGDA_RUN=$(AGDA) --transliterate
 OUT_DIR?=../dist
 LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
@@ -18,7 +19,7 @@ latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 $(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
-	$(AGDA) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
+	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
 define latexToPdf =
     @echo "Generating $@"
     $(eval PDF=$(notdir $@))
@@ -34,7 +35,7 @@ $(PDF_DIR)/midnight-example.pdf: $(LATEX_DIR)/$(MIDNIGHT)/PDF.tex $(latexFiles) 
 # Agda -> HTML
 define agdaToHtml =
     @echo "Generating $@"
-    $(AGDA) --html --html-dir $(HTML_DIR) $<
+    $(AGDA_RUN) --html --html-dir $(HTML_DIR) $<
 endef
 $(HTML_DIR)/$(LEDGER).PDF.html : $(LEDGER)/PDF.lagda
 	$(agdaToHtml)
@@ -50,7 +51,7 @@ define agdaToHs =
     mkdir -p $(HS_DIST)
     cp -r $(PROJECT)/hs-src/* $(HS_DIST)/
     cp $(PROJECT)/hs-src/$(CABAL_FILE) $(HS_DIST)/
-    $(AGDA) -c --ghc-dont-call-ghc --compile-dir $(HS_DIST) $<
+    $(AGDA_RUN) -c --ghc-dont-call-ghc --compile-dir $(HS_DIST) $<
     find $(HS_DIST)/MAlonzo -name "*.hs" -print\
       | sed "s#^$(HS_DIST)/#        #;s#\.hs##;s#/#.#g"\
       >> $(HS_DIST)/$(CABAL_FILE)
