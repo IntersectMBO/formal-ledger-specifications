@@ -15,6 +15,7 @@ import Relation.Nullary.Decidable
 open import Data.List.Ext using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Ext.Subperm
+open import Data.List.Ext.Subperm.Properties
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)

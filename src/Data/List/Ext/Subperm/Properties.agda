@@ -11,7 +11,7 @@ open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (Any; here; there) renaming (any? to any?ˡ)
 open import Data.List.Relation.Unary.Any.Properties using (¬Any[])
-open import Data.Product using (_×_; _,_; proj₁; proj₂)
+open import Data.Product using (_×_; _,_; proj₁; proj₂; ∃-syntax)
 open import Data.Sum.Base using (_⊎_; inj₁; inj₂)
 open import Level using (Level; _⊔_)
 open import Function using (_∘_; _⇔_; mk⇔; id; Equivalence)
@@ -43,17 +43,6 @@ Subperm⁻¹ (loose sp) = there (proj₁ SP) , loose (proj₂ SP)
 Subperm[]→[] : {xs : List A} → Subperm xs [] → xs ≡ []
 Subperm[]→[] {[]} _ = refl
 Subperm[]→[] {x ∷ xs} spxs[] = ⊥-elim (¬Subperm[] spxs[])
-
-data AnySubpermOf (P : Pred (List A) p) (l : List A) : Pred (List(List A)) (a ⊔ p) where
-  here  : ∀ {xs xss} → P xs → Subperm xs l → AnySubpermOf P l (xs ∷ xss)
-  there : ∀ {xs xss} → Subperm xs l → AnySubpermOf P l xss → AnySubpermOf P l (xs ∷ xss)
-
-toAny : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l → Any (_≡_ x) l
-toAny (here refl All.∷ p) = here refl
-toAny (there px All.∷ p) = there px
-
-fromAny : {x : A}{l : List A} → Any (_≡_ x) l → [ x ] ⊆ l
-fromAny p = p All.∷ All.[]
 
 tight⁻¹₁ : {x : A}{xs l : List A} → Subperm (x ∷ xs) l → x ∈ l
 tight⁻¹₁ (loose p) = there (tight⁻¹₁ p)
@@ -109,3 +98,10 @@ module _ ⦃ _ : DecEq A ⦄ where
   ...| yes p with (P? t)
   ...| no ¬q = no (λ (_ , q) → ¬q q)
   ...| yes q = yes (p , q)
+
+module _ {L : List A}{P : Pred (List A) p} where
+
+  ∃⊆⇔∃Subperm : (∃[ l ](l ⊆ L × P l)) ⇔ (∃[ l ](Subperm l L × P l))
+  ∃⊆⇔∃Subperm = mk⇔ (λ (l , l⊆L , Pl) → l , to ⊆⇔Subperm l⊆L , Pl) (λ (l , Sp , Pl) → l , from ⊆⇔Subperm Sp , Pl)
+    where open Equivalence
+
