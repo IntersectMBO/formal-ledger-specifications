@@ -139,17 +139,8 @@ _ : allPermutations ((1 ∷ 2 ∷ 3 ∷ []) ∷ (4 ∷ 5 ∷ []) ∷ []) ≡ (1 
                                                              ∷ (4 ∷ 5 ∷ []) ∷ (5 ∷ 4 ∷ []) ∷ []
 _ = refl
 
-_ : subpermutations{A = ℕ} [] ≡ [] ∷ []
+_ : subpermutations{A = ℕ} [] ≡ []
 _ = refl
-
-_ : _∈ˡ_ {A = List ℕ} [] (subpermutations{A = ℕ} [])
-_ = here refl
-
-_ : _∈ˡ_ {A = List ℕ} [] ([] ∷ (2 ∷ []) ∷ [])
-_ = here refl
-
-_ : _∈ˡ_ {A = List ℕ} [] ((2 ∷ []) ∷ [] ∷ [])
-_ = there (here refl)
 
 _ : subpermutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
 _ = refl
