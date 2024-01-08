@@ -86,6 +86,10 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.act
 
 open Equivalence
 
+-- ∃?-connecting-subperm : ∀ L {u}{v} → Dec (∃[ l ](Subperm l L) × (l connects u to v))
+-- ∃?-connecting-subperm = ?
+
+
 ∃?-connecting-subset : ∀ L {u}{v} → Dec (∃[ l ](l ⊆ˡ L) × (l connects u to v))
 ∃?-connecting-subset L {u}{v} with [ L connects u to v ?]
 ... | yes p = yes (L , (⊆-id , p))

@@ -40,8 +40,8 @@ sublists (x ∷ xs) = x +:: sublists xs  -- sublists including x
 
 -- insert a at each index of the given list
 insert_everywhereIn_ : A → List A → List (List A)
-insert a everywhereIn [] = []
-insert a everywhereIn (x ∷ []) = (a ∷ x ∷ []) ∷ (x ∷ a ∷ []) ∷ []
+insert a everywhereIn [] = [ a ] ∷ []
+-- insert a everywhereIn (x ∷ []) = (a ∷ x ∷ []) ∷ (x ∷ a ∷ []) ∷ []
 insert a everywhereIn (x ∷ xs) = (a ∷ x ∷ xs) ∷ map (x ∷_) (insert a everywhereIn xs)
 
 -- insert a at each index of each list of the given list of lists
@@ -63,4 +63,5 @@ allPermutations (l ∷ ls) = permutations l ++ allPermutations ls
 
 -- return all permutations of every sublist of the given list
 subpermutations : List A → List (List A)
-subpermutations = allPermutations ∘ sublists
+subpermutations [] = [] ∷ []
+subpermutations l = allPermutations (sublists l)

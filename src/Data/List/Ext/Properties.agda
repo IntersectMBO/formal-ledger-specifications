@@ -48,6 +48,13 @@ module _ {a}{A : Set a} where
   ¬⊆-[] : {x : A}{xs : List A} → ¬ (x ∷ xs) ⊆ []
   ¬⊆-[] {x} {xs} (px All.∷ h) = ¬Any[] px
 
+  ⊆⇔head∈tail⊆ : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l ⇔ (x ∈ l × xs ⊆ l)
+  ⊆⇔head∈tail⊆  {x} {xs} {[]} = mk⇔ (⊥-elim ∘ ¬⊆-[]) (λ ())
+  ⊆⇔head∈tail⊆  {x} {xs} {y ∷ ys} = mk⇔ i (λ (x∈yys , xs⊆yys) → x∈yys All.∷ xs⊆yys)
+    where
+    i : All (_∈ (y ∷ ys))(x ∷ xs) → (x ∈ˡ y ∷ ys) × (xs ⊆ (y ∷ ys))
+    i (px All.∷ h) = (px , h)
+
 module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
   open import Data.List.Relation.Unary.Unique.DecPropositional.Properties {A = A} _≟_
 
@@ -60,9 +67,8 @@ module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
   ∈-dedup : ∀ {l a} → a ∈ l ⇔ a ∈ deduplicate≡ l
   ∈-dedup = mk⇔ (∈-deduplicate⁺ _≟_) (∈-deduplicate⁻ _≟_ _)
 
-  ∈-head-⊆-tail : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l → x ∈ l × xs ⊆ l
-  ∈-head-⊆-tail {x} {xs} {[]} h = ⊥-elim (¬⊆-[] h)
-  ∈-head-⊆-tail {x} {xs} {y ∷ ys} (px All.∷ h) = px , h
+  ¬∈-dedup[] : {x : A} → ¬ x ∈ˡ (deduplicate≡ [])
+  ¬∈-dedup[] {x} p = ¬Any[] (Equivalence.from ∈-dedup p)
 
   ⊆-dedup : ∀{l l'} → l ⊆ l' ⇔ l ⊆ deduplicate≡ l'
   ⊆-dedup {[]} {l'} = mk⇔ (λ _ → All.[])(λ _ → All.[])
@@ -71,9 +77,9 @@ module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
     where
     open Equivalence
     i : ((x ∷ xs) ⊆ (y ∷ ys)) → ((x ∷ xs) ⊆ deduplicate≡ (y ∷ ys))
-    i h = to ∈-dedup (proj₁ (∈-head-⊆-tail h)) All.∷ to ⊆-dedup (proj₂ (∈-head-⊆-tail h))
+    i h = to ∈-dedup (proj₁ (to ⊆⇔head∈tail⊆ h)) All.∷ to ⊆-dedup (proj₂ (to ⊆⇔head∈tail⊆ h))
     ii : ((x ∷ xs) ⊆ deduplicate≡ (y ∷ ys)) → ((x ∷ xs) ⊆ (y ∷ ys))
-    ii h = (from ∈-dedup (proj₁ (∈-head-⊆-tail h))) All.∷ from ⊆-dedup (proj₂ (∈-head-⊆-tail h))
+    ii h = (from ∈-dedup (proj₁ (to ⊆⇔head∈tail⊆ h))) All.∷ from ⊆-dedup (proj₂ (to ⊆⇔head∈tail⊆ h))
 
   -- TODO: stdlib?
   dedup-++-↭ : {l l' : List A} → Disjoint l l' → deduplicate≡ (l ++ l') ↭ deduplicate≡ l ++ deduplicate≡ l'
@@ -99,22 +105,87 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒
 
 module _ {a}{A : Set a} ⦃ _ : DecEq A ⦄ where
   open import Data.List.Membership.DecPropositional {a} {A} _≟_ using (_∈?_)
+  open Equivalence
   _⊆?_ : (l L : List A) → Dec(l ⊆ L)
   l ⊆? L = all? (_∈? L) l
 
+  ¬[] : {x : A}{xs : List A} → ¬ ((x ∷ xs) ≡ [])
+  ¬[] = λ ()
+
+  -- add-head-subperm : {y : A}{l L : List A} → l ∈ subpermutations L → l ∈ subpermutations (y ∷ L)
+  -- add-head-subperm = {!!}
+  -- []∈subperm : {l : List A} → [] ∈ subpermutations l
+  -- []∈subperm {[]} = here refl
+  -- []∈subperm {x ∷ l} = there ([]∈subperm {l = l})
+
   -- unused, but could be useful later:
+  -- subperm⇔⊆ : {l L : List A} → l ⊆ L ⇔ l ∈ subpermutations L
+  -- subperm⇔⊆ {[]}{[]} = mk⇔ i ii
+  --   where
+  --   i : [] ⊆ [] → [] ∈ subpermutations []
+  --   i = λ _ → here refl
+  --   ii : [] ∈ subpermutations [] → [] ⊆ []
+  --   ii = λ _ → All.[]
+  -- subperm⇔⊆ {[]}{y ∷ ys} = mk⇔ i ii
+  --   where
+  --   i : All (_∈ (y ∷ ys)) [] → Any (_≡_ []) (subpermutations (y ∷ ys))
+  --   i All.[] = []∈subperm{l = y ∷ ys}
+  --   ii : Any (_≡_ []) (subpermutations (y ∷ ys)) → All (_∈ (y ∷ ys)) []
+  --   ii x = All.[]
+  -- subperm⇔⊆ {x ∷ xs} {[]} = mk⇔ {!!} {!!}
+  -- subperm⇔⊆ {x ∷ xs} {y ∷ ys} = mk⇔ {!!} {!!}
+
+
+
+  -- subperm⇔⊆ : {l L : List A} → (l ⊆ L) ⇔ l ∈ subpermutations L
+  -- subperm⇔⊆ {x ∷ xs} {[]} = mk⇔ i ii
+  --   where
+  --   i : All (_∈ []) (x ∷ xs) → Any (_≡_ (x ∷ xs)) (subpermutations [])
+  --   i l⊆L = ⊥-elim (¬Any[] (lookup l⊆L (here refl)))
+  --   ii : Any (_≡_ (x ∷ xs)) (subpermutations []) → All (_∈ []) (x ∷ xs)
+  --   ii (here px) = ⊥-elim (¬[] px)
+  --   ii (there ())
+  -- subperm⇔⊆ {[]}{[]} = {!!}
+  -- subperm⇔⊆ {[]}{y ∷ ys} = mk⇔ i ii
+  --   where
+  --   i : [] ⊆ (y ∷ ys) → [] ∈ subpermutations (y ∷ ys)
+  --   i = {!!}
+  --   ii : [] ∈ subpermutations (y ∷ ys) → [] ⊆ (y ∷ ys)
+  --   ii = {!!}
+
+  -- subperm⇔⊆ {x ∷ xs} {y ∷ ys} = mk⇔ i ii
+  --   where
+  --   open Equivalence
+  --   i : All (_∈ (y ∷ ys)) (x ∷ xs) → Any (_≡_ (x ∷ xs)) (subpermutations (y ∷ ys))
+  --   i (px All.∷ h) = goal
+  --     where
+  --     ξ : xs ∈ˡ subpermutations (y ∷ ys)
+  --     ξ = {!!}
+  --     goal : (x ∷ xs) ∈ (subpermutations (y ∷ ys))
+  --     goal = {!!}
+  --   ii : Any (_≡_ (x ∷ xs)) (subpermutations (y ∷ ys)) → All (_∈ (y ∷ ys)) (x ∷ xs)
+  --   ii = {!!}
+
+
   -- subperm⇔⊆ : {x : A}{xs L : List A} → ((x ∷ xs) ⊆ L) ⇔ x ∷ xs ∈ subpermutations L
   -- subperm⇔⊆ {x}{xs} {[]} = mk⇔ i ii
   --   where
   --   i : All (_∈ []) (x ∷ xs) → Any (_≡_ (x ∷ xs)) (subpermutations [])
   --   i l⊆L = ⊥-elim (¬Any[] (lookup l⊆L (here refl)))
   --   ii : Any (_≡_ (x ∷ xs)) (subpermutations []) → All (_∈ []) (x ∷ xs)
-  --   ii h = ⊥-elim (¬Any[] h)
+  --   ii (here px) = ⊥-elim (¬[] px)
+  --   ii (there ())
 
   -- subperm⇔⊆ {x} {xs} {y ∷ ys} = mk⇔ i ii
   --   where
+  --   open Equivalence
   --   i : All (_∈ (y ∷ ys)) (x ∷ xs) → Any (_≡_ (x ∷ xs)) (subpermutations (y ∷ ys))
-  --   i h = {!!}
+  --   i (px All.∷ h) = goal
+  --     where
+  --     ξ : xs ∈ˡ subpermutations (y ∷ ys)
+  --     ξ = {!!}
+  --     goal : (x ∷ xs) ∈ (subpermutations (y ∷ ys))
+  --     goal = {!!}
   --   ii : Any (_≡_ (x ∷ xs)) (subpermutations (y ∷ ys)) → All (_∈ (y ∷ ys)) (x ∷ xs)
   --   ii = {!!}
 
@@ -156,6 +227,18 @@ _ : allPermutations ((1 ∷ 2 ∷ 3 ∷ []) ∷ (4 ∷ 5 ∷ []) ∷ []) ≡ (1 
                                                              ∷ (3 ∷ 1 ∷ 2 ∷ []) ∷ (3 ∷ 2 ∷ 1 ∷ [])
                                                              ∷ (4 ∷ 5 ∷ []) ∷ (5 ∷ 4 ∷ []) ∷ []
 _ = refl
+
+_ : subpermutations{A = ℕ} [] ≡ [] ∷ []
+_ = refl
+
+_ : _∈ˡ_ {A = List ℕ} [] (subpermutations{A = ℕ} [])
+_ = here refl
+
+_ : _∈ˡ_ {A = List ℕ} [] ([] ∷ (2 ∷ []) ∷ [])
+_ = here refl
+
+_ : _∈ˡ_ {A = List ℕ} [] ((2 ∷ []) ∷ [] ∷ [])
+_ = there (here refl)
 
 _ : subpermutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
 _ = refl
