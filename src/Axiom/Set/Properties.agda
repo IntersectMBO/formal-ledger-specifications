@@ -343,21 +343,21 @@ SetIncl→Subperm : ∀ {l L : List A} → fromList l ⊆ fromList L → Subperm
 SetIncl→Subperm {l = []} {_} _ = Subperm[]
 SetIncl→Subperm {L = []} x = subst (λ l → Subperm l []) (sym (l⊆[] x)) []
 SetIncl→Subperm {l = _ ∷ _} {L = _ ∷ _} h =
-  tight (from ∈-fromList $ h (to ∈-fromList $ here refl))
+  (from ∈-fromList $ h (to ∈-fromList $ here refl)) ∷
         (SetIncl→Subperm $ ⊆-Transitive (λ u → to ∈-fromList $ there (from ∈-fromList u)) h)
 
 Subperm→SetIncl : ∀ {l L : List A} → Subperm l L → fromList l ⊆ fromList L
 Subperm→SetIncl [] {a} a∈l = ⊥-elim $ ¬Any[] (from ∈-fromList a∈l)
 
-Subperm→SetIncl (loose Sp) a∈l = to ∈-fromList $ there (from ∈-fromList $ Subperm→SetIncl Sp a∈l)
-Subperm→SetIncl {l = _ ∷ _} {L} (tight x∈L Sp) a∈l with from ∈-fromList a∈l
+Subperm→SetIncl (_ ∷ʳ Sp) a∈l = to ∈-fromList $ there (from ∈-fromList $ Subperm→SetIncl Sp a∈l)
+Subperm→SetIncl {l = _ ∷ _} {L} (x∈L ∷ Sp) a∈l with from ∈-fromList a∈l
 ...| here p = to ∈-fromList $ subst (_∈ˡ L) (sym p) x∈L
 ...| there ps = to ∈-fromList (from ∈-fromList $ Subperm→SetIncl Sp (to ∈-fromList ps))
 
 sublists⊆subpermutations : {l x : List A} → Sublist _≡_ x l → Subperm x l
 sublists⊆subpermutations Sublist.[] = []
-sublists⊆subpermutations (Sublist._∷ʳ_ _ x⊆l) = loose (sublists⊆subpermutations x⊆l)
-sublists⊆subpermutations (Sublist._∷_ x x⊆l) = tight (here x) (loose $ sublists⊆subpermutations x⊆l)
+sublists⊆subpermutations (Sublist._∷ʳ_ _ x⊆l) = _ ∷ʳ (sublists⊆subpermutations x⊆l)
+sublists⊆subpermutations (Sublist._∷_ x x⊆l) = (here x) ∷ (_ ∷ʳ (sublists⊆subpermutations x⊆l))
 
 Subperm⇔⊆ : ∀{l L : List A} → Subperm l L ⇔ l ⊆ˡ L
 Subperm⇔⊆ {l = l} {L} = mk⇔ (λ h → to sublist-⇔ (Subperm→SetIncl h)) λ h → SetIncl→Subperm (from sublist-⇔ h)

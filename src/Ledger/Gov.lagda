@@ -12,7 +12,7 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 open import Ledger.GovernanceActions gs hiding (yes; no)
 
 open import Data.List.Ext renaming (_⊆_ to _⊆ˡ_)
-open import Data.List.Ext.Subperm
+import Data.List.Ext.Subperm as Subperm
 open import Data.List.Ext.Subperm.Properties
 open import Data.List.Ext.Properties using (⊆-id)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
@@ -88,11 +88,13 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.act
 
 open Equivalence
 
-∃?-connecting-subperm : ∀ {L}{u}{v} → Dec (∃[ l ](Subperm l L) × (l connects u to v))
-∃?-connecting-subperm {L} {u}{v} = {!!}
+module _ where
+  open Subperm
+  ∃?-connecting-subperm : ∀ {L}{u}{v} → Dec (∃[ l ](Subperm l L) × (l connects u to v))
+  ∃?-connecting-subperm {L}{u}{v} = {!!}
 
-∃?-connecting-subset : ∀ {L}{u}{v} → Dec (∃[ l ](l ⊆ˡ L) × (l connects u to v))
-∃?-connecting-subset = from (map′⇔ ∃⊆⇔∃Subperm) ∃?-connecting-subperm
+  ∃?-connecting-subset : ∀ {L}{u}{v} → Dec (∃[ l ](l ⊆ˡ L) × (l connects u to v))
+  ∃?-connecting-subset = from (map′⇔ ∃⊆⇔∃Subperm) ∃?-connecting-subperm
 
 enactable? : ∀ eState aidPairs aidNew×st → Dec(enactable eState aidPairs aidNew×st)
 enactable? eState aidPairs (aidNew , as) with (getHashES eState (GovActionState.action as))

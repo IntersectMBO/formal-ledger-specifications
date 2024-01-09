@@ -55,6 +55,20 @@ module _ {a}{A : Set a} where
     i : All (_∈ (y ∷ ys))(x ∷ xs) → (x ∈ˡ y ∷ ys) × (xs ⊆ (y ∷ ys))
     i (px All.∷ h) = (px , h)
 
+  -- TODO: Prove the following to finish `allEnactable?` in `Ledger.Gov`.
+  --       Alternatively, prove `Subperm⇔∈subpermutations` in Data.List.Ext.Subperm.Properties`
+  --       and use that (since we have a proof of `(x ∷ xs) ⊆ l ⇔ Subperm (x ∷ xs) l`)
+  -- ⊆⇔∈subpermutations : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l ⇔ (x ∷ xs) ∈ subpermutations l
+  -- ⊆⇔∈subpermutations = mk⇔ ⊆→∈subpermutations ∈subpermutations→⊆
+  --   where
+  --   ⊆→∈subpermutations : {x : A}{xs L : List A} → (x ∷ xs) ⊆ L → (x ∷ xs) ∈ subpermutations L
+  --   ⊆→∈subpermutations {x} {xs} {[]} (px All.∷ h) = ⊥-elim (¬Any[] px)
+  --   ⊆→∈subpermutations {x} {xs} {y ∷ ys} (px All.∷ h) = {!!}
+
+  --   ∈subpermutations→⊆ : {x : A}{xs L : List A} → (x ∷ xs) ∈ subpermutations L → (x ∷ xs) ⊆ L
+  --   ∈subpermutations→⊆ {x} {xs} {[]} p = ⊥-elim (¬Any[] p)
+  --   ∈subpermutations→⊆ {x} {xs} {y ∷ ys} p = {!!}
+
 module _ {a} {A : Set a} ⦃ _ : DecEq A ⦄ where
   open import Data.List.Relation.Unary.Unique.DecPropositional.Properties {A = A} _≟_
 
@@ -102,7 +116,6 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (here refl) = inj₁ refl
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (here refl) (there b∈l) = inj₂ (inj₁ (lookup x b∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (here refl) = inj₂ (inj₂ (lookup x a∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
-
 
 
 -- TESTS --
