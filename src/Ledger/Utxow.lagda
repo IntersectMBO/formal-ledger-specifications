@@ -23,22 +23,23 @@ getVKeys = mapPartial isInj₁
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isInj₂
 
-credsNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ (ScriptPurpose × Credential)
-credsNeeded p utxo txb
+credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
+credsNeeded utxo txb
   =  mapˢ (λ (i , o) → (Spend i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  mapˢ (λ a → (Rwrd a , RwdAddr.stake a)) (dom (txwdrls .proj₁))
-  ∪  mapˢ (λ c → (Cert c , cwitness c)) (fromList txcerts)
-  ∪  mapˢ (λ x → (Mint x , inj₂ x)) (policies mint)
-  ∪  mapˢ (λ v → (Vote v , GovVote.credential v)) (fromList txvote)
-  ∪  (if p then (λ {sh} → mapˢ (λ p → (Propose p , inj₂ sh)) (fromList txprop))
-      else ∅)
+  ∪  mapˢ (λ a → (Rwrd     a , RwdAddr.stake a)) (dom (txwdrls .proj₁))
+  ∪  mapˢ (λ c → (Cert     c , cwitness c)) (fromList txcerts)
+  ∪  mapˢ (λ x → (Mint     x , inj₂ x)) (policies mint)
+  ∪  mapˢ (λ v → (Vote     v , GovVote.credential v)) (fromList txvote)
+  ∪  mapPartial (λ p → case p .GovProposal.policy of λ where
+    (just sh)  → just (Propose  p , inj₂ sh)
+    nothing    → nothing) (fromList txprop)
   where open TxBody txb
 
-witsVKeyNeeded : Maybe ScriptHash → UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded sh = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded sh
+witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
+witsVKeyNeeded = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 
-scriptsNeeded  : Maybe ScriptHash → UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded sh = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded sh
+scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
+scriptsNeeded = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 \end{code}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}
@@ -67,14 +68,14 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \begin{code}
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-        open UTxOState s; open UTxOEnv Γ
+        open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
-      in
+    in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
-    ∙  witsVKeyNeeded ppolicy utxo txb ⊆ witsKeyHashes
-    ∙  scriptsNeeded ppolicy utxo txb ≡ᵉ witsScriptHashes
+    ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
+    ∙  scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────

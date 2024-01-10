@@ -409,7 +409,7 @@ instance
     .to record { slot = slot ; pparams = pparams } →
         record { slot = slot ; pparams = to pparams }
     .from e → let open F.UTxOEnv e in record
-      { slot = slot ; ppolicy = nothing ; pparams = from pparams }
+      { slot = slot ; pparams = from pparams }
 
   Convertible-UTxOState : Convertible UTxOState F.UTxOState
   Convertible-UTxOState = λ where

@@ -196,6 +196,7 @@ record GovProposal : Set where
   field returnAddr  : RwdAddr
         action      : GovAction
         prevAction  : NeedsHash action
+        policy      : Maybe ScriptHash
         deposit     : Coin
         anchor      : Anchor
 \end{code}
