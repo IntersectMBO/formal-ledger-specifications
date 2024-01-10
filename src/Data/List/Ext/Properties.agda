@@ -55,7 +55,20 @@ module _ {a}{A : Set a} where
     i : All (_∈ (y ∷ ys))(x ∷ xs) → (x ∈ˡ y ∷ ys) × (xs ⊆ (y ∷ ys))
     i (px All.∷ h) = (px , h)
 
+  ∈⊆→∈ : ∀{x : A}{l l' : List A} → x ∈ l → l ⊆ l' → x ∈ l'
+  ∈⊆→∈ (here refl) (px All.∷ l⊆l') = px
+  ∈⊆→∈ (there x∈l) l⊆l' = ∈⊆→∈ x∈l (proj₂ (to ⊆⇔head∈tail⊆ l⊆l'))
+    where open Equivalence
+
+  toAny : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l → Any (_≡_ x) l
+  toAny (here refl All.∷ p) = here refl
+  toAny (there px All.∷ p) = there px
+
+  fromAny : {x : A}{l : List A} → Any (_≡_ x) l → [ x ] ⊆ l
+  fromAny p = p All.∷ All.[]
+
   -- TODO: Prove the following to finish `allEnactable?` in `Ledger.Gov`.
+
   --       Alternatively, prove `Subperm⇔∈subpermutations` in Data.List.Ext.Subperm.Properties`
   --       and use that (since we have a proof of `(x ∷ xs) ⊆ l ⇔ Subperm (x ∷ xs) l`)
   -- ⊆⇔∈subpermutations : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l ⇔ (x ∷ xs) ∈ subpermutations l

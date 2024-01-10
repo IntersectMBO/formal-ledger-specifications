@@ -4,10 +4,14 @@ module Data.List.Ext.Subperm.Properties {a}{A : Set a} where
 
 open import Class.DecEq using (DecEq; _≟_)
 open import Data.Empty
-open import Data.List using (List; _∷_; [_]; []; _++_)
-open import Data.List.Ext using (_⊆_; subpermutations; allPermutations; sublists; _+::_)
-open import Data.List.Ext.Properties using (addhead⊆; ⊆⇔head∈tail⊆)
+open import Data.Maybe
+open import Data.List using (List; _∷_; [_]; []; _++_; head; tail)
+open import Data.List.Properties using (++-identityˡ; ++-identityʳ)
+open import Data.List.Ext
+open import Data.List.Ext.Properties using (addhead⊆; ⊆⇔head∈tail⊆; ∈⊆→∈)
 open import Data.List.Membership.Propositional using (_∈_)
+open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_)
+open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-empty-inv)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (Any; here; there) renaming (any? to any?ˡ)
 open import Data.List.Relation.Unary.Any.Properties using (¬Any[])
@@ -17,7 +21,7 @@ open import Level using (Level; _⊔_)
 open import Function using (_∘_; _⇔_; mk⇔; id; Equivalence)
 open import Relation.Binary.Core using (Rel)
 open import Relation.Binary.Definitions using (Min) renaming (Decidable to Dec₂)
-open import Relation.Binary.PropositionalEquality using (_≡_; refl)
+open import Relation.Binary.PropositionalEquality using (_≡_; refl; sym; trans; cong; subst)
 open import Relation.Nullary using (yes; no; ¬_)
 open import Relation.Nullary.Decidable using (Dec; map′; _⊎-dec_; _×-dec_)
 open import Relation.Unary using (Pred; Decidable)
@@ -68,34 +72,126 @@ module _ {x : A}{xs : List A} where
   ii (_ ∷ʳ p) = addhead⊆ (from ⊆⇔head∈tail⊆ (∷ᴸ⁻ p , from ⊆⇔Subperm (∷ᴿ⁻ p)))
   ii (x∈l ∷ p) = from ⊆⇔head∈tail⊆ (x∈l , from ⊆⇔Subperm p)
 
+subperm-head∈ : {x : A}{xs l : List A} → (x ∷ xs) ∈ subpermutations l → x ∈ l
+subperm-head∈ {x} {xs} {[]} p = ⊥-elim (¬Any[] p)
+subperm-head∈ {x} {xs} {y ∷ ys} p = {!!}
+
+tail∈subperm : {x : A}{xs l : List A} → (x ∷ xs) ∈ subpermutations l → xs ∈ subpermutations l
+tail∈subperm {x} {xs} {[]} p = ⊥-elim (¬Any[] p)
+tail∈subperm {x} {xs} {y ∷ ys} p = {!!} -- proj₂ (⊆⇔head∈tail⊆ (fromAl∈-deduplproj₁ p))
+
+
+module _ {A : Set a} where
+
+  ∈++ˡ : {x : A}{ll lr : List A} → x ∈ ll → x ∈ ll ++ lr
+  ∈++ˡ (here refl) = here refl
+  ∈++ˡ (there x∈ys) = there (∈++ˡ x∈ys)
+
+  ∈++ʳ : {x : A}{ll lr : List A} → x ∈ lr → x ∈ ll ++ lr
+  ∈++ʳ {ll = []} = id
+  ∈++ʳ {ll = _ ∷ _} p = there (∈++ʳ p)
+
+  ⊎-elim-++ : {x : A}{l l' : List A} → x ∈ l ⊎ x ∈ l' → x ∈ l ++ l'
+  ⊎-elim-++ (inj₁ x∈l) = ∈++ˡ x∈l
+  ⊎-elim-++ (inj₂ x∈l') = ∈++ʳ x∈l'
+
+  ∈++→∈⊎ : {x : A}{l l' : List A} → x ∈ l ++ l' → x ∈ l ⊎ x ∈ l'
+  ∈++→∈⊎ {l = []} x∈[] = inj₂ x∈[]
+  ∈++→∈⊎ {l = _ ∷ _} (here refl) = inj₁ (here refl)
+  ∈++→∈⊎ {l = _ ∷ _} (there x∈ys) with (∈++→∈⊎ x∈ys)
+  ...| inj₁ y∈ys = inj₁ (there y∈ys)
+  ...| inj₂ x∈l' = inj₂ x∈l'
+
+  ∈-++⇔∈⊎ : {x : A}{l l' : List A} → (x ∈ l ++ l') ⇔ (x ∈ l ⊎ x ∈ l')
+  ∈-++⇔∈⊎ {x}{l}{l'} = mk⇔ (λ x∈ll' → ∈++→∈⊎ x∈ll') ⊎-elim-++
+
+  ∈-+∷[] : {x : A} → (x ∷ []) ∈ x +∷ []
+  ∈-+∷[] = here refl
+
+  ∈-+∷ : {x : A}{l : List A}{ls : List (List A)} → l ∈ ls → (x ∷ l) ∈ x +∷ ls
+  ∈-+∷ {x} (here px) = here (cong (λ z → x ∷ z) px)
+  ∈-+∷ {x} (there l∈ls') = there (∈-+∷ l∈ls')
+
+module _ {a}{A : Set a} where
+  ++head : ∀{x : A}{xs l : List A} → head ((x ∷ xs) ++ l) ≡ just x
+  ++head = refl
+
+  insert-head : {x : A}{l : List A} → head (insert x everywhereIn l) ≡ just (x ∷ l)
+  insert-head {x} {[]} = refl
+  insert-head {x} {y ∷ ys} = refl
+
+insertInAll-head' : ∀{x}{ls : List (List A)} →
+                    head (insert x everywhereInAll ls) ≡
+                    headM (insert x everywhereInM (head ls))
+insertInAll-head' {x} {[]} = refl
+insertInAll-head' {x} {ls ∷ ls₁} = {!!} -- ++head
+
+perm-head : {x : A}{xs : List A} → head (permutations (x ∷ xs)) ≡ just (x ∷ xs)
+perm-head {x} {[]} = refl
+perm-head {x} {y ∷ ys} = trans ν ρ
+  where
+    ν : head(insert x everywhereInAll (permutations (y ∷ ys)))
+          ≡ headM (insert x everywhereInM (head (permutations (y ∷ ys))))
+    ν = insertInAll-head'{ls = permutations (y ∷ ys)}
+
+    ρ : headM (insert x everywhereInM (head (permutations (y ∷ ys)))) ≡
+        headM (insert x everywhereInM (just (y ∷ ys)))
+    ρ = cong (λ u → headM (insert x everywhereInM u)) perm-head
+
+
+singleton∈subperm : {x : A}{l : List A} → x ∈ l → (x ∷ []) ∈ subpermutations l
+singleton∈subperm {x} {[]} x∈[] = ⊥-elim (¬Any[] x∈[])
+singleton∈subperm {x} {y ∷ ys} (here px) = goal
+  where
+  ξ' : y ∷ [] ∈ allPermutations ((y +∷ sublists ys) ++ sublists ys)
+  ξ' = singleton∈subperm (here{xs = ys} refl)
+  goal : x ∷ [] ∈ allPermutations ((y +∷ sublists ys) ++ sublists ys)
+  goal = {!!}
+singleton∈subperm {x} {y ∷ ys} (there x∈y∷ys) = {!!}
+
+
+distrib-allPerms : {l : List A} {xs ys : List (List A)} → l ∈ allPermutations (xs ++ ys) ⇔ l ∈ (allPermutations xs) ++ (allPermutations ys)
+distrib-allPerms {l} {xs} {ys} = mk⇔ i ii
+  where
+  i : l ∈ allPermutations (xs ++ ys) → l ∈ (allPermutations xs) ++ (allPermutations ys)
+  i = {!!}
+  ii : l ∈ (allPermutations xs) ++ (allPermutations ys) → l ∈ allPermutations (xs ++ ys)
+  ii = {!!}
+
+
+_subperm_∷ʳ_ : (xs : List A)(y : A)(ys : List A) → xs ∈ subpermutations ys → xs ∈ subpermutations (y ∷ ys)
+(xs subperm a ∷ʳ (y ∷ ys)) xs∈sp =
+  from (distrib-allPerms {xs = (a +∷ ((y +∷ sublists ys) ++ sublists ys))}) (∈++ʳ xs∈sp)
+  where open Equivalence
+
+head+tail∈ : {x : A}{xs L : List A} → x ∈ L → xs ∈ subpermutations L → x ∷ xs ∈ subpermutations L
+head+tail∈ {x} {xs} {.x ∷ ys} (here refl) xs∈spL = goal
+  where
+  goal : x ∷ xs ∈ allPermutations ((x +∷ sublists ys) ++ sublists ys)
+  goal = {!!}
+
+head+tail∈ {x} {xs} {y ∷ ys} (there x∈L) xs∈spL = {!!}
+
+_subperm_∷_ : (xs : List A) {x : A}{ys : List A} → x ∈ ys → xs ∈ subpermutations ys → (x ∷ xs) ∈ subpermutations ys
+_subperm_∷_ xs {x} {y ∷ ys} x∈ys Sp = head+tail∈ x∈ys Sp
+
+
 -- TODO: Prove the following to finish `allEnactable?` in `Ledger.Gov`.
 --       Alternatively, prove `⊆⇔∈subpermutations` in Data.List.Ext.Properties`
 --       and use that (since we have a proof of `(x ∷ xs) ⊆ l ⇔ Subperm (x ∷ xs) l`)
-Subperm→∈subpermutations : {x : A}{xs L : List A} → Subperm (x ∷ xs) L → (x ∷ xs) ∈ subpermutations L
-Subperm→∈subpermutations {x} {xs} (_∷ʳ_ {ys = ys} y Sp) = goal
-  where
-  goal : x ∷ xs ∈ allPermutations ((y +:: sublists ys) ++ sublists ys)
-  goal = {!!}
-Subperm→∈subpermutations {x} {xs = xs} {L} (x∈L ∷ SpxsL) = {!!}
+Subperm→∈subperms : {xs ys : List A} → ¬ xs ≡ [] → Subperm xs ys → xs ∈ subpermutations ys
+Subperm→∈subperms x [] = ⊥-elim (x refl)
+Subperm→∈subperms {xs} ¬xs[] (_∷ʳ_ {ys = ys} y Sp) = (xs subperm y ∷ʳ ys) (Subperm→∈subperms ¬xs[] Sp)
+Subperm→∈subperms {ys = ys} x (_∷_ {xs = []} x∈ys Sp[]) = singleton∈subperm x∈ys
+Subperm→∈subperms {ys = ys} ¬xzzs[] (_∷_ {x} {xs = z ∷ zs} x∈ys Sp) = (z ∷ zs) subperm x∈ys ∷ (Subperm→∈subperms (λ ()) Sp)
 
-∈subpermutations→Subperm : {x : A}{xs L : List A} → (x ∷ xs) ∈ subpermutations L → Subperm (x ∷ xs) L
-∈subpermutations→Subperm {x} {[]} {L} ∈spL = x∈L ∷ Sp[]L
-  where
-  x∈L : x ∈ L
-  x∈L = {!!}
-  Sp[]L : Subperm [] L
-  Sp[]L = {!!}
-∈subpermutations→Subperm {x} {y ∷ xs} {L} ∈spL = x∈L ∷ SpxsL
-  where
-  x∈L : x ∈ L
-  x∈L = {!!}
-  xs∈spL : (y ∷ xs) ∈ subpermutations L
-  xs∈spL = {!!}
-  SpxsL : Subperm (y ∷ xs) L
-  SpxsL = ∈subpermutations→Subperm xs∈spL
+∈subperms→Subperm : {x : A}{xs L : List A} → (x ∷ xs) ∈ subpermutations L → Subperm (x ∷ xs) L
+∈subperms→Subperm {xs = []} ∈spL = (subperm-head∈ ∈spL) ∷ Subperm[]
+∈subperms→Subperm {xs = _ ∷ _} {L} ∈spL =
+  (subperm-head∈ ∈spL) ∷ (∈subperms→Subperm (tail∈subperm {l = L} ∈spL))
 
-Subperm⇔∈subpermutations : {x : A}{xs L : List A} → Subperm (x ∷ xs) L ⇔ (x ∷ xs) ∈ subpermutations L
-Subperm⇔∈subpermutations = mk⇔ Subperm→∈subpermutations ∈subpermutations→Subperm
+Subperm⇔∈subperms : {x : A}{xs L : List A} → Subperm (x ∷ xs) L ⇔ (x ∷ xs) ∈ subpermutations L
+Subperm⇔∈subperms = mk⇔ (Subperm→∈subperms λ()) ∈subperms→Subperm
 
 
 module _ {l : List A}{P : Pred (List A) p} {xs : List A} {xss : List (List A)} where
@@ -137,18 +233,3 @@ module _ {L : List A}{P : Pred (List A) p} where
   ∃⊆⇔∃Subperm = mk⇔ (λ (l , l⊆L , Pl) → l , to ⊆⇔Subperm l⊆L , Pl) (λ (l , Sp , Pl) → l , from ⊆⇔Subperm Sp , Pl)
     where open Equivalence
 
-
-
-
-  -- anySubpermOf? : {l : List A}{P : Pred (List A) p} → Decidable P → Dec(∃ P)
-  -- anySubpermOf? {l = []} {P = P} P? with P? []
-  -- ...| no ¬p = no goal
-  --  where
-  --  goal : ¬ (∃[ l ] P l)
-  --  goal (l , Pl) = {!!}
-
-  --  -- λ x → {!!} -- (λ (_ , p) → ¬p {!!})
-  -- ...| yes p = yes ([] , p)
-  -- anySubpermOf? {l = xs ∷ xss} {P = _} P? = {!!}
-  -- [] = no λ()
-  -- anySubpermOf? l P P? (xs ∷ xss) = map′ fromSum toSum ((P? xs ×-dec subperm? xs l) ⊎-dec (subperm? xs l ×-dec anySubpermOf? l P P? xss))

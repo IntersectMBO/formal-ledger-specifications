@@ -2,17 +2,13 @@
 
 module Data.List.Ext.Subperm {a}{A : Set a} where
 
-open import Data.List using (List; _∷_; [_]; [])
-open import Data.List.Ext using (_⊆_)
+open import Data.List using (List; _∷_; [])
 open import Data.List.Membership.Propositional using (_∈_)
-open import Data.List.Relation.Unary.All using (all?; All; lookup)
-open import Data.List.Relation.Unary.Any using (Any; here; there) renaming (any? to any?ˡ)
 open import Data.Product using (_×_)
 open import Data.Sum using (_⊎_)
 open import Function using (_⇔_; mk⇔; id)
 open import Level using (Level; _⊔_)
 open import Relation.Binary.Core using (Rel)
-open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Relation.Unary using (Pred)
 
 private variable p : Level
@@ -38,9 +34,3 @@ anySubpermOf : (P : Pred (List A) a) (l : List A) → Pred (List(List A)) _
 anySubpermOf P l [] = P []
 anySubpermOf P l (xs ∷ xss) = (P xs × Subperm xs l) ⊎ anySubpermOf P l xss
 
-toAny : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l → Any (_≡_ x) l
-toAny (here refl All.∷ p) = here refl
-toAny (there px All.∷ p) = there px
-
-fromAny : {x : A}{l : List A} → Any (_≡_ x) l → [ x ] ⊆ l
-fromAny p = p All.∷ All.[]
