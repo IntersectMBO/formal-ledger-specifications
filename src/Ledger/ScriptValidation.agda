@@ -24,7 +24,7 @@ data ScriptPurpose : Set where
   Rwrd     : RwdAddr      → ScriptPurpose
   Mint     : ScriptHash   → ScriptPurpose
   Spend    : TxIn         → ScriptPurpose
-  Vote     : GovVote      → ScriptPurpose
+  Vote     : Voter        → ScriptPurpose
   Propose  : GovProposal  → ScriptPurpose
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
@@ -33,7 +33,7 @@ rdptr txb = λ where
   (Rwrd h)     → M.map (Rewrd   ,_) $ indexOfRwdAddr  h txwdrls
   (Mint h)     → M.map (Mint    ,_) $ indexOfPolicyId h (policies mint)
   (Spend h)    → M.map (Spend   ,_) $ indexOfTxIn     h txins
-  (Vote h)     → M.map (Vote    ,_) $ indexOfVote     h txvote
+  (Vote h)     → M.map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txvote)
   (Propose h)  → M.map (Propose ,_) $ indexOfProposal h txprop
  where open TxBody txb
 

@@ -29,7 +29,7 @@ credsNeeded utxo txb
   ∪  mapˢ (λ a → (Rwrd     a , RwdAddr.stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c → (Cert     c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x → (Mint     x , inj₂ x)) (policies mint)
-  ∪  mapˢ (λ v → (Vote     v , GovVote.credential v)) (fromList txvote)
+  ∪  mapˢ (λ v → (Vote     v , proj₂ v)) (fromList $ map GovVote.voter txvote)
   ∪  mapPartial (λ p → case p .GovProposal.policy of λ where
     (just sh)  → just (Propose  p , inj₂ sh)
     nothing    → nothing) (fromList txprop)

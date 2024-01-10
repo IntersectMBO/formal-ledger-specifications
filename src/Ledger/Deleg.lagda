@@ -107,8 +107,8 @@ module _ (open PParams) where
   cwitness (ccreghot c _)      = c
 
   getDRepVote : GovVote → Maybe Credential
-  getDRepVote record { role = DRep ; credential = credential }  = just credential
-  getDRepVote _                                                 = nothing
+  getDRepVote record { voter = (DRep , credential) }  = just credential
+  getDRepVote _                                       = nothing
 \end{code}
 \caption{Functions used for CERTS transition system}
 \end{figure*}

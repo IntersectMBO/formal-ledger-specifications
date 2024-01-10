@@ -14,7 +14,7 @@ open import Ledger.GovernanceActions gs
 \emph{Derived types}
 \begin{code}
 record GovActionState : Set where
-  field votes       : (GovRole × Credential) ⇀ Vote
+  field votes       : Voter ⇀ Vote
         returnAddr  : RwdAddr
         expiresIn   : Epoch
         action      : GovAction
@@ -48,6 +48,7 @@ private variable
   aid : GovActionID
   role : GovRole
   cred : Credential
+  voter : Voter
   v : Vote
   c d : Coin
   addr : RwdAddr
@@ -58,10 +59,10 @@ private variable
 \end{code}
 \emph{Functions used in the GOV rules}
 \begin{code}
-addVote : GovState → GovActionID → GovRole → Credential → Vote → GovState
-addVote s aid r kh v = map modifyVotes s
+addVote : GovState → GovActionID → Voter → Vote → GovState
+addVote s aid voter v = map modifyVotes s
   where modifyVotes = λ (gid , s') → gid , record s'
-          { votes = if gid ≡ aid then insert (votes s') (r , kh) v else votes s'}
+          { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
 
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
@@ -109,12 +110,12 @@ data _⊢_⇀⦇_,GOV'⦈_ where
   GOV-Vote : ∀ {x ast} → let
       open GovEnv Γ
       sig = inj₁ record
-        { gid = aid ; role = role ; credential = cred ; vote = v ; anchor = x }
+        { gid = aid ; voter = voter ; vote = v ; anchor = x }
     in
     ∙ (aid , ast) ∈ fromList s
-    ∙ canVote pparams (action ast) role
+    ∙ canVote pparams (action ast) (proj₁ voter)
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid role cred v
+      (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid voter v
 
   GOV-Propose : ∀ {x} → let
       open GovEnv Γ; open PParams pparams hiding (a)
