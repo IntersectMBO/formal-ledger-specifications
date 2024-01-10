@@ -82,7 +82,7 @@ private
 instance
   Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_ String
   Computational-GOV' .computeProof (⟦ _ , _ , pparams , _ , _ ⟧ᵍ , k) s
-                                   (inj₁ record { gid = aid ; role = role }) =
+                                   (inj₁ record { gid = aid ; voter = (role , _) }) =
     case lookupActionId pparams role aid s of λ where
       (yes p) → case Any↔ .from p of λ where
         (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem , cV))
@@ -102,7 +102,7 @@ instance
         (-, GOV-Propose (wf , dep , pol , (λ isNewComm → ⊥-elim (notNewComm (-, -, -, isNewComm))) , vHFA))
       _ → failure "GOV' failed at actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e"
   Computational-GOV' .completeness (⟦ _ , _ , pparams , _ , _ ⟧ᵍ , k) s
-                                   (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote (mem , cV))
+                                   (inj₁ record { gid = aid ; voter = (role , _) }) s' (GOV-Vote (mem , cV))
     with lookupActionId pparams role aid s
   ... | no ¬p = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
   ... | yes p with Any↔ .from p

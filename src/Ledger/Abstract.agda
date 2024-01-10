@@ -13,7 +13,7 @@ record indexOf : Set where
     indexOfRwdAddr  : RwdAddr → Wdrl → Maybe Ix
     indexOfTxIn     : TxIn → ℙ TxIn → Maybe Ix
     indexOfPolicyId : ScriptHash → ℙ ScriptHash → Maybe Ix
-    indexOfVote     : GovVote → List GovVote → Maybe Ix
+    indexOfVote     : Voter → List Voter → Maybe Ix
     indexOfProposal : GovProposal → List GovProposal → Maybe Ix
 
 record AbstractFunctions : Set where

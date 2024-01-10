@@ -31,11 +31,11 @@ maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-GovActionID : Set
-GovActionID = TxId × ℕ
-
 data GovRole : Set where
   CC DRep SPO : GovRole
+
+Voter        = GovRole × Credential
+GovActionID  = TxId × ℕ
 
 data VDeleg : Set where
   credVoter        : GovRole → Credential →  VDeleg
@@ -187,8 +187,7 @@ data Vote : Set where
 
 record GovVote : Set where
   field gid         : GovActionID
-        role        : GovRole
-        credential  : Credential
+        voter       : Voter
         vote        : Vote
         anchor      : Maybe Anchor
 
