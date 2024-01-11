@@ -5,13 +5,14 @@ open import Prelude hiding (lookup)
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
-open import Data.List.Ext using (sublists; permutations; allPermutations; subpermutations; _⊆_)
+open import Data.List.Ext using (sublists; permutations; allPermutations; subpermutations; _⊆_; _+∷_)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties
   using (∈-deduplicate⁻; ∈-deduplicate⁺; ∈-++⁻; ∈-++⁺ˡ; ∈-++⁺ʳ)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Disjoint.Propositional using (Disjoint)
-open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_)
+open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_; ↭-sym)
+open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (¬x∷xs↭[])
 open import Data.List.Relation.Unary.AllPairs using (AllPairs)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (Any; here; there)
@@ -146,6 +147,9 @@ _ : sublists (1 ∷ 2 ∷ 3 ∷ []) ≡ (1 ∷ 2 ∷ 3 ∷ [])
                                 ∷ (1 ∷ []) ∷ (2 ∷ 3 ∷ [])
                                 ∷ (2 ∷ []) ∷ (3 ∷ []) ∷ []
 _ = refl
+
+_ : 1 ∷ [] ∈ 1 +∷ sublists (2 ∷ 3 ∷ [])
+_ = there (there (there (here refl)))
 
 _ : permutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ []
 _ = refl

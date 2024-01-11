@@ -63,8 +63,6 @@ insert a everywhereInAll [] = []
 insert a everywhereInAll (l ∷ ls) = (insert a everywhereIn l) ++ (insert a everywhereInAll ls)
 -- flatMap (insert a everywhereIn)
 
-
-
 -- return all permutations of the given list
 permutations : List A → List (List A)
 permutations [] = []
