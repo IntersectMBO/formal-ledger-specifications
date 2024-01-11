@@ -17,7 +17,8 @@ record indexOf : Set where
     indexOfProposal : GovProposal → List GovProposal → Maybe Ix
 
 record AbstractFunctions : Set where
-  field txscriptfee : Prices → ExUnits → Coin
-        serSize     : Value → MemoryEstimate
-        indexOfImp  : indexOf
+  field txscriptfee  : Prices → ExUnits → Coin
+        serSize      : Value → MemoryEstimate
+        indexOfImp   : indexOf
         runPLCScript : CostModel → P2Script → ExUnits → List Data → Bool
+        scriptSize   : Script → ℕ

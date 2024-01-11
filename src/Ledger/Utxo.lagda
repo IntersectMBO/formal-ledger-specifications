@@ -12,6 +12,9 @@ open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
+import Data.Integer as ℤ
+import Data.Rational as ℚ
+
 open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude
@@ -31,6 +34,12 @@ instance
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = ∑[ x ← s ] x
 
+infixl 7 _*↓_
+
+-- multiply a natural number with a fraction, rounding down and taking the absolute value
+_*↓_ : ℚ.ℚ → ℕ → ℕ
+q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
+
 isPhaseTwoScriptAddress : Tx → Addr → Bool
 isPhaseTwoScriptAddress tx a =
   if isScriptAddr a then
@@ -49,7 +58,10 @@ utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
 
 utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize utxo = utxoEntrySizeWithoutVal + size (getValue utxo)
+utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValue o)
+
+refScripts : Tx → UTxO → ℙ Script
+refScripts tx utxo = ∅ -- TODO: implement when we do Babbage
 
 open PParams
 \end{code}
@@ -71,7 +83,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 \AgdaTarget{outs, minfee, inInterval, balance}
 \begin{figure*}[h]
 \begin{code}[hide]
-module _ (let open Tx; open TxBody) where
+module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \begin{code}
   outs : TxBody → UTxO
@@ -89,30 +101,32 @@ module _ (let open Tx; open TxBody) where
   isAdaOnlyᵇ : Value → Bool
   isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 
-  minfee : PParams → Tx → Coin
-  minfee pp tx  = pp .a * tx .body .txsize + pp .b
-                + txscriptfee (pp .prices) (totExUnits tx)
+  minfee : PParams → UTxO → Tx → Coin
+  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
+                     + txscriptfee (pp .prices) (totExUnits tx)
+                     + pp .minFeeRefScriptCoinsPerByte
+                       *↓ ∑ˢ[ x ← refScripts tx utxo ] scriptSize x
 
-  data DepositPurpose : Set where
-    CredentialDeposit  : Credential   → DepositPurpose
-    PoolDeposit        : Credential   → DepositPurpose
-    DRepDeposit        : Credential   → DepositPurpose
-    GovActionDeposit   : GovActionID  → DepositPurpose
+data DepositPurpose : Set where
+  CredentialDeposit  : Credential   → DepositPurpose
+  PoolDeposit        : Credential   → DepositPurpose
+  DRepDeposit        : Credential   → DepositPurpose
+  GovActionDeposit   : GovActionID  → DepositPurpose
 
-  certDeposit : PParams → DCert → DepositPurpose ⇀ Coin
-  certDeposit _   (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
-  certDeposit pp  (regpool c _)       = ❴ PoolDeposit       c , pp .poolDeposit  ❵
-  certDeposit _   (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
-  certDeposit _   _                   = ∅
+certDeposit : PParams → DCert → DepositPurpose ⇀ Coin
+certDeposit _   (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
+certDeposit pp  (regpool c _)       = ❴ PoolDeposit       c , pp .poolDeposit  ❵
+certDeposit _   (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
+certDeposit _   _                   = ∅
 
-  propDeposit : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
-  propDeposit pp gaid record { returnAddr = record { stake = c } }
-    = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
+propDeposit : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
+propDeposit pp gaid record { returnAddr = record { stake = c } }
+  = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
 
-  certRefund : DCert → ℙ DepositPurpose
-  certRefund (dereg c)      = ❴ CredentialDeposit c ❵
-  certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-  certRefund _              = ∅
+certRefund : DCert → ℙ DepositPurpose
+certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+certRefund _              = ∅
 \end{code}
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
@@ -141,10 +155,11 @@ _≥ᵇ_ = flip _≤ᵇ_
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
 
 -- TODO: this could be a regular property
+-- TODO: using this in UTxO rule below
 \end{code}
 \begin{code}
 feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee pp tx ≤ᵇ txfee
+feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
                   ∧ not (≟-∅ᵇ (txrdmrs ˢ))
                   =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
                       ∧ isAdaOnlyᵇ bal
@@ -330,7 +345,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOState s
     in
     ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙ inInterval slot txvldt                 ∙ minfee pp tx ≤ txfee
+    ∙ inInterval slot txvldt                 ∙ feesOK pp tx utxo ≡ true
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙ txsize ≤ maxTxSize pp
 
