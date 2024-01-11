@@ -49,7 +49,7 @@ record TokenAlgebra : Set₁ where
          _≤ᵗ_                      : Value → Value → Set
          AssetName                 : Set
          specialAsset              : AssetName
-         property                  : coin ∘ inject ≗ id
+         property                  : coin ∘ inject ≗ id -- FIXME: rename!
          coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 \end{code}
 \end{AgdaSuppressSpace}

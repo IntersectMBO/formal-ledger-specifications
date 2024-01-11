@@ -79,6 +79,7 @@ record PParams : Set where
         a b                           : ℕ
         minUTxOValue poolDeposit      : Coin
         coinsPerUTxOWord              : Coin
+        minFeeRefScriptCoinsPerByte   : ℚ
         prices                        : Prices
 \end{code}
 \emph{Technical group}\vskip-3mm

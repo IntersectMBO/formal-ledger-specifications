@@ -78,10 +78,9 @@ instance
         open Computational Computational-UTXOS
           renaming (computeProof to computeProof'; completeness to completeness')
 
-        computeProof = case H? of λ where
-          (yes (x , y , z , e , k , l , m , n , o , p , q , r)) →
-            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m n o p q r) <$> computeProof' Γ s tx
-          (no ¬p) → failure $ case dec-de-morgan ¬p of λ where
+        abstract
+          genErr : ¬ H → String
+          genErr  ¬p = case dec-de-morgan ¬p of λ where
             (inj₁ a) → "¬ TxBody.txins (Tx.body tx) ≢ ∅"
             (inj₂ b) → case dec-de-morgan b of λ where
               (inj₁ a₁) → "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
@@ -121,15 +120,19 @@ instance
                                       (inj₁ a₉) → "∀[ (a , _) ∈ range txouts ] Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a"
                                       (inj₂ _) → "something else broke"
 
-        completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → _
-        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m n o p q r h) = QED
-          where
-          QED : map proj₁ computeProof ≡ success s'
-          QED with H?
-          ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , n , o , p , q , r)
-          ... | yes _
-            with computeProof' Γ s tx | completeness' _ _ _ _ h
-          ... | success _ | refl = refl
+        computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
+        computeProofH (yes (x , y , z , e , k , l , m , n , o , p , q , r)) =
+            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m n o p q r) <$> computeProof' Γ s tx
+        computeProofH (no ¬p) = failure $ genErr ¬p
+
+        computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
+        computeProof = computeProofH H?
+
+        completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
+        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m n o p q r h) with H?
+        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , n , o , p , q , r)
+        ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
+        ... | success _ | refl = refl
 
 open Computational ⦃...⦄
 
@@ -145,35 +148,39 @@ private variable
   fees fees' donations donations'  : Coin
   deposits deposits'               : DepositPurpose ⇀ Coin
 
-balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
-balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
-
-balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → cbalance utxo ≡ cbalance utxo'
-balance-cong-coin {utxo} {utxo'} x =
-  coinIsMonoidHomomorphism .⟦⟧-cong (balance-cong {utxo} {utxo'} x)
-  where open MonoidMorphisms.IsMonoidHomomorphism
-
 open MonoidMorphisms.IsMonoidHomomorphism
 private
   ∙-homo-Coin = IsMagmaHomomorphism.homo (isMagmaHomomorphism coinIsMonoidHomomorphism)
 
-balance-∪ : disjoint (dom utxo) (dom utxo')
-                     → cbalance (utxo ∪ˡ utxo') ≡ cbalance utxo + cbalance utxo'
-balance-∪ {utxo} {utxo'} h = begin
-  cbalance (utxo ∪ˡ utxo')
-    ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-    $ indexedSumᵐ-cong {x = (utxo ∪ˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)} (id , id)
-    ⟩
-  coin (indexedSumᵐ _ ((utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)))
-    ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-    $ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h
-    ⟩
-  coin (balance utxo + balance utxo')
-    ≡⟨ ∙-homo-Coin  _ _ ⟩
-  cbalance utxo + cbalance utxo'
-    ∎
+opaque
+  unfolding balance
+  balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
+  balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
 
-module _ {txb : _} (open TxBody txb) where
+  balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → cbalance utxo ≡ cbalance utxo'
+  balance-cong-coin {utxo} {utxo'} x =
+    coinIsMonoidHomomorphism .⟦⟧-cong (balance-cong {utxo} {utxo'} x)
+    where open MonoidMorphisms.IsMonoidHomomorphism
+
+  balance-∪ : disjoint (dom utxo) (dom utxo')
+                       → cbalance (utxo ∪ˡ utxo') ≡ cbalance utxo + cbalance utxo'
+  balance-∪ {utxo} {utxo'} h = begin
+    cbalance (utxo ∪ˡ utxo')
+      ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
+      $ indexedSumᵐ-cong {x = (utxo ∪ˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)} (id , id)
+      ⟩
+    coin (indexedSumᵐ _ ((utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)))
+      ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
+      $ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h
+      ⟩
+    coin (balance utxo + balance utxo')
+      ≡⟨ ∙-homo-Coin  _ _ ⟩
+    cbalance utxo + cbalance utxo'
+      ∎
+
+module _ {txb : _} (open TxBody txb) where opaque
+  unfolding outs
+
   newTxid⇒disj : txid ∉ mapˢ proj₁ (dom utxo)
               → disjoint' (dom utxo) (dom (outs txb))
   newTxid⇒disj id∉utxo = disjoint⇒disjoint' λ h h' → id∉utxo $ to ∈-map

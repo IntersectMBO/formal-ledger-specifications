@@ -2,7 +2,7 @@ module Ledger.Foreign.HSLedger where
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
-open import Data.Rational using (½)
+open import Data.Rational using (0ℚ; ½)
 
 open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
@@ -197,6 +197,7 @@ HSAbstractFunctions = record
     ; indexOfProposal = λ _ _ → nothing
     }
   ; runPLCScript = λ _ _ _ _ → false
+  ; scriptSize = λ _ → 0
   }
 instance _ = HSAbstractFunctions
 
@@ -372,36 +373,37 @@ instance
       ; maxCollateralInputs = maxCollateralInputs
       }
     .from pp → let open F.PParams pp in record
-      { a                    = a
-      ; b                    = b
-      ; maxBlockSize         = maxBlockSize
-      ; maxTxSize            = maxTxSize
-      ; maxHeaderSize        = maxHeaderSize
-      ; maxValSize           = maxValSize
-      ; minUTxOValue         = minUTxOValue
-      ; poolDeposit          = poolDeposit
-      ; Emax                 = Emax
-      ; collateralPercentage = 0
-      ; pv                   = from pv
+      { a                           = a
+      ; b                           = b
+      ; maxBlockSize                = maxBlockSize
+      ; maxTxSize                   = maxTxSize
+      ; maxHeaderSize               = maxHeaderSize
+      ; maxValSize                  = maxValSize
+      ; minUTxOValue                = minUTxOValue
+      ; poolDeposit                 = poolDeposit
+      ; minFeeRefScriptCoinsPerByte = 0ℚ
+      ; Emax                        = Emax
+      ; collateralPercentage        = 0
+      ; pv                          = from pv
         -- TODO: translate these once they are implemented in F.PParams
       ; drepThresholds    = record
         { P1  = ½ ; P2a = ½ ; P2b = ½ ; P3  = ½ ; P4 = ½
         ; P5a = ½ ; P5b = ½ ; P5c = ½ ; P5d = ½ ; P6 = ½}
       ; poolThresholds    = record
         { Q1 = ½ ; Q2a = ½ ; Q2b = ½ ; Q4 = ½ }
-      ; govActionLifetime = govActionLifetime
-      ; govActionDeposit  = govActionDeposit
-      ; drepDeposit       = drepDeposit
-      ; drepActivity      = drepActivity
-      ; ccMinSize         = ccMinSize
-      ; ccMaxTermLength   = ccMaxTermLength
-      ; minimumAVS        = 0
-      ; costmdls            = from costmdls
-      ; prices              = prices
-      ; maxTxExUnits        = from maxTxExUnits
-      ; maxBlockExUnits     = from maxBlockExUnits
-      ; coinsPerUTxOWord    = coinsPerUTxOWord
-      ; maxCollateralInputs = maxCollateralInputs
+      ; govActionLifetime           = govActionLifetime
+      ; govActionDeposit            = govActionDeposit
+      ; drepDeposit                 = drepDeposit
+      ; drepActivity                = drepActivity
+      ; ccMinSize                   = ccMinSize
+      ; ccMaxTermLength             = ccMaxTermLength
+      ; minimumAVS                  = 0
+      ; costmdls                    = from costmdls
+      ; prices                      = prices
+      ; maxTxExUnits                = from maxTxExUnits
+      ; maxBlockExUnits             = from maxBlockExUnits
+      ; coinsPerUTxOWord            = coinsPerUTxOWord
+      ; maxCollateralInputs         = maxCollateralInputs
       }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
