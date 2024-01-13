@@ -4,7 +4,9 @@ module Data.List.Ext.Subperm.Properties {a}{A : Set a} where
 
 open import Class.DecEq using (DecEq; _≟_)
 open import Data.Empty
-open import Data.List using (List; []; _++_; head; tail) renaming (map to mapˡ)
+open import Data.List using (List; []; _++_; head; tail; length) renaming (map to mapˡ)
+open import Data.Nat using (_<_)
+open import Data.List.Properties using (∷-injective)
 open import Data.List.Ext
 open import Data.List.Ext.Properties using (addhead⊆; ⊆⇔head∈tail⊆; ∈⊆→∈)
 open import Data.List.Ext.Subperm
@@ -164,6 +166,20 @@ module _ {A : Set a} where
   ∈→∈-+∷ (here refl) = here refl
   ∈→∈-+∷ (there l∈ls') = there (∈→∈-+∷ l∈ls')
 
+  -- sublists (x ∷ xs) = x +∷ sublists xs  -- sublists including x
+  --                     ++ sublists xs     -- sublists omitting x
+
+  -- +∷-sublists : {l xs : List A}{x : A} → l ∈ (x +∷ sublists xs)  ⇔ (l ∈ sublists (x ∷ xs) × ¬ l ∈ sublists xs)
+  -- +∷-sublists {[]} {xs} {x} = {!!}
+  -- +∷-sublists {x₁ ∷ l} {xs} {x} = {!!}
+  ¬[]∈+∷ : {ls : List (List A)}{x : A} → ¬ [] ∈ x +∷ ls
+  ¬[]∈+∷ {[]} (here ())
+  ¬[]∈+∷ {[]} (there ())
+  ¬[]∈+∷ {l ∷ ls} (there p) = ¬[]∈+∷ p
+
+
+
+
 --------------------------------------------------
 ------- properties of insert_everywhereIn_ -------
 --------------------------------------------------
@@ -195,6 +211,31 @@ insertInAll-head' {[]} = refl
 insertInAll-head' {_ ∷ _} = ++head¬[] ¬insert[]
 
 
+tail-lem : {ls : List (List A)}{xs : List A}{x y : A} → x ∷ xs ∈ mapˡ (_∷_ y) ls → x ≡ y × xs ∈ ls
+tail-lem = {!!}
+
+insert⁻¹ : {l xs : List A}{x : A} → l ∈ insert x everywhereIn xs → x ∈ l
+insert⁻¹ {[]} {xs} {x} p = ⊥-elim (¬[]∈insert p)
+insert⁻¹ {y ∷ .[]} {[]} {.y} (here refl) = here refl
+insert⁻¹ {y ∷ .(x₁ ∷ xs)} {x₁ ∷ xs} {.y} (here refl) = here refl
+insert⁻¹ {y ∷ ys} {x₁ ∷ xs} {x} (there p) = there (insert⁻¹ (proj₂ (tail-lem p)))
+
+
+insertInAll⁻¹ : {ls : List (List A)}{l : List A}{x : A} → l ∈ insert x everywhereInAll ls → x ∈ l
+insertInAll⁻¹ {ls} {[]} {x} p = ⊥-elim (¬[]∈insertAll{ls} p)
+insertInAll⁻¹ {l ∷ ls} {y ∷ ys} {x} p with (∈++→∈⊎{ll = insert x everywhereIn l} p)
+...| inj₁ v = insert⁻¹{y ∷ ys} v
+...| inj₂ v = insertInAll⁻¹{ls} v
+
+
+-- allPerms-head⁻¹ : {ls : List (List A)}{l : List A}{x : A} → l ∈ allPermutations(x +∷ ls) → x ∈ l
+-- allPerms-head⁻¹ {[]} (here refl) = here refl
+-- allPerms-head⁻¹ {l' ∷ ls}{l}{x} p with (∈++→∈⊎{ll = permutations (x ∷ l')} p)
+-- -- permutations (x ∷ l') = insert a everywhereInAll (permutations as)
+-- ...| inj₁ v = {!!}
+-- ...| inj₂ v = {!!}
+
+
 --------------------------------------
 ------- properties of sublists -------
 --------------------------------------
@@ -207,6 +248,21 @@ sublists-head∈ : {l xs : List A}{x : A} → x ∷ xs ∈ sublists l → x ∈ 
 sublists-head∈ {y ∷ ys} xxs∈ with (∈++→∈⊎{ll = y +∷ sublists ys} xxs∈)
 ...| inj₁ v = here (∈+∷→head≡ v)
 ...| inj₂ v = there (sublists-head∈ v)
+
+sublists-head∈-contra : {l xs : List A}{x : A} → ¬ x ∈ l → ¬ x ∷ xs ∈ sublists l
+sublists-head∈-contra ¬x∈l xxs∈sl = ¬x∈l (sublists-head∈ xxs∈sl)
+
++∷sublists : {l xs : List A}{x : A}
+  → l ∈ x +∷ sublists xs → ¬ x ∈ xs
+  → l ∈ sublists (x ∷ xs) × ¬ l ∈ sublists xs
+
++∷sublists {[]} []∈ _ = ⊥-elim (¬[]∈+∷ []∈)
++∷sublists {y ∷ ys} {xs} l∈ ¬x∈ = ∈++ˡ l∈ , ii
+  where
+  ii : ¬ y ∷ ys ∈ sublists xs
+  ii = subst (λ u → ¬ (u ∷ ys) ∈ sublists xs) (sym (∈+∷→head≡ l∈))
+       (sublists-head∈-contra ¬x∈)
+
 
 sublists-tail∈ : {l zs : List A}{x z : A} → x ∷ z ∷ zs ∈ sublists l → z ∷ zs ∈ sublists l
 sublists-tail∈ {y ∷ ys} {zs} {x}{z} x∈ with (∈++→∈⊎{ll = y +∷ sublists ys} x∈)
@@ -269,6 +325,11 @@ perm-head {y ∷ ys}{x} = trans (insertInAll-head'{ls = permutations (y ∷ ys)}
 ∈-allPerm++ʳ {[]} xs∈allPerm = xs∈allPerm
 ∈-allPerm++ʳ {ls ∷ ls₁} xs∈allPerm = ∈++ʳ {ll = permutations ls}(∈-allPerm++ʳ{ll = ls₁} xs∈allPerm)
 
+-- allPermutations (x +∷ ls)
+-- = insert x everywhereInAll (allPermutations (ls))
+-- +∷-allPerm : {ll lr : List (List A)}{xs : List A} → allPermutations (x +∷ ls) → xs ∈ allPermutations (ll ++ lr)
+
+
 distrib-allPerms : {ll lr : List (List A)}{l : List A}
   → l ∈ allPermutations (ll ++ lr) ⇔ l ∈ (allPermutations ll) ++ (allPermutations lr)
 distrib-allPerms {[]} = mk⇔ id id
@@ -296,12 +357,34 @@ distrib-allPerms {xs ∷ xss} {ys} {l} = mk⇔ i ii
 ------- properties of subpermutations --------
 ----------------------------------------------
 
-subperm-head∈ : {xs l : List A}{x : A} → (x ∷ xs) ∈ subpermutations l → x ∈ l
-subperm-head∈ {xs} {[]} p = ⊥-elim (¬Any[] p)
-subperm-head∈ {xs} {y ∷ ys} {x} p with (∈++→∈⊎{ll = allPermutations (y +∷ sublists ys)} (to (distrib-allPerms{ll = (y +∷ sublists ys)}) p))
-...| inj₁ v = {!!}
-...| inj₂ v = {!!}
+¬[]∈subpermutations : {l : List A} → ¬ [] ∈ subpermutations l
+¬[]∈subpermutations {[]} = λ ()
+¬[]∈subpermutations {x ∷ xs} p = ¬[]∈allPermutations{ls = (x +∷ sublists xs ++ sublists xs)} p
 
+subperm-trans : {xs ys zs : List A} → xs ∈ subpermutations ys → ys ∈ subpermutations zs → xs ∈ subpermutations zs
+subperm-trans {[]} {y ∷ ys} {zs} []∈ ys∈ = ⊥-elim (¬[]∈subpermutations{y ∷ ys} []∈)
+subperm-trans {x ∷ xs} {ys} {zs} xs∈ ys∈ = {!!}
+
+empty-tail∈ : {xs : List A}{x : A} → x ∷ [] ∈ subpermutations (x ∷ xs)
+empty-tail∈ = {!!}
+
+∈→empty-tail∈ : {xs l : List A}{x : A} → (x ∷ xs) ∈ subpermutations l → (x ∷ []) ∈ subpermutations l
+∈→empty-tail∈ {xs}{l}{x} xxs∈ = subperm-trans {xs = x ∷ []} {ys = x ∷ xs} {zs = l} (empty-tail∈{xs}) xxs∈
+
+ν : {ys : List A}{x y : A} → x ∷ [] ∈ allPermutations (y +∷ sublists ys)
+  → ¬ x ≡ y → x ∷ [] ∈ allPermutations (sublists ys)
+ν {ys} p ¬x≡y = ⊥-elim {!!}
+
+ν' : {xs ys : List A}{x y : A} → x ∷ [] ∈ subpermutations (y ∷ ys) → ¬ x ≡ y → x ∷ [] ∈ subpermutations ys
+ν' {xs}{ys}{x}{y} p ¬x≡y with (∈++→∈⊎{ll = allPermutations (y +∷ sublists ys)} (to (distrib-allPerms{ll = (y +∷ sublists ys)}) p))
+...| inj₁ v = ν{ys} v ¬x≡y
+...| inj₂ v = v
+
+module _ ⦃ _ : DecEq A ⦄ where
+  subperm-head∈ : {xs l : List A}{x : A} → (x ∷ xs) ∈ subpermutations l → x ∈ l
+  subperm-head∈ {xs} {y ∷ ys} {x} p with (x ≟ y)
+  ...| yes x≡y = here x≡y
+  ...| no ¬x≡y = there (subperm-head∈ ((ν'{xs}{ys} (∈→empty-tail∈{l = y ∷ ys} p)) ¬x≡y))
 
 tail∈subperm : {l xs : List A}{x : A} → (x ∷ xs) ∈ subpermutations l → xs ∈ subpermutations l
 tail∈subperm {[]} p = ⊥-elim (¬Any[] p)
@@ -339,13 +422,14 @@ Subperm→∈subperms {xs} ¬xs[] (_∷ʳ_ {ys = ys} y Sp) = (xs subperm y ∷ʳ
 Subperm→∈subperms x (_∷_ {xs = []} x∈ys Sp[]) = singleton∈subperm x∈ys
 Subperm→∈subperms ¬xzzs[] (_∷_ {x} {xs = z ∷ zs} x∈ys Sp) = (z ∷ zs) subperm x∈ys ∷ (Subperm→∈subperms (λ ()) Sp)
 
-∈subperms→Subperm : {xs L : List A}{x : A} → x ∷ xs ∈ subpermutations L → Subperm (x ∷ xs) L
-∈subperms→Subperm {[]} ∈spL = (subperm-head∈ ∈spL) ∷ Subperm[]
-∈subperms→Subperm {_ ∷ _} {L} ∈spL =
-  (subperm-head∈ ∈spL) ∷ (∈subperms→Subperm (tail∈subperm {l = L} ∈spL))
+module _ ⦃ _ : DecEq A ⦄ where
+  ∈subperms→Subperm : {xs L : List A}{x : A} → x ∷ xs ∈ subpermutations L → Subperm (x ∷ xs) L
+  ∈subperms→Subperm {[]} ∈spL = (subperm-head∈ ∈spL) ∷ Subperm[]
+  ∈subperms→Subperm {_ ∷ _} {L} ∈spL =
+    (subperm-head∈ ∈spL) ∷ (∈subperms→Subperm (tail∈subperm {l = L} ∈spL))
 
-Subperm⇔∈subperms : {xs L : List A}{x : A} → Subperm (x ∷ xs) L ⇔ (x ∷ xs) ∈ subpermutations L
-Subperm⇔∈subperms = mk⇔ (Subperm→∈subperms λ()) ∈subperms→Subperm
+  Subperm⇔∈subperms : {xs L : List A}{x : A} → Subperm (x ∷ xs) L ⇔ (x ∷ xs) ∈ subpermutations L
+  Subperm⇔∈subperms = mk⇔ (Subperm→∈subperms λ()) ∈subperms→Subperm
 
 
 module _ {l : List A}{P : Pred (List A) p} {xs : List A} {xss : List (List A)} where

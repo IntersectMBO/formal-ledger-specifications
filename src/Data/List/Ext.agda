@@ -4,6 +4,9 @@ module Data.List.Ext where
 open import Data.List using (List; [_]; _++_; map; head)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Relation.Unary.All using (All)
+-- open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist; _∷ʳ_)
+--   renaming (minimum to minˡ) -- using (drop-Sublist)
+
 open import Data.Maybe using (Maybe)
 open import Data.Nat using (ℕ)
 open import Function using (_∘_)
@@ -38,11 +41,24 @@ _+∷_ : A → List (List A) → List (List A)
 a +∷ [] = [ a ∷ [] ]
 a +∷ (l ∷ ls) = (a ∷ l) ∷ (a +∷ ls)
 
+-- alternative (though not equivalent to above def)
+-- _+∷_ : A → List (List A) → List (List A)
+-- a +∷ [] = [ a ∷ [] ]
+-- a +∷ ls = map (a ∷_) ls
+
 -- return the list of all sublists of a given list
 sublists : List A → List (List A)
 sublists [] = []
 sublists (x ∷ xs) = x +∷ sublists xs  -- sublists including x
                     ++ sublists xs     -- sublists omitting x
+-- sublists (x ∷ xs) = x +∷ sublists xs  -- sublists including x
+--                     ++ sublists xs     -- sublists omitting x
+
+
+-- data Sublist : REL (List A) (List B) (a ⊔ b ⊔ r) where
+--   []   : Sublist [] []
+--   _∷ʳ_ : ∀ {xs ys} → ∀ y → Sublist xs ys → Sublist xs (y ∷ ys)
+--   _∷_  : ∀ {x xs y ys} → R x y → Sublist xs ys → Sublist (x ∷ xs) (y ∷ ys)
 
 -- insert a at each index of the given list
 insert_everywhereIn : A → List A → List (List A)
@@ -76,5 +92,4 @@ allPermutations (l ∷ ls) = permutations l ++ allPermutations ls
 
 -- return all permutations of every sublist of the given list
 subpermutations : List A → List (List A)
-subpermutations [] = []
 subpermutations l = allPermutations (sublists l)
