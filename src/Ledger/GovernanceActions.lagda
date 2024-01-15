@@ -108,7 +108,7 @@ threshold pp ccThreshold' = λ where
       nothing              → ∣ noVote            ∣ vote P2b     ∣ vote Q2b     ∣
     (NewConstitution _ _)  → ∣ vote ccThreshold  ∣ vote P3      ∣ noVote       ∣
     (TriggerHF _)          → ∣ vote ccThreshold  ∣ vote P4      ∣ vote Q4      ∣
-    (ChangePParams x)      → ∣ vote ccThreshold  ∣ vote (P5 x)  ∣ noVote       ∣
+    (ChangePParams x)      → ∣ vote ccThreshold  ∣ (P5 x)       ∣ Q5 x         ∣
     (TreasuryWdrl _)       → ∣ vote ccThreshold  ∣ vote P6      ∣ noVote       ∣
     Info                   → ∣ vote defer        ∣ vote defer   ∣ vote defer   ∣
   where
@@ -116,25 +116,38 @@ threshold pp ccThreshold' = λ where
     open DrepThresholds drepThresholds
     open PoolThresholds poolThresholds
 
-    ccThreshold : ℚ
-    ccThreshold = case ccThreshold' of λ where
-      (just x)  → x
-      nothing   → defer   -- (defer > 1 ⇒ unreachable threshold ⇒ not yet enactable)
-
-    pparamThreshold : PParamGroup → ℚ
-    pparamThreshold NetworkGroup     = P5a
-    pparamThreshold EconomicGroup    = P5b
-    pparamThreshold TechnicalGroup   = P5c
-    pparamThreshold GovernanceGroup  = P5d
-
-    P5 : PParamsUpdate → ℚ
-    P5 ppu = maximum (mapˢ pparamThreshold (updateGroups ppu))
-
     noVote : Maybe ℚ
     noVote = nothing
 
     vote : ℚ → Maybe ℚ
     vote = just
+
+    ccThreshold : ℚ
+    ccThreshold = case ccThreshold' of λ where
+      (just x)  → x
+      nothing   → defer   -- (defer > 1 ⇒ unreachable threshold ⇒ not yet enactable)
+
+    pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
+    pparamThreshold NetworkGroup     = vote P5a  , noVote
+    pparamThreshold EconomicGroup    = vote P5b  , noVote
+    pparamThreshold TechnicalGroup   = vote P5c  , noVote
+    pparamThreshold GovernanceGroup  = vote P5d  , noVote
+    pparamThreshold SecurityGroup    = noVote    , vote Q5e
+
+    maxThreshold : ℙ (Maybe ℚ) → Maybe ℚ
+    maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
+      where
+        comb : Maybe ℚ → Maybe ℚ → Maybe ℚ
+        comb (just x) (just y) = just (x Data.Rational.⊔ y)
+        comb (just x) nothing  = just x
+        comb nothing  (just y) = just y
+        comb nothing  nothing  = nothing
+
+    P5 : PParamsUpdate → Maybe ℚ
+    P5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
+
+    Q5 : PParamsUpdate → Maybe ℚ
+    Q5 ppu = maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
 
 -- TODO: this doesn't actually depend on PParams so we could remove that
 --       argument, but we don't have a default ATM
@@ -227,11 +240,18 @@ voting power to vote on their own (and competing) actions.
 \label{sec:protocol-parameters-and-governance-actions}
 Recall from Section~\ref{sec:protocol-parameters}, parameters used in the Cardano ledger are grouped according to
 the general purpose that each parameter serves (see Figure~\ref{fig:protocol-parameter-declarations}).
-Specifically, we have \NetworkGroup, \EconomicGroup, \TechnicalGroup, and \GovernanceGroup.
+Specifically, we have \NetworkGroup, \EconomicGroup, \TechnicalGroup and \GovernanceGroup.
+There is also a \SecurityGroup, which has a special purpose. Every protocol parameter belongs
+to one of the regular groups, and it also may or may not belong to the \SecurityGroup.
 This allows voting/ratification thresholds to be set by group, though we do not require that each protocol
 parameter governance action be confined to a single group. In case a governance action carries updates
 for multiple parameters from different groups, the maximum threshold of all the groups involved will
 apply to any given such governance action.
+
+The purpose of the \SecurityGroup is to add an additional check to
+security-relevant protocol parameters. Any proposal that includes a
+change to a security-relevant protocol parameter must also be accepted
+by at least half of the SPO stake.
 
 \subsection{Enactment}
 \label{sec:enactment}
