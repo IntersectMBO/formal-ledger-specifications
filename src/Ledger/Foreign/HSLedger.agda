@@ -390,7 +390,7 @@ instance
         { P1  = ½ ; P2a = ½ ; P2b = ½ ; P3  = ½ ; P4 = ½
         ; P5a = ½ ; P5b = ½ ; P5c = ½ ; P5d = ½ ; P6 = ½}
       ; poolThresholds    = record
-        { Q1 = ½ ; Q2a = ½ ; Q2b = ½ ; Q4 = ½ }
+        { Q1 = ½ ; Q2a = ½ ; Q2b = ½ ; Q4 = ½ ; Q5e = ½ }
       ; govActionLifetime           = govActionLifetime
       ; govActionDeposit            = govActionDeposit
       ; drepDeposit                 = drepDeposit
