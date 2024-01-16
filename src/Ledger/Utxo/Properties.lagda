@@ -393,26 +393,33 @@ module DepositHelpers
       ∎ where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
 
   rearrange0 :
-      deposits' ≡ updateDeposits pp txb deposits
-    → txfee + txdonation + (tot + remDepTot) + fees
-    ≡ fees + txfee + getCoin deposits' + txdonation
-  rearrange0 h = begin
-    txfee + txdonation + (tot + remDepTot) + fees
-      ≡⟨ +-comm _ fees ⟩
-    fees ℕ.+ (txfee ℕ.+ txdonation ℕ.+ (tot ℕ.+ remDepTot))
+      (bal : ℕ)
+    → deposits' ≡ updateDeposits pp txb deposits
+    → bal + txfee + txdonation + tot + (remDepTot + fees)
+    ≡ bal + (fees + txfee + getCoin deposits' + txdonation)
+  rearrange0 bal h = begin
+    bal ℕ.+ txfee ℕ.+ txdonation ℕ.+ tot ℕ.+ (remDepTot ℕ.+ fees)
       ≡t⟨⟩
-    (fees ℕ.+ txfee) ℕ.+ (txdonation ℕ.+ (tot ℕ.+ remDepTot))
-      ≡⟨ cong ((fees + txfee) +_) $ +-comm txdonation (tot + remDepTot) ⟩
-    (fees + txfee) ℕ.+ ((tot + remDepTot) ℕ.+ txdonation)
-      ≡t⟨⟩
-    (fees + txfee) ℕ.+ (tot + remDepTot) ℕ.+ txdonation
-      ≡⟨ cong (λ x → (fees + txfee) + x + txdonation)
-       $ begin tot + (dep - ref) ≡˘⟨ +-∸-assoc tot ref≤dep ⟩
-               (tot + dep) - ref ≡⟨ cong (_- ref) $ +-comm tot dep ⟩
-               (dep + tot) - ref ≡˘⟨ deposits-change ⟩
-               uDep              ≡⟨ cong getCoin $ sym h ⟩
-               getCoin deposits' ∎ ⟩
-    (fees + txfee) + getCoin deposits' + txdonation
+    bal ℕ.+ (txfee ℕ.+ txdonation ℕ.+ (tot ℕ.+ remDepTot) ℕ.+ fees)
+      ≡⟨ cong (bal +_) $ begin
+        txfee + txdonation + (tot + remDepTot) + fees
+          ≡⟨ +-comm _ fees ⟩
+        fees ℕ.+ (txfee ℕ.+ txdonation ℕ.+ (tot ℕ.+ remDepTot))
+          ≡t⟨⟩
+        (fees ℕ.+ txfee) ℕ.+ (txdonation ℕ.+ (tot ℕ.+ remDepTot))
+          ≡⟨ cong ((fees + txfee) +_) $ +-comm txdonation (tot + remDepTot) ⟩
+        (fees + txfee) ℕ.+ ((tot + remDepTot) ℕ.+ txdonation)
+          ≡t⟨⟩
+        (fees + txfee) ℕ.+ (tot + remDepTot) ℕ.+ txdonation
+          ≡⟨ cong (λ x → (fees + txfee) + x + txdonation)
+          $ begin tot + (dep - ref) ≡˘⟨ +-∸-assoc tot ref≤dep ⟩
+                  (tot + dep) - ref ≡⟨ cong (_- ref) $ +-comm tot dep ⟩
+                  (dep + tot) - ref ≡˘⟨ deposits-change ⟩
+                  uDep              ≡⟨ cong getCoin $ sym h ⟩
+                  getCoin deposits' ∎ ⟩
+        (fees + txfee) + getCoin deposits' + txdonation
+          ∎ ⟩
+    bal + ((fees + txfee) + getCoin deposits' + txdonation)
       ∎
 
   utxo-ref-prop' :
@@ -496,7 +503,7 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations}
        $ begin
           cbalance utxo ℕ.+ fees ℕ.+ dep
             ≡tˡ⟨ cong (cbalance utxo ℕ.+_) $ +-comm fees dep ⟩
-          cbalance utxo + (dep + fees)
+          cbalance utxo ℕ.+ (dep ℕ.+ fees)
             ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) $ m+[n∸m]≡n ref≤dep ⟩
           cbalance utxo ℕ.+ ((ref ℕ.+ remDepTot) ℕ.+ fees)
             ≡t⟨⟩
@@ -504,10 +511,7 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations}
             ≡⟨ cong (_+ (remDepTot + fees)) utxo-ref-prop ⟩
           (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) ℕ.+ txfee)
             ℕ.+ txdonation ℕ.+ tot ℕ.+ (remDepTot ℕ.+ fees)
-            ≡t⟨⟩
-          cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
-            ℕ.+ (txfee ℕ.+ txdonation ℕ.+ (tot ℕ.+ remDepTot) ℕ.+ fees)
-            ≡⟨ cong (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) +_) $ rearrange0 refl ⟩
+            ≡⟨ rearrange0 (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)) refl ⟩
           cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
             + ((fees + txfee) + getCoin deposits' + txdonation)
             ∎ ⟩
