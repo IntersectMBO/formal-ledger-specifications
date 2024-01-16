@@ -17,6 +17,17 @@ data Subperm : Rel (List A) a where
   _∷ʳ_ : ∀ {xs ys} → ∀ y → Subperm xs ys → Subperm xs (y ∷ ys)
   _∷_ : ∀ {x xs ys} → x ∈ ys → Subperm xs ys → Subperm (x ∷ xs) ys
 
+-- counterexample to third constructor:
+-- Let xs = ys = 1 ∷ [] and let x = 1.
+-- Then x ∈ ys (i.e., 1 ∈ 1 ∷ []) and Subperm xs ys ought to hold (i.e., Subperm (1 ∷ []) (1 ∷ [])
+-- Subperm (x ∷ xs) ys = Subperm (1 ∷ 1 ∷ []) (1 ∷ []) ought not hold.
+--
+-- However, we do have (1 ∷ 1 ∷ []) ⊆ (1 ∷ []), so we should think of Subperm less strictly.
+--
+-- The problem is we want x ∈ ys → xs ∈ subpermutations ys → (x ∷ xs) ∈ subpermutations ys, but that
+-- won't hold in general.
+
+
 Subperms : List A → Pred (List A) a
 Subperms l = λ x → Subperm x l
 

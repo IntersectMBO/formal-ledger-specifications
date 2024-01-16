@@ -5,7 +5,7 @@ open import Prelude hiding (lookup)
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
-open import Data.List.Ext using (sublists; permutations; allPermutations; subpermutations; _⊆_; _+∷_)
+open import Data.List.Ext -- using (sublists; permutations; allPermutations; subpermutations; _⊆_; _+∷_)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties
   using (∈-deduplicate⁻; ∈-deduplicate⁺; ∈-++⁻; ∈-++⁺ˡ; ∈-++⁺ʳ)
@@ -38,6 +38,10 @@ module _ {a}{A : Set a} where
   addhead⊆ All.[] = All.[]
   addhead⊆ (px All.∷ pxs) = there px All.∷ addhead⊆ pxs
 
+  drophead⊆ : {xs ys : List A}{x : A} → (x ∷ xs) ⊆ ys → xs ⊆ ys
+  drophead⊆ (here refl All.∷ p) = p
+  drophead⊆ (there px All.∷ p) = p
+
   ⊆-id : {l : List A} → l ⊆ l
   ⊆-id {[]} = All.[]
   ⊆-id {x ∷ xs} = All._∷_ (here refl) (addhead⊆ ⊆-id)
@@ -61,12 +65,20 @@ module _ {a}{A : Set a} where
   ∈⊆→∈ (there x∈l) l⊆l' = ∈⊆→∈ x∈l (proj₂ (to ⊆⇔head∈tail⊆ l⊆l'))
     where open Equivalence
 
-  toAny : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l → Any (_≡_ x) l
+  toAny : {x : A}{xs l : List A} → (x ∷ xs) ⊆ l → x ∈ l
   toAny (here refl All.∷ p) = here refl
   toAny (there px All.∷ p) = there px
 
-  fromAny : {x : A}{l : List A} → Any (_≡_ x) l → [ x ] ⊆ l
+  fromAny : {x : A}{l : List A} → x ∈ l → [ x ] ⊆ l
   fromAny p = p All.∷ All.[]
+
+  ∷⁻¹ : ∀ {xs ys}{x : A} → (x ∷ xs) ⊆ ys → x ∈ ys × xs ⊆ ys
+  ∷⁻¹ (px All.∷ p) = px , p
+
+  ∷curry : ∀ {xs ys}{x : A} → x ∈ ys × xs ⊆ ys → (x ∷ xs) ⊆ ys
+  ∷curry (x∈ys , xs⊆ys) = x∈ys All.∷ xs⊆ys
+
+
 
   -- TODO: Prove the following to finish `allEnactable?` in `Ledger.Gov`.
 
@@ -151,6 +163,12 @@ _ = refl
 _ : 1 ∷ [] ∈ 1 +∷ sublists (2 ∷ 3 ∷ [])
 _ = there (there (there (here refl)))
 
+_ : properSublists (1 ∷ []) ≡ []
+_ = refl
+
+_ : properSublists (1 ∷ 2 ∷ []) ≡ (1 ∷ []) ∷ (2 ∷ []) ∷ []
+_ = refl
+
 _ : permutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ []
 _ = refl
 
@@ -170,6 +188,12 @@ _ : allPermutations ((1 ∷ 2 ∷ 3 ∷ []) ∷ (4 ∷ 5 ∷ []) ∷ []) ≡ (1 
 _ = refl
 
 _ : subpermutations{A = ℕ} [] ≡ []
+_ = refl
+
+_ : subpermutations (1 ∷ []) ≡ (1 ∷ []) ∷ []
+_ = refl
+
+_ : subpermutations (1 ∷ 1 ∷ []) ≡ (1 ∷ 1 ∷ []) ∷ (1 ∷ 1 ∷ []) ∷ (1 ∷ []) ∷ (1 ∷ []) ∷ []
 _ = refl
 
 _ : subpermutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ []
