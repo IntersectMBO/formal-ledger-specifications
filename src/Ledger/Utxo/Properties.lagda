@@ -352,6 +352,19 @@ module DepositHelpers
     (dep + tot) ⊖ ref                         ≡⟨ ℤ.⊖-≥ (m≤n⇒m≤n+o tot ref≤dep) ⟩
     ℤ.+_ (dep + tot - ref) ∎
 
+  split-balance : ∀ keys → cbalance utxo ≡ cbalance (utxo ∣ keys ᶜ) + cbalance (utxo ∣ keys)
+  split-balance keys = begin
+                      cbalance utxo
+                        ≡˘⟨ balance-cong-coin {utxo = (utxo ∣ keys ᶜ) ∪ˡ (utxo ∣ keys)}{utxo}
+                          $ disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
+                          ≡ᵉ-∘ ∪-sym
+                          ≡ᵉ-∘ res-ex-∪ (_∈? keys) ⟩
+                      cbalance ((utxo ∣ keys ᶜ) ∪ˡ (utxo ∣ keys))
+                        ≡⟨ balance-∪ {utxo ∣ keys ᶜ} {utxo ∣ keys} $ flip res-ex-disjoint ⟩
+                      cbalance (utxo ∣ keys ᶜ) + cbalance (utxo ∣ keys)
+                        ∎
+    where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
+
   module _ (balanceUtxo balanceIns balanceNoIns balanceOuts balanceUtxo' : Coin)
            (ref txfee txdonation tot : Coin)
            (splitUtxo : balanceUtxo ≡ balanceNoIns + balanceIns)
@@ -390,19 +403,9 @@ module DepositHelpers
                     (cbalance (outs txb))
                     (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb))
                     ref txfee txdonation tot
-                    (begin
-                      cbalance utxo
-                        ≡˘⟨ balance-cong-coin {utxo = (utxo ∣ txins ᶜ) ∪ˡ (utxo ∣ txins)}{utxo}
-                          $ disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
-                          ≡ᵉ-∘ ∪-sym
-                          ≡ᵉ-∘ res-ex-∪ (_∈? txins) ⟩
-                      cbalance ((utxo ∣ txins ᶜ) ∪ˡ (utxo ∣ txins))
-                        ≡⟨ balance-∪ {utxo ∣ txins ᶜ} {utxo ∣ txins} $ flip res-ex-disjoint ⟩
-                      cbalance (utxo ∣ txins ᶜ) + cbalance (utxo ∣ txins)
-                        ∎)
+                    (split-balance txins)
                     (balance-∪ {utxo ∣ txins ᶜ} {outs txb} h)
                     (balValueToCoin {txb} {utxoSt} {UTxOEnv.pparams Γ} noMintAda newBal)
-    where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
 
   rearrange0 :
       (bal : ℕ)
@@ -434,20 +437,55 @@ module DepositHelpers
     bal + ((fees + txfee) + getCoin deposits' + txdonation)
       ∎
 
-  utxo-ref-prop' :
-    cbalance utxo ≡
-    cbalance (utxo ∣ collateral ᶜ) + cbalance (utxo ∣ collateral)
-  utxo-ref-prop' = begin
-    cbalance utxo
-      ≡˘⟨ balance-cong-coin {utxo = (utxo ∣ collateral ᶜ) ∪ˡ (utxo ∣ collateral)}{utxo}
-          $    disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
-          ≡ᵉ-∘ ∪-sym
-          ≡ᵉ-∘ res-ex-∪ (_∈? collateral) ⟩
-    cbalance ((utxo ∣ collateral ᶜ) ∪ˡ (utxo ∣ collateral))
-      ≡⟨ (balance-∪ {utxo ∣ collateral ᶜ} {utxo ∣ collateral}
-         $ flip res-ex-disjoint) ⟩
-    cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral))
-      ∎ where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
+  module _ (balanceUtxo balanceUtxo' : Coin)
+           (ref-prop : balanceUtxo + ref ≡ balanceUtxo' + txfee + txdonation + tot)
+           (h : deposits' ≡ updateDeposits pp txb deposits)
+           where
+
+    pov-scripts-worker : balanceUtxo + fees + dep + donations ≡
+                         balanceUtxo' + (fees + txfee) + getCoin deposits' + (donations + txdonation)
+    pov-scripts-worker = begin
+      balanceUtxo + fees + dep + donations
+        ≡⟨ cong (_+ donations)
+        $ begin
+            balanceUtxo ℕ.+ fees ℕ.+ dep
+              ≡tˡ⟨ cong (balanceUtxo ℕ.+_) $ +-comm fees dep ⟩
+            balanceUtxo ℕ.+ (dep ℕ.+ fees)
+              ≡˘⟨ cong (λ x → balanceUtxo + (x + fees)) $ m+[n∸m]≡n ref≤dep ⟩
+            balanceUtxo ℕ.+ ((ref ℕ.+ remDepTot) ℕ.+ fees)
+              ≡t⟨⟩
+            balanceUtxo ℕ.+ ref ℕ.+ (remDepTot ℕ.+ fees)
+              ≡⟨ cong (_+ (remDepTot + fees)) ref-prop ⟩
+            (balanceUtxo' ℕ.+ txfee) ℕ.+ txdonation ℕ.+ tot ℕ.+ (remDepTot ℕ.+ fees)
+              ≡⟨ rearrange0 (balanceUtxo') h ⟩
+            balanceUtxo' + (fees + txfee + getCoin deposits' + txdonation)
+              ∎ ⟩
+      balanceUtxo' ℕ.+ (fees + txfee ℕ.+ getCoin deposits' ℕ.+ txdonation) ℕ.+ donations
+        ≡t⟨⟩
+      balanceUtxo' ℕ.+ (fees + txfee) ℕ.+ getCoin deposits' ℕ.+ (txdonation ℕ.+ donations)
+        ≡⟨ cong (balanceUtxo' + (fees + txfee) + getCoin deposits' ℕ.+_)
+         $ +-comm txdonation donations ⟩
+      balanceUtxo' + (fees + txfee) + getCoin deposits' + (donations + txdonation)
+        ∎
+
+  pov-scripts : deposits' ≡ updateDeposits pp txb deposits
+              → cbalance utxo + fees + dep + donations
+                 ≡ cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
+                   + (fees + txfee) + getCoin deposits' + (donations + txdonation)
+  pov-scripts h = pov-scripts-worker (cbalance utxo) (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb))
+                                     utxo-ref-prop h
+
+  pov-no-scripts : cbalance utxo + fees + dep + donations ≡
+                   cbalance (utxo ∣ collateral ᶜ) + (fees + cbalance (utxo ∣ collateral)) + dep + donations
+  pov-no-scripts = cong (λ x → x + dep + donations) $ begin
+    cbalance utxo ℕ.+ fees
+      ≡⟨ cong (_+ fees) (split-balance collateral) ⟩
+    cbalance (utxo ∣ collateral ᶜ) ℕ.+ cbalance (utxo ∣ collateral) ℕ.+ fees
+      ≡t⟨⟩
+    cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ fees)
+      ≡⟨ cong (cbalance (utxo ∣ collateral ᶜ) +_) (+-comm _ fees) ⟩
+    cbalance (utxo ∣ collateral ᶜ) ℕ.+ (fees ℕ.+ cbalance (utxo ∣ collateral))
+      ∎
 \end{code}
 
 Here, we state the fact that the UTxO relation is computable.
@@ -498,61 +536,11 @@ then
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
     {deposits' = deposits'} h'
     step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ (Scripts-Yes _)) =
-  let open Tx tx renaming (body to txb); open TxBody txb
-      h : disjoint (dom (utxo ∣ txins ᶜ)) (dom (outs txb))
-      h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {txb = txb} {utxo} h')
-                  $ to ∈-∩ (res-comp-domᵐ h₁ , h₂)
-      utxoSt = ⟦ utxo , fees , deposits , donations ⟧ᵘ
-      pp = UTxOEnv.pparams Γ
-      ref = depositRefunds pp utxoSt txb
-      tot = newDeposits pp utxoSt txb
-      dep = getCoin deposits
-      remDepTot = getCoin deposits - ref
-      open DepositHelpers step h'
-  in begin
-    cbalance utxo + fees + dep + donations
-      ≡⟨ cong (_+ donations)
-       $ begin
-          cbalance utxo ℕ.+ fees ℕ.+ dep
-            ≡tˡ⟨ cong (cbalance utxo ℕ.+_) $ +-comm fees dep ⟩
-          cbalance utxo ℕ.+ (dep ℕ.+ fees)
-            ≡˘⟨ cong (λ x → cbalance utxo + (x + fees)) $ m+[n∸m]≡n ref≤dep ⟩
-          cbalance utxo ℕ.+ ((ref ℕ.+ remDepTot) ℕ.+ fees)
-            ≡t⟨⟩
-          cbalance utxo ℕ.+ ref ℕ.+ (remDepTot ℕ.+ fees)
-            ≡⟨ cong (_+ (remDepTot + fees)) utxo-ref-prop ⟩
-          (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) ℕ.+ txfee)
-            ℕ.+ txdonation ℕ.+ tot ℕ.+ (remDepTot ℕ.+ fees)
-            ≡⟨ rearrange0 (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)) refl ⟩
-          cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
-            + ((fees + txfee) + getCoin deposits' + txdonation)
-            ∎ ⟩
-    cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
-      ℕ.+ ((fees + txfee) ℕ.+ getCoin deposits' ℕ.+ txdonation) ℕ.+ donations
-      ≡t⟨⟩
-    cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
-      ℕ.+ (fees + txfee) ℕ.+ getCoin deposits' ℕ.+ (txdonation ℕ.+ donations)
-      ≡⟨ cong (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
-                + (fees + txfee) + getCoin deposits' ℕ.+_)
-       $ +-comm txdonation donations ⟩
-    cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
-      + (fees + txfee) + getCoin deposits' + (donations + txdonation)
-      ∎
+  DepositHelpers.pov-scripts step h' refl
 
 pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
     step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
-  let open Tx tx renaming (body to txb); open TxBody txb
-      dep = getCoin deposits
-      open DepositHelpers step h'
-  in cong (λ x → x + dep + donations) $ begin
-       cbalance utxo ℕ.+ fees
-         ≡⟨ cong (_+ fees) utxo-ref-prop' ⟩
-       cbalance (utxo ∣ collateral ᶜ) ℕ.+ cbalance (utxo ∣ collateral) ℕ.+ fees
-         ≡t⟨⟩
-       cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ fees)
-         ≡⟨ cong (cbalance (utxo ∣ collateral ᶜ) +_) (+-comm _ fees) ⟩
-       cbalance (utxo ∣ collateral ᶜ) ℕ.+ (fees ℕ.+ cbalance (utxo ∣ collateral))
-         ∎
+  DepositHelpers.pov-no-scripts step h'
 \end{code}
 
 \end{property}
