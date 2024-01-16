@@ -60,14 +60,14 @@ instance
           (_     , _    ) → failure "isValid check failed"
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
-      completeness _ (Scripts-Yes p) rewrite dec-yes H-Yes? p .proj₂ with H-No?
-      ... | no            _ = refl
-      ... | yes (p₁ , refl) with proj₂ p
-      ... | ()
-      completeness _ (Scripts-No p) rewrite dec-yes H-No? p .proj₂ with H-Yes?
-      ... | no            _ = refl
-      ... | yes (p₁ , refl) with proj₂ p
-      ... | ()
+      completeness _ (Scripts-Yes p) with H-No? | H-Yes?
+      ... | yes (_ , refl) | _     = case proj₂ p of λ ()
+      ... | no _           | yes _ = refl
+      ... | no _           | no ¬p = case ¬p p of λ ()
+      completeness _ (Scripts-No p) with H-Yes? | H-No?
+      ... | yes (_ , refl) | _     = case proj₂ p of λ ()
+      ... | no _           | yes _ = refl
+      ... | no _           | no ¬p = case ¬p p of λ ()
 
 instance
   Computational-UTXO' : Computational _⊢_⇀⦇_,UTXO⦈_ String
