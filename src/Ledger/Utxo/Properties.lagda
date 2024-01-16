@@ -352,45 +352,57 @@ module DepositHelpers
     (dep + tot) ⊖ ref                         ≡⟨ ℤ.⊖-≥ (m≤n⇒m≤n+o tot ref≤dep) ⟩
     ℤ.+_ (dep + tot - ref) ∎
 
+  module _ (balanceUtxo balanceIns balanceNoIns balanceOuts balanceUtxo' : Coin)
+           (ref txfee txdonation tot : Coin)
+           (splitUtxo : balanceUtxo ≡ balanceNoIns + balanceIns)
+           (splitUtxo' : balanceUtxo' ≡ balanceNoIns + balanceOuts)
+           (balanced : balanceIns + ref ≡ balanceOuts + txfee + tot + txdonation) where
+
+    utxo-ref-prop-worker :
+      balanceUtxo + ref ≡ balanceUtxo' + txfee + txdonation + tot
+    utxo-ref-prop-worker = begin
+      balanceUtxo + ref
+        ≡⟨ cong (_+ ref) splitUtxo ⟩
+      balanceNoIns ℕ.+ balanceIns ℕ.+ ref
+        ≡t⟨⟩
+      balanceNoIns ℕ.+ (balanceIns ℕ.+ ref)
+        ≡⟨ cong (balanceNoIns +_) balanced ⟩
+      balanceNoIns ℕ.+ (balanceOuts ℕ.+ txfee ℕ.+ tot ℕ.+ txdonation)
+        ≡t⟨⟩
+      (balanceNoIns ℕ.+ balanceOuts ℕ.+ txfee) ℕ.+ tot ℕ.+ txdonation
+        ≡˘⟨ cong (λ x → (x + txfee) + tot + txdonation) splitUtxo' ⟩
+      (balanceUtxo' ℕ.+ txfee) ℕ.+ tot ℕ.+ txdonation
+        ≡t⟨⟩
+      balanceUtxo' ℕ.+ txfee ℕ.+ (tot ℕ.+ txdonation)
+        ≡⟨ cong (balanceUtxo' + txfee +_) $ +-comm tot txdonation ⟩
+      balanceUtxo' ℕ.+ txfee ℕ.+ (txdonation ℕ.+ tot)
+        ≡t⟨⟩
+      (balanceUtxo' ℕ.+ txfee) ℕ.+ txdonation ℕ.+ tot
+        ∎
+
   utxo-ref-prop :
     cbalance utxo + ref ≡
-    (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) + txfee) + txdonation + tot
-  utxo-ref-prop = begin
-    cbalance utxo + ref
-      ≡˘⟨ cong (_+ ref)
-        $ balance-cong-coin {utxo = (utxo ∣ txins ᶜ) ∪ˡ (utxo ∣ txins)}{utxo}
-        $    disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
-        ≡ᵉ-∘ ∪-sym
-        ≡ᵉ-∘ res-ex-∪ (_∈? txins) ⟩
-    cbalance ((utxo ∣ txins ᶜ) ∪ˡ (utxo ∣ txins)) + ref
-      ≡⟨ cong (_+ ref)
-       $ balance-∪ {utxo ∣ txins ᶜ} {utxo ∣ txins}
-          $ flip res-ex-disjoint ⟩
-    cbalance (utxo ∣ txins ᶜ) ℕ.+ cbalance (utxo ∣ txins) ℕ.+ ref
-      ≡t⟨⟩
-    cbalance (utxo ∣ txins ᶜ) ℕ.+ (cbalance (utxo ∣ txins) ℕ.+ ref)
-      ≡⟨ cong (cbalance (utxo ∣ txins ᶜ) +_)
-       $ balValueToCoin {txb} {utxoSt} {UTxOEnv.pparams Γ} noMintAda newBal ⟩
-    cbalance (utxo ∣ txins ᶜ) ℕ.+ (cbalance (outs txb)
-      ℕ.+ txfee ℕ.+ tot ℕ.+ txdonation)
-      ≡t⟨⟩
-    (cbalance (utxo ∣ txins ᶜ) ℕ.+ cbalance (outs txb) ℕ.+ txfee)
-      ℕ.+ tot ℕ.+ txdonation
-      ≡˘⟨ cong (λ x → (x + txfee) + tot + txdonation)
-        $ balance-∪ {utxo ∣ txins ᶜ} {outs txb} h ⟩
-    (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) ℕ.+ txfee)
-      ℕ.+ tot ℕ.+ txdonation
-      ≡t⟨⟩
-    (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) ℕ.+ txfee)
-      ℕ.+ (tot ℕ.+ txdonation)
-      ≡⟨ cong ((cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) + txfee) +_)
-       $ +-comm tot txdonation ⟩
-    (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) ℕ.+ txfee)
-      ℕ.+ (txdonation ℕ.+ tot)
-      ≡t⟨⟩
-    (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) ℕ.+ txfee)
-      ℕ.+ txdonation ℕ.+ tot
-      ∎ where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
+    cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb) + txfee + txdonation + tot
+  utxo-ref-prop = utxo-ref-prop-worker
+                    (cbalance utxo)
+                    (cbalance (utxo ∣ txins))
+                    (cbalance (utxo ∣ txins ᶜ))
+                    (cbalance (outs txb))
+                    (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb))
+                    ref txfee txdonation tot
+                    (begin
+                      cbalance utxo
+                        ≡˘⟨ balance-cong-coin {utxo = (utxo ∣ txins ᶜ) ∪ˡ (utxo ∣ txins)}{utxo}
+                          $ disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
+                          ≡ᵉ-∘ ∪-sym
+                          ≡ᵉ-∘ res-ex-∪ (_∈? txins) ⟩
+                      cbalance ((utxo ∣ txins ᶜ) ∪ˡ (utxo ∣ txins))
+                        ≡⟨ balance-∪ {utxo ∣ txins ᶜ} {utxo ∣ txins} $ flip res-ex-disjoint ⟩
+                      cbalance (utxo ∣ txins ᶜ) + cbalance (utxo ∣ txins)
+                        ∎)
+                    (balance-∪ {utxo ∣ txins ᶜ} {outs txb} h)
+                    (balValueToCoin {txb} {utxoSt} {UTxOEnv.pparams Γ} noMintAda newBal)
+    where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
 
   rearrange0 :
       (bal : ℕ)
