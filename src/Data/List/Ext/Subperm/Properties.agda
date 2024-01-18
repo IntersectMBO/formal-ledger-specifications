@@ -254,9 +254,11 @@ module _ ⦃ _ : DecEq A ⦄ where
   subperm+newhead {[]} (here refl) ¬x∈xs = ⊥-elim (¬x∈xs (here refl))
   subperm+newhead {y ∷ ys} xs∈sp ¬x∈xs = subperm+head+{y ∷ ys} (subperm-head{y ∷ ys} xs∈sp ¬x∈xs)
 
-subperm+oldhead : {ys xs : List A}{x y : A} → xs ∈ subpermutations (y ∷ ys) → x ∈ ys → ¬ x ∈ xs
-                  → x ∷ xs ∈ subpermutations (y ∷ ys)
-subperm+oldhead {ys} {xs} {x} {y} xs∈sp x∈ys ¬x∈xs = {!!}
+  subperm+oldhead : {ys xs : List A}{x : A} → xs ∈ subpermutations ys → x ∈ ys → ¬ x ∈ xs
+                    → x ∷ xs ∈ subpermutations ys
+  subperm+oldhead {.(_ ∷ ys)} xs∈sp (here {xs = ys} refl) ¬x∈xs = subperm+newhead {ys = ys} xs∈sp ¬x∈xs
+  subperm+oldhead {.(y ∷ ys)} xs∈sp (there {y} {ys} x∈ys) ¬x∈xs = {!!}
+
 
 subpermhead∈generators : {ys xs : List A}{x : A} → (x ∷ xs) ∈ subpermutations ys → x ∈ ys
 subpermhead∈generators {y ∷ ys} {xs} {x} xs∈sp with (allPerm-++→⊎{ll = y +∷ sublists ys} xs∈sp)
@@ -264,7 +266,7 @@ subpermhead∈generators {y ∷ ys} {xs} {x} xs∈sp with (allPerm-++→⊎{ll =
 ...| inj₂ v = there (subpermhead∈generators v)
 
 subpermtail∈generators : {ys xs : List A}{x : A} → (x ∷ xs) ∈ subpermutations ys → All (_∈ ys) xs
-subpermtail∈generators {y ∷ ys} {[]} {x} xs∈sp = All.[]
+subpermtail∈generators {y ∷ ys} {[]} xs∈sp = All.[]
 subpermtail∈generators {y ∷ ys} {z ∷ xs} {x} xs∈sp = {!!}
 
 
@@ -281,7 +283,7 @@ module _ ⦃ _ : DecEq A ⦄ where
   ...| no ¬xs[] = subperm+newhead {ys} (⊆→subperm (drop⁺ 1 xsU) ysU xs⊆ys ¬xs[]) (all≢x→¬x∈ xsU)
   ⊆→subperm {x ∷ xs} {y ∷ ys} xxsU yysU (there px All.∷ xs⊆ys) _ with (xs ≟ [])
   ...| yes xs[] = singleton∈subperm' (there{xs = ys} px) xs[]
-  ...| no ¬xs[] = subperm+oldhead {ys} (⊆→subperm (drop⁺ 1 xxsU) yysU xs⊆ys ¬xs[]) px (all≢x→¬x∈ xxsU)
+  ...| no ¬xs[] = subperm+oldhead{ys = y ∷ ys} (⊆→subperm (drop⁺ 1 xxsU) yysU xs⊆ys ¬xs[]) (there px) (all≢x→¬x∈ xxsU)
 
   subperm→⊆ : {xs ys : List A} → Unique xs → Unique ys → xs ∈ subpermutations ys → xs ⊆ ys
   subperm→⊆ {[]} {ys} xsU ysU xs∈sp = ⊥-elim (¬[]∈subpermutations{l = ys} xs∈sp)
