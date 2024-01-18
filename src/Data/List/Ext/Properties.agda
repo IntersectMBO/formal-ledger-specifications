@@ -18,6 +18,7 @@ open import Data.List.Relation.Unary.AllPairs using (AllPairs)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (Any; here; there)
 open import Data.List.Relation.Unary.Any.Properties using (¬Any[])
+open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 
 open AllPairs
@@ -37,6 +38,22 @@ h ⊎-cong h' = (h M.⊎-cong h')
 All++ : ∀ {a p} {A : Set a} {P : Pred A p} {ll lr : List A} → All P ll → All P lr → All P (ll ++ lr)
 All++ {ll = .[]} All.[] h2 = h2
 All++ {ll = .(_ ∷ _)} (px All.∷ h1) h2 = px All.∷ (All++ h1 h2)
+
+imp→all : ∀ {a} {A : Set a} {ls : List (List A)}{y : A} → (∀ l → l ∈ ls → y ∈ l) → All (y ∈_ ) ls
+imp→all {ls = []} imph = All.[]
+imp→all {ls = l' ∷ ls} imph = (imph l' (here refl)) All.∷ (imp→all (λ l z → imph l (there z)))
+
+all→imp : ∀ {a} {A : Set a} {ls : List (List A)}{y : A} → All (y ∈_ ) ls → (∀ l → l ∈ ls → y ∈ l)
+all→imp {ls = .(l ∷ _)} (y∈l All.∷ y∈ls) l (here refl) = y∈l
+all→imp {ls = .(_ ∷ _)} (px All.∷ y∈all) l (there l∈ls) = all→imp y∈all l l∈ls
+
+all≢x→¬any≡x : ∀ {a} {A : Set a} {ys : List A}{x : A} → All (λ z → ¬ x ≡ z) ys → ¬ Any (λ z → x ≡ z) ys
+all≢x→¬any≡x (¬x≡y All.∷ all¬≡) (here x≡y) = ¬x≡y x≡y
+all≢x→¬any≡x (px All.∷ all¬≡) (there any≡) = all≢x→¬any≡x all¬≡ any≡
+
+all≢x→¬x∈ : ∀ {a} {A : Set a} {xs : List A}{x : A} → Unique (x ∷ xs) → ¬ x ∈ xs
+all≢x→¬x∈ (all¬≡x AllPairs.∷ _) x∈xs = all≢x→¬any≡x all¬≡x x∈xs
+
 
 module _ {a}{A : Set a} where
 
