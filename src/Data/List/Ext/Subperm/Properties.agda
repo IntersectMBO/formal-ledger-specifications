@@ -200,7 +200,6 @@ headInAll  {ls}  {y} imph p = all→imp (headInAll' (imp→all imph)) p
 permhead' : {ys : List A}{y : A} → All (y ∈_ ) (allPermutations (y +∷ sublists ys))
 permhead' {ys} {y} = headInAll'{ls = y +∷ sublists ys} +∷head∈all
 
-
 permhead : {ys : List A}{y : A} → ∀ l → l ∈ allPermutations(y +∷ sublists ys) → y ∈ l
 permhead {ys} {y} l l∈ = all→imp (permhead'{ys}) l l∈
 
@@ -259,6 +258,8 @@ module _ ⦃ _ : DecEq A ⦄ where
   subperm+oldhead {.(_ ∷ ys)} xs∈sp (here {xs = ys} refl) ¬x∈xs = subperm+newhead {ys = ys} xs∈sp ¬x∈xs
   subperm+oldhead {.(y ∷ ys)} xs∈sp (there {y} {ys} x∈ys) ¬x∈xs = {!!}
 
+drophead : {ys xs : List A} {x y z : A} → x ∷ z ∷ xs ∈ subpermutations (y ∷ ys) → z ∷ xs ∈ subpermutations (y ∷ ys)
+drophead = {!!}
 
 subpermhead∈generators : {ys xs : List A}{x : A} → (x ∷ xs) ∈ subpermutations ys → x ∈ ys
 subpermhead∈generators {y ∷ ys} {xs} {x} xs∈sp with (allPerm-++→⊎{ll = y +∷ sublists ys} xs∈sp)
@@ -267,7 +268,7 @@ subpermhead∈generators {y ∷ ys} {xs} {x} xs∈sp with (allPerm-++→⊎{ll =
 
 subpermtail∈generators : {ys xs : List A}{x : A} → (x ∷ xs) ∈ subpermutations ys → All (_∈ ys) xs
 subpermtail∈generators {y ∷ ys} {[]} xs∈sp = All.[]
-subpermtail∈generators {y ∷ ys} {z ∷ xs} {x} xs∈sp = {!!}
+subpermtail∈generators {y ∷ ys} {z ∷ xs} {x} xs∈sp = (subpermhead∈generators (drophead{ys} xs∈sp)) All.∷ subpermtail∈generators (drophead{ys} xs∈sp)
 
 
 -------------------------------------------------------------
