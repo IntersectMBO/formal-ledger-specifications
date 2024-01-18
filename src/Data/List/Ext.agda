@@ -47,6 +47,10 @@ sublists [] = []
 sublists (x ∷ xs) = x +∷ sublists xs  -- sublists including x
                     ++ sublists xs     -- sublists omitting x
 
+allSublists : List (List A) → List (List A)
+allSublists [] = []
+allSublists (l ∷ ls) = sublists l ++ allSublists ls
+
 -- return the list of all proper sublists of a given list
 properSublists : List A → List (List A)
 properSublists [] = []
@@ -68,6 +72,7 @@ headM (just l) = head l
 -- insert a at each index of each list of the given list of lists
 insert_everywhereInAll : A → List (List A) → List (List A)
 insert a everywhereInAll [] = []
+-- insert a everywhereInAll (l ∷ []) = (insert a everywhereIn l) ++ []
 insert a everywhereInAll (l ∷ ls) = (insert a everywhereIn l) ++ (insert a everywhereInAll ls)
 -- flatMap (insert a everywhereIn)
 
