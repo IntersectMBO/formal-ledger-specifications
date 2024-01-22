@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Data.List.Ext where
 
-open import Data.List using (List; [_]; _++_; map; head; drop)
+open import Data.List using (List; [_]; _++_; map; head; drop; concatMap)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Relation.Unary.All using (All)
 -- open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist; _∷ʳ_)
@@ -42,51 +42,67 @@ a +∷ [] = [ a ∷ [] ]
 a +∷ (l ∷ ls) = (a ∷ l) ∷ (a +∷ ls)
 
 -- return the list of all sublists of a given list
+-- sublists : List A → List (List A)
+-- sublists [] = []
+-- sublists (x ∷ xs) = x +∷ sublists xs  -- sublists including x
+--                     ++ sublists xs     -- sublists omitting x
+
 sublists : List A → List (List A)
-sublists [] = []
-sublists (x ∷ xs) = x +∷ sublists xs  -- sublists including x
-                    ++ sublists xs     -- sublists omitting x
+sublists [] = [ [] ]
+sublists (x ∷ xs) = map (x ∷_) (sublists xs) ++ sublists xs
+-- let subs = sublists xs
+--                      in subs ++ map (_∷_ x) subs
+
+-- concat : List (List A) → List A
+-- concat = foldr _++_ []
+
+-- concatMap : (A → List B) → List A → List B
+-- concatMap f = concat ∘ map f
 
 allSublists : List (List A) → List (List A)
-allSublists [] = []
+allSublists [] = [ [] ]
 allSublists (l ∷ ls) = sublists l ++ allSublists ls
 
--- return the list of all proper sublists of a given list
-properSublists : List A → List (List A)
-properSublists [] = []
-properSublists (x ∷ xs) = drop 1 (sublists (x ∷ xs))
-
--- insert a at each index of the given list
-insert_everywhereIn : A → List A → List (List A)
-insert a everywhereIn [] = [ a ] ∷ []
-insert a everywhereIn (x ∷ xs) = (a ∷ x ∷ xs) ∷ map (x ∷_) (insert a everywhereIn xs)
-
-insert_everywhereInM : A → Maybe (List A) → Maybe (List (List A))
-insert a everywhereInM nothing = nothing
-insert a everywhereInM (just l) = just (insert a everywhereIn l)
-
-headM : Maybe (List A) → Maybe A
-headM nothing = nothing
-headM (just l) = head l
+insert : A → List A → List (List A)
+insert x [] = (x ∷ []) ∷ []
+insert x (y ∷ ys) = (x ∷ y ∷ ys) ∷ map (y ∷_) (insert x ys)
 
 -- insert a at each index of each list of the given list of lists
-insert_everywhereInAll : A → List (List A) → List (List A)
-insert a everywhereInAll [] = []
--- insert a everywhereInAll (l ∷ []) = (insert a everywhereIn l) ++ []
-insert a everywhereInAll (l ∷ ls) = (insert a everywhereIn l) ++ (insert a everywhereInAll ls)
--- flatMap (insert a everywhereIn)
+insertInAll : A → List (List A) → List (List A)
+insertInAll a [] = [ [] ]
+insertInAll a ([] ∷ []) = [ [ a ] ]
+insertInAll a (l ∷ ls) = (insert a l) ++ (insertInAll a ls)
+
+-- flatMap : (A → List B) → List A → List B
+-- flatMap f [] = []
+-- flatMap f (x ∷ xs) = f x ++ flatMap f xs
 
 -- return all permutations of the given list
 permutations : List A → List (List A)
-permutations [] = []
-permutations (a ∷ []) = (a ∷ []) ∷ []
-permutations (a ∷ as) = insert a everywhereInAll (permutations as)
+permutations [] = [] ∷ []
+permutations (a ∷ as) = flatMap (insert a) (permutations as)
 
 -- return all permutations of every list in the given list of lists
 allPermutations : List (List A) → List (List A)
-allPermutations [] = []
+allPermutations [] = [ [] ]
 allPermutations (l ∷ ls) = permutations l ++ allPermutations ls
 
+
+subpermutations
+  subperm-incl-head
+  subperm-omit-head  : List A → List (List A)
+
+
+subperm-incl-head [] = [] ∷ []
+subperm-incl-head (x ∷ xs) = flatMap (insert x) (subpermutations xs)
+
+subperm-omit-head [] = [] ∷ []
+subperm-omit-head (x ∷ []) = [] ∷ []
+subperm-omit-head (x ∷ y ∷ zs) = subpermutations (y ∷ zs)
+
 -- return all permutations of every sublist of the given list
-subpermutations : List A → List (List A)
-subpermutations l = allPermutations (sublists l)
+-- subpermutations [] = [] ∷ []
+-- subpermutations (x ∷ xs) = subperm-incl-head (x ∷ xs) ++ subperm-omit-head (x ∷ xs)
+
+subpermutations [] = [] ∷ []
+subpermutations (x ∷ xs) = (flatMap (insert x) (subpermutations xs)) ++ subpermutations xs
