@@ -10,8 +10,8 @@ module Ledger.Ledger.Properties
   where
 
 open import Ledger.Deleg.Properties govStructure
-open import Ledger.Gov govStructure
-open import Ledger.Gov.Properties govStructure
+open import Ledger.Gov txs
+open import Ledger.Gov.Properties txs
 open import Ledger.Ledger txs abs
 open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs

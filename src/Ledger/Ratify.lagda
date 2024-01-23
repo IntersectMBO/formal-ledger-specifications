@@ -1,5 +1,26 @@
 \section{Ratification}
 \label{sec:ratification}
+\begin{code}[hide]
+{-# OPTIONS --safe #-}
+
+import Data.Integer as ℤ
+open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
+open import Data.Nat.Properties hiding (_≟_; _≤?_)
+open import Data.Nat.Properties.Ext
+
+open import Ledger.Prelude hiding (_∧_; _⊔_)
+open import Ledger.Transaction hiding (Vote)
+
+module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
+
+open import Ledger.GovernanceActions govStructure using (Vote)
+
+infixr 2 _∧_
+_∧_ = _×_
+
+instance
+  _ = +-0-commutativeMonoid
+\end{code}
 Governance actions are \defn{ratified} through on-chain voting actions.
 Different kinds of governance actions have different ratification requirements
 but always involve \textit{two of the three} governance bodies, with the exception
@@ -32,72 +53,124 @@ consequences in combination with other actions.
 
 \subsection{Ratification requirements}
 \label{sec:ratification-requirements}
-Figure~\ref{fig:ratification-requirements} details the ratification requirements for each
-governance action scenario. The columns represent
+Figure~\ref{fig:ratification-requirements} details the ratification
+requirements for each governance action scenario. The \threshold
+function is defined as a table, with a row for each type of \GovAction
+and the colums representing the \CC, \DRep and \SPO roles in that
+order.
+
+The symbols mean the following:
 \begin{itemize}
 \item
-  \GovAction: the action under consideration;
+  \AgdaFunction{vote} x: To pass the action, the \yes votes need to be over the threshold x.
 \item
-  \CC: a \ding{51} indicates that the constitutional committee must approve this action;
-  a - symbol means that constitutional committee votes do not apply;
+  \AgdaFunction{─}: The body of governance does not participate in voting.
 \item
-  \DRep: the vote threshold that must be met as a percentage of \totalStake;
+  \AgdaFunction{✓}: The constitutional committee needs to approve an action,
+  with the threshold assigned to it.
 \item
-  \SPO: the vote threshold that must be met as a percentage of the stake held by
-  all stake pools; a - symbol means that \SPO votes do not apply.
+  \AgdaFunction{✓†}: Voting is possible, but the action will never be enacted.
+  This is equivalent to \AgdaFunction{vote} 2 (or any other number above 1).
 \end{itemize}
-\begin{figure*}[h!]
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.65}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.11}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}@{}}
-\GovAction  & \CC  &  \DRep & \SPO \\
-\hline
-\endhead
-1. Motion of no-confidence & - & \Pone & \Qone \\
-2a. New committee/threshold (\emph{normal state}) & - & \Ptwoa & \Qtwoa \\
-2b. New committee/threshold (\emph{state of no-confidence}) & - & \Ptwob & \Qtwob \\
-3. Update to the Constitution & \ding{51} & \Pthree & - \\
-4. Hard-fork initiation & \ding{51} & \Pfour & \Qfour \\
-5a. Changes to protocol parameters in the \NetworkGroup & \ding{51} & \Pfivea & - \\
-5b. Changes to protocol parameters in the \EconomicGroup & \ding{51} & \Pfiveb & - \\
-5c. Changes to protocol parameters in the \TechnicalGroup & \ding{51} & \Pfivec & - \\
-5d. Changes to protocol parameters in the \GovernanceGroup & \ding{51} & \Pfived & - \\
-6. Treasury withdrawal & \ding{51} & \Psix & - \\
-7. Info & \ding{51} & \(100\) & \(100\) \\
-\end{longtable}
-\caption{Ratification requirements}
+
+There are two rows in this table which have a function computing the
+\DRep and \SPO thresholds simultaneously: the rows for \NewCommittee
+and \ChangePParams.
+
+For \NewCommittee, there can be different thresholds on whether the
+system is in a state of no-confidence or not. This information is
+provided via the \AgdaArgument{ccThreshold} argument: is the system is in a state of
+no-confidence, \nothing is given as that argument.
+
+In case of the \ChangePParams action, the thresholds further depend on
+what groups that action is associated with. \pparamThreshold
+associates a pair of threshold to each individual group. Since an
+individual update can contain multiple groups, the actual thresholds
+are then given by taking the maximum of all those thresholds.
+
+Note that each protocol parameter belongs to exactly one of the four
+groups that have a \DRep threshold, so a \DRep vote will always be
+required. Any protocol parameter may or may not be in the
+\SecurityGroup, so a \SPO vote may not be required.
+
+Each of the $P_x$ and $Q_x$ are protocol parameters.
+\begin{figure*}[h]
+\begin{code}[hide]
+private
+  ∣_∣_∣_∣ : {A : Set} → A → A → A → GovRole → A
+  ∣ q₁ ∣ q₂ ∣ q₃ ∣ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
+
+  ∣_∥_∣ : {A : Set} → A → A × A → GovRole → A
+  ∣ q₁ ∥ (q₂ , q₃) ∣ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
+
+vote : ℚ → Maybe ℚ
+vote = just
+
+defer : ℚ
+defer = ℚ.1ℚ ℚ.+ ℚ.1ℚ
+
+maxThreshold : ℙ (Maybe ℚ) → Maybe ℚ
+maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
+  where
+    comb : Maybe ℚ → Maybe ℚ → Maybe ℚ
+    comb (just x) (just y) = just (x ⊔ y)
+    comb (just x) nothing  = just x
+    comb nothing  (just y) = just y
+    comb nothing  nothing  = nothing
+
+─ : Maybe ℚ
+─ = nothing
+✓† = vote defer
+\end{code}
+\begin{AgdaMultiCode}
+\begin{code}
+threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
+threshold pp ccThreshold = λ where
+    NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1     ∣
+    (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                    ∣
+    (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─           ∣
+    (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4     ∣
+    (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                     ∣
+    (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─           ∣
+    Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†          ∣
+  where
+\end{code}
+\begin{code}[hide]
+    open PParams pp
+    open DrepThresholds drepThresholds
+    open PoolThresholds poolThresholds
+
+    ✓ = ccThreshold
+\end{code}
+\begin{code}
+    P/Q2a/b : Maybe ℚ × Maybe ℚ
+    P/Q2a/b = case ccThreshold of λ where
+      (just _) → (vote P2a , vote Q2a)
+      nothing  → (vote P2b , vote Q2b)
+
+    pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
+    pparamThreshold NetworkGroup     = (vote P5a  , ─         )
+    pparamThreshold EconomicGroup    = (vote P5b  , ─         )
+    pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
+    pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
+    pparamThreshold SecurityGroup    = (─         , vote Q5e  )
+
+    P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
+    P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
+             , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
+
+canVote : PParams → GovAction → GovRole → Set
+canVote pp a r = Is-just (threshold pp nothing a r)
+\end{code}
+\end{AgdaMultiCode}
+% TODO: this doesn't actually depend on PParams so we could remove that
+%       argument, but we don't have a default ATM
+\caption{Functions related to voting}
 \label{fig:ratification-requirements}
 \end{figure*}
-Each of these thresholds is a governance parameter.  The two thresholds for the \Info
-action are set to 100\% since setting it any lower would result in not being able to poll
-above the threshold.
 
 \subsection{Ratification restrictions}
 \label{sec:ratification-restrictions}
-\begin{code}[hide]
-{-# OPTIONS --safe #-}
-
-import Data.Integer as ℤ
-open import Data.Rational as ℚ using (ℚ; 0ℚ)
-open import Data.Nat.Properties hiding (_≟_; _≤?_)
-open import Data.Nat.Properties.Ext
-
-open import Ledger.Prelude hiding (_∧_)
-open import Ledger.Transaction hiding (Vote)
-
-module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
-
-open import Ledger.GovernanceActions govStructure using (Vote)
-open import Ledger.Gov govStructure
-
-infixr 2 _∧_
-_∧_ = _×_
-
-instance
-  _ = +-0-commutativeMonoid
-\end{code}
 \begin{figure*}[h!]
 \begin{code}
 record StakeDistrs : Set where

@@ -14,7 +14,7 @@ module Ledger.Ledger
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Gov govStructure
+open import Ledger.Gov txs
 open import Ledger.PPUp txs
 open import Ledger.Utxo txs abs
 open import Ledger.Utxow txs abs

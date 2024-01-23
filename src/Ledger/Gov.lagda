@@ -5,21 +5,17 @@
 
 open import Ledger.Prelude
 open import Ledger.Types.GovStructure
+open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
+module Ledger.Gov (txs : _) (open TransactionStructure txs using (govStructure)) where
+open GovStructure govStructure hiding (epoch)
 
-open import Ledger.GovernanceActions gs
+open import Ledger.GovernanceActions govStructure
+open import Ledger.Ratify txs
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{code}
-record GovActionState : Set where
-  field votes       : Voter ⇀ Vote
-        returnAddr  : RwdAddr
-        expiresIn   : Epoch
-        action      : GovAction
-        prevAction  : NeedsHash action
-
 GovState : Set
 GovState = List (GovActionID × GovActionState)
 

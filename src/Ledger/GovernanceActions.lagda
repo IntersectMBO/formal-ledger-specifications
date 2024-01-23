@@ -22,9 +22,6 @@ open import Ledger.Types.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 
-defer : ℚ
-defer = 1ℚ Data.Rational.+ 1ℚ
-
 -- TODO: this could be generic
 maximum : ℙ ℚ → ℚ
 maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
@@ -93,70 +90,6 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   to non-backwards compatible updates of a network. In Cardano, we formalize the definition slightly more by calling any upgrade that
   would lead to \emph{more blocks} being validated a ``hard fork'' and force nodes to comply with the new protocol version, effectively
   obsoleting nodes that are unable to handle the upgrade.}
-\begin{figure*}[h]
-\begin{code}[hide]
-private
-  ∣_∣_∣_∣ : {A : Set} → A → A → A → GovRole → A
-  ∣ q₁ ∣ q₂ ∣ q₃ ∣ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
-\end{code}
-\begin{code}
-threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
-threshold pp ccThreshold' = λ where
-    NoConfidence           → ∣ noVote            ∣ vote P1      ∣ vote Q1      ∣
-    (NewCommittee _ _ _)   → case ccThreshold' of λ where
-      (just _)             → ∣ noVote            ∣ vote P2a     ∣ vote Q2a     ∣
-      nothing              → ∣ noVote            ∣ vote P2b     ∣ vote Q2b     ∣
-    (NewConstitution _ _)  → ∣ vote ccThreshold  ∣ vote P3      ∣ noVote       ∣
-    (TriggerHF _)          → ∣ vote ccThreshold  ∣ vote P4      ∣ vote Q4      ∣
-    (ChangePParams x)      → ∣ vote ccThreshold  ∣ (P5 x)       ∣ Q5 x         ∣
-    (TreasuryWdrl _)       → ∣ vote ccThreshold  ∣ vote P6      ∣ noVote       ∣
-    Info                   → ∣ vote defer        ∣ vote defer   ∣ vote defer   ∣
-  where
-    open PParams pp
-    open DrepThresholds drepThresholds
-    open PoolThresholds poolThresholds
-
-    noVote : Maybe ℚ
-    noVote = nothing
-
-    vote : ℚ → Maybe ℚ
-    vote = just
-
-    ccThreshold : ℚ
-    ccThreshold = case ccThreshold' of λ where
-      (just x)  → x
-      nothing   → defer   -- (defer > 1 ⇒ unreachable threshold ⇒ not yet enactable)
-
-    pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
-    pparamThreshold NetworkGroup     = vote P5a  , noVote
-    pparamThreshold EconomicGroup    = vote P5b  , noVote
-    pparamThreshold TechnicalGroup   = vote P5c  , noVote
-    pparamThreshold GovernanceGroup  = vote P5d  , noVote
-    pparamThreshold SecurityGroup    = noVote    , vote Q5e
-
-    maxThreshold : ℙ (Maybe ℚ) → Maybe ℚ
-    maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
-      where
-        comb : Maybe ℚ → Maybe ℚ → Maybe ℚ
-        comb (just x) (just y) = just (x Data.Rational.⊔ y)
-        comb (just x) nothing  = just x
-        comb nothing  (just y) = just y
-        comb nothing  nothing  = nothing
-
-    P5 : PParamsUpdate → Maybe ℚ
-    P5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
-
-    Q5 : PParamsUpdate → Maybe ℚ
-    Q5 ppu = maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
-
--- TODO: this doesn't actually depend on PParams so we could remove that
---       argument, but we don't have a default ATM
-canVote : PParams → GovAction → GovRole → Set
-canVote pp a r = Is-just (threshold pp nothing a r)
-\end{code}
-\caption{Functions related to voting}
-\label{fig:voting-defs}
-\end{figure*}
 \subsection{Voting and ratification}
 \label{sec:voting-and-ratification}
 Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
@@ -211,6 +144,13 @@ record GovProposal : Set where
         policy      : Maybe ScriptHash
         deposit     : Coin
         anchor      : Anchor
+
+record GovActionState : Set where
+  field votes       : Voter ⇀ Vote
+        returnAddr  : RwdAddr
+        expiresIn   : Epoch
+        action      : GovAction
+        prevAction  : NeedsHash action
 \end{code}
 \caption{Governance action proposals and votes}
 \label{defs:governance-votes}
