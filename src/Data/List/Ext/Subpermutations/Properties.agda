@@ -55,10 +55,6 @@ module _ {a}{A : Set a} where
   []tail : {xs : List A}{x : A} → x ∷ [] ≡ x ∷ xs → [] ≡ xs
   []tail refl = refl
 
-  -- ∈-putsubhead : {ls : List (List A)}{l l' xs : List A} → xs ∈ l ∷ ls → xs ∈ l ∷ l' ∷ ls
-  -- ∈-putsubhead {ls} {l'} {xs} (here p) = here p
-  -- ∈-putsubhead {ls} {l'} {xs} (there p) = there (there p)
-
 -------------------------------
 ------ properties of map ------
 -------------------------------
@@ -232,6 +228,13 @@ module _ {a}{A : Set a} where
   ⊆+∷ {l'} {.[]} All.[] = All.[]
   ⊆+∷ {.(_ ∷ xs)} {.(_ ∷ _)} (here {xs = xs} refl All.∷ xs⊆l') = (there (here refl)) All.∷ (⊆+∷ xs⊆l')
   ⊆+∷ {.(_ ∷ _)} {.(_ ∷ _)} (there px All.∷ xs⊆l') = (there (there px)) All.∷ (⊆+∷ xs⊆l')
+
+  ⊆→∷⊆∷ : {ys xs : List A}{y : A} → xs ⊆ ys → (y ∷ xs) ⊆ (y ∷ ys)
+  ⊆→∷⊆∷ {[]} {[]} {y} xsys = here refl All.∷ All.[]
+  ⊆→∷⊆∷ {[]} {x ∷ xs} {y} (() All.∷ xsys)
+  ⊆→∷⊆∷ {x ∷ ys} {.[]} {y} All.[] = here refl All.∷ All.[]
+  ⊆→∷⊆∷ {y ∷ ys} {.(y ∷ xs)} {y'} (All._∷_ {.y} {xs} (here refl) xsys) = (here refl) All.∷ ((there (here refl)) All.∷ (⊆+∷ {l' = y ∷ ys} xsys))
+  ⊆→∷⊆∷ {y ∷ ys} {.(x ∷ xs)} {y'} (All._∷_ {x} {xs} (there px) xsys) = (here refl) All.∷ ((there (there px)) All.∷ (⊆+∷ {l' = y ∷ ys} xsys))
 
   ∈⊆→∈ : {l l' : List A}{x : A} → x ∈ l → l ⊆ l' → x ∈ l'
   ∈⊆→∈ (here refl) (px All.∷ l⊆l') = px
@@ -468,71 +471,6 @@ module _ {a}{A : Set a} where
   []∈subpermutations {[]} = here refl
   []∈subpermutations {x ∷ xs} = ∈++ʳ{ll = flatMap (insert x) (subpermutations xs)} ([]∈subpermutations{l = xs})
 
-  ∈insert-∈perm→∈perm' : {ys zs xs : List A}{y y' z : A} → xs ∈ insert y' zs → z ∷ zs ∈ permutations (y ∷ ys)
-        → z ∷ xs ∈ permutations (y' ∷ y ∷ ys)
-
-  ∈insert-∈perm→∈perm' {[]} {.[]} {.(y' ∷ [])} {y} {y'} {.y} (here refl) (here refl) = there (here refl)
-  ∈insert-∈perm→∈perm'{y ∷ ys} {[]} {.(x ∷ [])} {y'} {x} {z} (here refl) q = ⊥-elim (¬∷[]-insert∘insert'{ls = permutations ys} q)
-  ∈insert-∈perm→∈perm'{x ∷ ys} {x₁ ∷ zs} {xs} {y} {y'} {z} p q = {!!}
-
-
-  ∈insert-∈perm→∈perm∷ : {ys zs xs : List A}{y : A} → xs ∈ insert y zs → zs ∈ permutations ys → xs ∈ permutations (y ∷ ys)
-  ∈insert-∈perm→∈perm∷ {[]} {.[]} xs∈ (here refl) = xs∈
-  ∈insert-∈perm→∈perm∷ {z ∷ ys} {[]} {.(y ∷ [])} {y} (here refl) zs∈ = ⊥-elim (¬[]∈fmInsert{ls = permutations ys} zs∈)
-  ∈insert-∈perm→∈perm∷ {y ∷ ys} {x ∷ zs} (here refl) zs∈ = ∈-fm-insert (x ∷ zs) zs∈
-  ∈insert-∈perm→∈perm∷ {y ∷ ys} {x ∷ zs} {[]}  (there xs∈) zs∈ = ⊥-elim (¬[]∈map xs∈)
-  ∈insert-∈perm→∈perm∷ {y ∷ ys} {z ∷ zs} {x ∷ xs} {y'} (there xs∈) zs∈ with maphead-decomp' xs∈
-  ...| x≡z , xs∈y'zs = subst (λ u → u ∷ xs ∈ permutations (y' ∷ y ∷ ys)) (sym x≡z) (∈insert-∈perm→∈perm'{ys} xs∈y'zs zs∈)
-
-  ∈-subperm-decomp : {ys xs : List A} → xs ∈ subpermutations ys
-                     → ∃[ l ] (l ∈ sublists ys × xs ∈ permutations l)
-  ∈-subperm-decomp {[]} {.[]} (here refl) = [] , here refl , here refl
-  ∈-subperm-decomp {y ∷ ys} {xs} xs∈ with ∈-++→⊎{ll = flatMap (insert y) (subpermutations ys)} xs∈
-  ...| inj₁ v = goal
-    where
-    ξ : ∃[ l ] (l ∈ subpermutations ys × xs ∈ (insert y l))
-    ξ = ∈-fm-insert-decomp'{ls = subpermutations ys}{y} xs v
-
-    l' : List A
-    l' = proj₁ ξ
-
-    l'∈ : l' ∈ subpermutations ys
-    l'∈ = proj₁ (proj₂ ξ)
-
-    xs∈yl' : xs ∈ insert y l'
-    xs∈yl' = proj₂ (proj₂ ξ)
-
-    ξ' : ∃[ l ] (l ∈ sublists ys × l' ∈ permutations l)
-    ξ' = ∈-subperm-decomp{ys}{l'} l'∈
-
-    l : List A
-    l = proj₁ ξ'
-
-    yl∈ : y ∷ l ∈ sublists (y ∷ ys)
-    yl∈ = ∈-sublists+head' {ys = ys} {y} {l} (proj₁ (proj₂ ξ'))
-
-    goal : ∃[ l ] (l ∈ sublists (y ∷ ys) × (xs ∈ permutations l))
-    goal = (y ∷ l) , (yl∈ , (∈insert-∈perm→∈perm∷ {l}{l'}{xs} xs∈yl' (proj₂ (proj₂ ξ'))))
-  ...| inj₂ v with ∈-subperm-decomp{ys} v
-  ...| (l , l∈sl , xs∈pl) = l , ∈-sublists+head {ys = ys} l∈sl , xs∈pl
-
-  ∷∈subperm∷ : {ys xs : List A}{x : A} → ¬ x ∈ xs
-              → xs ∈ subpermutations ys → x ∷ xs ∈ subpermutations (x ∷ ys)
-  ∷∈subperm∷ {[]} {xs} {x} ¬x∈xs (here px) = here (subst (λ u → x ∷ xs ≡ x ∷ u) px refl)
-  ∷∈subperm∷ {y ∷ ys} {xs} {x} ¬x∈xs xs∈sp =
-    (∈++ˡ{ll = flatMap (insert x) (flatMap (insert y) (subpermutations ys) ++ subpermutations ys)}) (∈-fm-insert xs xs∈sp)
-
-  ∷∈subperm : {l' xs : List A}{x : A} → x ∈ l' → ¬ x ∈ xs
-              → xs ∈ subpermutations l' → x ∷ xs ∈ subpermutations l'
-  ∷∈subperm {.x ∷ ys} {xs} {x} (here refl) ¬x∈xs xs∈spyys with (∈-++→⊎{ll = flatMap (insert x) (subpermutations ys)} xs∈spyys)
-  ...| inj₁ v = ⊥-elim (¬x∈xs (fm-insert→head∈{ls = subpermutations ys} xs v))
-  ...| inj₂ v = ∷∈subperm∷ {ys} {xs} {x} ¬x∈xs v
-
-
-  ∷∈subperm {y ∷ ys} {xs}{x} (there x∈yys) ¬x∈xs xs∈spyys with ∈-++→⊎ xs∈spyys
-  ...| inj₁ v = ∈++ˡ{ll = flatMap (insert y) (subpermutations ys)} {!!}
-  ...| inj₂ v = ∈++ʳ (∷∈subperm x∈yys ¬x∈xs v)
-
   Unique→-Unique-subhead : {xs : List A}{x y : A} → Unique (x ∷ y ∷ xs) →  Unique (x ∷ xs)
   Unique→-Unique-subhead ((_ All.∷ xxsU) ∷ yxsU) = xxsU ∷ (drop⁺ 1 yxsU)
 
@@ -540,14 +478,24 @@ module _ {a}{A : Set a} where
   Unique→¬hd∈tl ((px All.∷ _) ∷ _) (here refl) = px refl
   Unique→¬hd∈tl xxsU (there p) = Unique→¬hd∈tl (Unique→-Unique-subhead xxsU) p
 
-  subpermIfSubset : {l l' : List A} → Unique l → l ⊆ l' → l ∈ subpermutations l'
-  subpermIfSubset {[]} {l'} _ l⊆l' = []∈subpermutations{l = l'}
-  subpermIfSubset {x ∷ xs} {l'} (x₁ ∷ lU) (px All.∷ pxs) = ∷∈subperm px (Unique→¬hd∈tl (x₁ ∷ lU)) (subpermIfSubset lU pxs)
+  subpermIfSubset : {ys xs : List A} → Unique xs → xs ⊆ ys → xs ∈ subpermutations ys
+  subpermIfSubset {[]} {.[]} xsU All.[] = here refl
+  subpermIfSubset {y ∷ ys} {[]} xsU xsys = ∈++ʳ{ll = flatMap(insert y) (subpermutations ys)} ([]∈subpermutations{ys})
+
+  subpermIfSubset {y ∷ ys} {.y ∷ xs} xsU (here refl All.∷ xsys) = {!!}
+   -- Proof sketch:  By uniqueness y ∉ xs, so xs ∈ subpermutations ys,
+   --                so y ∷ xs ∈ map(y ∷_) (subpermutations ys) ∈ subpermutations (y ∷ ys)
+
+  subpermIfSubset {y ∷ ys} {x ∷ xs} xsU (there px All.∷ xsys) = {!!}
+
 
   -- Proof that if l is a subpermutation of l', then l ⊆ l'
   subsetIfSubperm : {l l' : List A} → l ∈ subpermutations l' → l ⊆ l'
-  subsetIfSubperm {l} {l'} lsubpermOfl' with ∈-subperm-decomp{l'} lsubpermOfl'
-  ...| (xs , xs∈sll' , ys∈xs) = ∈sublists+perm→⊆ xs∈sll' ys∈xs
+  subsetIfSubperm {.[]} {[]} (here refl) = All.[]
+  subsetIfSubperm {xs} {y ∷ ys} lsubpermOfl' with (∈-++→⊎ {ll = flatMap (insert y) (subpermutations ys)} lsubpermOfl')
+  ...| inj₂ v = All-trans (subsetIfSubperm{xs}{ys} v) (all∈-→all∈+head {ys = ys} {ys} {y} ⊆-id)
+  ...| inj₁ v with ∈-fm-insert-decomp{ls = subpermutations ys} xs v
+  ...| l , l∈sp , x⊆yl = All-trans x⊆yl (⊆→∷⊆∷{ys = ys}{l} (subsetIfSubperm {l}{ys} l∈sp))
 
 
 -- TESTS --

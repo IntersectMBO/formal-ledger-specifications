@@ -595,19 +595,19 @@ module _ {a}{A : Set a} where
 -------------------------------------------------------------
 
 module _ {a}{A : Set a} ⦃ _ : DecEq A ⦄ where
-  -- ⊆→subperm : {xs ys : List A} → Unique xs → Unique ys → xs ⊆ ys → ¬ xs ≡ [] → xs ∈ subpermutations ys
-  -- ⊆→subperm {[]} {ys} xsU ysU xs⊆ys ¬xs[] = ⊥-elim (¬xs[] refl)
-  -- ⊆→subperm {x ∷ xs} {[]} xsU ysU (() All.∷ xs⊆ys) ¬xs[]
-  -- ⊆→subperm {x ∷ xs} {.x ∷ ys} xsU ysU (here refl All.∷ xs⊆ys) _ with (xs ≟ [])
-  -- ...| yes xs[] = singleton∈subperm' (here{xs = ys} refl) xs[]
-  -- ...| no ¬xs[] = subperm+newhead {ys = ys} (⊆→subperm (drop⁺ 1 xsU) ysU xs⊆ys ¬xs[]) (all≢x→¬x∈ xsU)
-  -- ⊆→subperm {x ∷ xs} {y ∷ ys} xxsU yysU (there px All.∷ xs⊆ys) _ with (xs ≟ [])
-  -- ...| yes xs[] = singleton∈subperm' (there{xs = ys} px) xs[]
-  -- ...| no ¬xs[] = {!!} -- subperm+oldhead{ys = y ∷ ys} (⊆→subperm (drop⁺ 1 xxsU) yysU xs⊆ys ¬xs[]) (there px) (all≢x→¬x∈ xxsU)
+  ⊆→subperm : {xs ys : List A} → Unique xs → Unique ys → xs ⊆ ys → ¬ xs ≡ [] → xs ∈ subpermutations ys
+  ⊆→subperm {[]} {ys} xsU ysU xs⊆ys ¬xs[] = ⊥-elim (¬xs[] refl)
+  ⊆→subperm {x ∷ xs} {[]} xsU ysU (() All.∷ xs⊆ys) ¬xs[]
+  ⊆→subperm {x ∷ xs} {.x ∷ ys} xsU ysU (here refl All.∷ xs⊆ys) _ with (xs ≟ [])
+  ...| yes xs[] = singleton∈subperm' (here{xs = ys} refl) xs[]
+  ...| no ¬xs[] = subperm+newhead {ys = ys} (⊆→subperm (drop⁺ 1 xsU) ysU xs⊆ys ¬xs[]) (all≢x→¬x∈ xsU)
+  ⊆→subperm {x ∷ xs} {y ∷ ys} xxsU yysU (there px All.∷ xs⊆ys) _ with (xs ≟ [])
+  ...| yes xs[] = singleton∈subperm' (there{xs = ys} px) xs[]
+  ...| no ¬xs[] = {!!} -- subperm+oldhead{ys = y ∷ ys} (⊆→subperm (drop⁺ 1 xxsU) yysU xs⊆ys ¬xs[]) (there px) (all≢x→¬x∈ xxsU)
 
-  -- subperm→⊆ : {xs ys : List A} → Unique xs → Unique ys → xs ∈ subpermutations ys → xs ⊆ ys
-  -- subperm→⊆ {[]} {ys} xsU ysU xs∈sp = ⊥-elim (¬[]∈subpermutations{l = ys} xs∈sp)
-  -- subperm→⊆ {x ∷ xs} {ys} xsU ysU xs∈sp = {!!} -- head∈subpermGenerators xs∈sp All.∷ tail∈subpermGenerators xs∈sp
+  subperm→⊆ : {xs ys : List A} → Unique xs → Unique ys → xs ∈ subpermutations ys → xs ⊆ ys
+  subperm→⊆ {[]} {ys} xsU ysU xs∈sp = ⊥-elim (¬[]∈subpermutations{l = ys} xs∈sp)
+  subperm→⊆ {x ∷ xs} {ys} xsU ysU xs∈sp = head∈subpermGenerators xs∈sp All.∷ tail∈subpermGenerators xs∈sp
 
 
 
