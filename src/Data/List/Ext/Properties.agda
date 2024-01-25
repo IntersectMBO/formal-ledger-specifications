@@ -333,17 +333,6 @@ module _ {a} {A : Set a} where
   ¬[]++ʳ ¬p [] = ¬p
   ¬[]++ʳ _ (_ ∷ _) = λ ()
 
-  -- ++head-just : {l xs : List A}{x : A} → head ((x ∷ xs) ++ l) ≡ just x
-  -- ++head-just = refl
-
-  -- ++head : {l xs : List A}{x : A} → head ((x ∷ xs) ++ l) ≡ head (x ∷ xs)
-  -- ++head = refl
-
-  -- ++head' : {ll lr : List A} → ¬ ll ≡ [] → head (ll ++ lr) ≡ head ll
-  -- ++head' {[]} ¬ll[] = ⊥-elim (¬ll[] refl)
-  -- ++head' {_ ∷ _} ¬ll[] = refl
-
-
 ------------------------------------
 ------- properties of insert -------
 ------------------------------------
@@ -426,10 +415,8 @@ module _ {a}{A : Set a} where
   ∈-insert-decomp {[]} .(_ ∷ []) (here refl) = here refl All.∷ All.[]
   ∈-insert-decomp {x ∷ xs} .(_ ∷ x ∷ xs) (here refl) = (here refl) All.∷ (all∈-→all∈+head ⊆-id)
   ∈-insert-decomp {x ∷ xs} [] (there ys∈) = All.[]
-  ∈-insert-decomp {x ∷ xs} {x'} (y ∷ ys) (there ys∈) = (there (here (proj₁ ξ))) All.∷ ⊆-swap (all∈-→all∈+head (∈-insert-decomp ys (proj₂ ξ)))
-    where
-    ξ : y ≡ x × ys ∈ insert x' xs
-    ξ = maphead-decomp' ys∈
+  ∈-insert-decomp {x ∷ xs} {x'} (y ∷ ys) (there ys∈) with maphead-decomp' ys∈
+  ...| y≡x , ys∈x'xs = there (here y≡x) All.∷ ⊆-swap (all∈-→all∈+head (∈-insert-decomp ys ys∈x'xs))
 
   ∈-fm-insert-decomp : {ls : List (List A)}{x : A} → ∀ ys → ys ∈ (flatMap (insert x) ls)
                        → ∃[ l ] (l ∈ ls × ys ⊆ (x ∷ l))
@@ -446,9 +433,9 @@ module _ {a}{A : Set a} where
   ...| l , l∈ls , xs∈yl = l , there l∈ls , xs∈yl
 
   ∈→∷∈fmInsert : {ls : List (List A)}{x : A} → ∀ l → l ∈ ls → x ∷ l ∈ flatMap (insert x) ls
-  ∈→∷∈fmInsert {[] ∷ ls} {x} .[] (here refl) = here refl
-  ∈→∷∈fmInsert {(x₁ ∷ l) ∷ ls} {x} .(x₁ ∷ l) (here refl) = here refl
-  ∈→∷∈fmInsert {l' ∷ ls} {x} l (there l∈ls) = ∈++ʳ {ll = insert x l'} (∈→∷∈fmInsert l l∈ls)
+  ∈→∷∈fmInsert {[] ∷ ls} .[] (here refl) = here refl
+  ∈→∷∈fmInsert {(y ∷ _) ∷ _} .(y ∷ _) (here refl) = here refl
+  ∈→∷∈fmInsert {_ ∷ ls} l (there l∈ls) = ∈++ʳ (∈→∷∈fmInsert l l∈ls)
 
 --------------------------------------
 ------- properties of sublists -------
@@ -458,14 +445,10 @@ module _ {a} {A : Set a} where
   []∈sublists {[]} = here refl
   []∈sublists {x ∷ l} = ∈++ʳ {ll = map (x ∷_) (sublists l)} ([]∈sublists{l})
 
-  -- ∷[]∈-sublists : {l : List A}{x : A} → x ∈ l → x ∷ [] ∈ sublists l
-  -- ∷[]∈-sublists {x ∷ xs} (here refl) = ⊎→++ {ll = x +∷ sublists xs} (inj₁ ∈-+∷)
-  -- ∷[]∈-sublists (there x∈l) = ⊎→++ (inj₂ (∷[]∈-sublists x∈l))
-
   sublists→⊆ : {l' xs : List A} → xs ∈ sublists l' → xs ⊆ l'
   sublists→⊆ {[]} {.[]} (here refl) = All.[]
-  sublists→⊆ {y ∷ ys} {[]} xs∈slyys = All.[]
-  sublists→⊆ {y ∷ ys} {x ∷ xs} xs∈slyys with ++→⊎{ll = map (_∷_ y) (sublists ys)} xs∈slyys
+  sublists→⊆ {_ ∷ _} {[]} xs∈slyys = All.[]
+  sublists→⊆ {y ∷ ys} {_ ∷ xs} xs∈slyys with ++→⊎{ll = map (_∷_ y) (sublists ys)} xs∈slyys
   ...| inj₂ v = ⊆+∷ (sublists→⊆ v)
   ...| inj₁ v with maphead-decomp v
   ... | .xs , <″-offset sl∈slys = here refl All.∷ ⊆+∷ (sublists→⊆ sl∈slys)
@@ -477,44 +460,6 @@ module _ {a} {A : Set a} where
   ∈-sublists+head {[]} = there
   ∈-sublists+head {z ∷ ys}{y} = ∈++ʳ {ll = map (_∷_ y) (sublists (z ∷ ys))}
 
-  -- ∈-sublists+head' : {ys : List A}{y : A}{xs : List A} → xs ∈ sublists ys → y ∷ xs ∈ sublists (y ∷ ys)
-  -- ∈-sublists+head' {[]} (here refl) = here refl
-  -- ∈-sublists+head' {z ∷ ys}{y}{xs} p = ∈++ˡ {ll = map (_∷_ y) (sublists (z ∷ ys))} (∈-map+head {ls = sublists (z ∷ ys)} p)
-  -- sublists⁻¹-head∈ : {ys xs : List A}{x : A} → x ∷ xs ∈ sublists ys → x ∈ ys
-  -- sublists⁻¹-head∈ {y ∷ ys} xxs∈ = {!!}
-  -- with (++→⊎{ll = y +∷ sublists ys} xxs∈)
-  -- ...| inj₁ v = here (∈+∷→head≡ v)
-  -- ...| inj₂ v = there (sublists⁻¹-head∈ v)
-
-  -- sublists-head∈-contra : {ys xs : List A}{x : A} → ¬ x ∈ ys → ¬ x ∷ xs ∈ sublists ys
-  -- sublists-head∈-contra ¬x∈l xxs∈sl = ¬x∈l (sublists⁻¹-head∈ xxs∈sl)
-
-  -- +∷sublists : {xs ys : List A}{x y : A} → x ∷ xs ∈ (y +∷ sublists ys) → x ≡ y × (xs ≡ [] ⊎ xs ∈ sublists ys)
-  -- +∷sublists {[]} {ys} {x} {y} p = ∈+∷→head≡ p , inj₁ refl
-  -- +∷sublists {z ∷ xs} {ys} {x} {y} p = ∈+∷→head≡ p , inj₂ (proj₂ (∈+∷→head×tail{ls = sublists ys} p))
-
-  -- +∷sublists' : {xs ys : List A}{x y : A} → x ∷ xs ∈ (y +∷ sublists ys) → ¬ xs ≡ [] → x ≡ y × xs ∈ sublists ys
-  -- +∷sublists' {xs} {ys} {x} {y} p ¬xs[] = (∈+∷→head≡ p) , proj₂ (∈+∷→head×tail' p ¬xs[])
-
-  -- sublists-tail∈ : {l zs : List A}{x z : A} → x ∷ z ∷ zs ∈ sublists l → z ∷ zs ∈ sublists l
-  -- sublists-tail∈ {y ∷ ys} {zs} {x}{z} x∈ with (++→⊎{ll = y +∷ sublists ys} x∈)
-  -- ...| inj₂ v = ∈++ʳ {ll = y +∷ sublists ys} (sublists-tail∈{l = ys} v)
-  -- ...| inj₁ v = ∈++ʳ (∈+∷→tail∈ ξ)
-  --   where
-  --   ξ : x ∷ z ∷ zs ∈ x +∷ sublists ys
-  --   ξ = subst (λ w → x ∷ z ∷ zs ∈ w +∷ sublists ys) (sym (∈+∷→head≡ v)) v
-
-  -- sublists-tail∈' : {l xs : List A}{x : A} → x ∷ xs ∈ sublists l → ¬ xs ≡ [] → xs ∈ sublists l
-  -- sublists-tail∈' {y ∷ ys} {xs} {x} x∈ ¬xs[] with (++→⊎{ll = y +∷ sublists ys} x∈)
-  -- ...| inj₂ v = ∈++ʳ {ll = y +∷ sublists ys} (sublists-tail∈'{l = ys} v ¬xs[])
-  -- ...| inj₁ v = ∈++ʳ (∈+∷→tail∈' ξ ¬xs[])
-  --   where
-  --   ξ : x ∷ xs ∈ x +∷ sublists ys
-  --   ξ = subst (λ w → x ∷ xs ∈ w +∷ sublists ys) (sym (∈+∷→head≡ v)) v
-
-  -- sublists⁻¹ : {l zs : List A}{x z : A} → x ∷ z ∷ zs ∈ sublists l → x ∈ l × z ∷ zs ∈ sublists l
-  -- sublists⁻¹ {l} xxs∈sl = sublists⁻¹-head∈ xxs∈sl , (sublists-tail∈{l}) xxs∈sl
-
 ------------------------------------------
 ------- properties of permutations -------
 ------------------------------------------
@@ -523,7 +468,7 @@ module _ {a}{A : Set a} where
   []∈permutations[] = here refl
 
   ∈-perm-decomp : {xs : List A}{x : A} → ∀ l → l ∈ flatMap (insert x) (permutations xs) → l ⊆ (x ∷ xs)
-  ∈-perm-decomp {[]} {x} .(x ∷ []) (here refl) = here refl All.∷ All.[]
+  ∈-perm-decomp {[]} .(_ ∷ []) (here refl) = here refl All.∷ All.[]
   ∈-perm-decomp {x ∷ xs} {x'} ys ys∈ = ξ'' (proj₁ ξ) ((proj₂ (proj₂ ξ)) , (ξ' (proj₁ ξ) (proj₁ (proj₂ ξ))))
     where
     -- TODO: clean up this proof
@@ -541,20 +486,12 @@ module _ {a}{A : Set a} where
 
   ∈-permutions→⊆ : {ys xs : List A} → ys ∈ permutations xs → ys ⊆ xs
   ∈-permutions→⊆ {[]} {xs}  ys∈ = All.[]
-  ∈-permutions→⊆ {y ∷ ys} {[]} (here ())
-  ∈-permutions→⊆ {y ∷ ys} {[]} (there ())
-  ∈-permutions→⊆ {y ∷ ys} {x ∷ xs} ys∈ = ∈-perm-decomp (y ∷ ys) ys∈
+  ∈-permutions→⊆ {_ ∷ _} {[]} (here ())
+  ∈-permutions→⊆ {_ ∷ _} {[]} (there ())
+  ∈-permutions→⊆ {y ∷ ys} {_ ∷ _} ys∈ = ∈-perm-decomp (y ∷ ys) ys∈
 
   ∈sublists+perm→⊆ : {l' xs ys : List A} → xs ∈ sublists l' → ys ∈ permutations xs → ys ⊆ l'
   ∈sublists+perm→⊆ xs∈ ys∈ = ⊆+∈sublists→⊆ (∈-permutions→⊆ ys∈) xs∈
-
-  -- x ∷ xs is a permutation of itself --
-  -- ∈-permutations : {x : A} {xs : List A} → x ∷ xs ∈ permutations (x ∷ xs)
-  -- ∈-permutations {x} {[]} = here refl
-  -- ∈-permutations {x} {y ∷ ys} = ∈-insertInAll ξ
-  --   where
-  --   ξ : y ∷ ys ∈ (permutations (y ∷ ys))
-  --   ξ = ∈-permutations
 
 ----------------------------------------------
 ------- properties of subpermutations --------
@@ -584,9 +521,9 @@ module _ {a}{A : Set a} where
   Unique→¬hd∈tl xxsU (there p) = Unique→¬hd∈tl (Unique→-Unique-subhead xxsU) p
 
   ∈-subperm-drophead : {ys xs : List A}{x : A} → xs ∈ subpermutations (x ∷ ys) → ¬ x ∈ xs → xs ∈ subpermutations ys
-  ∈-subperm-drophead {[]} {.(x ∷ [])} {x} (here refl) x∉xs = ⊥-elim (x∉xs (here refl))
-  ∈-subperm-drophead {[]} {.[]} {x} (there (here refl)) x∉xs = here refl
-  ∈-subperm-drophead {y ∷ ys} {xs} {x} xs∈sp x∉xs with ++→⊎{ll = flatMap (insert x) (flatMap (insert y) (subpermutations ys) ++ subpermutations ys)} xs∈sp
+  ∈-subperm-drophead {[]} {.(_ ∷ [])} (here refl) x∉xs = ⊥-elim (x∉xs (here refl))
+  ∈-subperm-drophead {[]} {.[]} (there (here refl)) x∉xs = here refl
+  ∈-subperm-drophead {y ∷ ys} {xs} xs∈sp x∉xs with ++→⊎ xs∈sp
   ...| inj₁ v = ⊥-elim (x∉xs (∈-fmInsert'{ls = subpermutations (y ∷ ys)} xs v ))
   ...| inj₂ v = v
 
@@ -610,22 +547,102 @@ module _ {a}{A : Set a} where
    --                so y ∷ xs ∈ map(y ∷_) (subpermutations ys) ∈ subpermutations (y ∷ ys)
 
   subpermIfSubset {y ∷ ys} {x ∷ .[]} (x∉xs ∷ xsU) (there x∈ys All.∷ All.[]) = ∈-subperm-head {ys = y ∷ ys} (there x∈ys)
-  subpermIfSubset {y ∷ ys} {x ∷ .(x' ∷ xs)} (x∉xs ∷ xsU) (there x∈ys All.∷ All._∷_ {x'} {xs} px xsyys) = goal
-    where
-    x∈ys' : x ∈ ys
-    x∈ys' = x∈ys
-    xsyys' : xs ⊆ (y ∷ ys)
-    xsyys' = xsyys
-    -- x∉xs' : ¬ x ∈ xs
-    -- x∉xs' = {!!}
-    goal : x ∷ x' ∷ xs ∈ flatMap (insert y) (subpermutations ys) ++ subpermutations ys
-    goal = {!!}
+  subpermIfSubset {y ∷ ys} {x ∷ .(x' ∷ xs)} (x∉xs ∷ xsU) (there x∈ys All.∷ All._∷_ {x'} {xs} px xsyys) = ?
 
   -- Proof that if l is a subpermutation of l', then l ⊆ l'
   subsetIfSubperm : {l l' : List A} → l ∈ subpermutations l' → l ⊆ l'
   subsetIfSubperm {.[]} {[]} (here refl) = All.[]
-  subsetIfSubperm {xs} {y ∷ ys} lsubpermOfl' with (++→⊎ {ll = flatMap (insert y) (subpermutations ys)} lsubpermOfl')
-  ...| inj₂ v = All-trans (subsetIfSubperm{xs}{ys} v) (all∈-→all∈+head {ys = ys} {ys} {y} ⊆-id)
-  ...| inj₁ v with ∈-fm-insert-decomp{ls = subpermutations ys} xs v
-  ...| l , l∈sp , x⊆yl = All-trans x⊆yl (⊆→∷⊆∷{ys = ys}{l} (subsetIfSubperm {l}{ys} l∈sp))
+  subsetIfSubperm {xs} {_ ∷ _} lsubpermOfl' with ++→⊎ lsubpermOfl'
+  ...| inj₂ v = All-trans (subsetIfSubperm v) (all∈-→all∈+head ⊆-id)
+  ...| inj₁ v with ∈-fm-insert-decomp xs v
+  ...| l , l∈sp , x⊆yl = All-trans x⊆yl (⊆→∷⊆∷ (subsetIfSubperm l∈sp))
 
+
+-------------------
+------ TESTS ------
+-------------------
+  _ : sublists{A = A} [] ≡ [] ∷ []
+  _ = refl
+
+  _ : [] ∈ sublists{A = A} []
+  _ = here refl
+
+_ : sublists (1 ∷ []) ≡ (1 ∷ []) ∷ [] ∷ []
+_ = refl
+
+_ : sublists (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (1 ∷ []) ∷ (2 ∷ []) ∷ [] ∷ []
+_ = refl
+
+_ : {a : Level}{A : Set a} → sublists{a}{A} [] ≡ [] ∷ []
+_ = refl
+
+_ : sublists (1 ∷ 2 ∷ 3 ∷ []) ≡    (1 ∷ 2 ∷ 3 ∷ [])
+                                 ∷ (1 ∷ 2 ∷ [])
+                                 ∷ (1 ∷ 3 ∷ [])
+                                 ∷ (1 ∷ [])
+                                 ∷ (2 ∷ 3 ∷ [])
+                                 ∷ (2 ∷ [])
+                                 ∷ (3 ∷ [])
+                                 ∷ []
+                                 ∷ []
+_ = refl
+
+_ : 1 ∷ [] ∈ 1 +∷ sublists (2 ∷ 3 ∷ [])
+_ = there (there (there (here refl)))
+
+_ : ∀{a}{A : Set a} → permutations{A = A} [] ≡ [] ∷ []
+_ = refl
+
+_ : permutations (1 ∷ 2 ∷ []) ≡ (1 ∷ 2 ∷ []) ∷ (2 ∷ 1 ∷ []) ∷ []
+_ = refl
+
+_ : permutations (1 ∷ 2 ∷ 3 ∷ []) ≡   (1 ∷ 2 ∷ 3 ∷ [])
+                                    ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                    ∷ (2 ∷ 3 ∷ 1 ∷ [])
+                                    ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                    ∷ (3 ∷ 1 ∷ 2 ∷ [])
+                                    ∷ (3 ∷ 2 ∷ 1 ∷ [])
+                                    ∷ []
+_ = refl
+
+
+_ : subpermutations{A = ℕ} [] ≡ [] ∷ []
+_ = refl
+
+_ : subpermutations (1 ∷ []) ≡ (1 ∷ []) ∷ [] ∷ []
+_ = refl
+
+_ : subpermutations (1 ∷ 1 ∷ []) ≡   (1 ∷ 1 ∷ [])
+                                   ∷ (1 ∷ 1 ∷ [])
+                                   ∷ (1 ∷ [])
+                                   ∷ (1 ∷ [])
+                                   ∷ []
+                                   ∷ []
+_ = refl
+
+_ : subpermutations (1 ∷ 2 ∷ []) ≡   (1 ∷ 2 ∷ [])
+                                   ∷ (2 ∷ 1 ∷ [])
+                                   ∷ (1 ∷ [])
+                                   ∷ (2 ∷ [])
+                                   ∷ []
+                                   ∷ []
+_ = refl
+
+_ : subpermutations (1 ∷ 2 ∷ 3 ∷ []) ≡   (1 ∷ 2 ∷ 3 ∷ [])
+                                       ∷ (2 ∷ 1 ∷ 3 ∷ [])
+                                       ∷ (2 ∷ 3 ∷ 1 ∷ [])
+                                       ∷ (1 ∷ 3 ∷ 2 ∷ [])
+                                       ∷ (3 ∷ 1 ∷ 2 ∷ [])
+                                       ∷ (3 ∷ 2 ∷ 1 ∷ [])
+                                       ∷ (1 ∷ 2 ∷ [])
+                                       ∷ (2 ∷ 1 ∷ [])
+                                       ∷ (1 ∷ 3 ∷ [])
+                                       ∷ (3 ∷ 1 ∷ [])
+                                       ∷ (1 ∷ [])
+                                       ∷ (2 ∷ 3 ∷ [])
+                                       ∷ (3 ∷ 2 ∷ [])
+                                       ∷ (2 ∷ [])
+                                       ∷ (3 ∷ [])
+                                       ∷ []
+                                       ∷ []
+_ = refl
