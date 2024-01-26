@@ -37,7 +37,7 @@ instance
       (Γ : LEnv)   (let ⟦ slot , ppolicy , pparams , enactState ⟧ˡᵉ = Γ)
       (s : LState) (let ⟦ utxoSt , govSt , certSt ⟧ˡ = s)
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
-      (let H? = λ {certSt'} → LEDGER-premises {tx}{certSt'} .proj₂ .dec)
+      (let H? = LEDGER-premises .proj₂ .dec)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
@@ -47,21 +47,19 @@ instance
       computeProof = do
         (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
         (certSt' , certStep) ← map₁ (λ where (inj₁ x) → x; (inj₂ x) → x) $ computeCerts certΓ certSt txcerts
-        (govSt'  , govStep)  ← map₁ (λ where (inj₁ ()); (inj₂ x) → x) $ computeGov   govΓ  govSt  (txgov txb)
-        case H? {certSt'} of λ where
-          (yes h) → success (_ , LEDGER⋯ utxoStep certStep govStep h)
+        (govSt'  , govStep)  ← map₁ (λ where (inj₁ ());    (inj₂ x) → x) $ computeGov   govΓ  govSt  (txgov txb)
+        case H? of λ where
+          (yes h) → success (_ , LEDGER⋯ utxoStep certStep govStep)
           (no f)  → failure "Failed at LEDGER"
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ success s'
-      completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ
-                   (LEDGER⋯ utxoStep certStep govStep h)
+      completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER⋯ utxoStep certStep govStep)
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certSt txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
         with computeGov govΓ govSt (txgov txb) | complete _ _ _ _ govStep
-      ... | success (govSt' , _) | refl
-        rewrite dec-yes (H? {certSt'}) h .proj₂ = refl
+      ... | success (govSt' , _) | refl = refl
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ (⊥ ⊎ String)
 Computational-LEDGERS = it
@@ -83,7 +81,7 @@ FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
   where open Tx; open TxBody; open UTxOState; open LState
 
 LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-LEDGER-pov h (LEDGER⋯ (UTXOW-inductive⋯ _ _ _ _ _ st) _ _ _) = pov h st
+LEDGER-pov h (LEDGER⋯ (UTXOW-inductive⋯ _ _ _ _ _ st) _ _) = pov h st
 
 data FreshTxs : LEnv → LState → List Tx → Set where
   []-Fresh : FreshTxs Γ s []
