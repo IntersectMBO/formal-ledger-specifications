@@ -473,6 +473,7 @@ module _ {a}{A : Set a} where
 
   ∈-fm-insert-distr : {ll lr : List (List A)}{xs : List A}{x : A} → xs ∈ flatMap (insert x) (ll ++ lr)
                       → xs ∈ flatMap (insert x) ll ++ flatMap (insert x) lr
+
   ∈-fm-insert-distr {[]} {lr} {xs} {x} xs∈xlr = xs∈xlr
   ∈-fm-insert-distr {ll ∷ lls} {[]} {xs} {x} xs∈xlr with ++→⊎{ll = insert x ll} xs∈xlr
   ...| inj₁ v = ∈++ˡ (∈++ˡ{ll = insert x ll} v)
@@ -483,6 +484,14 @@ module _ {a}{A : Set a} where
   ...| inj₁ w = ∈++ˡ{ll = (insert x ll ++ flatMap (insert x) lls)} (∈++ʳ{ll = insert x ll} w)
   ...| inj₂ w = ∈++ʳ{ll = (insert x ll ++ flatMap (insert x) lls)} w
 
+  ∈-fm-insert-distr⁻¹ : {ll lr : List (List A)}{xs : List A}{x : A}
+                      → xs ∈ flatMap (insert x) ll ++ flatMap (insert x) lr → xs ∈ flatMap (insert x) (ll ++ lr)
+  ∈-fm-insert-distr⁻¹ {[]} {lr} {xs} {x} xs∈++ = xs∈++
+  ∈-fm-insert-distr⁻¹ {ll ∷ ll₁} {lr} {xs} {x} xs∈++ = {!!}
+
+  ∈-fm-insert-swap : {ls : List (List A)}{y x : A} → ∀ l → l ∈ flatMap (insert x) (flatMap (insert y) ls)
+                     → l ∈ flatMap (insert y) (flatMap (insert x) ls)
+  ∈-fm-insert-swap = {!!}
 
   ∈→∷∈fmInsert : {ls : List (List A)}{x : A} → ∀ l → l ∈ ls → x ∷ l ∈ flatMap (insert x) ls
   ∈→∷∈fmInsert {[] ∷ ls} .[] (here refl) = here refl
@@ -595,10 +604,8 @@ module _ {a}{A : Set a} where
     with ++→⊎ {ll = flatMap (insert y)(flatMap (insert y') (subpermutations ys))}
               (∈-fm-insert-distr{ll = flatMap (insert y') (subpermutations ys)} xs∈yy'spys)
   ...| inj₁ v = ⊥-elim (y'∉xs (all→imp (fm-insert-resp-∈ (∈-fmInsert{ls = subpermutations ys})) xs v))
-  ...| inj₂ v = goal
-    where
-    goal : (y' ∷ xs) ∈ flatMap (insert y) (subpermutations (y' ∷ ys))
-    goal = {!!}
+  ...| inj₂ v = ∈-fm-insert-distr⁻¹{ll = flatMap (insert y') (subpermutations ys)}
+                (∈++ˡ (∈-fm-insert-swap{ls = (subpermutations ys)} (y' ∷ xs) (∈-fmInsertNew v)))
   ∈-fm-subperm-addhead {y' ∷ ys} {xs} {y} {x} (there x∈ys) x∉xs xs∈yspys = {!!}
 
   ∈-subperm-addhead : {ys xs : List A}{x : A} → x ∈ ys → ¬ x ∈ xs → xs ∈ subpermutations ys → (x ∷ xs) ∈ subpermutations ys
