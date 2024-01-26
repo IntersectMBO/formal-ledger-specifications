@@ -67,6 +67,8 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
   \item \Anchor---a url and a document hash;
   \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
+  \item \actionWellFormed---in the case of protocol parameter changes,
+    an action is well-formed if it preserves the well-formedness of parameters.
 \end{itemize}
 \begin{figure*}[h]
 \begin{longtable}[]{@{}
@@ -75,12 +77,12 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \textbf{Action}  & \textbf{Description}\\
 \hline
 \endhead
-\NoConfidence            & a motion to create a \defn{state of no-confidence} in the current constitutional committee \\[10pt]
-\NewCommittee            & changes to the members of the constitutional committee and/or to its signature threshold and/or term limits \\[10pt]
-\NewConstitution         & a modification to the off-chain Constitution, recorded as an on-chain hash of the text document \\[10pt]
+\NoConfidence            & a motion to create a \emph{state of no-confidence} in the current constitutional committee \\[10pt]
+\NewCommittee            & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
+\NewConstitution         & a modification to the off-chain Constitution and the proposal policy script \\[10pt]
 \TriggerHF\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\[10pt]
-\ChangePParams           & a change to \textit{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\[10pt]
-\TreasuryWdrl            & movements from the treasury, sub-categorized into small, medium or large withdrawals (based on the amount of Lovelace to be withdrawn)\\[10pt]
+\ChangePParams           & a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\[10pt]
+\TreasuryWdrl            & movements from the treasury\\
 \Info                    & an action that has no effect on-chain, other than an on-chain record
 \end{longtable}
 \caption{Types of governance actions}
@@ -90,11 +92,30 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   to non-backwards compatible updates of a network. In Cardano, we formalize the definition slightly more by calling any upgrade that
   would lead to \emph{more blocks} being validated a ``hard fork'' and force nodes to comply with the new protocol version, effectively
   obsoleting nodes that are unable to handle the upgrade.}
-\subsection{Voting and ratification}
-\label{sec:voting-and-ratification}
-Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
-The type of action and the state of the governance system determines which bodies must ratify it.
-Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
+
+
+% \subsection{Voting and ratification}
+% \label{sec:voting-and-ratification}
+% Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
+% The type of action and the state of the governance system determines which bodies must ratify it.
+% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
+
+\subsection{Hash protection}
+\label{sec:hash-protection}
+
+Enactment requires a second condition on top of the necessary votes,
+which is that the proposal was intended to be enacted in the way it
+is. This is achieved by linking them via their \GovActionID: a
+proposal can only be enacted if the previously enacted proposal of the
+same kind has the \GovActionID mentioned in the to be enacted proposal.
+
+However, not all types of governance actions require this strict
+protection. For \TreasuryWdrl and \Info, enacting them does not change
+the state in non-commutative ways, so they can always be enacted.
+
+Types related to this hash protection scheme are defined in
+Figure~\ref{fig:needshash-and-hashprotected-types}.
+
 \begin{figure*}[h]
 \begin{code}
 NeedsHash : GovAction → Set
@@ -112,19 +133,6 @@ HashProtected A = A × GovActionID
 \caption{NeedsHash and HashProtected types}
 \label{fig:needshash-and-hashprotected-types}
 \end{figure*}
-Figure~\ref{fig:needshash-and-hashprotected-types} defines types that are used in
-ratification (for verifyPrev) where we check that the stored hash matches the one
-attached to the action we want to ratify.
-\begin{itemize}
-\item
-  \defn{Ratification}. An action is said to be \defn{ratified} when it gathers enough votes in its favor
-  (according to the rules described in Section~\ref{sec:ratification}).
-\item
-  \defn{Expiration}. An action that doesn't collect sufficient `yes' votes before its deadline is said to have \defn{expired}.
-\item
-  \defn{Enactment}. An action that has been ratified is said to be \defn{enacted} once it has been activated on the network.
-\end{itemize}
-See Section~\ref{sec:ratification} for more on the ratification process.
 
 \begin{figure*}[h]
 \begin{code}
@@ -138,11 +146,11 @@ record GovVote : Set where
         anchor      : Maybe Anchor
 
 record GovProposal : Set where
-  field returnAddr  : RwdAddr
-        action      : GovAction
+  field action      : GovAction
         prevAction  : NeedsHash action
         policy      : Maybe ScriptHash
         deposit     : Coin
+        returnAddr  : RwdAddr
         anchor      : Anchor
 
 record GovActionState : Set where
@@ -152,150 +160,37 @@ record GovActionState : Set where
         action      : GovAction
         prevAction  : NeedsHash action
 \end{code}
-\caption{Governance action proposals and votes}
-\label{defs:governance-votes}
-\end{figure*}
-The data type \Vote represents the different voting options: \yes, \no, or \abstain.
-Each \vote is recorded in a \GovVote record along with the following data:
-a governance action ID, a role, a credential, and possibly an anchor.
-
-A \defn{governance action proposal} is recorded in a \GovProposal record which includes fields for
-a return address, the proposed governance action, a hash of the previous governance action,
-a deposit (required to propose a governance action)
-and an anchor (see Figure~\ref{defs:governance-votes}).
-
-To submit a governance action proposal to the chain one must provide a deposit which will be returned when
-the action is finalized (whether it is \defn{ratified} or has \defn{expired}).
-The deposit amount will be added to the \defn{deposit pot}, similar to stake key deposits. It will also be
-counted towards the stake of the reward address it will be paid back to, to not reduce the submitter's
-voting power to vote on their own (and competing) actions.
-\\[4pt]
-\textbf{Remarks}.
-\begin{enumerate}
-\item A motion of no-confidence is an extreme measure that enables Ada holders to revoke the power that has been granted to the current constitutional committee.
-\item A \emph{single} governance action might contain \emph{multiple} protocol parameter updates. Many parameters are inter-connected and might require moving in lockstep.
-\end{enumerate}
-
-\subsection{Protocol parameters and governance actions}
-\label{sec:protocol-parameters-and-governance-actions}
-Recall from Section~\ref{sec:protocol-parameters}, parameters used in the Cardano ledger are grouped according to
-the general purpose that each parameter serves (see Figure~\ref{fig:protocol-parameter-declarations}).
-Specifically, we have \NetworkGroup, \EconomicGroup, \TechnicalGroup and \GovernanceGroup.
-There is also a \SecurityGroup, which has a special purpose. Every protocol parameter belongs
-to one of the regular groups, and it also may or may not belong to the \SecurityGroup.
-This allows voting/ratification thresholds to be set by group, though we do not require that each protocol
-parameter governance action be confined to a single group. In case a governance action carries updates
-for multiple parameters from different groups, the maximum threshold of all the groups involved will
-apply to any given such governance action.
-
-The purpose of the \SecurityGroup is to add an additional check to
-security-relevant protocol parameters. Any proposal that includes a
-change to a security-relevant protocol parameter must also be accepted
-by at least half of the SPO stake.
-
-\subsection{Enactment}
-\label{sec:enactment}
-\defn{Enactment} of a governance action is carried out as an \defn{enact transition}
-which requires an \defn{enact environment}, an \defn{enact state}
-representing the existing state (prior to enactment), the voted on
-governance action (that achieved enough votes to enact), and the state that results from enacting the given
-governance action (see Figure~\ref{fig:enactment-types}).
-
-A record of type \EnactEnv represents the environment for enacting a governance action.
-A record of type \EnactState represents the state for enacting a governance action.
-The latter contains fields for the constitutional committee, constitution,
-protocol version, protocol parameters, withdrawals from treasury, and treasury balance.
-\begin{figure*}[h]
-\begin{code}
-record EnactEnv : Set where
-  constructor ⟦_,_,_⟧ᵉ
-  field gid       : GovActionID
-        treasury  : Coin
-        epoch     : Epoch
-
-record EnactState : Set where
-  field cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
-        constitution  : HashProtected (DocHash × Maybe ScriptHash)
-        pv            : HashProtected ProtVer
-        pparams       : HashProtected PParams
-        withdrawals   : RwdAddr ⇀ Coin
-
-ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
-ccCreds (just x   , _)  = dom (x .proj₁)
-ccCreds (nothing  , _)  = ∅
-\end{code}
-\caption{Enactment types}
-\label{fig:enactment-types}
-\end{figure*}
 \begin{code}[hide]
-open EnactState
-
-private variable
-  s : EnactState
-  up : PParamsUpdate
-  new : Credential ⇀ Epoch
-  rem : ℙ Credential
-  q : ℚ
-  dh : DocHash
-  sh : Maybe ScriptHash
-  v : ProtVer
-  wdrl : RwdAddr ⇀ Coin
-  t : Coin
-  gid : GovActionID
-  e : Epoch
-
 instance
-  _ = +-0-monoid
   unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
   unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 \end{code}
-
-The relation \ENACTsyntax is the transition relation for enacting a governance action.
-It represents how the \agdaboundEnactState changes when a specific governance action is enacted
-(see Figure~\ref{fig:enact-transition-system}).
-\begin{figure*}[h]
-\begin{code}
-data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
-
-  Enact-NoConf :
-    ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢   s ⇀⦇ NoConfidence ,ENACT⦈
-                 record  s { cc = nothing , gid }
-
-  Enact-NewComm : let old      = maybe proj₁ ∅ (s .EnactState.cc .proj₁)
-                      maxTerm  = s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e
-                  in
-    ∀[ term ∈ range new ] term ≤ maxTerm
-    ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewCommittee new rem q ,ENACT⦈
-                record  s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
-
-  Enact-NewConst :
-    ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewConstitution dh sh ,ENACT⦈
-                record  s { constitution = (dh , sh) , gid }
-
-  Enact-HF :
-    ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢   s ⇀⦇ TriggerHF v ,ENACT⦈
-                 record  s { pv = v , gid }
-
-  Enact-PParams :
-    ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ ChangePParams up ,ENACT⦈
-                record  s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
-
-  Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
-    ∑[ x ← newWdrls ] x ≤ t
-    ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ TreasuryWdrl wdrl  ,ENACT⦈
-                record  s { withdrawals  = newWdrls }
-
-  Enact-Info :
-    ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ Info  ,ENACT⦈ s
-\end{code}
-\caption{ENACT transition system}
-\label{fig:enact-transition-system}
+\caption{Vote and proposal types}
+\label{defs:governance-votes}
 \end{figure*}
+\subsection{Votes and proposals}
+
+The data type \Vote represents the different voting options: \yes,
+\no, or \abstain. To cast a \Vote, it needs to be packaged together
+with further information, such as who votes and for which governance
+action. This information is combined in the \GovVote record.
+
+To propose a governance action, a \GovProposal needs to be
+submitted. Beside the proposed action, it requires:
+\begin{itemize}
+\item potentially a pointer to the previous action (see Section~\ref{sec:hash-protection}),
+\item potentially a pointer to the proposal policy (if one is required),
+\item a deposit, which will be returned to \returnAddr, and
+\item an \Anchor, providing further information about the proposal.
+\end{itemize}
+
+The deposit will be returned when the action is removed from the state
+in any way. It will be added to the deposit pot, similar to stake key
+deposits. It will also be counted towards the stake of the reward
+address it will be paid back to, to not reduce the submitter's voting
+power to vote on their own (and competing) actions.
+
+\GovActionState is the state of an individual governance action. It
+contains the individual votes, its lifetime, and information necessary
+to enact the action and to repay the deposit.

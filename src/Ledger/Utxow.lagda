@@ -45,6 +45,7 @@ scriptsNeeded = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 \label{fig:functions:utxow}
 \end{figure*}
 
+\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}[hide]
 data
@@ -90,3 +91,4 @@ pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ h
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}
+\end{NoConway}

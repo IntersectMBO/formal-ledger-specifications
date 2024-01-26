@@ -116,6 +116,27 @@ getDRepVote _                                       = nothing
 \caption{Functions used for CERTS transition system}
 \end{figure*}
 
+The rules for transition systems dealing with individual certificates
+are defined in Figure~\ref{fig:sts:aux-cert}. GOVCERT deals with the
+new certificates relating to DReps and the constitutional committee.
+
+\begin{itemize}
+\item \GOVCERTregdrep registers (or re-registers) a DRep. In case of
+  registation, a deposit needs to be paid. Either way, the activity
+  period of the DRep is reset.
+\item \GOVCERTderegdrep deregisters a DRep.
+\item \GOVCERTccreghot registers a hot credential for constitutional
+  committee members. We check that the cold key did not previously
+  resign from the committee. Note that we intentionally do not check
+  if the cold key is actually part of the committee. Since a registered
+  hot key does not carry any voting power if the corresponding cold key
+  is not in the committee, there is no danger in doing this. By allowing
+  this, a newly elected member of the constitutional committee can
+  immediately delegate their vote to a hot key and use it to vote. Since
+  votes are counted after previous actions have been enacted, this allows
+  constitutional committee members to act without a delay of one epoch.
+\end{itemize}
+
 \begin{figure*}[h]
 \begin{code}
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
@@ -143,8 +164,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set whe
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈
-          ⟦ pools , ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
+    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈ ⟦ pools , ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
 
 data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set where
   GOVCERT-regdrep : let open PParams pp in
@@ -156,17 +176,29 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → S
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      Γ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈
-           ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
       ────────────────────────────────
-      Γ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈
-           ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
-\caption{Auxiliary DELEG and POOL rules}
+\caption{Auxiliary DELEG, POOL and GOVCERT transition systems}
+\label{fig:sts:aux-cert}
 \end{figure*}
+
+Figure~\ref{fig:sts:certs} assembles the CERTS transition system by
+bundling the previously defined pieces together into the CERT system,
+and then taking the reflexive-transitive closure of CERT together with
+CERTBASE as the base case. CERTBASE does the following:
+
+\begin{itemize}
+\item check the correctness of withdrawals and ensure that withdrawals
+  only happen from credentials that have delegated their voting power;
+\item set the rewards of the credentials that withdrew funds to zero;
+\item and set the activity timer of all DReps that voted to \drepActivity
+  many epochs in the future.
+\end{itemize}
 
 \begin{figure*}[h]
 \begin{code}
@@ -205,4 +237,5 @@ _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → 
 _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
 \end{code}
 \caption{CERTS rules}
+\label{fig:sts:certs}
 \end{figure*}

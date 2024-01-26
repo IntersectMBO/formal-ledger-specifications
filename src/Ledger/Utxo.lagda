@@ -66,7 +66,13 @@ refScripts tx utxo = ∅ -- TODO: implement when we do Babbage
 open PParams
 \end{code}
 
-Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
+Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define
+functions needed for the UTxO transition system. Note the special
+multiplication symbol \AgdaFunction{*↓} used in
+Figure~\ref{fig:functions:utxo}: it means to multiply and round down
+the result.
+
+\begin{NoConway}
 Figure~\ref{fig:ts-types:utxo-shelley} defines the types needed for the UTxO transition system.
 The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
@@ -79,12 +85,14 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
   \item
     The $\fun{balance}$ function calculates sum total of all the coin in a given UTxO.
 \end{itemize}
+\end{NoConway}
 
-\AgdaTarget{outs, minfee, inInterval, balance}
 \begin{figure*}[h]
 \begin{code}[hide]
 module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
+\begin{AgdaMultiCode}
+\begin{NoConway}
 \begin{code}
   outs : TxBody → UTxO
   outs tx = mapKeys (tx .txid ,_) (tx .txouts)
@@ -94,44 +102,79 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 
   cbalance : UTxO → Coin
   cbalance utxo = coin (balance utxo)
-
-  coinPolicies : ℙ ScriptHash
-  coinPolicies = policies (inject 1)
-
-  isAdaOnlyᵇ : Value → Bool
-  isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
-
+\end{code}
+\end{NoConway}
+\begin{code}
   minfee : PParams → UTxO → Tx → Coin
   minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
                      + txscriptfee (pp .prices) (totExUnits tx)
                      + pp .minFeeRefScriptCoinsPerByte
                        *↓ ∑ˢ[ x ← refScripts tx utxo ] scriptSize x
 
-data DepositPurpose : Set where
-  CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : Credential   → DepositPurpose
-  DRepDeposit        : Credential   → DepositPurpose
-  GovActionDeposit   : GovActionID  → DepositPurpose
-
-certDeposit : PParams → DCert → DepositPurpose ⇀ Coin
-certDeposit _   (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
-certDeposit pp  (regpool c _)       = ❴ PoolDeposit       c , pp .poolDeposit  ❵
-certDeposit _   (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
-certDeposit _   _                   = ∅
-
-propDeposit : PParams → GovActionID → GovProposal → DepositPurpose ⇀ Coin
-propDeposit pp gaid record { returnAddr = record { stake = c } }
-  = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
-
-certRefund : DCert → ℙ DepositPurpose
-certRefund (dereg c)      = ❴ CredentialDeposit c ❵
-certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-certRefund _              = ∅
 \end{code}
+\begin{code}[hide]
+module _ where
+\end{code}
+\begin{code}
+  data DepositPurpose : Set where
+    CredentialDeposit  : Credential   → DepositPurpose
+    PoolDeposit        : Credential   → DepositPurpose
+    DRepDeposit        : Credential   → DepositPurpose
+    GovActionDeposit   : GovActionID  → DepositPurpose
+\end{code}
+\begin{code}[hide]
+instance
+  unquoteDecl DecEq-DepositPurpose = derive-DecEq
+    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
+
+  HasCoin-UTxO : HasCoin UTxO
+  HasCoin-UTxO .getCoin = cbalance
+
+module _ (let open TxBody) where
+\end{code}
+\begin{code}
+
+  updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+  updateDeposits pp txb
+    = updateCertDeposits (txb .txcerts) ∘ updateProposalDeposits (txb .txprop)
+    where
+      certDeposit : DCert → DepositPurpose ⇀ Coin
+      certDeposit  (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
+      certDeposit  (regpool c _)       = ❴ PoolDeposit       c , pp .poolDeposit  ❵
+      certDeposit  (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
+      certDeposit  _                   = ∅
+
+      propDeposit : GovActionID → DepositPurpose ⇀ Coin
+      propDeposit gaid = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
+
+      certRefund : DCert → ℙ DepositPurpose
+      certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+      certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+      certRefund _              = ∅
+
+      updateCertDeposits : List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+      updateCertDeposits []              deposits = deposits
+      updateCertDeposits (cert ∷ certs)  deposits
+        = updateCertDeposits certs deposits ∪⁺ certDeposit cert ∣ certRefund cert ᶜ
+
+      updateProposalDeposits : List GovProposal → DepositPurpose ⇀ Coin
+        → DepositPurpose ⇀ Coin
+      updateProposalDeposits [] deposits = deposits
+      updateProposalDeposits (_ ∷ props) deposits
+        = updateProposalDeposits props deposits ∪⁺ propDeposit (txb .txid , length props)
+
+  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
+  depositsChange pp txb deposits
+    = getCoin (updateDeposits pp txb deposits) ⊖ getCoin deposits
+\end{code}
+\end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
 \end{figure*}
+
+\begin{NoConway}
 \begin{figure*}
+\begin{AgdaMultiCode}
 \begin{code}
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
@@ -154,10 +197,17 @@ _≥ᵇ_ = flip _≤ᵇ_
 ≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
 
+coinPolicies : ℙ ScriptHash
+coinPolicies = policies (inject 1)
+
+isAdaOnlyᵇ : Value → Bool
+isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
+
 -- TODO: this could be a regular property
 -- TODO: using this in UTxO rule below
 \end{code}
 \begin{code}
+
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
                   ∧ not (≟-∅ᵇ (txrdmrs ˢ))
@@ -171,17 +221,11 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
     collateralRange  = range    (utxo ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
 \end{code}
+\end{AgdaMultiCode}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo2}
 \end{figure*}
-\begin{code}[hide]
-instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
-
-  HasCoin-UTxO : HasCoin UTxO
-  HasCoin-UTxO .getCoin = cbalance
-\end{code}
+\end{NoConway}
 
 \AgdaTarget{UTxOEnv, UTxOState, \_⊢\_⇀⦇\_,UTXO⦈\_}
 \begin{figure*}[h]
@@ -189,12 +233,14 @@ instance
 \begin{code}
 Deposits = DepositPurpose ⇀ Coin
 \end{code}
+\begin{NoConway}
 \emph{UTxO environment}
 \begin{code}
 record UTxOEnv : Set where
   field slot     : Slot
         pparams  : PParams
 \end{code}
+\end{NoConway}
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Set where
@@ -204,6 +250,7 @@ record UTxOState : Set where
         deposits   : Deposits
         donations  : Coin
 \end{code}
+\begin{NoConway}
 \emph{UTxO transitions}
 
 \begin{code}[hide]
@@ -234,6 +281,7 @@ data
 \begin{code}
   _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
 \end{code}
+\end{NoConway}
 \caption{UTxO transition-system types}
 \label{fig:ts-types:utxo-shelley}
 \end{figure*}
@@ -243,28 +291,6 @@ data
 module _ (let open UTxOState; open TxBody) where
 \end{code}
 \begin{code}
-  updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin
-    → DepositPurpose ⇀ Coin
-  updateCertDeposits pp []              deposits = deposits
-  updateCertDeposits pp (cert ∷ certs)  deposits
-    = updateCertDeposits pp certs deposits ∪⁺ certDeposit pp cert ∣ certRefund cert ᶜ
-
-  updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ⇀ Coin
-    → DepositPurpose ⇀ Coin
-  updateProposalDeposits pp txid [] deposits = deposits
-  updateProposalDeposits pp txid (prop ∷ props) deposits
-    =   updateProposalDeposits pp txid props deposits
-    ∪⁺  propDeposit pp (txid , length props) prop
-
-  updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updateDeposits pp txb
-    =  updateCertDeposits pp (txb .txcerts)
-    ∘  updateProposalDeposits pp (txb .txid) (txb .txprop)
-
-  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
-  depositsChange pp txb deposits
-    = getCoin (updateDeposits pp txb deposits) ⊖ getCoin deposits
-
   depositRefunds : PParams → UTxOState → TxBody → Coin
   depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
 
@@ -288,9 +314,7 @@ module _ (let open UTxOState; open TxBody) where
 \label{fig:functions:utxo-2}
 \end{figure*}
 
-\begin{figure*}[h]
 \begin{code}[hide]
-
 open PParams
 data
   _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
@@ -338,6 +362,9 @@ private variable
 
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
+
+\begin{NoConway}
+\begin{figure*}[h]
 \begin{code}
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb
@@ -369,3 +396,4 @@ unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
+\end{NoConway}

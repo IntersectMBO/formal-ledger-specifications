@@ -28,6 +28,7 @@ private variable
   m n : ℕ
 \end{code}
 
+\begin{NoConway}
 The \AgdaRecord{Acnt} record has two fields, \AgdaField{treasury} and \AgdaField{reserves}, so
 the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the total assets that
 remain in treasury and reserves.
@@ -47,8 +48,10 @@ data pvCanFollow : ProtVer → ProtVer → Set where
 \caption{Definitions related to protocol parameters}
 \label{fig:protocol-parameter-defs}
 \end{figure*}
+\end{NoConway}
 
 \begin{figure*}[h!]
+\begin{AgdaMultiCode}
 \begin{code}
 data PParamGroup : Set where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup SecurityGroup : PParamGroup
@@ -58,14 +61,11 @@ record DrepThresholds : Set where
 
 record PoolThresholds : Set where
   field Q1 Q2a Q2b Q4 Q5e : ℚ
-\end{code}
-\begin{AgdaAlign}
-\begin{code}
+
 record PParams : Set where
   field
 \end{code}
-\emph{Network group}\vskip-3mm
-\AgdaTarget{maxBlockSize, maxTxSize, maxHeaderSize, maxValSize, pv}
+\emph{Network group}
 \begin{code}
         maxBlockSize maxTxSize        : ℕ
         maxHeaderSize maxValSize      : ℕ
@@ -73,8 +73,7 @@ record PParams : Set where
         pv                            : ProtVer -- retired, keep for now
         maxTxExUnits maxBlockExUnits  : ExUnits
 \end{code}
-\emph{Economic group}\vskip-3mm
-\AgdaTarget{a, b, minUTxOValue, poolDeposit}
+\emph{Economic group}
 \begin{code}
         a b                           : ℕ
         minUTxOValue poolDeposit      : Coin
@@ -82,16 +81,14 @@ record PParams : Set where
         minFeeRefScriptCoinsPerByte   : ℚ
         prices                        : Prices
 \end{code}
-\emph{Technical group}\vskip-3mm
-\AgdaTarget{Emax, collateralPercentage}
+\emph{Technical group}
 \begin{code}
         Emax                          : Epoch
         collateralPercentage          : ℕ
         -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
         costmdls                      : CostModel
 \end{code}
-\emph{Governance group}\vskip-3mm
-\AgdaTarget{drepThresholds, poolThresholds, ccMinSize, ccMaxTermLength, govActionLifetime, govActionDeposit, drepDeposit, drepActivity, minimumAVS}
+\emph{Governance group}
 \begin{code}
         drepThresholds                : DrepThresholds
         poolThresholds                : PoolThresholds
@@ -109,7 +106,7 @@ paramsWellFormed pp =
   ×  ℕtoEpoch govActionLifetime ≤ drepActivity
   where open PParams pp
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Protocol parameter declarations}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
@@ -124,12 +121,24 @@ to the general purpose that each parameter serves.
   \item \NetworkGroup: parameters related to the network settings;
   \item \EconomicGroup: parameters related to the economic aspects of the ledger;
   \item \TechnicalGroup: parameters related to technical settings;
-  \item \GovernanceGroup: parameters related to governance settings.
+  \item \GovernanceGroup: parameters related to governance settings;
+  \item \SecurityGroup: parameters that can impact the security of the system.
 \end{itemize}
-The first three of these groups contain protocol parameters that
-were already introduced during the Shelley, Alonzo and Babbage eras.
-The new protocol parameters introduced in the Conway era (CIP-1694) belong to \GovernanceGroup.
-These new parameters are declared in Figure~\ref{fig:protocol-parameter-declarations} and denote the following concepts.
+
+The first four groups have the property that every protocol parameter
+is associated to precisely one of these groups. The \SecurityGroup is
+special: every protocol parameter may or may not be in the
+\SecurityGroup. So, every protocol parameter belongs to at least one
+and at most two groups.
+
+The purpose of the groups is to determine voting thresholds for
+proposals aiming to change parameters. The thresholds depend on the
+groups of the parameters contained in such a proposal.
+
+These new parameters are declared in
+Figure~\ref{fig:protocol-parameter-declarations} and denote the
+following concepts.
+
 \begin{itemize}
   \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
   named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
@@ -142,6 +151,10 @@ These new parameters are declared in Figure~\ref{fig:protocol-parameter-declarat
   \item \drepActivity: \DRep activity period;
   \item \minimumAVS: the minimum active voting threshold.
 \end{itemize}
+
+Figure~\ref{fig:protocol-parameter-declarations} also defines the
+function \paramsWellFormed. It performs some sanity checks on protocol
+parameters.
 
 \begin{code}[hide]
 instance

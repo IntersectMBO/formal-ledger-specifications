@@ -15,6 +15,7 @@ module Ledger.Epoch
   where
 
 open import Ledger.Gov txs
+open import Ledger.Enact govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
@@ -51,6 +52,25 @@ instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
 data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochState → Set where
 \end{code}
+
+Figure~\ref{fig:epoch:sts} defines the rule for the EPOCH transition
+system. Currently, this contains some logic that is handled by
+POOLREAP in the Shelley specification, because POOLREAP has not been
+implemented here.
+
+The EPOCH rule now also needs to invoke RATIFY and properly deal with
+its results, i.e:
+
+\begin{itemize}
+\item Pay out all the enacted treasury withdrawals.
+\item Remove expired and enacted governance actions \& refund deposits.
+\item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
+\item Remove all hot keys from the constitutional committee delegation map that
+  do not belong to currently elected members.
+\item Apply the resulting enact state from the previous epoch boundary $fut$ and
+  store the resulting enact state $fut'$.
+\end{itemize}
+
 \begin{figure*}[h]
 \begin{code}
   EPOCH : let
@@ -96,8 +116,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochStat
     Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
 \end{code}
 \caption{EPOCH transition system}
+\label{fig:epoch:sts}
 \end{figure*}
 
+\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}[hide]
 data
@@ -122,3 +144,4 @@ data
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}
+\end{NoConway}

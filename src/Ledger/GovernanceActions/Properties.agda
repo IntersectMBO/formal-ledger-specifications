@@ -8,6 +8,7 @@ open import Ledger.Types.GovStructure
 module Ledger.GovernanceActions.Properties (gs : _) (open GovStructure gs) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
+open import Ledger.Enact gs
 
 open EnactState
 

@@ -14,6 +14,7 @@ module Ledger.Ledger
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.PPUp txs
 open import Ledger.Utxo txs abs
@@ -86,9 +87,11 @@ data
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
-pattern LEDGER⋯ x y z w = LEDGER (x , y , z , w)
+pattern LEDGER⋯ x y z = LEDGER (x , y , z)
 unquoteDecl LEDGER-premises = genPremises LEDGER-premises (quote LEDGER)
 \end{code}
+
+\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set
@@ -96,3 +99,4 @@ _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}
+\end{NoConway}
