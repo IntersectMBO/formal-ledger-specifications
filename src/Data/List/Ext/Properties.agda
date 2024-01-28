@@ -359,6 +359,8 @@ module _ {a} {A : Set a} where
   all≢→∉ {.(_ ∷ _)} (px All.∷ p) (here refl) = px refl
   all≢→∉ {.(_ ∷ _)} p (there q) = all≢→∉ (Alltail p) q
 
+
+
 ------------------------------------
 ------- properties of insert -------
 ------------------------------------
@@ -398,8 +400,8 @@ module _ {a}{A : Set a} where
   ∈-insert-head {x ∷ ys} = here refl
 
   ¬∷[]∈insert∘map : {ls : List (List A)}{y y' z : A} → ¬ z ∷ [] ∈ flatMap (insert y) (map (y' ∷_) ls)
-  ¬∷[]∈insert∘map {[]} {y} {y'} {z} = λ ()
-  ¬∷[]∈insert∘map {l ∷ ls} {y} {y'} {z} (there p) with ++→⊎ {ll = map (_∷_ y') (insert y l)} p
+  ¬∷[]∈insert∘map {[]}  = λ ()
+  ¬∷[]∈insert∘map {l ∷ ls} {y} {y'} {z} (there p) with ++→⊎ {ll = map (y' ∷_) (insert y l)} p
   ...| inj₁ v = ¬∷[]∈map∘insert v
   ...| inj₂ v = ¬∷[]∈insert∘map{ls} v
 
@@ -410,23 +412,23 @@ module _ {a}{A : Set a} where
   ...| inj₂ v = ¬[]∈fmInsert{ls}{y} v
 
   ∷[]∈insert-decomp : {l : List A}{y z : A} → z ∷ [] ∈ (insert y) l → z ≡ y × l ≡ []
-  ∷[]∈insert-decomp {[]} {y} {.y} (here refl) = <″-offset refl
-  ∷[]∈insert-decomp {x ∷ l} {y} {z} (there p) = ⊥-elim (¬∷[]∈map∘insert p)
+  ∷[]∈insert-decomp {[]} (here refl) = <″-offset refl
+  ∷[]∈insert-decomp {_ ∷ _} (there p) = ⊥-elim (¬∷[]∈map∘insert p)
 
   ∷[]∈fmInsert-decomp : {ls : List (List A)}{y z : A} → z ∷ [] ∈ flatMap (insert y) ls → z ≡ y × [] ∈ ls
-  ∷[]∈fmInsert-decomp{l ∷ ls} {y} {z} p with ++→⊎{ll = insert y l} p
+  ∷[]∈fmInsert-decomp{_ ∷ ls} p with ++→⊎ p
   ...| inj₁ v = proj₁ (∷[]∈insert-decomp v) , here (sym (proj₂ (∷[]∈insert-decomp v)))
   ...| inj₂ v = (proj₁ (∷[]∈fmInsert-decomp{ls} v)) , (there (proj₂ (∷[]∈fmInsert-decomp v)))
 
   ¬∷[]∈insert∘insert : {ys : List A}{y y' z : A} → ¬ z ∷ [] ∈ flatMap (insert y') (insert y ys)
-  ¬∷[]∈insert∘insert {[]} {y} {y'} {z} (there (here ()))
-  ¬∷[]∈insert∘insert {[]} {y} {y'} {z} (there (there ()))
-  ¬∷[]∈insert∘insert {y ∷ ys} {y'} {y''} {z} (there (there p)) with ++→⊎{ll = map (_∷_ y') (map (_∷_ y) (insert y'' ys))} p
+  ¬∷[]∈insert∘insert {[]} (there (here ()))
+  ¬∷[]∈insert∘insert {[]} (there (there ()))
+  ¬∷[]∈insert∘insert {_ ∷ ys} {y'} {y''} (there (there p)) with ++→⊎ p
   ...| inj₁ v = ¬∷[]∈map∘map {ls = insert y'' ys} v
   ...| inj₂ v = ¬∷[]∈insert∘map{insert y' ys} v
 
   ¬∷[]-insert∘insert' : {ls : List (List A)}{y y' z : A} → ¬ z ∷ [] ∈ flatMap (insert y') (flatMap (insert y) ls)
-  ¬∷[]-insert∘insert' {ls}{y}{y'} {z} p = ¬[]∈fmInsert{ls}{y} (proj₂ (∷[]∈fmInsert-decomp p))
+  ¬∷[]-insert∘insert' {ls}{y} p = ¬[]∈fmInsert{ls}{y} (proj₂ (∷[]∈fmInsert-decomp p))
 
   ∈-fmInsert : {ls : List (List A)}{x : A} → All (x ∈_) (flatMap (insert x) ls)
   ∈-fmInsert {[]} = All.[]
@@ -435,10 +437,9 @@ module _ {a}{A : Set a} where
   ∈-fmInsert' : {ls : List (List A)}{x : A} → ∀ l → l ∈ flatMap (insert x) ls → x ∈ l
   ∈-fmInsert' {ls} = all→imp (∈-fmInsert{ls})
 
-
   map-resp-∈ : {ls : List (List A)}{y x : A} → All (x ∈_) ls → All (x ∈_) (map (_∷_ y) ls)
   map-resp-∈ {[]} = id
-  map-resp-∈ {l ∷ ls} (px All.∷ p) = there px All.∷ map-resp-∈ p
+  map-resp-∈ {_ ∷ _} (px All.∷ p) = there px All.∷ map-resp-∈ p
 
   insert-resp-∈ : {ys : List A}{y x : A} → x ∈ ys → All (x ∈_) (insert y ys)
   insert-resp-∈ (here refl) = (there (here refl)) All.∷ ∈-map
@@ -446,34 +447,35 @@ module _ {a}{A : Set a} where
 
   map∘insert-reps-∈ : {z y x : A}(l : List A) → x ∈ l → All (x ∈_) (map (_∷_ z) (insert y l))
   map∘insert-reps-∈ [] ()
-  map∘insert-reps-∈ (w ∷ ws) (here refl) = (there (there (here refl))) All.∷ (map-resp-∈ ∈-map)
-  map∘insert-reps-∈ (w ∷ ws) (there x∈wws) = (there (there (there x∈wws))) All.∷ (map-resp-∈ (map-resp-∈ (insert-resp-∈ x∈wws)))
+  map∘insert-reps-∈ (_ ∷ _) (here refl) = (there (there (here refl))) All.∷ (map-resp-∈ ∈-map)
+  map∘insert-reps-∈ (_ ∷ _) (there x∈wws) = (there (there (there x∈wws)))
+                                            All.∷ (map-resp-∈ (map-resp-∈ (insert-resp-∈ x∈wws)))
 
   ∈-insert'' : {l : List A}{y x : A} → x ∈ l → All(x ∈_) (insert y l)
   ∈-insert'' {.(_ ∷ _)} (here refl) = (there (here refl)) All.∷ ∈-map
   ∈-insert'' {.(_ ∷ xs)} (there {xs = xs} x∈l) = (there (there x∈l)) All.∷ map∘insert-reps-∈ xs x∈l
 
   fmInsert-resp-∈ : {ls : List (List A)}{y x : A} → All (x ∈_) ls → All (x ∈_) (flatMap (insert y) ls)
-  fmInsert-resp-∈ {.[]} {y} {x} All.[] = All.[]
-  fmInsert-resp-∈ {.(l ∷ ls)} {y} {x} (All._∷_ {l} {ls} px p) = All++ {ll = insert y l} {lr = flatMap (insert y) ls} (∈-insert'' px) (fmInsert-resp-∈ p)
+  fmInsert-resp-∈ {.[]} All.[] = All.[]
+  fmInsert-resp-∈ {.(_ ∷ _)} (px All.∷ p) = All++ (∈-insert'' px) (fmInsert-resp-∈ p)
 
   ∈-fmInsert'' : {y x : A} → ∀ l → x ∈ l → All (x ∈_) (insert y l)
-  ∈-fmInsert'' {y} {x} .(x ∷ _) (here refl) = (there (here refl)) All.∷ ∈-map
-  ∈-fmInsert'' {y} {x} .(_ ∷ xs) (there {xs = xs} x∈l) = (there (there x∈l)) All.∷ (map∘insert-reps-∈ xs x∈l)
+  ∈-fmInsert'' .(_ ∷ _) (here refl) = (there (here refl)) All.∷ ∈-map
+  ∈-fmInsert'' .(_ ∷ xs) (there {xs = xs} x∈l) = (there (there x∈l)) All.∷ (map∘insert-reps-∈ xs x∈l)
 
   ∈-fmInsert''' : {ls : List (List A)}{y x : A} → All (x ∈_) ls → All (x ∈_) (flatMap (insert y) ls)
-  ∈-fmInsert''' {[]} {y} {x} x∈all = x∈all
-  ∈-fmInsert''' {l ∷ ls} {y} {x} (px All.∷ x∈all) = All++ {ll = insert y l} (∈-fmInsert'' l px) (∈-fmInsert''' x∈all)
+  ∈-fmInsert''' {[]} x∈all = x∈all
+  ∈-fmInsert''' {l ∷ _} (px All.∷ x∈all) = All++ (∈-fmInsert'' l px) (∈-fmInsert''' x∈all)
 
   ∈-insert-decomp : {xs : List A}{x : A} → ∀ ys → ys ∈ (insert x xs) → ys ⊆ (x ∷ xs)
   ∈-insert-decomp {[]} .(_ ∷ []) (here refl) = here refl All.∷ All.[]
-  ∈-insert-decomp {x ∷ xs} .(_ ∷ x ∷ xs) (here refl) = (here refl) All.∷ (all∈-→all∈+head ⊆-id)
-  ∈-insert-decomp {x ∷ xs} [] (there ys∈) = All.[]
-  ∈-insert-decomp {x ∷ xs} {x'} (y ∷ ys) (there ys∈) with maphead-decomp' ys∈
+  ∈-insert-decomp {_ ∷ _} .(_ ∷ _ ∷ _) (here refl) = (here refl) All.∷ (all∈-→all∈+head ⊆-id)
+  ∈-insert-decomp {_ ∷ _} [] (there ys∈) = All.[]
+  ∈-insert-decomp {_ ∷ _} (y ∷ ys) (there ys∈) with maphead-decomp' ys∈
   ...| y≡x , ys∈x'xs = there (here y≡x) All.∷ ⊆-swap (all∈-→all∈+head (∈-insert-decomp ys ys∈x'xs))
 
   ∈-fmInsert-decomp : {ls : List (List A)}{x : A} → ∀ ys → ys ∈ (flatMap (insert x) ls)
-                       → ∃[ l ] (l ∈ ls × ys ⊆ (x ∷ l))
+                      → ∃[ l ] (l ∈ ls × ys ⊆ (x ∷ l))
   ∈-fmInsert-decomp {xs ∷ _} ys ys∈ with ++→⊎ ys∈
   ...| inj₁ v = xs , here refl , ∈-insert-decomp ys v
   ...| inj₂ v with ∈-fmInsert-decomp ys v
@@ -487,7 +489,7 @@ module _ {a}{A : Set a} where
   ...| l , l∈ls , xs∈yl = l , there l∈ls , xs∈yl
 
   ∈-fmInsert-distr : {ll lr : List (List A)}{xs : List A}{x : A} → xs ∈ flatMap (insert x) (ll ++ lr)
-                      → xs ∈ flatMap (insert x) ll ++ flatMap (insert x) lr
+                     → xs ∈ flatMap (insert x) ll ++ flatMap (insert x) lr
 
   ∈-fmInsert-distr {[]} {lr} {xs} {x} xs∈xlr = xs∈xlr
   ∈-fmInsert-distr {ll ∷ lls} {[]} {xs} {x} xs∈xlr with ++→⊎{ll = insert x ll} xs∈xlr
@@ -513,11 +515,11 @@ module _ {a}{A : Set a} where
                        → l ∈ flatMap (insert x) ll ++ flatMap (insert x) lr → l ∈ flatMap (insert x) (ll ++ lr)
   ∈-fmInsert-distr⁻¹ {[]} {lr} l l∈++ = l∈++
   ∈-fmInsert-distr⁻¹ {ll ∷ lls} {lr}{x} l l∈++ with ++→⊎{ll = insert x ll ++ flatMap (insert x) lls} l∈++
-  ...| inj₂ v = ∈++ʳ {ll = insert x ll} (∈-fmInsert++ʳ{ll = lls} v)
+  ...| inj₂ v = ∈++ʳ (∈-fmInsert++ʳ{ll = lls} v)
   ...| inj₁ v
     with ++→⊎ (subst (λ u → l ∈ˡ u) (++-assoc (insert x ll) (flatMap (insert x) lls) (flatMap (insert x) lr)) (∈++ˡ  v))
   ...| inj₁ w = ∈++ˡ {ll = insert x ll} w
-  ...| inj₂ w = ∈++ʳ {ll = insert x ll} (∈-fmInsert-distr⁻¹{ll = lls}{lr} l w)
+  ...| inj₂ w = ∈++ʳ (∈-fmInsert-distr⁻¹{ll = lls}{lr} l w)
 
   ∈-insert→∈-fm : {ls : List (List A)}{y' y : A} → ∀ l → l ∈ map (y ∷_) (map (y' ∷_) ls)
                   → l ∈ flatMap (insert y) (map (y' ∷_ ) ls)
@@ -525,64 +527,32 @@ module _ {a}{A : Set a} where
   ∈-insert→∈-fm {_ ∷ _} l (there l∈) = ∈++ʳ (∈-insert→∈-fm l l∈)
 
   easylem : {z y x : A} → ∀ l → x ∷ z ∷ y ∷ l ∈ map (x ∷_) (map (z ∷_) (insert y l))
-  easylem {z} {y} {x} [] = here refl
-  easylem {z} {y} {x} (w ∷ l) = here refl
+  easylem  [] = here refl
+  easylem (_ ∷ _) = here refl
+
+  ∈-map→∈-fm : {ls : List (List A)}{y : A} → ∀ l → l ∈ map (y ∷_) ls → l ∈ flatMap (insert y) ls
+  ∈-map→∈-fm {[] ∷ ls} {y} l (here px) = here px
+  ∈-map→∈-fm {(_ ∷ _) ∷ _} l (here px) = here px
+  ∈-map→∈-fm {[] ∷ _} l (there l∈) = there (∈-map→∈-fm l l∈)
+  ∈-map→∈-fm {(_ ∷ _) ∷ _} l (there l∈) = ∈++ʳ (∈-map→∈-fm l l∈)
 
 
   ∈-map³→fm-map² : {ls : List (List A)}{y' y z : A} → ∀ l
                    → l ∈ map (y' ∷_) (map (y ∷_) (map (z ∷_) ls))
                    → l ∈ flatMap (insert y) (map (y' ∷_) (map (z ∷_) ls))
-  ∈-map³→fm-map² {l' ∷ ls} {y'} {y} {z} l (here px) = there (here px)
-  ∈-map³→fm-map² {l' ∷ ls} {y'} {y} {z} l (there l∈) = ∈++ʳ
-                                                         {ll =
-                                                          (y ∷ y' ∷ z ∷ l') ∷
-                                                          (y' ∷ y ∷ z ∷ l') ∷ map (_∷_ y') (map (_∷_ z) (insert y l'))}
-                                                         (∈-map³→fm-map² l l∈)
+  ∈-map³→fm-map² {_ ∷ _} l (here px) = there (here px)
+  ∈-map³→fm-map² {_ ∷ _} l (there l∈) = ∈++ʳ (∈-map³→fm-map² l l∈)
 
   ∈-map³→fm-map²' : {ls : List (List A)}{y' y z : A} → ∀ l
-     → l ∈ map (y' ∷_) (map (z ∷_) (map (y ∷_) ls))
-     → l ∈ flatMap (insert y) (map (y' ∷_) (map (z ∷_) ls))
-  ∈-map³→fm-map²' {l' ∷ ls} {.x} {y} {z} (x ∷ .(z ∷ y ∷ l')) (here refl) =
-    ∈++ˡ {ll = (y ∷ x ∷ z ∷ l') ∷ (x ∷ y ∷ z ∷ l') ∷ map (_∷_ x) (map (_∷_ z) (insert y l'))} (there (there (easylem l')))
-  ∈-map³→fm-map²' {l' ∷ ls} {y'} {y} {z} l (there l∈) = ∈++ʳ
-                                                          {ll =
-                                                           (y ∷ y' ∷ z ∷ l') ∷
-                                                           (y' ∷ y ∷ z ∷ l') ∷ map (_∷_ y') (map (_∷_ z) (insert y l'))}
-                                                          (∈-map³→fm-map²' l l∈)
-
-
-
-  ∈-fm-map-ins-swap : {ys : List A}{ y' y x : A} → ∀ l
-                      → l ∈ flatMap (insert x) (map (_∷_ y') (insert y ys))
-                      → l ∈ˡ (y ∷ x ∷ y' ∷ ys) ∷ (x ∷ y ∷ y' ∷ ys) ∷ map (_∷_ x) (map (_∷_ y') (insert y ys))
-                              ++ flatMap (insert y) (map (_∷_ y') (insert x ys))
-  ∈-fm-map-ins-swap {[]} {y'} {y} {x} l (here px) = there (there (here px))
-  ∈-fm-map-ins-swap {[]} {y'} {y} {x} l (there (here px)) = there (there (there (there (there (here px)))))
-  ∈-fm-map-ins-swap {[]} {y'} {y} {x} l (there (there (here px))) = there (there (there (there (here px))))
-  ∈-fm-map-ins-swap {z ∷ ys} {y'} {y} {x} l (here px) = there (there (here px))
-  ∈-fm-map-ins-swap {z ∷ ys} {y'} {y} {x} .(y' ∷ x ∷ y ∷ z ∷ ys) (there (here refl)) = ∈++ʳ
-                                                                                         {ll =
-                                                                                          (y ∷ x ∷ y' ∷ z ∷ ys) ∷
-                                                                                          (x ∷ y ∷ y' ∷ z ∷ ys) ∷
-                                                                                          (x ∷ y' ∷ y ∷ z ∷ ys) ∷
-                                                                                          map (_∷_ x) (map (_∷_ y') (map (_∷_ z) (insert y ys)))}
-                                                                                         (there (there (here refl)))
-  ∈-fm-map-ins-swap {z ∷ ys} {y'} {y} {x} l (there (there (here px))) = ∈++ʳ
-                                                                          {ll =
-                                                                           (y ∷ x ∷ y' ∷ z ∷ ys) ∷
-                                                                           (x ∷ y ∷ y' ∷ z ∷ ys) ∷
-                                                                           (x ∷ y' ∷ y ∷ z ∷ ys) ∷
-                                                                           map (_∷_ x) (map (_∷_ y') (map (_∷_ z) (insert y ys)))}
-                                                                          (there (here px))
-  ∈-fm-map-ins-swap {z ∷ ys} {y'} {y} {x} l (there (there (there l∈))) with ++→⊎ { ll = map (_∷_ y') (map (_∷_ y) (map (_∷_ z) (insert x ys)))} l∈
-  ...| inj₁ v = ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
-                            ∷ map (_∷_ x) (map (_∷_ y') (map (_∷_ z) (insert y ys)))}
-                (∈++ʳ (∈-map³→fm-map² {ls = insert x ys} l v))
-  ...| inj₂ v = {!!}
+                    → l ∈ map (y' ∷_) (map (z ∷_) (map (y ∷_) ls))
+                    → l ∈ flatMap (insert y) (map (y' ∷_) (map (z ∷_) ls))
+  ∈-map³→fm-map²' {l' ∷ _} {.x} {y} {z} (x ∷ .(z ∷ y ∷ l')) (here refl) = ∈++ˡ (there (there (easylem l')))
+  ∈-map³→fm-map²' {_ ∷ _} l (there l∈) = ∈++ʳ (∈-map³→fm-map²' l l∈)
 
 
   ∈-fm-ins : {ls : List (List A)}{y' x : A} → ∀ l → l ∈ flatMap (insert x) (map (y' ∷_) ls)
              → l ∈ map(x ∷_) (map(y' ∷_) ls) ++ map(y' ∷_) (flatMap (insert x) ls)
+
   ∈-fm-ins {_ ∷ _}  l (here px) = here px
   ∈-fm-ins {l' ∷ ls} {y'} {x} l (there l∈) with ++→⊎ l∈
   ...| inj₁ v = ∈++ʳ  (∈-map-distrˡ l v)
@@ -590,26 +560,102 @@ module _ {a}{A : Set a} where
   ...| inj₁ w = ∈++ˡ (there w)
   ...| inj₂ w = ∈++ʳ (∈-map-distrʳ {ll = insert x l'} l w)
 
+
+  ∈-map-ins : {ls : List (List A)}{y : A} → ∀ l → l ∈ ls → y ∷ l ∈ map(y ∷_) ls
+  ∈-map-ins {l' ∷ _} .l' (here refl) = here refl
+  ∈-map-ins {_ ∷ _} l (there l∈) = there (∈-map-ins l l∈)
+
+
+  map-fm-comm : {ls : List (List A)}{y' y : A}
+                → ∀ l → l ∈ map(y' ∷_) (flatMap (insert y) ls) → l ∈ flatMap (insert y) (map(y' ∷_) ls)
+
+  map-fm-comm {l' ∷ ls} {y'} {y} l l∈ with ++→⊎{ll = map (y' ∷_) (insert y l')} (∈-map-distr{ll = insert y l'} l l∈)
+  ...| inj₁ v = there (∈++ˡ{ll = map (y' ∷_) (insert y l')} v)
+  ...| inj₂ v = ∈++ʳ {ll = (y ∷ y' ∷ l') ∷ map (y' ∷_) (insert y l')} (map-fm-comm {ls} l v)
+
+
+  ∈-fm-map-ins-swap : {ys : List A}{ y' y x : A} → ∀ l
+                      → l ∈ flatMap (insert x) (map (y' ∷_) (insert y ys))
+                      → l ∈ (y ∷ x ∷ y' ∷ ys) ∷ (x ∷ y ∷ y' ∷ ys) ∷ map (x ∷_) (map (y' ∷_) (insert y ys))
+                            ++ flatMap (insert y) (map (y' ∷_) (insert x ys))
+
+  ∈-fm-map-ins-swap {[]} _ (here px) = there (there (here px))
+  ∈-fm-map-ins-swap {[]} _ (there (here px)) = there (there (there (there (there (here px)))))
+  ∈-fm-map-ins-swap {[]} _ (there (there (here px))) = there (there (there (there (here px))))
+  ∈-fm-map-ins-swap {_ ∷ _} _ (here px) = there (there (here px))
+  ∈-fm-map-ins-swap {z ∷ ys} {y'} {y} {x} .(y' ∷ x ∷ y ∷ z ∷ ys) (there (here refl)) =
+    ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
+               ∷ map (x ∷_) (map (y' ∷_) (map (_∷_ z) (insert y ys)))} (there (there (here refl)))
+  ∈-fm-map-ins-swap {z ∷ ys} {y'} {y} {x} l (there (there (here px))) =
+    ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
+               ∷ map (x ∷_) (map (y' ∷_) (map (_∷_ z) (insert y ys)))} (there (here px))
+  ∈-fm-map-ins-swap {z ∷ ys} {y'} {y} {x} l (there (there (there l∈)))
+    with ++→⊎ l∈
+  ...| inj₁ v = ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
+                            ∷ map (x ∷_) (map (y' ∷_) (map (z ∷_) (insert y ys)))}
+                (∈++ʳ (∈-map³→fm-map² {ls = insert x ys} l v))
+  ...| inj₂ v
+    with ++→⊎ (∈-fm-ins{ls = map (z ∷_)(insert y ys)} l v)
+  ...| inj₁ w = ∈++ˡ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
+                           ∷ map (x ∷_) (map (y' ∷_) (map (_∷_ z) (insert y ys)))} (there (there (there w)))
+  ...| inj₂ w = ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
+                           ∷ map (x ∷_) (map (y' ∷_) (map (_∷_ z) (insert y ys)))} (there goal)
+    where
+    ξ : ∀ l' → l' ∈ flatMap (insert x) (map (z ∷_) (insert y ys))
+             → l' ∈ (y ∷ x ∷ z ∷ ys) ∷ (x ∷ y ∷ z ∷ ys) ∷ map (x ∷_) (map (z ∷_) (insert y ys))
+                     ++ flatMap (insert y) (map (z ∷_) (insert x ys))
+    ξ l' l'∈ = ∈-fm-map-ins-swap  l' l'∈
+    ζ : ∃[ l' ] (l' ∈ flatMap (insert x) (map (z ∷_) (insert y ys)) × (y' ∷ l' ≡ l))
+    ζ = maphead-decomp{ls = flatMap (insert x) (map (z ∷_) (insert y ys))}{l} w
+    l' : List A
+    l' = proj₁ ζ
+    l'∈ : l' ∈ flatMap (insert x) (map (z ∷_) (insert y ys))
+    l'∈ = proj₁ (proj₂ ζ)
+    y'l'l : y' ∷ l' ≡ l
+    y'l'l = proj₂ (proj₂ ζ)
+
+    goal : l ∈ (y' ∷ y ∷ x ∷ z ∷ ys) ∷ (y' ∷ x ∷ y ∷ z ∷ ys)
+               ∷ map (y' ∷_) (map (x ∷_) (map (z ∷_) (insert y ys)))
+               ++ flatMap (insert y) (map(y' ∷_) (map(z ∷_) (insert x ys)))
+
+    goal with ++→⊎{ll = (y ∷ x ∷ z ∷ ys) ∷ (x ∷ y ∷ z ∷ ys) ∷ map (x ∷_) (map (z ∷_) (insert y ys))} (ξ l' l'∈)
+    ... | inj₁ (here px) =
+      ∈++ˡ {ll = (y' ∷ y ∷ x ∷ z ∷ ys) ∷ (y' ∷ x ∷ y ∷ z ∷ ys)
+                 ∷ map (y' ∷_) (map (x ∷_) (map (z ∷_) (insert y ys)))}
+           (here (sym (subst (λ r → y' ∷ r ≡ l) px y'l'l)))
+    ... | inj₁ (there (here px)) = there (here (sym (subst (λ r → y' ∷ r ≡ l) px y'l'l)))
+    ... | inj₁ (there (there u)) =
+      ∈++ˡ {ll = (y' ∷ y ∷ x ∷ z ∷ ys) ∷ (y' ∷ x ∷ y ∷ z ∷ ys)
+                 ∷ map (y' ∷_) (map (x ∷_) (map (_∷_ z) (insert y ys)))}
+                 (there (there (subst (λ r → r ∈ map (y' ∷_) (map (x ∷_) (map (_∷_ z) (insert y ys)))) y'l'l γ)))
+      where
+      γ :  (y' ∷ l') ∈ map (y' ∷_) (map (x ∷_) (map (z ∷_) (insert y ys)))
+      γ = ∈-map-ins {ls = map (x ∷_) (map (z ∷_) (insert y ys))} l' u
+    ...| inj₂ u =
+      ∈++ʳ ( map-fm-comm {ls = map (_∷_ z) (insert x ys)} l
+               (subst (λ r → r ∈ map (y' ∷_) (flatMap (insert y) (map (_∷_ z) (insert x ys))))
+                          y'l'l (∈-map-ins {ls =(flatMap (insert y) (map (_∷_ z) (insert x ys)))} l' u)))
+
   ∈-insert-swap : {ys : List A}{y x : A} → ∀ l → l ∈ flatMap (insert x) (insert y ys)
                   → l ∈ flatMap (insert y) (insert x ys)
   ∈-insert-swap {[]}  l (here px) = there (here px)
   ∈-insert-swap {[]}  l (there (here px)) = here px
   ∈-insert-swap {_ ∷ _} l (here px) = there (here px)
   ∈-insert-swap {_ ∷ _} l (there (here px)) = here px
-  ∈-insert-swap {_ ∷ _} l (there (there l∈)) with ++→⊎  l∈
-  ...| inj₁ v = there (there (∈++ʳ  (∈-insert→∈-fm l v)))
+  ∈-insert-swap {_ ∷ _} l (there (there l∈)) with ++→⊎ l∈
+  ...| inj₁ v = ∈++ʳ (∈-map→∈-fm l v)
   ...| inj₂ v = ∈-fm-map-ins-swap l v
 
   ∈-fmInsert-swap : {ls : List (List A)}{y x : A} → ∀ l → l ∈ flatMap (insert x) (flatMap (insert y) ls)
                      → l ∈ flatMap (insert y) (flatMap (insert x) ls)
-  ∈-fmInsert-swap {l' ∷ ls} {y} {x} l l∈xyls with ++→⊎{ll = flatMap (insert x) (insert y l')} (∈-fmInsert-distr {ll = insert y l'} {lr = flatMap (insert y) ls} l∈xyls)
+  ∈-fmInsert-swap {l' ∷ ls} {y} {x} l l∈xyls with ++→⊎ (∈-fmInsert-distr {ll = insert y l'} l∈xyls)
   ...| inj₁ v = ∈-fmInsert-distr⁻¹{ll = insert x l'} l (∈++ˡ (∈-insert-swap{l'} l v))
-  ...| inj₂ v = ∈-fmInsert-distr⁻¹ {ll = insert x l'} l (∈++ʳ  (∈-fmInsert-swap{ls} l v))
+  ...| inj₂ v = ∈-fmInsert-distr⁻¹{ll = insert x l'} l (∈++ʳ (∈-fmInsert-swap{ls} l v))
 
   ∈→∷∈fmInsert : {ls : List (List A)}{x : A} → ∀ l → l ∈ ls → x ∷ l ∈ flatMap (insert x) ls
-  ∈→∷∈fmInsert {[] ∷ ls} .[] (here refl) = here refl
+  ∈→∷∈fmInsert {[] ∷ _} .[] (here refl) = here refl
   ∈→∷∈fmInsert {(y ∷ _) ∷ _} .(y ∷ _) (here refl) = here refl
-  ∈→∷∈fmInsert {_ ∷ ls} l (there l∈ls) = ∈++ʳ (∈→∷∈fmInsert l l∈ls)
+  ∈→∷∈fmInsert {_ ∷ _} l (there l∈ls) = ∈++ʳ (∈→∷∈fmInsert l l∈ls)
 
 --------------------------------------
 ------- properties of sublists -------
@@ -724,7 +770,7 @@ module _ {a}{A : Set a} where
   ∈-subperm-addhead {_ ∷ ys} (here refl) y∉xs xs∈sp = ∈++ˡ (∈-fmInsertNew (∈-insert-cancelˡ{subpermutations ys} y∉xs xs∈sp))
   ∈-subperm-addhead {_ ∷ _} {xs}  (there x∈ys) x∉xs xs∈sp with ++→⊎ xs∈sp
   ...| inj₁ v = ∈++ˡ (∈-fm-subperm-addhead x∈ys x∉xs v)
-  ...| inj₂ v = ∈++ʳ (∈-subperm-addhead x∈ys x∉xs v) 
+  ...| inj₂ v = ∈++ʳ (∈-subperm-addhead x∈ys x∉xs v)
 
 -------------------------------------------------------------
 ------------  xs ⊆ ys  ⇔  xs ∈ subpermutations ys  ----------
