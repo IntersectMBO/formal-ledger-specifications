@@ -60,25 +60,24 @@ The symbols mean the following:
   This is equivalent to \AgdaFunction{vote} 2 (or any other number above 1).
 \end{itemize}
 
-There are two rows in this table which have a function computing the
+Two rows in this table contain functions that compute the
 \DRep and \SPO thresholds simultaneously: the rows for \NewCommittee
 and \ChangePParams.
 
-For \NewCommittee, there can be different thresholds on whether the
+For \NewCommittee, there can be different thresholds depending on whether the
 system is in a state of no-confidence or not. This information is
-provided via the \AgdaArgument{ccThreshold} argument: is the system is in a state of
-no-confidence, \nothing is given as that argument.
+provided via the \AgdaArgument{ccThreshold} argument: if the system is in a state of no-confidence, then \AgdaArgument{ccThreshold} is set to \nothing.
 
 In case of the \ChangePParams action, the thresholds further depend on
 what groups that action is associated with. \pparamThreshold
-associates a pair of threshold to each individual group. Since an
+associates a pair of thresholds to each individual group. Since an
 individual update can contain multiple groups, the actual thresholds
 are then given by taking the maximum of all those thresholds.
 
 Note that each protocol parameter belongs to exactly one of the four
 groups that have a \DRep threshold, so a \DRep vote will always be
-required. Any protocol parameter may or may not be in the
-\SecurityGroup, so a \SPO vote may not be required.
+required. A protocol parameter may or may not be in the
+\SecurityGroup, so an \SPO vote may not be required.
 
 Each of the $P_x$ and $Q_x$ are protocol parameters.
 \begin{figure*}[h]
@@ -353,7 +352,7 @@ DReps, regular DReps and SPOs.
   and is a helper for definitions further down.
 
 \item if a \CC member has not yet registered a hot key, has \expired,
-  or has resigned, then \actualCCVote returns \abstain; if those none
+  or has resigned, then \actualCCVote returns \abstain; if none
   of these conditions is met, then
   \begin{itemize}
     \item if the \CC member has voted, then that vote is returned;
@@ -422,7 +421,7 @@ RATIFY.
 
   \item \acceptedStakeRatio is the ratio of accepted stake. It is
     computed as the ratio of \yes votes over the votes that didn't
-    \abstain. This is equivalent to the sum of \yes and \no votes. The
+    \abstain. The latter is equivalent to the sum of \yes and \no votes. The
     special division symbol \AgdaFunction{/₀} indicates that in case
     of a division by 0, the numbers 0 should be returned. This implies
     that in the absence of stake, an action can only pass if the
@@ -487,9 +486,9 @@ abstract
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-defs-ii} defines the functions required to
-deal with delays. An action can either be delayed if the action
-contained in \EnactState isn't the one the action is building on top
+Figure~\ref{fig:defs:ratify-defs-ii} defines functions that
+deal with delays. A given action can either be delayed if the action
+contained in \EnactState isn't the one the given action is building on top
 of, or if a previous action was a \delayingAction.
 \begin{code}[hide]
 private variable

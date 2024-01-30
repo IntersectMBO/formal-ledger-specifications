@@ -17,8 +17,7 @@ open import Ledger.GovernanceActions gs
 Figure~\ref{fig:enact-defs} contains some definitions required to
 define the ENACT transition system. \EnactEnv is the environment and
 \EnactState the state of ENACT, which enacts a governance action. All
-governance actions except \TreasuryWdrl and \Info simply have the
-effect of modifying \EnactState, which of course can have further
+governance actions except \TreasuryWdrl and \Info modify \EnactState, which of course can have further
 consequences. Also, enacting these governance actions is the
 \emph{only} way of modifying \EnactState. The \withdrawals field of
 \EnactState is special in that it is ephemeral---ENACT accumulates
@@ -78,8 +77,7 @@ required). The exceptions are \NewCommittee and \TreasuryWdrl:
 
 \begin{itemize}
 \item \NewCommittee requires that maximum terms are respected, and
-\item \TreasuryWdrl requires that the sum of all withdrawals
-  (old and new) is still an amount covered by the treasury.
+\item \TreasuryWdrl requires that the treasury is able to cover the sum of all withdrawals (old and new).
 \end{itemize}
 
 \begin{figure*}[h]

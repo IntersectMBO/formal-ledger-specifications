@@ -127,10 +127,7 @@ new certificates relating to DReps and the constitutional committee.
 \item \GOVCERTderegdrep deregisters a DRep.
 \item \GOVCERTccreghot registers a hot credential for constitutional
   committee members. We check that the cold key did not previously
-  resign from the committee. Note that we intentionally do not check
-  if the cold key is actually part of the committee. Since a registered
-  hot key does not carry any voting power if the corresponding cold key
-  is not in the committee, there is no danger in doing this. By allowing
+  resign from the committee. Note that we intentionally do not check if the cold key is actually part of the committee; if it isn't, then the corresponding hot key does not carry any voting power. By allowing
   this, a newly elected member of the constitutional committee can
   immediately delegate their vote to a hot key and use it to vote. Since
   votes are counted after previous actions have been enacted, this allows
@@ -197,7 +194,7 @@ CERTBASE as the base case. CERTBASE does the following:
   only happen from credentials that have delegated their voting power;
 \item set the rewards of the credentials that withdrew funds to zero;
 \item and set the activity timer of all DReps that voted to \drepActivity
-  many epochs in the future.
+  epochs in the future.
 \end{itemize}
 
 \begin{figure*}[h]

@@ -69,7 +69,7 @@ open PParams
 Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define
 functions needed for the UTxO transition system. Note the special
 multiplication symbol \AgdaFunction{*↓} used in
-Figure~\ref{fig:functions:utxo}: it means to multiply and round down
+Figure~\ref{fig:functions:utxo}: it means multiply and round down
 the result.
 
 \begin{NoConway}

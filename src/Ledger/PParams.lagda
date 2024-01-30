@@ -127,8 +127,8 @@ to the general purpose that each parameter serves.
 
 The first four groups have the property that every protocol parameter
 is associated to precisely one of these groups. The \SecurityGroup is
-special: every protocol parameter may or may not be in the
-\SecurityGroup. So, every protocol parameter belongs to at least one
+special: a protocol parameter may or may not be in the
+\SecurityGroup. So, each protocol parameter belongs to at least one
 and at most two groups.
 
 The purpose of the groups is to determine voting thresholds for
