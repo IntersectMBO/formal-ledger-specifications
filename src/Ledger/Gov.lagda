@@ -12,18 +12,13 @@ module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
 open import Ledger.GovernanceActions gs hiding (yes; no)
 
 open import Data.List.Ext renaming (_⊆_ to _⊆ˡ_) hiding (insert)
-import Data.List.Ext.Subperm as Subperm
-open import Data.List.Ext.Subperm.Properties
-open import Data.List.Ext.Properties using (⊆-id; ∃uniqueSubset⇔∃uniqueSubperm; ∃⇔Any)
+open import Data.List.Ext.Properties using (⊆id; ∃uniqueSubset⇔∃uniqueSubperm; ∃⇔Any)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Relation.Nullary.Decidable using (_×-dec_)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
-
--- imports which may be helpful in filling remaining holes:
---   open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist; [])
 
 \end{code}
 \begin{figure*}[h]
@@ -92,17 +87,14 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.act
 
 open Equivalence
 
-module _ where
-  open Subperm
-  -- ∃?⇔Any? :
-  ∃?-connecting-subperm' : ∀ {u}{v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
-  ∃?-connecting-subperm' {u}{v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
+∃?-connecting-subperm' : ∀ {u}{v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
+∃?-connecting-subperm' {u}{v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
 
-  ∃?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (∃[ l ]((l ∈ˡ subpermutations L) × Unique l × l connects u to v))
-  ∃?-connecting-subperm L = from (map′⇔ ∃⇔Any) (∃?-connecting-subperm' L)
+∃?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (∃[ l ]((l ∈ˡ subpermutations L) × Unique l × l connects u to v))
+∃?-connecting-subperm L = from (map′⇔ ∃⇔Any) (∃?-connecting-subperm' L)
 
-  ∃?-connecting-subset : ∀ {u}{v} → ∀ L → Dec (∃[ l ](l ⊆ˡ L × Unique l × l connects u to v))
-  ∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
+∃?-connecting-subset : ∀ {u}{v} → ∀ L → Dec (∃[ l ](l ⊆ˡ L × Unique l × l connects u to v))
+∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
 
 enactable? : ∀ eState aidPairs aidNew×st → Dec(enactable eState aidPairs aidNew×st)
 enactable? eState aidPairs (aidNew , as) with (getHashES eState (GovActionState.action as))
