@@ -134,8 +134,14 @@ threshold pp ccThreshold' = λ where
     pparamThreshold GovernanceGroup  = vote P5d  , noVote
     pparamThreshold SecurityGroup    = noVote    , vote Q5e
 
-    P5 : PParamsUpdate → ℚ
-    P5 ppu = maximum (mapˢ pparamThreshold (updateGroups ppu))
+    maxThreshold : ℙ (Maybe ℚ) → Maybe ℚ
+    maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
+      where
+        comb : Maybe ℚ → Maybe ℚ → Maybe ℚ
+        comb (just x) (just y) = just (x Data.Rational.⊔ y)
+        comb (just x) nothing  = just x
+        comb nothing  (just y) = just y
+        comb nothing  nothing  = nothing
 
     P5 : PParamsUpdate → Maybe ℚ
     P5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))

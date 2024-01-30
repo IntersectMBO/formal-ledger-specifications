@@ -29,7 +29,6 @@ open import Data.Product using (map₂)
 open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
--- open import Relation.Unary using () renaming (Decidable to Decidable¹)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 
 open Equivalence
@@ -357,7 +356,7 @@ Subperm→SetIncl {l = _ ∷ _} {L} (x∈L ∷ Sp) a∈l with from ∈-fromList 
 sublists⊆subpermutations : {l x : List A} → Sublist _≡_ x l → Subperm x l
 sublists⊆subpermutations Sublist.[] = []
 sublists⊆subpermutations (Sublist._∷ʳ_ _ x⊆l) = _ ∷ʳ (sublists⊆subpermutations x⊆l)
-sublists⊆subpermutations (Sublist._∷_ x x⊆l) = (here x) ∷ (_ ∷ʳ (sublists⊆subpermutations x⊆l))
+sublists⊆subpermutations (Sublist._∷_ x x⊆l) = (here x) ∷ (_ ∷ʳ sublists⊆subpermutations x⊆l)
 
 Subperm⇔⊆ : ∀{l L : List A} → Subperm l L ⇔ l ⊆ˡ L
 Subperm⇔⊆ {l = l} {L} = mk⇔ (λ h → to sublist-⇔ (Subperm→SetIncl h)) λ h → SetIncl→Subperm (from sublist-⇔ h)
