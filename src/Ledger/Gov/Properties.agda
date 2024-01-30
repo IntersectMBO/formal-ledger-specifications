@@ -6,11 +6,15 @@ open import Data.List.Relation.Unary.Any
 
 open import Ledger.Prelude hiding (Any; any?)
 open import Ledger.Types.GovStructure
+open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Gov.Properties (gs : _) (open GovStructure gs hiding (epoch)) where
+module Ledger.Gov.Properties
+  (txs : _) (open TransactionStructure txs using (govStructure))
+  (open GovStructure govStructure hiding (epoch)) where
 
-open import Ledger.Gov gs
-open import Ledger.GovernanceActions gs hiding (yes; no)
+open import Ledger.Gov txs
+open import Ledger.GovernanceActions govStructure hiding (yes; no)
+open import Ledger.Ratify txs
 
 open Computational ⦃...⦄
 open Equivalence

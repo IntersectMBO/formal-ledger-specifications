@@ -166,7 +166,6 @@ instance _ = HSGovStructure
 
 open import Ledger.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
 open import Ledger.Deleg it hiding (PoolParams; DCert)
-open import Ledger.Gov it
 
 HSTransactionStructure : TransactionStructure
 HSTransactionStructure = record
@@ -182,6 +181,7 @@ HSTransactionStructure = record
 instance _ = HSTransactionStructure
 
 open import Ledger.Abstract it
+open import Ledger.Gov it
 
 HSAbstractFunctions : AbstractFunctions
 HSAbstractFunctions = record
