@@ -4,9 +4,6 @@ module Data.List.Ext where
 open import Data.List using (List; [_]; _++_; map; head; drop; concatMap)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Relation.Unary.All using (All)
--- open import Data.List.Relation.Binary.Sublist.Heterogeneous using (Sublist; _∷ʳ_)
---   renaming (minimum to minˡ) -- using (drop-Sublist)
-
 open import Data.Maybe using (Maybe)
 open import Data.Nat using (ℕ)
 open import Function using (_∘_)
@@ -37,10 +34,6 @@ l ⊆ l' = All (_∈ l') l
 sublists : List A → List (List A)
 sublists [] = [ [] ]
 sublists (x ∷ xs) = map (x ∷_) (sublists xs) ++ sublists xs
-
-allSublists : List (List A) → List (List A)
-allSublists [] = [ [] ]
-allSublists (l ∷ ls) = sublists l ++ allSublists ls
 
 -- insert the given element in every position of the given list
 insert : A → List A → List (List A)

@@ -87,17 +87,17 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.act
 
 open Equivalence
 
-∃?-connecting-subperm' : ∀ {u}{v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
-∃?-connecting-subperm' {u}{v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
+any?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
+any?-connecting-subperm {u}{v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
 
-∃?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (∃[ l ]((l ∈ˡ subpermutations L) × Unique l × l connects u to v))
-∃?-connecting-subperm L = from (map′⇔ ∃⇔Any) (∃?-connecting-subperm' L)
+∃?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (∃[ l ] l ∈ˡ subpermutations L × Unique l × l connects u to v)
+∃?-connecting-subperm L = from (map′⇔ ∃⇔Any) (any?-connecting-subperm L)
 
 ∃?-connecting-subset : ∀ {u}{v} → ∀ L → Dec (∃[ l ](l ⊆ˡ L × Unique l × l connects u to v))
 ∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
 
 enactable? : ∀ eState aidPairs aidNew×st → Dec(enactable eState aidPairs aidNew×st)
-enactable? eState aidPairs (aidNew , as) with (getHashES eState (GovActionState.action as))
+enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as)
 ... | nothing = yes tt
 ... | just aidOld = from (∃?-sublist-⇔ th) (∃?-connecting-subset aidPairs)
 

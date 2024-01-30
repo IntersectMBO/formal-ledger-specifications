@@ -387,24 +387,24 @@ module _ {a}{A : Set a} where
   map∷∘insert-comm : {ls : List (List A)}{y' y : A}
                 → ∀ l → l ∈ map(y' ∷_) (flatMap (insert y) ls) → l ∈ flatMap (insert y) (map(y' ∷_) ls)
   map∷∘insert-comm {l' ∷ ls} {y'} {y} l l∈ with ++→⊎{ll = map (y' ∷_) (insert y l')} (map∷distr++{ll = insert y l'} l l∈)
-  ...| inj₁ v = there (∈++ˡ{ll = map (y' ∷_) (insert y l')} v)
-  ...| inj₂ v = ∈++ʳ {ll = (y ∷ y' ∷ l') ∷ map (y' ∷_) (insert y l')} (map∷∘insert-comm {ls} l v)
+  ...| inj₁ v = there (∈++ˡ v)
+  ...| inj₂ v = ∈++ʳ (map∷∘insert-comm {ls} l v)
 
-  insert∘map-swap : {ys : List A}{ y' y x : A} → ∀ l
-                      → l ∈ flatMap (insert x) (map (y' ∷_) (insert y ys))
-                      → l ∈ (y ∷ x ∷ y' ∷ ys) ∷ (x ∷ y ∷ y' ∷ ys) ∷ map (x ∷_) (map (y' ∷_) (insert y ys))
-                            ++ flatMap (insert y) (map (y' ∷_) (insert x ys))
-  insert∘map-swap {[]} _ (here px) = there (there (here px))
-  insert∘map-swap {[]} _ (there (here px)) = there (there (there (there (there (here px)))))
-  insert∘map-swap {[]} _ (there (there (here px))) = there (there (there (there (here px))))
-  insert∘map-swap {_ ∷ _} _ (here px) = there (there (here px))
-  insert∘map-swap {z ∷ ys} {y'} {y} {x} .(y' ∷ x ∷ y ∷ z ∷ ys) (there (here refl)) =
+  insert-map-swap : {ys : List A}{y' y x : A} → ∀ l
+                    → l ∈ flatMap (insert x) (map (y' ∷_) (insert y ys))
+                    → l ∈ (y ∷ x ∷ y' ∷ ys) ∷ (x ∷ y ∷ y' ∷ ys) ∷ map (x ∷_) (map (y' ∷_) (insert y ys))
+                           ++ flatMap (insert y) (map (y' ∷_) (insert x ys))
+  insert-map-swap {[]} _ (here px) = there (there (here px))
+  insert-map-swap {[]} _ (there (here px)) = there (there (there (there (there (here px)))))
+  insert-map-swap {[]} _ (there (there (here px))) = there (there (there (there (here px))))
+  insert-map-swap {_ ∷ _} _ (here px) = there (there (here px))
+  insert-map-swap {z ∷ ys} {y'} {y} {x} .(y' ∷ x ∷ y ∷ z ∷ ys) (there (here refl)) =
     ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
-               ∷ map (x ∷_) (map (y' ∷_) (map (_∷_ z) (insert y ys)))} (there (there (here refl)))
-  insert∘map-swap {z ∷ ys} {y'} {y} {x} l (there (there (here px))) =
+               ∷ map (x ∷_) (map (y' ∷_) (map (z ∷_) (insert y ys)))} (there (there (here refl)))
+  insert-map-swap {z ∷ ys} {y'} {y} {x} l (there (there (here px))) =
     ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
-               ∷ map (x ∷_) (map (y' ∷_) (map (_∷_ z) (insert y ys)))} (there (here px))
-  insert∘map-swap {z ∷ ys} {y'} {y} {x} l (there (there (there l∈)))
+               ∷ map (x ∷_) (map (y' ∷_) (map (z ∷_) (insert y ys)))} (there (here px))
+  insert-map-swap {z ∷ ys} {y'} {y} {x} l (there (there (there l∈)))
     with ++→⊎ l∈
   ...| inj₁ v = ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
                             ∷ map (x ∷_) (map (y' ∷_) (map (z ∷_) (insert y ys)))}
@@ -412,9 +412,9 @@ module _ {a}{A : Set a} where
   ...| inj₂ v
     with ++→⊎ (ins∘map∷→map∷²++fm{ls = map (z ∷_)(insert y ys)} l v)
   ...| inj₁ w = ∈++ˡ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
-                           ∷ map (x ∷_) (map (y' ∷_) (map (_∷_ z) (insert y ys)))} (there (there (there w)))
+                           ∷ map (x ∷_) (map (y' ∷_) (map (z ∷_) (insert y ys)))} (there (there (there w)))
   ...| inj₂ w = ∈++ʳ {ll = (y ∷ x ∷ y' ∷ z ∷ ys) ∷ (x ∷ y ∷ y' ∷ z ∷ ys) ∷ (x ∷ y' ∷ y ∷ z ∷ ys)
-                           ∷ map (x ∷_) (map (y' ∷_) (map (_∷_ z) (insert y ys)))} (there goal)
+                           ∷ map (x ∷_) (map (y' ∷_) (map (z ∷_) (insert y ys)))} (there goal)
     where
     l' : List A
     l' = proj₁ (map∷decomp w)
@@ -426,7 +426,8 @@ module _ {a}{A : Set a} where
                ∷ map (y' ∷_) (map (x ∷_) (map (z ∷_) (insert y ys)))
                ++ flatMap (insert y) (map(y' ∷_) (map(z ∷_) (insert x ys)))
 
-    goal with ++→⊎{ll = (y ∷ x ∷ z ∷ ys) ∷ (x ∷ y ∷ z ∷ ys) ∷ map (x ∷_) (map (z ∷_) (insert y ys))} (insert∘map-swap l' l'∈)
+    goal with ++→⊎ {ll = (y ∷ x ∷ z ∷ ys) ∷ (x ∷ y ∷ z ∷ ys) ∷ map (x ∷_) (map (z ∷_) (insert y ys))}
+                   (insert-map-swap l' l'∈)
     ... | inj₁ (here px) =
       ∈++ˡ {ll = (y' ∷ y ∷ x ∷ z ∷ ys) ∷ (y' ∷ x ∷ y ∷ z ∷ ys)
                  ∷ map (y' ∷_) (map (x ∷_) (map (z ∷_) (insert y ys)))}
@@ -452,10 +453,10 @@ module _ {a}{A : Set a} where
   insert²-swap {_ ∷ _} l (there (here px)) = here px
   insert²-swap {_ ∷ _} l (there (there l∈)) with ++→⊎ l∈
   ...| inj₁ v = ∈++ʳ (l∈map∷→l∈fm∘insert l v)
-  ...| inj₂ v = insert∘map-swap l v
+  ...| inj₂ v = insert-map-swap l v
 
   insert²-swap' : {ls : List (List A)}{y x : A} → ∀ l → l ∈ flatMap (insert x) (flatMap (insert y) ls)
-                     → l ∈ flatMap (insert y) (flatMap (insert x) ls)
+                  → l ∈ flatMap (insert y) (flatMap (insert x) ls)
   insert²-swap' {l' ∷ ls} {y} {x} l l∈xyls with ++→⊎ (insert++distr {ll = insert y l'} l∈xyls)
   ...| inj₁ v = insert++distr⁻¹{ll = insert x l'} l (∈++ˡ (insert²-swap{l'} l v))
   ...| inj₂ v = insert++distr⁻¹{ll = insert x l'} l (∈++ʳ (insert²-swap'{ls} l v))
