@@ -120,4 +120,8 @@ open import Interface.IsCommutativeMonoid
 indexedSumᵛ' : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → ⦃ IsCommutativeMonoid' 0ℓ 0ℓ C ⦄ → (B → C) → A ⇀ B → C
 indexedSumᵛ' f m = indexedSumᵛ ⦃ fromCommMonoid' it ⦄ f (m ᶠᵐ)
 
+indexedSum' : ⦃ DecEq A ⦄ → ⦃ IsCommutativeMonoid' 0ℓ 0ℓ B ⦄ → (A → B) → ℙ A → B
+indexedSum' f s = indexedSum ⦃ fromCommMonoid' it ⦄ f (s ᶠˢ)
+
 syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
+syntax indexedSum'  (λ a → x) m = ∑ˢ[ a ← m ] x

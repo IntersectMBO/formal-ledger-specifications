@@ -31,6 +31,25 @@ private
   isNewCommittee (TreasuryWdrl x)         = no λ()
   isNewCommittee Info                     = no λ()
 
+  instance
+    needsPolicy₁ : {a : GovAction} → (∃[ u ] a ≡ ChangePParams u) ⁇
+    needsPolicy₁ {NoConfidence}           = ⁇ no λ()
+    needsPolicy₁ {NewCommittee new rem q} = ⁇ no λ()
+    needsPolicy₁ {NewConstitution x x₁}   = ⁇ no λ()
+    needsPolicy₁ {TriggerHF x}            = ⁇ no λ()
+    needsPolicy₁ {ChangePParams x}        = ⁇ yes (-, refl)
+    needsPolicy₁ {TreasuryWdrl x}         = ⁇ no λ()
+    needsPolicy₁ {Info}                   = ⁇ no λ()
+
+    needsPolicy₂ : {a : GovAction} → (∃[ w ] a ≡ TreasuryWdrl w) ⁇
+    needsPolicy₂ {NoConfidence}           = ⁇ no λ()
+    needsPolicy₂ {NewCommittee new rem q} = ⁇ no λ()
+    needsPolicy₂ {NewConstitution x x₁}   = ⁇ no λ()
+    needsPolicy₂ {TriggerHF x}            = ⁇ no λ()
+    needsPolicy₂ {ChangePParams x}        = ⁇ no λ()
+    needsPolicy₂ {TreasuryWdrl x}         = ⁇ yes (-, refl)
+    needsPolicy₂ {Info}                   = ⁇ no λ()
+
   hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ TriggerHF v' × pvCanFollow v' v)
   hasPrev record { action = NoConfidence }          v = no λ ()
   hasPrev record { action = (NewCommittee _ _ _) }  v = no λ ()
@@ -62,29 +81,40 @@ private
 
 instance
   Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_ String
-  Computational-GOV' .computeProof (⟦ _ , _ , pparams , _ ⟧ᵍ , k) s (inj₁ record { gid = aid ; role = role }) =
+  Computational-GOV' .computeProof (⟦ _ , _ , pparams , _ , _ ⟧ᵍ , k) s
+                                   (inj₁ record { gid = aid ; voter = (role , _) }) =
     case lookupActionId pparams role aid s of λ where
-      (yes p) →
-        case Any↔ .from p of λ where
-          (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem) cV)
+      (yes p) → case Any↔ .from p of λ where
+        (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem , cV))
       (no _)  → failure "Failed at GOV'"
-  Computational-GOV' .computeProof (⟦ _ , epoch , pparams , e ⟧ᵍ , k) s (inj₂ prop@(record { action = a ; deposit = d })) =
-    case ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e ¿
+  Computational-GOV' .computeProof (⟦ _ , epoch , pparams , ppolicy , e ⟧ᵍ , k) s
+                                   (inj₂ prop@(record { action = a ; deposit = d ; policy = p })) =
+    case ¿ actionWellFormed a ≡ true
+         × d ≡ pparams .PParams.govActionDeposit
+         × validHFAction prop s e
+         × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy) ¿
          ,′ isNewCommittee a of λ where
-      (yes (wf , dep , vHFA) , yes (new , rem , q , refl)) →
+      (yes (wf , dep , vHFA , pol) , yes (new , rem , q , refl)) →
         case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
-          (yes newOk) → success (_ , GOV-Propose wf dep (λ where refl → newOk) vHFA)
+          (yes newOk) → success (_ , GOV-Propose (wf , dep , pol , (λ where refl → newOk) , vHFA))
           (no _)      → failure "GOV' failed at ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅"
-      (yes (wf , dep , vHFA) , no notNewComm) → success (_ , GOV-Propose wf dep (λ isNewComm → ⊥-elim (notNewComm (_ , _ , _ , isNewComm))) vHFA)
+      (yes (wf , dep , vHFA , pol) , no notNewComm) → success
+        (-, GOV-Propose (wf , dep , pol , (λ isNewComm → ⊥-elim (notNewComm (-, -, -, isNewComm))) , vHFA))
       _ → failure "GOV' failed at actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e"
-  Computational-GOV' .completeness (⟦ _ , _ , pparams , _ ⟧ᵍ , k) s (inj₁ record { gid = aid ; role = role }) s' (GOV-Vote mem cV)
+  Computational-GOV' .completeness (⟦ _ , _ , pparams , _ , _ ⟧ᵍ , k) s
+                                   (inj₁ record { gid = aid ; voter = (role , _) }) s' (GOV-Vote (mem , cV))
     with lookupActionId pparams role aid s
   ... | no ¬p = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
   ... | yes p with Any↔ .from p
   ...   | (_ , mem , refl , cV) = refl
-  Computational-GOV' .completeness (⟦ _ , epoch , pparams , e ⟧ᵍ , k) s (inj₂ prop@(record { action = a ; deposit = d })) s' (GOV-Propose wf dep newOk vHFA)
-    with ¿ actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e ¿ | isNewCommittee a
-  ... | no ¬p | _ = ⊥-elim (¬p (wf , dep , vHFA))
+  Computational-GOV' .completeness (⟦ _ , epoch , pparams , ppolicy , e ⟧ᵍ , k) s
+    (inj₂ prop@(record { action = a ; deposit = d ; policy = p })) s'
+    (GOV-Propose (wf , dep , pol , newOk , vHFA))
+    with ¿ actionWellFormed a ≡ true
+         × d ≡ pparams .PParams.govActionDeposit
+         × validHFAction prop s e ×
+         (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy) ¿ | isNewCommittee a
+  ... | no ¬p | _ = ⊥-elim (¬p (wf , dep , vHFA , pol))
   ... | yes _ | no notNewComm = refl
   ... | yes _ | yes (new , rem , q , refl)
    rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl

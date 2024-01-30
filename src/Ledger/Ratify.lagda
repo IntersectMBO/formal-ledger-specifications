@@ -237,10 +237,10 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
   open PParams pparams
 
   activeDReps : ℙ Credential
-  activeDReps = dom (filterᵐ (λ x → currentEpoch ≤ (proj₂ x)) dreps)
+  activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
 
   activeCC : CCData → ℙ Credential
-  activeCC (just (cc , _))  = dom (filterᵐ (Is-just ∘ proj₂) (ccHotKeys ∣ dom cc))
+  activeCC (just (cc , _))  = dom (filterᵐ (λ (_ , x) → Is-just x) (ccHotKeys ∣ dom cc))
   activeCC nothing          = ∅
 
   spos : ℙ VDeleg
@@ -253,12 +253,12 @@ actualVotes Γ pparams cc ga votes  =   mapKeys (credVoter CC) (actualCCVotes cc
 
   actualCCVotes : CCData → Credential ⇀ Vote
   actualCCVotes nothing          =  ∅
-  actualCCVotes (just (cc , q))  =  ifᵈ (ccMinSize ≤ lengthˢ (activeCC (just (cc , q))))
+  actualCCVotes (just (cc , q))  =  if ccMinSize ≤ lengthˢ (activeCC (just (cc , q)))
                                     then mapWithKey actualCCVote cc
                                     else constMap (dom cc) Vote.no
 
   roleVotes : GovRole → VDeleg ⇀ Vote
-  roleVotes r = mapKeys (uncurry credVoter) (filterᵐ ((r ≡_) ∘ proj₁ ∘ proj₁) votes)
+  roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (λ (x , _) → r ≡ proj₁ x) votes)
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
   actualSPOVotes (TriggerHF _)  = roleVotes GovRole.SPO ∪ˡ constMap spos Vote.no
@@ -308,21 +308,7 @@ The code in Figure~\ref{fig:defs:ratify-i} defines some of the functions require
   \item \actualVotes is a partial function relating delegates to the actual vote that will be counted on their behalf;
   it accomplishes this by aggregating the results of \actualCCVotes, \actualPDRepVotes, \actualSPOVotes, and \actualDRepVotes.
 \end{itemize}
-\begin{figure*}[h!]
-\begin{code}
-votedHashes : Vote → (VDeleg ⇀ Vote) → ℙ VDeleg
-votedHashes v votes = votes ⁻¹ v
 
-votedYesHashes votedAbstainHashes participatingHashes : (VDeleg ⇀ Vote) → ℙ VDeleg
-votedYesHashes       votes = votedHashes Vote.yes      votes
-votedAbstainHashes   votes = votedHashes Vote.abstain  votes
-participatingHashes  votes = votedYesHashes votes ∪ votedHashes Vote.no votes
-\end{code}
-\caption{Calculation of the votes as they will be counted}
-\label{fig:defs:ratify-ii}
-\end{figure*}
-
-The code in Figure~\ref{fig:defs:ratify-ii} defines \votedHashes, which returns the set of delegates who voted a certain way on the given governance role.
 \begin{figure*}[h!]
 \begin{code}[hide]
 abstract
@@ -347,8 +333,8 @@ abstract
   acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
     where
       acceptedStake totalStake : Coin
-      acceptedStake  = ∑[ x ← getStakeDist r cc dists ∣ votedYesHashes      votes    ] x
-      totalStake     = ∑[ x ← getStakeDist r cc dists ∣ votedAbstainHashes  votes ᶜ  ] x
+      acceptedStake  = ∑[ x ← getStakeDist r cc dists ∣ votes ⁻¹ Vote.yes        ] x
+      totalStake     = ∑[ x ← getStakeDist r cc dists ∣ votes ⁻¹ Vote.abstain ᶜ  ] x
 
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =

@@ -19,7 +19,7 @@ open import Ledger.Utxo.Properties txs abs
 instance
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String
   Computational-UTXOW = record {Go}
-    where module Go Γ s tx (let H , ⁇ H? = UTXOW-inductive-premises {tx}{s}{Γ}) where
+    where module Go Γ s tx (let H , ⁇ H? = UTXOW-inductive-premises {tx}{s}) where
 
     open Computational Computational-UTXO
       renaming (computeProof to computeProof'; completeness to completeness')

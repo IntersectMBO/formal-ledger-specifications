@@ -76,7 +76,7 @@ testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
 testTx1 :: Tx
 testTx1 = MkTx
   { body = testTxBody1
-  , wits = MkTxWitnesses { vkSigs = [(0, 1)], scripts = [] }
+  , wits = MkTxWitnesses { vkSigs = [(0, 1)], scripts = [], txdats = [], txrdmrs = [] }
   , txAD = Nothing }
 
 testTxBody2 :: TxBody
@@ -91,7 +91,7 @@ testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
 testTx2 :: Tx
 testTx2 = MkTx
   { body = testTxBody2
-  , wits = MkTxWitnesses { vkSigs = [(1, 3)], scripts = [] }
+  , wits = MkTxWitnesses { vkSigs = [(1, 3)], scripts = [], txdats = [], txrdmrs = [] }
   , txAD = Nothing }
 
 utxowSteps :: UTxOEnv -> UTxOState -> [Tx] -> ComputationResult Text UTxOState

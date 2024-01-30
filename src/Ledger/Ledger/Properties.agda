@@ -41,7 +41,7 @@ instance
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
-      govΓ  = GovEnv  ∋ ⟦ txid , epoch slot , pparams , enactState ⟧ᵍ
+      govΓ  = GovEnv  ∋ ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ
 
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
       computeProof = do

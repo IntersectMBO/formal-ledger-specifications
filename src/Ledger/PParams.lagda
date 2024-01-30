@@ -51,13 +51,13 @@ data pvCanFollow : ProtVer → ProtVer → Set where
 \begin{figure*}[h!]
 \begin{code}
 data PParamGroup : Set where
-  NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup : PParamGroup
+  NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup SecurityGroup : PParamGroup
 
 record DrepThresholds : Set where
   field P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
 
 record PoolThresholds : Set where
-  field Q1 Q2a Q2b Q4 : ℚ
+  field Q1 Q2a Q2b Q4 Q5e : ℚ
 \end{code}
 \begin{AgdaAlign}
 \begin{code}
@@ -79,6 +79,7 @@ record PParams : Set where
         a b                           : ℕ
         minUTxOValue poolDeposit      : Coin
         coinsPerUTxOWord              : Coin
+        minFeeRefScriptCoinsPerByte   : ℚ
         prices                        : Prices
 \end{code}
 \emph{Technical group}\vskip-3mm
