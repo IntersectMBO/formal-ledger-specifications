@@ -29,6 +29,10 @@ define latexToPdf =
 endef
 $(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PRE)
 	$(latexToPdf)
+$(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
+	cp $(LATEX_DIR)/conway-ledger.tex $(LATEX_DIR)/$(LEDGER)
+$(PDF_DIR)/conway-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex $(latexFiles) $(PRE)
+	$(latexToPdf)
 $(PDF_DIR)/midnight-example.pdf: $(LATEX_DIR)/$(MIDNIGHT)/PDF.tex $(latexFiles) $(PRE)
 	$(latexToPdf)
 
@@ -110,7 +114,7 @@ $(OUT_DIR)/index.html:
 
 # User commands
 .PHONY: default clean \
-  ledger.docs midnight.docs docs \
+  ledger.docs ledger.conway.docs midnight.docs docs \
   ledger.html midnight.html html \
   ledger.hs midnight.hs hs \
   ledger.hsTest midnight.hsTest hsTest \
@@ -118,6 +122,7 @@ $(OUT_DIR)/index.html:
   staticWebsite
 
 ledger.docs: $(PDF_DIR)/cardano-ledger.pdf
+ledger.conway.docs: $(PDF_DIR)/conway-ledger.pdf
 midnight.docs: $(PDF_DIR)/midnight-example.pdf
 docs: ledger.docs midnight.docs
 

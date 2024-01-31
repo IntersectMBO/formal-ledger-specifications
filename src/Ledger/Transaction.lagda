@@ -35,7 +35,7 @@ record TransactionStructure : Set₁ where
   field
 \end{code}
 
-Transactions are defined in Figure~\ref{fig:defs:utxo-shelley}. A
+Transactions are defined in Figure~\ref{fig:defs:transactions}. A
 transaction is made up of a transaction body, a collection of
 witnesses and some optional auxiliary data. Some key ingredients in
 the transaction body are:
@@ -51,7 +51,6 @@ the transaction body are:
 
 \begin{figure*}[h]
 \emph{Abstract types}
-\AgdaTarget{Ix, TxId, Epoch, AuxiliaryData}
 \begin{code}
         Ix TxId AuxiliaryData : Set
 \end{code}
@@ -99,23 +98,21 @@ the transaction body are:
   open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
   open Ledger.Deleg             govStructure public
 \end{code}
+\begin{NoConway}
 \emph{Derived types}
-\AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
 \begin{code}
-  TxIn   = TxId × Ix
-  TxOut  = Addr × Value × Maybe DataHash
-  UTxO   = TxIn ⇀ TxOut
-  Wdrl   = RwdAddr ⇀ Coin
-
-  RdmrPtr : Set
-  RdmrPtr = Tag × Ix
+  TxIn     = TxId × Ix
+  TxOut    = Addr × Value × Maybe DataHash
+  UTxO     = TxIn ⇀ TxOut
+  Wdrl     = RwdAddr ⇀ Coin
+  RdmrPtr  = Tag × Ix
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 \end{code}
+\end{NoConway}
 \emph{Transaction types}
-\AgdaTarget{TxBody, txins, txouts, txfee, txvldt, txwdrls, txup, txADhash, txsize, txid, TxWitnesses, vkSigs, scripts, Tx, body, wits, txAD}
-\begin{AgdaSuppressSpace}
+\begin{AgdaMultiCode}
 \begin{code}
   record TxBody : Set where
     field txins          : ℙ TxIn
@@ -136,7 +133,9 @@ the transaction body are:
           collateral     : ℙ TxIn
           reqSigHash     : ℙ KeyHash
           scriptIntHash  : Maybe ScriptHash
-
+\end{code}
+\begin{NoConway}
+\begin{code}
   record TxWitnesses : Set where
     field vkSigs   : VKey ⇀ Sig
           scripts  : ℙ Script
@@ -152,13 +151,14 @@ the transaction body are:
           isValid  : Bool
           txAD     : Maybe AuxiliaryData
 \end{code}
-\end{AgdaSuppressSpace}
-\caption{Definitions used in the UTxO transition system}
-\label{fig:defs:utxo-shelley}
+\end{NoConway}
+\end{AgdaMultiCode}
+\caption{Transactions and related types}
+\label{fig:defs:transactions}
 \end{figure*}
 
+\begin{NoConway}
 \begin{figure*}[h]
-\emph{Abstract functions}
 \begin{code}
   getValue : TxOut → Value
   getValue (_ , v , _) = v
@@ -179,14 +179,16 @@ the transaction body are:
     else
       nothing
     where m = setToHashMap (tx .Tx.wits .TxWitnesses.scripts)
+\end{code}
+\caption{Functions related to transactions}
+\label{fig:defs:transaction-funs}
+\end{figure*}
+\end{NoConway}
 
+\begin{code}[hide]
   isP2Script : Script → Bool
   isP2Script = is-just ∘ isInj₂
-\end{code}
-\caption{Definitions used in the UTxO transition system, continued}
-\label{fig:defs:utxo-shelley-cont}
-\end{figure*}
-\begin{code}[hide]
+
   instance
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂

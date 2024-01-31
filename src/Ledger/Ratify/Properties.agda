@@ -5,8 +5,9 @@ open import Ledger.Transaction
 
 module Ledger.Ratify.Properties (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.Gov govStructure
+open import Ledger.Gov txs
 open import Ledger.GovernanceActions.Properties govStructure
+open import Ledger.Enact govStructure
 open import Ledger.Ratify txs
 
 open Computational ⦃...⦄ hiding (computeProof; completeness)

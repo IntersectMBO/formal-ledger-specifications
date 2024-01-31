@@ -1,5 +1,10 @@
 \documentclass[11pt,a4paper,dvipsnames]{article}
 
+\usepackage{environ}
+\NewEnviron{NoConway}{%
+\BODY
+}
+
 \include{preamble}
 
 \begin{document}
@@ -44,6 +49,7 @@ open import Ledger.Ratify.Properties
 open import Ledger.Chain.Properties
 
 open import Ledger.Gov
+open import Ledger.Enact
 open import Ledger.Ratify
 
 open import Ledger.Chain
@@ -63,9 +69,10 @@ open import Ledger.EssentialAgda
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
-\include{Ledger/Ledger}
 \include{Ledger/Gov}
 \include{Ledger/Deleg}
+\include{Ledger/Ledger}
+\include{Ledger/Enact}
 \include{Ledger/Ratify}
 \include{Ledger/Epoch}
 \include{Ledger/Chain}

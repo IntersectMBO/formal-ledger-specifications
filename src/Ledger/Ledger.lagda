@@ -14,7 +14,8 @@ module Ledger.Ledger
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Gov govStructure
+open import Ledger.Enact govStructure
+open import Ledger.Gov txs
 open import Ledger.PPUp txs
 open import Ledger.Utxo txs abs
 open import Ledger.Utxow txs abs
@@ -80,16 +81,17 @@ data
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
-    ∙  mapˢ stake (dom txwdrls) ⊆ dom (certState' .dState .voteDelegs)
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
-pattern LEDGER⋯ x y z w = LEDGER (x , y , z , w)
+pattern LEDGER⋯ x y z = LEDGER (x , y , z)
 unquoteDecl LEDGER-premises = genPremises LEDGER-premises (quote LEDGER)
 \end{code}
+
+\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set
@@ -97,3 +99,4 @@ _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}
+\end{NoConway}

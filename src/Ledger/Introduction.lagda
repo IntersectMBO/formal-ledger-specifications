@@ -203,3 +203,26 @@ module _ (ℙ_ : Set → Set) (_∈_ : ∀ {A : Set} → A → ℙ A → Set) wh
   A ⇀ B = Σ (Rel A B) left-unique
 \end{code}
 \end{figure*}
+
+\subsection{Superscripts and other special notations}
+
+In the current version of this specification, superscript letters are
+heavily used for things such as disambiguations or type
+conversions. These are essentially meaningless, only present for
+technical reasons and can safely be ignored. However there are the
+two exceptions:
+\begin{itemize}
+\item \AgdaFunction{∪ˡ} for left-biased union
+\item \AgdaFunction{ᶜ} in the context of set restrictions, where it indicates the complement
+\end{itemize}
+Also, non-letter superscripts do carry meaning.
+
+At some point in the future we hope to be able to remove all those
+non-essential superscripts. Since we prefer doing this by changing the
+Agda source code instead of via hiding them in this document, this is
+a non-trivial problem that will take some time to address.
+
+Additionally, there are some \AgdaFunction{?} and \AgdaFunction{¿}
+operations. These relate to decision procedures and can also safely be
+ignored. We also plan on refactoring the code in such a way that they
+should disappear from this document.

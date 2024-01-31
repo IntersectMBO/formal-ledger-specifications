@@ -6,10 +6,14 @@
 open import Axiom.Set.Properties using (∉-∅; ∃?-sublist-⇔)
 open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup)
 open import Ledger.Types.GovStructure
+open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Gov (gs : _) (open GovStructure gs hiding (epoch)) where
+module Ledger.Gov (txs : _) (open TransactionStructure txs using (govStructure)) where
+open GovStructure govStructure hiding (epoch)
 
-open import Ledger.GovernanceActions gs hiding (yes; no)
+open import Ledger.GovernanceActions govStructure hiding (yes; no)
+open import Ledger.Enact govStructure
+open import Ledger.Ratify txs
 
 open import Data.List.Ext renaming (_⊆_ to _⊆ˡ_) hiding (insert)
 open import Data.List.Ext.Properties using (⊆id; ∃uniqueSubset⇔∃uniqueSubperm; ∃⇔Any)
@@ -24,12 +28,12 @@ open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{code}
-record GovActionState : Set where
-  field votes       : Voter ⇀ Vote
-        returnAddr  : RwdAddr
-        expiresIn   : Epoch
-        action      : GovAction
-        prevAction  : NeedsHash action
+-- record GovActionState : Set where
+--   field votes       : Voter ⇀ Vote
+--         returnAddr  : RwdAddr
+--         expiresIn   : Epoch
+--         action      : GovAction
+--         prevAction  : NeedsHash action
 
 GovState : Set
 GovState = List (GovActionID × GovActionState)
@@ -147,10 +151,6 @@ validHFAction _ _ _ = ⊤
 \end{figure*}
 \footnotetext{\AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends element \AgdaBound{x} to list \AgdaBound{l}.}
 
-\GovActionState is the state of an individual governance action. It
-contains the individual votes, its lifetime, and information necessary
-to enact the action and to repay the deposit.
-
 \GovState behaves similar to a queue. New proposals are appended at
 the end, but any proposal can be removed at the epoch
 boundary. However, for the purposes of enactment, earlier proposals
@@ -175,8 +175,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
 \begin{code}
   GOV-Vote : ∀ {x ast} → let
       open GovEnv Γ
-      sig = inj₁ record
-        { gid = aid ; voter = voter ; vote = v ; anchor = x }
+      sig = inj₁ record { gid = aid ; voter = voter ; vote = v ; anchor = x }
     in
     ∙ (aid , ast) ∈ fromList s
     ∙ canVote pparams (action ast) (proj₁ voter)
@@ -185,9 +184,8 @@ data _⊢_⇀⦇_,GOV'⦈_ where
 
   GOV-Propose : ∀ {x} → let
       open GovEnv Γ; open PParams pparams hiding (a)
-      prop = record
-        { returnAddr = addr ; action = a ; anchor = x
-        ; policy = p ; deposit = d ; prevAction = prev }
+      prop = record { returnAddr = addr ; action = a ; anchor = x
+                    ; policy = p ; deposit = d ; prevAction = prev }
       s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
     ∙ actionWellFormed a ≡ true
@@ -204,3 +202,20 @@ _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}
 \end{figure*}
+
+The GOV transition system is now given as the reflexitive-transitive
+closure of the system GOV', described in
+Figure~\ref{defs:gov-rules}.
+
+For \GOVVote, we check that the governance action being voted on
+exists and the role is allowed to vote. \canVote is defined in
+Figure~\ref{fig:ratification-requirements}.
+
+For \GOVPropose, we check well-formedness, correctness of the deposit
+and some conditions depending on the type of the action:
+\begin{itemize}
+\item for \ChangePParams or \TreasuryWdrl, the proposal policy needs to be provided;
+\item for \NewCommittee, no proposals with members expiring in the present or past
+  epoch are allowed, and candidates cannot be added and removed at the same time;
+\item and we check the validity of hard-fork actions via \validHFAction.
+\end{itemize}
