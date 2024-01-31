@@ -28,13 +28,6 @@ open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{code}
--- record GovActionState : Set where
---   field votes       : Voter ⇀ Vote
---         returnAddr  : RwdAddr
---         expiresIn   : Epoch
---         action      : GovAction
---         prevAction  : NeedsHash action
-
 GovState : Set
 GovState = List (GovActionID × GovActionState)
 
