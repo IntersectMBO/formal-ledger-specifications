@@ -251,12 +251,6 @@ module _ {a}{A : Set a} where
   ...| inj₁ v = there (xs⊆xs++ys _ _ v)
   ...| inj₂ v = xs⊆ys++xs _ _ (map∷∘insert-comm {ls} l v)
 
-  -- The suggested lemma,
-  -- lem : {ys zs : List A}{x : A} → ∀ l → l ∈ insert x (ys ++ zs) ⇔ l ≡ ys ++ [ x ] ++ zs
-  -- doesn't hold.  However, the following probably does hold.
-  -- lem' : {ys zs : List A}{x : A} → ∀ l → l ∈ insert x (ys ++ zs) ⇔ l ∈ (insert x ys) ++ (insert x zs)
-  -- Todo: check if it would simplify things; if so, prove it and use it to simplify.
-
   insert-map-swap : {ys : List A}{y' y x : A} → ∀ l
                     → l ∈ concatMap (insert x) (map (y' ∷_) (insert y ys))
                     → l ∈ (y ∷ x ∷ y' ∷ ys) ∷ (x ∷ y ∷ y' ∷ ys) ∷ map (x ∷_) (map (y' ∷_) (insert y ys))
