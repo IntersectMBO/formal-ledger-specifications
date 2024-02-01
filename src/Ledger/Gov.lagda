@@ -16,14 +16,17 @@ open import Ledger.Enact govStructure
 open import Ledger.Ratify txs
 
 open import Data.List.Ext hiding (insert)
-open import Data.List.Ext.Properties using (∃uniqueSubset⇔∃uniqueSubperm; ∃⇔Any)
+open import Data.List.Ext.Properties using (∃uniqueSubset⇔∃uniqueSubperm)
+open import Data.List.Membership.Propositional.Properties using (Any↔)
+
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
-open import Relation.Nullary.Decidable using (_×-dec_)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
+open import Function.Related.Propositional using (↔⇒)
+open import Relation.Nullary.Decidable using (_×-dec_)
 
 \end{code}
 \begin{figure*}[h]
@@ -89,7 +92,7 @@ any?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (Any(λ l → Unique l ×
 any?-connecting-subperm {u}{v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
 
 ∃?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (∃[ l ] l ∈ˡ subpermutations L × Unique l × l connects u to v)
-∃?-connecting-subperm L = from (map′⇔ ∃⇔Any) (any?-connecting-subperm L)
+∃?-connecting-subperm L = from (map′⇔ (↔⇒ Any↔)) (any?-connecting-subperm L)
 
 ∃?-connecting-subset : ∀ {u}{v} → ∀ L → Dec (∃[ l ](l ⊆ˡ L × Unique l × l connects u to v))
 ∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
