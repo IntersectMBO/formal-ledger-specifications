@@ -15,8 +15,9 @@ open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
 open import Ledger.Ratify txs
 
-open import Data.List.Ext renaming (_⊆_ to _⊆ˡ_) hiding (insert)
-open import Data.List.Ext.Properties using (⊆id; ∃uniqueSubset⇔∃uniqueSubperm; ∃⇔Any)
+open import Data.List.Ext hiding (insert)
+open import Data.List.Ext.Properties using (∃uniqueSubset⇔∃uniqueSubperm; ∃⇔Any)
+open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)

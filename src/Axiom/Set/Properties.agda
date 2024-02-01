@@ -12,12 +12,12 @@ import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
-open import Data.List.Ext using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
+open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.All using (All; lookup; [])
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
@@ -303,22 +303,14 @@ module _ {L : List A} where
   open Equivalence
 
   sublist-⇔ : {l : List A} → ((fromList l ⊆ fromList L) ⇔ (l ⊆ˡ L))
-  sublist-⇔ {[]} = mk⇔ (λ _ → []) (λ _ {a} → (λ x → ⊥-elim (∉-∅ x)))
-  sublist-⇔ {x ∷ xs} = mk⇔ i ii
+  sublist-⇔ {[]} = mk⇔ (λ x ())  (λ _ {a} → (λ x → ⊥-elim (∉-∅ x)))
+  sublist-⇔ {x ∷ xs} = mk⇔ onlyif (λ u → (to ∈-fromList) ∘ u ∘ (from ∈-fromList))
     where
-    i : ({a : A} → a ∈ fromList (x ∷ xs) → a ∈ (fromList L)) → (x ∷ xs) ⊆ˡ L
-    i h = x∈L All.∷ to sublist-⇔ xs⊆L
-      where
-      x∈L : x ∈ˡ L
-      x∈L = from ∈-fromList (h (to ∈-fromList (here refl)))
-      xs⊆L : fromList xs ⊆ fromList L
-      xs⊆L {a} h' = h (∈-fromList-tail h')
-
-    ii : (x ∷ xs) ⊆ˡ L → ({a : A} → a ∈ (fromList (x ∷ xs)) → a ∈ (fromList L))
-    ii l⊆L {a} a∈l  = to ∈-fromList (lookup l⊆L (from ∈-fromList a∈l))
+    onlyif : ({a : A} → a ∈ fromList (x ∷ xs) → a ∈ (fromList L)) → (x ∷ xs) ⊆ˡ L
+    onlyif h (here refl) = from ∈-fromList (h (to ∈-fromList (here refl)))
+    onlyif h (there x'∈) = from ∈-fromList (h (to ∈-fromList (there x'∈)))
 
   module _ {ℓ : Level}{P : Pred (List A) ℓ} where
-
     ∃-sublist-⇔ : (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ (∃[ l ](l ⊆ˡ L × P l))
     ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
                       (λ (l , l⊆L , Pl) → l , from sublist-⇔ l⊆L , Pl)

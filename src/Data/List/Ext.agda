@@ -21,20 +21,6 @@ _⁉_ : ∀ {a}{A : Set a} → List A → ℕ → Maybe A
 (x ∷ _)  ⁉ zero  = just x
 (_ ∷ xs) ⁉ suc n = xs ⁉ n
 
--- LIST OPERATIONS --
-flatMap : (A → List B) → List A → List B
-flatMap f [] = []
-flatMap f (x ∷ xs) = f x ++ flatMap f xs
-
--- every element in the first list occurs in the second list
-_⊆_ : (l l' : List A) → Set _
-l ⊆ l' = All (_∈ l') l
-
--- list of all sublists of the given list
-sublists : List A → List (List A)
-sublists [] = [ [] ]
-sublists (x ∷ xs) = map (x ∷_) (sublists xs) ++ sublists xs
-
 -- insert the given element in every position of the given list
 insert : A → List A → List (List A)
 insert x [] = (x ∷ []) ∷ []
@@ -43,9 +29,9 @@ insert x (y ∷ ys) = (x ∷ y ∷ ys) ∷ map (y ∷_) (insert x ys)
 -- return all permutations of the given list
 permutations : List A → List (List A)
 permutations [] = [] ∷ []
-permutations (a ∷ as) = flatMap (insert a) (permutations as)
+permutations (a ∷ as) = concatMap (insert a) (permutations as)
 
 -- return all permutations of every sublist of the given list
 subpermutations : List A → List (List A)
 subpermutations [] = [] ∷ []
-subpermutations (x ∷ xs) = (flatMap (insert x) (subpermutations xs)) ++ subpermutations xs
+subpermutations (x ∷ xs) = (concatMap (insert x) (subpermutations xs)) ++ subpermutations xs
