@@ -110,6 +110,10 @@ module _ {a}{A : Set a} where
     ¬x∈[] : ¬ x ∈ []
     ¬x∈[] = λ ()
 
+  ∈∷∧⊆→∈ : {ys xs : List A}{y x : A} → x ∈ y ∷ xs → xs ⊆ ys → x ∈ y ∷ ys
+  ∈∷∧⊆→∈ (here px) xs⊆ = here px
+  ∈∷∧⊆→∈ (there x∈) xs⊆ = there (xs⊆ x∈)
+
 --------------------------------------------------------------
 ------- duplicate entries in lists and deduplication ---------
 --------------------------------------------------------------
@@ -301,7 +305,6 @@ module _ {a}{A : Set a} where
       where
       γ :  (y' ∷ l') ∈ map (y' ∷_) (map (x ∷_) (map (z ∷_) (insert y ys)))
       γ = ∈-map⁺ _ u
-      -- ∷∈map∷ {ls = map (x ∷_) (map (z ∷_) (insert y ys))} l' u
     ...| inj₂ u =
       xs⊆ys++xs _ _ (map∷∘insert-comm {ls = map (_∷_ z) (insert x ys)} l
                (subst (λ r → r ∈ map (y' ∷_) (concatMap (insert y) (map (_∷_ z) (insert x ys))))
@@ -393,17 +396,10 @@ module _ {a} {A : Set a} where
   ...| inj₂ v = xs⊆ys++xs _ _ (∈-subperm-addhead x∈ys x∉xs v)
 
 
-
 --------------------------------------------------------------------------
 ------------  l ⊆ ys  ⋀  l Unique   ⇔   l ∈ subpermutations ys  ----------
 --------------------------------------------------------------------------
   -- If l ⊆ ys and l has no repeated elements, then l is a subpermutation of ys.
-
-  ∈∷∧⊆→∈ : {ys xs : List A}{y x : A} → x ∈ y ∷ xs → xs ⊆ ys → x ∈ y ∷ ys
-  ∈∷∧⊆→∈ (here px) xs⊆ = here px
-  ∈∷∧⊆→∈ (there x∈) xs⊆ = there (xs⊆ x∈)
-
-
   uniqueSubset→subperm : {ys : List A} → ∀ l → Unique l → l ⊆ ys → l ∈ subpermutations ys
   uniqueSubset→subperm {[]} [] lU l⊆ = here refl
   uniqueSubset→subperm {[]} (x ∷ l) lU l⊆ = ⊥-elim (¬⊆[] l⊆)
