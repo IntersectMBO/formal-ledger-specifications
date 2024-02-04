@@ -26,11 +26,6 @@ insert : A → List A → List (List A)
 insert x [] = (x ∷ []) ∷ []
 insert x (y ∷ ys) = (x ∷ y ∷ ys) ∷ map (y ∷_) (insert x ys)
 
--- return all permutations of the given list
-permutations : List A → List (List A)
-permutations [] = [] ∷ []
-permutations (a ∷ as) = concatMap (insert a) (permutations as)
-
 -- return all permutations of every sublist of the given list
 subpermutations : List A → List (List A)
 subpermutations [] = [] ∷ []
