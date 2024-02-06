@@ -16,7 +16,7 @@ open import Ledger.Enact govStructure
 open import Ledger.Ratify txs
 
 open import Data.List.Ext hiding (insert)
-open import Data.List.Ext.Properties using (∃uniqueSubset⇔∃uniqueSubperm)
+open import Data.List.Ext.Properties using (∃uniqueSubset⇔∃uniqueSubperm; maxsublists⊧P)
 open import Data.List.Membership.Propositional.Properties using (Any↔)
 
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
@@ -105,9 +105,12 @@ enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.a
 allEnactable : EnactState → GovState → Set
 allEnactable e aid×states = All (λ p → enactable e (getAidPairsList aid×states) p) aid×states
 
-allEnactable? : ∀ eState aid×states → Dec (allEnactable eState aid×states)
+allEnactable? : (eState : EnactState)(aid×states : GovState) → Dec (allEnactable eState aid×states)
 allEnactable? eState aid×states =
   all? (λ aid×st → enactable? eState (getAidPairsList aid×states) aid×st) aid×states
+
+maxAllEnactable : EnactState → List (GovActionID × GovActionState) → List (List (GovActionID × GovActionState))
+maxAllEnactable e = maxsublists⊧P{P = λ l → allEnactable e l}{λ l → allEnactable? e l}
 
 private variable
   Γ : GovEnv

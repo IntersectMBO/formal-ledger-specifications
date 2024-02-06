@@ -8,7 +8,7 @@ import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
 open import Data.List using (List; [_]; []; _++_; head; tail; length; map)
-open import Data.List.Ext using (insert; subpermutations)
+open import Data.List.Ext using (insert; subpermutations; sublists)
 open import Data.List.Properties using (concat-++; map-++; ++-identityʳ; ++-assoc)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties
@@ -27,7 +27,8 @@ open import Data.List.Relation.Unary.Any.Properties using (¬Any[]; map⁺; map�
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties using (drop⁺)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
-
+open import Data.Nat.Properties using (_≤?_)
+open import Data.Nat using (_⊔_)
 open AllPairs
 
 -- TODO: stdlib?
@@ -47,6 +48,12 @@ AllPairs⇒≡∨R∨Rᵒᵖ (_ ∷ _) (here refl) (here refl) = inj₁ refl
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ _) (here refl) (there b∈l) = inj₂ (inj₁ (lookup x b∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ _) (there a∈l) (here refl) = inj₂ (inj₂ (lookup x a∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
+
+
+-- maximum length of the lists in the given list of lists
+maxlen : ∀{a}{A : Set a} → List (List A) → ℕ
+maxlen ls = foldl (λ n l → n ⊔ length l) 0 ls
+
 
 -------------------------------
 ------ properties of All ------
@@ -365,9 +372,40 @@ module _ {a} {A : Set a} where
     (inj₂ v) → xs⊆ys++xs _ _ (∈-subperm-addhead x∈ys x∉xs v)
 
 
+-----------------------------------------------------------------------
+------------  maximal subpermutations satisfying a predicate ----------
+-----------------------------------------------------------------------
+module _ {a} {A : Set a}
+         {p} {P : Pred (List A) p} {decP : Decidable¹ P} where
+
+  -- subpermutations of a given list which satisfy P
+  subperms⊧P : List A → List (List A)
+  subperms⊧P ys = filter decP (subpermutations ys)
+
+  -- subpermutations of a given list which satisfy P and are of maximum length among those satisfying P
+  maxsubperms⊧P : List A → List (List A)
+  maxsubperms⊧P ys = filter (λ l → length l ≟ maxlen (subperms⊧P ys)) (subperms⊧P ys)
+
+
+----------------------------------------------------------------
+------------  maximal sublists satisfying a predicate ----------
+----------------------------------------------------------------
+module _ {a} {A : Set a}
+         {p} {P : Pred (List A) p} {decP : Decidable¹ P} where
+
+  -- subpermutations of a given list which satisfy P
+  sublists⊧P : List A → List (List A)
+  sublists⊧P ys = filter decP (sublists ys)
+
+  -- subpermutations of a given list which satisfy P and are of maximum length among those satisfying P
+  maxsublists⊧P : List A → List (List A)
+  maxsublists⊧P ys = filter (λ l → length l ≟ maxlen (sublists⊧P ys)) (sublists⊧P ys)
+
+
 --------------------------------------------------------------------------
 ------------  l ⊆ ys  ⋀  l Unique   ⇔   l ∈ subpermutations ys  ----------
 --------------------------------------------------------------------------
+module _ {a} {A : Set a} where
   -- If l ⊆ ys and l has no repeated elements, then l is a subpermutation of ys.
   uniqueSubset→subperm : {ys : List A} → ∀ l → Unique l → l ⊆ ys → l ∈ subpermutations ys
   uniqueSubset→subperm {[]} [] lU l⊆ = here refl

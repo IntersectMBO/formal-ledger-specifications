@@ -21,12 +21,17 @@ _⁉_ : ∀ {a}{A : Set a} → List A → ℕ → Maybe A
 (x ∷ _)  ⁉ zero  = just x
 (_ ∷ xs) ⁉ suc n = xs ⁉ n
 
+-- sublists of the given list
+sublists : List A → List (List A)
+sublists []       = [] ∷ []
+sublists (x ∷ xs) = map (x ∷_) (sublists xs) ++ sublists xs
+
 -- insert the given element in every position of the given list
 insert : A → List A → List (List A)
 insert x [] = (x ∷ []) ∷ []
 insert x (y ∷ ys) = (x ∷ y ∷ ys) ∷ map (y ∷_) (insert x ys)
 
--- return all permutations of every sublist of the given list
+-- permutations of all sublists of the given list
 subpermutations : List A → List (List A)
 subpermutations [] = [] ∷ []
 subpermutations (x ∷ xs) = (concatMap (insert x) (subpermutations xs)) ++ subpermutations xs
