@@ -4,7 +4,7 @@
 {-# OPTIONS --safe #-}
 
 open import Axiom.Set.Properties using (∉-∅; ∃?-sublist-⇔)
-open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup)
+open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
 open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
 
@@ -16,7 +16,7 @@ open import Ledger.Enact govStructure
 open import Ledger.Ratify txs
 
 open import Data.List.Ext hiding (insert)
-open import Data.List.Ext.Properties using (∃uniqueSubset⇔∃uniqueSubperm; maxsublists⊧P)
+open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔)
 
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
@@ -88,13 +88,13 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.act
 
 open Equivalence
 
-any?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
-any?-connecting-subperm {u}{v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
+any?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
+any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
 
-∃?-connecting-subperm : ∀ {u}{v} → ∀ L → Dec (∃[ l ] l ∈ˡ subpermutations L × Unique l × l connects u to v)
+∃?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (∃[ l ] l ∈ˡ subpermutations L × Unique l × l connects u to v)
 ∃?-connecting-subperm L = from (map′⇔ (↔⇒ Any↔)) (any?-connecting-subperm L)
 
-∃?-connecting-subset : ∀ {u}{v} → ∀ L → Dec (∃[ l ](l ⊆ˡ L × Unique l × l connects u to v))
+∃?-connecting-subset : ∀ {u} {v} → ∀ L → Dec (∃[ l ](l ⊆ˡ L × Unique l × l connects u to v))
 ∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
 
 enactable? : ∀ eState aidPairs aidNew×st → Dec(enactable eState aidPairs aidNew×st)
@@ -109,8 +109,30 @@ allEnactable? : (eState : EnactState)(aid×states : GovState) → Dec (allEnacta
 allEnactable? eState aid×states =
   all? (λ aid×st → enactable? eState (getAidPairsList aid×states) aid×st) aid×states
 
+-- `maxAllEnactable` returns a list `ls` of sublists of the given
+-- list (`aid×states : List (GovActionID × GovActionState)`) such that
+--    (i) each sublist `l ∈ ls` satisfies `allEnactable e l` and
+--   (ii) each sublist `l ∈ ls` is of maximal length among sublists of `aid×states` satisfying `allEnactable`.
 maxAllEnactable : EnactState → List (GovActionID × GovActionState) → List (List (GovActionID × GovActionState))
-maxAllEnactable e = maxsublists⊧P{P = λ l → allEnactable e l}{λ l → allEnactable? e l}
+maxAllEnactable e = maxsublists⊧P{P = λ l → allEnactable e l} {λ l → allEnactable? e l}
+
+-- Every sublist returned by `maxAllEnactable` satisfies (i).
+∈-maxAllEnactable→allEnactable : {e : EnactState} {aid×states : List (GovActionID × GovActionState)}
+                                 → ∀ l → l ∈ˡ maxAllEnactable e aid×states → allEnactable e l
+∈-maxAllEnactable→allEnactable {e} {aid×states} l l∈ =
+  proj₁ (∈-filter{P? = allEnactable? e} {sublists aid×states} l
+          (proj₂ (∈-filter{P? = λ l → length l ≟ maxlen (sublists⊧P{P? = allEnactable? e} aid×states)} l l∈)))
+
+-- Every sublist returned by `maxAllEnactable` satisfies (ii).
+∈-maxAllEnactable→maxLength : {e : EnactState} {aid×states l l' : List (GovActionID × GovActionState)}
+                              → l ∈ˡ sublists aid×states → allEnactable e l
+                              → l' ∈ˡ maxAllEnactable e aid×states
+                              → length l ≤ length l'
+∈-maxAllEnactable→maxLength {e} {aid×states} {l} {l'} l∈ el l'∈ =
+  let ls = sublists⊧P{P? = allEnactable? e} aid×states in
+    subst (length l ≤_)
+        (sym (proj₁ (∈-filter{P? = λ l → length l ≟ maxlen ls} {ls} l' l'∈)))
+        (∈-maxlen-≤{ls = ls} l (∈-filter⁻¹{P? = allEnactable? e} l (el , l∈)))
 
 private variable
   Γ : GovEnv

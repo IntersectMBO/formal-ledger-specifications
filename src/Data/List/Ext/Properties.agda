@@ -27,9 +27,13 @@ open import Data.List.Relation.Unary.Any.Properties using (¬Any[]; map⁺; map�
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties using (drop⁺)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
-open import Data.Nat.Properties using (_≤?_)
-open import Data.Nat using (_⊔_)
+open import Data.Nat.Properties using (_≤?_; ⊔-identityʳ; ≤-reflexive; ≤-trans)
+open import Data.Nat using (_⊔_; _≤_)
 open AllPairs
+
+-- open import Algebra.Construct.NaturalChoice.MaxOp using (x≤x⊔y)
+
+
 
 -- TODO: stdlib?
 _×-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A × C) R.∼[ k ] (B × D)
@@ -50,9 +54,73 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ _) (there a∈l) (here refl) = inj₂ (inj�
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
 
 
--- maximum length of the lists in the given list of lists
-maxlen : ∀{a}{A : Set a} → List (List A) → ℕ
-maxlen ls = foldl (λ n l → n ⊔ length l) 0 ls
+module _ {a} {A : Set a} where
+
+  x≤x⊔y : ∀ x y → x ≤ x ⊔ y
+  x≤x⊔y zero y = z≤n
+  x≤x⊔y (suc x) zero = s≤s (≤-reflexive refl)
+  x≤x⊔y (suc x) (suc y) = s≤s (x≤x⊔y x y)
+
+  x≤y⊔x : ∀ x y → x ≤ y ⊔ x
+  x≤y⊔x zero y = z≤n
+  x≤y⊔x (suc x) zero = s≤s (x≤y⊔x x zero)
+  x≤y⊔x (suc x) (suc y) = s≤s (x≤y⊔x x y)
+
+  -- maximum length of the lists in the given list of lists
+  maxlen : List (List A) → ℕ
+  maxlen ls = foldr (λ l n → length l ⊔ n) 0 ls
+
+  maxlenˡ : List (List A) → ℕ
+  maxlenˡ ls = foldl (λ n l → n ⊔ length l) 0 ls
+
+  maxlen∷ : {ls : List (List A)} → ∀ l → maxlen (l ∷ ls) ≡ length l ⊔ maxlen ls
+  maxlen∷ {ls} l = refl
+
+  maxlen≤∷ : {ls : List (List A)} → ∀ l → maxlen ls ≤ maxlen (l ∷ ls)
+  maxlen≤∷ {[]} _ = z≤n
+  maxlen≤∷ {l' ∷ ls} l = subst (maxlen (l' ∷ ls) ≤_)
+                               (sym (maxlen∷{l' ∷ ls} l))
+                               (x≤y⊔x (maxlen (l' ∷ ls)) (length l))
+
+  ∈-maxlen-≤ : {ls : List (List A)} → ∀ l → l ∈ ls → length l ≤ maxlen ls
+  ∈-maxlen-≤ {l' ∷ ls} .l' (here refl) = subst (λ x → length l' ≤ x) (sym (maxlen∷{ls} l')) (x≤x⊔y (length l') (maxlen ls))
+  ∈-maxlen-≤ {l' ∷ ls} l (there l∈) = ≤-trans (∈-maxlen-≤{ls} l l∈) (maxlen≤∷{ls} l')
+
+-- ⊔-operator : MaxOperator ≤-totalPreorder
+-- ⊔-operator = record
+--   { x≤y⇒x⊔y≈y = m≤n⇒m⊔n≡n
+--   ; x≥y⇒x⊔y≈x = m≥n⇒m⊔n≡m
+--   }
+
+-- ≤-totalPreorder : TotalPreorder 0ℓ 0ℓ 0ℓ
+-- ≤-totalPreorder = record
+--   { isTotalPreorder = ≤-isTotalPreorder
+--   }
+
+-- ≤-isTotalPreorder : IsTotalPreorder _≡_ _≤_
+-- ≤-isTotalPreorder = record
+--   { isPreorder = ≤-isPreorder
+--   ; total      = ≤-total
+--   }
+
+-- ≤-isPreorder : IsPreorder _≡_ _≤_
+-- ≤-isPreorder = record
+--   { isEquivalence = isEquivalence
+--   ; reflexive     = ≤-reflexive
+--   ; trans         = ≤-trans
+--   }
+
+-- ≤-total : Total _≤_
+-- ≤-total zero    _       = inj₁ z≤n
+-- ≤-total _       zero    = inj₂ z≤n
+-- ≤-total (suc m) (suc n) = Sum.map s≤s s≤s (≤-total m n)
+
+-- Total : Rel A ℓ → Set _
+-- Total _∼_ = Connex _∼_ _∼_
+
+-- Connex : REL A B ℓ₁ → REL B A ℓ₂ → Set _
+-- Connex P Q = ∀ x y → P x y ⊎ Q y x
+
 
 
 -------------------------------
@@ -391,16 +459,30 @@ module _ {a} {A : Set a}
 ------------  maximal sublists satisfying a predicate ----------
 ----------------------------------------------------------------
 module _ {a} {A : Set a}
-         {p} {P : Pred (List A) p} {decP : Decidable¹ P} where
+         {p} {P : Pred (List A) p} {P? : Decidable¹ P} where
+
+  -- filter elimination rule
+  ∈-filter : {ls : List (List A)} → ∀ l → l ∈ filter P? ls → P l × l ∈ ls
+  ∈-filter {l' ∷ ls} l l∈ with (P? l')
+  ∈-filter {l' ∷ _} .l' (here refl) | yes p = p , here refl
+  ∈-filter {_ ∷ ls} l (there l∈) | yes p = proj₁ (∈-filter {ls} l l∈) , there (proj₂ (∈-filter {ls} l l∈))
+  ... | no ¬p = proj₁ (∈-filter {ls} l l∈) , there (proj₂ (∈-filter {ls} l l∈))
+
+  ∈-filter⁻¹ : {ls : List (List A)} → ∀ l → P l × l ∈ ls → l ∈ filter P? ls
+  ∈-filter⁻¹ {l' ∷ _} l (Pl , l∈) with (P? l')
+  ∈-filter⁻¹ {l' ∷ _} .l' (Pl , here refl) | yes p = here refl
+  ∈-filter⁻¹ {_ ∷ _} l (Pl , there l∈) | yes p = there (∈-filter⁻¹ l (Pl , l∈))
+  ∈-filter⁻¹ {l' ∷ _} .l' (Pl , here refl) | no ¬Pl = contradiction Pl ¬Pl
+  ∈-filter⁻¹ {_ ∷ _} l (Pl , there l∈) | no ¬p = ∈-filter⁻¹ l (Pl , l∈)
+
 
   -- subpermutations of a given list which satisfy P
   sublists⊧P : List A → List (List A)
-  sublists⊧P ys = filter decP (sublists ys)
+  sublists⊧P ys = filter P? (sublists ys)
 
   -- subpermutations of a given list which satisfy P and are of maximum length among those satisfying P
   maxsublists⊧P : List A → List (List A)
   maxsublists⊧P ys = filter (λ l → length l ≟ maxlen (sublists⊧P ys)) (sublists⊧P ys)
-
 
 --------------------------------------------------------------------------
 ------------  l ⊆ ys  ⋀  l Unique   ⇔   l ∈ subpermutations ys  ----------
