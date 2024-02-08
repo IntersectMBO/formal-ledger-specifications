@@ -4,7 +4,7 @@ open import Agda.Primitive renaming (Set to Type)
 
 module Axiom.Set where
 
-open import Prelude hiding (filter; map)
+open import Prelude hiding (map)
 
 import Function.Related.Propositional as R
 open import Data.List.Ext.Properties using (∈-dedup; _×-cong_)

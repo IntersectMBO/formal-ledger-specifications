@@ -11,7 +11,7 @@ open Theory th renaming (map to mapˢ)
 open import Axiom.Set.Rel th hiding (_∣'_; _↾'_)
 open import Axiom.Set.Properties th
 
-open import Prelude hiding (filter)
+open import Prelude
 
 import Data.Sum as ⊎
 open import Data.List.Ext.Properties using (AllPairs⇒≡∨R∨Rᵒᵖ)

@@ -5,6 +5,7 @@
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 
+import Data.List as L
 open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
@@ -94,7 +95,7 @@ its results, i.e:
       refunds   = pullbackMap payout (λ x → record { net = NetworkId ; stake = x }) (dom rewards)
       unclaimed = getCoin payout ∸ getCoin refunds
 
-      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
+      govSt' = L.filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
 
       certState' =
         ⟦ record dState { rewards = rewards ∪⁺ refunds }

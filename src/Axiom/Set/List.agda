@@ -29,7 +29,7 @@ List-Model = λ where
   .Set           → List
   ._∈_           → _∈ˡ_
   .sp            → Dec-SpecProperty
-  .specification → λ X P? → Prelude.filter P? X , mk⇔
+  .specification → λ X P? → Data.List.filter P? X , mk⇔
     (λ where (Pa , a∈X) → ∈-filter⁺ P? a∈X Pa)
     (λ a∈f → Data.Product.swap (∈-filter⁻ P? a∈f))
   .unions        → λ X → concat X , mk⇔

@@ -13,6 +13,7 @@ open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Ratify.Properties txs
+import Data.List as L
 
 open Computational ⦃...⦄
 
@@ -22,7 +23,7 @@ module _ {Γ : NewEpochEnv} {eps : EpochState} {e : Epoch} where
   open RatifyState fut using (removed) renaming (es to esW)
   open LState ls; open CertState certState; open Acnt acnt
   es         = record esW { withdrawals = ∅ }
-  govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
+  govSt'     = L.filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   EPOCH-total : ∃[ eps' ] Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total = -, EPOCH (pFut .proj₂)

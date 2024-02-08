@@ -5,7 +5,7 @@ open import Axiom.Set using (Theory)
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
 
-open import Prelude hiding (isEquivalence; trans; filter; map)
+open import Prelude hiding (isEquivalence; trans; map)
 open Theory th
 
 import Data.List
