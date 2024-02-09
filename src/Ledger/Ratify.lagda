@@ -191,7 +191,7 @@ CCData : Set
 CCData = Maybe ((Credential ⇀ Epoch) × ℚ)
 
 govRole : VDeleg → GovRole
-govRole (credVoter gv _)  = gv
+govRole (credVoter (gv , _))  = gv
 govRole abstainRep        = DRep
 govRole noConfidenceRep   = DRep
 
@@ -291,14 +291,14 @@ restrictedDists coins rank dists = dists
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
 actualVotes Γ pparams cc ga votes
-  =   mapKeys (credVoter CC) (actualCCVotes cc)  ∪ˡ actualPDRepVotes ga
+  =   mapKeys (λ x → (credVoter (CC , x))) (actualCCVotes cc)  ∪ˡ actualPDRepVotes ga
   ∪ˡ  actualDRepVotes                            ∪ˡ actualSPOVotes ga
   where
   open RatifyEnv Γ
   open PParams pparams
 
   roleVotes : GovRole → VDeleg ⇀ Vote
-  roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (λ (x , _) → r ≡ proj₁ x) votes)
+  roleVotes r = mapKeys credVoter (filterᵐ (λ (x , _) → r ≡ proj₁ x) votes)
 
   activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
   spos = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
@@ -325,7 +325,7 @@ actualVotes Γ pparams cc ga votes
 
   actualDRepVotes : VDeleg ⇀ Vote
   actualDRepVotes  =   roleVotes DRep
-                   ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
+                   ∪ˡ  constMap (mapˢ (λ x → (credVoter (DRep , x))) activeDReps) Vote.no
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
   actualSPOVotes (TriggerHF _)  = roleVotes SPO ∪ˡ constMap spos Vote.no

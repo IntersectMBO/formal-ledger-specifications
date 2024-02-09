@@ -238,10 +238,10 @@ instance
 
   Convertible-VDeleg : Convertible VDeleg F.VDeleg
   Convertible-VDeleg = λ where
-    .to (credVoter x x₁) → F.CredVoter (to x) (to x₁)
+    .to (credVoter (x , x₁)) → F.CredVoter (to x) (to x₁)
     .to abstainRep → F.AbstainRep
     .to noConfidenceRep → F.NoConfidenceRep
-    .from (F.CredVoter x x₁) → VDeleg.credVoter (from x) (from x₁)
+    .from (F.CredVoter x x₁) → VDeleg.credVoter (from x , from x₁)
     .from F.AbstainRep → VDeleg.abstainRep
     .from F.NoConfidenceRep → VDeleg.noConfidenceRep
 
