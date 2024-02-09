@@ -8,7 +8,7 @@ open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_; _⊔_)
+open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (_<$>_ to _．_)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -399,7 +399,7 @@ abstract
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs
         votes'  = actualVotes Γ pparams cc action votes
-        t       = maybe id 0ℚ (threshold pparams (proj₂ <$> cc) action role)
+        t       = maybe id 0ℚ (threshold pparams (proj₂ ． cc) action role)
     in acceptedStakeRatio role (dom votes') (stakeDistrs Γ) votes' ≥ t
 
   accepted : RatifyEnv → EnactState → GovActionState → Set
