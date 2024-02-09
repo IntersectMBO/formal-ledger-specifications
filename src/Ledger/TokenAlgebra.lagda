@@ -13,7 +13,7 @@ module Ledger.TokenAlgebra (
 \end{code}
 \begin{code}[hide]
   : Set) where
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (_≡_) renaming (_≗_ to _≡_)
 
 open import Algebra              using (CommutativeMonoid ; Monoid)
 open import Algebra.Morphism     using (module MonoidMorphisms )
@@ -49,7 +49,7 @@ record TokenAlgebra : Set₁ where
          _≤ᵗ_                      : Value → Value → Set
          AssetName                 : Set
          specialAsset              : AssetName
-         property                  : coin ∘ inject ≗ id -- FIXME: rename!
+         property                  : coin ∘ inject ≡ id
          coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 \end{code}
 \end{AgdaSuppressSpace}
