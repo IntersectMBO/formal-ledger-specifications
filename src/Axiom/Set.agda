@@ -164,9 +164,6 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-fromList : ∀ {a} → a ∈ˡ l ⇔ a ∈ fromList l
   ∈-fromList = proj₂ $ listing _
 
-  ∈-fromList-tail : ∀ {a x} → a ∈ fromList l → a ∈ fromList (x ∷ l)
-  ∈-fromList-tail a∈l = to ∈-fromList (there (from ∈-fromList a∈l))
-
   ∈-unions : {a : A} {U : Set (Set A)} → (∃[ T ] T ∈ U × a ∈ T) ⇔ a ∈ proj₁ (unions U)
   ∈-unions = proj₂ $ unions _
 

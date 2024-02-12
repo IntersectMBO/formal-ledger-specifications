@@ -317,4 +317,3 @@ module _ {L : List A} where
 
     ∃?-sublist-⇔ : Dec (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ Dec (∃[ l ](l ⊆ˡ L × P l))
     ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
-
