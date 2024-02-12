@@ -65,7 +65,8 @@ record TokenAlgebra : Set₁ where
 \AgdaTarget{sumᵛ}
 \begin{code}
   sumᵛ : List Value → Value
-  sumᵛ = foldr _+ᵛ_ (inject 0)
+  sumᵛ [] = inject 0
+  sumᵛ (x ∷ l) = x + sumᵛ l
 \end{code}
 \end{AgdaAlign}
 \caption{Token algebras, used for multi-assets}
