@@ -190,7 +190,7 @@ module _ {a} {A : Set a}  where
   concatMap⁺ : {ys xs : List A} {f : A → List A} → xs ⊆ ys → concatMap f xs ⊆ concatMap f ys
   concatMap⁺ = P.concat⁺ ∘ (P.map⁺ _)
 
-  concatMap-++ : ∀{b}{B : Set b} → ∀ (f : A → List B) (xs ys : List A)
+  concatMap-++ : ∀{b} {B : Set b} → ∀ (f : A → List B) (xs ys : List A)
                  → concatMap f (xs ++ ys) ≡ concatMap f xs ++ concatMap f ys
   concatMap-++ f xs ys = begin
     concatMap f (xs ++ ys)           ≡⟨⟩
@@ -198,7 +198,7 @@ module _ {a} {A : Set a}  where
     concat (map f xs ++ map f ys)    ≡˘⟨ concat-++ (map f xs) (map f ys) ⟩
     concatMap f xs ++ concatMap f ys ∎ where open ≡-Reasoning
 
-  concatMap-decomp : ∀{b}{B : Set b}{l : List A}{x : B}{f : A → List B}
+  concatMap-decomp : ∀{b} {B : Set b} {l : List A} {x : B} {f : A → List B}
                      → (x ∈ concatMap f l) ⇔ (∃[ z ] (z ∈ l) × (x ∈ f z))
   concatMap-decomp {b} {B} {[]} {x} {f} = mk⇔ (λ ()) (λ (_ , v , _) → ⊥-elim (¬∈[] v))
   concatMap-decomp {b} {B} {y ∷ ys} {x} {f} = mk⇔ i ii
@@ -233,7 +233,7 @@ module _ {a} {A : Set a} where
   ... | (l' , l'∈ , y'l'l) = subst (x ∈_) y'l'l (there (∈→∈-insert x∈ l' l'∈))
 
   ∈All→∈-inserts : {ls : List(List A)} {y x : A} → All (x ∈_) ls → ∀ l → l ∈ concatMap (insert y) ls → x ∈ l
-  ∈All→∈-inserts {ls}{y}{x} x∈ l l∈ with to concatMap-decomp l∈
+  ∈All→∈-inserts {ls} {y} {x} x∈ l l∈ with to concatMap-decomp l∈
   ... | (l' , l'∈ , l∈yl') = ∈→∈-insert (All-def x∈ l' l'∈) l l∈yl'
 
   ∈Allinsert : {ys : List A} {x : A} → All (x ∈_) (insert x ys)
@@ -330,7 +330,7 @@ module _ {a} {A : Set a} where
   ... | l' , l'∈ , l∈xl' = ⊥-elim (x∉l (∈-insert l l∈xl'))
 
   ∈-insert-cancelˡ : {ls : List (List A)} {xs : List A} {y : A} → ¬ y ∈ xs → xs ∈ concatMap (insert y) ls ++ ls → xs ∈ ls
-  ∈-insert-cancelˡ {ls}{xs} y∉xs xs∈yls = case (∈-++⁻ _ xs∈yls) of λ where
+  ∈-insert-cancelˡ {ls} {xs} y∉xs xs∈yls = case (∈-++⁻ _ xs∈yls) of λ where
     (inj₁ v) → case (to (concatMap-decomp{l = ls}) v) of λ where
           (l' , l'∈ , l∈xl') → ⊥-elim (y∉xs (∈-insert xs l∈xl'))
     (inj₂ v) → v
