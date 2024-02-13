@@ -15,17 +15,15 @@ open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
 open import Ledger.Ratify txs
 
-open import Data.List.Ext hiding (insert)
+open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties
-open import Data.List.Membership.Propositional.Properties using (Any↔)
-
+open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
-open import Data.List.Relation.Unary.All using (all?; All; lookup)
-open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
-open import Data.List.Membership.Propositional.Properties
-open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
+open import Data.List.Relation.Unary.All using (all?; All)
+open import Data.List.Relation.Unary.Any using (any?; Any)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
+open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.Propositional using (↔⇒)
 open import Relation.Nullary.Decidable using (_×-dec_)
 
@@ -115,14 +113,14 @@ allEnactable? eState aid×states =
 --    (i) each sublist `l ∈ ls` satisfies `allEnactable e l` and
 --   (ii) each sublist `l ∈ ls` is of maximal length among sublists of `aid×states` satisfying `allEnactable`.
 maxAllEnactable : EnactState → List (GovActionID × GovActionState) → List (List (GovActionID × GovActionState))
-maxAllEnactable e = maxsublists⊧P{P = λ l → allEnactable e l} {λ l → allEnactable? e l}
+maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 
 -- Every sublist returned by `maxAllEnactable` satisfies (i).
 ∈-maxAllEnactable→allEnactable : {e : EnactState} {aid×states : List (GovActionID × GovActionState)}
                                  → ∀ l → l ∈ˡ maxAllEnactable e aid×states → allEnactable e l
 ∈-maxAllEnactable→allEnactable {e} {aid×states} l l∈ =
   proj₂ (∈-filter⁻ (allEnactable? e) {l} {sublists aid×states}
-          (proj₁ (∈-filter⁻ (λ l → length l ≟ maxlen (sublists⊧P{P? = allEnactable? e} aid×states)) l∈)))
+          (proj₁ (∈-filter⁻ (λ l → length l ≟ maxlen (sublists⊧P (allEnactable? e) aid×states)) l∈)))
 
 -- Every sublist returned by `maxAllEnactable` satisfies (ii).
 ∈-maxAllEnactable→maxLength : {e : EnactState} {aid×states l l' : List (GovActionID × GovActionState)}
@@ -130,10 +128,10 @@ maxAllEnactable e = maxsublists⊧P{P = λ l → allEnactable e l} {λ l → all
                               → l' ∈ˡ maxAllEnactable e aid×states
                               → length l ≤ length l'
 ∈-maxAllEnactable→maxLength {e} {aid×states} {l} {l'} l∈ el l'∈ =
-  let ls = sublists⊧P{P? = allEnactable? e} aid×states in
+  let ls = sublists⊧P (allEnactable? e) aid×states in
     subst (length l ≤_)
-        (sym (proj₂ (∈-filter⁻ (λ l → length l ≟ maxlen ls) {xs = ls} l'∈)))
-        (∈-maxlen-≤{ls = ls} l (∈-filter⁺ (allEnactable? e) l∈ el))
+          (sym (proj₂ (∈-filter⁻ (λ l → length l ≟ maxlen ls) {xs = ls} l'∈)))
+          (∈-maxlen-≤ l (∈-filter⁺ (allEnactable? e) l∈ el))
 
 private variable
   Γ : GovEnv
