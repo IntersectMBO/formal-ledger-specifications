@@ -22,6 +22,7 @@ open import Data.List.Membership.Propositional.Properties using (Any↔)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.All using (all?; All; lookup)
 open import Data.List.Relation.Unary.Any using (any?; Any; here; there)
+open import Data.List.Membership.Propositional.Properties
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
@@ -120,8 +121,8 @@ maxAllEnactable e = maxsublists⊧P{P = λ l → allEnactable e l} {λ l → all
 ∈-maxAllEnactable→allEnactable : {e : EnactState} {aid×states : List (GovActionID × GovActionState)}
                                  → ∀ l → l ∈ˡ maxAllEnactable e aid×states → allEnactable e l
 ∈-maxAllEnactable→allEnactable {e} {aid×states} l l∈ =
-  proj₁ (∈-filter{P? = allEnactable? e} {sublists aid×states} l
-          (proj₂ (∈-filter{P? = λ l → length l ≟ maxlen (sublists⊧P{P? = allEnactable? e} aid×states)} l l∈)))
+  proj₂ (∈-filter⁻ (allEnactable? e) {l} {sublists aid×states}
+          (proj₁ (∈-filter⁻ (λ l → length l ≟ maxlen (sublists⊧P{P? = allEnactable? e} aid×states)) l∈)))
 
 -- Every sublist returned by `maxAllEnactable` satisfies (ii).
 ∈-maxAllEnactable→maxLength : {e : EnactState} {aid×states l l' : List (GovActionID × GovActionState)}
@@ -131,8 +132,8 @@ maxAllEnactable e = maxsublists⊧P{P = λ l → allEnactable e l} {λ l → all
 ∈-maxAllEnactable→maxLength {e} {aid×states} {l} {l'} l∈ el l'∈ =
   let ls = sublists⊧P{P? = allEnactable? e} aid×states in
     subst (length l ≤_)
-        (sym (proj₁ (∈-filter{P? = λ l → length l ≟ maxlen ls} {ls} l' l'∈)))
-        (∈-maxlen-≤{ls = ls} l (∈-filter⁻¹{P? = allEnactable? e} l (el , l∈)))
+        (sym (proj₂ (∈-filter⁻ (λ l → length l ≟ maxlen ls) {xs = ls} l'∈)))
+        (∈-maxlen-≤{ls = ls} l (∈-filter⁺ (allEnactable? e) l∈ el))
 
 private variable
   Γ : GovEnv
