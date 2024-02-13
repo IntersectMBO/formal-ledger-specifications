@@ -102,9 +102,7 @@ module _ {a} {A : Set a} where
   module _ {p} {P : Pred (List A) p} where
 
     All-def : {ls : List (List A)} → All P ls → (∀ l → l ∈ ls → P l)
-    All-def All.[] = λ x ()
-    All-def (px All.∷ _) _ (here refl) = px
-    All-def (_ All.∷ p) x (there x∈) = All-def p x x∈
+    All-def h _ = lookup h
 
 -------------------------------
 ------ properties of map ------
