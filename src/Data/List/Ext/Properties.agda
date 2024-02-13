@@ -122,11 +122,16 @@ module _ {a} {A : Set a} where
   map∷decomp∈ {_ ∷ _} (here refl) = refl , (here refl)
   map∷decomp∈ {_ ∷ _} (there xxs∈) = (proj₁ (map∷decomp∈ xxs∈)) , there (proj₂ (map∷decomp∈ xxs∈))
 
-  map∷decomp : {ls : List (List A)} {xs : List A} {y : A} → xs ∈ map (y ∷_) ls → ∃[ ys ](ys ∈ ls × y ∷ ys ≡ xs)
+  map∷decomp : {ls : List (List A)} {xs : List A} {y : A}
+               → xs ∈ map (y ∷_) ls → ∃[ ys ](ys ∈ ls × y ∷ ys ≡ xs)
   map∷decomp {l ∷ _} {.(_ ∷ l)} (here refl) = l , ((here refl) , refl)
   map∷decomp {_ ∷ _} {[]} {y} (there xs∈) = ⊥-elim (¬[]∈map xs∈)
   map∷decomp {_ ∷ _} {x ∷ xs} (there xs∈) =
     xs , there (proj₂ (map∷decomp∈ xs∈)) , subst (λ u → u ∷ xs ≡ x ∷ xs) (proj₁ (map∷decomp∈ xs∈)) refl
+
+  ∈-map : {ls : List (List A)} {y : A} → ∀ l → l ∈ map (y ∷_) ls → y ∈ l
+  ∈-map {l' ∷ ls} {y} .(y ∷ l') (here refl) = here refl
+  ∈-map {l' ∷ ls} {y} l (there l∈) = ∈-map l l∈
 
 -----------------------------------------------
 -------- Properties of list inclusion ---------
@@ -146,25 +151,6 @@ module _ {a} {A : Set a} where
   ∈∷∧⊆→∈ : {ys xs : List A} {y x : A} → x ∈ y ∷ xs → xs ⊆ ys → x ∈ y ∷ ys
   ∈∷∧⊆→∈ (here px) _ = here px
   ∈∷∧⊆→∈ (there x∈) xs⊆ = there (xs⊆ x∈)
-
-  ⊆→∷⊆∷ : {ys xs : List A} {x : A} → xs ⊆ ys → x ∷ xs ⊆ x ∷ ys
-  ⊆→∷⊆∷ _ (here px) = here px
-  ⊆→∷⊆∷ h (there y∈) = there (h y∈)
-
-  ⊆-swap : {xs : List A} {x y : A} → ∀ l → xs ⊆ x ∷ y ∷ l → xs ⊆ y ∷ x ∷ l
-  ⊆-swap _ h (here refl) = case (h (here refl)) of λ where
-      (here refl) → there (here refl)
-      (there (here refl)) → here refl
-      (there (there px)) → there (there px)
-  ⊆-swap l h (there p) = ⊆-swap l (λ z → h (there z)) p
-
-  All⊆-swap : {ls : List (List A)} {x y : A} → ∀ l → All(_⊆ x ∷ y ∷ l) ls → All(_⊆ y ∷ x ∷ l) ls
-  All⊆-swap {[]} _ _ = All.[]
-  All⊆-swap {_ ∷ _} l (px All.∷ p) = ⊆-swap l px All.∷ (All⊆-swap l p)
-
-  All⊆→Allmap∷⊆∷ : {ls : List (List A)} {ys : List A} {y : A} → All (_⊆ ys) ls → All (_⊆ y ∷ ys) (map (y ∷_) ls)
-  All⊆→Allmap∷⊆∷ {[]} _ = All.[]
-  All⊆→Allmap∷⊆∷ {_ ∷ _} (px All.∷ ls∈) = ⊆→∷⊆∷ px All.∷ All⊆→Allmap∷⊆∷ ls∈
 
 --------------------------------------------------------------
 ------- duplicate entries in lists and deduplication ---------
@@ -212,7 +198,8 @@ module _ {a} {A : Set a}  where
     concat (map f xs ++ map f ys)    ≡˘⟨ concat-++ (map f xs) (map f ys) ⟩
     concatMap f xs ++ concatMap f ys ∎ where open ≡-Reasoning
 
-  concatMap-decomp : ∀{b}{B : Set b}{l : List A}{x : B}{f : A → List B} → (x ∈ concatMap f l) ⇔ (∃[ z ] (z ∈ l) × (x ∈ f z))
+  concatMap-decomp : ∀{b}{B : Set b}{l : List A}{x : B}{f : A → List B}
+                     → (x ∈ concatMap f l) ⇔ (∃[ z ] (z ∈ l) × (x ∈ f z))
   concatMap-decomp {b} {B} {[]} {x} {f} = mk⇔ (λ ()) (λ (_ , v , _) → ⊥-elim (¬∈[] v))
   concatMap-decomp {b} {B} {y ∷ ys} {x} {f} = mk⇔ i ii
     where
@@ -229,34 +216,49 @@ module _ {a} {A : Set a}  where
 ------- properties of insert -------
 ------------------------------------
 module _ {a} {A : Set a} where
-  ∷∈insert : {ys : List A} {x : A} → x ∷ ys ∈ (insert x) ys
+  ∷∈insert : {ys : List A} {x : A} → x ∷ ys ∈ insert x ys
   ∷∈insert {[]} = here refl
   ∷∈insert {_ ∷ _} = here refl
 
-  ∈Allinsert : {l : List A} {x : A} → All (x ∈_) ((insert x) l)
-  ∈Allinsert {[]} = here refl All.∷ All.[]
-  ∈Allinsert {_ ∷ _} = (here refl) All.∷ ∈All→∈Allmap∷ ∈Allinsert
+  ∈-insert : {ys : List A} {x : A} → ∀ l → l ∈ insert x ys → x ∈ l
+  ∈-insert {[]} {x} .(x ∷ []) (here refl) = here refl
+  ∈-insert {y ∷ ys} {x} .(x ∷ y ∷ ys) (here refl) = here refl
+  ∈-insert {y ∷ ys} {x} l (there l∈) with map∷decomp l∈
+  ... | (l' , l'∈ , yl'l) = subst (x ∈_) yl'l (there (∈-insert l' l'∈))
 
-  ∈Allinserts : {ls : List (List A)} {x : A} → All (x ∈_) (concatMap (insert x) ls)
-  ∈Allinserts {[]} = All.[]
-  ∈Allinserts {_ ∷ ls} = All++intro ∈Allinsert (∈Allinserts{ls})
+  ∈→∈-insert : {ys : List A} {y x : A} → x ∈ ys → ∀ l → l ∈ insert y ys → x ∈ l
+  ∈→∈-insert {y' ∷ ys} {y} {x} x∈ .(y ∷ y' ∷ ys) (here refl) = there x∈
+  ∈→∈-insert {y' ∷ ys} {y} {.y'} (here refl) l (there l∈) = ∈-map l l∈
+  ∈→∈-insert {y' ∷ ys} {y} {x} (there x∈) l (there l∈) with map∷decomp {ls = insert y ys} l∈
+  ... | (l' , l'∈ , y'l'l) = subst (x ∈_) y'l'l (there (∈→∈-insert x∈ l' l'∈))
 
-  ∈→∈Allinsert : {ys : List A} {y x : A} → x ∈ ys → All (x ∈_) (insert y ys)
-  ∈→∈Allinsert (here refl) = (there (here refl)) All.∷ ∈Allmap∷
-  ∈→∈Allinsert (there x∈ys) = (there (there x∈ys)) All.∷ (∈All→∈Allmap∷ (∈→∈Allinsert x∈ys))
+  ∈All→∈-inserts : {ls : List(List A)} {y x : A} → All (x ∈_) ls → ∀ l → l ∈ concatMap (insert y) ls → x ∈ l
+  ∈All→∈-inserts {ls}{y}{x} x∈ l l∈ with to concatMap-decomp l∈
+  ... | (l' , l'∈ , l∈yl') = ∈→∈-insert (All-def x∈ l' l'∈) l l∈yl'
 
-  ∈All→∈Allinserts : {ls : List (List A)} {y x : A} → All (x ∈_) ls → All (x ∈_) (concatMap (insert y) ls)
-  ∈All→∈Allinserts {.[]} All.[] = All.[]
-  ∈All→∈Allinserts {.(_ ∷ _)} (px All.∷ p) = All++intro (∈→∈Allinsert px) (∈All→∈Allinserts p)
+  ∈Allinsert : {ys : List A} {x : A} → All (x ∈_) (insert x ys)
+  ∈Allinsert {[]} {x} = here refl All.∷ All.[]
+  ∈Allinsert {y ∷ ys} {x} = (here refl) All.∷ ∈All→∈Allmap∷ ∈Allinsert
 
-  Allinsert⊆∷ : {xs : List A} {x : A} → All(_⊆ (x ∷ xs)) (insert x xs)
-  Allinsert⊆∷ {[]} = id All.∷ All.[]
-  Allinsert⊆∷ {_ ∷ xs} = id All.∷ (All⊆-swap xs (All⊆→Allmap∷⊆∷ Allinsert⊆∷))
+  ∈Allinserts : {ls : List(List A)} {x : A} → All (x ∈_) (concatMap (insert x) ls)
+  ∈Allinserts {[]} {x} = All.[]
+  ∈Allinserts {[] ∷ ls} {x} = (here refl) All.∷ ∈Allinserts{ls}
+  ∈Allinserts {(y ∷ ys) ∷ ls} {x} = (here refl) All.∷ All++intro (∈All→∈Allmap∷{ls = insert x ys} ∈Allinsert) (∈Allinserts{ls})
+
+  insert⊆∷ : {xs : List A} {x : A} → ∀ l → l ∈ (insert x xs) → l ⊆ (x ∷ xs)
+  insert⊆∷ {[]} {.z} (z ∷ .[]) (here refl) {y} y∈ = y∈
+  insert⊆∷ {x ∷ xs} {.z} (z ∷ .(x ∷ xs)) (here refl) {y} y∈ = y∈
+  insert⊆∷ {x' ∷ xs} {x} (z ∷ zs) (there l∈) {y} y∈ with map∷decomp l∈
+  ... | (l' , l'∈ , x'l'zzs) = case (subst (y ∈ˡ_) (sym x'l'zzs) y∈) of λ where
+    (here refl) → there (here refl)
+    (there q) → case ((insert⊆∷ l' l'∈) q) of λ where
+      (here refl) → here refl
+      (there x) → there (there x)
 
   insert-decomp : {ls : List (List A)} {x : A} → ∀ ys → ys ∈ (concatMap (insert x) ls)
                   → ∃[ l ] (l ∈ ls × ys ⊆ (x ∷ l))
   insert-decomp {xs ∷ _} ys ys∈ with ∈-++⁻ _ ys∈
-  ...| inj₁ v = xs , here refl , All-def Allinsert⊆∷ ys v
+  ...| inj₁ v = xs , here refl , insert⊆∷ ys v
   ...| inj₂ v with insert-decomp ys v
   ...| l , l∈ls , ys⊆ = l , there l∈ls , ys⊆
 
@@ -322,13 +324,15 @@ module _ {a} {A : Set a} where
                             → l ∈ subpermutations ys
   ∈subperm→∈subpermOftail {[]} .(_ ∷ []) (here refl) x∉xs = ⊥-elim (x∉xs (here refl))
   ∈subperm→∈subpermOftail {[]} .[] (there (here refl)) x∉xs = here refl
-  ∈subperm→∈subpermOftail {y ∷ ys} l l∈sp x∉l with ∈-++⁻ _ l∈sp
-  ...| inj₁ v = ⊥-elim (x∉l (All-def (∈Allinserts{ls = subpermutations (y ∷ ys)}) l v ))
+  ∈subperm→∈subpermOftail {y ∷ ys} {x} l l∈sp x∉l with ∈-++⁻ _ l∈sp
   ...| inj₂ v = v
+  ...| inj₁ v with to (concatMap-decomp{l = (concatMap (insert y) (subpermutations ys) ++ subpermutations ys)}) v
+  ... | l' , l'∈ , l∈xl' = ⊥-elim (x∉l (∈-insert l l∈xl'))
 
   ∈-insert-cancelˡ : {ls : List (List A)} {xs : List A} {y : A} → ¬ y ∈ xs → xs ∈ concatMap (insert y) ls ++ ls → xs ∈ ls
-  ∈-insert-cancelˡ {ls} y∉xs xs∈yls = case (∈-++⁻ _ xs∈yls) of λ where
-    (inj₁ v) → ⊥-elim (y∉xs (All-def (∈Allinserts{ls = ls}) _ v))
+  ∈-insert-cancelˡ {ls}{xs} y∉xs xs∈yls = case (∈-++⁻ _ xs∈yls) of λ where
+    (inj₁ v) → case (to (concatMap-decomp{l = ls}) v) of λ where
+          (l' , l'∈ , l∈xl') → ⊥-elim (y∉xs (∈-insert xs l∈xl'))
     (inj₂ v) → v
 
 module _ {a} {A : Set a} where
@@ -344,8 +348,7 @@ module _ {a} {A : Set a} where
       (subst (λ x → xs ∈ x)
              (concatMap-++ (insert y) (concatMap (insert y') (subpermutations ys)) (subpermutations ys))
              xs∈yy'spys)
-
-  ...| inj₁ v = ⊥-elim (y'∉xs (All-def (∈All→∈Allinserts (∈Allinserts{ls = subpermutations ys})) xs v))
+  ...| inj₁ v = ⊥-elim (y'∉xs (∈All→∈-inserts (∈Allinserts{ls = subpermutations ys}) xs v))
   ...| inj₂ v = case (insert-decomp≡' {ls = subpermutations ys} xs v) of λ where
     (ll , lr , xs≡ , lllr∈) →
       let
@@ -368,7 +371,7 @@ module _ {a} {A : Set a} where
 
   ...| inj₁ v = case to concatMap-decomp v of λ where
     (l , l∈ , xs∈) →
-      let xl∈ = ∈insert→∷∈insert x∈ys (λ p → x∉xs (All-def (∈→∈Allinsert p) xs xs∈)) l∈ in
+      let xl∈ = ∈insert→∷∈insert x∈ys (λ p → x∉xs (∈→∈-insert p xs xs∈) ) l∈ in
       subst (x ∷ xs ∈_)
             (sym (concatMap-++ (insert y) (concatMap (insert y') (subpermutations ys)) _))
             (xs⊆xs++ys _ _ (insert-decomp∈⁻¹ (x ∷ xs) (x ∷ l , xl∈ , there (∈-map⁺ _ xs∈))))
