@@ -3,9 +3,9 @@
 open import Agda.Primitive using () renaming (Set to Type)
 open import Axiom.Set using (Theory)
 
-module Interface.HasFilter {ℓ} (th : Theory{ℓ}) where
+module Interface.HasFilter  where
 
-open Theory th hiding (filter)
+open Theory hiding (filter)
 
 record HasFilter (C D : Type) : Type₁ where
   field
