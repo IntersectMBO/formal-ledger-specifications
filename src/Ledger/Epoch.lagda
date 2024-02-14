@@ -72,14 +72,18 @@ its results, i.e:
 
 \begin{figure*}[h]
 \begin{code}
-  EPOCH : let
+  EPOCH :
+\end{code}
+\begin{code}[hide]
+    let
       open EpochState eps hiding (es)
       open RatifyState fut using (removed) renaming (es to esW)
       -- ^ this rolls over the future enact state into es
       open LState ls; open UTxOState utxoSt; open CertState certState
       open PState pState; open DState dState; open GState gState
       open Acnt acnt
-
+\end{code}
+\begin{code}
       trWithdrawals   = esW .EnactState.withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
@@ -108,7 +112,11 @@ its results, i.e:
 
       acnt' = record acnt
         { treasury = treasury + fees + unclaimed + donations ∸ totWithdrawals }
+\end{code}
+\begin{code}[hide]
     in
+\end{code}
+\begin{code}
     record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     ────────────────────────────────

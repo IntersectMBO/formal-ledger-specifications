@@ -68,7 +68,12 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
 \begin{code}
   PPUpdateEmpty : Γ ⊢ s ⇀⦇ nothing ,PPUP⦈ s
 
-  PPUpdateCurrent : let open PPUpdateEnv Γ in
+  PPUpdateCurrent :
+\end{code}
+\begin{code}[hide]
+   let open PPUpdateEnv Γ in
+\end{code}
+\begin{code}
     dom pup ⊆ dom genDelegs
     → All (isViableUpdate pparams) (range pup)
     → slot + (2 * StabilityWindow) < firstSlot (sucᵉ (epoch slot))

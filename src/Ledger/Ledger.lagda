@@ -44,6 +44,8 @@ record LState : Set where
 
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₁ txvote ++ map inj₂ txprop
+\end{code}
+\begin{code}[hide]
   where open TxBody txb
 \end{code}
 \caption{Types and functions for the LEDGER transition system}
@@ -77,7 +79,12 @@ data
 
 \begin{figure*}[h]
 \begin{code}
-  LEDGER : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+  LEDGER :
+\end{code}
+\begin{code}[hide]
+    let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+\end{code}
+\begin{code}
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'

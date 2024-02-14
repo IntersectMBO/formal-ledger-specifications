@@ -46,13 +46,23 @@ data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsU
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  NEWPP-Accept : ∀ {Γ} → let open NewPParamState s; newpp = applyUpdate pparams upd in
-    viablePParams newpp
-    ────────────────────────────────
-    Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧ⁿᵖ
+  NEWPP-Accept : ∀ {Γ} →
+\end{code}
+\begin{code}[hide]
+    let open NewPParamState s
+\end{code}
+\begin{code}
+        newpp = applyUpdate pparams upd
+\end{code}
+\begin{code}[hide]
+    in
+\end{code}
+\begin{code}
+        viablePParams newpp
+        ────────────────────────────────
+        Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧ⁿᵖ
 
-  NEWPP-Reject : ∀ {Γ} →
-    Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s
+  NEWPP-Reject : ∀ {Γ} → Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s
 \end{code}
 \caption{NEWPP transition system}
 \end{figure*}

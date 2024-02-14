@@ -56,12 +56,14 @@ record AdaIdType : Type where
 
 An inhabitant of `Value` is a map denoting a finite collection of quantities of assets.
 
-\begin{code}
+\begin{code}[hide]
 open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (refl ; sym ; trans)
-
+\end{code}
+\begin{code}
 AssetId  = PolicyId × AssetName
 Quantity = ℕ
-
+\end{code}
+\begin{code}[hide]
 module _
   {X : ℙ AssetId}
   {⋁A : isMaximal X}
@@ -74,7 +76,8 @@ module _
 
   open ≡-Reasoning
   open FunTot X ⋁A
-
+\end{code}
+\begin{code}
   _⊕_ : Op₂ (AssetId ⇒ Quantity)
   u ⊕ v = Fun⇒TotalMap λ aa → (lookup u) aa + (lookup v) aa
 
@@ -130,15 +133,21 @@ module _
     lookup tm aa + lookup ι aa  ≡⟨ cong (lookup tm aa +_) lookupι≡0 ⟩
     lookup tm aa + 0            ≡⟨ +-identityʳ (lookup tm aa) ⟩
     lookup tm aa                ∎
-
+\end{code}
+\begin{code}[hide]
   open IsSemigroup
   open IsMagma
+\end{code}
+\begin{code}
   isSemigrp : IsSemigroup _≋_ _⊕_
   isSemigrp .isMagma .isEquivalence        = ≋-isEquivalence
   isSemigrp .isMagma .∙-cong {u}{v}{x}{y}  = ⊕-cong {u}{v}{x}{y}
   isSemigrp .assoc                         = ⊕-assoc
-
+\end{code}
+\begin{code}[hide]
   open IsMonoid
+\end{code}
+\begin{code}
   ≋-⊕-ι-isMonoid : IsMonoid _≋_ _⊕_ ι
   ≋-⊕-ι-isMonoid .isSemigroup  = isSemigrp
   ≋-⊕-ι-isMonoid .identity     = ι-identity
@@ -146,8 +155,10 @@ module _
 
 We are now in a position to define the commutative monoid.
 
-\begin{code}
+\begin{code}[hide]
   open IsCommutativeMonoid
+\end{code}
+\begin{code}
   Vcm : CommutativeMonoid 0ℓ 0ℓ
   Vcm .Carrier                        = AssetId ⇒ Quantity
   Vcm ._≈_                            = _≋_
@@ -155,9 +166,11 @@ We are now in a position to define the commutative monoid.
   Vcm .ε                              = ι
   Vcm .isCommutativeMonoid .isMonoid  = ≋-⊕-ι-isMonoid
   Vcm .isCommutativeMonoid .comm      = ⊕-comm
-
+\end{code}
+\begin{code}[hide]
   instance _ = toCommMonoid' Vcm
-
+\end{code}
+\begin{code}
   Value-TokenAlgebra :
     (specialPolicy : PolicyId)
     (specialAsset : AssetName)
@@ -177,12 +190,13 @@ We are now in a position to define the commutative monoid.
     ; Dec-≤ᵗ = λ {x}{y} → Dec-lookup≤ {x}{y}
     }
     where
-
     specId : AssetId
     specId = (specialPolicy , specialAsset)
-
+\end{code}
+\begin{code}[hide]
     open Update
-
+\end{code}
+\begin{code}
     totalMap↠coin : AssetId ⇒ Quantity → Coin
     totalMap↠coin tm = lookup tm specId
 
@@ -197,6 +211,8 @@ We are now in a position to define the commutative monoid.
 
     compose-to-id : totalMap↠coin ∘ coin↪totalMap ≗ id
     compose-to-id _ = lookup-update-id ι
+\end{code}
+\begin{code}[hide]
       where open LookupUpdate {X = X} {specId} {⋁A}
 
     open CommutativeMonoid Vcm                    using () renaming (rawMonoid to Vcm-mon)
@@ -204,7 +220,8 @@ We are now in a position to define the commutative monoid.
     open IsMonoidHomomorphism                     using (isMagmaHomomorphism ; ε-homo)
     open IsMagmaHomomorphism                      using (isRelHomomorphism ; homo)
     open IsRelHomomorphism                        using () renaming (cong to ⟦⟧-cong)
-
+\end{code}
+\begin{code}
     CoinMonHom : IsMonoidHomomorphism Vcm-mon ℕ-mon totalMap↠coin
     CoinMonHom .isMagmaHomomorphism .isRelHomomorphism .⟦⟧-cong  = λ x → x
     CoinMonHom .isMagmaHomomorphism .homo                        = λ x y → ⊕-lemma x y

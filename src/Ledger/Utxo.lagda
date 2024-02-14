@@ -217,7 +217,11 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
                       ∧ not (≟-∅ᵇ collateral)
                       )
   where
+\end{code}
+\begin{code}[hide]
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
+\end{code}
+\begin{code}
     collateralRange  = range    (utxo ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
 \end{code}
@@ -367,10 +371,14 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{figure*}[h]
 \begin{code}
   UTXO-inductive :
+\end{code}
+\begin{code}[hide]
     let open Tx tx renaming (body to txb); open TxBody txb
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
+\end{code}
+\begin{code}
     ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
     ∙ inInterval slot txvldt                 ∙ feesOK pp tx utxo ≡ true
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0

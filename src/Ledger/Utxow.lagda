@@ -33,7 +33,11 @@ credsNeeded utxo txb
   ∪  mapPartial (λ p → case p .GovProposal.policy of λ where
     (just sh)  → just (Propose  p , inj₂ sh)
     nothing    → nothing) (fromList txprop)
+\end{code}
+\begin{code}[hide]
   where open TxBody txb
+\end{code}
+\begin{code}
 
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
 witsVKeyNeeded = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded
@@ -68,10 +72,15 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
-    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-        open UTxOState s
-        witsKeyHashes     = mapˢ hash (dom vkSigs)
-        witsScriptHashes  = mapˢ hash scripts
+    let
+\end{code}
+\begin{code}[hide]
+      open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+      open UTxOState s
+\end{code}
+\begin{code}
+      witsKeyHashes     = mapˢ hash (dom vkSigs)
+      witsScriptHashes  = mapˢ hash scripts
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s

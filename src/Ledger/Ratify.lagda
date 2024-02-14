@@ -503,7 +503,12 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \end{code}
 \begin{figure*}[h!]
 \begin{code}
-  RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+  RATIFY-Accept :
+\end{code}
+\begin{code}[hide]
+    let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+\end{code}
+\begin{code}
        accepted Γ es st
     →  ¬ delayed action prevAction es d
     →  ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
@@ -511,13 +516,23 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
             ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 
-  RATIFY-Reject : let open RatifyEnv Γ; st = a .proj₂ in
+  RATIFY-Reject :
+\end{code}
+\begin{code}[hide]
+    let open RatifyEnv Γ; st = a .proj₂ in
+\end{code}
+\begin{code}
        ¬ accepted Γ es st
     →  expired currentEpoch st
        ────────────────────────────────
        Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 
-  RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+  RATIFY-Continue :
+\end{code}
+\begin{code}[hide]
+    let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+\end{code}
+\begin{code}
        ¬ accepted Γ es st × ¬ expired currentEpoch st
     ⊎  accepted Γ es st
        × ( delayed action prevAction es d
