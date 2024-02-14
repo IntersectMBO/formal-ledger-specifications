@@ -99,7 +99,7 @@ its results, i.e:
       certState' =
         ⟦ record dState { rewards = rewards ∪⁺ refunds }
         , ⟦ pools ∣ retired ᶜ , retiring ∣ retired ᶜ ⟧ᵖ
-        , ⟦ if null govSt' then mapValues sucᵉ dreps else dreps
+        , ⟦ if null govSt' then mapValues (1 +ᵉ_) dreps else dreps
           , ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
 
       utxoSt' = ⟦ utxo , 0 , deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
@@ -131,13 +131,13 @@ data
 \end{code}
 \begin{code}
   NEWEPOCH-New :
-    e ≡ sucᵉ lastEpoch
+    e ≡ 1 +ᵉ lastEpoch
     → Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     ────────────────────────────────
     Γ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' ⟧ⁿᵉ
 
   NEWEPOCH-Not-New :
-    e ≢ sucᵉ lastEpoch
+    e ≢ 1 +ᵉ lastEpoch
     ────────────────────────────────
     Γ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps ⟧ⁿᵉ
 \end{code}
