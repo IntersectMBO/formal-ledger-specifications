@@ -27,14 +27,22 @@ maximum : ℙ ℚ → ℚ
 maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
 \begin{figure*}[h]
+\begin{code}[hide]
+data
+\end{code}
 \begin{code}
-data GovRole : Set where
+  GovRole : Set where
   CC DRep SPO : GovRole
 
 Voter        = GovRole × Credential
 GovActionID  = TxId × ℕ
 
-data VDeleg : Set where
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  VDeleg : Set where
   credVoter        : GovRole → Credential →  VDeleg
   abstainRep       :                         VDeleg
   noConfidenceRep  :                         VDeleg
@@ -43,7 +51,12 @@ record Anchor : Set where
   field  url   : String
          hash  : DocHash
 
-data GovAction : Set where
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  GovAction : Set where
   NoConfidence     :                                             GovAction
   NewCommittee     : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
   NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction
@@ -136,7 +149,12 @@ HashProtected A = A × GovActionID
 
 \begin{figure*}[h]
 \begin{code}
-data Vote : Set where
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  Vote : Set where
   yes no abstain  : Vote
 
 record GovVote : Set where

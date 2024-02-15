@@ -41,7 +41,12 @@ record Acnt : Set where
 ProtVer : Set
 ProtVer = ℕ × ℕ
 
-data pvCanFollow : ProtVer → ProtVer → Set where
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  pvCanFollow : ProtVer → ProtVer → Set where
   canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
   canFollowMinor : pvCanFollow (m , n) (m , n + 1)
 \end{code}
@@ -52,8 +57,11 @@ data pvCanFollow : ProtVer → ProtVer → Set where
 
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
+\begin{code}[hide]
+data
+\end{code}
 \begin{code}
-data PParamGroup : Set where
+  PParamGroup : Set where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup SecurityGroup : PParamGroup
 
 record DrepThresholds : Set where
