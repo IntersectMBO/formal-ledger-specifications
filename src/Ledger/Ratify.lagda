@@ -111,7 +111,12 @@ maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
 \begin{AgdaMultiCode}
 \begin{code}
 threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
-threshold pp ccThreshold = λ where
+threshold pp ccThreshold =
+\end{code}
+\begin{code}[hide]
+  λ where
+\end{code}
+\begin{code}
     NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1     ∣
     (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                    ∣
     (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─           ∣
@@ -130,9 +135,14 @@ threshold pp ccThreshold = λ where
 \end{code}
 \begin{code}
     P/Q2a/b : Maybe ℚ × Maybe ℚ
-    P/Q2a/b = case ccThreshold of λ where
-      (just _) → (vote P2a , vote Q2a)
-      nothing  → (vote P2b , vote Q2b)
+    P/Q2a/b = case ccThreshold of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+        (just _) → (vote P2a , vote Q2a)
+        nothing  → (vote P2b , vote Q2b)
 
     pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
     pparamThreshold NetworkGroup     = (vote P5a  , ─         )
@@ -294,8 +304,12 @@ actualVotes Γ pparams cc ga votes
   =   mapKeys (credVoter CC) (actualCCVotes cc)  ∪ˡ actualPDRepVotes ga
   ∪ˡ  actualDRepVotes                            ∪ˡ actualSPOVotes ga
   where
+\end{code}
+\begin{code}[hide]
   open RatifyEnv Γ
   open PParams pparams
+\end{code}
+\begin{code}
 
   roleVotes : GovRole → VDeleg ⇀ Vote
   roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (λ (x , _) → r ≡ proj₁ x) votes)
@@ -309,8 +323,13 @@ actualVotes Γ pparams cc ga votes
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
-    λ where  (true , just (just c'))  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
-             _                        → Vote.abstain -- expired, no hot key or resigned
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      (true , just (just c'))  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+      _                        → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : CCData → Credential ⇀ Vote
   actualCCVotes nothing          =  ∅
