@@ -81,9 +81,19 @@ open import Data.List.Relation.Binary.Sublist.Ext
 open import Data.List.Relation.Binary.Sublist.Propositional as S
 import Data.Maybe.Relation.Unary.Any as M
 \end{code}
+\begin{code}[hide]
+module _
+\end{code}
 \begin{code}
-module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where
-  data evalTimelock : Timelock → Set where
+  (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot)
+\end{code}
+\begin{code}[hide]
+  where
+  data
+\end{code}
+\begin{code}
+
+    evalTimelock : Timelock → Set where
     evalAll  : All evalTimelock ss
              → evalTimelock (RequireAllOf ss)
     evalAny  : Any evalTimelock ss
