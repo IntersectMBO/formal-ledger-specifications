@@ -55,13 +55,19 @@ record RwdAddr : Set where
 \end{code}
 \begin{code}[hide]
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
+private variable
+  a b : Level
+  A : Set a
+Σ-syntax' : (A : Set a) → (A → Set b) → Set _
+Σ-syntax' = Σ
+syntax Σ-syntax' A (λ x → B) = x ∈ A ﹐ B
 \end{code}
 \begin{code}
 
-VKeyBaseAddr         = Σ[ addr ∈ BaseAddr       ] isVKey    (addr .pay)
-VKeyBootstrapAddr    = Σ[ addr ∈ BootstrapAddr  ] isVKey    (addr .pay)
-ScriptBaseAddr       = Σ[ addr ∈ BaseAddr       ] isScript  (addr .pay)
-ScriptBootstrapAddr  = Σ[ addr ∈ BootstrapAddr  ] isScript  (addr .pay)
+VKeyBaseAddr         = addr ∈ BaseAddr      ﹐ isVKey   (addr .pay)
+VKeyBootstrapAddr    = addr ∈ BootstrapAddr ﹐ isVKey   (addr .pay)
+ScriptBaseAddr       = addr ∈ BaseAddr      ﹐ isScript (addr .pay)
+ScriptBootstrapAddr  = addr ∈ BootstrapAddr ﹐ isScript (addr .pay)
 
 Addr        = BaseAddr        ⊎ BootstrapAddr
 VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
