@@ -355,8 +355,8 @@ instance
       ; minUTxOValue        = minUTxOValue
       ; poolDeposit         = poolDeposit
       ; Emax                = Emax
+      ; nopt                = nopt
       ; pv                  = to pv
-      -- ; pv                  = to pv
       ; votingThresholds    = _
       ; govActionLifetime   = govActionLifetime
       ; govActionDeposit    = govActionDeposit
@@ -364,7 +364,6 @@ instance
       ; drepActivity        = drepActivity
       ; ccMinSize           = ccMinSize
       ; ccMaxTermLength     = ccMaxTermLength
-      ; minimumAVS          = minimumAVS
       ; costmdls            = to costmdls
       ; prices              = prices
       ; maxTxExUnits        = to maxTxExUnits
@@ -382,7 +381,9 @@ instance
       ; minUTxOValue                = minUTxOValue
       ; poolDeposit                 = poolDeposit
       ; minFeeRefScriptCoinsPerByte = 0ℚ
+      ; a0                          = 0ℚ
       ; Emax                        = Emax
+      ; nopt                        = nopt
       ; collateralPercentage        = 0
       ; pv                          = from pv
         -- TODO: translate these once they are implemented in F.PParams
@@ -397,7 +398,6 @@ instance
       ; drepActivity                = drepActivity
       ; ccMinSize                   = ccMinSize
       ; ccMaxTermLength             = ccMaxTermLength
-      ; minimumAVS                  = 0
       ; costmdls                    = from costmdls
       ; prices                      = prices
       ; maxTxExUnits                = from maxTxExUnits
