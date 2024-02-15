@@ -32,7 +32,7 @@ open import Data.Nat public
   hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_; _≡ᵇ_; _≥_; _>_; less-than-or-equal)
   renaming (_+_ to _+ℕ_)
 open import Data.Integer as ℤ public
-  using (ℤ; _⊖_)
+  using (ℤ)
   renaming (_+_ to _+ℤ_)
 open import Data.String public
   using (String; _<+>_)
