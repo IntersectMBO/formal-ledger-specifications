@@ -82,30 +82,22 @@ open import Data.List.Relation.Binary.Sublist.Propositional as S
 import Data.Maybe.Relation.Unary.Any as M
 \end{code}
 \begin{code}[hide]
-module _
+data
 \end{code}
 \begin{code}
-  (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot)
-\end{code}
-\begin{code}[hide]
-  where
-  data
-\end{code}
-\begin{code}
-
-    evalTimelock : Timelock → Set where
-    evalAll  : All evalTimelock ss
-             → evalTimelock (RequireAllOf ss)
-    evalAny  : Any evalTimelock ss
-             → evalTimelock (RequireAnyOf ss)
-    evalMOf  : MOf m evalTimelock ss
-             → evalTimelock (RequireMOf m ss)
-    evalSig  : x ∈ khs
-             → evalTimelock (RequireSig x)
-    evalTSt  : M.Any (a ≤_) (I .proj₁)
-             → evalTimelock (RequireTimeStart a)
-    evalTEx  : M.Any (_≤ a) (I .proj₂)
-             → evalTimelock (RequireTimeExpire a)
+  evalTimelock (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) : Timelock → Set where
+  evalAll  : All (evalTimelock khs I) ss
+           → (evalTimelock khs I) (RequireAllOf ss)
+  evalAny  : Any (evalTimelock khs I) ss
+           → (evalTimelock khs I) (RequireAnyOf ss)
+  evalMOf  : MOf m (evalTimelock khs I) ss
+           → (evalTimelock khs I) (RequireMOf m ss)
+  evalSig  : x ∈ khs
+           → (evalTimelock khs I) (RequireSig x)
+  evalTSt  : M.Any (a ≤_) (I .proj₁)
+           → (evalTimelock khs I) (RequireTimeStart a)
+  evalTEx  : M.Any (_≤ a) (I .proj₂)
+           → (evalTimelock khs I) (RequireTimeExpire a)
 \end{code}
 \caption{Timelock scripts and their evaluation}
 \label{fig:defs:timelock}
