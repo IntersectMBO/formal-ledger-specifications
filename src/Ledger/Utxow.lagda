@@ -16,6 +16,7 @@ open import Ledger.ScriptValidation txs abs
 \end{code}
 
 \begin{figure*}[h]
+\begin{AgdaAlign}
 \begin{code}
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isInj₁
@@ -50,6 +51,7 @@ witsVKeyNeeded = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
 scriptsNeeded = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 \end{code}
+\end{AgdaAlign}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}
 \end{figure*}

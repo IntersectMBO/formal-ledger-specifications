@@ -296,7 +296,7 @@ restrictedDists coins rank dists = dists
         restrict dist = topNDRepDist rank dist ∪ˡ mostStakeDRepDist dist coins
 \end{code}
 \begin{figure*}[h!]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
@@ -350,7 +350,7 @@ actualVotes Γ pparams cc ga votes
   actualSPOVotes (TriggerHF _)  = roleVotes SPO ∪ˡ constMap spos Vote.no
   actualSPOVotes _              = roleVotes SPO ∪ˡ constMap spos Vote.abstain
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Vote counting}
 \label{fig:defs:ratify-actualvotes}
 \end{figure*}

@@ -16,6 +16,7 @@ record NewPParamEnv : Set where
 --  field
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 record NewPParamState : Set where
   constructor ⟦_,_⟧ⁿᵖ
@@ -39,6 +40,7 @@ votedValue pup pparams quorum =
       (no  _)        → nothing
       (yes (u , _))  → just u
 \end{code}
+\end{AgdaMultiCode}
 \caption{Types and functions for the NEWPP transition system}
 \end{figure*}
 \begin{code}[hide]
