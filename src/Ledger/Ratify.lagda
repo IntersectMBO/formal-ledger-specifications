@@ -498,45 +498,32 @@ private variable
   removed : ℙ (GovActionID × GovActionState)
   d : Bool
 
+open GovActionState; open RatifyEnv
+
 data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Set where
 
 \end{code}
 \begin{figure*}[h!]
 \begin{code}
-  RATIFY-Accept :
-\end{code}
-\begin{code}[hide]
-    let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
-\end{code}
-\begin{code}
+  RATIFY-Accept : let st = a .proj₂ in
        accepted Γ es st
-    →  ¬ delayed action prevAction es d
-    →  ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+    →  ¬ delayed (st .action) (st .prevAction) es d
+    →  ⟦ a .proj₁ , Γ .treasury , Γ .currentEpoch ⟧ᵉ ⊢ es ⇀⦇ st .action ,ENACT⦈ es'
        ────────────────────────────────
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
-            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
+            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction (st .action)  ⟧ʳ
 
-  RATIFY-Reject :
-\end{code}
-\begin{code}[hide]
-    let open RatifyEnv Γ; st = a .proj₂ in
-\end{code}
-\begin{code}
+  RATIFY-Reject : let st = a .proj₂ in
        ¬ accepted Γ es st
-    →  expired currentEpoch st
+    →  expired (Γ .currentEpoch) st
        ────────────────────────────────
        Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 
-  RATIFY-Continue :
-\end{code}
-\begin{code}[hide]
-    let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
-\end{code}
-\begin{code}
-       ¬ accepted Γ es st × ¬ expired currentEpoch st
+  RATIFY-Continue : let st = a .proj₂ in
+       ¬ accepted Γ es st × ¬ expired (Γ .currentEpoch) st
     ⊎  accepted Γ es st
-       × ( delayed action prevAction es d
-         ⊎ (∀ es' → ¬ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'))
+       × ( delayed (st .action) (st .prevAction) es d
+         ⊎ (∀ es' → ¬ ⟦ a .proj₁ , Γ .treasury , Γ .currentEpoch ⟧ᵉ ⊢ es ⇀⦇ st .action ,ENACT⦈ es'))
     ────────────────────────────────
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 

@@ -42,25 +42,16 @@ private variable
   s s' : NewPParamState
   upd : PParamsUpdate
 
+open NewPParamState
+
 data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsUpdate → NewPParamState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  NEWPP-Accept : ∀ {Γ} →
-\end{code}
-\begin{code}[hide]
-    let open NewPParamState s
-\end{code}
-\begin{code}
-        newpp = applyUpdate pparams upd
-\end{code}
-\begin{code}[hide]
-    in
-\end{code}
-\begin{code}
-        viablePParams newpp
-        ────────────────────────────────
-        Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧ⁿᵖ
+  NEWPP-Accept : ∀ {Γ} → let newpp = applyUpdate (s .pparams) upd in
+    viablePParams newpp
+    ────────────────────────────────
+    Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp (s .ppup) ⟧ⁿᵖ
 
   NEWPP-Reject : ∀ {Γ} → Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s
 \end{code}

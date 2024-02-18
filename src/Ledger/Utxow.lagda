@@ -68,25 +68,21 @@ private variable
   s s' : UTxOState
   tx : Tx
 
+open TxBody; open UTxOState
+
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
-    let
-\end{code}
-\begin{code}[hide]
-      open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-      open UTxOState s
-\end{code}
-\begin{code}
-      witsKeyHashes     = mapˢ hash (dom vkSigs)
-      witsScriptHashes  = mapˢ hash scripts
+    let open Tx tx renaming (body to txb); open TxWitnesses wits
+        witsKeyHashes     = mapˢ hash (dom vkSigs)
+        witsScriptHashes  = mapˢ hash scripts
     in
-    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
-    ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
-    ∙  txADhash ≡ map hash txAD
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes (txb .txid)) σ
+    ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes (txb .txvldt) s
+    ∙  witsVKeyNeeded (s .utxo) txb ⊆ witsKeyHashes
+    ∙  scriptsNeeded (s .utxo) txb ≡ᵉ witsScriptHashes
+    ∙  txb .txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

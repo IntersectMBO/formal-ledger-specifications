@@ -37,6 +37,8 @@ private variable
   s : ChainState
   b : Block
   ls' : LState
+  es : EnactState
+  eps : EpochState
   nes : NewEpochState
 
 instance _ = +-0-monoid
@@ -84,10 +86,12 @@ calculateStakeDistrs ls =
     { stakeDistr = govActionDeposits ls
     }
 
-
-data
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaMulticode}
+\begin{code}[hide]
+data
+\end{code}
 \begin{code}
   _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set
 \end{code}
@@ -98,21 +102,17 @@ data
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  CHAIN :
-\end{code}
-\begin{code}[hide]
-    let open ChainState s; open Block b; open NewEpochState newEpochState
-        open EpochState epochState; open EnactState es
-    in
-\end{code}
-\begin{code}
-       record { stakeDistrs = calculateStakeDistrs ls }
-         ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es ⟧ˡᵉ
-         ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+  CHAIN : record { stakeDistrs = calculateStakeDistrs (EpochState.ls eps) }
+          ⊢ ChainState.newEpochState s ⇀⦇ epoch (Block.slot b) ,NEWEPOCH⦈ nes
+          →  ⟦ Block.slot b , (EnactState.constitution es) .proj₁ .proj₂
+             , (EnactState.pparams es) .proj₁ , (EpochState.es eps) ⟧ˡᵉ
+          ⊢ EpochState.ls eps ⇀⦇ Block.ts b ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
-        record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
+        record s { newEpochState =
+                   record nes { epochState =
+                                record (NewEpochState.epochState nes) { ls = ls'} } }
 \end{code}
+\end{AgdaMulticode}
 \caption{CHAIN transition system}
 \end{figure*}

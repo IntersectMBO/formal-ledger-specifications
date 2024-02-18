@@ -364,6 +364,9 @@ private variable
   s s' : UTxOState
   tx : Tx
 
+open UTxOState
+open UTxOEnv renaming (pparams to pp)
+
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
@@ -371,23 +374,17 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{figure*}[h]
 \begin{code}
   UTXO-inductive :
-\end{code}
-\begin{code}[hide]
     let open Tx tx renaming (body to txb); open TxBody txb
-        open UTxOEnv Γ renaming (pparams to pp)
-        open UTxOState s
     in
-\end{code}
-\begin{code}
-    ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙ inInterval slot txvldt                 ∙ feesOK pp tx utxo ≡ true
-    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
-    ∙ txsize ≤ maxTxSize pp
+    ∙ txins ≢ ∅                              ∙ txins ⊆ dom (s .utxo)
+    ∙ inInterval (Γ .slot) txvldt                 ∙ feesOK (Γ .pp) tx (s .utxo) ≡ true
+    ∙ consumed (Γ .pp) s txb ≡ produced (Γ .pp) s txb  ∙ coin mint ≡ 0
+    ∙ txsize ≤ maxTxSize (Γ .pp)
 
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
-        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
+        inject (utxoEntrySize txout * minUTxOValue (Γ .pp)) ≤ᵗ getValue txout
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
-        serSize (getValue txout) ≤ maxValSize pp
+        serSize (getValue txout) ≤ maxValSize (Γ .pp)
     ∙ ∀[ (a , _) ∈ range txouts ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txouts ]  netId a         ≡ networkId

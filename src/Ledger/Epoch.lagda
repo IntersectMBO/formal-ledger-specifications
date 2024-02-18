@@ -50,6 +50,8 @@ private variable
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
+open Acnt; open DState; open GState; open PState; open RatifyState
+
 data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochState → Set where
 \end{code}
 
@@ -72,55 +74,45 @@ its results, i.e:
 
 \begin{figure*}[h]
 \begin{code}
-  EPOCH :
-\end{code}
-\begin{code}[hide]
-    let
+  EPOCH : let
       open EpochState eps hiding (es)
-      open RatifyState fut using (removed) renaming (es to esW)
       -- ^ this rolls over the future enact state into es
       open LState ls; open UTxOState utxoSt; open CertState certState
-      open PState pState; open DState dState; open GState gState
-      open Acnt acnt
-\end{code}
-\begin{code}
-      trWithdrawals   = esW .EnactState.withdrawals
+
+      trWithdrawals   = (es fut) .EnactState.withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
-      removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
+      removedGovActions = flip concatMapˢ (removed fut) λ (gaid , gaSt) →
         mapˢ (GovActionState.returnAddr gaSt ,_)
              ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-      es        = record esW { withdrawals = ∅ }
-      retired   = retiring ⁻¹ e
+      es        = record (es fut) { withdrawals = ∅ }
+      retired   = (pState .retiring)⁻¹ e
       payout    = govActionReturns ∪⁺ trWithdrawals
-      refunds   = pullbackMap payout (λ x → record { net = NetworkId ; stake = x }) (dom rewards)
+      refunds   = pullbackMap payout (λ x → record { net = NetworkId ; stake = x }) (dom (dState .rewards))
       unclaimed = getCoin payout ∸ getCoin refunds
 
-      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
+      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ (removed fut) ¿) govSt
 
       certState' =
-        ⟦ record dState { rewards = rewards ∪⁺ refunds }
-        , ⟦ pools ∣ retired ᶜ , retiring ∣ retired ᶜ ⟧ᵖ
-        , ⟦ if null govSt' then mapValues sucᵉ dreps else dreps
-          , ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
+        ⟦ record dState { rewards = (dState .rewards) ∪⁺ refunds }
+        , ⟦ (pools pState) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ
+        , ⟦ if null govSt' then mapValues sucᵉ (dreps gState) else (dreps gState)
+          , ccHotKeys gState ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
 
       utxoSt' = ⟦ utxo , 0 , deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
       ls' = ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 
       acnt' = record acnt
-        { treasury = treasury + fees + unclaimed + donations ∸ totWithdrawals }
-\end{code}
-\begin{code}[hide]
+        { treasury = acnt .treasury + fees + unclaimed + donations ∸ totWithdrawals }
     in
-\end{code}
-\begin{code}
-    record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
+    record { currentEpoch = e ; treasury = acnt .treasury ; GState gState ; NewEpochEnv Γ }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     ────────────────────────────────
     Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
+
 \end{code}
 \caption{EPOCH transition system}
 \label{fig:epoch:sts}

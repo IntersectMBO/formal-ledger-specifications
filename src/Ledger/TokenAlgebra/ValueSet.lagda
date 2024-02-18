@@ -46,6 +46,7 @@ then we would have defined
 Finally, we define a record type with a single inhabitant with which we may wish to
 represent the type of Ada (rather than viewing Ada as just another asset).
 
+\begin{AgdaMultiCode}
 \begin{code}
 record AdaIdType : Type where
   instance constructor AdaId
@@ -57,39 +58,44 @@ record AdaIdType : Type where
 An inhabitant of `Value` is a map denoting a finite collection of quantities of assets.
 
 \begin{code}[hide]
-open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (refl ; sym ; trans)
+open CommutativeMonoid renaming (_∙_ to _⋆_)
 \end{code}
 \begin{code}
 AssetId  = PolicyId × AssetName
 Quantity = ℕ
-\end{code}
-\begin{code}[hide]
+
 module _
   {X : ℙ AssetId}
   {⋁A : isMaximal X}
+\end{code}
+\begin{code}[hide]
   ⦃ DecEq-PolicyId  : DecEq PolicyId ⦄
   ⦃ DecEq-AssetName : DecEq AssetName ⦄
   ⦃ DecEq-Tot : DecEq (AssetId ⇒ ℕ) ⦄
+\end{code}
+\begin{code}
   (Dec-lookup≤ : ∀ {u v : AssetId ⇒ ℕ}
     → (∀ {a p q} → lookup u (a , p) ≤ lookup v (a , q)) ⁇)
   where
 
+\end{code}
+\begin{code}[hide]
   open ≡-Reasoning
-  open FunTot X ⋁A
+  open FunTot
 \end{code}
 \begin{code}
   _⊕_ : Op₂ (AssetId ⇒ Quantity)
-  u ⊕ v = Fun⇒TotalMap λ aa → (lookup u) aa + (lookup v) aa
+  u ⊕ v = (Fun⇒TotalMap X ⋁A) λ aa → (lookup u) aa + (lookup v) aa
 
   ⊕-lemma :  (u v : AssetId ⇒ Quantity){aa : AssetId}
              → lookup (u ⊕ v) aa ≡ lookup u aa + lookup v aa
-  ⊕-lemma _ _ = lookup∘Fun⇒TotalMap-id
+  ⊕-lemma _ _ = lookup∘Fun⇒TotalMap-id X ⋁A
 
   zeroFun : AssetId → Quantity
   zeroFun = λ _ → 0
 
   ι : AssetId ⇒ Quantity
-  ι = Fun⇒TotalMap zeroFun
+  ι = (Fun⇒TotalMap X ⋁A) zeroFun
 
   lookupι≡0 :  ∀{a} → lookup ι a ≡ 0
   lookupι≡0 = ∈-rel⇒lookup-≡ ι (∈-map′ ⋁A)
@@ -166,11 +172,9 @@ We are now in a position to define the commutative monoid.
   Vcm .ε                              = ι
   Vcm .isCommutativeMonoid .isMonoid  = ≋-⊕-ι-isMonoid
   Vcm .isCommutativeMonoid .comm      = ⊕-comm
-\end{code}
-\begin{code}[hide]
+
   instance _ = toCommMonoid' Vcm
-\end{code}
-\begin{code}
+
   Value-TokenAlgebra :
     (specialPolicy : PolicyId)
     (specialAsset : AssetName)
@@ -211,9 +215,9 @@ We are now in a position to define the commutative monoid.
 
     compose-to-id : totalMap↠coin ∘ coin↪totalMap ≗ id
     compose-to-id _ = lookup-update-id ι
+      where open LookupUpdate {X = X} {specId} {⋁A}
 \end{code}
 \begin{code}[hide]
-      where open LookupUpdate {X = X} {specId} {⋁A}
 
     open CommutativeMonoid Vcm                    using () renaming (rawMonoid to Vcm-mon)
     open CommutativeMonoid +-0-commutativeMonoid  using () renaming (rawMonoid to ℕ-mon)
@@ -227,3 +231,4 @@ We are now in a position to define the commutative monoid.
     CoinMonHom .isMagmaHomomorphism .homo                        = λ x y → ⊕-lemma x y
     CoinMonHom .ε-homo                                           = lookupι≡0
 \end{code}
+\end{AgdaMultiCode}

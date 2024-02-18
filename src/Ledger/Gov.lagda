@@ -97,36 +97,27 @@ compatible version.
 
 \begin{figure*}
 \begin{code}[hide]
+open PParams hiding (a)
 data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
 \begin{code}
-  GOV-Vote :
-\end{code}
-\begin{code}[hide]
-    ∀ {x ast} → let
+  GOV-Vote : ∀ {x ast} → let
       open GovEnv Γ
       sig = inj₁ record { gid = aid ; voter = voter ; vote = v ; anchor = x }
     in
-\end{code}
-\begin{code}
     ∙ (aid , ast) ∈ fromList s
     ∙ canVote pparams (action ast) (proj₁ voter)
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid voter v
 
-  GOV-Propose :
-\end{code}
-\begin{code}[hide]
-    ∀ {x} → let
-      open GovEnv Γ; open PParams pparams hiding (a)
+  GOV-Propose : ∀ {x} → let
+      open GovEnv Γ
       prop = record { returnAddr = addr ; action = a ; anchor = x
                     ; policy = p ; deposit = d ; prevAction = prev }
-      s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+      s' = addAction s (govActionLifetime pparams +ᵉ epoch) (txid , k) addr a prev
     in
-\end{code}
-\begin{code}[hide]
     ∙ actionWellFormed a ≡ true
-    ∙ d ≡ govActionDeposit
+    ∙ d ≡ govActionDeposit pparams
     ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
     ∙ (∀ {new rem q} → a ≡ NewCommittee new rem q
        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)

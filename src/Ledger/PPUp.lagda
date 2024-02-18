@@ -62,6 +62,8 @@ instance
   ... | yes refl | no ¬p    = yes canFollowMajor
   ... | yes refl | yes p    = ⊥-elim $ ℕ.m+1+n≢m m $ ×.×-≡,≡←≡ p .proj₁
 
+open PPUpdateEnv
+
 data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → PPUpdateState → Set where
 \end{code}
 \begin{figure*}[h]
@@ -69,24 +71,19 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateEmpty : Γ ⊢ s ⇀⦇ nothing ,PPUP⦈ s
 
   PPUpdateCurrent :
-\end{code}
-\begin{code}[hide]
-   let open PPUpdateEnv Γ in
-\end{code}
-\begin{code}
-    dom pup ⊆ dom genDelegs
-    → All (isViableUpdate pparams) (range pup)
-    → slot + (2 * StabilityWindow) < firstSlot (sucᵉ (epoch slot))
-    → epoch slot ≡ e
+    dom pup ⊆ dom (Γ .genDelegs)
+    → All (isViableUpdate (Γ .pparams)) (range pup)
+    → Γ .slot + (2 * StabilityWindow) < firstSlot (sucᵉ (epoch (Γ .slot)))
+    → epoch (Γ .slot) ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
         record { pup = pup ∪ˡ pupˢ ; fpup = fpupˢ }
 
   PPUpdateFuture : let open PPUpdateEnv Γ in
-    dom pup ⊆ dom genDelegs
-    → All (isViableUpdate pparams) (range pup)
-    → firstSlot (sucᵉ (epoch slot)) ≤ slot + (2 * StabilityWindow)
-    → sucᵉ (epoch slot) ≡ e
+    dom pup ⊆ dom (Γ .genDelegs)
+    → All (isViableUpdate (Γ .pparams)) (range pup)
+    → firstSlot (sucᵉ (epoch (Γ .slot))) ≤ (Γ .slot) + (2 * StabilityWindow)
+    → sucᵉ (epoch (Γ .slot)) ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
         record { pup = pupˢ ; fpup = pup ∪ˡ fpupˢ }
