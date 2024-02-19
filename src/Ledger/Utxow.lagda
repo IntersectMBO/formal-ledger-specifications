@@ -16,6 +16,7 @@ open import Ledger.ScriptValidation txs abs
 \end{code}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isInj₁
@@ -30,10 +31,19 @@ credsNeeded utxo txb
   ∪  mapˢ (λ c → (Cert     c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x → (Mint     x , inj₂ x)) (policies mint)
   ∪  mapˢ (λ v → (Vote     v , proj₂ v)) (fromList $ map GovVote.voter txvote)
-  ∪  mapPartial (λ p → case p .GovProposal.policy of λ where
-    (just sh)  → just (Propose  p , inj₂ sh)
-    nothing    → nothing) (fromList txprop)
+  ∪  mapPartial (λ p →  case p .GovProposal.policy of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+                        (just sh)  → just (Propose  p , inj₂ sh)
+                        nothing    → nothing) (fromList txprop)
+\end{code}
+\begin{code}[hide]
   where open TxBody txb
+\end{code}
+\begin{code}
 
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
 witsVKeyNeeded = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded
@@ -41,6 +51,7 @@ witsVKeyNeeded = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
 scriptsNeeded = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 \end{code}
+\end{AgdaMultiCode}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}
 \end{figure*}
