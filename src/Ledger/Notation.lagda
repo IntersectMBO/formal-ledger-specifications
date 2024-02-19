@@ -24,4 +24,8 @@ In this section, we introduce some notations used in this document.
   denoted the same, except that \AgdaFunction{|} is replaced by \AgdaFunction{↾}.
 \item[Inverse image] The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the
   inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.
+\item[Left-biased union] For maps \AgdaBound{m} and \AgdaBound{m'}, we write
+  \AgdaBound{m}~\AgdaFunction{∪ˡ}~\AgdaBound{m'} for their left-biased union. This means that
+  key-value pairs in \AgdaBound{m} are guaranteed to be in the union, while key-value pairs in
+  \AgdaBound{m'} will be in the union if and only if the keys don't collide.
 \end{description}
