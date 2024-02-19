@@ -81,8 +81,16 @@ required). The exceptions are \NewCommittee and \TreasuryWdrl:
 \end{itemize}
 
 \begin{figure*}[h]
+\begin{code}[hide]
+data
+\end{code}
 \begin{code}
-data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set where
+  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
 
   Enact-NoConf :
     ───────────────────────────────────────
