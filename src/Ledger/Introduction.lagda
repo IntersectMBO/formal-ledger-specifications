@@ -78,14 +78,14 @@ other, forming a directed graph that is almost a tree.
 
 \subsection{Reflexive-transitive closure}
 
-Some STS relations need to be applied as many times as they can to
-arrive at a final state. Since we use this pattern multiple times, we
-define a closure operation which takes a STS relation and applies it
-as many times as possible.
+Some STS (state transition system) relations need to be applied as
+many times as they can to arrive at a final state. Since we use this
+pattern multiple times, we define a closure operation which takes a
+STS relation and applies it as many times as possible.
 
-The closure is defined in Figure \ref{fig:rt-closure}, assuming a
-relation \RTCB. In the remainder of the text, the closure operation is
-called \RTC.
+The closure \RTCI of a relation \RTCB is defined in Figure
+\ref{fig:rt-closure}. In the remainder of the text, the closure
+operation is called \RTC.
 
 \begin{figure*}[h!]
 \begin{code}[hide]
@@ -180,7 +180,8 @@ irrelevant. Additionally, all sets in this specification are finite.
 We use this set theory to define maps as seen below, which are used in
 many places. We usually think of maps as partial functions
 (i.e. functions not defined everywhere), but importantly they are not
-Agda functions.
+Agda functions. We denote the powerset operation by \PowerSet, which
+we use here to form a type of sets with elements in a given type.
 
 \begin{figure*}[h]
 \begin{code}[hide]
@@ -200,7 +201,7 @@ module _ (ℙ_ : Set → Set) (_∈_ : ∀ {A : Set} → A → ℙ A → Set) wh
   left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
   _⇀_ : Set → Set → Set
-  A ⇀ B = Σ (Rel A B) left-unique
+  A ⇀ B = Σ[ m ∈ Rel A B ] left-unique m
 \end{code}
 \end{figure*}
 

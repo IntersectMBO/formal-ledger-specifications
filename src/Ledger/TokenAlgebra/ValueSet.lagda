@@ -63,8 +63,12 @@ open CommutativeMonoid renaming (_∙_ to _⋆_)
 \begin{code}
 AssetId  = PolicyId × AssetName
 Quantity = ℕ
-
+\end{code}
+\begin{code}[hide]
 module _
+\end{code}
+\begin{code}
+
   {X : ℙ AssetId}
   {⋁A : isMaximal X}
 \end{code}
@@ -76,26 +80,27 @@ module _
 \begin{code}
   (Dec-lookup≤ : ∀ {u v : AssetId ⇒ ℕ}
     → (∀ {a p q} → lookup u (a , p) ≤ lookup v (a , q)) ⁇)
-  where
-
 \end{code}
 \begin{code}[hide]
+  where
+
   open ≡-Reasoning
-  open FunTot
+  open FunTot X ⋁A
 \end{code}
 \begin{code}
+
   _⊕_ : Op₂ (AssetId ⇒ Quantity)
-  u ⊕ v = (Fun⇒TotalMap X ⋁A) λ aa → (lookup u) aa + (lookup v) aa
+  u ⊕ v = Fun⇒TotalMap λ aa → (lookup u) aa + (lookup v) aa
 
   ⊕-lemma :  (u v : AssetId ⇒ Quantity){aa : AssetId}
              → lookup (u ⊕ v) aa ≡ lookup u aa + lookup v aa
-  ⊕-lemma _ _ = lookup∘Fun⇒TotalMap-id X ⋁A
+  ⊕-lemma _ _ = lookup∘Fun⇒TotalMap-id
 
   zeroFun : AssetId → Quantity
   zeroFun = λ _ → 0
 
   ι : AssetId ⇒ Quantity
-  ι = (Fun⇒TotalMap X ⋁A) zeroFun
+  ι = Fun⇒TotalMap zeroFun
 
   lookupι≡0 :  ∀{a} → lookup ι a ≡ 0
   lookupι≡0 = ∈-rel⇒lookup-≡ ι (∈-map′ ⋁A)
@@ -194,6 +199,7 @@ We are now in a position to define the commutative monoid.
     ; Dec-≤ᵗ = λ {x}{y} → Dec-lookup≤ {x}{y}
     }
     where
+
     specId : AssetId
     specId = (specialPolicy , specialAsset)
 \end{code}
