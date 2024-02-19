@@ -84,12 +84,10 @@ calculateStakeDistrs ls =
     { stakeDistr = govActionDeposits ls
     }
 
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaMulticode}
-\begin{code}[hide]
+
 data
 \end{code}
+\begin{figure*}[h]
 \begin{code}
   _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set
 \end{code}
@@ -100,7 +98,7 @@ data
 \end{code}
 \begin{figure*}[h]
 \begin{code}
- CHAIN :
+  CHAIN :
     let open ChainState s; open Block b; open NewEpochState newEpochState
         open EpochState epochState; open EnactState es
     in
@@ -112,6 +110,5 @@ data
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
 \end{code}
-\end{AgdaMulticode}
 \caption{CHAIN transition system}
 \end{figure*}
