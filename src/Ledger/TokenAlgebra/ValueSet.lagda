@@ -61,8 +61,12 @@ open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (refl ; sym ; trans)
 
 AssetId  = PolicyId × AssetName
 Quantity = ℕ
-
+\end{code}
+\begin{code}[hide]
 module _
+\end{code}
+\begin{code}
+
   {X : ℙ AssetId}
   {⋁A : isMaximal X}
   ⦃ DecEq-PolicyId  : DecEq PolicyId ⦄
@@ -70,10 +74,14 @@ module _
   ⦃ DecEq-Tot : DecEq (AssetId ⇒ ℕ) ⦄
   (Dec-lookup≤ : ∀ {u v : AssetId ⇒ ℕ}
     → (∀ {a p q} → lookup u (a , p) ≤ lookup v (a , q)) ⁇)
+\end{code}
+\begin{code}[hide]
   where
 
   open ≡-Reasoning
   open FunTot X ⋁A
+\end{code}
+\begin{code}
 
   _⊕_ : Op₂ (AssetId ⇒ Quantity)
   u ⊕ v = Fun⇒TotalMap λ aa → (lookup u) aa + (lookup v) aa

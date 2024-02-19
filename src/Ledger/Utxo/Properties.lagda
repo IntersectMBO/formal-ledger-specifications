@@ -8,7 +8,7 @@ open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHo
 import Data.Nat as ℕ
 open import Data.Nat.Properties         hiding (_≟_)
 open import Data.Sign                   using (Sign)
-open import Data.Integer as ℤ           using (ℤ; _⊖_)
+open import Data.Integer as ℤ           using (ℤ)
 open import Data.Integer.Ext            using (posPart; negPart)
 import Data.Integer.Properties as ℤ
 open import Data.String.Base            renaming (_++_ to _+ˢ_) using ()
@@ -256,7 +256,7 @@ module _ {txb : _} (open TxBody txb) where opaque
     cbalance (outs txb) + txfee + newDeposits pp utxoState txb + txdonation
       ∎
 
-posPart-negPart≡x : ∀ {x} → posPart x ⊖ negPart x ≡ x
+posPart-negPart≡x : {x : ℤ} → posPart x - negPart x ≡ x
 posPart-negPart≡x {ℤ.+_ n}     = refl
 posPart-negPart≡x {ℤ.negsuc n} = refl
 
@@ -309,20 +309,20 @@ module DepositHelpers
     remDepTot : Coin
     remDepTot = getCoin deposits - ref
 
-  deposits-change' : Δdep ≡ tot ⊖ ref
+  deposits-change' : Δdep ≡ tot - ref
   deposits-change' = sym posPart-negPart≡x
 
   dep-ref : tot ≡ 0 → uDep + ref ≡ dep
   dep-ref tot≡0 = ℤ.+-injective $ begin
     ℤ.+_ (uDep + ref)          ≡⟨ ℤ.pos-+ uDep ref ⟩
-    ℤ.+_ uDep ℤ.+ (ref ⊖ 0)    ≡˘⟨ cong! tot≡0 ⟩
-    ℤ.+_ uDep ℤ.+ (ref ⊖ tot)  ≡⟨ cong ((ℤ.+ uDep) +_) (ℤ.⊖-swap ref tot) ⟩
-    ℤ.+_ uDep ℤ.- (tot ⊖ ref)  ≡˘⟨ cong! deposits-change' ⟩
+    ℤ.+_ uDep ℤ.+ (ref - 0)    ≡˘⟨ cong (λ u → ℤ.+_ uDep ℤ.+ (ref - u)) tot≡0 ⟩
+    ℤ.+_ uDep ℤ.+ (ref - tot)  ≡⟨ cong ((ℤ.+ uDep) +_) (ℤ.⊖-swap ref tot) ⟩
+    ℤ.+_ uDep ℤ.- (tot - ref)  ≡˘⟨ cong (λ u →  ℤ.+_ uDep ℤ.- u) deposits-change' ⟩
     ℤ.+_ uDep ℤ.- Δdep         ≡˘⟨ cong ((ℤ.+ uDep) +_) (ℤ.⊖-swap dep uDep) ⟩
-    ℤ.+_ uDep + (dep ⊖ uDep)   ≡⟨ ℤ.distribʳ-⊖-+-pos uDep dep uDep ⟩
-    (uDep + dep) ⊖ uDep        ≡⟨ cong (_⊖ uDep) (+-comm uDep dep) ⟩
-    (dep + uDep) ⊖ uDep        ≡˘⟨ ℤ.distribʳ-⊖-+-pos dep uDep uDep ⟩
-    ℤ.+_ dep ℤ.+ (uDep ⊖ uDep) ≡⟨ cong! (ℤ.n⊖n≡0 uDep) ⟩
+    ℤ.+_ uDep + (dep - uDep)   ≡⟨ ℤ.distribʳ-⊖-+-pos uDep dep uDep ⟩
+    (uDep + dep) - uDep        ≡⟨ cong (_- uDep) (+-comm uDep dep) ⟩
+    (dep + uDep) - uDep        ≡˘⟨ ℤ.distribʳ-⊖-+-pos dep uDep uDep ⟩
+    ℤ.+_ dep ℤ.+ (uDep - uDep) ≡⟨ cong (λ u → ℤ.+_ dep ℤ.+ u) (ℤ.n⊖n≡0 uDep) ⟩
     ℤ.+_ dep ℤ.+ ℤ.0ℤ          ≡⟨ ℤ.+-identityʳ _ ⟩
     ℤ.+_ dep ∎
 
@@ -348,8 +348,8 @@ module DepositHelpers
     (ℤ.+_ uDep ℤ.- (ℤ.+_ dep)) ℤ.+ (ℤ.+_ dep) ≡⟨ cong! (ℤ.m-n≡m⊖n uDep dep) ⟩
     Δdep ℤ.+ (ℤ.+_ dep)                       ≡⟨ ℤ.+-comm Δdep (ℤ.+_ dep) ⟩
     (ℤ.+_ dep) ℤ.+ Δdep                       ≡⟨ cong! deposits-change' ⟩
-    (ℤ.+_ dep) ℤ.+ (tot ⊖ ref)                ≡⟨ ℤ.distribʳ-⊖-+-pos dep tot ref ⟩
-    (dep + tot) ⊖ ref                         ≡⟨ ℤ.⊖-≥ (m≤n⇒m≤n+o tot ref≤dep) ⟩
+    (ℤ.+_ dep) ℤ.+ (tot - ref)                ≡⟨ ℤ.distribʳ-⊖-+-pos dep tot ref ⟩
+    (dep + tot) - ref                         ≡⟨ ℤ.⊖-≥ (m≤n⇒m≤n+o tot ref≤dep) ⟩
     ℤ.+_ (dep + tot - ref) ∎
 
   split-balance : ∀ keys → cbalance utxo ≡ cbalance (utxo ∣ keys ᶜ) + cbalance (utxo ∣ keys)
