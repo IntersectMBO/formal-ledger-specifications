@@ -211,7 +211,7 @@ data
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
-\begin{AgdaMultiCode}
+\end{AgdaMultiCode}
 \caption{Auxiliary DELEG, POOL and GOVCERT transition systems}
 \label{fig:sts:aux-cert}
 \end{figure*}
