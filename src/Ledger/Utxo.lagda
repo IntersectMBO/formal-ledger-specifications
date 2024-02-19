@@ -114,10 +114,9 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \begin{code}[hide]
 module _ where
-  data
 \end{code}
 \begin{code}
-    DepositPurpose : Set where
+  data DepositPurpose : Set where
     CredentialDeposit  : Credential   → DepositPurpose
     PoolDeposit        : Credential   → DepositPurpose
     DRepDeposit        : Credential   → DepositPurpose
@@ -176,11 +175,8 @@ module _ (let open TxBody) where
 \begin{NoConway}
 \begin{figure*}
 \begin{AgdaMultiCode}
-\begin{code}[hide]
-data
-\end{code}
 \begin{code}
-  inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
+data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
   upper  : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)

@@ -15,12 +15,7 @@ open import Ledger.GovernanceActions gs
 record PoolParams : Set where
   field rewardAddr : Credential
 
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  DCert : Set where
+data DCert : Set where
   delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
   dereg       : Credential → DCert
   regpool     : Credential → PoolParams → DCert
@@ -140,11 +135,18 @@ new certificates relating to DReps and the constitutional committee.
 \end{itemize}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
+  _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ poolDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
@@ -165,7 +167,13 @@ data
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
+  _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+
   POOL-regpool :
     ∙ c ∉ dom pools
       ────────────────────────────────
@@ -181,7 +189,12 @@ data
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set where
+  _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
   GOVCERT-regdrep : let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
@@ -198,6 +211,7 @@ data
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
+\begin{AgdaMultiCode}
 \caption{Auxiliary DELEG, POOL and GOVCERT transition systems}
 \label{fig:sts:aux-cert}
 \end{figure*}
@@ -220,7 +234,13 @@ CERTBASE as the base case. CERTBASE does the following:
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
+  _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
@@ -241,7 +261,13 @@ data
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set where
+  _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+
   CERT-base :
     let open PParams pp; open GState stᵍ; open DState stᵈ
         refresh         = mapPartial getDRepVote (fromList vs)

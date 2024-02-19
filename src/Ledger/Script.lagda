@@ -58,11 +58,8 @@ record PlutusStructure : Set₁ where
 \end{code}
 We define \Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]
-\begin{code}[hide]
-data
-\end{code}
 \begin{code}
-  Timelock : Set where
+data Timelock : Set where
   RequireAllOf       : List Timelock      → Timelock
   RequireAnyOf       : List Timelock      → Timelock
   RequireMOf         : ℕ → List Timelock  → Timelock
@@ -83,11 +80,10 @@ private variable
 open import Data.List.Relation.Binary.Sublist.Ext
 open import Data.List.Relation.Binary.Sublist.Propositional as S
 import Data.Maybe.Relation.Unary.Any as M
-module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where
-  data
 \end{code}
 \begin{code}
-    evalTimelock : Timelock → Set where
+module _ (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) where
+  data evalTimelock : Timelock → Set where
     evalAll  : All evalTimelock ss
              → evalTimelock (RequireAllOf ss)
     evalAny  : Any evalTimelock ss
