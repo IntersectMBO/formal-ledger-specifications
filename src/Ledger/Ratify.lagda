@@ -81,6 +81,7 @@ required. A protocol parameter may or may not be in the
 
 Each of the $P_x$ and $Q_x$ are protocol parameters.
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 private
   ∣_∣_∣_∣ : {A : Set} → A → A → A → GovRole → A
@@ -108,7 +109,6 @@ maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
 ─ = nothing
 ✓† = vote defer
 \end{code}
-\begin{AgdaMultiCode}
 \begin{code}
 threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
 threshold pp ccThreshold =
@@ -117,43 +117,43 @@ threshold pp ccThreshold =
   λ where
 \end{code}
 \begin{code}
-    NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1     ∣
-    (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                    ∣
-    (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─           ∣
-    (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4     ∣
-    (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                     ∣
-    (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─           ∣
-    Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†          ∣
-  where
+      NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1     ∣
+      (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                    ∣
+      (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─           ∣
+      (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4     ∣
+      (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                     ∣
+      (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─           ∣
+      Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†          ∣
+        where
 \end{code}
 \begin{code}[hide]
-    open PParams pp
-    open DrepThresholds drepThresholds
-    open PoolThresholds poolThresholds
+        open PParams pp
+        open DrepThresholds drepThresholds
+        open PoolThresholds poolThresholds
 
-    ✓ = ccThreshold
+        ✓ = ccThreshold
 \end{code}
 \begin{code}
-    P/Q2a/b : Maybe ℚ × Maybe ℚ
-    P/Q2a/b = case ccThreshold of
+        P/Q2a/b : Maybe ℚ × Maybe ℚ
+        P/Q2a/b =  case ccThreshold of
 \end{code}
 \begin{code}[hide]
-      λ where
+          λ where
 \end{code}
 \begin{code}
-        (just _) → (vote P2a , vote Q2a)
-        nothing  → (vote P2b , vote Q2b)
+                   (just _) → (vote P2a , vote Q2a)
+                   nothing  → (vote P2b , vote Q2b)
 
-    pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
-    pparamThreshold NetworkGroup     = (vote P5a  , ─         )
-    pparamThreshold EconomicGroup    = (vote P5b  , ─         )
-    pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
-    pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
-    pparamThreshold SecurityGroup    = (─         , vote Q5e  )
+        pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
+        pparamThreshold NetworkGroup     = (vote P5a  , ─         )
+        pparamThreshold EconomicGroup    = (vote P5b  , ─         )
+        pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
+        pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
+        pparamThreshold SecurityGroup    = (─         , vote Q5e  )
 
-    P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
-    P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
-             , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
+        P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
+        P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
+                 , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
 
 canVote : PParams → GovAction → GovRole → Set
 canVote pp a r = Is-just (threshold pp nothing a r)
