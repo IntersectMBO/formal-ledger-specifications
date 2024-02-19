@@ -232,6 +232,7 @@ record PParams : Set where
         minUTxOValue        : Coin
         poolDeposit         : Coin
         Emax                : Epoch
+        nopt                : ℕ
         pv                  : Pair ℕ ℕ
         votingThresholds    : ⊤ -- TODO: foreign rational numbers
         govActionLifetime   : ℕ
@@ -240,7 +241,6 @@ record PParams : Set where
         drepActivity        : Epoch
         ccMinSize           : ℕ
         ccMaxTermLength     : ℕ
-        minimumAVS          : Coin
         costmdls            : Empty
         prices              : ⊤
         maxTxExUnits        : ExUnits
@@ -259,6 +259,7 @@ record PParams : Set where
     , minUTxOValue        :: Coin
     , poolDeposit         :: Coin
     , emax                :: Epoch
+    , nopt                :: Integer
     , pv                  :: (Integer, Integer)
     , votingThresholds    :: ()
     , govActionLifetime   :: Integer
@@ -267,7 +268,6 @@ record PParams : Set where
     , drepActivity        :: Epoch
     , ccMinSize           :: Integer
     , ccMaxTermLength     :: Integer
-    , minimumAVS          :: Coin
     , costmdls            :: AgdaEmpty
     , prices              :: ()
     , maxTxExUnits        :: ExUnits

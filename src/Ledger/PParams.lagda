@@ -83,7 +83,9 @@ record PParams : Set where
 \end{code}
 \emph{Technical group}
 \begin{code}
+        a0                            : ℚ
         Emax                          : Epoch
+        nopt                          : ℕ
         collateralPercentage          : ℕ
         -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
         costmdls                      : CostModel
@@ -96,7 +98,6 @@ record PParams : Set where
         govActionDeposit drepDeposit  : Coin
         drepActivity                  : Epoch
         ccMinSize ccMaxTermLength     : ℕ
-        minimumAVS                    : Coin
 
 paramsWellFormed : PParams → Set
 paramsWellFormed pp =
@@ -129,7 +130,10 @@ The first four groups have the property that every protocol parameter
 is associated to precisely one of these groups. The \SecurityGroup is
 special: a protocol parameter may or may not be in the
 \SecurityGroup. So, each protocol parameter belongs to at least one
-and at most two groups.
+and at most two groups. Note that in \cite{cip1694} there is no
+\SecurityGroup, but there is the concept of security-relevant protocol
+parameters. The difference between these notions is only social, so we
+implement security-relevant protocol parameters as a group.
 
 The purpose of the groups is to determine voting thresholds for
 proposals aiming to change parameters. The thresholds depend on the
@@ -142,7 +146,7 @@ following concepts.
 \begin{itemize}
   \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
   named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
-  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, and \Qfour;
+  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfivee;
   \item \ccMinSize: minimum constitutional committee size;
   \item \ccMaxTermLength: maximum term limit (in epochs) of constitutional committee members;
   \item \govActionLifetime: governance action expiration;

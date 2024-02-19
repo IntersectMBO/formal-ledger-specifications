@@ -8,8 +8,11 @@ open import Data.Integer as ℤ using (ℤ)
 open import Data.Nat     as ℕ using (ℕ)
 
 instance
-  subtractInt : HasSubtract ℤ
+  subtractNat : HasSubtract ℕ ℕ
+  subtractNat ._-_ = ℕ._∸_
+
+  subtractInt : HasSubtract ℤ ℤ
   subtractInt ._-_ = ℤ._-_
 
-  subtractNat : HasSubtract ℕ
-  subtractNat ._-_ = ℕ._∸_
+  subtractNatInt : HasSubtract ℕ ℤ
+  subtractNatInt ._-_ = ℤ._⊖_
