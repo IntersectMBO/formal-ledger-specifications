@@ -34,11 +34,11 @@ votedValue pup pparams quorum =
   case any? (λ u → lengthˢ (pup ↾ fromList [ u ]) ≥? quorum) (range pup) of
 \end{code}
 \begin{code}[hide]
-    λ where
+    λ  where
 \end{code}
 \begin{code}
-      (no  _)        → nothing
-      (yes (u , _))  → just u
+       (no  _)        → nothing
+       (yes (u , _))  → just u
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types and functions for the NEWPP transition system}
