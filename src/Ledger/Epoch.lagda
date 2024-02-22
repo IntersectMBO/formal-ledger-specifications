@@ -98,9 +98,9 @@ its results, i.e:
 
       certState' =
         ⟦ record dState { rewards = rewards ∪⁺ refunds }
-        , ⟦ pools ∣ retired ᶜ , retiring ∣ retired ᶜ ⟧ᵖ
-        , ⟦ if null govSt' then mapValues sucᵉ dreps else dreps
-          , ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
+        ﹐ ⟦ pools ∣ retired ᶜ ﹐ retiring ∣ retired ᶜ ⟧ᵖ
+        ﹐ ⟦ if null govSt' then mapValues sucᵉ dreps else dreps
+          ﹐ ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
 
       utxoSt' = ⟦ utxo , 0 , deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
