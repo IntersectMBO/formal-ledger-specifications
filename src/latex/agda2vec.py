@@ -59,7 +59,7 @@ def strip_prefix(s):
 def replace_agdaspace(s):
     return s.replace("\\AgdaSpace{}", "~")
 
-def transform_section_to_vector(lines):
+def transform_section_to_vector(lines, nest_level):
     """
     Transform the given lines into a vertical vector format, leaving each variable formatted with 
     \AgdaGeneralizable{} and removing any trailing spaces or comment characters.
@@ -67,16 +67,33 @@ def transform_section_to_vector(lines):
     vec_lines = ""
     vec_element = ""
     for line in lines:
+        # print("line", line)
         if "AgdaInductiveConstructor{﹐}" in line:
-            vec_lines += "\\begin{code}[inline] " + vec_element + " \\end{code}\\\\%\n"
+            if ("START" in vec_element):
+                vec_lines += vec_element + "%\n"
+            else:
+                vec_lines += "\\begin{code}[inline] " + vec_element + "\\end{code}\\\\%\n"
             vec_element = ""
+            continue
+        elif line == "\\\\\n":
+            continue
         else:
             vec_element += replace_agdaspace(strip_prefix(line))
     # dont' forget the last element (which is not trailed by "AgdaInductiveConstructor{,}")            
-    vec_lines += "\\begin{code}[inline] " + vec_element + " \\end{code}%\n"
+    if ("START" in vec_element):
+        vec_lines += vec_element + "%\n"
+    else:
+        vec_lines += "\\begin{code}[inline] " + vec_element + " \\end{code}%\n"
 
-    return "%\n% START ARRAY\n\\(\\left(\\begin{array}{c}%\n" + \
-        vec_lines + "\\end{array}\\right)\\)%\n% END ARRAY\n"
+    if nest_level > 0:
+        prefix = "  START INNER ARRAY\n "
+        suffix = "%\n%   END INNER ARRAY"
+    else:
+        prefix = "START ARRAY\n\\("
+        suffix = "\\)%\n% END ARRAY"
+
+    return "%\n% " + prefix + "\\left(\\begin{array}{c}%\n" + \
+        vec_lines + "\\end{array}\\right)" + suffix + "\n"
 
 def any(l , s):
     for substring in l:
@@ -112,9 +129,9 @@ def process_file(input_file_path, output_file_path):
 
     chunk = ""
     output_lines = []
-    inside_section = False
-    section_lines = []
+    vector_nest_level = -1
     follows_vector = False
+    vector_lines = [[] for _ in range(10)]  # Define vector_lines variable
 
     # brackets that signal the end of a vertical vector section
     closing_brackets = ["⟧ᶜ", "⟧ᶜˢ", "⟧ᵈ", "⟧ᵈᵉ", "⟧ᵖ", "⟧ᵛ"]
@@ -124,24 +141,28 @@ def process_file(input_file_path, output_file_path):
     # strings to be deleted if appearing next to a vertical vector
     
     for line in lines:
-        if "\\AgdaOperator{\\AgdaInductiveConstructor{⟦}}" in line and not inside_section:
-            inside_section = True
-            output_lines.append(process_chunk(chunk, follows_vector, False))
-            if follows_vector:
-                follows_vector = False
-            chunk = ""
-            continue  # Skip the start line
-        elif inside_section and any(end_patterns, line):
-            inside_section = False
+        if "\\AgdaOperator{\\AgdaInductiveConstructor{⟦}}" in line:
+            vector_nest_level += 1
+            if vector_nest_level == 0:
+                output_lines.append(process_chunk(chunk, follows_vector, False))
+                chunk = ""
+                if follows_vector:  # and vector_nest_level == 0:
+                    follows_vector = False
+            continue
+        elif vector_nest_level > -1 and any(end_patterns, line):
             follows_vector = True
             # Transform the collected section into a vertical vector
-            transformed_section = transform_section_to_vector(section_lines)
-            #if transformed_section.strip():  # Avoid adding empty transformations
-            output_lines.append(transformed_section)
-            section_lines = []  # Reset for the next section
+            
+            transformed_vector_lines = transform_section_to_vector(vector_lines[vector_nest_level], vector_nest_level)
+            vector_lines[vector_nest_level] = []  # Reset for the next section
+            if vector_nest_level == 0:
+                output_lines.append(transformed_vector_lines)
+            else:
+                vector_lines[vector_nest_level - 1].append(transformed_vector_lines)            
+            vector_nest_level -= 1
             continue
-        elif inside_section:
-            section_lines.append(line)
+        elif vector_nest_level > -1:
+            vector_lines[vector_nest_level].append(line)
             continue
         else:
             chunk += line
