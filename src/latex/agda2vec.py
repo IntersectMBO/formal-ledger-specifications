@@ -72,7 +72,7 @@ def transform_section_to_vector(lines, nest_level):
             if ("START" in vec_element):
                 vec_lines += vec_element + "%\n"
             else:
-                vec_lines += "\\begin{code}[inline] " + vec_element + "\\end{code}\\\\%\n"
+                vec_lines += "\\begin{code}[inline]\\text{" + vec_element + "}\\end{code}\\\\%\n"
             vec_element = ""
             continue
         elif line == "\\\\\n":
@@ -83,7 +83,7 @@ def transform_section_to_vector(lines, nest_level):
     if ("START" in vec_element):
         vec_lines += vec_element + "%\n"
     else:
-        vec_lines += "\\begin{code}[inline] " + vec_element + " \\end{code}%\n"
+        vec_lines += "\\begin{code}[inline]\\text{" + vec_element + "}\\end{code}%\n"
 
     if nest_level > 0:
         prefix = "  START INNER ARRAY\n "
