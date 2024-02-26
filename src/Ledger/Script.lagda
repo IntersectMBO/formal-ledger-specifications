@@ -56,7 +56,7 @@ record PlutusStructure : Set₁ where
         language : PlutusScript → Language
         toData : ∀ {A : Set} → A → Data
 \end{code}
-We define Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
+We define \Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]
 \begin{code}
 data Timelock : Set where

@@ -16,6 +16,7 @@ open import Ledger.ScriptValidation txs abs
 \end{code}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isInj₁
@@ -30,9 +31,14 @@ credsNeeded utxo txb
   ∪  mapˢ (λ c → (Cert     c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x → (Mint     x , inj₂ x)) (policies mint)
   ∪  mapˢ (λ v → (Vote     v , proj₂ v)) (fromList $ map GovVote.voter txvote)
-  ∪  mapPartial (λ p → case p .GovProposal.policy of λ where
-    (just sh)  → just (Propose  p , inj₂ sh)
-    nothing    → nothing) (fromList txprop)
+  ∪  mapPartial (λ p →  case p .GovProposal.policy of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+                        (just sh)  → just (Propose  p , inj₂ sh)
+                        nothing    → nothing) (fromList txprop)
 \end{code}
 \begin{code}[hide]
   where open TxBody txb
@@ -45,6 +51,7 @@ witsVKeyNeeded = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
 scriptsNeeded = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 \end{code}
+\end{AgdaMultiCode}
 \caption{Functions used for witnessing}
 \label{fig:functions:utxow}
 \end{figure*}
@@ -68,21 +75,20 @@ private variable
   s s' : UTxOState
   tx : Tx
 
-open TxBody; open UTxOState
-
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
-    let open Tx tx renaming (body to txb); open TxWitnesses wits
+    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+        open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
     in
-    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes (txb .txid)) σ
-    ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes (txb .txvldt) s
-    ∙  witsVKeyNeeded (s .utxo) txb ⊆ witsKeyHashes
-    ∙  scriptsNeeded (s .utxo) txb ≡ᵉ witsScriptHashes
-    ∙  txb .txADhash ≡ map hash txAD
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
+    ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
+    ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
+    ∙  scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
+    ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
