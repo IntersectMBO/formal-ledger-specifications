@@ -8,6 +8,11 @@ We introduce three distinct bodies that have specific functions in the new gover
   a group of delegate representatives (henceforth called \DReps)
 \item
   the stake pool operators (henceforth called \SPOs)
+
+In the following figure, \DocHash is equal to any other 32-bit hash
+type (such as \ScriptHash). We use a different name to avoid
+confusion.
+
 \end{enumerate}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -61,14 +66,16 @@ actionWellFormed _                  = true
 \end{figure*}
 Figure~\ref{defs:governance} defines several data types used to represent governance actions including:
 \begin{itemize}
-  \item \GovActionID (\defn{governance action identifier})---a pair consisting of
-        a \TxId (\defn{transaction ID}) and a natural number;
+  \item \GovActionID---a unique identifier for a governance action,
+    consisting of the \TxId of the proposing transaction and an index to identify a proposal within a transaction;
   \item \GovRole (\defn{governance role})---one of three available voter roles defined above (\CC, \DRep, \SPO);
   \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
   \item \Anchor---a url and a document hash;
   \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
   \item \actionWellFormed---in the case of protocol parameter changes,
     an action is well-formed if it preserves the well-formedness of parameters.
+    \ppdWellFormed is effectively the same as \paramsWellFormed, except that it
+    only applies to the parameters that are being changed.
 \end{itemize}
 \begin{figure*}[h]
 \begin{longtable}[]{@{}
@@ -104,17 +111,23 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \label{sec:hash-protection}
 
 Enactment requires a second condition on top of the necessary votes,
-which is that the proposal was intended to be enacted in the way it
-is. This is achieved by linking them via their \GovActionID: a
+which is that the state after enacting the proposal was intended when
+the action was submitted. This is achieved by requiring actions that
+intend to modify the same piece of state via their \GovActionID: a
 proposal can only be enacted if the previously enacted proposal of the
-same kind has the \GovActionID mentioned in the to be enacted proposal.
+same kind has the \GovActionID mentioned in the to be enacted
+proposal. \NoConfidence and \NewCommittee modify the same state, while
+every other type of governance action has its own state that isn't
+shared with any other action.
 
 However, not all types of governance actions require this strict
 protection. For \TreasuryWdrl and \Info, enacting them does not change
 the state in non-commutative ways, so they can always be enacted.
 
 Types related to this hash protection scheme are defined in
-Figure~\ref{fig:needshash-and-hashprotected-types}.
+Figure~\ref{fig:needshash-and-hashprotected-types}. \Unit is the unit
+type that has exactly one element, which reflects that a \GovActionID
+is not necessary.
 
 \begin{figure*}[h]
 \begin{code}
@@ -174,7 +187,9 @@ instance
 The data type \Vote represents the different voting options: \yes,
 \no, or \abstain. To cast a \Vote, it needs to be packaged together
 with further information, such as who votes and for which governance
-action. This information is combined in the \GovVote record.
+action. This information is combined in the \GovVote record. An
+optional \Anchor can be provided to give context about why a vote was
+cast in a certain manner.
 
 To propose a governance action, a \GovProposal needs to be
 submitted. Beside the proposed action, it requires:
@@ -185,11 +200,13 @@ submitted. Beside the proposed action, it requires:
 \item an \Anchor, providing further information about the proposal.
 \end{itemize}
 
-The deposit will be returned when the action is removed from the state
-in any way. It will be added to the deposit pot, similar to stake key
-deposits. It will also be counted towards the stake of the reward
-address it will be paid back to, to not reduce the submitter's voting
-power to vote on their own (and competing) actions.
+While the deposit is being held, is added to the deposit pot similar
+to stake key deposits. It is also counted towards the stake of the
+reward address it will be paid back to, to not reduce the submitter's
+voting power to vote on their own (and competing) actions. For a
+proposal to be valid, the proposal must be set to the current value of
+\govActionDeposit. The deposit will be returned when the action is
+removed from the state in any way.
 
 \GovActionState is the state of an individual governance action. It
 contains the individual votes, its lifetime, and information necessary

@@ -19,6 +19,16 @@ private variable
   sigs : List Sig
 \end{code}
 
+\begin{Conway}
+
+This is the specification of the Conway era of the Cardano ledger. As
+with previous specifications, this document is an incremental
+specification, so everything that isn't defined here refers to the
+most recent definition from an older specification.
+
+\end{Conway}
+
+\begin{NoConway}
 \begin{center}
 Repository: \url{https://github.com/IntersectMBO/formal-ledger-specifications}
 \end{center}
@@ -39,6 +49,7 @@ Conway \cite{cip1694} & Complete & Partial & Partial \\
 \caption{Specification progress}
 \label{fig:eras-progress}
 \end{longtable}
+\end{NoConway}
 
 \subsection{A note on Agda}
 
