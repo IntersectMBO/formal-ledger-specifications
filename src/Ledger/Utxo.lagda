@@ -378,7 +378,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ (a , _) ∈ range txouts ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txouts ]  netId a         ≡ networkId
-    ∙ ∀[ a ∈ dom  txwdrls ]        a .RwdAddr.net  ≡ networkId
+    ∙ ∀[ a ∈ dom txwdrls ]         a .RwdAddr.net  ≡ networkId
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

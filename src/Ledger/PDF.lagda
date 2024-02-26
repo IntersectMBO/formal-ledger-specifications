@@ -4,6 +4,8 @@
 \NewEnviron{NoConway}{%
 \BODY
 }
+\NewEnviron{Conway}{%
+}
 
 \include{preamble}
 
