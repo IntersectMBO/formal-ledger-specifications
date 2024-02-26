@@ -8,7 +8,7 @@ open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_; _⊔_; filter) renaming (filterᵐ to filter)
+open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where

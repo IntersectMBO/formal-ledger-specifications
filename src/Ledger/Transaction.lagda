@@ -10,7 +10,7 @@ module Ledger.Transaction where
 
 import Data.Maybe.Base as M
 
-open import Ledger.Prelude hiding (filter) renaming (filterᵐ to filter)
+open import Ledger.Prelude renaming (filterᵐ to filter)
 
 open import Ledger.Crypto
 open import Ledger.Types.Epoch

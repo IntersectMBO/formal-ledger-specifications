@@ -4,6 +4,7 @@
 {-# OPTIONS --safe #-}
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
+open import Data.List using (filter)
 
 open import Ledger.Prelude
 open import Ledger.Abstract

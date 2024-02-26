@@ -14,6 +14,8 @@ open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Ratify.Properties txs
 
+open import Data.List using (filter)
+
 open Computational ⦃...⦄
 
 module _ {Γ : NewEpochEnv} {eps : EpochState} {e : Epoch} where
