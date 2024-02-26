@@ -36,7 +36,6 @@ open import Tactic.Premises public
 open import Ledger.Set renaming (∅ to ∅ˢ; ❴_❵ to ❴_❵ˢ) public
 open import Interface.HasSingleton th public
 open import Interface.HasEmptySet th public
-open import Interface.HasFilter.InstanceTh {th} public
 
 dec-de-morgan : ∀{P Q : Set} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
