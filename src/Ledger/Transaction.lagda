@@ -10,7 +10,7 @@ module Ledger.Transaction where
 
 import Data.Maybe.Base as M
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (filter) renaming (filterᵐ to filter)
 
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
@@ -167,7 +167,7 @@ the transaction body are:
   txinsVKey txins utxo = txins ∩ dom (utxo ↾' (isVKeyAddr ∘ proj₁))
 
   scriptOuts : UTxO → UTxO
-  scriptOuts utxo = filterᵐ (λ (_ , addr , _) → isScriptAddr addr) utxo
+  scriptOuts utxo = filter (λ (_ , addr , _) → isScriptAddr addr) utxo
 
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))

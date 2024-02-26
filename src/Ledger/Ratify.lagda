@@ -8,7 +8,7 @@ open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_; _⊔_)
+open import Ledger.Prelude hiding (_∧_; _⊔_; filter) renaming (filterᵐ to filter)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -312,13 +312,13 @@ actualVotes Γ pparams cc ga votes
 \begin{code}
 
   roleVotes : GovRole → VDeleg ⇀ Vote
-  roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (λ (x , _) → r ≡ proj₁ x) votes)
+  roleVotes r = mapKeys (uncurry credVoter) (filter (λ (x , _) → r ≡ proj₁ x) votes)
 
-  activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
+  activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
   spos = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
 
   activeCC : CCData → ℙ Credential
-  activeCC (just (cc , _))  = dom (filterᵐ (λ (_ , x) → Is-just x) (ccHotKeys ∣ dom cc))
+  activeCC (just (cc , _))  = dom (filter (λ (_ , x) → Is-just x) (ccHotKeys ∣ dom cc))
   activeCC nothing          = ∅
 
   actualCCVote : Credential → Epoch → Vote
