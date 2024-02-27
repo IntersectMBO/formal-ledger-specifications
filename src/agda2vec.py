@@ -101,9 +101,19 @@ def any(l , s):
             return True
     return False
 
+def skip_line(line):
+    pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[0-9]+I\]%'
+    if re.match(pattern, line):
+        return True
+    else:
+        return False
+
 def process_chunk(chunk, follows_vector, last_flag):
+    #print("\n --------- chunk ---------- \n " + chunk + "\n ================================ \n")
+    if chunk in ["\\\\\n%\n", "\\", "%", "%%"]:
+        return ""
     unwanted_prefixes = ("\\\\", "%", "\\\\[\\AgdaEmptyExtraSkip]%")
-    unwanted_suffixes = ("\\<", "\\\\", "\\\\\[\\AgdaEmptyExtraSkip\]%", "\\>[.][@{}l@{}]\\<[314I]%", "\\>[.][@{}l@{}]\\<[731I]%", "\n", "%")
+    unwanted_suffixes = ("\\\\", "\\\\\[\\AgdaEmptyExtraSkip\]%", "\n")
     if last_flag:
         endcode = ""
     else:
@@ -131,6 +141,7 @@ def process_file(input_file_path, output_file_path):
     output_lines = []
     vector_nest_level = -1
     follows_vector = False
+    follows_deduction_line = False
     vector_lines = [[] for _ in range(10)]  # Define vector_lines variable
 
     # brackets that signal the end of a vertical vector section
@@ -143,12 +154,19 @@ def process_file(input_file_path, output_file_path):
     for line in lines:
         if "\\AgdaOperator{\\AgdaInductiveConstructor{⟦}}" in line:
             vector_nest_level += 1
+            if follows_deduction_line:
+                follows_deduction_line = False
             if vector_nest_level == 0:
                 output_lines.append(process_chunk(chunk, follows_vector, False))
                 chunk = ""
                 if follows_vector:  # and vector_nest_level == 0:
                     follows_vector = False
             continue
+        elif "\\AgdaOperator{\\AgdaFunction{────────────────────────────────" in line:
+            output_lines.append(process_chunk(chunk, follows_vector, False))
+            output_lines.append("\\begin{code}" + line + "\\end{code}")
+            chunk = ""
+            follows_deduction_line = True
         elif vector_nest_level > -1 and any(end_patterns, line):
             follows_vector = True
             # Transform the collected section into a vertical vector
@@ -165,7 +183,9 @@ def process_file(input_file_path, output_file_path):
             vector_lines[vector_nest_level].append(line)
             continue
         else:
-            chunk += line
+            if not (follows_vector and skip_line(line)) and not (follows_deduction_line and line in ["\\\\", "\\\\%", "%", "%%"]):
+                chunk += line
+
 
     if chunk:
         output_lines.append(process_chunk(chunk, follows_vector, True))
