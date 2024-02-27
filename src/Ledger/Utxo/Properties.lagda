@@ -504,8 +504,8 @@ UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
 
 \begin{property}[\textbf{Preserve Balance}]~\\
 \noindent
-For all $\var{env}\in$ \UTxOEnv, $\var{utxo},\var{utxo'}\in$ \UTxO,
-$\var{fees},\var{fees'}\in$ \Coin and $\var{tx}\in$ \Tx,
+For all \AgdaBound{Γ} \∈ \UTxOEnv, \AgdaBound{utxo}, \AgdaBound{utxo'} \∈ \UTxO,
+\AgdaBound{fees}, \AgdaBound{fees'} \∈ \Coin and \AgdaBound{tx} \∈ \Tx,
 
 if
 \begin{code}[hide]
@@ -541,6 +541,43 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations}
 pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
     step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
   DepositHelpers.pov-no-scripts step h'
+\end{code}
+
+\end{property}
+
+\begin{property}[\textbf{Minimum Spending Condition}]~\\
+\noindent
+For all
+\AG{utxo}    \∈ \UTxO,
+\AG{pparams} \∈ \PParams,
+\AG{utxoSt}  \∈ \UTxOState,
+\AG{txb}     \∈ \TxBody,
+
+if
+\begin{code}[hide]
+private variable
+  utxoSt : UTxOState
+  txb : TxBody
+
+_removes-no-deposits : UTxO → Set
+-- TODO: figure out how to express this property
+utxo removes-no-deposits = {!!}
+
+msc : let open TxBody; open UTxOEnv Γ; open PParams pparams in
+\end{code}
+\begin{code}
+  utxo removes-no-deposits
+\end{code}
+
+then
+\begin{code}[hide]
+  →
+\end{code}
+\begin{code}
+  coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
+\end{code}
+\begin{code}[hide}
+msc = {!!}
 \end{code}
 
 \end{property}
