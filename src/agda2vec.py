@@ -70,7 +70,7 @@ def transform_section_to_vector(lines, nest_level):
         # print("line", line)
         if "AgdaInductiveConstructor{﹐}" in line:
             if ("START" in vec_element):
-                vec_lines += vec_element + "%\n"
+                vec_lines += vec_element + "\\\\%\n"
             else:
                 vec_lines += "\\begin{code}[inline]\\text{" + vec_element + "}\\end{code}\\\\%\n"
             vec_element = ""
@@ -134,7 +134,7 @@ def process_file(input_file_path, output_file_path):
     vector_lines = [[] for _ in range(10)]  # Define vector_lines variable
 
     # brackets that signal the end of a vertical vector section
-    closing_brackets = ["⟧ᶜ", "⟧ᶜˢ", "⟧ᵈ", "⟧ᵈᵉ", "⟧ᵖ", "⟧ᵛ"]
+    closing_brackets = ["⟧ᶜ", "⟧ᶜˢ", "⟧ᵈ", "⟧ᵈᵉ", "⟧ᵉ", "⟧ᵉ'", "⟧ᵍ", "⟧ˡ", "⟧ˡᵉ", "⟧ⁿᵉ", "⟧ⁿᵖ", "⟧ᵖ", "⟧ʳ", "⟧ᵘ", "⟧ᵛ"]
 
     end_patterns = ["\\AgdaOperator{\\AgdaInductiveConstructor{" + s + "}}" for s in closing_brackets]
     

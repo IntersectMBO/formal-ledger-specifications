@@ -7,12 +7,14 @@ LATEX_DIR=latex
 PRE=$(addprefix $(LATEX_DIR)/,\
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex references.bib)
 PDF_DIR=$(OUT_DIR)/pdfs
+PYTHON=python
 HTML_DIR=$(OUT_DIR)/html
 HS_DIR=$(OUT_DIR)/haskell
 MALONZO_DIR=MAlonzo/Code
 CABAL_TEST=cabal run test
 LEDGER=Ledger
 MIDNIGHT=MidnightExample
+VEC_SCRIPT=agda2vec.py
 
 # Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
@@ -20,6 +22,8 @@ latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
 $(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
+	@echo "Converting any bracket contructors to vertical vectors in $@"
+	$(PYTHON) $(VEC_SCRIPT) $@
 define latexToPdf =
     @echo "Generating $@"
     $(eval PDF=$(notdir $@))
