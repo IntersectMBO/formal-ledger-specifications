@@ -16,6 +16,7 @@ record NewPParamEnv : Set where
 --  field
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 record NewPParamState : Set where
   constructor ⟦_,_⟧ⁿᵖ
@@ -30,10 +31,16 @@ updatePPUp pparams record { fpup = fpup }
 
 votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate
 votedValue pup pparams quorum =
-  case any? (λ u → lengthˢ (pup ↾ fromList [ u ]) ≥? quorum) (range pup) of λ where
-    (no  _)        → nothing
-    (yes (u , _))  → just u
+  case any? (λ u → lengthˢ (pup ↾ fromList [ u ]) ≥? quorum) (range pup) of
 \end{code}
+\begin{code}[hide]
+    λ  where
+\end{code}
+\begin{code}
+       (no  _)        → nothing
+       (yes (u , _))  → just u
+\end{code}
+\end{AgdaMultiCode}
 \caption{Types and functions for the NEWPP transition system}
 \end{figure*}
 \begin{code}[hide]

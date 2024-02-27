@@ -81,6 +81,7 @@ required. A protocol parameter may or may not be in the
 
 Each of the $P_x$ and $Q_x$ are protocol parameters.
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 private
   ∣_∣_∣_∣ : {A : Set} → A → A → A → GovRole → A
@@ -108,42 +109,51 @@ maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
 ─ = nothing
 ✓† = vote defer
 \end{code}
-\begin{AgdaMultiCode}
 \begin{code}
 threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
-threshold pp ccThreshold = λ where
-    NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1     ∣
-    (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                    ∣
-    (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─           ∣
-    (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4     ∣
-    (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                     ∣
-    (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─           ∣
-    Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†          ∣
-  where
+threshold pp ccThreshold =
 \end{code}
 \begin{code}[hide]
-    open PParams pp
-    open DrepThresholds drepThresholds
-    open PoolThresholds poolThresholds
-
-    ✓ = ccThreshold
+  λ where
 \end{code}
 \begin{code}
-    P/Q2a/b : Maybe ℚ × Maybe ℚ
-    P/Q2a/b = case ccThreshold of λ where
-      (just _) → (vote P2a , vote Q2a)
-      nothing  → (vote P2b , vote Q2b)
+      NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1     ∣
+      (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                    ∣
+      (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─           ∣
+      (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4     ∣
+      (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                     ∣
+      (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─           ∣
+      Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†          ∣
+        where
+\end{code}
+\begin{code}[hide]
+        open PParams pp
+        open DrepThresholds drepThresholds
+        open PoolThresholds poolThresholds
 
-    pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
-    pparamThreshold NetworkGroup     = (vote P5a  , ─         )
-    pparamThreshold EconomicGroup    = (vote P5b  , ─         )
-    pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
-    pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
-    pparamThreshold SecurityGroup    = (─         , vote Q5e  )
+        ✓ = ccThreshold
+\end{code}
+\begin{code}
+        P/Q2a/b : Maybe ℚ × Maybe ℚ
+        P/Q2a/b =  case ccThreshold of
+\end{code}
+\begin{code}[hide]
+          λ where
+\end{code}
+\begin{code}
+                   (just _) → (vote P2a , vote Q2a)
+                   nothing  → (vote P2b , vote Q2b)
 
-    P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
-    P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
-             , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
+        pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
+        pparamThreshold NetworkGroup     = (vote P5a  , ─         )
+        pparamThreshold EconomicGroup    = (vote P5b  , ─         )
+        pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
+        pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
+        pparamThreshold SecurityGroup    = (─         , vote Q5e  )
+
+        P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
+        P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
+                 , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
 
 canVote : PParams → GovAction → GovRole → Set
 canVote pp a r = Is-just (threshold pp nothing a r)
@@ -286,7 +296,7 @@ restrictedDists coins rank dists = dists
         restrict dist = topNDRepDist rank dist ∪ˡ mostStakeDRepDist dist coins
 \end{code}
 \begin{figure*}[h!]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
@@ -294,8 +304,12 @@ actualVotes Γ pparams cc ga votes
   =   mapKeys (credVoter CC) (actualCCVotes cc)  ∪ˡ actualPDRepVotes ga
   ∪ˡ  actualDRepVotes                            ∪ˡ actualSPOVotes ga
   where
+\end{code}
+\begin{code}[hide]
   open RatifyEnv Γ
   open PParams pparams
+\end{code}
+\begin{code}
 
   roleVotes : GovRole → VDeleg ⇀ Vote
   roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (λ (x , _) → r ≡ proj₁ x) votes)
@@ -309,8 +323,13 @@ actualVotes Γ pparams cc ga votes
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
-    λ where  (true , just (just c'))  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
-             _                        → Vote.abstain -- expired, no hot key or resigned
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      (true , just (just c'))  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+      _                        → Vote.abstain -- expired, no hot key or resigned
 
   actualCCVotes : CCData → Credential ⇀ Vote
   actualCCVotes nothing          =  ∅
@@ -331,7 +350,7 @@ actualVotes Γ pparams cc ga votes
   actualSPOVotes (TriggerHF _)  = roleVotes SPO ∪ˡ constMap spos Vote.no
   actualSPOVotes _              = roleVotes SPO ∪ˡ constMap spos Vote.abstain
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Vote counting}
 \label{fig:defs:ratify-actualvotes}
 \end{figure*}
