@@ -40,8 +40,8 @@ infixl 7 _*↓_
 _*↓_ : ℚ.ℚ → ℕ → ℕ
 q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 
-isPhaseTwoScriptAddress : Tx → Addr → Bool
-isPhaseTwoScriptAddress tx a =
+isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
+isTwoPhaseScriptAddress tx utxo a =
   if isScriptAddr a then
     (λ {p} → if lookupScriptHash (getScriptHash a p) tx
                  then (λ {s} → isP2Script s)
@@ -62,6 +62,19 @@ utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValue o)
 
 refScripts : Tx → UTxO → ℙ Script
 refScripts tx utxo = ∅ -- TODO: implement when we do Babbage
+  where
+   open Tx; open TxBody; open TxWitnesses
+   txins' refInputs' : ℙ TxIn
+   txins' = tx .body .txins
+   refInputs' = tx .body .refInputs
+   -- txout' : TxOut
+   -- txout' = {!!} -- utxo (txins' ∪ refInputs')
+   -- goal : ℙ Script
+   -- goal = {!!}
+
+txscripts : Tx → UTxO → ℙ Script
+txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+  where open Tx; open TxWitnesses
 
 open PParams
 \end{code}

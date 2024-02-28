@@ -102,7 +102,7 @@ the transaction body are:
 \emph{Derived types}
 \begin{code}
   TxIn     = TxId × Ix
-  TxOut    = Addr × Value × Maybe DataHash
+  TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
   UTxO     = TxIn ⇀ TxOut
   Wdrl     = RwdAddr ⇀ Coin
   RdmrPtr  = Tag × Ix
@@ -116,6 +116,7 @@ the transaction body are:
 \begin{code}
   record TxBody : Set where
     field txins          : ℙ TxIn
+          refInputs      : ℙ TxIn
           txouts         : Ix ⇀ TxOut
           txfee          : Coin
           mint           : Value
