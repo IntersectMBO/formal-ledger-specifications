@@ -555,29 +555,29 @@ For all
 
 if
 \begin{code}[hide]
-private variable
-  utxoSt : UTxOState
-  txb : TxBody
+module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
 
-_removes-no-deposits : UTxO → Set
--- TODO: figure out how to express this property
-utxo removes-no-deposits = {!!}
+  _removes-no-deposits : TxBody → Set
+  txb removes-no-deposits = depositsChange pparams txb deps ≡ ℤ.0ℤ
+    where
+    open UTxOEnv Γ; open PParams pparams
+    open UTxOState utxoSt renaming (deposits to deps)
 
-msc : let open TxBody; open UTxOEnv Γ; open PParams pparams in
+  msc : let open TxBody; open UTxOEnv Γ; open PParams pparams in
 \end{code}
 \begin{code}
-  utxo removes-no-deposits
+    txb removes-no-deposits
 \end{code}
 
 then
 \begin{code}[hide]
-  →
+    →
 \end{code}
 \begin{code}
-  coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
+    coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
 \end{code}
 \begin{code}[hide}
-msc = {!!}
+  msc = {!!}
 \end{code}
 
 \end{property}
