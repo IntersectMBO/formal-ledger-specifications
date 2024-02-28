@@ -592,9 +592,13 @@ then
     ξ = begin
       coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject (depositRefunds pparams utxoSt txb)) ≡⟨ cong (λ x → coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject x)) depref≡0 ⟩
       coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject 0) ≡⟨ cong (λ x → coin (balance (stUtxo ∣ txb .txins) + txb .mint + x)) {!!} ⟩
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint + 0ᵛ) ≡⟨ ε-homo {!coinIsMonoidHomomorphism!} ⟩
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint) + coin 0ᵛ ≡⟨ {!!} ⟩
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint) ∎
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint + 0ᵛ) ≡⟨ homo coinIsMonoidHomomorphism (balance (stUtxo ∣ txb .txins) + txb .mint) 0ᵛ ⟩
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint) + coin 0ᵛ ≡⟨ cong (coin (balance (stUtxo ∣ txb .txins) + txb .mint) +_) (ε-homo coinIsMonoidHomomorphism) ⟩
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint) + 0 ≡⟨ +-identityʳ (coin (balance (stUtxo ∣ txb .txins) + txb .mint)) ⟩
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint)      ∎
+
+    goal : coin (balance (stUtxo ∣ txb .txins) + txb .mint) ≥ length (txprop txb) * govActionDeposit
+    goal = ?
 
   -- The inequality above is equivalent to:
   --
