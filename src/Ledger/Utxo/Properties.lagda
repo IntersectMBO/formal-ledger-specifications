@@ -4,9 +4,11 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
+open import Algebra                     using (CommutativeMonoid ; Monoid)
 open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
+import Algebra.Morphism.Definitions as Morphs
 import Data.Nat as ℕ
-open import Data.Nat.Properties         hiding (_≟_)
+open import Data.Nat.Properties         hiding (_≟_) -- using (+-0-monoid)
 open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ)
 open import Data.Integer.Ext            using (posPart; negPart)
@@ -557,13 +559,13 @@ if
 \begin{code}[hide]
 module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
 
-  _removes-no-deposits : TxBody → Set
-  txb removes-no-deposits = depositsChange pparams txb deps ≡ ℤ.0ℤ
-    where
-    open UTxOEnv Γ; open PParams pparams
-    open UTxOState utxoSt renaming (deposits to deps)
+  open TxBody; open UTxOEnv Γ; open PParams pparams
+  open UTxOState utxoSt renaming (deposits to deps; utxo to stUtxo)
 
-  msc : let open TxBody; open UTxOEnv Γ; open PParams pparams in
+  _removes-no-deposits : TxBody → Set
+  txb removes-no-deposits = (depositsChange pparams txb deps) ≡ ℤ.0ℤ
+
+  msc :
 \end{code}
 \begin{code}
     txb removes-no-deposits
@@ -577,7 +579,62 @@ then
     coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
 \end{code}
 \begin{code}[hide}
-  msc = {!!}
+  msc ¬txbrm = {!!}
+    where
+    depref' : (depositsChange pparams txb deps) ≡ ℤ.0ℤ
+    depref' = ¬txbrm
+    depref≡0 : depositRefunds pparams utxoSt txb ≡ 0
+    depref≡0 = cong negPart depref'
+
+    open CommutativeMonoid Value-CommutativeMonoid renaming (ε to 0ᵛ)
+    ξ : coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject (depositRefunds pparams utxoSt txb))
+      ≡ coin (balance (stUtxo ∣ txb .txins) + txb .mint)
+    ξ = begin
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject (depositRefunds pparams utxoSt txb)) ≡⟨ cong (λ x → coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject x)) depref≡0 ⟩
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject 0) ≡⟨ cong (λ x → coin (balance (stUtxo ∣ txb .txins) + txb .mint + x)) {!!} ⟩
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint + 0ᵛ) ≡⟨ ε-homo {!coinIsMonoidHomomorphism!} ⟩
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint) + coin 0ᵛ ≡⟨ {!!} ⟩
+      coin (balance (stUtxo ∣ txb .txins) + txb .mint) ∎
+
+  -- The inequality above is equivalent to:
+  --
+  --  coin (balance (utxoSt .utxo ∣ txb .txins) +  txb .mint
+  --     +  inject (depositRefunds pparams utxoSt txb)) ≥ length (txprop txb) * govActionDeposit
+  --
+  -- and since
+  --
+  --   depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
+  --
+  -- and
+  --
+  --   depositsChange pp txb (st .deposits) ≡ ℤ.0ℤ
+  --
+  -- it is also equivalent to
+  --
+  --   coin (balance (utxoSt .utxo ∣ txb .txins) + txb .mint) ≥ length (txprop txb) * govActionDeposit
+  -- or
+  --   coin (∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x + txb .mint) ≥ length (txprop txb) * govActionDeposit
+  --
+  -- where ∑ is indexedSumᵛ' which is essentially of type (B → C) → A ⇀ B → C, and
+  --
+  -- Note: syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
+  --
+  -- In the present case, A = TxIn, B = TxOut, C = Value, so
+  --
+  -- ∑ : (TxOut → Value) → TxIn ⇀ TxOut → Value, so
+  --
+  -- ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x  means
+  --
+  -- indexedSumᵛ' getValue (utxoSt .utxo ∣ txb .txins)
+  --
+  -- where getValue is a function of type TxOut → Value
+
+
+    -- open IsMonoidHomomorphism coinIsMonoidHomomorphism using () renaming (ε-homo to hom)
+    -- open CommutativeMonoid +-0-commutativeMonoid  using () renaming (rawMonoid to ℕ-mon)
+    -- open IsMonoidHomomorphism                     using (isMagmaHomomorphism ) renaming (ε-homo to hom)
+    -- open IsMagmaHomomorphism                      using (isRelHomomorphism ; homo)
+
 \end{code}
 
 \end{property}
