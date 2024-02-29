@@ -12,7 +12,7 @@ open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
-import Data.Integer as ℤ
+open import Data.Integer as ℤ using (0ℤ)
 import Data.Rational as ℚ
 
 open import Tactic.Derive.DecEq
@@ -165,10 +165,10 @@ module _ (let open TxBody) where
 
   depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
   depositsChange pp txb deposits
-    = getCoin (updateDeposits pp txb deposits) - getCoin deposits
+    = getCoin{A = DepositPurpose ⇀ Coin} (updateDeposits pp txb deposits) - getCoin deposits
 
-  depositsPreserved : PParams → TxBody → DepositPurpose ⇀ Coin → Set
-  depositsPreserved pp txb deposits = proj₁ deposits ⊆ proj₁ (updateDeposits pp txb deposits)
+  _preservesDeposits_ : TxBody × PParams → DepositPurpose ⇀ Coin → Set
+  (txb , pp) preservesDeposits deposits = proj₁ deposits ⊆ proj₁ (updateDeposits pp txb deposits)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
