@@ -3,7 +3,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Axiom.Set.Properties using (∉-∅; ∃?-sublist-⇔)
+open import Axiom.Set.Properties using (∃?-sublist-⇔)
 open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
 open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
@@ -19,14 +19,15 @@ open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
+open import Relation.Nullary.Decidable using (map′)
 open import Data.List.Relation.Unary.All using (all?; All)
 open import Data.List.Relation.Unary.Any using (any?; Any)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.Propositional using (↔⇒)
-open import Relation.Nullary.Decidable using (_×-dec_)
 
+open GovActionState
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
@@ -51,88 +52,6 @@ data
 _⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
 \end{code}
 \begin{code}[hide]
-open GovActionState
-
--- convert list of (GovActionID,GovActionState)-pairs to list GovActionID pairs.
-getAidPairsList : GovState → List (GovActionID × GovActionID)
-getAidPairsList aid×states =
-  mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×states
-
--- convert list of (GovActionID,GovActionState)-pairs to SET of GovActionID pairs.
-getAidPairsSet : GovState → ℙ (GovActionID × GovActionID)
-getAidPairsSet aid×states =
-  mapPartial (λ (aid , as) → (aid ,_) <$> getHash (prevAction as)) $ fromList aid×states
-
--- a list of GovActionID pairs connects the first GovActionID to the second
-_connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
-[] connects aidNew to aidOld = aidNew ≡ aidOld
-((aid , aidPrev) ∷ s) connects aidNew to aidOld = aid ≡ aidNew × s connects aidPrev to aidOld
-                                                  ⊎ s connects aidNew to aidOld
--- TODO: delete these notes (and possibly add them to docs) after confirming they're correct.
---   Suppose:  aid₁ → aid₂ → aid₃ → aid₄ → aid₅.
---   And let:  l := (aid₅, aid₄) (aid₄, aid₃) (aid₃, aid₂) (aid₂, aid₁)
---   Check:    l connects aid₅ to aid₂ :
---               ((aid₅, aid₄) ∷ s) connects aid₅ to aid₂ = aid₅ ≡ aid₅ × s connects aid₄ to aid₂
-
-[_connects_to_?] : ∀ l aidNew aidOld → Dec (l connects aidNew to aidOld)
-[ [] connects aidNew to aidOld ?] = aidNew ≟ aidOld
-
-[ (aid , aidPrev) ∷ s connects aidNew to aidOld ?] =
-  ((aid ≟ aidNew) ×-dec [ s connects aidPrev to aidOld ?]) ⊎-dec [ s connects aidNew to aidOld ?]
-
-enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
-enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of λ where
-  nothing → ⊤
-  (just aidOld) → ∃[ t ](fromList t ⊆ fromList aidPairs × Unique t × t connects aidNew to aidOld)
-
-open Equivalence
-
-any?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
-any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
-
-∃?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (∃[ l ] l ∈ˡ subpermutations L × Unique l × l connects u to v)
-∃?-connecting-subperm L = from (map′⇔ (↔⇒ Any↔)) (any?-connecting-subperm L)
-
-∃?-connecting-subset : ∀ {u} {v} → ∀ L → Dec (∃[ l ](l ⊆ˡ L × Unique l × l connects u to v))
-∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
-
-enactable? : ∀ eState aidPairs aidNew×st → Dec(enactable eState aidPairs aidNew×st)
-enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as)
-... | nothing = yes tt
-... | just aidOld = from (∃?-sublist-⇔ th) (∃?-connecting-subset aidPairs)
-
-allEnactable : EnactState → GovState → Set
-allEnactable e aid×states = All (λ p → enactable e (getAidPairsList aid×states) p) aid×states
-
-allEnactable? : (eState : EnactState)(aid×states : GovState) → Dec (allEnactable eState aid×states)
-allEnactable? eState aid×states =
-  all? (λ aid×st → enactable? eState (getAidPairsList aid×states) aid×st) aid×states
-
--- `maxAllEnactable` returns a list `ls` of sublists of the given
--- list (`aid×states : List (GovActionID × GovActionState)`) such that
---    (i) each sublist `l ∈ ls` satisfies `allEnactable e l` and
---   (ii) each sublist `l ∈ ls` is of maximal length among sublists of `aid×states` satisfying `allEnactable`.
-maxAllEnactable : EnactState → List (GovActionID × GovActionState) → List (List (GovActionID × GovActionState))
-maxAllEnactable e = maxsublists⊧P (allEnactable? e)
-
--- Every sublist returned by `maxAllEnactable` satisfies (i).
-∈-maxAllEnactable→allEnactable : {e : EnactState} {aid×states : List (GovActionID × GovActionState)}
-                                 → ∀ l → l ∈ˡ maxAllEnactable e aid×states → allEnactable e l
-∈-maxAllEnactable→allEnactable {e} {aid×states} l l∈ =
-  proj₂ (∈-filter⁻ (allEnactable? e) {l} {sublists aid×states}
-          (proj₁ (∈-filter⁻ (λ l → length l ≟ maxlen (sublists⊧P (allEnactable? e) aid×states)) l∈)))
-
--- Every sublist returned by `maxAllEnactable` satisfies (ii).
-∈-maxAllEnactable→maxLength : {e : EnactState} {aid×states l l' : List (GovActionID × GovActionState)}
-                              → l ∈ˡ sublists aid×states → allEnactable e l
-                              → l' ∈ˡ maxAllEnactable e aid×states
-                              → length l ≤ length l'
-∈-maxAllEnactable→maxLength {e} {aid×states} {l} {l'} l∈ el l'∈ =
-  let ls = sublists⊧P (allEnactable? e) aid×states in
-    subst (length l ≤_)
-          (sym (proj₂ (∈-filter⁻ (λ l → length l ≟ maxlen ls) {xs = ls} l'∈)))
-          (∈-maxlen-≤ l (∈-filter⁺ (allEnactable? e) l∈ el))
-
 private variable
   Γ : GovEnv
   s s' : GovState
@@ -171,6 +90,95 @@ validHFAction _ _ _ = ⊤
 \label{defs:gov-defs}
 \end{figure*}
 \footnotetext{\AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends element \AgdaBound{x} to list \AgdaBound{l}.}
+\begin{figure*}[h]
+\begin{code}
+-- convert list of (GovActionID,GovActionState)-pairs to list GovActionID pairs.
+getAidPairsList : GovState → List (GovActionID × GovActionID)
+getAidPairsList aid×states =
+  mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×states
+
+-- convert list of (GovActionID,GovActionState)-pairs to SET of GovActionID pairs.
+getAidPairsSet : GovState → ℙ (GovActionID × GovActionID)
+getAidPairsSet aid×states =
+  mapPartial (λ (aid , as) → (aid ,_) <$> getHash (prevAction as)) $ fromList aid×states
+
+-- a list of GovActionID pairs connects the first GovActionID to the second
+_connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
+[] connects aidNew to aidOld = aidNew ≡ aidOld
+((aid , aidPrev) ∷ s) connects aidNew to aidOld  = aid ≡ aidNew × s connects aidPrev to aidOld
+                                                 ⊎ s connects aidNew to aidOld
+
+enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
+enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of λ where
+  nothing       → ⊤
+  (just aidOld) → ∃[ t ] fromList t ⊆ fromList aidPairs × Unique t × t connects aidNew to aidOld
+
+allEnactable : EnactState → GovState → Set
+allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
+\end{code}
+\begin{code}[hide]
+open Equivalence
+
+[_connects_to_?] : ∀ l aidNew aidOld → Dec (l connects aidNew to aidOld)
+[ [] connects aidNew to aidOld ?] = aidNew ≟ aidOld
+
+[ (aid , aidPrev) ∷ s connects aidNew to aidOld ?] =
+  ((aid ≟ aidNew) ×-dec [ s connects aidPrev to aidOld ?]) ⊎-dec [ s connects aidNew to aidOld ?]
+
+any?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
+any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
+
+∃?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (∃[ l ] l ∈ˡ subpermutations L × Unique l × l connects u to v)
+∃?-connecting-subperm L = from (map′⇔ (↔⇒ Any↔)) (any?-connecting-subperm L)
+
+∃?-connecting-subset : ∀ {u} {v} → ∀ L → Dec (∃[ l ] l ⊆ˡ L × Unique l × l connects u to v)
+∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
+
+enactable? : ∀ eState aidPairs aidNew×st → Dec (enactable eState aidPairs aidNew×st)
+enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as)
+... | nothing = yes tt
+... | just aidOld = from (∃?-sublist-⇔ th) (∃?-connecting-subset aidPairs)
+
+allEnactable? : ∀ eState aid×states → Dec (allEnactable eState aid×states)
+allEnactable? eState aid×states =
+  all? (λ aid×st → enactable? eState (getAidPairsList aid×states) aid×st) aid×states
+
+-- newtype to make the instance resolution work
+data allEnactable' : EnactState → GovState → Set where
+  AllEnactable' : ∀ {x y} → allEnactable x y → allEnactable' x y
+
+instance
+  allEnactable?' : ∀ {x y} → allEnactable' x y ⁇
+  allEnactable?' = ⁇ map′ AllEnactable' (λ where (AllEnactable' x) → x) (allEnactable? _ _)
+
+-- `maxAllEnactable` returns a list `ls` of sublists of the given
+-- list (`aid×states : List (GovActionID × GovActionState)`) such that
+--    (i) each sublist `l ∈ ls` satisfies `allEnactable e l` and
+--   (ii) each sublist `l ∈ ls` is of maximal length among sublists of `aid×states` satisfying `allEnactable`.
+maxAllEnactable : EnactState → List (GovActionID × GovActionState) → List (List (GovActionID × GovActionState))
+maxAllEnactable e = maxsublists⊧P (allEnactable? e)
+
+-- Every sublist returned by `maxAllEnactable` satisfies (i).
+∈-maxAllEnactable→allEnactable : ∀ {e} {aid×states} l
+  → l ∈ˡ maxAllEnactable e aid×states → allEnactable e l
+∈-maxAllEnactable→allEnactable {e} {aid×states} l l∈ =
+  proj₂ (∈-filter⁻ (allEnactable? e) {l} {sublists aid×states}
+          (proj₁ (∈-filter⁻ (λ l → length l ≟ maxlen (sublists⊧P (allEnactable? e) aid×states)) l∈)))
+
+-- Every sublist returned by `maxAllEnactable` satisfies (ii).
+∈-maxAllEnactable→maxLength : ∀ {e aid×states l l'}
+                              → l ∈ˡ sublists aid×states → allEnactable e l
+                              → l' ∈ˡ maxAllEnactable e aid×states
+                              → length l ≤ length l'
+∈-maxAllEnactable→maxLength {e} {aid×states} {l} {l'} l∈ el l'∈ =
+  let ls = sublists⊧P (allEnactable? e) aid×states in
+    subst (length l ≤_)
+          (sym (proj₂ (∈-filter⁻ (λ l → length l ≟ maxlen ls) {xs = ls} l'∈)))
+          (∈-maxlen-≤ l (∈-filter⁺ (allEnactable? e) l∈ el))
+\end{code}
+\caption{Enactability predicate}
+\label{defs:enactable}
+\end{figure*}
 
 \GovState behaves similar to a queue. New proposals are appended at
 the end, but any proposal can be removed at the epoch
@@ -215,6 +223,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ (∀ {new rem q} → a ≡ NewCommittee new rem q
        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ validHFAction prop s enactState
+    ∙ allEnactable enactState s'
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 

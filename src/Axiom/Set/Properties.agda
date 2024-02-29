@@ -5,7 +5,7 @@ open import Axiom.Set using (Theory)
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
 
-open import Prelude hiding (isEquivalence; trans; filter; map; lookup; _∷ʳ_)
+open import Prelude hiding (isEquivalence; trans; filter; map)
 open Theory th
 
 import Data.List
@@ -18,7 +18,6 @@ open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; 
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
-open import Data.List.Relation.Unary.All using (All; lookup; [])
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
@@ -302,18 +301,18 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
 module _ {L : List A} where
   open Equivalence
 
-  sublist-⇔ : {l : List A} → ((fromList l ⊆ fromList L) ⇔ (l ⊆ˡ L))
-  sublist-⇔ {[]} = mk⇔ (λ x ())  (λ _ {a} → (λ x → ⊥-elim (∉-∅ x)))
-  sublist-⇔ {x ∷ xs} = mk⇔ onlyif (λ u → (to ∈-fromList) ∘ u ∘ (from ∈-fromList))
+  sublist-⇔ : {l : List A} → fromList l ⊆ fromList L ⇔ l ⊆ˡ L
+  sublist-⇔ {[]} = mk⇔ (λ x ()) (λ _ {_} → ⊥-elim ∘ ∉-∅)
+  sublist-⇔ {x ∷ xs} = mk⇔ onlyif (λ u → to ∈-fromList ∘ u ∘ from ∈-fromList)
     where
-    onlyif : ({a : A} → a ∈ fromList (x ∷ xs) → a ∈ (fromList L)) → (x ∷ xs) ⊆ˡ L
+    onlyif : ({a : A} → a ∈ fromList (x ∷ xs) → a ∈ fromList L) → x ∷ xs ⊆ˡ L
     onlyif h (here refl) = from ∈-fromList (h (to ∈-fromList (here refl)))
     onlyif h (there x'∈) = from ∈-fromList (h (to ∈-fromList (there x'∈)))
 
   module _ {ℓ : Level}{P : Pred (List A) ℓ} where
-    ∃-sublist-⇔ : (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ (∃[ l ](l ⊆ˡ L × P l))
+    ∃-sublist-⇔ : (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ (∃[ l ] l ⊆ˡ L × P l)
     ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
                       (λ (l , l⊆L , Pl) → l , from sublist-⇔ l⊆L , Pl)
 
-    ∃?-sublist-⇔ : Dec (∃[ l ](fromList l ⊆ fromList L × P l)) ⇔ Dec (∃[ l ](l ⊆ˡ L × P l))
+    ∃?-sublist-⇔ : Dec (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ Dec (∃[ l ] l ⊆ˡ L × P l)
     ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔

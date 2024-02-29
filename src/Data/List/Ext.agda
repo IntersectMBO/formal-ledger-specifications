@@ -16,7 +16,7 @@ private variable
   A B : Set ℓ
 
 -- Looking up an index into the list; fails when out-of-bounds.
-_⁉_ : ∀ {a}{A : Set a} → List A → ℕ → Maybe A
+_⁉_ : List A → ℕ → Maybe A
 []       ⁉ _     = nothing
 (x ∷ _)  ⁉ zero  = just x
 (_ ∷ xs) ⁉ suc n = xs ⁉ n
@@ -34,4 +34,4 @@ insert x (y ∷ ys) = (x ∷ y ∷ ys) ∷ map (y ∷_) (insert x ys)
 -- permutations of all sublists of the given list
 subpermutations : List A → List (List A)
 subpermutations [] = [] ∷ []
-subpermutations (x ∷ xs) = (concatMap (insert x) (subpermutations xs)) ++ subpermutations xs
+subpermutations (x ∷ xs) = concatMap (insert x) (subpermutations xs) ++ subpermutations xs
