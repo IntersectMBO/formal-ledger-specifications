@@ -5,6 +5,7 @@
 {-# OPTIONS --safe #-}
 
 open import Algebra                     using (CommutativeMonoid ; Monoid)
+open import Algebra.Structures          using (IsCommutativeMonoid ; IsMonoid)
 open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
 import Algebra.Morphism.Definitions as Morphs
 import Data.Nat as ℕ
@@ -555,7 +556,7 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
   open UTxOState utxoSt renaming (deposits to deps; utxo to stUtxo)
 
   depsPreserved→depsChange≥0 : ((txb , pp) : TxBody × PParams) {deps : DepositPurpose ⇀ Coin}
-    → (txb , pp) preservesDeposits deps → depositsChange pp txb deps ≥ 0ℤ
+                             → (txb , pp) preservesDeposits deps → depositsChange pp txb deps ≥ 0ℤ
   depsPreserved→depsChange≥0 (txb , pp) {deps} depsUnch = a≤b→b⊖a≥0{getCoin deps} (a≤b→b-a≥0 μ)
     where
     a≤b→b-a≥0 : ∀ {a b : ℕ} → a ≤ b → b - a ≥ 0
@@ -565,42 +566,39 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
     a≤b→b⊖a≥0 : ∀ {a b : ℕ} → b - a ≥ 0 → b ℤ.⊖ a ≥ 0ℤ
     a≤b→b⊖a≥0 = {!!}
 
-    δ : proj₁ deps ⊆ proj₁ (updateDeposits pp txb deps)
-    δ = {!!}
+    ⊆→⨿ : proj₁ (updateDeposits pp txb deps) ≡ proj₁ deps ⨿ proj₁ (updateDeposits pp txb deps ∣ dom deps ᶜ)
+    ⊆→⨿ = {!!}
 
-    ⊆→⊎ : {d d' : DepositPurpose ⇀ Coin} → proj₁ d ⊆ proj₁ d' → proj₁ d' ≡ proj₁ d ⨿ proj₁ (d' ∣ dom d ᶜ)
-    ⊆→⊎ = {!!}
+    -- Use the hypothesis!
+    -- depsUnch : proj₁ deps ⊆ proj₁ (updateDeposits pp txb deps)
 
     -- indexedSum-partition : {d d' : DepositPurpose ⇀ Coin} → proj₁ d' ≡ proj₁ d ⨿ proj₁ (d' ∣ dom d ᶜ)
     --                        → indexedSumᵛ' getValue (d' ∣ txb .txins)
     --                          ≡ indexedSumᵛ' getValue d
     --                            + indexedSumᵛ' getValue (d' ∣ dom d ᶜ)
     -- indexedSum-partition = ?
-    ξ : ∀ {d : DepositPurpose ⇀ Coin} → getCoin d ≥ 0
-    ξ = z≤n
+
     γ : ∀ {d d' : DepositPurpose ⇀ Coin} → proj₁ d ⊆ proj₁ d' → getCoin d ≤ getCoin d'
     γ {d} {d'} d⊆d' = goal
       where
+      getValue≥0 : ∀ {x} → coin (getValue x) ≥ 0
+      getValue≥0 = z≤n
+      ξ : {d : DepositPurpose ⇀ Coin} → getCoin d ≥ 0
+      ξ = z≤n
       goal : indexedSumᵛ' id d ≤ indexedSumᵛ' id d'
       goal = {!!}
 
     μ : getCoin (updateDeposits pp txb deps) ≥ getCoin deps
     μ = γ{deps}{updateDeposits pp txb deps} depsUnch
 
-  --   indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f}
-  --     → disjoint (dom (toRel X)) (dom (toRel Y))
-  --     → indexedSumᵐ f (X ∪ˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
-
-
   msc :
 \end{code}
 \noindent
 For all
-\AG{utxo}    \∈ \UTxO,
-\AG{pparams} \∈ \PParams,
-\AG{utxoSt}  \∈ \UTxOState,
-\AG{txb}     \∈ \TxBody,
-
+  \AG{utxo}    \∈ \UTxO,
+  \AG{pparams} \∈ \PParams,
+  \AG{utxoSt}  \∈ \UTxOState,
+  \AG{txb}     \∈ \TxBody,
 if
 \begin{code}[inline]%
     (txb , pparams) preservesDeposits deps
@@ -616,70 +614,78 @@ then
 \begin{code}[hide]
   msc tx = subst (λ x → x ≥ length (txprop txb) * govActionDeposit) (sym ξ) goal
     where
+
     μ : (txb , pparams) preservesDeposits deps → depositsChange pparams txb deps ≥ 0ℤ
     μ = depsPreserved→depsChange≥0 (txb , pparams)
 
     ≥0→negPart≡0 : {x : ℤ} → x ≥ 0ℤ → negPart x ≡ 0
     ≥0→negPart≡0 {ℤ.+_ n} x≥0 = refl
 
-    ν : negPart (depositsChange pparams txb deps) ≡ 0
-    ν = ≥0→negPart≡0 (μ tx)
+    open CommutativeMonoid Value-CommutativeMonoid renaming (ε to 0ᵛ) using (identity)
 
-    open CommutativeMonoid Value-CommutativeMonoid renaming (ε to 0ᵛ) hiding (sym)
     coinInj : ∀{v} → coin v ≡ 0 → v ≡ 0ᵛ
     coinInj h = {!!}
 
     mono : inject 0 ≡ 0ᵛ
     mono = coinInj (property 0)
 
+    ν : negPart (depositsChange pparams txb deps) ≡ 0
+    ν = ≥0→negPart≡0 (μ tx)
+
+    κ : inject (depositRefunds pparams utxoSt txb) ≡ 0ᵛ
+    κ = Prelude.trans (cong inject ν ) mono
+
     bal : Value
     bal = balance (stUtxo ∣ txb .txins) + txb .mint
 
-    ξ : coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject (depositRefunds pparams utxoSt txb))
-      ≡ coin (balance (stUtxo ∣ txb .txins) + txb .mint)
+    -- ξ' : bal + 0ᵛ ≈ bal
+    -- ξ' = (proj₂ identity) bal
+
+    ξ : coin (bal + inject (depositRefunds pparams utxoSt txb)) ≡ coin bal
     ξ = begin
-        coin (bal + inject (depositRefunds pparams utxoSt txb)) ≡⟨ cong (λ x → coin (bal + inject x)) ν ⟩
-        coin (bal + inject 0) ≡⟨ cong (λ x → coin (bal + x)) mono ⟩
-        coin (bal + 0ᵛ) ≡⟨ homo coinIsMonoidHomomorphism bal 0ᵛ ⟩
-        coin bal + coin 0ᵛ ≡⟨ cong (coin bal +_) (ε-homo coinIsMonoidHomomorphism) ⟩
-        coin bal + 0 ≡⟨ +-identityʳ (coin (balance (stUtxo ∣ txb .txins) + txb .mint)) ⟩
-        coin bal      ∎
+      coin (bal + inject (depositRefunds pparams utxoSt txb))
+                          ≡⟨ cong (λ x → coin (bal + x)) κ ⟩
+      coin (bal + 0ᵛ)     ≡⟨ homo coinIsMonoidHomomorphism bal 0ᵛ ⟩
+      coin bal + coin 0ᵛ  ≡⟨ cong (coin bal +_) (ε-homo coinIsMonoidHomomorphism) ⟩
+      coin bal + 0        ≡⟨ +-identityʳ (coin (balance (stUtxo ∣ txb .txins) + txb .mint)) ⟩
+      coin bal            ∎
 
     goal : coin bal ≥ length (txprop txb) * govActionDeposit
     goal = {!!}
 
-  -- The inequality above is equivalent to:
+  -- Remaining Steps
+  -- ---------------
+  -- 1. Finish proof of `depsPreserved→depsChange≥0`.
   --
-  --  coin (balance (utxoSt .utxo ∣ txb .txins) +  txb .mint
-  --     +  inject (depositRefunds pparams utxoSt txb)) ≥ length (txprop txb) * govActionDeposit
+  -- 2. Check whether `coinInj : ∀{v} → coin v ≡ 0 → v ≡ 0ᵛ` holds and, if so, prove it.
   --
-  -- and since
+  -- 3. Prove `coin bal ≥ length (txprop txb) * govActionDeposit`.
   --
-  --   depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
+  --    Note that
+  --    bal = balance (utxoSt .utxo ∣ txb .txins) + txb .mint
+  --        = ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x + txb .mint
+  --        ≥ ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x
   --
-  -- and
+  --    so, if we can show:
+  --      i. coin(_) of each term in the sum is at least govActionDeposit, and
+  --     ii. there are at least length (txprop txb) terms in the sum,
+  --    then Step 3 will be done.
+
+  -- Other Notes
+  -- -----------
+  -- + ∑ is indexedSumᵛ' which is essentially of type (B → C) → A ⇀ B → C, and
   --
-  --   depositsChange pp txb (st .deposits) ≡ ℤ.0ℤ
+  --     `syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x`
   --
-  -- it is also equivalent to
+  -- + In the present case, A = TxIn, B = TxOut, C = Value, so
   --
-  --   coin (balance (utxoSt .utxo ∣ txb .txins) + txb .mint) ≥ length (txprop txb) * govActionDeposit
-  -- or
-  --   coin (∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x + txb .mint) ≥ length (txprop txb) * govActionDeposit
+  --   ∑ : (TxOut → Value) → TxIn ⇀ TxOut → Value, so
   --
-  -- where ∑ is indexedSumᵛ' which is essentially of type (B → C) → A ⇀ B → C, and
+  --   ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x  means
   --
-  -- Note: syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
+  --   indexedSumᵛ' getValue (utxoSt .utxo ∣ txb .txins)
   --
-  -- In the present case, A = TxIn, B = TxOut, C = Value, so
-  --
-  -- ∑ : (TxOut → Value) → TxIn ⇀ TxOut → Value, so
-  --
-  -- ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x  means
-  --
-  -- indexedSumᵛ' getValue (utxoSt .utxo ∣ txb .txins)
-  --
-  -- where getValue is a function of type TxOut → Value
+  --   where getValue is a function of type TxOut → Value
 
 \end{code}
 
