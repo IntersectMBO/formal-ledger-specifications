@@ -35,7 +35,7 @@ Voter        = GovRole × Credential
 GovActionID  = TxId × ℕ
 
 data VDeleg : Set where
-  credVoter        : GovRole → Credential →  VDeleg
+  credVoter        : (GovRole × Credential) →  VDeleg
   abstainRep       :                         VDeleg
   noConfidenceRep  :                         VDeleg
 
