@@ -137,7 +137,7 @@ module _ (let open TxBody) where
   updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
   updateCertDeposits _   []              deposits = deposits
   updateCertDeposits pp  (cert ∷ certs)  deposits
-    = updateCertDeposits pp certs deposits ∪⁺ certDeposit cert ∣ certRefund cert ᶜ
+    = updateCertDeposits pp certs deposits ∪⁺ certDeposit cert -- ∣ certRefund cert ᶜ
     where
     certDeposit : DCert → DepositPurpose ⇀ Coin
     certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
@@ -145,7 +145,7 @@ module _ (let open TxBody) where
     certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
     certDeposit _                   = ∅
 
-    certRefund : DCert → ℙ DepositPurpose
+    certRefund :  DCert → ℙ DepositPurpose
     certRefund (dereg c)      = ❴ CredentialDeposit c ❵
     certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
     certRefund _              = ∅

@@ -11,7 +11,7 @@ import Data.Nat as ℕ
 open import Data.Nat.Properties         hiding (_≟_) -- using (+-0-monoid)
 open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ ; 0ℤ)
-open import Data.Integer.Ext            using (posPart; negPart; ℤtoSignedℕ; ≥0→negPart≡0)
+open import Data.Integer.Ext            using (posPart; negPart; ℤtoSignedℕ)
 import Data.Integer.Properties as ℤ
 open import Data.String.Base            renaming (_++_ to _+ˢ_) using ()
 open import Relation.Binary             using (IsEquivalence)
@@ -565,6 +565,17 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
     a≤b→b⊖a≥0 : ∀ {a b : ℕ} → b - a ≥ 0 → b ℤ.⊖ a ≥ 0ℤ
     a≤b→b⊖a≥0 = {!!}
 
+    δ : proj₁ deps ⊆ proj₁ (updateDeposits pp txb deps)
+    δ = {!!}
+
+    ⊆→⊎ : {d d' : DepositPurpose ⇀ Coin} → proj₁ d ⊆ proj₁ d' → proj₁ d' ≡ proj₁ d ⨿ proj₁ (d' ∣ dom d ᶜ)
+    ⊆→⊎ = {!!}
+
+    -- indexedSum-partition : {d d' : DepositPurpose ⇀ Coin} → proj₁ d' ≡ proj₁ d ⨿ proj₁ (d' ∣ dom d ᶜ)
+    --                        → indexedSumᵛ' getValue (d' ∣ txb .txins)
+    --                          ≡ indexedSumᵛ' getValue d
+    --                            + indexedSumᵛ' getValue (d' ∣ dom d ᶜ)
+    -- indexedSum-partition = ?
     ξ : ∀ {d : DepositPurpose ⇀ Coin} → getCoin d ≥ 0
     ξ = z≤n
     γ : ∀ {d d' : DepositPurpose ⇀ Coin} → proj₁ d ⊆ proj₁ d' → getCoin d ≤ getCoin d'
@@ -573,9 +584,12 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
       goal : indexedSumᵛ' id d ≤ indexedSumᵛ' id d'
       goal = {!!}
 
-
     μ : getCoin (updateDeposits pp txb deps) ≥ getCoin deps
     μ = γ{deps}{updateDeposits pp txb deps} depsUnch
+
+  --   indexedSumᵐ-∪ : ∀ {X Y : FinMap A B} {f}
+  --     → disjoint (dom (toRel X)) (dom (toRel Y))
+  --     → indexedSumᵐ f (X ∪ˡᶠ Y) ≈ indexedSumᵐ f X ∙ indexedSumᵐ f Y
 
 
   msc :
@@ -588,7 +602,7 @@ For all
 \AG{txb}     \∈ \TxBody,
 
 if
-\begin{code}[inline]
+\begin{code}[inline]%
     (txb , pparams) preservesDeposits deps
 \end{code}
 then
@@ -599,32 +613,39 @@ then
 
     coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
 \end{code}
-\begin{code}[hide}
+\begin{code}[hide]
   msc tx = subst (λ x → x ≥ length (txprop txb) * govActionDeposit) (sym ξ) goal
     where
     μ : (txb , pparams) preservesDeposits deps → depositsChange pparams txb deps ≥ 0ℤ
     μ = depsPreserved→depsChange≥0 (txb , pparams)
-         --
+
+    ≥0→negPart≡0 : {x : ℤ} → x ≥ 0ℤ → negPart x ≡ 0
+    ≥0→negPart≡0 {ℤ.+_ n} x≥0 = refl
+
     ν : negPart (depositsChange pparams txb deps) ≡ 0
     ν = ≥0→negPart≡0 (μ tx)
 
     open CommutativeMonoid Value-CommutativeMonoid renaming (ε to 0ᵛ) hiding (sym)
     coinInj : ∀{v} → coin v ≡ 0 → v ≡ 0ᵛ
     coinInj h = {!!}
+
     mono : inject 0 ≡ 0ᵛ
     mono = coinInj (property 0)
+
+    bal : Value
+    bal = balance (stUtxo ∣ txb .txins) + txb .mint
 
     ξ : coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject (depositRefunds pparams utxoSt txb))
       ≡ coin (balance (stUtxo ∣ txb .txins) + txb .mint)
     ξ = begin
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject (depositRefunds pparams utxoSt txb)) ≡⟨ cong (λ x → coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject x)) ν ⟩
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint + inject 0) ≡⟨ cong (λ x → coin (balance (stUtxo ∣ txb .txins) + txb .mint + x)) mono ⟩
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint + 0ᵛ) ≡⟨ homo coinIsMonoidHomomorphism (balance (stUtxo ∣ txb .txins) + txb .mint) 0ᵛ ⟩
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint) + coin 0ᵛ ≡⟨ cong (coin (balance (stUtxo ∣ txb .txins) + txb .mint) +_) (ε-homo coinIsMonoidHomomorphism) ⟩
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint) + 0 ≡⟨ +-identityʳ (coin (balance (stUtxo ∣ txb .txins) + txb .mint)) ⟩
-      coin (balance (stUtxo ∣ txb .txins) + txb .mint)      ∎
+        coin (bal + inject (depositRefunds pparams utxoSt txb)) ≡⟨ cong (λ x → coin (bal + inject x)) ν ⟩
+        coin (bal + inject 0) ≡⟨ cong (λ x → coin (bal + x)) mono ⟩
+        coin (bal + 0ᵛ) ≡⟨ homo coinIsMonoidHomomorphism bal 0ᵛ ⟩
+        coin bal + coin 0ᵛ ≡⟨ cong (coin bal +_) (ε-homo coinIsMonoidHomomorphism) ⟩
+        coin bal + 0 ≡⟨ +-identityʳ (coin (balance (stUtxo ∣ txb .txins) + txb .mint)) ⟩
+        coin bal      ∎
 
-    goal : coin (balance (stUtxo ∣ txb .txins) + txb .mint) ≥ length (txprop txb) * govActionDeposit
+    goal : coin bal ≥ length (txprop txb) * govActionDeposit
     goal = {!!}
 
   -- The inequality above is equivalent to:
