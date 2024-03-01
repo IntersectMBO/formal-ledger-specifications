@@ -14,17 +14,17 @@ import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
-open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
+open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
+open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
-open import Class.DecEq using (DecEq; _≟_)
-open import Relation.Binary
+open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
-open import Relation.Unary using () renaming (Decidable to Decidable¹)
+open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 
 open Equivalence
 
@@ -296,3 +296,23 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
 
   ∩-sym : X ∩ Y ≡ᵉ Y ∩ X
   ∩-sym = ∩-sym⊆ , ∩-sym⊆
+
+-- Additional properties of lists and sets.
+module _ {L : List A} where
+  open Equivalence
+
+  sublist-⇔ : {l : List A} → fromList l ⊆ fromList L ⇔ l ⊆ˡ L
+  sublist-⇔ {[]} = mk⇔ (λ x ()) (λ _ {_} → ⊥-elim ∘ ∉-∅)
+  sublist-⇔ {x ∷ xs} = mk⇔ onlyif (λ u → to ∈-fromList ∘ u ∘ from ∈-fromList)
+    where
+    onlyif : ({a : A} → a ∈ fromList (x ∷ xs) → a ∈ fromList L) → x ∷ xs ⊆ˡ L
+    onlyif h (here refl) = from ∈-fromList (h (to ∈-fromList (here refl)))
+    onlyif h (there x'∈) = from ∈-fromList (h (to ∈-fromList (there x'∈)))
+
+  module _ {ℓ : Level}{P : Pred (List A) ℓ} where
+    ∃-sublist-⇔ : (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ (∃[ l ] l ⊆ˡ L × P l)
+    ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
+                      (λ (l , l⊆L , Pl) → l , from sublist-⇔ l⊆L , Pl)
+
+    ∃?-sublist-⇔ : Dec (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ Dec (∃[ l ] l ⊆ˡ L × P l)
+    ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
