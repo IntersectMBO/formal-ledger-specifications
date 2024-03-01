@@ -7,7 +7,7 @@ open import Prelude hiding (lookup; map)
 import Data.Product
 import Data.Sum
 import Function.Related.Propositional as R
-open import Data.List using (List; [_]; []; _++_; head; tail; length; map)
+open import Data.List using (List; [_]; []; _++_; head; tail; length; map; filter)
 open import Data.List.Ext using (insert; subpermutations; sublists)
 open import Data.List.Properties using (concat-++; map-++; ++-identityʳ; ++-assoc)
 open import Data.List.Membership.Propositional using (_∈_)
