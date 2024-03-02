@@ -555,28 +555,17 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
   open TxBody; open UTxOEnv Γ; open PParams pparams
   open UTxOState utxoSt renaming (deposits to deps; utxo to stUtxo)
 
-  depsPreserved→depsChange≥0 : ((txb , pp) : TxBody × PParams) {deps : DepositPurpose ⇀ Coin}
-                             → (txb , pp) preservesDeposits deps → depositsChange pp txb deps ≥ 0ℤ
-  depsPreserved→depsChange≥0 (txb , pp) {deps} depsUnch = a≤b→b⊖a≥0{getCoin deps} (a≤b→b-a≥0 μ)
+  depsPreserved→depsRefunds≡0 : (txb , pparams) preservesDeposits deps → depositRefunds pparams utxoSt txb ≡ 0
+  depsPreserved→depsRefunds≡0 txbpres = goal
     where
-    a≤b→b-a≥0 : ∀ {a b : ℕ} → a ≤ b → b - a ≥ 0
-    a≤b→b-a≥0 {.zero} {b} z≤n = z≤n
-    a≤b→b-a≥0 {.(suc _)} {.(suc _)} (s≤s a≤b) = a≤b→b-a≥0 a≤b
+    ≥0→negPart≡0 : {x : ℤ} → x ≥ 0ℤ → negPart x ≡ 0
+    ≥0→negPart≡0 {ℤ.+_ n} x≥0 = refl
 
-    a≤b→b⊖a≥0 : ∀ {a b : ℕ} → b - a ≥ 0 → b ℤ.⊖ a ≥ 0ℤ
-    a≤b→b⊖a≥0 = {!!}
+    x≥y⇒x-y≥0 : ∀ x y → x ≥ y → x ∸ y ≥ 0
+    x≥y⇒x-y≥0 x y x≥y = z≤n
 
-    ⊆→⨿ : proj₁ (updateDeposits pp txb deps) ≡ proj₁ deps ⨿ proj₁ (updateDeposits pp txb deps ∣ dom deps ᶜ)
-    ⊆→⨿ = {!!}
-
-    -- Use the hypothesis!
-    -- depsUnch : proj₁ deps ⊆ proj₁ (updateDeposits pp txb deps)
-
-    -- indexedSum-partition : {d d' : DepositPurpose ⇀ Coin} → proj₁ d' ≡ proj₁ d ⨿ proj₁ (d' ∣ dom d ᶜ)
-    --                        → indexedSumᵛ' getValue (d' ∣ txb .txins)
-    --                          ≡ indexedSumᵛ' getValue d
-    --                            + indexedSumᵛ' getValue (d' ∣ dom d ᶜ)
-    -- indexedSum-partition = ?
+    x≥y⇒x⊖y≥0 : ∀ {x y : ℕ} → x ≥ y → x - y ≥ 0ℤ
+    x≥y⇒x⊖y≥0 x≥y = {!!}
 
     γ : ∀ {d d' : DepositPurpose ⇀ Coin} → proj₁ d ⊆ proj₁ d' → getCoin d ≤ getCoin d'
     γ {d} {d'} d⊆d' = goal
@@ -588,8 +577,14 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
       goal : indexedSumᵛ' id d ≤ indexedSumᵛ' id d'
       goal = {!!}
 
-    μ : getCoin (updateDeposits pp txb deps) ≥ getCoin deps
-    μ = γ{deps}{updateDeposits pp txb deps} depsUnch
+    μ : getCoin (updateDeposits pparams txb deps) ≥ getCoin deps
+    μ = γ{deps}{updateDeposits pparams txb deps} txbpres
+
+    Δdeps≥0 : depositsChange pparams txb deps ≥ 0ℤ
+    Δdeps≥0 = x≥y⇒x⊖y≥0 μ
+
+    goal : depositRefunds pparams utxoSt txb ≡ 0
+    goal = ≥0→negPart≡0 Δdeps≥0
 
   msc :
 \end{code}
@@ -615,38 +610,21 @@ then
   msc tx = subst (λ x → x ≥ length (txprop txb) * govActionDeposit) (sym ξ) goal
     where
 
-    μ : (txb , pparams) preservesDeposits deps → depositsChange pparams txb deps ≥ 0ℤ
-    μ = depsPreserved→depsChange≥0 (txb , pparams)
-
-    ≥0→negPart≡0 : {x : ℤ} → x ≥ 0ℤ → negPart x ≡ 0
-    ≥0→negPart≡0 {ℤ.+_ n} x≥0 = refl
-
-    open CommutativeMonoid Value-CommutativeMonoid renaming (ε to 0ᵛ) using (identity)
-
-    coinInj : ∀{v} → coin v ≡ 0 → v ≡ 0ᵛ
-    coinInj h = {!!}
-
-    mono : inject 0 ≡ 0ᵛ
-    mono = coinInj (property 0)
-
-    ν : negPart (depositsChange pparams txb deps) ≡ 0
-    ν = ≥0→negPart≡0 (μ tx)
-
-    κ : inject (depositRefunds pparams utxoSt txb) ≡ 0ᵛ
-    κ = Prelude.trans (cong inject ν ) mono
+    open CommutativeMonoid Value-CommutativeMonoid using (identity) renaming (ε to 0ᵛ)
 
     bal : Value
     bal = balance (stUtxo ∣ txb .txins) + txb .mint
 
-    -- ξ' : bal + 0ᵛ ≈ bal
-    -- ξ' = (proj₂ identity) bal
+    μ : depositRefunds pparams utxoSt txb ≡ 0
+    μ = depsPreserved→depsRefunds≡0 tx
 
     ξ : coin (bal + inject (depositRefunds pparams utxoSt txb)) ≡ coin bal
     ξ = begin
       coin (bal + inject (depositRefunds pparams utxoSt txb))
-                          ≡⟨ cong (λ x → coin (bal + x)) κ ⟩
-      coin (bal + 0ᵛ)     ≡⟨ homo coinIsMonoidHomomorphism bal 0ᵛ ⟩
-      coin bal + coin 0ᵛ  ≡⟨ cong (coin bal +_) (ε-homo coinIsMonoidHomomorphism) ⟩
+                          ≡⟨ homo coinIsMonoidHomomorphism bal (inject (depositRefunds pparams utxoSt txb)) ⟩
+      coin bal + (coin ∘ inject) (depositRefunds pparams utxoSt txb)
+                          ≡⟨ cong (coin bal +_) (property (depositRefunds pparams utxoSt txb)) ⟩
+      coin bal + (depositRefunds pparams utxoSt txb) ≡⟨ cong (coin bal +_) μ ⟩
       coin bal + 0        ≡⟨ +-identityʳ (coin (balance (stUtxo ∣ txb .txins) + txb .mint)) ⟩
       coin bal            ∎
 
@@ -655,11 +633,9 @@ then
 
   -- Remaining Steps
   -- ---------------
-  -- 1. Finish proof of `depsPreserved→depsChange≥0`.
+  -- 1. Finish proof of `depsPreserved→depsRefunds≡0`.
   --
-  -- 2. Check whether `coinInj : ∀{v} → coin v ≡ 0 → v ≡ 0ᵛ` holds and, if so, prove it.
-  --
-  -- 3. Prove `coin bal ≥ length (txprop txb) * govActionDeposit`.
+  -- 2. Prove `coin bal ≥ length (txprop txb) * govActionDeposit`.
   --
   --    Note that
   --    bal = balance (utxoSt .utxo ∣ txb .txins) + txb .mint
