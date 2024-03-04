@@ -9,10 +9,10 @@ open import Algebra.Structures          using (IsCommutativeMonoid ; IsMonoid)
 open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
 import Algebra.Morphism.Definitions as Morphs
 import Data.Nat as ℕ
-open import Data.Nat.Properties         hiding (_≟_) -- using (+-0-monoid)
+open import Data.Nat.Properties         hiding (_≟_)
 open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ ; 0ℤ)
-open import Data.Integer.Ext            using (posPart; negPart; ℤtoSignedℕ)
+open import Data.Integer.Ext
 import Data.Integer.Properties as ℤ
 open import Data.String.Base            renaming (_++_ to _+ˢ_) using ()
 open import Relation.Binary             using (IsEquivalence)
@@ -555,18 +555,9 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
   open TxBody; open UTxOEnv Γ; open PParams pparams
   open UTxOState utxoSt renaming (deposits to deps; utxo to stUtxo)
 
-  depsPreserved→depsRefunds≡0 : (txb , pparams) preservesDeposits deps → depositRefunds pparams utxoSt txb ≡ 0
-  depsPreserved→depsRefunds≡0 txbpres = goal
+  depsPreserved→0refs : (txb , pparams) preservesDeposits deps → depositRefunds pparams utxoSt txb ≡ 0
+  depsPreserved→0refs txbpres = ≥0→negPart≡0 Δdeps≥0
     where
-    ≥0→negPart≡0 : {x : ℤ} → x ≥ 0ℤ → negPart x ≡ 0
-    ≥0→negPart≡0 {ℤ.+_ n} x≥0 = refl
-
-    x≥y⇒x-y≥0 : ∀ x y → x ≥ y → x ∸ y ≥ 0
-    x≥y⇒x-y≥0 x y x≥y = z≤n
-
-    x≥y⇒x⊖y≥0 : ∀ {x y : ℕ} → x ≥ y → x - y ≥ 0ℤ
-    x≥y⇒x⊖y≥0 x≥y = {!!}
-
     γ : ∀ {d d' : DepositPurpose ⇀ Coin} → proj₁ d ⊆ proj₁ d' → getCoin d ≤ getCoin d'
     γ {d} {d'} d⊆d' = goal
       where
@@ -581,10 +572,7 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
     μ = γ{deps}{updateDeposits pparams txb deps} txbpres
 
     Δdeps≥0 : depositsChange pparams txb deps ≥ 0ℤ
-    Δdeps≥0 = x≥y⇒x⊖y≥0 μ
-
-    goal : depositRefunds pparams utxoSt txb ≡ 0
-    goal = ≥0→negPart≡0 Δdeps≥0
+    Δdeps≥0 = x≤y⇒0≤y⊖x μ
 
   msc :
 \end{code}
@@ -607,33 +595,30 @@ then
     coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
 \end{code}
 \begin{code}[hide]
-  msc tx = subst (λ x → x ≥ length (txprop txb) * govActionDeposit) (sym ξ) goal
+  msc tx = subst (λ x → x ≥ length (txprop txb) * govActionDeposit) (sym cancelRefs) bal≥
     where
-
     open CommutativeMonoid Value-CommutativeMonoid using (identity) renaming (ε to 0ᵛ)
 
     bal : Value
     bal = balance (stUtxo ∣ txb .txins) + txb .mint
 
-    μ : depositRefunds pparams utxoSt txb ≡ 0
-    μ = depsPreserved→depsRefunds≡0 tx
+    refs : Coin
+    refs = depositRefunds pparams utxoSt txb
 
-    ξ : coin (bal + inject (depositRefunds pparams utxoSt txb)) ≡ coin bal
-    ξ = begin
-      coin (bal + inject (depositRefunds pparams utxoSt txb))
-                          ≡⟨ homo coinIsMonoidHomomorphism bal (inject (depositRefunds pparams utxoSt txb)) ⟩
-      coin bal + (coin ∘ inject) (depositRefunds pparams utxoSt txb)
-                          ≡⟨ cong (coin bal +_) (property (depositRefunds pparams utxoSt txb)) ⟩
-      coin bal + (depositRefunds pparams utxoSt txb) ≡⟨ cong (coin bal +_) μ ⟩
-      coin bal + 0        ≡⟨ +-identityʳ (coin (balance (stUtxo ∣ txb .txins) + txb .mint)) ⟩
-      coin bal            ∎
+    cancelRefs : coin (bal + inject refs) ≡ coin bal
+    cancelRefs = begin
+      coin (bal + inject refs)         ≡⟨ homo coinIsMonoidHomomorphism bal (inject refs) ⟩
+      coin bal + (coin ∘ inject) refs  ≡⟨ cong (coin bal +_) (property refs) ⟩
+      coin bal + refs                  ≡⟨ cong (coin bal +_) (depsPreserved→0refs tx) ⟩
+      coin bal + 0                     ≡⟨ +-identityʳ (coin bal) ⟩
+      coin bal                         ∎
 
-    goal : coin bal ≥ length (txprop txb) * govActionDeposit
-    goal = {!!}
+    bal≥ : coin bal ≥ length (txprop txb) * govActionDeposit
+    bal≥ = {!!}
 
   -- Remaining Steps
   -- ---------------
-  -- 1. Finish proof of `depsPreserved→depsRefunds≡0`.
+  -- 1. Finish proof of `depsPreserved→0refs`.
   --
   -- 2. Prove `coin bal ≥ length (txprop txb) * govActionDeposit`.
   --
