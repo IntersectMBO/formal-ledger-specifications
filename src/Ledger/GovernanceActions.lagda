@@ -187,7 +187,7 @@ instance
 \subsection{Votes and proposals}
 
 The data type \Vote represents the different voting options: \yes,
-\no, or \abstain. To cast a \Vote, it needs to be packaged together
+\no, or \abstain. For a \Vote to be cast, it must be packaged together
 with further information, such as who votes and for which governance
 action. This information is combined in the \GovVote record. An
 optional \Anchor can be provided to give context about why a vote was
@@ -202,10 +202,10 @@ submitted. Beside the proposed action, it requires:
 \item an \Anchor, providing further information about the proposal.
 \end{itemize}
 
-While the deposit is being held, is added to the deposit pot similar
+While the deposit is held, it is added to the deposit pot, similar
 to stake key deposits. It is also counted towards the stake of the
-reward address it will be paid back to, to not reduce the submitter's
-voting power to vote on their own (and competing) actions. For a
+reward address to which it will be returned, so as not to reduce the submitter's
+voting power when voting on their own (and competing) actions. For a
 proposal to be valid, the proposal must be set to the current value of
 \govActionDeposit. The deposit will be returned when the action is
 removed from the state in any way.
