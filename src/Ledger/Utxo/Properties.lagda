@@ -555,18 +555,39 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
   open TxBody; open UTxOEnv Γ; open PParams pparams
   open UTxOState utxoSt renaming (deposits to deps; utxo to stUtxo)
 
+  -- We proved `⊆→⨿ : X ⊆ Y → Y ≡ X ⨿ (Y ＼ X)` in `Set.Properties`.
+  -- Next: specialize `⊆→⨿` to Maps and/or Rels to get the following:
+
+  submap-decomp : ∀ {d d' : DepositPurpose ⇀ Coin} → d ˢ ⊆ d' ˢ → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
+  submap-decomp {d} {d'} d⊆d' = {!!}
+
+  decomp→valSum : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
+    → indexedSumᵐ (inject ∘ proj₂) (d' ᶠᵐ)
+      ≈ indexedSumᵐ (inject ∘ proj₂) (d ᶠᵐ) + indexedSumᵐ (inject ∘ proj₂) ((d' ∣ (dom d)ᶜ)ᶠᵐ)
+  decomp→valSum {d}{d'} = indexedSumᵐ-partition{m = d' ᶠᵐ}{d ᶠᵐ}{(d' ∣ (dom d) ᶜ) ᶠᵐ}{inject ∘ proj₂}
+
+  -- This gives the for the (Value-CommutativeMonoid) tokenAlgebra.
+  -- Next: prove it for ℕ to get the following:
+
+  decomp→sum : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
+         → indexedSumᵛ' id d' ≡ indexedSumᵛ' id d + indexedSumᵛ' id (d' ∣ (dom d) ᶜ)
+  decomp→sum decomp = {!!}
+
+  -- The next lemma should follow easily from the `decomp→sum` lemma.
+  decomp→ineq : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
+         → indexedSumᵛ' id d ≤ indexedSumᵛ' id d'
+  decomp→ineq {d}{d'} decomp = {!!}
+    where
+    getValue≥0 : ∀ {x} → coin (getValue x) ≥ 0
+    getValue≥0 = z≤n
+    ξ : {d : DepositPurpose ⇀ Coin} → getCoin d ≥ 0
+    ξ = z≤n
+
   depsPreserved→0refs : (txb , pparams) preservesDeposits deps → depositRefunds pparams utxoSt txb ≡ 0
   depsPreserved→0refs txbpres = ≥0→negPart≡0 Δdeps≥0
     where
-    γ : ∀ {d d' : DepositPurpose ⇀ Coin} → proj₁ d ⊆ proj₁ d' → getCoin d ≤ getCoin d'
-    γ {d} {d'} d⊆d' = goal
-      where
-      getValue≥0 : ∀ {x} → coin (getValue x) ≥ 0
-      getValue≥0 = z≤n
-      ξ : {d : DepositPurpose ⇀ Coin} → getCoin d ≥ 0
-      ξ = z≤n
-      goal : indexedSumᵛ' id d ≤ indexedSumᵛ' id d'
-      goal = {!!}
+    γ : ∀ {d d' : DepositPurpose ⇀ Coin} → d ˢ ⊆ d' ˢ → getCoin d ≤ getCoin d'
+    γ {d} {d'} d⊆d' = decomp→ineq {d} {d'} (submap-decomp{d}{d'} d⊆d')
 
     μ : getCoin (updateDeposits pparams txb deps) ≥ getCoin deps
     μ = γ{deps}{updateDeposits pparams txb deps} txbpres

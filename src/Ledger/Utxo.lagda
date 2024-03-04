@@ -168,7 +168,7 @@ module _ (let open TxBody) where
     = getCoin{A = DepositPurpose ⇀ Coin} (updateDeposits pp txb deposits) - getCoin deposits
 
   _preservesDeposits_ : TxBody × PParams → DepositPurpose ⇀ Coin → Set
-  (txb , pp) preservesDeposits deposits = proj₁ deposits ⊆ proj₁ (updateDeposits pp txb deposits)
+  (txb , pp) preservesDeposits deposits = deposits ˢ ⊆ (updateDeposits pp txb deposits) ˢ
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}

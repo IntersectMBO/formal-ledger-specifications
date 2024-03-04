@@ -271,6 +271,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
     disjoint' : Set A → Set A → Type ℓ
     disjoint' X Y = X ∩ Y ≡ᵉ ∅
 
+    _＼_ : Set A → Set A → Set A
+    X ＼ Y = filter (sp-¬ (sp-∈ {Y})) X
+
   All : (A → Type) → Set A → Type ℓ
   All P X = ∀ {a} → a ∈ X → P a
 
