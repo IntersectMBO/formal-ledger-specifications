@@ -1,7 +1,7 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Prelude hiding (filter; map)
+open import Prelude hiding (map)
 
 open import Agda.Primitive using (lzero) renaming (Set to Type)
 open import Axiom.Set using (Theory)
