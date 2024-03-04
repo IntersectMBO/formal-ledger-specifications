@@ -110,15 +110,17 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \subsection{Hash protection}
 \label{sec:hash-protection}
 
-Enactment requires a second condition on top of the necessary votes,
-which is that the state after enacting the proposal was intended when
-the action was submitted. This is achieved by requiring actions that
-intend to modify the same piece of state via their \GovActionID: a
-proposal can only be enacted if the previously enacted proposal of the
-same kind has the \GovActionID mentioned in the to be enacted
-proposal. \NoConfidence and \NewCommittee modify the same state, while
+For some types of governance actions, enactment requires a second
+condition on top of the necessary votes, which is that the state after
+enacting the proposal was intended when the action was submitted. This
+is achieved by requiring actions to unambiguously link to the state
+they are modifying via a pointer to the previous modification. A
+proposal can only be enacted if it contains the \GovActionID of the
+previously enacted proposal modifying the same piece of
+state. \NoConfidence and \NewCommittee modify the same state, while
 every other type of governance action has its own state that isn't
-shared with any other action.
+shared with any other action. This means that the enactibility of a
+proposal can change when other proposals are enacted.
 
 However, not all types of governance actions require this strict
 protection. For \TreasuryWdrl and \Info, enacting them does not change
