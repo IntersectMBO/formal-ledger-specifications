@@ -2,7 +2,7 @@
 \label{sec:utxo-properties}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+-- {-# OPTIONS --safe #-}
 
 open import Algebra                     using (CommutativeMonoid ; Monoid)
 open import Algebra.Structures          using (IsCommutativeMonoid ; IsMonoid)
@@ -14,8 +14,12 @@ open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ ; 0ℤ)
 open import Data.Integer.Ext
 import Data.Integer.Properties as ℤ
+open import Data.List.Properties        using (foldr-cong)
+open import Data.List.Relation.Unary.Any using (Any)
+open Any
 open import Data.String.Base            renaming (_++_ to _+ˢ_) using ()
 open import Relation.Binary             using (IsEquivalence)
+open import Axiom.Set.List
 
 open import Prelude; open Equivalence
 
@@ -145,7 +149,7 @@ abstract
 
 private variable
   tx                               : Tx
-  utxo utxo'                       : UTxO
+  utxo utxo' utxo''                : UTxO
   Γ                                : UTxOEnv
   utxoState utxoState'             : UTxOState
   fees fees' donations donations'  : Coin
@@ -548,8 +552,99 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
 
 \end{property}
 
-\begin{property}[\textbf{Minimum Spending Condition}]~\\
+
+\begin{property}[\textbf{General Minimum Spending Condition}]~\\
 \begin{code}[hide]
+
+
+module _ {Γ : UTxOEnv}
+         {tx : Tx}
+         {utxoSt : UTxOState} where
+  open Tx tx renaming (body to txb); open TxBody txb
+  open UTxOEnv Γ
+  open PParams pparams
+  open UTxOState utxoSt using () renaming (deposits to deps; utxo to st; fees to fs)
+
+  const-list-sum : {gps : List GovProposal}
+    → (∀ {p} → p ∈ˡ gps → GovProposal.deposit p ≡ govActionDeposit)
+    → sum (map GovProposal.deposit gps) ≡ length gps * govActionDeposit
+  const-list-sum {[]} h' = refl
+  const-list-sum {gp ∷ gps} h' = begin
+    sum (map GovProposal.deposit (gp ∷ gps)) ≡⟨ cong sum (cong (_∷ map GovProposal.deposit gps) (h' (here refl))) ⟩
+    govActionDeposit + sum (map GovProposal.deposit gps) ≡⟨ cong (govActionDeposit +_) (const-list-sum (h' ∘ there)) ⟩
+    govActionDeposit + length gps * govActionDeposit ∎
+
+\end{code}
+\begin{code}
+  gmsc :
+\end{code}
+\noindent
+For all
+  \AG{utxo}    \∈ \UTxO,
+  \AG{pparams} \∈ \PParams,
+  \AG{utxoSt}  \∈ \UTxOState,
+  \AG{txb}     \∈ \TxBody,
+\begin{code}[hide]
+
+    ⦃ _ : DecEq GovProposal ⦄ →
+\end{code}
+if each \AgdaRecord{GovProposal} in \AgdaField{txprop}~\AG{txb} deposits \AgdaField{govActionDeposit}, that is, if
+\begin{code}[hide]
+    (∀ {p} →
+\end{code}
+\begin{code}
+
+      p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit
+\end{code}
+then
+\begin{code}[hide]
+    ) →
+\end{code}
+\begin{code}
+
+    coin (consumed pparams utxoSt txb) ≥ length txprop * govActionDeposit
+\end{code}
+where \AgdaField{txprop}~\AG{txb} is the list of all \AgdaRecord{GovProposal} associated with
+the transaction body \AG{txb}. The hypothesis asserts that \AgdaField{govActionDeposit} is
+the deposit provided with each \AgdaRecord{GovProposal} in \AgdaField{txprop}~\AG{txb}.
+
+\begin{code}
+  gmsc h = subst (λ x → x ≥ length txprop * govActionDeposit) (sym coin-hom) γ
+    where
+    -- 1. The sum of all GovProposal deposits is equal to the number of GovProposals times govActionDeposit.
+    const-dep-sum : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
+    const-dep-sum = const-list-sum h
+
+    bal : Value
+    bal = balance (st ∣ txins) + mint
+
+    -- `depositRefunds pparams utxoSt txb` is a natural number (the negative part of the depositChange)
+    -- so it can only increase the balance and make the inequality easier to prove.
+    refs : Coin
+    refs = depositRefunds pparams utxoSt txb
+
+    coin-hom : coin (bal + inject refs) ≡ coin bal + refs
+    coin-hom = begin
+      coin (bal + inject refs)         ≡⟨ homo coinIsMonoidHomomorphism bal (inject refs) ⟩
+      coin bal + (coin ∘ inject) refs  ≡⟨ cong (coin bal +_) (property refs) ⟩
+      coin bal + refs                  ∎
+
+    -- 2. Consumed ≡ Produced
+    c≡p : Γ ⊢ ⟦ st , fs , deps , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
+              ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+          → consumed pparams utxoSt txb ≡ produced pparams utxoSt txb
+    c≡p (UTXO-inductive⋯ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _) = x
+
+    -- 3. Goal:
+    γ : coin bal + refs ≥ length txprop * govActionDeposit
+    γ = {!!}
+\end{code}
+\end{property}
+
+
+\begin{property}[\textbf{Minimum Spending Condition}]~\\
+
+\begin{code}
 module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
 
   open TxBody; open UTxOEnv Γ; open PParams pparams
@@ -558,8 +653,8 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
   -- We proved `⊆→⨿ : X ⊆ Y → Y ≡ X ⨿ (Y ＼ X)` in `Set.Properties`.
   -- Next: specialize `⊆→⨿` to Maps and/or Rels to get the following:
 
-  submap-decomp : ∀ {d d' : DepositPurpose ⇀ Coin} → d ˢ ⊆ d' ˢ → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
-  submap-decomp {d} {d'} d⊆d' = {!!}
+  postulate
+    submap-decomp : ∀ {d d' : DepositPurpose ⇀ Coin} → d ˢ ⊆ d' ˢ → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
 
   decomp→valSum : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
     → indexedSumᵐ (inject ∘ proj₂) (d' ᶠᵐ)
@@ -569,21 +664,16 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
   -- This gives the for the (Value-CommutativeMonoid) tokenAlgebra.
   -- Next: prove it for ℕ to get the following:
 
-  decomp→sum : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
-         → indexedSumᵛ' id d' ≡ indexedSumᵛ' id d + indexedSumᵛ' id (d' ∣ (dom d) ᶜ)
-  decomp→sum decomp = {!!}
+  postulate
+    decomp→sum : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
+      → indexedSumᵛ' id d' ≡ indexedSumᵛ' id d + indexedSumᵛ' id (d' ∣ (dom d) ᶜ)
 
   -- The next lemma should follow easily from the `decomp→sum` lemma.
-  decomp→ineq : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
-         → indexedSumᵛ' id d ≤ indexedSumᵛ' id d'
-  decomp→ineq {d}{d'} decomp = {!!}
-    where
-    getValue≥0 : ∀ {x} → coin (getValue x) ≥ 0
-    getValue≥0 = z≤n
-    ξ : {d : DepositPurpose ⇀ Coin} → getCoin d ≥ 0
-    ξ = z≤n
+  postulate
+    decomp→ineq : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
+          → indexedSumᵛ' id d ≤ indexedSumᵛ' id d'
 
-  depsPreserved→0refs : (txb , pparams) preservesDeposits deps → depositRefunds pparams utxoSt txb ≡ 0
+  depsPreserved→0refs : conservationOfDeposits pparams txb deps → depositRefunds pparams utxoSt txb ≡ 0
   depsPreserved→0refs txbpres = ≥0→negPart≡0 Δdeps≥0
     where
     γ : ∀ {d d' : DepositPurpose ⇀ Coin} → d ˢ ⊆ d' ˢ → getCoin d ≤ getCoin d'
@@ -597,6 +687,7 @@ module _ {Γ : UTxOEnv} {utxoSt : UTxOState} {txb : TxBody} where
 
   msc :
 \end{code}
+
 \noindent
 For all
   \AG{utxo}    \∈ \UTxO,
@@ -605,7 +696,7 @@ For all
   \AG{txb}     \∈ \TxBody,
 if
 \begin{code}[inline]%
-    (txb , pparams) preservesDeposits deps
+    conservationOfDeposits pparams txb deps
 \end{code}
 then
 \begin{code}[hide]
@@ -634,41 +725,41 @@ then
       coin bal + 0                     ≡⟨ +-identityʳ (coin bal) ⟩
       coin bal                         ∎
 
-    bal≥ : coin bal ≥ length (txprop txb) * govActionDeposit
-    bal≥ = {!!}
-
-  -- Remaining Steps
-  -- ---------------
-  -- 1. Finish proof of `depsPreserved→0refs`.
-  --
-  -- 2. Prove `coin bal ≥ length (txprop txb) * govActionDeposit`.
-  --
-  --    Note that
-  --    bal = balance (utxoSt .utxo ∣ txb .txins) + txb .mint
-  --        = ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x + txb .mint
-  --        ≥ ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x
-  --
-  --    so, if we can show:
-  --      i. coin(_) of each term in the sum is at least govActionDeposit, and
-  --     ii. there are at least length (txprop txb) terms in the sum,
-  --    then Step 3 will be done.
-
-  -- Other Notes
-  -- -----------
-  -- + ∑ is indexedSumᵛ' which is essentially of type (B → C) → A ⇀ B → C, and
-  --
-  --     `syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x`
-  --
-  -- + In the present case, A = TxIn, B = TxOut, C = Value, so
-  --
-  --   ∑ : (TxOut → Value) → TxIn ⇀ TxOut → Value, so
-  --
-  --   ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x  means
-  --
-  --   indexedSumᵛ' getValue (utxoSt .utxo ∣ txb .txins)
-  --
-  --   where getValue is a function of type TxOut → Value
-
+    postulate
+      bal≥ : coin bal ≥ length (txprop txb) * govActionDeposit
 \end{code}
-
 \end{property}
+
+\textbf{Remaining Steps}.
+
+\begin{verbatim}
+1. Finish proof of `depsPreserved→0refs`.
+2. Prove `coin bal ≥ length (txprop txb) * govActionDeposit`.
+
+Note that
+  bal = balance (utxoSt .utxo ∣ txb .txins) + txb .mint
+         = ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x + txb .mint
+         ≥ ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x
+\end{verbatim}
+
+so, if we can show:
+
+i. coin() of each term in the sum is at least govActionDeposit, and
+ii. there are at least length (txprop txb) terms in the sum, then Step 2 will be done.
+
+
+\textbf{Other Notes}.
+\begin{verbatim}
+∑ is indexedSumᵛ' which is essentially of type (B → C) → A ⇀ B → C, and
+      syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
+\end{verbatim}
+
+In the present case, A = TxIn, B = TxOut, C = Value, so
+\begin{verbatim}
+    ∑ : (TxOut → Value) → TxIn ⇀ TxOut → Value, so
+
+    ∑[ x ← (utxoSt .utxo ∣ txb .txins) ] getValue x  means
+
+    indexedSumᵛ' getValue (utxoSt .utxo ∣ txb .txins)
+\end{verbatim}
+where getValue is a function of type TxOut → Value.

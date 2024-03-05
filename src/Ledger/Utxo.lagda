@@ -163,12 +163,6 @@ module _ (let open TxBody) where
   updateDeposits pp txb =
     updateCertDeposits pp (txb .txcerts) ∘ updateProposalDeposits pp txb
 
-  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
-  depositsChange pp txb deposits
-    = getCoin{A = DepositPurpose ⇀ Coin} (updateDeposits pp txb deposits) - getCoin deposits
-
-  _preservesDeposits_ : TxBody × PParams → DepositPurpose ⇀ Coin → Set
-  (txb , pp) preservesDeposits deposits = deposits ˢ ⊆ (updateDeposits pp txb deposits) ˢ
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
@@ -294,6 +288,13 @@ data
 module _ (let open UTxOState; open TxBody) where
 \end{code}
 \begin{code}
+  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
+  depositsChange pp txb deposits
+    = getCoin{A = DepositPurpose ⇀ Coin} (updateDeposits pp txb deposits) - getCoin deposits
+
+  conservationOfDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → Set
+  conservationOfDeposits pp txb deposits = deposits ˢ ⊆ (updateDeposits pp txb deposits) ˢ
+
   depositRefunds : PParams → UTxOState → TxBody → Coin
   depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
 
