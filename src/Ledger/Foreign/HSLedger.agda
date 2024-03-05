@@ -435,11 +435,11 @@ instance
     .from (F.Failure a) → failure (from a)
 
 utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
-utxo-step e s tx = to $ UTXO-step (from e) (from s) (from tx)
+utxo-step = to UTXO-step
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
 utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
-utxow-step e s tx = to $ compute Computational-UTXOW (from e) (from s) (from tx)
+utxow-step = to (compute Computational-UTXOW)
 
 {-# COMPILE GHC utxow-step as utxowStep #-}
