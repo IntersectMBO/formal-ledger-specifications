@@ -44,6 +44,8 @@ record LState : Set where
 
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₁ txvote ++ map inj₂ txprop
+\end{code}
+\begin{code}[hide]
   where open TxBody txb
 \end{code}
 \caption{Types and functions for the LEDGER transition system}
@@ -60,9 +62,7 @@ private variable
 
 \begin{figure*}[h]
 \begin{code}[hide]
-open RwdAddr
-open DState
-open CertState
+open CertState; open DState; open LEnv; open LState; open RwdAddr; open TxBody
 
 data
 \end{code}
@@ -77,10 +77,12 @@ data
 
 \begin{figure*}[h]
 \begin{code}
-  LEDGER : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+  LEDGER :
+    ∙  record { LEnv Γ } ⊢ utxoSt s ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    ∙  ⟦ epoch (Γ .slot) , Γ .pparams , txvote (tx .body) , txwdrls (tx .body) ⟧ᶜ
+         ⊢ certState s ⇀⦇ txcerts (tx .body) ,CERTS⦈ certState'
+    ∙  ⟦ txid (tx .body) , epoch (Γ .slot) , Γ .pparams , Γ .ppolicy , Γ .enactState ⟧ᵍ
+         ⊢ govSt s ⇀⦇ txgov (tx .body) ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}

@@ -217,7 +217,11 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
                       ∧ not (≟-∅ᵇ collateral)
                       )
   where
+\end{code}
+\begin{code}[hide]
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
+\end{code}
+\begin{code}
     collateralRange  = range    (utxo ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
 \end{code}
