@@ -39,37 +39,37 @@ cwitness (ccreghot c _)      = c
 \begin{figure*}[h!]
 \begin{code}
 record CertEnv : Set where
-  constructor ⟦_,_,_,_⟧ᶜ
+  constructor ⟦_﹐_﹐_﹐_⟧ᶜ
   field epoch  : Epoch
         pp     : PParams
         votes  : List GovVote
         wdrls  : RwdAddr ⇀ Coin
 
 record DState : Set where
-  constructor ⟦_,_,_⟧ᵈ
+  constructor ⟦_﹐_﹐_⟧ᵈ
   field
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ Credential
     rewards      : Credential ⇀ Coin
 
 record PState : Set where
-  constructor ⟦_,_⟧ᵖ
+  constructor ⟦_﹐_⟧ᵖ
   field pools     : Credential ⇀ PoolParams
         retiring  : Credential ⇀ Epoch
 
 record GState : Set where
-  constructor ⟦_,_⟧ᵛ
+  constructor ⟦_﹐_⟧ᵛ
   field dreps      : Credential ⇀ Epoch
         ccHotKeys  : Credential ⇀ Maybe Credential
 
 record CertState : Set where
-  constructor ⟦_,_,_⟧ᶜˢ
+  constructor ⟦_﹐_﹐_⟧ᶜˢ
   field dState : DState
         pState : PState
         gState : GState
 
 record DelegEnv : Set where
-  constructor ⟦_,_⟧ᵈᵉ
+  constructor ⟦_﹐_⟧ᵈᵉ
   field pparams  : PParams
         pools    : Credential ⇀ PoolParams
 
@@ -135,83 +135,51 @@ new certificates relating to DReps and the constitutional committee.
 \end{itemize}
 
 \begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
-data
-\end{code}
 \begin{code}
-  _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
-
+data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ poolDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mc ∈ mapˢ just (dom pools)
       ────────────────────────────────
-      ⟦ pp , pools ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+      ⟦ pp ﹐ pools ⟧ᵈᵉ ⊢
+        ⟦ vDelegs ﹐ sDelegs ﹐ rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
+        ⟦ insertIfJust c mv vDelegs ﹐ insertIfJust c mc sDelegs ﹐ rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c ,DELEG⦈
-                          ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+      ⟦ pp ﹐ pools ⟧ᵈᵉ ⊢  ⟦ vDelegs ﹐ sDelegs ﹐ rwds ⟧ᵈ ⇀⦇ dereg c ,DELEG⦈
+                          ⟦ vDelegs ∣ ❴ c ❵ ᶜ ﹐ sDelegs ∣ ❴ c ❵ ᶜ ﹐ rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
-
+data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
   POOL-regpool :
     ∙ c ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
-            ⟦ ❴ c , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
+      pp ⊢  ⟦ pools ﹐ retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
+            ⟦ ❴ c , poolParams ❵ ∪ˡ pools ﹐ retiring ⟧ᵖ
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈ ⟦ pools , ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
+    pp ⊢ ⟦ pools ﹐ retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈ ⟦ pools ﹐ ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
 
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
+data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set where
   GOVCERT-regdrep : let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
+      ⟦ e ﹐ pp ﹐ vs ﹐ wdrls ⟧ᶜ ⊢  ⟦ dReps ﹐ ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps ﹐ ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+      Γ ⊢ ⟦ dReps ﹐ ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ ﹐ ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+      Γ ⊢ ⟦ dReps ﹐ ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps ﹐ ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
-\end{AgdaMultiCode}
 \caption{Auxiliary DELEG, POOL and GOVCERT transition systems}
 \label{fig:sts:aux-cert}
 \end{figure*}
@@ -230,44 +198,24 @@ CERTBASE as the base case. CERTBASE does the following:
 \end{itemize}
 
 \begin{figure*}[h]
-\begin{code}[hide]
-data
-\end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
-
+data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp ﹐ PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e ﹐ pp ﹐ vs ﹐ wdrls ⟧ᶜ ⊢ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e ﹐ pp ﹐ vs ﹐ wdrls ⟧ᶜ ⊢ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ ﹐ stᵖ' ﹐ stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
-      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
+      Γ ⊢ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ' ⟧ᶜˢ
 
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
-
+data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set where
   CERT-base :
     let open PParams pp; open GState stᵍ; open DState stᵈ
         refresh         = mapPartial getDRepVote (fromList vs)
@@ -277,10 +225,10 @@ data
     ∙ wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
-        , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
+      ⟦ e ﹐ pp ﹐ vs ﹐ wdrls ⟧ᶜ ⊢ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
+        ⟦ ⟦ voteDelegs ﹐ stakeDelegs ﹐ constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        ﹐ stᵖ
+        ﹐ ⟦ refreshedDReps ﹐ ccHotKeys ⟧ᵛ ⟧ᶜˢ
 
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
