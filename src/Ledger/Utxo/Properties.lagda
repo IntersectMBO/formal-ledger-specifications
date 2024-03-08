@@ -2,7 +2,7 @@
 \label{sec:utxo-properties}
 
 \begin{code}[hide]
--- {-# OPTIONS --safe #-}
+{-# OPTIONS --safe #-}
 
 open import Algebra                     using (CommutativeMonoid ; Monoid)
 open import Algebra.Structures          using (IsCommutativeMonoid ; IsMonoid)
@@ -28,7 +28,7 @@ open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
 open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
-open import Ledger.Prelude; open Properties
+open import Ledger.Prelude hiding (≤-trans); open Properties
 open import Ledger.Abstract
 open import Ledger.Transaction
 open import Interface.ComputationalRelation
@@ -554,67 +554,23 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
 
 
 \begin{property}[\textbf{General Minimum Spending Condition}]~\\
-\begin{code}[hide]
-
--- module GenMSC
---    {utxo' : UTxO}
---    {fees' : Coin}
---    {deposits' : DepositPurpose ⇀ Coin}
---    {donations' : Coin}
---    {tx : Tx} (let open Tx tx renaming (body to txb); open TxBody txb)
---    {Γ : UTxOEnv}
---    {utxoSt : UTxOState} (let open UTxOState utxoSt renaming (utxo to st; fees to fs; deposits to deps))
---    -- (step : Γ ⊢ ⟦ st , fs , deps , donationss ⟧ᵘ ⇀⦇ tx ,UTXO⦈ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ )
---    -- (h' : txid ∉ mapˢ proj₁ (dom utxo))
---    where
-
---   ppΓ : PParams
---   ppΓ = UTxOEnv.pparams Γ
-
---   open PParams ppΓ
-
-
-\end{code}
-\noindent
-For all \AgdaBound{Γ} \∈ \UTxOEnv, \AgdaBound{utxo}, \AgdaBound{utxo'} \∈ \UTxO,
-\AgdaBound{fees}, \AgdaBound{fees'} \∈ \Coin and \AgdaBound{tx} \∈ \Tx,
-
-if
-\begin{code}[hide]
-gmsc : let open Tx tx renaming (body to txb); open TxBody txb; pp = UTxOEnv.pparams Γ; open PParams pp
-           open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons) in
-
-\end{code}
-\begin{code}
-  Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-       ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
-\end{code}
-
-and if each \AgdaRecord{GovProposal} in \AgdaField{txprop}~\AG{txb} deposits \AgdaField{govActionDeposit}, that is, if
-\begin{code}[hide]
-  → (∀ {p} →
-\end{code}
-\begin{code}
-
-    p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit
-\end{code}
-
-then
-\begin{code}[hide]
-  ) →
-\end{code}
-\begin{code}
-
-  coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
-\end{code}
-where \AgdaField{txprop}~\AG{txb} is the list of all \AgdaRecord{GovProposal} associated with
-the transaction body \AG{txb}. The hypothesis asserts that \AgdaField{govActionDeposit} is
-the deposit provided with each \AgdaRecord{GovProposal} in \AgdaField{txprop}~\AG{txb}.
 
 \begin{code}
+gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
+            pp = UTxOEnv.pparams Γ; open PParams pp
+            open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
+        in
+
+        Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
+             ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
+
+  →     (∀ {p} → p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit)
+        -------------------------------------------------------------------
+  →     coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
+
 gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h =
 
-  subst (λ x → x ≥ length txprop * govActionDeposit) (sym coin-hom) γ
+  subst (λ x → x ≥ length txprop * govActionDeposit) (sym coin-hom) v
   where
     pp : PParams
     pp = UTxOEnv.pparams Γ
@@ -622,209 +578,78 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
     open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
     open PParams pp
 
-    Deps uDep refunds newDeps remDepTot : Coin
-    Δdep : ℤ
-                                                     -- Coin values of:
-    Deps       = getCoin deps                           --   existing deposits
-    uDep       = getCoin (updateDeposits pp txb deps)   --   updated deposits
-    Δdep       = depositsChange pp txb deps             --   change in deposits
-    refunds    = depositRefunds pp utxoState txb        --   refunds (negPart of Δdep)
-    newDeps    = newDeposits pp utxoState txb           --   new deposits (aka "tot"; posPart of Δdep)
-    remDepTot  = Deps - refunds
-
-    Δdeps≡ : Δdep ≡ newDeps - refunds
-    Δdeps≡ = sym posPart-negPart≡x
-
-    upd : DepositPurpose ⇀ Coin
-    upd = updateProposalDeposits pp txb ∅
+    newDeps refunds : Coin
+    newDeps    = newDeposits pp utxoState txb           -- "new" deposits (posPart of Δdep)
+    refunds    = depositRefunds pp utxoState txb        -- refunds (negPart of Δdep)
 
     balIn balOut : Value
     balIn = balance (st ∣ txins)
     balOut = balance (outs txb)
 
+    -- Fact. The sum of all GovProposal deposits is the number of GovProposals times govActionDeposit.
+    i : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
 
-    -- 1. The sum of all GovProposal deposits is equal to the number of GovProposals times govActionDeposit.
-    const-dep-sum : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
-    const-dep-sum = const-dep-sum-rec h
+    -- Claim. The newDeps---i.e., the positive part of the change in deposits---is the sum of all GovProposal deposits.
+    ii : newDeps ≡ sum (map GovProposal.deposit txprop)
+
+    -- Fact. coin consumed ≡ coin produced
+    iii : coin (balIn + mint) + refunds ≡ coin balOut + txfee + newDeps + txdonation
+
+    -- Claim. (depends on validity of ii)
+    iv : coin balOut + txfee + newDeps + txdonation ≥ sum (map GovProposal.deposit txprop)
+
+    -- Claim. (depends on validity of ii)
+    v : coin (balIn + mint) + refunds ≥ length txprop * govActionDeposit
+
+    -- Lemma -------------------------------------------------------------------------
+    coin-hom : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
+    coin-hom {val} {c} = begin
+      coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
+      coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
+      coin val + c                  ∎
+
+    -- Proofs -------------------------------------------------------------------------
+    i = irec h
       where
-      const-dep-sum-rec : {gps : List GovProposal}
+      irec : {gps : List GovProposal}
         → (∀ {p} → p ∈ˡ gps → GovProposal.deposit p ≡ govActionDeposit)
         → sum (map GovProposal.deposit gps) ≡ length gps * govActionDeposit
-      const-dep-sum-rec {[]} h' = refl
-      const-dep-sum-rec {gp ∷ gps} h' = begin
+      irec {[]} h' = refl
+      irec {gp ∷ gps} h' = begin
         sum (map GovProposal.deposit (gp ∷ gps)) ≡⟨ cong sum (cong (_∷ map GovProposal.deposit gps) (h' (here refl))) ⟩
-        govActionDeposit + sum (map GovProposal.deposit gps) ≡⟨ cong (govActionDeposit +_) (const-dep-sum-rec (h' ∘ there)) ⟩
+        govActionDeposit + sum (map GovProposal.deposit gps) ≡⟨ cong (govActionDeposit +_) (irec (h' ∘ there)) ⟩
         govActionDeposit + length gps * govActionDeposit ∎
 
-    claim : getCoin upd ≥ length txprop * govActionDeposit
-    claim = goal
+    ii = {!!}
+
+    iii = trans (sym coin-hom) (trans (cong coin c≡p) coin-hom')
       where
-      goal : indexedSumᵛ' id upd ≥ length txprop * govActionDeposit
-      goal = {!!}
+      coin-hom' : coin (balOut + inject txfee + inject newDeps + inject txdonation)
+                  ≡ coin balOut + txfee + newDeps + txdonation
+      coin-hom' = trans coin-hom
+                        (trans (cong (_+ txdonation) coin-hom)
+                               (cong (λ x → x + newDeps + txdonation) coin-hom))
 
+    iv = ≤-trans (≤-reflexive (sym ii)) (≤-trans ν' (≤-reflexive rearrange))
+      where
+      ν : ∀{m n : ℕ} → m ≤ m + n
+      ν {zero} = z≤n
+      ν {suc m} = s≤s ν
 
-    coin-hom : ∀ {v} {c} → coin (v + inject c) ≡ coin v + c
-    coin-hom {v} {c} = begin
-      coin (v + inject c)         ≡⟨ homo coinIsMonoidHomomorphism v (inject c) ⟩
-      coin v + (coin ∘ inject) c  ≡⟨ cong (coin v +_) (property c) ⟩
-      coin v + c                  ∎
+      ν' : ∀{m n : ℕ} → m ≤ n + m
+      ν' {zero} = z≤n
+      ν' {suc m}{n} =
+        ≤-trans (ν{suc m}{n}) (≤-trans (≤-reflexive (cong suc (+-comm m n))) (≤-reflexive (sym (+-suc n m))))
 
-    coin-hom' : coin (balOut + inject txfee + inject newDeps + inject txdonation)
-                ≡ coin balOut + txfee + newDeps + txdonation
-    coin-hom' = begin
-      coin (balOut + inject txfee + inject newDeps + inject txdonation)  ≡⟨ coin-hom ⟩
-      coin (balOut + inject txfee + inject newDeps) + txdonation         ≡⟨ cong (_+ txdonation) coin-hom ⟩
-      coin (balOut + inject txfee) + newDeps + txdonation                ≡⟨ cong (λ x → x + newDeps + txdonation) coin-hom  ⟩
-      coin balOut + txfee + newDeps + txdonation                         ∎
+      rearrange : coin balOut + txfee + txdonation + newDeps ≡ coin balOut + txfee + newDeps + txdonation
+      rearrange = begin
+        coin balOut + txfee + txdonation + newDeps ≡⟨ +-assoc (coin balOut + txfee) txdonation newDeps ⟩
+        (coin balOut + txfee) + (txdonation + newDeps) ≡⟨ cong (coin balOut + txfee +_) (+-comm txdonation newDeps) ⟩
+        (coin balOut + txfee) + (newDeps + txdonation) ≡⟨ sym (+-assoc (coin balOut + txfee) newDeps txdonation) ⟩
+        coin balOut + txfee + newDeps + txdonation ∎
 
-    cbalIn+mint :  coin (balIn + mint) ≡ coin balIn
-    cbalIn+mint = begin
-      coin (balIn + mint)     ≡⟨ homo coinIsMonoidHomomorphism balIn mint ⟩
-      coin balIn + coin mint  ≡⟨ cong (coin balIn +_) cmint≡0 ⟩
-      coin balIn + 0          ≡⟨ +-identityʳ (coin balIn) ⟩
-      coin balIn              ∎
-
-    μ : coin (balIn + mint) + refunds ≡ coin balOut + txfee + newDeps + txdonation
-    μ = begin
-      coin (balIn + mint) + refunds               ≡⟨ sym coin-hom ⟩
-      coin (consumed pp utxoState txb)            ≡⟨ cong coin c≡p ⟩
-      coin (produced pp utxoState txb)            ≡⟨ coin-hom' ⟩
-      coin balOut + txfee + newDeps + txdonation  ∎
-
-    -- 3. Goal:
-
-    -- γ' : coin balOut + txfee + newDeps + txdonation ≥ length txprop * govActionDeposit
-    -- γ' = {!!}
-
-    -- γ'' : coin balIn + refunds ≥ length txprop * govActionDeposit
-    -- γ'' = {!!}
-
-    γ : coin (balIn + mint) + refunds ≥ length txprop * govActionDeposit
-    γ = {!!}
-
-
+    v = ≤-trans (≤-reflexive (sym i)) (≤-trans iv (≤-reflexive (sym iii)))
 \end{code}
 \end{property}
 
 
-\begin{property}[\textbf{Minimum Spending Condition}]~\\
-
-\begin{code}
-module _ {Γ : UTxOEnv} {utxo : UTxOState} {txb : TxBody} where
-
-  open TxBody; open UTxOEnv Γ; open PParams pparams
-  open UTxOState utxo renaming (deposits to deps; utxo to stUtxo)
-
-  -- We proved `⊆→⨿ : X ⊆ Y → Y ≡ X ⨿ (Y ＼ X)` in `Set.Properties`.
-  -- Next: specialize `⊆→⨿` to Maps and/or Rels to get the following:
-
-  postulate
-    submap-decomp : ∀ {d d' : DepositPurpose ⇀ Coin} → d ˢ ⊆ d' ˢ → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
-
-  decomp→valSum : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
-    → indexedSumᵐ (inject ∘ proj₂) (d' ᶠᵐ)
-      ≈ indexedSumᵐ (inject ∘ proj₂) (d ᶠᵐ) + indexedSumᵐ (inject ∘ proj₂) ((d' ∣ (dom d)ᶜ)ᶠᵐ)
-  decomp→valSum {d}{d'} = indexedSumᵐ-partition{m = d' ᶠᵐ}{d ᶠᵐ}{(d' ∣ (dom d) ᶜ) ᶠᵐ}{inject ∘ proj₂}
-
-  -- This gives the for the (Value-CommutativeMonoid) tokenAlgebra.
-  -- Next: prove it for ℕ to get the following:
-
-  postulate
-    decomp→sum : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
-      → indexedSumᵛ' id d' ≡ indexedSumᵛ' id d + indexedSumᵛ' id (d' ∣ (dom d) ᶜ)
-
-  -- The next lemma should follow easily from the `decomp→sum` lemma.
-  postulate
-    decomp→ineq : ∀ {d d' : DepositPurpose ⇀ Coin} → (d' ˢ) ≡ d ˢ ⨿ ((d' ∣ (dom d) ᶜ) ˢ)
-          → indexedSumᵛ' id d ≤ indexedSumᵛ' id d'
-
-  depsPreserved→0refs : conservationOfDeposits pparams txb deps → depositRefunds pparams utxo txb ≡ 0
-  depsPreserved→0refs txbpres = ≥0→negPart≡0 Δdeps≥0
-    where
-    γ : ∀ {d d' : DepositPurpose ⇀ Coin} → d ˢ ⊆ d' ˢ → getCoin d ≤ getCoin d'
-    γ {d} {d'} d⊆d' = decomp→ineq {d} {d'} (submap-decomp{d}{d'} d⊆d')
-
-    μ : getCoin (updateDeposits pparams txb deps) ≥ getCoin deps
-    μ = γ{deps}{updateDeposits pparams txb deps} txbpres
-
-    Δdeps≥0 : depositsChange pparams txb deps ≥ 0ℤ
-    Δdeps≥0 = x≤y⇒0≤y⊖x μ
-
-  msc :
-\end{code}
-
-\noindent
-For all
-  \AG{utxo}    \∈ \UTxO,
-  \AG{pparams} \∈ \PParams,
-  \AG{utxo}  \∈ \UTxOState,
-  \AG{txb}     \∈ \TxBody,
-if
-\begin{code}[inline]%
-    conservationOfDeposits pparams txb deps
-\end{code}
-then
-\begin{code}[hide]
-    →
-\end{code}
-\begin{code}
-
-    coin (consumed pparams utxo txb) ≥ length (txprop txb) * govActionDeposit
-\end{code}
-\begin{code}[hide]
-  msc tx = subst (λ x → x ≥ length (txprop txb) * govActionDeposit) (sym cancelRefs) bal≥
-    where
-    open CommutativeMonoid Value-CommutativeMonoid using (identity) renaming (ε to 0ᵛ)
-
-    bal : Value
-    bal = balance (stUtxo ∣ txb .txins) + txb .mint
-
-    refs : Coin
-    refs = depositRefunds pparams utxo txb
-
-    cancelRefs : coin (bal + inject refs) ≡ coin bal
-    cancelRefs = begin
-      coin (bal + inject refs)         ≡⟨ homo coinIsMonoidHomomorphism bal (inject refs) ⟩
-      coin bal + (coin ∘ inject) refs  ≡⟨ cong (coin bal +_) (property refs) ⟩
-      coin bal + refs                  ≡⟨ cong (coin bal +_) (depsPreserved→0refs tx) ⟩
-      coin bal + 0                     ≡⟨ +-identityʳ (coin bal) ⟩
-      coin bal                         ∎
-
-    postulate
-      bal≥ : coin bal ≥ length (txprop txb) * govActionDeposit
-\end{code}
-\end{property}
-
-\textbf{Remaining Steps}.
-
-\begin{verbatim}
-1. Finish proof of `depsPreserved→0refs`.
-2. Prove `coin bal ≥ length (txprop txb) * govActionDeposit`.
-
-Note that
-  bal = balance (utxo .utxo ∣ txb .txins) + txb .mint
-         = ∑[ x ← (utxo .utxo ∣ txb .txins) ] getValue x + txb .mint
-         ≥ ∑[ x ← (utxo .utxo ∣ txb .txins) ] getValue x
-\end{verbatim}
-
-so, if we can show:
-
-i. coin() of each term in the sum is at least govActionDeposit, and
-ii. there are at least length (txprop txb) terms in the sum, then Step 2 will be done.
-
-
-\textbf{Other Notes}.
-\begin{verbatim}
-∑ is indexedSumᵛ' which is essentially of type (B → C) → A ⇀ B → C, and
-      syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
-\end{verbatim}
-
-In the present case, A = TxIn, B = TxOut, C = Value, so
-\begin{verbatim}
-    ∑ : (TxOut → Value) → TxIn ⇀ TxOut → Value, so
-
-    ∑[ x ← (utxo .utxo ∣ txb .txins) ] getValue x  means
-
-    indexedSumᵛ' getValue (utxo .utxo ∣ txb .txins)
-\end{verbatim}
-where getValue is a function of type TxOut → Value.
