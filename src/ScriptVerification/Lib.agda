@@ -18,6 +18,7 @@ open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
 
 open import Data.Rational
+open import Ledger.Set.Theory
 
 createEnv : ℕ → UTxOEnv
 createEnv s = record { slot = s ;
@@ -84,14 +85,20 @@ createInitUtxoState zero value = []
 createInitUtxoState (suc wallet) value = createUTxO (suc wallet) (suc wallet) value nothing
                                          ∷ createInitUtxoState wallet value
 
-fromList : List (TxIn × TxOut) → UTxO
-fromList xs = fromListᵐ xs
+fromList' : List (TxIn × TxOut) → UTxO
+fromList' = fromListᵐ
 
-helpMe : UTxOState
-helpMe = {!!}
+fromListIx : List (Implementation.Ix × TxOut) → Implementation.Ix ⇀ TxOut
+fromListIx = fromListᵐ
 
-createTx : Tx
-createTx = record { body = record
+{-
+createTx : ℙ TxIn
+           → List TxOut
+           → D
+           → D
+           → List PlutusScript
+           → Tx
+createTx a b c d e = record { body = record
                              { txins = {!!}
                              ; txouts = {!!}
                              ; txfee = {!!}
@@ -117,9 +124,4 @@ createTx = record { body = record
                                   ; txrdmrs = {!!} }
                   ; isValid = {!!}
                   ; txAD = {!!} }
-
--- exTx : Tx
--- exTx = {!!}
-
--- example : Bool
--- example = evalScripts exTx (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) exTx initUTxO)
+-}

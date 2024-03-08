@@ -6,4 +6,4 @@ record ScriptImplementation (D : Set) : Set₁ where
   field serialise : ∀ {A : Set} → A → D
         deserialise : ∀ {A : Set} → D → Maybe A
         ⦃ DecEq-Data  ⦄    : DecEq D
-        ⦃ DecEq-Script ⦄   : DecEq (D → Bool)
+        ⦃ DecEq-Script ⦄   : DecEq (D → D → Bool)

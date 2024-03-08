@@ -57,8 +57,8 @@ module Implementation where
   toData : ∀ {A : Set} → A → D
   toData = serialise
 
-  PlutusScript = Data → Bool
-  ScriptHash = Data → Bool
+  PlutusScript = Data → Data → Bool
+  ScriptHash = Data → Data → Bool
 
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
@@ -74,7 +74,7 @@ module Implementation where
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
-  open import Ledger.TokenAlgebra (Data → Bool)
+  open import Ledger.TokenAlgebra (Data → Data → Bool)
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
@@ -130,7 +130,7 @@ SVScriptStructure = record
   ; ps = SVP2ScriptStructure }
   where
   postulate
-    instance Hashable-Timelock : Hashable Timelock (Implementation.Data → Bool) -- ℕ
+    instance Hashable-Timelock : Hashable Timelock (Implementation.Data → Implementation.Data → Bool) -- ℕ
 
     hashRespectsUnion : ∀ {A B ℍ}
       → Hashable A ℍ → Hashable B ℍ
