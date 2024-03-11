@@ -28,3 +28,19 @@ negInduction {P = P} P? P0 (N , ¬PN)
     k≤N⇒Pk : ∀ {k} → k ≤ N → P k
     k≤N⇒Pk {zero}  k≤N = P0
     k≤N⇒Pk {suc k} k≤N = proj₂ $ k<N⇒P'k k≤N
+
+
+≤-+ : ∀{m n : ℕ} → m ≤ m + n
+≤-+ {zero} = z≤n
+≤-+ {suc m} = s≤s ≤-+
+
+≤-+̆  : ∀{m n : ℕ} → m ≤ n + m
+≤-+̆  {zero} = z≤n
+≤-+̆  {suc m}{n} =
+  ≤-trans (≤-+ {suc m} {n})
+          (≤-trans (≤-reflexive (cong suc (+-comm m n)))
+                   (≤-reflexive (sym (+-suc n m))))
+
+≤→∸-+-comm : ∀ {l m n : ℕ} → n ≤ m → m ∸ n + l ≡ m + l ∸ n
+≤→∸-+-comm {l} {m} {.zero} z≤n = refl
+≤→∸-+-comm {l} {.(suc _)} {.(suc _)} (s≤s n≤m) = ≤→∸-+-comm n≤m

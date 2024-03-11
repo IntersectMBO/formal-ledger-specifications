@@ -10,6 +10,7 @@ open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHo
 import Algebra.Morphism.Definitions as Morphs
 import Data.Nat as ℕ
 open import Data.Nat.Properties         hiding (_≟_)
+open import Data.Nat.Properties.Ext     using (≤-+; ≤→∸-+-comm; ≤-+̆ )
 open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ ; 0ℤ)
 open import Data.Integer.Ext
@@ -569,8 +570,8 @@ gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
   →     coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
 
 gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h =
+  ≤-trans v (≤-reflexive (sym coin-hom))
 
-  subst (λ x → x ≥ length txprop * govActionDeposit) (sym coin-hom) v
   where
     pp : PParams
     pp = UTxOEnv.pparams Γ
@@ -582,6 +583,14 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
     newDeps    = newDeposits pp utxoState txb           -- "new" deposits (posPart of Δdep)
     refunds    = depositRefunds pp utxoState txb        -- refunds (negPart of Δdep)
 
+    -- newDeps = posPart (getCoin (updateDeposits pp txb deposits) - getCoin deposits)
+    --         = posPart ((updateCertDeposits pp (txb .txcerts) ∘ updateProposalDeposits pp txb) deposits - getCoin deposits)
+    --   where
+    --   updateProposalDeposits pp txb deposits = deposits
+    --        ∪⁺ ❴ GovActionDeposit (txb .txid , i) , pp .govActionDeposit ❵
+    --        where there is one such singleton ❴ GovActionDeposit _ , _ ❵ added for each p ∈ (txb .txprop) and
+    --              i = # of proposals remaining in the list (txb .txprop) after p
+
     balIn balOut : Value
     balIn = balance (st ∣ txins)
     balOut = balance (outs txb)
@@ -589,8 +598,8 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
     -- Fact. The sum of all GovProposal deposits is the number of GovProposals times govActionDeposit.
     i : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
 
-    -- Claim. The newDeps---i.e., the positive part of the change in deposits---is the sum of all GovProposal deposits.
-    ii : newDeps ≡ sum (map GovProposal.deposit txprop)
+    -- Claim. The newDeps---i.e., the positive part of the change in deposits---is at least the sum of GovProposal deposits.
+    ii : newDeps ≥ sum (map GovProposal.deposit txprop)
 
     -- Fact. coin consumed ≡ coin produced
     iii : coin (balIn + mint) + refunds ≡ coin balOut + txfee + newDeps + txdonation
@@ -601,12 +610,37 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
     -- Claim. (depends on validity of ii)
     v : coin (balIn + mint) + refunds ≥ length txprop * govActionDeposit
 
-    -- Lemma -------------------------------------------------------------------------
+    -- Lemmas -------------------------------------------------------------------------
     coin-hom : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
     coin-hom {val} {c} = begin
       coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
       coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
       coin val + c                  ∎
+
+    module _ {txid : TxId}{gaDep : Coin}{deposits : DepositPurpose ⇀ Coin} where
+      updateProp+Singleton : (props : List GovProposal)
+        → getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
+           ≡ getCoin (updatePropHelper props txid gaDep deposits) + gaDep
+      updateProp+Singleton = {!!} --
+
+      updatePropDeps≥ : (props : List GovProposal)
+        → getCoin (updatePropHelper props txid gaDep deposits) ≥ getCoin deposits
+      updatePropDeps≥ [] = ≤-reflexive refl
+      updatePropDeps≥ (x ∷ props) =
+        ≤-trans (updatePropDeps≥ props) (≤-trans ≤-+ (≤-reflexive (sym (updateProp+Singleton props))))
+
+      updatePropDeps≡ : (props : List GovProposal)
+        → getCoin (updatePropHelper props txid gaDep deposits) - getCoin deposits ≡ (length props) * gaDep
+      updatePropDeps≡ [] = n∸n≡0 (getCoin deposits)
+      updatePropDeps≡ (_ ∷ props) = begin
+        getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
+           ∸ getCoin deposits               ≡⟨ cong (_∸ getCoin deposits) (updateProp+Singleton props) ⟩
+        getCoin (updatePropHelper props txid gaDep deposits) + gaDep ∸ getCoin deposits
+                                        ≡⟨ sym (≤→∸-+-comm (updatePropDeps≥ props)) ⟩
+        (getCoin (updatePropHelper props txid gaDep deposits) ∸ getCoin deposits) + gaDep
+                                        ≡⟨ cong (_+ gaDep) (updatePropDeps≡ props) ⟩
+        (length props) * gaDep + gaDep  ≡⟨ +-comm ((length props) * gaDep) gaDep ⟩
+        gaDep + (length props) * gaDep  ∎
 
     -- Proofs -------------------------------------------------------------------------
     i = irec h
@@ -620,7 +654,13 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
         govActionDeposit + sum (map GovProposal.deposit gps) ≡⟨ cong (govActionDeposit +_) (irec (h' ∘ there)) ⟩
         govActionDeposit + length gps * govActionDeposit ∎
 
-    ii = {!!}
+    ii = goal
+      where
+      ξ : getCoin (updateProposalDeposits pp txb deps) - getCoin deps ≡ govActionDeposit * length txprop
+      ξ = trans (updatePropDeps≡ txprop) (*-comm (length txprop) govActionDeposit)
+      goal : newDeps ≥ sum (map (λ r → GovProposal.deposit r) txprop)
+      goal = {!!}
+
 
     iii = trans (sym coin-hom) (trans (cong coin c≡p) coin-hom')
       where
@@ -630,17 +670,8 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
                         (trans (cong (_+ txdonation) coin-hom)
                                (cong (λ x → x + newDeps + txdonation) coin-hom))
 
-    iv = ≤-trans (≤-reflexive (sym ii)) (≤-trans ν' (≤-reflexive rearrange))
+    iv = ≤-trans ii (≤-trans ≤-+̆  (≤-reflexive rearrange))
       where
-      ν : ∀{m n : ℕ} → m ≤ m + n
-      ν {zero} = z≤n
-      ν {suc m} = s≤s ν
-
-      ν' : ∀{m n : ℕ} → m ≤ n + m
-      ν' {zero} = z≤n
-      ν' {suc m}{n} =
-        ≤-trans (ν{suc m}{n}) (≤-trans (≤-reflexive (cong suc (+-comm m n))) (≤-reflexive (sym (+-suc n m))))
-
       rearrange : coin balOut + txfee + txdonation + newDeps ≡ coin balOut + txfee + newDeps + txdonation
       rearrange = begin
         coin balOut + txfee + txdonation + newDeps ≡⟨ +-assoc (coin balOut + txfee) txdonation newDeps ⟩
@@ -649,6 +680,8 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
         coin balOut + txfee + newDeps + txdonation ∎
 
     v = ≤-trans (≤-reflexive (sym i)) (≤-trans iv (≤-reflexive (sym iii)))
+
+
 \end{code}
 \end{property}
 

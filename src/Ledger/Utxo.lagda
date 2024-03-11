@@ -8,7 +8,8 @@
 
 open import Algebra              using (CommutativeMonoid)
 open import Data.Integer.Ext     using (posPart; negPart)
-open import Data.Nat.Properties  using (+-0-monoid)
+open import Data.Nat.Properties.Ext using (≤→∸-+-comm; ≤-+)
+open import Data.Nat.Properties  using (+-0-monoid; n∸n≡0; +-comm; ≤-reflexive; ≤-trans)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
@@ -17,7 +18,7 @@ import Data.Rational as ℚ
 
 open import Tactic.Derive.DecEq
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (≤-trans)
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -150,14 +151,23 @@ module _ (let open TxBody) where
     certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
     certRefund _              = ∅
 
+  updatePropHelper : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+  updatePropHelper [] _ _ deposits = deposits
+  updatePropHelper (_ ∷ ps) txid gaDep deposits = updatePropHelper ps txid gaDep deposits
+    ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
+
   updateProposalDeposits  : PParams → TxBody → DepositPurpose ⇀ Coin
                           → DepositPurpose ⇀ Coin
-  updateProposalDeposits pp txb deposits = updatePropsalDepsRec (txb .txprop)
-    where
-    updatePropsalDepsRec : List GovProposal → DepositPurpose ⇀ Coin
-    updatePropsalDepsRec [] = deposits
-    updatePropsalDepsRec (_ ∷ props) = updatePropsalDepsRec props
-      ∪⁺ ❴ GovActionDeposit (txb .txid , length props) , pp .govActionDeposit ❵
+  updateProposalDeposits pp txb deposits = updatePropHelper (txb .txprop) (txb .txid)(pp .govActionDeposit) deposits
+
+
+
+-- updatePropsalDepsRec (txb .txprop)
+--     where
+--     updatePropsalDepsRec : List GovProposal → DepositPurpose ⇀ Coin
+--     updatePropsalDepsRec [] = deposits
+--     updatePropsalDepsRec (_ ∷ props) = updatePropsalDepsRec props
+--       ∪⁺ ❴ GovActionDeposit (txb .txid , length props) , pp .govActionDeposit ❵
 
   updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
   updateDeposits pp txb =
@@ -290,7 +300,7 @@ module _ (let open UTxOState; open TxBody) where
 \begin{code}
   depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
   depositsChange pp txb deposits
-    = getCoin{A = DepositPurpose ⇀ Coin} (updateDeposits pp txb deposits) - getCoin deposits
+    = getCoin (updateDeposits pp txb deposits) - getCoin deposits
 
   conservationOfDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → Set
   conservationOfDeposits pp txb deposits = deposits ˢ ⊆ (updateDeposits pp txb deposits) ˢ
