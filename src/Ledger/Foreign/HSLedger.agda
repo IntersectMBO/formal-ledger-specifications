@@ -10,6 +10,7 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeM
 open import Relation.Binary.Morphism.Structures
 
 open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
 
 import Foreign.Haskell as F
 import Ledger.Foreign.LedgerTypes as F
@@ -221,29 +222,13 @@ instance
     .from n → inj₁ record { net = _ ; pay = inj₁ n ; stake = inj₁ 0 }
 
   Convertible-Credential : Convertible Credential F.Credential
-  Convertible-Credential = λ where
-    .to (inj₁ x) → F.KeyHashObj (to x)
-    .to (inj₂ y) → F.ScriptObj (to y)
-    .from (F.ScriptObj x) → inj₁ (from x)
-    .from (F.KeyHashObj x) → inj₂ (from x)
+  Convertible-Credential = autoConvertible
 
   Convertible-GovRole : Convertible GovRole F.GovRole
-  Convertible-GovRole = λ where
-    .to CC → F.CC
-    .to DRep → F.DRep
-    .to SPO → F.SPO
-    .from F.CC → GovRole.CC
-    .from F.DRep → GovRole.DRep
-    .from F.SPO → GovRole.SPO
+  Convertible-GovRole = autoConvertible
 
   Convertible-VDeleg : Convertible VDeleg F.VDeleg
-  Convertible-VDeleg = λ where
-    .to (credVoter x x₁) → F.CredVoter (to x) (to x₁)
-    .to abstainRep → F.AbstainRep
-    .to noConfidenceRep → F.NoConfidenceRep
-    .from (F.CredVoter x x₁) → VDeleg.credVoter (from x) (from x₁)
-    .from F.AbstainRep → VDeleg.abstainRep
-    .from F.NoConfidenceRep → VDeleg.noConfidenceRep
+  Convertible-VDeleg = autoConvertible
 
   Convertible-PoolParams : Convertible PoolParams F.PoolParams
   Convertible-PoolParams = λ where
@@ -256,21 +241,7 @@ instance
     .from tt → record { url = "bogus" ; hash = tt }
 
   Convertible-DCert : Convertible DCert F.TxCert
-  Convertible-DCert = λ where
-    .to (delegate x x₁ x₂ x₃) → F.Delegate (to x) (to x₁) (to x₂) (to x₃)
-    .to (dereg x) → F.Dereg (to x)
-    .to (regpool x x₁) → F.RegPool (to x) (to x₁)
-    .to (retirepool x x₁) → F.RetirePool (to x) (to x₁)
-    .to (regdrep x x₁ x₂) → F.RegDRep (to x) (to x₁) (to x₂)
-    .to (deregdrep x) → F.DeRegDRep (to x)
-    .to (ccreghot x x₁) → F.CCRegHot (to x) (to x₁)
-    .from (F.Delegate x x₁ x₂ x₃) → DCert.delegate (from x) (from x₁) (from x₂) (from x₃)
-    .from (F.Dereg x) → DCert.dereg (from x)
-    .from (F.RegPool x x₁) → DCert.regpool (from x) (from x₁)
-    .from (F.RetirePool x x₁) → DCert.retirepool (from x) (from x₁)
-    .from (F.RegDRep x x₁ x₂) → DCert.regdrep (from x) (from x₁) (from x₂)
-    .from (F.DeRegDRep x) → DCert.deregdrep (from x)
-    .from (F.CCRegHot x x₁) → DCert.ccreghot (from x) (from x₁)
+  Convertible-DCert = autoConvertible
 
   Convertible-TxBody : Convertible TxBody F.TxBody
   Convertible-TxBody = λ where
@@ -308,10 +279,7 @@ instance
       }
 
   Convertible-Tag : Convertible Tag F.Tag
-  Convertible-Tag = λ where
-    .to   → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd; Vote → Vote; Propose → Propose }
-    .from → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd; Vote → Vote; Propose → Propose }
-   where open F.Tag
+  Convertible-Tag = autoConvertible
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
   Convertible-TxWitnesses = λ where
@@ -407,11 +375,7 @@ instance
       }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
-  Convertible-UTxOEnv = λ where
-    .to record { slot = slot ; pparams = pparams } →
-        record { slot = slot ; pparams = to pparams }
-    .from e → let open F.UTxOEnv e in record
-      { slot = slot ; pparams = from pparams }
+  Convertible-UTxOEnv = autoConvertible
 
   Convertible-UTxOState : Convertible UTxOState F.UTxOState
   Convertible-UTxOState = λ where
@@ -424,15 +388,8 @@ instance
       ; donations = ε
       }
 
-  Convertible-ComputationResult : ∀ {e e' a a'}
-    → ⦃ Convertible e e' ⦄
-    → ⦃ Convertible a a' ⦄
-    → Convertible (ComputationResult e a) (F.ComputationResult e' a')
-  Convertible-ComputationResult = λ where
-    .to (success a) → F.Success (to a)
-    .to (failure a) → F.Failure (to a)
-    .from (F.Success a) → success (from a)
-    .from (F.Failure a) → failure (from a)
+  Convertible-ComputationResult : ConvertibleType ComputationResult F.ComputationResult
+  Convertible-ComputationResult = autoConvertible
 
 utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
 utxo-step = to UTXO-step
