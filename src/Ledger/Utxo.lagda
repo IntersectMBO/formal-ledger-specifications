@@ -14,11 +14,12 @@ import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
 open import Data.Integer as ℤ using (0ℤ)
+open import Data.List.Relation.Unary.All using (All; tail)
 import Data.Rational as ℚ
 
 open import Tactic.Derive.DecEq
 
-open import Ledger.Prelude hiding (≤-trans)
+open import Ledger.Prelude hiding (≤-trans; All; tail)
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -135,21 +136,21 @@ module _ (let open TxBody) where
 \end{code}
 \begin{code}
 
+  certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
+  certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
+  certDeposit (regpool c _) {pp}  = ❴ PoolDeposit       c , pp .poolDeposit  ❵
+  certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
+  certDeposit _                   = ∅
+
+  certRefund :  DCert → ℙ DepositPurpose
+  certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+  certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+  certRefund _              = ∅
+
   updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
   updateCertDeposits _   []              deposits = deposits
   updateCertDeposits pp  (cert ∷ certs)  deposits
-    = updateCertDeposits pp certs deposits ∪⁺ certDeposit cert ∣ certRefund cert ᶜ
-    where
-    certDeposit : DCert → DepositPurpose ⇀ Coin
-    certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
-    certDeposit (regpool c _)       = ❴ PoolDeposit       c , pp .poolDeposit  ❵
-    certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
-    certDeposit _                   = ∅
-
-    certRefund :  DCert → ℙ DepositPurpose
-    certRefund (dereg c)      = ❴ CredentialDeposit c ❵
-    certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-    certRefund _              = ∅
+    = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
 
   updatePropHelper : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
   updatePropHelper [] _ _ deposits = deposits
@@ -159,15 +160,6 @@ module _ (let open TxBody) where
   updateProposalDeposits  : PParams → TxBody → DepositPurpose ⇀ Coin
                           → DepositPurpose ⇀ Coin
   updateProposalDeposits pp txb deposits = updatePropHelper (txb .txprop) (txb .txid)(pp .govActionDeposit) deposits
-
-
-
--- updatePropsalDepsRec (txb .txprop)
---     where
---     updatePropsalDepsRec : List GovProposal → DepositPurpose ⇀ Coin
---     updatePropsalDepsRec [] = deposits
---     updatePropsalDepsRec (_ ∷ props) = updatePropsalDepsRec props
---       ∪⁺ ❴ GovActionDeposit (txb .txid , length props) , pp .govActionDeposit ❵
 
   updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
   updateDeposits pp txb =
