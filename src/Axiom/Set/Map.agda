@@ -285,6 +285,9 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
   _∣_ᶜ : Map A B → Set A → Map A B
   m ∣ X ᶜ = ⊆-map (R._∣ X ᶜ) R.ex-⊆ m
 
+  resᵐ-∅ᶜ : {M : Map A B} → (M ∣ ∅ ᶜ) ˢ ≡ᵉ M ˢ
+  resᵐ-∅ᶜ = R.res-∅ᶜ
+
   -- map only values in X
   mapValueRestricted : (B → B) → Map A B → Set A → Map A B
   mapValueRestricted f m X = mapValues f (m ∣ X) ∪ˡ m

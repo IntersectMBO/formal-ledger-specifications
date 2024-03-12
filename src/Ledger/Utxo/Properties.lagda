@@ -617,74 +617,28 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
       coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
       coin val + c                  ∎
 
-    isRefundCert : DCert → Bool
-    isRefundCert (dereg c) = true
-    isRefundCert (deregdrep c) = true
-    isRefundCert _ = false
-
-    noRefund→∅ : {cert : DCert} → isRefundCert cert ≡ false → certRefund cert ≡ ∅
-    noRefund→∅ {delegate c _ _ _} ¬isRefund = refl
-    noRefund→∅ {regpool c _} ¬isRefund = refl
-    noRefund→∅ {regdrep _ _ _} ¬isRefund = refl
-    noRefund→∅ {retirepool c _} ¬isRefund = refl
-    noRefund→∅ {ccreghot c _} ¬isRefund = refl
-
-    noRefundCert : List DCert → Set _
-    noRefundCert l = All (λ cert → isRefundCert cert ≡ false) l
-
-    updateCertDeps≥ : (certs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
-      → noRefundCert certs → getCoin (updateCertDeposits pp certs deposits) ≥ getCoin deposits
-    updateCertDeps≥ [] nrf = ≤-reflexive refl
-    updateCertDeps≥ (cert ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) = goal
-      where
-      -- We need something like this below (line 650):
-      -- res-∅ᶜ : ∀{R : DepositPurpose ⇀ Coin} → (R ∣ ∅ ᶜ) ≡ᵉ R
-      -- res-∅ᶜ = ?
-
-      τ : certRefund cert ≡ ∅
-      τ = noRefund→∅ cert∉ref
-
-      α : (updateCertDeposits pp certs deposits) ∪⁺ certDeposit cert {pp} ∣ certRefund cert ᶜ ≡ (updateCertDeposits pp certs deposits) ∪⁺ certDeposit cert {pp}
-      α = begin
-        (updateCertDeposits pp certs deposits) ∪⁺ certDeposit cert {pp} ∣ certRefund cert ᶜ ≡⟨ cong (λ x → (updateCertDeposits pp certs deposits) ∪⁺ certDeposit cert {pp} ∣ x ᶜ) τ ⟩
-        (updateCertDeposits pp certs deposits) ∪⁺ certDeposit cert {pp} ∣ ∅ ᶜ ≡⟨ ? ⟩
-        (updateCertDeposits pp certs deposits) ∪⁺ certDeposit cert {pp} ∎
-
-      β : getCoin ((updateCertDeposits pp certs deposits) ∪⁺ certDeposit cert {pp})
-              ≥ getCoin (updateCertDeposits pp certs deposits)
-      β = ?
-
-      γ : getCoin (updateCertDeposits pp certs deposits) ≥ getCoin deposits
-      γ = updateCertDeps≥ certs nrf
-
-      goal : getCoin (((updateCertDeposits pp certs deposits) ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ)
-              ≥ getCoin deposits
-      goal = ?
-      -- ≤-trans γ (≤-trans β (≤-reflexive (cong getCoin α)))
-
-
-
 
     module _ {txid : TxId}{gaDep : Coin}{deposits : DepositPurpose ⇀ Coin} where
       updateProp+Singleton : (props : List GovProposal)
         → getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
            ≡ getCoin (updatePropHelper props txid gaDep deposits) + gaDep
-      updateProp+Singleton [] = goal
-        where
-        goal : getCoin (updatePropHelper [] txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
-               ≡ getCoin (updatePropHelper [] txid gaDep deposits) + gaDep
-        goal = begin
-          getCoin (updatePropHelper [] txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
-               ≡⟨ cong (λ (x : DepositPurpose ⇀ Coin) → getCoin (x ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)) refl ⟩
-          getCoin (deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
-               ≡⟨ {!!} ⟩
-          indexedSumᵛ' id deposits + gaDep ∎
+      updateProp+Singleton [] = {!!}
+      -- goal
+      --   where
+      --   goal : getCoin (updatePropHelper [] txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
+      --          ≡ getCoin (updatePropHelper [] txid gaDep deposits) + gaDep
+      --   goal = begin
+      --     getCoin (updatePropHelper [] txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
+      --          ≡⟨ cong (λ (x : DepositPurpose ⇀ Coin) → getCoin (x ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)) refl ⟩
+      --     getCoin (deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
+      --          ≡⟨ {!!} ⟩
+      --     indexedSumᵛ' id deposits + gaDep ∎
 
       updateProp+Singleton (p ∷ ps) = goal
         where
-        ξ : getCoin (updatePropHelper ps txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵ᵐ)
+        indH : getCoin (updatePropHelper ps txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵ᵐ)
                  ≡ getCoin (updatePropHelper ps txid gaDep deposits) + gaDep
-        ξ = updateProp+Singleton ps
+        indH = updateProp+Singleton ps
 
         goal : getCoin (updatePropHelper (p ∷ ps) txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length (p ∷ ps)) , gaDep ❵ᵐ)
                  ≡ getCoin (updatePropHelper (p ∷ ps) txid gaDep deposits) + gaDep
@@ -752,5 +706,4 @@ gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _
 
 \end{code}
 \end{property}
-
 
