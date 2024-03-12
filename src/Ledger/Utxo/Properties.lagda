@@ -557,151 +557,129 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
 \begin{property}[\textbf{General Minimum Spending Condition}]~\\
 
 \begin{code}
-gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
-            pp = UTxOEnv.pparams Γ; open PParams pp
-            open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
-        in
-
-        Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-             ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
-
-  →     (∀ {p} → p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit)
-        -------------------------------------------------------------------
-  →     coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
-
-gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h =
-  ≤-trans v (≤-reflexive (sym coin-hom))
-
+module _ {updateProp+Singleton : {deps : DepositPurpose ⇀ Coin} {cDep : DepositPurpose × Coin}
+                                 → getCoin (deps ∪⁺ ❴ cDep ❵ᵐ) ≡ getCoin deps + proj₂ cDep }
   where
-    pp : PParams
-    pp = UTxOEnv.pparams Γ
-    open Tx tx renaming (body to txb); open TxBody txb
-    open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
-    open PParams pp
 
-    newDeps refunds : Coin
-    newDeps    = newDeposits pp utxoState txb           -- "new" deposits (posPart of Δdep)
-    refunds    = depositRefunds pp utxoState txb        -- refunds (negPart of Δdep)
+  gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
+              pp = UTxOEnv.pparams Γ; open PParams pp
+              open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
+          in
 
-    -- newDeps = posPart (getCoin (updateDeposits pp txb deposits) - getCoin deposits)
-    --         = posPart ((updateCertDeposits pp (txb .txcerts) ∘ updateProposalDeposits pp txb) deposits - getCoin deposits)
-    --   where
-    --   updateProposalDeposits pp txb deposits = deposits
-    --        ∪⁺ ❴ GovActionDeposit (txb .txid , i) , pp .govActionDeposit ❵
-    --        where there is one such singleton ❴ GovActionDeposit _ , _ ❵ added for each p ∈ (txb .txprop) and
-    --              i = # of proposals remaining in the list (txb .txprop) after p
+          Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
+               ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 
-    balIn balOut : Value
-    balIn = balance (st ∣ txins)
-    balOut = balance (outs txb)
+    →     (∀ {p} → p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit)
+          -------------------------------------------------------------------
+    →     coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
 
-    -- Fact. The sum of all GovProposal deposits is the number of GovProposals times govActionDeposit.
-    i : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
+  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h =
+    ≤-trans v (≤-reflexive (sym coin-hom))
 
-    -- Claim. The newDeps---i.e., the positive part of the change in deposits---is at least the sum of GovProposal deposits.
-    ii : newDeps ≥ sum (map GovProposal.deposit txprop)
+    where
+      pp : PParams
+      pp = UTxOEnv.pparams Γ
+      open Tx tx renaming (body to txb); open TxBody txb
+      open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
+      open PParams pp
 
-    -- Fact. coin consumed ≡ coin produced
-    iii : coin (balIn + mint) + refunds ≡ coin balOut + txfee + newDeps + txdonation
+      newDeps refunds : Coin
+      newDeps    = newDeposits pp utxoState txb           -- "new" deposits (posPart of Δdep)
+      refunds    = depositRefunds pp utxoState txb        -- refunds (negPart of Δdep)
 
-    -- Claim. (depends on validity of ii)
-    iv : coin balOut + txfee + newDeps + txdonation ≥ sum (map GovProposal.deposit txprop)
-
-    -- Claim. (depends on validity of ii)
-    v : coin (balIn + mint) + refunds ≥ length txprop * govActionDeposit
-
-    -- Lemmas -------------------------------------------------------------------------
-    coin-hom : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
-    coin-hom {val} {c} = begin
-      coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
-      coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
-      coin val + c                  ∎
-
-
-    module _ {txid : TxId}{gaDep : Coin}{deposits : DepositPurpose ⇀ Coin} where
-      updateProp+Singleton : (props : List GovProposal)
-        → getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
-           ≡ getCoin (updatePropHelper props txid gaDep deposits) + gaDep
-      updateProp+Singleton [] = {!!}
-      -- goal
+      -- newDeps = posPart (getCoin (updateDeposits pp txb deposits) - getCoin deposits)
+      --         = posPart ((updateCertDeposits pp (txb .txcerts) ∘ updateProposalDeposits pp txb) deposits - getCoin deposits)
       --   where
-      --   goal : getCoin (updatePropHelper [] txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
-      --          ≡ getCoin (updatePropHelper [] txid gaDep deposits) + gaDep
-      --   goal = begin
-      --     getCoin (updatePropHelper [] txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
-      --          ≡⟨ cong (λ (x : DepositPurpose ⇀ Coin) → getCoin (x ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)) refl ⟩
-      --     getCoin (deposits ∪⁺ ❴ GovActionDeposit (txid , 0) , gaDep ❵ᵐ)
-      --          ≡⟨ {!!} ⟩
-      --     indexedSumᵛ' id deposits + gaDep ∎
+      --   updateProposalDeposits pp txb deposits = deposits
+      --        ∪⁺ ❴ GovActionDeposit (txb .txid , i) , pp .govActionDeposit ❵
+      --        where there is one such singleton ❴ GovActionDeposit _ , _ ❵ added for each p ∈ (txb .txprop) and
+      --              i = # of proposals remaining in the list (txb .txprop) after p
 
-      updateProp+Singleton (p ∷ ps) = goal
+      balIn balOut : Value
+      balIn = balance (st ∣ txins)
+      balOut = balance (outs txb)
+
+      -- Fact. The sum of all GovProposal deposits is the number of GovProposals times govActionDeposit.
+      i : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
+
+      -- Claim. The newDeps---i.e., the positive part of the change in deposits---is at least the sum of GovProposal deposits.
+      ii : newDeps ≥ sum (map GovProposal.deposit txprop)
+
+      -- Fact. coin consumed ≡ coin produced
+      iii : coin (balIn + mint) + refunds ≡ coin balOut + txfee + newDeps + txdonation
+
+      -- Claim. (depends on validity of ii)
+      iv : coin balOut + txfee + newDeps + txdonation ≥ sum (map GovProposal.deposit txprop)
+
+      -- Claim. (depends on validity of ii)
+      v : coin (balIn + mint) + refunds ≥ length txprop * govActionDeposit
+
+      -- Lemmas -------------------------------------------------------------------------
+      coin-hom : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
+      coin-hom {val} {c} = begin
+        coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
+        coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
+        coin val + c                  ∎
+
+
+      module _ {txid : TxId}{gaDep : Coin}{deposits : DepositPurpose ⇀ Coin}
         where
-        indH : getCoin (updatePropHelper ps txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵ᵐ)
-                 ≡ getCoin (updatePropHelper ps txid gaDep deposits) + gaDep
-        indH = updateProp+Singleton ps
+        updatePropDeps≥ : (props : List GovProposal)
+          → getCoin (updatePropHelper props txid gaDep deposits) ≥ getCoin deposits
+        updatePropDeps≥ [] = ≤-reflexive refl
+        updatePropDeps≥ (x ∷ props) =
+          ≤-trans (updatePropDeps≥ props) (≤-trans ≤-+ (≤-reflexive (sym (updateProp+Singleton))))
 
-        goal : getCoin (updatePropHelper (p ∷ ps) txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length (p ∷ ps)) , gaDep ❵ᵐ)
-                 ≡ getCoin (updatePropHelper (p ∷ ps) txid gaDep deposits) + gaDep
+        updatePropDeps≡ : (props : List GovProposal)
+          → getCoin (updatePropHelper props txid gaDep deposits) - getCoin deposits ≡ (length props) * gaDep
+        updatePropDeps≡ [] = n∸n≡0 (getCoin deposits)
+        updatePropDeps≡ (_ ∷ props) = begin
+          getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
+             ∸ getCoin deposits           ≡⟨ cong (_∸ getCoin deposits) (updateProp+Singleton) ⟩
+          getCoin (updatePropHelper props txid gaDep deposits) + gaDep ∸ getCoin deposits
+                                          ≡⟨ sym (≤→∸-+-comm (updatePropDeps≥ props)) ⟩
+          (getCoin (updatePropHelper props txid gaDep deposits) ∸ getCoin deposits) + gaDep
+                                          ≡⟨ cong (_+ gaDep) (updatePropDeps≡ props) ⟩
+          (length props) * gaDep + gaDep  ≡⟨ +-comm ((length props) * gaDep) gaDep ⟩
+          gaDep + (length props) * gaDep  ∎
+
+      -- Proofs -------------------------------------------------------------------------
+      i = irec h
+        where
+        irec : {gps : List GovProposal}
+          → (∀ {p} → p ∈ˡ gps → GovProposal.deposit p ≡ govActionDeposit)
+          → sum (map GovProposal.deposit gps) ≡ length gps * govActionDeposit
+        irec {[]} h' = refl
+        irec {gp ∷ gps} h' = begin
+          sum (map GovProposal.deposit (gp ∷ gps)) ≡⟨ cong sum (cong (_∷ map GovProposal.deposit gps) (h' (here refl))) ⟩
+          govActionDeposit + sum (map GovProposal.deposit gps) ≡⟨ cong (govActionDeposit +_) (irec (h' ∘ there)) ⟩
+          govActionDeposit + length gps * govActionDeposit ∎
+
+      ii = goal
+        where
+        ξ : getCoin (updateProposalDeposits pp txb deps) - getCoin deps ≡ govActionDeposit * length txprop
+        ξ = trans (updatePropDeps≡ txprop) (*-comm (length txprop) govActionDeposit)
+        goal : newDeps ≥ sum (map (λ r → GovProposal.deposit r) txprop)
         goal = {!!}
 
+      iii = trans (sym coin-hom) (trans (cong coin c≡p) coin-hom')
+        where
+        coin-hom' : coin (balOut + inject txfee + inject newDeps + inject txdonation)
+                    ≡ coin balOut + txfee + newDeps + txdonation
+        coin-hom' = trans coin-hom
+                          (trans (cong (_+ txdonation) coin-hom)
+                                 (cong (λ x → x + newDeps + txdonation) coin-hom))
 
-      updatePropDeps≥ : (props : List GovProposal)
-        → getCoin (updatePropHelper props txid gaDep deposits) ≥ getCoin deposits
-      updatePropDeps≥ [] = ≤-reflexive refl
-      updatePropDeps≥ (x ∷ props) =
-        ≤-trans (updatePropDeps≥ props) (≤-trans ≤-+ (≤-reflexive (sym (updateProp+Singleton props))))
+      iv = ≤-trans ii (≤-trans ≤-+̆  (≤-reflexive rearrange))
+        where
+        rearrange : coin balOut + txfee + txdonation + newDeps ≡ coin balOut + txfee + newDeps + txdonation
+        rearrange = begin
+          coin balOut + txfee + txdonation + newDeps     ≡⟨ +-assoc (coin balOut + txfee) txdonation newDeps ⟩
+          (coin balOut + txfee) + (txdonation + newDeps) ≡⟨ cong (coin balOut + txfee +_) (+-comm txdonation newDeps) ⟩
+          (coin balOut + txfee) + (newDeps + txdonation) ≡⟨ sym (+-assoc (coin balOut + txfee) newDeps txdonation) ⟩
+          coin balOut + txfee + newDeps + txdonation     ∎
 
-      updatePropDeps≡ : (props : List GovProposal)
-        → getCoin (updatePropHelper props txid gaDep deposits) - getCoin deposits ≡ (length props) * gaDep
-      updatePropDeps≡ [] = n∸n≡0 (getCoin deposits)
-      updatePropDeps≡ (_ ∷ props) = begin
-        getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
-           ∸ getCoin deposits               ≡⟨ cong (_∸ getCoin deposits) (updateProp+Singleton props) ⟩
-        getCoin (updatePropHelper props txid gaDep deposits) + gaDep ∸ getCoin deposits
-                                        ≡⟨ sym (≤→∸-+-comm (updatePropDeps≥ props)) ⟩
-        (getCoin (updatePropHelper props txid gaDep deposits) ∸ getCoin deposits) + gaDep
-                                        ≡⟨ cong (_+ gaDep) (updatePropDeps≡ props) ⟩
-        (length props) * gaDep + gaDep  ≡⟨ +-comm ((length props) * gaDep) gaDep ⟩
-        gaDep + (length props) * gaDep  ∎
-
-    -- Proofs -------------------------------------------------------------------------
-    i = irec h
-      where
-      irec : {gps : List GovProposal}
-        → (∀ {p} → p ∈ˡ gps → GovProposal.deposit p ≡ govActionDeposit)
-        → sum (map GovProposal.deposit gps) ≡ length gps * govActionDeposit
-      irec {[]} h' = refl
-      irec {gp ∷ gps} h' = begin
-        sum (map GovProposal.deposit (gp ∷ gps)) ≡⟨ cong sum (cong (_∷ map GovProposal.deposit gps) (h' (here refl))) ⟩
-        govActionDeposit + sum (map GovProposal.deposit gps) ≡⟨ cong (govActionDeposit +_) (irec (h' ∘ there)) ⟩
-        govActionDeposit + length gps * govActionDeposit ∎
-
-    ii = goal
-      where
-      ξ : getCoin (updateProposalDeposits pp txb deps) - getCoin deps ≡ govActionDeposit * length txprop
-      ξ = trans (updatePropDeps≡ txprop) (*-comm (length txprop) govActionDeposit)
-      goal : newDeps ≥ sum (map (λ r → GovProposal.deposit r) txprop)
-      goal = {!!}
-
-
-    iii = trans (sym coin-hom) (trans (cong coin c≡p) coin-hom')
-      where
-      coin-hom' : coin (balOut + inject txfee + inject newDeps + inject txdonation)
-                  ≡ coin balOut + txfee + newDeps + txdonation
-      coin-hom' = trans coin-hom
-                        (trans (cong (_+ txdonation) coin-hom)
-                               (cong (λ x → x + newDeps + txdonation) coin-hom))
-
-    iv = ≤-trans ii (≤-trans ≤-+̆  (≤-reflexive rearrange))
-      where
-      rearrange : coin balOut + txfee + txdonation + newDeps ≡ coin balOut + txfee + newDeps + txdonation
-      rearrange = begin
-        coin balOut + txfee + txdonation + newDeps ≡⟨ +-assoc (coin balOut + txfee) txdonation newDeps ⟩
-        (coin balOut + txfee) + (txdonation + newDeps) ≡⟨ cong (coin balOut + txfee +_) (+-comm txdonation newDeps) ⟩
-        (coin balOut + txfee) + (newDeps + txdonation) ≡⟨ sym (+-assoc (coin balOut + txfee) newDeps txdonation) ⟩
-        coin balOut + txfee + newDeps + txdonation ∎
-
-    v = ≤-trans (≤-reflexive (sym i)) (≤-trans iv (≤-reflexive (sym iii)))
+      v = ≤-trans (≤-reflexive (sym i)) (≤-trans iv (≤-reflexive (sym iii)))
 
 
 \end{code}
