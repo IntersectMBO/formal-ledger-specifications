@@ -137,7 +137,6 @@ private
         n       = length fromTel
         mkCon  c mkArg = Term.con c    $ L.map (vArg ∘ mkArg ∘ ♯)  (downFrom n)
         mkConP c mkArg = Pattern.con c $ L.map (vArg ∘ mkArg ∘ `_) (downFrom n)
-    liftTC $ R.debugPrintFmt "tactic" 10 "%q : %t" fromC fromTy
     true ← return (n == length toTel)
       where false → liftTC $ R.typeErrorFmt "%q and %q have different number of arguments" fromC toC
     return $ clause (tyViewToTel $ L.map (λ where (abs x (arg i _)) → abs x (arg i unknown)) fromTel)
