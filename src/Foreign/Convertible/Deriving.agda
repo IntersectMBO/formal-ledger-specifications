@@ -34,6 +34,7 @@ open import Foreign.Convertible
 private instance
   _ = Functor-M {TC}
 
+-- TODO: move to agda-stdlib-meta
 liftTC : ∀ {a} {A : Set a} → R.TC A → TC A
 liftTC m _ = m
 
@@ -44,13 +45,17 @@ private
   variable
     A B C : Set
 
+  -- There aren't any nice substitution functions (that I can find) in the standard library or
+  -- stdlib-meta. This one is cheating since we only want to substitute lzero, which is a closed
+  -- term that never gets applied to anything.
+
   Subst : Set → Set
   Subst A = ℕ → Term → A → A
 
   substTerm : Subst Term
   substArgs : Subst (Args Term)
-  substArg : Subst (Arg Term)
-  substAbs : Subst (Abs Term)
+  substArg  : Subst (Arg Term)
+  substAbs  : Subst (Abs Term)
   substSort : Subst Sort
 
   substTerm x s (var y args) =
@@ -87,7 +92,7 @@ private
   substTel : Subst TyViewTel
   substTel x s [] = []
   substTel x s (abs z t ∷ tel) = abs z (substArg x s t) ∷ (substTel (ℕ.suc x) s tel)
-    -- `abs` is abused here and doesn't actually scope over the `t`
+    -- Note: `abs` is abused in TyViewTel and doesn't actually scope over the `t`
 
   -- Substitute leading level parameters with lzero
   smashLevels : TyViewTel → ℕ × TyViewTel
@@ -95,15 +100,16 @@ private
     P.map ℕ.suc (substTel 0 (quote 0ℓ ∙)) $ smashLevels tel
   smashLevels tel = (0 , tel)
 
-  conversionClauses : (conv : Name) (fromDef : Definition) (toDef : Definition) → TC (List Clause)
-  conversionClauses conv fromDef toDef = return []
-
   tyViewToTel : TyViewTel → Telescope
   tyViewToTel = L.map λ where (abs s a) → s , a
 
   hideTyView : Abs (Arg A) → Abs (Arg A)
   hideTyView (abs s (arg (arg-info _ m) x)) = abs s (arg (arg-info hidden m) x)
 
+  -- The type of a Convertible instance. For parameterised types adds the appropriate instance
+  -- arguments and instantiates level arguments to lzero. For instance,
+  -- instanceType _⊎_ Hs.Either = {A B : Set} {a b : Set} → ⦃ Convertible A a ⦄ → ⦃ Convertible B b ⦄
+  --                              Convertible (A ⊎ B) (Hs.Either a b)
   instanceType : (agdaName hsName : Name) → TC TypeView
   instanceType agdaName hsName = do
     aLvls , agdaParams ← smashLevels <$> getParamsAndIndices agdaName
@@ -119,6 +125,10 @@ private
                    L.replicate n (abs "_" (iArg (quote Convertible ∙⟦ ♯ (n + n ∸ 1) ∣ ♯ (n ∸ 1) ⟧)))
     return $ tel , instHead
 
+  -- Compute one clause of the Convertible instance. For instance,
+  -- conversionClause Convertible.to to ((c₁ , _) , (c₂ , _)) generates
+  -- .to (c₁ x₁ .. xn) = c₂ (to x₁) .. (to xn)
+  -- where the xi are the visible constructor arguments.
   conversionClause : Name → Name → (Name × Type) × (Name × Type) → TC Clause
   conversionClause prjP prjE ((fromC , fromTy) , (toC , toTy)) = do
     let isVis   = λ { (abs _ (arg (arg-info visible _) _)) → true; _ → false }
@@ -134,6 +144,7 @@ private
                     (vArg (proj prjP) ∷ vArg (mkConP fromC id) ∷ [])
                     (mkCon toC (prjE ∙⟦_⟧))
 
+  -- Compute the clauses of a convertible instance.
   instanceClauses : (agdaName hsName : Name) → TC (List Clause)
   instanceClauses agdaName hsName = do
     agdaCons ← getConstrs agdaName
@@ -146,7 +157,7 @@ private
     fromClauses ← mapM (conversionClause (quote Convertible.from) (quote from)) (L.zip hsCons agdaCons)
     return $ toClauses ++ fromClauses
 
-  -- Compute just the conversion lambda
+  -- Compute conversion clauses for the current goal and wrap them in a pattern lambda.
   patternLambda : TC Term
   patternLambda = do
     quote Convertible ∙⟦ `A ∣ `B ⟧ ← reduce =<< goalTy
@@ -157,6 +168,8 @@ private
     fromClauses ← mapM (conversionClause (quote Convertible.from) (quote from)) (L.zip hsCons agdaCons)
     return $ pat-lam (toClauses ++ fromClauses) []
 
+-- Deriving a Convertible instance. Usage
+--   unquoteDecl iName = deriveConvertible iName (quote AgdaTy) (quote HsTy)
 deriveConvertible : Name → Name → Name → R.TC ⊤
 deriveConvertible instName agdaName hsName = initUnquoteWithGoal ⦃ defaultTCOptions ⦄ (agda-sort (lit 0)) do
   agdaDef ← getDefinition agdaName
@@ -168,11 +181,14 @@ deriveConvertible instName agdaName hsName = initUnquoteWithGoal ⦃ defaultTCOp
   defineFun instName clauses
   return _
 
+-- Macros providing an alternative interface. Usage
+--  iName : ConvertibleType AgdaTy HsTy
+--  iName = autoConvertible
 macro
-  autoConvertible : Tactic
-  autoConvertible = initTac ⦃ defaultTCOptions ⦄ $
-    unifyWithGoal =<< patternLambda
-
   ConvertibleType : Name → Name → Tactic
   ConvertibleType agdaName hsName = initTac ⦃ defaultTCOptions ⦄ $
     unifyWithGoal ∘ tyView =<< instanceType agdaName hsName
+
+  autoConvertible : Tactic
+  autoConvertible = initTac ⦃ defaultTCOptions ⦄ $
+    unifyWithGoal =<< patternLambda
