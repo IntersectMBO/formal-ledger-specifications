@@ -101,18 +101,6 @@ private
   tyViewToTel : TyViewTel → Telescope
   tyViewToTel = L.map λ where (abs s a) → s , a
 
-  -- liftTC₁ : (R.TC A → R.TC B) → TC A → TC B
-  -- liftTC₁ f m = do
-  --   env ← ask
-  --   liftTC $ f (m env)
-
-  -- reallyExtendContext : Telescope -> TC A → TC A
-  -- reallyExtendContext [] k = k
-  -- reallyExtendContext ((x , a) ∷ tel) k =
-  --   extendContext (x , a) $ do
-  --     env ← ask
-  --     liftTC $ R.extendContext x a (k env)
-
   hideTyView : Abs (Arg A) → Abs (Arg A)
   hideTyView (abs s (arg (arg-info _ m) x)) = abs s (arg (arg-info hidden m) x)
 
@@ -131,30 +119,43 @@ private
                    L.replicate n (abs "_" (iArg (quote Convertible ∙⟦ ♯ (n + n ∸ 1) ∣ ♯ (n ∸ 1) ⟧)))
     return $ tel , instHead
 
-  conversionClause : TyViewTel → Name → Name → ℕ → ℕ → (Name × Type) × (Name × Type) → TC Clause
-  conversionClause tel prjP prjE fromPars toPars ((fromC , fromTy) , (toC , toTy)) = do
-    let fromTel = drop fromPars (proj₁ (viewTy fromTy))
-        toTel   = drop toPars   (proj₁ (viewTy toTy))
+  conversionClause : Name → Name → (Name × Type) × (Name × Type) → TC Clause
+  conversionClause prjP prjE ((fromC , fromTy) , (toC , toTy)) = do
+    let isVis   = λ { (abs _ (arg (arg-info visible _) _)) → true; _ → false }
+        fromTel = L.filterᵇ isVis (proj₁ (viewTy fromTy))
+        toTel   = L.filterᵇ isVis (proj₁ (viewTy toTy))
         n       = length fromTel
         mkCon  c mkArg = Term.con c    $ L.map (vArg ∘ mkArg ∘ ♯)  (downFrom n)
         mkConP c mkArg = Pattern.con c $ L.map (vArg ∘ mkArg ∘ `_) (downFrom n)
+    liftTC $ R.debugPrintFmt "tactic" 10 "%q : %t" fromC fromTy
     true ← return (n == length toTel)
       where false → liftTC $ R.typeErrorFmt "%q and %q have different number of arguments" fromC toC
     return $ clause (tyViewToTel $ L.map (λ where (abs x (arg i _)) → abs x (arg i unknown)) fromTel)
                     (vArg (proj prjP) ∷ vArg (mkConP fromC id) ∷ [])
                     (mkCon toC (prjE ∙⟦_⟧))
 
-  instanceClauses : (agdaName hsName : Name) → TyViewTel → TC (List Clause)
-  instanceClauses agdaName hsName tel = do
+  instanceClauses : (agdaName hsName : Name) → TC (List Clause)
+  instanceClauses agdaName hsName = do
     agdaCons ← getConstrs agdaName
     hsCons   ← getConstrs hsName
     agdaPars ← length <$> getParamsAndIndices agdaName
     hsPars   ← length <$> getParamsAndIndices hsName
     true ← return (length agdaCons == length hsCons)
       where false → liftTC $ R.typeErrorFmt "%q and %q have different number of constructors" agdaName hsName
-    toClauses   ← mapM (conversionClause tel (quote Convertible.to)   (quote to)   agdaPars hsPars) (L.zip agdaCons hsCons)
-    fromClauses ← mapM (conversionClause tel (quote Convertible.from) (quote from) hsPars agdaPars) (L.zip hsCons agdaCons)
+    toClauses   ← mapM (conversionClause (quote Convertible.to)   (quote to)  ) (L.zip agdaCons hsCons)
+    fromClauses ← mapM (conversionClause (quote Convertible.from) (quote from)) (L.zip hsCons agdaCons)
     return $ toClauses ++ fromClauses
+
+  -- Compute just the conversion lambda, given the type.
+  patternLambda : TC Term
+  patternLambda = do
+    quote Convertible ∙⟦ `A ∣ `B ⟧ ← reduce =<< goalTy
+      where t → liftTC $ R.typeErrorFmt "Expected Convertible A B, got %t" t
+    agdaCons ← getConstrsForType `A
+    hsCons   ← getConstrsForType `B
+    toClauses   ← mapM (conversionClause (quote Convertible.to)   (quote to)  ) (L.zip agdaCons hsCons)
+    fromClauses ← mapM (conversionClause (quote Convertible.from) (quote from)) (L.zip hsCons agdaCons)
+    return $ pat-lam (toClauses ++ fromClauses) []
 
 deriveConvertible : Name → Name → Name → R.TC ⊤
 deriveConvertible instName agdaName hsName = initUnquoteWithGoal ⦃ defaultTCOptions ⦄ (agda-sort (lit 0)) do
@@ -163,6 +164,11 @@ deriveConvertible instName agdaName hsName = initUnquoteWithGoal ⦃ defaultTCOp
   -- instName ← freshName $ "Convertible" S.++ show hsName
   instTel , instTy ← instanceType agdaName hsName
   inst    ← declareDef (iArg instName) (tyView (instTel , instTy))
-  clauses ← instanceClauses agdaName hsName instTel
+  clauses ← instanceClauses agdaName hsName
   defineFun instName clauses
   return _
+
+macro
+  autoConvertible : Tactic
+  autoConvertible = initTac ⦃ defaultTCOptions ⦄ do
+    unifyWithGoal =<< patternLambda
