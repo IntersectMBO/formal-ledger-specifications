@@ -17,6 +17,7 @@ open Debug ("tactic.inline" , 100)
 open import Class.Show
 
 open import Algebra.Core using (Op₁)
+open import Algebra.Definitions.RawMagma using (_,_)
 
 private
   pattern `case_of_ x y = quote case_of_ ∙⟦ x ∣ y ⟧
