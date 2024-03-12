@@ -146,7 +146,7 @@ private
     fromClauses ← mapM (conversionClause (quote Convertible.from) (quote from)) (L.zip hsCons agdaCons)
     return $ toClauses ++ fromClauses
 
-  -- Compute just the conversion lambda, given the type.
+  -- Compute just the conversion lambda
   patternLambda : TC Term
   patternLambda = do
     quote Convertible ∙⟦ `A ∣ `B ⟧ ← reduce =<< goalTy
@@ -170,5 +170,9 @@ deriveConvertible instName agdaName hsName = initUnquoteWithGoal ⦃ defaultTCOp
 
 macro
   autoConvertible : Tactic
-  autoConvertible = initTac ⦃ defaultTCOptions ⦄ do
+  autoConvertible = initTac ⦃ defaultTCOptions ⦄ $
     unifyWithGoal =<< patternLambda
+
+  ConvertibleType : Name → Name → Tactic
+  ConvertibleType agdaName hsName = initTac ⦃ defaultTCOptions ⦄ $
+    unifyWithGoal ∘ tyView =<< instanceType agdaName hsName
