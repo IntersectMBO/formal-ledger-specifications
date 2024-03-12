@@ -1,4 +1,4 @@
-{-# OPTIONS -v tc.unquote.def:10 -v tc.unquote.decl:10 -v tactic:2 #-}
+
 module Foreign.Convertible.DerivingTest where
 
 open import Level
@@ -53,11 +53,34 @@ ConvertibleMaybe .to nothing    = nothing
 ConvertibleMaybe .from (just x) = just (from x)
 ConvertibleMaybe .from nothing  = nothing
 
+-- With deriveConvertible
 unquoteDecl iConvertMaybe  = deriveConvertible iConvertMaybe (quote Maybe) (quote HsMaybe)
-unquoteDecl iConvertEither = deriveConvertible iConvertEither (quote _⊎_) (quote HsEither)
+
+-- or with ConvertibleType and autoConvertible
+instance
+  iConvertEither : ConvertibleType _⊎_ HsEither
+  iConvertEither = autoConvertible
 
 instance
   ConvertibleNat = Convertible-Refl {ℕ}
 
 test : ℕ ⊎ Maybe ℕ → HsEither ℕ (HsMaybe ℕ)
 test = to
+
+_ : test (inj₂ (just 5)) ≡ right (just 5)
+_ = refl
+
+-- There was a problem due to Agda#7182 with record types in parameterised modules.
+
+module Param (A : Set) where
+  record AgdaThing : Set where
+    field theThing : A
+
+record HsThing : Set where
+  field theThing : ℕ
+
+open Param ℕ
+unquoteDecl iConvertThing = deriveConvertible iConvertThing (quote AgdaThing) (quote HsThing)
+
+convThing : Convertible AgdaThing HsThing
+convThing = autoConvertible
