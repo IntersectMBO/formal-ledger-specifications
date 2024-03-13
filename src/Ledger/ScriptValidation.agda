@@ -10,7 +10,6 @@ open import Ledger.Transaction
 open import Ledger.Abstract
 open import Ledger.Crypto
 
-
 module Ledger.ScriptValidation
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
@@ -49,7 +48,6 @@ getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
     []
     (lookupᵐ? utxo txin)
 getDatum tx utxo _ = []
-
 
 record TxInfo : Set where
   field realizedInputs : UTxO
@@ -147,7 +145,8 @@ valContext txinfo sp = toData (txinfo , sp)
 -- need to update costmodels to add the language map in order to check
 -- (Language ↦ CostModel) ∈ costmdls ↦ (Language ↦ CostModel)
 
-abstract
+
+opaque
 
   collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
     → Maybe (Script × List Data × ExUnits × CostModel)

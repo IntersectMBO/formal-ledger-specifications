@@ -2,8 +2,8 @@ open import Ledger.Prelude hiding (fromList; ε); open Computational
 
 module ScriptVerification.Prelude where
 
-record ScriptImplementation (D : Set) : Set₁ where
-  field serialise : ∀ {A : Set} → A → D
-        deserialise : ∀ {A : Set} → D → Maybe A
+record ScriptImplementation (T D : Set) : Set₁ where
+  field serialise : T → D
+        deserialise : D → Maybe T
+        toData' : ∀ {A : Set} → A → D -- fix this
         ⦃ DecEq-Data  ⦄    : DecEq D
-        ⦃ DecEq-Script ⦄   : DecEq (D → D → Bool)

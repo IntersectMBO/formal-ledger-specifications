@@ -14,11 +14,10 @@ open F using (Hash)
 private variable A B : Set
 instance
   _ : Hashable String Hash
-  _ = λ where .hash → F.hash; .hashInj → F.hash-inj
+  _ = λ where .hash → F.hash
 private
   Show⇒Hashable : ⦃ Show A ⦄ → Hashable A Hash
   Show⇒Hashable .hash = hash ∘ show
-  Show⇒Hashable .hashInj = hash-inj where postulate hash-inj : _
 instance
   Show-List : ⦃ Hashable A Hash ⦄ → Show (List A)
   Show-List .show = foldr (λ a acc → show (hash a) ++ "," ++ acc) ""
