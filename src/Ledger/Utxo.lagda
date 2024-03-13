@@ -165,64 +165,71 @@ module _ (let open TxBody) where
   updateDeposits pp txb =
     updateCertDeposits pp (txb .txcerts) ∘ updateProposalDeposits pp txb
 
-module _
-  {∪⁺singleCert≥ : {dp : DepositPurpose}{cv : Coin}{deps : DepositPurpose ⇀ Coin}
-                   → getCoin (deps ∪⁺ ❴ dp , cv ❵) ≥ getCoin deps}
-  {_∪⁺∅ᵐ∣∅ˢ≡id : (deposits :  DepositPurpose ⇀ Coin) → getCoin deposits ≡ getCoin ((deposits ∪⁺ ∅ᵐ) ∣ ∅ˢ ᶜ)}
-  {getCoin-⊆ : (d₁ d₂ : DepositPurpose ⇀ Coin) → d₁ ˢ ⊆ d₂ ˢ → getCoin d₁ ≤ getCoin d₂}
-  where
-    isRefundCert : DCert → Bool
-    isRefundCert (dereg c) = true
-    isRefundCert (deregdrep c) = true
-    isRefundCert _ = false
 
-    noRefund→∅ : {cert : DCert} → isRefundCert cert ≡ false → certRefund cert ≡ ∅
-    noRefund→∅ {delegate c _ _ _} ¬isRefund = refl
-    noRefund→∅ {regpool c _} ¬isRefund = refl
-    noRefund→∅ {regdrep _ _ _} ¬isRefund = refl
-    noRefund→∅ {retirepool c _} ¬isRefund = refl
-    noRefund→∅ {ccreghot c _} ¬isRefund = refl
+  isRefundCert : DCert → Bool
+  isRefundCert (dereg c) = true
+  isRefundCert (deregdrep c) = true
+  isRefundCert _ = false
 
-    noRefundCert : List DCert → Set _
-    noRefundCert l = All (λ cert → isRefundCert cert ≡ false) l
+  noRefund→∅ : {cert : DCert} → isRefundCert cert ≡ false → certRefund cert ≡ ∅
+  noRefund→∅ {delegate c _ _ _} ¬isRefund = refl
+  noRefund→∅ {regpool c _} ¬isRefund = refl
+  noRefund→∅ {regdrep _ _ _} ¬isRefund = refl
+  noRefund→∅ {retirepool c _} ¬isRefund = refl
+  noRefund→∅ {ccreghot c _} ¬isRefund = refl
 
+  noRefundCert : List DCert → Set _
+  noRefundCert l = All (λ cert → isRefundCert cert ≡ false) l
+
+  module _
+    -- ASSUMPTIONS --
+    {- 1 -} {getCoin-⊆     : (d₁ d₂ : DepositPurpose ⇀ Coin) → d₁ ˢ ⊆ d₂ ˢ → getCoin d₁ ≤ getCoin d₂}
+    {- 2 -} {_∪⁺∅ᵐ∣∅ˢ≡id   : (deposits :  DepositPurpose ⇀ Coin) → getCoin deposits ≡ getCoin ((deposits ∪⁺ ∅ᵐ) ∣ ∅ˢ ᶜ)}
+    {- 3 -} {∪⁺singleton≡  : {deps : DepositPurpose ⇀ Coin}{cDep : DepositPurpose × Coin}
+                             → getCoin (deps ∪⁺ ❴ cDep ❵) ≡ getCoin deps + proj₂ cDep }
+    where
     -- Main Lemma --
     updateCertDeps≥ : (certs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
       → noRefundCert certs → getCoin (updateCertDeposits pp certs deposits) ≥ getCoin deposits
 
-
     -- Supporting Lemma --
-    updateDeps-≥ :  (certs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
-      →                 noRefundCert certs → (cDep : DepositPurpose × Coin)
-                        -----------------------------------------------------------------------------------------
-      →                 getCoin (((updateCertDeposits pp certs deposits) ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) ≥ getCoin deposits
+    private
+      certDeps-≥-lem :  (certs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
+        →  noRefundCert certs → (cDep : DepositPurpose × Coin)
+           -----------------------------------------------------------------------------------------
+        →  getCoin (((updateCertDeposits pp certs deposits) ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) ≥ getCoin deposits
 
-    updateDeps-≥ certs {pp} {deposits} nrf cDep = ≤-trans (updateCertDeps≥ certs nrf) (≤-trans ∪⁺singleCert≥ ξ)
-      where
-      uDeps : DepositPurpose ⇀ Coin
-      uDeps = updateCertDeposits pp certs deposits
+      certDeps-≥-lem certs {pp} {deposits} nrf cDep = ≤-trans (updateCertDeps≥ certs nrf) (≤-trans α ξ)
+        where
+        uDeps : DepositPurpose ⇀ Coin
+        uDeps = updateCertDeposits pp certs deposits
 
-      ξ : getCoin ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) ≥ getCoin (uDeps ∪⁺ ❴ cDep ❵ᵐ)
-      ξ = getCoin-⊆ (uDeps ∪⁺ ❴ cDep ❵ᵐ) ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) (proj₂ (resᵐ-∅ᶜ {M = uDeps ∪⁺ ❴ cDep ❵ᵐ}))
+        α : getCoin uDeps ≤ getCoin (uDeps ∪⁺ ❴ cDep ❵ᵐ)
+        α = ≤-trans ≤-+ (≤-reflexive (sym ∪⁺singleton≡))
+
+        ξ : getCoin ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) ≥ getCoin (uDeps ∪⁺ ❴ cDep ❵ᵐ)
+        ξ = getCoin-⊆ (uDeps ∪⁺ ❴ cDep ❵ᵐ) ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) (proj₂ (resᵐ-∅ᶜ {M = uDeps ∪⁺ ❴ cDep ❵ᵐ}))
 
 
     updateCertDeps≥ [] nrf = ≤-reflexive refl
     updateCertDeps≥ (delegate x x₁ x₂ x₃ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
-     updateDeps-≥ certs nrf (CredentialDeposit x , x₃)
+     certDeps-≥-lem certs nrf (CredentialDeposit x , x₃)
 
     updateCertDeps≥ (regpool x x₁ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
-     updateDeps-≥ certs nrf (PoolDeposit x , pp .poolDeposit)
+     certDeps-≥-lem certs nrf (PoolDeposit x , pp .poolDeposit)
 
     updateCertDeps≥ (retirepool x x₁ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
       ≤-trans (updateCertDeps≥ certs nrf)
               (≤-reflexive ((updateCertDeposits pp certs deposits) ∪⁺∅ᵐ∣∅ˢ≡id))
 
     updateCertDeps≥ (regdrep x x₁ x₂ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
-     updateDeps-≥ certs nrf (DRepDeposit x , x₁)
+     certDeps-≥-lem certs nrf (DRepDeposit x , x₁)
 
     updateCertDeps≥ (ccreghot x x₁ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
       ≤-trans (updateCertDeps≥ certs nrf)
               (≤-reflexive ((updateCertDeposits pp certs deposits) ∪⁺∅ᵐ∣∅ˢ≡id))
+
+
 
 
 \end{code}

@@ -3,11 +3,12 @@
 module Data.Integer.Ext where
 
 open import Data.Integer using (ℤ; 0ℤ; _≤_; _≥_; +_; ∣_∣; sign; _⊖_; +≤+)
-open import Data.Integer.Properties using (+-cancelˡ-⊖)
-open import Data.Nat as ℕ using (ℕ; z≤n; s≤s; suc)
-open import Data.Product using (_,_; _×_)
+open import Data.Integer.Properties using (+-cancelˡ-⊖; [1+m]⊖[1+n]≡m⊖n)
+open import Data.Nat as ℕ using (ℕ; z≤n; s≤s; suc; _∸_)
+open import Data.Nat.Properties using (≤-trans; ≤-reflexive)
+open import Data.Product using (_,_; _×_; proj₂)
 open import Data.Sign using (Sign)
-open import Relation.Binary.PropositionalEquality using (_≡_; refl; sym; subst)
+open import Relation.Binary.PropositionalEquality using (_≡_; refl; sym; subst; cong)
 
 ℤtoSignedℕ : ℤ → Sign × ℕ
 ℤtoSignedℕ x = (sign x , ∣ x ∣)
@@ -22,11 +23,9 @@ negPart x with ℤtoSignedℕ x
 ... | (Sign.- , x) = x
 ... | _            = 0
 
-≥0→negPart≡0 : {x : ℤ} → x ≥ 0ℤ → negPart x ≡ 0
-≥0→negPart≡0 {+_ n} x≥0 = refl
-
-x≤y⇒0≤y⊖x : ∀ {x y : ℕ} → x ℕ.≤ y → 0ℤ ≤ y ⊖ x
-x≤y⇒0≤y⊖x {.0} z≤n = +≤+ z≤n
-x≤y⇒0≤y⊖x {.(suc x)} (s≤s {x} x≤y) = subst (λ x → 0ℤ ≤ x)
-                                           (sym (+-cancelˡ-⊖ 1 _ x))
-                                           (x≤y⇒0≤y⊖x x≤y)
+∸≤posPart⊖ : {m n : ℕ} → (m ∸ n) ℕ.≤ posPart (m ⊖ n)
+∸≤posPart⊖ {ℕ.zero} {ℕ.zero} = z≤n
+∸≤posPart⊖ {ℕ.zero} {suc n} = z≤n
+∸≤posPart⊖ {suc m} {ℕ.zero} = s≤s (∸≤posPart⊖ {m}{0})
+∸≤posPart⊖ {suc m} {suc n} = ≤-trans (∸≤posPart⊖{m}{n})
+                                     (≤-reflexive (sym (cong posPart ([1+m]⊖[1+n]≡m⊖n m n))))

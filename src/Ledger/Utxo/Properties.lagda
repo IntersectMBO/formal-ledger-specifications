@@ -4,13 +4,13 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra                     using (CommutativeMonoid ; Monoid)
-open import Algebra.Structures          using (IsCommutativeMonoid ; IsMonoid)
+open import Algebra                     using (CommutativeMonoid; Monoid)
+open import Algebra.Structures          using (IsCommutativeMonoid; IsMonoid)
 open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
 import Algebra.Morphism.Definitions as Morphs
 import Data.Nat as ℕ
 open import Data.Nat.Properties         hiding (_≟_)
-open import Data.Nat.Properties.Ext     using (≤-+; ≤→∸-+-comm; ≤-+̆ )
+open import Data.Nat.Properties.Ext     using (≤-+; ≤→∸-+-comm; ≤-+̆ ; ≤→∸c≤∸c)
 open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ ; 0ℤ)
 open import Data.Integer.Ext
@@ -557,8 +557,12 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
 \begin{property}[\textbf{General Minimum Spending Condition}]~\\
 
 \begin{code}
-module _ {updateProp+Singleton : {deps : DepositPurpose ⇀ Coin} {cDep : DepositPurpose × Coin}
-                                 → getCoin (deps ∪⁺ ❴ cDep ❵ᵐ) ≡ getCoin deps + proj₂ cDep }
+module _
+  -- ASSUMPTIONS --
+  {- 1 -} {getCoin-⊆     : (d₁ d₂ : DepositPurpose ⇀ Coin) → d₁ ˢ ⊆ d₂ ˢ → getCoin d₁ ≤ getCoin d₂}
+  {- 2 -} {_∪⁺∅ᵐ∣∅ˢ≡id   : (deposits :  DepositPurpose ⇀ Coin) → getCoin deposits ≡ getCoin ((deposits ∪⁺ ∅ᵐ) ∣ ∅ˢ ᶜ)}
+  {- 3 -} {∪⁺singleton≡  : {deps : DepositPurpose ⇀ Coin} {cDep : DepositPurpose × Coin}
+                             → getCoin (deps ∪⁺ ❴ cDep ❵) ≡ getCoin deps + proj₂ cDep }
   where
 
   gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
@@ -566,14 +570,15 @@ module _ {updateProp+Singleton : {deps : DepositPurpose ⇀ Coin} {cDep : Deposi
               open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
           in
 
-          Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
+  {- 4 -} Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 
-    →     (∀ {p} → p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit)
-          -------------------------------------------------------------------
-    →     coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
+  {- 5 -} →  (∀ {p} → p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit)
+  {- 6 -} →  noRefundCert txcerts
+             -------------------------------------------------------------------
+          →  coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
 
-  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h =
+  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h nrf =
     ≤-trans v (≤-reflexive (sym coin-hom))
 
     where
@@ -584,34 +589,26 @@ module _ {updateProp+Singleton : {deps : DepositPurpose ⇀ Coin} {cDep : Deposi
       open PParams pp
 
       newDeps refunds : Coin
-      newDeps    = newDeposits pp utxoState txb           -- "new" deposits (posPart of Δdep)
-      refunds    = depositRefunds pp utxoState txb        -- refunds (negPart of Δdep)
-
-      -- newDeps = posPart (getCoin (updateDeposits pp txb deposits) - getCoin deposits)
-      --         = posPart ((updateCertDeposits pp (txb .txcerts) ∘ updateProposalDeposits pp txb) deposits - getCoin deposits)
-      --   where
-      --   updateProposalDeposits pp txb deposits = deposits
-      --        ∪⁺ ❴ GovActionDeposit (txb .txid , i) , pp .govActionDeposit ❵
-      --        where there is one such singleton ❴ GovActionDeposit _ , _ ❵ added for each p ∈ (txb .txprop) and
-      --              i = # of proposals remaining in the list (txb .txprop) after p
+      newDeps    = newDeposits pp utxoState txb
+      refunds    = depositRefunds pp utxoState txb
 
       balIn balOut : Value
       balIn = balance (st ∣ txins)
       balOut = balance (outs txb)
 
-      -- Fact. The sum of all GovProposal deposits is the number of GovProposals times govActionDeposit.
+      -- The sum of all GovProposal deposits is the number of GovProposals times govActionDeposit.
       i : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
 
-      -- Claim. The newDeps---i.e., the positive part of the change in deposits---is at least the sum of GovProposal deposits.
+      -- The positive part of change in deposits is at least the sum of GovProposal deposits.
       ii : newDeps ≥ sum (map GovProposal.deposit txprop)
 
-      -- Fact. coin consumed ≡ coin produced
+      -- Coin consumed ≡ coin produced
       iii : coin (balIn + mint) + refunds ≡ coin balOut + txfee + newDeps + txdonation
 
-      -- Claim. (depends on validity of ii)
+      -- Coin produced is at least the sum of GovProposal deposits.
       iv : coin balOut + txfee + newDeps + txdonation ≥ sum (map GovProposal.deposit txprop)
 
-      -- Claim. (depends on validity of ii)
+      -- Coin consumed is at least the number of GovProposals times govActionDeposit.
       v : coin (balIn + mint) + refunds ≥ length txprop * govActionDeposit
 
       -- Lemmas -------------------------------------------------------------------------
@@ -621,27 +618,27 @@ module _ {updateProp+Singleton : {deps : DepositPurpose ⇀ Coin} {cDep : Deposi
         coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
         coin val + c                  ∎
 
-
-      module _ {txid : TxId}{gaDep : Coin}{deposits : DepositPurpose ⇀ Coin}
+      module _ {txid : TxId} {gaDep : Coin} {deposits : DepositPurpose ⇀ Coin}
         where
         updatePropDeps≥ : (props : List GovProposal)
           → getCoin (updatePropHelper props txid gaDep deposits) ≥ getCoin deposits
         updatePropDeps≥ [] = ≤-reflexive refl
         updatePropDeps≥ (x ∷ props) =
-          ≤-trans (updatePropDeps≥ props) (≤-trans ≤-+ (≤-reflexive (sym (updateProp+Singleton))))
+          ≤-trans (updatePropDeps≥ props) (≤-trans ≤-+ (≤-reflexive (sym ∪⁺singleton≡)))
 
         updatePropDeps≡ : (props : List GovProposal)
           → getCoin (updatePropHelper props txid gaDep deposits) - getCoin deposits ≡ (length props) * gaDep
         updatePropDeps≡ [] = n∸n≡0 (getCoin deposits)
         updatePropDeps≡ (_ ∷ props) = begin
           getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
-             ∸ getCoin deposits           ≡⟨ cong (_∸ getCoin deposits) (updateProp+Singleton) ⟩
+             ∸ getCoin deposits           ≡⟨ cong (_∸ getCoin deposits) ∪⁺singleton≡ ⟩
           getCoin (updatePropHelper props txid gaDep deposits) + gaDep ∸ getCoin deposits
                                           ≡⟨ sym (≤→∸-+-comm (updatePropDeps≥ props)) ⟩
           (getCoin (updatePropHelper props txid gaDep deposits) ∸ getCoin deposits) + gaDep
                                           ≡⟨ cong (_+ gaDep) (updatePropDeps≡ props) ⟩
           (length props) * gaDep + gaDep  ≡⟨ +-comm ((length props) * gaDep) gaDep ⟩
           gaDep + (length props) * gaDep  ∎
+
 
       -- Proofs -------------------------------------------------------------------------
       i = irec h
@@ -655,12 +652,19 @@ module _ {updateProp+Singleton : {deps : DepositPurpose ⇀ Coin} {cDep : Deposi
           govActionDeposit + sum (map GovProposal.deposit gps) ≡⟨ cong (govActionDeposit +_) (irec (h' ∘ there)) ⟩
           govActionDeposit + length gps * govActionDeposit ∎
 
-      ii = goal
+      ii = ≤-trans (≤-reflexive (trans i (*-comm (length txprop) govActionDeposit )))
+                   (≤-trans (≤-reflexive (sym Δ≡)) +Δ≥)
         where
-        ξ : getCoin (updateProposalDeposits pp txb deps) - getCoin deps ≡ govActionDeposit * length txprop
-        ξ = trans (updatePropDeps≡ txprop) (*-comm (length txprop) govActionDeposit)
-        goal : newDeps ≥ sum (map (λ r → GovProposal.deposit r) txprop)
-        goal = {!!}
+        updateDeposits≥ : getCoin ((updateDeposits pp txb) deps) ≥ getCoin (updateProposalDeposits pp txb deps)
+        updateDeposits≥ = updateCertDeps≥{getCoin-⊆ = getCoin-⊆} {_∪⁺∅ᵐ∣∅ˢ≡id} {∪⁺singleton≡} txcerts nrf
+
+        Δ≡ : getCoin (updateProposalDeposits pp txb deps) - getCoin deps ≡ govActionDeposit * length txprop
+        Δ≡ = trans (updatePropDeps≡ txprop) (*-comm (length txprop) govActionDeposit)
+
+        +Δ≥ : posPart (getCoin (updateDeposits pp txb deps) - getCoin deps)
+             ≥ (getCoin (updateProposalDeposits pp txb deps) ∸ getCoin deps)
+        +Δ≥ = ≤-trans (≤→∸c≤∸c (getCoin deps) updateDeposits≥)
+                      (∸≤posPart⊖ {getCoin (updateDeposits pp txb deps)} {getCoin deps})
 
       iii = trans (sym coin-hom) (trans (cong coin c≡p) coin-hom')
         where
@@ -680,7 +684,6 @@ module _ {updateProp+Singleton : {deps : DepositPurpose ⇀ Coin} {cDep : Deposi
           coin balOut + txfee + newDeps + txdonation     ∎
 
       v = ≤-trans (≤-reflexive (sym i)) (≤-trans iv (≤-reflexive (sym iii)))
-
 
 \end{code}
 \end{property}
