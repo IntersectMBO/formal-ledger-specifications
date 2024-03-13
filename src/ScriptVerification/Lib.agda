@@ -1,14 +1,11 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.Prelude
 
-module ScriptVerification.Lib (D : Set)
-  (scriptImp : ScriptImplementation D) (open ScriptImplementation scriptImp)
+module ScriptVerification.Lib (A D : Set)
+  (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
   where
 
-open import ScriptVerification.LedgerImplementation D scriptImp
-
-open Implementation
-
+open import ScriptVerification.LedgerImplementation A D scriptImp
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
@@ -16,9 +13,9 @@ open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
-
 open import Data.Rational
 open import Ledger.Set.Theory
+open Implementation
 
 createEnv : ℕ → UTxOEnv
 createEnv s = record { slot = s ;
@@ -91,37 +88,12 @@ fromList' = fromListᵐ
 fromListIx : List (Implementation.Ix × TxOut) → Implementation.Ix ⇀ TxOut
 fromListIx = fromListᵐ
 
-{-
-createTx : ℙ TxIn
-           → List TxOut
-           → D
-           → D
-           → List PlutusScript
-           → Tx
-createTx a b c d e = record { body = record
-                             { txins = {!!}
-                             ; txouts = {!!}
-                             ; txfee = {!!}
-                             ; mint = {!!}
-                             ; txvldt = {!!}
-                             ; txcerts = {!!}
-                             ; txwdrls = {!!}
-                             ; txvote = {!!}
-                             ; txprop = {!!}
-                             ; txdonation = {!!}
-                             ; txup = {!!}
-                             ; txADhash = {!!}
-                             ; netwrk = {!!}
-                             ; txsize = {!!}
-                             ; txid = {!!}
-                             ; collateral = {!!}
-                             ; reqSigHash = {!!}
-                             ; scriptIntHash = {!!}
-                             }
-                  ; wits = record { vkSigs = {!!}
-                                  ; scripts = {!!}
-                                  ; txdats = {!!}
-                                  ; txrdmrs = {!!} }
-                  ; isValid = {!!}
-                  ; txAD = {!!} }
--}
+applyScript : (Maybe D → Maybe D → Bool) → List D → Bool
+applyScript f [] = f nothing nothing
+applyScript f (_ ∷ []) = f nothing nothing
+applyScript f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer)
+applyScript f (datum ∷ redeemer ∷ valcontext ∷ _) = f (just datum) (just redeemer)
+
+notEmpty : ∀ {A : Set} → List A → Set
+notEmpty [] = ⊥
+notEmpty (x ∷ xs) = ⊤
