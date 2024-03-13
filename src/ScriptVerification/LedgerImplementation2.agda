@@ -27,14 +27,14 @@ D = String
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
-  ∀Hashable = λ where .hash → id; .hashInj refl → refl
+  ∀Hashable = λ where .hash → id
 
   ∀isHashableSet : isHashableSet A
   ∀isHashableSet = mkIsHashableSet A
 
 instance
   Hashable-⊤ : Hashable ⊤ ℕ
-  Hashable-⊤ = λ where .hash tt → 0; .hashInj _ → refl
+  Hashable-⊤ = λ where .hash tt → 0
 
 module Implementation where
   Network          = ⊤
@@ -128,18 +128,20 @@ SVScriptStructure = record
   { hashRespectsUnion = hashRespectsUnion
   ; ps = SVP2ScriptStructure }
   where
-  postulate
+
     instance Hashable-Timelock : Hashable Timelock String -- ℕ
+             Hashable-Timelock = record { hash = λ x → "timelock" }
 
     hashRespectsUnion : ∀ {A B ℍ}
       → Hashable A ℍ → Hashable B ℍ
       → Hashable (A ⊎ B) ℍ
+    hashRespectsUnion ha hb = record { hash = λ { (inj₁ x) → Hashable.hash ha x ; (inj₂ y) → Hashable.hash hb y }}
 
-  SVP2ScriptStructure : PlutusStructure
-  SVP2ScriptStructure = record
-    { Implementation
-    ; validPlutusScript = λ _ _ _ _ → ⊤
-    }
+    SVP2ScriptStructure : PlutusStructure
+    SVP2ScriptStructure = record
+      { Implementation
+      ; validPlutusScript = λ _ _ _ _ → ⊤
+      }
 
 instance _ = SVScriptStructure
 
@@ -186,6 +188,11 @@ instance _ = SVTransactionStructure
 open import Ledger.Abstract it
 open import Ledger.Gov it
 
+open TransactionStructure it
+
+indexOfTxInImp : TxIn → ℙ TxIn → Maybe Ix
+indexOfTxInImp x y = lookupᵐ? (fromListᵐ (setToList y)) (proj₁ x)
+
 SVAbstractFunctions : AbstractFunctions
 SVAbstractFunctions = record
   { Implementation
@@ -194,7 +201,7 @@ SVAbstractFunctions = record
   ; indexOfImp  = record
     { indexOfDCert    = λ _ _ → nothing
     ; indexOfRwdAddr  = λ _ _ → nothing
-    ; indexOfTxIn     = λ _ _ → nothing
+    ; indexOfTxIn     = indexOfTxInImp
     ; indexOfPolicyId = λ _ _ → nothing
     ; indexOfVote     = λ _ _ → nothing
     ; indexOfProposal = λ _ _ → nothing

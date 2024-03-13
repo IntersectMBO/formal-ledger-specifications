@@ -47,6 +47,11 @@ initTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ succeedIf1 ;
                            stake = inj₂ succeedIf1 })
                            , 10 , nothing
+script : TxIn × TxOut
+script = (6 , 6) , initTxOut
+
+initState' : UTxO
+initState' = fromList' (script ∷ (createInitUtxoState 5 10))
 
 exTx : Tx
 exTx = record { body = record
@@ -94,16 +99,64 @@ exampleRunScript' = ⟦ succeedIf1 ⟧, tt , ( 1000 , 1000 ) , (1 ∷ 0 ∷ [])
 getState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
 getState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) exTx initState)
 
+exTx' : Tx
+exTx' = record { body = record
+                         { txins = Ledger.Prelude.fromList ((6 , 6) ∷ [])
+                         ; txouts = ∅ -- fromListIx ((6 , initTxOut) ∷ [])
+                         ; txfee = 10
+                         ; mint = 0
+                         ; txvldt = nothing , nothing
+                         ; txcerts = []
+                         ; txwdrls = ∅
+                         ; txvote = []
+                         ; txprop = []
+                         ; txdonation = 0
+                         ; txup = nothing
+                         ; txADhash = nothing
+                         ; netwrk = just tt
+                         ; txsize = 10
+                         ; txid = 6
+                         ; collateral = ∅
+                         ; reqSigHash = ∅ -- maybe need this
+                         ; scriptIntHash = nothing -- not sure
+                         } ;
+                wits = record { vkSigs = ∅ ;
+                                scripts = Ledger.Prelude.fromList ((inj₂ succeedIf1) ∷ []) ;
+                                txdats = ∅ ;
+                                txrdmrs = ∅ } ;
+                isValid = false ;
+                txAD = nothing }
+
+
+
+getState' : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
+getState' = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) exTx' initState')
+
+getScripts : _
+getScripts = scriptsNeeded initState' (Tx.body exTx')
+
+opaque
+  unfolding collectPhaseTwoScriptInputs
+  unfolding setToList
+
+  _ : getState ≡ []
+  _ = refl
+
+  _ : example ≡ true
+  _ = refl
+
+  _ : getScripts ≡ ∅
+  _ = {!refl!}
+
+  _ : getState' ≡ []
+  _ = {!!}
+
+
 exampleRunScript'' : Bool
 exampleRunScript'' with getState
 ... | [] = false
 ... | x ∷ [] = false
 ... | x ∷ x₁ ∷ ans = ⟦ succeedIf1 ⟧, tt , ( 1000 , 1000 ) , (1 ∷ 0 ∷ [])
-
-getState' : Maybe (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-getState' = collectPhaseTwoScriptInputs' (UTxOEnv.pparams initEnv) exTx initState ((Mint succeedIf1) , succeedIf1)
-
-
 
 example'' : Bool
 example'' with Ledger.Prelude._≟_
