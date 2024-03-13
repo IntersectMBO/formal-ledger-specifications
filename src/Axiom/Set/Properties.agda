@@ -187,7 +187,6 @@ card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
 filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
 filter-⊆ = proj₂ ∘′ ∈⇔P
 
-
 Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Decidable¹ (_∈ fromList l)
 Dec-∈-fromList _ _ = Relation.Nullary.Decidable.map ∈-fromList (_∈ˡ?_ _≟_ _ _)
 
@@ -297,22 +296,6 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
 
   ∩-sym : X ∩ Y ≡ᵉ Y ∩ X
   ∩-sym = ∩-sym⊆ , ∩-sym⊆
-
-  module _ {X Y : Set A} {_∈X? : Decidable¹ (_∈ X)} where
-
-    ⊆→⨿ : X ⊆ Y → Y ≡ X ⨿ (Y ＼ X)
-    ⊆→⨿ X⊆Y = (ϕ , ψ) , λ a∈X a∈Y＼X → proj₁ (ξ a∈Y＼X) a∈X
-      where
-      ξ : ∀{u} → u ∈ (Y ＼ X) → u ∉ X × u ∈ Y
-      ξ {u} u∈ = from ∈-filter u∈
-      ϕ : Y ⊆ X ∪ (Y ＼ X)
-      ϕ {a} a∈Y with (a ∈X?)
-      ...| yes p = to ∈-∪ (inj₁ p)
-      ...| no ¬p = to ∈-∪ (inj₂ (to ∈-filter (¬p , a∈Y)))
-      ψ : X ∪ (Y ＼ X) ⊆ Y
-      ψ = λ a∈ → case ((from ∈-∪) a∈) of λ where
-        (inj₁ a∈X) → X⊆Y a∈X
-        (inj₂ a∈Y＼X) → proj₂ (ξ a∈Y＼X)
 
 -- Additional properties of lists and sets.
 module _ {L : List A} where

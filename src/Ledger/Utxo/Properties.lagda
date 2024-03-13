@@ -4,28 +4,23 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra                     using (CommutativeMonoid; Monoid)
-open import Algebra.Structures          using (IsCommutativeMonoid; IsMonoid)
-open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
-import Algebra.Morphism.Definitions as Morphs
-import Data.Nat as ℕ
-open import Data.Nat.Properties         hiding (_≟_)
-open import Data.Nat.Properties.Ext     using (≤-+; ≤→∸-+-comm; ≤-+̆ ; ≤→∸c≤∸c)
-open import Data.Sign                   using (Sign)
-open import Data.Integer as ℤ           using (ℤ ; 0ℤ)
+open import Algebra.Morphism              using (module MonoidMorphisms; IsMagmaHomomorphism)
+open import Data.Integer as ℤ             using (ℤ ; 0ℤ)
 open import Data.Integer.Ext
 import Data.Integer.Properties as ℤ
-open import Data.List.Properties        using (foldr-cong)
-open import Data.List.Relation.Unary.Any using (Any); open Any
-open import Data.List.Relation.Unary.All using (All; tail)
-open import Data.String.Base            renaming (_++_ to _+ˢ_) using ()
-open import Relation.Binary             using (IsEquivalence)
-open import Axiom.Set.List
+import Data.Nat as ℕ
+open import Data.Nat.Properties           hiding (_≟_)
+open import Data.Nat.Properties.Ext       using (≤-+; ≤→∸-+-comm; ≤-+̆ ; ≤→∸c≤∸c)
+open import Data.List.Relation.Unary.Any  using (Any); open Any
+open import Data.Sign                     using (Sign)
+open import Data.String.Base              renaming (_++_ to _+ˢ_) using ()
+open import Relation.Binary               using (IsEquivalence)
 
+open import Axiom.Set.List
 open import Prelude; open Equivalence
 
-open import Tactic.Cong                 using (cong!)
-open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
+open import Tactic.Cong                   using (cong!)
+open import Tactic.EquationalReasoning    using (module ≡-Reasoning)
 open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
@@ -46,9 +41,6 @@ instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
   _ = +-0-monoid
   _ = Functor-ComputationResult
-
-open import Data.Bool.Properties using ()
-open import Relation.Nullary.Decidable using ()
 
 instance
   Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_ String
@@ -150,7 +142,7 @@ abstract
 
 private variable
   tx                               : Tx
-  utxo utxo' utxo''                : UTxO
+  utxo utxo'                       : UTxO
   Γ                                : UTxOEnv
   utxoState utxoState'             : UTxOState
   fees fees' donations donations'  : Coin
