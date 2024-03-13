@@ -13,3 +13,4 @@ import MidnightExample.HSLedger
 
 -- ** not currently used
 import Tactic.DeriveComp
+import Foreign.Convertible.DerivingTest
