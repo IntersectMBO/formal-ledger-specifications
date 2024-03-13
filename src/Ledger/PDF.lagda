@@ -55,6 +55,7 @@ open import Ledger.Ratify
 open import Ledger.Chain
 
 open import Ledger.EssentialAgda
+open import Ledger.PDF.ConwayBootstrapEnact
 \end{code}
 
 \include{Ledger/Introduction}
@@ -88,5 +89,6 @@ open import Ledger.EssentialAgda
 \appendix
 
 \input{Ledger/EssentialAgda}
+\input{Ledger/PDF/ConwayBootstrapEnact}
 
 \end{document}

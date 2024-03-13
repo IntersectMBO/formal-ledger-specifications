@@ -8,7 +8,7 @@ open import Prelude hiding (find)
 
 open import Axiom.Set
 
-import Data.List
+open import Data.List using (filter)
 import Data.List.Relation.Unary.All as All
 import Data.List.Relation.Unary.Any as Any
 import Function
@@ -29,7 +29,7 @@ List-Model = λ where
   .Set           → List
   ._∈_           → _∈ˡ_
   .sp            → Dec-SpecProperty
-  .specification → λ X P? → Prelude.filter P? X , mk⇔
+  .specification → λ X P? → filter P? X , mk⇔
     (λ where (Pa , a∈X) → ∈-filter⁺ P? a∈X Pa)
     (λ a∈f → Data.Product.swap (∈-filter⁻ P? a∈f))
   .unions        → λ X → concat X , mk⇔
@@ -40,7 +40,7 @@ List-Model = λ where
     (∃[ a ] a ∈ˡ X × b ≡ f a) ⤖⟨ I.↔⇒⤖ (map-∈↔ f) ⟩
     b ∈ˡ Data.List.map f X    ∎
   .listing → λ l → l , mk⇔ id id
-    where open Theory
+    where open Theory hiding (filter)
           open R.EquationalReasoning
 
 List-Modelᶠ : Theoryᶠ
