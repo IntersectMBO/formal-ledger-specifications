@@ -13,3 +13,6 @@ import MidnightExample.HSLedger
 
 -- ** not currently used
 import Tactic.DeriveComp
+
+-- ** Verifiying Script Example
+import ScriptVerification.Examples

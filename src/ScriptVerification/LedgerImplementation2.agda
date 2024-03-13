@@ -1,9 +1,6 @@
 open import ScriptVerification.Prelude
 
-module ScriptVerification.LedgerImplementation
-  (D : Set)
-  (scriptImp : ScriptImplementation D) (open ScriptImplementation scriptImp)
-  where
+module ScriptVerification.LedgerImplementation2 where
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
@@ -25,6 +22,8 @@ open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
 
 open import Interface.HasOrder.Instance
+
+D = String
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
@@ -55,10 +54,10 @@ module Implementation where
   Data         = D
   Dataʰ        = mkHashableSet Data
   toData : ∀ {A : Set} → A → D
-  toData = serialise
+  toData x = "alskj"
 
-  PlutusScript = Data → Data → Bool
-  ScriptHash = Data → Data → Bool
+  PlutusScript = String
+  ScriptHash = String
 
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
@@ -74,7 +73,7 @@ module Implementation where
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
-  open import Ledger.TokenAlgebra (Data → Data → Bool)
+  open import Ledger.TokenAlgebra String
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
@@ -130,7 +129,7 @@ SVScriptStructure = record
   ; ps = SVP2ScriptStructure }
   where
   postulate
-    instance Hashable-Timelock : Hashable Timelock (Implementation.Data → Implementation.Data → Bool) -- ℕ
+    instance Hashable-Timelock : Hashable Timelock String -- ℕ
 
     hashRespectsUnion : ∀ {A B ℍ}
       → Hashable A ℍ → Hashable B ℍ
@@ -200,10 +199,7 @@ SVAbstractFunctions = record
     ; indexOfVote     = λ _ _ → nothing
     ; indexOfProposal = λ _ _ → nothing
     }
-  ; runPLCScript = λ { x x₁ x₂ [] → false ;
-                     x x₁ x₂ (x₃ ∷ []) → false ;
-                     x x₁ x₂ (datum ∷ redeemer ∷ x₅) → x₁ datum redeemer} -- λ _ _ _ _ → false
+  ; runPLCScript = λ _ _ _ _ → false
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions
-

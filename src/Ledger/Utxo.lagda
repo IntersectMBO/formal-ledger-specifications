@@ -109,7 +109,8 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
   minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
                      + txscriptfee (pp .prices) (totExUnits tx)
                      + pp .minFeeRefScriptCoinsPerByte
-                       *↓ ∑ˢ[ x ← refScripts tx utxo ] scriptSize x
+                       *↓ ∑ˢ[ x ← mapˢ scriptSize $ refScripts tx utxo ] x
+                         -- ∑ˢ[ x ← refScripts tx utxo ] scriptSize x
 
 \end{code}
 \begin{code}[hide]

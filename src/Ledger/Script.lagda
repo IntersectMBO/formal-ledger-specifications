@@ -34,7 +34,7 @@ record PlutusStructure : Set₁ where
         Language PlutusScript CostModel Prices LangDepView ExUnits : Set
         ⦃ ExUnit-CommutativeMonoid ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ ExUnits
         ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
-        ⦃ DecEq-PlutusScript       ⦄ : DecEq PlutusScript
+        -- ⦃ DecEq-PlutusScript       ⦄ : DecEq PlutusScript
         ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
         ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
 

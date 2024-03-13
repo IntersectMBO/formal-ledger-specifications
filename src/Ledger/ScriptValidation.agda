@@ -147,7 +147,8 @@ valContext txinfo sp = toData (txinfo , sp)
 -- need to update costmodels to add the language map in order to check
 -- (Language ↦ CostModel) ∈ costmdls ↦ (Language ↦ CostModel)
 
-abstract
+
+opaque
 
   collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
     → Maybe (Script × List Data × ExUnits × CostModel)
