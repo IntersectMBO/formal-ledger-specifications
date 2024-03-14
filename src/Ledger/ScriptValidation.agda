@@ -50,7 +50,6 @@ getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
     (lookupᵐ? utxo txin)
 getDatum tx utxo _ = []
 
-
 record TxInfo : Set where
   field realizedInputs : UTxO
         txouts  : Ix ⇀ TxOut

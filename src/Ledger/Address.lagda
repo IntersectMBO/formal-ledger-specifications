@@ -112,7 +112,7 @@ getScriptHash : ∀ a → isScriptAddr a → ScriptHash
 getScriptHash (inj₁ _) (SHisScript sh) = sh
 getScriptHash (inj₂ _) (SHisScript sh) = sh
 
-instance -- abstract
+instance abstract
   unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RwdAddr = derive-DecEq
     ( (quote BaseAddr      , DecEq-BaseAddr)
     ∷ (quote BootstrapAddr , DecEq-BootstrapAddr)

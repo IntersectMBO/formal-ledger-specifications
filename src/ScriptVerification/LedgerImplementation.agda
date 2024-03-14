@@ -1,8 +1,8 @@
 open import ScriptVerification.Prelude
 
 module ScriptVerification.LedgerImplementation
-  (D : Set)
-  (scriptImp : ScriptImplementation D) (open ScriptImplementation scriptImp)
+  (T D : Set)
+  (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
   where
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
@@ -28,14 +28,14 @@ open import Interface.HasOrder.Instance
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
-  ∀Hashable = λ where .hash → id; .hashInj refl → refl
+  ∀Hashable = λ where .hash → id
 
   ∀isHashableSet : isHashableSet A
   ∀isHashableSet = mkIsHashableSet A
 
 instance
   Hashable-⊤ : Hashable ⊤ ℕ
-  Hashable-⊤ = λ where .hash tt → 0; .hashInj _ → refl
+  Hashable-⊤ = λ where .hash tt → 0
 
 module Implementation where
   Network          = ⊤
@@ -55,10 +55,10 @@ module Implementation where
   Data         = D
   Dataʰ        = mkHashableSet Data
   toData : ∀ {A : Set} → A → D
-  toData = serialise
+  toData = toData' -- fix this
 
-  PlutusScript = Data → Data → Bool
-  ScriptHash = Data → Data → Bool
+  PlutusScript = ℕ × (Data → Data → Bool)
+  ScriptHash = ℕ
 
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
@@ -74,7 +74,7 @@ module Implementation where
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
-  open import Ledger.TokenAlgebra (Data → Data → Bool)
+  open import Ledger.TokenAlgebra ℕ
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
@@ -124,23 +124,30 @@ instance _ = SVCrypto
 
 open import Ledger.Script it it
 
+
+
 SVScriptStructure : ScriptStructure
 SVScriptStructure = record
   { hashRespectsUnion = hashRespectsUnion
   ; ps = SVP2ScriptStructure }
   where
-  postulate
-    instance Hashable-Timelock : Hashable Timelock (Implementation.Data → Implementation.Data → Bool) -- ℕ
+
+    instance Hashable-Timelock : Hashable Timelock ℕ
+             Hashable-Timelock = record { hash = λ x → 0 }
+
+    instance Hashable-PlutusScript : Hashable Implementation.PlutusScript ℕ
+             Hashable-PlutusScript = record { hash = λ x → proj₁ x }
 
     hashRespectsUnion : ∀ {A B ℍ}
       → Hashable A ℍ → Hashable B ℍ
       → Hashable (A ⊎ B) ℍ
+    hashRespectsUnion ha hb = record { hash = λ { (inj₁ x) → Hashable.hash ha x ; (inj₂ y) → Hashable.hash hb y }}
 
-  SVP2ScriptStructure : PlutusStructure
-  SVP2ScriptStructure = record
-    { Implementation
-    ; validPlutusScript = λ _ _ _ _ → ⊤
-    }
+    SVP2ScriptStructure : PlutusStructure
+    SVP2ScriptStructure =  record
+      { Implementation
+      ; validPlutusScript = λ _ _ _ _ → ⊤
+      }
 
 instance _ = SVScriptStructure
 
@@ -187,6 +194,11 @@ instance _ = SVTransactionStructure
 open import Ledger.Abstract it
 open import Ledger.Gov it
 
+open TransactionStructure it
+
+indexOfTxInImp : TxIn → ℙ TxIn → Maybe Ix
+indexOfTxInImp x y = lookupᵐ? (fromListᵐ (setToList y)) (proj₁ x)
+
 SVAbstractFunctions : AbstractFunctions
 SVAbstractFunctions = record
   { Implementation
@@ -195,15 +207,14 @@ SVAbstractFunctions = record
   ; indexOfImp  = record
     { indexOfDCert    = λ _ _ → nothing
     ; indexOfRwdAddr  = λ _ _ → nothing
-    ; indexOfTxIn     = λ _ _ → nothing
+    ; indexOfTxIn     = indexOfTxInImp
     ; indexOfPolicyId = λ _ _ → nothing
     ; indexOfVote     = λ _ _ → nothing
     ; indexOfProposal = λ _ _ → nothing
     }
   ; runPLCScript = λ { x x₁ x₂ [] → false ;
                      x x₁ x₂ (x₃ ∷ []) → false ;
-                     x x₁ x₂ (datum ∷ redeemer ∷ x₅) → x₁ datum redeemer} -- λ _ _ _ _ → false
+                     x x₁ x₂ (datum ∷ redeemer ∷ x₅) → (proj₂ x₁) datum redeemer}
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions
-

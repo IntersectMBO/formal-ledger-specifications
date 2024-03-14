@@ -1,11 +1,11 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.Prelude
 
-module ScriptVerification.Lib (D : Set)
-  (scriptImp : ScriptImplementation D) (open ScriptImplementation scriptImp)
+module ScriptVerification.Lib (A D : Set)
+  (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
   where
 
-open import ScriptVerification.LedgerImplementation D scriptImp
+open import ScriptVerification.LedgerImplementation A D scriptImp
 
 open Implementation
 
