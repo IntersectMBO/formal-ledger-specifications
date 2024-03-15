@@ -10,7 +10,6 @@ open import Ledger.Transaction
 open import Ledger.Abstract
 open import Ledger.Crypto
 
-
 module Ledger.ScriptValidation
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)

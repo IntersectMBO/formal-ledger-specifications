@@ -171,6 +171,7 @@ record ScriptStructure : Set₁ where
 
   Script = P1Script ⊎ P2Script
 
+
   open import Data.Empty
   open import Agda.Builtin.Equality
   open import Relation.Binary.PropositionalEquality

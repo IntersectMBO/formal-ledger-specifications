@@ -91,6 +91,12 @@ fromList' = fromListᵐ
 fromListIx : List (Implementation.Ix × TxOut) → Implementation.Ix ⇀ TxOut
 fromListIx = fromListᵐ
 
+applyScript : (Maybe D → Maybe D → Bool) → List D → Bool
+applyScript f [] = f nothing nothing
+applyScript f (_ ∷ []) = f nothing nothing
+applyScript f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer)
+applyScript f (datum ∷ redeemer ∷ valcontext ∷ _) = f (just datum) (just redeemer)
+
 {-
 createTx : ℙ TxIn
            → List TxOut

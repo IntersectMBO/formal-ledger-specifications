@@ -1,0 +1,17 @@
+In the formal ledger spec I have now managed to validate a script using `evalScripts`. The issue I have come accross is in the definition of `runPlcScript`
+
+At the moment it is
+
+```
+runPLCScript = λ { x x₁ x₂ [] → false ;
+                     x x₁ x₂ (x₃ ∷ []) → false ;
+                     x x₁ x₂ (datum ∷ redeemer ∷ x₅) → (proj₂ x₁) datum
+```
+
+The issue arises when I do not have a datum then the redeemer is taken as the datum since [] will reduce. Since we have no information about List Data when defining `runPLCScript` I am unsure how to fix this. How is this handled in haskell? At the moment I have 2 ideas
+
+One is to force the definition of `ϵ` for Data in `Ledger.Script` so that the list will always force the same order.
+
+The second way is to add some sort of tagging to Data in `Ledger.Script` so `Data = (Tag x Maybe Data')` then we would also enforce this same structure for `runPLCScript`.
+
+Both of these solutions would mean that the implementation doesn't match the spec though.

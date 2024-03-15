@@ -57,7 +57,7 @@ module Implementation where
   toData : ∀ {A : Set} → A → D
   toData = toData' -- fix this
 
-  PlutusScript = ℕ × (Data → Data → Bool)
+  PlutusScript = ℕ × (List Data → Bool)
   ScriptHash = ℕ
 
   ExUnits      = ℕ × ℕ
@@ -199,6 +199,9 @@ open TransactionStructure it
 indexOfTxInImp : TxIn → ℙ TxIn → Maybe Ix
 indexOfTxInImp x y = lookupᵐ? (fromListᵐ (setToList y)) (proj₁ x)
 
+-- runScript : CostModel → P2Script → ExUnits → List Data → Bool
+-- runScript x x₁ x₂ x₃ = {!x₃!}
+
 SVAbstractFunctions : AbstractFunctions
 SVAbstractFunctions = record
   { Implementation
@@ -212,9 +215,7 @@ SVAbstractFunctions = record
     ; indexOfVote     = λ _ _ → nothing
     ; indexOfProposal = λ _ _ → nothing
     }
-  ; runPLCScript = λ { x x₁ x₂ [] → false ;
-                     x x₁ x₂ (x₃ ∷ []) → false ;
-                     x x₁ x₂ (datum ∷ redeemer ∷ x₅) → (proj₂ x₁) datum redeemer}
+  ; runPLCScript = λ { x x₁ x₂ x₃ → proj₂ x₁ x₃ }
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions

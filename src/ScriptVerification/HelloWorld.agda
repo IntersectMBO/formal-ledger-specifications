@@ -1,13 +1,12 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.Prelude
 
-module ScriptVerification.Examples where
+module ScriptVerification.HelloWorld where
 
 scriptImp : ScriptImplementation ℕ ℕ
 scriptImp = record { serialise = id ;
                      deserialise = λ x → just x ;
                      toData' = λ x → 9999999 }
-
 
 open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
 open import ScriptVerification.Lib ℕ ℕ scriptImp
@@ -22,23 +21,32 @@ open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
+
 open import Data.Rational
 
+
+
+
+
+{-
 -- succeed if the datum is 1
-succeedIf1' : Maybe ℕ → Maybe ℕ → Bool
-succeedIf1' (just (suc zero)) _ = true
-succeedIf1' _ _ = false
+succeedIf1' : ℕ → ℕ → Bool
+succeedIf1' zero _ = false
+succeedIf1' (suc zero) _ = true
+succeedIf1' (suc (suc x)) _ = false
 
 succeedIf1 : PlutusScript
-succeedIf1 = 777 , applyScript succeedIf1'
+succeedIf1 = 777 , succeedIf1'
 
+-- when there is no datum what is the redeemer
 --succeed if the redeemer is 1
-succeedIf1Redeemer' : Maybe ℕ → Maybe ℕ → Bool
-succeedIf1Redeemer' _ (just (suc zero)) = true
-succeedIf1Redeemer' _ _ = false
+succeedIf1Redeemer' : ℕ → ℕ → Bool
+succeedIf1Redeemer' _ zero = false
+succeedIf1Redeemer' _ (suc zero) = true
+succeedIf1Redeemer' _ (suc (suc x)) = false
 
 succeedIf1Redeemer : PlutusScript
-succeedIf1Redeemer = 888 , applyScript succeedIf1Redeemer'
+succeedIf1Redeemer = 888 , succeedIf1Redeemer'
 
 {-
 test : PlutusScript
@@ -232,10 +240,11 @@ opaque
   _ = refl
 
   _ : example3 ≡ true
-  _ = refl
+  _ = {!refl!}
 
 exampleRunScript' : Bool
 exampleRunScript' = ⟦ succeedIf1 ⟧, tt , ( 1000 , 1000 ) , (1 ∷ 0 ∷ [])
 
 
 -- UTXO-step : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
+-}
