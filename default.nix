@@ -50,10 +50,10 @@ let
     pname = "agda-stdlib-meta";
     version = "2.0-rc1";
     src = fetchFromGitHub {
-      repo = "agda-stdlib-meta";
-      owner = "omelkonian";
-      rev = "v2.0-rc1";
-      sha256 = "k9hQrNfLa3v0i0UXKrdVoasDm6GZflTweUuwykUE5pU=";
+      repo = "stdlib-meta";
+      owner = "input-output-hk";
+      rev = "4fc4b1ed6e47d180516917d04be87cbacbf7d314";
+      sha256 = "T+9vwccbDO1IGBcGLjgV/fOt+IN14KEV9ct/J6nQCsM=";
     };
     meta = { };
     libraryFile = "agda-stdlib-meta.agda-lib";
