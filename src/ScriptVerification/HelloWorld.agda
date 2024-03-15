@@ -3,127 +3,49 @@ open import ScriptVerification.Prelude
 
 module ScriptVerification.HelloWorld where
 
-scriptImp : ScriptImplementation ℕ ℕ
+scriptImp : ScriptImplementation String String
 scriptImp = record { serialise = id ;
                      deserialise = λ x → just x ;
-                     toData' = λ x → 9999999 }
+                     toData' = λ x → "dummy" }
 
-open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
-open import ScriptVerification.Lib ℕ ℕ scriptImp
+open import ScriptVerification.LedgerImplementation String String scriptImp
+open import ScriptVerification.Lib String String scriptImp
 
 open Implementation
 
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
--- open import Ledger.UTxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
 
-open import Data.Rational
+-- true if redeemer is "Hello World"
+helloWorld' : Maybe String → Maybe String → Bool
+helloWorld' Nothing (just s) = ⌊ (s ≟ "Hello World") ⌋
+helloWorld' _ _ = false
 
-
-
-
-
-{-
--- succeed if the datum is 1
-succeedIf1' : ℕ → ℕ → Bool
-succeedIf1' zero _ = false
-succeedIf1' (suc zero) _ = true
-succeedIf1' (suc (suc x)) _ = false
-
-succeedIf1 : PlutusScript
-succeedIf1 = 777 , succeedIf1'
-
--- when there is no datum what is the redeemer
---succeed if the redeemer is 1
-succeedIf1Redeemer' : ℕ → ℕ → Bool
-succeedIf1Redeemer' _ zero = false
-succeedIf1Redeemer' _ (suc zero) = true
-succeedIf1Redeemer' _ (suc (suc x)) = false
-
-succeedIf1Redeemer : PlutusScript
-succeedIf1Redeemer = 888 , succeedIf1Redeemer'
-
-{-
-test : PlutusScript
-test x y with deserialise x
-... | just x₁ = succeedIf1' x₁ y
-... | nothing = false
--}
+helloWorld : PlutusScript
+helloWorld = 777 , applyScript helloWorld'
 
 initEnv : UTxOEnv
 initEnv = createEnv 0
 
-initState : UTxO
-initState = fromList' (createInitUtxoState 5 10)
-
--- initTxOut for script with datum reference
 initTxOut : TxOut
 initTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 10 , just 99
-
--- initTxOut for script without datum reference
-initTxOut' : TxOut
-initTxOut' = inj₁ (record { net = tt ;
-                           pay = inj₂ 888 ;
-                           stake = inj₂ 888 })
                            , 10 , nothing
 
 script : TxIn × TxOut
 script = (6 , 6) , initTxOut
 
-script' : TxIn × TxOut
-script' = (6 , 6) , initTxOut'
+initState : UTxO
+initState = fromList' (script ∷ (createInitUtxoState 5 10))
 
-initState' : UTxO
-initState' = fromList' (script ∷ (createInitUtxoState 5 10))
-
-initState'' : UTxO
-initState'' = fromList' (script' ∷ (createInitUtxoState 5 10))
-
-exTx : Tx
-exTx = record { body = record
-                         { txins = ∅
-                         ; txouts = fromListIx ((6 , initTxOut) ∷ [])
-                         ; txfee = 10
-                         ; mint = 0
-                         ; txvldt = nothing , nothing
-                         ; txcerts = []
-                         ; txwdrls = ∅
-                         ; txvote = []
-                         ; txprop = []
-                         ; txdonation = 0
-                         ; txup = nothing
-                         ; txADhash = nothing
-                         ; netwrk = just tt
-                         ; txsize = 10
-                         ; txid = 6
-                         ; collateral = ∅
-                         ; reqSigHash = ∅ -- maybe need this
-                         ; scriptIntHash = nothing -- not sure
-                         } ;
-                wits = record { vkSigs = ∅ ;
-                                scripts = ∅ ;
-                                txdats = ∅ ;
-                                txrdmrs = ∅ } ;
-                isValid = false ;
-                txAD = nothing }
-
-
-getState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-getState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) exTx initState)
-
-example : Bool
-example = evalScripts exTx (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) exTx initState)
-
-exTx' : Tx
-exTx' = record { body = record
+succeedTx : Tx
+succeedTx = record { body = record
                          { txins = Ledger.Prelude.fromList ((6 , 6) ∷ [])
                          ; txouts = ∅ -- fromListIx ((6 , initTxOut) ∷ [])
                          ; txfee = 10
@@ -144,30 +66,14 @@ exTx' = record { body = record
                          ; scriptIntHash = nothing -- not sure
                          } ;
                 wits = record { vkSigs = ∅ ;
-                                scripts = Ledger.Prelude.fromList ((inj₂ succeedIf1) ∷ []) ;
-                                txdats = fromListᵐ ((99 , 1) ∷ []) ;
-                                txrdmrs = fromListᵐ (((Spend , 6) , 5 , (5 , 5)) ∷ []) } ;
+                                scripts = Ledger.Prelude.fromList ((inj₂ helloWorld) ∷ []) ;
+                                txdats = ∅ ;
+                                txrdmrs = fromListᵐ (((Spend , 6) , "Hello World" , (5 , 5)) ∷ []) } ;
                 isValid = true ;
                 txAD = nothing }
 
-getState' : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-getState' = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) exTx' initState')
-
-getScripts : _
-getScripts = scriptsNeeded initState' (Tx.body exTx')
-
-helpMe : Maybe (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel) → Bool
-helpMe (just x) = true
-helpMe nothing = false
-
-example2 : Bool
-example2 = evalScripts exTx' (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) exTx' initState')
-
-exampleDatum : List Datum
-exampleDatum = getDatum exTx' initState' (Spend (6 , 6))
-
-exTx'' : Tx
-exTx'' = record { body = record
+failTx : Tx
+failTx = record { body = record
                          { txins = Ledger.Prelude.fromList ((6 , 6) ∷ [])
                          ; txouts = ∅ -- fromListIx ((6 , initTxOut) ∷ [])
                          ; txfee = 10
@@ -188,63 +94,37 @@ exTx'' = record { body = record
                          ; scriptIntHash = nothing -- not sure
                          } ;
                 wits = record { vkSigs = ∅ ;
-                                scripts = Ledger.Prelude.fromList ((inj₂ succeedIf1Redeemer) ∷ []) ;
+                                scripts = Ledger.Prelude.fromList ((inj₂ helloWorld) ∷ []) ;
                                 txdats = ∅ ;
-                                txrdmrs = fromListᵐ (((Spend , 6) , 1 , (5 , 5)) ∷ []) } ;
+                                txrdmrs = fromListᵐ (((Spend , 6) , "Hello World!" , (5 , 5)) ∷ []) } ;
                 isValid = true ;
                 txAD = nothing }
 
+succeedState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
+succeedState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) succeedTx initState)
 
-example3 : Bool
-example3 = evalScripts exTx'' (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) exTx'' initState'')
+succeedExample : Bool
+succeedExample = evalScripts succeedTx succeedState
 
-open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+failState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
+failState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) failTx initState)
 
-initUtxoState : UTxOState
-initUtxoState = ⟦ initState'' , 0 , fromListᵐ [] , 0 ⟧ᵘ
-
-testThis : ComputationResult String UTxOState
-testThis = UTXO-step initEnv initUtxoState exTx''
-
-isSuccess : ComputationResult String UTxOState → Bool
-isSuccess (success x) = true
-isSuccess (failure x) = false
-
-exampleDatum' : List Datum
-exampleDatum' = getDatum exTx'' initState'' (Spend (6 , 6))
+failExample : Bool
+failExample = evalScripts failTx failState
 
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
 
-  _ : getState ≡ []
+  -- need to check that the state is non-empty otherwise evalScripts will always return true
+  _ : notEmpty succeedState ≡ ⊤
   _ = refl
 
-  _ : example ≡ true
+  _ : succeedExample ≡ true
   _ = refl
 
-  test2 : lookupScriptHash 777 exTx' ≡ just (inj₂ succeedIf1)
-  test2 = refl
+  _ : notEmpty failState ≡ ⊤
+  _ = refl
 
-  _ : exampleDatum ≡ 1 ∷ []
+  _ : failExample ≡ false
   _ = refl
-
-  -- _ : getState' ≡ []
-  -- _ = {!refl!}
-  --
-
-  _ : exampleDatum' ≡ []
-  _ = refl
-
-  _ : example2 ≡ true
-  _ = refl
-
-  _ : example3 ≡ true
-  _ = {!refl!}
-
-exampleRunScript' : Bool
-exampleRunScript' = ⟦ succeedIf1 ⟧, tt , ( 1000 , 1000 ) , (1 ∷ 0 ∷ [])
-
-
--- UTXO-step : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
--}

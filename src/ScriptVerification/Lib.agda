@@ -97,6 +97,10 @@ applyScript f (_ ∷ []) = f nothing nothing
 applyScript f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer)
 applyScript f (datum ∷ redeemer ∷ valcontext ∷ _) = f (just datum) (just redeemer)
 
+notEmpty : ∀ {A : Set} → List A → Set
+notEmpty [] = ⊥
+notEmpty (x ∷ xs) = ⊤
+
 {-
 createTx : ℙ TxIn
            → List TxOut

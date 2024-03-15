@@ -16,13 +16,11 @@ open Implementation
 
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
--- open import Ledger.UTxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
-open import Data.Rational
 
 -- succeed if the datum is 1
 succeedIf1' : Maybe ℕ → Maybe ℕ → Bool
