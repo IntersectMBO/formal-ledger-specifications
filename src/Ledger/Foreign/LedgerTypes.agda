@@ -60,8 +60,10 @@ DataHash      = ⊤
 Datum         = ⊤
 Redeemer      = ⊤
 Anchor        = ⊤
+Script        = ⊤
 
 TxIn          = Pair TxId Ix
+--TxOut         = Pair Addr $ Pair Coin $ Pair (Maybe (Either Datum DataHash)) $ Maybe Script
 TxOut         = Pair Addr $ Pair Coin $ Maybe (Either Datum DataHash)
 UTxO          = HSMap TxIn TxOut
 
@@ -85,8 +87,11 @@ ExUnits = Pair ℕ ℕ
   type Redeemer      = ()
   type Anchor        = ()
 
+  type Script        = ()
+
   type TxIn  = (TxId, Ix)
-  type TxOut = (Addr, (Coin, Maybe DataHash))
+  -- type TxOut = (Addr, (Coin, (Maybe (Datum | DataHash), Maybe Script)))
+  type TxOut = (Addr, (Coin, Maybe (Datum | DataHash)))
   type UTxO  = [(TxIn, TxOut)]
   type Hash  = Integer
 
@@ -163,6 +168,7 @@ data TxCert : Set where
 
 record TxBody : Set where
   field txins    : List TxIn
+        refInputs : List TxIn
         txouts   : HSMap Ix TxOut
         txfee    : Coin
         txvldt   : Pair (Maybe ℕ) (Maybe ℕ)

@@ -11,7 +11,7 @@ open import Relation.Binary.Morphism.Structures
 
 open import Foreign.Convertible
 
-import Foreign.Haskell as F
+-- import Foreign.Haskell as F
 import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Crypto
@@ -276,6 +276,7 @@ instance
   Convertible-TxBody = λ where
     .to txb → let open TxBody txb in record
       { txins  = to txins
+      ; refInputs = to refInputs
       ; txouts = to txouts
       ; txfee  = txfee
       ; txvldt = to txvldt
@@ -288,6 +289,7 @@ instance
       }
     .from txb → let open F.TxBody txb in record
       { txins      = from txins
+      ; refInputs  = from refInputs
       ; txouts     = from txouts
       ; txcerts    = from txcerts
       ; mint       = ε -- tokenAlgebra only contains ada atm, so mint is surely empty

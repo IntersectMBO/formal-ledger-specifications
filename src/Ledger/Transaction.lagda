@@ -116,7 +116,7 @@ the transaction body are:
 \begin{code}
   record TxBody : Set where
     field txins          : ℙ TxIn
-          -- refInputs      : ℙ TxIn
+          refInputs      : ℙ TxIn
           txouts         : Ix ⇀ TxOut
           txfee          : Coin
           mint           : Value
