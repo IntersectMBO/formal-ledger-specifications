@@ -64,9 +64,10 @@ refScripts : Tx → UTxO → ℙ Script
 refScripts tx utxo = ∅ -- TODO: implement when we do Babbage
   where
    open Tx; open TxBody; open TxWitnesses
-   txins' refInputs' : ℙ TxIn
+   txins' : ℙ TxIn
    txins' = tx .body .txins
-   refInputs' = tx .body .refInputs
+   -- refInputs' : ℙ TxIn
+   -- refInputs' = tx .body .refInputs
    -- txout' : TxOut
    -- txout' = {!!} -- utxo (txins' ∪ refInputs')
    -- goal : ℙ Script

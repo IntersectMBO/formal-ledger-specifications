@@ -62,7 +62,7 @@ Redeemer      = ⊤
 Anchor        = ⊤
 
 TxIn          = Pair TxId Ix
-TxOut         = Pair Addr $ Pair Coin $ Maybe DataHash
+TxOut         = Pair Addr $ Pair Coin $ Maybe (Either Datum DataHash)
 UTxO          = HSMap TxIn TxOut
 
 Hash          = ℕ
