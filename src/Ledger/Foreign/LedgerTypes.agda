@@ -9,6 +9,7 @@ open import Prelude
 
 open import Foreign.Haskell
 open import Foreign.Haskell.Coerce
+open import Foreign.Haskell.Either
 
 {-# FOREIGN GHC
   import GHC.Generics (Generic)
