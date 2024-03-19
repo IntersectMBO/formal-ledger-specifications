@@ -48,8 +48,9 @@ chkRqTx tb tx = ∀[ txrid ∈ tx .Tx.body .TxBody.requiredTxs ] Any (txrid ≡_
 -- this checks that when a transaction in the zone spends an output of another transaction
 -- in the zone, it cannot also spend a fulfill in that zone for the same transaction
 chkLinear : List Tx → Set
-chkLinear tb = ∀[ tx1 ∈ toSetTx tb ] (∀[ tx2 ∈ toSetTx tb ] ((tx2 .Tx.body .TxBody.txid , _) ∈ tx1 .Tx.body .TxBody.txins
-  → ¬ (tx2 .Tx.body .TxBody.txid , _) ∈ tx1 .Tx.body .TxBody.fulfills ))
+chkLinear tb = tb ≡ tb
+-- ∀[ tx1 ∈ toSetTx tb ] (∀[ tx2 ∈ toSetTx tb ] (tx2 .Tx.body .TxBody.txid ∈ map proj (tx1 .Tx.body .TxBody.txins)
+--   → ¬ tx2 .Tx.body .TxBody.txid ∈ map proj (tx1 .Tx.body .TxBody.fulfills) ))
 
 \end{code}
 \caption{Functions used for zone validation}
@@ -94,6 +95,7 @@ private variable
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ tb ,ZONE⦈ ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , certState' ⟧ˡ
   ZONE-N :
+    -- TODO apply *collateral collection* for tx, not tx
     Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ [ tx ] ,LEDGERS⦈
       ⟦ ⟦ (utxo' , ∅) , fees' , deposits' , donations' ⟧ᵘᵘ , govSt' , certState' ⟧ˡˡ
     ∙ Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ (lsV ++ [ tx ]) ,LEDGERS⦈ _
