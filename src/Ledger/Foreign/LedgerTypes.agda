@@ -185,6 +185,7 @@ record TxBody : Set where
 {-# FOREIGN GHC
   data TxBody = MkTxBody
     { txins  :: [TxIn]
+    , refInputs :: [TxIn]
     , txouts :: [(Ix, TxOut)]
     , txfee  :: Coin
     , txvldt :: (Maybe Integer, Maybe Integer)
