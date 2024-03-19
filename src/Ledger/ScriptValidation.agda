@@ -129,9 +129,7 @@ certScripts c@(regdrep   (inj₂ y) _ _)   | yes p = just (Cert c , y)
 certScripts c@(deregdrep (inj₁ x))       | yes p = nothing
 certScripts c@(deregdrep (inj₂ y))       | yes p = just (Cert c , y)
 
--- private
-
-module _ where
+private
   scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
   scriptsNeeded utxo txb
     = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) txins

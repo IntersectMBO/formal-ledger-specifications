@@ -23,14 +23,14 @@ open import Interface.HasOrder.Instance
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
-  ∀Hashable = λ where .hash → id; .hashInj refl → refl
+  ∀Hashable = λ where .hash → id
 
   ∀isHashableSet : isHashableSet A
   ∀isHashableSet = mkIsHashableSet A
 
 instance
   Hashable-⊤ : Hashable ⊤ ℕ
-  Hashable-⊤ = λ where .hash tt → 0; .hashInj _ → refl
+  Hashable-⊤ = λ where .hash tt → 0
 
 module Implementation where
   Network          = ⊤

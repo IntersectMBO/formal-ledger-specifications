@@ -14,5 +14,5 @@ import MidnightExample.HSLedger
 -- ** not currently used
 import Tactic.DeriveComp
 
--- ** Verifiying Script Example
+-- ** Verifying Script Examples
 import ScriptVerification.Examples

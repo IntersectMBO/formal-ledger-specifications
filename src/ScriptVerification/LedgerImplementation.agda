@@ -199,9 +199,6 @@ open TransactionStructure it
 indexOfTxInImp : TxIn → ℙ TxIn → Maybe Ix
 indexOfTxInImp x y = lookupᵐ? (fromListᵐ (setToList y)) (proj₁ x)
 
--- runScript : CostModel → P2Script → ExUnits → List Data → Bool
--- runScript x x₁ x₂ x₃ = {!x₃!}
-
 SVAbstractFunctions : AbstractFunctions
 SVAbstractFunctions = record
   { Implementation
@@ -219,3 +216,4 @@ SVAbstractFunctions = record
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions
+

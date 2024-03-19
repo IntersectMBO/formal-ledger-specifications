@@ -105,13 +105,14 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
-  minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
-                     + txscriptfee (pp .prices) (totExUnits tx)
-                     + pp .minFeeRefScriptCoinsPerByte
-                       *↓ ∑ˢ[ x ← mapˢ scriptSize $ refScripts tx utxo ] x
-                         -- ∑ˢ[ x ← refScripts tx utxo ] scriptSize x
+  open import Axiom.Set.Sum
 
+  minfee : PParams → UTxO → Tx → Coin
+  minfee pp utxo tx  =
+    pp .a * tx .body .txsize + pp .b
+    + txscriptfee (pp .prices) (totExUnits tx)
+    + pp .minFeeRefScriptCoinsPerByte
+    *↓ ∑[ x ← (mapValues scriptSize $ setToHashMap (refScripts tx utxo)) ] x
 \end{code}
 \begin{code}[hide]
 module _ where
