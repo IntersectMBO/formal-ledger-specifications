@@ -100,12 +100,17 @@ the transaction body are:
 \end{code}
 \begin{NoConway}
 \emph{Derived types}
+
 \begin{code}
   TxIn     = TxId × Ix
   TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
   UTxO     = TxIn ⇀ TxOut
+  Request  = TxOut
+  Fulfill  = TxIn
+  FRxO     = Fulfill ⇀ Request
+  UTxOTemp = UTxO × FRxO
   Wdrl     = RwdAddr ⇀ Coin
-  RdmrPtr  = Tag × Ix
+  RdmrPtr = Tag × Ix
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
@@ -134,14 +139,17 @@ the transaction body are:
           collateral     : ℙ TxIn
           reqSigHash     : ℙ KeyHash
           scriptIntHash  : Maybe ScriptHash
+          fulfills       : ℙ Fulfill
+          requests       : Ix ⇀ Request
+
 \end{code}
 \begin{NoConway}
 \begin{code}
   record TxWitnesses : Set where
-    field vkSigs   : VKey ⇀ Sig
-          scripts  : ℙ Script
-          txdats   : DataHash ⇀ Datum
-          txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
+    field vkSigs    : VKey ⇀ Sig
+          scripts   : ℙ Script
+          txdats    : DataHash ⇀ Datum
+          txrdmrs   : RdmrPtr  ⇀ Redeemer × ExUnits
 
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
@@ -197,6 +205,9 @@ the transaction body are:
     else
       nothing
     where m = setToHashMap (txscripts tx utxo)
+
+  chkIsValid : Tx → Set
+  chkIsValid tx = tx .Tx.isValid ≡ true
 \end{code}
 \caption{Functions related to transactions}
 \label{fig:defs:transaction-funs}

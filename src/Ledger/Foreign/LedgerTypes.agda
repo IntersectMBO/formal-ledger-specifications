@@ -78,6 +78,11 @@ TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Pair (Maybe (Either Datum DataHash)) $ Maybe Script
 UTxO          = HSMap TxIn TxOut
 
+Request  = Pair Addr $ Pair Coin $ Maybe DataHash
+Fulfill  = Pair TxId Ix
+FRxO     = HSMap Fulfill Request
+UTxOTemp = Pair UTxO FRxO
+
 Hash          = ℕ
 
 GovActionID   = Pair TxId ℕ
@@ -116,8 +121,19 @@ ProtVer = Pair ℕ ℕ
   type Script        = ()
 
   type TxIn  = (TxId, Ix)
+<<<<<<< HEAD
   type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
   type UTxO  = HSMap TxIn TxOut
+=======
+  type TxOut = (Addr, (Coin, Maybe DataHash))
+  type UTxO  = [(TxIn, TxOut)]
+
+  Request  = TxOut
+  Fulfill  = TxIn
+  FRxO     = [(Fulfill, Request)]
+  UTxOTemp = UTxO × FRxO
+
+>>>>>>> babel first attempt
   type Hash  = Integer
 
   data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic)
@@ -208,6 +224,9 @@ record TxBody : Set where
         reqSigHash     : List Hash
         scriptIntHash  : Maybe Hash
         txcerts : List TxCert
+        fulfills       : ℙ Fulfill
+        requests       : HSMap Ix TxOut
+        requiredTxs    : List TxId
 {-# FOREIGN GHC
   data TxBody = MkTxBody
     { txins  :: [TxIn]
@@ -221,6 +240,9 @@ record TxBody : Set where
     , reqSigHash    :: [Hash]
     , scriptIntHash :: Maybe Hash
     , txcerts :: [TxCert]
+    , fulfills       :: ℙ Fulfill
+    , requests       :: [(Ix, Request)]
+    , requiredTxs    :: List TxId
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC TxBody = data TxBody (MkTxBody) #-}
@@ -474,7 +496,7 @@ GovState = List (Pair GovActionID GovActionState)
     , gvVote   :: Vote
     , gvAnchor :: Maybe Anchor
     }
-  
+
   data GovProposal = MkGovProposal
     { gpAction     :: GovAction
     , gpPrevAction :: GovActionID
@@ -722,3 +744,14 @@ record DelegEnv : Set where
 #-}
 {-# COMPILE GHC DelegEnv = data DelegEnv (MkDelegEnv) #-}
 
+record UTxOStateTemp : Set where
+  field utxoTemp : UTxO
+        feesTemp : Coin
+{-# FOREIGN GHC
+  data UTxOStateTemp = MkUTxOStateTemp
+    { utxoTemp :: UTxO
+    , feesTemp :: Coin
+    } deriving (Show, Generic)
+  instance ToExpr UTxOStateTemp
+#-}
+{-# COMPILE GHC UTxOStateTemp = data UTxOStateTemp (MkUTxOStateTemp) #-}

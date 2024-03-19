@@ -20,6 +20,8 @@ open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
+open import Ledger.Batch txs abs
+
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -27,7 +29,7 @@ record ChainState : Set where
   field newEpochState  : NewEpochState
 
 record Block : Set where
-  field ts    : List Tx
+  field zns    : List (List Tx)
         slot  : Slot
 \end{code}
 \caption{Definitions CHAIN transition system}
@@ -88,6 +90,7 @@ calculateStakeDistrs ls =
 data
 \end{code}
 \begin{figure*}[h]
+
 \begin{code}
   _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set
 \end{code}
@@ -105,7 +108,7 @@ data
        record { stakeDistrs = calculateStakeDistrs ls }
          ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es ⟧ˡᵉ
-         ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+         ⊢ ls ⇀⦇ zns ,ZONES⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
