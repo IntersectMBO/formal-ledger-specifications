@@ -398,10 +398,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOState s
     in
     ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙ refInputs ⊆ dom utxo
-    ∙ inInterval slot txvldt                 ∙ feesOK pp tx utxo ≡ true
-    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
-    ∙ txsize ≤ maxTxSize pp
+    ∙ refInputs ⊆ dom utxo                   ∙ inInterval slot txvldt
+    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         inject (((serSize (getValue txout)) + 160) * coinsPerUTxOWord pp) ≤ᵗ getValue txout
@@ -418,8 +417,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r , h)
+pattern UTXO-inductive⋯ tx Γ s x y u z w k l m v n o p q r h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , u , z , w , k , l , m , v , n , o , p , q , r , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
