@@ -78,7 +78,7 @@ private variable
   donations donations' : Coin
   govSt govSt' : GovState
   certState certState' : CertState
-  tb : List Tx
+  tb lsV : List Tx
   tx : Tx
 \end{code}
 
@@ -96,8 +96,9 @@ private variable
   ZONE-N :
     Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ [ tx ] ,LEDGERS⦈
       ⟦ ⟦ (utxo' , ∅) , fees' , deposits' , donations' ⟧ᵘᵘ , govSt' , certState' ⟧ˡˡ
-    ∙ Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ tb ,LEDGERS⦈ _
-    ∙ tb ≡ _ ++ [ tx ]
+    ∙ Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ (lsV ++ [ tx ]) ,LEDGERS⦈ _
+    ∙ tx .Tx.isValid ≡ false
+    ∙ All chkIsValid (toSetTx lsV)
     -- TODO check overpaying collateral
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ tb ,ZONE⦈ ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , certState' ⟧ˡ
