@@ -90,7 +90,7 @@ ExUnits = Pair ℕ ℕ
   type Script        = ()
 
   type TxIn  = (TxId, Ix)
-  type TxOut = (Addr, (Coin, (Maybe (Datum | DataHash), Maybe Script)))
+  type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
   -- type TxOut = (Addr, (Coin, Maybe (Datum | DataHash)))
   type UTxO  = [(TxIn, TxOut)]
   type Hash  = Integer
