@@ -54,6 +54,8 @@ module Implementation where
   toData : ∀ {A : Set} → A → Data
   toData _ = tt
 
+  --Script = ⊤
+
   PlutusScript = ⊤
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
@@ -119,15 +121,15 @@ instance _ = HSCrypto
 
 -- No scripts for now
 
-open import Ledger.Script it it
-
+open import Ledger.Script it it renaming (Timelock to TL)
+-- using (ScriptStructure; PlutusStructure)
 HSScriptStructure : ScriptStructure
 HSScriptStructure = record
   { hashRespectsUnion = hashRespectsUnion
   ; ps = HSP2ScriptStructure }
   where
   postulate
-    instance Hashable-Timelock : Hashable Timelock ℕ
+    instance Hashable-Timelock : Hashable TL ℕ
 
     hashRespectsUnion : ∀ {A B ℍ}
       → Hashable A ℍ → Hashable B ℍ
@@ -164,6 +166,7 @@ HSGovStructure = record
   ; crypto         = HSCrypto
   }
 instance _ = HSGovStructure
+
 
 open import Ledger.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
 open import Ledger.Deleg it hiding (PoolParams; DCert)
@@ -202,7 +205,7 @@ HSAbstractFunctions = record
   }
 instance _ = HSAbstractFunctions
 
-open TransactionStructure it
+open TransactionStructure it -- using (Addr; Credential; GovRole; VDeleg; PoolParams; Anchor; Script; DCert)
 open import Ledger.Utxo it it
 open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it
@@ -239,6 +242,11 @@ instance
   Convertible-Anchor = λ where
     .to _ → tt
     .from tt → record { url = "bogus" ; hash = tt }
+
+  Convertible-Script : Convertible Script F.Script
+  Convertible-Script = λ where
+    .to _ → tt
+    .from tt → inj₂ tt
 
   Convertible-DCert : Convertible DCert F.TxCert
   Convertible-DCert = autoConvertible

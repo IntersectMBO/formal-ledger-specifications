@@ -44,9 +44,9 @@ indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x) nothing (rdptr body s
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
 getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
   maybe
-    (λ { (_ , _ , just (inj₂ h))  → maybe [_] [] (lookupᵐ? txdats h)
-       ; (_ , _ , just (inj₁ d))  → [ d ]
-       ; (_ , _ , nothing) → [] })
+    (λ { (_ , _ , just (inj₂ h), _)  → maybe [_] [] (lookupᵐ? txdats h)
+       ; (_ , _ , just (inj₁ d), _)  → [ d ]
+       ; (_ , _ , nothing , _) → [] })
     []
     (lookupᵐ? utxo txin)
 getDatum tx utxo _ = []

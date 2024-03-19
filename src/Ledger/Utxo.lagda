@@ -40,14 +40,42 @@ infixl 7 _*↓_
 _*↓_ : ℚ.ℚ → ℕ → ℕ
 q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 
+refScripts : Tx → UTxO → ℙ Script
+refScripts tx utxo = goal -- TODO: implement when we do Babbage
+  where
+  -- The Babbage pdf spec says this should be
+  -- {(hash s , s) | (_ ,_ ,_ , s) ∈ utxo (spendInputs tx ∪ refInputs tx )}
+  -- but ℙ Script is not a set of pairs in ScriptHash × Script, it's just a
+  -- set of scripts, so I will assume the spec is wrong and that we should
+  -- be returning a set of scripts, namely,
+  -- {s | (_ ,_ ,_ , s) ∈ utxo (spendInputs tx ∪ refInputs tx )}
+    open Tx; open TxBody (tx .body)
+    goal : ℙ (Timelock ⊎ P2Script)
+    goal = mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+
+txscripts : Tx → UTxO → ℙ Script
+txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+  where open Tx; open TxWitnesses
+
 isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
 isTwoPhaseScriptAddress tx utxo a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx
-                 then (λ {s} → isP2Script s)
-                 else false)
+    (λ {p} → if lookupScriptHash (getScriptHash a p) tx then
+               (λ {s} → isP2Script s
+                        ∧ validatorHash a
+                        ∧ s ∈ᵇ txscripts tx utxo)
+             else false)
   else
     false
+  where
+  -- The pdf spec does not specify what the following function should test for;
+  -- even worse the types don't make sense in the pdf spec, it says we should be
+  -- testing for (validatorHash a , s) ∈ txscripts tx utxo, but txsripts returns
+  -- a set of scripts, not a set of pairs in ScriptHash × Script... so I'm just
+  -- going to set validatorHash as "true" for now and pretend the spec says we
+  -- should be testing for "validatorHash a" and "s ∈ txscripts tx utxo".
+  validatorHash : Addr → Bool
+  validatorHash a = true
 
 totExUnits : Tx → ExUnits
 totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
@@ -60,22 +88,6 @@ utxoEntrySizeWithoutVal = 8
 utxoEntrySize : TxOut → MemoryEstimate
 utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValue o)
 
-refScripts : Tx → UTxO → ℙ Script
-refScripts tx utxo = ∅ -- TODO: implement when we do Babbage
-  where
-   open Tx; open TxBody; open TxWitnesses
-   txins' : ℙ TxIn
-   txins' = tx .body .txins
-   -- refInputs' : ℙ TxIn
-   -- refInputs' = tx .body .refInputs
-   -- txout' : TxOut
-   -- txout' = {!!} -- utxo (txins' ∪ refInputs')
-   -- goal : ℙ Script
-   -- goal = {!!}
-
-txscripts : Tx → UTxO → ℙ Script
-txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
-  where open Tx; open TxWitnesses
 
 open PParams
 \end{code}
@@ -386,10 +398,13 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOState s
     in
     ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
+    ∙ refInputs ⊆ dom utxo
     ∙ inInterval slot txvldt                 ∙ feesOK pp tx utxo ≡ true
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙ txsize ≤ maxTxSize pp
 
+    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
+        inject (((serSize (getValue txout)) + 160) * coinsPerUTxOWord pp) ≤ᵗ getValue txout
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]

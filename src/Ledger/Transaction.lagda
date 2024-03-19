@@ -72,10 +72,10 @@ the transaction body are:
   open EpochStructure epochStructure public
   open Ledger.Script crypto epochStructure public
 
-  field scriptStructure : _
-  open ScriptStructure scriptStructure public
+  field scriptStructure : ScriptStructure
+  open ScriptStructure scriptStructure public -- using (ps; Script; P1Script; Hashable-Script; P2Script)
   open Ledger.PParams crypto epochStructure scriptStructure public
-
+  open PlutusStructure ps public using ()
   field govParams : _
   open GovParams govParams public
 
@@ -102,7 +102,7 @@ the transaction body are:
 \emph{Derived types}
 \begin{code}
   TxIn     = TxId × Ix
-  TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) -- × Maybe Script
+  TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
   UTxO     = TxIn ⇀ TxOut
   Wdrl     = RwdAddr ⇀ Coin
   RdmrPtr  = Tag × Ix
