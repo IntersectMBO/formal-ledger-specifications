@@ -93,8 +93,8 @@ exTx = record { body = record
                          ; txsize = 10
                          ; txid = 6
                          ; collateral = ∅
-                         ; reqSigHash = ∅ -- maybe need this
-                         ; scriptIntHash = nothing -- not sure
+                         ; reqSigHash = ∅
+                         ; scriptIntHash = nothing
                          } ;
                 wits = record { vkSigs = ∅ ;
                                 scripts = ∅ ;
@@ -169,8 +169,8 @@ exTx'' = record { body = record
                          ; txsize = 10
                          ; txid = 7
                          ; collateral = ∅
-                         ; reqSigHash = ∅ -- maybe need this
-                         ; scriptIntHash = nothing -- not sure
+                         ; reqSigHash = ∅
+                         ; scriptIntHash = nothing
                          } ;
                 wits = record { vkSigs = ∅ ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ succeedIf1Redeemer) ∷ []) ;
