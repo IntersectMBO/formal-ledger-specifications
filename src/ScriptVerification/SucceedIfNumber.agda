@@ -17,7 +17,6 @@ open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
-
 open Implementation
 
 -- succeed if the datum is 1

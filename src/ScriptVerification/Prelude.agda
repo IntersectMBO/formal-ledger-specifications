@@ -7,4 +7,3 @@ record ScriptImplementation (T D : Set) : Set₁ where
         deserialise : D → Maybe T
         toData' : ∀ {A : Set} → A → D -- fix this
         ⦃ DecEq-Data  ⦄    : DecEq D
-        -- ⦃ DecEq-Script ⦄   : DecEq (D → D → Bool)

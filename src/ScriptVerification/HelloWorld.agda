@@ -10,9 +10,6 @@ scriptImp = record { serialise = id ;
 
 open import ScriptVerification.LedgerImplementation String String scriptImp
 open import ScriptVerification.Lib String String scriptImp
-
-open Implementation
-
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
@@ -20,6 +17,7 @@ open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
+open Implementation
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool

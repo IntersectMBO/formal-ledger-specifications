@@ -6,24 +6,18 @@ module ScriptVerification.LedgerImplementation
   where
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-
 open import Data.Rational using (0ℚ; ½)
-
 open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid)
 open import Relation.Binary.Morphism.Structures
-
 open import Foreign.Convertible
-
 import Foreign.Haskell as F
 import Ledger.Foreign.LedgerTypes as F
-
 open import Ledger.Crypto
 open import Ledger.Transaction
 open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
-
 open import Interface.HasOrder.Instance
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
