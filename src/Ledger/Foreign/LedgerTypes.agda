@@ -65,6 +65,11 @@ TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Maybe DataHash
 UTxO          = HSMap TxIn TxOut
 
+Request  = Pair Addr $ Pair Coin $ Maybe DataHash
+Fulfill  = Pair TxId Ix
+FRxO     = HSMap Fulfill Request
+UTxOTemp = Pair UTxO FRxO
+
 Hash          = ℕ
 
 data Tag : Set where Spend Mint Cert Rewrd Vote Propose : Tag
@@ -88,6 +93,12 @@ ExUnits = Pair ℕ ℕ
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, (Coin, Maybe DataHash))
   type UTxO  = [(TxIn, TxOut)]
+
+  Request  = TxOut
+  Fulfill  = TxIn
+  FRxO     = [(Fulfill, Request)]
+  UTxOTemp = UTxO × FRxO
+
   type Hash  = Integer
 
   data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic)
@@ -175,6 +186,9 @@ record TxBody : Set where
         reqSigHash     : List Hash
         scriptIntHash  : Maybe Hash
         txcerts : List TxCert
+        fulfills       : ℙ Fulfill
+        requests       : HSMap Ix TxOut
+        requiredTxs    : List TxId
 {-# FOREIGN GHC
   data TxBody = MkTxBody
     { txins  :: [TxIn]
@@ -187,6 +201,9 @@ record TxBody : Set where
     , reqSigHash    :: [Hash]
     , scriptIntHash :: Maybe Hash
     , txcerts :: [TxCert]
+    , fulfills       :: ℙ Fulfill
+    , requests       :: [(Ix, Request)]
+    , requiredTxs    :: List TxId
     } deriving (Show, Generic)
   instance ToExpr TxBody
 #-}
@@ -302,3 +319,15 @@ record UTxOState : Set where
   instance ToExpr UTxOState
 #-}
 {-# COMPILE GHC UTxOState = data UTxOState (MkUTxOState) #-}
+
+record UTxOStateTemp : Set where
+  field utxoTemp : UTxO
+        feesTemp : Coin
+{-# FOREIGN GHC
+  data UTxOStateTemp = MkUTxOStateTemp
+    { utxoTemp :: UTxO
+    , feesTemp :: Coin
+    } deriving (Show, Generic)
+  instance ToExpr UTxOStateTemp
+#-}
+{-# COMPILE GHC UTxOStateTemp = data UTxOStateTemp (MkUTxOStateTemp) #-}

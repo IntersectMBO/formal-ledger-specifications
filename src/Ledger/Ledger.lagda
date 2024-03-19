@@ -41,6 +41,12 @@ record LState : Set where
         govSt      : GovState
         certState  : CertState
 
+record LStateTemp : Set where
+  constructor ⟦_,_,_⟧ˡˡ
+  field utxoStTemp     : UTxOStateTemp
+        govStTemp      : GovState
+        certStateTemp  : CertState
+
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₁ txvote ++ map inj₂ txprop
   where open TxBody txb
@@ -50,10 +56,10 @@ txgov txb = map inj₁ txvote ++ map inj₂ txprop
 \begin{code}[hide]
 private variable
   Γ : LEnv
-  s s' s'' : LState
-  utxoSt' : UTxOState
-  govSt' : GovState
-  certState' : CertState
+  s s' s'' : LStateTemp
+  utxoStTemp' : UTxOStateTemp
+  govStTemp' : GovState
+  certStateTemp' : CertState
   tx : Tx
 \end{code}
 
@@ -66,7 +72,7 @@ open CertState
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set
+  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LStateTemp → Tx → LStateTemp → Set
 \end{code}
 \begin{code}[hide]
   where
@@ -76,13 +82,13 @@ data
 
 \begin{figure*}[h]
 \begin{code}
-  LEDGER : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
-    ∙  mapˢ stake (dom txwdrls) ⊆ dom (certState' .dState .voteDelegs)
+  LEDGER : let open LStateTemp s; txb = tx .body; open TxBody txb; open LEnv Γ in
+    ∙  record { LEnv Γ } ⊢ utxoStTemp ⇀⦇ tx ,UTXOW⦈ utxoStTemp'
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certStateTemp ⇀⦇ txcerts ,CERTS⦈ certStateTemp'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govStTemp ⇀⦇ txgov txb ,GOV⦈ govStTemp'
+    ∙  mapˢ stake (dom txwdrls) ⊆ dom (certStateTemp' .dState .voteDelegs)
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoStTemp' , govStTemp' , certStateTemp' ⟧ˡˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}
@@ -92,7 +98,7 @@ unquoteDecl LEDGER-premises = genPremises LEDGER-premises (quote LEDGER)
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set
+_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LStateTemp → List Tx → LStateTemp → Set
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}

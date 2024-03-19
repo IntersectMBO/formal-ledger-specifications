@@ -100,12 +100,16 @@ the transaction body are:
   open Ledger.Deleg             govStructure public
 \end{code}
 \emph{Derived types}
-\AgdaTarget{TxIn, TxOut, UTxO, Wdrl}
+\AgdaTarget{TxIn, TxOut, UTxO, Request, Fulfill, FRxO, UTxOTemp, Wdrl}
 \begin{code}
-  TxIn   = TxId × Ix
-  TxOut  = Addr × Value × Maybe DataHash
-  UTxO   = TxIn ⇀ TxOut
-  Wdrl   = RwdAddr ⇀ Coin
+  TxIn     = TxId × Ix
+  TxOut    = Addr × Value × Maybe DataHash
+  UTxO     = TxIn ⇀ TxOut
+  Request  = TxOut
+  Fulfill  = TxIn
+  FRxO     = Fulfill ⇀ Request
+  UTxOTemp = UTxO × FRxO
+  Wdrl     = RwdAddr ⇀ Coin
 
   RdmrPtr : Set
   RdmrPtr = Tag × Ix
@@ -136,12 +140,15 @@ the transaction body are:
           collateral     : ℙ TxIn
           reqSigHash     : ℙ KeyHash
           scriptIntHash  : Maybe ScriptHash
+          fulfills       : ℙ Fulfill
+          requests       : Ix ⇀ Request
+          requiredTxs    : ℙ TxId
 
   record TxWitnesses : Set where
-    field vkSigs   : VKey ⇀ Sig
-          scripts  : ℙ Script
-          txdats   : DataHash ⇀ Datum
-          txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
+    field vkSigs    : VKey ⇀ Sig
+          scripts   : ℙ Script
+          txdats    : DataHash ⇀ Datum
+          txrdmrs   : RdmrPtr  ⇀ Redeemer × ExUnits
 
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
@@ -182,6 +189,9 @@ the transaction body are:
 
   isP2Script : Script → Bool
   isP2Script = is-just ∘ isInj₂
+
+  chkIsValid : Tx → Set
+  chkIsValid tx = tx .Tx.isValid ≡ true
 \end{code}
 \caption{Definitions used in the UTxO transition system, continued}
 \label{fig:defs:utxo-shelley-cont}
