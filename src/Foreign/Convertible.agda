@@ -67,3 +67,8 @@ instance
   Convertible-List = λ where
     .to   → map to
     .from → map from
+
+  Convertible-Fun : ∀ {A A' B B'} → ⦃ Convertible A A' ⦄ → ⦃ Convertible B B' ⦄ → Convertible (A → B) (A' → B')
+  Convertible-Fun = λ where
+    .to   → λ f → to   ∘ f ∘ from
+    .from → λ f → from ∘ f ∘ to
