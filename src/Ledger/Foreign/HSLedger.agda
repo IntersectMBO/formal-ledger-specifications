@@ -54,8 +54,6 @@ module Implementation where
   toData : ∀ {A : Set} → A → Data
   toData _ = tt
 
-  --Script = ⊤
-
   PlutusScript = ⊤
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
@@ -167,7 +165,6 @@ HSGovStructure = record
   }
 instance _ = HSGovStructure
 
-
 open import Ledger.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
 open import Ledger.Deleg it hiding (PoolParams; DCert)
 
@@ -255,7 +252,7 @@ instance
   Convertible-TxBody = λ where
     .to txb → let open TxBody txb in record
       { txins  = to txins
-      ; refInputs = to refInputs
+      ; refInputs  = to refInputs
       ; txouts = to txouts
       ; txfee  = txfee
       ; txvldt = to txvldt

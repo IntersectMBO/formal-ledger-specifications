@@ -86,7 +86,6 @@ ExUnits = Pair ℕ ℕ
   type Datum         = ()
   type Redeemer      = ()
   type Anchor        = ()
-  type Script        = ()
 
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
