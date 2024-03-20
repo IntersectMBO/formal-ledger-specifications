@@ -25,7 +25,22 @@ initParams = MkPParams
   , minUTxOValue = 0
   , poolDeposit = 10
   , emax = 10
-  , pv = (1, 0) }
+  , nopt = 0
+  , pv = (1, 0)
+  , votingThresholds = ()
+  , govActionLifetime = 10
+  , govActionDeposit = 10
+  , drepDeposit = 10
+  , drepActivity = 10
+  , ccMinSize = 10
+  , ccMaxTermLength = 10
+  , costmdls = ()
+  , prices = ()
+  , maxTxExUnits = 10
+  , maxBlockExUnits = 10
+  , coinsPerUTxOWord = 10
+  , maxCollateralInputs = 10
+  }
 
 initEnv :: UTxOEnv
 initEnv = MkUTxOEnv {slot = 0, pparams = initParams}
