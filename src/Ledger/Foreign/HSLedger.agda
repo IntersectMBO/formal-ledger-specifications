@@ -12,7 +12,7 @@ open import Relation.Binary.Morphism.Structures
 open import Foreign.Convertible
 open import Foreign.Convertible.Deriving
 
--- import Foreign.Haskell as F
+import Foreign.Haskell as F
 import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Crypto
@@ -121,15 +121,15 @@ instance _ = HSCrypto
 
 -- No scripts for now
 
-open import Ledger.Script it it renaming (Timelock to TL)
--- using (ScriptStructure; PlutusStructure)
+open import Ledger.Script it it
+
 HSScriptStructure : ScriptStructure
 HSScriptStructure = record
   { hashRespectsUnion = hashRespectsUnion
   ; ps = HSP2ScriptStructure }
   where
   postulate
-    instance Hashable-Timelock : Hashable TL ℕ
+    instance Hashable-Timelock : Hashable Timelock ℕ
 
     hashRespectsUnion : ∀ {A B ℍ}
       → Hashable A ℍ → Hashable B ℍ
@@ -205,7 +205,7 @@ HSAbstractFunctions = record
   }
 instance _ = HSAbstractFunctions
 
-open TransactionStructure it -- using (Addr; Credential; GovRole; VDeleg; PoolParams; Anchor; Script; DCert)
+open TransactionStructure it
 open import Ledger.Utxo it it
 open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it

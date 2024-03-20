@@ -72,10 +72,10 @@ the transaction body are:
   open EpochStructure epochStructure public
   open Ledger.Script crypto epochStructure public
 
-  field scriptStructure : ScriptStructure
-  open ScriptStructure scriptStructure public -- using (ps; Script; P1Script; Hashable-Script; P2Script)
+  field scriptStructure : _
+  open ScriptStructure scriptStructure public
   open Ledger.PParams crypto epochStructure scriptStructure public
-  open PlutusStructure ps public using ()
+
   field govParams : _
   open GovParams govParams public
 

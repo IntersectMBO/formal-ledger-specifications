@@ -65,7 +65,6 @@ Script        = ⊤
 
 TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Pair (Maybe (Either Datum DataHash)) $ Maybe Script
--- TxOut         = Pair Addr $ Pair Coin $ Maybe (Either Datum DataHash)
 UTxO          = HSMap TxIn TxOut
 
 Hash          = ℕ
@@ -91,7 +90,6 @@ ExUnits = Pair ℕ ℕ
 
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
-  -- type TxOut = (Addr, (Coin, Maybe (Datum | DataHash)))
   type UTxO  = [(TxIn, TxOut)]
   type Hash  = Integer
 
@@ -156,7 +154,6 @@ data VDeleg : Set where
     deriving (Show, Eq, Generic)
   instance ToExpr TxCert
 #-}
-
 data TxCert : Set where
   Delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → TxCert
   Dereg       : Credential → TxCert
