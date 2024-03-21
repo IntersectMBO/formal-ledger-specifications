@@ -75,7 +75,6 @@ private variable
   s s' : UTxOState
   tx : Tx
 
-
 -- Shelley Fig 10:
 --   wit : TxWitness = (VKey ⇀ Sig) × (ScriptHash ⇀ Script)
 --   txwitsScript : Tx → (ScriptHash ⇀ Script)
@@ -89,37 +88,43 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \begin{code}
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-                                                           -- txw := txwits tx
-                                                           -- txw : TxWitnesses
-                                                           -- fields vkSigs   : VKey ⇀ Sig
-                                                           --        scripts  : ℙ Script
-                                                           --        txdats   : DataHash ⇀ Datum
-                                                           --        txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
-                                                           --
+  -- record TxWitnesses : Set where
+  --   field vkSigs   : VKey ⇀ Sig
+  --         scripts  : ℙ Script
+  --         txdats   : DataHash ⇀ Datum
+  --         txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
+
+
         open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
-                       -- = {hashKey vk|vk ∈ dom(txwitsVKey txw)} (in pdf spec)
+                       -- = {hashKey vk|vk ∈ dom(txwitsVKey txw)} (in Babbage pdf)
+
         witsScriptHashes  = mapˢ hash scripts
-        inputHashes = (mapˢ (proj₁ ∘ proj₂ ∘ proj₂) (range (utxo ∣ txins))) --  ＼ Datum
--- X ＼ Y
---                {  | ( a, _ , h, _ ) ∈ range(utxo|spendInputs tx ) }
--- inputHashes := {h | isTwoPhaseScriptAddress tx utxo a             } − Datum
---                {  |                                               }
+                          -- = dom(txwitscripts txw) (in Babbage pdf)
+
+        inputHashes = (mapˢ (proj₁ ∘ proj₂ ∘ proj₂) (range (utxo ∣ txins)))
+
+        -- TODO: 1. restrict to addr `a` for which `isTwoPhaseScriptAddress tx utxo a ≡ true`
+        --       2. remove Datum from the result
+
+        refScriptHashes = mapˢ hash (refScripts tx utxo)
+                        -- = dom(refScripts tx utxo) (in Babbage pdf)
 
         neededHashes = scriptsNeeded utxo txb -- : ℙ ScriptHash
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
+
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ∩ scriptsP1 ] validP1Script witsKeyHashes txvldt s
-    -- ∀s ∈ (txscripts txw utxo neededHashes ) ∩ Scriptph1 , validateScript s tx (in pdf spec)
-    -- Question: Why the extra `needsHashes` argument to `txscripts` in Babbage pdf spec?
 
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    -- witsVKeyNeeded utxo tx genDelegs ⊆ witsKeyHashes  (in pdf spec)
-    ∙  neededHashes  ≡ᵉ witsScriptHashes
--- ＼ (refScripts tx utxo))
--- refScripts = mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
 
-       -- neededHashes − dom(refScripts tx utxo ) = dom(txwitscripts txw)
+    ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
+     -- neededHashes − dom(refScripts tx utxo) = dom(txwitscripts txw) (in Babbage pdf)
+     -- (I think we want to subtract {hashKey vk|vk ∈ dom(refScripts tx utxo) instead}.)
+
+    -- TODO:
+    -- ∙ inputHashes ⊆ dom(txdats)
+
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
@@ -135,3 +140,12 @@ unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}
 \end{NoConway}
+
+
+                                                           -- txw := txwits tx
+                                                           -- txw : TxWitnesses
+                                                           -- fields vkSigs   : VKey ⇀ Sig
+                                                           --        scripts  : ℙ Script
+                                                           --        txdats   : DataHash ⇀ Datum
+                                                           --        txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
+                                                           --
