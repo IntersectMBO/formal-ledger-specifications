@@ -606,26 +606,19 @@ module _
     ≤-trans (updateCertDeps≥ certs nrf)
             (≤-reflexive ((updateCertDeposits pp certs deposits) ∪⁺∅ᵐ∣∅ˢ≡id))
 
-module _
-  -- ASSUMPTIONS --
-  {- 1 -} {getCoin-⊆     : (d₁ d₂ : DepositPurpose ⇀ Coin) → d₁ ˢ ⊆ d₂ ˢ → getCoin d₁ ≤ getCoin d₂}
-  {- 2 -} {_∪⁺∅ᵐ∣∅ˢ≡id   : (deposits :  DepositPurpose ⇀ Coin) → getCoin deposits ≡ getCoin ((deposits ∪⁺ ∅ᵐ) ∣ ∅ˢ ᶜ)}
-  {- 3 -} {∪⁺singleton≡  : {deps : DepositPurpose ⇀ Coin} {cDep : DepositPurpose × Coin}
-                             → getCoin (deps ∪⁺ ❴ cDep ❵) ≡ getCoin deps + proj₂ cDep }
-  where
 
   gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
               pp = UTxOEnv.pparams Γ; open PParams pp
               open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
           in
 
-  {- 4 -} Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
+    Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 
-  {- 5 -} →  (∀ {p} → p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit)
-  {- 6 -} →  noRefundCert txcerts
-             -------------------------------------------------------------------
-          →  coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
+    →  (∀ {p} → p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit)
+    →  noRefundCert txcerts
+        -------------------------------------------------------------------
+    →  coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
 
   gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h nrf =
     ≤-trans v (≤-reflexive (sym coin-hom))
@@ -645,28 +638,7 @@ module _
       balIn = balance (st ∣ txins)
       balOut = balance (outs txb)
 
-      -- The sum of all GovProposal deposits is the number of GovProposals times govActionDeposit.
-      i : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
-
-      -- The positive part of change in deposits is at least the sum of GovProposal deposits.
-      ii : newDeps ≥ sum (map GovProposal.deposit txprop)
-
-      -- Coin consumed ≡ coin produced
-      iii : coin (balIn + mint) + refunds ≡ coin balOut + txfee + newDeps + txdonation
-
-      -- Coin produced is at least the sum of GovProposal deposits.
-      iv : coin balOut + txfee + newDeps + txdonation ≥ sum (map GovProposal.deposit txprop)
-
-      -- Coin consumed is at least the number of GovProposals times govActionDeposit.
-      v : coin (balIn + mint) + refunds ≥ length txprop * govActionDeposit
-
       -- Lemmas -------------------------------------------------------------------------
-      coin-hom : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
-      coin-hom {val} {c} = begin
-        coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
-        coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
-        coin val + c                  ∎
-
       module _ {txid : TxId} {gaDep : Coin} {deposits : DepositPurpose ⇀ Coin}
         where
         updatePropDeps≥ : (props : List GovProposal)
@@ -689,7 +661,15 @@ module _
           gaDep + (length props) * gaDep  ∎
 
 
-      -- Proofs -------------------------------------------------------------------------
+      -- TODO: move coin-hom to TokenAlgebra module
+      coin-hom : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
+      coin-hom {val} {c} = begin
+        coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
+        coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
+        coin val + c                  ∎
+
+      -- The sum of all GovProposal deposits is the number of GovProposals times govActionDeposit.
+      i : sum (map GovProposal.deposit txprop) ≡ length txprop * govActionDeposit
       i = irec h
         where
         irec : {gps : List GovProposal}
@@ -701,31 +681,36 @@ module _
           govActionDeposit + sum (map GovProposal.deposit gps) ≡⟨ cong (govActionDeposit +_) (irec (h' ∘ there)) ⟩
           govActionDeposit + length gps * govActionDeposit ∎
 
+      -- The positive part of change in deposits is at least the sum of GovProposal deposits.
+      ii : newDeps ≥ sum (map GovProposal.deposit txprop)
       ii = ≤-trans (≤-reflexive (trans i (*-comm (length txprop) govActionDeposit )))
                    (≤-trans (≤-reflexive (sym Δ≡)) +Δ≥)
         where
         updatedPropDeps : Coin
         updatedPropDeps = getCoin (updateProposalDeposits txprop txid govActionDeposit deps)
 
-        updateDeposits≥ : getCoin ((updateDeposits pp txb) deps) ≥ updatedPropDeps
-        updateDeposits≥ = updateCertDeps≥{getCoin-⊆ = getCoin-⊆} {_∪⁺∅ᵐ∣∅ˢ≡id} {∪⁺singleton≡} txcerts nrf
-
         Δ≡ : updatedPropDeps - getCoin deps ≡ govActionDeposit * length txprop
         Δ≡ = trans (updatePropDeps≡ txprop) (*-comm (length txprop) govActionDeposit)
 
         +Δ≥ : posPart (getCoin (updateDeposits pp txb deps) - getCoin deps)
              ≥ (updatedPropDeps ∸ getCoin deps)
-        +Δ≥ = ≤-trans (∸-monoˡ-≤ (getCoin deps) updateDeposits≥)
+        +Δ≥ = ≤-trans (∸-monoˡ-≤ (getCoin deps) (updateCertDeps≥ txcerts nrf))
                       (≤-reflexive (∸≡posPart⊖ {getCoin (updateDeposits pp txb deps)} {getCoin deps}))
 
+
+      -- Coin consumed ≡ coin produced
+      iii : coin (balIn + mint) + refunds ≡ coin balOut + txfee + newDeps + txdonation
       iii = trans (sym coin-hom) (trans (cong coin c≡p) coin-hom')
         where
+
         coin-hom' : coin (balOut + inject txfee + inject newDeps + inject txdonation)
                     ≡ coin balOut + txfee + newDeps + txdonation
         coin-hom' = trans coin-hom
                           (trans (cong (_+ txdonation) coin-hom)
                                  (cong (λ x → x + newDeps + txdonation) coin-hom))
 
+      -- Coin produced is at least the sum of GovProposal deposits.
+      iv : coin balOut + txfee + newDeps + txdonation ≥ sum (map GovProposal.deposit txprop)
       iv = ≤-trans ii (≤-trans (m≤n+m _ _) (≤-reflexive rearrange))
         where
         rearrange : coin balOut + txfee + txdonation + newDeps ≡ coin balOut + txfee + newDeps + txdonation
@@ -735,6 +720,8 @@ module _
           (coin balOut + txfee) + (newDeps + txdonation) ≡⟨ sym (+-assoc (coin balOut + txfee) newDeps txdonation) ⟩
           coin balOut + txfee + newDeps + txdonation     ∎
 
+      -- Coin consumed is at least the number of GovProposals times govActionDeposit.
+      v : coin (balIn + mint) + refunds ≥ length txprop * govActionDeposit
       v = ≤-trans (≤-reflexive (sym i)) (≤-trans iv (≤-reflexive (sym iii)))
 
 \end{code}
