@@ -75,6 +75,14 @@ private variable
   s s' : UTxOState
   tx : Tx
 
+-- Shelley Fig 10:
+--   wit : TxWitness = (VKey ⇀ Sig) × (ScriptHash ⇀ Script)
+--   txwitsScript : Tx → (ScriptHash ⇀ Script)
+-- Shelley Fig 18:
+--   scriptsNeeded : UTxO → Tx → ℙ ScriptHash       (required script hashes)
+-- Shelley Fig 20:
+--   scriptsNeeded utxo tx = dom(txwitsScript tx)
+
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
@@ -83,11 +91,18 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
+        inputHashes       = getInputHashes tx utxo
+        refScriptHashes   = mapˢ hash (refScripts tx utxo)
+        neededHashes      = scriptsNeeded utxo txb
+        txdatsHashes      = dom (txdats .proj₁)
+        allOutHashes      = getDataHashes (range txouts)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ∩ scriptsP1 ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
+    ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
+    ∙  inputHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ inputHashes ∪ getDataHashes (range (utxo ∣ refInputs))
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
@@ -97,8 +112,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \label{fig:rules:utxow}
 \end{figure*}
 \begin{code}[hide]
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , h)
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}

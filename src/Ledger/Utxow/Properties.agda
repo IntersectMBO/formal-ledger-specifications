@@ -27,13 +27,13 @@ instance
     computeProof : ComputationResult String (∃ (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈_))
     computeProof =
       case H? of λ where
-        (yes (p₁ , p₂ , p₃ , p₄ , p₅)) →
-          map (map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅)) (computeProof' Γ s tx)
+        (yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ )) →
+          map (map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ )) (computeProof' Γ s tx)
         (no _) → failure "Failed in UTXOW"
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
       → map proj₁ computeProof ≡ success s'
-    completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ h)
-      rewrite dec-yes H? (p₁ , p₂ , p₃ , p₄ , p₅) .proj₂
+    completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h)
+      rewrite dec-yes H? (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇) .proj₂
       with computeProof' Γ s tx | completeness' _ _ _ _ h
     ... | success _ | refl = refl

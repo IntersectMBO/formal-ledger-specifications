@@ -9,6 +9,7 @@ open import Prelude
 
 open import Foreign.Haskell
 open import Foreign.Haskell.Coerce
+open import Foreign.Haskell.Either
 
 {-# FOREIGN GHC
   import GHC.Generics (Generic)
@@ -60,9 +61,10 @@ DataHash      = ⊤
 Datum         = ⊤
 Redeemer      = ⊤
 Anchor        = ⊤
+Script        = ⊤
 
 TxIn          = Pair TxId Ix
-TxOut         = Pair Addr $ Pair Coin $ Maybe DataHash
+TxOut         = Pair Addr $ Pair Coin $ Pair (Maybe (Either Datum DataHash)) $ Maybe Script
 UTxO          = HSMap TxIn TxOut
 
 Hash          = ℕ
@@ -84,9 +86,10 @@ ExUnits = Pair ℕ ℕ
   type Datum         = ()
   type Redeemer      = ()
   type Anchor        = ()
+  type Script        = ()
 
   type TxIn  = (TxId, Ix)
-  type TxOut = (Addr, (Coin, Maybe DataHash))
+  type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
   type UTxO  = [(TxIn, TxOut)]
   type Hash  = Integer
 
@@ -163,6 +166,7 @@ data TxCert : Set where
 
 record TxBody : Set where
   field txins    : List TxIn
+        refInputs : List TxIn
         txouts   : HSMap Ix TxOut
         txfee    : Coin
         txvldt   : Pair (Maybe ℕ) (Maybe ℕ)
@@ -178,6 +182,7 @@ record TxBody : Set where
 {-# FOREIGN GHC
   data TxBody = MkTxBody
     { txins  :: [TxIn]
+    , refInputs :: [TxIn]
     , txouts :: [(Ix, TxOut)]
     , txfee  :: Coin
     , txvldt :: (Maybe Integer, Maybe Integer)

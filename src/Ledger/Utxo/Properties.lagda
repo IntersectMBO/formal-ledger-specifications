@@ -121,16 +121,16 @@ instance
                                       (inj₂ _) → "something else broke"
 
         computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
-        computeProofH (yes (x , y , z , e , k , l , m , n , o , p , q , r)) =
-            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m n o p q r) <$> computeProof' Γ s tx
+        computeProofH (yes (x , y , u , z , e , k , l , m , v , n , o , p , q , r)) =
+            map₂′ (UTXO-inductive⋯ _ _ _ x y u z e k l m v n o p q r) <$> computeProof' Γ s tx
         computeProofH (no ¬p) = failure $ genErr ¬p
 
         computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProof = computeProofH H?
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m n o p q r h) with H?
-        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , n , o , p , q , r)
+        completeness s' (UTXO-inductive⋯ _ _ _ x y u z w k l m v n o p q r h) with H?
+        ... | no ¬p = ⊥-elim $ ¬p (x , y , u , z , w , k , l , m , v , n , o , p , q , r)
         ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
         ... | success _ | refl = refl
 
@@ -276,7 +276,7 @@ module DepositHelpers
     stepS : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ᵘ ⇀⦇ tx ,UTXOS⦈
                 ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
     stepS = case step of λ where
-      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
+      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
 
     pp : PParams
     pp = UTxOEnv.pparams Γ
@@ -297,13 +297,13 @@ module DepositHelpers
     newBal' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                   ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
             → consumed pp utxoSt txb ≡ produced pp utxoSt txb
-    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _) = x
+    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _) = x
     newBal : consumed pp utxoSt txb ≡ produced pp utxoSt txb
     newBal = newBal' step
     noMintAda' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                      ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
                → coin (mint) ≡ 0
-    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _) = x
+    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _) = x
     noMintAda : coin mint ≡ 0
     noMintAda = noMintAda' step
     remDepTot : Coin
@@ -535,11 +535,11 @@ then
 \begin{code}[hide]
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
     {deposits' = deposits'} h'
-    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ (Scripts-Yes _)) =
+    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ (Scripts-Yes _)) =
   DepositHelpers.pov-scripts step h' refl
 
 pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
-    step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
+    step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
   DepositHelpers.pov-no-scripts step h'
 \end{code}
 

@@ -40,12 +40,12 @@ infixl 7 _*↓_
 _*↓_ : ℚ.ℚ → ℕ → ℕ
 q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 
-isPhaseTwoScriptAddress : Tx → Addr → Bool
-isPhaseTwoScriptAddress tx a =
+isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
+isTwoPhaseScriptAddress tx utxo a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx
-                 then (λ {s} → isP2Script s)
-                 else false)
+      (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo then
+               (λ {s} → isP2Script s)
+             else false)
   else
     false
 
@@ -60,8 +60,6 @@ utxoEntrySizeWithoutVal = 8
 utxoEntrySize : TxOut → MemoryEstimate
 utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValue o)
 
-refScripts : Tx → UTxO → ℙ Script
-refScripts tx utxo = ∅ -- TODO: implement when we do Babbage
 
 open PParams
 \end{code}
@@ -372,10 +370,12 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOState s
     in
     ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙ inInterval slot txvldt                 ∙ feesOK pp tx utxo ≡ true
-    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
-    ∙ txsize ≤ maxTxSize pp
+    ∙ refInputs ⊆ dom utxo                   ∙ inInterval slot txvldt
+    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
+    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
+        inject (((serSize (getValue txout)) + 160) * coinsPerUTxOWord pp) ≤ᵗ getValue txout
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
@@ -389,8 +389,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r , h)
+pattern UTXO-inductive⋯ tx Γ s x y u z w k l m v n o p q r h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , u , z , w , k , l , m , v , n , o , p , q , r , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
