@@ -6,13 +6,13 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra                 using (CommutativeMonoid)
-open import Data.Integer.Ext        using (posPart; negPart)
-open import Data.Nat.Properties     using (+-0-monoid; ≤-trans; m≤m+n; ≤-reflexive)
+open import Algebra               using (CommutativeMonoid)
+open import Data.Integer.Ext      using (posPart; negPart)
+open import Data.Nat.Properties   using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
-open import Data.Integer as ℤ using (0ℤ)
+import Data.Integer as ℤ
 import Data.Rational as ℚ
 
 open import Tactic.Derive.DecEq
@@ -132,7 +132,6 @@ instance
 
 \end{code}
 \begin{code}
-
 updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateCertDeposits _   []              deposits = deposits
 updateCertDeposits pp  (cert ∷ certs)  deposits
@@ -159,6 +158,9 @@ updateDeposits pp txb =
   updateCertDeposits pp txcerts ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
   where open TxBody txb
 
+depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
+depositsChange pp txb deposits
+  = getCoin (updateDeposits pp txb deposits) - getCoin deposits
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
@@ -284,13 +286,6 @@ data
 module _ (let open UTxOState; open TxBody) where
 \end{code}
 \begin{code}
-  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
-  depositsChange pp txb deposits
-    = getCoin (updateDeposits pp txb deposits) - getCoin deposits
-
-  conservationOfDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → Set
-  conservationOfDeposits pp txb deposits = deposits ˢ ⊆ (updateDeposits pp txb deposits) ˢ
-
   depositRefunds : PParams → UTxOState → TxBody → Coin
   depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
 
