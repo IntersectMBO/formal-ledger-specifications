@@ -6,10 +6,9 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra              using (CommutativeMonoid)
-open import Data.Integer.Ext     using (posPart; negPart)
-open import Data.Nat.Properties.Ext using (≤→∸-+-comm; ≤-+)
-open import Data.Nat.Properties  using (+-0-monoid; n∸n≡0; +-comm; ≤-reflexive; ≤-trans)
+open import Algebra                 using (CommutativeMonoid)
+open import Data.Integer.Ext        using (posPart; negPart)
+open import Data.Nat.Properties     using (+-0-monoid; ≤-trans; m≤m+n; ≤-reflexive)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
@@ -205,7 +204,7 @@ module _ (let open TxBody) where
         uDeps = updateCertDeposits pp certs deposits
 
         α : getCoin uDeps ≤ getCoin (uDeps ∪⁺ ❴ cDep ❵ᵐ)
-        α = ≤-trans ≤-+ (≤-reflexive (sym ∪⁺singleton≡))
+        α = ≤-trans (m≤m+n _ _) (≤-reflexive (sym ∪⁺singleton≡))
 
         ξ : getCoin ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) ≥ getCoin (uDeps ∪⁺ ❴ cDep ❵ᵐ)
         ξ = getCoin-⊆ (uDeps ∪⁺ ❴ cDep ❵ᵐ) ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) (proj₂ (resᵐ-∅ᶜ {M = uDeps ∪⁺ ❴ cDep ❵ᵐ}))

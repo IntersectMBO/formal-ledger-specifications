@@ -28,25 +28,3 @@ negInduction {P = P} P? P0 (N , ¬PN)
     k≤N⇒Pk : ∀ {k} → k ≤ N → P k
     k≤N⇒Pk {zero}  k≤N = P0
     k≤N⇒Pk {suc k} k≤N = proj₂ $ k<N⇒P'k k≤N
-
-
-≤-+ : ∀{m n : ℕ} → m ≤ m + n
-≤-+ {zero} = z≤n
-≤-+ {suc m} = s≤s ≤-+
-
-≤-+̆  : ∀{m n : ℕ} → m ≤ n + m
-≤-+̆  {zero} = z≤n
-≤-+̆  {suc m}{n} =
-  ≤-trans (≤-+ {suc m} {n})
-          (≤-trans (≤-reflexive (cong suc (+-comm m n)))
-                   (≤-reflexive (sym (+-suc n m))))
-
-≤→∸c≤∸c : ∀ {m n : ℕ} (c : ℕ) → n ≤ m → n ∸ c ≤ m ∸ c
-≤→∸c≤∸c {_} {.zero} zero z≤n = z≤n
-≤→∸c≤∸c {_} {.zero} (suc c) z≤n = z≤n
-≤→∸c≤∸c {.(suc _)} {.(suc _)} zero (s≤s n≤m) = s≤s n≤m
-≤→∸c≤∸c {.(suc _)} {.(suc _)} (suc c) (s≤s n≤m) = ≤→∸c≤∸c c n≤m
-
-≤→∸-+-comm : ∀ {l m n : ℕ} → n ≤ m → m ∸ n + l ≡ m + l ∸ n
-≤→∸-+-comm {l} {m} {.zero} z≤n = refl
-≤→∸-+-comm {l} {.(suc _)} {.(suc _)} (s≤s n≤m) = ≤→∸-+-comm n≤m

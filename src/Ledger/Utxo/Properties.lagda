@@ -10,7 +10,6 @@ open import Data.Integer.Ext
 import Data.Integer.Properties as ℤ
 import Data.Nat as ℕ
 open import Data.Nat.Properties           hiding (_≟_)
-open import Data.Nat.Properties.Ext       using (≤-+; ≤→∸-+-comm; ≤-+̆ ; ≤→∸c≤∸c)
 open import Data.List.Relation.Unary.Any  using (Any); open Any
 open import Data.Sign                     using (Sign)
 open import Data.String.Base              renaming (_++_ to _+ˢ_) using ()
@@ -616,7 +615,7 @@ module _
           → getCoin (updatePropHelper props txid gaDep deposits) ≥ getCoin deposits
         updatePropDeps≥ [] = ≤-reflexive refl
         updatePropDeps≥ (x ∷ props) =
-          ≤-trans (updatePropDeps≥ props) (≤-trans ≤-+ (≤-reflexive (sym ∪⁺singleton≡)))
+          ≤-trans (updatePropDeps≥ props) (≤-trans (m≤m+n _ _) (≤-reflexive (sym ∪⁺singleton≡)))
 
         updatePropDeps≡ : (props : List GovProposal)
           → getCoin (updatePropHelper props txid gaDep deposits) - getCoin deposits ≡ (length props) * gaDep
@@ -625,7 +624,7 @@ module _
           getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
              ∸ getCoin deposits           ≡⟨ cong (_∸ getCoin deposits) ∪⁺singleton≡ ⟩
           getCoin (updatePropHelper props txid gaDep deposits) + gaDep ∸ getCoin deposits
-                                          ≡⟨ sym (≤→∸-+-comm (updatePropDeps≥ props)) ⟩
+                                          ≡⟨ +-∸-comm _ (updatePropDeps≥ props) ⟩
           (getCoin (updatePropHelper props txid gaDep deposits) ∸ getCoin deposits) + gaDep
                                           ≡⟨ cong (_+ gaDep) (updatePropDeps≡ props) ⟩
           (length props) * gaDep + gaDep  ≡⟨ +-comm ((length props) * gaDep) gaDep ⟩
@@ -655,8 +654,8 @@ module _
 
         +Δ≥ : posPart (getCoin (updateDeposits pp txb deps) - getCoin deps)
              ≥ (getCoin (updateProposalDeposits pp txb deps) ∸ getCoin deps)
-        +Δ≥ = ≤-trans (≤→∸c≤∸c (getCoin deps) updateDeposits≥)
-                      (∸≤posPart⊖ {getCoin (updateDeposits pp txb deps)} {getCoin deps})
+        +Δ≥ = ≤-trans (∸-monoˡ-≤ (getCoin deps) updateDeposits≥)
+                      (≤-reflexive (∸≡posPart⊖ {getCoin (updateDeposits pp txb deps)} {getCoin deps}))
 
       iii = trans (sym coin-hom) (trans (cong coin c≡p) coin-hom')
         where
@@ -666,7 +665,7 @@ module _
                           (trans (cong (_+ txdonation) coin-hom)
                                  (cong (λ x → x + newDeps + txdonation) coin-hom))
 
-      iv = ≤-trans ii (≤-trans ≤-+̆  (≤-reflexive rearrange))
+      iv = ≤-trans ii (≤-trans (m≤n+m _ _) (≤-reflexive rearrange))
         where
         rearrange : coin balOut + txfee + txdonation + newDeps ≡ coin balOut + txfee + newDeps + txdonation
         rearrange = begin

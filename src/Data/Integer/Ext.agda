@@ -8,7 +8,7 @@ open import Data.Nat as ℕ
 open import Data.Nat.Properties using (≤-trans; ≤-reflexive)
 open import Data.Product
 open import Data.Sign
-open import Relation.Binary.PropositionalEquality using (sym; cong)
+open import Relation.Binary.PropositionalEquality using (_≡_; sym; cong; trans)
 
 ℤtoSignedℕ : ℤ → Sign × ℕ
 ℤtoSignedℕ x = (sign x , ∣ x ∣)
@@ -23,9 +23,8 @@ negPart x with ℤtoSignedℕ x
 ... | (Sign.- , x) = x
 ... | _            = 0
 
-∸≤posPart⊖ : {m n : ℕ} → (m ∸ n) ℕ.≤ posPart (m ⊖ n)
-∸≤posPart⊖ {ℕ.zero} {ℕ.zero} = z≤n
-∸≤posPart⊖ {ℕ.zero} {suc n} = z≤n
-∸≤posPart⊖ {suc m} {ℕ.zero} = s≤s (∸≤posPart⊖ {m}{0})
-∸≤posPart⊖ {suc m} {suc n} = ≤-trans (∸≤posPart⊖{m}{n})
-                                     (≤-reflexive (sym (cong posPart ([1+m]⊖[1+n]≡m⊖n m n))))
+∸≡posPart⊖ : {m n : ℕ} → (m ∸ n) ≡ posPart (m ⊖ n)
+∸≡posPart⊖ {zero} {zero} = _≡_.refl
+∸≡posPart⊖ {zero} {ℕ.suc n} = _≡_.refl
+∸≡posPart⊖ {ℕ.suc m} {zero} = _≡_.refl
+∸≡posPart⊖ {ℕ.suc m} {ℕ.suc n} = trans (∸≡posPart⊖{m}{n}) (sym (cong posPart (([1+m]⊖[1+n]≡m⊖n m n))))
