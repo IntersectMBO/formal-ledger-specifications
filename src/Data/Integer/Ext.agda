@@ -4,7 +4,7 @@ module Data.Integer.Ext where
 
 open import Data.Integer
 open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n)
-open import Data.Nat as ℕ
+open import Data.Nat
 open import Data.Product
 open import Data.Sign
 open import Relation.Binary.PropositionalEquality using (_≡_; sym; cong; trans)

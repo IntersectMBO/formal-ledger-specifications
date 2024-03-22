@@ -6,9 +6,9 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra               using (CommutativeMonoid)
-open import Data.Integer.Ext      using (posPart; negPart)
-open import Data.Nat.Properties   using (+-0-monoid)
+open import Algebra              using (CommutativeMonoid)
+open import Data.Integer.Ext     using (posPart; negPart)
+open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
 
@@ -17,7 +17,7 @@ import Data.Rational as ℚ
 
 open import Tactic.Derive.DecEq
 
-open import Ledger.Prelude hiding (≤-trans; All; tail)
+open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
 
