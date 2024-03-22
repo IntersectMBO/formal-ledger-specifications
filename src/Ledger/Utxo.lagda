@@ -130,10 +130,14 @@ instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
 
-module _ (let open TxBody) where
 \end{code}
 \begin{code}
 
+updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateCertDeposits _   []              deposits = deposits
+updateCertDeposits pp  (cert ∷ certs)  deposits
+  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
+  where
   certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
   certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
   certDeposit (regpool c _) {pp}  = ❴ PoolDeposit       c , pp .poolDeposit  ❵
@@ -145,25 +149,15 @@ module _ (let open TxBody) where
   certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
   certRefund _              = ∅
 
-  updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updateCertDeposits _   []              deposits = deposits
-  updateCertDeposits pp  (cert ∷ certs)  deposits
-    = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
+updateProposalDeposits : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateProposalDeposits [] _ _ deposits = deposits
+updateProposalDeposits (_ ∷ ps) txid gaDep deposits =
+  updateProposalDeposits ps txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
-  updatePropHelper : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updatePropHelper [] _ _ deposits = deposits
-  updatePropHelper (_ ∷ ps) txid gaDep deposits = updatePropHelper ps txid gaDep deposits
-    ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
-
-  updateProposalDeposits  : PParams → TxBody → DepositPurpose ⇀ Coin
-                          → DepositPurpose ⇀ Coin
-  updateProposalDeposits pp txb deposits = updatePropHelper (txb .txprop) (txb .txid)(pp .govActionDeposit) deposits
-
-  updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updateDeposits pp txb =
-    updateCertDeposits pp (txb .txcerts) ∘ updateProposalDeposits pp txb
-
-
+updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateDeposits pp txb =
+  updateCertDeposits pp txcerts ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
+  where open TxBody txb
 
 \end{code}
 \end{AgdaMultiCode}

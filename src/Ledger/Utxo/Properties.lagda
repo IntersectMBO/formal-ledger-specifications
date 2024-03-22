@@ -555,13 +555,6 @@ isRefundCert (dereg c) = true
 isRefundCert (deregdrep c) = true
 isRefundCert _ = false
 
-noRefund→∅ : {cert : DCert} → isRefundCert cert ≡ false → certRefund cert ≡ ∅
-noRefund→∅ {delegate c _ _ _} ¬isRefund = refl
-noRefund→∅ {regpool c _} ¬isRefund = refl
-noRefund→∅ {regdrep _ _ _} ¬isRefund = refl
-noRefund→∅ {retirepool c _} ¬isRefund = refl
-noRefund→∅ {ccreghot c _} ¬isRefund = refl
-
 noRefundCert : List DCert → Set _
 noRefundCert l = All (λ cert → isRefundCert cert ≡ false) l
 
@@ -677,20 +670,20 @@ module _
       module _ {txid : TxId} {gaDep : Coin} {deposits : DepositPurpose ⇀ Coin}
         where
         updatePropDeps≥ : (props : List GovProposal)
-          → getCoin (updatePropHelper props txid gaDep deposits) ≥ getCoin deposits
+          → getCoin (updateProposalDeposits props txid gaDep deposits) ≥ getCoin deposits
         updatePropDeps≥ [] = ≤-reflexive refl
         updatePropDeps≥ (x ∷ props) =
           ≤-trans (updatePropDeps≥ props) (≤-trans (m≤m+n _ _) (≤-reflexive (sym ∪⁺singleton≡)))
 
         updatePropDeps≡ : (props : List GovProposal)
-          → getCoin (updatePropHelper props txid gaDep deposits) - getCoin deposits ≡ (length props) * gaDep
+          → getCoin (updateProposalDeposits props txid gaDep deposits) - getCoin deposits ≡ (length props) * gaDep
         updatePropDeps≡ [] = n∸n≡0 (getCoin deposits)
         updatePropDeps≡ (_ ∷ props) = begin
-          getCoin (updatePropHelper props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
+          getCoin (updateProposalDeposits props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
              ∸ getCoin deposits           ≡⟨ cong (_∸ getCoin deposits) ∪⁺singleton≡ ⟩
-          getCoin (updatePropHelper props txid gaDep deposits) + gaDep ∸ getCoin deposits
+          getCoin (updateProposalDeposits props txid gaDep deposits) + gaDep ∸ getCoin deposits
                                           ≡⟨ +-∸-comm _ (updatePropDeps≥ props) ⟩
-          (getCoin (updatePropHelper props txid gaDep deposits) ∸ getCoin deposits) + gaDep
+          (getCoin (updateProposalDeposits props txid gaDep deposits) ∸ getCoin deposits) + gaDep
                                           ≡⟨ cong (_+ gaDep) (updatePropDeps≡ props) ⟩
           (length props) * gaDep + gaDep  ≡⟨ +-comm ((length props) * gaDep) gaDep ⟩
           gaDep + (length props) * gaDep  ∎
@@ -711,14 +704,17 @@ module _
       ii = ≤-trans (≤-reflexive (trans i (*-comm (length txprop) govActionDeposit )))
                    (≤-trans (≤-reflexive (sym Δ≡)) +Δ≥)
         where
-        updateDeposits≥ : getCoin ((updateDeposits pp txb) deps) ≥ getCoin (updateProposalDeposits pp txb deps)
+        updatedPropDeps : Coin
+        updatedPropDeps = getCoin (updateProposalDeposits txprop txid govActionDeposit deps)
+
+        updateDeposits≥ : getCoin ((updateDeposits pp txb) deps) ≥ updatedPropDeps
         updateDeposits≥ = updateCertDeps≥{getCoin-⊆ = getCoin-⊆} {_∪⁺∅ᵐ∣∅ˢ≡id} {∪⁺singleton≡} txcerts nrf
 
-        Δ≡ : getCoin (updateProposalDeposits pp txb deps) - getCoin deps ≡ govActionDeposit * length txprop
+        Δ≡ : updatedPropDeps - getCoin deps ≡ govActionDeposit * length txprop
         Δ≡ = trans (updatePropDeps≡ txprop) (*-comm (length txprop) govActionDeposit)
 
         +Δ≥ : posPart (getCoin (updateDeposits pp txb deps) - getCoin deps)
-             ≥ (getCoin (updateProposalDeposits pp txb deps) ∸ getCoin deps)
+             ≥ (updatedPropDeps ∸ getCoin deps)
         +Δ≥ = ≤-trans (∸-monoˡ-≤ (getCoin deps) updateDeposits≥)
                       (≤-reflexive (∸≡posPart⊖ {getCoin (updateDeposits pp txb deps)} {getCoin deps}))
 
