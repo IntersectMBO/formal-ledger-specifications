@@ -88,43 +88,21 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \begin{code}
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-  -- record TxWitnesses : Set where
-  --   field vkSigs   : VKey ⇀ Sig
-  --         scripts  : ℙ Script
-  --         txdats   : DataHash ⇀ Datum
-  --         txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
-
-
         open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
-                       -- = {hashKey vk|vk ∈ dom(txwitsVKey txw)} (in Babbage pdf)
-
         witsScriptHashes  = mapˢ hash scripts
-                          -- = dom(txwitscripts txw) (in Babbage pdf)
-
-        inputHashes = (mapˢ (proj₁ ∘ proj₂ ∘ proj₂) (range (utxo ∣ txins)))
-
-        -- TODO: 1. restrict to addr `a` for which `isTwoPhaseScriptAddress tx utxo a ≡ true`
-        --       2. remove Datum from the result
-
-        refScriptHashes = mapˢ hash (refScripts tx utxo)
-                        -- = dom(refScripts tx utxo) (in Babbage pdf)
-
-        neededHashes = scriptsNeeded utxo txb -- : ℙ ScriptHash
+        inputHashes       = getInputHashes tx utxo
+        refScriptHashes   = mapˢ hash (refScripts tx utxo)
+        neededHashes      = scriptsNeeded utxo txb
+        txdatsHashes      = dom (txdats .proj₁)
+        allOutHashes      = getDataHashes (range txouts)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ∩ scriptsP1 ] validP1Script witsKeyHashes txvldt s
-
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-
     ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
-     -- neededHashes − dom(refScripts tx utxo) = dom(txwitscripts txw) (in Babbage pdf)
-     -- (I think we want to subtract {hashKey vk|vk ∈ dom(refScripts tx utxo) instead}.)
-
-    -- TODO:
-    -- ∙ inputHashes ⊆ dom(txdats)
-
+    ∙  inputHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ inputHashes ∪ getDataHashes (range (utxo ∣ refInputs))
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
@@ -134,18 +112,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \label{fig:rules:utxow}
 \end{figure*}
 \begin{code}[hide]
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , h)
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}
 \end{NoConway}
-
-
-                                                           -- txw := txwits tx
-                                                           -- txw : TxWitnesses
-                                                           -- fields vkSigs   : VKey ⇀ Sig
-                                                           --        scripts  : ℙ Script
-                                                           --        txdats   : DataHash ⇀ Datum
-                                                           --        txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
-                                                           --
