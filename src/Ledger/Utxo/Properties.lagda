@@ -609,7 +609,6 @@ module _
     ≤-trans (updateCertDeps≥ certs nrf)
             (≤-reflexive ((updateCertDeposits pp certs deposits) ∪⁺∅ᵐ∣∅ˢ≡id))
 
-
   module _ {txid : TxId} {gaDep : Coin} {deposits : DepositPurpose ⇀ Coin}
     where
     updatePropDeps≥ : (props : List GovProposal)
@@ -632,9 +631,7 @@ module _
       gaDep + (length props) * gaDep  ∎
       where open Prelude.≡-Reasoning
 
-
-
-
+  -- Main Theorem: General Minimum Spending Condition --
   gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
               pp = UTxOEnv.pparams Γ; open PParams pp
               open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
@@ -648,32 +645,8 @@ module _
         -------------------------------------------------------------------
     →  coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
 
-  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h nrf = goal
-    where
-    pp : PParams
-    pp = UTxOEnv.pparams Γ
-    open Tx tx renaming (body to txb); open TxBody txb
-    open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
-    open PParams pp
-
-    newDeps refunds : Coin
-    newDeps    = newDeposits pp utxoState txb
-    refunds    = depositRefunds pp utxoState txb
-
-    balIn balOut : Value
-    balIn = balance (st ∣ txins)
-    balOut = balance (outs txb)
-
-    -- TODO: move coin-hom to TokenAlgebra module
-    coin-hom : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
-    coin-hom {val} {c} = begin
-      coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
-      coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
-      coin val + c                  ∎
-      where open Prelude.≡-Reasoning
-
-    goal : coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
-    goal = begin
+  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) h nrf =
+    begin
       length txprop * govActionDeposit
         ≡⟨ sym (updatePropDeps≡ txprop) ⟩
       getCoin (updateProposalDeposits txprop txid govActionDeposit deps) ∸ getCoin deps
@@ -697,7 +670,21 @@ module _
       coin(balOut + inject txfee + inject newDeps + inject txdonation)
         ≡˘⟨ cong coin c≡p ⟩
       coin (balIn + mint + inject refunds) ∎
-      where open ≤-Reasoning
+    where
+    open ≤-Reasoning
+    pp : PParams
+    pp = UTxOEnv.pparams Γ
+    open Tx tx renaming (body to txb); open TxBody txb
+    open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
+    open PParams pp
+
+    newDeps refunds : Coin
+    newDeps    = newDeposits pp utxoState txb
+    refunds    = depositRefunds pp utxoState txb
+
+    balIn balOut : Value
+    balIn = balance (st ∣ txins)
+    balOut = balance (outs txb)
 
 \end{code}
 \end{property}
