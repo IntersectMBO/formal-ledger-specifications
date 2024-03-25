@@ -7,6 +7,7 @@
 open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
 import Data.Nat as ℕ
 open import Data.Nat.Properties         hiding (_≟_)
+open import Data.Product                using (swap)
 open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ)
 open import Data.Integer.Ext            using (posPart; negPart; ∸≡posPart⊖)
@@ -24,7 +25,7 @@ open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
 open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 -- open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
-open import Ledger.Prelude hiding (≤-trans; All); open Properties
+open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
 open import Ledger.Abstract
 open import Ledger.Transaction
 open import Interface.ComputationalRelation
@@ -563,10 +564,11 @@ noRefundCert l = All (λ cert → isRefundCert cert ≡ false) l
 
 module _
   -- ASSUMPTIONS --
-  {- 1 -} {getCoin-⊆     : (d₁ d₂ : DepositPurpose ⇀ Coin) → d₁ ˢ ⊆ d₂ ˢ → getCoin d₁ ≤ getCoin d₂}
-  {- 2 -} {_∪⁺∅ᵐ∣∅ˢ≡id   : (deposits :  DepositPurpose ⇀ Coin) → getCoin deposits ≡ getCoin ((deposits ∪⁺ ∅ᵐ) ∣ ∅ˢ ᶜ)}
-  {- 3 -} {∪⁺singleton≡  : {deps : DepositPurpose ⇀ Coin}{cDep : DepositPurpose × Coin}
-                           → getCoin (deps ∪⁺ ❴ cDep ❵) ≡ getCoin deps + proj₂ cDep }
+  {- 1 -} {getCoin-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂}
+  {- 2 -} {coin∅ : getCoin{A = DepositPurpose ⇀ Coin} ∅ ≡ 0}
+  {- 3 -} {⊆→∪⁺ : (d d' : DepositPurpose ⇀ Coin) → d ˢ ⊆ d' ˢ → d' ≡ d ∪⁺ d'}
+  {- 4 -} {finiteness∘listing≡id : ∀ {l} → ((proj₁ ∘ finiteness) ∘ (proj₁ ∘ listing)) l ≡ l}
+
   where
   -- Main Lemma --
   updateCertDeps≥ : (certs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
@@ -574,22 +576,72 @@ module _
 
   -- Supporting Lemma --
   private
+    getCoin-⊆ : (d d' : DepositPurpose ⇀ Coin)
+                → d ˢ ⊆ d' ˢ → getCoin d ≤ getCoin d'
+    getCoin-⊆ d d' h = begin
+      getCoin d ≤⟨ m≤m+n (getCoin d) (getCoin d') ⟩
+      getCoin d + getCoin d' ≡⟨ sym (getCoin-hom d d') ⟩
+      getCoin (d ∪⁺ d') ≡⟨ cong getCoin (sym (⊆→∪⁺ d d' h)) ⟩
+      getCoin d' ∎
+      where open ≤-Reasoning
+
+    dbalance-cong : (d d' : DepositPurpose ⇀ Coin)
+                    → proj₁ d ≡ᵉ proj₁ d' → getCoin d ≡ getCoin d'
+    dbalance-cong d d' h = ≤-antisym (getCoin-⊆ d d' (proj₁ h))(getCoin-⊆ d' d (proj₂ h))
+
+    ∪⁺∅ᵐ∣∅ˢ≡id : (depts : DepositPurpose ⇀ Coin) → getCoin depts ≡ getCoin ((depts ∪⁺ ∅ᵐ) ∣ ∅ˢ ᶜ)
+    ∪⁺∅ᵐ∣∅ˢ≡id depts = begin
+      getCoin depts
+        ≡⟨ sym (+-identityʳ (getCoin depts)) ⟩
+      getCoin depts + 0
+        ≡⟨ cong (getCoin depts +_) (sym coin∅) ⟩
+      getCoin depts + getCoin{A = DepositPurpose ⇀ Coin} ∅ᵐ
+        ≡⟨ sym (getCoin-hom depts ∅) ⟩
+      getCoin (depts ∪⁺ ∅)
+        ≡⟨ dbalance-cong (depts ∪⁺ ∅ᵐ) ((depts ∪⁺ ∅ᵐ) ∣ ∅ˢ ᶜ) (swap (resᵐ-∅ᶜ {M = (depts ∪⁺ ∅ᵐ)})) ⟩
+      getCoin ((depts ∪⁺ ∅ᵐ) ∣ ∅ˢ ᶜ) ∎
+      where open Prelude.≡-Reasoning
+
+    getCoin-singleton : {dp : DepositPurpose} {c : Coin} → indexedSumᵛ' id ❴ (dp , c) ❵ ≡ c
+    getCoin-singleton {dp}{c} = begin
+      foldr (λ x → (proj₂ x) +_) 0 (deduplicate _≟_ (proj₁ (finiteness (proj₁ ❴ (dp , c) ❵))))
+        ≡⟨ cong (λ u → foldr (λ x → (proj₂ x) +_) 0 (deduplicate _≟_ u)) finiteness∘listing≡id ⟩
+      foldr (λ x → (proj₂ x) +_) 0 (deduplicate _≟_ ((dp , c) ∷ []))
+        ≡⟨ cong (λ u → foldr (λ x → (proj₂ x) +_) 0 u)
+                {x = deduplicate _≟_ ((dp , c) ∷ [])}
+                {y = (dp , c) ∷ []} refl ⟩
+      foldr (λ x → (proj₂ x) +_) 0 ((dp , c) ∷ [])
+        ≡⟨ +-identityʳ c ⟩
+      c ∎
+      where open Prelude.≡-Reasoning
+
+    ∪⁺singleton≡ : {deps : DepositPurpose ⇀ Coin}{(dp , c) : DepositPurpose × Coin}
+                   → getCoin (deps ∪⁺ ❴ (dp , c) ❵ᵐ) ≡ getCoin deps + c
+    ∪⁺singleton≡ {deps}{(dp , c)} = begin
+      getCoin (deps ∪⁺ ❴ (dp , c) ❵ᵐ) ≡⟨ getCoin-hom deps ❴ (dp , c) ❵ᵐ ⟩
+      getCoin deps + getCoin ❴ (dp , c) ❵ᵐ ≡⟨ cong (getCoin deps +_) (getCoin-singleton{dp}{c}) ⟩
+      getCoin deps + c  ∎
+      where open Prelude.≡-Reasoning
+
     certDeps-≥-lem :  (certs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
       →  noRefundCert certs → (cDep : DepositPurpose × Coin)
          -----------------------------------------------------------------------------------------
       →  getCoin (((updateCertDeposits pp certs deposits) ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) ≥ getCoin deposits
 
-    certDeps-≥-lem certs {pp} {deposits} nrf cDep = ≤-trans (updateCertDeps≥ certs nrf) (≤-trans α ξ)
-      where
-      uDeps : DepositPurpose ⇀ Coin
-      uDeps = updateCertDeposits pp certs deposits
-
-      α : getCoin uDeps ≤ getCoin (uDeps ∪⁺ ❴ cDep ❵ᵐ)
-      α = ≤-trans (m≤m+n _ _) (≤-reflexive (sym ∪⁺singleton≡))
-
-      ξ : getCoin ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) ≥ getCoin (uDeps ∪⁺ ❴ cDep ❵ᵐ)
-      ξ = getCoin-⊆ (uDeps ∪⁺ ❴ cDep ❵ᵐ) ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) (proj₂ (resᵐ-∅ᶜ {M = uDeps ∪⁺ ❴ cDep ❵ᵐ}))
-
+    certDeps-≥-lem certs {pp} {deposits} nrf cDep = let
+      uDeps = updateCertDeposits pp certs deposits in
+      begin
+        getCoin deposits
+          ≤⟨ updateCertDeps≥ certs nrf ⟩
+        getCoin uDeps
+          ≤⟨ m≤m+n (getCoin uDeps) (proj₂ cDep) ⟩
+        getCoin uDeps + proj₂ cDep
+          ≡⟨ sym ∪⁺singleton≡ ⟩
+        getCoin (uDeps ∪⁺ ❴ cDep ❵)
+          ≤⟨ getCoin-⊆ (uDeps ∪⁺ ❴ cDep ❵ᵐ) ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ )
+                       (proj₂ (resᵐ-∅ᶜ {M = uDeps ∪⁺ ❴ cDep ❵ᵐ})) ⟩
+        getCoin ((uDeps ∪⁺ ❴ cDep ❵ᵐ) ∣ ∅ˢ ᶜ ) ∎
+      where open ≤-Reasoning
 
   updateCertDeps≥ [] nrf = ≤-reflexive refl
   updateCertDeps≥ (delegate x x₁ x₂ x₃ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
@@ -600,14 +652,14 @@ module _
 
   updateCertDeps≥ (retirepool x x₁ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
     ≤-trans (updateCertDeps≥ certs nrf)
-            (≤-reflexive ((updateCertDeposits pp certs deposits) ∪⁺∅ᵐ∣∅ˢ≡id))
+            (≤-reflexive (∪⁺∅ᵐ∣∅ˢ≡id (updateCertDeposits pp certs deposits)))
 
   updateCertDeps≥ (regdrep x x₁ x₂ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
    certDeps-≥-lem certs nrf (DRepDeposit x , x₁)
 
   updateCertDeps≥ (ccreghot x x₁ ∷ certs) {pp} {deposits} (cert∉ref All.∷ nrf) =
     ≤-trans (updateCertDeps≥ certs nrf)
-            (≤-reflexive ((updateCertDeposits pp certs deposits) ∪⁺∅ᵐ∣∅ˢ≡id))
+            (≤-reflexive (∪⁺∅ᵐ∣∅ˢ≡id (updateCertDeposits pp certs deposits)))
 
   module _ {txid : TxId} {gaDep : Coin} {deposits : DepositPurpose ⇀ Coin}
     where
@@ -620,16 +672,19 @@ module _
     updatePropDeps≡ : (props : List GovProposal)
       → getCoin (updateProposalDeposits props txid gaDep deposits) - getCoin deposits ≡ (length props) * gaDep
     updatePropDeps≡ [] = n∸n≡0 (getCoin deposits)
-    updatePropDeps≡ (_ ∷ props) = begin
-      getCoin (updateProposalDeposits props txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ)
-         ∸ getCoin deposits           ≡⟨ cong (_∸ getCoin deposits) ∪⁺singleton≡ ⟩
-      getCoin (updateProposalDeposits props txid gaDep deposits) + gaDep ∸ getCoin deposits
-                                      ≡⟨ +-∸-comm _ (updatePropDeps≥ props) ⟩
-      (getCoin (updateProposalDeposits props txid gaDep deposits) ∸ getCoin deposits) + gaDep
-                                      ≡⟨ cong (_+ gaDep) (updatePropDeps≡ props) ⟩
-      (length props) * gaDep + gaDep  ≡⟨ +-comm ((length props) * gaDep) gaDep ⟩
+    updatePropDeps≡ (_ ∷ props) = let
+      upD = updateProposalDeposits props txid gaDep deposits in
+      begin
+        getCoin (upD ∪⁺ ❴ GovActionDeposit (txid , length props) , gaDep ❵ᵐ) ∸ getCoin deposits
+          ≡⟨ cong (_∸ getCoin deposits) ∪⁺singleton≡ ⟩
+        getCoin upD + gaDep ∸ getCoin deposits
+          ≡⟨ +-∸-comm _ (updatePropDeps≥ props) ⟩
+        (getCoin upD ∸ getCoin deposits) + gaDep
+          ≡⟨ cong (_+ gaDep) (updatePropDeps≡ props) ⟩
+        (length props) * gaDep + gaDep
+          ≡⟨ +-comm ((length props) * gaDep) gaDep ⟩
       gaDep + (length props) * gaDep  ∎
-      where open Prelude.≡-Reasoning
+        where open Prelude.≡-Reasoning
 
   -- Main Theorem: General Minimum Spending Condition --
   gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
@@ -638,7 +693,7 @@ module _
           in
 
     Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-               ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
+         ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 
     →  (∀ {p} → p ∈ˡ txprop → GovProposal.deposit p ≡ govActionDeposit)
     →  noRefundCert txcerts
@@ -673,14 +728,13 @@ module _
     where
     open ≤-Reasoning
     pp : PParams
-    pp = UTxOEnv.pparams Γ
+    pp = UTxOEnv.pparams Γ; open PParams pp
     open Tx tx renaming (body to txb); open TxBody txb
     open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
-    open PParams pp
 
     newDeps refunds : Coin
-    newDeps    = newDeposits pp utxoState txb
-    refunds    = depositRefunds pp utxoState txb
+    newDeps = newDeposits pp utxoState txb
+    refunds = depositRefunds pp utxoState txb
 
     balIn balOut : Value
     balIn = balance (st ∣ txins)

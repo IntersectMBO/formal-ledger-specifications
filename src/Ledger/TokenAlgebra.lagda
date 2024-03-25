@@ -20,7 +20,6 @@ open import Algebra.Morphism     using (module MonoidMorphisms )
 open import Data.Nat.Properties  using (+-0-monoid)
 open import Relation.Binary      using (Rel)
 open import Relation.Unary       using (Pred)
--- open import Relation.Binary.PropositionalEquality using (≡-Reasoning)
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TokenAlgebra}

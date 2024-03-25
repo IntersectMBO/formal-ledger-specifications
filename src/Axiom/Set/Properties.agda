@@ -297,6 +297,24 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
   ∩-sym : X ∩ Y ≡ᵉ Y ∩ X
   ∩-sym = ∩-sym⊆ , ∩-sym⊆
 
+  module _ {X Y : Set A} {_∈X? : Decidable¹ (_∈ X)}
+           {X⊆Y : X ⊆ Y}
+    where
+
+    ⊆-∪＼ : Y ⊆ X ∪ (Y ＼ X)
+    ⊆-∪＼ {a} a∈Y = case (a ∈X?) of λ where
+      (yes a∈X) → to ∈-∪ (inj₁ a∈X)
+      (no ¬a∈X) → to ∈-∪ (inj₂ (to ∈-filter (¬a∈X , a∈Y)))
+
+    ∪＼-⊆ : X ∪ (Y ＼ X) ⊆ Y
+    ∪＼-⊆ = λ a∈ → case from ∈-∪ a∈ of λ where
+      (inj₁ a∈X) → X⊆Y a∈X
+      (inj₂ a∈Y＼X) → proj₂ (from ∈-filter a∈Y＼X)
+
+    ⊆→⨿ : Y ≡ X ⨿ (Y ＼ X)
+    ⊆→⨿ = (⊆-∪＼ , ∪＼-⊆) , λ a∈X a∈Y＼X → proj₁ (from ∈-filter a∈Y＼X) a∈X
+
+
 -- Additional properties of lists and sets.
 module _ {L : List A} where
   open Equivalence
