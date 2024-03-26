@@ -215,7 +215,6 @@ opaque
 
   -- _ : getState' ≡ []
   -- _ = {!refl!}
-  --
 
   _ : exampleDatum' ≡ []
   _ = refl

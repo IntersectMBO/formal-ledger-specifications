@@ -21,7 +21,7 @@ open Implementation
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool
-helloWorld' Nothing (just s) = ⌊ (s ≟ "Hello World") ⌋
+helloWorld' _ (just s) = ⌊ (s ≟ "Hello World") ⌋
 helloWorld' _ _ = false
 
 helloWorld : PlutusScript
