@@ -95,3 +95,23 @@ LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) =
     LEDGERS-pov (subst (λ s → FreshTxs Γ s l)
                         (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
                         h₂) st
+
+
+-- ** Proof that LEDGER preserves the following invariant, so if it holds for
+-- some state it also holds when we successfully apply a block to that state.
+
+isGADepositᵇ : DepositPurpose → Bool
+isGADepositᵇ (GovActionDeposit _) = true
+isGADepositᵇ _                    = false
+
+isGADeposit : DepositPurpose → Set
+isGADeposit dp = isGADepositᵇ dp ≡ true
+
+govDepsMatch : LState → Set
+govDepsMatch s = let open UTxOState; open LState s in
+  filterˢ isGADeposit (dom (utxoSt .deposits ))
+  ≡ᵉ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
+
+-- LEDGER-govDepsMatch : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+--                       → govDepsMatch s → govDepsMatch s'
+-- LEDGER-govDepsMatch h (LEDGER⋯ (UTXOW-inductive⋯ _ _ _ _ _ st) _ _) gms = {!!}
