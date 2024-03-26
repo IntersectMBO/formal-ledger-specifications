@@ -6,7 +6,7 @@ open import Function.Definitions using (Injective)
 
 record Hashable (T THash : Set) : Set where
   field hash    : T → THash
-        hashInj : Injective _≡_ _≡_ hash
+        -- hashInj : Injective _≡_ _≡_ hash
 
 open Hashable ⦃...⦄ public
 

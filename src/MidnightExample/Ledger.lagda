@@ -23,7 +23,6 @@ instance
 
   Hashable-ℕ : Hashable ℕ Hash
   Hashable-ℕ .hash n = hash (+ n)
-  Hashable-ℕ .hashInj = ℤ.+-injective ∘ hashInj
 
 _<ᵇ_ : Maybe ℕ → Maybe ℕ → Bool
 just a  <ᵇ just b  = a Prelude.<ᵇ b
@@ -89,7 +88,6 @@ txDelta-injective {dec} {dec} refl = refl
 instance
   Hashable-Tx : Hashable Tx Hash
   Hashable-Tx .hash = hash ∘ txDelta
-  Hashable-Tx .hashInj = txDelta-injective ∘ hashInj
 \end{code}
 \caption{Transactions}
 \end{figure*}
