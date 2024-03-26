@@ -34,10 +34,12 @@ createEnv s = record { slot = s ;
                                ; poolDeposit = 500000000 -- lovelace
                                ; coinsPerUTxOWord = 4310 --lovelace (coinsPetUTxoByte)
                                ; minFeeRefScriptCoinsPerByte = 1ℚ -- unknown for now
-                               ; prices = tt -- need to fix this
+                               ; prices = tt -- fix this
+                               ; a0 = 1ℚ -- don't know
                                ; Emax = 18
+                               ; nopt = 0 -- don't know
                                ; collateralPercentage = 150
-                               ; costmdls = tt -- need to add this
+                               ; costmdls = tt -- fix this
                                ; drepThresholds = record -- unknown so setting all to 50%
                                                     { P1 = ½
                                                     ; P2a = ½
@@ -63,7 +65,6 @@ createEnv s = record { slot = s ;
                                ; drepActivity = 13 -- unknown
                                ; ccMinSize = 10 -- unknown
                                ; ccMaxTermLength = 73 -- unknown set to 1 year (73 epochs)
-                               ; minimumAVS = 0 --unknown set
                                } }
 
 createUTxO : (index : ℕ)
