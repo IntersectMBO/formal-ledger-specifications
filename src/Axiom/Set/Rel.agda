@@ -19,7 +19,7 @@ open import Data.These hiding (map)
 open import Data.Maybe.Base using () renaming (map to map?)
 open import Relation.Unary using (Decidable)
 open import Relation.Nullary using (yes; no)
-open import Relation.Binary using (_Preserves_⟶_)
+open import Relation.Binary using (_Preserves_⟶_; Minimum)
 import Relation.Binary.PropositionalEquality as I
 
 open Equivalence
@@ -87,6 +87,9 @@ dom∈ {R = R} {a} =
                                          (λ (x , ax∈R) → (a , x) , refl , ax∈R) ⟩
   (∃[ b ] (a , b) ∈ R)            ∎
   where open R.EquationalReasoning
+
+∉-dom∅ : ∀ {a : A} → a ∉ dom{A}{B} ∅
+∉-dom∅ {a} a∈dom∅ = ⊥-elim $ ∉-∅ $ proj₂ $ (to dom∈) a∈dom∅
 
 dom-⊆mapʳ : {f : B → B'} → dom R ⊆ dom (mapʳ f R)
 dom-⊆mapʳ {f = f} {a} a∈domR with to dom∈ a∈domR

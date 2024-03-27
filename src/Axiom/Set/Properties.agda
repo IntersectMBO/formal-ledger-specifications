@@ -246,6 +246,25 @@ Set-BoundedJoinSemilattice : IsBoundedJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_
 Set-BoundedJoinSemilattice = record
   { isJoinSemilattice = Set-JoinSemilattice ; minimum = ∅-minimum }
 
+Set-BddSemilattice : {A : Type ℓ} → BoundedJoinSemilattice _ _ _
+Set-BddSemilattice {A} = record
+                      { Carrier = Set A
+                      ; _≈_ = _≡ᵉ_ {A}
+                      ; _≤_ = _⊆_
+                      ; _∨_ = _∪_
+                      ; ⊥ = ∅
+                      ; isBoundedJoinSemilattice = Set-BoundedJoinSemilattice
+                      }
+
+module _ {A : Type ℓ} where
+  open import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice (Set-BddSemilattice {A})
+
+  ∪-identityˡ : (X : Set A) → ∅ ∪ X ≡ᵉ X
+  ∪-identityˡ = identityˡ
+
+  ∪-identityʳ : (X : Set A) → X ∪ ∅ ≡ᵉ X
+  ∪-identityʳ = identityʳ
+
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
 

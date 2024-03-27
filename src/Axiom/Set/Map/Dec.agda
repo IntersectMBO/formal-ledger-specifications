@@ -15,6 +15,7 @@ open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set)
 open Theory th
 open import Axiom.Set.Rel th using (dom)
 open import Axiom.Set.Map th
+open import Axiom.Set.Properties
 
 open Equivalence
 
@@ -32,11 +33,22 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
   ... | no  mr | no  mr' = Sum.[ flip contradiction mr , flip contradiction mr' ]
                                (from ∈-∪ dp)
 
+  -- Alternative `unionThese` without `with`
+  unionThese' : ⦃ DecEq A ⦄ → (m : Map A B) (m' : Map A C) (x : A)
+    → x ∈ dom (m ˢ) ∪ dom (m' ˢ) → These B C
+  unionThese' m m' x dp = case x ∈? dom (m ˢ) of λ where
+    (yes mr) → case x ∈? dom (m' ˢ) of λ where
+      (yes mr') → these (lookupᵐ m x) (lookupᵐ m' x)
+      (no  mr') → this  (lookupᵐ m x)
+    (no  mr) → case x ∈? dom (m' ˢ) of λ where
+      (yes mr') → that  (lookupᵐ m' x)
+      (no  mr') → Sum.[ flip contradiction mr , flip contradiction mr' ] (from ∈-∪ dp)
+
   unionWith : ⦃ DecEq A ⦄ → (These B C → D) → Map A B → Map A C → Map A D
   unionWith f m@(r , p) m'@(r' , p') = m'' , helper
      where
        d = dom r ∪ dom r'
-       m'' = map (λ (x , p) → x , f (unionThese m m' x p)) (incl-set d)
+       m'' = map (λ (x , p) → x , f (unionThese' m m' x p)) (incl-set d)
 
        helper : left-unique m''
        helper q q'
