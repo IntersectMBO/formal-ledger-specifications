@@ -9,10 +9,12 @@ open import Prelude
 
 open import Foreign.Haskell
 open import Foreign.Haskell.Coerce
+open import Data.Rational.Base
 
 {-# FOREIGN GHC
   import GHC.Generics (Generic)
   import Data.TreeDiff
+  import Prelude hiding (Rational)
 #-}
 
 data Empty : Set where
@@ -47,6 +49,7 @@ data ComputationResult E A : Set where
 
 HSMap : Set → Set → Set
 HSMap K V = List (Pair K V)
+Rational = Pair ℤ ℕ
 
 Coin          = ℕ
 Addr          = ℕ -- just payment credential
@@ -54,12 +57,15 @@ Addr          = ℕ -- just payment credential
 TxId          = ℕ
 Ix            = ℕ
 Epoch         = ℕ
+ScriptHash    = ℕ
 
 AuxiliaryData = ⊤
 DataHash      = ⊤
 Datum         = ⊤
 Redeemer      = ⊤
 Anchor        = ⊤
+Network       = ⊤
+PParamsUpdate = ⊤
 
 TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Maybe DataHash
@@ -67,23 +73,32 @@ UTxO          = HSMap TxIn TxOut
 
 Hash          = ℕ
 
-data Tag : Set where Spend Mint Cert Rewrd Vote Propose : Tag
+GovActionID   = Pair TxId ℕ
+
+HashProtected : Set → Set
+HashProtected A = Pair A GovActionID
+
+data Tag : Set where Spend Mint Cert Rewrd VoteTag Propose : Tag
 RdmrPtr = Pair Tag Ix
 ExUnits = Pair ℕ ℕ
+ProtVer = Pair ℕ ℕ
 
 {-# FOREIGN GHC
+  type Rational = (Integer, Integer)
   type Coin  = Integer
   type Addr  = Integer
 
   type TxId    = Integer
   type Ix      = Integer
   type Epoch   = Integer
+  type ScriptHash    = Integer
 
   type AuxiliaryData = ()
   type DataHash      = ()
   type Datum         = ()
   type Redeemer      = ()
   type Anchor        = ()
+  type Network       = ()
 
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, (Coin, Maybe DataHash))
@@ -94,6 +109,8 @@ ExUnits = Pair ℕ ℕ
   instance ToExpr Tag
   type RdmrPtr = (Tag, Ix)
   type ExUnits = (Integer, Integer)
+  type ProtVer = (Integer, Integer)
+  type GovActionID = (TxId, Integer)
 #-}
 {-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
 
@@ -110,9 +127,11 @@ data Credential : Set where
 {-# COMPILE GHC Credential = data Credential (ScriptObj | KeyHashObj) #-}
 
 PoolParams = Credential
+RwdAddr = Pair Network Credential
 
 {-# FOREIGN GHC
   type PoolParams = Credential
+  type RwdAddr = (Network, Credential)
 
   data GovRole
     = CC
@@ -302,3 +321,141 @@ record UTxOState : Set where
   instance ToExpr UTxOState
 #-}
 {-# COMPILE GHC UTxOState = data UTxOState (MkUTxOState) #-}
+
+record EnactState : Set where
+  field esCC           : HashProtected (Maybe (Pair (HSMap Credential Epoch) Rational))
+        esConstitution : HashProtected (Pair DataHash (Maybe ScriptHash))
+        esPV           : HashProtected ProtVer
+        esPParams      : HashProtected PParams
+        esWithdrawals  : HSMap RwdAddr Coin
+{-# FOREIGN GHC
+  data EnactState = MkEnactState
+    { esCC           :: (Maybe ([(Credential, Epoch)], Rational), GovActionID)
+    , esConstitution :: ((DataHash, Maybe ScriptHash), GovActionID)
+    , esPV           :: (ProtVer, GovActionID)
+    , esPParams      :: (PParams, GovActionID)
+    , esWithdrawals  :: [(RwdAddr, Coin)]
+    }
+#-}
+{-# COMPILE GHC EnactState = data EnactState (MkEnactState) #-}
+
+record GovEnv : Set where
+  field geTxId       : TxId
+        geEpoch      : Epoch
+        gePParams    : PParams
+        gePPolicy    : Maybe ScriptHash
+        geEnactState : EnactState
+{-# FOREIGN GHC
+  data GovEnv = MkGovEnv
+    { geTxId :: TxId
+    , geEpoch :: Epoch
+    , gePParams :: PParams
+    , gePPolicy :: Maybe ScriptHash
+    , geEnactState :: EnactState
+    }
+#-}
+{-# COMPILE GHC GovEnv = data GovEnv (MkGovEnv) #-}
+
+Voter = Pair GovRole Credential
+
+data GovAction : Set where
+  NoConfidence     :                                                         GovAction
+  NewCommittee     : (HSMap Credential Epoch) → List Credential → Rational → GovAction
+  NewConstitution  : DataHash → Maybe ScriptHash                           → GovAction
+  TriggerHF        : ProtVer                                               → GovAction
+  ChangePParams    : PParamsUpdate                                         → GovAction
+  TreasuryWdrl     : HSMap RwdAddr Coin                                    → GovAction
+  Info             :                                                         GovAction
+
+data Vote : Set where
+  VoteYes     : Vote
+  VoteNo      : Vote
+  VoteAbstain : Vote
+
+record GovActionState : Set where
+  field gasVotes       : HSMap Voter Vote
+        gasReturnAddr  : RwdAddr
+        gasExpiresIn   : Epoch
+        gasAction      : GovAction
+        gasPrevAction  : GovActionID
+
+record GovVote : Set where
+  field gvGid         : GovActionID
+        gvVoter       : Voter
+        gvVote        : Vote
+        gvAnchor      : Maybe Anchor
+
+record GovProposal : Set where
+  field gpAction      : GovAction
+        gpPrevAction  : GovActionID
+        gpPolicy      : Maybe ScriptHash
+        gpDeposit     : Coin
+        gpReturnAddr  : RwdAddr
+        gpAnchor      : Anchor
+
+data GovSignal : Set where
+  GovSignalVote : GovVote → GovSignal
+  GovSignalProposal : GovProposal → GovSignal
+
+GovState = List (Pair GovActionID GovActionState)
+{-# FOREIGN GHC
+  type Voter = (GovRole, Credential)
+  type GovState = [(GovActionID, GovActionState)]
+
+  data GovAction
+    = NoConfidence
+    | NewCommittee [(Credential, Epoch)] [Credential] Rational
+    | NewConstitution DataHash (Maybe ScriptHash)
+    | TriggerHF ProtVer
+    | ChangePParams ()
+    | TreasuryWdrl [(RwdAddr, Coin)]
+    | Info
+
+  data Vote
+    = VoteYes
+    | VoteNo
+    | VoteAbstain
+
+  data GovActionState = MkGovActionState
+    { gasVotes :: [(Voter, Vote)]
+    , gasReturnAddr :: RwdAddr
+    , gasExpiresIn :: Epoch
+    , gasAction :: GovAction
+    , gasPrevAction :: GovActionID
+    }
+
+  data GovVote = MkGovVote
+    { gvGid    :: GovActionID
+    , gvVoter  :: Voter
+    , gvVote   :: Vote
+    , gvAnchor :: Maybe Anchor
+    }
+  
+  data GovProposal = MkGovProposal
+    { gpAction     :: GovAction
+    , gpPrevAction :: GovActionID
+    , gpPolicy     :: Maybe ScriptHash
+    , gpDeposit    :: Coin
+    , gpReturnAddr :: RwdAddr
+    , gpAnchor     :: Anchor
+    }
+
+  data GovSignal
+    = GovSignalVote GovVote
+    | GovSignalProposal GovProposal
+#-}
+{-# COMPILE GHC GovAction = data GovAction
+  ( NoConfidence
+  | NewCommittee
+  | NewConstitution
+  | TriggerHF
+  | ChangePParams
+  | TreasuryWdrl
+  | Info
+  )
+ #-}
+{-# COMPILE GHC Vote = data Vote (VoteYes|VoteNo|VoteAbstain) #-}
+{-# COMPILE GHC GovActionState = data GovActionState (MkGovActionState) #-}
+{-# COMPILE GHC GovVote = data GovVote (MkGovVote) #-}
+{-# COMPILE GHC GovProposal = data GovProposal (MkGovProposal) #-}
+{-# COMPILE GHC GovSignal = data GovSignal (GovSignalVote|GovSignalProposal) #-}
