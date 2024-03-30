@@ -9,7 +9,7 @@ module Ledger.Ledger.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Axiom.Set.Properties th using (≡ᵉ-isEquivalence; ∪-cong; ≡ᵉ-Setoid)
+open import Axiom.Set.Properties th -- using (≡ᵉ-isEquivalence; ∪-cong; ≡ᵉ-Setoid; map-≡ᵉ; filter-pres-⊆)
 open import Ledger.Deleg.Properties govStructure
 open import Ledger.Gov txs
 open import Ledger.Gov.Properties txs
@@ -103,9 +103,6 @@ module _ where
                           h₂) st
 
 
--- ** Proof that LEDGER preserves the following invariant, so if it holds for
--- some state it also holds when we successfully apply a block to that state.
-
 isGADepositᵇ : DepositPurpose → Bool
 isGADepositᵇ (GovActionDeposit _) = true
 isGADepositᵇ _                    = false
@@ -119,74 +116,84 @@ govDepPurpose (id , _) = GovActionDeposit id
 govDepPurposes : GovState → List DepositPurpose
 govDepPurposes = map govDepPurpose
 
+-- ** Proof that LEDGER preserves the following invariant, so if it holds for
+-- some state it also holds when we successfully apply a block to that state.
 govDepsMatch : LState → Set
 govDepsMatch s = let open UTxOState; open LState s in
   filterˢ isGADeposit (dom (utxoSt .deposits ))
-  ≡ᵉ fromList (govDepPurposes govSt)
-
+    ≡ᵉ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
 
 LEDGER-govDepsMatch : {Γ : LEnv}{s s' : LState}{tx : Tx} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                       → govDepsMatch s → govDepsMatch s'
 LEDGER-govDepsMatch {Γ} s@{⟦ utxoSt , govSt , certState ⟧ˡ}
   s'@{.(⟦ utxoSt' , govSt' , certState' ⟧ˡ)} {tx}
   (_⊢_⇀⦇_,LEDGER⦈_.LEDGER {utxoSt' = utxoSt'} {certState'} {govSt'} x) aprioriMatch =
-
   begin
-    gDeps-utxoSt'             ≈⟨ i ⟩
-    gDeps-utxoSt ∪ newGovDeps ≈⟨ ∪-cong aprioriMatch ≡ᵉ.refl ⟩
-    gDeps-govSt ∪ newGovDeps  ≈˘⟨ ii ⟩
-    gDeps-govSt' ∎
-
+    gDeps-utxoSt'              ≈⟨ i ⟩
+    gDeps-utxoSt ∪ newGovDeps  ≈⟨ ∪-cong aprioriMatch ≡ᵉ.refl ⟩
+    gDeps-govSt ∪ newGovDeps   ≈˘⟨ ii ⟩
+    gDeps-govSt'               ∎
   where
-  open SetoidReasoning ≡ᵉ-Setoid
-  open UTxOState using (deposits)
+  open SetoidReasoning ≡ᵉ-Setoid; open UTxOState using (deposits)
   txb : TxBody
-  txb = Tx.body tx; open TxBody txb
-  open LEnv Γ
+  txb = Tx.body tx; open TxBody txb; open LEnv Γ
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence{DepositPurpose})
-
   gDeps-utxoSt gDeps-utxoSt' gDeps-govSt gDeps-govSt' : ℙ DepositPurpose
-
-  -- GovernanceAction deposits in the old UTXO state
-  gDeps-utxoSt  = filterˢ isGADeposit (dom (utxoSt .deposits))
-
-  -- GovernanceAction deposits in the old GovState
-  gDeps-govSt   = fromList (govDepPurposes govSt)
-
-  -- GovernanceAction deposits in the new UTXO state
-  gDeps-utxoSt' = filterˢ isGADeposit (dom (utxoSt' .deposits))
-
-  -- GovernanceAction deposits in the new GovState
-  gDeps-govSt'  = fromList (govDepPurposes govSt')
+  gDeps-utxoSt  = filterˢ isGADeposit (dom (utxoSt .deposits)) -- GA deposits in old UTXO state
+  gDeps-utxoSt' = filterˢ isGADeposit (dom (utxoSt' .deposits)) -- GA deposits in the new UTXO state
+  gDeps-govSt   = fromList (govDepPurposes govSt) -- GA deposits in the old GovState
+  gDeps-govSt'  = fromList (govDepPurposes govSt') -- GA deposits in the new GovState
 
   -- It suffices to show that gDeps-utxoSt and gDeps-govSt change by the same amount.
-
   -- That is, we will prove there is some set
   newGovDeps : ℙ DepositPurpose
-  newGovDeps = {!!}
+  newGovDeps = filterˢ isGADeposit (dom (depositsChangeˢ pparams txb))
   -- such that:
+  updateDeps≡ : dom (utxoSt' .deposits) ≡ᵉ dom (updateDeposits pparams txb (utxoSt .deposits))
+  updateDeps≡ = {!!}
 
-  -- i. Gov deposits in new Utxo state are those in old Utxo state plus newGovDeps,
-  i : gDeps-utxoSt' ≡ᵉ gDeps-utxoSt ∪ newGovDeps
-  i = {!!}
 
-  -- ii. Gov deposits in new GovState are those in the old GovState plus newGovDeps,
-  ii : gDeps-govSt' ≡ᵉ gDeps-govSt ∪ newGovDeps
-  ii = {!!}
+  dom-∪ : dom (updateDeposits pparams txb (utxoSt .deposits))
+               ≡ᵉ (dom (utxoSt .deposits)) ∪ dom (depositsChangeˢ pparams txb)
+  dom-∪ = {!!}
 
-  -- Then, since gDeps-utxoSt ≡ᵉ gDeps-govSt (by assumption), we have
-  -- gDeps-utxoSt ∪ newGovDeps ≡ᵉ gDeps-govSt ∪ newGovDeps,
+  i : filterˢ isGADeposit (dom (utxoSt' .deposits))
+      ≡ᵉ filterˢ isGADeposit (dom (utxoSt .deposits)) ∪ newGovDeps
 
-  -- so we conclude that the deposits match in the new state:
-  -- gDeps-utxoSt' ≡ᵉ gDeps-govSt'
+  i = begin
+      filterˢ isGADeposit (dom (utxoSt' .deposits))
+        ≈⟨ filter-pres-≡ᵉ updateDeps≡ ⟩
+      filterˢ isGADeposit (dom (updateDeposits pparams txb (utxoSt .deposits)))
+        ≈⟨ filter-pres-≡ᵉ dom-∪ ⟩
+      filterˢ isGADeposit (dom (utxoSt .deposits) ∪ dom (depositsChangeˢ pparams txb))
+        ≈⟨ filter-hom-∪ ⟩
+      filterˢ isGADeposit (dom (utxoSt .deposits)) ∪ filterˢ isGADeposit (dom (depositsChangeˢ pparams txb))
+        ∎
 
-  -- i.e., govDepsMatch ⟦ utxoSt' , govSt' , certState' ⟧ˡ holds.
+  ii : fromList (map (λ where (id , _) → GovActionDeposit id) govSt')
+       ≡ᵉ fromList (map (λ where (id , _) → GovActionDeposit id) govSt) ∪ newGovDeps
+  ii = begin
+       fromList (map (λ where (id , _) → GovActionDeposit id) govSt')
+         ≈⟨ {!!} ⟩
+       fromList (map (λ where (id , _) → GovActionDeposit id) govSt) ∪ newGovDeps
+         ∎
+
+
 
   -- (below are some assumptions that might be useful) --
 
   γ : ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
       ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
   γ = (proj₁ x) , (proj₂ (proj₂ x))
+
+  γ' : ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
+  γ' with (proj₁ x)
+  ...| UTXOW-inductive (_ , _ , _ , _ , _ , h) = h
+
+  γ'' : ∙ record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
+  γ'' with γ'
+  ...| UTXO-inductive {tx}{Γ}{s} (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , h) = h
+
 
 
   -- gmsc' : record { LEnv Γ } ⊢  utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
@@ -196,3 +203,28 @@ LEDGER-govDepsMatch {Γ} s@{⟦ utxoSt , govSt , certState ⟧ˡ}
   --        → filterˢ isGADeposit (dom (utxoSt' .deposits)) ≡ᵉ fromList (govDepPurposes govSt')
 
   -- gmsc' step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) hg premise = {!!}
+
+  -- Notes:
+  -- In the `_⊢_⇀⦇_,GOV⦈_` rule, the third argument (`txgov txb` here) is a `List (GovVote ⊎ GovProposal)`.
+  -- Only the `GovProposal` has a deposits field, so we should filter the `GovProposal`s from the list.
+  -- In the `GOV-Propose` constructor of the `_⊢_⇀⦇_,GOV⦈_` type, the `govSt : GovState` is updated
+  -- as follows:
+  --   govSt' = addAction govSt (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+  -- where
+  --   addAction : GovState
+  --             → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
+  --             → GovState
+  --   addAction govSt e aid addr a prev = govSt ∷ʳ (aid , record
+  --     { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+  --
+  -- The third argument of the helper type `_⊢_⇀⦇_,GOV'⦈_` is meant to be a single `GovVote ⊎ GovProposal`
+  -- and, in the GovProposal instance, it is `inj₂ prop`, where
+  --
+  --   prop = record { returnAddr = addr ; action = a ; anchor = x
+  --                 ; policy = p ; deposit = d ; prevAction = prev }
+  --
+  -- Question: How to show the deposit field in `prop` yields a new deposit added to govSt'?
+  -- Question: Is ordinary union what we want?
+  -- Question: What about a `GovActionDeposit id` that already shows up in govSt?
+  -- Question: What about epoch boundaries? (out of scope)
+  -- Question: Is state fresh/valid?  Valid transition doesn't necessarily mean valid state.

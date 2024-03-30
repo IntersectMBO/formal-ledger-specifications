@@ -187,6 +187,39 @@ card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
 filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
 filter-⊆ = proj₂ ∘′ ∈⇔P
 
+filter-pres-⊆ : ∀ {P : A → Type} {sp-P : specProperty P} → X ⊆ Y
+                → filter sp-P X ⊆ filter sp-P Y
+filter-pres-⊆ xy a∈ = let Pa∈ = from ∈-filter a∈ in
+  to ∈-filter ((proj₁ Pa∈) , (xy (proj₂ Pa∈)))
+
+filter-pres-≡ᵉ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
+                 → X ≡ᵉ Y → filter sp-P X ≡ᵉ filter sp-P Y
+filter-pres-≡ᵉ (X⊆Y , Y⊆X) = filter-pres-⊆ X⊆Y , filter-pres-⊆ Y⊆X
+
+filter-split-∪ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
+                 → ∀ {a} → a ∈ filter sp-P (X ∪ Y) → (P a × a ∈ X) ⊎ (P a × a ∈ Y)
+filter-split-∪ a∈ =
+  case ((proj₁ (from ∈-filter a∈)) , (from ∈-∪ (proj₂ (from ∈-filter a∈)))) of
+    λ where
+      (Pa , inj₁ a∈X) → inj₁ (Pa , a∈X)
+      (Pa , inj₂ a∈Y) → inj₂ (Pa , a∈Y)
+
+filter-hom-⊆ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
+               → filter sp-P (X ∪ Y) ⊆ filter sp-P X ∪ filter sp-P Y
+filter-hom-⊆ {a = a} a∈ = to ∈-∪ (case filter-split-∪ a∈ of λ where
+    (inj₁ v) → inj₁ (to ∈-filter v)
+    (inj₂ v) → inj₂ (to ∈-filter v))
+
+filter-hom-⊇ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
+               → filter sp-P X ∪ filter sp-P Y ⊆ filter sp-P (X ∪ Y)
+filter-hom-⊇ a∈ = to ∈-filter (case (from ∈-∪ a∈) of λ where
+     (inj₁ v) → proj₁ (from ∈-filter v) , to ∈-∪ (inj₁ (proj₂ (from ∈-filter v)))
+     (inj₂ v) → proj₁ (from ∈-filter v) , to ∈-∪ (inj₂ (proj₂ (from ∈-filter v))) )
+
+filter-hom-∪ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
+               → filter sp-P (X ∪ Y) ≡ᵉ (filter sp-P X) ∪ (filter sp-P Y)
+filter-hom-∪ {A} {P} {sp-P} {X} {Y} = filter-hom-⊆ , filter-hom-⊇
+
 Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Decidable¹ (_∈ fromList l)
 Dec-∈-fromList _ _ = Relation.Nullary.Decidable.map ∈-fromList (_∈ˡ?_ _≟_ _ _)
 

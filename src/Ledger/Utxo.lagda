@@ -130,42 +130,41 @@ instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
 
-module _ (let open TxBody) where
 \end{code}
 \begin{code}
 
-  updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updateDeposits pp txb
-    = updateCertDeposits (txb .txcerts) ∘ updateProposalDeposits (txb .txprop)
-    where
-      certDeposit : DCert → DepositPurpose ⇀ Coin
-      certDeposit  (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
-      certDeposit  (regpool c _)       = ❴ PoolDeposit       c , pp .poolDeposit  ❵
-      certDeposit  (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
-      certDeposit  _                   = ∅
+updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateCertDeposits _   []              deposits = deposits
+updateCertDeposits pp  (cert ∷ certs)  deposits
+  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
+  where
+  certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
+  certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
+  certDeposit (regpool c _) {pp}  = ❴ PoolDeposit       c , pp .poolDeposit  ❵
+  certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
+  certDeposit _                   = ∅
 
-      propDeposit : GovActionID → DepositPurpose ⇀ Coin
-      propDeposit gaid = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
+  certRefund :  DCert → ℙ DepositPurpose
+  certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+  certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+  certRefund _              = ∅
 
-      certRefund : DCert → ℙ DepositPurpose
-      certRefund (dereg c)      = ❴ CredentialDeposit c ❵
-      certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-      certRefund _              = ∅
+updateProposalDeposits : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateProposalDeposits [] _ _ deposits = deposits
+updateProposalDeposits (_ ∷ ps) txid gaDep deposits =
+  updateProposalDeposits ps txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
-      updateCertDeposits : List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-      updateCertDeposits []              deposits = deposits
-      updateCertDeposits (cert ∷ certs)  deposits
-        = updateCertDeposits certs deposits ∪⁺ certDeposit cert ∣ certRefund cert ᶜ
+updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateDeposits pp txb =
+  updateCertDeposits pp txcerts ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
+  where open TxBody txb
 
-      updateProposalDeposits : List GovProposal → DepositPurpose ⇀ Coin
-        → DepositPurpose ⇀ Coin
-      updateProposalDeposits [] deposits = deposits
-      updateProposalDeposits (_ ∷ props) deposits
-        = updateProposalDeposits props deposits ∪⁺ propDeposit (txb .txid , length props)
+depositsChangeˢ : PParams → TxBody → ℙ (DepositPurpose × Coin)
+depositsChangeˢ pp txb = (updateDeposits pp txb ∅)ˢ
 
-  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
-  depositsChange pp txb deposits
-    = getCoin (updateDeposits pp txb deposits) - getCoin deposits
+depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
+depositsChange pp txb deposits
+  = getCoin (updateDeposits pp txb deposits) - getCoin deposits
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
