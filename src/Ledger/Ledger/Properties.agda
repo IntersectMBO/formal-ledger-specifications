@@ -123,10 +123,12 @@ govDepsMatch s = let open UTxOState; open LState s in
   filterˢ isGADeposit (dom (utxoSt .deposits ))
     ≡ᵉ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
 
-LEDGER-govDepsMatch : {Γ : LEnv}{s s' : LState}{tx : Tx} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+LEDGER-govDepsMatch : {Γ : LEnv}{s s' : LState}{tx : Tx}
+                      → Tx.isValid tx ≡ true
+                      → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                       → govDepsMatch s → govDepsMatch s'
 LEDGER-govDepsMatch {Γ} s@{⟦ utxoSt , govSt , certState ⟧ˡ}
-  s'@{.(⟦ utxoSt' , govSt' , certState' ⟧ˡ)} {tx}
+  s'@{.(⟦ utxoSt' , govSt' , certState' ⟧ˡ)} {tx} txIsValid
   (_⊢_⇀⦇_,LEDGER⦈_.LEDGER {utxoSt' = utxoSt'} {certState'} {govSt'} x) aprioriMatch =
   begin
     gDeps-utxoSt'              ≈⟨ i ⟩
@@ -149,8 +151,34 @@ LEDGER-govDepsMatch {Γ} s@{⟦ utxoSt , govSt , certState ⟧ˡ}
   newGovDeps : ℙ DepositPurpose
   newGovDeps = filterˢ isGADeposit (dom (depositsChangeˢ pparams txb))
   -- such that:
-  updateDeps≡ : dom (utxoSt' .deposits) ≡ᵉ dom (updateDeposits pparams txb (utxoSt .deposits))
-  updateDeps≡ = {!!}
+
+
+  ⊢utxo : ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
+  ⊢utxo with (proj₁ x)
+  ...| UTXOW-inductive (_ , _ , _ , _ , _ , h) = h
+
+  ⊢utxo' : ∙ record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
+  ⊢utxo' with ⊢utxo
+  ...| UTXO-inductive {tx}{Γ}{s} (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , h) = h
+
+
+  ⊢utxo'' : ∙ record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
+          ────────────────────────────────
+          (utxoSt' .deposits) ≡ (updateDeposits pparams txb (utxoSt .deposits))
+  ⊢utxo'' (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes u) = refl
+  ⊢utxo'' (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No u) = ⊥-elim (¬ft (trans (sym txIsValid) (proj₂ u)))
+    where
+    ¬ft : ¬ (true ≡ false)
+    ¬ft ()
+
+  updateDeps≡ : utxoSt' .deposits ≡ updateDeposits pparams txb (utxoSt .deposits)
+  updateDeps≡ = ⊢utxo'' ⊢utxo'
+
+  updateDeps-dom≡ : dom (utxoSt' .deposits) ≡ dom (updateDeposits pparams txb (utxoSt .deposits))
+  updateDeps-dom≡ = cong dom updateDeps≡
+
+  updateDeps-dom≡ᵉ : dom (utxoSt' .deposits) ≡ᵉ dom (updateDeposits pparams txb (utxoSt .deposits))
+  updateDeps-dom≡ᵉ = ≡ᵉ.reflexive updateDeps-dom≡
 
 
   dom-∪ : dom (updateDeposits pparams txb (utxoSt .deposits))
@@ -162,7 +190,7 @@ LEDGER-govDepsMatch {Γ} s@{⟦ utxoSt , govSt , certState ⟧ˡ}
 
   i = begin
       filterˢ isGADeposit (dom (utxoSt' .deposits))
-        ≈⟨ filter-pres-≡ᵉ updateDeps≡ ⟩
+        ≈⟨ filter-pres-≡ᵉ updateDeps-dom≡ᵉ ⟩
       filterˢ isGADeposit (dom (updateDeposits pparams txb (utxoSt .deposits)))
         ≈⟨ filter-pres-≡ᵉ dom-∪ ⟩
       filterˢ isGADeposit (dom (utxoSt .deposits) ∪ dom (depositsChangeˢ pparams txb))
@@ -179,20 +207,11 @@ LEDGER-govDepsMatch {Γ} s@{⟦ utxoSt , govSt , certState ⟧ˡ}
          ∎
 
 
-
   -- (below are some assumptions that might be useful) --
 
   γ : ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
       ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
   γ = (proj₁ x) , (proj₂ (proj₂ x))
-
-  γ' : ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
-  γ' with (proj₁ x)
-  ...| UTXOW-inductive (_ , _ , _ , _ , _ , h) = h
-
-  γ'' : ∙ record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
-  γ'' with γ'
-  ...| UTXO-inductive {tx}{Γ}{s} (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , h) = h
 
 
 
