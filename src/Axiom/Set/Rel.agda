@@ -88,6 +88,32 @@ dom∈ {R = R} {a} =
   (∃[ b ] (a , b) ∈ R)            ∎
   where open R.EquationalReasoning
 
+dom∪' : ∀ {a} → a ∈ dom (R ∪ R') ⇔ (a ∈ dom R ∪ dom R')
+dom∪' {R = R} {R'}{a} =
+  a ∈ dom (R ∪ R')       ∼⟨ dom∈ ⟩
+  (∃[ b ] (a , b) ∈ R ∪ R') ∼⟨ mk⇔ (λ (b , pf) → b , (from ∈-∪ pf)) (λ (b , pf) → b , (to ∈-∪ pf)) ⟩
+  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R')) ∼⟨ i ⟩
+  (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ ii ⟩
+  (a ∈ dom R ⊎ a ∈ dom R') ∼⟨ ∈-∪ ⟩
+  (a ∈ dom R ∪ dom R') ∎
+  where
+  open R.EquationalReasoning
+  i : (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R')) ⇔ (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R')
+  i = mk⇔ (λ (b , pf) → case pf of λ where
+    (inj₁ p) → inj₁ (b , p)
+    (inj₂ p) → inj₂ (b , p)) (λ x → case x of λ where
+    (inj₁ (b , pf)) → b , (inj₁ pf)
+    (inj₂ (b , pf)) → b , (inj₂ pf))
+  ii : (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ⇔ (a ∈ dom R ⊎ a ∈ dom R')
+  ii = mk⇔ (λ x → case x of λ where
+    (inj₁ bpf) → inj₁ (from dom∈ bpf)
+    (inj₂ bpf) → inj₂ (from dom∈ bpf)) λ x → case x of λ where
+    (inj₁ pf) → inj₁ (to dom∈ pf)
+    (inj₂ pf) → inj₂ (to dom∈ pf)
+    
+dom∪ : dom (R ∪ R') ≡ᵉ (dom R ∪ dom R')
+dom∪ = (to dom∪') , (from dom∪')
+
 dom-⊆mapʳ : {f : B → B'} → dom R ⊆ dom (mapʳ f R)
 dom-⊆mapʳ {f = f} {a} a∈domR with to dom∈ a∈domR
 ... | b , ab∈R = from dom∈ (f b , to ∈-map ((a , b) , refl , ab∈R))

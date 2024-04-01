@@ -23,6 +23,9 @@ open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using
 open import Data.Product using (map₂)
 open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
+import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
+import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
+
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 
@@ -278,6 +281,30 @@ Set-JoinSemilattice = record
 Set-BoundedJoinSemilattice : IsBoundedJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_ ∅
 Set-BoundedJoinSemilattice = record
   { isJoinSemilattice = Set-JoinSemilattice ; minimum = ∅-minimum }
+
+Set-BddSemilattice : {A : Type ℓ} → BoundedJoinSemilattice _ _ _
+Set-BddSemilattice {A} = record
+                      { Carrier = Set A
+                      ; _≈_ = _≡ᵉ_ {A}
+                      ; _≤_ = _⊆_
+                      ; _∨_ = _∪_
+                      ; ⊥ = ∅
+                      ; isBoundedJoinSemilattice = Set-BoundedJoinSemilattice
+                      }
+
+module _ {A : Type ℓ} where
+  open Bounded∨Semilattice (Set-BddSemilattice {A})
+  open ∨Semilattice (BoundedJoinSemilattice.joinSemilattice (Set-BddSemilattice {A}))
+    using (∨-assoc)
+
+  ∪-identityˡ : (X : Set A) → ∅ ∪ X ≡ᵉ X
+  ∪-identityˡ = identityˡ
+
+  ∪-identityʳ : (X : Set A) → X ∪ ∅ ≡ᵉ X
+  ∪-identityʳ = identityʳ
+
+  ∪-assoc : (X Y Z : Set A) → (X ∪ Y) ∪ Z ≡ᵉ X ∪ (Y ∪ Z)
+  ∪-assoc = ∨-assoc
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
