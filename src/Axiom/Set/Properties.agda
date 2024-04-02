@@ -21,6 +21,7 @@ open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_�
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
+open import Data.Product.Properties using (×-≡,≡→≡)
 open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
 import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
@@ -177,6 +178,15 @@ map-∅ = ∅-least λ x∈map → case ∈-map⁻' x∈map of λ where (_ , _ ,
 mapPartial-∅ : {f : A → Maybe B} → mapPartial f ∅ ≡ᵉ ∅
 mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f = f}) x∈map of λ where
   (_ , h , _) → ⊥-elim (∉-∅ h)
+
+to-singleton-pair : ∀ {a x : A} {b y : B} → a ≡ x → b ≡ y → (a , b) ∈ ❴ x , y ❵
+to-singleton-pair a≡x b≡y = to ∈-singleton $ ×-≡,≡→≡ (a≡x , b≡y)
+
+singleton-pair : ∀ {a x : A} {b y : B} → a ∈ ❴ x ❵ → b ≡ y → (a , b) ∈ ❴ x , y ❵
+singleton-pair a∈ = to-singleton-pair (from ∈-singleton a∈)
+
+singleton-zip : ∀ {a x : A} {b y : B} → a ∈ ❴ x ❵ → b ∈ ❴ y ❵ → (a , b) ∈ ❴ x , y ❵
+singleton-zip a∈ b∈ = singleton-pair a∈ (from ∈-singleton b∈)
 
 card-≡ᵉ : (X Y : Σ (Set A) strongly-finite) → proj₁ X ≡ᵉ proj₁ Y → card X ≡ card Y
 card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =

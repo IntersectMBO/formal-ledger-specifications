@@ -17,6 +17,7 @@ open import Axiom.Set.Properties th
 import Data.Product
 open import Data.These hiding (map)
 open import Data.Maybe.Base using () renaming (map to map?)
+open import Data.Product.Properties using (,-injectiveˡ; ×-≡,≡→≡)
 open import Relation.Unary using (Decidable)
 open import Relation.Nullary using (yes; no)
 open import Relation.Binary using (_Preserves_⟶_)
@@ -88,31 +89,53 @@ dom∈ {R = R} {a} =
   (∃[ b ] (a , b) ∈ R)            ∎
   where open R.EquationalReasoning
 
+dom-single→≡ : {a x : A} {y : B} → a ∈ dom ❴ x , y ❵ → a ≡ x
+dom-single→≡ = ,-injectiveˡ ∘ from ∈-singleton ∘ proj₂ ∘ to dom∈
+
+≡→dom-single : {a x : A} {y : B} → a ≡ x → a ∈ dom ❴ x , y ❵
+≡→dom-single a≡x = from dom∈ (_ , to-singleton-pair a≡x refl)
+
+dom-single→single : {a x : A} {y : B} → a ∈ dom ❴ x , y ❵ → a ∈ ❴ x ❵
+dom-single→single = to ∈-singleton ∘ dom-single→≡
+
+single→dom-single : {a x : A} {y : B} → a ∈ ❴ x ❵ → a ∈ dom ❴ x , y ❵
+single→dom-single = ≡→dom-single ∘ from ∈-singleton
+
+dom-single≡single : {x : A} {y : B} → dom ❴ x , y ❵ ≡ᵉ ❴ x ❵
+dom-single≡single = dom-single→single , single→dom-single
+
 dom∪' : ∀ {a} → a ∈ dom (R ∪ R') ⇔ (a ∈ dom R ∪ dom R')
 dom∪' {R = R} {R'}{a} =
-  a ∈ dom (R ∪ R')       ∼⟨ dom∈ ⟩
-  (∃[ b ] (a , b) ∈ R ∪ R') ∼⟨ mk⇔ (λ (b , pf) → b , (from ∈-∪ pf)) (λ (b , pf) → b , (to ∈-∪ pf)) ⟩
-  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R')) ∼⟨ i ⟩
-  (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ ii ⟩
-  (a ∈ dom R ⊎ a ∈ dom R') ∼⟨ ∈-∪ ⟩
-  (a ∈ dom R ∪ dom R') ∎
-  where
-  open R.EquationalReasoning
-  i : (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R')) ⇔ (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R')
-  i = mk⇔ (λ (b , pf) → case pf of λ where
-    (inj₁ p) → inj₁ (b , p)
-    (inj₂ p) → inj₂ (b , p)) (λ x → case x of λ where
-    (inj₁ (b , pf)) → b , (inj₁ pf)
-    (inj₂ (b , pf)) → b , (inj₂ pf))
-  ii : (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ⇔ (a ∈ dom R ⊎ a ∈ dom R')
-  ii = mk⇔ (λ x → case x of λ where
-    (inj₁ bpf) → inj₁ (from dom∈ bpf)
-    (inj₂ bpf) → inj₂ (from dom∈ bpf)) λ x → case x of λ where
-    (inj₁ pf) → inj₁ (to dom∈ pf)
-    (inj₂ pf) → inj₂ (to dom∈ pf)
-    
+  a ∈ dom (R ∪ R')
+    ∼⟨ dom∈ ⟩
+  (∃[ b ] (a , b) ∈ R ∪ R')
+    ∼⟨ mk⇔ (λ (b , pf) → b , (from ∈-∪ pf)) (λ (b , pf) → b , (to ∈-∪ pf)) ⟩
+  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))
+    ∼⟨ mk⇔ (λ {(b , inj₁ p) → inj₁ (b , p); (b , inj₂ p) → inj₂ (b , p)})
+           (λ {(inj₁ (b , pf)) → (b , inj₁ pf); (inj₂ (b , pf)) → (b , inj₂ pf)}) ⟩
+  (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R')
+    ∼⟨ mk⇔ (λ {(inj₁ bpf) → inj₁ (from dom∈ bpf); (inj₂ bpf) → inj₂ (from dom∈ bpf)})
+           (λ {(inj₁ pf) → inj₁ (to dom∈ pf); (inj₂ pf) → inj₂ (to dom∈ pf)}) ⟩
+  (a ∈ dom R ⊎ a ∈ dom R')
+    ∼⟨ ∈-∪ ⟩
+  (a ∈ dom R ∪ dom R')
+    ∎
+  where open R.EquationalReasoning
+
+∉-dom∅ : ∀ {a : A} → a ∉ dom{A}{B} ∅
+∉-dom∅ {a} a∈dom∅ = ⊥-elim $ ∉-∅ $ proj₂ $ (to dom∈) a∈dom∅
+
+dom∅ : dom{A}{B} ∅ ≡ᵉ ∅
+dom∅ = ⊥-elim ∘ ∉-dom∅ , ∅-minimum (dom ∅)
+
 dom∪ : dom (R ∪ R') ≡ᵉ (dom R ∪ dom R')
 dom∪ = (to dom∪') , (from dom∪')
+
+dom⊆ : dom{A}{B} Preserves _⊆_ ⟶ _⊆_
+dom⊆ R⊆R' a∈ = from dom∈ $ proj₁ (to dom∈ a∈) , R⊆R' (proj₂ (to dom∈ a∈))
+
+dom-cong : R ≡ᵉ R' → dom R ≡ᵉ dom R'
+dom-cong RR' = (dom⊆ (proj₁ RR')) , (dom⊆ (proj₂ RR'))
 
 dom-⊆mapʳ : {f : B → B'} → dom R ⊆ dom (mapʳ f R)
 dom-⊆mapʳ {f = f} {a} a∈domR with to dom∈ a∈domR

@@ -132,22 +132,21 @@ instance
 
 \end{code}
 \begin{code}
+certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
+certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
+certDeposit (regpool c _) {pp}  = ❴ PoolDeposit       c , pp .poolDeposit  ❵
+certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
+certDeposit _                   = ∅
+
+certRefund : DCert → ℙ DepositPurpose
+certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+certRefund _              = ∅
 
 updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateCertDeposits _   []              deposits = deposits
 updateCertDeposits pp  (cert ∷ certs)  deposits
   = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
-  where
-  certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
-  certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
-  certDeposit (regpool c _) {pp}  = ❴ PoolDeposit       c , pp .poolDeposit  ❵
-  certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
-  certDeposit _                   = ∅
-
-  certRefund :  DCert → ℙ DepositPurpose
-  certRefund (dereg c)      = ❴ CredentialDeposit c ❵
-  certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-  certRefund _              = ∅
 
 updateProposalDeposits : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateProposalDeposits [] _ _ deposits = deposits
