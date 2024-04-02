@@ -45,28 +45,31 @@ chkRqTx : List Tx → Tx → Set
 chkRqTx tb tx = ∀[ txrid ∈ tx .Tx.body .TxBody.requiredTxs ] Any (txrid ≡_) ( getIDs tb )
 
 -- TODO write this
-mkCollOnlyTx : Tx → Tx
-mkCollOnlyTx tx = tx
+isDepUTxO : Tx → Tx → List Tx → Set
+isDepUTxO tx1 tx2 [] = tx2 .Tx.body .TxBody.txid ∉ map proj (tx1 .Tx.body .TxBody.txins) ∧
+  (∀ [ t ∈ tb ] t .Tx.body .TxBody.txid ∉ map proj (tx1 .Tx.body .TxBody.txins) → )
+isDepUTxO tx1 tx2 t :: ls = tx2 .Tx.body .TxBody.txid ∉ map proj (tx1 .Tx.body .TxBody.txins) ∧
+  (∀ [ t ∈ tb ] t .Tx.body .TxBody.txid ∉ map proj (tx1 .Tx.body .TxBody.txins) → )
 
 -- TODO write this
-mkUTxODeps : Tx → Tx → ℙ Tx → ℙ Tx
-mkUTxODeps tx1 tx2 tb = tb
+isDepFRxO : Tx → Tx → ℙ Tx → Set
+isDepFRxO tx1 tx2 tb = tb
 
--- TODO write this
-mkFRxODeps : Tx → Tx → ℙ Tx → ℙ Tx
-mkFRxODeps tx1 tx2 tb = tb 
-
--- TODO use existing/write
+-- check for duplicates in two sets
 noDups : ℙ Tx → ℙ Tx → Set
-noDups tb tb' = tb ≡ tb'
+noDups tb tb' = ∀[ tx ∈ tb ] ∀[ tx' ∈ tb' ] ¬ tx ≡ tx'
 
 -- TODO THIS IS WRONG! will fix
 -- this checks that when a transaction in the zone spends an output of another transaction
 -- in the zone, it cannot also spend a fulfill in that zone for the same transaction
 chkLinear : ℙ Tx → Set
-chkLinear tb = ∀[ tx1 ∈ tb ] (∀[ tx2 ∈ tb ] noDups (mkUTxODeps tx1 tx2 tb) (mkFRxODeps tx1 tx2 tb))
+chkLinear tb = ∀[ tx1 ∈ tb ] (∀[ tx2 ∈ tb ] ¬ ( (isDepUTxO tx1 tx2 tb) ∧ (isDepFRxO tx1 tx2 tb)) )
   -- (tx2 .Tx.body .TxBody.txid ∈ map proj (tx1 .Tx.body .TxBody.txins)
 --   → ¬ tx2 .Tx.body .TxBody.txid ∈ map proj (tx1 .Tx.body .TxBody.fulfills) ))
+
+-- sum up the fees (adjusted by collateralPercentage) of transactions in a list
+sumCol : List Tx → ℕ → Coin
+sumCol tb cp = foldr (λ { tx c → c + tx .Tx.body .TxBody.txfee * cp }) 0 tb
 
 \end{code}
 \caption{Functions used for zone validation}
@@ -107,19 +110,23 @@ private variable
     ∙ All (chkRqTx tb) (toSetTx tb)
     ∙ chkLinear (toSetTx tb)
     ∙ All chkIsValid (toSetTx tb)
-    -- TODO check overpaying collateral
+    ∙ ((coin (balance  (utxo ∣ tx .Tx.body .TxBody.collateral)) * 100)
+      ≥ᵇ sumCol (lsV ++ [ tx ]) (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ tb ,ZONE⦈ ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , certState' ⟧ˡ
   ZONE-N :
-    -- TODO apply *collateral collection* for tx, not tx
-    Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ [ mkCollOnlyTx tx ] ,LEDGERS⦈
-      ⟦ ⟦ (utxo' , ∅) , fees' , deposits' , donations' ⟧ᵘᵘ , govSt' , certState' ⟧ˡˡ
-    ∙ Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ (lsV ++ [ tx ]) ,LEDGERS⦈ _
+    Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ (lsV ++ [ tx ]) ,LEDGERS⦈ _
     ∙ tx .Tx.isValid ≡ false
     ∙ All chkIsValid (toSetTx lsV)
-    -- TODO check overpaying collateral
+    ∙ ((coin (balance  (utxo ∣ tx .Tx.body .TxBody.collateral)) * 100)
+      ≥ᵇ sumCol (lsV ++ [ tx ]) (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true
        ────────────────────────────────
-       Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ tb ,ZONE⦈ ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , certState' ⟧ˡ
+       Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ tb ,ZONE⦈
+            ⟦ ⟦ utxo ∣ (tx .Tx.body .TxBody.collateral) ᶜ
+            , fees + cbalance (utxo ∣ tx .Tx.body .TxBody.collateral)
+            , deposits , donations ⟧ᵘ
+            , govSt
+            , certState ⟧ˡ
 \end{code}
 \caption{ZONE transition system}
 \end{figure*}

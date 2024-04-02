@@ -101,10 +101,11 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         allOutHashes      = getDataHashes (range txouts)
     in
     -- TODO change signature check
-    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes ((mkTxNoReqTxs tx) .Tx.body .TxBody.txid)) σ
     -- TODO check frxo separately
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
-    ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
+    ∙  witsVKeyNeeded utxoTemp txb ⊆ witsKeyHashes
+    -- TODO frxo
     ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ (inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)))

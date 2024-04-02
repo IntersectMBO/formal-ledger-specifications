@@ -85,12 +85,16 @@ UTxOTemp = Pair UTxO FRxO
 
 Hash          = ℕ
 
+<<<<<<< HEAD
 GovActionID   = Pair TxId ℕ
 
 HashProtected : Set → Set
 HashProtected A = Pair A GovActionID
 
 data Tag : Set where Spend Mint Cert Rewrd VoteTag Propose : Tag
+=======
+data Tag : Set where Spend Mint Cert Rewrd Vote Propose Fuls : Tag
+>>>>>>> zone redo, TODOs
 RdmrPtr = Pair Tag Ix
 ExUnits = Pair ℕ ℕ
 ProtVer = Pair ℕ ℕ
@@ -121,28 +125,23 @@ ProtVer = Pair ℕ ℕ
   type Script        = ()
 
   type TxIn  = (TxId, Ix)
-<<<<<<< HEAD
   type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
   type UTxO  = HSMap TxIn TxOut
-=======
-  type TxOut = (Addr, (Coin, Maybe DataHash))
-  type UTxO  = [(TxIn, TxOut)]
 
   Request  = TxOut
   Fulfill  = TxIn
   FRxO     = [(Fulfill, Request)]
-  UTxOTemp = UTxO × FRxO
+  UTxOTemp = (UTxO, FRxO)
 
->>>>>>> babel first attempt
   type Hash  = Integer
 
-  data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic)
+  data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose | Fuls deriving (Show, Generic)
   type RdmrPtr = (Tag, Ix)
   type ExUnits = (Integer, Integer)
   type ProtVer = (Integer, Integer)
   type GovActionID = (TxId, Integer)
 #-}
-{-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
+{-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose | Fuls) #-}
 {-# COMPILE GHC TxId = data TxId (MkTxId) #-}
 {-# COMPILE GHC HSMap = data HSMap (MkHSMap) #-}
 {-# COMPILE GHC HSSet = data HSSet (MkHSSet) #-}
@@ -224,7 +223,7 @@ record TxBody : Set where
         reqSigHash     : List Hash
         scriptIntHash  : Maybe Hash
         txcerts : List TxCert
-        fulfills       : ℙ Fulfill
+        fulfills       : List Fulfill
         requests       : HSMap Ix TxOut
         requiredTxs    : List TxId
 {-# FOREIGN GHC
@@ -240,7 +239,7 @@ record TxBody : Set where
     , reqSigHash    :: [Hash]
     , scriptIntHash :: Maybe Hash
     , txcerts :: [TxCert]
-    , fulfills       :: ℙ Fulfill
+    , fulfills       :: [Fulfill]
     , requests       :: [(Ix, Request)]
     , requiredTxs    :: List TxId
     } deriving (Show, Generic)

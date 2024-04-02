@@ -28,7 +28,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Set where
-  Spend Mint Cert Rewrd Vote Propose : Tag
+  Spend Mint Cert Rewrd Vote Propose Fuls : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Set₁ where
@@ -208,6 +208,11 @@ the transaction body are:
 
   chkIsValid : Tx → Set
   chkIsValid tx = tx .Tx.isValid ≡ true
+
+  -- TODO unsure how to construct txid for no-required-txs transaction
+  mkTxNoReqTxs : Tx → Tx
+  mkTxNoReqTxs tx = let open Tx tx renaming (body to txb) in record tx { body = record txb { requiredTxs = ∅ } }
+
 \end{code}
 \caption{Functions related to transactions}
 \label{fig:defs:transaction-funs}

@@ -410,8 +410,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOStateTemp s
-          -- TODO get all scripts + inputs, including for fulfills
-          sLst = collectPhaseTwoScriptInputs pp tx (nutxo utxoTemp)
+          sLst = collectPhaseTwoScriptInputs pp tx utxoTemp
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
@@ -427,8 +426,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOStateTemp s
-          -- TODO get all scripts + inputs, including for fulfills
-          sLst = collectPhaseTwoScriptInputs pp tx (nutxo utxoTemp)
+          sLst = collectPhaseTwoScriptInputs pp tx utxoTemp
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
