@@ -399,9 +399,7 @@ instance
   Convertible-ComputationResult = autoConvertible
 
   Convertible-RwdAddr : Convertible (GovStructure.RwdAddr govStructure) F.RwdAddr
-  Convertible-RwdAddr = λ where
-    .to record { net = net ; stake = stake } → to net F., to stake
-    .from (net F., stake) → record { net = from net ; stake = from stake }
+  Convertible-RwdAddr = autoConvertible
 
   open import Ledger.Enact govStructure
   Convertible-EnactState : ConvertibleType EnactState F.EnactState
@@ -441,7 +439,7 @@ fromNeedsHash {Info} x = 0 F., 0
 instance
   Convertible-GovActionState : Convertible GovActionState F.GovActionState
   Convertible-GovActionState = λ where
-    .to record { votes = votes ; returnAddr = returnAddr ; expiresIn = expiresIn ; action = action ; prevAction = prevAction } →
+    .to s → let open GovActionState s in
       record
         { gasVotes = to votes
         ; gasReturnAddr = to returnAddr
@@ -449,7 +447,7 @@ instance
         ; gasAction = to action
         ; gasPrevAction = fromNeedsHash prevAction
         }
-    .from record { gasVotes = gasVotes ; gasReturnAddr = gasReturnAddr ; gasExpiresIn = gasExpiresIn ; gasAction = gasAction ; gasPrevAction = gasPrevAction } →
+    .from s → let open F.GovActionState s in
       record
         { votes = from gasVotes
         ; returnAddr = from gasReturnAddr
@@ -463,7 +461,7 @@ instance
 
   Convertible-GovProposal : Convertible GovProposal F.GovProposal
   Convertible-GovProposal = λ where
-    .to record { action = action ; prevAction = prevAction ; policy = policy ; deposit = deposit ; returnAddr = returnAddr ; anchor = anchor } →
+    .to p → let open GovProposal p in
       record
         { gpAction = to action
         ; gpPrevAction = fromNeedsHash prevAction
@@ -472,7 +470,7 @@ instance
         ; gpReturnAddr = to returnAddr
         ; gpAnchor = to anchor
         }
-    .from record { gpAction = gpAction ; gpPrevAction = gpPrevAction ; gpPolicy = gpPolicy ; gpDeposit = gpDeposit ; gpReturnAddr = gpReturnAddr ; gpAnchor = gpAnchor } →
+    .from p → let open F.GovProposal p in
       record
         { action = from gpAction
         ; prevAction = toNeedsHash gpPrevAction
