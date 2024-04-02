@@ -44,8 +44,9 @@ indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x) nothing (rdptr body s
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
 getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
   maybe
-    (λ { (_ , _ , just x)  → maybe [_] [] (lookupᵐ? txdats x)
-       ; (_ , _ , nothing) → [] })
+    (λ { (_ , _ , just (inj₂ h), _)  → maybe [_] [] (lookupᵐ? txdats h)
+       ; (_ , _ , just (inj₁ d), _)  → [ d ]
+       ; (_ , _ , nothing , _) → [] })
     []
     (lookupᵐ? utxo txin)
 getDatum tx utxo _ = []
@@ -152,7 +153,7 @@ abstract
   collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
     → Maybe (Script × List Data × ExUnits × CostModel)
   collectPhaseTwoScriptInputs' pp tx utxo (sp , sh)
-    with lookupScriptHash sh tx
+    with lookupScriptHash sh tx utxo
   ... | nothing = nothing
   ... | just s
     with isInj₂ s | indexedRdmrs tx sp
