@@ -98,7 +98,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         allOutHashes      = getDataHashes (range txouts)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ∩ scriptsP1 ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
