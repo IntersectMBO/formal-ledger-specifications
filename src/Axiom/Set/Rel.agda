@@ -88,21 +88,6 @@ dom∈ {R = R} {a} =
   (∃[ b ] (a , b) ∈ R)            ∎
   where open R.EquationalReasoning
 
-dom-single→≡ : {a x : A} {y : B} → a ∈ dom ❴ x , y ❵ → a ≡ x
-dom-single→≡ = ,-injectiveˡ ∘ from ∈-singleton ∘ proj₂ ∘ to dom∈
-
-≡→dom-single : {a x : A} {y : B} → a ≡ x → a ∈ dom ❴ x , y ❵
-≡→dom-single a≡x = from dom∈ (_ , to-singleton-pair a≡x refl)
-
-dom-single→single : {a x : A} {y : B} → a ∈ dom ❴ x , y ❵ → a ∈ ❴ x ❵
-dom-single→single = to ∈-singleton ∘ dom-single→≡
-
-single→dom-single : {a x : A} {y : B} → a ∈ ❴ x ❵ → a ∈ dom ❴ x , y ❵
-single→dom-single = ≡→dom-single ∘ from ∈-singleton
-
-dom-single≡single : {x : A} {y : B} → dom ❴ x , y ❵ ≡ᵉ ❴ x ❵
-dom-single≡single = dom-single→single , single→dom-single
-
 dom∪' : ∀ {a} → a ∈ dom (R ∪ R') ⇔ (a ∈ dom R ∪ dom R')
 dom∪' {R = R} {R'}{a} =
   a ∈ dom (R ∪ R')
