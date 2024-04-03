@@ -15,7 +15,6 @@ open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set)
 open Theory th
 open import Axiom.Set.Rel th using (dom)
 open import Axiom.Set.Map th
-open import Axiom.Set.Properties
 
 open Equivalence
 

@@ -19,7 +19,7 @@ open import Data.These hiding (map)
 open import Data.Maybe.Base using () renaming (map to map?)
 open import Relation.Unary using (Decidable)
 open import Relation.Nullary using (yes; no)
-open import Relation.Binary using (_Preserves_⟶_; Minimum)
+open import Relation.Binary using (_Preserves_⟶_)
 import Relation.Binary.PropositionalEquality as I
 
 open Equivalence
@@ -87,39 +87,6 @@ dom∈ {R = R} {a} =
                                          (λ (x , ax∈R) → (a , x) , refl , ax∈R) ⟩
   (∃[ b ] (a , b) ∈ R)            ∎
   where open R.EquationalReasoning
-
-dom∪' : ∀ {a} → a ∈ dom (R ∪ R') ⇔ (a ∈ dom R ∪ dom R')
-dom∪' {R = R} {R'}{a} =
-  a ∈ dom (R ∪ R')
-    ∼⟨ dom∈ ⟩
-  (∃[ b ] (a , b) ∈ R ∪ R')
-    ∼⟨ mk⇔ (λ (b , pf) → b , (from ∈-∪ pf)) (λ (b , pf) → b , (to ∈-∪ pf)) ⟩
-  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))
-    ∼⟨ mk⇔ (λ {(b , inj₁ p) → inj₁ (b , p); (b , inj₂ p) → inj₂ (b , p)})
-           (λ {(inj₁ (b , pf)) → (b , inj₁ pf); (inj₂ (b , pf)) → (b , inj₂ pf)}) ⟩
-  (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R')
-    ∼⟨ mk⇔ (λ {(inj₁ bpf) → inj₁ (from dom∈ bpf); (inj₂ bpf) → inj₂ (from dom∈ bpf)})
-           (λ {(inj₁ pf) → inj₁ (to dom∈ pf); (inj₂ pf) → inj₂ (to dom∈ pf)}) ⟩
-  (a ∈ dom R ⊎ a ∈ dom R')
-    ∼⟨ ∈-∪ ⟩
-  (a ∈ dom R ∪ dom R')
-    ∎
-  where open R.EquationalReasoning
-
-∉-dom∅ : ∀ {a : A} → a ∉ dom{A}{B} ∅
-∉-dom∅ {a} a∈dom∅ = ⊥-elim $ ∉-∅ $ proj₂ $ (to dom∈) a∈dom∅
-
-dom∅ : dom{A}{B} ∅ ≡ᵉ ∅
-dom∅ = ⊥-elim ∘ ∉-dom∅ , ∅-minimum (dom ∅)
-
-dom∪ : dom (R ∪ R') ≡ᵉ (dom R ∪ dom R')
-dom∪ = (to dom∪') , (from dom∪')
-
-dom⊆ : dom{A}{B} Preserves _⊆_ ⟶ _⊆_
-dom⊆ R⊆R' a∈ = from dom∈ $ proj₁ (to dom∈ a∈) , R⊆R' (proj₂ (to dom∈ a∈))
-
-dom-cong : R ≡ᵉ R' → dom R ≡ᵉ dom R'
-dom-cong RR' = (dom⊆ (proj₁ RR')) , (dom⊆ (proj₂ RR'))
 
 dom-⊆mapʳ : {f : B → B'} → dom R ⊆ dom (mapʳ f R)
 dom-⊆mapʳ {f = f} {a} a∈domR with to dom∈ a∈domR
