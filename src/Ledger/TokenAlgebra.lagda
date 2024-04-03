@@ -61,8 +61,8 @@ record TokenAlgebra : Set₁ where
     addValue : HasAdd Value
     addValue = record { _+_ = _+ᵛ_ }
 
-  coin-hom : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
-  coin-hom {val} {c} = begin
+  coin-inject-lemma : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
+  coin-inject-lemma {val} {c} = begin
     coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
     coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
     coin val + c                  ∎
