@@ -174,17 +174,9 @@ the transaction body are:
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
   refScripts : Tx → UTxO → ℙ Script
-  refScripts tx utxo = goal -- TODO: implement when we do Babbage
-    where
-    -- The Babbage pdf spec says this should be
-    -- {(hash s , s) | (_ ,_ ,_ , s) ∈ utxo (spendInputs tx ∪ refInputs tx )}
-    -- but ℙ Script is not a set of pairs in ScriptHash × Script, it's just a
-    -- set of scripts, so I will assume the spec is wrong and that we should
-    -- be returning a set of scripts, namely,
-    -- {s | (_ ,_ ,_ , s) ∈ utxo (spendInputs tx ∪ refInputs tx )}
-      open Tx; open TxBody (tx .body)
-      goal : ℙ (Timelock ⊎ P2Script)
-      goal = mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+  refScripts tx utxo =
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+    where open Tx; open TxBody (tx .body)
 
   txscripts : Tx → UTxO → ℙ Script
   txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
@@ -211,22 +203,4 @@ the transaction body are:
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 
-  getDataHashes : ℙ TxOut → ℙ DataHash
-  getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
-
-  getInputHashes : Tx → UTxO → ℙ DataHash
-  getInputHashes tx utxo = getDataHashes isP2Addr
-    where
-    open Tx; open TxBody (tx .body)
-    isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
-    isTwoPhaseScriptAddress tx utxo a =
-      if isScriptAddr a then
-        (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo then
-                   (λ {s} → isP2Script s)
-                 else false)
-      else false
-
-    isP2Addr : ℙ TxOut
-    isP2Addr = filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-                       (range (utxo ∣ txins))
 \end{code}

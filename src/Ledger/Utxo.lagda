@@ -49,6 +49,15 @@ isTwoPhaseScriptAddress tx utxo a =
   else
     false
 
+getDataHashes : ℙ TxOut → ℙ DataHash
+getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
+
+getInputHashes : Tx → UTxO → ℙ DataHash
+getInputHashes tx utxo = getDataHashes
+  (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
+           (range (utxo ∣ txins)))
+  where open Tx; open TxBody (tx .body)
+
 totExUnits : Tx → ExUnits
 totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
   where open Tx; open TxWitnesses
@@ -375,8 +384,6 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
-        inject (((serSize (getValue txout)) + 160) * coinsPerUTxOWord pp) ≤ᵗ getValue txout
-    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
     ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
         serSize (getValue txout) ≤ maxValSize pp
@@ -389,8 +396,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y u z w k l m v n o p q r h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , u , z , w , k , l , m , v , n , o , p , q , r , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

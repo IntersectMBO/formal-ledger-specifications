@@ -75,14 +75,6 @@ private variable
   s s' : UTxOState
   tx : Tx
 
--- Shelley Fig 10:
---   wit : TxWitness = (VKey ⇀ Sig) × (ScriptHash ⇀ Script)
---   txwitsScript : Tx → (ScriptHash ⇀ Script)
--- Shelley Fig 18:
---   scriptsNeeded : UTxO → Tx → ℙ ScriptHash       (required script hashes)
--- Shelley Fig 20:
---   scriptsNeeded utxo tx = dom(txwitsScript tx)
-
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
@@ -98,11 +90,11 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         allOutHashes      = getDataHashes (range txouts)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ∩ scriptsP1 ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ getDataHashes (range (utxo ∣ refInputs))
+    ∙  txdatsHashes ⊆ (inputHashes ∪ getDataHashes (range (utxo ∣ refInputs)))
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
