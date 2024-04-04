@@ -49,17 +49,18 @@ private variable
   s s' : NewPParamState
   upd : PParamsUpdate
 
+open NewPParamState
+
 data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsUpdate → NewPParamState → Set where
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  NEWPP-Accept : ∀ {Γ} → let open NewPParamState s; newpp = applyUpdate pparams upd in
+  NEWPP-Accept : ∀ {Γ} → let newpp = applyUpdate (s .pparams) upd in
     viablePParams newpp
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧ⁿᵖ
+    Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp (s .ppup) ⟧ⁿᵖ
 
-  NEWPP-Reject : ∀ {Γ} →
-    Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s
+  NEWPP-Reject : ∀ {Γ} → Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s
 \end{code}
 \caption{NEWPP transition system}
 \end{figure*}
