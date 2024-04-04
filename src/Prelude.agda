@@ -70,3 +70,8 @@ open import Class.Show public
 
 infix 2 ∃₂-syntax
 syntax ∃₂-syntax (λ x y → C) = ∃₂[ x , y ] C
+
+-- Instance for number literals, not enabled by default
+import Data.Nat.Literals as ℕ
+
+instance Number-ℕ = ℕ.number
