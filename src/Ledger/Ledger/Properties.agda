@@ -81,7 +81,7 @@ FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
   where open Tx; open TxBody; open UTxOState; open LState
 
 LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-LEDGER-pov h (LEDGER⋯ (UTXOW-inductive⋯ _ _ _ _ _ st) _ _) = pov h st
+LEDGER-pov h (LEDGER⋯ (UTXOW-inductive⋯ _ _ _ _ _ _ _ st) _ _) = pov h st
 
 data FreshTxs : LEnv → LState → List Tx → Set where
   []-Fresh : FreshTxs Γ s []
