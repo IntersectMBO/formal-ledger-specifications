@@ -249,8 +249,11 @@ instance
 
   Convertible-Script : Convertible Script F.Script
   Convertible-Script = λ where
-    .to _ → tt
-    .from tt → inj₂ tt
+    .to _ → ?
+    .from ()
+
+  Convertible-⊥ : Convertible ⊥ F.Empty
+  Convertible-⊥ = λ where .to (); .from ()
 
   Convertible-DCert : Convertible DCert F.TxCert
   Convertible-DCert = autoConvertible
@@ -321,9 +324,6 @@ instance
       ; wits    = from wits
       ; isValid = true
       ; txAD    = from txAD }
-
-  Convertible-⊥ : Convertible ⊥ F.Empty
-  Convertible-⊥ = λ where .to (); .from ()
 
   Convertible-PParams : Convertible PParams F.PParams
   Convertible-PParams = λ where
