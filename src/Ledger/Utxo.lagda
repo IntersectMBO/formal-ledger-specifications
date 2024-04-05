@@ -49,14 +49,15 @@ isTwoPhaseScriptAddress tx utxo a =
   else
     false
 
-getDataHashes : ℙ TxOut → ℙ DataHash
-getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
+opaque
+  getDataHashes : ℙ TxOut → ℙ DataHash
+  getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
 
-getInputHashes : Tx → UTxO → ℙ DataHash
-getInputHashes tx utxo = getDataHashes
-  (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-           (range (utxo ∣ txins)))
-  where open Tx; open TxBody (tx .body)
+  getInputHashes : Tx → UTxO → ℙ DataHash
+  getInputHashes tx utxo = getDataHashes
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
+            (range (utxo ∣ txins)))
+    where open Tx; open TxBody (tx .body)
 
 totExUnits : Tx → ExUnits
 totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu

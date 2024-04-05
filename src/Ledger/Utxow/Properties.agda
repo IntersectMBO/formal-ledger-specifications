@@ -32,8 +32,8 @@ instance
         (no _) → failure "Failed in UTXOW"
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-      → map proj₁ computeProof ≡ success s'
-    completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h)
-      rewrite dec-yes H? (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇) .proj₂
-      with computeProof' Γ s tx | completeness' _ _ _ _ h
+                        → map proj₁ computeProof ≡ success s'
+    completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h) with H?
+    ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇))
+    ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
     ... | success _ | refl = refl
