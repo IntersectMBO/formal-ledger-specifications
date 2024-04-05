@@ -67,7 +67,7 @@ Redeemer      = ⊤
 Anchor        = ⊤
 Network       = ⊤
 PParamsUpdate = ⊤
-Script        = ⊥
+Script        = ⊤
 
 TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Pair (Maybe (Either Datum DataHash)) $ Maybe Script
@@ -101,7 +101,7 @@ ProtVer = Pair ℕ ℕ
   type Redeemer      = ()
   type Anchor        = ()
   type Network       = ()
-  type Script        = AgdaEmpty
+  type Script        = ()
 
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
