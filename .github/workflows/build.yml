@@ -86,8 +86,9 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
             nix-build -A ledger.hsSrc -j1 -o outputs/ledgerSrc
-            git checkout master
-            git add -f outputs/ledgerSrc
+            git stash push
+            rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledgerSrc/* ledgerSrc/
+            git add -f ledgerSrc
             git commit -m "Updated for ${{ github.sha }}"
 
       - name: Push to gh-pages
