@@ -678,7 +678,7 @@ module _
        -------------------------------------------------------------------
     →  coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
 
-  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) nrf =
+  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) nrf =
     begin
     length txprop * govActionDeposit
       ≡˘⟨ updatePropDeps≡ txprop ⟩
