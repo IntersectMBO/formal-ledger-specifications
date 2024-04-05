@@ -81,3 +81,21 @@ jobs:
             branch: gh-pages
             force: true
             directory: .
+
+      - name: Commit haskell package
+        if: github.ref == 'refs/heads/master'
+        run: |
+            nix-build -A ledger.hsSrc -j1 -o outputs/ledgerSrc
+            git stash push
+            rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledgerSrc/* ledgerSrc/
+            git add -f ledgerSrc
+            git commit -m "Updated for ${{ github.sha }}"
+
+      - name: Push to gh-pages
+        if: github.ref == 'refs/heads/master'
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: haskell-package
+            force: true
+            directory: .
