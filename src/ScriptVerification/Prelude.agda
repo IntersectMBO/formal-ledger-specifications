@@ -5,5 +5,5 @@ module ScriptVerification.Prelude where
 record ScriptImplementation (T D : Set) : Set₁ where
   field serialise : T → D
         deserialise : D → Maybe T
-        toData' : ∀ {A : Set} → A → D -- fix this
+        toData' : ∀ {A : Set} → A → D -- fix this
         ⦃ DecEq-Data  ⦄    : DecEq D

@@ -197,7 +197,7 @@ SVAbstractFunctions : AbstractFunctions
 SVAbstractFunctions = record
   { Implementation
   ; txscriptfee = λ tt y → 0
-  ; serSize     = λ v → v
+  ; serSize     = λ v → 0 -- changed to 0
   ; indexOfImp  = record
     { indexOfDCert    = λ _ _ → nothing
     ; indexOfRwdAddr  = λ _ _ → nothing

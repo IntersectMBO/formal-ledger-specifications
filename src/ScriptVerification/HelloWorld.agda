@@ -18,6 +18,8 @@ open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
+open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Utxow.Properties SVTransactionStructure SVAbstractFunctions
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool
@@ -40,13 +42,19 @@ script : TxIn × TxOut
 script = (6 , 6) , initTxOut
 
 initState : UTxO
-initState = fromList' (script ∷ (createInitUtxoState 5 10))
+initState = fromList' (script ∷ (createInitUtxoState 5 1000000000000))
 
 succeedTx : Tx
 succeedTx = record { body = record
-                         { txins = Ledger.Prelude.fromList ((6 , 6) ∷ [])
-                         ; txouts = ∅ -- fromListIx ((6 , initTxOut) ∷ [])
-                         ; txfee = 10
+                         { txins = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
+                         ; txouts = fromListIx ((6 , initTxOut)
+                                               ∷ (5
+                                                 , ((inj₁ (record { net = tt ;
+                                                                    pay = inj₁ 5 ;
+                                                                    stake = inj₁ 5 }))
+                                                 , (1000000000000 - 10000000000) , nothing))
+                                               ∷ [])
+                         ; txfee = 10000000000
                          ; mint = 0
                          ; txvldt = nothing , nothing
                          ; txcerts = []
@@ -59,11 +67,13 @@ succeedTx = record { body = record
                          ; netwrk = just tt
                          ; txsize = 10
                          ; txid = 7
-                         ; collateral = ∅
-                         ; reqSigHash = ∅ -- maybe need this
-                         ; scriptIntHash = nothing -- not sure
+                         ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
+                         ; reqSigHash = ∅
+                         ; scriptIntHash = nothing
                          } ;
-                wits = record { vkSigs = ∅ ;
+                wits = record { vkSigs = fromListᵐ ((5 , 12) ∷ []) ;
+                                -- signature now is first number + txId ≡ second number
+                                -- first number is needs to be the id for the script
                                 scripts = Ledger.Prelude.fromList ((inj₂ helloWorld) ∷ []) ;
                                 txdats = ∅ ;
                                 txrdmrs = fromListᵐ (((Spend , 6) , "Hello World" , (5 , 5)) ∷ []) } ;
@@ -73,7 +83,7 @@ succeedTx = record { body = record
 failTx : Tx
 failTx = record { body = record
                          { txins = Ledger.Prelude.fromList ((6 , 6) ∷ [])
-                         ; txouts = ∅ -- fromListIx ((6 , initTxOut) ∷ [])
+                         ; txouts = ∅
                          ; txfee = 10
                          ; mint = 0
                          ; txvldt = nothing , nothing
@@ -88,8 +98,8 @@ failTx = record { body = record
                          ; txsize = 10
                          ; txid = 7
                          ; collateral = ∅
-                         ; reqSigHash = ∅ -- maybe need this
-                         ; scriptIntHash = nothing -- not sure
+                         ; reqSigHash = ∅
+                         ; scriptIntHash = nothing
                          } ;
                 wits = record { vkSigs = ∅ ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ helloWorld) ∷ []) ;
@@ -101,28 +111,44 @@ failTx = record { body = record
 succeedState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
 succeedState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) succeedTx initState)
 
-succeedExample : Bool
-succeedExample = evalScripts succeedTx succeedState
+evalSucceedScript : Bool
+evalSucceedScript = evalScripts succeedTx succeedState
 
 failState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
 failState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) failTx initState)
 
-failExample : Bool
-failExample = evalScripts failTx failState
+evalFailScript : Bool
+evalFailScript = evalScripts failTx failState
 
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
+  unfolding Computational-UTXO
+  unfolding outs
 
   -- need to check that the state is non-empty otherwise evalScripts will always return true
   _ : notEmpty succeedState ≡ ⊤
   _ = refl
 
-  _ : succeedExample ≡ true
+  _ : evalSucceedScript ≡ true
   _ = refl
 
   _ : notEmpty failState ≡ ⊤
-  _ = refl
+  _ = refl
 
-  _ : failExample ≡ false
+  _ : evalFailScript ≡ false
+  _ = refl
+
+  -- Compute the result of running the UTXO rules on the succeedTx transaction
+  succeedExample : ComputationResult String UTxOState
+  succeedExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  succeedTx
+
+  _ : isSuccess succeedExample ≡ true
+  _  = refl
+
+  -- Compute the result of running the UTXO rules on the failTx transaction
+  failExample : ComputationResult String UTxOState
+  failExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  failTx
+
+  _ : failExample ≡ failure "¬ feesOK pp tx utxo ≡ true"
   _ = refl
