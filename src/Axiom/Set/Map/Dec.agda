@@ -11,10 +11,13 @@ import Data.Sum as Sum
 open import Data.These hiding (map)
 open import Class.DecEq using (DecEq)
 
-open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set)
+open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set; incl-set-proj₁⊇)
 open Theory th
-open import Axiom.Set.Rel th using (dom)
+open import Axiom.Set.Rel th using (Rel; dom; dom∈)
 open import Axiom.Set.Map th
+open import Axiom.Set.Properties th using (∈-∪⁻)
+open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
+import Function.Related.Propositional as R
 
 open Equivalence
 
@@ -58,3 +61,33 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
 
     aggregate₊ : FinSet (A × V) → Map A V
     aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l
+
+    private variable
+      m m' : Map A V
+
+    dom∪⁺ : dom ((m ∪⁺ m')ˢ) ≡ᵉ dom (m ˢ) ∪ dom (m' ˢ)
+    dom∪⁺ = to dom∪⁺' , from dom∪⁺'
+      where
+      dom∪⁺' : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
+      dom∪⁺' {m = m} {m'}{a} = mk⇔ i ii
+        where
+        f : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
+        f (a , a∈) = a , (fold id id _∙_)(unionThese m m' a a∈)
+
+        α : {a : A} (p : a ∈ dom ((m ∪⁺ m') ˢ))
+          → ∃[ c ] (a , proj₁ (to dom∈ p)) ≡ f c × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
+        α p = from ∈-map $ proj₂ $ to dom∈ p
+
+        i : ∀ {a} → a ∈ dom ((m ∪⁺ m') ˢ) → a ∈ dom (m ˢ) ∪ dom (m' ˢ)
+        i p = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
+                    (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ $ α p)))
+                    (proj₂ $ proj₁ (α p))
+
+        ii : ∀ {a} → a ∈ dom (m ˢ) ∪ dom (m' ˢ) → a ∈ dom ((m ∪⁺ m') ˢ)
+        ii {a} a∈ = from dom∈ (proj₂ (f (proj₁ c')) , to ∈-map ν)
+          where
+          c' : ∃[ c ] ((a ≡ proj₁ c) × (c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))))
+          c' = from ∈-map (incl-set-proj₁⊇ a∈)
+          ν : ∃[ c ] (a , _) ≡ f c × c ∈ (incl-set (dom (m ˢ) ∪ dom (m' ˢ)))
+          ν = (proj₁ c') , (×-≡,≡→≡ (proj₁ (proj₂ c') , Prelude.refl) , (proj₂ (proj₂ c')))
+
