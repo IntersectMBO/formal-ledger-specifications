@@ -165,6 +165,10 @@ propDepsChangeˢ : List GovProposal → PParams → TxBody → ℙ (DepositPurpo
 propDepsChangeˢ props pp txb = (updateProposalDeposits props txid (pp .govActionDeposit) ∅)ˢ
   where open TxBody txb
 
+propDepsChange : List GovProposal → PParams → TxBody → DepositPurpose ⇀ Coin
+propDepsChange props pp txb = (updateProposalDeposits props txid (pp .govActionDeposit) ∅)
+  where open TxBody txb
+
 depositsChangeˢ' : List DCert → List GovProposal → PParams → TxBody → ℙ (DepositPurpose × Coin)
 depositsChangeˢ' certs props pp txb = certDepsChangeˢ certs pp (propDepsChangeˢ props pp txb)
 

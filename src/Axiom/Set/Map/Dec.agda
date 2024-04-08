@@ -15,9 +15,10 @@ open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set; incl-set-proj₁⊇
 open Theory th
 open import Axiom.Set.Rel th using (Rel; dom; dom∈)
 open import Axiom.Set.Map th
-open import Axiom.Set.Properties th using (∈-∪⁻)
+open import Axiom.Set.Properties th
 open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
 import Function.Related.Propositional as R
+open import Relation.Binary
 
 open Equivalence
 
