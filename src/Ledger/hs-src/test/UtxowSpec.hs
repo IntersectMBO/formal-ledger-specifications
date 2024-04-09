@@ -32,9 +32,6 @@ initParams = MkPParams
 initEnv :: UTxOEnv
 initEnv = MkUTxOEnv {slot = 0, pparams = initParams}
 
--- ada :: Coin
--- ada = 0
-
 a0 :: Addr
 a0 = 0
 
