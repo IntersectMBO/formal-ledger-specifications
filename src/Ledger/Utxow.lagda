@@ -94,7 +94,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ (inputHashes ∪ getDataHashes (range (utxo ∣ refInputs)))
+    ∙  txdatsHashes ⊆ (inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)))
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
