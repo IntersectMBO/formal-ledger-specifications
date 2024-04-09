@@ -310,9 +310,6 @@ instance
       ; txrdmrs = from txrdmrs
       }
 
-  Convertible-⊥ : Convertible ⊥ F.Empty
-  Convertible-⊥ = λ where .to (); .from ()
-
   Convertible-Tx : Convertible Tx F.Tx
   Convertible-Tx = λ where
     .to tx → let open Tx tx in record
@@ -324,6 +321,9 @@ instance
       ; wits    = from wits
       ; isValid = true
       ; txAD    = from txAD }
+
+  Convertible-⊥ : Convertible ⊥ F.Empty
+  Convertible-⊥ = λ where .to (); .from ()
 
   Convertible-PParams : Convertible PParams F.PParams
   Convertible-PParams = λ where
