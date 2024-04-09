@@ -249,3 +249,8 @@ and some conditions depending on the type of the action:
   epoch are allowed, and candidates cannot be added and removed at the same time;
 \item and we check the validity of hard-fork actions via \validHFAction.
 \end{itemize}
+\begin{code}[hide]
+-- unquoteDecl GOV-Vote-premises = genPremises GOV-Vote-premises (quote GOV-Vote)
+-- pattern GOV-Propose⋯ Γ x p₁ p₂ p₃ p₄ p₅ p₆ = GOV-Propose {Γ}{x} (p₁ , p₂ , p₃ , p₄ , p₅ , p₆)
+unquoteDecl GOV-Propose-premises = genPremises GOV-Propose-premises (quote GOV-Propose)
+\end{code}

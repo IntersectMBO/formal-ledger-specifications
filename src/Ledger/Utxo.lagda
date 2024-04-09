@@ -158,24 +158,9 @@ updateDeposits pp txb =
   updateCertDeposits pp txcerts ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
   where open TxBody txb
 
-certDepsChangeˢ : List DCert → PParams → ℙ (DepositPurpose × Coin) → ℙ (DepositPurpose × Coin)
-certDepsChangeˢ certs pp deps = (updateCertDeposits pp certs ∅)ˢ ∪ deps
-
-propDepsChangeˢ : List GovProposal → PParams → TxBody → ℙ (DepositPurpose × Coin)
-propDepsChangeˢ props pp txb = (updateProposalDeposits props txid (pp .govActionDeposit) ∅)ˢ
-  where open TxBody txb
-
 propDepsChange : List GovProposal → PParams → TxBody → DepositPurpose ⇀ Coin
 propDepsChange props pp txb = (updateProposalDeposits props txid (pp .govActionDeposit) ∅)
   where open TxBody txb
-
-depositsChangeˢ' : List DCert → List GovProposal → PParams → TxBody → ℙ (DepositPurpose × Coin)
-depositsChangeˢ' certs props pp txb = certDepsChangeˢ certs pp (propDepsChangeˢ props pp txb)
-
-depositsChangeˢ : PParams → TxBody → ℙ (DepositPurpose × Coin)
-depositsChangeˢ pp txb = (updateDeposits pp txb ∅)ˢ
-
-
 
 depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
 depositsChange pp txb deposits
