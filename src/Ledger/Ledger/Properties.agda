@@ -127,167 +127,168 @@ instance
   _ = +-0-monoid
 
 module _ -- ASSUMPTIONS (TODO: eliminate these) --
+         {govSt-bug : let open Tx in
+                      (tx : Tx) {govSt govSt' : GovState}
+                      → (tx .isValid ≡ false)
+                      → fromList (map (λ (id , _) → GovActionDeposit id) govSt')
+                        ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) govSt)}
          {filterGA : ∀ {txid} {n} → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵
                                      ≡ᵉ ❴ GovActionDeposit (txid , n) ❵ }
          {filterCD : ∀ {c} {pp} → filterˢ isGADeposit (dom ((certDeposit c {pp})ˢ)) ≡ᵉ ∅}
+         {filterCR : (c : DCert) {deps : DepositPurpose ⇀ Coin}
+                     → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ ))
+                       ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))}
   where
 
   LEDGER-govDepsMatch : LedgerInvariant _⊢_⇀⦇_,LEDGER⦈_ govDepsMatch
   LEDGER-govDepsMatch
     Γ@{⟦ slt , ppol , pp , enactSt ⟧ˡᵉ}   -- Γ : LEnv
     s@{⟦ utxoSt , govSt , _ ⟧ˡ}           -- s : LState = UTxOState × GovState × CertState
-                                          --                         (GovState = List (GovActionID × GovActionState))
+                                          --                          ^^^^^^^^ = List (GovActionID × GovActionState)
     tx@{record { body = txb ; wits = wits ; isValid = txIsValid ; txAD = txAD }}
     s'@{⟦ utxoSt' , govSt' , _ ⟧ˡ}
     (_⊢_⇀⦇_,LEDGER⦈_.LEDGER ( _⊢_⇀⦇_,UTXOW⦈_.UTXOW-inductive (_ , _ , _ , _ , _ , utxoSTS)
                             , _
                             , govSTS) )
-    aprioriMatch = goal
 
+    aprioriMatch   -- filterˢ isGADeposit (dom utxoDeps) ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) govSt)
+
+    with (txIsValid ≟ true)
+
+  ...| no ¬p = begin
+    filterˢ isGADeposit (dom (utxoSt' .deposits))
+      ≈⟨ filter-pres-≡ᵉ (updateDeps-dom≡ᵉ-notValid (¬-not ¬p)) ⟩
+    filterˢ isGADeposit (dom (utxoSt .deposits))
+      ≈⟨ aprioriMatch ⟩
+    fromList (map (λ (id , _) → GovActionDeposit id) govSt)
+      ≈˘⟨ govSt-bug tx (¬-not ¬p) ⟩
+    fromList (map (λ (id , _) → GovActionDeposit id) govSt')
+      ∎
     where
-    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence{DepositPurpose × Coin})
-    module ≡ᵉ₁ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
+    open SetoidReasoning ≡ᵉ-Setoid
+    open UTxOState using (deposits)
+
+    updateDeps-dom≡ᵉ-notValid : txIsValid ≡ false → dom (utxoSt' .deposits) ≡ᵉ dom (utxoSt .deposits)
+    updateDeps-dom≡ᵉ-notValid tx-not-valid = let open IsEquivalence (≡ᵉ-isEquivalence{DepositPurpose}) in
+      reflexive (cong dom (⊢utxo-not-valid ⊢utxo))
+      where
+      ¬ft : ¬ (true ≡ false)
+      ¬ft ()
+
+      ⊢utxo-not-valid : record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt' → (utxoSt' .deposits) ≡ (utxoSt .deposits)
+      ⊢utxo-not-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No _) = refl
+      ⊢utxo-not-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes u) = ⊥-elim $ ¬ft (trans (sym $ proj₂ u) tx-not-valid)
+
+      ⊢utxo : record { slot = slt ; pparams = pp } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
+      ⊢utxo = case utxoSTS of λ where
+        (UTXO-inductive (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , h)) → h
+
+  ...| yes p = begin
+    filterˢ isGADeposit (dom utxoDeps')
+      ≈⟨ filter-pres-≡ᵉ updateDeps-dom≡ᵉ ⟩
+    filterˢ isGADeposit (dom (updateDeposits pparams txb utxoDeps))
+      ≈⟨ noGACerts{txcerts} ⟩
+    filterˢ isGADeposit (dom (updateProposalDeposits txprop txid govActionDeposit utxoDeps))
+      ≈⟨ filter-pres-≡ᵉ (updatePropDeps≡ᵉ{txprop}) ⟩
+    filterˢ isGADeposit (dom (utxoDeps ∪⁺ propDepsChange txprop pparams txb))
+      ≈⟨ filter-pres-≡ᵉ dom∪⁺ ⟩
+    filterˢ isGADeposit ((dom utxoDeps) ∪ dom (propDepsChange txprop pparams txb))
+      ≈⟨ filter-hom-∪ ⟩
+    filterˢ isGADeposit (dom utxoDeps) ∪ filterˢ isGADeposit (dom (propDepsChange txprop pparams txb))
+      ≈⟨ ∪-cong ≡ᵉ.refl (subLemma{txprop}) ⟩
+    filterˢ isGADeposit (dom utxoDeps) ∪ dom ((propDepsChange txprop pparams txb)ˢ)
+      ≈⟨ ∪-cong aprioriMatch (≡ᵉ.sym claim2) ⟩
+    fromList (map (λ (id , _) → GovActionDeposit id) govSt) ∪ fromList (txProps (txgov txb))
+      ≈⟨ ≡ᵉ.sym (claim1 p) ⟩
+    fromList (map (λ (id , _) → GovActionDeposit id) govSt')
+      ∎
+    where
+    open SetoidReasoning ≡ᵉ-Setoid
+
+    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
 
     open UTxOState using (deposits)
 
     open TxBody txb
     open LEnv Γ; open PParams pp
 
-    utxoΓ : UTxOEnv
-    utxoΓ = record { slot = slt ; pparams = pp }
-
     utxoDeps utxoDeps' : DepositPurpose ⇀ Coin
     utxoDeps = utxoSt .deposits
     utxoDeps' = utxoSt' .deposits
 
-    ¬txIsValid : Bool
-    ¬txIsValid = not txIsValid
-
-    ⊢utxo :  utxoΓ ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
+    ⊢utxo : record { slot = slt ; pparams = pp } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
     ⊢utxo = case utxoSTS of λ where
      (UTXO-inductive (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , h)) → h
 
     γ : ⟦ txid , epoch slt , pp , ppol , enactSt ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
     γ = govSTS
 
-  -- govSt inhabits type GovState (= List (GovActionID × GovActionState)); it is updated
-  -- to obtain govSt' as follows: go through list `txgov txb : List (GovVote ⊎ GovProposal)` and
-  --   in `v : GovVote` case:    s' = addVote s aid voter v
-  --   in GovPropose case:       s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a' prev
-  -- where
-  --   addVote : GovState → GovActionID → Voter → Vote → GovState
-  --   addVote s aid voter v = map modifyVotes s
-  --     where modifyVotes = λ (gid , s') → gid , record s'
-  --             { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
-  --
-  --   addAction : GovState
-  --             → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
-  --             → GovState
-  --   addAction s e aid addr a prev = s ∷ʳ (aid , record
-  --     { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+    txProps : List (GovVote ⊎ GovProposal) → List DepositPurpose
+    txProps [] = []
+    txProps (inj₁ v ∷ vps) = txProps vps
+    txProps (inj₂ p ∷ vps) = GovActionDeposit (txid , length vps) ∷ txProps vps
 
-    updateGovDeps≡ᵉ : (txIsValid ≡ true
-                      → fromList (map (λ where (id , _) → GovActionDeposit id) govSt')
-                        ≡ᵉ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
-                           ∪ dom ((propDepsChange txprop pparams txb)ˢ))
-                      × (txIsValid ≡ false
-                        → fromList (map (λ where (id , _) → GovActionDeposit id) govSt')
-                          ≡ᵉ fromList (map (λ where (id , _) → GovActionDeposit id) govSt))
+    claim1 : txIsValid ≡ true
+             → fromList (map (λ (id , _) → GovActionDeposit id) govSt')
+               ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) govSt) ∪ fromList (txProps (txgov txb))
+    claim1 = {!!}
 
-    updateGovDeps≡ᵉ = i , ii
-      where
-      i : txIsValid ≡ true
-          → fromList (map (λ { (id , _) → GovActionDeposit id }) govSt')
-             ≡ᵉ fromList (map (λ { (id , _) → GovActionDeposit id }) govSt)
-                ∪ dom ((propDepsChange txprop pparams txb)ˢ)
-      i p = {!!}
-      ii : txIsValid ≡ false
-           → fromList (map (λ { (id , _) → GovActionDeposit id }) govSt')
-             ≡ᵉ fromList (map (λ { (id , _) → GovActionDeposit id }) govSt)
-      ii ¬p = {!!}
+    claim2 : fromList (txProps (txgov txb)) ≡ᵉ dom ((propDepsChange txprop pparams txb)ˢ)
+    claim2 = {!!}
 
-
-    updateDeps-dom≡ᵉ : (txIsValid ≡ true → dom utxoDeps' ≡ᵉ dom (updateDeposits pparams txb utxoDeps))
-                       × (txIsValid ≡ false → dom utxoDeps' ≡ᵉ dom utxoDeps)
+    updateDeps-dom≡ᵉ : dom utxoDeps' ≡ᵉ dom (updateDeposits pparams txb utxoDeps)
     updateDeps-dom≡ᵉ = let open IsEquivalence (≡ᵉ-isEquivalence{DepositPurpose}) in
-      reflexive ∘ (proj₁ updateDeps-dom≡) , reflexive ∘ (proj₂ updateDeps-dom≡)
+      reflexive (cong dom (⊢utxo-valid ⊢utxo))
       where
       ¬ft : ¬ (true ≡ false)
       ¬ft ()
 
-      ⊢utxo-valid : txIsValid ≡ true
-        → record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
-        → utxoDeps' ≡ (updateDeposits pparams txb utxoDeps)
-      ⊢utxo-valid _ (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes _) = refl
-      ⊢utxo-valid tx-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No u) =
-        ⊥-elim $ ¬ft (trans (sym tx-valid) (proj₂ u))
-
-      ⊢utxo-not-valid : txIsValid ≡ false
-        → record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt' → utxoDeps' ≡ utxoDeps
-      ⊢utxo-not-valid _ (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No _) = refl
-      ⊢utxo-not-valid tx-not-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes u) =
-        ⊥-elim $ ¬ft (trans (sym $ proj₂ u) tx-not-valid)
-
-      updateDeps≡ : (txIsValid ≡ true → utxoDeps' ≡ updateDeposits pparams txb utxoDeps)
-                  × (txIsValid ≡ false → utxoDeps' ≡ utxoDeps)
-      updateDeps≡ = (λ t → (⊢utxo-valid t) ⊢utxo) , (λ f → (⊢utxo-not-valid f) ⊢utxo)
-
-      updateDeps-dom≡ : (txIsValid ≡ true → dom utxoDeps' ≡ dom (updateDeposits pparams txb utxoDeps))
-                         × (txIsValid ≡ false → dom utxoDeps' ≡ dom utxoDeps)
-      updateDeps-dom≡ = (cong dom ∘ (proj₁ updateDeps≡)) , (cong dom ∘ (proj₂ updateDeps≡))
+      ⊢utxo-valid : record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOS⦈ utxoSt'
+                    → utxoDeps' ≡ (updateDeposits pparams txb utxoDeps)
+      ⊢utxo-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes _) = refl
+      ⊢utxo-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No u) = ⊥-elim $ ¬ft (trans (sym p) (proj₂ u))
 
     updatePropDeps≡ᵉ : {props : List GovProposal}
        → dom ((updateProposalDeposits props txid govActionDeposit utxoDeps)ˢ)
-        ≡ᵉ dom ((utxoDeps ∪⁺ propDepsChange props pparams txb)ˢ)
+         ≡ᵉ dom ((utxoDeps ∪⁺ propDepsChange props pparams txb)ˢ)
     updatePropDeps≡ᵉ {[]} = begin
       dom ((updateProposalDeposits [] txid govActionDeposit utxoDeps)ˢ)
-        ≈⟨ ≡ᵉ₁.refl ⟩
-      dom (utxoDeps ˢ)
-        ≈⟨ dom-cong (≡ᵉ.sym (∪-identityʳ (utxoDeps ˢ))) ⟩
+        ≈⟨ ≡ᵉ.sym (dom-cong (∪-identityʳ (utxoDeps ˢ))) ⟩
       (dom (utxoDeps ˢ ∪ ∅))
         ≈⟨ dom∪ ⟩
-      dom (utxoDeps ˢ) ∪ dom{X = DepositPurpose ⇀ Coin}{A = DepositPurpose}{B = Coin} ∅
-        ≈⟨ ∪-cong ≡ᵉ₁.refl (dom-cong ≡ᵉ.refl) ⟩
+      dom (utxoDeps ˢ) ∪ dom{X = DepositPurpose ⇀ Coin} ∅
+        ≈⟨ ∪-cong ≡ᵉ.refl ≡ᵉ.refl ⟩
       dom (utxoDeps ˢ) ∪ dom ((propDepsChange [] pparams txb)ˢ)
-        ≈⟨ ≡ᵉ₁.sym dom∪⁺ ⟩
+        ≈⟨ ≡ᵉ.sym dom∪⁺ ⟩
       dom ((utxoDeps ∪⁺ propDepsChange [] pparams txb) ˢ)
         ∎
-      where open SetoidReasoning ≡ᵉ-Setoid
-    updatePropDeps≡ᵉ {x ∷ props} = let
-        open SetoidReasoning ≡ᵉ-Setoid
-        gaD = GovActionDeposit (txid , length props)
-      in
+
+    updatePropDeps≡ᵉ {x ∷ props} = let gaD = GovActionDeposit (txid , length props) in
       begin
       dom (updateProposalDeposits (x ∷ props) txid govActionDeposit utxoDeps ˢ)
-        ≈⟨ ≡ᵉ₁.refl ⟩
-      dom ((updateProposalDeposits props txid govActionDeposit utxoDeps ∪⁺ ❴ gaD , govActionDeposit ❵) ˢ)
         ≈⟨ dom∪⁺ ⟩
       dom (updateProposalDeposits props txid govActionDeposit utxoDeps ˢ) ∪ dom (❴ gaD , govActionDeposit ❵ ˢ)
-        ≈⟨ ∪-cong (updatePropDeps≡ᵉ{props}) ≡ᵉ₁.refl ⟩
+        ≈⟨ ∪-cong (updatePropDeps≡ᵉ{props}) ≡ᵉ.refl ⟩
       dom ((utxoDeps ∪⁺ propDepsChange props pparams txb) ˢ) ∪ dom (❴ gaD , govActionDeposit ❵ ˢ)
-        ≈⟨ ∪-cong dom∪⁺ ≡ᵉ₁.refl ⟩
+        ≈⟨ ∪-cong dom∪⁺ ≡ᵉ.refl ⟩
       (dom (utxoDeps ˢ) ∪ dom ((propDepsChange props pparams txb) ˢ)) ∪ dom (❴ gaD , govActionDeposit ❵ ˢ)
         ≈⟨ ∪-assoc (dom (utxoDeps ˢ)) (dom ((propDepsChange props pparams txb) ˢ)) (dom (❴ gaD , govActionDeposit ❵ ˢ)) ⟩
       dom (utxoDeps ˢ) ∪ (dom ((propDepsChange props pparams txb) ˢ) ∪ dom (❴ gaD , govActionDeposit ❵ ˢ))
-        ≈⟨ ∪-cong ≡ᵉ₁.refl (≡ᵉ₁.sym dom∪⁺) ⟩
+        ≈⟨ ∪-cong ≡ᵉ.refl (≡ᵉ.sym dom∪⁺) ⟩
       dom (utxoDeps ˢ) ∪ dom ((propDepsChange props pparams txb ∪⁺ ❴ gaD , govActionDeposit ❵) ˢ)
-        ≈⟨ ≡ᵉ₁.sym dom∪⁺ ⟩
+        ≈⟨ ≡ᵉ.sym dom∪⁺ ⟩
       dom ((utxoDeps ∪⁺ propDepsChange (x ∷ props) pparams txb) ˢ)
         ∎
 
     noGACerts : ∀ {cs} {deps}
       → filterˢ isGADeposit (dom ((updateCertDeposits pparams cs deps)ˢ)) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))
-    noGACerts {[]} {deps} = filter-pres-≡ᵉ (dom-cong ≡ᵉ.refl)
-    noGACerts {c ∷ cs} {deps} =
-      let
-        open SetoidReasoning ≡ᵉ-Setoid
-        upCD = updateCertDeposits pparams cs deps
-      in
+    noGACerts {[]} {deps} = filter-pres-≡ᵉ ≡ᵉ.refl
+    noGACerts {c ∷ cs} {deps} = let upCD = updateCertDeposits pparams cs deps in
       begin
       filterˢ isGADeposit (dom ((updateCertDeposits pparams (c ∷ cs) deps)ˢ))
-        ≈⟨ filter-pres-≡ᵉ ≡ᵉ₁.refl ⟩
+        ≈⟨ filter-pres-≡ᵉ ≡ᵉ.refl ⟩
       filterˢ isGADeposit (dom (((upCD ∪⁺ certDeposit c {pparams}) ∣ certRefund c ᶜ)ˢ))
-        ≈⟨ {!!} ⟩
+        ≈⟨ filterCR c {upCD ∪⁺ certDeposit c {pparams}} ⟩
       filterˢ isGADeposit (dom ((upCD ∪⁺ certDeposit c {pparams})ˢ))
         ≈⟨ filter-pres-≡ᵉ dom∪⁺ ⟩
       filterˢ isGADeposit (dom (upCD ˢ) ∪ dom ((certDeposit c {pparams})ˢ))
@@ -301,24 +302,21 @@ module _ -- ASSUMPTIONS (TODO: eliminate these) --
 
     subLemma : {props : List GovProposal}
       → filterˢ isGADeposit (dom ((propDepsChange props pparams txb)ˢ)) ≡ᵉ dom ((propDepsChange props pparams txb)ˢ)
-    subLemma {[]} = let open SetoidReasoning ≡ᵉ-Setoid in
-      begin
-      filterˢ isGADeposit (dom ((propDepsChange [] pparams txb)ˢ))  ≈⟨ filter-pres-≡ᵉ (dom-cong ≡ᵉ.refl)⟩
-      filterˢ isGADeposit (dom {X = DepositPurpose ⇀ Coin} ∅)  ≈⟨ filter-pres-≡ᵉ dom∅ ⟩
+    subLemma {[]} = begin
+      filterˢ isGADeposit (dom ((propDepsChange [] pparams txb)ˢ))  ≈⟨ filter-pres-≡ᵉ ≡ᵉ.refl ⟩
+      filterˢ isGADeposit (dom {X = DepositPurpose ⇀ Coin} ∅)       ≈⟨ filter-pres-≡ᵉ dom∅ ⟩
       filterˢ isGADeposit ∅                                         ≈⟨ ∅-least filter-⊆ ⟩
-      ∅ˢ                                                            ≈⟨ ≡ᵉ₁.sym dom∅ ⟩
-      dom {A = DepositPurpose} {B = Coin} ∅ˢ                        ≈⟨ dom-cong ≡ᵉ.refl ⟩
-      dom ((propDepsChange [] pparams txb)ˢ)                          ∎
+      ∅                                                             ≈⟨ ≡ᵉ.sym dom∅ ⟩
+      dom ((propDepsChange [] pparams txb)ˢ)                        ∎
 
     subLemma {(p ∷ ps)} =
       let
-        open SetoidReasoning ≡ᵉ-Setoid; open Equivalence
         upPD = updateProposalDeposits ps txid govActionDeposit ∅
         gaD = GovActionDeposit (txid , length ps)
       in
       begin
       filterˢ isGADeposit (dom ((propDepsChange (p ∷ ps) pparams txb)ˢ))
-        ≈⟨ filter-pres-≡ᵉ (dom-cong ≡ᵉ.refl) ⟩
+        ≈⟨ filter-pres-≡ᵉ ≡ᵉ.refl ⟩
       filterˢ isGADeposit (dom ((upPD ∪⁺ ❴ gaD , govActionDeposit ❵) ˢ))
         ≈⟨ filter-pres-≡ᵉ dom∪⁺ ⟩
       filterˢ isGADeposit (dom (upPD ˢ) ∪ dom (❴ gaD , govActionDeposit ❵ ˢ))
@@ -326,50 +324,11 @@ module _ -- ASSUMPTIONS (TODO: eliminate these) --
       filterˢ isGADeposit (dom (upPD ˢ)) ∪ filterˢ isGADeposit (dom (❴ gaD , govActionDeposit ❵ ˢ))
         ≈⟨ ∪-cong (subLemma{ps}) (filter-pres-≡ᵉ dom-single≡single) ⟩
       dom ((propDepsChange ps pparams txb)ˢ) ∪ (filterˢ isGADeposit ❴ gaD ❵)
-        ≈⟨ ∪-cong (dom-cong ≡ᵉ.refl) filterGA ⟩
+        ≈⟨ ∪-cong ≡ᵉ.refl filterGA ⟩
       dom ((propDepsChange ps pparams txb)ˢ) ∪ ❴ gaD ❵
-        ≈⟨ ∪-cong ≡ᵉ₁.refl (≡ᵉ₁.sym dom-single≡single) ⟩
+        ≈⟨ ∪-cong ≡ᵉ.refl (≡ᵉ.sym dom-single≡single) ⟩
       dom ((propDepsChange ps pparams txb)ˢ) ∪ dom (❴ gaD , govActionDeposit ❵ ˢ)
-        ≈⟨ ≡ᵉ₁.sym dom∪⁺ ⟩
-      dom (((propDepsChange ps pparams txb) ∪⁺ ❴ gaD , govActionDeposit ❵) ˢ)
-        ≈⟨ dom-cong ≡ᵉ.refl ⟩
+        ≈⟨ ≡ᵉ.sym dom∪⁺ ⟩
       dom ((propDepsChange (p ∷ ps) pparams txb)ˢ)
         ∎
 
-    goal : govDepsMatch s'
-    goal with (txIsValid ≟ true)
-    ...| yes p = begin
-      filterˢ isGADeposit (dom (utxoSt' .deposits))
-        ≈⟨ filter-pres-≡ᵉ ((proj₁ updateDeps-dom≡ᵉ) p) ⟩
-      filterˢ isGADeposit (dom (updateDeposits pparams txb utxoDeps))
-        ≈⟨ noGACerts{txcerts} ⟩
-      filterˢ isGADeposit (dom (updateProposalDeposits txprop txid govActionDeposit utxoDeps))
-        ≈⟨ filter-pres-≡ᵉ (updatePropDeps≡ᵉ{txprop}) ⟩
-      filterˢ isGADeposit (dom (utxoDeps ∪⁺ propDepsChange txprop pparams txb))
-        ≈⟨ filter-pres-≡ᵉ dom∪⁺ ⟩
-      filterˢ isGADeposit ((dom utxoDeps) ∪ dom (propDepsChange txprop pparams txb))
-        ≈⟨ filter-hom-∪ ⟩
-      filterˢ isGADeposit (dom utxoDeps) ∪ filterˢ isGADeposit (dom (propDepsChange txprop pparams txb))
-        ≈⟨ ∪-cong ≡ᵉ₁.refl (subLemma{txprop}) ⟩
-      filterˢ isGADeposit (dom utxoDeps) ∪ dom ((propDepsChange txprop pparams txb)ˢ)
-        ≈⟨ ∪-cong aprioriMatch ≡ᵉ₁.refl ⟩
-      fromList (map (λ (id , _) → GovActionDeposit id) govSt) ∪ dom ((propDepsChange txprop pparams txb)ˢ)
-        ≈˘⟨ (proj₁ updateGovDeps≡ᵉ) p ⟩
-      fromList (map (λ (id , _) → GovActionDeposit id) govSt')
-        ∎
-      where open SetoidReasoning ≡ᵉ-Setoid
-
-    ...| no ¬p = begin
-      filterˢ isGADeposit (dom utxoDeps')
-        ≈⟨ filter-pres-≡ᵉ ((proj₂ updateDeps-dom≡ᵉ) (¬-not ¬p)) ⟩
-      filterˢ isGADeposit (dom utxoDeps)
-        ≈⟨ aprioriMatch ⟩
-      fromList (map (λ (id , _) → GovActionDeposit id) govSt)
-        ≈˘⟨ (proj₂ updateGovDeps≡ᵉ) (¬-not ¬p) ⟩
-      fromList (map (λ (id , _) → GovActionDeposit id) govSt')
-        ∎
-      where open SetoidReasoning ≡ᵉ-Setoid
-
--- QUESTIONS ---------------------------------------------------------------------
--- 3. What about epoch boundaries? (out of scope)
--- 4. Is state fresh/valid?  (Valid transition doesn't necessarily mean valid state.)

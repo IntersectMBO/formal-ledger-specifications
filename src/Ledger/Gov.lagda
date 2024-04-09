@@ -56,11 +56,10 @@ private variable
   Γ : GovEnv
   s s' : GovState
   aid : GovActionID
-  role : GovRole
-  cred : Credential
+  -- role : GovRole
   voter : Voter
   v : Vote
-  c d : Coin
+  d : Coin
   addr : RwdAddr
   a : GovAction
   prev : NeedsHash a
