@@ -1,14 +1,57 @@
-*.agdai
-.DS_Store
+## Ignore LaTeX build products
+**/*.aux
+**/*.lof
+**/*.log
+**/*.lot
+**/*.fls
+**/*.out
+**/*.toc
+**/*.fmt
+**/*.fot
+**/*.cb
+**/*.cb2
+**/*.lb
+**/*.ptb
+**/*.xdv
+**/*.pdf
+**/*.fdb_latexmk
+**/auto
+**/*.synctex.gz
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+**/*.bbl
+**/*.bcf
+**/*.blg
+**/*-blx.aux
+**/*-blx.bib
+**/*.run.xml
+
+## Cabal & Stack
+*/dist
+*~
 **/dist-newstyle/
+cabal.project.local
+stack.yaml.lock
+.ghc.environment.*
+ghcid.txt
+
+## Editors
+TAGS
+tags
+*.temp
+.dir-locals.el
 .editorconfig
+
+## Nix artifacts
 result*
 
-*.pdf
+## macOS
+.DS_Store
+
+## Other
+*.agdai
+dist/
+
 src/latex/Ledger/*
 src/latex/MidnightExample/*
 src/latex/bclogo.sty
-
-dist/
-
-*.time

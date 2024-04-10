@@ -26,7 +26,6 @@ open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
 import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
 import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
-
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 
@@ -264,6 +263,11 @@ filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
 ∪-⊆ : X ⊆ Z → Y ⊆ Z → X ∪ Y ⊆ Z
 ∪-⊆ X⊆Z Y⊆Z = λ a∈X∪Y → [ X⊆Z , Y⊆Z ]′ (∈⇔P a∈X∪Y)
 
+⊆→∪ : X ⊆ Y → X ∪ Y ≡ᵉ Y
+⊆→∪ X⊆Y = (λ {a} x → case from ∈-∪ x of λ where
+            (inj₁ v) → X⊆Y v
+            (inj₂ v) → v) , ∪-⊆ʳ
+
 ∪-Supremum : Supremum (_⊆_ {A}) _∪_
 ∪-Supremum _ _ = ∪-⊆ˡ , ∪-⊆ʳ , λ _ → ∪-⊆
 
@@ -333,10 +337,6 @@ module _ {A : Type ℓ} where
     ii h with ∈-∪⁻ h
     ... | (inj₁ a∈) = to ∈-fromList (here (from ∈-singleton a∈))
     ... | (inj₂ a∈) = to ∈-fromList (there (from ∈-fromList a∈))
-
-  -- fromList-∪ : (ll lr : List A) → fromList (ll ++ lr) ≡ᵉ (fromList ll) ∪ (fromList lr)
-  -- fromList-∪ [] lr = ≡ᵉ.sym (∪-identityˡ (fromList lr))
-  -- fromList-∪ (x ∷ ll) lr = {!!}
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj

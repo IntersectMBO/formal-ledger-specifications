@@ -7,7 +7,7 @@ open import Prelude
 open import Axiom.Set
 import Axiom.Set.List as L
 
-opaque -- abstract
+opaque
   List-Model : Theory {0ℓ}
   List-Model = L.List-Model
   List-Modelᶠ : Theoryᶠ
