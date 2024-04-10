@@ -16,6 +16,8 @@ open Theory th
 open import Axiom.Set.Rel th using (dom)
 open import Axiom.Set.Map th
 
+open import Interface.IsCommutativeMonoid
+
 open Equivalence
 
 private variable A B C D : Type
@@ -49,12 +51,12 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
        helper _ _ | _ , _ , refl | _ , _ , refl | yes _ | yes _
          with refl ← trans (sym eq) eq' = refl
 
-  module _ ⦃ M : Monoid 0ℓ 0ℓ ⦄ ⦃ _ : DecEq A ⦄ where
+  module _ {V : Type} ⦃ mon : IsCommutativeMonoid' 0ℓ 0ℓ V ⦄ ⦃ _ : DecEq A ⦄ where
     infixr 6 _∪⁺_
-    open Monoid M renaming (Carrier to V)
+    open IsCommutativeMonoid' mon
 
     _∪⁺_ : Map A V → Map A V → Map A V
-    _∪⁺_ = unionWith (fold id id _∙_)
+    _∪⁺_ = unionWith (fold id id _◇_)
 
     aggregate₊ : FinSet (A × V) → Map A V
     aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l

@@ -66,11 +66,40 @@ validBlockIn s b = ∃[ s' ] _ ⊢ s ⇀⦇ b ,CHAIN⦈ s'
 validBlock : Block → Set
 validBlock b = ∃[ s ] validBlockIn s b
 
-validTxIn : ChainState → Tx → Set
-validTxIn s tx = ∃[ b ] tx ∈ b × validBlockIn s b
+-- Transaction validity is complicated. In the truest sense, a
+-- transaction is valid if it is part of a valid block,
+-- i.e. `validTxIn₁`. However, a transaction can also be seen as valid
+-- if it could be applied at a certain slot (with no knowledge of an
+-- actual block). This is closer to how the mempool sees transaction
+-- validity and is expressed by `validTxIn₂`.
 
-validTx : Tx → Set
-validTx tx = ∃[ s ] validTxIn s tx
+-- Note that these two are not equivalent and in fact there is no
+-- implication between the two in either direction. `2 => 1` would
+-- require one to come up with a block, which we can't, but `1 => 2`
+-- is also not true, since the transaction might depend on a previous
+-- transaction in the same block. Maybe this means that `validTxIn₂`
+-- should be changed so that it allows for applying a list of
+-- transactions before the final transaction? However, the downside
+-- then becomes that the transaction isn't applied to the given state
+-- but to some intermediate one. Maybe we'll gain some insight on this
+-- matter once we have proven more theorems.
+
+validTxIn₁ : ChainState → Tx → Set
+validTxIn₁ s tx = ∃[ b ] tx ∈ b × validBlockIn s b
+
+module _ (s : ChainState) (slot : Slot) where
+
+  open ChainState s; open NewEpochState newEpochState
+  open EpochState epochState; open EnactState es
+
+  private
+    ledgerEnv = ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es ⟧ˡᵉ
+
+  validTxIn₂ : Tx → Set
+  validTxIn₂ tx = ∃[ ls' ] ledgerEnv ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'
+
+validTx₁ : Tx → Set
+validTx₁ tx = ∃[ s ] validTxIn₁ s tx
 
 ChainInvariant : ∀ {a} → (ChainState → Set a) → Set a
 ChainInvariant P = ∀ b s s' → _ ⊢ s ⇀⦇ b ,CHAIN⦈ s' → P s → P s'
@@ -86,11 +115,22 @@ module _ (s : ChainState) where
 
   -- Transaction properties
 
-  -- module _ {tx} (let txb = body tx) (valid : validTxIn s tx) where
-  --   -- TODO: with current definitions, this is only true when there are no refunds
-  --   propose-minSpend :
-  --     coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
-  --   propose-minSpend = {!!}
+  module _ {slot} {tx} (let txb = body tx) (valid : validTxIn₂ s slot tx)
+    (indexedSum-∪⁺-hom : ∀ {A V : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄ ⦃ mon : IsCommutativeMonoid' 0ℓ 0ℓ V ⦄
+      → (d₁ d₂ : A ⇀ V) → indexedSumᵛ' id (d₁ ∪⁺ d₂) ≡ indexedSumᵛ' id d₁ ◇ indexedSumᵛ' id d₂)
+    (indexedSum-⊆ : ∀ {A : Set} ⦃ _ : DecEq A ⦄ (d d' : A ⇀ ℕ) → d ˢ ⊆ d' ˢ
+      → indexedSumᵛ' id d ≤ indexedSumᵛ' id d') -- technically we could use an ordered monoid instead of ℕ
+    where
+    open import Ledger.Utxow txs abs
+    open import Ledger.Utxo.Properties txs abs
+
+    propose-minSpend : noRefundCert (txcerts txb)
+      → coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
+    propose-minSpend noRef = case valid of λ where
+      (_ , LEDGER-V (_ , (UTXOW-inductive⋯ _ _ _ _ _ _ _ x) , _ , _)) →
+        gmsc {indexedSum-∪⁺-hom} {indexedSum-⊆} x noRef
+      (_ , LEDGER-I (_ , (UTXOW-inductive⋯ _ _ _ _ _ _ _ x))) →
+        gmsc {indexedSum-∪⁺-hom} {indexedSum-⊆} x noRef
 
   --   propose-ChangePP-hasGroup : ∀ {up prop}
   --     → prop ∈ txb → prop .GovProposal.action ≡ ChangePParams up → updateGroups up ≢ ∅
