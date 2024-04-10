@@ -127,11 +127,6 @@ instance
   _ = +-0-monoid
 
 module _ -- ASSUMPTIONS (TODO: eliminate these) --
-         {govSt-bug : let open Tx in
-                      (tx : Tx) {govSt govSt' : GovState}
-                      → (tx .isValid ≡ false)
-                      → fromList (map (λ (id , _) → GovActionDeposit id) govSt')
-                        ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) govSt)}
          {filterGA : ∀ {txid} {n} → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵
                                      ≡ᵉ ❴ GovActionDeposit (txid , n) ❵ }
          {filterCD : ∀ {c} {pp} → filterˢ isGADeposit (dom ((certDeposit c {pp})ˢ)) ≡ᵉ ∅}
@@ -161,13 +156,15 @@ module _ -- ASSUMPTIONS (TODO: eliminate these) --
     filterˢ isGADeposit (dom (utxoSt .deposits))
       ≈⟨ aprioriMatch ⟩
     fromList (map (λ (id , _) → GovActionDeposit id) govSt)
-      ≈˘⟨ govSt-bug tx (¬-not ¬p) ⟩
+      ≈˘⟨ govSt-unch ⟩
     fromList (map (λ (id , _) → GovActionDeposit id) govSt')
       ∎
     where
     open SetoidReasoning ≡ᵉ-Setoid
     open UTxOState using (deposits)
-
+    govSt-unch : fromList (map (λ (id , _) → GovActionDeposit id) govSt')
+                 ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) govSt)
+    govSt-unch = ?
     updateDeps-dom≡ᵉ-notValid : txIsValid ≡ false → dom (utxoSt' .deposits) ≡ᵉ dom (utxoSt .deposits)
     updateDeps-dom≡ᵉ-notValid tx-not-valid = let open IsEquivalence (≡ᵉ-isEquivalence{DepositPurpose}) in
       reflexive (cong dom (⊢utxo-not-valid ⊢utxo))
