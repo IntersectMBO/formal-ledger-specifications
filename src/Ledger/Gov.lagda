@@ -56,7 +56,6 @@ private variable
   Γ : GovEnv
   s s' : GovState
   aid : GovActionID
-  -- role : GovRole
   voter : Voter
   v : Vote
   d : Coin
