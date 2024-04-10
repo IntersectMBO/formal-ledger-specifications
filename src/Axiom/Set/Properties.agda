@@ -305,7 +305,7 @@ Set-BddSemilattice {A} = record
 module _ {A : Type ℓ} where
   open Bounded∨Semilattice (Set-BddSemilattice {A})
   open ∨Semilattice (BoundedJoinSemilattice.joinSemilattice (Set-BddSemilattice {A}))
-    using (∨-assoc)
+    using (∨-comm; ∨-assoc)
 
   ∪-identityˡ : (X : Set A) → ∅ ∪ X ≡ᵉ X
   ∪-identityˡ = identityˡ
@@ -313,8 +313,30 @@ module _ {A : Type ℓ} where
   ∪-identityʳ : (X : Set A) → X ∪ ∅ ≡ᵉ X
   ∪-identityʳ = identityʳ
 
+  ∪-comm : (X Y : Set A) → X ∪ Y ≡ᵉ Y ∪ X
+  ∪-comm = ∨-comm
+
   ∪-assoc : (X Y Z : Set A) → (X ∪ Y) ∪ Z ≡ᵉ X ∪ (Y ∪ Z)
   ∪-assoc = ∨-assoc
+
+module _ {A : Type ℓ} where
+
+  fromList-∪-singleton : {x : A}{l : List A} → fromList (x ∷ l) ≡ᵉ ❴ x ❵ ∪ fromList l
+  fromList-∪-singleton {x = x}{l} = i , ii
+    where
+    i : fromList (x ∷ l) ⊆ ❴ x ❵ ∪ fromList l
+    i h with from ∈-fromList h
+    ... | here refl = ∈-∪⁺ (inj₁ (to ∈-fromList (here refl)))
+    ... | there q = ∈-∪⁺ (inj₂ (to ∈-fromList q))
+
+    ii : ❴ x ❵ ∪ fromList l ⊆ fromList (x ∷ l)
+    ii h with ∈-∪⁻ h
+    ... | (inj₁ a∈) = to ∈-fromList (here (from ∈-singleton a∈))
+    ... | (inj₂ a∈) = to ∈-fromList (there (from ∈-fromList a∈))
+
+  -- fromList-∪ : (ll lr : List A) → fromList (ll ++ lr) ≡ᵉ (fromList ll) ∪ (fromList lr)
+  -- fromList-∪ [] lr = ≡ᵉ.sym (∪-identityˡ (fromList lr))
+  -- fromList-∪ (x ∷ ll) lr = {!!}
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
