@@ -20,7 +20,6 @@ open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
-open import Ledger.Batch txs abs
 
 \end{code}
 \begin{figure*}[h]
