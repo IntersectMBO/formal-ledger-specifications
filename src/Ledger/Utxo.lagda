@@ -39,17 +39,23 @@ infixl 7 _*↓_
 -- multiply a natural number with a fraction, rounding down and taking the absolute value
 _*↓_ : ℚ.ℚ → ℕ → ℕ
 q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
+\end{code}
 
+\begin{figure*}[h]
+\begin{code}
 isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
 isTwoPhaseScriptAddress tx utxo a =
   if isScriptAddr a then
-      (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo then
-               (λ {s} → isP2Script s)
-             else false)
+    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
+                 then (λ {s} → isP2Script s)
+                 else false)
   else
     false
-
+\end{code}
+\begin{code}[hide]
 opaque
+\end{code}
+\begin{code}
   getDataHashes : ℙ TxOut → ℙ DataHash
   getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
 
@@ -62,7 +68,12 @@ opaque
 totExUnits : Tx → ExUnits
 totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
   where open Tx; open TxWitnesses
+\end{code}
+\caption{Functions supporting UTxO rules}
+\label{fig:supportfunctions:utxo}
+\end{figure*}
 
+\begin{code}[hide]
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
@@ -74,7 +85,7 @@ utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValue o)
 open PParams
 \end{code}
 
-Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define
+Figures~\ref{fig:supportfunctions:utxo},~\ref{fig:functions:utxo}, and~\ref{fig:functions:utxo2} define
 functions needed for the UTxO transition system. Note the special
 multiplication symbol \AgdaFunction{*↓} used in
 Figure~\ref{fig:functions:utxo}: it means multiply and round down
