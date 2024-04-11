@@ -108,7 +108,9 @@ instance
           renaming (action to a; deposit to d; policy to p; returnAddr to addr; prevAction to prev)
         open PParams pparams hiding (a)
 
-        H = ¿ actionWellFormed a ≡ true
+        instance _ = actionWellFormed?
+
+        H = ¿ actionWellFormed a
             × d ≡ govActionDeposit
             × validHFAction prop s enactState
             × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)

@@ -9,9 +9,10 @@ We introduce three distinct bodies that have specific functions in the new gover
 \item
   the stake pool operators (henceforth called \SPOs)
 
-In the following figure, \DocHash is equal to any other 32-bit hash
-type (such as \ScriptHash). We use a different name to avoid
-confusion.
+In the following figure, \DocHash is abstract but in the
+implementation it will be instantiated with a 32-bit hash type (like
+e.g. \ScriptHash). We keep it separate because it is used for a
+different purpose.
 
 \end{enumerate}
 \begin{code}[hide]
@@ -57,9 +58,19 @@ data GovAction : Set where
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction
   Info             :                                             GovAction
 
-actionWellFormed : GovAction → Bool
+actionWellFormed : GovAction → Set
 actionWellFormed (ChangePParams x)  = ppdWellFormed x
-actionWellFormed _                  = true
+actionWellFormed _                  = ⊤
+\end{code}
+\begin{code}[hide]
+actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
+actionWellFormed? {NoConfidence}        = Dec-⊤
+actionWellFormed? {NewCommittee _ _ _}  = Dec-⊤
+actionWellFormed? {NewConstitution _ _} = Dec-⊤
+actionWellFormed? {TriggerHF _}         = Dec-⊤
+actionWellFormed? {ChangePParams x}     = Dec-×
+actionWellFormed? {TreasuryWdrl _}      = Dec-⊤
+actionWellFormed? {Info}                = Dec-⊤
 \end{code}
 \caption{Governance actions}
 \label{defs:governance}
