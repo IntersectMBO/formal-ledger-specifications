@@ -21,7 +21,9 @@ open import Data.List.Relation.Unary.Any  using (Any); open Any
 open import Prelude; open Equivalence
 
 open import Tactic.Cong                 using (cong!)
+open import Tactic.Defaults
 open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
+open import Tactic.GenError
 open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
@@ -81,7 +83,7 @@ instance
         abstract
           genErr : ¬ H → String
           genErr  ¬p = case dec-de-morgan ¬p of λ where
-            (inj₁ a) → "¬ TxBody.txins (Tx.body tx) ≢ ∅"
+            (inj₁ a) → genError
             (inj₂ b) → case dec-de-morgan b of λ where
               (inj₁ a₁) → "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
               (inj₂ b₁) → case dec-de-morgan b₁ of λ where
