@@ -167,19 +167,25 @@ updateCertDeposits pp  (cert ∷ certs)  deposits
   certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
   certRefund _              = ∅
 
-updateProposalDeposits : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-updateProposalDeposits [] _ _ deposits = deposits
-updateProposalDeposits (_ ∷ ps) txid gaDep deposits =
-  updateProposalDeposits ps txid gaDep deposits ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
+updateProposalDeposits : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin
+  → DepositPurpose ⇀ Coin
+updateProposalDeposits []        _     _      deposits  = deposits
+updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
+  updateProposalDeposits ps txid gaDep deposits
+  ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
 updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-updateDeposits pp txb =
-  updateCertDeposits pp txcerts ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
+updateDeposits pp txb = updateCertDeposits pp txcerts
+                        ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
+\end{code}
+\begin{code}[hide]
   where open TxBody txb
+\end{code}
+\begin{code}
 
 depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
-depositsChange pp txb deposits
-  = getCoin (updateDeposits pp txb deposits) - getCoin deposits
+depositsChange pp txb deposits =
+  getCoin (updateDeposits pp txb deposits) - getCoin deposits
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
