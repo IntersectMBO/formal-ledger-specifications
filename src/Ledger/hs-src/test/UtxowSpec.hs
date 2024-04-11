@@ -11,6 +11,7 @@ import Test.HUnit ( (@?=) )
 
 import Lib
 
+(.->) :: a -> b -> (a, b)
 (.->) = (,)
 
 initParams :: PParams
@@ -24,13 +25,12 @@ initParams = MkPParams
   , minUTxOValue = 0
   , poolDeposit = 10
   , emax = 10
-  , pv = (1, 0) }
+  , pv = (1, 0)
+  , coinsPerUTxOWord = 1
+  }
 
 initEnv :: UTxOEnv
 initEnv = MkUTxOEnv {slot = 0, pparams = initParams}
-
-ada :: Coin
-ada = 0
 
 a0 :: Addr
 a0 = 0
@@ -42,36 +42,39 @@ a2 :: Addr
 a2 = 2
 
 initUTxO :: UTxO
-initUTxO = [ (0,  0) .-> (a0, (1000, Nothing)) ]
+initUTxO = [ (0,  0) .-> (a0, (1000, (Nothing, Nothing))) ]
 
 initState :: UTxOState
 initState = MkUTxOState {utxo = initUTxO, fees = 0}
 
 data SimpleTxBody = MkSimpleTxBody
-  { stxins   :: [TxIn]
-  , stxouts  :: [(Ix, TxOut)]
-  , stxvldt  :: (Maybe Integer, Maybe Integer)
-  , stxid    :: TxId 
-  , stxcerts :: [TxCert]}
+  { stxins     :: [TxIn]
+  , srefInputs :: [TxIn]
+  , stxouts    :: [(Ix, TxOut)]
+  , stxvldt    :: (Maybe Integer, Maybe Integer)
+  , stxid      :: TxId
+  , stxcerts   :: [TxCert]}
 
 bodyFromSimple :: PParams -> SimpleTxBody -> TxBody
 bodyFromSimple pp stxb = let s = 5 in MkTxBody
-  { txins  = stxins stxb
-  , txouts = stxouts stxb
-  , txfee  = (a pp) * s + (b pp)
-  , txvldt = stxvldt stxb
-  , txsize = s
-  , txid   = stxid stxb 
-  , txcerts = stxcerts stxb}
+  { txins     = stxins stxb
+  , refInputs = srefInputs stxb
+  , txouts    = stxouts stxb
+  , txfee     = (a pp) * s + (b pp)
+  , txvldt    = stxvldt stxb
+  , txsize    = s
+  , txid      = stxid stxb
+  , txcerts   = stxcerts stxb}
 
 testTxBody1 :: TxBody
 testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins   = [(0, 0)]
-  , stxouts  = [ 0 .-> (a0, (890, Nothing))
-               , 1 .-> (a1, (100, Nothing)) ]
-  , stxvldt  = (Nothing, Just 10)
-  , stxid    = 1 
-  , stxcerts = []}
+  { stxins     = [(0, 0)]
+  , srefInputs = [(0, 0)]
+  , stxouts    = [ 0 .-> (a0, (890, (Nothing, Nothing)))
+                 , 1 .-> (a1, (100, (Nothing, Nothing))) ]
+  , stxvldt    = (Nothing, Just 10)
+  , stxid      = 1
+  , stxcerts   = []}
 
 testTx1 :: Tx
 testTx1 = MkTx
@@ -81,12 +84,13 @@ testTx1 = MkTx
 
 testTxBody2 :: TxBody
 testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins = [(1, 1)]
-  , stxouts = [ 0 .-> (a2, (10, Nothing))
-              , 1 .-> (a1, (80, Nothing)) ]
-  , stxvldt = (Nothing, Just 10)
-  , stxid = 2 
-  , stxcerts = []}
+  { stxins     = [(1, 1)]
+  , srefInputs = [(1, 1)]
+  , stxouts    = [ 0 .-> (a2, (10, (Nothing, Nothing)))
+                 , 1 .-> (a1, (80, (Nothing, Nothing))) ]
+  , stxvldt    = (Nothing, Just 10)
+  , stxid      = 2
+  , stxcerts   = []}
 
 testTx2 :: Tx
 testTx2 = MkTx
@@ -104,8 +108,8 @@ spec = do
   describe "utxowSteps" $
     it "results in the expected state" $
       utxowSteps initEnv initState [testTx1, testTx2] @?= Success (MkUTxOState
-        { utxo = [ (1,0) .-> (a0, (890, Nothing))
-                 , (2,0) .-> (a2, (10,  Nothing))
-                 , (2,1) .-> (a1, (80,  Nothing)) ]
+        { utxo = [ (1,0) .-> (a0, (890, (Nothing, Nothing)))
+                 , (2,0) .-> (a2, (10,  (Nothing, Nothing)))
+                 , (2,1) .-> (a1, (80,  (Nothing, Nothing))) ]
         , fees = 20
         })
