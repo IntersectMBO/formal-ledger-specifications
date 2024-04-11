@@ -77,18 +77,25 @@ data
 
 \begin{figure*}[h]
 \begin{code}
-  LEDGER : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+  LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+    ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+
+  LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+    ∙  isValid tx ≡ false
+    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+       ────────────────────────────────
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
-pattern LEDGER⋯ x y z = LEDGER (x , y , z)
-unquoteDecl LEDGER-premises = genPremises LEDGER-premises (quote LEDGER)
+pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
+pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 \end{code}
 
 \begin{NoConway}
