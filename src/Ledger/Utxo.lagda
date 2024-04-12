@@ -78,8 +78,8 @@ totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
 utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
 
-utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValue o)
+utxoEntrySize : TxOutʰ → MemoryEstimate
+utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValueʰ o)
 
 
 open PParams
@@ -117,7 +117,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
   outs tx = mapKeys (tx .txid ,_) (tx .txouts)
 
   balance : UTxO → Value
-  balance utxo = ∑[ x ← utxo ] getValue x
+  balance utxo = ∑[ x ← mapValues txOutHash utxo ] getValueʰ x
 
   cbalance : UTxO → Coin
   cbalance utxo = coin (balance utxo)
@@ -239,7 +239,7 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
                       )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange  = range    (utxo ∣ collateral)
+    collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
 \end{code}
 \end{AgdaMultiCode}
@@ -391,19 +391,20 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     let open Tx tx renaming (body to txb); open TxBody txb
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
+        txoutsʰ = (mapValues txOutHash txouts)
     in
     ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
     ∙ refInputs ⊆ dom utxo                   ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
-    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
-        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
-    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
-        serSize (getValue txout) ≤ maxValSize pp
-    ∙ ∀[ (a , _) ∈ range txouts ]
+    ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
+    ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+        serSize (getValueʰ txout) ≤ maxValSize pp
+    ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txouts ]  netId a         ≡ networkId
+    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ networkId
     ∙ ∀[ a ∈ dom txwdrls ]         a .RwdAddr.net  ≡ networkId
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────

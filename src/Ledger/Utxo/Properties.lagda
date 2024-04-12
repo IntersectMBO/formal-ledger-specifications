@@ -86,40 +86,42 @@ instance
           (inj₂ b) → case dec-de-morgan b of λ where
             (inj₁ a₁) → "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
             (inj₂ b₁) → case dec-de-morgan b₁ of λ where
-                (inj₁ a₂) → "¬ inInterval (UTxOEnv.slot Γ) (txvldt (Tx.body tx))"
-                (inj₂ b₂) → case dec-de-morgan b₂ of λ where
-                  (inj₁ a₃) → "¬ feesOK pp tx utxo ≡ true"
-                  (inj₂ b₃) → case dec-de-morgan b₃ of λ where
-                      (inj₁ a₄) →
-                        let
-                          pp = UTxOEnv.pparams Γ
-                          txb = Tx.body tx
-                          con = consumed pp s txb
-                          prod = produced pp s txb
-                          showValue = show ∘ coin
-                        in
-                          ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
-                          +ˢ "\n  consumed =\t\t" +ˢ showValue con
-                          +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
-                          +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
-                          +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
-                          +ˢ "\n  produced =\t\t" +ˢ showValue prod
-                          +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
-                          +ˢ "\n    fee  =\t\t" +ˢ show (txb .TxBody.txfee)
-                          +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
-                          +ˢ "\n    donation  =\t\t" +ˢ show (txb .TxBody.txdonation)
-                          )
-                      (inj₂ b₄) → case dec-de-morgan b₄ of λ where
-                        (inj₁ a₅) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
-                        (inj₂ b₅) → case dec-de-morgan b₅ of λ where
-                            (inj₁ a₆) → "¬(TxBody.txsize (Tx.body tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
-                            (inj₂ b₆) → case dec-de-morgan b₆ of λ where
-                              (inj₁ a₇) → "∀[ (_ , txout) ∈ txouts .proj₁ ] inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout"
-                              (inj₂ b₇) → case dec-de-morgan b₇ of λ where
-                                  (inj₁ a₈) → "∀[ (_ , txout) ∈ txouts .proj₁ ] serSize (getValue txout) ≤ maxValSize pp"
-                                  (inj₂ b₈) → case dec-de-morgan b₈ of λ where
-                                    (inj₁ a₉) → "∀[ (a , _) ∈ range txouts ] Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a"
-                                    (inj₂ _) → "something else broke"
+                (inj₁ a₁') → "¬ refInputs ⊆ dom utxo "
+                (inj₂ b₂') → case dec-de-morgan b₂' of λ where
+                  (inj₁ a₂) → "¬ inInterval (UTxOEnv.slot Γ) (txvldt (Tx.body tx))"
+                  (inj₂ b₂) → case dec-de-morgan b₂ of λ where
+                    (inj₁ a₃) → "¬ feesOK pp tx utxo ≡ true"
+                    (inj₂ b₃) → case dec-de-morgan b₃ of λ where
+                        (inj₁ a₄) →
+                          let
+                            pp = UTxOEnv.pparams Γ
+                            txb = Tx.body tx
+                            con = consumed pp s txb
+                            prod = produced pp s txb
+                            showValue = show ∘ coin
+                          in
+                            ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
+                            +ˢ "\n  consumed =\t\t" +ˢ showValue con
+                            +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
+                            +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
+                            +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
+                            +ˢ "\n  produced =\t\t" +ˢ showValue prod
+                            +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
+                            +ˢ "\n    fee  =\t\t" +ˢ show (txb .TxBody.txfee)
+                            +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
+                            +ˢ "\n    donation  =\t\t" +ˢ show (txb .TxBody.txdonation)
+                            )
+                        (inj₂ b₄) → case dec-de-morgan b₄ of λ where
+                          (inj₁ a₅) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
+                          (inj₂ b₅) → case dec-de-morgan b₅ of λ where
+                              (inj₁ a₆) → "¬(TxBody.txsize (Tx.body tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
+                              (inj₂ b₆) → case dec-de-morgan b₆ of λ where
+                                (inj₁ a₇) → "∀[ (_ , txout) ∈ txouts .proj₁ ] inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout"
+                                (inj₂ b₇) → case dec-de-morgan b₇ of λ where
+                                    (inj₁ a₈) → "∀[ (_ , txout) ∈ txouts .proj₁ ] serSize (getValue txout) ≤ maxValSize pp"
+                                    (inj₂ b₈) → case dec-de-morgan b₈ of λ where
+                                      (inj₁ a₉) → "∀[ (a , _) ∈ range txouts ] Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a"
+                                      (inj₂ _) → "something else broke"
 
         computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProofH (yes (x , y , z , e , k , l , m , v , n , o , p , q , r)) =
@@ -157,7 +159,7 @@ private
 opaque
   unfolding balance
   balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
-  balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
+  balance-cong {utxo} {utxo'} eq = indexedSumᵐ-cong {x = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ} (map-≡ᵉ eq)
 
   balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → cbalance utxo ≡ cbalance utxo'
   balance-cong-coin {utxo} {utxo'} x =
@@ -169,12 +171,13 @@ opaque
   balance-∪ {utxo} {utxo'} h = begin
     cbalance (utxo ∪ˡ utxo')
       ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-      $ indexedSumᵐ-cong {x = (utxo ∪ˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)} (id , id)
+      $ indexedSumᵐ-cong {x = (mapValues txOutHash (utxo ∪ˡ utxo')) ᶠᵐ} {((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)} (disjoint-∪ˡ-mapValues {M = utxo} {utxo'} _ h)
       ⟩
-    coin (indexedSumᵐ _ ((utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)))
+    coin (indexedSumᵐ _ (((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)))
       ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-      $ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h
-      ⟩
+       $ indexedSumᵐ-∪ {X = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ}
+       (λ x x₁ → h (dom-mapʳ⊆ x) (dom-mapʳ⊆ x₁))
+       ⟩
     coin (balance utxo + balance utxo')
       ≡⟨ ∙-homo-Coin  _ _ ⟩
     cbalance utxo + cbalance utxo'
@@ -718,7 +721,5 @@ module _
     balIn balOut : Value
     balIn = balance (st ∣ txins)
     balOut = balance (outs txb)
-
 \end{code}
 \end{property}
-

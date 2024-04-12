@@ -164,6 +164,14 @@ the transaction body are:
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
+  TxOutʰ = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe ScriptHash
+
+  txOutHash : TxOut → TxOutʰ
+  txOutHash (a , v , d , s) = a , (v , (d , M.map hash s))
+
+  getValueʰ : TxOutʰ → Value
+  getValueʰ (_ , v , _) = v
+
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom (utxo ↾' (isVKeyAddr ∘ proj₁))
 

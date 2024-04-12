@@ -70,11 +70,11 @@ createEnv s = record { slot = s ;
 createUTxO : (index : ℕ)
            → (wallet : ℕ)
            → (value : Value)
-           → (Maybe D)
+           → Maybe (D ⊎ DataHash)
            → TxIn × TxOut
 createUTxO index wallet value d = (index , index)
                                 , (inj₁ (record { net = tt ; pay = inj₁ wallet ; stake = inj₁ wallet })
-                                  , value , d)
+                                  , value , d , nothing)
 
 createInitUtxoState : (wallets : ℕ)
                     → (value : Value)

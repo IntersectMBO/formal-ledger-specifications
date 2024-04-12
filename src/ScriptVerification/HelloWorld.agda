@@ -36,7 +36,7 @@ initTxOut : TxOut
 initTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 10 , nothing
+                           , 10 , nothing , nothing
 
 script : TxIn × TxOut
 script = (6 , 6) , initTxOut
@@ -47,12 +47,13 @@ initState = fromList' (script ∷ (createInitUtxoState 5 1000000000000))
 succeedTx : Tx
 succeedTx = record { body = record
                          { txins = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
+                         ; refInputs = ∅
                          ; txouts = fromListIx ((6 , initTxOut)
                                                ∷ (5
                                                  , ((inj₁ (record { net = tt ;
                                                                     pay = inj₁ 5 ;
                                                                     stake = inj₁ 5 }))
-                                                 , (1000000000000 - 10000000000) , nothing))
+                                                 , (1000000000000 - 10000000000) , nothing , nothing))
                                                ∷ [])
                          ; txfee = 10000000000
                          ; mint = 0
@@ -83,6 +84,7 @@ succeedTx = record { body = record
 failTx : Tx
 failTx = record { body = record
                          { txins = Ledger.Prelude.fromList ((6 , 6) ∷ [])
+                         ; refInputs = ∅
                          ; txouts = ∅
                          ; txfee = 10
                          ; mint = 0
@@ -125,6 +127,9 @@ opaque
   unfolding setToList
   unfolding Computational-UTXO
   unfolding outs
+
+  _ : notEmpty succeedState ≡ ⊤
+  _ = refl
 
   -- need to check that the state is non-empty otherwise evalScripts will always return true
   _ : notEmpty succeedState ≡ ⊤

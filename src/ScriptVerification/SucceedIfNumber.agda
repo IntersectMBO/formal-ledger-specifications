@@ -45,14 +45,14 @@ initTxOut : TxOut
 initTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 10 , just 99
+                           , 10 , just (inj₂ 99) , nothing
 
 -- initTxOut for script without datum reference
 initTxOut' : TxOut
 initTxOut' = inj₁ (record { net = tt ;
                            pay = inj₂ 888 ;
                            stake = inj₂ 888 })
-                           , 10 , nothing
+                           , 10 , nothing , nothing
 
 scriptDatum : TxIn × TxOut
 scriptDatum = (6 , 6) , initTxOut
@@ -66,43 +66,16 @@ initStateDatum = fromList' (scriptDatum ∷ (createInitUtxoState 5 1000000000000
 initStateRedeemer : UTxO
 initStateRedeemer = fromList' (scriptRedeemer ∷ (createInitUtxoState 5 1000000000000))
 
-exTx : Tx
-exTx = record { body = record
-                         { txins = ∅
-                         ; txouts = fromListIx ((6 , initTxOut) ∷ [])
-                         ; txfee = 10
-                         ; mint = 0
-                         ; txvldt = nothing , nothing
-                         ; txcerts = []
-                         ; txwdrls = ∅
-                         ; txvote = []
-                         ; txprop = []
-                         ; txdonation = 0
-                         ; txup = nothing
-                         ; txADhash = nothing
-                         ; netwrk = just tt
-                         ; txsize = 10
-                         ; txid = 6
-                         ; collateral = ∅
-                         ; reqSigHash = ∅
-                         ; scriptIntHash = nothing
-                         } ;
-                wits = record { vkSigs = ∅ ;
-                                scripts = ∅ ;
-                                txdats = ∅ ;
-                                txrdmrs = ∅ } ;
-                isValid = false ;
-                txAD = nothing }
-
 succeedTx : Tx
 succeedTx = record { body = record
                          { txins = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
+                         ; refInputs = ∅
                          ; txouts = fromListIx ((6 , initTxOut)
                                                 ∷ (5
                                                   , ((inj₁ (record { net = tt ;
                                                                      pay = inj₁ 5 ;
                                                                      stake = inj₁ 5 }))
-                                                  , (1000000000000 - 10000000000) , nothing))
+                                                  , (1000000000000 - 10000000000) , nothing , nothing))
                                                 ∷ [])
                          ; txfee = 10000000000
                          ; mint = 0
@@ -137,6 +110,7 @@ exampleDatum = getDatum succeedTx initStateDatum (Spend (6 , 6))
 failTx : Tx
 failTx = record { body = record
                          { txins = Ledger.Prelude.fromList ((6 , 6) ∷ [])
+                         ; refInputs = ∅
                          ; txouts = ∅
                          ; txfee = 10
                          ; mint = 0
@@ -175,7 +149,7 @@ opaque
   unfolding Computational-UTXO
   unfolding outs
 
-  gotScript : lookupScriptHash 777 succeedTx ≡ just (inj₂ succeedIf1Datum)
+  gotScript : lookupScriptHash 777 succeedTx initStateDatum ≡ just (inj₂ succeedIf1Datum)
   gotScript = refl
 
   _ : exampleDatum ≡ 1 ∷ []
