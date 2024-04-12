@@ -56,36 +56,54 @@ mkAllEdges : List Tx → List Tx → List (Tx × Tx)
 mkAllEdges [] ls = []
 mkAllEdges (h ∷ tb) ls = mkEdges h ls ++ mkFREdges h ls ++ mkAllEdges tb ls
 
+-- for a given tx, and set of edges,
+-- returns a list of transactions ls such that for each e in ls is such that e -> tx is a dependency
+-- i.e. returns all ends of incoming edges
+hasIncEdges : Tx → List (Tx × Tx) → List Tx
+hasIncEdges tx [] = []
+hasIncEdges tx ((e , tx') ∷ edges) with (tx .Tx.body .TxBody.txid ≡ᵇ tx' .Tx.body .TxBody.txid)
+... | true = e ∷ (hasIncEdges tx edges)
+... | false = (hasIncEdges tx edges)
 
-hasIncEdges : Tx → List (Tx × Tx) → Bool
-hasIncEdges tx [] = false
-hasIncEdges tx ((e , tx') ∷ edges) = (tx .Tx.body .TxBody.txid ≡ᵇ tx' .Tx.body .TxBody.txid) ∨ (hasIncEdges tx edges)
-
+-- filters a list of transactions such that only ones with no incoming edges remain
 nodesWithNoIncomingEdge : List Tx → List (Tx × Tx) → List Tx
 nodesWithNoIncomingEdge [] edges = []
 nodesWithNoIncomingEdge (tx ∷ txs) edges with (hasIncEdges tx edges)
-... | true = nodesWithNoIncomingEdge txs edges
-... | false = tx ∷ nodesWithNoIncomingEdge txs edges
+... | e ∷ dges = nodesWithNoIncomingEdge txs edges
+... | [] = tx ∷ nodesWithNoIncomingEdge txs edges
 
+-- remove the first instance of a transaction in a list
 removeTx : Tx → List Tx → List Tx
 removeTx tx [] = []
 removeTx tx (n ∷ ne) with (tx .Tx.body .TxBody.txid ≡ᵇ n .Tx.body .TxBody.txid)
 ... | true = ne
 ... | false = [ n ] ++ (removeTx tx ne)
 
+-- remove a transaction from a list if it has no incoming edges
+ifNoEdgeRemove : Tx → List (Tx × Tx) → List Tx → List Tx
+ifNoEdgeRemove tx edges s with (hasIncEdges tx edges)
+... | [] = removeTx tx s
+... | e ∷ dges = s
 
-updateS : Tx → List (Tx × Tx) → List Tx → List Tx
-updateS tx edges s with (hasIncEdges tx edges)
-... | true = s
-... | false = tx ∷ s
+-- given tx1, for all tx such that (tx1 , tx) in edges,
+--             remove (tx1 , tx) from the graph
+--             if tx has no other incoming edges then
+--               insert tx into S
+updateRES : Tx → List (Tx × Tx) → List Tx → ((List (Tx × Tx)) × (List Tx))
+updateRES tx1 [] s = ([] , s)
+updateRES tx1 ((tx , tx') ∷ em) s with (tx .Tx.body .TxBody.txid ≡ᵇ tx1 .Tx.body .TxBody.txid)
+... | true = (proj₁ (updateRES tx1 em (ifNoEdgeRemove tx em s)) , (ifNoEdgeRemove tx em s))
+... | false = ((tx , tx') ∷ proj₁ (updateRES tx1 em s) , s)
 
 -- topologically sorts a tx list
--- arguments : remaining edges, remaining txs with no incoming edge (S), current sorted list (L)
-topSortTxs : List (Tx × Tx) → List Tx → List Tx → Maybe (List Tx)
-topSortTxs [] s srtd = just srtd
-topSortTxs (e ∷ dges) [] srtd = nothing
-topSortTxs ((tx1 , tx2) ∷ dges) (tx ∷ rls) srtd =
-  topSortTxs dges (updateS tx2 dges (removeTx tx1 (tx ∷ rls))) (srtd ++ [ tx1 ])
+-- arguments : tracking edges for agda termination check, remaining edges, remaining txs with no incoming edge (S), current sorted list (L)
+topSortTxs : List (Tx × Tx) → List (Tx × Tx) → List Tx → List Tx → Maybe (List Tx)
+topSortTxs e [] s srtd = just srtd
+topSortTxs [] (r ∷ em) s srtd = nothing
+topSortTxs e (r ∷ em) [] srtd = nothing
+topSortTxs ((tx1 , tx2) ∷ dges) (r ∷ em) (tx ∷ rls) srtd =
+  topSortTxs dges (proj₁ updRES) (proj₂ updRES) (srtd ++ [ tx1 ])
+  where updRES = updateRES tx1 (r ∷ em) (removeTx tx1 (tx ∷ rls))
 
 -- TOP SORT original
 -- L ← Empty list that will contain the sorted elements
@@ -108,13 +126,13 @@ topSortTxs ((tx1 , tx2) ∷ dges) (tx ∷ rls) srtd =
 -- L ← Empty list that will contain the sorted elements
 -- S ← Set of all nodes with no incoming edge
 -- --
--- while S is not empty do -
---        for each (tx1 , tx2) in edges do
+-- for each (tx1 , tx2) in edges do
 --           remove tx1 from S
 --           add tx1 to L
---           remove (tx1 , tx2) from the graph
---           if tx2 has no other incoming edges then
---             insert tx2 into S
+--           for all tx such that (tx1 , tx) in edges,
+--             remove (tx1 , tx) from the graph
+--             if tx has no other incoming edges then
+--               insert tx into S
 --
 -- if graph has edges then
 --     return error   (graph has at least one cycle)
@@ -133,7 +151,7 @@ noDups tb tb' = ∀[ tx ∈ tb ] ∀[ tx' ∈ tb' ] ¬ tx ≡ tx'
 -- edges between transactions spending each other's outputs within the zone,
 -- and backwards edges between transactions spending each other's requests within the zone
 chkLinear : List Tx → Set
-chkLinear tb = topSortTxs (mkAllEdges tb tb) (nodesWithNoIncomingEdge tb (mkAllEdges tb tb)) [] ≡ just []
+chkLinear tb = topSortTxs (mkAllEdges tb tb) (mkAllEdges tb tb) (nodesWithNoIncomingEdge tb (mkAllEdges tb tb)) [] ≡ just []
 
 -- sum up the fees (adjusted by collateralPercentage) of transactions in a list
 sumCol : List Tx → ℕ → Coin
