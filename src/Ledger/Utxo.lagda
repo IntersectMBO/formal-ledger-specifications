@@ -172,6 +172,8 @@ depositsChange pp txb deposits
 \label{fig:functions:utxo}
 \end{figure*}
 
+
+
 \begin{NoConway}
 \begin{figure*}
 \begin{AgdaMultiCode}

@@ -7,14 +7,14 @@ open import Axiom.Set.Properties using (∃?-sublist-⇔)
 open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
 open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
+open import Ledger.Abstract
 
 module Ledger.Gov (txs : _) (open TransactionStructure txs using (govStructure)) where
 open GovStructure govStructure hiding (epoch)
 
 open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
-open import Ledger.Ratify txs
-
+open import Ledger.Ratify txs hiding (vote)
 open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
@@ -56,7 +56,7 @@ private variable
   Γ : GovEnv
   s s' : GovState
   aid : GovActionID
-  voter : Voter
+  voter' : Voter
   v : Vote
   d : Coin
   addr : RwdAddr
@@ -202,12 +202,12 @@ data _⊢_⇀⦇_,GOV'⦈_ where
 \begin{code}
   GOV-Vote : ∀ {x ast} → let
       open GovEnv Γ
-      sig = inj₁ record { gid = aid ; voter = voter ; vote = v ; anchor = x }
+      sig = inj₁ record { gid = aid ; voter = voter' ; vote = v ; anchor = x }
     in
     ∙ (aid , ast) ∈ fromList s
-    ∙ canVote pparams (action ast) (proj₁ voter)
+    ∙ canVote pparams (action ast) (proj₁ voter')
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid voter v
+      (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid voter' v
 
   GOV-Propose : ∀ {x} → let
       open GovEnv Γ; open PParams pparams hiding (a)

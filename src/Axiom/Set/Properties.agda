@@ -18,7 +18,9 @@ open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; 
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
-open import Data.List.Relation.Unary.Any using (here; there)
+open import Data.List.Relation.Unary.Any using (here; there )
+open import Data.List.Relation.Unary.Any.Properties using (++⁺ʳ; ++⁺ˡ; ++⁻)
+open import Data.List.Relation.Unary.Ext using (hereʳ; thereʳ)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
 open import Data.Product.Properties using (×-≡,≡→≡)
@@ -28,6 +30,7 @@ import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Se
 import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
+import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 open Equivalence
 
@@ -408,3 +411,22 @@ module _ {L : List A} where
 
     ∃?-sublist-⇔ : Dec (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ Dec (∃[ l ] l ⊆ˡ L × P l)
     ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
+
+∷⟺∷ʳ : {x : A}{l : List A} → (x ∷ l) ⊆ˡ (l ∷ʳ x) × (l ∷ʳ x) ⊆ˡ (x ∷ l)
+proj₁ (∷⟺∷ʳ {l = l}) (here refl) = ++⁺ʳ l (here refl)
+proj₁ ∷⟺∷ʳ (there u) = ++⁺ˡ u
+proj₂ (∷⟺∷ʳ {l = l}) u∈ = case (++⁻ l u∈) of λ where
+  (inj₁ ∈l) → there ∈l
+  (inj₂ (here refl)) → here refl
+
+fromList-∪-singletonʳ : {x : A}{l : List A} → fromList (l ∷ʳ x) ≡ᵉ fromList l ∪ ❴ x ❵
+fromList-∪-singletonʳ {x = x}{l} = begin
+  fromList (l ∷ʳ x)
+    ≈⟨ from sublist-⇔ (proj₂ ∷⟺∷ʳ) , from sublist-⇔ (proj₁ ∷⟺∷ʳ) ⟩
+  fromList (x ∷ l)
+    ≈⟨ fromList-∪-singleton ⟩
+  ❴ x ❵ ∪ fromList l
+    ≈⟨ ∪-comm ❴ x ❵ (fromList l) ⟩
+  fromList l ∪ ❴ x ❵
+    ∎
+  where open SetoidReasoning (≡ᵉ-Setoid)
