@@ -132,19 +132,17 @@ isGADeposit dp = isGADepositᵇ dp ≡ true
 
 govDepsMatch : LState → Set
 govDepsMatch ⟦ utxoSt , govSt , _ ⟧ˡ =
-  filterˢ isGADeposit (dom (utxoSt .deposits ))
-  ≡ᵉ fromList (map f govSt)
+  filterˢ isGADeposit (dom (utxoSt .deposits )) ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) govSt)
   where open UTxOState using (deposits)
 
 instance _ = +-0-monoid
-
 
 module _
 
   {gΓ : GovEnv}
 
   -- ASSUMPTIONS (TODO: eliminate these) --
-  {- 1 -} {dom-single : {d : DepositPurpose} {c : Coin} → ❴ d ❵ˢ ≡ dom ❴ d , c ❵ˢ }
+  {- 1 -} {dom-single : ∀ {A} {B} {x : A} {y : B} → dom (❴ x , y ❵ ˢ) ≡ ❴ x ❵ }
   {- 2 -} {filterCD   : ∀ {c} {pp} → filterˢ isGADeposit (dom ((certDeposit c {pp})ˢ)) ≡ᵉ ∅}
   {- 3 -} {filterGA   : ∀ {txid} {n} → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵ ≡ᵉ ❴ GovActionDeposit (txid , n) ❵ }
   {- 4 -} {filterCR   : (c : DCert) {deps : DepositPurpose ⇀ Coin}
@@ -184,7 +182,7 @@ module _
     where
     open UTxOState using (deposits)
     open TxBody txb
-    open LEnv Γ; open PParams pp hiding (govActionLifetime)
+    open LEnv Γ; open PParams pp --  hiding (govActionLifetime)
 
     utxoDeps utxoDeps' : DepositPurpose ⇀ Coin
     utxoDeps = utxoSt .deposits
@@ -194,12 +192,14 @@ module _
     updateGovStates s [] = s
     updateGovStates s (inj₁ v ∷ vps) = updateGovStates (addVote s gid voter vote) vps
       where open GovVote v
-    updateGovStates s (inj₂ p ∷ vps) =
-      updateGovStates
-        (addAction s (govActionLifetime +ᵉ GovEnv.epoch gΓ) (txid , length (filter dec-is-inj₂ vps))
-          returnAddr action prevAction) vps
-      -- where open GovEnv gΓ;
-      where open GovProposal p; open PParams (GovEnv.pparams gΓ)
+    updateGovStates s (inj₂ p ∷ vps) = updateGovStates (s ∷ʳ newAction) vps
+      where
+      open GovProposal p
+      newAction : GovActionID × GovActionState
+      newAction = (txid , length (filter dec-is-inj₂ vps))
+                  , record { votes = ∅ ; returnAddr = returnAddr
+                           ; expiresIn = (govActionLifetime +ᵉ GovEnv.epoch gΓ)
+                           ; action = action ; prevAction = prevAction }
 
     updateGovStatesΔ : List (GovVote ⊎ GovProposal) → GovState
     updateGovStatesΔ vps = updateGovStates [] vps
@@ -232,7 +232,50 @@ module _
       fromList (map f govSt)
       ∪ fromList (map f (updateGovStatesΔ (inj₁ v ∷ vps)))
         ∎
-    updateGovStates≡ᵉ govSt (inj₂ p ∷ vps) = {!!}
+    updateGovStates≡ᵉ govSt (inj₂ p ∷ vps) = goal
+      where
+      open GovProposal p
+
+      goal : fromList (map f (updateGovStates (addAction govSt (govActionLifetime +ᵉ GovEnv.epoch gΓ)
+                 (txid , length (filter dec-is-inj₂ vps)) returnAddr action prevAction) vps))
+             ≡ᵉ fromList (map f govSt)
+                ∪ fromList (map f (updateGovStatesΔ (inj₂ p ∷ vps)))
+      goal = {!!}
+
+    utxo-govst-connex' : {props : List GovProposal}
+      → dom (proposalDepositsΔ props pp txb ˢ) ≡ᵉ fromList (map f (updateGovStatesΔ (map inj₂ props)))
+    utxo-govst-connex' {[]} = dom∅
+
+    utxo-govst-connex' {p ∷ ps} = begin
+      dom (proposalDepositsΔ (p ∷ ps) pp txb ˢ)
+        ≈⟨ ≡ᵉ.refl ⟩
+      dom (updateProposalDeposits (p ∷ ps) txid govActionDeposit ∅ ˢ)
+        ≈⟨ ≡ᵉ.refl ⟩
+      dom ((updateProposalDeposits ps txid govActionDeposit ∅  ∪⁺ ❴ GovActionDeposit (txid , length ps) , govActionDeposit ❵) ˢ)
+        ≈⟨ dom∪⁺ ⟩
+      dom ((updateProposalDeposits ps txid govActionDeposit ∅)ˢ) ∪ dom ((❴ GovActionDeposit (txid , length ps) , govActionDeposit ❵) ˢ)
+        ≈⟨ ∪-cong (utxo-govst-connex'{ps}) ≡ᵉ.refl ⟩
+      fromList (map f (updateGovStatesΔ (map inj₂ ps))) ∪ dom ((❴ GovActionDeposit (txid , length ps) , govActionDeposit ❵) ˢ)
+        ≈⟨ ∪-cong ≡ᵉ.refl (≡ᵉ.reflexive dom-single) ⟩
+      fromList (map f (updateGovStatesΔ (map inj₂ ps))) ∪ (❴ GovActionDeposit (txid , length ps) ❵)
+        ≈⟨ ≡ᵉ.refl ⟩
+      fromList (map f (updateGovStatesΔ (map inj₂ ps))) ∪ fromList [ GovActionDeposit (txid , length ps) ]
+        ≈⟨ ≡ᵉ.refl ⟩
+      fromList (map f (updateGovStatesΔ (map inj₂ ps))) ∪ fromList (map f [ ((txid , length ps) , newActionState) ])
+        ≈⟨ ξ ⟩
+      fromList (map f (updateGovStatesΔ (map inj₂ (p ∷ ps))))
+        ∎
+        where
+        open GovProposal p
+        newActionState : GovActionState
+        newActionState = record { votes = ∅ ; returnAddr = returnAddr
+                                ; expiresIn = (govActionLifetime +ᵉ GovEnv.epoch gΓ)
+                                ; action = action ; prevAction = prevAction }
+
+        ξ : fromList (map f (updateGovStatesΔ (map inj₂ ps))) ∪ fromList (map f [ ((txid , length ps) , newActionState) ])
+            ≡ᵉ fromList (map f (updateGovStatesΔ (map inj₂ (p ∷ ps))))
+        ξ = {!!}
+
 
     utxo-govst-connex : {votes : List GovVote}{props : List GovProposal}
       → dom (proposalDepositsΔ props pp txb ˢ)
@@ -361,3 +404,4 @@ module _
         ≈˘⟨ updateGovSt≡ ⟩
       fromList (map f govSt')
         ∎
+
