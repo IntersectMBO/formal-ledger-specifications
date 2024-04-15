@@ -391,8 +391,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
     in
-    ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙ refInputs ⊆ dom utxo                   ∙ inInterval slot txvldt
+    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
+    ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
