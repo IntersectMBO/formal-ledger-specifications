@@ -215,7 +215,7 @@ instance
 
   Convertible-Rational : Convertible ℚ F.Rational
   Convertible-Rational = λ where
-    .to (mkℚ n d _) → n F., d
+    .to (mkℚ n d _) → n F., suc d
     .from (n F., zero) → 0ℚ -- TODO is there a safer way to do this?
     .from (n F., (suc d)) → n Data.Rational./ suc d
 
