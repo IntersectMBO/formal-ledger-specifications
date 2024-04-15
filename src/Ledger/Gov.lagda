@@ -72,11 +72,20 @@ addVote s aid voter v = map modifyVotes s
   where modifyVotes = λ (gid , s') → gid , record s'
           { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
 
+ActionId×ActionState : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
+                 → GovActionID × GovActionState
+ActionId×ActionState e aid addr a prev = (aid , record
+  { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+
+
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
-addAction s e aid addr a prev = s ∷ʳ (aid , record
-  { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+addAction s e aid addr a prev = s ∷ʳ ActionId×ActionState e aid addr a prev
+-- (aid , record
+--   { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+
+
 
 validHFAction : GovProposal → GovState → EnactState → Set
 validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
@@ -213,7 +222,8 @@ data _⊢_⇀⦇_,GOV'⦈_ where
       open GovEnv Γ; open PParams pparams hiding (a)
       prop = record { returnAddr = addr ; action = a ; anchor = x
                     ; policy = p ; deposit = d ; prevAction = prev }
-      s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+      -- s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+      s' = s ∷ʳ ActionId×ActionState (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
     ∙ actionWellFormed a ≡ true
     ∙ d ≡ govActionDeposit
