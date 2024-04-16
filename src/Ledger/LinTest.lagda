@@ -1,4 +1,4 @@
-\section{Zone State Transition}
+\section{Transaction Linearelisability Test}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -9,43 +9,79 @@ open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Zone
+module Ledger.LinTest
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Gov govStructure
-open import Ledger.PPUp txs
-open import Ledger.Utxo txs abs
-open import Ledger.Utxow txs abs
-open import Ledger.Ledger txs abs
+open import Ledger.Zone txs abs
 
 open Tx
-open TxBody
 \end{code}
 
-The entire state transformation of the ledger state caused by a valid
-zone can now be given as a combination of the previously
-defined transition systems.
+Topological sort/cycle detection tests.
 
 \begin{figure*}[h]
 \begin{code}
 
+txBody : TxBody
+txBody = record {
+        txins          : ℙ TxIn
+        txouts         : Ix ⇀ TxOut
+        txfee          = 0
+        mint           =  ∅
+        txvldt         = (nothing , nothing)
+        txcerts        = []
+        txwdrls        = ∅
+        txvote         = []
+        txprop         = []
+        txdonation     = 0
+        txup           = nothing
+        txADhash       = nothing
+        netwrk         = nothing
+        txsize         = 0
+        txid           : TxId
+        collateral     : ℙ TxIn
+        reqSigHash     : ℙ KeyHash
+        scriptIntHash  = nothing
+        fulfills       : ℙ Fulfill
+        requests       : Ix ⇀ Request
+        requiredTxs    =  ∅
+      }
+
+txWits : TxWitnesses
+txWits = record {
+      vkSigs    =  ∅
+      scripts   =  ∅
+      txdats    =  ∅
+      txrdmrs   =  ∅
+    }
+
+
+tx : Tx
+tx = record { body = txBody; wits = txWits; isValid = true; txAD = nothing }
+
+
+
+
+
+
+
 -- get a set of TxIds containing all IDs of transaction in given list tb
 getIDs : List Tx → ℙ TxId
-getIDs tb = foldr (λ { tx ls → ls ∪ (singleton (tx .body .txid)) }) ∅ tb
+getIDs tb = foldr (λ { tx ls → ls ∪ (singleton (tx .Tx.body .TxBody.txid)) }) ∅ tb
 
 -- make edges for a given transaction
 mkEdges : Tx → List Tx → List (Tx × Tx)
 mkEdges _ [] = []
-mkEdges tx (h ∷ tb) with ( ( tx .body .txid ) ∈? (fromList (map proj₁ (setToList (h .body .txins)))) )
+mkEdges tx (h ∷ tb) with ( ( tx .Tx.body .TxBody.txid ) ∈? (fromList (map proj₁ (setToList (h .Tx.body .TxBody.txins)))) )
 ... | yes p = (tx , h) ∷ mkEdges tx tb
 ... | no ¬p = mkEdges tx tb
 
 -- make FR edges for a given transaction
 mkFREdges : Tx → List Tx → List (Tx × Tx)
 mkFREdges _ [] = []
-mkFREdges tx (h ∷ tb) with ( ( tx .body .txid ) ∈? (fromList (map proj₁ (setToList (h .body .fulfills)))) )
+mkFREdges tx (h ∷ tb) with ( ( tx .Tx.body .TxBody.txid ) ∈? (fromList (map proj₁ (setToList (h .Tx.body .TxBody.fulfills)))) )
 ... | yes p = (h , tx) ∷ mkFREdges tx tb
 ... | no ¬p = mkFREdges tx tb
 
@@ -59,7 +95,7 @@ mkAllEdges (h ∷ tb) ls = mkEdges h ls ++ mkFREdges h ls ++ mkAllEdges tb ls
 -- i.e. returns all ends of incoming edges
 hasIncEdges : Tx → List (Tx × Tx) → List Tx
 hasIncEdges tx [] = []
-hasIncEdges tx ((e , tx') ∷ edges) with (tx .body .txid ≡ᵇ tx' .body .txid)
+hasIncEdges tx ((e , tx') ∷ edges) with (tx .Tx.body .TxBody.txid ≡ᵇ tx' .Tx.body .TxBody.txid)
 ... | true = e ∷ (hasIncEdges tx edges)
 ... | false = (hasIncEdges tx edges)
 
@@ -73,7 +109,7 @@ nodesWithNoIncomingEdge (tx ∷ txs) edges with (hasIncEdges tx edges)
 -- remove the first instance of a transaction in a list
 removeTx : Tx → List Tx → List Tx
 removeTx tx [] = []
-removeTx tx (n ∷ ne) with (tx .body .txid ≡ᵇ n .body .txid)
+removeTx tx (n ∷ ne) with (tx .Tx.body .TxBody.txid ≡ᵇ n .Tx.body .TxBody.txid)
 ... | true = ne
 ... | false = [ n ] ++ (removeTx tx ne)
 
@@ -89,7 +125,7 @@ ifNoEdgeRemove tx edges s with (hasIncEdges tx edges)
 --               insert tx into S
 updateRES : Tx → List (Tx × Tx) → List Tx → ((List (Tx × Tx)) × (List Tx))
 updateRES tx1 [] s = ([] , s)
-updateRES tx1 ((tx , tx') ∷ em) s with (tx .body .txid ≡ᵇ tx1 .body .txid)
+updateRES tx1 ((tx , tx') ∷ em) s with (tx .Tx.body .TxBody.txid ≡ᵇ tx1 .Tx.body .TxBody.txid)
 ... | true = (proj₁ (updateRES tx1 em (ifNoEdgeRemove tx em s)) , (ifNoEdgeRemove tx em s))
 ... | false = ((tx , tx') ∷ proj₁ (updateRES tx1 em s) , s)
 
@@ -140,7 +176,7 @@ topSortTxs ((tx1 , tx2) ∷ dges) (r ∷ em) (tx ∷ rls) srtd =
 
 -- check that all IDs in all requiredTxs groups correspond to Txs in the given zone
 chkRqTx : List Tx → Tx → Set
-chkRqTx tb tx = ∀[ txrid ∈ tx .body .requiredTxs ] Any (txrid ≡_) ( getIDs tb )
+chkRqTx tb tx = ∀[ txrid ∈ tx .Tx.body .TxBody.requiredTxs ] Any (txrid ≡_) ( getIDs tb )
 
 -- check for duplicates in two sets
 noDups : ℙ Tx → ℙ Tx → Set
@@ -154,7 +190,7 @@ chkLinear tb = topSortTxs (mkAllEdges tb tb) (mkAllEdges tb tb) (nodesWithNoInco
 
 -- sum up the fees (adjusted by collateralPercentage) of transactions in a list
 sumCol : List Tx → ℕ → Coin
-sumCol tb cp = foldr (λ { tx c → c + tx .body .txfee * cp }) 0 tb
+sumCol tb cp = foldr (λ { tx c → c + tx .Tx.body .TxBody.txfee * cp }) 0 tb
 
 \end{code}
 \caption{Functions used for zone validation}
@@ -195,20 +231,20 @@ private variable
     ∙ All (chkRqTx tb) (fromList tb)
     ∙ chkLinear tb
     ∙ All chkIsValid (fromList tb)
-    ∙ ((coin (balance  (utxo ∣ tx .body .collateral)) * 100)
+    ∙ ((coin (balance  (utxo ∣ tx .Tx.body .TxBody.collateral)) * 100)
       ≥ᵇ sumCol (lsV ++ [ tx ]) (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ tb ,ZONE⦈ ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , certState' ⟧ˡ
   ZONE-N :
     Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ (lsV ++ [ tx ]) ,LEDGERS⦈ _
-    ∙ tx .isValid ≡ false
+    ∙ tx .Tx.isValid ≡ false
     ∙ All chkIsValid (fromList lsV)
-    ∙ ((coin (balance  (utxo ∣ tx .body .collateral)) * 100)
+    ∙ ((coin (balance  (utxo ∣ tx .Tx.body .TxBody.collateral)) * 100)
       ≥ᵇ sumCol (lsV ++ [ tx ]) (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ tb ,ZONE⦈
-            ⟦ ⟦ utxo ∣ (tx .body .collateral) ᶜ
-            , fees + cbalance (utxo ∣ tx .body .collateral)
+            ⟦ ⟦ utxo ∣ (tx .Tx.body .TxBody.collateral) ᶜ
+            , fees + cbalance (utxo ∣ tx .Tx.body .TxBody.collateral)
             , deposits , donations ⟧ᵘ
             , govSt
             , certState ⟧ˡ
