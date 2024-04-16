@@ -89,6 +89,10 @@ module _ {a b : Level} {A : Set a} {B : Set b} where
   dec-is-inj₂ : ∀ x → Dec (is-inj₂ x)
   dec-is-inj₂ = λ {(inj₁ _) → no λ (); (inj₂ _) → yes tt}
 
+  map-[] : {f : A → B} (l : List A)  → map f l ≡ [] → l ≡ []
+  map-[] [] _ = refl
+  map-[] (_ ∷ _) = λ ()
+
 --------------------------------------------------------------
 ------- duplicate entries in lists and deduplication ---------
 --------------------------------------------------------------
