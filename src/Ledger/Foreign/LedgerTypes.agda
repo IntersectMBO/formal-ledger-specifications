@@ -14,7 +14,6 @@ open import Data.Rational.Base
 
 {-# FOREIGN GHC
   import GHC.Generics (Generic)
-  import Data.TreeDiff
   import Prelude hiding (Rational)
 #-}
 
@@ -22,7 +21,6 @@ data Empty : Set where
 
 {-# FOREIGN GHC
   data AgdaEmpty deriving (Show, Generic)
-  instance ToExpr AgdaEmpty
 #-}
 
 data ComputationResult E A : Set where
@@ -41,8 +39,6 @@ data ComputationResult E A : Set where
     return = pure
     (Success a) >>= m = m a
     (Failure e) >>= _ = Failure e
-
-  instance (ToExpr e, ToExpr a) => ToExpr (ComputationResult e a)
 #-}
 {-# COMPILE GHC ComputationResult = data ComputationResult (Success | Failure) #-}
 
@@ -52,10 +48,12 @@ HSMap : Set → Set → Set
 HSMap K V = List (Pair K V)
 Rational = Pair ℤ ℕ
 
+record TxId : Set where
+  field txid : ℕ
+
 Coin          = ℕ
 Addr          = ℕ -- just payment credential
 
-TxId          = ℕ
 Ix            = ℕ
 Epoch         = ℕ
 ScriptHash    = ℕ
@@ -66,7 +64,7 @@ Datum         = ⊤
 Redeemer      = ⊤
 Anchor        = ⊤
 Network       = ⊤
-PParamsUpdate = ⊤
+PParamsUpdate = ℕ
 Script        = ⊤
 
 TxIn          = Pair TxId Ix
@@ -90,10 +88,12 @@ ProtVer = Pair ℕ ℕ
   type Coin  = Integer
   type Addr  = Integer
 
-  type TxId    = Integer
+  newtype TxId = MkTxId Integer
+    deriving (Generic, Show, Eq, Ord)
   type Ix      = Integer
   type Epoch   = Integer
   type ScriptHash    = Integer
+  type PParamsUpdate = Integer
 
   type AuxiliaryData = ()
   type DataHash      = ()
@@ -109,20 +109,19 @@ ProtVer = Pair ℕ ℕ
   type Hash  = Integer
 
   data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic)
-  instance ToExpr Tag
   type RdmrPtr = (Tag, Ix)
   type ExUnits = (Integer, Integer)
   type ProtVer = (Integer, Integer)
   type GovActionID = (TxId, Integer)
 #-}
 {-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
+{-# COMPILE GHC TxId = data TxId (MkTxId) #-}
 
 {-# FOREIGN GHC
   data Credential
     = ScriptObj Integer
     | KeyHashObj Integer
     deriving (Show, Eq, Generic)
-  instance ToExpr Credential
 #-}
 data Credential : Set where
   ScriptObj  : Hash → Credential
@@ -141,7 +140,6 @@ RwdAddr = Pair Network Credential
     | DRep
     | SPO
     deriving (Show, Eq, Generic)
-  instance ToExpr GovRole
 #-}
 data GovRole : Set where
   CC DRep SPO : GovRole
@@ -153,7 +151,6 @@ data GovRole : Set where
     | AbstainRep
     | NoConfidenceRep
     deriving (Show, Eq, Generic)
-  instance ToExpr VDeleg
 #-}
 data VDeleg : Set where
   CredVoter        : GovRole → Credential →  VDeleg
@@ -171,7 +168,6 @@ data VDeleg : Set where
     | DeRegDRep Credential
     | CCRegHot Credential (Maybe Credential)
     deriving (Show, Eq, Generic)
-  instance ToExpr TxCert
 #-}
 data TxCert : Set where
   Delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → TxCert
@@ -212,7 +208,6 @@ record TxBody : Set where
     , scriptIntHash :: Maybe Hash
     , txcerts :: [TxCert]
     } deriving (Show, Generic)
-  instance ToExpr TxBody
 #-}
 {-# COMPILE GHC TxBody = data TxBody (MkTxBody) #-}
 
@@ -228,7 +223,6 @@ record TxWitnesses : Set where
     , txdats  :: [(DataHash, Datum)]
     , txrdmrs :: [(RdmrPtr, (Redeemer, ExUnits))]
     } deriving (Show, Generic)
-  instance ToExpr TxWitnesses
 #-}
 {-# COMPILE GHC TxWitnesses = data TxWitnesses (MkTxWitnesses) #-}
 
@@ -242,7 +236,6 @@ record Tx : Set where
     , wits :: TxWitnesses
     , txAD :: Maybe AuxiliaryData
     } deriving (Show, Generic)
-  instance ToExpr Tx
 #-}
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}
 
@@ -265,7 +258,7 @@ record PParams : Set where
         drepActivity        : Epoch
         ccMinSize           : ℕ
         ccMaxTermLength     : ℕ
-        costmdls            : Empty
+        costmdls            : ⊤
         prices              : ⊤
         maxTxExUnits        : ExUnits
         maxBlockExUnits     : ExUnits
@@ -292,14 +285,13 @@ record PParams : Set where
     , drepActivity        :: Epoch
     , ccMinSize           :: Integer
     , ccMaxTermLength     :: Integer
-    , costmdls            :: AgdaEmpty
+    , costmdls            :: ()
     , prices              :: ()
     , maxTxExUnits        :: ExUnits
     , maxBlockExUnits     :: ExUnits
     , coinsPerUTxOWord    :: Coin
     , maxCollateralInputs :: Integer
     } deriving (Show, Generic)
-  instance ToExpr PParams
 #-}
 {-# COMPILE GHC PParams = data PParams (MkPParams) #-}
 
@@ -311,7 +303,6 @@ record UTxOEnv : Set where
     { slot    :: Integer
     , pparams :: PParams
     } deriving (Show, Generic)
-  instance ToExpr UTxOEnv
 #-}
 {-# COMPILE GHC UTxOEnv = data UTxOEnv (MkUTxOEnv) #-}
 
@@ -323,7 +314,6 @@ record UTxOState : Set where
     { utxo :: UTxO
     , fees :: Coin
     } deriving (Show, Generic)
-  instance ToExpr UTxOState
 #-}
 {-# COMPILE GHC UTxOState = data UTxOState (MkUTxOState) #-}
 
@@ -412,7 +402,7 @@ GovState = List (Pair GovActionID GovActionState)
     | NewCommittee [(Credential, Epoch)] [Credential] Rational
     | NewConstitution DataHash (Maybe ScriptHash)
     | TriggerHF ProtVer
-    | ChangePParams ()
+    | ChangePParams PParamsUpdate
     | TreasuryWdrl [(RwdAddr, Coin)]
     | Info
 
