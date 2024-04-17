@@ -154,9 +154,7 @@ SVGovParams = record
       .UpdateT                → ⊤
       .updateGroups           → λ _ → ∅
       .applyUpdate            → λ p _ → p
-      .ppdWellFormed          → λ _ → false
-      .ppdWellFormed⇒hasGroup → λ ()
-      .ppdWellFormed⇒WF       → λ _ _ x → x
+      .ppWF?                  → ⁇ yes λ _ → id
   ; ppHashingScheme = it
   }
 
