@@ -436,7 +436,12 @@ functions (together with some helpers) that are used in the rules of
 RATIFY.
 
 \begin{itemize}
-  \item \getStakeDist computes the stake distribution based on the given governance role and the corresponding delegations;
+  \item \getStakeDist computes the stake distribution based on the
+    given governance role and the corresponding delegations. Note that
+    every constitutional committe member has a stake of 1, giving them
+    equal voting power. However, just as with other delegation, multiple
+    CC members can delegate to the same hot key, giving that hot key
+    the power of those multiple votes with a single actual vote.
 
   \item \acceptedStakeRatio is the ratio of accepted stake. It is
     computed as the ratio of \yes votes over the votes that didn't
@@ -508,7 +513,14 @@ abstract
 Figure~\ref{fig:defs:ratify-defs-ii} defines functions that
 deal with delays. A given action can either be delayed if the action
 contained in \EnactState isn't the one the given action is building on top
-of, or if a previous action was a \delayingAction.
+of, which is checked by \verifyPrev, or if a previous action was a
+\delayingAction. Note that \delayingAction affects the future: whenever a
+\delayingAction is accepted all future actions are delayed. \delayed then
+expresses the condition whether an action is delayed. This happens either
+because the previous action doesn't match the current one, or because the
+previous action was a delaying one. This information is passed in as an
+argument.
+
 \begin{code}[hide]
 private variable
   Γ : RatifyEnv

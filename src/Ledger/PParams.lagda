@@ -104,7 +104,6 @@ paramsWellFormed pp =
      0 ∉ fromList  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                    ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                    ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
-  ×  ℕtoEpoch govActionLifetime ≤ drepActivity
   where open PParams pp
 \end{code}
 \end{AgdaMultiCode}
@@ -168,6 +167,8 @@ instance
     ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
   unquoteDecl DecEq-PParams        = derive-DecEq
     ((quote PParams , DecEq-PParams) ∷ [])
+  unquoteDecl DecEq-PParamGroup    = derive-DecEq
+    ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
 
 instance
   pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
@@ -177,17 +178,41 @@ instance
   ... | no ¬p    | yes refl = yes canFollowMinor
   ... | yes refl | no ¬p    = yes canFollowMajor
   ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
+\end{code}
 
+Finally, to update parameters we introduce an abstract type. An update
+can be applied and it has a set of groups associated with it. An
+update is well formed if it has at least one group (i.e. if it updates
+something) and if it preserves well-formedness.
+
+\begin{figure*}[h!]
+\begin{AgdaMultiCode}
+\begin{code}[hide]
 record PParamsDiff : Set₁ where
-  field UpdateT : Set
-        updateGroups : UpdateT → ℙ PParamGroup
-        applyUpdate : PParams → UpdateT → PParams
-        ppdWellFormed : UpdateT → Bool
-        ppdWellFormed⇒hasGroup : ∀ {u} → ppdWellFormed u ≡ true → updateGroups u ≢ ∅
-        ppdWellFormed⇒WF       : ∀ {u} → ppdWellFormed u ≡ true → ∀ pp
-                               → paramsWellFormed pp
-                               → paramsWellFormed (applyUpdate pp u)
+  field
+\end{code}
+\emph{Abstract types \& functions}
+\begin{code}
+    UpdateT : Set
+    applyUpdate : PParams → UpdateT → PParams
+    updateGroups : UpdateT → ℙ PParamGroup
 
+\end{code}
+\begin{code}[hide]
+    ⦃ ppWF? ⦄ : ∀ {u} → (∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)) ⁇
+\end{code}
+\emph{Well-formedness condition}
+\begin{code}
+
+  ppdWellFormed : UpdateT → Set
+  ppdWellFormed u = updateGroups u ≢ ∅
+    × ∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)
+\end{code}
+\end{AgdaMultiCode}
+\caption{Abstract type for parameter updates}
+\label{fig:pp-update-type}
+\end{figure*}
+\begin{code}[hide]
 record GovParams : Set₁ where
   field ppUpd : PParamsDiff
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
