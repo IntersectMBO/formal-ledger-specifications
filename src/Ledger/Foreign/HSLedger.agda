@@ -65,7 +65,7 @@ module Implementation where
     }) where open import Algebra.PairOp ℕ zero _≡_ _+_
   _≥ᵉ_ : ExUnits → ExUnits → Set
   _≥ᵉ_ = _≡_
-  CostModel    = ⊤
+  CostModel    = ⊥
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
@@ -142,23 +142,16 @@ HSScriptStructure = record
 instance _ = HSScriptStructure
 
 open import Ledger.PParams it it it hiding (PParams)
-open import Axiom.Set.Properties List-Model using (∉-∅)
-
-opaque 
-  unfolding List-Model
-
-  singleton-≢-∅ : ∀ {a} {x : a} → ⦃ DecEq a ⦄ → singleton x ≢ ∅
-  singleton-≢-∅ {x = x} ()
 
 HsGovParams : GovParams
 HsGovParams = record
   { Implementation
   ; ppUpd = let open PParamsDiff in λ where
-      .UpdateT                → ℕ -- cost parameter `a`
-      .updateGroups           → λ _ → ❴ EconomicGroup ❵
-      .applyUpdate            → λ p a → record p { a = a }
-      .ppdWellFormed          → λ _ → true
-      .ppdWellFormed⇒hasGroup → λ _ → singleton-≢-∅
+      .UpdateT                → ⊤
+      .updateGroups           → λ _ → ∅
+      .applyUpdate            → λ p _ → p
+      .ppdWellFormed          → λ _ → false
+      .ppdWellFormed⇒hasGroup → λ ()
       .ppdWellFormed⇒WF       → λ _ _ x → x
   ; ppHashingScheme = it
   }
@@ -262,11 +255,6 @@ instance
   Convertible-DCert : Convertible DCert F.TxCert
   Convertible-DCert = autoConvertible
 
-  Convertible-TxId : Convertible ℕ F.TxId
-  Convertible-TxId = λ where
-    .to x → record { txid = x }
-    .from → F.TxId.txid
-
   Convertible-TxBody : Convertible TxBody F.TxBody
   Convertible-TxBody = λ where
     .to txb → let open TxBody txb in record
@@ -276,7 +264,7 @@ instance
       ; txfee  = txfee
       ; txvldt = to txvldt
       ; txsize = txsize
-      ; txid   = to txid
+      ; txid   = txid
       ; collateral = to collateral
       ; reqSigHash = to reqSigHash
       ; scriptIntHash = nothing
@@ -295,7 +283,7 @@ instance
       ; txADhash   = nothing
       ; netwrk     = nothing
       ; txsize     = txsize
-      ; txid       = from txid
+      ; txid       = txid
       ; txvote     = []
       ; txprop     = []
       ; txdonation = ε
@@ -452,8 +440,8 @@ fromNeedsHash {NewCommittee _ _ _} x = to x
 fromNeedsHash {NewConstitution _ _} x = to x
 fromNeedsHash {TriggerHF _} x = to x
 fromNeedsHash {ChangePParams _} x = to x
-fromNeedsHash {TreasuryWdrl _} x = to 0 F., 0
-fromNeedsHash {Info} x = to 0 F., 0
+fromNeedsHash {TreasuryWdrl _} x = 0 F., 0
+fromNeedsHash {Info} x = 0 F., 0
 
 instance
   Convertible-GovActionState : Convertible GovActionState F.GovActionState
