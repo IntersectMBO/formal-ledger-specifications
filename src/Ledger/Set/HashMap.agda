@@ -12,9 +12,3 @@ setToHashRel = mapˡ hash (mapˢ ×-dup X)
 
 setToHashMap : B ⇀ A
 setToHashMap = fromListᵐ (setToList setToHashRel)
-
-{-
-setToHashMap : B ⇀ A
-setToHashMap = setToHashRel ᵐ
-  where instance _ = record { isLeftUnique = mapˡ∘map⦅×-dup⦆-uniq {inj = hashInj} }
--}
