@@ -50,6 +50,9 @@ opaque
   setToList : ℙ A → List A
   setToList = id
 
+  singleton-≢-∅ : ∀ {A : Set} {x : A} → ⦃ DecEq A ⦄ → singleton x ≢ ∅
+  singleton-≢-∅ ()
+
   instance
     DecEq-ℙ : ⦃ _ : DecEq A ⦄ → DecEq (ℙ A)
     DecEq-ℙ = L.Decˡ.DecEq-Set

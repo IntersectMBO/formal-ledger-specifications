@@ -144,12 +144,6 @@ instance _ = HSScriptStructure
 open import Ledger.PParams it it it hiding (PParams)
 open import Axiom.Set.Properties List-Model using (∉-∅)
 
-opaque 
-  unfolding List-Model
-
-  singleton-≢-∅ : ∀ {a} {x : a} → ⦃ DecEq a ⦄ → singleton x ≢ ∅
-  singleton-≢-∅ {x = x} ()
-
 HsGovParams : GovParams
 HsGovParams = record
   { Implementation
