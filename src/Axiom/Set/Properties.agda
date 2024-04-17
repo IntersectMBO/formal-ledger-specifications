@@ -20,7 +20,6 @@ open import Data.List.Relation.Binary.Permutation.Propositional.Properties using
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there )
 open import Data.List.Relation.Unary.Any.Properties using (++⁺ʳ; ++⁺ˡ; ++⁻)
-open import Data.List.Relation.Unary.Ext using (hereʳ; thereʳ)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
 open import Data.Product.Properties using (×-≡,≡→≡)
