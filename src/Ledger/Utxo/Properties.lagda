@@ -80,16 +80,17 @@ instance
         open Computational Computational-UTXOS
           renaming (computeProof to computeProof'; completeness to completeness')
 
-        abstract
-          genErr : ¬ H → String
-          genErr  ¬p = case dec-de-morgan ¬p of λ where
-            (inj₁ a) → genError
-            (inj₂ b) → case dec-de-morgan b of λ where
-              (inj₁ a₁) → "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
-              (inj₂ b₁) → case dec-de-morgan b₁ of λ where
+        genErr : ¬ H → String
+        genErr  ¬p = case dec-de-morgan ¬p of λ where
+          (inj₁ a) → "¬ TxBody.txins (Tx.body tx) ≢ ∅"
+          (inj₂ b) → case dec-de-morgan b of λ where
+            (inj₁ a₁) → "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
+            (inj₂ b₁) → case dec-de-morgan b₁ of λ where
+                (inj₁ a₁') → "¬ refInputs ⊆ dom utxo "
+                (inj₂ b₂') → case dec-de-morgan b₂' of λ where
                   (inj₁ a₂) → "¬ inInterval (UTxOEnv.slot Γ) (txvldt (Tx.body tx))"
                   (inj₂ b₂) → case dec-de-morgan b₂ of λ where
-                    (inj₁ a₃) → "¬(minfee (UTxOEnv.pparams Γ) tx ≤ txfee (Tx.body tx))"
+                    (inj₁ a₃) → "¬ feesOK pp tx utxo ≡ true"
                     (inj₂ b₃) → case dec-de-morgan b₃ of λ where
                         (inj₁ a₄) →
                           let
@@ -158,7 +159,7 @@ private
 opaque
   unfolding balance
   balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
-  balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
+  balance-cong {utxo} {utxo'} eq = indexedSumᵐ-cong {x = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ} (map-≡ᵉ eq)
 
   balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → cbalance utxo ≡ cbalance utxo'
   balance-cong-coin {utxo} {utxo'} x =
@@ -170,12 +171,13 @@ opaque
   balance-∪ {utxo} {utxo'} h = begin
     cbalance (utxo ∪ˡ utxo')
       ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-      $ indexedSumᵐ-cong {x = (utxo ∪ˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)} (id , id)
+      $ indexedSumᵐ-cong {x = (mapValues txOutHash (utxo ∪ˡ utxo')) ᶠᵐ} {((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)} (disjoint-∪ˡ-mapValues {M = utxo} {utxo'} _ h)
       ⟩
-    coin (indexedSumᵐ _ ((utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)))
+    coin (indexedSumᵐ _ (((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)))
       ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-      $ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h
-      ⟩
+       $ indexedSumᵐ-∪ {X = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ}
+       (λ x x₁ → h (dom-mapʳ⊆ x) (dom-mapʳ⊆ x₁))
+       ⟩
     coin (balance utxo + balance utxo')
       ≡⟨ ∙-homo-Coin  _ _ ⟩
     cbalance utxo + cbalance utxo'
@@ -721,4 +723,3 @@ module _
     balOut = balance (outs txb)
 \end{code}
 \end{property}
-

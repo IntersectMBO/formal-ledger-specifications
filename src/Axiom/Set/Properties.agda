@@ -11,6 +11,8 @@ open Theory th
 import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
+import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
+import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
 import Relation.Nullary.Decidable
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
@@ -21,12 +23,12 @@ open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_�
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
+open import Data.Product.Properties.Ext
+open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
+open import Function.Related.TypeIsomorphisms
 open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
-import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
-import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
-open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 
 open Equivalence
 
@@ -172,6 +174,23 @@ map-≡ᵉ (x⊆y , y⊆x) = map-⊆ x⊆y , map-⊆ y⊆x
 
 map-∅ : {X : Set A} {f : A → B} → map f ∅ ≡ᵉ ∅
 map-∅ = ∅-least λ x∈map → case ∈-map⁻' x∈map of λ where (_ , _ , h) → ⊥-elim (∉-∅ h)
+
+map-∪ : {X Y : Set A} → (f : A → B) → map f (X ∪ Y) ≡ᵉ map f X ∪ map f Y
+map-∪ {X = X} {Y} f = from ≡ᵉ⇔≡ᵉ' λ b →
+    b ∈ map f (X ∪ Y)
+      ∼⟨ R.SK-sym ∈-map ⟩
+    (∃[ a ] b ≡ f a × a ∈ X ∪ Y)
+      ∼⟨ ∃-cong′ (R.K-refl ×-cong R.SK-sym ∈-∪) ⟩
+    (∃[ a ] b ≡ f a × (a ∈ X ⊎ a ∈ Y))
+      ↔⟨ ∃-cong′ ×-distribˡ-⊎' ⟩
+    (∃[ a ] (b ≡ f a × a ∈ X ⊎ b ≡ f a × a ∈ Y))
+      ↔⟨ ∃-distrib-⊎' ⟩
+    (∃[ a ] b ≡ f a × a ∈ X ⊎ ∃[ a ] b ≡ f a × a ∈ Y)
+      ∼⟨ ∈-map ⊎-cong ∈-map ⟩
+    (b ∈ map f X ⊎ b ∈ map f Y)
+      ∼⟨ ∈-∪ ⟩
+    b ∈ map f X ∪ map f Y ∎
+  where open R.EquationalReasoning
 
 mapPartial-∅ : {f : A → Maybe B} → mapPartial f ∅ ≡ᵉ ∅
 mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f = f}) x∈map of λ where

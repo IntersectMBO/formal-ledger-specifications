@@ -20,6 +20,7 @@ open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
 open import Data.Maybe.Properties using (just-injective)
 open import Relation.Unary using (Decidable)
 import Relation.Binary.PropositionalEquality as I
+import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 open Equivalence
 
@@ -152,28 +153,6 @@ singletonᵐ a b = ❴ (a , b) ❵
 ❴_❵ᵐ : A × B → Map A B
 ❴ k , v ❵ᵐ = singletonᵐ k v
 
-module Unionᵐ (sp-∈ : spec-∈ A) where
-  infixr 6 _∪ˡ_
-
-  _∪ˡ'_ : Rel A B → Rel A B → Rel A B
-  m ∪ˡ' m' = m ∪ filter (sp-∘ (sp-¬ (sp-∈ {dom m})) proj₁) m'
-
-  _∪ˡ_ : Map A B → Map A B → Map A B
-  m ∪ˡ m' = disj-∪ m (filterᵐ (sp-∘ (sp-¬ sp-∈) proj₁) m')
-      (∈⇔P -⟨ (λ where x (_ , refl , hy) → proj₁ (∈⇔P hy) (∈⇔P x)) ⟩- ∈⇔P)
-
-  disjoint-∪ˡ-∪ : (H : disjoint (dom R) (dom R')) → R ∪ˡ' R' ≡ᵉ R ∪ R'
-  disjoint-∪ˡ-∪ disj = from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔
-    (∈-∪⁺ ∘′ ⊎.map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
-    (∈⇔P ∘′ ⊎.map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
-
-  insert : Map A B → A → B → Map A B
-  insert m a b = ❴ a , b ❵ᵐ ∪ˡ m
-
-  insertIfJust : ⦃ DecEq A ⦄ → A → Maybe B → Map A B → Map A B
-  insertIfJust x nothing  m  = m
-  insertIfJust x (just y) m  = insert m x y
-
 disj-dom : ∀ {m m₁ m₂ : Map A B}
   → (m ˢ) ≡ (m₁ ˢ) ⨿ (m₂ ˢ)
   → disjoint (dom (m₁ ˢ)) (dom (m₂ ˢ))
@@ -212,6 +191,46 @@ mapKeys : (f : A → A') → (m : Map A B)
   → Map A' B
 mapKeys f (R , uniq) {inj} = mapˡ f R , mapˡ-uniq {inj = inj} uniq
 
+mapValues : (B → B') → Map A B → Map A B'
+mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
+
+module Unionᵐ (sp-∈ : spec-∈ A) where
+  infixr 6 _∪ˡ_
+
+  _∪ˡ'_ : Rel A B → Rel A B → Rel A B
+  m ∪ˡ' m' = m ∪ filter (sp-∘ (sp-¬ (sp-∈ {dom m})) proj₁) m'
+
+  _∪ˡ_ : Map A B → Map A B → Map A B
+  m ∪ˡ m' = disj-∪ m (filterᵐ (sp-∘ (sp-¬ sp-∈) proj₁) m')
+      (∈⇔P -⟨ (λ where x (_ , refl , hy) → proj₁ (∈⇔P hy) (∈⇔P x)) ⟩- ∈⇔P)
+
+  disjoint-∪ˡ-∪ : (H : disjoint (dom R) (dom R')) → R ∪ˡ' R' ≡ᵉ R ∪ R'
+  disjoint-∪ˡ-∪ disj = from ≡ᵉ⇔≡ᵉ' λ _ → mk⇔
+    (∈-∪⁺ ∘′ ⊎.map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
+    (∈⇔P ∘′ ⊎.map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
+
+  insert : Map A B → A → B → Map A B
+  insert m a b = ❴ a , b ❵ᵐ ∪ˡ m
+
+  insertIfJust : ⦃ DecEq A ⦄ → A → Maybe B → Map A B → Map A B
+  insertIfJust x nothing  m  = m
+  insertIfJust x (just y) m  = insert m x y
+
+  disjoint-∪ˡ-mapValues : {M M' : Map A B}
+                          (f : B → C)
+                          → (H : disjoint (dom (M ˢ)) (dom (M' ˢ)))
+                          → (mapValues f (M ∪ˡ M')) ˢ ≡ᵉ (mapValues f M ∪ˡ mapValues f M') ˢ
+  disjoint-∪ˡ-mapValues {M = M} {M'} f disj = begin
+    proj₁ (mapValues f (M ∪ˡ M'))
+    ≈⟨ map-≡ᵉ (disjoint-∪ˡ-∪ disj) ⟩
+    (mapʳ f ((proj₁ M) ∪ (proj₁ M')))
+    ≈⟨ map-∪ _ ⟩
+    (mapʳ f (proj₁ M) ∪ mapʳ f (proj₁ M'))
+    ≈˘⟨ disjoint-∪ˡ-∪ (λ x₁ x₂ → disj (dom-mapʳ⊆ x₁) (dom-mapʳ⊆ x₂)) ⟩
+    proj₁ (mapValues f M ∪ˡ mapValues f M')
+    ∎
+   where open SetoidReasoning ≡ᵉ-Setoid
+
 map⦅×-dup⦆-uniq : ∀ {x : Set A} → left-unique (mapˢ ×-dup x)
 map⦅×-dup⦆-uniq x y with ∈-map⁻' x | ∈-map⁻' y
 ... | fst , refl , _ | .fst , refl , _ = refl
@@ -223,9 +242,6 @@ mapˡ∘map⦅×-dup⦆-uniq {inj = inj} = mapˡ-uniq {inj = λ _ _ → inj} map
 
 idMap : Set A → Map A A
 idMap s = -, map⦅×-dup⦆-uniq {x = s}
-
-mapValues : (B → B') → Map A B → Map A B'
-mapValues f (R , uniq) = mapʳ f R , mapʳ-uniq uniq
 
 mapFromFun : (A → B) → Set A → Map A B
 mapFromFun f s = mapValues f (idMap s)
