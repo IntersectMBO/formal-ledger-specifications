@@ -393,8 +393,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)
     in
-    ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙ refInputs ⊆ dom utxo                   ∙ inInterval slot txvldt
+    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
+    ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 

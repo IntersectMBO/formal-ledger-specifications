@@ -69,7 +69,7 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
 testTxBody1 :: TxBody
 testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
   { stxins     = [(0, 0)]
-  , srefInputs = [(0, 0)]
+  , srefInputs = []
   , stxouts    = [ 0 .-> (a0, (890, (Nothing, Nothing)))
                  , 1 .-> (a1, (100, (Nothing, Nothing))) ]
   , stxvldt    = (Nothing, Just 10)
@@ -85,7 +85,7 @@ testTx1 = MkTx
 testTxBody2 :: TxBody
 testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
   { stxins     = [(1, 1)]
-  , srefInputs = [(1, 1)]
+  , srefInputs = [(1, 0)]
   , stxouts    = [ 0 .-> (a2, (10, (Nothing, Nothing)))
                  , 1 .-> (a1, (80, (Nothing, Nothing))) ]
   , stxvldt    = (Nothing, Just 10)
