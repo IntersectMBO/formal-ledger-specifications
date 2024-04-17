@@ -168,6 +168,8 @@ instance
     ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
   unquoteDecl DecEq-PParams        = derive-DecEq
     ((quote PParams , DecEq-PParams) ∷ [])
+  unquoteDecl DecEq-PParamGroup    = derive-DecEq
+    ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
 
 instance
   pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
