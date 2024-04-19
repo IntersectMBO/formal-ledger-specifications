@@ -219,6 +219,33 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
     updateVote s v = addVote s gid voter vote
       where open GovVote v
 
+
+    updateVote∷ : (g : GovActionID × GovActionState)(gs : GovState)(v : GovVote)
+                  → updateVote (g ∷ gs) v ≡ (updateVote [ g ] v) ++ updateVote gs v
+    updateVote∷ g gs v = refl
+
+    updateVote++ : (gs gs' : GovState) (v : GovVote)
+                   → updateVote (gs ++ gs') v ≡ updateVote gs v ++ updateVote gs' v
+    updateVote++ [] gs' v = refl
+    updateVote++ (g ∷ gs) gs' v = let open ≡-Reasoning in
+      begin
+        updateVote (g ∷ gs ++ gs') v ≡⟨ updateVote∷ g (gs ++ gs') v ⟩
+        updateVote [ g ] v ++ updateVote (gs ++ gs') v ≡⟨ cong (updateVote [ g ] v ++_) (updateVote++ gs gs' v) ⟩
+        updateVote [ g ] v ++ (updateVote gs v ++ updateVote gs' v) ≡⟨ ++-assoc (updateVote [ g ] v) (updateVote gs v) (updateVote gs' v) ⟩
+        (updateVote [ g ] v ++ updateVote gs v) ++ updateVote gs' v ≡˘⟨ cong (_++ updateVote gs' v) (updateVote∷ g gs v) ⟩
+        updateVote (g ∷ gs) v ++ updateVote gs' v
+        ∎
+
+    updateVotesOnly : GovState → List (GovVote ⊎ GovProposal) → GovState
+    updateVotesOnly s [] = s
+    updateVotesOnly s (inj₁ v ∷ vps) = updateVotesOnly (updateVote s v) vps
+    updateVotesOnly s (inj₂ _ ∷ vps) = updateVotesOnly s vps
+
+    votesOnly-empty : (vps : List (GovVote ⊎ GovProposal)) → updateVotesOnly [] vps ≡ []
+    votesOnly-empty [] = refl
+    votesOnly-empty (inj₁ v ∷ vps) = votesOnly-empty vps
+    votesOnly-empty (inj₂ p ∷ vps) = votesOnly-empty vps
+
     mkAction : GovProposal → ℕ → GovActionID × GovActionState
     mkAction p n = let open GovProposal p in
       ActionId×ActionState (PParams.govActionLifetime pp +ᵉ GovEnv.epoch gΓ)
@@ -226,6 +253,16 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
 
     propToState : GovState → GovProposal → ℕ → GovState
     propToState s p n = s ∷ʳ mkAction p n
+
+    propToState++ : (gs gs' : GovState) (p : GovProposal)(n : ℕ)
+                    → propToState (gs ++ gs') p n ≡ gs ++ propToState gs' p n
+    propToState++ gs gs' p n = let open ≡-Reasoning in
+      begin
+        propToState (gs ++ gs') p n ≡⟨ refl ⟩
+        (gs ++ gs') ∷ʳ mkAction p n ≡⟨ ++-assoc gs gs' [ mkAction p n ] ⟩
+        gs ++ gs' ∷ʳ mkAction p n ≡⟨ cong (gs ++_) refl ⟩
+        gs ++ propToState gs' p n
+          ∎
 
     updateGovStates : GovState → List (GovVote ⊎ GovProposal) → GovState
     updateGovStates s [] = s
@@ -353,46 +390,115 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
       dom ((proposalDepositsΔ (p ∷ ps) pp txb)ˢ)
         ∎
 
-    votesDoesntCount : (v : GovVote){vps : List (GovVote ⊎ GovProposal)} {govSt : GovState}
-      → map f (updateGovStates govSt (inj₁ v ∷ vps)) ≡ map f (updateGovStates govSt vps)
-    votesDoesntCount v {vps} {[]} = refl
-    votesDoesntCount v {[]} {g ∷ gs} = let open ≡-Reasoning; open GovVote v in
+    updateVote-map-invar : (gs : GovState)(v : GovVote) → map f (updateVote gs v) ≡ map f gs
+    updateVote-map-invar [] v = refl
+    updateVote-map-invar (g ∷ gs) v = let open ≡-Reasoning; open GovVote v in
       begin
         map f (updateVote (g ∷ gs) v)
           ≡⟨ cong (map f){x = (addVote (g ∷ gs) gid voter vote)} refl ⟩
         map f ((addVote [ g ] gid voter vote) ++ addVote gs gid voter vote)
           ≡⟨ map-++ f (addVote [ g ] gid voter vote) (addVote gs gid voter vote) ⟩
         map f (addVote [ g ] gid voter vote) ++ map f (addVote gs gid voter vote)
-          ≡⟨ cong (map f (addVote [ g ] gid voter vote) ++_) (votesDoesntCount v {[]}) ⟩
+          ≡⟨ cong (map f (addVote [ g ] gid voter vote) ++_) (updateVote-map-invar gs v) ⟩
+        map f (addVote [ g ] gid voter vote) ++ map f gs
+          ≡⟨ cong (_++ map f gs) refl ⟩
         map f (g ∷ gs)
           ∎
 
-    votesDoesntCount v {inj₁ v' ∷ vps} {govSt@((id , gaSt) ∷ gs)} = let open ≡-Reasoning in
+
+    updateVotesOnly-map-invar : (gs : GovState) (vps : List (GovVote ⊎ GovProposal))
+                          → map f (updateVotesOnly gs vps) ≡ map f gs
+    updateVotesOnly-map-invar gs [] = refl
+    updateVotesOnly-map-invar gs (inj₁ v ∷ vps) = let open ≡-Reasoning in
+      begin
+        map f (updateVotesOnly (updateVote gs v) vps)
+          ≡⟨ updateVotesOnly-map-invar ((updateVote gs v)) vps ⟩
+        map f (updateVote gs v)
+          ≡⟨ updateVote-map-invar gs v ⟩
+        map f gs
+          ∎
+    updateVotesOnly-map-invar gs (inj₂ p ∷ vps) = updateVotesOnly-map-invar gs vps
+
+
+    updateGovVote-++ : (gs gs' : GovState) (vps : List (GovVote ⊎ GovProposal))
+                       → updateGovStates (gs ++ gs') vps
+                       ≡ updateVotesOnly gs vps ++ updateGovStates gs' vps
+    updateGovVote-++ gs gs' [] = refl
+    updateGovVote-++ gs gs' (inj₁ v ∷ vps) = let open ≡-Reasoning in
+      begin
+        updateGovStates (updateVote (gs ++ gs') v) vps ≡⟨ cong (λ x → updateGovStates x vps) (updateVote++ gs gs' v) ⟩
+        updateGovStates ((updateVote gs v) ++ (updateVote gs' v)) vps ≡⟨ updateGovVote-++ ((updateVote gs v)) ((updateVote gs' v)) vps ⟩
+        updateVotesOnly (updateVote gs v) vps ++ updateGovStates (updateVote gs' v) vps
+          ∎
+
+    updateGovVote-++ gs gs' (inj₂ p ∷ vps) = let open ≡-Reasoning in
+      begin
+        updateGovStates (propToState (gs ++ gs') p (length vps)) vps ≡⟨ cong (λ x → updateGovStates x vps) (propToState++ gs gs' p (length vps)) ⟩
+        updateGovStates (gs ++ propToState gs' p (length vps)) vps ≡⟨ updateGovVote-++ gs (propToState gs' p (length vps)) vps ⟩
+        updateVotesOnly gs vps ++ updateGovStates (propToState gs' p (length vps)) vps
+          ∎
+
+    vote-updateGovStates-map-invar : (v : GovVote)(vps : List (GovVote ⊎ GovProposal)) {govSt : GovState}
+      → map f (updateGovStates govSt (inj₁ v ∷ vps)) ≡ map f (updateGovStates govSt vps)
+    vote-updateGovStates-map-invar v vps {[]} = refl
+    vote-updateGovStates-map-invar v [] {g ∷ gs} = let open ≡-Reasoning; open GovVote v in
+      begin
+        map f (updateVote (g ∷ gs) v)
+          ≡⟨ cong (map f){x = (addVote (g ∷ gs) gid voter vote)} refl ⟩
+        map f ((addVote [ g ] gid voter vote) ++ addVote gs gid voter vote)
+          ≡⟨ map-++ f (addVote [ g ] gid voter vote) (addVote gs gid voter vote) ⟩
+        map f (addVote [ g ] gid voter vote) ++ map f (addVote gs gid voter vote)
+          ≡⟨ cong (map f (addVote [ g ] gid voter vote) ++_) (vote-updateGovStates-map-invar v []) ⟩
+        map f (g ∷ gs)
+          ∎
+
+    vote-updateGovStates-map-invar v (inj₁ v' ∷ vps) {govSt@((id , gaSt) ∷ gs)} = let open ≡-Reasoning in
       begin
         map f (updateGovStates govSt (inj₁ v ∷ (inj₁ v' ∷ vps)))
-          ≡⟨ votesDoesntCount v' {vps}{updateVote govSt v} ⟩
+          ≡⟨ vote-updateGovStates-map-invar v' vps {updateVote govSt v} ⟩
         map f (updateGovStates (updateVote govSt v) vps)
-          ≡⟨ votesDoesntCount v{vps}{govSt} ⟩
+          ≡⟨ vote-updateGovStates-map-invar v vps {govSt} ⟩
         map f (updateGovStates govSt vps)
-          ≡˘⟨ votesDoesntCount v'{vps}{govSt} ⟩
+          ≡˘⟨ vote-updateGovStates-map-invar v' vps {govSt} ⟩
         map f (updateGovStates (updateVote govSt v') vps)
           ∎
 
-    votesDoesntCount v {inj₂ p ∷ vps} {govSt@((id , gaSt) ∷ gs)} = {!!}
-
-
-    votesDontCount : (vs : List GovVote) (ps : List GovProposal) {gs : GovState}
-       → map f (updateGovStates gs (map inj₁ vs ++ map inj₂ ps)) ≡ map f (updateGovStates gs (map inj₂ ps))
-    votesDontCount [] ps {gs} = refl
-    votesDontCount (v ∷ vs) ps {gs} = let open ≡-Reasoning in
-      begin
-        map f (updateGovStates (updateVote gs v) (map inj₁ vs ++ map inj₂ ps))
-          ≡⟨ votesDontCount vs ps ⟩
-        map f (updateGovStates (updateVote gs v) (map inj₂ ps))
-          ≡⟨ votesDoesntCount v {map inj₂ ps} ⟩
-        map f (updateGovStates gs (map inj₂ ps))
+    vote-updateGovStates-map-invar v (inj₂ p ∷ vps) {govSt@((id , gaSt) ∷ gs)} = goal
+      where
+      open ≡-Reasoning
+      goal : map f (updateGovStates (propToState (updateVote govSt v) p (length vps)) vps)
+             ≡ map f (updateGovStates (propToState govSt p (length vps)) vps)
+      goal = begin
+        map f (updateGovStates (propToState (updateVote govSt v) p (length vps)) vps)
+          ≡⟨ refl ⟩
+        map f (updateGovStates ((updateVote govSt v) ∷ʳ mkAction p (length vps)) vps)
+          ≡⟨ cong (map f) (updateGovVote-++ (updateVote govSt v) [ (mkAction p (length vps)) ] vps) ⟩
+        map f ((updateVotesOnly (updateVote govSt v) vps) ++ updateGovStates [ (mkAction p (length vps)) ] vps)
+          ≡⟨ map-++ f (updateVotesOnly (updateVote govSt v) vps) (updateGovStates [ (mkAction p (length vps)) ] vps) ⟩
+        map f (updateVotesOnly (updateVote govSt v) vps) ++ map f (updateGovStates [ (mkAction p (length vps)) ] vps)
+          ≡⟨ cong (_++ map f (updateGovStates [ (mkAction p (length vps)) ] vps)) (updateVotesOnly-map-invar ((updateVote govSt v)) vps) ⟩
+        map f (updateVote govSt v) ++ map f (updateGovStates [ (mkAction p (length vps)) ] vps)
+          ≡⟨ cong (_++ map f (updateGovStates [ (mkAction p (length vps)) ] vps)) (updateVote-map-invar govSt v) ⟩
+        map f govSt ++ map f (updateGovStates [ (mkAction p (length vps)) ] vps)
+          ≡˘⟨ cong (_++ map f (updateGovStates [ (mkAction p (length vps)) ] vps)) (updateVotesOnly-map-invar govSt vps) ⟩
+        map f (updateVotesOnly govSt vps) ++ map f (updateGovStates [ (mkAction p (length vps)) ] vps)
+          ≡˘⟨ map-++ f (updateVotesOnly govSt vps) (updateGovStates [ (mkAction p (length vps)) ] vps) ⟩
+        map f ((updateVotesOnly govSt vps) ++ (updateGovStates [ (mkAction p (length vps)) ] vps))
+          ≡˘⟨ cong (map f) (updateGovVote-++ govSt [ (mkAction p (length vps)) ] vps) ⟩
+        map f (updateGovStates (propToState govSt p (length vps)) vps)
           ∎
 
+    vote-updateGovStates-map-invar++ : (vs : List GovVote) (ps : List GovProposal) {gs : GovState}
+       → map f (updateGovStates gs (map inj₁ vs ++ map inj₂ ps)) ≡ map f (updateGovStates gs (map inj₂ ps))
+    vote-updateGovStates-map-invar++ [] ps {gs} = refl
+    vote-updateGovStates-map-invar++ (v ∷ vs) ps {gs} = let open ≡-Reasoning in
+      begin
+        map f (updateGovStates (updateVote gs v) (map inj₁ vs ++ map inj₂ ps))
+          ≡⟨ vote-updateGovStates-map-invar++ vs ps ⟩
+        map f (updateGovStates (updateVote gs v) (map inj₂ ps))
+          ≡⟨ vote-updateGovStates-map-invar v (map inj₂ ps) ⟩
+        map f (updateGovStates gs (map inj₂ ps))
+          ∎
 
     updateGovStates≡ : (vps : List (GovVote ⊎ GovProposal)) {govSt : GovState}
        → map f (updateGovStates govSt vps) ≡ map f (govSt ++ updateGovStates [] vps)
@@ -400,7 +506,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
     updateGovStates≡ (inj₁ v ∷ vps) {govSt} = let open ≡-Reasoning in
       begin
       map f (updateGovStates (updateVote govSt v) vps)
-        ≡⟨ votesDoesntCount  v {vps} ⟩
+        ≡⟨ vote-updateGovStates-map-invar  v vps ⟩
       map f (updateGovStates govSt vps)
         ≡⟨ updateGovStates≡ vps ⟩
       map f (govSt ++ updateGovStates [] vps)
@@ -516,7 +622,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
         (filterˢ isGADeposit (dom utxoDeps)) ∪ (dom ((proposalDepositsΔ txprop pp txb)ˢ))
           ≈⟨ ∪-cong aprioriMatch (utxo-govst-connex{txprop}) ⟩
         fromList (map f govSt) ∪ fromList (map f (updateGovStates [] (map inj₂ txprop)))
-          ≈˘⟨ ∪-cong ≡ᵉ.refl (≡ᵉ.reflexive (cong fromList (votesDontCount txvote txprop))) ⟩
+          ≈˘⟨ ∪-cong ≡ᵉ.refl (≡ᵉ.reflexive (cong fromList (vote-updateGovStates-map-invar++ txvote txprop))) ⟩
         fromList (map f govSt) ∪ fromList (map f (updateGovStates [] (txgov txb)))
           ≈⟨ ∪++ ⟩
         fromList ((map f govSt) ++ (map f (updateGovStates [] (txgov txb))))
