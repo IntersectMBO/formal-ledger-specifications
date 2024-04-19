@@ -353,7 +353,6 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
       dom ((proposalDepositsΔ (p ∷ ps) pp txb)ˢ)
         ∎
 
-
     votesDoesntCount : (v : GovVote){vps : List (GovVote ⊎ GovProposal)} {govSt : GovState}
       → map f (updateGovStates govSt (inj₁ v ∷ vps)) ≡ map f (updateGovStates govSt vps)
     votesDoesntCount v {vps} {[]} = refl
@@ -439,9 +438,40 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
         ❴ x ❵ ∪ fromList (l ++ l')          ≈˘⟨ fromList-∪-singleton ⟩
         fromList (x ∷ (l ++ l'))            ∎
 
+
     utxo-govst-connex : {props : List GovProposal}
       → dom (proposalDepositsΔ props pp txb ˢ) ≡ᵉ fromList (map f (updateGovStates [] (map inj₂ props)))
-    utxo-govst-connex = {!!}
+    utxo-govst-connex {[]} = dom∅
+
+    utxo-govst-connex {p ∷ ps} = let
+      open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
+      n = length ps
+      n' = length{A = GovVote ⊎ GovProposal} (map inj₂ ps) in
+      begin
+        dom (proposalDepositsΔ (p ∷ ps) pp txb ˢ)
+          ≈⟨ dom∪⁺ ⟩
+        dom (updateProposalDeposits ps txid govActionDeposit ∅) ∪ dom (❴ GovActionDeposit (txid , length ps) , govActionDeposit ❵ ˢ)
+          ≈⟨ ∪-cong (utxo-govst-connex{ps}) dom-single≡single ⟩
+        fromList (map f (updateGovStates [] (map inj₂ ps))) ∪ fromList [ GovActionDeposit (txid , length ps) ]
+          ≈⟨ ∪++ ⟩
+        fromList (map f (updateGovStates [] (map inj₂ ps)) ++ map f [ (mkAction p (length ps)) ])
+          ≈⟨ ≡ᵉ.reflexive (cong fromList (sym (map-++ f (updateGovStates [] (map inj₂ ps)) [ (mkAction p (length ps)) ]))) ⟩
+        fromList (map f ((updateGovStates [] (map inj₂ ps)) ∷ʳ (mkAction p (length ps))))
+          ≈⟨ ≡ᵉ.reflexive (cong fromList (map-++ f (updateGovStates [] (map inj₂ ps)) [ mkAction p n ])) ⟩
+        fromList ((map f (updateGovStates [] (map inj₂ ps)) ++ map f [ mkAction p n ]))
+          ≈˘⟨ ∪++ ⟩
+        fromList (map f (updateGovStates [] (map inj₂ ps))) ∪ fromList (map f [ mkAction p n ])
+          ≈˘⟨ ∪-comm (fromList (map f [ mkAction p n ])) (fromList (map f (updateGovStates [] (map inj₂ ps)))) ⟩
+        fromList (map f [ mkAction p n ]) ∪ fromList (map f (updateGovStates [] (map inj₂ ps)))
+          ≈⟨ ∪++ ⟩
+        fromList (map f [ mkAction p n ] ++ map f (updateGovStates [] (map inj₂ ps)))
+          ≈⟨ ≡ᵉ.reflexive (cong fromList (map-++ f [ mkAction p n ] (updateGovStates [] (map inj₂ ps)))) ⟩
+        fromList (map f ([ mkAction p n ] ++ updateGovStates [] (map inj₂ ps)))
+          ≈˘⟨ ≡ᵉ.reflexive (cong fromList (cong (λ x → map f ([ mkAction p x ] ++ updateGovStates [] (map inj₂ ps))) (length-map inj₂ ps))) ⟩
+        fromList (map f ([ mkAction p n' ] ++ updateGovStates [] (map inj₂ ps)))
+          ≈˘⟨ ≡ᵉ.reflexive (cong fromList (updateGovStates≡ (map inj₂ ps))) ⟩
+        fromList (map f (updateGovStates [] (inj₂ p ∷ map inj₂ ps)))
+          ∎
 
   module _
     (tx : Tx) (let open Tx tx renaming (body to txb)) (let open TxBody txb)
