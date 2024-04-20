@@ -9,7 +9,7 @@ module Ledger.Ledger.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
--- open import Axiom.Set.Properties th
+open import Axiom.Set.Properties th
 open import Ledger.Deleg.Properties govStructure
 open import Ledger.Gov txs
 open import Ledger.Gov.Properties txs
@@ -100,8 +100,8 @@ module _ where
     where open Tx; open TxBody; open UTxOState; open LState
 
   LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-  LEDGER-pov h (LEDGER-V⋯ _ (UTXOW-inductive⋯ _ _ _ _ _ st) _ _) = pov h st
-  LEDGER-pov h (LEDGER-I⋯ _ (UTXOW-inductive⋯ _ _ _ _ _ st))     = pov h st
+  LEDGER-pov h (LEDGER-V⋯ _ (UTXOW-inductive⋯ _ _ _ _ _ _ _ st) _ _) = pov h st
+  LEDGER-pov h (LEDGER-I⋯ _ (UTXOW-inductive⋯ _ _ _ _ _ _ _ st))     = pov h st
 
   data FreshTxs : LEnv → LState → List Tx → Set where
     []-Fresh : FreshTxs Γ s []
@@ -119,26 +119,22 @@ module _ where
 
 -- ** Proof that govDepsMatch is a LEDGER invariant.
 
-f : GovActionID × GovActionState → DepositPurpose
-f = λ (id , _) → GovActionDeposit id
-
-isGADepositᵇ : DepositPurpose → Bool
-isGADepositᵇ (GovActionDeposit _) = true
-isGADepositᵇ _                    = false
-
 isGADeposit : DepositPurpose → Set
 isGADeposit dp = isGADepositᵇ dp ≡ true
+  where
+  isGADepositᵇ : DepositPurpose → Bool
+  isGADepositᵇ (GovActionDeposit _) = true
+  isGADepositᵇ _                    = false
 
 govDepsMatch : LState → Set
 govDepsMatch ⟦ utxoSt , govSt , _ ⟧ˡ =
-  filterˢ isGADeposit (dom (UTxOState.deposits utxoSt))
-  ≡ᵉ fromList (map (λ pr → GovActionDeposit (proj₁ pr)) govSt)
+
+  filterˢ isGADeposit (dom (UTxOState.deposits utxoSt)) ≡ᵉ fromList (map (λ pr → GovActionDeposit (proj₁ pr)) govSt)
 
 instance _ = +-0-monoid
 
 getDeps : LState → DepositPurpose ⇀ Coin
 getDeps s = UTxOState.deposits (LState.utxoSt s)
-
 
 module _  -- ASSUMPTIONS (TODO: eliminate these) --
   {- 1 -} {filterCD : ∀ {pp} {c} → filterˢ isGADeposit (dom ((certDeposit c {pp})ˢ)) ≡ᵉ ∅}
@@ -146,11 +142,17 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
   {- 3 -} {filterCR : (c : DCert) {deps : DepositPurpose ⇀ Coin}
                       → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))}
   where
+
+  module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
+
   module Ledger-sts-setup
     (tx : Tx) (let open Tx tx renaming (body to txb)) (let open TxBody txb)
     (Γ : LEnv) (let open LEnv Γ renaming (pparams to pp))
     (s : LState)
     where
+
+    f : GovActionID × GovActionState → DepositPurpose
+    f = λ (id , _) → GovActionDeposit id
 
     open PParams pp using (govActionDeposit)
 
@@ -171,7 +173,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
                     → getDeps s' ≡ depUpdate s withIsValid≡ isValid
 
     STS→utxoDeps≡' {.(⟦ utxoSt' , _ , _ ⟧ˡ)} (LEDGER-V {utxoSt' = utxoSt'}
-      (val , UTXOW-inductive⋯ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts) , _ , _)) =
+      (val , UTXOW-inductive⋯ _ _ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts) , _ , _)) =
         trans (⊢utxo-valid UTXOS-sts) (sym (cong (depUpdate s withIsValid≡_) val))
           where
           ⊢utxo-valid : record { slot = slot ; pparams = pp } ⊢ LState.utxoSt s ⇀⦇ tx ,UTXOS⦈ utxoSt'
@@ -180,7 +182,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
           ⊢utxo-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No u) = contradiction (trans (sym val) (proj₂ u)) (λ ())
 
     STS→utxoDeps≡' {.(⟦ utxoSt' , _ , _ ⟧ˡ)} (LEDGER-I {utxoSt' = utxoSt'}
-      (¬val , UTXOW-inductive⋯ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts))) =
+      (¬val , UTXOW-inductive⋯ _ _ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts))) =
         trans (⊢utxo-invalid UTXOS-sts) (sym (cong (depUpdate s withIsValid≡_) ¬val))
           where
           ⊢utxo-invalid : record { slot = slot ; pparams = pp } ⊢ LState.utxoSt s ⇀⦇ tx ,UTXOS⦈ utxoSt'
@@ -288,8 +290,6 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
     --                   --
     -- CONNECTING LEMMAS --
     --                   --
-    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
-
     noGACerts : {cs : List DCert}(deps : DepositPurpose ⇀ Coin)
       → filterˢ isGADeposit (dom ((updateCertDeposits pp cs deps)ˢ)) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))
     noGACerts {[]} _ = filter-pres-≡ᵉ ≡ᵉ.refl
@@ -564,6 +564,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
       fromList (map f (updateGovStates [] (inj₂ p ∷ map inj₂ ps)))
         ∎
 
+
   module _
     (tx : Tx) (let open Tx tx renaming (body to txb)) (let open TxBody txb)
     (Γ : LEnv) (let open LEnv Γ renaming (pparams to pp))
@@ -575,16 +576,16 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
                           → govDepsMatch s → govDepsMatch s'
 
     LEDGER-govDepsMatch (LEDGER-I⋯ tx-not-valid
-                          (UTXOW-inductive⋯ _ _ _ _ _
-                            (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts)))
+                          (UTXOW-inductive⋯ _ _ _ _ _ _ _
+                            (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts)))
       aprioriMatch with UTXOS-sts
     ... | (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes u) = contradiction (trans (sym $ proj₂ u) tx-not-valid) (λ ())
     ... | (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No _) = aprioriMatch
 
     LEDGER-govDepsMatch s'@{⟦ utxoSt' , govSt' , certState' ⟧ˡ}
       utxosts@(LEDGER-V⋯ tx-valid
-                (UTXOW-inductive⋯ _ _ _ _ _
-                  (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts)) _ GOV-sts) aprioriMatch =
+                (UTXOW-inductive⋯ _ _ _ _ _ _ _
+                  (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts)) _ GOV-sts) aprioriMatch =
       let
         open Ledger-sts-setup tx Γ s;  open PParams pp using (govActionDeposit)
         utxoDeps' = getDeps s'
