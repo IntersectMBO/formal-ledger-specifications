@@ -18,8 +18,7 @@ open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; 
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
-open import Data.List.Relation.Unary.Any using (here; there )
-open import Data.List.Relation.Unary.Any.Properties using (++⁺ʳ; ++⁺ˡ; ++⁻)
+open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
 open import Data.Product.Properties using (×-≡,≡→≡)
@@ -29,7 +28,6 @@ import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Se
 import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
-import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 open Equivalence
 
@@ -180,14 +178,8 @@ mapPartial-∅ : {f : A → Maybe B} → mapPartial f ∅ ≡ᵉ ∅
 mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f = f}) x∈map of λ where
   (_ , h , _) → ⊥-elim (∉-∅ h)
 
-to-singleton-pair : ∀ {a x : A} {b y : B} → a ≡ x → b ≡ y → (a , b) ∈ ❴ x , y ❵
-to-singleton-pair a≡x b≡y = to ∈-singleton $ ×-≡,≡→≡ (a≡x , b≡y)
-
-singleton-pair : ∀ {a x : A} {b y : B} → a ∈ ❴ x ❵ → b ≡ y → (a , b) ∈ ❴ x , y ❵
-singleton-pair a∈ = to-singleton-pair (from ∈-singleton a∈)
-
-singleton-zip : ∀ {a x : A} {b y : B} → a ∈ ❴ x ❵ → b ∈ ❴ y ❵ → (a , b) ∈ ❴ x , y ❵
-singleton-zip a∈ b∈ = singleton-pair a∈ (from ∈-singleton b∈)
+∈-singleton-pair : ∀ {a x : A} {b y : B} → a ≡ x → b ≡ y → (a , b) ∈ ❴ x , y ❵
+∈-singleton-pair a≡x b≡y = to ∈-singleton $ ×-≡,≡→≡ (a≡x , b≡y)
 
 card-≡ᵉ : (X Y : Σ (Set A) strongly-finite) → proj₁ X ≡ᵉ proj₁ Y → card X ≡ card Y
 card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
@@ -212,11 +204,10 @@ filter-pres-≡ᵉ (X⊆Y , Y⊆X) = filter-pres-⊆ X⊆Y , filter-pres-⊆ Y�
 
 filter-split-∪ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
                  → ∀ {a} → a ∈ filter sp-P (X ∪ Y) → (P a × a ∈ X) ⊎ (P a × a ∈ Y)
-filter-split-∪ a∈ =
-  case ((proj₁ (from ∈-filter a∈)) , (from ∈-∪ (proj₂ (from ∈-filter a∈)))) of
-    λ where
-      (Pa , inj₁ a∈X) → inj₁ (Pa , a∈X)
-      (Pa , inj₂ a∈Y) → inj₂ (Pa , a∈Y)
+filter-split-∪ a∈ = case (proj₁ (from ∈-filter a∈) , from ∈-∪ (proj₂ (from ∈-filter a∈))) of
+  λ where
+    (Pa , inj₁ a∈X) → inj₁ (Pa , a∈X)
+    (Pa , inj₂ a∈Y) → inj₂ (Pa , a∈Y)
 
 filter-hom-⊆ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
                → filter sp-P (X ∪ Y) ⊆ filter sp-P X ∪ filter sp-P Y
@@ -325,20 +316,13 @@ module _ {A : Type ℓ} where
   ∪-assoc : (X Y Z : Set A) → (X ∪ Y) ∪ Z ≡ᵉ X ∪ (Y ∪ Z)
   ∪-assoc = ∨-assoc
 
-module _ {A : Type ℓ} where
-
-  fromList-∪-singleton : {x : A}{l : List A} → fromList (x ∷ l) ≡ᵉ ❴ x ❵ ∪ fromList l
-  fromList-∪-singleton {x = x}{l} = i , ii
-    where
-    i : fromList (x ∷ l) ⊆ ❴ x ❵ ∪ fromList l
-    i h with from ∈-fromList h
-    ... | here refl = ∈-∪⁺ (inj₁ (to ∈-fromList (here refl)))
-    ... | there q = ∈-∪⁺ (inj₂ (to ∈-fromList q))
-
-    ii : ❴ x ❵ ∪ fromList l ⊆ fromList (x ∷ l)
-    ii h with ∈-∪⁻ h
-    ... | (inj₁ a∈) = to ∈-fromList (here (from ∈-singleton a∈))
-    ... | (inj₂ a∈) = to ∈-fromList (there (from ∈-fromList a∈))
+fromList-∪-singleton : {A : Type ℓ} {x : A} {l : List A} → fromList (x ∷ l) ≡ᵉ ❴ x ❵ ∪ fromList l
+fromList-∪-singleton .proj₁ h with from ∈-fromList h
+... | here refl = ∈-∪⁺ (inj₁ (to ∈-fromList (here refl)))
+... | there q = ∈-∪⁺ (inj₂ (to ∈-fromList q))
+fromList-∪-singleton .proj₂ h with ∈-∪⁻ h
+... | (inj₁ a∈) = to ∈-fromList (here (from ∈-singleton a∈))
+... | (inj₂ a∈) = to ∈-fromList (there (from ∈-fromList a∈))
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
@@ -403,29 +387,10 @@ module _ {L : List A} where
     onlyif h (here refl) = from ∈-fromList (h (to ∈-fromList (here refl)))
     onlyif h (there x'∈) = from ∈-fromList (h (to ∈-fromList (there x'∈)))
 
-  module _ {ℓ : Level}{P : Pred (List A) ℓ} where
+  module _ {ℓ : Level} {P : Pred (List A) ℓ} where
     ∃-sublist-⇔ : (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ (∃[ l ] l ⊆ˡ L × P l)
     ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
                       (λ (l , l⊆L , Pl) → l , from sublist-⇔ l⊆L , Pl)
 
     ∃?-sublist-⇔ : Dec (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ Dec (∃[ l ] l ⊆ˡ L × P l)
     ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
-
-∷⟺∷ʳ : {x : A}{l : List A} → (x ∷ l) ⊆ˡ (l ∷ʳ x) × (l ∷ʳ x) ⊆ˡ (x ∷ l)
-proj₁ (∷⟺∷ʳ {l = l}) (here refl) = ++⁺ʳ l (here refl)
-proj₁ ∷⟺∷ʳ (there u) = ++⁺ˡ u
-proj₂ (∷⟺∷ʳ {l = l}) u∈ = case (++⁻ l u∈) of λ where
-  (inj₁ ∈l) → there ∈l
-  (inj₂ (here refl)) → here refl
-
-fromList-∪-singletonʳ : {x : A}{l : List A} → fromList (l ∷ʳ x) ≡ᵉ fromList l ∪ ❴ x ❵
-fromList-∪-singletonʳ {x = x}{l} = begin
-  fromList (l ∷ʳ x)
-    ≈⟨ from sublist-⇔ (proj₂ ∷⟺∷ʳ) , from sublist-⇔ (proj₁ ∷⟺∷ʳ) ⟩
-  fromList (x ∷ l)
-    ≈⟨ fromList-∪-singleton ⟩
-  ❴ x ❵ ∪ fromList l
-    ≈⟨ ∪-comm ❴ x ❵ (fromList l) ⟩
-  fromList l ∪ ❴ x ❵
-    ∎
-  where open SetoidReasoning (≡ᵉ-Setoid)

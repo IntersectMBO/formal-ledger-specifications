@@ -130,7 +130,6 @@ instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
 
--- module _ (let open TxBody) where
 \end{code}
 \begin{code}
 certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
@@ -171,8 +170,6 @@ depositsChange pp txb deposits
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
 \end{figure*}
-
-
 
 \begin{NoConway}
 \begin{figure*}

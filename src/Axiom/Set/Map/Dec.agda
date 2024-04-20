@@ -13,12 +13,9 @@ open import Class.DecEq using (DecEq)
 
 open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set; incl-set-proj₁⊇)
 open Theory th
-open import Axiom.Set.Rel th using (Rel; dom; dom∈)
+open import Axiom.Set.Rel th using (dom; dom∈)
 open import Axiom.Set.Map th
-open import Axiom.Set.Properties th
 open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
-import Function.Related.Propositional as R
-open import Relation.Binary
 
 open Equivalence
 
@@ -70,13 +67,13 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
     dom∪⁺ = to dom∪⁺' , from dom∪⁺'
       where
       dom∪⁺' : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
-      dom∪⁺' {m = m} {m'}{a} = mk⇔ i ii
+      dom∪⁺' {m = m} {m'} {a} = mk⇔ i ii
         where
         f : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
         f (a , a∈) = a , (fold id id _∙_)(unionThese m m' a a∈)
 
         α : {a : A} (p : a ∈ dom ((m ∪⁺ m') ˢ))
-          → ∃[ c ] (a , proj₁ (to dom∈ p)) ≡ f c × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
+            → ∃[ c ] (a , proj₁ (to dom∈ p)) ≡ f c × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
         α p = from ∈-map $ proj₂ $ to dom∈ p
 
         i : ∀ {a} → a ∈ dom ((m ∪⁺ m') ˢ) → a ∈ dom (m ˢ) ∪ dom (m' ˢ)

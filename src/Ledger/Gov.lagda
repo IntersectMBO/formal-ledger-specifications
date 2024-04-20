@@ -7,7 +7,6 @@ open import Axiom.Set.Properties using (∃?-sublist-⇔)
 open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
 open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
-open import Ledger.Abstract
 
 module Ledger.Gov (txs : _) (open TransactionStructure txs using (govStructure)) where
 open GovStructure govStructure hiding (epoch)
@@ -56,7 +55,7 @@ private variable
   Γ : GovEnv
   s s' : GovState
   aid : GovActionID
-  voter' : Voter
+  voter : Voter
   v : Vote
   d : Coin
   addr : RwdAddr
@@ -77,15 +76,10 @@ ActionId×ActionState : Epoch → GovActionID → RwdAddr → (a : GovAction) �
 ActionId×ActionState e aid addr a prev = (aid , record
   { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
-
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
 addAction s e aid addr a prev = s ∷ʳ ActionId×ActionState e aid addr a prev
--- (aid , record
---   { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
-
-
 
 validHFAction : GovProposal → GovState → EnactState → Set
 validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
@@ -211,19 +205,18 @@ data _⊢_⇀⦇_,GOV'⦈_ where
 \begin{code}
   GOV-Vote : ∀ {x ast} → let
       open GovEnv Γ
-      sig = inj₁ record { gid = aid ; voter = voter' ; vote = v ; anchor = x }
+      sig = inj₁ record { gid = aid ; voter = voter ; vote = v ; anchor = x }
     in
     ∙ (aid , ast) ∈ fromList s
-    ∙ canVote pparams (action ast) (proj₁ voter')
+    ∙ canVote pparams (action ast) (proj₁ voter)
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid voter' v
+      (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid voter v
 
   GOV-Propose : ∀ {x} → let
       open GovEnv Γ; open PParams pparams hiding (a)
       prop = record { returnAddr = addr ; action = a ; anchor = x
                     ; policy = p ; deposit = d ; prevAction = prev }
-      -- s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
-      s' = s ∷ʳ ActionId×ActionState (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+      s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
     ∙ actionWellFormed a ≡ true
     ∙ d ≡ govActionDeposit
@@ -257,8 +250,3 @@ and some conditions depending on the type of the action:
   epoch are allowed, and candidates cannot be added and removed at the same time;
 \item and we check the validity of hard-fork actions via \validHFAction.
 \end{itemize}
-\begin{code}[hide]
--- unquoteDecl GOV-Vote-premises = genPremises GOV-Vote-premises (quote GOV-Vote)
--- pattern GOV-Propose⋯ Γ x p₁ p₂ p₃ p₄ p₅ p₆ = GOV-Propose {Γ}{x} (p₁ , p₂ , p₃ , p₄ , p₅ , p₆)
-unquoteDecl GOV-Propose-premises = genPremises GOV-Propose-premises (quote GOV-Propose)
-\end{code}

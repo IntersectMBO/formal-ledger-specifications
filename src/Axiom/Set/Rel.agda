@@ -89,38 +89,35 @@ dom∈ {R = R} {a} =
   (∃[ b ] (a , b) ∈ R)            ∎
   where open R.EquationalReasoning
 
-dom-single→≡ : {a x : A} {y : B} → a ∈ dom ❴ x , y ❵ → a ≡ x
-dom-single→≡ = ,-injectiveˡ ∘ from ∈-singleton ∘ proj₂ ∘ to dom∈
+module _ {a x : A} {y : B} where
+  ∈-dom-singleton-pair : a ≡ x ⇔ a ∈ dom ❴ x , y ❵
+  ∈-dom-singleton-pair = mk⇔ (λ a≡x → from dom∈ (_ , ∈-singleton-pair a≡x refl))
+                             (,-injectiveˡ ∘ from ∈-singleton ∘ proj₂ ∘ to dom∈)
 
-≡→dom-single : {a x : A} {y : B} → a ≡ x → a ∈ dom ❴ x , y ❵
-≡→dom-single a≡x = from dom∈ (_ , to-singleton-pair a≡x refl)
+  dom-single→single : a ∈ dom ❴ x , y ❵ → a ∈ ❴ x ❵
+  dom-single→single = to ∈-singleton ∘ from ∈-dom-singleton-pair
 
-dom-single→single : {a x : A} {y : B} → a ∈ dom ❴ x , y ❵ → a ∈ ❴ x ❵
-dom-single→single = to ∈-singleton ∘ dom-single→≡
-
-single→dom-single : {a x : A} {y : B} → a ∈ ❴ x ❵ → a ∈ dom ❴ x , y ❵
-single→dom-single = ≡→dom-single ∘ from ∈-singleton
+  single→dom-single : a ∈ ❴ x ❵ → a ∈ dom ❴ x , y ❵
+  single→dom-single = to ∈-dom-singleton-pair ∘ from ∈-singleton
 
 dom-single≡single : {x : A} {y : B} → dom ❴ x , y ❵ ≡ᵉ ❴ x ❵
 dom-single≡single = dom-single→single , single→dom-single
 
 dom∪' : ∀ {a} → a ∈ dom (R ∪ R') ⇔ (a ∈ dom R ∪ dom R')
-dom∪' {R = R} {R'}{a} =
-  a ∈ dom (R ∪ R')
-    ∼⟨ dom∈ ⟩
-  (∃[ b ] (a , b) ∈ R ∪ R')
-    ∼⟨ mk⇔ (λ (b , pf) → b , (from ∈-∪ pf)) (λ (b , pf) → b , (to ∈-∪ pf)) ⟩
-  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))
-    ∼⟨ mk⇔ (λ {(b , inj₁ p) → inj₁ (b , p); (b , inj₂ p) → inj₂ (b , p)})
-           (λ {(inj₁ (b , pf)) → (b , inj₁ pf); (inj₂ (b , pf)) → (b , inj₂ pf)}) ⟩
-  (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R')
-    ∼⟨ mk⇔ (λ {(inj₁ bpf) → inj₁ (from dom∈ bpf); (inj₂ bpf) → inj₂ (from dom∈ bpf)})
-           (λ {(inj₁ pf) → inj₁ (to dom∈ pf); (inj₂ pf) → inj₂ (to dom∈ pf)}) ⟩
-  (a ∈ dom R ⊎ a ∈ dom R')
-    ∼⟨ ∈-∪ ⟩
-  (a ∈ dom R ∪ dom R')
-    ∎
-  where open R.EquationalReasoning
+dom∪' {R = R} {R'}{a} = let open R.EquationalReasoning in
+  a ∈ dom (R ∪ R')                           ∼⟨ dom∈ ⟩
+  (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ mk⇔ (λ (b , pf) → b , (from ∈-∪ pf))
+                                                    (λ (b , pf) → b , (to ∈-∪ pf)) ⟩
+  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ∼⟨ mk⇔ (λ {(b , inj₁ p) → inj₁ (b , p);
+                                                        (b , inj₂ p) → inj₂ (b , p)})
+                                                    (λ {(inj₁ (b , pf)) → (b , inj₁ pf);
+                                                        (inj₂ (b , pf)) → (b , inj₂ pf)}) ⟩
+  (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ mk⇔ (λ {(inj₁ bpf) → inj₁ (from dom∈ bpf);
+                                                        (inj₂ bpf) → inj₂ (from dom∈ bpf)})
+                                                    (λ {(inj₁ pf) → inj₁ (to dom∈ pf);
+                                                        (inj₂ pf) → inj₂ (to dom∈ pf)}) ⟩
+  (a ∈ dom R ⊎ a ∈ dom R')                   ∼⟨ ∈-∪ ⟩
+  (a ∈ dom R ∪ dom R')                       ∎
 
 ∉-dom∅ : ∀ {a : A} → a ∉ dom{A}{B} ∅
 ∉-dom∅ {a} a∈dom∅ = ⊥-elim $ ∉-∅ $ proj₂ $ (to dom∈) a∈dom∅

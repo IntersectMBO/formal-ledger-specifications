@@ -103,8 +103,3 @@ RTC-preserves-inv : ∀ {STS : C → S → Sig → S → Set} {P}
                   → LedgerInvariant STS P → LedgerInvariant (ReflexiveTransitiveClosure STS) P
 RTC-preserves-inv inv (BS-base Id-nop) = id
 RTC-preserves-inv inv (BS-ind p₁ p₂)   = RTC-preserves-inv inv p₂ ∘ inv p₁
-
-RTCᵢ-preserves-inv : ∀ {STS : C × ℕ → S → Sig → S → Set} {P}
-                  → LedgerInvariant STS P → LedgerInvariant (ReflexiveTransitiveClosureᵢ STS) P
-RTCᵢ-preserves-inv inv (BS-base Id-nop) = id
-RTCᵢ-preserves-inv inv (BS-ind p₁ p₂)   = RTCᵢ-preserves-inv inv p₂ ∘ inv p₁

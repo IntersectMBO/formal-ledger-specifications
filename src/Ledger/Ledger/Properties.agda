@@ -18,13 +18,10 @@ open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs
 open import Ledger.Utxow txs abs
 open import Ledger.Utxow.Properties txs abs
-open import Data.List.Relation.Unary.Any using (here; there )
 
-open import Data.Bool.Properties    using (¬-not)
-open import Data.List using (filter)
-open import Data.List.Properties    using (length-map; ++-identityʳ; ++-conicalʳ; map-++; ++-assoc)
-open import Data.List.Ext.Properties using (map-∷ʳ; frominj₁; ∈-frominj₁; frominj₂; ∈-frominj₂; map-[])
-open import Data.Nat.Properties  using (+-0-monoid)
+open import Data.Bool.Properties using (¬-not)
+open import Data.List.Properties using (length-map; ++-identityʳ; map-++; ++-assoc)
+open import Data.Nat.Properties using (+-0-monoid)
 open import Relation.Binary using (IsEquivalence)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
