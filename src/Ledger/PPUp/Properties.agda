@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_+_; _*_)
+open import Ledger.Prelude hiding (_*_)
 open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
 open import Ledger.Transaction
 
@@ -11,22 +11,22 @@ open import Ledger.PPUp txs
 private
   -- Ring literals
   open import Agda.Builtin.FromNat
-  open import Algebra; open Semiring Slotʳ hiding (refl)
+  open import Algebra; open Semiring Slotʳ using (_*_)
   open import Algebra.Literals; open Semiring-Lit Slotʳ
 
   Current-Property : PPUpdateEnv → Update → Set
   Current-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom pup ⊆ dom genDelegs
       × All (isViableUpdate pparams) (range pup)
-      × (slot + (2 * StabilityWindow)) < firstSlot (sucᵉ (epoch slot))
+      × slot + 2 * StabilityWindow < firstSlot (epoch slot + 1)
       × epoch slot ≡ e
 
   Future-Property : PPUpdateEnv → Update → Set
   Future-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom pup ⊆ dom genDelegs
       × All (isViableUpdate pparams) (range pup)
-      × firstSlot (sucᵉ (epoch slot)) ≤ (slot + (2 * StabilityWindow))
-      × sucᵉ (epoch slot) ≡ e
+      × firstSlot (epoch slot + 1) ≤ slot + 2 * StabilityWindow
+      × epoch slot + 1 ≡ e
 
 instance
   Computational-PPUP : Computational _⊢_⇀⦇_,PPUP⦈_ String

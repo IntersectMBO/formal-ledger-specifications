@@ -4,6 +4,8 @@ open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract
 
+open import Agda.Builtin.FromNat
+
 module Ledger.Epoch.Properties
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
@@ -52,12 +54,12 @@ module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
   open NewEpochState nes
 
   NEWEPOCH-total : ∃[ nes' ] Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes'
-  NEWEPOCH-total with e ≟ sucᵉ lastEpoch
+  NEWEPOCH-total with e ≟ lastEpoch + 1
   ... | yes p = ⟦ e , proj₁ EPOCH-total' ⟧ⁿᵉ , NEWEPOCH-New p (EPOCH-total' .proj₂)
   ... | no ¬p = -, NEWEPOCH-Not-New ¬p
 
   NEWEPOCH-complete : ∀ nes' → Γ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes' → proj₁ NEWEPOCH-total ≡ nes'
-  NEWEPOCH-complete nes' h with e ≟ sucᵉ lastEpoch | h
+  NEWEPOCH-complete nes' h with e ≟ lastEpoch + 1 | h
   ... | yes p | NEWEPOCH-New x x₁  rewrite EPOCH-complete' _ x₁ = refl
   ... | yes p | NEWEPOCH-Not-New x = ⊥-elim $ x p
   ... | no ¬p | NEWEPOCH-New x x₁  = ⊥-elim $ ¬p x

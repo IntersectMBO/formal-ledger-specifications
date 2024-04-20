@@ -16,6 +16,9 @@ open import Ledger.Gov txs
 open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Ratify txs
 
+open import Tactic.Defaults
+open import Tactic.GenError
+
 open Equivalence
 open GovActionState
 open Inverse
@@ -95,7 +98,7 @@ instance
         computeProof = case lookupActionId pparams (proj₁ voter) gid s of λ where
             (yes p) → case Any↔ .from p of λ where
               (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem , cV))
-            (no _)  → failure "Failed at GOV'"
+            (no ¬p)  → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₁ sig ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Vote (mem , cV)) with lookupActionId pparams (proj₁ voter) gid s
@@ -108,7 +111,9 @@ instance
           renaming (action to a; deposit to d; policy to p; returnAddr to addr; prevAction to prev)
         open PParams pparams hiding (a)
 
-        H = ¿ actionWellFormed a ≡ true
+        instance _ = actionWellFormed?
+
+        H = ¿ actionWellFormed a
             × d ≡ govActionDeposit
             × validHFAction prop s enactState
             × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
@@ -119,10 +124,10 @@ instance
           (yes (wf , dep , vHFA , pol , AllEnactable' en) , yes (new , rem , q , refl)) →
             case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
               (yes newOk) → success (_ , GOV-Propose (wf , dep , pol , (λ where refl → newOk) , vHFA , en))
-              (no _)      → failure "GOV' failed at ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅"
+              (no ¬p)     → failure (genErrors ¬p)
           (yes (wf , dep , vHFA , pol , AllEnactable' en) , no notNewComm) → success
             (-, GOV-Propose (wf , dep , pol , (λ isNewComm → ⊥-elim (notNewComm (-, -, -, isNewComm))) , vHFA , en))
-          _ → failure "GOV' failed at actionWellFormed a ≡ true × d ≡ pparams .PParams.govActionDeposit × validHFAction prop s e"
+          (no ¬p , _) → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Propose (wf , dep , pol , newOk , vHFA , en)) with H

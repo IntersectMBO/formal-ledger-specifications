@@ -9,7 +9,7 @@ module Ledger.Ledger.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Axiom.Set.Properties th
+-- open import Axiom.Set.Properties th
 open import Ledger.Deleg.Properties govStructure
 open import Ledger.Gov txs
 open import Ledger.Gov.Properties txs

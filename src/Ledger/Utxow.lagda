@@ -83,11 +83,18 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
+        inputHashes       = getInputHashes tx utxo
+        refScriptHashes   = mapˢ hash (refScripts tx utxo)
+        neededHashes      = scriptsNeeded utxo txb
+        txdatsHashes      = dom txdats
+        allOutHashes      = getDataHashes (range txouts)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  scriptsNeeded utxo txb ≡ᵉ witsScriptHashes
+    ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
+    ∙  inputHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ (inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)))
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
@@ -97,8 +104,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \label{fig:rules:utxow}
 \end{figure*}
 \begin{code}[hide]
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , h)
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}

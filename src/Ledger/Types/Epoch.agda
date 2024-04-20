@@ -4,6 +4,7 @@ module Ledger.Types.Epoch where
 
 open import Ledger.Prelude hiding (compare; Rel)
 
+open import Agda.Builtin.FromNat
 open import Algebra using (Semiring)
 open import Relation.Binary
 open import Data.Nat.Properties using (+-*-semiring)
@@ -57,6 +58,10 @@ record EpochStructure : Set₁ where
 
     addEpoch : HasAdd Epoch
     addEpoch ._+_ e e' = epoch (firstSlot e + firstSlot e')
+
+    Number-Epoch : Number Epoch
+    Number-Epoch .Number.Constraint _ = ⊤
+    Number-Epoch .Number.fromNat    x = ℕtoEpoch x
 
 record GlobalConstants : Set₁ where
   field  Network : Set; ⦃ DecEq-Netw ⦄ : DecEq Network

@@ -21,7 +21,9 @@ open import Data.List.Relation.Unary.Any  using (Any); open Any
 open import Prelude; open Equivalence
 
 open import Tactic.Cong                 using (cong!)
+open import Tactic.Defaults
 open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
+open import Tactic.GenError
 open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
@@ -78,16 +80,17 @@ instance
         open Computational Computational-UTXOS
           renaming (computeProof to computeProof'; completeness to completeness')
 
-        abstract
-          genErr : ¬ H → String
-          genErr  ¬p = case dec-de-morgan ¬p of λ where
-            (inj₁ a) → "¬ TxBody.txins (Tx.body tx) ≢ ∅"
-            (inj₂ b) → case dec-de-morgan b of λ where
-              (inj₁ a₁) → "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
-              (inj₂ b₁) → case dec-de-morgan b₁ of λ where
+        genErr : ¬ H → String
+        genErr  ¬p = case dec-de-morgan ¬p of λ where
+          (inj₁ a) → "¬ TxBody.txins (Tx.body tx) ≢ ∅"
+          (inj₂ b) → case dec-de-morgan b of λ where
+            (inj₁ a₁) → "¬ TxBody.txins (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
+            (inj₂ b₁) → case dec-de-morgan b₁ of λ where
+                (inj₁ a₁') → "¬ refInputs ⊆ dom utxo "
+                (inj₂ b₂') → case dec-de-morgan b₂' of λ where
                   (inj₁ a₂) → "¬ inInterval (UTxOEnv.slot Γ) (txvldt (Tx.body tx))"
                   (inj₂ b₂) → case dec-de-morgan b₂ of λ where
-                    (inj₁ a₃) → "¬(minfee (UTxOEnv.pparams Γ) tx ≤ txfee (Tx.body tx))"
+                    (inj₁ a₃) → "¬ feesOK pp tx utxo ≡ true"
                     (inj₂ b₃) → case dec-de-morgan b₃ of λ where
                         (inj₁ a₄) →
                           let
@@ -121,22 +124,23 @@ instance
                                       (inj₂ _) → "something else broke"
 
         computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
-        computeProofH (yes (x , y , z , e , k , l , m , n , o , p , q , r)) =
-            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m n o p q r) <$> computeProof' Γ s tx
+        computeProofH (yes (x , y , z , e , k , l , m , v , n , o , p , q , r)) =
+            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m v n o p q r) <$> computeProof' Γ s tx
         computeProofH (no ¬p) = failure $ genErr ¬p
 
         computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProof = computeProofH H?
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m n o p q r h) with H?
-        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , n , o , p , q , r)
+        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m v n o p q r h) with H?
+        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , v , n , o , p , q , r)
         ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
         ... | success _ | refl = refl
 
 open Computational ⦃...⦄
 
-abstract
+opaque
+  unfolding List-Model
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_ String
   Computational-UTXO = Computational-UTXO'
 
@@ -155,7 +159,7 @@ private
 opaque
   unfolding balance
   balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
-  balance-cong {utxo} {utxo'} = indexedSumᵐ-cong {x = utxo ᶠᵐ} {utxo' ᶠᵐ}
+  balance-cong {utxo} {utxo'} eq = indexedSumᵐ-cong {x = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ} (map-≡ᵉ eq)
 
   balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → cbalance utxo ≡ cbalance utxo'
   balance-cong-coin {utxo} {utxo'} x =
@@ -167,12 +171,13 @@ opaque
   balance-∪ {utxo} {utxo'} h = begin
     cbalance (utxo ∪ˡ utxo')
       ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-      $ indexedSumᵐ-cong {x = (utxo ∪ˡ utxo') ᶠᵐ} {(utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)} (id , id)
+      $ indexedSumᵐ-cong {x = (mapValues txOutHash (utxo ∪ˡ utxo')) ᶠᵐ} {((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)} (disjoint-∪ˡ-mapValues {M = utxo} {utxo'} _ h)
       ⟩
-    coin (indexedSumᵐ _ ((utxo ᶠᵐ) ∪ˡᶠ (utxo' ᶠᵐ)))
+    coin (indexedSumᵐ _ (((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)))
       ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-      $ indexedSumᵐ-∪ {X = utxo ᶠᵐ} {utxo' ᶠᵐ} h
-      ⟩
+       $ indexedSumᵐ-∪ {X = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ}
+       (λ x x₁ → h (dom-mapʳ⊆ x) (dom-mapʳ⊆ x₁))
+       ⟩
     coin (balance utxo + balance utxo')
       ≡⟨ ∙-homo-Coin  _ _ ⟩
     cbalance utxo + cbalance utxo'
@@ -279,7 +284,7 @@ module DepositHelpers
     stepS : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ᵘ ⇀⦇ tx ,UTXOS⦈
                 ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
     stepS = case step of λ where
-      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
+      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
 
     pp : PParams
     pp = UTxOEnv.pparams Γ
@@ -300,13 +305,13 @@ module DepositHelpers
     newBal' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                   ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
             → consumed pp utxoSt txb ≡ produced pp utxoSt txb
-    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _) = x
+    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _) = x
     newBal : consumed pp utxoSt txb ≡ produced pp utxoSt txb
     newBal = newBal' step
     noMintAda' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
                      ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
                → coin (mint) ≡ 0
-    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _) = x
+    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _) = x
     noMintAda : coin mint ≡ 0
     noMintAda = noMintAda' step
     remDepTot : Coin
@@ -538,11 +543,11 @@ then
 \begin{code}[hide]
 pov {tx}{utxo}{_}{fees}{deposits}{donations}
     {deposits' = deposits'} h'
-    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ (Scripts-Yes _)) =
+    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ (Scripts-Yes _)) =
   DepositHelpers.pov-scripts step h' refl
 
 pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
-    step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
+    step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
   DepositHelpers.pov-no-scripts step h'
 \end{code}
 
@@ -677,7 +682,7 @@ module _
        -------------------------------------------------------------------
     →  coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
 
-  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) nrf =
+  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _) nrf =
     begin
     length txprop * govActionDeposit
       ≡˘⟨ updatePropDeps≡ txprop ⟩
@@ -718,4 +723,3 @@ module _
     balOut = balance (outs txb)
 \end{code}
 \end{property}
-

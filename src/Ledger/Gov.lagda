@@ -218,7 +218,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-    ∙ actionWellFormed a ≡ true
+    ∙ actionWellFormed a
     ∙ d ≡ govActionDeposit
     ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
     ∙ (∀ {new rem q} → a ≡ NewCommittee new rem q

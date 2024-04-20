@@ -102,7 +102,7 @@ the transaction body are:
 \emph{Derived types}
 \begin{code}
   TxIn     = TxId × Ix
-  TxOut    = Addr × Value × Maybe DataHash
+  TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
   UTxO     = TxIn ⇀ TxOut
   Wdrl     = RwdAddr ⇀ Coin
   RdmrPtr  = Tag × Ix
@@ -116,6 +116,7 @@ the transaction body are:
 \begin{code}
   record TxBody : Set where
     field txins          : ℙ TxIn
+          refInputs      : ℙ TxIn
           txouts         : Ix ⇀ TxOut
           txfee          : Coin
           mint           : Value
@@ -163,6 +164,14 @@ the transaction body are:
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
+  TxOutʰ = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe ScriptHash
+
+  txOutHash : TxOut → TxOutʰ
+  txOutHash (a , v , d , s) = a , (v , (d , M.map hash s))
+
+  getValueʰ : TxOutʰ → Value
+  getValueʰ (_ , v , _) = v
+
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
   txinsVKey txins utxo = txins ∩ dom (utxo ↾' (isVKeyAddr ∘ proj₁))
 
@@ -172,13 +181,22 @@ the transaction body are:
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  lookupScriptHash : ScriptHash → Tx → Maybe Script
-  lookupScriptHash sh tx =
+  refScripts : Tx → UTxO → ℙ Script
+  refScripts tx utxo =
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+    where open Tx; open TxBody (tx .body)
+
+  txscripts : Tx → UTxO → ℙ Script
+  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+    where open Tx; open TxWitnesses
+
+  lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
+  lookupScriptHash sh tx utxo =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (tx .Tx.wits .TxWitnesses.scripts)
+    where m = setToHashMap (txscripts tx utxo)
 \end{code}
 \caption{Functions related to transactions}
 \label{fig:defs:transaction-funs}
@@ -192,4 +210,5 @@ the transaction body are:
   instance
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
+
 \end{code}

@@ -24,14 +24,14 @@ open import Interface.HasOrder.Instance
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
-  ∀Hashable = λ where .hash → id; .hashInj refl → refl
+  ∀Hashable = λ where .hash → id
 
   ∀isHashableSet : isHashableSet A
   ∀isHashableSet = mkIsHashableSet A
 
 instance
   Hashable-⊤ : Hashable ⊤ ℕ
-  Hashable-⊤ = λ where .hash tt → 0; .hashInj _ → refl
+  Hashable-⊤ = λ where .hash tt → 0
 
 module Implementation where
   Network          = ⊤
@@ -147,12 +147,10 @@ HsGovParams : GovParams
 HsGovParams = record
   { Implementation
   ; ppUpd = let open PParamsDiff in λ where
-      .UpdateT                → ⊤
-      .updateGroups           → λ _ → ∅
-      .applyUpdate            → λ p _ → p
-      .ppdWellFormed          → λ _ → false
-      .ppdWellFormed⇒hasGroup → λ ()
-      .ppdWellFormed⇒WF       → λ _ _ x → x
+      .UpdateT      → ⊤
+      .updateGroups → λ _ → ∅
+      .applyUpdate  → λ p _ → p
+      .ppWF?        → ⁇ yes (λ _ h → h)
   ; ppHashingScheme = it
   }
 
@@ -215,7 +213,7 @@ instance
 
   Convertible-Rational : Convertible ℚ F.Rational
   Convertible-Rational = λ where
-    .to (mkℚ n d _) → n F., d
+    .to (mkℚ n d _) → n F., suc d
     .from (n F., zero) → 0ℚ -- TODO is there a safer way to do this?
     .from (n F., (suc d)) → n Data.Rational./ suc d
 
@@ -247,6 +245,11 @@ instance
     .to _ → tt
     .from tt → record { url = "bogus" ; hash = tt }
 
+  Convertible-Script : Convertible Script F.Script
+  Convertible-Script = λ where
+    .to _ → tt
+    .from _ → inj₂ tt
+
   Convertible-DCert : Convertible DCert F.TxCert
   Convertible-DCert = autoConvertible
 
@@ -254,6 +257,7 @@ instance
   Convertible-TxBody = λ where
     .to txb → let open TxBody txb in record
       { txins  = to txins
+      ; refInputs  = to refInputs
       ; txouts = to txouts
       ; txfee  = txfee
       ; txvldt = to txvldt
@@ -266,6 +270,7 @@ instance
       }
     .from txb → let open F.TxBody txb in record
       { txins      = from txins
+      ; refInputs  = from refInputs
       ; txouts     = from txouts
       ; txcerts    = from txcerts
       ; mint       = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
