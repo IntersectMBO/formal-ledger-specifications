@@ -1,10 +1,5 @@
 {-# OPTIONS --safe #-}
 
-import Data.List.Membership.Propositional as P
-open import Data.List.Membership.Propositional.Properties
-open import Data.List.Relation.Unary.Any hiding (map)
-
-open import Ledger.Prelude hiding (Any; any?)
 open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
 
@@ -12,9 +7,22 @@ module Ledger.Gov.Properties
   (txs : _) (open TransactionStructure txs using (govStructure))
   (open GovStructure govStructure hiding (epoch)) where
 
+open import Ledger.Prelude hiding (Any; any?)
+
+open import Axiom.Set.Properties
+
+open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Ratify txs
+
+import Data.List.Membership.Propositional as P
+open import Data.List.Membership.Propositional.Properties
+open import Data.List.Relation.Unary.All using (all?; All)
+open import Data.List.Relation.Unary.Any hiding (map)
+open import Data.List.Relation.Unary.Unique.Propositional
+open import Data.Maybe.Properties
+open import Relation.Binary using (IsEquivalence)
 
 open import Tactic.Defaults
 open import Tactic.GenError
@@ -146,3 +154,16 @@ instance
 
 Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ (⊥ ⊎ String)
 Computational-GOV = it
+
+allEnactable-singleton : ∀ {aid s es} → getHash (s .prevAction) ≡ getHashES es (s .action)
+  → allEnactable es [ (aid , s) ]
+allEnactable-singleton {aid} {s} {es} eq = helper All.∷ All.[]
+  where
+    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th)
+
+    helper : enactable es (getAidPairsList [ (aid , s) ]) (aid , s)
+    helper with getHashES es (s .action) | getHash (s .prevAction)
+    ... | just x | just x' with refl <- just-injective eq =
+      [ (aid , x) ] , proj₁ ≡ᵉ.refl , All.[] ∷ [] , inj₁ (refl , refl)
+    ... | just x | nothing = case eq of λ ()
+    ... | nothing | _ = _
