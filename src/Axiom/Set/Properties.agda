@@ -20,7 +20,7 @@ open import Data.List.Relation.Binary.Permutation.Propositional.Properties using
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
-open import Data.Product using (map₂)
+import Data.Product
 open import Data.Product.Properties.Ext
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.TypeIsomorphisms
@@ -206,40 +206,36 @@ card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
     a ∈ˡ lY  ∎
   where open R.EquationalReasoning
 
-filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
-filter-⊆ = proj₂ ∘′ ∈⇔P
+module _ {P : A → Type} {sp-P : specProperty P} where
 
-filter-pres-⊆ : ∀ {P : A → Type} {sp-P : specProperty P} → X ⊆ Y
-                → filter sp-P X ⊆ filter sp-P Y
-filter-pres-⊆ xy a∈ = let Pa∈ = from ∈-filter a∈ in
-  to ∈-filter ((proj₁ Pa∈) , (xy (proj₂ Pa∈)))
+  filter-⊆ : filter sp-P X ⊆ X
+  filter-⊆ = proj₂ ∘′ ∈⇔P
 
-filter-pres-≡ᵉ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
-                 → X ≡ᵉ Y → filter sp-P X ≡ᵉ filter sp-P Y
-filter-pres-≡ᵉ (X⊆Y , Y⊆X) = filter-pres-⊆ X⊆Y , filter-pres-⊆ Y⊆X
+  filter-pres-⊆ : X ⊆ Y → filter sp-P X ⊆ filter sp-P Y
+  filter-pres-⊆ xy a∈ = let Pa∈ = from ∈-filter a∈ in
+    to ∈-filter (map₂ (λ u → xy u) Pa∈)
 
-filter-split-∪ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
-                 → ∀ {a} → a ∈ filter sp-P (X ∪ Y) → (P a × a ∈ X) ⊎ (P a × a ∈ Y)
-filter-split-∪ a∈ = case (proj₁ (from ∈-filter a∈) , from ∈-∪ (proj₂ (from ∈-filter a∈))) of
-  λ where
-    (Pa , inj₁ a∈X) → inj₁ (Pa , a∈X)
-    (Pa , inj₂ a∈Y) → inj₂ (Pa , a∈Y)
+  filter-pres-≡ᵉ : X ≡ᵉ Y → filter sp-P X ≡ᵉ filter sp-P Y
+  filter-pres-≡ᵉ (X⊆Y , Y⊆X) = filter-pres-⊆ X⊆Y , filter-pres-⊆ Y⊆X
 
-filter-hom-⊆ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
-               → filter sp-P (X ∪ Y) ⊆ filter sp-P X ∪ filter sp-P Y
-filter-hom-⊆ {a = a} a∈ = to ∈-∪ (case filter-split-∪ a∈ of λ where
+  filter-split-∪ : ∀ {a} → a ∈ filter sp-P (X ∪ Y) → (P a × a ∈ X) ⊎ (P a × a ∈ Y)
+  filter-split-∪ a∈ = case (proj₁ (from ∈-filter a∈) , from ∈-∪ (proj₂ (from ∈-filter a∈))) of
+    λ where
+      (Pa , inj₁ a∈X) → inj₁ (Pa , a∈X)
+      (Pa , inj₂ a∈Y) → inj₂ (Pa , a∈Y)
+
+  filter-hom-⊆ : filter sp-P (X ∪ Y) ⊆ filter sp-P X ∪ filter sp-P Y
+  filter-hom-⊆ {a = a} a∈ = to ∈-∪ (case filter-split-∪ a∈ of λ where
     (inj₁ v) → inj₁ (to ∈-filter v)
     (inj₂ v) → inj₂ (to ∈-filter v))
 
-filter-hom-⊇ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
-               → filter sp-P X ∪ filter sp-P Y ⊆ filter sp-P (X ∪ Y)
-filter-hom-⊇ a∈ = to ∈-filter (case (from ∈-∪ a∈) of λ where
-     (inj₁ v) → proj₁ (from ∈-filter v) , to ∈-∪ (inj₁ (proj₂ (from ∈-filter v)))
-     (inj₂ v) → proj₁ (from ∈-filter v) , to ∈-∪ (inj₂ (proj₂ (from ∈-filter v))) )
+  filter-hom-⊇ : filter sp-P X ∪ filter sp-P Y ⊆ filter sp-P (X ∪ Y)
+  filter-hom-⊇ a∈ = to ∈-filter (case (from ∈-∪ a∈) of λ where
+       (inj₁ v) → proj₁ (from ∈-filter v) , to ∈-∪ (inj₁ (proj₂ (from ∈-filter v)))
+       (inj₂ v) → proj₁ (from ∈-filter v) , to ∈-∪ (inj₂ (proj₂ (from ∈-filter v))) )
 
-filter-hom-∪ : ∀ {P : A → Type} {sp-P : specProperty P} {X Y : Set A}
-               → filter sp-P (X ∪ Y) ≡ᵉ (filter sp-P X) ∪ (filter sp-P Y)
-filter-hom-∪ {A} {P} {sp-P} {X} {Y} = filter-hom-⊆ , filter-hom-⊇
+  filter-hom-∪ : filter sp-P (X ∪ Y) ≡ᵉ (filter sp-P X) ∪ (filter sp-P Y)
+  filter-hom-∪ = filter-hom-⊆ , filter-hom-⊇
 
 Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Decidable¹ (_∈ fromList l)
 Dec-∈-fromList _ _ = Relation.Nullary.Decidable.map ∈-fromList (_∈ˡ?_ _≟_ _ _)
@@ -339,6 +335,21 @@ fromList-∪-singleton .proj₁ h with from ∈-fromList h
 fromList-∪-singleton .proj₂ h with ∈-∪⁻ h
 ... | (inj₁ a∈) = to ∈-fromList (here (from ∈-singleton a∈))
 ... | (inj₂ a∈) = to ∈-fromList (there (from ∈-fromList a∈))
+
+module _ {A : Type ℓ} where
+
+  ∪++ : {l l' : List A} → fromList l ∪ fromList l' ≡ᵉ fromList (l ++ l')
+  ∪++ {l = []} {l'} = ∪-identityˡ (fromList l')
+  ∪++ {l = x ∷ l} {l'} =
+    begin
+    fromList (x ∷ l) ∪ fromList l'      ≈⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
+    (❴ x ❵ ∪ fromList l) ∪ fromList l'  ≈⟨ ∪-assoc ❴ x ❵ (fromList l) (fromList l') ⟩
+    ❴ x ❵ ∪ (fromList l ∪ fromList l')  ≈⟨ ∪-cong ≡ᵉ.refl ∪++ ⟩
+    ❴ x ❵ ∪ fromList (l ++ l')          ≈˘⟨ fromList-∪-singleton ⟩
+    fromList (x ∷ (l ++ l'))            ∎
+    where
+    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence{A})
+    open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj

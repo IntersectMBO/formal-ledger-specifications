@@ -516,17 +516,6 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
       map f (govSt ++ updateGovStates (propToState [] p (length vps)) vps)
         ∎
 
-    ∪++ : {l l' : List DepositPurpose } → fromList l ∪ fromList l' ≡ᵉ fromList (l ++ l')
-    ∪++ {[]} {l'} = ∪-identityˡ (fromList l')
-    ∪++ {x ∷ l} {l'} = let open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose}) in
-      begin
-      fromList (x ∷ l) ∪ fromList l'      ≈⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
-      (❴ x ❵ ∪ fromList l) ∪ fromList l'  ≈⟨ ∪-assoc ❴ x ❵ (fromList l) (fromList l') ⟩
-      ❴ x ❵ ∪ (fromList l ∪ fromList l')  ≈⟨ ∪-cong ≡ᵉ.refl ∪++ ⟩
-      ❴ x ❵ ∪ fromList (l ++ l')          ≈˘⟨ fromList-∪-singleton ⟩
-      fromList (x ∷ (l ++ l'))            ∎
-
-
     utxo-govst-connex : {props : List GovProposal}
       → dom (proposalDepositsΔ props pp txb) ≡ᵉ fromList (map f (updateGovStates [] (map inj₂ props)))
     utxo-govst-connex {[]} = dom∅
@@ -580,9 +569,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
     ... | (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No _) = aprioriMatch
 
     LEDGER-govDepsMatch s'@{⟦ utxoSt' , govSt' , certState' ⟧ˡ}
-      utxosts@(LEDGER-V⋯ tx-valid
-                (UTXOW-inductive⋯ _ _ _ _ _ _ _
-                  (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts)) _ GOV-sts) aprioriMatch =
+      utxosts@(LEDGER-V⋯ tx-valid _ _ GOV-sts) aprioriMatch =
       let
         open Ledger-sts-setup tx Γ s;  open PParams pp using (govActionDeposit)
         utxoDeps' = getDeps s'
