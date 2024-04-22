@@ -21,7 +21,6 @@ open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_�
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
-open import Data.Product.Properties using (×-≡,≡→≡)
 open import Data.Product.Properties.Ext
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.TypeIsomorphisms
@@ -197,9 +196,6 @@ map-∪ {X = X} {Y} f = from ≡ᵉ⇔≡ᵉ' λ b →
 mapPartial-∅ : {f : A → Maybe B} → mapPartial f ∅ ≡ᵉ ∅
 mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f = f}) x∈map of λ where
   (_ , h , _) → ⊥-elim (∉-∅ h)
-
-∈-singleton-pair : ∀ {a x : A} {b y : B} → a ≡ x → b ≡ y → (a , b) ∈ ❴ x , y ❵
-∈-singleton-pair a≡x b≡y = to ∈-singleton $ ×-≡,≡→≡ (a≡x , b≡y)
 
 card-≡ᵉ : (X Y : Σ (Set A) strongly-finite) → proj₁ X ≡ᵉ proj₁ Y → card X ≡ card Y
 card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =

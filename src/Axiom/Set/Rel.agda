@@ -89,19 +89,21 @@ dom∈ {R = R} {a} =
   (∃[ b ] (a , b) ∈ R)            ∎
   where open R.EquationalReasoning
 
-module _ {a x : A} {y : B} where
-  ∈-dom-singleton-pair : a ≡ x ⇔ a ∈ dom ❴ x , y ❵
-  ∈-dom-singleton-pair = mk⇔ (λ a≡x → from dom∈ (_ , ∈-singleton-pair a≡x refl))
-                             (,-injectiveˡ ∘ from ∈-singleton ∘ proj₂ ∘ to dom∈)
+module _ {x : A} {y : B} where
+  module _ {a : A} where
+    ∈-dom-singleton-pair : a ≡ x ⇔ a ∈ dom ❴ x , y ❵
+    ∈-dom-singleton-pair = mk⇔ (λ a≡x → from dom∈ (y , to ∈-singleton (×-≡,≡→≡ (a≡x , refl))))
+                               (,-injectiveˡ ∘ from ∈-singleton ∘ proj₂ ∘ to dom∈)
 
-  dom-single→single : a ∈ dom ❴ x , y ❵ → a ∈ ❴ x ❵
-  dom-single→single = to ∈-singleton ∘ from ∈-dom-singleton-pair
+    dom-single→single : a ∈ dom ❴ x , y ❵ → a ∈ ❴ x ❵
+    dom-single→single = to ∈-singleton ∘ from ∈-dom-singleton-pair
 
-  single→dom-single : a ∈ ❴ x ❵ → a ∈ dom ❴ x , y ❵
-  single→dom-single = to ∈-dom-singleton-pair ∘ from ∈-singleton
+    single→dom-single : a ∈ ❴ x ❵ → a ∈ dom ❴ x , y ❵
+    single→dom-single = to ∈-dom-singleton-pair ∘ from ∈-singleton
 
-dom-single≡single : {x : A} {y : B} → dom ❴ x , y ❵ ≡ᵉ ❴ x ❵
-dom-single≡single = dom-single→single , single→dom-single
+  dom-single≡single : dom ❴ x , y ❵ ≡ᵉ ❴ x ❵
+  dom-single≡single = dom-single→single , single→dom-single
+
 
 dom∪' : ∀ {a} → a ∈ dom (R ∪ R') ⇔ (a ∈ dom R ∪ dom R')
 dom∪' {R = R} {R'}{a} = let open R.EquationalReasoning in
