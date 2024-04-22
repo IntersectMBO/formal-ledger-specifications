@@ -108,8 +108,7 @@ module _ {x : A} {y : B} where
 dom∪' : ∀ {a} → a ∈ dom (R ∪ R') ⇔ (a ∈ dom R ∪ dom R')
 dom∪' {R = R} {R'}{a} = let open R.EquationalReasoning in
   a ∈ dom (R ∪ R')                           ∼⟨ dom∈ ⟩
-  (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ mk⇔ (λ (b , pf) → b , (from ∈-∪ pf))
-                                                    (λ (b , pf) → b , (to ∈-∪ pf)) ⟩
+  (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ ∃-cong′ (R.SK-sym ∈-∪) ⟩
   (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ∼⟨ mk⇔ (λ {(b , inj₁ p) → inj₁ (b , p);
                                                         (b , inj₂ p) → inj₂ (b , p)})
                                                     (λ {(inj₁ (b , pf)) → (b , inj₁ pf);
