@@ -60,32 +60,36 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
     aggregate₊ : FinSet (A × V) → Map A V
     aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l
 
-    private variable
-      m m' : Map A V
+    module _ {m m' : Map A V} where
 
-    dom∪⁺ : dom ((m ∪⁺ m')ˢ) ≡ᵉ dom (m ˢ) ∪ dom (m' ˢ)
-    dom∪⁺ = to dom∪⁺' , from dom∪⁺'
-      where
-      dom∪⁺' : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
-      dom∪⁺' {m = m} {m'} {a} = mk⇔ i ii
+      dom-∪⁺⊆∪ : dom ((m ∪⁺ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
+      dom-∪⁺⊆∪ p = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
+                         (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ $ ∈-dom-∪⁺ p)))
+                         (proj₂ $ proj₁ (∈-dom-∪⁺ p))
         where
         f : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
         f (a , a∈) = a , (fold id id _∙_)(unionThese m m' a a∈)
 
-        α : {a : A} (p : a ∈ dom ((m ∪⁺ m') ˢ))
-            → ∃[ c ] (a , proj₁ (to dom∈ p)) ≡ f c × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
-        α p = from ∈-map $ proj₂ $ to dom∈ p
+        ∈-dom-∪⁺ : {a : A} (p : a ∈ dom ((m ∪⁺ m') ˢ))
+                   → ∃[ c ] (a , proj₁ (to dom∈ p)) ≡ f c
+                            × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
+        ∈-dom-∪⁺ p = from ∈-map $ proj₂ $ to dom∈ p
 
-        i : ∀ {a} → a ∈ dom ((m ∪⁺ m') ˢ) → a ∈ dom (m ˢ) ∪ dom (m' ˢ)
-        i p = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
-                    (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ $ α p)))
-                    (proj₂ $ proj₁ (α p))
 
-        ii : ∀ {a} → a ∈ dom (m ˢ) ∪ dom (m' ˢ) → a ∈ dom ((m ∪⁺ m') ˢ)
-        ii {a} a∈ = from dom∈ (proj₂ (f (proj₁ c')) , to ∈-map ν)
-          where
-          c' : ∃[ c ] ((a ≡ proj₁ c) × (c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))))
-          c' = from ∈-map (incl-set-proj₁⊇ a∈)
-          ν : ∃[ c ] (a , _) ≡ f c × c ∈ (incl-set (dom (m ˢ) ∪ dom (m' ˢ)))
-          ν = (proj₁ c') , (×-≡,≡→≡ (proj₁ (proj₂ c') , Prelude.refl) , (proj₂ (proj₂ c')))
+      dom-∪⊆∪⁺ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪⁺ m') ˢ)
+      dom-∪⊆∪⁺ {a} a∈ = from dom∈ (proj₂ (f (proj₁ c')) , to ∈-map ν)
+        where
+        f : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
+        f (a , a∈) = a , (fold id id _∙_)(unionThese m m' a a∈)
 
+        c' : ∃[ c ] ((a ≡ proj₁ c) × (c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))))
+        c' = from ∈-map (incl-set-proj₁⊇ a∈)
+
+        ν : ∃[ c ] (a , _) ≡ f c × c ∈ (incl-set (dom (m ˢ) ∪ dom (m' ˢ)))
+        ν = (proj₁ c') , (×-≡,≡→≡ (proj₁ (proj₂ c') , Prelude.refl) , (proj₂ (proj₂ c')))
+
+      dom-∪⁺⇔∪ : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
+      dom-∪⁺⇔∪ {a} = mk⇔ dom-∪⁺⊆∪ dom-∪⊆∪⁺
+
+      dom∪⁺ : dom ((m ∪⁺ m')ˢ) ≡ᵉ dom (m ˢ) ∪ dom (m' ˢ)
+      dom∪⁺ = to dom-∪⁺⇔∪ , from dom-∪⁺⇔∪
