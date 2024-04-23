@@ -3,13 +3,15 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Axiom.Set.Properties using (∃?-sublist-⇔)
-open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
 open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Gov (txs : _) (open TransactionStructure txs using (govStructure)) where
 open GovStructure govStructure hiding (epoch)
+
+open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
+
+open import Axiom.Set.Properties using (∃?-sublist-⇔)
 
 open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
@@ -18,13 +20,13 @@ open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
-open import Relation.Nullary.Decidable using (map′)
 open import Data.List.Relation.Unary.All using (all?; All)
 open import Data.List.Relation.Unary.Any using (any?; Any)
-open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
+open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.Propositional using (↔⇒)
+open import Relation.Nullary.Decidable using (map′)
 
 open GovActionState
 \end{code}
