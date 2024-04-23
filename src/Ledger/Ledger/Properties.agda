@@ -26,10 +26,8 @@ open import Relation.Binary using (IsEquivalence)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 instance _ = +-0-monoid
-{-
 
 open import Interface.ComputationalRelation
-
 
 -- ** Proof that LEDGER is computational.
 
@@ -120,7 +118,7 @@ module _ where
                           (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
                           h₂) st
 
--- -}
+
 -- ** Proof that govDepsMatch is a LEDGER invariant.
 
 isGADeposit : DepositPurpose → Set
