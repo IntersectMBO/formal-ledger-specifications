@@ -25,7 +25,11 @@ open import Data.Nat.Properties using (+-0-monoid)
 open import Relation.Binary using (IsEquivalence)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
+instance _ = +-0-monoid
+{-
+
 open import Interface.ComputationalRelation
+
 
 -- ** Proof that LEDGER is computational.
 
@@ -116,7 +120,7 @@ module _ where
                           (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
                           h₂) st
 
-
+-- -}
 -- ** Proof that govDepsMatch is a LEDGER invariant.
 
 isGADeposit : DepositPurpose → Set
@@ -128,10 +132,8 @@ isGADeposit dp = isGADepositᵇ dp ≡ true
 
 govDepsMatch : LState → Set
 govDepsMatch ⟦ utxoSt , govSt , _ ⟧ˡ =
-
-  filterˢ isGADeposit (dom (UTxOState.deposits utxoSt)) ≡ᵉ fromList (map (λ pr → GovActionDeposit (proj₁ pr)) govSt)
-
-instance _ = +-0-monoid
+  filterˢ isGADeposit (dom (UTxOState.deposits utxoSt))
+  ≡ᵉ fromList (map (λ pr → GovActionDeposit (proj₁ pr)) govSt)
 
 getDeps : LState → DepositPurpose ⇀ Coin
 getDeps s = UTxOState.deposits (LState.utxoSt s)
@@ -144,6 +146,8 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
   where
 
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
+
+  pattern UTXOW-UTXOS x = UTXOW-inductive⋯ _ _ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 
   module Ledger-sts-setup
     (tx : Tx) (let open Tx tx renaming (body to txb)) (let open TxBody txb)
@@ -169,40 +173,14 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
     depUpdate s withIsValid≡ true = updateDeposits pp txb (getDeps s)
     depUpdate s withIsValid≡ false = getDeps s
 
-    STS→utxoDeps≡' : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                    → getDeps s' ≡ depUpdate s withIsValid≡ isValid
+    STS→utxoDeps≡' : {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                     → getDeps s' ≡ depUpdate s withIsValid≡ isValid
+    STS→utxoDeps≡' (LEDGER-V (refl , UTXOW-UTXOS (Scripts-Yes _) , _ , _)) = refl
+    STS→utxoDeps≡' (LEDGER-I (refl , UTXOW-UTXOS (Scripts-No _))) = refl
 
-    STS→utxoDeps≡' {.(⟦ utxoSt' , _ , _ ⟧ˡ)} (LEDGER-V {utxoSt' = utxoSt'}
-      (val , UTXOW-inductive⋯ _ _ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts) , _ , _)) =
-        trans (⊢utxo-valid UTXOS-sts) (sym (cong (depUpdate s withIsValid≡_) val))
-          where
-          ⊢utxo-valid : record { slot = slot ; pparams = pp } ⊢ LState.utxoSt s ⇀⦇ tx ,UTXOS⦈ utxoSt'
-                        → UTxOState.deposits utxoSt' ≡ updateDeposits pp txb (getDeps s)
-          ⊢utxo-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes _) = refl
-          ⊢utxo-valid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No u) = contradiction (trans (sym val) (proj₂ u)) (λ ())
-
-    STS→utxoDeps≡' {.(⟦ utxoSt' , _ , _ ⟧ˡ)} (LEDGER-I {utxoSt' = utxoSt'}
-      (¬val , UTXOW-inductive⋯ _ _ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts))) =
-        trans (⊢utxo-invalid UTXOS-sts) (sym (cong (depUpdate s withIsValid≡_) ¬val))
-          where
-          ⊢utxo-invalid : record { slot = slot ; pparams = pp } ⊢ LState.utxoSt s ⇀⦇ tx ,UTXOS⦈ utxoSt'
-                        → UTxOState.deposits utxoSt' ≡ getDeps s
-          ⊢utxo-invalid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes u) = contradiction (trans (sym ¬val) (proj₂ u)) (λ ())
-          ⊢utxo-invalid (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No _) = refl
-
-    STS→utxoDeps≡ᵉ' : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                    → dom (getDeps s') ≡ᵉ dom (depUpdate s withIsValid≡ isValid)
-    STS→utxoDeps≡ᵉ' utxos-sts = let open IsEquivalence (≡ᵉ-isEquivalence{DepositPurpose}) in
-      reflexive (cong dom (STS→utxoDeps≡' utxos-sts))
-
-    STS→utxoDeps≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                    → isValid ≡ true → getDeps s' ≡ updateDeposits pp txb (getDeps s)
-    STS→utxoDeps≡ utxo-sts txvalid = trans (STS→utxoDeps≡' utxo-sts) (cong (depUpdate s withIsValid≡_) txvalid)
-
-    STS→utxoDeps≡ᵉ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                    → isValid ≡ true → dom (getDeps s') ≡ᵉ dom (updateDeposits pp txb (getDeps s))
-    STS→utxoDeps≡ᵉ utxo-sts txvalid = let open IsEquivalence (≡ᵉ-isEquivalence{DepositPurpose}) in
-      reflexive (cong dom (STS→utxoDeps≡ utxo-sts txvalid))
+    STS→utxoDeps≡ : {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → isValid ≡ true
+                    → getDeps s' ≡ updateDeposits pp txb (getDeps s)
+    STS→utxoDeps≡ (LEDGER-V x) refl = trans (STS→utxoDeps≡' ((LEDGER-V x))) refl
 
     -- Governance Definitions and Lemmas --
 
@@ -231,11 +209,6 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
     updateVotesOnly s [] = s
     updateVotesOnly s (inj₁ v ∷ vps) = updateVotesOnly (updateVote s v) vps
     updateVotesOnly s (inj₂ _ ∷ vps) = updateVotesOnly s vps
-
-    votesOnly-empty : (vps : List (GovVote ⊎ GovProposal)) → updateVotesOnly [] vps ≡ []
-    votesOnly-empty [] = refl
-    votesOnly-empty (inj₁ v ∷ vps) = votesOnly-empty vps
-    votesOnly-empty (inj₂ p ∷ vps) = votesOnly-empty vps
 
     mkAction : GovProposal → ℕ → GovActionID × GovActionState
     mkAction p n = let open GovProposal p in
@@ -266,26 +239,10 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
     STS→updateGovSt≡ (inj₁ v ∷ vps) (BS-ind (_⊢_⇀⦇_,GOV'⦈_.GOV-Vote x) x₁) = STS→updateGovSt≡ vps x₁
     STS→updateGovSt≡ (inj₂ p ∷ vps) (BS-ind (_⊢_⇀⦇_,GOV'⦈_.GOV-Propose x) x₁) = STS→updateGovSt≡ vps x₁
 
-    govUpdate_withIsValid≡_ : LState → Bool → GovState
-    govUpdate s withIsValid≡ true = updateGovStates govSt (txgov txb)
-    govUpdate s withIsValid≡ false = govSt
-
-
-    STS→GovSt≡' : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                 → LState.govSt s' ≡ govUpdate s withIsValid≡ isValid
-
-    STS→GovSt≡' {⟦ _ , govSt' , _ ⟧ˡ} (LEDGER-V x) = let open ≡-Reasoning in
-      begin
-      govSt'                             ≡⟨ STS→updateGovSt≡ (txgov txb) (proj₂ (proj₂ (proj₂ x))) ⟩
-      updateGovStates govSt (txgov txb)  ≡˘⟨ cong (govUpdate s withIsValid≡_) (proj₁ x) ⟩
-      govUpdate s withIsValid≡ isValid   ∎
-
-    STS→GovSt≡' {⟦ _ , .govSt , _ ⟧ˡ} (LEDGER-I x) = sym (cong (govUpdate s withIsValid≡_) (proj₁ x))
-
     STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                  → isValid ≡ true
                  → LState.govSt s' ≡ updateGovStates govSt (txgov txb)
-    STS→GovSt≡ utxo-sts txvalid = trans (STS→GovSt≡' utxo-sts) (cong (govUpdate s withIsValid≡_) txvalid)
+    STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) (proj₂ (proj₂ (proj₂ x)))
 
     --                   --
     -- CONNECTING LEMMAS --
@@ -561,12 +518,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
     LEDGER-govDepsMatch : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                           → govDepsMatch s → govDepsMatch s'
 
-    LEDGER-govDepsMatch (LEDGER-I⋯ tx-not-valid
-                          (UTXOW-inductive⋯ _ _ _ _ _ _ _
-                            (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ UTXOS-sts)))
-      aprioriMatch with UTXOS-sts
-    ... | (_⊢_⇀⦇_,UTXOS⦈_.Scripts-Yes u) = contradiction (trans (sym $ proj₂ u) tx-not-valid) (λ ())
-    ... | (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No _) = aprioriMatch
+    LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
     LEDGER-govDepsMatch s'@{⟦ utxoSt' , govSt' , certState' ⟧ˡ}
       utxosts@(LEDGER-V⋯ tx-valid _ _ GOV-sts) aprioriMatch =
@@ -579,7 +531,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate these) --
       in
       begin
       filterˢ isGADeposit (dom utxoDeps')
-        ≈⟨ filter-pres-≡ᵉ (STS→utxoDeps≡ᵉ utxosts tx-valid) ⟩
+        ≈⟨ filter-pres-≡ᵉ (≡ᵉ.reflexive (cong dom (STS→utxoDeps≡ utxosts tx-valid))) ⟩
       filterˢ isGADeposit (dom (updateDeposits pp txb utxoDeps))
         ≈⟨ noGACerts{txcerts} UPD ⟩
       filterˢ isGADeposit (dom (updateProposalDeposits txprop txid govActionDeposit utxoDeps))

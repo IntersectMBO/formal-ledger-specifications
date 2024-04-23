@@ -18,6 +18,7 @@ import Data.Product
 open import Data.These hiding (map)
 open import Data.Maybe.Base using () renaming (map to map?)
 open import Data.Product.Properties using (,-injectiveˡ; ×-≡,≡→≡)
+open import Data.Product.Properties.Ext using (∃-cong′; ∃-cong; ∃-≡)
 open import Relation.Unary using (Decidable)
 open import Relation.Nullary using (yes; no)
 open import Relation.Binary using (_Preserves_⟶_)
@@ -105,22 +106,6 @@ module _ {x : A} {y : B} where
   dom-single≡single = dom-single→single , single→dom-single
 
 
-dom∪' : ∀ {a} → a ∈ dom (R ∪ R') ⇔ (a ∈ dom R ∪ dom R')
-dom∪' {R = R} {R'}{a} = let open R.EquationalReasoning in
-  a ∈ dom (R ∪ R')                           ∼⟨ dom∈ ⟩
-  (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ mk⇔ (λ (b , pf) → b , (from ∈-∪ pf))
-                                                    (λ (b , pf) → b , (to ∈-∪ pf)) ⟩
-  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ∼⟨ mk⇔ (λ {(b , inj₁ p) → inj₁ (b , p);
-                                                        (b , inj₂ p) → inj₂ (b , p)})
-                                                    (λ {(inj₁ (b , pf)) → (b , inj₁ pf);
-                                                        (inj₂ (b , pf)) → (b , inj₂ pf)}) ⟩
-  (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ mk⇔ (λ {(inj₁ bpf) → inj₁ (from dom∈ bpf);
-                                                        (inj₂ bpf) → inj₂ (from dom∈ bpf)})
-                                                    (λ {(inj₁ pf) → inj₁ (to dom∈ pf);
-                                                        (inj₂ pf) → inj₂ (to dom∈ pf)}) ⟩
-  (a ∈ dom R ⊎ a ∈ dom R')                   ∼⟨ ∈-∪ ⟩
-  (a ∈ dom R ∪ dom R')                       ∎
-
 ∉-dom∅ : ∀ {a : A} → a ∉ dom{A}{B} ∅
 ∉-dom∅ {a} a∈dom∅ = ⊥-elim $ ∉-∅ $ proj₂ $ (to dom∈) a∈dom∅
 
@@ -128,7 +113,22 @@ dom∅ : dom{A}{B} ∅ ≡ᵉ ∅
 dom∅ = ⊥-elim ∘ ∉-dom∅ , ∅-minimum (dom ∅)
 
 dom∪ : dom (R ∪ R') ≡ᵉ (dom R ∪ dom R')
-dom∪ = (to dom∪') , (from dom∪')
+dom∪ = from ≡ᵉ⇔≡ᵉ' dom∪'
+  where
+  dom∪' : (dom (R ∪ R')) ≡ᵉ' (dom R ∪ dom R')
+  dom∪' {R = R} {R'} a = let open R.EquationalReasoning in
+    a ∈ dom (R ∪ R')                           ∼⟨ dom∈ ⟩
+    (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ ∃-cong′ (R.SK-sym ∈-∪) ⟩
+    (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ∼⟨ mk⇔ (λ {(b , inj₁ p) → inj₁ (b , p);
+                                                          (b , inj₂ p) → inj₂ (b , p)})
+                                                      (λ {(inj₁ (b , pf)) → (b , inj₁ pf);
+                                                          (inj₂ (b , pf)) → (b , inj₂ pf)}) ⟩
+    (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ mk⇔ (λ {(inj₁ bpf) → inj₁ (from dom∈ bpf);
+                                                          (inj₂ bpf) → inj₂ (from dom∈ bpf)})
+                                                      (λ {(inj₁ pf) → inj₁ (to dom∈ pf);
+                                                          (inj₂ pf) → inj₂ (to dom∈ pf)}) ⟩
+    (a ∈ dom R ⊎ a ∈ dom R')                   ∼⟨ ∈-∪ ⟩
+    (a ∈ dom R ∪ dom R')                       ∎
 
 dom⊆ : dom{A}{B} Preserves _⊆_ ⟶ _⊆_
 dom⊆ R⊆R' a∈ = from dom∈ $ proj₁ (to dom∈ a∈) , R⊆R' (proj₂ (to dom∈ a∈))
