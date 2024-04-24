@@ -347,10 +347,10 @@ actualVotes Γ pparams cc ga votes
     λ where
 \end{code}
 \begin{code}
-    nothing         →  ∅
-    (just (m , q))  →  if ccMinSize ≤ lengthˢ (activeCC m)
-                         then mapWithKey actualCCVote m
-                         else constMap (dom m) Vote.no
+      nothing         → ∅
+      (just (m , q))  → if ccMinSize ≤ lengthˢ (activeCC m)
+                          then mapWithKey actualCCVote m
+                          else constMap (dom m) Vote.no
 
   actualPDRepVotes : GovAction → VDeleg ⇀ Vote
   actualPDRepVotes NoConfidence
