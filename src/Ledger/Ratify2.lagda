@@ -22,7 +22,7 @@ actualVotes = true
     λ where
 \end{code}
 \begin{code}
-      _                        → true
+      _ → true
 
   f3 : Bool
   f3 = case true of
@@ -31,15 +31,6 @@ actualVotes = true
     λ where
 \end{code}
 \begin{code}
-      _          → true
-
-  f4 : Bool
-  f4 = case true of
-\end{code}
-\begin{code}[hide]
-    λ where
-\end{code}
-\begin{code}
-    _  →  true
+    _ → true
 \end{code}
 \end{AgdaMultiCode}
