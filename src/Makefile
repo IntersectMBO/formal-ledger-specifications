@@ -19,7 +19,7 @@ latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 $(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
-	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
+	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< --only-scope-checking
 define latexToPdf =
     @echo "Generating $@"
     $(eval PDF=$(notdir $@))

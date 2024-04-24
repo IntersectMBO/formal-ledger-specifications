@@ -23,6 +23,6 @@ module Ledger.PDF where
 \include{Ledger/Deleg}
 \include{Ledger/Ledger}
 \include{Ledger/Enact}
-\include{Ledger/Ratify}
+\include{Ledger/Ratify2}
 
 \end{document}
