@@ -18,48 +18,38 @@
 
 module Ledger.PDF where
 
-open import Ledger.BaseTypes
-open import Ledger.Introduction
-open import Ledger.Notation
-open import Ledger.Crypto
-open import Ledger.Types.Epoch
-open import Ledger.Address
-open import Ledger.Script
-open import Ledger.ScriptValidation
-open import Ledger.PParams
-
-open import Ledger.Types.GovStructure
-open import Ledger.GovernanceActions
-open import Ledger.Deleg
-
-open import Ledger.TokenAlgebra
-open import Ledger.TokenAlgebra.ValueSet
-open import Ledger.Transaction
-
-open import Ledger.Utxo
-open import Ledger.Utxo.Properties
-
-open import Ledger.Utxow
-open import Ledger.Utxow.Properties
-
-open import Ledger.PPUp
-open import Ledger.PPUp.Properties
-
-open import Ledger.Ledger
-open import Ledger.Ledger.Properties
-open import Ledger.Ratify.Properties
-open import Ledger.Chain.Properties
-
-open import Ledger.Gov
-open import Ledger.Enact
-open import Ledger.Ratify
-
-open import Ledger.Chain
-
-open import Ledger.EssentialAgda
-open import Ledger.PDF.ConwayBootstrapEnact
+open import Ledger.Prelude
 \end{code}
 
-\include{Ledger/Ratify2}
+\begin{AgdaMultiCode}
+\begin{code}
+ff : Bool
+ff = true
+  where
+\end{code}
+\begin{code}
+
+  f1 : Bool
+  f1 = true
+
+  f2 : Bool
+  f2 = case true of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      _ → true
+
+  f3 : Bool
+  f3 = case true of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+    _ → true
+\end{code}
+\end{AgdaMultiCode}
 
 \end{document}
