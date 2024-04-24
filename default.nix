@@ -72,7 +72,8 @@ rec {
 
   latex = texlive.combine {
     inherit (texlive)
-      scheme-small
+      scheme-basic
+      xetex
       xits
       collection-latexextra
       collection-latexrecommended
