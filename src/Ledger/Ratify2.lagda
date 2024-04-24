@@ -6,17 +6,17 @@ module Ledger.Ratify2 where
 
 \begin{AgdaMultiCode}
 \begin{code}
-actualVotes  : Bool
+actualVotes : Bool
 actualVotes = true
   where
 \end{code}
 \begin{code}
 
-  roleVotes : Bool
-  roleVotes = true
+  f1 : Bool
+  f1 = true
 
-  getCCHotCred : Bool
-  getCCHotCred = case true of
+  f2 : Bool
+  f2 = case true of
 \end{code}
 \begin{code}[hide]
     λ where
@@ -24,8 +24,8 @@ actualVotes = true
 \begin{code}
       _                        → true
 
-  actualCCVote : Bool
-  actualCCVote = case true of
+  f3 : Bool
+  f3 = case true of
 \end{code}
 \begin{code}[hide]
     λ where
@@ -33,8 +33,8 @@ actualVotes = true
 \begin{code}
       _          → true
 
-  actualCCVotes : Bool
-  actualCCVotes = case true of
+  f4 : Bool
+  f4 = case true of
 \end{code}
 \begin{code}[hide]
     λ where
