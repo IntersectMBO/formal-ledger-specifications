@@ -1,21 +1,10 @@
 \documentclass[11pt,a4paper,dvipsnames]{article}
 
-\usepackage{environ}
-\NewEnviron{NoConway}{%
-\BODY
-}
-\NewEnviron{Conway}{%
-}
-
 \include{preamble}
 
 \begin{document}
 
-\tableofcontents
-
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
-
 module Ledger.PDF where
 
 open import Ledger.Prelude
@@ -28,7 +17,6 @@ ff = true
   where
 \end{code}
 \begin{code}
-
   f1 : Bool
   f1 = true
 
