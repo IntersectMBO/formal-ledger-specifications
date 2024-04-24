@@ -6,8 +6,8 @@ module Ledger.Ratify2 where
 
 \begin{AgdaMultiCode}
 \begin{code}
-actualVotes : Bool
-actualVotes = true
+ff : Bool
+ff = true
   where
 \end{code}
 \begin{code}
