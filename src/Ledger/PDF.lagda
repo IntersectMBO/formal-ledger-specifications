@@ -60,37 +60,6 @@ open import Ledger.EssentialAgda
 open import Ledger.PDF.ConwayBootstrapEnact
 \end{code}
 
-\include{Ledger/Introduction}
-\include{Ledger/Notation}
-\include{Ledger/Crypto}
-\include{Ledger/BaseTypes}
-\include{Ledger/TokenAlgebra}
-\include{Ledger/Address}
-\include{Ledger/Script}
-\include{Ledger/PParams}
-\include{Ledger/GovernanceActions}
-\include{Ledger/Transaction}
-\include{Ledger/Utxo}
-\include{Ledger/Utxow}
-\include{Ledger/Gov}
-\include{Ledger/Deleg}
-\include{Ledger/Ledger}
-\include{Ledger/Enact}
-\include{Ledger/Ratify}
-\include{Ledger/Epoch}
-\include{Ledger/Chain}
-
-\section{Properties}
-\input{Ledger/Utxo/Properties}
-
-\bibliographystyle{abbrv}
-\bibliography{references}
-
-\clearpage
-
-\appendix
-
-\input{Ledger/EssentialAgda}
-\input{Ledger/PDF/ConwayBootstrapEnact}
+\include{Ledger/Ratify2}
 
 \end{document}
