@@ -117,9 +117,33 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.act
 
 allEnactable : EnactState → GovState → Set
 allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
+
+hasParentE : EnactState → (GovActionID × GovAction) → Set
+hasParentE e a = case getHashES e (proj₂ a) of λ where
+  nothing   → ⊤
+  (just id) → id ≡ proj₁ a
+
+hasParent : EnactState → GovState → (GovActionID × GovAction) → Set
+hasParent e s a = hasParentE e a ⊎ Any (λ x → proj₁ x ≡ proj₁ a) s
 \end{code}
 \begin{code}[hide]
 open Equivalence
+
+hasParentE? : ∀ e a → Dec (hasParentE e a)
+hasParentE? e a with getHashES e (proj₂ a)
+... | nothing   = yes _
+... | (just id) = id ≟ proj₁ a
+
+hasParent? : ∀ e s a → Dec (hasParent e s a)
+hasParent? e s a = hasParentE? e a ⊎-dec any? (λ x → proj₁ x ≟ proj₁ a) s
+
+-- newtype to make the instance resolution work
+data hasParent' : EnactState → GovState → (GovActionID × GovAction) → Set where
+  HasParent' : ∀ {x y z} → hasParent x y z → hasParent' x y z
+
+instance
+  hasParent?' : ∀ {x y z} → hasParent' x y z ⁇
+  hasParent?' = ⁇ map′ HasParent' (λ where (HasParent' x) → x) (hasParent? _ _ _)
 
 [_connects_to_?] : ∀ l aidNew aidOld → Dec (l connects aidNew to aidOld)
 [ [] connects aidNew to aidOld ?] = aidNew ≟ aidOld
@@ -225,7 +249,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ (∀ {new rem q} → a ≡ NewCommittee new rem q
        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ validHFAction prop s enactState
-    ∙ allEnactable enactState s'
+    ∙ hasParent enactState s ((txid , k) , a)
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
