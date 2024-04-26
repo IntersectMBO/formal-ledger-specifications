@@ -331,6 +331,22 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
     with _ , h ← res-singleton {m = m} (∈⇔P (-, (refl , kv∈m)))
     = subst _ (sym $ proj₂ m kv∈m (R.res-⊆ $ proj₂ h $ to ∈-singleton refl)) h
 
+  res-singleton⁺ : {k : A}{v : B} → (k , v) ∈ m ˢ → (k , v) ∈ (m ∣ ❴ k ❵)ˢ
+  res-singleton⁺ kv∈m = to ∈-filter ((to ∈-singleton refl) , kv∈m)
+
+  res-singleton-inhabited : ∀ {k a} → a ∈ (m ∣ ❴ k ❵) ˢ → k ∈ dom (m ˢ)
+  res-singleton-inhabited {m = m} {k} {a} a∈ =
+    from dom∈ ( proj₂ a , subst (λ x → (x , proj₂ a) ∈ (m ˢ))
+                                (from ∈-singleton (R.res-dom (∈-dom a∈)))
+                                (R.res-⊆ a∈) )
+
+  res-singleton'' : ∀ {k a} → a ∈ (m ∣ ❴ k ❵)ˢ → ∃[ v ] a ≡ (k , v)
+  res-singleton'' {m = m}{k}{a} a∈m =
+    let (v , m|≡) = res-singleton {m = m} (res-singleton-inhabited{m = m} a∈m) in
+    v , from ∈-singleton (proj₁ m|≡ a∈m)
+
+
+
   -- f(x,-)
   infix 30 _⦅_,-⦆
   _⦅_,-⦆ = curryᵐ

@@ -105,8 +105,10 @@ module _ {x : A} {y : B} where
   dom-single≡single : dom ❴ x , y ❵ ≡ᵉ ❴ x ❵
   dom-single≡single = dom-single→single , single→dom-single
 
+∈-dom : {a : A × B} → a ∈ R → proj₁ a ∈ dom R
+∈-dom {a = a} a∈ = to ∈-map (a , (refl , a∈))
 
-∉-dom∅ : ∀ {a : A} → a ∉ dom{A}{B} ∅
+∉-dom∅ : {a : A} → a ∉ dom{A}{B} ∅
 ∉-dom∅ {a} a∈dom∅ = ⊥-elim $ ∉-∅ $ proj₂ $ (to dom∈) a∈dom∅
 
 dom∅ : dom{A}{B} ∅ ≡ᵉ ∅
@@ -206,6 +208,7 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-comp-dom a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = proj₁ $ ∈⇔P h
 
+
   res-comp-domᵐ : dom (R ∣ X ᶜ) ⊆ dom R
   res-comp-domᵐ a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = ∈-map⁺'' (proj₂ (∈⇔P h))
@@ -221,6 +224,15 @@ module Restriction (sp-∈ : spec-∈ A) where
 
   res-∅ᶜ : R ∣ ∅ ᶜ ≡ᵉ R
   res-∅ᶜ = ex-⊆ , λ a∈R → ∈⇔P (∉-∅ , a∈R)
+
+  ∈-res-dom⁻ : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → (∃[ b ] (a , b) ∈ R) × a ∉ X
+  ∈-res-dom⁻ a∈ = to dom∈ (dom⊆ ex-⊆ a∈) , res-comp-dom a∈
+
+  ∈-res-dom⁺ : ∀ {a} → (∃[ b ] (a , b) ∈ R) × a ∉ X → a ∈ dom (R ∣ X ᶜ)
+  ∈-res-dom⁺ ((b , ab∈R) , a∉X) = from dom∈ (b , (∈⇔P (a∉X , ab∈R)))
+
+  ∈-res-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) ⇔ ((∃[ b ] (a , b) ∈ R) × a ∉ X)
+  ∈-res-dom = mk⇔ ∈-res-dom⁻ ∈-res-dom⁺
 
   res-ex-∪ : Decidable (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
   res-ex-∪ ∈X? = ∪-⊆ res-⊆ ex-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where
