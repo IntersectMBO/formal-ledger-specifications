@@ -125,7 +125,7 @@ instance
             × d ≡ govActionDeposit
             × validHFAction prop s enactState
             × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
-            × hasParent' enactState s ((txid , k) , a) ¿
+            × hasParent' enactState s a prev ¿
             ,′ isNewCommittee a
 
         computeProof = case H of λ where
