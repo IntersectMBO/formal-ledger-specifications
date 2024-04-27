@@ -301,8 +301,8 @@ restrictedDists coins rank dists = dists
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
 actualVotes Γ pparams cc ga votes
-  =   mapKeys (credVoter CC) (actualCCVotes cc)  ∪ˡ actualPDRepVotes ga
-  ∪ˡ  actualDRepVotes                            ∪ˡ actualSPOVotes ga
+  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes ga
+  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes ga
   where
 \end{code}
 \begin{code}[hide]
@@ -317,25 +317,40 @@ actualVotes Γ pparams cc ga votes
   activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
   spos = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
 
-  activeCC : CCData → ℙ Credential
-  activeCC (just (cc , _))  = dom (filter (λ (_ , x) → Is-just x) (ccHotKeys ∣ dom cc))
-  activeCC nothing          = ∅
-
-  actualCCVote : Credential → Epoch → Vote
-  actualCCVote c e = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
+  getCCHotCred : Credential × Epoch → Maybe Credential
+  getCCHotCred (c , e) = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
 \end{code}
 \begin{code}[hide]
     λ where
 \end{code}
 \begin{code}
-      (true , just (just c'))  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
-      _                        → Vote.abstain -- expired, no hot key or resigned
+      (true , just (just c'))  → just c'
+      _                        → nothing -- expired, no hot key or resigned
 
-  actualCCVotes : CCData → Credential ⇀ Vote
-  actualCCVotes nothing          =  ∅
-  actualCCVotes (just (cc , q))  =  if ccMinSize ≤ lengthˢ (activeCC (just (cc , q)))
-                                    then mapWithKey actualCCVote cc
-                                    else constMap (dom cc) Vote.no
+  actualCCVote : Credential → Epoch → Vote
+  actualCCVote c e = case getCCHotCred (c , e) of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+      _          → Vote.abstain
+
+  activeCC : (Credential ⇀ Epoch) → ℙ Credential
+  activeCC m = mapPartial getCCHotCred (m ˢ)
+
+  actualCCVotes : Credential ⇀ Vote
+  actualCCVotes = case cc of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      nothing         → ∅
+      (just (m , q))  → if ccMinSize ≤ lengthˢ (activeCC m)
+                          then mapWithKey actualCCVote m
+                          else constMap (dom m) Vote.no
 
   actualPDRepVotes : GovAction → VDeleg ⇀ Vote
   actualPDRepVotes NoConfidence
