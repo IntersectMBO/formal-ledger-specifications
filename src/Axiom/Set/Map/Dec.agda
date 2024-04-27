@@ -70,7 +70,7 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
                          (proj₂ $ proj₁ (∈-dom-∪⁺ p))
         where
         f : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
-        f (a , a∈) = a , (fold id id _∙_)(unionThese m m' a a∈)
+        f (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
 
         ∈-dom-∪⁺ : {a : A} (p : a ∈ dom ((m ∪⁺ m') ˢ))
                    → ∃[ c ] (a , proj₁ (to dom∈ p)) ≡ f c
@@ -82,7 +82,7 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
       dom-∪⊆∪⁺ {a} a∈ = from dom∈ (proj₂ (f (proj₁ c')) , to ∈-map ν)
         where
         f : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
-        f (a , a∈) = a , (fold id id _∙_)(unionThese m m' a a∈)
+        f (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
 
         c' : ∃[ c ] ((a ≡ proj₁ c) × (c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))))
         c' = from ∈-map (incl-set-proj₁⊇ a∈)
