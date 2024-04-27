@@ -225,14 +225,14 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-∅ᶜ : R ∣ ∅ ᶜ ≡ᵉ R
   res-∅ᶜ = ex-⊆ , λ a∈R → ∈⇔P (∉-∅ , a∈R)
 
-  ∈-res-dom⁻ : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → (∃[ b ] (a , b) ∈ R) × a ∉ X
-  ∈-res-dom⁻ a∈ = to dom∈ (dom⊆ ex-⊆ a∈) , res-comp-dom a∈
+  ∈-resᶜ-dom⁻ : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → a ∉ X × ∃[ b ] (a , b) ∈ R
+  ∈-resᶜ-dom⁻ a∈ = res-comp-dom a∈ , to dom∈ (dom⊆ ex-⊆ a∈)
 
-  ∈-res-dom⁺ : ∀ {a} → (∃[ b ] (a , b) ∈ R) × a ∉ X → a ∈ dom (R ∣ X ᶜ)
-  ∈-res-dom⁺ ((b , ab∈R) , a∉X) = from dom∈ (b , (∈⇔P (a∉X , ab∈R)))
+  ∈-resᶜ-dom⁺ : ∀ {a} → a ∉ X × ∃[ b ] (a , b) ∈ R → a ∈ dom (R ∣ X ᶜ)
+  ∈-resᶜ-dom⁺ (a∉X , (b , ab∈R)) = from dom∈ (b , (∈⇔P (a∉X , ab∈R)))
 
-  ∈-res-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) ⇔ ((∃[ b ] (a , b) ∈ R) × a ∉ X)
-  ∈-res-dom = mk⇔ ∈-res-dom⁻ ∈-res-dom⁺
+  ∈-resᶜ-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) ⇔ (a ∉ X × ∃[ b ] (a , b) ∈ R)
+  ∈-resᶜ-dom = mk⇔ ∈-resᶜ-dom⁻ ∈-resᶜ-dom⁺
 
   res-ex-∪ : Decidable (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
   res-ex-∪ ∈X? = ∪-⊆ res-⊆ ex-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where

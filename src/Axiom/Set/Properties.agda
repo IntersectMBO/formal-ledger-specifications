@@ -68,6 +68,17 @@ module _ {l : List A} {a} where
   ∈-fromList⁺ : ∀ {l : List A} {a} → a ∈ˡ l → a ∈ fromList l
   ∈-fromList⁺ = to ∈-fromList
 
+module _ {f : A → B} {X} {b} {P : A → Type} {sp-P : specProperty P} where
+  ∈-map-filter⁻' : b ∈ map f (filter sp-P X) → (∃[ a ] b ≡ f a × P a × a ∈ X)
+  ∈-map-filter⁻' h with from ∈-map h
+  ... | a , b≡fa , a∈X = a , b≡fa , from ∈-filter a∈X
+
+  ∈-map-filter⁺' : (∃[ a ] b ≡ f a × P a × a ∈ X) → b ∈ map f (filter sp-P X)
+  ∈-map-filter⁺' (a , b≡fa , Pa , a∈X) = to ∈-map (a , b≡fa , to ∈-filter (Pa , a∈X))
+
+  ∈-map-filter : (∃[ a ] b ≡ f a × P a × a ∈ X) ⇔ b ∈ map f (filter sp-P X)
+  ∈-map-filter = mk⇔ ∈-map-filter⁺' ∈-map-filter⁻'
+
 open import Tactic.AnyOf
 open import Tactic.Defaults
 
@@ -150,6 +161,9 @@ module _ {f : A → B} {g : B → C} where
 
   map-∘ : map g (map f X) ≡ᵉ map (g ∘ f) X
   map-∘ = map-⊆∘ , map-∘⊆
+
+  ∈-map⁺-∘ : ∀ {b} → b ∈ map f X → g b ∈ map (g ∘ f) X
+  ∈-map⁺-∘ = map-⊆∘ ∘ ∈-map⁺''
 
 map-⊆ : {X Y : Set A} {f : A → B} → X ⊆ Y → map f X ⊆ map f Y
 map-⊆ x⊆y a∈map with from ∈-map a∈map

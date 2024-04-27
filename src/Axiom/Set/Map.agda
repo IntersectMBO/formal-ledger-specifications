@@ -345,8 +345,6 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
     let (v , m|≡) = res-singleton {m = m} (res-singleton-inhabited{m = m} a∈m) in
     v , from ∈-singleton (proj₁ m|≡ a∈m)
 
-
-
   -- f(x,-)
   infix 30 _⦅_,-⦆
   _⦅_,-⦆ = curryᵐ
