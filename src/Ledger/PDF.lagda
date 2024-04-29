@@ -42,9 +42,6 @@ open import Ledger.Utxo.Properties
 open import Ledger.Utxow
 open import Ledger.Utxow.Properties
 
-open import Ledger.PPUp
-open import Ledger.PPUp.Properties
-
 open import Ledger.Ledger
 open import Ledger.Ledger.Properties
 open import Ledger.Ratify.Properties
