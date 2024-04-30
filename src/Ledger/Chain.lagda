@@ -99,10 +99,10 @@ data
 \begin{figure*}[h]
 \begin{code}
   CHAIN :
-    let open ChainState s; open Block b; open NewEpochState newEpochState
+    let open Block b; open ChainState s; open NewEpochState nes
         open EpochState epochState; open EnactState es
     in
-       record { stakeDistrs = calculateStakeDistrs ls }
+       record { stakeDistrs = calculateStakeDistrs (EpochState.ls (NewEpochState.epochState newEpochState)) }
          ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es ⟧ˡᵉ
          ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'

@@ -141,8 +141,8 @@ govDepsMatch ⟦ utxoSt , govSt , _ ⟧ˡ =
   filterˢ isGADeposit (dom (UTxOState.deposits utxoSt))
   ≡ᵉ fromList (map (λ pr → GovActionDeposit (proj₁ pr)) govSt)
 
-getDeps : LState → DepositPurpose ⇀ Coin
-getDeps s = UTxOState.deposits (LState.utxoSt s)
+getDeposits : LState → DepositPurpose ⇀ Coin
+getDeposits s = UTxOState.deposits (LState.utxoSt s)
 
 module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
   {- 1 -} {filterCD : ∀ {pp} {c} → filterˢ isGADeposit (dom (certDeposit c {pp})) ≡ᵉ ∅}
@@ -173,19 +173,19 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     govSt = LState.govSt s
 
     utxoDeps : DepositPurpose ⇀ Coin
-    utxoDeps = getDeps s
+    utxoDeps = getDeposits s
 
     depUpdate_withIsValid≡_ : LState → Bool → DepositPurpose ⇀ Coin
-    depUpdate s withIsValid≡ true = updateDeposits pp txb (getDeps s)
-    depUpdate s withIsValid≡ false = getDeps s
+    depUpdate s withIsValid≡ true = updateDeposits pp txb (getDeposits s)
+    depUpdate s withIsValid≡ false = getDeposits s
 
     STS→utxoDeps≡' : {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                     → getDeps s' ≡ depUpdate s withIsValid≡ isValid
+                     → getDeposits s' ≡ depUpdate s withIsValid≡ isValid
     STS→utxoDeps≡' (LEDGER-V (refl , UTXOW-UTXOS (Scripts-Yes _) , _ , _)) = refl
     STS→utxoDeps≡' (LEDGER-I (refl , UTXOW-UTXOS (Scripts-No _))) = refl
 
     STS→utxoDeps≡ : {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → isValid ≡ true
-                    → getDeps s' ≡ updateDeposits pp txb (getDeps s)
+                    → getDeposits s' ≡ updateDeposits pp txb (getDeposits s)
     STS→utxoDeps≡ (LEDGER-V x) refl = trans (STS→utxoDeps≡' ((LEDGER-V x))) refl
 
     -- Governance Definitions and Lemmas --
@@ -529,7 +529,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       utxosts@(LEDGER-V⋯ tx-valid _ _ GOV-sts) aprioriMatch =
       let
         open Ledger-sts-setup tx Γ s;  open PParams pp using (govActionDeposit)
-        utxoDeps' = getDeps s'
+        utxoDeps' = getDeposits s'
         UPD = updateProposalDeposits txprop txid (PParams.govActionDeposit pp) utxoDeps
         govSt' = LState.govSt s'
         open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
@@ -566,21 +566,23 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
   -- MAIN THEOREM: EPOCH --
   module _ (tx : Tx) (let open Tx tx renaming (body to txb)) (let open TxBody txb)
            (Γ : LEnv) (let open LEnv Γ renaming (pparams to pp))
-           (eΓ : NewEpochEnv)(eps : EpochState)
+           (eΓ : NewEpochEnv)
+           (eps : EpochState)
     where
     open EpochState eps hiding (es)
     open LState ls
     open GovActionState
-    open RatifyState fut using (removed) renaming (es to esW)
+    open RatifyState fut using (removed)
 
     EPOCH-govDepsMatch :
-      {assumption/bug? : mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ ((UTxOState.deposits utxoSt)ˢ)}
-      {eps' : EpochState} {e : Epoch}
+      (ratify-removed : mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ ((UTxOState.deposits utxoSt)ˢ))
+      (eps' : EpochState) {e : Epoch}
       → eΓ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       → govDepsMatch (EpochState.ls eps) → govDepsMatch (EpochState.ls eps')
 
-    EPOCH-govDepsMatch {assumption/bug?}{⟦ acnt' , ls' ,  es , fut' ⟧ᵉ'}
-      (_⊢_⇀⦇_,EPOCH⦈_.EPOCH x) govDepsMatch-ls = ≡ᵉ.trans connect (main-invariance-lemma govDepsMatch-ls)
+    EPOCH-govDepsMatch ratify-removed ⟦ acnt' , ls' ,  es , fut' ⟧ᵉ'
+      (_⊢_⇀⦇_,EPOCH⦈_.EPOCH x) govDepsMatch-ls =
+      ≡ᵉ.trans connect (main-invariance-lemma govDepsMatch-ls)
       where
 
       rga : Deposits → (GovActionID × GovActionState) → ℙ (RwdAddr × DepositPurpose × Coin)
@@ -593,7 +595,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       -- a simpler combinator that suffices here;
       χ' : ℙ DepositPurpose
       χ' = mapˢ (GovActionDeposit ∘ proj₁) removed
-      -- Below we prove χ and χ' are essentially equivalent (modulo the assumption/bug above).
+      -- Below we prove χ and χ' are essentially equivalent.
 
       P : GovActionID × GovActionState → Set
       P = λ u → proj₁ u ∉ mapˢ proj₁ removed
@@ -619,7 +621,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         where
         χ'⊆χ : χ' ⊆ χ utxoDeps
         χ'⊆χ {a} x with from ∈-map x
-        ... | ((gaid , gast) , a≡GAgaid , gaidgast∈rem) with from ∈-map (assumption/bug? x)
+        ... | ((gaid , gast) , a≡GAgaid , gaidgast∈rem) with from ∈-map (ratify-removed x)
         ... | ((dp , c) , a≡dp , dpc∈utxoDeps) =
           to ∈-map ( (returnAddr gast , GovActionDeposit gaid , c)
                    , a≡GAgaid
@@ -688,20 +690,31 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
           a∉χ' a∈χ' with ∈-map⁻' a∈χ'
           ... | q , refl , q∈rem = Paid×st (to ∈-map (q , refl , q∈rem))
 
-
   -- MAIN THEOREM: CHAIN --
-  module _ (tx : Tx) (Γ : LEnv) (cs : ChainState)
+  module _ (tx : Tx) (Γ : LEnv) (b : Block) (cs : ChainState)
     where
-    open Tx tx renaming (body to txb); open TxBody txb
-    open LEnv Γ renaming (pparams to pp)
-    open ChainState cs
+    open Block b; open ChainState cs
     open NewEpochState newEpochState
+    open EpochState epochState; open EnactState es
+    open RatifyState fut using (removed)
 
-    ls₀ : LState
-    ls₀ = EpochState.ls epochState
+    updateChainState : ChainState → NewEpochState → ChainState
+    updateChainState s nes =
+      record s { newEpochState =
+        record nes { epochState =
+          record (NewEpochState.epochState (ChainState.newEpochState s))
+            { ls = EpochState.ls (NewEpochState.epochState nes) }
+        }
+      }
 
-    CHAIN-govDepsMatch : {b : Block} {cs' : ChainState}
-      → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
-      → govDepsMatch ls₀ → govDepsMatch (EpochState.ls (NewEpochState.epochState (ChainState.newEpochState cs')))
+    CHAIN-govDepsMatch : {nes : NewEpochState}
+      → mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ (getDeposits ls ˢ)
+      → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
+      → govDepsMatch ls → govDepsMatch (EpochState.ls (NewEpochState.epochState nes))
 
-    CHAIN-govDepsMatch (CHAIN _ y) = RTC-preserves-inv (λ {c}{s}{sig} → LEDGER-govDepsMatch sig c s) y
+    CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-New _ eps₁→eps₂) ledgers) =
+      (RTC-preserves-inv (λ {c}{s}{sig} → LEDGER-govDepsMatch sig c s) ledgers)
+      ∘ (EPOCH-govDepsMatch tx Γ _ _ rrm _ eps₁→eps₂)
+
+    CHAIN-govDepsMatch _ (CHAIN (NEWEPOCH-Not-New _) ledgers) =
+      RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
