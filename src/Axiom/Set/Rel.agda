@@ -121,14 +121,10 @@ dom∪ = from ≡ᵉ⇔≡ᵉ' dom∪'
   dom∪' {R = R} {R'} a = let open R.EquationalReasoning in
     a ∈ dom (R ∪ R')                           ∼⟨ dom∈ ⟩
     (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ ∃-cong′ (R.SK-sym ∈-∪) ⟩
-    (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ∼⟨ mk⇔ (λ {(b , inj₁ p) → inj₁ (b , p);
-                                                          (b , inj₂ p) → inj₂ (b , p)})
-                                                      (λ {(inj₁ (b , pf)) → (b , inj₁ pf);
-                                                          (inj₂ (b , pf)) → (b , inj₂ pf)}) ⟩
-    (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ mk⇔ (λ {(inj₁ bpf) → inj₁ (from dom∈ bpf);
-                                                          (inj₂ bpf) → inj₂ (from dom∈ bpf)})
-                                                      (λ {(inj₁ pf) → inj₁ (to dom∈ pf);
-                                                          (inj₂ pf) → inj₂ (to dom∈ pf)}) ⟩
+    (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ∼⟨ mk⇔ (uncurry (λ x → [ inj₁ ∘′ (x ,_) , inj₂ ∘′ (x ,_) ]′))
+                                                      [ Data.Product.map₂ inj₁ , Data.Product.map₂ inj₂ ]′ ⟩
+    (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ mk⇔ [ inj₁ ∘′ from dom∈ , inj₂ ∘′ from dom∈ ]′
+                                                      [ inj₁ ∘′ to dom∈ , inj₂ ∘′ to dom∈ ]′ ⟩
     (a ∈ dom R ⊎ a ∈ dom R')                   ∼⟨ ∈-∪ ⟩
     (a ∈ dom R ∪ dom R')                       ∎
 
