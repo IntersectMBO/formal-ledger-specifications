@@ -126,9 +126,3 @@ indexedSum' f s = indexedSum ⦃ fromCommMonoid' it ⦄ f (s ᶠˢ)
 
 syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
 syntax indexedSum'  (λ a → x) m = ∑ˢ[ a ← m ] x
-
-module _ ⦃ _ : DecEq A ⦄ (P : A → Set) ⦃ _ : P ⁇¹ ⦄ {m : A ⇀ B} {X : ℙ A} where
-
-  ∈-filter-resᶜ-dom⁺ : ∀ {a} → P a × a ∉ X × ∃[ b ] (a , b) ∈ (m ˢ) → a ∈ filterˢ P (dom (m ∣ X ᶜ))
-  ∈-filter-resᶜ-dom⁺ (Pa , a∉X , bab∈m) = to ∈-filter (Pa , (∈-resᶜ-dom⁺ (a∉X , bab∈m)))
-    where open Equivalence

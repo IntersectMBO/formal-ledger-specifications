@@ -680,8 +680,8 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
               ⊆ filterˢ isGADeposit (dom utxoDeps')
         ⇚ {a} h with ∈-map⁻ f (from ∈-fromList h)
         ... | (aid×st , aid×st∈ , refl) with ∈-filter⁻ (λ u → ¿ P u ¿) aid×st∈
-        ... | (aid×st∈govSt , Paid×st) = ∈-filter-resᶜ-dom⁺ isGADeposit {utxoDeps}
-                                         (refl , a∉χ' , (to dom∈ $ proj₂ (from ∈-filter a∈)))
+        ... | (aid×st∈govSt , Paid×st) =
+          to ∈-filter (refl , ∈-resᶜ-dom⁺ (a∉χ' , (to dom∈ $ proj₂ (from ∈-filter a∈))))
           where
           a∈ : a ∈ filterˢ isGADeposit (dom utxoDeps)
           a∈ = snd $ to ∈-fromList $ to ∈ˡ-map (aid×st , refl , aid×st∈govSt)
@@ -689,6 +689,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
           a∉χ' : a ∉ χ'
           a∉χ' a∈χ' with ∈-map⁻' a∈χ'
           ... | q , refl , q∈rem = Paid×st (to ∈-map (q , refl , q∈rem))
+
 
   -- MAIN THEOREM: CHAIN --
   module _ (tx : Tx) (Γ : LEnv) (b : Block) (cs : ChainState)
