@@ -237,18 +237,35 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     updateGovStates s (inj₁ v ∷ vps) = updateGovStates (updateVote s v) vps
     updateGovStates s (inj₂ p ∷ vps) = updateGovStates (propToState s p (length vps)) vps
 
+
+    STS→updateGovSt≡' : {govSt govSt' : GovState} (vp : GovVote ⊎ GovProposal)
+                        → (∀ k → (gΓ , k) ⊢ govSt ⇀⦇ vp ,GOV'⦈ govSt')
+                        → govSt' ≡ updateGovStates govSt [ vp ]
+
+    STS→updateGovSt≡' (inj₁ _) h with (h 0)
+    ... | (GOV-Vote _) = refl
+    STS→updateGovSt≡' (inj₂ _) h with (h 0)
+    ... | (GOV-Propose  _) = refl
+
     STS→updateGovSt≡ : {govSt govSt' : GovState} (vps : List (GovVote ⊎ GovProposal))
-                       → (gΓ ⊢ govSt ⇀⦇ vps ,GOV⦈ govSt')
+                       → (_⊢_⇀⟦_⟧ᵢ*'_ IdSTS _⊢_⇀⦇_,GOV'⦈_ (gΓ , (length vps))  govSt vps govSt')
                        → govSt' ≡ updateGovStates govSt vps
 
     STS→updateGovSt≡ [] (BS-base Id-nop) = refl
-    STS→updateGovSt≡ (inj₁ v ∷ vps) (BS-ind (_⊢_⇀⦇_,GOV'⦈_.GOV-Vote x) x₁) = STS→updateGovSt≡ vps x₁
-    STS→updateGovSt≡ (inj₂ p ∷ vps) (BS-ind (_⊢_⇀⦇_,GOV'⦈_.GOV-Propose x) x₁) = STS→updateGovSt≡ vps x₁
+    STS→updateGovSt≡ {govSt} {govSt'} (inj₁ v ∷ vps) (BS-ind x h) = STS→updateGovSt≡ vps goal
+      where
+      goal : (IdSTS ⊢ _⊢_⇀⦇_,GOV'⦈_ ⇀⟦ gΓ , length vps ⟧ᵢ*' updateVote govSt v) vps govSt'
+      goal = {!!}
+
+    STS→updateGovSt≡ (inj₂ y ∷ vps) h = {!!}
+
+
 
     STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                  → isValid ≡ true
                  → LState.govSt s' ≡ updateGovStates govSt (txgov txb)
-    STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) (proj₂ (proj₂ (proj₂ x)))
+    STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) {!!} -- (proj₂ (proj₂ (proj₂ x)))
+
 
     --                   --
     -- CONNECTING LEMMAS --
@@ -581,7 +598,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       → govDepsMatch (EpochState.ls eps) → govDepsMatch (EpochState.ls eps')
 
     EPOCH-govDepsMatch ratify-removed ⟦ acnt' , ls' ,  es , fut' ⟧ᵉ'
-      (_⊢_⇀⦇_,EPOCH⦈_.EPOCH x) govDepsMatch-ls =
+      (EPOCH x) govDepsMatch-ls =
       ≡ᵉ.trans connect (main-invariance-lemma govDepsMatch-ls)
       where
 
