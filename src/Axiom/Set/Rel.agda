@@ -1,7 +1,7 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 {-# OPTIONS -v allTactics:100 #-}
 
-open import Prelude hiding (filter; map)
+open import Prelude hiding (map)
 
 open import Agda.Primitive using (lzero) renaming (Set to Type)
 open import Axiom.Set using (Theory)
@@ -170,6 +170,9 @@ module Restriction (sp-∈ : spec-∈ A) where
 
   res-∅ : R ∣ ∅ ≡ᵉ ∅
   res-∅ = dom-∅ res-dom
+
+  res-∅ᶜ : R ∣ ∅ ᶜ ≡ᵉ R
+  res-∅ᶜ = ex-⊆ , λ a∈R → ∈⇔P (∉-∅ , a∈R)
 
   res-ex-∪ : Decidable (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
   res-ex-∪ ∈X? = ∪-⊆ res-⊆ ex-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where

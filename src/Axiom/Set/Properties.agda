@@ -5,26 +5,30 @@ open import Axiom.Set using (Theory)
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
 
-open import Prelude hiding (isEquivalence; trans; filter; map)
+open import Prelude hiding (isEquivalence; trans; map)
 open Theory th
 
 import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
+import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
+import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
 import Relation.Nullary.Decidable
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
-open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
+open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
+open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
 open import Data.Product using (map₂)
-open import Class.DecEq using (DecEq; _≟_)
-open import Relation.Binary
+open import Data.Product.Properties.Ext
+open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
+open import Function.Related.TypeIsomorphisms
+open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
-open import Relation.Unary using () renaming (Decidable to Decidable¹)
 
 open Equivalence
 
@@ -171,6 +175,23 @@ map-≡ᵉ (x⊆y , y⊆x) = map-⊆ x⊆y , map-⊆ y⊆x
 map-∅ : {X : Set A} {f : A → B} → map f ∅ ≡ᵉ ∅
 map-∅ = ∅-least λ x∈map → case ∈-map⁻' x∈map of λ where (_ , _ , h) → ⊥-elim (∉-∅ h)
 
+map-∪ : {X Y : Set A} → (f : A → B) → map f (X ∪ Y) ≡ᵉ map f X ∪ map f Y
+map-∪ {X = X} {Y} f = from ≡ᵉ⇔≡ᵉ' λ b →
+    b ∈ map f (X ∪ Y)
+      ∼⟨ R.SK-sym ∈-map ⟩
+    (∃[ a ] b ≡ f a × a ∈ X ∪ Y)
+      ∼⟨ ∃-cong′ (R.K-refl ×-cong R.SK-sym ∈-∪) ⟩
+    (∃[ a ] b ≡ f a × (a ∈ X ⊎ a ∈ Y))
+      ↔⟨ ∃-cong′ ×-distribˡ-⊎' ⟩
+    (∃[ a ] (b ≡ f a × a ∈ X ⊎ b ≡ f a × a ∈ Y))
+      ↔⟨ ∃-distrib-⊎' ⟩
+    (∃[ a ] b ≡ f a × a ∈ X ⊎ ∃[ a ] b ≡ f a × a ∈ Y)
+      ∼⟨ ∈-map ⊎-cong ∈-map ⟩
+    (b ∈ map f X ⊎ b ∈ map f Y)
+      ∼⟨ ∈-∪ ⟩
+    b ∈ map f X ∪ map f Y ∎
+  where open R.EquationalReasoning
+
 mapPartial-∅ : {f : A → Maybe B} → mapPartial f ∅ ≡ᵉ ∅
 mapPartial-∅ {f = f} = ∅-least λ x∈map → case from (∈-mapPartial {f = f}) x∈map of λ where
   (_ , h , _) → ⊥-elim (∉-∅ h)
@@ -218,6 +239,11 @@ filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
 ∪-⊆ : X ⊆ Z → Y ⊆ Z → X ∪ Y ⊆ Z
 ∪-⊆ X⊆Z Y⊆Z = λ a∈X∪Y → [ X⊆Z , Y⊆Z ]′ (∈⇔P a∈X∪Y)
 
+⊆→∪ : X ⊆ Y → X ∪ Y ≡ᵉ Y
+⊆→∪ X⊆Y = (λ {a} x → case from ∈-∪ x of λ where
+            (inj₁ v) → X⊆Y v
+            (inj₂ v) → v) , ∪-⊆ʳ
+
 ∪-Supremum : Supremum (_⊆_ {A}) _∪_
 ∪-Supremum _ _ = ∪-⊆ˡ , ∪-⊆ʳ , λ _ → ∪-⊆
 
@@ -245,6 +271,25 @@ Set-JoinSemilattice = record
 Set-BoundedJoinSemilattice : IsBoundedJoinSemilattice (_≡ᵉ_ {A}) _⊆_ _∪_ ∅
 Set-BoundedJoinSemilattice = record
   { isJoinSemilattice = Set-JoinSemilattice ; minimum = ∅-minimum }
+
+Set-BddSemilattice : {A : Type ℓ} → BoundedJoinSemilattice _ _ _
+Set-BddSemilattice {A} = record
+                      { Carrier = Set A
+                      ; _≈_ = _≡ᵉ_ {A}
+                      ; _≤_ = _⊆_
+                      ; _∨_ = _∪_
+                      ; ⊥ = ∅
+                      ; isBoundedJoinSemilattice = Set-BoundedJoinSemilattice
+                      }
+
+module _ {A : Type ℓ} where
+  open import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice (Set-BddSemilattice {A})
+
+  ∪-identityˡ : (X : Set A) → ∅ ∪ X ≡ᵉ X
+  ∪-identityˡ = identityˡ
+
+  ∪-identityʳ : (X : Set A) → X ∪ ∅ ≡ᵉ X
+  ∪-identityʳ = identityʳ
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
@@ -296,3 +341,23 @@ module Intersectionᵖ (sp-∈ : spec-∈ A) where
 
   ∩-sym : X ∩ Y ≡ᵉ Y ∩ X
   ∩-sym = ∩-sym⊆ , ∩-sym⊆
+
+-- Additional properties of lists and sets.
+module _ {L : List A} where
+  open Equivalence
+
+  sublist-⇔ : {l : List A} → fromList l ⊆ fromList L ⇔ l ⊆ˡ L
+  sublist-⇔ {[]} = mk⇔ (λ x ()) (λ _ {_} → ⊥-elim ∘ ∉-∅)
+  sublist-⇔ {x ∷ xs} = mk⇔ onlyif (λ u → to ∈-fromList ∘ u ∘ from ∈-fromList)
+    where
+    onlyif : ({a : A} → a ∈ fromList (x ∷ xs) → a ∈ fromList L) → x ∷ xs ⊆ˡ L
+    onlyif h (here refl) = from ∈-fromList (h (to ∈-fromList (here refl)))
+    onlyif h (there x'∈) = from ∈-fromList (h (to ∈-fromList (there x'∈)))
+
+  module _ {ℓ : Level}{P : Pred (List A) ℓ} where
+    ∃-sublist-⇔ : (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ (∃[ l ] l ⊆ˡ L × P l)
+    ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
+                      (λ (l , l⊆L , Pl) → l , from sublist-⇔ l⊆L , Pl)
+
+    ∃?-sublist-⇔ : Dec (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ Dec (∃[ l ] l ⊆ˡ L × P l)
+    ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔

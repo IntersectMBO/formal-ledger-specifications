@@ -39,34 +39,53 @@ infixl 7 _*↓_
 -- multiply a natural number with a fraction, rounding down and taking the absolute value
 _*↓_ : ℚ.ℚ → ℕ → ℕ
 q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
+\end{code}
 
-isPhaseTwoScriptAddress : Tx → Addr → Bool
-isPhaseTwoScriptAddress tx a =
+\begin{figure*}[h]
+\begin{code}
+isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
+isTwoPhaseScriptAddress tx utxo a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx
+    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
                  then (λ {s} → isP2Script s)
                  else false)
   else
     false
+\end{code}
+\begin{code}[hide]
+opaque
+\end{code}
+\begin{code}
+  getDataHashes : ℙ TxOut → ℙ DataHash
+  getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
+
+  getInputHashes : Tx → UTxO → ℙ DataHash
+  getInputHashes tx utxo = getDataHashes
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
+            (range (utxo ∣ txins)))
+    where open Tx; open TxBody (tx .body)
 
 totExUnits : Tx → ExUnits
 totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
   where open Tx; open TxWitnesses
+\end{code}
+\caption{Functions supporting UTxO rules}
+\label{fig:supportfunctions:utxo}
+\end{figure*}
 
+\begin{code}[hide]
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
 
-utxoEntrySize : TxOut → MemoryEstimate
-utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValue o)
+utxoEntrySize : TxOutʰ → MemoryEstimate
+utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValueʰ o)
 
-refScripts : Tx → UTxO → ℙ Script
-refScripts tx utxo = ∅ -- TODO: implement when we do Babbage
 
 open PParams
 \end{code}
 
-Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo2} define
+Figures~\ref{fig:supportfunctions:utxo},~\ref{fig:functions:utxo}, and~\ref{fig:functions:utxo2} define
 functions needed for the UTxO transition system. Note the special
 multiplication symbol \AgdaFunction{*↓} used in
 Figure~\ref{fig:functions:utxo}: it means multiply and round down
@@ -98,7 +117,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
   outs tx = mapKeys (tx .txid ,_) (tx .txouts)
 
   balance : UTxO → Value
-  balance utxo = ∑[ x ← utxo ] getValue x
+  balance utxo = ∑[ x ← mapValues txOutHash utxo ] getValueʰ x
 
   cbalance : UTxO → Coin
   cbalance utxo = coin (balance utxo)
@@ -106,10 +125,11 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{NoConway}
 \begin{code}
   minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
-                     + txscriptfee (pp .prices) (totExUnits tx)
-                     + pp .minFeeRefScriptCoinsPerByte
-                       *↓ ∑ˢ[ x ← refScripts tx utxo ] scriptSize x
+  minfee pp utxo tx  =
+    pp .a * tx .body .txsize + pp .b
+    + txscriptfee (pp .prices) (totExUnits tx)
+    + pp .minFeeRefScriptCoinsPerByte
+    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
 
 \end{code}
 \begin{code}[hide]
@@ -130,42 +150,43 @@ instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
 
-module _ (let open TxBody) where
+\end{code}
+\begin{code}
+updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateCertDeposits _   []              deposits = deposits
+updateCertDeposits pp  (cert ∷ certs)  deposits
+  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
+  where
+  certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
+  certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
+  certDeposit (regpool c _) {pp}  = ❴ PoolDeposit       c , pp .poolDeposit  ❵
+  certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
+  certDeposit _                   = ∅
+
+  certRefund :  DCert → ℙ DepositPurpose
+  certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+  certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+  certRefund _              = ∅
+
+updateProposalDeposits : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin
+  → DepositPurpose ⇀ Coin
+updateProposalDeposits []        _     _      deposits  = deposits
+updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
+  updateProposalDeposits ps txid gaDep deposits
+  ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
+
+updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateDeposits pp txb = updateCertDeposits pp txcerts
+                        ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
+\end{code}
+\begin{code}[hide]
+  where open TxBody txb
 \end{code}
 \begin{code}
 
-  updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updateDeposits pp txb
-    = updateCertDeposits (txb .txcerts) ∘ updateProposalDeposits (txb .txprop)
-    where
-      certDeposit : DCert → DepositPurpose ⇀ Coin
-      certDeposit  (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
-      certDeposit  (regpool c _)       = ❴ PoolDeposit       c , pp .poolDeposit  ❵
-      certDeposit  (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
-      certDeposit  _                   = ∅
-
-      propDeposit : GovActionID → DepositPurpose ⇀ Coin
-      propDeposit gaid = ❴ GovActionDeposit gaid , pp .govActionDeposit ❵
-
-      certRefund : DCert → ℙ DepositPurpose
-      certRefund (dereg c)      = ❴ CredentialDeposit c ❵
-      certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-      certRefund _              = ∅
-
-      updateCertDeposits : List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-      updateCertDeposits []              deposits = deposits
-      updateCertDeposits (cert ∷ certs)  deposits
-        = updateCertDeposits certs deposits ∪⁺ certDeposit cert ∣ certRefund cert ᶜ
-
-      updateProposalDeposits : List GovProposal → DepositPurpose ⇀ Coin
-        → DepositPurpose ⇀ Coin
-      updateProposalDeposits [] deposits = deposits
-      updateProposalDeposits (_ ∷ props) deposits
-        = updateProposalDeposits props deposits ∪⁺ propDeposit (txb .txid , length props)
-
-  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
-  depositsChange pp txb deposits
-    = getCoin (updateDeposits pp txb deposits) - getCoin deposits
+depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
+depositsChange pp txb deposits =
+  getCoin (updateDeposits pp txb deposits) - getCoin deposits
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
@@ -218,7 +239,7 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
                       )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange  = range    (utxo ∣ collateral)
+    collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
 \end{code}
 \end{AgdaMultiCode}
@@ -370,27 +391,28 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     let open Tx tx renaming (body to txb); open TxBody txb
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
+        txoutsʰ = (mapValues txOutHash txouts)
     in
-    ∙ txins ≢ ∅                              ∙ txins ⊆ dom utxo
-    ∙ inInterval slot txvldt                 ∙ feesOK pp tx utxo ≡ true
-    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
-    ∙ txsize ≤ maxTxSize pp
+    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
+    ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
+    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
-    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
-        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValue txout
-    ∙ ∀[ (_ , txout) ∈ txouts .proj₁ ]
-        serSize (getValue txout) ≤ maxValSize pp
-    ∙ ∀[ (a , _) ∈ range txouts ]
+    ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
+    ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+        serSize (getValueʰ txout) ≤ maxValSize pp
+    ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txouts ]  netId a         ≡ networkId
-    ∙ ∀[ a ∈ dom  txwdrls ]        a .RwdAddr.net  ≡ networkId
+    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ networkId
+    ∙ ∀[ a ∈ dom txwdrls ]         a .RwdAddr.net  ≡ networkId
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m n o p q r h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , n , o , p , q , r , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

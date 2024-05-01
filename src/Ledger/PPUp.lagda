@@ -6,7 +6,7 @@
 open import Agda.Builtin.FromNat
 open import Algebra; open import Algebra.Literals
 import Data.Product.Properties as ×
-import Data.Nat as ℕ; import Data.Nat.Properties as ℕ; import Data.Nat.Literals as ℕ
+import Data.Nat as ℕ; import Data.Nat.Properties as ℕ
 
 open import Ledger.Prelude hiding (_*_)
 open import Ledger.Transaction
@@ -17,8 +17,6 @@ open Semiring Slotʳ using (_*_)
 open Semiring-Lit Slotʳ
 
 private variable m n : ℕ
-
-instance _ = ℕ.number
 \end{code}
 \begin{figure*}[h]
 \begin{code}
@@ -71,7 +69,7 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateCurrent : let open PPUpdateEnv Γ in
     dom pup ⊆ dom genDelegs
     → All (isViableUpdate pparams) (range pup)
-    → slot + (2 * StabilityWindow) < firstSlot (sucᵉ (epoch slot))
+    → slot + 2 * StabilityWindow < firstSlot (epoch slot + 1)
     → epoch slot ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
@@ -80,8 +78,8 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
   PPUpdateFuture : let open PPUpdateEnv Γ in
     dom pup ⊆ dom genDelegs
     → All (isViableUpdate pparams) (range pup)
-    → firstSlot (sucᵉ (epoch slot)) ≤ slot + (2 * StabilityWindow)
-    → sucᵉ (epoch slot) ≡ e
+    → firstSlot (epoch slot + 1) ≤ slot + 2 * StabilityWindow
+    → epoch slot + 1 ≡ e
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
         record { pup = pupˢ ; fpup = pup ∪ˡ fpupˢ }

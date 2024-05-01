@@ -3,6 +3,9 @@
 \usepackage{environ}
 \NewEnviron{NoConway}{%
 }
+\NewEnviron{Conway}{%
+\BODY
+}
 
 \include{preamble}
 
@@ -36,5 +39,6 @@
 \appendix
 
 \input{Ledger/EssentialAgda}
+\input{Ledger/PDF/ConwayBootstrapEnact}
 
 \end{document}

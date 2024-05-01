@@ -4,7 +4,7 @@ open import Agda.Primitive renaming (Set to Type)
 
 module Axiom.Set where
 
-open import Prelude hiding (filter; map)
+open import Prelude hiding (map)
 
 import Function.Related.Propositional as R
 open import Data.List.Ext.Properties using (∈-dedup; _×-cong_)
@@ -270,6 +270,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
 
     disjoint' : Set A → Set A → Type ℓ
     disjoint' X Y = X ∩ Y ≡ᵉ ∅
+
+    _＼_ : Set A → Set A → Set A
+    X ＼ Y = filter (sp-¬ (sp-∈ {Y})) X
 
   All : (A → Type) → Set A → Type ℓ
   All P X = ∀ {a} → a ∈ X → P a

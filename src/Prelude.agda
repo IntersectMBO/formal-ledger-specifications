@@ -13,7 +13,7 @@ open import Data.Bool public
   hiding (_≟_; _≤_; _≤?_; _<_; _<?_; if_then_else_)
 open import Data.Empty public
 open import Data.List public
-  hiding (align; alignWith; fromMaybe; map; zip; zipWith)
+  hiding (align; alignWith; filter; fromMaybe; map; zip; zipWith)
 open import Data.List.Membership.Propositional public
   using () renaming (_∈_ to _∈ˡ_; _∉_ to _∉ˡ_)
 open import Data.Maybe public
@@ -70,3 +70,8 @@ open import Class.Show public
 
 infix 2 ∃₂-syntax
 syntax ∃₂-syntax (λ x y → C) = ∃₂[ x , y ] C
+
+-- Instance for number literals, not enabled by default
+import Data.Nat.Literals as ℕ
+
+instance Number-ℕ = ℕ.number

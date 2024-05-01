@@ -4,6 +4,9 @@
 {-# OPTIONS --safe #-}
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
+open import Data.List using (filter)
+
+open import Agda.Builtin.FromNat
 
 open import Ledger.Prelude
 open import Ledger.Abstract
@@ -98,9 +101,9 @@ its results, i.e:
 
       certState' =
         ⟦ record dState { rewards = rewards ∪⁺ refunds }
-        ﹐ ⟦ pools ∣ retired ᶜ ﹐ retiring ∣ retired ᶜ ⟧ᵖ
-        ﹐ ⟦ if null govSt' then mapValues sucᵉ dreps else dreps
-          ﹐ ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
+        , ⟦ pools ∣ retired ᶜ , retiring ∣ retired ᶜ ⟧ᵖ
+        , ⟦ if null govSt' then mapValues (1 +_) dreps else dreps
+          , ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
 
       utxoSt' = ⟦ utxo , 0 , deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
@@ -131,13 +134,13 @@ data
 \end{code}
 \begin{code}
   NEWEPOCH-New :
-    e ≡ sucᵉ lastEpoch
+    e ≡ lastEpoch + 1
     → Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     ────────────────────────────────
     Γ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' ⟧ⁿᵉ
 
   NEWEPOCH-Not-New :
-    e ≢ sucᵉ lastEpoch
+    e ≢ lastEpoch + 1
     ────────────────────────────────
     Γ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps ⟧ⁿᵉ
 \end{code}

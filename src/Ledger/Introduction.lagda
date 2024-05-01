@@ -19,6 +19,16 @@ private variable
   sigs : List Sig
 \end{code}
 
+\begin{Conway}
+
+This is the specification of the Conway era of the Cardano ledger. As
+with previous specifications, this document is an incremental
+specification, so everything that isn't defined here refers to the
+most recent definition from an older specification.
+
+\end{Conway}
+
+\begin{NoConway}
 \begin{center}
 Repository: \url{https://github.com/IntersectMBO/formal-ledger-specifications}
 \end{center}
@@ -39,6 +49,7 @@ Conway \cite{cip1694} & Complete & Partial & Partial \\
 \caption{Specification progress}
 \label{fig:eras-progress}
 \end{longtable}
+\end{NoConway}
 
 \subsection{A note on Agda}
 
@@ -186,6 +197,12 @@ we use here to form a type of sets with elements in a given type.
 \begin{figure*}[h]
 \begin{code}[hide]
 module _ (ℙ_ : Set → Set) (_∈_ : ∀ {A : Set} → A → ℙ A → Set) where
+  private variable
+    a c : Level
+    A : Set a
+  Σ-syntax' : (A : Set a) → (A → Set c) → Set _
+  Σ-syntax' = Σ
+  syntax Σ-syntax' A (λ x → B) = x ∈ A ﹐ B
 \end{code}
 \begin{code}
   _⊆_ : {A : Set} → ℙ A → ℙ A → Set
@@ -201,7 +218,7 @@ module _ (ℙ_ : Set → Set) (_∈_ : ∀ {A : Set} → A → ℙ A → Set) wh
   left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
   _⇀_ : Set → Set → Set
-  A ⇀ B = Σ[ m ∈ Rel A B ] left-unique m
+  A ⇀ B = r ∈ Rel A B ﹐ left-unique r
 \end{code}
 \end{figure*}
 

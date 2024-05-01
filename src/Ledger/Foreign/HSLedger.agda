@@ -10,12 +10,13 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeM
 open import Relation.Binary.Morphism.Structures
 
 open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
 
 import Foreign.Haskell as F
 import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Crypto
-open import Ledger.Transaction
+open import Ledger.Transaction renaming (Vote to VoteTag)
 open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
 
@@ -23,14 +24,14 @@ open import Interface.HasOrder.Instance
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
-  ∀Hashable = λ where .hash → id; .hashInj refl → refl
+  ∀Hashable = λ where .hash → id
 
   ∀isHashableSet : isHashableSet A
   ∀isHashableSet = mkIsHashableSet A
 
 instance
   Hashable-⊤ : Hashable ⊤ ℕ
-  Hashable-⊤ = λ where .hash tt → 0; .hashInj _ → refl
+  Hashable-⊤ = λ where .hash tt → 0
 
 module Implementation where
   Network          = ⊤
@@ -146,12 +147,10 @@ HsGovParams : GovParams
 HsGovParams = record
   { Implementation
   ; ppUpd = let open PParamsDiff in λ where
-      .UpdateT                → ⊤
-      .updateGroups           → λ _ → ∅
-      .applyUpdate            → λ p _ → p
-      .ppdWellFormed          → λ _ → false
-      .ppdWellFormed⇒hasGroup → λ ()
-      .ppdWellFormed⇒WF       → λ _ _ x → x
+      .UpdateT      → ⊤
+      .updateGroups → λ _ → ∅
+      .applyUpdate  → λ p _ → p
+      .ppWF?        → ⁇ yes (λ _ h → h)
   ; ppHashingScheme = it
   }
 
@@ -164,7 +163,6 @@ HSGovStructure = record
   }
 instance _ = HSGovStructure
 
-open import Ledger.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
 open import Ledger.Deleg it hiding (PoolParams; DCert)
 
 HSTransactionStructure : TransactionStructure
@@ -201,15 +199,23 @@ HSAbstractFunctions = record
   }
 instance _ = HSAbstractFunctions
 
-open TransactionStructure it
+open TransactionStructure it hiding (GovVote; GovProposal)
+open import Ledger.Gov.Properties it
 open import Ledger.Utxo it it
 open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it
+open import Data.Rational
 
 instance
   _ = Convertible-Refl {⊤}
   _ = Convertible-Refl {ℕ}
   _ = Convertible-Refl {String}
+
+  Convertible-Rational : Convertible ℚ F.Rational
+  Convertible-Rational = λ where
+    .to (mkℚ n d _) → n F., suc d
+    .from (n F., zero) → 0ℚ -- TODO is there a safer way to do this?
+    .from (n F., (suc d)) → n Data.Rational./ suc d
 
   -- Since the foreign address is just a number, we do bad stuff here
   Convertible-Addr : Convertible Addr F.Addr
@@ -221,29 +227,13 @@ instance
     .from n → inj₁ record { net = _ ; pay = inj₁ n ; stake = inj₁ 0 }
 
   Convertible-Credential : Convertible Credential F.Credential
-  Convertible-Credential = λ where
-    .to (inj₁ x) → F.KeyHashObj (to x)
-    .to (inj₂ y) → F.ScriptObj (to y)
-    .from (F.ScriptObj x) → inj₁ (from x)
-    .from (F.KeyHashObj x) → inj₂ (from x)
+  Convertible-Credential = autoConvertible
 
   Convertible-GovRole : Convertible GovRole F.GovRole
-  Convertible-GovRole = λ where
-    .to CC → F.CC
-    .to DRep → F.DRep
-    .to SPO → F.SPO
-    .from F.CC → GovRole.CC
-    .from F.DRep → GovRole.DRep
-    .from F.SPO → GovRole.SPO
+  Convertible-GovRole = autoConvertible
 
   Convertible-VDeleg : Convertible VDeleg F.VDeleg
-  Convertible-VDeleg = λ where
-    .to (credVoter x x₁) → F.CredVoter (to x) (to x₁)
-    .to abstainRep → F.AbstainRep
-    .to noConfidenceRep → F.NoConfidenceRep
-    .from (F.CredVoter x x₁) → VDeleg.credVoter (from x) (from x₁)
-    .from F.AbstainRep → VDeleg.abstainRep
-    .from F.NoConfidenceRep → VDeleg.noConfidenceRep
+  Convertible-VDeleg = autoConvertible
 
   Convertible-PoolParams : Convertible PoolParams F.PoolParams
   Convertible-PoolParams = λ where
@@ -255,27 +245,19 @@ instance
     .to _ → tt
     .from tt → record { url = "bogus" ; hash = tt }
 
+  Convertible-Script : Convertible Script F.Script
+  Convertible-Script = λ where
+    .to _ → tt
+    .from _ → inj₂ tt
+
   Convertible-DCert : Convertible DCert F.TxCert
-  Convertible-DCert = λ where
-    .to (delegate x x₁ x₂ x₃) → F.Delegate (to x) (to x₁) (to x₂) (to x₃)
-    .to (dereg x) → F.Dereg (to x)
-    .to (regpool x x₁) → F.RegPool (to x) (to x₁)
-    .to (retirepool x x₁) → F.RetirePool (to x) (to x₁)
-    .to (regdrep x x₁ x₂) → F.RegDRep (to x) (to x₁) (to x₂)
-    .to (deregdrep x) → F.DeRegDRep (to x)
-    .to (ccreghot x x₁) → F.CCRegHot (to x) (to x₁)
-    .from (F.Delegate x x₁ x₂ x₃) → DCert.delegate (from x) (from x₁) (from x₂) (from x₃)
-    .from (F.Dereg x) → DCert.dereg (from x)
-    .from (F.RegPool x x₁) → DCert.regpool (from x) (from x₁)
-    .from (F.RetirePool x x₁) → DCert.retirepool (from x) (from x₁)
-    .from (F.RegDRep x x₁ x₂) → DCert.regdrep (from x) (from x₁) (from x₂)
-    .from (F.DeRegDRep x) → DCert.deregdrep (from x)
-    .from (F.CCRegHot x x₁) → DCert.ccreghot (from x) (from x₁)
+  Convertible-DCert = autoConvertible
 
   Convertible-TxBody : Convertible TxBody F.TxBody
   Convertible-TxBody = λ where
     .to txb → let open TxBody txb in record
       { txins  = to txins
+      ; refInputs  = to refInputs
       ; txouts = to txouts
       ; txfee  = txfee
       ; txvldt = to txvldt
@@ -288,6 +270,7 @@ instance
       }
     .from txb → let open F.TxBody txb in record
       { txins      = from txins
+      ; refInputs  = from refInputs
       ; txouts     = from txouts
       ; txcerts    = from txcerts
       ; mint       = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
@@ -308,10 +291,7 @@ instance
       }
 
   Convertible-Tag : Convertible Tag F.Tag
-  Convertible-Tag = λ where
-    .to   → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd; Vote → Vote; Propose → Propose }
-    .from → λ{ Spend → Spend; Mint → Mint; Cert → Cert; Rewrd → Rewrd; Vote → Vote; Propose → Propose }
-   where open F.Tag
+  Convertible-Tag = autoConvertible
 
   Convertible-TxWitnesses : Convertible TxWitnesses F.TxWitnesses
   Convertible-TxWitnesses = λ where
@@ -407,11 +387,7 @@ instance
       }
 
   Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
-  Convertible-UTxOEnv = λ where
-    .to record { slot = slot ; pparams = pparams } →
-        record { slot = slot ; pparams = to pparams }
-    .from e → let open F.UTxOEnv e in record
-      { slot = slot ; pparams = from pparams }
+  Convertible-UTxOEnv = autoConvertible
 
   Convertible-UTxOState : Convertible UTxOState F.UTxOState
   Convertible-UTxOState = λ where
@@ -424,22 +400,114 @@ instance
       ; donations = ε
       }
 
-  Convertible-ComputationResult : ∀ {e e' a a'}
-    → ⦃ Convertible e e' ⦄
-    → ⦃ Convertible a a' ⦄
-    → Convertible (ComputationResult e a) (F.ComputationResult e' a')
-  Convertible-ComputationResult = λ where
-    .to (success a) → F.Success (to a)
-    .to (failure a) → F.Failure (to a)
-    .from (F.Success a) → success (from a)
-    .from (F.Failure a) → failure (from a)
+  Convertible-ComputationResult : ConvertibleType ComputationResult F.ComputationResult
+  Convertible-ComputationResult = autoConvertible
+
+  Convertible-RwdAddr : Convertible (GovStructure.RwdAddr govStructure) F.RwdAddr
+  Convertible-RwdAddr = autoConvertible
+
+  open import Ledger.Enact govStructure
+  Convertible-EnactState : ConvertibleType EnactState F.EnactState
+  Convertible-EnactState = autoConvertible
+
+  Convertible-GovEnv : ConvertibleType GovEnv F.GovEnv
+  Convertible-GovEnv = autoConvertible
+
+  open import Ledger.GovernanceActions govStructure using (Vote; GovVote; GovProposal)
+  Convertible-Vote : ConvertibleType Vote F.Vote
+  Convertible-Vote = autoConvertible
+
+  Convertible-PParamsUpdate : Convertible (GovStructure.PParamsUpdate govStructure) F.PParamsUpdate
+  Convertible-PParamsUpdate = record { to = id ; from = id }
+
+  Convertible-GovAction : ConvertibleType GovAction F.GovAction
+  Convertible-GovAction = autoConvertible
+
+toNeedsHash : ∀ {action} → F.GovActionID → NeedsHash action
+toNeedsHash {NoConfidence} x = from x
+toNeedsHash {NewCommittee _ _ _} x = from x
+toNeedsHash {NewConstitution _ _} x = from x
+toNeedsHash {TriggerHF _} x = from x
+toNeedsHash {ChangePParams _} x = from x
+toNeedsHash {TreasuryWdrl _} x = tt
+toNeedsHash {Info} x = tt
+
+fromNeedsHash : ∀ {action} → NeedsHash action → F.GovActionID
+fromNeedsHash {NoConfidence} x = to x
+fromNeedsHash {NewCommittee _ _ _} x = to x
+fromNeedsHash {NewConstitution _ _} x = to x
+fromNeedsHash {TriggerHF _} x = to x
+fromNeedsHash {ChangePParams _} x = to x
+fromNeedsHash {TreasuryWdrl _} x = 0 F., 0
+fromNeedsHash {Info} x = 0 F., 0
+
+instance
+  Convertible-GovActionState : Convertible GovActionState F.GovActionState
+  Convertible-GovActionState = λ where
+    .to s → let open GovActionState s in
+      record
+        { gasVotes = to votes
+        ; gasReturnAddr = to returnAddr
+        ; gasExpiresIn = to expiresIn
+        ; gasAction = to action
+        ; gasPrevAction = fromNeedsHash prevAction
+        }
+    .from s → let open F.GovActionState s in
+      record
+        { votes = from gasVotes
+        ; returnAddr = from gasReturnAddr
+        ; expiresIn = from gasExpiresIn
+        ; action = from gasAction
+        ; prevAction = toNeedsHash gasPrevAction
+        }
+
+  Convertible-GovVote : ConvertibleType GovVote F.GovVote
+  Convertible-GovVote = autoConvertible
+
+  Convertible-GovProposal : Convertible GovProposal F.GovProposal
+  Convertible-GovProposal = λ where
+    .to p → let open GovProposal p in
+      record
+        { gpAction = to action
+        ; gpPrevAction = fromNeedsHash prevAction
+        ; gpPolicy = to policy
+        ; gpDeposit = to deposit
+        ; gpReturnAddr = to returnAddr
+        ; gpAnchor = to anchor
+        }
+    .from p → let open F.GovProposal p in
+      record
+        { action = from gpAction
+        ; prevAction = toNeedsHash gpPrevAction
+        ; policy = from gpPolicy
+        ; deposit = from gpDeposit
+        ; returnAddr = from gpReturnAddr
+        ; anchor = from gpAnchor
+        }
+
+  Convertible-GovSignal : Convertible (GovVote ⊎ GovProposal) F.GovSignal
+  Convertible-GovSignal = λ where
+    .to (inj₁ x) → F.GovSignalVote (to x)
+    .to (inj₂ y) → F.GovSignalProposal (to y)
+    .from (F.GovSignalVote x) → inj₁ (from x)
+    .from (F.GovSignalProposal x) → inj₂ (from x)
+
+  Convertible-⊥⊎ : ∀ {A} → Convertible (⊥ ⊎ A) A
+  Convertible-⊥⊎ = λ where
+    .to (inj₂ y) → y
+    .from → inj₂
 
 utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
-utxo-step e s tx = to $ UTXO-step (from e) (from s) (from tx)
+utxo-step = to UTXO-step
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
 utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
-utxow-step e s tx = to $ compute Computational-UTXOW (from e) (from s) (from tx)
+utxow-step = to (compute Computational-UTXOW)
 
 {-# COMPILE GHC utxow-step as utxowStep #-}
+
+gov-step : F.GovEnv → F.GovState → List F.GovSignal → F.ComputationResult String F.GovState
+gov-step = to (compute Computational-GOV)
+
+{-# COMPILE GHC gov-step as govStep #-}

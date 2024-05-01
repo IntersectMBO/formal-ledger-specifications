@@ -4,6 +4,8 @@
 \NewEnviron{NoConway}{%
 \BODY
 }
+\NewEnviron{Conway}{%
+}
 
 \include{preamble}
 
@@ -40,9 +42,6 @@ open import Ledger.Utxo.Properties
 open import Ledger.Utxow
 open import Ledger.Utxow.Properties
 
-open import Ledger.PPUp
-open import Ledger.PPUp.Properties
-
 open import Ledger.Ledger
 open import Ledger.Ledger.Properties
 open import Ledger.Ratify.Properties
@@ -54,7 +53,10 @@ open import Ledger.Ratify
 
 open import Ledger.Chain
 
+open import Ledger.Properties
+
 open import Ledger.EssentialAgda
+open import Ledger.PDF.ConwayBootstrapEnact
 \end{code}
 
 \include{Ledger/Introduction}
@@ -88,5 +90,6 @@ open import Ledger.EssentialAgda
 \appendix
 
 \input{Ledger/EssentialAgda}
+\input{Ledger/PDF/ConwayBootstrapEnact}
 
 \end{document}

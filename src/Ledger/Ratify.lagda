@@ -8,7 +8,7 @@ open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_; _⊔_)
+open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -301,8 +301,8 @@ restrictedDists coins rank dists = dists
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
 actualVotes Γ pparams cc ga votes
-  =   mapKeys (credVoter CC) (actualCCVotes cc)  ∪ˡ actualPDRepVotes ga
-  ∪ˡ  actualDRepVotes                            ∪ˡ actualSPOVotes ga
+  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes ga
+  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes ga
   where
 \end{code}
 \begin{code}[hide]
@@ -312,30 +312,45 @@ actualVotes Γ pparams cc ga votes
 \begin{code}
 
   roleVotes : GovRole → VDeleg ⇀ Vote
-  roleVotes r = mapKeys (uncurry credVoter) (filterᵐ (λ (x , _) → r ≡ proj₁ x) votes)
+  roleVotes r = mapKeys (uncurry credVoter) (filter (λ (x , _) → r ≡ proj₁ x) votes)
 
-  activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
+  activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
   spos = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
 
-  activeCC : CCData → ℙ Credential
-  activeCC (just (cc , _))  = dom (filterᵐ (λ (_ , x) → Is-just x) (ccHotKeys ∣ dom cc))
-  activeCC nothing          = ∅
-
-  actualCCVote : Credential → Epoch → Vote
-  actualCCVote c e = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
+  getCCHotCred : Credential × Epoch → Maybe Credential
+  getCCHotCred (c , e) = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
 \end{code}
 \begin{code}[hide]
     λ where
 \end{code}
 \begin{code}
-      (true , just (just c'))  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
-      _                        → Vote.abstain -- expired, no hot key or resigned
+      (true , just (just c'))  → just c'
+      _                        → nothing -- expired, no hot key or resigned
 
-  actualCCVotes : CCData → Credential ⇀ Vote
-  actualCCVotes nothing          =  ∅
-  actualCCVotes (just (cc , q))  =  if ccMinSize ≤ lengthˢ (activeCC (just (cc , q)))
-                                    then mapWithKey actualCCVote cc
-                                    else constMap (dom cc) Vote.no
+  actualCCVote : Credential → Epoch → Vote
+  actualCCVote c e = case getCCHotCred (c , e) of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+      _          → Vote.abstain
+
+  activeCC : (Credential ⇀ Epoch) → ℙ Credential
+  activeCC m = mapPartial getCCHotCred (m ˢ)
+
+  actualCCVotes : Credential ⇀ Vote
+  actualCCVotes = case cc of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      nothing         → ∅
+      (just (m , q))  → if ccMinSize ≤ lengthˢ (activeCC m)
+                          then mapWithKey actualCCVote m
+                          else constMap (dom m) Vote.no
 
   actualPDRepVotes : GovAction → VDeleg ⇀ Vote
   actualPDRepVotes NoConfidence
@@ -436,7 +451,12 @@ functions (together with some helpers) that are used in the rules of
 RATIFY.
 
 \begin{itemize}
-  \item \getStakeDist computes the stake distribution based on the given governance role and the corresponding delegations;
+  \item \getStakeDist computes the stake distribution based on the
+    given governance role and the corresponding delegations. Note that
+    every constitutional committe member has a stake of 1, giving them
+    equal voting power. However, just as with other delegation, multiple
+    CC members can delegate to the same hot key, giving that hot key
+    the power of those multiple votes with a single actual vote.
 
   \item \acceptedStakeRatio is the ratio of accepted stake. It is
     computed as the ratio of \yes votes over the votes that didn't
@@ -508,7 +528,14 @@ abstract
 Figure~\ref{fig:defs:ratify-defs-ii} defines functions that
 deal with delays. A given action can either be delayed if the action
 contained in \EnactState isn't the one the given action is building on top
-of, or if a previous action was a \delayingAction.
+of, which is checked by \verifyPrev, or if a previous action was a
+\delayingAction. Note that \delayingAction affects the future: whenever a
+\delayingAction is accepted all future actions are delayed. \delayed then
+expresses the condition whether an action is delayed. This happens either
+because the previous action doesn't match the current one, or because the
+previous action was a delaying one. This information is passed in as an
+argument.
+
 \begin{code}[hide]
 private variable
   Γ : RatifyEnv

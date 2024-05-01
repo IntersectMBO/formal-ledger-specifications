@@ -7,7 +7,7 @@ open import Prelude
 open import Axiom.Set
 import Axiom.Set.List as L
 
-abstract
+opaque
   List-Model : Theory {0ℓ}
   List-Model = L.List-Model
   List-Modelᶠ : Theoryᶠ
@@ -24,7 +24,8 @@ open Theoryᵈ List-Modelᵈ public
 
 open import Interface.IsSet th public
 
-abstract
+opaque
+  unfolding List-Model
   open import Axiom.Set.Properties th using (card-≡ᵉ)
 
   to-sp : {A : Set} (P : A → Set) → ⦃ P ⁇¹ ⦄ → specProperty P
