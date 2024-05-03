@@ -126,6 +126,9 @@ private
     fromClauses ← mapM (conversionClause (quote Convertible.from) (quote from)) (L.zip hsCons agdaCons)
     return $ pat-lam (toClauses ++ fromClauses) []
 
+doPatternLambda : Term → R.TC Term
+doPatternLambda hole = patternLambda =<< initTCEnvWithGoal hole
+
 -- Deriving a Convertible instance. Usage
 --   unquoteDecl iName = deriveConvertible iName (quote AgdaTy) (quote HsTy)
 deriveConvertible : Name → Name → Name → R.TC ⊤
