@@ -1,6 +1,6 @@
 -- {-# OPTIONS -v tc.unquote.def:10 -v tc.unquote.decl:10 -v tactic.hs-types:10 #-}
 
-module Foreign.Convertible.HaskellTypes where
+module Foreign.HaskellTypes.Deriving where
 
 open import Meta hiding (TC)
 
@@ -32,6 +32,7 @@ open import Class.Show.Instances
 open import Tactic.Derive.Show using (showName)
 
 open import Reflection.Utils
+open import Foreign.HaskellTypes
 
 {-
 
@@ -45,28 +46,23 @@ private variable
   l : Level
   A B : Set l
 
-record HasHsType (A : Set l) : Set₁ where
-  field
-    theHsType : Set
-
-open HasHsType
-
-HsType : (A : Set l) → ⦃ HasHsType A ⦄ → Set
-HsType _ ⦃ i ⦄ = i .HasHsType.theHsType
-
-instance
-  -- Could make a macro for these kind of congruence instances.
-
-  iHasHsTypeℕ : HasHsType ℕ
-  iHasHsTypeℕ .theHsType = ℕ
-
-  iHasHsTypeList : ⦃ HasHsType A ⦄ → HasHsType (List A)
-  iHasHsTypeList {A = A} .theHsType = List (HsType A)
-
-  iHasHsTypeFun : ⦃ HasHsType A ⦄ → ⦃ HasHsType B ⦄ → HasHsType (A → B)
-  iHasHsTypeFun {A = A} {B = B} .theHsType = HsType A → HsType B
-
 NameEnv = List (Name × String)
+
+solveInstance : Term → TC Term
+solveInstance ty = do
+  iTerm@(meta iMeta _) ← newMeta ty
+    where _ → typeErrorFmt "Impossible"
+  debugPrintFmt "tactic.hs-types" 10 "getInstances %t : %t" iTerm =<< inferType iTerm
+  iSol ∷ _ ← getInstances iMeta
+    where [] → typeErrorFmt "No instance found for %t" ty
+  debugPrintFmt "tactic.hs-types" 10 "iSol = %t" iSol
+  unify iTerm iSol
+  pure iSol
+
+solveHsType : Term → TC Term
+solveHsType tm = do
+  inst ← solveInstance (quote HasHsType ∙⟦ tm ⟧)
+  normalise $ def (quote HsType) (vArg tm ∷ iArg inst ∷ [])
 
 private
   lookup : ⦃ DecEq A ⦄ → A → List (A × B) → Maybe B
@@ -97,15 +93,6 @@ private
   isThis f (def g []) = f == g
   isThis _ _ = false
 
-  computeHsTypeInst : Term → TC Term
-  computeHsTypeInst tm = do
-    iTerm@(meta iMeta _) ← checkType unknown (quote HasHsType ∙⟦ tm ⟧)
-      where _ → typeErrorFmt "Impossible"
-    iSol ∷ _ ← getInstances iMeta
-      where [] → typeErrorFmt "No instance found for %t" (quote HasHsType ∙⟦ tm ⟧)
-    unify iTerm iSol
-    normalise $ def (quote HsType) (vArg tm ∷ iArg iSol ∷ [])
-
   computeHsType : Name → Name → Term → TC Term
   computeHsType aThis hThis tm with isThis aThis tm
   ... | true = pure (hThis ∙)
@@ -118,20 +105,26 @@ private
     just ty′ ← pure (strengthen ty)
       where nothing → extendContext x a $ typeErrorFmt "%s free in computed HsType %t" x ty
     pure ty′
-  computeHsType _ _ tm | false = computeHsTypeInst tm
+  computeHsType _ _ tm | false = do
+    debugPrintFmt "tactic.hs-types" 10 "solving HsType %t" tm
+    ty ← solveHsType tm
+    debugPrintFmt "tactic.hs-types" 10 "HsType %t = %t" tm ty
+    pure ty
 
   makeHsCon : NameEnv → Name → Name → Name → TC (Name × Type)
   makeHsCon env agdaName hsName c = do
+    debugPrintFmt "tactic.hs-types" 10 "Making constructor %q : %q" c agdaName
     hsC  ← freshHsConName env c
     cTy  ← getType c
+    debugPrintFmt "tactic.hs-types" 10 "cTy = %t" cTy
     hsTy ← computeHsType agdaName hsName cTy
+    debugPrintFmt "tactic.hs-types" 10 "hsTy = %t" hsTy
     pure (hsC , hsTy)
 
   makeHsData : NameEnv → Name → ℕ → List Name → TC Name
   makeHsData env agdaName nPars constrs = do
     hsName ← freshHsTypeName env agdaName
-    let hsPars = 0  -- TODO
-    declareData hsName hsPars `Set
+    declareData hsName 0 `Set
     hsCons ← mapM (makeHsCon env agdaName hsName) constrs
     defineData hsName hsCons
     pure hsName
@@ -179,20 +172,22 @@ private
     (record-type c fs)  → typeErrorFmt "todo record"
     _                   → typeErrorFmt "%q is not a data or record type" d
 
-  doAutoHsType : NameEnv → Term → TC ⊤
-  doAutoHsType env hole = do
-    def (quote HasHsType) (_ ∷ vArg (d ∙) ∷ _) ← inferType hole
-      where t → typeErrorFmt "Expected HasHsType D, got %t" t
-    hs ← makeHsType env d
-    bindHsType hs
-    unify hole (`λ⟦ proj (quote theHsType) ⇒ hs ∙ ⟧)
+doAutoHsType : NameEnv → Name → Term → TC Term
+doAutoHsType env d hole = do
+  -- def (quote HasHsType) (_ ∷ vArg (d ∙) ∷ _) ← inferType hole
+  --   where t → typeErrorFmt "Expected HasHsType D, got %t" t
+  checkType hole (quote HasHsType ∙⟦ d ∙ ⟧)
+  hs ← makeHsType env d
+  bindHsType hs
+  unify hole (`λ⟦ proj (quote HasHsType.HsType) ⇒ hs ∙ ⟧)
+  pure (hs ∙)
 
 macro
-  autoHsType : Term → TC ⊤
-  autoHsType = doAutoHsType []
+  autoHsType : Name → Term → TC ⊤
+  autoHsType d hole = _ <$ doAutoHsType [] d hole
 
-  autoHsType' : NameEnv → Term → TC ⊤
-  autoHsType' = doAutoHsType
+  autoHsType' : Name → NameEnv → Term → TC ⊤
+  autoHsType' d env hole = _ <$ doAutoHsType env d hole
 
   _↦_ : Name → String → Term → TC ⊤
   x ↦ s = unify (quote (Data.Product._,_) ◆⟦ lit (name x) ∣ lit (string s) ⟧)
