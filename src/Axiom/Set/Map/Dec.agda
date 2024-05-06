@@ -51,12 +51,12 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
        helper _ _ | _ , _ , refl | _ , _ , refl | yes _ | yes _
          with refl ← trans (sym eq) eq' = refl
 
-  module _ {V : Type} ⦃ mon : IsCommutativeMonoid' 0ℓ 0ℓ V ⦄ ⦃ _ : DecEq A ⦄ where
-    infixr 6 _∪⁺_
-    open IsCommutativeMonoid' mon
+  open import Algebra
+  module OpUnion {V : Type} (_∙_ : V → V → V) where
+    infixr 6 _∪̇_
 
-    _∪⁺_ : Map A V → Map A V → Map A V
-    _∪⁺_ = unionWith (fold id id _◇_)
+    _∪̇_ : ⦃ DecEq A ⦄ → Map A V → Map A V → Map A V
+    _∪̇_ = unionWith (fold id id _∙_)
 
-    aggregate₊ : FinSet (A × V) → Map A V
-    aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l
+    aggregate∙ : ⦃ DecEq A ⦄ → FinSet (A × V) → Map A V
+    aggregate∙ (_ , l , _) = foldl (λ m x → m ∪̇ ❴ x ❵ᵐ) ∅ᵐ l
