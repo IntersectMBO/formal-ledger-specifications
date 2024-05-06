@@ -163,8 +163,6 @@ HSGovStructure = record
   }
 instance _ = HSGovStructure
 
-open import Ledger.Deleg it hiding (PoolParams; DCert)
-
 HSTransactionStructure : TransactionStructure
 HSTransactionStructure = record
   { Implementation
@@ -206,10 +204,21 @@ open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it
 open import Data.Rational
 
+open import Algebra
+
 instance
   _ = Convertible-Refl {⊤}
   _ = Convertible-Refl {ℕ}
   _ = Convertible-Refl {String}
+
+  Convertible-HSMap : ∀ {A B A′ B′}
+    → ⦃ DecEq A ⦄
+    → ⦃ Convertible A A′ ⦄
+    → ⦃ Convertible B B′ ⦄
+    → Convertible (A ⇀ B) (F.HSMap A′ B′)
+  Convertible-HSMap = λ where
+    .to → F.MkHSMap ∘ to
+    .from → from ∘ F.HSMap.assocList
 
   Convertible-Rational : Convertible ℚ F.Rational
   Convertible-Rational = λ where
@@ -339,6 +348,7 @@ instance
       ; maxValSize          = maxValSize
       ; minUTxOValue        = minUTxOValue
       ; poolDeposit         = poolDeposit
+      ; keyDeposit          = keyDeposit
       ; Emax                = Emax
       ; nopt                = nopt
       ; pv                  = to pv
@@ -365,6 +375,7 @@ instance
       ; maxValSize                  = maxValSize
       ; minUTxOValue                = minUTxOValue
       ; poolDeposit                 = poolDeposit
+      ; keyDeposit                  = keyDeposit
       ; minFeeRefScriptCoinsPerByte = 0ℚ
       ; a0                          = 0ℚ
       ; Emax                        = Emax
@@ -446,6 +457,8 @@ fromNeedsHash {ChangePParams _} x = to x
 fromNeedsHash {TreasuryWdrl _} x = to 0 F., 0
 fromNeedsHash {Info} x = to 0 F., 0
 
+open import Ledger.Deleg.Properties govStructure
+
 instance
   Convertible-GovActionState : Convertible GovActionState F.GovActionState
   Convertible-GovActionState = λ where
@@ -502,6 +515,21 @@ instance
     .to (inj₂ y) → y
     .from → inj₂
 
+  Convertible-CertEnv : ConvertibleType CertEnv F.CertEnv
+  Convertible-CertEnv = autoConvertible
+
+  Convertible-GState : ConvertibleType GState F.GState
+  Convertible-GState = autoConvertible
+
+  Convertible-PState : ConvertibleType PState F.PState
+  Convertible-PState = autoConvertible
+
+  Convertible-DState : ConvertibleType DState F.DState
+  Convertible-DState = autoConvertible
+
+  Convertible-CertState : ConvertibleType CertState F.CertState
+  Convertible-CertState = autoConvertible
+
 utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
 utxo-step = to UTXO-step
 
@@ -516,3 +544,13 @@ gov-step : F.GovEnv → F.GovState → List F.GovSignal → F.ComputationResult 
 gov-step = to (compute Computational-GOV)
 
 {-# COMPILE GHC gov-step as govStep #-}
+
+certs-step : F.CertEnv → F.CertState → List F.TxCert → F.ComputationResult String F.CertState
+certs-step = to (compute Computational-CERTS)
+
+{-# COMPILE GHC certs-step as certsStep #-}
+
+cert-step : F.CertEnv →  F.CertState → F.TxCert → F.ComputationResult String F.CertState
+cert-step = to (compute Computational-CERT)
+
+{-# COMPILE GHC cert-step as certStep #-}

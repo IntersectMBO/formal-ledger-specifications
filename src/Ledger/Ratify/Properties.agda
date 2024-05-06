@@ -72,7 +72,7 @@ instance
   Computational-RATIFY' : Computational _⊢_⇀⦇_,RATIFY'⦈_ ⊥
   Computational-RATIFY' = record {Implementation}
 
-Computational-RATIFY : Computational _⊢_⇀⦇_,RATIFY⦈_ (⊥ ⊎ ⊥)
+Computational-RATIFY : Computational _⊢_⇀⦇_,RATIFY⦈_ ⊥
 Computational-RATIFY = it
 
 RATIFY-total : ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s'
@@ -80,4 +80,4 @@ RATIFY-total = ReflexiveTransitiveClosure-total (Implementation.RATIFY'-total _ 
 
 RATIFY-complete : ∀ {Γ s sig s'} →
   Γ ⊢ s ⇀⦇ sig ,RATIFY⦈ s' → RATIFY-total {Γ} {s} {sig} .proj₁ ≡ s'
-RATIFY-complete = computational⇒rightUnique it (RATIFY-total .proj₂)
+RATIFY-complete = computational⇒rightUnique Computational-RATIFY (RATIFY-total .proj₂)

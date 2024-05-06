@@ -152,7 +152,7 @@ instance
       completeness (inj₁ s) = GoVote.completeness s
       completeness (inj₂ s) = GoProp.completeness s
 
-Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ (⊥ ⊎ String)
+Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ String
 Computational-GOV = it
 
 allEnactable-singleton : ∀ {aid s es} → getHash (s .prevAction) ≡ getHashES es (s .action)

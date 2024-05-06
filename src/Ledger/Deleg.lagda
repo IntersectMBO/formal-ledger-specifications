@@ -148,9 +148,9 @@ data
 \begin{code}
 
   DELEG-delegate : let open PParams pp in
-    ∙ (c ∉ dom rwds → d ≡ poolDeposit)
+    ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mc ∈ mapˢ just (dom pools)
+    ∙ mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
       ⟦ pp , pools ⟧ᵈᵉ ⊢
         ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈

@@ -77,6 +77,7 @@ record PParams : Set where
 \begin{code}
         a b                           : ℕ
         minUTxOValue poolDeposit      : Coin
+        keyDeposit                    : Coin
         coinsPerUTxOWord              : Coin
         minFeeRefScriptCoinsPerByte   : ℚ
         prices                        : Prices

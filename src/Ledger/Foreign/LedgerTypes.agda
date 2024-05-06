@@ -44,8 +44,10 @@ data ComputationResult E A : Set where
 
 {-# COMPILE GHC Empty = data AgdaEmpty () #-}
 
-HSMap : Set → Set → Set
-HSMap K V = List (Pair K V)
+record HSMap K V : Set where
+  constructor MkHSMap
+  field assocList : List (Pair K V)
+
 Rational = Pair ℤ ℕ
 
 record TxId : Set where
@@ -90,6 +92,9 @@ ProtVer = Pair ℕ ℕ
 
   newtype TxId = MkTxId Integer
     deriving (Generic, Show, Eq, Ord)
+  newtype HSMap k v = MkHSMap [(k, v)]
+    deriving (Generic, Show, Eq, Ord)
+
   type Ix      = Integer
   type Epoch   = Integer
   type ScriptHash    = Integer
@@ -105,7 +110,7 @@ ProtVer = Pair ℕ ℕ
 
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
-  type UTxO  = [(TxIn, TxOut)]
+  type UTxO  = HSMap TxIn TxOut
   type Hash  = Integer
 
   data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic)
@@ -116,6 +121,7 @@ ProtVer = Pair ℕ ℕ
 #-}
 {-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
 {-# COMPILE GHC TxId = data TxId (MkTxId) #-}
+{-# COMPILE GHC HSMap = data HSMap (MkHSMap) #-}
 
 {-# FOREIGN GHC
   data Credential
@@ -198,7 +204,7 @@ record TxBody : Set where
   data TxBody = MkTxBody
     { txins  :: [TxIn]
     , refInputs :: [TxIn]
-    , txouts :: [(Ix, TxOut)]
+    , txouts :: HSMap Ix TxOut
     , txfee  :: Coin
     , txvldt :: (Maybe Integer, Maybe Integer)
     , txsize :: Integer
@@ -220,8 +226,8 @@ record TxWitnesses : Set where
   data TxWitnesses = MkTxWitnesses
     { vkSigs  :: [(Integer, Integer)]
     , scripts :: [AgdaEmpty]
-    , txdats  :: [(DataHash, Datum)]
-    , txrdmrs :: [(RdmrPtr, (Redeemer, ExUnits))]
+    , txdats  :: HSMap DataHash Datum
+    , txrdmrs :: HSMap RdmrPtr (Redeemer, ExUnits)
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC TxWitnesses = data TxWitnesses (MkTxWitnesses) #-}
@@ -248,6 +254,7 @@ record PParams : Set where
         maxValSize          : ℕ
         minUTxOValue        : Coin
         poolDeposit         : Coin
+        keyDeposit          : Coin
         Emax                : Epoch
         nopt                : ℕ
         pv                  : Pair ℕ ℕ
@@ -275,6 +282,7 @@ record PParams : Set where
     , maxValSize          :: Integer
     , minUTxOValue        :: Coin
     , poolDeposit         :: Coin
+    , keyDeposit          :: Coin
     , emax                :: Epoch
     , nopt                :: Integer
     , pv                  :: (Integer, Integer)
@@ -325,11 +333,11 @@ record EnactState : Set where
         esWithdrawals  : HSMap RwdAddr Coin
 {-# FOREIGN GHC
   data EnactState = MkEnactState
-    { esCC           :: (Maybe ([(Credential, Epoch)], Rational), GovActionID)
+    { esCC           :: (Maybe (HSMap Credential Epoch, Rational), GovActionID)
     , esConstitution :: ((DataHash, Maybe ScriptHash), GovActionID)
     , esPV           :: (ProtVer, GovActionID)
     , esPParams      :: (PParams, GovActionID)
-    , esWithdrawals  :: [(RwdAddr, Coin)]
+    , esWithdrawals  :: HSMap RwdAddr Coin
     }
 #-}
 {-# COMPILE GHC EnactState = data EnactState (MkEnactState) #-}
@@ -399,11 +407,11 @@ GovState = List (Pair GovActionID GovActionState)
 
   data GovAction
     = NoConfidence
-    | NewCommittee [(Credential, Epoch)] [Credential] Rational
+    | NewCommittee (HSMap Credential Epoch) [Credential] Rational
     | NewConstitution DataHash (Maybe ScriptHash)
     | TriggerHF ProtVer
     | ChangePParams PParamsUpdate
-    | TreasuryWdrl [(RwdAddr, Coin)]
+    | TreasuryWdrl (HSMap RwdAddr Coin)
     | Info
 
   data Vote
@@ -412,7 +420,7 @@ GovState = List (Pair GovActionID GovActionState)
     | VoteAbstain
 
   data GovActionState = MkGovActionState
-    { gasVotes :: [(Voter, Vote)]
+    { gasVotes :: HSMap Voter Vote
     , gasReturnAddr :: RwdAddr
     , gasExpiresIn :: Epoch
     , gasAction :: GovAction
@@ -454,3 +462,68 @@ GovState = List (Pair GovActionID GovActionState)
 {-# COMPILE GHC GovVote = data GovVote (MkGovVote) #-}
 {-# COMPILE GHC GovProposal = data GovProposal (MkGovProposal) #-}
 {-# COMPILE GHC GovSignal = data GovSignal (GovSignalVote|GovSignalProposal) #-}
+
+record CertEnv : Set where
+  field epoch  : Epoch
+        pp     : PParams
+        votes  : List GovVote
+        wdrls  : HSMap RwdAddr Coin
+{-# FOREIGN GHC
+  data CertEnv = MkCertEnv
+    { epoch :: Epoch
+    , pp    :: PParams
+    , votes :: [GovVote]
+    , wdrls :: HSMap RwdAddr Coin
+    }
+#-}
+{-# COMPILE GHC CertEnv = data CertEnv (MkCertEnv) #-}
+
+record DState : Set where
+  field
+    voteDelegs   : HSMap Credential VDeleg
+    stakeDelegs  : HSMap Credential Credential
+    rewards      : HSMap Credential Coin
+{-# FOREIGN GHC
+  data DState = MkDState
+    { voteDelegs  :: HSMap Credential VDeleg
+    , stakeDelegs :: HSMap Credential Credential
+    , rewards     :: HSMap Credential Coin
+    }
+#-}
+{-# COMPILE GHC DState = data DState (MkDState) #-}
+
+record PState : Set where
+  field pools     : HSMap Credential PoolParams
+        retiring  : HSMap Credential Epoch
+{-# FOREIGN GHC
+  data PState = MkPState
+    { pools :: HSMap Credential PoolParams
+    , retiring :: HSMap Credential Epoch
+    }
+#-}
+{-# COMPILE GHC PState = data PState (MkPState) #-}
+
+record GState : Set where
+  field dreps      : HSMap Credential Epoch
+        ccHotKeys  : HSMap Credential (Maybe Credential)
+{-# FOREIGN GHC
+  data GState = MkGState
+    { dreps     :: HSMap Credential Epoch
+    , ccHotKeys :: HSMap Credential (Maybe Credential)
+    }
+#-}
+{-# COMPILE GHC GState = data GState (MkGState) #-}
+
+record CertState : Set where
+  field dState : DState
+        pState : PState
+        gState : GState
+{-# FOREIGN GHC
+  data CertState = MkCertState
+    { dState :: DState
+    , pState :: PState
+    , gState :: GState
+    }
+#-}
+{-# COMPILE GHC CertState = data CertState (MkCertState) #-}
+
