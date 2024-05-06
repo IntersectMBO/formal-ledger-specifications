@@ -174,6 +174,7 @@ updateCertDeposits pp  (cert ∷ certs)  deposits
   certRefund (dereg c)      = ❴ CredentialDeposit c ❵
   certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
   certRefund _              = ∅
+  open OpUnion _+_ renaming (_∪̇_ to _∪⁺_)
 
 updateProposalDeposits : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin
   → DepositPurpose ⇀ Coin
@@ -181,6 +182,7 @@ updateProposalDeposits []        _     _      deposits  = deposits
 updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
   updateProposalDeposits ps txid gaDep deposits
   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
+  where open OpUnion _+_ renaming (_∪̇_ to _∪⁺_)
 
 updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateDeposits pp txb = updateCertDeposits pp txcerts
