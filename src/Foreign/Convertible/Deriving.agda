@@ -31,6 +31,8 @@ open import Class.MonadReader
 
 open import Tactic.Substitute
 open import Foreign.Convertible
+open import Foreign.HaskellTypes
+open import Foreign.HaskellTypes.Deriving
 
 private instance
   _ = Functor-M {TC}
@@ -153,3 +155,11 @@ macro
   autoConvertible : Tactic
   autoConvertible = initTac ⦃ defaultTCOptions ⦄ $
     unifyWithGoal =<< patternLambda
+
+  autoConvert : Name → Tactic
+  autoConvert d hole = do
+    hsTyMeta ← R.newMeta `Set
+    R.checkType hole $ quote Convertible ∙⟦ d ∙ ∣ hsTyMeta ⟧
+    hsTy ← solveHsType (d ∙)
+    R.unify hsTyMeta hsTy
+    R.unify hole =<< doPatternLambda hole

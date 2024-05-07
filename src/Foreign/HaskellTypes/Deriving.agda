@@ -46,6 +46,9 @@ private variable
   l : Level
   A B : Set l
 
+-- TODO: somewhere else
+`Set = agda-sort (Sort.set (quote 0ℓ ∙))
+
 NameEnv = List (Name × String)
 
 solveInstance : Term → TC Term
@@ -86,8 +89,6 @@ private
 
   freshHsConName : NameEnv → Name → TC Name
   freshHsConName env c = freshName (hsConName env c)
-
-  `Set = agda-sort (Sort.set (quote 0ℓ ∙))
 
   isThis : Name → Term → Bool
   isThis f (def g []) = f == g

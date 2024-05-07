@@ -23,16 +23,22 @@ open Foreign.HaskellTypes.Deriving
 open Foreign.Convertible.Deriving public using (autoConvertible; ConvertibleType)
 open Foreign.HaskellTypes.Deriving public using (autoHsType; autoHsType')
 
+record Marshall (A : Set) : Set₁ where
+  constructor mkMarshall
+  field
+    ⦃ iHsType      ⦄ : HasHsType A
+    ⦃ iConvertible ⦄ : Convertible A (HsType A)
+
 private
-  `Set = agda-sort (Sort.set (quote 0ℓ ∙))
   doAutoMarshalling : Name → Term → TC ⊤
   doAutoMarshalling d hole = do
-    hsTyMeta ← newMeta `Set
-    checkType hole (quote Convertible ∙⟦ d ∙ ∣ hsTyMeta ⟧)
-    hsTy ← solveHsType (d ∙)
-    unify hsTyMeta hsTy
-    patlam ← doPatternLambda hole
-    unify hole patlam
+    checkType hole (quote Marshall ∙⟦ d ∙ ⟧)
+    iHsTy ← newMeta (quote HasHsType ∙⟦ d ∙ ⟧)
+    hsTy  ← doAutoHsType [] d iHsTy
+    iConv ← newMeta (quote Convertible ∙⟦ d ∙ ∣ hsTy ⟧)
+    patlam ← doPatternLambda iConv
+    unify iConv patlam
+    unify hole (con (quote mkMarshall) (iArg iHsTy ∷ iArg iConv ∷ []))
 
 macro
   autoMarshall : Name → Term → TC ⊤
@@ -46,5 +52,6 @@ instance
   iConvertible-ℕ = Convertible-Refl
 
 instance
-  iHsType-Dummy      = autoHsType Dummy
-  iMarshalling-Dummy = autoMarshall Dummy
+  iMarshall-Dummy = autoMarshall Dummy
+  -- iHsType = autoHsType Dummy
+  -- iConv   = autoConvert Dummy
