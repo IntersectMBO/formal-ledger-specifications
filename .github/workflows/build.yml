@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: cachix/install-nix-action@v20
         with:
@@ -45,14 +45,14 @@ jobs:
 
       - name: Upload PDF artifacts
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: PDF specs
           path: docs/pdfs/*.pdf
 
       - name: Upload typechecking times
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Typechecking durations
           path: docs/*.time
