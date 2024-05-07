@@ -4,6 +4,7 @@ module Foreign.HaskellTypes where
 open import Level using (Level)
 open import Data.Nat.Base using (ℕ)
 open import Data.List.Base using (List)
+open import Data.Maybe.Base using (Maybe)
 
 private variable
   l : Level
@@ -24,6 +25,9 @@ instance
 
   iHasHsTypeList : ⦃ HasHsType A ⦄ → HasHsType (List A)
   iHasHsTypeList {A = A} .HasHsType.HsType = List (HsType A)
+
+  iHasHsTypeMaybe : ⦃ HasHsType A ⦄ → HasHsType (Maybe A)
+  iHasHsTypeMaybe {A = A} .HasHsType.HsType = Maybe (HsType A)
 
   iHasHsTypeFun : ⦃ HasHsType A ⦄ → ⦃ HasHsType B ⦄ → HasHsType (A → B)
   iHasHsTypeFun {A = A} {B = B} .HasHsType.HsType = HsType A → HsType B
