@@ -62,10 +62,29 @@ solveInstance ty = do
   unify iTerm iSol
   pure iSol
 
+solveHsTypes : ℕ → Term → TC Term
+solveHsTypeArgs : ℕ → List (Arg Term) → TC (List (Arg Term))
+
+solveHsTypes 0 ty = pure ty
+solveHsTypes (suc fuel) hsTy@(def (quote HasHsType.HsType) (_ ∷ _ ∷ vArg inst@(meta x _) ∷ [])) = do
+  iSol ∷ _ ← getInstances x
+    where [] → typeErrorFmt "No instance found for %t" hsTy
+  unify inst iSol
+  hsTy ← normalise hsTy
+  solveHsTypes fuel hsTy
+solveHsTypes fuel hsTy@(def d args) = def d <$> solveHsTypeArgs fuel args
+solveHsTypes fuel ty = pure ty
+
+solveHsTypeArgs _ [] = pure []
+solveHsTypeArgs fuel (arg i ty ∷ args) = do
+  ty   ← solveHsTypes fuel ty
+  args ← solveHsTypeArgs fuel args
+  pure (arg i ty ∷ args)
+
 solveHsType : Term → TC Term
 solveHsType tm = do
   inst ← solveInstance (quote HasHsType ∙⟦ tm ⟧)
-  normalise $ def (quote HsType) (vArg tm ∷ iArg inst ∷ [])
+  solveHsTypes 100 =<< normalise (def (quote HsType) (vArg tm ∷ iArg inst ∷ []))
 
 private
   lookup : ⦃ DecEq A ⦄ → A → List (A × B) → Maybe B
@@ -87,8 +106,14 @@ private
   hsConName : NameEnv → Name → String
   hsConName env c = fromMaybe (capitalize $ showName c) (lookup c env)
 
-  freshHsConName : NameEnv → Name → TC Name
-  freshHsConName env c = freshName (hsConName env c)
+  hsFieldName : NameEnv → Name → String
+  hsFieldName env f = fromMaybe (showName f) (lookup f env)
+
+  freshHsConName : NameEnv → Name → Name → TC Name
+  freshHsConName env tyName c =
+    if showName c == "constructor"
+    then freshName (hsConName env tyName) -- Unnamed record constructor: use type name
+    else freshName (hsConName env c)
 
   isThis : Name → Term → Bool
   isThis f (def g []) = f == g
@@ -115,7 +140,7 @@ private
   makeHsCon : NameEnv → Name → Name → Name → TC (Name × Type)
   makeHsCon env agdaName hsName c = do
     debugPrintFmt "tactic.hs-types" 10 "Making constructor %q : %q" c agdaName
-    hsC  ← freshHsConName env c
+    hsC  ← freshHsConName env hsName c
     cTy  ← getType c
     debugPrintFmt "tactic.hs-types" 10 "cTy = %t" cTy
     hsTy ← computeHsType agdaName hsName cTy
@@ -133,7 +158,7 @@ private
   makeHsType : NameEnv → Name → TC Name
   makeHsType env d = getDefinition d >>= λ where
       (data-type pars cs) → makeHsData env d pars cs
-      (record-type c fs)  → typeErrorFmt "todo record"
+      (record-type c fs)  → makeHsData env d 0 (c ∷ [])
       _                   → typeErrorFmt "%q is not a data or record type" d
 
   joinStrings : String → List String → String
@@ -163,23 +188,35 @@ private
     pure $ printf "data %s = %s\n  deriving (Show, Eq, Generic)\ninstance ToExpr %s"
                   (showName d) (joinStrings " | " cons) (showName d)
 
+  -- Record types
+  foreignPragmaRec : NameEnv → Name → List Name → List Name → TC String
+  foreignPragmaRec _ d [] _ = typeErrorFmt "impossible: %q is a record type with no constructors" d
+  foreignPragmaRec env d (c ∷ _) fs = do
+    tel , _ ← viewTy <$> withNormalisation true (getType c)
+    let fNames = map (hsFieldName env) fs
+    let args = map unAbs tel
+        renderField f ty = printf "%s :: %s" f (renderHsType $ unArg ty)
+        con = printf "%s {%s}" (showName c) (joinStrings ", " $ zipWith renderField fNames args)
+    pure $ printf "data %s = %s\n  deriving (Show, Eq, Generic)\ninstance ToExpr %s"
+                  (showName d) con (showName d)
+
   -- Take the name of a simple data type and generate the COMPILE and
   -- FOREIGN pragmas to bind to Haskell.
-  bindHsType : Name → TC ⊤
-  bindHsType d = getDefinition d >>= λ where
+  bindHsType : NameEnv → Name → Name → TC ⊤
+  bindHsType env agdaName hsName = getDefinition hsName >>= λ where
     (data-type pars cs) → do
-      pragmaCompile "GHC" d $ compilePragma d cs
-      pragmaForeign "GHC" =<< foreignPragma d cs
-    (record-type c fs)  → typeErrorFmt "todo record"
-    _                   → typeErrorFmt "%q is not a data or record type" d
+      pragmaCompile "GHC" hsName $ compilePragma hsName cs
+      getDefinition agdaName >>= λ where
+        (data-type _ _)    → pragmaForeign "GHC" =<< foreignPragma hsName cs
+        (record-type _ fs) → pragmaForeign "GHC" =<< foreignPragmaRec env hsName cs (map unArg fs)
+        _ → typeErrorFmt "%q is not a data or record type" agdaName
+    _ → typeErrorFmt "%q is not a data type (impossible)" hsName
 
 doAutoHsType : NameEnv → Name → Term → TC Term
 doAutoHsType env d hole = do
-  -- def (quote HasHsType) (_ ∷ vArg (d ∙) ∷ _) ← inferType hole
-  --   where t → typeErrorFmt "Expected HasHsType D, got %t" t
   checkType hole (quote HasHsType ∙⟦ d ∙ ⟧)
   hs ← makeHsType env d
-  bindHsType hs
+  bindHsType env d hs
   unify hole (`λ⟦ proj (quote HasHsType.HsType) ⇒ hs ∙ ⟧)
   pure (hs ∙)
 
