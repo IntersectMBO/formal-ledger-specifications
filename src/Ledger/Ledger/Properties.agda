@@ -9,11 +9,11 @@ module Ledger.Ledger.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Axiom.Set.Properties th {-
+open import Axiom.Set.Properties th
 open import Ledger.Chain txs abs
 open import Ledger.Deleg.Properties govStructure
 open import Ledger.Enact govStructure
-open import Ledger.Epoch txs abs -}
+open import Ledger.Epoch txs abs
 open import Ledger.Gov txs
 open import Ledger.Gov.Properties txs
 open import Ledger.Ledger txs abs
@@ -22,14 +22,14 @@ open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs
 open import Ledger.Utxow txs abs
 open import Ledger.Utxow.Properties txs abs
-{-
+
 open import Data.Bool.Properties using (¬-not)
 open import Data.List using (filter)
-open import Data.List.Ext using (∈ˡ-map-filter⁻; ∈ˡ-map-filter⁺) renaming (∈-map to ∈ˡ-map) -}
-open import Data.List.Properties using (length-map; ++-identityʳ; map-++; ++-assoc) {-
+open import Data.List.Ext using (∈ˡ-map-filter⁻; ∈ˡ-map-filter⁺) renaming (∈-map to ∈ˡ-map)
+open import Data.List.Properties using (length-map; ++-identityʳ; map-++; ++-assoc)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁻; ∈-filter⁺; ∈-map⁻; ∈-map⁺)
 open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
-open import Data.Nat.Properties using (+-0-monoid) -}
+open import Data.Nat.Properties using (+-0-monoid)
 open import Relation.Binary using (IsEquivalence)
 
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
@@ -283,10 +283,29 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     updateVote s v = addVote s gid voter vote
       where open GovVote v
 
+    updateVote-++ : (gs gs' : GovState) (v : GovVote)
+                   → updateVote (gs ++ gs') v ≡ updateVote gs v ++ updateVote gs' v
+    updateVote-++ [] gs' v = refl
+    updateVote-++ (g ∷ gs) gs' v = let open ≡-Reasoning in
+      begin
+      updateVote (g ∷ gs ++ gs') v
+        ≡⟨ cong (updateVote [ g ] v ++_) (updateVote-++ gs gs' v) ⟩
+      updateVote [ g ] v ++ (updateVote gs v ++ updateVote gs' v)
+        ≡⟨ ++-assoc (updateVote [ g ] v) (updateVote gs v) (updateVote gs' v) ⟩
+      (updateVote [ g ] v ++ updateVote gs v) ++ updateVote gs' v
+        ≡˘⟨ cong (_++ updateVote gs' v) refl ⟩
+      updateVote (g ∷ gs) v ++ updateVote gs' v
+        ∎
+
+    updateVotesOnly : GovState → List (GovVote ⊎ GovProposal) → GovState
+    updateVotesOnly s [] = s
+    updateVotesOnly s (inj₁ v ∷ vps) = updateVotesOnly (updateVote s v) vps
+    updateVotesOnly s (inj₂ _ ∷ vps) = updateVotesOnly s vps
+
+
     updateGovStates : {k : ℕ} → GovState → List (GovVote ⊎ GovProposal) → GovState
     updateGovStates s [] = s
-    updateGovStates {k} s (inj₁ v ∷ vps) = updateGovStates {suc k} (addVote s gid voter vote) vps
-      where open GovVote v
+    updateGovStates {k} s (inj₁ v ∷ vps) = updateGovStates {suc k} (updateVote s v) vps
     updateGovStates {k} s (inj₂ p ∷ vps) = updateGovStates {suc k} (propToState s p k) vps
 
     STS→updateGovSt≡ : {govSt govSt' : GovState}{k : ℕ} (vps : List (GovVote ⊎ GovProposal))
@@ -305,14 +324,98 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) (proj₂ (proj₂ (proj₂ x)))
 
 
+    updateVote-map-invar : (gs : GovState) (v : GovVote) → map f (updateVote gs v) ≡ map f gs
+    updateVote-map-invar [] v = refl
+    updateVote-map-invar (g ∷ gs) v = let open ≡-Reasoning; open GovVote v in
+      begin
+        map f (updateVote (g ∷ gs) v)
+          ≡⟨ cong (map f){x = (addVote (g ∷ gs) gid voter vote)} refl ⟩
+        map f ((addVote [ g ] gid voter vote) ++ addVote gs gid voter vote)
+          ≡⟨ map-++ f (addVote [ g ] gid voter vote) (addVote gs gid voter vote) ⟩
+        map f (addVote [ g ] gid voter vote) ++ map f (addVote gs gid voter vote)
+          ≡⟨ cong (map f (addVote [ g ] gid voter vote) ++_) (updateVote-map-invar gs v) ⟩
+        map f (addVote [ g ] gid voter vote) ++ map f gs
+          ≡⟨ cong (_++ map f gs) refl ⟩
+        map f (g ∷ gs)
+          ∎
+
+    updateVotesOnly-map-invar : (gs : GovState) (vps : List (GovVote ⊎ GovProposal))
+                                → map f (updateVotesOnly gs vps) ≡ map f gs
+    updateVotesOnly-map-invar gs [] = refl
+    updateVotesOnly-map-invar gs (inj₂ p ∷ vps) = updateVotesOnly-map-invar gs vps
+    updateVotesOnly-map-invar gs (inj₁ v ∷ vps) = let open ≡-Reasoning in
+      begin
+      map f (updateVotesOnly (updateVote gs v) vps)  ≡⟨ updateVotesOnly-map-invar ((updateVote gs v)) vps ⟩
+      map f (updateVote gs v)                        ≡⟨ updateVote-map-invar gs v ⟩
+      map f gs                                       ∎
+
+
+    updateGovVote-++ : {k : ℕ} (gs gs' : GovState) (vps : List (GovVote ⊎ GovProposal))
+      → updateGovStates {k} (gs ++ gs') vps ≡ updateVotesOnly gs vps ++ updateGovStates {k} gs' vps
+
+    updateGovVote-++ gs gs' [] = refl
+    updateGovVote-++ gs gs' (inj₁ v ∷ vps) = let open ≡-Reasoning in
+      begin
+      updateGovStates (updateVote (gs ++ gs') v) vps
+        ≡⟨ cong (λ x → updateGovStates x vps) (updateVote-++ gs gs' v) ⟩
+      updateGovStates ((updateVote gs v) ++ (updateVote gs' v)) vps
+        ≡⟨ updateGovVote-++ ((updateVote gs v)) ((updateVote gs' v)) vps ⟩
+      updateVotesOnly (updateVote gs v) vps ++ updateGovStates (updateVote gs' v) vps
+        ∎
+
+    updateGovVote-++ {k} gs gs' (inj₂ p ∷ vps) = let open ≡-Reasoning in
+      begin
+      updateGovStates (propToState (gs ++ gs') p k) vps
+        ≡⟨ cong (λ x → updateGovStates x vps) (propToState-++ gs gs' p k) ⟩
+      updateGovStates (gs ++ propToState gs' p k) vps
+        ≡⟨ updateGovVote-++ gs (propToState gs' p k) vps ⟩
+      updateVotesOnly gs vps ++ updateGovStates (propToState gs' p k) vps
+        ∎
+
     vote-updateGovStates-map-invar : {k : ℕ} (v : GovVote) (vps : List (GovVote ⊎ GovProposal)) {govSt : GovState}
       → map f (updateGovStates {k} govSt (inj₁ v ∷ vps)) ≡ map f (updateGovStates {suc k} govSt vps)
 
-    vote-updateGovStates-map-invar {k} v vps {govSt} = {!!}
+    vote-updateGovStates-map-invar {k} v vps {[]} = refl
+    vote-updateGovStates-map-invar {k} v [] {g ∷ gs} = let open GovVote v; open ≡-Reasoning in
+      begin
+        map f (updateVote (g ∷ gs) v)
+          ≡⟨ cong (map f){x = (addVote (g ∷ gs) gid voter vote)} refl ⟩
+        map f ((addVote [ g ] gid voter vote) ++ addVote gs gid voter vote)
+          ≡⟨ map-++ f (addVote [ g ] gid voter vote) (addVote gs gid voter vote) ⟩
+        map f (addVote [ g ] gid voter vote) ++ map f (addVote gs gid voter vote)
+          ≡⟨ cong (map f (addVote [ g ] gid voter vote) ++_) (vote-updateGovStates-map-invar {0} v []) ⟩
+        map f (g ∷ gs)
+          ∎
 
-    vote-updateGovStates-map-invar++ : {k : ℕ} (vs : List GovVote) (ps : List GovProposal)
-       → map f (updateGovStates {k} [] (map inj₁ vs ++ map inj₂ ps)) ≡ map f (updateGovStates {k} [] (map inj₂ ps))
-    vote-updateGovStates-map-invar++  = {!!}
+
+    vote-updateGovStates-map-invar {k} v (inj₁ v' ∷ vps) {govSt} = let open ≡-Reasoning in
+      begin
+      map f (updateGovStates govSt (inj₁ v ∷ (inj₁ v' ∷ vps)))
+        ≡⟨ vote-updateGovStates-map-invar v' vps {updateVote govSt v} ⟩
+      map f (updateGovStates (updateVote govSt v) vps)
+        ≡⟨ vote-updateGovStates-map-invar v vps {govSt} ⟩
+      map f (updateGovStates govSt vps)
+        ≡˘⟨ vote-updateGovStates-map-invar v' vps {govSt} ⟩
+      map f (updateGovStates (updateVote govSt v') vps)
+        ∎
+    vote-updateGovStates-map-invar {k} v (inj₂ p ∷ vps) {govSt} = let open ≡-Reasoning in
+      begin
+        map f (updateGovStates ((updateVote govSt v) ∷ʳ mkAction p (suc k)) vps)
+          ≡⟨ cong (map f) (updateGovVote-++ ((updateVote govSt v)) [ mkAction p (suc k) ] vps) ⟩
+        map f ((updateVotesOnly (updateVote govSt v)  vps) ++  (updateGovStates [ mkAction p (suc k) ] vps))
+          ≡⟨ map-++ f ((updateVotesOnly (updateVote govSt v)  vps)) ((updateGovStates [ mkAction p (suc k) ] vps)) ⟩
+        map f (updateVotesOnly (updateVote govSt v)  vps) ++  map f (updateGovStates [ mkAction p (suc k) ] vps)
+          ≡⟨ cong (_++ map f (updateGovStates [ mkAction p (suc k) ] vps)) (updateVotesOnly-map-invar (updateVote govSt v) vps) ⟩
+        map f (updateVote govSt v) ++  map f (updateGovStates [ mkAction p (suc k) ] vps)
+          ≡⟨ cong (_++ map f (updateGovStates {suc (suc k)} [ mkAction p (suc k) ] vps)) (updateVote-map-invar govSt v) ⟩
+        (map f govSt) ++  (map f (updateGovStates [ mkAction p (suc k) ] vps))
+          ≡˘⟨ cong (_++ (map f (updateGovStates [ mkAction p (suc k) ] vps))) (updateVotesOnly-map-invar govSt vps) ⟩
+        (map f (updateVotesOnly govSt vps)) ++  (map f (updateGovStates [ mkAction p (suc k) ] vps))
+          ≡˘⟨ map-++ f (updateVotesOnly govSt vps) (updateGovStates [ mkAction p (suc k) ] vps) ⟩
+        map f (updateVotesOnly govSt vps ++  updateGovStates [ mkAction p (suc k) ] vps)
+          ≡˘⟨ cong (map f) (updateGovVote-++ govSt [ mkAction p (suc k) ] vps) ⟩
+        map f (updateGovStates (govSt ∷ʳ mkAction p (suc k)) vps)
+          ∎
 
 
     updateGovStates≡ : {k : ℕ} (vps : List (GovVote ⊎ GovProposal)) {govSt : GovState}
@@ -320,18 +423,38 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
     updateGovStates≡ [] {govSt} = cong (map f) (sym (++-identityʳ govSt))
 
-    updateGovStates≡ {k} (inj₁ v ∷ vps) {govSt} = let open ≡-Reasoning in goal
-      where
-      goal : map f (updateGovStates {suc k} (updateVote govSt v) vps)
-       -- (addVote govSt (GovVote.gid v) (GovVote.voter v) (GovVote.vote v))
-             ≡ map f (govSt ++ updateGovStates {suc k} [] vps)
-      goal = let open ≡-Reasoning in
-        begin
-          map f (updateGovStates {suc k} (updateVote govSt v) vps)   ≡⟨ vote-updateGovStates-map-invar {k}  v vps ⟩
-          map f (updateGovStates {suc k} govSt vps)                  ≡⟨ updateGovStates≡ vps ⟩
-          map f (govSt ++ updateGovStates {suc k} [] vps)        ∎
+    updateGovStates≡ {k} (inj₁ v ∷ vps) {govSt} = let open ≡-Reasoning in
+      begin
+        map f (updateGovStates {suc k} (updateVote govSt v) vps)
+          ≡⟨ vote-updateGovStates-map-invar {k}  v vps ⟩
+        map f (updateGovStates {suc k} govSt vps)
+          ≡⟨ updateGovStates≡ vps ⟩
+        map f (govSt ++ updateGovStates {suc k} [] vps)
+          ∎
 
-    updateGovStates≡ (inj₂ p ∷ vps) {govSt} = {!!}
+    updateGovStates≡ {k} (inj₂ p ∷ vps) {govSt} = let open ≡-Reasoning in
+      begin
+        map f (updateGovStates {suc k} (propToState govSt p k) vps)
+          ≡⟨ updateGovStates≡ {suc k} vps ⟩
+        map f ((propToState govSt p k) ++  updateGovStates {suc k} [] vps)
+          ≡⟨ cong (λ x → map f (x ++ updateGovStates [] vps)) refl ⟩
+        map f ((govSt ++ [ mkAction p k ]) ++  updateGovStates {suc k} [] vps)
+          ≡⟨ cong (map f) (++-assoc govSt [ mkAction p k ] (updateGovStates {suc k} [] vps)) ⟩
+        map f (govSt ++ ([ mkAction p k ] ++  updateGovStates {suc k} [] vps))
+          ≡⟨ cong (λ x → map f (govSt ++ x ++  updateGovStates {suc k} [] vps)) refl ⟩
+        map f (govSt ++ propToState [] p k ++  updateGovStates [] vps)
+          ≡⟨ map-++ f govSt (propToState [] p k ++ updateGovStates [] vps) ⟩
+        map f govSt ++ (map f (propToState [] p k ++ updateGovStates [] vps))
+          ≡˘⟨ cong ((map f govSt) ++_) (updateGovStates≡ vps) ⟩
+        map f govSt ++ map f (updateGovStates (propToState [] p k) vps)
+          ≡˘⟨ map-++ f govSt (updateGovStates (propToState [] p k) vps) ⟩
+        map f (govSt ++ updateGovStates {suc k} (propToState [] p k) vps)
+          ∎
+
+    vote-updateGovStates-map-invar++ : {k : ℕ} (vs : List GovVote) (ps : List GovProposal)
+       → map f (updateGovStates {k} [] (map inj₁ vs ++ map inj₂ ps)) ≡ map f (updateGovStates {k} [] (map inj₂ ps))
+    vote-updateGovStates-map-invar++  = {!!}
+
 
     -- CONNECTING LEMMA --
     utxo-govst-connex : {props : List GovProposal}
@@ -405,16 +528,18 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
           fromList (map f govSt')
             ∎
 
-    LEDGER-govDepsMatch s'@{⟦ .(⟦ (UTxOState.utxo (LState.utxoSt s) ∣ collateral ᶜ) , _ , UTxOState.deposits (LState.utxoSt s) , _ ⟧ᵘ) , govSt' , certState' ⟧ˡ}
-      utxosts@(LEDGER-V (() , UTXOW-UTXOS (_⊢_⇀⦇_,UTXOS⦈_.Scripts-No (<″-offset fst)) , _ , GOV-sts)) aprioriMatch
+    LEDGER-govDepsMatch utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (<″-offset fst)) , _ , GOV-sts)) aprioriMatch
+
 
   -- MAIN THEOREM: EPOCH --
   module EPOCH-PROPS
-    (tx : Tx) (let open Tx tx renaming (body to txb)) (let open TxBody txb)
-    (Γ : LEnv) (let open LEnv Γ renaming (pparams to pp))
+    (tx : Tx)
+    (Γ : LEnv)
     (eΓ : NewEpochEnv)
     (eps : EpochState)
     where
+    open Tx tx renaming (body to txb); open TxBody txb
+    open LEnv Γ renaming (pparams to pp)
     open EpochState eps hiding (es)
     open LState ls
     open GovActionState
