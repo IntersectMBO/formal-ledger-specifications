@@ -352,13 +352,13 @@ fromList-∪-singleton .proj₂ h with ∈-∪⁻ h
 
 module _ {A : Type ℓ} where
 
-  ∪++ : {l l' : List A} → fromList l ∪ fromList l' ≡ᵉ fromList (l ++ l')
-  ∪++ {l = []} {l'} = ∪-identityˡ (fromList l')
-  ∪++ {l = x ∷ l} {l'} =
+  ∪-fromList-++ : {l l' : List A} → fromList l ∪ fromList l' ≡ᵉ fromList (l ++ l')
+  ∪-fromList-++ {l = []} {l'} = ∪-identityˡ (fromList l')
+  ∪-fromList-++ {l = x ∷ l} {l'} =
     begin
     fromList (x ∷ l) ∪ fromList l'      ≈⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
     (❴ x ❵ ∪ fromList l) ∪ fromList l'  ≈⟨ ∪-assoc ❴ x ❵ (fromList l) (fromList l') ⟩
-    ❴ x ❵ ∪ (fromList l ∪ fromList l')  ≈⟨ ∪-cong ≡ᵉ.refl ∪++ ⟩
+    ❴ x ❵ ∪ (fromList l ∪ fromList l')  ≈⟨ ∪-cong ≡ᵉ.refl ∪-fromList-++ ⟩
     ❴ x ❵ ∪ fromList (l ++ l')          ≈˘⟨ fromList-∪-singleton ⟩
     fromList (x ∷ (l ++ l'))            ∎
     where
