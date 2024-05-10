@@ -33,7 +33,7 @@ createEnv s = record { slot = s ;
                                ; minUTxOValue = 0
                                ; poolDeposit = 500000000 -- lovelace
                                ; keyDeposit = 500000000 -- lovelace
-                               ; coinsPerUTxOWord = 4310 --lovelace (coinsPetUTxoByte)
+                               ; coinsPerUTxOByte = 4310 --lovelace
                                ; minFeeRefScriptCoinsPerByte = 1ℚ -- unknown for now
                                ; prices = tt -- fix this
                                ; a0 = 1ℚ -- don't know

@@ -269,7 +269,7 @@ record PParams : Set where
         prices              : ⊤
         maxTxExUnits        : ExUnits
         maxBlockExUnits     : ExUnits
-        coinsPerUTxOWord    : Coin
+        coinsPerUTxOByte    : Coin
         -- collateralPercent   : ℕ
         maxCollateralInputs : ℕ
 {-# FOREIGN GHC
@@ -297,7 +297,7 @@ record PParams : Set where
     , prices              :: ()
     , maxTxExUnits        :: ExUnits
     , maxBlockExUnits     :: ExUnits
-    , coinsPerUTxOWord    :: Coin
+    , coinsPerUTxOByte    :: Coin
     , maxCollateralInputs :: Integer
     } deriving (Show, Generic)
 #-}
