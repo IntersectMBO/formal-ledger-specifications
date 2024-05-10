@@ -213,7 +213,8 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 \GovState behaves similar to a queue. New proposals are appended at
 the end, but any proposal can be removed at the epoch
 boundary. However, for the purposes of enactment, earlier proposals
-take priority.
+take priority. Note that \EnactState used in \GovEnv is defined later,
+in Section~\ref{sec:enactment}.
 
 \begin{itemize}
 \item \addVote inserts (and potentially overrides) a vote made for a
@@ -269,7 +270,11 @@ Figure~\ref{defs:gov-rules}.
 
 For \GOVVote, we check that the governance action being voted on
 exists and the role is allowed to vote. \canVote is defined in
-Figure~\ref{fig:ratification-requirements}.
+Figure~\ref{fig:ratification-requirements}. Note that there are no
+checks on whether the credential is actually associated with the
+role. This means that anyone can vote for e.g. the \CC role. However,
+during ratification those votes will only carry weight if they are
+properly associated with members of the constitutional committee.
 
 For \GOVPropose, we check well-formedness, correctness of the deposit
 and some conditions depending on the type of the action:

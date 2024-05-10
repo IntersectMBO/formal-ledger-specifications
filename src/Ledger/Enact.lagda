@@ -17,8 +17,11 @@ open import Ledger.GovernanceActions gs
 Figure~\ref{fig:enact-defs} contains some definitions required to
 define the ENACT transition system. \EnactEnv is the environment and
 \EnactState the state of ENACT, which enacts a governance action. All
-governance actions except \TreasuryWdrl and \Info modify \EnactState, which of course can have further
-consequences. Also, enacting these governance actions is the
+governance actions except \TreasuryWdrl and \Info modify \EnactState
+permanently, which of course can have further
+consequences. \TreasuryWdrl accumulates withdrawal temporarily in \EnactState
+but this information is applied and discarded immediately in EPOCH.
+Also, enacting these governance actions is the
 \emph{only} way of modifying \EnactState. The \withdrawals field of
 \EnactState is special in that it is ephemeral---ENACT accumulates
 withdrawals there which are paid out at the next epoch boundary where

@@ -28,4 +28,7 @@ In this section, we introduce some notations used in this document.
   \AgdaBound{m}~\AgdaFunction{∪ˡ}~\AgdaBound{m'} for their left-biased union. This means that
   key-value pairs in \AgdaBound{m} are guaranteed to be in the union, while key-value pairs in
   \AgdaBound{m'} will be in the union if and only if the keys don't collide.
+\item[Map addition] For maps \AgdaBound{m} and \AgdaBound{m'}, we write
+  \AgdaBound{m}~\AgdaFunction{∪⁺}~\AgdaBound{m'} for their union where keys that appear
+  in both maps have their corresponding values added.
 \end{description}
