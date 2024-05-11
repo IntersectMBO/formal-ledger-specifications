@@ -13,8 +13,9 @@ import Data.Sum
 import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
+open import Data.List.Ext using (∈-map⁺)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
-open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻)
+open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻; ∈-map⁻ ; map-∈↔)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
@@ -65,8 +66,15 @@ module _ {l : List A} {a} where
   ∈-fromList⁻ : a ∈ fromList l → a ∈ˡ l
   ∈-fromList⁻ = from ∈-fromList
 
-  ∈-fromList⁺ : ∀ {l : List A} {a} → a ∈ˡ l → a ∈ fromList l
+  ∈-fromList⁺ : a ∈ˡ l → a ∈ fromList l
   ∈-fromList⁺ = to ∈-fromList
+
+module _ {f : A → B} {l : List A} {b : B} where
+  ∈-fromList-map⁺ : b ∈ fromList (Data.List.map f l) → ∃[ a ] a ∈ˡ l × b ≡ f a
+  ∈-fromList-map⁺ = (∈-map⁻ f) ∘ ∈-fromList⁻
+
+  ∈-fromList-map⁻ : ∃[ x ] x ∈ˡ l × b ≡ f x → b ∈ fromList (Data.List.map f l)
+  ∈-fromList-map⁻ (x , x∈ , b≡) = ∈-fromList⁺ (∈-map⁺ (x , b≡ , x∈))
 
 module _ {f : A → B} {X} {b} {P : A → Type} {sp-P : specProperty P} where
   ∈-map-filter⁻' : b ∈ map f (filter sp-P X) → (∃[ a ] b ≡ f a × P a × a ∈ X)
