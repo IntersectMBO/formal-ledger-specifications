@@ -1,6 +1,6 @@
 module Ledger.Foreign.HSLedger where
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
+open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ); open Computational
 
 open import Data.Rational using (0ℚ; ½)
 
@@ -202,6 +202,8 @@ open import Ledger.Gov.Properties it
 open import Ledger.Utxo it it
 open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it
+open import Ledger.Ratify it
+open import Ledger.Ratify.Properties it
 open import Data.Rational
 
 open import Algebra
@@ -210,6 +212,12 @@ instance
   _ = Convertible-Refl {⊤}
   _ = Convertible-Refl {ℕ}
   _ = Convertible-Refl {String}
+  _ = Convertible-Refl {Bool}
+
+  Convertible-⊥ : Convertible ⊥ F.Empty
+  Convertible-⊥ = λ where
+    .to ()
+    .from ()
 
   Convertible-HSMap : ∀ {A B A′ B′}
     → ⦃ DecEq A ⦄
@@ -219,6 +227,14 @@ instance
   Convertible-HSMap = λ where
     .to → F.MkHSMap ∘ to
     .from → from ∘ F.HSMap.assocList
+
+  Convertible-HSSet : ∀ {A A′}
+    → ⦃ Convertible A A′ ⦄
+    → Convertible (ℙ A) (F.HSSet A′)
+  Convertible-HSSet =
+    λ where
+      .to → F.MkHSSet ∘ to ∘ setToList
+      .from → fromListˢ ∘ from ∘ F.HSSet.elems
 
   Convertible-Rational : Convertible ℚ F.Rational
   Convertible-Rational = λ where
@@ -333,9 +349,6 @@ instance
       ; wits    = from wits
       ; isValid = true
       ; txAD    = from txAD }
-
-  Convertible-⊥ : Convertible ⊥ F.Empty
-  Convertible-⊥ = λ where .to (); .from ()
 
   Convertible-PParams : Convertible PParams F.PParams
   Convertible-PParams = λ where
@@ -530,6 +543,15 @@ instance
   Convertible-CertState : ConvertibleType CertState F.CertState
   Convertible-CertState = autoConvertible
 
+  Convertible-StakeDistrs : Convertible StakeDistrs F.StakeDistrs
+  Convertible-StakeDistrs = autoConvertible
+
+  Convertible-RatifyEnv : Convertible RatifyEnv F.RatifyEnv
+  Convertible-RatifyEnv = autoConvertible
+
+  Convertible-RatifyState : Convertible RatifyState F.RatifyState
+  Convertible-RatifyState = autoConvertible
+
 utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
 utxo-step = to UTXO-step
 
@@ -554,3 +576,8 @@ cert-step : F.CertEnv →  F.CertState → F.TxCert → F.ComputationResult Stri
 cert-step = to (compute Computational-CERT)
 
 {-# COMPILE GHC cert-step as certStep #-}
+
+ratify-step : F.RatifyEnv → F.RatifyState → List (F.Pair F.GovActionID F.GovActionState) → F.ComputationResult F.Empty F.RatifyState
+ratify-step = to (compute Computational-RATIFY)
+
+{-# COMPILE GHC ratify-step as ratifyStep #-}
