@@ -48,6 +48,10 @@ record HSMap K V : Set where
   constructor MkHSMap
   field assocList : List (Pair K V)
 
+record HSSet A : Set where
+  constructor MkHSSet
+  field elems : List A
+
 Rational = Pair ℤ ℕ
 
 record TxId : Set where
@@ -94,6 +98,7 @@ ProtVer = Pair ℕ ℕ
     deriving (Generic, Show, Eq, Ord)
   newtype HSMap k v = MkHSMap [(k, v)]
     deriving (Generic, Show, Eq, Ord)
+  newtype HSSet a = MkHSSet [a]
 
   type Ix      = Integer
   type Epoch   = Integer
@@ -122,6 +127,7 @@ ProtVer = Pair ℕ ℕ
 {-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
 {-# COMPILE GHC TxId = data TxId (MkTxId) #-}
 {-# COMPILE GHC HSMap = data HSMap (MkHSMap) #-}
+{-# COMPILE GHC HSSet = data HSSet (MkHSSet) #-}
 
 {-# FOREIGN GHC
   data Credential
@@ -526,4 +532,43 @@ record CertState : Set where
     }
 #-}
 {-# COMPILE GHC CertState = data CertState (MkCertState) #-}
+
+record StakeDistrs : Set where
+  field stakeDistr  : HSMap VDeleg Coin
+{-# FOREIGN GHC
+  newtype StakeDistrs = MkStakeDistrs (HSMap VDeleg Coin)
+#-}
+{-# COMPILE GHC StakeDistrs = data StakeDistrs (MkStakeDistrs) #-}
+
+record RatifyEnv : Set where
+  field reStakeDistrs   : StakeDistrs
+        reCurrentEpoch  : Epoch
+        reDReps         : HSMap Credential Epoch
+        reCCHotKeys     : HSMap Credential (Maybe Credential)
+        reTreasury      : Coin
+{-# FOREIGN GHC
+  data RatifyEnv = MkRatifyEnv
+    { reStakeDistrs   :: StakeDistrs
+    , reCurrentEpoch  :: Epoch
+    , reDReps         :: HSMap Credential Epoch
+    , reCCHotKeys     :: HSMap Credential (Maybe Credential)
+    , reTreasury      :: Coin
+    }
+#-}
+{-# COMPILE GHC RatifyEnv = data RatifyEnv (MkRatifyEnv) #-}
+
+open import Ledger.Set.Theory
+
+record RatifyState : Set where
+  field es              : EnactState
+        removed         : HSSet (Pair GovActionID GovActionState)
+        delay           : Bool
+{-# FOREIGN GHC
+  data RatifyState = MkRatifyState
+   { es      :: EnactState
+   , removed :: HSSet (GovActionID, GovActionState)
+   , delay   :: Bool
+   }
+#-}
+{-# COMPILE GHC RatifyState = data RatifyState (MkRatifyState) #-}
 
