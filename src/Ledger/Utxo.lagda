@@ -185,7 +185,7 @@ updateDeposits pp txb = updateCertDeposits pp txcerts
 \begin{code}
 
 proposalDepositsΔ : List GovProposal → PParams → TxBody → DepositPurpose ⇀ Coin
-proposalDepositsΔ props pp txb = (updateProposalDeposits props txid (pp .govActionDeposit) ∅)
+proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActionDeposit) ∅
   where open TxBody txb
 
 depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
