@@ -300,7 +300,7 @@ record UTxOStateTemp : Set where
 nutxo : UTxOTemp → UTxO
 nutxo = proj₁
 
-frxo : UTxOTemp → UTxO
+frxo : UTxOTemp → FRxO
 frxo = proj₂
 
 \end{code}
