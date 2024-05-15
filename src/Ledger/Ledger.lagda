@@ -42,7 +42,7 @@ record LState : Set where
         certState  : CertState
 
 txgov : TxBody → List (GovVote ⊎ GovProposal)
-txgov txb = map inj₁ txvote ++ map inj₂ txprop
+txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
 \end{code}
 \caption{Types and functions for the LEDGER transition system}

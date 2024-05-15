@@ -12,10 +12,12 @@ import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
+open import Data.List.Base using () renaming (map to mapˡ)
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Ext using (∈-map⁺)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻; ∈-map⁻ ; map-∈↔)
+open import Data.List.Properties using (map-++) -- length-map; ++-identityʳ; ; ++-assoc)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
@@ -86,6 +88,7 @@ module _ {f : A → B} {X} {b} {P : A → Type} {sp-P : specProperty P} where
 
   ∈-map-filter : (∃[ a ] b ≡ f a × P a × a ∈ X) ⇔ b ∈ map f (filter sp-P X)
   ∈-map-filter = mk⇔ ∈-map-filter⁺' ∈-map-filter⁻'
+
 
 open import Tactic.AnyOf
 open import Tactic.Defaults
@@ -358,19 +361,37 @@ fromList-∪-singleton .proj₂ h with ∈-∪⁻ h
 ... | (inj₁ a∈) = to ∈-fromList (here (from ∈-singleton a∈))
 ... | (inj₂ a∈) = to ∈-fromList (there (from ∈-fromList a∈))
 
-module _ {A : Type ℓ} where
+∪-fromList-++ : {ll lr : List A} → fromList ll ∪ fromList lr ≡ᵉ fromList (ll ++ lr)
+∪-fromList-++ {ll = []} {lr} = ∪-identityˡ (fromList lr)
+∪-fromList-++ {ll = x ∷ l} {lr} =
+  begin
+  fromList (x ∷ l) ∪ fromList lr      ≈⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
+  (❴ x ❵ ∪ fromList l) ∪ fromList lr  ≈⟨ ∪-assoc ❴ x ❵ (fromList l) (fromList lr) ⟩
+  ❴ x ❵ ∪ (fromList l ∪ fromList lr)  ≈⟨ ∪-cong ≡ᵉ.refl ∪-fromList-++ ⟩
+  ❴ x ❵ ∪ fromList (l ++ lr)          ≈˘⟨ fromList-∪-singleton ⟩
+  fromList (x ∷ (l ++ lr))            ∎
+  where
+  module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence)
+  open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
 
-  ∪-fromList-++ : {l l' : List A} → fromList l ∪ fromList l' ≡ᵉ fromList (l ++ l')
-  ∪-fromList-++ {l = []} {l'} = ∪-identityˡ (fromList l')
-  ∪-fromList-++ {l = x ∷ l} {l'} =
-    begin
-    fromList (x ∷ l) ∪ fromList l'      ≈⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
-    (❴ x ❵ ∪ fromList l) ∪ fromList l'  ≈⟨ ∪-assoc ❴ x ❵ (fromList l) (fromList l') ⟩
-    ❴ x ❵ ∪ (fromList l ∪ fromList l')  ≈⟨ ∪-cong ≡ᵉ.refl ∪-fromList-++ ⟩
-    ❴ x ❵ ∪ fromList (l ++ l')          ≈˘⟨ fromList-∪-singleton ⟩
-    fromList (x ∷ (l ++ l'))            ∎
+module _ {f : A → B} {ll lr : List A} where
+
+  fromList-map-++-comm : fromList (mapˡ f (ll ++ lr)) ≡ᵉ fromList (mapˡ f (lr ++ ll))
+  fromList-map-++-comm = begin
+      fromList (mapˡ f (ll ++ lr))
+        ≈⟨ ≡ᵉ.reflexive (cong fromList (map-++ f ll lr)) ⟩
+      fromList (mapˡ f ll ++ mapˡ f lr)
+        ≈˘⟨ ∪-fromList-++ ⟩
+      fromList (mapˡ f ll) ∪ fromList (mapˡ f lr)
+        ≈⟨ ∪-comm (fromList (mapˡ f ll)) (fromList (mapˡ f lr)) ⟩
+      fromList (mapˡ f lr) ∪ fromList (mapˡ f ll)
+        ≈⟨ ∪-fromList-++ ⟩
+      fromList (mapˡ f lr ++ mapˡ f ll)
+        ≈˘⟨ ≡ᵉ.reflexive (cong fromList (map-++ f lr ll)) ⟩
+      fromList (mapˡ f (lr ++ ll))
+        ∎
     where
-    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence{A})
+    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence)
     open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
 
 disjoint-sym : disjoint X Y → disjoint Y X
@@ -443,3 +464,5 @@ module _ {L : List A} where
 
     ∃?-sublist-⇔ : Dec (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ Dec (∃[ l ] l ⊆ˡ L × P l)
     ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
+
+
