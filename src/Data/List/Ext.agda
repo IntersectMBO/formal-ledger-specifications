@@ -14,6 +14,7 @@ open import Function.Bundles using (_⇔_; mk⇔; Equivalence)
 open import Level using (Level)
 open import Relation.Binary.PropositionalEquality using (_≡_)
 open import Relation.Unary using (Decidable)
+open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_; ↭-sym)
 open Maybe; open List; open ℕ
 private variable
   ℓ : Level
@@ -69,3 +70,4 @@ zipWithIndex l = zip (range (length l)) l
 
 zipWithIndex⁻ : List A → List (A × ℕ)
 zipWithIndex⁻ l = zip l (range (length l))
+

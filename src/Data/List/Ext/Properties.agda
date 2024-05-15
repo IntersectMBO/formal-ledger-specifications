@@ -47,6 +47,10 @@ AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ _) (here refl) (there b∈l) = inj₂ (inj�
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ _) (there a∈l) (here refl) = inj₂ (inj₂ (lookup x a∈l))
 AllPairs⇒≡∨R∨Rᵒᵖ (x ∷ h) (there a∈l) (there b∈l) = AllPairs⇒≡∨R∨Rᵒᵖ h a∈l b∈l
 
+swap-head : ∀ {a} {A : Set a} {p : A} {ps : List A} → (p ∷ ps) ↭ ps ++ [ p ]
+swap-head {ps = []} = _↭_.refl
+swap-head {p = p} {p' ∷ ps} = _↭_.trans (_↭_.swap p p' _↭_.refl) (_↭_.prep p' swap-head)
+
 --------------------------------------------------------------
 ------- duplicate entries in lists and deduplication ---------
 --------------------------------------------------------------
