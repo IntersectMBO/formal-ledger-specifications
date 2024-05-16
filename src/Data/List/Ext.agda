@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Data.List.Ext where
 
-open import Data.List using (List; [_]; _++_; map; head; drop; concatMap; filter; zip; length)
+open import Data.List using (List; [_]; _++_; map; head; drop; concatMap; filter)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁻; ∈-filter⁺)
 open import Data.List.Relation.Unary.All using (All)
@@ -60,14 +60,3 @@ module _ {f : A → B} {l : List A} {b} {P : A → Set} {P? : Decidable P} where
 
   ∈ˡ-map-filter⁺ : (∃[ a ] b ≡ f a × a ∈ l × P a) → b ∈ map f (filter P? l)
   ∈ˡ-map-filter⁺ (a , b≡fa , a∈l , Pa) = ∈-map⁺ (a , b≡fa , ∈-filter⁺ P? a∈l Pa)
-
-range : ℕ → List ℕ
-range 0 = []
-range (suc n) = range n ++ [ n ]
-
-zipWithIndex : List A → List (ℕ × A)
-zipWithIndex l = zip (range (length l)) l
-
-zipWithIndex⁻ : List A → List (A × ℕ)
-zipWithIndex⁻ l = zip l (range (length l))
-

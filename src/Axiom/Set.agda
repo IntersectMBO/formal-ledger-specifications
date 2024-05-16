@@ -7,7 +7,6 @@ module Axiom.Set where
 open import Prelude hiding (map)
 
 import Function.Related.Propositional as R
-open import Data.List.Base using () renaming (map to mapˡ)
 open import Data.List.Ext.Properties using (∈-dedup; _×-cong_)
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.DecPropositional.Properties using (deduplicate-!)

@@ -18,7 +18,7 @@ import Data.Product
 open import Data.These hiding (map)
 open import Data.Maybe.Base using () renaming (map to map?)
 open import Data.Product.Properties using (,-injectiveˡ; ×-≡,≡→≡)
-open import Data.Product.Properties.Ext using (∃-cong′; ∃-cong; ∃-≡)
+open import Data.Product.Properties.Ext using (∃-cong′)
 open import Relation.Unary using (Decidable)
 open import Relation.Nullary using (yes; no)
 open import Relation.Binary using (_Preserves_⟶_)

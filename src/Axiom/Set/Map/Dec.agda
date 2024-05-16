@@ -63,32 +63,22 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
     aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l
 
     module _ {m m' : Map A V} where
+      dom→× : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
+      dom→× (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
 
       dom-∪⁺⊆∪ : dom ((m ∪⁺ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
-      dom-∪⁺⊆∪ p = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
-                         (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ $ ∈-dom-∪⁺ p)))
-                         (proj₂ $ proj₁ (∈-dom-∪⁺ p))
+      dom-∪⁺⊆∪ {a} a∈ = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
+                             (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ ∈-dom-∪⁺)))
+                             (proj₂ $ proj₁ ∈-dom-∪⁺)
         where
-        f : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
-        f (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
-
-        ∈-dom-∪⁺ : {a : A} (p : a ∈ dom ((m ∪⁺ m') ˢ))
-                   → ∃[ c ] (a , proj₁ (to dom∈ p)) ≡ f c
-                            × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
-        ∈-dom-∪⁺ p = from ∈-map $ proj₂ $ to dom∈ p
-
+        ∈-dom-∪⁺ : ∃[ c ] (a , proj₁ (to dom∈ a∈)) ≡ dom→× c
+                          × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
+        ∈-dom-∪⁺ = from ∈-map $ proj₂ $ to dom∈ a∈
 
       dom-∪⊆∪⁺ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪⁺ m') ˢ)
-      dom-∪⊆∪⁺ {a} a∈ = from dom∈ (proj₂ (f (proj₁ c')) , to ∈-map ν)
-        where
-        f : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
-        f (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
-
-        c' : ∃[ c ] ((a ≡ proj₁ c) × (c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))))
-        c' = from ∈-map (incl-set-proj₁⊇ a∈)
-
-        ν : ∃[ c ] (a , _) ≡ f c × c ∈ (incl-set (dom (m ˢ) ∪ dom (m' ˢ)))
-        ν = (proj₁ c') , (×-≡,≡→≡ (proj₁ (proj₂ c') , Prelude.refl) , (proj₂ (proj₂ c')))
+      dom-∪⊆∪⁺ {a} a∈ with from ∈-map (incl-set-proj₁⊇ a∈)
+      ... | c' , a≡c₁' , c'∈ =
+        from dom∈ (proj₂ (dom→× c') , to ∈-map (c' , ×-≡,≡→≡ (a≡c₁' , Prelude.refl) , c'∈))
 
       dom-∪⁺⇔∪ : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
       dom-∪⁺⇔∪ {a} = mk⇔ dom-∪⁺⊆∪ dom-∪⊆∪⁺
