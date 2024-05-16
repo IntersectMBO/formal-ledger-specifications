@@ -68,8 +68,8 @@ instance
       computeProof = case isValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
-          (certSt' , certStep) ← map₁ (λ where (inj₁ x) → x; (inj₂ x) → x) $ computeCerts certΓ certSt txcerts
-          (govSt'  , govStep)  ← map₁ (λ where (inj₁ ());    (inj₂ x) → x) $ computeGov   govΓ  govSt  (txgov txb)
+          (certSt' , certStep) ← computeCerts certΓ certSt txcerts
+          (govSt'  , govStep)  ← computeGov   govΓ  govSt  (txgov txb)
           success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
@@ -93,7 +93,7 @@ instance
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl = refl
 
-Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ (⊥ ⊎ String)
+Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
 Computational-LEDGERS = it
 
 instance
