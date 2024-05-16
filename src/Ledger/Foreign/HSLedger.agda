@@ -141,7 +141,7 @@ HSScriptStructure = record
 
 instance _ = HSScriptStructure
 
-open import Ledger.PParams it it it hiding (PParams)
+open import Ledger.PParams it it it hiding (PParams; Acnt)
 
 HsGovParams : GovParams
 HsGovParams = record
@@ -204,6 +204,11 @@ open import Ledger.Ratify it
 open import Ledger.Ratify.Properties it
 open import Ledger.Enact it
 open import Ledger.GovernanceActions it using (Vote; GovVote; GovProposal; GovAction)
+open import Ledger.GovernanceActions.Properties it
+open import Ledger.Ledger it it
+open import Ledger.Ledger.Properties it it
+--open import Ledger.Epoch it it
+--open import Ledger.Epoch.Properties it it
 
 open import Data.Rational
 
@@ -560,6 +565,24 @@ instance
   Convertible-EnactEnv : Convertible EnactEnv F.EnactEnv
   Convertible-EnactEnv = autoConvertible
 
+  Convertible-LEnv : Convertible LEnv F.LEnv
+  Convertible-LEnv = autoConvertible
+
+  Convertible-LState : Convertible LState F.LState
+  Convertible-LState = autoConvertible
+
+  --Convertible-NewEpochEnv : Convertible NewEpochEnv F.NewEpochEnv
+  --Convertible-NewEpochEnv = autoConvertible
+
+  Convertible-Acnt : Convertible Acnt F.Acnt
+  Convertible-Acnt = autoConvertible
+
+  Convertible-EpochState : Convertible EpochState F.EpochState
+  Convertible-EpochState = autoConvertible
+
+  --Convertible-NewEpochState : Convertible NewEpochState F.NewEpochState
+  --Convertible-NewEpochState = autoConvertible
+
 utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
 utxo-step = to (compute Computational-UTXO)
 
@@ -590,8 +613,17 @@ ratify-step = to (compute Computational-RATIFY)
 
 {-# COMPILE GHC ratify-step as ratifyStep #-}
 
-open import Ledger.GovernanceActions.Properties it
 enact-step : F.EnactEnv → F.EnactState → F.GovAction → F.ComputationResult String F.EnactState
 enact-step = to (compute Computational-ENACT)
 
 {-# COMPILE GHC enact-step as enactStep #-}
+
+ledger-step : F.LEnv → F.LState → F.Tx → F.ComputationResult String F.LState
+ledger-step = to (compute Computational-LEDGER)
+
+{-# COMPILE GHC ledger-step as ledgerStep #-}
+
+--newepoch-step : F.NewEpochEnv → F.NewEpochState → F.Epoch → F.ComputationResult ⊥ F.NewEpochState
+--newepoch-step = to (compute Computational-NEWEPOCH)
+--
+--{-# COMPILE GHC newepoch-step as newEpochStep #-}
