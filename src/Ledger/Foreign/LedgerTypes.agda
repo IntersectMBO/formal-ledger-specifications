@@ -613,3 +613,48 @@ record EnactEnv : Set where
     }
 #-}
 {-# COMPILE GHC EnactEnv = data EnactEnv (MkEnactEnv) #-}
+
+record Acnt : Set where
+  field treasury reserves : Coin
+{-# FOREIGN GHC
+  data Acnt = MkAcnt
+    { field :: Coin
+    , treasury :: Coin
+    , reserves :: Coin
+    }
+#-}
+{-# COMPILE GHC Acnt = data Acnt (MkAcnt) #-}
+
+record NewEpochEnv : Set where
+  field stakeDistrs : StakeDistrs
+{-# FOREIGN GHC
+  newtype NewEpochEnv = MkNewEpochEnv {stakeDistrs :: StakeDistrs}
+#-}
+{-# COMPILE GHC NewEpochEnv = data NewEpochEnv (MkNewEpochEnv) #-}
+
+record EpochState : Set where
+  field acnt       : Acnt
+        ls         : LState
+        es         : EnactState
+        fut        : RatifyState
+{-# FOREIGN GHC
+  data EpochState = MkEpochState
+    { acnt :: Acnt
+    , ls   :: LState
+    , es   :: EnactState
+    , fut  :: RatifyState
+    }
+#-}
+{-# COMPILE GHC EpochState = data EpochState (MkEpochState) #-}
+
+record NewEpochState : Set where
+  field lastEpoch   : Epoch
+        epochState  : EpochState
+{-# FOREIGN GHC
+  data NewEpochState = MkNewEpochState
+    { lastEpoch   : Epoch
+    , epochState  : EpochState
+    }
+#-}
+{-# COMPILE GHC NewEpochState = data NewEpochState (MkNewEpochState) #-}
+
