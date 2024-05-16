@@ -63,15 +63,16 @@ Addr          = ℕ -- just payment credential
 Ix            = ℕ
 Epoch         = ℕ
 ScriptHash    = ℕ
+Slot          = ℕ
+PParamsUpdate = ℕ
 
+Anchor        = ⊤
 AuxiliaryData = ⊤
-DataHash      = ⊤
 Datum         = ⊤
 Redeemer      = ⊤
-Anchor        = ⊤
 Network       = ⊤
-PParamsUpdate = ℕ
 Script        = ⊤
+DataHash      = ⊤
 
 TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Pair (Maybe (Either Datum DataHash)) $ Maybe Script
@@ -572,3 +573,43 @@ record RatifyState : Set where
 #-}
 {-# COMPILE GHC RatifyState = data RatifyState (MkRatifyState) #-}
 
+record LEnv : Set where
+  field slot        : Slot
+        ppolicy     : Maybe ScriptHash
+        pparams     : PParams
+        enactState  : EnactState
+{-# FOREIGN GHC
+  data LedgerEnv = MkLedgerEnv
+    { slot       :: Slot
+    , ppolicy    :: Maybe ScriptHash
+    , pparams    :: PParams
+    , enactState :: EnactState
+    }
+#-}
+{-# COMPILE GHC LEnv = data LedgerEnv (MkLedgerEnv) #-}
+
+record LState : Set where
+  field utxoSt     : UTxOState
+        govSt      : GovState
+        certState  : CertState
+{-# FOREIGN GHC
+  data LedgerState = MkLedgerState
+    { utxoSt    :: UTxOState
+    , govSt     :: GovState
+    , certState :: CertState
+    }
+#-}
+{-# COMPILE GHC LState = data LedgerState (MkLedgerState) #-}
+
+record EnactEnv : Set where
+  field gid       : GovActionID
+        treasury  : Coin
+        epoch     : Epoch
+{-# FOREIGN GHC
+  data EnactEnv = MkEnactEnv
+    { eeGid :: GovActionID
+    , eeTreasury :: Coin
+    , eeEpoch :: Epoch
+    }
+#-}
+{-# COMPILE GHC EnactEnv = data EnactEnv (MkEnactEnv) #-}

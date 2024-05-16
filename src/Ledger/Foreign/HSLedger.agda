@@ -154,15 +154,6 @@ HsGovParams = record
   ; ppHashingScheme = it
   }
 
-HSGovStructure : GovStructure
-HSGovStructure = record
-  { Implementation
-  ; epochStructure = HSEpochStructure
-  ; govParams      = HsGovParams
-  ; crypto         = HSCrypto
-  }
-instance _ = HSGovStructure
-
 HSTransactionStructure : TransactionStructure
 HSTransactionStructure = record
   { Implementation
@@ -174,7 +165,8 @@ HSTransactionStructure = record
   ; txidBytes       = id
   ; scriptStructure = HSScriptStructure
   }
-instance _ = HSTransactionStructure
+instance
+  _ = HSTransactionStructure
 
 open import Ledger.Abstract it
 open import Ledger.Gov it
@@ -197,13 +189,22 @@ HSAbstractFunctions = record
   }
 instance _ = HSAbstractFunctions
 
-open TransactionStructure it hiding (GovVote; GovProposal)
+HSGovStructure : GovStructure
+HSGovStructure = TransactionStructure.govStructure HSTransactionStructure
+instance _ = HSGovStructure
+
+open TransactionStructure it hiding (GovVote; GovProposal; GovAction)
+open GovStructure govStructure using (DocHash)
+
 open import Ledger.Gov.Properties it
 open import Ledger.Utxo it it
 open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it
 open import Ledger.Ratify it
 open import Ledger.Ratify.Properties it
+open import Ledger.Enact it
+open import Ledger.GovernanceActions it using (Vote; GovVote; GovProposal; GovAction)
+
 open import Data.Rational
 
 open import Algebra
@@ -267,8 +268,8 @@ instance
 
   Convertible-Anchor : Convertible Anchor F.Anchor
   Convertible-Anchor = λ where
-    .to _ → tt
-    .from tt → record { url = "bogus" ; hash = tt }
+    .to record { hash = x } → x
+    .from x → record { url = "bogus" ; hash = x }
 
   Convertible-Script : Convertible Script F.Script
   Convertible-Script = λ where
@@ -282,6 +283,9 @@ instance
   Convertible-TxId = λ where
     .to x → record { txid = x }
     .from → F.TxId.txid
+
+  Convertible-DataHash : Convertible DataHash F.DataHash
+  Convertible-DataHash = autoConvertible
 
   Convertible-TxBody : Convertible TxBody F.TxBody
   Convertible-TxBody = λ where
@@ -432,24 +436,25 @@ instance
   Convertible-ComputationResult : ConvertibleType ComputationResult F.ComputationResult
   Convertible-ComputationResult = autoConvertible
 
-  Convertible-RwdAddr : Convertible (GovStructure.RwdAddr govStructure) F.RwdAddr
+  Convertible-RwdAddr : Convertible RwdAddr F.RwdAddr
   Convertible-RwdAddr = autoConvertible
 
-  open import Ledger.Enact govStructure
-  Convertible-EnactState : ConvertibleType EnactState F.EnactState
+  Convertible-DocHash : Convertible DocHash F.DataHash
+  Convertible-DocHash = autoConvertible
+
+  Convertible-EnactState : Convertible EnactState F.EnactState
   Convertible-EnactState = autoConvertible
 
   Convertible-GovEnv : ConvertibleType GovEnv F.GovEnv
   Convertible-GovEnv = autoConvertible
 
-  open import Ledger.GovernanceActions govStructure using (Vote; GovVote; GovProposal)
-  Convertible-Vote : ConvertibleType Vote F.Vote
+  Convertible-Vote : Convertible Vote F.Vote
   Convertible-Vote = autoConvertible
 
-  Convertible-PParamsUpdate : Convertible (GovStructure.PParamsUpdate govStructure) F.PParamsUpdate
+  Convertible-PParamsUpdate : Convertible PParamsUpdate F.PParamsUpdate
   Convertible-PParamsUpdate = record { to = id ; from = id }
 
-  Convertible-GovAction : ConvertibleType GovAction F.GovAction
+  Convertible-GovAction : Convertible GovAction F.GovAction
   Convertible-GovAction = autoConvertible
 
 toNeedsHash : ∀ {action} → F.GovActionID → NeedsHash action
@@ -492,7 +497,7 @@ instance
         ; prevAction = toNeedsHash gasPrevAction
         }
 
-  Convertible-GovVote : ConvertibleType GovVote F.GovVote
+  Convertible-GovVote : Convertible GovVote F.GovVote
   Convertible-GovVote = autoConvertible
 
   Convertible-GovProposal : Convertible GovProposal F.GovProposal
@@ -552,8 +557,11 @@ instance
   Convertible-RatifyState : Convertible RatifyState F.RatifyState
   Convertible-RatifyState = autoConvertible
 
+  Convertible-EnactEnv : Convertible EnactEnv F.EnactEnv
+  Convertible-EnactEnv = autoConvertible
+
 utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
-utxo-step = to UTXO-step
+utxo-step = to (compute Computational-UTXO)
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
@@ -581,3 +589,9 @@ ratify-step : F.RatifyEnv → F.RatifyState → List (F.Pair F.GovActionID F.Gov
 ratify-step = to (compute Computational-RATIFY)
 
 {-# COMPILE GHC ratify-step as ratifyStep #-}
+
+open import Ledger.GovernanceActions.Properties it
+enact-step : F.EnactEnv → F.EnactState → F.GovAction → F.ComputationResult String F.EnactState
+enact-step = to (compute Computational-ENACT)
+
+{-# COMPILE GHC enact-step as enactStep #-}
