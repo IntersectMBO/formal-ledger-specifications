@@ -587,9 +587,6 @@ coin∅ = begin
 getCoin-singleton : ((dp , c) : DepositPurpose × Coin) → indexedSumᵛ' id ❴ (dp , c) ❵ ≡ c
 getCoin-singleton _ = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
 
-_∪⁺_ : ∀ {A} → ⦃ DecEq A ⦄ → A ⇀ ℕ → A ⇀ ℕ → A ⇀ ℕ
-_∪⁺_ = OpUnion._∪̇_ _+_
-
 module _
   -- ASSUMPTION --
   {- 1 -} {gc-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂}

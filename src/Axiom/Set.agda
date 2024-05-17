@@ -164,9 +164,6 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   ∈-fromList : ∀ {a} → a ∈ˡ l ⇔ a ∈ fromList l
   ∈-fromList = proj₂ $ listing _
 
-  listToFinSet : List A → FinSet A
-  listToFinSet l = fromList l , l , R.SK-sym ∈-fromList
-
   ∈-unions : {a : A} {U : Set (Set A)} → (∃[ T ] T ∈ U × a ∈ T) ⇔ a ∈ proj₁ (unions U)
   ∈-unions = proj₂ $ unions _
 
