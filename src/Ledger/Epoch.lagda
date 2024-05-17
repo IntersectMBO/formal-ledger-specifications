@@ -82,7 +82,6 @@ its results, i.e:
       open LState ls; open UTxOState utxoSt; open CertState certState
       open PState pState; open DState dState; open GState gState
       open Acnt acnt
-      open OpUnion _+_ renaming (aggregate∙ to aggregate₊)
 
       trWithdrawals   = esW .EnactState.withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x

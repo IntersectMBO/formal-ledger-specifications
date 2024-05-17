@@ -91,10 +91,6 @@ private variable
 
 instance
   _ = +-0-monoid
-
-_∪⁺_ : ∀ {A} → ⦃ DecEq A ⦄ → A ⇀ ℕ → A ⇀ ℕ → A ⇀ ℕ
-_∪⁺_ = OpUnion._∪̇_ _+_
-
 \end{code}
 
 Figure~\ref{fig:sts:enact} defines the rules of the ENACT transition
