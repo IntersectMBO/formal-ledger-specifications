@@ -105,6 +105,7 @@ ProtVer = Pair ℕ ℕ
   type Epoch   = Integer
   type ScriptHash    = Integer
   type PParamsUpdate = Integer
+  type Slot = Integer
 
   type AuxiliaryData = ()
   type DataHash      = ()
@@ -566,9 +567,9 @@ record RatifyState : Set where
         delay           : Bool
 {-# FOREIGN GHC
   data RatifyState = MkRatifyState
-   { es      :: EnactState
-   , removed :: HSSet (GovActionID, GovActionState)
-   , delay   :: Bool
+   { rsEnactState :: EnactState
+   , rsRemoved    :: HSSet (GovActionID, GovActionState)
+   , rsDelay      :: Bool
    }
 #-}
 {-# COMPILE GHC RatifyState = data RatifyState (MkRatifyState) #-}
@@ -580,10 +581,10 @@ record LEnv : Set where
         enactState  : EnactState
 {-# FOREIGN GHC
   data LedgerEnv = MkLedgerEnv
-    { slot       :: Slot
-    , ppolicy    :: Maybe ScriptHash
-    , pparams    :: PParams
-    , enactState :: EnactState
+    { leSlot       :: Slot
+    , lePPolicy    :: Maybe ScriptHash
+    , lePParams    :: PParams
+    , leEnactState :: EnactState
     }
 #-}
 {-# COMPILE GHC LEnv = data LedgerEnv (MkLedgerEnv) #-}
@@ -618,8 +619,7 @@ record Acnt : Set where
   field treasury reserves : Coin
 {-# FOREIGN GHC
   data Acnt = MkAcnt
-    { field :: Coin
-    , treasury :: Coin
+    { treasury :: Coin
     , reserves :: Coin
     }
 #-}
@@ -639,10 +639,10 @@ record EpochState : Set where
         fut        : RatifyState
 {-# FOREIGN GHC
   data EpochState = MkEpochState
-    { acnt :: Acnt
-    , ls   :: LState
-    , es   :: EnactState
-    , fut  :: RatifyState
+    { esAcnt       :: Acnt
+    , esLState     :: LedgerState
+    , esEnactState :: EnactState
+    , esFut        :: RatifyState
     }
 #-}
 {-# COMPILE GHC EpochState = data EpochState (MkEpochState) #-}
@@ -652,9 +652,40 @@ record NewEpochState : Set where
         epochState  : EpochState
 {-# FOREIGN GHC
   data NewEpochState = MkNewEpochState
-    { lastEpoch   : Epoch
-    , epochState  : EpochState
+    { lastEpoch  :: Epoch
+    , epochState :: EpochState
     }
 #-}
 {-# COMPILE GHC NewEpochState = data NewEpochState (MkNewEpochState) #-}
+
+record ChainState : Set where
+  field csNewEpochState : NewEpochState
+{-# FOREIGN GHC
+  newtype ChainState = MkChainState
+    { csNewEpochState :: NewEpochState
+    }
+#-}
+{-# COMPILE GHC ChainState = data ChainState (MkChainState) #-}
+
+record Block : Set where
+  field blockTxs : List Tx
+        blockSlot : Slot
+{-# FOREIGN GHC
+  data Block = MkBlock
+    { blockTxs :: [Tx]
+    , blockSlot :: Slot
+    }
+#-}
+{-# COMPILE GHC Block = data Block (MkBlock) #-}
+
+record DelegEnv : Set where
+  field dePParams  : PParams
+        dePools    : HSMap Credential PoolParams
+{-# FOREIGN GHC
+  data DelegEnv = MkDelegEnv
+    { dePParams :: PParams
+    , dePools :: HSMap Credential PoolParams
+    }
+#-}
+{-# COMPILE GHC DelegEnv = data DelegEnv (MkDelegEnv) #-}
 

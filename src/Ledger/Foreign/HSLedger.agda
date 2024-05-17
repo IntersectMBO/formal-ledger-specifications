@@ -207,8 +207,10 @@ open import Ledger.GovernanceActions it using (Vote; GovVote; GovProposal; GovAc
 open import Ledger.GovernanceActions.Properties it
 open import Ledger.Ledger it it
 open import Ledger.Ledger.Properties it it
---open import Ledger.Epoch it it
---open import Ledger.Epoch.Properties it it
+open import Ledger.Epoch it it using (NewEpochEnv; NewEpochState; EpochState)
+open import Ledger.Epoch.Properties it it
+open import Ledger.Chain it it
+open import Ledger.Chain.Properties it it
 
 open import Data.Rational
 
@@ -571,17 +573,30 @@ instance
   Convertible-LState : Convertible LState F.LState
   Convertible-LState = autoConvertible
 
-  --Convertible-NewEpochEnv : Convertible NewEpochEnv F.NewEpochEnv
-  --Convertible-NewEpochEnv = autoConvertible
+  Convertible-NewEpochEnv : Convertible NewEpochEnv F.NewEpochEnv
+  Convertible-NewEpochEnv = autoConvertible
 
   Convertible-Acnt : Convertible Acnt F.Acnt
-  Convertible-Acnt = autoConvertible
+  Convertible-Acnt = λ where
+    .to record { treasury = treasury ; reserves = reserves } →
+      record { treasury = treasury ; reserves = reserves }
+    .from record { treasury = treasury ; reserves = reserves } →
+      record { treasury = treasury ; reserves = reserves }
 
   Convertible-EpochState : Convertible EpochState F.EpochState
   Convertible-EpochState = autoConvertible
 
-  --Convertible-NewEpochState : Convertible NewEpochState F.NewEpochState
-  --Convertible-NewEpochState = autoConvertible
+  Convertible-NewEpochState : Convertible NewEpochState F.NewEpochState
+  Convertible-NewEpochState = autoConvertible
+
+  Convertible-ChainState : Convertible ChainState F.ChainState
+  Convertible-ChainState = autoConvertible
+
+  Convertible-Block : Convertible Block F.Block
+  Convertible-Block = autoConvertible
+
+  Convertible-DelegEnv : Convertible DelegEnv F.DelegEnv
+  Convertible-DelegEnv = autoConvertible
 
 utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
 utxo-step = to (compute Computational-UTXO)
@@ -608,6 +623,21 @@ cert-step = to (compute Computational-CERT)
 
 {-# COMPILE GHC cert-step as certStep #-}
 
+deleg-step : F.DelegEnv → F.DState → F.TxCert → F.ComputationResult String F.DState
+deleg-step = to (compute Computational-DELEG)
+
+{-# COMPILE GHC deleg-step as delegStep #-}
+
+pool-step : F.PParams → F.PState → F.TxCert → F.ComputationResult String F.PState
+pool-step = to (compute Computational-POOL)
+
+{-# COMPILE GHC pool-step as poolStep #-}
+
+govcert-step : F.CertEnv → F.GState → F.TxCert → F.ComputationResult String F.GState
+govcert-step = to (compute Computational-GOVCERT)
+
+{-# COMPILE GHC govcert-step as govCertStep #-}
+
 ratify-step : F.RatifyEnv → F.RatifyState → List (F.Pair F.GovActionID F.GovActionState) → F.ComputationResult F.Empty F.RatifyState
 ratify-step = to (compute Computational-RATIFY)
 
@@ -623,7 +653,22 @@ ledger-step = to (compute Computational-LEDGER)
 
 {-# COMPILE GHC ledger-step as ledgerStep #-}
 
---newepoch-step : F.NewEpochEnv → F.NewEpochState → F.Epoch → F.ComputationResult ⊥ F.NewEpochState
---newepoch-step = to (compute Computational-NEWEPOCH)
---
---{-# COMPILE GHC newepoch-step as newEpochStep #-}
+ledgers-step : F.LEnv → F.LState → List F.Tx → F.ComputationResult String F.LState
+ledgers-step = to (compute Computational-LEDGERS)
+
+{-# COMPILE GHC ledgers-step as ledgersStep #-}
+
+epoch-step : F.NewEpochEnv → F.EpochState → F.Epoch → F.ComputationResult F.Empty F.EpochState
+epoch-step = to (compute Computational-EPOCH)
+
+{-# COMPILE GHC epoch-step as epochStep #-}
+
+newepoch-step : F.NewEpochEnv → F.NewEpochState → F.Epoch → F.ComputationResult F.Empty F.NewEpochState
+newepoch-step = to (compute Computational-NEWEPOCH)
+
+{-# COMPILE GHC newepoch-step as newEpochStep #-}
+
+chain-step : ⊤ → F.ChainState → F.Block → F.ComputationResult String F.ChainState
+chain-step = to (compute Computational-CHAIN)
+
+{-# COMPILE GHC chain-step as chainStep #-}
