@@ -243,15 +243,12 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
           voteUpdate (g ∷ gs) v ++ voteUpdate gs' v             ∎
 
     updateGovState-++-decomp (inj₂ p ∷ vps) {k} gs gs' = let open ≡-Reasoning in begin
-      updateGovStates vps _ (propUpdate (gs ++ gs') p k)                   ≡⟨ cong (updateGovStates vps _) (propUpdate-++-decomp gs gs' p k) ⟩
-      updateGovStates vps _ (gs ++ propUpdate gs' p k)                     ≡⟨ updateGovState-++-decomp vps gs (propUpdate gs' p k) ⟩
-      updateVotesOnly gs vps ++ updateGovStates vps _ (propUpdate gs' p k) ∎
-      where
-      propUpdate-++-decomp : (gs gs' : GovState) (p : GovProposal) (n : ℕ) → propUpdate (gs ++ gs') p n ≡ gs ++ propUpdate gs' p n
-      propUpdate-++-decomp gs gs' p n = let open ≡-Reasoning in begin
-        propUpdate (gs ++ gs') p n  ≡⟨ ++-assoc gs gs' [ mkAction p n ] ⟩
-        gs ++ gs' ∷ʳ mkAction p n   ≡⟨ cong (gs ++_) refl ⟩
-        gs ++ propUpdate gs' p n          ∎
+      updateGovStates vps _ (propUpdate (gs ++ gs') p k)
+        ≡⟨ cong (updateGovStates vps _) (++-assoc gs gs' [ mkAction p k ]) ⟩
+      updateGovStates vps _ (gs ++ propUpdate gs' p k)
+        ≡⟨ updateGovState-++-decomp vps gs (propUpdate gs' p k) ⟩
+      updateVotesOnly gs vps ++ updateGovStates vps _ (propUpdate gs' p k)
+        ∎
 
     -- decomposition of updateGovStates applied to list of proposals
     updateProps-decomp : (ps : List GovProposal) {k : ℕ} {govSt : GovState} →
@@ -262,9 +259,12 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       updateGovStates (map inj₂ (ps ++ ps')) k govSt
       ≡ updateGovStates (map inj₂ ps) k govSt  ++ updateGovStates (map inj₂ ps') (k + length ps) []
     updateProps-++-decomp [] ps' {k} {govSt} = let open ≡-Reasoning in begin
-      updateGovStates (map inj₂ ps') k govSt              ≡˘⟨ cong (λ x → updateGovStates (map inj₂ ps') x govSt) (+-identityʳ k) ⟩
-      updateGovStates (map inj₂ ps') (k + 0) govSt        ≡⟨ updateProps-decomp ps' ⟩
-      govSt ++ updateGovStates (map inj₂ ps') (k + 0) []  ∎
+      updateGovStates (map inj₂ ps') k govSt
+        ≡˘⟨ cong (λ x → updateGovStates (map inj₂ ps') x govSt) (+-identityʳ k) ⟩
+      updateGovStates (map inj₂ ps') (k + 0) govSt
+        ≡⟨ updateProps-decomp ps' ⟩
+      govSt ++ updateGovStates (map inj₂ ps') (k + 0) []
+        ∎
     updateProps-++-decomp (p ∷ ps) ps' {k} {govSt} = let open ≡-Reasoning in begin
       updateGovStates (map inj₂ (ps ++ ps')) (suc k) (propUpdate govSt p k)
         ≡⟨ updateProps-++-decomp ps ps' ⟩
@@ -280,12 +280,17 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
           upp = updateGovStates (map inj₂ [ p ]) k []
           upps = updateGovStates (map inj₂ ps) (suc k) []
       in  begin
-          updateGovStates (map inj₂ ps) _ (propUpdate govSt p k)                ≡⟨ updateProps-decomp ps ⟩
-          (propUpdate govSt p k) ++ upps                                        ≡⟨ ++-assoc govSt [ mkAction p k ] upps  ⟩
-          govSt ++ (upp ++ upps)                                                ≡⟨ cong (λ x → govSt ++ (upp ++ updateGovStates (map inj₂ ps) x [])) (+-comm 1 k) ⟩
-          govSt ++ (upp ++ updateGovStates (map inj₂ ps) (k + length [ p ]) []) ≡˘⟨ cong (govSt ++_) (updateProps-++-decomp [ p ] ps {govSt = []}) ⟩
-          govSt ++ (updateGovStates (map inj₂ ([ p ] ++ ps)) k [] )             ≡⟨ cong (govSt ++_) refl ⟩
-          govSt ++ updateGovStates (map inj₂ ps) _ (propUpdate [] p k)          ∎
+          updateGovStates (map inj₂ ps) _ (propUpdate govSt p k)
+            ≡⟨ updateProps-decomp ps ⟩
+          (propUpdate govSt p k) ++ upps
+            ≡⟨ ++-assoc govSt [ mkAction p k ] upps  ⟩
+          govSt ++ (upp ++ upps)
+            ≡⟨ cong (λ x → govSt ++ (upp ++ updateGovStates (map inj₂ ps) x [])) (+-comm 1 k) ⟩
+          govSt ++ (upp ++ updateGovStates (map inj₂ ps) (k + length [ p ]) [])
+            ≡˘⟨ cong (govSt ++_) (updateProps-++-decomp [ p ] ps {govSt = []}) ⟩
+          govSt ++ updateGovStates (map inj₂ ps) _ (propUpdate [] p k)
+            ∎
+
     -- dpMap of GovState is invariant under updating with one GovVote
     dmMap-vote-invar : (v : GovVote) (vps : List (GovVote ⊎ GovProposal)) {k : ℕ} {govSt : GovState}
       → dpMap (updateGovStates (inj₁ v ∷ vps) k govSt ) ≡ dpMap (updateGovStates vps (suc k) govSt)
@@ -643,7 +648,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
           to ∈-filter (refl , ∈-resᶜ-dom⁺ (a∉χ' , (to dom∈ $ proj₂ (from ∈-filter a∈))))
            where
            a∈ : a ∈ filterˢ isGADeposit (dom utxoDeps)
-           a∈ = snd $ to ∈-fromList $ to ∈ˡ-map (aid×st , refl , aid×st∈govSt)
+           a∈ = snd $ to ∈-fromList $ to ∈ˡ-map (aid×st , aid×st∈govSt , refl)
 
            a∉χ' : a ∉ χ'
            a∉χ' a∈χ' with ∈-map⁻' a∈χ'

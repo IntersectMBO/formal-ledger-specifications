@@ -181,12 +181,12 @@ updateDeposits pp txb = updateCertDeposits pp txcerts
 \end{code}
 \begin{code}[hide]
   where open TxBody txb
-\end{code}
-\begin{code}
 
 proposalDepositsΔ : List GovProposal → PParams → TxBody → DepositPurpose ⇀ Coin
 proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActionDeposit) ∅
   where open TxBody txb
+\end{code}
+\begin{code}
 
 depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
 depositsChange pp txb deposits =

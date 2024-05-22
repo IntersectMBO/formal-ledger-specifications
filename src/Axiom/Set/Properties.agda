@@ -14,9 +14,8 @@ import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
 open import Data.List.Base using () renaming (map to mapˡ)
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
-open import Data.List.Ext using (∈-map⁺)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
-open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻; ∈-map⁻ ; map-∈↔)
+open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻; ∈-map⁺; ∈-map⁻ ; map-∈↔)
 open import Data.List.Properties using (map-++)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
@@ -76,7 +75,7 @@ module _ {f : A → B} {l : List A} {b : B} where
   ∈-fromList-map⁺ = (∈-map⁻ f) ∘ ∈-fromList⁻
 
   ∈-fromList-map⁻ : ∃[ x ] x ∈ˡ l × b ≡ f x → b ∈ fromList (Data.List.map f l)
-  ∈-fromList-map⁻ (x , x∈ , b≡) = ∈-fromList⁺ (∈-map⁺ (x , b≡ , x∈))
+  ∈-fromList-map⁻ (x , <″-offset x∈) = ∈-fromList⁺ (∈-map⁺ f x∈)
 
 module _ {f : A → B} {X} {b} {P : A → Type} {sp-P : specProperty P} where
   ∈-map-filter⁻' : b ∈ map f (filter sp-P X) → (∃[ a ] b ≡ f a × P a × a ∈ X)
@@ -373,26 +372,6 @@ fromList-∪-singleton .proj₂ h with ∈-∪⁻ h
   where
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence)
   open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
-
-module _ {f : A → B} {ll lr : List A} where
-
-  fromList-map-++-comm : fromList (mapˡ f (ll ++ lr)) ≡ᵉ fromList (mapˡ f (lr ++ ll))
-  fromList-map-++-comm = begin
-      fromList (mapˡ f (ll ++ lr))
-        ≈⟨ ≡ᵉ.reflexive (cong fromList (map-++ f ll lr)) ⟩
-      fromList (mapˡ f ll ++ mapˡ f lr)
-        ≈˘⟨ ∪-fromList-++ (mapˡ f ll) (mapˡ f lr) ⟩
-      fromList (mapˡ f ll) ∪ fromList (mapˡ f lr)
-        ≈⟨ ∪-comm (fromList (mapˡ f ll)) (fromList (mapˡ f lr)) ⟩
-      fromList (mapˡ f lr) ∪ fromList (mapˡ f ll)
-        ≈⟨ ∪-fromList-++ (mapˡ f lr) (mapˡ f ll) ⟩
-      fromList (mapˡ f lr ++ mapˡ f ll)
-        ≈˘⟨ ≡ᵉ.reflexive (cong fromList (map-++ f lr ll)) ⟩
-      fromList (mapˡ f (lr ++ ll))
-        ∎
-    where
-    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence)
-    open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
