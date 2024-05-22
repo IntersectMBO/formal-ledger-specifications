@@ -29,10 +29,12 @@ open import Data.List.Ext.Properties using (swap-head)
 open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁻; ∈-map⁻)
 open import Data.List.Relation.Unary.Any using (Any)
-open import Data.Product.Properties using (×-≡,≡→≡)
+open import Data.Product.Properties using (×-≡,≡←≡)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
 open import Relation.Binary using (IsEquivalence)
 open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_; ↭-sym)
+
+import Function.Related.Propositional as R
 
 open Any
 
@@ -222,24 +224,6 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     open PParams pp using (govActionDeposit)
     open ≡-Reasoning
     open LEDGER-PROPS tx Γ s
-
-    updateGovState-++-decomp : (vps : List (GovVote ⊎ GovProposal)) {k : ℕ} (gs gs' : GovState)
-      → updateGovStates vps k (gs ++ gs')  ≡ updateVotesOnly gs vps ++ updateGovStates vps k gs'
-
-    updateGovState-++-decomp [] _ _ = refl
-    updateGovState-++-decomp (inj₁ v ∷ vps) gs gs' = begin
-      updateGovStates vps _ (voteUpdate (gs ++ gs') v)
-        ≡⟨ cong (updateGovStates vps _) (map-++ _ gs gs') ⟩
-      updateGovStates vps _ (voteUpdate gs v ++ voteUpdate gs' v)
-        ≡⟨ updateGovState-++-decomp vps (voteUpdate gs v) (voteUpdate gs' v) ⟩
-      updateVotesOnly (voteUpdate gs v) vps ++ updateGovStates vps _ (voteUpdate gs' v) ∎
-
-    updateGovState-++-decomp (inj₂ p ∷ vps) {k} gs gs' = begin
-      updateGovStates vps _ (propUpdate (gs ++ gs') p k)
-        ≡⟨ cong (updateGovStates vps _) (++-assoc gs gs' [ mkAction p k ]) ⟩
-      updateGovStates vps _ (gs ++ propUpdate gs' p k)
-        ≡⟨ updateGovState-++-decomp vps gs (propUpdate gs' p k) ⟩
-      updateVotesOnly gs vps ++ updateGovStates vps _ (propUpdate gs' p k) ∎
 
 
     -- decomposition of updateGovStates applied to list of proposals
@@ -584,34 +568,22 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         where
         χ'⊆χ : χ' ⊆ χ utxoDeps
         χ'⊆χ {a} x with from ∈-map x
-        ... | ((gaid , gast) , a≡GAgaid , gaidgast∈rem) with from ∈-map (ratify-removed x)
-        ... | ((dp , c) , a≡dp , dpc∈utxoDeps) =
-          to ∈-map ( (returnAddr gast , GovActionDeposit gaid , c)
-                   , a≡GAgaid
-                   , to ∈-concatMapˢ((gaid , gast) , gaidgast∈rem , addr-dp-c-∈map)
-                   )
-          where
-          dp-c-∈-utxoDep : (GovActionDeposit gaid , c) ∈  (utxoDeps ˢ)
-          dp-c-∈-utxoDep = subst (λ x₂ → (x₂ , c) ∈ (utxoDeps ˢ))
-                                 (trans (sym a≡dp) a≡GAgaid) dpc∈utxoDeps
-
-          addr-dp-c-∈map : (returnAddr gast , GovActionDeposit gaid , c)
-                           ∈ mapˢ (returnAddr gast ,_) ( (utxoDeps ∣ ❴ GovActionDeposit gaid ❵)ˢ )
-          addr-dp-c-∈map =
-            to ∈-map $ (GovActionDeposit gaid , c)
-                     , (×-≡,≡→≡ (refl , refl) , res-singleton⁺{m = utxoDeps} dp-c-∈-utxoDep)
+        ... | (gaid , gast) , refl , gaidgast∈rem with from ∈-map (ratify-removed x)
+        ... | (dp , c) , refl , dpc∈utxoDeps = let gadc = (GovActionDeposit gaid , c) in
+          to ∈-map ((returnAddr gast , gadc)
+                   , refl
+                   , to ∈-concatMapˢ ((gaid , gast)
+                                     , gaidgast∈rem
+                                     , to ∈-map (gadc , refl , res-singleton⁺ {m = utxoDeps} dpc∈utxoDeps)))
         χ⊆χ' : χ utxoDeps ⊆ χ'
-        χ⊆χ' {a} x with (from ∈-map x)
-        ... | ((rwa , dp , c) , a≡dp , rwa-dp-c∈) with (from ∈-concatMapˢ rwa-dp-c∈)
-        ... | ((gaid , gast) , gaid-gast-∈-removed , rwa-dp-c-∈-map) with (from ∈-map rwa-dp-c-∈-map)
-        ... | ((dp' , _) , q≡ , q∈) = to ∈-map ((gaid , gast) , a≡GA , gaid-gast-∈-removed)
-          where
-          a≡GA : a ≡ GovActionDeposit gaid
-          a≡GA = let open ≡-Reasoning in begin
-            a                       ≡⟨ a≡dp ⟩
-            dp                      ≡⟨ cong (proj₁ ∘ proj₂) q≡ ⟩
-            dp'                     ≡⟨ cong proj₁ $ proj₂ (res-singleton''{m = utxoDeps} $ q∈) ⟩
-            GovActionDeposit gaid   ∎
+        χ⊆χ' {a} x with from ∈-map x
+        ... | (rwa , dp , c) , refl , rwa-dp-c∈ with (from ∈-concatMapˢ rwa-dp-c∈)
+        ... | (gaid , gast) , gaid-gast-∈-removed , rwa-dp-c-∈-map with (from ∈-map rwa-dp-c-∈-map)
+        ... | (.dp , _) , refl , q∈ =
+          to ∈-map ((gaid , gast)
+                   , proj₁ (×-≡,≡←≡ (proj₂ (res-singleton'' {m = utxoDeps} q∈)))
+                   , gaid-gast-∈-removed)
+
 
       main-invariance-lemma :
           filterˢ isGADeposit (dom utxoDeps) ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) govSt)
