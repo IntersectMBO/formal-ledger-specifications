@@ -63,22 +63,22 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
     aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l
 
     module _ {m m' : Map A V} where
-      dom→× : Σ A (λ a → a ∈ dom (m ˢ) ∪ dom (m' ˢ)) → A × V
-      dom→× (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
+      ∪-dom-lookup : ∃[ a ] a ∈ dom (m ˢ) ∪ dom (m' ˢ) → A × V
+      ∪-dom-lookup (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
 
       dom-∪⁺⊆∪ : dom ((m ∪⁺ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
       dom-∪⁺⊆∪ {a} a∈ = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
                              (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ ∈-dom-∪⁺)))
                              (proj₂ $ proj₁ ∈-dom-∪⁺)
         where
-        ∈-dom-∪⁺ : ∃[ c ] (a , proj₁ (to dom∈ a∈)) ≡ dom→× c
+        ∈-dom-∪⁺ : ∃[ c ] (a , proj₁ (to dom∈ a∈)) ≡ ∪-dom-lookup c
                           × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
         ∈-dom-∪⁺ = from ∈-map $ proj₂ $ to dom∈ a∈
 
       dom-∪⊆∪⁺ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪⁺ m') ˢ)
       dom-∪⊆∪⁺ {a} a∈ with from ∈-map (incl-set-proj₁⊇ a∈)
       ... | c' , a≡c₁' , c'∈ =
-        from dom∈ (proj₂ (dom→× c') , to ∈-map (c' , ×-≡,≡→≡ (a≡c₁' , Prelude.refl) , c'∈))
+        from dom∈ (proj₂ (∪-dom-lookup c') , to ∈-map (c' , ×-≡,≡→≡ (a≡c₁' , Prelude.refl) , c'∈))
 
       dom-∪⁺⇔∪ : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
       dom-∪⁺⇔∪ {a} = mk⇔ dom-∪⁺⊆∪ dom-∪⊆∪⁺
