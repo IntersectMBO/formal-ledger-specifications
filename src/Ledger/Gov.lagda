@@ -272,7 +272,7 @@ For \GOVVote, we check that the governance action being voted on
 exists and the role is allowed to vote. \canVote is defined in
 Figure~\ref{fig:ratification-requirements}. Note that there are no
 checks on whether the credential is actually associated with the
-role. This means that anyone can vote for e.g. the \CC role. However,
+role. This means that anyone can vote for, e.g., the \CC role. However,
 during ratification those votes will only carry weight if they are
 properly associated with members of the constitutional committee.
 
