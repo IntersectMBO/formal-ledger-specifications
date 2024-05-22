@@ -288,52 +288,33 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     -- dpMap of GovState is invariant under updating with one GovVote
     dpMap-vote-invar : (v : GovVote) (vps : List (GovVote ⊎ GovProposal)) {k : ℕ} {govSt : GovState}
       → dpMap (updateGovStates (inj₁ v ∷ vps) k govSt ) ≡ dpMap (updateGovStates vps (suc k) govSt)
-    dpMap-vote-invar _ _ {k} {[]} = refl
-    dpMap-vote-invar v [] {k} {g ∷ gs} = begin
-      dpMap (voteUpdate (g ∷ gs) v)                         ≡⟨ cong dpMap{x = (voteUpdate (g ∷ gs) v)} refl ⟩
-      dpMap (voteUpdate [ g ] v ++ voteUpdate gs v)         ≡⟨ map-++ (λ (id , _) → GovActionDeposit id) (voteUpdate [ g ] v) (voteUpdate gs v) ⟩
-      dpMap (voteUpdate [ g ] v) ++ dpMap (voteUpdate gs v) ≡⟨ cong (dpMap (voteUpdate [ g ] v) ++_) (dpMap-vote-invar v [] {0} ) ⟩
-      dpMap (g ∷ gs)                          ∎
-    dpMap-vote-invar v (inj₁ v' ∷ vps) {k} {govSt} = begin
-      dpMap (updateGovStates (inj₁ v ∷ (inj₁ v' ∷ vps)) _ govSt )  ≡⟨ dpMap-vote-invar v' vps ⟩
-      dpMap (updateGovStates vps _ (voteUpdate govSt v))           ≡⟨ dpMap-vote-invar v vps  ⟩
-      dpMap (updateGovStates vps _ govSt)                          ≡˘⟨ dpMap-vote-invar v' vps ⟩
-      dpMap (updateGovStates vps _ (voteUpdate govSt v'))          ∎
-    dpMap-vote-invar v (inj₂ p ∷ vps) {k} {govSt} = begin
-       dpMap (updateGovStates vps _ (voteUpdate govSt v ∷ʳ mkAction p (suc k)))  ≡⟨ cong dpMap (updateGovState-++-decomp vps (voteUpdate govSt v) [ mkAction p (suc k) ]) ⟩
-       dpMap ((updateVotesOnly (voteUpdate govSt v) vps) ++ upp)                 ≡⟨ map-++ (λ (id , _) → GovActionDeposit id) ((updateVotesOnly (voteUpdate govSt v) vps)) upp ⟩
-       dpMap (updateVotesOnly (voteUpdate govSt v) vps) ++ dpMap upp             ≡⟨ cong (_++ dpMap upp) (updateVotesOnly-map-invar (voteUpdate govSt v) vps) ⟩
-       dpMap (voteUpdate govSt v) ++ dpMap upp                                   ≡⟨ cong (_++ dpMap upp) (voteUpdate-map-invar govSt v) ⟩
-       dpMap govSt ++ dpMap upp                                                  ≡˘⟨ cong (_++ (dpMap upp)) (updateVotesOnly-map-invar govSt vps) ⟩
-       dpMap (updateVotesOnly govSt vps) ++  dpMap upp                           ≡˘⟨ map-++ (λ (id , _) → GovActionDeposit id) (updateVotesOnly govSt vps) upp ⟩
-       dpMap (updateVotesOnly govSt vps ++  upp)                                 ≡˘⟨ cong dpMap (updateGovState-++-decomp vps govSt [ mkAction p (suc k) ]) ⟩
-       dpMap (updateGovStates vps _ (govSt ∷ʳ mkAction p (suc k)))               ∎
-         where
-         upp = updateGovStates vps _ [ mkAction p (suc k) ]
+    dpMap-vote-invar v vps = dpMap-updateGovStates-cong vps (dpMap-vote-invar' v)
+      where
+      dpMap-vote-invar' : (v : GovVote) {govSt : GovState} → dpMap (voteUpdate govSt v) ≡ dpMap govSt
+      dpMap-vote-invar' v {[]} = refl
+      dpMap-vote-invar' v {x ∷ govSt} rewrite dpMap-vote-invar' v {govSt} = refl
 
-         voteUpdate-map-invar : (gs : GovState) (v : GovVote) → dpMap (voteUpdate gs v) ≡ dpMap gs
-         voteUpdate-map-invar [] v = refl
-         voteUpdate-map-invar (g ∷ gs) v = begin
-           dpMap (voteUpdate (g ∷ gs) v)                          ≡⟨ cong dpMap{x = voteUpdate (g ∷ gs) v} refl ⟩
-           dpMap (voteUpdate [ g ] v ++ voteUpdate gs v)          ≡⟨ map-++ (λ (id , _) → GovActionDeposit id) (voteUpdate [ g ] v) (voteUpdate gs v) ⟩
-           dpMap (voteUpdate [ g ] v) ++ dpMap (voteUpdate gs v)  ≡⟨ cong (dpMap (voteUpdate [ g ] v) ++_) (voteUpdate-map-invar gs v) ⟩
-           dpMap (voteUpdate [ g ] v) ++ dpMap gs                 ≡⟨ cong (_++ dpMap gs) refl ⟩
-           dpMap (g ∷ gs)                                         ∎
+      map-∷ʳ : ∀ {A B : Set} (f : A → B) x xs → map f (xs ∷ʳ x) ≡ map f xs ∷ʳ f x
+      map-∷ʳ f x xs = map-++ f xs [ x ]
 
-         updateVotesOnly-map-invar : (gs : GovState) (vps : List (GovVote ⊎ GovProposal))
-                                     → dpMap (updateVotesOnly gs vps) ≡ dpMap gs
-         updateVotesOnly-map-invar gs [] = refl
-         updateVotesOnly-map-invar gs (inj₂ p ∷ vps) = updateVotesOnly-map-invar gs vps
-         updateVotesOnly-map-invar gs (inj₁ v ∷ vps) = begin
-           dpMap (updateVotesOnly (voteUpdate gs v) vps)  ≡⟨ updateVotesOnly-map-invar (voteUpdate gs v) vps ⟩
-           dpMap (voteUpdate gs v)                        ≡⟨ voteUpdate-map-invar gs v ⟩
-           dpMap gs                                       ∎
+      dpMap-updateGovStates-cong : (vps : List (GovVote ⊎ GovProposal)) {k : ℕ} {govSt govSt' : GovState}
+        → dpMap govSt ≡ dpMap govSt'
+        → dpMap (updateGovStates vps k govSt) ≡ dpMap (updateGovStates vps k govSt')
+      dpMap-updateGovStates-cong [] h = h
+      dpMap-updateGovStates-cong (inj₁ x ∷ vps) h = dpMap-updateGovStates-cong vps $ begin
+        dpMap (voteUpdate _ x) ≡⟨  dpMap-vote-invar' x ⟩ dpMap _                ≡⟨ h ⟩
+        dpMap _                ≡˘⟨ dpMap-vote-invar' x ⟩ dpMap (voteUpdate _ x) ∎
+      dpMap-updateGovStates-cong (inj₂ y ∷ vps) h = dpMap-updateGovStates-cong vps $ begin
+        dpMap (propUpdate _ y _)  ≡⟨  map-∷ʳ _ _ _ ⟩ dpMap _ ∷ʳ _             ≡⟨ cong (_∷ʳ _) h ⟩
+        dpMap _ ∷ʳ _              ≡˘⟨ map-∷ʳ _ _ _ ⟩ dpMap (propUpdate _ y _) ∎
+
 
     dpMap-vote-invar++ : (ps : List GovProposal) (vs : List GovVote) {k : ℕ} {govSt : GovState}
       → dpMap (updateGovStates (map inj₂ ps ++ map inj₁ vs) k govSt ) ≡ dpMap (updateGovStates (map inj₂ ps) k govSt)
     dpMap-vote-invar++ [] [] = refl
     dpMap-vote-invar++ [] (v ∷ vs) = trans (dpMap-vote-invar v (map inj₁ vs)) (dpMap-vote-invar++ [] vs)
     dpMap-vote-invar++ (p ∷ ps) vs = dpMap-vote-invar++ ps vs
+
 
     updateGovStates≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {govSt : GovState}
        → dpMap (updateGovStates vps k govSt) ≡ dpMap (govSt ++ updateGovStates vps k [])
