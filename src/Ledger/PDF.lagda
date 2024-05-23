@@ -24,21 +24,6 @@ BoldItalicFont=*-BoldItalic,
 Scale=0.80
 %% Scale=MatchUppercase
 }
-\newfontfamily{\AgdaSerifFont}{\agdaFont}[\agdaFontOptions]
-\newfontfamily{\AgdaSansSerifFont}{\agdaFont}[\agdaFontOptions]
-\newfontfamily{\AgdaTypewriterFont}{\agdaFont}[\agdaFontOptions]
-\renewcommand{\AgdaFontStyle}[1]{{\AgdaSansSerifFont{}#1}}
-\renewcommand{\AgdaKeywordFontStyle}[1]{{\AgdaSansSerifFont{}#1}}
-\renewcommand{\AgdaStringFontStyle}[1]{{\AgdaTypewriterFont{}#1}}
-\renewcommand{\AgdaCommentFontStyle}[1]{{\AgdaTypewriterFont{}#1}}
-\renewcommand{\AgdaBoundFontStyle}[1]{{\emph{\AgdaTypewriterFont{}#1}}}
-
-% Math fonts
-\usepackage{unicode-math}
-\setsansfont{XITSMath-Regular.otf}
-\setmathfont{XITSMath-Regular.otf}
-
-\newcommand{\N}{\ensuremath{\mathbb{N}}}
 
 \begin{document}
 
