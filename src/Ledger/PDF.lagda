@@ -1,17 +1,12 @@
-\documentclass[11pt,a4paper,dvipsnames]{article}
-
+\documentclass{article}
 \usepackage{agda}
 
 \begin{document}
-
-\begin{code}[hide]
-module Ledger.PDF where
-
-open import Ledger.Prelude
-\end{code}
-
 \begin{AgdaMultiCode}
 \begin{code}
+module Ledger.PDF where
+open import Ledger.Prelude
+
 ff : Bool
 ff = true
   where
