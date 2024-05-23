@@ -26,7 +26,7 @@ initParams = MkPParams
   , poolDeposit = 10
   , emax = 10
   , pv = (1, 0)
-  , coinsPerUTxOWord = 1
+  , coinsPerUTxOByte = 1
   }
 
 initEnv :: UTxOEnv

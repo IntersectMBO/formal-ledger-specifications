@@ -363,7 +363,7 @@ instance
       ; prices              = prices
       ; maxTxExUnits        = to maxTxExUnits
       ; maxBlockExUnits     = to maxBlockExUnits
-      ; coinsPerUTxOWord    = coinsPerUTxOWord
+      ; coinsPerUTxOByte    = coinsPerUTxOByte
       ; maxCollateralInputs = maxCollateralInputs
       }
     .from pp → let open F.PParams pp in record
@@ -398,7 +398,7 @@ instance
       ; prices                      = prices
       ; maxTxExUnits                = from maxTxExUnits
       ; maxBlockExUnits             = from maxBlockExUnits
-      ; coinsPerUTxOWord            = coinsPerUTxOWord
+      ; coinsPerUTxOByte            = coinsPerUTxOByte
       ; maxCollateralInputs         = maxCollateralInputs
       }
 
