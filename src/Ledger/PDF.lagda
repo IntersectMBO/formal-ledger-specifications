@@ -1,29 +1,6 @@
 \documentclass[11pt,a4paper,dvipsnames]{article}
 
-\usepackage{iohk}
-\usepackage{agda-latex-macros}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue
- }
-\usepackage[links]{agda}
-\setlength{\mathindent}{10pt}
-
-\usepackage{fontspec}
-\newcommand\agdaFont{StrippedJuliaMono}
-\newcommand\agdaFontOptions{
-Path=fonts/,
-Extension=.ttf,
-UprightFont=*-Regular,
-BoldFont=*-Bold,
-ItalicFont=*-RegularItalic,
-BoldItalicFont=*-BoldItalic,
-%% Scale=MatchLowercase
-Scale=0.80
-%% Scale=MatchUppercase
-}
+\usepackage{agda}
 
 \begin{document}
 
