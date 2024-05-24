@@ -141,7 +141,7 @@ HSScriptStructure = record
 
 instance _ = HSScriptStructure
 
-open import Ledger.PParams it it it hiding (PParams; Acnt)
+open import Ledger.PParams it it it hiding (PParams; Acnt; DrepThresholds; PoolThresholds)
 
 HsGovParams : GovParams
 HsGovParams = record
@@ -361,6 +361,50 @@ instance
       ; isValid = true
       ; txAD    = from txAD }
 
+  Convertible-DrepThresholds : Convertible DrepThresholds F.DrepThresholds
+  Convertible-DrepThresholds = λ where
+    .to x → let open DrepThresholds x in record
+      { P1 = to P1
+      ; P2a = to P2a
+      ; P2b = to P2b
+      ; P3 = to P3
+      ; P4 = to P4
+      ; P5a = to P5a
+      ; P5b = to P5b
+      ; P5c = to P5c
+      ; P5d = to P5d
+      ; P6 = to P6
+      }
+    .from x → let open F.DrepThresholds x in record
+      { P1 = from P1
+      ; P2a = from P2a
+      ; P2b = from P2b
+      ; P3 = from P3
+      ; P4 = from P4
+      ; P5a = from P5a
+      ; P5b = from P5b
+      ; P5c = from P5c
+      ; P5d = from P5d
+      ; P6 = from P6
+      }
+
+  Convertible-PoolThresholds : Convertible PoolThresholds F.PoolThresholds
+  Convertible-PoolThresholds = λ where
+    .to x → let open PoolThresholds x in record
+      { Q1 = to Q1
+      ; Q2a = to Q2a
+      ; Q2b = to Q2b
+      ; Q4 = to Q4
+      ; Q5e = to Q5e
+      }
+    .from x → let open F.PoolThresholds x in record
+      { Q1 = from Q1
+      ; Q2a = from Q2a
+      ; Q2b = from Q2b
+      ; Q4 = from Q4
+      ; Q5e = from Q5e
+      }
+
   Convertible-PParams : Convertible PParams F.PParams
   Convertible-PParams = λ where
     .to pp → let open PParams pp in record
@@ -376,7 +420,8 @@ instance
       ; Emax                = Emax
       ; nopt                = nopt
       ; pv                  = to pv
-      ; votingThresholds    = _
+      ; drepVotingThresholds  = to drepThresholds
+      ; poolVotingThresholds  = to poolThresholds
       ; govActionLifetime   = govActionLifetime
       ; govActionDeposit    = govActionDeposit
       ; drepDeposit         = drepDeposit
@@ -406,12 +451,8 @@ instance
       ; nopt                        = nopt
       ; collateralPercentage        = 0
       ; pv                          = from pv
-        -- TODO: translate these once they are implemented in F.PParams
-      ; drepThresholds    = record
-        { P1  = ½ ; P2a = ½ ; P2b = ½ ; P3  = ½ ; P4 = ½
-        ; P5a = ½ ; P5b = ½ ; P5c = ½ ; P5d = ½ ; P6 = ½}
-      ; poolThresholds    = record
-        { Q1 = ½ ; Q2a = ½ ; Q2b = ½ ; Q4 = ½ ; Q5e = ½ }
+      ; drepThresholds              = from drepVotingThresholds
+      ; poolThresholds              = from poolVotingThresholds
       ; govActionLifetime           = govActionLifetime
       ; govActionDeposit            = govActionDeposit
       ; drepDeposit                 = drepDeposit
