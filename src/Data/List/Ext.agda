@@ -2,12 +2,13 @@
 module Data.List.Ext where
 
 open import Data.List using (List; [_]; _++_; map; head; drop; concatMap; filter)
-open import Data.List.Membership.Propositional using (_∈_)
+open import Data.List.Membership.Propositional using (_∈_; _∉_)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁻; ∈-filter⁺; map-∈↔; ∈-map⁻; ∈-map⁺)
 open import Data.List.Relation.Unary.All using (All)
 open import Data.List.Relation.Unary.Any using (Any; here; there)
 open import Data.Maybe using (Maybe)
 open import Data.Nat using (ℕ ; _+_)
+open import Class.Decidable
 open import Data.Product using (∃-syntax; _×_; _,_; proj₁; proj₂)
 open import Function using (_∘_)
 open import Function.Bundles using (_⇔_; mk⇔; Equivalence)
@@ -15,6 +16,7 @@ open import Level using (Level)
 open import Relation.Binary.PropositionalEquality using (_≡_)
 open import Relation.Unary using (Decidable)
 open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_; ↭-sym)
+open import Relation.Nullary.Decidable using (does)
 open Maybe; open List; open ℕ
 private variable
   ℓ : Level
@@ -48,9 +50,22 @@ subpermutations (x ∷ xs) = concatMap (insert x) (subpermutations xs) ++ subper
   ⇒ (a , a∈l , _≡_.refl) = ∈-map⁺ f a∈l
 
 module _ {f : A → B} {l : List A} {b} {P : A → Set} {P? : Decidable P} where
-  ∈ˡ-map-filter⁻ : b ∈ map f (filter P? l) → (∃[ a ] b ≡ f a × a ∈ l × P a)
-  ∈ˡ-map-filter⁻ h with ∈-map⁻ f h
-  ... | a , a∈X , b≡fa = a , (b≡fa , ∈-filter⁻ P? a∈X)
+  -- ∈ˡ-map-filter⁻ : b ∈ map f (filter P? l) → (∃[ a ] b ≡ f a × a ∈ l × P a)
+  -- ∈ˡ-map-filter⁻ h with ∈-map⁻ f h
+  -- ... | a , a∈X , _≡_.refl = a , _≡_.refl , ∈-filter⁻ P? a∈X
 
-  ∈ˡ-map-filter⁺ : (∃[ a ] b ≡ f a × a ∈ l × P a) → b ∈ map f (filter P? l)
-  ∈ˡ-map-filter⁺ (a , _≡_.refl , a∈l , Pa) = ∈-map⁺ f (∈-filter⁺ P? a∈l Pa)
+  -- ∈ˡ-map-filter⁺ : (∃[ a ] b ≡ f a × a ∈ l × P a) → b ∈ map f (filter P? l)
+  -- ∈ˡ-map-filter⁺ (a , _≡_.refl , a∈l , Pa) = ∈-map⁺ f (∈-filter⁺ P? a∈l Pa)
+
+  -- ∈ˡ-map-filter : (∃[ a ] b ≡ f a × a ∈ l × P a) ⇔ b ∈ map f (filter P? l)
+  -- ∈ˡ-map-filter = mk⇔ ∈ˡ-map-filter⁺ ∈ˡ-map-filter⁻
+
+  ∈ˡ-map-filter⁻ : b ∈ map f (filter P? l) → (∃[ a ] a ∈ l × b ≡ f a × P a)
+  ∈ˡ-map-filter⁻ h with ∈-map⁻ f h
+  ... | a , a∈X , _≡_.refl = a , proj₁ (∈-filter⁻ P? a∈X) , _≡_.refl , proj₂ (∈-filter⁻ P? {xs = l} a∈X)
+
+  ∈ˡ-map-filter⁺ : (∃[ a ] a ∈ l × b ≡ f a × P a) → b ∈ map f (filter P? l)
+  ∈ˡ-map-filter⁺ (a , a∈l , _≡_.refl , Pa) = ∈-map⁺ f (∈-filter⁺ P? a∈l Pa)
+
+  ∈ˡ-map-filter : (∃[ a ] a ∈ l × b ≡ f a × P a) ⇔ b ∈ map f (filter P? l)
+  ∈ˡ-map-filter = mk⇔ ∈ˡ-map-filter⁺ ∈ˡ-map-filter⁻

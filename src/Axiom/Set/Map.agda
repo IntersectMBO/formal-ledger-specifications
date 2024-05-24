@@ -178,7 +178,7 @@ mapˡ-uniq {inj = inj} uniq = λ h h' → case ∈⇔P h ,′ ∈⇔P h' of λ w
   (((_ , b) , refl , Ha) , ((_ , b') , eqb , Hb)) → uniq Ha
     $ subst _ ( sym
               $ ×-≡,≡→≡
-              $ map₁ (inj (from dom∈ (b , Ha)) (from dom∈ (b' , Hb)))
+              $ map₁ (inj (to dom∈ (b , Ha)) (to dom∈ (b' , Hb)))
                                   (×-≡,≡←≡ eqb))
               Hb
 
@@ -336,7 +336,7 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 
   res-singleton-inhabited : ∀ {k a} → a ∈ (m ∣ ❴ k ❵) ˢ → k ∈ dom (m ˢ)
   res-singleton-inhabited {m = m} {k} {a} a∈ =
-    from dom∈ ( proj₂ a , subst (λ x → (x , proj₂ a) ∈ (m ˢ))
+    to dom∈ ( proj₂ a , subst (λ x → (x , proj₂ a) ∈ (m ˢ))
                                 (from ∈-singleton (R.res-dom (∈-dom a∈)))
                                 (R.res-⊆ a∈) )
 
@@ -361,7 +361,7 @@ module Lookupᵐ (sp-∈ : spec-∈ A) where
 
   module _ (m : Map A B) (x : A) where
     lookupᵐ : {@(tactic initTac assumption') _ : x ∈ dom (m ˢ)} → B
-    lookupᵐ {h} = proj₁ (to dom∈ h)
+    lookupᵐ {h} = proj₁ (from dom∈ h)
 
     lookupᵐ? : ⦃ (x ∈ dom (m ˢ)) ⁇ ⦄ → Maybe B
     lookupᵐ? ⦃ ⁇ no  _ ⦄ = nothing

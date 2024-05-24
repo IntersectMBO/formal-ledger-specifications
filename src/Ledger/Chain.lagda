@@ -51,7 +51,7 @@ maybePurpose-prop : ∀ {prps} {x} {y}
   → (m : (DepositPurpose × Credential) ⇀ Coin)
   → (x , y) ∈ dom ((mapMaybeWithKeyᵐ (maybePurpose prps) m) ˢ)
   → x ≡ prps
-maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with to dom∈ xy∈dom
+maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with from dom∈ xy∈dom
 ... | z , ∈mmwk with prps ≟ x | ∈-mapMaybeWithKey {f = maybePurpose prps} ∈mmwk
 ... | yes refl | _ = refl
 

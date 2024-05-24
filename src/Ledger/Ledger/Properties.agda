@@ -24,12 +24,13 @@ open import Ledger.Utxow txs abs
 open import Ledger.Utxow.Properties txs abs
 
 open import Data.Bool.Properties using (¬-not)
-open import Data.List.Ext using (∈ˡ-map-filter⁺) renaming (∈-map to ∈ˡ-map)
+open import Data.List.Ext using (∈ˡ-map-filter⁺; ∈ˡ-map-filter)
 open import Data.List.Ext.Properties using (swap-head)
 open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc)
-open import Data.List.Membership.Propositional.Properties using (∈-filter⁻; ∈-map⁻)
+open import Data.List.Membership.Propositional.Properties using (∈-filter⁻; ∈-filter⁺; ∈-map⁻; ∈-map⁺; map-∈↔)
 open import Data.List.Relation.Unary.Any using (Any)
 open import Data.Product.Properties using (×-≡,≡←≡)
+open import Data.Product.Properties.Ext using (×-⇔; ×-⇔-swap)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
 open import Relation.Binary using (IsEquivalence)
 open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_; ↭-sym)
@@ -530,8 +531,9 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       → govDepsMatch (EpochState.ls eps) → govDepsMatch (EpochState.ls eps')
 
     EPOCH-govDepsMatch ratify-removed ⟦ acnt' , ls' ,  es , fut' ⟧ᵉ'
-      (EPOCH x) govDepsMatch-ls =
-      ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong (≡ᵉ.sym χ'≡χ))) (main-invariance-lemma govDepsMatch-ls)
+      (EPOCH x) = ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
+                            ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+      -- ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong (≡ᵉ.sym χ'≡χ))) (main-invariance-lemma govDepsMatch-ls)
       where
 
       -- the combinator used in the EPOCH rule
@@ -585,35 +587,42 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
                    , gaid-gast-∈-removed)
 
 
-      main-invariance-lemma :
-          filterˢ isGADeposit (dom utxoDeps) ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) govSt)
-          ----------------------------------------------------------------------------------------------------------
-        → filterˢ isGADeposit (dom utxoDeps') ≡ᵉ fromList (map (λ (id , _) → GovActionDeposit id) (filterᵇ Pᵇ govSt))
-
-      main-invariance-lemma (fst , snd) = ⇛ , ⇚
+      map-filter-decomp : ∀ a → (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)
+                                 ⇔ (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filterᵇ Pᵇ govSt))
+      map-filter-decomp a = mk⇔ i ii
         where
-        ⇛ : filterˢ isGADeposit (dom utxoDeps')
-            ⊆ fromList (map (λ (id , _) → GovActionDeposit id) (filterᵇ Pᵇ govSt))
-        ⇛ {a} h with from ∈-filter h
-        ... | (aGADep , a∈) with ∈-map⁻ (λ (id , _) → GovActionDeposit id)
-                                        $ from ∈-fromList (fst $ to ∈-filter (aGADep , res-comp-domᵐ a∈))
-        ... | ((tid , gast) , tidb∈govSt , refl) =
-          to ∈-fromList $ ∈ˡ-map-filter⁺{P? = λ u → ¿ P u ¿}
-                          ((tid , gast) , refl , tidb∈govSt , (res-comp-dom a∈) ∘ ∈-map⁺-∘)
+        i : ((a ∉ χ') × (a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt))
+            → a ∈ˡ map (GovActionDeposit ∘ proj₁) (filterᵇ Pᵇ govSt)
+        i (a∉χ' , a∈) with Inverse.from (map-∈↔ (GovActionDeposit ∘ proj₁)) a∈
+        ... | b , <″-offset b∈ = Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁))
+                                            (b , ∈-filter⁺ (λ u → ¿ P u ¿) b∈ (a∉χ' ∘ ∈-map⁺-∘) , refl)
 
-        ⇚ : fromList (map (λ (id , _) → GovActionDeposit id) (filterᵇ Pᵇ govSt))
-            ⊆ filterˢ isGADeposit (dom utxoDeps')
-        ⇚ {a} h with ∈-map⁻ (λ (id , _) → GovActionDeposit id) (from ∈-fromList h)
-        ... | (aid×st , aid×st∈ , refl) with ∈-filter⁻ (λ u → ¿ P u ¿) aid×st∈
-        ... | (aid×st∈govSt , Paid×st) =
-          to ∈-filter (refl , ∈-resᶜ-dom⁺ (a∉χ' , (to dom∈ $ proj₂ (from ∈-filter a∈))))
-           where
-           a∈ : a ∈ filterˢ isGADeposit (dom utxoDeps)
-           a∈ = snd $ to ∈-fromList $ to ∈ˡ-map (aid×st , aid×st∈govSt , refl)
+        ii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filterᵇ Pᵇ govSt)
+             → a ∉ χ' × (a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)
+        ii a∈ with from (∈ˡ-map-filter{l = govSt}{P? = (λ u → ¿ P u ¿)}) a∈
+        ... | b , b∈ , refl , Pb = a∉χ' , Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁)) (b , (b∈ , refl))
+          where
+          a∉χ' : GovActionDeposit (proj₁ b) ∉ χ'
+          a∉χ' a∈χ' with ∈-map⁻' a∈χ'
+          ... | q , refl , q∈rem = Pb (to ∈-map (q , refl , q∈rem))
 
-           a∉χ' : a ∉ χ'
-           a∉χ' a∈χ' with ∈-map⁻' a∈χ'
-           ... | q , refl , q∈rem = Paid×st (to ∈-map (q , refl , q∈rem))
+
+      main-invariance-lemma :
+          filterˢ isGADeposit (dom utxoDeps) ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) govSt)
+          ----------------------------------------------------------------------------------------------------------
+        → filterˢ isGADeposit (dom utxoDeps') ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) (filterᵇ Pᵇ govSt))
+
+      main-invariance-lemma HYP a = let open R.EquationalReasoning in
+        a ∈ (filterˢ isGADeposit (dom utxoDeps')) ∼⟨ R.SK-sym ∈-filter ⟩
+        ((isGADeposit a) × a ∈ (dom utxoDeps'))  ∼⟨ ×-⇔ R.K-refl ∈-resᶜ-dom ⟩
+        ((isGADeposit a) × a ∉ χ' × ∃[ q ] (a , q) ∈ utxoDeps) ∼⟨ ×-⇔-swap ⟩
+        (a ∉ χ' × (isGADeposit a) × ∃[ q ] (a , q) ∈ utxoDeps) ∼⟨ ×-⇔ R.K-refl (×-⇔ R.K-refl dom∈) ⟩
+        (a ∉ χ' × isGADeposit a × a ∈ dom utxoDeps) ∼⟨ ×-⇔ R.K-refl ∈-filter ⟩
+        (a ∉ χ' × a ∈ filterˢ isGADeposit (dom utxoDeps)) ∼⟨ ×-⇔ R.K-refl (HYP a) ⟩
+        (a ∉ χ' × a ∈ fromList (map (GovActionDeposit ∘ proj₁) govSt)) ∼⟨ ×-⇔ R.K-refl (R.SK-sym ∈-fromList) ⟩
+        (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt) ∼⟨ map-filter-decomp a ⟩
+        (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filterᵇ Pᵇ govSt)) ∼⟨ ∈-fromList ⟩
+        a ∈ (fromList (map (GovActionDeposit ∘ proj₁)(filterᵇ Pᵇ govSt))) ∎
 
 
   -- GA Deposits Invariance Property for CHAIN STS --------------------------------------------------------------------

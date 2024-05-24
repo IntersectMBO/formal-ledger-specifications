@@ -71,14 +71,14 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
                              (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ ∈-dom-∪⁺)))
                              (proj₂ $ proj₁ ∈-dom-∪⁺)
         where
-        ∈-dom-∪⁺ : ∃[ c ] (a , proj₁ (to dom∈ a∈)) ≡ ∪-dom-lookup c
+        ∈-dom-∪⁺ : ∃[ c ] (a , proj₁ (from dom∈ a∈)) ≡ ∪-dom-lookup c
                           × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
-        ∈-dom-∪⁺ = from ∈-map $ proj₂ $ to dom∈ a∈
+        ∈-dom-∪⁺ = from ∈-map $ proj₂ $ from dom∈ a∈
 
       dom-∪⊆∪⁺ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪⁺ m') ˢ)
       dom-∪⊆∪⁺ {a} a∈ with from ∈-map (incl-set-proj₁⊇ a∈)
       ... | c' , a≡c₁' , c'∈ =
-        from dom∈ (proj₂ (∪-dom-lookup c') , to ∈-map (c' , ×-≡,≡→≡ (a≡c₁' , Prelude.refl) , c'∈))
+        to dom∈ (proj₂ (∪-dom-lookup c') , to ∈-map (c' , ×-≡,≡→≡ (a≡c₁' , Prelude.refl) , c'∈))
 
       dom-∪⁺⇔∪ : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
       dom-∪⁺⇔∪ {a} = mk⇔ dom-∪⁺⊆∪ dom-∪⊆∪⁺
