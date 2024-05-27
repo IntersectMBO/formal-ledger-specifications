@@ -48,6 +48,10 @@ record HSMap K V : Set where
   constructor MkHSMap
   field assocList : List (Pair K V)
 
+record HSSet A : Set where
+  constructor MkHSSet
+  field elems : List A
+
 Rational = Pair ℤ ℕ
 
 record TxId : Set where
@@ -59,15 +63,16 @@ Addr          = ℕ -- just payment credential
 Ix            = ℕ
 Epoch         = ℕ
 ScriptHash    = ℕ
+Slot          = ℕ
+PParamsUpdate = ℕ
 
+Anchor        = ⊤
 AuxiliaryData = ⊤
-DataHash      = ⊤
 Datum         = ⊤
 Redeemer      = ⊤
-Anchor        = ⊤
 Network       = ⊤
-PParamsUpdate = ℕ
 Script        = ⊤
+DataHash      = ⊤
 
 TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Pair (Maybe (Either Datum DataHash)) $ Maybe Script
@@ -94,11 +99,13 @@ ProtVer = Pair ℕ ℕ
     deriving (Generic, Show, Eq, Ord)
   newtype HSMap k v = MkHSMap [(k, v)]
     deriving (Generic, Show, Eq, Ord)
+  newtype HSSet a = MkHSSet [a]
 
   type Ix      = Integer
   type Epoch   = Integer
   type ScriptHash    = Integer
   type PParamsUpdate = Integer
+  type Slot = Integer
 
   type AuxiliaryData = ()
   type DataHash      = ()
@@ -122,6 +129,7 @@ ProtVer = Pair ℕ ℕ
 {-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
 {-# COMPILE GHC TxId = data TxId (MkTxId) #-}
 {-# COMPILE GHC HSMap = data HSMap (MkHSMap) #-}
+{-# COMPILE GHC HSSet = data HSSet (MkHSSet) #-}
 
 {-# FOREIGN GHC
   data Credential
@@ -245,6 +253,12 @@ record Tx : Set where
 #-}
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}
 
+record DrepThresholds : Set where
+  field P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : Rational
+
+record PoolThresholds : Set where
+  field Q1 Q2a Q2b Q4 Q5e : Rational
+
 record PParams : Set where
   field a                   : ℕ
         b                   : ℕ
@@ -258,7 +272,8 @@ record PParams : Set where
         Emax                : Epoch
         nopt                : ℕ
         pv                  : Pair ℕ ℕ
-        votingThresholds    : ⊤ -- TODO: foreign rational numbers
+        poolVotingThresholds  : PoolThresholds
+        drepVotingThresholds  : DrepThresholds
         govActionLifetime   : ℕ
         govActionDeposit    : Coin
         drepDeposit         : Coin
@@ -269,10 +284,33 @@ record PParams : Set where
         prices              : ⊤
         maxTxExUnits        : ExUnits
         maxBlockExUnits     : ExUnits
-        coinsPerUTxOWord    : Coin
+        coinsPerUTxOByte    : Coin
         -- collateralPercent   : ℕ
         maxCollateralInputs : ℕ
 {-# FOREIGN GHC
+  data DrepThresholds = MkDrepThresholds
+    { p1      :: Rational
+    , p2a     :: Rational
+    , p2b     :: Rational
+    , p3      :: Rational
+    , p4      :: Rational
+    , p5a     :: Rational
+    , p5b     :: Rational
+    , p5c     :: Rational
+    , p5d     :: Rational
+    , p6      :: Rational
+    }
+    deriving Show
+
+  data PoolThresholds = MkPoolThresholds
+    { q1  :: Rational
+    , q2a :: Rational
+    , q2b :: Rational
+    , q4  :: Rational
+    , q5e :: Rational
+    }
+    deriving Show
+
   data PParams = MkPParams
     { a                   :: Integer
     , b                   :: Integer
@@ -286,7 +324,8 @@ record PParams : Set where
     , emax                :: Epoch
     , nopt                :: Integer
     , pv                  :: (Integer, Integer)
-    , votingThresholds    :: ()
+    , poolVotingThresholds :: PoolThresholds
+    , drepVotingThresholds :: DrepThresholds
     , govActionLifetime   :: Integer
     , govActionDeposit    :: Coin
     , drepDeposit         :: Coin
@@ -297,10 +336,12 @@ record PParams : Set where
     , prices              :: ()
     , maxTxExUnits        :: ExUnits
     , maxBlockExUnits     :: ExUnits
-    , coinsPerUTxOWord    :: Coin
+    , coinsPerUTxOByte    :: Coin
     , maxCollateralInputs :: Integer
     } deriving (Show, Generic)
 #-}
+{-# COMPILE GHC DrepThresholds = data DrepThresholds (MkDrepThresholds) #-}
+{-# COMPILE GHC PoolThresholds = data PoolThresholds (MkPoolThresholds) #-}
 {-# COMPILE GHC PParams = data PParams (MkPParams) #-}
 
 record UTxOEnv : Set where
@@ -526,4 +567,158 @@ record CertState : Set where
     }
 #-}
 {-# COMPILE GHC CertState = data CertState (MkCertState) #-}
+
+record StakeDistrs : Set where
+  field stakeDistr  : HSMap VDeleg Coin
+{-# FOREIGN GHC
+  newtype StakeDistrs = MkStakeDistrs (HSMap VDeleg Coin)
+#-}
+{-# COMPILE GHC StakeDistrs = data StakeDistrs (MkStakeDistrs) #-}
+
+record RatifyEnv : Set where
+  field reStakeDistrs   : StakeDistrs
+        reCurrentEpoch  : Epoch
+        reDReps         : HSMap Credential Epoch
+        reCCHotKeys     : HSMap Credential (Maybe Credential)
+        reTreasury      : Coin
+{-# FOREIGN GHC
+  data RatifyEnv = MkRatifyEnv
+    { reStakeDistrs   :: StakeDistrs
+    , reCurrentEpoch  :: Epoch
+    , reDReps         :: HSMap Credential Epoch
+    , reCCHotKeys     :: HSMap Credential (Maybe Credential)
+    , reTreasury      :: Coin
+    }
+#-}
+{-# COMPILE GHC RatifyEnv = data RatifyEnv (MkRatifyEnv) #-}
+
+open import Ledger.Set.Theory
+
+record RatifyState : Set where
+  field es              : EnactState
+        removed         : HSSet (Pair GovActionID GovActionState)
+        delay           : Bool
+{-# FOREIGN GHC
+  data RatifyState = MkRatifyState
+   { rsEnactState :: EnactState
+   , rsRemoved    :: HSSet (GovActionID, GovActionState)
+   , rsDelay      :: Bool
+   }
+#-}
+{-# COMPILE GHC RatifyState = data RatifyState (MkRatifyState) #-}
+
+record LEnv : Set where
+  field slot        : Slot
+        ppolicy     : Maybe ScriptHash
+        pparams     : PParams
+        enactState  : EnactState
+{-# FOREIGN GHC
+  data LedgerEnv = MkLedgerEnv
+    { leSlot       :: Slot
+    , lePPolicy    :: Maybe ScriptHash
+    , lePParams    :: PParams
+    , leEnactState :: EnactState
+    }
+#-}
+{-# COMPILE GHC LEnv = data LedgerEnv (MkLedgerEnv) #-}
+
+record LState : Set where
+  field utxoSt     : UTxOState
+        govSt      : GovState
+        certState  : CertState
+{-# FOREIGN GHC
+  data LedgerState = MkLedgerState
+    { utxoSt    :: UTxOState
+    , govSt     :: GovState
+    , certState :: CertState
+    }
+#-}
+{-# COMPILE GHC LState = data LedgerState (MkLedgerState) #-}
+
+record EnactEnv : Set where
+  field gid       : GovActionID
+        treasury  : Coin
+        epoch     : Epoch
+{-# FOREIGN GHC
+  data EnactEnv = MkEnactEnv
+    { eeGid :: GovActionID
+    , eeTreasury :: Coin
+    , eeEpoch :: Epoch
+    }
+#-}
+{-# COMPILE GHC EnactEnv = data EnactEnv (MkEnactEnv) #-}
+
+record Acnt : Set where
+  field treasury reserves : Coin
+{-# FOREIGN GHC
+  data Acnt = MkAcnt
+    { treasury :: Coin
+    , reserves :: Coin
+    }
+#-}
+{-# COMPILE GHC Acnt = data Acnt (MkAcnt) #-}
+
+record NewEpochEnv : Set where
+  field stakeDistrs : StakeDistrs
+{-# FOREIGN GHC
+  newtype NewEpochEnv = MkNewEpochEnv {stakeDistrs :: StakeDistrs}
+#-}
+{-# COMPILE GHC NewEpochEnv = data NewEpochEnv (MkNewEpochEnv) #-}
+
+record EpochState : Set where
+  field acnt       : Acnt
+        ls         : LState
+        es         : EnactState
+        fut        : RatifyState
+{-# FOREIGN GHC
+  data EpochState = MkEpochState
+    { esAcnt       :: Acnt
+    , esLState     :: LedgerState
+    , esEnactState :: EnactState
+    , esFut        :: RatifyState
+    }
+#-}
+{-# COMPILE GHC EpochState = data EpochState (MkEpochState) #-}
+
+record NewEpochState : Set where
+  field lastEpoch   : Epoch
+        epochState  : EpochState
+{-# FOREIGN GHC
+  data NewEpochState = MkNewEpochState
+    { lastEpoch  :: Epoch
+    , epochState :: EpochState
+    }
+#-}
+{-# COMPILE GHC NewEpochState = data NewEpochState (MkNewEpochState) #-}
+
+record ChainState : Set where
+  field csNewEpochState : NewEpochState
+{-# FOREIGN GHC
+  newtype ChainState = MkChainState
+    { csNewEpochState :: NewEpochState
+    }
+#-}
+{-# COMPILE GHC ChainState = data ChainState (MkChainState) #-}
+
+record Block : Set where
+  field blockTxs : List Tx
+        blockSlot : Slot
+{-# FOREIGN GHC
+  data Block = MkBlock
+    { blockTxs :: [Tx]
+    , blockSlot :: Slot
+    }
+#-}
+{-# COMPILE GHC Block = data Block (MkBlock) #-}
+
+record DelegEnv : Set where
+  field dePParams  : PParams
+        dePools    : HSMap Credential PoolParams
+{-# FOREIGN GHC
+  data DelegEnv = MkDelegEnv
+    { dePParams :: PParams
+    , dePools :: HSMap Credential PoolParams
+    }
+#-}
+{-# COMPILE GHC DelegEnv = data DelegEnv (MkDelegEnv) #-}
 

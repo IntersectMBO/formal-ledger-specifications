@@ -85,11 +85,18 @@ utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValueʰ o)
 open PParams
 \end{code}
 
-Figures~\ref{fig:supportfunctions:utxo},~\ref{fig:functions:utxo}, and~\ref{fig:functions:utxo2} define
-functions needed for the UTxO transition system. Note the special
-multiplication symbol \AgdaFunction{*↓} used in
-Figure~\ref{fig:functions:utxo}: it means multiply and round down
-the result.
+\begin{NoConway}
+Figures~\ref{fig:supportfunctions:utxo},~\ref{fig:functions:utxo},
+and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
+\end{NoConway}
+%
+\begin{Conway}
+Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
+\end{Conway}
+%
+\ Note the special multiplication symbol \AgdaFunction{*↓} used in
+Figure~\ref{fig:functions:utxo}: it means multiply and round down the
+result.
 
 \begin{NoConway}
 Figure~\ref{fig:ts-types:utxo-shelley} defines the types needed for the UTxO transition system.
@@ -310,6 +317,13 @@ data
 \caption{UTxO transition-system types}
 \label{fig:ts-types:utxo-shelley}
 \end{figure*}
+
+We redefine \depositRefunds and \newDeposits via \depositsChange. This
+simplifies their definitions and some correctness proofs. We then add
+the absolute value of \depositsChange to \consumed or \produced
+depending on its sign. This is done via \negPart and \posPart, which
+satisfy the key property that their difference is the identity
+function.
 
 \begin{figure*}
 \begin{code}[hide]

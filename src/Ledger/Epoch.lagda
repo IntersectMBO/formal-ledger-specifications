@@ -95,7 +95,7 @@ its results, i.e:
       retired   = retiring ⁻¹ e
       payout    = govActionReturns ∪⁺ trWithdrawals
       refunds   = pullbackMap payout (λ x → record { net = NetworkId ; stake = x }) (dom rewards)
-      unclaimed = getCoin payout ∸ getCoin refunds
+      unclaimed = getCoin payout - getCoin refunds
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
 

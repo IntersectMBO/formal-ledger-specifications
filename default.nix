@@ -170,13 +170,32 @@ rec {
     #   dontInstall = true;
     # };
 
-    hsExe = haskellPackages.callCabal2nix "${project}" "${hsSrc}/haskell/${main}" { };
+    hsExe = haskellPackages.callCabal2nixWithOptions "${project}" "${hsSrc}/haskell/${main}" "--no-haddock" {};
 
+  };
+
+  mkPdfDerivation = name: version: project: stdenv.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    pname = name;
+    version = version;
+    src = "${formalLedger}";
+    meta = { };
+    buildInputs = [ agdaWithDeps latex ];
+    buildPhase = ''
+        OUT_DIR=$out make ${project}
+      '';
+    doCheck = true;
+    checkPhase = ''
+        test -n "$(find $out/pdfs/ -type f -name '*.pdf')"
+      '';
+    dontInstall = true;
   };
 
   ledger = mkSpecDerivation {
     project = "ledger";
     main = "Ledger";
+  } // {
+    conway = mkPdfDerivation "conway-formal-spec" "0.9" "ledger.conway.docs";
   };
   midnight = mkSpecDerivation {
     project = "midnight";

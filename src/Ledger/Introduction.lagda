@@ -26,6 +26,9 @@ with previous specifications, this document is an incremental
 specification, so everything that isn't defined here refers to the
 most recent definition from an older specification.
 
+Note: As of now, this specification is still a draft. Some details and
+explanations may be missing or wrong.
+
 \end{Conway}
 
 \begin{NoConway}
