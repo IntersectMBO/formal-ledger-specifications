@@ -17,6 +17,7 @@ open import Data.List.Relation.Unary.Any
 open import Data.List.Relation.Unary.Unique.Propositional
 open import Data.Product
 open import Relation.Binary.PropositionalEquality
+open import Relation.Nullary
 open import Level using (Level)
 open import Function.Bundles
 
@@ -29,7 +30,7 @@ private
 ------------------------------------------------------------------------
 -- membership
 
-unique⇒∈-prop : Unique l → (x : A) → isPropositional (x ∈ l)
+unique⇒∈-prop : Unique l → (x : A) → Irrelevant (x ∈ l)
 unique⇒∈-prop (hx ∷ h) x (here refl) (here refl) = refl
 unique⇒∈-prop (hx ∷ h) x (here refl) (there b)   = ⊥-elim (All¬⇒¬Any hx b)
 unique⇒∈-prop (hx ∷ h) x (there a)   (here refl) = ⊥-elim (All¬⇒¬Any hx a)
