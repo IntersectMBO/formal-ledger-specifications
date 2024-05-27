@@ -50,16 +50,6 @@ subpermutations (x ∷ xs) = concatMap (insert x) (subpermutations xs) ++ subper
   ⇒ (a , a∈l , _≡_.refl) = ∈-map⁺ f a∈l
 
 module _ {f : A → B} {l : List A} {b} {P : A → Set} {P? : Decidable P} where
-  -- ∈ˡ-map-filter⁻ : b ∈ map f (filter P? l) → (∃[ a ] b ≡ f a × a ∈ l × P a)
-  -- ∈ˡ-map-filter⁻ h with ∈-map⁻ f h
-  -- ... | a , a∈X , _≡_.refl = a , _≡_.refl , ∈-filter⁻ P? a∈X
-
-  -- ∈ˡ-map-filter⁺ : (∃[ a ] b ≡ f a × a ∈ l × P a) → b ∈ map f (filter P? l)
-  -- ∈ˡ-map-filter⁺ (a , _≡_.refl , a∈l , Pa) = ∈-map⁺ f (∈-filter⁺ P? a∈l Pa)
-
-  -- ∈ˡ-map-filter : (∃[ a ] b ≡ f a × a ∈ l × P a) ⇔ b ∈ map f (filter P? l)
-  -- ∈ˡ-map-filter = mk⇔ ∈ˡ-map-filter⁺ ∈ˡ-map-filter⁻
-
   ∈ˡ-map-filter⁻ : b ∈ map f (filter P? l) → (∃[ a ] a ∈ l × b ≡ f a × P a)
   ∈ˡ-map-filter⁻ h with ∈-map⁻ f h
   ... | a , a∈X , _≡_.refl = a , proj₁ (∈-filter⁻ P? a∈X) , _≡_.refl , proj₂ (∈-filter⁻ P? {xs = l} a∈X)

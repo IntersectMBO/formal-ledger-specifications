@@ -75,7 +75,7 @@ module _ {f : A → B} {l : List A} {b : B} where
   ∈-fromList-map⁺ = (∈-map⁻ f) ∘ ∈-fromList⁻
 
   ∈-fromList-map⁻ : ∃[ x ] x ∈ˡ l × b ≡ f x → b ∈ fromList (Data.List.map f l)
-  ∈-fromList-map⁻ (x , <″-offset x∈) = ∈-fromList⁺ (∈-map⁺ f x∈)
+  ∈-fromList-map⁻ (x , x∈ , refl) = ∈-fromList⁺ (∈-map⁺ f x∈)
 
 module _ {f : A → B} {X} {b} {P : A → Type} {sp-P : specProperty P} where
   ∈-map-filter⁻' : b ∈ map f (filter sp-P X) → (∃[ a ] b ≡ f a × P a × a ∈ X)

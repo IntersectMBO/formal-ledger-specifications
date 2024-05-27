@@ -46,12 +46,6 @@ private variable
   [ (λ _ → P.refl) , (λ _ → P.refl) ]
   (uncurry λ _ → [ (λ _ → P.refl) , (λ _ → P.refl) ])
 
-×-⇔ : {A₁ : Set a₁} {A₂ : Set a₂} {B₁ : Set b₁} {B₂ : Set b₂}
- → A₁ ⇔ A₂ → B₁ ⇔ B₂ → (A₁ × B₁) ⇔ (A₂ × B₂)
-×-⇔ {A₁} {A₂} {B₁} {B₂} A⇔A' B⇔B' =
-  mk⇔ (λ x → Equivalence.to A⇔A' (proj₁ x) , Equivalence.to B⇔B' (proj₂ x) )
-      (λ x → Equivalence.from A⇔A' (proj₁ x) , Equivalence.from B⇔B' (proj₂ x))
-
 ×-⇔-swap : (A × B × C) ⇔ (B × A × C)
 ×-⇔-swap {A = A}{B = B}{C = C} = let open EquationalReasoning in
   (A × B × C) ∼⟨ mk⇔ (λ x → (proj₁ (proj₂ x)) , ((proj₁ x) , (proj₂ (proj₂ x)))) 

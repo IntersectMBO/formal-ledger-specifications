@@ -204,7 +204,7 @@ module _ {a} {A : Set a} where
 
   insert-decomp≡ : ∀ {ys : List A} {y : A} xs → xs ∈ insert y ys
                    → ∃[ ll ] ∃[ lr ] xs ≡ ll ++ [ y ] ++ lr × ys ≡ ll ++ lr
-  insert-decomp≡ {[]}     _        (here refl) = [] , [] , <″-offset refl
+  insert-decomp≡ {[]}     _        (here refl) = [] , [] , refl , refl
   insert-decomp≡ {y ∷ ys} _        (here refl) = [] , y ∷ ys , refl , refl
   insert-decomp≡ {_ ∷ _}  []       (there h)   = ⊥-elim (¬[]∈map h)
   insert-decomp≡ {y' ∷ _} (z ∷ zs) (there h)   =
