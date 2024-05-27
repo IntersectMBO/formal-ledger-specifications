@@ -48,7 +48,7 @@ let
   agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-meta";
-    version = "2.0-rc1";
+    version = "2.0";
     src = fetchFromGitHub {
       repo = "stdlib-meta";
       owner = "input-output-hk";
