@@ -19,15 +19,7 @@ let
     inherit (pkgs) system;
   };
 
-  agdaStdlib = customAgda.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
-    version = "2.0";
-    src = fetchFromGitHub {
-      repo = "agda-stdlib";
-      owner = "agda";
-      rev = "v2.0";
-      sha256 = "TjGvY3eqpF+DDwatT7A78flyPcTkcLHQ1xcg+MKgCoE=";
-    };
-  });
+  agdaStdlib = customAgda.agdaPackages.standard-library;
 
   agdaStdlibClasses = customAgda.agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
