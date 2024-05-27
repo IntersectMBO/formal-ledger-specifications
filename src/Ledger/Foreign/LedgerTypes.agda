@@ -225,7 +225,6 @@ record TxBody : Set where
         txcerts : List TxCert
         fulfills       : List Fulfill
         requests       : HSMap Ix TxOut
-        requiredTxs    : List TxId
 {-# FOREIGN GHC
   data TxBody = MkTxBody
     { txins  :: [TxIn]
@@ -241,7 +240,6 @@ record TxBody : Set where
     , txcerts :: [TxCert]
     , fulfills       :: [Fulfill]
     , requests       :: [(Ix, Request)]
-    , requiredTxs    :: List TxId
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC TxBody = data TxBody (MkTxBody) #-}
@@ -265,11 +263,13 @@ record Tx : Set where
   field body : TxBody
         wits : TxWitnesses
         txAD : Maybe AuxiliaryData
+        requiredTxs    : List TxId
 {-# FOREIGN GHC
   data Tx = MkTx
     { body :: TxBody
     , wits :: TxWitnesses
     , txAD :: Maybe AuxiliaryData
+    , requiredTxs    : List TxId
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}

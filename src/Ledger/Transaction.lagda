@@ -83,6 +83,7 @@ the transaction body are:
   open TokenAlgebra tokenAlgebra public
 
   field txidBytes : TxId → Ser
+        signedBytes : ℙ TxId → Ser
         networkId : Network
 
   govStructure : GovStructure
@@ -139,8 +140,8 @@ the transaction body are:
           collateral     : ℙ TxIn
           reqSigHash     : ℙ KeyHash
           scriptIntHash  : Maybe ScriptHash
-          fulfills       : ℙ Fulfill
           requests       : Ix ⇀ Request
+          fulfills       : ℙ Fulfill
 
 \end{code}
 \begin{NoConway}
@@ -159,6 +160,7 @@ the transaction body are:
           wits     : TxWitnesses
           isValid  : Bool
           txAD     : Maybe AuxiliaryData
+          requiredTxs    : ℙ TxId
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -208,10 +210,6 @@ the transaction body are:
 
   chkIsValid : Tx → Set
   chkIsValid tx = tx .Tx.isValid ≡ true
-
-  -- TODO unsure how to construct txid for no-required-txs transaction
-  mkTxNoReqTxs : Tx → Tx
-  mkTxNoReqTxs tx = let open Tx tx renaming (body to txb) in record tx { body = record txb { requiredTxs = ∅ } }
 
 \end{code}
 \caption{Functions related to transactions}

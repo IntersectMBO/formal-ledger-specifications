@@ -151,7 +151,7 @@ topSortTxs ((tx1 , tx2) ∷ dges) (r ∷ em) (tx ∷ rls) srtd =
 
 -- check that all IDs in all requiredTxs groups correspond to Txs in the given zone
 chkRqTx : List Tx → Tx → Set
-chkRqTx ltx tx = ∀[ txrid ∈ tx .body .requiredTxs ] Any (txrid ≡_) ( getIDs ltx )
+chkRqTx ltx tx = ∀[ txrid ∈ tx .requiredTxs ] Any (txrid ≡_) ( getIDs ltx )
 
 -- check for duplicates in two sets
 noDups : ℙ Tx → ℙ Tx → Set

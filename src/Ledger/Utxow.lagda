@@ -61,6 +61,7 @@ witsVKeyNeeded = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 
 scriptsNeeded  : UTxOTemp → TxBody → ℙ ScriptHash
 scriptsNeeded = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded
+
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used for witnessing}
@@ -101,7 +102,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         allOutHashes      = getDataHashes (range txouts)
     in
     -- TODO change signature check
-    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes ((mkTxNoReqTxs tx) .Tx.body .TxBody.txid)) σ
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (signedBytes ((singleton (tx .Tx.body .TxBody.txid)) ∪ (tx .Tx.requiredTxs))) σ  -- TODO check that what is signed is what we want
     -- TODO check frxo separately
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxoTemp txb ⊆ witsKeyHashes
