@@ -10,9 +10,13 @@ In this section, we introduce some notations used in this document.
 
 \begin{description}
 \item[Propositions, sets and types] This document loosly treats sets and types as the same thing.
+  When we need to convert a list to its set of elements, we write \fromList.
 \item[Sums and products] The sum (or disjoint union, coproduct, etc.) of \AgdaBound{A} and
   \AgdaBound{B} is denoted by \AgdaBound{A} \coproduct \AgdaBound{B}, and their product
-  is denoted by \AgdaBound{A} \agdatimes \AgdaBound{B}.
+  is denoted by \AgdaBound{A} \agdatimes \AgdaBound{B}. The projection functions from products
+  are denoted \fst and \snd, and the injections are denoted \inl and \inr respectively. The
+  properties whether an element of a coproduct is in the left or right component are called
+  \isInl and \isInr.
 \item[Record types] Record types are explained in Appendix~\ref{sec:appendix-agda-essentials}.
 \item[Postfix projections] Projections can be written using postix notation. For example, we may
   write \AgdaBound{x}\AgdaSpace{}\AgdaSymbol{.}\AgdaField{proj₁} instead of
