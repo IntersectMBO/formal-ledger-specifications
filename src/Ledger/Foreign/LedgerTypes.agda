@@ -253,6 +253,12 @@ record Tx : Set where
 #-}
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}
 
+record DrepThresholds : Set where
+  field P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : Rational
+
+record PoolThresholds : Set where
+  field Q1 Q2a Q2b Q4 Q5e : Rational
+
 record PParams : Set where
   field a                   : ℕ
         b                   : ℕ
@@ -266,7 +272,8 @@ record PParams : Set where
         Emax                : Epoch
         nopt                : ℕ
         pv                  : Pair ℕ ℕ
-        votingThresholds    : ⊤ -- TODO: foreign rational numbers
+        poolVotingThresholds  : PoolThresholds
+        drepVotingThresholds  : DrepThresholds
         govActionLifetime   : ℕ
         govActionDeposit    : Coin
         drepDeposit         : Coin
@@ -281,6 +288,29 @@ record PParams : Set where
         -- collateralPercent   : ℕ
         maxCollateralInputs : ℕ
 {-# FOREIGN GHC
+  data DrepThresholds = MkDrepThresholds
+    { p1      :: Rational
+    , p2a     :: Rational
+    , p2b     :: Rational
+    , p3      :: Rational
+    , p4      :: Rational
+    , p5a     :: Rational
+    , p5b     :: Rational
+    , p5c     :: Rational
+    , p5d     :: Rational
+    , p6      :: Rational
+    }
+    deriving Show
+
+  data PoolThresholds = MkPoolThresholds
+    { q1  :: Rational
+    , q2a :: Rational
+    , q2b :: Rational
+    , q4  :: Rational
+    , q5e :: Rational
+    }
+    deriving Show
+
   data PParams = MkPParams
     { a                   :: Integer
     , b                   :: Integer
@@ -294,7 +324,8 @@ record PParams : Set where
     , emax                :: Epoch
     , nopt                :: Integer
     , pv                  :: (Integer, Integer)
-    , votingThresholds    :: ()
+    , poolVotingThresholds :: PoolThresholds
+    , drepVotingThresholds :: DrepThresholds
     , govActionLifetime   :: Integer
     , govActionDeposit    :: Coin
     , drepDeposit         :: Coin
@@ -309,6 +340,8 @@ record PParams : Set where
     , maxCollateralInputs :: Integer
     } deriving (Show, Generic)
 #-}
+{-# COMPILE GHC DrepThresholds = data DrepThresholds (MkDrepThresholds) #-}
+{-# COMPILE GHC PoolThresholds = data PoolThresholds (MkPoolThresholds) #-}
 {-# COMPILE GHC PParams = data PParams (MkPParams) #-}
 
 record UTxOEnv : Set where
