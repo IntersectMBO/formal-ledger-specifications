@@ -148,12 +148,19 @@ getDeposits s = UTxOState.deposits (LState.utxoSt s)
 
 module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
   {- 1 -} {filterCD : ∀ {pp} {c} → filterˢ isGADeposit (dom (certDeposit c {pp})) ≡ᵉ ∅}
-  {- 2 -} {filterGA : ∀ {txid} {n} → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵ ≡ᵉ ❴ GovActionDeposit (txid , n) ❵ }
-  {- 3 -} {filterCR : (c : DCert) {deps : DepositPurpose ⇀ Coin}
+  {- 2 -} {filterCR : (c : DCert) {deps : DepositPurpose ⇀ Coin}
                       → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))}
   where
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
   pattern UTXOW-UTXOS x = UTXOW-inductive⋯ _ _ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
+
+  filterGA : ∀ txid n → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵ ≡ᵉ ❴ GovActionDeposit (txid , n) ❵
+  proj₁ (filterGA txid n) {a} x = (proj₂ (from ∈-filter x)) where open Equivalence
+  proj₂ (filterGA txid n) {a} x = to ∈-filter (ξ (from ∈-singleton x) , x)
+    where
+    open Equivalence
+    ξ : a ≡ GovActionDeposit (txid , n) → isGADeposit a
+    ξ refl = refl
 
   module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
     open Tx tx renaming (body to txb); open TxBody txb
@@ -447,7 +454,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       filterˢ isGADeposit (dom upPD) ∪ filterˢ isGADeposit (dom gaDˢ)
         ≈⟨ ∪-cong (allGA-propDepsΔ ps) (filter-pres-≡ᵉ dom-single≡single) ⟩
       dom pdΔ ∪ filterˢ isGADeposit ❴ GovActionDeposit (txid , length ps) ❵
-        ≈⟨ ∪-cong ≡ᵉ.refl filterGA ⟩
+        ≈⟨ ∪-cong ≡ᵉ.refl (filterGA _ _) ⟩
       dom pdΔ ∪ ❴ GovActionDeposit (txid , length ps) ❵
         ≈˘⟨ ∪-cong ≡ᵉ.refl dom-single≡single ⟩
       dom pdΔ ∪ dom gaDˢ
@@ -604,7 +611,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
       main-invariance-lemma :
           filterˢ isGADeposit (dom utxoDeps) ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) govSt)
-          ----------------------------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------------
         → filterˢ isGADeposit (dom utxoDeps') ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) (filterᵇ Pᵇ govSt))
 
       main-invariance-lemma HYP a = let open R.EquationalReasoning in
