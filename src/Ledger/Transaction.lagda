@@ -171,6 +171,12 @@ the transaction body are:
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
+  nutxo : UTxOTemp → UTxO
+  nutxo = proj₁
+
+  frxo : UTxOTemp → FRxO
+  frxo = proj₂
+
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
@@ -191,22 +197,24 @@ the transaction body are:
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  refScripts : Tx → UTxO → ℙ Script
-  refScripts tx utxo =
-    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+  refScripts : Tx → UTxOTemp → ℙ Script
+  refScripts tx utxoTemp =
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range ((nutxo utxoTemp) ∣ (txins ∪ refInputs)))
+    ∪
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range ((frxo utxoTemp) ∣ fulfills))
     where open Tx; open TxBody (tx .body)
 
-  txscripts : Tx → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+  txscripts : Tx → UTxOTemp → ℙ Script
+  txscripts tx utxoTemp = scripts (tx .wits) ∪ refScripts tx utxoTemp
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo =
+  lookupScriptHash : ScriptHash → Tx → UTxOTemp → Maybe Script
+  lookupScriptHash sh tx utxoTemp =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (txscripts tx utxo)
+    where m = setToHashMap (txscripts tx utxoTemp)
 
   chkIsValid : Tx → Set
   chkIsValid tx = tx .Tx.isValid ≡ true

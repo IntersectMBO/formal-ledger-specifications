@@ -43,10 +43,10 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 
 \begin{figure*}[h]
 \begin{code}
-isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
-isTwoPhaseScriptAddress tx utxo a =
+isTwoPhaseScriptAddress : Tx → UTxOTemp → Addr → Bool
+isTwoPhaseScriptAddress tx utxoTemp a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
+    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxoTemp
                  then (λ {s} → isP2Script s)
                  else false)
   else
@@ -59,10 +59,10 @@ opaque
   getDataHashes : ℙ TxOut → ℙ DataHash
   getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
 
-  getInputHashes : Tx → UTxO → ℙ DataHash
-  getInputHashes tx utxo = getDataHashes
-    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ txins)))
+  getInputHashes : Tx → UTxOTemp → ℙ DataHash
+  getInputHashes tx utxoTemp = getDataHashes
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxoTemp a ≡ true)
+            (range ((nutxo utxoTemp) ∣ txins) ∪ range ((frxo utxoTemp) ∣ txins)))
     where open Tx; open TxBody (tx .body)
 
 totExUnits : Tx → ExUnits
@@ -143,12 +143,12 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
-  minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  =
+  minfee : PParams → UTxOTemp → Tx → Coin
+  minfee pp utxoTemp tx  =
     pp .a * tx .body .txsize + pp .b
     + txscriptfee (pp .prices) (totExUnits tx)
     + pp .minFeeRefScriptCoinsPerByte
-    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxoTemp)) ] x
 
 \end{code}
 \begin{code}[hide]
@@ -248,8 +248,8 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 \end{code}
 \begin{code}
 
-feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
+feesOK : PParams → Tx → UTxOTemp → Bool
+feesOK pp tx utxoTemp = minfee pp utxoTemp tx ≤ᵇ txfee
                   ∧ not (≟-∅ᵇ (txrdmrs ˢ))
                   =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
                       ∧ isAdaOnlyᵇ bal
@@ -258,8 +258,8 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
                       )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
-    bal              = balance  (utxo ∣ collateral)
+    collateralRange  = range    ((mapValues txOutHash (nutxo utxoTemp)) ∣ collateral)
+    bal              = balance  ((nutxo utxoTemp) ∣ collateral)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules, continued}
@@ -296,12 +296,6 @@ record UTxOStateTemp : Set where
         feesTemp       : Coin
         depositsTemp   : Deposits
         donationsTemp  : Coin
-
-nutxo : UTxOTemp → UTxO
-nutxo = proj₁
-
-frxo : UTxOTemp → FRxO
-frxo = proj₂
 
 \end{code}
 \begin{NoConway}
@@ -352,28 +346,6 @@ function.
 module _ (let open UTxOState; open UTxOStateTemp; open TxBody) where
 \end{code}
 \begin{code}
-  updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin
-    → DepositPurpose ⇀ Coin
-  updateCertDeposits pp []              deposits = deposits
-  updateCertDeposits pp (cert ∷ certs)  deposits
-    = updateCertDeposits pp certs deposits ∪⁺ certDeposit pp cert ∣ certRefund cert ᶜ
-
-  updateProposalDeposits : PParams → TxId → List GovProposal → DepositPurpose ⇀ Coin
-    → DepositPurpose ⇀ Coin
-  updateProposalDeposits pp txid [] deposits = deposits
-  updateProposalDeposits pp txid (prop ∷ props) deposits
-    =   updateProposalDeposits pp txid props deposits
-    ∪⁺  propDeposit pp (txid , length props) prop
-
-  updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
-  updateDeposits pp txb
-    =  updateCertDeposits pp (txb .txcerts)
-    ∘  updateProposalDeposits pp (txb .txid) (txb .txprop)
-
-  depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
-  depositsChange pp txb deposits
-    = getCoin (updateDeposits pp txb deposits) ⊖ getCoin deposits
-
   depositRefunds : PParams → UTxOStateTemp → TxBody → Coin
   depositRefunds pp st txb = negPart (depositsChange pp txb (st .depositsTemp))
 
@@ -454,12 +426,12 @@ data _⊢_⇀⦇_,UTXO⦈_ where
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb
         open UTxOEnv Γ renaming (pparams to pp)
-        open UTxOState s
+        open UTxOStateTemp s
         txoutsʰ = (mapValues txOutHash txouts)
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom (nutxo utxoTemp)
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx (nutxo utxoTemp) ≡ true   ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ feesOK pp tx utxoTemp ≡ true   ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
     -- fulfills/requests stuff

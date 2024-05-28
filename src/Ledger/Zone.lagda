@@ -14,8 +14,8 @@ module Ledger.Zone
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Gov govStructure
-open import Ledger.PPUp txs
+open import Ledger.Enact govStructure
+open import Ledger.Gov txs
 open import Ledger.Utxo txs abs
 open import Ledger.Utxow txs abs
 open import Ledger.Ledger txs abs

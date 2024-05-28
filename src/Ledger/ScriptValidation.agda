@@ -157,7 +157,7 @@ opaque
   collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → FRxO → (ScriptPurpose × ScriptHash)
     → Maybe (Script × List Data × ExUnits × CostModel)
   collectPhaseTwoScriptInputs' pp tx utxo frxo (sp , sh)
-    with lookupScriptHash sh tx utxo
+    with lookupScriptHash sh tx (utxo , frxo)
   ... | nothing = nothing
   ... | just s
     with isInj₂ s | indexedRdmrs tx sp

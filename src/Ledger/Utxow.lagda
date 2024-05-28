@@ -41,8 +41,8 @@ credsNeeded utxoTemp txb
   ∪  mapˢ (λ c → (Cert     c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x → (Mint     x , inj₂ x)) (policies mint)
   ∪  mapˢ (λ v → (Vote     v , proj₂ v)) (fromList $ map GovVote.voter txvote)
-  ∪  mapPartial (λ p →  case p .GovProposal.policy of
   ∪ mapˢ (λ (i , o) → (Spend i , payCred (proj₁ o))) (((frxo utxoTemp) ∣ fulfills) ˢ)
+  ∪  mapPartial (λ p →  case p .GovProposal.policy of
 \end{code}
 \begin{code}[hide]
     λ where
@@ -95,21 +95,19 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         open UTxOStateTemp s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
-        inputHashes       = getInputHashes tx utxo
-        refScriptHashes   = mapˢ hash (refScripts tx utxo)
-        neededHashes      = scriptsNeeded utxo txb
+        inputHashes       = getInputHashes tx utxoTemp
+        refScriptHashes   = mapˢ hash (refScripts tx utxoTemp)
+        neededHashes      = scriptsNeeded utxoTemp txb
         txdatsHashes      = dom txdats
-        allOutHashes      = getDataHashes (range txouts)
+        allOutHashes      = getDataHashes (range txouts) ∪ getDataHashes (range requests)
     in
-    -- TODO change signature check
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (signedBytes ((singleton (tx .Tx.body .TxBody.txid)) ∪ (tx .Tx.requiredTxs))) σ  -- TODO check that what is signed is what we want
-    -- TODO check frxo separately
-    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxoTemp) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxoTemp txb ⊆ witsKeyHashes
     -- TODO frxo
     ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ (inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)))
+    ∙  txdatsHashes ⊆ (inputHashes ∪ allOutHashes ∪ getDataHashes (range ((nutxo utxoTemp) ∣ refInputs)))
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
