@@ -16,6 +16,7 @@ open import Axiom.Set.Properties using (∃?-sublist-⇔)
 open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
 open import Ledger.Ratify txs hiding (vote)
+
 open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)

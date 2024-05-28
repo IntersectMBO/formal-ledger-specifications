@@ -99,7 +99,7 @@ data
 \begin{figure*}[h]
 \begin{code}
   CHAIN :
-    let open Block b; open ChainState s; open NewEpochState nes
+    let open ChainState s; open Block b; open NewEpochState nes
         open EpochState epochState; open EnactState es
     in
        record { stakeDistrs = calculateStakeDistrs (EpochState.ls (NewEpochState.epochState newEpochState)) }

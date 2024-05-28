@@ -5,33 +5,29 @@ open import Axiom.Set using (Theory)
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
 
-open import Prelude hiding (isEquivalence; trans; map)
+open import Prelude hiding (isEquivalence; trans; map; map₂)
 open Theory th
 
 import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
 import Relation.Nullary.Decidable
-open import Data.List.Base using () renaming (map to mapˡ)
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
-open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻; ∈-map⁺; ∈-map⁻ ; map-∈↔)
-open import Data.List.Properties using (map-++)
+open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; ∈-filter⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-++⁻)
 open import Data.List.Relation.Binary.BagAndSetEquality using (∼bag⇒↭)
 open import Data.List.Relation.Binary.Permutation.Propositional.Properties using (↭-length)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
-import Data.Product
+open import Data.Product using (map₂; swap)
 open import Data.Product.Properties.Ext
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
-open import Function.Related.TypeIsomorphisms
 open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
 import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
 import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
-open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 
 open Equivalence
 
@@ -69,25 +65,6 @@ module _ {l : List A} {a} where
 
   ∈-fromList⁺ : a ∈ˡ l → a ∈ fromList l
   ∈-fromList⁺ = to ∈-fromList
-
-module _ {f : A → B} {l : List A} {b : B} where
-  ∈-fromList-map⁺ : b ∈ fromList (Data.List.map f l) → ∃[ a ] a ∈ˡ l × b ≡ f a
-  ∈-fromList-map⁺ = (∈-map⁻ f) ∘ ∈-fromList⁻
-
-  ∈-fromList-map⁻ : ∃[ x ] x ∈ˡ l × b ≡ f x → b ∈ fromList (Data.List.map f l)
-  ∈-fromList-map⁻ (x , x∈ , refl) = ∈-fromList⁺ (∈-map⁺ f x∈)
-
-module _ {f : A → B} {X} {b} {P : A → Type} {sp-P : specProperty P} where
-  ∈-map-filter⁻' : b ∈ map f (filter sp-P X) → (∃[ a ] b ≡ f a × P a × a ∈ X)
-  ∈-map-filter⁻' h with from ∈-map h
-  ... | a , b≡fa , a∈X = a , b≡fa , from ∈-filter a∈X
-
-  ∈-map-filter⁺' : (∃[ a ] b ≡ f a × P a × a ∈ X) → b ∈ map f (filter sp-P X)
-  ∈-map-filter⁺' (a , b≡fa , Pa , a∈X) = to ∈-map (a , b≡fa , to ∈-filter (Pa , a∈X))
-
-  ∈-map-filter : (∃[ a ] b ≡ f a × P a × a ∈ X) ⇔ b ∈ map f (filter sp-P X)
-  ∈-map-filter = mk⇔ ∈-map-filter⁺' ∈-map-filter⁻'
-
 
 open import Tactic.AnyOf
 open import Tactic.Defaults
@@ -279,7 +256,7 @@ filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
   a ∈ filter sp X            ∼⟨ R.SK-sym ∈-filter ⟩
   (P a × a ∈ X)              ∼⟨ R.K-refl ×-cong hl ⟩
   (P a × a ∈ˡ l)             ∼⟨ mk⇔ (uncurry $ flip $ ∈-filter⁺ P?)
-                                    (Data.Product.swap ∘ ∈-filter⁻ P?) ⟩
+                                    (swap ∘ ∈-filter⁻ P?) ⟩
   a ∈ˡ Data.List.filter P? l ∎
   where open R.EquationalReasoning
 

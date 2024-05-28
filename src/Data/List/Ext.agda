@@ -1,22 +1,16 @@
 {-# OPTIONS --safe #-}
 module Data.List.Ext where
 
-open import Data.List using (List; [_]; _++_; map; head; drop; concatMap; filter)
-open import Data.List.Membership.Propositional using (_∈_; _∉_)
-open import Data.List.Membership.Propositional.Properties using (∈-filter⁻; ∈-filter⁺; map-∈↔; ∈-map⁻; ∈-map⁺)
-open import Data.List.Relation.Unary.All using (All)
-open import Data.List.Relation.Unary.Any using (Any; here; there)
+open import Data.List using (List; _++_; map; concatMap; filter)
+open import Data.List.Membership.Propositional using (_∈_)
+open import Data.List.Membership.Propositional.Properties using (∈-map⁻; ∈-map⁺; ∈-filter⁻; ∈-filter⁺)
 open import Data.Maybe using (Maybe)
-open import Data.Nat using (ℕ ; _+_)
-open import Class.Decidable
+open import Data.Nat using (ℕ)
 open import Data.Product using (∃-syntax; _×_; _,_; proj₁; proj₂)
-open import Function using (_∘_)
 open import Function.Bundles using (_⇔_; mk⇔; Equivalence)
 open import Level using (Level)
 open import Relation.Binary.PropositionalEquality using (_≡_)
 open import Relation.Unary using (Decidable)
-open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_; ↭-sym)
-open import Relation.Nullary.Decidable using (does)
 open Maybe; open List; open ℕ
 private variable
   ℓ : Level
