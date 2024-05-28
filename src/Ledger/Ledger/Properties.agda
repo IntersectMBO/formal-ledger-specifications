@@ -9,6 +9,9 @@ module Ledger.Ledger.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Axiom.Extensionality.Propositional using (Extensionality) -- only needed for `dpMap-update`;
+                                -- Remove this import if we don't end up using `dpMap-update` or we find an
+                                -- alternative proof for `dpMap-update` that doesn't require extensionality.
 open import Axiom.Set.Properties th
 open import Ledger.Chain txs abs
 open import Ledger.Deleg.Properties govStructure
@@ -218,14 +221,12 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         = STS→updateGovSt≡ vps (suc k) h
       STS→updateGovSt≡ (inj₂ p ∷ vps) k (BS-ind (GOV-Propose x) h) = STS→updateGovSt≡ vps (suc k) h
 
-
   module EquationalProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     open Tx tx renaming (body to txb); open TxBody txb
     open LEnv Γ renaming (pparams to pp)
     open PParams pp using (govActionDeposit)
     open ≡-Reasoning
     open LEDGER-PROPS tx Γ s
-
 
     -- decomposition of updateGovStates applied to list of proposals
     updateProps-decomp : (ps : List GovProposal) {k : ℕ} {govSt : GovState} →
@@ -330,11 +331,53 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     open Tx tx renaming (body to txb); open TxBody txb
     open LEnv Γ renaming (pparams to pp)
     open PParams pp using (govActionDeposit)
-    open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
     govSt : GovState
     govSt = LState.govSt s
     open LEDGER-PROPS tx Γ s using (utxoDeps; dpMap; propUpdate; mkAction; updateGovStates; STS→GovSt≡)
     open EquationalProperties tx Γ s using (dpMap-vote-invar++; updateGovStates≡; updateProps-decomp; updateProps-++-decomp)
+
+    -- An alterative approach recommended in PR review suggests using `dpMap-update-length-≡`
+    -- instead of `permuteTwoProps` and `permuteProps` (defined below); however, I'm not sure
+    -- how to prove the following `dpMap-update` lemma without assuming function extensionality.
+    module _ (FUNEXT : Extensionality 0ℓ 0ℓ) where
+      dpMap-update : ∀ ps k govSt
+        → dpMap (updateGovStates (map inj₂ ps) k govSt)
+          ≡ dpMap govSt ++ applyUpTo (λ i → GovActionDeposit (txid , k + i)) (length ps)
+      dpMap-update [] k govSt = sym (++-identityʳ (dpMap govSt))
+
+      dpMap-update (x ∷ ps₁) k govSt = let open ≡-Reasoning in
+        begin
+        dpMap (updateGovStates (map inj₂ (x ∷ ps₁)) k govSt)
+          ≡⟨ dpMap-update ps₁ _ (propUpdate govSt x k) ⟩
+        dpMap (propUpdate govSt x k) ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
+          ≡⟨ cong (_++ _) (map-++ _ govSt _) ⟩
+        (dpMap govSt ++ [ GovActionDeposit (txid , k) ]) ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
+          ≡⟨ ++-assoc (dpMap govSt) [ GovActionDeposit (txid , k) ] _ ⟩
+        dpMap govSt ++ [ GovActionDeposit (txid , k) ] ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
+          ≡˘⟨ cong (λ u → dpMap govSt ++ [ GovActionDeposit (txid , u) ] ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)) (+-identityʳ k) ⟩
+        dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ] ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
+          ≡⟨ cong (λ u → dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ] ++ applyUpTo u (length ps₁)) funext-app ⟩
+        dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ] ++ applyUpTo (λ i → GovActionDeposit (txid , k + suc i)) (length ps₁)
+          ≡⟨ cong (dpMap govSt ++_) refl ⟩
+        dpMap govSt ++ applyUpTo (λ i → GovActionDeposit (txid , k + i)) (suc (length ps₁)) ∎
+          where
+          funext-app : (λ i → GovActionDeposit (txid , suc (k +ℕ i))) ≡ (λ i → GovActionDeposit (txid , k +ℕ suc i))
+          funext-app = FUNEXT λ i → cong (λ u → GovActionDeposit (txid , u)) (sym (+-suc k i))
+
+      dpMap-update-length-≡ : ∀ ps ps' → length ps ≡ length ps'
+        → dpMap (updateGovStates (map inj₂ ps) 0 []) ≡ dpMap (updateGovStates (map inj₂ ps') 0 [])
+      dpMap-update-length-≡ ps ps' l≡ = let open ≡-Reasoning in
+        begin
+        dpMap (updateGovStates (map inj₂ ps) 0 [])
+          ≡⟨ dpMap-update ps 0 [] ⟩
+        dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) (length ps)
+          ≡⟨ cong (λ u → dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) u) l≡ ⟩
+        dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) (length ps')
+          ≡˘⟨ dpMap-update ps' 0 [] ⟩
+        dpMap (updateGovStates (map inj₂ ps') 0 [])
+          ∎
+
+    open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 
     -- Decomposition of the domain of the result of `updateProposalDeposits`.
     updatePropDeps≡ᵉ : (props : List GovProposal)
@@ -479,6 +522,9 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         ≡˘⟨ cong (fromList ∘ dpMap) (updateProps-++-decomp ps [ p ]) ⟩
       fromList (dpMap (updateGovStates (map inj₂ (ps ++ [ p ])) 0 []))
         ≈⟨ permuteProps (ps ++ [ p ]) (p ∷ ps) 0 [] (↭-sym swap-head) ⟩
+      -- Alternatively (assuming `dpMap-update-length-≡`) for this step we could use:
+      --   ≡⟨ cong fromList (dpMap-update-length-≡ (ps ++ [ p ]) (p ∷ ps)
+      --                      (trans (length-++ ps) (+-comm (length ps) 1))) ⟩
       fromList (dpMap (updateGovStates (map inj₂ (p ∷ ps)) 0 [])) ∎
 
 
