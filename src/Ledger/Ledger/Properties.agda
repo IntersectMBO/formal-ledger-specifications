@@ -9,9 +9,6 @@ module Ledger.Ledger.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Axiom.Extensionality.Propositional using (Extensionality) -- only needed for `dpMap-update`;
-                                -- Remove this import if we don't end up using `dpMap-update` or we find an
-                                -- alternative proof for `dpMap-update` that doesn't require extensionality.
 open import Axiom.Set.Properties th
 open import Ledger.Chain txs abs
 open import Ledger.Deleg.Properties govStructure
@@ -27,20 +24,16 @@ open import Ledger.Utxow txs abs
 open import Ledger.Utxow.Properties txs abs
 
 open import Data.Bool.Properties using (¬-not)
-open import Data.List.Ext using (∈ˡ-map-filter⁺; ∈ˡ-map-filter)
-open import Data.List.Ext.Properties using (swap-head; _×-cong_)
-open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc)
-open import Data.List.Membership.Propositional.Properties using (∈-filter⁻; ∈-filter⁺; ∈-map⁻; ∈-map⁺; map-∈↔)
-open import Data.List.Relation.Unary.Any using (Any)
+open import Data.List.Ext using (∈ˡ-map-filter)
+open import Data.List.Ext.Properties using (_×-cong_; ∷-injective⁻)
+open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc; length-++)
+open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
 open import Data.Product.Properties using (×-≡,≡←≡)
 open import Data.Product.Properties.Ext using (×-⇔-swap)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
 open import Relation.Binary using (IsEquivalence)
-open import Data.List.Relation.Binary.Permutation.Propositional using (_↭_; ↭-sym)
 
 import Function.Related.Propositional as R
-
-open Any
 
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
@@ -336,46 +329,46 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     open LEDGER-PROPS tx Γ s using (utxoDeps; dpMap; propUpdate; mkAction; updateGovStates; STS→GovSt≡)
     open EquationalProperties tx Γ s using (dpMap-vote-invar++; updateGovStates≡; updateProps-decomp; updateProps-++-decomp)
 
-    -- An alterative approach recommended in PR review suggests using `dpMap-update-length-≡`
-    -- instead of `permuteTwoProps` and `permuteProps` (defined below); however, I'm not sure
-    -- how to prove the following `dpMap-update` lemma without assuming function extensionality.
-    module _ (FUNEXT : Extensionality 0ℓ 0ℓ) where
-      dpMap-update : ∀ ps k govSt
-        → dpMap (updateGovStates (map inj₂ ps) k govSt)
-          ≡ dpMap govSt ++ applyUpTo (λ i → GovActionDeposit (txid , k + i)) (length ps)
-      dpMap-update [] k govSt = sym (++-identityʳ (dpMap govSt))
+    dpMap-update : ∀ ps k govSt
+      → dpMap (updateGovStates (map inj₂ ps) k govSt)
+        ≡ dpMap govSt ++ applyUpTo (λ i → GovActionDeposit (txid , k + i)) (length ps)
+    dpMap-update [] k govSt = sym (++-identityʳ (dpMap govSt))
+    dpMap-update (x ∷ ps₁) k govSt = let open ≡-Reasoning in begin
+      dpMap (updateGovStates (map inj₂ (x ∷ ps₁)) k govSt)
+        ≡⟨ dpMap-update ps₁ _ (propUpdate govSt x k) ⟩
+      dpMap (propUpdate govSt x k)
+        ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
+        ≡⟨ cong (_++ _) (map-++ _ govSt _) ⟩
+      (dpMap govSt ++ [ GovActionDeposit (txid , k) ])
+        ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
+        ≡⟨ ++-assoc (dpMap govSt) [ GovActionDeposit (txid , k) ] _ ⟩
+      dpMap govSt ++ [ GovActionDeposit (txid , k) ]
+        ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
+        ≡˘⟨ cong (λ u → dpMap govSt ++ [ GovActionDeposit (txid , u) ]
+            ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i)))(length ps₁)) (+-identityʳ k) ⟩
+      dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ]
+        ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
+        ≡⟨ cong (λ u → dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ] ++ u)
+           (funext-app (length ps₁) (λ i → cong (λ v → GovActionDeposit (txid , v)) (sym (+-suc k i)))) ⟩
+      dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ]
+        ++ applyUpTo (λ i → GovActionDeposit (txid , k + suc i)) (length ps₁)
+        ≡⟨ cong (dpMap govSt ++_) refl ⟩
+      dpMap govSt ++ applyUpTo (λ i → GovActionDeposit (txid , k + i)) (suc (length ps₁)) ∎
+        where
+        funext-app : {f g : ℕ → DepositPurpose} (n : ℕ) → (∀ i → f i ≡ g i) → applyUpTo f n ≡ applyUpTo g n
+        funext-app zero fi≡gi = refl
+        funext-app (suc n) fi≡gi = ∷-injective⁻ (fi≡gi 0 , funext-app  n λ i → fi≡gi (suc i))
 
-      dpMap-update (x ∷ ps₁) k govSt = let open ≡-Reasoning in
-        begin
-        dpMap (updateGovStates (map inj₂ (x ∷ ps₁)) k govSt)
-          ≡⟨ dpMap-update ps₁ _ (propUpdate govSt x k) ⟩
-        dpMap (propUpdate govSt x k) ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
-          ≡⟨ cong (_++ _) (map-++ _ govSt _) ⟩
-        (dpMap govSt ++ [ GovActionDeposit (txid , k) ]) ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
-          ≡⟨ ++-assoc (dpMap govSt) [ GovActionDeposit (txid , k) ] _ ⟩
-        dpMap govSt ++ [ GovActionDeposit (txid , k) ] ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
-          ≡˘⟨ cong (λ u → dpMap govSt ++ [ GovActionDeposit (txid , u) ] ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)) (+-identityʳ k) ⟩
-        dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ] ++ applyUpTo (λ i → GovActionDeposit (txid , suc (k + i))) (length ps₁)
-          ≡⟨ cong (λ u → dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ] ++ applyUpTo u (length ps₁)) funext-app ⟩
-        dpMap govSt ++ [ GovActionDeposit (txid , k + 0) ] ++ applyUpTo (λ i → GovActionDeposit (txid , k + suc i)) (length ps₁)
-          ≡⟨ cong (dpMap govSt ++_) refl ⟩
-        dpMap govSt ++ applyUpTo (λ i → GovActionDeposit (txid , k + i)) (suc (length ps₁)) ∎
-          where
-          funext-app : (λ i → GovActionDeposit (txid , suc (k +ℕ i))) ≡ (λ i → GovActionDeposit (txid , k +ℕ suc i))
-          funext-app = FUNEXT λ i → cong (λ u → GovActionDeposit (txid , u)) (sym (+-suc k i))
-
-      dpMap-update-length-≡ : ∀ ps ps' → length ps ≡ length ps'
-        → dpMap (updateGovStates (map inj₂ ps) 0 []) ≡ dpMap (updateGovStates (map inj₂ ps') 0 [])
-      dpMap-update-length-≡ ps ps' l≡ = let open ≡-Reasoning in
-        begin
-        dpMap (updateGovStates (map inj₂ ps) 0 [])
-          ≡⟨ dpMap-update ps 0 [] ⟩
-        dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) (length ps)
-          ≡⟨ cong (λ u → dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) u) l≡ ⟩
-        dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) (length ps')
-          ≡˘⟨ dpMap-update ps' 0 [] ⟩
-        dpMap (updateGovStates (map inj₂ ps') 0 [])
-          ∎
+    dpMap-update-length-≡ : ∀ ps ps' → length ps ≡ length ps'
+      → dpMap (updateGovStates (map inj₂ ps) 0 []) ≡ dpMap (updateGovStates (map inj₂ ps') 0 [])
+    dpMap-update-length-≡ ps ps' l≡ = let open ≡-Reasoning in begin
+      dpMap (updateGovStates (map inj₂ ps) 0 [])
+        ≡⟨ dpMap-update ps 0 [] ⟩
+      dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) (length ps)
+        ≡⟨ cong (λ u → dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) u) l≡ ⟩
+      dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) (length ps')
+        ≡˘⟨ dpMap-update ps' 0 [] ⟩
+      dpMap (updateGovStates (map inj₂ ps') 0 []) ∎
 
     open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 
@@ -384,10 +377,13 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       → dom (updateProposalDeposits props txid govActionDeposit utxoDeps)
         ≡ᵉ dom (utxoDeps ∪⁺ proposalDepositsΔ props pp txb)
     updatePropDeps≡ᵉ [] = begin
-      dom (updateProposalDeposits [] txid govActionDeposit utxoDeps)  ≈˘⟨ dom-cong (∪-identityʳ (utxoDeps ˢ)) ⟩
-      dom (utxoDeps ˢ ∪ ∅)                                            ≈⟨ dom∪ ⟩
-      dom utxoDeps ∪ dom{X = DepositPurpose ⇀ Coin} ∅                 ≈˘⟨ dom∪⁺ ⟩
-      dom (utxoDeps ∪⁺ proposalDepositsΔ [] pp txb)                   ∎
+      dom (updateProposalDeposits [] txid govActionDeposit utxoDeps)
+        ≈˘⟨ dom-cong (∪-identityʳ (utxoDeps ˢ)) ⟩
+      dom (utxoDeps ˢ ∪ ∅)
+        ≈⟨ dom∪ ⟩
+      dom utxoDeps ∪ dom{X = DepositPurpose ⇀ Coin} ∅
+        ≈˘⟨ dom∪⁺ ⟩
+      dom (utxoDeps ∪⁺ proposalDepositsΔ [] pp txb) ∎
 
     updatePropDeps≡ᵉ (p ∷ ps) =
       let pdΔ = proposalDepositsΔ ps pp txb
@@ -403,7 +399,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         ≈⟨ ∪-assoc (dom utxoDeps) (dom (pdΔ)) (dom gaDˢ) ⟩
       dom utxoDeps ∪ (dom pdΔ ∪ dom gaDˢ)
         ≈˘⟨ ∪-cong ≡ᵉ.refl dom∪⁺ ⟩
-      dom utxoDeps ∪ dom ((pdΔ ∪⁺ ❴ GovActionDeposit (txid , length ps) , govActionDeposit ❵) ˢ)
+      dom utxoDeps ∪ dom ((pdΔ ∪⁺ ❴ GovActionDeposit (txid , length ps), govActionDeposit ❵)ˢ)
         ≈˘⟨ dom∪⁺ ⟩
       dom (utxoDeps ∪⁺ proposalDepositsΔ (p ∷ ps) pp txb)
         ∎
@@ -456,54 +452,8 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         ≈˘⟨ ∪-cong ≡ᵉ.refl dom-single≡single ⟩
       dom pdΔ ∪ dom gaDˢ
         ≈˘⟨ dom∪⁺ ⟩
-      dom (proposalDepositsΔ (p ∷ ps) pp txb)
-        ∎
+      dom (proposalDepositsΔ (p ∷ ps) pp txb) ∎
 
-    permuteTwoProps : (x y : GovProposal) (k : ℕ) {govSt : GovState} →
-      fromList (dpMap (propUpdate (propUpdate govSt x k) y (suc k)))
-      ≡ᵉ fromList (dpMap (propUpdate (propUpdate govSt y k) x (suc k)))
-    permuteTwoProps x y k {govSt} = begin
-      fromList (dpMap (propUpdate (govSt ∷ʳ mkAction x k) y (suc k)))
-        ≡⟨ cong (fromList ∘ dpMap) (++-assoc govSt [ mkAction x k ] [ mkAction y (suc k) ]) ⟩
-      fromList (dpMap (govSt ++ [ mkAction x k ] ++ [ mkAction y (suc k)]))
-        ≡⟨ cong fromList (map-++ (λ (id , _) → GovActionDeposit id)
-                                 govSt ([ mkAction x k ] ++ [ mkAction y (suc k)])) ⟩
-      fromList (dpMap govSt ++ dpMap [ mkAction x k ] ++ dpMap [ mkAction y (suc k) ])
-        ≡˘⟨ cong fromList (map-++ (λ (id , _) → GovActionDeposit id)
-                                  govSt ([ mkAction y k ] ++ [ mkAction x (suc k) ])) ⟩
-      fromList (dpMap (govSt ++ [ mkAction y k ] ++ [ mkAction x (suc k) ]))
-        ≡˘⟨ cong (fromList ∘ dpMap) (++-assoc govSt [ mkAction y k ] [ mkAction x (suc k) ]) ⟩
-      fromList (dpMap (propUpdate (propUpdate govSt y k) x (suc k)))
-        ∎
-
-    permuteProps : (ps ps' : List GovProposal) (k : ℕ) (govSt : GovState) → ps ↭ ps'
-      → fromList (dpMap (updateGovStates (map inj₂ ps) k govSt)) ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ ps') k govSt))
-    permuteProps ps .(ps) _ _ _↭_.refl = ≡ᵉ.reflexive refl
-    permuteProps .(x ∷ xs) .(x ∷ ys) k govSt (_↭_.prep {xs} {ys} x lrp) = permuteProps xs ys (suc k) (govSt ++ [ mkAction x k ]) lrp
-    permuteProps ps ps' k govSt (_↭_.trans {ys = ys} lrp lrp₁) = ≡ᵉ.trans (permuteProps ps ys k govSt lrp) (permuteProps ys ps' k govSt lrp₁)
-    permuteProps .(x ∷ y ∷ xs) .(y ∷ x ∷ ys) k govSt (_↭_.swap {xs} {ys} x y lrp) =
-      let upys = updateGovStates (map inj₂ ys) (suc (suc k)) []
-          pupxy = propUpdate (propUpdate govSt x k) y (suc k)
-          pupyx = propUpdate (propUpdate govSt y k) x (suc k)
-      in begin
-      fromList (dpMap (updateGovStates (map inj₂ xs) (suc (suc k)) pupxy))
-        ≈⟨ permuteProps xs ys (suc (suc k)) pupxy lrp ⟩
-      fromList (dpMap (updateGovStates (map inj₂ ys) (suc (suc k)) pupxy))
-        ≡⟨ cong (fromList ∘ dpMap) (updateProps-decomp ys) ⟩
-      fromList (dpMap (pupxy ++ upys))
-        ≡⟨ cong fromList (map-++ (λ (id , _) → GovActionDeposit id) pupxy upys) ⟩
-      fromList ((dpMap pupxy) ++ (dpMap upys))
-        ≈˘⟨ ∪-fromList-++ (dpMap pupxy) (dpMap upys) ⟩
-      fromList (dpMap pupxy) ∪ fromList (dpMap upys)
-        ≈⟨ ∪-cong (permuteTwoProps x y k) ≡ᵉ.refl ⟩
-      fromList (dpMap pupyx) ∪ fromList (dpMap upys)
-        ≈⟨ ∪-fromList-++ (dpMap pupyx) (dpMap upys) ⟩
-      fromList ((dpMap pupyx) ++ (dpMap upys))
-        ≡˘⟨ cong fromList (map-++ (λ (id , _) → GovActionDeposit id) pupyx upys) ⟩
-      fromList (dpMap (pupyx ++ upys))
-        ≡˘⟨ cong ((fromList ∘ dpMap)) (updateProps-decomp ys) ⟩
-      fromList (dpMap (updateGovStates (map inj₂ ys) _ pupyx))
-        ∎
 
     utxo-govst-connex : (props : List GovProposal)
       → dom (proposalDepositsΔ props pp txb) ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ props) 0 [] ))
@@ -517,14 +467,13 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       fromList (dpMap upps) ∪ fromList (dpMap [ mkAction p (length ps) ])
         ≈⟨ ∪-fromList-++ (dpMap upps)(dpMap [ mkAction p (length ps) ]) ⟩
       fromList (dpMap upps ++ dpMap [ mkAction p (length ps) ])
-        ≡˘⟨ cong fromList (map-++ (λ (id , _) → GovActionDeposit id) upps [ mkAction p (length ps) ]) ⟩
+        ≡˘⟨ cong fromList (map-++ (λ (id , _) → GovActionDeposit id)
+                                  upps [ mkAction p (length ps) ]) ⟩
       fromList (dpMap (upps ++ updateGovStates (map inj₂ [ p ]) (0 + length ps) []))
         ≡˘⟨ cong (fromList ∘ dpMap) (updateProps-++-decomp ps [ p ]) ⟩
       fromList (dpMap (updateGovStates (map inj₂ (ps ++ [ p ])) 0 []))
-        ≈⟨ permuteProps (ps ++ [ p ]) (p ∷ ps) 0 [] (↭-sym swap-head) ⟩
-      -- Alternatively (assuming `dpMap-update-length-≡`) for this step we could use:
-      --   ≡⟨ cong fromList (dpMap-update-length-≡ (ps ++ [ p ]) (p ∷ ps)
-      --                      (trans (length-++ ps) (+-comm (length ps) 1))) ⟩
+        ≡⟨ cong fromList (dpMap-update-length-≡ (ps ++ [ p ]) (p ∷ ps)
+                           (trans (length-++ ps) (+-comm (length ps) 1))) ⟩
       fromList (dpMap (updateGovStates (map inj₂ (p ∷ ps)) 0 [])) ∎
 
 
