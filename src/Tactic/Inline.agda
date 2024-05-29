@@ -45,7 +45,7 @@ private
       with x ℕ.<? lvl
     ... | yes _  = nothing
     ... | no  x≮ =
-      let k , _ = ℕ.≤⇒≤″ (ℕ.≮⇒≥ x≮)
+      let record { quotient = k } = ℕ.≤⇒≤″ (ℕ.≮⇒≥ x≮)
       in unArg <$> xs ⁉ (∣xs∣ ∸ suc k)
 
     -- (B) recursively substitute free variables for the values in given `xs`
