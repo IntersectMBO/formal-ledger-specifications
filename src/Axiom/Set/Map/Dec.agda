@@ -63,25 +63,25 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
     aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l
 
     module _ {m m' : Map A V} where
-      ∪-dom-lookup : ∃[ a ] a ∈ dom (m ˢ) ∪ dom (m' ˢ) → A × V
-      ∪-dom-lookup (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
+      ∪dom-lookup : ∃[ a ] a ∈ dom (m ˢ) ∪ dom (m' ˢ) → A × V
+      ∪dom-lookup (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
 
-      dom-∪⁺⊆∪ : dom ((m ∪⁺ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
-      dom-∪⁺⊆∪ {a} a∈ = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
-                             (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ ∈-dom-∪⁺)))
-                             (proj₂ $ proj₁ ∈-dom-∪⁺)
+      dom∪⁺⊆∪dom : dom ((m ∪⁺ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
+      dom∪⁺⊆∪dom {a} a∈ = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
+                                  (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ ∈-dom∪⁺)))
+                                  (proj₂ $ proj₁ ∈-dom∪⁺)
         where
-        ∈-dom-∪⁺ : ∃[ c ] (a , proj₁ (from dom∈ a∈)) ≡ ∪-dom-lookup c
+        ∈-dom∪⁺ : ∃[ c ] (a , proj₁ (from dom∈ a∈)) ≡ ∪dom-lookup c
                           × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
-        ∈-dom-∪⁺ = from ∈-map $ proj₂ $ from dom∈ a∈
+        ∈-dom∪⁺ = from ∈-map $ proj₂ $ from dom∈ a∈
 
-      dom-∪⊆∪⁺ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪⁺ m') ˢ)
-      dom-∪⊆∪⁺ {a} a∈ with from ∈-map (incl-set-proj₁⊇ a∈)
+      ∪dom⊆dom∪⁺ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪⁺ m') ˢ)
+      ∪dom⊆dom∪⁺ {a} a∈ with from ∈-map (incl-set-proj₁⊇ a∈)
       ... | c' , a≡c₁' , c'∈ =
-        to dom∈ (proj₂ (∪-dom-lookup c') , to ∈-map (c' , ×-≡,≡→≡ (a≡c₁' , Prelude.refl) , c'∈))
+        to dom∈ (proj₂ (∪dom-lookup c') , to ∈-map (c' , ×-≡,≡→≡ (a≡c₁' , Prelude.refl) , c'∈))
 
-      dom-∪⁺⇔∪ : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
-      dom-∪⁺⇔∪ {a} = mk⇔ dom-∪⁺⊆∪ dom-∪⊆∪⁺
+      dom∪⁺⇔∪dom : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
+      dom∪⁺⇔∪dom {a} = mk⇔ dom∪⁺⊆∪dom ∪dom⊆dom∪⁺
 
-      dom∪⁺ : dom ((m ∪⁺ m')ˢ) ≡ᵉ dom (m ˢ) ∪ dom (m' ˢ)
-      dom∪⁺ = to dom-∪⁺⇔∪ , from dom-∪⁺⇔∪
+      dom∪⁺≡∪dom : dom ((m ∪⁺ m')ˢ) ≡ᵉ dom (m ˢ) ∪ dom (m' ˢ)
+      dom∪⁺≡∪dom = to dom∪⁺⇔∪dom , from dom∪⁺⇔∪dom

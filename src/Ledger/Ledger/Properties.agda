@@ -391,7 +391,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       dom (utxoDeps ˢ ∪ ∅)
         ≈⟨ dom∪ ⟩
       dom utxoDeps ∪ dom{X = DepositPurpose ⇀ Coin} ∅
-        ≈˘⟨ dom∪⁺ ⟩
+        ≈˘⟨ dom∪⁺≡∪dom ⟩
       dom (utxoDeps ∪⁺ proposalDepositsΔ [] pp txb) ∎
 
     updatePropDeps≡ᵉ (p ∷ ps) =
@@ -399,17 +399,17 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
           gaDˢ = ❴ GovActionDeposit (txid , length ps) , govActionDeposit ❵ ˢ
       in begin
       dom (updateProposalDeposits (p ∷ ps) txid govActionDeposit utxoDeps)
-        ≈⟨ dom∪⁺ ⟩
+        ≈⟨ dom∪⁺≡∪dom ⟩
       dom (updateProposalDeposits ps txid govActionDeposit utxoDeps) ∪ dom gaDˢ
         ≈⟨ ∪-cong (updatePropDeps≡ᵉ ps) ≡ᵉ.refl ⟩
       dom (utxoDeps ∪⁺ pdΔ) ∪ dom gaDˢ
-        ≈⟨ ∪-cong dom∪⁺ ≡ᵉ.refl ⟩
+        ≈⟨ ∪-cong dom∪⁺≡∪dom ≡ᵉ.refl ⟩
       (dom utxoDeps ∪ dom pdΔ) ∪ dom gaDˢ
         ≈⟨ ∪-assoc (dom utxoDeps) (dom (pdΔ)) (dom gaDˢ) ⟩
       dom utxoDeps ∪ (dom pdΔ ∪ dom gaDˢ)
-        ≈˘⟨ ∪-cong ≡ᵉ.refl dom∪⁺ ⟩
+        ≈˘⟨ ∪-cong ≡ᵉ.refl dom∪⁺≡∪dom ⟩
       dom utxoDeps ∪ dom ((pdΔ ∪⁺ ❴ GovActionDeposit (txid , length ps), govActionDeposit ❵)ˢ)
-        ≈˘⟨ dom∪⁺ ⟩
+        ≈˘⟨ dom∪⁺≡∪dom ⟩
       dom (utxoDeps ∪⁺ proposalDepositsΔ (p ∷ ps) pp txb)
         ∎
 
@@ -423,7 +423,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       filterˢ isGADeposit (dom (updateCertDeposits pp (c ∷ cs) deps))
         ≈⟨ filterCR c {upCD ∪⁺ certDeposit c {pp}} ⟩
       filterˢ isGADeposit (dom (upCD ∪⁺ certDeposit c {pp}))
-        ≈⟨ filter-pres-≡ᵉ dom∪⁺ ⟩
+        ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
       filterˢ isGADeposit (dom upCD ∪ dom (certDeposit c {pp}))
         ≈⟨ filter-hom-∪ ⟩
       filterˢ isGADeposit (dom upCD) ∪ filterˢ isGADeposit (dom (certDeposit c {pp}))
@@ -450,7 +450,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
           gaDˢ = ❴ GovActionDeposit (txid , length ps) , govActionDeposit ❵ ˢ
       in begin
       filterˢ isGADeposit (dom (proposalDepositsΔ (p ∷ ps) pp txb))
-        ≈⟨ filter-pres-≡ᵉ dom∪⁺ ⟩
+        ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
       filterˢ isGADeposit (dom upPD ∪ dom gaDˢ)
         ≈⟨ filter-hom-∪ ⟩
       filterˢ isGADeposit (dom upPD) ∪ filterˢ isGADeposit (dom gaDˢ)
@@ -460,7 +460,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       dom pdΔ ∪ ❴ GovActionDeposit (txid , length ps) ❵
         ≈˘⟨ ∪-cong ≡ᵉ.refl dom-single≡single ⟩
       dom pdΔ ∪ dom gaDˢ
-        ≈˘⟨ dom∪⁺ ⟩
+        ≈˘⟨ dom∪⁺≡∪dom ⟩
       dom (proposalDepositsΔ (p ∷ ps) pp txb) ∎
 
 
@@ -469,7 +469,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     utxo-govst-connex [] = dom∅
     utxo-govst-connex (p ∷ ps) = let upps = updateGovStates (map inj₂ ps) _ [] in begin
       dom (proposalDepositsΔ (p ∷ ps) pp txb)
-        ≈⟨ dom∪⁺ ⟩
+        ≈⟨ dom∪⁺≡∪dom ⟩
       dom (updateProposalDeposits ps txid govActionDeposit ∅)
         ∪ dom (❴ GovActionDeposit (txid , length ps) , govActionDeposit ❵ ˢ)
         ≈⟨ ∪-cong (utxo-govst-connex ps) dom-single≡single ⟩
@@ -500,7 +500,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         filterˢ isGADeposit (dom (updateProposalDeposits txprop txid govActionDeposit utxoDeps))
           ≈⟨ filter-pres-≡ᵉ (updatePropDeps≡ᵉ txprop) ⟩
         filterˢ isGADeposit (dom (utxoDeps ∪⁺ proposalDepositsΔ txprop pp txb))
-          ≈⟨ filter-pres-≡ᵉ dom∪⁺ ⟩
+          ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
         filterˢ isGADeposit ((dom utxoDeps) ∪ dom (proposalDepositsΔ txprop pp txb))
           ≈⟨ filter-hom-∪ ⟩
         filterˢ isGADeposit (dom utxoDeps) ∪ filterˢ isGADeposit (dom (proposalDepositsΔ txprop pp txb))
@@ -564,7 +564,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
       -- utxo deposits restricted to old form of set used in EPOCH rule
       utxoDeps'' : Deposits
-      utxoDeps'' = utxoDeps ∣ (χ utxoDeps) ᶜ
+      utxoDeps'' = utxoDeps ∣ χ utxoDeps ᶜ
 
       open Equivalence
 
