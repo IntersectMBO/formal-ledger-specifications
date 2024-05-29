@@ -24,6 +24,11 @@ $(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
 	@echo "Converting any bracket contructors to vertical vectors in $@"
 	$(PYTHON) $(VEC_SCRIPT) $@
+
+$(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
+	mkdir -p $(LATEX_DIR)/$(LEDGER)
+	cp $(LATEX_DIR)/conway-ledger.tex $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex
+
 define latexToPdf =
     @echo "Generating $@"
     $(eval PDF=$(notdir $@))
@@ -33,8 +38,6 @@ define latexToPdf =
 endef
 $(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PRE)
 	$(latexToPdf)
-$(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
-	cp $(LATEX_DIR)/conway-ledger.tex $(LATEX_DIR)/$(LEDGER)
 $(PDF_DIR)/conway-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex $(latexFiles) $(PRE)
 	$(latexToPdf)
 $(PDF_DIR)/midnight-example.pdf: $(LATEX_DIR)/$(MIDNIGHT)/PDF.tex $(latexFiles) $(PRE)

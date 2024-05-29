@@ -70,16 +70,22 @@ record PParams : Set where
         maxBlockSize maxTxSize        : ℕ
         maxHeaderSize maxValSize      : ℕ
         maxCollateralInputs           : ℕ
-        pv                            : ProtVer -- retired, keep for now
         maxTxExUnits maxBlockExUnits  : ExUnits
+\end{code}
+\begin{code}[hide]
+        pv                            : ProtVer -- retired, keep for now
 \end{code}
 \emph{Economic group}
 \begin{code}
         a b                           : ℕ
-        minUTxOValue poolDeposit      : Coin
-        coinsPerUTxOWord              : Coin
+        keyDeposit                    : Coin
+        poolDeposit                   : Coin
+        coinsPerUTxOByte              : Coin
         minFeeRefScriptCoinsPerByte   : ℚ
         prices                        : Prices
+\end{code}
+\begin{code}[hide]
+        minUTxOValue                  : Coin -- retired, keep for now
 \end{code}
 \emph{Technical group}
 \begin{code}

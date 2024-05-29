@@ -22,7 +22,7 @@ instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
   Computational-CHAIN .computeProof Γ s b = do
     _ , neStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
-    _ , lsStep ← map₁ (λ where (inj₁ ()); (inj₂ x) → x) $ computeProof _ _ _
+    _ , lsStep ← computeProof _ _ _
     success (_ , CHAIN neStep lsStep)
   Computational-CHAIN .completeness Γ s b s' (CHAIN neStep lsStep)
     with recomputeProof neStep | completeness _ _ _ _ neStep

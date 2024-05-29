@@ -127,7 +127,9 @@ new certificates relating to DReps and the constitutional committee.
 \item \GOVCERTderegdrep deregisters a DRep.
 \item \GOVCERTccreghot registers a hot credential for constitutional
   committee members. We check that the cold key did not previously
-  resign from the committee. Note that we intentionally do not check if the cold key is actually part of the committee; if it isn't, then the corresponding hot key does not carry any voting power. By allowing
+  resign from the committee. Note that we intentionally do not check
+  if the cold key is actually part of the committee; if it isn't, then
+  the corresponding hot key does not carry any voting power. By allowing
   this, a newly elected member of the constitutional committee can
   immediately delegate their vote to a hot key and use it to vote. Since
   votes are counted after previous actions have been enacted, this allows
@@ -138,9 +140,9 @@ new certificates relating to DReps and the constitutional committee.
 \begin{code}
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
   DELEG-delegate : let open PParams pp in
-    ∙ (c ∉ dom rwds → d ≡ poolDeposit)
+    ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mc ∈ mapˢ just (dom pools)
+    ∙ mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
       ⟦ pp ﹐ pools ⟧ᵈᵉ ⊢
         ⟦ vDelegs ﹐ sDelegs ﹐ rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈

@@ -26,7 +26,7 @@ initParams = MkPParams
   , poolDeposit = 10
   , emax = 10
   , pv = (1, 0)
-  , coinsPerUTxOWord = 1
+  , coinsPerUTxOByte = 1
   }
 
 initEnv :: UTxOEnv
@@ -42,7 +42,7 @@ a2 :: Addr
 a2 = 2
 
 initUTxO :: UTxO
-initUTxO = [ (0,  0) .-> (a0, (1000, (Nothing, Nothing))) ]
+initUTxO = MkHSMap [ (MkTxId 0,  0) .-> (a0, (1000, (Nothing, Nothing))) ]
 
 initState :: UTxOState
 initState = MkUTxOState {utxo = initUTxO, fees = 0}
@@ -50,7 +50,7 @@ initState = MkUTxOState {utxo = initUTxO, fees = 0}
 data SimpleTxBody = MkSimpleTxBody
   { stxins     :: [TxIn]
   , srefInputs :: [TxIn]
-  , stxouts    :: [(Ix, TxOut)]
+  , stxouts    :: HSMap Ix TxOut
   , stxvldt    :: (Maybe Integer, Maybe Integer)
   , stxid      :: TxId
   , stxcerts   :: [TxCert]}
@@ -68,34 +68,36 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
 
 testTxBody1 :: TxBody
 testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins     = [(0, 0)]
+  { stxins     = [(MkTxId 0, 0)]
   , srefInputs = []
-  , stxouts    = [ 0 .-> (a0, (890, (Nothing, Nothing)))
-                 , 1 .-> (a1, (100, (Nothing, Nothing))) ]
+  , stxouts    = MkHSMap
+                   [ 0 .-> (a0, (890, (Nothing, Nothing)))
+                   , 1 .-> (a1, (100, (Nothing, Nothing))) ]
   , stxvldt    = (Nothing, Just 10)
-  , stxid      = 1
+  , stxid      = MkTxId 1
   , stxcerts   = []}
 
 testTx1 :: Tx
 testTx1 = MkTx
   { body = testTxBody1
-  , wits = MkTxWitnesses { vkSigs = [(0, 1)], scripts = [], txdats = [], txrdmrs = [] }
+  , wits = MkTxWitnesses { vkSigs = [(0, 1)], scripts = [], txdats = MkHSMap [], txrdmrs = MkHSMap [] }
   , txAD = Nothing }
 
 testTxBody2 :: TxBody
 testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins     = [(1, 1)]
-  , srefInputs = [(1, 0)]
-  , stxouts    = [ 0 .-> (a2, (10, (Nothing, Nothing)))
-                 , 1 .-> (a1, (80, (Nothing, Nothing))) ]
+  { stxins     = [(MkTxId 1, 1)]
+  , srefInputs = [(MkTxId 1, 0)]
+  , stxouts    = MkHSMap 
+                   [ 0 .-> (a2, (10, (Nothing, Nothing)))
+                   , 1 .-> (a1, (80, (Nothing, Nothing))) ]
   , stxvldt    = (Nothing, Just 10)
-  , stxid      = 2
+  , stxid      = MkTxId 2
   , stxcerts   = []}
 
 testTx2 :: Tx
 testTx2 = MkTx
   { body = testTxBody2
-  , wits = MkTxWitnesses { vkSigs = [(1, 3)], scripts = [], txdats = [], txrdmrs = [] }
+  , wits = MkTxWitnesses { vkSigs = [(1, 3)], scripts = [], txdats = MkHSMap [], txrdmrs = MkHSMap [] }
   , txAD = Nothing }
 
 utxowSteps :: UTxOEnv -> UTxOState -> [Tx] -> ComputationResult Text UTxOState
@@ -108,8 +110,9 @@ spec = do
   describe "utxowSteps" $
     it "results in the expected state" $
       utxowSteps initEnv initState [testTx1, testTx2] @?= Success (MkUTxOState
-        { utxo = [ (1,0) .-> (a0, (890, (Nothing, Nothing)))
-                 , (2,0) .-> (a2, (10,  (Nothing, Nothing)))
-                 , (2,1) .-> (a1, (80,  (Nothing, Nothing))) ]
+        { utxo = MkHSMap
+                   [ (MkTxId 1,0) .-> (a0, (890, (Nothing, Nothing)))
+                   , (MkTxId 2,0) .-> (a2, (10,  (Nothing, Nothing)))
+                   , (MkTxId 2,1) .-> (a1, (80,  (Nothing, Nothing))) ]
         , fees = 20
         })

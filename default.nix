@@ -20,23 +20,23 @@ let
   };
 
   agdaStdlib = customAgda.agdaPackages.standard-library.overrideAttrs (oldAttrs: {
-    version = "2.0-rc1";
+    version = "2.0";
     src = fetchFromGitHub {
       repo = "agda-stdlib";
       owner = "agda";
-      rev = "v2.0-rc1";
-      sha256 = "tGY7FEcKKW2jSuzniAJpNGxLiL/RRzsOvrajZgKqzRc=";
+      rev = "v2.0";
+      sha256 = "TjGvY3eqpF+DDwatT7A78flyPcTkcLHQ1xcg+MKgCoE=";
     };
   });
 
   agdaStdlibClasses = customAgda.agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-classes";
-    version = "2.0-rc1";
+    version = "2.0";
     src = fetchFromGitHub {
       repo = "agda-stdlib-classes";
       owner = "omelkonian";
-      rev = "v2.0-rc1";
+      rev = "v2.0";
       sha256 = "4ujdQv38u6BybFhRup9PMR0xpI59J/Naz/kaBtQQ9aY=";
     };
     meta = { };
@@ -48,7 +48,7 @@ let
   agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-meta";
-    version = "2.0-rc1";
+    version = "2.0";
     src = fetchFromGitHub {
       repo = "stdlib-meta";
       owner = "input-output-hk";
@@ -170,13 +170,32 @@ rec {
     #   dontInstall = true;
     # };
 
-    hsExe = haskellPackages.callCabal2nix "${project}" "${hsSrc}/haskell/${main}" { };
+    hsExe = haskellPackages.callCabal2nixWithOptions "${project}" "${hsSrc}/haskell/${main}" "--no-haddock" {};
 
+  };
+
+  mkPdfDerivation = name: version: project: stdenv.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    pname = name;
+    version = version;
+    src = "${formalLedger}";
+    meta = { };
+    buildInputs = [ agdaWithDeps latex ];
+    buildPhase = ''
+        OUT_DIR=$out make ${project}
+      '';
+    doCheck = true;
+    checkPhase = ''
+        test -n "$(find $out/pdfs/ -type f -name '*.pdf')"
+      '';
+    dontInstall = true;
   };
 
   ledger = mkSpecDerivation {
     project = "ledger";
     main = "Ledger";
+  } // {
+    conway = mkPdfDerivation "conway-formal-spec" "0.9" "ledger.conway.docs";
   };
   midnight = mkSpecDerivation {
     project = "midnight";
