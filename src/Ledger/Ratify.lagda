@@ -141,8 +141,8 @@ threshold pp ccThreshold =
           λ where
 \end{code}
 \begin{code}
-                   (just _) → (vote P2a , vote Q2a)
-                   nothing  → (vote P2b , vote Q2b)
+                   (just _)  → (vote P2a , vote Q2a)
+                   nothing   → (vote P2b , vote Q2b)
 
         pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
         pparamThreshold NetworkGroup     = (vote P5a  , ─         )
