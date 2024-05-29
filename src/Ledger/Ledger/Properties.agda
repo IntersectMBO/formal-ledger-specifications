@@ -24,6 +24,7 @@ open import Ledger.Utxow txs abs
 open import Ledger.Utxow.Properties txs abs
 
 open import Data.Bool.Properties using (¬-not)
+open import Data.List.Base using (filter)
 open import Data.List.Ext using (∈ˡ-map-filter)
 open import Data.List.Ext.Properties using (_×-cong_)
 open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc; length-++)
@@ -32,6 +33,7 @@ open import Data.Product.Properties using (×-≡,≡←≡)
 open import Data.Product.Properties.Ext using (×-⇔-swap)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
 open import Relation.Binary using (IsEquivalence)
+open import Relation.Unary using (Decidable)
 
 import Function.Related.Propositional as R
 
@@ -550,8 +552,8 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       P : GovActionID × GovActionState → Set
       P = λ u → proj₁ u ∉ mapˢ proj₁ removed
 
-      Pᵇ : GovActionID × GovActionState → Bool
-      Pᵇ = λ u → does ¿ P u ¿
+      P? : Decidable P
+      P? = λ u → ¿ P u ¿
 
       utxoDeps : Deposits
       utxoDeps = UTxOState.deposits utxoSt
@@ -589,30 +591,30 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
 
       map-filter-decomp : ∀ a → (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)
-                                 ⇔ (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filterᵇ Pᵇ govSt))
+                                 ⇔ (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filter P? govSt))
       map-filter-decomp a = mk⇔ i (λ h → ii h , iii h)
         where
         i : ((a ∉ χ') × (a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt))
-            → a ∈ˡ map (GovActionDeposit ∘ proj₁) (filterᵇ Pᵇ govSt)
+            → a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)
         i (a∉χ' , a∈) with Inverse.from (map-∈↔ (GovActionDeposit ∘ proj₁)) a∈
         ... | b , b∈ , refl = Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁))
-                                         (b , ∈-filter⁺ (λ u → ¿ P u ¿) b∈ (a∉χ' ∘ ∈-map⁺-∘) , refl)
+                                         (b , ∈-filter⁺ P? b∈ (a∉χ' ∘ ∈-map⁺-∘) , refl)
 
-        ii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filterᵇ Pᵇ govSt) → a ∉ χ'
-        ii a∈ a∈χ' with from (∈ˡ-map-filter{l = govSt}{P? = (λ u → ¿ P u ¿)}) a∈
+        ii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt) → a ∉ χ'
+        ii a∈ a∈χ' with from (∈ˡ-map-filter{l = govSt}{P? = P?}) a∈
         ... | _ , _ , refl , Pb with ∈-map⁻' a∈χ'
         ... | q , refl , q∈rem = Pb (to ∈-map (q , refl , q∈rem))
 
-        iii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filterᵇ Pᵇ govSt)
-             → a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt
-        iii a∈ with from (∈ˡ-map-filter{l = govSt}{P? = (λ u → ¿ P u ¿)}) a∈
+        iii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)
+              → a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt
+        iii a∈ with from (∈ˡ-map-filter{l = govSt}{P? = P?}) a∈
         ... | b , b∈ , refl , Pb = Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁)) (b , (b∈ , refl))
 
 
       main-invariance-lemma :
           filterˢ isGADeposit (dom utxoDeps) ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) govSt)
           ---------------------------------------------------------------------------------------------------
-        → filterˢ isGADeposit (dom utxoDeps') ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) (filterᵇ Pᵇ govSt))
+        → filterˢ isGADeposit (dom utxoDeps') ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) (filter P? govSt))
 
       main-invariance-lemma HYP a = let open R.EquationalReasoning in
         a ∈ (filterˢ isGADeposit (dom utxoDeps'))                       ∼⟨ R.SK-sym ∈-filter ⟩
@@ -623,8 +625,8 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         (a ∉ χ' × a ∈ filterˢ isGADeposit (dom utxoDeps))               ∼⟨ R.K-refl ×-cong (HYP a) ⟩
         (a ∉ χ' × a ∈ fromList (map (GovActionDeposit ∘ proj₁) govSt))  ∼⟨ R.K-refl ×-cong (R.SK-sym ∈-fromList)⟩
         (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
-        (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filterᵇ Pᵇ govSt))          ∼⟨ ∈-fromList ⟩
-        a ∈ fromList (map (GovActionDeposit ∘ proj₁)(filterᵇ Pᵇ govSt))  ∎
+        (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filter P? govSt))          ∼⟨ ∈-fromList ⟩
+        a ∈ fromList (map (GovActionDeposit ∘ proj₁)(filter P? govSt))  ∎
 
 
   -- GA Deposits Invariance Property for CHAIN STS --------------------------------------------------------------------
