@@ -54,7 +54,7 @@ data GovAction : Set where
   NewCommittee     : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
   NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction
   TriggerHF        : ProtVer                                  →  GovAction
-  ChangePParams    : PParamsUpdate                            →  GovAction
+  ChangePParams    : UpdateT                                  →  GovAction
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction
   Info             :                                             GovAction
 

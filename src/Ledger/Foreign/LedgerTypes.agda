@@ -64,7 +64,6 @@ Ix            = ℕ
 Epoch         = ℕ
 ScriptHash    = ℕ
 Slot          = ℕ
-PParamsUpdate = ℕ
 
 Anchor        = ⊤
 AuxiliaryData = ⊤
@@ -104,7 +103,6 @@ ProtVer = Pair ℕ ℕ
   type Ix      = Integer
   type Epoch   = Integer
   type ScriptHash    = Integer
-  type PParamsUpdate = Integer
   type Slot = Integer
 
   type AuxiliaryData = ()
@@ -260,33 +258,63 @@ record PoolThresholds : Set where
   field Q1 Q2a Q2b Q4 Q5e : Rational
 
 record PParams : Set where
-  field a                   : ℕ
-        b                   : ℕ
-        maxBlockSize        : ℕ
-        maxTxSize           : ℕ
-        maxHeaderSize       : ℕ
-        maxValSize          : ℕ
-        minUTxOValue        : Coin
-        poolDeposit         : Coin
-        keyDeposit          : Coin
-        Emax                : Epoch
-        nopt                : ℕ
-        pv                  : Pair ℕ ℕ
-        poolVotingThresholds  : PoolThresholds
-        drepVotingThresholds  : DrepThresholds
-        govActionLifetime   : ℕ
-        govActionDeposit    : Coin
-        drepDeposit         : Coin
-        drepActivity        : Epoch
-        ccMinSize           : ℕ
-        ccMaxTermLength     : ℕ
-        costmdls            : ⊤
-        prices              : ⊤
-        maxTxExUnits        : ExUnits
-        maxBlockExUnits     : ExUnits
-        coinsPerUTxOByte    : Coin
+  field a                      : ℕ
+        b                      : ℕ
+        maxBlockSize           : ℕ
+        maxTxSize              : ℕ
+        maxHeaderSize          : ℕ
+        maxValSize             : ℕ
+        minUTxOValue           : Coin
+        poolDeposit            : Coin
+        keyDeposit             : Coin
+        Emax                   : Epoch
+        nopt                   : ℕ
+        pv                     : Pair ℕ ℕ
+        poolVotingThresholds   : PoolThresholds
+        drepVotingThresholds   : DrepThresholds
+        govActionLifetime      : ℕ
+        govActionDeposit       : Coin
+        drepDeposit            : Coin
+        drepActivity           : Epoch
+        ccMinSize              : ℕ
+        ccMaxTermLength        : ℕ
+        costmdls               : ⊤
+        prices                 : ⊤
+        maxTxExUnits           : ExUnits
+        maxBlockExUnits        : ExUnits
+        coinsPerUTxOByte       : Coin
         -- collateralPercent   : ℕ
-        maxCollateralInputs : ℕ
+        maxCollateralInputs    : ℕ
+
+record PParamsUpdate : Set where
+  field a                      : Maybe ℕ
+        b                      : Maybe ℕ
+        maxBlockSize           : Maybe ℕ
+        maxTxSize              : Maybe ℕ
+        maxHeaderSize          : Maybe ℕ
+        maxValSize             : Maybe ℕ
+        minUTxOValue           : Maybe Coin
+        poolDeposit            : Maybe Coin
+        keyDeposit             : Maybe Coin
+        Emax                   : Maybe Epoch
+        nopt                   : Maybe ℕ
+        pv                     : Maybe (Pair ℕ ℕ)
+        poolVotingThresholds   : Maybe PoolThresholds
+        drepVotingThresholds   : Maybe DrepThresholds
+        govActionLifetime      : Maybe ℕ
+        govActionDeposit       : Maybe Coin
+        drepDeposit            : Maybe Coin
+        drepActivity           : Maybe Epoch
+        ccMinSize              : Maybe ℕ
+        ccMaxTermLength        : Maybe ℕ
+        costmdls               : Maybe ⊤
+        prices                 : Maybe ⊤
+        maxTxExUnits           : Maybe ExUnits
+        maxBlockExUnits        : Maybe ExUnits
+        coinsPerUTxOByte       : Maybe Coin
+        -- collateralPercent   : Maybe ℕ
+        maxCollateralInputs    : Maybe ℕ
+
 {-# FOREIGN GHC
   data DrepThresholds = MkDrepThresholds
     { p1      :: Rational
@@ -339,10 +367,40 @@ record PParams : Set where
     , coinsPerUTxOByte    :: Coin
     , maxCollateralInputs :: Integer
     } deriving (Show, Generic)
+
+  data PParamsUpdate = MkPParamsUpdate
+    { a                    :: Maybe Integer
+    , b                    :: Maybe Integer
+    , maxBlockSize         :: Maybe Integer
+    , maxTxSize            :: Maybe Integer
+    , maxHeaderSize        :: Maybe Integer
+    , maxValSize           :: Maybe Integer
+    , minUTxOValue         :: Maybe Coin
+    , poolDeposit          :: Maybe Coin
+    , keyDeposit           :: Maybe Coin
+    , emax                 :: Maybe Epoch
+    , nopt                 :: Maybe Integer
+    , pv                   :: Maybe (Integer, Integer)
+    , poolVotingThresholds :: Maybe PoolThresholds
+    , drepVotingThresholds :: Maybe DrepThresholds
+    , govActionLifetime    :: Maybe Integer
+    , govActionDeposit     :: Maybe Coin
+    , drepDeposit          :: Maybe Coin
+    , drepActivity         :: Maybe Epoch
+    , ccMinSize            :: Maybe Integer
+    , ccMaxTermLength      :: Maybe Integer
+    , costmdls             :: Maybe ()
+    , prices               :: Maybe ()
+    , maxTxExUnits         :: Maybe ExUnits
+    , maxBlockExUnits      :: Maybe ExUnits
+    , coinsPerUTxOByte     :: Maybe Coin
+    , maxCollateralInputs  :: Maybe Integer
+    } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC DrepThresholds = data DrepThresholds (MkDrepThresholds) #-}
 {-# COMPILE GHC PoolThresholds = data PoolThresholds (MkPoolThresholds) #-}
 {-# COMPILE GHC PParams = data PParams (MkPParams) #-}
+{-# COMPILE GHC PParamsUpdate = data PParamsUpdate (MkPParamsUpdate) #-}
 
 record UTxOEnv : Set where
   field slot    : ℕ

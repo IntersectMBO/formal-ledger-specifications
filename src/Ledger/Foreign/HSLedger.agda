@@ -147,10 +147,10 @@ HsGovParams : GovParams
 HsGovParams = record
   { Implementation
   ; ppUpd = let open PParamsDiff in λ where
-      .UpdateT      → ℕ -- cost parameter `a`
-      .updateGroups → λ _ → ❴ EconomicGroup ❵
-      .applyUpdate  → λ p a → record p { a = a }
-      .ppWF?        → ⁇ yes (λ _ h → h)
+      .UpdateT      → PParamsUpdate
+      .updateGroups → modifiedUpdateGroups
+      .applyUpdate  → applyPParamsUpdate
+      .ppWF?        → {!!}
   ; ppHashingScheme = it
   }
 
@@ -193,7 +193,7 @@ HSGovStructure : GovStructure
 HSGovStructure = TransactionStructure.govStructure HSTransactionStructure
 instance _ = HSGovStructure
 
-open TransactionStructure it hiding (GovVote; GovProposal; GovAction)
+open TransactionStructure it hiding (GovVote; GovProposal; GovAction; PParamsUpdate)
 open GovStructure govStructure using (DocHash)
 
 open import Ledger.Gov.Properties it
@@ -500,7 +500,7 @@ instance
   Convertible-Vote = autoConvertible
 
   Convertible-PParamsUpdate : Convertible PParamsUpdate F.PParamsUpdate
-  Convertible-PParamsUpdate = record { to = id ; from = id }
+  Convertible-PParamsUpdate = {!autoConvertible!}
 
   Convertible-GovAction : Convertible GovAction F.GovAction
   Convertible-GovAction = autoConvertible
