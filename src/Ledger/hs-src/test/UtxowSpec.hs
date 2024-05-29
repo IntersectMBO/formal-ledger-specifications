@@ -16,17 +16,17 @@ import Lib
 
 initParams :: PParams
 initParams = MkPParams
-  { a = 1
-  , b = 5
-  , maxBlockSize = 1000
-  , maxTxSize = 100
-  , maxHeaderSize = 100
-  , maxValSize = 1000
-  , minUTxOValue = 0
-  , poolDeposit = 10
-  , emax = 10
-  , pv = (1, 0)
-  , coinsPerUTxOByte = 1
+  { ppA = 1
+  , ppB = 5
+  , ppMaxBlockSize = 1000
+  , ppMaxTxSize = 100
+  , ppMaxHeaderSize = 100
+  , ppMaxValSize = 1000
+  , ppMinUTxOValue = 0
+  , ppPoolDeposit = 10
+  , ppEmax = 10
+  , ppPv = (1, 0)
+  , ppCoinsPerUTxOByte = 1
   }
 
 initEnv :: UTxOEnv
@@ -60,7 +60,7 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
   { txins     = stxins stxb
   , refInputs = srefInputs stxb
   , txouts    = stxouts stxb
-  , txfee     = (a pp) * s + (b pp)
+  , txfee     = (ppA pp) * s + (ppB pp)
   , txvldt    = stxvldt stxb
   , txsize    = s
   , txid      = stxid stxb

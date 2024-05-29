@@ -140,18 +140,41 @@ HSScriptStructure = record
 
 instance _ = HSScriptStructure
 
-open import Ledger.PParams it it it hiding (PParams; Acnt; DrepThresholds; PoolThresholds)
+open import Ledger.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
 
 HsGovParams : GovParams
 HsGovParams = record
   { Implementation
   ; ppUpd = let open PParamsDiff in λ where
-      .UpdateT      → ℕ -- cost parameter `a`
-      .updateGroups → λ _ → ❴ EconomicGroup ❵
-      .applyUpdate  → λ p a → record p { a = a }
-      .ppWF?        → ⁇ yes (λ _ h → h)
+      .UpdateT      → PParamsUpdate
+      .updateGroups → modifiedUpdateGroups
+      .applyUpdate  → applyPParamsUpdate
+      .ppWF? {u}    → ppWF u
   ; ppHashingScheme = it
   }
+  where
+    open PParamsUpdate
+    -- FIXME Replace `trustMe` with an actual proof
+    ppWF : (u : PParamsUpdate) →
+      ((pp : PParams) →
+      paramsWellFormed pp →
+      paramsWellFormed (applyPParamsUpdate pp u))
+      ⁇
+    ppWF u with paramsUpdateWellFormed? u
+    ... | yes _ = ⁇ (yes trustMe)
+      where
+        postulate
+          trustMe :
+            ((pp : PParams) →
+            paramsWellFormed pp →
+            paramsWellFormed (applyPParamsUpdate pp u))
+    ... | no _  = ⁇ (no trustMe)
+      where
+        postulate
+          trustMe :
+            ¬((pp : PParams) →
+            paramsWellFormed pp →
+            paramsWellFormed (applyPParamsUpdate pp u))
 
 HSTransactionStructure : TransactionStructure
 HSTransactionStructure = record
