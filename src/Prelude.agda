@@ -2,8 +2,6 @@
 
 module Prelude where
 
-open import Test.GetType
-
 open import Level public
   hiding (lower)
   renaming (_⊔_ to _⊔ˡ_; suc to sucˡ; zero to zeroˡ)

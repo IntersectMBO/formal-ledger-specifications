@@ -41,6 +41,7 @@ _*↓_ : ℚ.ℚ → ℕ → ℕ
 q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \end{code}
 
+\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
 isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
@@ -85,7 +86,6 @@ utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValueʰ o)
 open PParams
 \end{code}
 
-\begin{NoConway}
 Figures~\ref{fig:supportfunctions:utxo},~\ref{fig:functions:utxo},
 and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
 \end{NoConway}
@@ -112,6 +112,68 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
     The $\fun{balance}$ function calculates sum total of all the coin in a given UTxO.
 \end{itemize}
 \end{NoConway}
+
+The deposits have been reworked since the original Shelley design. We
+now track the amount of every deposit individually. This fixes an
+issue in the original design: An increase in deposit amounts would
+allow an attacker to make lots of deposits before that change and
+refund them after the change. The additional funds necessary would
+have been provided by the treasury. Since changes to protocol
+parameters were (and still are) known publicly and guaranteed before
+they are enacted, this comes at zero risk for an attacker. This means
+the deposit amounts could realistically never be increased. This issue
+is gone with the new design.
+
+Similar to \ScriptPurpose, \DepositPurpose carries the information
+what the deposit is being made for. The deposits are stored in the
+\deposits field of \UTxOState. \updateDeposits is responsible for
+updating this map, which is split into \updateCertDeposits and
+\updateProposalDeposits, responsible for certificates and proposals
+respectively. Both of these functions iterate over the relevant fields
+of the transaction body and insert or remove deposits depending on the
+information seen. Note that some deposits can only be refunded at the
+epoch boundary and are not removed by these functions.
+\begin{figure*}[h]
+\emph{Derived types}
+\begin{code}
+data DepositPurpose : Set where
+  CredentialDeposit  : Credential   → DepositPurpose
+  PoolDeposit        : Credential   → DepositPurpose
+  DRepDeposit        : Credential   → DepositPurpose
+  GovActionDeposit   : GovActionID  → DepositPurpose
+
+Deposits = DepositPurpose ⇀ Coin
+\end{code}
+\begin{NoConway}
+\emph{UTxO environment}
+\begin{code}
+record UTxOEnv : Set where
+  field slot     : Slot
+        pparams  : PParams
+\end{code}
+\end{NoConway}
+\emph{UTxO states}
+\begin{code}
+record UTxOState : Set where
+  constructor ⟦_,_,_,_⟧ᵘ
+  field utxo       : UTxO
+        fees       : Coin
+        deposits   : Deposits
+        donations  : Coin
+\end{code}
+\begin{NoConway}
+\emph{UTxO transitions}
+
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+\end{code}
+\end{NoConway}
+\caption{UTxO transition-system types}
+\label{fig:ts-types:utxo-shelley}
+\end{figure*}
 
 \begin{figure*}[h]
 \begin{code}[hide]
@@ -140,16 +202,6 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 
 \end{code}
 \begin{code}[hide]
-module _ where
-\end{code}
-\begin{code}
-  data DepositPurpose : Set where
-    CredentialDeposit  : Credential   → DepositPurpose
-    PoolDeposit        : Credential   → DepositPurpose
-    DRepDeposit        : Credential   → DepositPurpose
-    GovActionDeposit   : GovActionID  → DepositPurpose
-\end{code}
-\begin{code}[hide]
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
     ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
@@ -175,14 +227,13 @@ updateCertDeposits _   []              deposits = deposits
 updateCertDeposits pp  (cert ∷ certs)  deposits
   = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
 
-updateProposalDeposits : List GovProposal → TxId → Coin → DepositPurpose ⇀ Coin
-  → DepositPurpose ⇀ Coin
+updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
 updateProposalDeposits []        _     _      deposits  = deposits
 updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
   updateProposalDeposits ps txid gaDep deposits
   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
-updateDeposits : PParams → TxBody → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateDeposits : PParams → TxBody → Deposits → Deposits
 updateDeposits pp txb = updateCertDeposits pp txcerts
                         ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
 \end{code}
@@ -195,7 +246,7 @@ proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActi
 \end{code}
 \begin{code}
 
-depositsChange : PParams → TxBody → DepositPurpose ⇀ Coin → ℤ
+depositsChange : PParams → TxBody → Deposits → ℤ
 depositsChange pp txb deposits =
   getCoin (updateDeposits pp txb deposits) - getCoin deposits
 \end{code}
@@ -216,6 +267,25 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
 \end{code}
 \begin{code}[hide]
 -- Note: inInterval has to be a type definition for inference to work
+instance
+  Dec-inInterval : inInterval ⁇²
+  Dec-inInterval {slot} {just x  , just y } .dec with x ≤? slot | slot ≤? y
+  ... | no ¬p₁ | _      = no λ where (both (h₁ , h₂)) → ¬p₁ h₁
+  ... | yes p₁ | no ¬p₂ = no λ where (both (h₁ , h₂)) → ¬p₂ h₂
+  ... | yes p₁ | yes p₂ = yes (both (p₁ , p₂))
+  Dec-inInterval {slot} {just x  , nothing} .dec with x ≤? slot
+  ... | no ¬p = no  (λ where (lower h) → ¬p h)
+  ... | yes p = yes (lower p)
+  Dec-inInterval {slot} {nothing , just x } .dec with slot ≤? x
+  ... | no ¬p = no  (λ where (upper h) → ¬p h)
+  ... | yes p = yes (upper p)
+  Dec-inInterval {slot} {nothing , nothing} .dec = yes none
+
+  HasCoin-UTxOState : HasCoin UTxOState
+  HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s)
+                               + (UTxOState.fees s)
+                               + getCoin (UTxOState.deposits s)
+                               + UTxOState.donations s
 
 -- Boolean implication
 _=>ᵇ_ : Bool → Bool → Bool
@@ -259,71 +329,13 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 \end{figure*}
 \end{NoConway}
 
-\AgdaTarget{UTxOEnv, UTxOState, \_⊢\_⇀⦇\_,UTXO⦈\_}
-\begin{figure*}[h]
-\emph{Derived types}
-\begin{code}
-Deposits = DepositPurpose ⇀ Coin
-\end{code}
-\begin{NoConway}
-\emph{UTxO environment}
-\begin{code}
-record UTxOEnv : Set where
-  field slot     : Slot
-        pparams  : PParams
-\end{code}
-\end{NoConway}
-\emph{UTxO states}
-\begin{code}
-record UTxOState : Set where
-  constructor ⟦_,_,_,_⟧ᵘ
-  field utxo       : UTxO
-        fees       : Coin
-        deposits   : Deposits
-        donations  : Coin
-\end{code}
-\begin{NoConway}
-\emph{UTxO transitions}
-
-\begin{code}[hide]
-⟦_⟧ : {A : Set} → A → A
-⟦_⟧ = id
-
-instance
-  Dec-inInterval : inInterval ⁇²
-  Dec-inInterval {slot} {just x  , just y } .dec with x ≤? slot | slot ≤? y
-  ... | no ¬p₁ | _      = no λ where (both (h₁ , h₂)) → ¬p₁ h₁
-  ... | yes p₁ | no ¬p₂ = no λ where (both (h₁ , h₂)) → ¬p₂ h₂
-  ... | yes p₁ | yes p₂ = yes (both (p₁ , p₂))
-  Dec-inInterval {slot} {just x  , nothing} .dec with x ≤? slot
-  ... | no ¬p = no  (λ where (lower h) → ¬p h)
-  ... | yes p = yes (lower p)
-  Dec-inInterval {slot} {nothing , just x } .dec with slot ≤? x
-  ... | no ¬p = no  (λ where (upper h) → ¬p h)
-  ... | yes p = yes (upper p)
-  Dec-inInterval {slot} {nothing , nothing} .dec = yes none
-
-  HasCoin-UTxOState : HasCoin UTxOState
-  HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s)
-                               + (UTxOState.fees s)
-                               + getCoin (UTxOState.deposits s)
-                               + UTxOState.donations s
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
-\end{code}
-\end{NoConway}
-\caption{UTxO transition-system types}
-\label{fig:ts-types:utxo-shelley}
-\end{figure*}
-
-We redefine \depositRefunds and \newDeposits via \depositsChange. This
-simplifies their definitions and some correctness proofs. We then add
-the absolute value of \depositsChange to \consumed or \produced
-depending on its sign. This is done via \negPart and \posPart, which
-satisfy the key property that their difference is the identity
-function.
+We redefine \depositRefunds and \newDeposits via \depositsChange,
+which computes the difference between the total deposits before and
+after their application. This simplifies their definitions and some
+correctness proofs. We then add the absolute value of \depositsChange
+to \consumed or \produced depending on its sign. This is done via
+\negPart and \posPart, which satisfy the key property that their
+difference is the identity function.
 
 \begin{figure*}
 \begin{code}[hide]
@@ -423,7 +435,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ networkId
-    ∙ ∀[ a ∈ dom txwdrls ]         a .RwdAddr.net  ≡ networkId
+    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
