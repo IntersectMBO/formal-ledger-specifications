@@ -15,6 +15,12 @@ open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
 \end{code}
 
+Figure~\ref{fig:functions:utxow} defines functions used for
+witnessing. \witsVKeyNeeded and \scriptsNeeded are now defined by
+projecting the same information out of \credsNeeded. Note that the
+last component of \credsNeeded adds the script in the proposal policy
+only if it is present.
+
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
@@ -26,19 +32,19 @@ getScripts = mapPartial isInj₂
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
-  =  mapˢ (λ (i , o) → (Spend i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  mapˢ (λ a → (Rwrd     a , RwdAddr.stake a)) (dom (txwdrls .proj₁))
-  ∪  mapˢ (λ c → (Cert     c , cwitness c)) (fromList txcerts)
-  ∪  mapˢ (λ x → (Mint     x , inj₂ x)) (policies mint)
-  ∪  mapˢ (λ v → (Vote     v , proj₂ v)) (fromList $ map GovVote.voter txvote)
-  ∪  mapPartial (λ p →  case p .GovProposal.policy of
+  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
+  ∪  mapˢ (λ a        → (Rwrd   a , RwdAddr.stake a)) (dom (txwdrls .proj₁))
+  ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
+  ∪  mapˢ (λ x        → (Mint   x , inj₂ x)) (policies mint)
+  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList $ map GovVote.voter txvote)
+  ∪  mapPartial (λ p  → case  p .GovProposal.policy of
 \end{code}
 \begin{code}[hide]
     λ where
 \end{code}
 \begin{code}
-                        (just sh)  → just (Propose  p , inj₂ sh)
-                        nothing    → nothing) (fromList txprop)
+                              (just sh)  → just (Propose  p , inj₂ sh)
+                              nothing    → nothing) (fromList txprop)
 \end{code}
 \begin{code}[hide]
   where open TxBody txb
