@@ -209,6 +209,11 @@ card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
 
 module _ {P : A → Type} {sp-P : specProperty P} where
 
+  filter-∅ : (∀ a → a ∈ X → ¬ P a) → filter sp-P X ≡ᵉ ∅
+  proj₁ (filter-∅ h) {a} h' with from ∈-filter h'
+  ... | (Pa , a∈) = ⊥-elim (h a a∈ Pa)
+  proj₂ (filter-∅ h) {a} h' = ⊥-elim (∉-∅ h')
+
   filter-⊆ : filter sp-P X ⊆ X
   filter-⊆ = proj₂ ∘′ ∈⇔P
 

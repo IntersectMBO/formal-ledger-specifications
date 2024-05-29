@@ -37,12 +37,6 @@ subpermutations : List A → List (List A)
 subpermutations [] = [] ∷ []
 subpermutations (x ∷ xs) = concatMap (insert x) (subpermutations xs) ++ subpermutations xs
 
-∈-map : {f : A → B} {b : B} {l : List A} → (∃[ a ] (a ∈ l × b ≡ f a)) ⇔ b ∈ map f l
-∈-map {f = f}{b}{l} = mk⇔ ⇒ (∈-map⁻ f)
-  where
-  ⇒ : ∃[ a ](a ∈ l × b ≡ f a) → b ∈ map f l
-  ⇒ (a , a∈l , _≡_.refl) = ∈-map⁺ f a∈l
-
 module _ {f : A → B} {l : List A} {b} {P : A → Set} {P? : Decidable P} where
   ∈ˡ-map-filter⁻ : b ∈ map f (filter P? l) → (∃[ a ] a ∈ l × b ≡ f a × P a)
   ∈ˡ-map-filter⁻ h with ∈-map⁻ f h

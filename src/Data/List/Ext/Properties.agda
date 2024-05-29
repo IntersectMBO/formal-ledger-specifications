@@ -30,9 +30,6 @@ open import Data.Nat using (_⊔_; _≤_)
 
 open Equivalence
 
-∷-injective⁻ : {a : Level} {A : Set a} {xs ys : List A} {x y : A} → x ≡ y × xs ≡ ys → (x ∷ xs) ≡ (y ∷ ys)
-∷-injective⁻ (refl , refl) = refl
-
 -- TODO: stdlib?
 _×-cong_ : ∀ {a b c d} {A : Set a} {B : Set b} {C : Set c} {D : Set d} {k} → A R.∼[ k ] B → C R.∼[ k ] D → (A × C) R.∼[ k ] (B × D)
 h ×-cong h' = (h M.×-cong h')

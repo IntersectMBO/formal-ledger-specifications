@@ -25,7 +25,7 @@ open import Ledger.Utxow.Properties txs abs
 
 open import Data.Bool.Properties using (¬-not)
 open import Data.List.Ext using (∈ˡ-map-filter)
-open import Data.List.Ext.Properties using (_×-cong_; ∷-injective⁻)
+open import Data.List.Ext.Properties using (_×-cong_)
 open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc; length-++)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
 open import Data.Product.Properties using (×-≡,≡←≡)
@@ -147,7 +147,7 @@ getDeposits : LState → DepositPurpose ⇀ Coin
 getDeposits s = UTxOState.deposits (LState.utxoSt s)
 
 module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
-  {- 1 -} {filterCD : ∀ {pp} {c} → filterˢ isGADeposit (dom (certDeposit c {pp})) ≡ᵉ ∅}
+  {- 1 -} {filterCD : ∀ pp c → filterˢ isGADeposit (dom (certDeposit c {pp})) ≡ᵉ ∅}
   {- 2 -} {filterCR : (c : DCert) {deps : DepositPurpose ⇀ Coin}
                       → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))}
   where
@@ -364,7 +364,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         where
         funext-app : {f g : ℕ → DepositPurpose} (n : ℕ) → (∀ i → f i ≡ g i) → applyUpTo f n ≡ applyUpTo g n
         funext-app zero fi≡gi = refl
-        funext-app (suc n) fi≡gi = ∷-injective⁻ (fi≡gi 0 , funext-app  n λ i → fi≡gi (suc i))
+        funext-app (suc n) fi≡gi = cong₂ _∷_ (fi≡gi 0) (funext-app  n (fi≡gi ∘ suc))
 
     dpMap-update-length-≡ : ∀ ps ps' → length ps ≡ length ps'
       → dpMap (updateGovStates (map inj₂ ps) 0 []) ≡ dpMap (updateGovStates (map inj₂ ps') 0 [])
@@ -425,7 +425,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       filterˢ isGADeposit (dom upCD ∪ dom (certDeposit c {pp}))
         ≈⟨ filter-hom-∪ ⟩
       filterˢ isGADeposit (dom upCD) ∪ filterˢ isGADeposit (dom (certDeposit c {pp}))
-        ≈⟨ ∪-cong (noGACerts cs deps) (filterCD {pp} {c}) ⟩
+        ≈⟨ ∪-cong (noGACerts cs deps) (filterCD pp c) ⟩
       filterˢ isGADeposit (dom deps) ∪ ∅
         ≈⟨ ∪-identityʳ (filterˢ isGADeposit (dom deps)) ⟩
       filterˢ isGADeposit (dom deps) ∎

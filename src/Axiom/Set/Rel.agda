@@ -116,14 +116,14 @@ module _ {x : A} {y : B} where
 dom∅ : dom{A}{B} ∅ ≡ᵉ ∅
 dom∅ = ⊥-elim ∘ ∉-dom∅ , ∅-minimum (dom ∅)
 
-dom∪ : dom (R ∪ R') ≡ᵉ (dom R ∪ dom R')
+dom∪ : dom (R ∪ R') ≡ᵉ dom R ∪ dom R'
 dom∪ {R = R} {R'} = from ≡ᵉ⇔≡ᵉ' λ a →
   a ∈ dom (R ∪ R')                           ∼⟨ R.SK-sym dom∈ ⟩
   (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ ∃-cong′ (R.SK-sym ∈-∪) ⟩
   (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ↔⟨ ∃-distrib-⊎' ⟩
   (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ dom∈ ⊎-cong dom∈ ⟩
   (a ∈ dom R ⊎ a ∈ dom R')                   ∼⟨ ∈-∪ ⟩
-  (a ∈ dom R ∪ dom R')                       ∎
+  a ∈ dom R ∪ dom R'                         ∎
   where open R.EquationalReasoning
 
 dom⊆ : dom{A}{B} Preserves _⊆_ ⟶ _⊆_
