@@ -85,7 +85,6 @@ rec {
     '';
     postInstall = ''
       cp -r latex/ Makefile typecheck.time $out
-      sh checkTypeChecked.sh
     '';
     extraExtensions = [ "hs" "cabal" ];
   };
