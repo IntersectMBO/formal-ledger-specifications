@@ -162,7 +162,7 @@ rec {
     #   dontInstall = true;
     # };
 
-    hsExe = haskellPackages.callCabal2nixWithOptions "${project}" "${hsSrc}/haskell/${main}" "--no-haddock" {};
+    hsExe = haskell.lib.disableLibraryProfiling (haskellPackages.callCabal2nixWithOptions "${project}" "${hsSrc}/haskell/${main}" "--no-haddock" {});
 
   };
 
