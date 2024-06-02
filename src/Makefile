@@ -22,8 +22,8 @@ latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
 $(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
-	@echo "Converting any bracket contructors to vertical vectors in $@"
-	$(PYTHON) $(VEC_SCRIPT) $@
+#@echo "Converting any bracket contructors to vertical vectors in $@"
+#$(PYTHON) $(VEC_SCRIPT) $@
 
 $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
 	mkdir -p $(LATEX_DIR)/$(LEDGER)
