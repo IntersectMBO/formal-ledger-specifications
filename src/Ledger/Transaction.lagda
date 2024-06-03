@@ -129,7 +129,8 @@ the transaction body are:
           txdonation     : Coin
           txup           : Maybe Update
           txADhash       : Maybe ADHash
-          netwrk         : Maybe Network
+          txNetworkId    : Maybe Network
+          curTreasury    : Maybe Coin
           txsize         : ℕ
           txid           : TxId
           collateral     : ℙ TxIn

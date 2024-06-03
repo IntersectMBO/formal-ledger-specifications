@@ -403,12 +403,14 @@ record PParamsUpdate : Set where
 {-# COMPILE GHC PParamsUpdate = data PParamsUpdate (MkPParamsUpdate) #-}
 
 record UTxOEnv : Set where
-  field slot    : ℕ
-        pparams : PParams
+  field slot     : ℕ
+        pparams  : PParams
+        treasury : Coin
 {-# FOREIGN GHC
   data UTxOEnv = MkUTxOEnv
-    { slot    :: Integer
-    , pparams :: PParams
+    { ueSlot     :: Integer
+    , uePparams  :: PParams
+    , ueTreasury :: Coin
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC UTxOEnv = data UTxOEnv (MkUTxOEnv) #-}
@@ -670,12 +672,14 @@ record LEnv : Set where
         ppolicy     : Maybe ScriptHash
         pparams     : PParams
         enactState  : EnactState
+        treasury    : Coin
 {-# FOREIGN GHC
   data LedgerEnv = MkLedgerEnv
     { leSlot       :: Slot
     , lePPolicy    :: Maybe ScriptHash
     , lePParams    :: PParams
     , leEnactState :: EnactState
+    , leTreasury   :: Coin
     }
 #-}
 {-# COMPILE GHC LEnv = data LedgerEnv (MkLedgerEnv) #-}

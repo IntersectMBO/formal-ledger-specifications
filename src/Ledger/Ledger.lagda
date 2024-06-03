@@ -29,11 +29,12 @@ defined transition systems.
 \begin{figure*}[h]
 \begin{code}
 record LEnv : Set where
-  constructor ⟦_,_,_,_⟧ˡᵉ
+  constructor ⟦_,_,_,_,_⟧ˡᵉ
   field slot        : Slot
         ppolicy     : Maybe ScriptHash
         pparams     : PParams
         enactState  : EnactState
+        treasury    : Coin
 
 record LState : Set where
   constructor ⟦_,_,_⟧ˡ

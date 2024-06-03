@@ -65,7 +65,8 @@ succeedTx = record { body = record
                          ; txdonation = 0
                          ; txup = nothing
                          ; txADhash = nothing
-                         ; netwrk = just tt
+                         ; txNetworkId = just tt
+                         ; curTreasury = nothing
                          ; txsize = 10
                          ; txid = 7
                          ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
@@ -96,7 +97,8 @@ failTx = record { body = record
                          ; txdonation = 0
                          ; txup = nothing
                          ; txADhash = nothing
-                         ; netwrk = just tt
+                         ; txNetworkId = just tt
+                         ; curTreasury = nothing
                          ; txsize = 10
                          ; txid = 7
                          ; collateral = ∅
