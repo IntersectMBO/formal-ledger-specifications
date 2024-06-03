@@ -552,62 +552,24 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
   RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        accepted Γ es st
     →  ¬ delayed action prevAction es d
---@BEGIN@vecline
-    →
---@BEGIN@vec
-       ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ
---@END@vec
-       ⊢ es ⇀⦇ action ,ENACT⦈ es'
---@END@vecline
+    →  ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
---@BEGIN@vecline
-       Γ ⊢
---@BEGIN@vec
-       ⟦ es , removed , d ⟧ʳ
---@END@vec
-       ⇀⦇ a ,RATIFY'⦈
---@BEGIN@vec
-       ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
---@END@vec
---@END@vecline
+       Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
+            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 
   RATIFY-Reject : let open RatifyEnv Γ; st = a .proj₂ in
        ¬ accepted Γ es st
     →  expired currentEpoch st
        ────────────────────────────────
---@BEGIN@vecline
-    Γ ⊢
---@BEGIN@vec
-    ⟦ es , removed , d ⟧ʳ
---@END@vec
-    ⇀⦇ a ,RATIFY'⦈
---@BEGIN@vec
-    ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
---@END@vec
---@END@vecline
+       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 
   RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        ¬ accepted Γ es st × ¬ expired currentEpoch st
     ⊎  accepted Γ es st
        × ( delayed action prevAction es d
---@BEGIN@vecline
-         ⊎ (∀ es' → ¬
---@BEGIN@vec
-         ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ
---@END@vec
-         ⊢ es ⇀⦇ action ,ENACT⦈ es'))
---@END@vecline
+         ⊎ (∀ es' → ¬ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'))
     ────────────────────────────────
---@BEGIN@vecline
-    Γ ⊢
---@BEGIN@vec
-    ⟦ es , removed , d ⟧ʳ
---@END@vec
-    ⇀⦇ a ,RATIFY'⦈
---@BEGIN@vec
-    ⟦ es , removed , d ⟧ʳ
---@END@vec
---@END@vecline
+    Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Set

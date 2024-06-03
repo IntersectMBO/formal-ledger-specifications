@@ -79,38 +79,16 @@ data
   LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
---@BEGIN@vecline
-    ∙
---@BEGIN@vec
-    ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
---@END@vec
-    ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
---@END@vecline
---@BEGIN@vecline
-    ∙
---@BEGIN@vec
-    ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ
---@END@vec
-    ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
---@END@vecline
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
---@BEGIN@vecline
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈
---@BEGIN@vec
-       ⟦ utxoSt' , govSt' , certState' ⟧ˡ
---@END@vec
---@END@vecline
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 
   LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ false
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
        ────────────────────────────────
---@BEGIN@vecline
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈
---@BEGIN@vec
-       ⟦ utxoSt' , govSt , certState ⟧ˡ
---@END@vec
---@END@vecline
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
 \end{code}
 \caption{LEDGER transition system}
 \end{figure*}

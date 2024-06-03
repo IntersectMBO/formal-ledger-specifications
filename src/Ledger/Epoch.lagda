@@ -99,48 +99,23 @@ its results, i.e:
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
 
---@BEGIN@vecline
       certState' =
---@BEGIN@vec
         ⟦ record dState { rewards = rewards ∪⁺ refunds }
         , ⟦ pools ∣ retired ᶜ , retiring ∣ retired ᶜ ⟧ᵖ
         , ⟦ if null govSt' then mapValues (1 +_) dreps else dreps
           , ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
---@END@vec
---@END@vecline
 
---@BEGIN@vecline
-      utxoSt' =
---@BEGIN@vec
-        ⟦ utxo , 0 , deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
---@END@vec
---@END@vecline
+      utxoSt' = ⟦ utxo , 0 , deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
---@BEGIN@vecline
-      ls' =
---@BEGIN@vec
-        ⟦ utxoSt' , govSt' , certState' ⟧ˡ
---@END@vec
---@END@vecline
+      ls' = ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 
       acnt' = record acnt
         { treasury = treasury + fees + unclaimed + donations ∸ totWithdrawals }
     in
     record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
---@BEGIN@vecline
-        ⊢
---@BEGIN@vec
-        ⟦ es , ∅ , false ⟧ʳ
---@END@vec
-        ⇀⦇ govSt' ,RATIFY⦈ fut'
---@END@vecline
+        ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     ────────────────────────────────
---@BEGIN@vecline
-    Γ ⊢ eps ⇀⦇ e ,EPOCH⦈
- --@BEGIN@vec
-    ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
---@END@vec
---@END@vecline
+    Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
 \end{code}
 \caption{EPOCH transition system}
 \label{fig:epoch:sts}
@@ -162,30 +137,12 @@ data
     e ≡ lastEpoch + 1
     → Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     ────────────────────────────────
---@BEGIN@vecline
-    Γ ⊢
---@BEGIN@vec
-    ⟦ lastEpoch , eps ⟧ⁿᵉ
---@END@vec
-    ⇀⦇ e ,NEWEPOCH⦈
---@BEGIN@vec
-    ⟦ e , eps' ⟧ⁿᵉ
---@END@vec
---@END@vecline
+    Γ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' ⟧ⁿᵉ
 
   NEWEPOCH-Not-New :
     e ≢ lastEpoch + 1
     ────────────────────────────────
---@BEGIN@vecline
-    Γ ⊢
---@BEGIN@vec
-    ⟦ lastEpoch , eps ⟧ⁿᵉ
---@END@vec
-    ⇀⦇ e ,NEWEPOCH⦈
---@BEGIN@vec
-    ⟦ lastEpoch , eps ⟧ⁿᵉ
---@END@vec
---@END@vecline
+    Γ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps ⟧ⁿᵉ
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}

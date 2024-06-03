@@ -154,42 +154,15 @@ data
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
---@BEGIN@vecline
---@BEGIN@vec
-      ⟦ pp , pools ⟧ᵈᵉ
---@END@vec
-      ⊢
---@END@vecline
---@BEGIN@vecline
---@BEGIN@vec
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
---@END@vec
-        ⇀⦇ delegate c mv mc d ,DELEG⦈
---@END@vecline
---@BEGIN@vecline
---@BEGIN@vec
+      ⟦ pp , pools ⟧ᵈᵉ ⊢
+        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
         ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
---@END@vec
---@END@vecline
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
---@BEGIN@vecline
---@BEGIN@vec
-      ⟦ pp , pools ⟧ᵈᵉ
---@END@vec
-      ⊢
---@BEGIN@vec
-      ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
---@END@vec
-      ⇀⦇ dereg c ,DELEG⦈
---@END@vecline
---@BEGIN@vecline
---@BEGIN@vec
+      ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c ,DELEG⦈
                           ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
---@END@vec
---@END@vecline
 
 \end{code}
 \begin{code}[hide]
@@ -206,32 +179,12 @@ data
   POOL-regpool :
     ∙ c ∉ dom pools
       ────────────────────────────────
---@BEGIN@vecline
-      pp ⊢
---@BEGIN@vec
-      ⟦ pools , retiring ⟧ᵖ
---@END@vec
-      ⇀⦇ regpool c poolParams ,POOL⦈
---@END@vecline
---@BEGIN@vecline
---@BEGIN@vec
+      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
             ⟦ ❴ c , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
---@END@vec
---@END@vecline
 
   POOL-retirepool :
     ────────────────────────────────
---@BEGIN@vecline
-      pp ⊢
---@BEGIN@vec
-      ⟦ pools , retiring ⟧ᵖ
---@END@vec
-      ⇀⦇ retirepool c e ,POOL⦈
---@BEGIN@vec
-      ⟦ pools , ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
---@END@vec
---@END@vecline
-
+    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈ ⟦ pools , ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
 
 \end{code}
 \begin{code}[hide]
@@ -247,47 +200,18 @@ data
   GOVCERT-regdrep : let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
---@BEGIN@vecline
---@BEGIN@vec
-      ⟦ e , pp , vs , wdrls ⟧ᶜ
---@END@vec
-      ⊢
---@BEGIN@vec
-      ⟦ dReps , ccKeys ⟧ᵛ
---@END@vec
-      ⇀⦇ regdrep c d an ,GOVCERT⦈
---@BEGIN@vec
-      ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
---@END@vec
---@END@vecline
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
---@BEGIN@vecline
-      Γ ⊢
---@BEGIN@vec
-      ⟦ dReps , ccKeys ⟧ᵛ
---@END@vec
-      ⇀⦇ deregdrep c ,GOVCERT⦈
---@BEGIN@vec
-      ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
---@END@vec
---@END@vecline
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
       ────────────────────────────────
---@BEGIN@vecline
-      Γ ⊢
---@BEGIN@vec
-      ⟦ dReps , ccKeys ⟧ᵛ
---@END@vec
-      ⇀⦇ ccreghot c mc ,GOVCERT⦈
---@BEGIN@vec
-      ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
---@END@vec
---@END@vecline
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
 \end{AgdaMultiCode}
 \caption{Auxiliary DELEG, POOL and GOVCERT transition systems}
@@ -320,59 +244,19 @@ data
 \begin{code}
 
   CERT-deleg :
---@BEGIN@vecline
-    ∙
---@BEGIN@vec
-    ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ
---@END@vec
-    ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
---@END@vecline
+    ∙ ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
---@BEGIN@vecline
---@BEGIN@vec
-      ⟦ e , pp , vs , wdrls ⟧ᶜ
---@END@vec
-      ⊢
---@BEGIN@vec
-      ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
---@END@vec
-      ⇀⦇ dCert ,CERT⦈
---@BEGIN@vec
-      ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
---@END@vec
---@END@vecline
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
---@BEGIN@vecline
---@BEGIN@vec
-      ⟦ e , pp , vs , wdrls ⟧ᶜ
---@END@vec
-      ⊢
---@BEGIN@vec
-      ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
---@END@vec
-      ⇀⦇ dCert ,CERT⦈
---@BEGIN@vec
-      ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
---@END@vec
---@END@vecline
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
---@BEGIN@vecline
-      Γ ⊢
---@BEGIN@vec
-      ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
---@END@vec
-      ⇀⦇ dCert ,CERT⦈
---@BEGIN@vec
-      ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
---@END@vec
---@END@vecline
-
+      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
 
 \end{code}
 \begin{code}[hide]
@@ -395,23 +279,10 @@ data
     ∙ wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
---@BEGIN@vecline
---@BEGIN@vec
-      ⟦ e , pp , vs , wdrls ⟧ᶜ
---@END@vec
-      ⊢
---@BEGIN@vec
-      ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
---@END@vec
-      ⇀⦇ _ ,CERTBASE⦈
---@END@vecline
---@BEGIN@vecline
---@BEGIN@vec
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
         ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
---@END@vec
---@END@vecline
 
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_

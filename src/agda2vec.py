@@ -1,30 +1,13 @@
 import re
 import sys
 
-def remove_suffixes_rec(s, l):
+def remove_suffixes(s, l):
     """
     Repeatedly remove strings from l that occur at the end of s.
     """
     for substring in l:
         if s.endswith(substring):
-            s = remove_suffixes_rec(s[:-len(substring)], l)
-    return s
-
-def remove_suffixes(s, l):
-    """
-    Repeatedly remove strings from l that occur at the end of s.
-    """
-    # substring_removed is False iff no substring was removed in previous iteration
-    substring_removed = True
-    while substring_removed:
-        substring_removed = False
-        for substring in l:
-            # Check if the current substring is a final substring of s
-            if s.endswith(substring):
-                # Remove the final substring from s
-                s = s[:-len(substring)]
-                substring_removed = True  # Set flag to indicate a removal occurred
-                break
+            s = remove_suffixes(s[:-len(substring)], l)
     return s
 
 def remove_prefixes(s, l):
@@ -44,6 +27,32 @@ def remove_prefixes(s, l):
                 break
     return s
 
+def remove_or_replace_prefixes(s, l, replaceable, replacement):
+    """
+    Repeatedly remove strings from `l` that occur at the start of `s` while replacing
+    the string `replaceable`, if and whenever it occurs as a prefix, with `replacement`.
+    """
+    if s.startswith(replaceable):
+        s = replacement + s[len(replaceable):]
+
+    for substring in l:
+        if s.startswith(substring):
+            s = remove_or_replace_prefixes(s[len(substring):], l, replaceable, replacement)
+    return s
+
+def remove_or_replace_suffixes(s, l, replaceable, replacement):
+    """
+    Repeatedly remove strings from `l` that occur at the end of `s` while replacing
+    the string `replaceable`, if and whenever it occurs as a suffix, with `replacement`.
+    """
+    if s.endswith(replaceable):
+        s = s[:-len(replaceable)] + replacement
+
+    for substring in l:
+        if s.endswith(substring):
+            s = remove_or_replace_suffixes(s[:-len(substring)], l, replaceable, replacement)
+    return s
+
 def should_be_inlined(line):
     inline_patterns = ["\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
     outline_patterns = ["\\AgdaFunction{───────────────────────────────"]
@@ -55,6 +64,24 @@ def strip_prefix(s):
     """
     pattern = r'^\\>\[[^\]]*\]' # match a leading \>, followed by any characters in brackets.
     return re.sub(pattern, '', s, count=1)  # replace the matched pattern with an empty string
+
+def replace_prefix(s, old, new):
+    """
+    If `old` is a prefix of `s`, then replace it with `new`.
+    """
+    if s.startswith(old):
+        return new + s[len(old):]
+    else:
+        return s
+
+def replace_suffix(s, old, new):
+    """
+    If `old` is a suffix of `s`, then replace it with `new`.
+    """
+    if s.endswith(old):
+        return s[:-len(old)] + new
+    else:
+        return s
 
 def replace_agdaspace(s):
     return s.replace("\\AgdaSpace{}", "~")
@@ -68,7 +95,7 @@ def transform_section_to_vector(lines, nest_level):
     vec_element = ""
     for line in lines:
         # print("line", line)
-        if "AgdaInductiveConstructor{﹐}" in line:
+        if "AgdaInductiveConstructor{,}" in line:
             if ("START" in vec_element):
                 vec_lines += vec_element + "\\\\%\n"
             else:
@@ -89,8 +116,8 @@ def transform_section_to_vector(lines, nest_level):
         prefix = "  START INNER ARRAY\n "
         suffix = "%\n%   END INNER ARRAY"
     else:
-        prefix = "START ARRAY\n\\("
-        suffix = "\\)%\n% END ARRAY"
+        prefix = "\n% START ARRAY\n~\\("
+        suffix = "\\)~%\n% END ARRAY"
 
     return "%\n% " + prefix + "\\left(\\begin{array}{c}%\n" + \
         vec_lines + "\\end{array}\\right)" + suffix + "\n"
@@ -109,20 +136,22 @@ def skip_line(line):
         return False
 
 def process_chunk(chunk, follows_vector, last_flag):
-    #print("\n --------- chunk ---------- \n " + chunk + "\n ================================ \n")
-    if chunk in ["\\\\\n%\n", "\\", "%", "%%"]:
+    print("\n --------- chunk ---------- \n " + chunk + "\n ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ \n")
+    if chunk in ["\\\\\n%\n", "\\\\", "%", "%%"]:
         return ""
-    unwanted_prefixes = ("\\\\", "%", "\\\\[\\AgdaEmptyExtraSkip]%")
-    unwanted_suffixes = ("\\\\", "\\\\\[\\AgdaEmptyExtraSkip\]%", "\n")
+    unwanted_prefixes = (" ", "\\\\", "%")
+    unwanted_suffixes = (" ", "\\\\", "%", "\n")
+    replaceable = "\\\\[\\AgdaEmptyExtraSkip]"
+    replacement = "\\end{code}% replacement \n\\begin{code}\n"
     if last_flag:
         endcode = ""
     else:
         endcode = "%\n\\end{code}"
     if chunk:
-        chunk = remove_suffixes(chunk, unwanted_suffixes)
+        chunk = remove_or_replace_suffixes(chunk, unwanted_suffixes, replaceable, replacement)
         if follows_vector:
             follows_vector = False
-            chunk = remove_prefixes(chunk, unwanted_prefixes)
+            chunk = remove_or_replace_prefixes(chunk, unwanted_prefixes, replaceable, replacement)
             if should_be_inlined(chunk):
                 bc = "\\begin{code}[inline]"
                 output = bc + chunk + endcode
@@ -131,6 +160,8 @@ def process_chunk(chunk, follows_vector, last_flag):
                 output = bc + chunk + endcode
         else:
             output = chunk + endcode
+    print("\n ======= processed chunk ======== \n " + output + "\n =^=^=^=^=^=^=^=^=^=^=^=^=^=^=^= \n")
+
     return output
 
 def process_file(input_file_path, output_file_path):
@@ -200,4 +231,21 @@ if __name__ == "__main__":
 
     file_path = sys.argv[1]
     process_file(file_path, file_path)
+
+def remove_suffixes_alt(s, l):
+    """
+    Repeatedly remove strings from l that occur at the end of s.
+    """
+    # substring_removed is False iff no substring was removed in previous iteration
+    substring_removed = True
+    while substring_removed:
+        substring_removed = False
+        for substring in l:
+            # Check if the current substring is a final substring of s
+            if s.endswith(substring):
+                # Remove the final substring from s
+                s = s[:-len(substring)]
+                substring_removed = True  # Set flag to indicate a removal occurred
+                break
+    return s
 
