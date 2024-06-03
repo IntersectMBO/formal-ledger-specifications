@@ -552,14 +552,15 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
   RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        accepted Γ es st
     →  ¬ delayed action prevAction es d
+--@BEGIN@vecline
     →
 --@BEGIN@vec
        ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ
 --@END@vec
        ⊢ es ⇀⦇ action ,ENACT⦈ es'
+--@END@vecline
        ────────────────────────────────
-\end{code}
-\begin{code}[inline]
+--@BEGIN@vecline
        Γ ⊢
 --@BEGIN@vec
        ⟦ es , removed , d ⟧ʳ
@@ -568,15 +569,13 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 --@BEGIN@vec
        ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 --@END@vec
-\end{code}
-\begin{code}
+--@END@vecline
 
   RATIFY-Reject : let open RatifyEnv Γ; st = a .proj₂ in
        ¬ accepted Γ es st
     →  expired currentEpoch st
        ────────────────────────────────
-\end{code}
-\begin{code}[inline]
+--@BEGIN@vecline
     Γ ⊢
 --@BEGIN@vec
     ⟦ es , removed , d ⟧ʳ
@@ -585,21 +584,21 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 --@BEGIN@vec
     ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 --@END@vec
-\end{code}
-\begin{code}
+--@END@vecline
 
   RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        ¬ accepted Γ es st × ¬ expired currentEpoch st
     ⊎  accepted Γ es st
        × ( delayed action prevAction es d
+--@BEGIN@vecline
          ⊎ (∀ es' → ¬
 --@BEGIN@vec
          ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ
 --@END@vec
          ⊢ es ⇀⦇ action ,ENACT⦈ es'))
+--@END@vecline
     ────────────────────────────────
-\end{code}
-\begin{code}[inline]
+--@BEGIN@vecline
     Γ ⊢
 --@BEGIN@vec
     ⟦ es , removed , d ⟧ʳ
@@ -608,8 +607,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 --@BEGIN@vec
     ⟦ es , removed , d ⟧ʳ
 --@END@vec
-\end{code}
-\begin{code}
+--@END@vecline
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Set

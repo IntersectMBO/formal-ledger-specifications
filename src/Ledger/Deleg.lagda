@@ -39,37 +39,37 @@ cwitness (ccreghot c _)      = c
 \begin{figure*}[h!]
 \begin{code}
 record CertEnv : Set where
-  constructor ⟦_﹐_﹐_﹐_⟧ᶜ
+  constructor ⟦_,_,_,_⟧ᶜ
   field epoch  : Epoch
         pp     : PParams
         votes  : List GovVote
         wdrls  : RwdAddr ⇀ Coin
 
 record DState : Set where
-  constructor ⟦_﹐_﹐_⟧ᵈ
+  constructor ⟦_,_,_⟧ᵈ
   field
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ Credential
     rewards      : Credential ⇀ Coin
 
 record PState : Set where
-  constructor ⟦_﹐_⟧ᵖ
+  constructor ⟦_,_⟧ᵖ
   field pools     : Credential ⇀ PoolParams
         retiring  : Credential ⇀ Epoch
 
 record GState : Set where
-  constructor ⟦_﹐_⟧ᵛ
+  constructor ⟦_,_⟧ᵛ
   field dreps      : Credential ⇀ Epoch
         ccHotKeys  : Credential ⇀ Maybe Credential
 
 record CertState : Set where
-  constructor ⟦_﹐_﹐_⟧ᶜˢ
+  constructor ⟦_,_,_⟧ᶜˢ
   field dState : DState
         pState : PState
         gState : GState
 
 record DelegEnv : Set where
-  constructor ⟦_﹐_⟧ᵈᵉ
+  constructor ⟦_,_⟧ᵈᵉ
   field pparams  : PParams
         pools    : Credential ⇀ PoolParams
 
@@ -137,51 +137,159 @@ new certificates relating to DReps and the constitutional committee.
 \end{itemize}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
+\begin{code}[hide]
+data
+\end{code}
 \begin{code}
-data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set where
+  _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp ﹐ pools ⟧ᵈᵉ ⊢
-        ⟦ vDelegs ﹐ sDelegs ﹐ rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs ﹐ insertIfJust c mc sDelegs ﹐ rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+--@BEGIN@vecline
+--@BEGIN@vec
+      ⟦ pp , pools ⟧ᵈᵉ
+--@END@vec
+      ⊢
+--@END@vecline
+--@BEGIN@vecline
+--@BEGIN@vec
+        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
+--@END@vec
+        ⇀⦇ delegate c mv mc d ,DELEG⦈
+--@END@vecline
+--@BEGIN@vecline
+--@BEGIN@vec
+        ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+--@END@vec
+--@END@vecline
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp ﹐ pools ⟧ᵈᵉ ⊢  ⟦ vDelegs ﹐ sDelegs ﹐ rwds ⟧ᵈ ⇀⦇ dereg c ,DELEG⦈
-                          ⟦ vDelegs ∣ ❴ c ❵ ᶜ ﹐ sDelegs ∣ ❴ c ❵ ᶜ ﹐ rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+--@BEGIN@vecline
+--@BEGIN@vec
+      ⟦ pp , pools ⟧ᵈᵉ
+--@END@vec
+      ⊢
+--@BEGIN@vec
+      ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
+--@END@vec
+      ⇀⦇ dereg c ,DELEG⦈
+--@END@vecline
+--@BEGIN@vecline
+--@BEGIN@vec
+                          ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+--@END@vec
+--@END@vecline
 
-data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set where
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+
   POOL-regpool :
     ∙ c ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools ﹐ retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
-            ⟦ ❴ c , poolParams ❵ ∪ˡ pools ﹐ retiring ⟧ᵖ
+--@BEGIN@vecline
+      pp ⊢
+--@BEGIN@vec
+      ⟦ pools , retiring ⟧ᵖ
+--@END@vec
+      ⇀⦇ regpool c poolParams ,POOL⦈
+--@END@vecline
+--@BEGIN@vecline
+--@BEGIN@vec
+            ⟦ ❴ c , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
+--@END@vec
+--@END@vecline
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools ﹐ retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈ ⟦ pools ﹐ ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
+--@BEGIN@vecline
+      pp ⊢
+--@BEGIN@vec
+      ⟦ pools , retiring ⟧ᵖ
+--@END@vec
+      ⇀⦇ retirepool c e ,POOL⦈
+--@BEGIN@vec
+      ⟦ pools , ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
+--@END@vec
+--@END@vecline
 
-data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set where
+
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
   GOVCERT-regdrep : let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e ﹐ pp ﹐ vs ﹐ wdrls ⟧ᶜ ⊢  ⟦ dReps ﹐ ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps ﹐ ccKeys ⟧ᵛ
+--@BEGIN@vecline
+--@BEGIN@vec
+      ⟦ e , pp , vs , wdrls ⟧ᶜ
+--@END@vec
+      ⊢
+--@BEGIN@vec
+      ⟦ dReps , ccKeys ⟧ᵛ
+--@END@vec
+      ⇀⦇ regdrep c d an ,GOVCERT⦈
+--@BEGIN@vec
+      ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
+--@END@vec
+--@END@vecline
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps ﹐ ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ ﹐ ccKeys ⟧ᵛ
+--@BEGIN@vecline
+      Γ ⊢
+--@BEGIN@vec
+      ⟦ dReps , ccKeys ⟧ᵛ
+--@END@vec
+      ⇀⦇ deregdrep c ,GOVCERT⦈
+--@BEGIN@vec
+      ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+--@END@vec
+--@END@vecline
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps ﹐ ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps ﹐ ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+--@BEGIN@vecline
+      Γ ⊢
+--@BEGIN@vec
+      ⟦ dReps , ccKeys ⟧ᵛ
+--@END@vec
+      ⇀⦇ ccreghot c mc ,GOVCERT⦈
+--@BEGIN@vec
+      ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+--@END@vec
+--@END@vecline
 \end{code}
+\end{AgdaMultiCode}
 \caption{Auxiliary DELEG, POOL and GOVCERT transition systems}
 \label{fig:sts:aux-cert}
 \end{figure*}
@@ -200,24 +308,84 @@ CERTBASE as the base case. CERTBASE does the following:
 \end{itemize}
 
 \begin{figure*}[h]
+\begin{code}[hide]
+data
+\end{code}
 \begin{code}
-data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set where
+  _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+
   CERT-deleg :
-    ∙ ⟦ pp ﹐ PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+--@BEGIN@vecline
+    ∙
+--@BEGIN@vec
+    ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ
+--@END@vec
+    ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+--@END@vecline
       ────────────────────────────────
-      ⟦ e ﹐ pp ﹐ vs ﹐ wdrls ⟧ᶜ ⊢ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ
+--@BEGIN@vecline
+--@BEGIN@vec
+      ⟦ e , pp , vs , wdrls ⟧ᶜ
+--@END@vec
+      ⊢
+--@BEGIN@vec
+      ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+--@END@vec
+      ⇀⦇ dCert ,CERT⦈
+--@BEGIN@vec
+      ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+--@END@vec
+--@END@vecline
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e ﹐ pp ﹐ vs ﹐ wdrls ⟧ᶜ ⊢ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ ﹐ stᵖ' ﹐ stᵍ ⟧ᶜˢ
+--@BEGIN@vecline
+--@BEGIN@vec
+      ⟦ e , pp , vs , wdrls ⟧ᶜ
+--@END@vec
+      ⊢
+--@BEGIN@vec
+      ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+--@END@vec
+      ⇀⦇ dCert ,CERT⦈
+--@BEGIN@vec
+      ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+--@END@vec
+--@END@vecline
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
-      Γ ⊢ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ' ⟧ᶜˢ
+--@BEGIN@vecline
+      Γ ⊢
+--@BEGIN@vec
+      ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+--@END@vec
+      ⇀⦇ dCert ,CERT⦈
+--@BEGIN@vec
+      ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
+--@END@vec
+--@END@vecline
 
-data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set where
+
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\begin{code}
+
   CERT-base :
     let open PParams pp; open GState stᵍ; open DState stᵈ
         refresh         = mapPartial getDRepVote (fromList vs)
@@ -227,10 +395,23 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
     ∙ wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e ﹐ pp ﹐ vs ﹐ wdrls ⟧ᶜ ⊢ ⟦ stᵈ ﹐ stᵖ ﹐ stᵍ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ voteDelegs ﹐ stakeDelegs ﹐ constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
-        ﹐ stᵖ
-        ﹐ ⟦ refreshedDReps ﹐ ccHotKeys ⟧ᵛ ⟧ᶜˢ
+--@BEGIN@vecline
+--@BEGIN@vec
+      ⟦ e , pp , vs , wdrls ⟧ᶜ
+--@END@vec
+      ⊢
+--@BEGIN@vec
+      ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+--@END@vec
+      ⇀⦇ _ ,CERTBASE⦈
+--@END@vecline
+--@BEGIN@vecline
+--@BEGIN@vec
+        ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        , stᵖ
+        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
+--@END@vec
+--@END@vecline
 
 _⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
 _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
