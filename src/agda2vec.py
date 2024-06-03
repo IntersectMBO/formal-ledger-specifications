@@ -10,23 +10,6 @@ def remove_suffixes(s, l):
             s = remove_suffixes(s[:-len(substring)], l)
     return s
 
-def remove_prefixes(s, l):
-    """
-    Repeatedly remove strings from l that occur at the start of s.
-    """
-    # substring_removed is False iff no substring was removed in previous iteration
-    substring_removed = True
-    while substring_removed:
-        substring_removed = False
-        for substring in l:
-            # Check if the current substring is a final substring of s
-            if s.startswith(substring):
-                # Remove the final substring from s
-                s = s[len(substring):]
-                substring_removed = True  # Set flag to indicate a removal occurred
-                break
-    return s
-
 def remove_or_replace_prefixes(s, l, replaceable, replacement):
     """
     Repeatedly remove strings from `l` that occur at the start of `s` while replacing
@@ -53,11 +36,6 @@ def remove_or_replace_suffixes(s, l, replaceable, replacement):
             s = remove_or_replace_suffixes(s[:-len(substring)], l, replaceable, replacement)
     return s
 
-def should_be_inlined(line):
-    inline_patterns = ["\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
-    outline_patterns = ["\\AgdaFunction{───────────────────────────────"]
-    return any(inline_patterns, line) and not any(outline_patterns, line)
-    
 def strip_prefix(s):
     """
     Strip off leading patterns of the form \>[arbitrary_string] from the string s
@@ -83,8 +61,10 @@ def replace_suffix(s, old, new):
     else:
         return s
 
-def replace_agdaspace(s):
-    return s.replace("\\AgdaSpace{}", "~")
+def should_be_inlined(line):
+    inline_patterns = ["\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
+    outline_patterns = ["\\AgdaFunction{───────────────────────────────"]
+    return any(inline_patterns, line) and not any(outline_patterns, line)
 
 def transform_section_to_vector(lines, nest_level):
     """
@@ -105,7 +85,7 @@ def transform_section_to_vector(lines, nest_level):
         elif line == "\\\\\n":
             continue
         else:
-            vec_element += replace_agdaspace(strip_prefix(line))
+            vec_element += strip_prefix(line)
     # dont' forget the last element (which is not trailed by "AgdaInductiveConstructor{,}")            
     if ("START" in vec_element):
         vec_lines += vec_element + "%\n"
@@ -141,7 +121,7 @@ def process_chunk(chunk, follows_vector, last_flag):
         return ""
     unwanted_prefixes = (" ", "\\\\", "%")
     unwanted_suffixes = (" ", "\\\\", "%", "\n")
-    replaceable = "\\\\[\\AgdaEmptyExtraSkip]"
+    replaceable = "\\[\\AgdaEmptyExtraSkip]"
     replacement = "\\end{code}% replacement \n\\begin{code}\n"
     if last_flag:
         endcode = ""
@@ -183,6 +163,8 @@ def process_file(input_file_path, output_file_path):
     # strings to be deleted if appearing next to a vertical vector
     
     for line in lines:
+        if follows_vector and "AgdaEmptyExtraSkip" in line:
+            line = "\\end{code}% replacement \n\\begin{code}\n"
         if "\\AgdaOperator{\\AgdaInductiveConstructor{⟦}}" in line:
             vector_nest_level += 1
             if follows_deduction_line:
