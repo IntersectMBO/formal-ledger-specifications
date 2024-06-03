@@ -197,6 +197,15 @@ instance
 \end{figure*}
 \subsection{Votes and proposals}
 
+\begin{figure*}[h]
+\begin{code}
+getDRepVote : GovVote → Maybe Credential
+getDRepVote record { voter = (DRep , credential) }  = just credential
+getDRepVote _                                       = nothing
+\end{code}
+\caption{Governance helper function}
+\end{figure*}
+
 The data type \Vote represents the different voting options: \yes,
 \no, or \abstain. For a \Vote to be cast, it must be packaged together
 with further information, such as who votes and for which governance

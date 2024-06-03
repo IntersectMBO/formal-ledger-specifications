@@ -523,7 +523,7 @@ fromNeedsHash {ChangePParams _} x = to x
 fromNeedsHash {TreasuryWdrl _} x = to 0 F., 0
 fromNeedsHash {Info} x = to 0 F., 0
 
-open import Ledger.Deleg.Properties govStructure
+open import Ledger.Certs.Properties govStructure
 
 instance
   Convertible-GovActionState : Convertible GovActionState F.GovActionState

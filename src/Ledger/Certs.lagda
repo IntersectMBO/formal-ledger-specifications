@@ -1,4 +1,4 @@
-\section{Delegation}
+\section{Certificates}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -6,7 +6,7 @@
 open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
-module Ledger.Deleg (gs : _) (open GovStructure gs) where
+module Ledger.Certs (gs : _) (open GovStructure gs) where
 
 open import Ledger.GovernanceActions gs
 \end{code}
@@ -37,49 +37,82 @@ cwitness (ccreghot c _)      = c
 \end{figure*}
 
 \begin{figure*}[h!]
+\begin{AgdaAlign}
+\begin{AgdaSuppressSpace}
 \begin{code}
 record CertEnv : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᶜ
-  field epoch  : Epoch
-        pp     : PParams
-        votes  : List GovVote
-        wdrls  : RwdAddr ⇀ Coin
+  field
+\end{code}
+\begin{code}
+    epoch  : Epoch
+    pp     : PParams
+    votes  : List GovVote
+    wdrls  : RwdAddr ⇀ Coin
 
 record DState : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_⟧ᵈ
   field
+\end{code}
+\begin{code}
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ Credential
     rewards      : Credential ⇀ Coin
 
 record PState : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_⟧ᵖ
-  field pools     : Credential ⇀ PoolParams
-        retiring  : Credential ⇀ Epoch
+  field
+\end{code}
+\begin{code}
+    pools     : Credential ⇀ PoolParams
+    retiring  : Credential ⇀ Epoch
 
 record GState : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_⟧ᵛ
-  field dreps      : Credential ⇀ Epoch
-        ccHotKeys  : Credential ⇀ Maybe Credential
+  field
+\end{code}
+\begin{code}
+    dreps      : Credential ⇀ Epoch
+    ccHotKeys  : Credential ⇀ Maybe Credential
 
 record CertState : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_⟧ᶜˢ
-  field dState : DState
-        pState : PState
-        gState : GState
+  field
+\end{code}
+\begin{code}
+    dState : DState
+    pState : PState
+    gState : GState
 
 record DelegEnv : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_⟧ᵈᵉ
-  field pparams  : PParams
-        pools    : Credential ⇀ PoolParams
+  field
+\end{code}
+\begin{code}
+    pparams  : PParams
+    pools    : Credential ⇀ PoolParams
 
 GovCertEnv  = CertEnv
 PoolEnv     = PParams
 \end{code}
+\end{AgdaSuppressSpace}
+\end{AgdaAlign}
 \caption{Types used for CERTS transition system}
 \end{figure*}
 
-\begin{figure*}[h]
+
 \begin{code}[hide]
 private variable
   an : Anchor
@@ -108,13 +141,22 @@ private variable
   poolParams : PoolParams
   wdrls  : RwdAddr ⇀ Coin
 \end{code}
-\begin{code}
-getDRepVote : GovVote → Maybe Credential
-getDRepVote record { voter = (DRep , credential) }  = just credential
-getDRepVote _                                       = nothing
-\end{code}
-\caption{Functions used for CERTS transition system}
-\end{figure*}
+
+\subsection{Removal of pointer addresses, genesis delegations and MIR certificates}
+
+In the Conway era, support for pointer addresses, genesis delegations
+and MIR certificates is removed. In \DState, this means that the four
+fields relating to those features are no longer present, and \DelegEnv
+contains none of the fields it used to in the Shelley era.
+
+Note that pointer addresses are still usable, only their staking
+functionality has been retired. So all funds locked behind pointer
+addresses are still accessible, they just don't count towards the
+stake distribution anymore. Genesis delegations and MIR certificates
+have been superceded by the new governance mechanisms, in particular
+the \TreasuryWdrl governance action in case of the MIR certificates.
+
+\subsection{Governance certificate rules}
 
 The rules for transition systems dealing with individual certificates
 are defined in Figure~\ref{fig:sts:aux-cert}. GOVCERT deals with the
@@ -142,13 +184,50 @@ new certificates relating to DReps and the constitutional committee.
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Set
+  _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Set
 \end{code}
 \begin{code}[hide]
-  where
+data
 \end{code}
 \begin{code}
+  _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Set
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Set
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,CERT⦈_      : CertEnv → CertState → DCert → CertState → Set
+\end{code}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Set
+\end{code}
+\begin{code}[hide]
+module _ where
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Set
+  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+\end{code}
+\end{AgdaMultiCode}
+\caption{Types for the transition systems relating to certificates}
+\label{fig:sts:certs-types}
+\end{figure*}
 
+
+\begin{figure*}[h]
+\begin{code}[hide]
+data _⊢_⇀⦇_,DELEG⦈_ where
+\end{code}
+\begin{code}
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
@@ -163,19 +242,17 @@ data
       ────────────────────────────────
       ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c ,DELEG⦈
                           ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
-
 \end{code}
+\caption{Auxiliary DELEG transition system}
+\label{fig:sts:aux-cert-deleg}
+\end{figure*}
+
+
+\begin{figure*}[h]
 \begin{code}[hide]
-data
+data _⊢_⇀⦇_,POOL⦈_ where
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Set
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
-
   POOL-regpool :
     ∙ c ∉ dom pools
       ────────────────────────────────
@@ -185,16 +262,15 @@ data
   POOL-retirepool :
     ────────────────────────────────
     pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈ ⟦ pools , ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
+\end{code}
+\caption{Auxiliary POOL transition system}
+\label{fig:sts:aux-cert-pool}
+\end{figure*}
 
-\end{code}
+
+\begin{figure*}[h]
 \begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Set
-\end{code}
-\begin{code}[hide]
-  where
+data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
 \begin{code}
   GOVCERT-regdrep : let open PParams pp in
@@ -213,9 +289,8 @@ data
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
-\end{AgdaMultiCode}
-\caption{Auxiliary DELEG, POOL and GOVCERT transition systems}
-\label{fig:sts:aux-cert}
+\caption{Auxiliary GOVCERT transition system}
+\label{fig:sts:aux-cert-gov}
 \end{figure*}
 
 Figure~\ref{fig:sts:certs} assembles the CERTS transition system by
@@ -232,17 +307,11 @@ CERTBASE as the base case. CERTBASE does the following:
 \end{itemize}
 
 \begin{figure*}[h]
+\emph{CERT transitions}
 \begin{code}[hide]
-data
+data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Set
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
-
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
@@ -257,19 +326,12 @@ data
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
-
 \end{code}
+\emph{CERTBASE transition}
 \begin{code}[hide]
-data
+data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Set
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
-
   CERT-base :
     let open PParams pp; open GState stᵍ; open DState stᵈ
         refresh         = mapPartial getDRepVote (fromList vs)
@@ -283,9 +345,6 @@ data
         ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
-
-_⊢_⇀⦇_,CERTS⦈_ : CertEnv → CertState → List DCert → CertState → Set
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
 \end{code}
 \caption{CERTS rules}
 \label{fig:sts:certs}
