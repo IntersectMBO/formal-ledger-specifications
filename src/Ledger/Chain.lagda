@@ -51,7 +51,7 @@ maybePurpose-prop : ∀ {prps} {x} {y}
   → (m : (DepositPurpose × Credential) ⇀ Coin)
   → (x , y) ∈ dom ((mapMaybeWithKeyᵐ (maybePurpose prps) m) ˢ)
   → x ≡ prps
-maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with to dom∈ xy∈dom
+maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with from dom∈ xy∈dom
 ... | z , ∈mmwk with prps ≟ x | ∈-mapMaybeWithKey {f = maybePurpose prps} ∈mmwk
 ... | yes refl | _ = refl
 
@@ -99,10 +99,10 @@ data
 \begin{figure*}[h]
 \begin{code}
   CHAIN :
-    let open ChainState s; open Block b; open NewEpochState newEpochState
+    let open ChainState s; open Block b; open NewEpochState nes
         open EpochState epochState; open EnactState es
     in
-       record { stakeDistrs = calculateStakeDistrs ls }
+       record { stakeDistrs = calculateStakeDistrs (EpochState.ls (NewEpochState.epochState newEpochState)) }
          ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es ⟧ˡᵉ
          ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'

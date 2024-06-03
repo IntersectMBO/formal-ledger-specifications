@@ -32,15 +32,15 @@ record TotalMap (A B : Type) : Type where
   toMap = rel , left-unique-rel
 
   lookup : A → B
-  lookup _ = proj₁ (to dom∈ total-rel)
+  lookup _ = proj₁ (from dom∈ total-rel)
 
   -- verify that lookup is what we expect
   lookup∈rel : {a : A} → (a , lookup a) ∈ rel
-  lookup∈rel = proj₂ (to dom∈ total-rel)
+  lookup∈rel = proj₂ (from dom∈ total-rel)
 
   -- this is useful for proving equalities involving lookup
   ∈-rel⇒lookup-≡ : {a : A}{b : B} → (a , b) ∈ rel → lookup a ≡ b
-  ∈-rel⇒lookup-≡ ab∈rel = sym (left-unique-rel ab∈rel (proj₂ (to dom∈ total-rel)))
+  ∈-rel⇒lookup-≡ ab∈rel = sym (left-unique-rel ab∈rel (proj₂ (from dom∈ total-rel)))
 
 
 module Update {B : Type} ⦃ _ : DecEq A ⦄ where
@@ -62,7 +62,7 @@ module Update {B : Type} ⦃ _ : DecEq A ⦄ where
   mapWithKey : {B' : Type} → (A → B → B') → TotalMap A B → TotalMap A B'
   mapWithKey f tm .rel              = map (λ{(x , y) → x , f x y}) (rel tm)
   mapWithKey _ tm .left-unique-rel  = mapWithKey-uniq (left-unique-rel tm)
-  mapWithKey _ tm .total-rel        = ∈-map′ (∈-map′ (proj₂ (to dom∈ (total-rel tm))))
+  mapWithKey _ tm .total-rel        = ∈-map′ (∈-map′ (proj₂ (from dom∈ (total-rel tm))))
 
   update : A → B → TotalMap A B → TotalMap A B
   update a b = mapWithKey (updateFn (a , b))

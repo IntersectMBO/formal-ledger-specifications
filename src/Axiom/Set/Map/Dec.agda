@@ -11,10 +11,11 @@ import Data.Sum as Sum
 open import Data.These hiding (map)
 open import Class.DecEq using (DecEq)
 
-open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set)
+open Theoryᵈ thᵈ using (_∈?_; th; incl-set'; incl-set; incl-set-proj₁⊇)
 open Theory th
-open import Axiom.Set.Rel th using (dom)
+open import Axiom.Set.Rel th using (dom; dom∈)
 open import Axiom.Set.Map th
+open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
 
 open import Interface.IsCommutativeMonoid
 
@@ -60,3 +61,27 @@ module Lookupᵐᵈ (sp-∈ : spec-∈ A) where
 
     aggregate₊ : FinSet (A × V) → Map A V
     aggregate₊ (_ , l , _) = foldl (λ m x → m ∪⁺ ❴ x ❵ᵐ) ∅ᵐ l
+
+    module _ {m m' : Map A V} where
+      ∪dom-lookup : ∃[ a ] a ∈ dom (m ˢ) ∪ dom (m' ˢ) → A × V
+      ∪dom-lookup (a , a∈) = a , (fold id id _◇_)(unionThese m m' a a∈)
+
+      dom∪⁺⊆∪dom : dom ((m ∪⁺ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
+      dom∪⁺⊆∪dom {a} a∈ = subst (_∈ dom (m ˢ) ∪ dom (m' ˢ))
+                                  (Prelude.sym $ proj₁ (×-≡,≡←≡ $ proj₁ (proj₂ ∈-dom∪⁺)))
+                                  (proj₂ $ proj₁ ∈-dom∪⁺)
+        where
+        ∈-dom∪⁺ : ∃[ c ] (a , proj₁ (from dom∈ a∈)) ≡ ∪dom-lookup c
+                          × c ∈ incl-set (dom (m ˢ) ∪ dom (m' ˢ))
+        ∈-dom∪⁺ = from ∈-map $ proj₂ $ from dom∈ a∈
+
+      ∪dom⊆dom∪⁺ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪⁺ m') ˢ)
+      ∪dom⊆dom∪⁺ {a} a∈ with from ∈-map (incl-set-proj₁⊇ a∈)
+      ... | c' , a≡c₁' , c'∈ =
+        to dom∈ (proj₂ (∪dom-lookup c') , to ∈-map (c' , ×-≡,≡→≡ (a≡c₁' , Prelude.refl) , c'∈))
+
+      dom∪⁺⇔∪dom : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
+      dom∪⁺⇔∪dom {a} = mk⇔ dom∪⁺⊆∪dom ∪dom⊆dom∪⁺
+
+      dom∪⁺≡∪dom : dom ((m ∪⁺ m')ˢ) ≡ᵉ dom (m ˢ) ∪ dom (m' ˢ)
+      dom∪⁺≡∪dom = to dom∪⁺⇔∪dom , from dom∪⁺⇔∪dom

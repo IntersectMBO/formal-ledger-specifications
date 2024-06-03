@@ -5,14 +5,12 @@ open import Axiom.Set using (Theory)
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where
 
-open import Prelude hiding (isEquivalence; trans; map)
+open import Prelude hiding (isEquivalence; trans; map; map₂)
 open Theory th
 
 import Data.List
 import Data.Sum
 import Function.Related.Propositional as R
-import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
-import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
 import Relation.Nullary.Decidable
 open import Data.List.Ext.Properties using (_×-cong_; _⊎-cong_)
 open import Data.List.Membership.DecPropositional using () renaming (_∈?_ to _∈ˡ?_)
@@ -22,12 +20,13 @@ open import Data.List.Relation.Binary.Permutation.Propositional.Properties using
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties.WithK using (unique∧set⇒bag)
-open import Data.Product using (map₂)
+open import Data.Product using (map₂; swap)
 open import Data.Product.Properties.Ext
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
-open import Function.Related.TypeIsomorphisms
 open import Relation.Binary hiding (_⇔_)
 open import Relation.Binary.Lattice
+import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice as Bounded∨Semilattice
+import Relation.Binary.Lattice.Properties.JoinSemilattice as ∨Semilattice
 open import Relation.Binary.Morphism using (IsOrderHomomorphism)
 
 open Equivalence
@@ -64,7 +63,7 @@ module _ {l : List A} {a} where
   ∈-fromList⁻ : a ∈ fromList l → a ∈ˡ l
   ∈-fromList⁻ = from ∈-fromList
 
-  ∈-fromList⁺ : ∀ {l : List A} {a} → a ∈ˡ l → a ∈ fromList l
+  ∈-fromList⁺ : a ∈ˡ l → a ∈ fromList l
   ∈-fromList⁺ = to ∈-fromList
 
 open import Tactic.AnyOf
@@ -150,6 +149,9 @@ module _ {f : A → B} {g : B → C} where
   map-∘ : map g (map f X) ≡ᵉ map (g ∘ f) X
   map-∘ = map-⊆∘ , map-∘⊆
 
+  ∈-map⁺-∘ : ∀ {b} → b ∈ map f X → g b ∈ map (g ∘ f) X
+  ∈-map⁺-∘ = map-⊆∘ ∘ ∈-map⁺''
+
 map-⊆ : {X Y : Set A} {f : A → B} → X ⊆ Y → map f X ⊆ map f Y
 map-⊆ x⊆y a∈map with from ∈-map a∈map
 ... | a₁ , a≡fa₁ , a₁∈x = to ∈-map (a₁ , a≡fa₁ , x⊆y a₁∈x)
@@ -205,8 +207,41 @@ card-≡ᵉ (X , lX , lXᵘ , eqX) (Y , lY , lYᵘ , eqY) X≡Y =
     a ∈ˡ lY  ∎
   where open R.EquationalReasoning
 
-filter-⊆ : ∀ {P} {sp-P : specProperty P} → filter sp-P X ⊆ X
-filter-⊆ = proj₂ ∘′ ∈⇔P
+module _ {P : A → Type} {sp-P : specProperty P} where
+
+  filter-∅ : (∀ a → a ∈ X → ¬ P a) → filter sp-P X ≡ᵉ ∅
+  proj₁ (filter-∅ h) {a} h' with from ∈-filter h'
+  ... | (Pa , a∈) = ⊥-elim (h a a∈ Pa)
+  proj₂ (filter-∅ h) {a} h' = ⊥-elim (∉-∅ h')
+
+  filter-⊆ : filter sp-P X ⊆ X
+  filter-⊆ = proj₂ ∘′ ∈⇔P
+
+  filter-pres-⊆ : X ⊆ Y → filter sp-P X ⊆ filter sp-P Y
+  filter-pres-⊆ xy a∈ = let Pa∈ = from ∈-filter a∈ in
+    to ∈-filter (map₂ xy Pa∈)
+
+  filter-pres-≡ᵉ : X ≡ᵉ Y → filter sp-P X ≡ᵉ filter sp-P Y
+  filter-pres-≡ᵉ (X⊆Y , Y⊆X) = filter-pres-⊆ X⊆Y , filter-pres-⊆ Y⊆X
+
+  filter-split-∪ : ∀ {a} → a ∈ filter sp-P (X ∪ Y) → (P a × a ∈ X) ⊎ (P a × a ∈ Y)
+  filter-split-∪ a∈ = case (proj₁ (from ∈-filter a∈) , from ∈-∪ (proj₂ (from ∈-filter a∈))) of
+    λ where
+      (Pa , inj₁ a∈X) → inj₁ (Pa , a∈X)
+      (Pa , inj₂ a∈Y) → inj₂ (Pa , a∈Y)
+
+  filter-hom-⊆ : filter sp-P (X ∪ Y) ⊆ filter sp-P X ∪ filter sp-P Y
+  filter-hom-⊆ {a = a} a∈ = to ∈-∪ (case filter-split-∪ a∈ of λ where
+    (inj₁ v) → inj₁ (to ∈-filter v)
+    (inj₂ v) → inj₂ (to ∈-filter v))
+
+  filter-hom-⊇ : filter sp-P X ∪ filter sp-P Y ⊆ filter sp-P (X ∪ Y)
+  filter-hom-⊇ a∈ = to ∈-filter (case (from ∈-∪ a∈) of λ where
+       (inj₁ v) → proj₁ (from ∈-filter v) , to ∈-∪ (inj₁ (proj₂ (from ∈-filter v)))
+       (inj₂ v) → proj₁ (from ∈-filter v) , to ∈-∪ (inj₂ (proj₂ (from ∈-filter v))) )
+
+  filter-hom-∪ : filter sp-P (X ∪ Y) ≡ᵉ (filter sp-P X) ∪ (filter sp-P Y)
+  filter-hom-∪ = filter-hom-⊆ , filter-hom-⊇
 
 Dec-∈-fromList : ∀ {a : A} → ⦃ DecEq A ⦄ → (l : List A) → Decidable¹ (_∈ fromList l)
 Dec-∈-fromList _ _ = Relation.Nullary.Decidable.map ∈-fromList (_∈ˡ?_ _≟_ _ _)
@@ -226,7 +261,7 @@ filter-finite {X = X} {P} sp P? (l , hl) = Data.List.filter P? l , λ {a} →
   a ∈ filter sp X            ∼⟨ R.SK-sym ∈-filter ⟩
   (P a × a ∈ X)              ∼⟨ R.K-refl ×-cong hl ⟩
   (P a × a ∈ˡ l)             ∼⟨ mk⇔ (uncurry $ flip $ ∈-filter⁺ P?)
-                                    (Data.Product.swap ∘ ∈-filter⁻ P?) ⟩
+                                    (swap ∘ ∈-filter⁻ P?) ⟩
   a ∈ˡ Data.List.filter P? l ∎
   where open R.EquationalReasoning
 
@@ -283,13 +318,42 @@ Set-BddSemilattice {A} = record
                       }
 
 module _ {A : Type ℓ} where
-  open import Relation.Binary.Lattice.Properties.BoundedJoinSemilattice (Set-BddSemilattice {A})
+  open Bounded∨Semilattice (Set-BddSemilattice {A})
+  open ∨Semilattice (BoundedJoinSemilattice.joinSemilattice (Set-BddSemilattice {A}))
+    using (∨-comm; ∨-assoc)
 
   ∪-identityˡ : (X : Set A) → ∅ ∪ X ≡ᵉ X
   ∪-identityˡ = identityˡ
 
   ∪-identityʳ : (X : Set A) → X ∪ ∅ ≡ᵉ X
   ∪-identityʳ = identityʳ
+
+  ∪-comm : (X Y : Set A) → X ∪ Y ≡ᵉ Y ∪ X
+  ∪-comm = ∨-comm
+
+  ∪-assoc : (X Y Z : Set A) → (X ∪ Y) ∪ Z ≡ᵉ X ∪ (Y ∪ Z)
+  ∪-assoc = ∨-assoc
+
+fromList-∪-singleton : {A : Type ℓ} {x : A} {l : List A} → fromList (x ∷ l) ≡ᵉ ❴ x ❵ ∪ fromList l
+fromList-∪-singleton .proj₁ h with from ∈-fromList h
+... | here refl = ∈-∪⁺ (inj₁ (to ∈-fromList (here refl)))
+... | there q = ∈-∪⁺ (inj₂ (to ∈-fromList q))
+fromList-∪-singleton .proj₂ h with ∈-∪⁻ h
+... | (inj₁ a∈) = to ∈-fromList (here (from ∈-singleton a∈))
+... | (inj₂ a∈) = to ∈-fromList (there (from ∈-fromList a∈))
+
+∪-fromList-++ : (ll lr : List A) → fromList ll ∪ fromList lr ≡ᵉ fromList (ll ++ lr)
+∪-fromList-++ [] lr = ∪-identityˡ (fromList lr)
+∪-fromList-++ (x ∷ l) lr =
+  begin
+  fromList (x ∷ l) ∪ fromList lr      ≈⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
+  (❴ x ❵ ∪ fromList l) ∪ fromList lr  ≈⟨ ∪-assoc ❴ x ❵ (fromList l) (fromList lr) ⟩
+  ❴ x ❵ ∪ (fromList l ∪ fromList lr)  ≈⟨ ∪-cong ≡ᵉ.refl (∪-fromList-++ l lr) ⟩
+  ❴ x ❵ ∪ fromList (l ++ lr)          ≈˘⟨ fromList-∪-singleton ⟩
+  fromList (x ∷ (l ++ lr))            ∎
+  where
+  module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence)
+  open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
@@ -354,10 +418,12 @@ module _ {L : List A} where
     onlyif h (here refl) = from ∈-fromList (h (to ∈-fromList (here refl)))
     onlyif h (there x'∈) = from ∈-fromList (h (to ∈-fromList (there x'∈)))
 
-  module _ {ℓ : Level}{P : Pred (List A) ℓ} where
+  module _ {ℓ : Level} {P : Pred (List A) ℓ} where
     ∃-sublist-⇔ : (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ (∃[ l ] l ⊆ˡ L × P l)
     ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
                       (λ (l , l⊆L , Pl) → l , from sublist-⇔ l⊆L , Pl)
 
     ∃?-sublist-⇔ : Dec (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ Dec (∃[ l ] l ⊆ˡ L × P l)
     ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
+
+
