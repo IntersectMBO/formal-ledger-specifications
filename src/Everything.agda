@@ -3,6 +3,7 @@ module Everything where
 -- ** Cardano ledger
 import Ledger.PDF
 import Ledger.Foreign.HSLedger
+import Ledger.Foreign.Ledger
 
 import Ledger.NewPP; import Ledger.NewPP.Properties
 import Ledger.PPUp;  import Ledger.PPUp.Properties

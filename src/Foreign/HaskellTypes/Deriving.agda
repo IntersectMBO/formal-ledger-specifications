@@ -2,7 +2,7 @@
 
 module Foreign.HaskellTypes.Deriving where
 
-open import Meta hiding (TC)
+open import Meta hiding (TC; Monad-TC; MonadError-TC)
 
 open import Level using (Level; 0ℓ)
 open import Agda.Builtin.Reflection using (declareData; defineData; pragmaForeign; pragmaCompile; getInstances)
@@ -11,6 +11,7 @@ open import Reflection.AST hiding (showName)
 open import Reflection.AST.DeBruijn
 open import Data.Maybe using (Maybe; nothing; just; fromMaybe)
 open import Data.Unit using (⊤)
+open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.String using (String) renaming (_++_ to _&_)
 open import Data.Product hiding (map)
 import Data.String as String
@@ -25,13 +26,17 @@ open import Text.Printf
 import Agda.Builtin.Reflection.External using ()  -- Workaround Agda bug
 
 open import Class.DecEq
-open import Class.Monad
 open import Class.Functor
+open import Class.Monad
+open import Class.MonadError
+open import Class.MonadReader
 open import Class.Show
 open import Class.Show.Instances
+open import Class.MonadTC using (TCEnv; dontReduce; defaultTCOptions)
 open import Tactic.Derive.Show using (showName)
 
 open import Reflection.Utils
+open import Reflection.Utils.TCI
 open import Foreign.HaskellTypes
 
 {-
@@ -51,13 +56,32 @@ private variable
 
 NameEnv = List (Name × String)
 
+dummyEnv : TCEnv
+dummyEnv = record
+             { normalisation = false
+             ; reconstruction = false
+             ; noConstraints = false
+             ; reduction = dontReduce []
+             ; globalContext = []
+             ; localContext = []
+             ; goal = inj₁ unknown
+             ; options = defaultTCOptions
+             }
+
+ensureKnown : Term → TC ⊤
+ensureKnown v = do
+  ty ← withNormalisation true $ inferType v
+  ensureNoMetas ty dummyEnv
+
 solveInstance : Term → TC Term
 solveInstance ty = do
   iTerm@(meta iMeta _) ← newMeta ty
     where _ → typeErrorFmt "Impossible"
   debugPrintFmt "tactic.hs-types" 10 "getInstances %t : %t" iTerm =<< inferType iTerm
   iSol ∷ _ ← getInstances iMeta
-    where [] → typeErrorFmt "No instance found for %t" ty
+    where [] → do
+            ensureKnown iTerm
+            typeErrorFmt "No instance found for %t" ty
   debugPrintFmt "tactic.hs-types" 10 "iSol = %t" iSol
   unify iTerm iSol
   pure iSol
@@ -68,7 +92,9 @@ solveHsTypeArgs : ℕ → List (Arg Term) → TC (List (Arg Term))
 solveHsTypes 0 ty = pure ty
 solveHsTypes (suc fuel) hsTy@(def (quote HasHsType.HsType) (_ ∷ _ ∷ vArg inst@(meta x _) ∷ [])) = do
   iSol ∷ _ ← getInstances x
-    where [] → typeErrorFmt "No instance found for %t" hsTy
+    where [] → do
+            ensureKnown inst
+            typeErrorFmt "No instance found for %t" hsTy
   unify inst iSol
   hsTy ← normalise hsTy
   solveHsTypes fuel hsTy
@@ -116,7 +142,7 @@ private
     else freshName (hsConName env c)
 
   isThis : Name → Term → Bool
-  isThis f (def g []) = f == g
+  isThis f (def g _) = f == g
   isThis _ _ = false
 
   computeHsType : Name → Name → Term → TC Term
@@ -139,11 +165,13 @@ private
 
   makeHsCon : NameEnv → Name → Name → Name → TC (Name × Type)
   makeHsCon env agdaName hsName c = do
+    def agdaName' _ ← normalise (def agdaName [])
+      where _ → typeErrorFmt "Failed to compute source type for %q" agdaName
     debugPrintFmt "tactic.hs-types" 10 "Making constructor %q : %q" c agdaName
     hsC  ← freshHsConName env hsName c
     cTy  ← getType c
     debugPrintFmt "tactic.hs-types" 10 "cTy = %t" cTy
-    hsTy ← computeHsType agdaName hsName cTy
+    hsTy ← computeHsType agdaName' hsName cTy
     debugPrintFmt "tactic.hs-types" 10 "hsTy = %t" hsTy
     pure (hsC , hsTy)
 

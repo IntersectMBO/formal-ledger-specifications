@@ -1,11 +1,15 @@
 module Foreign.Convertible where
 
 open import Ledger.Prelude
+open import Foreign.HaskellTypes
 
 record Convertible (A B : Type) : Type where
   field to   : A → B
         from : B → A
 open Convertible ⦃...⦄ public
+
+HsConvertible : (A : Set) → ⦃ HasHsType A ⦄ → Set
+HsConvertible A = Convertible A (HsType A)
 
 Convertible-Refl : ∀ {A} → Convertible A A
 Convertible-Refl = λ where .to → id; .from → id
