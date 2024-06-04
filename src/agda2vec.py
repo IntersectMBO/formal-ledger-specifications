@@ -67,12 +67,25 @@ def should_be_inlined(str):
     outline_patterns = ["\\AgdaFunction{───────────────────────────────"]
     return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in outline_patterns)
 
+def strip_suffix(ls):
+    """
+    Strip off trailing \<% from the string s
+    """
+    if ls and ls[-1] == "%":
+        ls = ls[:-1]
+    if ls and ls[-1] == "\\\\":
+        ls = ls[:-1]
+    if ls and ls[-1].endswith("\\<%"):
+        ls[-1] = ls[-1][:-3]
+    return ls
+
 def format_vector(vector_block):
     def format_vector_tr(vector_block, acc):
         if not vector_block:
             return acc
         next_element, vector_block = get_until_match_from(vector_block, ["AgdaInductiveConstructor{,}"])
-        return format_vector_tr(vector_block[1:], acc + ["\\begin{code}[inline]\\text{"] + next_element + ["}\\end{code}\\\\%"])
+        next = strip_suffix(next_element)
+        return format_vector_tr(vector_block[1:], acc + ["\\begin{code}[inline]\\text{"] + next + ["}\\end{code}\\\\%"])
     return format_vector_tr(vector_block, [])
 
 def process_vector(lines):
