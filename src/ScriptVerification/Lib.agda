@@ -90,11 +90,11 @@ fromList' = fromListᵐ
 fromListIx : List (Implementation.Ix × TxOut) → Implementation.Ix ⇀ TxOut
 fromListIx = fromListᵐ
 
-applyScript : (Maybe D → Maybe D → Bool) → List D → Bool
-applyScript f [] = f nothing nothing
-applyScript f (_ ∷ []) = f nothing nothing
-applyScript f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer)
-applyScript f (datum ∷ redeemer ∷ valcontext ∷ _) = f (just datum) (just redeemer)
+applyScript : (Params → Maybe D → Maybe D → Bool) → Params → List D → Bool
+applyScript f p [] = f p nothing nothing
+applyScript f p (_ ∷ []) = f p nothing nothing
+applyScript f p (redeemer ∷ valcontext ∷ []) = f p nothing (just redeemer)
+applyScript f p (datum ∷ redeemer ∷ valcontext ∷ _) = f p (just datum) (just redeemer)
 
 applyScriptWithContext : (Params → Maybe D → Maybe D → List D → Bool) → Params → List D → Bool
 applyScriptWithContext f p [] = f p nothing nothing []
