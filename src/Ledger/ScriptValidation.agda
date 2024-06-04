@@ -121,14 +121,14 @@ rwdScripts a =
 certScripts : DCert → Maybe (ScriptPurpose × ScriptHash)
 certScripts d with ¿ DelegateOrDeReg d ¿
 ... | no ¬p = nothing
-certScripts c@(delegate  (inj₁ x) _ _ _) | yes p = nothing
-certScripts c@(delegate  (inj₂ y) _ _ _) | yes p = just (Cert c , y)
-certScripts c@(dereg     (inj₁ x))       | yes p = nothing
-certScripts c@(dereg     (inj₂ y))       | yes p = just (Cert c , y)
-certScripts c@(regdrep   (inj₁ x) _ _)   | yes p = nothing
-certScripts c@(regdrep   (inj₂ y) _ _)   | yes p = just (Cert c , y)
-certScripts c@(deregdrep (inj₁ x))       | yes p = nothing
-certScripts c@(deregdrep (inj₂ y))       | yes p = just (Cert c , y)
+certScripts c@(delegate  (KeyHashObj x) _ _ _) | yes p = nothing
+certScripts c@(delegate  (ScriptObj  y) _ _ _) | yes p = just (Cert c , y)
+certScripts c@(dereg     (KeyHashObj x))       | yes p = nothing
+certScripts c@(dereg     (ScriptObj  y))       | yes p = just (Cert c , y)
+certScripts c@(regdrep   (KeyHashObj x) _ _)   | yes p = nothing
+certScripts c@(regdrep   (ScriptObj  y) _ _)   | yes p = just (Cert c , y)
+certScripts c@(deregdrep (KeyHashObj x))       | yes p = nothing
+certScripts c@(deregdrep (ScriptObj  y))       | yes p = just (Cert c , y)
 
 private
   scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
