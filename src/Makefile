@@ -17,15 +17,15 @@ MIDNIGHT=MidnightExample
 VEC_SCRIPT=agda2vec.py
 
 # files that should be postprocessed
-ppNames=Chain \
-				Deleg \
-        Enact \
-        Epoch \
-        Ledger \
-        NewPP \
-        Ratify \
-        Utxo \
-        Utxo/Properties
+ppNames=Ratify
+# Deleg \
+# Enact \
+# Epoch \
+# Ledger \
+#Chain \
+# NewPP
+# Utxo \
+# Utxo/Properties
 
 ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))
 
@@ -34,13 +34,16 @@ latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 
 # General rule for all LaTeX files
-$(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
+$(filter-out $(ppLatexFiles), $(latexFiles)): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
-	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
-ifneq (,$(filter $@,$(ppLatexFiles)))  # only postprocess those named in ppNames
+	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $<
+
+# Specific rule for postprocessed LaTeX files
+$(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda
+	@echo "Compiling $<"
+	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $<
 	@echo "Postprocessing $@"
 	$(PYTHON) $(VEC_SCRIPT) $@ $@
-endif
 
 $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
 	mkdir -p $(LATEX_DIR)/$(LEDGER)

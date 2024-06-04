@@ -91,17 +91,12 @@ def process_vector(lines):
 
 def process_lines(lines):
     inline_halters = ["AgdaFunction{───────────────────────────────", "AgdaEmptyExtraSkip", "\\\\"] #, "AgdaInductiveConstructor{⟦", "\\\\"]
-    oprefix = ["\\end{code}", "%START VEC%", "\\(\\left(\\begin{array}{c}%"]
-    osuffix = ["\\end{array}\\right)\\)%", "%END VEC%"]
+    prefix = ["\\end{code}", "%START VEC%", "~\\(\\left(\\begin{array}{c}%"]
+    suffix = ["\\end{array}\\right)\\)~", "%END VEC%"]
 
     def process_lines_tr(ls, acc):
-        print("length of ls: ", len(ls))
         if not ls:
             return acc
-        #print("aa", aa); # print("c", c);     print("bb", bb)
-        
-        #line = lines.pop(0).strip()
-        #if "AgdaInductiveConstructor{⟦" in line:
         aac, bb = get_until_match_from(ls, ["AgdaInductiveConstructor{⟦}"])
         if not bb:
             return acc + aac
@@ -115,16 +110,15 @@ def process_lines(lines):
         vec_block, newbb = process_vector(bb[1:])
 
         if not newbb:
-            return acc + oprefix + vec_block + osuffix
+            return acc + prefix + vec_block + suffix
         if should_be_inlined(newbb[0]):
             inlined_lines, ls = get_until_match_from(newbb, inline_halters)
-            acc1 = acc + oprefix + vec_block + osuffix + ["%BEGIN INLINE%", "\\begin{code}[inline]%"] + inlined_lines + ["\\end{code}%", "%END INLINE%", "\\begin{code}%"]
+            acc1 = acc + prefix + vec_block + suffix + ["%BEGIN INLINE%", "\\begin{code}[inline]%"] + inlined_lines + ["\\end{code}%", "%END INLINE%", "\\begin{code}%"]
             return process_lines_tr(ls, acc1)
         else:
-            return process_lines_tr(newbb, acc + oprefix + vec_block + osuffix + ["\\begin{code}%"])
+            return process_lines_tr(newbb, acc + prefix + vec_block + suffix + ["\\begin{code}%"])
 
     return process_lines_tr(lines, [])
-    #return process_lines_tr(changed, same)
 
 def main():
     if len(sys.argv) != 3:
@@ -135,7 +129,6 @@ def main():
     out_file_path = sys.argv[2]
 
     lines = read_file(in_file_path)
-    print("length of lines: ", len(lines))
     processed_lines = process_lines(lines)
     write_file(out_file_path, processed_lines)
 
