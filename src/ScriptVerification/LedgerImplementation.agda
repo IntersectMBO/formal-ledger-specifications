@@ -1,7 +1,7 @@
 open import ScriptVerification.Prelude
 
 module ScriptVerification.LedgerImplementation
-  (T D : Set)
+  (T D P : Set)
   (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
   where
 
@@ -47,11 +47,12 @@ module Implementation where
   sign       = _+_
 
   Data         = D
+  Params       = P
   Dataʰ        = mkHashableSet Data
   toData : ∀ {A : Set} → A → D
   toData = toData' -- fix this
 
-  PlutusScript = ℕ × (List Data → Bool)
+  PlutusScript = ℕ × Params × (Params → List Data → Bool)
   ScriptHash = ℕ
 
   ExUnits      = ℕ × ℕ
@@ -204,7 +205,7 @@ SVAbstractFunctions = record
     ; indexOfVote     = λ _ _ → nothing
     ; indexOfProposal = λ _ _ → nothing
     }
-  ; runPLCScript = λ { x x₁ x₂ x₃ → proj₂ x₁ x₃ }
+  ; runPLCScript = λ { x (sh , params , script) x₂ x₃ → script params x₃ } -- proj₂ x₁ x₃ }
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions

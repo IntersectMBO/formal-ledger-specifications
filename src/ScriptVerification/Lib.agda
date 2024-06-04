@@ -1,11 +1,11 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.Prelude
 
-module ScriptVerification.Lib (A D : Set)
+module ScriptVerification.Lib (A D P : Set)
   (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
   where
 
-open import ScriptVerification.LedgerImplementation A D scriptImp
+open import ScriptVerification.LedgerImplementation A D P scriptImp
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
@@ -95,6 +95,12 @@ applyScript f [] = f nothing nothing
 applyScript f (_ ∷ []) = f nothing nothing
 applyScript f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer)
 applyScript f (datum ∷ redeemer ∷ valcontext ∷ _) = f (just datum) (just redeemer)
+
+applyScriptWithContext : (Params → Maybe D → Maybe D → List D → Bool) → Params → List D → Bool
+applyScriptWithContext f p [] = f p nothing nothing []
+applyScriptWithContext f p (_ ∷ []) = f p nothing nothing []
+applyScriptWithContext f p (redeemer ∷ valcontext ∷ []) = f p nothing (just redeemer) []
+applyScriptWithContext f p (datum ∷ redeemer ∷ valcontext ∷ vs) = f p (just datum) (just redeemer) (valcontext ∷ vs)
 
 notEmpty : ∀ {A : Set} → List A → Set
 notEmpty [] = ⊥
