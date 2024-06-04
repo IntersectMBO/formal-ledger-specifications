@@ -54,6 +54,53 @@ mkAllEdges : List Tx → List Tx → List (Tx × Tx)
 mkAllEdges [] ls = []
 mkAllEdges (h ∷ ltx) ls = mkEdges h ls ++ mkFREdges h ls ++ mkAllEdges ltx ls
 
+mkTxIdListV : List Tx → List TxId
+mkTxIdListV [] = []
+mkTxIdListV (a ∷ r) = (a .body .txid) ∷ mkTxIdListV r
+
+mkTxIdListE : List (Tx × Tx) → List (TxId × TxId)
+mkTxIdListE [] = []
+mkTxIdListE ((a , b) ∷ r) = (a .body .txid , b .body .txid) ∷ mkTxIdListE r
+
+-- returns true if a list of transaction IDs is a cycle in the edge list
+isCycle : List (TxId × TxId) → TxId → Bool
+isCycle [] _ = false
+isCycle ((tx1 , tx2) ∷ []) tx = tx2 ≡ᵇ tx
+isCycle ((tx1 , tx2) ∷ (tx3 , tx4) ∷ ls) tx = (tx2 ≡ᵇ tx3) ∧ isCycle ((tx3 , tx4) ∷ ls) tx
+
+-- either a given edge list contains no cycle starting/ending tx or it does not contain the same edges as a given graph
+notACycle : List (TxId × TxId) → Set
+notACycle [] = ⊥
+notACycle ((tx1 , tx2) ∷ []) = ⊥
+notACycle ((tx1 , tx2) ∷ (tx3 , tx4) ∷ ls) with ((isCycle ((tx3 , tx4) ∷ ls) tx1) ∧ (tx2 ≡ᵇ tx3))
+... | true = ⊥
+... | false = ¬ ⊥
+
+appendToEach : List (List (TxId × TxId)) → (TxId × TxId) → List (List (TxId × TxId))
+appendToEach (lstx ∷ lls) t = (t ∷ lstx) ∷ appendToEach lls t
+appendToEach [] _ = []
+
+appendAll : List (TxId × TxId) → List (List (TxId × TxId)) → List (List (TxId × TxId))
+appendAll (t ∷ ls) lls = (appendToEach lls t) ++ appendAll ls lls
+appendAll [] lls = []
+
+allPairs : List TxId → TxId → List (TxId × TxId)
+allPairs (q ∷ ls) t = (t , q) ∷ allPairs ls t
+allPairs [] _ = []
+
+allPossibleEdges' : List TxId → List TxId → List TxId → List (List (TxId × TxId)) → List (List (TxId × TxId))
+allPossibleEdges' (t ∷ ls1) ls2 ls st
+  = allPossibleEdges' ls1 (t ∷ ls2) ls (appendAll (allPairs ls t) st)
+allPossibleEdges' [] _ _ st = st
+
+allPossibleEdges : List TxId → List (List (TxId × TxId))
+allPossibleEdges ls = allPossibleEdges' ls [] ls []
+
+noCycles : List Tx → Set
+noCycles ls = ∀[ lsr ∈ fromList (allPossibleEdges (mkTxIdListV ls)) ]
+  ( (fromList (mkTxIdListE (mkAllEdges ls ls)) ≡ fromList lsr) → (notACycle lsr) )
+
+-- --
 -- for a given tx, and set of edges,
 -- returns a list of transactions ls such that for each e in ls is such that e -> tx is a dependency
 -- i.e. returns all ends of incoming edges
@@ -204,7 +251,7 @@ private variable
     Γ ⊢ ⟦ ⟦ (utxo , ∅) , fees , deposits , donations ⟧ᵘᵘ , govSt , certState ⟧ˡˡ ⇀⦇ ltx ,LEDGERS⦈
       ⟦ ⟦ (utxo' , ∅) , fees' , deposits' , donations' ⟧ᵘᵘ , govSt' , certState' ⟧ˡˡ
     ∙ All (chkRqTx ltx) (fromList ltx)
-    ∙ chkLinear ltx
+    ∙ noCycles ltx -- chkLinear ltx
     ∙ All chkIsValid (fromList ltx)
     ∙ ((coin (balance  (utxo ∣ tx .body .collateral)) * 100)
       ≥ᵇ sumCol (lsV ++ [ tx ]) (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true
