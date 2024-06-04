@@ -2,7 +2,7 @@
 AGDA?=agda
 AGDA_RUN=$(AGDA) --transliterate
 OUT_DIR?=../dist
-LATEX?=latexmk -xelatex -shell-escape -halt-on-error
+LATEX?=latexmk -xelatex -shell-escape # -halt-on-error
 LATEX_DIR=latex
 PRE=$(addprefix $(LATEX_DIR)/,\
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex references.bib)
@@ -16,14 +16,31 @@ LEDGER=Ledger
 MIDNIGHT=MidnightExample
 VEC_SCRIPT=agda2vec.py
 
+# files that should be postprocessed
+ppNames=Chain \
+				Deleg \
+        Enact \
+        Epoch \
+        Ledger \
+        NewPP \
+        Ratify \
+        Utxo \
+        Utxo/Properties
+
+ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))
+
 # Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
+
+# General rule for all LaTeX files
 $(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
-#@echo "Converting any bracket contructors to vertical vectors in $@"
-#$(PYTHON) $(VEC_SCRIPT) $@
+ifneq (,$(filter $@,$(ppLatexFiles)))  # only postprocess those named in ppNames
+	@echo "Postprocessing $@"
+	$(PYTHON) $(VEC_SCRIPT) $@ $@
+endif
 
 $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
 	mkdir -p $(LATEX_DIR)/$(LEDGER)
@@ -31,9 +48,11 @@ $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
 
 define latexToPdf =
     @echo "Generating $@"
+    @echo "latexFiles: " $(latexFiles)
+    @echo "ppLatexFiles: " $(ppLatexFiles)
     $(eval PDF=$(notdir $@))
     mkdir -p $(dir $@)
-    cd $(LATEX_DIR) && $(LATEX) -jobname=$(PDF:.pdf=) $(subst $(LATEX_DIR)/,, $<)
+    cd $(LATEX_DIR) && $(LATEX) -f -jobname=$(PDF:.pdf=) $(subst $(LATEX_DIR)/,, $<)
     mv $(LATEX_DIR)/$(PDF) $@
 endef
 $(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PRE)
@@ -128,7 +147,7 @@ $(OUT_DIR)/index.html:
   ledger.hsDocs midnight.hsDocs hsDocs \
   staticWebsite
 
-ledger.docs: $(PDF_DIR)/cardano-ledger.pdf
+ledger.docs: $(PDF_DIR)/cardano-ledger.pdf $(latexFiles)
 ledger.conway.docs: $(PDF_DIR)/conway-ledger.pdf
 midnight.docs: $(PDF_DIR)/midnight-example.pdf
 docs: ledger.docs midnight.docs

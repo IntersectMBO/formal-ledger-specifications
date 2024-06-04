@@ -1,233 +1,143 @@
-import re
 import sys
 
-def remove_suffixes(s, l):
-    """
-    Repeatedly remove strings from l that occur at the end of s.
-    """
-    for substring in l:
-        if s.endswith(substring):
-            s = remove_suffixes(s[:-len(substring)], l)
-    return s
+def write_file(filename, lines):
+    with open(filename, 'w') as file:
+        for line in lines:
+            file.write(line + '\n')
 
-def remove_or_replace_prefixes(s, l, replaceable, replacement):
-    """
-    Repeatedly remove strings from `l` that occur at the start of `s` while replacing
-    the string `replaceable`, if and whenever it occurs as a prefix, with `replacement`.
-    """
-    if s.startswith(replaceable):
-        s = replacement + s[len(replaceable):]
+def read_file(filename):
+    with open(filename, 'r') as file:
+        return file.readlines()
 
-    for substring in l:
-        if s.startswith(substring):
-            s = remove_or_replace_prefixes(s[len(substring):], l, replaceable, replacement)
-    return s
+def get_until_match_from(ls1, ls2):
+    """
+    Return a tuple of two lists:
+    1. ls1[:n] where `ls1[n]` is the first element in `ls1` containing any string 
+       from `ls2` as a substring.
+    2. ls1[n:], the remaining elements of `ls1`, the first of which has an element 
+       of ls2 as a substring.
 
-def remove_or_replace_suffixes(s, l, replaceable, replacement):
+    Parameters:
+    ls1 (list of str): list of strings, the first `n-1` of which will be returned, 
+                       followed by the remaining elements of ls1, which will be 
+                       returned in a second, separate list.
+    ls2 (list of str): list of "halting" substrings
     """
-    Repeatedly remove strings from `l` that occur at the end of `s` while replacing
-    the string `replaceable`, if and whenever it occurs as a suffix, with `replacement`.
-    """
-    if s.endswith(replaceable):
-        s = s[:-len(replaceable)] + replacement
+    if not ls1:
+        return ls1, []
 
-    for substring in l:
-        if s.endswith(substring):
-            s = remove_or_replace_suffixes(s[:-len(substring)], l, replaceable, replacement)
-    return s
+    for index, element in enumerate(ls1):
+        if any(substring in element for substring in ls2):
+            return [line.strip() for line in ls1[:index]], [line.strip() for line in ls1[index:]]
+    return ls1, []  # no match found
 
-def strip_prefix(s):
+def get_back_until_match_from(ls1, ls2):
     """
-    Strip off leading patterns of the form \>[arbitrary_string] from the string s
-    """
-    pattern = r'^\\>\[[^\]]*\]' # match a leading \>, followed by any characters in brackets.
-    return re.sub(pattern, '', s, count=1)  # replace the matched pattern with an empty string
+    Return a tuple of two lists:
+    1. ls1[:n] where `ls1[n]` is the last element in `ls1` containing any string 
+       from `ls2` as a substring.
+    2. ls1[n:], the remaining elements of `ls1`, the first of which has an element 
+       of ls2 as a substring.
 
-def replace_prefix(s, old, new):
-    """
-    If `old` is a prefix of `s`, then replace it with `new`.
-    """
-    if s.startswith(old):
-        return new + s[len(old):]
-    else:
-        return s
+    Parameters:
+    ls1 (list of str): List of strings to be split.
+    ls2 (list of str): List of substrings to search for in ls1.
 
-def replace_suffix(s, old, new):
+    Returns:
+    pair of lists of strings:
+    - The first returned list has elements from ls1 up to and including the last match.
+    - The second has the remaining elements, after the last match, from ls1.
     """
-    If `old` is a suffix of `s`, then replace it with `new`.
-    """
-    if s.endswith(old):
-        return s[:-len(old)] + new
-    else:
-        return s
+    last_match_index = -1
 
-def should_be_inlined(line):
+    # Iterate over the indices and elements of ls1
+    for index, element in enumerate(ls1):
+        if any(substring in element for substring in ls2):
+            last_match_index = index
+
+    # If a match is found, split the list accordingly
+    if last_match_index != -1:
+        return ls1[:last_match_index + 1], ls1[last_match_index + 1:]
+
+    return [], ls1 # no match found
+
+
+def should_be_inlined(str):
     inline_patterns = ["\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
     outline_patterns = ["\\AgdaFunction{───────────────────────────────"]
-    return any(inline_patterns, line) and not any(outline_patterns, line)
+    return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in outline_patterns)
 
-def transform_section_to_vector(lines, nest_level):
-    """
-    Transform the given lines into a vertical vector format, leaving each variable formatted with 
-    \AgdaGeneralizable{} and removing any trailing spaces or comment characters.
-    """
-    vec_lines = ""
-    vec_element = ""
-    for line in lines:
-        # print("line", line)
-        if "AgdaInductiveConstructor{,}" in line:
-            if ("START" in vec_element):
-                vec_lines += vec_element + "\\\\%\n"
-            else:
-                vec_lines += "\\begin{code}[inline]\\text{" + vec_element + "}\\end{code}\\\\%\n"
-            vec_element = ""
-            continue
-        elif line == "\\\\\n":
-            continue
+def format_vector(vector_block):
+    def format_vector_tr(vector_block, acc):
+        if not vector_block:
+            return acc
+        next_element, vector_block = get_until_match_from(vector_block, ["AgdaInductiveConstructor{,}"])
+        return format_vector_tr(vector_block[1:], acc + ["\\begin{code}[inline]\\text{"] + next_element + ["}\\end{code}\\\\%"])
+    return format_vector_tr(vector_block, [])
+
+def process_vector(lines):
+    def get_vector_block(lines, acc):
+        if not lines:
+            return acc, []
+        if "AgdaInductiveConstructor{⟦" in lines[0]:  # this must be an inner vector
+            vec_block, nextlines = process_vector(lines[1:])
+            return get_vector_block(nextlines, acc + vec_block)
+        if "AgdaInductiveConstructor{⟧" in lines[0]:
+            return acc, lines[1:]
         else:
-            vec_element += strip_prefix(line)
-    # dont' forget the last element (which is not trailed by "AgdaInductiveConstructor{,}")            
-    if ("START" in vec_element):
-        vec_lines += vec_element + "%\n"
-    else:
-        vec_lines += "\\begin{code}[inline]\\text{" + vec_element + "}\\end{code}%\n"
+            return get_vector_block(lines[1:], acc + [lines[0]])
+    vec_block, nextlines = get_vector_block(lines, [])
+    return format_vector(vec_block), nextlines
 
-    if nest_level > 0:
-        prefix = "  START INNER ARRAY\n "
-        suffix = "%\n%   END INNER ARRAY"
-    else:
-        prefix = "\n% START ARRAY\n~\\("
-        suffix = "\\)~%\n% END ARRAY"
+def process_lines(lines):
+    inline_halters = ["AgdaFunction{───────────────────────────────", "AgdaEmptyExtraSkip", "\\\\"] #, "AgdaInductiveConstructor{⟦", "\\\\"]
+    oprefix = ["\\end{code}", "%START VEC%", "\\(\\left(\\begin{array}{c}%"]
+    osuffix = ["\\end{array}\\right)\\)%", "%END VEC%"]
 
-    return "%\n% " + prefix + "\\left(\\begin{array}{c}%\n" + \
-        vec_lines + "\\end{array}\\right)" + suffix + "\n"
+    def process_lines_tr(ls, acc):
+        print("length of ls: ", len(ls))
+        if not ls:
+            return acc
+        #print("aa", aa); # print("c", c);     print("bb", bb)
+        
+        #line = lines.pop(0).strip()
+        #if "AgdaInductiveConstructor{⟦" in line:
+        aac, bb = get_until_match_from(ls, ["AgdaInductiveConstructor{⟦}"])
+        if not bb:
+            return acc + aac
 
-def any(l , s):
-    for substring in l:
-        if substring in s:
-            return True
-    return False
-
-def skip_line(line):
-    pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[0-9]+I\]%'
-    if re.match(pattern, line):
-        return True
-    else:
-        return False
-
-def process_chunk(chunk, follows_vector, last_flag):
-    print("\n --------- chunk ---------- \n " + chunk + "\n ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ \n")
-    if chunk in ["\\\\\n%\n", "\\\\", "%", "%%"]:
-        return ""
-    unwanted_prefixes = (" ", "\\\\", "%")
-    unwanted_suffixes = (" ", "\\\\", "%", "\n")
-    replaceable = "\\[\\AgdaEmptyExtraSkip]"
-    replacement = "\\end{code}% replacement \n\\begin{code}\n"
-    if last_flag:
-        endcode = ""
-    else:
-        endcode = "%\n\\end{code}"
-    if chunk:
-        chunk = remove_or_replace_suffixes(chunk, unwanted_suffixes, replaceable, replacement)
-        if follows_vector:
-            follows_vector = False
-            chunk = remove_or_replace_prefixes(chunk, unwanted_prefixes, replaceable, replacement)
-            if should_be_inlined(chunk):
-                bc = "\\begin{code}[inline]"
-                output = bc + chunk + endcode
-            else:
-                bc = "\\begin{code}"
-                output = bc + chunk + endcode
+        aa , c = get_back_until_match_from(aac, inline_halters)
+        if not c:
+            acc = acc + aa
         else:
-            output = chunk + endcode
-    print("\n ======= processed chunk ======== \n " + output + "\n =^=^=^=^=^=^=^=^=^=^=^=^=^=^=^= \n")
+            acc = acc + aa + ["\\end{code}%", "%BEGIN INLINE%", "\\begin{code}[inline]%"] + c
 
-    return output
+        vec_block, newbb = process_vector(bb[1:])
 
-def process_file(input_file_path, output_file_path):
-    with open(input_file_path, 'r', encoding='utf-8') as input_file:
-        lines = input_file.readlines()
-
-    chunk = ""
-    output_lines = []
-    vector_nest_level = -1
-    follows_vector = False
-    follows_deduction_line = False
-    vector_lines = [[] for _ in range(10)]  # Define vector_lines variable
-
-    # brackets that signal the end of a vertical vector section
-    closing_brackets = ["⟧ᶜ", "⟧ᶜˢ", "⟧ᵈ", "⟧ᵈᵉ", "⟧ᵉ", "⟧ᵉ'", "⟧ᵍ", "⟧ˡ", "⟧ˡᵉ", "⟧ⁿᵉ", "⟧ⁿᵖ", "⟧ᵖ", "⟧ʳ", "⟧ᵘ", "⟧ᵛ"]
-
-    end_patterns = ["\\AgdaOperator{\\AgdaInductiveConstructor{" + s + "}}" for s in closing_brackets]
-    
-    # strings to be deleted if appearing next to a vertical vector
-    
-    for line in lines:
-        if follows_vector and "AgdaEmptyExtraSkip" in line:
-            line = "\\end{code}% replacement \n\\begin{code}\n"
-        if "\\AgdaOperator{\\AgdaInductiveConstructor{⟦}}" in line:
-            vector_nest_level += 1
-            if follows_deduction_line:
-                follows_deduction_line = False
-            if vector_nest_level == 0:
-                output_lines.append(process_chunk(chunk, follows_vector, False))
-                chunk = ""
-                if follows_vector:  # and vector_nest_level == 0:
-                    follows_vector = False
-            continue
-        elif "\\AgdaOperator{\\AgdaFunction{────────────────────────────────" in line:
-            output_lines.append(process_chunk(chunk, follows_vector, False))
-            output_lines.append("\\begin{code}" + line + "\\end{code}")
-            chunk = ""
-            follows_deduction_line = True
-        elif vector_nest_level > -1 and any(end_patterns, line):
-            follows_vector = True
-            # Transform the collected section into a vertical vector
-            
-            transformed_vector_lines = transform_section_to_vector(vector_lines[vector_nest_level], vector_nest_level)
-            vector_lines[vector_nest_level] = []  # Reset for the next section
-            if vector_nest_level == 0:
-                output_lines.append(transformed_vector_lines)
-            else:
-                vector_lines[vector_nest_level - 1].append(transformed_vector_lines)            
-            vector_nest_level -= 1
-            continue
-        elif vector_nest_level > -1:
-            vector_lines[vector_nest_level].append(line)
-            continue
+        if not newbb:
+            return acc + oprefix + vec_block + osuffix
+        if should_be_inlined(newbb[0]):
+            inlined_lines, ls = get_until_match_from(newbb, inline_halters)
+            acc1 = acc + oprefix + vec_block + osuffix + ["%BEGIN INLINE%", "\\begin{code}[inline]%"] + inlined_lines + ["\\end{code}%", "%END INLINE%", "\\begin{code}%"]
+            return process_lines_tr(ls, acc1)
         else:
-            if not (follows_vector and skip_line(line)) and not (follows_deduction_line and line in ["\\\\", "\\\\%", "%", "%%"]):
-                chunk += line
+            return process_lines_tr(newbb, acc + oprefix + vec_block + osuffix + ["\\begin{code}%"])
 
+    return process_lines_tr(lines, [])
+    #return process_lines_tr(changed, same)
 
-    if chunk:
-        output_lines.append(process_chunk(chunk, follows_vector, True))
-
-    with open(output_file_path, 'w', encoding='utf-8') as output_file:
-        output_file.writelines(output_lines)
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python agda2vec.py file.tex")
+def main():
+    if len(sys.argv) != 3:
+        print('Usage: python agda2vec.py /path/to/inputFile.tex /path/to/outputFile.tex')
         sys.exit(1)
+    
+    in_file_path = sys.argv[1]
+    out_file_path = sys.argv[2]
 
-    file_path = sys.argv[1]
-    process_file(file_path, file_path)
+    lines = read_file(in_file_path)
+    print("length of lines: ", len(lines))
+    processed_lines = process_lines(lines)
+    write_file(out_file_path, processed_lines)
 
-def remove_suffixes_alt(s, l):
-    """
-    Repeatedly remove strings from l that occur at the end of s.
-    """
-    # substring_removed is False iff no substring was removed in previous iteration
-    substring_removed = True
-    while substring_removed:
-        substring_removed = False
-        for substring in l:
-            # Check if the current substring is a final substring of s
-            if s.endswith(substring):
-                # Remove the final substring from s
-                s = s[:-len(substring)]
-                substring_removed = True  # Set flag to indicate a removal occurred
-                break
-    return s
-
+if __name__ == '__main__':
+    main()
