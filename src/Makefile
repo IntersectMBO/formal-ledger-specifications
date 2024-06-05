@@ -17,7 +17,7 @@ MIDNIGHT=MidnightExample
 VEC_SCRIPT=agda2vec.py
 
 # files that should be postprocessed
-ppNames=Chain Enact Ratify
+ppNames=Chain Enact Ratify Ledger
 # Deleg \
 # Epoch \
 # Ledger \

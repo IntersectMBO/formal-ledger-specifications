@@ -129,7 +129,8 @@ def make_array(ls):
     return ["%START VEC%", "~\\(\\left(\\begin{array}{c}%"] + ls + ["\\end{array}\\right)\\)~", "%END VEC%"]
 
 def should_be_inlined(str):
-    inline_patterns = ["\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
+    
+    inline_patterns = ["\\AgdaOperator{\AgdaFunction{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
     return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in deduction)
 
 def format_vector(vector_block):
@@ -217,7 +218,7 @@ def process_vector(lines):
 
 def process_lines(lines):
 
-    inline_halters = deduction + extra_skip + newline + [left_bracket, "\\end{code}"]
+    inline_halters = deduction + extra_skip + newline + [left_bracket, "\\end{code}", "\\AgdaFunction{∙}"]
 
     unwanted = ["%"] + newline + extra_skip
 
