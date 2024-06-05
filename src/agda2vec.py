@@ -9,6 +9,62 @@ def read_file(filename):
     with open(filename, 'r') as file:
         return file.readlines()
 
+### General Helper functions #########################################################################
+def remove_prefixes(s, l):
+    """
+    Repeatedly remove any prefix from the string `s` if that prefix appears in the list of strings `l`.
+    """
+    for prefix in l:
+        if s.startswith(prefix):
+            s = remove_prefixes(s[len(prefix):], l)
+    return s
+
+def remove_suffixes(s, l):
+    """
+    Repeatedly remove any suffix from the string `s` if that suffix appears in the list of strings `l`.
+    """
+    for suffix in l:
+        if s.endswith(suffix):
+            s = remove_suffixes(s[:-len(suffix)], l)
+    return s
+
+def strip_prefixes(ls1, ls2):
+    """
+    Remove any prefix from the first string in `ls1` if that prefix is an element of `ls2`.
+    If the first element of `ls1` is fully removed, then proceed to the next element, and so on.
+    EXAMPLE Inputs: ls1 = ["prefix_match", "abc", "def"]
+                    ls2 = ["prefix", "_", "ab"]
+                    print(strip_prefixes(ls1, ls2))  
+            Output: ['match', 'abc', 'def']
+    """
+    while ls1 and ls1[0]:  # While there's a non-empty string in the first position
+        new_first = remove_prefixes(ls1[0], ls2)
+        if new_first == ls1[0]:  # No more prefixes to remove
+            break
+        ls1[0] = new_first
+        if not ls1[0]:  # If the first element becomes empty, remove it
+            ls1.pop(0)
+    return ls1
+
+def strip_suffixes(ls1, ls2):
+    """
+    Remove any suffix from the last string in `ls1` if that suffix is an element of `ls2`.  
+    If the last element of `ls1` is fully removed, repeat this suffix removal procedure 
+    on the previous (new last) element of `ls1`, and so on.
+    EXAMPLE Inputs: ls1 = ["abc", "def", "suffix_match"]
+                    ls2 = ["suffix", "match", "def"]
+                    print(strip_suffixes(ls1, ls2))
+            Output: ['abc', 'def', 'suffix_']
+    """
+    while ls1 and ls1[-1]:  # While there's a non-empty string in the last position
+        new_last = remove_suffixes(ls1[-1], ls2)
+        if new_last == ls1[-1]:  # No more suffixes to remove
+            break
+        ls1[-1] = new_last
+        if not ls1[-1]:  # If the last element becomes empty, remove it
+            ls1.pop()
+    return ls1
+
 def get_until_match_from(ls1, ls2):
     """
     Return a tuple of two lists:
@@ -62,29 +118,20 @@ def get_back_until_match_from(ls1, ls2):
     return [], ls1 # no match found
 
 
+### Special Helper functions #########################################################################
+
 def should_be_inlined(str):
     inline_patterns = ["\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
     outline_patterns = ["\\AgdaFunction{───────────────────────────────"]
     return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in outline_patterns)
 
-def strip_suffix(ls):
-    """
-    Strip off trailing \<% from the string s
-    """
-    if ls and ls[-1] == "%":
-        ls = ls[:-1]
-    if ls and ls[-1] == "\\\\":
-        ls = ls[:-1]
-    if ls and ls[-1].endswith("\\<%"):
-        ls[-1] = ls[-1][:-3]
-    return ls
-
 def format_vector(vector_block):
+    unwanted_suffixes = ["\AgdaSpace{}", "%"]
     def format_vector_tr(vector_block, acc):
         if not vector_block:
             return acc
         next_element, vector_block = get_until_match_from(vector_block, ["AgdaInductiveConstructor{,}"])
-        next = strip_suffix(next_element)
+        next = strip_suffixes(next_element, unwanted_suffixes)
         return format_vector_tr(vector_block[1:], acc + ["\\begin{code}[inline]\\text{"] + next + ["}\\end{code}\\\\%"])
     return format_vector_tr(vector_block, [])
 
@@ -102,10 +149,23 @@ def process_vector(lines):
     vec_block, nextlines = get_vector_block(lines, [])
     return format_vector(vec_block), nextlines
 
+### Main Agda-generated LaTeX file post-processing function ########################################
+
 def process_lines(lines):
+
     inline_halters = ["AgdaFunction{───────────────────────────────", "AgdaEmptyExtraSkip", "\\\\"] #, "AgdaInductiveConstructor{⟦", "\\\\"]
-    prefix = ["\\end{code}", "%START VEC%", "~\\(\\left(\\begin{array}{c}%"]
-    suffix = ["\\end{array}\\right)\\)~", "%END VEC%"]
+
+    start_array = ["%START VEC%", "~\\(\\left(\\begin{array}{c}%"]
+    end_array = ["\\end{array}\\right)\\)~", "%END VEC%"]
+    nums = ['[' + str(i) +']' for i in range(10)]
+
+    unwanted_prefixes = ["%", "\\\\", "[\\AgdaEmptyExtraSkip]"]  #"%", "\>"] + nums + ["[.]", "[@{}l@{}]"] 
+    # \<[1630I]% "\\[\AgdaEmptyExtraSkip]%"]
+    unwanted_suffixes = ["%", "\\\\", "[\\AgdaEmptyExtraSkip]"] #, "\\<"]
+
+    begin_code = ["\\begin{code}%"]
+    begin_inline_code = ["%BEGIN INLINE%", "\\begin{code}[inline]%"]
+    end_code = ["\\end{code}%"]
 
     def process_lines_tr(ls, acc):
         if not ls:
@@ -115,21 +175,22 @@ def process_lines(lines):
             return acc + aac
 
         aa , c = get_back_until_match_from(aac, inline_halters)
+        aa = strip_prefixes(strip_suffixes(aa, unwanted_suffixes), unwanted_prefixes)
+        c = strip_prefixes(c, unwanted_prefixes)
         if not c:
             acc = acc + aa
         else:
-            acc = acc + aa + ["\\end{code}%", "%BEGIN INLINE%", "\\begin{code}[inline]%"] + c
+            acc = acc + aa + end_code + begin_inline_code + c
 
         vec_block, newbb = process_vector(bb[1:])
 
         if not newbb:
-            return acc + prefix + vec_block + suffix
+            return acc + end_code + start_array + vec_block + end_array
         if should_be_inlined(newbb[0]):
-            inlined_lines, ls = get_until_match_from(newbb, inline_halters)
-            acc1 = acc + prefix + vec_block + suffix + ["%BEGIN INLINE%", "\\begin{code}[inline]%"] + inlined_lines + ["\\end{code}%", "%END INLINE%", "\\begin{code}%"]
-            return process_lines_tr(ls, acc1)
+            inlined, ls = get_until_match_from(newbb, inline_halters)
+            return process_lines_tr(ls, acc + end_code + start_array + vec_block + end_array + begin_inline_code + inlined + end_code + begin_code)
         else:
-            return process_lines_tr(newbb, acc + prefix + vec_block + suffix + ["\\begin{code}%"])
+            return process_lines_tr(newbb, acc + end_code + start_array + vec_block + end_array + begin_code)
 
     return process_lines_tr(lines, [])
 

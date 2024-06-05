@@ -95,7 +95,7 @@ rec {
       cp -r latex/ Makefile typecheck.time $out
       sh checkTypeChecked.sh
     '';
-    extraExtensions = [ "hs" "cabal" ];
+    extraExtensions = [ "hs" "cabal" "py" ];
   };
 
   mkSpecDerivation = { project, main }: rec {
