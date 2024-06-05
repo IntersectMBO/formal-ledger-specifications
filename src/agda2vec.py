@@ -10,6 +10,7 @@ def read_file(filename):
         return file.readlines()
 
 ### General Helper functions #########################################################################
+
 def remove_prefixes(s, l):
     """
     Repeatedly remove any prefix from the string `s` if that prefix appears in the list of strings `l`.
@@ -120,77 +121,123 @@ def get_back_until_match_from(ls1, ls2):
 
 ### Special Helper functions #########################################################################
 
+
+def inline_text(element):
+    return ["\\begin{code}[inline]\\text{"] + element + ["}\\end{code}\\\\%"]
+
+def make_array(ls):
+    return ["%START VEC%", "~\\(\\left(\\begin{array}{c}%"] + ls + ["\\end{array}\\right)\\)~", "%END VEC%"]
+
 def should_be_inlined(str):
     inline_patterns = ["\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
-    outline_patterns = ["\\AgdaFunction{───────────────────────────────"]
-    return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in outline_patterns)
+    return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in deduction)
 
 def format_vector(vector_block):
-    unwanted_suffixes = ["\AgdaSpace{}", "%"]
+    unwanted_suffixes = ["\\AgdaSpace{}", "%"]
     def format_vector_tr(vector_block, acc):
         if not vector_block:
             return acc
         next_element, vector_block = get_until_match_from(vector_block, ["AgdaInductiveConstructor{,}"])
         next = strip_suffixes(next_element, unwanted_suffixes)
-        return format_vector_tr(vector_block[1:], acc + ["\\begin{code}[inline]\\text{"] + next + ["}\\end{code}\\\\%"])
+        return format_vector_tr(vector_block[1:], acc + inline_text(next))
     return format_vector_tr(vector_block, [])
+
+
+deduction = ["AgdaFunction{───────────────────────────────"]
+extra_skip = ["[\\AgdaEmptyExtraSkip]"]
+newline = ["\\\\"]
+
+begin_code = ["\\begin{code}%"]
+begin_code_inline = ["\\begin{code}[inline]%"]
+end_code = ["\\end{code}%"]
+
+# N.B. It's important that left_bracket includes the trailing curly brace, to avoid matching
+# constructors, while right_bracket does not include the trailing curly brace, so that the 
+# latter will match all varieties of closing brackets.
+left_bracket = "AgdaInductiveConstructor{⟦}"
+right_bracket = "AgdaInductiveConstructor{⟧"
+
+def inline(l):
+    #print("l: ", l)
+    if not l:
+        return []
+    return begin_code_inline + l + end_code
+
+def append_begin(l):
+    if not l:
+        return []
+    if l[-1].endswith("\\begin{code}"):
+        return l
+    return l + begin_code
+
+def add_begin(l):
+    if not l:
+        return []
+    if l[-1].startswith("\\begin{code}"):
+        return l
+    return begin_code + l
+
+def add_end(l):
+    if not l:
+        return []
+    if l[-1].endswith("\\end{code}%"):
+        return l
+    return l + end_code
+
+
+def safe_add(l1, l2):
+    if not l1:
+        return l2
+    if not l2:
+        return l1
+    if (not (l1[-1].endswith("\\end{code}%") or l1[-1].endswith("%END VEC%"))) and l2[0].startswith("\\begin{code}"):
+        return add_end(l1) + l2
+    if (l1[-1].endswith("\\end{code}%") or l1[-1].endswith("%END VEC%")) and not l2[0].startswith("\\begin{code}"):
+        return l1 + add_begin(l2)
+    return l1 + l2            
+
 
 def process_vector(lines):
     def get_vector_block(lines, acc):
         if not lines:
             return acc, []
-        if "AgdaInductiveConstructor{⟦" in lines[0]:  # this must be an inner vector
+        if left_bracket in lines[0]:  # this must be an inner vector
             vec_block, nextlines = process_vector(lines[1:])
             return get_vector_block(nextlines, acc + vec_block)
-        if "AgdaInductiveConstructor{⟧" in lines[0]:
+        if right_bracket in lines[0]:
             return acc, lines[1:]
         else:
             return get_vector_block(lines[1:], acc + [lines[0]])
     vec_block, nextlines = get_vector_block(lines, [])
     return format_vector(vec_block), nextlines
 
+
+
 ### Main Agda-generated LaTeX file post-processing function ########################################
 
 def process_lines(lines):
 
-    inline_halters = ["AgdaFunction{───────────────────────────────", "AgdaEmptyExtraSkip", "\\\\"] #, "AgdaInductiveConstructor{⟦", "\\\\"]
+    inline_halters = deduction + extra_skip + newline + [left_bracket]
 
-    start_array = ["%START VEC%", "~\\(\\left(\\begin{array}{c}%"]
-    end_array = ["\\end{array}\\right)\\)~", "%END VEC%"]
-    nums = ['[' + str(i) +']' for i in range(10)]
-
-    unwanted_prefixes = ["%", "\\\\", "[\\AgdaEmptyExtraSkip]"]  #"%", "\>"] + nums + ["[.]", "[@{}l@{}]"] 
-    # \<[1630I]% "\\[\AgdaEmptyExtraSkip]%"]
-    unwanted_suffixes = ["%", "\\\\", "[\\AgdaEmptyExtraSkip]"] #, "\\<"]
-
-    begin_code = ["\\begin{code}%"]
-    begin_inline_code = ["%BEGIN INLINE%", "\\begin{code}[inline]%"]
-    end_code = ["\\end{code}%"]
+    unwanted = ["%"] + newline + extra_skip
 
     def process_lines_tr(ls, acc):
         if not ls:
             return acc
         aac, bb = get_until_match_from(ls, ["AgdaInductiveConstructor{⟦}"])
         if not bb:
-            return acc + aac
+            return safe_add(acc, aac)
 
         aa , c = get_back_until_match_from(aac, inline_halters)
-        aa = strip_prefixes(strip_suffixes(aa, unwanted_suffixes), unwanted_prefixes)
-        c = strip_prefixes(c, unwanted_prefixes)
-        if not c:
-            acc = acc + aa
-        else:
-            acc = acc + aa + end_code + begin_inline_code + c
+        aa = strip_prefixes(strip_suffixes(aa, unwanted), unwanted)
+        c = strip_prefixes(c, unwanted)
+        vec_block, newls = process_vector(bb[1:])
+        acc = safe_add(acc, add_end(aa)) + inline(c) + make_array(vec_block)
 
-        vec_block, newbb = process_vector(bb[1:])
-
-        if not newbb:
-            return acc + end_code + start_array + vec_block + end_array
-        if should_be_inlined(newbb[0]):
-            inlined, ls = get_until_match_from(newbb, inline_halters)
-            return process_lines_tr(ls, acc + end_code + start_array + vec_block + end_array + begin_inline_code + inlined + end_code + begin_code)
-        else:
-            return process_lines_tr(newbb, acc + end_code + start_array + vec_block + end_array + begin_code)
+        if should_be_inlined(newls[0]):
+            inl, newls = get_until_match_from(newls, inline_halters)
+            acc = acc + inline(inl)
+        return process_lines_tr(newls, acc)
 
     return process_lines_tr(lines, [])
 
