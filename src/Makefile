@@ -17,13 +17,12 @@ MIDNIGHT=MidnightExample
 VEC_SCRIPT=agda2vec.py
 
 # files that should be postprocessed
-ppNames=Ratify
+ppNames=Ratify Enact
+# Chain \
 # Deleg \
-# Enact \
 # Epoch \
 # Ledger \
-#Chain \
-# NewPP
+# NewPP \
 # Utxo \
 # Utxo/Properties
 

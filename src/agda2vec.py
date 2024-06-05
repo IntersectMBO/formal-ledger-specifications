@@ -217,7 +217,7 @@ def process_vector(lines):
 
 def process_lines(lines):
 
-    inline_halters = deduction + extra_skip + newline + [left_bracket]
+    inline_halters = deduction + extra_skip + newline + [left_bracket, "\\end{code}"]
 
     unwanted = ["%"] + newline + extra_skip
 
