@@ -88,11 +88,12 @@ the transaction body are:
   govStructure : GovStructure
   govStructure = record
     -- TODO: figure out what to do with the hash
-    { TxId = TxId; Network = Network; DocHash = ADHash
+    { TxId = TxId; DocHash = ADHash
     ; crypto = crypto
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams
+    ; globalConstants = globalConstants
     }
 
   open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
