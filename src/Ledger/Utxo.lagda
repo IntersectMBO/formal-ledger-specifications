@@ -431,8 +431,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom (nutxo utxoTemp)
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxoTemp ≡ true   ∙ consumed pp s txb ≡ produced pp s txb
-    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ feesOK pp tx utxoTemp ≡ true           ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ coin mint ≡ 0
 
     -- fulfills/requests stuff
     ∙ fulfills ⊆ dom (frxo utxoTemp)
