@@ -168,7 +168,7 @@ SVGovStructure = record
 instance _ = SVGovStructure
 
 open import Ledger.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
-open import Ledger.Deleg it hiding (PoolParams; DCert)
+open import Ledger.Certs it hiding (PoolParams; DCert)
 
 SVTransactionStructure : TransactionStructure
 SVTransactionStructure = record

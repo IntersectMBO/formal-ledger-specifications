@@ -12,7 +12,7 @@ open import Axiom.Set.Rel th using (Rel ; dom ; dom∈)
 open import Class.DecEq      using (DecEq ; _≟_)
 
 open Theory th    using ( Set ; _⊆_ ; _∈_ ; map ; ∈-map′ )
-open Equivalence  using (to)
+open Equivalence  using (from)
 
 private variable A B : Type
 
@@ -29,15 +29,15 @@ record TotalMapOn {A : Type}(X : Set A)(B : Type) : Type where
   toMap = rel , left-unique-rel
 
   lookup : Σ A (_∈ X) → B
-  lookup (_ , a∈X) = proj₁ (to dom∈ (total-rel a∈X))
+  lookup (_ , a∈X) = proj₁ (from dom∈ (total-rel a∈X))
 
   -- verify that lookup is what we expect
   lookup∈rel : {a : A} (a∈X : a ∈ X) → (a , lookup (a , a∈X)) ∈ rel
-  lookup∈rel a∈X = proj₂ (to dom∈ (total-rel a∈X))
+  lookup∈rel a∈X = proj₂ (from dom∈ (total-rel a∈X))
 
   -- this is useful for proving equalities involving lookup
   rel⇒lookup : {a : A} {a∈dom : a ∈ X} {b : B} → (a , b) ∈ rel → lookup (a , a∈dom) ≡ b
-  rel⇒lookup {a} {a∈dom} ab∈rel = sym (left-unique-rel ab∈rel (proj₂ (to dom∈ (total-rel a∈dom))))
+  rel⇒lookup {a} {a∈dom} ab∈rel = sym (left-unique-rel ab∈rel (proj₂ (from dom∈ (total-rel a∈dom))))
 
 
 module UpdateOn {B : Type} ⦃ _ : DecEq A ⦄ where
@@ -53,7 +53,7 @@ module UpdateOn {B : Type} ⦃ _ : DecEq A ⦄ where
   mapWithKeyOn : {X : Set A}{B' : Type} → (A → B → B') → TotalMapOn X B → TotalMapOn X B'
   mapWithKeyOn f tm .rel              = map (λ{(x , y) → x , f x y}) (rel tm)
   mapWithKeyOn _ tm .left-unique-rel  = mapWithKey-uniq (left-unique-rel tm)
-  mapWithKeyOn _ tm .total-rel a∈X    = ∈-map′ (∈-map′ (proj₂ (to dom∈ ((total-rel tm) a∈X))))
+  mapWithKeyOn _ tm .total-rel a∈X    = ∈-map′ (∈-map′ (proj₂ (from dom∈ ((total-rel tm) a∈X))))
 
   -- Return a new total map which is the same as the given total map except at a.
   update : {X : Set A} → A → B → TotalMapOn X B → TotalMapOn X B

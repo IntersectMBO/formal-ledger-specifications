@@ -2,7 +2,7 @@
 AGDA?=agda
 AGDA_RUN=$(AGDA) --transliterate
 OUT_DIR?=../dist
-LATEX?=latexmk -xelatex -shell-escape # -halt-on-error
+LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
 PRE=$(addprefix $(LATEX_DIR)/,\
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex references.bib)
@@ -34,7 +34,7 @@ $(filter-out $(ppLatexFiles), $(latexFiles)): $(LATEX_DIR)/%.tex: %.lagda
 # Specific rule for postprocessed LaTeX files
 $(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda
 	@echo "Compiling $<"
-	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $<
+	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
 	@echo "Postprocessing $@"
 	$(PYTHON) $(VEC_SCRIPT) $@ $@
 
@@ -44,11 +44,9 @@ $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
 
 define latexToPdf =
     @echo "Generating $@"
-    @echo "latexFiles: " $(latexFiles)
-    @echo "ppLatexFiles: " $(ppLatexFiles)
     $(eval PDF=$(notdir $@))
     mkdir -p $(dir $@)
-    cd $(LATEX_DIR) && $(LATEX) -f -jobname=$(PDF:.pdf=) $(subst $(LATEX_DIR)/,, $<)
+    cd $(LATEX_DIR) && $(LATEX) -jobname=$(PDF:.pdf=) $(subst $(LATEX_DIR)/,, $<)
     mv $(LATEX_DIR)/$(PDF) $@
 endef
 $(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PRE)

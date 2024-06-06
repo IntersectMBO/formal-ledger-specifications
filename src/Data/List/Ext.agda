@@ -1,16 +1,17 @@
 {-# OPTIONS --safe #-}
 module Data.List.Ext where
 
-open import Data.List using (List; [_]; _++_; map; head; drop; concatMap)
+open import Data.List using (List; _++_; map; concatMap; filter)
 open import Data.List.Membership.Propositional using (_∈_)
-open import Data.List.Relation.Unary.All using (All)
+open import Data.List.Membership.Propositional.Properties using (∈-map⁻; ∈-map⁺; ∈-filter⁻; ∈-filter⁺)
 open import Data.Maybe using (Maybe)
 open import Data.Nat using (ℕ)
-open import Function using (_∘_)
+open import Data.Product using (∃-syntax; _×_; _,_; proj₁; proj₂)
+open import Function.Bundles using (_⇔_; mk⇔; Equivalence)
 open import Level using (Level)
-
+open import Relation.Binary.PropositionalEquality using (_≡_)
+open import Relation.Unary using (Decidable)
 open Maybe; open List; open ℕ
-
 private variable
   ℓ : Level
   A B : Set ℓ
@@ -35,3 +36,14 @@ insert x (y ∷ ys) = (x ∷ y ∷ ys) ∷ map (y ∷_) (insert x ys)
 subpermutations : List A → List (List A)
 subpermutations [] = [] ∷ []
 subpermutations (x ∷ xs) = concatMap (insert x) (subpermutations xs) ++ subpermutations xs
+
+module _ {f : A → B} {l : List A} {b} {P : A → Set} {P? : Decidable P} where
+  ∈ˡ-map-filter⁻ : b ∈ map f (filter P? l) → (∃[ a ] a ∈ l × b ≡ f a × P a)
+  ∈ˡ-map-filter⁻ h with ∈-map⁻ f h
+  ... | a , a∈X , _≡_.refl = a , proj₁ (∈-filter⁻ P? a∈X) , _≡_.refl , proj₂ (∈-filter⁻ P? {xs = l} a∈X)
+
+  ∈ˡ-map-filter⁺ : (∃[ a ] a ∈ l × b ≡ f a × P a) → b ∈ map f (filter P? l)
+  ∈ˡ-map-filter⁺ (a , a∈l , _≡_.refl , Pa) = ∈-map⁺ f (∈-filter⁺ P? a∈l Pa)
+
+  ∈ˡ-map-filter : (∃[ a ] a ∈ l × b ≡ f a × P a) ⇔ b ∈ map f (filter P? l)
+  ∈ˡ-map-filter = mk⇔ ∈ˡ-map-filter⁺ ∈ˡ-map-filter⁻

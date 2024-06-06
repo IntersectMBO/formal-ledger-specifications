@@ -18,7 +18,7 @@ open import Ledger.Types.GovStructure
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
-import Ledger.Deleg
+import Ledger.Certs
 import Ledger.TokenAlgebra
 import Ledger.Address
 
@@ -96,7 +96,7 @@ the transaction body are:
     }
 
   open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
-  open Ledger.Deleg             govStructure public
+  open Ledger.Certs             govStructure public
 \end{code}
 \begin{NoConway}
 \emph{Derived types}

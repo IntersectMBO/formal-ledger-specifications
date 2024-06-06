@@ -211,21 +211,21 @@ instance
 
 \end{code}
 \begin{code}
-updateCertDeposits : PParams → List DCert → Deposits → Deposits
+certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
+certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
+certDeposit (regpool c _) {pp}  = ❴ PoolDeposit       c , pp .poolDeposit  ❵
+certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
+certDeposit _                   = ∅
+
+certRefund : DCert → ℙ DepositPurpose
+certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+certRefund _              = ∅
+
+updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateCertDeposits _   []              deposits = deposits
 updateCertDeposits pp  (cert ∷ certs)  deposits
-  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
-  where
-  certDeposit : DCert → PParams → Deposits
-  certDeposit (delegate  c _ _ v)  _   = ❴ CredentialDeposit  c , v                ❵
-  certDeposit (regpool   c _)      pp  = ❴ PoolDeposit        c , pp .poolDeposit  ❵
-  certDeposit (regdrep   c v _)    _   = ❴ DRepDeposit        c , v                ❵
-  certDeposit _                    _   = ∅
-
-  certRefund :  DCert → ℙ DepositPurpose
-  certRefund (dereg      c)  = ❴ CredentialDeposit  c ❵
-  certRefund (deregdrep  c)  = ❴ DRepDeposit        c ❵
-  certRefund _               = ∅
+  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
 
 updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
 updateProposalDeposits []        _     _      deposits  = deposits
@@ -238,6 +238,10 @@ updateDeposits pp txb = updateCertDeposits pp txcerts
                         ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
 \end{code}
 \begin{code}[hide]
+  where open TxBody txb
+
+proposalDepositsΔ : List GovProposal → PParams → TxBody → DepositPurpose ⇀ Coin
+proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActionDeposit) ∅
   where open TxBody txb
 \end{code}
 \begin{code}

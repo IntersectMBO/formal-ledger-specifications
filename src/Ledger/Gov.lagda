@@ -15,7 +15,7 @@ open import Axiom.Set.Properties using (∃?-sublist-⇔)
 
 open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
-open import Ledger.Ratify txs
+open import Ledger.Ratify txs hiding (vote)
 
 open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties
@@ -58,11 +58,9 @@ private variable
   Γ : GovEnv
   s s' : GovState
   aid : GovActionID
-  role : GovRole
-  cred : Credential
   voter : Voter
   v : Vote
-  c d : Coin
+  d : Coin
   addr : RwdAddr
   a : GovAction
   prev : NeedsHash a
@@ -76,11 +74,15 @@ addVote s aid voter v = map modifyVotes s
   where modifyVotes = λ (gid , s') → gid , record s'
           { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
 
+ActionId×ActionState : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
+                 → GovActionID × GovActionState
+ActionId×ActionState e aid addr a prev = (aid , record
+  { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
-addAction s e aid addr a prev = s ∷ʳ (aid , record
-  { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+addAction s e aid addr a prev = s ∷ʳ ActionId×ActionState e aid addr a prev
 
 validHFAction : GovProposal → GovState → EnactState → Set
 validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =

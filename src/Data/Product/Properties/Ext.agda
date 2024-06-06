@@ -45,3 +45,9 @@ private variable
   [ Prod.map₂ inj₁ , Prod.map₂ inj₂ ]′
   [ (λ _ → P.refl) , (λ _ → P.refl) ]
   (uncurry λ _ → [ (λ _ → P.refl) , (λ _ → P.refl) ])
+
+×-⇔-swap : (A × B × C) ⇔ (B × A × C)
+×-⇔-swap {A = A}{B = B}{C = C} = let open EquationalReasoning in
+  (A × B × C) ∼⟨ mk⇔ (λ x → (proj₁ ∘ proj₂) x , proj₁ x , (proj₂ ∘ proj₂) x)
+                     (λ x → (proj₁ ∘ proj₂) x , proj₁ x , (proj₂ ∘ proj₂) x) ⟩
+  (B × A × C) ∎

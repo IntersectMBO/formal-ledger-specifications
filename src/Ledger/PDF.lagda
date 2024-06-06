@@ -30,7 +30,7 @@ open import Ledger.PParams
 
 open import Ledger.Types.GovStructure
 open import Ledger.GovernanceActions
-open import Ledger.Deleg
+open import Ledger.Certs
 
 open import Ledger.TokenAlgebra
 open import Ledger.TokenAlgebra.ValueSet
@@ -73,7 +73,7 @@ open import Ledger.PDF.ConwayBootstrap
 \include{Ledger/Utxo}
 \include{Ledger/Utxow}
 \include{Ledger/Gov}
-\include{Ledger/Deleg}
+\include{Ledger/Certs}
 \include{Ledger/Ledger}
 \include{Ledger/Enact}
 \include{Ledger/Ratify}

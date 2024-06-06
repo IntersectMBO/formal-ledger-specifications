@@ -15,8 +15,11 @@ open Theory th
 open import Axiom.Set.Properties th
 
 import Data.Product
+open import Data.List.Ext.Properties using (_⊎-cong_)
 open import Data.These hiding (map)
 open import Data.Maybe.Base using () renaming (map to map?)
+open import Data.Product.Properties using (,-injectiveˡ; ×-≡,≡→≡)
+open import Data.Product.Properties.Ext using (∃-cong′; ∃-distrib-⊎')
 open import Relation.Unary using (Decidable)
 open import Relation.Nullary using (yes; no)
 open import Relation.Binary using (_Preserves_⟶_)
@@ -80,28 +83,69 @@ mapˡ f R = map (Data.Product.map₁ f) R
 mapʳ : (B → B') → Rel A B → Rel A B'
 mapʳ f R = map (Data.Product.map₂ f) R
 
-dom∈ : ∀ {a} → a ∈ dom R ⇔ (∃[ b ] (a , b) ∈ R)
+dom∈ : ∀ {a} → (∃[ b ] (a , b) ∈ R) ⇔ a ∈ dom R
 dom∈ {R = R} {a} =
-  a ∈ dom R                       ∼⟨ R.SK-sym ∈-map ⟩
-  (∃[ a₁ ] a ≡ proj₁ a₁ × a₁ ∈ R) ∼⟨ mk⇔ (λ { ((_ , y) , refl , ay∈R) → y , ay∈R })
-                                         (λ (x , ax∈R) → (a , x) , refl , ax∈R) ⟩
-  (∃[ b ] (a , b) ∈ R)            ∎
+  (∃[ b ] (a , b) ∈ R)            ∼⟨ R.SK-sym (mk⇔ (λ { ((_ , y) , refl , ay∈R) → y , ay∈R })
+                                              (λ (x , ax∈R) → (a , x) , refl , ax∈R)) ⟩
+  (∃[ a₁ ] a ≡ proj₁ a₁ × a₁ ∈ R) ∼⟨ ∈-map ⟩
+
+  a ∈ dom R                       ∎
   where open R.EquationalReasoning
 
+module _ {x : A} {y : B} where
+  module _ {a : A} where
+    ∈-dom-singleton-pair : a ≡ x ⇔ a ∈ dom ❴ x , y ❵
+    ∈-dom-singleton-pair = mk⇔ (λ a≡x → to dom∈ (y , to ∈-singleton (×-≡,≡→≡ (a≡x , refl))))
+                               (,-injectiveˡ ∘ from ∈-singleton ∘ proj₂ ∘ from dom∈)
+
+    dom-single→single : a ∈ dom ❴ x , y ❵ → a ∈ ❴ x ❵
+    dom-single→single = to ∈-singleton ∘ from ∈-dom-singleton-pair
+
+    single→dom-single : a ∈ ❴ x ❵ → a ∈ dom ❴ x , y ❵
+    single→dom-single = to ∈-dom-singleton-pair ∘ from ∈-singleton
+
+  dom-single≡single : dom ❴ x , y ❵ ≡ᵉ ❴ x ❵
+  dom-single≡single = dom-single→single , single→dom-single
+
+∈-dom : {a : A × B} → a ∈ R → proj₁ a ∈ dom R
+∈-dom {a = a} a∈ = to ∈-map (a , (refl , a∈))
+
+∉-dom∅ : {a : A} → a ∉ dom{A}{B} ∅
+∉-dom∅ {a} a∈dom∅ = ⊥-elim $ ∉-∅ $ proj₂ $ (from dom∈) a∈dom∅
+
+dom∅ : dom{A}{B} ∅ ≡ᵉ ∅
+dom∅ = ⊥-elim ∘ ∉-dom∅ , ∅-minimum (dom ∅)
+
+dom∪ : dom (R ∪ R') ≡ᵉ dom R ∪ dom R'
+dom∪ {R = R} {R'} = from ≡ᵉ⇔≡ᵉ' λ a →
+  a ∈ dom (R ∪ R')                           ∼⟨ R.SK-sym dom∈ ⟩
+  (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ ∃-cong′ (R.SK-sym ∈-∪) ⟩
+  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ↔⟨ ∃-distrib-⊎' ⟩
+  (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ dom∈ ⊎-cong dom∈ ⟩
+  (a ∈ dom R ⊎ a ∈ dom R')                   ∼⟨ ∈-∪ ⟩
+  a ∈ dom R ∪ dom R'                         ∎
+  where open R.EquationalReasoning
+
+dom⊆ : dom{A}{B} Preserves _⊆_ ⟶ _⊆_
+dom⊆ R⊆R' a∈ = to dom∈ $ proj₁ (from dom∈ a∈) , R⊆R' (proj₂ (from dom∈ a∈))
+
+dom-cong : R ≡ᵉ R' → dom R ≡ᵉ dom R'
+dom-cong RR' = (dom⊆ (proj₁ RR')) , (dom⊆ (proj₂ RR'))
+
 dom-⊆mapʳ : {f : B → B'} → dom R ⊆ dom (mapʳ f R)
-dom-⊆mapʳ {f = f} {a} a∈domR with to dom∈ a∈domR
-... | b , ab∈R = from dom∈ (f b , to ∈-map ((a , b) , refl , ab∈R))
+dom-⊆mapʳ {f = f} {a} a∈domR with from dom∈ a∈domR
+... | b , ab∈R = to dom∈ (f b , to ∈-map ((a , b) , refl , ab∈R))
 
 dom-mapʳ⊆ : {f : B → B'} → dom (mapʳ f R) ⊆ dom R
-dom-mapʳ⊆ a∈dmR with to dom∈ a∈dmR
+dom-mapʳ⊆ a∈dmR with from dom∈ a∈dmR
 ... | _ , p∈map with from ∈-map p∈map
-... | (_ , b) , refl , ab∈R = from dom∈ (b , ab∈R)
+... | (_ , b) , refl , ab∈R = to dom∈ (b , ab∈R)
 
 mapʳ-dom : {f : B → B'} → dom R ≡ᵉ dom (mapʳ f R)
 mapʳ-dom = dom-⊆mapʳ , dom-mapʳ⊆
 
 dom-∅ : dom R ⊆ ∅ → R ≡ᵉ ∅
-dom-∅ dom⊆∅ = ∅-least (λ {x} x∈R → ⊥-elim $ ∉-∅ $ dom⊆∅ $ from dom∈ (-, x∈R))
+dom-∅ dom⊆∅ = ∅-least (λ {x} x∈R → ⊥-elim $ ∉-∅ $ dom⊆∅ $ to dom∈ (-, x∈R))
 
 mapPartialLiftKey : (A → B → Maybe B') → A × B → Maybe (A × B')
 mapPartialLiftKey f (k , v) = map? (k ,_) (f k v)
@@ -158,6 +202,7 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-comp-dom a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = proj₁ $ ∈⇔P h
 
+
   res-comp-domᵐ : dom (R ∣ X ᶜ) ⊆ dom R
   res-comp-domᵐ a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = ∈-map⁺'' (proj₂ (∈⇔P h))
@@ -173,6 +218,15 @@ module Restriction (sp-∈ : spec-∈ A) where
 
   res-∅ᶜ : R ∣ ∅ ᶜ ≡ᵉ R
   res-∅ᶜ = ex-⊆ , λ a∈R → ∈⇔P (∉-∅ , a∈R)
+
+  ∈-resᶜ-dom⁻ : ∀ {a} → a ∈ dom (R ∣ X ᶜ) → a ∉ X × ∃[ b ] (a , b) ∈ R
+  ∈-resᶜ-dom⁻ a∈ = res-comp-dom a∈ , from dom∈ (dom⊆ ex-⊆ a∈)
+
+  ∈-resᶜ-dom⁺ : ∀ {a} → a ∉ X × ∃[ b ] (a , b) ∈ R → a ∈ dom (R ∣ X ᶜ)
+  ∈-resᶜ-dom⁺ (a∉X , (b , ab∈R)) = to dom∈ (b , (∈⇔P (a∉X , ab∈R)))
+
+  ∈-resᶜ-dom : ∀ {a} → a ∈ dom (R ∣ X ᶜ) ⇔ (a ∉ X × ∃[ b ] (a , b) ∈ R)
+  ∈-resᶜ-dom = mk⇔ ∈-resᶜ-dom⁻ ∈-resᶜ-dom⁺
 
   res-ex-∪ : Decidable (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
   res-ex-∪ ∈X? = ∪-⊆ res-⊆ ex-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where
@@ -203,8 +257,8 @@ module Restriction (sp-∈ : spec-∈ A) where
 
   res-dom-comm∩⊆ : {m : Rel A B} {m' : Rel A C} → dom m ∩ dom m' ⊆ dom (m ∣ dom m')
   res-dom-comm∩⊆ {m = m} {m' = m'} x with from ∈-∩ x
-  ... | a∈dm , a∈dm' with to dom∈ a∈dm | to dom∈ a∈dm'
-  ... | b , ab∈m | c , ac∈m = from dom∈ (b , to ∈-filter (a∈dm' , ab∈m))
+  ... | a∈dm , a∈dm' with from dom∈ a∈dm | from dom∈ a∈dm'
+  ... | b , ab∈m | c , ac∈m = to dom∈ (b , to ∈-filter (a∈dm' , ab∈m))
 
   res-dom-comm' : {m : Rel A B} {m' : Rel A C} → dom (m ∣ dom m') ≡ᵉ dom m ∩ dom m'
   res-dom-comm' = res-dom-comm⊆∩ , res-dom-comm∩⊆

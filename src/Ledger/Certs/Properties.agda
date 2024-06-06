@@ -8,10 +8,10 @@ open import Relation.Nullary.Decidable
 
 open import Tactic.ReduceDec
 
-module Ledger.Deleg.Properties (gs : _) (open GovStructure gs) where
+module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
-open import Ledger.Deleg gs
+open import Ledger.Certs gs
 
 open Computational ⦃...⦄
 
