@@ -20,7 +20,6 @@ VEC_SCRIPT=agda2vec.py
 ppNames=Chain Enact Ratify Ledger
 # Deleg \
 # Epoch \
-# Ledger \
 # NewPP \
 # Utxo \
 # Utxo/Properties

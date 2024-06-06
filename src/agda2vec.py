@@ -144,13 +144,12 @@ def format_vector(vector_block):
     return format_vector_tr(vector_block, [])
 
 
-deduction = ["AgdaFunction{───────────────────────────────"]
-extra_skip = ["[\\AgdaEmptyExtraSkip]"]
-newline = ["\\\\"]
-
-begin_code = ["\\begin{code}%"]
-begin_code_inline = ["\\begin{code}[inline]%"]
-end_code = ["\\end{code}%"]
+deduction = "AgdaFunction{───────────────────────────────"
+extra_skip = "[\\AgdaEmptyExtraSkip]"
+newline = "\\\\"
+begin_code = "\\begin{code}"
+begin_code_inline = "\\begin{code}[inline]"
+end_code = "\\end{code}"
 
 # N.B. It's important that left_bracket includes the trailing curly brace, to avoid matching
 # constructors, while right_bracket does not include the trailing curly brace, so that the 
@@ -162,28 +161,28 @@ def inline(l):
     #print("l: ", l)
     if not l:
         return []
-    return begin_code_inline + l + end_code
+    return [begin_code_inline] + l + [end_code]
 
 def append_begin(l):
     if not l:
         return []
-    if l[-1].endswith("\\begin{code}"):
+    if l[-1].endswith(begin_code):
         return l
-    return l + begin_code
+    return l + [begin_code]
 
 def add_begin(l):
     if not l:
         return []
-    if l[-1].startswith("\\begin{code}"):
+    if l[-1].startswith(begin_code):
         return l
-    return begin_code + l
+    return [begin_code] + l
 
 def add_end(l):
     if not l:
         return []
-    if l[-1].endswith("\\end{code}%"):
+    if l[-1].endswith(end_code):
         return l
-    return l + end_code
+    return l + [end_code]
 
 
 def safe_add(l1, l2):
@@ -191,9 +190,9 @@ def safe_add(l1, l2):
         return l2
     if not l2:
         return l1
-    if (not (l1[-1].endswith("\\end{code}%") or l1[-1].endswith("%END VEC%"))) and l2[0].startswith("\\begin{code}"):
+    if (not (l1[-1].endswith(end_code) or l1[-1].endswith("%END VEC%"))) and l2[0].startswith(begin_code):
         return add_end(l1) + l2
-    if (l1[-1].endswith("\\end{code}%") or l1[-1].endswith("%END VEC%")) and not l2[0].startswith("\\begin{code}"):
+    if (l1[-1].endswith(end_code) or l1[-1].endswith("%END VEC%")) and not l2[0].startswith(begin_code):
         return l1 + add_begin(l2)
     return l1 + l2            
 
@@ -218,25 +217,27 @@ def process_vector(lines):
 
 def process_lines(lines):
 
-    inline_halters = deduction + extra_skip + newline + [left_bracket, "\\end{code}", "\\AgdaFunction{∙}"]
+    inline_halt_back = [deduction, extra_skip, newline, left_bracket, end_code]
+    inline_halt = inline_halt_back + ["\\AgdaFunction{∙}"]
 
-    unwanted = ["%"] + newline + extra_skip
+    unwanted = ["%", newline, extra_skip]
 
     def process_lines_tr(ls, acc):
         if not ls:
             return acc
-        aac, bb = get_until_match_from(ls, ["AgdaInductiveConstructor{⟦}"])
+        aac, bb = get_until_match_from(ls, [left_bracket])
         if not bb:
             return safe_add(acc, aac)
 
-        aa , c = get_back_until_match_from(aac, inline_halters)
-        aa = strip_prefixes(strip_suffixes(aa, unwanted), unwanted)
+        aa , c = get_back_until_match_from(aac, inline_halt_back)
+        aa = strip_suffixes(aa, unwanted)
+        #aa = strip_prefixes(strip_suffixes(aa, unwanted), unwanted)
         c = strip_prefixes(c, unwanted)
         vec_block, newls = process_vector(bb[1:])
         acc = safe_add(acc, add_end(aa)) + inline(c) + make_array(vec_block)
 
         if should_be_inlined(newls[0]):
-            inl, newls = get_until_match_from(newls, inline_halters)
+            inl, newls = get_until_match_from(newls, inline_halt)
             acc = acc + inline(inl)
         return process_lines_tr(newls, acc)
 
