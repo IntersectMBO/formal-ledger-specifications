@@ -112,6 +112,171 @@ paramsWellFormed pp =
                    ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
   where open PParams pp
 \end{code}
+\begin{code}[hide]
+instance
+  unquoteDecl DecEq-DrepThresholds = derive-DecEq
+    ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
+  unquoteDecl DecEq-PoolThresholds = derive-DecEq
+    ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
+  unquoteDecl DecEq-PParams        = derive-DecEq
+    ((quote PParams , DecEq-PParams) ∷ [])
+  unquoteDecl DecEq-PParamGroup    = derive-DecEq
+    ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
+
+module PParamsUpdate where
+  record PParamsUpdate : Set where
+    field
+          maxBlockSize maxTxSize        : Maybe ℕ
+          maxHeaderSize maxValSize      : Maybe ℕ
+          maxCollateralInputs           : Maybe ℕ
+          maxTxExUnits maxBlockExUnits  : Maybe ExUnits
+          pv                            : Maybe ProtVer -- retired, keep for now
+          a b                           : Maybe ℕ
+          keyDeposit                    : Maybe Coin
+          poolDeposit                   : Maybe Coin
+          coinsPerUTxOByte              : Maybe Coin
+          minFeeRefScriptCoinsPerByte   : Maybe ℚ
+          prices                        : Maybe Prices
+          minUTxOValue                  : Maybe Coin -- retired, keep for now
+          a0                            : Maybe ℚ
+          Emax                          : Maybe Epoch
+          nopt                          : Maybe ℕ
+          collateralPercentage          : Maybe ℕ
+          costmdls                      : Maybe CostModel
+          drepThresholds                : Maybe DrepThresholds
+          poolThresholds                : Maybe PoolThresholds
+          govActionLifetime             : Maybe ℕ
+          govActionDeposit drepDeposit  : Maybe Coin
+          drepActivity                  : Maybe Epoch
+          ccMinSize ccMaxTermLength     : Maybe ℕ
+  
+  paramsUpdateWellFormed : PParamsUpdate → Set
+  paramsUpdateWellFormed ppu =
+       just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
+                         ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
+                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+    where open PParamsUpdate ppu
+  
+  paramsUpdateWellFormed? : ( u : PParamsUpdate ) → Dec (paramsUpdateWellFormed u)
+  paramsUpdateWellFormed? u = ¿ paramsUpdateWellFormed u ¿
+  
+  modifiesNetworkGroup : PParamsUpdate → Bool
+  modifiesNetworkGroup ppu = let open PParamsUpdate ppu in
+    or
+      ( is-just maxBlockSize
+      ∷ is-just maxTxSize
+      ∷ is-just maxHeaderSize
+      ∷ is-just maxValSize
+      ∷ is-just maxCollateralInputs
+      ∷ is-just maxTxExUnits
+      ∷ is-just maxBlockExUnits
+      ∷ is-just pv
+      ∷ [])
+  
+  modifiesEconomicGroup : PParamsUpdate → Bool
+  modifiesEconomicGroup ppu = let open PParamsUpdate ppu in
+    or
+      ( is-just a
+      ∷ is-just b
+      ∷ is-just keyDeposit
+      ∷ is-just poolDeposit
+      ∷ is-just coinsPerUTxOByte
+      ∷ is-just minFeeRefScriptCoinsPerByte
+      ∷ is-just prices
+      ∷ is-just minUTxOValue
+      ∷ [])
+  
+  modifiesTechnicalGroup : PParamsUpdate → Bool
+  modifiesTechnicalGroup ppu = let open PParamsUpdate ppu in
+    or
+      ( is-just a0
+      ∷ is-just Emax
+      ∷ is-just nopt
+      ∷ is-just collateralPercentage
+      ∷ is-just costmdls
+      ∷ [])
+  
+  modifiesGovernanceGroup : PParamsUpdate → Bool
+  modifiesGovernanceGroup ppu = let open PParamsUpdate ppu in
+    or
+      ( is-just drepThresholds
+      ∷ is-just poolThresholds
+      ∷ is-just govActionLifetime
+      ∷ is-just govActionDeposit
+      ∷ is-just drepDeposit
+      ∷ is-just drepActivity
+      ∷ is-just ccMinSize
+      ∷ is-just ccMaxTermLength
+      ∷ [])
+  
+  modifiedUpdateGroups : PParamsUpdate → ℙ PParamGroup
+  modifiedUpdateGroups ppu =
+    ( modifiesNetworkGroup    ?═⇒ NetworkGroup
+    ∪ modifiesEconomicGroup   ?═⇒ EconomicGroup
+    ∪ modifiesTechnicalGroup  ?═⇒ TechnicalGroup
+    ∪ modifiesGovernanceGroup ?═⇒ GovernanceGroup
+    )
+    where
+      _?═⇒_ : (PParamsUpdate → Bool) → PParamGroup → ℙ PParamGroup
+      pred ?═⇒ grp = if pred ppu then ❴ grp ❵ else ∅
+  
+  _?↗_ : ∀ {A : Set} → Maybe A → A → A
+  just x ?↗ _ = x
+  nothing ?↗ x = x
+  
+  ≡-update : ∀ {A : Set} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x ⇔ (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
+  ≡-update {u} {p} {x} = mk⇔ to from
+    where
+      to : ∀ {A} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x → (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
+      to {u = just x} refl = inj₁ refl
+      to {u = nothing} refl = inj₂ (refl , refl)
+  
+      from : ∀ {A} {u : Maybe A} {p : A} {x : A} → u ≡ just x ⊎ (p ≡ x × u ≡ nothing) → u ?↗ p ≡ x
+      from (inj₁ refl) = refl
+      from (inj₂ (refl , refl)) = refl
+  
+  applyPParamsUpdate : PParams → PParamsUpdate → PParams
+  applyPParamsUpdate pp ppu =
+    record
+      { maxBlockSize                = U.maxBlockSize ?↗ P.maxBlockSize
+      ; maxTxSize                   = U.maxTxSize ?↗ P.maxTxSize
+      ; maxHeaderSize               = U.maxHeaderSize ?↗ P.maxHeaderSize
+      ; maxValSize                  = U.maxValSize ?↗ P.maxValSize
+      ; maxCollateralInputs         = U.maxCollateralInputs ?↗ P.maxCollateralInputs
+      ; maxTxExUnits                = U.maxTxExUnits ?↗ P.maxTxExUnits
+      ; maxBlockExUnits             = U.maxBlockExUnits ?↗ P.maxBlockExUnits
+      ; pv                          = U.pv ?↗ P.pv
+      ; a                           = U.a ?↗ P.a
+      ; b                           = U.b ?↗ P.b
+      ; keyDeposit                  = U.keyDeposit ?↗ P.keyDeposit
+      ; poolDeposit                 = U.poolDeposit ?↗ P.poolDeposit
+      ; coinsPerUTxOByte            = U.coinsPerUTxOByte ?↗ P.coinsPerUTxOByte
+      ; minFeeRefScriptCoinsPerByte = U.minFeeRefScriptCoinsPerByte ?↗ P.minFeeRefScriptCoinsPerByte
+      ; prices                      = U.prices ?↗ P.prices
+      ; minUTxOValue                = U.minUTxOValue ?↗ P.minUTxOValue
+      ; a0                          = U.a0 ?↗ P.a0
+      ; Emax                        = U.Emax ?↗ P.Emax
+      ; nopt                        = U.nopt ?↗ P.nopt
+      ; collateralPercentage        = U.collateralPercentage ?↗ P.collateralPercentage
+      ; costmdls                    = U.costmdls ?↗ P.costmdls
+      ; drepThresholds              = U.drepThresholds ?↗ P.drepThresholds
+      ; poolThresholds              = U.poolThresholds ?↗ P.poolThresholds
+      ; govActionLifetime           = U.govActionLifetime ?↗ P.govActionLifetime
+      ; govActionDeposit            = U.govActionDeposit ?↗ P.govActionDeposit
+      ; drepDeposit                 = U.drepDeposit ?↗ P.drepDeposit
+      ; drepActivity                = U.drepActivity ?↗ P.drepActivity
+      ; ccMinSize                   = U.ccMinSize ?↗ P.ccMinSize
+      ; ccMaxTermLength             = U.ccMaxTermLength ?↗ P.ccMaxTermLength
+      }
+    where
+      open module P = PParams pp
+      open module U = PParamsUpdate ppu
+
+  instance
+    unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
+      ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
+
+\end{code}
 \end{AgdaMultiCode}
 \caption{Protocol parameter declarations}
 \label{fig:protocol-parameter-declarations}
@@ -166,16 +331,6 @@ function \paramsWellFormed. It performs some sanity checks on protocol
 parameters.
 
 \begin{code}[hide]
-instance
-  unquoteDecl DecEq-DrepThresholds = derive-DecEq
-    ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
-  unquoteDecl DecEq-PoolThresholds = derive-DecEq
-    ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
-  unquoteDecl DecEq-PParams        = derive-DecEq
-    ((quote PParams , DecEq-PParams) ∷ [])
-  unquoteDecl DecEq-PParamGroup    = derive-DecEq
-    ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
-
 instance
   pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
   pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)

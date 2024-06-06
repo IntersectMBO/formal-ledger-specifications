@@ -155,7 +155,68 @@ instance
   Convertible-RwdAddr = autoConvertible
 
   Convertible-PParamsUpdate : Convertible PParamsUpdate F.PParamsUpdate
-  Convertible-PParamsUpdate = record { to = id ; from = id }
+  Convertible-PParamsUpdate = λ where
+    .to x   → let open PParamsUpdate.PParamsUpdate x in
+      record
+        { a = to a
+        ; b = to b
+        ; maxBlockSize = to maxBlockSize
+        ; maxTxSize = to maxTxSize
+        ; maxHeaderSize = to maxHeaderSize
+        ; maxValSize = to maxValSize
+        ; minUTxOValue = to minUTxOValue
+        ; poolDeposit = to poolDeposit
+        ; keyDeposit = to keyDeposit
+        ; Emax = to Emax
+        ; nopt = to nopt
+        ; pv = to pv
+        ; poolVotingThresholds = to poolThresholds
+        ; drepVotingThresholds = to drepThresholds
+        ; govActionLifetime = to govActionLifetime
+        ; govActionDeposit = to govActionDeposit
+        ; drepDeposit = to drepDeposit
+        ; drepActivity = to drepActivity
+        ; ccMinSize = to ccMinSize
+        ; ccMaxTermLength = to ccMaxTermLength
+        ; costmdls = to costmdls
+        ; prices = to prices
+        ; maxTxExUnits = to maxTxExUnits
+        ; maxBlockExUnits = to maxBlockExUnits
+        ; coinsPerUTxOByte = to coinsPerUTxOByte
+        ; maxCollateralInputs = to maxCollateralInputs
+        }
+    .from x → let open F.PParamsUpdate x in
+      record
+        { maxBlockSize = from maxBlockSize
+        ; maxTxSize = from maxTxSize
+        ; maxHeaderSize = from maxHeaderSize
+        ; maxValSize = from maxValSize
+        ; maxCollateralInputs = from maxCollateralInputs
+        ; maxTxExUnits = from maxTxExUnits
+        ; maxBlockExUnits = from maxBlockExUnits
+        ; pv = from pv
+        ; a = from a
+        ; b = from b
+        ; keyDeposit = from keyDeposit
+        ; poolDeposit = from poolDeposit
+        ; coinsPerUTxOByte = from coinsPerUTxOByte
+        ; minFeeRefScriptCoinsPerByte = nothing
+        ; prices = from prices
+        ; minUTxOValue = from minUTxOValue
+        ; a0 = nothing
+        ; Emax = from Emax
+        ; nopt = from nopt
+        ; collateralPercentage = nothing
+        ; costmdls = from costmdls
+        ; drepThresholds = from drepVotingThresholds
+        ; poolThresholds = from poolVotingThresholds
+        ; govActionLifetime = from govActionLifetime
+        ; govActionDeposit = from govActionDeposit
+        ; drepDeposit = from drepDeposit
+        ; drepActivity = from drepActivity
+        ; ccMinSize = from ccMinSize
+        ; ccMaxTermLength = from ccMaxTermLength
+        }
 
 open import Ledger.Certs.Properties govStructure
 
