@@ -17,11 +17,7 @@ MIDNIGHT=MidnightExample
 VEC_SCRIPT=agda2vec.py
 
 # files that should be postprocessed
-ppNames=Chain Enact Ratify Ledger
-# Deleg \
-# Epoch \
-# NewPP \
-# Utxo \
+ppNames=Chain Deleg Enact Epoch Ratify Ledger NewPP
 # Utxo/Properties
 
 ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))

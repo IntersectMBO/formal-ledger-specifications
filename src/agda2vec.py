@@ -121,35 +121,16 @@ def get_back_until_match_from(ls1, ls2):
 
 ### Special Helper functions #########################################################################
 
-
-def inline_text(element):
-    return ["\\begin{code}[inline]\\text{"] + element + ["}\\end{code}\\\\%"]
-
-def make_array(ls):
-    return ["%START VEC%", "~\\(\\left(\\begin{array}{c}%"] + ls + ["\\end{array}\\right)\\)~", "%END VEC%"]
-
-def should_be_inlined(str):
-    
-    inline_patterns = ["\\AgdaOperator{\AgdaFunction{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⊢}}", "\\AgdaOperator{\\AgdaDatatype{⇀⦇}}\\AgdaSpace{}%"]
-    return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in deduction)
-
-def format_vector(vector_block):
-    unwanted_suffixes = ["\\AgdaSpace{}", "%"]
-    def format_vector_tr(vector_block, acc):
-        if not vector_block:
-            return acc
-        next_element, vector_block = get_until_match_from(vector_block, ["AgdaInductiveConstructor{,}"])
-        next = strip_suffixes(next_element, unwanted_suffixes)
-        return format_vector_tr(vector_block[1:], acc + inline_text(next))
-    return format_vector_tr(vector_block, [])
-
-
 deduction = "AgdaFunction{───────────────────────────────"
 extra_skip = "[\\AgdaEmptyExtraSkip]"
 newline = "\\\\"
 begin_code = "\\begin{code}"
 begin_code_inline = "\\begin{code}[inline]"
 end_code = "\\end{code}"
+entailment1 = "\\AgdaFunction{⊢}"
+sts1 = "\\AgdaFunction{⇀⦇}"
+entailment2 = "\\AgdaDatatype{⊢}"
+sts2 = "\\AgdaDatatype{⇀⦇}"
 
 # N.B. It's important that left_bracket includes the trailing curly brace, to avoid matching
 # constructors, while right_bracket does not include the trailing curly brace, so that the 
@@ -157,8 +138,55 @@ end_code = "\\end{code}"
 left_bracket = "AgdaInductiveConstructor{⟦}"
 right_bracket = "AgdaInductiveConstructor{⟧"
 
+def inline_text(element):
+    if not element:
+        return []
+    return ["\\begin{code}[inline]\\text{"] + element + ["}\\end{code}\\\\"]
+
+def should_be_inlined(str):
+    inline_patterns = [entailment1, entailment2 , sts1, sts2]
+    return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in [deduction])
+
+def make_array(ls):
+    if not ls:
+        return []
+    return ["%START VEC%", "\\(\\left(\\begin{array}{c}%"] + ls + ["\\end{array}\\right)\\)", "%END VEC%"]
+
+def make_inner_array(ls):
+    if not ls:
+        return []
+    ls = strip_suffixes(ls, ["%"])
+    return ["\\left(\\begin{array}{c}"] + ls + ["\\end{array}\\right)"]
+
+def format_vector(vector_block):
+    if not vector_block:
+        return []
+    unwanted_suffixes = [newline, "\\<%", "%", "\\>[.][@{}l@{}]\\<[250I]"]
+    element_halt = ["AgdaInductiveConstructor{,}", "\\left(\\begin{array}{c}"]
+    def format_vector_tr(vector_block, acc):
+        if not vector_block:
+            return acc
+        next_element, vector_block = get_until_match_from(vector_block, element_halt)
+        next_element = [ remove_suffixes(x, ["\\AgdaSpace{}%"]) for x in next_element]
+        next = strip_suffixes(next_element, unwanted_suffixes)
+
+        if next == [newline]:
+            next = []
+        else:
+            next = inline_text(next)
+
+        if vector_block and "\\left(\\begin{array}{c}" in vector_block[0]:
+            return format_vector_tr(vector_block[1:], acc + next + [vector_block[0], newline])
+        return format_vector_tr(vector_block[1:], acc + next)
+
+    return format_vector_tr(vector_block, [])
+
+def flatten(l):
+    if not l:
+        return ""
+    return l[0] + flatten(l[1:])
+
 def inline(l):
-    #print("l: ", l)
     if not l:
         return []
     return [begin_code_inline] + l + [end_code]
@@ -196,18 +224,19 @@ def safe_add(l1, l2):
         return l1 + add_begin(l2)
     return l1 + l2            
 
+def get_vector_block(lines, acc):
+    if not lines:   
+        return acc, []
+    if left_bracket in lines[0]:  # this must be an inner vector
+        vec_block, nextlines = get_vector_block(lines[1:], [])
+        return get_vector_block(nextlines, acc + [flatten(make_inner_array(format_vector(vec_block)))])
+    if right_bracket in lines[0]:
+        return acc, lines[1:]
+    else:
+        return get_vector_block(lines[1:], acc + [lines[0]])
+
 
 def process_vector(lines):
-    def get_vector_block(lines, acc):
-        if not lines:
-            return acc, []
-        if left_bracket in lines[0]:  # this must be an inner vector
-            vec_block, nextlines = process_vector(lines[1:])
-            return get_vector_block(nextlines, acc + vec_block)
-        if right_bracket in lines[0]:
-            return acc, lines[1:]
-        else:
-            return get_vector_block(lines[1:], acc + [lines[0]])
     vec_block, nextlines = get_vector_block(lines, [])
     return format_vector(vec_block), nextlines
 
@@ -217,11 +246,12 @@ def process_vector(lines):
 
 def process_lines(lines):
 
-    inline_halt_back = [deduction, extra_skip, newline, left_bracket, end_code]
+    inline_halt_back = [deduction, extra_skip, newline, left_bracket, begin_code, end_code, "\\>[6][@{}l@{\\AgdaIndent{0}}]%"]
     inline_halt = inline_halt_back + ["\\AgdaFunction{∙}"]
 
-    unwanted = ["%", newline, extra_skip]
-
+    unwanted = ["%", begin_code + "%", newline, extra_skip, "\\>[6]", "\\>[6][@{}l@{\\AgdaIndent{0}}", "\>[4][@{}l@{\AgdaIndent{0}}]%"]
+    unwanted_inl = unwanted + ["\\<"] #, "\\>[.][@{}l@{}]\\<[1449I]%", "\\>[.][@{}l@{}]\\<[1415I]%"]
+    
     def process_lines_tr(ls, acc):
         if not ls:
             return acc
@@ -230,15 +260,15 @@ def process_lines(lines):
             return safe_add(acc, aac)
 
         aa , c = get_back_until_match_from(aac, inline_halt_back)
-        aa = strip_suffixes(aa, unwanted)
         #aa = strip_prefixes(strip_suffixes(aa, unwanted), unwanted)
-        c = strip_prefixes(c, unwanted)
+        aa = strip_suffixes(aa, unwanted)
         vec_block, newls = process_vector(bb[1:])
-        acc = safe_add(acc, add_end(aa)) + inline(c) + make_array(vec_block)
+        acc = safe_add(acc, add_end(aa)) + inline(strip_prefixes(c, unwanted_inl)) + make_array(vec_block)
 
         if should_be_inlined(newls[0]):
             inl, newls = get_until_match_from(newls, inline_halt)
-            acc = acc + inline(inl)
+            acc = acc + inline(strip_prefixes(inl, unwanted_inl))
+
         return process_lines_tr(newls, acc)
 
     return process_lines_tr(lines, [])
