@@ -101,11 +101,6 @@ getAidPairsList : GovState → List (GovActionID × GovActionID)
 getAidPairsList aid×states =
   mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×states
 
--- convert list of (GovActionID,GovActionState)-pairs to SET of GovActionID pairs.
-getAidPairsSet : GovState → ℙ (GovActionID × GovActionID)
-getAidPairsSet aid×states =
-  mapPartial (λ (aid , as) → (aid ,_) <$> getHash (prevAction as)) $ fromList aid×states
-
 -- a list of GovActionID pairs connects the first GovActionID to the second
 _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
 [] connects aidNew to aidOld = aidNew ≡ aidOld
