@@ -30,7 +30,7 @@ initParams = MkPParams
   }
 
 initEnv :: UTxOEnv
-initEnv = MkUTxOEnv {slot = 0, pparams = initParams}
+initEnv = MkUTxOEnv {ueSlot = 0, uePparams = initParams}
 
 a0 :: Addr
 a0 = 0
