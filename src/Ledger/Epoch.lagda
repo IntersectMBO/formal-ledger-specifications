@@ -75,8 +75,8 @@ its results, i.e:
 \item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
 \item Remove all hot keys from the constitutional committee delegation map that
   do not belong to currently elected members.
-\item Apply the resulting enact state from the previous epoch boundary $fut$ and
-  store the resulting enact state $fut'$.
+\item Apply the resulting enact state from the previous epoch boundary \AgdaBound{fut} and
+  store the resulting enact state \AgdaBound{fut'}.
 \end{itemize}
 
 \begin{figure*}[h]
