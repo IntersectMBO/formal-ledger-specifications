@@ -66,7 +66,7 @@ the transaction body are:
   field crypto : _
   open Crypto crypto public
   open Ledger.TokenAlgebra ScriptHash public
-  open Ledger.Address Network KeyHash ScriptHash public
+  open Ledger.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public

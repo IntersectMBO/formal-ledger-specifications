@@ -29,13 +29,23 @@ credential contains a hash, either of a verifying (public) key
 VKeyBaseAddr, VKeyBoostrapAddr, ScriptBaseAddr, ScriptBootstrapAddr, VKeyAddr, ScriptAddr}
 \begin{AgdaSuppressSpace}
 \begin{code}
-Credential = KeyHash ⊎ ScriptHash
+data Credential : Set where
+  KeyHashObj : KeyHash → Credential
+  ScriptObj  : ScriptHash → Credential
 \end{code}
 \begin{code}[hide]
+isKeyHashObj : Credential → Maybe KeyHash
+isKeyHashObj (KeyHashObj h) = just h
+isKeyHashObj (ScriptObj _)  = nothing
+
+isScriptObj : Credential → Maybe ScriptHash
+isScriptObj (KeyHashObj _) = nothing
+isScriptObj (ScriptObj h)  = just h
+
 data isVKey : Credential → Set where
-  VKeyisVKey : (kh : KeyHash) → isVKey (inj₁ kh)
+  VKeyisVKey : (kh : KeyHash) → isVKey (KeyHashObj kh)
 data isScript : Credential → Set where
-  SHisScript : (sh : ScriptHash) → isScript (inj₂ sh)
+  SHisScript : (sh : ScriptHash) → isScript (ScriptObj sh)
 \end{code}
 \begin{code}
 
@@ -92,15 +102,17 @@ netId (inj₁ record {net = net}) = net
 netId (inj₂ record {net = net}) = net
 
 instance
+  unquoteDecl DecEq-Credential = derive-DecEq ((quote Credential , DecEq-Credential) ∷ [])
+
   Dec-isVKey : isVKey ⁇¹
   Dec-isVKey {x = c} .dec with c
-  ... | inj₁ h = yes (VKeyisVKey h)
-  ... | inj₂ _ = no  λ ()
+  ... | KeyHashObj h = yes (VKeyisVKey h)
+  ... | ScriptObj  _ = no  λ ()
 
   Dec-isScript : isScript ⁇¹
   Dec-isScript {x = x} .dec with x
-  ... | inj₁ _ = no λ ()
-  ... | inj₂ y = yes (SHisScript y)
+  ... | KeyHashObj _ = no λ ()
+  ... | ScriptObj  y = yes (SHisScript y)
 
 _ = isVKey ⁇¹ ∋ it
 _ = isVKeyAddr ⁇¹ ∋ it
