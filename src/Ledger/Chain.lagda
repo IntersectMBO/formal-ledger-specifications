@@ -23,10 +23,10 @@ open import Ledger.Epoch txs abs
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-record ChainState : Set where
+record ChainState : Type where
   field newEpochState  : NewEpochState
 
-record Block : Set where
+record Block : Type where
   field ts    : List Tx
         slot  : Slot
 \end{code}
@@ -89,7 +89,7 @@ data
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set
+  _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type
 \end{code}
 \caption{Type of the CHAIN transition system}
 \end{figure*}

@@ -1,7 +1,7 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.Prelude
 
-module ScriptVerification.Lib (A D : Set)
+module ScriptVerification.Lib (A D : Type)
   (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
   where
 
@@ -96,7 +96,7 @@ applyScript f (_ ∷ []) = f nothing nothing
 applyScript f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer)
 applyScript f (datum ∷ redeemer ∷ valcontext ∷ _) = f (just datum) (just redeemer)
 
-notEmpty : ∀ {A : Set} → List A → Set
+notEmpty : ∀ {A : Type} → List A → Type
 notEmpty [] = ⊥
 notEmpty (x ∷ xs) = ⊤
 

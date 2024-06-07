@@ -34,10 +34,10 @@ open GovActionState
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{code}
-GovState : Set
+GovState : Type
 GovState = List (GovActionID × GovActionState)
 
-record GovEnv : Set where
+record GovEnv : Type where
   constructor ⟦_,_,_,_,_⟧ᵍ
   field txid        : TxId
         epoch       : Epoch
@@ -50,8 +50,8 @@ record GovEnv : Set where
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Set
-_⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Set
+  _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
+_⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
 \end{code}
 \begin{code}[hide]
 private variable
@@ -84,7 +84,7 @@ addAction : GovState
           → GovState
 addAction s e aid addr a prev = s ∷ʳ ActionId×ActionState e aid addr a prev
 
-validHFAction : GovProposal → GovState → EnactState → Set
+validHFAction : GovProposal → GovState → EnactState → Type
 validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
   (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
   ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
@@ -102,25 +102,25 @@ getAidPairsList aid×states =
   mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×states
 
 -- a list of GovActionID pairs connects the first GovActionID to the second
-_connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Set
+_connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Type
 [] connects aidNew to aidOld = aidNew ≡ aidOld
 ((aid , aidPrev) ∷ s) connects aidNew to aidOld  = aid ≡ aidNew × s connects aidPrev to aidOld
                                                  ⊎ s connects aidNew to aidOld
 
-enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Set
+enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Type
 enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of λ where
   nothing       → ⊤
   (just aidOld) → ∃[ t ] fromList t ⊆ fromList aidPairs × Unique t × t connects aidNew to aidOld
 
-allEnactable : EnactState → GovState → Set
+allEnactable : EnactState → GovState → Type
 allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
 
-hasParentE : EnactState → GovActionID → GovAction → Set
+hasParentE : EnactState → GovActionID → GovAction → Type
 hasParentE e aid a = case getHashES e a of λ where
   nothing   → ⊤
   (just id) → id ≡ aid
 
-hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Set
+hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Type
 hasParent e s a aid with getHash aid
 ... | just aid' = hasParentE e aid' a ⊎ Any (λ x → proj₁ x ≡ aid') s
 ... | nothing = ⊤
@@ -139,7 +139,7 @@ hasParent? e s a aid with getHash aid
 ... | nothing = yes tt
 
 -- newtype to make the instance resolution work
-data hasParent' : EnactState → GovState → (a : GovAction) → NeedsHash a → Set where
+data hasParent' : EnactState → GovState → (a : GovAction) → NeedsHash a → Type where
   HasParent' : ∀ {x y z w} → hasParent x y z w → hasParent' x y z w
 
 instance
@@ -171,7 +171,7 @@ allEnactable? eState aid×states =
   all? (λ aid×st → enactable? eState (getAidPairsList aid×states) aid×st) aid×states
 
 -- newtype to make the instance resolution work
-data allEnactable' : EnactState → GovState → Set where
+data allEnactable' : EnactState → GovState → Type where
   AllEnactable' : ∀ {x y} → allEnactable x y → allEnactable' x y
 
 instance

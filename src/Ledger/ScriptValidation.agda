@@ -18,7 +18,7 @@ module Ledger.ScriptValidation
 instance
   _ = DecEq-Slot
 
-data ScriptPurpose : Set where
+data ScriptPurpose : Type where
   Cert     : DCert        → ScriptPurpose
   Rwrd     : RwdAddr      → ScriptPurpose
   Mint     : ScriptHash   → ScriptPurpose
@@ -50,7 +50,7 @@ getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
     (lookupᵐ? utxo txin)
 getDatum tx utxo _ = []
 
-record TxInfo : Set where
+record TxInfo : Type where
   field realizedInputs : UTxO
         txouts  : Ix ⇀ TxOut
         fee     : Value
@@ -75,7 +75,7 @@ txInfo l pp utxo tx = record
   ; vkKey = reqSigHash
   } where open Tx tx; open TxBody body
 
-data DelegateOrDeReg : DCert → Set where instance
+data DelegateOrDeReg : DCert → Type where instance
   delegate  : ∀ {x y z w} → DelegateOrDeReg (delegate x y z w)
   dereg     : ∀ {x} →       DelegateOrDeReg (dereg x)
   regdrep   : ∀ {x y z} →   DelegateOrDeReg (regdrep x y z)

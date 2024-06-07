@@ -136,7 +136,7 @@ epoch boundary and are not removed by these functions.
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{code}
-data DepositPurpose : Set where
+data DepositPurpose : Type where
   CredentialDeposit  : Credential   → DepositPurpose
   PoolDeposit        : Credential   → DepositPurpose
   DRepDeposit        : Credential   → DepositPurpose
@@ -147,7 +147,7 @@ Deposits = DepositPurpose ⇀ Coin
 \begin{NoConway}
 \emph{UTxO environment}
 \begin{code}
-record UTxOEnv : Set where
+record UTxOEnv : Type where
   field slot      : Slot
         pparams   : PParams
         treasury  : Coin
@@ -155,7 +155,7 @@ record UTxOEnv : Set where
 \end{NoConway}
 \emph{UTxO states}
 \begin{code}
-record UTxOState : Set where
+record UTxOState : Type where
   constructor ⟦_,_,_,_⟧ᵘ
   field utxo       : UTxO
         fees       : Coin
@@ -169,7 +169,7 @@ record UTxOState : Set where
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+  _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 \end{code}
 \end{NoConway}
 \caption{UTxO transition-system types}
@@ -260,7 +260,7 @@ depositsChange pp txb deposits =
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{code}
-data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Set where
+data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Type where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
   upper  : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)
@@ -297,7 +297,7 @@ _≤ᵇ_ _≥ᵇ_ : ℕ → ℕ → Bool
 m ≤ᵇ n = ¿ m ≤ n ¿ᵇ
 _≥ᵇ_ = flip _≤ᵇ_
 
-≟-∅ᵇ : {A : Set} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
+≟-∅ᵇ : {A : Type} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
 ≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
 
 coinPolicies : ℙ ScriptHash
@@ -369,7 +369,7 @@ module _ (let open UTxOState; open TxBody) where
 \begin{code}[hide]
 open PParams
 data
-  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 
 data _⊢_⇀⦇_,UTXOS⦈_ where
   Scripts-Yes :
@@ -412,12 +412,12 @@ private variable
   s s' : UTxOState
   tx : Tx
 
-data _≡?_ {A : Set} : Maybe A → A → Set where
+data _≡?_ {A : Type} : Maybe A → A → Type where
   ≡?-nothing : ∀ {x : A} → nothing  ≡? x
   ≡?-just    : ∀ {x : A} → (just x) ≡? x
 
 instance
-  ≟? : {A : Set} {x : Maybe A} {y : A} → ⦃ DecEq A ⦄ → (x ≡? y) ⁇
+  ≟? : {A : Type} {x : Maybe A} {y : A} → ⦃ DecEq A ⦄ → (x ≡? y) ⁇
   ≟? {x = just x} {y} with x ≟ y
   ... | yes refl = ⁇ yes ≡?-just
   ... | no ¬p    = ⁇ no λ where ≡?-just → ¬p refl

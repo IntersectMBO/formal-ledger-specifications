@@ -14,14 +14,14 @@ private
   open import Algebra; open Semiring Slotʳ using (_*_)
   open import Algebra.Literals; open Semiring-Lit Slotʳ
 
-  Current-Property : PPUpdateEnv → Update → Set
+  Current-Property : PPUpdateEnv → Update → Type
   Current-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom pup ⊆ dom genDelegs
       × All (isViableUpdate pparams) (range pup)
       × slot + 2 * StabilityWindow < firstSlot (epoch slot + 1)
       × epoch slot ≡ e
 
-  Future-Property : PPUpdateEnv → Update → Set
+  Future-Property : PPUpdateEnv → Update → Type
   Future-Property Γ (pup , e) = let open PPUpdateEnv Γ in
       dom pup ⊆ dom genDelegs
       × All (isViableUpdate pparams) (range pup)

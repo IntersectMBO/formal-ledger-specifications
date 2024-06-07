@@ -1,6 +1,8 @@
 {-# OPTIONS --safe #-}
 module Data.List.Ext where
 
+open import Agda.Primitive using () renaming (Set to Type)
+
 open import Data.List using (List; _++_; map; concatMap; filter)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties using (∈-map⁻; ∈-map⁺; ∈-filter⁻; ∈-filter⁺)
@@ -14,7 +16,7 @@ open import Relation.Unary using (Decidable)
 open Maybe; open List; open ℕ
 private variable
   ℓ : Level
-  A B : Set ℓ
+  A B : Type ℓ
 
 -- Looking up an index into the list; fails when out-of-bounds.
 _⁉_ : List A → ℕ → Maybe A
@@ -37,7 +39,7 @@ subpermutations : List A → List (List A)
 subpermutations [] = [] ∷ []
 subpermutations (x ∷ xs) = concatMap (insert x) (subpermutations xs) ++ subpermutations xs
 
-module _ {f : A → B} {l : List A} {b} {P : A → Set} {P? : Decidable P} where
+module _ {f : A → B} {l : List A} {b} {P : A → Type} {P? : Decidable P} where
   ∈ˡ-map-filter⁻ : b ∈ map f (filter P? l) → (∃[ a ] a ∈ l × b ≡ f a × P a)
   ∈ˡ-map-filter⁻ h with ∈-map⁻ f h
   ... | a , a∈X , _≡_.refl = a , proj₁ (∈-filter⁻ P? a∈X) , _≡_.refl , proj₂ (∈-filter⁻ P? {xs = l} a∈X)

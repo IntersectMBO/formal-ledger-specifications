@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Reflection.Ext where
 
-open import Prelude
+open import Prelude hiding (Type)
 open import PreludeMeta
 open import Data.Nat using (_≤ᵇ_)
 open import Data.Bool using (if_then_else_)

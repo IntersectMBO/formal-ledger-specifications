@@ -2,8 +2,6 @@
 {-# OPTIONS -v allTactics:100 #-}
 
 open import Prelude hiding (map)
-
-open import Agda.Primitive using (lzero) renaming (Set to Type)
 open import Axiom.Set using (Theory)
 
 module Axiom.Set.Rel (th : Theory {lzero}) where

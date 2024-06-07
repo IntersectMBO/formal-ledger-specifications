@@ -25,18 +25,18 @@ open import Ledger.Utxo txs abs
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-record EpochState : Set where
+record EpochState : Type where
   constructor ⟦_,_,_,_⟧ᵉ'
   field acnt       : Acnt
         ls         : LState
         es         : EnactState
         fut        : RatifyState
 
-record NewEpochEnv : Set where
+record NewEpochEnv : Type where
   field stakeDistrs : StakeDistrs
    -- TODO: compute this from LState instead
 
-record NewEpochState : Set where
+record NewEpochState : Type where
   constructor ⟦_,_⟧ⁿᵉ
   field lastEpoch   : Epoch
         epochState  : EpochState
@@ -59,7 +59,7 @@ instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 toRwdAddr : Credential → RwdAddr
 toRwdAddr x = record { net = NetworkId ; stake = x }
 
-data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochState → Set where
+data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochState → Type where
 \end{code}
 
 Figure~\ref{fig:epoch:sts} defines the rule for the EPOCH transition
@@ -138,7 +138,7 @@ its results, i.e:
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Set
+  _⊢_⇀⦇_,NEWEPOCH⦈_ : NewEpochEnv → NewEpochState → Epoch → NewEpochState → Type
 \end{code}
 \begin{code}[hide]
   where

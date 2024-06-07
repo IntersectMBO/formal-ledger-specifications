@@ -5,7 +5,6 @@ module Axiom.Set.Map.Dec (thᵈ : Theoryᵈ) where
 
 open import Prelude hiding (map; Monoid)
 
-open import Agda.Primitive renaming (Set to Type)
 open import Algebra using (Monoid)
 import Data.Sum as Sum
 open import Data.These hiding (map)
