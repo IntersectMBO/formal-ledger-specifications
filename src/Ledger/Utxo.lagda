@@ -133,6 +133,15 @@ respectively. Both of these functions iterate over the relevant fields
 of the transaction body and insert or remove deposits depending on the
 information seen. Note that some deposits can only be refunded at the
 epoch boundary and are not removed by these functions.
+
+There are two equivalent options to introduce this tracking of the
+deposits. Either by populating the \deposits field of \UTxOState with
+the correct keys and values that can be extracted from the state of
+the previous era at the transition into the Conway era, or by
+implementing this logic in older eras and replaying the chain with
+that implementation, effectively treating it as an erratum to the
+Shelley specification.
+
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{code}
