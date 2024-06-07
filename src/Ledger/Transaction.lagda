@@ -66,7 +66,7 @@ the transaction body are:
   field crypto : _
   open Crypto crypto public
   open Ledger.TokenAlgebra ScriptHash public
-  open Ledger.Address Network KeyHash ScriptHash public
+  open Ledger.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
@@ -88,11 +88,12 @@ the transaction body are:
   govStructure : GovStructure
   govStructure = record
     -- TODO: figure out what to do with the hash
-    { TxId = TxId; Network = Network; DocHash = ADHash
+    { TxId = TxId; DocHash = ADHash
     ; crypto = crypto
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams
+    ; globalConstants = globalConstants
     }
 
   open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public

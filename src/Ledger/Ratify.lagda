@@ -117,13 +117,13 @@ threshold pp ccThreshold =
   λ where
 \end{code}
 \begin{code}
-      NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1     ∣
-      (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                    ∣
-      (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─           ∣
-      (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4     ∣
-      (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                     ∣
-      (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─           ∣
-      Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†          ∣
+      NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
+      (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                 ∣
+      (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─        ∣
+      (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
+      (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                  ∣
+      (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─        ∣
+      Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
         where
 \end{code}
 \begin{code}[hide]
