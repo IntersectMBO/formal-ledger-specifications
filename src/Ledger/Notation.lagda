@@ -37,8 +37,8 @@ In this section, we introduce some notations used in this document.
   in both maps have their corresponding values added.
 \item[Maping a partial function] A partial function is a function on \AgdaBound{A} which may not be
   defined for all elements of \AgdaBound{A}. The \mapPartial operation takes such a function \AgdaBound{f}
-  and a set \AgdaBound{S} of elements of \AgdaBound{A} and applies \AgdaBound{f} to those elements
-  of \AgdaBound{S} where it is defined.  The result is the set
+  and a set \AgdaBound{S} of elements of \AgdaBound{A} and applies \AgdaBound{f} to the elements
+  of \AgdaBound{S} at which it is defined.  The result is the set
   \(\{\text{\AgdaBound{f} \AgdaBound{x}} ∣ \text{\AgdaBound{x}}
   ∈ \text{\AgdaBound{S} and \AgdaBound{f} is defined at \AgdaBound{x}}\}\).
 \end{description}
