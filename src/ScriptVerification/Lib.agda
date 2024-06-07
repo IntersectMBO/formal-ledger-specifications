@@ -18,7 +18,7 @@ open import Ledger.Set.Theory
 open Implementation
 
 createEnv : ℕ → UTxOEnv
-createEnv s = record { slot = s ;
+createEnv s = record { slot = s ; treasury = 0 ;
                    pparams = record
                                { maxBlockSize = 90112
                                ; maxTxSize = 16384
