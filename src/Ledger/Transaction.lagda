@@ -173,7 +173,7 @@ the transaction body are:
   getValueʰ (_ , v , _) = v
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom (utxo ↾' (isVKeyAddr ∘ proj₁))
+  txinsVKey txins utxo = txins ∩ dom (utxo ∣^' (isVKeyAddr ∘ proj₁))
 
   scriptOuts : UTxO → UTxO
   scriptOuts utxo = filter (λ (_ , addr , _) → isScriptAddr addr) utxo
