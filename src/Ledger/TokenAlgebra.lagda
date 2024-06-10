@@ -24,10 +24,16 @@ open import Relation.Unary       using (Pred)
 \emph{Derived types}
 \AgdaTarget{TokenAlgebra}
 \begin{AgdaSuppressSpace}
+\begin{AgdaAlign}
 \begin{code}
 record TokenAlgebra : Set₁ where
-  field  Value : Set
-         ⦃ Value-IsCommutativeMonoid' ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ Value
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    Value : Set
+    ⦃ Value-IsCommutativeMonoid' ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ Value
 
   MemoryEstimate : Set
   MemoryEstimate = ℕ
@@ -40,22 +46,23 @@ record TokenAlgebra : Set₁ where
     renaming (_∙_ to _+ᵛ_)
 
   open MonoidMorphisms (rawMonoid) (Monoid.rawMonoid +-0-monoid) public
+  field
 \end{code}
 \begin{code}
-  field  coin                      : Value → Coin
-         inject                    : Coin → Value
-         policies                  : Value → ℙ PolicyId
-         size                      : Value → MemoryEstimate
-         _≤ᵗ_                      : Value → Value → Set
-         AssetName                 : Set
-         specialAsset              : AssetName
-         property                  : coin ∘ inject ≗ id -- FIXME: rename!
-         coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
+    coin                      : Value → Coin
+    inject                    : Coin → Value
+    policies                  : Value → ℙ PolicyId
+    size                      : Value → MemoryEstimate
+    _≤ᵗ_                      : Value → Value → Set
+    AssetName                 : Set
+    specialAsset              : AssetName
+    property                  : coin ∘ inject ≗ id -- FIXME: rename!
+    coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 \end{code}
 \end{AgdaSuppressSpace}
 \begin{code}[hide]
-         ⦃ DecEq-Value ⦄ : DecEq Value
-         ⦃ Dec-≤ᵗ ⦄      : _≤ᵗ_ ⁇²
+    ⦃ DecEq-Value ⦄ : DecEq Value
+    ⦃ Dec-≤ᵗ ⦄      : _≤ᵗ_ ⁇²
 
   instance
     addValue : HasAdd Value

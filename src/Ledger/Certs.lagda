@@ -11,9 +11,15 @@ module Ledger.Certs (gs : _) (open GovStructure gs) where
 open import Ledger.GovernanceActions gs
 \end{code}
 \begin{figure*}[h!]
+\begin{AgdaAlign}
 \begin{code}
 record PoolParams : Set where
-  field rewardAddr : Credential
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    rewardAddr : Credential
 
 data DCert : Set where
   delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
@@ -33,6 +39,7 @@ cwitness (regdrep c _ _)     = c
 cwitness (deregdrep c)       = c
 cwitness (ccreghot c _)      = c
 \end{code}
+\end{AgdaAlign}
 \caption{Delegation definitions}
 \end{figure*}
 

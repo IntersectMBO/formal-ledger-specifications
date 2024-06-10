@@ -27,25 +27,37 @@ transaction can now be given as a combination of the previously
 defined transition systems.
 
 \begin{figure*}[h]
+\begin{AgdaAlign}
 \begin{code}
 record LEnv : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_,_,_⟧ˡᵉ
-  field slot        : Slot
-        ppolicy     : Maybe ScriptHash
-        pparams     : PParams
-        enactState  : EnactState
-        treasury    : Coin
+  field
+\end{code}
+\begin{code}
+    slot        : Slot
+    ppolicy     : Maybe ScriptHash
+    pparams     : PParams
+    enactState  : EnactState
+    treasury    : Coin
 
 record LState : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_⟧ˡ
-  field utxoSt     : UTxOState
-        govSt      : GovState
-        certState  : CertState
+  field
+\end{code}
+\begin{code}
+    utxoSt     : UTxOState
+    govSt      : GovState
+    certState  : CertState
 
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
 \end{code}
+\end{AgdaAlign}
 \caption{Types and functions for the LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]

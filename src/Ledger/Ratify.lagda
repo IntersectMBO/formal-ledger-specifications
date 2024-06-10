@@ -180,22 +180,38 @@ by at least half of the SPO stake.
 \subsection{Ratification restrictions}
 \label{sec:ratification-restrictions}
 \begin{figure*}[h!]
+\begin{AgdaMultiCode}
 \begin{code}
 record StakeDistrs : Set where
-  field stakeDistr  : VDeleg ⇀ Coin
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    stakeDistr  : VDeleg ⇀ Coin
 
 record RatifyEnv : Set where
-  field stakeDistrs   : StakeDistrs
-        currentEpoch  : Epoch
-        dreps         : Credential ⇀ Epoch
-        ccHotKeys     : Credential ⇀ Maybe Credential
-        treasury      : Coin
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    stakeDistrs   : StakeDistrs
+    currentEpoch  : Epoch
+    dreps         : Credential ⇀ Epoch
+    ccHotKeys     : Credential ⇀ Maybe Credential
+    treasury      : Coin
 
 record RatifyState : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_⟧ʳ
-  field es              : EnactState
-        removed         : ℙ (GovActionID × GovActionState)
-        delay           : Bool
+  field
+\end{code}
+\begin{code}
+    es              : EnactState
+    removed         : ℙ (GovActionID × GovActionState)
+    delay           : Bool
 
 CCData : Set
 CCData = Maybe ((Credential ⇀ Epoch) × ℚ)
@@ -210,6 +226,7 @@ IsCC    v = govRole v ≡ CC
 IsDRep  v = govRole v ≡ DRep
 IsSPO   v = govRole v ≡ SPO
 \end{code}
+\end{AgdaMultiCode}
 \caption{Types and functions for the RATIFY transition system}
 \label{fig:types-and-functions-for-the-ratify-transition-system}
 \end{figure*}

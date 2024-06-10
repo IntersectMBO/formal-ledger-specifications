@@ -33,17 +33,23 @@ open GovActionState
 \end{code}
 \begin{figure*}[h]
 \emph{Derived types}
+\begin{AgdaMultiCode}
 \begin{code}
 GovState : Set
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Set where
   constructor ⟦_,_,_,_,_⟧ᵍ
-  field txid        : TxId
-        epoch       : Epoch
-        pparams     : PParams
-        ppolicy     : Maybe ScriptHash
-        enactState  : EnactState
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    txid        : TxId
+    epoch       : Epoch
+    pparams     : PParams
+    ppolicy     : Maybe ScriptHash
+    enactState  : EnactState
 \end{code}
 \emph{Transition relation types}
 \begin{code}[hide]
@@ -90,6 +96,7 @@ validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
   ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
 validHFAction _ _ _ = ⊤
 \end{code}
+\end{AgdaMultiCode}
 \caption{Types and functions used in the GOV transition system\protect\footnotemark}
 \label{defs:gov-defs}
 \end{figure*}

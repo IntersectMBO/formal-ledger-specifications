@@ -19,18 +19,30 @@ open Semiring-Lit Slotʳ
 private variable m n : ℕ
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaAlign}
 \begin{code}
 GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
 record PPUpdateState : Set where
-  field pup   : ProposedPPUpdates
-        fpup  : ProposedPPUpdates
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    pup   : ProposedPPUpdates
+    fpup  : ProposedPPUpdates
 
 record PPUpdateEnv : Set where
-  field slot       : Slot
-        pparams    : PParams
-        genDelegs  : GenesisDelegation
 \end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    slot       : Slot
+    pparams    : PParams
+    genDelegs  : GenesisDelegation
+\end{code}
+\end{AgdaAlign}
 \caption{PPUP types}
 \end{figure*}
 \begin{figure*}[h]
