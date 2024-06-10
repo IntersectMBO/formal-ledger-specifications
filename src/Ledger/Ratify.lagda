@@ -233,7 +233,7 @@ rankThreshold = 1000
 
 -- DReps with at least `c` coins
 mostStakeDRepDist : Credential ⇀ Coin → Coin → Credential ⇀ Coin
-mostStakeDRepDist dist c = dist ↾' (_≥ c)
+mostStakeDRepDist dist c = dist ∣^' (_≥ c)
 
 -- mostStakeDRepDist-homomorphic : ∀ {dist} → Homomorphic₂ _ _ _>_ (_⊆_ on _ˢ) (mostStakeDRepDist dist)
 -- mostStakeDRepDist-homomorphic x>y = impl⇒cores⊆ _ _ {!!} --(<-trans x>y)

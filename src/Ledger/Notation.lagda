@@ -25,7 +25,7 @@ In this section, we introduce some notations used in this document.
   \AgdaBound{f} to some domain \AgdaBound{A} is denoted by \AgdaBound{f}~\AgdaFunction{|}~\AgdaBound{A},
   and the restriction to the complement of \AgdaBound{A} is written
   \AgdaBound{f}~\AgdaFunction{|}~\AgdaBound{A}~\AgdaFunction{ᶜ}. Corestriction or range restriction is
-  denoted the same, except that \AgdaFunction{|} is replaced by \AgdaFunction{↾}.
+  denoted the same, except that \AgdaFunction{|} is replaced by \corestriction.
 \item[Inverse image] The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the
   inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.
 \item[Left-biased union] For maps \AgdaBound{m} and \AgdaBound{m'}, we write
