@@ -55,11 +55,11 @@ opaque
     DecEq-ℙ = L.Decˡ.DecEq-Set
 
 open import Axiom.Set.Rel th public
-  hiding (_∣'_; _↾'_; dom; range)
+  hiding (_∣'_; _∣^'_; dom; range)
 
 open import Axiom.Set.Map th public
   renaming ( Map to infixr 1 _⇀_
-           ; filterᵐ to filterᵐ?; filterKeys to filterKeys?; _↾'_ to _↾'?_ )
+           ; filterᵐ to filterᵐ?; filterKeys to filterKeys?; _∣^'_ to _∣^'?_ )
 
 open import Axiom.Set.TotalMap th public
 open import Axiom.Set.TotalMapOn th
@@ -76,7 +76,7 @@ module _ ⦃ _ : DecEq A ⦄ where
     renaming (_∣_ to _∣ʳ_; _∣_ᶜ to _∣ʳ_ᶜ)
 
   open Corestriction {A} ∈-sp public
-    hiding (_↾_; _↾_ᶜ) public
+    hiding (_∣^_; _∣^_ᶜ) public
 
   open Restrictionᵐ {A} ∈-sp public
   open Corestrictionᵐ {A} ∈-sp public
@@ -113,8 +113,8 @@ filterᵐ P = filterᵐ? (to-sp P)
 filterKeys : (P : A → Type) ⦃ _ : P ⁇¹ ⦄ → (A ⇀ B) → (A ⇀ B)
 filterKeys P = filterKeys? (to-sp P)
 
-_↾'_ : A ⇀ B → (P : B → Type) ⦃ _ : P ⁇¹ ⦄ → A ⇀ B
-s ↾' P = s ↾'? to-sp P
+_∣^'_ : A ⇀ B → (P : B → Type) ⦃ _ : P ⁇¹ ⦄ → A ⇀ B
+s ∣^' P = s ∣^'? to-sp P
 
 open import Interface.IsCommutativeMonoid
 
