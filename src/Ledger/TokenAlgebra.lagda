@@ -27,7 +27,6 @@ MemoryEstimate = ℕ
 \emph{Derived types}
 \AgdaTarget{TokenAlgebra}
 \begin{AgdaSuppressSpace}
-\begin{AgdaAlign}
 \begin{code}
 record TokenAlgebra : Set₁ where
 \end{code}
