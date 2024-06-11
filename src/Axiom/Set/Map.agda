@@ -8,7 +8,7 @@ module Axiom.Set.Map (th : Theory {lzero}) where
 
 open Theory th renaming (map to mapˢ)
 
-open import Axiom.Set.Rel th hiding (_∣'_; _↾'_)
+open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
 open import Axiom.Set.Properties th
 
 open import Prelude
@@ -261,8 +261,8 @@ mapValues-dom {m = _ , _} = mapʳ-dom
 _∣'_ : {P : A → Type} → Map A B → specProperty P → Map A B
 m ∣' P? = filterᵐ (sp-∘ P? proj₁) m
 
-_↾'_ : {P : B → Type} → Map A B → specProperty P → Map A B
-m ↾' P? = filterᵐ (sp-∘ P? proj₂) m
+_∣^'_ : {P : B → Type} → Map A B → specProperty P → Map A B
+m ∣^' P? = filterᵐ (sp-∘ P? proj₂) m
 
 constMap : Set A → B → Map A B
 constMap X b = mapˢ (_, b) X , λ x x₁ →
@@ -373,13 +373,13 @@ module Lookupᵐ (sp-∈ : spec-∈ A) where
 module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   private module R = Corestriction sp-∈
 
-  _↾_ : Map A B → Set B → Map A B
-  m ↾ X = ⊆-map (R._↾ X) R.cores-⊆ m
+  _∣^_ : Map A B → Set B → Map A B
+  m ∣^ X = ⊆-map (R._∣^ X) R.cores-⊆ m
 
-  _↾_ᶜ : Map A B → Set B → Map A B
-  m ↾ X ᶜ = ⊆-map (R._↾ X ᶜ) R.coex-⊆ m
+  _∣^_ᶜ : Map A B → Set B → Map A B
+  m ∣^ X ᶜ = ⊆-map (R._∣^ X ᶜ) R.coex-⊆ m
 
   -- f⁻¹(x)
   infix 25 _⁻¹_
   _⁻¹_ : Map A B → B → Set A
-  m ⁻¹ a = dom ((m ↾ ❴ a ❵) ˢ)
+  m ⁻¹ a = dom ((m ∣^ ❴ a ❵) ˢ)
