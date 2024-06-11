@@ -13,7 +13,7 @@ In this section, we introduce some notations used in this document.
 and ``type'' are essentially the same, despite having different formal definitions
 in our Agda code. We represent sets as a special type, which we denote by
 \AgdaDatatype{Set}~\AgdaBound{A}, for \AgdaBound{A} an arbitrary type.
-(See Section~\ref{sec:sets--maps} for details and \cite[Chapter 19]{NPS:1990-open} for
+(See Section~\ref{sec:sets-maps} for details and \cite[Chapter 19]{NPS:1990-open} for
 background.)
 Agda denotes the primitive notion of type by \AgdaPrimitive{Set}.  To avoid confusion,
 throughout this document and in our Agda code we call this primitive \Type,

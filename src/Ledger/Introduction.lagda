@@ -183,6 +183,7 @@ code that generates this document also generates a Haskell library
 that lets anyone run this code.
 
 \subsection{Sets \& maps}
+\label{sec:sets-maps}
 
 The ledger heavily uses set theory. For various reasons it was
 necessary to implement our own set theory (there will be a paper on this
@@ -224,6 +225,21 @@ module _ (ℙ_ : Type → Type) (_∈_ : ∀ {A : Type} → A → ℙ A → Type
   A ⇀ B = r ∈ Rel A B ﹐ left-unique r
 \end{code}
 \end{figure*}
+
+\subsection{Propositions as types, properties and relations}
+
+In type theory we represent propositions as types and proofs of a proposition as
+elements of the corresponding type.
+A \textit{predicate} \AgdaFunction{P} represents a property or a relation.
+A unary predicate is a function that takes each \AgdaBound{x} (of some type \AgdaBound{A}) and
+returns a proposition \AgdaFunction{P}(\AgdaBound{x}). Thus, a predicate is a function of type
+\AgdaBound{A}~\AgdaSymbol{→}~\Type.
+
+A \textit{binary relation} \AgdaFunction{R} from \AgdaBound{A} to \AgdaBound{B} is a
+function that takes a pair of values \AgdaBound{x} and \AgdaBound{y} and returns a proposition
+asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \AgdaBound{y}.
+Thus, such a relation is a function of type \AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type
+or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type.
 
 \subsection{Superscripts and other special notations}
 
