@@ -36,7 +36,10 @@ In this section, we introduce some notations used in this document.
   \AgdaBound{m}~\AgdaFunction{∪⁺}~\AgdaBound{m'} for their union, where keys that appear
   in both maps have their corresponding values added.
 \item[Maping a partial function] A partial function is a function on \AgdaBound{A} which may not be
-  defined for all elements of \AgdaBound{A}. The \mapPartial operation takes such a function \AgdaBound{f}
+  defined for all elements of \AgdaBound{A}. We denote such a function by
+  \AgdaBound{f}~:~\AgdaBound{A}⇀\AgdaBound{B}.  (If we happen to know that the function is total---defined for all
+  elements of \AgdaBound{A}---then we would write \AgdaBound{f}~:~\AgdaBound{A}→\AgdaBound{B} instead.
+  The \mapPartial operation takes such a function \AgdaBound{f}
   and a set \AgdaBound{S} of elements of \AgdaBound{A} and applies \AgdaBound{f} to the elements
   of \AgdaBound{S} at which it is defined.  The result is the set
   \(\{\text{\AgdaBound{f} \AgdaBound{x}} ∣ \text{\AgdaBound{x}}
