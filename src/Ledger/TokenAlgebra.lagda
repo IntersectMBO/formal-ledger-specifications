@@ -20,6 +20,9 @@ open import Algebra.Morphism     using (module MonoidMorphisms )
 open import Data.Nat.Properties  using (+-0-monoid)
 open import Relation.Binary      using (Rel)
 open import Relation.Unary       using (Pred)
+
+MemoryEstimate : Set
+MemoryEstimate = ℕ
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TokenAlgebra}
@@ -34,9 +37,6 @@ record TokenAlgebra : Set₁ where
 \begin{code}
     Value : Set
     ⦃ Value-IsCommutativeMonoid' ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ Value
-
-  MemoryEstimate : Set
-  MemoryEstimate = ℕ
 
 \end{code}
 \begin{code}[hide]
