@@ -25,7 +25,7 @@ In this section, we introduce some notations used in this document.
   \AgdaBound{f} to some domain \AgdaBound{A} is denoted by \AgdaBound{f}~\AgdaFunction{|}~\AgdaBound{A},
   and the restriction to the complement of \AgdaBound{A} is written
   \AgdaBound{f}~\AgdaFunction{|}~\AgdaBound{A}~\AgdaFunction{ᶜ}. Corestriction or range restriction is
-  denoted the same, except that \AgdaFunction{|} is replaced by \AgdaFunction{↾}.
+  denoted the same, except that \AgdaFunction{|} is replaced by \corestriction.
 \item[Inverse image] The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the
   inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.
 \item[Left-biased union] For maps \AgdaBound{m} and \AgdaBound{m'}, we write
@@ -35,4 +35,10 @@ In this section, we introduce some notations used in this document.
 \item[Map addition] For maps \AgdaBound{m} and \AgdaBound{m'}, we write
   \AgdaBound{m}~\AgdaFunction{∪⁺}~\AgdaBound{m'} for their union, where keys that appear
   in both maps have their corresponding values added.
+\item[Maping a partial function] A partial function is a function on \AgdaBound{A} which may not be
+  defined for all elements of \AgdaBound{A}. The \mapPartial operation takes such a function \AgdaBound{f}
+  and a set \AgdaBound{S} of elements of \AgdaBound{A} and applies \AgdaBound{f} to the elements
+  of \AgdaBound{S} at which it is defined.  The result is the set
+  \(\{\text{\AgdaBound{f} \AgdaBound{x}} ∣ \text{\AgdaBound{x}}
+  ∈ \text{\AgdaBound{S} and \AgdaBound{f} is defined at \AgdaBound{x}}\}\).
 \end{description}

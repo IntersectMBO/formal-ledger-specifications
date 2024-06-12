@@ -43,15 +43,15 @@ initEnv = createEnv 0
 -- initTxOut for script with datum reference
 initTxOut : TxOut
 initTxOut = inj₁ (record { net = tt ;
-                           pay = inj₂ 777 ;
-                           stake = inj₂ 777 })
+                           pay = ScriptObj 777 ;
+                           stake = ScriptObj 777 })
                            , 10 , just (inj₂ 99) , nothing
 
 -- initTxOut for script without datum reference
 initTxOut' : TxOut
 initTxOut' = inj₁ (record { net = tt ;
-                           pay = inj₂ 888 ;
-                           stake = inj₂ 888 })
+                           pay = ScriptObj 888 ;
+                           stake = ScriptObj 888 })
                            , 10 , nothing , nothing
 
 scriptDatum : TxIn × TxOut
@@ -73,8 +73,8 @@ succeedTx = record { body = record
                          ; txouts = fromListIx ((6 , initTxOut)
                                                 ∷ (5
                                                   , ((inj₁ (record { net = tt ;
-                                                                     pay = inj₁ 5 ;
-                                                                     stake = inj₁ 5 }))
+                                                                     pay = KeyHashObj 5 ;
+                                                                     stake = KeyHashObj 5 }))
                                                   , (1000000000000 - 10000000000) , nothing , nothing))
                                                 ∷ [])
                          ; txfee = 10000000000
@@ -87,7 +87,8 @@ succeedTx = record { body = record
                          ; txdonation = 0
                          ; txup = nothing
                          ; txADhash = nothing
-                         ; netwrk = just tt
+                         ; txNetworkId = just tt
+                         ; curTreasury = nothing
                          ; txsize = 10
                          ; txid = 7
                          ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
@@ -122,7 +123,8 @@ failTx = record { body = record
                          ; txdonation = 0
                          ; txup = nothing
                          ; txADhash = nothing
-                         ; netwrk = just tt
+                         ; txNetworkId = just tt
+                         ; curTreasury = nothing
                          ; txsize = 10
                          ; txid = 7
                          ; collateral = ∅

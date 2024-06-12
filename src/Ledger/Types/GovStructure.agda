@@ -9,9 +9,8 @@ open import Ledger.Types.Epoch
 import Ledger.PParams
 
 record GovStructure : Set₁ where
-  field TxId Network DocHash : Set
+  field TxId DocHash : Set
         ⦃ DecEq-TxId ⦄ : DecEq TxId
-        ⦃ DecEq-Netw ⦄ : DecEq Network
 
   field crypto : _
   open Crypto crypto public
@@ -26,5 +25,8 @@ record GovStructure : Set₁ where
 
   field govParams : GovParams
   open GovParams govParams public
+
+  field globalConstants : _
+  open GlobalConstants globalConstants public
 
   open import Ledger.Address Network KeyHash ScriptHash public

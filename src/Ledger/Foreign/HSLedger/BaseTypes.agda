@@ -46,18 +46,14 @@ instance
   -- Since the foreign address is just a number, we do bad stuff here
   Convertible-Addr : Convertible Addr F.Addr
   Convertible-Addr = λ where
-    .to → λ where (inj₁ record { pay = inj₁ x }) → x
-                  (inj₁ record { pay = inj₂ x }) → x
-                  (inj₂ record { pay = inj₁ x }) → x
-                  (inj₂ record { pay = inj₂ x }) → x
-    .from n → inj₁ record { net = _ ; pay = inj₁ n ; stake = inj₁ 0 }
+    .to → λ where (inj₁ record { pay = KeyHashObj x }) → x
+                  (inj₁ record { pay = ScriptObj  x }) → x
+                  (inj₂ record { pay = KeyHashObj x }) → x
+                  (inj₂ record { pay = ScriptObj  x }) → x
+    .from n → inj₁ record { net = _ ; pay = KeyHashObj n ; stake = KeyHashObj 0 }
 
   Convertible-Credential : Convertible Credential F.Credential
-  Convertible-Credential = λ where
-    .to (inj₁ kh) → F.KeyHashObj kh
-    .to (inj₂ sh) → F.ScriptObj sh
-    .from (F.ScriptObj sh) → inj₂ sh
-    .from (F.KeyHashObj kh) → inj₁ kh
+  Convertible-Credential = autoConvertible
 
   Convertible-GovRole : Convertible GovRole F.GovRole
   Convertible-GovRole = autoConvertible
@@ -326,22 +322,23 @@ instance
       ; txcerts = to txcerts
       }
     .from txb → let open F.TxBody txb in record
-      { txins      = from txins
-      ; refInputs  = from refInputs
-      ; txouts     = from txouts
-      ; txcerts    = from txcerts
-      ; mint       = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
-      ; txfee      = txfee
-      ; txvldt     = from txvldt
-      ; txwdrls    = ∅
-      ; txup       = nothing
-      ; txADhash   = nothing
-      ; netwrk     = nothing
-      ; txsize     = txsize
-      ; txid       = from txid
-      ; txvote     = []
-      ; txprop     = []
-      ; txdonation = ε
+      { txins         = from txins
+      ; refInputs     = from refInputs
+      ; txouts        = from txouts
+      ; txcerts       = from txcerts
+      ; mint          = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
+      ; txfee         = txfee
+      ; txvldt        = from txvldt
+      ; txwdrls       = ∅
+      ; txup          = nothing
+      ; txADhash      = nothing
+      ; txNetworkId   = nothing
+      ; curTreasury   = nothing
+      ; txsize        = txsize
+      ; txid          = from txid
+      ; txvote        = []
+      ; txprop        = []
+      ; txdonation    = ε
       ; collateral    = from collateral
       ; reqSigHash    = from reqSigHash
       ; scriptIntHash = nothing

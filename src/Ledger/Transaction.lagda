@@ -66,7 +66,7 @@ the transaction body are:
   field crypto : _
   open Crypto crypto public
   open Ledger.TokenAlgebra ScriptHash public
-  open Ledger.Address Network KeyHash ScriptHash public
+  open Ledger.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
@@ -88,11 +88,12 @@ the transaction body are:
   govStructure : GovStructure
   govStructure = record
     -- TODO: figure out what to do with the hash
-    { TxId = TxId; Network = Network; DocHash = ADHash
+    { TxId = TxId; DocHash = ADHash
     ; crypto = crypto
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams
+    ; globalConstants = globalConstants
     }
 
   open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
@@ -128,7 +129,8 @@ the transaction body are:
           txdonation     : Coin
           txup           : Maybe Update
           txADhash       : Maybe ADHash
-          netwrk         : Maybe Network
+          txNetworkId    : Maybe Network
+          curTreasury    : Maybe Coin
           txsize         : ℕ
           txid           : TxId
           collateral     : ℙ TxIn
@@ -173,7 +175,7 @@ the transaction body are:
   getValueʰ (_ , v , _) = v
 
   txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom (utxo ↾' (isVKeyAddr ∘ proj₁))
+  txinsVKey txins utxo = txins ∩ dom (utxo ∣^' (isVKeyAddr ∘ proj₁))
 
   scriptOuts : UTxO → UTxO
   scriptOuts utxo = filter (λ (_ , addr , _) → isScriptAddr addr) utxo

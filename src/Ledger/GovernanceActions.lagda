@@ -60,17 +60,18 @@ data GovAction : Set where
 
 actionWellFormed : GovAction → Set
 actionWellFormed (ChangePParams x)  = ppdWellFormed x
+actionWellFormed (TreasuryWdrl x)   = ∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId
 actionWellFormed _                  = ⊤
 \end{code}
 \begin{code}[hide]
 actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
-actionWellFormed? {NoConfidence}        = Dec-⊤
-actionWellFormed? {NewCommittee _ _ _}  = Dec-⊤
-actionWellFormed? {NewConstitution _ _} = Dec-⊤
-actionWellFormed? {TriggerHF _}         = Dec-⊤
-actionWellFormed? {ChangePParams x}     = Dec-×
-actionWellFormed? {TreasuryWdrl _}      = Dec-⊤
-actionWellFormed? {Info}                = Dec-⊤
+actionWellFormed? {NoConfidence}        = it
+actionWellFormed? {NewCommittee _ _ _}  = it
+actionWellFormed? {NewConstitution _ _} = it
+actionWellFormed? {TriggerHF _}         = it
+actionWellFormed? {ChangePParams _}     = it
+actionWellFormed? {TreasuryWdrl _}      = it
+actionWellFormed? {Info}                = it
 \end{code}
 \caption{Governance actions}
 \label{defs:governance}

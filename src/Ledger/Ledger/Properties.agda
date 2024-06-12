@@ -57,7 +57,7 @@ instance
     computeGov   = comp {STS = _⊢_⇀⦇_,GOV⦈_}
 
     module go
-      (Γ : LEnv)   (let ⟦ slot , ppolicy , pparams , enactState ⟧ˡᵉ = Γ)
+      (Γ : LEnv)   (let ⟦ slot , ppolicy , pparams , enactState , _ ⟧ˡᵉ = Γ)
       (s : LState) (let ⟦ utxoSt , govSt , certSt ⟧ˡ = s)
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
@@ -154,7 +154,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
                       → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))}
   where
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
-  pattern UTXOW-UTXOS x = UTXOW-inductive⋯ _ _ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
+  pattern UTXOW-UTXOS x = UTXOW-inductive⋯ _ _ _ _ _ _ _ (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 
   filterGA : ∀ txid n → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵ ≡ᵉ ❴ GovActionDeposit (txid , n) ❵
   proj₁ (filterGA txid n) {a} x = (proj₂ (from ∈-filter x)) where open Equivalence
