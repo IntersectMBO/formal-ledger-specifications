@@ -230,11 +230,9 @@ module _ (ℙ_ : Type → Type) (_∈_ : ∀ {A : Type} → A → ℙ A → Type
 
 In type theory we represent propositions as types and proofs of a proposition as
 elements of the corresponding type.
-A \textit{predicate} \AgdaFunction{P} represents a property or a relation.
 A unary predicate is a function that takes each \AgdaBound{x} (of some type \AgdaBound{A}) and
 returns a proposition \AgdaFunction{P}(\AgdaBound{x}). Thus, a predicate is a function of type
 \AgdaBound{A}~\AgdaSymbol{→}~\Type.
-
 A \textit{binary relation} \AgdaFunction{R} between \AgdaBound{A} and \AgdaBound{B} is a
 function that takes a pair of values \AgdaBound{x} and \AgdaBound{y} and returns a proposition
 asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \AgdaBound{y}.
