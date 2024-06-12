@@ -235,7 +235,7 @@ A unary predicate is a function that takes each \AgdaBound{x} (of some type \Agd
 returns a proposition \AgdaFunction{P}(\AgdaBound{x}). Thus, a predicate is a function of type
 \AgdaBound{A}~\AgdaSymbol{→}~\Type.
 
-A \textit{binary relation} \AgdaFunction{R} from \AgdaBound{A} to \AgdaBound{B} is a
+A \textit{binary relation} \AgdaFunction{R} between \AgdaBound{A} and \AgdaBound{B} is a
 function that takes a pair of values \AgdaBound{x} and \AgdaBound{y} and returns a proposition
 asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \AgdaBound{y}.
 Thus, such a relation is a function of type \AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type
