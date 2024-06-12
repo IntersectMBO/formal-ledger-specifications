@@ -117,13 +117,13 @@ threshold pp ccThreshold =
   λ where
 \end{code}
 \begin{code}
-      NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1     ∣
-      (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                    ∣
-      (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─           ∣
-      (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4     ∣
-      (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                     ∣
-      (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─           ∣
-      Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†          ∣
+      NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
+      (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                 ∣
+      (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─        ∣
+      (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
+      (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                  ∣
+      (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─        ∣
+      Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
         where
 \end{code}
 \begin{code}[hide]
@@ -233,7 +233,7 @@ rankThreshold = 1000
 
 -- DReps with at least `c` coins
 mostStakeDRepDist : Credential ⇀ Coin → Coin → Credential ⇀ Coin
-mostStakeDRepDist dist c = dist ↾' (_≥ c)
+mostStakeDRepDist dist c = dist ∣^' (_≥ c)
 
 -- mostStakeDRepDist-homomorphic : ∀ {dist} → Homomorphic₂ _ _ _>_ (_⊆_ on _ˢ) (mostStakeDRepDist dist)
 -- mostStakeDRepDist-homomorphic x>y = impl⇒cores⊆ _ _ {!!} --(<-trans x>y)

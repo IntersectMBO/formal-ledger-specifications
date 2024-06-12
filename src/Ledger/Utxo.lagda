@@ -133,6 +133,15 @@ respectively. Both of these functions iterate over the relevant fields
 of the transaction body and insert or remove deposits depending on the
 information seen. Note that some deposits can only be refunded at the
 epoch boundary and are not removed by these functions.
+
+There are two equivalent ways to introduce this tracking of the
+deposits. One option would be to populate the \deposits field of
+\UTxOState with the correct keys and values that can be extracted from
+the state of the previous era at the transition into the Conway
+era. Alternatively, this logic can be implemented in older eras and
+replaying the chain with that implementation, effectively treating it
+as an erratum to the Shelley specification.
+
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{code}
@@ -148,8 +157,9 @@ Deposits = DepositPurpose ⇀ Coin
 \emph{UTxO environment}
 \begin{code}
 record UTxOEnv : Set where
-  field slot     : Slot
-        pparams  : PParams
+  field slot      : Slot
+        pparams   : PParams
+        treasury  : Coin
 \end{code}
 \end{NoConway}
 \emph{UTxO states}
@@ -411,8 +421,22 @@ private variable
   s s' : UTxOState
   tx : Tx
 
+data _≡?_ {A : Set} : Maybe A → A → Set where
+  ≡?-nothing : ∀ {x : A} → nothing  ≡? x
+  ≡?-just    : ∀ {x : A} → (just x) ≡? x
+
+instance
+  ≟? : {A : Set} {x : Maybe A} {y : A} → ⦃ DecEq A ⦄ → (x ≡? y) ⁇
+  ≟? {x = just x} {y} with x ≟ y
+  ... | yes refl = ⁇ yes ≡?-just
+  ... | no ¬p    = ⁇ no λ where ≡?-just → ¬p refl
+  ≟? {x = nothing} = ⁇ yes ≡?-nothing
+
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
+
+We write \maybeEq to mean that two potentially optional values are
+equal if they are both present.
 
 \begin{NoConway}
 \begin{figure*}[h]
@@ -436,13 +460,15 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ networkId
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
+    ∙ txNetworkId ≡? networkId
+    ∙ curTreasury ≡? treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

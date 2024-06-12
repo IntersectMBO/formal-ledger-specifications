@@ -161,9 +161,10 @@ SVGovParams = record
 SVGovStructure : GovStructure
 SVGovStructure = record
   { Implementation
-  ; epochStructure = SVEpochStructure
-  ; govParams      = SVGovParams
-  ; crypto         = SVCrypto
+  ; epochStructure  = SVEpochStructure
+  ; govParams       = SVGovParams
+  ; crypto          = SVCrypto
+  ; globalConstants = SVGlobalConstants
   }
 instance _ = SVGovStructure
 

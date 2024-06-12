@@ -47,11 +47,17 @@ record NewEpochState : Set where
 private variable
   nes nes' : NewEpochState
   e lastEpoch : Epoch
-  fut' : RatifyState
+  fut fut' : RatifyState
   eps eps' : EpochState
   Γ : NewEpochEnv
+  ls : LState
+  acnt : Acnt
+  es₀ : EnactState
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
+
+toRwdAddr : Credential → RwdAddr
+toRwdAddr x = record { net = NetworkId ; stake = x }
 
 data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochState → Set where
 \end{code}
@@ -69,54 +75,57 @@ its results, i.e:
 \item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
 \item Remove all hot keys from the constitutional committee delegation map that
   do not belong to currently elected members.
-\item Apply the resulting enact state from the previous epoch boundary $fut$ and
-  store the resulting enact state $fut'$.
+\item Apply the resulting enact state from the previous epoch boundary \AgdaBound{fut} and
+  store the resulting enact state \AgdaBound{fut'}.
 \end{itemize}
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
   EPOCH : let
-      open EpochState eps hiding (es)
-      open RatifyState fut using (removed) renaming (es to esW)
-      -- ^ this rolls over the future enact state into es
-      open LState ls; open UTxOState utxoSt; open CertState certState
-      open PState pState; open DState dState; open GState gState
-      open Acnt acnt
-
-      trWithdrawals   = esW .EnactState.withdrawals
-      totWithdrawals  = ∑[ x ← trWithdrawals ] x
+      ⟦ esW , removed , _ ⟧ʳ = fut
+      ⟦ utxoSt , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ = ls
+\end{code}
+\begin{code}[hide]
+      open UTxOState
+      open PState; open DState; open GState
+      open Acnt; open EnactState; open GovActionState
+\end{code}
+\begin{code}
 
       removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
-        mapˢ (GovActionState.returnAddr gaSt ,_)
-             ((deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+        mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-      es        = record esW { withdrawals = ∅ }
-      retired   = retiring ⁻¹ e
-      payout    = govActionReturns ∪⁺ trWithdrawals
-      refunds   = pullbackMap payout (λ x → record { net = NetworkId ; stake = x }) (dom rewards)
-      unclaimed = getCoin payout - getCoin refunds
+      trWithdrawals   = esW .withdrawals
+      totWithdrawals  = ∑[ x ← trWithdrawals ] x
+
+      es         = record esW { withdrawals = ∅ }
+      retired    = (pState .retiring) ⁻¹ e
+      payout     = govActionReturns ∪⁺ trWithdrawals
+      refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
+      unclaimed  = getCoin payout - getCoin refunds
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
 
       certState' =
-        ⟦ record dState { rewards = rewards ∪⁺ refunds }
-        , ⟦ pools ∣ retired ᶜ , retiring ∣ retired ᶜ ⟧ᵖ
-        , ⟦ if null govSt' then mapValues (1 +_) dreps else dreps
-          , ccHotKeys ∣ ccCreds (es .EnactState.cc) ⟧ᵛ ⟧ᶜˢ
+        ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
+        , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ
+        , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps)
+          , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ ⟧ᶜˢ
 
-      utxoSt' = ⟦ utxo , 0 , deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
+      utxoSt' = ⟦ utxoSt .utxo , 0 , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
       ls' = ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 
       acnt' = record acnt
-        { treasury = treasury + fees + unclaimed + donations ∸ totWithdrawals }
+        { treasury  = acnt .treasury ∸ totWithdrawals
+                    + utxoSt .fees + utxoSt .donations + unclaimed }
     in
-    record { currentEpoch = e ; treasury = treasury ; GState gState ; NewEpochEnv Γ }
+    record { currentEpoch = e ; treasury = acnt .treasury ; GState gState ; NewEpochEnv Γ }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
     ────────────────────────────────
-    Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
+    Γ ⊢ ⟦ acnt , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}

@@ -18,7 +18,7 @@ open import Ledger.Set.Theory
 open Implementation
 
 createEnv : ℕ → UTxOEnv
-createEnv s = record { slot = s ;
+createEnv s = record { slot = s ; treasury = 0 ;
                    pparams = record
                                { maxBlockSize = 90112
                                ; maxTxSize = 16384
@@ -74,7 +74,7 @@ createUTxO : (index : ℕ)
            → Maybe (D ⊎ DataHash)
            → TxIn × TxOut
 createUTxO index wallet value d = (index , index)
-                                , (inj₁ (record { net = tt ; pay = inj₁ wallet ; stake = inj₁ wallet })
+                                , (inj₁ (record { net = tt ; pay = KeyHashObj wallet ; stake = KeyHashObj wallet })
                                   , value , d , nothing)
 
 createInitUtxoState : (wallets : ℕ)

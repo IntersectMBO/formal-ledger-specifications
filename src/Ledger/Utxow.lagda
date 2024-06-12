@@ -25,17 +25,17 @@ only if it is present.
 \begin{AgdaMultiCode}
 \begin{code}
 getVKeys : ℙ Credential → ℙ KeyHash
-getVKeys = mapPartial isInj₁
+getVKeys = mapPartial isKeyHashObj
 
 getScripts : ℙ Credential → ℙ ScriptHash
-getScripts = mapPartial isInj₂
+getScripts = mapPartial isScriptObj
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
   ∪  mapˢ (λ a        → (Rwrd   a , RwdAddr.stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
-  ∪  mapˢ (λ x        → (Mint   x , inj₂ x)) (policies mint)
+  ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
   ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList $ map GovVote.voter txvote)
   ∪  mapPartial (λ p  → case  p .GovProposal.policy of
 \end{code}
@@ -43,7 +43,7 @@ credsNeeded utxo txb
     λ where
 \end{code}
 \begin{code}
-                              (just sh)  → just (Propose  p , inj₂ sh)
+                              (just sh)  → just (Propose  p , ScriptObj sh)
                               nothing    → nothing) (fromList txprop)
 \end{code}
 \begin{code}[hide]
@@ -98,9 +98,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  (neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes
+    ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ (inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)))
+    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────

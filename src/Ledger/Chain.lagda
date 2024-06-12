@@ -104,7 +104,7 @@ data
     in
        record { stakeDistrs = calculateStakeDistrs (EpochState.ls (NewEpochState.epochState newEpochState)) }
          ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es ⟧ˡᵉ
+    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧ˡᵉ
          ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈

@@ -31,7 +31,7 @@ updatePPUp pparams record { fpup = fpup }
 
 votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate
 votedValue pup pparams quorum =
-  case any? (λ u → lengthˢ (pup ↾ fromList [ u ]) ≥? quorum) (range pup) of
+  case any? (λ u → lengthˢ (pup ∣^ fromList [ u ]) ≥? quorum) (range pup) of
 \end{code}
 \begin{code}[hide]
     λ  where
