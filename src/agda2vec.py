@@ -66,7 +66,7 @@ def strip_suffixes(ls1, ls2):
             ls1.pop()
     return ls1
 
-def get_until_match_from(ls1, ls2):
+def get_until_match_from(ls1, ls2, to=False):
     """
     Return a tuple of two lists:
     1. ls1[:n] where `ls1[n]` is the first element in `ls1` containing any string 
@@ -79,12 +79,15 @@ def get_until_match_from(ls1, ls2):
                        followed by the remaining elements of ls1, which will be 
                        returned in a second, separate list.
     ls2 (list of str): list of "halting" substrings
+    to (bool):         if True, the halting substring is included in the first list
     """
     if not ls1:
         return ls1, []
 
     for index, element in enumerate(ls1):
         if any(substring in element for substring in ls2):
+            if to:
+                index = index + 1
             return [line.strip() for line in ls1[:index]], [line.strip() for line in ls1[index:]]
     return ls1, []  # no match found
 
@@ -162,11 +165,16 @@ def format_vector(vector_block):
     if not vector_block:
         return []
     unwanted_suffixes = [newline, "\\<%", "%", "\\>[.][@{}l@{}]\\<[250I]"]
-    element_halt = ["AgdaInductiveConstructor{,}", "\\left(\\begin{array}{c}"]
+    element_halt = ["AgdaInductiveConstructor{,}", "\\left(\\begin{array}{c}", "\\AgdaOperator{\\AgdaField{❴}}"]
     def format_vector_tr(vector_block, acc):
         if not vector_block:
             return acc
         next_element, vector_block = get_until_match_from(vector_block, element_halt)
+        # ignore "AgdaInductiveConstructor{,}" appearing inside ❴_❵; don't split vector element at that `,`
+        if vector_block and "\\AgdaOperator{\\AgdaField{❴}}" in vector_block[0]:
+            ne, vector_block = get_until_match_from(vector_block, ["\\AgdaOperator{\\AgdaField{❵}}"], True)
+            next_element = next_element + ne
+
         next_element = [ remove_suffixes(x, ["\\AgdaSpace{}%"]) for x in next_element]
         next = strip_suffixes(next_element, unwanted_suffixes)
 

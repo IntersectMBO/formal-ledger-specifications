@@ -17,7 +17,7 @@ MIDNIGHT=MidnightExample
 VEC_SCRIPT=agda2vec.py
 
 # files that should be postprocessed
-ppNames=Chain Deleg Enact Epoch Ratify Ledger NewPP
+ppNames=Certs Chain Enact Epoch Ratify Ledger NewPP
 # Utxo/Properties
 
 ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))
@@ -32,7 +32,7 @@ $(filter-out $(ppLatexFiles), $(latexFiles)): $(LATEX_DIR)/%.tex: %.lagda
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $<
 
 # Specific rule for postprocessed LaTeX files
-$(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda
+$(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda agda2vec.py
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
 	@echo "Postprocessing $@"
