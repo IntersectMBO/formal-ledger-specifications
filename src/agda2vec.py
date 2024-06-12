@@ -121,6 +121,14 @@ def get_back_until_match_from(ls1, ls2):
 
     return [], ls1 # no match found
 
+def find_match(ls1, ls2):
+    """
+    Return the index of the first element in `ls1` that contains any string from `ls2` as a substring.
+    """
+    for index, element in enumerate(ls1):
+        if any(substring in element for substring in ls2):
+            return index
+    return -1
 
 ### Special Helper functions #########################################################################
 
@@ -268,10 +276,16 @@ def process_lines(lines):
             return safe_add(acc, aac)
 
         aa , c = get_back_until_match_from(aac, inline_halt_back)
-        #aa = strip_prefixes(strip_suffixes(aa, unwanted), unwanted)
         aa = strip_suffixes(aa, unwanted)
+
         vec_block, newls = process_vector(bb[1:])
-        acc = safe_add(acc, add_end(aa)) + inline(strip_prefixes(c, unwanted_inl)) + make_array(vec_block)
+
+        c = strip_prefixes(c, unwanted_inl)
+        if find_match(c, ["\\AgdaFunction{∙}"]) != -1:        
+            c = [newline] + inline(c)
+        else:
+            c = inline(c)        
+        acc = safe_add(acc, add_end(aa)) + c + make_array(vec_block)
 
         if should_be_inlined(newls[0]):
             inl, newls = get_until_match_from(newls, inline_halt)
