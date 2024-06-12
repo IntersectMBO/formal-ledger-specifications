@@ -66,7 +66,7 @@ def strip_suffixes(ls1, ls2):
             ls1.pop()
     return ls1
 
-def get_until_match_from(ls1, ls2):
+def get_until_match_from(ls1, ls2, to=False):
     """
     Return a tuple of two lists:
     1. ls1[:n] where `ls1[n]` is the first element in `ls1` containing any string 
@@ -85,6 +85,8 @@ def get_until_match_from(ls1, ls2):
 
     for index, element in enumerate(ls1):
         if any(substring in element for substring in ls2):
+            if to:
+                index = index + 1
             return [line.strip() for line in ls1[:index]], [line.strip() for line in ls1[index:]]
     return ls1, []  # no match found
 
@@ -131,7 +133,7 @@ entailment1 = "\\AgdaFunction{⊢}"
 sts1 = "\\AgdaFunction{⇀⦇}"
 entailment2 = "\\AgdaDatatype{⊢}"
 sts2 = "\\AgdaDatatype{⇀⦇}"
-
+agda_space = "\\AgdaSpace{}"
 # N.B. It's important that left_bracket includes the trailing curly brace, to avoid matching
 # constructors, while right_bracket does not include the trailing curly brace, so that the 
 # latter will match all varieties of closing brackets.
@@ -150,7 +152,7 @@ def should_be_inlined(str):
 def make_array(ls):
     if not ls:
         return []
-    return ["%START VEC%", "\\(\\left(\\begin{array}{c}%"] + ls + ["\\end{array}\\right)\\)", "%END VEC%"]
+    return ["%START VEC%", "~\\(\\left(\\begin{array}{c}%"] + ls + ["\\end{array}\\right)\\)~", "%END VEC%"]
 
 def make_inner_array(ls):
     if not ls:
@@ -162,18 +164,20 @@ def format_vector(vector_block):
     if not vector_block:
         return []
     unwanted_suffixes = [newline, "\\<%", "%", "\\>[.][@{}l@{}]\\<[250I]"]
-    element_halt = ["AgdaInductiveConstructor{,}", "\\left(\\begin{array}{c}"]
+    element_halt = ["AgdaInductiveConstructor{,}", "\\left(\\begin{array}{c}", "\\AgdaOperator{\\AgdaField{❴}}"]
     def format_vector_tr(vector_block, acc):
         if not vector_block:
             return acc
         next_element, vector_block = get_until_match_from(vector_block, element_halt)
-        next_element = [ remove_suffixes(x, ["\\AgdaSpace{}%"]) for x in next_element]
+        # ignore "AgdaInductiveConstructor{,}" appearing inside ❴_❵; don't split vector element at that `,`
+        if vector_block and "\\AgdaOperator{\\AgdaField{❴}}" in vector_block[0]:
+            ne, vector_block = get_until_match_from(vector_block, ["\\AgdaOperator{\\AgdaField{❵}}"], True)
+            next_element = next_element + ne
+
+        next_element = [ remove_suffixes(x, [agda_space, "%"]) for x in next_element]
         next = strip_suffixes(next_element, unwanted_suffixes)
 
-        if next == [newline]:
-            next = []
-        else:
-            next = inline_text(next)
+        next = inline_text(strip_suffixes(next, [newline]))
 
         if vector_block and "\\left(\\begin{array}{c}" in vector_block[0]:
             return format_vector_tr(vector_block[1:], acc + next + [vector_block[0], newline])
@@ -184,9 +188,10 @@ def format_vector(vector_block):
 def flatten(l):
     if not l:
         return ""
-    return l[0] + flatten(l[1:])
+    return l[0] + "~" + flatten(l[1:])
 
 def inline(l):
+    l = strip_suffixes(strip_prefixes(l, [newline]), [newline])
     if not l:
         return []
     return [begin_code_inline] + l + [end_code]

@@ -74,6 +74,7 @@ its results, i.e:
 \end{itemize}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
   EPOCH : let
       open EpochState eps hiding (es)
@@ -117,6 +118,7 @@ its results, i.e:
     ────────────────────────────────
     Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
 \end{code}
+\end{AgdaMultiCode}
 \caption{EPOCH transition system}
 \label{fig:epoch:sts}
 \end{figure*}
