@@ -79,6 +79,7 @@ def get_until_match_from(ls1, ls2, to=False):
                        followed by the remaining elements of ls1, which will be 
                        returned in a second, separate list.
     ls2 (list of str): list of "halting" substrings
+    to (bool):         if True, the halting substring is included in the first list
     """
     if not ls1:
         return ls1, []
@@ -120,6 +121,14 @@ def get_back_until_match_from(ls1, ls2):
 
     return [], ls1 # no match found
 
+def find_match(ls1, ls2):
+    """
+    Return the index of the first element in `ls1` that contains any string from `ls2` as a substring.
+    """
+    for index, element in enumerate(ls1):
+        if any(substring in element for substring in ls2):
+            return index
+    return -1
 
 ### Special Helper functions #########################################################################
 
@@ -133,7 +142,7 @@ entailment1 = "\\AgdaFunction{⊢}"
 sts1 = "\\AgdaFunction{⇀⦇}"
 entailment2 = "\\AgdaDatatype{⊢}"
 sts2 = "\\AgdaDatatype{⇀⦇}"
-agda_space = "\\AgdaSpace{}"
+
 # N.B. It's important that left_bracket includes the trailing curly brace, to avoid matching
 # constructors, while right_bracket does not include the trailing curly brace, so that the 
 # latter will match all varieties of closing brackets.
@@ -152,7 +161,7 @@ def should_be_inlined(str):
 def make_array(ls):
     if not ls:
         return []
-    return ["%START VEC%", "~\\(\\left(\\begin{array}{c}%"] + ls + ["\\end{array}\\right)\\)~", "%END VEC%"]
+    return ["%START VEC%", "\\(\\left(\\begin{array}{c}%"] + ls + ["\\end{array}\\right)\\)", "%END VEC%"]
 
 def make_inner_array(ls):
     if not ls:
@@ -174,10 +183,13 @@ def format_vector(vector_block):
             ne, vector_block = get_until_match_from(vector_block, ["\\AgdaOperator{\\AgdaField{❵}}"], True)
             next_element = next_element + ne
 
-        next_element = [ remove_suffixes(x, [agda_space, "%"]) for x in next_element]
+        next_element = [ remove_suffixes(x, ["\\AgdaSpace{}%"]) for x in next_element]
         next = strip_suffixes(next_element, unwanted_suffixes)
 
-        next = inline_text(strip_suffixes(next, [newline]))
+        if next == [newline]:
+            next = []
+        else:
+            next = inline_text(next)
 
         if vector_block and "\\left(\\begin{array}{c}" in vector_block[0]:
             return format_vector_tr(vector_block[1:], acc + next + [vector_block[0], newline])
@@ -188,10 +200,10 @@ def format_vector(vector_block):
 def flatten(l):
     if not l:
         return ""
-    return l[0] + "~" + flatten(l[1:])
+    return l[0] + flatten(l[1:])
 
 def inline(l):
-    l = strip_suffixes(strip_prefixes(l, [newline]), [newline])
+    #l = strip_suffixes(strip_prefixes(l, [newline]), [newline])
     if not l:
         return []
     return [begin_code_inline] + l + [end_code]
@@ -265,10 +277,16 @@ def process_lines(lines):
             return safe_add(acc, aac)
 
         aa , c = get_back_until_match_from(aac, inline_halt_back)
-        #aa = strip_prefixes(strip_suffixes(aa, unwanted), unwanted)
         aa = strip_suffixes(aa, unwanted)
+
         vec_block, newls = process_vector(bb[1:])
-        acc = safe_add(acc, add_end(aa)) + inline(strip_prefixes(c, unwanted_inl)) + make_array(vec_block)
+
+        c = strip_prefixes(c, unwanted_inl)
+        if find_match(c, ["\\AgdaFunction{∙}"]) != -1:        
+            c = [newline] + inline(c)
+        else:
+            c = inline(c)        
+        acc = safe_add(acc, add_end(aa)) + c + make_array(vec_block)
 
         if should_be_inlined(newls[0]):
             inl, newls = get_until_match_from(newls, inline_halt)
