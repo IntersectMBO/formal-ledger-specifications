@@ -33,7 +33,7 @@ since they are \HashProtected.
 \begin{figure*}[h]
 \begin{AgdaAlign}
 \begin{code}
-record EnactEnv : Set where
+record EnactEnv : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_⟧ᵉ
@@ -44,7 +44,7 @@ record EnactEnv : Set where
     treasury  : Coin
     epoch     : Epoch
 
-record EnactState : Set where
+record EnactState : Type where
 \end{code}
 \begin{code}[hide]
   field
@@ -120,7 +120,7 @@ required). The exceptions are \NewCommittee and \TreasuryWdrl:
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set
+  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type
 \end{code}
 \begin{code}[hide]
   where

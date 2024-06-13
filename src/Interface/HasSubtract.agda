@@ -1,7 +1,9 @@
 {-# OPTIONS --safe --cubical-compatible #-}
 module Interface.HasSubtract where
 
-record HasSubtract (A B : Set) : Set where
+open import Agda.Primitive using () renaming (Set to Type)
+
+record HasSubtract (A B : Type) : Type where
   infixl 6 _-_
   field _-_ : A → A → B
 

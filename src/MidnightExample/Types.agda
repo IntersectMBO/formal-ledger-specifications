@@ -15,7 +15,7 @@ postulate hash : String → Hash
 -- TODO: where do I get a hash function from?
 {-# COMPILE GHC hash = fromIntegral . T.length #-}
 
-record Point : Set where
+record Point : Type where
   field  slot       : Maybe ℕ
          blockHash  : ℕ
 
@@ -26,7 +26,7 @@ record Point : Set where
 #-}
 {-# COMPILE GHC Point = data Point (MkPoint) #-}
 
-data Tx : Set where
+data Tx : Type where
   inc  : Tx
   dec  : Tx
 
@@ -35,7 +35,7 @@ data Tx : Set where
 #-}
 {-# COMPILE GHC Tx = data Tx (Inc | Dec) #-}
 
-record Header : Set where
+record Header : Type where
   field  slotNo     : ℕ
          blockNo    : ℕ
          blockHash  : Hash
@@ -52,7 +52,7 @@ record Header : Set where
 #-}
 {-# COMPILE GHC Header = data Header (MkHeader) #-}
 
-record Block : Set where
+record Block : Type where
   field  header  : Header
          body    : List Tx
 
@@ -63,7 +63,7 @@ record Block : Set where
 #-}
 {-# COMPILE GHC Block = data Block (MkBlock) #-}
 
-record LedgerState : Set where
+record LedgerState : Type where
   field  tip                  : Point
          count                : ℤ
          snapshot1 snapshot2  : ℤ

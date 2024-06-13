@@ -12,7 +12,7 @@ open import Interface.STS hiding (_⊢_⇀⟦_⟧*_)
 open import Relation.Binary.PropositionalEquality
 
 private variable
-  C S Sig : Set
+  C S Sig : Type
   Γ : C
   s s' s'' : S
   b sig : Sig
@@ -103,12 +103,12 @@ operation is called \RTC.
 
 \begin{figure*}[h!]
 \begin{code}[hide]
-module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Set) where
+module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
   data
 \end{code}
 \emph{Closure type}
 \begin{code}
-    _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Set
+    _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type
 \end{code}
 \begin{code}[hide]
     where
@@ -139,7 +139,7 @@ over the step relation.
 \begin{figure*}[h]
 \begin{AgdaAlign}
 \begin{code}
-record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Set) : Set where
+record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Type where
 \end{code}
 \begin{code}[hide]
   field
@@ -189,6 +189,7 @@ code that generates this document also generates a Haskell library
 that lets anyone run this code.
 
 \subsection{Sets \& maps}
+\label{sec:sets-maps}
 
 The ledger heavily uses set theory. For various reasons it was
 necessary to implement our own set theory (there will be a paper on this
@@ -205,31 +206,44 @@ we use here to form a type of sets with elements in a given type.
 
 \begin{figure*}[h]
 \begin{code}[hide]
-module _ (ℙ_ : Set → Set) (_∈_ : ∀ {A : Set} → A → ℙ A → Set) where
+module _ (ℙ_ : Type → Type) (_∈_ : ∀ {A : Type} → A → ℙ A → Type) where
   private variable
     a c : Level
-    A : Set a
-  Σ-syntax' : (A : Set a) → (A → Set c) → Set _
+    A : Type a
+  Σ-syntax' : (A : Type a) → (A → Type c) → Type _
   Σ-syntax' = Σ
   syntax Σ-syntax' A (λ x → B) = x ∈ A ﹐ B
 \end{code}
 \begin{code}
-  _⊆_ : {A : Set} → ℙ A → ℙ A → Set
+  _⊆_ : {A : Type} → ℙ A → ℙ A → Type
   X ⊆ Y = ∀ {x} → x ∈ X → x ∈ Y
 
-  _≡ᵉ_ : {A : Set} → ℙ A → ℙ A → Set
+  _≡ᵉ_ : {A : Type} → ℙ A → ℙ A → Type
   X ≡ᵉ Y = X ⊆ Y × Y ⊆ X
 
-  Rel : Set → Set → Set
+  Rel : Type → Type → Type
   Rel A B = ℙ (A × B)
 
-  left-unique : {A B : Set} → Rel A B → Set
+  left-unique : {A B : Type} → Rel A B → Type
   left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
-  _⇀_ : Set → Set → Set
+  _⇀_ : Type → Type → Type
   A ⇀ B = r ∈ Rel A B ﹐ left-unique r
 \end{code}
 \end{figure*}
+
+\subsection{Propositions as types, properties and relations}
+
+In type theory we represent propositions as types and proofs of a proposition as
+elements of the corresponding type.
+A unary predicate is a function that takes each \AgdaBound{x} (of some type \AgdaBound{A}) and
+returns a proposition \AgdaFunction{P}(\AgdaBound{x}). Thus, a predicate is a function of type
+\AgdaBound{A}~\AgdaSymbol{→}~\Type.
+A \textit{binary relation} \AgdaFunction{R} between \AgdaBound{A} and \AgdaBound{B} is a
+function that takes a pair of values \AgdaBound{x} and \AgdaBound{y} and returns a proposition
+asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \AgdaBound{y}.
+Thus, such a relation is a function of type \AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type
+or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type.
 
 \subsection{Superscripts and other special notations}
 

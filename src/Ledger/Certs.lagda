@@ -13,7 +13,7 @@ open import Ledger.GovernanceActions gs
 \begin{figure*}[h!]
 \begin{AgdaAlign}
 \begin{code}
-record PoolParams : Set where
+record PoolParams : Type where
 \end{code}
 \begin{code}[hide]
   field
@@ -21,7 +21,7 @@ record PoolParams : Set where
 \begin{code}
     rewardAddr : Credential
 
-data DCert : Set where
+data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
   dereg       : Credential → DCert
   regpool     : Credential → PoolParams → DCert
@@ -47,7 +47,7 @@ cwitness (ccreghot c _)      = c
 \begin{AgdaAlign}
 \begin{AgdaSuppressSpace}
 \begin{code}
-record CertEnv : Set where
+record CertEnv : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᶜ
@@ -59,7 +59,7 @@ record CertEnv : Set where
     votes  : List GovVote
     wdrls  : RwdAddr ⇀ Coin
 
-record DState : Set where
+record DState : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_⟧ᵈ
@@ -70,7 +70,7 @@ record DState : Set where
     stakeDelegs  : Credential ⇀ Credential
     rewards      : Credential ⇀ Coin
 
-record PState : Set where
+record PState : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_⟧ᵖ
@@ -80,7 +80,7 @@ record PState : Set where
     pools     : Credential ⇀ PoolParams
     retiring  : Credential ⇀ Epoch
 
-record GState : Set where
+record GState : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_⟧ᵛ
@@ -90,7 +90,7 @@ record GState : Set where
     dreps      : Credential ⇀ Epoch
     ccHotKeys  : Credential ⇀ Maybe Credential
 
-record CertState : Set where
+record CertState : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_⟧ᶜˢ
@@ -101,7 +101,7 @@ record CertState : Set where
     pState : PState
     gState : GState
 
-record DelegEnv : Set where
+record DelegEnv : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_⟧ᵈᵉ
@@ -191,37 +191,37 @@ new certificates relating to DReps and the constitutional committee.
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Set
+  _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Set
+  _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Set
+  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERT⦈_      : CertEnv → CertState → DCert → CertState → Set
+  _⊢_⇀⦇_,CERT⦈_      : CertEnv → CertState → DCert → CertState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Set
+  _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
 \end{code}
 \begin{code}[hide]
 module _ where
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Set
+  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
   _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
 \end{code}
 \end{AgdaMultiCode}

@@ -68,7 +68,7 @@ scriptsNeeded = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Set
+  _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 \end{code}
 \caption{UTxOW transition-system types}
 \label{fig:ts-types:utxow}

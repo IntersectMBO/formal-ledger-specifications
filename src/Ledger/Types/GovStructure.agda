@@ -2,14 +2,15 @@
 
 module Ledger.Types.GovStructure where
 
+open import Prelude using (Type)
 open import Class.DecEq
 open import Ledger.Crypto
 open import Ledger.Script
 open import Ledger.Types.Epoch
 import Ledger.PParams
 
-record GovStructure : Set₁ where
-  field TxId DocHash : Set
+record GovStructure : Type₁ where
+  field TxId DocHash : Type
         ⦃ DecEq-TxId ⦄ : DecEq TxId
 
   field crypto : _

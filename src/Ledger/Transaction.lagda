@@ -27,11 +27,11 @@ open import Tactic.Derive.DecEq
 open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
-data Tag : Set where
+data Tag : Type where
   Spend Mint Cert Rewrd Vote Propose : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
-record TransactionStructure : Set₁ where
+record TransactionStructure : Type₁ where
   field
 \end{code}
 
@@ -53,7 +53,7 @@ the transaction body are:
 \emph{Abstract types}
 \begin{AgdaMultiCode}
 \begin{code}
-        Ix TxId AuxiliaryData : Set
+        Ix TxId AuxiliaryData : Type
 \end{code}
 \begin{code}[hide]
         ⦃ DecEq-Ix   ⦄ : DecEq Ix
@@ -114,8 +114,9 @@ the transaction body are:
 \end{code}
 \end{NoConway}
 \emph{Transaction types}
+\begin{AgdaMultiCode}
 \begin{code}
-  record TxBody : Set where
+  record TxBody : Type where
 \end{code}
 \begin{code}[hide]
     field
@@ -144,7 +145,7 @@ the transaction body are:
 \end{code}
 \begin{NoConway}
 \begin{code}
-  record TxWitnesses : Set where
+  record TxWitnesses : Type where
 \end{code}
 \begin{code}[hide]
     field
@@ -158,7 +159,7 @@ the transaction body are:
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
 
-  record Tx : Set where
+  record Tx : Type where
 \end{code}
 \begin{code}[hide]
     field

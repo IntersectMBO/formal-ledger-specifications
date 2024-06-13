@@ -24,7 +24,7 @@ open import Ledger.Epoch txs abs
 \begin{figure*}[h]
 \begin{AgdaAlign}
 \begin{code}
-record ChainState : Set where
+record ChainState : Type where
 \end{code}
 \begin{code}[hide]
   field
@@ -32,7 +32,7 @@ record ChainState : Set where
 \begin{code}
     newEpochState  : NewEpochState
 
-record Block : Set where
+record Block : Type where
 \end{code}
 \begin{code}[hide]
   field
@@ -101,7 +101,7 @@ data
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-  _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Set
+  _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type
 \end{code}
 \caption{Type of the CHAIN transition system}
 \end{figure*}

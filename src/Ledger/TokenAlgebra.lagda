@@ -4,7 +4,7 @@
 \begin{AgdaAlign}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-
+open import Prelude using (Type)
 module Ledger.TokenAlgebra (
 \end{code}
 \emph{Abstract types}
@@ -12,7 +12,7 @@ module Ledger.TokenAlgebra (
   PolicyId
 \end{code}
 \begin{code}[hide]
-  : Set) where
+  : Type) where
 open import Ledger.Prelude
 
 open import Algebra              using (CommutativeMonoid ; Monoid)
@@ -28,7 +28,7 @@ MemoryEstimate = ℕ
 \AgdaTarget{TokenAlgebra}
 \begin{AgdaSuppressSpace}
 \begin{code}
-record TokenAlgebra : Set₁ where
+record TokenAlgebra : Type₁ where
 \end{code}
 \begin{code}[hide]
   field
@@ -52,7 +52,7 @@ record TokenAlgebra : Set₁ where
     inject                    : Coin → Value
     policies                  : Value → ℙ PolicyId
     size                      : Value → MemoryEstimate
-    _≤ᵗ_                      : Value → Value → Set
+    _≤ᵗ_                      : Value → Value → Type
     AssetName                 : Set
     specialAsset              : AssetName
     property                  : coin ∘ inject ≗ id -- FIXME: rename!

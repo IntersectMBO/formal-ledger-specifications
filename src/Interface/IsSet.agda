@@ -1,10 +1,10 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set
 
 module Interface.IsSet (th : Theory) where
 
+open import Prelude using (Type)
 import Axiom.Set.Rel th as Rel
 open import Axiom.Set.Map th as Map
 open import Axiom.Set.TotalMap th as TotalMap

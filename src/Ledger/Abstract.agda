@@ -7,7 +7,7 @@ module Ledger.Abstract (txs : TransactionStructure) where
 
 open TransactionStructure txs
 
-record indexOf : Set where
+record indexOf : Type where
   field
     indexOfDCert    : DCert → List DCert → Maybe Ix
     indexOfRwdAddr  : RwdAddr → Wdrl → Maybe Ix
@@ -16,7 +16,7 @@ record indexOf : Set where
     indexOfVote     : Voter → List Voter → Maybe Ix
     indexOfProposal : GovProposal → List GovProposal → Maybe Ix
 
-record AbstractFunctions : Set where
+record AbstractFunctions : Type where
   field txscriptfee  : Prices → ExUnits → Coin
         serSize      : Value → MemoryEstimate
         indexOfImp   : indexOf

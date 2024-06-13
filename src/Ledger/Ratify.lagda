@@ -84,10 +84,10 @@ Each of the $P_x$ and $Q_x$ are protocol parameters.
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 private
-  ∣_∣_∣_∣ : {A : Set} → A → A → A → GovRole → A
+  ∣_∣_∣_∣ : {A : Type} → A → A → A → GovRole → A
   ∣ q₁ ∣ q₂ ∣ q₃ ∣ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
 
-  ∣_∥_∣ : {A : Set} → A → A × A → GovRole → A
+  ∣_∥_∣ : {A : Type} → A → A × A → GovRole → A
   ∣ q₁ ∥ (q₂ , q₃) ∣ = λ { CC → q₁ ; DRep → q₂ ; SPO → q₃ }
 
 vote : ℚ → Maybe ℚ
@@ -155,7 +155,7 @@ threshold pp ccThreshold =
         P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
                  , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
 
-canVote : PParams → GovAction → GovRole → Set
+canVote : PParams → GovAction → GovRole → Type
 canVote pp a r = Is-just (threshold pp nothing a r)
 \end{code}
 \end{AgdaMultiCode}
@@ -182,7 +182,7 @@ by at least half of the SPO stake.
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
 \begin{code}
-record StakeDistrs : Set where
+record StakeDistrs : Type where
 \end{code}
 \begin{code}[hide]
   field
@@ -190,7 +190,7 @@ record StakeDistrs : Set where
 \begin{code}
     stakeDistr  : VDeleg ⇀ Coin
 
-record RatifyEnv : Set where
+record RatifyEnv : Type where
 \end{code}
 \begin{code}[hide]
   field
@@ -202,7 +202,7 @@ record RatifyEnv : Set where
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Coin
 
-record RatifyState : Set where
+record RatifyState : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_⟧ʳ
@@ -213,7 +213,7 @@ record RatifyState : Set where
     removed         : ℙ (GovActionID × GovActionState)
     delay           : Bool
 
-CCData : Set
+CCData : Type
 CCData = Maybe ((Credential ⇀ Epoch) × ℚ)
 
 govRole : VDeleg → GovRole
@@ -221,7 +221,7 @@ govRole (credVoter gv _)  = gv
 govRole abstainRep        = DRep
 govRole noConfidenceRep   = DRep
 
-IsCC IsDRep IsSPO : VDeleg → Set
+IsCC IsDRep IsSPO : VDeleg → Type
 IsCC    v = govRole v ≡ CC
 IsDRep  v = govRole v ≡ DRep
 IsSPO   v = govRole v ≡ SPO
@@ -446,17 +446,17 @@ abstract
       acceptedStake  = ∑[ x ← getStakeDist r cc dists ∣ votes ⁻¹ Vote.yes        ] x
       totalStake     = ∑[ x ← getStakeDist r cc dists ∣ votes ⁻¹ Vote.abstain ᶜ  ] x
 
-  acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Set
+  acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Type
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs
         votes'  = actualVotes Γ pparams cc action votes
         t       = maybe id 0ℚ (threshold pparams (proj₂ <$> cc) action role)
     in acceptedStakeRatio role (dom votes') (stakeDistrs Γ) votes' ≥ t
 
-  accepted : RatifyEnv → EnactState → GovActionState → Set
+  accepted : RatifyEnv → EnactState → GovActionState → Type
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
 
-  expired : Epoch → GovActionState → Set
+  expired : Epoch → GovActionState → Type
   expired current record { expiresIn = expiresIn } = expiresIn < current
 \end{code}
 \caption{Functions used in RATIFY rules, without delay}
@@ -494,7 +494,7 @@ RATIFY.
 open EnactState
 \end{code}
 \begin{code}
-verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Set
+verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Type
 verifyPrev NoConfidence           h es  = h ≡ es .cc .proj₂
 verifyPrev (NewCommittee _ _ _)   h es  = h ≡ es .cc .proj₂
 verifyPrev (NewConstitution _ _)  h es  = h ≡ es .constitution .proj₂
@@ -512,7 +512,7 @@ delayingAction (ChangePParams _)      = false
 delayingAction (TreasuryWdrl _)       = false
 delayingAction Info                   = false
 
-delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Set
+delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 \end{code}
 \begin{code}[hide]
@@ -561,7 +561,7 @@ private variable
   removed : ℙ (GovActionID × GovActionState)
   d : Bool
 
-data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Set where
+data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
 
 \end{code}
 \begin{figure*}[h!]
@@ -589,7 +589,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
     Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
-                 → RatifyState → Set
+                 → RatifyState → Type
 _⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,RATIFY'⦈_
 \end{code}
 \caption{The RATIFY transition system}

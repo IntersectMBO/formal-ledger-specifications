@@ -29,7 +29,7 @@ defined transition systems.
 \begin{figure*}[h]
 \begin{AgdaAlign}
 \begin{code}
-record LEnv : Set where
+record LEnv : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_,_,_⟧ˡᵉ
@@ -42,7 +42,7 @@ record LEnv : Set where
     enactState  : EnactState
     treasury    : Coin
 
-record LState : Set where
+record LState : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_⟧ˡ
@@ -79,7 +79,7 @@ open CertState
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Set
+  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type
 \end{code}
 \begin{code}[hide]
   where
@@ -113,7 +113,7 @@ pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Set
+_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}

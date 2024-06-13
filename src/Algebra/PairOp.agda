@@ -6,7 +6,7 @@ open import Algebra
 open import Data.Product.Relation.Binary.Pointwise.NonDependent
 open import Relation.Binary
 
-module Algebra.PairOp (X : Set) (ε : X) (_≈_ : Rel X zeroˡ) (_∙_ : Op₂ X) where
+module Algebra.PairOp (X : Type) (ε : X) (_≈_ : Rel X zeroˡ) (_∙_ : Op₂ X) where
 
 _∙ᵖ_ : (X × X) → (X × X) → (X × X)
 (a , b) ∙ᵖ (c , d) = (a ∙ c) , (b ∙ d)

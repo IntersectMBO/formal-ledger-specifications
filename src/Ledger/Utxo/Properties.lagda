@@ -561,15 +561,15 @@ isRefundCert (dereg c) = true
 isRefundCert (deregdrep c) = true
 isRefundCert _ = false
 
-noRefundCert : List DCert → Set _
+noRefundCert : List DCert → Type _
 noRefundCert l = All (λ cert → isRefundCert cert ≡ false) l
 
 opaque
   unfolding List-Model
   unfolding finiteness
-  fin∘list[] : {A : Set} → proj₁ (finiteness{A = A} ∅) ≡ []
+  fin∘list[] : {A : Type} → proj₁ (finiteness{A = A} ∅) ≡ []
   fin∘list[] = refl
-  fin∘list∷[] : {A : Set} {a : A} → proj₁ (finiteness ❴ a ❵) ≡ [ a ]
+  fin∘list∷[] : {A : Type} {a : A} → proj₁ (finiteness ❴ a ❵) ≡ [ a ]
   fin∘list∷[] = refl
 
 coin∅ : getCoin{A = DepositPurpose ⇀ Coin} ∅ ≡ 0

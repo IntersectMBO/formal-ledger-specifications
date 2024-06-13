@@ -7,20 +7,20 @@ open import Interface.STS public
 
 private variable
   a : Level
-  C S Sig : Set
-  Err Err₁ Err₂ : Set
+  C S Sig : Type
+  Err Err₁ Err₂ : Type
   c : C
   s s' s'' : S
   sig : Sig
 
-data ComputationResult {a : Level} (Err : Set) (R : Set a) : Set a where
+data ComputationResult {a : Level} (Err : Type) (R : Type a) : Type a where
   success : R → ComputationResult Err R
   failure : Err → ComputationResult Err R
 
-isFailure : ∀ {A : Set a} → ComputationResult Err A → Set a
+isFailure : ∀ {A : Type a} → ComputationResult Err A → Type a
 isFailure x = ∃[ e ] x ≡ failure e
 
-module _ {a b} {E : Set} {A : Set a} {B : Set b} where
+module _ {a b} {E : Type} {A : Type a} {B : Type b} where
   caseCR_∣_∣_ : (ma : ComputationResult E A) → (∀ {a} → ma ≡ success a → B) → (isFailure ma → B) → B
   caseCR ma ∣ f ∣ g with ma
   ... | success _ = f refl
@@ -41,41 +41,41 @@ instance
   Bifunctor-ComputationResult .bimap _ f (success x) = success $ f x
   Bifunctor-ComputationResult .bimap f _ (failure x) = failure $ f x
   
-  Functor-ComputationResult : ∀ {E : Set} → Functor (ComputationResult E)
+  Functor-ComputationResult : ∀ {E : Type} → Functor (ComputationResult E)
   Functor-ComputationResult ._<$>_ f (success x) = success $ f x
   Functor-ComputationResult ._<$>_ _ (failure x) = failure x
 
-  Applicative-ComputationResult : ∀ {E : Set} → Applicative (ComputationResult E)
+  Applicative-ComputationResult : ∀ {E : Type} → Applicative (ComputationResult E)
   Applicative-ComputationResult .pure = success
   Applicative-ComputationResult ._<*>_ (success f) x = f <$> x
   Applicative-ComputationResult ._<*>_ (failure e) _ = failure e
 
-  Monad-ComputationResult : ∀ {E : Set} → Monad (ComputationResult E)
+  Monad-ComputationResult : ∀ {E : Type} → Monad (ComputationResult E)
   Monad-ComputationResult .return = success
   Monad-ComputationResult ._>>=_ (success a) m = m a
   Monad-ComputationResult ._>>=_ (failure e) _ = failure e
 
-map-failure : ∀ {A B C : Set} {f : A → B} {x : C} {ma} → ma ≡ failure x → map f ma ≡ failure x
+map-failure : ∀ {A B C : Type} {f : A → B} {x : C} {ma} → ma ≡ failure x → map f ma ≡ failure x
 map-failure refl = refl
 
-success-maybe : ∀ {R : Set} → ComputationResult Err R → Maybe R
+success-maybe : ∀ {R : Type} → ComputationResult Err R → Maybe R
 success-maybe (success x) = just x
 success-maybe (failure _) = nothing
 
-failure-maybe : ∀ {R : Set} → ComputationResult Err R → Maybe Err
+failure-maybe : ∀ {R : Type} → ComputationResult Err R → Maybe Err
 failure-maybe (success _) = nothing
 failure-maybe (failure x) = just x
 
-_≈ᶜʳ_ : ∀ {A} → ComputationResult Err A → ComputationResult Err A → Set
+_≈ᶜʳ_ : ∀ {A} → ComputationResult Err A → ComputationResult Err A → Type
 x ≈ᶜʳ y = success-maybe x ≡ success-maybe y
 
-module _ (STS : C → S → Sig → S → Set) where
+module _ (STS : C → S → Sig → S → Type) where
 
-  ExtendedRel : C → S → Sig → ComputationResult Err S → Set
+  ExtendedRel : C → S → Sig → ComputationResult Err S → Type
   ExtendedRel c s sig (success s') = STS c s sig s'
   ExtendedRel c s sig (failure _ ) = ∀ s' → ¬ STS c s sig s'
 
-  record Computational Err : Set₁ where
+  record Computational Err : Type₁ where
     constructor MkComputational
     field
       computeProof : (c : C) (s : S) (sig : Sig) → ComputationResult Err (∃[ s' ] STS c s sig s')
@@ -89,7 +89,7 @@ module _ (STS : C → S → Sig → S → Set) where
 
     open ≡-Reasoning
 
-    computeFail : C → S → Sig → Set
+    computeFail : C → S → Sig → Type
     computeFail c s sig = isFailure $ compute c s sig
 
     ≡-success⇔STS : compute c s sig ≡ success s' ⇔ STS c s sig s'
@@ -118,7 +118,7 @@ module _ (STS : C → S → Sig → S → Set) where
     recomputeProof : ∀ {Γ s sig s'} → STS Γ s sig s' → ComputationResult Err (∃[ s'' ] STS Γ s sig s'')
     recomputeProof _ = computeProof _ _ _
 
-module _ {STS : C → S → Sig → S → Set} (comp : Computational STS Err) where
+module _ {STS : C → S → Sig → S → Type} (comp : Computational STS Err) where
 
   open Computational comp
 
@@ -152,7 +152,7 @@ module _ {STS : C → S → Sig → S → Set} (comp : Computational STS Err) wh
   ... | no ¬p    = no  λ h → ¬p $ sym $ computational⇒rightUnique h ExSTS
   ... | yes refl = yes ExSTS
 
-module _ {STS : C → S → Sig → S → Set} (comp comp' : Computational STS Err) where
+module _ {STS : C → S → Sig → S → Type} (comp comp' : Computational STS Err) where
 
   open Computational comp  renaming (compute to compute₁)
   open Computational comp' renaming (compute to compute₂)
@@ -162,13 +162,13 @@ module _ {STS : C → S → Sig → S → Set} (comp comp' : Computational STS E
     (ExtendedRel-compute comp) (ExtendedRel-compute comp')
 
 Computational⇒Dec' :
-  ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Set} ⦃ comp : Computational STS Err ⦄
+  ⦃ _ : DecEq S ⦄ {STS : C → S → Sig → S → Type} ⦃ comp : Computational STS Err ⦄
   → Dec (STS c s sig s')
 Computational⇒Dec' ⦃ comp = comp ⦄ = Computational⇒Dec comp
 
 open Computational ⦃...⦄
 
-record InjectError Err₁ Err₂ : Set where
+record InjectError Err₁ Err₂ : Type where
   field injectError : Err₁ → Err₂
 
 open InjectError
@@ -182,12 +182,12 @@ instance
   InjectError-Id = λ where
     .injectError → id
 
-  Computational-Id : {C S : Set} → Computational (IdSTS {C} {S}) ⊥
+  Computational-Id : {C S : Type} → Computational (IdSTS {C} {S}) ⊥
   Computational-Id .computeProof _ s _ = success (s , Id-nop)
   Computational-Id .completeness _ _ _ _ Id-nop = refl
 
-module _ {BSTS : C → S → ⊤ → S → Set} ⦃ _ : Computational BSTS Err₁ ⦄ where
-  module _ {STS : C → S → Sig → S → Set} ⦃ _ : Computational STS Err₂ ⦄
+module _ {BSTS : C → S → ⊤ → S → Type} ⦃ _ : Computational BSTS Err₁ ⦄ where
+  module _ {STS : C → S → Sig → S → Type} ⦃ _ : Computational STS Err₂ ⦄
      ⦃ _ : InjectError Err₁ Err ⦄ ⦃ _ : InjectError Err₂ Err ⦄ where instance
     Computational-ReflexiveTransitiveClosureᵇ : Computational (ReflexiveTransitiveClosureᵇ BSTS STS) (Err)
     Computational-ReflexiveTransitiveClosureᵇ .computeProof c s [] = bimap (injectError it) (map₂′ BS-base) (computeProof c s tt)
@@ -205,7 +205,7 @@ module _ {BSTS : C → S → ⊤ → S → Set} ⦃ _ : Computational BSTS Err�
       with computeProof ⦃ Computational-ReflexiveTransitiveClosureᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
     ... | success (s₂ , _) | p = p
 
-  module _ {STS : C × ℕ → S → Sig → S → Set} ⦃ Computational-STS : Computational STS Err₂ ⦄
+  module _ {STS : C × ℕ → S → Sig → S → Type} ⦃ Computational-STS : Computational STS Err₂ ⦄
     ⦃ InjectError-Err₁ : InjectError Err₁ Err ⦄ ⦃ InjectError-Err₂ : InjectError Err₂ Err ⦄
     where instance
     Computational-ReflexiveTransitiveClosureᵢᵇ' : Computational (_⊢_⇀⟦_⟧ᵢ*'_ BSTS STS) Err
@@ -231,10 +231,10 @@ module _ {BSTS : C → S → ⊤ → S → Set} ⦃ _ : Computational BSTS Err�
     Computational-ReflexiveTransitiveClosureᵢᵇ .completeness c =
       Computational-ReflexiveTransitiveClosureᵢᵇ' .completeness (c , 0)
 
-Computational-ReflexiveTransitiveClosure : {STS : C → S → Sig → S → Set} → ⦃ Computational STS Err ⦄
+Computational-ReflexiveTransitiveClosure : {STS : C → S → Sig → S → Type} → ⦃ Computational STS Err ⦄
   → Computational (ReflexiveTransitiveClosure STS) Err
 Computational-ReflexiveTransitiveClosure = it
 
-Computational-ReflexiveTransitiveClosureᵢ : {STS : C × ℕ → S → Sig → S → Set} → ⦃ Computational STS Err ⦄
+Computational-ReflexiveTransitiveClosureᵢ : {STS : C × ℕ → S → Sig → S → Type} → ⦃ Computational STS Err ⦄
   → Computational (ReflexiveTransitiveClosureᵢ STS) Err
 Computational-ReflexiveTransitiveClosureᵢ = it

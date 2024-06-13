@@ -5,29 +5,29 @@ module Ledger.Crypto where
 
 open import Ledger.Prelude hiding (T)
 
-record isHashableSet (T : Set) : Set₁ where
+record isHashableSet (T : Type) : Type₁ where
   constructor mkIsHashableSet
-  field THash : Set
+  field THash : Type
         ⦃ DecEq-THash ⦄ : DecEq      THash
         ⦃ DecEq-T     ⦄ : DecEq    T
         ⦃ T-Hashable  ⦄ : Hashable T THash
 open isHashableSet
 
-record HashableSet : Set₁ where
+record HashableSet : Type₁ where
   constructor mkHashableSet
-  field T : Set; ⦃ T-isHashable ⦄ : isHashableSet T
+  field T : Type; ⦃ T-isHashable ⦄ : isHashableSet T
   open isHashableSet T-isHashable public
 
-record PKKScheme : Set₁ where
+record PKKScheme : Type₁ where
   field
 \end{code}
 We rely on a public key signing scheme for verification of spending.
 \begin{figure*}[h]
 \emph{Types \& functions}
 \begin{code}
-        SKey VKey Sig Ser  : Set
-        isKeyPair          : SKey → VKey → Set
-        isSigned           : VKey → Ser → Sig → Set
+        SKey VKey Sig Ser  : Type
+        isKeyPair          : SKey → VKey → Type
+        isSigned           : VKey → Ser → Sig → Type
         sign               : SKey → Ser → Sig
 
   KeyPair = Σ[ sk ∈ SKey ] Σ[ vk ∈ VKey ] isKeyPair sk vk
@@ -47,13 +47,13 @@ We rely on a public key signing scheme for verification of spending.
         ⦃ DecEq-Sig  ⦄ : DecEq Sig
         ⦃ DecEq-Ser  ⦄ : DecEq Ser
 
-record Crypto : Set₁ where
+record Crypto : Type₁ where
   field pkk : PKKScheme
 
   open PKKScheme pkk public
 
   field ⦃ khs ⦄    : isHashableSet VKey
-        ScriptHash : Set; ⦃ DecEq-ScriptHash ⦄ : DecEq ScriptHash
+        ScriptHash : Type; ⦃ DecEq-ScriptHash ⦄ : DecEq ScriptHash
 
   open isHashableSet khs renaming (THash to KeyHash) hiding (DecEq-T) public
 
