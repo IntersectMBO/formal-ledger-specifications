@@ -126,7 +126,6 @@ data
   where
 \end{code}
 \begin{code}
-
   Enact-NoConf :
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record  s { cc = nothing , gid }

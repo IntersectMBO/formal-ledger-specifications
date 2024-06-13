@@ -87,7 +87,7 @@ rec {
       cp -r latex/ Makefile typecheck.time $out
       sh checkTypeChecked.sh
     '';
-    extraExtensions = [ "hs" "cabal" ];
+    extraExtensions = [ "hs" "cabal" "py" ];
   };
 
   mkSpecDerivation = { project, main }: rec {
@@ -97,7 +97,7 @@ rec {
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
-      buildInputs = [ agdaWithDeps latex ];
+      buildInputs = [ agdaWithDeps latex python3 ];
       buildPhase = ''
         OUT_DIR=$out make "${project}".docs
       '';
@@ -172,7 +172,7 @@ rec {
     version = version;
     src = "${formalLedger}";
     meta = { };
-    buildInputs = [ agdaWithDeps latex ];
+    buildInputs = [ agdaWithDeps latex python3 ];
     buildPhase = ''
         OUT_DIR=$out make ${project}
       '';
