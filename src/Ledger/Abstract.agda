@@ -22,3 +22,4 @@ record AbstractFunctions : Set where
         indexOfImp   : indexOf
         runPLCScript : CostModel → P2Script → ExUnits → List Data → Bool
         scriptSize   : Script → ℕ
+        valContext   : TxInfo → ScriptPurpose → Data

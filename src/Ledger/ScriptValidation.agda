@@ -18,13 +18,6 @@ module Ledger.ScriptValidation
 instance
   _ = DecEq-Slot
 
-data ScriptPurpose : Set where
-  Cert     : DCert        → ScriptPurpose
-  Rwrd     : RwdAddr      → ScriptPurpose
-  Mint     : ScriptHash   → ScriptPurpose
-  Spend    : TxIn         → ScriptPurpose
-  Vote     : Voter        → ScriptPurpose
-  Propose  : GovProposal  → ScriptPurpose
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
@@ -50,17 +43,6 @@ getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
     (lookupᵐ? utxo txin)
 getDatum tx utxo _ = []
 
-record TxInfo : Set where
-  field realizedInputs : UTxO
-        txouts  : Ix ⇀ TxOut
-        fee     : Value
-        mint    : Value
-        txcerts : List DCert
-        txwdrls : Wdrl
-        txvldt  : Maybe Slot × Maybe Slot
-        vkKey   : ℙ KeyHash
-        txdats  : DataHash ⇀ Datum
-        txid    : TxId
 
 txInfo : Language → PParams
                   → UTxO
@@ -139,13 +121,9 @@ private
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
     where open TxBody txb
 
-valContext : TxInfo → ScriptPurpose → Data
-valContext txinfo sp = toData (txinfo , sp)
-
 -- need to get map from language script ↦ cm
 -- need to update costmodels to add the language map in order to check
 -- (Language ↦ CostModel) ∈ costmdls ↦ (Language ↦ CostModel)
-
 
 opaque
 

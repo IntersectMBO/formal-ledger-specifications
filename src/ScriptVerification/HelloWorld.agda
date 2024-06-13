@@ -5,11 +5,17 @@ module ScriptVerification.HelloWorld where
 
 scriptImp : ScriptImplementation String String
 scriptImp = record { serialise = id ;
-                     deserialise = λ x → just x ;
-                     toData' = λ x → "dummy" }
+                     deserialise = λ x → just x }
 
-open import ScriptVerification.LedgerImplementation String String ⊤ scriptImp
-open import ScriptVerification.Lib String String ⊤ scriptImp
+open import ScriptVerification.LedgerImplementation String String scriptImp
+open import Ledger.Transaction using (TransactionStructure)
+open TransactionStructure SVTransactionStructure using (TxInfo; ScriptPurpose; Data)
+
+valContext : TxInfo → ScriptPurpose → Data
+valContext x x₁ = ""
+
+open import ScriptVerification.AbstractImplementation String String scriptImp valContext
+open import ScriptVerification.Lib String String scriptImp valContext
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
@@ -22,12 +28,12 @@ open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 open import Ledger.Utxow.Properties SVTransactionStructure SVAbstractFunctions
 
 -- true if redeemer is "Hello World"
-helloWorld' : ⊤ → Maybe String → Maybe String → Bool
-helloWorld' _ _ (just s) = ⌊ (s ≟ "Hello World") ⌋
-helloWorld' _ _ _ = false
+helloWorld' : Maybe String → Maybe String → Bool
+helloWorld' _ (just s) = ⌊ (s ≟ "Hello World") ⌋
+helloWorld' _ _ = false
 
 helloWorld : PlutusScript
-helloWorld = 777 , (tt , applyScript helloWorld')
+helloWorld = 777 , applyScript helloWorld'
 
 initEnv : UTxOEnv
 initEnv = createEnv 0

@@ -1,16 +1,22 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.Prelude
+open import Ledger.Transaction using (TransactionStructure)
+open import ScriptVerification.LedgerImplementation using (SVTransactionStructure)
 
-module ScriptVerification.Lib (A D P : Set)
-  (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
+module ScriptVerification.Lib (T D : Set)
+  (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
+  (open TransactionStructure (SVTransactionStructure T D scriptImp) using (TxInfo; ScriptPurpose))
+  (valContext' : TxInfo → ScriptPurpose → D)
   where
 
-open import ScriptVerification.LedgerImplementation A D P scriptImp
-open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import ScriptVerification.AbstractImplementation T D scriptImp valContext'
+open import ScriptVerification.LedgerImplementation T D scriptImp
+  renaming (SVTransactionStructure to SVTransactionStructure')
+open import Ledger.ScriptValidation SVTransactionStructure' SVAbstractFunctions
 open import Data.Empty
-open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Utxo SVTransactionStructure' SVAbstractFunctions
 open import Ledger.Transaction
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure'
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
 open import Data.Rational
@@ -90,17 +96,17 @@ fromList' = fromListᵐ
 fromListIx : List (Implementation.Ix × TxOut) → Implementation.Ix ⇀ TxOut
 fromListIx = fromListᵐ
 
-applyScript : (Params → Maybe D → Maybe D → Bool) → Params → List D → Bool
-applyScript f p [] = f p nothing nothing
-applyScript f p (_ ∷ []) = f p nothing nothing
-applyScript f p (redeemer ∷ valcontext ∷ []) = f p nothing (just redeemer)
-applyScript f p (datum ∷ redeemer ∷ valcontext ∷ _) = f p (just datum) (just redeemer)
+applyScript : (Maybe D → Maybe D → Bool) → List D → Bool
+applyScript f [] = f nothing nothing
+applyScript f (_ ∷ []) = f nothing nothing
+applyScript f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer)
+applyScript f (datum ∷ redeemer ∷ valcontext ∷ _) = f (just datum) (just redeemer)
 
-applyScriptWithContext : (Params → Maybe D → Maybe D → List D → Bool) → Params → List D → Bool
-applyScriptWithContext f p [] = f p nothing nothing []
-applyScriptWithContext f p (_ ∷ []) = f p nothing nothing []
-applyScriptWithContext f p (redeemer ∷ valcontext ∷ []) = f p nothing (just redeemer) []
-applyScriptWithContext f p (datum ∷ redeemer ∷ valcontext ∷ vs) = f p (just datum) (just redeemer) (valcontext ∷ vs)
+applyScriptWithContext : (Maybe D → Maybe D → List D → Bool) → List D → Bool
+applyScriptWithContext f [] = f nothing nothing []
+applyScriptWithContext f (_ ∷ []) = f nothing nothing []
+applyScriptWithContext f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer) []
+applyScriptWithContext f (datum ∷ redeemer ∷ valcontext ∷ vs) = f (just datum) (just redeemer) (valcontext ∷ vs)
 
 notEmpty : ∀ {A : Set} → List A → Set
 notEmpty [] = ⊥

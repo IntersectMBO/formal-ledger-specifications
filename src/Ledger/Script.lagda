@@ -53,7 +53,6 @@ record PlutusStructure : Set₁ where
   field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
         ⦃ Dec-validPlutusScript ⦄ : ∀ {x} → (validPlutusScript x ⁇³)
         language : PlutusScript → Language
-        toData : ∀ {A : Set} → A → Data
 \end{code}
 We define \Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]
@@ -179,4 +178,5 @@ record ScriptStructure : Set₁ where
   instance
     Hashable-Script : Hashable Script ScriptHash
     Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
+
 \end{code}

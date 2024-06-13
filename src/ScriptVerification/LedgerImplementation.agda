@@ -1,11 +1,10 @@
+open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.Prelude
 
 module ScriptVerification.LedgerImplementation
-  (T D P : Set)
-  (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
-  where
+  (T D : Set)
+  (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp) where
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import Data.Rational using (0ℚ; ½)
 open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
@@ -47,12 +46,11 @@ module Implementation where
   sign       = _+_
 
   Data         = D
-  Params       = P
   Dataʰ        = mkHashableSet Data
-  toData : ∀ {A : Set} → A → D
-  toData = toData' -- fix this
+ --  toData : ∀ {A : Set} → A → D
+ -- toData = toData' -- fix this
 
-  PlutusScript = ℕ × Params × (Params → List Data → Bool)
+  PlutusScript = ℕ × (List Data → Bool)
   ScriptHash = ℕ
 
   ExUnits      = ℕ × ℕ
@@ -118,8 +116,6 @@ SVCrypto = record
 instance _ = SVCrypto
 
 open import Ledger.Script it it
-
-
 
 SVScriptStructure : ScriptStructure
 SVScriptStructure = record
@@ -191,22 +187,3 @@ open TransactionStructure it
 
 indexOfTxInImp : TxIn → ℙ TxIn → Maybe Ix
 indexOfTxInImp x y = lookupᵐ? (fromListᵐ (setToList y)) (proj₁ x)
-
-SVAbstractFunctions : AbstractFunctions
-SVAbstractFunctions = record
-  { Implementation
-  ; txscriptfee = λ tt y → 0
-  ; serSize     = λ v → 0 -- changed to 0
-  ; indexOfImp  = record
-    { indexOfDCert    = λ _ _ → nothing
-    ; indexOfRwdAddr  = λ _ _ → nothing
-    ; indexOfTxIn     = indexOfTxInImp
-    ; indexOfPolicyId = λ _ _ → nothing
-    ; indexOfVote     = λ _ _ → nothing
-    ; indexOfProposal = λ _ _ → nothing
-    }
-  ; runPLCScript = λ { x (sh , params , script) x₂ x₃ → script params x₃ } -- proj₂ x₁ x₃ }
-  ; scriptSize = λ _ → 0
-  }
-instance _ = SVAbstractFunctions
-

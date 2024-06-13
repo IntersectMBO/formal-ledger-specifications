@@ -11,7 +11,7 @@ open import Data.Nat.Properties.Ext
 open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter)
 open import Ledger.Transaction hiding (Vote)
 
-module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
+module Ledger.Ratify (txs : _) (open TransactionStructure txs hiding (Vote)) where
 
 open import Ledger.Enact govStructure
 open import Ledger.GovernanceActions govStructure using (Vote)

@@ -197,6 +197,28 @@ the transaction body are:
     else
       nothing
     where m = setToHashMap (txscripts tx utxo)
+
+  -- TODO: Put in figure
+  data ScriptPurpose : Set where
+    Cert     : DCert        → ScriptPurpose
+    Rwrd     : RwdAddr      → ScriptPurpose
+    Mint     : ScriptHash   → ScriptPurpose
+    Spend    : TxIn         → ScriptPurpose
+    Vote     : Voter        → ScriptPurpose
+    Propose  : GovProposal  → ScriptPurpose
+
+  record TxInfo : Set where
+    field realizedInputs : UTxO
+          txouts  : Ix ⇀ TxOut
+          fee     : Value
+          mint    : Value
+          txcerts : List DCert
+          txwdrls : Wdrl
+          txvldt  : Maybe Slot × Maybe Slot
+          vkKey   : ℙ KeyHash
+          txdats  : DataHash ⇀ Datum
+          txid    : TxId
+
 \end{code}
 \caption{Functions related to transactions}
 \label{fig:defs:transaction-funs}
