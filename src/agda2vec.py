@@ -172,7 +172,7 @@ def make_inner_array(ls):
 def format_vector(vector_block):
     if not vector_block:
         return []
-    unwanted_suffixes = [newline, "\\<%", "%", "\\>[.][@{}l@{}]\\<[250I]"]
+    unwanted_suffixes = [newline, "%", "\\<", "\\>", "[.][@{}l@{}]", "[250I]", "[270I]"]
     element_halt = ["AgdaInductiveConstructor{,}", "\\left(\\begin{array}{c}", "\\AgdaOperator{\\AgdaField{❴}}"]
     def format_vector_tr(vector_block, acc):
         if not vector_block:
@@ -266,8 +266,8 @@ def process_lines(lines):
     inline_halt_back = [deduction, extra_skip, newline, left_bracket, begin_code, end_code, "\\>[6][@{}l@{\\AgdaIndent{0}}]%"]
     inline_halt = inline_halt_back + ["\\AgdaFunction{∙}"]
 
-    unwanted = ["%", begin_code + "%", newline, extra_skip, "\\>[6]", "\\>[6][@{}l@{\\AgdaIndent{0}}", "\>[4][@{}l@{\AgdaIndent{0}}]%"]
-    unwanted_inl = unwanted + ["\\<"] #, "\\>[.][@{}l@{}]\\<[1449I]%", "\\>[.][@{}l@{}]\\<[1415I]%"]
+    unwanted = ["%", begin_code, newline, extra_skip, "\\>[4]", "\\>[6]", "[@{}l@{\\AgdaIndent{0}}]"]
+    unwanted_inl = unwanted + ["\\<"] #, "\\>[.][@{}l@{}]\\<[270I]}"]
     
     def process_lines_tr(ls, acc):
         if not ls:
@@ -281,7 +281,7 @@ def process_lines(lines):
 
         vec_block, newls = process_vector(bb[1:])
 
-        c = strip_prefixes(c, unwanted_inl)
+        c = strip_suffixes(strip_prefixes(c, unwanted_inl), unwanted_inl)
         if find_match(c, ["\\AgdaFunction{∙}"]) != -1:        
             c = [newline] + inline(c)
         else:
