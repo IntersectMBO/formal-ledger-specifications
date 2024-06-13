@@ -7,19 +7,36 @@ LATEX_DIR=latex
 PRE=$(addprefix $(LATEX_DIR)/,\
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex references.bib)
 PDF_DIR=$(OUT_DIR)/pdfs
+PYTHON=python
 HTML_DIR=$(OUT_DIR)/html
 HS_DIR=$(OUT_DIR)/haskell
 MALONZO_DIR=MAlonzo/Code
 CABAL_TEST=cabal run test
 LEDGER=Ledger
 MIDNIGHT=MidnightExample
+VEC_SCRIPT=agda2vec.py
+
+# files that should be postprocessed for fancy vector typesetting
+ppNames=Certs Chain Enact Epoch Ratify Ledger NewPP
+# Utxo/Properties
+
+ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))
 
 # Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
-$(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
+
+# General rule for all LaTeX files
+$(filter-out $(ppLatexFiles), $(latexFiles)): $(LATEX_DIR)/%.tex: %.lagda
+	@echo "Compiling $<"
+	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $<
+
+# Specific rule for postprocessed LaTeX files
+$(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda agda2vec.py
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
+	@echo "Postprocessing $@"
+	$(PYTHON) $(VEC_SCRIPT) $@ $@
 
 $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
 	mkdir -p $(LATEX_DIR)/$(LEDGER)
@@ -124,7 +141,7 @@ $(OUT_DIR)/index.html:
   ledger.hsDocs midnight.hsDocs hsDocs \
   staticWebsite
 
-ledger.docs: $(PDF_DIR)/cardano-ledger.pdf
+ledger.docs: $(PDF_DIR)/cardano-ledger.pdf $(latexFiles)
 ledger.conway.docs: $(PDF_DIR)/conway-ledger.pdf
 midnight.docs: $(PDF_DIR)/midnight-example.pdf
 docs: ledger.docs midnight.docs
