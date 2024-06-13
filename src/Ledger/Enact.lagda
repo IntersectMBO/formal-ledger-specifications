@@ -32,13 +32,13 @@ since they are \HashProtected.
 
 \begin{figure*}[h]
 \begin{code}
-record EnactEnv : Set where
+record EnactEnv : Type where
   constructor ⟦_,_,_⟧ᵉ
   field gid       : GovActionID
         treasury  : Coin
         epoch     : Epoch
 
-record EnactState : Set where
+record EnactState : Type where
   field cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
         constitution  : HashProtected (DocHash × Maybe ScriptHash)
         pv            : HashProtected ProtVer
@@ -108,7 +108,7 @@ required). The exceptions are \NewCommittee and \TreasuryWdrl:
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Set
+  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type
 \end{code}
 \begin{code}[hide]
   where

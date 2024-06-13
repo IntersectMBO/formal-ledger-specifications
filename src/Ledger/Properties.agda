@@ -16,7 +16,7 @@ open import Ledger.Ledger txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 
-isCredDeposit : DepositPurpose → Set
+isCredDeposit : DepositPurpose → Type
 isCredDeposit (CredentialDeposit x) = ⊤
 isCredDeposit _ = ⊥
 
@@ -27,7 +27,7 @@ instance
   isCredDeposit? {DRepDeposit x} = ⁇ (no λ ())
   isCredDeposit? {GovActionDeposit x} = ⁇ (no λ ())
 
-isGADeposit : DepositPurpose → Set
+isGADeposit : DepositPurpose → Type
 isGADeposit (GovActionDeposit x) = ⊤
 isGADeposit _ = ⊥
 
@@ -60,10 +60,10 @@ instance
   _ : IsSet TxBody GovProposal
   _ = record { toSet = fromList ∘ TxBody.txprop }
 
-validBlockIn : ChainState → Block → Set
+validBlockIn : ChainState → Block → Type
 validBlockIn s b = ∃[ s' ] _ ⊢ s ⇀⦇ b ,CHAIN⦈ s'
 
-validBlock : Block → Set
+validBlock : Block → Type
 validBlock b = ∃[ s ] validBlockIn s b
 
 -- Transaction validity is complicated. In the truest sense, a
@@ -84,7 +84,7 @@ validBlock b = ∃[ s ] validBlockIn s b
 -- but to some intermediate one. Maybe we'll gain some insight on this
 -- matter once we have proven more theorems.
 
-validTxIn₁ : ChainState → Tx → Set
+validTxIn₁ : ChainState → Tx → Type
 validTxIn₁ s tx = ∃[ b ] tx ∈ b × validBlockIn s b
 
 module _ (s : ChainState) (slot : Slot) where
@@ -95,13 +95,13 @@ module _ (s : ChainState) (slot : Slot) where
   private
     ledgerEnv = ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧ˡᵉ
 
-  validTxIn₂ : Tx → Set
+  validTxIn₂ : Tx → Type
   validTxIn₂ tx = ∃[ ls' ] ledgerEnv ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'
 
-validTx₁ : Tx → Set
+validTx₁ : Tx → Type
 validTx₁ tx = ∃[ s ] validTxIn₁ s tx
 
-ChainInvariant : ∀ {a} → (ChainState → Set a) → Set a
+ChainInvariant : ∀ {a} → (ChainState → Type a) → Type a
 ChainInvariant P = ∀ b s s' → _ ⊢ s ⇀⦇ b ,CHAIN⦈ s' → P s → P s'
 
 module _ (s : ChainState) where
@@ -116,9 +116,9 @@ module _ (s : ChainState) where
   -- Transaction properties
 
   module _ {slot} {tx} (let txb = body tx) (valid : validTxIn₂ s slot tx)
-    (indexedSum-∪⁺-hom : ∀ {A V : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄ ⦃ mon : IsCommutativeMonoid' 0ℓ 0ℓ V ⦄
+    (indexedSum-∪⁺-hom : ∀ {A V : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄ ⦃ mon : IsCommutativeMonoid' 0ℓ 0ℓ V ⦄
       → (d₁ d₂ : A ⇀ V) → indexedSumᵛ' id (d₁ ∪⁺ d₂) ≡ indexedSumᵛ' id d₁ ◇ indexedSumᵛ' id d₂)
-    (indexedSum-⊆ : ∀ {A : Set} ⦃ _ : DecEq A ⦄ (d d' : A ⇀ ℕ) → d ˢ ⊆ d' ˢ
+    (indexedSum-⊆ : ∀ {A : Type} ⦃ _ : DecEq A ⦄ (d d' : A ⇀ ℕ) → d ˢ ⊆ d' ˢ
       → indexedSumᵛ' id d ≤ indexedSumᵛ' id d') -- technically we could use an ordered monoid instead of ℕ
     where
     open import Ledger.Utxow txs abs
@@ -139,7 +139,7 @@ module _ (s : ChainState) where
   -- Block properties
 
   module _ {b} (valid : validBlockIn s b) (let open Block b) where
-    isNewEpochBlock : Set
+    isNewEpochBlock : Type
     isNewEpochBlock = epoch slot ≡ sucᵉ lastEpoch
 
     newChainState : ChainState
@@ -153,15 +153,15 @@ module _ (s : ChainState) where
 
   -- Invariant properties
 
-  action-deposits≡actions-prop : Set
+  action-deposits≡actions-prop : Type
   action-deposits≡actions-prop = filterˢ isGADeposit (dom (UTxOState.deposits utxoSt))
     ≡ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
 
-  dom-rwds≡credDeposits : Set
+  dom-rwds≡credDeposits : Type
   dom-rwds≡credDeposits = filterˢ isCredDeposit (dom (UTxOState.deposits utxoSt))
     ≡ mapˢ CredentialDeposit (dom rewards)
 
-  pp-wellFormed : Set
+  pp-wellFormed : Type
   pp-wellFormed = paramsWellFormed pparams
 
 -- action-deposits≡actions-inv : ChainInvariant action-deposits≡actions-prop

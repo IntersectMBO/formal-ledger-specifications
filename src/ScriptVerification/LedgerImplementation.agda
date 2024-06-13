@@ -1,7 +1,8 @@
 open import ScriptVerification.Prelude
+open import Prelude using (Type)
 
 module ScriptVerification.LedgerImplementation
-  (T D : Set)
+  (T D : Type)
   (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
   where
 
@@ -20,7 +21,7 @@ open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
 open import Interface.HasOrder.Instance
 
-module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
+module _ {A : Type} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id
 
@@ -48,7 +49,7 @@ module Implementation where
 
   Data         = D
   Dataʰ        = mkHashableSet Data
-  toData : ∀ {A : Set} → A → D
+  toData : ∀ {A : Type} → A → D
   toData = toData' -- fix this
 
   PlutusScript = ℕ × (List Data → Bool)
@@ -62,7 +63,7 @@ module Implementation where
     ; ε = zero , zero
     ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
     }) where open import Algebra.PairOp ℕ zero _≡_ _+_
-  _≥ᵉ_ : ExUnits → ExUnits → Set
+  _≥ᵉ_ : ExUnits → ExUnits → Type
   _≥ᵉ_ = _≡_
   CostModel    = ⊤ -- changed from ⊥
   Language     = ⊤

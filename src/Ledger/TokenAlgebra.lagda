@@ -4,7 +4,7 @@
 \begin{AgdaAlign}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-
+open import Prelude using (Type)
 module Ledger.TokenAlgebra (
 \end{code}
 \emph{Abstract types}
@@ -12,7 +12,7 @@ module Ledger.TokenAlgebra (
   PolicyId
 \end{code}
 \begin{code}[hide]
-  : Set) where
+  : Type) where
 open import Ledger.Prelude
 
 open import Algebra              using (CommutativeMonoid ; Monoid)
@@ -25,11 +25,11 @@ open import Relation.Unary       using (Pred)
 \AgdaTarget{TokenAlgebra}
 \begin{AgdaSuppressSpace}
 \begin{code}
-record TokenAlgebra : Set₁ where
-  field  Value : Set
+record TokenAlgebra : Type₁ where
+  field  Value : Type
          ⦃ Value-IsCommutativeMonoid' ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ Value
 
-  MemoryEstimate : Set
+  MemoryEstimate : Type
   MemoryEstimate = ℕ
 
 \end{code}
@@ -46,8 +46,8 @@ record TokenAlgebra : Set₁ where
          inject                    : Coin → Value
          policies                  : Value → ℙ PolicyId
          size                      : Value → MemoryEstimate
-         _≤ᵗ_                      : Value → Value → Set
-         AssetName                 : Set
+         _≤ᵗ_                      : Value → Value → Type
+         AssetName                 : Type
          specialAsset              : AssetName
          property                  : coin ∘ inject ≗ id -- FIXME: rename!
          coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin

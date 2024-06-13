@@ -34,22 +34,22 @@ maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-data GovRole : Set where
+data GovRole : Type where
   CC DRep SPO : GovRole
 
 Voter        = GovRole × Credential
 GovActionID  = TxId × ℕ
 
-data VDeleg : Set where
+data VDeleg : Type where
   credVoter        : GovRole → Credential →  VDeleg
   abstainRep       :                         VDeleg
   noConfidenceRep  :                         VDeleg
 
-record Anchor : Set where
+record Anchor : Type where
   field  url   : String
          hash  : DocHash
 
-data GovAction : Set where
+data GovAction : Type where
   NoConfidence     :                                             GovAction
   NewCommittee     : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
   NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction
@@ -58,7 +58,7 @@ data GovAction : Set where
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction
   Info             :                                             GovAction
 
-actionWellFormed : GovAction → Set
+actionWellFormed : GovAction → Type
 actionWellFormed (ChangePParams x)  = ppdWellFormed x
 actionWellFormed (TreasuryWdrl x)   = ∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId
 actionWellFormed _                  = ⊤
@@ -145,7 +145,7 @@ is not necessary.
 
 \begin{figure*}[h]
 \begin{code}
-NeedsHash : GovAction → Set
+NeedsHash : GovAction → Type
 NeedsHash NoConfidence           = GovActionID
 NeedsHash (NewCommittee _ _ _)   = GovActionID
 NeedsHash (NewConstitution _ _)  = GovActionID
@@ -154,7 +154,7 @@ NeedsHash (ChangePParams _)      = GovActionID
 NeedsHash (TreasuryWdrl _)       = ⊤
 NeedsHash Info                   = ⊤
 
-HashProtected : Set → Set
+HashProtected : Type → Type
 HashProtected A = A × GovActionID
 \end{code}
 \caption{NeedsHash and HashProtected types}
@@ -163,16 +163,16 @@ HashProtected A = A × GovActionID
 
 \begin{figure*}[h]
 \begin{code}
-data Vote : Set where
+data Vote : Type where
   yes no abstain  : Vote
 
-record GovVote : Set where
+record GovVote : Type where
   field gid         : GovActionID
         voter       : Voter
         vote        : Vote
         anchor      : Maybe Anchor
 
-record GovProposal : Set where
+record GovProposal : Type where
   field action      : GovAction
         prevAction  : NeedsHash action
         policy      : Maybe ScriptHash
@@ -180,7 +180,7 @@ record GovProposal : Set where
         returnAddr  : RwdAddr
         anchor      : Anchor
 
-record GovActionState : Set where
+record GovActionState : Type where
   field votes       : Voter ⇀ Vote
         returnAddr  : RwdAddr
         expiresIn   : Epoch

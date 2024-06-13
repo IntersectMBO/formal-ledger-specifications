@@ -9,8 +9,17 @@ module Ledger.Notation where
 In this section, we introduce some notations used in this document.
 
 \begin{description}
-\item[Propositions, sets and types] This document loosly treats sets and types as the same thing.
-  When we need to convert a list to its set of elements, we write \fromList.
+\item[Propositions, sets and types] In this document the abstract notions of ``set''
+and ``type'' are essentially the same, despite having different formal definitions
+in our Agda code. We represent sets as a special type, which we denote by
+\AgdaDatatype{Set}~\AgdaBound{A}, for \AgdaBound{A} an arbitrary type.
+(See Section~\ref{sec:sets-maps} for details and \cite[Chapter 19]{NPS:1990-open} for
+background.)
+Agda denotes the primitive notion of type by \AgdaPrimitive{Set}.  To avoid confusion,
+throughout this document and in our Agda code we call this primitive \Type,
+reserving the name \AgdaDatatype{Set} for our set type.
+All of our sets are finite, and when we need to convert
+a list \AgdaBound{l} to its set of elements, we write \fromList~\AgdaBound{l}.
 \item[Sums and products] The sum (or disjoint union, coproduct, etc.) of \AgdaBound{A} and
   \AgdaBound{B} is denoted by \AgdaBound{A} \coproduct \AgdaBound{B}, and their product
   is denoted by \AgdaBound{A} \agdatimes \AgdaBound{B}. The projection functions from products
@@ -18,7 +27,7 @@ In this section, we introduce some notations used in this document.
   properties whether an element of a coproduct is in the left or right component are called
   \isInl and \isInr.
 \item[Record types] Record types are explained in Appendix~\ref{sec:appendix-agda-essentials}.
-\item[Postfix projections] Projections can be written using postix notation. For example, we may
+\item[Postfix projections] Projections can be written using postfix notation. For example, we may
   write \AgdaBound{x}\AgdaSpace{}\AgdaSymbol{.}\AgdaField{proj₁} instead of
   \AgdaField{proj₁}\AgdaSpace{}\AgdaBound{x}.
 \item[Restriction, corestriction and complements] The restriction of a function or map
@@ -35,7 +44,7 @@ In this section, we introduce some notations used in this document.
 \item[Map addition] For maps \AgdaBound{m} and \AgdaBound{m'}, we write
   \AgdaBound{m}~\AgdaFunction{∪⁺}~\AgdaBound{m'} for their union, where keys that appear
   in both maps have their corresponding values added.
-\item[Maping a partial function] A partial function is a function on \AgdaBound{A} which may not be
+\item[Mapping a partial function] A \textit{partial function} is a function on \AgdaBound{A} which may not be
   defined for all elements of \AgdaBound{A}. The \mapPartial operation takes such a function \AgdaBound{f}
   and a set \AgdaBound{S} of elements of \AgdaBound{A} and applies \AgdaBound{f} to the elements
   of \AgdaBound{S} at which it is defined.  The result is the set

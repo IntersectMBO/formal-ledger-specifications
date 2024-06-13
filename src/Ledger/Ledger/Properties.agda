@@ -111,7 +111,7 @@ module _ where
     s s' : LState
     l : List Tx
 
-  FreshTx : Tx → LState → Set
+  FreshTx : Tx → LState → Type
   FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
     where open Tx; open TxBody; open UTxOState; open LState
 
@@ -119,7 +119,7 @@ module _ where
   LEDGER-pov h (LEDGER-V⋯ _ (UTXOW-inductive⋯ _ _ _ _ _ _ _ st) _ _) = pov h st
   LEDGER-pov h (LEDGER-I⋯ _ (UTXOW-inductive⋯ _ _ _ _ _ _ _ st))     = pov h st
 
-  data FreshTxs : LEnv → LState → List Tx → Set where
+  data FreshTxs : LEnv → LState → List Tx → Type where
     []-Fresh : FreshTxs Γ s []
     ∷-Fresh  : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → FreshTxs Γ s' l
               → FreshTxs Γ s (tx ∷ l)
@@ -134,14 +134,14 @@ module _ where
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
-isGADeposit : DepositPurpose → Set
+isGADeposit : DepositPurpose → Type
 isGADeposit dp = isGADepositᵇ dp ≡ true
   where
   isGADepositᵇ : DepositPurpose → Bool
   isGADepositᵇ (GovActionDeposit _) = true
   isGADepositᵇ _                    = false
 
-govDepsMatch : LState → Set
+govDepsMatch : LState → Type
 govDepsMatch ⟦ utxoSt , govSt , _ ⟧ˡ =
   filterˢ isGADeposit (dom (UTxOState.deposits utxoSt)) ≡ᵉ fromList (map (GovActionDeposit ∘ proj₁) govSt)
 
@@ -282,7 +282,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       dpMap-vote-invar' v {[]} = refl
       dpMap-vote-invar' v {x ∷ govSt} rewrite dpMap-vote-invar' v {govSt} = refl
 
-      map-∷ʳ : ∀ {A B : Set} (f : A → B) x xs → map f (xs ∷ʳ x) ≡ map f xs ∷ʳ f x
+      map-∷ʳ : ∀ {A B : Type} (f : A → B) x xs → map f (xs ∷ʳ x) ≡ map f xs ∷ʳ f x
       map-∷ʳ f x xs = map-++ f xs [ x ]
 
       dpMap-updateGovStates-cong : (vps : List (GovVote ⊎ GovProposal)) {k : ℕ} {govSt govSt' : GovState}
@@ -549,7 +549,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       χ' = mapˢ (GovActionDeposit ∘ proj₁) removed
       -- Below we prove χ and χ' are essentially equivalent.
 
-      P : GovActionID × GovActionState → Set
+      P : GovActionID × GovActionState → Type
       P = λ u → proj₁ u ∉ mapˢ proj₁ removed
 
       P? : Decidable P

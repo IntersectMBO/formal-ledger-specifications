@@ -8,7 +8,7 @@ open import Ledger.Prelude as Prelude
 open import Data.Integer using (+_; 0ℤ; 1ℤ; -1ℤ)
 
 module MidnightExample.Ledger
-  (Hash : Set)
+  (Hash : Type)
   ⦃ _ : DecEq Hash ⦄
   ⦃ _ : Hashable ℤ Hash ⦄
   ⦃ _ : Hashable₁ List Hash ⦄
@@ -45,7 +45,7 @@ points in the chain.
 \begin{figure*}[h]
 \AgdaTarget{Point, slot, blockHash, slotsInEpoch, epochOf}
 \begin{code}
-record Point : Set where
+record Point : Type where
   field  slot       : Maybe ℕ
          blockHash  : Hash
 
@@ -72,7 +72,7 @@ the header given the body.
 \begin{figure*}[h]
 \AgdaTarget{Tx, inc, dec, txDelta}
 \begin{code}
-data Tx : Set where
+data Tx : Type where
   inc  : Tx
   dec  : Tx
 
@@ -94,14 +94,14 @@ instance
 \begin{figure*}[h]
 \AgdaTarget{Header, slotNo, blockNo, blockHash, prev, nodeId, Block, header, body, blockPoint, computeBlockHash, addBlockHash}
 \begin{code}
-record Header : Set where
+record Header : Type where
   field  slotNo     : ℕ
          blockNo    : ℕ
          blockHash  : Hash
          prev       : ℕ
          nodeId     : ℕ
 
-record Block : Set where
+record Block : Type where
   field  header  : Header
          body    : List Tx
 
@@ -132,7 +132,7 @@ The ledger state consists of a pointer to the previous block as well as a counte
 \AgdaTarget{LedgerState, tip, count, snapshot1, snapshot2, tickLedgerState}
 \begin{AgdaSuppressSpace}
 \begin{code}
-record LedgerState : Set where
+record LedgerState : Type where
   field  tip                  : Point
          count                : ℤ
          snapshot1 snapshot2  : ℤ
@@ -161,7 +161,7 @@ that the hash in the header is correct.
 \begin{figure*}[h]
 \AgdaTarget{\_⊢\_⇀⦇\_,LEDGER⦈\_, LEDGER-inductive}
 \begin{code}
-data _⊢_⇀⦇_,LEDGER⦈_ : ⊤ → LedgerState → Block → LedgerState → Set where
+data _⊢_⇀⦇_,LEDGER⦈_ : ⊤ → LedgerState → Block → LedgerState → Type where
   LEDGER-inductive : ∀ {Γ} {s} {b} →
     let open Block b
         acc = ∑ˡ[ x ← body ] txDelta x

@@ -2,6 +2,8 @@
 
 module Prelude where
 
+open import Agda.Primitive using (lzero) renaming (Set to Type) public
+
 open import Level public
   hiding (lower)
   renaming (_⊔_ to _⊔ˡ_; suc to sucˡ; zero to zeroˡ)

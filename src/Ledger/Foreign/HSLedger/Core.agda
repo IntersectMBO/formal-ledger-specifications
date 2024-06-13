@@ -21,7 +21,7 @@ open import Ledger.Types.Epoch
 
 open import Ledger.Transaction renaming (Vote to VoteTag) public
 
-module _ {A : Set} ⦃ _ : DecEq A ⦄ where instance
+module _ {A : Type} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id
 
@@ -50,7 +50,7 @@ module Implementation where
 
   Data         = ⊤
   Dataʰ        = mkHashableSet Data
-  toData : ∀ {A : Set} → A → Data
+  toData : ∀ {A : Type} → A → Data
   toData _ = tt
 
   PlutusScript = ⊤
@@ -62,7 +62,7 @@ module Implementation where
     ; ε = zero , zero
     ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
     }) where open import Algebra.PairOp ℕ zero _≡_ _+_
-  _≥ᵉ_ : ExUnits → ExUnits → Set
+  _≥ᵉ_ : ExUnits → ExUnits → Type
   _≥ᵉ_ = _≡_
   CostModel    = ⊤
   Language     = ⊤

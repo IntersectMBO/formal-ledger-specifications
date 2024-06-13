@@ -2,7 +2,9 @@
 
 module Interface.HasEmptySet where
 
-record HasEmptySet (A : Set) : Set where
+open import Prelude using (Type)
+
+record HasEmptySet (A : Type) : Type where
   field
     ∅ : A
 

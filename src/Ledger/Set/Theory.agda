@@ -28,7 +28,7 @@ opaque
   unfolding List-Model
   open import Axiom.Set.Properties th using (card-≡ᵉ)
 
-  to-sp : {A : Set} (P : A → Set) → ⦃ P ⁇¹ ⦄ → specProperty P
+  to-sp : {A : Type} (P : A → Type) → ⦃ P ⁇¹ ⦄ → specProperty P
   to-sp _ = dec¹
 
   finiteness : ∀ (X : Theory.Set th A) → finite X
@@ -104,16 +104,16 @@ _ᶠᵐ : A ⇀ B → FinMap A B
 _ᶠˢ : ℙ A → FinSet A
 X ᶠˢ = X , finiteness _
 
-filterˢ : (P : A → Set) ⦃ _ : P ⁇¹ ⦄ → ℙ A → ℙ A
+filterˢ : (P : A → Type) ⦃ _ : P ⁇¹ ⦄ → ℙ A → ℙ A
 filterˢ P = filterˢ? (to-sp P)
 
-filterᵐ : (P : A × B → Set) ⦃ _ : P ⁇¹ ⦄ → (A ⇀ B) → (A ⇀ B)
+filterᵐ : (P : A × B → Type) ⦃ _ : P ⁇¹ ⦄ → (A ⇀ B) → (A ⇀ B)
 filterᵐ P = filterᵐ? (to-sp P)
 
-filterKeys : (P : A → Set) ⦃ _ : P ⁇¹ ⦄ → (A ⇀ B) → (A ⇀ B)
+filterKeys : (P : A → Type) ⦃ _ : P ⁇¹ ⦄ → (A ⇀ B) → (A ⇀ B)
 filterKeys P = filterKeys? (to-sp P)
 
-_∣^'_ : A ⇀ B → (P : B → Set) ⦃ _ : P ⁇¹ ⦄ → A ⇀ B
+_∣^'_ : A ⇀ B → (P : B → Type) ⦃ _ : P ⁇¹ ⦄ → A ⇀ B
 s ∣^' P = s ∣^'? to-sp P
 
 open import Interface.IsCommutativeMonoid

@@ -1,11 +1,9 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
+open import Prelude
 open import Axiom.Set
 
 module Axiom.Set.Factor (th : Theory {lzero}) where
-
-open import Prelude
 
 open Theory th
 open import Axiom.Set.Properties th

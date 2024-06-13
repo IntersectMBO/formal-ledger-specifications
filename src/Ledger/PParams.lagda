@@ -35,13 +35,13 @@ remain in treasury and reserves.
 
 \begin{figure*}[h!]
 \begin{code}
-record Acnt : Set where
+record Acnt : Type where
   field treasury reserves : Coin
 
-ProtVer : Set
+ProtVer : Type
 ProtVer = ℕ × ℕ
 
-data pvCanFollow : ProtVer → ProtVer → Set where
+data pvCanFollow : ProtVer → ProtVer → Type where
   canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
   canFollowMinor : pvCanFollow (m , n) (m , n + 1)
 \end{code}
@@ -53,16 +53,16 @@ data pvCanFollow : ProtVer → ProtVer → Set where
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
 \begin{code}
-data PParamGroup : Set where
+data PParamGroup : Type where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup SecurityGroup : PParamGroup
 
-record DrepThresholds : Set where
+record DrepThresholds : Type where
   field P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
 
-record PoolThresholds : Set where
+record PoolThresholds : Type where
   field Q1 Q2a Q2b Q4 Q5e : ℚ
 
-record PParams : Set where
+record PParams : Type where
   field
 \end{code}
 \emph{Network group}
@@ -105,7 +105,7 @@ record PParams : Set where
         drepActivity                  : Epoch
         ccMinSize ccMaxTermLength     : ℕ
 
-paramsWellFormed : PParams → Set
+paramsWellFormed : PParams → Type
 paramsWellFormed pp =
      0 ∉ fromList  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                    ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
@@ -124,7 +124,7 @@ instance
     ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
 
 module PParamsUpdate where
-  record PParamsUpdate : Set where
+  record PParamsUpdate : Type where
     field
           maxBlockSize maxTxSize        : Maybe ℕ
           maxHeaderSize maxValSize      : Maybe ℕ
@@ -150,7 +150,7 @@ module PParamsUpdate where
           drepActivity                  : Maybe Epoch
           ccMinSize ccMaxTermLength     : Maybe ℕ
   
-  paramsUpdateWellFormed : PParamsUpdate → Set
+  paramsUpdateWellFormed : PParamsUpdate → Type
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                          ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
@@ -220,11 +220,11 @@ module PParamsUpdate where
       _?═⇒_ : (PParamsUpdate → Bool) → PParamGroup → ℙ PParamGroup
       pred ?═⇒ grp = if pred ppu then ❴ grp ❵ else ∅
   
-  _?↗_ : ∀ {A : Set} → Maybe A → A → A
+  _?↗_ : ∀ {A : Type} → Maybe A → A → A
   just x ?↗ _ = x
   nothing ?↗ x = x
   
-  ≡-update : ∀ {A : Set} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x ⇔ (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
+  ≡-update : ∀ {A : Type} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x ⇔ (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
   ≡-update {u} {p} {x} = mk⇔ to from
     where
       to : ∀ {A} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x → (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
@@ -349,12 +349,12 @@ something) and if it preserves well-formedness.
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
-record PParamsDiff : Set₁ where
+record PParamsDiff : Type₁ where
   field
 \end{code}
 \emph{Abstract types \& functions}
 \begin{code}
-    UpdateT : Set
+    UpdateT : Type
     applyUpdate : PParams → UpdateT → PParams
     updateGroups : UpdateT → ℙ PParamGroup
 
@@ -365,7 +365,7 @@ record PParamsDiff : Set₁ where
 \emph{Well-formedness condition}
 \begin{code}
 
-  ppdWellFormed : UpdateT → Set
+  ppdWellFormed : UpdateT → Type
   ppdWellFormed u = updateGroups u ≢ ∅
     × ∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)
 \end{code}
@@ -374,7 +374,7 @@ record PParamsDiff : Set₁ where
 \label{fig:pp-update-type}
 \end{figure*}
 \begin{code}[hide]
-record GovParams : Set₁ where
+record GovParams : Type₁ where
   field ppUpd : PParamsDiff
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
   field ppHashingScheme : isHashableSet PParams

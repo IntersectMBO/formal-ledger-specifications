@@ -22,11 +22,11 @@ private variable m n : ℕ
 \begin{code}
 GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
-record PPUpdateState : Set where
+record PPUpdateState : Type where
   field pup   : ProposedPPUpdates
         fpup  : ProposedPPUpdates
 
-record PPUpdateEnv : Set where
+record PPUpdateEnv : Type where
   field slot       : Slot
         pparams    : PParams
         genDelegs  : GenesisDelegation
@@ -35,10 +35,10 @@ record PPUpdateEnv : Set where
 \end{figure*}
 \begin{figure*}[h]
 \begin{code}
-viablePParams : PParams → Set
+viablePParams : PParams → Type
 viablePParams pp = ⊤ -- TODO: block size check
 
-isViableUpdate : PParams → PParamsUpdate → Set
+isViableUpdate : PParams → PParamsUpdate → Type
 isViableUpdate pp pup with applyUpdate pp pup
 ... | pp' = pvCanFollow (PParams.pv pp) (PParams.pv pp') × viablePParams pp'
 \end{code}
@@ -60,7 +60,7 @@ instance
   ... | yes refl | no ¬p    = yes canFollowMajor
   ... | yes refl | yes p    = ⊥-elim $ ℕ.m+1+n≢m m $ ×.×-≡,≡←≡ p .proj₁
 
-data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → PPUpdateState → Set where
+data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → PPUpdateState → Type where
 \end{code}
 \begin{figure*}[h]
 \begin{code}

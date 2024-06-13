@@ -2,7 +2,7 @@ module Foreign.Convertible where
 
 open import Ledger.Prelude
 
-record Convertible (A B : Set) : Set where
+record Convertible (A B : Type) : Type where
   field to   : A → B
         from : B → A
 open Convertible ⦃...⦄ public
@@ -10,10 +10,10 @@ open Convertible ⦃...⦄ public
 Convertible-Refl : ∀ {A} → Convertible A A
 Convertible-Refl = λ where .to → id; .from → id
 
-Convertible₁ : (Set → Set) → (Set → Set) → Set₁
+Convertible₁ : (Type → Type) → (Type → Type) → Type₁
 Convertible₁ T U = ∀ {A B} → ⦃ Convertible A B ⦄ → Convertible (T A) (U B)
 
-Convertible₂ : (Set → Set → Set) → (Set → Set → Set) → Set₁
+Convertible₂ : (Type → Type → Type) → (Type → Type → Type) → Type₁
 Convertible₂ T U = ∀ {A B} → ⦃ Convertible A B ⦄ → Convertible₁ (T A) (U B)
 
 -- ** instances
