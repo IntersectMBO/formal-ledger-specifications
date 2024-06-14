@@ -22,10 +22,10 @@ record PoolParams : Type where
     rewardAddr : Credential
 
 data DCert : Type where
-  delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → DCert
+  delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
   dereg       : Credential → DCert
-  regpool     : Credential → PoolParams → DCert
-  retirepool  : Credential → Epoch → DCert
+  regpool     : KeyHash → PoolParams → DCert
+  retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → DCert
   ccreghot    : Credential → Maybe Credential → DCert
@@ -33,8 +33,8 @@ data DCert : Type where
 cwitness : DCert → Credential
 cwitness (delegate c _ _ _)  = c
 cwitness (dereg c)           = c
-cwitness (regpool c _)       = c
-cwitness (retirepool c _)    = c
+cwitness (regpool kh _)      = KeyHashObj kh
+cwitness (retirepool kh _)   = KeyHashObj kh
 cwitness (regdrep c _ _)     = c
 cwitness (deregdrep c)       = c
 cwitness (ccreghot c _)      = c
@@ -66,7 +66,7 @@ record DState : Type where
 \end{code}
 \begin{code}
     voteDelegs   : Credential ⇀ VDeleg
-    stakeDelegs  : Credential ⇀ Credential
+    stakeDelegs  : Credential ⇀ KeyHash
     rewards      : Credential ⇀ Coin
 
 record PState : Type where
@@ -76,8 +76,8 @@ record PState : Type where
   field
 \end{code}
 \begin{code}
-    pools     : Credential ⇀ PoolParams
-    retiring  : Credential ⇀ Epoch
+    pools     : KeyHash ⇀ PoolParams
+    retiring  : KeyHash ⇀ Epoch
 
 record GState : Type where
 \end{code}
@@ -108,7 +108,7 @@ record DelegEnv : Type where
 \end{code}
 \begin{code}
     pparams  : PParams
-    pools    : Credential ⇀ PoolParams
+    pools    : KeyHash ⇀ PoolParams
 
 GovCertEnv  = CertEnv
 PoolEnv     = PParams
@@ -122,10 +122,10 @@ PoolEnv     = PParams
 private variable
   an : Anchor
   dReps dReps' : Credential ⇀ Epoch
-  pools : Credential ⇀ PoolParams
+  pools : KeyHash ⇀ PoolParams
   vDelegs : Credential ⇀ VDeleg
-  sDelegs : Credential ⇀ Credential
-  retiring retiring' : Credential ⇀ Epoch
+  sDelegs : Credential ⇀ KeyHash
+  retiring : KeyHash ⇀ Epoch
   ccKeys : Credential ⇀ Maybe Credential
   rwds : Credential ⇀ Coin
   dCert : DCert
@@ -238,11 +238,11 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
+    ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
       ⟦ pp , pools ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mc d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mc sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
+        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
@@ -261,14 +261,14 @@ data _⊢_⇀⦇_,POOL⦈_ where
 \end{code}
 \begin{code}
   POOL-regpool :
-    ∙ c ∉ dom pools
+    ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool c poolParams ,POOL⦈
-            ⟦ ❴ c , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
+      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool kh poolParams ,POOL⦈
+            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool c e ,POOL⦈ ⟦ pools , ❴ c , e ❵ ∪ˡ retiring ⟧ᵖ
+    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
 \end{code}
 \caption{Auxiliary POOL transition system}
 \label{fig:sts:aux-cert-pool}

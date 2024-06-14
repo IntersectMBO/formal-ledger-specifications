@@ -81,6 +81,7 @@ ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
 \AgdaTarget{payCred, isVKeyAddr}
 \begin{code}
 payCred       : Addr → Credential
+stakeCred     : Addr → Maybe Credential
 netId         : Addr → Network
 isVKeyAddr    : Addr → Type
 isScriptAddr  : Addr → Type
@@ -96,6 +97,9 @@ isScriptRwdAddr  = isScript ∘ RwdAddr.stake
 \begin{code}[hide]
 payCred (inj₁ record {pay = pay}) = pay
 payCred (inj₂ record {pay = pay}) = pay
+
+stakeCred (inj₁ record {stake = stake}) = just stake
+stakeCred (inj₂ _) = nothing
 
 netId (inj₁ record {net = net}) = net
 netId (inj₂ record {net = net}) = net

@@ -148,7 +148,7 @@ as an erratum to the Shelley specification.
 \begin{code}
 data DepositPurpose : Type where
   CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : Credential   → DepositPurpose
+  PoolDeposit        : KeyHash      → DepositPurpose
   DRepDeposit        : Credential   → DepositPurpose
   GovActionDeposit   : GovActionID  → DepositPurpose
 
@@ -234,10 +234,10 @@ instance
 \end{code}
 \begin{code}
 certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
-certDeposit (delegate c _ _ v)  = ❴ CredentialDeposit c , v                ❵
-certDeposit (regpool c _) {pp}  = ❴ PoolDeposit       c , pp .poolDeposit  ❵
-certDeposit (regdrep c v _)     = ❴ DRepDeposit       c , v                ❵
-certDeposit _                   = ∅
+certDeposit (delegate c _ _ v)   = ❴ CredentialDeposit c , v                ❵
+certDeposit (regpool kh _) {pp}  = ❴ PoolDeposit      kh , pp .poolDeposit  ❵
+certDeposit (regdrep c v _)      = ❴ DRepDeposit       c , v                ❵
+certDeposit _                    = ∅
 
 certRefund : DCert → ℙ DepositPurpose
 certRefund (dereg c)      = ❴ CredentialDeposit c ❵
