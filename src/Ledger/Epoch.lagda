@@ -26,17 +26,31 @@ open import Ledger.Utxo txs abs
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
+record Snapshot : Set where
+  constructor ⟦_,_⟧ˢ
+  field
+    stake        : Credential ⇀ Coin
+    delegations  : Credential ⇀ KeyHash
+    -- poolParameters : KeyHash ⇀ PoolParam
+
+record Snapshots : Set where
+  constructor ⟦_,_,_,_⟧ˢˢ
+  field
+    mark set go  : Snapshot
+    feeSS        : Coin
+
 record EpochState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ᵉ'
+  constructor ⟦_,_,_,_,_⟧ᵉ'
   field
 \end{code}
 \begin{code}
-    acnt       : Acnt
-    ls         : LState
-    es         : EnactState
-    fut        : RatifyState
+        acnt       : Acnt
+        ss         : Snapshots
+        ls         : LState
+        es         : EnactState
+        fut        : RatifyState
 
 record NewEpochEnv : Type where
 \end{code}
@@ -75,6 +89,30 @@ instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
 toRwdAddr : Credential → RwdAddr
 toRwdAddr x = record { net = NetworkId ; stake = x }
+
+getStakeCred : TxOut → Maybe Credential
+getStakeCred (a , _ , _ , _) = stakeCred a
+
+stakeDistr : UTxO → DState → PState → Snapshot
+stakeDistr utxo dState pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
+  where
+    open DState dState
+    stakeCreds = mapPartial getStakeCred (range utxo)
+    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) stakeCreds
+    stakeRelation = m ∪ proj₁ rewards
+    activeDelegs = stakeDelegs
+
+private variable
+  mark set go : Snapshot
+  feeSS : Coin
+  lstate : LState
+  ss ss' : Snapshots
+
+data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
+  SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
+             stake = stakeDistr utxo dState pState
+    in
+    lstate ⊢ ⟦ mark , set , go , feeSS ⟧ˢˢ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧ˢˢ
 
 data _⊢_⇀⦇_,EPOCH⦈_ : NewEpochEnv → EpochState → Epoch → EpochState → Type where
 \end{code}
@@ -141,8 +179,9 @@ its results, i.e:
     in
     record { currentEpoch = e ; treasury = acnt .treasury ; GState gState ; NewEpochEnv Γ }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
+      → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
-    Γ ⊢ ⟦ acnt , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ls' , es , fut' ⟧ᵉ'
+    Γ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ss' , ls' , es , fut' ⟧ᵉ'
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}

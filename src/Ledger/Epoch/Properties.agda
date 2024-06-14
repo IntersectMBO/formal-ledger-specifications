@@ -20,6 +20,13 @@ open import Data.List using (filter)
 
 open Computational ⦃...⦄
 
+module _ (lstate : LState) (ss : Snapshots) where
+  SNAP-total : ∃[ ss' ] lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+  SNAP-total = -, SNAP
+
+  SNAP-complete : ∀ ss' → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss' → proj₁ SNAP-total ≡ ss'
+  SNAP-complete ss' SNAP = refl
+
 module _ {Γ : NewEpochEnv} {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
@@ -29,13 +36,15 @@ module _ {Γ : NewEpochEnv} {eps : EpochState} {e : Epoch} where
   govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   EPOCH-total : ∃[ eps' ] Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-  EPOCH-total = -, EPOCH (pFut .proj₂)
+  EPOCH-total = -, EPOCH (pFut .proj₂) (snap .proj₂)
     where pFut = RATIFY-total {record { currentEpoch = e ; treasury = treasury
                                       ; GState gState ; NewEpochEnv Γ }}
                               {⟦ es , ∅ , false ⟧ʳ} {govSt'}
+          snap = SNAP-total ls ss
 
   EPOCH-complete : ∀ eps' → Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
-  EPOCH-complete eps' (EPOCH p) = cong ⟦ _ , _ , _ ,_⟧ᵉ' (RATIFY-complete p)
+  EPOCH-complete eps' (EPOCH p₁ p₂) =
+    cong₂ ⟦ _ ,_, _ , _ ,_⟧ᵉ' (SNAP-complete _ _ _ p₂) (RATIFY-complete p₁)
 
   abstract
     EPOCH-total' : ∃[ eps' ] Γ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'

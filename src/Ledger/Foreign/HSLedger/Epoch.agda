@@ -11,6 +11,12 @@ open import Ledger.Epoch HSTransactionStructure HSAbstractFunctions
 open import Ledger.Epoch.Properties HSTransactionStructure HSAbstractFunctions
 
 instance
+  Convertible-Snapshot : Convertible Snapshot F.Snapshot
+  Convertible-Snapshot = autoConvertible
+
+  Convertible-Snapshots : Convertible Snapshots F.Snapshots
+  Convertible-Snapshots = autoConvertible
+
   Convertible-EpochState : Convertible EpochState F.EpochState
   Convertible-EpochState = autoConvertible
 
