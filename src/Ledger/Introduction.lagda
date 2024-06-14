@@ -137,7 +137,7 @@ definition in Figure \ref{fig:computational} which is parametrized
 over the step relation.
 
 \begin{figure*}[h]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Type where
 \end{code}
@@ -150,7 +150,7 @@ record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Typ
 
   nothing⇒∀¬STS : compute Γ s b ≡ nothing → ∀ s' → ¬ Γ ⊢ s ⇀⦇ b ,X⦈ s'
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Computational relations}
 \label{fig:computational}
 \end{figure*}

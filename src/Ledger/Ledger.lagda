@@ -27,7 +27,7 @@ transaction can now be given as a combination of the previously
 defined transition systems.
 
 \begin{figure*}[h]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 record LEnv : Type where
 \end{code}
@@ -57,7 +57,7 @@ txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Types and functions for the LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]

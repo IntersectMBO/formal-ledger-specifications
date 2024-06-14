@@ -33,7 +33,7 @@ maximum : ℙ ℚ → ℚ
 maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
 \begin{figure*}[h]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 data GovRole : Type where
   CC DRep SPO : GovRole
@@ -79,7 +79,7 @@ actionWellFormed? {ChangePParams _}     = it
 actionWellFormed? {TreasuryWdrl _}      = it
 actionWellFormed? {Info}                = it
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
@@ -169,7 +169,7 @@ HashProtected A = A × GovActionID
 \end{figure*}
 
 \begin{figure*}[h]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 data Vote : Type where
   yes no abstain  : Vote
@@ -216,7 +216,7 @@ instance
   unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Vote and proposal types}
 \label{defs:governance-votes}
 \end{figure*}

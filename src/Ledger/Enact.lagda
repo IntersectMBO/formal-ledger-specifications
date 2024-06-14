@@ -31,7 +31,7 @@ Note that all other fields of \EnactState also contain a \GovActionID
 since they are \HashProtected.
 
 \begin{figure*}[h]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 record EnactEnv : Type where
 \end{code}
@@ -80,7 +80,7 @@ getHashES es (ChangePParams _)      = just $ es .pparams .proj₂
 getHashES es (TreasuryWdrl _)       = nothing
 getHashES es Info                   = nothing
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Types and function used for the ENACT transition system}
 \label{fig:enact-defs}
 \end{figure*}

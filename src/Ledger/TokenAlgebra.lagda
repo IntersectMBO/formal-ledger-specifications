@@ -1,7 +1,7 @@
 \section{Token algebras}
 \label{sec:token-algebra}
 \begin{figure*}[h]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 open import Prelude using (Type)
@@ -26,7 +26,6 @@ MemoryEstimate = ℕ
 \end{code}
 \emph{Derived types}
 \AgdaTarget{TokenAlgebra}
-\begin{AgdaSuppressSpace}
 \begin{code}
 record TokenAlgebra : Type₁ where
 \end{code}
@@ -58,7 +57,6 @@ record TokenAlgebra : Type₁ where
     property                  : coin ∘ inject ≗ id -- FIXME: rename!
     coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 \end{code}
-\end{AgdaSuppressSpace}
 \begin{code}[hide]
     ⦃ DecEq-Value ⦄ : DecEq Value
     ⦃ Dec-≤ᵗ ⦄      : _≤ᵗ_ ⁇²
@@ -83,6 +81,6 @@ record TokenAlgebra : Type₁ where
   sumᵛ [] = inject 0
   sumᵛ (x ∷ l) = x + sumᵛ l
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Token algebras, used for multi-assets}
 \end{figure*}

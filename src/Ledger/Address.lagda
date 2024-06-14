@@ -14,7 +14,7 @@ credential contains a hash, either of a verifying (public) key
 (\isVKey) or of a (\isScript).
 
 \begin{figure*}[h!]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \emph{Abstract types}
 \begin{code}
   Network
@@ -27,7 +27,6 @@ credential contains a hash, either of a verifying (public) key
 \emph{Derived types}
 \AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
 VKeyBaseAddr, VKeyBoostrapAddr, ScriptBaseAddr, ScriptBootstrapAddr, VKeyAddr, ScriptAddr}
-\begin{AgdaSuppressSpace}
 \begin{code}
 data Credential : Type where
   KeyHashObj : KeyHash → Credential
@@ -77,7 +76,7 @@ Addr        = BaseAddr        ⊎ BootstrapAddr
 VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
 ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
 \end{code}
-\end{AgdaSuppressSpace} \\
+\\
 \emph{Helper functions}
 \AgdaTarget{payCred, isVKeyAddr}
 \begin{code}
@@ -90,7 +89,7 @@ isVKeyAddr       = isVKey ∘ payCred
 isScriptAddr     = isScript ∘ payCred
 isScriptRwdAddr  = isScript ∘ RwdAddr.stake
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Definitions used in Addresses}
 \label{fig:defs:addresses}
 \end{figure*}

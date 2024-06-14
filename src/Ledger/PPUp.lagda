@@ -19,7 +19,7 @@ open Semiring-Lit Slotʳ
 private variable m n : ℕ
 \end{code}
 \begin{figure*}[h]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
@@ -42,7 +42,7 @@ record PPUpdateEnv : Type where
     pparams    : PParams
     genDelegs  : GenesisDelegation
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{PPUP types}
 \end{figure*}
 \begin{figure*}[h]

@@ -11,7 +11,7 @@ module Ledger.Certs (gs : _) (open GovStructure gs) where
 open import Ledger.GovernanceActions gs
 \end{code}
 \begin{figure*}[h!]
-\begin{AgdaAlign}
+\begin{AgdaMultiCode}
 \begin{code}
 record PoolParams : Type where
 \end{code}
@@ -39,13 +39,12 @@ cwitness (regdrep c _ _)     = c
 cwitness (deregdrep c)       = c
 cwitness (ccreghot c _)      = c
 \end{code}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Delegation definitions}
 \end{figure*}
 
 \begin{figure*}[h!]
-\begin{AgdaAlign}
-\begin{AgdaSuppressSpace}
+\begin{AgdaMultiCode}
 \begin{code}
 record CertEnv : Type where
 \end{code}
@@ -114,8 +113,7 @@ record DelegEnv : Type where
 GovCertEnv  = CertEnv
 PoolEnv     = PParams
 \end{code}
-\end{AgdaSuppressSpace}
-\end{AgdaAlign}
+\end{AgdaMultiCode}
 \caption{Types used for CERTS transition system}
 \end{figure*}
 
