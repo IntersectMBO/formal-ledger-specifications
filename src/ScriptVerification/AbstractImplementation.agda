@@ -3,13 +3,12 @@ open import ScriptVerification.Prelude
 open import Ledger.Transaction using (TransactionStructure)
 open import ScriptVerification.LedgerImplementation using (SVTransactionStructure)
 
-module ScriptVerification.AbstractImplementation (T D : Set)
-  (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
-  (open TransactionStructure (SVTransactionStructure T D scriptImp))
+module ScriptVerification.AbstractImplementation (T D : Set){{DecEq-Data : DecEq D}}
+  (open TransactionStructure (SVTransactionStructure T D))
   (valContext' : TxInfo → ScriptPurpose → D)
   where
 
-open import ScriptVerification.LedgerImplementation T D scriptImp renaming (SVTransactionStructure to SVTransactionStructure')
+open import ScriptVerification.LedgerImplementation T D renaming (SVTransactionStructure to SVTransactionStructure')
 open import Ledger.Abstract SVTransactionStructure'
 
 open Implementation

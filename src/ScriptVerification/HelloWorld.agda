@@ -3,19 +3,15 @@ open import ScriptVerification.Prelude
 
 module ScriptVerification.HelloWorld where
 
-scriptImp : ScriptImplementation String String
-scriptImp = record { serialise = id ;
-                     deserialise = λ x → just x }
-
-open import ScriptVerification.LedgerImplementation String String scriptImp
+open import ScriptVerification.LedgerImplementation String String
 open import Ledger.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure using (TxInfo; ScriptPurpose; Data)
 
 valContext : TxInfo → ScriptPurpose → Data
 valContext x x₁ = ""
 
-open import ScriptVerification.AbstractImplementation String String scriptImp valContext
-open import ScriptVerification.Lib String String scriptImp valContext
+open import ScriptVerification.AbstractImplementation String String valContext
+open import ScriptVerification.Lib String String valContext
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions

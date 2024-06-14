@@ -1,9 +1,7 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import ScriptVerification.Prelude
 
 module ScriptVerification.LedgerImplementation
-  (T D : Set)
-  (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp) where
+  (T D : Set) {{DecEq-Data : DecEq D}} where
 
 open import Data.Rational using (0ℚ; ½)
 open import Algebra             using (CommutativeMonoid)
