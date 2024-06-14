@@ -172,20 +172,20 @@ data VDeleg : Type where
 
 {-# FOREIGN GHC
   data TxCert
-    = Delegate Credential (Maybe VDeleg) (Maybe Credential) Coin
+    = Delegate Credential (Maybe VDeleg) (Maybe Integer) Coin
     | Dereg Credential
-    | RegPool Credential PoolParams
-    | RetirePool Credential Epoch
+    | RegPool Integer PoolParams
+    | RetirePool Integer Epoch
     | RegDRep Credential Coin Anchor
     | DeRegDRep Credential
     | CCRegHot Credential (Maybe Credential)
     deriving (Show, Eq, Generic)
 #-}
 data TxCert : Type where
-  Delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → TxCert
+  Delegate    : Credential → Maybe VDeleg → Maybe Hash → Coin → TxCert
   Dereg       : Credential → TxCert
-  RegPool     : Credential → PoolParams → TxCert
-  RetirePool  : Credential → Epoch → TxCert
+  RegPool     : Hash → PoolParams → TxCert
+  RetirePool  : Hash → Epoch → TxCert
   RegDRep     : Credential → Coin → Anchor → TxCert
   DeRegDRep   : Credential → TxCert
   CCRegHot    : Credential → Maybe Credential → TxCert
@@ -582,20 +582,20 @@ record CertEnv : Type where
 record DState : Type where
   field
     voteDelegs   : HSMap Credential VDeleg
-    stakeDelegs  : HSMap Credential Credential
+    stakeDelegs  : HSMap Credential Hash
     rewards      : HSMap Credential Coin
 {-# FOREIGN GHC
   data DState = MkDState
     { voteDelegs  :: HSMap Credential VDeleg
-    , stakeDelegs :: HSMap Credential Credential
+    , stakeDelegs :: HSMap Integer Credential
     , rewards     :: HSMap Credential Coin
     }
 #-}
 {-# COMPILE GHC DState = data DState (MkDState) #-}
 
 record PState : Type where
-  field pools     : HSMap Credential PoolParams
-        retiring  : HSMap Credential Epoch
+  field pools     : HSMap Hash PoolParams
+        retiring  : HSMap Hash Epoch
 {-# FOREIGN GHC
   data PState = MkPState
     { pools :: HSMap Credential PoolParams
@@ -775,11 +775,11 @@ record Block : Type where
 
 record DelegEnv : Type where
   field dePParams  : PParams
-        dePools    : HSMap Credential PoolParams
+        dePools    : HSMap Hash PoolParams
 {-# FOREIGN GHC
   data DelegEnv = MkDelegEnv
     { dePParams :: PParams
-    , dePools :: HSMap Credential PoolParams
+    , dePools :: HSMap Integer PoolParams
     }
 #-}
 {-# COMPILE GHC DelegEnv = data DelegEnv (MkDelegEnv) #-}
