@@ -114,7 +114,6 @@ the transaction body are:
 \end{code}
 \end{NoConway}
 \emph{Transaction types}
-\begin{AgdaMultiCode}
 \begin{code}
   record TxBody : Type where
 \end{code}

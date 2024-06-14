@@ -18,6 +18,7 @@ VEC_SCRIPT=agda2vec.py
 
 # files that should be postprocessed for fancy vector typesetting
 ppNames=Certs Chain Enact Epoch Ratify Ledger NewPP
+#
 # Utxo/Properties
 
 ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))
