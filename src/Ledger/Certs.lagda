@@ -164,8 +164,10 @@ the \TreasuryWdrl governance action in case of the MIR certificates.
 \subsection{Governance certificate rules}
 
 The rules for transition systems dealing with individual certificates
-are defined in Figure~\ref{fig:sts:aux-cert}. GOVCERT deals with the
-new certificates relating to DReps and the constitutional committee.
+are defined in Figures~\ref{fig:sts:aux-cert-deleg},
+\ref{fig:sts:aux-cert-pool} and \ref{fig:sts:aux-cert-gov}. GOVCERT
+deals with the new certificates relating to DReps and the
+constitutional committee.
 
 \begin{itemize}
 \item \GOVCERTregdrep registers (or re-registers) a DRep. In case of
