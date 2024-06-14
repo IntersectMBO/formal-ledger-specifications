@@ -327,7 +327,6 @@ actualVotes Γ pparams cc ga votes
   open PParams pparams
 \end{code}
 \begin{code}
-
   roleVotes : GovRole → VDeleg ⇀ Vote
   roleVotes r = mapKeys (uncurry credVoter) (filter (λ (x , _) → r ≡ proj₁ x) votes)
 
