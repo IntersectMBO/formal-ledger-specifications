@@ -36,6 +36,6 @@ open import Interface.HasSingleton th public
 open import Interface.HasEmptySet public
 open import Interface.HasEmptySet.Instances th public
 
-dec-de-morgan : ∀{P Q : Set} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
+dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
 dec-de-morgan ⦃ ⁇ yes p ⦄ ¬pq = inj₂ λ q → ¬pq (p , q)

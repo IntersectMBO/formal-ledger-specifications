@@ -1,6 +1,5 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
 open import Axiom.Set using (Theory)
 
 module Axiom.Set.Properties {ℓ} (th : Theory {ℓ}) where

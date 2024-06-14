@@ -22,14 +22,14 @@ credential contains a hash, either of a verifying (public) key
   ScriptHash
 \end{code}
 \begin{code}[hide]
-  : Set) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
+  : Type) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
 \end{code}
 \emph{Derived types}
 \AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
 VKeyBaseAddr, VKeyBoostrapAddr, ScriptBaseAddr, ScriptBootstrapAddr, VKeyAddr, ScriptAddr}
 \begin{AgdaSuppressSpace}
 \begin{code}
-data Credential : Set where
+data Credential : Type where
   KeyHashObj : KeyHash → Credential
   ScriptObj  : ScriptHash → Credential
 \end{code}
@@ -42,24 +42,24 @@ isScriptObj : Credential → Maybe ScriptHash
 isScriptObj (KeyHashObj _) = nothing
 isScriptObj (ScriptObj h)  = just h
 
-data isVKey : Credential → Set where
+data isVKey : Credential → Type where
   VKeyisVKey : (kh : KeyHash) → isVKey (KeyHashObj kh)
-data isScript : Credential → Set where
+data isScript : Credential → Type where
   SHisScript : (sh : ScriptHash) → isScript (ScriptObj sh)
 \end{code}
 \begin{code}
 
-record BaseAddr : Set where
+record BaseAddr : Type where
   field net    : Network
         pay    : Credential
         stake  : Credential
 
-record BootstrapAddr : Set where
+record BootstrapAddr : Type where
   field net        : Network
         pay        : Credential
         attrsSize  : ℕ
 
-record RwdAddr : Set where
+record RwdAddr : Type where
   field net    : Network
         stake  : Credential
 \end{code}
@@ -83,8 +83,8 @@ ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
 \begin{code}
 payCred       : Addr → Credential
 netId         : Addr → Network
-isVKeyAddr    : Addr → Set
-isScriptAddr  : Addr → Set
+isVKeyAddr    : Addr → Type
+isScriptAddr  : Addr → Type
 
 isVKeyAddr       = isVKey ∘ payCred
 isScriptAddr     = isScript ∘ payCred

@@ -4,7 +4,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive using () renaming (Set to Type)
+open import Prelude using (Type)
 
 module Ledger.TokenAlgebra.ValueSet (PolicyId AssetName : Type) where
 

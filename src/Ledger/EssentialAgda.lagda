@@ -9,6 +9,7 @@ understand the other sections of the specification.
 
 module Ledger.EssentialAgda where
 
+open import Prelude using (Type)
 open import Data.Nat
 \end{code}
 
@@ -18,7 +19,7 @@ A \defn{record} is a product with named accessors for the individual fields.  It
 define a type that groups together inhabitants of other types.\\[6pt]
 \textbf{Example}.
 \begin{code}
-record Pair (A B : Set) : Set where
+record Pair (A B : Type) : Type where
   constructor ⦅_,_⦆
   field
     fst : A

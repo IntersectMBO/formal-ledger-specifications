@@ -5,10 +5,10 @@ module Interface.IsCommutativeMonoid where
 open import Algebra using (IsCommutativeMonoid; CommutativeMonoid)
 open import Prelude
 
-record IsCommutativeMonoid' c ℓ Carrier : Set (sucˡ (c ⊔ˡ ℓ)) where
+record IsCommutativeMonoid' c ℓ Carrier : Type (sucˡ (c ⊔ˡ ℓ)) where
   infix  4 _≈_
   field
-    _≈_                 : Carrier → Carrier → Set ℓ
+    _≈_                 : Carrier → Carrier → Type ℓ
     ⦃ semigroup ⦄       : Semigroup Carrier
     ⦃ monoid ⦄          : Monoid Carrier
     isCommutativeMonoid : IsCommutativeMonoid {c} _≈_ _◇_ ε

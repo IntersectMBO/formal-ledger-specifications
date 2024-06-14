@@ -11,7 +11,7 @@ open import Data.String using (_++_)
 import MidnightExample.Types as F
 open F using (Hash)
 
-private variable A B : Set
+private variable A B : Type
 instance
   _ : Hashable String Hash
   _ = λ where .hash → F.hash

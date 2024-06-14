@@ -2,7 +2,7 @@
 -- {-# OPTIONS -v tactic.premises:100 #-}
 module Tactic.Premises where
 
-open import Prelude
+open import Prelude hiding (Type)
 open import PreludeMeta
 open import MetaPrelude using (enumerate)
 

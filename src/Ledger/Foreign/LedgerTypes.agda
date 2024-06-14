@@ -17,13 +17,13 @@ open import Data.Rational.Base
   import Prelude hiding (Rational)
 #-}
 
-data Empty : Set where
+data Empty : Type where
 
 {-# FOREIGN GHC
   data AgdaEmpty deriving (Show, Generic)
 #-}
 
-data ComputationResult E A : Set where
+data ComputationResult E A : Type where
   Success : A → ComputationResult E A
   Failure : E → ComputationResult E A
 {-# FOREIGN GHC
@@ -44,17 +44,17 @@ data ComputationResult E A : Set where
 
 {-# COMPILE GHC Empty = data AgdaEmpty () #-}
 
-record HSMap K V : Set where
+record HSMap K V : Type where
   constructor MkHSMap
   field assocList : List (Pair K V)
 
-record HSSet A : Set where
+record HSSet A : Type where
   constructor MkHSSet
   field elems : List A
 
 Rational = Pair ℤ ℕ
 
-record TxId : Set where
+record TxId : Type where
   field txid : ℕ
 
 Coin          = ℕ
@@ -81,10 +81,10 @@ Hash          = ℕ
 
 GovActionID   = Pair TxId ℕ
 
-HashProtected : Set → Set
+HashProtected : Type → Type
 HashProtected A = Pair A GovActionID
 
-data Tag : Set where Spend Mint Cert Rewrd VoteTag Propose : Tag
+data Tag : Type where Spend Mint Cert Rewrd VoteTag Propose : Tag
 RdmrPtr = Pair Tag Ix
 ExUnits = Pair ℕ ℕ
 ProtVer = Pair ℕ ℕ
@@ -135,7 +135,7 @@ ProtVer = Pair ℕ ℕ
     | KeyHashObj Integer
     deriving (Show, Eq, Generic)
 #-}
-data Credential : Set where
+data Credential : Type where
   ScriptObj  : Hash → Credential
   KeyHashObj : Hash → Credential
 {-# COMPILE GHC Credential = data Credential (ScriptObj | KeyHashObj) #-}
@@ -153,7 +153,7 @@ RwdAddr = Pair Network Credential
     | SPO
     deriving (Show, Eq, Generic)
 #-}
-data GovRole : Set where
+data GovRole : Type where
   CC DRep SPO : GovRole
 {-# COMPILE GHC GovRole = data GovRole (CC | DRep | SPO) #-}
 
@@ -164,7 +164,7 @@ data GovRole : Set where
     | NoConfidenceRep
     deriving (Show, Eq, Generic)
 #-}
-data VDeleg : Set where
+data VDeleg : Type where
   CredVoter        : GovRole → Credential →  VDeleg
   AbstainRep       :                         VDeleg
   NoConfidenceRep  :                         VDeleg
@@ -181,7 +181,7 @@ data VDeleg : Set where
     | CCRegHot Credential (Maybe Credential)
     deriving (Show, Eq, Generic)
 #-}
-data TxCert : Set where
+data TxCert : Type where
   Delegate    : Credential → Maybe VDeleg → Maybe Credential → Coin → TxCert
   Dereg       : Credential → TxCert
   RegPool     : Credential → PoolParams → TxCert
@@ -191,7 +191,7 @@ data TxCert : Set where
   CCRegHot    : Credential → Maybe Credential → TxCert
 {-# COMPILE GHC TxCert = data TxCert (Delegate | Dereg | RegPool | RetirePool | RegDRep | DeRegDRep | CCRegHot) #-}
 
-record TxBody : Set where
+record TxBody : Type where
   field txins    : List TxIn
         refInputs : List TxIn
         txouts   : HSMap Ix TxOut
@@ -223,7 +223,7 @@ record TxBody : Set where
 #-}
 {-# COMPILE GHC TxBody = data TxBody (MkTxBody) #-}
 
-record TxWitnesses : Set where
+record TxWitnesses : Type where
   field vkSigs  : List (Pair ℕ ℕ)
         scripts : List Empty
         txdats  : HSMap DataHash Datum
@@ -238,7 +238,7 @@ record TxWitnesses : Set where
 #-}
 {-# COMPILE GHC TxWitnesses = data TxWitnesses (MkTxWitnesses) #-}
 
-record Tx : Set where
+record Tx : Type where
   field body : TxBody
         wits : TxWitnesses
         txAD : Maybe AuxiliaryData
@@ -251,13 +251,13 @@ record Tx : Set where
 #-}
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}
 
-record DrepThresholds : Set where
+record DrepThresholds : Type where
   field P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : Rational
 
-record PoolThresholds : Set where
+record PoolThresholds : Type where
   field Q1 Q2a Q2b Q4 Q5e : Rational
 
-record PParams : Set where
+record PParams : Type where
   field a                      : ℕ
         b                      : ℕ
         maxBlockSize           : ℕ
@@ -286,7 +286,7 @@ record PParams : Set where
         -- collateralPercent   : ℕ
         maxCollateralInputs    : ℕ
 
-record PParamsUpdate : Set where
+record PParamsUpdate : Type where
   field a                      : Maybe ℕ
         b                      : Maybe ℕ
         maxBlockSize           : Maybe ℕ
@@ -402,7 +402,7 @@ record PParamsUpdate : Set where
 {-# COMPILE GHC PParams = data PParams (MkPParams) #-}
 {-# COMPILE GHC PParamsUpdate = data PParamsUpdate (MkPParamsUpdate) #-}
 
-record UTxOEnv : Set where
+record UTxOEnv : Type where
   field slot     : ℕ
         pparams  : PParams
         treasury : Coin
@@ -415,7 +415,7 @@ record UTxOEnv : Set where
 #-}
 {-# COMPILE GHC UTxOEnv = data UTxOEnv (MkUTxOEnv) #-}
 
-record UTxOState : Set where
+record UTxOState : Type where
   field utxo : UTxO
         fees : Coin
 {-# FOREIGN GHC
@@ -426,7 +426,7 @@ record UTxOState : Set where
 #-}
 {-# COMPILE GHC UTxOState = data UTxOState (MkUTxOState) #-}
 
-record EnactState : Set where
+record EnactState : Type where
   field esCC           : HashProtected (Maybe (Pair (HSMap Credential Epoch) Rational))
         esConstitution : HashProtected (Pair DataHash (Maybe ScriptHash))
         esPV           : HashProtected ProtVer
@@ -443,7 +443,7 @@ record EnactState : Set where
 #-}
 {-# COMPILE GHC EnactState = data EnactState (MkEnactState) #-}
 
-record GovEnv : Set where
+record GovEnv : Type where
   field geTxId       : TxId
         geEpoch      : Epoch
         gePParams    : PParams
@@ -462,7 +462,7 @@ record GovEnv : Set where
 
 Voter = Pair GovRole Credential
 
-data GovAction : Set where
+data GovAction : Type where
   NoConfidence     :                                                         GovAction
   NewCommittee     : (HSMap Credential Epoch) → List Credential → Rational → GovAction
   NewConstitution  : DataHash → Maybe ScriptHash                           → GovAction
@@ -471,25 +471,25 @@ data GovAction : Set where
   TreasuryWdrl     : HSMap RwdAddr Coin                                    → GovAction
   Info             :                                                         GovAction
 
-data Vote : Set where
+data Vote : Type where
   VoteYes     : Vote
   VoteNo      : Vote
   VoteAbstain : Vote
 
-record GovActionState : Set where
+record GovActionState : Type where
   field gasVotes       : HSMap Voter Vote
         gasReturnAddr  : RwdAddr
         gasExpiresIn   : Epoch
         gasAction      : GovAction
         gasPrevAction  : GovActionID
 
-record GovVote : Set where
+record GovVote : Type where
   field gvGid         : GovActionID
         gvVoter       : Voter
         gvVote        : Vote
         gvAnchor      : Maybe Anchor
 
-record GovProposal : Set where
+record GovProposal : Type where
   field gpAction      : GovAction
         gpPrevAction  : GovActionID
         gpPolicy      : Maybe ScriptHash
@@ -497,7 +497,7 @@ record GovProposal : Set where
         gpReturnAddr  : RwdAddr
         gpAnchor      : Anchor
 
-data GovSignal : Set where
+data GovSignal : Type where
   GovSignalVote : GovVote → GovSignal
   GovSignalProposal : GovProposal → GovSignal
 
@@ -564,7 +564,7 @@ GovState = List (Pair GovActionID GovActionState)
 {-# COMPILE GHC GovProposal = data GovProposal (MkGovProposal) #-}
 {-# COMPILE GHC GovSignal = data GovSignal (GovSignalVote|GovSignalProposal) #-}
 
-record CertEnv : Set where
+record CertEnv : Type where
   field epoch  : Epoch
         pp     : PParams
         votes  : List GovVote
@@ -579,7 +579,7 @@ record CertEnv : Set where
 #-}
 {-# COMPILE GHC CertEnv = data CertEnv (MkCertEnv) #-}
 
-record DState : Set where
+record DState : Type where
   field
     voteDelegs   : HSMap Credential VDeleg
     stakeDelegs  : HSMap Credential Credential
@@ -593,7 +593,7 @@ record DState : Set where
 #-}
 {-# COMPILE GHC DState = data DState (MkDState) #-}
 
-record PState : Set where
+record PState : Type where
   field pools     : HSMap Credential PoolParams
         retiring  : HSMap Credential Epoch
 {-# FOREIGN GHC
@@ -604,7 +604,7 @@ record PState : Set where
 #-}
 {-# COMPILE GHC PState = data PState (MkPState) #-}
 
-record GState : Set where
+record GState : Type where
   field dreps      : HSMap Credential Epoch
         ccHotKeys  : HSMap Credential (Maybe Credential)
 {-# FOREIGN GHC
@@ -615,7 +615,7 @@ record GState : Set where
 #-}
 {-# COMPILE GHC GState = data GState (MkGState) #-}
 
-record CertState : Set where
+record CertState : Type where
   field dState : DState
         pState : PState
         gState : GState
@@ -628,14 +628,14 @@ record CertState : Set where
 #-}
 {-# COMPILE GHC CertState = data CertState (MkCertState) #-}
 
-record StakeDistrs : Set where
+record StakeDistrs : Type where
   field stakeDistr  : HSMap VDeleg Coin
 {-# FOREIGN GHC
   newtype StakeDistrs = MkStakeDistrs (HSMap VDeleg Coin)
 #-}
 {-# COMPILE GHC StakeDistrs = data StakeDistrs (MkStakeDistrs) #-}
 
-record RatifyEnv : Set where
+record RatifyEnv : Type where
   field reStakeDistrs   : StakeDistrs
         reCurrentEpoch  : Epoch
         reDReps         : HSMap Credential Epoch
@@ -654,7 +654,7 @@ record RatifyEnv : Set where
 
 open import Ledger.Set.Theory
 
-record RatifyState : Set where
+record RatifyState : Type where
   field es              : EnactState
         removed         : HSSet (Pair GovActionID GovActionState)
         delay           : Bool
@@ -667,7 +667,7 @@ record RatifyState : Set where
 #-}
 {-# COMPILE GHC RatifyState = data RatifyState (MkRatifyState) #-}
 
-record LEnv : Set where
+record LEnv : Type where
   field slot        : Slot
         ppolicy     : Maybe ScriptHash
         pparams     : PParams
@@ -684,7 +684,7 @@ record LEnv : Set where
 #-}
 {-# COMPILE GHC LEnv = data LedgerEnv (MkLedgerEnv) #-}
 
-record LState : Set where
+record LState : Type where
   field utxoSt     : UTxOState
         govSt      : GovState
         certState  : CertState
@@ -697,7 +697,7 @@ record LState : Set where
 #-}
 {-# COMPILE GHC LState = data LedgerState (MkLedgerState) #-}
 
-record EnactEnv : Set where
+record EnactEnv : Type where
   field gid       : GovActionID
         treasury  : Coin
         epoch     : Epoch
@@ -710,7 +710,7 @@ record EnactEnv : Set where
 #-}
 {-# COMPILE GHC EnactEnv = data EnactEnv (MkEnactEnv) #-}
 
-record Acnt : Set where
+record Acnt : Type where
   field treasury reserves : Coin
 {-# FOREIGN GHC
   data Acnt = MkAcnt
@@ -720,14 +720,14 @@ record Acnt : Set where
 #-}
 {-# COMPILE GHC Acnt = data Acnt (MkAcnt) #-}
 
-record NewEpochEnv : Set where
+record NewEpochEnv : Type where
   field stakeDistrs : StakeDistrs
 {-# FOREIGN GHC
   newtype NewEpochEnv = MkNewEpochEnv {stakeDistrs :: StakeDistrs}
 #-}
 {-# COMPILE GHC NewEpochEnv = data NewEpochEnv (MkNewEpochEnv) #-}
 
-record EpochState : Set where
+record EpochState : Type where
   field acnt       : Acnt
         ls         : LState
         es         : EnactState
@@ -742,7 +742,7 @@ record EpochState : Set where
 #-}
 {-# COMPILE GHC EpochState = data EpochState (MkEpochState) #-}
 
-record NewEpochState : Set where
+record NewEpochState : Type where
   field lastEpoch   : Epoch
         epochState  : EpochState
 {-# FOREIGN GHC
@@ -753,7 +753,7 @@ record NewEpochState : Set where
 #-}
 {-# COMPILE GHC NewEpochState = data NewEpochState (MkNewEpochState) #-}
 
-record ChainState : Set where
+record ChainState : Type where
   field csNewEpochState : NewEpochState
 {-# FOREIGN GHC
   newtype ChainState = MkChainState
@@ -762,7 +762,7 @@ record ChainState : Set where
 #-}
 {-# COMPILE GHC ChainState = data ChainState (MkChainState) #-}
 
-record Block : Set where
+record Block : Type where
   field blockTxs : List Tx
         blockSlot : Slot
 {-# FOREIGN GHC
@@ -773,7 +773,7 @@ record Block : Set where
 #-}
 {-# COMPILE GHC Block = data Block (MkBlock) #-}
 
-record DelegEnv : Set where
+record DelegEnv : Type where
   field dePParams  : PParams
         dePools    : HSMap Credential PoolParams
 {-# FOREIGN GHC

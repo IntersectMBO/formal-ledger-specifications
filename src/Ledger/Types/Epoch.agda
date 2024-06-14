@@ -9,9 +9,9 @@ open import Algebra using (Semiring)
 open import Relation.Binary
 open import Data.Nat.Properties using (+-*-semiring)
 
-record EpochStructure : Set₁ where
+record EpochStructure : Type₁ where
   field Slotʳ : Semiring 0ℓ 0ℓ
-        Epoch : Set; ⦃ DecEq-Epoch ⦄ : DecEq Epoch
+        Epoch : Type; ⦃ DecEq-Epoch ⦄ : DecEq Epoch
 
   Slot = Semiring.Carrier Slotʳ
 
@@ -63,8 +63,8 @@ record EpochStructure : Set₁ where
     Number-Epoch .Number.Constraint _ = ⊤
     Number-Epoch .Number.fromNat    x = ℕtoEpoch x
 
-record GlobalConstants : Set₁ where
-  field  Network : Set; ⦃ DecEq-Netw ⦄ : DecEq Network
+record GlobalConstants : Type₁ where
+  field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network
          SlotsPerEpochᶜ : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
          StabilityWindowᶜ : ℕ
          Quorum : ℕ

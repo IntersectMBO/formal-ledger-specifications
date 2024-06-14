@@ -12,13 +12,13 @@ module Ledger.NewPP (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.PPUp txs
 
-record NewPParamEnv : Set where
+record NewPParamEnv : Type where
 --  field
 \end{code}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
-record NewPParamState : Set where
+record NewPParamState : Type where
   constructor ⟦_,_⟧ⁿᵖ
   field pparams  : PParams
         ppup     : PPUpdateState
@@ -49,7 +49,7 @@ private variable
   s s' : NewPParamState
   upd : PParamsUpdate
 
-data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsUpdate → NewPParamState → Set where
+data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsUpdate → NewPParamState → Type where
 \end{code}
 \begin{figure*}[h]
 \begin{code}

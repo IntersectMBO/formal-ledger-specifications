@@ -22,25 +22,25 @@ module Ledger.Script
   (es     : _) (open EpochStructure es)
   where
 
-record P1ScriptStructure : Set₁ where
-  field P1Script : Set
-        validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Set
+record P1ScriptStructure : Type₁ where
+  field P1Script : Type
+        validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Type
         ⦃ Dec-validP1Script ⦄ : validP1Script ⁇³
         ⦃ Hashable-P1Script ⦄ : Hashable P1Script ScriptHash
         ⦃ DecEq-P1Script    ⦄ : DecEq P1Script
 
-record PlutusStructure : Set₁ where
+record PlutusStructure : Type₁ where
   field Dataʰ : HashableSet
-        Language PlutusScript CostModel Prices LangDepView ExUnits : Set
+        Language PlutusScript CostModel Prices LangDepView ExUnits : Type
         ⦃ ExUnit-CommutativeMonoid ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ ExUnits
         ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
         ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
         ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
 
-  field  _≥ᵉ_              : ExUnits → ExUnits → Set
+  field  _≥ᵉ_              : ExUnits → ExUnits → Type
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
          ⦃ DecEQ-Prices  ⦄ : DecEq Prices
-         -- GetPair              : ExUnits → Set × Set
+         -- GetPair              : ExUnits → Type × Type
          -- coinIsMonoidMorphism : GetPair Is ExUnit-CommutativeMonoid
          --                          -CommutativeMonoid⟶ +-0-commutativeMonoid
 
@@ -50,15 +50,15 @@ record PlutusStructure : Set₁ where
   Datum    = Data
   Redeemer = Data
 
-  field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Set
+  field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Type
         ⦃ Dec-validPlutusScript ⦄ : ∀ {x} → (validPlutusScript x ⁇³)
         language : PlutusScript → Language
-        toData : ∀ {A : Set} → A → Data
+        toData : ∀ {A : Type} → A → Data
 \end{code}
 We define \Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
 \begin{figure*}[h]
 \begin{code}
-data Timelock : Set where
+data Timelock : Type where
   RequireAllOf       : List Timelock      → Timelock
   RequireAnyOf       : List Timelock      → Timelock
   RequireMOf         : ℕ → List Timelock  → Timelock
@@ -84,7 +84,7 @@ import Data.Maybe.Relation.Unary.Any as M
 data
 \end{code}
 \begin{code}
-  evalTimelock (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) : Timelock → Set where
+  evalTimelock (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) : Timelock → Type where
   evalAll  : All (evalTimelock khs I) ss
            → (evalTimelock khs I) (RequireAllOf ss)
   evalAny  : Any (evalTimelock khs I) ss
@@ -155,9 +155,9 @@ P1ScriptStructure-TL = record
   { P1Script = Timelock
   ; validP1Script = evalTimelock }
 
-record ScriptStructure : Set₁ where
+record ScriptStructure : Type₁ where
   field hashRespectsUnion :
-          {A B Hash : Set} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
+          {A B Hash : Type} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
         ⦃ Hash-Timelock ⦄ : Hashable Timelock ScriptHash
 
   p1s : P1ScriptStructure

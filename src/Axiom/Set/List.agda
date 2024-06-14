@@ -1,7 +1,5 @@
 {-# OPTIONS --safe --no-import-sorts #-}
 
-open import Agda.Primitive renaming (Set to Type)
-
 module Axiom.Set.List where
 
 open import Prelude hiding (find)
