@@ -720,27 +720,56 @@ record Acnt : Type where
 #-}
 {-# COMPILE GHC Acnt = data Acnt (MkAcnt) #-}
 
-record NewEpochEnv : Type where
-  field stakeDistrs : StakeDistrs
+record Snapshot : Set where
+  field
+    stake        : HSMap Credential Coin
+    delegations  : HSMap Credential Hash
+    -- poolParameters : KeyHash ⇀ PoolParam
 {-# FOREIGN GHC
-  newtype NewEpochEnv = MkNewEpochEnv {stakeDistrs :: StakeDistrs}
+  data Snapshot = MkSnapshot
+    { sStake       :: Map Credential Coin
+    , sDelegations :: Map Credential Integer
+    }
 #-}
-{-# COMPILE GHC NewEpochEnv = data NewEpochEnv (MkNewEpochEnv) #-}
+{-# COMPILE GHC Snapshot = data Snapshot (MkSnapshot) #-}
+
+record Snapshots : Set where
+  field
+    mark set go  : Snapshot
+    feeSS        : Coin
+{-# FOREIGN GHC
+  data Snapshots = MkSnapshots
+    { ssMark  :: Snapshot
+    , ssSet   :: Snapshot
+    , ssGo    :: Snapshot
+    , ssFeeSS :: SnapShot
+    }
+#-}
+{-# COMPILE GHC Snapshots = data Snapshots (MkSnapshots) #-}
 
 record EpochState : Type where
   field acnt       : Acnt
+        ss         : Snapshots
         ls         : LState
         es         : EnactState
         fut        : RatifyState
 {-# FOREIGN GHC
   data EpochState = MkEpochState
     { esAcnt       :: Acnt
+    , esSs         :: Snapshots
     , esLState     :: LedgerState
     , esEnactState :: EnactState
     , esFut        :: RatifyState
     }
 #-}
 {-# COMPILE GHC EpochState = data EpochState (MkEpochState) #-}
+
+record NewEpochEnv : Type where
+  field stakeDistrs : StakeDistrs
+{-# FOREIGN GHC
+  newtype NewEpochEnv = MkNewEpochEnv {stakeDistrs :: StakeDistrs}
+#-}
+{-# COMPILE GHC NewEpochEnv = data NewEpochEnv (MkNewEpochEnv) #-}
 
 record NewEpochState : Type where
   field lastEpoch   : Epoch

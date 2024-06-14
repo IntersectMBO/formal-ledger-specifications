@@ -534,8 +534,8 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       → eΓ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       → govDepsMatch (EpochState.ls eps) → govDepsMatch (EpochState.ls eps')
 
-    EPOCH-govDepsMatch ratify-removed ⟦ acnt' , ls' ,  es , fut' ⟧ᵉ'
-      (EPOCH x) = ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
+    EPOCH-govDepsMatch ratify-removed ⟦ acnt' , ls' ,  es , _ , fut' ⟧ᵉ'
+      (EPOCH x _) = ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
                             ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
       where
 
