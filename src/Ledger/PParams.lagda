@@ -34,9 +34,15 @@ the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the tota
 remain in treasury and reserves.
 
 \begin{figure*}[h!]
+\begin{AgdaMultiCode}
 \begin{code}
 record Acnt : Type where
-  field treasury reserves : Coin
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    treasury reserves : Coin
 
 ProtVer : Type
 ProtVer = ℕ × ℕ
@@ -45,6 +51,7 @@ data pvCanFollow : ProtVer → ProtVer → Type where
   canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
   canFollowMinor : pvCanFollow (m , n) (m , n + 1)
 \end{code}
+\end{AgdaMultiCode}
 \caption{Definitions related to protocol parameters}
 \label{fig:protocol-parameter-defs}
 \end{figure*}
@@ -57,12 +64,24 @@ data PParamGroup : Type where
   NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup SecurityGroup : PParamGroup
 
 record DrepThresholds : Type where
-  field P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
 
 record PoolThresholds : Type where
-  field Q1 Q2a Q2b Q4 Q5e : ℚ
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    Q1 Q2a Q2b Q4 Q5e : ℚ
 
 record PParams : Type where
+\end{code}
+\begin{code}[hide]
   field
 \end{code}
 \emph{Network group}
