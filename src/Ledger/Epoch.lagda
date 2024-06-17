@@ -102,6 +102,10 @@ stakeDistr utxo dState pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDe
     stakeRelation = m ∪ proj₁ rewards
     activeDelegs = stakeDelegs
 
+mkStakeDistrs : Snapshot → (Credential ⇀ VDeleg) → StakeDistrs
+mkStakeDistrs ⟦ stake , _ ⟧ˢ delegations .StakeDistrs.stakeDistr =
+  aggregateBy (proj₁ delegations) stake
+
 private variable
   mark set go : Snapshot
   feeSS : Coin
@@ -177,7 +181,7 @@ its results, i.e:
         { treasury  = acnt .treasury ∸ totWithdrawals
                     + utxoSt .fees + utxoSt .donations + unclaimed }
     in
-    record { currentEpoch = e ; treasury = acnt .treasury ; GState gState ; NewEpochEnv Γ }
+    record { currentEpoch = e ; stakeDistrs = mkStakeDistrs (Snapshots.mark ss') (voteDelegs dState) ; treasury = acnt .treasury ; GState gState }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
