@@ -14,6 +14,7 @@ in {
     nativeBuildInputs = [
       specs.agdaWithDeps
       specs.latex
+      python3
     ];
   };
 

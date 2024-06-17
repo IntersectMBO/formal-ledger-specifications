@@ -16,7 +16,7 @@ open import Ledger.Ledger.Properties txs abs
 
 open Computational ⦃...⦄
 
-module _ {Γ : NewEpochEnv} {nes : NewEpochState} {e : Epoch} where
+module _ {nes : NewEpochState} {e : Epoch} where
 
 instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
