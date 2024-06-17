@@ -144,6 +144,7 @@ as an erratum to the Shelley specification.
 
 \begin{figure*}[h]
 \emph{Derived types}
+\begin{AgdaMultiCode}
 \begin{code}
 data DepositPurpose : Type where
   CredentialDeposit  : Credential   → DepositPurpose
@@ -157,19 +158,29 @@ Deposits = DepositPurpose ⇀ Coin
 \emph{UTxO environment}
 \begin{code}
 record UTxOEnv : Type where
-  field slot      : Slot
-        pparams   : PParams
-        treasury  : Coin
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    slot      : Slot
+    pparams   : PParams
+    treasury  : Coin
 \end{code}
 \end{NoConway}
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᵘ
-  field utxo       : UTxO
-        fees       : Coin
-        deposits   : Deposits
-        donations  : Coin
+  field
+\end{code}
+\begin{code}
+    utxo       : UTxO
+    fees       : Coin
+    deposits   : Deposits
+    donations  : Coin
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}
@@ -181,6 +192,7 @@ data
   _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 \end{code}
 \end{NoConway}
+\end{AgdaMultiCode}
 \caption{UTxO transition-system types}
 \label{fig:ts-types:utxo-shelley}
 \end{figure*}
