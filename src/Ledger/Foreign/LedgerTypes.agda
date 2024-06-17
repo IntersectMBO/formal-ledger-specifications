@@ -587,7 +587,7 @@ record DState : Type where
 {-# FOREIGN GHC
   data DState = MkDState
     { voteDelegs  :: HSMap Credential VDeleg
-    , stakeDelegs :: HSMap Integer Credential
+    , stakeDelegs :: HSMap Credential Integer
     , rewards     :: HSMap Credential Coin
     }
 #-}
@@ -598,8 +598,8 @@ record PState : Type where
         retiring  : HSMap Hash Epoch
 {-# FOREIGN GHC
   data PState = MkPState
-    { pools :: HSMap Credential PoolParams
-    , retiring :: HSMap Credential Epoch
+    { pools :: HSMap Integer PoolParams
+    , retiring :: HSMap Integer Epoch
     }
 #-}
 {-# COMPILE GHC PState = data PState (MkPState) #-}
@@ -727,8 +727,8 @@ record Snapshot : Set where
     -- poolParameters : KeyHash ⇀ PoolParam
 {-# FOREIGN GHC
   data Snapshot = MkSnapshot
-    { sStake       :: Map Credential Coin
-    , sDelegations :: Map Credential Integer
+    { sStake       :: HSMap Credential Coin
+    , sDelegations :: HSMap Credential Integer
     }
 #-}
 {-# COMPILE GHC Snapshot = data Snapshot (MkSnapshot) #-}
@@ -742,7 +742,7 @@ record Snapshots : Set where
     { ssMark  :: Snapshot
     , ssSet   :: Snapshot
     , ssGo    :: Snapshot
-    , ssFeeSS :: SnapShot
+    , ssFeeSS :: Integer
     }
 #-}
 {-# COMPILE GHC Snapshots = data Snapshots (MkSnapshots) #-}

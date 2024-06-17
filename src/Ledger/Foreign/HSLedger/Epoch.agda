@@ -20,10 +20,7 @@ instance
   Convertible-EpochState : Convertible EpochState F.EpochState
   Convertible-EpochState = autoConvertible
 
-  Convertible-NewEpochEnv : Convertible NewEpochEnv F.NewEpochEnv
-  Convertible-NewEpochEnv = autoConvertible
-
-epoch-step : F.NewEpochEnv → F.EpochState → F.Epoch → F.ComputationResult F.Empty F.EpochState
+epoch-step : ⊤ → F.EpochState → F.Epoch → F.ComputationResult F.Empty F.EpochState
 epoch-step = to (compute Computational-EPOCH)
 
 {-# COMPILE GHC epoch-step as epochStep #-}

@@ -149,7 +149,7 @@ getDeposits : LState → DepositPurpose ⇀ Coin
 getDeposits s = UTxOState.deposits (LState.utxoSt s)
 
 module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
-  {- 1 -} {filterCD : ∀ pp c → filterˢ isGADeposit (dom (certDeposit c {pp})) ≡ᵉ ∅}
+  {- 1 -} {filterCD : ∀ pp c → filterˢ isGADeposit (dom (certDeposit c pp)) ≡ᵉ ∅}
   {- 2 -} {filterCR : (c : DCert) {deps : DepositPurpose ⇀ Coin}
                       → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))}
   where
@@ -421,12 +421,12 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       let upCD = updateCertDeposits pp cs deps
       in begin
       filterˢ isGADeposit (dom (updateCertDeposits pp (c ∷ cs) deps))
-        ≈⟨ filterCR c {upCD ∪⁺ certDeposit c {pp}} ⟩
-      filterˢ isGADeposit (dom (upCD ∪⁺ certDeposit c {pp}))
+        ≈⟨ filterCR c {upCD ∪⁺ certDeposit c pp} ⟩
+      filterˢ isGADeposit (dom (upCD ∪⁺ certDeposit c pp))
         ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
-      filterˢ isGADeposit (dom upCD ∪ dom (certDeposit c {pp}))
+      filterˢ isGADeposit (dom upCD ∪ dom (certDeposit c pp))
         ≈⟨ filter-hom-∪ ⟩
-      filterˢ isGADeposit (dom upCD) ∪ filterˢ isGADeposit (dom (certDeposit c {pp}))
+      filterˢ isGADeposit (dom upCD) ∪ filterˢ isGADeposit (dom (certDeposit c pp))
         ≈⟨ ∪-cong (noGACerts cs deps) (filterCD pp c) ⟩
       filterˢ isGADeposit (dom deps) ∪ ∅
         ≈⟨ ∪-identityʳ (filterˢ isGADeposit (dom deps)) ⟩
@@ -522,16 +522,16 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     LEDGER-govDepsMatch utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
 
 
-  module EPOCH-PROPS (tx : Tx) (Γ : LEnv) (eΓ : NewEpochEnv) (eps : EpochState) where
+  module EPOCH-PROPS (tx : Tx) (Γ : LEnv) (eps : EpochState) where
     open Tx tx renaming (body to txb); open TxBody txb
     open LEnv Γ renaming (pparams to pp); open EpochState eps hiding (es); open LState ls
     open GovActionState; open RatifyState fut using (removed)
 
-    -- GA Deposits Invariance Property for EPOCH STS --------------------------------------------------------------------
+    -- GA Deposits Invariance Property for EPOCH STS -----------------------------------------------
     EPOCH-govDepsMatch :
       (ratify-removed : mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ (UTxOState.deposits utxoSt ˢ))
       (eps' : EpochState) {e : Epoch}
-      → eΓ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+      → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       → govDepsMatch (EpochState.ls eps) → govDepsMatch (EpochState.ls eps')
 
     EPOCH-govDepsMatch ratify-removed ⟦ acnt' , ls' ,  es , _ , fut' ⟧ᵉ'
@@ -653,7 +653,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
     CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-New _ eps₁→eps₂) ledgers) =
       (RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers)
-      ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ _ rrm _ eps₁→eps₂)
+      ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
 
     CHAIN-govDepsMatch _ (CHAIN (NEWEPOCH-Not-New _) ledgers) =
       RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers

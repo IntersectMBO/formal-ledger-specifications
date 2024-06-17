@@ -13,7 +13,7 @@ instance
   Convertible-NewEpochState : Convertible NewEpochState F.NewEpochState
   Convertible-NewEpochState = autoConvertible
 
-newepoch-step : F.NewEpochEnv → F.NewEpochState → F.Epoch → F.ComputationResult F.Empty F.NewEpochState
+newepoch-step : ⊤ → F.NewEpochState → F.Epoch → F.ComputationResult F.Empty F.NewEpochState
 newepoch-step = to (compute Computational-NEWEPOCH)
 
 {-# COMPILE GHC newepoch-step as newEpochStep #-}

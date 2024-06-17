@@ -230,14 +230,13 @@ instance
 
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
-
 \end{code}
 \begin{code}
-certDeposit : DCert → {pp : PParams} → DepositPurpose ⇀ Coin
-certDeposit (delegate c _ _ v)   = ❴ CredentialDeposit c , v                ❵
-certDeposit (regpool kh _) {pp}  = ❴ PoolDeposit      kh , pp .poolDeposit  ❵
-certDeposit (regdrep c v _)      = ❴ DRepDeposit       c , v                ❵
-certDeposit _                    = ∅
+certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
+certDeposit (delegate c _ _ v) _  = ❴ CredentialDeposit c , v                ❵
+certDeposit (regpool kh _)     pp = ❴ PoolDeposit      kh , pp .poolDeposit  ❵
+certDeposit (regdrep c v _)    _  = ❴ DRepDeposit       c , v                ❵
+certDeposit _                  _  = ∅
 
 certRefund : DCert → ℙ DepositPurpose
 certRefund (dereg c)      = ❴ CredentialDeposit c ❵
@@ -247,7 +246,7 @@ certRefund _              = ∅
 updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
 updateCertDeposits _   []              deposits = deposits
 updateCertDeposits pp  (cert ∷ certs)  deposits
-  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert {pp}) ∣ certRefund cert ᶜ
+  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 
 updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
 updateProposalDeposits []        _     _      deposits  = deposits
