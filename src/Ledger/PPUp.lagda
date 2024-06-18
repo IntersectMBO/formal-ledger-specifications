@@ -19,18 +19,30 @@ open Semiring-Lit Slotʳ
 private variable m n : ℕ
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
 record PPUpdateState : Type where
-  field pup   : ProposedPPUpdates
-        fpup  : ProposedPPUpdates
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    pup   : ProposedPPUpdates
+    fpup  : ProposedPPUpdates
 
 record PPUpdateEnv : Type where
-  field slot       : Slot
-        pparams    : PParams
-        genDelegs  : GenesisDelegation
 \end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    slot       : Slot
+    pparams    : PParams
+    genDelegs  : GenesisDelegation
+\end{code}
+\end{AgdaMultiCode}
 \caption{PPUP types}
 \end{figure*}
 \begin{figure*}[h]

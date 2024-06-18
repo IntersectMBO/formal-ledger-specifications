@@ -24,23 +24,40 @@ open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 record EpochState : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᵉ'
-  field acnt       : Acnt
-        ls         : LState
-        es         : EnactState
-        fut        : RatifyState
+  field
+\end{code}
+\begin{code}
+    acnt       : Acnt
+    ls         : LState
+    es         : EnactState
+    fut        : RatifyState
 
 record NewEpochEnv : Type where
-  field stakeDistrs : StakeDistrs
-   -- TODO: compute this from LState instead
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    stakeDistrs : StakeDistrs
+    -- TODO: compute this from LState instead
 
 record NewEpochState : Type where
-  constructor ⟦_,_⟧ⁿᵉ
-  field lastEpoch   : Epoch
-        epochState  : EpochState
 \end{code}
+\begin{code}[hide]
+  constructor ⟦_,_⟧ⁿᵉ
+  field
+\end{code}
+\begin{code}
+    lastEpoch   : Epoch
+    epochState  : EpochState
+\end{code}
+\end{AgdaMultiCode}
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]

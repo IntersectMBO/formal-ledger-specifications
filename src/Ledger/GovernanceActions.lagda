@@ -33,6 +33,7 @@ maximum : ℙ ℚ → ℚ
 maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 data GovRole : Type where
   CC DRep SPO : GovRole
@@ -46,8 +47,13 @@ data VDeleg : Type where
   noConfidenceRep  :                         VDeleg
 
 record Anchor : Type where
-  field  url   : String
-         hash  : DocHash
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    url   : String
+    hash  : DocHash
 
 data GovAction : Type where
   NoConfidence     :                                             GovAction
@@ -73,6 +79,7 @@ actionWellFormed? {ChangePParams _}     = it
 actionWellFormed? {TreasuryWdrl _}      = it
 actionWellFormed? {Info}                = it
 \end{code}
+\end{AgdaMultiCode}
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
@@ -162,30 +169,46 @@ HashProtected A = A × GovActionID
 \end{figure*}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 data Vote : Type where
   yes no abstain  : Vote
 
 record GovVote : Type where
-  field gid         : GovActionID
-        voter       : Voter
-        vote        : Vote
-        anchor      : Maybe Anchor
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    gid         : GovActionID
+    voter       : Voter
+    vote        : Vote
+    anchor      : Maybe Anchor
 
 record GovProposal : Type where
-  field action      : GovAction
-        prevAction  : NeedsHash action
-        policy      : Maybe ScriptHash
-        deposit     : Coin
-        returnAddr  : RwdAddr
-        anchor      : Anchor
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    action      : GovAction
+    prevAction  : NeedsHash action
+    policy      : Maybe ScriptHash
+    deposit     : Coin
+    returnAddr  : RwdAddr
+    anchor      : Anchor
 
 record GovActionState : Type where
-  field votes       : Voter ⇀ Vote
-        returnAddr  : RwdAddr
-        expiresIn   : Epoch
-        action      : GovAction
-        prevAction  : NeedsHash action
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    votes       : Voter ⇀ Vote
+    returnAddr  : RwdAddr
+    expiresIn   : Epoch
+    action      : GovAction
+    prevAction  : NeedsHash action
 \end{code}
 \begin{code}[hide]
 instance
@@ -193,6 +216,7 @@ instance
   unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 \end{code}
+\end{AgdaMultiCode}
 \caption{Vote and proposal types}
 \label{defs:governance-votes}
 \end{figure*}

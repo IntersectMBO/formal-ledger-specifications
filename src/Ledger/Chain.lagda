@@ -22,14 +22,26 @@ open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 record ChainState : Type where
-  field newEpochState  : NewEpochState
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    newEpochState  : NewEpochState
 
 record Block : Type where
-  field ts    : List Tx
-        slot  : Slot
 \end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    ts    : List Tx
+    slot  : Slot
+\end{code}
+\end{AgdaMultiCode}
 \caption{Definitions CHAIN transition system}
 \end{figure*}
 \begin{code}[hide]

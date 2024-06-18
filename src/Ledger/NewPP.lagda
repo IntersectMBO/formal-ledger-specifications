@@ -20,8 +20,13 @@ record NewPParamEnv : Type where
 \begin{code}
 record NewPParamState : Type where
   constructor ⟦_,_⟧ⁿᵖ
-  field pparams  : PParams
-        ppup     : PPUpdateState
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    pparams  : PParams
+    ppup     : PPUpdateState
 
 updatePPUp : PParams → PPUpdateState → PPUpdateState
 updatePPUp pparams record { fpup = fpup }

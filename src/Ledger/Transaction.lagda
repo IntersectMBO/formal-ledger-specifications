@@ -51,6 +51,7 @@ the transaction body are:
 
 \begin{figure*}[h]
 \emph{Abstract types}
+\begin{AgdaMultiCode}
 \begin{code}
         Ix TxId AuxiliaryData : Type
 \end{code}
@@ -113,46 +114,60 @@ the transaction body are:
 \end{code}
 \end{NoConway}
 \emph{Transaction types}
-\begin{AgdaMultiCode}
 \begin{code}
   record TxBody : Type where
-    field txins          : ℙ TxIn
-          refInputs      : ℙ TxIn
-          txouts         : Ix ⇀ TxOut
-          txfee          : Coin
-          mint           : Value
-          txvldt         : Maybe Slot × Maybe Slot
-          txcerts        : List DCert
-          txwdrls        : Wdrl
-          txvote         : List GovVote
-          txprop         : List GovProposal
-          txdonation     : Coin
-          txup           : Maybe Update
-          txADhash       : Maybe ADHash
-          txNetworkId    : Maybe Network
-          curTreasury    : Maybe Coin
-          txsize         : ℕ
-          txid           : TxId
-          collateral     : ℙ TxIn
-          reqSigHash     : ℙ KeyHash
-          scriptIntHash  : Maybe ScriptHash
+\end{code}
+\begin{code}[hide]
+    field
+\end{code}
+\begin{code}
+      txins          : ℙ TxIn
+      refInputs      : ℙ TxIn
+      txouts         : Ix ⇀ TxOut
+      txfee          : Coin
+      mint           : Value
+      txvldt         : Maybe Slot × Maybe Slot
+      txcerts        : List DCert
+      txwdrls        : Wdrl
+      txvote         : List GovVote
+      txprop         : List GovProposal
+      txdonation     : Coin
+      txup           : Maybe Update
+      txADhash       : Maybe ADHash
+      txNetworkId    : Maybe Network
+      curTreasury    : Maybe Coin
+      txsize         : ℕ
+      txid           : TxId
+      collateral     : ℙ TxIn
+      reqSigHash     : ℙ KeyHash
+      scriptIntHash  : Maybe ScriptHash
 \end{code}
 \begin{NoConway}
 \begin{code}
   record TxWitnesses : Type where
-    field vkSigs   : VKey ⇀ Sig
-          scripts  : ℙ Script
-          txdats   : DataHash ⇀ Datum
-          txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
+\end{code}
+\begin{code}[hide]
+    field
+\end{code}
+\begin{code}
+      vkSigs   : VKey ⇀ Sig
+      scripts  : ℙ Script
+      txdats   : DataHash ⇀ Datum
+      txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
 
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
 
   record Tx : Type where
-    field body     : TxBody
-          wits     : TxWitnesses
-          isValid  : Bool
-          txAD     : Maybe AuxiliaryData
+\end{code}
+\begin{code}[hide]
+    field
+\end{code}
+\begin{code}
+      body     : TxBody
+      wits     : TxWitnesses
+      isValid  : Bool
+      txAD     : Maybe AuxiliaryData
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -162,6 +177,7 @@ the transaction body are:
 
 \begin{NoConway}
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
   getValue : TxOut → Value
   getValue (_ , v , _) = v
@@ -200,6 +216,7 @@ the transaction body are:
       nothing
     where m = setToHashMap (txscripts tx utxo)
 \end{code}
+\end{AgdaMultiCode}
 \caption{Functions related to transactions}
 \label{fig:defs:transaction-funs}
 \end{figure*}

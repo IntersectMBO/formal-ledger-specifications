@@ -31,19 +31,30 @@ Note that all other fields of \EnactState also contain a \GovActionID
 since they are \HashProtected.
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 record EnactEnv : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_⟧ᵉ
-  field gid       : GovActionID
-        treasury  : Coin
-        epoch     : Epoch
+  field
+\end{code}
+\begin{code}
+    gid       : GovActionID
+    treasury  : Coin
+    epoch     : Epoch
 
 record EnactState : Type where
-  field cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
-        constitution  : HashProtected (DocHash × Maybe ScriptHash)
-        pv            : HashProtected ProtVer
-        pparams       : HashProtected PParams
-        withdrawals   : RwdAddr ⇀ Coin
+\end{code}
+\begin{code}[hide]
+  field
+\end{code}
+\begin{code}
+    cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
+    constitution  : HashProtected (DocHash × Maybe ScriptHash)
+    pv            : HashProtected ProtVer
+    pparams       : HashProtected PParams
+    withdrawals   : RwdAddr ⇀ Coin
 
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x   , _)  = dom (x .proj₁)
@@ -69,6 +80,7 @@ getHashES es (ChangePParams _)      = just $ es .pparams .proj₂
 getHashES es (TreasuryWdrl _)       = nothing
 getHashES es Info                   = nothing
 \end{code}
+\end{AgdaMultiCode}
 \caption{Types and function used for the ENACT transition system}
 \label{fig:enact-defs}
 \end{figure*}

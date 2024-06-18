@@ -1,3 +1,4 @@
+import re
 import sys
 
 def write_file(filename, lines):
@@ -11,35 +12,44 @@ def read_file(filename):
 
 ### General Helper functions #########################################################################
 
-def remove_prefixes(s, l):
+def rm_weird_agda_patterns(lines):
+    # The pattern to match the specified form
+    pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[0-9]+I\]%'
+    
+    # List to store lines that do not match the pattern
+    filtered_lines = [line for line in lines if not re.match(pattern, line)]
+    
+    return filtered_lines
+
+def rm_prefixes(s, l):
     """
     Repeatedly remove any prefix from the string `s` if that prefix appears in the list of strings `l`.
     """
     for prefix in l:
         if s.startswith(prefix):
-            s = remove_prefixes(s[len(prefix):], l)
+            s = rm_prefixes(s[len(prefix):], l)
     return s
 
-def remove_suffixes(s, l):
+def rm_suffixes(s, l):
     """
     Repeatedly remove any suffix from the string `s` if that suffix appears in the list of strings `l`.
     """
     for suffix in l:
         if s.endswith(suffix):
-            s = remove_suffixes(s[:-len(suffix)], l)
+            s = rm_suffixes(s[:-len(suffix)], l)
     return s
 
-def strip_prefixes(ls1, ls2):
+def remove_prefixes(ls1, ls2):
     """
     Remove any prefix from the first string in `ls1` if that prefix is an element of `ls2`.
     If the first element of `ls1` is fully removed, then proceed to the next element, and so on.
     EXAMPLE Inputs: ls1 = ["prefix_match", "abc", "def"]
                     ls2 = ["prefix", "_", "ab"]
-                    print(strip_prefixes(ls1, ls2))  
+                    print(remove_prefixes(ls1, ls2))  
             Output: ['match', 'abc', 'def']
     """
     while ls1 and ls1[0]:  # While there's a non-empty string in the first position
-        new_first = remove_prefixes(ls1[0], ls2)
+        new_first = rm_prefixes(ls1[0], ls2)
         if new_first == ls1[0]:  # No more prefixes to remove
             break
         ls1[0] = new_first
@@ -47,18 +57,18 @@ def strip_prefixes(ls1, ls2):
             ls1.pop(0)
     return ls1
 
-def strip_suffixes(ls1, ls2):
+def remove_suffixes(ls1, ls2):
     """
     Remove any suffix from the last string in `ls1` if that suffix is an element of `ls2`.  
     If the last element of `ls1` is fully removed, repeat this suffix removal procedure 
     on the previous (new last) element of `ls1`, and so on.
     EXAMPLE Inputs: ls1 = ["abc", "def", "suffix_match"]
                     ls2 = ["suffix", "match", "def"]
-                    print(strip_suffixes(ls1, ls2))
+                    print(remove_suffixes(ls1, ls2))
             Output: ['abc', 'def', 'suffix_']
     """
     while ls1 and ls1[-1]:  # While there's a non-empty string in the last position
-        new_last = remove_suffixes(ls1[-1], ls2)
+        new_last = rm_suffixes(ls1[-1], ls2)
         if new_last == ls1[-1]:  # No more suffixes to remove
             break
         ls1[-1] = new_last
@@ -166,13 +176,13 @@ def make_array(ls):
 def make_inner_array(ls):
     if not ls:
         return []
-    ls = strip_suffixes(ls, ["%"])
+    ls = remove_suffixes(ls, ["%"])
     return ["\\left(\\begin{array}{c}"] + ls + ["\\end{array}\\right)"]
 
 def format_vector(vector_block):
     if not vector_block:
         return []
-    unwanted_suffixes = [newline, "%", "\\<", "\\>", "[.][@{}l@{}]", "[250I]", "[270I]"]
+    unwanted_suffixes = [newline, "%", "\\<", "\\>"]
     element_halt = ["AgdaInductiveConstructor{,}", "\\left(\\begin{array}{c}", "\\AgdaOperator{\\AgdaField{❴}}"]
     def format_vector_tr(vector_block, acc):
         if not vector_block:
@@ -183,8 +193,9 @@ def format_vector(vector_block):
             ne, vector_block = get_until_match_from(vector_block, ["\\AgdaOperator{\\AgdaField{❵}}"], True)
             next_element = next_element + ne
 
-        next_element = [ remove_suffixes(x, ["\\AgdaSpace{}%"]) for x in next_element]
-        next = strip_suffixes(next_element, unwanted_suffixes)
+        next_element = [ rm_suffixes(x, ["\\AgdaSpace{}%"]) for x in next_element]
+        next_element = rm_weird_agda_patterns(next_element)
+        next = remove_suffixes(next_element, unwanted_suffixes)
 
         if next == [newline]:
             next = []
@@ -207,13 +218,6 @@ def inline(l):
     if not l:
         return []
     return [begin_code_inline] + l + [end_code]
-
-def append_begin(l):
-    if not l:
-        return []
-    if l[-1].endswith(begin_code):
-        return l
-    return l + [begin_code]
 
 def add_begin(l):
     if not l:
@@ -252,12 +256,9 @@ def get_vector_block(lines, acc):
     else:
         return get_vector_block(lines[1:], acc + [lines[0]])
 
-
 def process_vector(lines):
     vec_block, nextlines = get_vector_block(lines, [])
     return format_vector(vec_block), nextlines
-
-
 
 ### Main Agda-generated LaTeX file post-processing function ########################################
 
@@ -267,7 +268,7 @@ def process_lines(lines):
     inline_halt = inline_halt_back + ["\\AgdaFunction{∙}"]
 
     unwanted = ["%", begin_code, newline, extra_skip, "\\>[4]", "\\>[6]", "[@{}l@{\\AgdaIndent{0}}]"]
-    unwanted_inl = unwanted + ["\\<"] #, "\\>[.][@{}l@{}]\\<[270I]}"]
+    unwanted_inl = unwanted + ["\\<"]
     
     def process_lines_tr(ls, acc):
         if not ls:
@@ -277,11 +278,11 @@ def process_lines(lines):
             return safe_add(acc, aac)
 
         aa , c = get_back_until_match_from(aac, inline_halt_back)
-        aa = strip_suffixes(aa, unwanted)
+        aa = remove_suffixes(aa, unwanted)
 
         vec_block, newls = process_vector(bb[1:])
 
-        c = strip_suffixes(strip_prefixes(c, unwanted_inl), unwanted_inl)
+        c = remove_suffixes(remove_prefixes(c, unwanted_inl), unwanted_inl)
         if find_match(c, ["\\AgdaFunction{∙}"]) != -1:        
             c = [newline] + inline(c)
         else:
@@ -290,7 +291,7 @@ def process_lines(lines):
 
         if should_be_inlined(newls[0]):
             inl, newls = get_until_match_from(newls, inline_halt)
-            acc = acc + inline(strip_prefixes(inl, unwanted_inl))
+            acc = acc + inline(remove_prefixes(inl, unwanted_inl))
 
         return process_lines_tr(newls, acc)
 
