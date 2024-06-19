@@ -11,6 +11,9 @@ def read_file(filename):
         return file.readlines()
 
 ### General Helper functions #########################################################################
+def is_slash_gt_number(s: str) -> bool:
+    pattern = r'\\>\[(?:[1-9]?\d)\]'
+    return bool(re.fullmatch(pattern, s))
 
 def rm_weird_agda_patterns(lines):
     # The pattern to match the specified form
@@ -140,8 +143,7 @@ def find_match(ls1, ls2):
             return index
     return -1
 
-### Special Helper functions #########################################################################
-
+### String constants #########################################################################
 deduction = "AgdaFunction{───────────────────────────────"
 extra_skip = "[\\AgdaEmptyExtraSkip]"
 newline = "\\\\"
@@ -159,6 +161,7 @@ sts2 = "\\AgdaDatatype{⇀⦇}"
 left_bracket = "AgdaInductiveConstructor{⟦}"
 right_bracket = "AgdaInductiveConstructor{⟧"
 
+### Helper functions #########################################################################
 def inline_text(element):
     if not element:
         return []
@@ -233,12 +236,36 @@ def add_end(l):
         return l
     return l + [end_code]
 
+def process_pre_inline_block(inl, unwanted):
+    needs_newline = ["\\AgdaFunction{∙}", "\\AgdaBound{utxoSt'}", "\\AgdaBound{ls'}"]
+    inl = remove_suffixes(remove_prefixes(inl, unwanted), unwanted)
+    if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
+        return []
+    if find_match(inl, needs_newline) != -1:        
+        return [newline] + inline(inl)
+    return inline(inl)        
+
+def process_post_inline_block(inl, unwanted):
+    inl = remove_suffixes(remove_prefixes(inl, unwanted), unwanted)
+    if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
+        return []
+    if find_match(inl, ["\\AgdaSymbol{=}"]) != -1:
+        return inline(inl) + [newline]
+    return inline(inl)        
 
 def safe_add(l1, l2):
     if not l1:
         return l2
     if not l2:
         return l1
+    if l1[-2].endswith(end_code) and l1[-1].endswith(newline):
+        if l2[0].startswith(end_code):
+            return l1 + l2[1:]
+        if l2[0].startswith(begin_code):
+            return l1 + l2
+        if l2[0].startswith(newline):
+            return l1 + [begin_code] + l2[1:]
+        return l1 + [begin_code] + l2
     if (not (l1[-1].endswith(end_code) or l1[-1].endswith("%END VEC%"))) and l2[0].startswith(begin_code):
         return add_end(l1) + l2
     if (l1[-1].endswith(end_code) or l1[-1].endswith("%END VEC%")) and not l2[0].startswith(begin_code):
@@ -268,31 +295,31 @@ def process_lines(lines):
     inline_halt = inline_halt_back + ["\\AgdaFunction{∙}"]
 
     unwanted = ["%", begin_code, newline, extra_skip, "\\>[4]", "\\>[6]", "[@{}l@{\\AgdaIndent{0}}]"]
-    unwanted_inl = unwanted + ["\\<"]
+    unwanted_inline = unwanted + ["\\<"]
     
     def process_lines_tr(ls, acc):
         if not ls:
             return acc
+
+        # aac: Agda code block up to the next left bracket (start of vector)
+        # bb: Agda code block from the left bracket to the end of the vector
         aac, bb = get_until_match_from(ls, [left_bracket])
         if not bb:
             return safe_add(acc, aac)
 
+        # aa: Agda code block before the inlined block preceding the vector
+        # c: Agda code block preceding the vector that should be inlined
         aa , c = get_back_until_match_from(aac, inline_halt_back)
         aa = remove_suffixes(aa, unwanted)
+        c = process_pre_inline_block(c, unwanted_inline)
 
         vec_block, newls = process_vector(bb[1:])
 
-        c = remove_suffixes(remove_prefixes(c, unwanted_inl), unwanted_inl)
-        if find_match(c, ["\\AgdaFunction{∙}"]) != -1:        
-            c = [newline] + inline(c)
-        else:
-            c = inline(c)        
         acc = safe_add(acc, add_end(aa)) + c + make_array(vec_block)
 
-        if should_be_inlined(newls[0]):
-            inl, newls = get_until_match_from(newls, inline_halt)
-            acc = acc + inline(remove_prefixes(inl, unwanted_inl))
-
+        inl, newls = get_until_match_from(newls, inline_halt)
+        inl = process_post_inline_block(inl, unwanted_inline)
+        acc = acc + inl
         return process_lines_tr(newls, acc)
 
     return process_lines_tr(lines, [])
