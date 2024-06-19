@@ -29,7 +29,7 @@ let
       repo = "agda-stdlib-classes";
       owner = "omelkonian";
       rev = "v2.0";
-      sha256 = "4ujdQv38u6BybFhRup9PMR0xpI59J/Naz/kaBtQQ9aY=";
+      sha256 = "sha256-PcieRRnctjCzFCi+gUYAgyIAicMOAZPl8Sw35fZdt0E=";
     };
     meta = { };
     libraryFile = "agda-stdlib-classes.agda-lib";
