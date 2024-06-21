@@ -64,6 +64,7 @@ record TxInfo : Set where
         txdats  : DataHash ⇀ Datum
         txid    : TxId
         realizedFulfills : FRxO
+        requiredTxs : ℙ TxId
 
 txInfo : Language → PParams
                   → UTxOTemp
@@ -77,6 +78,7 @@ txInfo l pp utxoT tx = record
   ; mint = mint
   ; vkKey = reqSigHash
   ; realizedFulfills = (proj₂ utxoT) ∣ fulfills
+  ; requiredTxs = requiredTxs
   } where open Tx tx; open TxBody body
 
 data DelegateOrDeReg : DCert → Set where instance
