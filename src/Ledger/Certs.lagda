@@ -12,6 +12,7 @@ open import Ledger.GovernanceActions gs
 \end{code}
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
+\begin{NoConway}
 \begin{code}
 record PoolParams : Type where
 \end{code}
@@ -20,7 +21,9 @@ record PoolParams : Type where
 \end{code}
 \begin{code}
     rewardAddr : Credential
-
+\end{code}
+\end{NoConway}
+\begin{code}
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
   dereg       : Credential → DCert
@@ -29,7 +32,9 @@ data DCert : Type where
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → DCert
   ccreghot    : Credential → Maybe Credential → DCert
-
+\end{code}
+\begin{NoConway}
+\begin{code}
 cwitness : DCert → Credential
 cwitness (delegate c _ _ _)  = c
 cwitness (dereg c)           = c
@@ -39,6 +44,7 @@ cwitness (regdrep c _ _)     = c
 cwitness (deregdrep c)       = c
 cwitness (ccreghot c _)      = c
 \end{code}
+\end{NoConway}
 \end{AgdaMultiCode}
 \caption{Delegation definitions}
 \end{figure*}
@@ -68,6 +74,9 @@ record DState : Type where
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ KeyHash
     rewards      : Credential ⇀ Coin
+\end{code}
+\begin{NoConway}
+\begin{code}
 
 record PState : Type where
 \end{code}
@@ -78,6 +87,9 @@ record PState : Type where
 \begin{code}
     pools     : KeyHash ⇀ PoolParams
     retiring  : KeyHash ⇀ Epoch
+\end{code}
+\end{NoConway}
+\begin{code}
 
 record GState : Type where
 \end{code}
@@ -161,6 +173,16 @@ stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
 the \TreasuryWdrl governance action in case of the MIR certificates.
 
+\subsection{Delegation}
+
+Registered credentials can now delegate to a DRep as well as to a
+stake pool. This is achieved by giving the \delegate certificate two
+optional fields, corresponding to a DRep and stake pool. Stake can be
+delegated for voting and block production simultaneously, since these
+are two separate features. In fact, preventing this could weaken the
+security of the chain, since security relies on high participation of
+honest stake holders.
+
 \subsection{Governance certificate rules}
 
 The rules for transition systems dealing with individual certificates
@@ -231,6 +253,7 @@ module _ where
 
 
 \begin{figure*}[h]
+\begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,DELEG⦈_ where
 \end{code}
@@ -250,12 +273,14 @@ data _⊢_⇀⦇_,DELEG⦈_ where
       ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c ,DELEG⦈
                           ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}
 \label{fig:sts:aux-cert-deleg}
 \end{figure*}
 
-
+\begin{NoConway}
 \begin{figure*}[h]
+\begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,POOL⦈_ where
 \end{code}
@@ -270,12 +295,14 @@ data _⊢_⇀⦇_,POOL⦈_ where
     ────────────────────────────────
     pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{Auxiliary POOL transition system}
 \label{fig:sts:aux-cert-pool}
 \end{figure*}
-
+\end{NoConway}
 
 \begin{figure*}[h]
+\begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
@@ -296,6 +323,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
 \label{fig:sts:aux-cert-gov}
 \end{figure*}
@@ -315,6 +343,7 @@ CERTBASE as the base case. CERTBASE does the following:
 
 \begin{figure*}[h]
 \emph{CERT transitions}
+\begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
@@ -334,7 +363,9 @@ data _⊢_⇀⦇_,CERT⦈_ where
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
 \end{code}
+\end{AgdaSuppressSpace}
 \emph{CERTBASE transition}
+\begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
@@ -353,6 +384,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{CERTS rules}
 \label{fig:sts:certs}
 \end{figure*}
