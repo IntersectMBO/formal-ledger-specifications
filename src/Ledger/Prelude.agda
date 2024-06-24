@@ -15,7 +15,6 @@ open import Prelude public
 
 open import Ledger.Prelude.Base public
 
-open import Data.Maybe.Properties.Ext public
 open import Data.Product.Ext public
 open import Interface.ComputationalRelation public
 open import Interface.HasAdd public
