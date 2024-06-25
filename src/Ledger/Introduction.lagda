@@ -54,7 +54,7 @@ Conway \cite{cip1694} & Complete & Partial & Partial \\
 \end{longtable}
 \end{NoConway}
 
-\subsection{A note on Agda}
+\subsection{A Note on Agda}
 
 This specification is written using the Agda programming language and
 proof assistant \cite{agda2023}. We have spent a lot of time on making
@@ -69,7 +69,7 @@ expression, please feel free to open an issue in our
 \href{https://github.com/input-output-hk/formal-ledger-specifications/issues}{repository}
 with the `notation' label.
 
-\subsection{Separation of concerns}
+\subsection{Separation of Concerns}
 
 The \emph{Cardano Node} consists of three pieces:
 
@@ -90,7 +90,7 @@ initial state \(s\), a signal \(b\) and a final state \(s'\). The ledger consist
 25-ish (depending on the version) such relations that depend on each
 other, forming a directed graph that is almost a tree.
 
-\subsection{Reflexive-transitive closure}
+\subsection{Reflexive-transitive Closure}
 
 Some STS (state transition system) relations need to be applied as
 many times as they can to arrive at a final state. Since we use this
@@ -188,7 +188,7 @@ correct. This is indeed something we have done, and the same source
 code that generates this document also generates a Haskell library
 that lets anyone run this code.
 
-\subsection{Sets \& maps}
+\subsection{Sets \& Maps}
 \label{sec:sets-maps}
 
 The ledger heavily uses set theory. For various reasons it was
@@ -232,7 +232,7 @@ module _ (ℙ_ : Type → Type) (_∈_ : ∀ {A : Type} → A → ℙ A → Type
 \end{code}
 \end{figure*}
 
-\subsection{Propositions as types, properties and relations}
+\subsection{Propositions as Types, Properties and Relations}
 
 In type theory we represent propositions as types and proofs of a proposition as
 elements of the corresponding type.
@@ -245,7 +245,7 @@ asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \Ag
 Thus, such a relation is a function of type \AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type
 or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type.
 
-\subsection{Superscripts and other special notations}
+\subsection{Superscripts and Other Special Notations}
 
 In the current version of this specification, superscript letters are
 heavily used for things such as disambiguations or type

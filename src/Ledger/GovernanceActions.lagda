@@ -1,4 +1,4 @@
-\section{Governance actions}
+\section{Governance Actions}
 \label{sec:governance-actions}
 We introduce three distinct bodies that have specific functions in the new governance framework:
 \begin{enumerate}
@@ -120,13 +120,13 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   obsoleting nodes that are unable to handle the upgrade.}
 
 
-% \subsection{Voting and ratification}
+% \subsection{Voting and Ratification}
 % \label{sec:voting-and-ratification}
 % Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
 % The type of action and the state of the governance system determines which bodies must ratify it.
 % Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
 
-\subsection{Hash protection}
+\subsection{Hash Protection}
 \label{sec:hash-protection}
 
 For some types of governance actions, enactment requires a second
@@ -220,7 +220,7 @@ instance
 \caption{Vote and proposal types}
 \label{defs:governance-votes}
 \end{figure*}
-\subsection{Votes and proposals}
+\subsection{Votes and Proposals}
 
 \begin{figure*}[h]
 \begin{code}

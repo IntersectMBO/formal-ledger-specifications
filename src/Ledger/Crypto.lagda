@@ -1,4 +1,4 @@
-\section{Cryptographic primitives}
+\section{Cryptographic Primitives}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 module Ledger.Crypto where

@@ -1,4 +1,4 @@
-\section{Protocol parameters}
+\section{Protocol Parameters}
 \label{sec:protocol-parameters}
 This section defines the adjustable protocol parameters of the Cardano ledger.
 These parameters are used in block validation and can affect various features of the system,

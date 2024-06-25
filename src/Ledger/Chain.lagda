@@ -1,4 +1,4 @@
-\section{Blockchain layer}
+\section{Blockchain Layer}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

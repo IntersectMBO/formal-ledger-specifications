@@ -36,7 +36,7 @@ new constitution, and ensures that the in principle arbitrary semantic
 changes caused by enacting a hard-fork do not have unintended
 consequences in combination with other actions.
 
-\subsection{Ratification requirements}
+\subsection{Ratification Requirements}
 \label{sec:ratification-requirements}
 Figure~\ref{fig:ratification-requirements} details the ratification
 requirements for each governance action scenario. For a governance
@@ -165,7 +165,7 @@ canVote pp a r = Is-just (threshold pp nothing a r)
 \label{fig:ratification-requirements}
 \end{figure*}
 
-\subsection{Protocol parameters and governance actions}
+\subsection{Protocol Parameters and Governance Actions}
 \label{sec:protocol-parameters-and-governance-actions}
 Voting thresholds for protocol parameters can be set by group, and we do not require that each protocol
 parameter governance action be confined to a single group. In case a governance action carries updates
@@ -177,7 +177,7 @@ security-relevant protocol parameters. Any proposal that includes a
 change to a security-relevant protocol parameter must also be accepted
 by at least half of the SPO stake.
 
-\subsection{Ratification restrictions}
+\subsection{Ratification Restrictions}
 \label{sec:ratification-restrictions}
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
