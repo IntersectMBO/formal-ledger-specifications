@@ -12,8 +12,10 @@ open import Algebra.Morphism    using (module MonoidMorphisms) public
 
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid) public
 
-open import Foreign.Convertible          public
-open import Foreign.Convertible.Deriving public
+open import Foreign.Convertible           public
+open import Foreign.Convertible.Deriving  public
+open import Foreign.HaskellTypes          public
+open import Foreign.HaskellTypes.Deriving public
 
 open import Ledger.Types.GovStructure
 open import Ledger.Crypto

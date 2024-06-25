@@ -14,7 +14,7 @@ open import Data.Maybe using (Maybe; nothing; just; fromMaybe; maybe′)
 open import Data.Unit using (⊤)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.String using (String) renaming (_++_ to _&_)
-open import Data.Product hiding (map; zip)
+open import Data.Product hiding (map; zip; zipWith)
 import Data.String as String
 open import Data.Bool
 open import Data.Nat
@@ -80,6 +80,8 @@ solveHsType tm = do
 
 
 private
+  debug = debugPrintFmt "tactic.hs-types"
+
   _‼_ : List A → ℕ → Maybe A
   []       ‼ i     = nothing
   (x ∷ xs) ‼ zero  = just x
@@ -130,22 +132,22 @@ private
       where nothing → extendContext x a $ typeErrorFmt "%s free in computed HsType %t" x ty
     pure ty′
   computeHsType _ _ tm | false = do
-    debugPrintFmt "tactic.hs-types" 10 "solving HsType %t" tm
+    debug 10 "solving HsType %t" tm
     ty ← solveHsType tm
-    debugPrintFmt "tactic.hs-types" 10 "HsType %t = %t" tm ty
+    debug 10 "HsType %t = %t" tm ty
     pure ty
 
-  makeHsCon : NameEnv → Name → Name → Name → TC (Name × Type)
+  makeHsCon : NameEnv → Name → Name → Name → TC (Name × Agda.Builtin.Reflection.Quantity × Type)
   makeHsCon env agdaName hsName c = do
+    debug 10 "Making constructor %q : %q" c agdaName
     def agdaName' _ ← normalise (def agdaName [])
       where _ → typeErrorFmt "Failed to compute source type for %q" agdaName
-    debugPrintFmt "tactic.hs-types" 10 "Making constructor %q : %q" c agdaName
     hsC  ← freshHsConName env hsName c
     cTy  ← getType c
-    debugPrintFmt "tactic.hs-types" 10 "cTy = %t" cTy
+    debug 10 "cTy = %t" cTy
     hsTy ← computeHsType agdaName' hsName cTy
-    debugPrintFmt "tactic.hs-types" 10 "hsTy = %t" hsTy
-    pure (hsC , hsTy)
+    debug 10 "hsTy = %t" hsTy
+    pure (hsC , quantity-ω , hsTy)
 
   makeHsData : NameEnv → Name → ℕ → List Name → TC Name
   makeHsData env agdaName nPars constrs = do
@@ -225,6 +227,7 @@ doAutoHsType : NameEnv → Name → Term → TC Term
 doAutoHsType env d hole = do
   checkType hole (quote HasHsType ∙⟦ d ∙ ⟧)
   hs ← makeHsType env d
+  debug 50 "  HsType %q = %q" d hs
   bindHsType env d hs
   unify hole (`λ⟦ proj (quote HasHsType.HsType) ⇒ hs ∙ ⟧)
   pure (hs ∙)

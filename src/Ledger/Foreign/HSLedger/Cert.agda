@@ -18,8 +18,6 @@ open import Ledger.Certs.Haskell HSGovStructure
   renaming (CertState to CertState') using ()
 
 instance
-  _ = Convertible-Refl {String}
-
   Convertible-CertState : ConvertibleType CertState F.CertState
   Convertible-CertState = autoConvertible
 
