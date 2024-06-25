@@ -189,7 +189,8 @@ its results, i.e:
                     + utxoSt .fees + utxoSt .donations + unclaimed }
     in
     record { currentEpoch = e
-           ; stakeDistrs = mkStakeDistrs (Snapshots.mark ss') govSt' (utxoSt' .deposits) (voteDelegs dState)
+           ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
+                                          (utxoSt' .deposits) (voteDelegs dState)
            ; treasury = acnt .treasury ; GState gState }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'

@@ -105,17 +105,17 @@ instance
   _ = +-0-monoid
 \end{code}
 
-Figure~\ref{fig:sts:enact} defines the rules of the ENACT transition
-system. Usually no preconditions are checked, and the state is simply
+Figures~\ref{fig:sts:enact,fig:sts:enact-cont} define the rules of the ENACT transition
+system. Usually no preconditions are checked and the state is simply
 updated (including the \GovActionID for the hash protection scheme, if
 required). The exceptions are \NewCommittee and \TreasuryWdrl:
-
 \begin{itemize}
 \item \NewCommittee requires that maximum terms are respected, and
 \item \TreasuryWdrl requires that the treasury is able to cover the sum of all withdrawals (old and new).
 \end{itemize}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 data
 \end{code}
@@ -142,7 +142,14 @@ data
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewConstitution dh sh ,ENACT⦈
                 record  s { constitution = (dh , sh) , gid }
-
+\end{code}
+\end{AgdaMultiCode}
+\caption{ENACT transition system}
+\label{fig:sts:enact}
+\end{figure*}
+\begin{figure*}[h]
+\begin{AgdaMultiCode}
+\begin{code}
   Enact-HF :
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈ record s { pv = v , gid }
@@ -161,6 +168,7 @@ data
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ Info ,ENACT⦈ s
 \end{code}
-\caption{ENACT transition system}
-\label{fig:sts:enact}
+\end{AgdaMultiCode}
+\caption{ENACT transition system (continued)}
+\label{fig:sts:enact-cont}
 \end{figure*}

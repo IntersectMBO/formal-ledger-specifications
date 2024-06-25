@@ -50,15 +50,21 @@ record GovEnv : Type where
     pparams     : PParams
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
+
 \end{code}
+\end{AgdaMultiCode}
 \emph{Transition relation types}
 \begin{code}[hide]
 data
 \end{code}
+\begin{AgdaSuppressSpace}
 \begin{code}
   _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
+\end{code}
+\begin{code}
 _⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
 \end{code}
+\end{AgdaSuppressSpace}
 \begin{code}[hide]
 private variable
   Γ : GovEnv
@@ -74,6 +80,7 @@ private variable
   p : Maybe ScriptHash
 \end{code}
 \emph{Functions used in the GOV rules}
+\begin{AgdaMultiCode}
 \begin{code}
 addVote : GovState → GovActionID → Voter → Vote → GovState
 addVote s aid voter v = map modifyVotes s
@@ -102,6 +109,7 @@ validHFAction _ _ _ = ⊤
 \end{figure*}
 \footnotetext{\AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends element \AgdaBound{x} to list \AgdaBound{l}.}
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}
 -- convert list of (GovActionID,GovActionState)-pairs to list GovActionID pairs.
 getAidPairsList : GovState → List (GovActionID × GovActionID)
@@ -111,21 +119,33 @@ getAidPairsList aid×states =
 -- a list of GovActionID pairs connects the first GovActionID to the second
 _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Type
 [] connects aidNew to aidOld = aidNew ≡ aidOld
-((aid , aidPrev) ∷ s) connects aidNew to aidOld  = aid ≡ aidNew × s connects aidPrev to aidOld
-                                                 ⊎ s connects aidNew to aidOld
+((aid , aidPrev) ∷ s) connects aidNew to aidOld  =
+  aid ≡ aidNew × s connects aidPrev to aidOld ⊎ s connects aidNew to aidOld
 
-enactable : EnactState → List (GovActionID × GovActionID) → GovActionID × GovActionState → Type
-enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of λ where
-  nothing       → ⊤
-  (just aidOld) → ∃[ t ] fromList t ⊆ fromList aidPairs × Unique t × t connects aidNew to aidOld
+enactable  : EnactState → List (GovActionID × GovActionID)
+           → GovActionID × GovActionState → Type
+enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of
+\end{code}
+\begin{code}[hide]
+  λ where
+\end{code}
+\begin{code}
+  nothing        → ⊤
+  (just aidOld)  → ∃[ t ]  fromList t ⊆ fromList aidPairs
+                           × Unique t × t connects aidNew to aidOld
 
 allEnactable : EnactState → GovState → Type
 allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
 
 hasParentE : EnactState → GovActionID → GovAction → Type
-hasParentE e aid a = case getHashES e a of λ where
-  nothing   → ⊤
-  (just id) → id ≡ aid
+hasParentE e aid a = case getHashES e a of
+\end{code}
+\begin{code}[hide]
+  λ where
+\end{code}
+\begin{code}
+  nothing    → ⊤
+  (just id)  → id ≡ aid
 
 hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Type
 hasParent e s a aid with getHash aid
@@ -210,6 +230,7 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
           (sym (proj₂ (∈-filter⁻ (λ l → length l ≟ maxlen ls) {xs = ls} l'∈)))
           (∈-maxlen-≤ l (∈-filter⁺ (allEnactable? e) l∈ el))
 \end{code}
+\end{AgdaMultiCode}
 \caption{Enactability predicate}
 \label{defs:enactable}
 \end{figure*}

@@ -15,9 +15,15 @@ def is_slash_gt_number(s: str) -> bool:
     pattern = r'\\>\[(?:[1-9]?\d)\]'
     return bool(re.fullmatch(pattern, s))
 
+def replace_suffix(x, s1, s2):
+    if x.endswith(s1):
+        return x[:-len(s1)] + s2
+    return x
+
 def rm_weird_agda_patterns(lines):
     # The pattern to match the specified form
-    pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[0-9]+I\]%'
+    #pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[0-9]+I\]%'
+    pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[1-9][0-9]*I\]'
     
     # List to store lines that do not match the pattern
     filtered_lines = [line for line in lines if not re.match(pattern, line)]
@@ -144,23 +150,25 @@ def find_match(ls1, ls2):
     return -1
 
 ### String constants #########################################################################
+agda_space = "\\AgdaSpace{}"
+aic = "AgdaInductiveConstructor{,}"
 deduction = "AgdaFunction{───────────────────────────────"
 extra_skip = "[\\AgdaEmptyExtraSkip]"
-newline = "\\\\"
-begin_code = "\\begin{code}"
-begin_code_inline = "\\begin{code}[inline]"
-end_code = "\\end{code}"
 entailment1 = "\\AgdaFunction{⊢}"
 sts1 = "\\AgdaFunction{⇀⦇}"
 entailment2 = "\\AgdaDatatype{⊢}"
 sts2 = "\\AgdaDatatype{⇀⦇}"
-aic = "AgdaInductiveConstructor{,}"
-begin_array = "\\left(\\begin{array}{c}"
-end_array = "\\end{array}\\right)"
 left_brace = "\\AgdaOperator{\\AgdaField{❴}}"
 right_brace = "\\AgdaOperator{\\AgdaField{❵}}"
 left_bracket = "AgdaInductiveConstructor{⟦}"
 right_bracket = "AgdaInductiveConstructor{⟧"
+
+newline = "\\\\"
+begin_code = "\\begin{code}"
+begin_code_inline = "\\begin{code}[inline]"
+end_code = "\\end{code}"
+begin_array = "\\left(\\begin{array}{c}"
+end_array = "\\end{array}\\right)"
 # N.B. It's important that left_bracket includes the trailing curly brace, to avoid matching
 # constructors, while right_bracket does not include the trailing curly brace, so that the 
 # latter will match all varieties of closing brackets.
@@ -178,6 +186,7 @@ def should_be_inlined(str):
 def make_array(ls):
     if not ls:
         return []
+    ls = remove_suffixes(ls, ["\\\\"])
     return ["%START VEC%", "\\(" + begin_array] + ls + [end_array + "\\)", "%END VEC%"]
 
 def make_inner_array(ls):
@@ -210,17 +219,17 @@ def format_vector(vector_block):
             return acc
 
         # get next element of vector
-        next_element, vector_block = get_next_element(vector_block, [])
+        next, vector_block = get_next_element(vector_block, [])
         # clean next element
-        next_element = [ rm_suffixes(x, ["\\AgdaSpace{}%"]) for x in next_element]
-        next_element = rm_weird_agda_patterns(next_element)
-        next = remove_suffixes(next_element, unwanted_suffixes)
+        next = [ replace_suffix(x, agda_space + "%", " ") for x in next]
+        next = rm_weird_agda_patterns(next)
+        next = remove_suffixes(next, unwanted_suffixes)
         if next == [newline]:
             next = []
         else:
             next = inline_text(next)
 
-        if vector_block and "\\left(\\begin{array}{c}" in vector_block[0]:
+        if vector_block and begin_array in vector_block[0]:
             return format_vector_tr(vector_block[1:], acc + next + [vector_block[0], newline])
         return format_vector_tr(vector_block[1:], acc + next)
 
@@ -254,6 +263,7 @@ def add_end(l):
 def process_pre_inline_block(inl, unwanted):
     needs_newline = ["\\AgdaFunction{∙}", "\\AgdaBound{utxoSt'}", "\\AgdaBound{ls'}"]
     inl = remove_suffixes(remove_prefixes(inl, unwanted), unwanted)
+    inl = rm_weird_agda_patterns(inl)
     if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
         return []
     if find_match(inl, needs_newline) != -1:        
@@ -262,6 +272,7 @@ def process_pre_inline_block(inl, unwanted):
 
 def process_post_inline_block(inl, unwanted):
     inl = remove_suffixes(remove_prefixes(inl, unwanted), unwanted)
+    inl = rm_weird_agda_patterns(inl)
     if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
         return []
     if find_match(inl, ["\\AgdaSymbol{=}"]) != -1:
@@ -335,6 +346,8 @@ def process_lines(lines):
         inl, newls = get_until_match_from(newls, inline_halt)
         inl = process_post_inline_block(inl, unwanted_inline)
         acc = acc + inl
+        if newls[0] == newline and newls[1] == "%" and newls[2] == newline + extra_skip + "%":
+            newls = [newline] + newls[3:]
         return process_lines_tr(newls, acc)
 
     return process_lines_tr(lines, [])

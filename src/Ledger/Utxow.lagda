@@ -33,11 +33,11 @@ getScripts = mapPartial isScriptObj
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  mapˢ (λ a        → (Rwrd   a , RwdAddr.stake a)) (dom (txwdrls .proj₁))
+  ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
-  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList $ map GovVote.voter txvote)
-  ∪  mapPartial (λ p  → case  p .GovProposal.policy of
+  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList $ map voter txvote)
+  ∪  mapPartial (λ p  → case  p .policy of
 \end{code}
 \begin{code}[hide]
     λ where
@@ -47,7 +47,7 @@ credsNeeded utxo txb
                               nothing    → nothing) (fromList txprop)
 \end{code}
 \begin{code}[hide]
-  where open TxBody txb
+  where open TxBody txb; open GovVote; open RwdAddr; open GovProposal
 \end{code}
 \begin{code}
 
