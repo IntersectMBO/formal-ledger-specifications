@@ -564,6 +564,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 
 \end{code}
 \begin{figure*}[h!]
+\begin{AgdaSuppressSpace}
 \begin{code}
   RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
        accepted Γ es st
@@ -591,6 +592,7 @@ _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × Go
                  → RatifyState → Type
 _⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,RATIFY'⦈_
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{The RATIFY transition system}
 \label{fig:sts:ratify}
 \end{figure*}
