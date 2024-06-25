@@ -371,13 +371,13 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
 \begin{code}
   CERT-base :
-    let open PParams pp; open GState stᵍ; open DState stᵈ
+    let open PParams pp; open GState stᵍ; open DState stᵈ; open RwdAddr
         refresh         = mapPartial getDRepVote (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
-        wdrlCreds       = mapˢ RwdAddr.stake (dom wdrls)
+        wdrlCreds       = mapˢ stake (dom wdrls)
     in
     ∙ wdrlCreds ⊆ dom voteDelegs
-    ∙ mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ
+    ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
         ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ

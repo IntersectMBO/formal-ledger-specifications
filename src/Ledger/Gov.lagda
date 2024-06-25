@@ -124,7 +124,7 @@ _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionI
 
 enactable  : EnactState → List (GovActionID × GovActionID)
            → GovActionID × GovActionState → Type
-enactable e aidPairs = λ (aidNew , as) → case getHashES e (GovActionState.action as) of
+enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
 \end{code}
 \begin{code}[hide]
   λ where
