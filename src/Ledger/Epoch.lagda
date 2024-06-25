@@ -86,6 +86,9 @@ toRwdAddr x = record { net = NetworkId ; stake = x }
 
 getStakeCred : TxOut → Maybe Credential
 getStakeCred (a , _ , _ , _) = stakeCred a
+
+open RwdAddr using (stake)
+open GovActionState using (returnAddr)
 \end{code}
 
 \begin{figure*}[h]
@@ -99,9 +102,9 @@ stakeDistr utxo ⟦ _ , stakeDelegs , rewards ⟧ᵈ pState = ⟦ aggregate₊ (
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
-  (mapˢ (λ (gaid , addr) → (gaid , addr) , RwdAddr.stake addr) govSt')
+  (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
   (mapFromPartialFun (λ (gaid , _) → lookupᵐ? ds (GovActionDeposit gaid)) govSt')
-  where govSt' = mapˢ (map₂ GovActionState.returnAddr) (fromList govSt)
+  where govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
 
 \end{code}
 \begin{code}[hide]
@@ -189,7 +192,8 @@ its results, i.e:
                     + utxoSt .fees + utxoSt .donations + unclaimed }
     in
     record { currentEpoch = e
-           ; stakeDistrs = mkStakeDistrs (Snapshots.mark ss') govSt' (utxoSt' .deposits) (voteDelegs dState)
+           ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
+                                          (utxoSt' .deposits) (voteDelegs dState)
            ; treasury = acnt .treasury ; GState gState }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'

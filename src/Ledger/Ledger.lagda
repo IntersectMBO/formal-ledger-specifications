@@ -88,6 +88,7 @@ data
 \end{figure*}
 
 \begin{figure*}[h]
+\begin{AgdaSuppressSpace}
 \begin{code}
   LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ true
@@ -103,6 +104,7 @@ data
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]

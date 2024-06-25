@@ -109,6 +109,7 @@ data
   where
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaSuppressSpace}
 \begin{code}
   CHAIN :
     let open ChainState s; open Block b; open NewEpochState nes
@@ -121,5 +122,6 @@ data
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{CHAIN transition system}
 \end{figure*}

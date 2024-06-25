@@ -153,6 +153,7 @@ data DepositPurpose : Type where
   GovActionDeposit   : GovActionID  → DepositPurpose
 
 Deposits = DepositPurpose ⇀ Coin
+
 \end{code}
 \begin{NoConway}
 \emph{UTxO environment}
@@ -243,7 +244,8 @@ certRefund (dereg c)      = ❴ CredentialDeposit c ❵
 certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
 certRefund _              = ∅
 
-updateCertDeposits : PParams → List DCert → DepositPurpose ⇀ Coin → DepositPurpose ⇀ Coin
+updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
+                    → DepositPurpose ⇀ Coin
 updateCertDeposits _   []              deposits = deposits
 updateCertDeposits pp  (cert ∷ certs)  deposits
   = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
