@@ -117,6 +117,8 @@ required). The exceptions are \NewCommittee and \TreasuryWdrl:
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
+open PParams using (ccMaxTermLength)
+open EnactState using (cc)
 data
 \end{code}
 \begin{code}
@@ -130,8 +132,8 @@ data
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record  s { cc = nothing , gid }
 
-  Enact-NewComm : let old      = maybe proj₁ ∅ (s .EnactState.cc .proj₁)
-                      maxTerm  = s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e
+  Enact-NewComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
+                      maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
