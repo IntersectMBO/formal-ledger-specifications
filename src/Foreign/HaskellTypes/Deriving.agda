@@ -1,19 +1,20 @@
--- {-# OPTIONS -v tc.unquote.def:10 -v tc.unquote.decl:10 -v tactic.hs-types:10 #-}
+{-# OPTIONS -v tactic.hs-types:100 #-}
 
 module Foreign.HaskellTypes.Deriving where
 
 open import Meta hiding (TC; Monad-TC; MonadError-TC)
 
 open import Level using (Level; 0ℓ)
-open import Agda.Builtin.Reflection using (declareData; defineData; pragmaForeign; pragmaCompile; getInstances)
+open import Agda.Builtin.Reflection using (declareData; defineData; pragmaForeign; pragmaCompile;
+                                           solveInstanceConstraints)
 open import Reflection as R hiding (showName; _>>=_; _>>_)
 open import Reflection.AST hiding (showName)
 open import Reflection.AST.DeBruijn
-open import Data.Maybe using (Maybe; nothing; just; fromMaybe)
+open import Data.Maybe using (Maybe; nothing; just; fromMaybe; maybe′)
 open import Data.Unit using (⊤)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.String using (String) renaming (_++_ to _&_)
-open import Data.Product hiding (map)
+open import Data.Product hiding (map; zip)
 import Data.String as String
 open import Data.Bool
 open import Data.Nat
@@ -54,65 +55,36 @@ private variable
 -- TODO: somewhere else
 `Set = agda-sort (Sort.set (quote 0ℓ ∙))
 
-NameEnv = List (Name × String)
+private
+  NameEnv = List (Name × String)
 
-dummyEnv : TCEnv
-dummyEnv = record
-             { normalisation = false
-             ; reconstruction = false
-             ; noConstraints = false
-             ; reduction = dontReduce []
-             ; globalContext = []
-             ; localContext = []
-             ; goal = inj₁ unknown
-             ; options = defaultTCOptions
-             }
-
-ensureKnown : Term → TC ⊤
-ensureKnown v = do
-  ty ← withNormalisation true $ inferType v
-  ensureNoMetas ty dummyEnv
-
-solveInstance : Term → TC Term
-solveInstance ty = do
-  iTerm@(meta iMeta _) ← newMeta ty
-    where _ → typeErrorFmt "Impossible"
-  debugPrintFmt "tactic.hs-types" 10 "getInstances %t : %t" iTerm =<< inferType iTerm
-  iSol ∷ _ ← getInstances iMeta
-    where [] → do
-            ensureKnown iTerm
-            typeErrorFmt "No instance found for %t" ty
-  debugPrintFmt "tactic.hs-types" 10 "iSol = %t" iSol
-  unify iTerm iSol
-  pure iSol
-
-solveHsTypes : ℕ → Term → TC Term
-solveHsTypeArgs : ℕ → List (Arg Term) → TC (List (Arg Term))
-
-solveHsTypes 0 ty = pure ty
-solveHsTypes (suc fuel) hsTy@(def (quote HasHsType.HsType) (_ ∷ _ ∷ vArg inst@(meta x _) ∷ [])) = do
-  iSol ∷ _ ← getInstances x
-    where [] → do
-            ensureKnown inst
-            typeErrorFmt "No instance found for %t" hsTy
-  unify inst iSol
-  hsTy ← normalise hsTy
-  solveHsTypes fuel hsTy
-solveHsTypes fuel hsTy@(def d args) = def d <$> solveHsTypeArgs fuel args
-solveHsTypes fuel ty = pure ty
-
-solveHsTypeArgs _ [] = pure []
-solveHsTypeArgs fuel (arg i ty ∷ args) = do
-  ty   ← solveHsTypes fuel ty
-  args ← solveHsTypeArgs fuel args
-  pure (arg i ty ∷ args)
+  dummyEnv : TCEnv
+  dummyEnv = record
+              { normalisation = false
+              ; reconstruction = false
+              ; noConstraints = false
+              ; reduction = dontReduce []
+              ; globalContext = []
+              ; localContext = []
+              ; goal = inj₁ unknown
+              ; options = defaultTCOptions
+              }
 
 solveHsType : Term → TC Term
 solveHsType tm = do
-  inst ← solveInstance (quote HasHsType ∙⟦ tm ⟧)
-  solveHsTypes 100 =<< normalise (def (quote HsType) (vArg tm ∷ iArg inst ∷ []))
+  hsTy ← checkType (quote HsType ∙⟦ tm ⟧) `Set
+  solveInstanceConstraints
+  normalise hsTy >>= λ where
+    (def (quote HsType) _) → typeErrorFmt "Failed to solve HsType %t" tm
+    hsTy                   → return hsTy
+
 
 private
+  _‼_ : List A → ℕ → Maybe A
+  []       ‼ i     = nothing
+  (x ∷ xs) ‼ zero  = just x
+  (x ∷ xs) ‼ suc i = xs ‼ i
+
   lookup : ⦃ DecEq A ⦄ → A → List (A × B) → Maybe B
   lookup x xs = proj₂ <$> findᵇ ((x ==_) ∘ proj₁) xs
 
@@ -240,6 +212,15 @@ private
         _ → typeErrorFmt "%q is not a data or record type" agdaName
     _ → typeErrorFmt "%q is not a data type (impossible)" hsName
 
+  computeProjections : ℕ → Name → TC (List Term)
+  computeProjections npars c = do
+    argTys , _ ← viewTy <$> getType c
+    let is  = downFrom (length argTys)
+        tel = map (λ where (abs x ty) → x , ty) argTys
+        lhs = vArg (con c (map (λ where (i , abs x (arg info _)) → arg info (var i))
+                               (drop npars (zip is argTys)))) ∷ []
+    return $ map (λ i → pat-lam (clause tel lhs (var i []) ∷ []) []) (drop npars is)
+
 doAutoHsType : NameEnv → Name → Term → TC Term
 doAutoHsType env d hole = do
   checkType hole (quote HasHsType ∙⟦ d ∙ ⟧)
@@ -257,3 +238,25 @@ macro
 
   _↦_ : Name → String → Term → TC ⊤
   x ↦ s = unify (quote (Data.Product._,_) ◆⟦ lit (name x) ∣ lit (string s) ⟧)
+
+  hsCon : Term → ℕ → Term → TC ⊤
+  hsCon agdaTy i hole = do
+    hsTy@(def hsName _) ← solveHsType agdaTy
+      where _ → typeErrorFmt "Failed to compute HsType of %t" agdaTy
+    cs ← getDefinition hsName >>= λ where
+      (data-type _ cs)  → return cs
+      _ → typeErrorFmt "Expected HsType %t to be a data type, but got %t" agdaTy hsTy
+    c ← maybe′ return  (typeErrorFmt "%q has only %u constructors" hsName (length cs)) (cs ‼ i)
+    unify hole (con c [])
+
+  hsProj : Term → ℕ → Term → TC ⊤
+  hsProj agdaTy i hole = do
+    hsTy@(def hsName _) ← solveHsType agdaTy
+      where _ → typeErrorFmt "Failed to compute HsType of %t" agdaTy
+    prjs ← getDefinition hsName >>= λ where
+      (data-type npars (c ∷ [])) → computeProjections npars c
+      _ → typeErrorFmt "Expected HsType %t to be a single constructor data type, but got %t" agdaTy hsTy
+    prj ← maybe′ return (typeErrorFmt "%q has only %u fields" hsName (length prjs)) (prjs ‼ i)
+    target ← newMeta `Set
+    checkType hole (pi (vArg hsTy) (abs "_" target))
+    unify hole prj
