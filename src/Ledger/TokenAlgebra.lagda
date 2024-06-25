@@ -1,4 +1,4 @@
-\section{Token algebras}
+\section{Token Algebras}
 \label{sec:token-algebra}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}

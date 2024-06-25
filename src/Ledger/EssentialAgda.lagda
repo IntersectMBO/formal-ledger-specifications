@@ -1,4 +1,4 @@
-\section{Appendix: Agda essentials}
+\section{Agda Essentials}
 \label{sec:appendix-agda-essentials}
 Here we describe some of the essential concepts and syntax of the Agda programming language and proof assistant.
 The goal is to provide some background for readers who are not already familiar with Agda, to help them
@@ -13,7 +13,7 @@ open import Prelude using (Type)
 open import Data.Nat
 \end{code}
 
-\subsection{Record types}
+\subsection{Record Types}
 
 A \defn{record} is a product with named accessors for the individual fields.  It provides a way to
 define a type that groups together inhabitants of other types.\\[6pt]

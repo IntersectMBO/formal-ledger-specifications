@@ -1,4 +1,4 @@
-\section{Epoch boundary}
+\section{Epoch Boundary}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

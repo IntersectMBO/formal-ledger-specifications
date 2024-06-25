@@ -159,7 +159,7 @@ private variable
   wdrls  : RwdAddr ⇀ Coin
 \end{code}
 
-\subsection{Removal of pointer addresses, genesis delegations and MIR certificates}
+\subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
 
 In the Conway era, support for pointer addresses, genesis delegations
 and MIR certificates is removed. In \DState, this means that the four
@@ -183,7 +183,7 @@ are two separate features. In fact, preventing this could weaken the
 security of the chain, since security relies on high participation of
 honest stake holders.
 
-\subsection{Governance certificate rules}
+\subsection{Governance Certificate Rules}
 
 The rules for transition systems dealing with individual certificates
 are defined in Figures~\ref{fig:sts:aux-cert-deleg},
