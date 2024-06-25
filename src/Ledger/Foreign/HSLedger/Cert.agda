@@ -11,8 +11,6 @@ import Foreign.Haskell.Pair as F
 open import Ledger.Certs.Properties HSGovStructure
 
 instance
-  _ = Convertible-Refl {String}
-
   Convertible-CertState : ConvertibleType CertState F.CertState
   Convertible-CertState = autoConvertible
 

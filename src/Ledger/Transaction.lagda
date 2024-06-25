@@ -97,7 +97,8 @@ the transaction body are:
     ; globalConstants = globalConstants
     }
 
-  open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
+  module GovernanceActions = Ledger.GovernanceActions govStructure
+  open GovernanceActions hiding (Vote; yes; no; abstain) public
   open Ledger.Certs             govStructure public
 \end{code}
 \begin{NoConway}
