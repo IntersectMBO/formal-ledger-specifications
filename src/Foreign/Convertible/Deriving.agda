@@ -117,6 +117,9 @@ private
     fromClauses ← mapM (conversionClause (quote Convertible.from) (quote from)) (L.zip hsCons agdaCons)
     return $ toClauses ++ fromClauses
 
+  absurdClause : Name → Clause
+  absurdClause prj = absurd-clause (("x" , vArg unknown) ∷ []) (vArg (proj prj) ∷ vArg (absurd 0) ∷ [])
+
   -- Compute conversion clauses for the current goal and wrap them in a pattern lambda.
   patternLambda : TC Term
   patternLambda = do
@@ -126,7 +129,9 @@ private
     hsCons   ← getConstrsForType `B
     toClauses   ← mapM (conversionClause (quote Convertible.to)   (quote to)  ) (L.zip agdaCons hsCons)
     fromClauses ← mapM (conversionClause (quote Convertible.from) (quote from)) (L.zip hsCons agdaCons)
-    return $ pat-lam (toClauses ++ fromClauses) []
+    case toClauses ++ fromClauses of λ where
+      []  → return $ pat-lam (absurdClause (quote Convertible.to) ∷ absurdClause (quote Convertible.from) ∷ []) []
+      cls → return $ pat-lam cls []
 
 doPatternLambda : Term → R.TC Term
 doPatternLambda hole = patternLambda =<< initTCEnvWithGoal hole
@@ -145,8 +150,10 @@ deriveConvertible instName agdaName hsName = initUnquoteWithGoal ⦃ defaultTCOp
   return _
 
 -- Macros providing an alternative interface. Usage
---  iName : ConvertibleType AgdaTy HsTy
---  iName = autoConvertible
+--   iName : ConvertibleType AgdaTy HsTy
+--   iName = autoConvertible
+-- or
+--   iName = autoConvert AgdaTy
 macro
   ConvertibleType : Name → Name → Tactic
   ConvertibleType agdaName hsName = initTac ⦃ defaultTCOptions ⦄ $

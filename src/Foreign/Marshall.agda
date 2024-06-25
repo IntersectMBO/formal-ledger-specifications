@@ -24,41 +24,31 @@ open Foreign.HaskellTypes.Deriving
 open Foreign.Convertible.Deriving public using (autoConvertible; ConvertibleType)
 open Foreign.HaskellTypes.Deriving public using (autoHsType; autoHsType')
 
-record Marshall (A : Set) : Set₁ where
-  constructor mkMarshall
-  field
-    ⦃ iHsType      ⦄ : HasHsType A
-    ⦃ iConvertible ⦄ : Convertible A (HsType A)
-
-private
-  doAutoMarshalling : NameEnv → Name → Term → TC ⊤
-  doAutoMarshalling env d hole = do
-    checkType hole (quote Marshall ∙⟦ d ∙ ⟧)
-    iHsTy ← newMeta (quote HasHsType ∙⟦ d ∙ ⟧)
-    hsTy  ← doAutoHsType env d iHsTy
-    iConv ← newMeta (quote Convertible ∙⟦ d ∙ ∣ hsTy ⟧)
-    patlam ← doPatternLambda iConv
-    unify iConv patlam
-    unify hole (con (quote mkMarshall) (iArg iHsTy ∷ iArg iConv ∷ []))
-
-macro
-  autoMarshall : Name → Term → TC ⊤
-  autoMarshall = doAutoMarshalling []
-
-  autoMarshall' : Name → NameEnv → Term → TC ⊤
-  autoMarshall' d env = doAutoMarshalling env d
-
 data Dummy : Set where
   baseCase : Dummy
   stepCase : Maybe ℕ → Dummy
+
+record DummyR : Set where
+  field
+    x : ℕ
+    y : Maybe ℕ
 
 instance
   iConvertible-ℕ = Convertible-Refl {ℕ}
 
 instance
-  -- iMarshall-Dummy = autoMarshall Dummy
-  iHsType = autoHsType Dummy
-  iConv   = autoConvert Dummy
+  iHsType  = autoHsType Dummy
+  iConv    = autoConvert Dummy
+  iHsTypeR = autoHsType DummyR
+  iConvR   = autoConvert DummyR
 
-foo : HsType Dummy
-foo = to (stepCase (just 2))
+dummy : HsType Dummy
+dummy = to (stepCase (just 2))
+
+dummy₁ : HsType Dummy
+dummy₁ = hsCon Dummy 1 (just 2)
+
+project : HsType DummyR → Maybe ℕ
+project r = hsProj DummyR 1 r
+
+test = hsProj DummyR 1 (hsCon DummyR 0 1 (just 2))

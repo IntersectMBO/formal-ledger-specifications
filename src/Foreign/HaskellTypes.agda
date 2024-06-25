@@ -3,10 +3,15 @@ module Foreign.HaskellTypes where
 
 open import Level using (Level)
 open import Data.Nat.Base using (ℕ)
+open import Data.String.Base using (String)
 open import Data.List.Base using (List)
 open import Data.Maybe.Base using (Maybe)
 open import Data.Sum.Base using (_⊎_)
+open import Data.Product.Base using (_×_)
 open import Data.Unit using (⊤)
+
+open import Foreign.Haskell.Pair using (Pair)
+open import Foreign.Haskell.Either using (Either)
 
 private variable
   l : Level
@@ -26,6 +31,7 @@ instance
 
   iHsTy-ℕ = MkHsType ℕ ℕ
   iHsTy-⊤ = MkHsType ⊤ ⊤
+  iHsTy-String = MkHsType String String
 
   -- Could make a macro for these kind of congruence instances.
   iHsTy-List : ⦃ HasHsType A ⦄ → HasHsType (List A)
@@ -38,4 +44,7 @@ instance
   iHsTy-Fun {A = A} {B = B} .HasHsType.HsType = HsType A → HsType B
 
   iHsTy-Sum : ⦃ HasHsType A ⦄ → ⦃ HasHsType B ⦄ → HasHsType (A ⊎ B)
-  iHsTy-Sum {A = A} {B = B} .HasHsType.HsType = HsType A ⊎ HsType B
+  iHsTy-Sum {A = A} {B = B} .HasHsType.HsType = Either (HsType A) (HsType B)
+
+  iHsTy-Pair : ⦃ HasHsType A ⦄ → ⦃ HasHsType B ⦄ → HasHsType (A × B)
+  iHsTy-Pair {A = A} {B = B} .HasHsType.HsType = Pair (HsType A) (HsType B)
