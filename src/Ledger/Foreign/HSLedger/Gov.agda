@@ -28,7 +28,7 @@ instance
   HsTy-GovVote = autoHsType GovVote
   Conv-GovVote = autoConvert GovVote
 
-  HsTy-GovEnv = autoHsType' GovEnv (⟦_,_,_,_,_⟧ᵍ ↦ "MkGovEnv" ∷ [])
+  HsTy-GovEnv = autoHsType GovEnv ⊣ withConstructor "MkGovEnv"
   Conv-GovEnv = autoConvert GovEnv
 
 -- NeedsHash depends on a GovAction, so a little bit of manual work is

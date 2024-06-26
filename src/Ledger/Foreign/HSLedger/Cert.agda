@@ -9,7 +9,7 @@ open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Certs.Properties govStructure
 
 instance
-  HsTy-CertState = autoHsType' CertState (⟦_,_,_⟧ᶜˢ ↦ "MkCertState" ∷ [])
+  HsTy-CertState = autoHsType CertState ⊣ withConstructor "MkCertState"
   Conv-CertState = autoConvert CertState
 
 certs-step : HsType (CertEnv → CertState → List DCert → ComputationResult String CertState)

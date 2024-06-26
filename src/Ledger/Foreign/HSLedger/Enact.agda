@@ -14,7 +14,7 @@ instance
   HsTy-EnactState = autoHsType EnactState
   Conv-EnactState = autoConvert EnactState
 
-  HsTy-EnactEnv = autoHsType' EnactEnv (⟦_,_,_⟧ᵉ ↦ "MkEnactEnv" ∷ [])
+  HsTy-EnactEnv = autoHsType EnactEnv ⊣ withConstructor "MkEnactEnv"
   Conv-EnactEnv = autoConvert EnactEnv
 
   HsTy-GovAction = autoHsType GovAction

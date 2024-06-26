@@ -14,10 +14,10 @@ open import Ledger.Ledger it it
 open import Ledger.Ledger.Properties it it
 
 instance
-  HsTy-LEnv = autoHsType' LEnv (⟦_,_,_,_,_⟧ˡᵉ ↦ "MkLEnv" ∷ [])
+  HsTy-LEnv = autoHsType LEnv ⊣ withConstructor "MkLEnv"
   Conv-LEnv = autoConvert LEnv
 
-  HsTy-LState = autoHsType' LState (⟦_,_,_⟧ˡ ↦ "MkLState" ∷ [])
+  HsTy-LState = autoHsType LState ⊣ withConstructor "MkLState"
   Conv-LState = autoConvert LState
 
 ledger-step : HsType (LEnv → LState → Tx → ComputationResult String LState)

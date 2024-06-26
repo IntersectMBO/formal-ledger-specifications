@@ -12,13 +12,13 @@ open import Ledger.Epoch it it
 open import Ledger.Epoch.Properties it it
 
 instance
-  HsTy-Snapshot = autoHsType' Snapshot (⟦_,_⟧ˢ ↦ "MkSnapshot" ∷ [])
+  HsTy-Snapshot = autoHsType Snapshot ⊣ withConstructor "MkSnapshot"
   Conv-Snapshot = autoConvert Snapshot
 
-  HsTy-Snapshots = autoHsType' Snapshots (⟦_,_,_,_⟧ˢˢ ↦ "MkSnapshots" ∷ [])
+  HsTy-Snapshots = autoHsType Snapshots ⊣ withConstructor "MkSnapshots"
   Conv-Snapshots = autoConvert Snapshots
 
-  HsTy-EpochState = autoHsType' EpochState (⟦_,_,_,_,_⟧ᵉ' ↦ "MkEpochState" ∷ [])
+  HsTy-EpochState = autoHsType EpochState ⊣ withConstructor "MkEpochState"
   Conv-EpochState = autoConvert EpochState
 
 epoch-step : HsType (⊤ → EpochState → Epoch → ComputationResult ⊥ EpochState)

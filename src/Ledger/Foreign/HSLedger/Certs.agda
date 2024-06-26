@@ -13,22 +13,22 @@ instance
   HsTy-PoolParams = autoHsType PoolParams
   Conv-PoolParams = autoConvert PoolParams
 
-  HsTy-PState = autoHsType' PState (⟦_,_⟧ᵖ ↦ "MkPState" ∷ [])
+  HsTy-PState = autoHsType PState ⊣ withConstructor "MkPState"
   Conv-PState = autoConvert PState
 
-  HsTy-DelegEnv = autoHsType' DelegEnv (⟦_,_⟧ᵈᵉ ↦ "MkDelegEnv" ∷ [])
+  HsTy-DelegEnv = autoHsType DelegEnv ⊣ withConstructor "MkDelegEnv"
   Conv-DelegEnv = autoConvert DelegEnv
 
-  HsTy-CertEnv = autoHsType' CertEnv (⟦_,_,_,_⟧ᶜ ↦ "MkCertEnv" ∷ [])
+  HsTy-CertEnv = autoHsType CertEnv ⊣ withConstructor "MkCertEnv"
   Conv-CertEnv = autoConvert CertEnv
 
-  HsTy-DState = autoHsType' DState (⟦_,_,_⟧ᵈ ↦ "MkDState" ∷ [])
+  HsTy-DState = autoHsType DState ⊣ withConstructor "MkDState"
   Conv-DState = autoConvert DState
 
   HsTy-DCert = autoHsType DCert
   Conv-DCert = autoConvert DCert
 
-  HsTy-GState = autoHsType' GState (⟦_,_⟧ᵛ ↦ "MkGState" ∷ [])
+  HsTy-GState = autoHsType GState ⊣ withConstructor "MkGState"
   Conv-GState = autoConvert GState
 
 deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)

@@ -9,7 +9,7 @@ open import Ledger.Epoch it it
 open import Ledger.Epoch.Properties it it
 
 instance
-  HsTy-NewEpochState = autoHsType' NewEpochState (⟦_,_⟧ⁿᵉ ↦ "MkNewEpochState" ∷ [])
+  HsTy-NewEpochState = autoHsType NewEpochState ⊣ withConstructor "MkNewEpochState"
   Conv-NewEpochState = autoConvert NewEpochState
 
 newepoch-step : HsType (⊤ → NewEpochState → Epoch → ComputationResult ⊥ NewEpochState)
