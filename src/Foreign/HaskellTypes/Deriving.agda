@@ -1,4 +1,3 @@
--- {-# OPTIONS -v tactic.hs-types:100 #-}
 
 module Foreign.HaskellTypes.Deriving where
 
@@ -153,6 +152,7 @@ private
                  ∷ (quote Pair   , "(,)")
                  ∷ (quote Maybe  , "Maybe")
                  ∷ (quote Either , "Either")
+                 ∷ (quote String , "Data.Text.Text")
                  ∷ []
 
   hsTypeName : NameEnv → Name → String
@@ -189,6 +189,10 @@ private
     just ty′ ← pure (strengthen ty)
       where nothing → extendContext x a $ typeErrorFmt "%s free in computed HsType %t" x ty
     pure ty′
+  -- Hack to get recursive occurrences under lists to work
+  computeHsType aThis hThis (def (quote List) (_ ∷ vArg a ∷ [])) | false = do
+    ty ← computeHsType aThis hThis a
+    pure (quote List ∙⟦ ty ⟧)
   computeHsType _ _ tm | false = do
     debug 10 "solving HsType %t" tm
     ty ← solveHsType tm

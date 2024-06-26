@@ -11,12 +11,12 @@ instance
   HsTy-Tag = autoHsType Tag
   Conv-Tag = autoConvert Tag
 
-  HsTy-P1Script = autoHsType Timelock
+  HsTy-Timelock = autoHsType Timelock
   -- The termination checker doesn't like recursion through lists of recursive structures, or that
   -- we do all the matching in a rhs pattern lambda. Telling the termination checker to go away does
   -- work though.
   {-# TERMINATING #-}
-  Conv-P1Script = autoConvert Timelock
+  Conv-Timelock = autoConvert Timelock
 
   HsTy-TxWitnessess = autoHsType TxWitnesses
   Conv-TxWitnessess = autoConvert TxWitnesses
