@@ -20,8 +20,6 @@ Convertible₁ T U = ∀ {A B} → ⦃ Convertible A B ⦄ → Convertible (T A)
 Convertible₂ : (Type → Type → Type) → (Type → Type → Type) → Type₁
 Convertible₂ T U = ∀ {A B} → ⦃ Convertible A B ⦄ → Convertible₁ (T A) (U B)
 
--- ** instances
-
 Functor⇒Convertible : ∀ {F : Type↑} → ⦃ Functor F ⦄ → Convertible₁ F F
 Functor⇒Convertible = λ where
   .to   → map to
@@ -31,6 +29,12 @@ Bifunctor⇒Convertible : ∀ {F} → ⦃ Bifunctor F ⦄ → Convertible₂ F F
 Bifunctor⇒Convertible = λ where
   .to   → bimap to to
   .from → bimap from from
+
+_⨾_ : ∀ {A B C} → Convertible A B → Convertible B C → Convertible A C
+(c ⨾ c') .to   = c' .to   ∘ c  .to
+(c ⨾ c') .from = c  .from ∘ c' .from
+
+-- ** instances
 
 open import Foreign.Haskell
 open import Foreign.Haskell.Coerce using (coerce)

@@ -1,28 +1,25 @@
 module Ledger.Foreign.HSLedger.Ratify where
 
+open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
+open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Foreign.HSLedger.Gov
 
-open import Ledger.Ratify HSTransactionStructure
-open import Ledger.Ratify.Properties HSTransactionStructure
-
-import Ledger.Foreign.LedgerTypes as F
-import Foreign.Haskell.Pair as F
+open import Ledger.Ratify it
+open import Ledger.Ratify.Properties it
 
 instance
-  _ = Convertible-Refl {Bool}
+  HsTy-StakeDistrs = autoHsType StakeDistrs
+  Conv-StakeDistrs = autoConvert StakeDistrs
 
-  Convertible-StakeDistrs : Convertible StakeDistrs F.StakeDistrs
-  Convertible-StakeDistrs = autoConvertible
+  HsTy-RatifyEnv = autoHsType RatifyEnv
+  Conv-RatifyEnv = autoConvert RatifyEnv
 
-  Convertible-RatifyEnv : Convertible RatifyEnv F.RatifyEnv
-  Convertible-RatifyEnv = autoConvertible
+  HsTy-RatifyState = autoHsType' RatifyState (⟦_,_,_⟧ʳ ↦ "MkRatifyState" ∷ [])
+  Conv-RatifyState = autoConvert RatifyState
 
-  Convertible-RatifyState : Convertible RatifyState F.RatifyState
-  Convertible-RatifyState = autoConvertible
-
-ratify-step : F.RatifyEnv → F.RatifyState → List (F.Pair F.GovActionID F.GovActionState) → F.ComputationResult F.Empty F.RatifyState
+ratify-step : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → ComputationResult ⊥ RatifyState)
 ratify-step = to (compute Computational-RATIFY)
 
 {-# COMPILE GHC ratify-step as ratifyStep #-}

@@ -124,7 +124,7 @@ private
   ... | true = pure (hThis ∙)
   computeHsType aThis hThis (Π[ x ∶ arg (arg-info visible _) a ] b) | false = do
     dom ← computeHsType aThis hThis a
-    rng ← extendContext x (vArg dom) $ computeHsType aThis hThis b
+    rng ← extendContext x (vArg a) $ computeHsType aThis hThis b
     pure (vΠ[ x ∶ dom ] rng)
   computeHsType aThis hThis (Π[ x ∶ a ] b) | false = do
     ty ← extendContext x a $ computeHsType aThis hThis b
@@ -263,3 +263,9 @@ macro
     target ← newMeta `Set
     checkType hole (pi (vArg hsTy) (abs "_" target))
     unify hole prj
+
+  hsTyName : Term → Term → TC ⊤
+  hsTyName agdaTy hole = do
+    hsTy@(def hsName _) ← solveHsType agdaTy
+      where _ → typeErrorFmt "Failed to compute HsType of %t" agdaTy
+    unify hole (lit (name hsName))
