@@ -57,7 +57,7 @@ record Anchor : Type where
 
 data GovAction : Type where
   NoConfidence     :                                             GovAction
-  NewCommittee     : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
+  UpdateCommittee  : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
   NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction
   TriggerHF        : ProtVer                                  →  GovAction
   ChangePParams    : PParamsUpdate                            →  GovAction
@@ -71,13 +71,13 @@ actionWellFormed _                  = ⊤
 \end{code}
 \begin{code}[hide]
 actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
-actionWellFormed? {NoConfidence}        = it
-actionWellFormed? {NewCommittee _ _ _}  = it
-actionWellFormed? {NewConstitution _ _} = it
-actionWellFormed? {TriggerHF _}         = it
-actionWellFormed? {ChangePParams _}     = it
-actionWellFormed? {TreasuryWdrl _}      = it
-actionWellFormed? {Info}                = it
+actionWellFormed? {NoConfidence}          = it
+actionWellFormed? {UpdateCommittee _ _ _} = it
+actionWellFormed? {NewConstitution _ _}   = it
+actionWellFormed? {TriggerHF _}           = it
+actionWellFormed? {ChangePParams _}       = it
+actionWellFormed? {TreasuryWdrl _}        = it
+actionWellFormed? {Info}                  = it
 \end{code}
 \end{AgdaMultiCode}
 \caption{Governance actions}
@@ -104,7 +104,7 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \hline
 \endhead
 \NoConfidence            & a motion to create a \emph{state of no-confidence} in the current constitutional committee \\[10pt]
-\NewCommittee            & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
+\UpdateCommittee         & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
 \NewConstitution         & a modification to the off-chain Constitution and the proposal policy script \\[10pt]
 \TriggerHF\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\[10pt]
 \ChangePParams           & a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\[10pt]
@@ -136,7 +136,7 @@ is achieved by requiring actions to unambiguously link to the state
 they are modifying via a pointer to the previous modification. A
 proposal can only be enacted if it contains the \GovActionID of the
 previously enacted proposal modifying the same piece of
-state. \NoConfidence and \NewCommittee modify the same state, while
+state. \NoConfidence and \UpdateCommittee modify the same state, while
 every other type of governance action has its own state that isn't
 shared with any other action. This means that the enactibility of a
 proposal can change when other proposals are enacted.
@@ -153,13 +153,13 @@ is not necessary.
 \begin{figure*}[h]
 \begin{code}
 NeedsHash : GovAction → Type
-NeedsHash NoConfidence           = GovActionID
-NeedsHash (NewCommittee _ _ _)   = GovActionID
-NeedsHash (NewConstitution _ _)  = GovActionID
-NeedsHash (TriggerHF _)          = GovActionID
-NeedsHash (ChangePParams _)      = GovActionID
-NeedsHash (TreasuryWdrl _)       = ⊤
-NeedsHash Info                   = ⊤
+NeedsHash NoConfidence             = GovActionID
+NeedsHash (UpdateCommittee _ _ _)  = GovActionID
+NeedsHash (NewConstitution _ _)    = GovActionID
+NeedsHash (TriggerHF _)            = GovActionID
+NeedsHash (ChangePParams _)        = GovActionID
+NeedsHash (TreasuryWdrl _)         = ⊤
+NeedsHash Info                     = ⊤
 
 HashProtected : Type → Type
 HashProtected A = A × GovActionID

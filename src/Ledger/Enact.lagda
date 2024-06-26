@@ -61,24 +61,24 @@ ccCreds (just x   , _)  = dom (x .proj₁)
 ccCreds (nothing  , _)  = ∅
 
 getHash : ∀ {a} → NeedsHash a → Maybe GovActionID
-getHash {NoConfidence}         h = just h
-getHash {NewCommittee _ _ _}   h = just h
-getHash {NewConstitution _ _}  h = just h
-getHash {TriggerHF _}          h = just h
-getHash {ChangePParams _}      h = just h
-getHash {TreasuryWdrl _}       _ = nothing
-getHash {Info}                 _ = nothing
+getHash {NoConfidence}           h = just h
+getHash {UpdateCommittee _ _ _}  h = just h
+getHash {NewConstitution _ _}    h = just h
+getHash {TriggerHF _}            h = just h
+getHash {ChangePParams _}        h = just h
+getHash {TreasuryWdrl _}         _ = nothing
+getHash {Info}                   _ = nothing
 
 open EnactState
 
 getHashES : EnactState → GovAction → Maybe GovActionID
-getHashES es NoConfidence           = just $ es .cc .proj₂
-getHashES es (NewCommittee _ _ _)   = just $ es .cc .proj₂
-getHashES es (NewConstitution _ _)  = just $ es .constitution .proj₂
-getHashES es (TriggerHF _)          = just $ es .pv .proj₂
-getHashES es (ChangePParams _)      = just $ es .pparams .proj₂
-getHashES es (TreasuryWdrl _)       = nothing
-getHashES es Info                   = nothing
+getHashES es NoConfidence             = just $ es .cc .proj₂
+getHashES es (UpdateCommittee _ _ _)  = just $ es .cc .proj₂
+getHashES es (NewConstitution _ _)    = just $ es .constitution .proj₂
+getHashES es (TriggerHF _)            = just $ es .pv .proj₂
+getHashES es (ChangePParams _)        = just $ es .pparams .proj₂
+getHashES es (TreasuryWdrl _)         = nothing
+getHashES es Info                     = nothing
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types and function used for the ENACT transition system}
@@ -108,9 +108,9 @@ instance
 Figures~\ref{fig:sts:enact,fig:sts:enact-cont} define the rules of the ENACT transition
 system. Usually no preconditions are checked and the state is simply
 updated (including the \GovActionID for the hash protection scheme, if
-required). The exceptions are \NewCommittee and \TreasuryWdrl:
+required). The exceptions are \UpdateCommittee and \TreasuryWdrl:
 \begin{itemize}
-\item \NewCommittee requires that maximum terms are respected, and
+\item \UpdateCommittee requires that maximum terms are respected, and
 \item \TreasuryWdrl requires that the treasury is able to cover the sum of all withdrawals (old and new).
 \end{itemize}
 
@@ -137,7 +137,7 @@ data
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈
+    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ UpdateCommittee new rem q ,ENACT⦈
       record s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
 
   Enact-NewConst :
