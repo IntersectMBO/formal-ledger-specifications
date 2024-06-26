@@ -185,7 +185,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     -- GovState definitions and lemmas --
     mkAction : GovProposal → ℕ → GovActionID × GovActionState
     mkAction p n = let open GovProposal p in
-      ActionId×ActionState
+      mkGovStatePair
         (PParams.govActionLifetime pp +ᵉ GovEnv.epoch ⟦ txid , epoch slot , pp , ppolicy , enactState ⟧ᵍ)
         (GovEnv.txid ⟦ txid , epoch slot , pp , ppolicy , enactState ⟧ᵍ , n) returnAddr action prevAction
 

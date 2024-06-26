@@ -9,6 +9,7 @@ open import Ledger.Types.GovStructure
 module Ledger.Certs (gs : _) (open GovStructure gs) where
 
 open import Ledger.GovernanceActions gs
+open RwdAddr
 \end{code}
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
@@ -157,6 +158,11 @@ private variable
   vs : List GovVote
   poolParams : PoolParams
   wdrls  : RwdAddr ⇀ Coin
+  dreps : Credential ⇀ Epoch
+  ccHotKeys : Credential ⇀ Maybe Credential
+  voteDelegs : Credential ⇀ VDeleg
+  stakeDelegs : Credential ⇀ KeyHash
+  rewards : Credential ⇀ Coin
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -371,7 +377,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
 \begin{code}
   CERT-base :
-    let open PParams pp; open GState stᵍ; open DState stᵈ; open RwdAddr
+    let open PParams pp
         refresh         = mapPartial getDRepVote (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
@@ -379,8 +385,9 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦
+        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
+        ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
 \end{code}

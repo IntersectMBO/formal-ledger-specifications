@@ -130,20 +130,19 @@ data
 \begin{code}
   Enact-NoConf :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record  s { cc = nothing , gid }
+    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record s { cc = nothing , gid }
 
   Enact-NewComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
                       maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewCommittee new rem q ,ENACT⦈
-                record  s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
+    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NewCommittee new rem q ,ENACT⦈
+      record s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
 
   Enact-NewConst :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ NewConstitution dh sh ,ENACT⦈
-                record  s { constitution = (dh , sh) , gid }
+    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈ record s { constitution = (dh , sh) , gid }
 \end{code}
 \end{AgdaMultiCode}
 \caption{ENACT transition system}
