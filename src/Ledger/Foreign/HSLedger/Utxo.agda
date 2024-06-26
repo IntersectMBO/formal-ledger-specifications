@@ -1,43 +1,34 @@
 module Ledger.Foreign.HSLedger.Utxo where
 
+open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
+open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Certs
+open import Ledger.Foreign.HSLedger.PParams
+open import Ledger.Foreign.HSLedger.Transaction
 
-import Ledger.Foreign.LedgerTypes as F
-
-open import Ledger.Utxo HSTransactionStructure HSAbstractFunctions
-open import Ledger.Utxo.Properties HSTransactionStructure HSAbstractFunctions
-open import Ledger.Utxo.Haskell.Properties HSTransactionStructure HSAbstractFunctions
-open import Ledger.Utxow.Properties HSTransactionStructure HSAbstractFunctions
+open import Ledger.Utxo it it
+open import Ledger.Utxo.Properties it it
+open import Ledger.Utxow.Properties it it
 
 instance
-  _ = Convertible-Refl {String}
+  HsTy-UTxOEnv = autoHsType UTxOEnv
+  Conv-UTxOEnv = autoConvert UTxOEnv
 
-  Convertible-UTxOEnv : Convertible UTxOEnv F.UTxOEnv
-  Convertible-UTxOEnv = autoConvertible
+  HsTy-UTxOState = autoHsType' UTxOState (⟦_,_,_,_⟧ᵘ ↦ "MkUTxOState" ∷ [])
+  Conv-UTxOState = autoConvert UTxOState
 
-  Convertible-UTxOState : Convertible UTxOState F.UTxOState
-  Convertible-UTxOState = λ where
-    .to record { utxo = utxo ; fees = fees } →
-        record { utxo = to utxo ; fees = fees }
-    .from s → let open F.UTxOState s in record
-      { utxo      = from utxo
-      ; fees      = fees
-      ; deposits  = ∅ᵐ
-      ; donations = ε
-      }
-
-utxo-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxo-step : HsType (UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState)
 utxo-step = to (compute Computational-UTXO)
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
-utxo-step' : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxo-step' : HsType (UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState)
 utxo-step' = to (compute Computational-UTXO')
 
 {-# COMPILE GHC utxo-step' as utxoStep' #-}
 
-utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxow-step : HsType (UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState)
 utxow-step = to (compute Computational-UTXOW)
 
 {-# COMPILE GHC utxow-step as utxowStep #-}

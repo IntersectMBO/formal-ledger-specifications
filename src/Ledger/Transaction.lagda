@@ -108,14 +108,12 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     ; globalConstants = globalConstants
     }
 
-  open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
+  module GovernanceActions = Ledger.GovernanceActions govStructure
+  open GovernanceActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Certs govStructure public
   open import Ledger.Certs.Haskell govStructure public
     renaming (DState to DState'; GState to GState') using ()
-  -- module GovernanceActions = Ledger.GovernanceActions govStructure
-  -- open GovernanceActions hiding (Vote; yes; no; abstain) public
-  -- open Ledger.Certs             govStructure public
 \end{code}
 \begin{NoConway}
 \emph{Derived types}

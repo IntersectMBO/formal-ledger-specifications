@@ -2,6 +2,7 @@
 module Foreign.HaskellTypes where
 
 open import Level using (Level)
+open import Data.Bool.Base using (Bool)
 open import Data.Nat.Base using (ℕ)
 open import Data.String.Base using (String)
 open import Data.List.Base using (List)
@@ -30,6 +31,7 @@ MkHsType A Hs .HasHsType.HsType = Hs
 instance
 
   iHsTy-ℕ = MkHsType ℕ ℕ
+  iHsTy-Bool = MkHsType Bool Bool
   iHsTy-⊤ = MkHsType ⊤ ⊤
   iHsTy-String = MkHsType String String
 

@@ -3,12 +3,13 @@ module Ledger.Foreign.HSLedger.NewEpoch where
 import Ledger.Foreign.LedgerTypes as F
 import Data.Integer as ℤ
 
+open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Ratify
 open import Ledger.Foreign.HSLedger.Epoch
 
-open import Ledger.Epoch HSTransactionStructure HSAbstractFunctions
-open import Ledger.Epoch.Properties HSTransactionStructure HSAbstractFunctions
+open import Ledger.Epoch it it
+open import Ledger.Epoch.Properties it it
 
 instance
   -- manual, since we want to throw an error on non-zero update
@@ -19,10 +20,10 @@ instance
       (yes p) → record { F.RewardUpdate ru ; rs = from (ru .F.RewardUpdate.rs) ; zeroSum = p }
       (no ¬p) → error "Formal Spec: cannot make a non-zero reward update"
 
-  Convertible-NewEpochState : Convertible NewEpochState F.NewEpochState
-  Convertible-NewEpochState = autoConvertible
+  HsTy-NewEpochState = autoHsType' NewEpochState (⟦_,_⟧ⁿᵉ ↦ "MkNewEpochState" ∷ [])
+  Conv-NewEpochState = autoConvert NewEpochState
 
-newepoch-step : ⊤ → F.NewEpochState → F.Epoch → F.ComputationResult F.Empty F.NewEpochState
+newepoch-step : HsType (⊤ → NewEpochState → Epoch → ComputationResult ⊥ NewEpochState)
 newepoch-step = to (compute Computational-NEWEPOCH)
 
 {-# COMPILE GHC newepoch-step as newEpochStep #-}

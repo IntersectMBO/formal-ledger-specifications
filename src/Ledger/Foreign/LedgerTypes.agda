@@ -318,7 +318,6 @@ data Credential : Type where
 -- --     | TreasuryWdrl (HSMap RwdAddr Coin)
 -- --     | Info
 
--- -- <<<<<<< HEAD
 -- --   data PParams = MkPParams
 -- --     { ppA                   :: Integer
 -- --     , ppB                   :: Integer
@@ -461,7 +460,6 @@ data Credential : Type where
 -- -- #-}
 -- -- {-# COMPILE GHC DState = data DState (MkDState) #-}
 
--- -- <<<<<<< HEAD
 -- -- data GovAction : Type where
 -- --   NoConfidence     :                                                         GovAction
 -- --   UpdateCommittee  : (HSMap Credential Epoch) → List Credential → Rational → GovAction
@@ -470,7 +468,6 @@ data Credential : Type where
 -- --   ChangePParams    : PParamsUpdate                                         → GovAction
 -- --   TreasuryWdrl     : HSMap RwdAddr Coin                                    → GovAction
 -- --   Info             :                                                         GovAction
--- -- =======
 -- -- -- record PState : Type where
 -- -- --   field pools     : HSMap Hash PoolParams
 -- -- --         retiring  : HSMap Hash Epoch
@@ -546,7 +543,6 @@ data Credential : Type where
 -- -- -- #-}
 -- -- -- {-# COMPILE GHC RatifyState = data RatifyState (MkRatifyState) #-}
 
--- -- <<<<<<< HEAD
 -- --   data GovAction
 -- --     = NoConfidence
 -- --     | UpdateCommittee (HSMap Credential Epoch) [Credential] Rational
@@ -610,7 +606,6 @@ data Credential : Type where
 -- -- -- #-}
 -- -- -- {-# COMPILE GHC Acnt = data Acnt (MkAcnt) #-}
 
--- -- <<<<<<< HEAD
 -- --   data GovSignal
 -- --     = GovSignalVote GovVote
 -- --     | GovSignalProposal GovProposal
@@ -783,7 +778,6 @@ data DepositPurpose : Type where
 -- -- -- #-}
 -- -- -- {-# COMPILE GHC NewEpochState = data NewEpochState (MkNewEpochState) #-}
 
--- -- <<<<<<< HEAD
 
 -- (GState with new deposits field)
 record GState' : Type where

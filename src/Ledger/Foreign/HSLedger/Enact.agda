@@ -1,33 +1,26 @@
 module Ledger.Foreign.HSLedger.Enact where
 
+open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
-
-import Ledger.Foreign.LedgerTypes as F
+open import Ledger.Foreign.HSLedger.Address
+open import Ledger.Foreign.HSLedger.PParams
 
 open import Ledger.Types.GovStructure
 
-HSGovStructure : GovStructure
-HSGovStructure = TransactionStructure.govStructure HSTransactionStructure
-instance _ = HSGovStructure
-
-open GovStructure HSGovStructure public
-
-open import Ledger.Enact HSGovStructure
-open import Ledger.GovernanceActions.Properties HSGovStructure
+open import Ledger.Enact govStructure
+open import Ledger.GovernanceActions.Properties govStructure
 
 instance
-  _ = Convertible-Refl {String}
+  HsTy-EnactState = autoHsType EnactState
+  Conv-EnactState = autoConvert EnactState
 
-  Convertible-EnactState : Convertible EnactState F.EnactState
-  Convertible-EnactState = autoConvertible
+  HsTy-EnactEnv = autoHsType' EnactEnv (⟦_,_,_⟧ᵉ ↦ "MkEnactEnv" ∷ [])
+  Conv-EnactEnv = autoConvert EnactEnv
 
-  Convertible-EnactEnv : Convertible EnactEnv F.EnactEnv
-  Convertible-EnactEnv = autoConvertible
+  HsTy-GovAction = autoHsType GovAction
+  Conv-GovAction = autoConvert GovAction
 
-  Convertible-GovAction : Convertible GovAction F.GovAction
-  Convertible-GovAction = autoConvertible
-
-enact-step : F.EnactEnv → F.EnactState → F.GovAction → F.ComputationResult String F.EnactState
+enact-step : HsType (EnactEnv → EnactState → GovAction → ComputationResult String EnactState)
 enact-step = to (compute Computational-ENACT)
 
 {-# COMPILE GHC enact-step as enactStep #-}

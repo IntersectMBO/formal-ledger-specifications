@@ -1,63 +1,82 @@
 module Ledger.Foreign.HSLedger.Certs where
 
-open import Ledger.Foreign.HSLedger.BaseTypes
+open import Ledger.Foreign.HSLedger.Core hiding (DState; CertEnv; GState)
+open import Ledger.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GState)
+open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Foreign.HSLedger.Gov
+open import Ledger.Foreign.HSLedger.PParams
 
-import Ledger.Foreign.LedgerTypes as F
-import Foreign.Haskell.Pair as F
+open import Ledger.Certs.Properties govStructure
+open import Ledger.Certs.Haskell govStructure using (⟦_,_,_,_⟧ᵈ; DState; GState)
 
-open import Ledger.Certs.Properties HSGovStructure
-
-open import Ledger.Certs.Haskell.Properties HSGovStructure
+open import Ledger.Certs.Haskell.Properties govStructure
   renaming ( Computational-DELEG   to Computational-DELEG'
            ; Computational-GOVCERT to Computational-GOVCERT' )
   hiding   ( Computational-POOL )
 
-open import Ledger.Certs.Haskell HSGovStructure
-  renaming ( DelegEnv to DelegEnv' ; CertEnv to CertEnv' )
-  using ()
+open import Ledger.Certs.Haskell govStructure
+  renaming ( DelegEnv to DelegEnv')
+  using (⟦_,_⟧ᵈᵉ; CertEnv; ⟦_,_,_,_⟧ᶜ; ⟦_,_,_⟧ᵛ)
 
 instance
-  _ = Convertible-Refl {String}
+  HsTy-PoolParams = autoHsType PoolParams
+  Conv-PoolParams = autoConvert PoolParams
 
-  Convertible-PState : ConvertibleType PState F.PState
-  Convertible-PState = autoConvertible
+  HsTy-DepositPurpose = autoHsType DepositPurpose
+  Conv-DepositPurpose = autoConvert DepositPurpose
 
-  Convertible-DelegEnv : Convertible DelegEnv F.DelegEnv
-  Convertible-DelegEnv = autoConvertible
+  HsTy-PState = autoHsType' PState (⟦_,_⟧ᵖ ↦ "MkPState" ∷ [])
+  Conv-PState = autoConvert PState
 
-  Convertible-DelegEnv' : Convertible DelegEnv' F.DelegEnv'
-  Convertible-DelegEnv' = autoConvertible
+  HsTy-DelegEnv = autoHsType' DelegEnv (⟦_,_,_⟧ᵈᵉ ↦ "MkDelegEnv" ∷ [])
+  Conv-DelegEnv = autoConvert DelegEnv
 
-  Convertible-CertEnv : ConvertibleType CertEnv F.CertEnv
-  Convertible-CertEnv = autoConvertible
+  HsTy-DelegEnv' = autoHsType' DelegEnv' (⟦_,_⟧ᵈᵉ ↦ "MkDelegEnv'" ∷ [])
+  Conv-DelegEnv' = autoConvert DelegEnv'
 
-  Convertible-CertEnv' : ConvertibleType CertEnv' F.CertEnv'
-  Convertible-CertEnv' = autoConvertible
+  -- HsTy-CertEnv = autoHsType' CertEnv (⟦_,_,_,_,_⟧ᶜ ↦ "MkCertEnv" ∷ [])
+  -- Conv-CertEnv = autoConvert CertEnv
 
-deleg-step : F.DelegEnv → F.DState → F.TxCert → F.ComputationResult String F.DState
-deleg-step = to (compute Computational-DELEG)
+  HsTy-CertEnv' = autoHsType' CertEnv (⟦_,_,_,_⟧ᶜ ↦ "MkCertEnv'" ∷ [])
+  Conv-CertEnv' = autoConvert CertEnv
 
-{-# COMPILE GHC deleg-step as delegStep #-}
+  -- HsTy-DState = autoHsType' DState (⟦_,_,_⟧ᵈ ↦ "MkDState" ∷ [])
+  -- Conv-DState = autoConvert DState
 
-deleg-step' : F.DelegEnv' → F.DState' → F.TxCert → F.ComputationResult String F.DState'
+  HsTy-DState' = autoHsType' DState (⟦_,_,_,_⟧ᵈ ↦ "MkDState'" ∷ [])
+  Conv-DState' = autoConvert DState
+
+  HsTy-DCert = autoHsType DCert
+  Conv-DCert = autoConvert DCert
+
+  -- HsTy-GState = autoHsType' GState (⟦_,_⟧ᵛ ↦ "MkGState" ∷ [])
+  -- Conv-GState = autoConvert GState
+
+  HsTy-GState' = autoHsType' GState (⟦_,_,_⟧ᵛ ↦ "MkGState" ∷ [])
+  Conv-GState' = autoConvert GState
+
+-- deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
+-- deleg-step = to (compute Computational-DELEG)
+
+-- {-# COMPILE GHC deleg-step as delegStep #-}
+
+deleg-step' : HsType (DelegEnv' → DState' → DCert → ComputationResult String DState')
 deleg-step' = to (compute Computational-DELEG')
 
 {-# COMPILE GHC deleg-step' as delegStep' #-}
 
-
-pool-step : F.PParams → F.PState → F.TxCert → F.ComputationResult String F.PState
+pool-step : HsType (PParams → PState → DCert → ComputationResult String PState)
 pool-step = to (compute Computational-POOL)
 
 {-# COMPILE GHC pool-step as poolStep #-}
 
-govcert-step : F.CertEnv → F.GState → F.TxCert → F.ComputationResult String F.GState
-govcert-step = to (compute Computational-GOVCERT)
+-- govcert-step : HsType (CertEnv → GState → DCert → ComputationResult String GState)
+-- govcert-step = to (compute Computational-GOVCERT)
 
-{-# COMPILE GHC govcert-step as govCertStep #-}
+-- {-# COMPILE GHC govcert-step as govCertStep #-}
 
-govcert-step' : F.CertEnv' → F.GState' → F.TxCert → F.ComputationResult String F.GState'
+govcert-step' : HsType (CertEnv → GState → DCert → ComputationResult String GState)
 govcert-step' = to (compute Computational-GOVCERT')
 
-{-# COMPILE GHC govcert-step' as govCertStep' #-}
+-- {-# COMPILE GHC govcert-step' as govCertStep' #-}

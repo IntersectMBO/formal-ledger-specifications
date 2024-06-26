@@ -1,33 +1,42 @@
 module Ledger.Foreign.HSLedger.Ledger where
 
-import Ledger.Foreign.LedgerTypes as F
-import Foreign.Haskell.Pair as F
-
+open import Ledger.Foreign.HSLedger.Core
+open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.BaseTypes
+open import Ledger.Foreign.HSLedger.PParams
+open import Ledger.Foreign.HSLedger.Transaction
 open import Ledger.Foreign.HSLedger.Cert
 open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Foreign.HSLedger.Utxo
 open import Ledger.Foreign.HSLedger.Gov
 open import Ledger.Foreign.HSLedger.Certs
 
-open import Ledger.Ledger HSTransactionStructure HSAbstractFunctions
-open import Ledger.Ledger.Properties HSTransactionStructure HSAbstractFunctions
+open import Ledger.Ledger it it
+open import Ledger.Ledger.Properties it it
 
 instance
-  _ = Convertible-Refl {String}
+  -- These are "duplicate" because of the duplicate STSs
+  HsTy-GState = autoHsType' GState (⟦_,_⟧ᵛ ↦ "MkGState" ∷ [])
+  Conv-GState = autoConvert GState
 
-  Convertible-LEnv : Convertible LEnv F.LEnv
-  Convertible-LEnv = autoConvertible
+  HsTy-DState = autoHsType' DState (⟦_,_,_⟧ᵈ ↦ "MkDState" ∷ [])
+  Conv-DState = autoConvert DState
 
-  Convertible-LState : Convertible LState F.LState
-  Convertible-LState = autoConvertible
+  HsTy-CertState = autoHsType' CertState (⟦_,_,_⟧ᶜˢ ↦ "MkCertState" ∷ [])
+  Conv-CertState = autoConvert CertState
 
-ledger-step : F.LEnv → F.LState → F.Tx → F.ComputationResult String F.LState
+  HsTy-LEnv = autoHsType' LEnv (⟦_,_,_,_,_⟧ˡᵉ ↦ "MkLEnv" ∷ [])
+  Conv-LEnv = autoConvert LEnv
+
+  HsTy-LState = autoHsType' LState (⟦_,_,_⟧ˡ ↦ "MkLState" ∷ [])
+  Conv-LState = autoConvert LState
+
+ledger-step : HsType (LEnv → LState → Tx → ComputationResult String LState)
 ledger-step = to (compute Computational-LEDGER)
 
 {-# COMPILE GHC ledger-step as ledgerStep #-}
 
-ledgers-step : F.LEnv → F.LState → List F.Tx → F.ComputationResult String F.LState
+ledgers-step : HsType (LEnv → LState → List Tx → ComputationResult String LState)
 ledgers-step = to (compute Computational-LEDGERS)
 
 {-# COMPILE GHC ledgers-step as ledgersStep #-}

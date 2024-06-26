@@ -6,10 +6,8 @@ open import Data.Rational
 open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ); open Computational
 
 open import Ledger.Foreign.HSLedger.Core public
-
-import Ledger.Foreign.LedgerTypes as F
+import Ledger.Foreign.HSTypes as F
 import Foreign.Haskell.Pair as F
-import Foreign.Haskell.Either as F
 
 instance
   iConvTop    = Convertible-Refl {⊤}
@@ -18,10 +16,24 @@ instance
   iConvBool   = Convertible-Refl {Bool}
 
 instance
+
+  -- * Unit and empty
+
   HsTy-⊥ = MkHsType ⊥ F.Empty
   Conv-⊥ = autoConvert ⊥
 
   HsTy-⊤ = MkHsType ⊤ ⊤
+
+  -- * Rational numbers
+
+  HsTy-Rational = MkHsType ℚ F.Rational
+  Conv-Rational : HsConvertible ℚ
+  Conv-Rational = λ where
+    .to (mkℚ n d _) → n F., suc d
+    .from (n F., zero) → 0ℚ -- TODO is there a safer way to do this?
+    .from (n F., (suc d)) → n Data.Rational./ suc d
+
+  -- * Maps and Sets
 
   HsTy-HSSet : ∀ {A} → ⦃ HasHsType A ⦄ → HasHsType (ℙ A)
   HsTy-HSSet {A} = MkHsType _ (F.HSSet (HsType A))
@@ -45,6 +57,8 @@ instance
     .to → F.MkHSMap ∘ to
     .from → from ∘ F.HSMap.assocList
 
+  -- * ComputationResult
+
   HsTy-ComputationResult : ∀ {l} {Err} {A : Type l}
                            → ⦃ HasHsType Err ⦄ → ⦃ HasHsType A ⦄
                            → HasHsType (ComputationResult Err A)
@@ -53,96 +67,65 @@ instance
   Conv-ComputationResult : ConvertibleType ComputationResult F.ComputationResult
   Conv-ComputationResult = autoConvertible
 
-  HsTy-Rational = MkHsType ℚ F.Rational
-  Conv-Rational : HsConvertible ℚ
-  Conv-Rational = λ where
-    .to (mkℚ n d _) → n F., suc d
-    .from (n F., zero) → 0ℚ -- TODO is there a safer way to do this?
-    .from (n F., (suc d)) → n Data.Rational./ suc d
-
-  HsTy-BaseAddr      = MkHsType BaseAddr F.BaseAddr
-  HsTy-BootstrapAddr = MkHsType BootstrapAddr F.BootstrapAddr
+  -- HsTy-BaseAddr      = MkHsType BaseAddr F.BaseAddr
+  -- HsTy-BootstrapAddr = MkHsType BootstrapAddr F.BootstrapAddr
 
   -- Since the foreign address is just a number, we do bad stuff here
 
-  Conv-BaseAddr : HsConvertible BaseAddr
-  Conv-BaseAddr = λ where
-    .to → λ where record{ pay = KeyHashObj x } → x
-                  record{ pay = ScriptObj  x } → x
-    .from n → record{ pay = KeyHashObj n; stake = KeyHashObj 0 }
+  -- Conv-BaseAddr : HsConvertible BaseAddr
+  -- Conv-BaseAddr = λ where
+  --   .to → λ where record{ pay = KeyHashObj x } → x
+  --                 record{ pay = ScriptObj  x } → x
+  --   .from n → record{ pay = KeyHashObj n; stake = KeyHashObj 0 }
 
-  Conv-BootstrapAddr : HsConvertible BootstrapAddr
-  Conv-BootstrapAddr = λ where
-    .to → λ where record{ pay = KeyHashObj x } → x
-                  record{ pay = ScriptObj  x } → x
-    .from n → record{ pay = KeyHashObj n; attrsSize = 0 }
+  -- Conv-BootstrapAddr : HsConvertible BootstrapAddr
+  -- Conv-BootstrapAddr = λ where
+  --   .to → λ where record{ pay = KeyHashObj x } → x
+  --                 record{ pay = ScriptObj  x } → x
+  --   .from n → record{ pay = KeyHashObj n; attrsSize = 0 }
 
-  HsTy-Credential = autoHsType Credential
-  Conv-Credential = autoConvert Credential
+  -- -- TODO: Scripts
+  -- Conv-Script : Convertible Script F.Script
+  -- Conv-Script = λ where
+  --   .to _ → tt
+  --   .from _ → inj₂ tt
 
-  HsTy-GovRole = autoHsType GovRole
-  Conv-GovRole = autoConvert GovRole
+  -- -- TODO: Having a newtype on the Haskell side but not on the Agda side is a bit awkward.
+  -- Conv-TxId : Convertible ℕ F.TxId
+  -- Conv-TxId = λ where
+  --   .to x → record { txid = x }
+  --   .from → F.TxId.txid
 
-  HsTy-Anchor = autoHsType Anchor
-  Conv-Anchor = autoConvert Anchor
+  -- HsTy-P1Script = MkHsType P1Script F.Empty
 
-  -- TODO: Scripts
-  Conv-Script : Convertible Script F.Script
-  Conv-Script = λ where
-    .to _ → tt
-    .from _ → inj₂ tt
+  -- HsTy-TxWitnessess = autoHsType TxWitnesses
+  -- Conv-TxWitnesses : HsConvertible TxWitnesses
+  -- Conv-TxWitnesses = λ where
+  --   .to txw → let open TxWitnesses txw in hsCon TxWitnesses 0
+  --     (to vkSigs)
+  --     (F.MkHSSet [])  -- TODO: scripts
+  --     (to txdats)
+  --     (to txrdmrs)
+  --   .from txw → record
+  --     { vkSigs  = from (hsProj TxWitnesses 0 txw)
+  --     ; scripts = ∅
+  --     ; txdats  = from (hsProj TxWitnesses 2 txw)
+  --     ; txrdmrs = from (hsProj TxWitnesses 3 txw)
+  --     }
 
-  -- TODO: Having a newtype on the Haskell side but not on the Agda side is a bit awkward.
-  Conv-TxId : Convertible ℕ F.TxId
-  Conv-TxId = λ where
-    .to x → record { txid = x }
-    .from → F.TxId.txid
-
-  HsTy-Tag = autoHsType Tag
-  Conv-Tag = autoConvert Tag
-
-  HsTy-P1Script = MkHsType P1Script F.Empty
-
-  HsTy-TxWitnessess = autoHsType TxWitnesses
-  Conv-TxWitnesses : HsConvertible TxWitnesses
-  Conv-TxWitnesses = λ where
-    .to txw → let open TxWitnesses txw in hsCon TxWitnesses 0
-      (to vkSigs)
-      (F.MkHSSet [])  -- TODO: scripts
-      (to txdats)
-      (to txrdmrs)
-    .from txw → record
-      { vkSigs  = from (hsProj TxWitnesses 0 txw)
-      ; scripts = ∅
-      ; txdats  = from (hsProj TxWitnesses 2 txw)
-      ; txrdmrs = from (hsProj TxWitnesses 3 txw)
-      }
-
-  HsTy-DrepThresholds = autoHsType DrepThresholds
-  Conv-DrepThresholds = autoConvert DrepThresholds
-
-  HsTy-PoolThresholds = autoHsType PoolThresholds
-  Conv-PoolThresholds = autoConvert PoolThresholds
-
-  HsTy-RwdAddr = autoHsType RwdAddr
-  Conv-RwdAddr = autoConvert RwdAddr
-
-  HsTy-PParamsUpdate = autoHsType PParamsUpdate.PParamsUpdate
-  Conv-PParamsUpdate = autoConvert PParamsUpdate.PParamsUpdate
+  -- HsTy-RwdAddr = autoHsType RwdAddr
+  -- Conv-RwdAddr = autoConvert RwdAddr
 
 open import Ledger.Certs.Properties govStructure
 open import Ledger.Certs.Haskell.Properties govStructure
 
 instance
 
-  HsTy-GState = autoHsType GState
-  Conv-GState = autoConvert GState
+  -- HsTy-GState = autoHsType GState
+  -- Conv-GState = autoConvert GState
 
-  HsTy-VDeleg = autoHsType VDeleg
-  Conv-VDeleg = autoConvert VDeleg
-
-  HsTy-DepositPurpose = autoHsType DepositPurpose
-  Conv-DepositPurpose = autoConvert DepositPurpose
+  -- HsTy-VDeleg = autoHsType VDeleg
+  -- Conv-VDeleg = autoConvert VDeleg
 
   -- HsTy-DepositPurpose = autoHsType DepositPurpose
   -- Conv-DepositPurpose = autoConvert DepositPurpose
@@ -150,41 +133,32 @@ instance
   -- Convertible-GState' : ConvertibleType GState' F.GState'
   -- Convertible-GState' = autoConvertible
 
-  Convertible-DState : ConvertibleType DState F.DState
-  Convertible-DState = autoConvertible
+  -- Convertible-DState : ConvertibleType DState F.DState
+  -- Convertible-DState = autoConvertible
 
-  Convertible-DState' : ConvertibleType DState' F.DState'
-  Convertible-DState' = autoConvertible
+  -- Convertible-DState' : ConvertibleType DState' F.DState'
+  -- Convertible-DState' = autoConvertible
 
-  Convertible-Acnt : Convertible Acnt F.Acnt
-  Convertible-Acnt = λ where
-    .to record { treasury = treasury ; reserves = reserves } →
-      record { treasury = treasury ; reserves = reserves }
-    .from record { treasury = treasury ; reserves = reserves } →
-      record { treasury = treasury ; reserves = reserves }
-  HsTy-DState = autoHsType DState
-  Conv-DState = autoConvert DState
+  -- Convertible-Acnt : Convertible Acnt F.Acnt
+  -- Convertible-Acnt = λ where
+  --   .to record { treasury = treasury ; reserves = reserves } →
+  --     record { treasury = treasury ; reserves = reserves }
+  --   .from record { treasury = treasury ; reserves = reserves } →
+  --     record { treasury = treasury ; reserves = reserves }
+  -- HsTy-DState = autoHsType DState
+  -- Conv-DState = autoConvert DState
 
-  HsTy-Acnt = autoHsType Acnt
-  Conv-Acnt = autoConvert Acnt
+  -- HsTy-PoolParams = autoHsType PoolParams
+  -- Conv-PoolParams = autoConvert PoolParams
 
-  HsTy-PParams = autoHsType PParams
-  Conv-PParams = autoConvert PParams
+  -- HsTy-DCert = autoHsType DCert
+  -- Conv-DCert = autoConvert DCert
 
-  HsTy-PoolParams = autoHsType PoolParams
-  Conv-PoolParams = autoConvert PoolParams
+  -- HsTy-GovVote = autoHsType GovVote
+  -- Conv-GovVote = autoConvert GovVote
 
-  HsTy-DCert = autoHsType DCert
-  Conv-DCert = autoConvert DCert
-
-  HsTy-Vote = autoHsType GovernanceActions.Vote
-  Conv-Vote = autoConvert GovernanceActions.Vote
-
-  HsTy-GovVote = autoHsType GovVote
-  Conv-GovVote = autoConvert GovVote
-
-  HsTy-GovAction = autoHsType GovAction
-  Conv-GovAction = autoConvert GovAction
+  -- HsTy-GovAction = autoHsType GovAction
+  -- Conv-GovAction = autoConvert GovAction
 
   -- TODO: This one is a dependent record!
   -- HsTy-GovProposal = autoHsType GovProposal

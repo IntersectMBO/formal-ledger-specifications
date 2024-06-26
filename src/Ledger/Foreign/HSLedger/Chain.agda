@@ -1,24 +1,21 @@
 module Ledger.Foreign.HSLedger.Chain where
 
-import Ledger.Foreign.LedgerTypes as F
-
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.NewEpoch
 open import Ledger.Foreign.HSLedger.Certs
+open import Ledger.Foreign.HSLedger.Transaction
 
-open import Ledger.Chain HSTransactionStructure HSAbstractFunctions
-open import Ledger.Chain.Properties HSTransactionStructure HSAbstractFunctions
+open import Ledger.Chain it it
+open import Ledger.Chain.Properties it it
 
 instance
-  _ = Convertible-Refl {String}
+  HsTy-ChainState = autoHsType ChainState
+  Conv-ChainState = autoConvert ChainState
 
-  Convertible-ChainState : Convertible ChainState F.ChainState
-  Convertible-ChainState = autoConvertible
+  HsTy-Block = autoHsType Block
+  Conv-Block = autoConvert Block
 
-  Convertible-Block : Convertible Block F.Block
-  Convertible-Block = autoConvertible
-
-chain-step : ⊤ → F.ChainState → F.Block → F.ComputationResult String F.ChainState
+chain-step : HsType (⊤ → ChainState → Block → ComputationResult String ChainState)
 chain-step = to (compute Computational-CHAIN)
 
 {-# COMPILE GHC chain-step as chainStep #-}

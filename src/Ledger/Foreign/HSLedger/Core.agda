@@ -108,49 +108,46 @@ module Implementation where
   tokenAlgebra    = coinTokenAlgebra
 
 HSGlobalConstants = GlobalConstants ∋ record {Implementation}
-HSEpochStructure  = EpochStructure  ∋ ℕEpochStructure HSGlobalConstants
-instance _ = HSEpochStructure
+instance
+  HSEpochStructure = EpochStructure  ∋ ℕEpochStructure HSGlobalConstants
 
-HSCrypto : Crypto
-HSCrypto = record
-  { Implementation
-  ; pkk = HSPKKScheme
-  }
-  where
-  -- Dummy private key crypto scheme
-  HSPKKScheme : PKKScheme
-  HSPKKScheme = record
+  HSCrypto : Crypto
+  HSCrypto = record
     { Implementation
-    ; isSigned         = λ a b m → a + b ≡ m
-    ; sign             = _+_
-    ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
+    ; pkk = HSPKKScheme
     }
+    where
+    -- Dummy private key crypto scheme
+    HSPKKScheme : PKKScheme
+    HSPKKScheme = record
+      { Implementation
+      ; isSigned         = λ a b m → a + b ≡ m
+      ; sign             = _+_
+      ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
+      }
 
-instance _ = HSCrypto
-
--- No scripts for now
+-- No P2 scripts for now
 
 open import Ledger.Script it it
 
-HSScriptStructure : ScriptStructure
-HSScriptStructure = record
-  { hashRespectsUnion = hashRespectsUnion
-  ; ps = HSP2ScriptStructure }
-  where
-  postulate
-    instance Hashable-Timelock : Hashable Timelock ℕ
+instance
+  HSScriptStructure : ScriptStructure
+  HSScriptStructure = record
+    { hashRespectsUnion = hashRespectsUnion
+    ; ps = HSP2ScriptStructure }
+    where
+    postulate
+      instance Hashable-Timelock : Hashable Timelock ℕ
 
-    hashRespectsUnion : ∀ {A B ℍ}
-      → Hashable A ℍ → Hashable B ℍ
-      → Hashable (A ⊎ B) ℍ
+      hashRespectsUnion : ∀ {A B ℍ}
+        → Hashable A ℍ → Hashable B ℍ
+        → Hashable (A ⊎ B) ℍ
 
-  HSP2ScriptStructure : PlutusStructure
-  HSP2ScriptStructure = record
-    { Implementation
-    ; validPlutusScript = λ _ _ _ _ → ⊤
-    }
-
-instance _ = HSScriptStructure
+    HSP2ScriptStructure : PlutusStructure
+    HSP2ScriptStructure = record
+      { Implementation
+      ; validPlutusScript = λ _ _ _ _ → ⊤
+      }
 
 open import Ledger.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
 
@@ -188,40 +185,39 @@ HsGovParams = record
             paramsWellFormed pp →
             paramsWellFormed (applyPParamsUpdate pp u))
 
-HSTransactionStructure : TransactionStructure
-HSTransactionStructure = record
-  { Implementation
-  ; epochStructure  = HSEpochStructure
-  ; globalConstants = HSGlobalConstants
-  ; adHashingScheme = it
-  ; crypto          = HSCrypto
-  ; govParams       = HsGovParams
-  ; txidBytes       = id
-  ; scriptStructure = HSScriptStructure
-  }
 instance
-  _ = HSTransactionStructure
+  HSTransactionStructure : TransactionStructure
+  HSTransactionStructure = record
+    { Implementation
+    ; epochStructure  = HSEpochStructure
+    ; globalConstants = HSGlobalConstants
+    ; adHashingScheme = it
+    ; crypto          = HSCrypto
+    ; govParams       = HsGovParams
+    ; txidBytes       = id
+    ; scriptStructure = HSScriptStructure
+    }
 
 open TransactionStructure HSTransactionStructure public
 
 open import Ledger.Abstract it
 
-HSAbstractFunctions : AbstractFunctions
-HSAbstractFunctions = record
-  { Implementation
-  ; txscriptfee = λ tt y → 0
-  ; serSize     = λ v → v
-  ; indexOfImp  = record
-    { indexOfDCert    = λ _ _ → nothing
-    ; indexOfRwdAddr  = λ _ _ → nothing
-    ; indexOfTxIn     = λ _ _ → nothing
-    ; indexOfPolicyId = λ _ _ → nothing
-    ; indexOfVote     = λ _ _ → nothing
-    ; indexOfProposal = λ _ _ → nothing
+instance
+  HSAbstractFunctions : AbstractFunctions
+  HSAbstractFunctions = record
+    { Implementation
+    ; txscriptfee = λ tt y → 0
+    ; serSize     = λ v → v
+    ; indexOfImp  = record
+      { indexOfDCert    = λ _ _ → nothing
+      ; indexOfRwdAddr  = λ _ _ → nothing
+      ; indexOfTxIn     = λ _ _ → nothing
+      ; indexOfPolicyId = λ _ _ → nothing
+      ; indexOfVote     = λ _ _ → nothing
+      ; indexOfProposal = λ _ _ → nothing
+      }
+    ; runPLCScript = λ _ _ _ _ → false
+    ; scriptSize = λ _ → 0
     }
-  ; runPLCScript = λ _ _ _ _ → false
-  ; scriptSize = λ _ → 0
-  }
-instance _ = HSAbstractFunctions
 
 open import Ledger.Address Network KeyHash ScriptHash using () public
