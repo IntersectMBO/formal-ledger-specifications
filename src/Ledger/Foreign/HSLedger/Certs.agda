@@ -36,15 +36,19 @@ instance
   -- Conv-DState = autoConvert DState
 
   HsTy-PState = autoHsType PState ⊣ withConstructor "MkPState"
+                                  • fieldPrefix "ps"
   Conv-PState = autoConvert PState
 
   HsTy-DelegEnv = autoHsType DelegEnv ⊣ withConstructor "MkDelegEnv"
+                                      • fieldPrefix "de"
   Conv-DelegEnv = autoConvert DelegEnv
 
   HsTy-CertEnv = autoHsType CertEnv ⊣ withConstructor "MkCertEnv"
+                                    • fieldPrefix "ce"
   Conv-CertEnv = autoConvert CertEnv
 
   HsTy-DState = autoHsType DState ⊣ withConstructor "MkDState"
+                                  • fieldPrefix "ds"
   Conv-DState = autoConvert DState
 
   HsTy-DCert = autoHsType DCert
@@ -54,6 +58,7 @@ instance
   -- Conv-GState = autoConvert GState
 
   HsTy-GState = autoHsType GState ⊣ withConstructor "MkGState"
+                                  • fieldPrefix "gs"
   Conv-GState = autoConvert GState
 
 -- deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
