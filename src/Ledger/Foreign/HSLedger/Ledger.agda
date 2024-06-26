@@ -16,19 +16,19 @@ open import Ledger.Ledger.Properties it it
 
 instance
   -- These are "duplicate" because of the duplicate STSs
-  HsTy-GState = autoHsType' GState (⟦_,_⟧ᵛ ↦ "MkGState" ∷ [])
-  Conv-GState = autoConvert GState
+  HsTy-GState' = autoHsType GState ⊣ withConstructor "MkGState"
+  Conv-GState' = autoConvert GState
 
-  HsTy-DState = autoHsType' DState (⟦_,_,_⟧ᵈ ↦ "MkDState" ∷ [])
-  Conv-DState = autoConvert DState
+  HsTy-DState' = autoHsType DState ⊣ withConstructor "MkDState"
+  Conv-DState' = autoConvert DState
 
-  HsTy-CertState = autoHsType' CertState (⟦_,_,_⟧ᶜˢ ↦ "MkCertState" ∷ [])
-  Conv-CertState = autoConvert CertState
+  HsTy-CertState' = autoHsType CertState ⊣ withConstructor "MkCertState"
+  Conv-CertState' = autoConvert CertState
 
-  HsTy-LEnv = autoHsType' LEnv (⟦_,_,_,_,_⟧ˡᵉ ↦ "MkLEnv" ∷ [])
+  HsTy-LEnv = autoHsType LEnv ⊣ withConstructor "MkLEnv"
   Conv-LEnv = autoConvert LEnv
 
-  HsTy-LState = autoHsType' LState (⟦_,_,_⟧ˡ ↦ "MkLState" ∷ [])
+  HsTy-LState = autoHsType LState ⊣ withConstructor "MkLState"
   Conv-LState = autoConvert LState
 
 ledger-step : HsType (LEnv → LState → Tx → ComputationResult String LState)

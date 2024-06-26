@@ -30,9 +30,9 @@ MkHsType A Hs .HasHsType.HsType = Hs
 
 instance
 
-  iHsTy-ℕ = MkHsType ℕ ℕ
-  iHsTy-Bool = MkHsType Bool Bool
-  iHsTy-⊤ = MkHsType ⊤ ⊤
+  iHsTy-ℕ      = MkHsType ℕ ℕ
+  iHsTy-Bool   = MkHsType Bool Bool
+  iHsTy-⊤      = MkHsType ⊤ ⊤
   iHsTy-String = MkHsType String String
 
   -- Could make a macro for these kind of congruence instances.

@@ -23,7 +23,7 @@ instance
   HsTy-RatifyEnv = autoHsType RatifyEnv
   Conv-RatifyEnv = autoConvert RatifyEnv
 
-  HsTy-RatifyState = autoHsType' RatifyState (⟦_,_,_⟧ʳ ↦ "MkRatifyState" ∷ [])
+  HsTy-RatifyState = autoHsType RatifyState ⊣ withConstructor "MkRatifyState"
   Conv-RatifyState = autoConvert RatifyState
 
 ratify-debug : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → String)

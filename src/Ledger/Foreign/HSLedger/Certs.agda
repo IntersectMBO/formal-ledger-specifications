@@ -26,26 +26,26 @@ instance
   HsTy-DepositPurpose = autoHsType DepositPurpose
   Conv-DepositPurpose = autoConvert DepositPurpose
 
-  HsTy-PState = autoHsType' PState (⟦_,_⟧ᵖ ↦ "MkPState" ∷ [])
-  Conv-PState = autoConvert PState
-
-  HsTy-DelegEnv = autoHsType' DelegEnv (⟦_,_,_⟧ᵈᵉ ↦ "MkDelegEnv" ∷ [])
-  Conv-DelegEnv = autoConvert DelegEnv
-
-  HsTy-DelegEnv' = autoHsType' DelegEnv' (⟦_,_⟧ᵈᵉ ↦ "MkDelegEnv'" ∷ [])
+  HsTy-DelegEnv' = autoHsType DelegEnv' ⊣ withConstructor "MkDelegEnv'"
   Conv-DelegEnv' = autoConvert DelegEnv'
 
   -- HsTy-CertEnv = autoHsType' CertEnv (⟦_,_,_,_,_⟧ᶜ ↦ "MkCertEnv" ∷ [])
   -- Conv-CertEnv = autoConvert CertEnv
 
-  HsTy-CertEnv' = autoHsType' CertEnv (⟦_,_,_,_⟧ᶜ ↦ "MkCertEnv'" ∷ [])
-  Conv-CertEnv' = autoConvert CertEnv
-
   -- HsTy-DState = autoHsType' DState (⟦_,_,_⟧ᵈ ↦ "MkDState" ∷ [])
   -- Conv-DState = autoConvert DState
 
-  HsTy-DState' = autoHsType' DState (⟦_,_,_,_⟧ᵈ ↦ "MkDState'" ∷ [])
-  Conv-DState' = autoConvert DState
+  HsTy-PState = autoHsType PState ⊣ withConstructor "MkPState"
+  Conv-PState = autoConvert PState
+
+  HsTy-DelegEnv = autoHsType DelegEnv ⊣ withConstructor "MkDelegEnv"
+  Conv-DelegEnv = autoConvert DelegEnv
+
+  HsTy-CertEnv = autoHsType CertEnv ⊣ withConstructor "MkCertEnv"
+  Conv-CertEnv = autoConvert CertEnv
+
+  HsTy-DState = autoHsType DState ⊣ withConstructor "MkDState"
+  Conv-DState = autoConvert DState
 
   HsTy-DCert = autoHsType DCert
   Conv-DCert = autoConvert DCert
@@ -53,8 +53,8 @@ instance
   -- HsTy-GState = autoHsType' GState (⟦_,_⟧ᵛ ↦ "MkGState" ∷ [])
   -- Conv-GState = autoConvert GState
 
-  HsTy-GState' = autoHsType' GState (⟦_,_,_⟧ᵛ ↦ "MkGState" ∷ [])
-  Conv-GState' = autoConvert GState
+  HsTy-GState = autoHsType GState ⊣ withConstructor "MkGState"
+  Conv-GState = autoConvert GState
 
 -- deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
 -- deleg-step = to (compute Computational-DELEG)

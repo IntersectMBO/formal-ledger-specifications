@@ -3,6 +3,7 @@ module Ledger.Foreign.HSLedger.NewEpoch where
 import Ledger.Foreign.LedgerTypes as F
 import Data.Integer as ℤ
 
+open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Ratify
@@ -12,15 +13,32 @@ open import Ledger.Epoch it it
 open import Ledger.Epoch.Properties it it
 
 instance
+
+  record HsRewardUpdate : Type where
+    field Δt Δr Δf : ℤ
+          rs : HsType (Credential ⇀ Coin)
+  {-# FOREIGN GHC
+    data RewardUpdate = MkRewardUpdate
+      { deltaT  :: Integer
+      , deltaR  :: Integer
+      , deltaF  :: Integer
+      , rs      :: HSMap Credential Coin
+      }
+  #-}
+  {-# COMPILE GHC HsRewardUpdate = data RewardUpdate (MkRewardUpdate) #-}
+
+  HsTy-RewardUpdate : HasHsType RewardUpdate
+  HsTy-RewardUpdate .HasHsType.HsType = HsRewardUpdate
+
   -- manual, since we want to throw an error on non-zero update
-  Convertible-RewardUpdate : Convertible RewardUpdate F.RewardUpdate
-  Convertible-RewardUpdate .to   ru = record { RewardUpdate ru; rs = to (ru .RewardUpdate.rs) }
-  Convertible-RewardUpdate .from ru =
-    case (let open F.RewardUpdate ru in ¿ Δt + Δr + Δf + ℤ.+ ∑[ x ← from rs ] x ≡ ℤ.0ℤ ¿) of λ where
-      (yes p) → record { F.RewardUpdate ru ; rs = from (ru .F.RewardUpdate.rs) ; zeroSum = p }
+  Conv-RewardUpdate : Convertible RewardUpdate HsRewardUpdate
+  Conv-RewardUpdate .to   ru = record { RewardUpdate ru; rs = to (ru .RewardUpdate.rs) }
+  Conv-RewardUpdate .from ru =
+    case (let open HsRewardUpdate ru in ¿ Δt + Δr + Δf + ℤ.+ ∑[ x ← from rs ] x ≡ ℤ.0ℤ ¿) of λ where
+      (yes p) → record { HsRewardUpdate ru ; rs = from (ru .HsRewardUpdate.rs) ; zeroSum = p }
       (no ¬p) → error "Formal Spec: cannot make a non-zero reward update"
 
-  HsTy-NewEpochState = autoHsType' NewEpochState (⟦_,_⟧ⁿᵉ ↦ "MkNewEpochState" ∷ [])
+  HsTy-NewEpochState = autoHsType NewEpochState ⊣ withConstructor "MkNewEpochState"
   Conv-NewEpochState = autoConvert NewEpochState
 
 newepoch-step : HsType (⊤ → NewEpochState → Epoch → ComputationResult ⊥ NewEpochState)

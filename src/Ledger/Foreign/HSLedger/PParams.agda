@@ -15,8 +15,8 @@ instance
   HsTy-Acnt = autoHsType Acnt
   Conv-Acnt = autoConvert Acnt
 
-  HsTy-PParams = autoHsType PParams
+  HsTy-PParams = autoHsType PParams ⊣ fieldPrefix "pp"
   Conv-PParams = autoConvert PParams
 
-  HsTy-PParamsUpdate = autoHsType PParamsUpdate.PParamsUpdate
+  HsTy-PParamsUpdate = autoHsType PParamsUpdate.PParamsUpdate ⊣ fieldPrefix "ppu"
   Conv-PParamsUpdate = autoConvert PParamsUpdate.PParamsUpdate

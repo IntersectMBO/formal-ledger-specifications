@@ -119,7 +119,7 @@ instance
 open import Ledger.Certs.Properties govStructure
 open import Ledger.Certs.Haskell.Properties govStructure
 
-instance
+--instance
 
   -- HsTy-GState = autoHsType GState
   -- Conv-GState = autoConvert GState

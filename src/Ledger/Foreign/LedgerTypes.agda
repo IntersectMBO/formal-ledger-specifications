@@ -962,19 +962,6 @@ record GState' : Type where
 -- -- #-}
 -- -- {-# COMPILE GHC NewEpochEnv = data NewEpochEnv (MkNewEpochEnv) #-}
 
--- -- record RewardUpdate : Type where
--- --   field Δt Δr Δf : ℤ
--- --         rs : HSMap Credential Coin
--- -- {-# FOREIGN GHC
--- --   data RewardUpdate = MkRewardUpdate
--- --     { deltaT  :: Integer
--- --     , deltaR  :: Integer
--- --     , deltaF  :: Integer
--- --     , rs      :: HSMap Credential Coin
--- --     }
--- -- #-}
--- -- {-# COMPILE GHC RewardUpdate = data RewardUpdate (MkRewardUpdate) #-}
-
 -- -- record NewEpochState : Type where
 -- --   field lastEpoch   : Epoch
 -- --         epochState  : EpochState

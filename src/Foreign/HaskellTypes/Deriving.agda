@@ -10,8 +10,9 @@ open import Agda.Builtin.Reflection using (declareData; defineData; pragmaForeig
 open import Reflection as R hiding (showName; _>>=_; _>>_)
 open import Reflection.AST hiding (showName)
 open import Reflection.AST.DeBruijn
-open import Data.Maybe using (Maybe; nothing; just; fromMaybe; maybe′)
+open import Data.Maybe using (Maybe; nothing; just; fromMaybe; maybe′; _<∣>_)
 open import Data.Unit using (⊤)
+open import Data.Integer.Base using (ℤ)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.String using (String) renaming (_++_ to _&_)
 open import Data.Product hiding (map; zip; zipWith)
@@ -19,7 +20,7 @@ import Data.String as String
 open import Data.Bool
 open import Data.Nat
 open import Data.List hiding (lookup; fromMaybe)
-open import Data.Char using (toUpper)
+open import Data.Char using (toUpper; toLower)
 open import Foreign.Haskell
 open import Function
 open import Text.Printf
@@ -39,6 +40,7 @@ open import Tactic.Derive.Show using (showName)
 open import Reflection.Utils
 open import Reflection.Utils.TCI
 open import Foreign.HaskellTypes
+open import Foreign.Haskell.Pair using (Pair)
 
 {-
 
@@ -56,8 +58,72 @@ private variable
 `Set = agda-sort (Sort.set (quote 0ℓ ∙))
 
 private
-  NameEnv = List (Name × String)
+  mapHead : (A → A) → List A → List A
+  mapHead f []       = []
+  mapHead f (x ∷ xs) = f x ∷ xs
 
+capitalize : String → String
+capitalize = String.fromList ∘ mapHead toUpper ∘ String.toList
+
+uncapitalize : String → String
+uncapitalize = String.fromList ∘ mapHead toLower ∘ String.toList
+
+record NameEnv : Set where
+  field
+    customNames : List (Name × String)
+    tName       : Name → Maybe String
+    cName       : Name → Maybe String
+    fName       : Name → Maybe String
+
+private
+  lookup : ⦃ DecEq A ⦄ → A → List (A × B) → Maybe B
+  lookup x xs = proj₂ <$> findᵇ ((x ==_) ∘ proj₁) xs
+
+  lookupEnv : (NameEnv → Name → Maybe String) → NameEnv → Name → Maybe String
+  lookupEnv fn env x = lookup x (NameEnv.customNames env) <∣> fn env x
+
+  lookupTypeName  = lookupEnv NameEnv.tName
+  lookupConName   = lookupEnv NameEnv.cName
+  lookupFieldName = lookupEnv NameEnv.fName
+
+  emptyEnv : NameEnv
+  emptyEnv = record{ customNames = []
+                   ; tName = const nothing
+                   ; cName = const nothing
+                   ; fName = const nothing }
+
+  customName : Name → String → NameEnv
+  customName x s = record emptyEnv { customNames = (x , s) ∷ [] }
+
+onTypes : (String → String) → NameEnv
+onTypes f = record emptyEnv { tName = just ∘ f ∘ showName }
+
+onConstructors : (String → String) → NameEnv
+onConstructors f = record emptyEnv { cName = just ∘ f ∘ showName }
+
+-- Only use for single constructor types obviously
+withConstructor : String → NameEnv
+withConstructor c = onConstructors (const c)
+
+onFields : (String → String) → NameEnv
+onFields f = record emptyEnv { fName = just ∘ f ∘ showName }
+
+fieldPrefix : String → NameEnv
+fieldPrefix pre = onFields $ (pre String.++_) ∘ capitalize
+
+infixr 5 _•_
+_•_ : NameEnv → NameEnv → NameEnv
+env • env₁ = record
+  { customNames = env.customNames ++ env₁.customNames
+  ; tName       = λ x → env.tName x <∣> env₁.tName x
+  ; cName       = λ x → env.cName x <∣> env₁.cName x
+  ; fName       = λ x → env.fName x <∣> env₁.fName x
+  }
+  where
+    module env  = NameEnv env
+    module env₁ = NameEnv env₁
+
+private
   dummyEnv : TCEnv
   dummyEnv = record
               { normalisation = false
@@ -87,27 +153,24 @@ private
   (x ∷ xs) ‼ zero  = just x
   (x ∷ xs) ‼ suc i = xs ‼ i
 
-  lookup : ⦃ DecEq A ⦄ → A → List (A × B) → Maybe B
-  lookup x xs = proj₂ <$> findᵇ ((x ==_) ∘ proj₁) xs
-
-  mapHead : (A → A) → List A → List A
-  mapHead f []       = []
-  mapHead f (x ∷ xs) = f x ∷ xs
-
-  capitalize : String → String
-  capitalize = String.fromList ∘ mapHead toUpper ∘ String.toList
+  specialHsTypes : List (Name × String)
+  specialHsTypes = (quote ⊤ , "()")
+                 ∷ (quote ℕ , "Integer")
+                 ∷ (quote ℤ , "Integer")
+                 ∷ (quote Pair , "(,)")
+                 ∷ []
 
   hsTypeName : NameEnv → Name → String
-  hsTypeName env d = fromMaybe (capitalize $ showName d) (lookup d env)
+  hsTypeName env d = fromMaybe (capitalize $ showName d) (lookupTypeName env d)
 
   freshHsTypeName : NameEnv → Name → TC Name
   freshHsTypeName env d = freshName (hsTypeName env d)
 
   hsConName : NameEnv → Name → String
-  hsConName env c = fromMaybe (capitalize $ showName c) (lookup c env)
+  hsConName env c = fromMaybe (capitalize $ showName c) (lookupConName env c)
 
   hsFieldName : NameEnv → Name → String
-  hsFieldName env f = fromMaybe (showName f) (lookup f env)
+  hsFieldName env f = fromMaybe (uncapitalize $ showName f) (lookupFieldName env f)
 
   freshHsConName : NameEnv → Name → Name → TC Name
   freshHsConName env tyName c =
@@ -169,12 +232,16 @@ private
   compilePragma : Name → List Name → String
   compilePragma d cs = printf "= data %s (%s)" (showName d) (joinStrings " | " (map showName cs))
 
+  renderHsTypeName : Name → String
+  renderHsTypeName d = fromMaybe (showName d) (lookup d specialHsTypes)
+
   renderHsType : Term → String
   renderHsArgs : List (Arg Term) → List String
 
-  renderHsType (def (quote List) (vArg a ∷ [])) = printf "[%s]" (renderHsType a)
-  renderHsType (def d []) = showName d
-  renderHsType (def d vs) = printf "(%s %s)" (showName d) (joinStrings " " (renderHsArgs vs))
+  renderHsType (def (quote List) (_ ∷ vArg a ∷ [])) = printf "[%s]" (renderHsType a)
+  renderHsType (def (quote Pair) (_ ∷ _ ∷ vArg a ∷ vArg b ∷ [])) = printf "(%s, %s)" (renderHsType a) (renderHsType b)
+  renderHsType (def d []) = renderHsTypeName d
+  renderHsType (def d vs) = printf "(%s %s)" (renderHsTypeName d) (joinStrings " " (renderHsArgs vs))
   renderHsType t = printf "(TODO: renderHsType %s)" (show t)
 
   renderHsArgs [] = []
@@ -187,8 +254,8 @@ private
             tel , _ ← viewTy <$> getType c
             let args = map unAbs tel
             pure $ printf "%s %s" (showName c) (joinStrings " " $ renderHsArgs args)
-    pure $ printf "data %s = %s\n  deriving (Show, Eq, Generic)\ninstance ToExpr %s"
-                  (showName d) (joinStrings " | " cons) (showName d)
+    pure $ printf "data %s = %s\n  deriving (Show, Eq, Generic)"
+                  (showName d) (joinStrings " | " cons)
 
   -- Record types
   foreignPragmaRec : NameEnv → Name → List Name → List Name → TC String
@@ -199,14 +266,18 @@ private
     let args = map unAbs tel
         renderField f ty = printf "%s :: %s" f (renderHsType $ unArg ty)
         con = printf "%s {%s}" (showName c) (joinStrings ", " $ zipWith renderField fNames args)
-    pure $ printf "data %s = %s\n  deriving (Show, Eq, Generic)\ninstance ToExpr %s"
-                  (showName d) con (showName d)
+    pure $ printf "data %s = %s\n  deriving (Show, Eq, Generic)"
+                  (showName d) con
+
+  hsImports : String
+  hsImports = "import GHC.Generics (Generic)"
 
   -- Take the name of a simple data type and generate the COMPILE and
   -- FOREIGN pragmas to bind to Haskell.
   bindHsType : NameEnv → Name → Name → TC ⊤
   bindHsType env agdaName hsName = getDefinition hsName >>= λ where
     (data-type pars cs) → do
+      pragmaForeign "GHC" hsImports
       pragmaCompile "GHC" hsName $ compilePragma hsName cs
       getDefinition agdaName >>= λ where
         (data-type _ _)    → pragmaForeign "GHC" =<< foreignPragma hsName cs
@@ -234,13 +305,15 @@ doAutoHsType env d hole = do
 
 macro
   autoHsType : Name → Term → TC ⊤
-  autoHsType d hole = _ <$ doAutoHsType [] d hole
+  autoHsType d hole = _ <$ doAutoHsType emptyEnv d hole
 
-  autoHsType' : Name → NameEnv → Term → TC ⊤
-  autoHsType' d env hole = _ <$ doAutoHsType env d hole
+  infix 0 autoHsType_⊣_
+  autoHsType_⊣_ : Name → NameEnv → Term → TC ⊤
+  autoHsType_⊣_ d env hole = _ <$ doAutoHsType env d hole
 
+  infix 9 _↦_
   _↦_ : Name → String → Term → TC ⊤
-  x ↦ s = unify (quote (Data.Product._,_) ◆⟦ lit (name x) ∣ lit (string s) ⟧)
+  x ↦ s = unify (quote customName ∙⟦ lit (name x) ∣ lit (string s) ⟧)
 
   hsCon : Term → ℕ → Term → TC ⊤
   hsCon agdaTy i hole = do

@@ -18,8 +18,8 @@ instance
   -- HsTy-CertState = autoHsType' CertState (⟦_,_,_⟧ᶜˢ ↦ "MkCertState" ∷ [])
   -- Conv-CertState = autoConvert CertState
 
-  HsTy-CertState' = autoHsType' CertState (⟦_,_,_⟧ᶜˢ ↦ "MkCertState'" ∷ [])
-  Conv-CertState' = autoConvert CertState
+  HsTy-CertState = autoHsType CertState ⊣ withConstructor "MkCertState"
+  Conv-CertState = autoConvert CertState
 
 certs-step' : HsType (CertEnv → CertState → List DCert → ComputationResult String CertState)
 certs-step' = to (compute Computational-CERTS')

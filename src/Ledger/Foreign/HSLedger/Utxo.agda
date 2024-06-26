@@ -15,7 +15,7 @@ instance
   HsTy-UTxOEnv = autoHsType UTxOEnv
   Conv-UTxOEnv = autoConvert UTxOEnv
 
-  HsTy-UTxOState = autoHsType' UTxOState (⟦_,_,_,_⟧ᵘ ↦ "MkUTxOState" ∷ [])
+  HsTy-UTxOState = autoHsType UTxOState ⊣ withConstructor "MkUTxOState"
   Conv-UTxOState = autoConvert UTxOState
 
 utxo-step : HsType (UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState)
