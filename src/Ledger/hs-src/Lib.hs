@@ -2,7 +2,7 @@ module Lib
   ( module X
   ) where
 
-import MAlonzo.Code.Ledger.Foreign.LedgerTypes as X
+import MAlonzo.Code.Ledger.Foreign.HSTypes as X
 
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Cert as X (certStep, certsStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Chain as X (chainStep)
