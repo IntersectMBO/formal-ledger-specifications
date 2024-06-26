@@ -464,7 +464,7 @@ Voter = Pair GovRole Credential
 
 data GovAction : Type where
   NoConfidence     :                                                         GovAction
-  NewCommittee     : (HSMap Credential Epoch) → List Credential → Rational → GovAction
+  UpdateCommittee  : (HSMap Credential Epoch) → List Credential → Rational → GovAction
   NewConstitution  : DataHash → Maybe ScriptHash                           → GovAction
   TriggerHF        : ProtVer                                               → GovAction
   ChangePParams    : PParamsUpdate                                         → GovAction
@@ -508,7 +508,7 @@ GovState = List (Pair GovActionID GovActionState)
 
   data GovAction
     = NoConfidence
-    | NewCommittee (HSMap Credential Epoch) [Credential] Rational
+    | UpdateCommittee (HSMap Credential Epoch) [Credential] Rational
     | NewConstitution DataHash (Maybe ScriptHash)
     | TriggerHF ProtVer
     | ChangePParams PParamsUpdate
@@ -550,7 +550,7 @@ GovState = List (Pair GovActionID GovActionState)
 #-}
 {-# COMPILE GHC GovAction = data GovAction
   ( NoConfidence
-  | NewCommittee
+  | UpdateCommittee
   | NewConstitution
   | TriggerHF
   | ChangePParams

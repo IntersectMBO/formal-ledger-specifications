@@ -277,7 +277,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ actionWellFormed a
     ∙ d ≡ govActionDeposit
     ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
-    ∙ (∀ {new rem q} → a ≡ NewCommittee new rem q
+    ∙ (∀ {new rem q} → a ≡ UpdateCommittee new rem q
        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s a prev
@@ -306,7 +306,7 @@ For \GOVPropose, we check well-formedness, correctness of the deposit
 and some conditions depending on the type of the action:
 \begin{itemize}
 \item for \ChangePParams or \TreasuryWdrl, the proposal policy needs to be provided;
-\item for \NewCommittee, no proposals with members expiring in the present or past
+\item for \UpdateCommittee, no proposals with members expiring in the present or past
   epoch are allowed, and candidates cannot be added and removed at the same time;
 \item and we check the validity of hard-fork actions via \validHFAction.
 \end{itemize}

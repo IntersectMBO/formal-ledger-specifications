@@ -20,7 +20,7 @@ instance
   Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_ String
   Computational-ENACT .computeProof ⟦ _ , t , e ⟧ᵉ s = λ where
     NoConfidence             → success (_ , Enact-NoConf)
-    (NewCommittee new rem q) →
+    (UpdateCommittee new rem q) →
       case ¿ ∀[ term ∈ range new ]
                term ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e ¿ of λ where
       (yes p) → success (-, Enact-NewComm p)
@@ -36,7 +36,7 @@ instance
   Computational-ENACT .completeness ⟦ _ , t , e ⟧ᵉ s action _ p
     with action | p
   ... | .NoConfidence           | Enact-NoConf   = refl
-  ... | .NewCommittee new rem q | Enact-NewComm p
+  ... | .UpdateCommittee new rem q | Enact-NewComm p
     rewrite dec-yes
       (¿ ∀[ term ∈ range new ] term
            ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e ¿) p .proj₂

@@ -14,7 +14,7 @@ open import Ledger.GovernanceActions HSGovStructure using (Vote) public
 
 toNeedsHash : ∀ {action} → F.GovActionID → NeedsHash action
 toNeedsHash {NoConfidence} x = from x
-toNeedsHash {NewCommittee _ _ _} x = from x
+toNeedsHash {UpdateCommittee _ _ _} x = from x
 toNeedsHash {NewConstitution _ _} x = from x
 toNeedsHash {TriggerHF _} x = from x
 toNeedsHash {ChangePParams _} x = from x
@@ -23,7 +23,7 @@ toNeedsHash {Info} x = tt
 
 fromNeedsHash : ∀ {action} → NeedsHash action → F.GovActionID
 fromNeedsHash {NoConfidence} x = to x
-fromNeedsHash {NewCommittee _ _ _} x = to x
+fromNeedsHash {UpdateCommittee _ _ _} x = to x
 fromNeedsHash {NewConstitution _ _} x = to x
 fromNeedsHash {TriggerHF _} x = to x
 fromNeedsHash {ChangePParams _} x = to x

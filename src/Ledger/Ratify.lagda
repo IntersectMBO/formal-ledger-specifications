@@ -61,10 +61,10 @@ The symbols mean the following:
 \end{itemize}
 
 Two rows in this table contain functions that compute the
-\DRep and \SPO thresholds simultaneously: the rows for \NewCommittee
+\DRep and \SPO thresholds simultaneously: the rows for \UpdateCommittee
 and \ChangePParams.
 
-For \NewCommittee, there can be different thresholds depending on whether the
+For \UpdateCommittee, there can be different thresholds depending on whether the
 system is in a state of no-confidence or not. This information is
 provided via the \AgdaArgument{ccThreshold} argument: if the system is in a state of no-confidence, then \AgdaArgument{ccThreshold} is set to \nothing.
 
@@ -117,13 +117,13 @@ threshold pp ccThreshold =
   λ where
 \end{code}
 \begin{code}
-      NoConfidence           → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
-      (NewCommittee _ _ _)   → ∣ ─   ∥ P/Q2a/b                 ∣
-      (NewConstitution _ _)  → ∣ ✓   ∣ vote P3      ∣ ─        ∣
-      (TriggerHF _)          → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
-      (ChangePParams x)      → ∣ ✓   ∥ P/Q5 x                  ∣
-      (TreasuryWdrl _)       → ∣ ✓   ∣ vote P6      ∣ ─        ∣
-      Info                   → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
+      NoConfidence             → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
+      (UpdateCommittee _ _ _)  → ∣ ─   ∥ P/Q2a/b                 ∣
+      (NewConstitution _ _)    → ∣ ✓   ∣ vote P3      ∣ ─        ∣
+      (TriggerHF _)            → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
+      (ChangePParams x)        → ∣ ✓   ∥ P/Q5 x                  ∣
+      (TreasuryWdrl _)         → ∣ ✓   ∣ vote P6      ∣ ─        ∣
+      Info                     → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
         where
 \end{code}
 \begin{code}[hide]
@@ -494,22 +494,22 @@ open EnactState
 \end{code}
 \begin{code}
 verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Type
-verifyPrev NoConfidence           h es  = h ≡ es .cc .proj₂
-verifyPrev (NewCommittee _ _ _)   h es  = h ≡ es .cc .proj₂
-verifyPrev (NewConstitution _ _)  h es  = h ≡ es .constitution .proj₂
-verifyPrev (TriggerHF _)          h es  = h ≡ es .pv .proj₂
-verifyPrev (ChangePParams _)      h es  = h ≡ es .pparams .proj₂
-verifyPrev (TreasuryWdrl _)       _ _   = ⊤
-verifyPrev Info                   _ _   = ⊤
+verifyPrev NoConfidence             h es  = h ≡ es .cc .proj₂
+verifyPrev (UpdateCommittee _ _ _)  h es  = h ≡ es .cc .proj₂
+verifyPrev (NewConstitution _ _)    h es  = h ≡ es .constitution .proj₂
+verifyPrev (TriggerHF _)            h es  = h ≡ es .pv .proj₂
+verifyPrev (ChangePParams _)        h es  = h ≡ es .pparams .proj₂
+verifyPrev (TreasuryWdrl _)         _ _   = ⊤
+verifyPrev Info                     _ _   = ⊤
 
 delayingAction : GovAction → Bool
-delayingAction NoConfidence           = true
-delayingAction (NewCommittee _ _ _)   = true
-delayingAction (NewConstitution _ _)  = true
-delayingAction (TriggerHF _)          = true
-delayingAction (ChangePParams _)      = false
-delayingAction (TreasuryWdrl _)       = false
-delayingAction Info                   = false
+delayingAction NoConfidence             = true
+delayingAction (UpdateCommittee _ _ _)  = true
+delayingAction (NewConstitution _ _)    = true
+delayingAction (TriggerHF _)            = true
+delayingAction (ChangePParams _)        = false
+delayingAction (TreasuryWdrl _)         = false
+delayingAction Info                     = false
 
 delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
@@ -517,13 +517,13 @@ delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 \begin{code}[hide]
 abstract
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
-  verifyPrev? NoConfidence           h es = dec
-  verifyPrev? (NewCommittee x x₁ x₂) h es = dec
-  verifyPrev? (NewConstitution x x₁) h es = dec
-  verifyPrev? (TriggerHF x)          h es = dec
-  verifyPrev? (ChangePParams x)      h es = dec
-  verifyPrev? (TreasuryWdrl x)       h es = dec
-  verifyPrev? Info                   h es = dec
+  verifyPrev? NoConfidence              h es = dec
+  verifyPrev? (UpdateCommittee x x₁ x₂) h es = dec
+  verifyPrev? (NewConstitution x x₁)    h es = dec
+  verifyPrev? (TriggerHF x)             h es = dec
+  verifyPrev? (ChangePParams x)         h es = dec
+  verifyPrev? (TreasuryWdrl x)          h es = dec
+  verifyPrev? Info                      h es = dec
 
   delayed? : ∀ a h es d → Dec (delayed a h es d)
   delayed? a h es d = let instance _ = ⁇ verifyPrev? a h es in dec
