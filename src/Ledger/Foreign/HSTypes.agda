@@ -14,8 +14,9 @@ open import Data.Rational.Base
 
 {-# FOREIGN GHC
   import GHC.Generics (Generic)
-  import Prelude hiding (Rational)
   import Data.Void (Void)
+  import Prelude hiding (Rational)
+  import GHC.Real (Ratio(..))
 #-}
 
 -- * The empty type
@@ -25,7 +26,13 @@ data Empty : Type where
 
 -- * Rational
 
-Rational = Pair ℤ ℕ
+data Rational : Type where
+  _,_ : ℤ → ℕ → Rational
+{-# COMPILE GHC Rational = data Rational ((:%)) #-}
+
+-- We'll generate code with qualified references to Rational in this
+-- module, so make sure to define it.
+{-# FOREIGN GHC type Rational = Ratio Integer #-}
 
 -- * Maps and Sets
 

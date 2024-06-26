@@ -1,4 +1,4 @@
-{-# OPTIONS -v tactic.hs-types:100 #-}
+-- {-# OPTIONS -v tactic.hs-types:100 #-}
 
 module Foreign.HaskellTypes.Deriving where
 
@@ -25,8 +25,6 @@ open import Foreign.Haskell
 open import Function
 open import Text.Printf
 
-import Agda.Builtin.Reflection.External using ()  -- Workaround Agda bug
-
 open import Class.DecEq
 open import Class.Functor
 open import Class.Monad
@@ -43,7 +41,6 @@ open import Foreign.HaskellTypes
 open import Foreign.Haskell.Pair using (Pair)
 
 {-
-
 Need to generate:
   - a data type that can be compiled to a Haskell data type
   - the corresponding Haskell type (in a FOREIGN pragma)
@@ -57,6 +54,15 @@ private variable
 -- TODO: somewhere else
 `Set = agda-sort (Sort.set (quote 0ℓ ∙))
 
+-- * Controlling the names of the generated types
+
+record NameEnv : Set where
+  field
+    customNames : List (Name × String)
+    tName       : Name → Maybe String
+    cName       : Name → Maybe String
+    fName       : Name → Maybe String
+
 private
   mapHead : (A → A) → List A → List A
   mapHead f []       = []
@@ -67,13 +73,6 @@ capitalize = String.fromList ∘ mapHead toUpper ∘ String.toList
 
 uncapitalize : String → String
 uncapitalize = String.fromList ∘ mapHead toLower ∘ String.toList
-
-record NameEnv : Set where
-  field
-    customNames : List (Name × String)
-    tName       : Name → Maybe String
-    cName       : Name → Maybe String
-    fName       : Name → Maybe String
 
 private
   lookup : ⦃ DecEq A ⦄ → A → List (A × B) → Maybe B
@@ -101,6 +100,9 @@ onTypes f = record emptyEnv { tName = just ∘ f ∘ showName }
 onConstructors : (String → String) → NameEnv
 onConstructors f = record emptyEnv { cName = just ∘ f ∘ showName }
 
+withName : String → NameEnv
+withName t = onTypes (const t)
+
 -- Only use for single constructor types obviously
 withConstructor : String → NameEnv
 withConstructor c = onConstructors (const c)
@@ -123,18 +125,8 @@ env • env₁ = record
     module env  = NameEnv env
     module env₁ = NameEnv env₁
 
-private
-  dummyEnv : TCEnv
-  dummyEnv = record
-              { normalisation = false
-              ; reconstruction = false
-              ; noConstraints = false
-              ; reduction = dontReduce []
-              ; globalContext = []
-              ; localContext = []
-              ; goal = inj₁ unknown
-              ; options = defaultTCOptions
-              }
+
+-- * The inner workings
 
 solveHsType : Term → TC Term
 solveHsType tm = do
@@ -143,7 +135,6 @@ solveHsType tm = do
   normalise hsTy >>= λ where
     (def (quote HsType) _) → typeErrorFmt "Failed to solve HsType %t" tm
     hsTy                   → return hsTy
-
 
 private
   debug = debugPrintFmt "tactic.hs-types"
@@ -154,10 +145,14 @@ private
   (x ∷ xs) ‼ suc i = xs ‼ i
 
   specialHsTypes : List (Name × String)
-  specialHsTypes = (quote ⊤ , "()")
-                 ∷ (quote ℕ , "Integer")
-                 ∷ (quote ℤ , "Integer")
-                 ∷ (quote Pair , "(,)")
+  specialHsTypes = (quote ⊤      , "()")
+                 ∷ (quote ℕ      , "Integer")
+                 ∷ (quote ℤ      , "Integer")
+                 ∷ (quote Bool   , "Bool")
+                 ∷ (quote List   , "[]")
+                 ∷ (quote Pair   , "(,)")
+                 ∷ (quote Maybe  , "Maybe")
+                 ∷ (quote Either , "Either")
                  ∷ []
 
   hsTypeName : NameEnv → Name → String
@@ -233,7 +228,7 @@ private
   compilePragma d cs = printf "= data %s (%s)" (showName d) (joinStrings " | " (map showName cs))
 
   renderHsTypeName : Name → String
-  renderHsTypeName d = fromMaybe (showName d) (lookup d specialHsTypes)
+  renderHsTypeName d = fromMaybe ("MAlonzo.Code." String.++ R.showName d) (lookup d specialHsTypes)
 
   renderHsType : Term → String
   renderHsArgs : List (Arg Term) → List String
@@ -293,6 +288,8 @@ private
         lhs = vArg (con c (map (λ where (i , abs x (arg info _)) → arg info (var i))
                                (drop npars (zip is argTys)))) ∷ []
     return $ map (λ i → pat-lam (clause tel lhs (var i []) ∷ []) []) (drop npars is)
+
+-- * Exported macros
 
 doAutoHsType : NameEnv → Name → Term → TC Term
 doAutoHsType env d hole = do
