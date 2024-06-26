@@ -247,11 +247,12 @@ submitted. Beside the proposed action, it requires:
 \item an \Anchor, providing further information about the proposal.
 \end{itemize}
 
-While the deposit is held, it is added to the deposit pot, similar
-to stake key deposits. It is also counted towards the stake of the
-reward address to which it will be returned, so as not to reduce the submitter's
-voting power when voting on their own (and competing) actions. For a
-proposal to be valid, the proposal must be set to the current value of
+While the deposit is held, it is added to the deposit pot, similar to
+stake key deposits. It is also counted towards the voting stake (but
+not the block production stake) of the reward address to which it will
+be returned, so as not to reduce the submitter's voting power when
+voting on their own (and competing) actions. For a proposal to be
+valid, the proposal must be set to the current value of
 \govActionDeposit. The deposit will be returned when the action is
 removed from the state in any way.
 
