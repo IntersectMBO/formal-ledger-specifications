@@ -92,10 +92,14 @@ private
 -- Auto-generated conversions for the non-dependent types
 
 instance
-  HsTy-GovProposal' = autoHsType GovProposal'
+  HsTy-GovProposal' = autoHsType GovProposal' ⊣ withName "GovProposal"
+                                              • withConstructor "MkGovProposal"
+                                              • fieldPrefix "gp"
   Conv-GovProposal' = autoConvert GovProposal'
 
-  HsTy-GovActionState' = autoHsType GovActionState'
+  HsTy-GovActionState' = autoHsType GovActionState' ⊣ withName "GovActionState"
+                                                    • withConstructor "MkGovActionState"
+                                                    • fieldPrefix "gas"
   Conv-GovActionState' = autoConvert GovActionState'
 
 -- And finally we compose everything into conversions for the dependent types
