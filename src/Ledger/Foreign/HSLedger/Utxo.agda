@@ -18,6 +18,9 @@ instance
   HsTy-UTxOState = autoHsType UTxOState ⊣ withConstructor "MkUTxOState"
   Conv-UTxOState = autoConvert UTxOState
 
+unquoteDecl = do
+  hsTypeAlias UTxO
+
 utxo-step : HsType (UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState)
 utxo-step = to (compute Computational-UTXO)
 

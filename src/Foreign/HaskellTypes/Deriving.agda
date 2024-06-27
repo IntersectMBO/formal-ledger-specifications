@@ -10,7 +10,7 @@ open import Reflection as R hiding (showName; _>>=_; _>>_)
 open import Reflection.AST hiding (showName)
 open import Reflection.AST.DeBruijn
 open import Data.Maybe using (Maybe; nothing; just; fromMaybe; maybe′; _<∣>_)
-open import Data.Unit using (⊤)
+open import Data.Unit using (⊤; tt)
 open import Data.Integer.Base using (ℤ)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.String using (String) renaming (_++_ to _&_)
@@ -293,6 +293,12 @@ private
                                (drop npars (zip is argTys)))) ∷ []
     return $ map (λ i → pat-lam (clause tel lhs (var i []) ∷ []) []) (drop npars is)
 
+  makeTypeAlias : Name → NameEnv → Term → TC ⊤
+  makeTypeAlias agdaName env hole = do
+    hsTy ← solveHsType (def agdaName [])
+    pragmaForeign "GHC" $ printf "type %s = %s" (hsTypeName env agdaName) (renderHsType hsTy)
+    unify hole (quote return ∙⟦ con (quote tt) [] ⟧)
+
 -- * Exported macros
 
 doAutoHsType : NameEnv → Name → Term → TC Term
@@ -315,6 +321,17 @@ macro
   infix 9 _↦_
   _↦_ : Name → String → Term → TC ⊤
   x ↦ s = unify (quote customName ∙⟦ lit (name x) ∣ lit (string s) ⟧)
+
+  -- Generate a Haskell type synonym for the HsType of the given type
+  -- Usage `unquoteDecl = do hsTypeSynonym Foo; hsTypeSynonym Bar`
+  hsTypeAlias : Name → Term → TC ⊤
+  hsTypeAlias agdaName = makeTypeAlias agdaName emptyEnv
+
+  -- The only NameEnv that's useful here is `withName`.
+  hsTypeAlias_⊣_ : Name → NameEnv → Term → TC ⊤
+  hsTypeAlias agdaName ⊣ env = makeTypeAlias agdaName env
+
+  -- * Macros for constructing and deconstructing generated types
 
   hsCon : Term → ℕ → Term → TC ⊤
   hsCon agdaTy i hole = do

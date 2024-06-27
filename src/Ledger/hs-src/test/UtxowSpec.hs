@@ -53,6 +53,9 @@ initParams = MkPParams
   , ppCcMaxTermLength = 100
   }
 
+mkTxId :: Integer -> TxId
+mkTxId = id
+
 initEnv :: UTxOEnv
 initEnv = MkUTxOEnv {ueSlot = 0, uePparams = initParams, ueTreasury = 0}
 
