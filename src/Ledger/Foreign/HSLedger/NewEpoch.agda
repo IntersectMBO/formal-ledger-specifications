@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.NewEpoch where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Ratify
 open import Ledger.Foreign.HSLedger.Epoch

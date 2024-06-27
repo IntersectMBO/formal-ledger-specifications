@@ -1,7 +1,6 @@
 
 module Ledger.Foreign.HSLedger.Gov where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Enact
@@ -29,6 +28,7 @@ instance
   Conv-GovVote = autoConvert GovVote
 
   HsTy-GovEnv = autoHsType GovEnv ⊣ withConstructor "MkGovEnv"
+                                  • fieldPrefix "ge"
   Conv-GovEnv = autoConvert GovEnv
 
 -- NeedsHash depends on a GovAction, so a little bit of manual work is

@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.Certs where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Enact

@@ -1,7 +1,6 @@
 
 module Ledger.Foreign.HSLedger.PParams where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 
 instance
@@ -15,8 +14,10 @@ instance
   HsTy-Acnt = autoHsType Acnt
   Conv-Acnt = autoConvert Acnt
 
-  HsTy-PParams = autoHsType PParams ⊣ fieldPrefix "pp"
+  HsTy-PParams = autoHsType PParams ⊣ withConstructor "MkPParams"
+                                    • fieldPrefix "pp"
   Conv-PParams = autoConvert PParams
 
-  HsTy-PParamsUpdate = autoHsType PParamsUpdate.PParamsUpdate ⊣ fieldPrefix "ppu"
+  HsTy-PParamsUpdate = autoHsType PParamsUpdate.PParamsUpdate ⊣ withConstructor "MkPParamsUpdate"
+                                                              • fieldPrefix "ppu"
   Conv-PParamsUpdate = autoConvert PParamsUpdate.PParamsUpdate

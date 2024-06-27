@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.Ledger where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.PParams
 open import Ledger.Foreign.HSLedger.Transaction
@@ -15,6 +14,7 @@ open import Ledger.Ledger.Properties it it
 
 instance
   HsTy-LEnv = autoHsType LEnv ⊣ withConstructor "MkLEnv"
+                              • fieldPrefix "le"
   Conv-LEnv = autoConvert LEnv
 
   HsTy-LState = autoHsType LState ⊣ withConstructor "MkLState"

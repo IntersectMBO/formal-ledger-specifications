@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.Transaction where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Certs
@@ -18,11 +17,11 @@ instance
   {-# TERMINATING #-}
   Conv-Timelock = autoConvert Timelock
 
-  HsTy-TxWitnessess = autoHsType TxWitnesses
+  HsTy-TxWitnessess = autoHsType TxWitnesses ⊣ withConstructor "MkTxWitnesses"
   Conv-TxWitnessess = autoConvert TxWitnesses
 
-  HsTy-TxBody = autoHsType TxBody
+  HsTy-TxBody = autoHsType TxBody ⊣ withConstructor "MkTxBody"
   Conv-TxBody = autoConvert TxBody
 
-  HsTy-Tx = autoHsType Tx
+  HsTy-Tx = autoHsType Tx ⊣ withConstructor "MkTx"
   Conv-Tx = autoConvert Tx
