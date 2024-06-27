@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.Enact where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.PParams
@@ -11,10 +10,12 @@ open import Ledger.Enact govStructure
 open import Ledger.GovernanceActions.Properties govStructure
 
 instance
-  HsTy-EnactState = autoHsType EnactState
+  HsTy-EnactState = autoHsType EnactState ⊣ withConstructor "MkEnactState"
+                                          • fieldPrefix "es"
   Conv-EnactState = autoConvert EnactState
 
   HsTy-EnactEnv = autoHsType EnactEnv ⊣ withConstructor "MkEnactEnv"
+                                      • fieldPrefix "ee"
   Conv-EnactEnv = autoConvert EnactEnv
 
   HsTy-GovAction = autoHsType GovAction

@@ -84,4 +84,4 @@ pool-step = to (compute Computational-POOL)
 govcert-step' : HsType (CertEnv → GState → DCert → ComputationResult String GState)
 govcert-step' = to (compute Computational-GOVCERT')
 
--- {-# COMPILE GHC govcert-step' as govCertStep' #-}
+{-# COMPILE GHC govcert-step' as govCertStep' #-}

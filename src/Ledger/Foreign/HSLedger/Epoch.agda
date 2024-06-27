@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.Epoch where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.PParams
@@ -19,6 +18,7 @@ instance
   Conv-Snapshots = autoConvert Snapshots
 
   HsTy-EpochState = autoHsType EpochState ⊣ withConstructor "MkEpochState"
+                                          • fieldPrefix "es"
   Conv-EpochState = autoConvert EpochState
 
 epoch-step : HsType (⊤ → EpochState → Epoch → ComputationResult ⊥ EpochState)

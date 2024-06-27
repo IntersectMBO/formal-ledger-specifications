@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.Utxo where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Certs
@@ -12,7 +11,8 @@ open import Ledger.Utxo.Properties it it
 open import Ledger.Utxow.Properties it it
 
 instance
-  HsTy-UTxOEnv = autoHsType UTxOEnv
+  HsTy-UTxOEnv = autoHsType UTxOEnv ⊣ withConstructor "MkUTxOEnv"
+                                    • fieldPrefix "ue"
   Conv-UTxOEnv = autoConvert UTxOEnv
 
   HsTy-UTxOState = autoHsType UTxOState ⊣ withConstructor "MkUTxOState"

@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.Ratify where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.Enact
@@ -20,10 +19,13 @@ instance
   HsTy-StakeDistrs = autoHsType StakeDistrs
   Conv-StakeDistrs = autoConvert StakeDistrs
 
-  HsTy-RatifyEnv = autoHsType RatifyEnv
+  HsTy-RatifyEnv = autoHsType RatifyEnv ⊣ withConstructor "MkRatifyEnv"
+                                        • fieldPrefix "re"
   Conv-RatifyEnv = autoConvert RatifyEnv
 
   HsTy-RatifyState = autoHsType RatifyState ⊣ withConstructor "MkRatifyState"
+                                            • fieldPrefix "rs"
+                                            • RatifyState.es ↦ "rsEnactState"
   Conv-RatifyState = autoConvert RatifyState
 
 ratify-debug : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → String)

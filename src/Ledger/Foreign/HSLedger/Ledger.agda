@@ -26,6 +26,7 @@ instance
   Conv-CertState' = autoConvert CertState
 
   HsTy-LEnv = autoHsType LEnv ⊣ withConstructor "MkLEnv"
+                              • fieldPrefix "le"
   Conv-LEnv = autoConvert LEnv
 
   HsTy-LState = autoHsType LState ⊣ withConstructor "MkLState"
