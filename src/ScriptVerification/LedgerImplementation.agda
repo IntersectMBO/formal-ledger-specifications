@@ -14,7 +14,7 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeM
 open import Relation.Binary.Morphism.Structures
 open import Foreign.Convertible
 import Foreign.Haskell as F
-import Ledger.Foreign.LedgerTypes as F
+import Ledger.Foreign.HSTypes as F
 open import Ledger.Crypto
 open import Ledger.Transaction
 open import Ledger.Types.Epoch
@@ -214,4 +214,3 @@ SVAbstractFunctions = record
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions
-
