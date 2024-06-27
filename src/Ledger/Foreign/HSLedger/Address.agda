@@ -15,3 +15,6 @@ instance
 
   HsTy-RwdAddr = autoHsType RwdAddr ⊣ fieldPrefix "rwd"
   Conv-RwdAddr = autoConvert RwdAddr
+
+unquoteDecl = do
+  hsTypeAlias Addr

@@ -25,3 +25,15 @@ instance
 
   HsTy-Tx = autoHsType Tx ⊣ withConstructor "MkTx"
   Conv-Tx = autoConvert Tx
+
+unquoteDecl = do
+  hsTypeAlias TxId
+  hsTypeAlias Ix
+  hsTypeAlias TxIn
+  hsTypeAlias P1Script
+  hsTypeAlias P2Script ⊣ withName "P2Script"
+  hsTypeAlias Script
+  hsTypeAlias Datum
+  hsTypeAlias DataHash ⊣ withName "DataHash"
+  hsTypeAlias Value
+  hsTypeAlias TxOut
