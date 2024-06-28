@@ -96,6 +96,14 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
     \ppdWellFormed is effectively the same as \paramsWellFormed, except that it
     only applies to the parameters that are being changed.
 \end{itemize}
+The governance actions carry the following information:
+\begin{itemize}
+  \item \UpdateCommittee: a map of credentials and terms to add and a set of credentials to remove from the committee;
+  \item \NewConstitution: a hash of the new constitution document and an optional proposal policy;
+  \item \TriggerHF: the protocol version of the epoch to hard fork into;
+  \item \ChangePParams: the updates to the parameters; and
+  \item \TreasuryWdrl: a map of withdrawals.
+\end{itemize}
 \begin{figure*}[h]
 \begin{longtable}[]{@{}
  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2}}
