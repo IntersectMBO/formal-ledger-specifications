@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.GovernanceActions</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Background">\section{Governance Actions}
+\label{sec:governance-actions}
+We introduce three distinct bodies that have specific functions in the new governance framework:
+\begin{enumerate}
+\item
+  a constitutional committee  (henceforth called \CC)
+\item
+  a group of delegate representatives (henceforth called \DReps)
+\item
+  the stake pool operators (henceforth called \SPOs)
+
+In the following figure, \DocHash is abstract but in the
+implementation it will be instantiated with a 32-bit hash type (like
+e.g. \ScriptHash). We keep it separate because it is used for a
+different purpose.
+
+\end{enumerate}
+</a><a id="593" class="Markup">\begin{code}[hide]</a>
+<a id="612" class="Symbol">{-#</a> <a id="616" class="Keyword">OPTIONS</a> <a id="624" class="Pragma">--safe</a> <a id="631" class="Symbol">#-}</a>
+
+<a id="636" class="Keyword">open</a> <a id="641" class="Keyword">import</a> <a id="648" href="Data.Nat.Properties.html" class="Module">Data.Nat.Properties</a> <a id="668" class="Keyword">using</a> <a id="674" class="Symbol">(</a><a id="675" href="Data.Nat.Properties.html#16493" class="Function">+-0-monoid</a><a id="685" class="Symbol">)</a>
+<a id="687" class="Keyword">open</a> <a id="692" class="Keyword">import</a> <a id="699" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="713" class="Keyword">using</a> <a id="719" class="Symbol">(</a><a id="720" href="Data.Rational.Base.html#1342" class="Record">ℚ</a><a id="721" class="Symbol">;</a> <a id="723" href="Data.Rational.Base.html#4325" class="Function">0ℚ</a><a id="725" class="Symbol">;</a> <a id="727" href="Data.Rational.Base.html#4346" class="Function">1ℚ</a><a id="729" class="Symbol">)</a>
+
+<a id="732" class="Keyword">open</a> <a id="737" class="Keyword">import</a> <a id="744" href="Tactic.Derive.DecEq.html" class="Module">Tactic.Derive.DecEq</a>
+
+<a id="765" class="Keyword">open</a> <a id="770" class="Keyword">import</a> <a id="777" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="792" class="Keyword">hiding</a> <a id="799" class="Symbol">(</a><a id="800" href="Relation.Nullary.Decidable.Core.html#1618" class="InductiveConstructor">yes</a><a id="803" class="Symbol">;</a> <a id="805" href="Relation.Nullary.Decidable.Core.html#1655" class="InductiveConstructor">no</a><a id="807" class="Symbol">)</a>
+<a id="809" class="Keyword">open</a> <a id="814" class="Keyword">import</a> <a id="821" href="Ledger.Types.GovStructure.html" class="Module">Ledger.Types.GovStructure</a>
+
+<a id="848" class="Keyword">module</a> <a id="855" href="Ledger.GovernanceActions.html" class="Module">Ledger.GovernanceActions</a> <a id="880" class="Symbol">(</a><a id="881" href="Ledger.GovernanceActions.html#881" class="Bound">gs</a> <a id="884" class="Symbol">:</a> <a id="886" class="Symbol">_)</a> <a id="889" class="Symbol">(</a><a id="890" class="Keyword">open</a> <a id="895" href="Ledger.Types.GovStructure.html#235" class="Module">GovStructure</a> <a id="908" href="Ledger.GovernanceActions.html#881" class="Bound">gs</a><a id="910" class="Symbol">)</a> <a id="912" class="Keyword">where</a>
+
+<a id="919" class="Comment">-- TODO: this could be generic</a>
+<a id="maximum"></a><a id="950" href="Ledger.GovernanceActions.html#950" class="Function">maximum</a> <a id="958" class="Symbol">:</a> <a id="960" href="Ledger.Set.Theory.html#382" class="Function Operator">ℙ</a> <a id="962" href="Data.Rational.Base.html#1342" class="Record">ℚ</a> <a id="964" class="Symbol">→</a> <a id="966" href="Data.Rational.Base.html#1342" class="Record">ℚ</a>
+<a id="968" href="Ledger.GovernanceActions.html#950" class="Function">maximum</a> <a id="976" href="Ledger.GovernanceActions.html#976" class="Bound">x</a> <a id="978" class="Symbol">=</a> <a id="980" href="Data.List.Base.html#4437" class="Function">foldl</a> <a id="986" href="Data.Rational.Base.html#6776" class="Function Operator">Data.Rational._⊔_</a> <a id="1004" href="Data.Rational.Base.html#4325" class="Function">0ℚ</a> <a id="1007" class="Symbol">(</a><a id="1008" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="1014" href="Function.Base.html#1974" class="Function Operator">$</a> <a id="1016" href="Ledger.Set.Theory.html#648" class="Function">finiteness</a> <a id="1027" href="Ledger.GovernanceActions.html#976" class="Bound">x</a><a id="1028" class="Symbol">)</a>
+<a id="1030" class="Markup">\end{code}</a><a id="1040" class="Background">
+\begin{figure*}[h]
+\begin{AgdaMultiCode}
+</a><a id="1082" class="Markup">\begin{code}</a>
+<a id="1095" class="Keyword">data</a> <a id="GovRole"></a><a id="1100" href="Ledger.GovernanceActions.html#1100" class="Datatype">GovRole</a> <a id="1108" class="Symbol">:</a> <a id="1110" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1115" class="Keyword">where</a>
+  <a id="GovRole.CC"></a><a id="1123" href="Ledger.GovernanceActions.html#1123" class="InductiveConstructor">CC</a> <a id="GovRole.DRep"></a><a id="1126" href="Ledger.GovernanceActions.html#1126" class="InductiveConstructor">DRep</a> <a id="GovRole.SPO"></a><a id="1131" href="Ledger.GovernanceActions.html#1131" class="InductiveConstructor">SPO</a> <a id="1135" class="Symbol">:</a> <a id="1137" href="Ledger.GovernanceActions.html#1100" class="Datatype">GovRole</a>
+
+<a id="Voter"></a><a id="1146" href="Ledger.GovernanceActions.html#1146" class="Function">Voter</a>        <a id="1159" class="Symbol">=</a> <a id="1161" href="Ledger.GovernanceActions.html#1100" class="Datatype">GovRole</a> <a id="1169" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1171" href="Ledger.Address.html#764" class="Datatype">Credential</a>
+<a id="GovActionID"></a><a id="1182" href="Ledger.GovernanceActions.html#1182" class="Function">GovActionID</a>  <a id="1195" class="Symbol">=</a> <a id="1197" href="Ledger.Types.GovStructure.html#270" class="Field">TxId</a> <a id="1202" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1204" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+
+<a id="1207" class="Keyword">data</a> <a id="VDeleg"></a><a id="1212" href="Ledger.GovernanceActions.html#1212" class="Datatype">VDeleg</a> <a id="1219" class="Symbol">:</a> <a id="1221" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1226" class="Keyword">where</a>
+  <a id="VDeleg.credVoter"></a><a id="1234" href="Ledger.GovernanceActions.html#1234" class="InductiveConstructor">credVoter</a>        <a id="1251" class="Symbol">:</a> <a id="1253" href="Ledger.GovernanceActions.html#1100" class="Datatype">GovRole</a> <a id="1261" class="Symbol">→</a> <a id="1263" href="Ledger.Address.html#764" class="Datatype">Credential</a> <a id="1274" class="Symbol">→</a>  <a id="1277" href="Ledger.GovernanceActions.html#1212" class="Datatype">VDeleg</a>
+  <a id="VDeleg.abstainRep"></a><a id="1286" href="Ledger.GovernanceActions.html#1286" class="InductiveConstructor">abstainRep</a>       <a id="1303" class="Symbol">:</a>                         <a id="1329" href="Ledger.GovernanceActions.html#1212" class="Datatype">VDeleg</a>
+  <a id="VDeleg.noConfidenceRep"></a><a id="1338" href="Ledger.GovernanceActions.html#1338" class="InductiveConstructor">noConfidenceRep</a>  <a id="1355" class="Symbol">:</a>                         <a id="1381" href="Ledger.GovernanceActions.html#1212" class="Datatype">VDeleg</a>
+
+<a id="1389" class="Keyword">record</a> <a id="Anchor"></a><a id="1396" href="Ledger.GovernanceActions.html#1396" class="Record">Anchor</a> <a id="1403" class="Symbol">:</a> <a id="1405" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1410" class="Keyword">where</a>
+<a id="1416" class="Markup">\end{code}</a><a id="1426" class="Background">
+</a><a id="1427" class="Markup">\begin{code}[hide]</a>
+  <a id="1448" class="Keyword">field</a>
+<a id="1454" class="Markup">\end{code}</a><a id="1464" class="Background">
+</a><a id="1465" class="Markup">\begin{code}</a>
+    <a id="Anchor.url"></a><a id="1482" href="Ledger.GovernanceActions.html#1482" class="Field">url</a>   <a id="1488" class="Symbol">:</a> <a id="1490" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
+    <a id="Anchor.hash"></a><a id="1501" href="Ledger.GovernanceActions.html#1501" class="Field">hash</a>  <a id="1507" class="Symbol">:</a> <a id="1509" href="Ledger.Types.GovStructure.html#275" class="Field">DocHash</a>
+
+<a id="1518" class="Keyword">data</a> <a id="GovAction"></a><a id="1523" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a> <a id="1533" class="Symbol">:</a> <a id="1535" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1540" class="Keyword">where</a>
+  <a id="GovAction.NoConfidence"></a><a id="1548" href="Ledger.GovernanceActions.html#1548" class="InductiveConstructor">NoConfidence</a>     <a id="1565" class="Symbol">:</a>                                             <a id="1611" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+  <a id="GovAction.NewCommittee"></a><a id="1623" href="Ledger.GovernanceActions.html#1623" class="InductiveConstructor">NewCommittee</a>     <a id="1640" class="Symbol">:</a> <a id="1642" class="Symbol">(</a><a id="1643" href="Ledger.Address.html#764" class="Datatype">Credential</a> <a id="1654" href="Ledger.Set.Theory.html#1515" class="Function Operator">⇀</a> <a id="1656" href="Ledger.Types.Epoch.html#335" class="Function">Epoch</a><a id="1661" class="Symbol">)</a> <a id="1663" class="Symbol">→</a> <a id="1665" href="Ledger.Set.Theory.html#382" class="Function Operator">ℙ</a> <a id="1667" href="Ledger.Address.html#764" class="Datatype">Credential</a> <a id="1678" class="Symbol">→</a> <a id="1680" href="Data.Rational.Base.html#1342" class="Record">ℚ</a>  <a id="1683" class="Symbol">→</a>  <a id="1686" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+  <a id="GovAction.NewConstitution"></a><a id="1698" href="Ledger.GovernanceActions.html#1698" class="InductiveConstructor">NewConstitution</a>  <a id="1715" class="Symbol">:</a> <a id="1717" href="Ledger.Types.GovStructure.html#275" class="Field">DocHash</a> <a id="1725" class="Symbol">→</a> <a id="1727" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1733" href="Ledger.Crypto.html#1525" class="Function">ScriptHash</a>               <a id="1758" class="Symbol">→</a>  <a id="1761" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+  <a id="GovAction.TriggerHF"></a><a id="1773" href="Ledger.GovernanceActions.html#1773" class="InductiveConstructor">TriggerHF</a>        <a id="1790" class="Symbol">:</a> <a id="1792" href="Ledger.PParams.html#1271" class="Function">ProtVer</a>                                  <a id="1833" class="Symbol">→</a>  <a id="1836" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+  <a id="GovAction.ChangePParams"></a><a id="1848" href="Ledger.GovernanceActions.html#1848" class="InductiveConstructor">ChangePParams</a>    <a id="1865" class="Symbol">:</a> <a id="1867" href="Ledger.PParams.html#15045" class="Function">PParamsUpdate</a>                            <a id="1908" class="Symbol">→</a>  <a id="1911" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+  <a id="GovAction.TreasuryWdrl"></a><a id="1923" href="Ledger.GovernanceActions.html#1923" class="InductiveConstructor">TreasuryWdrl</a>     <a id="1940" class="Symbol">:</a> <a id="1942" class="Symbol">(</a><a id="1943" href="Ledger.Address.html#1583" class="Record">RwdAddr</a> <a id="1951" href="Ledger.Set.Theory.html#1515" class="Function Operator">⇀</a> <a id="1953" href="Ledger.Prelude.Base.html#81" class="Function">Coin</a><a id="1957" class="Symbol">)</a>                         <a id="1983" class="Symbol">→</a>  <a id="1986" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+  <a id="GovAction.Info"></a><a id="1998" href="Ledger.GovernanceActions.html#1998" class="InductiveConstructor">Info</a>             <a id="2015" class="Symbol">:</a>                                             <a id="2061" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+
+<a id="actionWellFormed"></a><a id="2072" href="Ledger.GovernanceActions.html#2072" class="Function">actionWellFormed</a> <a id="2089" class="Symbol">:</a> <a id="2091" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a> <a id="2101" class="Symbol">→</a> <a id="2103" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="2108" href="Ledger.GovernanceActions.html#2072" class="Function">actionWellFormed</a> <a id="2125" class="Symbol">(</a><a id="2126" href="Ledger.GovernanceActions.html#1848" class="InductiveConstructor">ChangePParams</a> <a id="2140" href="Ledger.GovernanceActions.html#2140" class="Bound">x</a><a id="2141" class="Symbol">)</a>  <a id="2144" class="Symbol">=</a> <a id="2146" href="Ledger.PParams.html#14662" class="Function">ppdWellFormed</a> <a id="2160" href="Ledger.GovernanceActions.html#2140" class="Bound">x</a>
+<a id="2162" href="Ledger.GovernanceActions.html#2072" class="Function">actionWellFormed</a> <a id="2179" class="Symbol">(</a><a id="2180" href="Ledger.GovernanceActions.html#1923" class="InductiveConstructor">TreasuryWdrl</a> <a id="2193" href="Ledger.GovernanceActions.html#2193" class="Bound">x</a><a id="2194" class="Symbol">)</a>   <a id="2198" class="Symbol">=</a> <a id="2200" href="Interface.IsSet.html#594" class="Function">∀[</a> <a id="2203" href="Ledger.GovernanceActions.html#2203" class="Bound">a</a> <a id="2205" href="Interface.IsSet.html#594" class="Function">∈</a> <a id="2207" href="Interface.IsSet.html#777" class="Function">dom</a> <a id="2211" href="Ledger.GovernanceActions.html#2193" class="Bound">x</a> <a id="2213" href="Interface.IsSet.html#594" class="Function">]</a> <a id="2215" href="Ledger.Address.html#1612" class="Field">RwdAddr.net</a> <a id="2227" href="Ledger.GovernanceActions.html#2203" class="Bound">a</a> <a id="2229" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="2231" href="Ledger.Types.Epoch.html#1892" class="Function">NetworkId</a>
+<a id="2241" href="Ledger.GovernanceActions.html#2072" class="CatchallClause Function">actionWellFormed</a><a id="2257" class="CatchallClause"> </a><a id="2258" class="CatchallClause Symbol">_</a>                  <a id="2277" class="Symbol">=</a> <a id="2279" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+<a id="2281" class="Markup">\end{code}</a><a id="2291" class="Background">
+</a><a id="2292" class="Markup">\begin{code}[hide]</a>
+<a id="actionWellFormed?"></a><a id="2311" href="Ledger.GovernanceActions.html#2311" class="Function">actionWellFormed?</a> <a id="2329" class="Symbol">:</a> <a id="2331" class="Symbol">∀</a> <a id="2333" class="Symbol">{</a><a id="2334" href="Ledger.GovernanceActions.html#2334" class="Bound">a</a><a id="2335" class="Symbol">}</a> <a id="2337" class="Symbol">→</a> <a id="2339" href="Ledger.GovernanceActions.html#2072" class="Function">actionWellFormed</a> <a id="2356" href="Ledger.GovernanceActions.html#2334" class="Bound">a</a> <a id="2358" href="Class.Decidable.Core.html#208" class="Record Operator">⁇</a>
+<a id="2360" href="Ledger.GovernanceActions.html#2311" class="Function">actionWellFormed?</a> <a id="2378" class="Symbol">{</a><a id="2379" href="Ledger.GovernanceActions.html#1548" class="InductiveConstructor">NoConfidence</a><a id="2391" class="Symbol">}</a>        <a id="2400" class="Symbol">=</a> <a id="2402" href="Function.Base.html#4736" class="Function">it</a>
+<a id="2405" href="Ledger.GovernanceActions.html#2311" class="Function">actionWellFormed?</a> <a id="2423" class="Symbol">{</a><a id="2424" href="Ledger.GovernanceActions.html#1623" class="InductiveConstructor">NewCommittee</a> <a id="2437" class="Symbol">_</a> <a id="2439" class="Symbol">_</a> <a id="2441" class="Symbol">_}</a>  <a id="2445" class="Symbol">=</a> <a id="2447" href="Function.Base.html#4736" class="Function">it</a>
+<a id="2450" href="Ledger.GovernanceActions.html#2311" class="Function">actionWellFormed?</a> <a id="2468" class="Symbol">{</a><a id="2469" href="Ledger.GovernanceActions.html#1698" class="InductiveConstructor">NewConstitution</a> <a id="2485" class="Symbol">_</a> <a id="2487" class="Symbol">_}</a> <a id="2490" class="Symbol">=</a> <a id="2492" href="Function.Base.html#4736" class="Function">it</a>
+<a id="2495" href="Ledger.GovernanceActions.html#2311" class="Function">actionWellFormed?</a> <a id="2513" class="Symbol">{</a><a id="2514" href="Ledger.GovernanceActions.html#1773" class="InductiveConstructor">TriggerHF</a> <a id="2524" class="Symbol">_}</a>         <a id="2535" class="Symbol">=</a> <a id="2537" href="Function.Base.html#4736" class="Function">it</a>
+<a id="2540" href="Ledger.GovernanceActions.html#2311" class="Function">actionWellFormed?</a> <a id="2558" class="Symbol">{</a><a id="2559" href="Ledger.GovernanceActions.html#1848" class="InductiveConstructor">ChangePParams</a> <a id="2573" class="Symbol">_}</a>     <a id="2580" class="Symbol">=</a> <a id="2582" href="Function.Base.html#4736" class="Function">it</a>
+<a id="2585" href="Ledger.GovernanceActions.html#2311" class="Function">actionWellFormed?</a> <a id="2603" class="Symbol">{</a><a id="2604" href="Ledger.GovernanceActions.html#1923" class="InductiveConstructor">TreasuryWdrl</a> <a id="2617" class="Symbol">_}</a>      <a id="2625" class="Symbol">=</a> <a id="2627" href="Function.Base.html#4736" class="Function">it</a>
+<a id="2630" href="Ledger.GovernanceActions.html#2311" class="Function">actionWellFormed?</a> <a id="2648" class="Symbol">{</a><a id="2649" href="Ledger.GovernanceActions.html#1998" class="InductiveConstructor">Info</a><a id="2653" class="Symbol">}</a>                <a id="2670" class="Symbol">=</a> <a id="2672" href="Function.Base.html#4736" class="Function">it</a>
+<a id="2675" class="Markup">\end{code}</a><a id="2685" class="Background">
+\end{AgdaMultiCode}
+\caption{Governance actions}
+\label{defs:governance}
+\end{figure*}
+Figure~\ref{defs:governance} defines several data types used to represent governance actions including:
+\begin{itemize}
+  \item \GovActionID---a unique identifier for a governance action,
+    consisting of the \TxId of the proposing transaction and an index to identify a proposal within a transaction;
+  \item \GovRole (\defn{governance role})---one of three available voter roles defined above (\CC, \DRep, \SPO);
+  \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
+  \item \Anchor---a url and a document hash;
+  \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
+  \item \actionWellFormed---in the case of protocol parameter changes,
+    an action is well-formed if it preserves the well-formedness of parameters.
+    \ppdWellFormed is effectively the same as \paramsWellFormed, except that it
+    only applies to the parameters that are being changed.
+\end{itemize}
+\begin{figure*}[h]
+\begin{longtable}[]{@{}
+ &gt;{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2}}
+ &gt;{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.75}}@{}}
+\textbf{Action}  &amp; \textbf{Description}\\
+\hline
+\endhead
+\NoConfidence            &amp; a motion to create a \emph{state of no-confidence} in the current constitutional committee \\[10pt]
+\NewCommittee            &amp; changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
+\NewConstitution         &amp; a modification to the off-chain Constitution and the proposal policy script \\[10pt]
+\TriggerHF\footnotemark  &amp; triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\[10pt]
+\ChangePParams           &amp; a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks&#39;&#39;)\\[10pt]
+\TreasuryWdrl            &amp; movements from the treasury\\
+\Info                    &amp; an action that has no effect on-chain, other than an on-chain record
+\end{longtable}
+\caption{Types of governance actions}
+\label{fig:types-of-governance-actions}
+\end{figure*}
+\footnotetext{There are many varying definitions of the term ``hard fork&#39;&#39; in the blockchain industry. Hard forks typically refer
+  to non-backwards compatible updates of a network. In Cardano, we formalize the definition slightly more by calling any upgrade that
+  would lead to \emph{more blocks} being validated a ``hard fork&#39;&#39; and force nodes to comply with the new protocol version, effectively
+  obsoleting nodes that are unable to handle the upgrade.}
+
+
+% \subsection{Voting and Ratification}
+% \label{sec:voting-and-ratification}
+% Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
+% The type of action and the state of the governance system determines which bodies must ratify it.
+% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
+
+\subsection{Hash Protection}
+\label{sec:hash-protection}
+
+For some types of governance actions, enactment requires a second
+condition on top of the necessary votes, which is that the state after
+enacting the proposal was intended when the action was submitted. This
+is achieved by requiring actions to unambiguously link to the state
+they are modifying via a pointer to the previous modification. A
+proposal can only be enacted if it contains the \GovActionID of the
+previously enacted proposal modifying the same piece of
+state. \NoConfidence and \NewCommittee modify the same state, while
+every other type of governance action has its own state that isn&#39;t
+shared with any other action. This means that the enactibility of a
+proposal can change when other proposals are enacted.
+
+However, not all types of governance actions require this strict
+protection. For \TreasuryWdrl and \Info, enacting them does not change
+the state in non-commutative ways, so they can always be enacted.
+
+Types related to this hash protection scheme are defined in
+Figure~\ref{fig:needshash-and-hashprotected-types}. \Unit is the unit
+type that has exactly one element, which reflects that a \GovActionID
+is not necessary.
+
+\begin{figure*}[h]
+</a><a id="7170" class="Markup">\begin{code}</a>
+<a id="NeedsHash"></a><a id="7183" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="7193" class="Symbol">:</a> <a id="7195" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a> <a id="7205" class="Symbol">→</a> <a id="7207" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="7212" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="7222" href="Ledger.GovernanceActions.html#1548" class="InductiveConstructor">NoConfidence</a>           <a id="7245" class="Symbol">=</a> <a id="7247" href="Ledger.GovernanceActions.html#1182" class="Function">GovActionID</a>
+<a id="7259" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="7269" class="Symbol">(</a><a id="7270" href="Ledger.GovernanceActions.html#1623" class="InductiveConstructor">NewCommittee</a> <a id="7283" class="Symbol">_</a> <a id="7285" class="Symbol">_</a> <a id="7287" class="Symbol">_)</a>   <a id="7292" class="Symbol">=</a> <a id="7294" href="Ledger.GovernanceActions.html#1182" class="Function">GovActionID</a>
+<a id="7306" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="7316" class="Symbol">(</a><a id="7317" href="Ledger.GovernanceActions.html#1698" class="InductiveConstructor">NewConstitution</a> <a id="7333" class="Symbol">_</a> <a id="7335" class="Symbol">_)</a>  <a id="7339" class="Symbol">=</a> <a id="7341" href="Ledger.GovernanceActions.html#1182" class="Function">GovActionID</a>
+<a id="7353" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="7363" class="Symbol">(</a><a id="7364" href="Ledger.GovernanceActions.html#1773" class="InductiveConstructor">TriggerHF</a> <a id="7374" class="Symbol">_)</a>          <a id="7386" class="Symbol">=</a> <a id="7388" href="Ledger.GovernanceActions.html#1182" class="Function">GovActionID</a>
+<a id="7400" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="7410" class="Symbol">(</a><a id="7411" href="Ledger.GovernanceActions.html#1848" class="InductiveConstructor">ChangePParams</a> <a id="7425" class="Symbol">_)</a>      <a id="7433" class="Symbol">=</a> <a id="7435" href="Ledger.GovernanceActions.html#1182" class="Function">GovActionID</a>
+<a id="7447" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="7457" class="Symbol">(</a><a id="7458" href="Ledger.GovernanceActions.html#1923" class="InductiveConstructor">TreasuryWdrl</a> <a id="7471" class="Symbol">_)</a>       <a id="7480" class="Symbol">=</a> <a id="7482" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+<a id="7484" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="7494" href="Ledger.GovernanceActions.html#1998" class="InductiveConstructor">Info</a>                   <a id="7517" class="Symbol">=</a> <a id="7519" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+
+<a id="HashProtected"></a><a id="7522" href="Ledger.GovernanceActions.html#7522" class="Function">HashProtected</a> <a id="7536" class="Symbol">:</a> <a id="7538" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="7543" class="Symbol">→</a> <a id="7545" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="7550" href="Ledger.GovernanceActions.html#7522" class="Function">HashProtected</a> <a id="7564" href="Ledger.GovernanceActions.html#7564" class="Bound">A</a> <a id="7566" class="Symbol">=</a> <a id="7568" href="Ledger.GovernanceActions.html#7564" class="Bound">A</a> <a id="7570" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="7572" href="Ledger.GovernanceActions.html#1182" class="Function">GovActionID</a>
+<a id="7584" class="Markup">\end{code}</a><a id="7594" class="Background">
+\caption{NeedsHash and HashProtected types}
+\label{fig:needshash-and-hashprotected-types}
+\end{figure*}
+
+\begin{figure*}[h]
+\begin{AgdaMultiCode}
+</a><a id="7741" class="Markup">\begin{code}</a>
+<a id="7754" class="Keyword">data</a> <a id="Vote"></a><a id="7759" href="Ledger.GovernanceActions.html#7759" class="Datatype">Vote</a> <a id="7764" class="Symbol">:</a> <a id="7766" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="7771" class="Keyword">where</a>
+  <a id="Vote.yes"></a><a id="7779" href="Ledger.GovernanceActions.html#7779" class="InductiveConstructor">yes</a> <a id="Vote.no"></a><a id="7783" href="Ledger.GovernanceActions.html#7783" class="InductiveConstructor">no</a> <a id="Vote.abstain"></a><a id="7786" href="Ledger.GovernanceActions.html#7786" class="InductiveConstructor">abstain</a>  <a id="7795" class="Symbol">:</a> <a id="7797" href="Ledger.GovernanceActions.html#7759" class="Datatype">Vote</a>
+
+<a id="7803" class="Keyword">record</a> <a id="GovVote"></a><a id="7810" href="Ledger.GovernanceActions.html#7810" class="Record">GovVote</a> <a id="7818" class="Symbol">:</a> <a id="7820" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="7825" class="Keyword">where</a>
+<a id="7831" class="Markup">\end{code}</a><a id="7841" class="Background">
+</a><a id="7842" class="Markup">\begin{code}[hide]</a>
+  <a id="7863" class="Keyword">field</a>
+<a id="7869" class="Markup">\end{code}</a><a id="7879" class="Background">
+</a><a id="7880" class="Markup">\begin{code}</a>
+    <a id="GovVote.gid"></a><a id="7897" href="Ledger.GovernanceActions.html#7897" class="Field">gid</a>         <a id="7909" class="Symbol">:</a> <a id="7911" href="Ledger.GovernanceActions.html#1182" class="Function">GovActionID</a>
+    <a id="GovVote.voter"></a><a id="7927" href="Ledger.GovernanceActions.html#7927" class="Field">voter</a>       <a id="7939" class="Symbol">:</a> <a id="7941" href="Ledger.GovernanceActions.html#1146" class="Function">Voter</a>
+    <a id="GovVote.vote"></a><a id="7951" href="Ledger.GovernanceActions.html#7951" class="Field">vote</a>        <a id="7963" class="Symbol">:</a> <a id="7965" href="Ledger.GovernanceActions.html#7759" class="Datatype">Vote</a>
+    <a id="GovVote.anchor"></a><a id="7974" href="Ledger.GovernanceActions.html#7974" class="Field">anchor</a>      <a id="7986" class="Symbol">:</a> <a id="7988" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="7994" href="Ledger.GovernanceActions.html#1396" class="Record">Anchor</a>
+
+<a id="8002" class="Keyword">record</a> <a id="GovProposal"></a><a id="8009" href="Ledger.GovernanceActions.html#8009" class="Record">GovProposal</a> <a id="8021" class="Symbol">:</a> <a id="8023" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="8028" class="Keyword">where</a>
+<a id="8034" class="Markup">\end{code}</a><a id="8044" class="Background">
+</a><a id="8045" class="Markup">\begin{code}[hide]</a>
+  <a id="8066" class="Keyword">field</a>
+<a id="8072" class="Markup">\end{code}</a><a id="8082" class="Background">
+</a><a id="8083" class="Markup">\begin{code}</a>
+    <a id="GovProposal.action"></a><a id="8100" href="Ledger.GovernanceActions.html#8100" class="Field">action</a>      <a id="8112" class="Symbol">:</a> <a id="8114" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+    <a id="GovProposal.prevAction"></a><a id="8128" href="Ledger.GovernanceActions.html#8128" class="Field">prevAction</a>  <a id="8140" class="Symbol">:</a> <a id="8142" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="8152" href="Ledger.GovernanceActions.html#8100" class="Field">action</a>
+    <a id="GovProposal.policy"></a><a id="8163" href="Ledger.GovernanceActions.html#8163" class="Field">policy</a>      <a id="8175" class="Symbol">:</a> <a id="8177" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="8183" href="Ledger.Crypto.html#1525" class="Function">ScriptHash</a>
+    <a id="GovProposal.deposit"></a><a id="8198" href="Ledger.GovernanceActions.html#8198" class="Field">deposit</a>     <a id="8210" class="Symbol">:</a> <a id="8212" href="Ledger.Prelude.Base.html#81" class="Function">Coin</a>
+    <a id="GovProposal.returnAddr"></a><a id="8221" href="Ledger.GovernanceActions.html#8221" class="Field">returnAddr</a>  <a id="8233" class="Symbol">:</a> <a id="8235" href="Ledger.Address.html#1583" class="Record">RwdAddr</a>
+    <a id="GovProposal.anchor"></a><a id="8247" href="Ledger.GovernanceActions.html#8247" class="Field">anchor</a>      <a id="8259" class="Symbol">:</a> <a id="8261" href="Ledger.GovernanceActions.html#1396" class="Record">Anchor</a>
+
+<a id="8269" class="Keyword">record</a> <a id="GovActionState"></a><a id="8276" href="Ledger.GovernanceActions.html#8276" class="Record">GovActionState</a> <a id="8291" class="Symbol">:</a> <a id="8293" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="8298" class="Keyword">where</a>
+<a id="8304" class="Markup">\end{code}</a><a id="8314" class="Background">
+</a><a id="8315" class="Markup">\begin{code}[hide]</a>
+  <a id="8336" class="Keyword">field</a>
+<a id="8342" class="Markup">\end{code}</a><a id="8352" class="Background">
+</a><a id="8353" class="Markup">\begin{code}</a>
+    <a id="GovActionState.votes"></a><a id="8370" href="Ledger.GovernanceActions.html#8370" class="Field">votes</a>       <a id="8382" class="Symbol">:</a> <a id="8384" href="Ledger.GovernanceActions.html#1146" class="Function">Voter</a> <a id="8390" href="Ledger.Set.Theory.html#1515" class="Function Operator">⇀</a> <a id="8392" href="Ledger.GovernanceActions.html#7759" class="Datatype">Vote</a>
+    <a id="GovActionState.returnAddr"></a><a id="8401" href="Ledger.GovernanceActions.html#8401" class="Field">returnAddr</a>  <a id="8413" class="Symbol">:</a> <a id="8415" href="Ledger.Address.html#1583" class="Record">RwdAddr</a>
+    <a id="GovActionState.expiresIn"></a><a id="8427" href="Ledger.GovernanceActions.html#8427" class="Field">expiresIn</a>   <a id="8439" class="Symbol">:</a> <a id="8441" href="Ledger.Types.Epoch.html#335" class="Function">Epoch</a>
+    <a id="GovActionState.action"></a><a id="8451" href="Ledger.GovernanceActions.html#8451" class="Field">action</a>      <a id="8463" class="Symbol">:</a> <a id="8465" href="Ledger.GovernanceActions.html#1523" class="Datatype">GovAction</a>
+    <a id="GovActionState.prevAction"></a><a id="8479" href="Ledger.GovernanceActions.html#8479" class="Field">prevAction</a>  <a id="8491" class="Symbol">:</a> <a id="8493" href="Ledger.GovernanceActions.html#7183" class="Function">NeedsHash</a> <a id="8503" href="Ledger.GovernanceActions.html#8451" class="Field">action</a>
+<a id="8510" class="Markup">\end{code}</a><a id="8520" class="Background">
+</a><a id="8521" class="Markup">\begin{code}[hide]</a>
+<a id="8540" class="Keyword">instance</a>
+  <a id="8551" class="Keyword">unquoteDecl</a> <a id="DecEq-GovRole"></a><a id="8563" href="Ledger.GovernanceActions.html#8563" class="Function">DecEq-GovRole</a> <a id="8577" class="Symbol">=</a> <a id="8579" href="Tactic.Derive.DecEq.html#3506" class="Function">derive-DecEq</a> <a id="8592" class="Symbol">((</a><a id="8594" class="Keyword">quote</a> <a id="8600" href="Ledger.GovernanceActions.html#1100" class="Datatype">GovRole</a> <a id="8608" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="8610" href="Ledger.GovernanceActions.html#8563" class="Function">DecEq-GovRole</a><a id="8623" class="Symbol">)</a> <a id="8625" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="8627" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="8629" class="Symbol">)</a>
+  <a id="8633" class="Keyword">unquoteDecl</a> <a id="DecEq-Vote"></a><a id="8645" href="Ledger.GovernanceActions.html#8645" class="Function">DecEq-Vote</a>    <a id="8659" class="Symbol">=</a> <a id="8661" href="Tactic.Derive.DecEq.html#3506" class="Function">derive-DecEq</a> <a id="8674" class="Symbol">((</a><a id="8676" class="Keyword">quote</a> <a id="8682" href="Ledger.GovernanceActions.html#7759" class="Datatype">Vote</a>    <a id="8690" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="8692" href="Ledger.GovernanceActions.html#8645" class="Function">DecEq-Vote</a><a id="8702" class="Symbol">)</a>    <a id="8707" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="8709" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="8711" class="Symbol">)</a>
+  <a id="8715" class="Keyword">unquoteDecl</a> <a id="DecEq-VDeleg"></a><a id="8727" href="Ledger.GovernanceActions.html#8727" class="Function">DecEq-VDeleg</a>  <a id="8741" class="Symbol">=</a> <a id="8743" href="Tactic.Derive.DecEq.html#3506" class="Function">derive-DecEq</a> <a id="8756" class="Symbol">((</a><a id="8758" class="Keyword">quote</a> <a id="8764" href="Ledger.GovernanceActions.html#1212" class="Datatype">VDeleg</a>  <a id="8772" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="8774" href="Ledger.GovernanceActions.html#8727" class="Function">DecEq-VDeleg</a><a id="8786" class="Symbol">)</a>  <a id="8789" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="8791" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="8793" class="Symbol">)</a>
+<a id="8795" class="Markup">\end{code}</a><a id="8805" class="Background">
+\end{AgdaMultiCode}
+\caption{Vote and proposal types}
+\label{defs:governance-votes}
+\end{figure*}
+\subsection{Votes and Proposals}
+
+\begin{figure*}[h]
+</a><a id="8957" class="Markup">\begin{code}</a>
+<a id="getDRepVote"></a><a id="8970" href="Ledger.GovernanceActions.html#8970" class="Function">getDRepVote</a> <a id="8982" class="Symbol">:</a> <a id="8984" href="Ledger.GovernanceActions.html#7810" class="Record">GovVote</a> <a id="8992" class="Symbol">→</a> <a id="8994" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="9000" href="Ledger.Address.html#764" class="Datatype">Credential</a>
+<a id="9011" href="Ledger.GovernanceActions.html#8970" class="Function">getDRepVote</a> <a id="9023" class="Keyword">record</a> <a id="9030" class="Symbol">{</a> <a id="9032" href="Ledger.GovernanceActions.html#7927" class="Field">voter</a> <a id="9038" class="Symbol">=</a> <a id="9040" class="Symbol">(</a><a id="9041" href="Ledger.GovernanceActions.html#1126" class="InductiveConstructor">DRep</a> <a id="9046" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="9048" href="Ledger.GovernanceActions.html#9048" class="Bound">credential</a><a id="9058" class="Symbol">)</a> <a id="9060" class="Symbol">}</a>  <a id="9063" class="Symbol">=</a> <a id="9065" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="9070" href="Ledger.GovernanceActions.html#9048" class="Bound">credential</a>
+<a id="9081" href="Ledger.GovernanceActions.html#8970" class="CatchallClause Function">getDRepVote</a><a id="9092" class="CatchallClause"> </a><a id="9093" class="CatchallClause Symbol">_</a>                                       <a id="9133" class="Symbol">=</a> <a id="9135" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+<a id="9143" class="Markup">\end{code}</a><a id="9153" class="Background">
+\caption{Governance helper function}
+\end{figure*}
+
+The data type \Vote represents the different voting options: \yes,
+\no, or \abstain. For a \Vote to be cast, it must be packaged together
+with further information, such as who votes and for which governance
+action. This information is combined in the \GovVote record. An
+optional \Anchor can be provided to give context about why a vote was
+cast in a certain manner.
+
+To propose a governance action, a \GovProposal needs to be
+submitted. Beside the proposed action, it requires:
+\begin{itemize}
+\item potentially a pointer to the previous action (see Section~\ref{sec:hash-protection}),
+\item potentially a pointer to the proposal policy (if one is required),
+\item a deposit, which will be returned to \returnAddr, and
+\item an \Anchor, providing further information about the proposal.
+\end{itemize}
+
+While the deposit is held, it is added to the deposit pot, similar
+to stake key deposits. It is also counted towards the stake of the
+reward address to which it will be returned, so as not to reduce the submitter&#39;s
+voting power when voting on their own (and competing) actions. For a
+proposal to be valid, the proposal must be set to the current value of
+\govActionDeposit. The deposit will be returned when the action is
+removed from the state in any way.
+
+\GovActionState is the state of an individual governance action. It
+contains the individual votes, its lifetime, and information necessary
+to enact the action and to repay the deposit.
+</a></pre></body></html>
