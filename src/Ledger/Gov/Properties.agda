@@ -36,49 +36,49 @@ private
                    Dec (Any (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role) s)
   lookupActionId pparams role aid = any? λ _ → ¿ _ ¿
 
-  isNewCommittee : (a : GovAction) → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ NewCommittee new rem q)
-  isNewCommittee NoConfidence             = no λ()
-  isNewCommittee (NewCommittee new rem q) = yes (new , rem , q , refl)
-  isNewCommittee (NewConstitution x x₁)   = no λ()
-  isNewCommittee (TriggerHF x)            = no λ()
-  isNewCommittee (ChangePParams x)        = no λ()
-  isNewCommittee (TreasuryWdrl x)         = no λ()
-  isNewCommittee Info                     = no λ()
+  isUpdateCommittee : (a : GovAction) → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ UpdateCommittee new rem q)
+  isUpdateCommittee NoConfidence                = no λ()
+  isUpdateCommittee (UpdateCommittee new rem q) = yes (new , rem , q , refl)
+  isUpdateCommittee (NewConstitution x x₁)      = no λ()
+  isUpdateCommittee (TriggerHF x)               = no λ()
+  isUpdateCommittee (ChangePParams x)           = no λ()
+  isUpdateCommittee (TreasuryWdrl x)            = no λ()
+  isUpdateCommittee Info                        = no λ()
 
   instance
     needsPolicy₁ : {a : GovAction} → (∃[ u ] a ≡ ChangePParams u) ⁇
-    needsPolicy₁ {NoConfidence}           = ⁇ no λ()
-    needsPolicy₁ {NewCommittee new rem q} = ⁇ no λ()
-    needsPolicy₁ {NewConstitution x x₁}   = ⁇ no λ()
-    needsPolicy₁ {TriggerHF x}            = ⁇ no λ()
-    needsPolicy₁ {ChangePParams x}        = ⁇ yes (-, refl)
-    needsPolicy₁ {TreasuryWdrl x}         = ⁇ no λ()
-    needsPolicy₁ {Info}                   = ⁇ no λ()
+    needsPolicy₁ {NoConfidence}              = ⁇ no λ()
+    needsPolicy₁ {UpdateCommittee new rem q} = ⁇ no λ()
+    needsPolicy₁ {NewConstitution x x₁}      = ⁇ no λ()
+    needsPolicy₁ {TriggerHF x}               = ⁇ no λ()
+    needsPolicy₁ {ChangePParams x}           = ⁇ yes (-, refl)
+    needsPolicy₁ {TreasuryWdrl x}            = ⁇ no λ()
+    needsPolicy₁ {Info}                      = ⁇ no λ()
 
     needsPolicy₂ : {a : GovAction} → (∃[ w ] a ≡ TreasuryWdrl w) ⁇
-    needsPolicy₂ {NoConfidence}           = ⁇ no λ()
-    needsPolicy₂ {NewCommittee new rem q} = ⁇ no λ()
-    needsPolicy₂ {NewConstitution x x₁}   = ⁇ no λ()
-    needsPolicy₂ {TriggerHF x}            = ⁇ no λ()
-    needsPolicy₂ {ChangePParams x}        = ⁇ no λ()
-    needsPolicy₂ {TreasuryWdrl x}         = ⁇ yes (-, refl)
-    needsPolicy₂ {Info}                   = ⁇ no λ()
+    needsPolicy₂ {NoConfidence}              = ⁇ no λ()
+    needsPolicy₂ {UpdateCommittee new rem q} = ⁇ no λ()
+    needsPolicy₂ {NewConstitution x x₁}      = ⁇ no λ()
+    needsPolicy₂ {TriggerHF x}               = ⁇ no λ()
+    needsPolicy₂ {ChangePParams x}           = ⁇ no λ()
+    needsPolicy₂ {TreasuryWdrl x}            = ⁇ yes (-, refl)
+    needsPolicy₂ {Info}                      = ⁇ no λ()
 
   hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ TriggerHF v' × pvCanFollow v' v)
-  hasPrev record { action = NoConfidence }          v = no λ ()
-  hasPrev record { action = (NewCommittee _ _ _) }  v = no λ ()
-  hasPrev record { action = (NewConstitution _ _) } v = no λ ()
-  hasPrev record { action = (TriggerHF v') }        v = case pvCanFollow? {v'} {v} of λ where
+  hasPrev record { action = NoConfidence }            v = no λ ()
+  hasPrev record { action = (UpdateCommittee _ _ _) } v = no λ ()
+  hasPrev record { action = (NewConstitution _ _) }   v = no λ ()
+  hasPrev record { action = (TriggerHF v') }          v = case pvCanFollow? {v'} {v} of λ where
     (yes p) → yes (-, refl , p)
     (no ¬p) → no  (λ where (_ , refl , h) → ¬p h)
-  hasPrev record { action = (ChangePParams _) }     v = no λ ()
-  hasPrev record { action = (TreasuryWdrl _) }      v = no λ ()
-  hasPrev record { action = Info }                  v = no λ ()
+  hasPrev record { action = (ChangePParams _) }       v = no λ ()
+  hasPrev record { action = (TreasuryWdrl _) }        v = no λ ()
+  hasPrev record { action = Info }                    v = no λ ()
 
   instance
     validHFAction? : ∀ {p s e} → validHFAction p s e ⁇
     validHFAction? {record { action = NoConfidence }} = Dec-⊤
-    validHFAction? {record { action = NewCommittee _ _ _ }} = Dec-⊤
+    validHFAction? {record { action = UpdateCommittee _ _ _ }} = Dec-⊤
     validHFAction? {record { action = NewConstitution _ _ }} = Dec-⊤
     validHFAction? {record { action = TriggerHF v ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
       with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
@@ -126,7 +126,7 @@ instance
             × validHFAction prop s enactState
             × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
             × hasParent' enactState s a prev ¿
-            ,′ isNewCommittee a
+            ,′ isUpdateCommittee a
 
         computeProof = case H of λ where
           (yes (wf , dep , vHFA , pol , HasParent' en) , yes (new , rem , q , refl)) →

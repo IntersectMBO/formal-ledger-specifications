@@ -25,6 +25,7 @@ open import Ledger.Utxo txs abs
 \end{code}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
+\begin{NoConway}
 \begin{code}
 record Snapshot : Set where
   constructor ⟦_,_⟧ˢ
@@ -39,6 +40,9 @@ record Snapshots : Set where
     mark set go  : Snapshot
     feeSS        : Coin
 
+\end{code}
+\end{NoConway}
+\begin{code}
 record EpochState : Type where
 \end{code}
 \begin{code}[hide]
@@ -52,6 +56,9 @@ record EpochState : Type where
     es         : EnactState
     fut        : RatifyState
 
+\end{code}
+\begin{NoConway}
+\begin{code}
 record NewEpochState : Type where
 \end{code}
 \begin{code}[hide]
@@ -62,6 +69,7 @@ record NewEpochState : Type where
     lastEpoch   : Epoch
     epochState  : EpochState
 \end{code}
+\end{NoConway}
 \end{AgdaMultiCode}
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
@@ -185,8 +193,6 @@ its results, i.e:
 
       utxoSt' = ⟦ utxoSt .utxo , 0 , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
-      ls' = ⟦ utxoSt' , govSt' , certState' ⟧ˡ
-
       acnt' = record acnt
         { treasury  = acnt .treasury ∸ totWithdrawals
                     + utxoSt .fees + utxoSt .donations + unclaimed }
@@ -198,7 +204,8 @@ its results, i.e:
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
-    _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈ ⟦ acnt' , ss' , ls' , es , fut' ⟧ᵉ'
+    _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈
+        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ˡ , es , fut' ⟧ᵉ'
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}

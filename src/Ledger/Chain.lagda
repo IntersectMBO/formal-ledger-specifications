@@ -116,8 +116,8 @@ data
         open EpochState epochState; open EnactState es
     in
        _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧ˡᵉ
-         ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt
+       ⟧ˡᵉ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
