@@ -1,4 +1,4 @@
-\section{UTxO}
+\lsection{UTxO}
 \label{sec:utxo}
 
 \subsection{Accounting}

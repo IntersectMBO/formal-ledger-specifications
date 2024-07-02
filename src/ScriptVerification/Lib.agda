@@ -9,7 +9,7 @@ module ScriptVerification.Lib (T D : Set){{DecEq-Data : DecEq D}}
   where
 
 open import ScriptVerification.AbstractImplementation T D valContext'
-open import ScriptVerification.LedgerImplementation T D
+open import ScriptVerification.LedgerImplementation T D 
   renaming (SVTransactionStructure to SVTransactionStructure')
 open import Ledger.ScriptValidation SVTransactionStructure' SVAbstractFunctions
 open import Data.Empty

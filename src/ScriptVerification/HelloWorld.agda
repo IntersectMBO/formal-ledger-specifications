@@ -1,8 +1,7 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import ScriptVerification.Prelude
 
+open import ScriptVerification.Prelude (String)
 module ScriptVerification.HelloWorld where
-
 open import ScriptVerification.LedgerImplementation String String
 open import Ledger.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure using (TxInfo; ScriptPurpose; Data)

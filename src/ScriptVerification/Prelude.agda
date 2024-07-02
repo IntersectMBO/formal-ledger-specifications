@@ -1,27 +1,43 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
-module ScriptVerification.Prelude where
-
-record ScriptImplementation (T D : Set) : Set₁ where
-  field -- serialise : T → D
-        -- deserialise : D → Maybe T
-        ⦃ DecEq-Data  ⦄ : DecEq D
-        -- valContext' : ScriptPurpose → TxInfo → D -- fix this
+module ScriptVerification.Prelude (D : Set) {{DecEq-Data : DecEq D}} where
 
 open import Tactic.Derive.DecEq
 
-  -- Only implementing Rwd, Mint and Spend
-  -- TODO: Implement Cert, Propose and Vote
+-- Only implementing Rwd, Mint and Spend
+-- TODO: Implement Cert, Propose and Vote
+-- All maps become lists of pairs to ensure decidable equality
 
-
-
+SDatum = D
 SValue = ℕ
 STxId = ℕ
 SIx = ℕ
 STxIn  = STxId × SIx
-
 SCredential = ℕ ⊎ ℕ
 SNetwork = ⊤
+SSlot = ℕ
+SKeyHash = ℕ
+
+record SBaseAddr : Set where
+  field net    : SNetwork
+        pay    : SCredential
+        stake  : SCredential
+instance
+  unquoteDecl DecEq-SBaseAddr = derive-DecEq
+    ((quote SBaseAddr , DecEq-SBaseAddr) ∷ [])
+
+record SBootstrapAddr : Set where
+  field net        : SNetwork
+        pay        : SCredential
+        attrsSize  : ℕ
+instance
+  unquoteDecl DecEq-SBootstrapAddr = derive-DecEq
+    ((quote SBootstrapAddr , DecEq-SBootstrapAddr) ∷ [])
+
+SAddr = SBaseAddr ⊎ SBootstrapAddr
+
+STxOut = SAddr × SValue × Maybe D -- dropping Maybe Script for now
+SUTxO  = List (STxIn × STxOut)
 
 record SRwdAddr : Set where
   field net    : SNetwork
@@ -41,18 +57,19 @@ instance
     ((quote SScriptPurpose , DecEq-SScriptPurpose) ∷ [])
 
 
-{-
-record TxInfo : Set where
-  field realizedInputs : UTxO
-        txouts  : Ix ⇀ TxOut
-        fee     : Value
-        mint    : Value
-        txcerts : List DCert
-        txwdrls : Wdrl
-        txvldt  : Maybe Slot × Maybe Slot
-        vkKey   : ℙ KeyHash
-        txdats  : DataHash ⇀ Datum
-        txid    : TxId
--}
+record STxInfo : Set where
+  field realizedInputs : SUTxO 
+        txouts         : List (SIx × STxOut)
+        fee            : SValue
+        mint           : SValue
+        -- not adding txcerts as rarely used
+        txwdrls        : List (SRwdAddr  × Coin)
+        txvldt         : Maybe SSlot × Maybe SSlot
+        vkey           : ℙ SKeyHash
+        txdats         : List D -- Hash is id for datums therfore List D can replicate: DataHash ⇀ Datum
+        txid           : STxId
+instance
+  unquoteDecl DecEq-STxInfo = derive-DecEq
+    ((quote STxInfo , DecEq-STxInfo) ∷ [])
 
-open import ScriptVerification.LedgerImplementation SScriptPurpose SScriptPurpose
+-- open import ScriptVerification.LedgerImplementation SScriptPurpose SScriptPurpose
