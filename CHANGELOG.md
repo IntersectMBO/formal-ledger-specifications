@@ -19,6 +19,7 @@
 - Replace `allEnactable` with `hasParent` in `GOV`
 - Add `curTreasury` field to transactions
 - Compute the voting stake distribution
+- Add deposit amount to `dereg` certificate
 
 ### V0.9
 

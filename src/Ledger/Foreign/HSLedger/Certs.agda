@@ -12,6 +12,9 @@ open import Ledger.Certs.Properties HSGovStructure
 instance
   _ = Convertible-Refl {String}
 
+  Convertible-DepositPurpose : ConvertibleType DepositPurpose F.DepositPurpose
+  Convertible-DepositPurpose = autoConvertible
+
   Convertible-PState : ConvertibleType PState F.PState
   Convertible-PState = autoConvertible
 
