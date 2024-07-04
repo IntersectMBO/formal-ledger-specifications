@@ -41,9 +41,9 @@ witnesses and some optional auxiliary data. Some key ingredients in
 the transaction body are:
 
 \begin{itemize}
-  \item A set of transaction inputs, each of which identifies an output from a previous transaction.
+  \item A set \AgdaField{txins} of transaction inputs, each of which identifies an output from a previous transaction.
     A transaction input consists of a transaction id and an index to uniquely identify the output.
-  \item An indexed collection of transaction outputs.
+  \item An indexed collection \AgdaField{txouts} of transaction outputs.
     The \TxOut type is an address paired with a coin value.
   \item A transaction fee. This value will be added to the fee pot.
   \item The size and the hash of the serialized form of the transaction that was included in the block.

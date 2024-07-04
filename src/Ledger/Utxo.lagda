@@ -95,8 +95,8 @@ Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition
 \end{Conway}
 %
 \ Note the special multiplication symbol \AgdaFunction{*↓} used in
-Figure~\ref{fig:functions:utxo}: it means multiply and round down the
-result.
+Figure~\ref{fig:functions:utxo}: it means multiply and take the absolute value of the
+result, rounded down to the nearest integer.
 
 \begin{NoConway}
 Figure~\ref{fig:ts-types:utxo-shelley} defines the types needed for the UTxO transition system.
@@ -448,10 +448,10 @@ instance
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
+\begin{NoConway}
 We write \maybeEq to mean that two potentially optional values are
 equal if they are both present.
 
-\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
   UTXO-inductive :

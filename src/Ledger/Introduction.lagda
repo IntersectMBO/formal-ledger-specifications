@@ -200,10 +200,12 @@ irrelevant. Additionally, all sets in this specification are finite.
 
 We use this set theory to define maps as seen below, which are used in
 many places. We usually think of maps as partial functions
-(i.e. functions not defined everywhere), but importantly they are not
-Agda functions. We denote the powerset operation by \PowerSet, which
-we use here to form a type of sets with elements in a given type.
-
+(i.e., functions not defined everywhere---equivalently, "left unique"
+relations) and we use the harpoon arrow \AgdaFunction{⇀} to
+distinguish such maps from standard Agda functions which use \AgdaSymbol{→}.
+The figure below also gives notation for the powerset operation, \PowerSet,
+used to form a type of sets with elements in a given type,
+as well as the subset relation and the equality relation for sets.
 \begin{figure*}[h]
 \begin{code}[hide]
 module _ (ℙ_ : Type → Type) (_∈_ : ∀ {A : Type} → A → ℙ A → Type) where
