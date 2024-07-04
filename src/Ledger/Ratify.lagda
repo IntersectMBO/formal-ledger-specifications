@@ -79,7 +79,8 @@ groups that have a \DRep threshold, so a \DRep vote will always be
 required. A protocol parameter may or may not be in the
 \SecurityGroup, so an \SPO vote may not be required.
 
-Each of the $P_x$ and $Q_x$ are protocol parameters.
+Finally, each of the \AgdaFunction{P}$_x$ and \AgdaFunction{Q}$_x$ in
+Figure~\ref{fig:ratification-requirements} are protocol parameters.
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
