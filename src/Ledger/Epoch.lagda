@@ -5,6 +5,8 @@
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
+import Data.Integer as ℤ
+open import Data.Integer.Ext
 
 open import Agda.Builtin.FromNat
 
@@ -23,6 +25,22 @@ open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 \end{code}
+\begin{NoConway}
+\begin{figure*}[h]
+\begin{code}
+record RewardUpdate : Set where
+  constructor ⟦_,_,_,_⟧ʳᵘ
+  field
+    Δt Δr Δf : ℤ
+    rs : Credential ⇀ Coin
+\end{code}
+\begin{code}[hide]
+    -- more convient here than doing checks
+    {zeroSum} : Δt + Δr + Δf + ℤ.+ ∑[ x ← rs ] x ≡ ℤ.0ℤ
+\end{code}
+\end{figure*}
+\end{NoConway}
+
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{NoConway}
@@ -62,12 +80,13 @@ record EpochState : Type where
 record NewEpochState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_⟧ⁿᵉ
+  constructor ⟦_,_,_⟧ⁿᵉ
   field
 \end{code}
 \begin{code}
     lastEpoch   : Epoch
     epochState  : EpochState
+    ru          : Maybe RewardUpdate
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -78,7 +97,7 @@ private variable
   nes nes' : NewEpochState
   e lastEpoch : Epoch
   fut fut' : RatifyState
-  eps eps' : EpochState
+  eps eps' eps'' : EpochState
   ls : LState
   acnt : Acnt
   es₀ : EnactState
@@ -86,6 +105,8 @@ private variable
   feeSS : Coin
   lstate : LState
   ss ss' : Snapshots
+  ru : RewardUpdate
+  mru : Maybe RewardUpdate
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
@@ -97,6 +118,29 @@ getStakeCred (a , _ , _ , _) = stakeCred a
 
 open RwdAddr using (stake)
 open GovActionState using (returnAddr)
+
+applyRUpd : RewardUpdate → EpochState → EpochState
+applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
+  ⟦ ⟦ treasury , reserves ⟧ᵃ
+  , ss
+  , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
+    , govSt
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , es
+  , fut
+  ⟧ᵉ' =
+  ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
+    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ
+  , ss
+  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
+    , govSt
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , es
+  , fut ⟧ᵉ'
+  where
+    regRU     = rs ∣ dom rewards
+    unregRU   = rs ∣ dom rewards ᶜ
+    unregRU'  = ∑[ x ← unregRU ] x
 \end{code}
 
 \begin{figure*}[h]
@@ -191,11 +235,10 @@ its results, i.e:
         , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps)
           , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ ⟧ᶜˢ
 
-      utxoSt' = ⟦ utxoSt .utxo , 0 , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
+      utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
       acnt' = record acnt
-        { treasury  = acnt .treasury ∸ totWithdrawals
-                    + utxoSt .fees + utxoSt .donations + unclaimed }
+        { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
     in
     record { currentEpoch = e
            ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
@@ -224,16 +267,24 @@ data
   where
 \end{code}
 \begin{code}
-  NEWEPOCH-New :
-    e ≡ lastEpoch + 1
-    → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-    ────────────────────────────────
-    _ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' ⟧ⁿᵉ
+  NEWEPOCH-New : let
+      eps' = applyRUpd ru eps
+    in
+    ∙ e ≡ lastEpoch + 1
+    ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
+      ────────────────────────────────
+      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧ⁿᵉ
 
   NEWEPOCH-Not-New :
-    e ≢ lastEpoch + 1
-    ────────────────────────────────
-    _ ⊢ ⟦ lastEpoch , eps ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps ⟧ⁿᵉ
+    ∙ e ≢ lastEpoch + 1
+      ────────────────────────────────
+      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧ⁿᵉ
+
+  NEWEPOCH-No-Reward-Update :
+    ∙ e ≡ lastEpoch + 1
+    ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+      ────────────────────────────────
+      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧ⁿᵉ
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}

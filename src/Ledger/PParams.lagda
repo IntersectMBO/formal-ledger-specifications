@@ -39,6 +39,7 @@ remain in treasury and reserves.
 record Acnt : Type where
 \end{code}
 \begin{code}[hide]
+  constructor ⟦_,_⟧ᵃ
   field
 \end{code}
 \begin{code}

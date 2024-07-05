@@ -63,23 +63,26 @@ instance
   Computational-EPOCH .computeProof Γ s sig = success EPOCH-total'
   Computational-EPOCH .completeness Γ s sig s' h = cong success (EPOCH-complete' s' h)
 
-module _ {nes : NewEpochState} {e : Epoch} where
+module _ {e : Epoch} where
 
-  open NewEpochState nes
+  NEWEPOCH-total : ∀ nes'' → ∃[ nes' ] _ ⊢ nes'' ⇀⦇ e ,NEWEPOCH⦈ nes'
+  NEWEPOCH-total ⟦ lastEpoch , _ , ru ⟧ⁿᵉ with e ≟ lastEpoch + 1 | ru
+  ... | yes p | just ru = ⟦ e , proj₁ EPOCH-total' , nothing ⟧ⁿᵉ
+                        , NEWEPOCH-New (p , EPOCH-total' .proj₂)
+  ... | yes p | nothing = ⟦ e , proj₁ EPOCH-total' , nothing ⟧ⁿᵉ
+                        , NEWEPOCH-No-Reward-Update (p , EPOCH-total' .proj₂)
+  ... | no ¬p | _ = -, NEWEPOCH-Not-New ¬p
 
-  NEWEPOCH-total : ∃[ nes' ] _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes'
-  NEWEPOCH-total with e ≟ lastEpoch + 1
-  ... | yes p = ⟦ e , proj₁ EPOCH-total' ⟧ⁿᵉ , NEWEPOCH-New p (EPOCH-total' .proj₂)
-  ... | no ¬p = -, NEWEPOCH-Not-New ¬p
-
-  NEWEPOCH-complete : ∀ nes' → _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes' → proj₁ NEWEPOCH-total ≡ nes'
-  NEWEPOCH-complete nes' h with e ≟ lastEpoch + 1 | h
-  ... | yes p | NEWEPOCH-New x x₁  rewrite EPOCH-complete' _ x₁ = refl
-  ... | yes p | NEWEPOCH-Not-New x = ⊥-elim $ x p
-  ... | no ¬p | NEWEPOCH-New x x₁  = ⊥-elim $ ¬p x
-  ... | no ¬p | NEWEPOCH-Not-New x = refl
+  NEWEPOCH-complete : ∀ nes nes' → _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes' → proj₁ (NEWEPOCH-total nes) ≡ nes'
+  NEWEPOCH-complete ⟦ lastEpoch , _ , ru ⟧ⁿᵉ nes' h with e ≟ lastEpoch + 1 | ru | h
+  ... | yes p | just ru | NEWEPOCH-New (x , x₁) rewrite EPOCH-complete' _ x₁ = refl
+  ... | yes p | ru | NEWEPOCH-Not-New x = ⊥-elim $ x p
+  ... | yes p | nothing | NEWEPOCH-No-Reward-Update (x , x₁) rewrite EPOCH-complete' _ x₁ = refl
+  ... | no ¬p | ru | NEWEPOCH-New (x , x₁)  = ⊥-elim $ ¬p x
+  ... | no ¬p | ru | NEWEPOCH-Not-New x = refl
+  ... | no ¬p | nothing | NEWEPOCH-No-Reward-Update (x , x₁) = ⊥-elim $ ¬p x
 
 instance
   Computational-NEWEPOCH : Computational _⊢_⇀⦇_,NEWEPOCH⦈_ ⊥
-  Computational-NEWEPOCH .computeProof Γ s sig = success NEWEPOCH-total
-  Computational-NEWEPOCH .completeness Γ s sig s' h = cong success (NEWEPOCH-complete s' h)
+  Computational-NEWEPOCH .computeProof Γ s sig = success (NEWEPOCH-total _)
+  Computational-NEWEPOCH .completeness Γ s sig s' h = cong success (NEWEPOCH-complete _ s' h)
