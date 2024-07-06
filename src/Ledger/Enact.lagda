@@ -157,8 +157,8 @@ data
 
   Enact-PParams :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢  s ⇀⦇ ChangePParams up ,ENACT⦈
-                record  s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
+    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
+      record s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
 
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
     ∑[ x ← newWdrls ] x ≤ t
