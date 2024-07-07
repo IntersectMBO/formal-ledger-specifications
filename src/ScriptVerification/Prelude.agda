@@ -36,7 +36,8 @@ instance
 
 SAddr = SBaseAddr ⊎ SBootstrapAddr
 
-STxOut = SAddr × SValue × Maybe D -- dropping Maybe Script for now
+-- ScriptHash
+STxOut = SAddr × SValue × Maybe (D ⊎ D) -- Assumes hash is identity for datums, dropping Maybe Script for now
 SUTxO  = List (STxIn × STxOut)
 
 record SRwdAddr : Set where
