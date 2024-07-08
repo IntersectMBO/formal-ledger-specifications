@@ -61,4 +61,9 @@ represents an optional value and can either be
 (indicating the absence of a value).  If \AgdaBound{x} has type \AgdaDatatype{X}, then
 \AgdaInductiveConstructor{just}\AgdaSpace{}\AgdaBound{x} has type
 \AgdaDatatype{Maybe}\AgdaSpace{}\AgdaDatatype{X}.
+\item[The \AgdaFunction{\$} symbol] is used as a function application operator that has the lowest precedence;
+it allows for the elimination of parentheses in expressions. For example,
+\AgdaFunction{f}\AgdaSpace{}\AgdaFunction{\$}\AgdaSpace{}\AgdaFunction{g}\AgdaSpace{}%
+\AgdaFunction{\$}\AgdaSpace{}\AgdaFunction{h}\AgdaSpace{}\AgdaBound{x} is equivalent to
+\AgdaFunction{f}\AgdaSpace{}(\AgdaFunction{g}\AgdaSpace{}(\AgdaFunction{h}\AgdaSpace{}\AgdaBound{x})).
 \end{description}
