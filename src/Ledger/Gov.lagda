@@ -110,13 +110,13 @@ validHFAction _ _ _ = ⊤
 \footnotetext{\AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends element \AgdaBound{x} to list \AgdaBound{l}.}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
-\begin{code}[hide]
--- convert list of (GovActionID,GovActionState)-pairs to list GovActionID pairs.
+\begin{code}
+-- Convert list of (GovActionID, GovActionState) pairs.
 getAidPairsList : GovState → List (GovActionID × GovActionID)
 getAidPairsList aid×states =
   mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×states
 
--- a list of GovActionID pairs connects the first GovActionID to the second
+-- A list of GovActionID pairs connects the first GovActionID to the second.
 _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Type
 [] connects aidNew to aidOld = aidNew ≡ aidOld
 ((aid , aidPrev) ∷ s) connects aidNew to aidOld  =
@@ -136,8 +136,7 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
 
 allEnactable : EnactState → GovState → Type
 allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
-\end{code}
-\begin{code}
+
 hasParentE : EnactState → GovActionID → GovAction → Type
 hasParentE e aid a = case getHashES e a of
 \end{code}
