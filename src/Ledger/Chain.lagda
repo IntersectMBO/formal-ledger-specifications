@@ -100,9 +100,11 @@ calculateStakeDistrs ls =
 data
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaSuppressSpace}
 \begin{code}
   _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{Type of the CHAIN transition system}
 \end{figure*}
 \begin{code}[hide]

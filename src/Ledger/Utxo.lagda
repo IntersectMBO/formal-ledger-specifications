@@ -221,10 +221,10 @@ instance
 \end{code}
 \begin{code}
 certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
-certDeposit (delegate c _ _ v) _  = ❴ CredentialDeposit c , v                ❵
-certDeposit (regpool kh _)     pp = ❴ PoolDeposit      kh , pp .poolDeposit  ❵
-certDeposit (regdrep c v _)    _  = ❴ DRepDeposit       c , v                ❵
-certDeposit _                  _  = ∅
+certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
+certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
+certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
+certDeposit _                  _   = ∅
 
 certRefund : DCert → ℙ DepositPurpose
 certRefund (dereg c _)    = ❴ CredentialDeposit c ❵
