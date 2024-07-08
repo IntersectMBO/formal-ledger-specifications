@@ -2,7 +2,9 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-module Ledger.Introduction where
+open import Axiom.Set using (Theory)
+
+module Ledger.Introduction (th : Theory) where
 
 open import Prelude
 
@@ -208,29 +210,29 @@ used to form a type of sets with elements in a given type,
 as well as the subset relation and the equality relation for sets.
 \begin{figure*}[h]
 \begin{code}[hide]
-module _ (ℙ_ : Type → Type) (_∈_ : ∀ {A : Type} → A → ℙ A → Type) where
-  private variable
-    a c : Level
-    A : Type a
-  Σ-syntax' : (A : Type a) → (A → Type c) → Type _
-  Σ-syntax' = Σ
-  syntax Σ-syntax' A (λ x → B) = x ∈ A ﹐ B
+open Theory th using (_∈_) renaming (Set to ℙ)
+private variable
+  a c : Level
+  A : Type a
+Σ-syntax' : (A : Type a) → (A → Type c) → Type _
+Σ-syntax' = Σ
+syntax Σ-syntax' A (λ x → B) = x ∈ A ﹐ B
 \end{code}
 \begin{code}
-  _⊆_ : {A : Type} → ℙ A → ℙ A → Type
-  X ⊆ Y = ∀ {x} → x ∈ X → x ∈ Y
+_⊆_ : {A : Type} → ℙ A → ℙ A → Type
+X ⊆ Y = ∀ {x} → x ∈ X → x ∈ Y
 
   _≡ᵉ_ : {A : Type} → ℙ A → ℙ A → Type
   X ≡ᵉ Y = X ⊆ Y × Y ⊆ X
 
-  Rel : Type → Type → Type
-  Rel A B = ℙ (A × B)
+Rel : Type → Type → Type
+Rel A B = ℙ (A × B)
 
-  left-unique : {A B : Type} → Rel A B → Type
-  left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
+left-unique : {A B : Type} → Rel A B → Type
+left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
-  _⇀_ : Type → Type → Type
-  A ⇀ B = r ∈ Rel A B ﹐ left-unique r
+_⇀_ : Type → Type → Type
+A ⇀ B = r ∈ Rel A B ﹐ left-unique r
 \end{code}
 \end{figure*}
 

@@ -21,6 +21,11 @@ open import Ledger.Types.Epoch
 
 open import Ledger.Transaction renaming (Vote to VoteTag) public
 
+postulate
+  error : {A : Set} → String → A
+{-# FOREIGN GHC import Data.Text #-}
+{-# COMPILE GHC error = \ _ s -> error (unpack s) #-}
+
 module _ {A : Type} ⦃ _ : DecEq A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id

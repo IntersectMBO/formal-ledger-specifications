@@ -77,7 +77,7 @@ txInfo l pp utxo tx = record
 
 data DelegateOrDeReg : DCert → Type where instance
   delegate  : ∀ {x y z w} → DelegateOrDeReg (delegate x y z w)
-  dereg     : ∀ {x} →       DelegateOrDeReg (dereg x)
+  dereg     : ∀ {x y} →     DelegateOrDeReg (dereg x y)
   regdrep   : ∀ {x y z} →   DelegateOrDeReg (regdrep x y z)
   deregdrep : ∀ {x} →       DelegateOrDeReg (deregdrep x)
 
@@ -85,7 +85,7 @@ instance
   Dec-DelegateOrDeReg : DelegateOrDeReg ⁇¹
   Dec-DelegateOrDeReg {dc} .dec with dc
   ... | delegate _ _ _ _ = yes it
-  ... | dereg _          = yes it
+  ... | dereg _ _        = yes it
   ... | regdrep _ _ _    = yes it
   ... | deregdrep _      = yes it
   ... | regpool _ _      = no λ ()
@@ -123,8 +123,8 @@ certScripts d with ¿ DelegateOrDeReg d ¿
 ... | no ¬p = nothing
 certScripts c@(delegate  (KeyHashObj x) _ _ _) | yes p = nothing
 certScripts c@(delegate  (ScriptObj  y) _ _ _) | yes p = just (Cert c , y)
-certScripts c@(dereg     (KeyHashObj x))       | yes p = nothing
-certScripts c@(dereg     (ScriptObj  y))       | yes p = just (Cert c , y)
+certScripts c@(dereg     (KeyHashObj x) _)     | yes p = nothing
+certScripts c@(dereg     (ScriptObj  y) _)     | yes p = just (Cert c , y)
 certScripts c@(regdrep   (KeyHashObj x) _ _)   | yes p = nothing
 certScripts c@(regdrep   (ScriptObj  y) _ _)   | yes p = just (Cert c , y)
 certScripts c@(deregdrep (KeyHashObj x))       | yes p = nothing

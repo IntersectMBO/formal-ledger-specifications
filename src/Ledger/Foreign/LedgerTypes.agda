@@ -173,7 +173,7 @@ data VDeleg : Type where
 {-# FOREIGN GHC
   data TxCert
     = Delegate Credential (Maybe VDeleg) (Maybe Integer) Coin
-    | Dereg Credential
+    | Dereg Credential Coin
     | RegPool Integer PoolParams
     | RetirePool Integer Epoch
     | RegDRep Credential Coin Anchor
@@ -183,7 +183,7 @@ data VDeleg : Type where
 #-}
 data TxCert : Type where
   Delegate    : Credential → Maybe VDeleg → Maybe Hash → Coin → TxCert
-  Dereg       : Credential → TxCert
+  Dereg       : Credential → Coin → TxCert
   RegPool     : Hash → PoolParams → TxCert
   RetirePool  : Hash → Epoch → TxCert
   RegDRep     : Credential → Coin → Anchor → TxCert
@@ -464,7 +464,7 @@ Voter = Pair GovRole Credential
 
 data GovAction : Type where
   NoConfidence     :                                                         GovAction
-  NewCommittee     : (HSMap Credential Epoch) → List Credential → Rational → GovAction
+  UpdateCommittee  : (HSMap Credential Epoch) → List Credential → Rational → GovAction
   NewConstitution  : DataHash → Maybe ScriptHash                           → GovAction
   TriggerHF        : ProtVer                                               → GovAction
   ChangePParams    : PParamsUpdate                                         → GovAction
@@ -508,7 +508,7 @@ GovState = List (Pair GovActionID GovActionState)
 
   data GovAction
     = NoConfidence
-    | NewCommittee (HSMap Credential Epoch) [Credential] Rational
+    | UpdateCommittee (HSMap Credential Epoch) [Credential] Rational
     | NewConstitution DataHash (Maybe ScriptHash)
     | TriggerHF ProtVer
     | ChangePParams PParamsUpdate
@@ -550,7 +550,7 @@ GovState = List (Pair GovActionID GovActionState)
 #-}
 {-# COMPILE GHC GovAction = data GovAction
   ( NoConfidence
-  | NewCommittee
+  | UpdateCommittee
   | NewConstitution
   | TriggerHF
   | ChangePParams
@@ -564,17 +564,34 @@ GovState = List (Pair GovActionID GovActionState)
 {-# COMPILE GHC GovProposal = data GovProposal (MkGovProposal) #-}
 {-# COMPILE GHC GovSignal = data GovSignal (GovSignalVote|GovSignalProposal) #-}
 
+data DepositPurpose : Type where
+  CredentialDeposit  : Credential   → DepositPurpose
+  PoolDeposit        : Hash         → DepositPurpose
+  DRepDeposit        : Credential   → DepositPurpose
+  GovActionDeposit   : GovActionID  → DepositPurpose
+{-# FOREIGN GHC
+  data DepositPurpose
+    = CredentialDeposit Credential
+    | PoolDeposit Integer
+    | DRepDeposit Credential
+    | GovActionDeposit GovActionID
+#-}
+{-# COMPILE GHC DepositPurpose =
+  data DepositPurpose (CredentialDeposit | PoolDeposit | DRepDeposit | GovActionDeposit) #-}
+
 record CertEnv : Type where
-  field epoch  : Epoch
-        pp     : PParams
-        votes  : List GovVote
-        wdrls  : HSMap RwdAddr Coin
+  field epoch    : Epoch
+        pp       : PParams
+        votes    : List GovVote
+        wdrls    : HSMap RwdAddr Coin
+        deposits : HSMap DepositPurpose Coin
 {-# FOREIGN GHC
   data CertEnv = MkCertEnv
-    { epoch :: Epoch
-    , pp    :: PParams
-    , votes :: [GovVote]
-    , wdrls :: HSMap RwdAddr Coin
+    { epoch      :: Epoch
+    , pp         :: PParams
+    , votes      :: [GovVote]
+    , wdrls      :: HSMap RwdAddr Coin
+    , ceDeposits :: HSMap DepositPurpose Coin
     }
 #-}
 {-# COMPILE GHC CertEnv = data CertEnv (MkCertEnv) #-}
@@ -771,13 +788,28 @@ record NewEpochEnv : Type where
 #-}
 {-# COMPILE GHC NewEpochEnv = data NewEpochEnv (MkNewEpochEnv) #-}
 
+record RewardUpdate : Type where
+  field Δt Δr Δf : ℤ
+        rs : HSMap Credential Coin
+{-# FOREIGN GHC
+  data RewardUpdate = MkRewardUpdate
+    { deltaT  :: Integer
+    , deltaR  :: Integer
+    , deltaF  :: Integer
+    , rs      :: HSMap Credential Coin
+    }
+#-}
+{-# COMPILE GHC RewardUpdate = data RewardUpdate (MkRewardUpdate) #-}
+
 record NewEpochState : Type where
   field lastEpoch   : Epoch
         epochState  : EpochState
+        ru          : Maybe RewardUpdate
 {-# FOREIGN GHC
   data NewEpochState = MkNewEpochState
     { lastEpoch  :: Epoch
     , epochState :: EpochState
+    , ru         :: Maybe RewardUpdate
     }
 #-}
 {-# COMPILE GHC NewEpochState = data NewEpochState (MkNewEpochState) #-}
@@ -805,10 +837,12 @@ record Block : Type where
 record DelegEnv : Type where
   field dePParams  : PParams
         dePools    : HSMap Hash PoolParams
+        deposits   : HSMap DepositPurpose Coin
 {-# FOREIGN GHC
   data DelegEnv = MkDelegEnv
     { dePParams :: PParams
     , dePools :: HSMap Integer PoolParams
+    , deDeposits :: HSMap DepositPurpose Coin
     }
 #-}
 {-# COMPILE GHC DelegEnv = data DelegEnv (MkDelegEnv) #-}

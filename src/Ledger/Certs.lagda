@@ -8,8 +8,31 @@ open import Ledger.Types.GovStructure
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
 
+open import Tactic.Derive.DecEq
+
 open import Ledger.GovernanceActions gs
+open RwdAddr
 \end{code}
+
+\begin{figure*}[h]
+\emph{Derived types}
+\begin{code}
+data DepositPurpose : Type where
+  CredentialDeposit  : Credential   → DepositPurpose
+  PoolDeposit        : KeyHash      → DepositPurpose
+  DRepDeposit        : Credential   → DepositPurpose
+  GovActionDeposit   : GovActionID  → DepositPurpose
+
+Deposits = DepositPurpose ⇀ Coin
+\end{code}
+\begin{code}[hide]
+instance
+  unquoteDecl DecEq-DepositPurpose = derive-DecEq
+    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
+\end{code}
+\caption{Deposit types}
+\end{figure*}
+
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
 \begin{NoConway}
@@ -26,7 +49,7 @@ record PoolParams : Type where
 \begin{code}
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
-  dereg       : Credential → DCert
+  dereg       : Credential → Coin → DCert
   regpool     : KeyHash → PoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
@@ -37,7 +60,7 @@ data DCert : Type where
 \begin{code}
 cwitness : DCert → Credential
 cwitness (delegate c _ _ _)  = c
-cwitness (dereg c)           = c
+cwitness (dereg c _)         = c
 cwitness (regpool kh _)      = KeyHashObj kh
 cwitness (retirepool kh _)   = KeyHashObj kh
 cwitness (regdrep c _ _)     = c
@@ -55,14 +78,15 @@ cwitness (ccreghot c _)      = c
 record CertEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ᶜ
+  constructor ⟦_,_,_,_,_⟧ᶜ
   field
 \end{code}
 \begin{code}
-    epoch  : Epoch
-    pp     : PParams
-    votes  : List GovVote
-    wdrls  : RwdAddr ⇀ Coin
+    epoch     : Epoch
+    pp        : PParams
+    votes     : List GovVote
+    wdrls     : RwdAddr ⇀ Coin
+    deposits  : Deposits
 
 record DState : Type where
 \end{code}
@@ -115,12 +139,13 @@ record CertState : Type where
 record DelegEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_⟧ᵈᵉ
+  constructor ⟦_,_,_⟧ᵈᵉ
   field
 \end{code}
 \begin{code}
     pparams  : PParams
     pools    : KeyHash ⇀ PoolParams
+    deposits : Deposits
 
 GovCertEnv  = CertEnv
 PoolEnv     = PParams
@@ -157,6 +182,12 @@ private variable
   vs : List GovVote
   poolParams : PoolParams
   wdrls  : RwdAddr ⇀ Coin
+  dreps : Credential ⇀ Epoch
+  ccHotKeys : Credential ⇀ Maybe Credential
+  voteDelegs : Credential ⇀ VDeleg
+  stakeDelegs : Credential ⇀ KeyHash
+  rewards : Credential ⇀ Coin
+  deps : Deposits
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -172,6 +203,16 @@ addresses are still accessible, they just don't count towards the
 stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
 the \TreasuryWdrl governance action in case of the MIR certificates.
+
+\subsection{Explicit deposits}
+
+Registration and deregistration of staking credentials are now
+required to explicitly state the deposit that is being paid or
+refunded. This aligns them better with other design decisions such as
+having explicit transaction fees and helps make this information
+visible to light clients and hardware wallets. While not shown in the
+figures, the old certificates without explicit deposits will still be
+supported for some time for backwards compatibility.
 
 \subsection{Delegation}
 
@@ -263,14 +304,15 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , deps ⟧ᵈᵉ ⊢
         ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
         ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
+    ∙ (CredentialDeposit c , d) ∈ deps
       ────────────────────────────────
-      ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c ,DELEG⦈
+      ⟦ pp , pools , deps ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
                           ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 \end{code}
 \end{AgdaSuppressSpace}
@@ -310,7 +352,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
   GOVCERT-regdrep : let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
                                   ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
@@ -349,14 +391,14 @@ data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
 \begin{code}
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
@@ -371,7 +413,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
 \begin{code}
   CERT-base :
-    let open PParams pp; open GState stᵍ; open DState stᵈ; open RwdAddr
+    let open PParams pp
         refresh         = mapPartial getDRepVote (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
@@ -379,8 +421,9 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
+        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
+        ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
 \end{code}

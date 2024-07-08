@@ -145,16 +145,6 @@ as an erratum to the Shelley specification.
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{AgdaMultiCode}
-\begin{code}
-data DepositPurpose : Type where
-  CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : KeyHash      → DepositPurpose
-  DRepDeposit        : Credential   → DepositPurpose
-  GovActionDeposit   : GovActionID  → DepositPurpose
-
-Deposits = DepositPurpose ⇀ Coin
-
-\end{code}
 \begin{NoConway}
 \emph{UTxO environment}
 \begin{code}
@@ -226,21 +216,18 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \begin{code}[hide]
 instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
-
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
 \end{code}
 \begin{code}
 certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
-certDeposit (delegate c _ _ v) _  = ❴ CredentialDeposit c , v                ❵
-certDeposit (regpool kh _)     pp = ❴ PoolDeposit      kh , pp .poolDeposit  ❵
-certDeposit (regdrep c v _)    _  = ❴ DRepDeposit       c , v                ❵
-certDeposit _                  _  = ∅
+certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
+certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
+certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
+certDeposit _                  _   = ∅
 
 certRefund : DCert → ℙ DepositPurpose
-certRefund (dereg c)      = ❴ CredentialDeposit c ❵
+certRefund (dereg c _)    = ❴ CredentialDeposit c ❵
 certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
 certRefund _              = ∅
 

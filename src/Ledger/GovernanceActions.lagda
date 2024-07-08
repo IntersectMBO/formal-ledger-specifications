@@ -57,7 +57,7 @@ record Anchor : Type where
 
 data GovAction : Type where
   NoConfidence     :                                             GovAction
-  NewCommittee     : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
+  UpdateCommittee  : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
   NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction
   TriggerHF        : ProtVer                                  →  GovAction
   ChangePParams    : PParamsUpdate                            →  GovAction
@@ -71,13 +71,13 @@ actionWellFormed _                  = ⊤
 \end{code}
 \begin{code}[hide]
 actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
-actionWellFormed? {NoConfidence}        = it
-actionWellFormed? {NewCommittee _ _ _}  = it
-actionWellFormed? {NewConstitution _ _} = it
-actionWellFormed? {TriggerHF _}         = it
-actionWellFormed? {ChangePParams _}     = it
-actionWellFormed? {TreasuryWdrl _}      = it
-actionWellFormed? {Info}                = it
+actionWellFormed? {NoConfidence}          = it
+actionWellFormed? {UpdateCommittee _ _ _} = it
+actionWellFormed? {NewConstitution _ _}   = it
+actionWellFormed? {TriggerHF _}           = it
+actionWellFormed? {ChangePParams _}       = it
+actionWellFormed? {TreasuryWdrl _}        = it
+actionWellFormed? {Info}                  = it
 \end{code}
 \end{AgdaMultiCode}
 \caption{Governance actions}
@@ -99,6 +99,14 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
     a well-formedness check is unnecessary.
 
 \end{itemize}
+The governance actions carry the following information:
+\begin{itemize}
+  \item \UpdateCommittee: a map of credentials and terms to add and a set of credentials to remove from the committee;
+  \item \NewConstitution: a hash of the new constitution document and an optional proposal policy;
+  \item \TriggerHF: the protocol version of the epoch to hard fork into;
+  \item \ChangePParams: the updates to the parameters; and
+  \item \TreasuryWdrl: a map of withdrawals.
+\end{itemize}
 \begin{figure*}[h]
 \begin{longtable}[]{@{}
  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2}}
@@ -107,7 +115,7 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \hline
 \endhead
 \NoConfidence            & a motion to create a \emph{state of no-confidence} in the current constitutional committee \\[10pt]
-\NewCommittee            & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
+\UpdateCommittee         & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
 \NewConstitution         & a modification to the off-chain Constitution and the proposal policy script \\[10pt]
 \TriggerHF\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\[10pt]
 \ChangePParams           & a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\[10pt]
@@ -139,7 +147,7 @@ is achieved by requiring actions to unambiguously link to the state
 they are modifying via a pointer to the previous modification. A
 proposal can only be enacted if it contains the \GovActionID of the
 previously enacted proposal modifying the same piece of
-state. \NoConfidence and \NewCommittee modify the same state, while
+state. \NoConfidence and \UpdateCommittee modify the same state, while
 every other type of governance action has its own state that isn't
 shared with any other action. This means that the enactibility of a
 proposal can change when other proposals are enacted.
@@ -156,13 +164,13 @@ that a \GovActionID is not necessary for the given \GovAction.
 \begin{figure*}[h]
 \begin{code}
 NeedsHash : GovAction → Type
-NeedsHash NoConfidence           = GovActionID
-NeedsHash (NewCommittee _ _ _)   = GovActionID
-NeedsHash (NewConstitution _ _)  = GovActionID
-NeedsHash (TriggerHF _)          = GovActionID
-NeedsHash (ChangePParams _)      = GovActionID
-NeedsHash (TreasuryWdrl _)       = ⊤
-NeedsHash Info                   = ⊤
+NeedsHash NoConfidence             = GovActionID
+NeedsHash (UpdateCommittee _ _ _)  = GovActionID
+NeedsHash (NewConstitution _ _)    = GovActionID
+NeedsHash (TriggerHF _)            = GovActionID
+NeedsHash (ChangePParams _)        = GovActionID
+NeedsHash (TreasuryWdrl _)         = ⊤
+NeedsHash Info                     = ⊤
 
 HashProtected : Type → Type
 HashProtected A = A × GovActionID
@@ -250,11 +258,12 @@ submitted. Beside the proposed action, it requires:
 \item an \Anchor, providing further information about the proposal.
 \end{itemize}
 
-While the deposit is held, it is added to the deposit pot, similar
-to stake key deposits. It is also counted towards the stake of the
-reward address to which it will be returned, so as not to reduce the submitter's
-voting power when voting on their own (and competing) actions. For a
-proposal to be valid, the proposal must be set to the current value of
+While the deposit is held, it is added to the deposit pot, similar to
+stake key deposits. It is also counted towards the voting stake (but
+not the block production stake) of the reward address to which it will
+be returned, so as not to reduce the submitter's voting power when
+voting on their own (and competing) actions. For a proposal to be
+valid, the proposal must be set to the current value of
 \govActionDeposit. The deposit will be returned when the action is
 removed from the state in any way.
 

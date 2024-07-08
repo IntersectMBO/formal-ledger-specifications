@@ -22,7 +22,6 @@ def replace_suffix(x, s1, s2):
 
 def rm_weird_agda_patterns(lines):
     # The pattern to match the specified form
-    #pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[0-9]+I\]%'
     pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[1-9][0-9]*I\]'
     
     # List to store lines that do not match the pattern
@@ -52,10 +51,6 @@ def remove_prefixes(ls1, ls2):
     """
     Remove any prefix from the first string in `ls1` if that prefix is an element of `ls2`.
     If the first element of `ls1` is fully removed, then proceed to the next element, and so on.
-    EXAMPLE Inputs: ls1 = ["prefix_match", "abc", "def"]
-                    ls2 = ["prefix", "_", "ab"]
-                    print(remove_prefixes(ls1, ls2))  
-            Output: ['match', 'abc', 'def']
     """
     while ls1 and ls1[0]:  # While there's a non-empty string in the first position
         new_first = rm_prefixes(ls1[0], ls2)
@@ -71,10 +66,6 @@ def remove_suffixes(ls1, ls2):
     Remove any suffix from the last string in `ls1` if that suffix is an element of `ls2`.  
     If the last element of `ls1` is fully removed, repeat this suffix removal procedure 
     on the previous (new last) element of `ls1`, and so on.
-    EXAMPLE Inputs: ls1 = ["abc", "def", "suffix_match"]
-                    ls2 = ["suffix", "match", "def"]
-                    print(remove_suffixes(ls1, ls2))
-            Output: ['abc', 'def', 'suffix_']
     """
     while ls1 and ls1[-1]:  # While there's a non-empty string in the last position
         new_last = rm_suffixes(ls1[-1], ls2)
@@ -118,14 +109,11 @@ def get_back_until_match_from(ls1, ls2):
     2. ls1[n:], the remaining elements of `ls1`, the first of which has an element 
        of ls2 as a substring.
 
-    Parameters:
-    ls1 (list of str): List of strings to be split.
-    ls2 (list of str): List of substrings to search for in ls1.
-
-    Returns:
-    pair of lists of strings:
-    - The first returned list has elements from ls1 up to and including the last match.
-    - The second has the remaining elements, after the last match, from ls1.
+    Parameters: ls1 (list of str), list of strings to be split.
+                ls2 (list of str), list of substrings to search for in ls1.
+    Return (pair of lists of strings):
+      - The first returned list has elements from ls1 up to and including the last match.
+      - The second has the remaining elements, after the last match, from ls1.
     """
     last_match_index = -1
 
@@ -149,14 +137,23 @@ def find_match(ls1, ls2):
             return index
     return -1
 
+def are_all_substrings(list1, list2):
+    """
+    Returns true iff every string in `list2` is a substring of some string in `list1`.
+    Parameters:  list1 (list of str): The list of strings to search within.
+                 list2 (list of str): The list of strings to search for.
+    """
+    return all(any(s2 in s1 for s1 in list1) for s2 in list2)
+
+
 ### String constants #########################################################################
 agda_space = "\\AgdaSpace{}"
 aic = "AgdaInductiveConstructor{,}"
 deduction = "AgdaFunction{───────────────────────────────"
 extra_skip = "[\\AgdaEmptyExtraSkip]"
 entailment1 = "\\AgdaFunction{⊢}"
-sts1 = "\\AgdaFunction{⇀⦇}"
 entailment2 = "\\AgdaDatatype{⊢}"
+sts1 = "\\AgdaFunction{⇀⦇}"
 sts2 = "\\AgdaDatatype{⇀⦇}"
 left_brace = "\\AgdaOperator{\\AgdaField{❴}}"
 right_brace = "\\AgdaOperator{\\AgdaField{❵}}"
@@ -169,6 +166,11 @@ begin_code_inline = "\\begin{code}[inline]"
 end_code = "\\end{code}"
 begin_array = "\\left(\\begin{array}{c}"
 end_array = "\\end{array}\\right)"
+
+agda_arrow = "\\AgdaSymbol{→}"
+gamma = "\\AgdaGeneralizable{Γ}"
+agda_dot = "\\AgdaFunction{∙}"
+
 # N.B. It's important that left_bracket includes the trailing curly brace, to avoid matching
 # constructors, while right_bracket does not include the trailing curly brace, so that the 
 # latter will match all varieties of closing brackets.
@@ -177,16 +179,53 @@ end_array = "\\end{array}\\right)"
 def inline_text(element):
     if not element:
         return []
-    return ["\\begin{code}[inline]\\text{"] + element + ["}\\end{code}\\\\"]
+    return [begin_code_inline + "\\text{"] + element + ["}" + end_code + newline]
 
 def should_be_inlined(str):
     inline_patterns = [entailment1, entailment2 , sts1, sts2]
     return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in [deduction])
 
+def replace_backslashes(input_string):
+    """
+    Replaces all occurrences of '\\\\' in the input string with ',' and returns the modified string
+    along with the count of replacements made.
+    (This function is useful for converting a string representing a LaTeX vertical vector 
+    to that of a horizontal vector.)
+    Parameters: input_string (str), the string to process.
+    Returns: A tuple containing the modified string and the number of replacements made.
+    """
+    replacements = input_string.count("\\\\")
+    modified_string = input_string.replace("\\\\", "&")
+    return modified_string, replacements
+
+def replace_backslashes_in_list(string_list):
+    """
+    Replaces all occurrences of '\\\\' in each string of the input list with '&' and returns 
+    the list of modified strings along with the total number of replacements.
+    Parameter: string_list (list of str), the list of strings to process.
+    Return: A tuple containing the list of modified strings along with the number of replacements.
+    """
+    total_replacements = 0
+    modified_list = []
+    for s in string_list:
+        if find_match([s], ["\\begin{code}[inline]"]) == -1:
+            replacements = s.count(newline)
+            total_replacements += replacements
+            s = s.replace(newline, "&")
+        modified_list.append(s)
+    return modified_list, total_replacements
+
+def make_horizontal_array(ls):
+    if not ls:
+        return []
+    ls = remove_suffixes(ls, [newline])
+    ls, n = replace_backslashes_in_list(ls)
+    return ["%START HORIZONTAL VEC%", "\\(" + "\\left(\\begin{array}{" + ('c' * (n + 1)) + "}"] + ls + ["\\end{array}\\right)^T\\)", "%END HORIZONTAL VEC%"]
+
 def make_array(ls):
     if not ls:
         return []
-    ls = remove_suffixes(ls, ["\\\\"])
+    ls = remove_suffixes(ls, [newline])
     return ["%START VEC%", "\\(" + begin_array] + ls + [end_array + "\\)", "%END VEC%"]
 
 def make_inner_array(ls):
@@ -241,7 +280,6 @@ def flatten(l):
     return l[0] + flatten(l[1:])
 
 def inline(l):
-    #l = strip_suffixes(strip_prefixes(l, [newline]), [newline])
     if not l:
         return []
     return [begin_code_inline] + l + [end_code]
@@ -260,24 +298,28 @@ def add_end(l):
         return l
     return l + [end_code]
 
-def process_pre_inline_block(inl, unwanted):
-    needs_newline = ["\\AgdaFunction{∙}", "\\AgdaBound{utxoSt'}", "\\AgdaBound{ls'}"]
+def process_inline_block(inl, unwanted):
     inl = remove_suffixes(remove_prefixes(inl, unwanted), unwanted)
     inl = rm_weird_agda_patterns(inl)
-    if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
-        return []
-    if find_match(inl, needs_newline) != -1:        
-        return [newline] + inline(inl)
-    return inline(inl)        
 
-def process_post_inline_block(inl, unwanted):
-    inl = remove_suffixes(remove_prefixes(inl, unwanted), unwanted)
-    inl = rm_weird_agda_patterns(inl)
+    semicolon_after = ["\\AgdaGeneralizable{fut}"]
+    space_before = [gamma, agda_dot, "\\AgdaBound{utxoSt'}", "\\AgdaFunction{mkStakeDistrs}", "\\AgdaFunction{stakeDistr}", agda_arrow]
+    space_after = [agda_arrow, "\\AgdaGeneralizable{fut}"]
+    newline_before = [agda_dot, "\\AgdaBound{ls'}", "\\AgdaBound{utxoSt'}"]
+
     if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
         return []
-    if find_match(inl, ["\\AgdaSymbol{=}"]) != -1:
-        return inline(inl) + [newline]
-    return inline(inl)        
+    if find_match(inl, semicolon_after) != -1:
+        inl = inl + [";"]
+    if find_match(inl, space_before) != -1:
+        inl = ["~" + agda_space] + inl
+    if find_match(inl, space_after) != -1:
+        inl = inl + [agda_space]
+
+    inl = inline(inl)
+    if find_match(inl, newline_before) != -1:
+        inl =  [newline] + inl
+    return inl        
 
 def safe_add(l1, l2):
     if not l1:
@@ -321,8 +363,11 @@ def process_lines(lines):
     inline_halt = inline_halt_back + ["\\AgdaFunction{∙}"]
 
     unwanted = ["%", begin_code, newline, extra_skip, "\\>[4]", "\\>[6]", "[@{}l@{\\AgdaIndent{0}}]"]
-    unwanted_inline = unwanted + ["\\<"]
-    
+    unwanted_inline = unwanted + ["\\>[0]", "\\>[2]", "\\<"]
+
+    horizontal1 = ["\\AgdaBound{es}", "\\AgdaField{∅}", "\\AgdaInductiveConstructor{false}"]
+    horizontal2 = ["\\AgdaBound{esW}", "\\AgdaBound{removed}", "\\AgdaUnderscore{}"]
+    horizontal3 = ["\\AgdaBound{utxoSt}", "\\AgdaBound{govSt}"]
     def process_lines_tr(ls, acc):
         if not ls:
             return acc
@@ -337,14 +382,16 @@ def process_lines(lines):
         # c: Agda code block preceding the vector that should be inlined
         aa , c = get_back_until_match_from(aac, inline_halt_back)
         aa = remove_suffixes(aa, unwanted)
-        c = process_pre_inline_block(c, unwanted_inline)
+        c = process_inline_block(c, unwanted_inline) # pre
 
         vec_block, newls = process_vector(bb[1:])
-
-        acc = safe_add(acc, add_end(aa)) + c + make_array(vec_block)
+        if are_all_substrings(vec_block, horizontal1) or are_all_substrings(vec_block, horizontal2) or are_all_substrings(vec_block, horizontal3):
+            acc = safe_add(acc, add_end(aa)) + c + make_horizontal_array(vec_block)
+        else:
+            acc = safe_add(acc, add_end(aa)) + c + make_array(vec_block)          
 
         inl, newls = get_until_match_from(newls, inline_halt)
-        inl = process_post_inline_block(inl, unwanted_inline)
+        inl = process_inline_block(inl, unwanted_inline) # postx
         acc = acc + inl
         if newls[0] == newline and newls[1] == "%" and newls[2] == newline + extra_skip + "%":
             newls = [newline] + newls[3:]

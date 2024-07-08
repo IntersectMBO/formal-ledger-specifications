@@ -100,9 +100,11 @@ calculateStakeDistrs ls =
 data
 \end{code}
 \begin{figure*}[h]
+\begin{AgdaSuppressSpace}
 \begin{code}
   _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type
 \end{code}
+\end{AgdaSuppressSpace}
 \caption{Type of the CHAIN transition system}
 \end{figure*}
 \begin{code}[hide]
@@ -116,8 +118,8 @@ data
         open EpochState epochState; open EnactState es
     in
        _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧ˡᵉ
-         ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt
+       ⟧ˡᵉ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }

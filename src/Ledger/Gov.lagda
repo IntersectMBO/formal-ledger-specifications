@@ -31,6 +31,7 @@ open import Relation.Nullary.Decidable using (map′)
 
 open GovActionState
 \end{code}
+
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{AgdaMultiCode}
@@ -50,7 +51,6 @@ record GovEnv : Type where
     pparams     : PParams
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
-
 \end{code}
 \end{AgdaMultiCode}
 \emph{Transition relation types}
@@ -87,15 +87,15 @@ addVote s aid voter v = map modifyVotes s
   where modifyVotes = λ (gid , s') → gid , record s'
           { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
 
-ActionId×ActionState : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
+mkGovStatePair : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
                  → GovActionID × GovActionState
-ActionId×ActionState e aid addr a prev = (aid , record
+mkGovStatePair e aid addr a prev = (aid , record
   { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
-addAction s e aid addr a prev = s ∷ʳ ActionId×ActionState e aid addr a prev
+addAction s e aid addr a prev = s ∷ʳ mkGovStatePair e aid addr a prev
 
 validHFAction : GovProposal → GovState → EnactState → Type
 validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
@@ -110,7 +110,7 @@ validHFAction _ _ _ = ⊤
 \footnotetext{\AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends element \AgdaBound{x} to list \AgdaBound{l}.}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
-\begin{code}
+\begin{code}[hide]
 -- convert list of (GovActionID,GovActionState)-pairs to list GovActionID pairs.
 getAidPairsList : GovState → List (GovActionID × GovActionID)
 getAidPairsList aid×states =
@@ -136,7 +136,8 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
 
 allEnactable : EnactState → GovState → Type
 allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
-
+\end{code}
+\begin{code}
 hasParentE : EnactState → GovActionID → GovAction → Type
 hasParentE e aid a = case getHashES e a of
 \end{code}
@@ -276,7 +277,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ actionWellFormed a
     ∙ d ≡ govActionDeposit
     ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
-    ∙ (∀ {new rem q} → a ≡ NewCommittee new rem q
+    ∙ (∀ {new rem q} → a ≡ UpdateCommittee new rem q
        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s a prev
@@ -305,7 +306,7 @@ For \GOVPropose, we check well-formedness, correctness of the deposit
 and some conditions depending on the type of the action:
 \begin{itemize}
 \item for \ChangePParams or \TreasuryWdrl, the proposal policy needs to be provided;
-\item for \NewCommittee, no proposals with members expiring in the present or past
+\item for \UpdateCommittee, no proposals with members expiring in the present or past
   epoch are allowed, and candidates cannot be added and removed at the same time;
 \item and we check the validity of hard-fork actions via \validHFAction.
 \end{itemize}

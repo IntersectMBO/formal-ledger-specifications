@@ -62,7 +62,7 @@ instance
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
-      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
+      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , UTxOState.deposits utxoSt ⟧ᶜ
       govΓ  = GovEnv  ∋ ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ
 
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
@@ -185,7 +185,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     -- GovState definitions and lemmas --
     mkAction : GovProposal → ℕ → GovActionID × GovActionState
     mkAction p n = let open GovProposal p in
-      ActionId×ActionState
+      mkGovStatePair
         (PParams.govActionLifetime pp +ᵉ GovEnv.epoch ⟦ txid , epoch slot , pp , ppolicy , enactState ⟧ᵍ)
         (GovEnv.txid ⟦ txid , epoch slot , pp , ppolicy , enactState ⟧ᵍ , n) returnAddr action prevAction
 
@@ -651,9 +651,13 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
       → govDepsMatch ls → govDepsMatch (EpochState.ls (NewEpochState.epochState nes))
 
-    CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-New _ eps₁→eps₂) ledgers) =
+    CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
       (RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers)
       ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
 
     CHAIN-govDepsMatch _ (CHAIN (NEWEPOCH-Not-New _) ledgers) =
       RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
+
+    CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
+      (RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers)
+      ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
