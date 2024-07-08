@@ -3,7 +3,8 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude renaming (map to mapᴸ; mapˢ to map)
+
 open import Ledger.Types.GovStructure
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
@@ -302,7 +303,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
+    ∙ mkh ∈ map just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
       ⟦ pp , pools , deps ⟧ᵈᵉ ⊢
         ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
@@ -416,10 +417,10 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     let open PParams pp
         refresh         = mapPartial getDRepVote (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
-        wdrlCreds       = mapˢ stake (dom wdrls)
+        wdrlCreds       = map stake (dom wdrls)
     in
     ∙ wdrlCreds ⊆ dom voteDelegs
-    ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
+    ∙ map (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
         ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
