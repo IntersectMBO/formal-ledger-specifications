@@ -222,8 +222,8 @@ syntax Σ-syntax' A (λ x → B) = x ∈ A ﹐ B
 _⊆_ : {A : Type} → ℙ A → ℙ A → Type
 X ⊆ Y = ∀ {x} → x ∈ X → x ∈ Y
 
-  _≡ᵉ_ : {A : Type} → ℙ A → ℙ A → Type
-  X ≡ᵉ Y = X ⊆ Y × Y ⊆ X
+_≡ᵉ_ : {A : Type} → ℙ A → ℙ A → Type
+X ≡ᵉ Y = X ⊆ Y × Y ⊆ X
 
 Rel : Type → Type → Type
 Rel A B = ℙ (A × B)
