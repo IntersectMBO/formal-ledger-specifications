@@ -91,7 +91,8 @@ and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition sy
 \end{NoConway}
 %
 \begin{Conway}
-Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
+Figures~\ref{fig:ts-types:utxo}--\ref{fig:functions:utxo-conway}
+define types and functions needed for the UTxO transition system.
 \end{Conway}
 %
 \ Note the special multiplication symbol \AgdaFunction{*↓} used in
@@ -99,7 +100,7 @@ Figure~\ref{fig:functions:utxo}: it means multiply and round down the
 result.
 
 \begin{NoConway}
-Figure~\ref{fig:ts-types:utxo-shelley} defines the types needed for the UTxO transition system.
+Figure~\ref{fig:ts-types:utxo} defines the types needed for the UTxO transition system.
 The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
 \begin{itemize}
@@ -185,7 +186,7 @@ data
 \end{NoConway}
 \end{AgdaMultiCode}
 \caption{UTxO transition-system types}
-\label{fig:ts-types:utxo-shelley}
+\label{fig:ts-types:utxo}
 \end{figure*}
 
 \begin{figure*}[h]
@@ -372,7 +373,7 @@ module _ (let open UTxOState; open TxBody) where
     +  inject (txb .txdonation)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
-\label{fig:functions:utxo-2}
+\label{fig:functions:utxo-conway}
 \end{figure*}
 
 \begin{code}[hide]

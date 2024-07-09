@@ -32,7 +32,7 @@ committee, a constitutional change, or a hard-fork delays ratification of
 all other governance actions until the first epoch after their
 enactment. This gives a new constitutional committee enough time to vote
 on current proposals, re-evaluate existing proposals with respect to a
-new constitution, and ensures that the in principle arbitrary semantic
+new constitution, and ensures that the (in principle arbitrary) semantic
 changes caused by enacting a hard-fork do not have unintended
 consequences in combination with other actions.
 

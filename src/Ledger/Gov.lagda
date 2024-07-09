@@ -104,19 +104,18 @@ validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
 validHFAction _ _ _ = ⊤
 \end{code}
 \end{AgdaMultiCode}
-\caption{Types and functions used in the GOV transition system\protect\footnotemark}
+\caption{Types and functions used in the GOV transition system}
 \label{defs:gov-defs}
 \end{figure*}
-\footnotetext{\AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends element \AgdaBound{x} to list \AgdaBound{l}.}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
-\begin{code}[hide]
--- convert list of (GovActionID,GovActionState)-pairs to list GovActionID pairs.
+\begin{code}
+-- Convert list of (GovActionID, GovActionState) pairs.
 getAidPairsList : GovState → List (GovActionID × GovActionID)
 getAidPairsList aid×states =
   mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×states
 
--- a list of GovActionID pairs connects the first GovActionID to the second
+-- A list of GovActionID pairs connects the first GovActionID to the second.
 _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Type
 [] connects aidNew to aidOld = aidNew ≡ aidOld
 ((aid , aidPrev) ∷ s) connects aidNew to aidOld  =
@@ -136,8 +135,7 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
 
 allEnactable : EnactState → GovState → Type
 allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
-\end{code}
-\begin{code}
+
 hasParentE : EnactState → GovActionID → GovAction → Type
 hasParentE e aid a = case getHashES e a of
 \end{code}
@@ -236,7 +234,7 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 \label{defs:enactable}
 \end{figure*}
 
-\GovState behaves similar to a queue. New proposals are appended at
+\GovState behaves like a queue. New proposals are appended at
 the end, but any proposal can be removed at the epoch
 boundary. However, for the purposes of enactment, earlier proposals
 take priority. Note that \EnactState used in \GovEnv is defined later,
@@ -248,7 +246,7 @@ particular governance action (identified by its ID) by a credential with a role.
 
 \item \addAction adds a new proposed action at the end of a given \GovState.
 
-\item \validHFAction is the property whether a given proposal, if it is a
+\item The \validHFAction property indicates whether a given proposal, if it is a
 \TriggerHF action, can potentially be enacted in the future. For this to be the
 case, its \prevAction needs to exist, be another \TriggerHF action and have a
 compatible version.

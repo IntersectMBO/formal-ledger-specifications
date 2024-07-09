@@ -204,7 +204,7 @@ stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
 the \TreasuryWdrl governance action in case of the MIR certificates.
 
-\subsection{Explicit deposits}
+\subsection{Explicit Deposits}
 
 Registration and deregistration of staking credentials are now
 required to explicitly state the deposit that is being paid or
@@ -227,8 +227,14 @@ honest stake holders.
 \subsection{Governance Certificate Rules}
 
 The rules for transition systems dealing with individual certificates
-are defined in Figures~\ref{fig:sts:aux-cert-deleg},
-\ref{fig:sts:aux-cert-pool} and \ref{fig:sts:aux-cert-gov}. GOVCERT
+are defined in
+\begin{NoConway}
+Figures~\ref{fig:sts:aux-cert-deleg}, \ref{fig:sts:aux-cert-pool}
+\end{NoConway}
+\begin{Conway}
+Figures~\ref{fig:sts:aux-cert-deleg}
+\end{Conway}
+\ and~\ref{fig:sts:aux-cert-gov}. GOVCERT
 deals with the new certificates relating to DReps and the
 constitutional committee.
 

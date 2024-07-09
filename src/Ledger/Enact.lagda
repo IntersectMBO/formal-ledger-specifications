@@ -105,7 +105,7 @@ instance
   _ = +-0-monoid
 \end{code}
 
-Figures~\ref{fig:sts:enact,fig:sts:enact-cont} define the rules of the ENACT transition
+Figures~\ref{fig:sts:enact} and~\ref{fig:sts:enact-cont} define the rules of the ENACT transition
 system. Usually no preconditions are checked and the state is simply
 updated (including the \GovActionID for the hash protection scheme, if
 required). The exceptions are \UpdateCommittee and \TreasuryWdrl:
