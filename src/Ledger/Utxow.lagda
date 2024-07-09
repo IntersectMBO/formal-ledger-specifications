@@ -2,7 +2,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_∘_) renaming (map to mapᴸ; mapˢ to map; _∘₂_ to _∘_)
+open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
 open import Ledger.Crypto
 open import Ledger.Abstract
 open import Ledger.Transaction
@@ -32,11 +32,11 @@ getScripts = mapPartial isScriptObj
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
-  =  map (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  map (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
-  ∪  map (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
-  ∪  map (λ x        → (Mint   x , ScriptObj x)) (policies mint)
-  ∪  map (λ v        → (Vote   v , proj₂ v)) (fromList $ mapᴸ voter txvote)
+  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
+  ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
+  ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
+  ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
+  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList $ map voter txvote)
   ∪  mapPartial (λ p  → case  p .policy of
 \end{code}
 \begin{code}[hide]
@@ -52,10 +52,10 @@ credsNeeded utxo txb
 \begin{code}
 
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded = getVKeys ∘ map proj₂ ∘ credsNeeded
+witsVKeyNeeded = getVKeys ∘ mapˢ proj₂ ∘ credsNeeded
 
 scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded = getScripts ∘ map proj₂ ∘ credsNeeded
+scriptsNeeded = getScripts ∘ mapˢ proj₂ ∘ credsNeeded
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used for witnessing}
@@ -87,10 +87,10 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
-        witsKeyHashes     = map hash (dom vkSigs)
-        witsScriptHashes  = map hash scripts
+        witsKeyHashes     = mapˢ hash (dom vkSigs)
+        witsScriptHashes  = mapˢ hash scripts
         inputHashes       = getInputHashes tx utxo
-        refScriptHashes   = map hash (refScripts tx utxo)
+        refScriptHashes   = mapˢ hash (refScripts tx utxo)
         neededHashes      = scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = getDataHashes (range txouts)
@@ -101,7 +101,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
-    ∙  txADhash ≡ mapᴸ hash txAD
+    ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

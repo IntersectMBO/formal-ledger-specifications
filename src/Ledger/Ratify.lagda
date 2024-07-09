@@ -8,7 +8,7 @@ open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
-open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter; map to mapᴸ; mapˢ to map)
+open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -153,8 +153,8 @@ threshold pp ccThreshold =
         pparamThreshold SecurityGroup    = (─         , vote Q5e  )
 
         P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
-        P/Q5 ppu = maxThreshold (map (proj₁ ∘ pparamThreshold) (updateGroups ppu))
-                 , maxThreshold (map (proj₂ ∘ pparamThreshold) (updateGroups ppu))
+        P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
+                 , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
 
 canVote : PParams → GovAction → GovRole → Type
 canVote pp a r = Is-just (threshold pp nothing a r)
@@ -376,7 +376,7 @@ actualVotes Γ pparams cc ga votes
 
   actualDRepVotes : VDeleg ⇀ Vote
   actualDRepVotes  =   roleVotes DRep
-                   ∪ˡ  constMap (map (credVoter DRep) activeDReps) Vote.no
+                   ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
   actualSPOVotes (TriggerHF _)  = roleVotes SPO ∪ˡ constMap spos Vote.no

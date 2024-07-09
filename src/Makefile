@@ -15,28 +15,37 @@ CABAL_TEST=cabal run test
 LEDGER=Ledger
 MIDNIGHT=MidnightExample
 VEC_SCRIPT=agda2vec.py
+POSTPROC_SCRIPT=agdatexpostproc.py
 
 # files that should be postprocessed for fancy vector typesetting
-ppNames=Certs Chain Enact Epoch Ratify Ledger NewPP
-#Utxo/Properties
+ppNames=Certs Chain Enact Epoch Ratify Ledger NewPP #Utxo/Properties
+pprocNames=Utxow
 
 ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))
+pprocLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(pprocNames:%=%.tex))
 
 # Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 
 # General rule for all LaTeX files
-$(filter-out $(ppLatexFiles), $(latexFiles)): $(LATEX_DIR)/%.tex: %.lagda
+$(filter-out $(ppLatexFiles) $(pprocLatexFiles), $(latexFiles)): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $<
 
 # Specific rule for postprocessed LaTeX files
-$(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda agda2vec.py
+$(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda $(VEC_SCRIPT)
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
-	@echo "Postprocessing $@"
+	@echo "Postprocessing $@ for vertical vectors"
 	$(PYTHON) $(VEC_SCRIPT) $@ $@
+
+# Specific rule for postprocessed LaTeX files
+$(pprocLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda $(POSTPROC_SCRIPT)
+	@echo "Compiling $<"
+	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
+	@echo "Postprocessing $@ for removal of superscript from map"
+	$(PYTHON) $(POSTPROC_SCRIPT) $@ $@
 
 $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
 	mkdir -p $(LATEX_DIR)/$(LEDGER)

@@ -95,9 +95,6 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
     an action is well-formed if it preserves the well-formedness of parameters.
     \ppdWellFormed is effectively the same as \paramsWellFormed, except that it
     only applies to the parameters that are being changed.
-    \Unit is the unit type that has exactly one element; here it is used in case
-    a well-formedness check is unnecessary.
-
 \end{itemize}
 The governance actions carry the following information:
 \begin{itemize}
@@ -157,9 +154,7 @@ protection. For \TreasuryWdrl and \Info, enacting them does not change
 the state in non-commutative ways, so they can always be enacted.
 
 Types related to this hash protection scheme are defined in
-Figure~\ref{fig:needshash-and-hashprotected-types}. As mentioned,
-\Unit is the unit type that has exactly one element, which reflects
-that a \GovActionID is not necessary for the given \GovAction.
+Figure~\ref{fig:needshash-and-hashprotected-types}.
 
 \begin{figure*}[h]
 \begin{code}

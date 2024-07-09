@@ -9,7 +9,7 @@ module Ledger.Notation where
 In this section, we introduce some notations used in this document.
 
 \begin{description}
-\item[Propositions, sets and types] In this document the abstract notions of ``set''
+\item[Propositions, sets and types.] In this document the abstract notions of ``set''
 and ``type'' are essentially the same, despite having different formal definitions
 in our Agda code. We represent sets as a special type, which we denote by
 \AgdaDatatype{Set}~\AgdaBound{A}, for \AgdaBound{A} an arbitrary type.
@@ -66,4 +66,7 @@ it allows for the elimination of parentheses in expressions. For example,
 \AgdaFunction{f}\AgdaSpace{}\AgdaFunction{\$}\AgdaSpace{}\AgdaFunction{g}\AgdaSpace{}%
 \AgdaFunction{\$}\AgdaSpace{}\AgdaFunction{h}\AgdaSpace{}\AgdaBound{x} is equivalent to
 \AgdaFunction{f}\AgdaSpace{}(\AgdaFunction{g}\AgdaSpace{}(\AgdaFunction{h}\AgdaSpace{}\AgdaBound{x})).
+\item[The unit type] \AgdaRecord{⊤} has a single inhabitant \AgdaInductiveConstructor{tt} and may be thought
+of as a type that carries no information; it is useful for signifying the completion of an action, the
+presence of a trivial value, a trivially satisfied requirement, etc.
 \end{description}
