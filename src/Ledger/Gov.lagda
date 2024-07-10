@@ -111,17 +111,18 @@ validHFAction _ _ _ = ⊤
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
--- convert list of (GovActionID,GovActionState)-pairs to list GovActionID pairs.
+-- Convert list of (GovActionID, GovActionState) pairs.
 getAidPairsList : GovState → List (GovActionID × GovActionID)
 getAidPairsList aid×states =
   mapMaybe (λ (aid , aState) → (aid ,_) <$> getHash (prevAction aState)) $ aid×states
 
--- a list of GovActionID pairs connects the first GovActionID to the second
+-- A list of GovActionID pairs connects the first GovActionID to the second.
 _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionID → Type
 [] connects aidNew to aidOld = aidNew ≡ aidOld
 ((aid , aidPrev) ∷ s) connects aidNew to aidOld  =
   aid ≡ aidNew × s connects aidPrev to aidOld ⊎ s connects aidNew to aidOld
-
+\end{code}
+\begin{code}
 enactable  : EnactState → List (GovActionID × GovActionID)
            → GovActionID × GovActionState → Type
 enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
@@ -130,14 +131,13 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
   λ where
 \end{code}
 \begin{code}
-  nothing        → ⊤
-  (just aidOld)  → ∃[ t ]  fromList t ⊆ fromList aidPairs
-                           × Unique t × t connects aidNew to aidOld
+   nothing        → ⊤
+   (just aidOld)  → ∃[ t ]  fromList t ⊆ fromList aidPairs
+                            × Unique t × t connects aidNew to aidOld
 
 allEnactable : EnactState → GovState → Type
 allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
-\end{code}
-\begin{code}
+
 hasParentE : EnactState → GovActionID → GovAction → Type
 hasParentE e aid a = case getHashES e a of
 \end{code}
@@ -145,8 +145,8 @@ hasParentE e aid a = case getHashES e a of
   λ where
 \end{code}
 \begin{code}
-  nothing    → ⊤
-  (just id)  → id ≡ aid
+   nothing    → ⊤
+   (just id)  → id ≡ aid
 
 hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Type
 hasParent e s a aid with getHash aid
@@ -253,6 +253,14 @@ particular governance action (identified by its ID) by a credential with a role.
 case, its \prevAction needs to exist, be another \TriggerHF action and have a
 compatible version.
 \end{itemize}
+
+Figure~\ref{defs:enactable} shows some of the functions used to determine whether certain
+actions are enactable in a given state.  Specifically, \AgdaFunction{allEnactable} passes
+the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list of
+\AgdaFunction{GovActionID}-pairs which is then passed to \AgdaFunction{enactable}. The latter uses the
+\AgdaFunction{\AgdaUnderscore{}connects\AgdaUnderscore{}to\AgdaUnderscore{}} function to check
+whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
+enacted one.
 
 \begin{figure*}
 \begin{code}[hide]
