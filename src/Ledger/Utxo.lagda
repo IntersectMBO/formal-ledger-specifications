@@ -208,15 +208,6 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
-  -- outsTemp : TxBody → UTxOTemp
-  -- outsTemp tx = mapKeys (tx .txid ,_) (tx .txouts)
-
-  -- balanceTemp : UTxOTemp → Value
-  -- balanceTemp (utxo, frxo) = (∑[ x ← utxo ] getValue x) + (∑[ x ← frxo ] getValue x)
-  --
-  -- cbalanceTemp : UTxOTemp → Coin
-  -- cbalanceTemp (utxo, frxo) = coin (balanceTemp (utxo, frxo))
-
   requestsUTxO : TxBody → FRxO
   requestsUTxO tx = mapKeys (tx .txid ,_) (tx .requests)
 

@@ -115,7 +115,8 @@ data
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
-pattern LEDGER⋯ w x y = LEDGER (w , x , y)
+pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
+pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 \end{code}
 
 \begin{NoConway}

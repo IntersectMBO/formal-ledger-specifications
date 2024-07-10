@@ -84,7 +84,6 @@ the transaction body are:
   open TokenAlgebra tokenAlgebra public
 
   field txidBytes : TxId → Ser
-        signedBytes : ℙ TxId → Ser
         networkId : Network
 
   govStructure : GovStructure
