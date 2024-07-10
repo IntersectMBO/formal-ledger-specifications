@@ -20,6 +20,8 @@ open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
+open import Ledger.Zone txs abs
+
 \end{code}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -38,7 +40,7 @@ record Block : Type where
   field
 \end{code}
 \begin{code}
-    ts    : List Tx
+    zns   : List (List Tx)
     slot  : Slot
 \end{code}
 \end{AgdaMultiCode}
@@ -119,7 +121,7 @@ data
     in
        _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt
-       ⟧ˡᵉ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+       ⟧ˡᵉ ⊢ ls ⇀⦇ ts ,ZONES⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }

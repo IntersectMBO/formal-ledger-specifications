@@ -44,10 +44,10 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
-isTwoPhaseScriptAddress tx utxo a =
+isTwoPhaseScriptAddress : Tx → UTxOTemp → Addr → Bool
+isTwoPhaseScriptAddress tx utxoTemp a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
+    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxoTemp
                  then (λ {s} → isP2Script s)
                  else false)
   else
@@ -60,10 +60,10 @@ opaque
   getDataHashes : ℙ TxOut → ℙ DataHash
   getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
 
-  getInputHashes : Tx → UTxO → ℙ DataHash
-  getInputHashes tx utxo = getDataHashes
-    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ txins)))
+  getInputHashes : Tx → UTxOTemp → ℙ DataHash
+  getInputHashes tx utxoTemp = getDataHashes
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxoTemp a ≡ true)
+            (range ((nutxo utxoTemp) ∣ txins) ∪ range ((frxo utxoTemp) ∣ txins)))
     where open Tx; open TxBody (tx .body)
 
 totExUnits : Tx → ExUnits
@@ -109,7 +109,7 @@ The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
     It maps the transaction id and output index to the output.
 
   \item
-    The $\fun{balance}$ function calculates sum total of all the coin in a given UTxO.
+    The $\fun{balance}$ function calculates sum total of all the coin in a given UTxO
 \end{itemize}
 \end{NoConway}
 
@@ -173,6 +173,19 @@ record UTxOState : Type where
     deposits   : Deposits
     donations  : Coin
 \end{code}
+\begin{code}
+record UTxOState : Type where
+\end{code}
+\begin{code}[hide]
+  constructor ⟦_,_,_,_⟧ᵘᵘ
+  field
+\end{code}
+\begin{code}
+      utxoTemp       : UTxOTemp
+      feesTemp       : Coin
+      depositsTemp   : Deposits
+      donationsTemp  : Coin
+\end{code}
 \begin{NoConway}
 \emph{UTxO transitions}
 
@@ -195,6 +208,18 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
+  -- outsTemp : TxBody → UTxOTemp
+  -- outsTemp tx = mapKeys (tx .txid ,_) (tx .txouts)
+
+  -- balanceTemp : UTxOTemp → Value
+  -- balanceTemp (utxo, frxo) = (∑[ x ← utxo ] getValue x) + (∑[ x ← frxo ] getValue x)
+  --
+  -- cbalanceTemp : UTxOTemp → Coin
+  -- cbalanceTemp (utxo, frxo) = coin (balanceTemp (utxo, frxo))
+
+  requestsUTxO : TxBody → FRxO
+  requestsUTxO tx = mapKeys (tx .txid ,_) (tx .requests)
+
   outs : TxBody → UTxO
   outs tx = mapKeys (tx .txid ,_) (tx .txouts)
 
@@ -206,12 +231,12 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
-  minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  =
+  minfee : PParams → UTxOTemp → Tx → Coin
+  minfee pp utxoTemp tx  =
     pp .a * tx .body .txsize + pp .b
     + txscriptfee (pp .prices) (totExUnits tx)
     + pp .minFeeRefScriptCoinsPerByte
-    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxoTemp)) ] x
 
 \end{code}
 \begin{code}[hide]
@@ -320,8 +345,8 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 \end{code}
 \begin{code}
 
-feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
+feesOK : PParams → Tx → UTxOTemp → Bool
+feesOK pp tx utxoTemp = minfee pp utxoTemp tx ≤ᵇ txfee
                   ∧ not (≟-∅ᵇ (txrdmrs ˢ))
                   =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
                       ∧ isAdaOnlyᵇ bal
@@ -330,8 +355,8 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
                       )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
-    bal              = balance  (utxo ∣ collateral)
+    collateralRange  = range    ((mapValues txOutHash (nutxo utxoTemp)) ∣ collateral)
+    bal              = balance  ((nutxo utxoTemp) ∣ collateral)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules, continued}
@@ -349,24 +374,26 @@ difference is the identity function.
 
 \begin{figure*}
 \begin{code}[hide]
-module _ (let open UTxOState; open TxBody) where
+module _ (let open UTxOState; open UTxOStateTemp; open TxBody) where
 \end{code}
 \begin{code}
-  depositRefunds : PParams → UTxOState → TxBody → Coin
-  depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
+  depositRefunds : PParams → UTxOStateTemp → TxBody → Coin
+  depositRefunds pp st txb = negPart (depositsChange pp txb (st .depositsTemp))
 
-  newDeposits : PParams → UTxOState → TxBody → Coin
-  newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
+  newDeposits : PParams → UTxOStateTemp → TxBody → Coin
+  newDeposits pp st txb = posPart (depositsChange pp txb (st .depositsTemp))
 
-  consumed : PParams → UTxOState → TxBody → Value
+  consumed : PParams → UTxOStateTemp → TxBody → Value
   consumed pp st txb
-    =  balance (st .utxo ∣ txb .txins)
+    =  balance (nutxo (st .utxoTemp) ∣ txb .txins)
+    +  balance (requestsUTxO txb)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
 
-  produced : PParams → UTxOState → TxBody → Value
+  produced : PParams → UTxOStateTemp → TxBody → Value
   produced pp st txb
     =  balance (outs txb)
+    +  balance (frxo (st .utxoTemp) ∣ txb .fulfills)
     +  inject (txb .txfee)
     +  inject (newDeposits pp st txb)
     +  inject (txb .txdonation)
@@ -378,47 +405,47 @@ module _ (let open UTxOState; open TxBody) where
 \begin{code}[hide]
 open PParams
 data
-  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
+  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOStateTemp → Tx → UTxOStateTemp → Type
 
 data _⊢_⇀⦇_,UTXOS⦈_ where
   Scripts-Yes :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          open UTxOStateTemp s
+          sLst = collectPhaseTwoScriptInputs pp tx utxoTemp
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
-                              , fees + txfee
-                              , updateDeposits pp txb deposits
-                              , donations + txdonation
-                              ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (((nutxo utxoTemp) ∣ txins ᶜ) ∪ˡ (outs txb), ((frxo utxoTemp) ∣ fulfills ᶜ) ∪ˡ (requestsUTxO txb))
+                              , feesTemp + txfee
+                              , updateDeposits pp txb depositsTemp
+                              , donationsTemp + txdonation
+                              ⟧ᵘᵘ
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          open UTxOStateTemp s
+          sLst = collectPhaseTwoScriptInputs pp tx utxoTemp
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
-                              , fees + cbalance (utxo ∣ collateral)
-                              , deposits
-                              , donations
-                              ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ ((nutxo utxoTemp) ∣ collateral ᶜ , frxo utxoTemp)
+                              , feesTemp + cbalance ((nutxo utxoTemp) ∣ collateral)
+                              , depositsTemp
+                              , donationsTemp
+                              ⟧ᵘᵘ
 
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
 private variable
   Γ : UTxOEnv
-  s s' : UTxOState
+  s s' : UTxOStateTemp
   tx : Tx
 
 data _≡?_ {A : Type} : Maybe A → A → Type where
@@ -444,13 +471,16 @@ equal if they are both present.
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb
         open UTxOEnv Γ renaming (pparams to pp)
-        open UTxOState s
+        open UTxOStateTemp s
         txoutsʰ = (mapValues txOutHash txouts)
     in
-    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
+    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom (nutxo utxoTemp)
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
-    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ feesOK pp tx utxoTemp ≡ true           ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ coin mint ≡ 0
+
+    -- fulfills/requests stuff
+    ∙ fulfills ⊆ dom (frxo utxoTemp)
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout

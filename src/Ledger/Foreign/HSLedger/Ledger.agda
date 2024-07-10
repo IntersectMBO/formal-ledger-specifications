@@ -31,3 +31,14 @@ ledgers-step : F.LEnv → F.LState → List F.Tx → F.ComputationResult String 
 ledgers-step = to (compute Computational-LEDGERS)
 
 {-# COMPILE GHC ledgers-step as ledgersStep #-}
+
+
+zone-step : F.LEnv → F.LState → F.Tx → F.ComputationResult String F.LState
+zone-step = to (compute Computational-ZONE)
+
+{-# COMPILE GHC zone-step as zoneStep #-}
+
+zones-step : F.LEnv → F.LState → List F.Tx → F.ComputationResult String F.LState
+zones-step = to (compute Computational-ZONES)
+
+{-# COMPILE GHC zones-step as zonesStep #-}

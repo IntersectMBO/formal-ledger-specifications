@@ -25,6 +25,7 @@ data ScriptPurpose : Type where
   Spend    : TxIn         → ScriptPurpose
   Vote     : Voter        → ScriptPurpose
   Propose  : GovProposal  → ScriptPurpose
+  Fulfills : Fulfill      → ScriptPurpose
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
@@ -34,6 +35,7 @@ rdptr txb = λ where
   (Spend h)    → M.map (Spend   ,_) $ indexOfTxIn     h txins
   (Vote h)     → M.map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txvote)
   (Propose h)  → M.map (Propose ,_) $ indexOfProposal h txprop
+  (Fulfills h) → M.map (Fuls ,_)    $ indexOfFulfills h fulfills
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
@@ -61,18 +63,22 @@ record TxInfo : Type where
         vkKey   : ℙ KeyHash
         txdats  : DataHash ⇀ Datum
         txid    : TxId
+        realizedFulfills : FRxO
+        requiredTxs : ℙ TxId
 
 txInfo : Language → PParams
-                  → UTxO
+                  → UTxOTemp
                   → Tx
                   → TxInfo
-txInfo l pp utxo tx = record
+txInfo l pp utxoT tx = record
   { TxBody body
   ; TxWitnesses wits
-  ; realizedInputs = utxo ∣ txins
+  ; realizedInputs = (proj₁ utxoT) ∣ txins
   ; fee = inject txfee
   ; mint = mint
   ; vkKey = reqSigHash
+  ; realizedFulfills = (proj₂ utxoT) ∣ fulfills
+  ; requiredTxs = requiredTxs
   } where open Tx tx; open TxBody body
 
 data DelegateOrDeReg : DCert → Type where instance
@@ -131,9 +137,10 @@ certScripts c@(deregdrep (KeyHashObj x))       | yes p = nothing
 certScripts c@(deregdrep (ScriptObj  y))       | yes p = just (Cert c , y)
 
 private
-  scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
-  scriptsNeeded utxo txb
+  scriptsNeeded : UTxO → FRxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
+  scriptsNeeded utxo frxo txb
     = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) txins
+    ∪ mapPartial (λ x → spendScripts x (scriptOutsWithHash frxo)) fulfills
     ∪ mapPartial (λ x → rwdScripts x) (dom $ txwdrls .proj₁)
     ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
@@ -149,27 +156,27 @@ valContext txinfo sp = toData (txinfo , sp)
 
 opaque
 
-  collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
+  collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → FRxO → (ScriptPurpose × ScriptHash)
     → Maybe (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs' pp tx utxo (sp , sh)
-    with lookupScriptHash sh tx utxo
+  collectPhaseTwoScriptInputs' pp tx utxo frxo (sp , sh)
+    with lookupScriptHash sh tx (utxo , frxo)
   ... | nothing = nothing
   ... | just s
     with isInj₂ s | indexedRdmrs tx sp
   ... | just p2s | just (rdmr , eu)
       = just (s ,
-          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (txInfo (language p2s) pp utxo tx) sp ∷ [])
+          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (txInfo (language p2s) pp (utxo , frxo) tx) sp ∷ [])
           , eu
           , PParams.costmdls pp)
         )
   ... | x | y = nothing
 
-  collectPhaseTwoScriptInputs : PParams → Tx → UTxO
+  collectPhaseTwoScriptInputs : PParams → Tx → UTxOTemp
     → List (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs pp tx utxo
+  collectPhaseTwoScriptInputs pp tx utxoT
     = setToList
-    $ mapPartial (collectPhaseTwoScriptInputs' pp tx utxo)
-    $ scriptsNeeded utxo (tx .Tx.body)
+    $ mapPartial (collectPhaseTwoScriptInputs' pp tx (proj₁ utxoT) (proj₂ utxoT))
+    $ scriptsNeeded (proj₁ utxoT) (proj₂ utxoT) (tx .Tx.body)
 
 open TxBody
 open Tx

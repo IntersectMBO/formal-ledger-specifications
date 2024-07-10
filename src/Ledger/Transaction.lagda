@@ -28,7 +28,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where
-  Spend Mint Cert Rewrd Vote Propose : Tag
+  Spend Mint Cert Rewrd Vote Propose Fuls : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Type₁ where
@@ -84,6 +84,7 @@ the transaction body are:
   open TokenAlgebra tokenAlgebra public
 
   field txidBytes : TxId → Ser
+        signedBytes : ℙ TxId → Ser
         networkId : Network
 
   govStructure : GovStructure
@@ -102,12 +103,17 @@ the transaction body are:
 \end{code}
 \begin{NoConway}
 \emph{Derived types}
+
 \begin{code}
   TxIn     = TxId × Ix
   TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
   UTxO     = TxIn ⇀ TxOut
+  Request  = TxOut
+  Fulfill  = TxIn
+  FRxO     = Fulfill ⇀ Request
+  UTxOTemp = UTxO × FRxO
   Wdrl     = RwdAddr ⇀ Coin
-  RdmrPtr  = Tag × Ix
+  RdmrPtr = Tag × Ix
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
@@ -141,6 +147,9 @@ the transaction body are:
       collateral     : ℙ TxIn
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash
+      requests       : Ix ⇀ Request
+      fulfills       : ℙ Fulfill
+      requiredTxs    : ℙ TxId
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -179,6 +188,12 @@ the transaction body are:
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
+  nutxo : UTxOTemp → UTxO
+  nutxo = proj₁
+
+  frxo : UTxOTemp → FRxO
+  frxo = proj₂
+
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
@@ -199,22 +214,28 @@ the transaction body are:
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  refScripts : Tx → UTxO → ℙ Script
-  refScripts tx utxo =
-    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+  refScripts : Tx → UTxOTemp → ℙ Script
+  refScripts tx utxoTemp =
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range ((nutxo utxoTemp) ∣ (txins ∪ refInputs)))
+    ∪
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range ((frxo utxoTemp) ∣ fulfills))
     where open Tx; open TxBody (tx .body)
 
-  txscripts : Tx → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+  txscripts : Tx → UTxOTemp → ℙ Script
+  txscripts tx utxoTemp = scripts (tx .wits) ∪ refScripts tx utxoTemp
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo =
+  lookupScriptHash : ScriptHash → Tx → UTxOTemp → Maybe Script
+  lookupScriptHash sh tx utxoTemp =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (txscripts tx utxo)
+    where m = setToHashMap (txscripts tx utxoTemp)
+
+  chkIsValid : Tx → Set
+  chkIsValid tx = tx .Tx.isValid ≡ true
+
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions related to transactions}

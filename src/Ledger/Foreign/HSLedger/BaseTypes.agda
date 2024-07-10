@@ -320,6 +320,10 @@ instance
       ; reqSigHash = to reqSigHash
       ; scriptIntHash = nothing
       ; txcerts = to txcerts
+      -- TODO
+      -- requests       : Ix ⇀ Request
+      -- fulfills       : ℙ Fulfill
+      -- requiredTxs    : ℙ TxId
       }
     .from txb → let open F.TxBody txb in record
       { txins         = from txins

@@ -53,6 +53,12 @@ record LState : Type where
     govSt      : GovState
     certState  : CertState
 
+record LStateTemp : Set where
+  constructor ⟦_,_,_⟧ˡˡ
+  field utxoStTemp     : UTxOStateTemp
+        govStTemp      : GovState
+        certStateTemp  : CertState
+
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
@@ -63,10 +69,10 @@ txgov txb = map inj₂ txprop ++ map inj₁ txvote
 \begin{code}[hide]
 private variable
   Γ : LEnv
-  s s' s'' : LState
-  utxoSt' : UTxOState
-  govSt' : GovState
-  certState' : CertState
+  s s' s'' : LStateTemp
+  utxoStTemp' : UTxOStateTemp
+  govStTemp' : GovState
+  certStateTemp' : CertState
   tx : Tx
 \end{code}
 
@@ -80,7 +86,7 @@ open UTxOState
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type
+  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LStateTemp → Tx → LStateTemp → Type
 \end{code}
 \begin{code}[hide]
   where
@@ -91,32 +97,31 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+  LEDGER-V : let open LStateTemp s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ true
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , deposits utxoSt ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  record { LEnv Γ } ⊢ utxoStTemp ⇀⦇ tx ,UTXOW⦈ utxoStTemp'
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , deposits utxoSt ⟧ᶜ ⊢ certStateTemp ⇀⦇ txcerts ,CERTS⦈ certStateTemp'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govStTemp ⇀⦇ txgov txb ,GOV⦈ govStTemp'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoStTemp' , govStTemp' , certStateTemp' ⟧ˡˡ
 
-  LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+  LEDGER-I : let open LStateTemp s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ false
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    ∙  record { LEnv Γ } ⊢ utxoStTemp ⇀⦇ tx ,UTXOW⦈ utxoStTemp'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoStTemp' , govStTemp' , certStateTemp' ⟧ˡˡ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
-pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
-pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
+pattern LEDGER⋯ w x y = LEDGER (w , x , y)
 \end{code}
 
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
+_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LStateTemp → List Tx → LStateTemp → Type
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}

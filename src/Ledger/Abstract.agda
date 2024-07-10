@@ -15,6 +15,7 @@ record indexOf : Type where
     indexOfPolicyId : ScriptHash → ℙ ScriptHash → Maybe Ix
     indexOfVote     : Voter → List Voter → Maybe Ix
     indexOfProposal : GovProposal → List GovProposal → Maybe Ix
+    indexOfFulfills : Fulfill → ℙ Fulfill → Maybe Ix
 
 record AbstractFunctions : Type where
   field txscriptfee  : Prices → ExUnits → Coin

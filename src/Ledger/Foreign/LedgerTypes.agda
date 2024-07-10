@@ -77,6 +77,11 @@ TxIn          = Pair TxId Ix
 TxOut         = Pair Addr $ Pair Coin $ Pair (Maybe (Either Datum DataHash)) $ Maybe Script
 UTxO          = HSMap TxIn TxOut
 
+Request  = Pair Addr $ Pair Coin $ Maybe DataHash
+Fulfill  = Pair TxId Ix
+FRxO     = HSMap Fulfill Request
+UTxOTemp = Pair UTxO FRxO
+
 Hash          = ℕ
 
 GovActionID   = Pair TxId ℕ
@@ -84,7 +89,7 @@ GovActionID   = Pair TxId ℕ
 HashProtected : Type → Type
 HashProtected A = Pair A GovActionID
 
-data Tag : Type where Spend Mint Cert Rewrd VoteTag Propose : Tag
+data Tag : Type where Spend Mint Cert Rewrd VoteTag Propose Fuls : Tag
 RdmrPtr = Pair Tag Ix
 ExUnits = Pair ℕ ℕ
 ProtVer = Pair ℕ ℕ
@@ -116,15 +121,21 @@ ProtVer = Pair ℕ ℕ
   type TxIn  = (TxId, Ix)
   type TxOut = (Addr, (Coin, (Maybe (Either Datum DataHash), Maybe Script)))
   type UTxO  = HSMap TxIn TxOut
+
+  Request  = TxOut
+  Fulfill  = TxIn
+  FRxO     = [(Fulfill, Request)]
+  UTxOTemp = (UTxO, FRxO)
+
   type Hash  = Integer
 
-  data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose deriving (Show, Generic)
+  data Tag     = Spend | Mint | Cert | Rewrd | Vote | Propose | Fuls deriving (Show, Generic)
   type RdmrPtr = (Tag, Ix)
   type ExUnits = (Integer, Integer)
   type ProtVer = (Integer, Integer)
   type GovActionID = (TxId, Integer)
 #-}
-{-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose) #-}
+{-# COMPILE GHC Tag = data Tag (Spend | Mint | Cert | Rewrd | Vote | Propose | Fuls) #-}
 {-# COMPILE GHC TxId = data TxId (MkTxId) #-}
 {-# COMPILE GHC HSMap = data HSMap (MkHSMap) #-}
 {-# COMPILE GHC HSSet = data HSSet (MkHSSet) #-}
@@ -206,6 +217,8 @@ record TxBody : Type where
         reqSigHash     : List Hash
         scriptIntHash  : Maybe Hash
         txcerts : List TxCert
+        fulfills       : List Fulfill
+        requests       : HSMap Ix TxOut
 {-# FOREIGN GHC
   data TxBody = MkTxBody
     { txins  :: [TxIn]
@@ -219,6 +232,8 @@ record TxBody : Type where
     , reqSigHash    :: [Hash]
     , scriptIntHash :: Maybe Hash
     , txcerts :: [TxCert]
+    , fulfills       :: [Fulfill]
+    , requests       :: [(Ix, Request)]
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC TxBody = data TxBody (MkTxBody) #-}
@@ -242,11 +257,13 @@ record Tx : Type where
   field body : TxBody
         wits : TxWitnesses
         txAD : Maybe AuxiliaryData
+        requiredTxs    : List TxId
 {-# FOREIGN GHC
   data Tx = MkTx
     { body :: TxBody
     , wits :: TxWitnesses
     , txAD :: Maybe AuxiliaryData
+    , requiredTxs    : List TxId
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC Tx = data Tx (MkTx) #-}
@@ -534,7 +551,7 @@ GovState = List (Pair GovActionID GovActionState)
     , gvVote   :: Vote
     , gvAnchor :: Maybe Anchor
     }
-  
+
   data GovProposal = MkGovProposal
     { gpAction     :: GovAction
     , gpPrevAction :: GovActionID
@@ -847,3 +864,14 @@ record DelegEnv : Type where
 #-}
 {-# COMPILE GHC DelegEnv = data DelegEnv (MkDelegEnv) #-}
 
+record UTxOStateTemp : Set where
+  field utxoTemp : UTxO
+        feesTemp : Coin
+{-# FOREIGN GHC
+  data UTxOStateTemp = MkUTxOStateTemp
+    { utxoTemp :: UTxO
+    , feesTemp :: Coin
+    } deriving (Show, Generic)
+  instance ToExpr UTxOStateTemp
+#-}
+{-# COMPILE GHC UTxOStateTemp = data UTxOStateTemp (MkUTxOStateTemp) #-}

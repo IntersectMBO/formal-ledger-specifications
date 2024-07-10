@@ -211,6 +211,7 @@ HSAbstractFunctions = record
     ; indexOfPolicyId = λ _ _ → nothing
     ; indexOfVote     = λ _ _ → nothing
     ; indexOfProposal = λ _ _ → nothing
+    ; indexOfFulfills = λ _ _ → nothing
     }
   ; runPLCScript = λ _ _ _ _ → false
   ; scriptSize = λ _ → 0
