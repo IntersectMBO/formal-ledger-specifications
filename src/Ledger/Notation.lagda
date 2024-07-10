@@ -26,6 +26,16 @@ a list \AgdaBound{l} to its set of elements, we write \fromList~\AgdaBound{l}.
   are denoted \fst and \snd, and the injections are denoted \inl and \inr respectively. The
   properties whether an element of a coproduct is in the left or right component are called
   \isInl and \isInr.
+\item[Addition of map values.] The expression
+\AgdaFunction{∑[}\AgdaSpace{}%
+\AgdaBound{x}\AgdaSpace{}%
+\AgdaFunction{←}\AgdaSpace{}%
+\AgdaFunction{m}\AgdaSpace{}%
+\AgdaFunction{]}\AgdaSpace{}%
+\AgdaFunction{f}\AgdaSpace{}%
+\AgdaBound{x}
+denotes the sum of the values obtained by applying the function \AgdaFunction{f} to the values
+of the map \AgdaFunction{m}.
 \item[Record types] are explained in Appendix~\ref{sec:appendix-agda-essentials}.
 \item[Postfix projections.] Projections can be written using postfix notation. For example, we may
   write \AgdaBound{x}\AgdaSpace{}\AgdaSymbol{.}\AgdaField{proj₁} instead of

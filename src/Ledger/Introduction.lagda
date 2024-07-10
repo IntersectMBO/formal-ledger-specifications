@@ -90,7 +90,9 @@ More generally, we will consider state machines with an environment:
 These are modelled as 4-ary relations between the environment \(Γ\), an
 initial state \(s\), a signal \(b\) and a final state \(s'\). The ledger consists of
 25-ish (depending on the version) such relations that depend on each
-other, forming a directed graph that is almost a tree.
+other, forming a directed graph that is almost a tree.  Thus each such relation
+represents the transition rule of the state machine; \(X\) is simply a placeholder
+for the name of the transition rule.
 
 \subsection{Reflexive-transitive Closure}
 
