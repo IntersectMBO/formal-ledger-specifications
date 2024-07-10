@@ -143,7 +143,6 @@ replaying the chain with that implementation, effectively treating it
 as an erratum to the Shelley specification.
 
 \begin{figure*}[h]
-\emph{Derived types}
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \emph{UTxO environment}
