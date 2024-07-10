@@ -4,7 +4,6 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-
 open import Ledger.Types.GovStructure
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
