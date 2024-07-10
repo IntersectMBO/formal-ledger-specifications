@@ -136,7 +136,7 @@ Since all such state machines need to be evaluated by the nodes and all
 nodes should compute the same states, the relations specified by them
 should be computable by functions. This can be captured by the
 definition in Figure \ref{fig:computational} which is parametrized
-over the step relation.
+over the state transition relation.
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -170,7 +170,7 @@ This has two further implications:
 
 \begin{itemize}
 
-\item Since \compute is a function, the step relation is necessarily
+\item Since \compute is a function, the state transition relation is necessarily
 a (partial) function; i.e., there is at most one possible final state for each
 input data. Otherwise, we could prove that \compute could evaluates to
 two different states on the same inputs, which is impossible since it

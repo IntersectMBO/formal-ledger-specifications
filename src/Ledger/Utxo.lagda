@@ -339,14 +339,6 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 \end{figure*}
 \end{NoConway}
 
-We redefine \depositRefunds and \newDeposits via \depositsChange,
-which computes the difference between the total deposits before and
-after their application. This simplifies their definitions and some
-correctness proofs. We then add the absolute value of \depositsChange
-to \consumed or \produced depending on its sign. This is done via
-\negPart and \posPart, which satisfy the key property that their
-difference is the identity function.
-
 \begin{figure*}
 \begin{code}[hide]
 module _ (let open UTxOState; open TxBody) where
@@ -374,6 +366,15 @@ module _ (let open UTxOState; open TxBody) where
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
 \end{figure*}
+
+As seen in Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo-conway},
+we redefine \depositRefunds and \newDeposits via \depositsChange,
+which computes the difference between the total deposits before and
+after their application. This simplifies their definitions and some
+correctness proofs. We then add the absolute value of \depositsChange
+to \consumed or \produced depending on its sign. This is done via
+\negPart and \posPart, which satisfy the key property that their
+difference is the identity function.
 
 \begin{code}[hide]
 open PParams

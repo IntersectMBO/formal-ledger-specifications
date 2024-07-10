@@ -243,8 +243,14 @@ constitutional committee.
   registation, a deposit needs to be paid. Either way, the activity
   period of the DRep is reset.
 \item \GOVCERTderegdrep deregisters a DRep.
-\item \GOVCERTccreghot registers a hot credential for constitutional
-  committee members. We check that the cold key did not previously
+\item \GOVCERTccreghot registers a ``hot'' credential for constitutional
+  committee members.\footnote{By ``hot'' and ``cold'' credentials we mean
+    the following: a cold credential is used to register a hot credential,
+    and then the hot credential is used for voting. The idea is that the
+    access to the cold credential is kept in a secure location, while the
+    hot credential is more conveniently accessed.  If the hot credential
+    is compromised, it can be changed using the cold credential.}
+  We check that the cold key did not previously
   resign from the committee. Note that we intentionally do not check
   if the cold key is actually part of the committee; if it isn't, then
   the corresponding hot key does not carry any voting power. By allowing

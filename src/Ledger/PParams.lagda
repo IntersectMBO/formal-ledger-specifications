@@ -113,7 +113,11 @@ record PParams : Type where
         Emax                          : Epoch
         nopt                          : ℕ
         collateralPercentage          : ℕ
+\end{code}
+\begin{code}[hide]
         -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
+\end{code}
+\begin{code}
         costmdls                      : CostModel
 \end{code}
 \emph{Governance group}
