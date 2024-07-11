@@ -104,6 +104,14 @@ stakeCred (inj₂ _) = nothing
 netId (inj₁ record {net = net}) = net
 netId (inj₂ record {net = net}) = net
 
+data isBootstrapAddr : Addr → Set where
+ IsBootstrapAddr : ∀ a → isBootstrapAddr (inj₂ a)
+
+instance
+  isBootstrapAddr? : ∀ {a} → isBootstrapAddr a ⁇
+  isBootstrapAddr? {inj₁ _} = ⁇ no λ ()
+  isBootstrapAddr? {inj₂ a} = ⁇ yes (IsBootstrapAddr a)
+
 instance
   unquoteDecl DecEq-Credential = derive-DecEq ((quote Credential , DecEq-Credential) ∷ [])
 

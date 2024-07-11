@@ -37,18 +37,20 @@ instance
               (inj₁ a₄) → "inputHashes ⊆ txdatsHashes"
               (inj₂ b₄) → case dec-de-morgan b₄ of λ where
                 (inj₁ a₅) → "txdatsHashes ⊆ (inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)))"
-                (inj₂ b₅) → "txADhash ≡ map hash txAD"
+                (inj₂ b₅) → case dec-de-morgan b₅ of λ where
+                  (inj₁ a₆) → "languages ⊆ allowedLanguages"
+                  (inj₂ b₆) → "txADhash ≡ map hash txAD"
 
     computeProof : ComputationResult String (∃ (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈_))
     computeProof =
       case H? of λ where
-        (yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ )) →
-          map (map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ )) (computeProof' Γ s tx)
+        (yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈)) →
+          map (map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈)) (computeProof' Γ s tx)
         (no ¬p) → failure $ genErr ¬p
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
                         → map proj₁ computeProof ≡ success s'
-    completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h) with H?
-    ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇))
+    completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h) with H?
+    ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈))
     ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
     ... | success _ | refl = refl
