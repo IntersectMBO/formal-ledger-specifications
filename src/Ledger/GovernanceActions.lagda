@@ -154,9 +154,7 @@ protection. For \TreasuryWdrl and \Info, enacting them does not change
 the state in non-commutative ways, so they can always be enacted.
 
 Types related to this hash protection scheme are defined in
-Figure~\ref{fig:needshash-and-hashprotected-types}. \Unit is the unit
-type that has exactly one element, which reflects that a \GovActionID
-is not necessary.
+Figure~\ref{fig:needshash-and-hashprotected-types}.
 
 \begin{figure*}[h]
 \begin{code}

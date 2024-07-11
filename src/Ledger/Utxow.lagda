@@ -2,7 +2,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
 open import Ledger.Crypto
 open import Ledger.Abstract
 open import Ledger.Transaction
@@ -117,10 +117,10 @@ credsNeeded utxo txb
 \begin{code}
 
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded = getVKeys ∘₂ mapˢ proj₂ ∘₂ credsNeeded
+witsVKeyNeeded = getVKeys ∘ mapˢ proj₂ ∘ credsNeeded
 
 scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded = getScripts ∘₂ mapˢ proj₂ ∘₂ credsNeeded
+scriptsNeeded = getScripts ∘ mapˢ proj₂ ∘ credsNeeded
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used for witnessing}
