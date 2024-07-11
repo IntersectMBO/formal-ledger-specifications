@@ -20,6 +20,9 @@
 - Add `curTreasury` field to transactions
 - Compute the voting stake distribution
 - Add deposit amount to `dereg` certificate
+- Prevent older Plutus versions in transaction with Conway features
+- Allow reference scripts and inputs to be used with Plutus V1
+- Add sanity checks for delegating hot credentials
 
 ### V0.9
 

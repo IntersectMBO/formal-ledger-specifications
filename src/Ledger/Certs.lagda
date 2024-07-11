@@ -78,7 +78,7 @@ cwitness (ccreghot c _)      = c
 record CertEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ᶜ
+  constructor ⟦_,_,_,_,_,_⟧ᶜ
   field
 \end{code}
 \begin{code}
@@ -87,6 +87,7 @@ record CertEnv : Type where
     votes     : List GovVote
     wdrls     : RwdAddr ⇀ Coin
     deposits  : Deposits
+    coldCreds : ℙ Credential
 
 record DState : Type where
 \end{code}
@@ -188,6 +189,7 @@ private variable
   stakeDelegs : Credential ⇀ KeyHash
   rewards : Credential ⇀ Coin
   deps : Deposits
+  cc : ℙ Credential
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -239,10 +241,9 @@ constitutional committee.
 \item \GOVCERTderegdrep deregisters a DRep.
 \item \GOVCERTccreghot registers a hot credential for constitutional
   committee members. We check that the cold key did not previously
-  resign from the committee. Note that we intentionally do not check
-  if the cold key is actually part of the committee; if it isn't, then
-  the corresponding hot key does not carry any voting power. By allowing
-  this, a newly elected member of the constitutional committee can
+  resign from the committee. We allow this delegation for any cold
+  credential that is either part of \EnactState or is is a proposal.
+  This allows a newly elected member of the constitutional committee to
   immediately delegate their vote to a hot key and use it to vote. Since
   votes are counted after previous actions have been enacted, this allows
   constitutional committee members to act without a delay of one epoch.
@@ -352,7 +353,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
   GOVCERT-regdrep : let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
                                   ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
@@ -362,8 +363,9 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
+    ∙ c ∈ cc
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
@@ -393,12 +395,12 @@ data _⊢_⇀⦇_,CERT⦈_ where
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
@@ -421,7 +423,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
+      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢ ⟦
         ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
         ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ

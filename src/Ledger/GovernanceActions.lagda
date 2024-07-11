@@ -233,6 +233,10 @@ instance
 getDRepVote : GovVote → Maybe Credential
 getDRepVote record { voter = (DRep , credential) }  = just credential
 getDRepVote _                                       = nothing
+
+proposedCC : GovAction → ℙ Credential
+proposedCC (UpdateCommittee x _ _) = dom x
+proposedCC _                       = ∅
 \end{code}
 \caption{Governance helper function}
 \end{figure*}
