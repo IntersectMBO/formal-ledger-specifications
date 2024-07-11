@@ -580,11 +580,12 @@ data DepositPurpose : Type where
   data DepositPurpose (CredentialDeposit | PoolDeposit | DRepDeposit | GovActionDeposit) #-}
 
 record CertEnv : Type where
-  field epoch    : Epoch
-        pp       : PParams
-        votes    : List GovVote
-        wdrls    : HSMap RwdAddr Coin
-        deposits : HSMap DepositPurpose Coin
+  field epoch     : Epoch
+        pp        : PParams
+        votes     : List GovVote
+        wdrls     : HSMap RwdAddr Coin
+        deposits  : HSMap DepositPurpose Coin
+        coldCreds : List Credential
 {-# FOREIGN GHC
   data CertEnv = MkCertEnv
     { epoch      :: Epoch
@@ -592,6 +593,7 @@ record CertEnv : Type where
     , votes      :: [GovVote]
     , wdrls      :: HSMap RwdAddr Coin
     , ceDeposits :: HSMap DepositPurpose Coin
+    , coldCreds  :: [Credential]
     }
 #-}
 {-# COMPILE GHC CertEnv = data CertEnv (MkCertEnv) #-}

@@ -55,6 +55,11 @@ record EnactState : Type where
     pv            : HashProtected ProtVer
     pparams       : HashProtected PParams
     withdrawals   : RwdAddr ⇀ Coin
+\end{code}
+\begin{code}[hide]
+open EnactState
+\end{code}
+\begin{code}
 
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x   , _)  = dom (x .proj₁)
@@ -68,8 +73,6 @@ getHash {TriggerHF _}            h = just h
 getHash {ChangePParams _}        h = just h
 getHash {TreasuryWdrl _}         _ = nothing
 getHash {Info}                   _ = nothing
-
-open EnactState
 
 getHashES : EnactState → GovAction → Maybe GovActionID
 getHashES es NoConfidence             = just $ es .cc .proj₂
