@@ -25,7 +25,7 @@ only if it is present.
 Conway. If a transaction contains any votes, proposals, a treasury
 donation or asserts the treasury amount, it is only allowed to contain
 Plutus V3 scripts. Additionally, the presence of reference scripts or
-inline scripts does not prevent Plutus V1 scripts to be used in a
+inline scripts does not prevent Plutus V1 scripts from being used in a
 transaction anymore. Only inline datums are now disallowed from
 appearing together with a Plutus V1 script.
 
