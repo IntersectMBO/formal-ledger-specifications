@@ -174,7 +174,7 @@ record UTxOState : Type where
     donations  : Coin
 \end{code}
 \begin{code}
-record UTxOState : Type where
+record UTxOStateTemp : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᵘᵘ
@@ -193,7 +193,7 @@ record UTxOState : Type where
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
+  _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOStateTemp → Tx → UTxOStateTemp → Type
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}

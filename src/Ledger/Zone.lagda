@@ -63,20 +63,21 @@ sumCol : List Tx → ℕ → Coin
 sumCol ltx cp = foldr (λ { tx c → c + tx .body .txfee * cp }) 0 ltx
 
 -- every tx in the list has enough collateral to cover preceeding ones TODO
--- collForPrec' : List Tx → ℕ → Set
--- collForPrec' [] _ = true
--- collForPrec' (t ∷ ls) tc = ((coin (balance  (utxo ∣ tx .body .collateral)) * 100)
+collForPrec' : List Tx → Coin → Set
+collForPrec' [] _ = true ≡ true
+collForPrec' (t ∷ ls) tc = true ≡ tru
+-- ((coin (balance  (utxo ∣ tx .body .collateral)) * 100)
 --   ≥ᵇ sumCol ltx (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true ∧
 -- ((coin (balance  (utxo ∣ tx .body .collateral)) * 100)
 --   ≥ᵇ sumCol ltx (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true
 
-collForPrec : List Tx → Set
-collForPrec _ = true ≡ true
--- collForPrec [] = true
--- collForPrec (t ∷ l) = collForPrec' (t ∷ l) (coin (balance  (utxo ∣ t .body .collateral)) * 100)
---
--- collInUTxO : List Tx → UTxO → Set
--- -- TODO
+collForPrec : List Tx → Coin
+collForPrec [] = true ≡ true
+collForPrec (t ∷ l) = collForPrec' (t ∷ l) (coin (balance  (utxo ∣ t .body .collateral)) * 100)
+
+collInUTxO : List Tx → UTxO → Set
+collInUTxO [] _ = true ≡ true
+collInUTxO (t ∷ l) u = (t .body .collateral ⊆ dom u) ∧ (collInUTxO l u)
 \end{code}
 \caption{Functions used for zone validation}
 \label{fig:functions:zone}
@@ -87,7 +88,7 @@ collForPrec _ = true ≡ true
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,ZONE⦈_ : LEnv → LState → List Tx → LState → Set
+  _⊢_⇀⦇_,ZONE⦈_ : LEnv → LState → List Tx → LState → Type
 \end{code}
 \begin{code}[hide]
   where
@@ -118,7 +119,7 @@ private variable
     ∙ All chkIsValid (fromList ltx)
     ∙ ((totSizeZone ltx) ≤ᵇ (Γ .LEnv.pparams .PParams.maxTxSize)) ≡ true
     ∙ collForPrec ltx
-    -- ∙ collInUTxO utxo ltx
+    ∙ collInUTxO utxo ltx
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ ltx ,ZONE⦈ ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , certState' ⟧ˡ
   ZONE-N :
@@ -127,7 +128,7 @@ private variable
     ∙ All chkIsValid (fromList lsV)
     ∙ ((totSizeZone ltx) ≤ᵇ (Γ .LEnv.pparams .PParams.maxTxSize)) ≡ true
     ∙ collForPrec (lsV ++ [ tx ])
-    -- ∙ collInUTxO utxo (lsV ++ [ tx ])
+    ∙ collInUTxO utxo (lsV ++ [ tx ])
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ lsV ++ [ tx ] ,ZONE⦈
             ⟦ ⟦ utxo ∣ (tx .body .collateral) ᶜ
@@ -147,7 +148,7 @@ private variable
 \end{code}
 \begin{figure*}[h]
 \begin{code}
-_⊢_⇀⦇_,ZONES⦈_ : LEnv → LState → List (List Tx) → LState → Set
+_⊢_⇀⦇_,ZONES⦈_ : LEnv → LState → List (List Tx) → LState → Type
 _⊢_⇀⦇_,ZONES⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,ZONE⦈_
 \end{code}
 \caption{ZONES transition system}
