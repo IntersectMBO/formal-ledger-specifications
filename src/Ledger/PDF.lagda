@@ -51,9 +51,9 @@ open import Ledger.Gov
 open import Ledger.Enact
 open import Ledger.Ratify
 
--- open import Ledger.Chain         -- no changes in Conway
+open import Ledger.Chain
 
--- open import Ledger.Properties    -- no changes in Conway
+open import Ledger.Properties
 
 open import Ledger.EssentialAgda
 open import Ledger.PDF.ConwayBootstrapEnact
@@ -78,10 +78,10 @@ open import Ledger.PDF.ConwayBootstrap
 \include{Ledger/Enact}
 \include{Ledger/Ratify}
 \include{Ledger/Epoch}
-%% \include{Ledger/Chain}           % no changes in Conway
+\include{Ledger/Chain}
 
-% \section{Properties}              % no changes in Conway
-%% \input{Ledger/Utxo/Properties}
+\section{Properties}
+\input{Ledger/Utxo/Properties}
 
 \bibliographystyle{abbrv}
 \bibliography{references}
