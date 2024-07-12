@@ -90,7 +90,9 @@ More generally, we will consider state machines with an environment:
 These are modelled as 4-ary relations between the environment \(Γ\), an
 initial state \(s\), a signal \(b\) and a final state \(s'\). The ledger consists of
 25-ish (depending on the version) such relations that depend on each
-other, forming a directed graph that is almost a tree.
+other, forming a directed graph that is almost a tree.  Thus each such relation
+represents the transition rule of the state machine; \(X\) is simply a placeholder
+for the name of the transition rule.
 
 \subsection{Reflexive-transitive Closure}
 
@@ -202,10 +204,12 @@ irrelevant. Additionally, all sets in this specification are finite.
 
 We use this set theory to define maps as seen below, which are used in
 many places. We usually think of maps as partial functions
-(i.e., functions not necessarily defined everywhere), but importantly they are not
-Agda functions. We denote the powerset operation by \PowerSetField, which
-we use here to form a type of sets with elements in a given type.
-
+(i.e., functions not necessarily defined everywhere---equivalently, "left-unique"
+relations) and we use the harpoon arrow \AgdaFunction{⇀} to
+distinguish such maps from standard Agda functions which use \AgdaSymbol{→}.
+The figure below also gives notation for the powerset operation, \PowerSet,
+used to form a type of sets with elements in a given type,
+as well as the subset relation and the equality relation for sets.
 \begin{figure*}[h]
 \begin{code}[hide]
 open Theory th using (_∈_) renaming (Set to ℙ)

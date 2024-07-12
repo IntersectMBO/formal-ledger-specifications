@@ -307,8 +307,22 @@ record Theoryᵈ : Type₁ where
   field
     ∈-sp : ⦃ DecEq A ⦄ → spec-∈ A
     _∈?_ : ⦃ DecEq A ⦄ → Decidable² (_∈_ {A = A})
-    all? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Decidable¹ P) {X : Set A} → Dec (All P X)
-    any? : ⦃ DecEq A ⦄ → {P : A → Type} (P? : Decidable¹ P) (X : Set A) → Dec (Any P X)
+    all? : {P : A → Type} (P? : Decidable¹ P) {X : Set A} → Dec (All P X)
+    any? : {P : A → Type} (P? : Decidable¹ P) (X : Set A) → Dec (Any P X)
+
+
+  module _ {A : Type} {P : A → Type} where
+    module _ ⦃ _ : P ⁇¹ ⦄ where instance
+      Dec-Allˢ : All P ⁇¹
+      Dec-Allˢ = ⁇¹ λ x → all? dec¹ {x}
+
+      Dec-Anyˢ : Any P ⁇¹
+      Dec-Anyˢ = ⁇¹ any? dec¹
+
+    module _ (P? : Decidable¹ P) where
+      allᵇ anyᵇ : (X : Set A) → Bool
+      allᵇ X = ⌊ all? P? {X} ⌋
+      anyᵇ X = ⌊ any? P? X   ⌋
 
   module _ {A : Type} ⦃ _ : DecEq A ⦄ where
 
@@ -318,18 +332,6 @@ record Theoryᵈ : Type₁ where
     instance
       Dec-∈ : _∈_ {A = A} ⁇²
       Dec-∈ = ⁇² _∈?_
-
-    module _ {P : A → Type} ⦃ _ : P ⁇¹ ⦄ where instance
-      Dec-Allˢ : All P ⁇¹
-      Dec-Allˢ = ⁇¹ λ x → all? dec¹ {x}
-
-      Dec-Anyˢ : Any P ⁇¹
-      Dec-Anyˢ = ⁇¹ any? dec¹
-
-    module _ {P : A → Type} (P? : Decidable¹ P) where
-      allᵇ anyᵇ : (X : Set A) → Bool
-      allᵇ X = ⌊ all? P? {X} ⌋
-      anyᵇ X = ⌊ any? P? X   ⌋
 
     _ = _∈_  {A = A} ⁇² ∋ it
     _ = _⊆_  {A = A} ⁇² ∋ it
