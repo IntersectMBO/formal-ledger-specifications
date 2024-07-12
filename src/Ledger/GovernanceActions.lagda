@@ -123,10 +123,9 @@ The governance actions carry the following information:
 \label{fig:types-of-governance-actions}
 \end{figure*}
 \footnotetext{There are many varying definitions of the term ``hard fork'' in the blockchain industry. Hard forks typically refer
-  to non-backwards compatible updates of a network. In Cardano, we formalize the definition slightly more by calling any upgrade that
+  to non-backwards compatible updates of a network. In Cardano, we attach a bit more meaning to the definition by calling any upgrade that
   would lead to \emph{more blocks} being validated a ``hard fork'' and force nodes to comply with the new protocol version, effectively
   rendering a node obsolete if it is unable to handle the upgrade.}
-
 
 % \subsection{Voting and Ratification}
 % \label{sec:voting-and-ratification}
