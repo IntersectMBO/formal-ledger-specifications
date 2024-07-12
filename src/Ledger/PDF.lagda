@@ -78,10 +78,10 @@ open import Ledger.PDF.ConwayBootstrap
 \include{Ledger/Enact}
 \include{Ledger/Ratify}
 \include{Ledger/Epoch}
-\include{Ledger/Chain}
+%% \include{Ledger/Chain}           % no changes in Conway
 
-\section{Properties}
-\input{Ledger/Utxo/Properties}
+% \section{Properties}              % no changes in Conway
+%% \input{Ledger/Utxo/Properties}
 
 \bibliographystyle{abbrv}
 \bibliography{references}
