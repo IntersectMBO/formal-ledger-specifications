@@ -51,9 +51,9 @@ open import Ledger.Gov
 open import Ledger.Enact
 open import Ledger.Ratify
 
-open import Ledger.Chain
+-- open import Ledger.Chain         -- no changes in Conway
 
-open import Ledger.Properties
+-- open import Ledger.Properties    -- no changes in Conway
 
 open import Ledger.EssentialAgda
 open import Ledger.PDF.ConwayBootstrapEnact
