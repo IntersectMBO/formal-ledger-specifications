@@ -75,6 +75,9 @@ private
   hasPrev record { action = (TreasuryWdrl _) }        v = no λ ()
   hasPrev record { action = Info }                    v = no λ ()
 
+opaque
+  unfolding validHFAction isRegistered
+
   instance
     validHFAction? : ∀ {p s e} → validHFAction p s e ⁇
     validHFAction? {record { action = NoConfidence }} = Dec-⊤
@@ -93,6 +96,11 @@ private
     validHFAction? {record { action = TreasuryWdrl _ }} = Dec-⊤
     validHFAction? {record { action = Info }} = Dec-⊤
 
+  isRegistered? : ∀ Γ v → Dec (isRegistered Γ v)
+  isRegistered? _ (CC   , _) = ¿ _ ∈ _ ¿
+  isRegistered? _ (DRep , _) = ¿ _ ∈ _ ¿
+  isRegistered? _ (SPO  , _) = ¿ _ ∈ _ ¿
+
 instance
   Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_ String
   Computational-GOV' = record {Go} where
@@ -103,15 +111,18 @@ instance
       module GoVote sig where
         open GovVote sig
 
-        computeProof = case lookupActionId pparams (proj₁ voter) gid s of λ where
-            (yes p) → case Any↔ .from p of λ where
-              (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem , cV))
-            (no ¬p)  → failure (genErrors ¬p)
+        computeProof = case lookupActionId pparams (proj₁ voter) gid s ,′ isRegistered? (proj₁ Γ) voter of λ where
+            (yes p , yes p') → case Any↔ .from p of λ where
+              (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem , cV , p'))
+            (yes _ , no ¬p) → failure (genErrors ¬p)
+            (no ¬p , _)     → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₁ sig ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (GOV-Vote (mem , cV)) with lookupActionId pparams (proj₁ voter) gid s
-        ... | no ¬p = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
-        ... | yes p with Any↔ .from p
+        completeness s' (GOV-Vote (mem , cV , reg))
+          with lookupActionId pparams (proj₁ voter) gid s | isRegistered? (proj₁ Γ) voter
+        ... | no ¬p | _ = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
+        ... | yes _ | no ¬p = ⊥-elim $ ¬p reg
+        ... | yes p | yes p' with Any↔ .from p
         ... | (_ , mem , refl , cV) = refl
 
       module GoProp prop where

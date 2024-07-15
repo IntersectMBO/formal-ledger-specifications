@@ -9,6 +9,10 @@ open import Ledger.Foreign.HSLedger.Core public
 import Ledger.Foreign.LedgerTypes as F
 import Foreign.Haskell.Pair as F
 
+--HSGovStructure : GovStructure
+HSGovStructure = TransactionStructure.govStructure HSTransactionStructure
+open import Ledger.GovernanceActions HSGovStructure using (Vote) public
+
 instance
   _ = Convertible-Refl {⊤}
   _ = Convertible-Refl {ℕ}
@@ -355,3 +359,9 @@ instance
       ; wits    = from wits
       ; isValid = true
       ; txAD    = from txAD }
+
+  Convertible-Vote : Convertible Vote F.Vote
+  Convertible-Vote = autoConvertible
+
+  Convertible-GovVote : Convertible GovVote F.GovVote
+  Convertible-GovVote = autoConvertible

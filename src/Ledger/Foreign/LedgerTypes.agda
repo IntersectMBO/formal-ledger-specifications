@@ -443,23 +443,6 @@ record EnactState : Type where
 #-}
 {-# COMPILE GHC EnactState = data EnactState (MkEnactState) #-}
 
-record GovEnv : Type where
-  field geTxId       : TxId
-        geEpoch      : Epoch
-        gePParams    : PParams
-        gePPolicy    : Maybe ScriptHash
-        geEnactState : EnactState
-{-# FOREIGN GHC
-  data GovEnv = MkGovEnv
-    { geTxId :: TxId
-    , geEpoch :: Epoch
-    , gePParams :: PParams
-    , gePPolicy :: Maybe ScriptHash
-    , geEnactState :: EnactState
-    }
-#-}
-{-# COMPILE GHC GovEnv = data GovEnv (MkGovEnv) #-}
-
 Voter = Pair GovRole Credential
 
 data GovAction : Type where
@@ -644,6 +627,25 @@ record CertState : Type where
     }
 #-}
 {-# COMPILE GHC CertState = data CertState (MkCertState) #-}
+
+record GovEnv : Type where
+  field geTxId       : TxId
+        geEpoch      : Epoch
+        gePParams    : PParams
+        gePPolicy    : Maybe ScriptHash
+        geEnactState : EnactState
+        geCertState  : CertState
+{-# FOREIGN GHC
+  data GovEnv = MkGovEnv
+    { geTxId :: TxId
+    , geEpoch :: Epoch
+    , gePParams :: PParams
+    , gePPolicy :: Maybe ScriptHash
+    , geEnactState :: EnactState
+    , geCertState :: CertState
+    }
+#-}
+{-# COMPILE GHC GovEnv = data GovEnv (MkGovEnv) #-}
 
 record StakeDistrs : Type where
   field stakeDistr  : HSMap VDeleg Coin
