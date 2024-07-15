@@ -6,8 +6,6 @@ import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Types.GovStructure
 
-HSGovStructure : GovStructure
-HSGovStructure = TransactionStructure.govStructure HSTransactionStructure
 instance _ = HSGovStructure
 
 open GovStructure HSGovStructure public

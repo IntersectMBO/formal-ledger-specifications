@@ -2,7 +2,7 @@ module Ledger.Foreign.HSLedger.Certs where
 
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Enact
-open import Ledger.Foreign.HSLedger.Gov
+--open import Ledger.Foreign.HSLedger.Gov
 
 import Ledger.Foreign.LedgerTypes as F
 import Foreign.Haskell.Pair as F

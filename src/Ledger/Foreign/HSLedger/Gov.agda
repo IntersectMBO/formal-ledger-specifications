@@ -1,5 +1,7 @@
 module Ledger.Foreign.HSLedger.Gov where
 
+open import Ledger.Foreign.HSLedger.Cert
+
 open import Ledger.Foreign.HSLedger.BaseTypes
 
 import Ledger.Foreign.LedgerTypes as F
@@ -39,9 +41,6 @@ instance
   Convertible-DocHash : Convertible DocHash F.DataHash
   Convertible-DocHash = autoConvertible
 
-  Convertible-Vote : Convertible Vote F.Vote
-  Convertible-Vote = autoConvertible
-
   Convertible-GovActionState : Convertible GovActionState F.GovActionState
   Convertible-GovActionState = λ where
     .to s → let open GovActionState s in
@@ -60,9 +59,6 @@ instance
         ; action = from gasAction
         ; prevAction = toNeedsHash gasPrevAction
         }
-
-  Convertible-GovVote : Convertible GovVote F.GovVote
-  Convertible-GovVote = autoConvertible
 
   Convertible-GovProposal : Convertible GovProposal F.GovProposal
   Convertible-GovProposal = λ where
