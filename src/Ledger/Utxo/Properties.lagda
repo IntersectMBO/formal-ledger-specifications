@@ -558,7 +558,7 @@ pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
 \begin{code}[hide]
 isRefundCert : DCert → Bool
 isRefundCert (dereg c _) = true
-isRefundCert (deregdrep c) = true
+isRefundCert (deregdrep c _) = true
 isRefundCert _ = false
 
 noRefundCert : List DCert → Type _
