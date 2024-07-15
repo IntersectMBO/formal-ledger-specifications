@@ -177,7 +177,7 @@ data VDeleg : Type where
     | RegPool Integer PoolParams
     | RetirePool Integer Epoch
     | RegDRep Credential Coin Anchor
-    | DeRegDRep Credential
+    | DeRegDRep Credential Coin
     | CCRegHot Credential (Maybe Credential)
     deriving (Show, Eq, Generic)
 #-}
@@ -187,7 +187,7 @@ data TxCert : Type where
   RegPool     : Hash → PoolParams → TxCert
   RetirePool  : Hash → Epoch → TxCert
   RegDRep     : Credential → Coin → Anchor → TxCert
-  DeRegDRep   : Credential → TxCert
+  DeRegDRep   : Credential → Coin → TxCert
   CCRegHot    : Credential → Maybe Credential → TxCert
 {-# COMPILE GHC TxCert = data TxCert (Delegate | Dereg | RegPool | RetirePool | RegDRep | DeRegDRep | CCRegHot) #-}
 
