@@ -354,9 +354,6 @@ actualVotes Γ pparams cc ga votes
       (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
       _          → Vote.abstain
 
-  activeCC : (Credential ⇀ Epoch) → ℙ Credential
-  activeCC m = mapPartial getCCHotCred (m ˢ)
-
   actualCCVotes : Credential ⇀ Vote
   actualCCVotes = case cc of
 \end{code}
@@ -365,7 +362,7 @@ actualVotes Γ pparams cc ga votes
 \end{code}
 \begin{code}
       nothing         → ∅
-      (just (m , q))  → if ccMinSize ≤ lengthˢ (activeCC m)
+      (just (m , q))  → if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
                           then mapWithKey actualCCVote m
                           else constMap (dom m) Vote.no
 
