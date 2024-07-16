@@ -235,7 +235,7 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 \label{defs:enactable}
 \end{figure*}
 
-\GovState behaves like a queue. New proposals are appended at
+The behavior of \GovState is similar to that of a queue. New proposals are appended at
 the end, but any proposal can be removed at the epoch
 boundary. However, for the purposes of enactment, earlier proposals
 take priority. Note that \EnactState used in \GovEnv is defined later,
