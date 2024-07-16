@@ -52,9 +52,9 @@ Some key ingredients in the transaction body are:
 \begin{Conway}
 Ingredients of the transaction body introduced in the Conway era are the following:
 \begin{itemize}
-  \item \AgdaField{txvote}, the list of \GovVotes for the current transaction;
-  \item \AgdaField{txprop}, the list of \GovProposals for the current transaction;
-  \item \AgdaField{txdonation}, the treasury donation amount for the current transaction;
+  \item \AgdaField{txvote}, the list of votes for goverance actions;
+  \item \AgdaField{txprop}, the list of governance proposals;
+  \item \AgdaField{txdonation}, the treasury donation amount;
   \item \AgdaField{curTreasury}, the current value of the treasury.
 \end{itemize}
 \end{Conway}
