@@ -91,7 +91,8 @@ and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition sy
 \end{NoConway}
 %
 \begin{Conway}
-Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
+Figures~\ref{fig:ts-types:utxo}--\ref{fig:functions:utxo-conway}
+define types and functions needed for the UTxO transition system.
 \end{Conway}
 %
 \ Note the special multiplication symbol \AgdaFunction{*↓} used in
@@ -99,7 +100,7 @@ Figure~\ref{fig:functions:utxo}: it means multiply and take the absolute value o
 result, rounded down to the nearest integer.
 
 \begin{NoConway}
-Figure~\ref{fig:ts-types:utxo-shelley} defines the types needed for the UTxO transition system.
+Figure~\ref{fig:ts-types:utxo} defines the types needed for the UTxO transition system.
 The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
 \begin{itemize}
@@ -184,7 +185,7 @@ data
 \end{NoConway}
 \end{AgdaMultiCode}
 \caption{UTxO transition-system types}
-\label{fig:ts-types:utxo-shelley}
+\label{fig:ts-types:utxo}
 \end{figure*}
 
 \begin{figure*}[h]
@@ -338,14 +339,6 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 \end{figure*}
 \end{NoConway}
 
-We redefine \depositRefunds and \newDeposits via \depositsChange,
-which computes the difference between the total deposits before and
-after their application. This simplifies their definitions and some
-correctness proofs. We then add the absolute value of \depositsChange
-to \consumed or \produced depending on its sign. This is done via
-\negPart and \posPart, which satisfy the key property that their
-difference is the identity function.
-
 \begin{figure*}
 \begin{code}[hide]
 module _ (let open UTxOState; open TxBody) where
@@ -371,8 +364,17 @@ module _ (let open UTxOState; open TxBody) where
     +  inject (txb .txdonation)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
-\label{fig:functions:utxo-2}
+\label{fig:functions:utxo-conway}
 \end{figure*}
+
+As seen in Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo-conway},
+we redefine \depositRefunds and \newDeposits via \depositsChange,
+which computes the difference between the total deposits before and
+after their application. This simplifies their definitions and some
+correctness proofs. We then add the absolute value of \depositsChange
+to \consumed or \produced depending on its sign. This is done via
+\negPart and \posPart, which satisfy the key property that their
+difference is the identity function.
 
 \begin{code}[hide]
 open PParams

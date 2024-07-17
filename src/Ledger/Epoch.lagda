@@ -188,8 +188,7 @@ system. Currently, this contains some logic that is handled by
 POOLREAP in the Shelley specification, since POOLREAP is not implemented here.
 
 The EPOCH rule now also needs to invoke RATIFY and properly deal with
-its results, i.e:
-
+its results by carrying out each of the following tasks.
 \begin{itemize}
 \item Pay out all the enacted treasury withdrawals.
 \item Remove expired and enacted governance actions \& refund deposits.

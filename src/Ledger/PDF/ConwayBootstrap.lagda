@@ -7,7 +7,7 @@ module Ledger.PDF.ConwayBootstrap where
 
 As described in \cite{cip1694}, the governance system needs to be
 bootstrapped. During the bootstrap period, the following changes will
-be made to the ledger described in this document:
+be made to the ledger described in this document.
 
 \begin{itemize}
 \item Transactions containing any proposal except \TriggerHF,

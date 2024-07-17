@@ -303,8 +303,9 @@ def process_inline_block(inl, unwanted):
     inl = rm_weird_agda_patterns(inl)
 
     semicolon_after = ["\\AgdaGeneralizable{fut}"]
-    space_before = [gamma, agda_dot, "\\AgdaBound{utxoSt'}", "\\AgdaFunction{mkStakeDistrs}", "\\AgdaFunction{stakeDistr}", agda_arrow]
-    space_after = [agda_arrow, "\\AgdaGeneralizable{fut}"]
+    tab_before = [agda_dot]
+    space_before = [gamma, "\\AgdaBound{utxoSt'}", "\\AgdaFunction{mkStakeDistrs}", "\\AgdaFunction{stakeDistr}", agda_arrow]
+    space_after = [agda_arrow, "\\AgdaGeneralizable{fut}", agda_dot, entailment1] #, entailment2]
     newline_before = [agda_dot, "\\AgdaBound{ls'}", "\\AgdaBound{utxoSt'}"]
 
     if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
@@ -317,6 +318,8 @@ def process_inline_block(inl, unwanted):
         inl = inl + [agda_space]
 
     inl = inline(inl)
+    if find_match(inl, tab_before) != -1:
+        inl = ["\phantom{XX}%"] + inl
     if find_match(inl, newline_before) != -1:
         inl =  [newline] + inl
     return inl        

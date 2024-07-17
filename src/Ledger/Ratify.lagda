@@ -32,7 +32,7 @@ committee, a constitutional change, or a hard-fork delays ratification of
 all other governance actions until the first epoch after their
 enactment. This gives a new constitutional committee enough time to vote
 on current proposals, re-evaluate existing proposals with respect to a
-new constitution, and ensures that the in principle arbitrary semantic
+new constitution, and ensures that the (in principle arbitrary) semantic
 changes caused by enacting a hard-fork do not have unintended
 consequences in combination with other actions.
 
@@ -49,7 +49,7 @@ in that order.
 The symbols mean the following:
 \begin{itemize}
 \item
-  \AgdaFunction{vote} x: To pass the action, the \yes votes need to be over the threshold x.
+  \AgdaFunction{vote} x: For an action to pass, the stake associated with the yes votes must exceed the threshold x.
 \item
   \AgdaFunction{─}: The body of governance does not participate in voting.
 \item

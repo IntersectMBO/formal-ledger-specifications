@@ -64,7 +64,7 @@ this document readable for people unfamiliar with Agda (or other proof
 assistants, functional programming languages, etc.). However, by the
 nature of working in a formal language we have to play by its rules,
 meaning that some instances of uncommon notation are very difficult or
-impossible to replace. Some are explained in
+impossible to avoid. Some are explained in
 Section~\ref{sec:notation}, but there is no guarantee that this
 section is complete. Anyone who is confused by the meaning of an
 expression, please feel free to open an issue in our
@@ -76,9 +76,9 @@ with the `notation' label.
 The \emph{Cardano Node} consists of three pieces:
 
 \begin{itemize}
-  \item Networking layer, which deals with sending messages across the internet
-  \item Consensus layer, which establishes a common order of valid blocks
-  \item Ledger layer, which decides whether a sequence of blocks is valid
+  \item Networking layer, which deals with sending messages across the internet;
+  \item Consensus layer, which establishes a common order of valid blocks;
+  \item Ledger layer, which decides whether a sequence of blocks is valid.
 \end{itemize}
 
 Because of this separation, the ledger gets to be a state machine:
@@ -134,11 +134,11 @@ module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
 
 \subsection{Computational}
 
-Since all such state machines need to be evaluated by the node and all
+Since all such state machines need to be evaluated by the nodes and all
 nodes should compute the same states, the relations specified by them
 should be computable by functions. This can be captured by the
 definition in Figure \ref{fig:computational} which is parametrized
-over the step relation.
+over the state transition relation.
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -172,13 +172,13 @@ This has two further implications:
 
 \begin{itemize}
 
-\item Since \compute is a function, the step relation is necessarily
-right-unique, i.e. there is at most one possible final state for each
+\item Since \compute is a function, the state transition relation is necessarily
+a (partial) function; i.e., there is at most one possible final state for each
 input data. Otherwise, we could prove that \compute could evaluates to
 two different states on the same inputs, which is impossible since it
 is a function.
 
-\item The actual definition of \compute is irrelevant - any two
+\item The actual definition of \compute is irrelevant---any two
 implementations of \compute have to produce the same result on any
 input. This is because we can simply chain the equivalences for two
 different \compute functions together.
@@ -198,13 +198,13 @@ that lets anyone run this code.
 The ledger heavily uses set theory. For various reasons it was
 necessary to implement our own set theory (there will be a paper on this
 some time in the future). Crucially, the set theory is completely
-abstract (in a technical sense - Agda has an abstract keyword) meaning
+abstract (in a technical sense---Agda has an abstract keyword) meaning
 that implementation details of the set theory are
 irrelevant. Additionally, all sets in this specification are finite.
 
 We use this set theory to define maps as seen below, which are used in
 many places. We usually think of maps as partial functions
-(i.e., functions not defined everywhere---equivalently, "left unique"
+(i.e., functions not necessarily defined everywhere---equivalently, "left-unique"
 relations) and we use the harpoon arrow \AgdaFunction{⇀} to
 distinguish such maps from standard Agda functions which use \AgdaSymbol{→}.
 The figure below also gives notation for the powerset operation, \PowerSet,
@@ -262,14 +262,12 @@ two exceptions:
 \item \AgdaFunction{∪ˡ} for left-biased union
 \item \AgdaFunction{ᶜ} in the context of set restrictions, where it indicates the complement
 \end{itemize}
-Also, non-letter superscripts do carry meaning.
+Also, non-letter superscripts do carry meaning.\footnote{At some point in the future we
+  hope to be able to remove all those non-essential superscripts.  Since we prefer doing
+  this by changing the Agda source code instead of via hiding them in this document, this
+  is a non-trivial problem that will take some time to address.}
 
-At some point in the future we hope to be able to remove all those
-non-essential superscripts. Since we prefer doing this by changing the
-Agda source code instead of via hiding them in this document, this is
-a non-trivial problem that will take some time to address.
-
-Additionally, there are some \AgdaFunction{?} and \AgdaFunction{¿}
-operations. These relate to decision procedures and can also safely be
-ignored. We also plan on refactoring the code in such a way that they
-should disappear from this document.
+Finally, there are some \AgdaFunction{?} and \AgdaFunction{¿} operations.
+These relate to decision procedures and can also safely be ignored.\footnote{We
+  plan on refactoring the code so that these special symbols will also disappear
+  from this document.}
