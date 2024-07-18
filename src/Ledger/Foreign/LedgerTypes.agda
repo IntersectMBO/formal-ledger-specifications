@@ -263,28 +263,28 @@ record PParams : Type where
         maxBlockSize           : ℕ
         maxTxSize              : ℕ
         maxHeaderSize          : ℕ
-        maxValSize             : ℕ
-        minUTxOValue           : Coin
-        poolDeposit            : Coin
         keyDeposit             : Coin
+        poolDeposit            : Coin
         Emax                   : Epoch
         nopt                   : ℕ
         pv                     : Pair ℕ ℕ
-        poolVotingThresholds   : PoolThresholds
-        drepVotingThresholds   : DrepThresholds
-        govActionLifetime      : ℕ
-        govActionDeposit       : Coin
-        drepDeposit            : Coin
-        drepActivity           : Epoch
-        ccMinSize              : ℕ
-        ccMaxTermLength        : ℕ
+        minUTxOValue           : Coin
+        coinsPerUTxOByte       : Coin
         costmdls               : ⊤
         prices                 : ⊤
         maxTxExUnits           : ExUnits
         maxBlockExUnits        : ExUnits
-        coinsPerUTxOByte       : Coin
+        maxValSize             : ℕ
         -- collateralPercent   : ℕ
         maxCollateralInputs    : ℕ
+        poolVotingThresholds   : PoolThresholds
+        drepVotingThresholds   : DrepThresholds
+        ccMinSize              : ℕ
+        ccMaxTermLength        : ℕ
+        govActionLifetime      : ℕ
+        govActionDeposit       : Coin
+        drepDeposit            : Coin
+        drepActivity           : Epoch
 
 record PParamsUpdate : Type where
   field a                      : Maybe ℕ
@@ -374,27 +374,27 @@ record PParamsUpdate : Type where
     , ppuMaxBlockSize         :: Maybe Integer
     , ppuMaxTxSize            :: Maybe Integer
     , ppuMaxHeaderSize        :: Maybe Integer
-    , ppuMaxValSize           :: Maybe Integer
-    , ppuMinUTxOValue         :: Maybe Coin
-    , ppuPoolDeposit          :: Maybe Coin
     , ppuKeyDeposit           :: Maybe Coin
+    , ppuPoolDeposit          :: Maybe Coin
     , ppuEmax                 :: Maybe Epoch
     , ppuNopt                 :: Maybe Integer
     , ppuPv                   :: Maybe (Integer, Integer)
-    , ppuPoolVotingThresholds :: Maybe PoolThresholds
-    , ppuDrepVotingThresholds :: Maybe DrepThresholds
-    , ppuGovActionLifetime    :: Maybe Integer
-    , ppuGovActionDeposit     :: Maybe Coin
-    , ppuDrepDeposit          :: Maybe Coin
-    , ppuDrepActivity         :: Maybe Epoch
-    , ppuCCMinSize            :: Maybe Integer
-    , ppuCCMaxTermLength      :: Maybe Integer
+    , ppuMinUTxOValue         :: Maybe Coin
+    , ppuCoinsPerUTxOByte     :: Maybe Coin
     , ppuCostmdls             :: Maybe ()
     , ppuPrices               :: Maybe ()
     , ppuMaxTxExUnits         :: Maybe ExUnits
     , ppuMaxBlockExUnits      :: Maybe ExUnits
-    , ppuCoinsPerUTxOByte     :: Maybe Coin
+    , ppuMaxValSize           :: Maybe Integer
     , ppuMaxCollateralInputs  :: Maybe Integer
+    , ppuPoolVotingThresholds :: Maybe PoolThresholds
+    , ppuDrepVotingThresholds :: Maybe DrepThresholds
+    , ppuCCMinSize            :: Maybe Integer
+    , ppuCCMaxTermLength      :: Maybe Integer
+    , ppuGovActionLifetime    :: Maybe Integer
+    , ppuGovActionDeposit     :: Maybe Coin
+    , ppuDrepDeposit          :: Maybe Coin
+    , ppuDrepActivity         :: Maybe Epoch
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC DrepThresholds = data DrepThresholds (MkDrepThresholds) #-}
