@@ -26,6 +26,7 @@ open import Data.List.Relation.Unary.All using (all?; All)
 open import Data.List.Relation.Unary.Any using (any?; Any)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
+open import Data.Rational using (ℚ)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.Propositional using (↔⇒)
 open import Relation.Nullary.Decidable using (map′)
@@ -82,43 +83,34 @@ private variable
   prev : NeedsHash a
   k : ℕ
   p : Maybe ScriptHash
+
 \end{code}
 \emph{Functions used in the GOV rules}
 \begin{AgdaMultiCode}
 \begin{code}[hide]
--- Preliminary (first draft/rough sketch) versions of helper functions
--- for reordering the list of governance actions. TODO: improve/test/refine
-sameKind : GovAction → GovAction → Bool
-sameKind NoConfidence NoConfidence = true
-sameKind (UpdateCommittee _ _ _) (UpdateCommittee _ _ _) = true
-sameKind (NewConstitution _ _) (NewConstitution _ _) = true
-sameKind (TriggerHF _) (TriggerHF _) = true
-sameKind (ChangePParams _) (ChangePParams _) = true
-sameKind (TreasuryWdrl _) (TreasuryWdrl _) = true
-sameKind Info Info = true
-sameKind _ _ = false
-
-sameKind? : (g1 g2 : GovAction) → Dec(sameKind g1 g2 ≡ true)
-sameKind? g1 g2 with sameKind g1 g2
-... | false = false because ofⁿ λ ()
-... | true = true because ofʸ refl
+govActionPriority : GovAction → ℕ
+govActionPriority NoConfidence             = 0
+govActionPriority (UpdateCommittee _ _ _)  = 1
+govActionPriority (NewConstitution _ _)    = 2
+govActionPriority (TriggerHF _)            = 3
+govActionPriority (ChangePParams _)        = 4
+govActionPriority (TreasuryWdrl _)         = 5
+govActionPriority Info                     = 6
 
 groupGovActions : List GovAction → List GovAction
-groupGovActions gs =
- filter (λ x → sameKind? NoConfidence x) gs
-  ++ filter (λ x → sameKind? (UpdateCommittee _ _ _) x) gs
-  ++ filter (λ x → sameKind? (NewConstitution _ _) x) gs
-  ++ filter (λ x → sameKind? (TriggerHF _) x) gs
-  ++ filter (λ x → sameKind? (ChangePParams _) x) gs
-  ++ filter (λ x → sameKind? (TreasuryWdrl _) x) gs
-  ++ filter (λ x → sameKind? Info x) gs
+groupGovActions gs  =   filter (λ x → govActionPriority x ≟ 0) gs
+                    ++  filter (λ x → govActionPriority x ≟ 1) gs
+                    ++  filter (λ x → govActionPriority x ≟ 2) gs
+                    ++  filter (λ x → govActionPriority x ≟ 3) gs
+                    ++  filter (λ x → govActionPriority x ≟ 4) gs
+                    ++  filter (λ x → govActionPriority x ≟ 5) gs
+                    ++  filter (λ x → govActionPriority x ≟ 6) gs
 
-insertGovAction : GovAction → List GovAction → Bool → List GovAction
-insertGovAction g [] _ = g ∷ []
-insertGovAction g (x ∷ xs) w with sameKind g x | w
-... | false | true = g ∷ x ∷ xs
-... | false | false = x ∷ insertGovAction g xs false
-... | true | _ = x ∷ insertGovAction g xs true
+insertGovAction : GovAction → List GovAction → List GovAction
+insertGovAction g [] = g ∷ []
+insertGovAction g (x ∷ xs) with (govActionPriority x) ≤? (govActionPriority g)
+... | yes _ = x ∷ insertGovAction g xs
+... | no _ = g ∷ x ∷ xs
 \end{code}
 \begin{code}
 addVote : GovState → GovActionID → Voter → Vote → GovState
