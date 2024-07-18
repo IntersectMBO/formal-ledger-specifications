@@ -104,11 +104,12 @@ groupGovActions gs  =   filter (λ x → govActionPriority x ≟ 0) gs
                     ++  filter (λ x → govActionPriority x ≟ 5) gs
                     ++  filter (λ x → govActionPriority x ≟ 6) gs
 
-insertGovAction : GovAction → List GovAction → List GovAction
-insertGovAction g [] = g ∷ []
-insertGovAction g (x ∷ xs) with (govActionPriority x) ≤? (govActionPriority g)
-... | yes _ = x ∷ insertGovAction g xs
-... | no _ = g ∷ x ∷ xs
+insertGovAction : GovState → GovActionID × GovActionState → GovState
+insertGovAction [] gaPr = [ gaPr ]
+insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
+  with (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
+... | yes _  = (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
+... | no _   = (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 \end{code}
 \begin{code}
 addVote : GovState → GovActionID → Voter → Vote → GovState
@@ -124,7 +125,7 @@ mkGovStatePair e aid addr a prev = (aid , record
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
-addAction s e aid addr a prev = s ∷ʳ mkGovStatePair e aid addr a prev
+addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
 
 validHFAction : GovProposal → GovState → EnactState → Type
 validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
