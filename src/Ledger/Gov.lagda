@@ -95,14 +95,14 @@ govActionPriority (ChangePParams _)        = 4
 govActionPriority (TreasuryWdrl _)         = 5
 govActionPriority Info                     = 6
 
-groupGovActions : List GovAction → List GovAction
-groupGovActions gs  =   filter (λ x → govActionPriority x ≟ 0) gs
-                    ++  filter (λ x → govActionPriority x ≟ 1) gs
-                    ++  filter (λ x → govActionPriority x ≟ 2) gs
-                    ++  filter (λ x → govActionPriority x ≟ 3) gs
-                    ++  filter (λ x → govActionPriority x ≟ 4) gs
-                    ++  filter (λ x → govActionPriority x ≟ 5) gs
-                    ++  filter (λ x → govActionPriority x ≟ 6) gs
+groupGovActions : GovState → GovState
+groupGovActions gs  =   filter (λ x → govActionPriority (action (proj₂ x)) ≟ 0) gs
+                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 1) gs
+                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 2) gs
+                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 3) gs
+                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 4) gs
+                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 5) gs
+                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 6) gs
 
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
