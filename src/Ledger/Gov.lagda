@@ -26,7 +26,6 @@ open import Data.List.Relation.Unary.All using (all?; All)
 open import Data.List.Relation.Unary.Any using (any?; Any)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
-open import Data.Rational using (ℚ)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.Propositional using (↔⇒)
 open import Relation.Nullary.Decidable using (map′)
@@ -83,7 +82,6 @@ private variable
   prev : NeedsHash a
   k : ℕ
   p : Maybe ScriptHash
-
 \end{code}
 \emph{Functions used in the GOV rules}
 \begin{AgdaMultiCode}
