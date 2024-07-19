@@ -132,7 +132,7 @@ threshold pp ccThreshold =
         open DrepThresholds drepThresholds
         open PoolThresholds poolThresholds
 
-        ✓ = ccThreshold
+        ✓ = maybe just ✓† ccThreshold
 \end{code}
 \begin{code}
         P/Q2a/b : Maybe ℚ × Maybe ℚ
