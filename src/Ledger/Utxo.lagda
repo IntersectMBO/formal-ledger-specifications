@@ -82,7 +82,6 @@ utxoEntrySizeWithoutVal = 8
 utxoEntrySize : TxOutʰ → MemoryEstimate
 utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValueʰ o)
 
-
 open PParams
 \end{code}
 
@@ -208,6 +207,9 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
+  toUTxOState : UTxOStateTemp → UTxOState 
+  toUTxOState u = let open UTxOStateTemp in ⟦(proj₁ (utxoTemp u)) , feesTemp u , depositsTemp u , donationsTemp u ⟧ᵘ
+
   requestsUTxO : TxBody → FRxO
   requestsUTxO tx = mapKeys (tx .txid ,_) (tx .requests)
 

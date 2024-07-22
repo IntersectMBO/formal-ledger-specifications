@@ -100,7 +100,7 @@ data
   LEDGER-V : let open LStateTemp s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoStTemp ⇀⦇ tx ,UTXOW⦈ utxoStTemp'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , deposits utxoSt ⟧ᶜ ⊢ certStateTemp ⇀⦇ txcerts ,CERTS⦈ certStateTemp'
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , deposits (toUTxOState utxoStTemp) ⟧ᶜ ⊢ certStateTemp ⇀⦇ txcerts ,CERTS⦈ certStateTemp'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govStTemp ⇀⦇ txgov txb ,GOV⦈ govStTemp'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoStTemp' , govStTemp' , certStateTemp' ⟧ˡˡ

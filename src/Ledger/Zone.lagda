@@ -46,7 +46,7 @@ totSizeZone z = sum (map sizeTx z)
 
 -- check that all IDs in all requiredTxs groups correspond to Txs in the given zone
 chkRqTx : List Tx → Tx → Set
-chkRqTx ltx tx = ∀[ txrid ∈ tx .requiredTxs ] Any (txrid ≡_) ( getIDs ltx )
+chkRqTx ltx tx = ∀[ txid ∈ tx .body .requiredTxs ] Any (txid ≡_) ( getIDs ltx )
 
 -- check for duplicates in two sets
 noDups : ℙ Tx → ℙ Tx → Set
@@ -62,22 +62,16 @@ chkLinear ltx = topSortTxs (mkAllEdges ltx ltx) (mkAllEdges ltx ltx) (nodesWithN
 sumCol : List Tx → ℕ → Coin
 sumCol ltx cp = foldr (λ { tx c → c + tx .body .txfee * cp }) 0 ltx
 
--- every tx in the list has enough collateral to cover preceeding ones TODO
-collForPrec' : List Tx → Coin → Set
-collForPrec' [] _ = true ≡ true
-collForPrec' (t ∷ ls) tc = true ≡ tru
--- ((coin (balance  (utxo ∣ tx .body .collateral)) * 100)
---   ≥ᵇ sumCol ltx (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true ∧
--- ((coin (balance  (utxo ∣ tx .body .collateral)) * 100)
---   ≥ᵇ sumCol ltx (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ true
-
-collForPrec : List Tx → Coin
-collForPrec [] = true ≡ true
-collForPrec (t ∷ l) = collForPrec' (t ∷ l) (coin (balance  (utxo ∣ t .body .collateral)) * 100)
+-- check that collateral in each transaction in the list is enough to cover the preceeding ones
+collForPrec : List Tx → ℕ → UTxO → Coin → Maybe Coin
+collForPrec [] cp u _ = nothing
+collForPrec (t ∷ l) cp u c with c ≤? (coin (balance  (u ∣ t .body .collateral)) * 100) 
+... | no _ = nothing
+... | yes _ = collForPrec l cp u (c - t .body .txfee * cp )
 
 collInUTxO : List Tx → UTxO → Set
 collInUTxO [] _ = true ≡ true
-collInUTxO (t ∷ l) u = (t .body .collateral ⊆ dom u) ∧ (collInUTxO l u)
+collInUTxO (t ∷ l) u =  (t .body .collateral ⊆ dom u) × (collInUTxO l u)
 \end{code}
 \caption{Functions used for zone validation}
 \label{fig:functions:zone}
@@ -118,8 +112,8 @@ private variable
     ∙ noCycles ltx
     ∙ All chkIsValid (fromList ltx)
     ∙ ((totSizeZone ltx) ≤ᵇ (Γ .LEnv.pparams .PParams.maxTxSize)) ≡ true
-    ∙ collForPrec ltx
-    ∙ collInUTxO utxo ltx
+    ∙ collForPrec ltx (Γ .LEnv.pparams .PParams.collateralPercentage) utxo (sumCol ltx (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ just _
+    ∙ collInUTxO ltx utxo 
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ ltx ,ZONE⦈ ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , certState' ⟧ˡ
   ZONE-N :
@@ -127,8 +121,8 @@ private variable
     ∙ tx .isValid ≡ false
     ∙ All chkIsValid (fromList lsV)
     ∙ ((totSizeZone ltx) ≤ᵇ (Γ .LEnv.pparams .PParams.maxTxSize)) ≡ true
-    ∙ collForPrec (lsV ++ [ tx ])
-    ∙ collInUTxO utxo (lsV ++ [ tx ])
+    ∙ collForPrec (lsV ++ [ tx ]) (Γ .LEnv.pparams .PParams.collateralPercentage) utxo (sumCol (lsV ++ [ tx ]) (Γ .LEnv.pparams .PParams.collateralPercentage)) ≡ just _
+    ∙ collInUTxO (lsV ++ [ tx ]) utxo
        ────────────────────────────────
        Γ ⊢ ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , certState ⟧ˡ ⇀⦇ lsV ++ [ tx ] ,ZONE⦈
             ⟦ ⟦ utxo ∣ (tx .body .collateral) ᶜ
