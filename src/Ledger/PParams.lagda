@@ -87,43 +87,53 @@ record PParams : Type where
 \end{code}
 \emph{Network group}
 \begin{code}
-        maxBlockSize maxTxSize        : ℕ
-        maxHeaderSize maxValSize      : ℕ
+        maxBlockSize                  : ℕ
+        maxTxSize                     : ℕ
+        maxHeaderSize                 : ℕ
+        maxTxExUnits                  : ExUnits
+        maxBlockExUnits               : ExUnits
+        maxValSize                    : ℕ
         maxCollateralInputs           : ℕ
-        maxTxExUnits maxBlockExUnits  : ExUnits
 \end{code}
 \begin{code}[hide]
         pv                            : ProtVer -- retired, keep for now
 \end{code}
 \emph{Economic group}
 \begin{code}
-        a b                           : ℕ
+        a                             : ℕ
+        b                             : ℕ
         keyDeposit                    : Coin
         poolDeposit                   : Coin
         coinsPerUTxOByte              : Coin
-        minFeeRefScriptCoinsPerByte   : ℚ
         prices                        : Prices
+        minFeeRefScriptCoinsPerByte   : ℚ
 \end{code}
 \begin{code}[hide]
         minUTxOValue                  : Coin -- retired, keep for now
 \end{code}
 \emph{Technical group}
 \begin{code}
-        a0                            : ℚ
         Emax                          : Epoch
         nopt                          : ℕ
+        a0                            : ℚ
         collateralPercentage          : ℕ
+\end{code}
+\begin{code}[hide]
         -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
+\end{code}
+\begin{code}
         costmdls                      : CostModel
 \end{code}
 \emph{Governance group}
 \begin{code}
-        drepThresholds                : DrepThresholds
         poolThresholds                : PoolThresholds
+        drepThresholds                : DrepThresholds
+        ccMinSize                     : ℕ
+        ccMaxTermLength               : ℕ
         govActionLifetime             : ℕ
-        govActionDeposit drepDeposit  : Coin
+        govActionDeposit              : Coin
+        drepDeposit                   : Coin
         drepActivity                  : Epoch
-        ccMinSize ccMaxTermLength     : ℕ
 
 paramsWellFormed : PParams → Type
 paramsWellFormed pp =

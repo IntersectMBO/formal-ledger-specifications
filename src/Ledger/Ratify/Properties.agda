@@ -12,11 +12,6 @@ open import Ledger.Ratify txs
 
 open Computational ⦃...⦄ hiding (computeProof; completeness)
 
-pattern RATIFY-Continue₁  x y = RATIFY-Continue (inj₁ (x , y))
-pattern RATIFY-Continue₂  x y = RATIFY-Continue (inj₂ (x , y))
-pattern RATIFY-Continue₂₁ x y = RATIFY-Continue₂ x (inj₁ y)
-pattern RATIFY-Continue₂₂ x y = RATIFY-Continue₂ x (inj₂ y)
-
 private
   module Implementation
     Γ (s : RatifyState) (sig : _ × _)
@@ -29,42 +24,28 @@ private
     exp? = expired? currentEpoch st
     del? = delayed? action prevAction es d
 
+    opaque
+      acceptConds? : ∀ a → Dec (acceptConds Γ s a)
+      acceptConds? _ = Dec-× ⦃ ⁇ accepted? _ _ _ ⦄
+        ⦃ Dec-× ⦃ Dec-→ ⦃ ⁇ delayed? _ _ _ _ ⦄ ⦄ ⦃ ⁇ Computational⇒Dec' ⦄ ⦄ .dec
+
     RATIFY'-total : ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFY'⦈ s'
     RATIFY'-total
-      with acc? | exp? | del?
-    ... | no ¬acc | no ¬exp | _ = -, RATIFY-Continue₁ ¬acc ¬exp
-    ... | no ¬acc | yes exp | _ = -, RATIFY-Reject ¬acc exp
-    ... | yes acc | _ | yes del = -, RATIFY-Continue₂₁ acc del
-    ... | yes acc | _ | no ¬del
-      = caseCR es'
-        ∣ (λ eq → -, RATIFY-Accept acc ¬del (≡-success⇔STS .Equivalence.to eq))
-        ∣ (λ eq → -, RATIFY-Continue₂₂ acc (failure⇒∀¬STS eq))
+      with acceptConds? sig | exp?
+    ... | yes p@(_ , _ , (_ , q)) | _ = -, RATIFY-Accept (p , q)
+    ... | no ¬p | no ¬a = -, RATIFY-Continue (¬p , ¬a)
+    ... | no ¬p | yes a = -, RATIFY-Reject (¬p , a)
 
     computeProof = success {Err = ⊥} RATIFY'-total
 
     RATIFY'-completeness : ∀ s' → Γ ⊢ s ⇀⦇ sig ,RATIFY'⦈ s' → RATIFY'-total .proj₁ ≡ s'
-    RATIFY'-completeness s' (RATIFY-Continue₁ ¬acc ¬exp)
-      rewrite dec-no acc? ¬acc | dec-no exp? ¬exp = refl
-    RATIFY'-completeness s' (RATIFY-Reject ¬acc exp)
-      rewrite dec-no acc? ¬acc | dec-yes exp? exp .proj₂ = refl
-    RATIFY'-completeness s' (RATIFY-Continue₂₁ acc del)
-      rewrite dec-yes acc? acc .proj₂ | dec-yes del? del .proj₂ = refl
-    RATIFY'-completeness s' (RATIFY-Accept acc ¬del eq)
-      rewrite dec-yes acc? acc .proj₂ | dec-no del? ¬del
-      = cong proj₁
-      $ caseCR-success
-      $ Computational-ENACT .Computational.completeness _ _ _ _ eq
-    RATIFY'-completeness s' (RATIFY-Continue₂₂ acc h)
-      with del?
-    ... | yes del
-      rewrite dec-yes acc? acc .proj₂ | dec-yes del? del .proj₂ = refl
-    ... | no ¬del
-      rewrite dec-yes acc? acc .proj₂ | dec-no del? ¬del
-      = cong proj₁
-      $ caseCR-failure
-      $ caseCR es'
-        ∣ ⊥-elim ∘ h _ ∘ ≡-success⇔STS .Equivalence.to
-        ∣ id
+    RATIFY'-completeness ⟦ x , _ , _ ⟧ʳ (RATIFY-Accept (p , a)) with acceptConds? sig
+    ... | no ¬h = ⊥-elim (¬h p)
+    ... | yes (_ , _ , _ , h) = cong ⟦_, _ , _ ⟧ʳ $ computational⇒rightUnique Computational-ENACT h a
+    RATIFY'-completeness s' (RATIFY-Reject (¬p , a))
+      rewrite dec-no (acceptConds? _) ¬p | dec-yes exp? a .proj₂ = refl
+    RATIFY'-completeness s' (RATIFY-Continue (¬p , ¬a))
+      rewrite dec-no (acceptConds? _) ¬p | dec-no exp? ¬a = refl
 
     completeness = cong (success {Err = ⊥}) ∘₂ RATIFY'-completeness
 

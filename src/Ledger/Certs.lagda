@@ -204,7 +204,7 @@ stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
 the \TreasuryWdrl governance action in case of the MIR certificates.
 
-\subsection{Explicit deposits}
+\subsection{Explicit Deposits}
 
 Registration and deregistration of staking credentials are now
 required to explicitly state the deposit that is being paid or
@@ -227,8 +227,14 @@ honest stake holders.
 \subsection{Governance Certificate Rules}
 
 The rules for transition systems dealing with individual certificates
-are defined in Figures~\ref{fig:sts:aux-cert-deleg},
-\ref{fig:sts:aux-cert-pool} and \ref{fig:sts:aux-cert-gov}. GOVCERT
+are defined in
+\begin{NoConway}
+Figures~\ref{fig:sts:aux-cert-deleg}, \ref{fig:sts:aux-cert-pool}
+\end{NoConway}
+\begin{Conway}
+Figures~\ref{fig:sts:aux-cert-deleg}
+\end{Conway}
+\ and~\ref{fig:sts:aux-cert-gov}. GOVCERT
 deals with the new certificates relating to DReps and the
 constitutional committee.
 
@@ -237,8 +243,14 @@ constitutional committee.
   registation, a deposit needs to be paid. Either way, the activity
   period of the DRep is reset.
 \item \GOVCERTderegdrep deregisters a DRep.
-\item \GOVCERTccreghot registers a hot credential for constitutional
-  committee members. We check that the cold key did not previously
+\item \GOVCERTccreghot registers a ``hot'' credential for constitutional
+  committee members.\footnote{By ``hot'' and ``cold'' credentials we mean
+    the following: a cold credential is used to register a hot credential,
+    and then the hot credential is used for voting. The idea is that the
+    access to the cold credential is kept in a secure location, while the
+    hot credential is more conveniently accessed.  If the hot credential
+    is compromised, it can be changed using the cold credential.}
+  We check that the cold key did not previously
   resign from the committee. Note that we intentionally do not check
   if the cold key is actually part of the committee; if it isn't, then
   the corresponding hot key does not carry any voting power. By allowing
@@ -349,7 +361,7 @@ data _⊢_⇀⦇_,POOL⦈_ where
 data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
 \begin{code}
-  GOVCERT-regdrep : let open PParams pp in
+  GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
