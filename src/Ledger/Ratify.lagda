@@ -514,6 +514,12 @@ delayingAction Info                     = false
 
 delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
+
+acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
+acceptConds Γ ⟦ es , removed , d ⟧ʳ a = let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+       accepted Γ es st
+    ×  ¬ delayed action prevAction es d
+    × ∃[ es' ]  ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
 abstract
@@ -538,20 +544,21 @@ abstract
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
 \end{code}
-\caption{Functions relating to delays}
+\caption{Functions related to ratification}
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-defs-ii} defines functions that
-deal with delays. A given action can either be delayed if the action
-contained in \EnactState isn't the one the given action is building on top
-of, which is checked by \verifyPrev, or if a previous action was a
-\delayingAction. Note that \delayingAction affects the future: whenever a
-\delayingAction is accepted all future actions are delayed. \delayed then
-expresses the condition whether an action is delayed. This happens either
-because the previous action doesn't match the current one, or because the
-previous action was a delaying one. This information is passed in as an
-argument.
+Figure~\ref{fig:defs:ratify-defs-ii} defines functions that deal with
+delays and the acceptance criterion for ratification. A given action
+can either be delayed if the action contained in \EnactState isn't the
+one the given action is building on top of, which is checked by
+\verifyPrev, or if a previous action was a \delayingAction. Note that
+\delayingAction affects the future: whenever a \delayingAction is
+accepted all future actions are delayed. \delayed then expresses the
+condition whether an action is delayed. This happens either because
+the previous action doesn't match the current one, or because the
+previous action was a delaying one. This information is passed in as
+an argument.
 
 \begin{code}[hide]
 private variable
@@ -568,26 +575,23 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{AgdaSuppressSpace}
 \begin{code}
   RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
-       accepted Γ es st
-    →  ¬ delayed action prevAction es d
-    →  ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+     ∙ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
             ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 
   RATIFY-Reject : let open RatifyEnv Γ; st = a .proj₂ in
-       ¬ accepted Γ es st
-    →  expired currentEpoch st
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+     ∙ expired currentEpoch st
        ────────────────────────────────
        Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 
   RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
-       ¬ accepted Γ es st × ¬ expired currentEpoch st
-    ⊎  accepted Γ es st
-       × ( delayed action prevAction es d
-         ⊎ (∀ es' → ¬ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'))
-    ────────────────────────────────
-    Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+     ∙ ¬ expired currentEpoch st
+       ────────────────────────────────
+       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type
