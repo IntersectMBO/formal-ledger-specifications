@@ -15,27 +15,41 @@ CABAL_TEST=cabal run test
 LEDGER=Ledger
 MIDNIGHT=MidnightExample
 VEC_SCRIPT=agda2vec.py
+HLDIFF_SCRIPT=hldiff.py
+HLDIFF_LIST=hldiff_list.txt
 
 # files that should be postprocessed for fancy vector typesetting
 ppNames=Certs Chain Enact Epoch Ratify Ledger NewPP #Utxo/Properties
 
+# files that should be postprocessed for yellow highlighting of new objects
+hlNames=Transaction
+
 ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))
+
+hlLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(hlNames:%=%.tex))
 
 # Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 
 # General rule for all LaTeX files
-$(filter-out $(ppLatexFiles), $(latexFiles)): $(LATEX_DIR)/%.tex: %.lagda
+$(filter-out $(hlLatexFiles), $(filter-out $(ppLatexFiles), $(latexFiles))): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $<
 
-# Specific rule for postprocessed LaTeX files
+# Specific rule for postprocessed LaTeX files (for vertical vectors)
 $(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda $(VEC_SCRIPT)
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
 	@echo "Postprocessing $@ for vertical vectors"
 	$(PYTHON) $(VEC_SCRIPT) $@ $@
+
+# Second rule for postprocessed LaTeX files (for highlighting new objects)
+$(hlLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda $(HLDIFF_SCRIPT) $(HLDIFF_LIST)
+	@echo "Compiling $<"
+	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
+	@echo "Postprocessing $@ for highlighting of new objects"
+	$(PYTHON) $(HLDIFF_SCRIPT) $@ $@ $(HLDIFF_LIST)
 
 $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
 	mkdir -p $(LATEX_DIR)/$(LEDGER)
