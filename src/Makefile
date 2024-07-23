@@ -63,10 +63,6 @@ $(CONWAY_TEX_FILES): $(CONWAY_TEX_DIR)/%.tex: %.lagda
 		$(PYTHON) $(HL_SCRIPT) $@ $@ $(HL_LIST); \
 	fi
 
-# $(CONWAY_TEX_DIR)/$(LEDGER)/conway-ledger.tex:
-# 	mkdir -p $(CONWAY_TEX_DIR)/$(LEDGER)
-# 	cp $(CONWAY_TEX_DIR)/conway-ledger.tex $(CONWAY_TEX_DIR)/$(LEDGER)/conway-ledger.tex
-
 define latexToPdf =
     @echo "Generating $@"
     $(eval PDF=$(notdir $@))
