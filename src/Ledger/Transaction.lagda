@@ -55,7 +55,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   \item \AgdaField{txvote}, the list of votes for goverance actions;
   \item \AgdaField{txprop}, the list of governance proposals;
   \item \AgdaField{txdonation}, the treasury donation amount;
-  \item \AgdaField{curTreasury}, the current value of the treasury.
+  \item \AgdaField{curTreasury}, the current value of the treasury;
+  \item \AgdaField{txsize}, the size of the serialized form of the transaction;
+  \item \AgdaField{txId}, the hash of the serialized form of the transaction.
 \end{itemize}
 \end{Conway}
 
