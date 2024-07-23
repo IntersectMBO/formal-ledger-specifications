@@ -361,7 +361,7 @@ data _⊢_⇀⦇_,POOL⦈_ where
 data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
 \begin{code}
-  GOVCERT-regdrep : let open PParams pp in
+  GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
