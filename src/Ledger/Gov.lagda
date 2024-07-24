@@ -110,6 +110,14 @@ insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
   with (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
 ... | yes _  = (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
 ... | no _   = (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
+
+insertGovAction-∈ : (gSt : GovState){x : GovActionID × GovActionState}
+  → x ∈ˡ insertGovAction gSt x
+insertGovAction-∈ [] = Any.here refl
+insertGovAction-∈ ((gaID₀ , gaSt₀) ∷ gaPrs) {(gaID₁ , gaSt₁)}
+  with (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
+... | yes _  = Any.there (insertGovAction-∈ gaPrs)
+... | no _   = Any.here refl
 \end{code}
 \begin{code}
 addVote : GovState → GovActionID → Voter → Vote → GovState
