@@ -260,26 +260,20 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     dpMap∘voteUpdate≡dpMap v {[]} = refl
     dpMap∘voteUpdate≡dpMap v {(aid , ast) ∷ govSt} =
       cong (λ x → (GovActionDeposit ∘ proj₁) (aid , ast) ∷ x) (dpMap∘voteUpdate≡dpMap v)
-      where
-        open GovVote v
-        open ≡-Reasoning
-        modifyVotes : GovActionID × GovActionState → GovActionID × GovActionState
-        modifyVotes = λ (gid' , s') → gid' , record s'
-             { votes = if gid' ≡ gid then insert (GovActionState.votes s') voter vote else GovActionState.votes s'}
 
     dpMap-votes-invar : (vs : List GovVote) {k : ℕ} {govSt : GovState}
-      → fromList (dpMap (updateGovStates (map inj₁ vs) k govSt)) ≡ᵉ fromList (dpMap (updateGovStates [] k govSt))
+      → fromList (dpMap (updateGovStates (map inj₁ vs) k govSt)) ≡ᵉ fromList (dpMap govSt)
     dpMap-votes-invar [] = ≡ᵉ.refl
     dpMap-votes-invar (v ∷ vs) {k} {govSt} = begin
       fromList (dpMap (updateGovStates (map inj₁ (v ∷ vs)) k govSt))
-        ≈⟨ ≡ᵉ.refl ⟩
+        ≡⟨ refl ⟩
       fromList (dpMap (updateGovStates (map inj₁ vs) (suc k) (voteUpdate govSt v)))
-        ≡⟨ {!!} ⟩
-      fromList (dpMap (voteUpdate (updateGovStates (map inj₁ vs) (suc k) govSt) v))
-        ≡⟨ cong fromList (dpMap∘voteUpdate≡dpMap v) ⟩
-      fromList (dpMap (updateGovStates (map inj₁ vs) (suc k) govSt))
         ≈⟨ dpMap-votes-invar vs ⟩
-      fromList (dpMap (updateGovStates [] (suc k) govSt))
+      fromList (dpMap (updateGovStates [] (suc k) (voteUpdate govSt v)))
+        ≡⟨ refl ⟩
+      fromList (dpMap (voteUpdate govSt v))
+        ≡⟨ cong fromList (dpMap∘voteUpdate≡dpMap v) ⟩
+      fromList (dpMap govSt)
         ∎
 
     props-dpMap-votes-invar : (vs : List GovVote) (ps : List GovProposal) {k : ℕ} {govSt : GovState}
@@ -313,87 +307,59 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
            ⊆ fromList (dpMap (insertGovAction gSt (mkAction x k)))
       ii = {!!}
 
-    dpMap-update-≡ : ∀ gSt gSt' x y k
-      → fromList (dpMap gSt) ≡ᵉ fromList (dpMap gSt')
-      → fromList (dpMap (insertGovAction gSt (mkAction x k))) ≡ᵉ fromList (dpMap (insertGovAction gSt' (mkAction y k)))
-    dpMap-update-≡ gSt gSt' x y k h = begin
-      fromList (dpMap (insertGovAction gSt (mkAction x k)))
-        ≈⟨ dpMap-update-∪ gSt x k ⟩
-      fromList (dpMap gSt) ∪ fromList (dpMap [ mkAction x k ])
-        ≈⟨ ∪-cong h ≡ᵉ.refl ⟩
-      fromList (dpMap gSt') ∪ fromList (dpMap [ mkAction y k ])
-        ≈˘⟨ dpMap-update-∪ gSt' y k ⟩
-      fromList (dpMap (insertGovAction gSt' (mkAction y k)))
-        ∎
-
-    length-injective : (p p' : GovProposal)(ps ps' : List GovProposal)
-      → length (p ∷ ps) ≡ length (p' ∷ ps') → length ps ≡ length ps'
-    length-injective p p' ps ps' h = trans refl (trans (cong (λ x → x - 1) h) refl)
-
-    dpMap-update-length-≡ : ∀ gSt gSt' ps ps' k
-      → fromList (dpMap gSt) ≡ᵉ fromList (dpMap gSt') → length ps ≡ length ps'
-      → fromList (dpMap (updateGovStates (map inj₂ ps) k gSt)) ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ ps') k gSt'))
-    dpMap-update-length-≡ gSt gSt' [] [] k h l≡ = h
-    dpMap-update-length-≡ gSt gSt' (x ∷ ps) (y ∷ ps') k h l≡ = goal
+    connex-lemma : ∀ {gSt p ps k}
+      → fromList (dpMap (updateGovStates (map inj₂ ps) k gSt)) ∪ ❴ GovActionDeposit (txid , k + length ps) ❵
+          ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ ps) (suc k) (propUpdate gSt p k)))
+    connex-lemma {gSt} {p} {[]} {k} = goal
       where
-      ξ : fromList (dpMap (insertGovAction gSt (mkAction x k)))
-          ≡ᵉ fromList (dpMap (insertGovAction gSt' (mkAction y k)))
-      ξ = dpMap-update-≡ gSt gSt' x y k h
-
-      goal : fromList (dpMap (updateGovStates (map inj₂ (x ∷ ps)) k gSt)) ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ (y ∷ ps')) k gSt'))
+      goal : fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , k + 0) ❵
+        ≡ᵉ fromList (dpMap (propUpdate gSt p k))
       goal = begin
-        fromList (dpMap (updateGovStates (map inj₂ (x ∷ ps)) k gSt))
-          ≈⟨ ≡ᵉ.refl ⟩
-        fromList (dpMap (updateGovStates (map inj₂ ps) (suc k) (propUpdate gSt x k)))
-          ≈⟨ ≡ᵉ.refl ⟩
-        fromList (dpMap (updateGovStates (map inj₂ ps) (suc k) (insertGovAction gSt (mkAction x k))))
-          ≈⟨ dpMap-update-length-≡ (insertGovAction gSt (mkAction x k))
-               (insertGovAction gSt' (mkAction y k)) ps ps' (suc k) ξ (length-injective x y ps ps' l≡) ⟩
-        fromList (dpMap (updateGovStates (map inj₂ ps') (suc k) (insertGovAction gSt' (mkAction y k))))
-          ≈⟨ ≡ᵉ.refl ⟩
-        fromList (dpMap (updateGovStates (map inj₂ (y ∷ ps')) k gSt'))
+        fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , k + 0) ❵
+          ≡⟨ cong (λ x → fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , x) ❵) (+-identityʳ k) ⟩
+        fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , k) ❵
+          ≈˘⟨ dpMap-update-∪ gSt p k ⟩
+        fromList (dpMap (propUpdate gSt p k))
           ∎
 
-    connex-lemma : ∀ {gSt p ps txi}
-      → fromList (dpMap (updateGovStates (map inj₂ ps) 0 gSt)) ∪ ❴ GovActionDeposit (txi , length ps) ❵
-          ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ ps) (suc 0) (propUpdate gSt p 0)))
-    connex-lemma {[]} {p} {ps} {txi} = goal
-      where
-      goal : fromList (dpMap (updateGovStates (map inj₂ ps) 0 [])) ∪ ❴ GovActionDeposit (txi , length ps) ❵
-             ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ ps) 1 (propUpdate [] p 0)))
-      goal = begin
-        fromList (dpMap (updateGovStates (map inj₂ ps) 0 [])) ∪ ❴ GovActionDeposit (txi , length ps) ❵ˢ
-          ≈⟨ ≡ᵉ.refl ⟩
-        fromList (dpMap (updateGovStates (map inj₂ ps) 0 [])) ∪ fromList (dpMap [ ((txi , length ps) , _) ] )
-          ≈⟨ {!!} ⟩
-        fromList (dpMap (updateGovStates (map inj₂ ps) 1 (propUpdate [] p 0))) ∎
-    connex-lemma {x ∷ gSt} {p} {ps} {txi} = {!!}
+    -- ≡ᵉ.sym (dpMap-update-∪ gSt p k)
+    connex-lemma {gSt} {p} {p' ∷ ps} {k} = begin
+      fromList (dpMap (updateGovStates (map inj₂ (p' ∷ ps)) k gSt)) ∪ ❴ GovActionDeposit (txid , k + length (p' ∷ ps)) ❵
+        ≡⟨ cong (λ x → fromList (dpMap (updateGovStates (map inj₂ (p' ∷ ps)) k gSt)) ∪ ❴ GovActionDeposit (txid , x) ❵) (+-suc k (length ps)) ⟩
+      fromList (dpMap (updateGovStates (map inj₂ ps) (suc k) (propUpdate gSt p' k))) ∪ ❴ GovActionDeposit (txid , (suc k) + length ps) ❵
+        ≈˘⟨ ∪-cong (connex-lemma{gSt}{p'}{ps}) ≡ᵉ.refl ⟩
+      (fromList (dpMap (updateGovStates (map inj₂ ps) k gSt)) ∪ ❴ GovActionDeposit (txid , k + length ps) ❵) ∪ ❴ GovActionDeposit (txid , (suc k) + length ps) ❵
+        ≈⟨ ∪-cong (connex-lemma{gSt}{p}{ps}) ≡ᵉ.refl ⟩
+      fromList (dpMap (updateGovStates (map inj₂ ps) (suc k) (propUpdate gSt p k))) ∪ ❴ GovActionDeposit (txid , (suc k) + length ps) ❵
+        ≈⟨ connex-lemma {propUpdate gSt p k}{p'}{ps} ⟩
+      fromList (dpMap (updateGovStates (map inj₂ ps) (suc (suc k)) (propUpdate (propUpdate gSt p k) p' (suc k))))
+        ≡⟨ refl ⟩
+      fromList (dpMap (updateGovStates (map inj₂ (p' ∷ ps)) (suc k) (propUpdate gSt p k)))
+        ∎
 
-    utxo-govst-connex : ∀ {utxoDs gSt txp txi gad}
+    utxo-govst-connex : ∀ {utxoDs gSt txp gad}
       → filterˢ isGADeposit (dom (utxoDs)) ≡ᵉ fromList (dpMap gSt)
-      → filterˢ isGADeposit (dom (updateProposalDeposits txp txi gad utxoDs))
+      → filterˢ isGADeposit (dom (updateProposalDeposits txp txid gad utxoDs))
         ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ txp) 0 gSt))
-    utxo-govst-connex {utxoDs} {gSt} {[]} {txi} {gad} x = x
-    utxo-govst-connex {utxoDs} {gSt} {p ∷ ps} {txi} {gad} x = begin
-      filterˢ isGADeposit (dom (updateProposalDeposits (p ∷ ps) txi gad utxoDs))
-        ≈⟨ ≡ᵉ.refl ⟩
-      filterˢ isGADeposit (dom (updateProposalDeposits ps txi gad utxoDs
-        ∪⁺ ❴ GovActionDeposit (txi , length ps) , gad ❵))
+    utxo-govst-connex {utxoDs} {gSt} {[]} {gad} x = x
+    utxo-govst-connex {utxoDs} {gSt} {p ∷ ps} {gad} x = begin
+      filterˢ isGADeposit (dom (updateProposalDeposits (p ∷ ps) txid gad utxoDs))
+        ≡⟨ refl ⟩
+      filterˢ isGADeposit (dom (updateProposalDeposits ps txid gad utxoDs
+        ∪⁺ ❴ GovActionDeposit (txid , length ps) , gad ❵))
         ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
-      filterˢ isGADeposit ((dom (updateProposalDeposits ps txi gad utxoDs))
-        ∪ (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txi , length ps) , gad ❵))
+      filterˢ isGADeposit ((dom (updateProposalDeposits ps txid gad utxoDs))
+        ∪ (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txid , length ps) , gad ❵))
         ≈⟨ filter-hom-∪ ⟩
-      filterˢ isGADeposit (dom (updateProposalDeposits ps txi gad utxoDs)) ∪ filterˢ isGADeposit
-          (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txi , length ps) , gad ❵)
+      filterˢ isGADeposit (dom (updateProposalDeposits ps txid gad utxoDs)) ∪ filterˢ isGADeposit
+          (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txid , length ps) , gad ❵)
         ≈⟨ ∪-cong (utxo-govst-connex {txp = ps} x) (filter-pres-≡ᵉ dom-single≡single) ⟩
       fromList (dpMap (updateGovStates (map inj₂ ps) 0 gSt))
-        ∪ filterˢ isGADeposit ❴ GovActionDeposit (txi , length ps) ❵
-        ≈⟨ ∪-cong  ≡ᵉ.refl (filterGA txi _) ⟩
-      fromList (dpMap (updateGovStates (map inj₂ ps) 0 gSt)) ∪ ❴ GovActionDeposit (txi , length ps) ❵
+        ∪ filterˢ isGADeposit ❴ GovActionDeposit (txid , length ps) ❵
+        ≈⟨ ∪-cong  ≡ᵉ.refl (filterGA txid _) ⟩
+      fromList (dpMap (updateGovStates (map inj₂ ps) 0 gSt)) ∪ ❴ GovActionDeposit (txid , length ps) ❵
         ≈⟨ connex-lemma {gSt} {p} {ps} ⟩
       fromList (dpMap (updateGovStates (map inj₂ ps) (suc 0) (propUpdate gSt p 0)))
-        ≈⟨ ≡ᵉ.refl ⟩
-      fromList (dpMap (updateGovStates (inj₂ p ∷ (map inj₂ ps)) 0 gSt))
         ≈⟨ ≡ᵉ.refl ⟩
       fromList (dpMap (updateGovStates (map inj₂ (p ∷ ps)) 0 gSt)) ∎
 
