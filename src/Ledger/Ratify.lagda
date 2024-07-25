@@ -442,9 +442,11 @@ abstract
   acceptedStakeRatio : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → ℚ
   acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
     where
+      dist : VDeleg ⇀ Coin
+      dist = getStakeDist r cc dists
       acceptedStake totalStake : Coin
-      acceptedStake  = ∑[ x ← getStakeDist r cc dists ∣ votes ⁻¹ Vote.yes        ] x
-      totalStake     = ∑[ x ← getStakeDist r cc dists ∣ votes ⁻¹ Vote.abstain ᶜ  ] x
+      acceptedStake  = ∑[ x ← dist ∣ votes ⁻¹ Vote.yes                              ] x
+      totalStake     = ∑[ x ← dist ∣ dom (votes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵))  ] x
 
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Type
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
@@ -516,10 +518,10 @@ delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 
 acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
-acceptConds Γ ⟦ es , removed , d ⟧ʳ a = let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+acceptConds Γ ⟦ es , removed , d ⟧ʳ (id , st) = let open RatifyEnv Γ; open GovActionState st in
        accepted Γ es st
     ×  ¬ delayed action prevAction es d
-    × ∃[ es' ]  ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+    × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
 abstract
@@ -562,7 +564,6 @@ an argument.
 
 \begin{code}[hide]
 private variable
-  Γ : RatifyEnv
   es es' : EnactState
   a : GovActionID × GovActionState
   removed : ℙ (GovActionID × GovActionState)
@@ -574,20 +575,20 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{figure*}[h!]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+  RATIFY-Accept : ∀ {Γ} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
      ∙ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
      ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
             ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 
-  RATIFY-Reject : let open RatifyEnv Γ; st = a .proj₂ in
+  RATIFY-Reject : ∀ {Γ} → let open RatifyEnv Γ; st = a .proj₂ in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
      ∙ expired currentEpoch st
        ────────────────────────────────
        Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 
-  RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+  RATIFY-Continue : ∀ {Γ} → let open RatifyEnv Γ; st = a .proj₂ in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
      ∙ ¬ expired currentEpoch st
        ────────────────────────────────
