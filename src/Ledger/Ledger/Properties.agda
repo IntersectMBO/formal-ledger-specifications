@@ -298,14 +298,24 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     dpMap-update-∪ : ∀ gSt x k
       → fromList (dpMap (insertGovAction gSt (mkAction x k)))
         ≡ᵉ fromList (dpMap gSt) ∪ fromList (dpMap [ mkAction x k ])
-    dpMap-update-∪ gSt x k = i , ii
+    dpMap-update-∪ [] x k = ≡ᵉ.sym (∪-identityˡ (fromList (dpMap [ mkAction x k ])))
+    dpMap-update-∪ (g@(u , v) ∷ gSt) x k = goal
       where
-      i : fromList (dpMap (insertGovAction gSt (mkAction x k)))
-          ⊆ fromList (dpMap gSt) ∪ fromList (dpMap [ mkAction x k ])
-      i = {!!}
-      ii : fromList (dpMap gSt) ∪ fromList (dpMap [ mkAction x k ])
-           ⊆ fromList (dpMap (insertGovAction gSt (mkAction x k)))
-      ii = {!!}
+      goal : fromList (dpMap (insertGovAction (g ∷ gSt) (mkAction x k)))
+             ≡ᵉ fromList (dpMap (g ∷ gSt)) ∪ fromList (dpMap [ mkAction x k ])
+      goal = begin
+        fromList (dpMap (insertGovAction (g ∷ gSt) (mkAction x k)))
+          ≈⟨ {!!} ⟩
+        ❴ GovActionDeposit u ❵ ∪ fromList (dpMap (insertGovAction gSt (mkAction x k)))
+          ≈⟨ ∪-cong ≡ᵉ.refl (dpMap-update-∪ gSt x k) ⟩
+        ❴ GovActionDeposit u ❵ ∪ (fromList (dpMap gSt) ∪ fromList (dpMap [ mkAction x k ]))
+          ≈˘⟨ ∪-assoc ❴ GovActionDeposit u ❵ (fromList (dpMap gSt)) (fromList (dpMap [ mkAction x k ])) ⟩
+        (❴ GovActionDeposit u ❵ ∪ fromList (dpMap gSt)) ∪ fromList (dpMap [ mkAction x k ])
+          ≈˘⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
+        fromList (GovActionDeposit u ∷ dpMap gSt) ∪ fromList (dpMap [ mkAction x k ])
+          ≡⟨ refl ⟩
+        fromList (dpMap ((u , v) ∷ gSt)) ∪ fromList (dpMap [ mkAction x k ])
+          ∎
 
     connex-lemma : ∀ {gSt p ps k}
       → fromList (dpMap (updateGovStates (map inj₂ ps) k gSt)) ∪ ❴ GovActionDeposit (txid , k + length ps) ❵
@@ -322,7 +332,6 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         fromList (dpMap (propUpdate gSt p k))
           ∎
 
-    -- ≡ᵉ.sym (dpMap-update-∪ gSt p k)
     connex-lemma {gSt} {p} {p' ∷ ps} {k} = begin
       fromList (dpMap (updateGovStates (map inj₂ (p' ∷ ps)) k gSt)) ∪ ❴ GovActionDeposit (txid , k + length (p' ∷ ps)) ❵
         ≡⟨ cong (λ x → fromList (dpMap (updateGovStates (map inj₂ (p' ∷ ps)) k gSt)) ∪ ❴ GovActionDeposit (txid , x) ❵) (+-suc k (length ps)) ⟩
