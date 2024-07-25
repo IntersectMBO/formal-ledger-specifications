@@ -295,26 +295,37 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       fromList (dpMap (updateGovStates (map inj₂ (p ∷ ps)) k govSt))
         ∎
 
-    dpMap-update-∪ : ∀ gSt x k
-      → fromList (dpMap (insertGovAction gSt (mkAction x k)))
-        ≡ᵉ fromList (dpMap gSt) ∪ fromList (dpMap [ mkAction x k ])
-    dpMap-update-∪ [] x k = ≡ᵉ.sym (∪-identityˡ (fromList (dpMap [ mkAction x k ])))
-    dpMap-update-∪ (g@(u , v) ∷ gSt) x k = goal
-      where
-      goal : fromList (dpMap (insertGovAction (g ∷ gSt) (mkAction x k)))
-             ≡ᵉ fromList (dpMap (g ∷ gSt)) ∪ fromList (dpMap [ mkAction x k ])
-      goal = begin
-        fromList (dpMap (insertGovAction (g ∷ gSt) (mkAction x k)))
-          ≈⟨ {!!} ⟩
-        ❴ GovActionDeposit u ❵ ∪ fromList (dpMap (insertGovAction gSt (mkAction x k)))
-          ≈⟨ ∪-cong ≡ᵉ.refl (dpMap-update-∪ gSt x k) ⟩
-        ❴ GovActionDeposit u ❵ ∪ (fromList (dpMap gSt) ∪ fromList (dpMap [ mkAction x k ]))
-          ≈˘⟨ ∪-assoc ❴ GovActionDeposit u ❵ (fromList (dpMap gSt)) (fromList (dpMap [ mkAction x k ])) ⟩
-        (❴ GovActionDeposit u ❵ ∪ fromList (dpMap gSt)) ∪ fromList (dpMap [ mkAction x k ])
-          ≈˘⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
-        fromList (GovActionDeposit u ∷ dpMap gSt) ∪ fromList (dpMap [ mkAction x k ])
+    dpMap-update-∪ : ∀ gSt p k
+      → fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , k) ❵
+          ≡ᵉ fromList (dpMap (propUpdate gSt p k))
+    dpMap-update-∪ [] p k = ∪-identityˡ (fromList (dpMap [ mkAction p k ]))
+    dpMap-update-∪ (g@(gaID₀ , gaSt₀) ∷ gSt) p k
+      with (govActionPriority (GovActionState.action gaSt₀))
+           ≤? (govActionPriority (GovActionState.action (proj₂ (mkAction p k))))
+    ... | yes _  = begin
+        fromList (dpMap (g ∷ gSt)) ∪ ❴ GovActionDeposit (txid , k) ❵
           ≡⟨ refl ⟩
-        fromList (dpMap ((u , v) ∷ gSt)) ∪ fromList (dpMap [ mkAction x k ])
+        fromList (GovActionDeposit gaID₀ ∷ dpMap gSt) ∪ ❴ GovActionDeposit (txid , k) ❵
+          ≈⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
+        (❴ GovActionDeposit gaID₀ ❵ ∪ fromList (dpMap gSt)) ∪ ❴ GovActionDeposit (txid , k) ❵
+          ≈⟨ ∪-assoc ❴ GovActionDeposit gaID₀ ❵ (fromList (dpMap gSt)) ❴ GovActionDeposit (txid , k) ❵ ⟩
+        ❴ GovActionDeposit gaID₀ ❵ ∪ (fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , k) ❵)
+          ≈⟨ ∪-cong ≡ᵉ.refl (dpMap-update-∪ gSt p k) ⟩
+        ❴ GovActionDeposit gaID₀ ❵ ∪ fromList (dpMap (propUpdate gSt p k))
+          ≈˘⟨ fromList-∪-singleton ⟩
+        fromList (GovActionDeposit gaID₀ ∷ dpMap (propUpdate gSt p k))
+          ≡⟨ refl ⟩
+        fromList (dpMap (g ∷ insertGovAction gSt (mkAction p k)))
+          ∎
+
+    ... | no _   = begin
+        fromList (dpMap (g ∷ gSt)) ∪ ❴ GovActionDeposit (txid , k) ❵
+          ≈⟨ ∪-comm (fromList (dpMap (g ∷ gSt))) ❴ GovActionDeposit (txid , k) ❵ ⟩
+        ❴ GovActionDeposit (txid , k) ❵ ∪ fromList (dpMap (g ∷ gSt))
+          ≈˘⟨ fromList-∪-singleton ⟩
+        fromList (GovActionDeposit (txid , k) ∷ dpMap (g ∷ gSt))
+          ≡⟨ refl ⟩
+        fromList (dpMap ((mkAction p k) ∷ g ∷ gSt))
           ∎
 
     connex-lemma : ∀ {gSt p ps k}
@@ -328,7 +339,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , k + 0) ❵
           ≡⟨ cong (λ x → fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , x) ❵) (+-identityʳ k) ⟩
         fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txid , k) ❵
-          ≈˘⟨ dpMap-update-∪ gSt p k ⟩
+          ≈⟨ dpMap-update-∪ gSt p k ⟩
         fromList (dpMap (propUpdate gSt p k))
           ∎
 
