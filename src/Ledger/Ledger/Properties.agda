@@ -135,9 +135,10 @@ module _ where
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
 -- Mapping a list of `GovActionID × GovActionState`s to a list of
--- `DepositPurpose`s is so common, we give it a name `dpMap`.
+-- `DepositPurpose`s is so common, we give it a name `dpMap`;
+-- it's equivalent to `map (λ (id , _) → GovActionDeposit id)`.
 dpMap : GovState → List DepositPurpose
-dpMap = map (GovActionDeposit ∘ proj₁) -- map (λ (id , _) → GovActionDeposit id)
+dpMap = map (GovActionDeposit ∘ proj₁)
 
 isGADeposit : DepositPurpose → Type
 isGADeposit dp = isGADepositᵇ dp ≡ true
