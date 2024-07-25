@@ -417,10 +417,6 @@ module _ {L : List A} where
     onlyif h (here refl) = from ∈-fromList (h (to ∈-fromList (here refl)))
     onlyif h (there x'∈) = from ∈-fromList (h (to ∈-fromList (there x'∈)))
 
-
-
-
-
   module _ {ℓ : Level} {P : Pred (List A) ℓ} where
     ∃-sublist-⇔ : (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ (∃[ l ] l ⊆ˡ L × P l)
     ∃-sublist-⇔ = mk⇔ (λ (l , l⊆L , Pl) → l , to sublist-⇔ l⊆L , Pl)
@@ -428,7 +424,3 @@ module _ {L : List A} where
 
     ∃?-sublist-⇔ : Dec (∃[ l ] fromList l ⊆ fromList L × P l) ⇔ Dec (∃[ l ] l ⊆ˡ L × P l)
     ∃?-sublist-⇔ = map′⇔ ∃-sublist-⇔
-
-fromList-⊆-cong : {l₀ l₁ : List A} → l₀ ⊆ˡ l₁ → l₁ ⊆ˡ l₀ → fromList l₀ ≡ᵉ fromList l₁
-fromList-⊆-cong h h' = from sublist-⇔ h , from sublist-⇔ h'
-
