@@ -85,7 +85,7 @@ private variable
 \end{code}
 \emph{Functions used in the GOV rules}
 \begin{AgdaMultiCode}
-\begin{code}[hide]
+\begin{code}
 govActionPriority : GovAction → ℕ
 govActionPriority NoConfidence             = 0
 govActionPriority (UpdateCommittee _ _ _)  = 1
@@ -95,22 +95,15 @@ govActionPriority (ChangePParams _)        = 4
 govActionPriority (TreasuryWdrl _)         = 5
 govActionPriority Info                     = 6
 
-groupGovActions : GovState → GovState
-groupGovActions gs  =   filter (λ x → govActionPriority (action (proj₂ x)) ≟ 0) gs
-                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 1) gs
-                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 2) gs
-                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 3) gs
-                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 4) gs
-                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 5) gs
-                    ++  filter (λ x → govActionPriority (action (proj₂ x)) ≟ 6) gs
-
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
 insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
-  with (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
-... | yes _  = (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
-... | no _   = (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
-
+  = if (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁)) then
+      (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
+    else
+      (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
+\end{code}
+\begin{code}[hide]
 insertGovAction-∈ : (gSt : GovState){x : GovActionID × GovActionState}
   → x ∈ˡ insertGovAction gSt x
 insertGovAction-∈ [] = Any.here refl
