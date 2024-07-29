@@ -98,21 +98,10 @@ govActionPriority Info                     = 6
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
 insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
-  = if (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁)) then
-      (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
-    else
-      (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
-\end{code}
-\begin{code}[hide]
-insertGovAction-∈ : (gSt : GovState){x : GovActionID × GovActionState}
-  → x ∈ˡ insertGovAction gSt x
-insertGovAction-∈ [] = Any.here refl
-insertGovAction-∈ ((gaID₀ , gaSt₀) ∷ gaPrs) {(gaID₁ , gaSt₁)}
-  with (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
-... | yes _  = Any.there (insertGovAction-∈ gaPrs)
-... | no _   = Any.here refl
-\end{code}
-\begin{code}
+  =  if (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
+     then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
+     else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
+
 addVote : GovState → GovActionID → Voter → Vote → GovState
 addVote s aid voter v = map modifyVotes s
   where modifyVotes = λ (gid , s') → gid , record s'
