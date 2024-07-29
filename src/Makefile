@@ -5,6 +5,7 @@ OUT_DIR?=../dist
 LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
 CONWAY_TEX_DIR=latex/Conway
+HL_LIST=$(LATEX_DIR)/hldiff_list.txt
 PRE=$(addprefix $(LATEX_DIR)/,\
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex references.bib)
 PDF_DIR=$(OUT_DIR)/pdfs
@@ -17,7 +18,6 @@ LEDGER=Ledger
 MIDNIGHT=MidnightExample
 VV_SCRIPT=agda2vec.py
 HL_SCRIPT=hldiff.py
-HL_LIST=hldiff_list.txt
 
 # Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
