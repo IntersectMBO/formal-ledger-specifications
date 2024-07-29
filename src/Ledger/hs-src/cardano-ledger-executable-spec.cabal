@@ -16,7 +16,6 @@ maintainer:         andre.knispel@iohk.io
 -- A copyright notice.
 -- copyright:
 -- category:
-extra-source-files: CHANGELOG.md
 
 common globalOptions
     default-language: Haskell2010
