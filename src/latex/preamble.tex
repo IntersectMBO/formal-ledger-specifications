@@ -37,6 +37,9 @@ Scale=0.80
 \renewcommand{\AgdaCommentFontStyle}[1]{{\AgdaTypewriterFont{}#1}}
 \renewcommand{\AgdaBoundFontStyle}[1]{{\emph{\AgdaTypewriterFont{}#1}}}
 
+% Define the \hldiff macro to highlight text with a yellow background
+\newcommand{\hldiff}[1]{\colorbox{yellow}{#1}}
+
 % Math fonts
 \usepackage{unicode-math}
 \setsansfont{XITSMath-Regular.otf}
@@ -47,9 +50,6 @@ Scale=0.80
 %%
 %% Functions
 %%
-\newcommand{\txins}[1]{\fun{txins}~ \var{#1}}
-\newcommand{\txouts}[1]{\fun{txouts}~ \var{#1}}
-\newcommand{\txid}[1]{\fun{txid}~ \var{#1}}
 \newcommand{\outs}[1]{\fun{outs}~ \var{#1}}
 \newcommand{\balance}[1]{\fun{balance}~ \var{#1}}
 \newcommand{\txfee}[1]{\fun{txfee}~ \var{#1}}

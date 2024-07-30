@@ -138,10 +138,10 @@ epoch boundary and are not removed by these functions.
 There are two equivalent ways to introduce this tracking of the
 deposits. One option would be to populate the \deposits field of
 \UTxOState with the correct keys and values that can be extracted from
-the state of the previous era at the transition into the Conway
-era. Alternatively, this logic can be implemented in older eras and
-replaying the chain with that implementation, effectively treating it
-as an erratum to the Shelley specification.
+the state of the previous era at the transition into the Conway era.
+Alternatively, we can effectively treat the old handling of deposits
+as an erratum in the Shelley specification, which we fix by implementing
+the new deposits logic in older eras and then replaying the chain.
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
