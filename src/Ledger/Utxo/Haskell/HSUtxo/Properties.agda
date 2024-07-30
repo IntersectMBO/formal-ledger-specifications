@@ -27,7 +27,7 @@ open import Ledger.Abstract
 open import Ledger.Transaction
 open import Interface.ComputationalRelation
 
-module Ledger.X.Haskell.HSUtxo.Properties
+module Ledger.Utxo.Haskell.HSUtxo.Properties
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
