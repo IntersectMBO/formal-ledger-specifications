@@ -4,6 +4,8 @@ AGDA_RUN=$(AGDA) --transliterate
 OUT_DIR?=../dist
 LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
+CONWAY_TEX_DIR=latex/Conway
+HL_LIST=$(LATEX_DIR)/hldiff_list.txt
 PRE=$(addprefix $(LATEX_DIR)/,\
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex references.bib)
 PDF_DIR=$(OUT_DIR)/pdfs
@@ -14,32 +16,52 @@ MALONZO_DIR=MAlonzo/Code
 CABAL_TEST=cabal run test
 LEDGER=Ledger
 MIDNIGHT=MidnightExample
-VEC_SCRIPT=agda2vec.py
-
-# files that should be postprocessed for fancy vector typesetting
-ppNames=Certs Chain Enact Epoch Ratify Ledger NewPP #Utxo/Properties
-
-ppLatexFiles=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(ppNames:%=%.tex))
+VV_SCRIPT=agda2vec.py
+HL_SCRIPT=hldiff.py
 
 # Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 
-# General rule for all LaTeX files
-$(filter-out $(ppLatexFiles), $(latexFiles)): $(LATEX_DIR)/%.tex: %.lagda
+# Conway Tex Files
+CONWAY_TEX_FILES=$(patsubst %.lagda, $(CONWAY_TEX_DIR)/%.tex,\
+             $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
+
+# to be postprocessed for vertical vector typesetting
+VV_NAMES=Certs Chain Enact Epoch Ratify Ledger NewPP #Utxo/Properties
+
+VV_TEX_FILES=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
+CONWAY_VV_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
+
+# to be postprocessed for highlighting new symbols in Coway pdf
+HL_NAMES=Transaction
+HL_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(HL_NAMES:%=%.tex))
+
+# General rule for all LaTeX files (with postprocessing for vertical vectors)
+$(latexFiles): $(LATEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
 	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $<
+	@set -e; \
+	if echo "$(VV_TEX_FILES)" | grep -wq "$@"; then \
+		echo "Postprocessing $@ for vertical vectors"; \
+		$(PYTHON) $(VV_SCRIPT) $@ $@; \
+	fi
 
-# Specific rule for postprocessed LaTeX files
-$(ppLatexFiles): $(LATEX_DIR)/$(LEDGER)/%.tex: $(LEDGER)/%.lagda $(VEC_SCRIPT)
+# Rule for Conway LaTeX files
+# (with postprocessing for vertical vectors and highlighting new Conway symbols)
+$(CONWAY_TEX_FILES): $(CONWAY_TEX_DIR)/%.tex: %.lagda
 	@echo "Compiling $<"
-	$(AGDA_RUN) --latex --latex-dir=$(LATEX_DIR) $< # --only-scope-checking
-	@echo "Postprocessing $@ for vertical vectors"
-	$(PYTHON) $(VEC_SCRIPT) $@ $@
-
-$(LATEX_DIR)/$(LEDGER)/conway-ledger.tex:
-	mkdir -p $(LATEX_DIR)/$(LEDGER)
-	cp $(LATEX_DIR)/conway-ledger.tex $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex
+	$(AGDA_RUN) --latex --latex-dir=$(CONWAY_TEX_DIR) $<
+	@set -e; \
+	if echo "$(CONWAY_VV_TEX_FILES)" | grep -wq "$@"; then \
+		echo "Postprocessing $@ for vertical vectors"; \
+		$(PYTHON) $(VV_SCRIPT) $@ $@; \
+	fi
+	@set -e; \
+	if echo "$(HL_TEX_FILES)" | grep -wq "$@"; then \
+		echo "Postprocessing $@ for highlighting symbols"; \
+		$(PYTHON) $(HL_SCRIPT) $@ $@ $(HL_LIST); \
+	fi
 
 define latexToPdf =
     @echo "Generating $@"
@@ -48,9 +70,10 @@ define latexToPdf =
     cd $(LATEX_DIR) && $(LATEX) -jobname=$(PDF:.pdf=) $(subst $(LATEX_DIR)/,, $<)
     mv $(LATEX_DIR)/$(PDF) $@
 endef
+
 $(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PRE)
 	$(latexToPdf)
-$(PDF_DIR)/conway-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/conway-ledger.tex $(latexFiles) $(PRE)
+$(PDF_DIR)/conway-ledger.pdf: $(LATEX_DIR)/conway-ledger.tex $(CONWAY_TEX_FILES) $(PRE)
 	$(latexToPdf)
 $(PDF_DIR)/midnight-example.pdf: $(LATEX_DIR)/$(MIDNIGHT)/PDF.tex $(latexFiles) $(PRE)
 	$(latexToPdf)
@@ -166,6 +189,9 @@ hsDocs: ledger.hsDocs midnight.hsDocs
 staticWebsite: $(OUT_DIR)/index.html
 
 clean:
-	rm -rf $(LATEX_DIR)/$(LEDGER) $(LATEX_DIR)/$(MIDNIGHT)\
-	       $(LATEX_DIR)/cardano-ledger.* $(LATEX_DIR)/midnight-example.*\
-	       $(OUT_DIR)/
+	rm -rf $(PDF_DIR)/conway-ledger.pdf $(PDF_DIR)/cardano-ledger.pdf\
+           $(LATEX_DIR)/$(LEDGER)/PDF.tex $(CONWAY_TEX_DIR)/$(LEDGER)/PDF.tex
+
+wipe: clean
+	rm -rf $(LATEX_DIR)/$(LEDGER) $(LATEX_DIR)/$(MIDNIGHT) $(CONWAY_TEX_DIR)/$(LEDGER)\
+	       $(OUT_DIR)/\

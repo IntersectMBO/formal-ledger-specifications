@@ -90,7 +90,6 @@ jobs:
             rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledgerSrc/* ledgerSrc/
             git add -f ledgerSrc
             git commit -m "Updated for ${{ github.sha }}"
-            git tag haskell-package-$(git rev-parse --short ${{ github.sha }}) -m "Tag for ${{ github.sha }}"
 
       - name: Push haskell package
         if: github.ref == 'refs/heads/master'
