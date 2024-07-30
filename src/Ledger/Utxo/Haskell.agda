@@ -15,7 +15,7 @@ open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
 
-module Ledger.Utxo.Haskell.HSUtxo
+module Ledger.Utxo.Haskell
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where

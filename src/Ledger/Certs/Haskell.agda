@@ -3,7 +3,7 @@
 open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
-module Ledger.Certs.Haskell.HSCerts (gs : _) (open GovStructure gs) where
+module Ledger.Certs.Haskell (gs : _) (open GovStructure gs) where
 
 open import Tactic.Derive.DecEq
 
