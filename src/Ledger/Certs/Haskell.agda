@@ -3,28 +3,29 @@
 open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
-module Ledger.Certs.Haskell (gs : _) (open GovStructure gs) where
+module Ledger.Certs.Haskell
+  (gs : _) (open GovStructure gs)
+  where
+
+open import Ledger.Certs gs hiding ( DCert
+                                   ; CertEnv
+                                   ; DState
+                                   ; GState
+                                   ; CertState
+                                   ; GovCertEnv
+                                   ; _⊢_⇀⦇_,DELEG⦈_
+                                   ; _⊢_⇀⦇_,GOVCERT⦈_
+                                   ; _⊢_⇀⦇_,CERTBASE⦈_
+                                   ; _⊢_⇀⦇_,CERT⦈_
+                                   ; _⊢_⇀⦇_,CERTS⦈_
+                                   )
 
 open import Tactic.Derive.DecEq
 
 open import Ledger.GovernanceActions gs
 open RwdAddr
 
-data DepositPurpose : Type where
-  CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : KeyHash      → DepositPurpose
-  DRepDeposit        : Credential   → DepositPurpose
-  GovActionDeposit   : GovActionID  → DepositPurpose
-
-Deposits = DepositPurpose ⇀ Coin
-
-instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
-
-record PoolParams : Type where
-  field
-    rewardAddr : Credential
+open PParams
 
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
@@ -34,15 +35,6 @@ data DCert : Type where
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → DCert
   ccreghot    : Credential → Maybe Credential → DCert
-
-cwitness : DCert → Credential
-cwitness (delegate c _ _ _)  = c
-cwitness (dereg c _)         = c
-cwitness (regpool kh _)      = KeyHashObj kh
-cwitness (retirepool kh _)   = KeyHashObj kh
-cwitness (regdrep c _ _)     = c
-cwitness (deregdrep c)       = c
-cwitness (ccreghot c _)      = c
 
 record CertEnv : Type where
   constructor ⟦_,_,_,_,_⟧ᶜ
@@ -54,23 +46,19 @@ record CertEnv : Type where
     deposits  : Deposits
 
 record DState : Type where
-  constructor ⟦_,_,_⟧ᵈ
+  constructor ⟦_,_,_,_⟧ᵈ
   field
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ KeyHash
     rewards      : Credential ⇀ Coin
-
-record PState : Type where
-  constructor ⟦_,_⟧ᵖ
-  field
-    pools     : KeyHash ⇀ PoolParams
-    retiring  : KeyHash ⇀ Epoch
+    ddeps     : Deposits
 
 record GState : Type where
-  constructor ⟦_,_⟧ᵛ
+  constructor ⟦_,_,_⟧ᵛ
   field
     dreps      : Credential ⇀ Epoch
     ccHotKeys  : Credential ⇀ Maybe Credential
+    gdeps  : Deposits
 
 record CertState : Type where
   constructor ⟦_,_,_⟧ᶜˢ
@@ -79,53 +67,50 @@ record CertState : Type where
     pState : PState
     gState : GState
 
-record DelegEnv : Type where
-  constructor ⟦_,_,_⟧ᵈᵉ
-  field
-    pparams  : PParams
-    pools    : KeyHash ⇀ PoolParams
-    deposits : Deposits
-
 GovCertEnv  = CertEnv
-PoolEnv     = PParams
+
+certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
+certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
+certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
+certDeposit _                  _   = ∅
+-- handled in the Utxo module:
+-- certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
+
+certRefund : DCert → ℙ DepositPurpose
+certRefund (dereg c _)    = ❴ CredentialDeposit c ❵
+certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+certRefund _              = ∅
+
+updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
+                    → DepositPurpose ⇀ Coin
+updateCertDeposits _   []              deposits = deposits
+updateCertDeposits pp  (cert ∷ certs)  deposits
+  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
+
+
+-- updateProposalDeposits []        _     _      deposits  = deposits
+-- updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
+--   updateProposalDeposits ps txid gaDep deposits
+--   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
+
+-- updateDeposits : PParams → Deposits → Deposits
+-- updateDeposits pp = updateCertDeposits pp txcerts
+--                         ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
 
 private variable
-  an : Anchor
-  dReps dReps' : Credential ⇀ Epoch
-  pools : KeyHash ⇀ PoolParams
+  pools   : KeyHash ⇀ PoolParams
   vDelegs : Credential ⇀ VDeleg
   sDelegs : Credential ⇀ KeyHash
-  retiring : KeyHash ⇀ Epoch
-  ccKeys : Credential ⇀ Maybe Credential
-  rwds : Credential ⇀ Coin
-  dCert : DCert
-  c c' : Credential
-  mc : Maybe Credential
-  mv : Maybe VDeleg
-  d : Coin
-  e : Epoch
-  kh kh' : KeyHash
-  mkh : Maybe KeyHash
-  st st' : CertState
-  stᵍ stᵍ' : GState
-  stᵈ stᵈ' : DState
-  stᵖ stᵖ' : PState
-  Γ : CertEnv
-  pp : PParams
-  vs : List GovVote
-  poolParams : PoolParams
-  wdrls  : RwdAddr ⇀ Coin
-  dreps : Credential ⇀ Epoch
-  ccHotKeys : Credential ⇀ Maybe Credential
-  voteDelegs : Credential ⇀ VDeleg
-  stakeDelegs : Credential ⇀ KeyHash
-  rewards : Credential ⇀ Coin
-  deps : Deposits
+  rwds    : Credential ⇀ Coin
+  c       : Credential
+  d       : Coin
+  mv      : Maybe VDeleg
+  mkh     : Maybe KeyHash
+  pp      : PParams
+  deps    : Deposits
 
 data
   _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Type
-data
-  _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Type
 data
   _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Type
 data
@@ -143,8 +128,17 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
       ⟦ pp , pools , deps ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+        record { voteDelegs = vDelegs
+               ; stakeDelegs = sDelegs
+               ; rewards = rwds
+               ; ddeps = d
+               }
+        ⇀⦇ delegate c mv mkh d ,DELEG⦈
+        record { voteDelegs = insertIfJust c mv vDelegs
+               ; stakeDelegs = insertIfJust c mkh sDelegs
+               ; rewards = rwds ∪ˡ ❴ c , 0 ❵
+               ; ddeps = updateDeposits pp txb ds
+               }
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
@@ -152,17 +146,6 @@ data _⊢_⇀⦇_,DELEG⦈_ where
       ────────────────────────────────
       ⟦ pp , pools , deps ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
                           ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
-
-data _⊢_⇀⦇_,POOL⦈_ where
-  POOL-regpool :
-    ∙ kh ∉ dom pools
-      ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
-
-  POOL-retirepool :
-    ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
 
 data _⊢_⇀⦇_,GOVCERT⦈_ where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
