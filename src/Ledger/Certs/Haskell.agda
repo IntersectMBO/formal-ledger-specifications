@@ -86,12 +86,6 @@ updateCertDeposit  : PParams → DCert → (DepositPurpose ⇀ Coin)
 updateCertDeposit pp cert deposits
   = (deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 
-updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
-                    → DepositPurpose ⇀ Coin
-updateCertDeposits _   []              deposits = deposits
-updateCertDeposits pp  (cert ∷ certs)  deposits
-  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
-
 private variable
   an                  : Anchor
   dReps               : Credential ⇀ Epoch
@@ -232,8 +226,6 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
         refresh         = mapPartial getDRepVote (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
-        updatedDDeps    = deps -- TODO: replace with actual updated ddeps
-        updatedGDeps    = deps -- TODO: replace with actual updated gdeps
     in
     ∙ wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
@@ -254,11 +246,11 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
         record { dState = record { voteDelegs = voteDelegs
                                  ; stakeDelegs = stakeDelegs
                                  ; rewards = constMap wdrlCreds 0 ∪ˡ rewards
-                                 ; ddeps = updatedDDeps
+                                 ; ddeps = deps
                                  }
                ; pState = stᵖ
                ; gState = record { dreps = refreshedDReps
                                  ; ccHotKeys = ccHotKeys
-                                 ; gdeps = updatedGDeps
+                                 ; gdeps = deps
                                  }
                }
