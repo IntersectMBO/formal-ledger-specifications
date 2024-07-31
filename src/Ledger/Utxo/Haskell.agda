@@ -10,7 +10,7 @@ module Ledger.Utxo.Haskell
 
 open import Ledger.Prelude
 
-open import Ledger.Utxo txs abs hiding (certDeposit; updateCertDeposits; _⊢_⇀⦇_,UTXO⦈_)
+open import Ledger.Utxo txs abs hiding (certDeposit; updateCertDeposits; _⊢_⇀⦇_,UTXO⦈_) public
 -- Ledger.Utxo is unchanged except for these ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 import Data.Sum.Relation.Unary.All as Sum
