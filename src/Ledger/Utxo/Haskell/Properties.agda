@@ -3,7 +3,7 @@
 open import Ledger.Abstract using (AbstractFunctions)
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Utxo.HaskellProperties
+module Ledger.Utxo.Haskell.Properties
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where

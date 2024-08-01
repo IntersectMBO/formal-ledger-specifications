@@ -10,7 +10,9 @@ import Ledger.PPUp;  import Ledger.PPUp.Properties
 
 -- ** Conformance test reconciliation
 import Ledger.Utxo.Haskell
+import Ledger.Utxo.Haskell.Properties
 import Ledger.Certs.Haskell
+import Ledger.Certs.Haskell.Properties
 
 -- ** Midnight example
 import MidnightExample.PDF

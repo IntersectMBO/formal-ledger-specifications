@@ -2,7 +2,7 @@
 
 open import Ledger.Types.GovStructure using (GovStructure)
 
-module Ledger.Certs.HaskellProperties (gs : _) (open GovStructure gs) where
+module Ledger.Certs.Haskell.Properties (gs : _) (open GovStructure gs) where
 
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
