@@ -1,21 +1,18 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
-open import Ledger.Types.GovStructure
+open import Ledger.Types.GovStructure using (GovStructure)
+
+module Ledger.Certs.HaskellProperties (gs : _) (open GovStructure gs) where
 
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
 
-open import Tactic.ReduceDec
-
-module Ledger.Certs.HaskellProperties (gs : _) (open GovStructure gs) where
-
-open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Certs.Haskell gs
+open import Ledger.GovernanceActions gs hiding (yes; no)
+open import Ledger.Prelude
+open import Tactic.GenError using (genErrors)
 
 open Computational ⦃...⦄
-
-open import Tactic.GenError using (genErrors)
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String

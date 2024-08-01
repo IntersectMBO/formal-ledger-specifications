@@ -1,39 +1,22 @@
 {-# OPTIONS --safe #-}
 
-open import Algebra.Morphism            using (module MonoidMorphisms; IsMagmaHomomorphism)
-import Data.Nat as ℕ
-open import Data.Nat.Properties         hiding (_≟_)
-open import Data.Product                using (swap)
-open import Data.Sign                   using (Sign)
-open import Data.Integer as ℤ           using (ℤ)
-open import Data.Integer.Ext            using (posPart; negPart; ∸≡posPart⊖)
-import Data.Integer.Properties as ℤ
-open import Data.String.Base            renaming (_++_ to _+ˢ_) using ()
-open import Relation.Binary             using (IsEquivalence)
-
-open import Data.List.Relation.Unary.All  using (All)
-open import Data.List.Relation.Unary.Any  using (Any); open Any
-
-open import Prelude; open Equivalence
-
-open import Tactic.Cong                 using (cong!)
-open import Tactic.Defaults
-open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
-open import Tactic.GenError
-open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
-
-open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
-open import Ledger.Abstract
-open import Ledger.Transaction
-open import Interface.ComputationalRelation
+open import Ledger.Abstract using (AbstractFunctions)
+open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Utxo.HaskellProperties
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Utxo.Haskell txs abs
+open import Data.Nat.Properties hiding (_≟_)
+open import Data.String.Base renaming (_++_ to _+ˢ_) using ()
+open import Interface.ComputationalRelation
+open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
 open import Ledger.ScriptValidation txs abs
+open import Ledger.Utxo.Haskell txs abs
+open import Prelude
+
+open Equivalence
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
