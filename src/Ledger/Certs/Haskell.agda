@@ -7,14 +7,12 @@ module Ledger.Certs.Haskell
   (gs : _) (open GovStructure gs)
   where
 
-open import Ledger.Certs gs hiding ( DCert
-                                   ; CertEnv
+open import Ledger.Certs gs hiding ( CertEnv
                                    ; DState
                                    ; GState
                                    ; CertState
                                    ; GovCertEnv
                                    ; _⊢_⇀⦇_,DELEG⦈_
-                                   ; _⊢_⇀⦇_,POOL⦈_
                                    ; _⊢_⇀⦇_,GOVCERT⦈_
                                    ; _⊢_⇀⦇_,CERTBASE⦈_
                                    ; _⊢_⇀⦇_,CERT⦈_
@@ -25,16 +23,6 @@ open import Tactic.Derive.DecEq
 
 open import Ledger.GovernanceActions gs
 open RwdAddr
-
-
-data DCert : Type where
-  delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
-  dereg       : Credential → Coin → DCert
-  regpool     : KeyHash → PoolParams → DCert
-  retirepool  : KeyHash → Epoch → DCert
-  regdrep     : Credential → Coin → Anchor → DCert
-  deregdrep   : Credential → DCert
-  ccreghot    : Credential → Maybe Credential → DCert
 
 record CertEnv : Type where
   constructor ⟦_,_,_,_,_⟧ᶜ
@@ -130,25 +118,13 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
-    ∙ (CredentialDeposit c , d) ∈ envDeposits
+    ∙ (CredentialDeposit c , d) ∈ dep
       ────────────────────────────────
       ⟦ pp , pools , envDeposits ⟧ᵈᵉ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈᴴ
       ⇀⦇ dereg c d ,DELEG⦈
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
       , updateCertDeposit pp (dereg c d) dep ⟧ᵈᴴ
-
-
-data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
-  POOL-regpool :
-    ∙ kh ∉ dom pools
-      ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
-
-  POOL-retirepool :
-    ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
 
 
 data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Type where
@@ -212,6 +188,5 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
       , ⟦ refreshedDReps , ccHotKeys , gdep ⟧ᵛᴴ
       ⟧ᶜˢ
 
-module _ where
-  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_

@@ -22,7 +22,7 @@ instance
                                 × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
       (yes p) → success (-, DELEG-delegate p )
       (no ¬p) → failure (genErrors ¬p)
-    (dereg c d) → case ¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ envDeps ¿ of λ where
+    (dereg c d) → case ¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ dep ¿ of λ where
       (yes p) → success (-, DELEG-dereg p)
       (no ¬p) → failure (genErrors ¬p)
     _ → failure "Unexpected certificate in DELEG"
@@ -32,7 +32,7 @@ instance
                                 × (c ∈ dom rwds → d ≡ 0)
                                 × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ _ , _ , envDeps ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈᴴ (dereg c d) _ (DELEG-dereg p)
-    rewrite dec-yes (¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ envDeps ¿) p .proj₂ = refl
+    rewrite dec-yes (¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ dep ¿) p .proj₂ = refl
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ ⟦ pools , _ ⟧ᵖ (regpool c _) =
