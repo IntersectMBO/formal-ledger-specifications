@@ -113,18 +113,18 @@ instance
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
 
-  -- Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
-  -- Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls , _ ⟧ᶜ st _ =
-  --   let open PParams pp; open CertState st; open GState gState; open DState dState
-  --       refresh = mapPartial getDRepVote (fromList vs)
-  --       wdrlCreds = mapˢ RwdAddr.stake (dom wdrls)
-  --   in case ¿ wdrlCreds ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-  --     (yes p) → success (-, CERT-base p)
-  --     (no ¬p) → failure (genErrors ¬p)
-  -- Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls , _ ⟧ᶜ st _ st' (CERT-base p)
-  --   rewrite let dState = CertState.dState st; open DState dState in
-  --     dec-yes ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
-  --       p .proj₂ = refl
+  Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
+  Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls , _ ⟧ᶜ st _ =
+    let open PParams pp; open CertState st; open GState gState; open DState dState
+        refresh = mapPartial getDRepVote (fromList vs)
+        wdrlCreds = mapˢ RwdAddr.stake (dom wdrls)
+    in case ¿ wdrlCreds ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
+      (yes p) → success (-, CERT-base p)
+      (no ¬p) → failure (genErrors ¬p)
+  Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls , _ ⟧ᶜ st _ st' (CERT-base p)
+    rewrite let dState = CertState.dState st; open DState dState in
+      dec-yes ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
+        p .proj₂ = refl
 
--- Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
--- Computational-CERTS = it
+Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
+Computational-CERTS = it

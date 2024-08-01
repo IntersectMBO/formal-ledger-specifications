@@ -110,7 +110,8 @@ private variable
   stᵖ stᵖ'            : PState
   Γ                   : CertEnv
   pp                  : PParams
-  dep envDeposits     : Deposits
+  envDeposits         : Deposits
+  dep gdep ddep       : Deposits
   vs                  : List GovVote
   poolParams          : PoolParams
   wdrls               : RwdAddr ⇀ Coin
@@ -201,12 +202,16 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , envDeposits ⟧ᶜ ⊢
-      ⟦ ⟦ voteDelegs , stakeDelegs , rewards , dep ⟧ᵈᴴ
+      ⟦ ⟦ voteDelegs , stakeDelegs , rewards , ddep ⟧ᵈᴴ
       , stᵖ
-      , ⟦ dreps , ccHotKeys , dep ⟧ᵛᴴ
+      , ⟦ dreps , ccHotKeys , gdep ⟧ᵛᴴ
       ⟧ᶜˢ
       ⇀⦇ _ ,CERTBASE⦈
-      ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , dep ⟧ᵈᴴ
+      ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , ddep ⟧ᵈᴴ
       , stᵖ
-      , ⟦ refreshedDReps , ccHotKeys , dep ⟧ᵛᴴ
+      , ⟦ refreshedDReps , ccHotKeys , gdep ⟧ᵛᴴ
       ⟧ᶜˢ
+
+module _ where
+  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
+  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
