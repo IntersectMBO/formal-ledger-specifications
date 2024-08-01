@@ -575,20 +575,20 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{figure*}[h!]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  RATIFY-Accept : ∀ {Γ} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+  RATIFY-Accept : ∀ {Γ} {es} {removed} {d} {a} {es'} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
      ∙ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
      ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
             ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 
-  RATIFY-Reject : ∀ {Γ} → let open RatifyEnv Γ; st = a .proj₂ in
+  RATIFY-Reject : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
      ∙ expired currentEpoch st
        ────────────────────────────────
        Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 
-  RATIFY-Continue : ∀ {Γ} → let open RatifyEnv Γ; st = a .proj₂ in
+  RATIFY-Continue : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
      ∙ ¬ expired currentEpoch st
        ────────────────────────────────
