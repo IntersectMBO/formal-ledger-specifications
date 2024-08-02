@@ -7,18 +7,10 @@ module Ledger.Certs.Haskell
   (gs : _) (open GovStructure gs)
   where
 
-open import Ledger.Certs gs hiding ( CertEnv
-                                   ; DelegEnv
-                                   ; DState
-                                   ; GState
-                                   ; CertState
-                                   ; GovCertEnv
-                                   ; _⊢_⇀⦇_,DELEG⦈_
-                                   ; _⊢_⇀⦇_,GOVCERT⦈_
-                                   ; _⊢_⇀⦇_,CERTBASE⦈_
-                                   ; _⊢_⇀⦇_,CERT⦈_
-                                   ; _⊢_⇀⦇_,CERTS⦈_
-                                   )
+open import Ledger.Certs gs
+  using (Deposits; PState; PoolParams; DCert; DepositPurpose; _⊢_⇀⦇_,POOL⦈_; DecEq-DepositPurpose; PoolEnv)
+open DCert
+open DepositPurpose
 
 open import Tactic.Derive.DecEq
 

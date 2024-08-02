@@ -9,9 +9,6 @@ import Foreign.Haskell.Pair as F
 
 open import Ledger.Certs.Properties HSGovStructure
 open import Ledger.Certs.Haskell.Properties HSGovStructure
-  renaming (Computational-DELEG to Computational-DELEG')
-  renaming (Computational-GOVCERT to Computational-GOVCERT')
-  using ()
 
 instance
   _ = Convertible-Refl {String}
