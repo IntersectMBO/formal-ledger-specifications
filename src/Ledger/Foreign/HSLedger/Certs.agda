@@ -22,8 +22,14 @@ instance
   Convertible-DelegEnv : Convertible DelegEnv F.DelegEnv
   Convertible-DelegEnv = autoConvertible
 
+  Convertible-DelegEnv' : Convertible DelegEnv' F.DelegEnv'
+  Convertible-DelegEnv' = autoConvertible
+
   Convertible-CertEnv : ConvertibleType CertEnv F.CertEnv
   Convertible-CertEnv = autoConvertible
+
+  Convertible-CertEnv' : ConvertibleType CertEnv' F.CertEnv'
+  Convertible-CertEnv' = autoConvertible
 
 deleg-step : F.DelegEnv → F.DState → F.TxCert → F.ComputationResult String F.DState
 deleg-step = to (compute Computational-DELEG)
@@ -40,10 +46,10 @@ govcert-step = to (compute Computational-GOVCERT)
 
 {-# COMPILE GHC govcert-step as govCertStep #-}
 
-deleg-step' : F.DelegEnv → F.DState' → F.TxCert → F.ComputationResult String F.DState'
+deleg-step' : F.DelegEnv' → F.DState' → F.TxCert → F.ComputationResult String F.DState'
 deleg-step' = to (compute Computational-DELEG')
 {-# COMPILE GHC deleg-step' as delegStep' #-}
 
-govcert-step' : F.CertEnv → F.GState' → F.TxCert → F.ComputationResult String F.GState'
+govcert-step' : F.CertEnv' → F.GState' → F.TxCert → F.ComputationResult String F.GState'
 govcert-step' = to (compute Computational-GOVCERT')
 {-# COMPILE GHC govcert-step' as govCertStep' #-}
