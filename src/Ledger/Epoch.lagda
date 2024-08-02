@@ -73,7 +73,6 @@ record EpochState : Type where
     ls         : LState
     es         : EnactState
     fut        : RatifyState
-
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -118,7 +117,9 @@ getStakeCred (a , _ , _ , _) = stakeCred a
 
 open RwdAddr using (stake)
 open GovActionState using (returnAddr)
-
+\end{code}
+\begin{NoConway}
+\begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   ⟦ ⟦ treasury , reserves ⟧ᵃ
@@ -142,6 +143,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
 \end{code}
+\end{NoConway}
 
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}

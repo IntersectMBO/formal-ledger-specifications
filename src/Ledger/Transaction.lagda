@@ -22,7 +22,6 @@ import Ledger.Certs
 import Ledger.TokenAlgebra
 import Ledger.Address
 
-
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
@@ -239,5 +238,4 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   instance
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
-
 \end{code}

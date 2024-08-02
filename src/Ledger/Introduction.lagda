@@ -105,7 +105,7 @@ The closure \RTCI of a relation \RTCB is defined in Figure
 \ref{fig:rt-closure}. In the remainder of the text, the closure
 operation is called \RTC.
 
-\begin{figure*}[h!]
+\begin{figure*}[htb]
 \begin{code}[hide]
 module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
   data
@@ -140,7 +140,7 @@ should be computable by functions. This can be captured by the
 definition in Figure \ref{fig:computational} which is parametrized
 over the state transition relation.
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}
 record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Type where
