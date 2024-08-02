@@ -83,19 +83,21 @@ jobs:
             directory: .
 
       - name: Commit haskell package
-        if: github.ref == 'refs/heads/master'
+        if: github.ref != 'refs/heads/master' && github.ref != 'refs/heads/haskell-package-test'
         run: |
-            nix-build -A ledger.hsSrc -j1 -o outputs/ledgerSrc
-            git stash push
-            rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledgerSrc/* ledgerSrc/
-            git add -f ledgerSrc
+            nix-build -A ledger.hsSrc -j1 -o outputs/MAlonzo
+            git stash
+            git checkout -b ${{ github.ref_name }}-MAlonzo refs/heads/haskell-package-test
+            git stash pop
+            rsync -r --exclude={'**/nix-support','**/lib'} outputs/MAlonzo/* MAlonzo/
+            git add -f MAlonzo
             git commit -m "Updated for ${{ github.sha }}"
 
       - name: Push haskell package
-        if: github.ref == 'refs/heads/master'
+        if: github.ref != 'refs/heads/master' && github.ref != 'refs/heads/haskell-package-test'
         uses: ad-m/github-push-action@v0.6.0
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            branch: haskell-package
+            branch: ${{ github.ref_name }}-MAlonzo
             force: true
             directory: .
