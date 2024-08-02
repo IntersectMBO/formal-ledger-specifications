@@ -35,8 +35,10 @@ open GovActionState
 \begin{figure*}[h]
 \emph{Derived types}
 \begin{AgdaMultiCode}
-\begin{code}
+\begin{code}[hide]
 GovState : Type
+\end{code}
+\begin{code}
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Type where
@@ -71,6 +73,7 @@ private variable
   s s' : GovState
   aid : GovActionID
   voter : Voter
+  vote : GovVote
   v : Vote
   d : Coin
   addr : RwdAddr
@@ -107,7 +110,8 @@ validHFAction _ _ _ = ⊤
 \caption{Types and functions used in the GOV transition system}
 \label{defs:gov-defs}
 \end{figure*}
-\begin{figure*}[h]
+
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 -- Convert list of (GovActionID,GovActionState)-pairs to list of GovActionID pairs.
@@ -268,12 +272,12 @@ data _⊢_⇀⦇_,GOV'⦈_ where
 \begin{code}
   GOV-Vote : ∀ {x ast} → let
       open GovEnv Γ
-      sig = inj₁ record { gid = aid ; voter = voter ; vote = v ; anchor = x }
+      vote = record { gid = aid ; voter = voter ; vote = v ; anchor = x }
     in
     ∙ (aid , ast) ∈ fromList s
     ∙ canVote pparams (action ast) (proj₁ voter)
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ sig ,GOV'⦈ addVote s aid voter v
+      (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV'⦈ addVote s aid voter v
 
   GOV-Propose : ∀ {x} → let
       open GovEnv Γ; open PParams pparams hiding (a)

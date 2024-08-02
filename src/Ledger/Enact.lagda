@@ -31,7 +31,7 @@ Note that all other fields of \EnactState also contain a \GovActionID
 since they are \HashProtected.
 
 \begin{figure*}[h]
-\begin{AgdaMultiCode}
+\begin{AgdaSuppressSpace}
 \begin{code}
 record EnactEnv : Type where
 \end{code}
@@ -55,6 +55,11 @@ record EnactState : Type where
     pv            : HashProtected ProtVer
     pparams       : HashProtected PParams
     withdrawals   : RwdAddr ⇀ Coin
+\end{code}
+\begin{code}[hide]
+open EnactState
+\end{code}
+\begin{code}
 
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x   , _)  = dom (x .proj₁)
@@ -69,18 +74,23 @@ getHash {ChangePParams _}        h = just h
 getHash {TreasuryWdrl _}         _ = nothing
 getHash {Info}                   _ = nothing
 
-open EnactState
-
 getHashES : EnactState → GovAction → Maybe GovActionID
-getHashES es NoConfidence             = just $ es .cc .proj₂
-getHashES es (UpdateCommittee _ _ _)  = just $ es .cc .proj₂
-getHashES es (NewConstitution _ _)    = just $ es .constitution .proj₂
-getHashES es (TriggerHF _)            = just $ es .pv .proj₂
-getHashES es (ChangePParams _)        = just $ es .pparams .proj₂
+getHashES es NoConfidence             = just (es .cc .proj₂)
+getHashES es (UpdateCommittee _ _ _)  = just (es .cc .proj₂)
+getHashES es (NewConstitution _ _)    = just (es .constitution .proj₂)
+getHashES es (TriggerHF _)            = just (es .pv .proj₂)
+getHashES es (ChangePParams _)        = just (es .pparams .proj₂)
 getHashES es (TreasuryWdrl _)         = nothing
 getHashES es Info                     = nothing
 \end{code}
-\end{AgdaMultiCode}
+\emph{Type of the ENACT transition system}
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type
+\end{code}
+\end{AgdaSuppressSpace}
 \caption{Types and function used for the ENACT transition system}
 \label{fig:enact-defs}
 \end{figure*}
@@ -119,13 +129,7 @@ required). The exceptions are \UpdateCommittee and \TreasuryWdrl:
 \begin{code}[hide]
 open PParams using (ccMaxTermLength)
 open EnactState using (cc)
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type
-\end{code}
-\begin{code}[hide]
-  where
+data _⊢_⇀⦇_,ENACT⦈_ where
 \end{code}
 \begin{code}
   Enact-NoConf :
@@ -148,7 +152,7 @@ data
 \caption{ENACT transition system}
 \label{fig:sts:enact}
 \end{figure*}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
   Enact-HF :

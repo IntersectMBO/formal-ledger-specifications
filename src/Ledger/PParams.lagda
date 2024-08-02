@@ -33,7 +33,7 @@ The \AgdaRecord{Acnt} record has two fields, \AgdaField{treasury} and \AgdaField
 the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the total assets that
 remain in treasury and reserves.
 
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record Acnt : Type where
@@ -58,11 +58,15 @@ data pvCanFollow : ProtVer → ProtVer → Type where
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 data PParamGroup : Type where
-  NetworkGroup EconomicGroup TechnicalGroup GovernanceGroup SecurityGroup : PParamGroup
+  NetworkGroup     : PParamGroup
+  EconomicGroup    : PParamGroup
+  TechnicalGroup   : PParamGroup
+  GovernanceGroup  : PParamGroup
+  SecurityGroup    : PParamGroup
 
 record DrepThresholds : Type where
 \end{code}
@@ -134,7 +138,13 @@ record PParams : Type where
         govActionDeposit              : Coin
         drepDeposit                   : Coin
         drepActivity                  : Epoch
-
+\end{code}
+\end{AgdaMultiCode}
+\caption{Protocol parameter definitions}
+\label{fig:protocol-parameter-declarations}
+\end{figure*}
+\begin{figure*}
+\begin{code}
 paramsWellFormed : PParams → Type
 paramsWellFormed pp =
      0 ∉ fromList  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
@@ -142,6 +152,9 @@ paramsWellFormed pp =
                    ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
   where open PParams pp
 \end{code}
+\caption{Protocol parameter well-formedness}
+\label{fig:protocol-parameter-well-formedness}
+\end{figure*}
 \begin{code}[hide]
 instance
   unquoteDecl DecEq-DrepThresholds = derive-DecEq
@@ -307,10 +320,6 @@ module PParamsUpdate where
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
 
 \end{code}
-\end{AgdaMultiCode}
-\caption{Protocol parameter declarations}
-\label{fig:protocol-parameter-declarations}
-\end{figure*}
 % Retiring ProtVer's documentation since ProtVer is retired.
 % \ProtVer represents the protocol version used in the Cardano ledger.
 % It is a pair of natural numbers, representing the major and minor version,
@@ -376,7 +385,7 @@ can be applied and it has a set of groups associated with it. An
 update is well formed if it has at least one group (i.e. if it updates
 something) and if it preserves well-formedness.
 
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 record PParamsDiff : Type₁ where
