@@ -38,4 +38,4 @@ certs-step' = to (compute Computational-CERTS')
 cert-step' : F.CertEnv' →  F.CertState' → F.TxCert → F.ComputationResult String F.CertState'
 cert-step' = to (compute Computational-CERT')
 
-{-# COMPILE GHC cert-step as certStep #-}
+{-# COMPILE GHC cert-step' as certStep' #-}
