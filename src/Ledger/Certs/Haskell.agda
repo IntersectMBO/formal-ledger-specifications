@@ -7,8 +7,7 @@ module Ledger.Certs.Haskell
   (gs : _) (open GovStructure gs)
   where
 
-open import Ledger.Certs gs hiding ( CertEnv
-                                   ; DState
+open import Ledger.Certs gs hiding ( DState
                                    ; GState
                                    ; CertState
                                    ; GovCertEnv
@@ -17,24 +16,14 @@ open import Ledger.Certs gs hiding ( CertEnv
                                    ; _⊢_⇀⦇_,CERTBASE⦈_
                                    ; _⊢_⇀⦇_,CERT⦈_
                                    ; _⊢_⇀⦇_,CERTS⦈_
-                                   ) public
+                                   )
 
 open import Tactic.Derive.DecEq
 
 open import Ledger.GovernanceActions gs
 open RwdAddr
 
-record CertEnv : Type where
-  constructor ⟦_,_,_,_,_⟧ᶜ
-  -- constructor ⟦_,_,_,_⟧ᶜ
-  field
-    epoch     : Epoch
-    pp        : PParams
-    votes     : List GovVote
-    wdrls     : RwdAddr ⇀ Coin
-    deposits  : Deposits
-
-record DState : Type where
+record DState' : Type where
   constructor ⟦_,_,_,_⟧ᵈᴴ
   field
     voteDelegs   : Credential ⇀ VDeleg
@@ -42,38 +31,38 @@ record DState : Type where
     rewards      : Credential ⇀ Coin
     deposits     : Deposits
 
-record GState : Type where
+record GState' : Type where
   constructor ⟦_,_,_⟧ᵛᴴ
   field
     dreps      : Credential ⇀ Epoch
     ccHotKeys  : Credential ⇀ Maybe Credential
     deposits   : Deposits
 
-record CertState : Type where
+record CertState' : Type where
   constructor ⟦_,_,_⟧ᶜˢ
   field
-    dState : DState
+    dState : DState'
     pState : PState
-    gState : GState
+    gState : GState'
 
-GovCertEnv  = CertEnv
+GovCertEnv'  = CertEnv
 
-certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
-certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
-certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
-certDeposit _                  _   = ∅
+certDeposit' : DCert → PParams → DepositPurpose ⇀ Coin
+certDeposit' (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
+certDeposit' (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
+certDeposit' _                  _   = ∅
 -- handled in the Utxo module:
 -- certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
 
-certRefund : DCert → ℙ DepositPurpose
-certRefund (dereg c _)    = ❴ CredentialDeposit c ❵
-certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-certRefund _              = ∅
+certRefund' : DCert → ℙ DepositPurpose
+certRefund' (dereg c _)    = ❴ CredentialDeposit c ❵
+certRefund' (deregdrep c)  = ❴ DRepDeposit c ❵
+certRefund' _              = ∅
 
-updateCertDeposit  : PParams → DCert → (DepositPurpose ⇀ Coin)
+updateCertDeposit'  : PParams → DCert → (DepositPurpose ⇀ Coin)
                     → DepositPurpose ⇀ Coin
-updateCertDeposit pp cert deposits
-  = (deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
+updateCertDeposit' pp cert deposits
+  = (deposits ∪⁺ certDeposit' cert pp) ∣ certRefund' cert ᶜ
 
 private variable
   an                  : Anchor
@@ -94,8 +83,8 @@ private variable
   kh kh'              : KeyHash
   mv                  : Maybe VDeleg
   mkh                 : Maybe KeyHash
-  stᵍ stᵍ'            : GState
-  stᵈ stᵈ'            : DState
+  stᵍ stᵍ'            : GState'
+  stᵈ stᵈ'            : DState'
   stᵖ stᵖ'            : PState
   Γ                   : CertEnv
   pp                  : PParams
@@ -104,7 +93,7 @@ private variable
   poolParams          : PoolParams
   wdrls               : RwdAddr ⇀ Coin
 
-data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type where
+data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState' → DCert → DState' → Type where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
@@ -114,7 +103,7 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈᴴ
       ⇀⦇ delegate c mv mkh d ,DELEG⦈
       ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵
-      , updateCertDeposit pp (delegate c mv mkh d) dep ⟧ᵈᴴ
+      , updateCertDeposit' pp (delegate c mv mkh d) dep ⟧ᵈᴴ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
@@ -124,10 +113,10 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈᴴ
       ⇀⦇ dereg c d ,DELEG⦈
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
-      , updateCertDeposit pp (dereg c d) dep ⟧ᵈᴴ
+      , updateCertDeposit' pp (dereg c d) dep ⟧ᵈᴴ
 
 
-data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Type where
+data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv' → GState' → DCert → GState' → Type where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
@@ -135,23 +124,23 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
       ⟦ dReps , ccKeys , dep ⟧ᵛᴴ
         ⇀⦇ regdrep c d an ,GOVCERT⦈
       ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys
-      , updateCertDeposit pp (regdrep c d an ) dep ⟧ᵛᴴ
+      , updateCertDeposit' pp (regdrep c d an ) dep ⟧ᵛᴴ
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛᴴ
           ⇀⦇ deregdrep c ,GOVCERT⦈
-          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit pp (deregdrep c) dep ⟧ᵛᴴ
+          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit' pp (deregdrep c) dep ⟧ᵛᴴ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛᴴ
           ⇀⦇ ccreghot c mc ,GOVCERT⦈
-          ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit pp (ccreghot c mc) dep ⟧ᵛᴴ
+          ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit' pp (ccreghot c mc) dep ⟧ᵛᴴ
 
-data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
+data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState' → DCert → CertState' → Type where
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , edeps ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
@@ -167,7 +156,7 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → T
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
 
-data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
+data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState' → ⊤ → CertState' → Type where
   CERT-base :
     let open PParams pp
         refresh         = mapPartial getDRepVote (fromList vs)
@@ -188,5 +177,5 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
       , ⟦ refreshedDReps , ccHotKeys , gdep ⟧ᵛᴴ
       ⟧ᶜˢ
 
-_⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
+_⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState' → List DCert → CertState' → Type
 _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_

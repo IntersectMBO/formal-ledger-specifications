@@ -8,12 +8,13 @@ import Ledger.Foreign.LedgerTypes as F
 import Foreign.Haskell.Pair as F
 
 open import Ledger.Certs.Properties HSGovStructure
+open import Ledger.Certs.Haskell.Properties HSGovStructure
+  renaming (Computational-DELEG to Computational-DELEG')
+  renaming (Computational-GOVCERT to Computational-GOVCERT')
+  using ()
 
 instance
   _ = Convertible-Refl {String}
-
-  Convertible-DepositPurpose : ConvertibleType DepositPurpose F.DepositPurpose
-  Convertible-DepositPurpose = autoConvertible
 
   Convertible-PState : ConvertibleType PState F.PState
   Convertible-PState = autoConvertible
@@ -38,3 +39,11 @@ govcert-step : F.CertEnv → F.GState → F.TxCert → F.ComputationResult Strin
 govcert-step = to (compute Computational-GOVCERT)
 
 {-# COMPILE GHC govcert-step as govCertStep #-}
+
+deleg-step' : F.DelegEnv → F.DState' → F.TxCert → F.ComputationResult String F.DState'
+deleg-step' = to (compute Computational-DELEG')
+{-# COMPILE GHC deleg-step' as delegStep' #-}
+
+govcert-step' : F.CertEnv → F.GState' → F.TxCert → F.ComputationResult String F.GState'
+govcert-step' = to (compute Computational-GOVCERT')
+{-# COMPILE GHC govcert-step' as govCertStep' #-}

@@ -7,7 +7,18 @@ module Ledger.Certs.Haskell.Properties (gs : _) (open GovStructure gs) where
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
 
+open import Ledger.Certs gs hiding ( DState
+                                   ; GState
+                                   ; CertState
+                                   ; GovCertEnv
+                                   ; _⊢_⇀⦇_,DELEG⦈_
+                                   ; _⊢_⇀⦇_,GOVCERT⦈_
+                                   ; _⊢_⇀⦇_,CERTBASE⦈_
+                                   ; _⊢_⇀⦇_,CERT⦈_
+                                   ; _⊢_⇀⦇_,CERTS⦈_
+                                   )
 open import Ledger.Certs.Haskell gs
+
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Prelude
 open import Tactic.GenError using (genErrors)
@@ -115,14 +126,14 @@ instance
 
   Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
   Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls , _ ⟧ᶜ st _ =
-    let open PParams pp; open CertState st; open GState gState; open DState dState
+    let open PParams pp; open CertState' st; open GState' gState; open DState' dState
         refresh = mapPartial getDRepVote (fromList vs)
         wdrlCreds = mapˢ RwdAddr.stake (dom wdrls)
     in case ¿ wdrlCreds ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
       (yes p) → success (-, CERT-base p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls , _ ⟧ᶜ st _ st' (CERT-base p)
-    rewrite let dState = CertState.dState st; open DState dState in
+    rewrite let dState = CertState'.dState st; open DState' dState in
       dec-yes ¿ mapˢ RwdAddr.stake (dom wdrls) ⊆ dom voteDelegs × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
