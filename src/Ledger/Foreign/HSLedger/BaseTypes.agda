@@ -216,7 +216,6 @@ instance
 
 open import Ledger.Certs.Properties govStructure
 open import Ledger.Certs.Haskell.Properties govStructure
--- open import Ledger.Certs govStructure using (DepositPurpose)
 
 instance
 

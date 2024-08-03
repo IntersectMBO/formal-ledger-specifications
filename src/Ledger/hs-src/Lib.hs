@@ -13,5 +13,4 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.Gov as X (govStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger as X (ledgerStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.NewEpoch as X (newEpochStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ratify as X (ratifyStep, ratifyDebug)
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo as X (utxoStep, utxowStep)
-
+import MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo as X (utxoStep, utxoStep', utxowStep)

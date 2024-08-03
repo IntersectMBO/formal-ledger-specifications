@@ -7,6 +7,7 @@ import Ledger.Foreign.LedgerTypes as F
 
 open import Ledger.Utxo HSTransactionStructure HSAbstractFunctions
 open import Ledger.Utxo.Properties HSTransactionStructure HSAbstractFunctions
+open import Ledger.Utxo.Haskell.Properties HSTransactionStructure HSAbstractFunctions
 open import Ledger.Utxow.Properties HSTransactionStructure HSAbstractFunctions
 
 instance
@@ -35,3 +36,8 @@ utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F
 utxow-step = to (compute Computational-UTXOW)
 
 {-# COMPILE GHC utxow-step as utxowStep #-}
+
+utxo-step'' : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxo-step'' = to (compute Computational-UTXO'')
+
+{-# COMPILE GHC utxo-step'' as utxoStep'' #-}

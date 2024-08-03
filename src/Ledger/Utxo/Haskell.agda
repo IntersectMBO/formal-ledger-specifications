@@ -17,36 +17,80 @@ import Data.Sum.Relation.Unary.All as Sum
 
 open PParams
 
-data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 
-certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
-certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
-certDeposit _                  _   = ∅
+certDeposit'' : DCert → PParams → DepositPurpose ⇀ Coin
+certDeposit'' (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
+certDeposit'' _                  _   = ∅
 -- -- Now handling the following two cases in Certs.Haskell module:
 -- certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
 -- certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
 
--- -- Cert refunds now handled in Certs.Haskell module.
+-- -- Refunds now handled in Certs.Haskell module.
 -- certRefund : DCert → ℙ DepositPurpose
 
-updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
+updateCertDeposits''  : PParams → List DCert → (DepositPurpose ⇀ Coin)
                     → DepositPurpose ⇀ Coin
-updateCertDeposits _   []              deposits = deposits
-updateCertDeposits pp  (cert ∷ certs)  deposits
-  = updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp
--- -- Cert refunds now handled in Certs.Haskell module.
+updateCertDeposits'' _   []              deposits = deposits
+updateCertDeposits'' pp  (cert ∷ certs)  deposits
+  = updateCertDeposits'' pp certs deposits ∪⁺ certDeposit'' cert pp
+-- -- Refunds now handled in Certs.Haskell module.
 -- = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 
 -- -- Unchanged/defined in Utxo module:
--- updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
--- updateDeposits : PParams → TxBody → Deposits → Deposits
+updateProposalDeposits'' : List GovProposal → TxId → Coin → Deposits → Deposits
+updateProposalDeposits'' []        _     _      deposits  = deposits
+updateProposalDeposits'' (_ ∷ ps)  txid  gaDep  deposits  =
+  updateProposalDeposits'' ps txid gaDep deposits
+  ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
+
+updateDeposits'' : PParams → TxBody → Deposits → Deposits
+updateDeposits'' pp txb = updateCertDeposits'' pp txcerts
+                        ∘ updateProposalDeposits'' txprop txid (pp .govActionDeposit)
+  where open TxBody txb
+
+open import Ledger.ScriptValidation txs abs
 
 private variable
   Γ : UTxOEnv
   s s' : UTxOState
   tx : Tx
 
-data _⊢_⇀⦇_,UTXO⦈_ where
+open PParams
+
+data _⊢_⇀⦇_,UTXOS⦈''_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
+  Scripts-Yes :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ true
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈''  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+                              , fees + txfee
+                              , updateDeposits'' pp txb deposits
+                              , donations + txdonation
+                              ⟧ᵘ
+
+  Scripts-No :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ false
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈''  ⟦ utxo ∣ collateral ᶜ
+                              , fees + cbalance (utxo ∣ collateral)
+                              , deposits
+                              , donations
+                              ⟧ᵘ
+
+data _⊢_⇀⦇_,UTXO⦈''_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
 
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb
@@ -69,9 +113,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
-    ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
+    ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈'' s'
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
+      Γ ⊢ s ⇀⦇ tx ,UTXO⦈'' s'
 
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
