@@ -24,8 +24,8 @@ instance
   _ = Functor-ComputationResult
 
 instance
-  Computational-UTXOS'' : Computational _⊢_⇀⦇_,UTXOS⦈''_ String
-  Computational-UTXOS'' = record {go} where
+  Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_ String
+  Computational-UTXOS = record {go} where
     module go Γ s tx
       (let H-Yes , ⁇ H-Yes? = Scripts-Yes-premises {Γ} {s} {tx})
       (let H-No  , ⁇ H-No?  = Scripts-No-premises {Γ} {s} {tx}) where
@@ -40,7 +40,7 @@ instance
           (no _  , yes p) → success (_ , (Scripts-No p))
           (_     , _    ) → failure "isValid check failed"
 
-      completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈'' s' → map proj₁ computeProof ≡ success s'
+      completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
       completeness _ (Scripts-Yes p) with H-No? | H-Yes?
       ... | yes (_ , refl) | _     = case proj₂ p of λ ()
       ... | no _           | yes _ = refl
@@ -51,12 +51,12 @@ instance
       ... | no _           | no ¬p = case ¬p p of λ ()
 
 instance
-  Computational-UTXO'' : Computational _⊢_⇀⦇_,UTXO⦈''_ String
+  Computational-UTXO'' : Computational _⊢_⇀⦇_,UTXO⦈_ String
   Computational-UTXO'' = record {Go}
     where
       module Go Γ s tx (let H , ⁇ H? = UTXO-premises {tx}{Γ}{s}) where
 
-        open Computational Computational-UTXOS''
+        open Computational Computational-UTXOS
           renaming (computeProof to computeProof'; completeness to completeness')
 
         genErr : ¬ H → String
@@ -102,15 +102,15 @@ instance
                                       (inj₁ a₉) → "∀[ (a , _) ∈ range txouts ] Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a"
                                       (inj₂ _) → "something else broke"
 
-        computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈'' s')
+        computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProofH (yes (x , y , z , e , k , l , m , v , n , o , p , q , r , t , u)) =
             map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m v n o p q r t u) <$> computeProof' Γ s tx
         computeProofH (no ¬p) = failure $ genErr ¬p
 
-        computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈'' s')
+        computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProof = computeProofH H?
 
-        completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈'' s' → map proj₁ computeProof ≡ success s'
+        completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m v n o p q r t u h) with H?
         ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u)
         ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h

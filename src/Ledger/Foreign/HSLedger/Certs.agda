@@ -33,6 +33,12 @@ deleg-step = to (compute Computational-DELEG)
 
 {-# COMPILE GHC deleg-step as delegStep #-}
 
+deleg-step' : F.DelegEnv' → F.DState' → F.TxCert → F.ComputationResult String F.DState'
+deleg-step' = to (compute Computational-DELEG')
+
+{-# COMPILE GHC deleg-step' as delegStep' #-}
+
+
 pool-step : F.PParams → F.PState → F.TxCert → F.ComputationResult String F.PState
 pool-step = to (compute Computational-POOL)
 
@@ -43,10 +49,7 @@ govcert-step = to (compute Computational-GOVCERT)
 
 {-# COMPILE GHC govcert-step as govCertStep #-}
 
-deleg-step' : F.DelegEnv' → F.DState' → F.TxCert → F.ComputationResult String F.DState'
-deleg-step' = to (compute Computational-DELEG')
-{-# COMPILE GHC deleg-step' as delegStep' #-}
-
 govcert-step' : F.CertEnv' → F.GState' → F.TxCert → F.ComputationResult String F.GState'
 govcert-step' = to (compute Computational-GOVCERT')
+
 {-# COMPILE GHC govcert-step' as govCertStep' #-}

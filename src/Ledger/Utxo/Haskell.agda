@@ -10,42 +10,39 @@ module Ledger.Utxo.Haskell
 
 open import Ledger.Prelude
 
-open import Ledger.Utxo txs abs hiding (certDeposit; updateCertDeposits; _⊢_⇀⦇_,UTXO⦈_) public
--- Ledger.Utxo is unchanged except for these ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+open import Ledger.Utxo txs abs hiding (certDeposit; updateCertDeposits; updateProposalDeposits; updateDeposits; _⊢_⇀⦇_,UTXOS⦈_; _⊢_⇀⦇_,UTXO⦈_) public
 
 import Data.Sum.Relation.Unary.All as Sum
 
 open PParams
 
 
-certDeposit'' : DCert → PParams → DepositPurpose ⇀ Coin
-certDeposit'' (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
-certDeposit'' _                  _   = ∅
--- -- Now handling the following two cases in Certs.Haskell module:
+certDepositUtxo : DCert → PParams → DepositPurpose ⇀ Coin
+certDepositUtxo (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
+certDepositUtxo _                  _   = ∅
+-- -- Handle the following two cases in Certs.Haskell module:
 -- certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
 -- certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
 
--- -- Refunds now handled in Certs.Haskell module.
+-- -- Handle refunds in Certs.Haskell module.
 -- certRefund : DCert → ℙ DepositPurpose
 
-updateCertDeposits''  : PParams → List DCert → (DepositPurpose ⇀ Coin)
-                    → DepositPurpose ⇀ Coin
-updateCertDeposits'' _   []              deposits = deposits
-updateCertDeposits'' pp  (cert ∷ certs)  deposits
-  = updateCertDeposits'' pp certs deposits ∪⁺ certDeposit'' cert pp
--- -- Refunds now handled in Certs.Haskell module.
--- = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
+updateCertDepositsUtxo  : PParams → List DCert → (DepositPurpose ⇀ Coin)
+                        → DepositPurpose ⇀ Coin
+updateCertDepositsUtxo _   []              deposits = deposits
+updateCertDepositsUtxo pp  (cert ∷ certs)  deposits
+  = updateCertDepositsUtxo pp certs deposits ∪⁺ certDepositUtxo cert pp
 
 -- -- Unchanged/defined in Utxo module:
-updateProposalDeposits'' : List GovProposal → TxId → Coin → Deposits → Deposits
-updateProposalDeposits'' []        _     _      deposits  = deposits
-updateProposalDeposits'' (_ ∷ ps)  txid  gaDep  deposits  =
-  updateProposalDeposits'' ps txid gaDep deposits
+updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
+updateProposalDeposits []        _     _      deposits  = deposits
+updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
+  updateProposalDeposits ps txid gaDep deposits
   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
-updateDeposits'' : PParams → TxBody → Deposits → Deposits
-updateDeposits'' pp txb = updateCertDeposits'' pp txcerts
-                        ∘ updateProposalDeposits'' txprop txid (pp .govActionDeposit)
+updateDeposits : PParams → TxBody → Deposits → Deposits
+updateDeposits pp txb = updateCertDepositsUtxo pp txcerts
+                        ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
   where open TxBody txb
 
 open import Ledger.ScriptValidation txs abs
@@ -57,7 +54,7 @@ private variable
 
 open PParams
 
-data _⊢_⇀⦇_,UTXOS⦈''_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
+data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
   Scripts-Yes :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
@@ -68,9 +65,9 @@ data _⊢_⇀⦇_,UTXOS⦈''_ : UTxOEnv → UTxOState → Tx → UTxOState → T
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈''  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
-                              , updateDeposits'' pp txb deposits
+                              , updateDeposits pp txb deposits
                               , donations + txdonation
                               ⟧ᵘ
 
@@ -84,13 +81,13 @@ data _⊢_⇀⦇_,UTXOS⦈''_ : UTxOEnv → UTxOState → Tx → UTxOState → T
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈''  ⟦ utxo ∣ collateral ᶜ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
                               , fees + cbalance (utxo ∣ collateral)
                               , deposits
                               , donations
                               ⟧ᵘ
 
-data _⊢_⇀⦇_,UTXO⦈''_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
+data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
 
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb
@@ -113,9 +110,9 @@ data _⊢_⇀⦇_,UTXO⦈''_ : UTxOEnv → UTxOState → Tx → UTxOState → Ty
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
-    ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈'' s'
+    ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ tx ,UTXO⦈'' s'
+      Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)

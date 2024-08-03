@@ -7,11 +7,7 @@ module Ledger.Certs.Haskell.Properties (gs : _) (open GovStructure gs) where
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
 
-open import Ledger.Certs gs hiding ( DState
-                                   ; GState
-                                   ; CertState
-                                   ; GovCertEnv
-                                   ; _⊢_⇀⦇_,DELEG⦈_
+open import Ledger.Certs gs hiding ( _⊢_⇀⦇_,DELEG⦈_
                                    ; _⊢_⇀⦇_,GOVCERT⦈_
                                    ; _⊢_⇀⦇_,CERTBASE⦈_
                                    ; _⊢_⇀⦇_,CERT⦈_

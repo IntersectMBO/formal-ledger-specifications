@@ -25,15 +25,15 @@ certs-step = to (compute Computational-CERTS)
 
 {-# COMPILE GHC certs-step as certsStep #-}
 
-cert-step : F.CertEnv →  F.CertState → F.TxCert → F.ComputationResult String F.CertState
-cert-step = to (compute Computational-CERT)
-
-{-# COMPILE GHC cert-step as certStep #-}
-
 certs-step' : F.CertEnv' → F.CertState' → List F.TxCert → F.ComputationResult String F.CertState'
 certs-step' = to (compute Computational-CERTS')
 
 {-# COMPILE GHC certs-step' as certsStep' #-}
+
+cert-step : F.CertEnv →  F.CertState → F.TxCert → F.ComputationResult String F.CertState
+cert-step = to (compute Computational-CERT)
+
+{-# COMPILE GHC cert-step as certStep #-}
 
 cert-step' : F.CertEnv' →  F.CertState' → F.TxCert → F.ComputationResult String F.CertState'
 cert-step' = to (compute Computational-CERT')

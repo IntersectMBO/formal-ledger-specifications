@@ -32,12 +32,12 @@ utxo-step = to (compute Computational-UTXO)
 
 {-# COMPILE GHC utxo-step as utxoStep #-}
 
-utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
-utxow-step = to (compute Computational-UTXOW)
-
-{-# COMPILE GHC utxow-step as utxowStep #-}
-
 utxo-step'' : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
 utxo-step'' = to (compute Computational-UTXO'')
 
 {-# COMPILE GHC utxo-step'' as utxoStep'' #-}
+
+utxow-step : F.UTxOEnv → F.UTxOState → F.Tx → F.ComputationResult String F.UTxOState
+utxow-step = to (compute Computational-UTXOW)
+
+{-# COMPILE GHC utxow-step as utxowStep #-}

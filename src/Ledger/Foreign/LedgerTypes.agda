@@ -603,10 +603,10 @@ record CertEnv' : Type where
         wdrls    : HSMap RwdAddr Coin
 {-# FOREIGN GHC
   data CertEnv' = MkCertEnv'
-    { epoch      :: Epoch
-    , pp         :: PParams
-    , votes      :: [GovVote]
-    , wdrls      :: HSMap RwdAddr Coin
+    { epoch'      :: Epoch
+    , pp'         :: PParams
+    , votes'      :: [GovVote]
+    , wdrls'      :: HSMap RwdAddr Coin
     }
 #-}
 {-# COMPILE GHC CertEnv' = data CertEnv' (MkCertEnv') #-}
@@ -634,10 +634,10 @@ record DState' : Type where
     deposits     : HSMap DepositPurpose Coin
 {-# FOREIGN GHC
   data DState' = MkDState'
-    { voteDelegs  :: HSMap Credential VDeleg
-    , stakeDelegs :: HSMap Credential Integer
-    , rewards     :: HSMap Credential Coin
-    , ddeposits   :: HSMap DepositPurpose Coin
+    { voteDelegs'  :: HSMap Credential VDeleg
+    , stakeDelegs' :: HSMap Credential Integer
+    , rewards'     :: HSMap Credential Coin
+    , ddeposits'   :: HSMap DepositPurpose Coin
     }
 #-}
 {-# COMPILE GHC DState' = data DState' (MkDState') #-}
@@ -671,9 +671,9 @@ record GState' : Type where
         deposits   : HSMap DepositPurpose Coin
 {-# FOREIGN GHC
   data GState' = MkGState'
-    { dreps     :: HSMap Credential Epoch
-    , ccHotKeys :: HSMap Credential (Maybe Credential)
-    , gdeposits :: HSMap DepositPurpose Coin
+    { dreps'     :: HSMap Credential Epoch
+    , ccHotKeys' :: HSMap Credential (Maybe Credential)
+    , gdeposits' :: HSMap DepositPurpose Coin
     }
 #-}
 {-# COMPILE GHC GState' = data GState' (MkGState') #-}
@@ -697,9 +697,9 @@ record CertState' : Type where
         gState : GState'
 {-# FOREIGN GHC
   data CertState' = MkCertState'
-    { dState :: DState'
-    , pState :: PState
-    , gState :: GState'
+    { dState' :: DState'
+    , pState' :: PState
+    , gState' :: GState'
     }
 #-}
 {-# COMPILE GHC CertState' = data CertState' (MkCertState') #-}
@@ -911,8 +911,8 @@ record DelegEnv' : Type where
         dePools    : HSMap Hash PoolParams
 {-# FOREIGN GHC
   data DelegEnv' = MkDelegEnv'
-    { dePParams :: PParams
-    , dePools :: HSMap Integer PoolParams
+    { dePParams' :: PParams
+    , dePools' :: HSMap Integer PoolParams
     }
 #-}
 {-# COMPILE GHC DelegEnv' = data DelegEnv' (MkDelegEnv') #-}
