@@ -110,14 +110,13 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     }
 
   open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
-  open Ledger.Certs             govStructure public
-  open Ledger.Certs.Haskell     govStructure public
-    renaming (_⊢_⇀⦇_,CERTBASE⦈_ to _⊢_⇀⦇_,CERTBASE'⦈_
-             ; _⊢_⇀⦇_,CERTS⦈_   to _⊢_⇀⦇_,CERTS'⦈_
-             ; _⊢_⇀⦇_,CERT⦈_    to _⊢_⇀⦇_,CERT'⦈_
-             ; _⊢_⇀⦇_,DELEG⦈_   to _⊢_⇀⦇_,DELEG'⦈_
-             ; _⊢_⇀⦇_,GOVCERT⦈_ to _⊢_⇀⦇_,GOVCERT'⦈_
-             )
+
+  open import Ledger.Certs govStructure public
+    -- using ( DState ; GState ; Deposits ; PState ; PoolParams ; DCert
+    --       ; DepositPurpose ; _⊢_⇀⦇_,POOL⦈_ ; DecEq-DepositPurpose ; PoolEnv)
+
+  open import Ledger.Certs.Haskell govStructure public
+    renaming (DState to DState'; GState to GState') using ()
 \end{code}
 \begin{NoConway}
 \emph{Derived types}

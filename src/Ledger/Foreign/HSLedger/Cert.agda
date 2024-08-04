@@ -9,7 +9,13 @@ import Ledger.Foreign.LedgerTypes as F
 import Foreign.Haskell.Pair as F
 
 open import Ledger.Certs.Properties HSGovStructure
+
 open import Ledger.Certs.Haskell.Properties HSGovStructure
+  renaming ( Computational-CERT  to Computational-CERT'
+           ; Computational-CERTS to Computational-CERTS' )
+
+open import Ledger.Certs.Haskell HSGovStructure
+  renaming (CertState to CertState') using ()
 
 instance
   _ = Convertible-Refl {String}

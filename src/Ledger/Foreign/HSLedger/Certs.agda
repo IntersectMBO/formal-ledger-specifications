@@ -8,7 +8,15 @@ import Ledger.Foreign.LedgerTypes as F
 import Foreign.Haskell.Pair as F
 
 open import Ledger.Certs.Properties HSGovStructure
+
 open import Ledger.Certs.Haskell.Properties HSGovStructure
+  renaming ( Computational-DELEG   to Computational-DELEG'
+           ; Computational-GOVCERT to Computational-GOVCERT' )
+  hiding   ( Computational-POOL )
+
+open import Ledger.Certs.Haskell HSGovStructure
+  renaming ( DelegEnv to DelegEnv' ; CertEnv to CertEnv' )
+  using ()
 
 instance
   _ = Convertible-Refl {String}
