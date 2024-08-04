@@ -112,9 +112,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Certs govStructure public
-    -- using ( DState ; GState ; Deposits ; PState ; PoolParams ; DCert
-    --       ; DepositPurpose ; _⊢_⇀⦇_,POOL⦈_ ; DecEq-DepositPurpose ; PoolEnv)
-
   open import Ledger.Certs.Haskell govStructure public
     renaming (DState to DState'; GState to GState') using ()
 \end{code}
