@@ -9,11 +9,17 @@ import Foreign.Haskell.Pair as F
 
 open import Ledger.Certs.Properties HSGovStructure
 
+open import Ledger.Certs.Haskell.Properties HSGovStructure
+  renaming ( Computational-DELEG   to Computational-DELEG'
+           ; Computational-GOVCERT to Computational-GOVCERT' )
+  hiding   ( Computational-POOL )
+
+open import Ledger.Certs.Haskell HSGovStructure
+  renaming ( DelegEnv to DelegEnv' ; CertEnv to CertEnv' )
+  using ()
+
 instance
   _ = Convertible-Refl {String}
-
-  Convertible-DepositPurpose : ConvertibleType DepositPurpose F.DepositPurpose
-  Convertible-DepositPurpose = autoConvertible
 
   Convertible-PState : ConvertibleType PState F.PState
   Convertible-PState = autoConvertible
@@ -21,13 +27,25 @@ instance
   Convertible-DelegEnv : Convertible DelegEnv F.DelegEnv
   Convertible-DelegEnv = autoConvertible
 
+  Convertible-DelegEnv' : Convertible DelegEnv' F.DelegEnv'
+  Convertible-DelegEnv' = autoConvertible
+
   Convertible-CertEnv : ConvertibleType CertEnv F.CertEnv
   Convertible-CertEnv = autoConvertible
+
+  Convertible-CertEnv' : ConvertibleType CertEnv' F.CertEnv'
+  Convertible-CertEnv' = autoConvertible
 
 deleg-step : F.DelegEnv → F.DState → F.TxCert → F.ComputationResult String F.DState
 deleg-step = to (compute Computational-DELEG)
 
 {-# COMPILE GHC deleg-step as delegStep #-}
+
+deleg-step' : F.DelegEnv' → F.DState' → F.TxCert → F.ComputationResult String F.DState'
+deleg-step' = to (compute Computational-DELEG')
+
+{-# COMPILE GHC deleg-step' as delegStep' #-}
+
 
 pool-step : F.PParams → F.PState → F.TxCert → F.ComputationResult String F.PState
 pool-step = to (compute Computational-POOL)
@@ -38,3 +56,8 @@ govcert-step : F.CertEnv → F.GState → F.TxCert → F.ComputationResult Strin
 govcert-step = to (compute Computational-GOVCERT)
 
 {-# COMPILE GHC govcert-step as govCertStep #-}
+
+govcert-step' : F.CertEnv' → F.GState' → F.TxCert → F.ComputationResult String F.GState'
+govcert-step' = to (compute Computational-GOVCERT')
+
+{-# COMPILE GHC govcert-step' as govCertStep' #-}

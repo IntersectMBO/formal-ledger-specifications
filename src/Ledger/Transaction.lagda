@@ -19,6 +19,7 @@ import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
 import Ledger.Certs
+import Ledger.Certs.Haskell
 import Ledger.TokenAlgebra
 import Ledger.Address
 
@@ -109,7 +110,10 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     }
 
   open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
-  open Ledger.Certs             govStructure public
+
+  open import Ledger.Certs govStructure public
+  open import Ledger.Certs.Haskell govStructure public
+    renaming (DState to DState'; GState to GState') using ()
 \end{code}
 \begin{NoConway}
 \emph{Derived types}

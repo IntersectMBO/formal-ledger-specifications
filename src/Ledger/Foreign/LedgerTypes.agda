@@ -596,6 +596,21 @@ record CertEnv : Type where
 #-}
 {-# COMPILE GHC CertEnv = data CertEnv (MkCertEnv) #-}
 
+record CertEnv' : Type where
+  field epoch    : Epoch
+        pp       : PParams
+        votes    : List GovVote
+        wdrls    : HSMap RwdAddr Coin
+{-# FOREIGN GHC
+  data CertEnv' = MkCertEnv'
+    { epoch'      :: Epoch
+    , pp'         :: PParams
+    , votes'      :: [GovVote]
+    , wdrls'      :: HSMap RwdAddr Coin
+    }
+#-}
+{-# COMPILE GHC CertEnv' = data CertEnv' (MkCertEnv') #-}
+
 record DState : Type where
   field
     voteDelegs   : HSMap Credential VDeleg
@@ -609,6 +624,23 @@ record DState : Type where
     }
 #-}
 {-# COMPILE GHC DState = data DState (MkDState) #-}
+
+-- (DState with new deposits field)
+record DState' : Type where
+  field
+    voteDelegs   : HSMap Credential VDeleg
+    stakeDelegs  : HSMap Credential Hash
+    rewards      : HSMap Credential Coin
+    deposits     : HSMap DepositPurpose Coin
+{-# FOREIGN GHC
+  data DState' = MkDState'
+    { voteDelegs'  :: HSMap Credential VDeleg
+    , stakeDelegs' :: HSMap Credential Integer
+    , rewards'     :: HSMap Credential Coin
+    , ddeposits'   :: HSMap DepositPurpose Coin
+    }
+#-}
+{-# COMPILE GHC DState' = data DState' (MkDState') #-}
 
 record PState : Type where
   field pools     : HSMap Hash PoolParams
@@ -632,6 +664,20 @@ record GState : Type where
 #-}
 {-# COMPILE GHC GState = data GState (MkGState) #-}
 
+-- (GState with new deposits field)
+record GState' : Type where
+  field dreps      : HSMap Credential Epoch
+        ccHotKeys  : HSMap Credential (Maybe Credential)
+        deposits   : HSMap DepositPurpose Coin
+{-# FOREIGN GHC
+  data GState' = MkGState'
+    { dreps'     :: HSMap Credential Epoch
+    , ccHotKeys' :: HSMap Credential (Maybe Credential)
+    , gdeposits' :: HSMap DepositPurpose Coin
+    }
+#-}
+{-# COMPILE GHC GState' = data GState' (MkGState') #-}
+
 record CertState : Type where
   field dState : DState
         pState : PState
@@ -644,6 +690,19 @@ record CertState : Type where
     }
 #-}
 {-# COMPILE GHC CertState = data CertState (MkCertState) #-}
+
+record CertState' : Type where
+  field dState : DState'
+        pState : PState
+        gState : GState'
+{-# FOREIGN GHC
+  data CertState' = MkCertState'
+    { dState' :: DState'
+    , pState' :: PState
+    , gState' :: GState'
+    }
+#-}
+{-# COMPILE GHC CertState' = data CertState' (MkCertState') #-}
 
 record StakeDistrs : Type where
   field stakeDistr  : HSMap VDeleg Coin
@@ -847,3 +906,13 @@ record DelegEnv : Type where
 #-}
 {-# COMPILE GHC DelegEnv = data DelegEnv (MkDelegEnv) #-}
 
+record DelegEnv' : Type where
+  field dePParams  : PParams
+        dePools    : HSMap Hash PoolParams
+{-# FOREIGN GHC
+  data DelegEnv' = MkDelegEnv'
+    { dePParams' :: PParams
+    , dePools' :: HSMap Integer PoolParams
+    }
+#-}
+{-# COMPILE GHC DelegEnv' = data DelegEnv' (MkDelegEnv') #-}

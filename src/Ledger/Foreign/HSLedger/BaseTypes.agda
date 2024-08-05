@@ -215,6 +215,7 @@ instance
         }
 
 open import Ledger.Certs.Properties govStructure
+open import Ledger.Certs.Haskell.Properties govStructure
 
 instance
 
@@ -226,8 +227,17 @@ instance
   Convertible-GState : ConvertibleType GState F.GState
   Convertible-GState = autoConvertible
 
+  Convertible-DepositPurpose : ConvertibleType DepositPurpose F.DepositPurpose
+  Convertible-DepositPurpose = autoConvertible
+
+  Convertible-GState' : ConvertibleType GState' F.GState'
+  Convertible-GState' = autoConvertible
+
   Convertible-DState : ConvertibleType DState F.DState
   Convertible-DState = autoConvertible
+
+  Convertible-DState' : ConvertibleType DState' F.DState'
+  Convertible-DState' = autoConvertible
 
   Convertible-Acnt : Convertible Acnt F.Acnt
   Convertible-Acnt = λ where
