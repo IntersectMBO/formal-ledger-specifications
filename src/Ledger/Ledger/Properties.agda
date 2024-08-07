@@ -101,6 +101,9 @@ instance
   HasCoin-LState : HasCoin LState
   HasCoin-LState .getCoin s = getCoin (LState.utxoSt s)
 
+instance
+  HasCoin-LStateTemp : HasCoin LStateTemp
+  HasCoin-LStateTemp .getCoin s = getCoin (LState.utxoStTemp s)
 -- ** Proof that LEDGER preserves values.
 
 module _ where

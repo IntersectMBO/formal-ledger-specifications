@@ -315,6 +315,13 @@ instance
                                + getCoin (UTxOState.deposits s)
                                + UTxOState.donations s
 
+  HasCoin-UTxOStateTemp : HasCoin UTxOStateTemp
+  HasCoin-UTxOStateTemp .getCoin s = getCoin (nutxo (UTxOStateTemp.utxoTemp s))
+                               - getCoin (frxo (UTxOStateTemp.utxoTemp s))
+                               + (UTxOStateTemp.feesTemp s)
+                               + getCoin (UTxOStateTemp.depositsTemp s)
+                               + UTxOStateTemp.donationsTemp s
+
 -- Boolean implication
 _=>ᵇ_ : Bool → Bool → Bool
 a =>ᵇ b = if a then b else true
@@ -470,10 +477,7 @@ equal if they are both present.
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom (nutxo utxoTemp)
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxoTemp ≡ true           ∙ consumed pp s txb ≡ produced pp s txb
-    ∙ coin mint ≡ 0
-
-    -- fulfills/requests stuff
-    ∙ fulfills ⊆ dom (frxo utxoTemp)
+    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
@@ -485,13 +489,15 @@ equal if they are both present.
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
+    -- fulfills/requests stuff
+    ∙ fulfills ⊆ dom (frxo utxoTemp)
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h g
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h , g)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
