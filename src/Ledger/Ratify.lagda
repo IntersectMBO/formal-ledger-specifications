@@ -450,10 +450,11 @@ abstract
 
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Type
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
-    let open GovActionState gs
+    let open GovActionState gs; open PParams pparams
         votes'  = actualVotes Γ pparams cc action votes
         t       = maybe id 0ℚ (threshold pparams (proj₂ <$> cc) action role)
     in acceptedStakeRatio role (dom votes') (stakeDistrs Γ) votes' ≥ t
+     ∧ (role ≡ CC → maybe (λ (m , _) → lengthˢ m) 0 cc ≥ ccMinSize)
 
   accepted : RatifyEnv → EnactState → GovActionState → Type
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
@@ -538,10 +539,10 @@ abstract
   delayed? a h es d = let instance _ = ⁇ verifyPrev? a h es in dec
 
   acceptedBy? : ∀ Γ es st role → Dec (acceptedBy Γ es st role)
-  acceptedBy? Γ record{ cc = cc , _ ; pparams = pparams , _ } st role = _ ℚ.≤? _
+  acceptedBy? _ _ _ _ = _ ℚ.≤? _ ×-dec _ ≟ _ →-dec _ ≥? _
 
   accepted? : ∀ Γ es st → Dec (accepted Γ es st)
-  accepted? Γ es st = let instance _ = ⁇¹ acceptedBy? Γ es st in dec
+  accepted? Γ es st = let a = λ {x} → acceptedBy? Γ es st x in a ×-dec a ×-dec a
 
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
