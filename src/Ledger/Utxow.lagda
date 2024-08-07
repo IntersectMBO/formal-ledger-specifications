@@ -17,7 +17,7 @@ open import Ledger.ScriptValidation txs abs
 
 The purpose of witnessing is make sure the intended action is
 authorized by the holder of the signing key.  (For details see
-the Formal Ledger Specification for the Shelley Era~\cite[Sec.~8.3]{cardano_shelley_ledger}.)
+the Formal Ledger Specification for the Shelley Era~\cite[Sec.~8.3]{cardano_shelley_spec}.)
 Figure~\ref{fig:functions:utxow} defines functions used for witnessing.
 \witsVKeyNeeded and \scriptsNeeded are now defined by projecting the same information out of
 \credsNeeded. Note that the last component of \credsNeeded adds the script in the proposal policy
@@ -102,7 +102,7 @@ credsNeeded utxo txb
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
-  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList $ map voter txvote)
+  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList (map voter txvote))
   ∪  mapPartial (λ p  → case  p .policy of
 \end{code}
 \begin{code}[hide]
