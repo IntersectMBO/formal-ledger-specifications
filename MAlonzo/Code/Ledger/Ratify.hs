@@ -2565,9 +2565,11 @@ d_expired'63'_2420 v0 v1 v2
 d__'8866'_'8640''10631'_'44'RATIFY'''10632'__2436 a0 a1 a2 a3 a4
   = ()
 data T__'8866'_'8640''10631'_'44'RATIFY'''10632'__2436
-  = C_RATIFY'45'Accept_2476 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_RATIFY'45'Reject_2502 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_RATIFY'45'Continue_2528 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_RATIFY'45'Accept_2476000 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    INTENTIONAL CONFLICT
+    C_RATIFY'45'Reject_25020000 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    INTENTIONAL CONFLICT
+    C_RATIFY'45'Continue_252800000 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Ratify._.ccHotKeys
 d_ccHotKeys_2452 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
