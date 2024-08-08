@@ -53,7 +53,7 @@ data DCert : Type where
   regpool     : KeyHash → PoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
-  deregdrep   : Credential → DCert
+  deregdrep   : Credential → Coin → DCert
   ccreghot    : Credential → Maybe Credential → DCert
 \end{code}
 \begin{NoConway}
@@ -64,7 +64,7 @@ cwitness (dereg c _)         = c
 cwitness (regpool kh _)      = KeyHashObj kh
 cwitness (retirepool kh _)   = KeyHashObj kh
 cwitness (regdrep c _ _)     = c
-cwitness (deregdrep c)       = c
+cwitness (deregdrep c _)     = c
 cwitness (ccreghot c _)      = c
 \end{code}
 \end{NoConway}
@@ -369,8 +369,9 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
+    ∙ (CredentialDeposit c , d) ∈ deps
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys

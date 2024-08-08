@@ -79,7 +79,7 @@ data DelegateOrDeReg : DCert → Type where instance
   delegate  : ∀ {x y z w} → DelegateOrDeReg (delegate x y z w)
   dereg     : ∀ {x y} →     DelegateOrDeReg (dereg x y)
   regdrep   : ∀ {x y z} →   DelegateOrDeReg (regdrep x y z)
-  deregdrep : ∀ {x} →       DelegateOrDeReg (deregdrep x)
+  deregdrep : ∀ {x y} →     DelegateOrDeReg (deregdrep x y)
 
 instance
   Dec-DelegateOrDeReg : DelegateOrDeReg ⁇¹
@@ -87,7 +87,7 @@ instance
   ... | delegate _ _ _ _ = yes it
   ... | dereg _ _        = yes it
   ... | regdrep _ _ _    = yes it
-  ... | deregdrep _      = yes it
+  ... | deregdrep _ _    = yes it
   ... | regpool _ _      = no λ ()
   ... | retirepool _ _   = no λ ()
   ... | ccreghot _ _     = no λ ()
@@ -127,8 +127,8 @@ certScripts c@(dereg     (KeyHashObj x) _)     | yes p = nothing
 certScripts c@(dereg     (ScriptObj  y) _)     | yes p = just (Cert c , y)
 certScripts c@(regdrep   (KeyHashObj x) _ _)   | yes p = nothing
 certScripts c@(regdrep   (ScriptObj  y) _ _)   | yes p = just (Cert c , y)
-certScripts c@(deregdrep (KeyHashObj x))       | yes p = nothing
-certScripts c@(deregdrep (ScriptObj  y))       | yes p = just (Cert c , y)
+certScripts c@(deregdrep (KeyHashObj x) _)     | yes p = nothing
+certScripts c@(deregdrep (ScriptObj  y) _)     | yes p = just (Cert c , y)
 
 private
   scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
