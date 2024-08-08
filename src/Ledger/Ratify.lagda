@@ -452,9 +452,10 @@ abstract
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs; open PParams pparams
         votes'  = actualVotes Γ pparams cc action votes
-        t       = maybe id 0ℚ (threshold pparams (proj₂ <$> cc) action role)
+        mbyT    = threshold pparams (proj₂ <$> cc) action role
+        t       = maybe id 0ℚ mbyT
     in acceptedStakeRatio role (dom votes') (stakeDistrs Γ) votes' ≥ t
-     ∧ (role ≡ CC → maybe (λ (m , _) → lengthˢ m) 0 cc ≥ ccMinSize)
+     ∧ (role ≡ CC → maybe (λ (m , _) → lengthˢ m) 0 cc ≥ ccMinSize ⊎ Is-nothing mbyT)
 
   accepted : RatifyEnv → EnactState → GovActionState → Type
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
@@ -538,8 +539,15 @@ abstract
   delayed? : ∀ a h es d → Dec (delayed a h es d)
   delayed? a h es d = let instance _ = ⁇ verifyPrev? a h es in dec
 
+  Is-nothing? : ∀ {A : Set} {x : Maybe A} → Dec (Is-nothing x)
+  Is-nothing? {x = x} = All.dec (const $ no id) x
+    where
+        import Data.Maybe.Relation.Unary.All as All
+
   acceptedBy? : ∀ Γ es st role → Dec (acceptedBy Γ es st role)
-  acceptedBy? _ _ _ _ = _ ℚ.≤? _ ×-dec _ ≟ _ →-dec _ ≥? _
+  acceptedBy? _ _ _ _ = _ ℚ.≤? _ ×-dec _ ≟ _ →-dec (_ ≥? _ ⊎-dec Is-nothing?)
+    where
+      import Relation.Nullary.Decidable as Dec
 
   accepted? : ∀ Γ es st → Dec (accepted Γ es st)
   accepted? Γ es st = let a = λ {x} → acceptedBy? Γ es st x in a ×-dec a ×-dec a
