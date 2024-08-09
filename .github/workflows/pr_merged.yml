@@ -1,0 +1,53 @@
+name: Formal Ledger Specs - PR Merged
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+
+permissions:
+  contents: write
+
+env:
+  MAlonzo_branch: ${{ github.event.pull_request.head.ref }}-MAlonzo
+
+jobs:
+  pr-merged:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: MAlonzo-code
+      - name: Merge ${{ env.MAlonzo_branch }} into MAlonzo-code
+        if: github.event.pull_request.merged
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          # GitHub Actions fetches shallow copies of remote branches
+          # which might not be ideal when rebasing, hence use `--unshallow`.
+          git fetch --unshallow origin ${{ env.MAlonzo_branch }}
+          git checkout ${{ env.MAlonzo_branch }}
+          # During `git rebase` 'ours' and 'theirs' are flipped
+          # so what we do here is that we keep the changes from ${{ env.MAlonzo_branch }}.
+          git rebase -X theirs origin/MAlonzo-code
+          git checkout MAlonzo-code
+          git merge --squash ${{ env.MAlonzo_branch }}
+          git commit -m "Generate code for GH-${{ github.event.pull_request.number }}" || echo "Everything is up-to-date."
+
+      - name: Push MAlonzo-code
+        if: github.event.pull_request.merged
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: MAlonzo-code
+            force: false
+            directory: .
+
+      - name: Delete ${{ env.MAlonzo_branch }} branch
+        if: github.event.pull_request.merged
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branches: ${{ env.MAlonzo_branch }}
