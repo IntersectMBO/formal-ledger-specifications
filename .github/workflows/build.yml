@@ -10,11 +10,24 @@ on:
 permissions:
   contents: write
 
+env:
+  MAlonzo_branch: ${{ github.event.pull_request.head.ref }}-MAlonzo
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: MAlonzo-code
+
+      - name: Create branch ${{ env.MAlonzo_branch }} for generated code
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        run: |
+          git checkout -b ${{ env.MAlonzo_branch }} origin/MAlonzo-code
+          git push origin ${{ env.MAlonzo_branch }}
+
       - uses: actions/checkout@v4
 
       - uses: cachix/install-nix-action@v20
@@ -65,11 +78,14 @@ jobs:
           echo "** Generated Haskell files:"; find -L docs/ -name '*.hs'
           OUT_DIR=../docs/ make staticWebsite
 
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
       - name: Add files
         if: github.ref == 'refs/heads/master'
         run: |
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -f docs/
             git commit -m "Updated for ${{ github.sha }}"
 
@@ -82,20 +98,21 @@ jobs:
             force: true
             directory: .
 
-      - name: Commit haskell package
-        if: github.ref == 'refs/heads/master'
+      - name: Commit generated code at ${{ env.MAlonzo_branch }}
+        if: github.ref != 'refs/heads/master'
         run: |
-            nix-build -A ledger.hsSrc -j1 -o outputs/ledgerSrc
+            nix-build -A ledger.hsSrc -j1 -o outputs/MAlonzo
             git stash push
-            rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledgerSrc/* ledgerSrc/
-            git add -f ledgerSrc
-            git commit -m "Updated for ${{ github.sha }}"
+            git fetch origin ${{ env.MAlonzo_branch }} --depth 1
+            git checkout ${{ env.MAlonzo_branch }}
+            rsync -r --exclude={'**/nix-support','**/lib'} outputs/MAlonzo/haskell/Ledger/* generated/
+            git add -f generated && git commit -m "Generate code for ${{ github.sha }}" || echo "Everything is up-to-date."
 
-      - name: Push haskell package
-        if: github.ref == 'refs/heads/master'
+      - name: Push ${{ env.MAlonzo_branch }}
+        if: github.ref != 'refs/heads/master'
         uses: ad-m/github-push-action@v0.6.0
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            branch: haskell-package
-            force: true
+            branch: ${{ env.MAlonzo_branch }}
+            force: false
             directory: .
