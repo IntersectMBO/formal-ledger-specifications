@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.EssentialAgda</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Background">\section{Agda Essentials}
+\label{sec:appendix-agda-essentials}
+Here we describe some of the essential concepts and syntax of the Agda programming language and proof assistant.
+The goal is to provide some background for readers who are not already familiar with Agda, to help them
+understand the other sections of the specification.
+
+</a><a id="334" class="Markup">\begin{code}[hide]</a>
+<a id="353" class="Symbol">{-#</a> <a id="357" class="Keyword">OPTIONS</a> <a id="365" class="Pragma">--safe</a> <a id="372" class="Symbol">#-}</a>
+
+<a id="377" class="Keyword">module</a> <a id="384" href="Ledger.EssentialAgda.html" class="Module">Ledger.EssentialAgda</a> <a id="405" class="Keyword">where</a>
+
+<a id="412" class="Keyword">open</a> <a id="417" class="Keyword">import</a> <a id="424" href="Prelude.html" class="Module">Prelude</a> <a id="432" class="Keyword">using</a> <a id="438" class="Symbol">(</a><a id="439" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="443" class="Symbol">)</a>
+<a id="445" class="Keyword">open</a> <a id="450" class="Keyword">import</a> <a id="457" href="Data.Nat.html" class="Module">Data.Nat</a>
+<a id="466" class="Markup">\end{code}</a><a id="476" class="Background">
+
+\subsection{Record Types}
+
+A \defn{record} is a product with named accessors for the individual fields.  It provides a way to
+define a type that groups together inhabitants of other types.\\[6pt]
+\textbf{Example}.
+</a><a id="692" class="Markup">\begin{code}</a>
+<a id="705" class="Keyword">record</a> <a id="Pair"></a><a id="712" href="Ledger.EssentialAgda.html#712" class="Record">Pair</a> <a id="717" class="Symbol">(</a><a id="718" href="Ledger.EssentialAgda.html#718" class="Bound">A</a> <a id="720" href="Ledger.EssentialAgda.html#720" class="Bound">B</a> <a id="722" class="Symbol">:</a> <a id="724" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="728" class="Symbol">)</a> <a id="730" class="Symbol">:</a> <a id="732" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="737" class="Keyword">where</a>
+  <a id="745" class="Keyword">constructor</a> <a id="⦅_,_⦆"></a><a id="757" href="Ledger.EssentialAgda.html#757" class="InductiveConstructor Operator">⦅_,_⦆</a>
+  <a id="765" class="Keyword">field</a>
+    <a id="Pair.fst"></a><a id="775" href="Ledger.EssentialAgda.html#775" class="Field">fst</a> <a id="779" class="Symbol">:</a> <a id="781" href="Ledger.EssentialAgda.html#718" class="Bound">A</a>
+    <a id="Pair.snd"></a><a id="787" href="Ledger.EssentialAgda.html#787" class="Field">snd</a> <a id="791" class="Symbol">:</a> <a id="793" href="Ledger.EssentialAgda.html#720" class="Bound">B</a>
+<a id="795" class="Markup">\end{code}</a><a id="805" class="Background">
+%
+We can construct an element of the type \AgdaRecord{Pair ℕ ℕ} (i.e., a pair of natural numbers) as follows:
+%
+</a><a id="918" class="Markup">\begin{code}</a>
+<a id="p23"></a><a id="931" href="Ledger.EssentialAgda.html#931" class="Function">p23</a> <a id="935" class="Symbol">:</a> <a id="937" href="Ledger.EssentialAgda.html#712" class="Record">Pair</a> <a id="942" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="944" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="946" href="Ledger.EssentialAgda.html#931" class="Function">p23</a> <a id="950" class="Symbol">=</a> <a id="952" class="Keyword">record</a> <a id="959" class="Symbol">{</a> <a id="961" href="Ledger.EssentialAgda.html#775" class="Field">fst</a> <a id="965" class="Symbol">=</a> <a id="967" class="Number">2</a><a id="968" class="Symbol">;</a> <a id="970" href="Ledger.EssentialAgda.html#787" class="Field">snd</a> <a id="974" class="Symbol">=</a> <a id="976" class="Number">3</a> <a id="978" class="Symbol">}</a>
+<a id="980" class="Markup">\end{code}</a><a id="990" class="Background">
+%
+Since our definition of the \AgdaRecord{Pair} type provides an (optional) constructor
+\AgdaInductiveConstructor{⦅\_,\_⦆}, we can have defined \AgdaFunction{p23} as follows:
+%
+</a><a id="1168" class="Markup">\begin{code}</a>
+<a id="p23&#39;"></a><a id="1181" href="Ledger.EssentialAgda.html#1181" class="Function">p23&#39;</a> <a id="1186" class="Symbol">:</a> <a id="1188" href="Ledger.EssentialAgda.html#712" class="Record">Pair</a> <a id="1193" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1195" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="1197" href="Ledger.EssentialAgda.html#1181" class="Function">p23&#39;</a> <a id="1202" class="Symbol">=</a> <a id="1204" href="Ledger.EssentialAgda.html#757" class="InductiveConstructor Operator">⦅</a> <a id="1206" class="Number">2</a> <a id="1208" href="Ledger.EssentialAgda.html#757" class="InductiveConstructor Operator">,</a> <a id="1210" class="Number">3</a> <a id="1212" href="Ledger.EssentialAgda.html#757" class="InductiveConstructor Operator">⦆</a>
+<a id="1214" class="Markup">\end{code}</a><a id="1224" class="Background">
+%
+Finally, we can ``update&#39;&#39; a record by deriving from it a new record whose fields may contain new
+values.  The syntax is best explained by way of example.
+%
+</a><a id="1384" class="Markup">\begin{code}</a>
+<a id="p24"></a><a id="1397" href="Ledger.EssentialAgda.html#1397" class="Function">p24</a> <a id="1401" class="Symbol">:</a> <a id="1403" href="Ledger.EssentialAgda.html#712" class="Record">Pair</a> <a id="1408" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1410" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="1412" href="Ledger.EssentialAgda.html#1397" class="Function">p24</a> <a id="1416" class="Symbol">=</a> <a id="1418" class="Keyword">record</a> <a id="1425" href="Ledger.EssentialAgda.html#931" class="Function">p23</a> <a id="1429" class="Symbol">{</a> <a id="1431" href="Ledger.EssentialAgda.html#787" class="Field">snd</a> <a id="1435" class="Symbol">=</a> <a id="1437" class="Number">4</a> <a id="1439" class="Symbol">}</a>
+<a id="1441" class="Markup">\end{code}</a><a id="1451" class="Background">
+%
+This results a new record, \AgdaFunction{p24}, which denotes the pair
+\AgdaInductiveConstructor{⦅}~\AgdaNumber{2}~\AgdaInductiveConstructor{,}~\AgdaNumber{4}~\AgdaInductiveConstructor{⦆}.
+\\[6pt]
+See also \href{https://agda.readthedocs.io/en/v2.6.4/language/record-types}{\texttt{https://agda.readthedocs.io/en/v2.6.4/language/record-types}}.
+</a></pre></body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.PDF</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Background">\documentclass[11pt,a4paper,dvipsnames]{article}
+
+\usepackage{environ}
+\NewEnviron{NoConway}{%
+\BODY
+}
+\NewEnviron{Conway}{%
+}
+
+\include{preamble}
+
+\begin{document}
+
+\tableofcontents
+
+</a><a id="185" class="Markup">\begin{code}[hide]</a>
+<a id="204" class="Symbol">{-#</a> <a id="208" class="Keyword">OPTIONS</a> <a id="216" class="Pragma">--safe</a> <a id="223" class="Symbol">#-}</a>
+
+<a id="228" class="Keyword">module</a> <a id="235" href="Ledger.PDF.html" class="Module">Ledger.PDF</a> <a id="246" class="Keyword">where</a>
+
+<a id="253" class="Keyword">open</a> <a id="258" class="Keyword">import</a> <a id="265" href="Ledger.BaseTypes.html" class="Module">Ledger.BaseTypes</a>
+<a id="282" class="Keyword">open</a> <a id="287" class="Keyword">import</a> <a id="294" href="Ledger.Introduction.html" class="Module">Ledger.Introduction</a>
+<a id="314" class="Keyword">open</a> <a id="319" class="Keyword">import</a> <a id="326" href="Ledger.Notation.html" class="Module">Ledger.Notation</a>
+<a id="342" class="Keyword">open</a> <a id="347" class="Keyword">import</a> <a id="354" href="Ledger.Crypto.html" class="Module">Ledger.Crypto</a>
+<a id="368" class="Keyword">open</a> <a id="373" class="Keyword">import</a> <a id="380" href="Ledger.Types.Epoch.html" class="Module">Ledger.Types.Epoch</a>
+<a id="399" class="Keyword">open</a> <a id="404" class="Keyword">import</a> <a id="411" href="Ledger.Address.html" class="Module">Ledger.Address</a>
+<a id="426" class="Keyword">open</a> <a id="431" class="Keyword">import</a> <a id="438" href="Ledger.Script.html" class="Module">Ledger.Script</a>
+<a id="452" class="Keyword">open</a> <a id="457" class="Keyword">import</a> <a id="464" href="Ledger.ScriptValidation.html" class="Module">Ledger.ScriptValidation</a>
+<a id="488" class="Keyword">open</a> <a id="493" class="Keyword">import</a> <a id="500" href="Ledger.PParams.html" class="Module">Ledger.PParams</a>
+
+<a id="516" class="Keyword">open</a> <a id="521" class="Keyword">import</a> <a id="528" href="Ledger.Types.GovStructure.html" class="Module">Ledger.Types.GovStructure</a>
+<a id="554" class="Keyword">open</a> <a id="559" class="Keyword">import</a> <a id="566" href="Ledger.GovernanceActions.html" class="Module">Ledger.GovernanceActions</a>
+<a id="591" class="Keyword">open</a> <a id="596" class="Keyword">import</a> <a id="603" href="Ledger.Certs.html" class="Module">Ledger.Certs</a>
+
+<a id="617" class="Keyword">open</a> <a id="622" class="Keyword">import</a> <a id="629" href="Ledger.TokenAlgebra.html" class="Module">Ledger.TokenAlgebra</a>
+<a id="649" class="Keyword">open</a> <a id="654" class="Keyword">import</a> <a id="661" href="Ledger.TokenAlgebra.ValueSet.html" class="Module">Ledger.TokenAlgebra.ValueSet</a>
+<a id="690" class="Keyword">open</a> <a id="695" class="Keyword">import</a> <a id="702" href="Ledger.Transaction.html" class="Module">Ledger.Transaction</a>
+
+<a id="722" class="Keyword">open</a> <a id="727" class="Keyword">import</a> <a id="734" href="Ledger.Utxo.html" class="Module">Ledger.Utxo</a>
+<a id="746" class="Keyword">open</a> <a id="751" class="Keyword">import</a> <a id="758" href="Ledger.Utxo.Properties.html" class="Module">Ledger.Utxo.Properties</a>
+
+<a id="782" class="Keyword">open</a> <a id="787" class="Keyword">import</a> <a id="794" href="Ledger.Utxow.html" class="Module">Ledger.Utxow</a>
+<a id="807" class="Keyword">open</a> <a id="812" class="Keyword">import</a> <a id="819" href="Ledger.Utxow.Properties.html" class="Module">Ledger.Utxow.Properties</a>
+
+<a id="844" class="Keyword">open</a> <a id="849" class="Keyword">import</a> <a id="856" href="Ledger.Ledger.html" class="Module">Ledger.Ledger</a>
+<a id="870" class="Keyword">open</a> <a id="875" class="Keyword">import</a> <a id="882" href="Ledger.Ledger.Properties.html" class="Module">Ledger.Ledger.Properties</a>
+<a id="907" class="Keyword">open</a> <a id="912" class="Keyword">import</a> <a id="919" href="Ledger.Ratify.Properties.html" class="Module">Ledger.Ratify.Properties</a>
+<a id="944" class="Keyword">open</a> <a id="949" class="Keyword">import</a> <a id="956" href="Ledger.Chain.Properties.html" class="Module">Ledger.Chain.Properties</a>
+
+<a id="981" class="Keyword">open</a> <a id="986" class="Keyword">import</a> <a id="993" href="Ledger.Gov.html" class="Module">Ledger.Gov</a>
+<a id="1004" class="Keyword">open</a> <a id="1009" class="Keyword">import</a> <a id="1016" href="Ledger.Enact.html" class="Module">Ledger.Enact</a>
+<a id="1029" class="Keyword">open</a> <a id="1034" class="Keyword">import</a> <a id="1041" href="Ledger.Ratify.html" class="Module">Ledger.Ratify</a>
+
+<a id="1056" class="Keyword">open</a> <a id="1061" class="Keyword">import</a> <a id="1068" href="Ledger.Chain.html" class="Module">Ledger.Chain</a>
+
+<a id="1082" class="Keyword">open</a> <a id="1087" class="Keyword">import</a> <a id="1094" href="Ledger.Properties.html" class="Module">Ledger.Properties</a>
+
+<a id="1113" class="Keyword">open</a> <a id="1118" class="Keyword">import</a> <a id="1125" href="Ledger.EssentialAgda.html" class="Module">Ledger.EssentialAgda</a>
+<a id="1146" class="Keyword">open</a> <a id="1151" class="Keyword">import</a> <a id="1158" href="Ledger.PDF.ConwayBootstrapEnact.html" class="Module">Ledger.PDF.ConwayBootstrapEnact</a>
+<a id="1190" class="Keyword">open</a> <a id="1195" class="Keyword">import</a> <a id="1202" href="Ledger.PDF.ConwayBootstrap.html" class="Module">Ledger.PDF.ConwayBootstrap</a>
+<a id="1229" class="Markup">\end{code}</a><a id="1239" class="Background">
+
+\include{Ledger/Introduction}
+\include{Ledger/Notation}
+\include{Ledger/Crypto}
+\include{Ledger/BaseTypes}
+\include{Ledger/TokenAlgebra}
+\include{Ledger/Address}
+\include{Ledger/Script}
+\include{Ledger/PParams}
+\include{Ledger/GovernanceActions}
+\include{Ledger/Transaction}
+\include{Ledger/Utxo}
+\include{Ledger/Utxow}
+\include{Ledger/Gov}
+\include{Ledger/Certs}
+\include{Ledger/Ledger}
+\include{Ledger/Enact}
+\include{Ledger/Ratify}
+\include{Ledger/Epoch}
+\include{Ledger/Chain}
+
+\section{Properties}
+\input{Ledger/Utxo/Properties}
+
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\clearpage
+
+\appendix
+
+\input{Ledger/EssentialAgda}
+\input{Ledger/PDF/ConwayBootstrapEnact}
+\input{Ledger/PDF/ConwayBootstrap}
+
+\end{document}
+</a></pre></body></html>
