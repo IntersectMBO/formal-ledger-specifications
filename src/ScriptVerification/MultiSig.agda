@@ -21,6 +21,11 @@ open TransactionStructure SVTransactionStructure
 TxInToSymbolic : TxIn → STxIn
 TxInToSymbolic x = x
 
+AddrToSymbolic' : Addr → SAddr
+AddrToSymbolic' (inj₁ R) = inj₁ (record { BaseAddr R })
+AddrToSymbolic' (inj₂ record { net = net ; pay = pay ; attrsSize = attrsSize }) = inj₂ (record { net = net ; pay = pay ; attrsSize = attrsSize })
+
+
 AddrToSymbolic : Addr → SAddr
 AddrToSymbolic (inj₁ record { net = net ; pay = pay ; stake = stake }) = inj₁ (record { net = net ; pay = pay ; stake = stake })
 AddrToSymbolic (inj₂ record { net = net ; pay = pay ; attrsSize = attrsSize }) = inj₂ (record { net = net ; pay = pay ; attrsSize = attrsSize })
@@ -111,14 +116,31 @@ newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee
 ... | _ = nothing
 
 -- TODO: Implement this later
-oldValue : (STxInfo × SScriptPurpose) -> ℕ
+oldValue : (STxInfo × SScriptPurpose) -> Value
 oldValue (fst , snd) = 1
 
 -- TODO: Implement this later
-newValue : (STxInfo × SScriptPurpose) -> ℕ
+newValue : (STxInfo × SScriptPurpose) -> Value
 newValue ctx = 1
 
+-- TODO: Implement this
+checkSigned : PubKeyHash → (STxInfo × SScriptPurpose) → Bool
+checkSigned = λ x x₁ → true
+
+-- TODO: Implement this
+query : PubKeyHash → List PubKeyHash → Bool
+query = λ x x₁ → true
+
+-- TODO: Implement this
+checkPayment : PubKeyHash -> Value -> (STxInfo × SScriptPurpose) -> Bool
+checkPayment pkh v ctx = true
+
+-- TODO: Implement this
+expired : ℕ -> (STxInfo × SScriptPurpose) -> Bool
+expired slot ctx = true
+
 multiSigValidator' : MultiSig → Label → Input → (STxInfo × SScriptPurpose) → Bool
+
 multiSigValidator' param Holding (Propose v pkh slot) ctx =
   (newValue ctx == oldValue ctx)
   ∧ ⌊ oldValue ctx ≥? v ⌋
@@ -131,11 +153,39 @@ multiSigValidator' param Holding (Propose v pkh slot) ctx =
                                       ∧ (pkh == pkh')
                                       ∧ (slot == slot')
                                       ∧ (sigs' == []) )
+
 multiSigValidator' param Holding _ ctx = false
-multiSigValidator' param (Collecting x x₁ x₂ x₃) (Propose x₄ x₅ x₆) ctx = false
-multiSigValidator' param (Collecting x x₁ x₂ x₃) (Add x₄) ctx = false
-multiSigValidator' param (Collecting x x₁ x₂ x₃) Pay ctx = false
-multiSigValidator' param (Collecting x x₁ x₂ x₃) Cancel ctx = false
+
+multiSigValidator' param (Collecting _ _ _ _) (Propose _ _ _) ctx = false
+
+multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
+  (newValue ctx == oldValue ctx)
+  ∧ checkSigned sig ctx
+  ∧ query sig (MultiSig.signatories param)
+  ∧ (case (newLabel ctx) of λ where
+      nothing → false
+      (just Holding) → false
+      (just (Collecting v' pkh' slot' sigs')) →
+        (v == v')
+        ∧ (pkh == pkh')
+        ∧ (slot == slot')
+        ∧ (sigs' == sig ∷ sigs)) -- Make this an order agnostic comparison?
+
+multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
+  (length sigs) ≥ᵇ MultiSig.minNumSignatures param
+   ∧ (case (newLabel ctx) of λ where
+      nothing → false
+      (just Holding) → checkPayment pkh v ctx
+                       ∧ (oldValue ctx == (_+_ {{addValue}} (newValue ctx) v))
+      (just (Collecting _ _ _ _)) → false)
+
+multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
+  (newValue ctx == oldValue ctx)
+  ∧ (case (newLabel ctx) of λ where
+      nothing → false
+      (just Holding) → expired slot ctx
+      (just (Collecting _ _ _ _)) → false)
+
 
 multiSigValidator : MultiSig → Maybe SData → Maybe SData → List SData → Bool
 multiSigValidator m (just (inj₁ (inj₁ x))) (just (inj₁ (inj₂ y))) (inj₂ y₁ ∷ []) =
@@ -211,7 +261,7 @@ succeedTx = record { body = record
                                 -- signature now is first number + txId ≡ second number
                                 -- first number is needs to be the id for the script
                                 scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
-                                txdats = fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
+                                txdats =  fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
                                 txrdmrs = fromListᵐ (((Spend , 6) ,
                                                       inj₁ (inj₂ (Propose 1 2 3)) ,
                                                       (5 , 5)) ∷ []) } ;
@@ -270,6 +320,8 @@ failState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) failTx initSt
 evalFailTx : Bool
 evalFailTx = evalScripts failTx failState
 
+
+{-
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
@@ -296,3 +348,4 @@ opaque
 
   _ : isSuccess failExample ≡ false
   _  = refl
+-}

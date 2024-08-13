@@ -23,8 +23,6 @@ open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 open import Ledger.Utxow.Properties SVTransactionStructure SVAbstractFunctions
 
 -- open import Haskell.Prelude
-
-
 Placeholder = String
 POSIXTimeRange = Placeholder
 ScriptPurpose = Placeholder
@@ -120,8 +118,13 @@ agdaValidator param dat red ctx = case dat of λ where
 
   Holding -> case red of λ where
 
-    (Propose v pkh d) -> (newValue ctx == oldValue ctx) && geq (oldValue ctx) v && gt v emptyValue && (case (newLabel ctx) of λ where
+    (Propose v pkh d) ->
+             (newValue ctx == oldValue ctx)
+             && geq (oldValue ctx) v
+             && gt v emptyValue
+             && (case (newLabel ctx) of λ where
       Holding -> False
+
       (Collecting v' pkh' d' sigs') -> v == v' && pkh == pkh' && d == d' && sigs' == [] )
     (Add _) -> False
     Pay -> False
@@ -131,15 +134,34 @@ agdaValidator param dat red ctx = case dat of λ where
 
     (Propose _ _ _) -> False
 
-    (Add sig) -> newValue ctx == oldValue ctx && checkSigned sig ctx && query sig (authSigs param) && (case (newLabel ctx) of λ where
-      Holding -> False
-      (Collecting v' pkh' d' sigs') -> v == v' && pkh == pkh' && d == d' && sigs' == insert sig sigs )
+    (Add sig) ->
+      newValue ctx == oldValue ctx
+      && checkSigned sig ctx
+      && query sig (authSigs param)
+      && (case (newLabel ctx) of λ where
+        Holding -> False
+        (Collecting v' pkh' d' sigs') ->
+          v == v'
+          && pkh == pkh'
+          && d == d'
+          && sigs' == insert sig sigs )
 
-    Pay -> (lengthNat sigs) >= (nr param) && (case (newLabel ctx) of λ where
-      Holding -> checkPayment pkh v ctx && oldValue ctx == ((newValue ctx) + v)
+
+
+
+
+
+
+
+    Pay ->
+      (lengthNat sigs) >= (nr param)
+      && (case (newLabel ctx) of λ where
+        Holding -> checkPayment pkh v ctx
+                   && oldValue ctx == ((newValue ctx) + v)
       (Collecting _ _ _ _) -> False )
 
-    Cancel -> newValue ctx == oldValue ctx && (case (newLabel ctx) of λ where
+    Cancel -> newValue ctx == oldValue ctx
+    && (case (newLabel ctx) of λ where
       Holding -> expired d ctx
       (Collecting _ _ _ _) -> False)
 
