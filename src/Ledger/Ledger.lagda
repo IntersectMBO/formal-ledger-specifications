@@ -143,7 +143,6 @@ data
         -- it constructs full transaction from TxBody in subTx and witnesses attached to tx
         -- sets each subTx isValid to true ( subTxs with bad scripts are not allowed)
         -- sets isTopLevel to false for each subTx
-        -- adds to the set of inputs of each subTx the inputs in corInputs of tx the spendOuts of the subTx
     in
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s tx ≡ produced pp s tx
     ∙ txsize ≤ maxTxSize pp
@@ -153,7 +152,7 @@ data
     -- for each spendOut in each transactions, there is a corresponding spe
     -- ∙ requiredTxs of subTxs and tx itself are in subTxs and have corresponding bodies
     -- ∙ range (utxo ∣ corInputs) contains all the same outputs as listed in all spendOuts in all subTxs
-    
+
     ∙  getAllIns tx ⊆ dom utxo
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ txs ,SWAPS⦈ utxoSt'

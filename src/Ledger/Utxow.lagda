@@ -93,7 +93,7 @@ allowedLanguages tx utxo =
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
-    -- ∙ if all new fields of tx are empty, any Plutus language can be used, otherwise only new version
+    -- ∙ TODO if all new fields of tx are empty, any Plutus language can be used, otherwise only new version
     -- ∙ isTopLevel ≡ false, only new-version Plutus can be used
 
 getScripts : ℙ Credential → ℙ ScriptHash
@@ -102,6 +102,7 @@ getScripts = mapPartial isScriptObj
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
+  -- TODO add credential for spendOuts
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)

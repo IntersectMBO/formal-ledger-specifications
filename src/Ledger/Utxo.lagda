@@ -63,7 +63,7 @@ opaque
   getInputHashes : Tx → UTxO → ℙ DataHash
   getInputHashes tx utxo = getDataHashes
     (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ txins)))
+            (range (utxo ∣ txins ∪ corInputs)))
     where open Tx; open TxBody (tx .body)
 
 totExUnits : Tx → ExUnits
@@ -351,7 +351,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ corInputs) ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
                               , updateDeposits pp txb deposits
                               , donations + txdonation
