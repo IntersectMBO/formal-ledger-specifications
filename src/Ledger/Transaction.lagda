@@ -29,7 +29,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where
-  Spend Mint Cert Rewrd Vote Propose : Tag
+  Spend Mint Cert Rewrd Vote Propose SpendOut : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Type₁ where
@@ -156,6 +156,11 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       collateral     : ℙ TxIn
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash
+      -- NEW
+      swaps          : ℙ TxId
+      requiredTxs    : ℙ TxId
+      spendOuts      : Ix ⇀ TxOut
+      corInputs      : ℙ TxIn
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -182,7 +187,12 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       body     : TxBody
       wits     : TxWitnesses
       isValid  : Bool
+      isTopLevel  : Bool
       txAD     : Maybe AuxiliaryData
+      -- NEW
+      subTxBodies  : TxId ⇀ TxBody × ( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits)
+      -- NEW
+      requiredTxBodies  : TxId ⇀ TxBody
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}

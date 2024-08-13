@@ -70,6 +70,52 @@ private variable
   tx : Tx
 \end{code}
 
+\begin{code}
+
+feesOK : PParams → Tx → UTxO → Bool
+feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
+                  ∧ (not (≟-∅ᵇ (txrdmrs ˢ)) ∧ (isTopLevel ≡ true))
+                  =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
+                      ∧ isAdaOnlyᵇ bal
+                      ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
+                      ∧ not (≟-∅ᵇ collateral)
+                      -- ∧ sum of specified fees in txfee fields in subTxs <= top-level txfee
+                      )
+  where
+    open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
+    collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
+    bal              = balance  (utxo ∣ collateral)
+\end{code}
+
+\begin{figure*}
+\begin{code}[hide]
+module _ (let open UTxOState; open TxBody) where
+\end{code}
+\begin{code}
+  depositRefunds : PParams → UTxOState → TxBody → Coin
+  depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
+
+  newDeposits : PParams → UTxOState → TxBody → Coin
+  newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
+
+  consumed : PParams → UTxOState → TxBody → Value
+  consumed pp st txb
+    =  balance (st .utxo ∣ txb .txins)
+    +  txb .mint
+    +  inject (depositRefunds pp st txb)
+    +  balance (st .utxo ∣ txb .corInputs)
+
+  produced : PParams → UTxOState → TxBody → Value
+  produced pp st txb
+    =  balance (outs txb)
+    +  inject (txb .txfee)
+    +  inject (newDeposits pp st txb)
+    +  inject (txb .txdonation)
+\end{code}
+\caption{Functions used in UTxO rules, continued}
+\label{fig:functions:utxo-conway}
+\end{figure*}
+
 \begin{figure*}[h]
 \begin{code}[hide]
 open RwdAddr
@@ -91,17 +137,33 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+  LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ 
+        txs = mkTxList tx
+    in
+    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s tx ≡ produced pp s tx
+    ∙ txsize ≤ maxTxSize pp
+    -- TODO ∙  txs is non-empty/ OK
+    -- TODO all inputs and corInputs in all txs are in UTxO
+    -- ∙ requiredTxs of subTxs and tx itself are in subTxs and have corresponding bodies
+    -- ∙ all subTxs have no subTxs
+    ∙  getAllIns tx ⊆ dom utxo
     ∙  isValid tx ≡ true
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , deposits utxoSt ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ txs ,SWAPS⦈ utxoSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 
-  LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+  LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ 
+        txs = mkTxList tx
+    in
+    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s tx ≡ produced pp s tx
+    ∙ txsize ≤ maxTxSize pp
+    -- TODO ∙  txs is non-empty/ OK
+    -- TODO all inputs and corInputs in all txs are in UTxO
+    -- ∙ requiredTxs of subTxs and tx itself are in subTxs and have corresponding bodies
+    -- ∙ all subTxs have no subTxs
+    ∙  getAllIns tx ⊆ dom utxo
     ∙  isValid tx ≡ false
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ txs ,SWAPS⦈ utxoSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
 \end{code}

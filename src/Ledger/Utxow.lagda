@@ -79,6 +79,7 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isKeyHashObj
 
+-- TODO check this
 allowedLanguages : Tx → UTxO → ℙ Language
 allowedLanguages tx utxo =
   if (∃[ o ∈ os ] isBootstrapAddr (proj₁ o))
@@ -91,14 +92,16 @@ allowedLanguages tx utxo =
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
   where
     txb = tx .Tx.body; open TxBody txb
-    os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
+    os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs ∪ corInputs))
+    -- ∙ if all new fields of tx are empty, any Plutus language can be used, otherwise only new version
+    -- ∙ isTopLevel ≡ false, only new-version Plutus can be used
 
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isScriptObj
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
-  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
+  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txins ∪ corInputs)) ˢ)
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
@@ -161,6 +164,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         txdatsHashes      = dom txdats
         allOutHashes      = getDataHashes (range txouts)
     in
+    -- TODO does this allow extra scripts? they should be allowed (if not, this makes the witness collection for subTxs more complicated)
+    -- TODO deal with reference inputs correctly
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
@@ -169,6 +174,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
+
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

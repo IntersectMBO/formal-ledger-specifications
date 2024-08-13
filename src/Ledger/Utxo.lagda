@@ -318,54 +318,12 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 -- TODO: this could be a regular property
 -- TODO: using this in UTxO rule below
 \end{code}
-\begin{code}
 
-feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
-                  ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                  =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                      ∧ isAdaOnlyᵇ bal
-                      ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
-                      ∧ not (≟-∅ᵇ collateral)
-                      )
-  where
-    open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
-    bal              = balance  (utxo ∣ collateral)
-\end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo2}
 \end{figure*}
 \end{NoConway}
-
-\begin{figure*}
-\begin{code}[hide]
-module _ (let open UTxOState; open TxBody) where
-\end{code}
-\begin{code}
-  depositRefunds : PParams → UTxOState → TxBody → Coin
-  depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
-
-  newDeposits : PParams → UTxOState → TxBody → Coin
-  newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
-
-  consumed : PParams → UTxOState → TxBody → Value
-  consumed pp st txb
-    =  balance (st .utxo ∣ txb .txins)
-    +  txb .mint
-    +  inject (depositRefunds pp st txb)
-
-  produced : PParams → UTxOState → TxBody → Value
-  produced pp st txb
-    =  balance (outs txb)
-    +  inject (txb .txfee)
-    +  inject (newDeposits pp st txb)
-    +  inject (txb .txdonation)
-\end{code}
-\caption{Functions used in UTxO rules, continued}
-\label{fig:functions:utxo-conway}
-\end{figure*}
 
 As seen in Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo-conway},
 we redefine \depositRefunds and \newDeposits via \depositsChange,
@@ -380,6 +338,7 @@ difference is the identity function.
 open PParams
 data
   _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
+
 
 data _⊢_⇀⦇_,UTXOS⦈_ where
   Scripts-Yes :
@@ -407,6 +366,20 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
+        ∙ isTopLevel ≡ false
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
+
+  Scripts-No-TopLevel :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ false
+        ∙ isTopLevel ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
                               , fees + cbalance (utxo ∣ collateral)
@@ -448,10 +421,10 @@ equal if they are both present.
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)
     in
-    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
-    ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
-    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    -- deal with refInputs correctly here
+    ∙ txins  ≢ ∅                         ∙ allrefInputs tx ⊆ dom utxo
+    ∙ txins ∩ refInputs ≡ ∅              ∙ inInterval slot tx
+    ∙ coin (allMint tx) ≡ 0
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
@@ -463,13 +436,19 @@ equal if they are both present.
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
+
+    -- new checks
+    ∙ all subTxs have corresponding bodies in subTxBodies
+    ∙ construct UTxO from spendOuts and corInputs of all transactions and check it's contained in utxo 
+    ∙ only top level tx has corInputs
+
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h i j
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h , i , j)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
