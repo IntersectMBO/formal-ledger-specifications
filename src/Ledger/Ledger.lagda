@@ -139,13 +139,21 @@ data
 \begin{code}
   LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ 
         txs = mkTxList tx
+        -- mkList makes a list of transactions that is tx ++ mkSubTxs 
+        -- it constructs full transaction from TxBody in subTx and witnesses attached to tx
+        -- sets each subTx isValid to true ( subTxs with bad scripts are not allowed)
+        -- sets isTopLevel to false for each subTx
+        -- adds to the set of inputs of each subTx the inputs in corInputs of tx the spendOuts of the subTx
     in
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s tx ≡ produced pp s tx
     ∙ txsize ≤ maxTxSize pp
     -- TODO ∙  txs is non-empty/ OK
     -- TODO all inputs and corInputs in all txs are in UTxO
+    -- corInputs and regular inputs are distinct
+    -- for each spendOut in each transactions, there is a corresponding spe
     -- ∙ requiredTxs of subTxs and tx itself are in subTxs and have corresponding bodies
-    -- ∙ all subTxs have no subTxs
+    -- ∙ range (utxo ∣ corInputs) contains all the same outputs as listed in all spendOuts in all subTxs
+    
     ∙  getAllIns tx ⊆ dom utxo
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ txs ,SWAPS⦈ utxoSt'
@@ -158,9 +166,13 @@ data
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s tx ≡ produced pp s tx
     ∙ txsize ≤ maxTxSize pp
     -- TODO ∙  txs is non-empty/ OK
-    -- TODO all inputs and corInputs in all txs are in UTxO
+    -- TODO all inputs in all txs are in UTxO
+    -- corInputs and regular inputs are distinct
+    -- for each spendOut in each transactions, there is a corresponding spe
     -- ∙ requiredTxs of subTxs and tx itself are in subTxs and have corresponding bodies
-    -- ∙ all subTxs have no subTxs
+    -- ∙ range (utxo ∣ corInputs) contains all the same outputs as listed in all spendOuts in all subTxs
+
+    ∙  corInputs tx ⊆ dom utxo
     ∙  getAllIns tx ⊆ dom utxo
     ∙  isValid tx ≡ false
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ txs ,SWAPS⦈ utxoSt'

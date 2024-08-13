@@ -424,7 +424,7 @@ equal if they are both present.
     -- deal with refInputs correctly here
     ∙ txins  ≢ ∅                         ∙ allrefInputs tx ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅              ∙ inInterval slot tx
-    ∙ coin (allMint tx) ≡ 0
+    ∙ coin tx ≡ 0
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
@@ -439,7 +439,6 @@ equal if they are both present.
 
     -- new checks
     ∙ all subTxs have corresponding bodies in subTxBodies
-    ∙ construct UTxO from spendOuts and corInputs of all transactions and check it's contained in utxo 
     ∙ only top level tx has corInputs
 
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'

@@ -190,7 +190,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       isTopLevel  : Bool
       txAD     : Maybe AuxiliaryData
       -- NEW
-      subTxBodies  : TxId ⇀ TxBody × ( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits)
+      subTxBodies  : TxId ⇀ TxBody × ( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData)
       -- NEW
       requiredTxBodies  : TxId ⇀ TxBody
 \end{code}
