@@ -97,7 +97,7 @@ opaque
 
   isRegistered : GovEnv → Voter → Type
   isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ ⟧ᵍ (r , c) = case r of λ where
-    CC    → c ∈ dom (gState .ccHotKeys)
+    CC    → just c ∈ range (gState .ccHotKeys)
     DRep  → c ∈ dom (gState .dreps)
     SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
 
