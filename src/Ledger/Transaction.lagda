@@ -11,6 +11,7 @@ module Ledger.Transaction where
 import Data.Maybe.Base as M
 
 open import Ledger.Prelude renaming (filterᵐ to filter)
+open import Data.These hiding (map)
 
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
@@ -27,7 +28,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where
-  Spend Mint Cert Rewrd Vote Propose : Tag
+  Spend Mint Cert Rewrd Vote Propose SpendOut BatchObs : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Type₁ where
@@ -120,7 +121,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   UTxO     = TxIn ⇀ TxOut
   Wdrl     = RwdAddr ⇀ Coin
   RdmrPtr  = Tag × Ix
-
+    
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 \end{code}
@@ -152,7 +153,19 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       txid           : TxId
       collateral     : ℙ TxIn
       reqSigHash     : ℙ KeyHash
-      scriptIntHash  : Maybe ScriptHash
+      scriptIntHash  : Maybe ScriptHash -- TODO is this actually checked somewhere?
+      -- NEW
+      requireBatchObservers : ℙ ScriptHash
+      -- option to put datums and redeemers inside the transaction
+      -- TODO do we need these in this specificaiton??
+      -- txdatsB   : DataHash ⇀ Datum 
+      -- txrdmrsB  : RdmrPtr  ⇀ Redeemer × ExUnits
+      -- outputs being spent for which inputs are provided by top-level tx
+      spendOuts      : Ix ⇀ TxOut
+      -- inputs corresponding to spentOuts
+      corInputs      : ℙ TxIn
+      -- fixes the attached subTxs
+      subTxIds       : ℙ TxId
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -170,9 +183,16 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
 
+  data BatchData : Type where
+    SingularTransaction : BatchData 
+    OldTransaction : BatchData
+    BatchParent : TxId → Bool → BatchData -- meaning batch valid, txid is the top-level tx
+
   record Tx : Type where
 \end{code}
 \begin{code}[hide]
+    inductive
+    constructor tree
     field
 \end{code}
 \begin{code}
@@ -180,6 +200,8 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       wits     : TxWitnesses
       isValid  : Bool
       txAD     : Maybe AuxiliaryData
+      -- NEW
+      subTxs   : List Tx
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -191,6 +213,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
+  
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
@@ -216,17 +239,17 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
     where open Tx; open TxBody (tx .body)
 
-  txscripts : Tx → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+  getBatchScripts : ℙ Script → Tx → UTxO → ℙ Script
+  getBatchScripts bs tx utxo = bs ∪ refScripts tx utxo
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo =
+  lookupScriptHash : ScriptHash → ℙ Script → Tx → UTxO → Maybe Script
+  lookupScriptHash sh bs tx utxo =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (txscripts tx utxo)
+    where m = setToHashMap (getBatchScripts bs tx utxo)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions related to transactions}
@@ -242,3 +265,4 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 \end{code}
+ 

@@ -43,10 +43,10 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
-isTwoPhaseScriptAddress tx utxo a =
+isTwoPhaseScriptAddress : ℙ Script → Tx → UTxO → Addr → Bool
+isTwoPhaseScriptAddress bs tx utxo a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
+    (λ {p} → if lookupScriptHash (getScriptHash a p) bs tx utxo
                  then (λ {s} → isP2Script s)
                  else false)
   else
@@ -59,15 +59,11 @@ opaque
   getDataHashes : ℙ TxOut → ℙ DataHash
   getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
 
-  getInputHashes : Tx → UTxO → ℙ DataHash
-  getInputHashes tx utxo = getDataHashes
-    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ txins)))
+  getSpentHashes : ℙ Script → Tx → UTxO → ℙ DataHash
+  getSpentHashes bs tx utxo = getDataHashes
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress bs tx utxo a ≡ true)
+            (range (utxo ∣ txins)) ∪ (range spendOuts)) 
     where open Tx; open TxBody (tx .body)
-
-totExUnits : Tx → ExUnits
-totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
-  where open Tx; open TxWitnesses
 \end{code}
 \caption{Functions supporting UTxO rules}
 \label{fig:supportfunctions:utxo}
@@ -150,12 +146,18 @@ the new deposits logic in older eras and then replaying the chain.
 record UTxOEnv : Type where
 \end{code}
 \begin{code}[hide]
+  constructor ⟦_,_,_,_,_,_,_,_⟧ᵘᵉ
   field
 \end{code}
 \begin{code}
     slot      : Slot
     pparams   : PParams
     treasury  : Coin
+    bObs      : ℙ ScriptHash
+    batchData : BatchData
+    validPath : Bool
+    isTop     : Bool
+    batchScripts : ℙ Script
 \end{code}
 \end{NoConway}
 \emph{UTxO states}
@@ -207,11 +209,6 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \begin{code}
   refScriptsSize : UTxO → Tx → ℕ
   refScriptsSize utxo tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
-
-  minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
-                     + txscriptfee (pp .prices) (totExUnits tx)
-                     + scriptsCost pp (refScriptsSize utxo tx)
 
 \end{code}
 \begin{code}[hide]
@@ -382,21 +379,6 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 -- TODO: this could be a regular property
 -- TODO: using this in UTxO rule below
 \end{code}
-\begin{code}
-
-feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                        =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                             ∧ isAdaOnlyᵇ bal
-                             ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
-                             ∧ not (≟-∅ᵇ collateral)
-                             )
-                     )
-  where
-    open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
-    bal              = balance  (utxo ∣ collateral)
-\end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo2}
@@ -413,19 +395,6 @@ module _ (let open UTxOState; open TxBody) where
 
   newDeposits : PParams → UTxOState → TxBody → Coin
   newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
-
-  consumed : PParams → UTxOState → TxBody → Value
-  consumed pp st txb
-    =  balance (st .utxo ∣ txb .txins)
-    +  txb .mint
-    +  inject (depositRefunds pp st txb)
-    +  inject (getCoin (txb .txwdrls))
-
-  produced : PParams → UTxOState → TxBody → Value
-  produced pp st txb = balance (outs txb)
-                     + inject (txb .txfee)
-                     + inject (newDeposits pp st txb)
-                     + inject (txb .txdonation)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -464,23 +433,47 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          bd = Γ .UTxOEnv.batchData
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ ValidCertDeposits pp deposits txcerts
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isValid ≡ true
+        ∙ validPath ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ (corInputs)) ᶜ) ∪ˡ (outs txb)
+                              , fees + txfee
+                              , updateDeposits pp txb deposits
+                              , donations + txdonation
+                              ⟧ᵘ
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          bd = Γ .UTxOEnv.batchData
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isValid ≡ false
+        ∙ validPath ≡ false
+        ∙ isTop ≡ false
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
+
+  Scripts-No-TopLevel :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          bd = Γ .UTxOEnv.batchData
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ validPath ≡ false
+        ∙ isTop ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
 \end{code}
@@ -491,6 +484,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
 \begin{code}[hide]
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
+unquoteDecl Scripts-No-Top-premises  = genPremises Scripts-No-Top-premises  (quote Scripts-No-TopLevel)
 
 private variable
   Γ : UTxOEnv
@@ -520,11 +514,10 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         txoutsʰ = (mapValues txOutHash txouts)
         overhead = 160
     in
-    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
-    ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
-    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
-    ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
+    -- deal with refInputs correctly here TODO
+    ∙ txins  ≢ ∅                         ∙ refInputs ⊆ dom utxo
+    ∙ txins ∩ refInputs ≡ ∅              ∙ inInterval slot txvldt
+    ∙ coin mint ≡ 0                      
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
@@ -536,13 +529,17 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
     ∙ txNetworkId ≡? NetworkId
     ∙ curTreasury ≡? treasury
+
+    -- NEW
+    ∙ (isTop ≡ false → txb .TxBody.corInputs ≡ ∅)
+
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

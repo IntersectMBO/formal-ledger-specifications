@@ -31,7 +31,7 @@ record P1ScriptStructure : Type₁ where
 record PlutusStructure : Type₁ where
   field Dataʰ : HashableSet
         Language PlutusScript CostModel Prices LangDepView ExUnits : Type
-        PlutusV1 PlutusV2 PlutusV3   : Language
+        PlutusV1 PlutusV2 PlutusV3 PlutusV4   : Language 
         ⦃ ExUnit-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ ExUnits
         ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
         ⦃ DecEq-Language           ⦄ : DecEq Language
