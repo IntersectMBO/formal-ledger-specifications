@@ -8,6 +8,7 @@ import Data.List as L
 open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
+open import Data.Integer.Ext     using (posPart; negPart)
 
 module Ledger.Ledger
   (txs : _) (open TransactionStructure txs)
@@ -17,56 +18,25 @@ module Ledger.Ledger
 open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.Utxo txs abs
+open import Ledger.Swaps txs abs
 open import Ledger.Utxow txs abs
 
-open Tx
+-- open Tx
+-- open TxBody
+-- open TxWitnesses
 \end{code}
 
 The entire state transformation of the ledger state caused by a valid
 transaction can now be given as a combination of the previously
 defined transition systems.
 
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
-record LEnv : Type where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ˡᵉ
-  field
-\end{code}
-\begin{code}
-    slot        : Slot
-    ppolicy     : Maybe ScriptHash
-    pparams     : PParams
-    enactState  : EnactState
-    treasury    : Coin
-
-record LState : Type where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_⟧ˡ
-  field
-\end{code}
-\begin{code}
-    utxoSt     : UTxOState
-    govSt      : GovState
-    certState  : CertState
-
-txgov : TxBody → List (GovVote ⊎ GovProposal)
-txgov txb = map inj₂ txprop ++ map inj₁ txvote
-  where open TxBody txb
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types and functions for the LEDGER transition system}
-\end{figure*}
 \begin{code}[hide]
 private variable
   Γ : LEnv
   s s' s'' : LState
-  utxoSt' : UTxOState
-  govSt' : GovState
-  certState' : CertState
+  u u' : UTxOState
+  g g' : GovState
+  c c' : CertState
   tx : Tx
 \end{code}
 
@@ -74,10 +44,10 @@ private variable
 
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
-                  ∧ (not (≟-∅ᵇ (txrdmrs ˢ)) ∧ (isTopLevel ≡ true))
+                  ∧ (not (≟-∅ᵇ (txrdmrs ˢ)) ∧ isTopLevel)
                   =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
                       ∧ isAdaOnlyᵇ bal
-                      ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
+                      ∧ (coin bal * 100) ≥ᵇ (txfee * collateralPercentage)
                       ∧ not (≟-∅ᵇ collateral)
                       -- ∧ sum of specified fees in txfee fields in subTxs <= top-level txfee
                       )
@@ -89,25 +59,38 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 
 \begin{figure*}
 \begin{code}[hide]
-module _ (let open UTxOState; open TxBody) where
+module _ (let open UTxOState) where
 \end{code}
 \begin{code}
+        -- mkTxList makes a list of transactions that is tx ++ mkSubTxs 
+        -- it constructs full transaction from TxBody in subTx and witnesses attached to tx
+        -- sets each subTx isValid to true ( subTxs with bad scripts are not allowed)
+        -- sets isTopLevel to false for each subTx
+  mkTxList : Tx → List Tx 
+  mkTxList tx = {!   !}
+
+  chkCorInputs : UTxO → List TxOut → Bool 
+  chkCorInputs uu ls = {!   !}
+
+  mkListSpendOuts : Tx → List TxOut
+  mkListSpendOuts t = {!   !}
+
   depositRefunds : PParams → UTxOState → TxBody → Coin
-  depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
+  depositRefunds pp st txb = let open TxBody in negPart (depositsChange pp txb (st .deposits))
 
   newDeposits : PParams → UTxOState → TxBody → Coin
-  newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
+  newDeposits pp st txb = let open TxBody in posPart (depositsChange pp txb (st .deposits))
 
   consumed : PParams → UTxOState → TxBody → Value
   consumed pp st txb
-    =  balance (st .utxo ∣ txb .txins)
+    =  let open TxBody in balance (st .utxo ∣ txb .txins)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
     +  balance (st .utxo ∣ txb .corInputs)
 
   produced : PParams → UTxOState → TxBody → Value
   produced pp st txb
-    =  balance (outs txb)
+    =  let open TxBody in balance (outs txb)
     +  inject (txb .txfee)
     +  inject (newDeposits pp st txb)
     +  inject (txb .txdonation)
@@ -126,6 +109,42 @@ open UTxOState
 data
 \end{code}
 \begin{code}
+  _⊢_⇀⦇_,CHKTX⦈_ : LEnv → LState → Tx → LState → Type
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\caption{The type of the CHKTX transition system}
+\end{figure*}
+
+\begin{figure*}[h]
+\begin{AgdaSuppressSpace}
+\begin{code}
+  CHKTX : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txs = (mkTxList tx)
+    in
+    ∙ feesOK pp tx utx ≡ true               ∙ consumed pp u body ≡ produced pp u body
+    ∙ txsize ≤ maxTxSize 
+    -- ∙ ∀[ tb ∈ ((proj₁ (range subTxBodies))  ) ] tb .TxBody.txins ∪ tb .TxBody.corInputs ⊆ dom utx 
+    -- ∙ ∀[ tb ∈ range (proj₁ subTxBodies) ∪ body ] tb .TxBody.txins ∩ body .TxBody.corInputs ≢ ∅
+    -- ∙ ∀[ t ∈ subTxs ] subTxs .TxBody.requiredTxs  ⊆ tb .TxBody.subTxs
+    -- ∙ chkCorInputs (utxo ∣ corInputs) (mkListSpendOuts tx) ≡ true
+       ────────────────────────────────
+       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,CHKTX⦈ ⟦ u , g , c ⟧ˡ
+\end{code}
+\end{AgdaSuppressSpace}
+\caption{CHKTX transition system}
+\end{figure*}
+\begin{code}[hide]
+-- pattern CHKTX-V⋯ w x y z = CHKTX-V (w , x , y , z)
+\end{code}
+
+
+\begin{figure*}[h]
+\begin{code}[hide]
+
+data
+\end{code}
+\begin{code}
   _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type
 \end{code}
 \begin{code}[hide]
@@ -137,53 +156,32 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ 
-        txs = mkTxList tx
-        -- mkList makes a list of transactions that is tx ++ mkSubTxs 
-        -- it constructs full transaction from TxBody in subTx and witnesses attached to tx
-        -- sets each subTx isValid to true ( subTxs with bad scripts are not allowed)
-        -- sets isTopLevel to false for each subTx
+  LEDGER-V : let open Tx tx ; txs = mkTxList tx
     in
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s tx ≡ produced pp s tx
-    ∙ txsize ≤ maxTxSize pp
-    -- TODO ∙  txs is non-empty/ OK
-    -- TODO all inputs and corInputs in all txs are in UTxO
-    -- corInputs and regular inputs are distinct
-    -- for each spendOut in each transactions, there is a corresponding spe
-    -- ∙ requiredTxs of subTxs and tx itself are in subTxs and have corresponding bodies
-    -- ∙ range (utxo ∣ corInputs) contains all the same outputs as listed in all spendOuts in all subTxs
-
-    ∙  getAllIns tx ⊆ dom utxo
-    ∙  isValid tx ≡ true
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ txs ,SWAPS⦈ utxoSt'
+    ∙  isValid ≡ true
+    ∙  txs ≢ []
+    ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,CHKTX⦈ ⟦ u , g , c ⟧ˡ
+    ∙  Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈  ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+       Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈  ⟦ u' , g' , c' ⟧ˡ
 
-  LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ 
-        txs = mkTxList tx
+  LEDGER-I : let open Tx tx ; txs = mkTxList tx
     in
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s tx ≡ produced pp s tx
-    ∙ txsize ≤ maxTxSize pp
-    -- TODO ∙  txs is non-empty/ OK
-    -- TODO all inputs in all txs are in UTxO
-    -- corInputs and regular inputs are distinct
-    -- for each spendOut in each transactions, there is a corresponding spe
-    -- ∙ requiredTxs of subTxs and tx itself are in subTxs and have corresponding bodies
-    -- ∙ range (utxo ∣ corInputs) contains all the same outputs as listed in all spendOuts in all subTxs
-
-    ∙  corInputs tx ⊆ dom utxo
-    ∙  getAllIns tx ⊆ dom utxo
-    ∙  isValid tx ≡ false
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ txs ,SWAPS⦈ utxoSt'
+    ∙  isValid ≡ false
+    -- TODO this check could be in CHKTX if we didnt also need to construct it here
+    ∙  txs ≢ []
+    -- TODO this rule does nothing except for some checks, should we do this another way?
+    ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,CHKTX⦈ ⟦ u , g , c ⟧ˡ
+    ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈  ⟦ u' , g , c ⟧ˡ
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
+       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g , c ⟧ˡ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
-pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
-pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
+-- pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
+-- pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 \end{code}
 
 \begin{NoConway}

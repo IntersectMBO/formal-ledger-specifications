@@ -159,7 +159,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       -- NEW
       swaps          : ℙ TxId
       requiredTxs    : ℙ TxId
-      spendOuts      : Ix ⇀ TxOut
+      spendOuts      : List TxOut
       corInputs      : ℙ TxIn
 \end{code}
 \begin{NoConway}
@@ -190,7 +190,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       isTopLevel  : Bool
       txAD     : Maybe AuxiliaryData
       -- NEW
-      subTxBodies  : TxId ⇀ TxBody × ( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData)
+      subTxBodies  : TxId ⇀ TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData))
       -- NEW
       requiredTxBodies  : TxId ⇀ TxBody
 \end{code}

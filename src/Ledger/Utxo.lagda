@@ -63,7 +63,7 @@ opaque
   getInputHashes : Tx → UTxO → ℙ DataHash
   getInputHashes tx utxo = getDataHashes
     (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ txins ∪ corInputs)))
+            (range (utxo ∣ (txins ∪ corInputs))))
     where open Tx; open TxBody (tx .body)
 
 totExUnits : Tx → ExUnits
@@ -422,9 +422,9 @@ equal if they are both present.
         txoutsʰ = (mapValues txOutHash txouts)
     in
     -- deal with refInputs correctly here
-    ∙ txins  ≢ ∅                         ∙ allrefInputs tx ⊆ dom utxo
-    ∙ txins ∩ refInputs ≡ ∅              ∙ inInterval slot tx
-    ∙ coin tx ≡ 0
+    ∙ txins  ≢ ∅                         ∙ refInputs ⊆ dom utxo
+    ∙ txins ∩ refInputs ≡ ∅              ∙ inInterval slot txvldt
+    ∙ coin mint ≡ 0
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
@@ -438,16 +438,16 @@ equal if they are both present.
     ∙ curTreasury ≡? treasury
 
     -- new checks
-    ∙ all subTxs have corresponding bodies in subTxBodies
-    ∙ only top level tx has corInputs
+    -- ∙ all subTxs have corresponding bodies in subTxBodies
+    -- ∙ only top level tx has corInputs
 
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h i j
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h , i , j)
+-- pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h i j
+--       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h , i , j)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
