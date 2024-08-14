@@ -81,19 +81,19 @@ module _ (let open UTxOState) where
   newDeposits : PParams → UTxOState → TxBody → Coin
   newDeposits pp st txb = let open TxBody in posPart (depositsChange pp txb (st .deposits))
 
-  consumed : PParams → UTxOState → TxBody → Value
-  consumed pp st txb
-    =  let open TxBody in balance (st .utxo ∣ txb .txins)
+  consumed : PParams → UTxOState → List TxBody → Value
+  consumed pp st txbls
+    =  foldr  (λ txb → (let open TxBody in balance (st .utxo ∣ txb .txins)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
-    +  balance (st .utxo ∣ txb .corInputs)
+    +  balance (st .utxo ∣ txb .corInputs)) +_) (inject 0) txbls
 
-  produced : PParams → UTxOState → TxBody → Value
-  produced pp st txb
-    =  let open TxBody in balance (outs txb)
+  produced : PParams → UTxOState → List TxBody → Value
+  produced pp st txbls
+    =  foldr (λ txb → (let open TxBody in balance (outs txb)
     +  inject (txb .txfee)
     +  inject (newDeposits pp st txb)
-    +  inject (txb .txdonation)
+    +  inject (txb .txdonation)) +_) (inject 0) txbls
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -122,8 +122,10 @@ data
 \begin{code}
   CHKTX : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txs = (mkTxList tx)
     in
-    ∙ feesOK pp tx utx ≡ true               ∙ consumed pp u body ≡ produced pp u body
+    ∙ feesOK pp tx utx ≡ true               
+    ∙ consumed pp u (body ∷ map proj₁ (proj₂ (setToList subTxBodies))) ≡ produced pp u (body ∷ map proj₁ (proj₂ (setToList subTxBodies)))
     ∙ txsize ≤ maxTxSize 
+    ∙ txs ≢ []
     -- ∙ ∀[ tb ∈ ((proj₁ (range subTxBodies))  ) ] tb .TxBody.txins ∪ tb .TxBody.corInputs ⊆ dom utx 
     -- ∙ ∀[ tb ∈ range (proj₁ subTxBodies) ∪ body ] tb .TxBody.txins ∩ body .TxBody.corInputs ≢ ∅
     -- ∙ ∀[ t ∈ subTxs ] subTxs .TxBody.requiredTxs  ⊆ tb .TxBody.subTxs
@@ -159,7 +161,6 @@ data
   LEDGER-V : let open Tx tx ; txs = mkTxList tx
     in
     ∙  isValid ≡ true
-    ∙  txs ≢ []
     ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,CHKTX⦈ ⟦ u , g , c ⟧ˡ
     ∙  Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈  ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
@@ -168,8 +169,6 @@ data
   LEDGER-I : let open Tx tx ; txs = mkTxList tx
     in
     ∙  isValid ≡ false
-    -- TODO this check could be in CHKTX if we didnt also need to construct it here
-    ∙  txs ≢ []
     -- TODO this rule does nothing except for some checks, should we do this another way?
     ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,CHKTX⦈ ⟦ u , g , c ⟧ˡ
     ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈  ⟦ u' , g , c ⟧ˡ
