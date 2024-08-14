@@ -64,7 +64,7 @@ certDeposit _                  _   = ∅
 
 certRefund : DCert → ℙ DepositPurpose
 certRefund (dereg c _)    = ❴ CredentialDeposit c ❵
-certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
+certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
 certRefund _              = ∅
 
 updateCertDeposit  : PParams → DCert → (DepositPurpose ⇀ Coin)
@@ -138,8 +138,8 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
     ∙ c ∈ dom dReps
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
-          ⇀⦇ deregdrep c ,GOVCERT⦈
-          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit pp (deregdrep c) dep ⟧ᵛ
+          ⇀⦇ deregdrep c d ,GOVCERT⦈
+          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit pp (deregdrep c d) dep ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys

@@ -227,9 +227,9 @@ certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
 certDeposit _                  _   = ∅
 
 certRefund : DCert → ℙ DepositPurpose
-certRefund (dereg c _)    = ❴ CredentialDeposit c ❵
-certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-certRefund _              = ∅
+certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
+certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
+certRefund _                = ∅
 
 updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
                     → DepositPurpose ⇀ Coin

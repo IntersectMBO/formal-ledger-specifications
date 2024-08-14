@@ -59,7 +59,7 @@ instance
          ⊎ (d ≡ 0 × c ∈ dom dReps) ¿ of λ where
       (yes p) → success (-, GOVCERT-regdrep p)
       (no ¬p) → failure (genErrors ¬p)
-  Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ dReps , _ , dep ⟧ᵛ (deregdrep c) =
+  Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ dReps , _ , dep ⟧ᵛ (deregdrep c _) =
     case c ∈? dom dReps of λ where
       (yes p) → success (-, GOVCERT-deregdrep {pp = pp} p)
       (no ¬p)  → failure (genErrors ¬p)
@@ -75,7 +75,7 @@ instance
         (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps))
       ¿ p .proj₂ = refl
   Computational-GOVCERT .completeness _ ⟦ dReps , _ , _ ⟧ᵛ
-    (deregdrep c) _ (GOVCERT-deregdrep p)
+    (deregdrep c _) _ (GOVCERT-deregdrep p)
     rewrite dec-yes (c ∈? dom dReps) p .proj₂ = refl
   Computational-GOVCERT .completeness _ ⟦ _ , ccKeys , _ ⟧ᵛ
     (ccreghot c _) _ (GOVCERT-ccreghot ¬p)
@@ -112,7 +112,7 @@ instance
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-    dCert@(deregdrep c) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
+    dCert@(deregdrep c _) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
