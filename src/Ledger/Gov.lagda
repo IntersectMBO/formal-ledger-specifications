@@ -6,7 +6,7 @@
 open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Gov (txs : _) (open TransactionStructure txs using (govStructure)) where
+module Ledger.Gov (txs : _) (open TransactionStructure txs using (govStructure; networkId)) where
 open GovStructure govStructure hiding (epoch)
 
 open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
@@ -287,6 +287,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ (∀ {new rem q} → a ≡ UpdateCommittee new rem q
        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ validHFAction prop s enactState
+    ∙ (GovProposal.returnAddr prop) .RwdAddr.net ≡ networkId
     ∙ hasParent enactState s a prev
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
