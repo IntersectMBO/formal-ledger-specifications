@@ -288,7 +288,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s a prev
-    ∙ (GovProposal.returnAddr prop) .RwdAddr.net ≡ networkId
+    ∙ addr .RwdAddr.net ≡ networkId
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
