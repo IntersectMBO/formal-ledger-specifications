@@ -157,7 +157,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash
       -- NEW
-      swaps          : ℙ TxId
+      subTxs          : ℙ TxId
       requiredTxs    : ℙ TxId
       spendOuts      : List TxOut
       corInputs      : ℙ TxIn

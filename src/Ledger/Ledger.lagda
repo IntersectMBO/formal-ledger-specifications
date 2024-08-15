@@ -18,7 +18,6 @@ module Ledger.Ledger
 open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.Utxo txs abs
-open import Ledger.Swaps txs abs
 open import Ledger.Utxow txs abs
 
 -- open Tx
@@ -30,6 +29,40 @@ The entire state transformation of the ledger state caused by a valid
 transaction can now be given as a combination of the previously
 defined transition systems.
 
+\begin{figure*}[h]
+\begin{AgdaMultiCode}
+\begin{code}
+record LEnv : Type where
+\end{code}
+\begin{code}[hide]
+  constructor ⟦_,_,_,_,_⟧ˡᵉ
+  field
+\end{code}
+\begin{code}
+    slot        : Slot
+    ppolicy     : Maybe ScriptHash
+    pparams     : PParams
+    enactState  : EnactState
+    treasury    : Coin
+
+record LState : Type where
+\end{code}
+\begin{code}[hide]
+  constructor ⟦_,_,_⟧ˡ
+  field
+\end{code}
+\begin{code}
+    utxoSt     : UTxOState
+    govSt      : GovState
+    certState  : CertState
+
+txgov : TxBody → List (GovVote ⊎ GovProposal)
+txgov txb = map inj₂ txprop ++ map inj₁ txvote
+  where open TxBody txb
+\end{code}
+\end{AgdaMultiCode}
+\caption{Types and functions for the LEDGER and SWAP transition systems}
+\end{figure*}
 \begin{code}[hide]
 private variable
   Γ : LEnv
@@ -39,6 +72,8 @@ private variable
   c c' : CertState
   tx : Tx
 \end{code}
+
+
 
 \begin{code}
 
@@ -99,50 +134,13 @@ module _ (let open UTxOState) where
 \label{fig:functions:utxo-conway}
 \end{figure*}
 
+
 \begin{figure*}[h]
 \begin{code}[hide]
 open RwdAddr
 open DState
 open CertState
 open UTxOState
-
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CHKTX⦈_ : LEnv → LState → Tx → LState → Type
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\caption{The type of the CHKTX transition system}
-\end{figure*}
-
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
-  CHKTX : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txs = (mkTxList tx)
-    in
-    ∙ feesOK pp tx utx ≡ true               
-    ∙ consumed pp u (body ∷ map proj₁ (proj₂ (setToList subTxBodies))) ≡ produced pp u (body ∷ map proj₁ (proj₂ (setToList subTxBodies)))
-    ∙ txsize ≤ maxTxSize 
-    ∙ txs ≢ []
-    -- ∙ ∀[ tb ∈ ((proj₁ (range subTxBodies))  ) ] tb .TxBody.txins ∪ tb .TxBody.corInputs ⊆ dom utx 
-    -- ∙ ∀[ tb ∈ range (proj₁ subTxBodies) ∪ body ] tb .TxBody.txins ∩ body .TxBody.corInputs ≢ ∅
-    -- ∙ ∀[ t ∈ subTxs ] subTxs .TxBody.requiredTxs  ⊆ tb .TxBody.subTxs
-    -- ∙ chkCorInputs (utxo ∣ corInputs) (mkListSpendOuts tx) ≡ true
-       ────────────────────────────────
-       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,CHKTX⦈ ⟦ u , g , c ⟧ˡ
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{CHKTX transition system}
-\end{figure*}
-\begin{code}[hide]
--- pattern CHKTX-V⋯ w x y z = CHKTX-V (w , x , y , z)
-\end{code}
-
-
-\begin{figure*}[h]
-\begin{code}[hide]
 
 data
 \end{code}
@@ -154,33 +152,64 @@ data
 \end{code}
 \caption{The type of the LEDGER transition system}
 \end{figure*}
-
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-V : let open Tx tx ; txs = mkTxList tx
+  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txs = (mkTxList tx); txBods = (map proj₁ (map proj₂ (setToList (proj₁ subTxBodies))))
     in
-    ∙  isValid ≡ true
-    ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,CHKTX⦈ ⟦ u , g , c ⟧ˡ
-    ∙  Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈  ⟦ u' , g' , c' ⟧ˡ
+    ∙ feesOK pp tx utx ≡ true               
+    ∙ consumed pp u (body ∷ txBods) ≡ produced pp u (body ∷ txBods)
+    ∙ txsize ≤ maxTxSize 
+    ∙ txs ≢ [] 
+    -- ∙ ∀[ tb ∈ ((proj₁ (range subTxBodies))  ) ] tb .TxBody.txins ∪ tb .TxBody.corInputs ⊆ dom utx 
+    -- ∙ ∀[ tb ∈ range (proj₁ subTxBodies) ∪ body ] tb .TxBody.txins ∩ body .TxBody.corInputs ≢ ∅
+    -- ∙ ∀[ t ∈ subTxBodies ] body  ⊆ (proj₁ (proj₂ (proj₁ (subTxBodies)))) -- (proj₁ (proj₂ (proj₁ t))) .TxBody.requiredTxs ⊆ body .TxBody.subTxs
+    -- ∙ chkCorInputs (utx ∣ corInputs) (mkListSpendOuts tx) ≡ true
+    -- ∙ Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
-       Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈  ⟦ u' , g' , c' ⟧ˡ
-
-  LEDGER-I : let open Tx tx ; txs = mkTxList tx
-    in
-    ∙  isValid ≡ false
-    -- TODO this rule does nothing except for some checks, should we do this another way?
-    ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,CHKTX⦈ ⟦ u , g , c ⟧ˡ
-    ∙  Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈  ⟦ u' , g , c ⟧ˡ
-       ────────────────────────────────
-       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g , c ⟧ˡ
+       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
 -- pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
--- pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
+\end{code}
+
+\begin{figure*}[h]
+\begin{code}[hide]
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,SWAP⦈_ : LEnv → LState → Tx → LState → Type
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\caption{The type of the SWAP transition system}
+\end{figure*}
+\begin{figure*}[h]
+\begin{AgdaSuppressSpace}
+\begin{code}
+  SWAP-V : let open Tx tx renaming (body to txb); open TxBody txb; open LEnv Γ renaming (slot to sl)
+    in
+    ∙  record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+    ∙  ⟦ epoch sl , pparams , txvote , txwdrls , deposits u ⟧ᶜ ⊢ c ⇀⦇ txcerts ,CERTS⦈ c'
+    ∙  ⟦ txid , epoch sl , pparams , ppolicy , enactState ⟧ᵍ ⊢ g ⇀⦇ txgov txb ,GOV⦈ g'
+       ────────────────────────────────
+       Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g' , c' ⟧ˡ
+
+  SWAP-I :     
+    ∙  record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+      ────────────────────────────────
+       Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g , c ⟧ˡ
+\end{code}
+\end{AgdaSuppressSpace}
+\caption{SWAP transition system}
+\end{figure*}
+\begin{code}[hide]
+-- pattern SWAP-V⋯ w x y z = SWAP-V (w , x , y , z)
+-- pattern SWAP-I⋯ y z     = SWAP-I (y , z)
 \end{code}
 
 \begin{NoConway}
@@ -188,6 +217,17 @@ data
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
+\end{code}
+\caption{LEDGERS transition system}
+\end{figure*}
+\end{NoConway}
+
+
+\begin{NoConway}
+\begin{figure*}[h]
+\begin{code}
+_⊢_⇀⦇_,SWAPS⦈_ : LEnv → LState → List Tx → LState → Type
+_⊢_⇀⦇_,SWAPS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,SWAP⦈_
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}
