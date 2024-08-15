@@ -429,9 +429,9 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     let open PParams pp
         refresh         = mapPartial getDRepVote (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
-        wdrlCreds       = filterˢ isKeyHash (mapˢ stake (dom wdrls))
+        wdrlCreds       = mapˢ stake (dom wdrls)
     in
-    ∙ wdrlCreds ⊆ dom voteDelegs
+    ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
