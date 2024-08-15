@@ -72,7 +72,7 @@ cwitness (ccreghot c _)      = c
 \caption{Delegation definitions}
 \end{figure*}
 
-\begin{figure*}[h!]
+\begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}
 record CertEnv : Type where
@@ -261,7 +261,7 @@ constitutional committee.
 \end{itemize}
 
 \begin{figure*}[h]
-\begin{AgdaMultiCode}
+\begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data
 \end{code}
@@ -292,14 +292,11 @@ data
 \begin{code}
   _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
 \end{code}
-\begin{code}[hide]
-module _ where
-\end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
 \end{code}
-\end{AgdaMultiCode}
+\end{AgdaSuppressSpace}
 \caption{Types for the transition systems relating to certificates}
 \label{fig:sts:certs-types}
 \end{figure*}
@@ -355,7 +352,7 @@ data _⊢_⇀⦇_,POOL⦈_ where
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,GOVCERT⦈_ where
@@ -396,7 +393,7 @@ CERTBASE as the base case. CERTBASE does the following:
   epochs in the future.
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[htbp]
 \emph{CERT transitions}
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]

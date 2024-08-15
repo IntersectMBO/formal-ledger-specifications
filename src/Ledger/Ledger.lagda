@@ -70,6 +70,7 @@ private variable
   tx : Tx
 \end{code}
 
+\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}[hide]
 open RwdAddr
@@ -87,8 +88,9 @@ data
 \end{code}
 \caption{The type of the LEDGER transition system}
 \end{figure*}
+\end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
 \begin{code}
   LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
@@ -98,6 +100,9 @@ data
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+\end{code}
+\begin{NoConway}
+\begin{code}
 
   LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ false
@@ -105,6 +110,7 @@ data
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
 \end{code}
+\end{NoConway}
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
 \end{figure*}
