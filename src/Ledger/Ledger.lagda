@@ -145,42 +145,6 @@ open UTxOState
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\caption{The type of the LEDGER transition system}
-\end{figure*}
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
-  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txs = (mkTxList tx); txBods = (map proj₁ (map proj₂ (setToList (proj₁ subTxBodies))))
-    in
-    ∙ feesOK pp tx utx ≡ true               
-    ∙ consumed pp u (body ∷ txBods) ≡ produced pp u (body ∷ txBods)
-    ∙ txsize ≤ maxTxSize 
-    ∙ txs ≢ [] 
-    -- ∙ ∀[ tb ∈ ((proj₁ (range subTxBodies))  ) ] tb .TxBody.txins ∪ tb .TxBody.corInputs ⊆ dom utx 
-    -- ∙ ∀[ tb ∈ range (proj₁ subTxBodies) ∪ body ] tb .TxBody.txins ∩ body .TxBody.corInputs ≢ ∅
-    -- ∙ ∀[ t ∈ subTxBodies ] body  ⊆ (proj₁ (proj₂ (proj₁ (subTxBodies)))) -- (proj₁ (proj₂ (proj₁ t))) .TxBody.requiredTxs ⊆ body .TxBody.subTxs
-    -- ∙ chkCorInputs (utx ∣ corInputs) (mkListSpendOuts tx) ≡ true
-    -- ∙ Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
-       ────────────────────────────────
-       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{LEDGER transition system}
-\end{figure*}
-\begin{code}[hide]
--- pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
-\end{code}
-
-\begin{figure*}[h]
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
   _⊢_⇀⦇_,SWAP⦈_ : LEnv → LState → Tx → LState → Type
 \end{code}
 \begin{code}[hide]
@@ -212,22 +176,60 @@ data
 -- pattern SWAP-I⋯ y z     = SWAP-I (y , z)
 \end{code}
 
-\begin{NoConway}
-\begin{figure*}[h]
-\begin{code}
-_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
-_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
-\end{code}
-\caption{LEDGERS transition system}
-\end{figure*}
-\end{NoConway}
-
 
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,SWAPS⦈_ : LEnv → LState → List Tx → LState → Type
 _⊢_⇀⦇_,SWAPS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,SWAP⦈_
+\end{code}
+\caption{LEDGERS transition system}
+\end{figure*}
+\end{NoConway}
+
+
+\begin{figure*}[h]
+\begin{code}[hide]
+
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type
+\end{code}
+\begin{code}[hide]
+  where
+\end{code}
+\caption{The type of the LEDGER transition system}
+\end{figure*}
+\begin{figure*}[h]
+\begin{AgdaSuppressSpace}
+\begin{code}
+  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txs = (mkTxList tx); txBods = (map proj₁ (map proj₂ (setToList (proj₁ subTxBodies))))
+    in
+    ∙ Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
+    ∙ feesOK pp tx utx ≡ true               
+    ∙ consumed pp u (body ∷ txBods) ≡ produced pp u (body ∷ txBods)
+    ∙ txsize ≤ maxTxSize 
+    ∙ txs ≢ [] 
+    -- ∙ ∀[ tb ∈ ((proj₁ (range subTxBodies))  ) ] tb .TxBody.txins ∪ tb .TxBody.corInputs ⊆ dom utx 
+    -- ∙ ∀[ tb ∈ range (proj₁ subTxBodies) ∪ body ] tb .TxBody.txins ∩ body .TxBody.corInputs ≢ ∅
+    -- ∙ ∀[ t ∈ subTxBodies ] body  ⊆ (proj₁ (proj₂ (proj₁ (subTxBodies)))) -- (proj₁ (proj₂ (proj₁ t))) .TxBody.requiredTxs ⊆ body .TxBody.subTxs
+    -- ∙ chkCorInputs (utx ∣ corInputs) (mkListSpendOuts tx) ≡ true
+       ────────────────────────────────
+       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
+\end{code}
+\end{AgdaSuppressSpace}
+\caption{LEDGER transition system}
+\end{figure*}
+\begin{code}[hide]
+-- pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
+\end{code}
+
+\begin{NoConway}
+\begin{figure*}[h]
+\begin{code}
+_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
+_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}
