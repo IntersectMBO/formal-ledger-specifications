@@ -7,7 +7,7 @@
 \NewEnviron{Conway}{%
 }
 
-\include{preamble}
+\input{preamble}
 
 \begin{document}
 
