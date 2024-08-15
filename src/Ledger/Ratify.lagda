@@ -81,7 +81,7 @@ required. A protocol parameter may or may not be in the
 
 Finally, each of the \AgdaFunction{P}$_x$ and \AgdaFunction{Q}$_x$ in
 Figure~\ref{fig:ratification-requirements} are protocol parameters.
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 private
@@ -180,7 +180,7 @@ by at least half of the SPO stake.
 
 \subsection{Ratification Restrictions}
 \label{sec:ratification-restrictions}
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record StakeDistrs : Type where
@@ -493,7 +493,7 @@ RATIFY.
   \item \accepted then checks if an action is accepted by all roles; and
   \item \expired checks whether a governance action is expired in a given epoch.
 \end{itemize}
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{code}[hide]
 open EnactState
 \end{code}
@@ -581,7 +581,7 @@ private variable
 data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
 
 \end{code}
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
   RATIFY-Accept : ∀ {Γ} {es} {removed} {d} {a} {es'} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in

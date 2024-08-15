@@ -188,7 +188,7 @@ data
 \label{fig:ts-types:utxo}
 \end{figure*}
 
-\begin{figure*}[h]
+\begin{figure*}[htbp]
 \begin{code}[hide]
 module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
@@ -339,7 +339,7 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}
+\begin{figure*}[htbp]
 \begin{code}[hide]
 module _ (let open UTxOState; open TxBody) where
 \end{code}

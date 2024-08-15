@@ -174,7 +174,7 @@ HashProtected A = A × GovActionID
 \label{fig:needshash-and-hashprotected-types}
 \end{figure*}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}
 data Vote : Type where
@@ -228,7 +228,7 @@ instance
 \end{figure*}
 \subsection{Votes and Proposals}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{code}
 getDRepVote : GovVote → Maybe Credential
 getDRepVote record { voter = (DRep , credential) }  = just credential
