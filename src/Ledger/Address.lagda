@@ -37,6 +37,13 @@ isKeyHashObj : Credential → Maybe KeyHash
 isKeyHashObj (KeyHashObj h) = just h
 isKeyHashObj (ScriptObj _)  = nothing
 
+isKeyHashObjᵇ : Credential → Bool
+isKeyHashObjᵇ (KeyHashObj _) = true
+isKeyHashObjᵇ _ = false
+
+isKeyHash : Credential → Type
+isKeyHash x = isKeyHashObjᵇ x ≡ true
+
 isScriptObj : Credential → Maybe ScriptHash
 isScriptObj (KeyHashObj _) = nothing
 isScriptObj (ScriptObj h)  = just h
