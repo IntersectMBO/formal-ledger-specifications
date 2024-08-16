@@ -317,6 +317,7 @@ data CertState = MkCertState
   { dState :: DState
   , pState :: PState
   , gState :: GState
+  , temporaryDeposits :: HSMap DepositPurpose Coin
   }
 data CertState' = MkCertState'
   { dState' :: DState'
@@ -2402,135 +2403,145 @@ d_deposits_796 v0
 -- Ledger.Foreign.LedgerTypes.CertState
 d_CertState_798 = ()
 type T_CertState_798 = CertState
-pattern C_CertState'46'constructor_9313 a0 a1 a2 = MkCertState a0 a1 a2
-check_CertState'46'constructor_9313 ::
-  T_DState_732 -> T_PState_764 -> T_GState_774 -> T_CertState_798
-check_CertState'46'constructor_9313 = MkCertState
+pattern C_CertState'46'constructor_9323 a0 a1 a2 a3 = MkCertState a0 a1 a2 a3
+check_CertState'46'constructor_9323 ::
+  T_DState_732 ->
+  T_PState_764 ->
+  T_GState_774 ->
+  T_HSMap_26 T_DepositPurpose_682 Integer -> T_CertState_798
+check_CertState'46'constructor_9323 = MkCertState
 cover_CertState_798 :: CertState -> ()
 cover_CertState_798 x
   = case x of
-      MkCertState _ _ _ -> ()
+      MkCertState _ _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.CertState.dState
-d_dState_806 :: T_CertState_798 -> T_DState_732
-d_dState_806 v0
+d_dState_808 :: T_CertState_798 -> T_DState_732
+d_dState_808 v0
   = case coe v0 of
-      C_CertState'46'constructor_9313 v1 v2 v3 -> coe v1
+      C_CertState'46'constructor_9323 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.CertState.pState
-d_pState_808 :: T_CertState_798 -> T_PState_764
-d_pState_808 v0
+d_pState_810 :: T_CertState_798 -> T_PState_764
+d_pState_810 v0
   = case coe v0 of
-      C_CertState'46'constructor_9313 v1 v2 v3 -> coe v2
+      C_CertState'46'constructor_9323 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.CertState.gState
-d_gState_810 :: T_CertState_798 -> T_GState_774
-d_gState_810 v0
+d_gState_812 :: T_CertState_798 -> T_GState_774
+d_gState_812 v0
   = case coe v0 of
-      C_CertState'46'constructor_9313 v1 v2 v3 -> coe v3
+      C_CertState'46'constructor_9323 v1 v2 v3 v4 -> coe v3
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Ledger.Foreign.LedgerTypes.CertState.temporaryDeposits
+d_temporaryDeposits_814 ::
+  T_CertState_798 -> T_HSMap_26 T_DepositPurpose_682 Integer
+d_temporaryDeposits_814 v0
+  = case coe v0 of
+      C_CertState'46'constructor_9323 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.CertState'
-d_CertState''_812 = ()
-type T_CertState''_812 = CertState'
-pattern C_CertState'''46'constructor_9349 a0 a1 a2 = MkCertState' a0 a1 a2
-check_CertState'''46'constructor_9349 ::
+d_CertState''_816 = ()
+type T_CertState''_816 = CertState'
+pattern C_CertState'''46'constructor_9375 a0 a1 a2 = MkCertState' a0 a1 a2
+check_CertState'''46'constructor_9375 ::
   T_DState''_746 ->
-  T_PState_764 -> T_GState''_784 -> T_CertState''_812
-check_CertState'''46'constructor_9349 = MkCertState'
-cover_CertState''_812 :: CertState' -> ()
-cover_CertState''_812 x
+  T_PState_764 -> T_GState''_784 -> T_CertState''_816
+check_CertState'''46'constructor_9375 = MkCertState'
+cover_CertState''_816 :: CertState' -> ()
+cover_CertState''_816 x
   = case x of
       MkCertState' _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.CertState'.dState
-d_dState_820 :: T_CertState''_812 -> T_DState''_746
-d_dState_820 v0
+d_dState_824 :: T_CertState''_816 -> T_DState''_746
+d_dState_824 v0
   = case coe v0 of
-      C_CertState'''46'constructor_9349 v1 v2 v3 -> coe v1
+      C_CertState'''46'constructor_9375 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.CertState'.pState
-d_pState_822 :: T_CertState''_812 -> T_PState_764
-d_pState_822 v0
+d_pState_826 :: T_CertState''_816 -> T_PState_764
+d_pState_826 v0
   = case coe v0 of
-      C_CertState'''46'constructor_9349 v1 v2 v3 -> coe v2
+      C_CertState'''46'constructor_9375 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.CertState'.gState
-d_gState_824 :: T_CertState''_812 -> T_GState''_784
-d_gState_824 v0
+d_gState_828 :: T_CertState''_816 -> T_GState''_784
+d_gState_828 v0
   = case coe v0 of
-      C_CertState'''46'constructor_9349 v1 v2 v3 -> coe v3
+      C_CertState'''46'constructor_9375 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.StakeDistrs
-d_StakeDistrs_826 = ()
-type T_StakeDistrs_826 = StakeDistrs
-pattern C_StakeDistrs'46'constructor_9383 a0 = MkStakeDistrs a0
-check_StakeDistrs'46'constructor_9383 ::
-  T_HSMap_26 T_VDeleg_136 Integer -> T_StakeDistrs_826
-check_StakeDistrs'46'constructor_9383 = MkStakeDistrs
-cover_StakeDistrs_826 :: StakeDistrs -> ()
-cover_StakeDistrs_826 x
+d_StakeDistrs_830 = ()
+type T_StakeDistrs_830 = StakeDistrs
+pattern C_StakeDistrs'46'constructor_9409 a0 = MkStakeDistrs a0
+check_StakeDistrs'46'constructor_9409 ::
+  T_HSMap_26 T_VDeleg_136 Integer -> T_StakeDistrs_830
+check_StakeDistrs'46'constructor_9409 = MkStakeDistrs
+cover_StakeDistrs_830 :: StakeDistrs -> ()
+cover_StakeDistrs_830 x
   = case x of
       MkStakeDistrs _ -> ()
 -- Ledger.Foreign.LedgerTypes.StakeDistrs.stakeDistr
-d_stakeDistr_830 ::
-  T_StakeDistrs_826 -> T_HSMap_26 T_VDeleg_136 Integer
-d_stakeDistr_830 v0
+d_stakeDistr_834 ::
+  T_StakeDistrs_830 -> T_HSMap_26 T_VDeleg_136 Integer
+d_stakeDistr_834 v0
   = case coe v0 of
-      C_StakeDistrs'46'constructor_9383 v1 -> coe v1
+      C_StakeDistrs'46'constructor_9409 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RatifyEnv
-d_RatifyEnv_832 = ()
-type T_RatifyEnv_832 = RatifyEnv
-pattern C_RatifyEnv'46'constructor_9441 a0 a1 a2 a3 a4 = MkRatifyEnv a0 a1 a2 a3 a4
-check_RatifyEnv'46'constructor_9441 ::
-  T_StakeDistrs_826 ->
+d_RatifyEnv_836 = ()
+type T_RatifyEnv_836 = RatifyEnv
+pattern C_RatifyEnv'46'constructor_9467 a0 a1 a2 a3 a4 = MkRatifyEnv a0 a1 a2 a3 a4
+check_RatifyEnv'46'constructor_9467 ::
+  T_StakeDistrs_830 ->
   Integer ->
   T_HSMap_26 T_Credential_118 Integer ->
   T_HSMap_26
     T_Credential_118
     (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_Credential_118) ->
-  Integer -> T_RatifyEnv_832
-check_RatifyEnv'46'constructor_9441 = MkRatifyEnv
-cover_RatifyEnv_832 :: RatifyEnv -> ()
-cover_RatifyEnv_832 x
+  Integer -> T_RatifyEnv_836
+check_RatifyEnv'46'constructor_9467 = MkRatifyEnv
+cover_RatifyEnv_836 :: RatifyEnv -> ()
+cover_RatifyEnv_836 x
   = case x of
       MkRatifyEnv _ _ _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.RatifyEnv.reStakeDistrs
-d_reStakeDistrs_844 :: T_RatifyEnv_832 -> T_StakeDistrs_826
-d_reStakeDistrs_844 v0
+d_reStakeDistrs_848 :: T_RatifyEnv_836 -> T_StakeDistrs_830
+d_reStakeDistrs_848 v0
   = case coe v0 of
-      C_RatifyEnv'46'constructor_9441 v1 v2 v3 v4 v5 -> coe v1
+      C_RatifyEnv'46'constructor_9467 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RatifyEnv.reCurrentEpoch
-d_reCurrentEpoch_846 :: T_RatifyEnv_832 -> Integer
-d_reCurrentEpoch_846 v0
+d_reCurrentEpoch_850 :: T_RatifyEnv_836 -> Integer
+d_reCurrentEpoch_850 v0
   = case coe v0 of
-      C_RatifyEnv'46'constructor_9441 v1 v2 v3 v4 v5 -> coe v2
+      C_RatifyEnv'46'constructor_9467 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RatifyEnv.reDReps
-d_reDReps_848 ::
-  T_RatifyEnv_832 -> T_HSMap_26 T_Credential_118 Integer
-d_reDReps_848 v0
+d_reDReps_852 ::
+  T_RatifyEnv_836 -> T_HSMap_26 T_Credential_118 Integer
+d_reDReps_852 v0
   = case coe v0 of
-      C_RatifyEnv'46'constructor_9441 v1 v2 v3 v4 v5 -> coe v3
+      C_RatifyEnv'46'constructor_9467 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RatifyEnv.reCCHotKeys
-d_reCCHotKeys_850 ::
-  T_RatifyEnv_832 ->
+d_reCCHotKeys_854 ::
+  T_RatifyEnv_836 ->
   T_HSMap_26 T_Credential_118 (Maybe T_Credential_118)
-d_reCCHotKeys_850 v0
+d_reCCHotKeys_854 v0
   = case coe v0 of
-      C_RatifyEnv'46'constructor_9441 v1 v2 v3 v4 v5 -> coe v4
+      C_RatifyEnv'46'constructor_9467 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RatifyEnv.reTreasury
-d_reTreasury_852 :: T_RatifyEnv_832 -> Integer
-d_reTreasury_852 v0
+d_reTreasury_856 :: T_RatifyEnv_836 -> Integer
+d_reTreasury_856 v0
   = case coe v0 of
-      C_RatifyEnv'46'constructor_9441 v1 v2 v3 v4 v5 -> coe v5
+      C_RatifyEnv'46'constructor_9467 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RatifyState
-d_RatifyState_854 = ()
-type T_RatifyState_854 = RatifyState
-pattern C_RatifyState'46'constructor_9531 a0 a1 a2 = MkRatifyState a0 a1 a2
-check_RatifyState'46'constructor_9531 ::
+d_RatifyState_858 = ()
+type T_RatifyState_858 = RatifyState
+pattern C_RatifyState'46'constructor_9557 a0 a1 a2 = MkRatifyState a0 a1 a2
+check_RatifyState'46'constructor_9557 ::
   T_EnactState_538 ->
   T_HSSet_40
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
@@ -2538,85 +2549,85 @@ check_RatifyState'46'constructor_9531 ::
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
           () () T_TxId_52 Integer)
        T_GovActionState_608) ->
-  Bool -> T_RatifyState_854
-check_RatifyState'46'constructor_9531 = MkRatifyState
-cover_RatifyState_854 :: RatifyState -> ()
-cover_RatifyState_854 x
+  Bool -> T_RatifyState_858
+check_RatifyState'46'constructor_9557 = MkRatifyState
+cover_RatifyState_858 :: RatifyState -> ()
+cover_RatifyState_858 x
   = case x of
       MkRatifyState _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.RatifyState.es
-d_es_862 :: T_RatifyState_854 -> T_EnactState_538
-d_es_862 v0
+d_es_866 :: T_RatifyState_858 -> T_EnactState_538
+d_es_866 v0
   = case coe v0 of
-      C_RatifyState'46'constructor_9531 v1 v2 v3 -> coe v1
+      C_RatifyState'46'constructor_9557 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RatifyState.removed
-d_removed_864 ::
-  T_RatifyState_854 ->
+d_removed_868 ::
+  T_RatifyState_858 ->
   T_HSSet_40
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        AgdaAny AgdaAny
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
           AgdaAny AgdaAny T_TxId_52 Integer)
        T_GovActionState_608)
-d_removed_864 v0
+d_removed_868 v0
   = case coe v0 of
-      C_RatifyState'46'constructor_9531 v1 v2 v3 -> coe v2
+      C_RatifyState'46'constructor_9557 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RatifyState.delay
-d_delay_866 :: T_RatifyState_854 -> Bool
-d_delay_866 v0
+d_delay_870 :: T_RatifyState_858 -> Bool
+d_delay_870 v0
   = case coe v0 of
-      C_RatifyState'46'constructor_9531 v1 v2 v3 -> coe v3
+      C_RatifyState'46'constructor_9557 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.LEnv
-d_LEnv_868 = ()
-type T_LEnv_868 = LedgerEnv
-pattern C_LEnv'46'constructor_9589 a0 a1 a2 a3 a4 = MkLedgerEnv a0 a1 a2 a3 a4
-check_LEnv'46'constructor_9589 ::
+d_LEnv_872 = ()
+type T_LEnv_872 = LedgerEnv
+pattern C_LEnv'46'constructor_9615 a0 a1 a2 a3 a4 = MkLedgerEnv a0 a1 a2 a3 a4
+check_LEnv'46'constructor_9615 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
-  T_PParams_302 -> T_EnactState_538 -> Integer -> T_LEnv_868
-check_LEnv'46'constructor_9589 = MkLedgerEnv
-cover_LEnv_868 :: LedgerEnv -> ()
-cover_LEnv_868 x
+  T_PParams_302 -> T_EnactState_538 -> Integer -> T_LEnv_872
+check_LEnv'46'constructor_9615 = MkLedgerEnv
+cover_LEnv_872 :: LedgerEnv -> ()
+cover_LEnv_872 x
   = case x of
       MkLedgerEnv _ _ _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.LEnv.slot
-d_slot_880 :: T_LEnv_868 -> Integer
-d_slot_880 v0
+d_slot_884 :: T_LEnv_872 -> Integer
+d_slot_884 v0
   = case coe v0 of
-      C_LEnv'46'constructor_9589 v1 v2 v3 v4 v5 -> coe v1
+      C_LEnv'46'constructor_9615 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.LEnv.ppolicy
-d_ppolicy_882 :: T_LEnv_868 -> Maybe Integer
-d_ppolicy_882 v0
+d_ppolicy_886 :: T_LEnv_872 -> Maybe Integer
+d_ppolicy_886 v0
   = case coe v0 of
-      C_LEnv'46'constructor_9589 v1 v2 v3 v4 v5 -> coe v2
+      C_LEnv'46'constructor_9615 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.LEnv.pparams
-d_pparams_884 :: T_LEnv_868 -> T_PParams_302
-d_pparams_884 v0
+d_pparams_888 :: T_LEnv_872 -> T_PParams_302
+d_pparams_888 v0
   = case coe v0 of
-      C_LEnv'46'constructor_9589 v1 v2 v3 v4 v5 -> coe v3
+      C_LEnv'46'constructor_9615 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.LEnv.enactState
-d_enactState_886 :: T_LEnv_868 -> T_EnactState_538
-d_enactState_886 v0
+d_enactState_890 :: T_LEnv_872 -> T_EnactState_538
+d_enactState_890 v0
   = case coe v0 of
-      C_LEnv'46'constructor_9589 v1 v2 v3 v4 v5 -> coe v4
+      C_LEnv'46'constructor_9615 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.LEnv.treasury
-d_treasury_888 :: T_LEnv_868 -> Integer
-d_treasury_888 v0
+d_treasury_892 :: T_LEnv_872 -> Integer
+d_treasury_892 v0
   = case coe v0 of
-      C_LEnv'46'constructor_9589 v1 v2 v3 v4 v5 -> coe v5
+      C_LEnv'46'constructor_9615 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.LState
-d_LState_890 = ()
-type T_LState_890 = LedgerState
-pattern C_LState'46'constructor_9661 a0 a1 a2 = MkLedgerState a0 a1 a2
-check_LState'46'constructor_9661 ::
+d_LState_894 = ()
+type T_LState_894 = LedgerState
+pattern C_LState'46'constructor_9687 a0 a1 a2 = MkLedgerState a0 a1 a2
+check_LState'46'constructor_9687 ::
   T_UTxOState_528 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
@@ -2625,382 +2636,382 @@ check_LState'46'constructor_9661 ::
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
           () () T_TxId_52 Integer)
        T_GovActionState_608) ->
-  T_CertState_798 -> T_LState_890
-check_LState'46'constructor_9661 = MkLedgerState
-cover_LState_890 :: LedgerState -> ()
-cover_LState_890 x
+  T_CertState_798 -> T_LState_894
+check_LState'46'constructor_9687 = MkLedgerState
+cover_LState_894 :: LedgerState -> ()
+cover_LState_894 x
   = case x of
       MkLedgerState _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.LState.utxoSt
-d_utxoSt_898 :: T_LState_890 -> T_UTxOState_528
-d_utxoSt_898 v0
+d_utxoSt_902 :: T_LState_894 -> T_UTxOState_528
+d_utxoSt_902 v0
   = case coe v0 of
-      C_LState'46'constructor_9661 v1 v2 v3 -> coe v1
+      C_LState'46'constructor_9687 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.LState.govSt
-d_govSt_900 ::
-  T_LState_890 ->
+d_govSt_904 ::
+  T_LState_894 ->
   [MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
      AgdaAny AgdaAny
      (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
         AgdaAny AgdaAny T_TxId_52 Integer)
      T_GovActionState_608]
-d_govSt_900 v0
+d_govSt_904 v0
   = case coe v0 of
-      C_LState'46'constructor_9661 v1 v2 v3 -> coe v2
+      C_LState'46'constructor_9687 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.LState.certState
-d_certState_902 :: T_LState_890 -> T_CertState_798
-d_certState_902 v0
+d_certState_906 :: T_LState_894 -> T_CertState_798
+d_certState_906 v0
   = case coe v0 of
-      C_LState'46'constructor_9661 v1 v2 v3 -> coe v3
+      C_LState'46'constructor_9687 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.EnactEnv
-d_EnactEnv_904 = ()
-type T_EnactEnv_904 = EnactEnv
-pattern C_EnactEnv'46'constructor_9697 a0 a1 a2 = MkEnactEnv a0 a1 a2
-check_EnactEnv'46'constructor_9697 ::
+d_EnactEnv_908 = ()
+type T_EnactEnv_908 = EnactEnv
+pattern C_EnactEnv'46'constructor_9723 a0 a1 a2 = MkEnactEnv a0 a1 a2
+check_EnactEnv'46'constructor_9723 ::
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     () () T_TxId_52 Integer ->
-  Integer -> Integer -> T_EnactEnv_904
-check_EnactEnv'46'constructor_9697 = MkEnactEnv
-cover_EnactEnv_904 :: EnactEnv -> ()
-cover_EnactEnv_904 x
+  Integer -> Integer -> T_EnactEnv_908
+check_EnactEnv'46'constructor_9723 = MkEnactEnv
+cover_EnactEnv_908 :: EnactEnv -> ()
+cover_EnactEnv_908 x
   = case x of
       MkEnactEnv _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.EnactEnv.gid
-d_gid_912 ::
-  T_EnactEnv_904 ->
+d_gid_916 ::
+  T_EnactEnv_908 ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     AgdaAny AgdaAny T_TxId_52 Integer
-d_gid_912 v0
+d_gid_916 v0
   = case coe v0 of
-      C_EnactEnv'46'constructor_9697 v1 v2 v3 -> coe v1
+      C_EnactEnv'46'constructor_9723 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.EnactEnv.treasury
-d_treasury_914 :: T_EnactEnv_904 -> Integer
-d_treasury_914 v0
+d_treasury_918 :: T_EnactEnv_908 -> Integer
+d_treasury_918 v0
   = case coe v0 of
-      C_EnactEnv'46'constructor_9697 v1 v2 v3 -> coe v2
+      C_EnactEnv'46'constructor_9723 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.EnactEnv.epoch
-d_epoch_916 :: T_EnactEnv_904 -> Integer
-d_epoch_916 v0
+d_epoch_920 :: T_EnactEnv_908 -> Integer
+d_epoch_920 v0
   = case coe v0 of
-      C_EnactEnv'46'constructor_9697 v1 v2 v3 -> coe v3
+      C_EnactEnv'46'constructor_9723 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Acnt
-d_Acnt_918 = ()
-type T_Acnt_918 = Acnt
-pattern C_Acnt'46'constructor_9729 a0 a1 = MkAcnt a0 a1
-check_Acnt'46'constructor_9729 :: Integer -> Integer -> T_Acnt_918
-check_Acnt'46'constructor_9729 = MkAcnt
-cover_Acnt_918 :: Acnt -> ()
-cover_Acnt_918 x
+d_Acnt_922 = ()
+type T_Acnt_922 = Acnt
+pattern C_Acnt'46'constructor_9755 a0 a1 = MkAcnt a0 a1
+check_Acnt'46'constructor_9755 :: Integer -> Integer -> T_Acnt_922
+check_Acnt'46'constructor_9755 = MkAcnt
+cover_Acnt_922 :: Acnt -> ()
+cover_Acnt_922 x
   = case x of
       MkAcnt _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.Acnt.treasury
-d_treasury_924 :: T_Acnt_918 -> Integer
-d_treasury_924 v0
+d_treasury_928 :: T_Acnt_922 -> Integer
+d_treasury_928 v0
   = case coe v0 of
-      C_Acnt'46'constructor_9729 v1 v2 -> coe v1
+      C_Acnt'46'constructor_9755 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Acnt.reserves
-d_reserves_926 :: T_Acnt_918 -> Integer
-d_reserves_926 v0
+d_reserves_930 :: T_Acnt_922 -> Integer
+d_reserves_930 v0
   = case coe v0 of
-      C_Acnt'46'constructor_9729 v1 v2 -> coe v2
+      C_Acnt'46'constructor_9755 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Snapshot
-d_Snapshot_928 = ()
-type T_Snapshot_928 = Snapshot
-pattern C_Snapshot'46'constructor_9757 a0 a1 = MkSnapshot a0 a1
-check_Snapshot'46'constructor_9757 ::
+d_Snapshot_932 = ()
+type T_Snapshot_932 = Snapshot
+pattern C_Snapshot'46'constructor_9783 a0 a1 = MkSnapshot a0 a1
+check_Snapshot'46'constructor_9783 ::
   T_HSMap_26 T_Credential_118 Integer ->
-  T_HSMap_26 T_Credential_118 Integer -> T_Snapshot_928
-check_Snapshot'46'constructor_9757 = MkSnapshot
-cover_Snapshot_928 :: Snapshot -> ()
-cover_Snapshot_928 x
+  T_HSMap_26 T_Credential_118 Integer -> T_Snapshot_932
+check_Snapshot'46'constructor_9783 = MkSnapshot
+cover_Snapshot_932 :: Snapshot -> ()
+cover_Snapshot_932 x
   = case x of
       MkSnapshot _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.Snapshot.stake
-d_stake_934 ::
-  T_Snapshot_928 -> T_HSMap_26 T_Credential_118 Integer
-d_stake_934 v0
+d_stake_938 ::
+  T_Snapshot_932 -> T_HSMap_26 T_Credential_118 Integer
+d_stake_938 v0
   = case coe v0 of
-      C_Snapshot'46'constructor_9757 v1 v2 -> coe v1
+      C_Snapshot'46'constructor_9783 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Snapshot.delegations
-d_delegations_936 ::
-  T_Snapshot_928 -> T_HSMap_26 T_Credential_118 Integer
-d_delegations_936 v0
+d_delegations_940 ::
+  T_Snapshot_932 -> T_HSMap_26 T_Credential_118 Integer
+d_delegations_940 v0
   = case coe v0 of
-      C_Snapshot'46'constructor_9757 v1 v2 -> coe v2
+      C_Snapshot'46'constructor_9783 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Snapshots
-d_Snapshots_938 = ()
-type T_Snapshots_938 = Snapshots
-pattern C_Snapshots'46'constructor_9787 a0 a1 a2 a3 = MkSnapshots a0 a1 a2 a3
-check_Snapshots'46'constructor_9787 ::
-  T_Snapshot_928 ->
-  T_Snapshot_928 -> T_Snapshot_928 -> Integer -> T_Snapshots_938
-check_Snapshots'46'constructor_9787 = MkSnapshots
-cover_Snapshots_938 :: Snapshots -> ()
-cover_Snapshots_938 x
+d_Snapshots_942 = ()
+type T_Snapshots_942 = Snapshots
+pattern C_Snapshots'46'constructor_9813 a0 a1 a2 a3 = MkSnapshots a0 a1 a2 a3
+check_Snapshots'46'constructor_9813 ::
+  T_Snapshot_932 ->
+  T_Snapshot_932 -> T_Snapshot_932 -> Integer -> T_Snapshots_942
+check_Snapshots'46'constructor_9813 = MkSnapshots
+cover_Snapshots_942 :: Snapshots -> ()
+cover_Snapshots_942 x
   = case x of
       MkSnapshots _ _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.Snapshots.mark
-d_mark_948 :: T_Snapshots_938 -> T_Snapshot_928
-d_mark_948 v0
+d_mark_952 :: T_Snapshots_942 -> T_Snapshot_932
+d_mark_952 v0
   = case coe v0 of
-      C_Snapshots'46'constructor_9787 v1 v2 v3 v4 -> coe v1
+      C_Snapshots'46'constructor_9813 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Snapshots.set
-d_set_950 :: T_Snapshots_938 -> T_Snapshot_928
-d_set_950 v0
+d_set_954 :: T_Snapshots_942 -> T_Snapshot_932
+d_set_954 v0
   = case coe v0 of
-      C_Snapshots'46'constructor_9787 v1 v2 v3 v4 -> coe v2
+      C_Snapshots'46'constructor_9813 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Snapshots.go
-d_go_952 :: T_Snapshots_938 -> T_Snapshot_928
-d_go_952 v0
+d_go_956 :: T_Snapshots_942 -> T_Snapshot_932
+d_go_956 v0
   = case coe v0 of
-      C_Snapshots'46'constructor_9787 v1 v2 v3 v4 -> coe v3
+      C_Snapshots'46'constructor_9813 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Snapshots.feeSS
-d_feeSS_954 :: T_Snapshots_938 -> Integer
-d_feeSS_954 v0
+d_feeSS_958 :: T_Snapshots_942 -> Integer
+d_feeSS_958 v0
   = case coe v0 of
-      C_Snapshots'46'constructor_9787 v1 v2 v3 v4 -> coe v4
+      C_Snapshots'46'constructor_9813 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.EpochState
-d_EpochState_956 = ()
-type T_EpochState_956 = EpochState
-pattern C_EpochState'46'constructor_9853 a0 a1 a2 a3 a4 = MkEpochState a0 a1 a2 a3 a4
-check_EpochState'46'constructor_9853 ::
-  T_Acnt_918 ->
-  T_Snapshots_938 ->
-  T_LState_890 ->
-  T_EnactState_538 -> T_RatifyState_854 -> T_EpochState_956
-check_EpochState'46'constructor_9853 = MkEpochState
-cover_EpochState_956 :: EpochState -> ()
-cover_EpochState_956 x
+d_EpochState_960 = ()
+type T_EpochState_960 = EpochState
+pattern C_EpochState'46'constructor_9879 a0 a1 a2 a3 a4 = MkEpochState a0 a1 a2 a3 a4
+check_EpochState'46'constructor_9879 ::
+  T_Acnt_922 ->
+  T_Snapshots_942 ->
+  T_LState_894 ->
+  T_EnactState_538 -> T_RatifyState_858 -> T_EpochState_960
+check_EpochState'46'constructor_9879 = MkEpochState
+cover_EpochState_960 :: EpochState -> ()
+cover_EpochState_960 x
   = case x of
       MkEpochState _ _ _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.EpochState.acnt
-d_acnt_968 :: T_EpochState_956 -> T_Acnt_918
-d_acnt_968 v0
+d_acnt_972 :: T_EpochState_960 -> T_Acnt_922
+d_acnt_972 v0
   = case coe v0 of
-      C_EpochState'46'constructor_9853 v1 v2 v3 v4 v5 -> coe v1
+      C_EpochState'46'constructor_9879 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.EpochState.ss
-d_ss_970 :: T_EpochState_956 -> T_Snapshots_938
-d_ss_970 v0
+d_ss_974 :: T_EpochState_960 -> T_Snapshots_942
+d_ss_974 v0
   = case coe v0 of
-      C_EpochState'46'constructor_9853 v1 v2 v3 v4 v5 -> coe v2
+      C_EpochState'46'constructor_9879 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.EpochState.ls
-d_ls_972 :: T_EpochState_956 -> T_LState_890
-d_ls_972 v0
+d_ls_976 :: T_EpochState_960 -> T_LState_894
+d_ls_976 v0
   = case coe v0 of
-      C_EpochState'46'constructor_9853 v1 v2 v3 v4 v5 -> coe v3
+      C_EpochState'46'constructor_9879 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.EpochState.es
-d_es_974 :: T_EpochState_956 -> T_EnactState_538
-d_es_974 v0
+d_es_978 :: T_EpochState_960 -> T_EnactState_538
+d_es_978 v0
   = case coe v0 of
-      C_EpochState'46'constructor_9853 v1 v2 v3 v4 v5 -> coe v4
+      C_EpochState'46'constructor_9879 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.EpochState.fut
-d_fut_976 :: T_EpochState_956 -> T_RatifyState_854
-d_fut_976 v0
+d_fut_980 :: T_EpochState_960 -> T_RatifyState_858
+d_fut_980 v0
   = case coe v0 of
-      C_EpochState'46'constructor_9853 v1 v2 v3 v4 v5 -> coe v5
+      C_EpochState'46'constructor_9879 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.NewEpochEnv
-d_NewEpochEnv_978 = ()
-type T_NewEpochEnv_978 = NewEpochEnv
-pattern C_NewEpochEnv'46'constructor_9919 a0 = MkNewEpochEnv a0
-check_NewEpochEnv'46'constructor_9919 ::
-  T_StakeDistrs_826 -> T_NewEpochEnv_978
-check_NewEpochEnv'46'constructor_9919 = MkNewEpochEnv
-cover_NewEpochEnv_978 :: NewEpochEnv -> ()
-cover_NewEpochEnv_978 x
+d_NewEpochEnv_982 = ()
+type T_NewEpochEnv_982 = NewEpochEnv
+pattern C_NewEpochEnv'46'constructor_9945 a0 = MkNewEpochEnv a0
+check_NewEpochEnv'46'constructor_9945 ::
+  T_StakeDistrs_830 -> T_NewEpochEnv_982
+check_NewEpochEnv'46'constructor_9945 = MkNewEpochEnv
+cover_NewEpochEnv_982 :: NewEpochEnv -> ()
+cover_NewEpochEnv_982 x
   = case x of
       MkNewEpochEnv _ -> ()
 -- Ledger.Foreign.LedgerTypes.NewEpochEnv.stakeDistrs
-d_stakeDistrs_982 :: T_NewEpochEnv_978 -> T_StakeDistrs_826
-d_stakeDistrs_982 v0
+d_stakeDistrs_986 :: T_NewEpochEnv_982 -> T_StakeDistrs_830
+d_stakeDistrs_986 v0
   = case coe v0 of
-      C_NewEpochEnv'46'constructor_9919 v1 -> coe v1
+      C_NewEpochEnv'46'constructor_9945 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RewardUpdate
-d_RewardUpdate_984 = ()
-type T_RewardUpdate_984 = RewardUpdate
-pattern C_RewardUpdate'46'constructor_9945 a0 a1 a2 a3 = MkRewardUpdate a0 a1 a2 a3
-check_RewardUpdate'46'constructor_9945 ::
+d_RewardUpdate_988 = ()
+type T_RewardUpdate_988 = RewardUpdate
+pattern C_RewardUpdate'46'constructor_9971 a0 a1 a2 a3 = MkRewardUpdate a0 a1 a2 a3
+check_RewardUpdate'46'constructor_9971 ::
   Integer ->
   Integer ->
   Integer ->
-  T_HSMap_26 T_Credential_118 Integer -> T_RewardUpdate_984
-check_RewardUpdate'46'constructor_9945 = MkRewardUpdate
-cover_RewardUpdate_984 :: RewardUpdate -> ()
-cover_RewardUpdate_984 x
+  T_HSMap_26 T_Credential_118 Integer -> T_RewardUpdate_988
+check_RewardUpdate'46'constructor_9971 = MkRewardUpdate
+cover_RewardUpdate_988 :: RewardUpdate -> ()
+cover_RewardUpdate_988 x
   = case x of
       MkRewardUpdate _ _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.RewardUpdate.Δt
-d_Δt_994 :: T_RewardUpdate_984 -> Integer
-d_Δt_994 v0
+d_Δt_998 :: T_RewardUpdate_988 -> Integer
+d_Δt_998 v0
   = case coe v0 of
-      C_RewardUpdate'46'constructor_9945 v1 v2 v3 v4 -> coe v1
+      C_RewardUpdate'46'constructor_9971 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RewardUpdate.Δr
-d_Δr_996 :: T_RewardUpdate_984 -> Integer
-d_Δr_996 v0
+d_Δr_1000 :: T_RewardUpdate_988 -> Integer
+d_Δr_1000 v0
   = case coe v0 of
-      C_RewardUpdate'46'constructor_9945 v1 v2 v3 v4 -> coe v2
+      C_RewardUpdate'46'constructor_9971 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RewardUpdate.Δf
-d_Δf_998 :: T_RewardUpdate_984 -> Integer
-d_Δf_998 v0
+d_Δf_1002 :: T_RewardUpdate_988 -> Integer
+d_Δf_1002 v0
   = case coe v0 of
-      C_RewardUpdate'46'constructor_9945 v1 v2 v3 v4 -> coe v3
+      C_RewardUpdate'46'constructor_9971 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.RewardUpdate.rs
-d_rs_1000 ::
-  T_RewardUpdate_984 -> T_HSMap_26 T_Credential_118 Integer
-d_rs_1000 v0
+d_rs_1004 ::
+  T_RewardUpdate_988 -> T_HSMap_26 T_Credential_118 Integer
+d_rs_1004 v0
   = case coe v0 of
-      C_RewardUpdate'46'constructor_9945 v1 v2 v3 v4 -> coe v4
+      C_RewardUpdate'46'constructor_9971 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.NewEpochState
-d_NewEpochState_1002 = ()
-type T_NewEpochState_1002 = NewEpochState
-pattern C_NewEpochState'46'constructor_10011 a0 a1 a2 = MkNewEpochState a0 a1 a2
-check_NewEpochState'46'constructor_10011 ::
+d_NewEpochState_1006 = ()
+type T_NewEpochState_1006 = NewEpochState
+pattern C_NewEpochState'46'constructor_10037 a0 a1 a2 = MkNewEpochState a0 a1 a2
+check_NewEpochState'46'constructor_10037 ::
   Integer ->
-  T_EpochState_956 ->
-  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_RewardUpdate_984 ->
-  T_NewEpochState_1002
-check_NewEpochState'46'constructor_10011 = MkNewEpochState
-cover_NewEpochState_1002 :: NewEpochState -> ()
-cover_NewEpochState_1002 x
+  T_EpochState_960 ->
+  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_RewardUpdate_988 ->
+  T_NewEpochState_1006
+check_NewEpochState'46'constructor_10037 = MkNewEpochState
+cover_NewEpochState_1006 :: NewEpochState -> ()
+cover_NewEpochState_1006 x
   = case x of
       MkNewEpochState _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.NewEpochState.lastEpoch
-d_lastEpoch_1010 :: T_NewEpochState_1002 -> Integer
-d_lastEpoch_1010 v0
+d_lastEpoch_1014 :: T_NewEpochState_1006 -> Integer
+d_lastEpoch_1014 v0
   = case coe v0 of
-      C_NewEpochState'46'constructor_10011 v1 v2 v3 -> coe v1
+      C_NewEpochState'46'constructor_10037 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.NewEpochState.epochState
-d_epochState_1012 :: T_NewEpochState_1002 -> T_EpochState_956
-d_epochState_1012 v0
+d_epochState_1016 :: T_NewEpochState_1006 -> T_EpochState_960
+d_epochState_1016 v0
   = case coe v0 of
-      C_NewEpochState'46'constructor_10011 v1 v2 v3 -> coe v2
+      C_NewEpochState'46'constructor_10037 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.NewEpochState.ru
-d_ru_1014 :: T_NewEpochState_1002 -> Maybe T_RewardUpdate_984
-d_ru_1014 v0
+d_ru_1018 :: T_NewEpochState_1006 -> Maybe T_RewardUpdate_988
+d_ru_1018 v0
   = case coe v0 of
-      C_NewEpochState'46'constructor_10011 v1 v2 v3 -> coe v3
+      C_NewEpochState'46'constructor_10037 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.ChainState
-d_ChainState_1016 = ()
-type T_ChainState_1016 = ChainState
-pattern C_ChainState'46'constructor_10041 a0 = MkChainState a0
-check_ChainState'46'constructor_10041 ::
-  T_NewEpochState_1002 -> T_ChainState_1016
-check_ChainState'46'constructor_10041 = MkChainState
-cover_ChainState_1016 :: ChainState -> ()
-cover_ChainState_1016 x
+d_ChainState_1020 = ()
+type T_ChainState_1020 = ChainState
+pattern C_ChainState'46'constructor_10067 a0 = MkChainState a0
+check_ChainState'46'constructor_10067 ::
+  T_NewEpochState_1006 -> T_ChainState_1020
+check_ChainState'46'constructor_10067 = MkChainState
+cover_ChainState_1020 :: ChainState -> ()
+cover_ChainState_1020 x
   = case x of
       MkChainState _ -> ()
 -- Ledger.Foreign.LedgerTypes.ChainState.csNewEpochState
-d_csNewEpochState_1020 :: T_ChainState_1016 -> T_NewEpochState_1002
-d_csNewEpochState_1020 v0
+d_csNewEpochState_1024 :: T_ChainState_1020 -> T_NewEpochState_1006
+d_csNewEpochState_1024 v0
   = case coe v0 of
-      C_ChainState'46'constructor_10041 v1 -> coe v1
+      C_ChainState'46'constructor_10067 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Block
-d_Block_1022 = ()
-type T_Block_1022 = Block
-pattern C_Block'46'constructor_10055 a0 a1 = MkBlock a0 a1
-check_Block'46'constructor_10055 ::
+d_Block_1026 = ()
+type T_Block_1026 = Block
+pattern C_Block'46'constructor_10081 a0 a1 = MkBlock a0 a1
+check_Block'46'constructor_10081 ::
   MAlonzo.Code.Agda.Builtin.List.T_List_10 () T_Tx_224 ->
-  Integer -> T_Block_1022
-check_Block'46'constructor_10055 = MkBlock
-cover_Block_1022 :: Block -> ()
-cover_Block_1022 x
+  Integer -> T_Block_1026
+check_Block'46'constructor_10081 = MkBlock
+cover_Block_1026 :: Block -> ()
+cover_Block_1026 x
   = case x of
       MkBlock _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.Block.blockTxs
-d_blockTxs_1028 :: T_Block_1022 -> [T_Tx_224]
-d_blockTxs_1028 v0
+d_blockTxs_1032 :: T_Block_1026 -> [T_Tx_224]
+d_blockTxs_1032 v0
   = case coe v0 of
-      C_Block'46'constructor_10055 v1 v2 -> coe v1
+      C_Block'46'constructor_10081 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.Block.blockSlot
-d_blockSlot_1030 :: T_Block_1022 -> Integer
-d_blockSlot_1030 v0
+d_blockSlot_1034 :: T_Block_1026 -> Integer
+d_blockSlot_1034 v0
   = case coe v0 of
-      C_Block'46'constructor_10055 v1 v2 -> coe v2
+      C_Block'46'constructor_10081 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.DelegEnv
-d_DelegEnv_1032 = ()
-type T_DelegEnv_1032 = DelegEnv
-pattern C_DelegEnv'46'constructor_10087 a0 a1 a2 = MkDelegEnv a0 a1 a2
-check_DelegEnv'46'constructor_10087 ::
+d_DelegEnv_1036 = ()
+type T_DelegEnv_1036 = DelegEnv
+pattern C_DelegEnv'46'constructor_10113 a0 a1 a2 = MkDelegEnv a0 a1 a2
+check_DelegEnv'46'constructor_10113 ::
   T_PParams_302 ->
   T_HSMap_26 Integer T_Credential_118 ->
-  T_HSMap_26 T_DepositPurpose_682 Integer -> T_DelegEnv_1032
-check_DelegEnv'46'constructor_10087 = MkDelegEnv
-cover_DelegEnv_1032 :: DelegEnv -> ()
-cover_DelegEnv_1032 x
+  T_HSMap_26 T_DepositPurpose_682 Integer -> T_DelegEnv_1036
+check_DelegEnv'46'constructor_10113 = MkDelegEnv
+cover_DelegEnv_1036 :: DelegEnv -> ()
+cover_DelegEnv_1036 x
   = case x of
       MkDelegEnv _ _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.DelegEnv.dePParams
-d_dePParams_1040 :: T_DelegEnv_1032 -> T_PParams_302
-d_dePParams_1040 v0
+d_dePParams_1044 :: T_DelegEnv_1036 -> T_PParams_302
+d_dePParams_1044 v0
   = case coe v0 of
-      C_DelegEnv'46'constructor_10087 v1 v2 v3 -> coe v1
+      C_DelegEnv'46'constructor_10113 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.DelegEnv.dePools
-d_dePools_1042 ::
-  T_DelegEnv_1032 -> T_HSMap_26 Integer T_Credential_118
-d_dePools_1042 v0
+d_dePools_1046 ::
+  T_DelegEnv_1036 -> T_HSMap_26 Integer T_Credential_118
+d_dePools_1046 v0
   = case coe v0 of
-      C_DelegEnv'46'constructor_10087 v1 v2 v3 -> coe v2
+      C_DelegEnv'46'constructor_10113 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.DelegEnv.deposits
-d_deposits_1044 ::
-  T_DelegEnv_1032 -> T_HSMap_26 T_DepositPurpose_682 Integer
-d_deposits_1044 v0
+d_deposits_1048 ::
+  T_DelegEnv_1036 -> T_HSMap_26 T_DepositPurpose_682 Integer
+d_deposits_1048 v0
   = case coe v0 of
-      C_DelegEnv'46'constructor_10087 v1 v2 v3 -> coe v3
+      C_DelegEnv'46'constructor_10113 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.DelegEnv'
-d_DelegEnv''_1046 = ()
-type T_DelegEnv''_1046 = DelegEnv'
-pattern C_DelegEnv'''46'constructor_10123 a0 a1 = MkDelegEnv' a0 a1
-check_DelegEnv'''46'constructor_10123 ::
+d_DelegEnv''_1050 = ()
+type T_DelegEnv''_1050 = DelegEnv'
+pattern C_DelegEnv'''46'constructor_10149 a0 a1 = MkDelegEnv' a0 a1
+check_DelegEnv'''46'constructor_10149 ::
   T_PParams_302 ->
-  T_HSMap_26 Integer T_Credential_118 -> T_DelegEnv''_1046
-check_DelegEnv'''46'constructor_10123 = MkDelegEnv'
-cover_DelegEnv''_1046 :: DelegEnv' -> ()
-cover_DelegEnv''_1046 x
+  T_HSMap_26 Integer T_Credential_118 -> T_DelegEnv''_1050
+check_DelegEnv'''46'constructor_10149 = MkDelegEnv'
+cover_DelegEnv''_1050 :: DelegEnv' -> ()
+cover_DelegEnv''_1050 x
   = case x of
       MkDelegEnv' _ _ -> ()
 -- Ledger.Foreign.LedgerTypes.DelegEnv'.dePParams
-d_dePParams_1052 :: T_DelegEnv''_1046 -> T_PParams_302
-d_dePParams_1052 v0
+d_dePParams_1056 :: T_DelegEnv''_1050 -> T_PParams_302
+d_dePParams_1056 v0
   = case coe v0 of
-      C_DelegEnv'''46'constructor_10123 v1 v2 -> coe v1
+      C_DelegEnv'''46'constructor_10149 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Foreign.LedgerTypes.DelegEnv'.dePools
-d_dePools_1054 ::
-  T_DelegEnv''_1046 -> T_HSMap_26 Integer T_Credential_118
-d_dePools_1054 v0
+d_dePools_1058 ::
+  T_DelegEnv''_1050 -> T_HSMap_26 Integer T_Credential_118
+d_dePools_1058 v0
   = case coe v0 of
-      C_DelegEnv'''46'constructor_10123 v1 v2 -> coe v2
+      C_DelegEnv'''46'constructor_10149 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError

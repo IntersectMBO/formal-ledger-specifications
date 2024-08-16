@@ -900,7 +900,7 @@ d_Computational'45'POOL_1052 v0
                                                (coe
                                                   MAlonzo.Code.Ledger.Certs.d_retiring_868
                                                   (coe v2)))
-                                            (coe MAlonzo.Code.Ledger.Certs.C_POOL'45'regpool_1076)))
+                                            (coe MAlonzo.Code.Ledger.Certs.C_POOL'45'regpool_1102)))
                                else coe
                                       seq (coe v9)
                                       (coe
@@ -947,7 +947,7 @@ d_Computational'45'POOL_1052 v0
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
                                        (coe v6)))
                                  (coe MAlonzo.Code.Ledger.Certs.d_retiring_868 (coe v2)))))
-                        (coe MAlonzo.Code.Ledger.Certs.C_POOL'45'retirepool_1078))
+                        (coe MAlonzo.Code.Ledger.Certs.C_POOL'45'retirepool_1104))
               _ -> coe v4))
 -- Ledger.Certs.Haskell.Properties.Computational-GOVCERT
 d_Computational'45'GOVCERT_1078 ::
@@ -2771,7 +2771,7 @@ d_Computational'45'CERTBASE_1670 v0
                                                                          v2
                                                                          (let v13
                                                                                 = coe
-                                                                                    MAlonzo.Code.Ledger.Certs.Haskell.C_mkGeneralizeTel_22433
+                                                                                    MAlonzo.Code.Ledger.Certs.Haskell.C_mkGeneralizeTel_22277
                                                                                     (coe v3)
                                                                                     (coe v4)
                                                                                     (coe v2)
@@ -2831,7 +2831,7 @@ d_Computational'45'CERTBASE_1670 v0
                                                                           coe
                                                                             (MAlonzo.Code.Ledger.PParams.d_drepActivity_344
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Certs.Haskell.d_'46'generalizedField'45'pp_22407
+                                                                                  MAlonzo.Code.Ledger.Certs.Haskell.d_'46'generalizedField'45'pp_22251
                                                                                   v13))) in
                                                                coe (coe (\ v14 -> v13)))
                                                               (coe

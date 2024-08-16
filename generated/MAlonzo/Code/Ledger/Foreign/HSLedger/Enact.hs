@@ -6781,7 +6781,7 @@ d_Convertible'45'EnactEnv_694
             case coe v0 of
               MAlonzo.Code.Ledger.Enact.C_'10214'_'44'_'44'_'10215''7497'_782 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_EnactEnv'46'constructor_9697
+                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_EnactEnv'46'constructor_9723
                      (coe
                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -6806,7 +6806,7 @@ d_Convertible'45'EnactEnv_694
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_EnactEnv'46'constructor_9697 v1 v2 v3
+              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_EnactEnv'46'constructor_9723 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Enact.C_'10214'_'44'_'44'_'10215''7497'_782
                      (coe
@@ -12571,7 +12571,7 @@ d_Convertible'45'GovAction_696
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Foreign.HSLedger.Enact.enact-step
 enactStep ::
-  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_EnactEnv_904 ->
+  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_EnactEnv_908 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_EnactState_538 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_GovAction_584 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_ComputationResult_12
@@ -12579,7 +12579,7 @@ enactStep ::
     MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_EnactState_538
 enactStep = coe d_enact'45'step_698
 d_enact'45'step_698 ::
-  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_EnactEnv_904 ->
+  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_EnactEnv_908 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_EnactState_538 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_GovAction_584 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_ComputationResult_12
@@ -18267,10 +18267,10 @@ d_enact'45'step_698 v0 v1 v2
                (coe
                   MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                   (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
-                  (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_gid_912 (coe v0))))
+                  (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_gid_916 (coe v0))))
             (coe
-               MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_treasury_914 (coe v0))
-            (coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_epoch_916 (coe v0)))
+               MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_treasury_918 (coe v0))
+            (coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_epoch_920 (coe v0)))
          (coe
             MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_1425
             (coe

@@ -156,26 +156,26 @@ d_Wdrl_438 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
 d_Wdrl_438 = erased
 -- _.evalTimelock
-d_evalTimelock_496 a0 a1 a2 a3 = ()
+d_evalTimelock_500 a0 a1 a2 a3 = ()
 -- Ledger.ScriptValidation.ScriptPurpose
-d_ScriptPurpose_1590 a0 a1 = ()
-data T_ScriptPurpose_1590
-  = C_Cert_1592 MAlonzo.Code.Ledger.Certs.T_DCert_788 |
-    C_Rwrd_1594 MAlonzo.Code.Ledger.Address.T_RwdAddr_70 |
-    C_Mint_1596 AgdaAny |
-    C_Spend_1598 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_Vote_1600 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_Propose_1602 MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_708
+d_ScriptPurpose_1598 a0 a1 = ()
+data T_ScriptPurpose_1598
+  = C_Cert_1600 MAlonzo.Code.Ledger.Certs.T_DCert_788 |
+    C_Rwrd_1602 MAlonzo.Code.Ledger.Address.T_RwdAddr_70 |
+    C_Mint_1604 AgdaAny |
+    C_Spend_1606 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_Vote_1608 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_Propose_1610 MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_708
 -- Ledger.ScriptValidation.rdptr
-d_rdptr_1604 ::
+d_rdptr_1612 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
-  MAlonzo.Code.Ledger.Transaction.T_TxBody_2608 ->
-  T_ScriptPurpose_1590 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
+  MAlonzo.Code.Ledger.Transaction.T_TxBody_2616 ->
+  T_ScriptPurpose_1598 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rdptr_1604 v0 v1 v2 v3
+d_rdptr_1612 v0 v1 v2 v3
   = case coe v3 of
-      C_Cert_1592 v4
+      C_Cert_1600 v4
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_68
              (\ v5 ->
@@ -183,10 +183,10 @@ d_rdptr_1604 v0 v1 v2 v3
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Ledger.Transaction.C_Cert_10) (coe v5))
              (coe
-                MAlonzo.Code.Ledger.Abstract.d_indexOfDCert_1574
-                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602 (coe v1)) v4
-                (MAlonzo.Code.Ledger.Transaction.d_txcerts_2662 (coe v2)))
-      C_Rwrd_1594 v4
+                MAlonzo.Code.Ledger.Abstract.d_indexOfDCert_1582
+                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610 (coe v1)) v4
+                (MAlonzo.Code.Ledger.Transaction.d_txcerts_2670 (coe v2)))
+      C_Rwrd_1602 v4
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_68
              (\ v5 ->
@@ -194,10 +194,10 @@ d_rdptr_1604 v0 v1 v2 v3
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Ledger.Transaction.C_Rewrd_12) (coe v5))
              (coe
-                MAlonzo.Code.Ledger.Abstract.d_indexOfRwdAddr_1576
-                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602 (coe v1)) v4
-                (MAlonzo.Code.Ledger.Transaction.d_txwdrls_2664 (coe v2)))
-      C_Mint_1596 v4
+                MAlonzo.Code.Ledger.Abstract.d_indexOfRwdAddr_1584
+                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610 (coe v1)) v4
+                (MAlonzo.Code.Ledger.Transaction.d_txwdrls_2672 (coe v2)))
+      C_Mint_1604 v4
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_68
              (\ v5 ->
@@ -205,13 +205,13 @@ d_rdptr_1604 v0 v1 v2 v3
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Ledger.Transaction.C_Mint_8) (coe v5))
              (coe
-                MAlonzo.Code.Ledger.Abstract.d_indexOfPolicyId_1580
-                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602 (coe v1)) v4
+                MAlonzo.Code.Ledger.Abstract.d_indexOfPolicyId_1588
+                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610 (coe v1)) v4
                 (coe
                    MAlonzo.Code.Ledger.TokenAlgebra.d_policies_208
                    (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104 (coe v0))
-                   (MAlonzo.Code.Ledger.Transaction.d_mint_2658 (coe v2))))
-      C_Spend_1598 v4
+                   (MAlonzo.Code.Ledger.Transaction.d_mint_2666 (coe v2))))
+      C_Spend_1606 v4
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_68
              (\ v5 ->
@@ -219,10 +219,10 @@ d_rdptr_1604 v0 v1 v2 v3
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Ledger.Transaction.C_Spend_6) (coe v5))
              (coe
-                MAlonzo.Code.Ledger.Abstract.d_indexOfTxIn_1578
-                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602 (coe v1)) v4
-                (MAlonzo.Code.Ledger.Transaction.d_txins_2650 (coe v2)))
-      C_Vote_1600 v4
+                MAlonzo.Code.Ledger.Abstract.d_indexOfTxIn_1586
+                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610 (coe v1)) v4
+                (MAlonzo.Code.Ledger.Transaction.d_txins_2658 (coe v2)))
+      C_Vote_1608 v4
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_68
              (\ v5 ->
@@ -230,16 +230,16 @@ d_rdptr_1604 v0 v1 v2 v3
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Ledger.Transaction.C_Vote_14) (coe v5))
              (coe
-                MAlonzo.Code.Ledger.Abstract.d_indexOfVote_1582
-                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602 (coe v1)) v4
+                MAlonzo.Code.Ledger.Abstract.d_indexOfVote_1590
+                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610 (coe v1)) v4
                 (coe
                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
                    () erased
                    (\ v5 ->
                       MAlonzo.Code.Ledger.GovernanceActions.d_voter_702 (coe v5))
-                   (MAlonzo.Code.Ledger.Transaction.d_txvote_2666 (coe v2))))
-      C_Propose_1602 v4
+                   (MAlonzo.Code.Ledger.Transaction.d_txvote_2674 (coe v2))))
+      C_Propose_1610 v4
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_68
              (\ v5 ->
@@ -247,18 +247,18 @@ d_rdptr_1604 v0 v1 v2 v3
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Ledger.Transaction.C_Propose_16) (coe v5))
              (coe
-                MAlonzo.Code.Ledger.Abstract.d_indexOfProposal_1584
-                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602 (coe v1)) v4
-                (MAlonzo.Code.Ledger.Transaction.d_txprop_2668 (coe v2)))
+                MAlonzo.Code.Ledger.Abstract.d_indexOfProposal_1592
+                (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610 (coe v1)) v4
+                (MAlonzo.Code.Ledger.Transaction.d_txprop_2676 (coe v2)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.indexedRdmrs
-d_indexedRdmrs_1680 ::
+d_indexedRdmrs_1688 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2710 ->
-  T_ScriptPurpose_1590 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2718 ->
+  T_ScriptPurpose_1598 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_indexedRdmrs_1680 v0 v1 v2 v3
+d_indexedRdmrs_1688 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.Maybe.Base.du_maybe_36
       (coe
@@ -269,8 +269,8 @@ d_indexedRdmrs_1680 v0 v1 v2 v3
                  MAlonzo.Code.Axiom.Set.d_th_1430
                  (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
               (coe
-                 MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706
-                 (coe MAlonzo.Code.Ledger.Transaction.d_wits_2722 (coe v2)))
+                 MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714
+                 (coe MAlonzo.Code.Ledger.Transaction.d_wits_2730 (coe v2)))
               (coe v4)
               (coe
                  MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__138
@@ -291,31 +291,31 @@ d_indexedRdmrs_1680 v0 v1 v2 v3
                        (coe
                           MAlonzo.Code.Axiom.Set.Map.du__'738'_532
                           (coe
-                             MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706
-                             (coe MAlonzo.Code.Ledger.Transaction.d_wits_2722 (coe v2)))))))))
+                             MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714
+                             (coe MAlonzo.Code.Ledger.Transaction.d_wits_2730 (coe v2)))))))))
       (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
       (coe
-         d_rdptr_1604 (coe v0) (coe v1)
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2))
+         d_rdptr_1612 (coe v0) (coe v1)
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2))
          (coe v3))
 -- Ledger.ScriptValidation.getDatum
-d_getDatum_1714 ::
+d_getDatum_1722 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2710 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2718 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  T_ScriptPurpose_1590 -> [AgdaAny]
-d_getDatum_1714 v0 ~v1 v2 v3 v4 = du_getDatum_1714 v0 v2 v3 v4
-du_getDatum_1714 ::
+  T_ScriptPurpose_1598 -> [AgdaAny]
+d_getDatum_1722 v0 ~v1 v2 v3 v4 = du_getDatum_1722 v0 v2 v3 v4
+du_getDatum_1722 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2710 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2718 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  T_ScriptPurpose_1590 -> [AgdaAny]
-du_getDatum_1714 v0 v1 v2 v3
+  T_ScriptPurpose_1598 -> [AgdaAny]
+du_getDatum_1722 v0 v1 v2 v3
   = let v4 = coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16 in
     coe
       (case coe v3 of
-         C_Spend_1598 v5
+         C_Spend_1606 v5
            -> coe
                 MAlonzo.Code.Data.Maybe.Base.du_maybe_36
                 (coe
@@ -347,9 +347,9 @@ du_getDatum_1714 v0 v1 v2 v3
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Transaction.d_txdats_2704
+                                                                 MAlonzo.Code.Ledger.Transaction.d_txdats_2712
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Transaction.d_wits_2722
+                                                                    MAlonzo.Code.Ledger.Transaction.d_wits_2730
                                                                     (coe v1)))
                                                               (coe v14)
                                                               (coe
@@ -380,9 +380,9 @@ du_getDatum_1714 v0 v1 v2 v3
                                                                        (coe
                                                                           MAlonzo.Code.Axiom.Set.Map.du__'738'_532
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Transaction.d_txdats_2704
+                                                                             MAlonzo.Code.Ledger.Transaction.d_txdats_2712
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Transaction.d_wits_2722
+                                                                                MAlonzo.Code.Ledger.Transaction.d_wits_2730
                                                                                 (coe v1))))))))
                                                     _ -> MAlonzo.RTE.mazUnreachableError
                                              MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
@@ -417,106 +417,106 @@ du_getDatum_1714 v0 v1 v2 v3
                             (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_532 (coe v2))))))
          _ -> coe v4)
 -- Ledger.ScriptValidation.TxInfo
-d_TxInfo_1754 a0 a1 = ()
-data T_TxInfo_1754
-  = C_TxInfo'46'constructor_15645 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_TxInfo_1762 a0 a1 = ()
+data T_TxInfo_1762
+  = C_TxInfo'46'constructor_15653 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 AgdaAny AgdaAny
                                   [MAlonzo.Code.Ledger.Certs.T_DCert_788]
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 [AgdaAny]
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 AgdaAny
 -- Ledger.ScriptValidation.TxInfo.realizedInputs
-d_realizedInputs_1776 ::
-  T_TxInfo_1754 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_realizedInputs_1776 v0
+d_realizedInputs_1784 ::
+  T_TxInfo_1762 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_realizedInputs_1784 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.txouts
-d_txouts_1778 ::
-  T_TxInfo_1754 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_txouts_1778 v0
+d_txouts_1786 ::
+  T_TxInfo_1762 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_txouts_1786 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.fee
-d_fee_1780 :: T_TxInfo_1754 -> AgdaAny
-d_fee_1780 v0
+d_fee_1788 :: T_TxInfo_1762 -> AgdaAny
+d_fee_1788 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.mint
-d_mint_1782 :: T_TxInfo_1754 -> AgdaAny
-d_mint_1782 v0
+d_mint_1790 :: T_TxInfo_1762 -> AgdaAny
+d_mint_1790 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.txcerts
-d_txcerts_1784 ::
-  T_TxInfo_1754 -> [MAlonzo.Code.Ledger.Certs.T_DCert_788]
-d_txcerts_1784 v0
+d_txcerts_1792 ::
+  T_TxInfo_1762 -> [MAlonzo.Code.Ledger.Certs.T_DCert_788]
+d_txcerts_1792 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.txwdrls
-d_txwdrls_1786 ::
-  T_TxInfo_1754 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_txwdrls_1786 v0
+d_txwdrls_1794 ::
+  T_TxInfo_1762 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_txwdrls_1794 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.txvldt
-d_txvldt_1788 ::
-  T_TxInfo_1754 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_txvldt_1788 v0
+d_txvldt_1796 ::
+  T_TxInfo_1762 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_txvldt_1796 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.vkKey
-d_vkKey_1790 :: T_TxInfo_1754 -> [AgdaAny]
-d_vkKey_1790 v0
+d_vkKey_1798 :: T_TxInfo_1762 -> [AgdaAny]
+d_vkKey_1798 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.txdats
-d_txdats_1792 ::
-  T_TxInfo_1754 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_txdats_1792 v0
+d_txdats_1800 ::
+  T_TxInfo_1762 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_txdats_1800 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v9
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.TxInfo.txid
-d_txid_1794 :: T_TxInfo_1754 -> AgdaAny
-d_txid_1794 v0
+d_txid_1802 :: T_TxInfo_1762 -> AgdaAny
+d_txid_1802 v0
   = case coe v0 of
-      C_TxInfo'46'constructor_15645 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+      C_TxInfo'46'constructor_15653 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v10
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.txInfo
-d_txInfo_1796 ::
+d_txInfo_1804 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.PParams.T_PParams_228 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2710 -> T_TxInfo_1754
-d_txInfo_1796 v0 ~v1 ~v2 ~v3 v4 v5 = du_txInfo_1796 v0 v4 v5
-du_txInfo_1796 ::
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2718 -> T_TxInfo_1762
+d_txInfo_1804 v0 ~v1 ~v2 ~v3 v4 v5 = du_txInfo_1804 v0 v4 v5
+du_txInfo_1804 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2710 -> T_TxInfo_1754
-du_txInfo_1796 v0 v1 v2
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2718 -> T_TxInfo_1762
+du_txInfo_1804 v0 v1 v2
   = coe
-      C_TxInfo'46'constructor_15645
+      C_TxInfo'46'constructor_15653
       (coe
          MAlonzo.Code.Axiom.Set.Map.du__'8739'__1254
          (coe
@@ -531,54 +531,54 @@ du_txInfo_1796 v0 v1 v2
                (coe MAlonzo.Code.Ledger.Transaction.d_DecEq'45'Ix_1128 (coe v0))))
          (coe v1)
          (coe
-            MAlonzo.Code.Ledger.Transaction.d_txins_2650
-            (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2))))
+            MAlonzo.Code.Ledger.Transaction.d_txins_2658
+            (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2))))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_txouts_2654
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2)))
+         MAlonzo.Code.Ledger.Transaction.d_txouts_2662
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2)))
       (coe
          MAlonzo.Code.Ledger.TokenAlgebra.d_inject_206
          (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104 (coe v0))
-         (MAlonzo.Code.Ledger.Transaction.d_txfee_2656
-            (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2))))
+         (MAlonzo.Code.Ledger.Transaction.d_txfee_2664
+            (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2))))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_mint_2658
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2)))
+         MAlonzo.Code.Ledger.Transaction.d_mint_2666
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2)))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_txcerts_2662
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2)))
+         MAlonzo.Code.Ledger.Transaction.d_txcerts_2670
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2)))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_txwdrls_2664
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2)))
+         MAlonzo.Code.Ledger.Transaction.d_txwdrls_2672
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2)))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_txvldt_2660
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2)))
+         MAlonzo.Code.Ledger.Transaction.d_txvldt_2668
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2)))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2686
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2)))
+         MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2694
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2)))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_txdats_2704
-         (coe MAlonzo.Code.Ledger.Transaction.d_wits_2722 (coe v2)))
+         MAlonzo.Code.Ledger.Transaction.d_txdats_2712
+         (coe MAlonzo.Code.Ledger.Transaction.d_wits_2730 (coe v2)))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_txid_2682
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v2)))
+         MAlonzo.Code.Ledger.Transaction.d_txid_2690
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v2)))
 -- Ledger.ScriptValidation.DelegateOrDeReg
-d_DelegateOrDeReg_1920 a0 a1 a2 = ()
-data T_DelegateOrDeReg_1920
-  = C_delegate_1930 | C_dereg_1936 | C_regdrep_1944 |
-    C_deregdrep_1950
+d_DelegateOrDeReg_1928 a0 a1 a2 = ()
+data T_DelegateOrDeReg_1928
+  = C_delegate_1938 | C_dereg_1944 | C_regdrep_1952 |
+    C_deregdrep_1958
 -- Ledger.ScriptValidation.Dec-DelegateOrDeReg
-d_Dec'45'DelegateOrDeReg_1952 ::
+d_Dec'45'DelegateOrDeReg_1960 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_788 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'DelegateOrDeReg_1952 ~v0 ~v1 v2
-  = du_Dec'45'DelegateOrDeReg_1952 v2
-du_Dec'45'DelegateOrDeReg_1952 ::
+d_Dec'45'DelegateOrDeReg_1960 ~v0 ~v1 v2
+  = du_Dec'45'DelegateOrDeReg_1960 v2
+du_Dec'45'DelegateOrDeReg_1960 ::
   MAlonzo.Code.Ledger.Certs.T_DCert_788 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_Dec'45'DelegateOrDeReg_1952 v0
+du_Dec'45'DelegateOrDeReg_1960 v0
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (case coe v0 of
@@ -588,14 +588,14 @@ du_Dec'45'DelegateOrDeReg_1952 v0
                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
                 (coe
                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                   (\ v5 v6 -> coe C_delegate_1930))
+                   (\ v5 v6 -> coe C_delegate_1938))
          MAlonzo.Code.Ledger.Certs.C_dereg_792 v1 v2
            -> coe
                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
                 (coe
                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                   (\ v3 v4 -> coe C_dereg_1936))
+                   (\ v3 v4 -> coe C_dereg_1944))
          MAlonzo.Code.Ledger.Certs.C_regpool_794 v1 v2
            -> coe
                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -612,14 +612,14 @@ du_Dec'45'DelegateOrDeReg_1952 v0
                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
                 (coe
                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                   (\ v4 v5 -> coe C_regdrep_1944))
+                   (\ v4 v5 -> coe C_regdrep_1952))
          MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v1 v2
            -> coe
                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
                 (coe
                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                   (\ v3 v4 -> coe C_deregdrep_1950))
+                   (\ v3 v4 -> coe C_deregdrep_1958))
          MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v1 v2
            -> coe
                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -627,23 +627,23 @@ du_Dec'45'DelegateOrDeReg_1952 v0
                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.ScriptValidation.UTxOSH
-d_UTxOSH_1974 ::
+d_UTxOSH_1982 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 -> ()
-d_UTxOSH_1974 = erased
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 -> ()
+d_UTxOSH_1982 = erased
 -- Ledger.ScriptValidation.scriptOutWithHash
-d_scriptOutWithHash_1976 ::
+d_scriptOutWithHash_1984 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_scriptOutWithHash_1976 ~v0 ~v1 ~v2 v3
-  = du_scriptOutWithHash_1976 v3
-du_scriptOutWithHash_1976 ::
+d_scriptOutWithHash_1984 ~v0 ~v1 ~v2 v3
+  = du_scriptOutWithHash_1984 v3
+du_scriptOutWithHash_1984 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_scriptOutWithHash_1976 v0
+du_scriptOutWithHash_1984 v0
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v1 v2
         -> coe
@@ -664,37 +664,37 @@ du_scriptOutWithHash_1976 v0
              (coe (\ v3 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.scriptOutsWithHash
-d_scriptOutsWithHash_1986 ::
+d_scriptOutsWithHash_1994 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_scriptOutsWithHash_1986 ~v0 ~v1 v2
-  = du_scriptOutsWithHash_1986 v2
-du_scriptOutsWithHash_1986 ::
+d_scriptOutsWithHash_1994 ~v0 ~v1 v2
+  = du_scriptOutsWithHash_1994 v2
+du_scriptOutsWithHash_1994 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_scriptOutsWithHash_1986 v0
+du_scriptOutsWithHash_1994 v0
   = coe
       MAlonzo.Code.Axiom.Set.Map.du_mapMaybeWithKey'7504'_1166
       (coe
          MAlonzo.Code.Axiom.Set.d_th_1430
          (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-      (\ v1 v2 -> coe du_scriptOutWithHash_1976 v2) (coe v0)
+      (\ v1 v2 -> coe du_scriptOutWithHash_1984 v2) (coe v0)
 -- Ledger.ScriptValidation.spendScripts
-d_spendScripts_1990 ::
+d_spendScripts_1998 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_spendScripts_1990 v0 ~v1 v2 v3 = du_spendScripts_1990 v0 v2 v3
-du_spendScripts_1990 ::
+d_spendScripts_1998 v0 ~v1 v2 v3 = du_spendScripts_1998 v0 v2 v3
+du_spendScripts_1998 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_spendScripts_1990 v0 v1 v2
+du_spendScripts_1998 v0 v1 v2
   = coe
       MAlonzo.Code.Interface.ToBool.du_if_then_else__46
       (coe MAlonzo.Code.Interface.ToBool.du_ToBool'45''8263'_112) erased
@@ -718,7 +718,7 @@ du_spendScripts_1990 v0 v1 v2
               MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                 (coe C_Spend_1598 (coe v1))
+                 (coe C_Spend_1606 (coe v1))
                  (coe
                     MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                     (coe
@@ -729,16 +729,16 @@ du_spendScripts_1990 v0 v1 v2
                        (coe v2) (coe v1) (coe v3))))))
       (coe (\ v3 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
 -- Ledger.ScriptValidation.rwdScripts
-d_rwdScripts_1998 ::
+d_rwdScripts_2006 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Ledger.Address.T_RwdAddr_70 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rwdScripts_1998 ~v0 ~v1 v2 = du_rwdScripts_1998 v2
-du_rwdScripts_1998 ::
+d_rwdScripts_2006 ~v0 ~v1 v2 = du_rwdScripts_2006 v2
+du_rwdScripts_2006 ::
   MAlonzo.Code.Ledger.Address.T_RwdAddr_70 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_rwdScripts_1998 v0
+du_rwdScripts_2006 v0
   = coe
       MAlonzo.Code.Interface.ToBool.du_if_then_else__46
       (coe MAlonzo.Code.Interface.ToBool.du_ToBool'45''8263'_112) erased
@@ -757,21 +757,21 @@ du_rwdScripts_1998 v0
                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                  (coe C_Rwrd_1594 (coe v0)) (coe v4))
+                                  (coe C_Rwrd_1602 (coe v0)) (coe v4))
                         _ -> MAlonzo.RTE.mazUnreachableError
                  _ -> MAlonzo.RTE.mazUnreachableError)))
       (coe (\ v1 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
 -- Ledger.ScriptValidation.certScripts
-d_certScripts_2006 ::
+d_certScripts_2014 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_788 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_certScripts_2006 ~v0 ~v1 v2 = du_certScripts_2006 v2
-du_certScripts_2006 ::
+d_certScripts_2014 ~v0 ~v1 v2 = du_certScripts_2014 v2
+du_certScripts_2014 ::
   MAlonzo.Code.Ledger.Certs.T_DCert_788 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_certScripts_2006 v0
+du_certScripts_2014 v0
   = case coe v0 of
       MAlonzo.Code.Ledger.Certs.C_delegate_790 v1 v2 v3 v4
         -> case coe v1 of
@@ -782,7 +782,7 @@ du_certScripts_2006 v0
                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                       (coe C_Cert_1592 (coe v0)) (coe v5))
+                       (coe C_Cert_1600 (coe v0)) (coe v5))
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Ledger.Certs.C_dereg_792 v1 v2
         -> case coe v1 of
@@ -793,7 +793,7 @@ du_certScripts_2006 v0
                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                       (coe C_Cert_1592 (coe v0)) (coe v3))
+                       (coe C_Cert_1600 (coe v0)) (coe v3))
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Ledger.Certs.C_regpool_794 v1 v2
         -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
@@ -808,7 +808,7 @@ du_certScripts_2006 v0
                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                       (coe C_Cert_1592 (coe v0)) (coe v4))
+                       (coe C_Cert_1600 (coe v0)) (coe v4))
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v1 v2
         -> case coe v1 of
@@ -819,25 +819,25 @@ du_certScripts_2006 v0
                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                       (coe C_Cert_1592 (coe v0)) (coe v3))
+                       (coe C_Cert_1600 (coe v0)) (coe v3))
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v1 v2
         -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.scriptsNeeded
-d_scriptsNeeded_2066 ::
+d_scriptsNeeded_2074 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Transaction.T_TxBody_2608 ->
+  MAlonzo.Code.Ledger.Transaction.T_TxBody_2616 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_scriptsNeeded_2066 v0 ~v1 v2 v3 = du_scriptsNeeded_2066 v0 v2 v3
-du_scriptsNeeded_2066 ::
+d_scriptsNeeded_2074 v0 ~v1 v2 v3 = du_scriptsNeeded_2074 v0 v2 v3
+du_scriptsNeeded_2074 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Transaction.T_TxBody_2608 ->
+  MAlonzo.Code.Ledger.Transaction.T_TxBody_2616 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-du_scriptsNeeded_2066 v0 v1 v2
+du_scriptsNeeded_2074 v0 v1 v2
   = coe
       MAlonzo.Code.Axiom.Set.du__'8746'__662
       (coe
@@ -849,9 +849,9 @@ du_scriptsNeeded_2066 v0 v1 v2
             (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
          (\ v3 ->
             coe
-              du_spendScripts_1990 (coe v0) (coe v3)
-              (coe du_scriptOutsWithHash_1986 (coe v1)))
-         (MAlonzo.Code.Ledger.Transaction.d_txins_2650 (coe v2)))
+              du_spendScripts_1998 (coe v0) (coe v3)
+              (coe du_scriptOutsWithHash_1994 (coe v1)))
+         (MAlonzo.Code.Ledger.Transaction.d_txins_2658 (coe v2)))
       (coe
          MAlonzo.Code.Axiom.Set.du__'8746'__662
          (coe
@@ -861,7 +861,7 @@ du_scriptsNeeded_2066 v0 v1 v2
             MAlonzo.Code.Axiom.Set.du_mapPartial_558
             (MAlonzo.Code.Axiom.Set.d_th_1430
                (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-            (coe du_rwdScripts_1998)
+            (coe du_rwdScripts_2006)
             (coe
                MAlonzo.Code.Interface.IsSet.du_dom_538
                (coe
@@ -870,7 +870,7 @@ du_scriptsNeeded_2066 v0 v1 v2
                (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Set_542)
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                  (coe MAlonzo.Code.Ledger.Transaction.d_txwdrls_2664 (coe v2)))))
+                  (coe MAlonzo.Code.Ledger.Transaction.d_txwdrls_2672 (coe v2)))))
          (coe
             MAlonzo.Code.Axiom.Set.du__'8746'__662
             (coe
@@ -880,13 +880,13 @@ du_scriptsNeeded_2066 v0 v1 v2
                MAlonzo.Code.Axiom.Set.du_mapPartial_558
                (MAlonzo.Code.Axiom.Set.d_th_1430
                   (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-               (coe du_certScripts_2006)
+               (coe du_certScripts_2014)
                (coe
                   MAlonzo.Code.Axiom.Set.du_fromList_410
                   (coe
                      MAlonzo.Code.Axiom.Set.d_th_1430
                      (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-                  (coe MAlonzo.Code.Ledger.Transaction.d_txcerts_2662 (coe v2))))
+                  (coe MAlonzo.Code.Ledger.Transaction.d_txcerts_2670 (coe v2))))
             (coe
                MAlonzo.Code.Axiom.Set.du_map_380
                (MAlonzo.Code.Axiom.Set.d_th_1430
@@ -894,21 +894,21 @@ du_scriptsNeeded_2066 v0 v1 v2
                (\ v3 ->
                   coe
                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                    (coe C_Mint_1596 (coe v3)) (coe v3))
+                    (coe C_Mint_1604 (coe v3)) (coe v3))
                (coe
                   MAlonzo.Code.Ledger.TokenAlgebra.d_policies_208
                   (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104 (coe v0))
-                  (MAlonzo.Code.Ledger.Transaction.d_mint_2658 (coe v2))))))
+                  (MAlonzo.Code.Ledger.Transaction.d_mint_2666 (coe v2))))))
 -- Ledger.ScriptValidation.valContext
-d_valContext_2126 ::
+d_valContext_2134 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
-  T_TxInfo_1754 -> T_ScriptPurpose_1590 -> AgdaAny
-d_valContext_2126 v0 ~v1 v2 v3 = du_valContext_2126 v0 v2 v3
-du_valContext_2126 ::
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
+  T_TxInfo_1762 -> T_ScriptPurpose_1598 -> AgdaAny
+d_valContext_2134 v0 ~v1 v2 v3 = du_valContext_2134 v0 v2 v3
+du_valContext_2134 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  T_TxInfo_1754 -> T_ScriptPurpose_1590 -> AgdaAny
-du_valContext_2126 v0 v1 v2
+  T_TxInfo_1762 -> T_ScriptPurpose_1598 -> AgdaAny
+du_valContext_2134 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Script.d_toData_236
       (MAlonzo.Code.Ledger.Script.d_ps_428
@@ -917,15 +917,15 @@ du_valContext_2126 v0 v1 v2
       erased
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v1) (coe v2))
 -- Ledger.ScriptValidation.collectPhaseTwoScriptInputs'
-d_collectPhaseTwoScriptInputs''_2132 ::
+d_collectPhaseTwoScriptInputs''_2140 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_228 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2710 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2718 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
+d_collectPhaseTwoScriptInputs''_2140 v0 v1 v2 v3 v4 v5
   = case coe v5 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v6 v7
         -> let v8
@@ -943,7 +943,7 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                         (coe
                            MAlonzo.Code.Axiom.Set.Map.du__'738'_532
                            (coe
-                              MAlonzo.Code.Ledger.Transaction.du_m_2842 (coe v0) (coe v3)
+                              MAlonzo.Code.Ledger.Transaction.du_m_2850 (coe v0) (coe v3)
                               (coe v4)))) in
            coe
              (case coe v8 of
@@ -959,7 +959,7 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                 (coe
                                                    MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                              (coe
-                                                MAlonzo.Code.Ledger.Transaction.du_m_2842 (coe v0)
+                                                MAlonzo.Code.Ledger.Transaction.du_m_2850 (coe v0)
                                                 (coe v3) (coe v4))
                                              (coe v7) (coe v11) in
                                    coe
@@ -979,9 +979,9 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706
+                                                              MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Transaction.d_wits_2722
+                                                                 MAlonzo.Code.Ledger.Transaction.d_wits_2730
                                                                  (coe v3)))
                                                            (coe v14)
                                                            (coe
@@ -1009,18 +1009,18 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                     (coe
                                                                        MAlonzo.Code.Axiom.Set.Map.du__'738'_532
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706
+                                                                          MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Transaction.d_wits_2722
+                                                                             MAlonzo.Code.Ledger.Transaction.d_wits_2730
                                                                              (coe v3)))))))))
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                                                    (let v14
-                                                          = MAlonzo.Code.Ledger.Transaction.d_body_2720
+                                                          = MAlonzo.Code.Ledger.Transaction.d_body_2728
                                                               (coe v3) in
                                                     coe
                                                       (case coe v6 of
-                                                         C_Cert_1592 v15
+                                                         C_Cert_1600 v15
                                                            -> coe
                                                                 MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                 (\ v16 ->
@@ -1030,13 +1030,13 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                         MAlonzo.Code.Ledger.Transaction.C_Cert_10)
                                                                      (coe v16))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfDCert_1574
-                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfDCert_1582
+                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                       (coe v1))
                                                                    v15
-                                                                   (MAlonzo.Code.Ledger.Transaction.d_txcerts_2662
+                                                                   (MAlonzo.Code.Ledger.Transaction.d_txcerts_2670
                                                                       (coe v14)))
-                                                         C_Rwrd_1594 v15
+                                                         C_Rwrd_1602 v15
                                                            -> coe
                                                                 MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                 (\ v16 ->
@@ -1046,13 +1046,13 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                         MAlonzo.Code.Ledger.Transaction.C_Rewrd_12)
                                                                      (coe v16))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfRwdAddr_1576
-                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfRwdAddr_1584
+                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                       (coe v1))
                                                                    v15
-                                                                   (MAlonzo.Code.Ledger.Transaction.d_txwdrls_2664
+                                                                   (MAlonzo.Code.Ledger.Transaction.d_txwdrls_2672
                                                                       (coe v14)))
-                                                         C_Mint_1596 v15
+                                                         C_Mint_1604 v15
                                                            -> coe
                                                                 MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                 (\ v16 ->
@@ -1062,17 +1062,17 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                         MAlonzo.Code.Ledger.Transaction.C_Mint_8)
                                                                      (coe v16))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfPolicyId_1580
-                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfPolicyId_1588
+                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                       (coe v1))
                                                                    v15
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.TokenAlgebra.d_policies_208
                                                                       (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104
                                                                          (coe v0))
-                                                                      (MAlonzo.Code.Ledger.Transaction.d_mint_2658
+                                                                      (MAlonzo.Code.Ledger.Transaction.d_mint_2666
                                                                          (coe v14))))
-                                                         C_Spend_1598 v15
+                                                         C_Spend_1606 v15
                                                            -> coe
                                                                 MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                 (\ v16 ->
@@ -1082,13 +1082,13 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                         MAlonzo.Code.Ledger.Transaction.C_Spend_6)
                                                                      (coe v16))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfTxIn_1578
-                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfTxIn_1586
+                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                       (coe v1))
                                                                    v15
-                                                                   (MAlonzo.Code.Ledger.Transaction.d_txins_2650
+                                                                   (MAlonzo.Code.Ledger.Transaction.d_txins_2658
                                                                       (coe v14)))
-                                                         C_Vote_1600 v15
+                                                         C_Vote_1608 v15
                                                            -> coe
                                                                 MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                 (\ v16 ->
@@ -1098,8 +1098,8 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                         MAlonzo.Code.Ledger.Transaction.C_Vote_14)
                                                                      (coe v16))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfVote_1582
-                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfVote_1590
+                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                       (coe v1))
                                                                    v15
                                                                    (coe
@@ -1109,9 +1109,9 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                       (\ v16 ->
                                                                          MAlonzo.Code.Ledger.GovernanceActions.d_voter_702
                                                                            (coe v16))
-                                                                      (MAlonzo.Code.Ledger.Transaction.d_txvote_2666
+                                                                      (MAlonzo.Code.Ledger.Transaction.d_txvote_2674
                                                                          (coe v14))))
-                                                         C_Propose_1602 v15
+                                                         C_Propose_1610 v15
                                                            -> coe
                                                                 MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                 (\ v16 ->
@@ -1121,11 +1121,11 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                         MAlonzo.Code.Ledger.Transaction.C_Propose_16)
                                                                      (coe v16))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfProposal_1584
-                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                   MAlonzo.Code.Ledger.Abstract.d_indexOfProposal_1592
+                                                                   (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                       (coe v1))
                                                                    v15
-                                                                   (MAlonzo.Code.Ledger.Transaction.d_txprop_2668
+                                                                   (MAlonzo.Code.Ledger.Transaction.d_txprop_2676
                                                                       (coe v14)))
                                                          _ -> MAlonzo.RTE.mazUnreachableError)) in
                                          coe
@@ -1145,7 +1145,7 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                          (coe
                                                                             MAlonzo.Code.Data.List.Base.du__'43''43'__62
                                                                             (coe
-                                                                               du_getDatum_1714
+                                                                               du_getDatum_1722
                                                                                (coe v0) (coe v3)
                                                                                (coe v4) (coe v6))
                                                                             (coe
@@ -1154,10 +1154,10 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                                (coe
                                                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                                   (coe
-                                                                                     du_valContext_2126
+                                                                                     du_valContext_2134
                                                                                      (coe v0)
                                                                                      (coe
-                                                                                        du_txInfo_1796
+                                                                                        du_txInfo_1804
                                                                                         (coe v0)
                                                                                         (coe v4)
                                                                                         (coe v3))
@@ -1191,7 +1191,7 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                     (coe
                                                        MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Transaction.du_m_2842
+                                                    MAlonzo.Code.Ledger.Transaction.du_m_2850
                                                     (coe v0) (coe v3) (coe v4))
                                                  (coe v7) (coe v12) in
                                        coe
@@ -1212,9 +1212,9 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706
+                                                                  MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Transaction.d_wits_2722
+                                                                     MAlonzo.Code.Ledger.Transaction.d_wits_2730
                                                                      (coe v3)))
                                                                (coe v15)
                                                                (coe
@@ -1242,18 +1242,18 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                         (coe
                                                                            MAlonzo.Code.Axiom.Set.Map.du__'738'_532
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706
+                                                                              MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Transaction.d_wits_2722
+                                                                                 MAlonzo.Code.Ledger.Transaction.d_wits_2730
                                                                                  (coe v3)))))))))
                                                        (coe
                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                                                        (let v15
-                                                              = MAlonzo.Code.Ledger.Transaction.d_body_2720
+                                                              = MAlonzo.Code.Ledger.Transaction.d_body_2728
                                                                   (coe v3) in
                                                         coe
                                                           (case coe v6 of
-                                                             C_Cert_1592 v16
+                                                             C_Cert_1600 v16
                                                                -> coe
                                                                     MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                     (\ v17 ->
@@ -1263,13 +1263,13 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                             MAlonzo.Code.Ledger.Transaction.C_Cert_10)
                                                                          (coe v17))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfDCert_1574
-                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfDCert_1582
+                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                           (coe v1))
                                                                        v16
-                                                                       (MAlonzo.Code.Ledger.Transaction.d_txcerts_2662
+                                                                       (MAlonzo.Code.Ledger.Transaction.d_txcerts_2670
                                                                           (coe v15)))
-                                                             C_Rwrd_1594 v16
+                                                             C_Rwrd_1602 v16
                                                                -> coe
                                                                     MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                     (\ v17 ->
@@ -1279,13 +1279,13 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                             MAlonzo.Code.Ledger.Transaction.C_Rewrd_12)
                                                                          (coe v17))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfRwdAddr_1576
-                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfRwdAddr_1584
+                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                           (coe v1))
                                                                        v16
-                                                                       (MAlonzo.Code.Ledger.Transaction.d_txwdrls_2664
+                                                                       (MAlonzo.Code.Ledger.Transaction.d_txwdrls_2672
                                                                           (coe v15)))
-                                                             C_Mint_1596 v16
+                                                             C_Mint_1604 v16
                                                                -> coe
                                                                     MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                     (\ v17 ->
@@ -1295,17 +1295,17 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                             MAlonzo.Code.Ledger.Transaction.C_Mint_8)
                                                                          (coe v17))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfPolicyId_1580
-                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfPolicyId_1588
+                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                           (coe v1))
                                                                        v16
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.TokenAlgebra.d_policies_208
                                                                           (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104
                                                                              (coe v0))
-                                                                          (MAlonzo.Code.Ledger.Transaction.d_mint_2658
+                                                                          (MAlonzo.Code.Ledger.Transaction.d_mint_2666
                                                                              (coe v15))))
-                                                             C_Spend_1598 v16
+                                                             C_Spend_1606 v16
                                                                -> coe
                                                                     MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                     (\ v17 ->
@@ -1315,13 +1315,13 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                             MAlonzo.Code.Ledger.Transaction.C_Spend_6)
                                                                          (coe v17))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfTxIn_1578
-                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfTxIn_1586
+                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                           (coe v1))
                                                                        v16
-                                                                       (MAlonzo.Code.Ledger.Transaction.d_txins_2650
+                                                                       (MAlonzo.Code.Ledger.Transaction.d_txins_2658
                                                                           (coe v15)))
-                                                             C_Vote_1600 v16
+                                                             C_Vote_1608 v16
                                                                -> coe
                                                                     MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                     (\ v17 ->
@@ -1331,8 +1331,8 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                             MAlonzo.Code.Ledger.Transaction.C_Vote_14)
                                                                          (coe v17))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfVote_1582
-                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfVote_1590
+                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                           (coe v1))
                                                                        v16
                                                                        (coe
@@ -1342,9 +1342,9 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                           (\ v17 ->
                                                                              MAlonzo.Code.Ledger.GovernanceActions.d_voter_702
                                                                                (coe v17))
-                                                                          (MAlonzo.Code.Ledger.Transaction.d_txvote_2666
+                                                                          (MAlonzo.Code.Ledger.Transaction.d_txvote_2674
                                                                              (coe v15))))
-                                                             C_Propose_1602 v16
+                                                             C_Propose_1610 v16
                                                                -> coe
                                                                     MAlonzo.Code.Data.Maybe.Base.du_map_68
                                                                     (\ v17 ->
@@ -1354,11 +1354,11 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                             MAlonzo.Code.Ledger.Transaction.C_Propose_16)
                                                                          (coe v17))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfProposal_1584
-                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1602
+                                                                       MAlonzo.Code.Ledger.Abstract.d_indexOfProposal_1592
+                                                                       (MAlonzo.Code.Ledger.Abstract.d_indexOfImp_1610
                                                                           (coe v1))
                                                                        v16
-                                                                       (MAlonzo.Code.Ledger.Transaction.d_txprop_2668
+                                                                       (MAlonzo.Code.Ledger.Transaction.d_txprop_2676
                                                                           (coe v15)))
                                                              _ -> MAlonzo.RTE.mazUnreachableError)) in
                                              coe
@@ -1378,7 +1378,7 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                              (coe
                                                                                 MAlonzo.Code.Data.List.Base.du__'43''43'__62
                                                                                 (coe
-                                                                                   du_getDatum_1714
+                                                                                   du_getDatum_1722
                                                                                    (coe v0) (coe v3)
                                                                                    (coe v4)
                                                                                    (coe v6))
@@ -1388,10 +1388,10 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                                                                                    (coe
                                                                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                                       (coe
-                                                                                         du_valContext_2126
+                                                                                         du_valContext_2134
                                                                                          (coe v0)
                                                                                          (coe
-                                                                                            du_txInfo_1796
+                                                                                            du_txInfo_1804
                                                                                             (coe v0)
                                                                                             (coe v4)
                                                                                             (coe
@@ -1416,37 +1416,37 @@ d_collectPhaseTwoScriptInputs''_2132 v0 v1 v2 v3 v4 v5
                 _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.ScriptValidation.collectPhaseTwoScriptInputs
-d_collectPhaseTwoScriptInputs_2208 ::
+d_collectPhaseTwoScriptInputs_2216 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_228 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2710 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2718 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_collectPhaseTwoScriptInputs_2208 v0 v1 v2 v3 v4
+d_collectPhaseTwoScriptInputs_2216 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Axiom.Set.du_mapPartial_558
       (MAlonzo.Code.Axiom.Set.d_th_1430
          (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-      (d_collectPhaseTwoScriptInputs''_2132
+      (d_collectPhaseTwoScriptInputs''_2140
          (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
       (coe
-         du_scriptsNeeded_2066 (coe v0) (coe v4)
-         (coe MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v3)))
+         du_scriptsNeeded_2074 (coe v0) (coe v4)
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v3)))
 -- Ledger.ScriptValidation.⟦_⟧,_,_,_
-d_'10214'_'10215''44'_'44'_'44'__2216 ::
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
+d_'10214'_'10215''44'_'44'_'44'__2224 ::
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
   AgdaAny -> AgdaAny -> AgdaAny -> [AgdaAny] -> Bool
-d_'10214'_'10215''44'_'44'_'44'__2216 v0 v1 v2 v3 v4
+d_'10214'_'10215''44'_'44'_'44'__2224 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Ledger.Abstract.d_runPLCScript_1604 v0 v2 v1 v3 v4
+      MAlonzo.Code.Ledger.Abstract.d_runPLCScript_1612 v0 v2 v1 v3 v4
 -- Ledger.ScriptValidation.evalScripts
-d_evalScripts_2226 ::
+d_evalScripts_2234 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2710 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1594 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2718 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Bool
-d_evalScripts_2226 v0 v1 v2 v3
+d_evalScripts_2234 v0 v1 v2 v3
   = case coe v3 of
       [] -> coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10
       (:) v4 v5
@@ -1472,17 +1472,17 @@ d_evalScripts_2226 v0 v1 v2 v3
                                               MAlonzo.Code.Ledger.Transaction.d_epochStructure_1436
                                               (coe v0))
                                            (coe
-                                              MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2686
+                                              MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2694
                                               (coe
-                                                 MAlonzo.Code.Ledger.Transaction.d_body_2720
+                                                 MAlonzo.Code.Ledger.Transaction.d_body_2728
                                                  (coe v2)))
                                            (coe
-                                              MAlonzo.Code.Ledger.Transaction.d_txvldt_2660
+                                              MAlonzo.Code.Ledger.Transaction.d_txvldt_2668
                                               (coe
-                                                 MAlonzo.Code.Ledger.Transaction.d_body_2720
+                                                 MAlonzo.Code.Ledger.Transaction.d_body_2728
                                                  (coe v2)))
                                            (coe v8)))
-                                     (coe d_evalScripts_2226 (coe v0) (coe v1) (coe v2) (coe v5)))
+                                     (coe d_evalScripts_2234 (coe v0) (coe v1) (coe v2) (coe v5)))
                            _ -> MAlonzo.RTE.mazUnreachableError
                     MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v8
                       -> case coe v7 of
@@ -1492,10 +1492,10 @@ d_evalScripts_2226 v0 v1 v2 v3
                                     -> coe
                                          MAlonzo.Code.Data.Bool.Base.d__'8743'__24
                                          (coe
-                                            MAlonzo.Code.Ledger.Abstract.d_runPLCScript_1604 v1 v12
+                                            MAlonzo.Code.Ledger.Abstract.d_runPLCScript_1612 v1 v12
                                             v8 v11 v9)
                                          (coe
-                                            d_evalScripts_2226 (coe v0) (coe v1) (coe v2) (coe v5))
+                                            d_evalScripts_2234 (coe v0) (coe v1) (coe v2) (coe v5))
                                   _ -> MAlonzo.RTE.mazUnreachableError
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError

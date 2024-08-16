@@ -51,21 +51,21 @@ d_Computational'45'DELEG_16 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
 d_Computational'45'DELEG_16
   = coe
-      MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'DELEG_994
+      MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'DELEG_1002
       (coe MAlonzo.Code.Ledger.Foreign.HSLedger.Enact.d_HSGovStructure_8)
 -- Ledger.Foreign.HSLedger.Certs._.Computational-GOVCERT
 d_Computational'45'GOVCERT_18 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
 d_Computational'45'GOVCERT_18
   = coe
-      MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'GOVCERT_1094
+      MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'GOVCERT_1102
       (coe MAlonzo.Code.Ledger.Foreign.HSLedger.Enact.d_HSGovStructure_8)
 -- Ledger.Foreign.HSLedger.Certs._.Computational-POOL
 d_Computational'45'POOL_20 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
 d_Computational'45'POOL_20
   = coe
-      MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'POOL_1068
+      MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'POOL_1076
       (coe MAlonzo.Code.Ledger.Foreign.HSLedger.Enact.d_HSGovStructure_8)
 -- Ledger.Foreign.HSLedger.Certs._.Computational-DELEG
 d_Computational'45'DELEG_30 ::
@@ -360,9 +360,9 @@ d_Convertible'45'DelegEnv_60
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_914 v1 v2 v3
+              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_918 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DelegEnv'46'constructor_10087
+                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DelegEnv'46'constructor_10113
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -2565,9 +2565,9 @@ d_Convertible'45'DelegEnv_60
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DelegEnv'46'constructor_10087 v1 v2 v3
+              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DelegEnv'46'constructor_10113 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_914
+                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_918
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -4700,7 +4700,7 @@ d_Convertible'45'DelegEnv''_62
             case coe v0 of
               MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'10215''7496''7497'_912 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DelegEnv'''46'constructor_10123
+                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DelegEnv'''46'constructor_10149
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -6667,7 +6667,7 @@ d_Convertible'45'DelegEnv''_62
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DelegEnv'''46'constructor_10123 v1 v2
+              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DelegEnv'''46'constructor_10149 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'10215''7496''7497'_912
                      (coe
@@ -18193,7 +18193,7 @@ d_Convertible'45'CertEnv''_66
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Foreign.HSLedger.Certs.deleg-step
 delegStep ::
-  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DelegEnv_1032 ->
+  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DelegEnv_1036 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DState_732 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_TxCert_144 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_ComputationResult_12
@@ -18201,7 +18201,7 @@ delegStep ::
     MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DState_732
 delegStep = coe d_deleg'45'step_68
 d_deleg'45'step_68 ::
-  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DelegEnv_1032 ->
+  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DelegEnv_1036 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DState_732 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_TxCert_144 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_ComputationResult_12
@@ -18941,11 +18941,11 @@ d_deleg'45'step_68 v0 v1 v2
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'DELEG_994
+            MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'DELEG_1002
             (coe
                MAlonzo.Code.Ledger.Foreign.HSLedger.Enact.d_HSGovStructure_8))
          (coe
-            MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_914
+            MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_918
             (coe
                MAlonzo.Code.Foreign.Convertible.d_from_20
                (coe
@@ -20775,7 +20775,7 @@ d_deleg'45'step_68 v0 v1 v2
                           (coe
                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_drepActivity_406
                              (coe v3)))))
-               (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_dePParams_1040
+               (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_dePParams_1044
                   (coe v0)))
             (coe
                MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -20830,7 +20830,7 @@ d_deleg'45'step_68 v0 v1 v2
                                 v3)))))
                (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_assocList_34
                   (coe
-                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_dePools_1042 (coe v0))))
+                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_dePools_1046 (coe v0))))
             (coe
                MAlonzo.Code.Foreign.Convertible.d_from_20
                (coe
@@ -21028,7 +21028,7 @@ d_deleg'45'step_68 v0 v1 v2
                      (coe (\ v3 -> v3)) (coe (\ v3 -> v3))))
                (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_assocList_34
                   (coe
-                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_deposits_1044
+                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_deposits_1048
                      (coe v0)))))
          (coe
             MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496'_858
@@ -22127,7 +22127,7 @@ d_deleg'45'step_68 v0 v1 v2
             v2))
 -- Ledger.Foreign.HSLedger.Certs.deleg-step'
 delegStep' ::
-  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DelegEnv''_1046 ->
+  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DelegEnv''_1050 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DState''_746 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_TxCert_144 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_ComputationResult_12
@@ -22135,7 +22135,7 @@ delegStep' ::
     MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DState''_746
 delegStep' = coe d_deleg'45'step''_70
 d_deleg'45'step''_70 ::
-  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DelegEnv''_1046 ->
+  MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DelegEnv''_1050 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_DState''_746 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_TxCert_144 ->
   MAlonzo.Code.Ledger.Foreign.LedgerTypes.T_ComputationResult_12
@@ -25153,7 +25153,7 @@ d_deleg'45'step''_70 v0 v1 v2
                           (coe
                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_drepActivity_406
                              (coe v3)))))
-               (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_dePParams_1052
+               (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_dePParams_1056
                   (coe v0)))
             (coe
                MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -25208,7 +25208,7 @@ d_deleg'45'step''_70 v0 v1 v2
                                 v3)))))
                (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_assocList_34
                   (coe
-                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_dePools_1054 (coe v0)))))
+                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_dePools_1058 (coe v0)))))
          (coe
             MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'44'_'10215''7496'_868
             (coe
@@ -26787,7 +26787,7 @@ d_pool'45'step_72 v0 v1 v2
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'POOL_1068
+            MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'POOL_1076
             (coe
                MAlonzo.Code.Ledger.Foreign.HSLedger.Enact.d_HSGovStructure_8))
          (coe
@@ -29749,7 +29749,7 @@ d_govcert'45'step_74 v0 v1 v2
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'GOVCERT_1094
+            MAlonzo.Code.Ledger.Certs.Properties.d_Computational'45'GOVCERT_1102
             (coe
                MAlonzo.Code.Ledger.Foreign.HSLedger.Enact.d_HSGovStructure_8))
          (coe
