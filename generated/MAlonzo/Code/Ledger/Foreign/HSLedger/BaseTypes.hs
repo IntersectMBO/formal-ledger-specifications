@@ -188,7 +188,7 @@ d_Convertible'45'Addr_54
             case coe v0 of
               MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v1
                 -> case coe v1 of
-                     MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021 v2 v3 v4
+                     MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835 v2 v3 v4
                        -> case coe v3 of
                             MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v5 -> coe v5
                             MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v5 -> coe v5
@@ -196,7 +196,7 @@ d_Convertible'45'Addr_54
                      _ -> MAlonzo.RTE.mazUnreachableError
               MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v1
                 -> case coe v1 of
-                     MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2237 v2 v3 v4
+                     MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3051 v2 v3 v4
                        -> case coe v3 of
                             MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v5 -> coe v5
                             MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v5 -> coe v5
@@ -208,7 +208,7 @@ d_Convertible'45'Addr_54
             coe
               MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
               (coe
-                 MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021
+                 MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835
                  (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                  (coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v0))
                  (coe
@@ -247,22 +247,22 @@ d_Convertible'45'GovRole_72
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+              MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                 -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-              MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+              MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                 -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-              MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+              MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                 -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
-                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Foreign.HSLedger.BaseTypes.Convertible-VDeleg
 d_Convertible'45'VDeleg_74 ::
@@ -273,7 +273,7 @@ d_Convertible'45'VDeleg_74
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v1 v2
+              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                      (coe
@@ -283,22 +283,22 @@ d_Convertible'45'VDeleg_74
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                      -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                      -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                      -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v3 ->
                                  case coe v3 of
                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
-                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
                      (coe
@@ -326,9 +326,9 @@ d_Convertible'45'VDeleg_74
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v4)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
-              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                 -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
               _ -> MAlonzo.RTE.mazUnreachableError))
@@ -337,7 +337,7 @@ d_Convertible'45'VDeleg_74
             case coe v0 of
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -345,22 +345,22 @@ d_Convertible'45'VDeleg_74
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                      -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                      -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                      -> coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v3 ->
                                  case coe v3 of
                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
-                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
                      (coe
@@ -389,9 +389,9 @@ d_Convertible'45'VDeleg_74
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
-                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Foreign.HSLedger.BaseTypes.Convertible-Anchor
 d_Convertible'45'Anchor_76 ::
@@ -402,13 +402,13 @@ d_Convertible'45'Anchor_76
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399 v1 v2
+              MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415 v1 v2
                 -> coe v2
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399
+              MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415
               (coe ("bogus" :: Data.Text.Text)) (coe v0)))
 -- Ledger.Foreign.HSLedger.BaseTypes.Convertible-Script
 d_Convertible'45'Script_84 ::
@@ -540,7 +540,7 @@ d_Convertible'45'TxWitnesses_100
                                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                         v3)))))))
                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                    (coe MAlonzo.Code.Ledger.Transaction.d_vkSigs_2700 (coe v0))))
+                    (coe MAlonzo.Code.Ledger.Transaction.d_vkSigs_2708 (coe v0))))
               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
               (coe
                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
@@ -590,7 +590,7 @@ d_Convertible'45'TxWitnesses_100
                                            (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                            v3)))))))
                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                       (coe MAlonzo.Code.Ledger.Transaction.d_txdats_2704 (coe v0)))))
+                       (coe MAlonzo.Code.Ledger.Transaction.d_txdats_2712 (coe v0)))))
               (coe
                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
                  (coe
@@ -809,11 +809,11 @@ d_Convertible'45'TxWitnesses_100
                                            (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                            v3)))))))
                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                       (coe MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706 (coe v0)))))))
+                       (coe MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714 (coe v0)))))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Transaction.C_TxWitnesses'46'constructor_16349
+              MAlonzo.Code.Ledger.Transaction.C_TxWitnesses'46'constructor_16385
               (coe
                  MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_566
                  (coe
@@ -1792,7 +1792,7 @@ d_Convertible'45'RwdAddr_216
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_2437 v1 v2
+              MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3251 v1 v2
                 -> coe
                      MAlonzo.Code.Foreign.Haskell.Pair.C__'44'__36
                      (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
@@ -1827,7 +1827,7 @@ d_Convertible'45'RwdAddr_216
             case coe v0 of
               MAlonzo.Code.Foreign.Haskell.Pair.C__'44'__36 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_2437
+                     MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3251
                      (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -4124,7 +4124,7 @@ d_Convertible'45'GState_376
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7515'_882 v1 v2
+              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7515'_886 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GState'46'constructor_9233
                      (coe
@@ -4312,25 +4312,25 @@ d_Convertible'45'GState_376
             case coe v0 of
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GState'46'constructor_9233 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7515'_882
+                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7515'_886
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -4364,19 +4364,19 @@ d_Convertible'45'GState_376
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -4439,7 +4439,7 @@ d_Convertible'45'DepositPurpose_378
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770 v1
+              MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774 v1
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684
                      (coe
@@ -4467,10 +4467,10 @@ d_Convertible'45'DepositPurpose_378
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v3)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
-              MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772 v1
+              MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776 v1
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686 (coe v1)
-              MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774 v1
+              MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778 v1
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688
                      (coe
@@ -4498,7 +4498,7 @@ d_Convertible'45'DepositPurpose_378
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v3)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
-              MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776 v1
+              MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780 v1
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690
                      (coe
@@ -4526,7 +4526,7 @@ d_Convertible'45'DepositPurpose_378
             case coe v0 of
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770
+                     MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -4553,10 +4553,10 @@ d_Convertible'45'DepositPurpose_378
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686 v1
-                -> coe MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772 (coe v1)
+                -> coe MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776 (coe v1)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774
+                     MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -4584,7 +4584,7 @@ d_Convertible'45'DepositPurpose_378
                         v1)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776
+                     MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780
                      (coe
                         MAlonzo.Code.Data.Product.Base.du_map_128
                         (coe
@@ -4604,7 +4604,7 @@ d_Convertible'45'GState''_380
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'10215''7515'_884 v1 v2 v3
+              MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'10215''7515'_888 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GState'''46'constructor_9277
                      (coe
@@ -4798,7 +4798,7 @@ d_Convertible'45'GState''_380
                                          (coe
                                             (\ v4 ->
                                                case coe v4 of
-                                                 MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770 v5
+                                                 MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774 v5
                                                    -> coe
                                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684
                                                         (coe
@@ -4830,11 +4830,11 @@ d_Convertible'45'GState''_380
                                                                              (coe v7)
                                                                       _ -> MAlonzo.RTE.mazUnreachableError)))
                                                            v5)
-                                                 MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772 v5
+                                                 MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776 v5
                                                    -> coe
                                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686
                                                         (coe v5)
-                                                 MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774 v5
+                                                 MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778 v5
                                                    -> coe
                                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688
                                                         (coe
@@ -4866,7 +4866,7 @@ d_Convertible'45'GState''_380
                                                                              (coe v7)
                                                                       _ -> MAlonzo.RTE.mazUnreachableError)))
                                                            v5)
-                                                 MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776 v5
+                                                 MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780 v5
                                                    -> coe
                                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690
                                                         (coe
@@ -4896,7 +4896,7 @@ d_Convertible'45'GState''_380
                                                case coe v4 of
                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684 v5
                                                    -> coe
-                                                        MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770
+                                                        MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774
                                                         (coe
                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
                                                            (coe
@@ -4928,11 +4928,11 @@ d_Convertible'45'GState''_380
                                                            v5)
                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686 v5
                                                    -> coe
-                                                        MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772
+                                                        MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776
                                                         (coe v5)
                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688 v5
                                                    -> coe
-                                                        MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774
+                                                        MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778
                                                         (coe
                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
                                                            (coe
@@ -4964,7 +4964,7 @@ d_Convertible'45'GState''_380
                                                            v5)
                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690 v5
                                                    -> coe
-                                                        MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776
+                                                        MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780
                                                         (coe
                                                            MAlonzo.Code.Data.Product.Base.du_map_128
                                                            (coe
@@ -5028,25 +5028,25 @@ d_Convertible'45'GState''_380
             case coe v0 of
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GState'''46'constructor_9277 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'10215''7515'_884
+                     MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'10215''7515'_888
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -5080,19 +5080,19 @@ d_Convertible'45'GState''_380
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -5150,9 +5150,9 @@ d_Convertible'45'GState''_380
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_780
+                              MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_784
                               (coe
-                                 MAlonzo.Code.Ledger.Transaction.d_govStructure_2222
+                                 MAlonzo.Code.Ledger.Transaction.d_govStructure_2230
                                  (coe
                                     MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818)))
                            (coe
@@ -5160,7 +5160,7 @@ d_Convertible'45'GState''_380
                               (coe
                                  (\ v4 ->
                                     case coe v4 of
-                                      MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770 v5
+                                      MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774 v5
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684
                                              (coe
@@ -5192,11 +5192,11 @@ d_Convertible'45'GState''_380
                                                                   (coe v7)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v5)
-                                      MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772 v5
+                                      MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776 v5
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686
                                              (coe v5)
-                                      MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774 v5
+                                      MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778 v5
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688
                                              (coe
@@ -5228,7 +5228,7 @@ d_Convertible'45'GState''_380
                                                                   (coe v7)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v5)
-                                      MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776 v5
+                                      MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780 v5
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690
                                              (coe
@@ -5258,7 +5258,7 @@ d_Convertible'45'GState''_380
                                     case coe v4 of
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684 v5
                                         -> coe
-                                             MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770
+                                             MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
@@ -5289,10 +5289,10 @@ d_Convertible'45'GState''_380
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v5)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686 v5
-                                        -> coe MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772 (coe v5)
+                                        -> coe MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776 (coe v5)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688 v5
                                         -> coe
-                                             MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774
+                                             MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
@@ -5324,7 +5324,7 @@ d_Convertible'45'GState''_380
                                                 v5)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690 v5
                                         -> coe
-                                             MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776
+                                             MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780
                                              (coe
                                                 MAlonzo.Code.Data.Product.Base.du_map_128
                                                 (coe
@@ -5353,7 +5353,7 @@ d_Convertible'45'DState_382
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496'_858 v1 v2 v3
+              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496'_862 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DState'46'constructor_9083
                      (coe
@@ -5396,7 +5396,7 @@ d_Convertible'45'DState_382
                                             (coe
                                                (\ v5 ->
                                                   case coe v5 of
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v6 v7
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v6 v7
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                            (coe
@@ -5406,13 +5406,13 @@ d_Convertible'45'DState_382
                                                                  (coe
                                                                     (\ v8 ->
                                                                        case coe v8 of
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                          _ -> MAlonzo.RTE.mazUnreachableError))
@@ -5421,13 +5421,13 @@ d_Convertible'45'DState_382
                                                                        case coe v8 of
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                          _ -> MAlonzo.RTE.mazUnreachableError)))
                                                               v6)
                                                            (coe
@@ -5459,10 +5459,10 @@ d_Convertible'45'DState_382
                                                                                 (coe v9)
                                                                          _ -> MAlonzo.RTE.mazUnreachableError)))
                                                               v7)
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                     _ -> MAlonzo.RTE.mazUnreachableError))
@@ -5471,7 +5471,7 @@ d_Convertible'45'DState_382
                                                   case coe v5 of
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v6 v7
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                            (coe
                                                               MAlonzo.Code.Foreign.Convertible.d_from_20
                                                               (coe
@@ -5479,13 +5479,13 @@ d_Convertible'45'DState_382
                                                                  (coe
                                                                     (\ v8 ->
                                                                        case coe v8 of
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                          _ -> MAlonzo.RTE.mazUnreachableError))
@@ -5494,13 +5494,13 @@ d_Convertible'45'DState_382
                                                                        case coe v8 of
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                          _ -> MAlonzo.RTE.mazUnreachableError)))
                                                               v6)
                                                            (coe
@@ -5534,10 +5534,10 @@ d_Convertible'45'DState_382
                                                               v7)
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                     _ -> MAlonzo.RTE.mazUnreachableError)) in
                                   coe
                                     (coe
@@ -5735,25 +5735,25 @@ d_Convertible'45'DState_382
             case coe v0 of
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DState'46'constructor_9083 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496'_858
+                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496'_862
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -5783,7 +5783,7 @@ d_Convertible'45'DState_382
                               (coe
                                  (\ v4 ->
                                     case coe v4 of
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v5 v6
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v5 v6
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                              (coe
@@ -5793,13 +5793,13 @@ d_Convertible'45'DState_382
                                                    (coe
                                                       (\ v7 ->
                                                          case coe v7 of
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
@@ -5808,13 +5808,13 @@ d_Convertible'45'DState_382
                                                          case coe v7 of
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v5)
                                              (coe
@@ -5846,10 +5846,10 @@ d_Convertible'45'DState_382
                                                                   (coe v8)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                       _ -> MAlonzo.RTE.mazUnreachableError))
@@ -5858,7 +5858,7 @@ d_Convertible'45'DState_382
                                     case coe v4 of
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v5 v6
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
@@ -5866,13 +5866,13 @@ d_Convertible'45'DState_382
                                                    (coe
                                                       (\ v7 ->
                                                          case coe v7 of
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
@@ -5881,13 +5881,13 @@ d_Convertible'45'DState_382
                                                          case coe v7 of
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v5)
                                              (coe
@@ -5921,10 +5921,10 @@ d_Convertible'45'DState_382
                                                 v6)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                       _ -> MAlonzo.RTE.mazUnreachableError))))
                         (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_assocList_34 (coe v1)))
                      (coe
@@ -5932,19 +5932,19 @@ d_Convertible'45'DState_382
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -5978,19 +5978,19 @@ d_Convertible'45'DState_382
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -6029,7 +6029,7 @@ d_Convertible'45'DState''_384
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'44'_'10215''7496'_868 v1 v2 v3 v4
+              MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'44'_'10215''7496'_872 v1 v2 v3 v4
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DState'''46'constructor_9141
                      (coe
@@ -6072,7 +6072,7 @@ d_Convertible'45'DState''_384
                                             (coe
                                                (\ v6 ->
                                                   case coe v6 of
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v7 v8
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v7 v8
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                            (coe
@@ -6082,13 +6082,13 @@ d_Convertible'45'DState''_384
                                                                  (coe
                                                                     (\ v9 ->
                                                                        case coe v9 of
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                          _ -> MAlonzo.RTE.mazUnreachableError))
@@ -6097,13 +6097,13 @@ d_Convertible'45'DState''_384
                                                                        case coe v9 of
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                          _ -> MAlonzo.RTE.mazUnreachableError)))
                                                               v7)
                                                            (coe
@@ -6135,10 +6135,10 @@ d_Convertible'45'DState''_384
                                                                                 (coe v10)
                                                                          _ -> MAlonzo.RTE.mazUnreachableError)))
                                                               v8)
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                     _ -> MAlonzo.RTE.mazUnreachableError))
@@ -6147,7 +6147,7 @@ d_Convertible'45'DState''_384
                                                   case coe v6 of
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v7 v8
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                            (coe
                                                               MAlonzo.Code.Foreign.Convertible.d_from_20
                                                               (coe
@@ -6155,13 +6155,13 @@ d_Convertible'45'DState''_384
                                                                  (coe
                                                                     (\ v9 ->
                                                                        case coe v9 of
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                          _ -> MAlonzo.RTE.mazUnreachableError))
@@ -6170,13 +6170,13 @@ d_Convertible'45'DState''_384
                                                                        case coe v9 of
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                          MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                          _ -> MAlonzo.RTE.mazUnreachableError)))
                                                               v7)
                                                            (coe
@@ -6210,10 +6210,10 @@ d_Convertible'45'DState''_384
                                                               v8)
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                     _ -> MAlonzo.RTE.mazUnreachableError)) in
                                   coe
                                     (coe
@@ -6417,7 +6417,7 @@ d_Convertible'45'DState''_384
                                          (coe
                                             (\ v5 ->
                                                case coe v5 of
-                                                 MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770 v6
+                                                 MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774 v6
                                                    -> coe
                                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684
                                                         (coe
@@ -6449,11 +6449,11 @@ d_Convertible'45'DState''_384
                                                                              (coe v8)
                                                                       _ -> MAlonzo.RTE.mazUnreachableError)))
                                                            v6)
-                                                 MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772 v6
+                                                 MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776 v6
                                                    -> coe
                                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686
                                                         (coe v6)
-                                                 MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774 v6
+                                                 MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778 v6
                                                    -> coe
                                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688
                                                         (coe
@@ -6485,7 +6485,7 @@ d_Convertible'45'DState''_384
                                                                              (coe v8)
                                                                       _ -> MAlonzo.RTE.mazUnreachableError)))
                                                            v6)
-                                                 MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776 v6
+                                                 MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780 v6
                                                    -> coe
                                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690
                                                         (coe
@@ -6515,7 +6515,7 @@ d_Convertible'45'DState''_384
                                                case coe v5 of
                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684 v6
                                                    -> coe
-                                                        MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770
+                                                        MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774
                                                         (coe
                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
                                                            (coe
@@ -6547,11 +6547,11 @@ d_Convertible'45'DState''_384
                                                            v6)
                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686 v6
                                                    -> coe
-                                                        MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772
+                                                        MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776
                                                         (coe v6)
                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688 v6
                                                    -> coe
-                                                        MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774
+                                                        MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778
                                                         (coe
                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
                                                            (coe
@@ -6583,7 +6583,7 @@ d_Convertible'45'DState''_384
                                                            v6)
                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690 v6
                                                    -> coe
-                                                        MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776
+                                                        MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780
                                                         (coe
                                                            MAlonzo.Code.Data.Product.Base.du_map_128
                                                            (coe
@@ -6647,25 +6647,25 @@ d_Convertible'45'DState''_384
             case coe v0 of
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DState'''46'constructor_9141 v1 v2 v3 v4
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'44'_'10215''7496'_868
+                     MAlonzo.Code.Ledger.Certs.Haskell.C_'10214'_'44'_'44'_'44'_'10215''7496'_872
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -6695,7 +6695,7 @@ d_Convertible'45'DState''_384
                               (coe
                                  (\ v5 ->
                                     case coe v5 of
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v6 v7
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v6 v7
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                              (coe
@@ -6705,13 +6705,13 @@ d_Convertible'45'DState''_384
                                                    (coe
                                                       (\ v8 ->
                                                          case coe v8 of
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
@@ -6720,13 +6720,13 @@ d_Convertible'45'DState''_384
                                                          case coe v8 of
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
                                              (coe
@@ -6758,10 +6758,10 @@ d_Convertible'45'DState''_384
                                                                   (coe v9)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v7)
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                       _ -> MAlonzo.RTE.mazUnreachableError))
@@ -6770,7 +6770,7 @@ d_Convertible'45'DState''_384
                                     case coe v5 of
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v6 v7
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
@@ -6778,13 +6778,13 @@ d_Convertible'45'DState''_384
                                                    (coe
                                                       (\ v8 ->
                                                          case coe v8 of
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
@@ -6793,13 +6793,13 @@ d_Convertible'45'DState''_384
                                                          case coe v8 of
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
                                              (coe
@@ -6833,10 +6833,10 @@ d_Convertible'45'DState''_384
                                                 v7)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                       _ -> MAlonzo.RTE.mazUnreachableError))))
                         (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_assocList_34 (coe v1)))
                      (coe
@@ -6844,19 +6844,19 @@ d_Convertible'45'DState''_384
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -6890,19 +6890,19 @@ d_Convertible'45'DState''_384
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_136
+                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_20
                                  (coe
                                     MAlonzo.Code.Ledger.Crypto.d_khs_192
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                               (coe
                                  MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_196
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1164
+                                    MAlonzo.Code.Ledger.Transaction.d_crypto_1168
                                     (coe
                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818))))
                            (coe
@@ -6936,9 +6936,9 @@ d_Convertible'45'DState''_384
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_92
                            (coe
-                              MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_780
+                              MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_784
                               (coe
-                                 MAlonzo.Code.Ledger.Transaction.d_govStructure_2222
+                                 MAlonzo.Code.Ledger.Transaction.d_govStructure_2230
                                  (coe
                                     MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818)))
                            (coe
@@ -6946,7 +6946,7 @@ d_Convertible'45'DState''_384
                               (coe
                                  (\ v5 ->
                                     case coe v5 of
-                                      MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770 v6
+                                      MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774 v6
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684
                                              (coe
@@ -6978,11 +6978,11 @@ d_Convertible'45'DState''_384
                                                                   (coe v8)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
-                                      MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772 v6
+                                      MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776 v6
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686
                                              (coe v6)
-                                      MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774 v6
+                                      MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778 v6
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688
                                              (coe
@@ -7014,7 +7014,7 @@ d_Convertible'45'DState''_384
                                                                   (coe v8)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
-                                      MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776 v6
+                                      MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780 v6
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690
                                              (coe
@@ -7044,7 +7044,7 @@ d_Convertible'45'DState''_384
                                     case coe v5 of
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredentialDeposit_684 v6
                                         -> coe
-                                             MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_770
+                                             MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_774
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
@@ -7075,10 +7075,10 @@ d_Convertible'45'DState''_384
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_PoolDeposit_686 v6
-                                        -> coe MAlonzo.Code.Ledger.Certs.C_PoolDeposit_772 (coe v6)
+                                        -> coe MAlonzo.Code.Ledger.Certs.C_PoolDeposit_776 (coe v6)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRepDeposit_688 v6
                                         -> coe
-                                             MAlonzo.Code.Ledger.Certs.C_DRepDeposit_774
+                                             MAlonzo.Code.Ledger.Certs.C_DRepDeposit_778
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
@@ -7110,7 +7110,7 @@ d_Convertible'45'DState''_384
                                                 v6)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_GovActionDeposit_690 v6
                                         -> coe
-                                             MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_776
+                                             MAlonzo.Code.Ledger.Certs.C_GovActionDeposit_780
                                              (coe
                                                 MAlonzo.Code.Data.Product.Base.du_map_128
                                                 (coe
@@ -8724,11 +8724,11 @@ d_Convertible'45'PoolParams_520
             coe
               MAlonzo.Code.Foreign.Convertible.d_to_18
               d_Convertible'45'Credential_70
-              (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786 (coe v0))))
+              (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790 (coe v0))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12157
+              MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12173
               (coe
                  MAlonzo.Code.Foreign.Convertible.d_from_20
                  (coe
@@ -8761,7 +8761,7 @@ d_Convertible'45'DCert_526
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_delegate_790 v1 v2 v3 v4
+              MAlonzo.Code.Ledger.Certs.C_delegate_794 v1 v2 v3 v4
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146
                      (coe
@@ -8799,7 +8799,7 @@ d_Convertible'45'DCert_526
                               (coe
                                  (\ v5 ->
                                     case coe v5 of
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v6 v7
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v6 v7
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                              (coe
@@ -8809,13 +8809,13 @@ d_Convertible'45'DCert_526
                                                    (coe
                                                       (\ v8 ->
                                                          case coe v8 of
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
@@ -8824,13 +8824,13 @@ d_Convertible'45'DCert_526
                                                          case coe v8 of
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
                                              (coe
@@ -8862,10 +8862,10 @@ d_Convertible'45'DCert_526
                                                                   (coe v9)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v7)
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                       _ -> MAlonzo.RTE.mazUnreachableError))
@@ -8874,7 +8874,7 @@ d_Convertible'45'DCert_526
                                     case coe v5 of
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v6 v7
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
@@ -8882,13 +8882,13 @@ d_Convertible'45'DCert_526
                                                    (coe
                                                       (\ v8 ->
                                                          case coe v8 of
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
@@ -8897,13 +8897,13 @@ d_Convertible'45'DCert_526
                                                          case coe v8 of
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
                                              (coe
@@ -8937,10 +8937,10 @@ d_Convertible'45'DCert_526
                                                 v7)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                       _ -> MAlonzo.RTE.mazUnreachableError))))
                         v2)
                      (coe
@@ -8953,7 +8953,7 @@ d_Convertible'45'DCert_526
                               (coe (\ v5 -> v5)) (coe (\ v5 -> v5))))
                         v3)
                      (coe v4)
-              MAlonzo.Code.Ledger.Certs.C_dereg_792 v1 v2
+              MAlonzo.Code.Ledger.Certs.C_dereg_796 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148
                      (coe
@@ -8982,18 +8982,18 @@ d_Convertible'45'DCert_526
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
                      (coe v2)
-              MAlonzo.Code.Ledger.Certs.C_regpool_794 v1 v2
+              MAlonzo.Code.Ledger.Certs.C_regpool_798 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         d_Convertible'45'Credential_70
-                        (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786 (coe v2)))
-              MAlonzo.Code.Ledger.Certs.C_retirepool_796 v1 v2
+                        (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790 (coe v2)))
+              MAlonzo.Code.Ledger.Certs.C_retirepool_800 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152 (coe v1)
                      (coe v2)
-              MAlonzo.Code.Ledger.Certs.C_regdrep_798 v1 v2 v3
+              MAlonzo.Code.Ledger.Certs.C_regdrep_802 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154
                      (coe
@@ -9022,8 +9022,8 @@ d_Convertible'45'DCert_526
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
                      (coe v2)
-                     (coe MAlonzo.Code.Ledger.GovernanceActions.d_hash_646 (coe v3))
-              MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v1 v2
+                     (coe MAlonzo.Code.Ledger.GovernanceActions.d_hash_650 (coe v3))
+              MAlonzo.Code.Ledger.Certs.C_deregdrep_804 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156
                      (coe
@@ -9052,7 +9052,7 @@ d_Convertible'45'DCert_526
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
                      (coe v2)
-              MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v1 v2
+              MAlonzo.Code.Ledger.Certs.C_ccreghot_806 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158
                      (coe
@@ -9114,7 +9114,7 @@ d_Convertible'45'DCert_526
             case coe v0 of
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146 v1 v2 v3 v4
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_delegate_790
+                     MAlonzo.Code.Ledger.Certs.C_delegate_794
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -9150,7 +9150,7 @@ d_Convertible'45'DCert_526
                               (coe
                                  (\ v5 ->
                                     case coe v5 of
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v6 v7
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v6 v7
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                              (coe
@@ -9160,13 +9160,13 @@ d_Convertible'45'DCert_526
                                                    (coe
                                                       (\ v8 ->
                                                          case coe v8 of
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
@@ -9175,13 +9175,13 @@ d_Convertible'45'DCert_526
                                                          case coe v8 of
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
                                              (coe
@@ -9213,10 +9213,10 @@ d_Convertible'45'DCert_526
                                                                   (coe v9)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v7)
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                         -> coe
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                       _ -> MAlonzo.RTE.mazUnreachableError))
@@ -9225,7 +9225,7 @@ d_Convertible'45'DCert_526
                                     case coe v5 of
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v6 v7
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
@@ -9233,13 +9233,13 @@ d_Convertible'45'DCert_526
                                                    (coe
                                                       (\ v8 ->
                                                          case coe v8 of
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
@@ -9248,13 +9248,13 @@ d_Convertible'45'DCert_526
                                                          case coe v8 of
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                            MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                              -> coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
                                                 v6)
                                              (coe
@@ -9288,10 +9288,10 @@ d_Convertible'45'DCert_526
                                                 v7)
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                         -> coe
-                                             MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                             MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                       _ -> MAlonzo.RTE.mazUnreachableError))))
                         v2)
                      (coe
@@ -9306,7 +9306,7 @@ d_Convertible'45'DCert_526
                      (coe v4)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_dereg_792
+                     MAlonzo.Code.Ledger.Certs.C_dereg_796
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -9335,7 +9335,7 @@ d_Convertible'45'DCert_526
                      (coe v2)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_regpool_794 (coe v1)
+                     MAlonzo.Code.Ledger.Certs.C_regpool_798 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -9345,11 +9345,11 @@ d_Convertible'45'DCert_526
                                  coe
                                    MAlonzo.Code.Foreign.Convertible.d_to_18
                                    d_Convertible'45'Credential_70
-                                   (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786 (coe v3))))
+                                   (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790 (coe v3))))
                            (coe
                               (\ v3 ->
                                  coe
-                                   MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12157
+                                   MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12173
                                    (coe
                                       MAlonzo.Code.Foreign.Convertible.d_from_20
                                       (coe
@@ -9381,10 +9381,10 @@ d_Convertible'45'DCert_526
                                       v3))))
                         v2)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152 v1 v2
-                -> coe MAlonzo.Code.Ledger.Certs.C_retirepool_796 (coe v1) (coe v2)
+                -> coe MAlonzo.Code.Ledger.Certs.C_retirepool_800 (coe v1) (coe v2)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_regdrep_798
+                     MAlonzo.Code.Ledger.Certs.C_regdrep_802
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -9418,18 +9418,18 @@ d_Convertible'45'DCert_526
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399 v5 v6
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415 v5 v6
                                      -> coe v6
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v4 ->
                                  coe
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415
                                    (coe ("bogus" :: Data.Text.Text)) (coe v4))))
                         v3)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_deregdrep_800
+                     MAlonzo.Code.Ledger.Certs.C_deregdrep_804
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -9458,7 +9458,7 @@ d_Convertible'45'DCert_526
                      (coe v2)
               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_ccreghot_802
+                     MAlonzo.Code.Ledger.Certs.C_ccreghot_806
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -9546,7 +9546,7 @@ d_Convertible'45'TxBody_528
                                   (\ v2 ->
                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56 (coe v2)))))
                          (coe (\ v2 v3 -> v3)) (coe v1)))
-                 (MAlonzo.Code.Ledger.Transaction.d_txins_2650 (coe v0)))
+                 (MAlonzo.Code.Ledger.Transaction.d_txins_2658 (coe v0)))
               (coe
                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
@@ -9570,7 +9570,7 @@ d_Convertible'45'TxBody_528
                                   (\ v2 ->
                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56 (coe v2)))))
                          (coe (\ v2 v3 -> v3)) (coe v1)))
-                 (MAlonzo.Code.Ledger.Transaction.d_refInputs_2652 (coe v0)))
+                 (MAlonzo.Code.Ledger.Transaction.d_refInputs_2660 (coe v0)))
               (coe
                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
                  (coe
@@ -9591,7 +9591,7 @@ d_Convertible'45'TxBody_528
                                                    case coe v2 of
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v3
                                                        -> case coe v3 of
-                                                            MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021 v4 v5 v6
+                                                            MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835 v4 v5 v6
                                                               -> case coe v5 of
                                                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v7
                                                                      -> coe v7
@@ -9601,7 +9601,7 @@ d_Convertible'45'TxBody_528
                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v3
                                                        -> case coe v3 of
-                                                            MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2237 v4 v5 v6
+                                                            MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3051 v4 v5 v6
                                                               -> case coe v5 of
                                                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v7
                                                                      -> coe v7
@@ -9615,7 +9615,7 @@ d_Convertible'45'TxBody_528
                                                    coe
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021
+                                                        MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835
                                                         (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
@@ -9852,8 +9852,8 @@ d_Convertible'45'TxBody_528
                                            (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                            v3)))))))
                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                       (coe MAlonzo.Code.Ledger.Transaction.d_txouts_2654 (coe v0)))))
-              (coe MAlonzo.Code.Ledger.Transaction.d_txfee_2656 (coe v0))
+                       (coe MAlonzo.Code.Ledger.Transaction.d_txouts_2662 (coe v0)))))
+              (coe MAlonzo.Code.Ledger.Transaction.d_txfee_2664 (coe v0))
               (coe
                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                  (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -9876,8 +9876,8 @@ d_Convertible'45'TxBody_528
                                (coe
                                   MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
                                   (coe (\ v2 -> v2)) (coe (\ v2 -> v2))))))
-                    (coe MAlonzo.Code.Ledger.Transaction.d_txvldt_2660 (coe v0))))
-              (coe MAlonzo.Code.Ledger.Transaction.d_txsize_2680 (coe v0))
+                    (coe MAlonzo.Code.Ledger.Transaction.d_txvldt_2668 (coe v0))))
+              (coe MAlonzo.Code.Ledger.Transaction.d_txsize_2688 (coe v0))
               (coe
                  MAlonzo.Code.Foreign.Convertible.d_to_18
                  (coe
@@ -9890,7 +9890,7 @@ d_Convertible'45'TxBody_528
                     (coe
                        (\ v1 ->
                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56 (coe v1))))
-                 (MAlonzo.Code.Ledger.Transaction.d_txid_2682 (coe v0)))
+                 (MAlonzo.Code.Ledger.Transaction.d_txid_2690 (coe v0)))
               (coe
                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
@@ -9914,12 +9914,12 @@ d_Convertible'45'TxBody_528
                                   (\ v2 ->
                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56 (coe v2)))))
                          (coe (\ v2 v3 -> v3)) (coe v1)))
-                 (MAlonzo.Code.Ledger.Transaction.d_collateral_2684 (coe v0)))
+                 (MAlonzo.Code.Ledger.Transaction.d_collateral_2692 (coe v0)))
               (coe
                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
                  () erased (\ v1 -> v1)
-                 (MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2686 (coe v0)))
+                 (MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2694 (coe v0)))
               (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
               (coe
                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -9931,7 +9931,7 @@ d_Convertible'45'TxBody_528
                        (coe
                           (\ v1 ->
                              case coe v1 of
-                               MAlonzo.Code.Ledger.Certs.C_delegate_790 v2 v3 v4 v5
+                               MAlonzo.Code.Ledger.Certs.C_delegate_794 v2 v3 v4 v5
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146
                                       (coe
@@ -9974,7 +9974,7 @@ d_Convertible'45'TxBody_528
                                                (coe
                                                   (\ v6 ->
                                                      case coe v6 of
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v7 v8
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v7 v8
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                               (coe
@@ -9984,13 +9984,13 @@ d_Convertible'45'TxBody_528
                                                                     (coe
                                                                        (\ v9 ->
                                                                           case coe v9 of
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -9999,13 +9999,13 @@ d_Convertible'45'TxBody_528
                                                                           case coe v9 of
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v7)
                                                               (coe
@@ -10037,10 +10037,10 @@ d_Convertible'45'TxBody_528
                                                                                    (coe v10)
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v8)
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                        _ -> MAlonzo.RTE.mazUnreachableError))
@@ -10049,7 +10049,7 @@ d_Convertible'45'TxBody_528
                                                      case coe v6 of
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v7 v8
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                               (coe
                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                  (coe
@@ -10057,13 +10057,13 @@ d_Convertible'45'TxBody_528
                                                                     (coe
                                                                        (\ v9 ->
                                                                           case coe v9 of
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -10072,13 +10072,13 @@ d_Convertible'45'TxBody_528
                                                                           case coe v9 of
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v7)
                                                               (coe
@@ -10112,10 +10112,10 @@ d_Convertible'45'TxBody_528
                                                                  v8)
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                        _ -> MAlonzo.RTE.mazUnreachableError))))
                                          v3)
                                       (coe
@@ -10129,7 +10129,7 @@ d_Convertible'45'TxBody_528
                                                (coe (\ v6 -> v6)) (coe (\ v6 -> v6))))
                                          v4)
                                       (coe v5)
-                               MAlonzo.Code.Ledger.Certs.C_dereg_792 v2 v3
+                               MAlonzo.Code.Ledger.Certs.C_dereg_796 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148
                                       (coe
@@ -10162,18 +10162,18 @@ d_Convertible'45'TxBody_528
                                                     _ -> MAlonzo.RTE.mazUnreachableError)))
                                          v2)
                                       (coe v3)
-                               MAlonzo.Code.Ledger.Certs.C_regpool_794 v2 v3
+                               MAlonzo.Code.Ledger.Certs.C_regpool_798 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 (coe v2)
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_to_18
                                          d_Convertible'45'Credential_70
-                                         (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786 (coe v3)))
-                               MAlonzo.Code.Ledger.Certs.C_retirepool_796 v2 v3
+                                         (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790 (coe v3)))
+                               MAlonzo.Code.Ledger.Certs.C_retirepool_800 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152
                                       (coe v2) (coe v3)
-                               MAlonzo.Code.Ledger.Certs.C_regdrep_798 v2 v3 v4
+                               MAlonzo.Code.Ledger.Certs.C_regdrep_802 v2 v3 v4
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154
                                       (coe
@@ -10207,8 +10207,8 @@ d_Convertible'45'TxBody_528
                                          v2)
                                       (coe v3)
                                       (coe
-                                         MAlonzo.Code.Ledger.GovernanceActions.d_hash_646 (coe v4))
-                               MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v2 v3
+                                         MAlonzo.Code.Ledger.GovernanceActions.d_hash_650 (coe v4))
+                               MAlonzo.Code.Ledger.Certs.C_deregdrep_804 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156
                                       (coe
@@ -10241,7 +10241,7 @@ d_Convertible'45'TxBody_528
                                                     _ -> MAlonzo.RTE.mazUnreachableError)))
                                          v2)
                                       (coe v3)
-                               MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v2 v3
+                               MAlonzo.Code.Ledger.Certs.C_ccreghot_806 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158
                                       (coe
@@ -10312,7 +10312,7 @@ d_Convertible'45'TxBody_528
                              case coe v1 of
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146 v2 v3 v4 v5
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_delegate_790
+                                      MAlonzo.Code.Ledger.Certs.C_delegate_794
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -10353,7 +10353,7 @@ d_Convertible'45'TxBody_528
                                                (coe
                                                   (\ v6 ->
                                                      case coe v6 of
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v7 v8
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v7 v8
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                               (coe
@@ -10363,13 +10363,13 @@ d_Convertible'45'TxBody_528
                                                                     (coe
                                                                        (\ v9 ->
                                                                           case coe v9 of
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -10378,13 +10378,13 @@ d_Convertible'45'TxBody_528
                                                                           case coe v9 of
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v7)
                                                               (coe
@@ -10416,10 +10416,10 @@ d_Convertible'45'TxBody_528
                                                                                    (coe v10)
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v8)
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                        _ -> MAlonzo.RTE.mazUnreachableError))
@@ -10428,7 +10428,7 @@ d_Convertible'45'TxBody_528
                                                      case coe v6 of
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v7 v8
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                               (coe
                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                  (coe
@@ -10436,13 +10436,13 @@ d_Convertible'45'TxBody_528
                                                                     (coe
                                                                        (\ v9 ->
                                                                           case coe v9 of
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -10451,13 +10451,13 @@ d_Convertible'45'TxBody_528
                                                                           case coe v9 of
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v7)
                                                               (coe
@@ -10491,10 +10491,10 @@ d_Convertible'45'TxBody_528
                                                                  v8)
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                        _ -> MAlonzo.RTE.mazUnreachableError))))
                                          v3)
                                       (coe
@@ -10510,7 +10510,7 @@ d_Convertible'45'TxBody_528
                                       (coe v5)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148 v2 v3
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_dereg_792
+                                      MAlonzo.Code.Ledger.Certs.C_dereg_796
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -10543,7 +10543,7 @@ d_Convertible'45'TxBody_528
                                       (coe v3)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 v2 v3
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_regpool_794 (coe v2)
+                                      MAlonzo.Code.Ledger.Certs.C_regpool_798 (coe v2)
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -10553,12 +10553,12 @@ d_Convertible'45'TxBody_528
                                                   coe
                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
                                                     d_Convertible'45'Credential_70
-                                                    (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                    (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                        (coe v4))))
                                             (coe
                                                (\ v4 ->
                                                   coe
-                                                    MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12157
+                                                    MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12173
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -10590,10 +10590,10 @@ d_Convertible'45'TxBody_528
                                                        v4))))
                                          v3)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152 v2 v3
-                                 -> coe MAlonzo.Code.Ledger.Certs.C_retirepool_796 (coe v2) (coe v3)
+                                 -> coe MAlonzo.Code.Ledger.Certs.C_retirepool_800 (coe v2) (coe v3)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154 v2 v3 v4
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_regdrep_798
+                                      MAlonzo.Code.Ledger.Certs.C_regdrep_802
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -10631,18 +10631,18 @@ d_Convertible'45'TxBody_528
                                             (coe
                                                (\ v5 ->
                                                   case coe v5 of
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399 v6 v7
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415 v6 v7
                                                       -> coe v7
                                                     _ -> MAlonzo.RTE.mazUnreachableError))
                                             (coe
                                                (\ v5 ->
                                                   coe
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415
                                                     (coe ("bogus" :: Data.Text.Text)) (coe v5))))
                                          v4)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156 v2 v3
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_deregdrep_800
+                                      MAlonzo.Code.Ledger.Certs.C_deregdrep_804
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -10675,7 +10675,7 @@ d_Convertible'45'TxBody_528
                                       (coe v3)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158 v2 v3
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_ccreghot_802
+                                      MAlonzo.Code.Ledger.Certs.C_ccreghot_806
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -10739,11 +10739,11 @@ d_Convertible'45'TxBody_528
                                                        _ -> MAlonzo.RTE.mazUnreachableError))))
                                          v3)
                                _ -> MAlonzo.RTE.mazUnreachableError))))
-                 (MAlonzo.Code.Ledger.Transaction.d_txcerts_2662 (coe v0)))))
+                 (MAlonzo.Code.Ledger.Transaction.d_txcerts_2670 (coe v0)))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Transaction.C_TxBody'46'constructor_16177
+              MAlonzo.Code.Ledger.Transaction.C_TxBody'46'constructor_16213
               (coe
                  MAlonzo.Code.Axiom.Set.du_fromList_410
                  (coe
@@ -10803,7 +10803,7 @@ d_Convertible'45'TxBody_528
                                      case coe v1 of
                                        MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v2
                                          -> case coe v2 of
-                                              MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021 v3 v4 v5
+                                              MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835 v3 v4 v5
                                                 -> case coe v4 of
                                                      MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v6
                                                        -> coe v6
@@ -10813,7 +10813,7 @@ d_Convertible'45'TxBody_528
                                               _ -> MAlonzo.RTE.mazUnreachableError
                                        MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v2
                                          -> case coe v2 of
-                                              MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2237 v3 v4 v5
+                                              MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3051 v3 v4 v5
                                                 -> case coe v4 of
                                                      MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v6
                                                        -> coe v6
@@ -10827,7 +10827,7 @@ d_Convertible'45'TxBody_528
                                      coe
                                        MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                                        (coe
-                                          MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021
+                                          MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835
                                           (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                           (coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v1))
                                           (coe
@@ -11026,7 +11026,7 @@ d_Convertible'45'TxBody_528
                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txouts_188 (coe v0))))
               (coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txfee_190 (coe v0))
               (let v1
-                     = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104
+                     = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2112
                          (coe
                             MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818) in
                coe
@@ -11068,7 +11068,7 @@ d_Convertible'45'TxBody_528
                        (coe
                           (\ v1 ->
                              case coe v1 of
-                               MAlonzo.Code.Ledger.Certs.C_delegate_790 v2 v3 v4 v5
+                               MAlonzo.Code.Ledger.Certs.C_delegate_794 v2 v3 v4 v5
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146
                                       (coe
@@ -11111,7 +11111,7 @@ d_Convertible'45'TxBody_528
                                                (coe
                                                   (\ v6 ->
                                                      case coe v6 of
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v7 v8
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v7 v8
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                               (coe
@@ -11121,13 +11121,13 @@ d_Convertible'45'TxBody_528
                                                                     (coe
                                                                        (\ v9 ->
                                                                           case coe v9 of
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -11136,13 +11136,13 @@ d_Convertible'45'TxBody_528
                                                                           case coe v9 of
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v7)
                                                               (coe
@@ -11174,10 +11174,10 @@ d_Convertible'45'TxBody_528
                                                                                    (coe v10)
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v8)
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                        _ -> MAlonzo.RTE.mazUnreachableError))
@@ -11186,7 +11186,7 @@ d_Convertible'45'TxBody_528
                                                      case coe v6 of
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v7 v8
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                               (coe
                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                  (coe
@@ -11194,13 +11194,13 @@ d_Convertible'45'TxBody_528
                                                                     (coe
                                                                        (\ v9 ->
                                                                           case coe v9 of
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -11209,13 +11209,13 @@ d_Convertible'45'TxBody_528
                                                                           case coe v9 of
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v7)
                                                               (coe
@@ -11249,10 +11249,10 @@ d_Convertible'45'TxBody_528
                                                                  v8)
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                        _ -> MAlonzo.RTE.mazUnreachableError))))
                                          v3)
                                       (coe
@@ -11266,7 +11266,7 @@ d_Convertible'45'TxBody_528
                                                (coe (\ v6 -> v6)) (coe (\ v6 -> v6))))
                                          v4)
                                       (coe v5)
-                               MAlonzo.Code.Ledger.Certs.C_dereg_792 v2 v3
+                               MAlonzo.Code.Ledger.Certs.C_dereg_796 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148
                                       (coe
@@ -11299,18 +11299,18 @@ d_Convertible'45'TxBody_528
                                                     _ -> MAlonzo.RTE.mazUnreachableError)))
                                          v2)
                                       (coe v3)
-                               MAlonzo.Code.Ledger.Certs.C_regpool_794 v2 v3
+                               MAlonzo.Code.Ledger.Certs.C_regpool_798 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 (coe v2)
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_to_18
                                          d_Convertible'45'Credential_70
-                                         (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786 (coe v3)))
-                               MAlonzo.Code.Ledger.Certs.C_retirepool_796 v2 v3
+                                         (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790 (coe v3)))
+                               MAlonzo.Code.Ledger.Certs.C_retirepool_800 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152
                                       (coe v2) (coe v3)
-                               MAlonzo.Code.Ledger.Certs.C_regdrep_798 v2 v3 v4
+                               MAlonzo.Code.Ledger.Certs.C_regdrep_802 v2 v3 v4
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154
                                       (coe
@@ -11344,8 +11344,8 @@ d_Convertible'45'TxBody_528
                                          v2)
                                       (coe v3)
                                       (coe
-                                         MAlonzo.Code.Ledger.GovernanceActions.d_hash_646 (coe v4))
-                               MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v2 v3
+                                         MAlonzo.Code.Ledger.GovernanceActions.d_hash_650 (coe v4))
+                               MAlonzo.Code.Ledger.Certs.C_deregdrep_804 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156
                                       (coe
@@ -11378,7 +11378,7 @@ d_Convertible'45'TxBody_528
                                                     _ -> MAlonzo.RTE.mazUnreachableError)))
                                          v2)
                                       (coe v3)
-                               MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v2 v3
+                               MAlonzo.Code.Ledger.Certs.C_ccreghot_806 v2 v3
                                  -> coe
                                       MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158
                                       (coe
@@ -11449,7 +11449,7 @@ d_Convertible'45'TxBody_528
                              case coe v1 of
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146 v2 v3 v4 v5
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_delegate_790
+                                      MAlonzo.Code.Ledger.Certs.C_delegate_794
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -11490,7 +11490,7 @@ d_Convertible'45'TxBody_528
                                                (coe
                                                   (\ v6 ->
                                                      case coe v6 of
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v7 v8
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v7 v8
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                               (coe
@@ -11500,13 +11500,13 @@ d_Convertible'45'TxBody_528
                                                                     (coe
                                                                        (\ v9 ->
                                                                           case coe v9 of
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -11515,13 +11515,13 @@ d_Convertible'45'TxBody_528
                                                                           case coe v9 of
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v7)
                                                               (coe
@@ -11553,10 +11553,10 @@ d_Convertible'45'TxBody_528
                                                                                    (coe v10)
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v8)
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                          -> coe
                                                               MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                        _ -> MAlonzo.RTE.mazUnreachableError))
@@ -11565,7 +11565,7 @@ d_Convertible'45'TxBody_528
                                                      case coe v6 of
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v7 v8
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                               (coe
                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                  (coe
@@ -11573,13 +11573,13 @@ d_Convertible'45'TxBody_528
                                                                     (coe
                                                                        (\ v9 ->
                                                                           case coe v9 of
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                               -> coe
                                                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -11588,13 +11588,13 @@ d_Convertible'45'TxBody_528
                                                                           case coe v9 of
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                               -> coe
-                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                  v7)
                                                               (coe
@@ -11628,10 +11628,10 @@ d_Convertible'45'TxBody_528
                                                                  v8)
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                        MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                          -> coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                        _ -> MAlonzo.RTE.mazUnreachableError))))
                                          v3)
                                       (coe
@@ -11647,7 +11647,7 @@ d_Convertible'45'TxBody_528
                                       (coe v5)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148 v2 v3
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_dereg_792
+                                      MAlonzo.Code.Ledger.Certs.C_dereg_796
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -11680,7 +11680,7 @@ d_Convertible'45'TxBody_528
                                       (coe v3)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 v2 v3
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_regpool_794 (coe v2)
+                                      MAlonzo.Code.Ledger.Certs.C_regpool_798 (coe v2)
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -11690,12 +11690,12 @@ d_Convertible'45'TxBody_528
                                                   coe
                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
                                                     d_Convertible'45'Credential_70
-                                                    (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                    (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                        (coe v4))))
                                             (coe
                                                (\ v4 ->
                                                   coe
-                                                    MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12157
+                                                    MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12173
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -11727,10 +11727,10 @@ d_Convertible'45'TxBody_528
                                                        v4))))
                                          v3)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152 v2 v3
-                                 -> coe MAlonzo.Code.Ledger.Certs.C_retirepool_796 (coe v2) (coe v3)
+                                 -> coe MAlonzo.Code.Ledger.Certs.C_retirepool_800 (coe v2) (coe v3)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154 v2 v3 v4
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_regdrep_798
+                                      MAlonzo.Code.Ledger.Certs.C_regdrep_802
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -11768,18 +11768,18 @@ d_Convertible'45'TxBody_528
                                             (coe
                                                (\ v5 ->
                                                   case coe v5 of
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399 v6 v7
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415 v6 v7
                                                       -> coe v7
                                                     _ -> MAlonzo.RTE.mazUnreachableError))
                                             (coe
                                                (\ v5 ->
                                                   coe
-                                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399
+                                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415
                                                     (coe ("bogus" :: Data.Text.Text)) (coe v5))))
                                          v4)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156 v2 v3
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_deregdrep_800
+                                      MAlonzo.Code.Ledger.Certs.C_deregdrep_804
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -11812,7 +11812,7 @@ d_Convertible'45'TxBody_528
                                       (coe v3)
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158 v2 v3
                                  -> coe
-                                      MAlonzo.Code.Ledger.Certs.C_ccreghot_802
+                                      MAlonzo.Code.Ledger.Certs.C_ccreghot_806
                                       (coe
                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                          (coe
@@ -11885,7 +11885,7 @@ d_Convertible'45'TxBody_528
               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
               (let v1
-                     = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104
+                     = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2112
                          (coe
                             MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818) in
                coe
@@ -11978,7 +11978,7 @@ d_Convertible'45'Tx_602
                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56
                                                      (coe v3)))))
                                        (coe (\ v3 v4 -> v4)) (coe v2)))
-                               (MAlonzo.Code.Ledger.Transaction.d_txins_2650 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_txins_2658 (coe v1)))
                             (coe
                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
@@ -12004,7 +12004,7 @@ d_Convertible'45'Tx_602
                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56
                                                      (coe v3)))))
                                        (coe (\ v3 v4 -> v4)) (coe v2)))
-                               (MAlonzo.Code.Ledger.Transaction.d_refInputs_2652 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_refInputs_2660 (coe v1)))
                             (coe
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
                                (coe
@@ -12025,7 +12025,7 @@ d_Convertible'45'Tx_602
                                                                  case coe v3 of
                                                                    MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v4
                                                                      -> case coe v4 of
-                                                                          MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021 v5 v6 v7
+                                                                          MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835 v5 v6 v7
                                                                             -> case coe v6 of
                                                                                  MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v8
                                                                                    -> coe v8
@@ -12035,7 +12035,7 @@ d_Convertible'45'Tx_602
                                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                                    MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v4
                                                                      -> case coe v4 of
-                                                                          MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2237 v5 v6 v7
+                                                                          MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3051 v5 v6 v7
                                                                             -> case coe v6 of
                                                                                  MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v8
                                                                                    -> coe v8
@@ -12049,7 +12049,7 @@ d_Convertible'45'Tx_602
                                                                  coe
                                                                    MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021
+                                                                      MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835
                                                                       (coe
                                                                          MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                                                       (coe
@@ -12309,8 +12309,8 @@ d_Convertible'45'Tx_602
                                                             MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                          v4)))))))
                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                     (coe MAlonzo.Code.Ledger.Transaction.d_txouts_2654 (coe v1)))))
-                            (coe MAlonzo.Code.Ledger.Transaction.d_txfee_2656 (coe v1))
+                                     (coe MAlonzo.Code.Ledger.Transaction.d_txouts_2662 (coe v1)))))
+                            (coe MAlonzo.Code.Ledger.Transaction.d_txfee_2664 (coe v1))
                             (coe
                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                                (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -12335,8 +12335,8 @@ d_Convertible'45'Tx_602
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
                                                 (coe (\ v3 -> v3)) (coe (\ v3 -> v3))))))
-                                  (coe MAlonzo.Code.Ledger.Transaction.d_txvldt_2660 (coe v1))))
-                            (coe MAlonzo.Code.Ledger.Transaction.d_txsize_2680 (coe v1))
+                                  (coe MAlonzo.Code.Ledger.Transaction.d_txvldt_2668 (coe v1))))
+                            (coe MAlonzo.Code.Ledger.Transaction.d_txsize_2688 (coe v1))
                             (coe
                                MAlonzo.Code.Foreign.Convertible.d_to_18
                                (coe
@@ -12350,7 +12350,7 @@ d_Convertible'45'Tx_602
                                      (\ v2 ->
                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56
                                           (coe v2))))
-                               (MAlonzo.Code.Ledger.Transaction.d_txid_2682 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_txid_2690 (coe v1)))
                             (coe
                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
@@ -12376,12 +12376,12 @@ d_Convertible'45'Tx_602
                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56
                                                      (coe v3)))))
                                        (coe (\ v3 v4 -> v4)) (coe v2)))
-                               (MAlonzo.Code.Ledger.Transaction.d_collateral_2684 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_collateral_2692 (coe v1)))
                             (coe
                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
                                () erased (\ v2 -> v2)
-                               (MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2686 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2694 (coe v1)))
                             (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                             (coe
                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -12393,7 +12393,7 @@ d_Convertible'45'Tx_602
                                      (coe
                                         (\ v2 ->
                                            case coe v2 of
-                                             MAlonzo.Code.Ledger.Certs.C_delegate_790 v3 v4 v5 v6
+                                             MAlonzo.Code.Ledger.Certs.C_delegate_794 v3 v4 v5 v6
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146
                                                     (coe
@@ -12436,7 +12436,7 @@ d_Convertible'45'Tx_602
                                                              (coe
                                                                 (\ v7 ->
                                                                    case coe v7 of
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v8 v9
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v8 v9
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                                             (coe
@@ -12447,13 +12447,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -12463,13 +12463,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -12507,10 +12507,10 @@ d_Convertible'45'Tx_602
                                                                                                     v11)
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v9)
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
@@ -12519,7 +12519,7 @@ d_Convertible'45'Tx_602
                                                                    case coe v7 of
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v8 v9
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                                             (coe
                                                                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                (coe
@@ -12528,13 +12528,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -12544,13 +12544,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -12590,10 +12590,10 @@ d_Convertible'45'Tx_602
                                                                                v9)
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                                     (coe
@@ -12607,7 +12607,7 @@ d_Convertible'45'Tx_602
                                                              (coe (\ v7 -> v7)) (coe (\ v7 -> v7))))
                                                        v5)
                                                     (coe v6)
-                                             MAlonzo.Code.Ledger.Certs.C_dereg_792 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_dereg_796 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148
                                                     (coe
@@ -12640,20 +12640,20 @@ d_Convertible'45'Tx_602
                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                        v3)
                                                     (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_regpool_794 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_regpool_798 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150
                                                     (coe v3)
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
                                                        d_Convertible'45'Credential_70
-                                                       (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                       (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                           (coe v4)))
-                                             MAlonzo.Code.Ledger.Certs.C_retirepool_796 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_retirepool_800 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152
                                                     (coe v3) (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_regdrep_798 v3 v4 v5
+                                             MAlonzo.Code.Ledger.Certs.C_regdrep_802 v3 v4 v5
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154
                                                     (coe
@@ -12687,9 +12687,9 @@ d_Convertible'45'Tx_602
                                                        v3)
                                                     (coe v4)
                                                     (coe
-                                                       MAlonzo.Code.Ledger.GovernanceActions.d_hash_646
+                                                       MAlonzo.Code.Ledger.GovernanceActions.d_hash_650
                                                        (coe v5))
-                                             MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_deregdrep_804 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156
                                                     (coe
@@ -12722,7 +12722,7 @@ d_Convertible'45'Tx_602
                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                        v3)
                                                     (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_ccreghot_806 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158
                                                     (coe
@@ -12793,7 +12793,7 @@ d_Convertible'45'Tx_602
                                            case coe v2 of
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146 v3 v4 v5 v6
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_delegate_790
+                                                    MAlonzo.Code.Ledger.Certs.C_delegate_794
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -12834,7 +12834,7 @@ d_Convertible'45'Tx_602
                                                              (coe
                                                                 (\ v7 ->
                                                                    case coe v7 of
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v8 v9
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v8 v9
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                                             (coe
@@ -12845,13 +12845,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -12861,13 +12861,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -12905,10 +12905,10 @@ d_Convertible'45'Tx_602
                                                                                                     v11)
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v9)
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
@@ -12917,7 +12917,7 @@ d_Convertible'45'Tx_602
                                                                    case coe v7 of
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v8 v9
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                                             (coe
                                                                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                (coe
@@ -12926,13 +12926,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -12942,13 +12942,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -12988,10 +12988,10 @@ d_Convertible'45'Tx_602
                                                                                v9)
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                                     (coe
@@ -13007,7 +13007,7 @@ d_Convertible'45'Tx_602
                                                     (coe v6)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_dereg_792
+                                                    MAlonzo.Code.Ledger.Certs.C_dereg_796
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -13040,7 +13040,7 @@ d_Convertible'45'Tx_602
                                                     (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_regpool_794 (coe v3)
+                                                    MAlonzo.Code.Ledger.Certs.C_regpool_798 (coe v3)
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -13050,12 +13050,12 @@ d_Convertible'45'Tx_602
                                                                 coe
                                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
                                                                   d_Convertible'45'Credential_70
-                                                                  (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                                  (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                                      (coe v5))))
                                                           (coe
                                                              (\ v5 ->
                                                                 coe
-                                                                  MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12157
+                                                                  MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12173
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                      (coe
@@ -13088,11 +13088,11 @@ d_Convertible'45'Tx_602
                                                        v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_retirepool_796
+                                                    MAlonzo.Code.Ledger.Certs.C_retirepool_800
                                                     (coe v3) (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154 v3 v4 v5
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_regdrep_798
+                                                    MAlonzo.Code.Ledger.Certs.C_regdrep_802
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -13130,19 +13130,19 @@ d_Convertible'45'Tx_602
                                                           (coe
                                                              (\ v6 ->
                                                                 case coe v6 of
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399 v7 v8
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415 v7 v8
                                                                     -> coe v8
                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
                                                           (coe
                                                              (\ v6 ->
                                                                 coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415
                                                                   (coe ("bogus" :: Data.Text.Text))
                                                                   (coe v6))))
                                                        v5)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_deregdrep_800
+                                                    MAlonzo.Code.Ledger.Certs.C_deregdrep_804
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -13175,7 +13175,7 @@ d_Convertible'45'Tx_602
                                                     (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_ccreghot_802
+                                                    MAlonzo.Code.Ledger.Certs.C_ccreghot_806
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -13239,11 +13239,11 @@ d_Convertible'45'Tx_602
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                              _ -> MAlonzo.RTE.mazUnreachableError))))
-                               (MAlonzo.Code.Ledger.Transaction.d_txcerts_2662 (coe v1)))))
+                               (MAlonzo.Code.Ledger.Transaction.d_txcerts_2670 (coe v1)))))
                     (coe
                        (\ v1 ->
                           coe
-                            MAlonzo.Code.Ledger.Transaction.C_TxBody'46'constructor_16177
+                            MAlonzo.Code.Ledger.Transaction.C_TxBody'46'constructor_16213
                             (coe
                                MAlonzo.Code.Axiom.Set.du_fromList_410
                                (coe
@@ -13309,7 +13309,7 @@ d_Convertible'45'Tx_602
                                                    case coe v2 of
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v3
                                                        -> case coe v3 of
-                                                            MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021 v4 v5 v6
+                                                            MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835 v4 v5 v6
                                                               -> case coe v5 of
                                                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v7
                                                                      -> coe v7
@@ -13319,7 +13319,7 @@ d_Convertible'45'Tx_602
                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v3
                                                        -> case coe v3 of
-                                                            MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2237 v4 v5 v6
+                                                            MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3051 v4 v5 v6
                                                               -> case coe v5 of
                                                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v7
                                                                      -> coe v7
@@ -13333,7 +13333,7 @@ d_Convertible'45'Tx_602
                                                    coe
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021
+                                                        MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835
                                                         (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
@@ -13545,7 +13545,7 @@ d_Convertible'45'Tx_602
                                      (coe v1))))
                             (coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txfee_190 (coe v1))
                             (let v2
-                                   = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104
+                                   = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2112
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818) in
                              coe
@@ -13588,7 +13588,7 @@ d_Convertible'45'Tx_602
                                      (coe
                                         (\ v2 ->
                                            case coe v2 of
-                                             MAlonzo.Code.Ledger.Certs.C_delegate_790 v3 v4 v5 v6
+                                             MAlonzo.Code.Ledger.Certs.C_delegate_794 v3 v4 v5 v6
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146
                                                     (coe
@@ -13631,7 +13631,7 @@ d_Convertible'45'Tx_602
                                                              (coe
                                                                 (\ v7 ->
                                                                    case coe v7 of
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v8 v9
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v8 v9
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                                             (coe
@@ -13642,13 +13642,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -13658,13 +13658,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -13702,10 +13702,10 @@ d_Convertible'45'Tx_602
                                                                                                     v11)
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v9)
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
@@ -13714,7 +13714,7 @@ d_Convertible'45'Tx_602
                                                                    case coe v7 of
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v8 v9
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                                             (coe
                                                                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                (coe
@@ -13723,13 +13723,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -13739,13 +13739,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -13785,10 +13785,10 @@ d_Convertible'45'Tx_602
                                                                                v9)
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                                     (coe
@@ -13802,7 +13802,7 @@ d_Convertible'45'Tx_602
                                                              (coe (\ v7 -> v7)) (coe (\ v7 -> v7))))
                                                        v5)
                                                     (coe v6)
-                                             MAlonzo.Code.Ledger.Certs.C_dereg_792 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_dereg_796 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148
                                                     (coe
@@ -13835,20 +13835,20 @@ d_Convertible'45'Tx_602
                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                        v3)
                                                     (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_regpool_794 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_regpool_798 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150
                                                     (coe v3)
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
                                                        d_Convertible'45'Credential_70
-                                                       (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                       (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                           (coe v4)))
-                                             MAlonzo.Code.Ledger.Certs.C_retirepool_796 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_retirepool_800 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152
                                                     (coe v3) (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_regdrep_798 v3 v4 v5
+                                             MAlonzo.Code.Ledger.Certs.C_regdrep_802 v3 v4 v5
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154
                                                     (coe
@@ -13882,9 +13882,9 @@ d_Convertible'45'Tx_602
                                                        v3)
                                                     (coe v4)
                                                     (coe
-                                                       MAlonzo.Code.Ledger.GovernanceActions.d_hash_646
+                                                       MAlonzo.Code.Ledger.GovernanceActions.d_hash_650
                                                        (coe v5))
-                                             MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_deregdrep_804 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156
                                                     (coe
@@ -13917,7 +13917,7 @@ d_Convertible'45'Tx_602
                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                        v3)
                                                     (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_ccreghot_806 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158
                                                     (coe
@@ -13988,7 +13988,7 @@ d_Convertible'45'Tx_602
                                            case coe v2 of
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146 v3 v4 v5 v6
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_delegate_790
+                                                    MAlonzo.Code.Ledger.Certs.C_delegate_794
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -14029,7 +14029,7 @@ d_Convertible'45'Tx_602
                                                              (coe
                                                                 (\ v7 ->
                                                                    case coe v7 of
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v8 v9
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v8 v9
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                                             (coe
@@ -14040,13 +14040,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -14056,13 +14056,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -14100,10 +14100,10 @@ d_Convertible'45'Tx_602
                                                                                                     v11)
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v9)
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
@@ -14112,7 +14112,7 @@ d_Convertible'45'Tx_602
                                                                    case coe v7 of
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v8 v9
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                                             (coe
                                                                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                (coe
@@ -14121,13 +14121,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -14137,13 +14137,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -14183,10 +14183,10 @@ d_Convertible'45'Tx_602
                                                                                v9)
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                                     (coe
@@ -14202,7 +14202,7 @@ d_Convertible'45'Tx_602
                                                     (coe v6)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_dereg_792
+                                                    MAlonzo.Code.Ledger.Certs.C_dereg_796
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -14235,7 +14235,7 @@ d_Convertible'45'Tx_602
                                                     (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_regpool_794 (coe v3)
+                                                    MAlonzo.Code.Ledger.Certs.C_regpool_798 (coe v3)
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -14245,12 +14245,12 @@ d_Convertible'45'Tx_602
                                                                 coe
                                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
                                                                   d_Convertible'45'Credential_70
-                                                                  (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                                  (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                                      (coe v5))))
                                                           (coe
                                                              (\ v5 ->
                                                                 coe
-                                                                  MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12157
+                                                                  MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12173
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                      (coe
@@ -14283,11 +14283,11 @@ d_Convertible'45'Tx_602
                                                        v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_retirepool_796
+                                                    MAlonzo.Code.Ledger.Certs.C_retirepool_800
                                                     (coe v3) (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154 v3 v4 v5
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_regdrep_798
+                                                    MAlonzo.Code.Ledger.Certs.C_regdrep_802
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -14325,19 +14325,19 @@ d_Convertible'45'Tx_602
                                                           (coe
                                                              (\ v6 ->
                                                                 case coe v6 of
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399 v7 v8
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415 v7 v8
                                                                     -> coe v8
                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
                                                           (coe
                                                              (\ v6 ->
                                                                 coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415
                                                                   (coe ("bogus" :: Data.Text.Text))
                                                                   (coe v6))))
                                                        v5)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_deregdrep_800
+                                                    MAlonzo.Code.Ledger.Certs.C_deregdrep_804
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -14370,7 +14370,7 @@ d_Convertible'45'Tx_602
                                                     (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_ccreghot_802
+                                                    MAlonzo.Code.Ledger.Certs.C_ccreghot_806
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -14443,7 +14443,7 @@ d_Convertible'45'Tx_602
                             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                             (let v2
-                                   = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104
+                                   = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2112
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818) in
                              coe
@@ -14496,7 +14496,7 @@ d_Convertible'45'Tx_602
                                   (MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_reqSigHash_200
                                      (coe v1))))
                             (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))))
-                 (MAlonzo.Code.Ledger.Transaction.d_body_2720 (coe v0)))
+                 (MAlonzo.Code.Ledger.Transaction.d_body_2728 (coe v0)))
               (coe
                  MAlonzo.Code.Foreign.Convertible.d_to_18
                  (coe
@@ -14556,7 +14556,7 @@ d_Convertible'45'Tx_602
                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                       v4)))))))
                                (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                  (coe MAlonzo.Code.Ledger.Transaction.d_vkSigs_2700 (coe v1))))
+                                  (coe MAlonzo.Code.Ledger.Transaction.d_vkSigs_2708 (coe v1))))
                             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                             (coe
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
@@ -14622,7 +14622,7 @@ d_Convertible'45'Tx_602
                                                             MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                          v4)))))))
                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                     (coe MAlonzo.Code.Ledger.Transaction.d_txdats_2704 (coe v1)))))
+                                     (coe MAlonzo.Code.Ledger.Transaction.d_txdats_2712 (coe v1)))))
                             (coe
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
                                (coe
@@ -14858,12 +14858,12 @@ d_Convertible'45'Tx_602
                                                          v4)))))))
                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                      (coe
-                                        MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706
+                                        MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714
                                         (coe v1)))))))
                     (coe
                        (\ v1 ->
                           coe
-                            MAlonzo.Code.Ledger.Transaction.C_TxWitnesses'46'constructor_16349
+                            MAlonzo.Code.Ledger.Transaction.C_TxWitnesses'46'constructor_16385
                             (coe
                                MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_566
                                (coe
@@ -15107,7 +15107,7 @@ d_Convertible'45'Tx_602
                                   (coe
                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txrdmrs_222
                                      (coe v1)))))))
-                 (MAlonzo.Code.Ledger.Transaction.d_wits_2722 (coe v0)))
+                 (MAlonzo.Code.Ledger.Transaction.d_wits_2730 (coe v0)))
               (coe
                  MAlonzo.Code.Foreign.Convertible.d_to_18
                  (coe
@@ -15117,11 +15117,11 @@ d_Convertible'45'Tx_602
                        MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
                        (coe (\ v1 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                        (coe (\ v1 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
-                 (MAlonzo.Code.Ledger.Transaction.d_txAD_2726 (coe v0)))))
+                 (MAlonzo.Code.Ledger.Transaction.d_txAD_2734 (coe v0)))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Transaction.C_Tx'46'constructor_16529
+              MAlonzo.Code.Ledger.Transaction.C_Tx'46'constructor_16565
               (coe
                  MAlonzo.Code.Foreign.Convertible.d_from_20
                  (coe
@@ -15155,7 +15155,7 @@ d_Convertible'45'Tx_602
                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56
                                                      (coe v3)))))
                                        (coe (\ v3 v4 -> v4)) (coe v2)))
-                               (MAlonzo.Code.Ledger.Transaction.d_txins_2650 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_txins_2658 (coe v1)))
                             (coe
                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
@@ -15181,7 +15181,7 @@ d_Convertible'45'Tx_602
                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56
                                                      (coe v3)))))
                                        (coe (\ v3 v4 -> v4)) (coe v2)))
-                               (MAlonzo.Code.Ledger.Transaction.d_refInputs_2652 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_refInputs_2660 (coe v1)))
                             (coe
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
                                (coe
@@ -15202,7 +15202,7 @@ d_Convertible'45'Tx_602
                                                                  case coe v3 of
                                                                    MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v4
                                                                      -> case coe v4 of
-                                                                          MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021 v5 v6 v7
+                                                                          MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835 v5 v6 v7
                                                                             -> case coe v6 of
                                                                                  MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v8
                                                                                    -> coe v8
@@ -15212,7 +15212,7 @@ d_Convertible'45'Tx_602
                                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                                    MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v4
                                                                      -> case coe v4 of
-                                                                          MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2237 v5 v6 v7
+                                                                          MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3051 v5 v6 v7
                                                                             -> case coe v6 of
                                                                                  MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v8
                                                                                    -> coe v8
@@ -15226,7 +15226,7 @@ d_Convertible'45'Tx_602
                                                                  coe
                                                                    MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021
+                                                                      MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835
                                                                       (coe
                                                                          MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                                                       (coe
@@ -15486,8 +15486,8 @@ d_Convertible'45'Tx_602
                                                             MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                          v4)))))))
                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                     (coe MAlonzo.Code.Ledger.Transaction.d_txouts_2654 (coe v1)))))
-                            (coe MAlonzo.Code.Ledger.Transaction.d_txfee_2656 (coe v1))
+                                     (coe MAlonzo.Code.Ledger.Transaction.d_txouts_2662 (coe v1)))))
+                            (coe MAlonzo.Code.Ledger.Transaction.d_txfee_2664 (coe v1))
                             (coe
                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                                (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -15512,8 +15512,8 @@ d_Convertible'45'Tx_602
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
                                                 (coe (\ v3 -> v3)) (coe (\ v3 -> v3))))))
-                                  (coe MAlonzo.Code.Ledger.Transaction.d_txvldt_2660 (coe v1))))
-                            (coe MAlonzo.Code.Ledger.Transaction.d_txsize_2680 (coe v1))
+                                  (coe MAlonzo.Code.Ledger.Transaction.d_txvldt_2668 (coe v1))))
+                            (coe MAlonzo.Code.Ledger.Transaction.d_txsize_2688 (coe v1))
                             (coe
                                MAlonzo.Code.Foreign.Convertible.d_to_18
                                (coe
@@ -15527,7 +15527,7 @@ d_Convertible'45'Tx_602
                                      (\ v2 ->
                                         MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56
                                           (coe v2))))
-                               (MAlonzo.Code.Ledger.Transaction.d_txid_2682 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_txid_2690 (coe v1)))
                             (coe
                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
@@ -15553,12 +15553,12 @@ d_Convertible'45'Tx_602
                                                    MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txid_56
                                                      (coe v3)))))
                                        (coe (\ v3 v4 -> v4)) (coe v2)))
-                               (MAlonzo.Code.Ledger.Transaction.d_collateral_2684 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_collateral_2692 (coe v1)))
                             (coe
                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
                                () erased (\ v2 -> v2)
-                               (MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2686 (coe v1)))
+                               (MAlonzo.Code.Ledger.Transaction.d_reqSigHash_2694 (coe v1)))
                             (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                             (coe
                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -15570,7 +15570,7 @@ d_Convertible'45'Tx_602
                                      (coe
                                         (\ v2 ->
                                            case coe v2 of
-                                             MAlonzo.Code.Ledger.Certs.C_delegate_790 v3 v4 v5 v6
+                                             MAlonzo.Code.Ledger.Certs.C_delegate_794 v3 v4 v5 v6
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146
                                                     (coe
@@ -15613,7 +15613,7 @@ d_Convertible'45'Tx_602
                                                              (coe
                                                                 (\ v7 ->
                                                                    case coe v7 of
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v8 v9
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v8 v9
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                                             (coe
@@ -15624,13 +15624,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -15640,13 +15640,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -15684,10 +15684,10 @@ d_Convertible'45'Tx_602
                                                                                                     v11)
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v9)
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
@@ -15696,7 +15696,7 @@ d_Convertible'45'Tx_602
                                                                    case coe v7 of
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v8 v9
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                                             (coe
                                                                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                (coe
@@ -15705,13 +15705,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -15721,13 +15721,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -15767,10 +15767,10 @@ d_Convertible'45'Tx_602
                                                                                v9)
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                                     (coe
@@ -15784,7 +15784,7 @@ d_Convertible'45'Tx_602
                                                              (coe (\ v7 -> v7)) (coe (\ v7 -> v7))))
                                                        v5)
                                                     (coe v6)
-                                             MAlonzo.Code.Ledger.Certs.C_dereg_792 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_dereg_796 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148
                                                     (coe
@@ -15817,20 +15817,20 @@ d_Convertible'45'Tx_602
                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                        v3)
                                                     (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_regpool_794 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_regpool_798 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150
                                                     (coe v3)
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
                                                        d_Convertible'45'Credential_70
-                                                       (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                       (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                           (coe v4)))
-                                             MAlonzo.Code.Ledger.Certs.C_retirepool_796 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_retirepool_800 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152
                                                     (coe v3) (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_regdrep_798 v3 v4 v5
+                                             MAlonzo.Code.Ledger.Certs.C_regdrep_802 v3 v4 v5
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154
                                                     (coe
@@ -15864,9 +15864,9 @@ d_Convertible'45'Tx_602
                                                        v3)
                                                     (coe v4)
                                                     (coe
-                                                       MAlonzo.Code.Ledger.GovernanceActions.d_hash_646
+                                                       MAlonzo.Code.Ledger.GovernanceActions.d_hash_650
                                                        (coe v5))
-                                             MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_deregdrep_804 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156
                                                     (coe
@@ -15899,7 +15899,7 @@ d_Convertible'45'Tx_602
                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                        v3)
                                                     (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_ccreghot_806 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158
                                                     (coe
@@ -15970,7 +15970,7 @@ d_Convertible'45'Tx_602
                                            case coe v2 of
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146 v3 v4 v5 v6
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_delegate_790
+                                                    MAlonzo.Code.Ledger.Certs.C_delegate_794
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -16011,7 +16011,7 @@ d_Convertible'45'Tx_602
                                                              (coe
                                                                 (\ v7 ->
                                                                    case coe v7 of
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v8 v9
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v8 v9
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                                             (coe
@@ -16022,13 +16022,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -16038,13 +16038,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -16082,10 +16082,10 @@ d_Convertible'45'Tx_602
                                                                                                     v11)
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v9)
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
@@ -16094,7 +16094,7 @@ d_Convertible'45'Tx_602
                                                                    case coe v7 of
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v8 v9
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                                             (coe
                                                                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                (coe
@@ -16103,13 +16103,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -16119,13 +16119,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -16165,10 +16165,10 @@ d_Convertible'45'Tx_602
                                                                                v9)
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                                     (coe
@@ -16184,7 +16184,7 @@ d_Convertible'45'Tx_602
                                                     (coe v6)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_dereg_792
+                                                    MAlonzo.Code.Ledger.Certs.C_dereg_796
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -16217,7 +16217,7 @@ d_Convertible'45'Tx_602
                                                     (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_regpool_794 (coe v3)
+                                                    MAlonzo.Code.Ledger.Certs.C_regpool_798 (coe v3)
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -16227,12 +16227,12 @@ d_Convertible'45'Tx_602
                                                                 coe
                                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
                                                                   d_Convertible'45'Credential_70
-                                                                  (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                                  (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                                      (coe v5))))
                                                           (coe
                                                              (\ v5 ->
                                                                 coe
-                                                                  MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12157
+                                                                  MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12173
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                      (coe
@@ -16265,11 +16265,11 @@ d_Convertible'45'Tx_602
                                                        v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_retirepool_796
+                                                    MAlonzo.Code.Ledger.Certs.C_retirepool_800
                                                     (coe v3) (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154 v3 v4 v5
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_regdrep_798
+                                                    MAlonzo.Code.Ledger.Certs.C_regdrep_802
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -16307,19 +16307,19 @@ d_Convertible'45'Tx_602
                                                           (coe
                                                              (\ v6 ->
                                                                 case coe v6 of
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399 v7 v8
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415 v7 v8
                                                                     -> coe v8
                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
                                                           (coe
                                                              (\ v6 ->
                                                                 coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415
                                                                   (coe ("bogus" :: Data.Text.Text))
                                                                   (coe v6))))
                                                        v5)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_deregdrep_800
+                                                    MAlonzo.Code.Ledger.Certs.C_deregdrep_804
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -16352,7 +16352,7 @@ d_Convertible'45'Tx_602
                                                     (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_ccreghot_802
+                                                    MAlonzo.Code.Ledger.Certs.C_ccreghot_806
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -16416,11 +16416,11 @@ d_Convertible'45'Tx_602
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                              _ -> MAlonzo.RTE.mazUnreachableError))))
-                               (MAlonzo.Code.Ledger.Transaction.d_txcerts_2662 (coe v1)))))
+                               (MAlonzo.Code.Ledger.Transaction.d_txcerts_2670 (coe v1)))))
                     (coe
                        (\ v1 ->
                           coe
-                            MAlonzo.Code.Ledger.Transaction.C_TxBody'46'constructor_16177
+                            MAlonzo.Code.Ledger.Transaction.C_TxBody'46'constructor_16213
                             (coe
                                MAlonzo.Code.Axiom.Set.du_fromList_410
                                (coe
@@ -16486,7 +16486,7 @@ d_Convertible'45'Tx_602
                                                    case coe v2 of
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v3
                                                        -> case coe v3 of
-                                                            MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021 v4 v5 v6
+                                                            MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835 v4 v5 v6
                                                               -> case coe v5 of
                                                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v7
                                                                      -> coe v7
@@ -16496,7 +16496,7 @@ d_Convertible'45'Tx_602
                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v3
                                                        -> case coe v3 of
-                                                            MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2237 v4 v5 v6
+                                                            MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3051 v4 v5 v6
                                                               -> case coe v5 of
                                                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v7
                                                                      -> coe v7
@@ -16510,7 +16510,7 @@ d_Convertible'45'Tx_602
                                                    coe
                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2021
+                                                        MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2835
                                                         (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
@@ -16722,7 +16722,7 @@ d_Convertible'45'Tx_602
                                      (coe v1))))
                             (coe MAlonzo.Code.Ledger.Foreign.LedgerTypes.d_txfee_190 (coe v1))
                             (let v2
-                                   = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104
+                                   = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2112
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818) in
                              coe
@@ -16765,7 +16765,7 @@ d_Convertible'45'Tx_602
                                      (coe
                                         (\ v2 ->
                                            case coe v2 of
-                                             MAlonzo.Code.Ledger.Certs.C_delegate_790 v3 v4 v5 v6
+                                             MAlonzo.Code.Ledger.Certs.C_delegate_794 v3 v4 v5 v6
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146
                                                     (coe
@@ -16808,7 +16808,7 @@ d_Convertible'45'Tx_602
                                                              (coe
                                                                 (\ v7 ->
                                                                    case coe v7 of
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v8 v9
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v8 v9
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                                             (coe
@@ -16819,13 +16819,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -16835,13 +16835,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -16879,10 +16879,10 @@ d_Convertible'45'Tx_602
                                                                                                     v11)
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v9)
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
@@ -16891,7 +16891,7 @@ d_Convertible'45'Tx_602
                                                                    case coe v7 of
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v8 v9
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                                             (coe
                                                                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                (coe
@@ -16900,13 +16900,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -16916,13 +16916,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -16962,10 +16962,10 @@ d_Convertible'45'Tx_602
                                                                                v9)
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                                     (coe
@@ -16979,7 +16979,7 @@ d_Convertible'45'Tx_602
                                                              (coe (\ v7 -> v7)) (coe (\ v7 -> v7))))
                                                        v5)
                                                     (coe v6)
-                                             MAlonzo.Code.Ledger.Certs.C_dereg_792 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_dereg_796 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148
                                                     (coe
@@ -17012,20 +17012,20 @@ d_Convertible'45'Tx_602
                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                        v3)
                                                     (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_regpool_794 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_regpool_798 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150
                                                     (coe v3)
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
                                                        d_Convertible'45'Credential_70
-                                                       (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                       (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                           (coe v4)))
-                                             MAlonzo.Code.Ledger.Certs.C_retirepool_796 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_retirepool_800 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152
                                                     (coe v3) (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_regdrep_798 v3 v4 v5
+                                             MAlonzo.Code.Ledger.Certs.C_regdrep_802 v3 v4 v5
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154
                                                     (coe
@@ -17059,9 +17059,9 @@ d_Convertible'45'Tx_602
                                                        v3)
                                                     (coe v4)
                                                     (coe
-                                                       MAlonzo.Code.Ledger.GovernanceActions.d_hash_646
+                                                       MAlonzo.Code.Ledger.GovernanceActions.d_hash_650
                                                        (coe v5))
-                                             MAlonzo.Code.Ledger.Certs.C_deregdrep_800 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_deregdrep_804 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156
                                                     (coe
@@ -17094,7 +17094,7 @@ d_Convertible'45'Tx_602
                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                        v3)
                                                     (coe v4)
-                                             MAlonzo.Code.Ledger.Certs.C_ccreghot_802 v3 v4
+                                             MAlonzo.Code.Ledger.Certs.C_ccreghot_806 v3 v4
                                                -> coe
                                                     MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158
                                                     (coe
@@ -17165,7 +17165,7 @@ d_Convertible'45'Tx_602
                                            case coe v2 of
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Delegate_146 v3 v4 v5 v6
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_delegate_790
+                                                    MAlonzo.Code.Ledger.Certs.C_delegate_794
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -17206,7 +17206,7 @@ d_Convertible'45'Tx_602
                                                              (coe
                                                                 (\ v7 ->
                                                                    case coe v7 of
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632 v8 v9
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636 v8 v9
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138
                                                                             (coe
@@ -17217,13 +17217,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -17233,13 +17233,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -17277,10 +17277,10 @@ d_Convertible'45'Tx_602
                                                                                                     v11)
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v9)
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                        -> coe
                                                                             MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
@@ -17289,7 +17289,7 @@ d_Convertible'45'Tx_602
                                                                    case coe v7 of
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CredVoter_138 v8 v9
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_632
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_636
                                                                             (coe
                                                                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                (coe
@@ -17298,13 +17298,13 @@ d_Convertible'45'Tx_602
                                                                                      (\ v10 ->
                                                                                         case coe
                                                                                                v10 of
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
-                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                          MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                             -> coe
                                                                                                  MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
@@ -17314,13 +17314,13 @@ d_Convertible'45'Tx_602
                                                                                                v10 of
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CC_130
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_620
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_CC_624
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DRep_132
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_622
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_DRep_626
                                                                                           MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_SPO_134
                                                                                             -> coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_624
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.C_SPO_628
                                                                                           _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                v8)
                                                                             (coe
@@ -17360,10 +17360,10 @@ d_Convertible'45'Tx_602
                                                                                v9)
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_AbstainRep_140
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_634
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_638
                                                                      MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_NoConfidenceRep_142
                                                                        -> coe
-                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_636
+                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_640
                                                                      _ -> MAlonzo.RTE.mazUnreachableError))))
                                                        v4)
                                                     (coe
@@ -17379,7 +17379,7 @@ d_Convertible'45'Tx_602
                                                     (coe v6)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_Dereg_148 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_dereg_792
+                                                    MAlonzo.Code.Ledger.Certs.C_dereg_796
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -17412,7 +17412,7 @@ d_Convertible'45'Tx_602
                                                     (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegPool_150 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_regpool_794 (coe v3)
+                                                    MAlonzo.Code.Ledger.Certs.C_regpool_798 (coe v3)
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -17422,12 +17422,12 @@ d_Convertible'45'Tx_602
                                                                 coe
                                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
                                                                   d_Convertible'45'Credential_70
-                                                                  (MAlonzo.Code.Ledger.Certs.d_rewardAddr_786
+                                                                  (MAlonzo.Code.Ledger.Certs.d_rewardAddr_790
                                                                      (coe v5))))
                                                           (coe
                                                              (\ v5 ->
                                                                 coe
-                                                                  MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12157
+                                                                  MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12173
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                      (coe
@@ -17460,11 +17460,11 @@ d_Convertible'45'Tx_602
                                                        v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RetirePool_152 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_retirepool_796
+                                                    MAlonzo.Code.Ledger.Certs.C_retirepool_800
                                                     (coe v3) (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_RegDRep_154 v3 v4 v5
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_regdrep_798
+                                                    MAlonzo.Code.Ledger.Certs.C_regdrep_802
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -17502,19 +17502,19 @@ d_Convertible'45'Tx_602
                                                           (coe
                                                              (\ v6 ->
                                                                 case coe v6 of
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399 v7 v8
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415 v7 v8
                                                                     -> coe v8
                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
                                                           (coe
                                                              (\ v6 ->
                                                                 coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1399
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1415
                                                                   (coe ("bogus" :: Data.Text.Text))
                                                                   (coe v6))))
                                                        v5)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_DeRegDRep_156 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_deregdrep_800
+                                                    MAlonzo.Code.Ledger.Certs.C_deregdrep_804
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -17547,7 +17547,7 @@ d_Convertible'45'Tx_602
                                                     (coe v4)
                                              MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_CCRegHot_158 v3 v4
                                                -> coe
-                                                    MAlonzo.Code.Ledger.Certs.C_ccreghot_802
+                                                    MAlonzo.Code.Ledger.Certs.C_ccreghot_806
                                                     (coe
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        (coe
@@ -17620,7 +17620,7 @@ d_Convertible'45'Tx_602
                             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                             (let v2
-                                   = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2104
+                                   = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2112
                                        (coe
                                           MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_818) in
                              coe
@@ -17733,7 +17733,7 @@ d_Convertible'45'Tx_602
                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                       v4)))))))
                                (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                  (coe MAlonzo.Code.Ledger.Transaction.d_vkSigs_2700 (coe v1))))
+                                  (coe MAlonzo.Code.Ledger.Transaction.d_vkSigs_2708 (coe v1))))
                             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                             (coe
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
@@ -17799,7 +17799,7 @@ d_Convertible'45'Tx_602
                                                             MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                          v4)))))))
                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                     (coe MAlonzo.Code.Ledger.Transaction.d_txdats_2704 (coe v1)))))
+                                     (coe MAlonzo.Code.Ledger.Transaction.d_txdats_2712 (coe v1)))))
                             (coe
                                MAlonzo.Code.Ledger.Foreign.LedgerTypes.C_MkHSMap_36
                                (coe
@@ -18035,12 +18035,12 @@ d_Convertible'45'Tx_602
                                                          v4)))))))
                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                      (coe
-                                        MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2706
+                                        MAlonzo.Code.Ledger.Transaction.d_txrdmrs_2714
                                         (coe v1)))))))
                     (coe
                        (\ v1 ->
                           coe
-                            MAlonzo.Code.Ledger.Transaction.C_TxWitnesses'46'constructor_16349
+                            MAlonzo.Code.Ledger.Transaction.C_TxWitnesses'46'constructor_16385
                             (coe
                                MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_566
                                (coe
