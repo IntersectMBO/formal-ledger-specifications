@@ -170,7 +170,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
     in
-    ∙ wdrlCreds ⊆ dom voteDelegs
+    ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢
