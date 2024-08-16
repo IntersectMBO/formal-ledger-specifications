@@ -125,7 +125,8 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , ss
   , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState , tmpDeps ⟧ᶜˢ
+    ⟧ˡ
   , es
   , fut
   ⟧ᵉ' =
@@ -134,7 +135,8 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , ss
   , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState , tmpDeps ⟧ᶜˢ
+    ⟧ˡ
   , es
   , fut ⟧ᵉ'
   where
@@ -204,7 +206,7 @@ its results by carrying out each of the following tasks.
 \begin{code}
   EPOCH : let
       ⟦ esW , removed , _ ⟧ʳ = fut
-      ⟦ utxoSt , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ = ls
+      ⟦ utxoSt , govSt , ⟦ dState , pState , gState , tmpDeps ⟧ᶜˢ ⟧ˡ = ls
 \end{code}
 \begin{code}[hide]
       open UTxOState
@@ -232,7 +234,9 @@ its results by carrying out each of the following tasks.
         ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
         , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ
         , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps)
-          , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ ⟧ᶜˢ
+          , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ
+        , tmpDeps
+        ⟧ᶜˢ
 
       utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 

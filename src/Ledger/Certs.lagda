@@ -55,6 +55,7 @@ data DCert : Type where
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → Coin → DCert
   ccreghot    : Credential → Maybe Credential → DCert
+
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -128,13 +129,14 @@ record GState : Type where
 record CertState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ᶜˢ
+  constructor ⟦_,_,_,_⟧ᶜˢ
   field
 \end{code}
 \begin{code}
     dState : DState
     pState : PState
     gState : GState
+    temporaryDeposits : Deposits
 
 record DelegEnv : Type where
 \end{code}
@@ -156,6 +158,22 @@ PoolEnv     = PParams
 
 
 \begin{code}[hide]
+certDeposit' : DCert → PParams → Deposits
+certDeposit' (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
+certDeposit' (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
+certDeposit' _                  _   = ∅
+-- handled in the Utxo module:
+-- certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
+
+certRefund' : DCert → ℙ DepositPurpose
+certRefund' (dereg c _)      = ❴ CredentialDeposit c ❵
+certRefund' (deregdrep c _)  = ❴ DRepDeposit c ❵
+certRefund' _                = ∅
+
+updateCertDeposit'  : PParams → DCert → Deposits → Deposits
+updateCertDeposit' pp cert deposits
+  = (deposits ∪⁺ certDeposit' cert pp) ∣ certRefund' cert ᶜ
+
 private variable
   an : Anchor
   dReps dReps' : Credential ⇀ Epoch
@@ -187,7 +205,7 @@ private variable
   voteDelegs : Credential ⇀ VDeleg
   stakeDelegs : Credential ⇀ KeyHash
   rewards : Credential ⇀ Coin
-  deps : Deposits
+  deps tdeps : Deposits
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -406,17 +424,19 @@ data _⊢_⇀⦇_,CERT⦈_ where
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢
+        ⟦ stᵈ , stᵖ , stᵍ , tdeps ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ , updateCertDeposit' pp dCert tdeps ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ , tdeps ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ , tdeps ⟧ᶜˢ
 
   CERT-vdel :
-    ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
+    ∙ ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
-      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢
+        ⟦ stᵈ , stᵖ , stᵍ , tdeps ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' , updateCertDeposit' pp dCert tdeps ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}
 \emph{CERTBASE transition}
@@ -435,10 +455,12 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
-        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
-        ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ , tdeps ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
+        ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
+        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
+        , tdeps
+        ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}

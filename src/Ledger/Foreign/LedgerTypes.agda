@@ -682,11 +682,13 @@ record CertState : Type where
   field dState : DState
         pState : PState
         gState : GState
+        temporaryDeposits : HSMap DepositPurpose Coin
 {-# FOREIGN GHC
   data CertState = MkCertState
     { dState :: DState
     , pState :: PState
     , gState :: GState
+    , temporaryDeposits :: HSMap DepositPurpose Coin
     }
 #-}
 {-# COMPILE GHC CertState = data CertState (MkCertState) #-}
