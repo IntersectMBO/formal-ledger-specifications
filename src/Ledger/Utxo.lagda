@@ -421,7 +421,7 @@ equal if they are both present.
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)
     in
-    -- deal with refInputs correctly here
+    -- deal with refInputs correctly here TODO
     ∙ txins  ≢ ∅                         ∙ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅              ∙ inInterval slot txvldt
     ∙ coin mint ≡ 0
@@ -437,7 +437,7 @@ equal if they are both present.
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
 
-    -- new checks
+    -- new checks TODO
     -- ∙ all subTxs have corresponding bodies in subTxBodies
     -- ∙ only top level tx has corInputs
 

@@ -167,6 +167,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     in
     -- TODO does this allow extra scripts? they should be allowed (if not, this makes the witness collection for subTxs more complicated)
     -- TODO deal with reference inputs correctly
+    -- TODO check required Txs all there if hasOwnUnits, checkSubTxBodies are there
+    -- TODO add subunits to script integrity hash
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes

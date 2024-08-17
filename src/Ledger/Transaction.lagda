@@ -155,12 +155,20 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       txid           : TxId
       collateral     : ℙ TxIn
       reqSigHash     : ℙ KeyHash
-      scriptIntHash  : Maybe ScriptHash
+      scriptIntHash  : Maybe ScriptHash -- TODO is this actually checked somewhere?
       -- NEW
-      subTxs          : ℙ TxId
+      -- fixes all attached sub-transactions
+      subTxs          : ℙ TxId 
+      -- fixes what transaction bodies will be shown to plutus scripts being run by this transaction (can be in any transaction)
       requiredTxs    : ℙ TxId
+      -- outputs being spent for which inputs are provided by top-level tx
       spendOuts      : List TxOut
+      -- inputs corresponding to spentOuts
       corInputs      : ℙ TxIn
+      -- toggles whether subTx provides ExUnits or the top-level Tx provides them
+      knowsOwnUnits   : Bool
+      -- units for sub-Txs if they do not provide their own
+      subUnits        : TxId ⇀ (RdmrPtr  ⇀ ExUnits)
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -187,11 +195,13 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       body     : TxBody
       wits     : TxWitnesses
       isValid  : Bool
+      -- Top level transaction or not (set by builder of top level Tx)
       isTopLevel  : Bool
       txAD     : Maybe AuxiliaryData
       -- NEW
-      subTxBodies  : TxId ⇀ TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData))
-      -- NEW
+      -- map of transaction bodies and associated data (can only be attached to a top level transaction)
+      -- probably need a data structure called subTxData here instead of a product?
+      subTxBodies  : TxId ⇀ TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody))
       requiredTxBodies  : TxId ⇀ TxBody
 \end{code}
 \end{NoConway}
@@ -204,6 +214,39 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
+
+  -- returns a list of subTxBodies paired with associated other data (sigs, etc)
+  getTxData : (TxId ⇀ TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody))) → List (TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)))
+  getTxData subTxBodies = map proj₂ (setToList (proj₁ subTxBodies))
+
+  -- returns just the txbody of a given subTx data structure 
+  getBD : TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → TxBody
+  getBD = proj₁
+
+  -- returns just the signature of a given subTx data structure
+  getSigs : TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → ( VKey ⇀ Sig )
+  getSigs = proj₁ ∘ proj₂
+  
+  -- returns just the redeemer/exunit data of a given subTx data structure
+  getRds : TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → (RdmrPtr  ⇀ Redeemer × ExUnits)
+  getRds t = proj₁ (proj₂ (proj₂ t))
+
+  -- returns just the aux data of a given subTx data structure
+  getAD : TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → (Maybe AuxiliaryData)
+  getAD t = proj₁ (proj₂ (proj₂ (proj₂ t)))
+    
+  -- returns requireTxBodies if ownRds are provided 
+  getReqs : Bool → (TxId ⇀ TxBody) → TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → (TxId ⇀ TxBody)
+  getReqs ownRds st t with ownRds  
+  ... | false = st
+  ... | true  = proj₂ (proj₂ (proj₂ (proj₂ t)))
+
+  -- returns redeemer pointer sturucture if ownRds is true, returns redeemer pointers with redeemers from structure and exunits from txExs
+  mkRds : Bool → (RdmrPtr  ⇀ Redeemer × ExUnits) → (TxId ⇀ RdmrPtr  ⇀ ExUnits) → (RdmrPtr  ⇀ Redeemer × ExUnits) 
+  mkRds ownRds r txExs with ownRds  
+  ... | false = r -- TODO compute the real set!!
+  ... | true  = r
+
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
