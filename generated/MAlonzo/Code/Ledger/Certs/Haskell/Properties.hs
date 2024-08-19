@@ -902,7 +902,7 @@ d_Computational'45'POOL_1056 v0
                                                (coe
                                                   MAlonzo.Code.Ledger.Certs.d_retiring_872
                                                   (coe v2)))
-                                            (coe MAlonzo.Code.Ledger.Certs.C_POOL'45'regpool_1072)))
+                                            (coe MAlonzo.Code.Ledger.Certs.C_POOL'45'regpool_1076)))
                                else coe
                                       seq (coe v9)
                                       (coe
@@ -948,8 +948,8 @@ d_Computational'45'POOL_1056 v0
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
                                        (coe v6)))
-                                 (coe MAlonzo.Code.Ledger.Certs.d_retiring_868 (coe v2)))))
-                        (coe MAlonzo.Code.Ledger.Certs.C_POOL'45'retirepool_1074))
+                                 (coe MAlonzo.Code.Ledger.Certs.d_retiring_872 (coe v2)))))
+                        (coe MAlonzo.Code.Ledger.Certs.C_POOL'45'retirepool_1078))
               _ -> coe v4))
 -- Ledger.Certs.Haskell.Properties.Computational-GOVCERT
 d_Computational'45'GOVCERT_1082 ::
