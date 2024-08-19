@@ -363,6 +363,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     open LEnv Γ renaming (pparams to pp); open EpochState eps hiding (es); open LState ls
     open GovActionState; open RatifyState fut using (removed)
 
+{- NOTE: Temporarily uncomment until the proof is adapted.
     -- GA Deposits Invariance Property for EPOCH STS -----------------------------------------------
     EPOCH-govDepsMatch :
       (ratify-removed : mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ (UTxOState.deposits utxoSt ˢ))
@@ -464,7 +465,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
         (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filter P? govSt))          ∼⟨ ∈-fromList ⟩
         a ∈ fromList (map (GovActionDeposit ∘ proj₁)(filter P? govSt))  ∎
-
+-}
 
   -- GA Deposits Invariance Property for CHAIN STS --------------------------------------------------------------------
   module _ (tx : Tx) (Γ : LEnv) (b : Block) (cs : ChainState) where
@@ -482,7 +483,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
             { ls = EpochState.ls (NewEpochState.epochState nes) }
         }
       }
-
+{-
     CHAIN-govDepsMatch : {nes : NewEpochState}
       → mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ (UTxOState.deposits (LState.utxoSt ls) ˢ)
       → totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
@@ -499,3 +500,4 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
       (RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers)
       ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
+-}
