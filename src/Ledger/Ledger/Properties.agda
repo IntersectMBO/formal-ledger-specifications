@@ -363,7 +363,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     open LEnv Γ renaming (pparams to pp); open EpochState eps hiding (es); open LState ls
     open GovActionState; open RatifyState fut using (removed)
 
-{- NOTE: Temporarily uncomment until the proof is adapted.
+{- NOTE: Temporarily comment until the proof is adapted.
     -- GA Deposits Invariance Property for EPOCH STS -----------------------------------------------
     EPOCH-govDepsMatch :
       (ratify-removed : mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ (UTxOState.deposits utxoSt ˢ))
