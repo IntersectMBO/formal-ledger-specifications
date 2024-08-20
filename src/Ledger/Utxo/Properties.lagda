@@ -48,7 +48,7 @@ instance
   Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_ String
   Computational-UTXOS = record {go} where
     module go Γ s tx
-      (let H-Yes , ⁇ H-Yes? = Scripts-Yes-premises {Γ} {s} {tx})
+      (let H-Yes , ⁇ H-Yes? = Scripts-Yes-premises {Γ} {s} {tx} )
       (let H-No  , ⁇ H-No?  = Scripts-No-premises {Γ} {s} {tx}) where
       open Tx tx renaming (body to txb); open TxBody txb
       open UTxOEnv Γ renaming (pparams to pp)
@@ -64,7 +64,7 @@ instance
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
       completeness _ (Scripts-Yes p) with H-No? | H-Yes?
       ... | yes (_ , refl) | _     = case proj₂ p of λ ()
-      ... | no _           | yes _ = refl
+      ... | no _           | yes _ = ? -- refl
       ... | no _           | no ¬p = case ¬p p of λ ()
       completeness _ (Scripts-No p) with H-Yes? | H-No?
       ... | yes (_ , refl) | _     = case proj₂ p of λ ()

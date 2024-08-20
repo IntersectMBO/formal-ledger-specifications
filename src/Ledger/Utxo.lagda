@@ -220,7 +220,7 @@ instance
   HasCoin-UTxO .getCoin = cbalance
 \end{code}
 \begin{code}
-certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
+certDeposit : DCert → PParams → Deposits
 certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
 certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
 certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
@@ -231,11 +231,26 @@ certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
 certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
 certRefund _                = ∅
 
-updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
-                    → DepositPurpose ⇀ Coin
-updateCertDeposits _   []              deposits = deposits
-updateCertDeposits pp  (cert ∷ certs)  deposits
-  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
+
+-- updateCertDeposits  : PParams → List DCert → Deposits → Deposits
+-- updateCertDeposits pp [] deposits = deposits
+-- updateCertDeposits pp (cert ∷ certs) deposits =
+--   (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
+
+updateCertDeposits  : PParams → List DCert → Deposits → Maybe Deposits
+updateCertDeposits pp (delegate c _ _ v ∷ certs) deposits =
+  updateCertDeposits pp certs (deposits ∪⁺ ❴ CredentialDeposit c , v ❵)
+updateCertDeposits pp (regpool kh _ ∷ certs) deposits =
+  updateCertDeposits pp certs (deposits ∪⁺ ❴ PoolDeposit kh , pp .poolDeposit ❵)
+updateCertDeposits pp (regdrep c v _ ∷ certs) deposits =
+  updateCertDeposits pp certs (deposits ∪⁺ ❴ DRepDeposit c , v ❵)
+updateCertDeposits pp (dereg c _ ∷ certs) deposits with (CredentialDeposit c) ∈? mapˢ proj₁ (deposits ˢ)
+... | no  _ = nothing
+... | yes _ = updateCertDeposits pp certs (deposits ∣ ❴ CredentialDeposit c ❵ ᶜ)
+updateCertDeposits pp (deregdrep c _ ∷ certs) deposits with (DRepDeposit c) ∈? mapˢ proj₁ (deposits ˢ)
+... | no  _ = nothing
+... | yes _ = updateCertDeposits pp certs (deposits ∣ ❴ DRepDeposit c ❵ ᶜ)
+updateCertDeposits pp _ deposits = just deposits
 
 updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
 updateProposalDeposits []        _     _      deposits  = deposits
@@ -243,22 +258,23 @@ updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
   updateProposalDeposits ps txid gaDep deposits
   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
-updateDeposits : PParams → TxBody → Deposits → Deposits
+updateDeposits : PParams → TxBody → Deposits → Maybe Deposits
 updateDeposits pp txb = updateCertDeposits pp txcerts
                         ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
 \end{code}
 \begin{code}[hide]
   where open TxBody txb
 
-proposalDepositsΔ : List GovProposal → PParams → TxBody → DepositPurpose ⇀ Coin
+proposalDepositsΔ : List GovProposal → PParams → TxBody → Deposits
 proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActionDeposit) ∅
   where open TxBody txb
 \end{code}
 \begin{code}
 
-depositsChange : PParams → TxBody → Deposits → ℤ
-depositsChange pp txb deposits =
-  getCoin (updateDeposits pp txb deposits) - getCoin deposits
+depositsChange : PParams → TxBody → Deposits → Maybe ℤ
+depositsChange pp txb deposits with (updateDeposits pp txb deposits)
+... | nothing = nothing
+... | just newDeposits = just (getCoin newDeposits - getCoin deposits)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
@@ -344,24 +360,29 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 module _ (let open UTxOState; open TxBody) where
 \end{code}
 \begin{code}
-  depositRefunds : PParams → UTxOState → TxBody → Coin
-  depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
+  depositRefunds : PParams → UTxOState → TxBody → Maybe Coin
+  depositRefunds pp st txb with depositsChange pp txb (st .deposits)
+  ... | nothing = nothing
+  ... | just dc = just (negPart dc)
 
-  newDeposits : PParams → UTxOState → TxBody → Coin
-  newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
+  newDeposits : PParams → UTxOState → TxBody → Maybe Coin
+  newDeposits pp st txb with depositsChange pp txb (st .deposits)
+  ... | nothing = nothing
+  ... | just dc = just (posPart dc)
 
-  consumed : PParams → UTxOState → TxBody → Value
-  consumed pp st txb
-    =  balance (st .utxo ∣ txb .txins)
-    +  txb .mint
-    +  inject (depositRefunds pp st txb)
+  consumed : PParams → UTxOState → TxBody → Maybe Value
+  consumed pp st txb with depositRefunds pp st txb
+  ... | nothing = nothing
+  ... | just refunds = just (balance (st .utxo ∣ txb .txins) + txb .mint + inject refunds)
 
-  produced : PParams → UTxOState → TxBody → Value
-  produced pp st txb
-    =  balance (outs txb)
-    +  inject (txb .txfee)
-    +  inject (newDeposits pp st txb)
-    +  inject (txb .txdonation)
+  produced : PParams → UTxOState → TxBody → Maybe Value
+  produced pp st txb with newDeposits pp st txb
+  ... | nothing = nothing
+  ... | just deps = just ( balance (outs txb)
+                         + inject (txb .txfee)
+                         + inject deps
+                         + inject (txb .txdonation)
+                         )
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -378,6 +399,16 @@ difference is the identity function.
 
 \begin{code}[hide]
 open PParams
+private variable
+  udeps : Deposits
+
+data _≢nothing {A : Type} : Maybe A → Type where
+  something : ∀{x : A} → (just x) ≢nothing
+
+some : ∀{A}(m : Maybe A) → m ≢nothing → A
+some (just x) _ = x
+some nothing ()
+
 data
   _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 
@@ -389,14 +420,15 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ isValid
+        {p : updateDeposits pp txb deposits ≢nothing}
+      → ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
-                              , fees + txfee
-                              , updateDeposits pp txb deposits
-                              , donations + txdonation
-                              ⟧ᵘ
+                               , fees + txfee
+                               , some (updateDeposits pp txb deposits) p
+                               , donations + txdonation
+                               ⟧ᵘ
 
   Scripts-No :
     ∀ {Γ} {s} {tx}

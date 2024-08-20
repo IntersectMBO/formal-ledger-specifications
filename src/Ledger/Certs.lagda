@@ -73,7 +73,7 @@ cwitness (ccreghot c _)      = c
 \caption{Delegation definitions}
 \end{figure*}
 
-\begin{figure*}[htb]
+\begin{figure*}[h!]
 \begin{AgdaMultiCode}
 \begin{code}
 record CertEnv : Type where
@@ -129,14 +129,13 @@ record GState : Type where
 record CertState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ᶜˢ
+  constructor ⟦_,_,_⟧ᶜˢ
   field
 \end{code}
 \begin{code}
     dState : DState
     pState : PState
     gState : GState
-    temporaryDeposits : Deposits
 
 record DelegEnv : Type where
 \end{code}
@@ -158,22 +157,6 @@ PoolEnv     = PParams
 
 
 \begin{code}[hide]
-certDeposit' : DCert → PParams → Deposits
-certDeposit' (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
-certDeposit' (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
-certDeposit' _                  _   = ∅
--- handled in the Utxo module:
--- certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
-
-certRefund' : DCert → ℙ DepositPurpose
-certRefund' (dereg c _)      = ❴ CredentialDeposit c ❵
-certRefund' (deregdrep c _)  = ❴ DRepDeposit c ❵
-certRefund' _                = ∅
-
-updateCertDeposit'  : PParams → DCert → Deposits → Deposits
-updateCertDeposit' pp cert deposits
-  = (deposits ∪⁺ certDeposit' cert pp) ∣ certRefund' cert ᶜ
-
 private variable
   an : Anchor
   dReps dReps' : Credential ⇀ Epoch
@@ -279,7 +262,7 @@ constitutional committee.
 \end{itemize}
 
 \begin{figure*}[h]
-\begin{AgdaSuppressSpace}
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 data
 \end{code}
@@ -310,11 +293,14 @@ data
 \begin{code}
   _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
 \end{code}
-\begin{code}
-_⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+\begin{code}[hide]
+module _ where
 \end{code}
-\end{AgdaSuppressSpace}
+\begin{code}
+  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
+  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+\end{code}
+\end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}
 \label{fig:sts:certs-types}
 \end{figure*}
@@ -370,7 +356,7 @@ data _⊢_⇀⦇_,POOL⦈_ where
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}[htb]
+\begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,GOVCERT⦈_ where
@@ -411,7 +397,7 @@ CERTBASE as the base case. CERTBASE does the following:
   epochs in the future.
 \end{itemize}
 
-\begin{figure*}[htbp]
+\begin{figure*}[h]
 \emph{CERT transitions}
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
@@ -422,18 +408,17 @@ data _⊢_⇀⦇_,CERT⦈_ where
     ∙ ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢
-        ⟦ stᵈ , stᵖ , stᵍ , tdeps ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ , updateCertDeposit' pp dCert tdeps ⟧ᶜˢ
+        ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ , tdeps ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ , tdeps ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
-    ∙ ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
+    ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢
-        ⟦ stᵈ , stᵖ , stᵍ , tdeps ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' , updateCertDeposit' pp dCert tdeps ⟧ᶜˢ
+      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}
 \emph{CERTBASE transition}
@@ -452,11 +437,10 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
-        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ , tdeps ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
+        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
         ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
-        , tdeps
         ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}

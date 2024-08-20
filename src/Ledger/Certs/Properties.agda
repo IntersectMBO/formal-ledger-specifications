@@ -77,7 +77,7 @@ instance
     rewrite dec-no ((c , nothing) ∈? (ccKeys ˢ)) ¬p = refl
 
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
-  Computational-CERT .computeProof Γ@(⟦ e , pp , vs , _ , deps ⟧ᶜ) ⟦ stᵈ , stᵖ , stᵍ , _ ⟧ᶜˢ dCert
+  Computational-CERT .computeProof Γ@(⟦ e , pp , vs , _ , deps ⟧ᶜ) ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ dCert
     with computeProof ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ stᵈ dCert
        | computeProof pp stᵖ dCert | computeProof Γ stᵍ dCert
   ... | success (_ , h) | _               | _               = success (-, CERT-deleg h)
@@ -85,33 +85,33 @@ instance
   ... | failure _       | failure _       | success (_ , h) = success (-, CERT-vdel h)
   ... | failure e₁      | failure e₂      | failure e₃      = failure $
     "DELEG: " <> e₁ <> "\nPOOL: " <> e₂ <> "\nVDEL: " <> e₃
-  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls , deps ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ , _ ⟧ᶜˢ
-    dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ , _ ⟧ᶜˢ (CERT-deleg h)
+  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls , deps ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
     with computeProof ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
-  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls , deps ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ , _ ⟧ᶜˢ
-    dCert@(dereg c _) ⟦ stᵈ' , stᵖ , stᵍ , _ ⟧ᶜˢ (CERT-deleg h)
+  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls , deps ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(dereg c _) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
     with computeProof ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
-  Computational-CERT .completeness ⟦ _ , pp , _ , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ , _ ⟧ᶜˢ
-    dCert@(regpool c poolParams) ⟦ stᵈ , stᵖ' , stᵍ , _ ⟧ᶜˢ (CERT-pool h)
+  Computational-CERT .completeness ⟦ _ , pp , _ , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(regpool c poolParams) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
     with computeProof pp stᵖ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
-  Computational-CERT .completeness ⟦ _ , pp , _ , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ , _ ⟧ᶜˢ
-    dCert@(retirepool c e) ⟦ stᵈ , stᵖ' , stᵍ , _ ⟧ᶜˢ (CERT-pool h)
+  Computational-CERT .completeness ⟦ _ , pp , _ , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(retirepool c e) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
     with completeness _ _ _ _ h
   ... | refl = refl
-  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ , _ ⟧ᶜˢ
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
     dCert@(regdrep c d an)
-    ⟦ stᵈ , stᵖ , stᵍ' , _ ⟧ᶜˢ (CERT-vdel h)
+    ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
-  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ , _ ⟧ᶜˢ
-    dCert@(deregdrep c _) ⟦ stᵈ , stᵖ , stᵍ' , _ ⟧ᶜˢ (CERT-vdel h)
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(deregdrep c _) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
-  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ , _ ⟧ᶜˢ
-    dCert@(ccreghot c mkh) ⟦ stᵈ , stᵖ , stᵍ' , _ ⟧ᶜˢ (CERT-vdel h)
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(ccreghot c mkh) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
     with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
 
