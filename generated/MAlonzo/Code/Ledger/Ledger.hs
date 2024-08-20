@@ -82,8 +82,8 @@ d_EnactState_1598 a0 a1 = ()
 -- Ledger.Ledger._._⊢_⇀⦇_,GOV⦈_
 d__'8866'_'8640''10631'_'44'GOV'10632'__1650 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1586 ->
-  MAlonzo.Code.Ledger.Gov.T_GovEnv_962 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1590 ->
+  MAlonzo.Code.Ledger.Gov.T_GovEnv_966 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> ()

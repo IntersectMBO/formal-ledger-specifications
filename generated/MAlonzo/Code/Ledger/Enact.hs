@@ -308,10 +308,10 @@ du_getHashES_828 v0 v1
         -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Enact._⊢_⇀⦇_,ENACT⦈_
-d__'8866'_'8640''10631'_'44'ENACT'10632'__840 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'ENACT'10632'__840
-  = C_Enact'45'NoConf_868 |
-    C_Enact'45'NewComm_876 (AgdaAny ->
+d__'8866'_'8640''10631'_'44'ENACT'10632'__844 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'ENACT'10632'__844
+  = C_Enact'45'NoConf_872 |
+    C_Enact'45'NewComm_880 (AgdaAny ->
                             MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
                             MAlonzo.Code.Data.Sum.Base.T__'8846'__30) |
     C_Enact'45'NewConst_882 | C_Enact'45'HF_884 |
