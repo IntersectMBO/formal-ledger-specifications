@@ -121,13 +121,24 @@ instance
   ... | success _ | refl = refl
 
   Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
-  Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls ⟧ᶜ st _ =
-    let open PParams pp; open CertState st; open GState gState; open DState dState
-        refresh = mapPartial getDRepVote (fromList vs)
-    in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
+  Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls ⟧ᶜ st sig = goal
+    where
+    open PParams pp; open CertState st; open GState gState; open DState dState
+    refresh = mapPartial getDRepVote (fromList vs)
+
+    genErr : ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
+                 × mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards)
+                  → String
+    genErr ¬p = case dec-de-morgan ¬p of λ where
+      (inj₁ a) → "¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs )"
+      (inj₂ b) → "¬ ( mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards )"
+
+    goal : ComputationResult String
+           (∃-syntax (_⊢_⇀⦇_,CERTBASE⦈_ ⟦ e , pp , vs , wdrls ⟧ᶜ st sig))
+    goal = case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
               × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
       (yes p) → success (-, CERT-base p)
-      (no ¬p) → failure (genErrors ¬p)
+      (no ¬p) → failure (genErr ¬p)
   Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls ⟧ᶜ st _ st' (CERT-base p)
     rewrite let dState = CertState.dState st; open DState dState in
       dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
