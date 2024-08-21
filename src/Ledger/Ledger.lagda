@@ -9,6 +9,7 @@ open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
 open import Data.Integer.Ext     using (posPart; negPart)
+open import Data.List.Sort.Base
 
 module Ledger.Ledger
   (txs : _) (open TransactionStructure txs)
@@ -73,6 +74,39 @@ private variable
 
 
 \begin{code}
+-- builds witness record for sub-txs from sub-tx structure and top-level tx 
+mkWits : Bool → TxWitnesses → (VKey ⇀ Sig) → (RdmrPtr  ⇀ Redeemer × ExUnits) → TxWitnesses
+mkWits ownRds txw s r = record { vkSigs = s; scripts = txw .TxWitnesses.scripts; txdats = txw .TxWitnesses.txdats; txrdmrs = r }
+
+-- builds list of transactions from sub-txs in top-level tx
+mkTxList : Tx → List Tx 
+mkTxList tx = 
+  tx ∷ map (λ stx → 
+    record { body = stx .Swap.stxTxBody ; 
+          wits = record { vkSigs = stx .Swap.stxWits ; scripts = tx .Tx.wits .TxWitnesses.scripts; txdats = tx .Tx.wits .TxWitnesses.txdats; 
+            txrdmrs = mkRds (stx .Swap.stxTxBody .TxBody.knowsOwnUnits) (stx .Swap.stxRdmrs) (tx .Tx.body .TxBody.subUnits) (stx .Swap.stxTxBody .TxBody.txid) };
+          isValid = true;
+          isTopLevel = false;
+          txAD = stx .Swap.stxAux;
+          subTxBodies = ∅ ;
+          requiredTxBodies = getReqs (stx .Swap.stxTxBody .TxBody.knowsOwnUnits) tx stx })
+    (getTxData (tx .Tx.subTxBodies)) 
+
+exUnitsZero : ExUnits 
+exUnitsZero = {!   !}
+
+
+totExUnits : List Tx → ExUnits
+totExUnits ltx = {!   !} --foldr (λ tx → _+ ( ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu) ) exUnitsZero ltx 
+  where open Tx; open TxWitnesses
+
+minfee : PParams → UTxO → Tx → Coin
+minfee pp utxo tx  =
+  pp .a * tx .body .txsize + pp .b
+  + txscriptfee (pp .prices) (totExUnits (tx ∷ mkTxList tx))
+  + pp .minFeeRefScriptCoinsPerByte
+  *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+  where open PParams; open Tx ; open TxBody 
 
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee
@@ -81,14 +115,12 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee
                       ∧ isAdaOnlyᵇ bal
                       ∧ (coin bal * 100) ≥ᵇ (totalFee * collateralPercentage)
                       ∧ not (≟-∅ᵇ collateral)
-                      -- ∧ sum of specified fees in txfee fields in subTxs <= top-level txfee
-                      -- TODO only add b once
                       )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
-    totalFee            = {!   !} -- TODO sum of all txfees
+    totalFee            = (tx .Tx.body .TxBody.txfee) + sum (map (λ p → p .Swap.stxTxBody .TxBody.txfee) (getTxData (tx .Tx.subTxBodies))) -- TODO sum of all txfees
 \end{code}
 
 \begin{figure*}
@@ -96,43 +128,42 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee
 module _ (let open UTxOState) where
 \end{code}
 \begin{code}
-        -- mkTxList makes a list of transactions that is tx ++ mkSubTxs 
-        -- it constructs full transaction from TxBody in subTx and script/datum witnesses attached to tx
-        -- sets each subTx isValid to true ( subTxs with bad scripts are not allowed)
-        -- sets isTopLevel to false for each subTx
 
-  -- builds witness record for sub-txs from sub-tx structure and top-level tx 
-  mkWits : Bool → TxWitnesses → (VKey ⇀ Sig) → (RdmrPtr  ⇀ Redeemer × ExUnits) → TxWitnesses
-  mkWits ownRds txw s r = record { vkSigs = s; scripts = txw .TxWitnesses.scripts; txdats = txw .TxWitnesses.txdats; txrdmrs = r }
+  deleteFirst : TxOut → List TxOut → List TxOut
+  deleteFirst = {!   !}
+  -- _ [] = [] 
+  -- deleteFirst a (b ∷ bc) with (a ≟ b)
+  -- ... | yes _   = bc 
+  -- ... | no _  = b ∷ deleteFirst a bc
 
-  -- builds transaction record for sub-txs from sub-tx structure and top-level tx 
-  mkTx : TxBody → TxWitnesses → Maybe AuxiliaryData → (TxId ⇀ TxBody) → Tx
-  mkTx txb tw ad r = record { body = txb ; 
-            wits = tw;
-            isValid = true;
-            isTopLevel = false;
-            txAD = ad;
-            subTxBodies = ∅ ;
-            requiredTxBodies = r}
+--   T : Bool → Set
+-- T true   =  ⊤
+-- T false  =  ⊥
 
-  -- builds list of transactions from sub-txs in top-level tx
-  mkTxList : Tx → List Tx 
-  mkTxList tx = 
-    tx ∷ map (λ stx → 
-      (mkTx (getBD stx) (mkWits (tx .Tx.body .TxBody.knowsOwnUnits) (tx .Tx.wits) (getSigs stx) (mkRds (tx .Tx.body .TxBody.knowsOwnUnits) (getRds stx) (tx .Tx.body .TxBody.subUnits) )) (getAD stx) (getReqs (tx .Tx.body .TxBody.knowsOwnUnits) {!   !} stx) )) 
-      (getTxData (tx .Tx.subTxBodies)) --(map proj₁ (tx .Tx.subTxBodies))
+-- ≤ᵇ→≤ : ∀ (m n : ℕ) → T (m ≤ᵇ n) → m ≤ n
+-- ≤ᵇ→≤ zero    n       tt  =  z≤n
+-- ≤ᵇ→≤ (suc m) zero    ()
+-- ≤ᵇ→≤ (suc m) (suc n) t   =  s≤s (≤ᵇ→≤ m n t)
 
+--   toBoolt : TxOut → TxOut → Bool 
+--   toBoolt a b with (a ≟ b)
+--   ... | yes _  = true 
+--   ... | no _ = false
+
+  compareLists : List TxOut → List TxOut → Set 
+  compareLists [] [] = true ≡ true
+  compareLists (_ ∷ l) [] = false ≡ true
+  compareLists [] (_ ∷ l) = false ≡ true
+  compareLists (a ∷ l1) (b ∷ l2) = (a ∈ fromList (b ∷ l2) ) × (compareLists l1 (deleteFirst a (b ∷ l2) ))
 
   -- check ins in top-level tx correspond to spendOuts in the UTxO set
+  -- could do this instead by forcing explicit indexing, ie spendOuts : TxIn - TxOut
   chkCorInsOuts : List TxBody → UTxO → Set 
-  chkCorInsOuts uu ls = {!   !}
-
-  -- mkListSpendOuts : Tx → List TxOut
-  -- mkListSpendOuts t = 
+  chkCorInsOuts tbl uu = compareLists (foldr (_++_) [] (map (λ p → p .TxBody.spendOuts) tbl) ) (map proj₂ (setToList (proj₁ uu))) 
 
   -- all requiredTxs refer to existing subTxs
   chkReqTxs : List TxBody → TxBody → Set
-  chkReqTxs txbods bd = foldr (λ t l → (t .TxBody.requiredTxs ⊆ (bd .TxBody.subTxs)) × l) (true ≡ true) txbods
+  chkReqTxs txbods bd = foldr (λ t l → (t .TxBody.requiredTxs ⊆ (bd .TxBody.subTxs)) × l) (true ≡ true) txbods 
 
   -- no corInputs provided are also provided as regular inputs in any transaction
   chkCorIns : List TxBody → ℙ TxIn → Set
@@ -154,7 +185,6 @@ module _ (let open UTxOState) where
     +  txb .mint
     +  inject (depositRefunds pp st txb)
     +  balance (st .utxo ∣ txb .corInputs)) +_) (inject 0) txbls
-    -- TODO check that new corInputs field used correctly?
 
   produced : PParams → UTxOState → List TxBody → Value
   produced pp st txbls
@@ -237,7 +267,7 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map getBD (getTxData subTxBodies)); txs = (mkTxList tx)
+  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Swap.stxTxBody) (getTxData subTxBodies)); txs = (mkTxList tx)
     in
     ∙ Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
     ∙ feesOK pp tx utx ≡ true               
@@ -249,6 +279,7 @@ data
     ∙ chkReqTxs (body ∷ txBods) body 
     ∙ chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs) 
     -- TODO check all subUnits are provided for txs with false hasOwnUnits
+    -- sum exunits <= max
        ────────────────────────────────
        Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
 \end{code}

@@ -384,3 +384,4 @@ module Corestrictionᵐ (sp-∈ : spec-∈ B) where
   infix 25 _⁻¹_
   _⁻¹_ : Map A B → B → Set A
   m ⁻¹ a = dom ((m ∣^ ❴ a ❵) ˢ)
+ 

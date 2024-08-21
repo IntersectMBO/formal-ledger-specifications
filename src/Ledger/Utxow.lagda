@@ -167,16 +167,22 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     in
     -- TODO does this allow extra scripts? they should be allowed (if not, this makes the witness collection for subTxs more complicated)
     -- TODO deal with reference inputs correctly
-    -- TODO check required Txs all there if hasOwnUnits, checkSubTxBodies are there
-    -- TODO add subunits to script integrity hash
+    -- TODO add subunits to script integrity hash (How?)
+    -- TODO redeemers and hashes for corInputs!
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
+    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
+
+    -- new checks 
+    -- all subTxBodies are provided 
+    ∙ subTxs ≡ dom subTxBodies 
+    -- subTxs only in top-level txs
+    ∙ isTopLevel ≡ false → subTxs ≡ ∅
 
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
@@ -190,7 +196,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 --       = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h)
 -- pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
 
-unquoteDecl UTXOW-inductive-premises =
-  genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
+-- unquoteDecl UTXOW-inductive-premises =
+--   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}
 \end{NoConway}

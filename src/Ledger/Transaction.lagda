@@ -11,6 +11,7 @@ module Ledger.Transaction where
 import Data.Maybe.Base as M
 
 open import Ledger.Prelude renaming (filterᵐ to filter)
+open import Data.These hiding (map)
 
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
@@ -186,6 +187,13 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
 
+  record Swap : Type where 
+    field
+      stxTxBody   : TxBody 
+      stxWits     : VKey ⇀ Sig 
+      stxRdmrs    : RdmrPtr  ⇀ Redeemer × ExUnits
+      stxAux      : Maybe AuxiliaryData
+
   record Tx : Type where
 \end{code}
 \begin{code}[hide]
@@ -200,9 +208,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       txAD     : Maybe AuxiliaryData
       -- NEW
       -- map of transaction bodies and associated data (can only be attached to a top level transaction)
-      -- probably need a data structure called subTxData here instead of a product?
-      subTxBodies  : TxId ⇀ TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody))
-      requiredTxBodies  : TxId ⇀ TxBody
+      -- probably should make ExUnits optional here somehow?
+      subTxBodies  : TxId ⇀ Swap
+      requiredTxBodies : TxId ⇀ TxBody
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -216,37 +224,28 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{code}
 
   -- returns a list of subTxBodies paired with associated other data (sigs, etc)
-  getTxData : (TxId ⇀ TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody))) → List (TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)))
+  getTxData : (TxId ⇀ Swap) → List Swap
   getTxData subTxBodies = map proj₂ (setToList (proj₁ subTxBodies))
-
-  -- returns just the txbody of a given subTx data structure 
-  getBD : TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → TxBody
-  getBD = proj₁
-
-  -- returns just the signature of a given subTx data structure
-  getSigs : TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → ( VKey ⇀ Sig )
-  getSigs = proj₁ ∘ proj₂
-  
-  -- returns just the redeemer/exunit data of a given subTx data structure
-  getRds : TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → (RdmrPtr  ⇀ Redeemer × ExUnits)
-  getRds t = proj₁ (proj₂ (proj₂ t))
-
-  -- returns just the aux data of a given subTx data structure
-  getAD : TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → (Maybe AuxiliaryData)
-  getAD t = proj₁ (proj₂ (proj₂ (proj₂ t)))
     
-  -- returns requireTxBodies if ownRds are provided 
-  getReqs : Bool → (TxId ⇀ TxBody) → TxBody × (( VKey ⇀ Sig ) × (RdmrPtr  ⇀ Redeemer × ExUnits) × (Maybe AuxiliaryData) ×  (TxId ⇀ TxBody)) → (TxId ⇀ TxBody)
-  getReqs ownRds st t with ownRds  
-  ... | false = st
-  ... | true  = proj₂ (proj₂ (proj₂ (proj₂ t)))
+  -- returns requiredTx Bodies if ownRds are provided 
+  getReqs : Bool → Tx → Swap → (TxId ⇀ TxBody)
+  getReqs ownRds t s with ownRds  
+  ... | false = singletonᵐ (t .Tx.body .TxBody.txid) (t .Tx.body)
+  ... | true  = (mapValues (λ p → p .Swap.stxTxBody) (t .Tx.subTxBodies)) ∣ (s .Swap.stxTxBody .TxBody.requiredTxs)
 
-  -- returns redeemer pointer sturucture if ownRds is true, returns redeemer pointers with redeemers from structure and exunits from txExs
-  mkRds : Bool → (RdmrPtr  ⇀ Redeemer × ExUnits) → (TxId ⇀ RdmrPtr  ⇀ ExUnits) → (RdmrPtr  ⇀ Redeemer × ExUnits) 
-  mkRds ownRds r txExs with ownRds  
-  ... | false = r -- TODO compute the real set!!
-  ... | true  = r
+  toRE : Redeemer → ExUnits → Redeemer × ExUnits
+  toRE r x = ( r , x ) 
 
+  noR : Redeemer
+  noR = toData tt
+
+  -- returns redeemer pointer sturucture if ownRds is true, otherwise returns redeemer pointers with redeemers from structure and exunits from subUs
+  mkRds : Bool → (RdmrPtr  ⇀ Redeemer × ExUnits) → (TxId ⇀ (RdmrPtr  ⇀ ExUnits)) → TxId → (RdmrPtr  ⇀ Redeemer × ExUnits) 
+  mkRds ownRds r subUs myid with (ownRds , (head (setToList (proj₁ (subUs ∣ (singleton myid) )))) )  
+  ... | (true , _)  = r
+  ... | (false , nothing) = ∅ 
+  ... | (false , just y) = unionWith (fold id (toRE noR) (λ ( a , b ) c → (a , c))) r (proj₂ y) 
+ 
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
@@ -299,3 +298,4 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 
 \end{code}
+ 

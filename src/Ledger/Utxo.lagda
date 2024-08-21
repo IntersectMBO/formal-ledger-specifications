@@ -65,10 +65,6 @@ opaque
     (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
             (range (utxo ∣ (txins ∪ corInputs))))
     where open Tx; open TxBody (tx .body)
-
-totExUnits : Tx → ExUnits
-totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
-  where open Tx; open TxWitnesses
 \end{code}
 \caption{Functions supporting UTxO rules}
 \label{fig:supportfunctions:utxo}
@@ -205,15 +201,6 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
   cbalance utxo = coin (balance utxo)
 \end{code}
 \end{NoConway}
-\begin{code}
-  minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  =
-    pp .a * tx .body .txsize + pp .b
-    + txscriptfee (pp .prices) (totExUnits tx)
-    + pp .minFeeRefScriptCoinsPerByte
-    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
-
-\end{code}
 \begin{code}[hide]
 instance
   HasCoin-UTxO : HasCoin UTxO
@@ -346,12 +333,12 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          sLst = collectPhaseTwoScriptInputs pp tx (range requiredTxBodies) utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ corInputs) ᶜ) ∪ˡ (outs txb)
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ (corInputs)) ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
                               , updateDeposits pp txb deposits
                               , donations + txdonation
@@ -437,10 +424,6 @@ equal if they are both present.
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
 
-    -- new checks TODO
-    -- ∙ all subTxs have corresponding bodies in subTxBodies
-    -- ∙ only top level tx has corInputs
-
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
@@ -448,7 +431,7 @@ equal if they are both present.
 \begin{code}[hide]
 -- pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h i j
 --       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h , i , j)
-unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
+-- unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
