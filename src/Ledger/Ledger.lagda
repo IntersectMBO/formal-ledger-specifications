@@ -91,9 +91,6 @@ mkTxList tx =
           requiredTxBodies = getReqs (stx .Swap.stxTxBody .TxBody.knowsOwnUnits) tx stx })
     (getTxData (tx .Tx.subTxBodies)) 
 
-exUnitsZero : ExUnits 
-exUnitsZero = {!   !}
-
 -- sum up all units across all transactions
 totExUnits : List Tx → ExUnits
 totExUnits ltx = {!   !}
