@@ -158,6 +158,8 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash -- TODO is this actually checked somewhere?
       -- NEW
+      -- Top level transaction or not (set by builder of top level Tx)
+      isTopLevel  : Bool
       -- fixes all attached sub-transactions
       subTxs          : ℙ TxId 
       -- fixes what transaction bodies will be shown to plutus scripts being run by this transaction (can be in any transaction)
@@ -203,8 +205,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       body     : TxBody
       wits     : TxWitnesses
       isValid  : Bool
-      -- Top level transaction or not (set by builder of top level Tx)
-      isTopLevel  : Bool
       txAD     : Maybe AuxiliaryData
       -- NEW
       -- map of transaction bodies and associated data (can only be attached to a top level transaction)

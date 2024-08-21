@@ -171,19 +171,6 @@ record ScriptStructure : Type₁ where
 
   Script = P1Script ⊎ P2Script
 
---   DecEq-P2Script : ∀ (x1 x2 : P2Script) → Dec (x1 ≡ x2)
-
--- _≤?′_ : ∀ (m n : ℕ) → Dec (m ≤ n)
--- m ≤?′ n with m ≤ᵇ n | ≤ᵇ→≤ m n | ≤→≤ᵇ {m} {n}
--- ...        | true   | p        | _            = yes (p tt)
--- ...        | false  | _        | ¬p           = no ¬p
-
---  -- Boolean comparison of scripts
---   _=%_ : ∀ (a b : P2Script) → Bool 
---   a =% b with ((hash a) ≟ (hash b))
---   ... | yes _  =  true
---   ... | no _  =  false
-
   open import Data.Empty
   open import Agda.Builtin.Equality
   open import Relation.Binary.PropositionalEquality

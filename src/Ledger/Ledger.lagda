@@ -86,7 +86,6 @@ mkTxList tx =
           wits = record { vkSigs = stx .Swap.stxWits ; scripts = tx .Tx.wits .TxWitnesses.scripts; txdats = tx .Tx.wits .TxWitnesses.txdats; 
             txrdmrs = mkRds (stx .Swap.stxTxBody .TxBody.knowsOwnUnits) (stx .Swap.stxRdmrs) (tx .Tx.body .TxBody.subUnits) (stx .Swap.stxTxBody .TxBody.txid) };
           isValid = true;
-          isTopLevel = false;
           txAD = stx .Swap.stxAux;
           subTxBodies = ∅ ;
           requiredTxBodies = getReqs (stx .Swap.stxTxBody .TxBody.knowsOwnUnits) tx stx })
@@ -95,10 +94,11 @@ mkTxList tx =
 exUnitsZero : ExUnits 
 exUnitsZero = {!   !}
 
-
+-- sum up all units across all transactions
 totExUnits : List Tx → ExUnits
-totExUnits ltx = {!   !} --foldr (λ tx → _+ ( ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu) ) exUnitsZero ltx 
-  where open Tx; open TxWitnesses
+totExUnits ltx = {!   !}
+  -- foldr (λ tx → _+ ( ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu) ) exUnitsZero ltx 
+  -- where open Tx; open TxWitnesses
 
 minfee : PParams → UTxO → Tx → Coin
 minfee pp utxo tx  =
@@ -108,6 +108,7 @@ minfee pp utxo tx  =
   *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
   where open PParams; open Tx ; open TxBody 
 
+-- totalFee is computed instead of using top-level fee
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee
                   ∧ (not (≟-∅ᵇ (txrdmrs ˢ)) ∧ isTopLevel)
@@ -120,7 +121,7 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
-    totalFee            = (tx .Tx.body .TxBody.txfee) + sum (map (λ p → p .Swap.stxTxBody .TxBody.txfee) (getTxData (tx .Tx.subTxBodies))) -- TODO sum of all txfees
+    totalFee            = (tx .Tx.body .TxBody.txfee) + sum (map (λ p → p .Swap.stxTxBody .TxBody.txfee) (getTxData (tx .Tx.subTxBodies))) 
 \end{code}
 
 \begin{figure*}
@@ -130,26 +131,12 @@ module _ (let open UTxOState) where
 \begin{code}
 
   deleteFirst : TxOut → List TxOut → List TxOut
-  deleteFirst = {!   !}
-  -- _ [] = [] 
-  -- deleteFirst a (b ∷ bc) with (a ≟ b)
-  -- ... | yes _   = bc 
-  -- ... | no _  = b ∷ deleteFirst a bc
+  deleteFirst _ [] = [] 
+  deleteFirst a (b ∷ bc) with ((txOutHash a) ≟ (txOutHash b))
+  ... | yes _   = bc 
+  ... | no _  = b ∷ deleteFirst a bc
 
---   T : Bool → Set
--- T true   =  ⊤
--- T false  =  ⊥
-
--- ≤ᵇ→≤ : ∀ (m n : ℕ) → T (m ≤ᵇ n) → m ≤ n
--- ≤ᵇ→≤ zero    n       tt  =  z≤n
--- ≤ᵇ→≤ (suc m) zero    ()
--- ≤ᵇ→≤ (suc m) (suc n) t   =  s≤s (≤ᵇ→≤ m n t)
-
---   toBoolt : TxOut → TxOut → Bool 
---   toBoolt a b with (a ≟ b)
---   ... | yes _  = true 
---   ... | no _ = false
-
+  -- do two lists have the same elements?
   compareLists : List TxOut → List TxOut → Set 
   compareLists [] [] = true ≡ true
   compareLists (_ ∷ l) [] = false ≡ true
@@ -173,12 +160,27 @@ module _ (let open UTxOState) where
   chkInsInUTxO : List TxBody → ℙ TxIn → Set
   chkInsInUTxO txbods uins = foldr (λ t l → (t .TxBody.txins ∪ t .TxBody.corInputs ⊆ uins ) × l) (true ≡ true) txbods  
 
+  -- check that tx provides exUnits via subunits p
+  chkDom : Tx → Tx → Set
+  chkDom tx p with (lookupᵐ? (tx .Tx.body .TxBody.subUnits) (tx .Tx.body .TxBody.txid))
+  ... | nothing = ⊥
+  ... | just a = dom a ≡ dom (p .Tx.wits .TxWitnesses.txrdmrs)
+
+  -- check that tx provides exUnits via subunits for all transactions that dont know OwnUnits
+  chkSubUnits : Tx → List Tx → Set
+  chkSubUnits tx ltx = 
+    foldr (λ p q → ((p .Tx.body .TxBody.knowsOwnUnits ≡ false) → 
+    (chkDom tx p)) × q) 
+    ⊤ ltx
+
   depositRefunds : PParams → UTxOState → TxBody → Coin
   depositRefunds pp st txb = let open TxBody in negPart (depositsChange pp txb (st .deposits))
 
   newDeposits : PParams → UTxOState → TxBody → Coin
   newDeposits pp st txb = let open TxBody in posPart (depositsChange pp txb (st .deposits))
 
+  -- fold over all transaction bodies 
+  -- add corInputs to total balance
   consumed : PParams → UTxOState → List TxBody → Value
   consumed pp st txbls
     =  foldr  (λ txb → (let open TxBody in balance (st .utxo ∣ txb .txins)
@@ -186,6 +188,7 @@ module _ (let open UTxOState) where
     +  inject (depositRefunds pp st txb)
     +  balance (st .utxo ∣ txb .corInputs)) +_) (inject 0) txbls
 
+  -- fold over all transaction bodies 
   produced : PParams → UTxOState → List TxBody → Value
   produced pp st txbls
     =  foldr (λ txb → (let open TxBody in balance (outs txb)
@@ -269,17 +272,18 @@ data
 \begin{code}
   LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Swap.stxTxBody) (getTxData subTxBodies)); txs = (mkTxList tx)
     in
-    ∙ Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
     ∙ feesOK pp tx utx ≡ true               
     ∙ consumed pp u (body ∷ txBods) ≡ produced pp u (body ∷ txBods)
     ∙ txsize ≤ maxTxSize 
-    ∙ txs ≢ [] 
     ∙ chkInsInUTxO txBods (dom utx) 
     ∙ chkCorIns (body ∷ txBods) (body .TxBody.corInputs )
     ∙ chkReqTxs (body ∷ txBods) body 
     ∙ chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs) 
-    -- TODO check all subUnits are provided for txs with false hasOwnUnits
-    -- sum exunits <= max
+    ∙ body .TxBody.isTopLevel ≡ true  
+    ∙ foldr (λ p q → ((p .TxBody.isTopLevel ≡ false) × q)) ⊤ txBods
+    ∙ chkSubUnits tx txs
+    -- ∙ ? totExUnits txs maxTxExUnits --≤ maxTxExUnits TODO
+    ∙ Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
        Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
 \end{code}

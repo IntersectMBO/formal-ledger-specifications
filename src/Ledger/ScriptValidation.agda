@@ -69,17 +69,21 @@ record TxInfo : Type where
 -- TODO what is going on here??
 txInfo : Language → PParams
                   → UTxO
-                  → TxBody
+                  → TxBody × TxWitnesses
                   → TxInfo
-txInfo l pp utxo txb = {!   !}
+txInfo l pp utxo (txb , wits) = 
   record
-  { TxBody body
-  ; TxWitnesses wits
-  ; realizedInputs = utxo ∣ txins
-  ; fee = inject txfee
-  ; mint = mint
-  ; vkKey = reqSigHash
-  } where open Tx tx; open TxBody body
+  { realizedInputs = utxo ∣ txins
+    ; txouts  = txouts
+    ; fee     = inject txfee
+    ; mint    = mint
+    ; txcerts = txcerts
+    ; txwdrls = txwdrls
+    ; txvldt  = txvldt
+    ; vkKey = reqSigHash
+    ; txdats  = wits .TxWitnesses.txdats
+    ; txid    = txid
+  } where open TxBody txb
 
 -- TODO have to add (some of?) these to new Plutus TxInfo and parametrize txInfo by language property
       -- isTopLevel  : Bool
@@ -187,11 +191,12 @@ opaque
     with isInj₂ s | indexedRdmrs tx sp
   ... | just p2s | just (rdmr , eu)
       = just (s ,
-          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (map (λ tx → txInfo (language p2s) pp utxo tx) ((tx .Tx.body) ∷ ltx)) sp ∷ [])
+          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (map (λ tx → txInfo (language p2s) pp utxo tx) ((tx .Tx.body , (tx .Tx.wits)) ∷ (map (λ tb → (tb , tx .Tx.wits )) ltx))) sp ∷ [])
           , eu
           , PParams.costmdls pp)
         )
   ... | x | y = nothing
+      
 
   collectPhaseTwoScriptInputs : PParams → Tx → List TxBody → UTxO
     → List (Script × List Data × ExUnits × CostModel)

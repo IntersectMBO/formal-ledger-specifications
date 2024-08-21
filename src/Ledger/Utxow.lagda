@@ -88,8 +88,10 @@ allowedLanguages tx utxo =
     then fromList (PlutusV3 ∷ [])
   else if ∃[ o ∈ os ] HasInlineDatum o
     then fromList (PlutusV2 ∷ PlutusV3 ∷ [])
+  else if (isTopLevel ≡ false ⊎ subTxs ≢ ∅) 
+    then fromList (PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   else
-    fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
+    fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
@@ -102,7 +104,7 @@ getScripts = mapPartial isScriptObj
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  -- TODO add credential for spendOuts
+  ∪  mapˢ (λ (i , o)  → (SpendOut  i , payCred (proj₁ o))) ((utxo ∣ corInputs) ˢ)
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
@@ -168,7 +170,6 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     -- TODO does this allow extra scripts? they should be allowed (if not, this makes the witness collection for subTxs more complicated)
     -- TODO deal with reference inputs correctly
     -- TODO add subunits to script integrity hash (How?)
-    -- TODO redeemers and hashes for corInputs!
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
