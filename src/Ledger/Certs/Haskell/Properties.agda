@@ -124,13 +124,13 @@ instance
   Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls ⟧ᶜ st _ =
     let open PParams pp; open CertState st; open GState gState; open DState dState
         refresh = mapPartial getDRepVote (fromList vs)
-    in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
+    in case ¿ (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
               × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
       (yes p) → success (-, CERT-base p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-CERTBASE .completeness ⟦ e , pp , vs , wdrls ⟧ᶜ st _ st' (CERT-base p)
     rewrite let dState = CertState.dState st; open DState dState in
-      dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
+      dec-yes ¿ (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
                 × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
