@@ -17,7 +17,6 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
-import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
@@ -30,7 +29,6 @@ import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Decidable.Instances
 import qualified MAlonzo.Code.Class.Semigroup.Core
 import qualified MAlonzo.Code.Class.Semigroup.Instances
-import qualified MAlonzo.Code.Data.Bool.Properties
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Properties
@@ -2556,32 +2554,19 @@ d_Computational'45'CERTBASE_1674 v0
                                                                  (coe v6)))))))
                                              v8))
                                      (coe
-                                        MAlonzo.Code.Ledger.Set.Theory.du_filter'738'_1122
-                                        (\ v8 ->
-                                           coe
-                                             MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
-                                             (coe
-                                                MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-                                                (coe
-                                                   MAlonzo.Code.Data.Bool.Properties.d__'8799'__2950))
-                                             (coe
-                                                MAlonzo.Code.Ledger.Address.du_isKeyHashObj'7495'_26
-                                                (coe v8))
-                                             (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
+                                        MAlonzo.Code.Axiom.Set.du_map_380
+                                        (MAlonzo.Code.Axiom.Set.d_th_1430
+                                           (coe
+                                              MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
+                                        (\ v8 -> MAlonzo.Code.Ledger.Address.d_stake_84 (coe v8))
                                         (coe
-                                           MAlonzo.Code.Axiom.Set.du_map_380
-                                           (MAlonzo.Code.Axiom.Set.d_th_1430
+                                           MAlonzo.Code.Interface.IsSet.du_dom_538
+                                           (coe
+                                              MAlonzo.Code.Axiom.Set.d_th_1430
                                               (coe
                                                  MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-                                           (\ v8 -> MAlonzo.Code.Ledger.Address.d_stake_84 (coe v8))
-                                           (coe
-                                              MAlonzo.Code.Interface.IsSet.du_dom_538
-                                              (coe
-                                                 MAlonzo.Code.Axiom.Set.d_th_1430
-                                                 (coe
-                                                    MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-                                              (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_546)
-                                              (coe v5)))))
+                                           (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_546)
+                                           (coe v5))))
                                   (coe
                                      MAlonzo.Code.Class.Decidable.Core.du_'8263''185'__110
                                      (coe
@@ -2794,7 +2779,7 @@ d_Computational'45'CERTBASE_1674 v0
                                                                          v2
                                                                          (let v13
                                                                                 = coe
-                                                                                    MAlonzo.Code.Ledger.Certs.Haskell.C_mkGeneralizeTel_22565
+                                                                                    MAlonzo.Code.Ledger.Certs.Haskell.C_mkGeneralizeTel_22449
                                                                                     (coe v3)
                                                                                     (coe v4)
                                                                                     (coe v2)
@@ -2861,7 +2846,7 @@ d_Computational'45'CERTBASE_1674 v0
                                                                           coe
                                                                             (MAlonzo.Code.Ledger.PParams.d_drepActivity_344
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Certs.Haskell.d_'46'generalizedField'45'pp_22539
+                                                                                  MAlonzo.Code.Ledger.Certs.Haskell.d_'46'generalizedField'45'pp_22423
                                                                                   v13))) in
                                                                coe (coe (\ v14 -> v13)))
                                                               (coe
@@ -2957,47 +2942,33 @@ d_Computational'45'CERTBASE_1674 v0
                                                                                      (coe v6)))))))
                                                                  v11))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Set.Theory.du_filter'738'_1122
+                                                            MAlonzo.Code.Axiom.Set.du_map_380
+                                                            (MAlonzo.Code.Axiom.Set.d_th_1430
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                                             (\ v11 ->
-                                                               coe
-                                                                 MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
-                                                                 (coe
-                                                                    MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-                                                                    (coe
-                                                                       MAlonzo.Code.Data.Bool.Properties.d__'8799'__2950))
-                                                                 (coe
-                                                                    MAlonzo.Code.Ledger.Address.du_isKeyHashObj'7495'_26
-                                                                    (coe v11))
-                                                                 (coe
-                                                                    MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
+                                                               MAlonzo.Code.Ledger.Address.d_stake_84
+                                                                 (coe v11))
                                                             (coe
-                                                               MAlonzo.Code.Axiom.Set.du_map_380
-                                                               (MAlonzo.Code.Axiom.Set.d_th_1430
+                                                               MAlonzo.Code.Interface.IsSet.du_dom_538
+                                                               (coe
+                                                                  MAlonzo.Code.Axiom.Set.d_th_1430
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-                                                               (\ v11 ->
-                                                                  MAlonzo.Code.Ledger.Address.d_stake_84
-                                                                    (coe v11))
                                                                (coe
-                                                                  MAlonzo.Code.Interface.IsSet.du_dom_538
-                                                                  (coe
-                                                                     MAlonzo.Code.Axiom.Set.d_th_1430
-                                                                     (coe
-                                                                        MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-                                                                  (coe
-                                                                     MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_546)
-                                                                  (coe v5)))))
+                                                                  MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_546)
+                                                               (coe v5))))
                                                       erased in
                                             coe
                                               (case coe v11 of
                                                  MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v12
                                                    -> coe
-                                                        ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8838\n filter\738\n (Ledger.Address.isKeyHash\n  (.Ledger.Types.Epoch.GlobalConstants.Network\n   (.GovStructure.globalConstants gs))\n  (.Ledger.Crypto.isHashableSet.THash\n   (.Ledger.Crypto.Crypto.khs (.GovStructure.crypto gs)))\n  (.Ledger.Crypto.Crypto.ScriptHash (.GovStructure.crypto gs)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 r \8594 .Ledger.Address.RwdAddr.stake r)\n  (Interface.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496) wdrls)))\n(Interface.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Ledger.Certs.Haskell.DState.voteDelegs\n  (.Ledger.Certs.Haskell.CertState.dState st)))"
+                                                        ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 r \8594 .Ledger.Address.RwdAddr.stake r)\n (Interface.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496) wdrls))\n(Interface.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Ledger.Certs.Haskell.DState.voteDelegs\n  (.Ledger.Certs.Haskell.CertState.dState st)))"
                                                          ::
                                                          Data.Text.Text)
                                                  MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v12
                                                    -> coe
-                                                        ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (Bifunctor.map\8321 (_1550 gs e pp vs wdrls st sig)\n  (\955 r \8594 .Ledger.Address.RwdAddr.stake r))\n (.Interface.IsSet.IsSet.toSet (_1539 gs e pp vs wdrls st sig)\n  wdrls))\n(.proj\8321\n (.Ledger.Certs.Haskell.DState.rewards\n  (.Ledger.Certs.Haskell.CertState.dState st)))"
+                                                        ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (Bifunctor.map\8321 (_1545 gs e pp vs wdrls st sig)\n  (\955 r \8594 .Ledger.Address.RwdAddr.stake r))\n (.Interface.IsSet.IsSet.toSet (_1534 gs e pp vs wdrls st sig)\n  wdrls))\n(.proj\8321\n (.Ledger.Certs.Haskell.DState.rewards\n  (.Ledger.Certs.Haskell.CertState.dState st)))"
                                                          ::
                                                          Data.Text.Text)
                                                  _ -> MAlonzo.RTE.mazUnreachableError)))
