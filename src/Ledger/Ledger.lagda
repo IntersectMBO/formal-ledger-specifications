@@ -220,14 +220,17 @@ data
 \begin{code}
   SWAP-V : let open Tx tx renaming (body to txb); open TxBody txb; open LEnv Γ renaming (slot to sl)
     in
-    ∙  record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+    ∙  isValid tx ≡ true
     ∙  ⟦ epoch sl , pparams , txvote , txwdrls , deposits u ⟧ᶜ ⊢ c ⇀⦇ txcerts ,CERTS⦈ c'
     ∙  ⟦ txid , epoch sl , pparams , ppolicy , enactState ⟧ᵍ ⊢ g ⇀⦇ txgov txb ,GOV⦈ g'
+    ∙  record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
        ────────────────────────────────
        Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g' , c' ⟧ˡ
 
-  SWAP-I :     
-    ∙  record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+  SWAP-I :
+    ∙ isValid tx ≡ false 
+    ∙ isTopLevel tx ≡ true     
+    ∙ record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
       ────────────────────────────────
        Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g , c ⟧ˡ
 \end{code}

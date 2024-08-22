@@ -95,8 +95,6 @@ allowedLanguages tx utxo =
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
-    -- ∙ TODO if all new fields of tx are empty, any Plutus language can be used, otherwise only new version
-    -- ∙ isTopLevel ≡ false, only new-version Plutus can be used
 
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isScriptObj

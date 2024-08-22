@@ -333,7 +333,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx (map (λ p → p .Swap.stxTxBody) (getTxData subTxBodies)) utxo
+          sLst = collectPhaseTwoScriptInputs pp tx (range requireTxBodies) utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
@@ -344,29 +344,29 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
                               , donations + txdonation
                               ⟧ᵘ
 
+  -- Scripts-No :
+  --   ∀ {Γ} {s} {tx}
+  --   → let open Tx tx renaming (body to txb); open TxBody txb
+  --         open UTxOEnv Γ renaming (pparams to pp)
+  --         open UTxOState s
+  --         sLst = collectPhaseTwoScriptInputs pp tx (range requireTxBodies) utxo
+  --     in
+  --       ∙ evalScripts tx sLst ≡ isValid
+  --       ∙ isValid ≡ false
+  --       ∙ isTopLevel ≡ false
+  --         ────────────────────────────────
+  --         Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
+
   Scripts-No :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx (map (λ p → p .Swap.stxTxBody) (getTxData subTxBodies)) utxo
+          sLst = collectPhaseTwoScriptInputs pp tx (range requiredTxBodies) utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
-        ∙ isTopLevel ≡ false
-          ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
-
-  Scripts-No-TopLevel :
-    ∀ {Γ} {s} {tx}
-    → let open Tx tx renaming (body to txb); open TxBody txb
-          open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx (map (λ p → p .Swap.stxTxBody) (getTxData subTxBodies)) utxo
-      in
-        ∙ evalScripts tx sLst ≡ isValid
-        ∙ isValid ≡ false
-        ∙ isTopLevel ≡ true
+        -- ∙ isTopLevel ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
                               , fees + cbalance (utxo ∣ collateral)
