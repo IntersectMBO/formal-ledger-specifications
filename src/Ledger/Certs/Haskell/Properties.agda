@@ -130,7 +130,7 @@ instance
                  × mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards)
                   → String
     genErr ¬p = case dec-de-morgan ¬p of λ where
-      (inj₁ a) → "¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs )"
+      (inj₁ a) → "XXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs ) \n" + "XXXXXXXXXXXXXXXXXX \n"
       (inj₂ b) → "¬ ( mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards )"
 
     goal : ComputationResult String
