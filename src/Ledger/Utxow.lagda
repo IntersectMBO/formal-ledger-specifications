@@ -88,7 +88,7 @@ allowedLanguages tx utxo =
     then fromList (PlutusV3 ∷ [])
   else if ∃[ o ∈ os ] HasInlineDatum o
     then fromList (PlutusV2 ∷ PlutusV3 ∷ [])
-  else if (isTopLevel ≡ false ⊎ subTxs ≢ ∅) 
+  else if (tx .Tx.isTopLevel ≡ false ⊎ subTxs ≢ ∅) 
     then fromList (PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   else
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])

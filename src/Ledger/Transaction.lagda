@@ -158,8 +158,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash -- TODO is this actually checked somewhere?
       -- NEW
-      -- Top level transaction or not (set by builder of top level Tx)
-      isTopLevel  : Bool
       -- fixes all attached sub-transactions
       subTxs          : ℙ TxId 
       -- fixes what transaction bodies will be shown to plutus scripts being run by this transaction (can be in any transaction)
@@ -195,6 +193,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       stxWits     : VKey ⇀ Sig 
       stxRdmrs    : RdmrPtr  ⇀ Redeemer × ExUnits
       stxAux      : Maybe AuxiliaryData
+      stxIsValid  : Bool
 
   record Tx : Type where
 \end{code}
@@ -211,6 +210,10 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       -- probably should make ExUnits optional here somehow?
       subTxBodies  : TxId ⇀ Swap
       requiredTxBodies : TxId ⇀ TxBody
+      -- is this tx top level?
+      isTopLevel  : Bool 
+      -- are all scripts in this batch expected to pass?
+      batchValid  : Bool
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}

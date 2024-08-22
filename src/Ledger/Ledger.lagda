@@ -85,10 +85,12 @@ mkTxList tx =
     record { body = stx .Swap.stxTxBody ; 
           wits = record { vkSigs = stx .Swap.stxWits ; scripts = tx .Tx.wits .TxWitnesses.scripts; txdats = tx .Tx.wits .TxWitnesses.txdats; 
             txrdmrs = mkRds (stx .Swap.stxTxBody .TxBody.knowsOwnUnits) (stx .Swap.stxRdmrs) (tx .Tx.body .TxBody.subUnits) (stx .Swap.stxTxBody .TxBody.txid) };
-          isValid = true;
+          isValid = stx .Swap.stxIsValid;
           txAD = stx .Swap.stxAux;
           subTxBodies = ∅ ;
-          requiredTxBodies = getReqs (stx .Swap.stxTxBody .TxBody.knowsOwnUnits) tx stx })
+          requiredTxBodies = getReqs (stx .Swap.stxTxBody .TxBody.knowsOwnUnits) tx stx ;
+          isTopLevel = false ;
+          batchValid = tx .Tx.isTopLevel })
     (getTxData (tx .Tx.subTxBodies)) 
 
 -- sum up all units across all transactions
@@ -108,7 +110,7 @@ minfee pp utxo tx  =
 -- totalFee is computed instead of using top-level fee
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee
-                  ∧ (not (≟-∅ᵇ (txrdmrs ˢ)) ∧ isTopLevel)
+                  ∧ (not (≟-∅ᵇ (txrdmrs ˢ)))
                   =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
                       ∧ isAdaOnlyᵇ bal
                       ∧ (coin bal * 100) ≥ᵇ (totalFee * collateralPercentage)
@@ -220,7 +222,7 @@ data
 \begin{code}
   SWAP-V : let open Tx tx renaming (body to txb); open TxBody txb; open LEnv Γ renaming (slot to sl)
     in
-    ∙  isValid tx ≡ true
+    ∙  tx .Tx.batchValid ≡ true
     ∙  ⟦ epoch sl , pparams , txvote , txwdrls , deposits u ⟧ᶜ ⊢ c ⇀⦇ txcerts ,CERTS⦈ c'
     ∙  ⟦ txid , epoch sl , pparams , ppolicy , enactState ⟧ᵍ ⊢ g ⇀⦇ txgov txb ,GOV⦈ g'
     ∙  record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
@@ -228,8 +230,7 @@ data
        Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g' , c' ⟧ˡ
 
   SWAP-I :
-    ∙ isValid tx ≡ false 
-    ∙ isTopLevel tx ≡ true     
+    ∙ tx .Tx.batchValid ≡ false 
     ∙ record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
       ────────────────────────────────
        Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g , c ⟧ˡ
@@ -272,17 +273,17 @@ data
 \begin{code}
   LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Swap.stxTxBody) (getTxData subTxBodies)); txs = (mkTxList tx)
     in
-    ∙ feesOK pp tx utx ≡ true               
-    ∙ consumed pp u (body ∷ txBods) ≡ produced pp u (body ∷ txBods)
-    ∙ txsize ≤ maxTxSize 
-    ∙ chkInsInUTxO txBods (dom utx) 
-    ∙ chkCorIns (body ∷ txBods) (body .TxBody.corInputs )
-    ∙ chkReqTxs (body ∷ txBods) body 
-    ∙ chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs) 
-    ∙ body .TxBody.isTopLevel ≡ true  
-    ∙ foldr (λ p q → ((p .TxBody.isTopLevel ≡ false) × q)) ⊤ txBods
-    ∙ chkSubUnits tx txs
-    -- ∙ ? totExUnits txs maxTxExUnits --≤ maxTxExUnits TODO
+    ∙ feesOK pp tx utx ≡ true         --1      
+    ∙ batchValid ≡ true → consumed pp u (body ∷ txBods) ≡ produced pp u (body ∷ txBods) --2
+    ∙ txsize ≤ maxTxSize  --3
+    ∙ chkInsInUTxO txBods (dom utx)  --4
+    ∙ chkReqTxs (body ∷ txBods) body --5
+    ∙ isTopLevel ≡ true  --6
+    ∙ batchValid ≡ foldr (λ p q → q ∧ (p .Tx.isValid)) true txs --7
+    ∙ chkSubUnits tx txs --8
+    -- ∙ ? totExUnits txs maxTxExUnits --≤ maxTxExUnits TODO --9
+    ∙ chkCorIns (body ∷ txBods) (body .TxBody.corInputs ) --10
+    ∙ chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs)  --11
     ∙ Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
        Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
