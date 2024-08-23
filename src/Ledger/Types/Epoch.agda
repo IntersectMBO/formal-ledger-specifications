@@ -64,7 +64,7 @@ record EpochStructure : Type₁ where
     Number-Epoch .Number.fromNat    x = ℕtoEpoch x
 
 record GlobalConstants : Type₁ where
-  field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network
+  field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network; ⦃ Show-Network ⦄ : Show Network
          SlotsPerEpochᶜ : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
          StabilityWindowᶜ : ℕ
          Quorum : ℕ

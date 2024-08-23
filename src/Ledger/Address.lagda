@@ -23,9 +23,8 @@ credential contains a hash, either of a verifying (public) key
   ScriptHash
 \end{code}
 \begin{code}[hide]
-  : Type)  ⦃ _ : DecEq Network ⦄
-           ⦃ _ : DecEq KeyHash ⦄     ⦃ _ : Show KeyHash ⦄
-           ⦃ _ : DecEq ScriptHash ⦄  ⦃ _ : Show ScriptHash ⦄ where
+  : Type)  ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄
+           ⦃ _ : Show Network  ⦄ ⦃ _ : Show KeyHash  ⦄ ⦃ _ : Show ScriptHash  ⦄ where
 \end{code}
 \emph{Derived types}
 \AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
@@ -76,6 +75,9 @@ record RwdAddr : Type where
         stake  : Credential
 \end{code}
 \begin{code}[hide]
+instance
+  unquoteDecl Show-RwdAddr = derive-Show [ (quote RwdAddr , Show-RwdAddr) ]
+
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
 \end{code}
 \begin{code}
