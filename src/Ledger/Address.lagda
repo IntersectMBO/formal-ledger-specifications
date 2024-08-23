@@ -5,6 +5,9 @@
 open import Ledger.Prelude
 
 open import Tactic.Derive.DecEq
+open import Tactic.Derive.Show
+open import Class.MonadTC.Instances
+open import Tactic.Derive (quote Show) (quote show)
 
 module Ledger.Address (
 \end{code}
@@ -22,7 +25,8 @@ credential contains a hash, either of a verifying (public) key
   ScriptHash
 \end{code}
 \begin{code}[hide]
-  : Type) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
+  : Type) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ -- where
+          ⦃ _ : Show KeyHash ⦄ ⦃ _ : Show ScriptHash ⦄ where
 \end{code}
 \emph{Derived types}
 \AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
@@ -33,6 +37,9 @@ data Credential : Type where
   ScriptObj  : ScriptHash → Credential
 \end{code}
 \begin{code}[hide]
+instance
+  unquoteDecl Show-Credential = derive-Show [ (quote Credential , Show-Credential) ]
+
 isKeyHashObj : Credential → Maybe KeyHash
 isKeyHashObj (KeyHashObj h) = just h
 isKeyHashObj (ScriptObj _)  = nothing

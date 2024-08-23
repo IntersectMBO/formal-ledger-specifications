@@ -54,6 +54,8 @@ opaque
     DecEq-ℙ : ⦃ _ : DecEq A ⦄ → DecEq (ℙ A)
     DecEq-ℙ = L.Decˡ.DecEq-Set
 
+    Show-ℙ : ⦃ _ : Show A ⦄ → Show (ℙ A)
+    Show-ℙ .show = λ x → Show-finite .show (x , (finiteness x))
 
 import Axiom.Set.Rel
 module Rel = Axiom.Set.Rel th

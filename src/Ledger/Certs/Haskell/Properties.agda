@@ -16,6 +16,7 @@ open import Ledger.Certs gs
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Prelude
 open import Tactic.GenError using (genErrors)
+open import Tactic.Derive.Show
 
 open Computational ⦃...⦄
 
@@ -124,13 +125,17 @@ instance
   Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls ⟧ᶜ st sig = goal
     where
     open PParams pp; open CertState st; open GState gState; open DState dState
+    sep : String
+    sep = " |XXX| "
     refresh = mapPartial getDRepVote (fromList vs)
 
     genErr : ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
                  × mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards)
                   → String
     genErr ¬p = case dec-de-morgan ¬p of λ where
-      (inj₁ a) → "XXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs ) \n" + "XXXXXXXXXXXXXXXXXX \n"
+      (inj₁ a) → sep + " ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs ) "
+                 + sep + " filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)): "
+                 + show (filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)))
       (inj₂ b) → "¬ ( mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards )"
 
     goal : ComputationResult String
