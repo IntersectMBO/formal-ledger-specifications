@@ -14,7 +14,6 @@ open import Data.Product.Properties using (∃∃↔∃∃)
 open import Data.Product.Properties.Ext using (∃-cong′; ∃-≡)
 open import Class.DecEq using (DecEq; _≟_)
 open import Relation.Binary using () renaming (Decidable to Dec₂)
-open import Class.Show.Instances
 
 private variable
   ℓ : Level
@@ -373,4 +372,3 @@ record Theoryᵈ : Type₁ where
 
       incl-set-proj₁ : map proj₁ (incl-set X) ≡ᵉ X
       incl-set-proj₁ = incl-set-proj₁⊆ , incl-set-proj₁⊇
-

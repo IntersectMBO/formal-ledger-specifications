@@ -16,7 +16,6 @@ open import Ledger.Certs gs
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Prelude
 open import Tactic.GenError using (genErrors)
-open import Tactic.Derive.Show
 
 open Computational ⦃...⦄
 
