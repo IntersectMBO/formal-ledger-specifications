@@ -69,10 +69,11 @@ module Implementation where
     }) where open import Algebra.PairOp ℕ zero _≡_ _+_
   _≥ᵉ_ : ExUnits → ExUnits → Type
   _≥ᵉ_ = _≡_
+
   instance
     Show-ExUnits : Show ExUnits
     Show-ExUnits = Show-×
-    -- record { show = λ where (gas , mem) → "ExUnits " ++ show gas ++ " " ++ show mem }
+
   CostModel    = ⊤
   Language     = ⊤
   LangDepView  = ⊤

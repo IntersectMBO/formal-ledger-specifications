@@ -125,17 +125,23 @@ instance
     where
     open PParams pp; open CertState st; open GState gState; open DState dState
     sep : String
-    sep = " |XXX| "
+    sep = " | "
     refresh = mapPartial getDRepVote (fromList vs)
 
     genErr : ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
                  × mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards)
                   → String
     genErr ¬p = case dec-de-morgan ¬p of λ where
-      (inj₁ a) → sep + " ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs ) "
+      (inj₁ a) → " ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs ) "
                  + sep + " filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)): "
                  + show (filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)))
+                 + sep + " dom voteDelegs: "
+                 + show (dom voteDelegs)
       (inj₂ b) → "¬ ( mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards )"
+                 + sep + " mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ): "
+                 + show (mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ))
+                 + sep + " proj₁ rewards: "
+                 + show (proj₁ rewards)
 
     goal : ComputationResult String
            (∃-syntax (_⊢_⇀⦇_,CERTBASE⦈_ ⟦ e , pp , vs , wdrls ⟧ᶜ st sig))

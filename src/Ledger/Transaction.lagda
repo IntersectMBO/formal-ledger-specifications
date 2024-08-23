@@ -78,7 +78,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   field crypto : _
   open Crypto crypto public
   open Ledger.TokenAlgebra ScriptHash public
-  open Ledger.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
+  open Ledger.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
