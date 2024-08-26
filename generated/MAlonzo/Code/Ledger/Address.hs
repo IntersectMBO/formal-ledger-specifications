@@ -23,12 +23,17 @@ import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Class.Show.Core
+import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Data.Nat.Properties
+import qualified MAlonzo.Code.Data.Nat.Show
+import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.DecEq
+import qualified MAlonzo.Code.Tactic.Derive.Show
 
 -- Ledger.Address.Credential
 d_Credential_16 a0 a1 a2 a3 a4 a5 = ()
@@ -721,3 +726,107 @@ du_DecEq'45'RwdAddr_194 v0 v1 v2
                                             erased)))
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Address._.Show-Credential
+d_Show'45'Credential_206 ::
+  () ->
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+d_Show'45'Credential_206 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8
+  = du_Show'45'Credential_206 v7 v8
+du_Show'45'Credential_206 ::
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+du_Show'45'Credential_206 v0 v1
+  = coe
+      MAlonzo.Code.Class.Show.Core.C_mkShow_18
+      (coe
+         (\ v2 ->
+            case coe v2 of
+              C_KeyHashObj_18 v3
+                -> coe
+                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+                     (coe ("KeyHashObj" :: Data.Text.Text))
+                     (coe
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        (coe MAlonzo.Code.Class.Show.Core.d_show_16 v0 v3))
+              C_ScriptObj_20 v3
+                -> coe
+                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+                     (coe ("ScriptObj" :: Data.Text.Text))
+                     (coe
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        (coe MAlonzo.Code.Class.Show.Core.d_show_16 v1 v3))
+              _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Address._.Show-RwdAddr
+d_Show'45'RwdAddr_208 ::
+  () ->
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+d_Show'45'RwdAddr_208 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du_Show'45'RwdAddr_208 v6 v7 v8
+du_Show'45'RwdAddr_208 ::
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+du_Show'45'RwdAddr_208 v0 v1 v2
+  = coe
+      MAlonzo.Code.Class.Show.Core.C_mkShow_18
+      (coe
+         (\ v3 ->
+            case coe v3 of
+              C_RwdAddr'46'constructor_3251 v4 v5
+                -> coe
+                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+                     (coe
+                        MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+                        (coe ("constructor" :: Data.Text.Text))
+                        (coe
+                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                           (coe MAlonzo.Code.Class.Show.Core.d_show_16 v0 v4)))
+                     (coe
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        (coe
+                           MAlonzo.Code.Class.Show.Core.d_show_16
+                           (coe du_Show'45'Credential_206 (coe v1) (coe v2)) v5))
+              _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Address._.Show-Credential×Coin
+d_Show'45'Credential'215'Coin_210 ::
+  () ->
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+d_Show'45'Credential'215'Coin_210 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8
+  = du_Show'45'Credential'215'Coin_210 v7 v8
+du_Show'45'Credential'215'Coin_210 ::
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+du_Show'45'Credential'215'Coin_210 v0 v1
+  = coe
+      MAlonzo.Code.Class.Show.Instances.du_Show'45''215'_6
+      (coe du_Show'45'Credential_206 (coe v0) (coe v1))
+      (coe
+         MAlonzo.Code.Class.Show.Core.C_mkShow_18
+         (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
