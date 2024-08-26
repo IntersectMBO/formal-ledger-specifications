@@ -131,14 +131,14 @@ ProtVer = Pair ℕ ℕ
 
 {-# FOREIGN GHC
   data Credential
-    = ScriptObj Integer
-    | KeyHashObj Integer
+    = KeyHashObj Integer
+    | ScriptObj Integer
     deriving (Show, Eq, Generic)
 #-}
 data Credential : Type where
-  ScriptObj  : Hash → Credential
   KeyHashObj : Hash → Credential
-{-# COMPILE GHC Credential = data Credential (ScriptObj | KeyHashObj) #-}
+  ScriptObj  : Hash → Credential
+{-# COMPILE GHC Credential = data Credential (KeyHashObj | ScriptObj) #-}
 
 PoolParams = Credential
 RwdAddr = Pair Network Credential
