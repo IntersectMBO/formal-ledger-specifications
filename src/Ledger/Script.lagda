@@ -38,10 +38,13 @@ record PlutusStructure : Type₁ where
         ⦃ DecEq-Language           ⦄ : DecEq Language
         ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
         ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
+        ⦃ Show-CostModel           ⦄ : Show CostModel
 
   field  _≥ᵉ_              : ExUnits → ExUnits → Type
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
          ⦃ DecEQ-Prices  ⦄ : DecEq Prices
+         ⦃ Show-ExUnits  ⦄ : Show ExUnits
+         ⦃ Show-Prices   ⦄ : Show Prices
 
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
 

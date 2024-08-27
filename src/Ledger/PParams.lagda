@@ -12,6 +12,7 @@ open import Data.Rational using (ℚ)
 open import Relation.Nullary.Decidable
 
 open import Tactic.Derive.DecEq
+open import Tactic.Derive.Show
 
 open import Ledger.Prelude
 open import Ledger.Crypto
@@ -47,6 +48,10 @@ record Acnt : Type where
 
 ProtVer : Type
 ProtVer = ℕ × ℕ
+
+instance
+  Show-ProtVer : Show ProtVer
+  Show-ProtVer = Show-×
 
 data pvCanFollow : ProtVer → ProtVer → Type where
   canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
@@ -157,6 +162,8 @@ paramsWellFormed pp =
 \end{figure*}
 \begin{code}[hide]
 instance
+  Show-ℚ = Show _ ∋ record {M}
+    where import Data.Rational.Show as M
   unquoteDecl DecEq-DrepThresholds = derive-DecEq
     ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
   unquoteDecl DecEq-PoolThresholds = derive-DecEq
@@ -165,6 +172,12 @@ instance
     ((quote PParams , DecEq-PParams) ∷ [])
   unquoteDecl DecEq-PParamGroup    = derive-DecEq
     ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
+  unquoteDecl Show-DrepThresholds = derive-Show
+    ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
+  unquoteDecl Show-PoolThresholds = derive-Show
+    ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
+  unquoteDecl Show-PParams        = derive-Show
+    ((quote PParams , Show-PParams) ∷ [])
 
 module PParamsUpdate where
   record PParamsUpdate : Type where
@@ -419,4 +432,5 @@ record GovParams : Type₁ where
   field ppHashingScheme : isHashableSet PParams
   open isHashableSet ppHashingScheme renaming (THash to PPHash) public
   field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
+--         ⦃ Show-UpdT ⦄ : Show PParamsUpdate
 \end{code}
