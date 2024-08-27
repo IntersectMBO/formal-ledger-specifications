@@ -300,13 +300,13 @@ whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed actio
 enacted one.
 
 Additionally, \govActionPriority assigns a priority to the various governance action types.
-This is useful for ordering lists of governance actions as well as grouping governance actions
-according toits constructor (\NoConfidence, \UpdateCommittee, \NewConstitution, etc.).
-In particular, the relations \AgdaOperator{\AgdaFunction{\AgdaUnderscore{}∼\AgdaUnderscore{}}} and
-\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in Figure~\ref{defs:enactable}
-are used for determining whether two actions are of the same ``kind'' in the following sense: either
-the actions arise from the same constructor, or one action is a \NoConfidence and the other is an
-\UpdateCommittee action.
+This is useful for ordering lists of governance actions as well as grouping governance
+actions by constructor. In particular, the relations
+\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}∼\AgdaUnderscore{}}} and
+\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in
+Figure~\ref{defs:enactable} are used for determining whether two actions are of the same
+``kind'' in the following sense: either the actions arise from the same constructor, or one
+action is a \NoConfidence and the other is an \UpdateCommittee action.
 
 \begin{figure*}
 \begin{code}[hide]
