@@ -95,6 +95,18 @@ govActionPriority (ChangePParams _)        = 4
 govActionPriority (TreasuryWdrl _)         = 5
 govActionPriority Info                     = 6
 
+_gaPrRel_ : ℕ → ℕ → Type
+n gaPrRel m = (n ≡ m) ⊎ (n ≡ 0 × m ≡ 1) ⊎ (n ≡ 1 × m ≡ 0)
+
+_gaPrRel?_ : (n m : ℕ) → Dec (n gaPrRel m)
+n gaPrRel? m = (n ≟ m) ⊎-dec (n ≟ 0 ×-dec m ≟ 1) ⊎-dec (n ≟ 1 ×-dec m ≟ 0)
+
+_≡ᵍᵃ_ : GovAction → GovAction → Type
+a ≡ᵍᵃ a' = (govActionPriority a) gaPrRel (govActionPriority a')
+
+_≡ᵍᵃ?_ : (a a' : GovAction) → Dec (a ≡ᵍᵃ a')
+a ≡ᵍᵃ? a' = (govActionPriority a) gaPrRel? (govActionPriority a')
+
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
 insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
@@ -169,8 +181,10 @@ hasParentE e aid a = case getHashES e a of
    (just id)  → id ≡ aid
 
 hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Type
-hasParent e s a aid with getHash aid
-... | just aid' = hasParentE e aid' a ⊎ Any (λ x → proj₁ x ≡ aid') s
+hasParent e s a aid with getHash {a = a} aid
+... | just aid' = hasParentE e aid' a
+                  ⊎ Any (λ (gid , gas) → gid ≡ aid'
+                                         × action gas ≡ᵍᵃ a) s
 ... | nothing = ⊤
 \end{code}
 \begin{code}[hide]
@@ -183,8 +197,10 @@ hasParentE? e aid a with getHashES e a
 
 hasParent? : ∀ e s a aid → Dec (hasParent e s a aid)
 hasParent? e s a aid with getHash aid
-... | just aid' = hasParentE? e aid' a ⊎-dec any? (λ x → proj₁ x ≟ aid') s
-... | nothing = yes tt
+... | just aid' = hasParentE? e aid' a
+                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid'
+                                              ×-dec action gas ≡ᵍᵃ? a) s
+... | nothing = yes _
 
 -- newtype to make the instance resolution work
 data hasParent' : EnactState → GovState → (a : GovAction) → NeedsHash a → Type where
