@@ -12,7 +12,8 @@ record MultiSig : Set where
     signatories : List PubKeyHash
     minNumSignatures : ℕ
 
-SData = MultiSigData ⊎ (STxInfo × SScriptPurpose)
+ScriptContext = STxInfo × SScriptPurpose
+SData = MultiSigData ⊎ ScriptContext
 
 open import ScriptVerification.LedgerImplementation SData SData
 open import Ledger.Transaction using (TransactionStructure)
@@ -24,7 +25,6 @@ TxInToSymbolic x = x
 AddrToSymbolic' : Addr → SAddr
 AddrToSymbolic' (inj₁ R) = inj₁ (record { BaseAddr R })
 AddrToSymbolic' (inj₂ record { net = net ; pay = pay ; attrsSize = attrsSize }) = inj₂ (record { net = net ; pay = pay ; attrsSize = attrsSize })
-
 
 AddrToSymbolic : Addr → SAddr
 AddrToSymbolic (inj₁ record { net = net ; pay = pay ; stake = stake }) = inj₁ (record { net = net ; pay = pay ; stake = stake })
@@ -108,23 +108,30 @@ getInlineOutputDatum (a , b , just (inj₁ (inj₂ y))) dats = nothing
 getInlineOutputDatum (a , b , just (inj₂ y)) dats = nothing
 getInlineOutputDatum (a , b , nothing) dats = nothing
 
-newLabel : (STxInfo × SScriptPurpose) -> Maybe Label
+newLabel : ScriptContext -> Maybe Label
 newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
   mapMaybe (λ x → getInlineOutputDatum x txdats) (map proj₂ txouts)
 ... | [] = nothing
 ... | inj₁ (inj₁ x) ∷ [] = just x
 ... | _ = nothing
 
--- TODO: Implement this later
-oldValue : (STxInfo × SScriptPurpose) -> Value
-oldValue (fst , snd) = 1
+balanceSTxOut : List STxOut → Value
+balanceSTxOut txout = foldr (_+_ {{addValue}}) 0 (map (λ {(_ , v , _) → v}) txout)
 
--- TODO: Implement this later
-newValue : (STxInfo × SScriptPurpose) -> Value
-newValue ctx = 1
+
+helpMe : ScriptContext → Value
+helpMe = {!!}
+
+-- TODO: Fix This so that it only looks at the value at the contract address 
+oldValue : ScriptContext -> Value
+oldValue (txinfo , _) = balanceSTxOut (map proj₂ (STxInfo.realizedInputs txinfo))
+
+-- TODO: Fix This so that it only looks at the value at the contract address
+newValue : ScriptContext -> Value
+newValue (txinfo , _) = balanceSTxOut (map proj₂ (STxInfo.txouts txinfo))
 
 -- TODO: Implement this
-checkSigned : PubKeyHash → (STxInfo × SScriptPurpose) → Bool
+checkSigned : PubKeyHash → ScriptContext → Bool
 checkSigned = λ x x₁ → true
 
 -- TODO: Implement this
@@ -132,18 +139,21 @@ query : PubKeyHash → List PubKeyHash → Bool
 query = λ x x₁ → true
 
 -- TODO: Implement this
-checkPayment : PubKeyHash -> Value -> (STxInfo × SScriptPurpose) -> Bool
+checkPayment : PubKeyHash -> Value -> ScriptContext -> Bool
 checkPayment pkh v ctx = true
 
 -- TODO: Implement this
-expired : ℕ -> (STxInfo × SScriptPurpose) -> Bool
+expired : ℕ -> ScriptContext -> Bool
 expired slot ctx = true
 
-multiSigValidator' : MultiSig → Label → Input → (STxInfo × SScriptPurpose) → Bool
+multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
 
 multiSigValidator' param Holding (Propose v pkh slot) ctx =
-  (newValue ctx == oldValue ctx)
-  ∧ ⌊ oldValue ctx ≥? v ⌋
+  -- (newValue ctx == oldValue ctx)
+  -- (newValue ctx ≥ᵇ oldValue ctx)
+  -- (newValue ctx == oldValue ctx)
+  -- ∧
+  ⌊ oldValue ctx ≥? v ⌋
   ∧ ⌊ v ≥? 0 ⌋
   ∧ (case (newLabel ctx) of λ where
       nothing → false
@@ -159,7 +169,8 @@ multiSigValidator' param Holding _ ctx = false
 multiSigValidator' param (Collecting _ _ _ _) (Propose _ _ _) ctx = false
 
 multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
-  (newValue ctx == oldValue ctx)
+  -- (newValue ctx == oldValue ctx)
+  (newValue ctx ≥ᵇ oldValue ctx)
   ∧ checkSigned sig ctx
   ∧ query sig (MultiSig.signatories param)
   ∧ (case (newLabel ctx) of λ where
@@ -205,7 +216,7 @@ initTxOut : TxOut
 initTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 10 , just (inj₂ (inj₁ (inj₁ Holding))) , nothing
+                           , 800000000000 , just (inj₂ (inj₁ (inj₁ Holding))) , nothing
 
 script : TxIn × TxOut
 script = (6 , 6) , initTxOut
@@ -217,7 +228,7 @@ succeedTxOut : TxOut
 succeedTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 10 , just (inj₁ (inj₁ (inj₁ (Collecting 1 2 3 [])))) , nothing
+                           , 200000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 1 2 3 [])))) , nothing
 
 
 failTxOut : TxOut
@@ -238,7 +249,8 @@ succeedTx = record { body = record
                                                  , ((inj₁ (record { net = tt ;
                                                                     pay = inj₁ 5 ;
                                                                     stake = inj₁ 5 }))
-                                                 , (1000000000000 - 10000000000) , nothing , nothing))
+                                               -- , 10000000000 , nothing , nothing))
+                                               , (1600000000000 - 10000000000) , nothing , nothing))
                                                ∷ [])
                          ; txfee = 10000000000
                          ; mint = 0
@@ -320,8 +332,35 @@ failState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) failTx initSt
 evalFailTx : Bool
 evalFailTx = evalScripts failTx failState
 
-
 {-
+⟦_⟧,_,_,_ : P2Script → CostModel → ExUnits → List Data → Bool
+⟦ s ⟧, cm , eu , d = runPLCScript cm s eu d
+
+evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
+evalScripts tx [] = true
+evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) =
+  ¿ evalTimelock (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
+evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ
+-}
+
+
+
+⟦_⟧',_,_,_ : P2Script → ⊤ → ℕ × ℕ → List SData → ℕ × ℕ
+⟦ s ⟧', cm , eu , [] = 1 , 1
+⟦ s ⟧', cm , eu , (x ∷ []) = 1 , 1
+⟦ s ⟧', cm , eu , (x ∷ x₁ ∷ []) = 1 , 1
+⟦ s ⟧', cm , eu , (x ∷ x₁ ∷ inj₁ x₂ ∷ d) = 1 , 1
+⟦ s ⟧', cm , eu , (x ∷ x₁ ∷ inj₂ y ∷ d) = newValue y , oldValue y
+
+evalScripts' : Tx → List (Script × List SData × (ℕ × ℕ) × ⊤) → ℕ × ℕ
+evalScripts' tx [] = 0 , 0
+evalScripts' tx ((inj₁ tl , d , eu , cm) ∷ Γ) = 0 , 0
+evalScripts' tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧', cm , eu , d -- Evalscripts' tx Γ
+
+test : ℕ × ℕ
+test = evalScripts' succeedTx succeedState
+
+
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
@@ -335,12 +374,17 @@ opaque
   _ : notEmpty succeedState ≡ ⊤
   _ = refl
 
+  -- new value , old value
+  --          1000000000000  
+  _ : test ≡ (990000000010 , 1000000000010)
+  _ = {!!}
+
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   succeedExample : ComputationResult String UTxOState
   succeedExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  succeedTx
 
   _ : isSuccess succeedExample ≡ true
-  _  = refl
+  _  = {!refl!}
 
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   failExample : ComputationResult String UTxOState
@@ -348,4 +392,3 @@ opaque
 
   _ : isSuccess failExample ≡ false
   _  = refl
--}
