@@ -319,7 +319,7 @@ def process_inline_block(inl, unwanted):
 
     inl = inline(inl)
     if find_match(inl, tab_before) != -1:
-        inl = ["\phantom{XX}%"] + inl
+        inl = ["\\phantom{XX}%"] + inl
     if find_match(inl, newline_before) != -1:
         inl =  [newline] + inl
     return inl        
