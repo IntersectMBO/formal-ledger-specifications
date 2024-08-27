@@ -21,7 +21,7 @@ open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
 open import Interface.HasOrder.Instance
 
-module _ {A : Type} ⦃ _ : DecEq A ⦄ where instance
+module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id
 
@@ -65,6 +65,10 @@ module Implementation where
     }) where open import Algebra.PairOp ℕ zero _≡_ _+_
   _≥ᵉ_ : ExUnits → ExUnits → Type
   _≥ᵉ_ = _≡_
+  instance
+    Show-ExUnits : Show ExUnits
+    Show-ExUnits = Show-×
+
   CostModel    = ⊤ -- changed from ⊥
   Language     = ⊤
   LangDepView  = ⊤

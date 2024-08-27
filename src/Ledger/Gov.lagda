@@ -17,6 +17,7 @@ open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
 open import Ledger.Ratify txs hiding (vote)
 
+open import Data.List using (filter)
 open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
@@ -85,6 +86,22 @@ private variable
 \emph{Functions used in the GOV rules}
 \begin{AgdaMultiCode}
 \begin{code}
+govActionPriority : GovAction → ℕ
+govActionPriority NoConfidence             = 0
+govActionPriority (UpdateCommittee _ _ _)  = 1
+govActionPriority (NewConstitution _ _)    = 2
+govActionPriority (TriggerHF _)            = 3
+govActionPriority (ChangePParams _)        = 4
+govActionPriority (TreasuryWdrl _)         = 5
+govActionPriority Info                     = 6
+
+insertGovAction : GovState → GovActionID × GovActionState → GovState
+insertGovAction [] gaPr = [ gaPr ]
+insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
+  =  if (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
+     then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
+     else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
+
 addVote : GovState → GovActionID → Voter → Vote → GovState
 addVote s aid voter v = map modifyVotes s
   where modifyVotes = λ (gid , s') → gid , record s'
@@ -98,7 +115,7 @@ mkGovStatePair e aid addr a prev = (aid , record
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
-addAction s e aid addr a prev = s ∷ʳ mkGovStatePair e aid addr a prev
+addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
 
 validHFAction : GovProposal → GovState → EnactState → Type
 validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =

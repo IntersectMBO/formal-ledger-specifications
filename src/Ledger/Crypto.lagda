@@ -9,6 +9,7 @@ record isHashableSet (T : Type) : Type₁ where
   constructor mkIsHashableSet
   field THash : Type
         ⦃ DecEq-THash ⦄ : DecEq      THash
+        ⦃ Show-THash  ⦄ : Show       THash
         ⦃ DecEq-T     ⦄ : DecEq    T
         ⦃ T-Hashable  ⦄ : Hashable T THash
 open isHashableSet
@@ -53,7 +54,7 @@ record Crypto : Type₁ where
   open PKKScheme pkk public
 
   field ⦃ khs ⦄    : isHashableSet VKey
-        ScriptHash : Type; ⦃ DecEq-ScriptHash ⦄ : DecEq ScriptHash
+        ScriptHash : Type; ⦃ DecEq-ScriptHash ⦄ : DecEq ScriptHash ; ⦃ Show-ScriptHash ⦄ : Show ScriptHash
 
   open isHashableSet khs renaming (THash to KeyHash) hiding (DecEq-T) public
 

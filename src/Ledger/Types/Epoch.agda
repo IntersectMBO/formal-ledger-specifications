@@ -11,7 +11,7 @@ open import Data.Nat.Properties using (+-*-semiring)
 
 record EpochStructure : Type₁ where
   field Slotʳ : Semiring 0ℓ 0ℓ
-        Epoch : Type; ⦃ DecEq-Epoch ⦄ : DecEq Epoch
+        Epoch : Type; ⦃ DecEq-Epoch ⦄ : DecEq Epoch; ⦃ Show-Epoch ⦄ : Show Epoch
 
   Slot = Semiring.Carrier Slotʳ
 
@@ -64,7 +64,7 @@ record EpochStructure : Type₁ where
     Number-Epoch .Number.fromNat    x = ℕtoEpoch x
 
 record GlobalConstants : Type₁ where
-  field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network
+  field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network; ⦃ Show-Network ⦄ : Show Network
          SlotsPerEpochᶜ : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
          StabilityWindowᶜ : ℕ
          Quorum : ℕ
