@@ -433,7 +433,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
     in
-    ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
+    ∙ (filterˢ isKeyHash wdrlCreds) ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦

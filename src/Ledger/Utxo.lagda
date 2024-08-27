@@ -402,13 +402,6 @@ open PParams
 private variable
   udeps : Deposits
 
-data _≢nothing {A : Type} : Maybe A → Type where
-  something : ∀{x : A} → (just x) ≢nothing
-
-some : ∀{A}(m : Maybe A) → m ≢nothing → A
-some (just x) _ = x
-some nothing ()
-
 data
   _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 
@@ -419,16 +412,15 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
-      in
-        {p : updateDeposits pp txb deposits ≢nothing}
-      → ∙ evalScripts tx sLst ≡ isValid
-        ∙ isValid ≡ true
-          ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
-                               , fees + txfee
-                               , some (updateDeposits pp txb deposits) p
-                               , donations + txdonation
-                               ⟧ᵘ
+      in {p : ∃[ deps ] updateDeposits pp txb deposits ≡ just deps}
+      →  ∙ evalScripts tx sLst ≡ isValid
+         ∙ isValid ≡ true
+           ────────────────────────────────
+           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+                                , fees + txfee
+                                , proj₁ p
+                                , donations + txdonation
+                                ⟧ᵘ
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
