@@ -306,7 +306,7 @@ actions by constructor. In particular, the relations
 \AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in
 Figure~\ref{defs:enactable} are used for determining whether two actions are of the same
 ``kind'' in the following sense: either the actions arise from the same constructor, or one
-action is a \NoConfidence and the other is an \UpdateCommittee action.
+action is \NoConfidence and the other is an \UpdateCommittee action.
 
 \begin{figure*}
 \begin{code}[hide]
