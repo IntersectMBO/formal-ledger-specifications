@@ -34,7 +34,7 @@ VV_TEX_FILES=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
 CONWAY_VV_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
 
 # to be postprocessed for highlighting new symbols in Coway pdf
-HL_NAMES=Transaction
+HL_NAMES=Transaction Utxo
 HL_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(HL_NAMES:%=%.tex))
 
 # General rule for all LaTeX files (with postprocessing for vertical vectors)
