@@ -376,12 +376,18 @@ to \consumed or \produced depending on its sign. This is done via
 \negPart and \posPart, which satisfy the key property that their
 difference is the identity function.
 
+\begin{figure*}[htbp]
 \begin{code}[hide]
 open PParams
 data
+\end{code}
+\begin{code}
   _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
-
+\end{code}
+\begin{code}[hide]
 data _⊢_⇀⦇_,UTXOS⦈_ where
+\end{code}
+\begin{code}
   Scripts-Yes :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
@@ -392,11 +398,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
-                              , fees + txfee
-                              , updateDeposits pp txb deposits
-                              , donations + txdonation
-                              ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧ᵘ
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -408,12 +410,13 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
-                              , fees + cbalance (utxo ∣ collateral)
-                              , deposits
-                              , donations
-                              ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
+\end{code}
+\caption{UTXOS rule}
+\label{fig:utxos-conway}
+\end{figure*}
 
+\begin{code}[hide]
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
@@ -436,9 +439,8 @@ instance
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
-\begin{NoConway}
-We write \maybeEq to mean that two potentially optional values are
-equal if they are both present.
+Figure~\ref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together.
+(The \maybeEq symbol that appears in the figure denotes equality of two potentially optional values.)
 
 \begin{figure*}[h]
 \begin{code}
@@ -475,4 +477,3 @@ unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
-\end{NoConway}

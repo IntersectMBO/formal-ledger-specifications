@@ -319,7 +319,7 @@ def process_inline_block(inl, unwanted):
 
     inl = inline(inl)
     if find_match(inl, tab_before) != -1:
-        inl = ["\phantom{XX}%"] + inl
+        inl = ["\\phantom{XX}%"] + inl
     if find_match(inl, newline_before) != -1:
         inl =  [newline] + inl
     return inl        
@@ -362,11 +362,11 @@ def process_vector(lines):
 
 def process_lines(lines):
 
-    inline_halt_back = [deduction, extra_skip, newline, left_bracket, begin_code, end_code, "\\>[6][@{}l@{\\AgdaIndent{0}}]%"]
-    inline_halt = inline_halt_back + ["\\AgdaFunction{∙}"]
+    inline_halt_back = [deduction, extra_skip, newline, left_bracket, begin_code, end_code, "\\>[6][@{}l@{\\AgdaIndent{0}}]%", "\\>[981I][@{}l@{\\AgdaIndent{0}}]"]
+    inline_halt = inline_halt_back + ["\\AgdaFunction{∙}" , "\\>[981I][@{}l@{\\AgdaIndent{0}}]"]
 
-    unwanted = ["%", begin_code, newline, extra_skip, "\\>[4]", "\\>[6]", "[@{}l@{\\AgdaIndent{0}}]"]
-    unwanted_inline = unwanted + ["\\>[0]", "\\>[2]", "\\<"]
+    unwanted = ["%", begin_code, newline, extra_skip, "\\>[4]", "\\>[6]", "[@{}l@{\\AgdaIndent{0}}]", "\\>[981I][@{}l@{\\AgdaIndent{0}}]"]
+    unwanted_inline = unwanted + ["\\>[0]", "\\>[2]", "\\<", "\\>[981I][@{}l@{\\AgdaIndent{0}}]"]
 
     horizontal1 = ["\\AgdaBound{es}", "\\AgdaField{∅}", "\\AgdaInductiveConstructor{false}"]
     horizontal2 = ["\\AgdaBound{esW}", "\\AgdaBound{removed}", "\\AgdaUnderscore{}"]
