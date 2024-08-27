@@ -136,13 +136,14 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record s { cc = nothing , gid }
 
-  Enact-NewComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
+  Enact-NewComm : let -- old      = maybe proj₁ ∅ (s .cc .proj₁)
                       maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ UpdateCommittee new rem q ,ENACT⦈
-      record s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
+      s
+      -- record s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
 
   Enact-NewConst :
     ───────────────────────────────────────
