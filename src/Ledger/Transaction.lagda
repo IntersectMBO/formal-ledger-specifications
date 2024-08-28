@@ -234,7 +234,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   getReqs : Bool → Tx → Swap → (TxId ⇀ TxBody)
   getReqs ownRds t s with ownRds  
   ... | false = singletonᵐ (t .Tx.body .TxBody.txid) (t .Tx.body)
-  ... | true  = (mapValues (λ p → p .Swap.stxTxBody) (t .Tx.subTxBodies)) ∣ (s .Swap.stxTxBody .TxBody.requiredTxs)
+  ... | true  = (mapValues (λ p → p .Swap.stxTxBody) (t .Tx.subTxBodies)) ∣ (s .Swap.stxTxBody .TxBody.requiredTxs) -- TODO include body of tx itself here
 
   toRE : Redeemer → ExUnits → Redeemer × ExUnits
   toRE r x = ( r , x ) 
