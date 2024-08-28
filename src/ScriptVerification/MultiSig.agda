@@ -1,5 +1,8 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.MultiSigDatum
+open import Relation.Binary using (REL; Decidable)
+open import Level using (Level; _⊔_; suc)
+open import Data.Maybe renaming (map to maybeMap)
 
 open import ScriptVerification.Prelude MultiSigData
 
@@ -159,23 +162,19 @@ matchIx? n (inj₂ record { net = net ; pay = (inj₁ x) ; attrsSize = attrsSize
 matchIx? n (inj₂ record { net = net ; pay = (inj₂ y) ; attrsSize = attrsSize }) = n ≟ y
 
 -- Get the value of txouts for own script
-newValue' : ScriptContext → Maybe Value
-newValue' sc@(txinfo , sp) with getScriptCredential sc
+newValue : ScriptContext → Maybe Value
+newValue sc@(txinfo , sp) with getScriptCredential sc
 ... | nothing = nothing
 ... | just sh = just (balanceSTxOut (filter (λ { (fst , snd) → matchIx? sh fst}) (map proj₂ (STxInfo.txouts txinfo))))
 
-oldValue' : ScriptContext → Maybe Value
-oldValue' sc@(txinfo , sp) with getScriptCredential sc
+oldValue : ScriptContext → Maybe Value
+oldValue sc@(txinfo , sp) with getScriptCredential sc
 ... | nothing = nothing
 ... | just sh = just (balanceSTxOut (filter (λ { (fst , snd) → matchIx? sh fst}) (map proj₂ (STxInfo.realizedInputs txinfo))))
 
--- TODO: Fix This so that it only looks at the value at the contract address 
-oldValue : ScriptContext -> Value
-oldValue (txinfo , _) = balanceSTxOut (map proj₂ (STxInfo.realizedInputs txinfo))
-
--- TODO: Fix This so that it only looks at the value at the contract address
-newValue : ScriptContext -> Value
-newValue (txinfo , _) = balanceSTxOut (map proj₂ (STxInfo.txouts txinfo))
+compareScriptValues : {ℓ : Level}{r : REL ℕ ℕ ℓ} → Decidable r → Maybe Value → Maybe Value → Bool
+compareScriptValues r (just ov) (just nv) = ⌊ r ov nv ⌋
+compareScriptValues r _ _ = false
 
 -- TODO: Implement this
 checkSigned : PubKeyHash → ScriptContext → Bool
@@ -196,11 +195,8 @@ expired slot ctx = true
 multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
 
 multiSigValidator' param Holding (Propose v pkh slot) ctx =
-  -- (newValue ctx == oldValue ctx)
-  -- (newValue ctx ≥ᵇ oldValue ctx)
-  -- (newValue ctx == oldValue ctx)
-  -- ∧
-  ⌊ oldValue ctx ≥? v ⌋
+  compareScriptValues _≟_ (oldValue ctx) (newValue ctx)
+  ∧ compareScriptValues _≥?_ (oldValue ctx) (just v)
   ∧ ⌊ v ≥? 0 ⌋
   ∧ (case (newLabel ctx) of λ where
       nothing → false
@@ -216,8 +212,7 @@ multiSigValidator' param Holding _ ctx = false
 multiSigValidator' param (Collecting _ _ _ _) (Propose _ _ _) ctx = false
 
 multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
-  -- (newValue ctx == oldValue ctx)
-  (newValue ctx ≥ᵇ oldValue ctx)
+  compareScriptValues _≟_ (oldValue ctx) (newValue ctx) -- should this be equal or _≤_
   ∧ checkSigned sig ctx
   ∧ query sig (MultiSig.signatories param)
   ∧ (case (newLabel ctx) of λ where
@@ -234,7 +229,7 @@ multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
    ∧ (case (newLabel ctx) of λ where
       nothing → false
       (just Holding) → checkPayment pkh v ctx
-                       ∧ (oldValue ctx == (_+_ {{addValue}} (newValue ctx) v))
+                       ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} v) (newValue ctx))
       (just (Collecting _ _ _ _)) → false)
 
 multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
@@ -243,6 +238,8 @@ multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
       nothing → false
       (just Holding) → expired slot ctx
       (just (Collecting _ _ _ _)) → false)
+
+
 
 
 multiSigValidator : MultiSig → Maybe SData → Maybe SData → List SData → Bool
@@ -275,7 +272,7 @@ succeedTxOut : TxOut
 succeedTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 200000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 1 2 3 [])))) , nothing
+                           , 800000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 1 2 3 [])))) , nothing
 
 
 failTxOut : TxOut
@@ -297,7 +294,7 @@ succeedTx = record { body = record
                                                                     pay = inj₁ 5 ;
                                                                     stake = inj₁ 5 }))
                                                -- , 10000000000 , nothing , nothing))
-                                               , (1600000000000 - 10000000000) , nothing , nothing))
+                                               , (1000000000000 - 10000000000) , nothing , nothing))
                                                ∷ [])
                          ; txfee = 10000000000
                          ; mint = 0
@@ -379,31 +376,12 @@ failState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) failTx initSt
 evalFailTx : Bool
 evalFailTx = evalScripts failTx failState
 
-{-
-⟦_⟧,_,_,_ : P2Script → CostModel → ExUnits → List Data → Bool
-⟦ s ⟧, cm , eu , d = runPLCScript cm s eu d
-
-evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
-evalScripts tx [] = true
-evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) =
-  ¿ evalTimelock (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
-evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ
--}
-
-
-⟦_⟧',_,_,_ : P2Script → ⊤ → ℕ × ℕ → List SData → ℕ × ℕ
-⟦ s ⟧', cm , eu , [] = 1 , 1
-⟦ s ⟧', cm , eu , (x ∷ []) = 1 , 1
-⟦ s ⟧', cm , eu , (x ∷ x₁ ∷ []) = 1 , 1
-⟦ s ⟧', cm , eu , (x ∷ x₁ ∷ inj₁ x₂ ∷ d) = 1 , 1
-⟦ s ⟧', cm , eu , (x ∷ x₁ ∷ inj₂ y ∷ d) = newValue y , oldValue y
-
 ⟦_⟧2,_,_,_ : P2Script → ⊤ → ℕ × ℕ → List SData → Maybe ℕ × Maybe ℕ -- (List STxOut)
 ⟦ s ⟧2, cm , eu , [] = nothing , nothing
 ⟦ s ⟧2, cm , eu , (x ∷ []) = nothing , nothing
 ⟦ s ⟧2, cm , eu , (x ∷ x₁ ∷ []) = nothing , nothing
 ⟦ s ⟧2, cm , eu , (x ∷ x₁ ∷ inj₁ x₂ ∷ d) = nothing , nothing
-⟦ s ⟧2, cm , eu , (x ∷ x₁ ∷ inj₂ y ∷ d) = (oldValue' y) , (newValue' y)
+⟦ s ⟧2, cm , eu , (x ∷ x₁ ∷ inj₂ y ∷ d) = (oldValue y) , (newValue y)
 
 evalScripts' : Tx → List (Script × List SData × (ℕ × ℕ) × ⊤) → Maybe ℕ × Maybe ℕ -- ℕ × ℕ
 evalScripts' tx [] = nothing , nothing -- 0 , 0
@@ -411,7 +389,6 @@ evalScripts' tx ((inj₁ tl , d , eu , cm) ∷ Γ) = nothing , nothing -- 0 , 0
 evalScripts' tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧2, cm , eu , d -- Evalscripts' tx Γ
 
 test = evalScripts' succeedTx succeedState
-
 
 opaque
   unfolding collectPhaseTwoScriptInputs
@@ -435,7 +412,7 @@ opaque
   succeedExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  succeedTx
 
   _ : isSuccess succeedExample ≡ true
-  _  = {!refl!}
+  _  = refl
 
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   failExample : ComputationResult String UTxOState
@@ -443,7 +420,6 @@ opaque
 
   _ : isSuccess failExample ≡ false
   _  = refl
-
 
 -- TxOuts
 -- just
