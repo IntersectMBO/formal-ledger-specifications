@@ -106,7 +106,7 @@ d_Computational'45'CHAIN_1922 v0 v1
                              (coe
                                 MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_738)
                              (coe
-                                MAlonzo.Code.Ledger.Ledger.Properties.d_Computational'45'LEDGER_2618
+                                MAlonzo.Code.Ledger.Ledger.Properties.d_Computational'45'LEDGER_2626
                                 (coe v0) (coe v1))
                              (coe
                                 MAlonzo.Code.Interface.ComputationalRelation.C_InjectError'46'constructor_82995
@@ -115,7 +115,7 @@ d_Computational'45'CHAIN_1922 v0 v1
                                 MAlonzo.Code.Interface.ComputationalRelation.C_InjectError'46'constructor_82995
                                 (coe (\ v8 -> v8))))
                           (coe
-                             MAlonzo.Code.Ledger.Ledger.C_'10214'_'44'_'44'_'44'_'44'_'10215''737''7497'_2032
+                             MAlonzo.Code.Ledger.Ledger.C_'10214'_'44'_'44'_'44'_'44'_'10215''737''7497'_2040
                              (coe MAlonzo.Code.Ledger.Chain.d_slot_2152 (coe v4))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
@@ -124,27 +124,27 @@ d_Computational'45'CHAIN_1922 v0 v1
                                    (coe
                                       MAlonzo.Code.Ledger.Enact.d_constitution_838
                                       (coe
-                                         MAlonzo.Code.Ledger.Epoch.d_es_2202
+                                         MAlonzo.Code.Ledger.Epoch.d_es_2210
                                          (coe
-                                            MAlonzo.Code.Ledger.Epoch.d_epochState_2218
+                                            MAlonzo.Code.Ledger.Epoch.d_epochState_2226
                                             (coe v6))))))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                 (coe
                                    MAlonzo.Code.Ledger.Enact.d_pparams_842
                                    (coe
-                                      MAlonzo.Code.Ledger.Epoch.d_es_2202
-                                      (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2218 (coe v6)))))
+                                      MAlonzo.Code.Ledger.Epoch.d_es_2210
+                                      (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2226 (coe v6)))))
                              (coe
-                                MAlonzo.Code.Ledger.Epoch.d_es_2202
-                                (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2218 (coe v6)))
+                                MAlonzo.Code.Ledger.Epoch.d_es_2210
+                                (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2226 (coe v6)))
                              (coe
                                 MAlonzo.Code.Ledger.PParams.d_treasury_148
                                 (coe
-                                   MAlonzo.Code.Ledger.Epoch.d_acnt_2196
-                                   (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2218 (coe v6)))))
-                          (MAlonzo.Code.Ledger.Epoch.d_ls_2200
-                             (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2218 (coe v6)))
+                                   MAlonzo.Code.Ledger.Epoch.d_acnt_2204
+                                   (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2226 (coe v6)))))
+                          (MAlonzo.Code.Ledger.Epoch.d_ls_2208
+                             (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2226 (coe v6)))
                           (MAlonzo.Code.Ledger.Chain.d_ts_2150 (coe v4)))
                        (\ v8 ->
                           case coe v8 of
@@ -156,61 +156,61 @@ d_Computational'45'CHAIN_1922 v0 v1
                                       (coe
                                          MAlonzo.Code.Ledger.Chain.C_ChainState'46'constructor_3289
                                          (coe
-                                            MAlonzo.Code.Ledger.Epoch.C_'10214'_'44'_'44'_'10215''8319''7497'_2222
+                                            MAlonzo.Code.Ledger.Epoch.C_'10214'_'44'_'44'_'10215''8319''7497'_2230
                                             (coe
-                                               MAlonzo.Code.Ledger.Epoch.d_lastEpoch_2216 (coe v6))
+                                               MAlonzo.Code.Ledger.Epoch.d_lastEpoch_2224 (coe v6))
                                             (coe
-                                               MAlonzo.Code.Ledger.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_2206
+                                               MAlonzo.Code.Ledger.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_2214
                                                (coe
-                                                  MAlonzo.Code.Ledger.Epoch.d_acnt_2196
+                                                  MAlonzo.Code.Ledger.Epoch.d_acnt_2204
                                                   (let v11
                                                          = coe
                                                              MAlonzo.Code.Ledger.Chain.C_mkGeneralizeTel_39899
                                                              (coe v3) (coe v4) (coe v6) (coe v9) in
                                                    coe
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Epoch.d_epochState_2218
+                                                        MAlonzo.Code.Ledger.Epoch.d_epochState_2226
                                                         (coe
                                                            MAlonzo.Code.Ledger.Chain.d_'46'generalizedField'45'nes_39893
                                                            v11))))
                                                (coe
-                                                  MAlonzo.Code.Ledger.Epoch.d_ss_2198
+                                                  MAlonzo.Code.Ledger.Epoch.d_ss_2206
                                                   (let v11
                                                          = coe
                                                              MAlonzo.Code.Ledger.Chain.C_mkGeneralizeTel_39899
                                                              (coe v3) (coe v4) (coe v6) (coe v9) in
                                                    coe
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Epoch.d_epochState_2218
+                                                        MAlonzo.Code.Ledger.Epoch.d_epochState_2226
                                                         (coe
                                                            MAlonzo.Code.Ledger.Chain.d_'46'generalizedField'45'nes_39893
                                                            v11))))
                                                (coe v9)
                                                (coe
-                                                  MAlonzo.Code.Ledger.Epoch.d_es_2202
+                                                  MAlonzo.Code.Ledger.Epoch.d_es_2210
                                                   (let v11
                                                          = coe
                                                              MAlonzo.Code.Ledger.Chain.C_mkGeneralizeTel_39899
                                                              (coe v3) (coe v4) (coe v6) (coe v9) in
                                                    coe
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Epoch.d_epochState_2218
+                                                        MAlonzo.Code.Ledger.Epoch.d_epochState_2226
                                                         (coe
                                                            MAlonzo.Code.Ledger.Chain.d_'46'generalizedField'45'nes_39893
                                                            v11))))
                                                (coe
-                                                  MAlonzo.Code.Ledger.Epoch.d_fut_2204
+                                                  MAlonzo.Code.Ledger.Epoch.d_fut_2212
                                                   (let v11
                                                          = coe
                                                              MAlonzo.Code.Ledger.Chain.C_mkGeneralizeTel_39899
                                                              (coe v3) (coe v4) (coe v6) (coe v9) in
                                                    coe
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Epoch.d_epochState_2218
+                                                        MAlonzo.Code.Ledger.Epoch.d_epochState_2226
                                                         (coe
                                                            MAlonzo.Code.Ledger.Chain.d_'46'generalizedField'45'nes_39893
                                                            v11)))))
-                                            (coe MAlonzo.Code.Ledger.Epoch.d_ru_2220 (coe v6))))
+                                            (coe MAlonzo.Code.Ledger.Epoch.d_ru_2228 (coe v6))))
                                       (coe MAlonzo.Code.Ledger.Chain.C_CHAIN_2398 v6 v7 v10))
                             _ -> MAlonzo.RTE.mazUnreachableError)
                 _ -> MAlonzo.RTE.mazUnreachableError))
