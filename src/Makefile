@@ -28,13 +28,13 @@ CONWAY_TEX_FILES=$(patsubst %.lagda, $(CONWAY_TEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 
 # to be postprocessed for vertical vector typesetting
-VV_NAMES=Certs Chain Enact Epoch Ratify Ledger NewPP #Utxo/Properties
+VV_NAMES=Certs Chain Enact Epoch Ratify Ledger NewPP Utxo #Utxo/Properties
 
 VV_TEX_FILES=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
 CONWAY_VV_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
 
 # to be postprocessed for highlighting new symbols in Coway pdf
-HL_NAMES=Transaction
+HL_NAMES=Transaction Utxo
 HL_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(HL_NAMES:%=%.tex))
 
 # General rule for all LaTeX files (with postprocessing for vertical vectors)
