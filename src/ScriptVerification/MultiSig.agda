@@ -115,12 +115,59 @@ newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee
 ... | inj₁ (inj₁ x) ∷ [] = just x
 ... | _ = nothing
 
+-- You get the Ix input of spend script
+-- Then you lookup the realized inputs
+-- Then you lookup the txouts
+--
+
+-- TODO: Look into this
+getPaymentCredential : STxOut → ℕ
+getPaymentCredential (inj₁ record { net = net ; pay = (inj₁ x) ; stake = stake } , snd) = x
+getPaymentCredential (inj₁ record { net = net ; pay = (inj₂ y) ; stake = stake } , snd) = y
+getPaymentCredential (inj₂ record { net = net ; pay = (inj₁ x) ; attrsSize = attrsSize } , snd) = x
+getPaymentCredential (inj₂ record { net = net ; pay = (inj₂ y) ; attrsSize = attrsSize } , snd) = y
+
+-- TODO: look into Ledger.address version of getscripthash
+getScriptCredential' : ℕ → SUTxO → Maybe ℕ
+getScriptCredential' ix [] = nothing
+getScriptCredential' ix (((txid' , ix') , txout) ∷ utxos) with ix ≟ ix'
+... | no ¬a = getScriptCredential' ix utxos
+... | yes a = just (getPaymentCredential txout)
+
+--TODO: Handle cases other than spend
+getScriptCredential : ScriptContext → Maybe ℕ
+getScriptCredential (fst , Rwrd x) = nothing
+getScriptCredential (fst , Mint x) = nothing
+getScriptCredential (txinfo , Spend (txid , ix)) = getScriptCredential' ix (STxInfo.realizedInputs txinfo)
+getScriptCredential (fst , Empty) = nothing
+
+open import Data.List using (filter)
+
 balanceSTxOut : List STxOut → Value
 balanceSTxOut txout = foldr (_+_ {{addValue}}) 0 (map (λ {(_ , v , _) → v}) txout)
 
+matchIx : ℕ → SAddr → Set
+matchIx n (inj₁ record { net = net ; pay = (inj₁ x) ; stake = stake }) = n ≡ x
+matchIx n (inj₁ record { net = net ; pay = (inj₂ y) ; stake = stake }) = n ≡ y
+matchIx n (inj₂ record { net = net ; pay = (inj₁ x) ; attrsSize = attrsSize }) = n ≡ x
+matchIx n (inj₂ record { net = net ; pay = (inj₂ y) ; attrsSize = attrsSize }) = n ≡ y
 
-helpMe : ScriptContext → Value
-helpMe = {!!}
+matchIx? : (n : ℕ) → (a : SAddr) → Dec (matchIx n a)
+matchIx? n (inj₁ record { net = net ; pay = (inj₁ x) ; stake = stake }) = n ≟ x
+matchIx? n (inj₁ record { net = net ; pay = (inj₂ y) ; stake = stake }) = n ≟ y
+matchIx? n (inj₂ record { net = net ; pay = (inj₁ x) ; attrsSize = attrsSize }) = n ≟ x
+matchIx? n (inj₂ record { net = net ; pay = (inj₂ y) ; attrsSize = attrsSize }) = n ≟ y
+
+-- Get the value of txouts for own script
+newValue' : ScriptContext → Maybe Value
+newValue' sc@(txinfo , sp) with getScriptCredential sc
+... | nothing = nothing
+... | just sh = just (balanceSTxOut (filter (λ { (fst , snd) → matchIx? sh fst}) (map proj₂ (STxInfo.txouts txinfo))))
+
+oldValue' : ScriptContext → Maybe Value
+oldValue' sc@(txinfo , sp) with getScriptCredential sc
+... | nothing = nothing
+... | just sh = just (balanceSTxOut (filter (λ { (fst , snd) → matchIx? sh fst}) (map proj₂ (STxInfo.realizedInputs txinfo))))
 
 -- TODO: Fix This so that it only looks at the value at the contract address 
 oldValue : ScriptContext -> Value
@@ -344,7 +391,6 @@ evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ 
 -}
 
 
-
 ⟦_⟧',_,_,_ : P2Script → ⊤ → ℕ × ℕ → List SData → ℕ × ℕ
 ⟦ s ⟧', cm , eu , [] = 1 , 1
 ⟦ s ⟧', cm , eu , (x ∷ []) = 1 , 1
@@ -352,12 +398,18 @@ evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ 
 ⟦ s ⟧', cm , eu , (x ∷ x₁ ∷ inj₁ x₂ ∷ d) = 1 , 1
 ⟦ s ⟧', cm , eu , (x ∷ x₁ ∷ inj₂ y ∷ d) = newValue y , oldValue y
 
-evalScripts' : Tx → List (Script × List SData × (ℕ × ℕ) × ⊤) → ℕ × ℕ
-evalScripts' tx [] = 0 , 0
-evalScripts' tx ((inj₁ tl , d , eu , cm) ∷ Γ) = 0 , 0
-evalScripts' tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧', cm , eu , d -- Evalscripts' tx Γ
+⟦_⟧2,_,_,_ : P2Script → ⊤ → ℕ × ℕ → List SData → Maybe ℕ × Maybe ℕ -- (List STxOut)
+⟦ s ⟧2, cm , eu , [] = nothing , nothing
+⟦ s ⟧2, cm , eu , (x ∷ []) = nothing , nothing
+⟦ s ⟧2, cm , eu , (x ∷ x₁ ∷ []) = nothing , nothing
+⟦ s ⟧2, cm , eu , (x ∷ x₁ ∷ inj₁ x₂ ∷ d) = nothing , nothing
+⟦ s ⟧2, cm , eu , (x ∷ x₁ ∷ inj₂ y ∷ d) = (oldValue' y) , (newValue' y)
 
-test : ℕ × ℕ
+evalScripts' : Tx → List (Script × List SData × (ℕ × ℕ) × ⊤) → Maybe ℕ × Maybe ℕ -- ℕ × ℕ
+evalScripts' tx [] = nothing , nothing -- 0 , 0
+evalScripts' tx ((inj₁ tl , d , eu , cm) ∷ Γ) = nothing , nothing -- 0 , 0
+evalScripts' tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧2, cm , eu , d -- Evalscripts' tx Γ
+
 test = evalScripts' succeedTx succeedState
 
 
@@ -375,9 +427,8 @@ opaque
   _ = refl
 
   -- new value , old value
-  --          1000000000000  
-  _ : test ≡ (990000000010 , 1000000000010)
-  _ = {!!}
+ -- _ : test ≡ (1790000000000 , 1800000000000)
+ -- _ = refl
 
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   succeedExample : ComputationResult String UTxOState
@@ -392,3 +443,17 @@ opaque
 
   _ : isSuccess failExample ≡ false
   _  = refl
+
+
+-- TxOuts
+-- just
+{-
+
+((inj₁ (record { net = tt ; pay = inj₂ 777 ; stake = inj₂ 777 }) ,
+  200000000000 , just (inj₁ (inj₁ (Collecting 1 2 3 []))))
+ ∷
+ (inj₁ (record { net = tt ; pay = inj₁ 5 ; stake = inj₁ 5 }) ,
+  1590000000000 , nothing)
+ ∷ [])
+
+-}

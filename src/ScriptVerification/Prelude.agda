@@ -59,7 +59,7 @@ instance
 
 
 record STxInfo : Set where
-  field realizedInputs : SUTxO 
+  field realizedInputs : SUTxO
         txouts         : List (SIx × STxOut)
         fee            : SValue
         mint           : SValue
