@@ -211,7 +211,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
   minfee : PParams → UTxO → Tx → Coin
   minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
                      + txscriptfee (pp .prices) (totExUnits tx)
-                     + pp .minFeeRefScriptCoinsPerByte *↓ scriptsCost utxo tx
+                     + scriptsCost utxo tx
 
 \end{code}
 \begin{code}[hide]
@@ -328,7 +328,7 @@ feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrd
                              ∧ not (≟-∅ᵇ collateral)
                              )
                      )
-                     ∧ newScriptCost utxo tx ≤ᵇ pp .maxRefScriptPerTx
+                     ∧ scriptsCost utxo tx ≤ᵇ pp .maxRefScriptPerTx
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
