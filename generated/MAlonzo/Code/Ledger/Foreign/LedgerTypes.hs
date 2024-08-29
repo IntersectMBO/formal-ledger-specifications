@@ -75,8 +75,8 @@ type ExUnits = (Integer, Integer)
 type ProtVer = (Integer, Integer)
 type GovActionID = (TxId, Integer)
 data Credential
-  = ScriptObj Integer
-  | KeyHashObj Integer
+  = KeyHashObj Integer
+  | ScriptObj Integer
   deriving (Show, Eq, Generic)
 type PoolParams = Credential
 type RwdAddr = (Network, Credential)
@@ -583,17 +583,17 @@ d_ProtVer_116 = erased
 -- Ledger.Foreign.LedgerTypes.Credential
 d_Credential_118 = ()
 type T_Credential_118 = Credential
-pattern C_ScriptObj_120 a0 = ScriptObj a0
-pattern C_KeyHashObj_122 a0 = KeyHashObj a0
-check_ScriptObj_120 :: Integer -> T_Credential_118
-check_ScriptObj_120 = ScriptObj
-check_KeyHashObj_122 :: Integer -> T_Credential_118
-check_KeyHashObj_122 = KeyHashObj
+pattern C_KeyHashObj_120 a0 = KeyHashObj a0
+pattern C_ScriptObj_122 a0 = ScriptObj a0
+check_KeyHashObj_120 :: Integer -> T_Credential_118
+check_KeyHashObj_120 = KeyHashObj
+check_ScriptObj_122 :: Integer -> T_Credential_118
+check_ScriptObj_122 = ScriptObj
 cover_Credential_118 :: Credential -> ()
 cover_Credential_118 x
   = case x of
-      ScriptObj _ -> ()
       KeyHashObj _ -> ()
+      ScriptObj _ -> ()
 -- Ledger.Foreign.LedgerTypes.PoolParams
 d_PoolParams_124 :: ()
 d_PoolParams_124 = erased
