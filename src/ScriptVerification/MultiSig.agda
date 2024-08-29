@@ -224,13 +224,24 @@ multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
         ∧ (slot == slot')
         ∧ (sigs' == sig ∷ sigs)) -- Make this an order agnostic comparison?
 
+-- Originally Pay does not take in a value
+-- multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
 multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
   (length sigs) ≥ᵇ MultiSig.minNumSignatures param
    ∧ (case (newLabel ctx) of λ where
       nothing → false
-      (just Holding) → checkPayment pkh v ctx
-                       ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} v) (newValue ctx))
-      (just (Collecting _ _ _ _)) → false)
+      (just Holding) → false -- the below check was originally in holding 
+                  --   checkPayment pkh v ctx
+                    --   ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} val) (newValue ctx))
+                                                                                            -- was v
+      (just (Collecting _ _ _ _)) →
+                    checkPayment pkh v ctx
+                     ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} v) (newValue ctx)))
+
+                     -- note this was wrong: (maybeMap (_+_ {{addValue}} val) (newValue ctx)))
+
+        -- this was true
+        -- true)
 
 multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
   (newValue ctx == oldValue ctx)
@@ -272,7 +283,7 @@ succeedTxOut : TxOut
 succeedTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 800000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 1 2 3 [])))) , nothing
+                           , 800000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 100000000000 2 3 [])))) , nothing
 
 
 failTxOut : TxOut
@@ -319,11 +330,10 @@ succeedTx = record { body = record
                                 scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
                                 txdats =  fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
                                 txrdmrs = fromListᵐ (((Spend , 6) ,
-                                                      inj₁ (inj₂ (Propose 1 2 3)) ,
+                                                      inj₁ (inj₂ (Propose 100000000000 2 3)) ,
                                                       (5 , 5)) ∷ []) } ;
                 isValid = true ;
                 txAD = nothing }
-
 
 failTx : Tx
 failTx = record { body = record
@@ -364,6 +374,59 @@ failTx = record { body = record
                 isValid = true ;
                 txAD = nothing }
 
+succeedTxOut' : TxOut
+succeedTxOut' = inj₁ (record { net = tt ;
+                           pay = inj₂ 777 ;
+                           stake = inj₂ 777 })
+                           , 700000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 1 2 3 [])))) , nothing
+
+
+-- need to update the transaction id
+succeedTx' : Tx
+succeedTx' = record { body = record
+                         { txins = Ledger.Prelude.fromList ((7 , 6) ∷ (7 , 5) ∷ [])
+                         ; refInputs = ∅
+                         ; txouts = fromListIx ((6 , succeedTxOut')
+                                               ∷ (5
+                                                 , ((inj₁ (record { net = tt ;
+                                                                    pay = inj₁ 5 ;
+                                                                    stake = inj₁ 5 }))
+                                               -- , 10000000000 , nothing , nothing))
+                                               , (1090000000000 - 10000000000) , nothing , nothing))
+                                               ∷ [])
+                         ; txfee = 10000000000
+                         ; mint = 0
+                         ; txvldt = nothing , nothing
+                         ; txcerts = []
+                         ; txwdrls = ∅
+                         ; txvote = []
+                         ; txprop = []
+                         ; txdonation = 0
+                         ; txup = nothing
+                         ; txADhash = nothing
+                         ; netwrk = just tt
+                         ; txsize = 10
+                         ; txid = 8
+                         ; collateral = Ledger.Prelude.fromList ((7 , 5) ∷ [])
+                         ; reqSigHash = ∅
+                         ; scriptIntHash = nothing
+                         } ;
+                wits = record { vkSigs = fromListᵐ ((5 , 12) ∷ []) ;
+                                -- signature now is first number + txId ≡ second number
+                                -- first number is needs to be the id for the script
+                                scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
+                                txdats =  fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
+                                txrdmrs = fromListᵐ (((Spend , 6) ,
+                                                      inj₁ (inj₂ Pay) ,
+                                                      (7 , 5)) ∷ []) } ;
+                isValid = true ;
+                txAD = nothing }
+
+
+-- (Collecting v pkh slot sigs) Pay ctx
+-- multiSigValidator' param Holding (Propose v pkh slot) ctx =
+
+
 succeedState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
 succeedState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) succeedTx initState)
 
@@ -388,7 +451,10 @@ evalScripts' tx [] = nothing , nothing -- 0 , 0
 evalScripts' tx ((inj₁ tl , d , eu , cm) ∷ Γ) = nothing , nothing -- 0 , 0
 evalScripts' tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧2, cm , eu , d -- Evalscripts' tx Γ
 
-test = evalScripts' succeedTx succeedState
+-- test = evalScripts' succeedTx succeedState
+letsGo : ComputationResult String UTxOState → ComputationResult String UTxOState
+letsGo (success x) = UTXO-step initEnv x succeedTx'
+letsGo (failure x) = failure x
 
 opaque
   unfolding collectPhaseTwoScriptInputs
@@ -414,6 +480,12 @@ opaque
   _ : isSuccess succeedExample ≡ true
   _  = refl
 
+  se : ComputationResult String UTxOState
+  se = letsGo succeedExample
+
+  _ : isSuccess se ≡ true
+  _ = refl
+
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   failExample : ComputationResult String UTxOState
   failExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  failTx
@@ -432,4 +504,31 @@ opaque
   1590000000000 , nothing)
  ∷ [])
 
+success
+⟦
+((4 , 4) ,
+ inj₁ (record { net = tt ; pay = inj₁ 4 ; stake = inj₁ 4 }) ,
+ 1000000000000 , nothing , nothing)
+∷
+((3 , 3) ,
+ inj₁ (record { net = tt ; pay = inj₁ 3 ; stake = inj₁ 3 }) ,
+ 1000000000000 , nothing , nothing)
+∷
+((2 , 2) ,
+ inj₁ (record { net = tt ; pay = inj₁ 2 ; stake = inj₁ 2 }) ,
+ 1000000000000 , nothing , nothing)
+∷
+((1 , 1) ,
+ inj₁ (record { net = tt ; pay = inj₁ 1 ; stake = inj₁ 1 }) ,
+ 1000000000000 , nothing , nothing)
+∷
+((7 , 6) ,
+ inj₁ (record { net = tt ; pay = inj₂ 777 ; stake = inj₂ 777 }) ,
+ 800000000000 ,
+ just (inj₁ (inj₁ (inj₁ (Collecting 1 2 3 [])))) , nothing)
+∷
+((7 , 5) ,
+ inj₁ (record { net = tt ; pay = inj₁ 5 ; stake = inj₁ 5 }) ,
+ 990000000000 , nothing , nothing)
+∷ []
 -}
