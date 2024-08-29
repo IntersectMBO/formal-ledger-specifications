@@ -103,7 +103,7 @@ jobs:
         run: |
             nix-build -A ledger.hsSrc -j1 -o outputs/MAlonzo
             git stash push
-            git fetch origin ${{ env.MAlonzo_branch }} --depth 1
+            git fetch origin ${{ env.MAlonzo_branch }} --unshallow
             git checkout ${{ env.MAlonzo_branch }}
             rsync -r --exclude={'**/nix-support','**/lib'} outputs/MAlonzo/haskell/Ledger/* generated/
             git add -f generated && git commit -m "Generate code for ${{ github.sha }}" || echo "Everything is up-to-date."
