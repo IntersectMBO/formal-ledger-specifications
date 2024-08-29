@@ -116,6 +116,10 @@ record PParams : Type where
         coinsPerUTxOByte              : Coin
         prices                        : Prices
         minFeeRefScriptCoinsPerByte   : ℚ
+        maxRefScriptPerTx             : ℕ
+        maxRefScriptPerBlock          : ℕ
+        refScriptCostStride           : ℕ
+        refScriptCostMultiplier       : ℚ
 \end{code}
 \begin{code}[hide]
         minUTxOValue                  : Coin -- retired, keep for now
@@ -192,6 +196,10 @@ module PParamsUpdate where
           poolDeposit                   : Maybe Coin
           coinsPerUTxOByte              : Maybe Coin
           minFeeRefScriptCoinsPerByte   : Maybe ℚ
+          maxRefScriptPerTx             : Maybe ℕ
+          maxRefScriptPerBlock          : Maybe ℕ
+          refScriptCostStride           : Maybe ℕ
+          refScriptCostMultiplier       : Maybe ℚ
           prices                        : Maybe Prices
           minUTxOValue                  : Maybe Coin -- retired, keep for now
           a0                            : Maybe ℚ
@@ -238,6 +246,10 @@ module PParamsUpdate where
       ∷ is-just poolDeposit
       ∷ is-just coinsPerUTxOByte
       ∷ is-just minFeeRefScriptCoinsPerByte
+      ∷ is-just maxRefScriptPerTx
+      ∷ is-just maxRefScriptPerBlock
+      ∷ is-just refScriptCostStride
+      ∷ is-just refScriptCostMultiplier
       ∷ is-just prices
       ∷ is-just minUTxOValue
       ∷ [])
@@ -308,6 +320,10 @@ module PParamsUpdate where
       ; poolDeposit                 = U.poolDeposit ?↗ P.poolDeposit
       ; coinsPerUTxOByte            = U.coinsPerUTxOByte ?↗ P.coinsPerUTxOByte
       ; minFeeRefScriptCoinsPerByte = U.minFeeRefScriptCoinsPerByte ?↗ P.minFeeRefScriptCoinsPerByte
+      ; maxRefScriptPerTx           = U.maxRefScriptPerTx ?↗ P.maxRefScriptPerTx
+      ; maxRefScriptPerBlock        = U.maxRefScriptPerBlock ?↗ P.maxRefScriptPerBlock
+      ; refScriptCostStride         = U.refScriptCostStride ?↗ P.refScriptCostStride
+      ; refScriptCostMultiplier     = U.refScriptCostMultiplier ?↗ P.refScriptCostMultiplier
       ; prices                      = U.prices ?↗ P.prices
       ; minUTxOValue                = U.minUTxOValue ?↗ P.minUTxOValue
       ; a0                          = U.a0 ?↗ P.a0

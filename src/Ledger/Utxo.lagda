@@ -27,6 +27,7 @@ module Ledger.Utxo
   where
 
 open import Ledger.ScriptValidation txs abs
+open import Ledger.Costs txs abs using (scriptsCost)
 
 instance
   _ = +-0-monoid
@@ -206,12 +207,11 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
+
   minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  =
-    pp .a * tx .body .txsize + pp .b
-    + txscriptfee (pp .prices) (totExUnits tx)
-    + pp .minFeeRefScriptCoinsPerByte
-    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
+                     + txscriptfee (pp .prices) (totExUnits tx)
+                     + pp .minFeeRefScriptCoinsPerByte *↓ scriptsCost utxo tx
 
 \end{code}
 \begin{code}[hide]
@@ -321,13 +321,14 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 \begin{code}
 
 feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
-                  ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                  =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                      ∧ isAdaOnlyᵇ bal
-                      ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
-                      ∧ not (≟-∅ᵇ collateral)
-                      )
+feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
+                        =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
+                             ∧ isAdaOnlyᵇ bal
+                             ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
+                             ∧ not (≟-∅ᵇ collateral)
+                             )
+                     )
+                     ∧ newScriptCost utxo tx ≤ᵇ pp .maxRefScriptPerTx
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
