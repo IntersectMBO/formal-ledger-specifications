@@ -10,6 +10,7 @@ open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
 open import Data.Rational using (ℚ)
 open import Relation.Nullary.Decidable
+open import Data.List.Relation.Unary.Any using (Any; here; there)
 
 open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
@@ -153,14 +154,31 @@ record PParams : Type where
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
 \begin{figure*}
+\begin{AgdaMultiCode}
 \begin{code}
-paramsWellFormed : PParams → Type
-paramsWellFormed pp =
-     0 ∉ fromList  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
-                   ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                   ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+positivePParams : PParams → List ℕ
+positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ refScriptCostStride
+                      ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
+                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+\end{code}
+\begin{code}[hide]
   where open PParams pp
 \end{code}
+\begin{code}
+
+paramsWellFormed : PParams → Type
+paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
+\end{code}
+\begin{code}[hide]
+paramsWF-elim : (pp : PParams) → paramsWellFormed pp → (n : ℕ) → n ∈ˡ (positivePParams pp) → n > 0
+paramsWF-elim pp pwf (suc n) x = z<s
+paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
+  where open Equivalence
+
+refScriptCostStride>0 : (pp : PParams) → paramsWellFormed pp → (PParams.refScriptCostStride pp) > 0
+refScriptCostStride>0 pp pwf = paramsWF-elim pp pwf (PParams.refScriptCostStride pp) (there (there (there (there (here refl)))))
+\end{code}
+\end{AgdaMultiCode}
 \caption{Protocol parameter well-formedness}
 \label{fig:protocol-parameter-well-formedness}
 \end{figure*}
@@ -347,7 +365,6 @@ module PParamsUpdate where
   instance
     unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
-
 \end{code}
 % Retiring ProtVer's documentation since ProtVer is retired.
 % \ProtVer represents the protocol version used in the Cardano ledger.
