@@ -1,7 +1,7 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import ScriptVerification.Prelude
 
-module ScriptVerification.SucceedIfNumber where
+module ScriptVerification.Examples.SucceedIfNumber where
 
 scriptImp : ScriptImplementation ℕ ℕ
 scriptImp = record { serialise = id ;

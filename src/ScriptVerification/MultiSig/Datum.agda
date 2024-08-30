@@ -1,6 +1,6 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
-module ScriptVerification.MultiSigDatum where
+module ScriptVerification.MultiSig.Datum where
 
 open import Tactic.Derive.DecEq
 
