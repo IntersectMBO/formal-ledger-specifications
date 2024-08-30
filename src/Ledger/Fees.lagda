@@ -57,12 +57,14 @@ generateTerminationProof (suc limit) = termination-proof (induction (suc limit))
 scriptsTotalSize : UTxO → Tx → Coin
 scriptsTotalSize utxo tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
 
-scriptsCost : (pp : PParams) → paramsWellFormed pp → UTxO → Tx → Coin
-scriptsCost pp pwf utxo tx = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte (scriptsTotalSize utxo tx) (generateTerminationProof (scriptsTotalSize utxo tx))
+scriptsCost : (pp : PParams) → UTxO → Tx → Coin
+scriptsCost pp utxo tx with (PParams.refScriptCostStride pp)
+... | 0 = 0  -- This case should never occur; refScriptCostStride should always be > 0.
+... | suc m = goal
   where
   open PParams pp
   multiplier = refScriptCostMultiplier
-  sizeIncrement = refScriptCostStride
+  sizeIncrement = suc m
   sizeIncrementRational = sizeIncrement ↑ℚ
 
   scriptsCostAux : ℚ → ℚ → (n : ℕ) → Terminates n → Coin
@@ -71,9 +73,10 @@ scriptsCost pp pwf utxo tx = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte (sc
   ... | no p = scriptsCostAux (acc + (sizeIncrementRational * curTierPrice)) (multiplier * curTierPrice) (n - sizeIncrement)
                  (tproof (n - sizeIncrement) (>′0⇒suc∸≤′ (m>′0⇒n>′0 sizeIncrement>′0 p)))
     where
-    -- Everything below is for the (well-founded recursion) proof that scriptCostAux terminates.
+    -- Everything below, in this `where` block, is needed only for the
+    -- (well-founded recursion) proof that scriptCostAux terminates.
     sizeIncrement>′0 : sizeIncrement >′ 0
-    sizeIncrement>′0 = <⇒<′ (refScriptCostStride>0 pp pwf)
+    sizeIncrement>′0 = <⇒<′ z<s
 
     >′-trans : ∀ {l m n} → n >′ m → m >′ l → n >′ l
     >′-trans {l} {m} {.(suc m)} <′-base m>l = ≤′-step m>l
@@ -90,5 +93,8 @@ scriptsCost pp pwf utxo tx = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte (sc
 
     >′0⇒suc∸≤′ : ∀ {n} → (n >′ 0) → suc (n ∸ sizeIncrement) ≤′ n
     >′0⇒suc∸≤′ {n} n>0 = suc∸≤′ n>0 sizeIncrement>′0
+
+  goal : Coin
+  goal = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte (scriptsTotalSize utxo tx) (generateTerminationProof (scriptsTotalSize utxo tx))
 
 \end{code}

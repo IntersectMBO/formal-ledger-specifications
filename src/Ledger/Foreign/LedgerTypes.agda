@@ -258,62 +258,72 @@ record PoolThresholds : Type where
   field Q1 Q2a Q2b Q4 Q5e : Rational
 
 record PParams : Type where
-  field a                      : ℕ
-        b                      : ℕ
-        maxBlockSize           : ℕ
-        maxTxSize              : ℕ
-        maxHeaderSize          : ℕ
-        keyDeposit             : Coin
-        poolDeposit            : Coin
-        Emax                   : Epoch
-        nopt                   : ℕ
-        pv                     : Pair ℕ ℕ
-        minUTxOValue           : Coin
-        coinsPerUTxOByte       : Coin
-        costmdls               : ⊤
-        prices                 : ⊤
-        maxTxExUnits           : ExUnits
-        maxBlockExUnits        : ExUnits
-        maxValSize             : ℕ
-        -- collateralPercent   : ℕ
-        maxCollateralInputs    : ℕ
-        poolVotingThresholds   : PoolThresholds
-        drepVotingThresholds   : DrepThresholds
-        ccMinSize              : ℕ
-        ccMaxTermLength        : ℕ
-        govActionLifetime      : ℕ
-        govActionDeposit       : Coin
-        drepDeposit            : Coin
-        drepActivity           : Epoch
+  field a                             : ℕ
+        b                             : ℕ
+        maxBlockSize                  : ℕ
+        maxTxSize                     : ℕ
+        maxHeaderSize                 : ℕ
+        keyDeposit                    : Coin
+        poolDeposit                   : Coin
+        Emax                          : Epoch
+        nopt                          : ℕ
+        pv                            : Pair ℕ ℕ
+        minUTxOValue                  : Coin
+        coinsPerUTxOByte              : Coin
+        costmdls                      : ⊤
+        prices                        : ⊤
+        minFeeRefScriptCoinsPerByte   : Rational
+        maxRefScriptPerTx             : ℕ
+        maxRefScriptPerBlock          : ℕ
+        refScriptCostStride           : ℕ
+        refScriptCostMultiplier       : Rational
+        maxTxExUnits                  : ExUnits
+        maxBlockExUnits               : ExUnits
+        maxValSize                    : ℕ
+        -- collateralPercent          : ℕ
+        maxCollateralInputs           : ℕ
+        poolVotingThresholds          : PoolThresholds
+        drepVotingThresholds          : DrepThresholds
+        ccMinSize                     : ℕ
+        ccMaxTermLength               : ℕ
+        govActionLifetime             : ℕ
+        govActionDeposit              : Coin
+        drepDeposit                   : Coin
+        drepActivity                  : Epoch
 
 record PParamsUpdate : Type where
-  field a                      : Maybe ℕ
-        b                      : Maybe ℕ
-        maxBlockSize           : Maybe ℕ
-        maxTxSize              : Maybe ℕ
-        maxHeaderSize          : Maybe ℕ
-        keyDeposit             : Maybe Coin
-        poolDeposit            : Maybe Coin
-        Emax                   : Maybe Epoch
-        nopt                   : Maybe ℕ
-        pv                     : Maybe (Pair ℕ ℕ)
-        minUTxOValue           : Maybe Coin
-        coinsPerUTxOByte       : Maybe Coin
-        costmdls               : Maybe ⊤
-        prices                 : Maybe ⊤
-        maxTxExUnits           : Maybe ExUnits
-        maxBlockExUnits        : Maybe ExUnits
-        maxValSize             : Maybe ℕ
-        -- collateralPercent   : Maybe ℕ
-        maxCollateralInputs    : Maybe ℕ
-        poolVotingThresholds   : Maybe PoolThresholds
-        drepVotingThresholds   : Maybe DrepThresholds
-        ccMinSize              : Maybe ℕ
-        ccMaxTermLength        : Maybe ℕ
-        govActionLifetime      : Maybe ℕ
-        govActionDeposit       : Maybe Coin
-        drepDeposit            : Maybe Coin
-        drepActivity           : Maybe Epoch
+  field a                             : Maybe ℕ
+        b                             : Maybe ℕ
+        maxBlockSize                  : Maybe ℕ
+        maxTxSize                     : Maybe ℕ
+        maxHeaderSize                 : Maybe ℕ
+        keyDeposit                    : Maybe Coin
+        poolDeposit                   : Maybe Coin
+        Emax                          : Maybe Epoch
+        nopt                          : Maybe ℕ
+        pv                            : Maybe (Pair ℕ ℕ)
+        minUTxOValue                  : Maybe Coin
+        coinsPerUTxOByte              : Maybe Coin
+        costmdls                      : Maybe ⊤
+        prices                        : Maybe ⊤
+        minFeeRefScriptCoinsPerByte   : Maybe Rational
+        maxRefScriptPerTx             : Maybe ℕ
+        maxRefScriptPerBlock          : Maybe ℕ
+        refScriptCostStride           : Maybe ℕ
+        refScriptCostMultiplier       : Maybe Rational
+        maxTxExUnits                  : Maybe ExUnits
+        maxBlockExUnits               : Maybe ExUnits
+        maxValSize                    : Maybe ℕ
+        -- collateralPercent          : Maybe ℕ
+        maxCollateralInputs           : Maybe ℕ
+        poolVotingThresholds          : Maybe PoolThresholds
+        drepVotingThresholds          : Maybe DrepThresholds
+        ccMinSize                     : Maybe ℕ
+        ccMaxTermLength               : Maybe ℕ
+        govActionLifetime             : Maybe ℕ
+        govActionDeposit              : Maybe Coin
+        drepDeposit                   : Maybe Coin
+        drepActivity                  : Maybe Epoch
 
 {-# FOREIGN GHC
   data DrepThresholds = MkDrepThresholds
@@ -340,61 +350,71 @@ record PParamsUpdate : Type where
     deriving Show
 
   data PParams = MkPParams
-    { ppA                   :: Integer
-    , ppB                   :: Integer
-    , ppMaxBlockSize        :: Integer
-    , ppMaxTxSize           :: Integer
-    , ppMaxHeaderSize       :: Integer
-    , ppKeyDeposit          :: Coin
-    , ppPoolDeposit         :: Coin
-    , ppEmax                :: Epoch
-    , ppNopt                :: Integer
-    , ppPv                  :: (Integer, Integer)
-    , ppMinUTxOValue        :: Coin
-    , ppCoinsPerUTxOByte    :: Coin
-    , ppCostmdls            :: ()
-    , ppPrices              :: ()
-    , ppMaxTxExUnits        :: ExUnits
-    , ppMaxBlockExUnits     :: ExUnits
-    , ppMaxValSize          :: Integer
-    , ppMaxCollateralInputs :: Integer
-    , ppPoolVotingThresholds :: PoolThresholds
-    , ppDrepVotingThresholds :: DrepThresholds
-    , ppCCMinSize           :: Integer
-    , ppCCMaxTermLength     :: Integer
-    , ppGovActionLifetime   :: Integer
-    , ppGovActionDeposit    :: Coin
-    , ppDrepDeposit         :: Coin
-    , ppDrepActivity        :: Epoch
+    { ppA                            :: Integer
+    , ppB                            :: Integer
+    , ppMaxBlockSize                 :: Integer
+    , ppMaxTxSize                    :: Integer
+    , ppMaxHeaderSize                :: Integer
+    , ppKeyDeposit                   :: Coin
+    , ppPoolDeposit                  :: Coin
+    , ppEmax                         :: Epoch
+    , ppNopt                         :: Integer
+    , ppPv                           :: (Integer, Integer)
+    , ppMinUTxOValue                 :: Coin
+    , ppCoinsPerUTxOByte             :: Coin
+    , ppCostmdls                     :: ()
+    , ppPrices                       :: ()
+    , ppMinFeeRefScriptCoinsPerByte  :: Rational
+    , ppMaxRefScriptPerTx            :: Coin
+    , ppMaxRefScriptPerBlock         :: Coin
+    , ppRefScriptCostStride          :: Coin
+    , ppRefScriptCostMultiplier      :: Rational
+    , ppMaxTxExUnits                 :: ExUnits
+    , ppMaxBlockExUnits              :: ExUnits
+    , ppMaxValSize                   :: Integer
+    , ppMaxCollateralInputs          :: Integer
+    , ppPoolVotingThresholds         :: PoolThresholds
+    , ppDrepVotingThresholds         :: DrepThresholds
+    , ppCCMinSize                    :: Integer
+    , ppCCMaxTermLength              :: Integer
+    , ppGovActionLifetime            :: Integer
+    , ppGovActionDeposit             :: Coin
+    , ppDrepDeposit                  :: Coin
+    , ppDrepActivity                 :: Epoch
     } deriving (Show, Generic)
 
   data PParamsUpdate = MkPParamsUpdate
-    { ppuA                    :: Maybe Integer
-    , ppuB                    :: Maybe Integer
-    , ppuMaxBlockSize         :: Maybe Integer
-    , ppuMaxTxSize            :: Maybe Integer
-    , ppuMaxHeaderSize        :: Maybe Integer
-    , ppuKeyDeposit           :: Maybe Coin
-    , ppuPoolDeposit          :: Maybe Coin
-    , ppuEmax                 :: Maybe Epoch
-    , ppuNopt                 :: Maybe Integer
-    , ppuPv                   :: Maybe (Integer, Integer)
-    , ppuMinUTxOValue         :: Maybe Coin
-    , ppuCoinsPerUTxOByte     :: Maybe Coin
-    , ppuCostmdls             :: Maybe ()
-    , ppuPrices               :: Maybe ()
-    , ppuMaxTxExUnits         :: Maybe ExUnits
-    , ppuMaxBlockExUnits      :: Maybe ExUnits
-    , ppuMaxValSize           :: Maybe Integer
-    , ppuMaxCollateralInputs  :: Maybe Integer
-    , ppuPoolVotingThresholds :: Maybe PoolThresholds
-    , ppuDrepVotingThresholds :: Maybe DrepThresholds
-    , ppuCCMinSize            :: Maybe Integer
-    , ppuCCMaxTermLength      :: Maybe Integer
-    , ppuGovActionLifetime    :: Maybe Integer
-    , ppuGovActionDeposit     :: Maybe Coin
-    , ppuDrepDeposit          :: Maybe Coin
-    , ppuDrepActivity         :: Maybe Epoch
+    { ppuA                            :: Maybe Integer
+    , ppuB                            :: Maybe Integer
+    , ppuMaxBlockSize                 :: Maybe Integer
+    , ppuMaxTxSize                    :: Maybe Integer
+    , ppuMaxHeaderSize                :: Maybe Integer
+    , ppuKeyDeposit                   :: Maybe Coin
+    , ppuPoolDeposit                  :: Maybe Coin
+    , ppuEmax                         :: Maybe Epoch
+    , ppuNopt                         :: Maybe Integer
+    , ppuPv                           :: Maybe (Integer, Integer)
+    , ppuMinUTxOValue                 :: Maybe Coin
+    , ppuCoinsPerUTxOByte             :: Maybe Coin
+    , ppuCostmdls                     :: Maybe ()
+    , ppuPrices                       :: Maybe ()
+    , ppuMinFeeRefScriptCoinsPerByte  :: Maybe Rational
+    , ppuMaxRefScriptPerTx            :: Maybe Coin
+    , ppuMaxRefScriptPerBlock         :: Maybe Coin
+    , ppuRefScriptCostStride          :: Maybe Coin
+    , ppuRefScriptCostMultiplier      :: Maybe Rational
+    , ppuMaxTxExUnits                 :: Maybe ExUnits
+    , ppuMaxBlockExUnits              :: Maybe ExUnits
+    , ppuMaxValSize                   :: Maybe Integer
+    , ppuMaxCollateralInputs          :: Maybe Integer
+    , ppuPoolVotingThresholds         :: Maybe PoolThresholds
+    , ppuDrepVotingThresholds         :: Maybe DrepThresholds
+    , ppuCCMinSize                    :: Maybe Integer
+    , ppuCCMaxTermLength              :: Maybe Integer
+    , ppuGovActionLifetime            :: Maybe Integer
+    , ppuGovActionDeposit             :: Maybe Coin
+    , ppuDrepDeposit                  :: Maybe Coin
+    , ppuDrepActivity                 :: Maybe Epoch
     } deriving (Show, Generic)
 #-}
 {-# COMPILE GHC DrepThresholds = data DrepThresholds (MkDrepThresholds) #-}

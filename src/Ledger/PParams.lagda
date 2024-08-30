@@ -213,12 +213,12 @@ module PParamsUpdate where
           keyDeposit                    : Maybe Coin
           poolDeposit                   : Maybe Coin
           coinsPerUTxOByte              : Maybe Coin
+          prices                        : Maybe Prices
           minFeeRefScriptCoinsPerByte   : Maybe ℚ
           maxRefScriptPerTx             : Maybe ℕ
           maxRefScriptPerBlock          : Maybe ℕ
           refScriptCostStride           : Maybe ℕ
           refScriptCostMultiplier       : Maybe ℚ
-          prices                        : Maybe Prices
           minUTxOValue                  : Maybe Coin -- retired, keep for now
           a0                            : Maybe ℚ
           Emax                          : Maybe Epoch

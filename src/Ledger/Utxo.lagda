@@ -208,10 +208,10 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{NoConway}
 \begin{code}
 
-  minfee : (pp : PParams) → paramsWellFormed pp → UTxO → Tx → Coin
-  minfee pp ppwf utxo tx  = pp .a * tx .body .txsize + pp .b
-                          + txscriptfee (pp .prices) (totExUnits tx)
-                          + scriptsCost pp ppwf utxo tx
+  minfee : (pp : PParams) → UTxO → Tx → Coin
+  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
+                     + txscriptfee (pp .prices) (totExUnits tx)
+                     + scriptsCost pp utxo tx
 
 \end{code}
 \begin{code}[hide]
@@ -320,15 +320,15 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 \end{code}
 \begin{code}
 
-feesOK : (pp : PParams) → paramsWellFormed pp → Tx → UTxO → Bool
-feesOK pp ppwf tx utxo =  (  minfee pp ppwf utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                             =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                                  ∧ isAdaOnlyᵇ bal
-                                  ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
-                                  ∧ not (≟-∅ᵇ collateral)
-                                  )
-                          )
-                          ∧ scriptsCost pp ppwf utxo tx ≤ᵇ pp .maxRefScriptPerTx
+feesOK : (pp : PParams) → Tx → UTxO → Bool
+feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
+                        =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
+                             ∧ isAdaOnlyᵇ bal
+                             ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
+                             ∧ not (≟-∅ᵇ collateral)
+                             )
+                     )
+                     ∧ scriptsCost pp utxo tx ≤ᵇ pp .maxRefScriptPerTx
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
@@ -450,7 +450,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp _ tx utxo ≡ true             ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
