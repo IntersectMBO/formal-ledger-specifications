@@ -1,0 +1,118 @@
+name: Formal Ledger Specs
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+permissions:
+  contents: write
+
+env:
+  MAlonzo_branch: ${{ github.event.pull_request.head.ref }}-MAlonzo
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: MAlonzo-code
+
+      - name: Create branch ${{ env.MAlonzo_branch }} for generated code
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        run: |
+          git checkout -b ${{ env.MAlonzo_branch }} origin/MAlonzo-code
+          git push origin ${{ env.MAlonzo_branch }}
+
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v20
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+
+      - name: Build formalLedger
+        id: formalLedger
+        run: |
+          mkdir -p outputs
+          nix-build -A formalLedger -j1 -o outputs/formalLedger
+          rsync -r --include={'**/*.time'} outputs/formalLedger*/* docs/
+
+      - name: Build ledger
+        id: ledger
+        run: |
+          nix-build -A ledger -j1 -o outputs/ledger
+          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
+
+      - name: Build midnight
+        id: midnight
+        run: |
+          nix-build -A midnight -j1 -o outputs/midnight
+          rsync -r --exclude={'**/nix-support','**/lib'} outputs/midnight*/* docs/
+
+      - name: Upload PDF artifacts
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: PDF specs
+          path: docs/pdfs/*.pdf
+
+      - name: Upload typechecking times
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Typechecking durations
+          path: docs/*.time
+
+      - name: Generate main website
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "** Generated PDF files:"; find -L docs/ -name '*.pdf'
+          echo "** Generated HTML files:"; find -L docs/ -name '*.html'
+          echo "** Generated Haskell files:"; find -L docs/ -name '*.hs'
+          OUT_DIR=../docs/ make staticWebsite
+
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Add files
+        if: github.ref == 'refs/heads/master'
+        run: |
+            git add -f docs/
+            git commit -m "Updated for ${{ github.sha }}"
+
+      - name: Push to gh-pages
+        if: github.ref == 'refs/heads/master'
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: gh-pages
+            force: true
+            directory: .
+
+      - name: Commit generated code at ${{ env.MAlonzo_branch }}
+        if: github.ref != 'refs/heads/master'
+        run: |
+            nix-build -A ledger.hsSrc -j1 -o outputs/MAlonzo
+            git stash push
+            git fetch origin ${{ env.MAlonzo_branch }} --depth 1
+            git checkout ${{ env.MAlonzo_branch }}
+            rsync -r --exclude={'**/nix-support','**/lib'} outputs/MAlonzo/haskell/Ledger/* generated/
+            git add -f generated && git commit -m "Generate code for ${{ github.sha }}" || echo "Everything is up-to-date."
+
+      - name: Push ${{ env.MAlonzo_branch }}
+        if: github.ref != 'refs/heads/master'
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: ${{ env.MAlonzo_branch }}
+            force: false
+            directory: .
