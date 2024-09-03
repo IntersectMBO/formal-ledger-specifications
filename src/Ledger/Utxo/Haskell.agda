@@ -11,6 +11,7 @@ module Ledger.Utxo.Haskell
 open import Ledger.Prelude
 
 open import Ledger.Utxo txs abs hiding (certDeposit; updateCertDeposits; updateProposalDeposits; updateDeposits; _⊢_⇀⦇_,UTXOS⦈_; _⊢_⇀⦇_,UTXO⦈_) public
+open import Ledger.Fees txs abs using (scriptsTotalSize)
 
 import Data.Sum.Relation.Unary.All as Sum
 
@@ -99,6 +100,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ scriptsTotalSize utxo tx ≤ pp .maxRefScriptPerTx
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
@@ -114,5 +116,5 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)

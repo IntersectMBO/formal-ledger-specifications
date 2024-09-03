@@ -27,7 +27,7 @@ module Ledger.Utxo
   where
 
 open import Ledger.ScriptValidation txs abs
-open import Ledger.Fees txs abs using (scriptsCost)
+open import Ledger.Fees txs abs using (scriptsTotalSize; scriptsCost)
 
 instance
   _ = +-0-monoid
@@ -328,7 +328,6 @@ feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrd
                              ∧ not (≟-∅ᵇ collateral)
                              )
                      )
-                     ∧ scriptsCost pp utxo tx ≤ᵇ pp .maxRefScriptPerTx
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
@@ -452,6 +451,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ scriptsTotalSize utxo tx ≤ pp .maxRefScriptPerTx
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
@@ -468,8 +468,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

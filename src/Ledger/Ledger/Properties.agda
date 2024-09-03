@@ -157,7 +157,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
                       → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))}
   where
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
-  pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
+  pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 
   filterGA : ∀ txid n → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵ ≡ᵉ ❴ GovActionDeposit (txid , n) ❵
   proj₁ (filterGA txid n) {a} x = (proj₂ (from ∈-filter x)) where open Equivalence
