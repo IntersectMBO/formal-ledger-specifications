@@ -27,7 +27,7 @@ module Ledger.Utxo
   where
 
 open import Ledger.ScriptValidation txs abs
-open import Ledger.Fees txs abs using (scriptsTotalSize; scriptsCost)
+open import Ledger.Fees txs using (scriptsCost)
 
 instance
   _ = +-0-monoid
@@ -207,11 +207,13 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
+  refScriptsSize : UTxO → Tx → ℕ
+  refScriptsSize utxo tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
 
   minfee : (pp : PParams) → UTxO → Tx → Coin
   minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
                      + txscriptfee (pp .prices) (totExUnits tx)
-                     + scriptsCost pp utxo tx
+                     + scriptsCost pp (refScriptsSize utxo tx)
 
 \end{code}
 \begin{code}[hide]
@@ -451,7 +453,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
-    ∙ scriptsTotalSize utxo tx ≤ pp .maxRefScriptSizePerTx
+    ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout

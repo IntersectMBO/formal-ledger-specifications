@@ -7,7 +7,7 @@ open import Ledger.Transaction
 
 module Ledger.Fees
   (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  -- (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Data.Rational using (0ℚ; ℚ; mkℚ+; _*_; floor)
@@ -36,16 +36,13 @@ _↑ℚ : ℕ → ℚ
 n ↑ℚ = mkℚ+ n 1 (1-coprimeTo n ∘ swap)
 \end{code}
 \begin{code}
-scriptsTotalSize : UTxO → Tx → Coin
-scriptsTotalSize utxo tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
-
-scriptsCost : (pp : PParams) → UTxO → Tx → Coin
-scriptsCost pp utxo tx with (PParams.refScriptCostStride pp)
+scriptsCost : (pp : PParams) → ℕ → Coin
+scriptsCost pp scSz with (PParams.refScriptCostStride pp)
 ... | 0 = 0  -- This case should never occur; refScriptCostStride should always be > 0.
 ... | suc m =
   scriptsCostAux  0ℚ
-                  minFeeRefScriptCoinsPerByte (scriptsTotalSize utxo tx)
-                  (<′-wellFounded (scriptsTotalSize utxo tx))
+                  minFeeRefScriptCoinsPerByte scSz
+                  (<′-wellFounded scSz)
 \end{code}
 \begin{code}[hide]
   where

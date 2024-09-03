@@ -11,7 +11,7 @@ module Ledger.Utxo.Haskell
 open import Ledger.Prelude
 
 open import Ledger.Utxo txs abs hiding (certDeposit; updateCertDeposits; updateProposalDeposits; updateDeposits; _⊢_⇀⦇_,UTXOS⦈_; _⊢_⇀⦇_,UTXO⦈_) public
-open import Ledger.Fees txs abs using (scriptsTotalSize)
+open import Ledger.Fees txs using (scriptsCost)
 
 import Data.Sum.Relation.Unary.All as Sum
 
@@ -100,7 +100,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
-    ∙ scriptsTotalSize utxo tx ≤ pp .maxRefScriptSizePerTx
+    ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout

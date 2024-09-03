@@ -96,6 +96,7 @@ calculateStakeDistrs ls =
     { stakeDistr = govActionDeposits ls
     }
 
+-- calculateTotalRefScriptsSize :
 
 data
 \end{code}
