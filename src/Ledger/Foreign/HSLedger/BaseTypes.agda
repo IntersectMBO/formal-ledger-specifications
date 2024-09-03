@@ -168,8 +168,8 @@ instance
         ; coinsPerUTxOByte = to coinsPerUTxOByte
         ; costmdls = to costmdls
         ; minFeeRefScriptCoinsPerByte = to minFeeRefScriptCoinsPerByte
-        ; maxRefScriptPerTx = to maxRefScriptPerTx
-        ; maxRefScriptPerBlock = to maxRefScriptPerBlock
+        ; maxRefScriptSizePerTx = to maxRefScriptSizePerTx
+        ; maxRefScriptSizePerBlock = to maxRefScriptSizePerBlock
         ; refScriptCostStride = to refScriptCostStride
         ; refScriptCostMultiplier = to refScriptCostMultiplier
         ; prices = to prices
@@ -203,8 +203,8 @@ instance
         ; coinsPerUTxOByte = from coinsPerUTxOByte
         ; costmdls = from costmdls
         ; minFeeRefScriptCoinsPerByte = from minFeeRefScriptCoinsPerByte
-        ; maxRefScriptPerTx = from maxRefScriptPerTx
-        ; maxRefScriptPerBlock = from maxRefScriptPerBlock
+        ; maxRefScriptSizePerTx = from maxRefScriptSizePerTx
+        ; maxRefScriptSizePerBlock = from maxRefScriptSizePerBlock
         ; refScriptCostStride = from refScriptCostStride
         ; refScriptCostMultiplier = from refScriptCostMultiplier
         ; prices = from prices
@@ -274,8 +274,8 @@ instance
       ; costmdls                     = to costmdls
       ; prices                       = prices
       ; minFeeRefScriptCoinsPerByte  = to minFeeRefScriptCoinsPerByte
-      ; maxRefScriptPerTx            = maxRefScriptPerTx
-      ; maxRefScriptPerBlock         = maxRefScriptPerBlock
+      ; maxRefScriptSizePerTx        = maxRefScriptSizePerTx
+      ; maxRefScriptSizePerBlock     = maxRefScriptSizePerBlock
       ; refScriptCostStride          = refScriptCostStride
       ; refScriptCostMultiplier      = to refScriptCostMultiplier
       ; maxTxExUnits                 = to maxTxExUnits
@@ -308,8 +308,8 @@ instance
       ; costmdls                     = from costmdls
       ; prices                       = prices
       ; minFeeRefScriptCoinsPerByte  = from minFeeRefScriptCoinsPerByte
-      ; maxRefScriptPerTx            = maxRefScriptPerTx
-      ; maxRefScriptPerBlock         = maxRefScriptPerBlock
+      ; maxRefScriptSizePerTx        = maxRefScriptSizePerTx
+      ; maxRefScriptSizePerBlock     = maxRefScriptSizePerBlock
       ; refScriptCostStride          = refScriptCostStride
       ; refScriptCostMultiplier      = from refScriptCostMultiplier
       ; maxTxExUnits                 = from maxTxExUnits

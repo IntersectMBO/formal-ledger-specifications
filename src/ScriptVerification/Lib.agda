@@ -37,8 +37,8 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                ; coinsPerUTxOByte = 4310 --lovelace
                                ; minFeeRefScriptCoinsPerByte = 1ℚ -- unknown for now
                                ; prices = tt -- fix this
-                               ; maxRefScriptPerTx = 100
-                               ; maxRefScriptPerBlock = 10000
+                               ; maxRefScriptSizePerTx = 200 * 1024 -- 200KiB
+                               ; maxRefScriptSizePerBlock = 1024 * 1024 -- 1MiB
                                ; refScriptCostStride  = 25
                                ; refScriptCostMultiplier = mkℚ+ 6 5 (gcd≡1⇒coprime refl) -- 1.2
                                ; a0 = 1ℚ -- don't know

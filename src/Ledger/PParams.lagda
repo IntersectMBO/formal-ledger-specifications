@@ -117,8 +117,8 @@ record PParams : Type where
         coinsPerUTxOByte              : Coin
         prices                        : Prices
         minFeeRefScriptCoinsPerByte   : ℚ
-        maxRefScriptPerTx             : ℕ
-        maxRefScriptPerBlock          : ℕ
+        maxRefScriptSizePerTx         : ℕ
+        maxRefScriptSizePerBlock      : ℕ
         refScriptCostStride           : ℕ
         refScriptCostMultiplier       : ℚ
 \end{code}
@@ -215,8 +215,8 @@ module PParamsUpdate where
           coinsPerUTxOByte              : Maybe Coin
           prices                        : Maybe Prices
           minFeeRefScriptCoinsPerByte   : Maybe ℚ
-          maxRefScriptPerTx             : Maybe ℕ
-          maxRefScriptPerBlock          : Maybe ℕ
+          maxRefScriptSizePerTx         : Maybe ℕ
+          maxRefScriptSizePerBlock      : Maybe ℕ
           refScriptCostStride           : Maybe ℕ
           refScriptCostMultiplier       : Maybe ℚ
           minUTxOValue                  : Maybe Coin -- retired, keep for now
@@ -264,8 +264,8 @@ module PParamsUpdate where
       ∷ is-just poolDeposit
       ∷ is-just coinsPerUTxOByte
       ∷ is-just minFeeRefScriptCoinsPerByte
-      ∷ is-just maxRefScriptPerTx
-      ∷ is-just maxRefScriptPerBlock
+      ∷ is-just maxRefScriptSizePerTx
+      ∷ is-just maxRefScriptSizePerBlock
       ∷ is-just refScriptCostStride
       ∷ is-just refScriptCostMultiplier
       ∷ is-just prices
@@ -338,8 +338,8 @@ module PParamsUpdate where
       ; poolDeposit                 = U.poolDeposit ?↗ P.poolDeposit
       ; coinsPerUTxOByte            = U.coinsPerUTxOByte ?↗ P.coinsPerUTxOByte
       ; minFeeRefScriptCoinsPerByte = U.minFeeRefScriptCoinsPerByte ?↗ P.minFeeRefScriptCoinsPerByte
-      ; maxRefScriptPerTx           = U.maxRefScriptPerTx ?↗ P.maxRefScriptPerTx
-      ; maxRefScriptPerBlock        = U.maxRefScriptPerBlock ?↗ P.maxRefScriptPerBlock
+      ; maxRefScriptSizePerTx       = U.maxRefScriptSizePerTx ?↗ P.maxRefScriptSizePerTx
+      ; maxRefScriptSizePerBlock    = U.maxRefScriptSizePerBlock ?↗ P.maxRefScriptSizePerBlock
       ; refScriptCostStride         = U.refScriptCostStride ?↗ P.refScriptCostStride
       ; refScriptCostMultiplier     = U.refScriptCostMultiplier ?↗ P.refScriptCostMultiplier
       ; prices                      = U.prices ?↗ P.prices

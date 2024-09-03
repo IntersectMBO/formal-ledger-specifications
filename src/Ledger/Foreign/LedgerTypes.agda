@@ -273,8 +273,8 @@ record PParams : Type where
         costmdls                      : ⊤
         prices                        : ⊤
         minFeeRefScriptCoinsPerByte   : Rational
-        maxRefScriptPerTx             : ℕ
-        maxRefScriptPerBlock          : ℕ
+        maxRefScriptSizePerTx         : ℕ
+        maxRefScriptSizePerBlock      : ℕ
         refScriptCostStride           : ℕ
         refScriptCostMultiplier       : Rational
         maxTxExUnits                  : ExUnits
@@ -307,8 +307,8 @@ record PParamsUpdate : Type where
         costmdls                      : Maybe ⊤
         prices                        : Maybe ⊤
         minFeeRefScriptCoinsPerByte   : Maybe Rational
-        maxRefScriptPerTx             : Maybe ℕ
-        maxRefScriptPerBlock          : Maybe ℕ
+        maxRefScriptSizePerTx         : Maybe ℕ
+        maxRefScriptSizePerBlock      : Maybe ℕ
         refScriptCostStride           : Maybe ℕ
         refScriptCostMultiplier       : Maybe Rational
         maxTxExUnits                  : Maybe ExUnits
@@ -365,9 +365,9 @@ record PParamsUpdate : Type where
     , ppCostmdls                     :: ()
     , ppPrices                       :: ()
     , ppMinFeeRefScriptCoinsPerByte  :: Rational
-    , ppMaxRefScriptPerTx            :: Coin
-    , ppMaxRefScriptPerBlock         :: Coin
-    , ppRefScriptCostStride          :: Coin
+    , ppMaxRefScriptSizePerTx        :: ℕ
+    , ppMaxRefScriptSizePerBlock     :: ℕ
+    , ppRefScriptCostStride          :: ℕ
     , ppRefScriptCostMultiplier      :: Rational
     , ppMaxTxExUnits                 :: ExUnits
     , ppMaxBlockExUnits              :: ExUnits
@@ -399,9 +399,9 @@ record PParamsUpdate : Type where
     , ppuCostmdls                     :: Maybe ()
     , ppuPrices                       :: Maybe ()
     , ppuMinFeeRefScriptCoinsPerByte  :: Maybe Rational
-    , ppuMaxRefScriptPerTx            :: Maybe Coin
-    , ppuMaxRefScriptPerBlock         :: Maybe Coin
-    , ppuRefScriptCostStride          :: Maybe Coin
+    , ppuMaxRefScriptSizePerTx        :: Maybe ℕ
+    , ppuMaxRefScriptSizePerBlock     :: Maybe ℕ
+    , ppuRefScriptCostStride          :: Maybe ℕ
     , ppuRefScriptCostMultiplier      :: Maybe Rational
     , ppuMaxTxExUnits                 :: Maybe ExUnits
     , ppuMaxBlockExUnits              :: Maybe ExUnits

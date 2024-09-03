@@ -451,7 +451,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
-    ∙ scriptsTotalSize utxo tx ≤ pp .maxRefScriptPerTx
+    ∙ scriptsTotalSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
