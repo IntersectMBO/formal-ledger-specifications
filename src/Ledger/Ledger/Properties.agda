@@ -469,7 +469,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
   module _ (tx : Tx) (Γ : LEnv) (b : Block) (cs : ChainState) where
     open Block b; open ChainState cs
     open NewEpochState newEpochState
-    open EpochState epochState; open EnactState es
+    open EpochState epochState; open EnactState es; pp = pparams .proj₁
     open RatifyState fut using (removed)
     open SetoidProperties using (LEDGER-govDepsMatch)
 
@@ -484,16 +484,17 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
     CHAIN-govDepsMatch : {nes : NewEpochState}
       → mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ (UTxOState.deposits (LState.utxoSt ls) ˢ)
+      → totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
       → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
       → govDepsMatch ls → govDepsMatch (EpochState.ls (NewEpochState.epochState nes))
 
-    CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
+    CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
       (RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers)
-      ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
+       ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
 
-    CHAIN-govDepsMatch _ (CHAIN (NEWEPOCH-Not-New _) ledgers) =
+    CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-Not-New _) ledgers) =
       RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
 
-    CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
+    CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
       (RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers)
       ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)

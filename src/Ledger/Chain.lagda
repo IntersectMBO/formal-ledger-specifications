@@ -96,7 +96,9 @@ calculateStakeDistrs ls =
     { stakeDistr = govActionDeposits ls
     }
 
--- calculateTotalRefScriptsSize :
+totalRefScriptsSize : LState → List Tx → ℕ
+totalRefScriptsSize lst txs = sum $ map (refScriptsSize utxo) txs
+  where open UTxOState (LState.utxoSt lst)
 
 data
 \end{code}
@@ -116,11 +118,12 @@ data
 \begin{code}
   CHAIN :
     let open ChainState s; open Block b; open NewEpochState nes
-        open EpochState epochState; open EnactState es
+        open EpochState epochState; open EnactState es; pp = pparams .proj₁
     in
-       _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt
-       ⟧ˡᵉ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+    totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
+    →  _   ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    →  ⟦ slot , constitution .proj₁ .proj₂ , pp , es , Acnt.treasury acnt ⟧ˡᵉ
+           ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }

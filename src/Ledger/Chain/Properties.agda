@@ -23,8 +23,8 @@ instance
   Computational-CHAIN .computeProof Γ s b = do
     _ , neStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
     _ , lsStep ← computeProof _ _ _
-    success (_ , CHAIN neStep lsStep)
-  Computational-CHAIN .completeness Γ s b s' (CHAIN neStep lsStep)
+    success (_ , CHAIN _ neStep lsStep)
+  Computational-CHAIN .completeness Γ s b s' (CHAIN _ neStep lsStep)
     with recomputeProof neStep | completeness _ _ _ _ neStep
   ... | _         | refl
     with recomputeProof lsStep | completeness _ _ _ _ lsStep
