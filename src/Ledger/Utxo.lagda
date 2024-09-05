@@ -60,10 +60,10 @@ opaque
   getDataHashes : ℙ TxOut → ℙ DataHash
   getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
 
-  getInputHashes : Tx → UTxO → ℙ DataHash
-  getInputHashes tx utxo = getDataHashes
+  getSpentHashes : Tx → UTxO → ℙ DataHash
+  getSpentHashes tx utxo = getDataHashes
     (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ (txins ∪ corInputs))))
+            (range (utxo ∣ txins)) ∪ (fromList spendOuts) )
     where open Tx; open TxBody (tx .body)
 \end{code}
 \caption{Functions supporting UTxO rules}
@@ -333,7 +333,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx (setToList (range requiredTxBodies)) utxo
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ true
         ∙ batchValid ≡ true
@@ -349,7 +349,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx (setToList (range requiredTxBodies)) utxo
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isTopLevel ≡ false
@@ -362,7 +362,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx (setToList (range requiredTxBodies)) utxo
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isTopLevel ≡ true

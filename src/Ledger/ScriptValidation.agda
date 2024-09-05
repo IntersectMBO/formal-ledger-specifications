@@ -25,8 +25,8 @@ data ScriptPurpose : Type where
   Spend    : TxIn         → ScriptPurpose
   Vote     : Voter        → ScriptPurpose
   Propose  : GovProposal  → ScriptPurpose
-  SpendOut : TxIn         → ScriptPurpose
-  -- TODO new script purpose
+  SpendOut : Ix         → ScriptPurpose
+  BatchObs : ScriptHash   → ScriptPurpose
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
@@ -36,14 +36,15 @@ rdptr txb = λ where
   (Spend h)    → M.map (Spend   ,_) $ indexOfTxIn     h txins
   (Vote h)     → M.map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txvote)
   (Propose h)  → M.map (Propose ,_) $ indexOfProposal h txprop
-  (SpendOut h) → M.map (SpendOut ,_) $ indexOfSpendOut h corInputs
-  -- TODO new type of pointer 
+  (SpendOut h) → M.map (SpendOut ,_) $ (just h) 
+  (BatchObs h)  → M.map (BatchObs ,_) $ indexOfBatchObs h requireBatchObservers
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x) nothing (rdptr body sp)
   where open Tx tx; open TxWitnesses wits
 
+-- TODO get datums for spendOuts!
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
 getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
   maybe
@@ -53,6 +54,18 @@ getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
     []
     (lookupᵐ? utxo txin)
 getDatum tx utxo _ = []
+
+record TxInfo' : Type where
+  field realizedInputs : UTxO
+        txouts  : Ix ⇀ TxOut
+        fee     : Value
+        mint    : Value
+        txcerts : List DCert
+        txwdrls : Wdrl
+        txvldt  : Maybe Slot × Maybe Slot
+        vkKey   : ℙ KeyHash
+        txdats  : DataHash ⇀ Datum
+        txid    : TxId
 
 record TxInfo : Type where
   field realizedInputs : UTxO
@@ -65,40 +78,46 @@ record TxInfo : Type where
         vkKey   : ℙ KeyHash
         txdats  : DataHash ⇀ Datum
         txid    : TxId
+        otherInfos : List TxInfo'
 
--- TODO what is going on here??
-txInfo : Language → PParams
+txInfo' : Language → ScriptPurpose
+                  → PParams
                   → UTxO
-                  → TxBody × TxWitnesses
-                  → TxInfo
-txInfo l pp utxo (txb , wits) = 
-  record
-  { realizedInputs = utxo ∣ txins
-    ; txouts  = txouts
-    ; fee     = inject txfee
-    ; mint    = mint
-    ; txcerts = txcerts
-    ; txwdrls = txwdrls
-    ; txvldt  = txvldt
-    ; vkKey = reqSigHash
-    ; txdats  = wits .TxWitnesses.txdats
-    ; txid    = txid
-  } where open TxBody txb
+                  → Tx'
+                  → TxInfo'
+txInfo' l sp pp utxo tx = record
+  { TxBody body'
+  ; TxWitnesses wits'
+  ; realizedInputs = utxo ∣ txins
+  ; fee = inject txfee
+  ; mint = mint
+  ; vkKey = reqSigHash
+  } where open Tx' tx; open TxBody body'
 
--- TODO have to add (some of?) these to new Plutus TxInfo and parametrize txInfo by language property
-      -- isTopLevel  : Bool
-      -- -- fixes all attached sub-transactions
-      -- subTxs          : ℙ TxId 
-      -- -- fixes what transaction bodies will be shown to plutus scripts being run by this transaction (can be in any transaction)
-      -- requiredTxs    : ℙ TxId
-      -- -- outputs being spent for which inputs are provided by top-level tx
-      -- spendOuts      : List TxOut
-      -- -- inputs corresponding to spentOuts
-      -- corInputs      : ℙ TxIn
-      -- -- toggles whether subTx provides ExUnits or the top-level Tx provides them
-      -- knowsOwnUnits   : Bool
-      -- -- units for sub-Txs if they do not provide their own
-      -- subUnits        : TxId ⇀ (RdmrPtr  ⇀ ExUnits)
+mkInfos' : Language → ScriptPurpose
+                  → PParams
+                  → UTxO
+                  → List Tx'
+                  → List TxInfo' 
+mkInfos' l sp pp utxo lstx with sp
+... | BatchObs _ = map (λ tx' → (txInfo' l sp pp utxo tx')) lstx 
+... | _    = []                 
+
+
+txInfo : Language → ScriptPurpose
+                  → PParams
+                  → UTxO
+                  → Tx
+                  → TxInfo
+txInfo l sp pp utxo tx = record
+  { TxBody body
+  ; TxWitnesses wits
+  ; realizedInputs = utxo ∣ txins
+  ; fee = inject txfee
+  ; mint = mint
+  ; vkKey = reqSigHash
+  ; otherInfos = mkInfos' l sp pp utxo (getTxData (tx .Tx.subTxBodies))
+  } where open Tx tx; open TxBody body
 
 data DelegateOrDeReg : DCert → Type where instance
   delegate  : ∀ {x y z w} → DelegateOrDeReg (delegate x y z w)
@@ -136,12 +155,8 @@ spendScripts txin utxo =
   else
     nothing
 
-spendOutScripts : TxIn → UTxOSH → Maybe (ScriptPurpose × ScriptHash)
-spendOutScripts txin utxo =
-  if txin ∈ dom utxo then
-    (λ {p} → just (SpendOut txin , proj₂ (lookupᵐ utxo txin)))
-  else
-    nothing
+spendOutScripts : Ix → Tx → Maybe (ScriptPurpose × ScriptHash)
+spendOutScripts ix tx = nothing -- TODO FIX
 
 rwdScripts : RwdAddr → Maybe (ScriptPurpose × ScriptHash)
 rwdScripts a =
@@ -162,18 +177,24 @@ certScripts c@(regdrep   (ScriptObj  y) _ _)   | yes p = just (Cert c , y)
 certScripts c@(deregdrep (KeyHashObj x))       | yes p = nothing
 certScripts c@(deregdrep (ScriptObj  y))       | yes p = just (Cert c , y)
 
+getBOs : Tx → ℙ ScriptHash
+getBOs tx with (tx .Tx.isTopLevel)
+... | true = tx .Tx.body .TxBody.requireBatchObservers
+... | false = ∅
+
 private
-  scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
-  scriptsNeeded utxo txb
+  scriptsNeeded : UTxO → Tx → ℙ (ScriptPurpose × ScriptHash)
+  scriptsNeeded utxo tx
     = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) txins
     ∪ mapPartial (λ x → rwdScripts x) (dom $ txwdrls .proj₁)
     ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
-    ∪ mapPartial (λ x → spendOutScripts x (scriptOutsWithHash utxo)) corInputs
-    where open TxBody txb
-
-valContext : List TxInfo → ScriptPurpose → Data
-valContext lti sp = toData (lti , sp)
+    ∪ mapˢ (λ x → BatchObs x , x) (getBOs tx) 
+-- TODO add spendOuts scripts 
+    where open Tx tx ; open TxBody body
+    
+valContext : TxInfo → ScriptPurpose → Data
+valContext txinfo sp = toData (txinfo , sp)
 
 -- need to get map from language script ↦ cm
 -- need to update costmodels to add the language map in order to check
@@ -182,28 +203,28 @@ valContext lti sp = toData (lti , sp)
 
 opaque
 
-  collectPhaseTwoScriptInputs' : PParams → Tx → List TxBody → UTxO → (ScriptPurpose × ScriptHash)
+  collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
     → Maybe (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs' pp tx ltx utxo (sp , sh)
+  collectPhaseTwoScriptInputs' pp tx utxo (sp , sh)
     with lookupScriptHash sh tx utxo
   ... | nothing = nothing
   ... | just s
     with isInj₂ s | indexedRdmrs tx sp
   ... | just p2s | just (rdmr , eu)
       = just (s ,
-          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (map (λ tx → txInfo (language p2s) pp utxo tx) ((tx .Tx.body , (tx .Tx.wits)) ∷ (map (λ tb → (tb , tx .Tx.wits )) ltx))) sp ∷ [])
+          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (txInfo (language p2s) sp pp utxo tx) sp ∷ [])
           , eu
           , PParams.costmdls pp)
         )
   ... | x | y = nothing
       
 
-  collectPhaseTwoScriptInputs : PParams → Tx → List TxBody → UTxO
+  collectPhaseTwoScriptInputs : PParams → Tx → UTxO
     → List (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs pp tx ltx utxo
+  collectPhaseTwoScriptInputs pp tx utxo
     = setToList
-    $ mapPartial (collectPhaseTwoScriptInputs' pp tx ltx utxo)
-    $ scriptsNeeded utxo (tx .Tx.body)
+    $ mapPartial (collectPhaseTwoScriptInputs' pp tx utxo)
+    $ scriptsNeeded utxo tx
 
 open TxBody
 open Tx

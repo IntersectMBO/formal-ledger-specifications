@@ -30,7 +30,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where
-  Spend Mint Cert Rewrd Vote Propose SpendOut : Tag
+  Spend Mint Cert Rewrd Vote Propose SpendOut BatchObs : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Type₁ where
@@ -158,18 +158,16 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash -- TODO is this actually checked somewhere?
       -- NEW
+      requireBatchObservers : ℙ ScriptHash
+      -- option to put datums and redeemers inside the transaction
+      txdatsB   : DataHash ⇀ Datum
+      txrdmrsB  : RdmrPtr  ⇀ Redeemer × ExUnits
       -- fixes all attached sub-transactions
       subTxs          : ℙ TxId 
-      -- fixes what transaction bodies will be shown to plutus scripts being run by this transaction (can be in any transaction)
-      requiredTxs    : ℙ TxId
       -- outputs being spent for which inputs are provided by top-level tx
       spendOuts      : List TxOut
       -- inputs corresponding to spentOuts
       corInputs      : ℙ TxIn
-      -- toggles whether subTx provides ExUnits or the top-level Tx provides them
-      knowsOwnUnits   : Bool
-      -- units for sub-Txs if they do not provide their own
-      subUnits        : TxId ⇀ (RdmrPtr  ⇀ ExUnits)
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -187,17 +185,33 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
 
-  record Swap : Type where 
+
+
+  record Tx' : Type where
+\end{code}
+\begin{code}[hide]
+    inductive
+    constructor tree
     field
-      stxTxBody   : TxBody 
-      stxWits     : VKey ⇀ Sig 
-      stxRdmrs    : RdmrPtr  ⇀ Redeemer × ExUnits
-      stxAux      : Maybe AuxiliaryData
-      stxIsValid  : Bool
+\end{code}
+\begin{code}
+      body'     : TxBody
+      wits'     : TxWitnesses
+      isValid'  : Bool
+      txAD'     : Maybe AuxiliaryData
+      -- NEW
+      -- map of transaction bodies and associated data (can only be attached to a top level transaction)
+      -- probably should make ExUnits optional here somehow?
+      -- is this tx top level?
+      isTopLevel'  : Bool 
+      -- are all scripts in this batch expected to pass?
+      batchValid'  : Bool
 
   record Tx : Type where
 \end{code}
 \begin{code}[hide]
+    inductive
+    constructor tree
     field
 \end{code}
 \begin{code}
@@ -207,9 +221,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       txAD     : Maybe AuxiliaryData
       -- NEW
       -- map of transaction bodies and associated data (can only be attached to a top level transaction)
-      -- probably should make ExUnits optional here somehow?
-      subTxBodies  : TxId ⇀ Swap
-      requiredTxBodies : TxId ⇀ TxBody
+      subTxBodies  : TxId ⇀ Tx'
       -- is this tx top level?
       isTopLevel  : Bool 
       -- are all scripts in this batch expected to pass?
@@ -227,28 +239,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{code}
 
   -- returns a list of subTxBodies paired with associated other data (sigs, etc)
-  getTxData : (TxId ⇀ Swap) → List Swap
+  getTxData : (TxId ⇀ Tx') → List Tx'
   getTxData subTxBodies = map proj₂ (setToList (proj₁ subTxBodies))
-    
-  -- returns requiredTx Bodies if ownRds are provided 
-  getReqs : Bool → Tx → Swap → (TxId ⇀ TxBody)
-  getReqs ownRds t s with ownRds  
-  ... | false = singletonᵐ (t .Tx.body .TxBody.txid) (t .Tx.body)
-  ... | true  = (mapValues (λ p → p .Swap.stxTxBody) (t .Tx.subTxBodies)) ∣ (s .Swap.stxTxBody .TxBody.requiredTxs) -- TODO include body of tx itself here
-
-  toRE : Redeemer → ExUnits → Redeemer × ExUnits
-  toRE r x = ( r , x ) 
-
-  noR : Redeemer
-  noR = toData tt
-
-  -- returns redeemer pointer sturucture if ownRds is true, otherwise returns redeemer pointers with redeemers from structure and exunits from subUs
-  mkRds : Bool → (RdmrPtr  ⇀ Redeemer × ExUnits) → (TxId ⇀ (RdmrPtr  ⇀ ExUnits)) → TxId → (RdmrPtr  ⇀ Redeemer × ExUnits) 
-  mkRds ownRds r subUs myid with (ownRds , (head (setToList (proj₁ (subUs ∣ (singleton myid) )))) )  
-  ... | (true , _)  = r
-  ... | (false , nothing) = ∅ 
-  ... | (false , just y) = unionWith (fold id (toRE noR) (λ ( a , b ) c → (a , c))) r (proj₂ y) 
- 
+  
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 

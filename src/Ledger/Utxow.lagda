@@ -102,7 +102,8 @@ getScripts = mapPartial isScriptObj
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  mapˢ (λ (i , o)  → (SpendOut  i , payCred (proj₁ o))) ((utxo ∣ corInputs) ˢ)
+  -- ∪  mapˢ (λ i  → (SpendOut  i , payCred (proj₁ (lookup)))) (fromList spendOuts ) TODO compute set of credentials for SpendOut
+  ∪  mapˢ (λ x        → (BatchObs x , ScriptObj x)) requireBatchObservers
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
@@ -159,7 +160,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
-        inputHashes       = getInputHashes tx utxo
+        spentHashes       = getSpentHashes tx utxo
         refScriptHashes   = mapˢ hash (refScripts tx utxo)
         neededHashes      = scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
@@ -167,13 +168,12 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     in
     -- TODO does this allow extra scripts? they should be allowed (if not, this makes the witness collection for subTxs more complicated)
     -- TODO deal with reference inputs correctly
-    -- TODO add subunits to script integrity hash (How?)
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
-    ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
+    ∙  spentHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ spentHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
 
