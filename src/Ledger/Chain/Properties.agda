@@ -24,7 +24,7 @@ instance
     s@record { newEpochState = nes }
     b@record { ts = ts ; slot = slot } = do
          nes' , neStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
-         ls , lsStep ← computeProof _ (getLState nes') ts
+         ls' , lsStep ← computeProof _ (getLState nes') ts
          case ((totalRefScriptsSize (EpochState.ls (NewEpochState.epochState nes')) ts)
                 ≤? (PParams.maxRefScriptSizePerBlock (proj₁ (EnactState.pparams
                      (EpochState.es (NewEpochState.epochState nes')))))) of λ where
@@ -46,5 +46,13 @@ instance
     open NewEpochState nes
     open EpochState epochState
     goal : map proj₁ (Computational.computeProof Computational-CHAIN tt s b)
-           ≡ success record { newEpochState = ⟦ lastEpoch , ⟦ acnt , ss , _ , _ , fut ⟧ᵉ' , ru ⟧ⁿᵉ }
-    goal = {!!}
+           ≡ success record { newEpochState = ⟦ lastEpoch , ⟦ acnt , ss , _ , EpochState.es epochState , fut ⟧ᵉ' , ru ⟧ⁿᵉ }
+    goal with recomputeProof neStep | completeness _ _ _ _ neStep
+    ... | _         | refl
+      with recomputeProof lsStep | completeness _ _ _ _ lsStep
+    ... | success _ | refl
+      with ((totalRefScriptsSize (EpochState.ls (NewEpochState.epochState nes)) (Block.ts b))
+                ≤? (PParams.maxRefScriptSizePerBlock (proj₁ (EnactState.pparams
+                     (EpochState.es (NewEpochState.epochState nes))))))
+    ... | yes p = refl
+    ... | no ¬p = ⊥-elim (¬p p)
