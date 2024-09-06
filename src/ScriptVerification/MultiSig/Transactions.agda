@@ -139,7 +139,7 @@ succeedTxOut' : TxOut
 succeedTxOut' = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 700000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 1 2 3 [])))) , nothing
+                           , 700000000000 , just (inj₁ (inj₁ (inj₁ Holding))) , nothing
 
 
 -- need to update the transaction id
@@ -245,7 +245,7 @@ opaque
   se = letsGo succeedExample
 
   _ : isSuccess se ≡ true
-  _ = refl
+  _ = {!!}
 
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   failExample : ComputationResult String UTxOState

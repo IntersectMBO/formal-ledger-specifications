@@ -161,18 +161,11 @@ multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
   (length sigs) ≥ᵇ MultiSig.minNumSignatures param
    ∧ (case (newLabel ctx) of λ where
       nothing → false
-      (just Holding) → false -- the below check was originally in holding 
-                  --   checkPayment pkh v ctx
-                    --   ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} val) (newValue ctx))
-                                                                                            -- was v
-      (just (Collecting _ _ _ _)) →
-                    checkPayment pkh v ctx
-                     ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} v) (newValue ctx)))
+      (just Holding) → checkPayment pkh v ctx
+                       ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} v) (newValue ctx))
+                       ∧ false
 
-                     -- note this was wrong: (maybeMap (_+_ {{addValue}} val) (newValue ctx)))
-
-        -- this was true
-        -- true)
+      (just (Collecting _ _ _ _)) → false)
 
 multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
   (newValue ctx == oldValue ctx)
@@ -180,9 +173,6 @@ multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
       nothing → false
       (just Holding) → expired slot ctx
       (just (Collecting _ _ _ _)) → false)
-
-
-
 
 multiSigValidator : MultiSig → Maybe SData → Maybe SData → List SData → Bool
 multiSigValidator m (just (inj₁ (inj₁ x))) (just (inj₁ (inj₂ y))) (inj₂ y₁ ∷ []) =
