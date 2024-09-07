@@ -365,9 +365,9 @@ record PParamsUpdate : Type where
     , ppCostmdls                     :: ()
     , ppPrices                       :: ()
     , ppMinFeeRefScriptCoinsPerByte  :: Rational
-    , ppMaxRefScriptSizePerTx        :: ℕ
-    , ppMaxRefScriptSizePerBlock     :: ℕ
-    , ppRefScriptCostStride          :: ℕ
+    , ppMaxRefScriptSizePerTx        :: Integer
+    , ppMaxRefScriptSizePerBlock     :: Integer
+    , ppRefScriptCostStride          :: Integer
     , ppRefScriptCostMultiplier      :: Rational
     , ppMaxTxExUnits                 :: ExUnits
     , ppMaxBlockExUnits              :: ExUnits
@@ -399,9 +399,9 @@ record PParamsUpdate : Type where
     , ppuCostmdls                     :: Maybe ()
     , ppuPrices                       :: Maybe ()
     , ppuMinFeeRefScriptCoinsPerByte  :: Maybe Rational
-    , ppuMaxRefScriptSizePerTx        :: Maybe ℕ
-    , ppuMaxRefScriptSizePerBlock     :: Maybe ℕ
-    , ppuRefScriptCostStride          :: Maybe ℕ
+    , ppuMaxRefScriptSizePerTx        :: Maybe Integer
+    , ppuMaxRefScriptSizePerBlock     :: Maybe Integer
+    , ppuRefScriptCostStride          :: Maybe Integer
     , ppuRefScriptCostMultiplier      :: Maybe Rational
     , ppuMaxTxExUnits                 :: Maybe ExUnits
     , ppuMaxBlockExUnits              :: Maybe ExUnits
