@@ -62,6 +62,7 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
   , txouts    = stxouts stxb
   , txfee     = (ppA pp) * s + (ppB pp)
   , txvldt    = stxvldt stxb
+  , txwdrls   = MkHSMap mempty
   , txsize    = s
   , txid      = stxid stxb
   , txcerts   = stxcerts stxb}
