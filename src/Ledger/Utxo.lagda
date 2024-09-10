@@ -350,11 +350,15 @@ module _ (let open UTxOState; open TxBody) where
   newDeposits : PParams → UTxOState → TxBody → Coin
   newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
 
+  sumWithdrawals : TxBody → Coin
+  sumWithdrawals txb = ∑[ x ← txb .txwdrls ] x
+
   consumed : PParams → UTxOState → TxBody → Value
   consumed pp st txb
     =  balance (st .utxo ∣ txb .txins)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
+    +  inject (sumWithdrawals txb)
 
   produced : PParams → UTxOState → TxBody → Value
   produced pp st txb
