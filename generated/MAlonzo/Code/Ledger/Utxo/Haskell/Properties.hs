@@ -1179,7 +1179,7 @@ du_genErr_2086 v0 v1 v2 v3 v4
                                                                                                             v4))))))
                                                                                           (coe
                                                                                              MAlonzo.Code.Data.String.Base.d__'43''43'__20
-                                                                                             ("\n  produced =\t\t"
+                                                                                             ("\n    withdrawals =\t"
                                                                                               ::
                                                                                               Data.Text.Text)
                                                                                              (coe
@@ -1193,22 +1193,21 @@ du_genErr_2086 v0 v1 v2 v3 v4
                                                                                                          (coe
                                                                                                             v0))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Utxo.du_produced_2420
-                                                                                                         (coe
-                                                                                                            v0)
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Ledger.Utxo.d_pparams_1860
+                                                                                                         MAlonzo.Code.Ledger.TokenAlgebra.d_inject_206
+                                                                                                         (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
                                                                                                             (coe
-                                                                                                               v2))
+                                                                                                               v0))
                                                                                                          (coe
-                                                                                                            v3)
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                            MAlonzo.Code.Ledger.Utxo.du_sumWithdrawals_2406
                                                                                                             (coe
-                                                                                                               v4)))))
+                                                                                                               v0)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                               (coe
+                                                                                                                  v4))))))
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Data.String.Base.d__'43''43'__20
-                                                                                                   ("\n    outs =\t\t"
+                                                                                                   ("\n  produced =\t\t"
                                                                                                     ::
                                                                                                     Data.Text.Text)
                                                                                                    (coe
@@ -1222,64 +1221,93 @@ du_genErr_2086 v0 v1 v2 v3 v4
                                                                                                                (coe
                                                                                                                   v0))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Utxo.du_balance_1900
+                                                                                                               MAlonzo.Code.Ledger.Utxo.du_produced_2420
                                                                                                                (coe
                                                                                                                   v0)
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Utxo.du_outs_1894
+                                                                                                                  MAlonzo.Code.Ledger.Utxo.d_pparams_1860
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Transaction.d_body_2848
-                                                                                                                     (coe
-                                                                                                                        v4))))))
+                                                                                                                     v2))
+                                                                                                               (coe
+                                                                                                                  v3)
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                  (coe
+                                                                                                                     v4)))))
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Data.String.Base.d__'43''43'__20
-                                                                                                         ("\n    fee  =\t\t"
+                                                                                                         ("\n    outs =\t\t"
                                                                                                           ::
                                                                                                           Data.Text.Text)
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Data.String.Base.d__'43''43'__20
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Data.Nat.Show.d_show_56
-                                                                                                               (MAlonzo.Code.Ledger.Transaction.d_txfee_2784
-                                                                                                                  (coe
-                                                                                                                     MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                               MAlonzo.Code.Class.Show.Core.d_show_16
+                                                                                                               MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.Ledger.TokenAlgebra.d_coin_204
+                                                                                                                  (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
                                                                                                                      (coe
-                                                                                                                        v4))))
+                                                                                                                        v0))
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.Utxo.du_balance_1900
+                                                                                                                     (coe
+                                                                                                                        v0)
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Utxo.du_outs_1894
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                           (coe
+                                                                                                                              v4))))))
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Data.String.Base.d__'43''43'__20
-                                                                                                               ("\n    newDeposits  =\t"
+                                                                                                               ("\n    fee  =\t\t"
                                                                                                                 ::
                                                                                                                 Data.Text.Text)
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Data.String.Base.d__'43''43'__20
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Data.Nat.Show.d_show_56
-                                                                                                                     (coe
-                                                                                                                        MAlonzo.Code.Ledger.Utxo.du_newDeposits_2398
-                                                                                                                        (coe
-                                                                                                                           v0)
-                                                                                                                        (coe
-                                                                                                                           MAlonzo.Code.Ledger.Utxo.d_pparams_1860
-                                                                                                                           (coe
-                                                                                                                              v2))
-                                                                                                                        (coe
-                                                                                                                           v3)
+                                                                                                                     (MAlonzo.Code.Ledger.Transaction.d_txfee_2784
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                            (coe
                                                                                                                               v4))))
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Data.String.Base.d__'43''43'__20
-                                                                                                                     ("\n    donation  =\t\t"
+                                                                                                                     ("\n    newDeposits  =\t"
                                                                                                                       ::
                                                                                                                       Data.Text.Text)
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Data.Nat.Show.d_show_56
-                                                                                                                        (MAlonzo.Code.Ledger.Transaction.d_txdonation_2798
+                                                                                                                        MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                              MAlonzo.Code.Ledger.Utxo.du_newDeposits_2398
                                                                                                                               (coe
-                                                                                                                                 v4)))))))))))))))))))))
+                                                                                                                                 v0)
+                                                                                                                              (coe
+                                                                                                                                 MAlonzo.Code.Ledger.Utxo.d_pparams_1860
+                                                                                                                                 (coe
+                                                                                                                                    v2))
+                                                                                                                              (coe
+                                                                                                                                 v3)
+                                                                                                                              (coe
+                                                                                                                                 MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                                 (coe
+                                                                                                                                    v4))))
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                                                                                                           ("\n    donation  =\t\t"
+                                                                                                                            ::
+                                                                                                                            Data.Text.Text)
+                                                                                                                           (coe
+                                                                                                                              MAlonzo.Code.Data.Nat.Show.d_show_56
+                                                                                                                              (MAlonzo.Code.Ledger.Transaction.d_txdonation_2798
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                                    (coe
+                                                                                                                                       v4)))))))))))))))))))))))
                                                            MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v16
                                                              -> let v17
                                                                       = coe
