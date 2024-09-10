@@ -324,6 +324,7 @@ instance
       ; txouts = to txouts
       ; txfee  = txfee
       ; txvldt = to txvldt
+      ; txwdrls = to txwdrls
       ; txsize = txsize
       ; txid   = to txid
       ; collateral = to collateral
@@ -339,7 +340,7 @@ instance
       ; mint          = ε -- tokenAlgebra only contains ada atm, so mint is surely empty
       ; txfee         = txfee
       ; txvldt        = from txvldt
-      ; txwdrls       = ∅
+      ; txwdrls       = from txwdrls
       ; txup          = nothing
       ; txADhash      = nothing
       ; txNetworkId   = nothing

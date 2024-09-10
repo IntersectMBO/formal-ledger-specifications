@@ -191,13 +191,18 @@ data TxCert : Type where
   CCRegHot    : Credential → Maybe Credential → TxCert
 {-# COMPILE GHC TxCert = data TxCert (Delegate | Dereg | RegPool | RetirePool | RegDRep | DeRegDRep | CCRegHot) #-}
 
+Wdrl = HSMap RwdAddr Coin
+{-# FOREIGN GHC
+  type Wdrl = HSMap RwdAddr Coin
+#-}
+
 record TxBody : Type where
   field txins    : List TxIn
         refInputs : List TxIn
         txouts   : HSMap Ix TxOut
         txfee    : Coin
         txvldt   : Pair (Maybe ℕ) (Maybe ℕ)
-        --txwdrls  : Wdrl
+        txwdrls  : Wdrl
         --txup     : Maybe Update
         --txADhash : Maybe ADHash
         txsize   : ℕ
@@ -213,6 +218,7 @@ record TxBody : Type where
     , txouts :: HSMap Ix TxOut
     , txfee  :: Coin
     , txvldt :: (Maybe Integer, Maybe Integer)
+    , txwdrls :: Wdrl
     , txsize :: Integer
     , txid   :: TxId
     , collateral    :: [TxIn]

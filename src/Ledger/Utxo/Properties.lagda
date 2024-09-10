@@ -105,6 +105,7 @@ instance
                             +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
                             +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
                             +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
+                            +ˢ "\n    withdrawals =\t" +ˢ showValue (inject (sumWithdrawals txb))
                             +ˢ "\n  produced =\t\t" +ˢ showValue prod
                             +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
                             +ˢ "\n    fee  =\t\t" +ˢ show (txb .TxBody.txfee)
