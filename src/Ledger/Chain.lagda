@@ -120,7 +120,7 @@ data
     let open ChainState s; open Block b; open NewEpochState nes
         open EpochState epochState; open EnactState es; pp = pparams .proj₁
     in
-    totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
+    totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
     →  _   ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     →  ⟦ slot , constitution .proj₁ .proj₂ , pp , es , Acnt.treasury acnt ⟧ˡᵉ
            ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
