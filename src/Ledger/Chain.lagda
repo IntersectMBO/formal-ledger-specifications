@@ -117,9 +117,14 @@ data
 \begin{AgdaSuppressSpace}
 \begin{code}
   CHAIN :
+\end{code}
+\begin{code}[hide]
     let open ChainState s; open Block b; open NewEpochState nes
-        open EpochState epochState; open EnactState es; pp = pparams .proj₁
+        open EpochState epochState; open EnactState es
+        pp = pparams .proj₁; open PParams pp using (maxRefScriptSizePerBlock)
     in
+\end{code}
+\begin{code}
     totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
     →  _   ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
     →  ⟦ slot , constitution .proj₁ .proj₂ , pp , es , Acnt.treasury acnt ⟧ˡᵉ
