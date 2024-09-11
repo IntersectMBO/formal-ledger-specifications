@@ -1,6 +1,5 @@
 module Ledger.Foreign.HSLedger.NewEpoch where
 
-import Ledger.Foreign.LedgerTypes as F
 import Data.Integer as ℤ
 
 open import Ledger.Foreign.HSLedger.Address

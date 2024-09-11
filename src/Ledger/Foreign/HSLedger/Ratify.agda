@@ -10,7 +10,6 @@ open import Ledger.Enact govStructure
 open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length)
 import Data.Rational.Show as Rational
 
-import Ledger.Foreign.LedgerTypes as F
 import Foreign.Haskell.Pair as F
 open import Ledger.Ratify it
 open import Ledger.Ratify.Properties it
