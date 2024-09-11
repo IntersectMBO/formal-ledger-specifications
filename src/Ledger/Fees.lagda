@@ -19,18 +19,8 @@ open import Data.Product using (swap)
 open import Induction.WellFounded using (Acc; acc)
 \end{code}
 
-The function \AgdaFunction{scriptsCost} calculates the fee for reference scripts in the transaction
-using a function that is piece-wise linear in the size, where the linear constant multiple grows with each
-\refScriptCostStride bytes.  Thus, the \AgdaFunction{scriptsCost} function depends on the
-\AgdaFunction{scriptsTotalSize} function, which returns an integer that is the total size of
-the reference script in bytes, as well as the following protocol parameters:
-\begin{itemize}
-\item \refScriptCostMultiplier, a rational number, the growth factor or step multiplier that determines how
-much the price per byte increases after each increment;
-\item \refScriptCostStride, an integer, the size in bytes at which the price per byte grows linearly;
-\item \minFeeRefScriptCoinsPerByte, a rational number, the base fee or initial price per byte.
-\end{itemize}
-
+\begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 _↑ℚ : ℕ → ℚ
 n ↑ℚ = mkℚ+ n 1 (1-coprimeTo n ∘ swap)
@@ -48,6 +38,8 @@ scriptsCost pp scSz with (PParams.refScriptCostStride pp)
   where
   open PParams pp
   multiplier = refScriptCostMultiplier
+\end{code}
+\begin{code}
   sizeIncrement = suc m
   sizeIncrementRational = sizeIncrement ↑ℚ
 
@@ -58,6 +50,8 @@ scriptsCost pp scSz with (PParams.refScriptCostStride pp)
                               (multiplier * curTierPrice)
                               (n - sizeIncrement)
                               (rs $ suc∸≤′ (>′-trans (<⇒<′ $ ≰⇒> p) (<⇒<′ z<s)) (<⇒<′ z<s))
+\end{code}
+\begin{code}[hide]
     where
     >′-trans : ∀ {l m n} → n >′ m → m >′ l → n >′ l
     >′-trans {l} {m} {.(suc m)} <′-base m>l = ≤′-step m>l
@@ -69,3 +63,19 @@ scriptsCost pp scSz with (PParams.refScriptCostStride pp)
     suc∸≤′ {suc _} {suc .0} (≤′-step _) <′-base = <′-base
     suc∸≤′ {suc _} {suc _} (≤′-step x) (≤′-step y) = ≤′-step (suc∸≤′ x y)
 \end{code}
+\end{AgdaMultiCode}
+\caption{Calculation of fees for reference scripts}
+\label{fig:scriptsCost}
+\end{figure*}
+The function \AgdaFunction{scriptsCost} (Fig.~\ref{fig:scriptsCost}) calculates the fee for
+reference scripts in the transaction using a function that is piece-wise linear in the size,
+where the linear constant multiple grows with each \refScriptCostStride bytes.
+Thus, the \AgdaFunction{scriptsCost} function depends on the \AgdaFunction{scriptsTotalSize}
+function, which returns an integer that is the total size of the reference script in bytes,
+as well as the following protocol parameters:
+\begin{itemize}
+\item \refScriptCostMultiplier, a rational number, the growth factor or step multiplier that
+determines how much the price per byte increases after each increment;
+\item \refScriptCostStride, an integer, the size in bytes at which the price per byte grows linearly;
+\item \minFeeRefScriptCoinsPerByte, a rational number, the base fee or initial price per byte.
+\end{itemize}

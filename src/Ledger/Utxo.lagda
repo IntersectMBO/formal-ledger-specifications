@@ -322,7 +322,7 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 \end{code}
 \begin{code}
 
-feesOK : (pp : PParams) → Tx → UTxO → Bool
+feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
                         =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
                              ∧ isAdaOnlyᵇ bal
