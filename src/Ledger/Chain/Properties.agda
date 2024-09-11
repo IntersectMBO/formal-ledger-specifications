@@ -31,17 +31,7 @@ instance
            (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
            (yes p) → success (_ , CHAIN p neStep lsStep)
 
-  Computational-CHAIN .completeness .tt s b
-    .(record { newEpochState = record { lastEpoch = NewEpochState.lastEpoch nes
-                                      ; epochState = record  { acnt = EpochState.acnt (NewEpochState.epochState nes)
-                                                             ; ss = EpochState.ss (NewEpochState.epochState nes)
-                                                             ; ls = _
-                                                             ; es = EpochState.es (NewEpochState.epochState nes)
-                                                             ; fut = EpochState.fut (NewEpochState.epochState nes)
-                                                             }
-                                      ; ru = NewEpochState.ru nes
-                                      }
-             }) (CHAIN {nes = nes} p neStep lsStep) = goal
+  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} p neStep lsStep) = goal
     where
     open NewEpochState nes
     open EpochState epochState
