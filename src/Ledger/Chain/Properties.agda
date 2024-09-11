@@ -18,16 +18,29 @@ open import Ledger.Ledger.Properties txs abs
 
 open Computational ⦃...⦄
 
+open PParams
+refScriptSize≤?Bound : (nes : NewEpochState)(ts : List Tx)
+  → Dec ( (totalRefScriptsSize (EpochState.ls (NewEpochState.epochState nes)) ts)
+          ≤ ( maxRefScriptSizePerBlock $
+                proj₁ ( EnactState.pparams $
+                          EpochState.es (NewEpochState.epochState nes)
+                      )
+            )
+        )
+refScriptSize≤?Bound nes ts = (totalRefScriptsSize (EpochState.ls (NewEpochState.epochState nes)) ts)
+                                       ≤? ( maxRefScriptSizePerBlock $
+                                              proj₁ ( EnactState.pparams $
+                                                        EpochState.es (NewEpochState.epochState nes)
+                                                    )
+                                           )
+
 instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
-  Computational-CHAIN .computeProof Γ
-    s
+  Computational-CHAIN .computeProof Γ s
     record { ts = ts } = do
          nes' , neStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
          ls' , lsStep ← computeProof _ (getLState nes') ts
-         case ((totalRefScriptsSize (EpochState.ls (NewEpochState.epochState nes')) ts)
-                ≤? (PParams.maxRefScriptSizePerBlock (proj₁ (EnactState.pparams
-                     (EpochState.es (NewEpochState.epochState nes')))))) of λ where
+         case refScriptSize≤?Bound nes' ts of λ where
            (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
            (yes p) → success (_ , CHAIN p neStep lsStep)
 
@@ -41,8 +54,6 @@ instance
     ... | _         | refl
       with recomputeProof lsStep | completeness _ _ _ _ lsStep
     ... | success _ | refl
-      with ((totalRefScriptsSize (EpochState.ls (NewEpochState.epochState nes)) (Block.ts b))
-                ≤? (PParams.maxRefScriptSizePerBlock (proj₁ (EnactState.pparams
-                     (EpochState.es (NewEpochState.epochState nes))))))
+      with refScriptSize≤?Bound nes (Block.ts b)
     ... | yes p = refl
     ... | no ¬p = ⊥-elim (¬p p)
