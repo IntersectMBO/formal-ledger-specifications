@@ -21,8 +21,8 @@ open Computational ⦃...⦄
 instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
   Computational-CHAIN .computeProof Γ
-    s@record { newEpochState = nes }
-    b@record { ts = ts ; slot = slot } = do
+    s
+    record { ts = ts } = do
          nes' , neStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
          ls' , lsStep ← computeProof _ (getLState nes') ts
          case ((totalRefScriptsSize (EpochState.ls (NewEpochState.epochState nes')) ts)
