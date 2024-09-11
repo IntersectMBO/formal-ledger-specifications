@@ -3,9 +3,7 @@ module Ledger.Foreign.HSLedger.NewEpoch where
 import Data.Integer as ℤ
 
 open import Ledger.Foreign.HSLedger.Address
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.BaseTypes
-open import Ledger.Foreign.HSLedger.Ratify
 open import Ledger.Foreign.HSLedger.Epoch
 
 open import Ledger.Epoch it it

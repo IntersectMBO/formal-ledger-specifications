@@ -1,7 +1,7 @@
 module Ledger.Foreign.HSLedger.Ratify where
 
-open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
+open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Foreign.HSLedger.Gov
 

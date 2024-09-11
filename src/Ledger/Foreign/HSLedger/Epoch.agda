@@ -1,11 +1,11 @@
 module Ledger.Foreign.HSLedger.Epoch where
 
-open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
-open import Ledger.Foreign.HSLedger.PParams
-open import Ledger.Foreign.HSLedger.Ratify
+open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Foreign.HSLedger.Ledger
+open import Ledger.Foreign.HSLedger.PParams
+open import Ledger.Foreign.HSLedger.Ratify
 
 open import Ledger.Epoch it it
 open import Ledger.Epoch.Properties it it

@@ -1,7 +1,7 @@
 module Ledger.Foreign.HSLedger.Utxo where
 
-open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
+open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Certs
 open import Ledger.Foreign.HSLedger.PParams
 open import Ledger.Foreign.HSLedger.Transaction

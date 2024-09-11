@@ -2,7 +2,6 @@ module Ledger.Foreign.HSLedger.Chain where
 
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.NewEpoch
-open import Ledger.Foreign.HSLedger.Certs
 open import Ledger.Foreign.HSLedger.Transaction
 
 open import Ledger.Chain it it

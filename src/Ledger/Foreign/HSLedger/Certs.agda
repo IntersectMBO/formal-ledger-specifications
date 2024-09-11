@@ -1,9 +1,7 @@
 module Ledger.Foreign.HSLedger.Certs where
 
-open import Ledger.Foreign.HSLedger.Core hiding (DState; CertEnv; GState)
-open import Ledger.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GState)
 open import Ledger.Foreign.HSLedger.Address
-open import Ledger.Foreign.HSLedger.Enact
+open import Ledger.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GState)
 open import Ledger.Foreign.HSLedger.Gov
 open import Ledger.Foreign.HSLedger.PParams
 

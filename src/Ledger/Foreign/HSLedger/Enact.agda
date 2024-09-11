@@ -1,10 +1,8 @@
 module Ledger.Foreign.HSLedger.Enact where
 
-open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
+open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.PParams
-
-open import Ledger.Types.GovStructure
 
 open import Ledger.Enact govStructure
 open import Ledger.GovernanceActions.Properties govStructure

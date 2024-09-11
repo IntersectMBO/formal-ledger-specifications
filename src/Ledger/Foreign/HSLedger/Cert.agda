@@ -1,12 +1,7 @@
 module Ledger.Foreign.HSLedger.Cert where
 
-open import Ledger.Foreign.HSLedger.Core hiding (CertState; CertEnv; ⟦_,_,_⟧ᶜˢ)
 open import Ledger.Foreign.HSLedger.BaseTypes hiding (CertState; CertEnv; ⟦_,_,_⟧ᶜˢ)
-open import Ledger.Foreign.HSLedger.Gov
 open import Ledger.Foreign.HSLedger.Certs
-open import Ledger.Foreign.HSLedger.Enact
-
-open import Ledger.Certs.Properties govStructure
 
 open import Ledger.Certs.Haskell.Properties govStructure
   renaming ( Computational-CERT  to Computational-CERT'

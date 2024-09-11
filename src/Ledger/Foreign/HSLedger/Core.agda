@@ -1,11 +1,8 @@
 module Ledger.Foreign.HSLedger.Core where
 
 open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ) public
-open Computational
 
 open Computational public
-
-open import Relation.Binary.Morphism.Structures
 
 open import Algebra             using (CommutativeMonoid)      public
 open import Algebra.Morphism    using (module MonoidMorphisms) public
@@ -17,7 +14,6 @@ open import Foreign.Convertible.Deriving  public
 open import Foreign.HaskellTypes          public
 open import Foreign.HaskellTypes.Deriving public
 
-open import Ledger.Types.GovStructure
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
 

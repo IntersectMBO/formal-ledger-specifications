@@ -1,4 +1,3 @@
-
 module Ledger.Foreign.HSLedger.Address where
 
 open import Ledger.Foreign.HSLedger.BaseTypes

@@ -1,10 +1,8 @@
-
 module Ledger.Foreign.HSLedger.PParams where
 
 open import Ledger.Foreign.HSLedger.BaseTypes
 
 instance
-
   HsTy-DrepThresholds = autoHsType DrepThresholds
   Conv-DrepThresholds = autoConvert DrepThresholds
 

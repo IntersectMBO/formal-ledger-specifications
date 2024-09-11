@@ -1,7 +1,7 @@
 module Ledger.Foreign.HSLedger.Transaction where
 
-open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Address
+open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Certs
 open import Ledger.Foreign.HSLedger.Gov
 open import Ledger.Foreign.HSLedger.PParams

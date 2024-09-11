@@ -1,15 +1,13 @@
 module Ledger.Foreign.HSLedger.Ledger where
 
-open import Ledger.Foreign.HSLedger.Core
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.BaseTypes
+open import Ledger.Foreign.HSLedger.Certs
+open import Ledger.Foreign.HSLedger.Enact
+open import Ledger.Foreign.HSLedger.Gov
 open import Ledger.Foreign.HSLedger.PParams
 open import Ledger.Foreign.HSLedger.Transaction
-open import Ledger.Foreign.HSLedger.Cert
-open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Foreign.HSLedger.Utxo
-open import Ledger.Foreign.HSLedger.Gov
-open import Ledger.Foreign.HSLedger.Certs
 
 open import Ledger.Ledger it it
 open import Ledger.Ledger.Properties it it
