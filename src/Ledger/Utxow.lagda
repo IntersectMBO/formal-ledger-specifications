@@ -79,6 +79,11 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isKeyHashObj
 
+isSb : TxBody → Bool
+isSb txb with (txb .TxBody.subTxs)
+... | isSubTx = false
+... | isTopLevel l = (txb .TxBody.requireBatchObservers ≡ᵇ ∅) ∧ (l ≡ᵇ ∅) 
+
 -- TODO check this
 allowedLanguages : Tx → UTxO → ℙ Language
 allowedLanguages tx utxo =
@@ -88,13 +93,18 @@ allowedLanguages tx utxo =
     then fromList (PlutusV3 ∷ [])
   else if ∃[ o ∈ os ] HasInlineDatum o
     then fromList (PlutusV2 ∷ PlutusV3 ∷ [])
-  else if (tx .Tx.isTopLevel ≡ false ⊎ subTxs ≢ ∅) 
+  else if (isSb txb) -- TODO is this right?
     then fromList (PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   else
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
+
+chkSubTxs : ForTopLevel → List Tx' → Set
+chkSubTxs subTxs tids with subTxs 
+... | isSubTx = true ≡ false 
+... | isTopLevel sts = fromList (map (λ t → t .Tx'.body' .TxBody.txid ) tids ) ≡ sts 
 
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isScriptObj
@@ -178,10 +188,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  txADhash ≡ map hash txAD
 
     -- new checks 
-    -- all subTxBodies are provided 
-    ∙ subTxs ≡ dom subTxBodies 
-    -- subTxs only in top-level txs
-    ∙ isTopLevel ≡ false → subTxs ≡ ∅
+    -- all subTxBodies are provided if toplevel
+    ∙ chkSubTxs subTxs subTxBodies
 
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────

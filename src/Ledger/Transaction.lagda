@@ -125,6 +125,10 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   Wdrl     = RwdAddr ⇀ Coin
   RdmrPtr  = Tag × Ix
 
+  data ForTopLevel : Type where
+    isSubTx : ForTopLevel
+    isTopLevel    : (ℙ TxId) → ForTopLevel
+
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 \end{code}
@@ -160,12 +164,13 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       -- NEW
       requireBatchObservers : ℙ ScriptHash
       -- option to put datums and redeemers inside the transaction
-      txdatsB   : DataHash ⇀ Datum
-      txrdmrsB  : RdmrPtr  ⇀ Redeemer × ExUnits
+      -- TODO do we need these in this specificaiton??
+      -- txdatsB   : DataHash ⇀ Datum 
+      -- txrdmrsB  : RdmrPtr  ⇀ Redeemer × ExUnits
       -- fixes all attached sub-transactions
-      subTxs          : ℙ TxId 
+      subTxs          : ForTopLevel 
       -- outputs being spent for which inputs are provided by top-level tx
-      spendOuts      : List TxOut
+      spendOuts      : Ix ⇀ TxOut
       -- inputs corresponding to spentOuts
       corInputs      : ℙ TxIn
 \end{code}
@@ -202,8 +207,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       -- NEW
       -- map of transaction bodies and associated data (can only be attached to a top level transaction)
       -- probably should make ExUnits optional here somehow?
-      -- is this tx top level?
-      isTopLevel'  : Bool 
       -- are all scripts in this batch expected to pass?
       batchValid'  : Bool
 
@@ -221,9 +224,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       txAD     : Maybe AuxiliaryData
       -- NEW
       -- map of transaction bodies and associated data (can only be attached to a top level transaction)
-      subTxBodies  : TxId ⇀ Tx'
-      -- is this tx top level?
-      isTopLevel  : Bool 
+      subTxBodies  : List Tx'
       -- are all scripts in this batch expected to pass?
       batchValid  : Bool
 \end{code}

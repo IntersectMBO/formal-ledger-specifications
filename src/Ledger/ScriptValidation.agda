@@ -44,7 +44,6 @@ indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x) nothing (rdptr body sp)
   where open Tx tx; open TxWitnesses wits
 
--- TODO get datums for spendOuts!
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
 getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
   maybe
@@ -53,6 +52,13 @@ getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
        ; (_ , _ , nothing , _) → [] })
     []
     (lookupᵐ? utxo txin)
+getDatum tx _ (SpendOut ix) = let open Tx tx; open TxWitnesses wits in
+  maybe
+    (λ { (_ , _ , just (inj₂ h), _)  → maybe [_] [] (lookupᵐ? txdats h)
+       ; (_ , _ , just (inj₁ d), _)  → [ d ]
+       ; (_ , _ , nothing , _) → [] })
+    []
+    (lookupᵐ? (body .TxBody.spendOuts) ix)
 getDatum tx utxo _ = []
 
 record TxInfo' : Type where
@@ -100,7 +106,7 @@ mkInfos' : Language → ScriptPurpose
                   → List Tx'
                   → List TxInfo' 
 mkInfos' l sp pp utxo lstx with sp
-... | BatchObs _ = map (λ tx' → (txInfo' l sp pp utxo tx')) lstx 
+... | BatchObs _  = map (λ tx' → (txInfo' l sp pp utxo tx')) lstx
 ... | _    = []                 
 
 
@@ -116,7 +122,7 @@ txInfo l sp pp utxo tx = record
   ; fee = inject txfee
   ; mint = mint
   ; vkKey = reqSigHash
-  ; otherInfos = mkInfos' l sp pp utxo (getTxData (tx .Tx.subTxBodies))
+  ; otherInfos = mkInfos' l sp pp utxo (tx .Tx.subTxBodies)
   } where open Tx tx; open TxBody body
 
 data DelegateOrDeReg : DCert → Type where instance
@@ -139,9 +145,16 @@ instance
 UTxOSH  = TxIn ⇀ (TxOut × ScriptHash)
 
 scriptOutWithHash : TxIn → TxOut → Maybe (TxOut × ScriptHash)
-scriptOutWithHash txin (addr , r) =
+scriptOutWithHash _ (addr , r) =
   if isScriptAddr addr then
     (λ {p} → just ((addr , r) , getScriptHash addr p))
+  else
+    nothing
+
+scriptOutWithHashNoIn : TxOut → Maybe ScriptHash
+scriptOutWithHashNoIn (addr , r) =
+  if isScriptAddr addr then
+    (λ {p} → just ( getScriptHash addr p))
   else
     nothing
 
@@ -155,8 +168,10 @@ spendScripts txin utxo =
   else
     nothing
 
-spendOutScripts : Ix → Tx → Maybe (ScriptPurpose × ScriptHash)
-spendOutScripts ix tx = nothing -- TODO FIX
+spendOutScripts : (Ix × TxOut) → Maybe (ScriptPurpose × ScriptHash)
+spendOutScripts (x , o) with (x , (scriptOutWithHashNoIn o))
+... | (x , just jo) = just (SpendOut x , jo)
+... | (x , nothing) = nothing
 
 rwdScripts : RwdAddr → Maybe (ScriptPurpose × ScriptHash)
 rwdScripts a =
@@ -178,9 +193,9 @@ certScripts c@(deregdrep (KeyHashObj x))       | yes p = nothing
 certScripts c@(deregdrep (ScriptObj  y))       | yes p = just (Cert c , y)
 
 getBOs : Tx → ℙ ScriptHash
-getBOs tx with (tx .Tx.isTopLevel)
-... | true = tx .Tx.body .TxBody.requireBatchObservers
-... | false = ∅
+getBOs tx with (tx .Tx.body .TxBody.subTxs)
+... | isTopLevel _ = tx .Tx.body .TxBody.requireBatchObservers
+... | isSubTx = ∅
 
 private
   scriptsNeeded : UTxO → Tx → ℙ (ScriptPurpose × ScriptHash)
@@ -190,7 +205,7 @@ private
     ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
     ∪ mapˢ (λ x → BatchObs x , x) (getBOs tx) 
--- TODO add spendOuts scripts 
+    ∪ mapPartial spendOutScripts (proj₁ spendOuts)
     where open Tx tx ; open TxBody body
     
 valContext : TxInfo → ScriptPurpose → Data

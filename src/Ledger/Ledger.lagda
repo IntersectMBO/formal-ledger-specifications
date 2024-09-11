@@ -83,10 +83,9 @@ mkTxList tx =
             txrdmrs = stx .Tx'.wits' .TxWitnesses.txrdmrs };
           isValid = stx .Tx'.isValid';
           txAD = stx .Tx'.txAD';
-          subTxBodies = ∅ ;
-          isTopLevel = false ;
+          subTxBodies = [] ;
           batchValid = tx .Tx.batchValid })
-    (getTxData (tx .Tx.subTxBodies)) 
+     (tx .Tx.subTxBodies)
 
 -- sum up all units across all transactions
 totExUnits : List Tx → ExUnits
@@ -115,7 +114,7 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
-    totalFee            = (tx .Tx.body .TxBody.txfee) + sum (map (λ p → p .Tx'.body' .TxBody.txfee) (getTxData (tx .Tx.subTxBodies))) 
+    totalFee            = (tx .Tx.body .TxBody.txfee) + sum (map (λ p → p .Tx'.body' .TxBody.txfee) (tx .Tx.subTxBodies))
 \end{code}
 
 \begin{figure*}
@@ -140,7 +139,7 @@ module _ (let open UTxOState) where
   -- check ins in top-level tx correspond to spendOuts in the UTxO set
   -- could do this instead by forcing explicit indexing, ie spendOuts : TxIn - TxOut
   chkCorInsOuts : List TxBody → UTxO → Set 
-  chkCorInsOuts tbl uu = compareLists (foldr (_++_) [] (map (λ p → p .TxBody.spendOuts) tbl) ) (map proj₂ (setToList (proj₁ uu))) 
+  chkCorInsOuts tbl uu = compareLists (foldr (_++_) [] (map (λ p → (map proj₂ (setToList (proj₁ (p .TxBody.spendOuts))))) tbl))  (map proj₂ (setToList (proj₁ uu))) 
 
   -- all requireBatchObservers are required by top-level Tx
   chkReqBOs : List TxBody → TxBody → Set
@@ -176,6 +175,11 @@ module _ (let open UTxOState) where
     +  inject (txb .txfee)
     +  inject (newDeposits pp st txb)
     +  inject (txb .txdonation)) +_) (inject 0) txbls
+
+sameEls : ForTopLevel → List TxId → Set 
+sameEls subTxs lst with subTxs
+... | isTopLevel tids = (length (setToList tids) ≡ length lst) × ( tids ≡ (fromList lst))
+... | isSubTx = false ≡ true
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -253,18 +257,19 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx'.body') (getTxData subTxBodies)); txs = (mkTxList tx)
+  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx'.body')  subTxBodies); txs = (mkTxList tx)
     in
     ∙ feesOK pp tx utx ≡ true         --1      
     ∙ batchValid ≡ true → consumed pp u (body ∷ txBods) ≡ produced pp u (body ∷ txBods) --2
     ∙ txsize ≤ maxTxSize  --3
     ∙ chkInsInUTxO txBods (dom utx)  --4
     ∙ batchValid ≡ true → chkReqBOs (body ∷ txBods) body --5
-    ∙ isTopLevel ≡ true  --6
+    ∙ subTxs ≢ isSubTx  --6
     ∙ batchValid ≡ foldr (λ p q → q ∧ (p .Tx.isValid)) true txs --7
     -- ∙ ? totExUnits txs maxTxExUnits --≤ maxTxExUnits TODO --9
     ∙ chkCorIns (body ∷ txBods) (body .TxBody.corInputs ) --10
     ∙ chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs)  --11
+    ∙ sameEls subTxs (map (λ t → t .Tx'.body' .TxBody.txid) subTxBodies) -- 12
     ∙ Γ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
        Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ

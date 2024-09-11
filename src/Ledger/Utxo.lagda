@@ -63,7 +63,7 @@ opaque
   getSpentHashes : Tx → UTxO → ℙ DataHash
   getSpentHashes tx utxo = getDataHashes
     (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ txins)) ∪ (fromList spendOuts) )
+            (range (utxo ∣ txins)) ∪ (range spendOuts)) 
     where open Tx; open TxBody (tx .body)
 \end{code}
 \caption{Functions supporting UTxO rules}
@@ -336,7 +336,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ true
-        ∙ batchValid ≡ true
+        ∙ subTxs ≢ isSubTx -- batchValid ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ (corInputs)) ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
@@ -352,7 +352,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isTopLevel ≡ false
+        ∙ subTxs ≡ isSubTx  -- isTopLevel ≡ false
         ∙ batchValid ≡ false
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
@@ -365,7 +365,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isTopLevel ≡ true
+        ∙ subTxs ≢ isSubTx -- isTopLevel ≡ true
         ∙ batchValid ≡ false
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
