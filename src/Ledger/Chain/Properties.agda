@@ -36,7 +36,7 @@ instance
     open NewEpochState nes
     open EpochState epochState
     goal : map proj₁ (Computational.computeProof Computational-CHAIN tt s b)
-           ≡ success record { newEpochState = ⟦ lastEpoch , ⟦ acnt , ss , _ , EpochState.es epochState , fut ⟧ᵉ' , ru ⟧ⁿᵉ }
+           ≡ success record { newEpochState = _ }
     goal with recomputeProof neStep | completeness _ _ _ _ neStep
     ... | _         | refl
       with recomputeProof lsStep | completeness _ _ _ _ lsStep
