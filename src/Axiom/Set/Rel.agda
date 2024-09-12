@@ -17,7 +17,7 @@ open import Data.List.Ext.Properties using (_⊎-cong_)
 open import Data.These hiding (map)
 open import Data.Maybe.Base using () renaming (map to map?)
 open import Data.Product.Properties using (,-injectiveˡ; ×-≡,≡→≡)
-open import Data.Product.Properties.Ext using (∃-cong′; ∃-distrib-⊎')
+open import Data.Product.Properties.Ext using (∃-cong′; ∃-distrib-⊎)
 open import Relation.Unary using (Decidable)
 open import Relation.Nullary using (yes; no)
 open import Relation.Binary using (_Preserves_⟶_)
@@ -118,7 +118,7 @@ dom∪ : dom (R ∪ R') ≡ᵉ dom R ∪ dom R'
 dom∪ {R = R} {R'} = from ≡ᵉ⇔≡ᵉ' λ a →
   a ∈ dom (R ∪ R')                           ∼⟨ R.SK-sym dom∈ ⟩
   (∃[ b ] (a , b) ∈ R ∪ R')                  ∼⟨ ∃-cong′ (R.SK-sym ∈-∪) ⟩
-  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ↔⟨ ∃-distrib-⊎' ⟩
+  (∃[ b ] ((a , b) ∈ R ⊎ (a , b) ∈ R'))      ↔⟨ ∃-distrib-⊎ ⟩
   (∃[ b ] (a , b) ∈ R ⊎ ∃[ b ] (a , b) ∈ R') ∼⟨ dom∈ ⊎-cong dom∈ ⟩
   (a ∈ dom R ⊎ a ∈ dom R')                   ∼⟨ ∈-∪ ⟩
   a ∈ dom R ∪ dom R'                         ∎
