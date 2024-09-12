@@ -509,20 +509,17 @@ module DepositHelpers
   pov-scripts h = pov-scripts-worker (cbalance utxo) (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb))
                                      utxo-ref-prop h
 
-  pov-no-scripts : cbalance utxo + fees + getCoin deposits + donations + wdls ≡
+  pov-no-scripts : cbalance utxo + fees + dep + donations ≡
                    cbalance (utxo ∣ collateral ᶜ) + (fees + cbalance (utxo ∣ collateral)) + dep + donations
-  pov-no-scripts = let cbuf = cbalance utxo + fees in begin
-    cbuf + getCoin deposits + donations + wdls      ≡⟨ cong (_+ wdls) (+-assoc cbuf dep donations) ⟩
-    cbuf + (getCoin deposits + donations) + wdls    ≡⟨ +-assoc cbuf (dep + donations) wdls ⟩
-    cbuf + ((getCoin deposits + donations) + wdls)  ≡⟨ cong (cbuf +_) (+-comm (dep + donations) wdls) ⟩
-    cbuf + (wdls + (getCoin deposits + donations))  ≡˘⟨ +-assoc cbuf wdls (dep + donations) ⟩
-    cbuf + wdls + (getCoin deposits + donations)    ≡˘⟨ +-assoc (cbuf + wdls) dep donations ⟩
-    cbuf + wdls + getCoin deposits + donations      ≡⟨ cong (λ x → x + getCoin deposits + donations ) goal ⟩
-    cbalance (utxo ∣ collateral ᶜ) + (fees + cbalance (utxo ∣ collateral)) + getCoin deposits + donations
-    ∎
-    where
-    goal : cbalance utxo + fees + wdls ≡ cbalance (utxo ∣ collateral ᶜ) + (fees + cbalance (utxo ∣ collateral))
-    goal = {!!}
+  pov-no-scripts = cong (λ x → x + dep + donations) $ begin
+    cbalance utxo ℕ.+ fees
+      ≡⟨ cong (_+ fees) (split-balance collateral) ⟩
+    cbalance (utxo ∣ collateral ᶜ) ℕ.+ cbalance (utxo ∣ collateral) ℕ.+ fees
+      ≡t⟨⟩
+    cbalance (utxo ∣ collateral ᶜ) ℕ.+ (cbalance (utxo ∣ collateral) ℕ.+ fees)
+      ≡⟨ cong (cbalance (utxo ∣ collateral ᶜ) +_) (+-comm _ fees) ⟩
+    cbalance (utxo ∣ collateral ᶜ) ℕ.+ (fees ℕ.+ cbalance (utxo ∣ collateral))
+      ∎
 
 \end{code}
 
@@ -547,37 +544,55 @@ For all \AgdaBound{Γ} \∈ \UTxOEnv, \AgdaBound{utxo}, \AgdaBound{utxo'} \∈ \
 
 if
 \begin{code}[hide]
-pov : let open Tx; open TxBody in
+module _ (let open Tx; open TxBody) {invalid⇒no-wdls : ∀ tx → Tx.isValid tx ≡ false → getCoin (tx .body .txwdrls) ≡ 0} where
+
+  pov :
 \end{code}
 \begin{code}
-  tx .body .txid ∉ mapˢ proj₁ (dom utxo)
+    tx .body .txid ∉ mapˢ proj₁ (dom utxo)
 \end{code}
 
 and
 \begin{code}[hide]
-  →
+    →
 \end{code}
 \begin{code}
-  Γ ⊢  ⟦ utxo   , fees   , deposits   , donations   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-       ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
+    Γ ⊢  ⟦ utxo   , fees   , deposits   , donations   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
+         ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 \end{code}
 
 then
 \begin{code}[hide]
-  →
+    →
 \end{code}
 \begin{code}
          getCoin ⟦ utxo   , fees   , deposits   , donations   ⟧ᵘ + getCoin (tx .body .txwdrls)
       ≡  getCoin ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 \end{code}
 \begin{code}[hide]
-pov {tx}{utxo}{_}{fees}{deposits}{donations}{deposits' = deposits'} h'
-    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ (Scripts-Yes _)) =
-    DepositHelpers.pov-scripts step h' refl
+  pov {tx}{utxo}{_}{fees}{deposits}{donations}{deposits' = deposits'} h'
+      step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ (Scripts-Yes _)) =
+      DepositHelpers.pov-scripts step h' refl
 
-pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
-    step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No _)) =
-    DepositHelpers.pov-no-scripts step h'
+  pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
+      step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid))) = goal
+      where
+      open Tx tx renaming (body to txb); open TxBody txb
+
+      ii : cbalance utxo + fees + getCoin deposits + donations + getCoin (txwdrls (body tx))
+             ≡ cbalance utxo + fees + getCoin deposits + donations + 0
+      ii = cong (cbalance utxo + fees + getCoin deposits + donations +_) (invalid⇒no-wdls tx invalid)
+
+      iv : cbalance utxo + fees + getCoin deposits + donations
+             ≡ cbalance (utxo ∣ collateral (body tx) ᶜ) + (fees + cbalance (utxo ∣ collateral (body tx)))
+               + getCoin deposits + donations
+      iv = DepositHelpers.pov-no-scripts step h'
+
+      goal : cbalance utxo + fees + getCoin deposits + donations + getCoin (txwdrls (body tx))
+             ≡ cbalance (utxo ∣ collateral (body tx) ᶜ) + (fees + cbalance (utxo ∣ collateral (body tx)))
+               + getCoin deposits + donations
+      goal = trans ii (trans (+-identityʳ (cbalance utxo + fees + getCoin deposits + donations)) iv)
+
 \end{code}
 \end{property}
 
