@@ -393,13 +393,15 @@ du_decidable_112 v0 v1 v2
                     (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
              (:) v5 v6
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
                     (coe
                        MAlonzo.Code.Data.Product.Base.du_uncurry_244
                        (coe
                           MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62))
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__74
+                       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.du_uncons_76)
+                    (coe
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
                        (coe v0 v3 v5) (coe du_decidable_112 (coe v0) (coe v4) (coe v6)))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError

@@ -20,7 +20,6 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
-import qualified MAlonzo.Code.Data.Empty
 import qualified MAlonzo.Code.Data.Fin.Base
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
@@ -49,7 +48,8 @@ du_head_56 v0
       C_here_46 v3 -> coe v3
       C_there_54 v3
         -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_38
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+             erased
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.Any.tail
 d_tail_66 ::
@@ -65,7 +65,10 @@ d_tail_66 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_tail_66 v7
 du_tail_66 :: T_Any_34 -> T_Any_34
 du_tail_66 v0
   = case coe v0 of
-      C_here_46 v3 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14
+      C_here_46 v3
+        -> coe
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+             erased
       C_there_54 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.Any.map
@@ -125,7 +128,7 @@ d_lookup_94 ~v0 ~v1 ~v2 v3 ~v4 v5 = du_lookup_94 v3 v5
 du_lookup_94 :: [AgdaAny] -> T_Any_34 -> AgdaAny
 du_lookup_94 v0 v1
   = coe
-      MAlonzo.Code.Data.List.Base.du_lookup_464 (coe v0)
+      MAlonzo.Code.Data.List.Base.du_lookup_406 (coe v0)
       (coe du_index_86 (coe v0) (coe v1))
 -- Data.List.Relation.Unary.Any._∷=_
 d__'8759''61'__102 ::
@@ -139,7 +142,7 @@ du__'8759''61'__102 ::
   [AgdaAny] -> T_Any_34 -> AgdaAny -> [AgdaAny]
 du__'8759''61'__102 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.List.Base.du__'91'_'93''8759''61'__1088 (coe v0)
+      MAlonzo.Code.Data.List.Base.du__'91'_'93''8759''61'__986 (coe v0)
       (coe du_index_86 (coe v0) (coe v1)) (coe v2)
 -- Data.List.Relation.Unary.Any._─_
 d__'9472'__114 ::
@@ -151,7 +154,7 @@ d__'9472'__114 ~v0 ~v1 ~v2 ~v3 v4 v5 = du__'9472'__114 v4 v5
 du__'9472'__114 :: [AgdaAny] -> T_Any_34 -> [AgdaAny]
 du__'9472'__114 v0 v1
   = coe
-      MAlonzo.Code.Data.List.Base.du_removeAt_662 (coe v0)
+      MAlonzo.Code.Data.List.Base.du_removeAt_586 (coe v0)
       (coe du_index_86 (coe v0) (coe v1))
 -- Data.List.Relation.Unary.Any.satisfied
 d_satisfied_120 ::
@@ -233,10 +236,10 @@ du_any'63'_138 v0 v1
              (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
       (:) v2 v3
         -> coe
-             MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
-             (coe du_fromSum_132)
+             MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+             (coe du_fromSum_132) (coe du_toSum_126)
              (coe
-                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__84
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__86
                 (coe v0 v2) (coe du_any'63'_138 (coe v0) (coe v3)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.Any.satisfiable
@@ -256,7 +259,7 @@ du_satisfiable_148 v0
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v1 v2
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-             (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_306 (coe v1))
+             (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v1))
              (coe C_here_46 v2)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.Any.any

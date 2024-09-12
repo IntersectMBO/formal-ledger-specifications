@@ -439,7 +439,7 @@ du_poset_90 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
 du_poset_90 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6347
+      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6389
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
          (coe d_isJoinSemilattice_40 (coe v0)))
 -- Relation.Binary.Lattice.Bundles.JoinSemilattice._.preorder
@@ -460,7 +460,7 @@ du_preorder_94 v0
 -- Relation.Binary.Lattice.Bundles.BoundedJoinSemilattice
 d_BoundedJoinSemilattice_102 a0 a1 a2 = ()
 data T_BoundedJoinSemilattice_102
-  = C_BoundedJoinSemilattice'46'constructor_2381 (AgdaAny ->
+  = C_BoundedJoinSemilattice'46'constructor_2401 (AgdaAny ->
                                                   AgdaAny -> AgdaAny)
                                                  AgdaAny
                                                  MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsBoundedJoinSemilattice_116
@@ -480,13 +480,13 @@ d__'8744'__128 ::
   T_BoundedJoinSemilattice_102 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8744'__128 v0
   = case coe v0 of
-      C_BoundedJoinSemilattice'46'constructor_2381 v4 v5 v6 -> coe v4
+      C_BoundedJoinSemilattice'46'constructor_2401 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedJoinSemilattice.⊥
 d_'8869'_130 :: T_BoundedJoinSemilattice_102 -> AgdaAny
 d_'8869'_130 v0
   = case coe v0 of
-      C_BoundedJoinSemilattice'46'constructor_2381 v4 v5 v6 -> coe v5
+      C_BoundedJoinSemilattice'46'constructor_2401 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedJoinSemilattice.isBoundedJoinSemilattice
 d_isBoundedJoinSemilattice_132 ::
@@ -494,7 +494,7 @@ d_isBoundedJoinSemilattice_132 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsBoundedJoinSemilattice_116
 d_isBoundedJoinSemilattice_132 v0
   = case coe v0 of
-      C_BoundedJoinSemilattice'46'constructor_2381 v4 v5 v6 -> coe v6
+      C_BoundedJoinSemilattice'46'constructor_2401 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedJoinSemilattice._.antisym
 d_antisym_136 ::
@@ -1003,7 +1003,7 @@ du_preorder_192 v0
 -- Relation.Binary.Lattice.Bundles.MeetSemilattice
 d_MeetSemilattice_200 a0 a1 a2 = ()
 data T_MeetSemilattice_200
-  = C_MeetSemilattice'46'constructor_4579 (AgdaAny ->
+  = C_MeetSemilattice'46'constructor_4629 (AgdaAny ->
                                            AgdaAny -> AgdaAny)
                                           MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsMeetSemilattice_180
 -- Relation.Binary.Lattice.Bundles.MeetSemilattice.Carrier
@@ -1020,7 +1020,7 @@ d__'8743'__224 ::
   T_MeetSemilattice_200 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8743'__224 v0
   = case coe v0 of
-      C_MeetSemilattice'46'constructor_4579 v4 v5 -> coe v4
+      C_MeetSemilattice'46'constructor_4629 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.MeetSemilattice.isMeetSemilattice
 d_isMeetSemilattice_226 ::
@@ -1028,7 +1028,7 @@ d_isMeetSemilattice_226 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsMeetSemilattice_180
 d_isMeetSemilattice_226 v0
   = case coe v0 of
-      C_MeetSemilattice'46'constructor_4579 v4 v5 -> coe v5
+      C_MeetSemilattice'46'constructor_4629 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.MeetSemilattice._.antisym
 d_antisym_230 ::
@@ -1416,7 +1416,7 @@ du_poset_276 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
 du_poset_276 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6347
+      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6389
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_188
          (coe d_isMeetSemilattice_226 (coe v0)))
 -- Relation.Binary.Lattice.Bundles.MeetSemilattice._.preorder
@@ -1437,7 +1437,7 @@ du_preorder_280 v0
 -- Relation.Binary.Lattice.Bundles.BoundedMeetSemilattice
 d_BoundedMeetSemilattice_288 a0 a1 a2 = ()
 data T_BoundedMeetSemilattice_288
-  = C_BoundedMeetSemilattice'46'constructor_6589 (AgdaAny ->
+  = C_BoundedMeetSemilattice'46'constructor_6659 (AgdaAny ->
                                                   AgdaAny -> AgdaAny)
                                                  AgdaAny
                                                  MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsBoundedMeetSemilattice_274
@@ -1457,13 +1457,13 @@ d__'8743'__314 ::
   T_BoundedMeetSemilattice_288 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8743'__314 v0
   = case coe v0 of
-      C_BoundedMeetSemilattice'46'constructor_6589 v4 v5 v6 -> coe v4
+      C_BoundedMeetSemilattice'46'constructor_6659 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedMeetSemilattice.⊤
 d_'8868'_316 :: T_BoundedMeetSemilattice_288 -> AgdaAny
 d_'8868'_316 v0
   = case coe v0 of
-      C_BoundedMeetSemilattice'46'constructor_6589 v4 v5 v6 -> coe v5
+      C_BoundedMeetSemilattice'46'constructor_6659 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedMeetSemilattice.isBoundedMeetSemilattice
 d_isBoundedMeetSemilattice_318 ::
@@ -1471,7 +1471,7 @@ d_isBoundedMeetSemilattice_318 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsBoundedMeetSemilattice_274
 d_isBoundedMeetSemilattice_318 v0
   = case coe v0 of
-      C_BoundedMeetSemilattice'46'constructor_6589 v4 v5 v6 -> coe v6
+      C_BoundedMeetSemilattice'46'constructor_6659 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedMeetSemilattice._.antisym
 d_antisym_322 ::
@@ -1945,7 +1945,7 @@ du_meetSemilattice_372 ::
   T_BoundedMeetSemilattice_288 -> T_MeetSemilattice_200
 du_meetSemilattice_372 v0
   = coe
-      C_MeetSemilattice'46'constructor_4579 (d__'8743'__314 (coe v0))
+      C_MeetSemilattice'46'constructor_4629 (d__'8743'__314 (coe v0))
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isMeetSemilattice_284
          (coe d_isBoundedMeetSemilattice_318 (coe v0)))
 -- Relation.Binary.Lattice.Bundles.BoundedMeetSemilattice._.poset
@@ -1981,7 +1981,7 @@ du_preorder_378 v0
 -- Relation.Binary.Lattice.Bundles.Lattice
 d_Lattice_386 a0 a1 a2 = ()
 data T_Lattice_386
-  = C_Lattice'46'constructor_8877 (AgdaAny -> AgdaAny -> AgdaAny)
+  = C_Lattice'46'constructor_8977 (AgdaAny -> AgdaAny -> AgdaAny)
                                   (AgdaAny -> AgdaAny -> AgdaAny)
                                   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsLattice_340
 -- Relation.Binary.Lattice.Bundles.Lattice.Carrier
@@ -1997,13 +1997,13 @@ d__'8804'__410 = erased
 d__'8744'__412 :: T_Lattice_386 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8744'__412 v0
   = case coe v0 of
-      C_Lattice'46'constructor_8877 v4 v5 v6 -> coe v4
+      C_Lattice'46'constructor_8977 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.Lattice._∧_
 d__'8743'__414 :: T_Lattice_386 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8743'__414 v0
   = case coe v0 of
-      C_Lattice'46'constructor_8877 v4 v5 v6 -> coe v5
+      C_Lattice'46'constructor_8977 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.Lattice.isLattice
 d_isLattice_416 ::
@@ -2011,7 +2011,7 @@ d_isLattice_416 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsLattice_340
 d_isLattice_416 v0
   = case coe v0 of
-      C_Lattice'46'constructor_8877 v4 v5 v6 -> coe v6
+      C_Lattice'46'constructor_8977 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.Lattice._.antisym
 d_antisym_420 ::
@@ -2502,7 +2502,7 @@ du_setoid_478 ::
   T_Lattice_386 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_setoid_478 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_727
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
       (MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
@@ -2533,7 +2533,7 @@ d_meetSemilattice_482 ~v0 ~v1 ~v2 v3 = du_meetSemilattice_482 v3
 du_meetSemilattice_482 :: T_Lattice_386 -> T_MeetSemilattice_200
 du_meetSemilattice_482 v0
   = coe
-      C_MeetSemilattice'46'constructor_4579 (d__'8743'__414 (coe v0))
+      C_MeetSemilattice'46'constructor_4629 (d__'8743'__414 (coe v0))
       (coe
          MAlonzo.Code.Relation.Binary.Lattice.Structures.du_isMeetSemilattice_360
          (coe d_isLattice_416 (coe v0)))
@@ -2568,7 +2568,7 @@ du_preorder_488 v0
 -- Relation.Binary.Lattice.Bundles.DistributiveLattice
 d_DistributiveLattice_496 a0 a1 a2 = ()
 data T_DistributiveLattice_496
-  = C_DistributiveLattice'46'constructor_11737 (AgdaAny ->
+  = C_DistributiveLattice'46'constructor_11867 (AgdaAny ->
                                                 AgdaAny -> AgdaAny)
                                                (AgdaAny -> AgdaAny -> AgdaAny)
                                                MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsDistributiveLattice_420
@@ -2588,14 +2588,14 @@ d__'8744'__522 ::
   T_DistributiveLattice_496 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8744'__522 v0
   = case coe v0 of
-      C_DistributiveLattice'46'constructor_11737 v4 v5 v6 -> coe v4
+      C_DistributiveLattice'46'constructor_11867 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.DistributiveLattice._∧_
 d__'8743'__524 ::
   T_DistributiveLattice_496 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8743'__524 v0
   = case coe v0 of
-      C_DistributiveLattice'46'constructor_11737 v4 v5 v6 -> coe v5
+      C_DistributiveLattice'46'constructor_11867 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.DistributiveLattice.isDistributiveLattice
 d_isDistributiveLattice_526 ::
@@ -2603,7 +2603,7 @@ d_isDistributiveLattice_526 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsDistributiveLattice_420
 d_isDistributiveLattice_526 v0
   = case coe v0 of
-      C_DistributiveLattice'46'constructor_11737 v4 v5 v6 -> coe v6
+      C_DistributiveLattice'46'constructor_11867 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.DistributiveLattice._.∧-distribˡ-∨
 d_'8743''45'distrib'737''45''8744'_530 ::
@@ -2623,7 +2623,7 @@ d_lattice_536 ~v0 ~v1 ~v2 v3 = du_lattice_536 v3
 du_lattice_536 :: T_DistributiveLattice_496 -> T_Lattice_386
 du_lattice_536 v0
   = coe
-      C_Lattice'46'constructor_8877 (d__'8744'__522 (coe v0))
+      C_Lattice'46'constructor_8977 (d__'8744'__522 (coe v0))
       (d__'8743'__524 (coe v0))
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isLattice_430
          (coe d_isDistributiveLattice_526 (coe v0)))
@@ -3324,7 +3324,7 @@ du_trans_608 v0
 -- Relation.Binary.Lattice.Bundles.BoundedLattice
 d_BoundedLattice_616 a0 a1 a2 = ()
 data T_BoundedLattice_616
-  = C_BoundedLattice'46'constructor_14751 (AgdaAny ->
+  = C_BoundedLattice'46'constructor_14911 (AgdaAny ->
                                            AgdaAny -> AgdaAny)
                                           (AgdaAny -> AgdaAny -> AgdaAny) AgdaAny AgdaAny
                                           MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsBoundedLattice_502
@@ -3342,26 +3342,26 @@ d__'8744'__646 ::
   T_BoundedLattice_616 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8744'__646 v0
   = case coe v0 of
-      C_BoundedLattice'46'constructor_14751 v4 v5 v6 v7 v8 -> coe v4
+      C_BoundedLattice'46'constructor_14911 v4 v5 v6 v7 v8 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedLattice._∧_
 d__'8743'__648 ::
   T_BoundedLattice_616 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8743'__648 v0
   = case coe v0 of
-      C_BoundedLattice'46'constructor_14751 v4 v5 v6 v7 v8 -> coe v5
+      C_BoundedLattice'46'constructor_14911 v4 v5 v6 v7 v8 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedLattice.⊤
 d_'8868'_650 :: T_BoundedLattice_616 -> AgdaAny
 d_'8868'_650 v0
   = case coe v0 of
-      C_BoundedLattice'46'constructor_14751 v4 v5 v6 v7 v8 -> coe v6
+      C_BoundedLattice'46'constructor_14911 v4 v5 v6 v7 v8 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedLattice.⊥
 d_'8869'_652 :: T_BoundedLattice_616 -> AgdaAny
 d_'8869'_652 v0
   = case coe v0 of
-      C_BoundedLattice'46'constructor_14751 v4 v5 v6 v7 v8 -> coe v7
+      C_BoundedLattice'46'constructor_14911 v4 v5 v6 v7 v8 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedLattice.isBoundedLattice
 d_isBoundedLattice_654 ::
@@ -3369,7 +3369,7 @@ d_isBoundedLattice_654 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsBoundedLattice_502
 d_isBoundedLattice_654 v0
   = case coe v0 of
-      C_BoundedLattice'46'constructor_14751 v4 v5 v6 v7 v8 -> coe v8
+      C_BoundedLattice'46'constructor_14911 v4 v5 v6 v7 v8 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BoundedLattice._.antisym
 d_antisym_658 ::
@@ -4003,7 +4003,7 @@ du_boundedJoinSemilattice_726 ::
   T_BoundedLattice_616 -> T_BoundedJoinSemilattice_102
 du_boundedJoinSemilattice_726 v0
   = coe
-      C_BoundedJoinSemilattice'46'constructor_2381
+      C_BoundedJoinSemilattice'46'constructor_2401
       (d__'8744'__646 (coe v0)) (d_'8869'_652 (coe v0))
       (coe
          MAlonzo.Code.Relation.Binary.Lattice.Structures.du_isBoundedJoinSemilattice_584
@@ -4020,7 +4020,7 @@ du_boundedMeetSemilattice_728 ::
   T_BoundedLattice_616 -> T_BoundedMeetSemilattice_288
 du_boundedMeetSemilattice_728 v0
   = coe
-      C_BoundedMeetSemilattice'46'constructor_6589
+      C_BoundedMeetSemilattice'46'constructor_6659
       (d__'8743'__648 (coe v0)) (d_'8868'_650 (coe v0))
       (coe
          MAlonzo.Code.Relation.Binary.Lattice.Structures.du_isBoundedMeetSemilattice_586
@@ -4035,7 +4035,7 @@ d_lattice_730 ~v0 ~v1 ~v2 v3 = du_lattice_730 v3
 du_lattice_730 :: T_BoundedLattice_616 -> T_Lattice_386
 du_lattice_730 v0
   = coe
-      C_Lattice'46'constructor_8877 (d__'8744'__646 (coe v0))
+      C_Lattice'46'constructor_8977 (d__'8744'__646 (coe v0))
       (d__'8743'__648 (coe v0))
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isLattice_518
          (coe d_isBoundedLattice_654 (coe v0)))
@@ -4109,7 +4109,7 @@ du_setoid_742 v0 = coe du_setoid_478 (coe du_lattice_730 (coe v0))
 -- Relation.Binary.Lattice.Bundles.HeytingAlgebra
 d_HeytingAlgebra_750 a0 a1 a2 = ()
 data T_HeytingAlgebra_750
-  = C_HeytingAlgebra'46'constructor_18439 (AgdaAny ->
+  = C_HeytingAlgebra'46'constructor_18655 (AgdaAny ->
                                            AgdaAny -> AgdaAny)
                                           (AgdaAny -> AgdaAny -> AgdaAny)
                                           (AgdaAny -> AgdaAny -> AgdaAny) AgdaAny AgdaAny
@@ -4128,33 +4128,33 @@ d__'8744'__782 ::
   T_HeytingAlgebra_750 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8744'__782 v0
   = case coe v0 of
-      C_HeytingAlgebra'46'constructor_18439 v4 v5 v6 v7 v8 v9 -> coe v4
+      C_HeytingAlgebra'46'constructor_18655 v4 v5 v6 v7 v8 v9 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.HeytingAlgebra._∧_
 d__'8743'__784 ::
   T_HeytingAlgebra_750 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8743'__784 v0
   = case coe v0 of
-      C_HeytingAlgebra'46'constructor_18439 v4 v5 v6 v7 v8 v9 -> coe v5
+      C_HeytingAlgebra'46'constructor_18655 v4 v5 v6 v7 v8 v9 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.HeytingAlgebra._⇨_
 d__'8680'__786 ::
   T_HeytingAlgebra_750 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8680'__786 v0
   = case coe v0 of
-      C_HeytingAlgebra'46'constructor_18439 v4 v5 v6 v7 v8 v9 -> coe v6
+      C_HeytingAlgebra'46'constructor_18655 v4 v5 v6 v7 v8 v9 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.HeytingAlgebra.⊤
 d_'8868'_788 :: T_HeytingAlgebra_750 -> AgdaAny
 d_'8868'_788 v0
   = case coe v0 of
-      C_HeytingAlgebra'46'constructor_18439 v4 v5 v6 v7 v8 v9 -> coe v7
+      C_HeytingAlgebra'46'constructor_18655 v4 v5 v6 v7 v8 v9 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.HeytingAlgebra.⊥
 d_'8869'_790 :: T_HeytingAlgebra_750 -> AgdaAny
 d_'8869'_790 v0
   = case coe v0 of
-      C_HeytingAlgebra'46'constructor_18439 v4 v5 v6 v7 v8 v9 -> coe v8
+      C_HeytingAlgebra'46'constructor_18655 v4 v5 v6 v7 v8 v9 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.HeytingAlgebra.isHeytingAlgebra
 d_isHeytingAlgebra_792 ::
@@ -4162,7 +4162,7 @@ d_isHeytingAlgebra_792 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsHeytingAlgebra_598
 d_isHeytingAlgebra_792 v0
   = case coe v0 of
-      C_HeytingAlgebra'46'constructor_18439 v4 v5 v6 v7 v8 v9 -> coe v9
+      C_HeytingAlgebra'46'constructor_18655 v4 v5 v6 v7 v8 v9 -> coe v9
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.HeytingAlgebra.boundedLattice
 d_boundedLattice_794 ::
@@ -4175,7 +4175,7 @@ du_boundedLattice_794 ::
   T_HeytingAlgebra_750 -> T_BoundedLattice_616
 du_boundedLattice_794 v0
   = coe
-      C_BoundedLattice'46'constructor_14751 (d__'8744'__782 (coe v0))
+      C_BoundedLattice'46'constructor_14911 (d__'8744'__782 (coe v0))
       (d__'8743'__784 (coe v0)) (d_'8868'_788 (coe v0))
       (d_'8869'_790 (coe v0))
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isBoundedLattice_614
@@ -5129,7 +5129,7 @@ du_trans_890 v0
 -- Relation.Binary.Lattice.Bundles.BooleanAlgebra
 d_BooleanAlgebra_898 a0 a1 a2 = ()
 data T_BooleanAlgebra_898
-  = C_BooleanAlgebra'46'constructor_22395 (AgdaAny ->
+  = C_BooleanAlgebra'46'constructor_22683 (AgdaAny ->
                                            AgdaAny -> AgdaAny)
                                           (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny)
                                           AgdaAny AgdaAny
@@ -5148,32 +5148,32 @@ d__'8744'__930 ::
   T_BooleanAlgebra_898 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8744'__930 v0
   = case coe v0 of
-      C_BooleanAlgebra'46'constructor_22395 v4 v5 v6 v7 v8 v9 -> coe v4
+      C_BooleanAlgebra'46'constructor_22683 v4 v5 v6 v7 v8 v9 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BooleanAlgebra._∧_
 d__'8743'__932 ::
   T_BooleanAlgebra_898 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8743'__932 v0
   = case coe v0 of
-      C_BooleanAlgebra'46'constructor_22395 v4 v5 v6 v7 v8 v9 -> coe v5
+      C_BooleanAlgebra'46'constructor_22683 v4 v5 v6 v7 v8 v9 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BooleanAlgebra.¬_
 d_'172'__934 :: T_BooleanAlgebra_898 -> AgdaAny -> AgdaAny
 d_'172'__934 v0
   = case coe v0 of
-      C_BooleanAlgebra'46'constructor_22395 v4 v5 v6 v7 v8 v9 -> coe v6
+      C_BooleanAlgebra'46'constructor_22683 v4 v5 v6 v7 v8 v9 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BooleanAlgebra.⊤
 d_'8868'_936 :: T_BooleanAlgebra_898 -> AgdaAny
 d_'8868'_936 v0
   = case coe v0 of
-      C_BooleanAlgebra'46'constructor_22395 v4 v5 v6 v7 v8 v9 -> coe v7
+      C_BooleanAlgebra'46'constructor_22683 v4 v5 v6 v7 v8 v9 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BooleanAlgebra.⊥
 d_'8869'_938 :: T_BooleanAlgebra_898 -> AgdaAny
 d_'8869'_938 v0
   = case coe v0 of
-      C_BooleanAlgebra'46'constructor_22395 v4 v5 v6 v7 v8 v9 -> coe v8
+      C_BooleanAlgebra'46'constructor_22683 v4 v5 v6 v7 v8 v9 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BooleanAlgebra.isBooleanAlgebra
 d_isBooleanAlgebra_940 ::
@@ -5181,7 +5181,7 @@ d_isBooleanAlgebra_940 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsBooleanAlgebra_730
 d_isBooleanAlgebra_940 v0
   = case coe v0 of
-      C_BooleanAlgebra'46'constructor_22395 v4 v5 v6 v7 v8 v9 -> coe v9
+      C_BooleanAlgebra'46'constructor_22683 v4 v5 v6 v7 v8 v9 -> coe v9
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Lattice.Bundles.BooleanAlgebra.heytingAlgebra
 d_heytingAlgebra_946 ::
@@ -5194,7 +5194,7 @@ du_heytingAlgebra_946 ::
   T_BooleanAlgebra_898 -> T_HeytingAlgebra_750
 du_heytingAlgebra_946 v0
   = coe
-      C_HeytingAlgebra'46'constructor_18439 (d__'8744'__930 (coe v0))
+      C_HeytingAlgebra'46'constructor_18655 (d__'8744'__930 (coe v0))
       (d__'8743'__932 (coe v0))
       (\ v1 -> coe d__'8744'__930 v0 (coe d_'172'__934 v0 v1))
       (d_'8868'_936 (coe v0)) (d_'8869'_938 (coe v0))

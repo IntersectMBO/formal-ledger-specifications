@@ -251,24 +251,7 @@ du_Convertible'45'Map_92 v0 v1 v2
               d_to_18
               (coe
                  du_Convertible'45'FinSet_80
-                 (coe
-                    C_Convertible'46'constructor_21
-                    (coe
-                       (\ v4 ->
-                          coe
-                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
-                            (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
-                            (coe
-                               MAlonzo.Code.Data.Product.Base.du_map_128 (coe d_to_18 (coe v1))
-                               (coe (\ v5 -> d_to_18 (coe v2))) (coe v4))))
-                    (coe
-                       (\ v4 ->
-                          coe
-                            MAlonzo.Code.Data.Product.Base.du_map_128 (coe d_from_20 (coe v1))
-                            (coe (\ v5 -> d_from_20 (coe v2)))
-                            (coe
-                               MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
-                               (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40) v4)))))
+                 (coe du_Convertible'45'Pair_70 (coe v1) (coe v2)))
               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))))
       (coe
          (\ v3 ->

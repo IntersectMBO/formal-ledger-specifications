@@ -43,7 +43,7 @@ d_anyOf''_4 v0
       (coe MAlonzo.Code.Meta.d_iMonadTC'45'TCI_4) (coe ())
       (coe ("anyOf" :: Data.Text.Text))
       (coe
-         MAlonzo.Code.Data.List.Base.du_foldl_256
+         MAlonzo.Code.Data.List.Base.du_foldl_230
          (coe
             (\ v1 v2 ->
                coe
@@ -114,7 +114,7 @@ d_anyOf'8319'_12 v0
       (coe MAlonzo.Code.Meta.d_iMonadTC'45'TCI_4) (coe ())
       (coe ("anyOf" :: Data.Text.Text))
       (coe
-         MAlonzo.Code.Data.List.Base.du_foldl_256
+         MAlonzo.Code.Data.List.Base.du_foldl_230
          (coe
             (\ v1 v2 ->
                coe

@@ -86,7 +86,7 @@ d_Format_64 = erased
 d_Error_66 a0 = ()
 -- Text.Printf.Generic.Type.Error
 d_Error_96 a0 a1 a2 = ()
-data T_Error_96 = C_Error'46'constructor_419
+data T_Error_96 = C_Error'46'constructor_421
 -- Text.Printf.Generic.Type.Size
 d_Size_100 ::
   MAlonzo.Code.Text.Format.Generic.T_FormatSpec_6 ->
@@ -125,7 +125,7 @@ du_map_118 v0 v1 v2
         -> coe
              MAlonzo.Code.Function.Nary.NonDependent.Base.du_map'8345'_140
              (coe
-                MAlonzo.Code.Data.List.Base.du_foldr_242 (coe addInt)
+                MAlonzo.Code.Data.List.Base.du_foldr_216 (coe addInt)
                 (coe (0 :: Integer))
                 (coe
                    MAlonzo.Code.Data.List.Base.du_map_22
@@ -284,7 +284,7 @@ du_printf'8242'_218 v0 v1
         -> coe
              MAlonzo.Code.Data.Product.Nary.NonDependent.du_curry'8868''8345'_170
              (coe
-                MAlonzo.Code.Data.List.Base.du_foldr_242 (coe addInt)
+                MAlonzo.Code.Data.List.Base.du_foldr_216 (coe addInt)
                 (coe (0 :: Integer))
                 (coe
                    MAlonzo.Code.Data.List.Base.du_map_22

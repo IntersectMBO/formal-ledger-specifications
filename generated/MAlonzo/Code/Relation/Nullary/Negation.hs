@@ -19,12 +19,10 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
-import qualified MAlonzo.Code.Data.Empty
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Effect.Monad
-import qualified MAlonzo.Code.Function.Base
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Negation.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -92,9 +90,9 @@ du_'172''172''45'Monad_64
   = coe
       MAlonzo.Code.Effect.Monad.du_mkRawMonad_178
       (coe
-         (\ v0 v1 v2 ->
+         (\ v0 v1 ->
             coe
-              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_38))
+              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44))
       erased
 -- Relation.Nullary.Negation.¬¬-push
 d_'172''172''45'push_70 ::
@@ -122,7 +120,7 @@ d_call'47'cc_80 ::
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
 d_call'47'cc_80 = erased
 -- Relation.Nullary.Negation.independence-of-premise
-d_independence'45'of'45'premise_90 ::
+d_independence'45'of'45'premise_88 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -134,9 +132,9 @@ d_independence'45'of'45'premise_90 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_independence'45'of'45'premise_90 = erased
+d_independence'45'of'45'premise_88 = erased
 -- Relation.Nullary.Negation._.helper
-d_helper_108 ::
+d_helper_106 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -147,14 +145,14 @@ d_helper_108 ::
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_helper_108 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du_helper_108 v6 v7 v8
-du_helper_108 ::
+d_helper_106 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du_helper_106 v6 v7 v8
+du_helper_106 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_helper_108 v0 v1 v2
+du_helper_106 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v3 v4
         -> if coe v3
@@ -169,11 +167,13 @@ du_helper_108 v0 v1 v2
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0)
                        (coe
-                          MAlonzo.Code.Function.Base.du__'8728''8242'__216
-                          (\ v5 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14) erased))
+                          (\ v5 ->
+                             coe
+                               MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+                               erased)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Nullary.Negation.independence-of-premise-⊎
-d_independence'45'of'45'premise'45''8846'_114 ::
+d_independence'45'of'45'premise'45''8846'_112 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -184,9 +184,9 @@ d_independence'45'of'45'premise'45''8846'_114 ::
   (MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_independence'45'of'45'premise'45''8846'_114 = erased
+d_independence'45'of'45'premise'45''8846'_112 = erased
 -- Relation.Nullary.Negation._.helper
-d_helper_128 ::
+d_helper_126 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -196,12 +196,12 @@ d_helper_128 ::
   (AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30) ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30
-d_helper_128 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 = du_helper_128 v6 v7
-du_helper_128 ::
+d_helper_126 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 = du_helper_126 v6 v7
+du_helper_126 ::
   (AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30) ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30
-du_helper_128 v0 v1
+du_helper_126 v0 v1
   = case coe v1 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v2 v3
         -> if coe v2
@@ -216,6 +216,8 @@ du_helper_128 v0 v1
                     (coe
                        MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                        (coe
-                          MAlonzo.Code.Function.Base.du__'8728''8242'__216
-                          (\ v4 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14) erased))
+                          (\ v4 ->
+                             coe
+                               MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+                               erased)))
       _ -> MAlonzo.RTE.mazUnreachableError

@@ -241,19 +241,19 @@ d__'58''42'__182 ::
   MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_424 ->
   MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_424 ->
   MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_424
-d__'58''42'__182
+d__'58''42'__182 v0
   = coe
       MAlonzo.Code.Algebra.Solver.Ring.C_op_434
-      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''42''93'_420)
+      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''42''93'_420) (coe v0)
 -- Algebra.Solver.Ring.Simple._._:+_
 d__'58''43'__184 ::
   MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_424 ->
   MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_424 ->
   MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_424
-d__'58''43'__184
+d__'58''43'__184 v0
   = coe
       MAlonzo.Code.Algebra.Solver.Ring.C_op_434
-      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''43''93'_418)
+      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''43''93'_418) (coe v0)
 -- Algebra.Solver.Ring.Simple._._:-_
 d__'58''45'__186 ::
   MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_424 ->
@@ -1068,27 +1068,27 @@ d_prove_282 v0 v1 v2 v3
                              (coe v7) in
                    coe
                      (let v9
-                            = MAlonzo.Code.Algebra.Structures.d_isSemiring_1540 (coe v8) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemiring_1692 (coe v8) in
                       coe
                         (let v10
-                               = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1432
+                               = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1584
                                    (coe v9) in
                          coe
                            (let v11
-                                  = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1336
+                                  = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1488
                                       (coe v10) in
                             coe
                               (let v12
-                                     = MAlonzo.Code.Algebra.Structures.d_isMonoid_664 (coe v11) in
+                                     = MAlonzo.Code.Algebra.Structures.d_isMonoid_746 (coe v11) in
                                coe
                                  (let v13
-                                        = MAlonzo.Code.Algebra.Structures.d_isSemigroup_614
+                                        = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
                                             (coe v12) in
                                   coe
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.du_setoid_168
+                                       MAlonzo.Code.Algebra.Structures.du_setoid_200
                                        (coe
-                                          MAlonzo.Code.Algebra.Structures.d_isMagma_448
+                                          MAlonzo.Code.Algebra.Structures.d_isMagma_480
                                           (coe v13))))))))))
                (\ v7 v8 v9 ->
                   coe
@@ -1154,27 +1154,27 @@ d_solve_286 v0 v1 v2 v3
                              (coe v7) in
                    coe
                      (let v9
-                            = MAlonzo.Code.Algebra.Structures.d_isSemiring_1540 (coe v8) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemiring_1692 (coe v8) in
                       coe
                         (let v10
-                               = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1432
+                               = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1584
                                    (coe v9) in
                          coe
                            (let v11
-                                  = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1336
+                                  = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1488
                                       (coe v10) in
                             coe
                               (let v12
-                                     = MAlonzo.Code.Algebra.Structures.d_isMonoid_664 (coe v11) in
+                                     = MAlonzo.Code.Algebra.Structures.d_isMonoid_746 (coe v11) in
                                coe
                                  (let v13
-                                        = MAlonzo.Code.Algebra.Structures.d_isSemigroup_614
+                                        = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
                                             (coe v12) in
                                   coe
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.du_setoid_168
+                                       MAlonzo.Code.Algebra.Structures.du_setoid_200
                                        (coe
-                                          MAlonzo.Code.Algebra.Structures.d_isMagma_448
+                                          MAlonzo.Code.Algebra.Structures.d_isMagma_480
                                           (coe v13))))))))))
                (coe (\ v7 -> coe MAlonzo.Code.Algebra.Solver.Ring.C_var_442))
                (\ v7 v8 v9 ->

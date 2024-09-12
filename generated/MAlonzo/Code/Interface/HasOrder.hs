@@ -207,7 +207,7 @@ d_'8804''45'antisym'8658''60''45'asym_112 = erased
 -- Interface.HasOrder._._.HasDecPreorder
 d_HasDecPreorder_152 a0 a1 a2 = ()
 data T_HasDecPreorder_152
-  = C_HasDecPreorder'46'constructor_9189 T_HasPreorder_18
+  = C_HasDecPreorder'46'constructor_9169 T_HasPreorder_18
                                          (AgdaAny ->
                                           AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10)
                                          (AgdaAny ->
@@ -216,7 +216,7 @@ data T_HasDecPreorder_152
 d_hasPreorder_160 :: T_HasDecPreorder_152 -> T_HasPreorder_18
 d_hasPreorder_160 v0
   = case coe v0 of
-      C_HasDecPreorder'46'constructor_9189 v1 v2 v3 -> coe v1
+      C_HasDecPreorder'46'constructor_9169 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.HasOrder._._.HasDecPreorder.dec-≤
 d_dec'45''8804'_162 ::
@@ -225,7 +225,7 @@ d_dec'45''8804'_162 ::
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_dec'45''8804'_162 v0
   = case coe v0 of
-      C_HasDecPreorder'46'constructor_9189 v1 v2 v3 -> coe v2
+      C_HasDecPreorder'46'constructor_9169 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.HasOrder._._.HasDecPreorder.dec-<
 d_dec'45''60'_164 ::
@@ -234,18 +234,18 @@ d_dec'45''60'_164 ::
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_dec'45''60'_164 v0
   = case coe v0 of
-      C_HasDecPreorder'46'constructor_9189 v1 v2 v3 -> coe v3
+      C_HasDecPreorder'46'constructor_9169 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.HasOrder._._.HasPartialOrder
 d_HasPartialOrder_166 a0 a1 a2 = ()
 data T_HasPartialOrder_166
-  = C_HasPartialOrder'46'constructor_9473 T_HasPreorder_18
+  = C_HasPartialOrder'46'constructor_9459 T_HasPreorder_18
                                           (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Interface.HasOrder._._.HasPartialOrder.hasPreorder
 d_hasPreorder_172 :: T_HasPartialOrder_166 -> T_HasPreorder_18
 d_hasPreorder_172 v0
   = case coe v0 of
-      C_HasPartialOrder'46'constructor_9473 v1 v2 -> coe v1
+      C_HasPartialOrder'46'constructor_9459 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.HasOrder._._.HasPartialOrder.≤-antisym
 d_'8804''45'antisym_174 ::
@@ -253,7 +253,7 @@ d_'8804''45'antisym_174 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8804''45'antisym_174 v0
   = case coe v0 of
-      C_HasPartialOrder'46'constructor_9473 v1 v2 -> coe v2
+      C_HasPartialOrder'46'constructor_9459 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.HasOrder._._.HasPartialOrder.≤-isPartialOrder
 d_'8804''45'isPartialOrder_176 ::
@@ -269,7 +269,7 @@ du_'8804''45'isPartialOrder_176 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
 du_'8804''45'isPartialOrder_176 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9831
+      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9853
       (coe d_'8804''45'isPreorder_38 (coe d_hasPreorder_172 (coe v0)))
       (coe d_'8804''45'antisym_174 (coe v0))
 -- Interface.HasOrder._._.HasPartialOrder.<-asymmetric
@@ -360,7 +360,7 @@ d_'60''8658''172''62''8846''8776'_210 = erased
 -- Interface.HasOrder._._.HasDecPartialOrder
 d_HasDecPartialOrder_220 a0 a1 a2 = ()
 data T_HasDecPartialOrder_220
-  = C_HasDecPartialOrder'46'constructor_19617 T_HasPartialOrder_166
+  = C_HasDecPartialOrder'46'constructor_19577 T_HasPartialOrder_166
                                               (AgdaAny ->
                                                AgdaAny ->
                                                MAlonzo.Code.Class.Decidable.Core.T__'8263'_10)
@@ -372,7 +372,7 @@ d_hasPartialOrder_228 ::
   T_HasDecPartialOrder_220 -> T_HasPartialOrder_166
 d_hasPartialOrder_228 v0
   = case coe v0 of
-      C_HasDecPartialOrder'46'constructor_19617 v1 v2 v3 -> coe v1
+      C_HasDecPartialOrder'46'constructor_19577 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.HasOrder._._.HasDecPartialOrder.dec-≤
 d_dec'45''8804'_230 ::
@@ -381,7 +381,7 @@ d_dec'45''8804'_230 ::
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_dec'45''8804'_230 v0
   = case coe v0 of
-      C_HasDecPartialOrder'46'constructor_19617 v1 v2 v3 -> coe v2
+      C_HasDecPartialOrder'46'constructor_19577 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.HasOrder._._.HasDecPartialOrder.dec-<
 d_dec'45''60'_232 ::
@@ -390,7 +390,7 @@ d_dec'45''60'_232 ::
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_dec'45''60'_232 v0
   = case coe v0 of
-      C_HasDecPartialOrder'46'constructor_19617 v1 v2 v3 -> coe v3
+      C_HasDecPartialOrder'46'constructor_19577 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.HasOrder._.HasPreorder≡
 d_HasPreorder'8801'_234 ::
@@ -642,7 +642,7 @@ du_hasPreorderFromNonStrict_362 v0 v1
       C_HasPreorder'46'constructor_851 v0
       (\ v2 v3 ->
          coe
-           MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+           MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
            (coe
               (\ v4 ->
                  let v5 = coe v1 v2 v3 in
@@ -694,7 +694,7 @@ du_hasPartialOrderFromNonStrict_382 ::
   T_HasPartialOrder_166
 du_hasPartialOrderFromNonStrict_382 v0 v1 v2
   = coe
-      C_HasPartialOrder'46'constructor_9473
+      C_HasPartialOrder'46'constructor_9459
       (coe du_hasPreorderFromNonStrict_362 (coe v0) (coe v1)) (coe v2)
 -- Interface.HasOrder._._._.hasPreorderFromStrictPartialOrder
 d_hasPreorderFromStrictPartialOrder_438 ::
@@ -717,7 +717,7 @@ du_hasPreorderFromStrictPartialOrder_438 v0
          (coe v0))
       (\ v1 v2 ->
          coe
-           MAlonzo.Code.Function.Bundles.du_mk'8660'_2296 (coe (\ v3 -> v3))
+           MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 (coe (\ v3 -> v3))
            (coe (\ v3 -> v3)))
 -- Interface.HasOrder._._._.hasPartialOrderFromStrictPartialOrder
 d_hasPartialOrderFromStrictPartialOrder_442 ::
@@ -734,7 +734,7 @@ du_hasPartialOrderFromStrictPartialOrder_442 ::
   T_HasPartialOrder_166
 du_hasPartialOrderFromStrictPartialOrder_442 v0
   = coe
-      C_HasPartialOrder'46'constructor_9473
+      C_HasPartialOrder'46'constructor_9459
       (coe du_hasPreorderFromStrictPartialOrder_438 (coe v0))
       (coe
          MAlonzo.Code.Relation.Binary.Construct.StrictToNonStrict.du_antisym_30

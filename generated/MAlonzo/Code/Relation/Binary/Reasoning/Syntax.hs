@@ -44,7 +44,7 @@ du_begin__46 v0 v1 v2 = coe v0 v1 v2
 -- Relation.Binary.Reasoning.Syntax.SubRelation
 d_SubRelation_60 a0 a1 a2 a3 a4 a5 = ()
 data T_SubRelation_60
-  = C_SubRelation'46'constructor_2981 (AgdaAny ->
+  = C_SubRelation'46'constructor_2989 (AgdaAny ->
                                        AgdaAny ->
                                        AgdaAny ->
                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20)
@@ -63,7 +63,7 @@ d_IsS'63'_88 ::
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_IsS'63'_88 v0
   = case coe v0 of
-      C_SubRelation'46'constructor_2981 v3 v4 -> coe v3
+      C_SubRelation'46'constructor_2989 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Reasoning.Syntax.SubRelation.extract
 d_extract_92 ::
@@ -71,7 +71,7 @@ d_extract_92 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_extract_92 v0
   = case coe v0 of
-      C_SubRelation'46'constructor_2981 v3 v4 -> coe v4
+      C_SubRelation'46'constructor_2989 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Reasoning.Syntax.begin-subrelation-syntax._.IsS
 d_IsS_110 ::
@@ -110,7 +110,7 @@ du_begin__126 v0 v1 v2 v3
   = coe
       d_extract_92 v0 v1 v2 v3
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_toWitness_116
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_toWitness_134
          (coe d_IsS'63'_88 v0 v1 v2 v3))
 -- Relation.Binary.Reasoning.Syntax.begin-equality-syntax._.begin_
 d_begin__148 ::
@@ -269,7 +269,8 @@ d_begin'45'contradiction__246 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
 du_begin'45'contradiction__246 :: AgdaAny
 du_begin'45'contradiction__246
   = coe
-      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_38
+      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+      erased
 -- Relation.Binary.Reasoning.Syntax.begin-contradiction-syntax._.x<x
 d_x'60'x_258 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -293,7 +294,7 @@ du_x'60'x_258 v0 v1 v2
   = coe
       d_extract_92 v0 v1 v1 v2
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_toWitness_116
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_toWitness_134
          (coe d_IsS'63'_88 v0 v1 v1 v2))
 -- Relation.Binary.Reasoning.Syntax._.forward
 d_forward_290 ::

@@ -79,9 +79,9 @@ du_InducedEquivalence_82 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_InducedEquivalence_82 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_727
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_743
+         MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
          (coe
             (\ v1 ->
                coe

@@ -44,14 +44,14 @@ du_negInduction_14 v0 v1
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v2 v3
         -> let v4
                  = coe
-                     MAlonzo.Code.Data.Nat.Properties.du_anyUpTo'63'_6232
+                     MAlonzo.Code.Data.Nat.Properties.du_anyUpTo'63'_6424
                      (coe
                         (\ v4 ->
                            coe
-                             MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__74
+                             MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
                              (coe v0 v4)
                              (coe
-                                MAlonzo.Code.Relation.Nullary.Decidable.Core.du_'172''63'_68
+                                MAlonzo.Code.Relation.Nullary.Decidable.Core.du_'172''63'_70
                                 (coe v0 (addInt (coe (1 :: Integer)) (coe v4))))))
                      (coe v2) in
            coe
@@ -73,7 +73,8 @@ du_negInduction_14 v0 v1
                        else coe
                               seq (coe v6)
                               (coe
-                                 MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_38)
+                                 MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+                                 erased)
                 _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Nat.Properties.Ext._.helper
@@ -99,7 +100,7 @@ du_helper_64 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_decidable'45'stable_170
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_decidable'45'stable_188
          (coe v0 (addInt (coe (1 :: Integer)) (coe v1))))
 -- Data.Nat.Properties.Ext._.k<N⇒P'k
 d_k'60'N'8658'P''k_74 ::

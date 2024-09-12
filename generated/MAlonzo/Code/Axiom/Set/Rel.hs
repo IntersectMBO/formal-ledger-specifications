@@ -328,7 +328,7 @@ du_dom'8712'_422 v0 v1 v2
          MAlonzo.Code.Function.Related.Propositional.du_SK'45'sym_168
          (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_88)
          (coe
-            MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+            MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
             (coe
                (\ v3 ->
                   case coe v3 of
@@ -370,7 +370,7 @@ du_'8712''45'dom'45'singleton'45'pair_466 ::
   AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_'8712''45'dom'45'singleton'45'pair_466 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe
          (\ v4 ->
             coe
@@ -564,20 +564,19 @@ du_dom'8746'_494 v0 v1 v2
                        (coe du_dom'8712'_422 (coe v0) (coe v1) (coe v3))
                        (coe du_dom'8712'_422 (coe v0) (coe v2) (coe v3))))
                  (coe
-                    MAlonzo.Code.Data.Product.Properties.Ext.du_'8707''45'distrib'45''8846'''_108))
+                    MAlonzo.Code.Data.Product.Properties.Ext.du_'8707''45'distrib'45''8846'_72))
               (coe
-                 MAlonzo.Code.Data.Product.Properties.Ext.du_'8707''45'cong'8242'_54
+                 MAlonzo.Code.Data.Product.Properties.Ext.du_'8707''45'cong'8242'_38
                  (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12)
-                 (coe
-                    (\ v4 ->
-                       coe
-                         MAlonzo.Code.Function.Related.Propositional.du_SK'45'sym_168
-                         (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_88)
+                 (\ v4 ->
+                    coe
+                      MAlonzo.Code.Function.Related.Propositional.du_SK'45'sym_168
+                      (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_88)
+                      (coe
+                         MAlonzo.Code.Axiom.Set.du_'8712''45''8746'_676 (coe v0) (coe v1)
+                         (coe v2)
                          (coe
-                            MAlonzo.Code.Axiom.Set.du_'8712''45''8746'_676 (coe v0) (coe v1)
-                            (coe v2)
-                            (coe
-                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v4)))))))
+                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v4))))))
            (coe
               MAlonzo.Code.Function.Related.Propositional.du_SK'45'sym_168
               (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_88)
@@ -858,7 +857,7 @@ du_mapPartialLiftKey_586 v0 v1
   = case coe v1 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v2 v3
         -> coe
-             MAlonzo.Code.Data.Maybe.Base.du_map_68
+             MAlonzo.Code.Data.Maybe.Base.du_map_64
              (\ v4 ->
                 coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v4))
              (coe v0 v2 v3)
@@ -1546,7 +1545,7 @@ du_'8712''45'res'7580''45'dom_808 ::
   AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_'8712''45'res'7580''45'dom_808 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe
          du_'8712''45'res'7580''45'dom'8315'_788 (coe v0) (coe v1) (coe v2)
          (coe v3) (coe v4))

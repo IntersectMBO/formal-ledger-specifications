@@ -21,7 +21,7 @@ import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Algebra.Construct.NaturalChoice.Base
 import qualified MAlonzo.Code.Algebra.Lattice.Bundles
 import qualified MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp
-import qualified MAlonzo.Code.Algebra.Lattice.Structures
+import qualified MAlonzo.Code.Algebra.Structures
 import qualified MAlonzo.Code.Relation.Binary.Bundles
 import qualified MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd
 
@@ -32,16 +32,16 @@ d_'8851''45'isSemilattice_22 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
   MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_128 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsSemilattice_2530
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_590
 d_'8851''45'isSemilattice_22 ~v0 ~v1 ~v2 v3 v4
   = du_'8851''45'isSemilattice_22 v3 v4
 du_'8851''45'isSemilattice_22 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
   MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_128 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsSemilattice_2530
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_590
 du_'8851''45'isSemilattice_22 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'isSemilattice_600
+      MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'isSemilattice_602
       (coe
          MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_746
          (coe v0))
@@ -64,7 +64,7 @@ du_'8851''45'semilattice_24 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10
 du_'8851''45'semilattice_24 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'semilattice_602
+      MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'semilattice_604
       (coe
          MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_746
          (coe v0))

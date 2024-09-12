@@ -379,73 +379,91 @@ d_Substitutive_356 ::
   (AgdaAny -> AgdaAny -> ()) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> ()
 d_Substitutive_356 = erased
--- Relation.Binary.Definitions.Decidable
-d_Decidable_366 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  (AgdaAny -> AgdaAny -> ()) -> ()
-d_Decidable_366 = erased
--- Relation.Binary.Definitions.WeaklyDecidable
-d_WeaklyDecidable_374 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  (AgdaAny -> AgdaAny -> ()) -> ()
-d_WeaklyDecidable_374 = erased
--- Relation.Binary.Definitions.DecidableEquality
-d_DecidableEquality_384 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
-d_DecidableEquality_384 = erased
 -- Relation.Binary.Definitions.Irrelevant
-d_Irrelevant_388 ::
+d_Irrelevant_366 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> ()
-d_Irrelevant_388 = erased
+d_Irrelevant_366 = erased
 -- Relation.Binary.Definitions.Recomputable
-d_Recomputable_400 ::
+d_Recomputable_374 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> ()
-d_Recomputable_400 = erased
+d_Recomputable_374 = erased
+-- Relation.Binary.Definitions.Stable
+d_Stable_382 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) -> ()
+d_Stable_382 = erased
+-- Relation.Binary.Definitions.WeaklyDecidable
+d_WeaklyDecidable_390 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) -> ()
+d_WeaklyDecidable_390 = erased
+-- Relation.Binary.Definitions.Decidable
+d_Decidable_398 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) -> ()
+d_Decidable_398 = erased
+-- Relation.Binary.Definitions.DecidableEquality
+d_DecidableEquality_408 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
+d_DecidableEquality_408 = erased
 -- Relation.Binary.Definitions.Universal
-d_Universal_408 ::
+d_Universal_412 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> ()
-d_Universal_408 = erased
+d_Universal_412 = erased
+-- Relation.Binary.Definitions.Empty
+d_Empty_420 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) -> ()
+d_Empty_420 = erased
 -- Relation.Binary.Definitions.NonEmpty
-d_NonEmpty_428 a0 a1 a2 a3 a4 a5 = ()
-data T_NonEmpty_428 = C_nonEmpty_448 AgdaAny AgdaAny AgdaAny
+d_NonEmpty_440 a0 a1 a2 a3 a4 a5 = ()
+data T_NonEmpty_440 = C_nonEmpty_460 AgdaAny AgdaAny AgdaAny
 -- Relation.Binary.Definitions.NonEmpty.x
-d_x_442 :: T_NonEmpty_428 -> AgdaAny
-d_x_442 v0
+d_x_454 :: T_NonEmpty_440 -> AgdaAny
+d_x_454 v0
   = case coe v0 of
-      C_nonEmpty_448 v1 v2 v3 -> coe v1
+      C_nonEmpty_460 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Definitions.NonEmpty.y
-d_y_444 :: T_NonEmpty_428 -> AgdaAny
-d_y_444 v0
+d_y_456 :: T_NonEmpty_440 -> AgdaAny
+d_y_456 v0
   = case coe v0 of
-      C_nonEmpty_448 v1 v2 v3 -> coe v2
+      C_nonEmpty_460 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Definitions.NonEmpty.proof
-d_proof_446 :: T_NonEmpty_428 -> AgdaAny
-d_proof_446 v0
+d_proof_458 :: T_NonEmpty_440 -> AgdaAny
+d_proof_458 v0
   = case coe v0 of
-      C_nonEmpty_448 v1 v2 v3 -> coe v3
+      C_nonEmpty_460 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError

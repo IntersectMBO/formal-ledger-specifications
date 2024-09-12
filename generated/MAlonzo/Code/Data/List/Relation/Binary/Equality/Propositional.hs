@@ -265,7 +265,7 @@ du_tabulate'8314'_38 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Relation.Binary.Equality.Setoid.du_tabulate'8314'_184
       v0
--- Pointwise
+-- Data.List.Relation.Binary.Equality.Propositional._.Pointwise.Pointwise
 d_Pointwise_39 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 -- Data.List.Relation.Binary.Equality.Propositional._.tabulate⁻
 d_tabulate'8315'_40 ::

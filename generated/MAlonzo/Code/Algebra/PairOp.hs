@@ -20,7 +20,6 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Algebra.Structures
 import qualified MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent
-import qualified MAlonzo.Code.Function.Base
 
 -- Algebra.PairOp._∙ᵖ_
 d__'8729''7510'__12 ::
@@ -77,7 +76,7 @@ du_pairOpIdentity'737'_24 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
         -> coe
-             MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'refl_48
+             MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'refl_60
              (coe (\ v5 -> coe v1 v3)) (coe (\ v5 -> coe v1 v4))
              (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v0))
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -101,7 +100,7 @@ du_pairOpIdentity'691'_32 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
         -> coe
-             MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'refl_48
+             MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'refl_60
              (coe (\ v5 -> coe v1 v3)) (coe (\ v5 -> coe v1 v4))
              (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v0))
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -154,7 +153,7 @@ du_pairOpAssoc_46 v0 v1 v2 v3 v4
                -> case coe v4 of
                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v9 v10
                       -> coe
-                           MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'refl_48
+                           MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'refl_60
                            (coe (\ v11 -> coe v1 v5 v7 v9)) (coe (\ v11 -> coe v1 v6 v8 v10))
                            (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v0))
                     _ -> MAlonzo.RTE.mazUnreachableError
@@ -166,83 +165,55 @@ d_pairOpIsMonoid_62 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_604 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_604
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_686 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_686
 d_pairOpIsMonoid_62 ~v0 v1 ~v2 ~v3 v4 = du_pairOpIsMonoid_62 v1 v4
 du_pairOpIsMonoid_62 ::
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_604 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_604
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_686 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_686
 du_pairOpIsMonoid_62 v0 v1
   = case coe v1 of
-      MAlonzo.Code.Algebra.Structures.C_IsMonoid'46'constructor_13575 v2 v3
+      MAlonzo.Code.Algebra.Structures.C_IsMonoid'46'constructor_15873 v2 v3
         -> coe
-             MAlonzo.Code.Algebra.Structures.C_IsMonoid'46'constructor_13575
+             MAlonzo.Code.Algebra.Structures.C_IsMonoid'46'constructor_15873
              (coe
-                MAlonzo.Code.Algebra.Structures.C_IsSemigroup'46'constructor_9319
+                MAlonzo.Code.Algebra.Structures.C_IsSemigroup'46'constructor_10417
                 (coe
-                   MAlonzo.Code.Algebra.Structures.C_IsMagma'46'constructor_785
+                   MAlonzo.Code.Algebra.Structures.C_IsMagma'46'constructor_1867
                    (coe
-                      MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'isEquivalence_224
+                      MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'isEquivalence_236
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_152
-                         (coe MAlonzo.Code.Algebra.Structures.d_isMagma_448 (coe v2)))
+                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_184
+                         (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v2)))
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_152
-                         (coe MAlonzo.Code.Algebra.Structures.d_isMagma_448 (coe v2))))
+                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_184
+                         (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v2))))
                    (coe
                       (\ v4 v5 v6 v7 v8 v9 ->
                          coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_154
-                              (MAlonzo.Code.Algebra.Structures.d_isMagma_448 (coe v2))
-                              (coe
-                                 MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
-                                 (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v10))
-                                 (\ v10 v11 -> v10) v4 v5)
-                              (coe
-                                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
-                                 (\ v10 v11 -> v11)
-                                 (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v10)) v4
-                                 v5)
-                              (coe
-                                 MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
-                                 (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v10))
-                                 (\ v10 v11 -> v10) v6 v7)
-                              (coe
-                                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
-                                 (\ v10 v11 -> v11)
-                                 (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v10)) v6
-                                 v7)
+                              MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_186
+                              (MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v2))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v5))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v6))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v8))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v9)))
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_154
-                              (MAlonzo.Code.Algebra.Structures.d_isMagma_448 (coe v2))
-                              (coe
-                                 MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
-                                 (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v10))
-                                 (\ v10 v11 -> v10) v4 v5)
-                              (coe
-                                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
-                                 (\ v10 v11 -> v11)
-                                 (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v10)) v4
-                                 v5)
-                              (coe
-                                 MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
-                                 (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v10))
-                                 (\ v10 v11 -> v10) v6 v7)
-                              (coe
-                                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
-                                 (\ v10 v11 -> v11)
-                                 (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v10)) v6
-                                 v7)
+                              MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_186
+                              (MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v2))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v6))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v7))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v8))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v9))))))
                 (coe
                    du_pairOpAssoc_46 (coe v0)
-                   (coe MAlonzo.Code.Algebra.Structures.d_assoc_450 (coe v2))))
+                   (coe MAlonzo.Code.Algebra.Structures.d_assoc_482 (coe v2))))
              (coe du_pairOpIdentity_40 (coe v0) (coe v3))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.PairOp.pairOpComm
@@ -269,7 +240,7 @@ du_pairOpComm_80 v0 v1 v2 v3
         -> case coe v3 of
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v6 v7
                -> coe
-                    MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'refl_48
+                    MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent.du_'215''45'refl_60
                     (coe (\ v8 -> coe v1 v4 v6)) (coe (\ v8 -> coe v1 v5 v7))
                     (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v0))
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -280,19 +251,19 @@ d_pairOpRespectsComm_92 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_654 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_654
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_736 ->
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_736
 d_pairOpRespectsComm_92 ~v0 v1 ~v2 ~v3 v4
   = du_pairOpRespectsComm_92 v1 v4
 du_pairOpRespectsComm_92 ::
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_654 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_654
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_736 ->
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_736
 du_pairOpRespectsComm_92 v0 v1
   = case coe v1 of
-      MAlonzo.Code.Algebra.Structures.C_IsCommutativeMonoid'46'constructor_15395 v2 v3
+      MAlonzo.Code.Algebra.Structures.C_IsCommutativeMonoid'46'constructor_17695 v2 v3
         -> coe
-             MAlonzo.Code.Algebra.Structures.C_IsCommutativeMonoid'46'constructor_15395
+             MAlonzo.Code.Algebra.Structures.C_IsCommutativeMonoid'46'constructor_17695
              (coe du_pairOpIsMonoid_62 (coe v0) (coe v2))
              (coe du_pairOpComm_80 (coe v0) (coe v3))
       _ -> MAlonzo.RTE.mazUnreachableError

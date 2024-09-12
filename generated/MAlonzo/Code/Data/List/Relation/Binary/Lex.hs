@@ -523,7 +523,7 @@ du_'91''93''60''91''93''45''8660'_234 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_'91''93''60''91''93''45''8660'_234
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.C_base_42)
       (coe du_'46'extendedlambda0_236)
 -- Data.List.Relation.Binary.Lex._..extendedlambda0
@@ -565,7 +565,7 @@ du_'8759''60''8759''45''8660'_248 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_'8759''60''8759''45''8660'_248
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe
          MAlonzo.Code.Data.Sum.Base.du_'91'_'44'_'93'_52
          (coe MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.C_this_60)
@@ -631,10 +631,10 @@ du_decidable_260 v0 v1 v2 v3 v4
                     MAlonzo.Code.Relation.Nullary.Decidable.du_map_18
                     (coe du_'8759''60''8759''45''8660'_248)
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__84
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__86
                        (coe v2 v5 v7)
                        (coe
-                          MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__74
+                          MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
                           (coe v1 v5 v7)
                           (coe
                              du_decidable_260 (coe v0) (coe v1) (coe v2) (coe v6) (coe v8))))

@@ -280,7 +280,7 @@ du_equalitySubRelation_152 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.T_SubRelation_60
 du_equalitySubRelation_152
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.C_SubRelation'46'constructor_2981
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.C_SubRelation'46'constructor_2989
       (\ v0 v1 v2 -> coe du_IsEquality'63'_138 v2)
       (\ v0 v1 v2 v3 -> coe du_extractEquality_148 v2 v3)
 -- Relation.Binary.Reasoning.Base.Double._.begin_

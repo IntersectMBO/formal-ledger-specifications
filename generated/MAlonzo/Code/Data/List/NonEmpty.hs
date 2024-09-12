@@ -25,11 +25,11 @@ d__'8759''691'''__14 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
-  AgdaAny -> MAlonzo.Code.Data.List.NonEmpty.Base.T_SnocView_296
+  AgdaAny -> MAlonzo.Code.Data.List.NonEmpty.Base.T_SnocView_304
 d__'8759''691'''__14 ~v0 ~v1 = du__'8759''691'''__14
 du__'8759''691'''__14 ::
   [AgdaAny] ->
-  AgdaAny -> MAlonzo.Code.Data.List.NonEmpty.Base.T_SnocView_296
+  AgdaAny -> MAlonzo.Code.Data.List.NonEmpty.Base.T_SnocView_304
 du__'8759''691'''__14
   = coe
-      MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759''691''8242'__304
+      MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759''691''8242'__312

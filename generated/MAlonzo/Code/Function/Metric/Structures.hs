@@ -490,20 +490,20 @@ d_trans_98 v0
 -- Function.Metric.Structures.IsPreMetric
 d_IsPreMetric_102 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 = ()
 data T_IsPreMetric_102
-  = C_IsPreMetric'46'constructor_6335 T_IsProtoMetric_30
+  = C_IsPreMetric'46'constructor_6347 T_IsProtoMetric_30
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Metric.Structures.IsPreMetric.isProtoMetric
 d_isProtoMetric_110 :: T_IsPreMetric_102 -> T_IsProtoMetric_30
 d_isProtoMetric_110 v0
   = case coe v0 of
-      C_IsPreMetric'46'constructor_6335 v1 v2 -> coe v1
+      C_IsPreMetric'46'constructor_6347 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Structures.IsPreMetric.≈⇒0
 d_'8776''8658'0_112 ::
   T_IsPreMetric_102 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8776''8658'0_112 v0
   = case coe v0 of
-      C_IsPreMetric'46'constructor_6335 v1 v2 -> coe v2
+      C_IsPreMetric'46'constructor_6347 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Structures.IsPreMetric._.antisym
 d_antisym_116 ::
@@ -989,20 +989,20 @@ d_trans_170 v0
 -- Function.Metric.Structures.IsQuasiSemiMetric
 d_IsQuasiSemiMetric_174 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 = ()
 data T_IsQuasiSemiMetric_174
-  = C_IsQuasiSemiMetric'46'constructor_10097 T_IsPreMetric_102
+  = C_IsQuasiSemiMetric'46'constructor_10111 T_IsPreMetric_102
                                              (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Metric.Structures.IsQuasiSemiMetric.isPreMetric
 d_isPreMetric_182 :: T_IsQuasiSemiMetric_174 -> T_IsPreMetric_102
 d_isPreMetric_182 v0
   = case coe v0 of
-      C_IsQuasiSemiMetric'46'constructor_10097 v1 v2 -> coe v1
+      C_IsQuasiSemiMetric'46'constructor_10111 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Structures.IsQuasiSemiMetric.0⇒≈
 d_0'8658''8776'_184 ::
   T_IsQuasiSemiMetric_174 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_0'8658''8776'_184 v0
   = case coe v0 of
-      C_IsQuasiSemiMetric'46'constructor_10097 v1 v2 -> coe v2
+      C_IsQuasiSemiMetric'46'constructor_10111 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Structures.IsQuasiSemiMetric._.antisym
 d_antisym_188 ::
@@ -1547,20 +1547,20 @@ d_trans_246 v0
 -- Function.Metric.Structures.IsSemiMetric
 d_IsSemiMetric_250 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 = ()
 data T_IsSemiMetric_250
-  = C_IsSemiMetric'46'constructor_13989 T_IsQuasiSemiMetric_174
+  = C_IsSemiMetric'46'constructor_14005 T_IsQuasiSemiMetric_174
                                         (AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Metric.Structures.IsSemiMetric.isQuasiSemiMetric
 d_isQuasiSemiMetric_258 ::
   T_IsSemiMetric_250 -> T_IsQuasiSemiMetric_174
 d_isQuasiSemiMetric_258 v0
   = case coe v0 of
-      C_IsSemiMetric'46'constructor_13989 v1 v2 -> coe v1
+      C_IsSemiMetric'46'constructor_14005 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Structures.IsSemiMetric.sym
 d_sym_260 :: T_IsSemiMetric_250 -> AgdaAny -> AgdaAny -> AgdaAny
 d_sym_260 v0
   = case coe v0 of
-      C_IsSemiMetric'46'constructor_13989 v1 v2 -> coe v2
+      C_IsSemiMetric'46'constructor_14005 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Structures.IsSemiMetric._.0⇒≈
 d_0'8658''8776'_264 ::
@@ -2170,20 +2170,20 @@ d_trans_326 v0
 d_IsGeneralMetric_332 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12
   = ()
 data T_IsGeneralMetric_332
-  = C_IsGeneralMetric'46'constructor_18237 T_IsSemiMetric_250
+  = C_IsGeneralMetric'46'constructor_18255 T_IsSemiMetric_250
                                            (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Metric.Structures.IsGeneralMetric.isSemiMetric
 d_isSemiMetric_342 :: T_IsGeneralMetric_332 -> T_IsSemiMetric_250
 d_isSemiMetric_342 v0
   = case coe v0 of
-      C_IsGeneralMetric'46'constructor_18237 v1 v2 -> coe v1
+      C_IsGeneralMetric'46'constructor_18255 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Structures.IsGeneralMetric.triangle
 d_triangle_344 ::
   T_IsGeneralMetric_332 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_triangle_344 v0
   = case coe v0 of
-      C_IsGeneralMetric'46'constructor_18237 v1 v2 -> coe v2
+      C_IsGeneralMetric'46'constructor_18255 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Structures.IsGeneralMetric._.0⇒≈
 d_0'8658''8776'_348 ::

@@ -358,7 +358,7 @@ du_applyDownFrom'8314''8321'_218 v0 v1
                 MAlonzo.Code.Data.List.Relation.Unary.Linked.C__'8759'__42
                 (coe
                    v1 v2
-                   (MAlonzo.Code.Data.Nat.Properties.d_'8804''45'refl_2646 (coe v0)))
+                   (MAlonzo.Code.Data.Nat.Properties.d_'8804''45'refl_2776 (coe v0)))
                 (coe
                    du_applyDownFrom'8314''8321'_218
                    (coe subInt (coe v0) (coe (1 :: Integer)))

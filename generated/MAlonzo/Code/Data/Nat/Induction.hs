@@ -56,7 +56,7 @@ du_rec_34 ::
   (Integer -> AgdaAny -> AgdaAny) -> Integer -> AgdaAny
 du_rec_34
   = coe
-      MAlonzo.Code.Induction.du_build_54
+      MAlonzo.Code.Induction.du_build_36
       (\ v0 v1 v2 -> coe du_recBuilder_22 v1 v2)
 -- Data.Nat.Induction.CRec
 d_CRec_38 ::
@@ -101,7 +101,7 @@ d_cRec_68 ::
   (Integer -> AgdaAny -> AgdaAny) -> Integer -> AgdaAny
 d_cRec_68 v0
   = coe
-      MAlonzo.Code.Induction.du_build_54
+      MAlonzo.Code.Induction.du_build_36
       (\ v1 v2 v3 -> coe du_cRecBuilder_50 (coe v0) v2 v3)
 -- Data.Nat.Induction.<′-Rec
 d_'60''8242''45'Rec_70 ::

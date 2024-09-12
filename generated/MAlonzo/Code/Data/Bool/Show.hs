@@ -17,6 +17,7 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.Char
 import qualified MAlonzo.Code.Agda.Builtin.String
 
 -- Data.Bool.Show.show
@@ -25,3 +26,6 @@ d_show_6 v0
   = if coe v0
       then coe ("true" :: Data.Text.Text)
       else coe ("false" :: Data.Text.Text)
+-- Data.Bool.Show.showBit
+d_showBit_8 :: Bool -> MAlonzo.Code.Agda.Builtin.Char.T_Char_6
+d_showBit_8 v0 = if coe v0 then coe '1' else coe '0'

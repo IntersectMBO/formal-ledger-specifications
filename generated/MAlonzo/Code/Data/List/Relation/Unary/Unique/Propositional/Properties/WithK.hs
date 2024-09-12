@@ -52,7 +52,7 @@ du_unique'8743'set'8658'bag_64 ::
   AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_1960
 du_unique'8743'set'8658'bag_64 v0 v1
   = coe
-      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_38549
+      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_38621
       (coe MAlonzo.Code.Function.Bundles.d_to_1724 (coe v0 v1))
       (coe MAlonzo.Code.Function.Bundles.d_from_1726 (coe v0 v1))
       (coe MAlonzo.Code.Function.Bundles.d_to'45'cong_1728 (coe v0 v1))

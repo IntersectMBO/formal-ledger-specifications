@@ -20,7 +20,6 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Algebra.Lattice.Bundles
-import qualified MAlonzo.Code.Algebra.Lattice.Structures
 import qualified MAlonzo.Code.Algebra.Structures
 import qualified MAlonzo.Code.Relation.Binary.Bundles
 import qualified MAlonzo.Code.Relation.Binary.Construct.NonStrictToStrict
@@ -953,20 +952,20 @@ d_isAlgSemilattice_454 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsSemilattice_2530
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_590
 d_isAlgSemilattice_454 ~v0 ~v1 ~v2 v3 = du_isAlgSemilattice_454 v3
 du_isAlgSemilattice_454 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsSemilattice_2530
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_590
 du_isAlgSemilattice_454 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.C_IsSemilattice'46'constructor_33435
+      MAlonzo.Code.Algebra.Structures.C_IsCommutativeBand'46'constructor_13109
       (coe
-         MAlonzo.Code.Algebra.Structures.C_IsBand'46'constructor_10105
+         MAlonzo.Code.Algebra.Structures.C_IsBand'46'constructor_11205
          (coe
-            MAlonzo.Code.Algebra.Structures.C_IsSemigroup'46'constructor_9319
+            MAlonzo.Code.Algebra.Structures.C_IsSemigroup'46'constructor_10417
             (coe
-               MAlonzo.Code.Algebra.Structures.C_IsMagma'46'constructor_785
+               MAlonzo.Code.Algebra.Structures.C_IsMagma'46'constructor_1867
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
                   (coe
@@ -1243,7 +1242,7 @@ du_dualIsMeetSemilattice_458 ::
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsMeetSemilattice_180
 du_dualIsMeetSemilattice_458 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Lattice.Structures.C_IsMeetSemilattice'46'constructor_7727
+      MAlonzo.Code.Relation.Binary.Lattice.Structures.C_IsMeetSemilattice'46'constructor_7577
       (coe
          MAlonzo.Code.Relation.Binary.Properties.Poset.du_'8805''45'isPartialOrder_142
          (coe
@@ -1267,7 +1266,7 @@ du_dualMeetSemilattice_460 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_MeetSemilattice_200
 du_dualMeetSemilattice_460 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Lattice.Bundles.C_MeetSemilattice'46'constructor_4579
+      MAlonzo.Code.Relation.Binary.Lattice.Bundles.C_MeetSemilattice'46'constructor_4629
       (MAlonzo.Code.Relation.Binary.Lattice.Bundles.d__'8744'__38
          (coe v0))
       (coe du_dualIsMeetSemilattice_458 (coe v0))
@@ -1369,7 +1368,7 @@ du_'8776''45'dec'8658'isDecPartialOrder_490 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecPartialOrder_224
 du_'8776''45'dec'8658'isDecPartialOrder_490 v0 v1
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecPartialOrder'46'constructor_11657
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecPartialOrder'46'constructor_11683
       (coe
          MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
          (coe

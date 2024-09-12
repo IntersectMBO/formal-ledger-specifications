@@ -632,11 +632,12 @@ du_join_158 v0 v1
 -- Effect.Monad._.mkRawMonad
 d_mkRawMonad_178 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (() -> ()) ->
   (() -> AgdaAny -> AgdaAny) ->
   (() -> () -> AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny) ->
   T_RawMonad_24
-d_mkRawMonad_178 ~v0 ~v1 v2 v3 = du_mkRawMonad_178 v2 v3
+d_mkRawMonad_178 ~v0 ~v1 ~v2 v3 v4 = du_mkRawMonad_178 v3 v4
 du_mkRawMonad_178 ::
   (() -> AgdaAny -> AgdaAny) ->
   (() -> () -> AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny) ->
@@ -658,20 +659,20 @@ du_mkRawMonad_178 v0 v1
 -- Effect.Monad.RawMonadZero
 d_RawMonadZero_206 a0 a1 a2 = ()
 data T_RawMonadZero_206
-  = C_RawMonadZero'46'constructor_6879 T_RawMonad_24
+  = C_RawMonadZero'46'constructor_7131 T_RawMonad_24
                                        MAlonzo.Code.Effect.Empty.T_RawEmpty_16
 -- Effect.Monad.RawMonadZero.rawMonad
 d_rawMonad_214 :: T_RawMonadZero_206 -> T_RawMonad_24
 d_rawMonad_214 v0
   = case coe v0 of
-      C_RawMonadZero'46'constructor_6879 v1 v2 -> coe v1
+      C_RawMonadZero'46'constructor_7131 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Monad.RawMonadZero.rawEmpty
 d_rawEmpty_216 ::
   T_RawMonadZero_206 -> MAlonzo.Code.Effect.Empty.T_RawEmpty_16
 d_rawEmpty_216 v0
   = case coe v0 of
-      C_RawMonadZero'46'constructor_6879 v1 v2 -> coe v2
+      C_RawMonadZero'46'constructor_7131 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Monad.RawMonadZero._._*>_
 d__'42''62'__220 ::
@@ -1035,26 +1036,26 @@ du_rawApplicativeZero_276 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicativeZero_120
 du_rawApplicativeZero_276 v0
   = coe
-      MAlonzo.Code.Effect.Applicative.C_RawApplicativeZero'46'constructor_7747
+      MAlonzo.Code.Effect.Applicative.C_RawApplicativeZero'46'constructor_8049
       (coe d_rawApplicative_32 (coe d_rawMonad_214 (coe v0)))
       (coe d_rawEmpty_216 (coe v0))
 -- Effect.Monad.RawMonadPlus
 d_RawMonadPlus_284 a0 a1 a2 = ()
 data T_RawMonadPlus_284
-  = C_RawMonadPlus'46'constructor_8773 T_RawMonadZero_206
+  = C_RawMonadPlus'46'constructor_9035 T_RawMonadZero_206
                                        MAlonzo.Code.Effect.Choice.T_RawChoice_16
 -- Effect.Monad.RawMonadPlus.rawMonadZero
 d_rawMonadZero_292 :: T_RawMonadPlus_284 -> T_RawMonadZero_206
 d_rawMonadZero_292 v0
   = case coe v0 of
-      C_RawMonadPlus'46'constructor_8773 v1 v2 -> coe v1
+      C_RawMonadPlus'46'constructor_9035 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Monad.RawMonadPlus.rawChoice
 d_rawChoice_294 ::
   T_RawMonadPlus_284 -> MAlonzo.Code.Effect.Choice.T_RawChoice_16
 d_rawChoice_294 v0
   = case coe v0 of
-      C_RawMonadPlus'46'constructor_8773 v1 v2 -> coe v2
+      C_RawMonadPlus'46'constructor_9035 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Monad.RawMonadPlus._._*>_
 d__'42''62'__298 ::
@@ -1514,25 +1515,25 @@ du_rawAlternative_364 ::
   MAlonzo.Code.Effect.Applicative.T_RawAlternative_180
 du_rawAlternative_364 v0
   = coe
-      MAlonzo.Code.Effect.Applicative.C_RawAlternative'46'constructor_9601
+      MAlonzo.Code.Effect.Applicative.C_RawAlternative'46'constructor_9897
       (coe du_rawApplicativeZero_276 (coe d_rawMonadZero_292 (coe v0)))
       (coe d_rawChoice_294 (coe v0))
 -- Effect.Monad.RawMonadTd
 d_RawMonadTd_376 a0 a1 a2 a3 a4 = ()
 data T_RawMonadTd_376
-  = C_RawMonadTd'46'constructor_10961 (() -> AgdaAny -> AgdaAny)
+  = C_RawMonadTd'46'constructor_11233 (() -> AgdaAny -> AgdaAny)
                                       T_RawMonad_24
 -- Effect.Monad.RawMonadTd.lift
 d_lift_386 :: T_RawMonadTd_376 -> () -> AgdaAny -> AgdaAny
 d_lift_386 v0
   = case coe v0 of
-      C_RawMonadTd'46'constructor_10961 v1 v2 -> coe v1
+      C_RawMonadTd'46'constructor_11233 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Monad.RawMonadTd.rawMonad
 d_rawMonad_388 :: T_RawMonadTd_376 -> T_RawMonad_24
 d_rawMonad_388 v0
   = case coe v0 of
-      C_RawMonadTd'46'constructor_10961 v1 v2 -> coe v2
+      C_RawMonadTd'46'constructor_11233 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Monad.RawMonadTd._._*>_
 d__'42''62'__392 ::

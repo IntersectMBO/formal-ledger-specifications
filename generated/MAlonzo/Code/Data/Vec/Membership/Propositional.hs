@@ -124,5 +124,5 @@ du_lose_34 ::
   AgdaAny -> MAlonzo.Code.Data.Vec.Relation.Unary.Any.T_Any_32
 du_lose_34 v0 v1
   = coe
-      MAlonzo.Code.Data.Vec.Membership.Setoid.du_lose_126
+      MAlonzo.Code.Data.Vec.Membership.Setoid.du_lose_120
       (coe (\ v2 v3 v4 v5 -> v5)) (coe v0) (coe v1)

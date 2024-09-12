@@ -47,7 +47,7 @@ d_debugPrint_10 ::
   MAlonzo.Code.Class.MonadTC.T_MonadTC_88 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
   Integer ->
-  [MAlonzo.Code.Agda.Builtin.Reflection.T_ErrorPart_306] -> AgdaAny
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_ErrorPart_308] -> AgdaAny
 d_debugPrint_10 v0
   = coe MAlonzo.Code.Class.MonadTC.d_debugPrint_182 (coe v0)
 -- PreludeMeta._.declareAndDefineFun
@@ -298,7 +298,7 @@ d_typeError_60 ::
   MAlonzo.Code.Class.MonadTC.T_MonadTC_88 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  [MAlonzo.Code.Agda.Builtin.Reflection.T_ErrorPart_306] -> AgdaAny
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_ErrorPart_308] -> AgdaAny
 d_typeError_60 v0
   = coe MAlonzo.Code.Class.MonadTC.d_typeError_146 (coe v0)
 -- PreludeMeta._.unify

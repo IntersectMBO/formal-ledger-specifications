@@ -19,7 +19,7 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Data.Product.Properties
-import qualified MAlonzo.Code.Data.Word.Properties
+import qualified MAlonzo.Code.Data.Word64.Properties
 import qualified MAlonzo.Code.Relation.Binary.Construct.On
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 
@@ -39,13 +39,13 @@ d__'8776''63'__10
       (coe MAlonzo.Code.Agda.Builtin.Reflection.d_primQNameToWord64s_36)
       (coe
          MAlonzo.Code.Data.Product.Properties.du_'8801''45'dec_78
-         (coe MAlonzo.Code.Data.Word.Properties.d__'8799'__52)
-         (coe (\ v0 -> MAlonzo.Code.Data.Word.Properties.d__'8799'__52)))
+         (coe MAlonzo.Code.Data.Word64.Properties.d__'8799'__52)
+         (coe (\ v0 -> MAlonzo.Code.Data.Word64.Properties.d__'8799'__52)))
 -- Reflection.AST.Name._≟_
 d__'8799'__12 ::
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d__'8799'__12 v0 v1
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
-      erased (coe d__'8776''63'__10 v0 v1)
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+      erased erased (coe d__'8776''63'__10 v0 v1)

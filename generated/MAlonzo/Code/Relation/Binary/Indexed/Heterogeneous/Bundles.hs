@@ -91,7 +91,7 @@ d_trans_48 v0
 -- Relation.Binary.Indexed.Heterogeneous.Bundles.IndexedPreorder
 d_IndexedPreorder_60 a0 a1 a2 a3 a4 = ()
 newtype T_IndexedPreorder_60
-  = C_IndexedPreorder'46'constructor_1981 MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Structures.T_IsIndexedPreorder_44
+  = C_IndexedPreorder'46'constructor_1987 MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Structures.T_IsIndexedPreorder_44
 -- Relation.Binary.Indexed.Heterogeneous.Bundles.IndexedPreorder.Carrier
 d_Carrier_80 :: T_IndexedPreorder_60 -> AgdaAny -> ()
 d_Carrier_80 = erased
@@ -111,7 +111,7 @@ d_isPreorder_86 ::
   MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Structures.T_IsIndexedPreorder_44
 d_isPreorder_86 v0
   = case coe v0 of
-      C_IndexedPreorder'46'constructor_1981 v4 -> coe v4
+      C_IndexedPreorder'46'constructor_1987 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Indexed.Heterogeneous.Bundles.IndexedPreorder._.isEquivalence
 d_isEquivalence_90 ::

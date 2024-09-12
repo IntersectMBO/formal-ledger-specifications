@@ -264,7 +264,7 @@ du_f'45'cong''_412 v0 v1 v2 v3
   = coe
       v0 v1 v2
       (coe
-         MAlonzo.Code.Data.List.Relation.Binary.BagAndSetEquality.du_'8764'bag'8658''8621'_1456
+         MAlonzo.Code.Data.List.Relation.Binary.BagAndSetEquality.du_'8764'bag'8658''8621'_1394
          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v1))
          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))
          (coe
@@ -292,7 +292,7 @@ du_deduplicate'45'Σ_420 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
-         MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+         MAlonzo.Code.Data.List.Base.du_deduplicate_898
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
          (coe v1))
       (coe
@@ -352,7 +352,7 @@ du_ext'45'cong_430 v0 v1 v2 v3 v4
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
          (coe
-            MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+            MAlonzo.Code.Data.List.Base.du_deduplicate_898
             (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
             (coe v2))
          (coe
@@ -361,7 +361,7 @@ du_ext'45'cong_430 v0 v1 v2 v3 v4
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
          (coe
-            MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+            MAlonzo.Code.Data.List.Base.du_deduplicate_898
             (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
             (coe v3))
          (coe

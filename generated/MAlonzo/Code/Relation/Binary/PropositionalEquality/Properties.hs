@@ -355,7 +355,7 @@ du_isEquivalence_396 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
 du_isEquivalence_396
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_743
+      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
       erased erased erased
 -- Relation.Binary.PropositionalEquality.Properties.isDecEquivalence
 d_isDecEquivalence_398 ::
@@ -373,7 +373,7 @@ du_isDecEquivalence_398 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecEquivalence_44
 du_isDecEquivalence_398 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecEquivalence'46'constructor_3075
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecEquivalence'46'constructor_3083
       (coe du_isEquivalence_396) (coe v0)
 -- Relation.Binary.PropositionalEquality.Properties.setoid
 d_setoid_402 ::
@@ -383,7 +383,7 @@ d_setoid_402 ~v0 ~v1 = du_setoid_402
 du_setoid_402 :: MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_setoid_402
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_727
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
       (coe du_isEquivalence_396)
 -- Relation.Binary.PropositionalEquality.Properties.decSetoid
 d_decSetoid_406 ::
@@ -401,7 +401,7 @@ du_decSetoid_406 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84
 du_decSetoid_406 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1377
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1389
       (coe du_isDecEquivalence_398 (coe v0))
 -- Relation.Binary.PropositionalEquality.Properties.isPreorder
 d_isPreorder_410 ::

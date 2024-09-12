@@ -78,12 +78,12 @@ d__'8815'__104 :: Integer -> Integer -> ()
 d__'8815'__104 = erased
 -- Data.Nat.Base.NonZero
 d_NonZero_112 a0 = ()
-newtype T_NonZero_112 = C_NonZero'46'constructor_3581 AgdaAny
+newtype T_NonZero_112 = C_NonZero'46'constructor_3575 AgdaAny
 -- Data.Nat.Base.NonZero.nonZero
 d_nonZero_118 :: T_NonZero_112 -> AgdaAny
 d_nonZero_118 v0
   = case coe v0 of
-      C_NonZero'46'constructor_3581 v1 -> coe v1
+      C_NonZero'46'constructor_3575 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Nat.Base.nonZero
 d_nonZero_122 :: Integer -> T_NonZero_112
@@ -91,7 +91,7 @@ d_nonZero_122 ~v0 = du_nonZero_122
 du_nonZero_122 :: T_NonZero_112
 du_nonZero_122
   = coe
-      C_NonZero'46'constructor_3581
+      C_NonZero'46'constructor_3575
       (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
 -- Data.Nat.Base.≢-nonZero
 d_'8802''45'nonZero_126 ::
@@ -104,9 +104,10 @@ du_'8802''45'nonZero_126 :: Integer -> T_NonZero_112
 du_'8802''45'nonZero_126 v0
   = case coe v0 of
       0 -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_38
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+             erased
       _ -> coe
-             C_NonZero'46'constructor_3581
+             C_NonZero'46'constructor_3575
              (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
 -- Data.Nat.Base.>-nonZero
 d_'62''45'nonZero_136 :: Integer -> T__'8804'__22 -> T_NonZero_112
@@ -118,7 +119,7 @@ du_'62''45'nonZero_136 v0
         -> coe
              seq (coe v3)
              (coe
-                C_NonZero'46'constructor_3581
+                C_NonZero'46'constructor_3575
                 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Nat.Base.≢-nonZero⁻¹
@@ -138,12 +139,12 @@ du_'62''45'nonZero'8315''185'_146
   = coe C_s'8804's_34 (coe C_z'8804'n_26)
 -- Data.Nat.Base.NonTrivial
 d_NonTrivial_152 a0 = ()
-newtype T_NonTrivial_152 = C_NonTrivial'46'constructor_5677 AgdaAny
+newtype T_NonTrivial_152 = C_NonTrivial'46'constructor_5661 AgdaAny
 -- Data.Nat.Base.NonTrivial.nonTrivial
 d_nonTrivial_158 :: T_NonTrivial_152 -> AgdaAny
 d_nonTrivial_158 v0
   = case coe v0 of
-      C_NonTrivial'46'constructor_5677 v1 -> coe v1
+      C_NonTrivial'46'constructor_5661 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Nat.Base.nonTrivial
 d_nonTrivial_162 :: Integer -> T_NonTrivial_152
@@ -151,7 +152,7 @@ d_nonTrivial_162 ~v0 = du_nonTrivial_162
 du_nonTrivial_162 :: T_NonTrivial_152
 du_nonTrivial_162
   = coe
-      C_NonTrivial'46'constructor_5677
+      C_NonTrivial'46'constructor_5661
       (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
 -- Data.Nat.Base.n>1⇒nonTrivial
 d_n'62'1'8658'nonTrivial_166 ::
@@ -167,7 +168,7 @@ du_n'62'1'8658'nonTrivial_166 v0
                -> coe
                     seq (coe v6)
                     (coe
-                       C_NonTrivial'46'constructor_5677
+                       C_NonTrivial'46'constructor_5661
                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -179,7 +180,7 @@ d_nonTrivial'8658'nonZero_170 ~v0 ~v1
 du_nonTrivial'8658'nonZero_170 :: T_NonZero_112
 du_nonTrivial'8658'nonZero_170
   = coe
-      C_NonZero'46'constructor_3581
+      C_NonZero'46'constructor_3575
       (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
 -- Data.Nat.Base.nonTrivial⇒n>1
 d_nonTrivial'8658'n'62'1_174 ::
@@ -198,45 +199,45 @@ d_nonTrivial'8658''8802'1_178 ::
 d_nonTrivial'8658''8802'1_178 = erased
 -- Data.Nat.Base.+-rawMagma
 d_'43''45'rawMagma_180 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_10
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_36
 d_'43''45'rawMagma_180
   = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMagma'46'constructor_79
+      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMagma'46'constructor_341
       addInt
 -- Data.Nat.Base.+-0-rawMonoid
 d_'43''45'0'45'rawMonoid_182 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_38
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_64
 d_'43''45'0'45'rawMonoid_182
   = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMonoid'46'constructor_477
+      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMonoid'46'constructor_745
       addInt (0 :: Integer)
 -- Data.Nat.Base.*-rawMagma
 d_'42''45'rawMagma_184 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_10
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_36
 d_'42''45'rawMagma_184
   = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMagma'46'constructor_79
+      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMagma'46'constructor_341
       mulInt
 -- Data.Nat.Base.*-1-rawMonoid
 d_'42''45'1'45'rawMonoid_186 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_38
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_64
 d_'42''45'1'45'rawMonoid_186
   = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMonoid'46'constructor_477
+      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMonoid'46'constructor_745
       mulInt (1 :: Integer)
 -- Data.Nat.Base.+-*-rawNearSemiring
 d_'43''45''42''45'rawNearSemiring_188 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_108
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_134
 d_'43''45''42''45'rawNearSemiring_188
   = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawNearSemiring'46'constructor_1429
+      MAlonzo.Code.Algebra.Bundles.Raw.C_RawNearSemiring'46'constructor_1729
       addInt mulInt (0 :: Integer)
 -- Data.Nat.Base.+-*-rawSemiring
 d_'43''45''42''45'rawSemiring_190 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawSemiring_148
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawSemiring_174
 d_'43''45''42''45'rawSemiring_190
   = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawSemiring'46'constructor_2033
+      MAlonzo.Code.Algebra.Bundles.Raw.C_RawSemiring'46'constructor_2353
       addInt mulInt (0 :: Integer) (1 :: Integer)
 -- Data.Nat.Base.pred
 d_pred_192 :: Integer -> Integer
@@ -375,67 +376,67 @@ d__'62''8242'__370 = erased
 d__'8804''8243'__380 :: Integer -> Integer -> ()
 d__'8804''8243'__380 = erased
 -- Data.Nat.Base._<″_
-d__'60''8243'__388 :: Integer -> Integer -> ()
-d__'60''8243'__388 = erased
+d__'60''8243'__382 :: Integer -> Integer -> ()
+d__'60''8243'__382 = erased
 -- Data.Nat.Base._≥″_
-d__'8805''8243'__394 :: Integer -> Integer -> ()
-d__'8805''8243'__394 = erased
+d__'8805''8243'__388 :: Integer -> Integer -> ()
+d__'8805''8243'__388 = erased
 -- Data.Nat.Base._>″_
-d__'62''8243'__400 :: Integer -> Integer -> ()
-d__'62''8243'__400 = erased
--- Data.Nat.Base.s≤″s⁻¹
-d_s'8804''8243's'8315''185'_418 ::
-  Integer ->
-  Integer ->
-  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26 ->
-  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26
-d_s'8804''8243's'8315''185'_418 ~v0 ~v1 v2
-  = du_s'8804''8243's'8315''185'_418 v2
-du_s'8804''8243's'8315''185'_418 ::
-  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26 ->
-  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26
-du_s'8804''8243's'8315''185'_418 v0 = coe v0
+d__'62''8243'__394 :: Integer -> Integer -> ()
+d__'62''8243'__394 = erased
 -- Data.Nat.Base.s<″s⁻¹
-d_s'60''8243's'8315''185'_426 ::
+d_s'60''8243's'8315''185'_404 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26 ->
   MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26
-d_s'60''8243's'8315''185'_426 ~v0 ~v1 v2
-  = du_s'60''8243's'8315''185'_426 v2
-du_s'60''8243's'8315''185'_426 ::
+d_s'60''8243's'8315''185'_404 ~v0 ~v1 v2
+  = du_s'60''8243's'8315''185'_404 v2
+du_s'60''8243's'8315''185'_404 ::
   MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26 ->
   MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26
-du_s'60''8243's'8315''185'_426 v0 = coe v0
+du_s'60''8243's'8315''185'_404 v0 = coe v0
 -- Data.Nat.Base._≤‴_
-d__'8804''8244'__430 a0 a1 = ()
-data T__'8804''8244'__430
-  = C_'8804''8244''45'refl_434 |
-    C_'8804''8244''45'step_440 T__'8804''8244'__430
+d__'8804''8244'__408 a0 a1 = ()
+data T__'8804''8244'__408
+  = C_'8804''8244''45'refl_412 |
+    C_'8804''8244''45'step_418 T__'8804''8244'__408
 -- Data.Nat.Base._<‴_
-d__'60''8244'__442 :: Integer -> Integer -> ()
-d__'60''8244'__442 = erased
+d__'60''8244'__420 :: Integer -> Integer -> ()
+d__'60''8244'__420 = erased
 -- Data.Nat.Base._≥‴_
-d__'8805''8244'__448 :: Integer -> Integer -> ()
-d__'8805''8244'__448 = erased
+d__'8805''8244'__426 :: Integer -> Integer -> ()
+d__'8805''8244'__426 = erased
 -- Data.Nat.Base._>‴_
-d__'62''8244'__454 :: Integer -> Integer -> ()
-d__'62''8244'__454 = erased
+d__'62''8244'__432 :: Integer -> Integer -> ()
+d__'62''8244'__432 = erased
 -- Data.Nat.Base.Ordering
-d_Ordering_460 a0 a1 = ()
-data T_Ordering_460
-  = C_less_466 Integer | C_equal_470 | C_greater_476 Integer
+d_Ordering_438 a0 a1 = ()
+data T_Ordering_438
+  = C_less_444 Integer | C_equal_448 | C_greater_454 Integer
 -- Data.Nat.Base.compare
-d_compare_482 :: Integer -> Integer -> T_Ordering_460
-d_compare_482 v0 v1
+d_compare_460 :: Integer -> Integer -> T_Ordering_438
+d_compare_460 v0 v1
   = case coe v0 of
       0 -> case coe v1 of
-             0 -> coe C_equal_470
+             0 -> coe C_equal_448
              _ -> let v2 = subInt (coe v1) (coe (1 :: Integer)) in
-                  coe (coe C_less_466 v2)
+                  coe (coe C_less_444 v2)
       _ -> let v2 = subInt (coe v0) (coe (1 :: Integer)) in
            coe
              (case coe v1 of
-                0 -> coe C_greater_476 v2
+                0 -> coe C_greater_454 v2
                 _ -> let v3 = subInt (coe v1) (coe (1 :: Integer)) in
-                     coe (coe d_compare_482 (coe v2) (coe v3)))
+                     coe (coe d_compare_460 (coe v2) (coe v3)))
+-- Data.Nat.Base.s≤″s⁻¹
+d_s'8804''8243's'8315''185'_514 ::
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26 ->
+  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26
+d_s'8804''8243's'8315''185'_514 ~v0 ~v1 v2
+  = du_s'8804''8243's'8315''185'_514 v2
+du_s'8804''8243's'8315''185'_514 ::
+  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26 ->
+  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26
+du_s'8804''8243's'8315''185'_514 v0 = coe v0

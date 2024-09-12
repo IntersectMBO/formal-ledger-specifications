@@ -77,7 +77,7 @@ du_'8771''8658''8596'_78 ::
   T__'8771'__24 -> MAlonzo.Code.Function.Bundles.T_Inverse_1960
 du_'8771''8658''8596'_78 v0
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2364
+      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2366
       (coe d_to_46 (coe v0)) (coe d_from_48 (coe v0))
 -- Function.Properties.Inverse.HalfAdjointEquivalence._._.from
 d_from_88 :: T__'8771'__24 -> AgdaAny -> AgdaAny

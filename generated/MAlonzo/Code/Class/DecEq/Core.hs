@@ -45,7 +45,7 @@ du__'61''61'__18 ::
   T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
 du__'61''61'__18 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_112 v0
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_130 v0
       erased (coe d__'8799'__16 v1 v2 v3)
 -- Class.DecEq.Core.DecEq._≡ᵇ_
 d__'8801''7495'__20 ::

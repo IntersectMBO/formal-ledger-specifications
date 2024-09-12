@@ -53,6 +53,22 @@ d_acceptConds_1836 ::
   MAlonzo.Code.Ledger.Ratify.T_RatifyState_1912 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
 d_acceptConds_1836 = erased
+-- Ledger.Ratify.Properties._.RatifyState.delay
+d_delay_1922 ::
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1912 -> Bool
+d_delay_1922 v0
+  = coe MAlonzo.Code.Ledger.Ratify.d_delay_1924 (coe v0)
+-- Ledger.Ratify.Properties._.RatifyState.es
+d_es_1924 ::
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1912 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_830
+d_es_1924 v0 = coe MAlonzo.Code.Ledger.Ratify.d_es_1920 (coe v0)
+-- Ledger.Ratify.Properties._.RatifyState.removed
+d_removed_1926 ::
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1912 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_removed_1926 v0
+  = coe MAlonzo.Code.Ledger.Ratify.d_removed_1922 (coe v0)
 -- Ledger.Ratify.Properties.Implementation.exp?
 d_exp'63'_1994 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -89,15 +105,15 @@ du_acceptConds'63'_2000 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_acceptConds'63'_2000 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__74
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
       (coe
          MAlonzo.Code.Ledger.Ratify.d_accepted'63'_2538 (coe v0) (coe v1)
          (coe MAlonzo.Code.Ledger.Ratify.d_es_1920 (coe v2))
          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__74
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
          (coe
-            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__94
+            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__96
             (coe
                MAlonzo.Code.Ledger.Ratify.d_delayed'63'_2494 (coe v0)
                (coe
@@ -296,11 +312,9 @@ d_Computational'45'RATIFY_2088 v0
          MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_738)
       (coe d_Computational'45'RATIFY''_2086 (coe v0))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.C_InjectError'46'constructor_82995
-         (coe (\ v1 -> MAlonzo.RTE.mazUnreachableError)))
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_726)
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.C_InjectError'46'constructor_82995
-         (coe (\ v1 -> MAlonzo.RTE.mazUnreachableError)))
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_726)
 -- Ledger.Ratify.Properties.RATIFY-total
 d_RATIFY'45'total_2098 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->

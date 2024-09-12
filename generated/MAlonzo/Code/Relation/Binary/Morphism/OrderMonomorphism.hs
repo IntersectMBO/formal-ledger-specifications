@@ -839,7 +839,7 @@ du_isPreorder_180 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
 du_isPreorder_180 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPreorder'46'constructor_3993
+      MAlonzo.Code.Relation.Binary.Structures.C_IsPreorder'46'constructor_4003
       (coe
          MAlonzo.Code.Relation.Binary.Morphism.RelMonomorphism.du_isEquivalence_78
          (coe v0)
@@ -888,7 +888,7 @@ du_isPartialOrder_222 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
 du_isPartialOrder_222 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9831
+      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9853
       (coe
          du_isPreorder_180 (coe v0) (coe v1)
          (coe
@@ -925,7 +925,7 @@ du_isTotalOrder_268 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsTotalOrder_404
 du_isTotalOrder_268 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsTotalOrder'46'constructor_20499
+      MAlonzo.Code.Relation.Binary.Structures.C_IsTotalOrder'46'constructor_20555
       (coe
          du_isPartialOrder_222 (coe v0) (coe v1)
          (coe
@@ -966,7 +966,7 @@ du_isDecTotalOrder_320 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_460
 du_isDecTotalOrder_320 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecTotalOrder'46'constructor_22635
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecTotalOrder'46'constructor_22695
       (coe
          du_isTotalOrder_268 (coe v0) (coe v1)
          (coe
@@ -1017,7 +1017,7 @@ du_isStrictPartialOrder_386 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_290
 du_isStrictPartialOrder_386 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsStrictPartialOrder'46'constructor_14011
+      MAlonzo.Code.Relation.Binary.Structures.C_IsStrictPartialOrder'46'constructor_14045
       (coe
          MAlonzo.Code.Relation.Binary.Morphism.RelMonomorphism.du_isEquivalence_78
          (coe v0)
@@ -1066,7 +1066,7 @@ du_isStrictTotalOrder_422 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534
 du_isStrictTotalOrder_422 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsStrictTotalOrder'46'constructor_24885
+      MAlonzo.Code.Relation.Binary.Structures.C_IsStrictTotalOrder'46'constructor_24953
       (coe
          du_isStrictPartialOrder_386 (coe v0) (coe v1)
          (coe

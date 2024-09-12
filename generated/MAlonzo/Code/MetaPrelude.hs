@@ -55,10 +55,10 @@ du_zipWithIndex_26 ::
   (Integer -> AgdaAny -> AgdaAny) -> [AgdaAny] -> [AgdaAny]
 du_zipWithIndex_26 v0 v1
   = coe
-      MAlonzo.Code.Data.List.Base.du_zipWith_134 (coe v0)
+      MAlonzo.Code.Data.List.Base.du_zipWith_104 (coe v0)
       (coe
-         MAlonzo.Code.Data.List.Base.d_upTo_476
-         (coe MAlonzo.Code.Data.List.Base.du_length_304 v1))
+         MAlonzo.Code.Data.List.Base.d_upTo_418
+         (coe MAlonzo.Code.Data.List.Base.du_length_284 v1))
       (coe v1)
 -- MetaPrelude.enumerate
 d_enumerate_34 ::

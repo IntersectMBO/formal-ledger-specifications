@@ -17,6 +17,7 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Data.Product.Base
@@ -145,6 +146,59 @@ du_map_120 v0 v1 v2 v3
                       -> coe
                            C__'8759'__62 (coe v0 v10 v12 v8)
                            (coe du_map_120 (coe v0) (coe v11) (coe v13) (coe v9))
+                    _ -> MAlonzo.RTE.mazUnreachableError
+             _ -> MAlonzo.RTE.mazUnreachableError
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Data.List.Relation.Binary.Pointwise.Base.unzip
+d_unzip_130 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  T_Pointwise_48 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_unzip_130 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 v11 v12
+  = du_unzip_130 v10 v11 v12
+du_unzip_130 ::
+  [AgdaAny] ->
+  [AgdaAny] ->
+  T_Pointwise_48 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_unzip_130 v0 v1 v2
+  = case coe v2 of
+      C_'91''93'_56
+        -> coe
+             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
+             (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v2))
+      C__'8759'__62 v7 v8
+        -> case coe v0 of
+             (:) v9 v10
+               -> case coe v1 of
+                    (:) v11 v12
+                      -> case coe v7 of
+                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v13 v14
+                             -> case coe v14 of
+                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v15 v16
+                                    -> coe
+                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                         (coe
+                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v13))
+                                         (coe
+                                            (\ v17 ->
+                                               coe
+                                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                                 (coe C__'8759'__62 v15)
+                                                 (coe (\ v18 -> coe C__'8759'__62 v16))))
+                                         (coe du_unzip_130 (coe v10) (coe v12) (coe v8))
+                                  _ -> MAlonzo.RTE.mazUnreachableError
+                           _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError

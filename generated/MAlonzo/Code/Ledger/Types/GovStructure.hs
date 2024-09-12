@@ -24,8 +24,11 @@ import qualified MAlonzo.Code.Algebra.Bundles
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Show.Core
+import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Data.Nat.Base
+import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Data.Rational.Base
+import qualified MAlonzo.Code.Data.Rational.Show
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.HasAdd
@@ -42,7 +45,7 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 -- Ledger.Types.GovStructure.GovStructure
 d_GovStructure_6 = ()
 data T_GovStructure_6
-  = C_GovStructure'46'constructor_2529 MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+  = C_GovStructure'46'constructor_2711 MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                                        MAlonzo.Code.Ledger.Crypto.T_Crypto_134
                                        MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20
                                        MAlonzo.Code.Ledger.Script.T_ScriptStructure_402
@@ -50,6 +53,24 @@ data T_GovStructure_6
                                        MAlonzo.Code.Ledger.Types.Epoch.T_GlobalConstants_256
 -- Ledger.Types.GovStructure._.GovParams
 d_GovParams_212 a0 a1 a2 a3 a4 a5 = ()
+-- Ledger.Types.GovStructure._.GovParams.DecEq-UpdT
+d_DecEq'45'UpdT_288 ::
+  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+d_DecEq'45'UpdT_288 v0
+  = coe MAlonzo.Code.Ledger.PParams.d_DecEq'45'UpdT_1240 (coe v0)
+-- Ledger.Types.GovStructure._.GovParams.ppHashingScheme
+d_ppHashingScheme_300 ::
+  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
+  MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
+d_ppHashingScheme_300 v0
+  = coe MAlonzo.Code.Ledger.PParams.d_ppHashingScheme_1226 (coe v0)
+-- Ledger.Types.GovStructure._.GovParams.ppUpd
+d_ppUpd_302 ::
+  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
+  MAlonzo.Code.Ledger.PParams.T_PParamsDiff_1148
+d_ppUpd_302 v0
+  = coe MAlonzo.Code.Ledger.PParams.d_ppUpd_1212 (coe v0)
 -- Ledger.Types.GovStructure.GovStructure.TxId
 d_TxId_530 :: T_GovStructure_6 -> ()
 d_TxId_530 = erased
@@ -61,14 +82,14 @@ d_DecEq'45'TxId_534 ::
   T_GovStructure_6 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'TxId_534 v0
   = case coe v0 of
-      C_GovStructure'46'constructor_2529 v3 v4 v5 v6 v7 v8 -> coe v3
+      C_GovStructure'46'constructor_2711 v3 v4 v5 v6 v7 v8 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Types.GovStructure.GovStructure.crypto
 d_crypto_536 ::
   T_GovStructure_6 -> MAlonzo.Code.Ledger.Crypto.T_Crypto_134
 d_crypto_536 v0
   = case coe v0 of
-      C_GovStructure'46'constructor_2529 v3 v4 v5 v6 v7 v8 -> coe v4
+      C_GovStructure'46'constructor_2711 v3 v4 v5 v6 v7 v8 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Types.GovStructure.GovStructure._.Dec-isSigned
 d_Dec'45'isSigned_540 ::
@@ -208,7 +229,7 @@ d_epochStructure_582 ::
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20
 d_epochStructure_582 v0
   = case coe v0 of
-      C_GovStructure'46'constructor_2529 v3 v4 v5 v6 v7 v8 -> coe v5
+      C_GovStructure'46'constructor_2711 v3 v4 v5 v6 v7 v8 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Types.GovStructure.GovStructure._._+ᵉ_
 d__'43''7497'__586 ::
@@ -274,7 +295,7 @@ d_Slot_604 :: T_GovStructure_6 -> ()
 d_Slot_604 = erased
 -- Ledger.Types.GovStructure.GovStructure._.Slotʳ
 d_Slot'691'_606 ::
-  T_GovStructure_6 -> MAlonzo.Code.Algebra.Bundles.T_Semiring_2022
+  T_GovStructure_6 -> MAlonzo.Code.Algebra.Bundles.T_Semiring_2280
 d_Slot'691'_606 v0
   = coe
       MAlonzo.Code.Ledger.Types.Epoch.d_Slot'691'_54
@@ -337,7 +358,7 @@ d_scriptStructure_624 ::
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_402
 d_scriptStructure_624 v0
   = case coe v0 of
-      C_GovStructure'46'constructor_2529 v3 v4 v5 v6 v7 v8 -> coe v6
+      C_GovStructure'46'constructor_2711 v3 v4 v5 v6 v7 v8 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Types.GovStructure.GovStructure._._≥ᵉ_
 d__'8805''7497'__628 ::
@@ -777,13 +798,23 @@ d_Show'45'ProtVer_758 ::
 d_Show'45'ProtVer_758 ~v0 = du_Show'45'ProtVer_758
 du_Show'45'ProtVer_758 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 du_Show'45'ProtVer_758
-  = coe MAlonzo.Code.Ledger.PParams.du_Show'45'ProtVer_160
+  = coe
+      MAlonzo.Code.Class.Show.Instances.du_Show'45''215'_6
+      (coe
+         MAlonzo.Code.Class.Show.Core.C_mkShow_18
+         (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
+      (coe
+         MAlonzo.Code.Class.Show.Core.C_mkShow_18
+         (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
 -- Ledger.Types.GovStructure.GovStructure._.Show-ℚ
 d_Show'45'ℚ_760 ::
   T_GovStructure_6 -> MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'ℚ_760 ~v0 = du_Show'45'ℚ_760
 du_Show'45'ℚ_760 :: MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'ℚ_760 = coe MAlonzo.Code.Ledger.PParams.du_Show'45'ℚ_430
+du_Show'45'ℚ_760
+  = coe
+      MAlonzo.Code.Class.Show.Core.C_mkShow_18
+      (coe MAlonzo.Code.Data.Rational.Show.d_show_6)
 -- Ledger.Types.GovStructure.GovStructure._.paramsWellFormed
 d_paramsWellFormed_768 ::
   T_GovStructure_6 -> MAlonzo.Code.Ledger.PParams.T_PParams_244 -> ()
@@ -1406,7 +1437,7 @@ d_govParams_1020 ::
   T_GovStructure_6 -> MAlonzo.Code.Ledger.PParams.T_GovParams_1180
 d_govParams_1020 v0
   = case coe v0 of
-      C_GovStructure'46'constructor_2529 v3 v4 v5 v6 v7 v8 -> coe v7
+      C_GovStructure'46'constructor_2711 v3 v4 v5 v6 v7 v8 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Types.GovStructure.GovStructure._.DecEq-T
 d_DecEq'45'T_1024 ::
@@ -1511,7 +1542,7 @@ d_globalConstants_1050 ::
   MAlonzo.Code.Ledger.Types.Epoch.T_GlobalConstants_256
 d_globalConstants_1050 v0
   = case coe v0 of
-      C_GovStructure'46'constructor_2529 v3 v4 v5 v6 v7 v8 -> coe v8
+      C_GovStructure'46'constructor_2711 v3 v4 v5 v6 v7 v8 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Types.GovStructure.GovStructure._.DecEq-Netw
 d_DecEq'45'Netw_1054 ::

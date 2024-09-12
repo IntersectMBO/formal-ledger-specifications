@@ -150,8 +150,8 @@ du_'46'extendedlambda0_144 v0 v1 v2 v3
              (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_72)
              (\ v6 -> coe C_BS'45'ind_72 v4 v5)
              (coe
-                du_ReflexiveTransitiveClosure'45'total_126 (coe v0) (coe v1)
-                (coe v4) (coe v2))
+                du_ReflexiveTransitiveClosure'45'total_126
+                (coe (\ v6 v7 v8 -> coe v0 v6 v7 v8)) (coe v1) (coe v4) (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.STS.ReflexiveTransitiveClosureᵢ
 d_ReflexiveTransitiveClosure'7522'_150 ::
@@ -281,7 +281,8 @@ du_'46'extendedlambda1_178 v0 v1 v2 v3 v4 v5 v6 v7
              (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_72)
              (\ v10 -> coe C_BS'45'ind_92 v8 v9)
              (coe
-                du_helper_164 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
+                du_helper_164 (coe v0) (coe v1) (coe v2) (coe v3)
+                (coe (\ v10 v11 v12 -> coe v4 v10 v11 v12))
                 (coe
                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                    (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v5))

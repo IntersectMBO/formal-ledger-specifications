@@ -197,9 +197,14 @@ du_dec_70 ::
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_dec_70 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
       (coe
          MAlonzo.Code.Relation.Binary.Morphism.Structures.d_injective_78 v1
+         v3 v4)
+      (coe
+         MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+         (MAlonzo.Code.Relation.Binary.Morphism.Structures.d_isHomomorphism_76
+            (coe v1))
          v3 v4)
       (coe v2 (coe v0 v3) (coe v0 v4))
 -- Relation.Binary.Morphism.RelMonomorphism.isEquivalence
@@ -225,7 +230,7 @@ du_isEquivalence_78 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
 du_isEquivalence_78 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_743
+      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
       (coe
          du_refl_36 (coe v0) (coe v1)
          (coe MAlonzo.Code.Relation.Binary.Structures.d_refl_34 (coe v2)))
@@ -258,7 +263,7 @@ du_isDecEquivalence_98 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecEquivalence_44
 du_isDecEquivalence_98 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecEquivalence'46'constructor_3075
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecEquivalence'46'constructor_3083
       (coe
          du_isEquivalence_78 (coe v0) (coe v1)
          (coe

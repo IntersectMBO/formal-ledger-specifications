@@ -22,8 +22,8 @@ import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 
 -- Axiom.UniquenessOfIdentityProofs.UIP
-d_UIP_8 :: MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
-d_UIP_8 = erased
+d_UIP_14 :: MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
+d_UIP_14 = erased
 -- Axiom.UniquenessOfIdentityProofs.Constant⇒UIP.≡-canonical
 d_'8801''45'canonical_36 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -62,7 +62,7 @@ d_'8801''45'irrelevant_38 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'8801''45'irrelevant_38 = erased
 -- Axiom.UniquenessOfIdentityProofs.Decidable⇒UIP.≡-normalise
-d_'8801''45'normalise_56 ::
+d_'8801''45'normalise_54 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny ->
@@ -72,9 +72,9 @@ d_'8801''45'normalise_56 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''45'normalise_56 = erased
+d_'8801''45'normalise_54 = erased
 -- Axiom.UniquenessOfIdentityProofs.Decidable⇒UIP.≡-normalise-constant
-d_'8801''45'normalise'45'constant_92 ::
+d_'8801''45'normalise'45'constant_66 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny ->
@@ -85,9 +85,9 @@ d_'8801''45'normalise'45'constant_92 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''45'normalise'45'constant_92 = erased
+d_'8801''45'normalise'45'constant_66 = erased
 -- Axiom.UniquenessOfIdentityProofs.Decidable⇒UIP.≡-irrelevant
-d_'8801''45'irrelevant_124 ::
+d_'8801''45'irrelevant_72 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny ->
@@ -98,4 +98,4 @@ d_'8801''45'irrelevant_124 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''45'irrelevant_124 = erased
+d_'8801''45'irrelevant_72 = erased

@@ -46,12 +46,12 @@ d_total_44 = erased
 -- Axiom.Set.TotalMap.TotalMap
 d_TotalMap_54 a0 a1 a2 = ()
 data T_TotalMap_54
-  = C_TotalMap'46'constructor_581 AgdaAny (AgdaAny -> AgdaAny)
+  = C_TotalMap'46'constructor_589 AgdaAny (AgdaAny -> AgdaAny)
 -- Axiom.Set.TotalMap.TotalMap.rel
 d_rel_66 :: T_TotalMap_54 -> AgdaAny
 d_rel_66 v0
   = case coe v0 of
-      C_TotalMap'46'constructor_581 v1 v3 -> coe v1
+      C_TotalMap'46'constructor_589 v1 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.TotalMap.TotalMap.left-unique-rel
 d_left'45'unique'45'rel_68 ::
@@ -66,7 +66,7 @@ d_left'45'unique'45'rel_68 = erased
 d_total'45'rel_70 :: T_TotalMap_54 -> AgdaAny -> AgdaAny
 d_total'45'rel_70 v0
   = case coe v0 of
-      C_TotalMap'46'constructor_581 v1 v3 -> coe v3
+      C_TotalMap'46'constructor_589 v1 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.TotalMap.TotalMap.toMap
 d_toMap_72 ::
@@ -175,7 +175,7 @@ du_mapWithKey_148 ::
   (AgdaAny -> AgdaAny -> AgdaAny) -> T_TotalMap_54 -> T_TotalMap_54
 du_mapWithKey_148 v0 v1 v2
   = coe
-      C_TotalMap'46'constructor_581
+      C_TotalMap'46'constructor_589
       (coe
          MAlonzo.Code.Axiom.Set.du_map_386 v0
          (\ v3 ->
@@ -354,7 +354,7 @@ du_Fun'8658'TotalMap_224 ::
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> T_TotalMap_54
 du_Fun'8658'TotalMap_224 v0 v1 v2 v3
   = coe
-      C_TotalMap'46'constructor_581
+      C_TotalMap'46'constructor_589
       (coe
          MAlonzo.Code.Axiom.Set.du_map_386 v0
          (\ v4 ->

@@ -27,8 +27,6 @@ import qualified MAlonzo.Code.Relation.Binary.Bundles
 
 -- Data.Container.Morphism.Properties._.id-correct
 d_id'45'correct_22 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Data.Container.Core.T_Container_10 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->

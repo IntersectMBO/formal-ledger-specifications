@@ -28,15 +28,34 @@ d_Map_152 :: MAlonzo.Code.Axiom.Set.T_Theory_82 -> () -> () -> ()
 d_Map_152 = erased
 -- Interface.IsSet.TotalMap.TotalMap
 d_TotalMap_292 a0 a1 a2 = ()
+-- Interface.IsSet.TotalMap.TotalMap.left-unique-rel
+d_left'45'unique'45'rel_314 ::
+  MAlonzo.Code.Axiom.Set.TotalMap.T_TotalMap_54 ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_left'45'unique'45'rel_314 = erased
+-- Interface.IsSet.TotalMap.TotalMap.rel
+d_rel_320 ::
+  MAlonzo.Code.Axiom.Set.TotalMap.T_TotalMap_54 -> AgdaAny
+d_rel_320 v0
+  = coe MAlonzo.Code.Axiom.Set.TotalMap.d_rel_66 (coe v0)
+-- Interface.IsSet.TotalMap.TotalMap.total-rel
+d_total'45'rel_324 ::
+  MAlonzo.Code.Axiom.Set.TotalMap.T_TotalMap_54 -> AgdaAny -> AgdaAny
+d_total'45'rel_324 v0
+  = coe MAlonzo.Code.Axiom.Set.TotalMap.d_total'45'rel_70 (coe v0)
 -- Interface.IsSet.IsSet
 d_IsSet_474 a0 a1 a2 = ()
 newtype T_IsSet_474
-  = C_IsSet'46'constructor_1993 (AgdaAny -> AgdaAny)
+  = C_IsSet'46'constructor_2009 (AgdaAny -> AgdaAny)
 -- Interface.IsSet.IsSet.toSet
 d_toSet_482 :: T_IsSet_474 -> AgdaAny -> AgdaAny
 d_toSet_482 v0
   = case coe v0 of
-      C_IsSet'46'constructor_1993 v1 -> coe v1
+      C_IsSet'46'constructor_2009 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.IsSet.IsSet._∈_
 d__'8712'__484 ::
@@ -99,7 +118,7 @@ d_IsSet'45'Set_544 ::
 d_IsSet'45'Set_544 ~v0 ~v1 = du_IsSet'45'Set_544
 du_IsSet'45'Set_544 :: T_IsSet_474
 du_IsSet'45'Set_544
-  = coe C_IsSet'46'constructor_1993 (coe (\ v0 -> v0))
+  = coe C_IsSet'46'constructor_2009 (coe (\ v0 -> v0))
 -- Interface.IsSet.IsSet-Map
 d_IsSet'45'Map_548 ::
   MAlonzo.Code.Axiom.Set.T_Theory_82 -> () -> () -> T_IsSet_474
@@ -107,7 +126,7 @@ d_IsSet'45'Map_548 ~v0 ~v1 ~v2 = du_IsSet'45'Map_548
 du_IsSet'45'Map_548 :: T_IsSet_474
 du_IsSet'45'Map_548
   = coe
-      C_IsSet'46'constructor_1993
+      C_IsSet'46'constructor_2009
       (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_534)
 -- Interface.IsSet.IsSet-TotalMap
 d_IsSet'45'TotalMap_550 ::
@@ -116,5 +135,5 @@ d_IsSet'45'TotalMap_550 ~v0 ~v1 ~v2 = du_IsSet'45'TotalMap_550
 du_IsSet'45'TotalMap_550 :: T_IsSet_474
 du_IsSet'45'TotalMap_550
   = coe
-      C_IsSet'46'constructor_1993
+      C_IsSet'46'constructor_2009
       (coe (\ v0 -> MAlonzo.Code.Axiom.Set.TotalMap.d_rel_66 (coe v0)))

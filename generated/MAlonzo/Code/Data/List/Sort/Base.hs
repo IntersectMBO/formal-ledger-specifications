@@ -33,16 +33,16 @@ d_Sorted_96 = erased
 -- Data.List.Sort.Base.SortingAlgorithm
 d_SortingAlgorithm_108 a0 a1 a2 a3 = ()
 data T_SortingAlgorithm_108
-  = C_SortingAlgorithm'46'constructor_995 ([AgdaAny] -> [AgdaAny])
-                                          ([AgdaAny] ->
-                                           MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__16)
-                                          ([AgdaAny] ->
-                                           MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26)
+  = C_SortingAlgorithm'46'constructor_1003 ([AgdaAny] -> [AgdaAny])
+                                           ([AgdaAny] ->
+                                            MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__16)
+                                           ([AgdaAny] ->
+                                            MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26)
 -- Data.List.Sort.Base.SortingAlgorithm.sort
 d_sort_120 :: T_SortingAlgorithm_108 -> [AgdaAny] -> [AgdaAny]
 d_sort_120 v0
   = case coe v0 of
-      C_SortingAlgorithm'46'constructor_995 v1 v2 v3 -> coe v1
+      C_SortingAlgorithm'46'constructor_1003 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Sort.Base.SortingAlgorithm.sort-↭
 d_sort'45''8621'_124 ::
@@ -51,7 +51,7 @@ d_sort'45''8621'_124 ::
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__16
 d_sort'45''8621'_124 v0
   = case coe v0 of
-      C_SortingAlgorithm'46'constructor_995 v1 v2 v3 -> coe v2
+      C_SortingAlgorithm'46'constructor_1003 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Sort.Base.SortingAlgorithm.sort-↗
 d_sort'45''8599'_128 ::
@@ -60,5 +60,5 @@ d_sort'45''8599'_128 ::
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26
 d_sort'45''8599'_128 v0
   = case coe v0 of
-      C_SortingAlgorithm'46'constructor_995 v1 v2 v3 -> coe v3
+      C_SortingAlgorithm'46'constructor_1003 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError

@@ -148,7 +148,7 @@ du_fmap_40 ::
 du_fmap_40 v0 = coe du_fmap_22 (coe v0)
 -- Class.Functor.Core.FunctorLaws
 d_FunctorLaws_46 a0 a1 = ()
-data T_FunctorLaws_46 = C_FunctorLaws'46'constructor_8497
+data T_FunctorLaws_46 = C_FunctorLaws'46'constructor_8593
 -- Class.Functor.Core.FunctorLaws.fmap-id
 d_fmap'45'id_76 ::
   T_FunctorLaws_46 ->

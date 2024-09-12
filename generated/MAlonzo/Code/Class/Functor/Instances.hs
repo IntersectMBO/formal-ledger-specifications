@@ -36,7 +36,7 @@ d_Functor'45'Maybe_6 ::
 d_Functor'45'Maybe_6
   = coe
       MAlonzo.Code.Class.Functor.Core.C_Functor'46'constructor_121
-      (\ v0 v1 v2 v3 v4 -> coe MAlonzo.Code.Data.Maybe.Base.du_map_68 v4)
+      (\ v0 v1 v2 v3 v4 -> coe MAlonzo.Code.Data.Maybe.Base.du_map_64 v4)
 -- Class.Functor.Instances.FunctorLaws-Maybe
 d_FunctorLaws'45'Maybe_12 ::
   MAlonzo.Code.Class.Functor.Core.T_FunctorLaws_46
@@ -112,11 +112,11 @@ d_Functor'45'TC_82
       (coe
          (\ v0 v1 v2 v3 v4 v5 ->
             coe
-              MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_334 v0 v2 erased
+              MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 v0 v2 erased
               erased v5
               (\ v6 ->
                  coe
-                   MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_324 v2 erased
+                   MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 v2 erased
                    (coe v4 v6))))
 -- Class.Functor.Instances.Functor-Abs
 d_Functor'45'Abs_88 :: MAlonzo.Code.Class.Functor.Core.T_Functor_14

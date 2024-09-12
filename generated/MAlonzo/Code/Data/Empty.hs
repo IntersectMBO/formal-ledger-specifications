@@ -33,3 +33,11 @@ d_'8869''45'elim_14 ::
 d_'8869''45'elim_14 ~v0 ~v1 ~v2 = du_'8869''45'elim_14
 du_'8869''45'elim_14 :: AgdaAny
 du_'8869''45'elim_14 = MAlonzo.RTE.mazUnreachableError
+-- Data.Empty.⊥-elim-irr
+d_'8869''45'elim'45'irr_20 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20 -> AgdaAny
+d_'8869''45'elim'45'irr_20 ~v0 ~v1 ~v2
+  = du_'8869''45'elim'45'irr_20
+du_'8869''45'elim'45'irr_20 :: AgdaAny
+du_'8869''45'elim'45'irr_20 = MAlonzo.RTE.mazUnreachableError

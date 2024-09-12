@@ -53,7 +53,7 @@ du_Show'45''215'_6 v0 v1
             case coe v2 of
               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
                 -> coe
-                     MAlonzo.Code.Data.String.Base.d_parens_38
+                     MAlonzo.Code.Data.String.Base.d_parens_46
                      (coe
                         MAlonzo.Code.Data.String.Base.d__'43''43'__20
                         (coe MAlonzo.Code.Class.Show.Core.d_show_16 v0 v3)
@@ -77,7 +77,8 @@ du_Show'45'List_12 v0
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
       (coe
          (\ v1 ->
-            MAlonzo.Code.Data.String.Base.d_braces_42
+            coe
+              MAlonzo.Code.Data.String.Base.d_braces_48
               (coe
                  MAlonzo.Code.Data.String.Base.d_intersperse_30
                  (", " :: Data.Text.Text)
@@ -169,7 +170,7 @@ d_Show'45'Literal_66 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Literal_66
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showLiteral_12)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showLiteral_14)
 -- Class.Show.Instances.Show-Arg
 d_Show'45'Arg_68 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -227,55 +228,55 @@ d_Show'45'Names_80 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Names_80
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showTerms_36)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showTerms_38)
 -- Class.Show.Instances.Show-Term
 d_Show'45'Term_82 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Term_82
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showTerm_38)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showTerm_40)
 -- Class.Show.Instances.Show-Sort
 d_Show'45'Sort_84 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Sort_84
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showSort_40)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showSort_42)
 -- Class.Show.Instances.Show-Patterns
 d_Show'45'Patterns_86 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Patterns_86
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showPatterns_42)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showPatterns_44)
 -- Class.Show.Instances.Show-Pattern
 d_Show'45'Pattern_88 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Pattern_88
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showPattern_44)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showPattern_46)
 -- Class.Show.Instances.Show-Clause
 d_Show'45'Clause_90 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Clause_90
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showClause_46)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showClause_48)
 -- Class.Show.Instances.Show-Clauses
 d_Show'45'Clauses_92 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Clauses_92
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showClauses_48)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showClauses_50)
 -- Class.Show.Instances.Show-Tel
 d_Show'45'Tel_94 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Tel_94
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showTel_50)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showTel_52)
 -- Class.Show.Instances.Show-Definition
 d_Show'45'Definition_96 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Definition_96
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe MAlonzo.Code.Reflection.AST.Show.d_showDefinition_166)
+      (coe MAlonzo.Code.Reflection.AST.Show.d_showDefinition_168)
 -- Class.Show.Instances.Show-AName
 d_Show'45'AName_98 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'AName_98
@@ -291,7 +292,7 @@ d_Show'45'AType_100
       du_Show'45'Arg_68
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
-         (coe MAlonzo.Code.Reflection.AST.Show.d_showTerm_38))
+         (coe MAlonzo.Code.Reflection.AST.Show.d_showTerm_40))
 -- Class.Show.Instances.Show-ATerms
 d_Show'45'ATerms_102 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'ATerms_102

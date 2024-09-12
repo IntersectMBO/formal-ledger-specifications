@@ -49,7 +49,7 @@ d_gcd_136 v0 v1
 -- Data.Integer.GCD.gcd[i,j]∣i
 d_gcd'91'i'44'j'93''8739'i_146 ::
   Integer ->
-  Integer -> MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__12
+  Integer -> MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20
 d_gcd'91'i'44'j'93''8739'i_146 v0 v1
   = coe
       MAlonzo.Code.Data.Nat.GCD.d_gcd'91'm'44'n'93''8739'm_248
@@ -58,7 +58,7 @@ d_gcd'91'i'44'j'93''8739'i_146 v0 v1
 -- Data.Integer.GCD.gcd[i,j]∣j
 d_gcd'91'i'44'j'93''8739'j_156 ::
   Integer ->
-  Integer -> MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__12
+  Integer -> MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20
 d_gcd'91'i'44'j'93''8739'j_156 v0 v1
   = coe
       MAlonzo.Code.Data.Nat.GCD.d_gcd'91'm'44'n'93''8739'n_278
@@ -69,9 +69,9 @@ d_gcd'45'greatest_168 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__12 ->
-  MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__12 ->
-  MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__12
+  MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20 ->
+  MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20 ->
+  MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20
 d_gcd'45'greatest_168 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Data.Nat.GCD.d_gcd'45'greatest_310

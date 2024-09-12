@@ -20,7 +20,6 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
-import qualified MAlonzo.Code.Data.Empty
 import qualified MAlonzo.Code.Data.Fin.Base
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.Product.Base
@@ -51,7 +50,8 @@ du_head_58 v0
       C_here_44 v4 -> coe v4
       C_there_54 v4
         -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_38
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+             erased
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Vec.Relation.Unary.Any.tail
 d_tail_70 ::
@@ -68,7 +68,10 @@ d_tail_70 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 = du_tail_70 v8
 du_tail_70 :: T_Any_32 -> T_Any_32
 du_tail_70 v0
   = case coe v0 of
-      C_here_44 v4 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14
+      C_here_44 v4
+        -> coe
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+             erased
       C_there_54 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Vec.Relation.Unary.Any.toSum
@@ -225,10 +228,10 @@ du_any'63'_124 v0 v1
              (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
       MAlonzo.Code.Data.Vec.Base.C__'8759'__38 v3 v4
         -> coe
-             MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
-             (coe du_fromSum_90)
+             MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+             (coe du_fromSum_90) (coe du_toSum_82)
              (coe
-                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__84
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__86
                 (coe v0 v3) (coe du_any'63'_124 (coe v0) (coe v4)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Vec.Relation.Unary.Any.satisfiable

@@ -58,7 +58,7 @@ du_sublists_20 v0
              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v0) (coe v0)
       (:) v1 v2
         -> coe
-             MAlonzo.Code.Data.List.Base.du__'43''43'__62
+             MAlonzo.Code.Data.List.Base.du__'43''43'__32
              (coe
                 MAlonzo.Code.Data.List.Base.du_map_22
                 (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v1))
@@ -102,9 +102,9 @@ du_subpermutations_40 v0
              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v0) (coe v0)
       (:) v1 v2
         -> coe
-             MAlonzo.Code.Data.List.Base.du__'43''43'__62
+             MAlonzo.Code.Data.List.Base.du__'43''43'__32
              (coe
-                MAlonzo.Code.Data.List.Base.du_concatMap_272
+                MAlonzo.Code.Data.List.Base.du_concatMap_246
                 (coe du_insert_28 (coe v1)) (coe du_subpermutations_40 (coe v2)))
              (coe du_subpermutations_40 (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -137,10 +137,10 @@ du_'8712''737''45'map'45'filter'8315'_66 v0 v1 v2
               MAlonzo.Code.Data.List.Membership.Setoid.du_find_84
               (coe
                  MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
-              (coe MAlonzo.Code.Data.List.Base.du_filter_740 (coe v1) (coe v0))
+              (coe MAlonzo.Code.Data.List.Base.du_filter_664 (coe v1) (coe v0))
               (coe
-                 MAlonzo.Code.Data.List.Relation.Unary.Any.Properties.du_map'8315'_716
-                 (coe MAlonzo.Code.Data.List.Base.du_filter_740 (coe v1) (coe v0))
+                 MAlonzo.Code.Data.List.Relation.Unary.Any.Properties.du_map'8315'_736
+                 (coe MAlonzo.Code.Data.List.Base.du_filter_664 (coe v1) (coe v0))
                  (coe v2)) in
     coe
       (case coe v3 of
@@ -154,14 +154,14 @@ du_'8712''737''45'map'45'filter'8315'_66 v0 v1 v2
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                              (coe
-                                MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_530
+                                MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_506
                                 v1 v4 v0 v6))
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased
                              (coe
                                 MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                 (coe
-                                   MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_530
+                                   MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_506
                                    v1 v4 v0 v6))))
                 _ -> MAlonzo.RTE.mazUnreachableError
          _ -> MAlonzo.RTE.mazUnreachableError)
@@ -198,9 +198,9 @@ du_'8712''737''45'map'45'filter'8314'_82 v0 v1 v2
                       -> coe
                            MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'map'8314'_160
                            v3
-                           (coe MAlonzo.Code.Data.List.Base.du_filter_740 (coe v1) (coe v0))
+                           (coe MAlonzo.Code.Data.List.Base.du_filter_664 (coe v1) (coe v0))
                            (coe
-                              MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8314'_524
+                              MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8314'_500
                               v1 v0 v5 v8)
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -227,6 +227,31 @@ du_'8712''737''45'map'45'filter_92 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_'8712''737''45'map'45'filter_92 v0 v1
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe du_'8712''737''45'map'45'filter'8314'_82 (coe v0) (coe v1))
       (coe du_'8712''737''45'map'45'filter'8315'_66 (coe v0) (coe v1))
+-- Data.List.Ext..generalizedField-A.ℓ
+d_'46'generalizedField'45'A'46'ℓ_3083 ::
+  T_GeneralizeTel_3091 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'A'46'ℓ_3083 v0
+  = case coe v0 of
+      C_mkGeneralizeTel_3093 v1 v3 -> coe v1
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Data.List.Ext..generalizedField-A
+d_'46'generalizedField'45'A_3085 :: T_GeneralizeTel_3091 -> ()
+d_'46'generalizedField'45'A_3085 = erased
+-- Data.List.Ext..generalizedField-B.ℓ
+d_'46'generalizedField'45'B'46'ℓ_3087 ::
+  T_GeneralizeTel_3091 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'B'46'ℓ_3087 v0
+  = case coe v0 of
+      C_mkGeneralizeTel_3093 v1 v3 -> coe v3
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Data.List.Ext..generalizedField-B
+d_'46'generalizedField'45'B_3089 :: T_GeneralizeTel_3091 -> ()
+d_'46'generalizedField'45'B_3089 = erased
+-- Data.List.Ext.GeneralizeTel
+d_GeneralizeTel_3091 = ()
+data T_GeneralizeTel_3091
+  = C_mkGeneralizeTel_3093 MAlonzo.Code.Agda.Primitive.T_Level_18
+                           MAlonzo.Code.Agda.Primitive.T_Level_18

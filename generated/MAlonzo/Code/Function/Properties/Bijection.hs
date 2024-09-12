@@ -88,7 +88,7 @@ du_'10518''45'isEquivalence_34 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
 du_'10518''45'isEquivalence_34
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_743
+      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
       (coe (\ v0 -> coe du_refl_28))
       (coe
          (\ v0 v1 ->
@@ -116,7 +116,7 @@ du_Bijection'8658'Inverse_36 ::
   MAlonzo.Code.Function.Bundles.T_Inverse_1960
 du_Bijection'8658'Inverse_36 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_38549
+      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_38621
       (coe MAlonzo.Code.Function.Bundles.d_to_934 (coe v2))
       (coe
          MAlonzo.Code.Function.Bundles.du_to'8315'_920

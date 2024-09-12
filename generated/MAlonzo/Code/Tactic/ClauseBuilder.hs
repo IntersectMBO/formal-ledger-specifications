@@ -46,6 +46,7 @@ import qualified MAlonzo.Code.Data.Maybe.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Sum.Base
+import qualified MAlonzo.Code.Meta
 import qualified MAlonzo.Code.MetaPrelude
 import qualified MAlonzo.Code.Reflection.AST.Argument
 import qualified MAlonzo.Code.Reflection.Debug
@@ -58,7 +59,7 @@ d_sort_6
   = coe
       MAlonzo.Code.Data.List.Sort.MergeSort.du_sort_186
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'decTotalOrder_2698)
+         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'decTotalOrder_2828)
 -- Tactic.ClauseBuilder._.sort-↗
 d_sort'45''8599'_8 ::
   [Integer] ->
@@ -67,7 +68,7 @@ d_sort'45''8599'_8
   = coe
       MAlonzo.Code.Data.List.Sort.MergeSort.du_sort'45''8599'_258
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'decTotalOrder_2698)
+         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'decTotalOrder_2828)
 -- Tactic.ClauseBuilder._.sort-↭
 d_sort'45''8621'_10 ::
   [Integer] ->
@@ -76,7 +77,7 @@ d_sort'45''8621'_10
   = coe
       MAlonzo.Code.Data.List.Sort.MergeSort.du_sort'45''8621'_220
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'decTotalOrder_2698)
+         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'decTotalOrder_2828)
 -- Tactic.ClauseBuilder.ClauseBuilder
 d_ClauseBuilder_24 a0 = ()
 data T_ClauseBuilder_24
@@ -141,7 +142,7 @@ d_typedVarSinglePattern_56 v0 v1
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
              (coe
-                MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                 (coe
                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v1)))
              (coe
@@ -160,7 +161,7 @@ d_varSinglePattern_64 v0
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
              (coe
-                MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                 (coe
                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                    (coe
@@ -203,7 +204,7 @@ d_findIndexDefault_78 :: [Integer] -> Integer -> Integer -> Integer
 d_findIndexDefault_78 v0 v1 v2
   = let v3
           = coe
-              MAlonzo.Code.Data.List.Base.du_filter_740
+              MAlonzo.Code.Data.List.Base.du_filter_664
               (coe
                  (\ v3 ->
                     case coe v3 of
@@ -213,12 +214,12 @@ d_findIndexDefault_78 v0 v1 v2
                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22 v5 v2
                       _ -> MAlonzo.RTE.mazUnreachableError))
               (coe
-                 MAlonzo.Code.Data.List.Base.du_zipWith_134
+                 MAlonzo.Code.Data.List.Base.du_zipWith_104
                  (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32)
                  (coe
-                    MAlonzo.Code.Data.List.Base.du_applyUpTo_434 (coe (\ v3 -> v3))
+                    MAlonzo.Code.Data.List.Base.du_applyUpTo_376 (coe (\ v3 -> v3))
                     (coe
-                       MAlonzo.Code.Data.List.Base.du_foldr_242
+                       MAlonzo.Code.Data.List.Base.du_foldr_216
                        (let v3 = \ v3 -> addInt (coe (1 :: Integer)) (coe v3) in
                         coe (coe (\ v4 -> v3)))
                        (coe (0 :: Integer)) (coe v0)))
@@ -241,9 +242,9 @@ d_singlePatternFromPattern_110 v0
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
              (coe
-                MAlonzo.Code.Data.List.Base.du_replicate_314
+                MAlonzo.Code.Data.List.Base.du_replicate_294
                 (coe
-                   MAlonzo.Code.Data.List.Base.du_length_304
+                   MAlonzo.Code.Data.List.Base.du_length_284
                    (d_appearingIndices_120 (coe v1) (coe v2) (coe v2)))
                 (coe
                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -274,7 +275,7 @@ d_appearingIndices_120 v0 v1 v2
       MAlonzo.Code.Agda.Builtin.Reflection.C_dot_248 v3
         -> coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16
       MAlonzo.Code.Agda.Builtin.Reflection.C_var_252 v3
-        -> coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_306 (coe v3)
+        -> coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v3)
       MAlonzo.Code.Agda.Builtin.Reflection.C_lit_256 v3
         -> coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16
       MAlonzo.Code.Agda.Builtin.Reflection.C_proj_260 v3
@@ -294,7 +295,7 @@ d_appearingIndicesHelper_122 v0 v1 v2
         -> case coe v3 of
              MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v5 v6
                -> coe
-                    MAlonzo.Code.Data.List.Base.du__'43''43'__62
+                    MAlonzo.Code.Data.List.Base.du__'43''43'__32
                     (coe d_appearingIndices_120 (coe v0) (coe v1) (coe v6))
                     (coe d_appearingIndicesHelper_122 (coe v0) (coe v1) (coe v4))
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -307,10 +308,10 @@ d_normalisedIndexList_142 v0 v1
   = coe
       MAlonzo.Code.Data.List.Sort.MergeSort.du_sort_186
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'decTotalOrder_2698)
+         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'decTotalOrder_2828)
       (coe
-         MAlonzo.Code.Data.List.Base.du_deduplicate_1000
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558)
+         MAlonzo.Code.Data.List.Base.du_deduplicate_898
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688)
          (coe d_appearingIndices_120 (coe v0) (coe v1) (coe v1)))
 -- Tactic.ClauseBuilder._.replacePatternIndex
 d_replacePatternIndex_144 ::
@@ -424,7 +425,7 @@ du_constrToPattern_196 v0 v1 v2 v3
                MAlonzo.Code.Class.MonadReader.d_local_44 v1 () erased
                (\ v4 ->
                   coe
-                    MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_243
+                    MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_245
                     (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
                     (coe MAlonzo.Code.Class.MonadTC.d_reconstruction_52 (coe v4))
                     (coe MAlonzo.Code.Class.MonadTC.d_noConstraints_54 (coe v4))
@@ -475,7 +476,7 @@ du_constrToPattern_196 v0 v1 v2 v3
                         (coe
                            MAlonzo.Code.Agda.Builtin.Reflection.C_con_244 (coe v3)
                            (coe
-                              MAlonzo.Code.Data.List.Base.du_zipWith_134
+                              MAlonzo.Code.Data.List.Base.du_zipWith_104
                               (coe
                                  (\ v7 v8 ->
                                     case coe v7 of
@@ -492,8 +493,8 @@ du_constrToPattern_196 v0 v1 v2 v3
                                       _ -> MAlonzo.RTE.mazUnreachableError))
                               (coe v5)
                               (coe
-                                 MAlonzo.Code.Data.List.Base.d_downFrom_478
-                                 (coe MAlonzo.Code.Data.List.Base.du_length_304 v5))))))
+                                 MAlonzo.Code.Data.List.Base.d_downFrom_420
+                                 (coe MAlonzo.Code.Data.List.Base.du_length_284 v5))))))
            _ -> MAlonzo.RTE.mazUnreachableError)
 -- Tactic.ClauseBuilder._.constrToPatternTyped
 d_constrToPatternTyped_224 ::
@@ -548,7 +549,7 @@ du_constrToPatternTyped_224 v0 v1 v2 v3 v4 v5
                     MAlonzo.Code.Class.MonadReader.d_local_44 v2 () erased
                     (\ v7 ->
                        coe
-                         MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_243
+                         MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_245
                          (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
                          (coe MAlonzo.Code.Class.MonadTC.d_reconstruction_52 (coe v7))
                          (coe MAlonzo.Code.Class.MonadTC.d_noConstraints_54 (coe v7))
@@ -591,7 +592,7 @@ du_constrToPatternTyped_224 v0 v1 v2 v3 v4 v5
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.Reflection.C_con_244 (coe v4)
                                    (coe
-                                      MAlonzo.Code.Data.List.Base.du_zipWith_134
+                                      MAlonzo.Code.Data.List.Base.du_zipWith_104
                                       (coe
                                          (\ v10 v11 ->
                                             case coe v10 of
@@ -608,8 +609,8 @@ du_constrToPatternTyped_224 v0 v1 v2 v3 v4 v5
                                               _ -> MAlonzo.RTE.mazUnreachableError))
                                       (coe v8)
                                       (coe
-                                         MAlonzo.Code.Data.List.Base.d_downFrom_478
-                                         (coe MAlonzo.Code.Data.List.Base.du_length_304 v8))))))
+                                         MAlonzo.Code.Data.List.Base.d_downFrom_420
+                                         (coe MAlonzo.Code.Data.List.Base.du_length_284 v8))))))
                    _ -> MAlonzo.RTE.mazUnreachableError)))
 -- Tactic.ClauseBuilder._.constructorPatterns
 d_constructorPatterns_254 ::
@@ -682,7 +683,7 @@ du_constructorPatterns_254 v0 v1 v2 v3
                                                                       (coe
                                                                          MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22
                                                                          (coe
-                                                                            MAlonzo.Code.Data.List.Base.du_length_304
+                                                                            MAlonzo.Code.Data.List.Base.du_length_284
                                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                (coe
                                                                                   MAlonzo.Code.Reflection.Utils.d_viewTy_146
@@ -799,7 +800,7 @@ d_helper''_316 v0
                     (coe
                        C_MatchExpr_308
                        (coe
-                          MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                          MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3)
                              (coe
@@ -840,7 +841,7 @@ d_clauseExprToClauseInfo_334 v0
                       -> case coe v5 of
                            MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v6
                              -> coe
-                                  MAlonzo.Code.Data.List.Base.du__'43''43'__62
+                                  MAlonzo.Code.Data.List.Base.du__'43''43'__32
                                   (coe
                                      MAlonzo.Code.Data.List.Base.du_map_22
                                      (coe
@@ -853,7 +854,7 @@ d_clauseExprToClauseInfo_334 v0
                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                     (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_306 (coe v4))
+                                     (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4))
                                      (coe v6))
                                   (coe d_clauseExprToClauseInfo_334 (coe C_MatchExpr_308 (coe v3)))
                            _ -> MAlonzo.RTE.mazUnreachableError
@@ -906,7 +907,7 @@ du_helper_358 v0 v1
                                        -> coe
                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                             (coe
-                                               MAlonzo.Code.Data.List.Base.du__'43''43'__62 (coe v4)
+                                               MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v4)
                                                (coe v9))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -922,7 +923,7 @@ du_helper_358 v0 v1
                                                   (coe v11))
                                                (coe
                                                   addInt
-                                                  (coe MAlonzo.Code.Data.List.Base.du_length_304 v4)
+                                                  (coe MAlonzo.Code.Data.List.Base.du_length_284 v4)
                                                   (coe v12)))
                                      _ -> MAlonzo.RTE.mazUnreachableError
                               _ -> MAlonzo.RTE.mazUnreachableError)
@@ -989,7 +990,7 @@ d_clauseExprToPatLam_440 v0
 -- Tactic.ClauseBuilder.ContextMonad
 d_ContextMonad_450 a0 a1 = ()
 newtype T_ContextMonad_450
-  = C_ContextMonad'46'constructor_50899 (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  = C_ContextMonad'46'constructor_50049 (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
                                          () ->
                                          MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
                                          AgdaAny -> AgdaAny)
@@ -1000,7 +1001,7 @@ d_introPatternM_458 ::
   () -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny -> AgdaAny
 d_introPatternM_458 v0
   = case coe v0 of
-      C_ContextMonad'46'constructor_50899 v1 -> coe v1
+      C_ContextMonad'46'constructor_50049 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.ClauseBuilder.ContextMonad.extendContextM
 d_extendContextM_460 ::
@@ -1037,7 +1038,7 @@ d_Monad'45'Id_472
 d_ContextMonad'45'Id_474 :: T_ContextMonad_450
 d_ContextMonad'45'Id_474
   = coe
-      C_ContextMonad'46'constructor_50899 (coe (\ v0 v1 v2 v3 -> v3))
+      C_ContextMonad'46'constructor_50049 (coe (\ v0 v1 v2 v3 -> v3))
 -- Tactic.ClauseBuilder._.refineWithSingle
 d_refineWithSingle_496 ::
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
@@ -1242,10 +1243,10 @@ d_helper_532 v0 v1
                       (coe
                          (\ v5 -> coe MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22 v5 v0)))
                    (coe
-                      MAlonzo.Code.Data.List.Base.du_take_622
+                      MAlonzo.Code.Data.List.Base.du_take_546
                       (coe
                          MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22
-                         (coe MAlonzo.Code.Data.List.Base.du_length_304 v4) v0)
+                         (coe MAlonzo.Code.Data.List.Base.du_length_284 v4) v0)
                       (coe v4)))
          _ -> coe v2)
 -- Tactic.ClauseBuilder._.isProj
@@ -1337,7 +1338,7 @@ du_specializeType_564 v0 v1 v2 v3 v4 v5
                                                (coe du_isProj_562 (coe v9))
                                                (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                                                (coe
-                                                  MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                                                  MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                      (coe
@@ -1549,11 +1550,11 @@ du_specializeType_564 v0 v1 v2 v3 v4 v5
                                                                                                                                  (0 ::
                                                                                                                                     Integer))))
                                                                                                                       (coe
-                                                                                                                         MAlonzo.Code.Data.List.Base.du_take_622
+                                                                                                                         MAlonzo.Code.Data.List.Base.du_take_546
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Data.List.Base.du_length_304
+                                                                                                                               MAlonzo.Code.Data.List.Base.du_length_284
                                                                                                                                v27)
                                                                                                                             (0 ::
                                                                                                                                Integer))
@@ -1597,7 +1598,7 @@ du_ContextMonad'45'MonadTC_604 ::
   MAlonzo.Code.Class.MonadTC.T_MonadTC_88 -> T_ContextMonad_450
 du_ContextMonad'45'MonadTC_604 v0 v1 v2 v3
   = coe
-      C_ContextMonad'46'constructor_50899
+      C_ContextMonad'46'constructor_50049
       (coe
          (\ v4 v5 v6 v7 ->
             coe
@@ -1659,8 +1660,7 @@ du_matchExprM_630 v0 v1 v2
             (\ v3 ->
                coe
                  MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
-                 (coe MAlonzo.Code.Class.Monad.Core.du_Functor'45'M_50 (coe v0)) ()
-                 erased () erased
+                 (coe du___628 (coe v0)) () erased () erased
                  (\ v4 ->
                     coe
                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -1712,7 +1712,7 @@ du_helper''_646 v0 v1 v2
                     (coe
                        du_matchExprM_630 (coe v0) (coe v1)
                        (coe
-                          MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                          MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
                              (coe
@@ -1764,7 +1764,7 @@ du_singleMatchExpr_664 v0 v1 v2 v3
   = coe
       du_matchExprM_630 (coe v0) (coe v1)
       (coe
-         MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+         MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v3)))
 -- Tactic.ClauseBuilder.ClauseExprM.singleTelescopeMatchExpr
@@ -2029,9 +2029,9 @@ d_instanciatePattern_782 v0
       (coe
          d_clauseTelescope_752
          (coe
-            MAlonzo.Code.Data.Maybe.Base.d_from'45'just_64
+            MAlonzo.Code.Data.Maybe.Base.d_from'45'just_60
             (coe
-               MAlonzo.Code.Data.List.Base.du_head_608
+               MAlonzo.Code.Data.List.Base.du_head_532
                (coe
                   d_clauseExprToClauses_428
                   (coe
@@ -2049,7 +2049,7 @@ d_instanciatePatterns_786 v0 v1
   = case coe v0 of
       []
         -> coe
-             MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+             MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
              (coe
                 MAlonzo.Code.Agda.Builtin.Reflection.C_clause_272 (coe v0) (coe v0)
                 (coe v1))
@@ -2070,8 +2070,7 @@ d_ctxBindingClause_796 ::
   MAlonzo.Code.Class.MonadTC.T_TCEnv_32 -> AgdaAny
 d_ctxBindingClause_796 v0 v1
   = coe
-      MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-      MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+      MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased
       (coe
          du_ctxSinglePatterns_186
@@ -2084,22 +2083,17 @@ d_ctxBindingClause_796 v0 v1
          v1)
       (\ v2 ->
          coe
-           MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-           MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+           MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
            erased
            (coe
-              MAlonzo.Code.Class.Monad.Core.d_return_16
-              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased
+              MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
               (d_instanciatePatterns_786
-                 (coe MAlonzo.Code.Data.List.Base.du_reverse_536 v2) (coe v0)))
+                 (coe MAlonzo.Code.Data.List.Base.du_reverse_460 v2) (coe v0)))
            (\ v3 ->
               let v4
                     = coe
                         MAlonzo.Code.Class.MonadTC.du_error1_592
-                        (coe
-                           MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_122
-                           (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_32))
-                        (coe ())
+                        (coe MAlonzo.Code.Meta.d_iMonadError'45'TC_8) (coe ())
                         (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22)
                         (coe ("Bug in ctxBindingClause" :: Data.Text.Text)) in
               coe
@@ -2107,5 +2101,5 @@ d_ctxBindingClause_796 v0 v1
                    (:) v5 v6
                      -> coe
                           MAlonzo.Code.Class.Monad.Core.d_return_16
-                          MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased v5
+                          MAlonzo.Code.Meta.d_iMonad'45'TC_2 () erased v5 v1
                    _ -> coe v4 v1)))

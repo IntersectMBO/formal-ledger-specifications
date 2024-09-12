@@ -21,6 +21,7 @@ import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
+import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Monad.Core
 import qualified MAlonzo.Code.Class.Monad.Instances
@@ -37,6 +38,17 @@ import qualified MAlonzo.Code.Reflection.Tactic
 import qualified MAlonzo.Code.Reflection.Utils
 import qualified MAlonzo.Code.Reflection.Utils.TCI
 
+-- Tactic.Assumption._
+d___4 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
+  MAlonzo.Code.Class.Monad.Core.T_Monad_8 ->
+  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+d___4 ~v0 v1 = du___4 v1
+du___4 ::
+  MAlonzo.Code.Class.Monad.Core.T_Monad_8 ->
+  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+du___4 v0
+  = coe MAlonzo.Code.Class.Monad.Core.du_Functor'45'M_50 (coe v0)
 -- Tactic.Assumption.solve
 d_solve_6 ::
   MAlonzo.Code.Class.MonadTC.T_TCOptions_20 ->
@@ -46,97 +58,73 @@ d_solve_6 v0 v1
   = coe
       MAlonzo.Code.Reflection.Tactic.d_initTac_100 (coe v0)
       (coe
-         MAlonzo.Code.Class.MonadTC.d_runSpeculative_184
-         MAlonzo.Code.Reflection.TCI.d_MonadTC'45'TCI_156 () erased
-         (\ v2 ->
-            coe
-              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
-              erased
-              (coe
-                 MAlonzo.Code.Class.MonadReader.du_reader_50 ()
-                 MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_18
+         MAlonzo.Code.Reflection.TCI.du_runSpeculative_150 (coe ())
+         (coe
+            (\ v2 ->
+               coe
+                 MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
+                 erased
                  (coe
-                    MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_110
-                    (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
-                 () (\ v3 -> MAlonzo.Code.Class.MonadTC.d_goal_62 (coe v3)) v2)
-              (\ v3 ->
-                 let v4
-                       = coe
-                           MAlonzo.Code.Class.MonadTC.du_error1_592
-                           (coe
-                              MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_122
-                              (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_32))
-                           (coe ())
-                           (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22)
-                           (coe ("solve: Goal is not a term!" :: Data.Text.Text)) in
-                 coe
-                   (case coe v3 of
-                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v5
-                        -> coe
-                             MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-                             MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
-                             erased
-                             (coe
-                                MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
+                    MAlonzo.Code.Class.MonadReader.du_reader_50 ()
+                    MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_18
+                    (coe
+                       MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_110
+                       (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
+                    () (\ v3 -> MAlonzo.Code.Class.MonadTC.d_goal_62 (coe v3)) v2)
+                 (\ v3 ->
+                    let v4
+                          = coe
+                              MAlonzo.Code.Class.MonadTC.du_error1_592
+                              (coe MAlonzo.Code.Meta.d_iMonadError'45'TC_8) (coe ())
+                              (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22)
+                              (coe ("solve: Goal is not a term!" :: Data.Text.Text)) in
+                    coe
+                      (case coe v3 of
+                         MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v5
+                           -> coe
+                                MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
+                                MAlonzo.Code.Meta.d_iMonad'45'TC_2 () erased () erased
                                 (coe
-                                   MAlonzo.Code.Class.Monad.Core.du_Functor'45'M_50
+                                   MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
+                                   (coe du___4 (coe MAlonzo.Code.Meta.d_iMonad'45'TC_2)) () erased
+                                   () erased MAlonzo.Code.Reflection.Utils.d_findMetas_58
                                    (coe
-                                      MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_96
-                                      (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6)))
-                                () erased () erased MAlonzo.Code.Reflection.Utils.d_findMetas_58
-                                (coe
-                                   MAlonzo.Code.Class.MonadTC.d_checkType_150
-                                   MAlonzo.Code.Reflection.TCI.d_MonadTC'45'TCI_156 v1 v5)
-                                v2)
-                             (\ v6 ->
-                                coe
-                                  MAlonzo.Code.Data.Bool.Base.du_if_then_else__44
-                                  (coe MAlonzo.Code.Data.List.Base.du_null_282 (coe v6))
-                                  (coe
-                                     MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
+                                      MAlonzo.Code.Class.MonadTC.d_checkType_150
+                                      MAlonzo.Code.Meta.d_iMonadTC'45'TCI_4 v1 v5))
+                                (\ v6 ->
+                                   coe
+                                     MAlonzo.Code.Data.Bool.Base.du_if_then_else__44
+                                     (coe MAlonzo.Code.Data.List.Base.du_null_262 (coe v6))
                                      (coe
-                                        MAlonzo.Code.Class.Monad.Core.du_Functor'45'M_50
+                                        MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
+                                        (coe du___4 (coe MAlonzo.Code.Meta.d_iMonad'45'TC_2)) ()
+                                        erased () erased
+                                        (\ v7 ->
+                                           coe
+                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v7)
+                                             (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
                                         (coe
-                                           MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_96
+                                           MAlonzo.Code.Class.MonadTC.d_unify_142
+                                           MAlonzo.Code.Meta.d_iMonadTC'45'TCI_4 v5 v1))
+                                     (coe
+                                        MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
+                                        (coe du___4 (coe MAlonzo.Code.Meta.d_iMonad'45'TC_2)) ()
+                                        erased () erased
+                                        (\ v7 ->
+                                           coe
+                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v7)
+                                             (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8))
+                                        (coe
+                                           MAlonzo.Code.Class.MonadTC.du_error1_592
+                                           (coe MAlonzo.Code.Meta.d_iMonadError'45'TC_8) (coe ())
                                            (coe
-                                              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6)))
-                                     () erased () erased
-                                     (\ v7 ->
-                                        coe
-                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v7)
-                                          (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
-                                     (coe
-                                        MAlonzo.Code.Class.MonadTC.d_unify_142
-                                        MAlonzo.Code.Reflection.TCI.d_MonadTC'45'TCI_156 v5 v1))
-                                  (coe
-                                     MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
-                                     (coe
-                                        MAlonzo.Code.Class.Monad.Core.du_Functor'45'M_50
-                                        (coe
-                                           MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_96
+                                              MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22)
                                            (coe
-                                              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6)))
-                                     () erased () erased
-                                     (\ v7 ->
-                                        coe
-                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v7)
-                                          (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8))
-                                     (coe
-                                        MAlonzo.Code.Class.MonadTC.du_error1_592
-                                        (coe
-                                           MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_122
-                                           (coe
-                                              MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_32))
-                                        (coe ())
-                                        (coe
-                                           MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22)
-                                        (coe
-                                           ("Unsolved metavariables remaining!"
-                                            ::
-                                            Data.Text.Text))))
-                                  v2)
-                      _ -> coe v4 v2))))
+                                              ("Unsolved metavariables remaining!"
+                                               ::
+                                               Data.Text.Text)))))
+                                v2
+                         _ -> coe v4 v2)))))
 -- Tactic.Assumption.assumption'
 d_assumption''_20 ::
   MAlonzo.Code.Class.MonadTC.T_TCEnv_32 -> AgdaAny
@@ -154,8 +142,7 @@ d_assumption''_20
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+              MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
               erased
               (coe
                  MAlonzo.Code.Class.MonadTC.du_getContext_546
@@ -168,7 +155,7 @@ d_assumption''_20
                  v0)
               (\ v1 ->
                  coe
-                   MAlonzo.Code.Data.List.Base.du_foldl_256
+                   MAlonzo.Code.Data.List.Base.du_foldl_230
                    (\ v2 v3 ->
                       coe
                         MAlonzo.Code.Class.MonadError.d_catch_30
@@ -211,8 +198,8 @@ d_assumption''_20
                       (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22)
                       (coe ("No valid assumption!" :: Data.Text.Text)))
                    (coe
-                      MAlonzo.Code.Data.List.Base.d_downFrom_478
-                      (coe MAlonzo.Code.Data.List.Base.du_length_304 v1))
+                      MAlonzo.Code.Data.List.Base.d_downFrom_420
+                      (coe MAlonzo.Code.Data.List.Base.du_length_284 v1))
                    v0)))
 -- Tactic.Assumption._.assumption
 d_assumption_36 ::

@@ -63,7 +63,7 @@ du_Disjoint'8658'AllAll_72 ::
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
 du_Disjoint'8658'AllAll_72 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Data.List.Relation.Unary.All.du_map_166
+      MAlonzo.Code.Data.List.Relation.Unary.All.du_map_164
       (coe
          (\ v4 ->
             coe
@@ -71,7 +71,7 @@ du_Disjoint'8658'AllAll_72 v0 v1 v2 v3
               (coe v2)))
       (coe v1)
       (coe
-         MAlonzo.Code.Data.List.Relation.Unary.All.du_tabulate_270 v1
+         MAlonzo.Code.Data.List.Relation.Unary.All.du_tabulate_264 v1
          (\ v4 v5 v6 ->
             coe
               v3 v4

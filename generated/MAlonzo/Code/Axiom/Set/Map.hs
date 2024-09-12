@@ -141,7 +141,7 @@ d_left'45'unique_462 ::
 d_left'45'unique_462 = erased
 -- Axiom.Set.Map.IsLeftUnique
 d_IsLeftUnique_478 a0 a1 a2 a3 = ()
-data T_IsLeftUnique_478 = C_IsLeftUnique'46'constructor_3211
+data T_IsLeftUnique_478 = C_IsLeftUnique'46'constructor_3219
 -- Axiom.Set.Map.IsLeftUnique.isLeftUnique
 d_isLeftUnique_484 ::
   T_IsLeftUnique_478 ->
@@ -284,7 +284,7 @@ du_fromList'7504'_568 v0 v1 v2
       (coe
          MAlonzo.Code.Axiom.Set.du_fromList_416 (coe v0)
          (coe
-            MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+            MAlonzo.Code.Data.List.Base.du_deduplicate_898
             (coe
                (\ v3 v4 ->
                   coe
@@ -302,7 +302,7 @@ du_fromList'7504'_568 v0 v1 v2
                     MAlonzo.Code.Axiom.Set.Properties.du_'8712''45'fromList'8315'_226
                     (coe v0)
                     (coe
-                       MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+                       MAlonzo.Code.Data.List.Base.du_deduplicate_898
                        (coe
                           MAlonzo.Code.Relation.Binary.Construct.On.du_decidable_102
                           (coe (\ v6 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v6)))
@@ -313,7 +313,7 @@ du_fromList'7504'_568 v0 v1 v2
                  (coe
                     MAlonzo.Code.Data.List.Ext.Properties.du_AllPairs'8658''8801''8744'R'8744'R'7506''7510'_78
                     (coe
-                       MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+                       MAlonzo.Code.Data.List.Base.du_deduplicate_898
                        (coe
                           MAlonzo.Code.Relation.Binary.Construct.On.du_decidable_102
                           (coe (\ v6 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v6)))
@@ -332,7 +332,7 @@ du_fromList'7504'_568 v0 v1 v2
                     MAlonzo.Code.Axiom.Set.Properties.du_'8712''45'fromList'8315'_226
                     (coe v0)
                     (coe
-                       MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+                       MAlonzo.Code.Data.List.Base.du_deduplicate_898
                        (coe
                           MAlonzo.Code.Relation.Binary.Construct.On.du_decidable_102
                           (coe (\ v6 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v6)))
@@ -839,7 +839,7 @@ du_disjoint'45''8746''737''45''8746'_898 v0 v1 v2 v3 v4
          MAlonzo.Code.Axiom.Set.Properties.du_'8801''7497''8660''8801''7497'''_244)
       (\ v5 ->
          coe
-           MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+           MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
            (coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
               (coe
@@ -2335,20 +2335,22 @@ du__'8315''185'__1602 v0 v1 v2 v3
             du__'8739''94'__1586 (coe v0) (coe v1) (coe v2)
             (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_440 v0 erased v3)))
 -- Axiom.Set.Map..generalizedField-A
-d_'46'generalizedField'45'A_131749 :: T_GeneralizeTel_131757 -> ()
-d_'46'generalizedField'45'A_131749 = erased
+d_'46'generalizedField'45'A_130463 :: T_GeneralizeTel_130471 -> ()
+d_'46'generalizedField'45'A_130463 = erased
 -- Axiom.Set.Map..generalizedField-B
-d_'46'generalizedField'45'B_131751 :: T_GeneralizeTel_131757 -> ()
-d_'46'generalizedField'45'B_131751 = erased
+d_'46'generalizedField'45'B_130465 :: T_GeneralizeTel_130471 -> ()
+d_'46'generalizedField'45'B_130465 = erased
 -- Axiom.Set.Map..generalizedField-B'
-d_'46'generalizedField'45'B''_131753 ::
-  T_GeneralizeTel_131757 -> ()
-d_'46'generalizedField'45'B''_131753 = erased
+d_'46'generalizedField'45'B''_130467 ::
+  T_GeneralizeTel_130471 -> ()
+d_'46'generalizedField'45'B''_130467 = erased
 -- Axiom.Set.Map..generalizedField-R
-d_'46'generalizedField'45'R_131755 ::
-  T_GeneralizeTel_131757 -> AgdaAny
-d_'46'generalizedField'45'R_131755
-  = MAlonzo.RTE.mazUnreachableError
+d_'46'generalizedField'45'R_130469 ::
+  T_GeneralizeTel_130471 -> AgdaAny
+d_'46'generalizedField'45'R_130469 v0
+  = case coe v0 of
+      C_mkGeneralizeTel_130473 v4 -> coe v4
+      _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.Map.GeneralizeTel
-d_GeneralizeTel_131757 a0 = ()
-newtype T_GeneralizeTel_131757 = C_mkGeneralizeTel_131759 AgdaAny
+d_GeneralizeTel_130471 a0 = ()
+newtype T_GeneralizeTel_130471 = C_mkGeneralizeTel_130473 AgdaAny

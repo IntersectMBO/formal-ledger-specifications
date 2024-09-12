@@ -54,7 +54,7 @@ d_x'8805'y'8658'x'8851'y'8776'y_126 v0
 -- Algebra.Construct.NaturalChoice.Base._.MaxOperator
 d_MaxOperator_128 a0 a1 a2 a3 = ()
 data T_MaxOperator_128
-  = C_MaxOperator'46'constructor_1659 (AgdaAny -> AgdaAny -> AgdaAny)
+  = C_MaxOperator'46'constructor_1665 (AgdaAny -> AgdaAny -> AgdaAny)
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Construct.NaturalChoice.Base._.MaxOperator._⊔_
@@ -62,21 +62,21 @@ d__'8852'__144 ::
   T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8852'__144 v0
   = case coe v0 of
-      C_MaxOperator'46'constructor_1659 v1 v2 v3 -> coe v1
+      C_MaxOperator'46'constructor_1665 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base._.MaxOperator.x≤y⇒x⊔y≈y
 d_x'8804'y'8658'x'8852'y'8776'y_150 ::
   T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_x'8804'y'8658'x'8852'y'8776'y_150 v0
   = case coe v0 of
-      C_MaxOperator'46'constructor_1659 v1 v2 v3 -> coe v2
+      C_MaxOperator'46'constructor_1665 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base._.MaxOperator.x≥y⇒x⊔y≈x
 d_x'8805'y'8658'x'8852'y'8776'x_156 ::
   T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_x'8805'y'8658'x'8852'y'8776'x_156 v0
   = case coe v0 of
-      C_MaxOperator'46'constructor_1659 v1 v2 v3 -> coe v3
+      C_MaxOperator'46'constructor_1665 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base.MinOp⇒MaxOp
 d_MinOp'8658'MaxOp_158 ::
@@ -90,7 +90,7 @@ d_MinOp'8658'MaxOp_158 ~v0 ~v1 ~v2 ~v3 v4
 du_MinOp'8658'MaxOp_158 :: T_MinOperator_98 -> T_MaxOperator_128
 du_MinOp'8658'MaxOp_158 v0
   = coe
-      C_MaxOperator'46'constructor_1659 (coe d__'8851'__114 (coe v0))
+      C_MaxOperator'46'constructor_1665 (coe d__'8851'__114 (coe v0))
       (coe d_x'8805'y'8658'x'8851'y'8776'y_126 (coe v0))
       (coe d_x'8804'y'8658'x'8851'y'8776'x_120 (coe v0))
 -- Algebra.Construct.NaturalChoice.Base._._._⊓_

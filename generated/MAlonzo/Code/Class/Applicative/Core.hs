@@ -378,14 +378,14 @@ du_zipWithA_80 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
 -- Class.Applicative.Core.Applicative₀
 d_Applicative'8320'_84 a0 = ()
 data T_Applicative'8320'_84
-  = C_Applicative'8320''46'constructor_7569 T_Applicative_8
+  = C_Applicative'8320''46'constructor_7815 T_Applicative_8
                                             (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
                                              () -> AgdaAny)
 -- Class.Applicative.Core.Applicative₀.super
 d_super_92 :: T_Applicative'8320'_84 -> T_Applicative_8
 d_super_92 v0
   = case coe v0 of
-      C_Applicative'8320''46'constructor_7569 v1 v2 -> coe v1
+      C_Applicative'8320''46'constructor_7815 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Applicative.Core.Applicative₀.ε₀
 d_ε'8320'_94 ::
@@ -393,7 +393,7 @@ d_ε'8320'_94 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> AgdaAny
 d_ε'8320'_94 v0
   = case coe v0 of
-      C_Applicative'8320''46'constructor_7569 v1 v2 -> coe v2
+      C_Applicative'8320''46'constructor_7815 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Applicative.Core._.super
 d_super_98 :: T_Applicative'8320'_84 -> T_Applicative_8
@@ -406,7 +406,7 @@ d_ε'8320'_100 v0 = coe d_ε'8320'_94 (coe v0)
 -- Class.Applicative.Core.Alternative
 d_Alternative_104 a0 = ()
 newtype T_Alternative_104
-  = C_Alternative'46'constructor_7745 (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  = C_Alternative'46'constructor_8001 (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
                                        () -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Class.Applicative.Core.Alternative._<|>_
 d__'60''124''62'__110 ::
@@ -415,7 +415,7 @@ d__'60''124''62'__110 ::
   () -> AgdaAny -> AgdaAny -> AgdaAny
 d__'60''124''62'__110 v0
   = case coe v0 of
-      C_Alternative'46'constructor_7745 v1 -> coe v1
+      C_Alternative'46'constructor_8001 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Applicative.Core._._<|>_
 d__'60''124''62'__114 ::
@@ -451,6 +451,6 @@ du_'8899'__118 ::
   T_Applicative'8320'_84 -> T_Alternative_104 -> [AgdaAny] -> AgdaAny
 du_'8899'__118 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.List.Base.du_foldr_242
+      MAlonzo.Code.Data.List.Base.du_foldr_216
       (coe d__'60''124''62'__110 v2 v0 erased)
       (coe d_ε'8320'_94 v1 v0 erased)

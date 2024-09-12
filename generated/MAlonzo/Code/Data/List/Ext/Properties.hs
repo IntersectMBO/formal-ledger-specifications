@@ -129,7 +129,7 @@ du_AllPairs'8658''8801''8744'R'8744'R'7506''7510'_78 v0 v1 v2 v3
                                   (coe
                                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                                      (coe
-                                        MAlonzo.Code.Data.List.Relation.Unary.All.du_lookup_440 v9
+                                        MAlonzo.Code.Data.List.Relation.Unary.All.du_lookup_434 v9
                                         v6 v15))
                            _ -> MAlonzo.RTE.mazUnreachableError
                     MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54 v12
@@ -140,7 +140,7 @@ du_AllPairs'8658''8801''8744'R'8744'R'7506''7510'_78 v0 v1 v2 v3
                                   (coe
                                      MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
                                      (coe
-                                        MAlonzo.Code.Data.List.Relation.Unary.All.du_lookup_440 v9
+                                        MAlonzo.Code.Data.List.Relation.Unary.All.du_lookup_434 v9
                                         v6 v12))
                            MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54 v15
                              -> coe
@@ -160,7 +160,7 @@ du_deduplicate'8801'_164 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> [AgdaAny] -> [AgdaAny]
 du_deduplicate'8801'_164 v0
   = coe
-      MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+      MAlonzo.Code.Data.List.Base.du_deduplicate_898
       (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
 -- Data.List.Ext.Properties._.disj-on-dedup
 d_disj'45'on'45'dedup_170 ::
@@ -191,13 +191,13 @@ du_'8712''45'dedup_178 ::
   AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_'8712''45'dedup_178 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe
-         MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'deduplicate'8314'_584
+         MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'deduplicate'8314'_560
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0)) (coe v1)
          (coe v2))
       (coe
-         MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'deduplicate'8315'_558
+         MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'deduplicate'8315'_534
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
          (coe v1))
 -- Data.List.Ext.Properties._.dedup-++-↭
@@ -220,20 +220,20 @@ du_dedup'45''43''43''45''8621'_184 ::
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__16
 du_dedup'45''43''43''45''8621'_184 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.List.Relation.Binary.BagAndSetEquality.du_'8764'bag'8658''8621'_1456
+      MAlonzo.Code.Data.List.Relation.Binary.BagAndSetEquality.du_'8764'bag'8658''8621'_1394
       (coe
-         MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+         MAlonzo.Code.Data.List.Base.du_deduplicate_898
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
          (coe
-            MAlonzo.Code.Data.List.Base.du__'43''43'__62 (coe v1) (coe v2)))
+            MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v1) (coe v2)))
       (coe
-         MAlonzo.Code.Data.List.Base.du__'43''43'__62
+         MAlonzo.Code.Data.List.Base.du__'43''43'__32
          (coe
-            MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+            MAlonzo.Code.Data.List.Base.du_deduplicate_898
             (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
             (coe v1))
          (coe
-            MAlonzo.Code.Data.List.Base.du_deduplicate_1000
+            MAlonzo.Code.Data.List.Base.du_deduplicate_898
             (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
             (coe v2)))
       (coe
@@ -294,7 +294,7 @@ du_dedup'45''43''43''45''8621'_184 v0 v1 v2
                     (coe
                        du_'8712''45'dedup_178 (coe v0)
                        (coe
-                          MAlonzo.Code.Data.List.Base.du__'43''43'__62 (coe v1) (coe v2))
+                          MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v1) (coe v2))
                        (coe v3))))))
 -- Data.List.Ext.Properties._._.helper
 d_helper_202 ::
@@ -316,7 +316,7 @@ du_helper_202 ::
   [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_helper_202 v0 v1
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe
          MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8315'_214
          v0 v1)
@@ -336,11 +336,11 @@ d_maxlen_218 ~v0 ~v1 v2 = du_maxlen_218 v2
 du_maxlen_218 :: [[AgdaAny]] -> Integer
 du_maxlen_218 v0
   = coe
-      MAlonzo.Code.Data.List.Base.du_foldr_242
+      MAlonzo.Code.Data.List.Base.du_foldr_216
       (coe
          (\ v1 ->
             MAlonzo.Code.Data.Nat.Base.d__'8852'__204
-              (coe MAlonzo.Code.Data.List.Base.du_length_304 v1)))
+              (coe MAlonzo.Code.Data.List.Base.du_length_284 v1)))
       (coe (0 :: Integer)) (coe v0)
 -- Data.List.Ext.Properties._.maxlen≤∷
 d_maxlen'8804''8759'_230 ::
@@ -358,20 +358,20 @@ du_maxlen'8804''8759'_230 v0 v1
       [] -> coe MAlonzo.Code.Data.Nat.Base.C_z'8804'n_26
       (:) v2 v3
         -> let v4
-                 = MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalPreorder_2692 in
+                 = MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalPreorder_2822 in
            coe
              (let v5
-                    = MAlonzo.Code.Data.Nat.Properties.d_'8852''45'operator_4312 in
+                    = MAlonzo.Code.Data.Nat.Properties.d_'8852''45'operator_4440 in
               coe
                 (coe
-                   MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'y_2704
+                   MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'y_2834
                    (coe
                       MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_746
                       (coe v4))
                    (coe
                       MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.du_MaxOp'8658'MinOp_174
                       (coe v5))
-                   (coe MAlonzo.Code.Data.List.Base.du_length_304 v1)
+                   (coe MAlonzo.Code.Data.List.Base.du_length_284 v1)
                    (coe du_maxlen_218 (coe v0))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Ext.Properties._.∈-maxlen-≤
@@ -394,24 +394,24 @@ du_'8712''45'maxlen'45''8804'_244 v0 v1
         -> case coe v1 of
              MAlonzo.Code.Data.List.Relation.Unary.Any.C_here_46 v6
                -> let v7
-                        = MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalPreorder_2692 in
+                        = MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalPreorder_2822 in
                   coe
                     (let v8
-                           = MAlonzo.Code.Data.Nat.Properties.d_'8852''45'operator_4312 in
+                           = MAlonzo.Code.Data.Nat.Properties.d_'8852''45'operator_4440 in
                      coe
                        (coe
-                          MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'x_2678
+                          MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'x_2808
                           (coe
                              MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_746
                              (coe v7))
                           (coe
                              MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.du_MaxOp'8658'MinOp_174
                              (coe v8))
-                          (coe MAlonzo.Code.Data.List.Base.du_length_304 v2)
+                          (coe MAlonzo.Code.Data.List.Base.du_length_284 v2)
                           (coe du_maxlen_218 (coe v3))))
              MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54 v6
                -> coe
-                    MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2654
+                    MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2784
                     (coe du_'8712''45'maxlen'45''8804'_244 (coe v3) (coe v6))
                     (coe du_maxlen'8804''8759'_230 (coe v3) (coe v2))
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -680,11 +680,11 @@ du_concatMap'45'decomp_450 v0 v1 v2 v3 v4
   = case coe v2 of
       []
         -> coe
-             MAlonzo.Code.Function.Bundles.du_mk'8660'_2296 erased
+             MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
              (coe (\ v5 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14))
       (:) v5 v6
         -> coe
-             MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+             MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
              (coe
                 du_i_470 (coe v0) (coe v1) (coe v5) (coe v6) (coe v3) (coe v4))
              (coe
@@ -716,7 +716,7 @@ du_i_470 ::
 du_i_470 v0 v1 v2 v3 v4 v5 v6
   = let v7
           = coe
-              MAlonzo.Code.Data.List.Relation.Unary.Any.Properties.du_'43''43''8315'_848
+              MAlonzo.Code.Data.List.Relation.Unary.Any.Properties.du_'43''43''8315'_868
               (coe v5 v2) (coe v6) in
     coe
       (case coe v7 of
@@ -783,8 +783,8 @@ du_ii_502 v0 v1 v2 v3 v4 v5 v6
                            MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'xs'43''43'ys_242
                            (coe v5 v7)
                            (coe
-                              MAlonzo.Code.Data.List.Base.du_foldr_242
-                              (coe MAlonzo.Code.Data.List.Base.du__'43''43'__62)
+                              MAlonzo.Code.Data.List.Base.du_foldr_216
+                              (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
                               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                               (coe MAlonzo.Code.Data.List.Base.du_map_22 (coe v5) (coe v3)))
                            v4 v10
@@ -792,7 +792,7 @@ du_ii_502 v0 v1 v2 v3 v4 v5 v6
                       -> coe
                            MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'ys'43''43'xs_248
                            (coe
-                              MAlonzo.Code.Data.List.Base.du_concatMap_272 (coe v5) (coe v3))
+                              MAlonzo.Code.Data.List.Base.du_concatMap_246 (coe v5) (coe v3))
                            (coe v5 v2) v4
                            (coe
                               MAlonzo.Code.Function.Bundles.d_from_1726
@@ -1056,8 +1056,10 @@ du_insert'45'decomp_656 v0 v1 v2 v3 v4
                        (coe
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v8)
                           (coe
-                             du_insert'8838''8759'_610 (coe v0) (coe v6) (coe v2) (coe v3)
-                             (coe v9)))
+                             (\ v10 ->
+                                coe
+                                  du_insert'8838''8759'_610 (coe v0) (coe v6) (coe v2) (coe v3)
+                                  (coe v9) (coe v10))))
                 _ -> MAlonzo.RTE.mazUnreachableError
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Data.List.Ext.Properties._.insert-decomp≡
@@ -1152,7 +1154,7 @@ du_'91''93''8712'subpermutations_720 v0
              MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'ys'43''43'xs_248
              (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2))
              (coe
-                MAlonzo.Code.Data.List.Base.du_concatMap_272
+                MAlonzo.Code.Data.List.Base.du_concatMap_246
                 (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v1))
                 (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2)))
              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
@@ -1224,8 +1226,8 @@ du_'8712''45'insert'45'cancel'737'_756 v0 v1 v2 v3 v4
           = coe
               MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8315'_214
               (coe
-                 MAlonzo.Code.Data.List.Base.du_foldr_242
-                 (coe MAlonzo.Code.Data.List.Base.du__'43''43'__62)
+                 MAlonzo.Code.Data.List.Base.du_foldr_216
+                 (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                  (coe
                     MAlonzo.Code.Data.List.Base.du_map_22
@@ -1288,7 +1290,7 @@ du_'8712'insert'8594''8759''8712'insert''_800 v0 v1 v2 v3 v4 v5 v6
                                       = coe
                                           MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8315'_214
                                           (coe
-                                             MAlonzo.Code.Data.List.Base.du_concatMap_272
+                                             MAlonzo.Code.Data.List.Base.du_concatMap_246
                                              (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v7))
                                              (coe
                                                 MAlonzo.Code.Data.List.Ext.du_subpermutations_40
@@ -1343,10 +1345,13 @@ du_'8712'insert'8594''8759''8712'insert''_800 v0 v1 v2 v3 v4 v5 v6
                                                                    (coe
                                                                       MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8314''737'_202
                                                                       (coe
-                                                                         MAlonzo.Code.Data.List.Base.du_concatMap_272
+                                                                         MAlonzo.Code.Data.List.Base.du_concatMap_246
                                                                          (coe
-                                                                            MAlonzo.Code.Data.List.Ext.du_insert_28
-                                                                            (coe v7))
+                                                                            (\ v23 ->
+                                                                               coe
+                                                                                 MAlonzo.Code.Data.List.Ext.du_insert_28
+                                                                                 (coe v7)
+                                                                                 (coe v23)))
                                                                          (coe
                                                                             MAlonzo.Code.Data.List.Ext.du_subpermutations_40
                                                                             (coe v8)))
@@ -1362,8 +1367,11 @@ du_'8712'insert'8594''8759''8712'insert''_800 v0 v1 v2 v3 v4 v5 v6
                                                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                                (coe v7) (coe v12))
                                                                             (coe
-                                                                               MAlonzo.Code.Data.List.Ext.du_insert_28
-                                                                               (coe v7)))
+                                                                               (\ v23 ->
+                                                                                  coe
+                                                                                    MAlonzo.Code.Data.List.Ext.du_insert_28
+                                                                                    (coe v7)
+                                                                                    (coe v23))))
                                                                          (coe
                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                             (coe v12)
@@ -1398,7 +1406,7 @@ du_'8712'insert'8594''8759''8712'insert''_800 v0 v1 v2 v3 v4 v5 v6
                                   (coe
                                      MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8315'_214
                                      (coe
-                                        MAlonzo.Code.Data.List.Base.du_concatMap_272
+                                        MAlonzo.Code.Data.List.Base.du_concatMap_246
                                         (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v7))
                                         (coe
                                            MAlonzo.Code.Data.List.Ext.du_subpermutations_40
@@ -1475,8 +1483,8 @@ du_'46'extendedlambda3_864 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                  (coe
                                     MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8314''691'_208
                                     (coe
-                                       MAlonzo.Code.Data.List.Base.du_foldr_242
-                                       (coe MAlonzo.Code.Data.List.Base.du__'43''43'__62)
+                                       MAlonzo.Code.Data.List.Base.du_foldr_216
+                                       (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                                        (coe
                                           MAlonzo.Code.Data.List.Base.du_map_22
@@ -1538,14 +1546,16 @@ du_'46'extendedlambda4_868 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v1) (coe v2)))
                    (coe
                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v5) (coe v3))
-                   (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v4)))
+                   (coe
+                      (\ v12 ->
+                         coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v4) (coe v12))))
                 (coe
                    MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8314''737'_202
                    (coe
-                      MAlonzo.Code.Data.List.Base.du_concatMap_272
+                      MAlonzo.Code.Data.List.Base.du_concatMap_246
                       (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v4))
                       (coe
-                         MAlonzo.Code.Data.List.Base.du_concatMap_272
+                         MAlonzo.Code.Data.List.Base.du_concatMap_246
                          (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v1))
                          (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2))))
                    (coe
@@ -1553,7 +1563,7 @@ du_'46'extendedlambda4_868 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                       (coe
                          du_concatMap'45'decomp_450 (coe v0) (coe v0)
                          (coe
-                            MAlonzo.Code.Data.List.Base.du_concatMap_272
+                            MAlonzo.Code.Data.List.Base.du_concatMap_246
                             (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v1))
                             (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2)))
                          (coe
@@ -1572,7 +1582,11 @@ du_'46'extendedlambda4_868 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                   (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2))
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v5) (coe v7))
-                                  (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v1)))
+                                  (coe
+                                     (\ v12 ->
+                                        coe
+                                          MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v1)
+                                          (coe v12))))
                                (coe
                                   du_'8712'insert'8594''8759''8712'insert''_800 (coe v0) (coe v2)
                                   (coe v7) (coe v1) (coe v5) (coe v6) (coe v9)))
@@ -1657,7 +1671,7 @@ du_'8712''45'subperm'45'addhead_920 v0 v1 v2 v3 v4 v5
                -> coe
                     MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'xs'43''43'ys_242
                     (coe
-                       MAlonzo.Code.Data.List.Base.du_concatMap_272
+                       MAlonzo.Code.Data.List.Base.du_concatMap_246
                        (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v6))
                        (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v7)))
                     (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v7))
@@ -1687,8 +1701,8 @@ du_'8712''45'subperm'45'addhead_920 v0 v1 v2 v3 v4 v5
                     (coe
                        MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8315'_214
                        (coe
-                          MAlonzo.Code.Data.List.Base.du_foldr_242
-                          (coe MAlonzo.Code.Data.List.Base.du__'43''43'__62)
+                          MAlonzo.Code.Data.List.Base.du_foldr_216
+                          (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                           (coe
                              MAlonzo.Code.Data.List.Base.du_map_22
@@ -1728,7 +1742,7 @@ du_'46'extendedlambda7_934 v0 v1 v2 v3 v4 v5 v6
         -> coe
              MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'xs'43''43'ys_242
              (coe
-                MAlonzo.Code.Data.List.Base.du_concatMap_272
+                MAlonzo.Code.Data.List.Base.du_concatMap_246
                 (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v1))
                 (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2)))
              (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2))
@@ -1742,8 +1756,8 @@ du_'46'extendedlambda7_934 v0 v1 v2 v3 v4 v5 v6
              MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'ys'43''43'xs_248
              (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2))
              (coe
-                MAlonzo.Code.Data.List.Base.du_foldr_242
-                (coe MAlonzo.Code.Data.List.Base.du__'43''43'__62)
+                MAlonzo.Code.Data.List.Base.du_foldr_216
+                (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
                 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                 (coe
                    MAlonzo.Code.Data.List.Base.du_map_22
@@ -1772,7 +1786,7 @@ du_sublists'8871'P_952 ::
   [AgdaAny] -> [[AgdaAny]]
 du_sublists'8871'P_952 v0 v1
   = coe
-      MAlonzo.Code.Data.List.Base.du_filter_740 (coe v0)
+      MAlonzo.Code.Data.List.Base.du_filter_664 (coe v0)
       (coe MAlonzo.Code.Data.List.Ext.du_sublists_20 (coe v1))
 -- Data.List.Ext.Properties._.maxsublists⊧P
 d_maxsublists'8871'P_958 ::
@@ -1791,11 +1805,11 @@ du_maxsublists'8871'P_958 ::
   [AgdaAny] -> [[AgdaAny]]
 du_maxsublists'8871'P_958 v0 v1
   = coe
-      MAlonzo.Code.Data.List.Base.du_filter_740
+      MAlonzo.Code.Data.List.Base.du_filter_664
       (coe
          (\ v2 ->
-            MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558
-              (coe MAlonzo.Code.Data.List.Base.du_length_304 v2)
+            MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688
+              (coe MAlonzo.Code.Data.List.Base.du_length_284 v2)
               (coe
                  du_maxlen_218 (coe du_sublists'8871'P_952 (coe v0) (coe v1)))))
       (coe du_sublists'8871'P_952 (coe v0) (coe v1))
@@ -1836,8 +1850,8 @@ du_uniqueSubset'8594'subperm_978 v0 v1 v2 v3 v4
                     MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'ys'43''43'xs_248
                     (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v6))
                     (coe
-                       MAlonzo.Code.Data.List.Base.du_foldr_242
-                       (coe MAlonzo.Code.Data.List.Base.du__'43''43'__62) (coe v2)
+                       MAlonzo.Code.Data.List.Base.du_foldr_216
+                       (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32) (coe v2)
                        (coe
                           MAlonzo.Code.Data.List.Base.du_map_22
                           (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v5))
@@ -1886,7 +1900,7 @@ du_'46'extendedlambda0_990 v0 v1 v2 v3 v4 v5 v6 v7
         -> coe
              MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'xs'43''43'ys_242
              (coe
-                MAlonzo.Code.Data.List.Base.du_concatMap_272
+                MAlonzo.Code.Data.List.Base.du_concatMap_246
                 (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v1))
                 (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2)))
              (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2))
@@ -1912,21 +1926,25 @@ du_'46'extendedlambda0_990 v0 v1 v2 v3 v4 v5 v6 v7
                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v1) (coe v4))
                             (1 :: Integer) v5)
                          (coe
-                            du_'8838'y'8759''8743'y'8713''8594''8838'ys_346
-                            (coe
-                               (\ v11 v12 ->
-                                  coe
-                                    v6 v11
-                                    (coe
-                                       MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54 v12)))))
+                            (\ v11 ->
+                               coe
+                                 du_'8838'y'8759''8743'y'8713''8594''8838'ys_346
+                                 (coe
+                                    (\ v12 v13 ->
+                                       coe
+                                         v6 v12
+                                         (coe
+                                            MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54
+                                            v13)))
+                                 (coe v11))))
                       (coe du_'8759''8712'insert_526 (coe v4)))))
       MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54 v10
         -> let v11
                  = coe
                      MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8315'_214
                      (coe
-                        MAlonzo.Code.Data.List.Base.du_foldr_242
-                        (coe MAlonzo.Code.Data.List.Base.du__'43''43'__62)
+                        MAlonzo.Code.Data.List.Base.du_foldr_216
+                        (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                         (coe
                            MAlonzo.Code.Data.List.Base.du_map_22
@@ -1955,7 +1973,7 @@ du_'46'extendedlambda0_990 v0 v1 v2 v3 v4 v5 v6 v7
                   -> coe
                        MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'xs'43''43'ys_242
                        (coe
-                          MAlonzo.Code.Data.List.Base.du_concatMap_272
+                          MAlonzo.Code.Data.List.Base.du_concatMap_246
                           (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v1))
                           (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2)))
                        (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2))
@@ -1969,8 +1987,8 @@ du_'46'extendedlambda0_990 v0 v1 v2 v3 v4 v5 v6 v7
                        MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_xs'8838'ys'43''43'xs_248
                        (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v2))
                        (coe
-                          MAlonzo.Code.Data.List.Base.du_foldr_242
-                          (coe MAlonzo.Code.Data.List.Base.du__'43''43'__62)
+                          MAlonzo.Code.Data.List.Base.du_foldr_216
+                          (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                           (coe
                              MAlonzo.Code.Data.List.Base.du_map_22
@@ -2012,7 +2030,7 @@ du_subperm'8594'subset_1006 v0 v1 v2 v3 v4 v5
              (coe
                 MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8315'_214
                 (coe
-                   MAlonzo.Code.Data.List.Base.du_concatMap_272
+                   MAlonzo.Code.Data.List.Base.du_concatMap_246
                    (coe MAlonzo.Code.Data.List.Ext.du_insert_28 (coe v6))
                    (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v7)))
                 (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v7)) v3)
@@ -2237,7 +2255,7 @@ du_'8707'uniqueSubset'8660''8707'uniqueSubperm_1104 ::
   [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_'8707'uniqueSubset'8660''8707'uniqueSubperm_1104 v0 v1
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe
          du_'8707'uniqueSubset'8594''8707'uniqueSubperm_1076 (coe v0)
          (coe v1))

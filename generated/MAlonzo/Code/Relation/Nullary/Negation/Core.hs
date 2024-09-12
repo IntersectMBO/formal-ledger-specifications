@@ -43,8 +43,8 @@ d__'172''45''8846'__36 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
 d__'172''45''8846'__36 = erased
--- Relation.Nullary.Negation.Core.contradiction
-d_contradiction_38 ::
+-- Relation.Nullary.Negation.Core.contradiction-irr
+d_contradiction'45'irr_38 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -52,12 +52,27 @@ d_contradiction_38 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny
-d_contradiction_38 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_contradiction_38
-du_contradiction_38 :: AgdaAny
-du_contradiction_38
-  = coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14
+d_contradiction'45'irr_38 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_contradiction'45'irr_38
+du_contradiction'45'irr_38 :: AgdaAny
+du_contradiction'45'irr_38
+  = coe MAlonzo.Code.Data.Empty.du_'8869''45'elim'45'irr_20
+-- Relation.Nullary.Negation.Core.contradiction
+d_contradiction_44 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  AgdaAny ->
+  (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  AgdaAny
+d_contradiction_44 ~v0 ~v1 ~v2 ~v3 ~v4 = du_contradiction_44
+du_contradiction_44 ::
+  (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  AgdaAny
+du_contradiction_44 v0 = coe du_contradiction'45'irr_38
 -- Relation.Nullary.Negation.Core.contradiction₂
-d_contradiction'8322'_44 ::
+d_contradiction'8322'_48 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -68,14 +83,14 @@ d_contradiction'8322'_44 ::
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny
-d_contradiction'8322'_44 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8
-  = du_contradiction'8322'_44 v6
-du_contradiction'8322'_44 ::
+d_contradiction'8322'_48 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8
+  = du_contradiction'8322'_48 v6
+du_contradiction'8322'_48 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> AgdaAny
-du_contradiction'8322'_44 v0
-  = coe seq (coe v0) (coe du_contradiction_38)
+du_contradiction'8322'_48 v0
+  = coe seq (coe v0) (coe du_contradiction_44 erased)
 -- Relation.Nullary.Negation.Core.contraposition
-d_contraposition_58 ::
+d_contraposition_62 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -83,9 +98,9 @@ d_contraposition_58 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_contraposition_58 = erased
+d_contraposition_62 = erased
 -- Relation.Nullary.Negation.Core.stable
-d_stable_66 ::
+d_stable_70 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   ((((AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
@@ -93,16 +108,16 @@ d_stable_66 ::
     AgdaAny) ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_stable_66 = erased
+d_stable_70 = erased
 -- Relation.Nullary.Negation.Core.negated-stable
-d_negated'45'stable_72 ::
+d_negated'45'stable_74 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (((AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
     MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_negated'45'stable_72 = erased
+d_negated'45'stable_74 = erased
 -- Relation.Nullary.Negation.Core.¬¬-map
 d_'172''172''45'map_80 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

@@ -37,5 +37,5 @@ du_'172''35''45'isEquivalence_20 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
 du_'172''35''45'isEquivalence_20
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_743
+      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
       erased erased erased

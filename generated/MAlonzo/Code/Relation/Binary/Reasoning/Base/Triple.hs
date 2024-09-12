@@ -500,7 +500,7 @@ du_strictRelation_202 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.T_SubRelation_60
 du_strictRelation_202
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.C_SubRelation'46'constructor_2981
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.C_SubRelation'46'constructor_2989
       (\ v0 v1 v2 -> coe du_IsStrict'63'_188 v2)
       (\ v0 v1 v2 v3 -> coe du_extractStrict_198 v2 v3)
 -- Relation.Binary.Reasoning.Base.Triple.IsEquality
@@ -619,7 +619,7 @@ du_eqRelation_238 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.T_SubRelation_60
 du_eqRelation_238
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.C_SubRelation'46'constructor_2981
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.C_SubRelation'46'constructor_2989
       (\ v0 v1 v2 -> coe du_IsEquality'63'_224 v2)
       (\ v0 v1 v2 v3 -> coe du_extractEquality_234 v2 v3)
 -- Relation.Binary.Reasoning.Base.Triple._.begin_

@@ -120,6 +120,110 @@ d_IsLeftInverse_64 a0 a1 a2 a3 a4 a5 a6 = ()
 d_IsRightInverse_66 a0 a1 a2 a3 a4 a5 a6 = ()
 -- Function.Construct.Identity._._.IsSurjection
 d_IsSurjection_70 a0 a1 a2 a3 a4 a5 = ()
+-- Function.Construct.Identity._._.IsBijection.isInjection
+d_isInjection_214 ::
+  MAlonzo.Code.Function.Structures.T_IsBijection_238 ->
+  MAlonzo.Code.Function.Structures.T_IsInjection_92
+d_isInjection_214 v0
+  = coe MAlonzo.Code.Function.Structures.d_isInjection_246 (coe v0)
+-- Function.Construct.Identity._._.IsBijection.surjective
+d_surjective_220 ::
+  MAlonzo.Code.Function.Structures.T_IsBijection_238 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_surjective_220 v0
+  = coe MAlonzo.Code.Function.Structures.d_surjective_248 (coe v0)
+-- Function.Construct.Identity._._.IsCongruent.cong
+d_cong_272 ::
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_cong_272 v0
+  = coe MAlonzo.Code.Function.Structures.d_cong_32 (coe v0)
+-- Function.Construct.Identity._._.IsCongruent.isEquivalence₁
+d_isEquivalence'8321'_274 ::
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
+d_isEquivalence'8321'_274 v0
+  = coe
+      MAlonzo.Code.Function.Structures.d_isEquivalence'8321'_34 (coe v0)
+-- Function.Construct.Identity._._.IsCongruent.isEquivalence₂
+d_isEquivalence'8322'_276 ::
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
+d_isEquivalence'8322'_276 v0
+  = coe
+      MAlonzo.Code.Function.Structures.d_isEquivalence'8322'_36 (coe v0)
+-- Function.Construct.Identity._._.IsInjection.injective
+d_injective_330 ::
+  MAlonzo.Code.Function.Structures.T_IsInjection_92 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_injective_330 v0
+  = coe MAlonzo.Code.Function.Structures.d_injective_102 (coe v0)
+-- Function.Construct.Identity._._.IsInjection.isCongruent
+d_isCongruent_332 ::
+  MAlonzo.Code.Function.Structures.T_IsInjection_92 ->
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22
+d_isCongruent_332 v0
+  = coe MAlonzo.Code.Function.Structures.d_isCongruent_100 (coe v0)
+-- Function.Construct.Identity._._.IsInverse.inverseʳ
+d_inverse'691'_392 ::
+  MAlonzo.Code.Function.Structures.T_IsInverse_490 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_inverse'691'_392 v0
+  = coe MAlonzo.Code.Function.Structures.d_inverse'691'_502 (coe v0)
+-- Function.Construct.Identity._._.IsInverse.isLeftInverse
+d_isLeftInverse_402 ::
+  MAlonzo.Code.Function.Structures.T_IsInverse_490 ->
+  MAlonzo.Code.Function.Structures.T_IsLeftInverse_322
+d_isLeftInverse_402 v0
+  = coe MAlonzo.Code.Function.Structures.d_isLeftInverse_500 (coe v0)
+-- Function.Construct.Identity._._.IsLeftInverse.from-cong
+d_from'45'cong_464 ::
+  MAlonzo.Code.Function.Structures.T_IsLeftInverse_322 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_from'45'cong_464 v0
+  = coe MAlonzo.Code.Function.Structures.d_from'45'cong_336 (coe v0)
+-- Function.Construct.Identity._._.IsLeftInverse.inverseˡ
+d_inverse'737'_466 ::
+  MAlonzo.Code.Function.Structures.T_IsLeftInverse_322 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_inverse'737'_466 v0
+  = coe MAlonzo.Code.Function.Structures.d_inverse'737'_338 (coe v0)
+-- Function.Construct.Identity._._.IsLeftInverse.isCongruent
+d_isCongruent_468 ::
+  MAlonzo.Code.Function.Structures.T_IsLeftInverse_322 ->
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22
+d_isCongruent_468 v0
+  = coe MAlonzo.Code.Function.Structures.d_isCongruent_334 (coe v0)
+-- Function.Construct.Identity._._.IsRightInverse.from-cong
+d_from'45'cong_530 ::
+  MAlonzo.Code.Function.Structures.T_IsRightInverse_408 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_from'45'cong_530 v0
+  = coe MAlonzo.Code.Function.Structures.d_from'45'cong_422 (coe v0)
+-- Function.Construct.Identity._._.IsRightInverse.inverseʳ
+d_inverse'691'_532 ::
+  MAlonzo.Code.Function.Structures.T_IsRightInverse_408 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_inverse'691'_532 v0
+  = coe MAlonzo.Code.Function.Structures.d_inverse'691'_424 (coe v0)
+-- Function.Construct.Identity._._.IsRightInverse.isCongruent
+d_isCongruent_534 ::
+  MAlonzo.Code.Function.Structures.T_IsRightInverse_408 ->
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22
+d_isCongruent_534 v0
+  = coe MAlonzo.Code.Function.Structures.d_isCongruent_420 (coe v0)
+-- Function.Construct.Identity._._.IsSurjection.isCongruent
+d_isCongruent_666 ::
+  MAlonzo.Code.Function.Structures.T_IsSurjection_162 ->
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22
+d_isCongruent_666 v0
+  = coe MAlonzo.Code.Function.Structures.d_isCongruent_170 (coe v0)
+-- Function.Construct.Identity._._.IsSurjection.surjective
+d_surjective_674 ::
+  MAlonzo.Code.Function.Structures.T_IsSurjection_162 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_surjective_674 v0
+  = coe MAlonzo.Code.Function.Structures.d_surjective_172 (coe v0)
 -- Function.Construct.Identity._.isCongruent
 d_isCongruent_736 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -150,7 +254,7 @@ du_isInjection_738 ::
   MAlonzo.Code.Function.Structures.T_IsInjection_92
 du_isInjection_738 v0
   = coe
-      MAlonzo.Code.Function.Structures.C_IsInjection'46'constructor_3991
+      MAlonzo.Code.Function.Structures.C_IsInjection'46'constructor_3997
       (coe du_isCongruent_736 (coe v0)) (coe (\ v1 v2 v3 -> v3))
 -- Function.Construct.Identity._.isSurjection
 d_isSurjection_740 ::
@@ -166,7 +270,7 @@ du_isSurjection_740 ::
   MAlonzo.Code.Function.Structures.T_IsSurjection_162
 du_isSurjection_740 v0
   = coe
-      MAlonzo.Code.Function.Structures.C_IsSurjection'46'constructor_6455
+      MAlonzo.Code.Function.Structures.C_IsSurjection'46'constructor_6463
       (coe du_isCongruent_736 (coe v0)) (coe du_surjective_26)
 -- Function.Construct.Identity._.isBijection
 d_isBijection_742 ::
@@ -182,7 +286,7 @@ du_isBijection_742 ::
   MAlonzo.Code.Function.Structures.T_IsBijection_238
 du_isBijection_742 v0
   = coe
-      MAlonzo.Code.Function.Structures.C_IsBijection'46'constructor_10103
+      MAlonzo.Code.Function.Structures.C_IsBijection'46'constructor_10113
       (coe du_isInjection_738 (coe v0)) (coe du_surjective_26)
 -- Function.Construct.Identity._.isLeftInverse
 d_isLeftInverse_744 ::
@@ -198,7 +302,7 @@ du_isLeftInverse_744 ::
   MAlonzo.Code.Function.Structures.T_IsLeftInverse_322
 du_isLeftInverse_744 v0
   = coe
-      MAlonzo.Code.Function.Structures.C_IsLeftInverse'46'constructor_14351
+      MAlonzo.Code.Function.Structures.C_IsLeftInverse'46'constructor_14363
       (coe du_isCongruent_736 (coe v0)) (coe (\ v1 v2 v3 -> v3))
       (coe (\ v1 v2 v3 -> v3))
 -- Function.Construct.Identity._.isRightInverse
@@ -215,7 +319,7 @@ du_isRightInverse_746 ::
   MAlonzo.Code.Function.Structures.T_IsRightInverse_408
 du_isRightInverse_746 v0
   = coe
-      MAlonzo.Code.Function.Structures.C_IsRightInverse'46'constructor_18819
+      MAlonzo.Code.Function.Structures.C_IsRightInverse'46'constructor_18837
       (coe du_isCongruent_736 (coe v0)) (coe (\ v1 v2 v3 -> v3))
       (coe (\ v1 v2 v3 -> v3))
 -- Function.Construct.Identity._.isInverse
@@ -232,7 +336,7 @@ du_isInverse_748 ::
   MAlonzo.Code.Function.Structures.T_IsInverse_490
 du_isInverse_748 v0
   = coe
-      MAlonzo.Code.Function.Structures.C_IsInverse'46'constructor_22425
+      MAlonzo.Code.Function.Structures.C_IsInverse'46'constructor_22449
       (coe du_isLeftInverse_744 (coe v0)) (coe (\ v1 v2 v3 -> v3))
 -- Function.Construct.Identity._.function
 d_function_782 ::
@@ -256,7 +360,7 @@ d_injection_784 ~v0 ~v1 ~v2 = du_injection_784
 du_injection_784 :: MAlonzo.Code.Function.Bundles.T_Injection_776
 du_injection_784
   = coe
-      MAlonzo.Code.Function.Bundles.C_Injection'46'constructor_8673
+      MAlonzo.Code.Function.Bundles.C_Injection'46'constructor_8675
       (coe (\ v0 -> v0)) (coe (\ v0 v1 v2 -> v2))
       (coe (\ v0 v1 v2 -> v2))
 -- Function.Construct.Identity._.surjection
@@ -269,7 +373,7 @@ d_surjection_786 ~v0 ~v1 ~v2 = du_surjection_786
 du_surjection_786 :: MAlonzo.Code.Function.Bundles.T_Surjection_846
 du_surjection_786
   = coe
-      MAlonzo.Code.Function.Bundles.C_Surjection'46'constructor_11189
+      MAlonzo.Code.Function.Bundles.C_Surjection'46'constructor_11197
       (coe (\ v0 -> v0)) (coe (\ v0 v1 v2 -> v2)) (coe du_surjective_26)
 -- Function.Construct.Identity._.bijection
 d_bijection_788 ::
@@ -281,7 +385,7 @@ d_bijection_788 ~v0 ~v1 ~v2 = du_bijection_788
 du_bijection_788 :: MAlonzo.Code.Function.Bundles.T_Bijection_926
 du_bijection_788
   = coe
-      MAlonzo.Code.Function.Bundles.C_Bijection'46'constructor_15263
+      MAlonzo.Code.Function.Bundles.C_Bijection'46'constructor_15277
       (coe (\ v0 -> v0)) (coe (\ v0 v1 v2 -> v2)) (coe du_bijective_30)
 -- Function.Construct.Identity._.equivalence
 d_equivalence_790 ::
@@ -294,7 +398,7 @@ du_equivalence_790 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_equivalence_790
   = coe
-      MAlonzo.Code.Function.Bundles.C_Equivalence'46'constructor_25777
+      MAlonzo.Code.Function.Bundles.C_Equivalence'46'constructor_25797
       (coe (\ v0 -> v0)) (coe (\ v0 -> v0)) (coe (\ v0 v1 v2 -> v2))
       (coe (\ v0 v1 v2 -> v2))
 -- Function.Construct.Identity._.leftInverse
@@ -308,7 +412,7 @@ du_leftInverse_792 ::
   MAlonzo.Code.Function.Bundles.T_LeftInverse_1792
 du_leftInverse_792
   = coe
-      MAlonzo.Code.Function.Bundles.C_LeftInverse'46'constructor_29743
+      MAlonzo.Code.Function.Bundles.C_LeftInverse'46'constructor_29775
       (coe (\ v0 -> v0)) (coe (\ v0 -> v0)) (coe (\ v0 v1 v2 -> v2))
       (coe (\ v0 v1 v2 -> v2)) (coe (\ v0 v1 v2 -> v2))
 -- Function.Construct.Identity._.rightInverse
@@ -322,7 +426,7 @@ du_rightInverse_794 ::
   MAlonzo.Code.Function.Bundles.T_RightInverse_1880
 du_rightInverse_794
   = coe
-      MAlonzo.Code.Function.Bundles.C_RightInverse'46'constructor_34521
+      MAlonzo.Code.Function.Bundles.C_RightInverse'46'constructor_34573
       (coe (\ v0 -> v0)) (coe (\ v0 -> v0)) (coe (\ v0 v1 v2 -> v2))
       (coe (\ v0 v1 v2 -> v2)) (coe (\ v0 v1 v2 -> v2))
 -- Function.Construct.Identity._.inverse
@@ -335,7 +439,7 @@ d_inverse_796 ~v0 ~v1 ~v2 = du_inverse_796
 du_inverse_796 :: MAlonzo.Code.Function.Bundles.T_Inverse_1960
 du_inverse_796
   = coe
-      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_38549
+      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_38621
       (coe (\ v0 -> v0)) (coe (\ v0 -> v0)) (coe (\ v0 v1 v2 -> v2))
       (coe (\ v0 v1 v2 -> v2)) (coe du_inverse'7495'_36)
 -- Function.Construct.Identity._.⟶-id

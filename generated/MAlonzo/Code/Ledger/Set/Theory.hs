@@ -878,14 +878,6 @@ d_toSet_204 ::
   MAlonzo.Code.Interface.IsSet.T_IsSet_474 -> AgdaAny -> [AgdaAny]
 d_toSet_204 v0
   = coe MAlonzo.Code.Interface.IsSet.d_toSet_482 (coe v0)
--- Ledger.Set.Theory._.card-≡ᵉ
-d_card'45''8801''7497'_208 ::
-  () ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_card'45''8801''7497'_208 = erased
 -- Ledger.Set.Theory.to-sp
 d_to'45'sp_214 ::
   () ->
@@ -970,7 +962,8 @@ du_Show'45'ℙ_260 v0
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
       (coe
          (\ v1 ->
-            MAlonzo.Code.Data.String.Base.d_braces_42
+            coe
+              MAlonzo.Code.Data.String.Base.d_braces_48
               (coe
                  MAlonzo.Code.Data.String.Base.d_intersperse_30
                  (", " :: Data.Text.Text)
@@ -3055,7 +3048,7 @@ d_updateFn'45'id_592 ::
 d_updateFn'45'id_592 = erased
 -- Ledger.Set.Theory._.fold-cong↭
 d_fold'45'cong'8621'_624 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   (AgdaAny -> AgdaAny) ->
   [AgdaAny] ->
@@ -3068,7 +3061,7 @@ d_fold'45'cong'8621'_624 v0 v1 v2 v3 v4 v5
       v4 v5
 -- Ledger.Set.Theory._.indexedSum
 d_indexedSum_626 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
@@ -3077,7 +3070,7 @@ d_indexedSum_626 v0 v1 v2 v3
   = coe MAlonzo.Code.Axiom.Set.Sum.du_indexedSum_798 (coe v0) v2 v3
 -- Ledger.Set.Theory._.indexedSum-cong
 d_indexedSum'45'cong_628 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
@@ -3090,7 +3083,7 @@ d_indexedSum'45'cong_628 v0 v1 v2 v3 v4 v5
       v4 v5
 -- Ledger.Set.Theory._.indexedSum-singleton
 d_indexedSum'45'singleton_630 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
@@ -3100,7 +3093,7 @@ d_indexedSum'45'singleton_630 v0 v1 v2 v3 v4
       v3 v4
 -- Ledger.Set.Theory._.indexedSum-singleton'
 d_indexedSum'45'singleton''_632 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
@@ -3113,7 +3106,7 @@ d_indexedSum'45'singleton''_632 v0 v1 v2 v3 v4 v5
       (coe v0) v2 v3 v4 v5
 -- Ledger.Set.Theory._.indexedSum-∅
 d_indexedSum'45''8709'_634 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) -> AgdaAny
@@ -3125,7 +3118,7 @@ d_indexedSum'45''8709'_634 v0 v1 v2 v3
       (coe v0) v2 v3
 -- Ledger.Set.Theory._.indexedSum-∪
 d_indexedSum'45''8746'_636 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
@@ -3144,13 +3137,13 @@ d_indexedSum'45''8746'_636 v0 v1 v2 v3 v4 v5 v6 v7 v8
       v3 v6 v7
 -- Ledger.Set.Theory._.indexedSumL
 d_indexedSumL_638 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () -> (AgdaAny -> AgdaAny) -> [AgdaAny] -> AgdaAny
 d_indexedSumL_638 v0 v1 v2
   = coe MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_752 (coe v0) v2
 -- Ledger.Set.Theory._.indexedSumL'
 d_indexedSumL''_640 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
@@ -3159,7 +3152,7 @@ d_indexedSumL''_640 v0 v1 v2 v3
       MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL''_760 (coe v0) v2 v3
 -- Ledger.Set.Theory._.indexedSumL-++
 d_indexedSumL'45''43''43'_642 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () -> (AgdaAny -> AgdaAny) -> [AgdaAny] -> [AgdaAny] -> AgdaAny
 d_indexedSumL'45''43''43'_642 v0 v1 v2 v3 v4
   = coe
@@ -3167,7 +3160,7 @@ d_indexedSumL'45''43''43'_642 v0 v1 v2 v3 v4
       v2 v3 v4
 -- Ledger.Set.Theory._.indexedSumᵐ
 d_indexedSum'7504'_644 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -3180,7 +3173,7 @@ d_indexedSum'7504'_644 v0 v1 v2 v3 v4 v5 v6
       v5 v6
 -- Ledger.Set.Theory._.indexedSumᵐ-cong
 d_indexedSum'7504''45'cong_646 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -3195,7 +3188,7 @@ d_indexedSum'7504''45'cong_646 v0 v1 v2 v3 v4 v5 v6 v7
       v3 v4 v5 v6 v7
 -- Ledger.Set.Theory._.indexedSumᵛ
 d_indexedSum'7515'_648 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -3208,7 +3201,7 @@ d_indexedSum'7515'_648 v0 v1 v2 v3 v4 v5
       v5
 -- Ledger.Set.Theory._.IndexedSumUnionᵐ._∪ˡᶠ_
 d__'8746''737''7584'__652 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -3245,7 +3238,7 @@ du__'8746''737''7584'__652 v0 v1 v2 v3 v4 v5 v6 v7
       v4 v5 v6 v7
 -- Ledger.Set.Theory._.IndexedSumUnionᵐ.indexedSumᵐ-partition
 d_indexedSum'7504''45'partition_654 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -3270,7 +3263,7 @@ d_indexedSum'7504''45'partition_654 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
       (coe v0) v3 v4 v5 v6 v7 v8 v9 v10 v11
 -- Ledger.Set.Theory._.IndexedSumUnionᵐ.indexedSumᵐ-∪
 d_indexedSum'7504''45''8746'_656 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -3297,7 +3290,7 @@ d_indexedSum'7504''45''8746'_656 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
       (coe v0) v3 v4 v5 v6 v7 v8 v9
 -- Ledger.Set.Theory._.IndexedSumUnionᵐ.∪ˡ-finite
 d_'8746''737''45'finite_658 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -5402,7 +5395,7 @@ d__'8746''737''7584'__898 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -5432,7 +5425,7 @@ d_indexedSum'7504''45'partition_900 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -5443,7 +5436,7 @@ d_indexedSum'7504''45'partition_900 ~v0 ~v1 v2 v3 v4
 du_indexedSum'7504''45'partition_900 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -5469,7 +5462,7 @@ d_indexedSum'7504''45''8746'_902 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny) ->
@@ -5483,7 +5476,7 @@ d_indexedSum'7504''45''8746'_902 ~v0 ~v1 v2 v3 v4
 du_indexedSum'7504''45''8746'_902 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny) ->
@@ -5513,7 +5506,7 @@ d_'8746''737''45'finite_904 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->

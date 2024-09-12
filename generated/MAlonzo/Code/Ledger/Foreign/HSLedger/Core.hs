@@ -47,6 +47,7 @@ import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Data.Rational.Base
+import qualified MAlonzo.Code.Data.Rational.Show
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Data.Unit.Properties
 import qualified MAlonzo.Code.Function.Bundles
@@ -172,15 +173,9 @@ d_Data'688'_60
       MAlonzo.Code.Ledger.Crypto.C_mkHashableSet_54
       (coe
          MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
-         (coe
-            MAlonzo.Code.Class.Show.Core.C_mkShow_18
-            (coe (\ v0 -> seq (coe v0) (coe ("tt" :: Data.Text.Text)))))
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
+         MAlonzo.Code.Class.Show.Instances.d_Show'45''8868'_16
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
          (coe
             MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
             (coe (\ v0 -> v0))))
@@ -203,7 +198,7 @@ d_ExUnit'45'CommutativeMonoid_70
   = coe
       MAlonzo.Code.Interface.IsCommutativeMonoid.du_toCommMonoid''_62
       (coe
-         MAlonzo.Code.Algebra.Bundles.C_CommutativeMonoid'46'constructor_15145
+         MAlonzo.Code.Algebra.Bundles.C_CommutativeMonoid'46'constructor_17931
          (coe MAlonzo.Code.Algebra.PairOp.du__'8729''7510'__12 (coe addInt))
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe (0 :: Integer))
@@ -212,7 +207,7 @@ d_ExUnit'45'CommutativeMonoid_70
             MAlonzo.Code.Algebra.PairOp.du_pairOpRespectsComm_92
             (coe (0 :: Integer))
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'isCommutativeMonoid_3194)))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'isCommutativeMonoid_3324)))
 -- Ledger.Foreign.HSLedger.Core.Implementation._≥ᵉ_
 d__'8805''7497'__96 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -241,26 +236,8 @@ d_LangDepView_104 = erased
 -- Ledger.Foreign.HSLedger.Core.Implementation.Prices
 d_Prices_106 :: ()
 d_Prices_106 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.MemoryEstimate
-d_MemoryEstimate_110 :: ()
-d_MemoryEstimate_110 = erased
 -- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra
 d_TokenAlgebra_112 = ()
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra._∙_
-d__'8729'__116 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  AgdaAny -> AgdaAny -> AgdaAny
-d__'8729'__116 v0
-  = coe
-      MAlonzo.Code.Algebra.Bundles.d__'8729'__840
-      (coe
-         MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra._≈_
-d__'8776'__118 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  AgdaAny -> AgdaAny -> ()
-d__'8776'__118 = erased
 -- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra._≤ᵗ_
 d__'8804''7511'__120 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
@@ -285,23 +262,10 @@ d_DecEq'45'Value_126 ::
 d_DecEq'45'Value_126 v0
   = coe
       MAlonzo.Code.Ledger.TokenAlgebra.d_DecEq'45'Value_222 (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidHomomorphism
-d_IsMonoidHomomorphism_128 a0 a1 = ()
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism
-d_IsMonoidIsomorphism_130 a0 a1 = ()
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism
-d_IsMonoidMonomorphism_132 a0 a1 = ()
 -- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.Value
 d_Value_134 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 -> ()
 d_Value_134 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.Value-CommutativeMonoid
-d_Value'45'CommutativeMonoid_136 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820
-d_Value'45'CommutativeMonoid_136
-  = coe
-      MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
 -- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.Value-IsCommutativeMonoid'
 d_Value'45'IsCommutativeMonoid''_138 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
@@ -310,12 +274,6 @@ d_Value'45'IsCommutativeMonoid''_138 v0
   = coe
       MAlonzo.Code.Ledger.TokenAlgebra.d_Value'45'IsCommutativeMonoid''_120
       (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.addValue
-d_addValue_140 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
-d_addValue_140
-  = coe MAlonzo.Code.Ledger.TokenAlgebra.du_addValue_226
 -- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.coin
 d_coin_142 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
@@ -325,7 +283,7 @@ d_coin_142 v0
 -- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.coinIsMonoidHomomorphism
 d_coinIsMonoidHomomorphism_146 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350
 d_coinIsMonoidHomomorphism_146 v0
   = coe
       MAlonzo.Code.Ledger.TokenAlgebra.d_coinIsMonoidHomomorphism_220
@@ -336,16 +294,6 @@ d_inject_148 ::
   Integer -> AgdaAny
 d_inject_148 v0
   = coe MAlonzo.Code.Ledger.TokenAlgebra.d_inject_206 (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.monoid
-d_monoid_150 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_740
-d_monoid_150 v0
-  = coe
-      MAlonzo.Code.Algebra.Bundles.du_monoid_890
-      (coe
-         MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
-         (coe v0))
 -- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.policies
 d_policies_152 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
@@ -357,19 +305,6 @@ d_property_154 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_property_154 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.rawMonoid
-d_rawMonoid_156 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_38
-d_rawMonoid_156 v0
-  = let v1
-          = coe
-              MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
-              (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Algebra.Bundles.du_rawMonoid_812
-         (coe MAlonzo.Code.Algebra.Bundles.du_monoid_890 (coe v1)))
 -- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.size
 d_size_158 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
@@ -381,288 +316,6 @@ d_specialAsset_160 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 -> AgdaAny
 d_specialAsset_160 v0
   = coe MAlonzo.Code.Ledger.TokenAlgebra.d_specialAsset_216 (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.ε
-d_ε_164 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 -> AgdaAny
-d_ε_164 v0
-  = coe
-      MAlonzo.Code.Algebra.Bundles.d_ε_842
-      (coe
-         MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidHomomorphism.homo
-d_homo_168 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_homo_168 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidHomomorphism.isMagmaHomomorphism
-d_isMagmaHomomorphism_170 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
-d_isMagmaHomomorphism_170 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
-      (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidHomomorphism.isRelHomomorphism
-d_isRelHomomorphism_172 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
-d_isRelHomomorphism_172 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidHomomorphism.ε-homo
-d_ε'45'homo_174 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
-  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ε'45'homo_174 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidHomomorphism.cong
-d_cong_176 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
-  AgdaAny ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_cong_176 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.homo
-d_homo_180 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_homo_180 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.injective
-d_injective_182 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  AgdaAny ->
-  AgdaAny ->
-  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_injective_182 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_injective_266
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.isMagmaHomomorphism
-d_isMagmaHomomorphism_184 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
-d_isMagmaHomomorphism_184 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
-         (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
-            (coe v0)))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.isMagmaIsomorphism
-d_isMagmaIsomorphism_186 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaIsomorphism_102
-d_isMagmaIsomorphism_186 ~v0 = du_isMagmaIsomorphism_186
-du_isMagmaIsomorphism_186 ::
-  (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaIsomorphism_102
-du_isMagmaIsomorphism_186 v0 v1
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_320
-      v1
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.isMagmaMonomorphism
-d_isMagmaMonomorphism_188 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
-d_isMagmaMonomorphism_188 ~v0 ~v1 v2
-  = du_isMagmaMonomorphism_188 v2
-du_isMagmaMonomorphism_188 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
-du_isMagmaMonomorphism_188 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.isMonoidHomomorphism
-d_isMonoidHomomorphism_190 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
-d_isMonoidHomomorphism_190 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.isMonoidMonomorphism
-d_isMonoidMonomorphism_192 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256
-d_isMonoidMonomorphism_192 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
-      (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.isRelHomomorphism
-d_isRelHomomorphism_194 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
-d_isRelHomomorphism_194 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
-         (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
-            (coe
-               MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
-               (coe v0))))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.isRelIsomorphism
-d_isRelIsomorphism_196 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_94
-d_isRelIsomorphism_196 ~v0 ~v1 v2 = du_isRelIsomorphism_196 v2
-du_isRelIsomorphism_196 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_94
-du_isRelIsomorphism_196 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelIsomorphism_128
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_320
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.isRelMonomorphism
-d_isRelMonomorphism_198 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
-d_isRelMonomorphism_198 ~v0 ~v1 v2 = du_isRelMonomorphism_198 v2
-du_isRelMonomorphism_198 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
-du_isRelMonomorphism_198 v0
-  = let v1
-          = MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
-              (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_98
-         (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
-            (coe v1)))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.surjective
-d_surjective_200 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_surjective_200 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_surjective_298 (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.ε-homo
-d_ε'45'homo_202 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ε'45'homo_202 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidIsomorphism.cong
-d_cong_204 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  AgdaAny ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_cong_204 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.homo
-d_homo_208 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_homo_208 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.injective
-d_injective_210 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  AgdaAny ->
-  AgdaAny ->
-  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_injective_210 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_injective_266 (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.isMagmaHomomorphism
-d_isMagmaHomomorphism_212 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
-d_isMagmaHomomorphism_212 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.isMagmaMonomorphism
-d_isMagmaMonomorphism_214 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
-d_isMagmaMonomorphism_214 ~v0 = du_isMagmaMonomorphism_214
-du_isMagmaMonomorphism_214 ::
-  (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
-du_isMagmaMonomorphism_214 v0 v1
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
-      v1
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.isMonoidHomomorphism
-d_isMonoidHomomorphism_216 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
-d_isMonoidHomomorphism_216 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
-      (coe v0)
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.isRelHomomorphism
-d_isRelHomomorphism_218 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
-d_isRelHomomorphism_218 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
-         (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
-            (coe v0)))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.isRelMonomorphism
-d_isRelMonomorphism_220 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
-d_isRelMonomorphism_220 ~v0 ~v1 v2 = du_isRelMonomorphism_220 v2
-du_isRelMonomorphism_220 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
-du_isRelMonomorphism_220 v0
-  = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_98
-      (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
-         (coe v0))
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.ε-homo
-d_ε'45'homo_222 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ε'45'homo_222 = erased
--- Ledger.Foreign.HSLedger.Core.Implementation._.TokenAlgebra.IsMonoidMonomorphism.cong
-d_cong_224 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  AgdaAny ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_cong_224 = erased
 -- Ledger.Foreign.HSLedger.Core.Implementation.coinTokenAlgebra
 d_coinTokenAlgebra_226 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8
@@ -676,7 +329,7 @@ d_'46'extendedlambda1_232
       (coe
          MAlonzo.Code.Interface.IsCommutativeMonoid.du_toCommMonoid''_62
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3204))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
       (\ v0 -> v0) (\ v0 -> v0)
       (\ v0 ->
          coe
@@ -688,9 +341,9 @@ d_'46'extendedlambda1_232
       (coe
          MAlonzo.Code.Algebra.Morphism.Construct.Identity.du_isMonoidHomomorphism_196
          (coe
-            MAlonzo.Code.Algebra.Bundles.du_rawMonoid_812
+            MAlonzo.Code.Algebra.Bundles.du_rawMonoid_954
             (coe
-               MAlonzo.Code.Algebra.Bundles.du_monoid_890
+               MAlonzo.Code.Algebra.Bundles.du_monoid_1032
                (coe
                   MAlonzo.Code.Interface.IsCommutativeMonoid.du_fromCommMonoid''_40
                   (coe
@@ -726,7 +379,7 @@ d_HSGlobalConstants_252 ::
   MAlonzo.Code.Ledger.Types.Epoch.T_GlobalConstants_256
 d_HSGlobalConstants_252
   = coe
-      MAlonzo.Code.Ledger.Types.Epoch.C_GlobalConstants'46'constructor_5839
+      MAlonzo.Code.Ledger.Types.Epoch.C_GlobalConstants'46'constructor_6069
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
          (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
@@ -735,7 +388,7 @@ d_HSGlobalConstants_252
          (coe (\ v0 -> seq (coe v0) (coe ("tt" :: Data.Text.Text)))))
       d_SlotsPerEpoch'7580'_36
       (coe
-         MAlonzo.Code.Data.Nat.Base.C_NonZero'46'constructor_3581
+         MAlonzo.Code.Data.Nat.Base.C_NonZero'46'constructor_3575
          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
       d_StabilityWindow'7580'_38 d_Quorum_40 d_NetworkId_42
 -- Ledger.Foreign.HSLedger.Core.HSEpochStructure
@@ -752,19 +405,13 @@ d___256 = coe d_HSEpochStructure_254
 d_HSCrypto_258 :: MAlonzo.Code.Ledger.Crypto.T_Crypto_134
 d_HSCrypto_258
   = coe
-      MAlonzo.Code.Ledger.Crypto.C_Crypto'46'constructor_2333
+      MAlonzo.Code.Ledger.Crypto.C_Crypto'46'constructor_2419
       d_HSPKKScheme_264
       (coe
          MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558))
-         (coe
-            MAlonzo.Code.Class.Show.Core.C_mkShow_18
-            (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558))
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+         MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
          (coe
             MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
             (coe (\ v0 -> v0))))
@@ -774,59 +421,25 @@ d_HSCrypto_258
 d_HSPKKScheme_264 :: MAlonzo.Code.Ledger.Crypto.T_PKKScheme_56
 d_HSPKKScheme_264
   = coe
-      MAlonzo.Code.Ledger.Crypto.C_PKKScheme'46'constructor_1851 addInt
+      MAlonzo.Code.Ledger.Crypto.C_PKKScheme'46'constructor_1827 addInt
       (\ v0 v1 ->
          coe
            MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__138
-           (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558)
+           (coe
+              MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+              (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
            (coe addInt (coe v0) (coe v1)))
       erased MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
 -- Ledger.Foreign.HSLedger.Core._
 d___278 :: MAlonzo.Code.Ledger.Crypto.T_Crypto_134
 d___278 = coe d_HSCrypto_258
--- Ledger.Foreign.HSLedger.Core._.P1ScriptStructure
-d_P1ScriptStructure_286 = ()
 -- Ledger.Foreign.HSLedger.Core._.PlutusStructure
 d_PlutusStructure_290 = ()
 -- Ledger.Foreign.HSLedger.Core._.ScriptStructure
 d_ScriptStructure_304 = ()
 -- Ledger.Foreign.HSLedger.Core._.Timelock
 d_Timelock_306 = ()
--- Ledger.Foreign.HSLedger.Core._.evalTimelock
-d_evalTimelock_320 a0 a1 a2 = ()
--- Ledger.Foreign.HSLedger.Core._.P1ScriptStructure.Dec-validP1Script
-d_Dec'45'validP1Script_324 ::
-  MAlonzo.Code.Ledger.Script.T_P1ScriptStructure_92 ->
-  [Integer] ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'validP1Script_324 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_Dec'45'validP1Script_108 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.P1ScriptStructure.DecEq-P1Script
-d_DecEq'45'P1Script_326 ::
-  MAlonzo.Code.Ledger.Script.T_P1ScriptStructure_92 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'P1Script_326 v0
-  = coe MAlonzo.Code.Ledger.Script.d_DecEq'45'P1Script_112 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.P1ScriptStructure.Hashable-P1Script
-d_Hashable'45'P1Script_328 ::
-  MAlonzo.Code.Ledger.Script.T_P1ScriptStructure_92 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
-d_Hashable'45'P1Script_328 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_Hashable'45'P1Script_110 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.P1ScriptStructure.P1Script
-d_P1Script_330 ::
-  MAlonzo.Code.Ledger.Script.T_P1ScriptStructure_92 -> ()
-d_P1Script_330 = erased
--- Ledger.Foreign.HSLedger.Core._.P1ScriptStructure.validP1Script
-d_validP1Script_332 ::
-  MAlonzo.Code.Ledger.Script.T_P1ScriptStructure_92 ->
-  [Integer] ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny -> ()
-d_validP1Script_332 = erased
 -- Ledger.Foreign.HSLedger.Core._.PlutusStructure._≥ᵉ_
 d__'8805''7497'__336 ::
   MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
@@ -836,13 +449,6 @@ d__'8805''7497'__336 = erased
 d_CostModel_338 ::
   MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 -> ()
 d_CostModel_338 = erased
--- Ledger.Foreign.HSLedger.Core._.PlutusStructure.T
-d_T_340 :: MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 -> ()
-d_T_340 = erased
--- Ledger.Foreign.HSLedger.Core._.PlutusStructure.THash
-d_THash_342 ::
-  MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 -> ()
-d_THash_342 = erased
 -- Ledger.Foreign.HSLedger.Core._.PlutusStructure.Dataʰ
 d_Data'688'_344 ::
   MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
@@ -890,26 +496,6 @@ d_DecEq'45'Language_358 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Language_358 v0
   = coe MAlonzo.Code.Ledger.Script.d_DecEq'45'Language_214 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.PlutusStructure.DecEq-T
-d_DecEq'45'T_360 ::
-  MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'T_360 v0
-  = let v1 = MAlonzo.Code.Ledger.Script.d_Data'688'_190 (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Crypto.d_DecEq'45'T_26
-         (coe MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40 (coe v1)))
--- Ledger.Foreign.HSLedger.Core._.PlutusStructure.DecEq-THash
-d_DecEq'45'THash_362 ::
-  MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'THash_362 v0
-  = let v1 = MAlonzo.Code.Ledger.Script.d_Data'688'_190 (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
-         (coe MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40 (coe v1)))
 -- Ledger.Foreign.HSLedger.Core._.PlutusStructure.ExUnit-CommutativeMonoid
 d_ExUnit'45'CommutativeMonoid_364 ::
   MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
@@ -978,34 +564,6 @@ d_Show'45'Prices_390 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Prices_390 v0
   = coe MAlonzo.Code.Ledger.Script.d_Show'45'Prices_230 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.PlutusStructure.Show-THash
-d_Show'45'THash_392 ::
-  MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'THash_392 v0
-  = let v1 = MAlonzo.Code.Ledger.Script.d_Data'688'_190 (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Crypto.d_Show'45'THash_24
-         (coe MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40 (coe v1)))
--- Ledger.Foreign.HSLedger.Core._.PlutusStructure.T-Hashable
-d_T'45'Hashable_394 ::
-  MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
-d_T'45'Hashable_394 v0
-  = let v1 = MAlonzo.Code.Ledger.Script.d_Data'688'_190 (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Crypto.d_T'45'Hashable_28
-         (coe MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40 (coe v1)))
--- Ledger.Foreign.HSLedger.Core._.PlutusStructure.T-isHashable
-d_T'45'isHashable_396 ::
-  MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
-  MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
-d_T'45'isHashable_396 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40
-      (coe MAlonzo.Code.Ledger.Script.d_Data'688'_190 (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.PlutusStructure.language
 d_language_398 ::
   MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
@@ -1023,279 +581,12 @@ d_validPlutusScript_402 ::
   MAlonzo.Code.Ledger.Script.T_PlutusStructure_114 ->
   AgdaAny -> [AgdaAny] -> AgdaAny -> AgdaAny -> ()
 d_validPlutusScript_402 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure._≥ᵉ_
-d__'8805''7497'__406 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  AgdaAny -> AgdaAny -> ()
-d__'8805''7497'__406 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.CostModel
-d_CostModel_408 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_CostModel_408 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.T
-d_T_410 :: MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_T_410 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.THash
-d_THash_412 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_THash_412 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Dataʰ
-d_Data'688'_414 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Ledger.Crypto.T_HashableSet_32
-d_Data'688'_414 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_Data'688'_190
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Dec-validP1Script
-d_Dec'45'validP1Script_418 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  [Integer] ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Script.T_Timelock_264 ->
-  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'validP1Script_418
-  = let v0 = d___278 in
-    coe
-      (let v1 = d___256 in
-       coe
-         (coe
-            (\ v2 ->
-               MAlonzo.Code.Ledger.Script.d_Dec'45'validP1Script_108
-                 (coe
-                    MAlonzo.Code.Ledger.Script.d_p1s_440 (coe v0) (coe v1) (coe v2)))))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Dec-validPlutusScript
-d_Dec'45'validPlutusScript_420 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  AgdaAny ->
-  [AgdaAny] ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'validPlutusScript_420 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_Dec'45'validPlutusScript_256
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.DecEQ-Prices
-d_DecEQ'45'Prices_422 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEQ'45'Prices_422 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_DecEQ'45'Prices_226
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.DecEq-CostModel
-d_DecEq'45'CostModel_424 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'CostModel_424 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_DecEq'45'CostModel_216
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.DecEq-ExUnits
-d_DecEq'45'ExUnits_426 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'ExUnits_426 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_DecEq'45'ExUnits_224
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.DecEq-LangDepView
-d_DecEq'45'LangDepView_428 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'LangDepView_428 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_DecEq'45'LangDepView_218
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.DecEq-Language
-d_DecEq'45'Language_430 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'Language_430 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_DecEq'45'Language_214
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.DecEq-P1Script
-d_DecEq'45'P1Script_432 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'P1Script_432
-  = let v0 = d___278 in
-    coe
-      (let v1 = d___256 in
-       coe
-         (coe
-            (\ v2 ->
-               MAlonzo.Code.Ledger.Script.d_DecEq'45'P1Script_112
-                 (coe
-                    MAlonzo.Code.Ledger.Script.d_p1s_440 (coe v0) (coe v1) (coe v2)))))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.DecEq-T
-d_DecEq'45'T_434 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'T_434 v0
-  = let v1
-          = MAlonzo.Code.Ledger.Script.d_Data'688'_190
-              (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0)) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Crypto.d_DecEq'45'T_26
-         (coe MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40 (coe v1)))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.DecEq-THash
-d_DecEq'45'THash_436 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'THash_436 v0
-  = let v1
-          = MAlonzo.Code.Ledger.Script.d_Data'688'_190
-              (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0)) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
-         (coe MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40 (coe v1)))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.ExUnit-CommutativeMonoid
-d_ExUnit'45'CommutativeMonoid_438 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10
-d_ExUnit'45'CommutativeMonoid_438 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_ExUnit'45'CommutativeMonoid_210
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.ExUnits
-d_ExUnits_440 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_ExUnits_440 = erased
 -- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Hash-Timelock
 d_Hash'45'Timelock_442 ::
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
   MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_Hash'45'Timelock_442 v0
   = coe MAlonzo.Code.Ledger.Script.d_Hash'45'Timelock_438 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Hashable-P1Script
-d_Hashable'45'P1Script_444 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
-d_Hashable'45'P1Script_444
-  = let v0 = d___278 in
-    coe
-      (let v1 = d___256 in
-       coe
-         (coe
-            (\ v2 ->
-               MAlonzo.Code.Ledger.Script.d_Hashable'45'P1Script_110
-                 (coe
-                    MAlonzo.Code.Ledger.Script.d_p1s_440 (coe v0) (coe v1) (coe v2)))))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Hashable-PlutusScript
-d_Hashable'45'PlutusScript_446 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
-d_Hashable'45'PlutusScript_446 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_Hashable'45'PlutusScript_212
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.LangDepView
-d_LangDepView_450 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_LangDepView_450 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Language
-d_Language_452 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_Language_452 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.P1Script
-d_P1Script_454 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_P1Script_454 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.PlutusScript
-d_PlutusScript_456 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_PlutusScript_456 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.PlutusV1
-d_PlutusV1_458 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> AgdaAny
-d_PlutusV1_458 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_PlutusV1_204
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.PlutusV2
-d_PlutusV2_460 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> AgdaAny
-d_PlutusV2_460 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_PlutusV2_206
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.PlutusV3
-d_PlutusV3_462 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> AgdaAny
-d_PlutusV3_462 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_PlutusV3_208
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Prices
-d_Prices_464 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_Prices_464 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Script
-d_Script_468 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 -> ()
-d_Script_468 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Show-CostModel
-d_Show'45'CostModel_470 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'CostModel_470 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_Show'45'CostModel_220
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Show-ExUnits
-d_Show'45'ExUnits_472 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'ExUnits_472 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_Show'45'ExUnits_228
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Show-Prices
-d_Show'45'Prices_474 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Prices_474 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_Show'45'Prices_230
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.Show-THash
-d_Show'45'THash_476 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'THash_476 v0
-  = let v1
-          = MAlonzo.Code.Ledger.Script.d_Data'688'_190
-              (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0)) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Crypto.d_Show'45'THash_24
-         (coe MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40 (coe v1)))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.T-Hashable
-d_T'45'Hashable_478 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
-d_T'45'Hashable_478 v0
-  = let v1
-          = MAlonzo.Code.Ledger.Script.d_Data'688'_190
-              (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0)) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Crypto.d_T'45'Hashable_28
-         (coe MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40 (coe v1)))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.T-isHashable
-d_T'45'isHashable_480 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
-d_T'45'isHashable_480 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_T'45'isHashable_40
-      (coe
-         MAlonzo.Code.Ledger.Script.d_Data'688'_190
-         (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0)))
 -- Ledger.Foreign.HSLedger.Core._.ScriptStructure.hashRespectsUnion
 d_hashRespectsUnion_482 ::
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
@@ -1307,52 +598,17 @@ d_hashRespectsUnion_482 ::
   MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_hashRespectsUnion_482 v0
   = coe MAlonzo.Code.Ledger.Script.d_hashRespectsUnion_436 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.language
-d_language_484 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  AgdaAny -> AgdaAny
-d_language_484 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_language_258
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.p1s
-d_p1s_486 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  MAlonzo.Code.Ledger.Script.T_P1ScriptStructure_92
-d_p1s_486
-  = coe
-      MAlonzo.Code.Ledger.Script.d_p1s_440 (coe d___278) (coe d___256)
 -- Ledger.Foreign.HSLedger.Core._.ScriptStructure.ps
 d_ps_488 ::
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
   MAlonzo.Code.Ledger.Script.T_PlutusStructure_114
 d_ps_488 v0 = coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.toData
-d_toData_490 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  () -> AgdaAny -> AgdaAny
-d_toData_490 v0
-  = coe
-      MAlonzo.Code.Ledger.Script.d_toData_262
-      (coe MAlonzo.Code.Ledger.Script.d_ps_454 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.validP1Script
-d_validP1Script_492 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  [Integer] ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Script.T_Timelock_264 -> ()
-d_validP1Script_492 = erased
--- Ledger.Foreign.HSLedger.Core._.ScriptStructure.validPlutusScript
-d_validPlutusScript_494 ::
-  MAlonzo.Code.Ledger.Script.T_ScriptStructure_402 ->
-  AgdaAny -> [AgdaAny] -> AgdaAny -> AgdaAny -> ()
-d_validPlutusScript_494 = erased
 -- Ledger.Foreign.HSLedger.Core.HSScriptStructure
 d_HSScriptStructure_524 ::
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_402
 d_HSScriptStructure_524
   = coe
-      MAlonzo.Code.Ledger.Script.C_ScriptStructure'46'constructor_72983
+      MAlonzo.Code.Ledger.Script.C_ScriptStructure'46'constructor_72503
       (coe d_hashRespectsUnion_538) (coe d_Hashable'45'Timelock_530)
       (coe d_HSP2ScriptStructure_540)
 -- Ledger.Foreign.HSLedger.Core._.Hashable-Timelock
@@ -1368,7 +624,7 @@ d_HSP2ScriptStructure_540 ::
   MAlonzo.Code.Ledger.Script.T_PlutusStructure_114
 d_HSP2ScriptStructure_540
   = coe
-      MAlonzo.Code.Ledger.Script.C_PlutusStructure'46'constructor_4215
+      MAlonzo.Code.Ledger.Script.C_PlutusStructure'46'constructor_4253
       d_Data'688'_60 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
       (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
       (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
@@ -1390,12 +646,8 @@ d_HSP2ScriptStructure_540
          (coe (\ v0 -> seq (coe v0) (coe ("tt" :: Data.Text.Text)))))
       (coe
          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558))
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558)))
+         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
          (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
@@ -1418,8 +670,8 @@ d_DecEq'45'PParams_558
       (let v0 = d_HSGlobalConstants_252 in
        coe
          (coe
-            MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1301
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3638
+            MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1287
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
             MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
             MAlonzo.Code.Interface.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
@@ -1442,15 +694,8 @@ d_DecEq'45'PParams_558
       (coe d___550)
 -- Ledger.Foreign.HSLedger.Core._.GovParams
 d_GovParams_564 = ()
--- Ledger.Foreign.HSLedger.Core._.PParamGroup
-d_PParamGroup_570 = ()
 -- Ledger.Foreign.HSLedger.Core._.PParams
 d_PParams_572 = ()
--- Ledger.Foreign.HSLedger.Core._.PParamsDiff
-d_PParamsDiff_574 = ()
--- Ledger.Foreign.HSLedger.Core._.ProtVer
-d_ProtVer_576 :: ()
-d_ProtVer_576 = erased
 -- Ledger.Foreign.HSLedger.Core._.Show-PParams
 d_Show'45'PParams_582 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'PParams_582
@@ -1459,8 +704,8 @@ d_Show'45'PParams_582
       (let v0 = d_HSGlobalConstants_252 in
        coe
          (coe
-            MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1301
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3638
+            MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1287
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
             MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
             MAlonzo.Code.Interface.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
@@ -1485,61 +730,12 @@ d_Show'45'PParams_582
 d_paramsWellFormed_596 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> ()
 d_paramsWellFormed_596 = erased
--- Ledger.Foreign.HSLedger.Core._.pvCanFollow
-d_pvCanFollow_598 a0 a1 = ()
--- Ledger.Foreign.HSLedger.Core._.GovParams.DecEq-T
-d_DecEq'45'T_606 ::
-  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'T_606 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_DecEq'45'T_26
-      (coe MAlonzo.Code.Ledger.PParams.d_ppHashingScheme_1226 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.GovParams.DecEq-THash
-d_DecEq'45'THash_608 ::
-  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'THash_608 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
-      (coe MAlonzo.Code.Ledger.PParams.d_ppHashingScheme_1226 (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.GovParams.DecEq-UpdT
 d_DecEq'45'UpdT_610 ::
   MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'UpdT_610 v0
   = coe MAlonzo.Code.Ledger.PParams.d_DecEq'45'UpdT_1240 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.GovParams.THash
-d_THash_612 :: MAlonzo.Code.Ledger.PParams.T_GovParams_1180 -> ()
-d_THash_612 = erased
--- Ledger.Foreign.HSLedger.Core._.GovParams.UpdateT
-d_UpdateT_614 :: MAlonzo.Code.Ledger.PParams.T_GovParams_1180 -> ()
-d_UpdateT_614 = erased
--- Ledger.Foreign.HSLedger.Core._.GovParams.Show-THash
-d_Show'45'THash_616 ::
-  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'THash_616 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_Show'45'THash_24
-      (coe MAlonzo.Code.Ledger.PParams.d_ppHashingScheme_1226 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.GovParams.T-Hashable
-d_T'45'Hashable_618 ::
-  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
-d_T'45'Hashable_618 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_T'45'Hashable_28
-      (coe MAlonzo.Code.Ledger.PParams.d_ppHashingScheme_1226 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.GovParams.applyUpdate
-d_applyUpdate_620 ::
-  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
-  MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  AgdaAny -> MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_applyUpdate_620 v0
-  = coe
-      MAlonzo.Code.Ledger.PParams.d_applyUpdate_1164
-      (coe MAlonzo.Code.Ledger.PParams.d_ppUpd_1212 (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.GovParams.ppHashingScheme
 d_ppHashingScheme_622 ::
   MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
@@ -1552,22 +748,6 @@ d_ppUpd_624 ::
   MAlonzo.Code.Ledger.PParams.T_PParamsDiff_1148
 d_ppUpd_624 v0
   = coe MAlonzo.Code.Ledger.PParams.d_ppUpd_1212 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.GovParams.ppWF?
-d_ppWF'63'_626 ::
-  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
-  AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_ppWF'63'_626 v0
-  = coe
-      MAlonzo.Code.Ledger.PParams.d_ppWF'63'_1172
-      (coe MAlonzo.Code.Ledger.PParams.d_ppUpd_1212 (coe v0))
--- Ledger.Foreign.HSLedger.Core._.GovParams.updateGroups
-d_updateGroups_630 ::
-  MAlonzo.Code.Ledger.PParams.T_GovParams_1180 ->
-  AgdaAny -> [MAlonzo.Code.Ledger.PParams.T_PParamGroup_168]
-d_updateGroups_630 v0
-  = coe
-      MAlonzo.Code.Ledger.PParams.d_updateGroups_1166
-      (coe MAlonzo.Code.Ledger.PParams.d_ppUpd_1212 (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.PParams.Emax
 d_Emax_646 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
 d_Emax_646 v0 = coe MAlonzo.Code.Ledger.PParams.d_Emax_336 (coe v0)
@@ -1739,10 +919,6 @@ d_updateGroups_714 ::
   AgdaAny -> [MAlonzo.Code.Ledger.PParams.T_PParamGroup_168]
 d_updateGroups_714 v0
   = coe MAlonzo.Code.Ledger.PParams.d_updateGroups_1166 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.PParamsUpdate._?↗_
-d__'63''8599'__718 :: () -> Maybe AgdaAny -> AgdaAny -> AgdaAny
-d__'63''8599'__718 v0 v1 v2
-  = coe MAlonzo.Code.Ledger.PParams.du__'63''8599'__916 v1 v2
 -- Ledger.Foreign.HSLedger.Core._.PParamsUpdate.DecEq-PParamsUpdate
 d_DecEq'45'PParamsUpdate_720 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
@@ -1752,8 +928,8 @@ d_DecEq'45'PParamsUpdate_720
       (let v0 = d_HSGlobalConstants_252 in
        coe
          (coe
-            MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1301
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3638
+            MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1287
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
             MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
             MAlonzo.Code.Interface.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
@@ -1783,16 +959,6 @@ d_applyPParamsUpdate_724 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244
 d_applyPParamsUpdate_724
   = coe MAlonzo.Code.Ledger.PParams.du_applyPParamsUpdate_964
--- Ledger.Foreign.HSLedger.Core._.PParamsUpdate.modifiedUpdateGroups
-d_modifiedUpdateGroups_726 ::
-  MAlonzo.Code.Ledger.PParams.T_PParamsUpdate_452 ->
-  [MAlonzo.Code.Ledger.PParams.T_PParamGroup_168]
-d_modifiedUpdateGroups_726
-  = coe MAlonzo.Code.Ledger.PParams.du_modifiedUpdateGroups_900
--- Ledger.Foreign.HSLedger.Core._.PParamsUpdate.paramsUpdateWellFormed
-d_paramsUpdateWellFormed_736 ::
-  MAlonzo.Code.Ledger.PParams.T_PParamsUpdate_452 -> ()
-d_paramsUpdateWellFormed_736 = erased
 -- Ledger.Foreign.HSLedger.Core._.PParamsUpdate.PParamsUpdate.Emax
 d_Emax_744 ::
   MAlonzo.Code.Ledger.PParams.T_PParamsUpdate_452 -> Maybe Integer
@@ -1949,9 +1115,9 @@ d_pv_800 v0 = coe MAlonzo.Code.Ledger.PParams.d_pv_526 (coe v0)
 d_HsGovParams_808 :: MAlonzo.Code.Ledger.PParams.T_GovParams_1180
 d_HsGovParams_808
   = coe
-      MAlonzo.Code.Ledger.PParams.C_GovParams'46'constructor_1162021
+      MAlonzo.Code.Ledger.PParams.C_GovParams'46'constructor_1146233
       (coe
-         MAlonzo.Code.Ledger.PParams.C_PParamsDiff'46'constructor_1161271
+         MAlonzo.Code.Ledger.PParams.C_PParamsDiff'46'constructor_1145447
          (coe MAlonzo.Code.Ledger.PParams.du_applyPParamsUpdate_964)
          (coe MAlonzo.Code.Ledger.PParams.du_modifiedUpdateGroups_900)
          (\ v0 -> d_ppWF_818 (coe v0)))
@@ -1962,8 +1128,8 @@ d_HsGovParams_808
             (let v0 = d_HSGlobalConstants_252 in
              coe
                (coe
-                  MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1301
-                  MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3638
+                  MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1287
+                  MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
                   MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
                   MAlonzo.Code.Interface.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
@@ -1989,8 +1155,8 @@ d_HsGovParams_808
             (let v0 = d_HSGlobalConstants_252 in
              coe
                (coe
-                  MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1301
-                  MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3638
+                  MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1287
+                  MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
                   MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
                   MAlonzo.Code.Interface.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
@@ -2016,8 +1182,8 @@ d_HsGovParams_808
             (let v0 = d_HSGlobalConstants_252 in
              coe
                (coe
-                  MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1301
-                  MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3638
+                  MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1287
+                  MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
                   MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
                   MAlonzo.Code.Interface.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
@@ -2046,8 +1212,8 @@ d_HsGovParams_808
          (let v0 = d_HSGlobalConstants_252 in
           coe
             (coe
-               MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1301
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3638
+               MAlonzo.Code.Ledger.Types.Epoch.C_EpochStructure'46'constructor_1287
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
                MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
                MAlonzo.Code.Interface.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
@@ -2075,19 +1241,15 @@ d_ppWF_818 ::
 d_ppWF_818 v0
   = let v1
           = coe
-              MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__94
+              MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__96
               (coe
                  MAlonzo.Code.Class.Decidable.Core.d_dec_16
                  (coe
-                    MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__138
+                    MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1660
+                    (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)
                     (coe
-                       MAlonzo.Code.Axiom.Set.d__'8712''63'__1590
-                       MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10 erased
-                       (coe
-                          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
-                          (coe
-                             MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-                             (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558))))
+                       MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
                     (coe
                        MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe (0 :: Integer)))
                     (coe
@@ -2179,24 +1341,18 @@ d_HSTransactionStructure_850 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20
 d_HSTransactionStructure_850
   = coe
-      MAlonzo.Code.Ledger.Transaction.C_TransactionStructure'46'constructor_13419
+      MAlonzo.Code.Ledger.Transaction.C_TransactionStructure'46'constructor_13767
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558))
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558))
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
       (coe
          MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
-         (coe
-            MAlonzo.Code.Class.Show.Core.C_mkShow_18
-            (coe (\ v0 -> seq (coe v0) (coe ("tt" :: Data.Text.Text)))))
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
+         MAlonzo.Code.Class.Show.Instances.d_Show'45''8868'_16
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
          (coe
             MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
             (coe (\ v0 -> v0))))
@@ -2234,7 +1390,7 @@ d__'8729'__860
              = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232 (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Bundles.d__'8729'__840
+            MAlonzo.Code.Algebra.Bundles.d__'8729'__982
             (coe
                MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
                (coe v1))))
@@ -3192,7 +2348,14 @@ d_Show'45'Prices_1236
 -- Ledger.Foreign.HSLedger.Core._.Show-ProtVer
 d_Show'45'ProtVer_1238 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'ProtVer_1238
-  = coe MAlonzo.Code.Ledger.PParams.du_Show'45'ProtVer_160
+  = coe
+      MAlonzo.Code.Class.Show.Instances.du_Show'45''215'_6
+      (coe
+         MAlonzo.Code.Class.Show.Core.C_mkShow_18
+         (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
+      (coe
+         MAlonzo.Code.Class.Show.Core.C_mkShow_18
+         (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
 -- Ledger.Foreign.HSLedger.Core._.Show-RwdAddr
 d_Show'45'RwdAddr_1240 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
@@ -3256,7 +2419,10 @@ d_Show'45'THash_1250
             (coe MAlonzo.Code.Ledger.Transaction.d_govParams_2202 (coe v0))))
 -- Ledger.Foreign.HSLedger.Core._.Show-ℚ
 d_Show'45'ℚ_1252 :: MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'ℚ_1252 = coe MAlonzo.Code.Ledger.PParams.du_Show'45'ℚ_430
+d_Show'45'ℚ_1252
+  = coe
+      MAlonzo.Code.Class.Show.Core.C_mkShow_18
+      (coe MAlonzo.Code.Data.Rational.Show.d_show_6)
 -- Ledger.Foreign.HSLedger.Core._.Sig
 d_Sig_1254 :: ()
 d_Sig_1254 = erased
@@ -3273,7 +2439,7 @@ d_SlotsPerEpoch'7580'_1258
          (coe
             MAlonzo.Code.Ledger.Transaction.d_globalConstants_1210 (coe v0)))
 -- Ledger.Foreign.HSLedger.Core._.Slotʳ
-d_Slot'691'_1260 :: MAlonzo.Code.Algebra.Bundles.T_Semiring_2022
+d_Slot'691'_1260 :: MAlonzo.Code.Algebra.Bundles.T_Semiring_2280
 d_Slot'691'_1260
   = let v0 = d_HSTransactionStructure_850 in
     coe
@@ -3409,7 +2575,7 @@ d_Value_1318 :: ()
 d_Value_1318 = erased
 -- Ledger.Foreign.HSLedger.Core._.Value-CommutativeMonoid
 d_Value'45'CommutativeMonoid_1320 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962
 d_Value'45'CommutativeMonoid_1320
   = let v0 = d_HSTransactionStructure_850 in
     coe
@@ -3450,8 +2616,13 @@ d_adHashingScheme_1334 ::
   MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
 d_adHashingScheme_1334
   = coe
-      MAlonzo.Code.Ledger.Transaction.d_adHashingScheme_1196
-      (coe d_HSTransactionStructure_850)
+      MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
+      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
+      MAlonzo.Code.Class.Show.Instances.d_Show'45''8868'_16
+      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
+      (coe
+         MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
+         (coe (\ v0 -> v0)))
 -- Ledger.Foreign.HSLedger.Core._.addEpoch
 d_addEpoch_1336 :: MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
 d_addEpoch_1336
@@ -3506,7 +2677,7 @@ d_coin'45'inject'45'lemma_1352 ::
 d_coin'45'inject'45'lemma_1352 = erased
 -- Ledger.Foreign.HSLedger.Core._.coinIsMonoidHomomorphism
 d_coinIsMonoidHomomorphism_1354 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350
 d_coinIsMonoidHomomorphism_1354
   = let v0 = d_HSTransactionStructure_850 in
     coe
@@ -3515,15 +2686,13 @@ d_coinIsMonoidHomomorphism_1354
          (coe MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232 (coe v0)))
 -- Ledger.Foreign.HSLedger.Core._.crypto
 d_crypto_1358 :: MAlonzo.Code.Ledger.Crypto.T_Crypto_134
-d_crypto_1358
-  = coe
-      MAlonzo.Code.Ledger.Transaction.d_crypto_1234
-      (coe d_HSTransactionStructure_850)
+d_crypto_1358 = coe d_HSCrypto_258
 -- Ledger.Foreign.HSLedger.Core._.cwitness
 d_cwitness_1360 ::
   MAlonzo.Code.Ledger.Certs.T_DCert_834 ->
   MAlonzo.Code.Ledger.Address.T_Credential_16
-d_cwitness_1360 = coe MAlonzo.Code.Ledger.Certs.d_cwitness_850
+d_cwitness_1360 v0
+  = coe MAlonzo.Code.Ledger.Certs.d_cwitness_850 (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.epoch
 d_epoch_1368 :: Integer -> Integer
 d_epoch_1368
@@ -3536,10 +2705,7 @@ d_epoch_1368
 -- Ledger.Foreign.HSLedger.Core._.epochStructure
 d_epochStructure_1370 ::
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20
-d_epochStructure_1370
-  = coe
-      MAlonzo.Code.Ledger.Transaction.d_epochStructure_1520
-      (coe d_HSTransactionStructure_850)
+d_epochStructure_1370 = coe d_HSEpochStructure_254
 -- Ledger.Foreign.HSLedger.Core._.evalTimelock
 d_evalTimelock_1384 a0 a1 a2 = ()
 -- Ledger.Foreign.HSLedger.Core._.firstSlot
@@ -3576,16 +2742,10 @@ d_getValue'688'_1394
 -- Ledger.Foreign.HSLedger.Core._.globalConstants
 d_globalConstants_1396 ::
   MAlonzo.Code.Ledger.Types.Epoch.T_GlobalConstants_256
-d_globalConstants_1396
-  = coe
-      MAlonzo.Code.Ledger.Transaction.d_globalConstants_1210
-      (coe d_HSTransactionStructure_850)
+d_globalConstants_1396 = coe d_HSGlobalConstants_252
 -- Ledger.Foreign.HSLedger.Core._.govParams
 d_govParams_1398 :: MAlonzo.Code.Ledger.PParams.T_GovParams_1180
-d_govParams_1398
-  = coe
-      MAlonzo.Code.Ledger.Transaction.d_govParams_2202
-      (coe d_HSTransactionStructure_850)
+d_govParams_1398 = coe d_HsGovParams_808
 -- Ledger.Foreign.HSLedger.Core._.govStructure
 d_govStructure_1400 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6
@@ -3715,7 +2875,7 @@ d_maximum_1442 ::
 d_maximum_1442
   = coe MAlonzo.Code.Ledger.GovernanceActions.du_maximum_660
 -- Ledger.Foreign.HSLedger.Core._.monoid
-d_monoid_1444 :: MAlonzo.Code.Algebra.Bundles.T_Monoid_740
+d_monoid_1444 :: MAlonzo.Code.Algebra.Bundles.T_Monoid_882
 d_monoid_1444
   = let v0 = d_HSTransactionStructure_850 in
     coe
@@ -3723,7 +2883,7 @@ d_monoid_1444
              = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232 (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Bundles.du_monoid_890
+            MAlonzo.Code.Algebra.Bundles.du_monoid_1032
             (coe
                MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
                (coe v1))))
@@ -3734,10 +2894,7 @@ d_netId_1446 ::
 d_netId_1446 = coe MAlonzo.Code.Ledger.Address.du_netId_112
 -- Ledger.Foreign.HSLedger.Core._.networkId
 d_networkId_1448 :: MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
-d_networkId_1448
-  = coe
-      MAlonzo.Code.Ledger.Transaction.d_networkId_2348
-      (coe d_HSTransactionStructure_850)
+d_networkId_1448 = coe d_networkId_248
 -- Ledger.Foreign.HSLedger.Core._.p1s
 d_p1s_1452 :: MAlonzo.Code.Ledger.Script.T_P1ScriptStructure_92
 d_p1s_1452
@@ -3841,7 +2998,7 @@ d_pvCanFollow'63'_1478 ::
 d_pvCanFollow'63'_1478
   = coe MAlonzo.Code.Ledger.PParams.du_pvCanFollow'63'_1100
 -- Ledger.Foreign.HSLedger.Core._.rawMonoid
-d_rawMonoid_1480 :: MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_38
+d_rawMonoid_1480 :: MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_64
 d_rawMonoid_1480
   = let v0 = d_HSTransactionStructure_850 in
     coe
@@ -3854,8 +3011,8 @@ d_rawMonoid_1480
                     (coe v1) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Bundles.du_rawMonoid_812
-               (coe MAlonzo.Code.Algebra.Bundles.du_monoid_890 (coe v2)))))
+               MAlonzo.Code.Algebra.Bundles.du_rawMonoid_954
+               (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1032 (coe v2)))))
 -- Ledger.Foreign.HSLedger.Core._.refScripts
 d_refScripts_1482 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
@@ -3874,10 +3031,7 @@ d_scriptOuts_1490
 -- Ledger.Foreign.HSLedger.Core._.scriptStructure
 d_scriptStructure_1492 ::
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_402
-d_scriptStructure_1492
-  = coe
-      MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1806
-      (coe d_HSTransactionStructure_850)
+d_scriptStructure_1492 = coe d_HSScriptStructure_524
 -- Ledger.Foreign.HSLedger.Core._.sign
 d_sign_1494 :: Integer -> Integer -> Integer
 d_sign_1494
@@ -3941,10 +3095,7 @@ d_toData_1506
 -- Ledger.Foreign.HSLedger.Core._.tokenAlgebra
 d_tokenAlgebra_1508 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8
-d_tokenAlgebra_1508
-  = coe
-      MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
-      (coe d_HSTransactionStructure_850)
+d_tokenAlgebra_1508 = coe d_tokenAlgebra_250
 -- Ledger.Foreign.HSLedger.Core._.txOutHash
 d_txOutHash_1510 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3955,10 +3106,7 @@ d_txOutHash_1510
       (coe d_HSTransactionStructure_850)
 -- Ledger.Foreign.HSLedger.Core._.txidBytes
 d_txidBytes_1512 :: Integer -> Integer
-d_txidBytes_1512
-  = coe
-      MAlonzo.Code.Ledger.Transaction.d_txidBytes_2346
-      (coe d_HSTransactionStructure_850)
+d_txidBytes_1512 v0 = coe v0
 -- Ledger.Foreign.HSLedger.Core._.txinsScript
 d_txinsScript_1514 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
@@ -4020,7 +3168,7 @@ d_ε_1526
              = MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232 (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Bundles.d_ε_842
+            MAlonzo.Code.Algebra.Bundles.d_ε_984
             (coe
                MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
                (coe v1))))
@@ -4467,36 +3615,36 @@ d_voter_1808 v0
   = coe MAlonzo.Code.Ledger.GovernanceActions.d_voter_748 (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidHomomorphism.homo
 d_homo_1812 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_homo_1812 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidHomomorphism.isMagmaHomomorphism
 d_isMagmaHomomorphism_1814 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_176
 d_isMagmaHomomorphism_1814 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
       (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_1816 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
 d_isRelHomomorphism_1816 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_184
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidHomomorphism.ε-homo
 d_ε'45'homo_1818 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_ε'45'homo_1818 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidHomomorphism.cong
 d_cong_1820 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
@@ -4504,13 +3652,13 @@ d_cong_1820 ::
 d_cong_1820 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.homo
 d_homo_1824 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_homo_1824 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.injective
 d_injective_1826 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
@@ -4518,121 +3666,121 @@ d_injective_1826 ::
 d_injective_1826 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.isMagmaHomomorphism
 d_isMagmaHomomorphism_1828 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_176
 d_isMagmaHomomorphism_1828 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
          (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
             (coe v0)))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.isMagmaIsomorphism
 d_isMagmaIsomorphism_1830 ::
   (Integer -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaIsomorphism_102
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaIsomorphism_218
 d_isMagmaIsomorphism_1830 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_320
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_436
       v1
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.isMagmaMonomorphism
 d_isMagmaMonomorphism_1832 ::
   (Integer -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_194
 d_isMagmaMonomorphism_1832 ~v0 v1 = du_isMagmaMonomorphism_1832 v1
 du_isMagmaMonomorphism_1832 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_194
 du_isMagmaMonomorphism_1832 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_396
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.isMonoidHomomorphism
 d_isMonoidHomomorphism_1834 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350
 d_isMonoidHomomorphism_1834 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.isMonoidMonomorphism
 d_isMonoidMonomorphism_1836 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372
 d_isMonoidMonomorphism_1836 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
       (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_1838 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
 d_isRelHomomorphism_1838 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_184
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
          (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
             (coe
-               MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+               MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
                (coe v0))))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.isRelIsomorphism
 d_isRelIsomorphism_1840 ::
   (Integer -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_94
 d_isRelIsomorphism_1840 ~v0 v1 = du_isRelIsomorphism_1840 v1
 du_isRelIsomorphism_1840 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_94
 du_isRelIsomorphism_1840 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelIsomorphism_128
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelIsomorphism_244
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_320
+         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_436
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_1842 ::
   (Integer -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
 d_isRelMonomorphism_1842 ~v0 v1 = du_isRelMonomorphism_1842 v1
 du_isRelMonomorphism_1842 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
 du_isRelMonomorphism_1842 v0
   = let v1
-          = MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+          = MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
               (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_98
+         MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_214
          (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
+            MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_396
             (coe v1)))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.surjective
 d_surjective_1844 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_surjective_1844 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_surjective_298 (coe v0)
+      MAlonzo.Code.Algebra.Morphism.Structures.d_surjective_414 (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.ε-homo
 d_ε'45'homo_1846 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_ε'45'homo_1846 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidIsomorphism.cong
 d_cong_1848 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
@@ -4640,13 +3788,13 @@ d_cong_1848 ::
 d_cong_1848 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.homo
 d_homo_1852 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_homo_1852 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.injective
 d_injective_1854 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
@@ -4654,66 +3802,66 @@ d_injective_1854 ::
 d_injective_1854 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.isMagmaHomomorphism
 d_isMagmaHomomorphism_1856 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_176
 d_isMagmaHomomorphism_1856 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.isMagmaMonomorphism
 d_isMagmaMonomorphism_1858 ::
   (Integer -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_194
 d_isMagmaMonomorphism_1858 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_396
       v1
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.isMonoidHomomorphism
 d_isMonoidHomomorphism_1860 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350
 d_isMonoidHomomorphism_1860 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
       (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_1862 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
 d_isRelHomomorphism_1862 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_184
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
          (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
             (coe v0)))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.isRelMonomorphism
 d_isRelMonomorphism_1864 ::
   (Integer -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
 d_isRelMonomorphism_1864 ~v0 v1 = du_isRelMonomorphism_1864 v1
 du_isRelMonomorphism_1864 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
 du_isRelMonomorphism_1864 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_98
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_214
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
+         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_396
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.ε-homo
 d_ε'45'homo_1866 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_ε'45'homo_1866 = erased
 -- Ledger.Foreign.HSLedger.Core._.IsMonoidMonomorphism.cong
 d_cong_1868 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
@@ -5776,7 +4924,7 @@ d__'8729'__2258 ::
   AgdaAny -> AgdaAny -> AgdaAny
 d__'8729'__2258 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.d__'8729'__840
+      MAlonzo.Code.Algebra.Bundles.d__'8729'__982
       (coe
          MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
          (coe v0))
@@ -5822,7 +4970,7 @@ d_Value_2276 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.Value-CommutativeMonoid
 d_Value'45'CommutativeMonoid_2278 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_820
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962
 d_Value'45'CommutativeMonoid_2278
   = coe
       MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
@@ -5855,7 +5003,7 @@ d_coin'45'inject'45'lemma_2286 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.coinIsMonoidHomomorphism
 d_coinIsMonoidHomomorphism_2288 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350
 d_coinIsMonoidHomomorphism_2288 v0
   = coe
       MAlonzo.Code.Ledger.TokenAlgebra.d_coinIsMonoidHomomorphism_220
@@ -5869,10 +5017,10 @@ d_inject_2290 v0
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.monoid
 d_monoid_2292 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_740
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_882
 d_monoid_2292 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.du_monoid_890
+      MAlonzo.Code.Algebra.Bundles.du_monoid_1032
       (coe
          MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
          (coe v0))
@@ -5890,7 +5038,7 @@ d_property_2296 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.rawMonoid
 d_rawMonoid_2298 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_38
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_64
 d_rawMonoid_2298 v0
   = let v1
           = coe
@@ -5898,8 +5046,8 @@ d_rawMonoid_2298 v0
               (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Bundles.du_rawMonoid_812
-         (coe MAlonzo.Code.Algebra.Bundles.du_monoid_890 (coe v1)))
+         MAlonzo.Code.Algebra.Bundles.du_rawMonoid_954
+         (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1032 (coe v1)))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.size
 d_size_2300 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
@@ -5922,279 +5070,279 @@ d_ε_2306 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 -> AgdaAny
 d_ε_2306 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.d_ε_842
+      MAlonzo.Code.Algebra.Bundles.d_ε_984
       (coe
          MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidHomomorphism.homo
 d_homo_2310 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_homo_2310 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidHomomorphism.isMagmaHomomorphism
 d_isMagmaHomomorphism_2312 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_176
 d_isMagmaHomomorphism_2312 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
       (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2314 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
 d_isRelHomomorphism_2314 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_184
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidHomomorphism.ε-homo
 d_ε'45'homo_2316 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_ε'45'homo_2316 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidHomomorphism.cong
 d_cong_2318 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_cong_2318 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.homo
 d_homo_2322 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_homo_2322 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.injective
 d_injective_2324 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
 d_injective_2324 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_injective_266
+      MAlonzo.Code.Algebra.Morphism.Structures.d_injective_382
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.isMagmaHomomorphism
 d_isMagmaHomomorphism_2326 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_176
 d_isMagmaHomomorphism_2326 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
          (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
             (coe v0)))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.isMagmaIsomorphism
 d_isMagmaIsomorphism_2328 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
   (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaIsomorphism_102
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaIsomorphism_218
 d_isMagmaIsomorphism_2328 ~v0 = du_isMagmaIsomorphism_2328
 du_isMagmaIsomorphism_2328 ::
   (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaIsomorphism_102
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaIsomorphism_218
 du_isMagmaIsomorphism_2328 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_320
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_436
       v1
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.isMagmaMonomorphism
 d_isMagmaMonomorphism_2330 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
   (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_194
 d_isMagmaMonomorphism_2330 ~v0 ~v1 v2
   = du_isMagmaMonomorphism_2330 v2
 du_isMagmaMonomorphism_2330 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_194
 du_isMagmaMonomorphism_2330 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_396
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.isMonoidHomomorphism
 d_isMonoidHomomorphism_2332 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350
 d_isMonoidHomomorphism_2332 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.isMonoidMonomorphism
 d_isMonoidMonomorphism_2334 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372
 d_isMonoidMonomorphism_2334 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
       (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_2336 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
 d_isRelHomomorphism_2336 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_184
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
          (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
             (coe
-               MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+               MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
                (coe v0))))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.isRelIsomorphism
 d_isRelIsomorphism_2338 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
   (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_94
 d_isRelIsomorphism_2338 ~v0 ~v1 v2 = du_isRelIsomorphism_2338 v2
 du_isRelIsomorphism_2338 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_94
 du_isRelIsomorphism_2338 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelIsomorphism_128
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelIsomorphism_244
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_320
+         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaIsomorphism_436
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_2340 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
   (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
 d_isRelMonomorphism_2340 ~v0 ~v1 v2 = du_isRelMonomorphism_2340 v2
 du_isRelMonomorphism_2340 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
 du_isRelMonomorphism_2340 v0
   = let v1
-          = MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_296
+          = MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_412
               (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_98
+         MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_214
          (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
+            MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_396
             (coe v1)))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.surjective
 d_surjective_2342 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_surjective_2342 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_surjective_298 (coe v0)
+      MAlonzo.Code.Algebra.Morphism.Structures.d_surjective_414 (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.ε-homo
 d_ε'45'homo_2344 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_ε'45'homo_2344 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidIsomorphism.cong
 d_cong_2346 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_288 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_404 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_cong_2346 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.homo
 d_homo_2350 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_homo_2350 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.injective
 d_injective_2352 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
 d_injective_2352 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_injective_266 (coe v0)
+      MAlonzo.Code.Algebra.Morphism.Structures.d_injective_382 (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.isMagmaHomomorphism
 d_isMagmaHomomorphism_2354 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_60
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_176
 d_isMagmaHomomorphism_2354 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.isMagmaMonomorphism
 d_isMagmaMonomorphism_2356 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
   (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_194
 d_isMagmaMonomorphism_2356 ~v0 = du_isMagmaMonomorphism_2356
 du_isMagmaMonomorphism_2356 ::
   (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_78
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaMonomorphism_194
 du_isMagmaMonomorphism_2356 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_396
       v1
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.isMonoidHomomorphism
 d_isMonoidHomomorphism_2358 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_234
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_350
 d_isMonoidHomomorphism_2358 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
       (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2360 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
 d_isRelHomomorphism_2360 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_68
+      MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_184
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_242
+         MAlonzo.Code.Algebra.Morphism.Structures.d_isMagmaHomomorphism_358
          (coe
-            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_264
+            MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidHomomorphism_380
             (coe v0)))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.isRelMonomorphism
 d_isRelMonomorphism_2362 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8 ->
   (AgdaAny -> Integer) ->
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
 d_isRelMonomorphism_2362 ~v0 ~v1 v2 = du_isRelMonomorphism_2362 v2
 du_isRelMonomorphism_2362 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_64
 du_isRelMonomorphism_2362 v0
   = coe
-      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_98
+      MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_214
       (coe
-         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_280
+         MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_396
          (coe v0))
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.ε-homo
 d_ε'45'homo_2364 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_ε'45'homo_2364 = erased
 -- Ledger.Foreign.HSLedger.Core._.TokenAlgebra.IsMonoidMonomorphism.cong
 d_cong_2366 ::
-  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_256 ->
+  MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_372 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -6365,8 +5513,6 @@ d_vkSigs_2430 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_vkSigs_2828 (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.AbstractFunctions
 d_AbstractFunctions_2474 = ()
--- Ledger.Foreign.HSLedger.Core._.indexOf
-d_indexOf_2476 = ()
 -- Ledger.Foreign.HSLedger.Core._.AbstractFunctions.indexOfImp
 d_indexOfImp_2480 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
@@ -6401,57 +5547,15 @@ d_txscriptfee_2488 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Integer
 d_txscriptfee_2488 v0
   = coe MAlonzo.Code.Ledger.Abstract.d_txscriptfee_1662 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.indexOf.indexOfDCert
-d_indexOfDCert_2492 ::
-  MAlonzo.Code.Ledger.Abstract.T_indexOf_1624 ->
-  MAlonzo.Code.Ledger.Certs.T_DCert_834 ->
-  [MAlonzo.Code.Ledger.Certs.T_DCert_834] -> Maybe Integer
-d_indexOfDCert_2492 v0
-  = coe MAlonzo.Code.Ledger.Abstract.d_indexOfDCert_1638 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.indexOf.indexOfPolicyId
-d_indexOfPolicyId_2494 ::
-  MAlonzo.Code.Ledger.Abstract.T_indexOf_1624 ->
-  Integer -> [Integer] -> Maybe Integer
-d_indexOfPolicyId_2494 v0
-  = coe MAlonzo.Code.Ledger.Abstract.d_indexOfPolicyId_1644 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.indexOf.indexOfProposal
-d_indexOfProposal_2496 ::
-  MAlonzo.Code.Ledger.Abstract.T_indexOf_1624 ->
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
-  Maybe Integer
-d_indexOfProposal_2496 v0
-  = coe MAlonzo.Code.Ledger.Abstract.d_indexOfProposal_1648 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.indexOf.indexOfRwdAddr
-d_indexOfRwdAddr_2498 ::
-  MAlonzo.Code.Ledger.Abstract.T_indexOf_1624 ->
-  MAlonzo.Code.Ledger.Address.T_RwdAddr_76 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe Integer
-d_indexOfRwdAddr_2498 v0
-  = coe MAlonzo.Code.Ledger.Abstract.d_indexOfRwdAddr_1640 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.indexOf.indexOfTxIn
-d_indexOfTxIn_2500 ::
-  MAlonzo.Code.Ledger.Abstract.T_indexOf_1624 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe Integer
-d_indexOfTxIn_2500 v0
-  = coe MAlonzo.Code.Ledger.Abstract.d_indexOfTxIn_1642 (coe v0)
--- Ledger.Foreign.HSLedger.Core._.indexOf.indexOfVote
-d_indexOfVote_2502 ::
-  MAlonzo.Code.Ledger.Abstract.T_indexOf_1624 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe Integer
-d_indexOfVote_2502 v0
-  = coe MAlonzo.Code.Ledger.Abstract.d_indexOfVote_1646 (coe v0)
 -- Ledger.Foreign.HSLedger.Core.HSAbstractFunctions
 d_HSAbstractFunctions_2504 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650
 d_HSAbstractFunctions_2504
   = coe
-      MAlonzo.Code.Ledger.Abstract.C_AbstractFunctions'46'constructor_2547
+      MAlonzo.Code.Ledger.Abstract.C_AbstractFunctions'46'constructor_2941
       (coe (\ v0 v1 -> 0 :: Integer)) (coe (\ v0 -> v0))
       (coe
-         MAlonzo.Code.Ledger.Abstract.C_indexOf'46'constructor_2285
+         MAlonzo.Code.Ledger.Abstract.C_indexOf'46'constructor_2649
          (coe (\ v0 v1 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
          (coe (\ v0 v1 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
          (coe (\ v0 v1 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
@@ -6462,5 +5566,3 @@ d_HSAbstractFunctions_2504
       (coe
          (\ v0 v1 v2 v3 -> coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8))
       (coe (\ v0 -> 0 :: Integer))
--- Acnt
-d_Acnt_2563 = ()

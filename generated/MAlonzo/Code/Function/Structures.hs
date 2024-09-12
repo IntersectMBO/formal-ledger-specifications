@@ -74,7 +74,7 @@ du_setoid_40 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_setoid_40 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_727
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
       (d_isEquivalence'8321'_34 (coe v0))
 -- Function.Structures.IsCongruent.Eq₁._._≈_
 d__'8776'__44 ::
@@ -294,7 +294,7 @@ du_setoid_66 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_setoid_66 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_727
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
       (d_isEquivalence'8322'_36 (coe v0))
 -- Function.Structures.IsCongruent.Eq₂._._≈_
 d__'8776'__70 ::
@@ -497,20 +497,20 @@ du_trans_88 v0
 -- Function.Structures.IsInjection
 d_IsInjection_92 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
 data T_IsInjection_92
-  = C_IsInjection'46'constructor_3991 T_IsCongruent_22
+  = C_IsInjection'46'constructor_3997 T_IsCongruent_22
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Structures.IsInjection.isCongruent
 d_isCongruent_100 :: T_IsInjection_92 -> T_IsCongruent_22
 d_isCongruent_100 v0
   = case coe v0 of
-      C_IsInjection'46'constructor_3991 v1 v2 -> coe v1
+      C_IsInjection'46'constructor_3997 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsInjection.injective
 d_injective_102 ::
   T_IsInjection_92 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_injective_102 v0
   = case coe v0 of
-      C_IsInjection'46'constructor_3991 v1 v2 -> coe v2
+      C_IsInjection'46'constructor_3997 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsInjection._.cong
 d_cong_106 ::
@@ -997,13 +997,13 @@ du_trans_158 v0
 -- Function.Structures.IsSurjection
 d_IsSurjection_162 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
 data T_IsSurjection_162
-  = C_IsSurjection'46'constructor_6455 T_IsCongruent_22
+  = C_IsSurjection'46'constructor_6463 T_IsCongruent_22
                                        (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14)
 -- Function.Structures.IsSurjection.isCongruent
 d_isCongruent_170 :: T_IsSurjection_162 -> T_IsCongruent_22
 d_isCongruent_170 v0
   = case coe v0 of
-      C_IsSurjection'46'constructor_6455 v1 v2 -> coe v1
+      C_IsSurjection'46'constructor_6463 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsSurjection.surjective
 d_surjective_172 ::
@@ -1011,7 +1011,7 @@ d_surjective_172 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_surjective_172 v0
   = case coe v0 of
-      C_IsSurjection'46'constructor_6455 v1 v2 -> coe v2
+      C_IsSurjection'46'constructor_6463 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsSurjection._.cong
 d_cong_176 ::
@@ -1526,13 +1526,13 @@ du_strictlySurjective_230 v0 v1
 -- Function.Structures.IsBijection
 d_IsBijection_238 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
 data T_IsBijection_238
-  = C_IsBijection'46'constructor_10103 T_IsInjection_92
+  = C_IsBijection'46'constructor_10113 T_IsInjection_92
                                        (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14)
 -- Function.Structures.IsBijection.isInjection
 d_isInjection_246 :: T_IsBijection_238 -> T_IsInjection_92
 d_isInjection_246 v0
   = case coe v0 of
-      C_IsBijection'46'constructor_10103 v1 v2 -> coe v1
+      C_IsBijection'46'constructor_10113 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBijection.surjective
 d_surjective_248 ::
@@ -1540,7 +1540,7 @@ d_surjective_248 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_surjective_248 v0
   = case coe v0 of
-      C_IsBijection'46'constructor_10103 v1 v2 -> coe v2
+      C_IsBijection'46'constructor_10113 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBijection._.cong
 d_cong_252 ::
@@ -2112,7 +2112,7 @@ d_isSurjection_312 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
 du_isSurjection_312 :: T_IsBijection_238 -> T_IsSurjection_162
 du_isSurjection_312 v0
   = coe
-      C_IsSurjection'46'constructor_6455
+      C_IsSurjection'46'constructor_6463
       (coe d_isCongruent_100 (coe d_isInjection_246 (coe v0)))
       (coe d_surjective_248 (coe v0))
 -- Function.Structures.IsBijection._.strictlySurjective
@@ -2138,28 +2138,28 @@ du_strictlySurjective_316 v0
 -- Function.Structures.IsLeftInverse
 d_IsLeftInverse_322 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 data T_IsLeftInverse_322
-  = C_IsLeftInverse'46'constructor_14351 T_IsCongruent_22
+  = C_IsLeftInverse'46'constructor_14363 T_IsCongruent_22
                                          (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                          (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Structures.IsLeftInverse.isCongruent
 d_isCongruent_334 :: T_IsLeftInverse_322 -> T_IsCongruent_22
 d_isCongruent_334 v0
   = case coe v0 of
-      C_IsLeftInverse'46'constructor_14351 v1 v2 v3 -> coe v1
+      C_IsLeftInverse'46'constructor_14363 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsLeftInverse.from-cong
 d_from'45'cong_336 ::
   T_IsLeftInverse_322 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_from'45'cong_336 v0
   = case coe v0 of
-      C_IsLeftInverse'46'constructor_14351 v1 v2 v3 -> coe v2
+      C_IsLeftInverse'46'constructor_14363 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsLeftInverse.inverseˡ
 d_inverse'737'_338 ::
   T_IsLeftInverse_322 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_inverse'737'_338 v0
   = case coe v0 of
-      C_IsLeftInverse'46'constructor_14351 v1 v2 v3 -> coe v3
+      C_IsLeftInverse'46'constructor_14363 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsLeftInverse._.isEquivalence₁
 d_isEquivalence'8321'_342 ::
@@ -2713,7 +2713,7 @@ du_isSurjection_400 ::
   (AgdaAny -> AgdaAny) -> T_IsLeftInverse_322 -> T_IsSurjection_162
 du_isSurjection_400 v0 v1
   = coe
-      C_IsSurjection'46'constructor_6455 (coe d_isCongruent_334 (coe v1))
+      C_IsSurjection'46'constructor_6463 (coe d_isCongruent_334 (coe v1))
       (coe
          (\ v2 ->
             coe
@@ -2722,28 +2722,28 @@ du_isSurjection_400 v0 v1
 -- Function.Structures.IsRightInverse
 d_IsRightInverse_408 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 data T_IsRightInverse_408
-  = C_IsRightInverse'46'constructor_18819 T_IsCongruent_22
+  = C_IsRightInverse'46'constructor_18837 T_IsCongruent_22
                                           (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                           (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Structures.IsRightInverse.isCongruent
 d_isCongruent_420 :: T_IsRightInverse_408 -> T_IsCongruent_22
 d_isCongruent_420 v0
   = case coe v0 of
-      C_IsRightInverse'46'constructor_18819 v1 v2 v3 -> coe v1
+      C_IsRightInverse'46'constructor_18837 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsRightInverse.from-cong
 d_from'45'cong_422 ::
   T_IsRightInverse_408 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_from'45'cong_422 v0
   = case coe v0 of
-      C_IsRightInverse'46'constructor_18819 v1 v2 v3 -> coe v2
+      C_IsRightInverse'46'constructor_18837 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsRightInverse.inverseʳ
 d_inverse'691'_424 ::
   T_IsRightInverse_408 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_inverse'691'_424 v0
   = case coe v0 of
-      C_IsRightInverse'46'constructor_18819 v1 v2 v3 -> coe v3
+      C_IsRightInverse'46'constructor_18837 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsRightInverse._.isEquivalence₁
 d_isEquivalence'8321'_428 ::
@@ -3282,20 +3282,20 @@ du_strictlyInverse'691'_482 v0 v1 v2
 -- Function.Structures.IsInverse
 d_IsInverse_490 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 data T_IsInverse_490
-  = C_IsInverse'46'constructor_22425 T_IsLeftInverse_322
+  = C_IsInverse'46'constructor_22449 T_IsLeftInverse_322
                                      (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Structures.IsInverse.isLeftInverse
 d_isLeftInverse_500 :: T_IsInverse_490 -> T_IsLeftInverse_322
 d_isLeftInverse_500 v0
   = case coe v0 of
-      C_IsInverse'46'constructor_22425 v1 v2 -> coe v1
+      C_IsInverse'46'constructor_22449 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsInverse.inverseʳ
 d_inverse'691'_502 ::
   T_IsInverse_490 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_inverse'691'_502 v0
   = case coe v0 of
-      C_IsInverse'46'constructor_22425 v1 v2 -> coe v2
+      C_IsInverse'46'constructor_22449 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsInverse._.from-cong
 d_from'45'cong_506 ::
@@ -3913,7 +3913,7 @@ d_isRightInverse_570 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10
 du_isRightInverse_570 :: T_IsInverse_490 -> T_IsRightInverse_408
 du_isRightInverse_570 v0
   = coe
-      C_IsRightInverse'46'constructor_18819
+      C_IsRightInverse'46'constructor_18837
       (coe d_isCongruent_334 (coe d_isLeftInverse_500 (coe v0)))
       (coe d_from'45'cong_336 (coe d_isLeftInverse_500 (coe v0)))
       (coe d_inverse'691'_502 (coe v0))
@@ -3963,7 +3963,7 @@ du_inverse_576 v0
 -- Function.Structures.IsBiEquivalence
 d_IsBiEquivalence_584 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 = ()
 data T_IsBiEquivalence_584
-  = C_IsBiEquivalence'46'constructor_27983 T_IsCongruent_22
+  = C_IsBiEquivalence'46'constructor_28009 T_IsCongruent_22
                                            (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                            (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Function.Structures.IsBiEquivalence.to-isCongruent
@@ -3971,21 +3971,21 @@ d_to'45'isCongruent_598 ::
   T_IsBiEquivalence_584 -> T_IsCongruent_22
 d_to'45'isCongruent_598 v0
   = case coe v0 of
-      C_IsBiEquivalence'46'constructor_27983 v1 v2 v3 -> coe v1
+      C_IsBiEquivalence'46'constructor_28009 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBiEquivalence.from₁-cong
 d_from'8321''45'cong_600 ::
   T_IsBiEquivalence_584 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_from'8321''45'cong_600 v0
   = case coe v0 of
-      C_IsBiEquivalence'46'constructor_27983 v1 v2 v3 -> coe v2
+      C_IsBiEquivalence'46'constructor_28009 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBiEquivalence.from₂-cong
 d_from'8322''45'cong_602 ::
   T_IsBiEquivalence_584 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_from'8322''45'cong_602 v0
   = case coe v0 of
-      C_IsBiEquivalence'46'constructor_27983 v1 v2 v3 -> coe v3
+      C_IsBiEquivalence'46'constructor_28009 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBiEquivalence._.isEquivalence₁
 d_isEquivalence'8321'_606 ::
@@ -4529,7 +4529,7 @@ du_trans_658 v0
 -- Function.Structures.IsBiInverse
 d_IsBiInverse_666 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 = ()
 data T_IsBiInverse_666
-  = C_IsBiInverse'46'constructor_32699 T_IsCongruent_22
+  = C_IsBiInverse'46'constructor_32731 T_IsCongruent_22
                                        (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                        (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                        (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
@@ -4538,35 +4538,35 @@ data T_IsBiInverse_666
 d_to'45'isCongruent_684 :: T_IsBiInverse_666 -> T_IsCongruent_22
 d_to'45'isCongruent_684 v0
   = case coe v0 of
-      C_IsBiInverse'46'constructor_32699 v1 v2 v3 v4 v5 -> coe v1
+      C_IsBiInverse'46'constructor_32731 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBiInverse.from₁-cong
 d_from'8321''45'cong_686 ::
   T_IsBiInverse_666 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_from'8321''45'cong_686 v0
   = case coe v0 of
-      C_IsBiInverse'46'constructor_32699 v1 v2 v3 v4 v5 -> coe v2
+      C_IsBiInverse'46'constructor_32731 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBiInverse.from₂-cong
 d_from'8322''45'cong_688 ::
   T_IsBiInverse_666 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_from'8322''45'cong_688 v0
   = case coe v0 of
-      C_IsBiInverse'46'constructor_32699 v1 v2 v3 v4 v5 -> coe v3
+      C_IsBiInverse'46'constructor_32731 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBiInverse.inverseˡ
 d_inverse'737'_690 ::
   T_IsBiInverse_666 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_inverse'737'_690 v0
   = case coe v0 of
-      C_IsBiInverse'46'constructor_32699 v1 v2 v3 v4 v5 -> coe v4
+      C_IsBiInverse'46'constructor_32731 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBiInverse.inverseʳ
 d_inverse'691'_692 ::
   T_IsBiInverse_666 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_inverse'691'_692 v0
   = case coe v0 of
-      C_IsBiInverse'46'constructor_32699 v1 v2 v3 v4 v5 -> coe v5
+      C_IsBiInverse'46'constructor_32731 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsBiInverse._.isEquivalence₁
 d_isEquivalence'8321'_696 ::
@@ -5110,20 +5110,20 @@ du_trans_748 v0
 -- Function.Structures.IsSplitSurjection
 d_IsSplitSurjection_752 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
 data T_IsSplitSurjection_752
-  = C_IsSplitSurjection'46'constructor_35449 (AgdaAny -> AgdaAny)
+  = C_IsSplitSurjection'46'constructor_35501 (AgdaAny -> AgdaAny)
                                              T_IsLeftInverse_322
 -- Function.Structures.IsSplitSurjection.from
 d_from_760 :: T_IsSplitSurjection_752 -> AgdaAny -> AgdaAny
 d_from_760 v0
   = case coe v0 of
-      C_IsSplitSurjection'46'constructor_35449 v1 v2 -> coe v1
+      C_IsSplitSurjection'46'constructor_35501 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsSplitSurjection.isLeftInverse
 d_isLeftInverse_762 ::
   T_IsSplitSurjection_752 -> T_IsLeftInverse_322
 d_isLeftInverse_762 v0
   = case coe v0 of
-      C_IsSplitSurjection'46'constructor_35449 v1 v2 -> coe v2
+      C_IsSplitSurjection'46'constructor_35501 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.IsSplitSurjection._.from-cong
 d_from'45'cong_766 ::
