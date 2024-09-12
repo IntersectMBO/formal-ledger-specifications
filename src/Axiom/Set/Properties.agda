@@ -185,7 +185,7 @@ map-∪ {X = X} {Y} f = from ≡ᵉ⇔≡ᵉ' λ b →
     (∃[ a ] b ≡ f a × (a ∈ X ⊎ a ∈ Y))
       ↔⟨ ∃-cong′ ×-distribˡ-⊎' ⟩
     (∃[ a ] (b ≡ f a × a ∈ X ⊎ b ≡ f a × a ∈ Y))
-      ↔⟨ ∃-distrib-⊎' ⟩
+      ↔⟨ ∃-distrib-⊎ ⟩
     (∃[ a ] b ≡ f a × a ∈ X ⊎ ∃[ a ] b ≡ f a × a ∈ Y)
       ∼⟨ ∈-map ⊎-cong ∈-map ⟩
     (b ∈ map f X ⊎ b ∈ map f Y)
