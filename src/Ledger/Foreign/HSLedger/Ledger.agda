@@ -2,6 +2,7 @@ module Ledger.Foreign.HSLedger.Ledger where
 
 open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.BaseTypes
+  hiding (CertState)
 open import Ledger.Foreign.HSLedger.Certs
 open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Foreign.HSLedger.Gov
@@ -10,18 +11,20 @@ open import Ledger.Foreign.HSLedger.Transaction
 open import Ledger.Foreign.HSLedger.Utxo
 
 open import Ledger.Ledger it it
-open import Ledger.Ledger.Properties it it
+  hiding (LState)
+open import Ledger.Ledger.Haskell it it
+open import Ledger.Ledger.Haskell.Properties it it
 
 instance
   -- These are "duplicate" because of the duplicate STSs
-  HsTy-GState' = autoHsType GState ⊣ withConstructor "MkGState"
+  HsTy-GState' = autoHsType GState
+    ⊣ withName "GState'"
+    • withConstructor "MkGState'"
+    • fieldPrefix "gs'"
   Conv-GState' = autoConvert GState
 
   HsTy-DState' = autoHsType DState ⊣ withConstructor "MkDState"
   Conv-DState' = autoConvert DState
-
-  HsTy-CertState' = autoHsType CertState ⊣ withConstructor "MkCertState"
-  Conv-CertState' = autoConvert CertState
 
   HsTy-LEnv = autoHsType LEnv ⊣ withConstructor "MkLEnv"
                               • fieldPrefix "le"

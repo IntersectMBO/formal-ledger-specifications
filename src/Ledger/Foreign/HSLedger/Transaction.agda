@@ -17,6 +17,9 @@ instance
   {-# TERMINATING #-}
   Conv-Timelock = autoConvert Timelock
 
+  HsTy-HashedTimelock = autoHsType HashedTimelock ⊣ withConstructor "MkHashedTimelock"
+  Conv-HashedTimelock = autoConvert HashedTimelock
+
   HsTy-TxWitnessess = autoHsType TxWitnesses ⊣ withConstructor "MkTxWitnesses"
   Conv-TxWitnessess = autoConvert TxWitnesses
 
@@ -37,3 +40,4 @@ unquoteDecl = do
   hsTypeAlias DataHash ⊣ withName "DataHash"
   hsTypeAlias Value
   hsTypeAlias TxOut
+  hsTypeAlias RdmrPtr

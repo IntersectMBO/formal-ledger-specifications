@@ -1,12 +1,12 @@
 module Ledger.Foreign.HSLedger.Certs where
 
 open import Ledger.Foreign.HSLedger.Address
-open import Ledger.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GState)
+open import Ledger.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GState; CertState)
 open import Ledger.Foreign.HSLedger.Gov
 open import Ledger.Foreign.HSLedger.PParams
 
 open import Ledger.Certs.Properties govStructure
-open import Ledger.Certs.Haskell govStructure using (⟦_,_,_,_⟧ᵈ; DState; GState)
+open import Ledger.Certs.Haskell govStructure using (⟦_,_,_,_⟧ᵈ; DState; GState; CertState)
 
 open import Ledger.Certs.Haskell.Properties govStructure
   renaming ( Computational-DELEG   to Computational-DELEG'
@@ -64,6 +64,9 @@ instance
     ⊣ withConstructor "MkGState"
     • fieldPrefix "gs"
   Conv-GState = autoConvert GState
+
+  HsTy-CertState' = autoHsType CertState ⊣ withConstructor "MkCertState"
+  Conv-CertState' = autoConvert CertState
 
 -- deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
 -- deleg-step = to (compute Computational-DELEG)

@@ -4,14 +4,18 @@ module Lib
   ) where
 
 import MAlonzo.Code.Ledger.Foreign.HSTypes              as X
-  (HSSet(..), HSMap(..), ComputationResult(..))
+  (HSSet(..), HSMap(..), ComputationResult(..), Rational(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Address     as X
-  (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr)
+  ( Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..)
+  , Addr, Wdrl)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.PParams     as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction as X
-  ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
-  , Script, Datum, DataHash, Value, TxOut)
+  ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..)
+  , Tx(..), TxId, Ix, TxIn, P1Script, P2Script, Script
+  , Datum, DataHash, Value, TxOut, HashedTimelock(..)
+  , RdmrPtr
+  )
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Cert        as X
   (certStep', certsStep')
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Chain       as X
@@ -25,12 +29,16 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.Epoch       as X
   (Snapshot(..), Snapshots(..), EpochState(..), epochStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Gov         as X
   ( GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..), GovEnv(..), GovProposal(..)
-  , GovActionState(..), govStep)
+  , GovActionState(..), govStep, Voter, GovState)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger      as X
-  (LEnv(..), LState(..), ledgerStep, CertState(..), DState(..))
+  ( LEnv(..), LState(..), ledgerStep, CertState(..), DState(..)
+  , GState'(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.NewEpoch    as X
   (NewEpochState(..), newEpochStep, HsRewardUpdate(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ratify      as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo        as X
   (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep)
+import MAlonzo.Code.Ledger.Foreign.HSLedger.Core        as X
+  ( Coin, ExUnits, Redeemer, AuxiliaryData, Epoch
+  , ScriptHash, GovActionID)
