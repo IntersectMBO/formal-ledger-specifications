@@ -115,7 +115,7 @@ jobs:
       - name: Build ledger
         id: ledger-pdf
         run: |
-          echo -n html docs | xargs -d' ' -I{} nix-build -A ledger.{} -j1 -o outputs/ledger
+          echo -n html docs conway | xargs -d' ' -I{} nix-build -A ledger.{} -j1 -o outputs/ledger-{}
           rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
       - name: Upload docs
         if: github.ref == 'refs/heads/master'
