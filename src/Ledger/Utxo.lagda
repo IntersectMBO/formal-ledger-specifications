@@ -153,6 +153,8 @@ record UTxOEnv : Type where
     slot      : Slot
     pparams   : PParams
     treasury  : Coin
+    bObs      : ℙ ScriptHash
+    batchData : BatchData
 \end{code}
 \end{NoConway}
 \emph{UTxO states}
@@ -302,6 +304,14 @@ coinPolicies = policies (inject 1)
 isAdaOnlyᵇ : Value → Bool
 isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 
+validPath : BatchData → Tx → Bool
+validPath (BatchParent _ batchValid) _ = batchValid
+validPath (SingularTransaction _) tx = tx .Tx.isValid
+
+isTop : BatchData → Tx → Bool
+isTop (BatchParent tid batchValid) tx = (tid ≡ᵇ (tx .Tx.body .TxBody.txid)) 
+isTop _ _ = false
+
 -- TODO: this could be a regular property
 -- TODO: using this in UTxO rule below
 \end{code}
@@ -333,10 +343,11 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          bd = Γ .UTxOEnv.batchData
+          sLst = collectPhaseTwoScriptInputs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ true
-        ∙ subTxs ≢ isSubTx -- batchValid ≡ true
+        ∙ validPath bd tx ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ (corInputs)) ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
@@ -349,11 +360,12 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          bd = Γ .UTxOEnv.batchData
+          sLst = collectPhaseTwoScriptInputs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ subTxs ≡ isSubTx  -- isTopLevel ≡ false
-        ∙ batchValid ≡ false
+        ∙ isTop bd tx ≡ false
+        ∙ validPath bd tx ≡ false
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
 
@@ -362,11 +374,12 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          bd = Γ .UTxOEnv.batchData
+          sLst = collectPhaseTwoScriptInputs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ subTxs ≢ isSubTx -- isTopLevel ≡ true
-        ∙ batchValid ≡ false
+        ∙ isTop bd tx ≡ true
+        ∙ validPath bd tx ≡ false
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
                               , fees + cbalance (utxo ∣ collateral)

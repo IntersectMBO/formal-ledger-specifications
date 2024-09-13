@@ -124,11 +124,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   UTxO     = TxIn ⇀ TxOut
   Wdrl     = RwdAddr ⇀ Coin
   RdmrPtr  = Tag × Ix
-
-  data ForTopLevel : Type where
-    isSubTx : ForTopLevel
-    isTopLevel    : (ℙ TxId) → ForTopLevel
-
+    
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 \end{code}
@@ -167,8 +163,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       -- TODO do we need these in this specificaiton??
       -- txdatsB   : DataHash ⇀ Datum 
       -- txrdmrsB  : RdmrPtr  ⇀ Redeemer × ExUnits
-      -- fixes all attached sub-transactions
-      subTxs          : ForTopLevel 
       -- outputs being spent for which inputs are provided by top-level tx
       spendOuts      : Ix ⇀ TxOut
       -- inputs corresponding to spentOuts
@@ -190,25 +184,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
 
-
-
-  record Tx' : Type where
-\end{code}
-\begin{code}[hide]
-    inductive
-    constructor tree
-    field
-\end{code}
-\begin{code}
-      body'     : TxBody
-      wits'     : TxWitnesses
-      isValid'  : Bool
-      txAD'     : Maybe AuxiliaryData
-      -- NEW
-      -- map of transaction bodies and associated data (can only be attached to a top level transaction)
-      -- probably should make ExUnits optional here somehow?
-      -- are all scripts in this batch expected to pass?
-      batchValid'  : Bool
+  data BatchData : Type where
+    SingularTransaction : Bool → BatchData -- bool specifies if the transaction is a complete or incomplete batch by itsefl use isValid as batch valid
+    BatchParent : TxId → Bool → BatchData -- meaning batch valid, txid is the top-level tx
 
   record Tx : Type where
 \end{code}
@@ -222,11 +200,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       wits     : TxWitnesses
       isValid  : Bool
       txAD     : Maybe AuxiliaryData
-      -- NEW
-      -- map of transaction bodies and associated data (can only be attached to a top level transaction)
-      subTxBodies  : List Tx'
-      -- are all scripts in this batch expected to pass?
-      batchValid  : Bool
+      subTxs   : List Tx
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -238,10 +212,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
-
-  -- returns a list of subTxBodies paired with associated other data (sigs, etc)
-  getTxData : (TxId ⇀ Tx') → List Tx'
-  getTxData subTxBodies = map proj₂ (setToList (proj₁ subTxBodies))
   
   getValue : TxOut → Value
   getValue (_ , v , _) = v

@@ -79,32 +79,27 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isKeyHashObj
 
-isSb : TxBody → Bool
-isSb txb with (txb .TxBody.subTxs)
-... | isSubTx = false
-... | isTopLevel l = (txb .TxBody.requireBatchObservers ≡ᵇ ∅) ∧ (l ≡ᵇ ∅) 
+-- no new features used if singular complete transaction
+newFeatures : BatchData → Bool
+newFeatures (SingularTransaction b) = b
+newFeatures _ = false
 
 -- TODO check this
-allowedLanguages : Tx → UTxO → ℙ Language
-allowedLanguages tx utxo =
+allowedLanguages : BatchData → Tx → UTxO → ℙ Language
+allowedLanguages bd tx utxo =
   if (∃[ o ∈ os ] isBootstrapAddr (proj₁ o))
     then ∅
   else if UsesV3Features txb
     then fromList (PlutusV3 ∷ [])
   else if ∃[ o ∈ os ] HasInlineDatum o
     then fromList (PlutusV2 ∷ PlutusV3 ∷ [])
-  else if (isSb txb) -- TODO is this right?
+  else if (newFeatures bd) -- TODO is this right?
     then fromList (PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   else
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
-
-chkSubTxs : ForTopLevel → List Tx' → Set
-chkSubTxs subTxs tids with subTxs 
-... | isSubTx = true ≡ false 
-... | isTopLevel sts = fromList (map (λ t → t .Tx'.body' .TxBody.txid ) tids ) ≡ sts 
 
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isScriptObj
@@ -184,12 +179,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  spentHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ spentHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
-    ∙  languages tx utxo ⊆ allowedLanguages tx utxo
+    ∙  languages tx utxo ⊆ allowedLanguages (Γ .UTxOEnv.batchData) tx utxo
     ∙  txADhash ≡ map hash txAD
-
-    -- new checks 
-    -- all subTxBodies are provided if toplevel
-    ∙ chkSubTxs subTxs subTxBodies
 
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
