@@ -24,7 +24,9 @@ instance
   HsTy-DepositPurpose = autoHsType DepositPurpose
   Conv-DepositPurpose = autoConvert DepositPurpose
 
-  HsTy-DelegEnv' = autoHsType DelegEnv' ⊣ withConstructor "MkDelegEnv'"
+  HsTy-DelegEnv' = autoHsType DelegEnv'
+    ⊣ withConstructor "MkDelegEnv"
+    • withName "DelegEnv"
   Conv-DelegEnv' = autoConvert DelegEnv'
 
   -- HsTy-CertEnv = autoHsType' CertEnv (⟦_,_,_,_,_⟧ᶜ ↦ "MkCertEnv" ∷ [])
@@ -33,20 +35,23 @@ instance
   -- HsTy-DState = autoHsType' DState (⟦_,_,_⟧ᵈ ↦ "MkDState" ∷ [])
   -- Conv-DState = autoConvert DState
 
-  HsTy-PState = autoHsType PState ⊣ withConstructor "MkPState"
-                                  • fieldPrefix "ps"
+  HsTy-PState = autoHsType PState
+    ⊣ withConstructor "MkPState"
+    • fieldPrefix "ps"
   Conv-PState = autoConvert PState
 
-  HsTy-DelegEnv = autoHsType DelegEnv ⊣ withConstructor "MkDelegEnv"
-                                      • fieldPrefix "de"
-  Conv-DelegEnv = autoConvert DelegEnv
+  -- HsTy-DelegEnv = autoHsType DelegEnv ⊣ withConstructor "MkDelegEnv"
+  -- Conv-DelegEnv = autoConvert DelegEnv
 
-  HsTy-CertEnv = autoHsType CertEnv ⊣ withConstructor "MkCertEnv"
-                                    • fieldPrefix "ce"
+  HsTy-CertEnv = autoHsType CertEnv
+    ⊣ withConstructor "MkCertEnv"
+    • fieldPrefix "ce"
   Conv-CertEnv = autoConvert CertEnv
 
-  HsTy-DState = autoHsType DState ⊣ withConstructor "MkDState"
-                                  • fieldPrefix "ds"
+  HsTy-DState = autoHsType DState
+    ⊣ withConstructor "MkDState'"
+    • withName "DState'"
+    • fieldPrefix "ds"
   Conv-DState = autoConvert DState
 
   HsTy-DCert = autoHsType DCert
@@ -55,8 +60,9 @@ instance
   -- HsTy-GState = autoHsType' GState (⟦_,_⟧ᵛ ↦ "MkGState" ∷ [])
   -- Conv-GState = autoConvert GState
 
-  HsTy-GState = autoHsType GState ⊣ withConstructor "MkGState"
-                                  • fieldPrefix "gs"
+  HsTy-GState = autoHsType GState
+    ⊣ withConstructor "MkGState"
+    • fieldPrefix "gs"
   Conv-GState = autoConvert GState
 
 -- deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)

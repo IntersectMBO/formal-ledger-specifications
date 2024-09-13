@@ -9,7 +9,7 @@ instance
   HsTy-PoolThresholds = autoHsType PoolThresholds
   Conv-PoolThresholds = autoConvert PoolThresholds
 
-  HsTy-Acnt = autoHsType Acnt
+  HsTy-Acnt = autoHsType Acnt ⊣ withConstructor "MkAcnt"
   Conv-Acnt = autoConvert Acnt
 
   HsTy-PParams = autoHsType PParams ⊣ withConstructor "MkPParams"

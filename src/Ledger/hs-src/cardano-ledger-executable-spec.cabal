@@ -21,7 +21,7 @@ common globalOptions
     default-language: Haskell2010
     build-depends: base
     default-extensions:
-        CPP PolyKinds EmptyDataDecls EmptyCase ExistentialQuantification
+        PolyKinds EmptyDataDecls EmptyCase ExistentialQuantification
         ScopedTypeVariables NoMonomorphismRestriction RankNTypes
         PatternSynonyms DeriveGeneric
     ghc-options:

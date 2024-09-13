@@ -9,21 +9,26 @@ open import Ledger.Foreign.HSLedger.Epoch
 open import Ledger.Epoch it it
 open import Ledger.Epoch.Properties it it
 
+open import Ledger.Foreign.HSTypes hiding (ComputationResult)
+
+record HsRewardUpdate : Type where
+  field Δt Δr Δf : ℤ
+        rs : HsType (Credential ⇀ Coin)
+{-# FOREIGN GHC
+  data HsRewardUpdate = MkRewardUpdate
+    { deltaT  :: Integer
+    , deltaR  :: Integer
+    , deltaF  :: Integer
+    , rs      ::
+        MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap
+          MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential
+          Integer
+    }
+    deriving (Eq, Show)
+#-}
+{-# COMPILE GHC HsRewardUpdate = data HsRewardUpdate (MkRewardUpdate) #-}
+
 instance
-
-  record HsRewardUpdate : Type where
-    field Δt Δr Δf : ℤ
-          rs : HsType (Credential ⇀ Coin)
-  {-# FOREIGN GHC
-    data RewardUpdate = MkRewardUpdate
-      { deltaT  :: Integer
-      , deltaR  :: Integer
-      , deltaF  :: Integer
-      , rs      :: HSMap Credential Coin
-      }
-  #-}
-  {-# COMPILE GHC HsRewardUpdate = data RewardUpdate (MkRewardUpdate) #-}
-
   HsTy-RewardUpdate : HasHsType RewardUpdate
   HsTy-RewardUpdate .HasHsType.HsType = HsRewardUpdate
 
