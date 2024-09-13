@@ -38,6 +38,7 @@ module Ledger.Utxo.Properties
 
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
+open import Algebra.Definitions.RawMagma +-rawMagma using () renaming (_,_ to _,≤_)
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
@@ -341,7 +342,7 @@ module DepositHelpers
 
   ref≤dep : ref ≤ dep
   ref≤dep with ref ≟ 0
-  ... | no ¬p = ≤″⇒≤ $ ℕ.less-than-or-equal $ begin
+  ... | no ¬p = ≤″⇒≤ $ _ ,≤_ $ begin
     ref + uDep ≡⟨ +-comm ref uDep ⟩
     uDep + ref ≡⟨ dep-ref $ ref-tot-0 ¬p ⟩
     dep        ∎
