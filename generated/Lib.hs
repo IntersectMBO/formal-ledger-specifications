@@ -27,9 +27,9 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.Gov         as X
   ( GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..), GovEnv(..), GovProposal(..)
   , GovActionState(..), govStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger      as X
-  (LEnv(..), LState(..), ledgerStep, CertState(..))
+  (LEnv(..), LState(..), ledgerStep, CertState(..), DState(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.NewEpoch    as X
-  (NewEpochState(..), newEpochStep)
+  (NewEpochState(..), newEpochStep, HSRewardUpdate(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ratify      as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo        as X
