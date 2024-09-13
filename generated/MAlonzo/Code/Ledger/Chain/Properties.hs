@@ -74,31 +74,31 @@ d_Computational'45'LEDGER_1818 v0 v1
       MAlonzo.Code.Ledger.Ledger.Properties.d_Computational'45'LEDGER_2632
       (coe v0) (coe v1)
 -- Ledger.Chain.Properties._.completeness
-d_completeness_1902 ::
+d_completeness_1900 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_1902 = erased
+d_completeness_1900 = erased
 -- Ledger.Chain.Properties._.computeProof
-d_computeProof_1908 ::
+d_computeProof_1906 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_1908 v0
+d_computeProof_1906 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe v0)
 -- Ledger.Chain.Properties.Computational-CHAIN
-d_Computational'45'CHAIN_1928 ::
+d_Computational'45'CHAIN_1926 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'CHAIN_1928 v0 v1
+d_Computational'45'CHAIN_1926 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v2 v3 v4 ->

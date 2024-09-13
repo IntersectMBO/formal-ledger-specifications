@@ -132,6 +132,25 @@ d_DecEq'45'DepositPurpose_120 v0
   = coe
       MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_826
       (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2350 (coe v0))
+-- _.DecEq-RwdAddr
+d_DecEq'45'RwdAddr_146 ::
+  MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+d_DecEq'45'RwdAddr_146 v0
+  = coe
+      MAlonzo.Code.Ledger.Address.du_DecEq'45'RwdAddr_194
+      (coe
+         MAlonzo.Code.Ledger.Types.Epoch.d_DecEq'45'Netw_276
+         (coe
+            MAlonzo.Code.Ledger.Transaction.d_globalConstants_1210 (coe v0)))
+      (coe
+         MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
+         (coe
+            MAlonzo.Code.Ledger.Crypto.d_khs_200
+            (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0))))
+      (coe
+         MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
+         (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0)))
 -- _.DepositPurpose
 d_DepositPurpose_186 a0 = ()
 -- _.GovProposal
@@ -2455,16 +2474,16 @@ d_consumedCoinEquality_2558 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_consumedCoinEquality_2558 = erased
 -- Ledger.Utxo.Properties._._.producedCoinEquality
-d_producedCoinEquality_2574 ::
+d_producedCoinEquality_2586 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2736 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_producedCoinEquality_2574 = erased
+d_producedCoinEquality_2586 = erased
 -- Ledger.Utxo.Properties._._.balValueToCoin
-d_balValueToCoin_2588 ::
+d_balValueToCoin_2600 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2736 ->
@@ -2473,15 +2492,15 @@ d_balValueToCoin_2588 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_balValueToCoin_2588 = erased
+d_balValueToCoin_2600 = erased
 -- Ledger.Utxo.Properties.posPart-negPart≡x
-d_posPart'45'negPart'8801'x_2600 ::
+d_posPart'45'negPart'8801'x_2612 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_posPart'45'negPart'8801'x_2600 = erased
+d_posPart'45'negPart'8801'x_2612 = erased
 -- Ledger.Utxo.Properties._._.collateral
-d_collateral_2642 ::
+d_collateral_2654 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2493,17 +2512,17 @@ d_collateral_2642 ::
   Integer ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_collateral_2642 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_collateral_2642 v9
-du_collateral_2642 ::
+d_collateral_2654 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_collateral_2654 v9
+du_collateral_2654 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-du_collateral_2642 v0
+du_collateral_2654 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_collateral_2812
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v0))
 -- Ledger.Utxo.Properties._._.mint
-d_mint_2646 ::
+d_mint_2658 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2513,16 +2532,16 @@ d_mint_2646 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   Integer -> MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> AgdaAny
-d_mint_2646 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_mint_2646 v9
-du_mint_2646 ::
+d_mint_2658 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_mint_2658 v9
+du_mint_2658 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> AgdaAny
-du_mint_2646 v0
+du_mint_2658 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_mint_2786
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v0))
 -- Ledger.Utxo.Properties._._.txdonation
-d_txdonation_2660 ::
+d_txdonation_2672 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2532,16 +2551,16 @@ d_txdonation_2660 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   Integer -> MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> Integer
-d_txdonation_2660 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_txdonation_2660 v9
-du_txdonation_2660 ::
+d_txdonation_2672 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_txdonation_2672 v9
+du_txdonation_2672 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> Integer
-du_txdonation_2660 v0
+du_txdonation_2672 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_txdonation_2798
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v0))
 -- Ledger.Utxo.Properties._._.txfee
-d_txfee_2662 ::
+d_txfee_2674 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2551,16 +2570,16 @@ d_txfee_2662 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   Integer -> MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> Integer
-d_txfee_2662 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_txfee_2662 v9
-du_txfee_2662 ::
+d_txfee_2674 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_txfee_2674 v9
+du_txfee_2674 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> Integer
-du_txfee_2662 v0
+du_txfee_2674 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_txfee_2784
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v0))
 -- Ledger.Utxo.Properties._._.txid
-d_txid_2664 ::
+d_txid_2676 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2570,16 +2589,16 @@ d_txid_2664 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   Integer -> MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> AgdaAny
-d_txid_2664 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_txid_2664 v9
-du_txid_2664 ::
+d_txid_2676 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_txid_2676 v9
+du_txid_2676 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> AgdaAny
-du_txid_2664 v0
+du_txid_2676 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_txid_2810
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v0))
 -- Ledger.Utxo.Properties._._.txins
-d_txins_2666 ::
+d_txins_2678 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2591,17 +2610,17 @@ d_txins_2666 ::
   Integer ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_txins_2666 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_txins_2666 v9
-du_txins_2666 ::
+d_txins_2678 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_txins_2678 v9
+du_txins_2678 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-du_txins_2666 v0
+du_txins_2678 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_txins_2778
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v0))
 -- Ledger.Utxo.Properties._.DepositHelpers.pp
-d_pp_2722 ::
+d_pp_2734 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2617,15 +2636,15 @@ d_pp_2722 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_2722 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 ~v11 ~v12
-  = du_pp_2722 v10
-du_pp_2722 ::
+d_pp_2734 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 ~v11 ~v12
+  = du_pp_2734 v10
+du_pp_2734 ::
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-du_pp_2722 v0
+du_pp_2734 v0
   = coe MAlonzo.Code.Ledger.Utxo.d_pparams_1860 (coe v0)
 -- Ledger.Utxo.Properties._.DepositHelpers.dep
-d_dep_2724 ::
+d_dep_2736 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2642,13 +2661,13 @@ d_dep_2724 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   Integer
-d_dep_2724 v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
+d_dep_2736 v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
            ~v13
-  = du_dep_2724 v0 v6
-du_dep_2724 ::
+  = du_dep_2736 v0 v6
+du_dep_2736 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Integer
-du_dep_2724 v0 v1
+du_dep_2736 v0 v1
   = coe
       MAlonzo.Code.Ledger.Set.Theory.du_indexedSum'7515'''_1160
       (coe
@@ -2663,7 +2682,7 @@ du_dep_2724 v0 v1
             MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
       (coe (\ v2 -> v2)) (coe v1)
 -- Ledger.Utxo.Properties._.DepositHelpers.uDep
-d_uDep_2726 ::
+d_uDep_2738 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2680,14 +2699,14 @@ d_uDep_2726 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   Integer
-d_uDep_2726 v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 ~v9 v10 v11 ~v12 ~v13
-  = du_uDep_2726 v0 v6 v10 v11
-du_uDep_2726 ::
+d_uDep_2738 v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 ~v9 v10 v11 ~v12 ~v13
+  = du_uDep_2738 v0 v6 v10 v11
+du_uDep_2738 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 -> Integer
-du_uDep_2726 v0 v1 v2 v3
+du_uDep_2738 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Ledger.Set.Theory.du_indexedSum'7515'''_1160
       (coe
@@ -2707,7 +2726,7 @@ du_uDep_2726 v0 v1 v2 v3
          (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v2))
          (coe v1))
 -- Ledger.Utxo.Properties._.DepositHelpers.Δdep
-d_Δdep_2728 ::
+d_Δdep_2740 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2724,20 +2743,20 @@ d_Δdep_2728 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   Integer
-d_Δdep_2728 v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 ~v9 v10 v11 ~v12 ~v13
-  = du_Δdep_2728 v0 v6 v10 v11
-du_Δdep_2728 ::
+d_Δdep_2740 v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 ~v9 v10 v11 ~v12 ~v13
+  = du_Δdep_2740 v0 v6 v10 v11
+du_Δdep_2740 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 -> Integer
-du_Δdep_2728 v0 v1 v2 v3
+du_Δdep_2740 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Ledger.Utxo.du_depositsChange_2072 (coe v0)
       (coe MAlonzo.Code.Ledger.Utxo.d_pparams_1860 (coe v3))
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v2)) (coe v1)
 -- Ledger.Utxo.Properties._.DepositHelpers.utxoSt
-d_utxoSt_2730 ::
+d_utxoSt_2742 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2753,19 +2772,19 @@ d_utxoSt_2730 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864
-d_utxoSt_2730 ~v0 v1 ~v2 v3 ~v4 v5 ~v6 v7 ~v8 ~v9 ~v10 ~v11 ~v12
-  = du_utxoSt_2730 v1 v3 v5 v7
-du_utxoSt_2730 ::
+d_utxoSt_2742 ~v0 v1 ~v2 v3 ~v4 v5 ~v6 v7 ~v8 ~v9 ~v10 ~v11 ~v12
+  = du_utxoSt_2742 v1 v3 v5 v7
+du_utxoSt_2742 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer -> MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864
-du_utxoSt_2730 v0 v1 v2 v3
+du_utxoSt_2742 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1882
       (coe v0) (coe v1) (coe v2) (coe v3)
 -- Ledger.Utxo.Properties._.DepositHelpers.ref
-d_ref_2732 ::
+d_ref_2744 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2782,9 +2801,9 @@ d_ref_2732 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   Integer
-d_ref_2732 v0 ~v1 v2 ~v3 v4 ~v5 v6 ~v7 v8 ~v9 v10 v11 ~v12 ~v13
-  = du_ref_2732 v0 v2 v4 v6 v8 v10 v11
-du_ref_2732 ::
+d_ref_2744 v0 ~v1 v2 ~v3 v4 ~v5 v6 ~v7 v8 ~v9 v10 v11 ~v12 ~v13
+  = du_ref_2744 v0 v2 v4 v6 v8 v10 v11
+du_ref_2744 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
@@ -2792,7 +2811,7 @@ du_ref_2732 ::
   Integer ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 -> Integer
-du_ref_2732 v0 v1 v2 v3 v4 v5 v6
+du_ref_2744 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Ledger.Utxo.du_depositRefunds_2390 (coe v0)
       (coe MAlonzo.Code.Ledger.Utxo.d_pparams_1860 (coe v6))
@@ -2801,7 +2820,7 @@ du_ref_2732 v0 v1 v2 v3 v4 v5 v6
          (coe v1) (coe v2) (coe v3) (coe v4))
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v5))
 -- Ledger.Utxo.Properties._.DepositHelpers.tot
-d_tot_2734 ::
+d_tot_2746 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2818,9 +2837,9 @@ d_tot_2734 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   Integer
-d_tot_2734 v0 ~v1 v2 ~v3 v4 ~v5 v6 ~v7 v8 ~v9 v10 v11 ~v12 ~v13
-  = du_tot_2734 v0 v2 v4 v6 v8 v10 v11
-du_tot_2734 ::
+d_tot_2746 v0 ~v1 v2 ~v3 v4 ~v5 v6 ~v7 v8 ~v9 v10 v11 ~v12 ~v13
+  = du_tot_2746 v0 v2 v4 v6 v8 v10 v11
+du_tot_2746 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
@@ -2828,7 +2847,7 @@ du_tot_2734 ::
   Integer ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 -> Integer
-du_tot_2734 v0 v1 v2 v3 v4 v5 v6
+du_tot_2746 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Ledger.Utxo.du_newDeposits_2398 (coe v0)
       (coe MAlonzo.Code.Ledger.Utxo.d_pparams_1860 (coe v6))
@@ -2836,8 +2855,60 @@ du_tot_2734 v0 v1 v2 v3 v4 v5 v6
          MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1882
          (coe v1) (coe v2) (coe v3) (coe v4))
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v5))
+-- Ledger.Utxo.Properties._.DepositHelpers.wdls
+d_wdls_2748 ::
+  MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
+  MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXO'10632'__1884 ->
+  (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  Integer
+d_wdls_2748 v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 ~v11 ~v12
+            ~v13
+  = du_wdls_2748 v0 v10
+du_wdls_2748 ::
+  MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> Integer
+du_wdls_2748 v0 v1
+  = coe
+      MAlonzo.Code.Ledger.Set.Theory.du_indexedSum'7515'''_1160
+      (coe
+         MAlonzo.Code.Ledger.Address.du_DecEq'45'RwdAddr_194
+         (coe
+            MAlonzo.Code.Ledger.Types.Epoch.d_DecEq'45'Netw_276
+            (coe
+               MAlonzo.Code.Ledger.Transaction.d_globalConstants_1210 (coe v0)))
+         (coe
+            MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
+            (coe
+               MAlonzo.Code.Ledger.Crypto.d_khs_200
+               (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0))))
+         (coe
+            MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
+            (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0))))
+      (coe
+         MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+      (coe
+         MAlonzo.Code.Interface.IsCommutativeMonoid.du_toCommMonoid''_62
+         (coe
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+      (coe (\ v2 -> v2))
+      (coe
+         MAlonzo.Code.Ledger.Transaction.d_txwdrls_2792
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v1)))
 -- Ledger.Utxo.Properties._.DepositHelpers.h
-d_h_2736 ::
+d_h_2750 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2857,9 +2928,9 @@ d_h_2736 ::
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_h_2736 = erased
+d_h_2750 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.newBal'
-d_newBal''_2742 ::
+d_newBal''_2756 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2877,9 +2948,9 @@ d_newBal''_2742 ::
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXO'10632'__1884 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_newBal''_2742 = erased
+d_newBal''_2756 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.newBal
-d_newBal_2746 ::
+d_newBal_2760 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2896,9 +2967,9 @@ d_newBal_2746 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_newBal_2746 = erased
+d_newBal_2760 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.noMintAda'
-d_noMintAda''_2748 ::
+d_noMintAda''_2762 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2916,9 +2987,9 @@ d_noMintAda''_2748 ::
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXO'10632'__1884 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_noMintAda''_2748 = erased
+d_noMintAda''_2762 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.noMintAda
-d_noMintAda_2752 ::
+d_noMintAda_2766 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2935,9 +3006,9 @@ d_noMintAda_2752 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_noMintAda_2752 = erased
+d_noMintAda_2766 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.remDepTot
-d_remDepTot_2754 ::
+d_remDepTot_2768 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2954,10 +3025,10 @@ d_remDepTot_2754 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   Integer
-d_remDepTot_2754 v0 ~v1 v2 ~v3 v4 ~v5 v6 ~v7 v8 ~v9 v10 v11 ~v12
+d_remDepTot_2768 v0 ~v1 v2 ~v3 v4 ~v5 v6 ~v7 v8 ~v9 v10 v11 ~v12
                  ~v13
-  = du_remDepTot_2754 v0 v2 v4 v6 v8 v10 v11
-du_remDepTot_2754 ::
+  = du_remDepTot_2768 v0 v2 v4 v6 v8 v10 v11
+du_remDepTot_2768 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
@@ -2965,7 +3036,7 @@ du_remDepTot_2754 ::
   Integer ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 -> Integer
-du_remDepTot_2754 v0 v1 v2 v3 v4 v5 v6
+du_remDepTot_2768 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22
       (coe
@@ -2982,10 +3053,10 @@ du_remDepTot_2754 v0 v1 v2 v3 v4 v5 v6
                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
          (coe (\ v7 -> v7)) (coe v3))
       (coe
-         du_ref_2732 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4) (coe v5)
+         du_ref_2744 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4) (coe v5)
          (coe v6))
 -- Ledger.Utxo.Properties._.DepositHelpers.deposits-change'
-d_deposits'45'change''_2756 ::
+d_deposits'45'change''_2770 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3002,9 +3073,9 @@ d_deposits'45'change''_2756 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_deposits'45'change''_2756 = erased
+d_deposits'45'change''_2770 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.dep-ref
-d_dep'45'ref_2758 ::
+d_dep'45'ref_2772 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3022,9 +3093,9 @@ d_dep'45'ref_2758 ::
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_dep'45'ref_2758 = erased
+d_dep'45'ref_2772 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.ref-tot-0
-d_ref'45'tot'45'0_2774 ::
+d_ref'45'tot'45'0_2788 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3043,9 +3114,9 @@ d_ref'45'tot'45'0_2774 ::
   (MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ref'45'tot'45'0_2774 = erased
+d_ref'45'tot'45'0_2788 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.ref≤dep
-d_ref'8804'dep_2790 ::
+d_ref'8804'dep_2804 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3062,10 +3133,10 @@ d_ref'8804'dep_2790 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-d_ref'8804'dep_2790 v0 ~v1 v2 ~v3 v4 ~v5 v6 ~v7 v8 ~v9 v10 v11 ~v12
+d_ref'8804'dep_2804 v0 ~v1 v2 ~v3 v4 ~v5 v6 ~v7 v8 ~v9 v10 v11 ~v12
                     ~v13
-  = du_ref'8804'dep_2790 v0 v2 v4 v6 v8 v10 v11
-du_ref'8804'dep_2790 ::
+  = du_ref'8804'dep_2804 v0 v2 v4 v6 v8 v10 v11
+du_ref'8804'dep_2804 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
@@ -3074,7 +3145,7 @@ du_ref'8804'dep_2790 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-du_ref'8804'dep_2790 v0 v1 v2 v3 v4 v5 v6
+du_ref'8804'dep_2804 v0 v1 v2 v3 v4 v5 v6
   = let v7
           = coe
               MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
@@ -3083,14 +3154,14 @@ du_ref'8804'dep_2790 v0 v1 v2 v3 v4 v5 v6
                  coe
                    MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2678
                    (coe
-                      du_ref_2732 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4) (coe v5)
+                      du_ref_2744 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4) (coe v5)
                       (coe v6)))
               (coe
                  MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_66
                  (coe
                     eqInt
                     (coe
-                       du_ref_2732 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4) (coe v5)
+                       du_ref_2744 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4) (coe v5)
                        (coe v6))
                     (coe (0 :: Integer)))) in
     coe
@@ -3607,48 +3678,48 @@ du_ref'8804'dep_2790 v0 v1 v2 v3 v4 v5 v6
                                    _ -> coe (0 :: Integer))))
                           (coe
                              MAlonzo.Code.Algebra.Definitions.RawMagma.C__'44'__40
-                             (coe du_uDep_2726 (coe v0) (coe v3) (coe v5) (coe v6))
+                             (coe du_uDep_2738 (coe v0) (coe v3) (coe v5) (coe v6))
                              (coe
                                 MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
                                 (\ v10 v11 v12 -> v12)
                                 (addInt
                                    (coe
-                                      du_ref_2732 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
+                                      du_ref_2744 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
                                       (coe v5) (coe v6))
-                                   (coe du_uDep_2726 (coe v0) (coe v3) (coe v5) (coe v6)))
-                                (coe du_dep_2724 (coe v0) (coe v3))
+                                   (coe du_uDep_2738 (coe v0) (coe v3) (coe v5) (coe v6)))
+                                (coe du_dep_2736 (coe v0) (coe v3))
                                 (coe
                                    MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_436
                                    erased
                                    (addInt
                                       (coe
-                                         du_ref_2732 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
+                                         du_ref_2744 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
                                          (coe v5) (coe v6))
-                                      (coe du_uDep_2726 (coe v0) (coe v3) (coe v5) (coe v6)))
+                                      (coe du_uDep_2738 (coe v0) (coe v3) (coe v5) (coe v6)))
                                    (addInt
                                       (coe
-                                         du_ref_2732 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
+                                         du_ref_2744 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
                                          (coe v5) (coe v6))
-                                      (coe du_uDep_2726 (coe v0) (coe v3) (coe v5) (coe v6)))
-                                   (coe du_dep_2724 (coe v0) (coe v3))
+                                      (coe du_uDep_2738 (coe v0) (coe v3) (coe v5) (coe v6)))
+                                   (coe du_dep_2736 (coe v0) (coe v3))
                                    (coe
                                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_436
                                       erased
                                       (addInt
                                          (coe
-                                            du_ref_2732 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
+                                            du_ref_2744 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
                                             (coe v5) (coe v6))
-                                         (coe du_uDep_2726 (coe v0) (coe v3) (coe v5) (coe v6)))
-                                      (coe du_dep_2724 (coe v0) (coe v3))
-                                      (coe du_dep_2724 (coe v0) (coe v3))
+                                         (coe du_uDep_2738 (coe v0) (coe v3) (coe v5) (coe v6)))
+                                      (coe du_dep_2736 (coe v0) (coe v3))
+                                      (coe du_dep_2736 (coe v0) (coe v3))
                                       (coe
                                          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
-                                         erased (coe du_dep_2724 (coe v0) (coe v3)))
+                                         erased (coe du_dep_2736 (coe v0) (coe v3)))
                                       erased)
                                    erased))))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Utxo.Properties._.DepositHelpers.deposits-change
-d_deposits'45'change_2806 ::
+d_deposits'45'change_2820 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3665,9 +3736,9 @@ d_deposits'45'change_2806 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_deposits'45'change_2806 = erased
+d_deposits'45'change_2820 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.split-balance
-d_split'45'balance_2810 ::
+d_split'45'balance_2824 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3685,9 +3756,9 @@ d_split'45'balance_2810 ::
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_split'45'balance_2810 = erased
+d_split'45'balance_2824 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers._.utxo-ref-prop-worker
-d_utxo'45'ref'45'prop'45'worker_2860 ::
+d_utxo'45'ref'45'prop'45'worker_2874 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3716,9 +3787,9 @@ d_utxo'45'ref'45'prop'45'worker_2860 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_utxo'45'ref'45'prop'45'worker_2860 = erased
+d_utxo'45'ref'45'prop'45'worker_2874 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.utxo-ref-prop
-d_utxo'45'ref'45'prop_2870 ::
+d_utxo'45'ref'45'prop_2884 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3735,9 +3806,9 @@ d_utxo'45'ref'45'prop_2870 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_utxo'45'ref'45'prop_2870 = erased
+d_utxo'45'ref'45'prop_2884 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.rearrange0
-d_rearrange0_2874 ::
+d_rearrange0_2888 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3756,9 +3827,9 @@ d_rearrange0_2874 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_rearrange0_2874 = erased
+d_rearrange0_2888 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers._.pov-scripts-worker
-d_pov'45'scripts'45'worker_2900 ::
+d_pov'45'scripts'45'worker_2914 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3779,9 +3850,9 @@ d_pov'45'scripts'45'worker_2900 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_pov'45'scripts'45'worker_2900 = erased
+d_pov'45'scripts'45'worker_2914 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.pov-scripts
-d_pov'45'scripts_2912 ::
+d_pov'45'scripts_2936 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3799,9 +3870,9 @@ d_pov'45'scripts_2912 ::
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_pov'45'scripts_2912 = erased
+d_pov'45'scripts_2936 = erased
 -- Ledger.Utxo.Properties._.DepositHelpers.pov-no-scripts
-d_pov'45'no'45'scripts_2916 ::
+d_pov'45'no'45'scripts_2940 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3818,21 +3889,21 @@ d_pov'45'no'45'scripts_2916 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_pov'45'no'45'scripts_2916 = erased
+d_pov'45'no'45'scripts_2940 = erased
 -- Ledger.Utxo.Properties.UTXO-step
-d_UTXO'45'step_2924 ::
+d_UTXO'45'step_2948 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_UTXO'45'step_2924 v0 v1
+d_UTXO'45'step_2948 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
       (coe d_Computational'45'UTXO_2370 (coe v0) (coe v1))
 -- Ledger.Utxo.Properties.UTXO-step-computes-UTXO
-d_UTXO'45'step'45'computes'45'UTXO_2926 ::
+d_UTXO'45'step'45'computes'45'UTXO_2950 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
@@ -3840,15 +3911,18 @@ d_UTXO'45'step'45'computes'45'UTXO_2926 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864 ->
   MAlonzo.Code.Function.Bundles.T_Equivalence_1714
-d_UTXO'45'step'45'computes'45'UTXO_2926 v0 v1 v2 v3 v4 v5
+d_UTXO'45'step'45'computes'45'UTXO_2950 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_'8801''45'success'8660'STS_300
       (coe d_Computational'45'UTXO_2370 (coe v0) (coe v1)) (coe v2)
       (coe v3) (coe v4) (coe v5)
--- Ledger.Utxo.Properties.pov
-d_pov_2928 ::
+-- Ledger.Utxo.Properties._._.pov
+d_pov_2964 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
+  (MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
+   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
@@ -3863,16 +3937,16 @@ d_pov_2928 ::
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXO'10632'__1884 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_pov_2928 = erased
+d_pov_2964 = erased
 -- Ledger.Utxo.Properties.isRefundCert
-d_isRefundCert_2966 ::
+d_isRefundCert_2994 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_834 -> Bool
-d_isRefundCert_2966 ~v0 ~v1 v2 = du_isRefundCert_2966 v2
-du_isRefundCert_2966 ::
+d_isRefundCert_2994 ~v0 ~v1 v2 = du_isRefundCert_2994 v2
+du_isRefundCert_2994 ::
   MAlonzo.Code.Ledger.Certs.T_DCert_834 -> Bool
-du_isRefundCert_2966 v0
+du_isRefundCert_2994 v0
   = let v1 = coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8 in
     coe
       (case coe v0 of
@@ -3882,38 +3956,38 @@ du_isRefundCert_2966 v0
            -> coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10
          _ -> coe v1)
 -- Ledger.Utxo.Properties.noRefundCert
-d_noRefundCert_2972 ::
+d_noRefundCert_3000 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_834] -> ()
-d_noRefundCert_2972 = erased
+d_noRefundCert_3000 = erased
 -- Ledger.Utxo.Properties.fin∘list[]
-d_fin'8728'list'91''93'_2980 ::
+d_fin'8728'list'91''93'_3008 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   () -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_fin'8728'list'91''93'_2980 = erased
+d_fin'8728'list'91''93'_3008 = erased
 -- Ledger.Utxo.Properties.fin∘list∷[]
-d_fin'8728'list'8759''91''93'_2986 ::
+d_fin'8728'list'8759''91''93'_3014 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   () -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_fin'8728'list'8759''91''93'_2986 = erased
+d_fin'8728'list'8759''91''93'_3014 = erased
 -- Ledger.Utxo.Properties.coin∅
-d_coin'8709'_2988 ::
+d_coin'8709'_3016 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_coin'8709'_2988 = erased
+d_coin'8709'_3016 = erased
 -- Ledger.Utxo.Properties.getCoin-singleton
-d_getCoin'45'singleton_3024 ::
+d_getCoin'45'singleton_3052 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_getCoin'45'singleton_3024 = erased
+d_getCoin'45'singleton_3052 = erased
 -- Ledger.Utxo.Properties._.getCoin∪⁺∅≡id
-d_getCoin'8746''8314''8709''8801'id_3044 ::
+d_getCoin'8746''8314''8709''8801'id_3072 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3927,9 +4001,9 @@ d_getCoin'8746''8314''8709''8801'id_3044 ::
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_getCoin'8746''8314''8709''8801'id_3044 = erased
+d_getCoin'8746''8314''8709''8801'id_3072 = erased
 -- Ledger.Utxo.Properties._.getCoin∣∅≡id
-d_getCoin'8739''8709''8801'id_3056 ::
+d_getCoin'8739''8709''8801'id_3084 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3943,9 +4017,9 @@ d_getCoin'8739''8709''8801'id_3056 ::
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_getCoin'8739''8709''8801'id_3056 = erased
+d_getCoin'8739''8709''8801'id_3084 = erased
 -- Ledger.Utxo.Properties._.getCoin∪⁺∅∣∅id
-d_getCoin'8746''8314''8709''8739''8709'id_3062 ::
+d_getCoin'8746''8314''8709''8739''8709'id_3090 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3959,9 +4033,9 @@ d_getCoin'8746''8314''8709''8739''8709'id_3062 ::
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_getCoin'8746''8314''8709''8739''8709'id_3062 = erased
+d_getCoin'8746''8314''8709''8739''8709'id_3090 = erased
 -- Ledger.Utxo.Properties._.∪⁺singleton≡
-d_'8746''8314'singleton'8801'_3074 ::
+d_'8746''8314'singleton'8801'_3102 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3976,9 +4050,9 @@ d_'8746''8314'singleton'8801'_3074 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8746''8314'singleton'8801'_3074 = erased
+d_'8746''8314'singleton'8801'_3102 = erased
 -- Ledger.Utxo.Properties._._.≤updatePropDeps
-d_'8804'updatePropDeps_3100 ::
+d_'8804'updatePropDeps_3128 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3995,16 +4069,16 @@ d_'8804'updatePropDeps_3100 ::
   Integer ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-d_'8804'updatePropDeps_3100 v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
-  = du_'8804'updatePropDeps_3100 v0 v4 v5 v6 v7
-du_'8804'updatePropDeps_3100 ::
+d_'8804'updatePropDeps_3128 v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
+  = du_'8804'updatePropDeps_3128 v0 v4 v5 v6 v7
+du_'8804'updatePropDeps_3128 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny ->
   Integer ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-du_'8804'updatePropDeps_3100 v0 v1 v2 v3 v4
+du_'8804'updatePropDeps_3128 v0 v1 v2 v3 v4
   = case coe v4 of
       []
         -> coe
@@ -4026,7 +4100,7 @@ du_'8804'updatePropDeps_3100 v0 v1 v2 v3 v4
         -> coe
              MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2784
              (coe
-                du_'8804'updatePropDeps_3100 (coe v0) (coe v1) (coe v2) (coe v3)
+                du_'8804'updatePropDeps_3128 (coe v0) (coe v1) (coe v2) (coe v3)
                 (coe v6))
              (coe
                 MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2784
@@ -4071,7 +4145,7 @@ du_'8804'updatePropDeps_3100 v0 v1 v2 v3 v4
                       (coe v3))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._._.updatePropDeps≡
-d_updatePropDeps'8801'_3108 ::
+d_updatePropDeps'8801'_3136 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4088,9 +4162,9 @@ d_updatePropDeps'8801'_3108 ::
   Integer ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_updatePropDeps'8801'_3108 = erased
+d_updatePropDeps'8801'_3136 = erased
 -- Ledger.Utxo.Properties._.≤certDeps
-d_'8804'certDeps_3132 ::
+d_'8804'certDeps_3160 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4106,14 +4180,14 @@ d_'8804'certDeps_3132 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-d_'8804'certDeps_3132 v0 ~v1 ~v2 ~v3 ~v4 v5 v6
-  = du_'8804'certDeps_3132 v0 v5 v6
-du_'8804'certDeps_3132 ::
+d_'8804'certDeps_3160 v0 ~v1 ~v2 ~v3 ~v4 v5 v6
+  = du_'8804'certDeps_3160 v0 v5 v6
+du_'8804'certDeps_3160 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-du_'8804'certDeps_3132 v0 v1 v2
+du_'8804'certDeps_3160 v0 v1 v2
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (coe
@@ -4581,7 +4655,7 @@ du_'8804'certDeps_3132 v0 v1 v2
                            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
                      (coe (\ v5 -> v5)) (coe v1))))))
 -- Ledger.Utxo.Properties._.≤updateCertDeps
-d_'8804'updateCertDeps_3148 ::
+d_'8804'updateCertDeps_3176 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4598,16 +4672,16 @@ d_'8804'updateCertDeps_3148 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-d_'8804'updateCertDeps_3148 v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
-  = du_'8804'updateCertDeps_3148 v0 v4 v5 v6 v7
-du_'8804'updateCertDeps_3148 ::
+d_'8804'updateCertDeps_3176 v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
+  = du_'8804'updateCertDeps_3176 v0 v4 v5 v6 v7
+du_'8804'updateCertDeps_3176 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_834] ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-du_'8804'updateCertDeps_3148 v0 v1 v2 v3 v4
+du_'8804'updateCertDeps_3176 v0 v1 v2 v3 v4
   = case coe v1 of
       []
         -> coe
@@ -4633,10 +4707,10 @@ du_'8804'updateCertDeps_3148 v0 v1 v2 v3 v4
                       -> coe
                            MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2784
                            (coe
-                              du_'8804'updateCertDeps_3148 (coe v0) (coe v6) (coe v2) (coe v3)
+                              du_'8804'updateCertDeps_3176 (coe v0) (coe v6) (coe v2) (coe v3)
                               (coe v10))
                            (coe
-                              du_'8804'certDeps_3132 (coe v0)
+                              du_'8804'certDeps_3160 (coe v0)
                               (coe
                                  MAlonzo.Code.Ledger.Utxo.du_updateCertDeposits_1942 (coe v0)
                                  (coe v2) (coe v6) (coe v3))
@@ -4648,10 +4722,10 @@ du_'8804'updateCertDeps_3148 v0 v1 v2 v3 v4
                       -> coe
                            MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2784
                            (coe
-                              du_'8804'updateCertDeps_3148 (coe v0) (coe v6) (coe v2) (coe v3)
+                              du_'8804'updateCertDeps_3176 (coe v0) (coe v6) (coe v2) (coe v3)
                               (coe v10))
                            (coe
-                              du_'8804'certDeps_3132 (coe v0)
+                              du_'8804'certDeps_3160 (coe v0)
                               (coe
                                  MAlonzo.Code.Ledger.Utxo.du_updateCertDeposits_1942 (coe v0)
                                  (coe v2) (coe v6) (coe v3))
@@ -4663,7 +4737,7 @@ du_'8804'updateCertDeps_3148 v0 v1 v2 v3 v4
                       -> coe
                            MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2784
                            (coe
-                              du_'8804'updateCertDeps_3148 (coe v0) (coe v6) (coe v2) (coe v3)
+                              du_'8804'updateCertDeps_3176 (coe v0) (coe v6) (coe v2) (coe v3)
                               (coe v10))
                            (coe
                               MAlonzo.Code.Data.Nat.Properties.du_'8804''45'reflexive_2772
@@ -4689,10 +4763,10 @@ du_'8804'updateCertDeps_3148 v0 v1 v2 v3 v4
                       -> coe
                            MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2784
                            (coe
-                              du_'8804'updateCertDeps_3148 (coe v0) (coe v6) (coe v2) (coe v3)
+                              du_'8804'updateCertDeps_3176 (coe v0) (coe v6) (coe v2) (coe v3)
                               (coe v10))
                            (coe
-                              du_'8804'certDeps_3132 (coe v0)
+                              du_'8804'certDeps_3160 (coe v0)
                               (coe
                                  MAlonzo.Code.Ledger.Utxo.du_updateCertDeposits_1942 (coe v0)
                                  (coe v2) (coe v6) (coe v3))
@@ -4704,7 +4778,7 @@ du_'8804'updateCertDeps_3148 v0 v1 v2 v3 v4
                       -> coe
                            MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2784
                            (coe
-                              du_'8804'updateCertDeps_3148 (coe v0) (coe v6) (coe v2) (coe v3)
+                              du_'8804'updateCertDeps_3176 (coe v0) (coe v6) (coe v2) (coe v3)
                               (coe v10))
                            (coe
                               MAlonzo.Code.Data.Nat.Properties.du_'8804''45'reflexive_2772
@@ -4730,7 +4804,7 @@ du_'8804'updateCertDeps_3148 v0 v1 v2 v3 v4
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._._.body
-d_body_3178 ::
+d_body_3206 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4742,18 +4816,18 @@ d_body_3178 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
-  T_GeneralizeTel_862247 ->
+  T_GeneralizeTel_923315 ->
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2736
-d_body_3178 ~v0 ~v1 ~v2 ~v3 v4 = du_body_3178 v4
-du_body_3178 ::
-  T_GeneralizeTel_862247 ->
+d_body_3206 ~v0 ~v1 ~v2 ~v3 v4 = du_body_3206 v4
+du_body_3206 ::
+  T_GeneralizeTel_923315 ->
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2736
-du_body_3178 v0
+du_body_3206 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_body_2848
-      (coe d_'46'generalizedField'45'tx_862233 (coe v0))
+      (coe d_'46'generalizedField'45'tx_923301 (coe v0))
 -- Ledger.Utxo.Properties._._.txcerts
-d_txcerts_3200 ::
+d_txcerts_3228 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4765,18 +4839,18 @@ d_txcerts_3200 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
-  T_GeneralizeTel_862247 -> [MAlonzo.Code.Ledger.Certs.T_DCert_834]
-d_txcerts_3200 ~v0 ~v1 ~v2 ~v3 v4 = du_txcerts_3200 v4
-du_txcerts_3200 ::
-  T_GeneralizeTel_862247 -> [MAlonzo.Code.Ledger.Certs.T_DCert_834]
-du_txcerts_3200 v0
+  T_GeneralizeTel_923315 -> [MAlonzo.Code.Ledger.Certs.T_DCert_834]
+d_txcerts_3228 ~v0 ~v1 ~v2 ~v3 v4 = du_txcerts_3228 v4
+du_txcerts_3228 ::
+  T_GeneralizeTel_923315 -> [MAlonzo.Code.Ledger.Certs.T_DCert_834]
+du_txcerts_3228 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_txcerts_2790
       (coe
          MAlonzo.Code.Ledger.Transaction.d_body_2848
-         (coe d_'46'generalizedField'45'tx_862233 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_923301 (coe v0)))
 -- Ledger.Utxo.Properties._._.txprop
-d_txprop_3212 ::
+d_txprop_3240 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4788,20 +4862,20 @@ d_txprop_3212 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
-  T_GeneralizeTel_862247 ->
+  T_GeneralizeTel_923315 ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754]
-d_txprop_3212 ~v0 ~v1 ~v2 ~v3 v4 = du_txprop_3212 v4
-du_txprop_3212 ::
-  T_GeneralizeTel_862247 ->
+d_txprop_3240 ~v0 ~v1 ~v2 ~v3 v4 = du_txprop_3240 v4
+du_txprop_3240 ::
+  T_GeneralizeTel_923315 ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754]
-du_txprop_3212 v0
+du_txprop_3240 v0
   = coe
       MAlonzo.Code.Ledger.Transaction.d_txprop_2796
       (coe
          MAlonzo.Code.Ledger.Transaction.d_body_2848
-         (coe d_'46'generalizedField'45'tx_862233 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_923301 (coe v0)))
 -- Ledger.Utxo.Properties._._.govActionDeposit
-d_govActionDeposit_3252 ::
+d_govActionDeposit_3280 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4813,18 +4887,18 @@ d_govActionDeposit_3252 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
-  T_GeneralizeTel_862247 -> Integer
-d_govActionDeposit_3252 ~v0 ~v1 ~v2 ~v3 v4
-  = du_govActionDeposit_3252 v4
-du_govActionDeposit_3252 :: T_GeneralizeTel_862247 -> Integer
-du_govActionDeposit_3252 v0
+  T_GeneralizeTel_923315 -> Integer
+d_govActionDeposit_3280 ~v0 ~v1 ~v2 ~v3 v4
+  = du_govActionDeposit_3280 v4
+du_govActionDeposit_3280 :: T_GeneralizeTel_923315 -> Integer
+du_govActionDeposit_3280 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_govActionDeposit_356
       (coe
          MAlonzo.Code.Ledger.Utxo.d_pparams_1860
-         (coe d_'46'generalizedField'45'Γ_862235 (coe v0)))
+         (coe d_'46'generalizedField'45'Γ_923303 (coe v0)))
 -- Ledger.Utxo.Properties._._.deposits
-d_deposits_3288 ::
+d_deposits_3316 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4836,16 +4910,16 @@ d_deposits_3288 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_deposits_3288 ~v0 ~v1 ~v2 ~v3 v4 = du_deposits_3288 v4
-du_deposits_3288 ::
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_deposits_3288 v0
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_deposits_3316 ~v0 ~v1 ~v2 ~v3 v4 = du_deposits_3316 v4
+du_deposits_3316 ::
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_deposits_3316 v0
   = coe
       MAlonzo.Code.Ledger.Utxo.d_deposits_1878
-      (coe d_'46'generalizedField'45'utxoState_862237 (coe v0))
+      (coe d_'46'generalizedField'45'utxoState_923305 (coe v0))
 -- Ledger.Utxo.Properties._._.donations
-d_donations_3290 ::
+d_donations_3318 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4857,15 +4931,15 @@ d_donations_3290 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
-  T_GeneralizeTel_862247 -> Integer
-d_donations_3290 ~v0 ~v1 ~v2 ~v3 v4 = du_donations_3290 v4
-du_donations_3290 :: T_GeneralizeTel_862247 -> Integer
-du_donations_3290 v0
+  T_GeneralizeTel_923315 -> Integer
+d_donations_3318 ~v0 ~v1 ~v2 ~v3 v4 = du_donations_3318 v4
+du_donations_3318 :: T_GeneralizeTel_923315 -> Integer
+du_donations_3318 v0
   = coe
       MAlonzo.Code.Ledger.Utxo.d_donations_1880
-      (coe d_'46'generalizedField'45'utxoState_862237 (coe v0))
+      (coe d_'46'generalizedField'45'utxoState_923305 (coe v0))
 -- Ledger.Utxo.Properties._._.fees
-d_fees_3292 ::
+d_fees_3320 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4877,15 +4951,15 @@ d_fees_3292 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
-  T_GeneralizeTel_862247 -> Integer
-d_fees_3292 ~v0 ~v1 ~v2 ~v3 v4 = du_fees_3292 v4
-du_fees_3292 :: T_GeneralizeTel_862247 -> Integer
-du_fees_3292 v0
+  T_GeneralizeTel_923315 -> Integer
+d_fees_3320 ~v0 ~v1 ~v2 ~v3 v4 = du_fees_3320 v4
+du_fees_3320 :: T_GeneralizeTel_923315 -> Integer
+du_fees_3320 v0
   = coe
       MAlonzo.Code.Ledger.Utxo.d_fees_1876
-      (coe d_'46'generalizedField'45'utxoState_862237 (coe v0))
+      (coe d_'46'generalizedField'45'utxoState_923305 (coe v0))
 -- Ledger.Utxo.Properties._._.utxo
-d_utxo_3294 ::
+d_utxo_3322 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4897,16 +4971,16 @@ d_utxo_3294 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_utxo_3294 ~v0 ~v1 ~v2 ~v3 v4 = du_utxo_3294 v4
-du_utxo_3294 ::
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_utxo_3294 v0
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_utxo_3322 ~v0 ~v1 ~v2 ~v3 v4 = du_utxo_3322 v4
+du_utxo_3322 ::
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_utxo_3322 v0
   = coe
       MAlonzo.Code.Ledger.Utxo.d_utxo_1874
-      (coe d_'46'generalizedField'45'utxoState_862237 (coe v0))
+      (coe d_'46'generalizedField'45'utxoState_923305 (coe v0))
 -- Ledger.Utxo.Properties._.gmsc
-d_gmsc_3296 ::
+d_gmsc_3324 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -4928,9 +5002,9 @@ d_gmsc_3296 ::
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXO'10632'__1884 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-d_gmsc_3296 v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
-  = du_gmsc_3296 v0 v4 v5 v6 v7 v8 v9 v10 v11 v12
-du_gmsc_3296 ::
+d_gmsc_3324 v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
+  = du_gmsc_3324 v0 v4 v5 v6 v7 v8 v9 v10 v11 v12
+du_gmsc_3324 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
@@ -4942,7 +5016,7 @@ du_gmsc_3296 ::
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXO'10632'__1884 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
+du_gmsc_3324 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
   = case coe v8 of
       MAlonzo.Code.Ledger.Utxo.C_UTXO'45'inductive_2730 v14
         -> case coe v14 of
@@ -4997,7 +5071,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                         MAlonzo.Code.Data.List.Base.du_length_284
                                                                                                                         (let v43
                                                                                                                                = coe
-                                                                                                                                   C_mkGeneralizeTel_862249
+                                                                                                                                   C_mkGeneralizeTel_923317
                                                                                                                                    (coe
                                                                                                                                       v1)
                                                                                                                                    (coe
@@ -5017,7 +5091,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                  (coe
-                                                                                                                                    d_'46'generalizedField'45'tx_862233
+                                                                                                                                    d_'46'generalizedField'45'tx_923301
                                                                                                                                     (coe
                                                                                                                                        v43))))))
                                                                                                                      (coe
@@ -5025,9 +5099,9 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Utxo.d_pparams_1860
                                                                                                                            (coe
-                                                                                                                              d_'46'generalizedField'45'Γ_862235
+                                                                                                                              d_'46'generalizedField'45'Γ_923303
                                                                                                                               (coe
-                                                                                                                                 C_mkGeneralizeTel_862249
+                                                                                                                                 C_mkGeneralizeTel_923317
                                                                                                                                  (coe
                                                                                                                                     v1)
                                                                                                                                  (coe
@@ -5059,7 +5133,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                            v3)
                                                                                                                         (let v43
                                                                                                                                = coe
-                                                                                                                                   C_mkGeneralizeTel_862249
+                                                                                                                                   C_mkGeneralizeTel_923317
                                                                                                                                    (coe
                                                                                                                                       v1)
                                                                                                                                    (coe
@@ -5078,7 +5152,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                               (coe
-                                                                                                                                 d_'46'generalizedField'45'tx_862233
+                                                                                                                                 d_'46'generalizedField'45'tx_923301
                                                                                                                                  (coe
                                                                                                                                     v43))))))
                                                                                                                   (coe
@@ -5100,7 +5174,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.PParams.d_govActionDeposit_356
                                                                                                                            (coe
-                                                                                                                              du_pp_3316
+                                                                                                                              du_pp_3344
                                                                                                                               (coe
                                                                                                                                  v2))))
                                                                                                                      (coe
@@ -5143,7 +5217,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.PParams.d_govActionDeposit_356
                                                                                                                                  (coe
-                                                                                                                                    du_pp_3316
+                                                                                                                                    du_pp_3344
                                                                                                                                     (coe
                                                                                                                                        v2)))
                                                                                                                               (coe
@@ -5190,7 +5264,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                               v3)
                                                                                                                            (let v43
                                                                                                                                   = coe
-                                                                                                                                      C_mkGeneralizeTel_862249
+                                                                                                                                      C_mkGeneralizeTel_923317
                                                                                                                                       (coe
                                                                                                                                          v1)
                                                                                                                                       (coe
@@ -5209,7 +5283,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                  (coe
-                                                                                                                                    d_'46'generalizedField'45'tx_862233
+                                                                                                                                    d_'46'generalizedField'45'tx_923301
                                                                                                                                     (coe
                                                                                                                                        v43))))))
                                                                                                                      (coe
@@ -5267,7 +5341,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.PParams.d_govActionDeposit_356
                                                                                                                                     (coe
-                                                                                                                                       du_pp_3316
+                                                                                                                                       du_pp_3344
                                                                                                                                        (coe
                                                                                                                                           v2)))
                                                                                                                                  (coe
@@ -5323,7 +5397,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                  (coe
                                                                                                                                     v0)
                                                                                                                                  (coe
-                                                                                                                                    du_pp_3316
+                                                                                                                                    du_pp_3344
                                                                                                                                     (coe
                                                                                                                                        v2))
                                                                                                                                  (coe
@@ -5374,7 +5448,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                  v3)
                                                                                                                               (let v43
                                                                                                                                      = coe
-                                                                                                                                         C_mkGeneralizeTel_862249
+                                                                                                                                         C_mkGeneralizeTel_923317
                                                                                                                                          (coe
                                                                                                                                             v1)
                                                                                                                                          (coe
@@ -5393,7 +5467,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                     (coe
-                                                                                                                                       d_'46'generalizedField'45'tx_862233
+                                                                                                                                       d_'46'generalizedField'45'tx_923301
                                                                                                                                        (coe
                                                                                                                                           v43))))))
                                                                                                                         (coe
@@ -5430,7 +5504,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                     (coe
                                                                                                                                        v0)
                                                                                                                                     (coe
-                                                                                                                                       du_pp_3316
+                                                                                                                                       du_pp_3344
                                                                                                                                        (coe
                                                                                                                                           v2))
                                                                                                                                     (coe
@@ -5465,7 +5539,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                     (coe
                                                                                                                                        v3))))
                                                                                                                            (coe
-                                                                                                                              du_newDeps_3440
+                                                                                                                              du_newDeps_3468
                                                                                                                               (coe
                                                                                                                                  v0)
                                                                                                                               (coe
@@ -5491,7 +5565,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                     v3)
                                                                                                                                  (let v43
                                                                                                                                         = coe
-                                                                                                                                            C_mkGeneralizeTel_862249
+                                                                                                                                            C_mkGeneralizeTel_923317
                                                                                                                                             (coe
                                                                                                                                                v1)
                                                                                                                                             (coe
@@ -5510,7 +5584,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                        (coe
-                                                                                                                                          d_'46'generalizedField'45'tx_862233
+                                                                                                                                          d_'46'generalizedField'45'tx_923301
                                                                                                                                           (coe
                                                                                                                                              v43))))))
                                                                                                                            (coe
@@ -5529,7 +5603,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                       v46
                                                                                                                                       v47))
                                                                                                                               (coe
-                                                                                                                                 du_newDeps_3440
+                                                                                                                                 du_newDeps_3468
                                                                                                                                  (coe
                                                                                                                                     v0)
                                                                                                                                  (coe
@@ -5544,7 +5618,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                     (coe
                                                                                                                                        addInt
                                                                                                                                        (coe
-                                                                                                                                          du_newDeps_3440
+                                                                                                                                          du_newDeps_3468
                                                                                                                                           (coe
                                                                                                                                              v0)
                                                                                                                                           (coe
@@ -5571,7 +5645,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                        (coe
                                                                                                                                           v0))
                                                                                                                                     (coe
-                                                                                                                                       du_balOut_3446
+                                                                                                                                       du_balOut_3476
                                                                                                                                        (coe
                                                                                                                                           v0)
                                                                                                                                        (coe
@@ -5593,7 +5667,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                        v3)
                                                                                                                                     (let v43
                                                                                                                                            = coe
-                                                                                                                                               C_mkGeneralizeTel_862249
+                                                                                                                                               C_mkGeneralizeTel_923317
                                                                                                                                                (coe
                                                                                                                                                   v1)
                                                                                                                                                (coe
@@ -5612,7 +5686,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                        (coe
                                                                                                                                           MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                           (coe
-                                                                                                                                             d_'46'generalizedField'45'tx_862233
+                                                                                                                                             d_'46'generalizedField'45'tx_923301
                                                                                                                                              (coe
                                                                                                                                                 v43))))))
                                                                                                                               (coe
@@ -5629,7 +5703,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                        (coe
                                                                                                                                           addInt
                                                                                                                                           (coe
-                                                                                                                                             du_newDeps_3440
+                                                                                                                                             du_newDeps_3468
                                                                                                                                              (coe
                                                                                                                                                 v0)
                                                                                                                                              (coe
@@ -5656,7 +5730,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                           (coe
                                                                                                                                              v0))
                                                                                                                                        (coe
-                                                                                                                                          du_balOut_3446
+                                                                                                                                          du_balOut_3476
                                                                                                                                           (coe
                                                                                                                                              v0)
                                                                                                                                           (coe
@@ -5667,7 +5741,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                        (coe
                                                                                                                                           addInt
                                                                                                                                           (coe
-                                                                                                                                             du_newDeps_3440
+                                                                                                                                             du_newDeps_3468
                                                                                                                                              (coe
                                                                                                                                                 v0)
                                                                                                                                              (coe
@@ -5694,7 +5768,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                           (coe
                                                                                                                                              v0))
                                                                                                                                        (coe
-                                                                                                                                          du_balOut_3446
+                                                                                                                                          du_balOut_3476
                                                                                                                                           (coe
                                                                                                                                              v0)
                                                                                                                                           (coe
@@ -5716,7 +5790,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                           v3)
                                                                                                                                        (let v43
                                                                                                                                               = coe
-                                                                                                                                                  C_mkGeneralizeTel_862249
+                                                                                                                                                  C_mkGeneralizeTel_923317
                                                                                                                                                   (coe
                                                                                                                                                      v1)
                                                                                                                                                   (coe
@@ -5735,7 +5809,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                              (coe
-                                                                                                                                                d_'46'generalizedField'45'tx_862233
+                                                                                                                                                d_'46'generalizedField'45'tx_923301
                                                                                                                                                 (coe
                                                                                                                                                    v43))))))
                                                                                                                                  (coe
@@ -5752,7 +5826,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                           (coe
                                                                                                                                              addInt
                                                                                                                                              (coe
-                                                                                                                                                du_newDeps_3440
+                                                                                                                                                du_newDeps_3468
                                                                                                                                                 (coe
                                                                                                                                                    v0)
                                                                                                                                                 (coe
@@ -5779,7 +5853,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                              (coe
                                                                                                                                                 v0))
                                                                                                                                           (coe
-                                                                                                                                             du_balOut_3446
+                                                                                                                                             du_balOut_3476
                                                                                                                                              (coe
                                                                                                                                                 v0)
                                                                                                                                              (coe
@@ -5790,7 +5864,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                           (coe
                                                                                                                                              addInt
                                                                                                                                              (coe
-                                                                                                                                                du_newDeps_3440
+                                                                                                                                                du_newDeps_3468
                                                                                                                                                 (coe
                                                                                                                                                    v0)
                                                                                                                                                 (coe
@@ -5817,7 +5891,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                              (coe
                                                                                                                                                 v0))
                                                                                                                                           (coe
-                                                                                                                                             du_balOut_3446
+                                                                                                                                             du_balOut_3476
                                                                                                                                              (coe
                                                                                                                                                 v0)
                                                                                                                                              (coe
@@ -5839,7 +5913,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                              v3)
                                                                                                                                           (let v43
                                                                                                                                                  = coe
-                                                                                                                                                     C_mkGeneralizeTel_862249
+                                                                                                                                                     C_mkGeneralizeTel_923317
                                                                                                                                                      (coe
                                                                                                                                                         v1)
                                                                                                                                                      (coe
@@ -5858,7 +5932,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                                 (coe
-                                                                                                                                                   d_'46'generalizedField'45'tx_862233
+                                                                                                                                                   d_'46'generalizedField'45'tx_923301
                                                                                                                                                    (coe
                                                                                                                                                       v43))))))
                                                                                                                                     (coe
@@ -5875,7 +5949,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                              (coe
                                                                                                                                                 addInt
                                                                                                                                                 (coe
-                                                                                                                                                   du_newDeps_3440
+                                                                                                                                                   du_newDeps_3468
                                                                                                                                                    (coe
                                                                                                                                                       v0)
                                                                                                                                                    (coe
@@ -5902,7 +5976,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                 (coe
                                                                                                                                                    v0))
                                                                                                                                              (coe
-                                                                                                                                                du_balOut_3446
+                                                                                                                                                du_balOut_3476
                                                                                                                                                 (coe
                                                                                                                                                    v0)
                                                                                                                                                 (coe
@@ -5913,7 +5987,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                              (coe
                                                                                                                                                 addInt
                                                                                                                                                 (coe
-                                                                                                                                                   du_newDeps_3440
+                                                                                                                                                   du_newDeps_3468
                                                                                                                                                    (coe
                                                                                                                                                       v0)
                                                                                                                                                    (coe
@@ -5940,7 +6014,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                 (coe
                                                                                                                                                    v0))
                                                                                                                                              (coe
-                                                                                                                                                du_balOut_3446
+                                                                                                                                                du_balOut_3476
                                                                                                                                                 (coe
                                                                                                                                                    v0)
                                                                                                                                                 (coe
@@ -5962,7 +6036,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                 v3)
                                                                                                                                              (let v43
                                                                                                                                                     = coe
-                                                                                                                                                        C_mkGeneralizeTel_862249
+                                                                                                                                                        C_mkGeneralizeTel_923317
                                                                                                                                                         (coe
                                                                                                                                                            v1)
                                                                                                                                                         (coe
@@ -5981,7 +6055,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                                    (coe
-                                                                                                                                                      d_'46'generalizedField'45'tx_862233
+                                                                                                                                                      d_'46'generalizedField'45'tx_923301
                                                                                                                                                       (coe
                                                                                                                                                          v43))))))
                                                                                                                                        (coe
@@ -5998,7 +6072,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                 (coe
                                                                                                                                                    addInt
                                                                                                                                                    (coe
-                                                                                                                                                      du_newDeps_3440
+                                                                                                                                                      du_newDeps_3468
                                                                                                                                                       (coe
                                                                                                                                                          v0)
                                                                                                                                                       (coe
@@ -6025,7 +6099,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                    (coe
                                                                                                                                                       v0))
                                                                                                                                                 (coe
-                                                                                                                                                   du_balOut_3446
+                                                                                                                                                   du_balOut_3476
                                                                                                                                                    (coe
                                                                                                                                                       v0)
                                                                                                                                                    (coe
@@ -6034,7 +6108,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                              (coe
                                                                                                                                                 addInt
                                                                                                                                                 (coe
-                                                                                                                                                   du_newDeps_3440
+                                                                                                                                                   du_newDeps_3468
                                                                                                                                                    (coe
                                                                                                                                                       v0)
                                                                                                                                                    (coe
@@ -6063,7 +6137,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                          (coe
                                                                                                                                                             v0)))
                                                                                                                                                    (coe
-                                                                                                                                                      du_balOut_3446
+                                                                                                                                                      du_balOut_3476
                                                                                                                                                       (coe
                                                                                                                                                          v0)
                                                                                                                                                       (coe
@@ -6095,7 +6169,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                    v3)
                                                                                                                                                 (let v43
                                                                                                                                                        = coe
-                                                                                                                                                           C_mkGeneralizeTel_862249
+                                                                                                                                                           C_mkGeneralizeTel_923317
                                                                                                                                                            (coe
                                                                                                                                                               v1)
                                                                                                                                                            (coe
@@ -6114,7 +6188,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                    (coe
                                                                                                                                                       MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                                       (coe
-                                                                                                                                                         d_'46'generalizedField'45'tx_862233
+                                                                                                                                                         d_'46'generalizedField'45'tx_923301
                                                                                                                                                          (coe
                                                                                                                                                             v43))))))
                                                                                                                                           (coe
@@ -6129,7 +6203,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                 (coe
                                                                                                                                                    addInt
                                                                                                                                                    (coe
-                                                                                                                                                      du_newDeps_3440
+                                                                                                                                                      du_newDeps_3468
                                                                                                                                                       (coe
                                                                                                                                                          v0)
                                                                                                                                                       (coe
@@ -6158,7 +6232,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                             (coe
                                                                                                                                                                v0)))
                                                                                                                                                       (coe
-                                                                                                                                                         du_balOut_3446
+                                                                                                                                                         du_balOut_3476
                                                                                                                                                          (coe
                                                                                                                                                             v0)
                                                                                                                                                          (coe
@@ -6202,7 +6276,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                (coe
                                                                                                                                                                   v0)))
                                                                                                                                                          (coe
-                                                                                                                                                            du_balOut_3446
+                                                                                                                                                            du_balOut_3476
                                                                                                                                                             (coe
                                                                                                                                                                v0)
                                                                                                                                                             (coe
@@ -6223,7 +6297,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                             (coe
                                                                                                                                                                v0))
                                                                                                                                                          (coe
-                                                                                                                                                            du_newDeps_3440
+                                                                                                                                                            du_newDeps_3468
                                                                                                                                                             (coe
                                                                                                                                                                v0)
                                                                                                                                                             (coe
@@ -6249,7 +6323,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                       v3)
                                                                                                                                                    (let v43
                                                                                                                                                           = coe
-                                                                                                                                                              C_mkGeneralizeTel_862249
+                                                                                                                                                              C_mkGeneralizeTel_923317
                                                                                                                                                               (coe
                                                                                                                                                                  v1)
                                                                                                                                                               (coe
@@ -6268,7 +6342,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                       (coe
                                                                                                                                                          MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                                          (coe
-                                                                                                                                                            d_'46'generalizedField'45'tx_862233
+                                                                                                                                                            d_'46'generalizedField'45'tx_923301
                                                                                                                                                             (coe
                                                                                                                                                                v43))))))
                                                                                                                                              (coe
@@ -6308,7 +6382,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                   (coe
                                                                                                                                                                      v0)))
                                                                                                                                                             (coe
-                                                                                                                                                               du_balOut_3446
+                                                                                                                                                               du_balOut_3476
                                                                                                                                                                (coe
                                                                                                                                                                   v0)
                                                                                                                                                                (coe
@@ -6329,7 +6403,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                (coe
                                                                                                                                                                   v0))
                                                                                                                                                             (coe
-                                                                                                                                                               du_newDeps_3440
+                                                                                                                                                               du_newDeps_3468
                                                                                                                                                                (coe
                                                                                                                                                                   v0)
                                                                                                                                                                (coe
@@ -6368,7 +6442,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                   (coe
                                                                                                                                                                      v0)))
                                                                                                                                                             (coe
-                                                                                                                                                               du_balOut_3446
+                                                                                                                                                               du_balOut_3476
                                                                                                                                                                (coe
                                                                                                                                                                   v0)
                                                                                                                                                                (coe
@@ -6389,7 +6463,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                (coe
                                                                                                                                                                   v0))
                                                                                                                                                             (coe
-                                                                                                                                                               du_newDeps_3440
+                                                                                                                                                               du_newDeps_3468
                                                                                                                                                                (coe
                                                                                                                                                                   v0)
                                                                                                                                                                (coe
@@ -6425,7 +6499,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                          v3)
                                                                                                                                                       (let v43
                                                                                                                                                              = coe
-                                                                                                                                                                 C_mkGeneralizeTel_862249
+                                                                                                                                                                 C_mkGeneralizeTel_923317
                                                                                                                                                                  (coe
                                                                                                                                                                     v1)
                                                                                                                                                                  (coe
@@ -6444,7 +6518,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                          (coe
                                                                                                                                                             MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                                             (coe
-                                                                                                                                                               d_'46'generalizedField'45'tx_862233
+                                                                                                                                                               d_'46'generalizedField'45'tx_923301
                                                                                                                                                                (coe
                                                                                                                                                                   v43))))))
                                                                                                                                                 (coe
@@ -6485,7 +6559,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                      (coe
                                                                                                                                                                         v0)))
                                                                                                                                                                (coe
-                                                                                                                                                                  du_balOut_3446
+                                                                                                                                                                  du_balOut_3476
                                                                                                                                                                   (coe
                                                                                                                                                                      v0)
                                                                                                                                                                   (coe
@@ -6506,7 +6580,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                   (coe
                                                                                                                                                                      v0))
                                                                                                                                                                (coe
-                                                                                                                                                                  du_newDeps_3440
+                                                                                                                                                                  du_newDeps_3468
                                                                                                                                                                   (coe
                                                                                                                                                                      v0)
                                                                                                                                                                   (coe
@@ -6547,33 +6621,52 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                   (coe
                                                                                                                                                                      v0)))
                                                                                                                                                             (coe
-                                                                                                                                                               du_balIn_3444
+                                                                                                                                                               MAlonzo.Code.Algebra.Bundles.d__'8729'__982
                                                                                                                                                                (coe
-                                                                                                                                                                  v0)
-                                                                                                                                                               (coe
-                                                                                                                                                                  v1)
-                                                                                                                                                               (coe
-                                                                                                                                                                  v3))
-                                                                                                                                                            (MAlonzo.Code.Ledger.Transaction.d_mint_2786
-                                                                                                                                                               (coe
-                                                                                                                                                                  MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                                                                  MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
                                                                                                                                                                   (coe
-                                                                                                                                                                     v1))))
+                                                                                                                                                                     MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
+                                                                                                                                                                     (coe
+                                                                                                                                                                        v0)))
+                                                                                                                                                               (coe
+                                                                                                                                                                  du_balIn_3474
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v0)
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v1)
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v3))
+                                                                                                                                                               (MAlonzo.Code.Ledger.Transaction.d_mint_2786
+                                                                                                                                                                  (coe
+                                                                                                                                                                     MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                                                                     (coe
+                                                                                                                                                                        v1))))
+                                                                                                                                                            (coe
+                                                                                                                                                               MAlonzo.Code.Ledger.TokenAlgebra.d_inject_206
+                                                                                                                                                               (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v0))
+                                                                                                                                                               (coe
+                                                                                                                                                                  du_refunds_3470
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v0)
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v1)
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v2)
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v3))))
                                                                                                                                                          (coe
                                                                                                                                                             MAlonzo.Code.Ledger.TokenAlgebra.d_inject_206
                                                                                                                                                             (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
                                                                                                                                                                (coe
                                                                                                                                                                   v0))
                                                                                                                                                             (coe
-                                                                                                                                                               du_refunds_3442
+                                                                                                                                                               du_wdrls_3472
                                                                                                                                                                (coe
                                                                                                                                                                   v0)
                                                                                                                                                                (coe
-                                                                                                                                                                  v1)
-                                                                                                                                                               (coe
-                                                                                                                                                                  v2)
-                                                                                                                                                               (coe
-                                                                                                                                                                  v3)))))
+                                                                                                                                                                  v1)))))
                                                                                                                                                    (coe
                                                                                                                                                       MAlonzo.Code.Ledger.TokenAlgebra.d_coin_204
                                                                                                                                                       (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
@@ -6591,7 +6684,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                             v3)
                                                                                                                                                          (let v43
                                                                                                                                                                 = coe
-                                                                                                                                                                    C_mkGeneralizeTel_862249
+                                                                                                                                                                    C_mkGeneralizeTel_923317
                                                                                                                                                                     (coe
                                                                                                                                                                        v1)
                                                                                                                                                                     (coe
@@ -6610,7 +6703,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                             (coe
                                                                                                                                                                MAlonzo.Code.Ledger.Transaction.d_body_2848
                                                                                                                                                                (coe
-                                                                                                                                                                  d_'46'generalizedField'45'tx_862233
+                                                                                                                                                                  d_'46'generalizedField'45'tx_923301
                                                                                                                                                                   (coe
                                                                                                                                                                      v43))))))
                                                                                                                                                    (let v43
@@ -6644,33 +6737,52 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                                                         (coe
                                                                                                                                                                            v0)))
                                                                                                                                                                   (coe
-                                                                                                                                                                     du_balIn_3444
+                                                                                                                                                                     MAlonzo.Code.Algebra.Bundles.d__'8729'__982
                                                                                                                                                                      (coe
-                                                                                                                                                                        v0)
-                                                                                                                                                                     (coe
-                                                                                                                                                                        v1)
-                                                                                                                                                                     (coe
-                                                                                                                                                                        v3))
-                                                                                                                                                                  (MAlonzo.Code.Ledger.Transaction.d_mint_2786
-                                                                                                                                                                     (coe
-                                                                                                                                                                        MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                                                                        MAlonzo.Code.Ledger.TokenAlgebra.du_Value'45'CommutativeMonoid_122
                                                                                                                                                                         (coe
-                                                                                                                                                                           v1))))
+                                                                                                                                                                           MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
+                                                                                                                                                                           (coe
+                                                                                                                                                                              v0)))
+                                                                                                                                                                     (coe
+                                                                                                                                                                        du_balIn_3474
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v0)
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v1)
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v3))
+                                                                                                                                                                     (MAlonzo.Code.Ledger.Transaction.d_mint_2786
+                                                                                                                                                                        (coe
+                                                                                                                                                                           MAlonzo.Code.Ledger.Transaction.d_body_2848
+                                                                                                                                                                           (coe
+                                                                                                                                                                              v1))))
+                                                                                                                                                                  (coe
+                                                                                                                                                                     MAlonzo.Code.Ledger.TokenAlgebra.d_inject_206
+                                                                                                                                                                     (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v0))
+                                                                                                                                                                     (coe
+                                                                                                                                                                        du_refunds_3470
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v0)
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v1)
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v2)
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v3))))
                                                                                                                                                                (coe
                                                                                                                                                                   MAlonzo.Code.Ledger.TokenAlgebra.d_inject_206
                                                                                                                                                                   (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2232
                                                                                                                                                                      (coe
                                                                                                                                                                         v0))
                                                                                                                                                                   (coe
-                                                                                                                                                                     du_refunds_3442
+                                                                                                                                                                     du_wdrls_3472
                                                                                                                                                                      (coe
                                                                                                                                                                         v0)
                                                                                                                                                                      (coe
-                                                                                                                                                                        v1)
-                                                                                                                                                                     (coe
-                                                                                                                                                                        v2)
-                                                                                                                                                                     (coe
-                                                                                                                                                                        v3)))))))
+                                                                                                                                                                        v1)))))))
                                                                                                                                                    erased)
                                                                                                                                                 erased)
                                                                                                                                              erased)
@@ -6681,7 +6793,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Data.Nat.Properties.du_m'8804'n'43'm_3494
                                                                                                                                  (coe
-                                                                                                                                    du_newDeps_3440
+                                                                                                                                    du_newDeps_3468
                                                                                                                                     (coe
                                                                                                                                        v0)
                                                                                                                                     (coe
@@ -6730,7 +6842,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.PParams.d_govActionDeposit_356
                                                                                                                                     (coe
-                                                                                                                                       du_pp_3316
+                                                                                                                                       du_pp_3344
                                                                                                                                        (coe
                                                                                                                                           v2)))
                                                                                                                                  (coe
@@ -6761,7 +6873,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                  (coe
                                                                                                                                     v0)
                                                                                                                                  (coe
-                                                                                                                                    du_pp_3316
+                                                                                                                                    du_pp_3344
                                                                                                                                     (coe
                                                                                                                                        v2))
                                                                                                                                  (coe
@@ -6789,7 +6901,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.PParams.d_govActionDeposit_356
                                                                                                                                        (coe
-                                                                                                                                          du_pp_3316
+                                                                                                                                          du_pp_3344
                                                                                                                                           (coe
                                                                                                                                              v2)))
                                                                                                                                     (coe
@@ -6820,7 +6932,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                  (coe
                                                                                                                                     v3)))
                                                                                                                            (coe
-                                                                                                                              du_'8804'updateCertDeps_3148
+                                                                                                                              du_'8804'updateCertDeps_3176
                                                                                                                               (coe
                                                                                                                                  v0)
                                                                                                                               (coe
@@ -6830,7 +6942,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                     (coe
                                                                                                                                        v1)))
                                                                                                                               (coe
-                                                                                                                                 du_pp_3316
+                                                                                                                                 du_pp_3344
                                                                                                                                  (coe
                                                                                                                                     v2))
                                                                                                                               (coe
@@ -6852,7 +6964,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.PParams.d_govActionDeposit_356
                                                                                                                                     (coe
-                                                                                                                                       du_pp_3316
+                                                                                                                                       du_pp_3344
                                                                                                                                        (coe
                                                                                                                                           v2)))
                                                                                                                                  (coe
@@ -6878,7 +6990,7 @@ du_gmsc_3296 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._._.pp
-d_pp_3316 ::
+d_pp_3344 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -6927,19 +7039,19 @@ d_pp_3316 ::
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXOS'10632'__2422 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_3316 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
+d_pp_3344 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
           ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23 ~v24 ~v25
           ~v26 ~v27
-  = du_pp_3316 v5
-du_pp_3316 ::
+  = du_pp_3344 v5
+du_pp_3344 ::
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-du_pp_3316 v0
+du_pp_3344 v0
   = coe MAlonzo.Code.Ledger.Utxo.d_pparams_1860 (coe v0)
 -- Ledger.Utxo.Properties._._∣ˡ_
 d__'8739''737'__3427 a0 a1 a2 a3 = ()
 -- Ledger.Utxo.Properties._._.newDeps
-d_newDeps_3440 ::
+d_newDeps_3468 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -6987,22 +7099,22 @@ d_newDeps_3440 ::
   MAlonzo.Code.Ledger.Utxo.T__'8801''63'__2598 ->
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXOS'10632'__2422 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> Integer
-d_newDeps_3440 v0 ~v1 ~v2 ~v3 v4 v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
+d_newDeps_3468 v0 ~v1 ~v2 ~v3 v4 v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
                ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23 ~v24 ~v25
                ~v26 ~v27
-  = du_newDeps_3440 v0 v4 v5 v6
-du_newDeps_3440 ::
+  = du_newDeps_3468 v0 v4 v5 v6
+du_newDeps_3468 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864 -> Integer
-du_newDeps_3440 v0 v1 v2 v3
+du_newDeps_3468 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Ledger.Utxo.du_newDeposits_2398 (coe v0)
-      (coe du_pp_3316 (coe v2)) (coe v3)
+      (coe du_pp_3344 (coe v2)) (coe v3)
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v1))
 -- Ledger.Utxo.Properties._._.refunds
-d_refunds_3442 ::
+d_refunds_3470 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -7050,22 +7162,106 @@ d_refunds_3442 ::
   MAlonzo.Code.Ledger.Utxo.T__'8801''63'__2598 ->
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXOS'10632'__2422 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> Integer
-d_refunds_3442 v0 ~v1 ~v2 ~v3 v4 v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
+d_refunds_3470 v0 ~v1 ~v2 ~v3 v4 v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
                ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23 ~v24 ~v25
                ~v26 ~v27
-  = du_refunds_3442 v0 v4 v5 v6
-du_refunds_3442 ::
+  = du_refunds_3470 v0 v4 v5 v6
+du_refunds_3470 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864 -> Integer
-du_refunds_3442 v0 v1 v2 v3
+du_refunds_3470 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Ledger.Utxo.du_depositRefunds_2390 (coe v0)
-      (coe du_pp_3316 (coe v2)) (coe v3)
+      (coe du_pp_3344 (coe v2)) (coe v3)
       (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v1))
+-- Ledger.Utxo.Properties._._.wdrls
+d_wdrls_3472 ::
+  MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+    MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+    MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
+   MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  Integer ->
+  (MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Ledger.Utxo.T_inInterval_2082 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 -> AgdaAny) ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+   MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+   MAlonzo.Code.Data.Sum.Relation.Unary.All.T_All_44) ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
+  (MAlonzo.Code.Ledger.Address.T_RwdAddr_76 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
+  MAlonzo.Code.Ledger.Utxo.T__'8801''63'__2598 ->
+  MAlonzo.Code.Ledger.Utxo.T__'8801''63'__2598 ->
+  MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXOS'10632'__2422 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> Integer
+d_wdrls_3472 v0 ~v1 ~v2 ~v3 v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
+             ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23 ~v24 ~v25
+             ~v26 ~v27
+  = du_wdrls_3472 v0 v4
+du_wdrls_3472 ::
+  MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> Integer
+du_wdrls_3472 v0 v1
+  = coe
+      MAlonzo.Code.Ledger.Set.Theory.du_indexedSum'7515'''_1160
+      (coe
+         MAlonzo.Code.Ledger.Address.du_DecEq'45'RwdAddr_194
+         (coe
+            MAlonzo.Code.Ledger.Types.Epoch.d_DecEq'45'Netw_276
+            (coe
+               MAlonzo.Code.Ledger.Transaction.d_globalConstants_1210 (coe v0)))
+         (coe
+            MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
+            (coe
+               MAlonzo.Code.Ledger.Crypto.d_khs_200
+               (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0))))
+         (coe
+            MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
+            (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0))))
+      (coe
+         MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+      (coe
+         MAlonzo.Code.Interface.IsCommutativeMonoid.du_toCommMonoid''_62
+         (coe
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+      (coe (\ v2 -> v2))
+      (coe
+         MAlonzo.Code.Ledger.Transaction.d_txwdrls_2792
+         (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v1)))
 -- Ledger.Utxo.Properties._._.balIn
-d_balIn_3444 ::
+d_balIn_3474 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -7113,15 +7309,15 @@ d_balIn_3444 ::
   MAlonzo.Code.Ledger.Utxo.T__'8801''63'__2598 ->
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXOS'10632'__2422 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny
-d_balIn_3444 v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
+d_balIn_3474 v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
              ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23 ~v24 ~v25
              ~v26 ~v27
-  = du_balIn_3444 v0 v4 v6
-du_balIn_3444 ::
+  = du_balIn_3474 v0 v4 v6
+du_balIn_3474 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864 -> AgdaAny
-du_balIn_3444 v0 v1 v2
+du_balIn_3474 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Utxo.du_balance_1900 (coe v0)
       (coe
@@ -7141,7 +7337,7 @@ du_balIn_3444 v0 v1 v2
             MAlonzo.Code.Ledger.Transaction.d_txins_2778
             (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v1))))
 -- Ledger.Utxo.Properties._._.balOut
-d_balOut_3446 ::
+d_balOut_3476 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1650 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -7189,72 +7385,72 @@ d_balOut_3446 ::
   MAlonzo.Code.Ledger.Utxo.T__'8801''63'__2598 ->
   MAlonzo.Code.Ledger.Utxo.T__'8866'_'8640''10631'_'44'UTXOS'10632'__2422 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny
-d_balOut_3446 v0 ~v1 ~v2 ~v3 v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
+d_balOut_3476 v0 ~v1 ~v2 ~v3 v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
               ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23 ~v24 ~v25
               ~v26 ~v27
-  = du_balOut_3446 v0 v4
-du_balOut_3446 ::
+  = du_balOut_3476 v0 v4
+du_balOut_3476 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2838 -> AgdaAny
-du_balOut_3446 v0 v1
+du_balOut_3476 v0 v1
   = coe
       MAlonzo.Code.Ledger.Utxo.du_balance_1900 (coe v0)
       (coe
          MAlonzo.Code.Ledger.Utxo.du_outs_1894
          (coe MAlonzo.Code.Ledger.Transaction.d_body_2848 (coe v1)))
 -- Ledger.Utxo.Properties._..generalizedField-tx
-d_'46'generalizedField'45'tx_862233 ::
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Ledger.Transaction.T_Tx_2838
-d_'46'generalizedField'45'tx_862233 v0
+d_'46'generalizedField'45'tx_923301 ::
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Ledger.Transaction.T_Tx_2838
+d_'46'generalizedField'45'tx_923301 v0
   = case coe v0 of
-      C_mkGeneralizeTel_862249 v1 v2 v3 v4 v5 v6 v7 -> coe v1
+      C_mkGeneralizeTel_923317 v1 v2 v3 v4 v5 v6 v7 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._..generalizedField-Γ
-d_'46'generalizedField'45'Γ_862235 ::
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850
-d_'46'generalizedField'45'Γ_862235 v0
+d_'46'generalizedField'45'Γ_923303 ::
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850
+d_'46'generalizedField'45'Γ_923303 v0
   = case coe v0 of
-      C_mkGeneralizeTel_862249 v1 v2 v3 v4 v5 v6 v7 -> coe v2
+      C_mkGeneralizeTel_923317 v1 v2 v3 v4 v5 v6 v7 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._..generalizedField-utxoState
-d_'46'generalizedField'45'utxoState_862237 ::
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864
-d_'46'generalizedField'45'utxoState_862237 v0
+d_'46'generalizedField'45'utxoState_923305 ::
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864
+d_'46'generalizedField'45'utxoState_923305 v0
   = case coe v0 of
-      C_mkGeneralizeTel_862249 v1 v2 v3 v4 v5 v6 v7 -> coe v3
+      C_mkGeneralizeTel_923317 v1 v2 v3 v4 v5 v6 v7 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._..generalizedField-utxo'
-d_'46'generalizedField'45'utxo''_862239 ::
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'46'generalizedField'45'utxo''_862239 v0
+d_'46'generalizedField'45'utxo''_923307 ::
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'46'generalizedField'45'utxo''_923307 v0
   = case coe v0 of
-      C_mkGeneralizeTel_862249 v1 v2 v3 v4 v5 v6 v7 -> coe v4
+      C_mkGeneralizeTel_923317 v1 v2 v3 v4 v5 v6 v7 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._..generalizedField-fees'
-d_'46'generalizedField'45'fees''_862241 ::
-  T_GeneralizeTel_862247 -> Integer
-d_'46'generalizedField'45'fees''_862241 v0
+d_'46'generalizedField'45'fees''_923309 ::
+  T_GeneralizeTel_923315 -> Integer
+d_'46'generalizedField'45'fees''_923309 v0
   = case coe v0 of
-      C_mkGeneralizeTel_862249 v1 v2 v3 v4 v5 v6 v7 -> coe v5
+      C_mkGeneralizeTel_923317 v1 v2 v3 v4 v5 v6 v7 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._..generalizedField-deposits'
-d_'46'generalizedField'45'deposits''_862243 ::
-  T_GeneralizeTel_862247 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'46'generalizedField'45'deposits''_862243 v0
+d_'46'generalizedField'45'deposits''_923311 ::
+  T_GeneralizeTel_923315 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'46'generalizedField'45'deposits''_923311 v0
   = case coe v0 of
-      C_mkGeneralizeTel_862249 v1 v2 v3 v4 v5 v6 v7 -> coe v6
+      C_mkGeneralizeTel_923317 v1 v2 v3 v4 v5 v6 v7 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._..generalizedField-donations'
-d_'46'generalizedField'45'donations''_862245 ::
-  T_GeneralizeTel_862247 -> Integer
-d_'46'generalizedField'45'donations''_862245 v0
+d_'46'generalizedField'45'donations''_923313 ::
+  T_GeneralizeTel_923315 -> Integer
+d_'46'generalizedField'45'donations''_923313 v0
   = case coe v0 of
-      C_mkGeneralizeTel_862249 v1 v2 v3 v4 v5 v6 v7 -> coe v7
+      C_mkGeneralizeTel_923317 v1 v2 v3 v4 v5 v6 v7 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Utxo.Properties._.GeneralizeTel
-d_GeneralizeTel_862247 a0 a1 a2 a3 = ()
-data T_GeneralizeTel_862247
-  = C_mkGeneralizeTel_862249 MAlonzo.Code.Ledger.Transaction.T_Tx_2838
+d_GeneralizeTel_923315 a0 a1 a2 a3 = ()
+data T_GeneralizeTel_923315
+  = C_mkGeneralizeTel_923317 MAlonzo.Code.Ledger.Transaction.T_Tx_2838
                              MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1850
                              MAlonzo.Code.Ledger.Utxo.T_UTxOState_1864
                              MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 Integer

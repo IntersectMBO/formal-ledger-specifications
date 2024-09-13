@@ -2111,7 +2111,7 @@ du_chain'45'step_52
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Chain.Properties.d_Computational'45'CHAIN_1928
+            MAlonzo.Code.Ledger.Chain.Properties.d_Computational'45'CHAIN_1926
             (coe
                MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_850)
             (coe
