@@ -1056,9 +1056,9 @@ d_script_406 v0
   = case coe v0 of
       C_HashedTimelock'46'constructor_71969 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Script.HashedTimelock.hash
-d_hash_408 :: T_HashedTimelock_400 -> AgdaAny
-d_hash_408 v0
+-- Ledger.Script.HashedTimelock.h
+d_h_408 :: T_HashedTimelock_400 -> AgdaAny
+d_h_408 v0
   = case coe v0 of
       C_HashedTimelock'46'constructor_71969 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -1122,7 +1122,7 @@ du_Hashable'45'HashedTimelock_412 ::
 du_Hashable'45'HashedTimelock_412
   = coe
       MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
-      (coe (\ v0 -> d_hash_408 (coe v0)))
+      (coe (\ v0 -> d_h_408 (coe v0)))
 -- Ledger.Script.P1ScriptStructure-TL
 d_P1ScriptStructure'45'TL_414 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->

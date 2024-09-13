@@ -51,7 +51,7 @@ data Tag = Spend  | Mint  | Cert  | Rewrd  | Vote  | Propose
   deriving (Show, Eq, Generic)
 data Timelock = RequireAllOf [MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.Timelock] | RequireAnyOf [MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.Timelock] | RequireMOf Integer [MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.Timelock] | RequireSig Integer | RequireTimeStart Integer | RequireTimeExpire Integer
   deriving (Show, Eq, Generic)
-data HashedTimelock = MkHashedTimelock {script :: MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.Timelock, hash :: Integer}
+data HashedTimelock = MkHashedTimelock {script :: MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.Timelock, h :: Integer}
   deriving (Show, Eq, Generic)
 data TxWitnesses = MkTxWitnesses {vkSigs :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap Integer Integer), scripts :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSSet (Either MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.HashedTimelock Integer)), txdats :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap () ()), txrdmrs :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap (MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.Tag, Integer) ((), (Integer, Integer)))}
   deriving (Show, Eq, Generic)

@@ -1724,10 +1724,10 @@ d_ScriptStructure_1600 a0 = ()
 d_Timelock_1602 a0 = ()
 -- Ledger.Transaction.TransactionStructure._.evalTimelock
 d_evalTimelock_1616 a0 a1 a2 a3 = ()
--- Ledger.Transaction.TransactionStructure._.HashedTimelock.hash
-d_hash_1620 ::
+-- Ledger.Transaction.TransactionStructure._.HashedTimelock.h
+d_h_1620 ::
   MAlonzo.Code.Ledger.Script.T_HashedTimelock_400 -> AgdaAny
-d_hash_1620 v0 = coe MAlonzo.Code.Ledger.Script.d_hash_408 (coe v0)
+d_h_1620 v0 = coe MAlonzo.Code.Ledger.Script.d_h_408 (coe v0)
 -- Ledger.Transaction.TransactionStructure._.HashedTimelock.script
 d_script_1622 ::
   MAlonzo.Code.Ledger.Script.T_HashedTimelock_400 ->

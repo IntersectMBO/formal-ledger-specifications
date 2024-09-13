@@ -3668,10 +3668,10 @@ d_maximum_1888 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maximum_1888
   = coe MAlonzo.Code.Ledger.GovernanceActions.du_maximum_658
--- Ledger.Foreign.HSLedger.Core._.HashedTimelock.hash
-d_hash_1914 ::
+-- Ledger.Foreign.HSLedger.Core._.HashedTimelock.h
+d_h_1914 ::
   MAlonzo.Code.Ledger.Script.T_HashedTimelock_400 -> Integer
-d_hash_1914 v0 = coe MAlonzo.Code.Ledger.Script.d_hash_408 (coe v0)
+d_h_1914 v0 = coe MAlonzo.Code.Ledger.Script.d_h_408 (coe v0)
 -- Ledger.Foreign.HSLedger.Core._.HashedTimelock.script
 d_script_1916 ::
   MAlonzo.Code.Ledger.Script.T_HashedTimelock_400 ->
