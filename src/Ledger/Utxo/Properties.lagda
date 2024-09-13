@@ -545,7 +545,7 @@ For all \AgdaBound{Γ} \∈ \UTxOEnv, \AgdaBound{utxo}, \AgdaBound{utxo'} \∈ \
 
 if
 \begin{code}[hide]
-module _ (let open Tx; open TxBody) {invalid⇒no-wdls : ∀ tx → Tx.isValid tx ≡ false → getCoin (tx .body .txwdrls) ≡ 0} where
+module _ (let open Tx; open TxBody) (invalidTx→noWdls : ∀ tx → Tx.isValid tx ≡ false → getCoin (tx .body .txwdrls) ≡ 0) where
 
   pov :
 \end{code}
@@ -571,29 +571,14 @@ then
       ≡  getCoin ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
 \end{code}
 \begin{code}[hide]
-  pov {tx}{utxo}{_}{fees}{deposits}{donations}{deposits' = deposits'} h'
-      step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ (Scripts-Yes _)) =
-      DepositHelpers.pov-scripts step h' refl
+  pov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ (Scripts-Yes _)) =
+    DepositHelpers.pov-scripts step h' refl
 
   pov {tx}{utxo}{_}{fees}{deposits}{donations} h'
-      step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid))) = goal
-      where
-      open Tx tx renaming (body to txb); open TxBody txb
-
-      ii : cbalance utxo + fees + getCoin deposits + donations + getCoin (txwdrls (body tx))
-             ≡ cbalance utxo + fees + getCoin deposits + donations + 0
-      ii = cong (cbalance utxo + fees + getCoin deposits + donations +_) (invalid⇒no-wdls tx invalid)
-
-      iv : cbalance utxo + fees + getCoin deposits + donations
-             ≡ cbalance (utxo ∣ collateral (body tx) ᶜ) + (fees + cbalance (utxo ∣ collateral (body tx)))
-               + getCoin deposits + donations
-      iv = DepositHelpers.pov-no-scripts step h'
-
-      goal : cbalance utxo + fees + getCoin deposits + donations + getCoin (txwdrls (body tx))
-             ≡ cbalance (utxo ∣ collateral (body tx) ᶜ) + (fees + cbalance (utxo ∣ collateral (body tx)))
-               + getCoin deposits + donations
-      goal = trans ii (trans (+-identityʳ (cbalance utxo + fees + getCoin deposits + donations)) iv)
-
+    step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid))) =
+      trans (cong (cbalance utxo + fees + getCoin deposits + donations +_) (invalidTx→noWdls tx invalid))
+            (trans (+-identityʳ (cbalance utxo + fees + getCoin deposits + donations))
+                   (DepositHelpers.pov-no-scripts step h'))
 \end{code}
 \end{property}
 

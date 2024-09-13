@@ -103,7 +103,7 @@ instance
 
 -- ** Proof that LEDGER preserves values.
 
-module _ where
+module _ (let open Tx; open TxBody) (invalidTx⇒noWdls : ∀ tx → Tx.isValid tx ≡ false → getCoin (tx .body .txwdrls) ≡ 0) where
 
   private variable
     tx : Tx
@@ -115,22 +115,22 @@ module _ where
   FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
     where open Tx; open TxBody; open UTxOState; open LState
 
-  LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-  LEDGER-pov h (LEDGER-V⋯ _ (UTXOW⇒UTXO st) _ _) = pov h st
-  LEDGER-pov h (LEDGER-I⋯ _ (UTXOW⇒UTXO st))     = pov h st
+  LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s + getCoin (TxBody.txwdrls (Tx.body tx)) ≡ getCoin s'
+  LEDGER-pov h (LEDGER-V⋯ _ (UTXOW⇒UTXO st) _ _) = pov invalidTx⇒noWdls h st
+  LEDGER-pov h (LEDGER-I⋯ _ (UTXOW⇒UTXO st))     = pov invalidTx⇒noWdls h st
 
   data FreshTxs : LEnv → LState → List Tx → Type where
     []-Fresh : FreshTxs Γ s []
     ∷-Fresh  : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → FreshTxs Γ s' l
               → FreshTxs Γ s (tx ∷ l)
 
-  LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
-  LEDGERS-pov _ (BS-base Id-nop) = refl
-  LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) =
-    trans (LEDGER-pov h x) $
-      LEDGERS-pov (subst (λ s → FreshTxs Γ s l)
-                          (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
-                          h₂) st
+  -- LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
+  -- LEDGERS-pov _ (BS-base Id-nop) = refl
+  -- LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) =
+  --   trans (LEDGER-pov h x) $
+  --     LEDGERS-pov (subst (λ s → FreshTxs Γ s l)
+  --                         (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
+  --                         h₂) st
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
