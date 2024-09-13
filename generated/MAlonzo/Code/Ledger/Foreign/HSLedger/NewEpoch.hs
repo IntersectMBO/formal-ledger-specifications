@@ -65,12 +65,16 @@ import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 
 import GHC.Generics (Generic)
-data RewardUpdate = MkRewardUpdate
+data HsRewardUpdate = MkRewardUpdate
   { deltaT  :: Integer
   , deltaR  :: Integer
   , deltaF  :: Integer
-  , rs      :: HSMap Credential Coin
+  , rs      ::
+      MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap
+        MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential
+        Integer
   }
+  deriving (Eq, Show)
 data NewEpochState = MkNewEpochState {lastEpoch :: Integer, epochState :: MAlonzo.Code.Ledger.Foreign.HSLedger.Epoch.EpochState, ru :: (Maybe MAlonzo.Code.Ledger.Foreign.HSLedger.NewEpoch.HsRewardUpdate)}
   deriving (Show, Eq, Generic)
 -- Ledger.Foreign.HSLedger.NewEpoch._.NewEpochState
@@ -117,7 +121,7 @@ d_Δt_104 ::
 d_Δt_104 v0 = coe MAlonzo.Code.Ledger.Epoch.d_Δt_2240 (coe v0)
 -- Ledger.Foreign.HSLedger.NewEpoch.HsRewardUpdate
 d_HsRewardUpdate_148 = ()
-type T_HsRewardUpdate_148 = RewardUpdate
+type T_HsRewardUpdate_148 = HsRewardUpdate
 pattern C_HsRewardUpdate'46'constructor_255 a0 a1 a2 a3 = MkRewardUpdate a0 a1 a2 a3
 check_HsRewardUpdate'46'constructor_255 ::
   Integer ->
@@ -128,7 +132,7 @@ check_HsRewardUpdate'46'constructor_255 ::
     Integer ->
   T_HsRewardUpdate_148
 check_HsRewardUpdate'46'constructor_255 = MkRewardUpdate
-cover_HsRewardUpdate_148 :: RewardUpdate -> ()
+cover_HsRewardUpdate_148 :: HsRewardUpdate -> ()
 cover_HsRewardUpdate_148 x
   = case x of
       MkRewardUpdate _ _ _ _ -> ()

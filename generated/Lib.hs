@@ -18,7 +18,7 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.Chain       as X
   (ChainState(..), Block(..), chainStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Certs       as X
   ( PoolParams(..), PState(..), DelegEnv(..), CertEnv(..), DState(..), DCert(..), GState(..)
-  , delegStep, govCertStep, poolStep)
+  , delegStep', govCertStep', poolStep, DepositPurpose(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Enact       as X
   (EnactState(..), EnactEnv(..), enactStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Epoch       as X
@@ -33,4 +33,4 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.NewEpoch    as X
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ratify      as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo        as X
-  (DepositPurpose(..), UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep)
+  (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep)
