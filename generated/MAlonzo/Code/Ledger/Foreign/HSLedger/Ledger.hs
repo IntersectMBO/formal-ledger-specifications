@@ -55,11 +55,11 @@ import qualified MAlonzo.Code.Ledger.Utxo
 import qualified MAlonzo.Code.Prelude
 
 import GHC.Generics (Generic)
-data GState = MkGState' {gs'Dreps :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential Integer), gs'CcHotKeys :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential (Maybe MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential))}
+data GState' = MkGState' {gs'Dreps :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential Integer), gs'CcHotKeys :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential (Maybe MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential))}
   deriving (Show, Eq, Generic)
 data DState = MkDState {voteDelegs :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential MAlonzo.Code.Ledger.Foreign.HSLedger.Gov.VDeleg), stakeDelegs :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential Integer), rewards :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential Integer)}
   deriving (Show, Eq, Generic)
-data CertState = MkCertState {dState :: MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.DState, pState :: MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.PState, gState :: MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.GState}
+data CertState = MkCertState {dState :: MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.DState, pState :: MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.PState, gState :: MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.GState'}
   deriving (Show, Eq, Generic)
 data LEnv = MkLEnv {leSlot :: Integer, lePpolicy :: (Maybe Integer), lePparams :: MAlonzo.Code.Ledger.Foreign.HSLedger.PParams.PParams, leEnactState :: MAlonzo.Code.Ledger.Foreign.HSLedger.Enact.EnactState, leTreasury :: Integer}
   deriving (Show, Eq, Generic)
@@ -4356,9 +4356,9 @@ d_ledgers'45'step_162 v0
                MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSAbstractFunctions_2602))
          (coe
             MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'LEnv_154 v0))
--- Ledger.Foreign.HSLedger.Ledger.GState
-d_GState_359 = ()
-type T_GState_359 = GState
+-- Ledger.Foreign.HSLedger.Ledger.GState'
+d_GState''_359 = ()
+type T_GState''_359 = GState'
 pattern C_MkGState''_361 a0 a1 = MkGState' a0 a1
 check_MkGState''_361 ::
   MAlonzo.Code.Ledger.Foreign.HSTypes.T_HSMap_16
@@ -4368,10 +4368,10 @@ check_MkGState''_361 ::
     MAlonzo.Code.Ledger.Foreign.HSLedger.Address.T_Credential_27
     (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
        () MAlonzo.Code.Ledger.Foreign.HSLedger.Address.T_Credential_27) ->
-  T_GState_359
+  T_GState''_359
 check_MkGState''_361 = MkGState'
-cover_GState_359 :: GState -> ()
-cover_GState_359 x
+cover_GState''_359 :: GState' -> ()
+cover_GState''_359 x
   = case x of
       MkGState' _ _ -> ()
 -- Ledger.Foreign.HSLedger.Ledger.DState
@@ -4401,7 +4401,7 @@ pattern C_MkCertState_4807 a0 a1 a2 = MkCertState a0 a1 a2
 check_MkCertState_4807 ::
   T_DState_2109 ->
   MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.T_PState_2587 ->
-  T_GState_359 -> T_CertState_4805
+  T_GState''_359 -> T_CertState_4805
 check_MkCertState_4807 = MkCertState
 cover_CertState_4805 :: CertState -> ()
 cover_CertState_4805 x
