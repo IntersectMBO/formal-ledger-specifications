@@ -32,6 +32,7 @@ data BootstrapAddr = BootstrapAddr {bootNet :: (), bootPay :: MAlonzo.Code.Ledge
 data RwdAddr = RwdAddr {rwdNet :: (), rwdStake :: MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential}
   deriving (Show, Eq, Generic)
 type Addr = (Either MAlonzo.Code.Ledger.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Foreign.HSLedger.Address.BootstrapAddr)
+type Wdrl = (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Foreign.HSLedger.Address.RwdAddr Integer)
 -- Ledger.Foreign.HSLedger.Address.HsTy-Credential
 d_HsTy'45'Credential_8 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14

@@ -67,6 +67,8 @@ data GovProposal = MkGovProposal {gpAction :: MAlonzo.Code.Ledger.Foreign.HSLedg
   deriving (Show, Eq, Generic)
 data GovActionState = MkGovActionState {gasVotes :: (MAlonzo.Code.Ledger.Foreign.HSTypes.HSMap (MAlonzo.Code.Ledger.Foreign.HSLedger.Gov.GovRole, MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential) MAlonzo.Code.Ledger.Foreign.HSLedger.Gov.Vote), gasReturnAddr :: MAlonzo.Code.Ledger.Foreign.HSLedger.Address.RwdAddr, gasExpiresIn :: Integer, gasAction :: MAlonzo.Code.Ledger.Foreign.HSLedger.Enact.GovAction, gasPrevAction :: (Integer, Integer)}
   deriving (Show, Eq, Generic)
+type Voter = (MAlonzo.Code.Ledger.Foreign.HSLedger.Gov.GovRole, MAlonzo.Code.Ledger.Foreign.HSLedger.Address.Credential)
+type GovState = [((Integer, Integer), MAlonzo.Code.Ledger.Foreign.HSLedger.Gov.GovActionState)]
 -- Ledger.Foreign.HSLedger.Gov._.GovEnv
 d_GovEnv_30 = ()
 -- Ledger.Foreign.HSLedger.Gov._.GovState

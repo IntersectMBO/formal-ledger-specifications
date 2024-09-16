@@ -4,7 +4,7 @@ module Lib
   ) where
 
 import MAlonzo.Code.Ledger.Foreign.HSTypes              as X
-  (HSSet(..), HSMap(..), ComputationResult(..))
+  (HSSet(..), HSMap(..), ComputationResult(..), Empty, Rational(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Address     as X
   (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.PParams     as X

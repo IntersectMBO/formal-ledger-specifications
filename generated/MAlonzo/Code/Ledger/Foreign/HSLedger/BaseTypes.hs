@@ -28,6 +28,14 @@ import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Ledger.Foreign.HSTypes
 import qualified MAlonzo.Code.Ledger.Set.Theory
 
+type Coin = Integer
+type ExUnits = (Integer, Integer)
+type T = ()
+type Redeemer = ()
+type AuxiliaryData = ()
+type Epoch = Integer
+type ScriptHash = Integer
+type GovActionID = (Integer, Integer)
 -- Ledger.Foreign.HSLedger.BaseTypes.iConvTop
 d_iConvTop_8 :: MAlonzo.Code.Foreign.Convertible.T_Convertible_8
 d_iConvTop_8

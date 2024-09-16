@@ -69,6 +69,7 @@ type Datum = ()
 type DataHash = ()
 type Value = Integer
 type TxOut = ((Either MAlonzo.Code.Ledger.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Foreign.HSLedger.Address.BootstrapAddr), (Integer, ((Maybe (Either () ())), (Maybe (Either MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.HashedTimelock Integer)))))
+type RdmrPtr = (MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction.Tag, Integer)
 -- Ledger.Foreign.HSLedger.Transaction.HsTy-Tag
 d_HsTy'45'Tag_8 :: MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
 d_HsTy'45'Tag_8 = erased
