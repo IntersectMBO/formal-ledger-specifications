@@ -2300,7 +2300,7 @@ d_Conv'45'UTxOState_256
                               (coe
                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_92
                                  (coe
-                                    MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_94)
+                                    MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_106)
                                  (coe
                                     MAlonzo.Code.Ledger.Foreign.HSLedger.BaseTypes.d_iConvNat_10)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))))
@@ -2377,7 +2377,7 @@ d_Conv'45'UTxOState_256
                                  (coe
                                     MAlonzo.Code.Ledger.Transaction.d_govStructure_2366 (coe v5))))
                            (coe
-                              MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_94)
+                              MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_106)
                            (coe MAlonzo.Code.Ledger.Foreign.HSLedger.BaseTypes.d_iConvNat_10))
                         (MAlonzo.Code.Ledger.Foreign.HSTypes.d_assocList_24 (coe v3)))
                      (coe v4)
@@ -2544,7 +2544,7 @@ check_MkUTxOState_1713 ::
                    Integer))))) ->
   Integer ->
   MAlonzo.Code.Ledger.Foreign.HSTypes.T_HSMap_16
-    MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.T_DepositPurpose_525
+    MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.T_DepositPurpose_529
     Integer ->
   Integer -> T_UTxOState_1711
 check_MkUTxOState_1713 = MkUTxOState

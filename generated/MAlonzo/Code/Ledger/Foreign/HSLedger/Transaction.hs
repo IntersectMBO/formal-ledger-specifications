@@ -439,7 +439,7 @@ d_Conv'45'TxBody_26
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_to_18
                            (coe
-                              MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_114))
+                              MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_130))
                         v7)
                      (coe
                         MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
@@ -651,7 +651,7 @@ d_Conv'45'TxBody_26
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_from_20
                            (coe
-                              MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_114))
+                              MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_130))
                         v7)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -901,7 +901,7 @@ d_Conv'45'Tx_30
                            () erased
                            (MAlonzo.Code.Foreign.Convertible.d_to_18
                               (coe
-                                 MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_114))
+                                 MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_130))
                            (MAlonzo.Code.Ledger.Transaction.d_txcerts_2822 (coe v1)))
                         (coe
                            MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
@@ -1221,7 +1221,7 @@ d_Conv'45'Tx_30
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_114))
+                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_130))
                                              v12)
                                           (coe
                                              MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
@@ -1472,7 +1472,7 @@ d_Conv'45'Tx_30
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_114))
+                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.d_Conv'45'DCert_130))
                                              v12)
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -2032,7 +2032,7 @@ check_MkTxBody_10661 ::
     () () (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer)
     (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer) ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
-    () MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.T_DCert_10599 ->
+    () MAlonzo.Code.Ledger.Foreign.HSLedger.Certs.T_DCert_13311 ->
   MAlonzo.Code.Ledger.Foreign.HSTypes.T_HSMap_16
     MAlonzo.Code.Ledger.Foreign.HSLedger.Address.T_RwdAddr_3767
     Integer ->
