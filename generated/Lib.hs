@@ -11,14 +11,13 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.PParams     as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction as X
   ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
-  , Script, Datum, DataHash, Value, TxOut, HashedTimelock(..))
+  , Script, Datum, DataHash, Value, TxOut)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Cert        as X
-  (certStep', certsStep', CertState (..), CertState'(..))
+  (certStep', certsStep')
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Chain       as X
   (ChainState(..), Block(..), chainStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Certs       as X
-  ( PoolParams(..), PState(..), DelegEnv(..), CertEnv(..)
-  , DState(..), DCert(..), GState(..), DState'(..)
+  ( PoolParams(..), PState(..), DelegEnv(..), CertEnv(..), DState'(..), DCert(..), GState(..)
   , delegStep', govCertStep', poolStep, DepositPurpose(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Enact       as X
   (EnactState(..), EnactEnv(..), enactStep, GovAction (..))
@@ -28,7 +27,7 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.Gov         as X
   ( GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..), GovEnv(..), GovProposal(..)
   , GovActionState(..), govStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger      as X
-  (LEnv(..), LState(..), ledgerStep)
+  (LEnv(..), LState(..), ledgerStep, CertState(..), DState(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.NewEpoch    as X
   (NewEpochState(..), newEpochStep, HsRewardUpdate(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ratify      as X
