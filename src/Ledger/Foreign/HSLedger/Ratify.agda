@@ -1,38 +1,39 @@
 module Ledger.Foreign.HSLedger.Ratify where
 
+open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.BaseTypes
 open import Ledger.Foreign.HSLedger.Enact
 open import Ledger.Foreign.HSLedger.Gov
 
-open import Ledger.Ratify HSTransactionStructure
-open import Ledger.Ratify.Properties HSTransactionStructure
-open import Ledger.Enact HSGovStructure
+open import Ledger.Enact govStructure
 
 open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length)
 import Data.Rational.Show as Rational
 
-import Ledger.Foreign.LedgerTypes as F
 import Foreign.Haskell.Pair as F
+open import Ledger.Ratify it
+open import Ledger.Ratify.Properties it
 
 instance
-  _ = Convertible-Refl {Bool}
+  HsTy-StakeDistrs = autoHsType StakeDistrs
+  Conv-StakeDistrs = autoConvert StakeDistrs
 
-  Convertible-StakeDistrs : Convertible StakeDistrs F.StakeDistrs
-  Convertible-StakeDistrs = autoConvertible
+  HsTy-RatifyEnv = autoHsType RatifyEnv ⊣ withConstructor "MkRatifyEnv"
+                                        • fieldPrefix "re"
+  Conv-RatifyEnv = autoConvert RatifyEnv
 
-  Convertible-RatifyEnv : Convertible RatifyEnv F.RatifyEnv
-  Convertible-RatifyEnv = autoConvertible
+  HsTy-RatifyState = autoHsType RatifyState ⊣ withConstructor "MkRatifyState"
+                                            • fieldPrefix "rs"
+                                            • RatifyState.es ↦ "rsEnactState"
+  Conv-RatifyState = autoConvert RatifyState
 
-  Convertible-RatifyState : Convertible RatifyState F.RatifyState
-  Convertible-RatifyState = autoConvertible
-
-ratify-debug : F.RatifyEnv → F.RatifyState → List (F.Pair F.GovActionID F.GovActionState) → String
+ratify-debug : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → String)
 ratify-debug env st sig =
   "Number of govactions: " +ˢ show (length sig) +ˢ "\n" +ˢ
   foldr (λ x s → s +ˢ govActionInfo x) "" sig
   where
     open RatifyEnv (from env)
-    govActionInfo : F.Pair F.GovActionID F.GovActionState → String
+    govActionInfo : HsType (GovActionID × GovActionState) → String
     govActionInfo (gaId F., gas) = 
       let
         open GovActionState (from gas)
@@ -50,7 +51,7 @@ ratify-debug env st sig =
 
 {-# COMPILE GHC ratify-debug as ratifyDebug #-}
 
-ratify-step : F.RatifyEnv → F.RatifyState → List (F.Pair F.GovActionID F.GovActionState) → F.ComputationResult F.Empty F.RatifyState
+ratify-step : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → ComputationResult ⊥ RatifyState)
 ratify-step = to (compute Computational-RATIFY)
 
 {-# COMPILE GHC ratify-step as ratifyStep #-}

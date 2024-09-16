@@ -1,98 +1,118 @@
 module Ledger.Foreign.HSLedger.Gov where
 
+open import Ledger.Foreign.HSLedger.Address
 open import Ledger.Foreign.HSLedger.BaseTypes
-
-import Ledger.Foreign.LedgerTypes as F
-import Foreign.Haskell.Pair as F
-
 open import Ledger.Foreign.HSLedger.Enact
+open import Ledger.Foreign.HSLedger.PParams
 
-open import Ledger.Gov HSTransactionStructure
-open import Ledger.Gov.Properties HSTransactionStructure
+open import Ledger.Gov it
+open import Ledger.Gov.Properties it
 
-open import Ledger.GovernanceActions HSGovStructure using (Vote) public
-
-toNeedsHash : ∀ {action} → F.GovActionID → NeedsHash action
-toNeedsHash {NoConfidence} x = from x
-toNeedsHash {UpdateCommittee _ _ _} x = from x
-toNeedsHash {NewConstitution _ _} x = from x
-toNeedsHash {TriggerHF _} x = from x
-toNeedsHash {ChangePParams _} x = from x
-toNeedsHash {TreasuryWdrl _} x = tt
-toNeedsHash {Info} x = tt
-
-fromNeedsHash : ∀ {action} → NeedsHash action → F.GovActionID
-fromNeedsHash {NoConfidence} x = to x
-fromNeedsHash {UpdateCommittee _ _ _} x = to x
-fromNeedsHash {NewConstitution _ _} x = to x
-fromNeedsHash {TriggerHF _} x = to x
-fromNeedsHash {ChangePParams _} x = to x
-fromNeedsHash {TreasuryWdrl _} x = to 0 F., 0
-fromNeedsHash {Info} x = to 0 F., 0
+open import Ledger.GovernanceActions govStructure using (Vote) public
 
 instance
-  _ = Convertible-Refl {String}
+  HsTy-GovRole = autoHsType GovRole
+  Conv-GovRole = autoConvert GovRole
 
-  Convertible-GovEnv : ConvertibleType GovEnv F.GovEnv
-  Convertible-GovEnv = autoConvertible
+  HsTy-Anchor = autoHsType Anchor
+  Conv-Anchor = autoConvert Anchor
 
-  Convertible-DocHash : Convertible DocHash F.DataHash
-  Convertible-DocHash = autoConvertible
+  HsTy-VDeleg = autoHsType VDeleg
+  Conv-VDeleg = autoConvert VDeleg
 
-  Convertible-Vote : Convertible Vote F.Vote
-  Convertible-Vote = autoConvertible
+  HsTy-Vote = autoHsType Vote
+  Conv-Vote = autoConvert Vote
 
-  Convertible-GovActionState : Convertible GovActionState F.GovActionState
-  Convertible-GovActionState = λ where
-    .to s → let open GovActionState s in
-      record
-        { gasVotes = to votes
-        ; gasReturnAddr = to returnAddr
-        ; gasExpiresIn = to expiresIn
-        ; gasAction = to action
-        ; gasPrevAction = fromNeedsHash prevAction
-        }
-    .from s → let open F.GovActionState s in
-      record
-        { votes = from gasVotes
-        ; returnAddr = from gasReturnAddr
-        ; expiresIn = from gasExpiresIn
-        ; action = from gasAction
-        ; prevAction = toNeedsHash gasPrevAction
-        }
+  HsTy-GovVote = autoHsType GovVote
+  Conv-GovVote = autoConvert GovVote
 
-  Convertible-GovVote : Convertible GovVote F.GovVote
-  Convertible-GovVote = autoConvertible
+  HsTy-GovEnv = autoHsType GovEnv ⊣ withConstructor "MkGovEnv"
+                                  • fieldPrefix "ge"
+  Conv-GovEnv = autoConvert GovEnv
 
-  Convertible-GovProposal : Convertible GovProposal F.GovProposal
-  Convertible-GovProposal = λ where
-    .to p → let open GovProposal p in
-      record
-        { gpAction = to action
-        ; gpPrevAction = fromNeedsHash prevAction
-        ; gpPolicy = to policy
-        ; gpDeposit = to deposit
-        ; gpReturnAddr = to returnAddr
-        ; gpAnchor = to anchor
-        }
-    .from p → let open F.GovProposal p in
-      record
-        { action = from gpAction
-        ; prevAction = toNeedsHash gpPrevAction
-        ; policy = from gpPolicy
-        ; deposit = from gpDeposit
-        ; returnAddr = from gpReturnAddr
-        ; anchor = from gpAnchor
-        }
+-- NeedsHash depends on a GovAction, so a little bit of manual work is
+-- required to get the types using it into Haskell.
 
-  Convertible-GovSignal : Convertible (GovVote ⊎ GovProposal) F.GovSignal
-  Convertible-GovSignal = λ where
-    .to (inj₁ x) → F.GovSignalVote (to x)
-    .to (inj₂ y) → F.GovSignalProposal (to y)
-    .from (F.GovSignalVote x) → inj₁ (from x)
-    .from (F.GovSignalProposal x) → inj₂ (from x)
+-- First we define to/fromNeedsHash that replaces the ⊤ cases by a
+-- dummy GovActionID.
 
-gov-step : F.GovEnv → F.GovState → List F.GovSignal → F.ComputationResult String F.GovState
+toNeedsHash : ∀ {action} → GovActionID → NeedsHash action
+toNeedsHash {NoConfidence}           x = x
+toNeedsHash {UpdateCommittee _ _ _}  x = x
+toNeedsHash {NewConstitution _ _}    x = x
+toNeedsHash {TriggerHF _}            x = x
+toNeedsHash {ChangePParams _}        x = x
+toNeedsHash {TreasuryWdrl _}         x = tt
+toNeedsHash {Info}                   x = tt
+
+fromNeedsHash : ∀ {action} → NeedsHash action → GovActionID
+fromNeedsHash {NoConfidence}           x = x
+fromNeedsHash {UpdateCommittee _ _ _}  x = x
+fromNeedsHash {NewConstitution _ _}    x = x
+fromNeedsHash {TriggerHF _}            x = x
+fromNeedsHash {ChangePParams _}        x = x
+fromNeedsHash {TreasuryWdrl _}         x = 0 , 0
+fromNeedsHash {Info}                   x = 0 , 0
+
+-- Then we define non-dependent versions of the types that use
+-- NeedsHash.
+
+record GovProposal' : Type where
+  field
+    action      : GovAction
+    prevAction  : GovActionID       -- NeedsHash action
+    policy      : Maybe ScriptHash
+    deposit     : Coin
+    returnAddr  : RwdAddr
+    anchor      : Anchor
+
+record GovActionState' : Type where
+  field
+    votes       : Voter ⇀ Vote
+    returnAddr  : RwdAddr
+    expiresIn   : Epoch
+    action      : GovAction
+    prevAction  : GovActionID       -- NeedsHash action
+
+-- We can convert between the dependent and non-dependent versions
+-- using to/fromNeedsHash.
+
+private
+  mkGovProposal' : Convertible GovProposal GovProposal'
+  mkGovProposal' = λ where
+    .to   p → let module p = GovProposal  p in record{ p; prevAction = fromNeedsHash p.prevAction }
+    .from p → let module p = GovProposal' p in record{ p; prevAction = toNeedsHash   p.prevAction }
+
+  mkGovActionState' : Convertible GovActionState GovActionState'
+  mkGovActionState' = λ where
+    .to   s → let module s = GovActionState  s in record{ s; prevAction = fromNeedsHash s.prevAction }
+    .from s → let module s = GovActionState' s in record{ s; prevAction = toNeedsHash   s.prevAction }
+
+-- Auto-generated conversions for the non-dependent types
+
+instance
+  HsTy-GovProposal' = autoHsType GovProposal' ⊣ withName "GovProposal"
+                                              • withConstructor "MkGovProposal"
+                                              • fieldPrefix "gp"
+  Conv-GovProposal' = autoConvert GovProposal'
+
+  HsTy-GovActionState' = autoHsType GovActionState' ⊣ withName "GovActionState"
+                                                    • withConstructor "MkGovActionState"
+                                                    • fieldPrefix "gas"
+  Conv-GovActionState' = autoConvert GovActionState'
+
+-- And finally we compose everything into conversions for the dependent types
+
+instance
+  HsTy-GovProposal = MkHsType GovProposal (HsType GovProposal')
+  Conv-GovProposal = mkGovProposal' ⨾ Conv-GovProposal'
+
+  HsTy-GovActionState = MkHsType GovActionState (HsType GovActionState')
+  Conv-GovActionState = mkGovActionState' ⨾ Conv-GovActionState'
+
+-- Computational function
+
+gov-step : HsType (GovEnv → GovState → List (GovVote ⊎ GovProposal) → ComputationResult String GovState)
 gov-step = to (compute Computational-GOV)
 
 {-# COMPILE GHC gov-step as govStep #-}
