@@ -11,7 +11,7 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.PParams     as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction as X
   ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
-  , Script, Datum, DataHash, Value, TxOut)
+  , Script, Datum, DataHash, Value, TxOut, HashedTimelock(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Cert        as X
   (certStep', certsStep')
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Chain       as X
