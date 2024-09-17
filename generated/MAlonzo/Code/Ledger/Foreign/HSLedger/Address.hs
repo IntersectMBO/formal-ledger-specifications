@@ -22,6 +22,7 @@ import qualified MAlonzo.Code.Foreign.Convertible
 import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Ledger.Address
 
+import qualified MAlonzo.Code.Ledger.Foreign.HSTypes
 import GHC.Generics (Generic)
 data Credential = KeyHashObj Integer | ScriptObj Integer
   deriving (Show, Eq, Generic)
