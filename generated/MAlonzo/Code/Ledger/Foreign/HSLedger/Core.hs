@@ -75,6 +75,14 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
 import Data.Text
+type Coin = Integer
+type ExUnits = (Integer, Integer)
+type T = ()
+type Redeemer = ()
+type AuxiliaryData = ()
+type Epoch = Integer
+type ScriptHash = Integer
+type GovActionID = (Integer, Integer)
 -- Ledger.Foreign.HSLedger.Core.error
 d_error_10 ::
   forall xA. () -> MAlonzo.Code.Agda.Builtin.String.T_String_6 -> xA

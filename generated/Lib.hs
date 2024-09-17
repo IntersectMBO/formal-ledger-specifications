@@ -35,3 +35,6 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.Ratify      as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo        as X
   (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep)
+import MAlonzo.Code.Ledger.Foreign.HSLedger.Core        as X
+  ( Coin, ExUnits, Data, Redeemer, AuxiliaryData, Epoch
+  , ScriptHash, GovActionID)
