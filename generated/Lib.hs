@@ -6,7 +6,8 @@ module Lib
 import MAlonzo.Code.Ledger.Foreign.HSTypes              as X
   (HSSet(..), HSMap(..), ComputationResult(..), Rational(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Address     as X
-  (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr)
+  ( Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..)
+  , Addr, Wdrl)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.PParams     as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction as X
@@ -28,7 +29,7 @@ import MAlonzo.Code.Ledger.Foreign.HSLedger.Epoch       as X
   (Snapshot(..), Snapshots(..), EpochState(..), epochStep)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Gov         as X
   ( GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..), GovEnv(..), GovProposal(..)
-  , GovActionState(..), govStep)
+  , GovActionState(..), govStep, Voter, GovState)
 import MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger      as X
   ( LEnv(..), LState(..), ledgerStep, CertState(..), DState(..)
   , GState'(..))
