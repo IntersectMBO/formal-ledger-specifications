@@ -340,9 +340,8 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 \end{NoConway}
 
 \begin{figure*}[htbp]
-\begin{AgdaMultiCode}
 \begin{code}[hide]
-module _ (let open UTxOState) where
+module _ (let open UTxOState; open TxBody) where
 \end{code}
 \begin{code}
   depositRefunds : PParams → UTxOState → TxBody → Coin
@@ -351,38 +350,19 @@ module _ (let open UTxOState) where
   newDeposits : PParams → UTxOState → TxBody → Coin
   newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
 
-  consumed : PParams → UTxOState → Tx → Value
-  consumed pp st tx =
-    if isValid then
-      balance (st .utxo ∣ txins)
-      + mint + inject (depositRefunds pp st txb)
-      + inject (getCoin txwdrls)
-    else
-      balance (st .utxo ∣ txins) + inject (depositRefunds pp st txb)
-\end{code}
-\begin{code}[hide]
-    where open Tx tx renaming (body to txb); open TxBody txb
-\end{code}
-\begin{code}
+  consumed : PParams → UTxOState → TxBody → Value
+  consumed pp st txb
+    =  balance (st .utxo ∣ txb .txins)
+    +  txb .mint
+    +  inject (depositRefunds pp st txb)
 
   produced : PParams → UTxOState → TxBody → Value
-  produced pp st txb =  balance (outs txb) + inject txfee
-                        + inject (newDeposits pp st txb)
-                        + inject txdonation
+  produced pp st txb
+    =  balance (outs txb)
+    +  inject (txb .txfee)
+    +  inject (newDeposits pp st txb)
+    +  inject (txb .txdonation)
 \end{code}
-\begin{code}[hide]
-    where open TxBody txb
-
-module _ (pp : PParams)
-         (st : UTxOState) (let open UTxOState)
-         (tx : Tx) (let open Tx tx renaming (body to txb)) (let open TxBody txb)
-  where
-  valid→consumed : isValid ≡ true → consumed pp st tx ≡ balance (st .utxo ∣ txins)
-    + mint + inject (depositRefunds pp st txb)
-    + inject (getCoin txwdrls)
-  valid→consumed refl = refl
-\end{code}
-\end{AgdaMultiCode}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
 \end{figure*}
@@ -469,7 +449,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s tx ≡ produced pp s txb
+    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
