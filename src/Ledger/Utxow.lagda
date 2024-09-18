@@ -79,10 +79,9 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isKeyHashObj
 
--- no new features used if singular complete transaction
-newFeatures : BatchData → Bool
-newFeatures (SingularTransaction b) = b
-newFeatures _ = false
+isOld : BatchData → Bool 
+isOld OldTransaction = true 
+isOld _ = false
 
 -- TODO check this
 allowedLanguages : BatchData → Tx → UTxO → ℙ Language
@@ -93,7 +92,7 @@ allowedLanguages bd tx utxo =
     then fromList (PlutusV3 ∷ [])
   else if ∃[ o ∈ os ] HasInlineDatum o
     then fromList (PlutusV2 ∷ PlutusV3 ∷ [])
-  else if (newFeatures bd) -- TODO is this right?
+  else if (isOld bd ≡ true ) -- TODO is this right?
     then fromList (PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   else
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
@@ -181,6 +180,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  txdatsHashes ⊆ spentHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
     ∙  languages tx utxo ⊆ allowedLanguages (Γ .UTxOEnv.batchData) tx utxo
     ∙  txADhash ≡ map hash txAD
+    -- NEW 
+    ∙  requireBatchObservers ⊆ Γ .UTxOEnv.bObs --3
 
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────

@@ -167,6 +167,8 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       spendOuts      : Ix ⇀ TxOut
       -- inputs corresponding to spentOuts
       corInputs      : ℙ TxIn
+      -- fixes the attached subTxs
+      subTxIds       : ℙ TxId
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -185,7 +187,8 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     scriptsP1 = mapPartial isInj₁ scripts
 
   data BatchData : Type where
-    SingularTransaction : Bool → BatchData -- bool specifies if the transaction is a complete or incomplete batch by itsefl use isValid as batch valid
+    SingularTransaction : BatchData 
+    OldTransaction : BatchData
     BatchParent : TxId → Bool → BatchData -- meaning batch valid, txid is the top-level tx
 
   record Tx : Type where

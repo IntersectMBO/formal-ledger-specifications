@@ -306,7 +306,8 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 
 validPath : BatchData → Tx → Bool
 validPath (BatchParent _ batchValid) _ = batchValid
-validPath (SingularTransaction _) tx = tx .Tx.isValid
+validPath SingularTransaction tx = tx .Tx.isValid
+validPath OldTransaction tx = tx .Tx.isValid
 
 isTop : BatchData → Tx → Bool
 isTop (BatchParent tid batchValid) tx = (tid ≡ᵇ (tx .Tx.body .TxBody.txid)) 

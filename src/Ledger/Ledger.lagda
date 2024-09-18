@@ -15,6 +15,7 @@ module Ledger.Ledger
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+   
 
 open import Ledger.Enact govStructure
 open import Ledger.Gov txs
@@ -98,16 +99,15 @@ mkTxList tx =
           subTxs = [] })
      (tx .Tx.subTxs)
 
--- sum up all units across all transactions
-totExUnits : List Tx → ExUnits
-totExUnits ltx = {!   !}
-  -- foldr (λ tx → _+ ( ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu) ) exUnitsZero ltx 
-  -- where open Tx; open TxWitnesses
+-- sum up all units across all transactions TODO this is wrong!
+totExUnits : Tx → List Tx → ExUnits
+totExUnits tx _ = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu 
+  where open Tx; open TxWitnesses
 
 minfee : PParams → UTxO → Tx → Coin
 minfee pp utxo tx  =
   pp .a * tx .body .txsize + pp .b
-  + txscriptfee (pp .prices) (totExUnits (tx ∷ mkTxList tx))
+  + txscriptfee (pp .prices) (totExUnits tx (mkTxList tx))
   + pp .minFeeRefScriptCoinsPerByte
   *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
   where open PParams; open Tx ; open TxBody 
@@ -166,11 +166,25 @@ module _ (let open UTxOState) where
   newDeposits : PParams → UTxOState → TxBody → Coin
   newDeposits pp st txb = let open TxBody in posPart (depositsChange pp txb (st .deposits))
 
+  singleInvalid : BatchData → List Tx → Bool
+  singleInvalid SingularTransaction (tx ∷ []) with (tx .Tx.isValid)
+  ... | true = false 
+  ... | false = true 
+  singleInvalid _ _ = false
+
+  -- if tx is balanced, and all new features are empty, this is true
+  noNewFeatures : Bool → TxBody → Bool
+  noNewFeatures isBalanced txb with ((((isBalanced , setToList (txb .TxBody.requireBatchObservers)) , setToList (proj₁ (txb .TxBody.spendOuts))) , setToList (txb .TxBody.corInputs  )) , setToList (txb .TxBody.subTxIds ))
+  ... | ((((true , []) , [] ) , []) , []) = true 
+  ... | _ = false 
+
 -- TODO FIX / discuss
-  mkBatchData : List Tx → BatchData
-  mkBatchData [] = SingularTransaction false -- should not happen
-  mkBatchData (tx ∷ []) = SingularTransaction (tx .Tx.isValid)
-  mkBatchData (tx ∷ txs) = BatchParent (tx .Tx.body .TxBody.txid) (foldr (λ p q → q ∧ (p .Tx.isValid)) true (tx ∷ txs))
+  mkBatchData : Bool → List Tx → BatchData
+  mkBatchData  _ [] = SingularTransaction -- should not happen
+  mkBatchData isBalanced (tx ∷ []) with (noNewFeatures isBalanced (tx .Tx.body)) 
+  ... | false = SingularTransaction 
+  ... | true  = OldTransaction 
+  mkBatchData _ (tx ∷ txs) = BatchParent (tx .Tx.body .TxBody.txid) (foldr (λ p q → q ∧ (p .Tx.isValid)) true (tx ∷ txs))
 
   -- fold over all transaction bodies 
   -- add corInputs to total balance
@@ -188,6 +202,10 @@ module _ (let open UTxOState) where
     +  inject (txb .txfee)
     +  inject (newDeposits pp st txb)
     +  inject (txb .txdonation)) +_) (inject 0) txbls
+
+  getIDs : List Tx → ℙ TxId 
+  getIDs ls = foldr (λ t → (singleton (t .Tx.body .TxBody.txid) ∪_ )) ∅ ls
+
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -217,7 +235,6 @@ data
   SWAP-V : let open Tx tx renaming (body to txb); open TxBody txb; open SwapEnv Γ' ; open LEnv lenv renaming (slot to sl) 
     in
     ∙  validPath bdat tx ≡ true
-    ∙  txb .TxBody.requireBatchObservers ⊆ reqObs --3
     ∙  ⟦ epoch sl , pparams , txvote , txwdrls , deposits u ⟧ᶜ ⊢ c ⇀⦇ txcerts ,CERTS⦈ c'
     ∙  ⟦ txid , epoch sl , pparams , ppolicy , enactState ⟧ᵍ ⊢ g ⇀⦇ txgov txb ,GOV⦈ g'
     ∙  record { LEnv lenv ; batchData = bdat ; bObs = reqObs } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
@@ -267,15 +284,17 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx.body)  subTxs); txs = (mkTxList tx) ; bd = mkBatchData txs
+  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx.body)  subTxs); txs = (mkTxList tx) ; isBalanced = consumed pp u (body ∷ txBods) ≡ᵇ produced pp u (body ∷ txBods) ; bd = mkBatchData isBalanced txs
     in
     ∙ feesOK pp tx utx ≡ true         --1      
-    ∙ bd ≢ SingularTransaction false → consumed pp u (body ∷ txBods) ≡ produced pp u (body ∷ txBods) --2
+    ∙ isBalanced ≡ true  → singleInvalid bd txs ≡ false  --2
     ∙ txsize ≤ maxTxSize  --3
     ∙ chkInsInUTxO txBods (dom utx)  --4
-    -- ∙ ? totExUnits txs maxTxExUnits --≤ maxTxExUnits TODO --5
-    ∙ bd ≢ SingularTransaction false → chkCorIns (body ∷ txBods) (body .TxBody.corInputs ) --6
-    ∙ bd ≢ SingularTransaction false → chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs)  --7
+    -- ∙ maxTxExUnits ≥ᵉ totExUnits txs maxTxExUnits   --5 -- TODO this doesnt work!
+    ∙ chkCorIns (body ∷ txBods) (body .TxBody.corInputs ) → singleInvalid bd txs ≡ false --6
+    ∙ chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs) → singleInvalid bd txs ≡ false  --7
+    ∙ getIDs subTxs ≡ subTxIds -- TODO can we put subTxs directly in body?
+    ∙ lengthˢ subTxIds ≡ length subTxs -- no repeated transactions 
     ∙ ⟦ Γ , bd ,  body .TxBody.requireBatchObservers ⟧ˢᵉ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
        Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
