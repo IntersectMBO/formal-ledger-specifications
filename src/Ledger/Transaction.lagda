@@ -203,6 +203,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       wits     : TxWitnesses
       isValid  : Bool
       txAD     : Maybe AuxiliaryData
+      -- NEW
       subTxs   : List Tx
 \end{code}
 \end{NoConway}

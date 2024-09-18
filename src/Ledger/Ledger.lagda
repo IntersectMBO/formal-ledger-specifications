@@ -87,17 +87,6 @@ private variable
 
 
 \begin{code}
--- builds list of transactions from sub-txs in top-level tx
-mkTxList : Tx → List Tx
-mkTxList tx = 
-  tx ∷ map (λ stx → 
-    record { body = stx .Tx.body ; 
-          wits = record { vkSigs = stx .Tx.wits .TxWitnesses.vkSigs ; scripts = tx .Tx.wits .TxWitnesses.scripts; txdats = stx .Tx.wits .TxWitnesses.txdats; 
-            txrdmrs = stx .Tx.wits .TxWitnesses.txrdmrs };
-          isValid = stx .Tx.isValid;
-          txAD = stx .Tx.txAD;
-          subTxs = [] })
-     (tx .Tx.subTxs)
 
 -- sum up all units across all transactions TODO this is wrong!
 totExUnits : Tx → List Tx → ExUnits
@@ -107,7 +96,7 @@ totExUnits tx _ = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
 minfee : PParams → UTxO → Tx → Coin
 minfee pp utxo tx  =
   pp .a * tx .body .txsize + pp .b
-  + txscriptfee (pp .prices) (totExUnits tx (mkTxList tx))
+  + txscriptfee (pp .prices) (totExUnits tx (tx .subTxs))
   + pp .minFeeRefScriptCoinsPerByte
   *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
   where open PParams; open Tx ; open TxBody 
@@ -178,7 +167,6 @@ module _ (let open UTxOState) where
   ... | ((((true , []) , [] ) , []) , []) = true 
   ... | _ = false 
 
--- TODO FIX / discuss
   mkBatchData : Bool → List Tx → BatchData
   mkBatchData  _ [] = SingularTransaction -- should not happen
   mkBatchData isBalanced (tx ∷ []) with (noNewFeatures isBalanced (tx .Tx.body)) 
@@ -284,7 +272,7 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx.body)  subTxs); txs = (mkTxList tx) ; isBalanced = consumed pp u (body ∷ txBods) ≡ᵇ produced pp u (body ∷ txBods) ; bd = mkBatchData isBalanced txs
+  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx.body)  subTxs); txs = tx ∷ subTxs ; isBalanced = consumed pp u (body ∷ txBods) ≡ᵇ produced pp u (body ∷ txBods) ; bd = mkBatchData isBalanced txs
     in
     ∙ feesOK pp tx utx ≡ true         --1      
     ∙ isBalanced ≡ true  → singleInvalid bd txs ≡ false  --2
