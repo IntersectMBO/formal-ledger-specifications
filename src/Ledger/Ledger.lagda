@@ -88,15 +88,20 @@ private variable
 
 \begin{code}
 
--- sum up all units across all transactions TODO this is wrong!
-totExUnits : Tx → List Tx → ExUnits
-totExUnits tx _ = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu 
+txToExUnits : Tx → ExUnits 
+txToExUnits tx = (∑[ (_ , eu) ← (tx .wits .txrdmrs) ]  eu)
   where open Tx; open TxWitnesses
+
+-- sum up all units across all transactions TODO this is wrong!
+totExUnits : List Tx → ExUnits
+totExUnits lstx = ∑[ au ← fromListᵐ (map (λ tx → ((tx .body .TxBody.txid) , txToExUnits tx)) lstx)] au
+  where open Tx; open TxWitnesses
+
 
 minfee : PParams → UTxO → Tx → Coin
 minfee pp utxo tx  =
   pp .a * tx .body .txsize + pp .b
-  + txscriptfee (pp .prices) (totExUnits tx (tx .subTxs))
+  + txscriptfee (pp .prices) (totExUnits (tx ∷ (tx .subTxs)))
   + pp .minFeeRefScriptCoinsPerByte
   *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
   where open PParams; open Tx ; open TxBody 

@@ -390,6 +390,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
 
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
+unquoteDecl Scripts-No-Top-premises  = genPremises Scripts-No-Top-premises  (quote Scripts-No-TopLevel)
 
 private variable
   Γ : UTxOEnv
@@ -443,9 +444,9 @@ equal if they are both present.
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
--- pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h i j
---       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h , i , j)
--- unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r 
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r )
+unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}

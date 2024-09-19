@@ -113,7 +113,7 @@ noSubsInSubs bd tx with (isTop bd tx , tx .Tx.subTxs)
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  -- ∪  mapˢ (λ i  → (SpendOut  i , payCred (proj₁ (lookup)))) (fromList spendOuts ) TODO compute set of credentials for SpendOut
+  ∪  mapˢ (λ (ix , o) → (SpendOut  ix , payCred (proj₁ o))) ((spendOuts) ˢ)
   ∪  mapˢ (λ x        → (BatchObs x , ScriptObj x)) requireBatchObservers
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
