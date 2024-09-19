@@ -131,3 +131,25 @@ instance
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
+
+private variable
+  dCert : DCert
+  stᵍ stᵍ' : GState
+  stᵈ stᵈ' : DState
+  stᵖ stᵖ' : PState
+  Γ : CertEnv
+
+{-
+pov :  Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+       → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+pov {stᵖ = stᵖ} {stᵍ} (CERT-deleg {pp} {deps = deps} {e = e} {vs} {wdrls}
+  (DELEG-delegate {c = c} {rwds} {d} {mkh} {vDelegs = vDelegs} {sDelegs} {mv} x)) = goal
+  where
+  goal :  getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+          ≡ getCoin  ⟦ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ (c , 0) ❵ ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+  goal = {!!}
+
+pov {stᵖ = stᵖ} (CERT-deleg {wdrls = wdrls} (DELEG-dereg {rwds = rwds} {vDelegs = vDelegs} x)) = {!!}
+pov (CERT-pool x) = refl
+pov (CERT-vdel x) = refl
+-}
