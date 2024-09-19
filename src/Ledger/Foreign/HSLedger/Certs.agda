@@ -65,8 +65,8 @@ instance
     • fieldPrefix "gs"
   Conv-GState = autoConvert GState
 
-  HsTy-CertState' = autoHsType CertState ⊣ withConstructor "MkCertState"
-  Conv-CertState' = autoConvert CertState
+  HsTy-CertState = autoHsType CertState ⊣ withConstructor "MkCertState"
+  Conv-CertState = autoConvert CertState
 
 -- deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
 -- deleg-step = to (compute Computational-DELEG)
