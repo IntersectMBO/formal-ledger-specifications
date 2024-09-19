@@ -38,6 +38,7 @@ module Ledger.Utxo.Properties
 
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
+open import Ledger.Delegation govStructure
 open import Algebra.Definitions.RawMagma +-rawMagma using () renaming (_,_ to _,≤_)
 
 instance

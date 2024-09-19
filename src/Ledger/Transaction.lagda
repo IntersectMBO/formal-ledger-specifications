@@ -15,6 +15,7 @@ open import Ledger.Prelude renaming (filterᵐ to filter)
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
+open import Ledger.Types.StateStructure
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
@@ -111,9 +112,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   module GovernanceActions = Ledger.GovernanceActions govStructure
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
-  open import Ledger.Certs govStructure public
-  open import Ledger.Certs.Haskell govStructure public
-    renaming (DState to DState'; GState to GState') using ()
+  field stateStructure : StateStructure govStructure
+  open StateStructure stateStructure public
+  open import Ledger.Delegation govStructure
 \end{code}
 \begin{NoConway}
 \emph{Derived types}

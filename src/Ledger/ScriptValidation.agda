@@ -15,6 +15,8 @@ module Ledger.ScriptValidation
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
+open import Ledger.Delegation govStructure
+
 instance
   _ = DecEq-Slot
 

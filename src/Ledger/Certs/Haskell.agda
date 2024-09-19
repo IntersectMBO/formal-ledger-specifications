@@ -7,10 +7,9 @@ module Ledger.Certs.Haskell
   (gs : _) (open GovStructure gs)
   where
 
+open import Ledger.Delegation gs
 open import Ledger.Certs gs
-  using (Deposits; PState; PoolParams; DCert; DepositPurpose; _⊢_⇀⦇_,POOL⦈_; DecEq-DepositPurpose; PoolEnv)
-open DCert
-open DepositPurpose
+  using (PState; _⊢_⇀⦇_,POOL⦈_; PoolEnv)
 
 open import Tactic.Derive.DecEq
 
@@ -187,3 +186,14 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
 
 _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
 _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+
+open import Ledger.Types.StateStructure gs
+
+StateStructureʰ : StateStructure
+StateStructureʰ = record
+  { CertEnv = CertEnv
+  ; DelegEnv = DelegEnv
+  ; CertState = CertState
+  ; _⊢_⇀⦇_,CERTS⦈_ = _⊢_⇀⦇_,CERTS⦈_
+  ; DState = DState
+  }

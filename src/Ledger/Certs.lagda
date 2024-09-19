@@ -6,67 +6,25 @@
 open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
-module Ledger.Certs (gs : _) (open GovStructure gs) where
+module Ledger.Certs
+  (gs : _) (open GovStructure gs)
+  where
 
 open import Tactic.Derive.DecEq
 
 open import Ledger.GovernanceActions gs
 open RwdAddr
+open import Ledger.Delegation gs
 \end{code}
 
 \begin{figure*}[h]
 \emph{Derived types}
-\begin{code}
-data DepositPurpose : Type where
-  CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : KeyHash      → DepositPurpose
-  DRepDeposit        : Credential   → DepositPurpose
-  GovActionDeposit   : GovActionID  → DepositPurpose
-
-Deposits = DepositPurpose ⇀ Coin
-\end{code}
-\begin{code}[hide]
-instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
-\end{code}
 \caption{Deposit types}
 \end{figure*}
 
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
 \begin{NoConway}
-\begin{code}
-record PoolParams : Type where
-\end{code}
-\begin{code}[hide]
-  field
-\end{code}
-\begin{code}
-    rewardAddr : Credential
-\end{code}
-\end{NoConway}
-\begin{code}
-data DCert : Type where
-  delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
-  dereg       : Credential → Coin → DCert
-  regpool     : KeyHash → PoolParams → DCert
-  retirepool  : KeyHash → Epoch → DCert
-  regdrep     : Credential → Coin → Anchor → DCert
-  deregdrep   : Credential → Coin → DCert
-  ccreghot    : Credential → Maybe Credential → DCert
-\end{code}
-\begin{NoConway}
-\begin{code}
-cwitness : DCert → Credential
-cwitness (delegate c _ _ _)  = c
-cwitness (dereg c _)         = c
-cwitness (regpool kh _)      = KeyHashObj kh
-cwitness (retirepool kh _)   = KeyHashObj kh
-cwitness (regdrep c _ _)     = c
-cwitness (deregdrep c _)     = c
-cwitness (ccreghot c _)      = c
-\end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
 \caption{Delegation definitions}
@@ -147,7 +105,6 @@ record DelegEnv : Type where
     pools    : KeyHash ⇀ PoolParams
     deposits : Deposits
 
-GovCertEnv  = CertEnv
 PoolEnv     = PParams
 \end{code}
 \end{AgdaMultiCode}
@@ -278,7 +235,7 @@ data
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Type
+  _⊢_⇀⦇_,GOVCERT⦈_   : CertEnv → GState → DCert → GState → Type
 \end{code}
 \begin{code}[hide]
 data
@@ -441,3 +398,15 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
 \caption{CERTS rules}
 \label{fig:sts:certs}
 \end{figure*}
+\begin{code}[hide]
+open import Ledger.Types.StateStructure gs
+
+StateStructureˢ : StateStructure
+StateStructureˢ = record
+  { CertEnv = CertEnv
+  ; DelegEnv = DelegEnv
+  ; CertState = CertState
+  ; _⊢_⇀⦇_,CERTS⦈_ = _⊢_⇀⦇_,CERTS⦈_
+  ; DState = DState
+  }
+\end{code}
