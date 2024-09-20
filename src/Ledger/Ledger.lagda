@@ -47,13 +47,14 @@ record LEnv : Type where
 record SwapEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ˢᵉ
+  constructor ⟦_,_,_,_⟧ˢᵉ
   field
 \end{code}
 \begin{code}
     lenv        : LEnv
     bdat        : BatchData
     reqObs      : ℙ ScriptHash
+    bScripts      : ℙ Script
 
 record LState : Type where
 \end{code}
@@ -230,14 +231,14 @@ data
     ∙  validPath bdat tx ≡ true
     ∙  ⟦ epoch sl , pparams , txvote , txwdrls , deposits u ⟧ᶜ ⊢ c ⇀⦇ txcerts ,CERTS⦈ c'
     ∙  ⟦ txid , epoch sl , pparams , ppolicy , enactState ⟧ᵍ ⊢ g ⇀⦇ txgov txb ,GOV⦈ g'
-    ∙  record { LEnv lenv ; batchData = bdat ; bObs = reqObs } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+    ∙  record { LEnv lenv ; batchData = bdat ; bObs = reqObs ; batchScripts = bScripts } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
        ────────────────────────────────
        Γ' ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g' , c' ⟧ˡ
 
   SWAP-I : let open SwapEnv Γ' 
     in
     ∙ validPath bdat tx ≡ false
-    ∙ record { LEnv lenv ; batchData = bdat ; bObs = reqObs } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+    ∙ record { LEnv lenv ; batchData = bdat ; bObs = reqObs ; batchScripts = bScripts } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
       ────────────────────────────────
        Γ' ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g , c ⟧ˡ
 \end{code}
@@ -277,7 +278,7 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx.body)  subTxs); txs = tx ∷ subTxs ; isBalanced = consumed pp u (body ∷ txBods) ≡ᵇ produced pp u (body ∷ txBods) ; bd = mkBatchData isBalanced txs
+  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx.body)  subTxs); txs = tx ∷ subTxs ; isBalanced = consumed pp u (body ∷ txBods) ≡ᵇ produced pp u (body ∷ txBods) ; bd = mkBatchData isBalanced txs ; allScripts = foldr (λ t l → (t .Tx.wits .TxWitnesses.scripts) ∪ l) ∅ txs
     in
     ∙ feesOK pp tx utx ≡ true         --1      
     ∙ isBalanced ≡ true  → singleInvalid bd txs ≡ false  --2
@@ -288,9 +289,9 @@ data
     ∙ chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs) → singleInvalid bd txs ≡ false  --7
     ∙ getIDs subTxs ≡ subTxIds -- TODO can we put subTxs directly in body?
     ∙ lengthˢ subTxIds ≡ length subTxs -- no repeated transactions 
-    ∙ ⟦ Γ , bd ,  body .TxBody.requireBatchObservers ⟧ˢᵉ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
+    ∙ ⟦ Γ , bd ,  body .TxBody.requireBatchObservers , allScripts ⟧ˢᵉ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
-       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
+       Γ ⊢  ⟦ u , g , c ⟧fˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}

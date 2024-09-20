@@ -68,8 +68,8 @@ instance
   Dec-UsesV3Features {record { txvote = [] ; txprop = x ∷ txprop }} = ⁇ yes (HasProps (λ ()))
   Dec-UsesV3Features {record { txvote = x ∷ txvote }} = ⁇ yes (HasVotes (λ ()))
 
-languages : Tx → UTxO → ℙ Language
-languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
+languages : ℙ Script → Tx → UTxO → ℙ Language
+languages bs tx utxo = mapPartial getLanguage (getBatchScripts bs tx utxo)
   where
     getLanguage : Script → Maybe Language
     getLanguage (inj₁ _) = nothing
@@ -88,12 +88,12 @@ allowedLanguages : BatchData → Tx → UTxO → ℙ Language
 allowedLanguages bd tx utxo =
   if (∃[ o ∈ os ] isBootstrapAddr (proj₁ o))
     then ∅
+  else if (isOld bd ≡ true ) 
+    then fromList (PlutusV4 ∷ [])
   else if UsesV3Features txb
     then fromList (PlutusV3 ∷ [])
   else if ∃[ o ∈ os ] HasInlineDatum o
     then fromList (PlutusV2 ∷ PlutusV3 ∷ [])
-  else if (isOld bd ≡ true ) -- TODO is this right?
-    then fromList (PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   else
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   where
@@ -169,23 +169,25 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
+        bd                = Γ .UTxOEnv.batchData
+        bs                = Γ .UTxOEnv.batchScripts
         witsKeyHashes     = mapˢ hash (dom vkSigs)
-        witsScriptHashes  = mapˢ hash scripts
-        spentHashes       = getSpentHashes tx utxo
+        witsScriptHashes  = mapˢ hash (scripts ∪ (Γ .UTxOEnv.batchScripts))
+        spentHashes       = getSpentHashes bs tx utxo
         refScriptHashes   = mapˢ hash (refScripts tx utxo)
         neededHashes      = scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = getDataHashes (range txouts)
+
     in
-    -- TODO does this allow extra scripts? they should be allowed (if not, this makes the witness collection for subTxs more complicated)
-    -- TODO deal with reference inputs correctly
+    -- TODO can we share reference scripts?? how?
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ mapPartial isInj₁ (getBatchScripts bs tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
+    ∙  neededHashes ＼ refScriptHashes ⊆ witsScriptHashes  -- TODO this is relaxed because extra scripts are in batchScripts! is this ok?
     ∙  spentHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ spentHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
-    ∙  languages tx utxo ⊆ allowedLanguages (Γ .UTxOEnv.batchData) tx utxo
+    ∙  languages bs tx utxo ⊆ allowedLanguages bd tx utxo
     ∙  txADhash ≡ map hash txAD
     -- NEW 
     ∙  requireBatchObservers ⊆ Γ .UTxOEnv.bObs --3

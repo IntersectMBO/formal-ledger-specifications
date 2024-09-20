@@ -210,10 +210,10 @@ valContext txinfo sp = toData (txinfo , sp)
 
 opaque
 
-  collectPhaseTwoScriptInputs' : BatchData → PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
+  collectPhaseTwoScriptInputs' : ℙ Script → BatchData → PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
     → Maybe (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs' bd pp tx utxo (sp , sh)
-    with lookupScriptHash sh tx utxo
+  collectPhaseTwoScriptInputs' bs bd pp tx utxo (sp , sh)
+    with lookupScriptHash sh bs tx utxo
   ... | nothing = nothing
   ... | just s
     with isInj₂ s | indexedRdmrs tx sp
@@ -226,11 +226,11 @@ opaque
   ... | x | y = nothing
       
 
-  collectPhaseTwoScriptInputs : BatchData → PParams → Tx → UTxO
+  collectPhaseTwoScriptInputs : ℙ Script → BatchData → PParams → Tx → UTxO
     → List (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs bd pp tx utxo
+  collectPhaseTwoScriptInputs bs bd pp tx utxo
     = setToList
-    $ mapPartial (collectPhaseTwoScriptInputs' bd pp tx utxo)
+    $ mapPartial (collectPhaseTwoScriptInputs' bs bd pp tx utxo)
     $ scriptsNeeded bd utxo tx
 
 open TxBody

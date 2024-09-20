@@ -44,10 +44,10 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
-isTwoPhaseScriptAddress tx utxo a =
+isTwoPhaseScriptAddress : ℙ Script → Tx → UTxO → Addr → Bool
+isTwoPhaseScriptAddress bs tx utxo a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
+    (λ {p} → if lookupScriptHash (getScriptHash a p) bs tx utxo
                  then (λ {s} → isP2Script s)
                  else false)
   else
@@ -60,9 +60,9 @@ opaque
   getDataHashes : ℙ TxOut → ℙ DataHash
   getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
 
-  getSpentHashes : Tx → UTxO → ℙ DataHash
-  getSpentHashes tx utxo = getDataHashes
-    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
+  getSpentHashes : ℙ Script → Tx → UTxO → ℙ DataHash
+  getSpentHashes bs tx utxo = getDataHashes
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress bs tx utxo a ≡ true)
             (range (utxo ∣ txins)) ∪ (range spendOuts)) 
     where open Tx; open TxBody (tx .body)
 \end{code}
@@ -155,6 +155,7 @@ record UTxOEnv : Type where
     treasury  : Coin
     bObs      : ℙ ScriptHash
     batchData : BatchData
+    batchScripts : ℙ Script
 \end{code}
 \end{NoConway}
 \emph{UTxO states}
@@ -345,7 +346,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
           bd = Γ .UTxOEnv.batchData
-          sLst = collectPhaseTwoScriptInputs bd pp tx utxo
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ true
         ∙ validPath bd tx ≡ true
@@ -362,7 +364,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
           bd = Γ .UTxOEnv.batchData
-          sLst = collectPhaseTwoScriptInputs bd pp tx utxo
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isTop bd tx ≡ false
@@ -376,7 +379,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
           bd = Γ .UTxOEnv.batchData
-          sLst = collectPhaseTwoScriptInputs bd pp tx utxo
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isTop bd tx ≡ true

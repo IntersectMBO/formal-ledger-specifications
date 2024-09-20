@@ -242,17 +242,17 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
     where open Tx; open TxBody (tx .body)
 
-  txscripts : Tx → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+  getBatchScripts : ℙ Script → Tx → UTxO → ℙ Script
+  getBatchScripts bs tx utxo = bs ∪ refScripts tx utxo
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo =
+  lookupScriptHash : ScriptHash → ℙ Script → Tx → UTxO → Maybe Script
+  lookupScriptHash sh bs tx utxo =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (txscripts tx utxo)
+    where m = setToHashMap (getBatchScripts bs tx utxo)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions related to transactions}
