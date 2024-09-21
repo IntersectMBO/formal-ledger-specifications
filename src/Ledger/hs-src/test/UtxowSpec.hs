@@ -32,17 +32,17 @@ initParams = MkPParams
   , ppMaxRefScriptSizePerTx = 200 * 1024 -- 200KiB
   , ppMaxRefScriptSizePerBlock = 1024 * 1024 -- 1MiB
   , ppRefScriptCostStride = 25
-  , ppRefScriptCostMultiplier = (6, 5)
+  , ppRefScriptCostMultiplier = 1.2 -- see [1]
   , ppPoolDeposit = 10
   , ppEmax = 10
   , ppPv = (1, 0)
   , ppCoinsPerUTxOByte = 1
   , ppMaxCollateralInputs = 1
-  , ppMaxTxExUnits = (100, 100)
-  , ppMaxBlockExUnits = (100, 100)
+  , ppMaxTxExUnits = (10000000000 , 14000000)    -- from ScriptVerification.Lib
+  , ppMaxBlockExUnits = (40000000000 , 62000000) -- from ScriptVerification.Lib
   , ppKeyDeposit = 0
   , ppPrices = ()
-  , ppMinFeeRefScriptCoinsPerByte = (1, 10)
+  , ppMinFeeRefScriptCoinsPerByte = 15 -- see [1]
   , ppA0 = 1
   , ppNopt = 0
   , ppCollateralPercentage = 5
@@ -167,3 +167,6 @@ spec = do
         , deposits = MkHSMap []
         , donations = 0
         })
+
+
+-- [1] https://github.com/IntersectMBO/cardano-ledger/blob/master/docs/adr/2024-08-14_009-refscripts-fee-change.md

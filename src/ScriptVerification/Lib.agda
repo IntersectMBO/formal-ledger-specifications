@@ -35,12 +35,12 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                ; poolDeposit = 500000000 -- lovelace
                                ; keyDeposit = 500000000 -- lovelace
                                ; coinsPerUTxOByte = 4310 --lovelace
-                               ; minFeeRefScriptCoinsPerByte = 1ℚ -- unknown for now
+                               ; minFeeRefScriptCoinsPerByte = mkℚ+ 15 1 (gcd≡1⇒coprime refl) -- see [1]
                                ; prices = tt -- fix this
                                ; maxRefScriptSizePerTx = 200 * 1024 -- 200KiB
                                ; maxRefScriptSizePerBlock = 1024 * 1024 -- 1MiB
                                ; refScriptCostStride  = 25
-                               ; refScriptCostMultiplier = mkℚ+ 6 5 (gcd≡1⇒coprime refl) -- 1.2
+                               ; refScriptCostMultiplier = mkℚ+ 6 5 (gcd≡1⇒coprime refl) -- see [1]
                                ; a0 = 1ℚ -- don't know
                                ; Emax = 18
                                ; nopt = 0 -- don't know
@@ -108,3 +108,5 @@ notEmpty (x ∷ xs) = ⊤
 isSuccess : ComputationResult String UTxOState → Bool
 isSuccess (success x) = true
 isSuccess (failure x) = false
+
+-- [1] https://github.com/IntersectMBO/cardano-ledger/blob/master/docs/adr/2024-08-14_009-refscripts-fee-change.md
