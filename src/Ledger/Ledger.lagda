@@ -291,7 +291,7 @@ data
     ∙ lengthˢ subTxIds ≡ length subTxs -- no repeated transactions 
     ∙ ⟦ Γ , bd ,  body .TxBody.requireBatchObservers , allScripts ⟧ˢᵉ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
-       Γ ⊢  ⟦ u , g , c ⟧fˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
+       Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
