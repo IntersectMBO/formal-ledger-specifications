@@ -42,7 +42,6 @@ initParams = MkPParams
   , ppMaxTxExUnits = (100, 100)
   , ppMaxBlockExUnits = (100, 100)
   , ppKeyDeposit = 0
-  , ppMinFeeRefScriptCoinsPerByte = 0
   , ppPrices = ()
   , ppA0 = 1
   , ppNopt = 0
