@@ -79,21 +79,21 @@ languages bs tx utxo = mapPartial getLanguage (getBatchScripts bs tx utxo)
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isKeyHashObj
 
-isOld : BatchData → Bool 
-isOld OldTransaction = true 
-isOld _ = false
+usesV4Features : BatchData → Bool 
+usesV4Features OldTransaction = false 
+usesV4Features _ = true
 
 -- TODO check this
 allowedLanguages : BatchData → Tx → UTxO → ℙ Language
 allowedLanguages bd tx utxo =
   if (∃[ o ∈ os ] isBootstrapAddr (proj₁ o))
     then ∅
-  else if (isOld bd ≡ true ) 
+  else if (usesV4Features bd ≡ true ) 
     then fromList (PlutusV4 ∷ [])
   else if UsesV3Features txb
-    then fromList (PlutusV3 ∷ [])
+    then fromList (PlutusV3 ∷ PlutusV4 ∷ [])
   else if ∃[ o ∈ os ] HasInlineDatum o
-    then fromList (PlutusV2 ∷ PlutusV3 ∷ [])
+    then fromList (PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   else
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   where
