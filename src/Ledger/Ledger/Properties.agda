@@ -103,19 +103,19 @@ instance
 
 -- ** Proof that LEDGER preserves values.
 
-module _ where
+FreshTx : Tx → LState → Type
+FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
+  where open Tx tx; open TxBody body; open UTxOState; open LState
+
+module _ (tx : Tx) (let open Tx tx; open TxBody body) where
 
   private variable
-    tx : Tx
     Γ : LEnv
     s s' : LState
     l : List Tx
 
-  FreshTx : Tx → LState → Type
-  FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
-    where open Tx; open TxBody; open UTxOState; open LState
-
-  LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
+  -- TODO: Fix this after proving pov for CERTS.
+  LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s + φ(getCoin txwdrls , isValid) ≡ getCoin s'
   LEDGER-pov h (LEDGER-V⋯ _ (UTXOW⇒UTXO st) _ _) = pov h st
   LEDGER-pov h (LEDGER-I⋯ _ (UTXOW⇒UTXO st))     = pov h st
 
@@ -124,13 +124,14 @@ module _ where
     ∷-Fresh  : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → FreshTxs Γ s' l
               → FreshTxs Γ s (tx ∷ l)
 
-  LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
-  LEDGERS-pov _ (BS-base Id-nop) = refl
-  LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) =
-    trans (LEDGER-pov h x) $
-      LEDGERS-pov (subst (λ s → FreshTxs Γ s l)
-                          (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
-                          h₂) st
+  -- TODO: Fix this after proving pov for CERTS.
+  -- LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
+  -- LEDGERS-pov _ (BS-base Id-nop) = refl
+  -- LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) =
+  --   trans (LEDGER-pov h x) $
+  --     LEDGERS-pov (subst (λ s → FreshTxs Γ s l)
+  --                         (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
+  --                         h₂) st
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
