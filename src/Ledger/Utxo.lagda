@@ -355,6 +355,7 @@ module _ (let open UTxOState; open TxBody) where
     =  balance (st .utxo ∣ txb .txins)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
+    +  inject (getCoin (txb .txwdrls))
 
   produced : PParams → UTxOState → TxBody → Value
   produced pp st txb
