@@ -153,7 +153,7 @@ record PParams : Type where
 paramsWellFormed : PParams → Type
 paramsWellFormed pp =
      0 ∉ fromList  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
-                   ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
+                   ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                    ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
   where open PParams pp
 \end{code}
@@ -209,7 +209,7 @@ module PParamsUpdate where
   paramsUpdateWellFormed : PParamsUpdate → Type
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
-                         ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
+                         ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                          ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
     where open PParamsUpdate ppu
   

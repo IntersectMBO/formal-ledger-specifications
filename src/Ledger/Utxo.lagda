@@ -454,7 +454,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
-        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
+        inject (utxoEntrySize txout * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]

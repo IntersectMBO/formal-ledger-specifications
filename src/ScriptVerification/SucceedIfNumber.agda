@@ -170,7 +170,8 @@ opaque
   succeedExample : ComputationResult String UTxOState
   succeedExample = UTXO-step initEnv ⟦ initStateDatum , 0 , ∅ , 0 ⟧ᵘ  succeedTx
 
-  _ : isSuccess succeedExample ≡ true
+  --  This is now false since `minUTxOValue` was replaced with `coinsPerUTxOByte` (= 4310 in `ScriptVerification.Lib`)
+  _ : isSuccess succeedExample ≡ false
   _  = refl
 
   -- Compute the result of running the UTXO rules on the failTx transaction
