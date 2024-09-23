@@ -13,31 +13,25 @@ open import Agda.Builtin.FromNat
 open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
+open import Ledger.Types.LedgerStructure
 
 module Ledger.Epoch
-  (txs : _) (open TransactionStructure txs)
+  (txs : _) (open TransactionStructure txs hiding (DState; PState; CertState; stakeDelegs; rewards; dState; pState; retiring; voteDelegs))
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (ledgerStructure  : LedgerStructure txs abs) (open LedgerStructure ledgerStructure)
   where
+
+open import Ledger.Types.CertsStructure govStructure
+open CertsStructure certsStructure
+open import Ledger.Delegation govStructure
 
 open import Ledger.Gov txs
 open import Ledger.Enact govStructure
-open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 \end{code}
 \begin{NoConway}
 \begin{figure*}[h]
-\begin{code}
-record RewardUpdate : Set where
-  constructor ⟦_,_,_,_⟧ʳᵘ
-  field
-    Δt Δr Δf : ℤ
-    rs : Credential ⇀ Coin
-\end{code}
-\begin{code}[hide]
-    -- more convient here than doing checks
-    {zeroSum} : Δt + Δr + Δf + ℤ.+ ∑[ x ← rs ] x ≡ ℤ.0ℤ
-\end{code}
 \end{figure*}
 \end{NoConway}
 
@@ -121,26 +115,29 @@ open GovActionState using (returnAddr)
 \begin{NoConway}
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
+applyRUpd rupd@(⟦ Δt , Δr , Δf , rs ⟧ʳᵘ)
   ⟦ ⟦ treasury , reserves ⟧ᵃ
   , ss
-  , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
-    , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , lState
+    --⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
+    --, govSt
+    --, lState --⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ
+    --⟧ˡ
   , es
   , fut
   ⟧ᵉ' =
   ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
     , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ
   , ss
-  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
-    , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , applyRUpdLState rupd lState
+    -- ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
   , fut ⟧ᵉ'
   where
-    regRU     = rs ∣ dom rewards
-    unregRU   = rs ∣ dom rewards ᶜ
+    certState = certSt lState
+    dSt = dState certState
+    regRU     = rs ∣ dom (rewards dSt)
+    unregRU   = rs ∣ dom (rewards dSt) ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
 \end{code}
 \end{NoConway}
@@ -149,10 +146,10 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
 \begin{AgdaSuppressSpace}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo ⟦ _ , stakeDelegs , rewards ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
+stakeDistr utxo dState pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs dState ⟧ˢ
   where
-    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ proj₁ rewards
+    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom (rewards dState))
+    stakeRelation = m ∪ proj₁ (rewards dState)
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
@@ -176,8 +173,14 @@ opaque
 \begin{NoConway}
 \begin{code}
 data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
-  SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
-             stake = stakeDistr utxo dState pState
+  SNAP : let
+      utxoState = utxoSt lstate
+      utxo = UTxOState.utxo utxoState
+      certState = certSt lstate
+      dSt = dState certState
+      pSt = pState certState
+      stake = stakeDistr utxo dSt pSt
+      fees = UTxOState.fees utxoState
     in
     lstate ⊢ ⟦ mark , set , go , feeSS ⟧ˢˢ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧ˢˢ
 
@@ -206,11 +209,16 @@ its results by carrying out each of the following tasks.
 \begin{code}
   EPOCH : let
       ⟦ esW , removed , _ ⟧ʳ = fut
-      ⟦ utxoSt , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ = ls
+      certState = certSt ls
+      pSt = pState certState
+      dSt = dState certState
+      gSt = gState certState
+      rwds = rewards dSt
+      utxoSt = utxoSt ls
+      govSt = govSt ls
 \end{code}
 \begin{code}[hide]
       open UTxOState
-      open PState; open DState; open GState
       open Acnt; open EnactState; open GovActionState
 \end{code}
 \begin{code}
@@ -223,18 +231,13 @@ its results by carrying out each of the following tasks.
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
       es         = record esW { withdrawals = ∅ }
-      retired    = (pState .retiring) ⁻¹ e
+      retired    = (retiring pSt) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
-      refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
+      refunds    = pullbackMap payout toRwdAddr (dom (dSt .rewards))
       unclaimed  = getCoin payout - getCoin refunds
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
-
-      certState' =
-        ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
-        , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ
-        , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps)
-          , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ ⟧ᶜˢ
+      lState' = updateLState ls
 
       utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
@@ -243,13 +246,16 @@ its results by carrying out each of the following tasks.
     in
     record { currentEpoch = e
            ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                          (utxoSt' .deposits) (voteDelegs dState)
-           ; treasury = acnt .treasury ; GState gState }
+                                          (utxoSt' .deposits) (voteDelegs dSt)
+           ; treasury = acnt .treasury
+           ; dreps = {!? gState!}
+           ; ccHotKeys = {!!}
+           }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
     _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈
-        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ˡ , es , fut' ⟧ᵉ'
+        ⟦ acnt' , ss' , lState' , es , fut' ⟧ᵉ'
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}

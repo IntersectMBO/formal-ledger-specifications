@@ -9,10 +9,13 @@ module Ledger.Delegation
   where
 
 open import Data.Maybe
+import Data.Integer as ℤ
 
 open import Ledger.GovernanceActions gs
 open import Ledger.Prelude
 open import Ledger.Prelude.Base
+
+open import Agda.Builtin.FromNat
 
 open import Tactic.Derive.DecEq
 
@@ -49,4 +52,11 @@ cwitness (retirepool kh _)   = KeyHashObj kh
 cwitness (regdrep c _ _)     = c
 cwitness (deregdrep c _)     = c
 cwitness (ccreghot c _)      = c
+
+record RewardUpdate : Set where
+  constructor ⟦_,_,_,_⟧ʳᵘ
+  field
+    Δt Δr Δf : ℤ
+    rs : Credential ⇀ Coin
+    {zeroSum} : Δt + Δr + Δf + ℤ.+ ∑[ x ← rs ] x ≡ ℤ.0ℤ
 \end{code}

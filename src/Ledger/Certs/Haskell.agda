@@ -9,12 +9,13 @@ module Ledger.Certs.Haskell
 
 open import Ledger.Delegation gs
 open import Ledger.Certs gs
-  using (PState; _⊢_⇀⦇_,POOL⦈_; PoolEnv)
+  using (PState; _⊢_⇀⦇_,POOL⦈_; PoolEnv; ⟦_,_⟧ᵖ)
 
 open import Tactic.Derive.DecEq
 
 open import Ledger.GovernanceActions gs
 open RwdAddr
+open import Agda.Builtin.FromNat
 
 record CertEnv : Type where
   constructor ⟦_,_,_,_⟧ᶜ
@@ -187,13 +188,20 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
 _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
 _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
 
-open import Ledger.Types.StateStructure gs
+open import Ledger.Types.CertsStructure gs
 
-StateStructureʰ : StateStructure
-StateStructureʰ = record
+CertsStructureʰ : CertsStructure
+CertsStructureʰ = record
   { CertEnv = CertEnv
   ; DelegEnv = DelegEnv
   ; CertState = CertState
   ; _⊢_⇀⦇_,CERTS⦈_ = _⊢_⇀⦇_,CERTS⦈_
   ; DState = DState
+  ; stakeDelegs = DState.stakeDelegs
+  ; rewards = DState.rewards
+  ; dState = CertState.dState
+  ; pState = CertState.pState
+  ; PState = PState
+  ; retiring = PState.retiring
+  ; voteDelegs = DState.voteDelegs
   }

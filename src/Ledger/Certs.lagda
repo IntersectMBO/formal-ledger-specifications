@@ -399,14 +399,22 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
 \label{fig:sts:certs}
 \end{figure*}
 \begin{code}[hide]
-open import Ledger.Types.StateStructure gs
+open import Ledger.Types.CertsStructure gs
+open import Agda.Builtin.FromNat
 
-StateStructureˢ : StateStructure
-StateStructureˢ = record
+CertsStructureˢ : CertsStructure
+CertsStructureˢ = record
   { CertEnv = CertEnv
   ; DelegEnv = DelegEnv
   ; CertState = CertState
   ; _⊢_⇀⦇_,CERTS⦈_ = _⊢_⇀⦇_,CERTS⦈_
   ; DState = DState
+  ; stakeDelegs = DState.stakeDelegs
+  ; rewards = DState.rewards
+  ; dState = CertState.dState
+  ; pState = CertState.pState
+  ; PState = PState
+  ; retiring = PState.retiring
+  ; voteDelegs = DState.voteDelegs
   }
 \end{code}
