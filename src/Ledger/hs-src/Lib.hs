@@ -3,34 +3,36 @@ module Lib
   , module Lib
   ) where
 
-import MAlonzo.Code.Ledger.Foreign.HSTypes              as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSTypes              as X
   (HSSet(..), HSMap(..), ComputationResult(..))
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Address     as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Address     as X
   (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr)
-import MAlonzo.Code.Ledger.Foreign.HSLedger.PParams     as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.PParams     as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Transaction as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Transaction as X
   ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
   , Script, Datum, DataHash, Value, TxOut)
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Cert        as X
-  (certStep', certsStep')
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Chain       as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Cert        as X
+  (certStep, certsStep, CertState(..))
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Chain       as X
   (ChainState(..), Block(..), chainStep)
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Certs       as X
-  ( PoolParams(..), PState(..), DelegEnv(..), CertEnv(..), DState'(..), DCert(..), GState(..)
-  , delegStep', govCertStep', poolStep, DepositPurpose(..))
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Enact       as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Certs       as X
+  ( PoolParams(..), PState(..), DelegEnv(..), CertEnv(..), DState(..), DCert(..), GState(..)
+  , delegStep, govCertStep, poolStep, DepositPurpose(..))
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Enact       as X
   (EnactState(..), EnactEnv(..), enactStep, GovAction (..))
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Epoch       as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Epoch       as X
   (Snapshot(..), Snapshots(..), EpochState(..), epochStep)
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Gov         as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Gov         as X
   ( GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..), GovEnv(..), GovProposal(..)
   , GovActionState(..), govStep)
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger      as X
-  (LEnv(..), LState(..), ledgerStep, CertState(..), DState(..))
-import MAlonzo.Code.Ledger.Foreign.HSLedger.NewEpoch    as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Ledger      as X
+  (LEnv(..), LState(..), ledgerStep)
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.NewEpoch    as X
   (NewEpochState(..), newEpochStep, HsRewardUpdate(..))
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Ratify      as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Ratify      as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep)
-import MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo        as X
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Utxo        as X
   (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep)
+import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes   as X
+  (Coin)
