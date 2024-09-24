@@ -152,15 +152,25 @@ instance
         (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
         (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
 
-P1ScriptStructure-TL : ⦃ Hashable Timelock ScriptHash ⦄ → P1ScriptStructure
+record HashedTimelock : Type where
+  field
+    script : Timelock
+    h : ScriptHash
+
+unquoteDecl DecEq-HashedTimelock = derive-DecEq ((quote HashedTimelock , DecEq-HashedTimelock) ∷ [])
+instance
+  Hashable-HashedTimelock : Hashable HashedTimelock ScriptHash
+  Hashable-HashedTimelock = record { hash = HashedTimelock.h }
+
+P1ScriptStructure-TL : P1ScriptStructure
 P1ScriptStructure-TL = record
-  { P1Script = Timelock
-  ; validP1Script = evalTimelock }
+  { P1Script = HashedTimelock
+  ; validP1Script = λ kh I tl → evalTimelock kh I (tl .HashedTimelock.script)
+  }
 
 record ScriptStructure : Type₁ where
   field hashRespectsUnion :
           {A B Hash : Type} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
-        ⦃ Hash-Timelock ⦄ : Hashable Timelock ScriptHash
 
   p1s : P1ScriptStructure
   p1s = P1ScriptStructure-TL

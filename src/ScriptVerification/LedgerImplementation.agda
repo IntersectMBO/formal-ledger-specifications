@@ -123,17 +123,12 @@ instance _ = SVCrypto
 
 open import Ledger.Script it it
 
-
-
 SVScriptStructure : ScriptStructure
 SVScriptStructure = record
   { hashRespectsUnion = hashRespectsUnion
-  ; ps = SVP2ScriptStructure }
+  ; ps = SVP2ScriptStructure
+  }
   where
-
-    instance Hashable-Timelock : Hashable Timelock ℕ
-             Hashable-Timelock = record { hash = λ x → 0 }
-
     instance Hashable-PlutusScript : Hashable Implementation.PlutusScript ℕ
              Hashable-PlutusScript = record { hash = λ x → proj₁ x }
 

@@ -8,7 +8,8 @@ open import Ledger.Foreign.HSLedger.PParams
 open import Ledger.Foreign.HSLedger.Ratify
 
 open import Ledger.Epoch it it
-open import Ledger.Epoch.Properties it it
+  using (Snapshot; Snapshots)
+open import Ledger.Epoch.Haskell it it
 
 instance
   HsTy-Snapshot = autoHsType Snapshot ⊣ withConstructor "MkSnapshot"

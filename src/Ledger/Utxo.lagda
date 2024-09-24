@@ -27,6 +27,7 @@ module Ledger.Utxo
   where
 
 open import Ledger.ScriptValidation txs abs
+open import Ledger.Delegation govStructure
 
 instance
   _ = +-0-monoid

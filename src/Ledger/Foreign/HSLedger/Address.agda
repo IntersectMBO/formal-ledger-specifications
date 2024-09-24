@@ -2,6 +2,10 @@ module Ledger.Foreign.HSLedger.Address where
 
 open import Ledger.Foreign.HSLedger.BaseTypes
 
+{-# FOREIGN GHC
+  import qualified MAlonzo.Code.Ledger.Foreign.HSTypes
+#-}
+
 instance
   HsTy-Credential = autoHsType Credential
   Conv-Credential = autoConvert Credential
@@ -17,3 +21,4 @@ instance
 
 unquoteDecl = do
   hsTypeAlias Addr
+  hsTypeAlias Wdrl

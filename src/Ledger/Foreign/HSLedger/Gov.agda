@@ -110,6 +110,10 @@ instance
   HsTy-GovActionState = MkHsType GovActionState (HsType GovActionState')
   Conv-GovActionState = mkGovActionState' ⨾ Conv-GovActionState'
 
+unquoteDecl = do
+  hsTypeAlias Voter
+  hsTypeAlias GovState
+
 -- Computational function
 
 gov-step : HsType (GovEnv → GovState → List (GovVote ⊎ GovProposal) → ComputationResult String GovState)

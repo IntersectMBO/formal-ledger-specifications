@@ -10,7 +10,7 @@ open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Ledger
-  (txs : _) (open TransactionStructure txs)
+  (txs : _) (open TransactionStructure txs hiding (CertState; _⊢_⇀⦇_,CERTS⦈_; CertEnv))
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
@@ -18,6 +18,7 @@ open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.Utxo txs abs
 open import Ledger.Utxow txs abs
+open import Ledger.Certs govStructure
 
 open Tx
 \end{code}
@@ -74,8 +75,6 @@ private variable
 \begin{figure*}[h]
 \begin{code}[hide]
 open RwdAddr
-open DState
-open CertState
 open UTxOState
 
 data

@@ -56,7 +56,7 @@ module Implementation where
   toData : ∀ {A : Type} → A → Data
   toData _ = tt
 
-  PlutusScript = ⊤
+  PlutusScript = ScriptHash
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
     { Carrier = ExUnits
@@ -132,12 +132,9 @@ instance
     { hashRespectsUnion = hashRespectsUnion
     ; ps = HSP2ScriptStructure }
     where
-    postulate
-      instance Hashable-Timelock : Hashable Timelock ℕ
-
-      hashRespectsUnion : ∀ {A B ℍ}
-        → Hashable A ℍ → Hashable B ℍ
-        → Hashable (A ⊎ B) ℍ
+    hashRespectsUnion : {A B Hash : Type} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
+    hashRespectsUnion record { hash = hash₁ } record { hash = hash₂ } =
+      record { hash = λ where (inj₁ x) → hash₁ x; (inj₂ y) → hash₂ y }
 
     HSP2ScriptStructure : PlutusStructure
     HSP2ScriptStructure = record
@@ -217,3 +214,14 @@ instance
     }
 
 open import Ledger.Address Network KeyHash ScriptHash using () public
+
+-- * Aliases
+unquoteDecl = do
+  hsTypeAlias Coin
+  hsTypeAlias ExUnits
+  hsTypeAlias Data
+  hsTypeAlias Redeemer
+  hsTypeAlias AuxiliaryData
+  hsTypeAlias Epoch
+  hsTypeAlias ScriptHash
+  hsTypeAlias GovActionID
