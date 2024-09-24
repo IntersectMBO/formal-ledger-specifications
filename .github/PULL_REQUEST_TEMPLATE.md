@@ -7,5 +7,6 @@ to the issue. -->
 # Checklist
 
 - [ ] Commit sequence broadly makes sense and commits have useful messages
+- [ ] Any semantic changes to the specifications are documented in `CHANGELOG.md`
 - [ ] Code is formatted according to [CONTRIBUTING.md](https://github.com/input-output-hk/formal-ledger-specifications/blob/master/CONTRIBUTING.md)
 - [ ] Self-reviewed the diff
