@@ -34,6 +34,9 @@ instance
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = ∑[ x ← s ] x
 
+≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → {s s' : A ⇀ Coin} → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
+≡ᵉ-getCoin {A} ⦃ decEqA ⦄ {s} {s'} s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
+
 infixl 7 _*↓_
 
 -- multiply a natural number with a fraction, rounding down and taking the absolute value

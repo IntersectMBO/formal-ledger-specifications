@@ -36,7 +36,7 @@ private macro
     ∷ quote ∈-filter⁺' ∷ quote ∈-∪⁺ ∷ quote ∈-map⁺' ∷ quote ∈-fromList⁺ ∷ [])
 
 private variable
-  A B : Type
+  A B C : Type
   X Y : Set A
 
 open CommutativeMonoid M renaming (trans to ≈-trans)
@@ -120,6 +120,11 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
     → indexedSumᵐ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵐ-cong {x = x , _ , h} {y , _ , h'} = indexedSum-cong {x = x , h} {y , h'}
 
+  indexedSumᵛ-cong : {f : B → Carrier}
+    → indexedSumᵛ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
+  indexedSumᵛ-cong {x = x , _ , h} {y , _ , h'} = indexedSum-cong {x = x , h} {y , h'}
+
+
   module IndexedSumUnionᵐ
     (sp-∈ : spec-∈ A) (∈-A-dec : {X : Set A} → Decidable¹ (_∈ X)) where
 
@@ -155,3 +160,5 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
 
             helper : toRel m ≡ᵉ toRel (m₁ ∪ˡᶠ m₂)
             helper = ≡ᵉ.trans (proj₁ m≡m₁∪m₂) (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj-dom')
+
+

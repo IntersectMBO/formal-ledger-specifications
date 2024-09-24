@@ -10,9 +10,11 @@ open import Tactic.ReduceDec
 
 module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
 
+open import Algebra using (CommutativeMonoid)
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Certs gs
-
+open import Data.Nat.Properties         using (+-0-commutativeMonoid; +-0-monoid; +-identityʳ; +-identityˡ)
+open import Axiom.Set.Properties using (Dec-∈-singleton; ≡ᵉ-isEquivalence; ∪-cong)
 open Computational ⦃...⦄
 
 open import Tactic.GenError using (genErrors)
@@ -139,17 +141,87 @@ private variable
   stᵖ stᵖ' : PState
   Γ : CertEnv
 
-{-
-pov :  Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
-       → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
-pov {stᵖ = stᵖ} {stᵍ} (CERT-deleg {pp} {deps = deps} {e = e} {vs} {wdrls}
-  (DELEG-delegate {c = c} {rwds} {d} {mkh} {vDelegs = vDelegs} {sDelegs} {mv} x)) = goal
-  where
-  goal :  getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
-          ≡ getCoin  ⟦ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ (c , 0) ❵ ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
-  goal = {!!}
+instance
+  _ = +-0-monoid
 
-pov {stᵖ = stᵖ} (CERT-deleg {wdrls = wdrls} (DELEG-dereg {rwds = rwds} {vDelegs = vDelegs} x)) = {!!}
-pov (CERT-pool x) = refl
-pov (CERT-vdel x) = refl
--}
+  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
+  HasCoin-Map .getCoin s = ∑[ x ← s ] x
+
+≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
+≡ᵉ-getCoin {A} ⦃ decEqA ⦄ s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
+
+
+module _ {A : Type} ⦃ _ : DecEq A ⦄  where
+  getCoin-singleton : ((a , c) : A × Coin) → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
+  getCoin-singleton _ = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
+
+  module _ {gc-hom : (d₁ d₂ : A ⇀ Coin) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂} where
+
+    ∪ˡsingleton≡ :  {m : A ⇀ Coin} {(a , c) : A × Coin} → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
+    ∪ˡsingleton≡ {m} {(a , c)} = begin
+      getCoin (m ∪ˡ ❴ (a , c) ❵)
+        ≡⟨ gc-hom m ❴ (a , c) ❵ ⟩
+      getCoin m + getCoin{A = A ⇀ Coin} ❴ (a , c) ❵
+        ≡⟨ cong (getCoin m +_) (getCoin-singleton (a , c)) ⟩
+      getCoin m + c
+        ∎
+      where open ≡-Reasoning
+
+module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂} where
+  open ≡-Reasoning
+
+  pov :  Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+         → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+  pov {stᵖ = stᵖ} {stᵍ} (CERT-deleg {pp} {deps = deps} {e = e} {vs} {wdrls}
+    (DELEG-delegate {c = c} {rwds} {d} {mkh} {vDelegs = vDelegs} {sDelegs} {mv} x)) =
+    begin
+      getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ  ≡⟨ refl ⟩
+      getCoin rwds                                            ≡˘⟨ +-identityʳ (getCoin rwds) ⟩
+      getCoin rwds + 0                                        ≡˘⟨ ∪ˡsingleton≡ {gc-hom = gc-hom}{rwds} ⟩
+      getCoin (rwds ∪ˡ ❴ (c , 0) ❵ᵐ)                          ≡⟨ refl ⟩
+      getCoin  ⟦ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ (c , 0) ❵ ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+      ∎
+
+
+  pov {stᵖ = stᵖ} {stᵍ} (CERT-deleg {wdrls = wdrls} (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = goal
+    where
+    open import Relation.Binary using (IsEquivalence)
+    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th  {Credential × Coin})
+    ξ'' : ((rwds ∣ ❴ c ❵)  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ)) ˢ ≡ᵉ rwds ˢ
+    ξ'' = ≡ᵉ.trans (disjoint-∪ˡ-∪ res-ex-disjoint) (res-ex-∪ (Dec-∈-singleton th))
+
+    ξ' : ∀ (m m' : Credential ⇀ Coin) → m ˢ ≡ᵉ m' ˢ → getCoin m ≡ getCoin m'
+    ξ' m m' = ≡ᵉ-getCoin m m'
+
+
+    sing≡ : (rwds ∣ ❴ c ❵ )ˢ ≡ᵉ  (❴ (c , 0) ❵ᵐ)ˢ
+    sing≡ = {!!}
+
+    χ' : ((rwds ∣ ❴ c ❵ ) ∪ˡ (rwds ∣ ❴ c ❵ ᶜ))ˢ ≡ᵉ  (rwds ∣ ❴ c ❵ )ˢ ∪ (rwds ∣ ❴ c ❵ ᶜ)ˢ
+    χ' = {!!}
+
+    χ'' : (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ))ˢ ≡ᵉ (❴ (c , 0) ❵ᵐ)ˢ  ∪ (rwds ∣ ❴ c ❵ ᶜ)ˢ
+    χ'' = {!!}
+
+    γ : (rwds ∣ ❴ c ❵ )ˢ ∪ (rwds ∣ ❴ c ❵ ᶜ)ˢ ≡ᵉ (❴ (c , 0) ❵ᵐ)ˢ  ∪ (rwds ∣ ❴ c ❵ ᶜ)ˢ
+    γ = ∪-cong th sing≡ ≡ᵉ.refl
+
+    ξ : ((rwds ∣ ❴ c ❵ ) ∪ˡ (rwds ∣ ❴ c ❵ ᶜ))ˢ ≡ᵉ  (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ))ˢ
+    ξ = ≡ᵉ.trans χ' (≡ᵉ.trans γ (≡ᵉ.sym χ''))
+
+    goal :  getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+            ≡ getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    goal =
+      begin
+      getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ  ≡⟨ refl ⟩
+      getCoin rwds                                             ≡˘⟨ (ξ' ((rwds ∣ ❴ c ❵ ) ∪ˡ (rwds ∣ ❴ c ❵ ᶜ))(rwds)) ξ'' ⟩
+      getCoin ((rwds ∣ ❴ c ❵ ) ∪ˡ (rwds ∣ ❴ c ❵ ᶜ))             ≡⟨ ξ' ((rwds ∣ ❴ c ❵ ) ∪ˡ (rwds ∣ ❴ c ❵ ᶜ)) (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ)) ξ ⟩
+      getCoin (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ) )              ≡⟨ gc-hom ❴ (c , 0) ❵ᵐ (rwds ∣ ❴ c ❵ ᶜ) ⟩
+      getCoin ❴ (c , 0) ❵ᵐ  + getCoin (rwds ∣ ❴ c ❵ ᶜ)              ≡⟨ cong (_+ getCoin (rwds ∣ ❴ c ❵ ᶜ)) (getCoin-singleton (c , 0)) ⟩
+      0 + getCoin (rwds ∣ ❴ c ❵ ᶜ)              ≡⟨ +-identityˡ (getCoin (rwds ∣ ❴ c ❵ ᶜ)) ⟩
+      getCoin (rwds ∣ ❴ c ❵ ᶜ)                                 ≡⟨ refl ⟩
+      getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+      ∎
+
+  pov (CERT-pool x) = refl
+  pov (CERT-vdel x) = refl
