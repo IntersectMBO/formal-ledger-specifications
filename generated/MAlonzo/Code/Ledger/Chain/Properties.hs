@@ -71,34 +71,34 @@ d_Computational'45'LEDGER_1898 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
 d_Computational'45'LEDGER_1898 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Ledger.Properties.d_Computational'45'LEDGER_2714
+      MAlonzo.Code.Ledger.Ledger.Properties.d_Computational'45'LEDGER_2712
       (coe v0) (coe v1)
 -- Ledger.Chain.Properties._.completeness
-d_completeness_1980 ::
+d_completeness_1982 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_1980 = erased
+d_completeness_1982 = erased
 -- Ledger.Chain.Properties._.computeProof
-d_computeProof_1986 ::
+d_computeProof_1988 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_1986 v0
+d_computeProof_1988 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe v0)
 -- Ledger.Chain.Properties.Computational-CHAIN
-d_Computational'45'CHAIN_2006 ::
+d_Computational'45'CHAIN_2008 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'CHAIN_2006 v0 v1
+d_Computational'45'CHAIN_2008 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v2 v3 v4 ->
@@ -137,7 +137,7 @@ d_Computational'45'CHAIN_2006 v0 v1
                              (coe
                                 MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_738)
                              (coe
-                                MAlonzo.Code.Ledger.Ledger.Properties.d_Computational'45'LEDGER_2714
+                                MAlonzo.Code.Ledger.Ledger.Properties.d_Computational'45'LEDGER_2712
                                 (coe v0) (coe v1))
                              (coe
                                 MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_726)

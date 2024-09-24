@@ -63,16 +63,16 @@ d_Dec'45'evalTimelock_96 v0
 d__'8866'_'8640''10631'_'44'UTXOW'10632'__1722 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Utxow.Properties.Computational-UTXOW
-d_Computational'45'UTXOW_2020 ::
+d_Computational'45'UTXOW_2018 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'UTXOW_2020 v0 v1
+d_Computational'45'UTXOW_2018 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_2106 (coe v0) (coe v1))
+      (d_computeProof_2104 (coe v0) (coe v1))
 -- Ledger.Utxow.Properties._.Go.genErr
-d_genErr_2058 ::
+d_genErr_2056 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1930 ->
@@ -81,13 +81,13 @@ d_genErr_2058 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_genErr_2058 v0 ~v1 ~v2 v3 v4 ~v5 = du_genErr_2058 v0 v3 v4
-du_genErr_2058 ::
+d_genErr_2056 v0 ~v1 ~v2 v3 v4 ~v5 = du_genErr_2056 v0 v3 v4
+du_genErr_2056 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1944 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2854 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_genErr_2058 v0 v1 v2
+du_genErr_2056 v0 v1 v2
   = let v3
           = coe
               MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_28
@@ -646,14 +646,14 @@ du_genErr_2058 v0 v1 v2
                    _ -> MAlonzo.RTE.mazUnreachableError)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Utxow.Properties._.Go.computeProof
-d_computeProof_2106 ::
+d_computeProof_2104 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1930 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1944 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2854 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_2106 v0 v1 v2 v3 v4
+d_computeProof_2104 v0 v1 v2 v3 v4
   = let v5
           = MAlonzo.Code.Class.Decidable.Core.d_dec_16
               (coe
@@ -764,10 +764,10 @@ d_computeProof_2106 v0 v1 v2 v3 v4
                        seq (coe v7)
                        (coe
                           MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
-                          (coe du_genErr_2058 (coe v0) (coe v3) (coe v4)))
+                          (coe du_genErr_2056 (coe v0) (coe v3) (coe v4)))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Utxow.Properties._.Go.completeness
-d_completeness_2130 ::
+d_completeness_2128 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1930 ->
@@ -776,4 +776,4 @@ d_completeness_2130 ::
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1944 ->
   MAlonzo.Code.Ledger.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2248 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_2130 = erased
+d_completeness_2128 = erased
