@@ -56,38 +56,38 @@ d_Dec'45'evalTimelock_96 ::
 d_Dec'45'evalTimelock_96 v0
   = coe
       MAlonzo.Code.Ledger.Script.d_Dec'45'evalTimelock_322
-      (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0))
+      (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1256 (coe v0))
       (coe
-         MAlonzo.Code.Ledger.Transaction.d_epochStructure_1520 (coe v0))
+         MAlonzo.Code.Ledger.Transaction.d_epochStructure_1542 (coe v0))
 -- Ledger.Utxow.Properties._._⊢_⇀⦇_,UTXOW⦈_
-d__'8866'_'8640''10631'_'44'UTXOW'10632'__1722 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'UTXOW'10632'__1744 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Utxow.Properties.Computational-UTXOW
-d_Computational'45'UTXOW_2018 ::
+d_Computational'45'UTXOW_2044 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'UTXOW_2018 v0 v1
+d_Computational'45'UTXOW_2044 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_2104 (coe v0) (coe v1))
+      (d_computeProof_2130 (coe v0) (coe v1))
 -- Ledger.Utxow.Properties._.Go.genErr
-d_genErr_2056 ::
+d_genErr_2082 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1930 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1944 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2854 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1956 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1970 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2898 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_genErr_2056 v0 ~v1 ~v2 v3 v4 ~v5 = du_genErr_2056 v0 v3 v4
-du_genErr_2056 ::
+d_genErr_2082 v0 ~v1 ~v2 v3 v4 ~v5 = du_genErr_2082 v0 v3 v4
+du_genErr_2082 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1944 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2854 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1970 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2898 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_genErr_2056 v0 v1 v2
+du_genErr_2082 v0 v1 v2
   = let v3
           = coe
               MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_28
@@ -99,18 +99,18 @@ du_genErr_2056 v0 v1 v2
                        coe
                          MAlonzo.Code.Ledger.Crypto.d_Dec'45'isSigned_116
                          (MAlonzo.Code.Ledger.Crypto.d_pkk_172
-                            (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0)))
+                            (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1256 (coe v0)))
                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
                          (coe
-                            MAlonzo.Code.Ledger.Transaction.d_txidBytes_2346 v0
-                            (MAlonzo.Code.Ledger.Transaction.d_txid_2826
-                               (coe MAlonzo.Code.Ledger.Transaction.d_body_2864 (coe v2))))
+                            MAlonzo.Code.Ledger.Transaction.d_txidBytes_2390 v0
+                            (MAlonzo.Code.Ledger.Transaction.d_txid_2870
+                               (coe MAlonzo.Code.Ledger.Transaction.d_body_2908 (coe v2))))
                          (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))))
                  (coe
                     MAlonzo.Code.Axiom.Set.Map.du__'738'_534
                     (coe
-                       MAlonzo.Code.Ledger.Transaction.d_vkSigs_2844
-                       (coe MAlonzo.Code.Ledger.Transaction.d_wits_2866 (coe v2)))))
+                       MAlonzo.Code.Ledger.Transaction.d_vkSigs_2888
+                       (coe MAlonzo.Code.Ledger.Transaction.d_wits_2910 (coe v2)))))
               erased in
     coe
       (case coe v3 of
@@ -129,9 +129,9 @@ du_genErr_2056 v0 v1 v2
                            (coe
                               (\ v5 ->
                                  MAlonzo.Code.Ledger.Script.d_Dec'45'evalTimelock_322
-                                   (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1234 (coe v0))
+                                   (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1256 (coe v0))
                                    (coe
-                                      MAlonzo.Code.Ledger.Transaction.d_epochStructure_1520
+                                      MAlonzo.Code.Ledger.Transaction.d_epochStructure_1542
                                       (coe v0))
                                    (coe
                                       MAlonzo.Code.Axiom.Set.du_map_386
@@ -144,7 +144,7 @@ du_genErr_2056 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                (coe
-                                                  MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                  MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                   (coe v0)))))
                                       (coe
                                          MAlonzo.Code.Interface.IsSet.du_dom_540
@@ -154,22 +154,22 @@ du_genErr_2056 v0 v1 v2
                                                MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                          (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_548)
                                          (coe
-                                            MAlonzo.Code.Ledger.Transaction.d_vkSigs_2844
+                                            MAlonzo.Code.Ledger.Transaction.d_vkSigs_2888
                                             (coe
-                                               MAlonzo.Code.Ledger.Transaction.d_wits_2866
+                                               MAlonzo.Code.Ledger.Transaction.d_wits_2910
                                                (coe v2)))))
                                    (coe
-                                      MAlonzo.Code.Ledger.Transaction.d_txvldt_2804
-                                      (coe MAlonzo.Code.Ledger.Transaction.d_body_2864 (coe v2)))
+                                      MAlonzo.Code.Ledger.Transaction.d_txvldt_2848
+                                      (coe MAlonzo.Code.Ledger.Transaction.d_body_2908 (coe v2)))
                                    (coe v5)))
                            (coe
                               MAlonzo.Code.Axiom.Set.du_mapPartial_564
                               (MAlonzo.Code.Axiom.Set.d_th_1458
                                  (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                               (coe MAlonzo.Code.Data.Sum.du_isInj'8321'_24)
-                              (MAlonzo.Code.Ledger.Transaction.d_txscripts_2964
+                              (MAlonzo.Code.Ledger.Transaction.d_txscripts_3008
                                  (coe v0) (coe v2)
-                                 (coe MAlonzo.Code.Ledger.Utxo.d_utxo_1954 (coe v1)))))
+                                 (coe MAlonzo.Code.Ledger.Utxo.d_utxo_1980 (coe v1)))))
                         erased in
               coe
                 (case coe v5 of
@@ -196,7 +196,7 @@ du_genErr_2056 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                       (coe v0))))
                                              (coe v7)
                                              (coe
@@ -210,7 +210,7 @@ du_genErr_2056 v0 v1 v2
                                                       (coe
                                                          MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                            MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                             (coe v0)))))
                                                 (coe
                                                    MAlonzo.Code.Interface.IsSet.du_dom_540
@@ -221,14 +221,14 @@ du_genErr_2056 v0 v1 v2
                                                    (coe
                                                       MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_548)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Transaction.d_vkSigs_2844
+                                                      MAlonzo.Code.Ledger.Transaction.d_vkSigs_2888
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Transaction.d_wits_2866
+                                                         MAlonzo.Code.Ledger.Transaction.d_wits_2910
                                                          (coe v2)))))))
                                      (coe
-                                        MAlonzo.Code.Ledger.Utxow.du_witsVKeyNeeded_2244 v0
-                                        (MAlonzo.Code.Ledger.Utxo.d_utxo_1954 (coe v1))
-                                        (MAlonzo.Code.Ledger.Transaction.d_body_2864 (coe v2))))
+                                        MAlonzo.Code.Ledger.Utxow.du_witsVKeyNeeded_2268 v0
+                                        (MAlonzo.Code.Ledger.Utxo.d_utxo_1980 (coe v1))
+                                        (MAlonzo.Code.Ledger.Transaction.d_body_2908 (coe v2))))
                                   erased in
                         coe
                           (case coe v7 of
@@ -256,7 +256,7 @@ du_genErr_2056 v0 v1 v2
                                                           (coe
                                                              MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                                MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                                 (coe v0)))
                                                           (coe v9)
                                                           (coe
@@ -268,17 +268,17 @@ du_genErr_2056 v0 v1 v2
                                                                 (coe
                                                                    MAlonzo.Code.Ledger.Script.d_Hashable'45'Script_528
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                                       (coe v0))
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Transaction.d_epochStructure_1520
+                                                                      MAlonzo.Code.Ledger.Transaction.d_epochStructure_1542
                                                                       (coe v0))
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1806
+                                                                      MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1828
                                                                       (coe v0))))
-                                                             (MAlonzo.Code.Ledger.Transaction.d_scripts_2846
+                                                             (MAlonzo.Code.Ledger.Transaction.d_scripts_2890
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Transaction.d_wits_2866
+                                                                   MAlonzo.Code.Ledger.Transaction.d_wits_2910
                                                                    (coe v2))))))
                                                   (coe
                                                      MAlonzo.Code.Axiom.Set.du__'65340'__718
@@ -292,14 +292,14 @@ du_genErr_2056 v0 v1 v2
                                                         erased
                                                         (MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                              MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                               (coe v0))))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2246
+                                                        MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2270
                                                         v0
-                                                        (MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                        (MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                            (coe v1))
-                                                        (MAlonzo.Code.Ledger.Transaction.d_body_2864
+                                                        (MAlonzo.Code.Ledger.Transaction.d_body_2908
                                                            (coe v2)))
                                                      (coe
                                                         MAlonzo.Code.Axiom.Set.du_map_386
@@ -310,18 +310,18 @@ du_genErr_2056 v0 v1 v2
                                                            (coe
                                                               MAlonzo.Code.Ledger.Script.d_Hashable'45'Script_528
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                                 MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                                  (coe v0))
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Transaction.d_epochStructure_1520
+                                                                 MAlonzo.Code.Ledger.Transaction.d_epochStructure_1542
                                                                  (coe v0))
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1806
+                                                                 MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1828
                                                                  (coe v0))))
-                                                        (MAlonzo.Code.Ledger.Transaction.d_refScripts_2912
+                                                        (MAlonzo.Code.Ledger.Transaction.d_refScripts_2956
                                                            (coe v0) (coe v2)
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                              MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                               (coe v1))))))
                                                (coe
                                                   MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1622
@@ -336,7 +336,7 @@ du_genErr_2056 v0 v1 v2
                                                           (coe
                                                              MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                                MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                                 (coe v0)))
                                                           (coe v9)
                                                           (coe
@@ -351,14 +351,14 @@ du_genErr_2056 v0 v1 v2
                                                                 erased
                                                                 (MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                                       (coe v0))))
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2246
+                                                                MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2270
                                                                 v0
-                                                                (MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                                (MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                                    (coe v1))
-                                                                (MAlonzo.Code.Ledger.Transaction.d_body_2864
+                                                                (MAlonzo.Code.Ledger.Transaction.d_body_2908
                                                                    (coe v2)))
                                                              (coe
                                                                 MAlonzo.Code.Axiom.Set.du_map_386
@@ -369,18 +369,18 @@ du_genErr_2056 v0 v1 v2
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Script.d_Hashable'45'Script_528
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                                         MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                                          (coe v0))
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Transaction.d_epochStructure_1520
+                                                                         MAlonzo.Code.Ledger.Transaction.d_epochStructure_1542
                                                                          (coe v0))
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1806
+                                                                         MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1828
                                                                          (coe v0))))
-                                                                (MAlonzo.Code.Ledger.Transaction.d_refScripts_2912
+                                                                (MAlonzo.Code.Ledger.Transaction.d_refScripts_2956
                                                                    (coe v0) (coe v2)
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                                      MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                                       (coe v1)))))))
                                                   (coe
                                                      MAlonzo.Code.Axiom.Set.du_map_386
@@ -391,17 +391,17 @@ du_genErr_2056 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.Ledger.Script.d_Hashable'45'Script_528
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Transaction.d_crypto_1234
+                                                              MAlonzo.Code.Ledger.Transaction.d_crypto_1256
                                                               (coe v0))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Transaction.d_epochStructure_1520
+                                                              MAlonzo.Code.Ledger.Transaction.d_epochStructure_1542
                                                               (coe v0))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1806
+                                                              MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1828
                                                               (coe v0))))
-                                                     (MAlonzo.Code.Ledger.Transaction.d_scripts_2846
+                                                     (MAlonzo.Code.Ledger.Transaction.d_scripts_2890
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Transaction.d_wits_2866
+                                                           MAlonzo.Code.Ledger.Transaction.d_wits_2910
                                                            (coe v2))))))
                                             erased in
                                   coe
@@ -434,7 +434,7 @@ du_genErr_2056 v0 v1 v2
                                                                           (coe
                                                                              MAlonzo.Code.Ledger.Script.d_ps_454
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1806
+                                                                                MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1828
                                                                                 (coe v0))))))
                                                                  (coe v11)
                                                                  (coe
@@ -446,15 +446,15 @@ du_genErr_2056 v0 v1 v2
                                                                     (coe
                                                                        MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_548)
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Transaction.d_txdats_2848
+                                                                       MAlonzo.Code.Ledger.Transaction.d_txdats_2892
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Transaction.d_wits_2866
+                                                                          MAlonzo.Code.Ledger.Transaction.d_wits_2910
                                                                           (coe v2))))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Utxo.du_getInputHashes_1856
+                                                            MAlonzo.Code.Ledger.Utxo.du_getInputHashes_1882
                                                             (coe v0) (coe v2)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                               MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                                (coe v1))))
                                                       erased in
                                             coe
@@ -487,7 +487,7 @@ du_genErr_2056 v0 v1 v2
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Script.d_ps_454
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1806
+                                                                                          MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1828
                                                                                           (coe
                                                                                              v0))))))
                                                                            (coe v13)
@@ -498,10 +498,10 @@ du_genErr_2056 v0 v1 v2
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Utxo.du_getInputHashes_1856
+                                                                                 MAlonzo.Code.Ledger.Utxo.du_getInputHashes_1882
                                                                                  (coe v0) (coe v2)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                                                    MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                                                     (coe v1)))
                                                                               (coe
                                                                                  MAlonzo.Code.Axiom.Set.du__'8746'__668
@@ -510,7 +510,7 @@ du_genErr_2056 v0 v1 v2
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Utxo.du_getDataHashes_1852
+                                                                                    MAlonzo.Code.Ledger.Utxo.du_getDataHashes_1878
                                                                                     (coe
                                                                                        MAlonzo.Code.Interface.IsSet.du_range_542
                                                                                        (coe
@@ -520,13 +520,13 @@ du_genErr_2056 v0 v1 v2
                                                                                        (coe
                                                                                           MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_548)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Transaction.d_txouts_2798
+                                                                                          MAlonzo.Code.Ledger.Transaction.d_txouts_2842
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Transaction.d_body_2864
+                                                                                             MAlonzo.Code.Ledger.Transaction.d_body_2908
                                                                                              (coe
                                                                                                 v2)))))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Utxo.du_getDataHashes_1852
+                                                                                    MAlonzo.Code.Ledger.Utxo.du_getDataHashes_1878
                                                                                     (coe
                                                                                        MAlonzo.Code.Interface.IsSet.du_range_542
                                                                                        (coe
@@ -551,20 +551,20 @@ du_genErr_2056 v0 v1 v2
                                                                                                 erased
                                                                                                 MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                 erased
-                                                                                                (MAlonzo.Code.Ledger.Transaction.d_DecEq'45'TxId_1194
+                                                                                                (MAlonzo.Code.Ledger.Transaction.d_DecEq'45'TxId_1216
                                                                                                    (coe
                                                                                                       v0))
-                                                                                                (MAlonzo.Code.Ledger.Transaction.d_DecEq'45'Ix_1192
+                                                                                                (MAlonzo.Code.Ledger.Transaction.d_DecEq'45'Ix_1214
                                                                                                    (coe
                                                                                                       v0))))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                                                             MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Transaction.d_refInputs_2796
+                                                                                             MAlonzo.Code.Ledger.Transaction.d_refInputs_2840
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Transaction.d_body_2864
+                                                                                                MAlonzo.Code.Ledger.Transaction.d_body_2908
                                                                                                 (coe
                                                                                                    v2))))))))))
                                                                    (coe
@@ -576,9 +576,9 @@ du_genErr_2056 v0 v1 v2
                                                                       (coe
                                                                          MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_548)
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Transaction.d_txdats_2848
+                                                                         MAlonzo.Code.Ledger.Transaction.d_txdats_2892
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Transaction.d_wits_2866
+                                                                            MAlonzo.Code.Ledger.Transaction.d_wits_2910
                                                                             (coe v2)))))
                                                                 erased in
                                                       coe
@@ -607,23 +607,23 @@ du_genErr_2056 v0 v1 v2
                                                                                         (coe
                                                                                            MAlonzo.Code.Ledger.Script.d_ps_454
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1806
+                                                                                              MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1828
                                                                                               (coe
                                                                                                  v0))))
                                                                                      (coe v15)
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Utxow.du_allowedLanguages_2110
+                                                                                        MAlonzo.Code.Ledger.Utxow.du_allowedLanguages_2134
                                                                                         (coe v0)
                                                                                         (coe v2)
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                                                           MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                                                            (coe
                                                                                               v1)))))
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Utxow.du_languages_2094
+                                                                                MAlonzo.Code.Ledger.Utxow.du_languages_2118
                                                                                 (coe v0) (coe v2)
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Utxo.d_utxo_1954
+                                                                                   MAlonzo.Code.Ledger.Utxo.d_utxo_1980
                                                                                    (coe v1))))
                                                                           erased in
                                                                 coe
@@ -646,20 +646,20 @@ du_genErr_2056 v0 v1 v2
                    _ -> MAlonzo.RTE.mazUnreachableError)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Utxow.Properties._.Go.computeProof
-d_computeProof_2104 ::
+d_computeProof_2130 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1930 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1944 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2854 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1956 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1970 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2898 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_2104 v0 v1 v2 v3 v4
+d_computeProof_2130 v0 v1 v2 v3 v4
   = let v5
           = MAlonzo.Code.Class.Decidable.Core.d_dec_16
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (coe
-                    MAlonzo.Code.Ledger.Utxow.du_UTXOW'45'inductive'45'premises_2380
+                    MAlonzo.Code.Ledger.Utxow.du_UTXOW'45'inductive'45'premises_2404
                     (coe v0) (coe v4) (coe v3))) in
     coe
       (case coe v5 of
@@ -693,7 +693,7 @@ d_computeProof_2104 v0 v1 v2 v3 v4
                                                                                   (coe
                                                                                      (\ v23 v24 ->
                                                                                         coe
-                                                                                          MAlonzo.Code.Ledger.Utxow.C_UTXOW'45'inductive_2354
+                                                                                          MAlonzo.Code.Ledger.Utxow.C_UTXOW'45'inductive_2378
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                              (coe
@@ -748,7 +748,7 @@ d_computeProof_2104 v0 v1 v2 v3 v4
                                                                                                                      v24))))))))))))
                                                                                (coe
                                                                                   MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
-                                                                                  (MAlonzo.Code.Ledger.Utxo.Properties.d_Computational'45'UTXO_2450
+                                                                                  (MAlonzo.Code.Ledger.Utxo.Properties.d_Computational'45'UTXO_2484
                                                                                      (coe v0)
                                                                                      (coe v1))
                                                                                   v2 v3 v4)
@@ -764,16 +764,16 @@ d_computeProof_2104 v0 v1 v2 v3 v4
                        seq (coe v7)
                        (coe
                           MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
-                          (coe du_genErr_2056 (coe v0) (coe v3) (coe v4)))
+                          (coe du_genErr_2082 (coe v0) (coe v3) (coe v4)))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Utxow.Properties._.Go.completeness
-d_completeness_2128 ::
+d_completeness_2154 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1730 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1930 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1944 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2854 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1944 ->
-  MAlonzo.Code.Ledger.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2248 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1956 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1970 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2898 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1970 ->
+  MAlonzo.Code.Ledger.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2272 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_2128 = erased
+d_completeness_2154 = erased
