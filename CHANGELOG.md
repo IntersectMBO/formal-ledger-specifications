@@ -20,7 +20,7 @@
 - Add `curTreasury` field to transactions
 - Compute the voting stake distribution
 - Add deposit amount to `dereg` certificate
-- Replace minUTxOValue with coinsPerUTxOByte
+- Replace `minUTxOValue` with `coinsPerUTxOByte`
 
 ### V0.9
 
