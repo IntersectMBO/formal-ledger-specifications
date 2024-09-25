@@ -13,8 +13,8 @@ module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
 open import Algebra using (CommutativeMonoid)
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Certs gs
-open import Data.Nat.Properties         using (+-0-commutativeMonoid; +-0-monoid; +-identityʳ; +-identityˡ)
-open import Axiom.Set.Properties using (Dec-∈-singleton; ≡ᵉ-isEquivalence; ∪-cong; disjoint-subst)
+open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)
+open import Axiom.Set.Properties using (≡ᵉ-isEquivalence; disjoint-subst; ∪-cong; Dec-∈-singleton)
 open Computational ⦃...⦄
 
 open import Tactic.GenError using (genErrors)
@@ -150,7 +150,6 @@ instance
 ≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
 ≡ᵉ-getCoin {A} ⦃ decEqA ⦄ s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
 
-
 module _ {A : Type} ⦃ _ : DecEq A ⦄  where
   getCoin-singleton : ((a , c) : A × Coin) → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
   getCoin-singleton _ = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
@@ -168,7 +167,6 @@ module _ {A : Type} ⦃ _ : DecEq A ⦄  where
       where open ≡-Reasoning
 
 module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂}
-         --{gc-hom' : (s₁ s₂ : ℙ (Credential × Coin)) → getCoin (s₁ ∪ s₂) ≡ getCoin s₁ + getCoin s₂}
          where
   open ≡-Reasoning
 
@@ -177,10 +175,15 @@ module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d�
   pov {stᵖ = stᵖ} {stᵍ} (CERT-deleg {pp} {deps = deps} {e = e} {vs} {wdrls}
     (DELEG-delegate {c = c} {rwds} {d} {mkh} {vDelegs = vDelegs} {sDelegs} {mv} x)) =
     begin
-      getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ  ≡˘⟨ +-identityʳ (getCoin rwds) ⟩
-      getCoin rwds + 0                                        ≡˘⟨ ∪ˡsingleton≡ {gc-hom = gc-hom}{rwds} ⟩
-      getCoin  ⟦ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ (c , 0) ❵ ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
-      ∎
+      getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+        ≡˘⟨ +-identityʳ (getCoin rwds) ⟩
+      getCoin rwds + 0
+        ≡˘⟨ ∪ˡsingleton≡ {gc-hom = gc-hom}{rwds} ⟩
+      getCoin  ⟦ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ (c , 0) ❵ ⟧ᵈ
+               , stᵖ
+               , stᵍ
+               ⟧ᶜˢ
+        ∎
 
   pov {stᵖ = stᵖ} {stᵍ} (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) =
     begin

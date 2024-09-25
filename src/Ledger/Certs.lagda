@@ -158,12 +158,9 @@ PoolEnv     = PParams
 rewardsBalance : DState → Coin
 rewardsBalance ds = ∑[ x ← DState.rewards ds ] x
 
-rbalance : CertState → Coin
-rbalance cs = rewardsBalance (CertState.dState cs)
-
 instance
   HasCoin-CertState : HasCoin CertState
-  HasCoin-CertState .getCoin = rbalance
+  HasCoin-CertState .getCoin = rewardsBalance ∘ CertState.dState
 \end{code}
 
 \begin{code}[hide]

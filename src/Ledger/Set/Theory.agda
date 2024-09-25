@@ -139,15 +139,15 @@ opaque
   singleton-≢-∅ : ∀ {a} {x : a} → ⦃ DecEq a ⦄ → singleton x ≢ ∅
   singleton-≢-∅ {x = x} ()
 
-aggregateBy :  ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → ⦃ DecEq C ⦄ → ⦃ IsCommutativeMonoid' 0ℓ 0ℓ C ⦄
-               → Rel A B → A ⇀ C → B ⇀ C
+aggregateBy : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → ⦃ DecEq C ⦄ → ⦃ IsCommutativeMonoid' 0ℓ 0ℓ C ⦄
+            → Rel A B → A ⇀ C → B ⇀ C
 aggregateBy R m = mapFromFun (λ b → ∑[ x ← m ∣ Rel.dom (R ∣^ʳ ❴ b ❵) ] x) (Rel.range R)
 
-module _ ⦃ decA : DecEq A ⦄ ⦃ decB : DecEq B ⦄
+module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄
          ⦃ cm : IsCommutativeMonoid' 0ℓ 0ℓ C ⦄
          where
   open CommutativeMonoid (fromCommMonoid' cm)
 
-  indexedSumᵛ'-cong : {f : B → C} → indexedSumᵛ' ⦃ decA ⦄ ⦃ decB ⦄ ⦃ cm ⦄ f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
+  indexedSumᵛ'-cong : {f : B → C} → indexedSumᵛ' f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵛ'-cong {f = f} {x} {y} x≡y =
-    indexedSum-cong ⦃ fromCommMonoid' cm ⦄ {A × B}{λ (a , b) → f b} {(x ˢ) ᶠˢ}{(y ˢ) ᶠˢ} x≡y
+    indexedSum-cong ⦃ fromCommMonoid' cm ⦄ {A × B} {λ (a , b) → f b} {(x ˢ) ᶠˢ} {(y ˢ) ᶠˢ} x≡y
