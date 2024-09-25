@@ -1,4 +1,4 @@
-open import Ledger.Prelude hiding (fromList; ε); open Computational
+open import Ledger.Prelude hiding (fromList; ε; _/_); open Computational
 open import ScriptVerification.Prelude
 
 module ScriptVerification.Lib (A D : Type)
@@ -13,7 +13,8 @@ open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
-open import Data.Rational
+open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)
+open import Data.Nat.Coprimality using (Coprime; gcd≡1⇒coprime)
 open import Ledger.Set.Theory
 open Implementation
 
@@ -34,8 +35,12 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                ; poolDeposit = 500000000 -- lovelace
                                ; keyDeposit = 500000000 -- lovelace
                                ; coinsPerUTxOByte = 4310 --lovelace
-                               ; minFeeRefScriptCoinsPerByte = 1ℚ -- unknown for now
+                               ; minFeeRefScriptCoinsPerByte = mkℚ+ 15 1 (gcd≡1⇒coprime refl) -- see [1]
                                ; prices = tt -- fix this
+                               ; maxRefScriptSizePerTx = 200 * 1024 -- 200KiB
+                               ; maxRefScriptSizePerBlock = 1024 * 1024 -- 1MiB
+                               ; refScriptCostStride  = 25
+                               ; refScriptCostMultiplier = mkℚ+ 6 5 (gcd≡1⇒coprime refl) -- see [1]
                                ; a0 = 1ℚ -- don't know
                                ; Emax = 18
                                ; nopt = 0 -- don't know
@@ -103,3 +108,5 @@ notEmpty (x ∷ xs) = ⊤
 isSuccess : ComputationResult String UTxOState → Bool
 isSuccess (success x) = true
 isSuccess (failure x) = false
+
+-- [1] https://github.com/IntersectMBO/cardano-ledger/blob/master/docs/adr/2024-08-14_009-refscripts-fee-change.md

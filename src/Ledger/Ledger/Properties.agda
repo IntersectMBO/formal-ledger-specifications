@@ -103,19 +103,19 @@ instance
 
 -- ** Proof that LEDGER preserves values.
 
-module _ where
+FreshTx : Tx → LState → Type
+FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
+  where open Tx tx; open TxBody body; open UTxOState; open LState
+
+module _ (tx : Tx) (let open Tx tx; open TxBody body) where
 
   private variable
-    tx : Tx
     Γ : LEnv
     s s' : LState
     l : List Tx
 
-  FreshTx : Tx → LState → Type
-  FreshTx tx ls = tx .body .txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
-    where open Tx; open TxBody; open UTxOState; open LState
-
-  LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
+  -- TODO: Fix this after proving pov for CERTS.
+  LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s + φ(getCoin txwdrls , isValid) ≡ getCoin s'
   LEDGER-pov h (LEDGER-V⋯ _ (UTXOW⇒UTXO st) _ _) = pov h st
   LEDGER-pov h (LEDGER-I⋯ _ (UTXOW⇒UTXO st))     = pov h st
 
@@ -124,13 +124,14 @@ module _ where
     ∷-Fresh  : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → FreshTxs Γ s' l
               → FreshTxs Γ s (tx ∷ l)
 
-  LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
-  LEDGERS-pov _ (BS-base Id-nop) = refl
-  LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) =
-    trans (LEDGER-pov h x) $
-      LEDGERS-pov (subst (λ s → FreshTxs Γ s l)
-                          (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
-                          h₂) st
+  -- TODO: Fix this after proving pov for CERTS.
+  -- LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
+  -- LEDGERS-pov _ (BS-base Id-nop) = refl
+  -- LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) =
+  --   trans (LEDGER-pov h x) $
+  --     LEDGERS-pov (subst (λ s → FreshTxs Γ s l)
+  --                         (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
+  --                         h₂) st
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
@@ -157,7 +158,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
                       → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))}
   where
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
-  pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
+  pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 
   filterGA : ∀ txid n → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵ ≡ᵉ ❴ GovActionDeposit (txid , n) ❵
   proj₁ (filterGA txid n) {a} x = (proj₂ (from ∈-filter x)) where open Equivalence
@@ -469,7 +470,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
   module _ (tx : Tx) (Γ : LEnv) (b : Block) (cs : ChainState) where
     open Block b; open ChainState cs
     open NewEpochState newEpochState
-    open EpochState epochState; open EnactState es
+    open EpochState epochState; open EnactState es; pp = pparams .proj₁
     open RatifyState fut using (removed)
     open SetoidProperties using (LEDGER-govDepsMatch)
 
@@ -484,16 +485,17 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
     CHAIN-govDepsMatch : {nes : NewEpochState}
       → mapˢ (GovActionDeposit ∘ proj₁) removed ⊆ mapˢ proj₁ (UTxOState.deposits (LState.utxoSt ls) ˢ)
+      → totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
       → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
       → govDepsMatch ls → govDepsMatch (EpochState.ls (NewEpochState.epochState nes))
 
-    CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
+    CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
       (RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers)
-      ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
+       ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
 
-    CHAIN-govDepsMatch _ (CHAIN (NEWEPOCH-Not-New _) ledgers) =
+    CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-Not-New _) ledgers) =
       RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
 
-    CHAIN-govDepsMatch rrm (CHAIN (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
+    CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
       (RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers)
       ∘ (EPOCH-PROPS.EPOCH-govDepsMatch tx Γ _ rrm _ eps₁→eps₂)
