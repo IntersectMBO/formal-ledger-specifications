@@ -37,3 +37,7 @@ unquoteDecl = do
   hsTypeAlias DataHash ⊣ withName "DataHash"
   hsTypeAlias Value
   hsTypeAlias TxOut
+  hsTypeAlias RdmrPtr
+  hsTypeAlias ScriptHash
+  hsTypeAlias AuxiliaryData
+  hsTypeAlias Wdrl

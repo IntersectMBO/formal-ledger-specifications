@@ -4,9 +4,11 @@ open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
 
 instance
   HsTy-DrepThresholds = autoHsType DrepThresholds
+    ⊣ withConstructor "MkDrepThresholds"
   Conv-DrepThresholds = autoConvert DrepThresholds
 
   HsTy-PoolThresholds = autoHsType PoolThresholds
+    ⊣ withConstructor "MkPoolThresholds"
   Conv-PoolThresholds = autoConvert PoolThresholds
 
   HsTy-Acnt = autoHsType Acnt ⊣ withConstructor "MkAcnt"
