@@ -107,58 +107,53 @@ FreshTx : Tx → LState → Type
 FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
   where open Tx tx; open TxBody body; open UTxOState; open LState
 
-module _ (tx : Tx) (let open Tx tx; open TxBody body) where
+module _ (tx : Tx) (let open Tx tx; open TxBody body)
+         {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂}
+         {sumConstZero : {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → ∑[ x ← constMap X 0 ] x ≡ 0}
+  where
 
   private variable
     Γ : LEnv
     l : List Tx
 
-  -- TODO: Fix this after proving pov for CERTS.
   LEDGER-pov :  {s s' : LState} → FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                 → getCoin s + φ(getCoin txwdrls , isValid) ≡ getCoin s'
-  LEDGER-pov {s = s} {s'} h (LEDGER-V⋯ _ (UTXOW⇒UTXO st) _ _) = goal
+  LEDGER-pov  {s = ⟦ utxoSt , govSt , ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⟧ˡ}
+              {s' = ⟦ utxoSt' , govSt' , ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ ⟧ˡ}
+              h (LEDGER-V {utxoSt' = utxoSt'} (_ , UTXOW⇒UTXO st , h' , _)) =
+    let  open ≡-Reasoning
+         certState = ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+         certState' = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
+    in  begin
+        getCoin utxoSt + getCoin certState + φ (getCoin txwdrls , isValid)
+          ≡⟨ +-assoc (getCoin utxoSt) _ _ ⟩
+        getCoin utxoSt + (getCoin certState + φ (getCoin txwdrls , isValid))
+          ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState) _) ⟩
+        getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState)
+          ≡˘⟨ +-assoc (getCoin utxoSt) _ _  ⟩
+        getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState
+          ≡⟨ cong (_+ getCoin certState) (pov h st) ⟩
+        getCoin utxoSt' + getCoin certState
+          ≡⟨ cong (getCoin utxoSt' +_) (CERTS-pov {gc-hom = gc-hom} {sumConstZero} h') ⟩
+        getCoin utxoSt' + getCoin certState'
+          ∎
+
+  LEDGER-pov s@{s = ⟦ utxoSt , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ} s'@{s' = ⟦ utxoSt' , govSt' , ⟦ dState' , pState' , gState' ⟧ᶜˢ ⟧ˡ} h (LEDGER-I {utxoSt' = utxoSt'} (_ , UTXOW⇒UTXO st)) = goal
     where
-    open ≡-Reasoning
-    goal : getCoin (LState.utxoSt s) + getCoin (LState.certState s)
-           + φ (getCoin txwdrls , isValid)
-           ≡ getCoin (LState.utxoSt s') + getCoin (LState.certState s')
-    goal = begin
-      getCoin (LState.utxoSt s) + getCoin (LState.certState s) + φ (getCoin txwdrls , isValid)
-        ≡⟨ {!+-assoc!} ⟩
-      getCoin (LState.utxoSt s) + (getCoin (LState.certState s) + φ (getCoin txwdrls , isValid))
-        ≡⟨ {!!} ⟩
-      getCoin (LState.utxoSt s) + (φ (getCoin txwdrls , isValid) + getCoin (LState.certState s))
-        ≡⟨ {!!} ⟩
-      getCoin (LState.utxoSt s) + φ (getCoin txwdrls , isValid) + getCoin (LState.certState s)
-        ≡⟨ {!!} ⟩
-      getCoin (LState.utxoSt s') + getCoin (LState.certState s)
-        ≡⟨ {!!} ⟩
-      getCoin (LState.utxoSt s') + getCoin (LState.certState s')
-        ∎
-    -- cbalance (UTxOState.utxo (LState.utxoSt s)) +ℕ
-    --   UTxOState.fees (LState.utxoSt s)
-    --   +ℕ indexedSumᵛ' (λ x → x) (UTxOState.deposits (LState.utxoSt s))
-    --   +ℕ UTxOState.donations (LState.utxoSt s)
-    --   +ℕ rewardsBalance (CertState.dState (LState.certState s))
+    goal : getCoin s + φ(getCoin txwdrls , isValid) ≡ getCoin s'
+    goal = {!!}
+
+    -- cbalance utxoSt + UTxOState.fees utxoSt +ℕ
+    --   indexedSumᵛ' (λ x → x) (UTxOState.deposits utxoSt)
+    --   +ℕ UTxOState.donations utxoSt
+    --   +ℕ rewardsBalance dState
     --   +ℕ φ (HasCoin.getCoin HasCoin-Map txwdrls , isValid)
-      -- ≡
-      -- cbalance (UTxOState.utxo utxoSt') +ℕ UTxOState.fees utxoSt' +ℕ
-      -- indexedSumᵛ' (λ x → x) (UTxOState.deposits utxoSt')
-      -- +ℕ UTxOState.donations utxoSt'
-      -- +ℕ rewardsBalance (CertState.dState certState')
+    --   ≡
+    --   cbalance (UTxOState.utxo utxoSt') +ℕ UTxOState.fees utxoSt' +ℕ
+    --   indexedSumᵛ' (λ x → x) (UTxOState.deposits utxoSt')
+    --   +ℕ UTxOState.donations utxoSt'
+    --   +ℕ rewardsBalance dState
 
-  -- pov :  Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
-  --        → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
--- pov h st
-  LEDGER-pov h (LEDGER-I⋯ _ (UTXOW⇒UTXO st))     = {!!} -- pov h st
-
-  private variable
-    s s' : LState
-
-  data FreshTxs : LEnv → LState → List Tx → Type where
-    []-Fresh : FreshTxs Γ s []
-    ∷-Fresh  : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → FreshTxs Γ s' l
-              → FreshTxs Γ s (tx ∷ l)
 
   -- TODO: Fix this after proving pov for CERTS.
   -- LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
