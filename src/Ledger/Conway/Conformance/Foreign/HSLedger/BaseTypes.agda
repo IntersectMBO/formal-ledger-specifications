@@ -71,3 +71,5 @@ open import Ledger.Conway.Conformance.Certs.Properties govStructure
 unquoteDecl = do
   hsTypeAlias Coin
   hsTypeAlias ExUnits
+  hsTypeAlias Epoch
+  hsTypeAlias ScriptHash

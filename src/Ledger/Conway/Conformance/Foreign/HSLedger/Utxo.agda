@@ -20,6 +20,7 @@ instance
 
 unquoteDecl = do
   hsTypeAlias UTxO
+  hsTypeAlias Redeemer
 
 utxo-step : HsType (UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState)
 utxo-step = to (compute Computational-UTXO)
