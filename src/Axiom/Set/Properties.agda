@@ -357,6 +357,9 @@ fromList-∪-singleton .proj₂ h with ∈-∪⁻ h
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
 
+disjoint-subst : disjoint X Y → X ≡ᵉ Z → disjoint Z Y
+disjoint-subst disj X≡Z = disj ∘ (proj₂ X≡Z)
+
 module Intersectionᵖ (sp-∈ : spec-∈ A) where
   open Intersection sp-∈
 

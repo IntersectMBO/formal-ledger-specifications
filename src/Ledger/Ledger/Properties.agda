@@ -13,7 +13,7 @@ open import Axiom.Set.Properties th
 open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
-open import Ledger.Certs.Properties govStructure
+open import Ledger.Certs.Properties govStructure hiding (HasCoin-Map)
 open import Ledger.Gov txs
 open import Ledger.Gov.Properties txs
 open import Ledger.Ledger txs abs
@@ -31,7 +31,7 @@ open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc; length-
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
 open import Data.Product.Properties using (×-≡,≡←≡)
 open import Data.Product.Properties.Ext using (×-⇔-swap)
-open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
+open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm; +-assoc)
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Unary using (Decidable)
 
@@ -99,7 +99,7 @@ Computational-LEDGERS = it
 
 instance
   HasCoin-LState : HasCoin LState
-  HasCoin-LState .getCoin s = getCoin (LState.utxoSt s)
+  HasCoin-LState .getCoin s = getCoin (LState.utxoSt s) + getCoin (LState.certState s)
 
 -- ** Proof that LEDGER preserves values.
 
@@ -111,13 +111,49 @@ module _ (tx : Tx) (let open Tx tx; open TxBody body) where
 
   private variable
     Γ : LEnv
-    s s' : LState
     l : List Tx
 
   -- TODO: Fix this after proving pov for CERTS.
-  LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s + φ(getCoin txwdrls , isValid) ≡ getCoin s'
-  LEDGER-pov h (LEDGER-V⋯ _ (UTXOW⇒UTXO st) _ _) = pov h st
-  LEDGER-pov h (LEDGER-I⋯ _ (UTXOW⇒UTXO st))     = pov h st
+  LEDGER-pov :  {s s' : LState} → FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                → getCoin s + φ(getCoin txwdrls , isValid) ≡ getCoin s'
+  LEDGER-pov {s = s} {s'} h (LEDGER-V⋯ _ (UTXOW⇒UTXO st) _ _) = goal
+    where
+    open ≡-Reasoning
+    goal : getCoin (LState.utxoSt s) + getCoin (LState.certState s)
+           + φ (getCoin txwdrls , isValid)
+           ≡ getCoin (LState.utxoSt s') + getCoin (LState.certState s')
+    goal = begin
+      getCoin (LState.utxoSt s) + getCoin (LState.certState s) + φ (getCoin txwdrls , isValid)
+        ≡⟨ {!+-assoc!} ⟩
+      getCoin (LState.utxoSt s) + (getCoin (LState.certState s) + φ (getCoin txwdrls , isValid))
+        ≡⟨ {!!} ⟩
+      getCoin (LState.utxoSt s) + (φ (getCoin txwdrls , isValid) + getCoin (LState.certState s))
+        ≡⟨ {!!} ⟩
+      getCoin (LState.utxoSt s) + φ (getCoin txwdrls , isValid) + getCoin (LState.certState s)
+        ≡⟨ {!!} ⟩
+      getCoin (LState.utxoSt s') + getCoin (LState.certState s)
+        ≡⟨ {!!} ⟩
+      getCoin (LState.utxoSt s') + getCoin (LState.certState s')
+        ∎
+    -- cbalance (UTxOState.utxo (LState.utxoSt s)) +ℕ
+    --   UTxOState.fees (LState.utxoSt s)
+    --   +ℕ indexedSumᵛ' (λ x → x) (UTxOState.deposits (LState.utxoSt s))
+    --   +ℕ UTxOState.donations (LState.utxoSt s)
+    --   +ℕ rewardsBalance (CertState.dState (LState.certState s))
+    --   +ℕ φ (HasCoin.getCoin HasCoin-Map txwdrls , isValid)
+      -- ≡
+      -- cbalance (UTxOState.utxo utxoSt') +ℕ UTxOState.fees utxoSt' +ℕ
+      -- indexedSumᵛ' (λ x → x) (UTxOState.deposits utxoSt')
+      -- +ℕ UTxOState.donations utxoSt'
+      -- +ℕ rewardsBalance (CertState.dState certState')
+
+  -- pov :  Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+  --        → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+-- pov h st
+  LEDGER-pov h (LEDGER-I⋯ _ (UTXOW⇒UTXO st))     = {!!} -- pov h st
+
+  private variable
+    s s' : LState
 
   data FreshTxs : LEnv → LState → List Tx → Type where
     []-Fresh : FreshTxs Γ s []
