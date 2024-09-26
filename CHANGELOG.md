@@ -21,6 +21,16 @@
 - Compute the voting stake distribution
 - Add deposit amount to `dereg` certificate
 - Replace `minUTxOValue` with `coinsPerUTxOByte`
+- Fix CC threshold being incorrect in the case of no-confidence
+- Change logic of `RATIFY` to reject proposals properly
+- Fix total voting stake computation
+- Fix that `ccMinSize` was not respected with an empty CC
+- Add deposit amount to `deregdrep`
+- Withdrawal gate triggers only for `KeyHashObj`
+- Add missing `NetworkID` checks
+- Ratify GAs in the correct order
+- Only consider matching GAs in `hasParent`
+- Fix `ccMinSize` check not properly accounting for double delegations
 
 ### V0.9
 
