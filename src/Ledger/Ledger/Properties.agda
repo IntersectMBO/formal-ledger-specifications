@@ -13,7 +13,7 @@ open import Axiom.Set.Properties th
 open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
-open import Ledger.Certs.Properties govStructure renaming (pov to certs-pov) hiding (HasCoin-Map)
+open import Ledger.Certs.Properties govStructure hiding (HasCoin-Map)
 open import Ledger.Gov txs
 open import Ledger.Gov.Properties txs
 open import Ledger.Ledger txs abs
