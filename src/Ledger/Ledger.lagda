@@ -278,15 +278,23 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-Ind : let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp; txBods = (map (λ p → p .Tx.body)  subTxs); txs = tx ∷ subTxs ; isBalanced = consumed pp u (body ∷ txBods) ≡ᵇ produced pp u (body ∷ txBods) ; bd = mkBatchData isBalanced txs ; allScripts = foldr (λ t l → (t .Tx.wits .TxWitnesses.scripts) ∪ l) ∅ txs
+  LEDGER-Ind : 
+    let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
+        txBods            = (map (λ p → p .Tx.body)  subTxs)
+        txs               = tx ∷ subTxs 
+        isBalanced        = consumed pp u (body ∷ txBods) ≡ᵇ produced pp u (body ∷ txBods) 
+        bd                = mkBatchData isBalanced txs 
+        balanced          = isBalanced ≡ true
+        insOK             = chkCorIns (body ∷ txBods) (body .TxBody.corInputs )
+        insOutsOK         = chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs)
+        allScripts        = foldr (λ t l → (t .Tx.wits .TxWitnesses.scripts) ∪ l) ∅ txs 
+
     in
     ∙ feesOK pp tx utx ≡ true         --1      
-    ∙ isBalanced ≡ true  → singleInvalid bd txs ≡ false  --2
+    ∙ singleInvalid bd txs ≡ false → balanced × insOK × insOutsOK  --2
     ∙ txsize ≤ maxTxSize  --3
     ∙ chkInsInUTxO txBods (dom utx)  --4
     -- ∙ maxTxExUnits ≥ᵉ totExUnits txs maxTxExUnits   --5 -- TODO this doesnt work!
-    ∙ chkCorIns (body ∷ txBods) (body .TxBody.corInputs ) → singleInvalid bd txs ≡ false --6
-    ∙ chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs) → singleInvalid bd txs ≡ false  --7
     ∙ getIDs subTxs ≡ subTxIds -- TODO can we put subTxs directly in body?
     ∙ lengthˢ subTxIds ≡ length subTxs -- no repeated transactions 
     ∙ ⟦ Γ , bd ,  body .TxBody.requireBatchObservers , allScripts ⟧ˢᵉ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
