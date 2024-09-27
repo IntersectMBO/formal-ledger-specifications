@@ -3,12 +3,12 @@
 open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
+module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
+
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
 
 open import Tactic.ReduceDec
-
-module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
 
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Certs gs
