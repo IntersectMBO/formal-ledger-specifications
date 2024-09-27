@@ -15,10 +15,10 @@ import Lib
 (.->) = (,)
 
 drepThresholds :: DrepThresholds
-drepThresholds = MkDrepThresholds 0 0 0 0 0 0 0 0 0 0
+drepThresholds = DrepThresholds 0 0 0 0 0 0 0 0 0 0
 
 poolThresholds :: PoolThresholds
-poolThresholds = MkPoolThresholds 0 0 0 0 0
+poolThresholds = PoolThresholds 0 0 0 0 0
 
 initParams :: PParams
 initParams = MkPParams

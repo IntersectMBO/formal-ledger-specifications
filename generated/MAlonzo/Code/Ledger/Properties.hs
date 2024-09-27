@@ -112,19 +112,19 @@ d_Block_1744 a0 a1 = ()
 -- Ledger.Properties._.ChainState
 d_ChainState_1748 a0 a1 = ()
 -- Ledger.Properties._.Block.slot
-d_slot_1768 :: MAlonzo.Code.Ledger.Chain.T_Block_2254 -> AgdaAny
-d_slot_1768 v0 = coe MAlonzo.Code.Ledger.Chain.d_slot_2262 (coe v0)
+d_slot_1768 :: MAlonzo.Code.Ledger.Chain.T_Block_2256 -> AgdaAny
+d_slot_1768 v0 = coe MAlonzo.Code.Ledger.Chain.d_slot_2264 (coe v0)
 -- Ledger.Properties._.Block.ts
 d_ts_1770 ::
-  MAlonzo.Code.Ledger.Chain.T_Block_2254 ->
+  MAlonzo.Code.Ledger.Chain.T_Block_2256 ->
   [MAlonzo.Code.Ledger.Transaction.T_Tx_2898]
-d_ts_1770 v0 = coe MAlonzo.Code.Ledger.Chain.d_ts_2260 (coe v0)
+d_ts_1770 v0 = coe MAlonzo.Code.Ledger.Chain.d_ts_2262 (coe v0)
 -- Ledger.Properties._.ChainState.newEpochState
 d_newEpochState_1774 ::
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326
 d_newEpochState_1774 v0
-  = coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0)
+  = coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0)
 -- Ledger.Properties._.consumed
 d_consumed_1828 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -143,124 +143,124 @@ du_consumed_1828 v0
 -- Ledger.Properties._.NewEpochState
 d_NewEpochState_1948 a0 a1 = ()
 -- Ledger.Properties._.NewEpochState.epochState
-d_epochState_2010 ::
+d_epochState_2012 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   MAlonzo.Code.Ledger.Epoch.T_EpochState_2302
-d_epochState_2010 v0
+d_epochState_2012 v0
   = coe MAlonzo.Code.Ledger.Epoch.d_epochState_2336 (coe v0)
 -- Ledger.Properties._.NewEpochState.lastEpoch
-d_lastEpoch_2012 ::
+d_lastEpoch_2014 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 -> AgdaAny
-d_lastEpoch_2012 v0
+d_lastEpoch_2014 v0
   = coe MAlonzo.Code.Ledger.Epoch.d_lastEpoch_2334 (coe v0)
 -- Ledger.Properties._.NewEpochState.ru
-d_ru_2014 ::
+d_ru_2016 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   Maybe MAlonzo.Code.Ledger.Epoch.T_RewardUpdate_2242
-d_ru_2014 v0 = coe MAlonzo.Code.Ledger.Epoch.d_ru_2338 (coe v0)
+d_ru_2016 v0 = coe MAlonzo.Code.Ledger.Epoch.d_ru_2338 (coe v0)
 -- Ledger.Properties._._⊢_⇀⦇_,LEDGER⦈_
-d__'8866'_'8640''10631'_'44'LEDGER'10632'__2048 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'LEDGER'10632'__2050 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Properties._.LEnv
-d_LEnv_2054 a0 a1 = ()
+d_LEnv_2056 a0 a1 = ()
 -- Ledger.Properties._.LState
-d_LState_2056 a0 a1 = ()
+d_LState_2058 a0 a1 = ()
 -- Ledger.Properties._.LEnv.enactState
-d_enactState_2072 ::
+d_enactState_2074 ::
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2128 ->
   MAlonzo.Code.Ledger.Enact.T_EnactState_852
-d_enactState_2072 v0
+d_enactState_2074 v0
   = coe MAlonzo.Code.Ledger.Ledger.d_enactState_2146 (coe v0)
 -- Ledger.Properties._.LEnv.pparams
-d_pparams_2074 ::
+d_pparams_2076 ::
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2128 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pparams_2074 v0
+d_pparams_2076 v0
   = coe MAlonzo.Code.Ledger.Ledger.d_pparams_2144 (coe v0)
 -- Ledger.Properties._.LEnv.ppolicy
-d_ppolicy_2076 ::
+d_ppolicy_2078 ::
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2128 -> Maybe AgdaAny
-d_ppolicy_2076 v0
+d_ppolicy_2078 v0
   = coe MAlonzo.Code.Ledger.Ledger.d_ppolicy_2142 (coe v0)
 -- Ledger.Properties._.LEnv.slot
-d_slot_2078 :: MAlonzo.Code.Ledger.Ledger.T_LEnv_2128 -> AgdaAny
-d_slot_2078 v0
+d_slot_2080 :: MAlonzo.Code.Ledger.Ledger.T_LEnv_2128 -> AgdaAny
+d_slot_2080 v0
   = coe MAlonzo.Code.Ledger.Ledger.d_slot_2140 (coe v0)
 -- Ledger.Properties._.LEnv.treasury
-d_treasury_2080 ::
+d_treasury_2082 ::
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2128 -> Integer
-d_treasury_2080 v0
+d_treasury_2082 v0
   = coe MAlonzo.Code.Ledger.Ledger.d_treasury_2148 (coe v0)
 -- Ledger.Properties._.LState.certState
-d_certState_2084 ::
+d_certState_2086 ::
   MAlonzo.Code.Ledger.Ledger.T_LState_2152 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952
-d_certState_2084 v0
+d_certState_2086 v0
   = coe MAlonzo.Code.Ledger.Ledger.d_certState_2164 (coe v0)
 -- Ledger.Properties._.LState.govSt
-d_govSt_2086 ::
+d_govSt_2088 ::
   MAlonzo.Code.Ledger.Ledger.T_LState_2152 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_govSt_2086 v0
+d_govSt_2088 v0
   = coe MAlonzo.Code.Ledger.Ledger.d_govSt_2162 (coe v0)
 -- Ledger.Properties._.LState.utxoSt
-d_utxoSt_2088 ::
+d_utxoSt_2090 ::
   MAlonzo.Code.Ledger.Ledger.T_LState_2152 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1970
-d_utxoSt_2088 v0
+d_utxoSt_2090 v0
   = coe MAlonzo.Code.Ledger.Ledger.d_utxoSt_2160 (coe v0)
 -- Ledger.Properties._.EnactState
-d_EnactState_2110 a0 a1 = ()
+d_EnactState_2112 a0 a1 = ()
 -- Ledger.Properties._.EnactState.cc
-d_cc_2146 ::
+d_cc_2148 ::
   MAlonzo.Code.Ledger.Enact.T_EnactState_852 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_cc_2146 v0 = coe MAlonzo.Code.Ledger.Enact.d_cc_864 (coe v0)
+d_cc_2148 v0 = coe MAlonzo.Code.Ledger.Enact.d_cc_864 (coe v0)
 -- Ledger.Properties._.EnactState.constitution
-d_constitution_2148 ::
+d_constitution_2150 ::
   MAlonzo.Code.Ledger.Enact.T_EnactState_852 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_constitution_2148 v0
+d_constitution_2150 v0
   = coe MAlonzo.Code.Ledger.Enact.d_constitution_866 (coe v0)
 -- Ledger.Properties._.EnactState.pparams
-d_pparams_2150 ::
+d_pparams_2152 ::
   MAlonzo.Code.Ledger.Enact.T_EnactState_852 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pparams_2150 v0
+d_pparams_2152 v0
   = coe MAlonzo.Code.Ledger.Enact.d_pparams_870 (coe v0)
 -- Ledger.Properties._.EnactState.pv
-d_pv_2152 ::
+d_pv_2154 ::
   MAlonzo.Code.Ledger.Enact.T_EnactState_852 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pv_2152 v0 = coe MAlonzo.Code.Ledger.Enact.d_pv_868 (coe v0)
+d_pv_2154 v0 = coe MAlonzo.Code.Ledger.Enact.d_pv_868 (coe v0)
 -- Ledger.Properties._.EnactState.withdrawals
-d_withdrawals_2154 ::
+d_withdrawals_2156 ::
   MAlonzo.Code.Ledger.Enact.T_EnactState_852 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_withdrawals_2154 v0
+d_withdrawals_2156 v0
   = coe MAlonzo.Code.Ledger.Enact.d_withdrawals_872 (coe v0)
 -- Ledger.Properties._.GovState
-d_GovState_2180 ::
+d_GovState_2182 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 -> ()
-d_GovState_2180 = erased
+d_GovState_2182 = erased
 -- Ledger.Properties.isCredDeposit
-d_isCredDeposit_2264 ::
+d_isCredDeposit_2266 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 -> ()
-d_isCredDeposit_2264 = erased
+d_isCredDeposit_2266 = erased
 -- Ledger.Properties.isCredDeposit?
-d_isCredDeposit'63'_2268 ::
+d_isCredDeposit'63'_2270 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_isCredDeposit'63'_2268 ~v0 ~v1 v2 = du_isCredDeposit'63'_2268 v2
-du_isCredDeposit'63'_2268 ::
+d_isCredDeposit'63'_2270 ~v0 ~v1 v2 = du_isCredDeposit'63'_2270 v2
+du_isCredDeposit'63'_2270 ::
   MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_isCredDeposit'63'_2268 v0
+du_isCredDeposit'63'_2270 v0
   = case coe v0 of
       MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_838 v1
         -> coe
@@ -294,22 +294,22 @@ du_isCredDeposit'63'_2268 v0
                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Properties.isGADeposit
-d_isGADeposit_2278 ::
+d_isGADeposit_2280 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 -> ()
-d_isGADeposit_2278 = erased
+d_isGADeposit_2280 = erased
 -- Ledger.Properties.isGADeposit?
-d_isGADeposit'63'_2282 ::
+d_isGADeposit'63'_2284 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_isGADeposit'63'_2282 ~v0 ~v1 v2 = du_isGADeposit'63'_2282 v2
-du_isGADeposit'63'_2282 ::
+d_isGADeposit'63'_2284 ~v0 ~v1 v2 = du_isGADeposit'63'_2284 v2
+du_isGADeposit'63'_2284 ::
   MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_isGADeposit'63'_2282 v0
+du_isGADeposit'63'_2284 v0
   = case coe v0 of
       MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_838 v1
         -> coe
@@ -343,18 +343,18 @@ du_isGADeposit'63'_2282 v0
                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Properties.getLState
-d_getLState_2292 ::
+d_getLState_2294 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   MAlonzo.Code.Ledger.Ledger.T_LState_2152
-d_getLState_2292 v0
+d_getLState_2294 v0
   = coe
       MAlonzo.Code.Ledger.Epoch.d_ls_2318
       (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2336 (coe v0))
 -- Ledger.Properties.getRewards
-d_getRewards_2294 ::
+d_getRewards_2296 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_getRewards_2294 v0
+d_getRewards_2296 v0
   = coe
       MAlonzo.Code.Ledger.Certs.d_rewards_924
       (coe
@@ -365,10 +365,10 @@ d_getRewards_2294 v0
                MAlonzo.Code.Ledger.Epoch.d_ls_2318
                (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2336 (coe v0)))))
 -- Ledger.Properties.allDReps
-d_allDReps_2296 ::
+d_allDReps_2298 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_allDReps_2296 v0
+d_allDReps_2298 v0
   = coe
       MAlonzo.Code.Ledger.Certs.d_dreps_946
       (coe
@@ -379,19 +379,19 @@ d_allDReps_2296 v0
                MAlonzo.Code.Ledger.Epoch.d_ls_2318
                (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2336 (coe v0)))))
 -- Ledger.Properties.activeDReps
-d_activeDReps_2298 ::
+d_activeDReps_2300 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16]
-d_activeDReps_2298 v0 ~v1 v2 v3 = du_activeDReps_2298 v0 v2 v3
-du_activeDReps_2298 ::
+d_activeDReps_2300 v0 ~v1 v2 v3 = du_activeDReps_2300 v0 v2 v3
+du_activeDReps_2300 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16]
-du_activeDReps_2298 v0 v1 v2
+du_activeDReps_2300 v0 v1 v2
   = coe
       MAlonzo.Code.Interface.IsSet.du_dom_540
       (coe
@@ -438,23 +438,23 @@ du_activeDReps_2298 v0 v1 v2
                      MAlonzo.Code.Ledger.Epoch.d_ls_2318
                      (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2336 (coe v2)))))))
 -- Ledger.Properties.getGovState
-d_getGovState_2308 ::
+d_getGovState_2310 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_getGovState_2308 v0
+d_getGovState_2310 v0
   = coe
       MAlonzo.Code.Ledger.Ledger.d_govSt_2162
       (coe
          MAlonzo.Code.Ledger.Epoch.d_ls_2318
          (coe MAlonzo.Code.Ledger.Epoch.d_epochState_2336 (coe v0)))
 -- Ledger.Properties._
-d___2310 ::
+d___2312 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   MAlonzo.Code.Interface.IsSet.T_IsSet_474
-d___2310 ~v0 ~v1 = du___2310
-du___2310 :: MAlonzo.Code.Interface.IsSet.T_IsSet_474
-du___2310
+d___2312 ~v0 ~v1 = du___2312
+du___2312 :: MAlonzo.Code.Interface.IsSet.T_IsSet_474
+du___2312
   = coe
       MAlonzo.Code.Interface.IsSet.C_IsSet'46'constructor_2009
       (coe
@@ -464,32 +464,32 @@ du___2310
               (coe
                  MAlonzo.Code.Axiom.Set.d_th_1458
                  (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-              (coe MAlonzo.Code.Ledger.Chain.d_ts_2260 (coe v0))))
+              (coe MAlonzo.Code.Ledger.Chain.d_ts_2262 (coe v0))))
 -- Ledger.Properties.validBlockIn
-d_validBlockIn_2314 ::
+d_validBlockIn_2316 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
-  MAlonzo.Code.Ledger.Chain.T_Block_2254 -> ()
-d_validBlockIn_2314 = erased
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
+  MAlonzo.Code.Ledger.Chain.T_Block_2256 -> ()
+d_validBlockIn_2316 = erased
 -- Ledger.Properties.validBlock
-d_validBlock_2322 ::
+d_validBlock_2324 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_Block_2254 -> ()
-d_validBlock_2322 = erased
+  MAlonzo.Code.Ledger.Chain.T_Block_2256 -> ()
+d_validBlock_2324 = erased
 -- Ledger.Properties.validTxIn₁
-d_validTxIn'8321'_2328 ::
+d_validTxIn'8321'_2330 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2898 -> ()
-d_validTxIn'8321'_2328 = erased
+d_validTxIn'8321'_2330 = erased
 -- Ledger.Properties._.ledgerEnv
-d_ledgerEnv_2380 ::
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+d_ledgerEnv_2382 ::
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   AgdaAny -> MAlonzo.Code.Ledger.Ledger.T_LEnv_2128
-d_ledgerEnv_2380 v0 v1
+d_ledgerEnv_2382 v0 v1
   = coe
       MAlonzo.Code.Ledger.Ledger.C_'10214'_'44'_'44'_'44'_'44'_'10215''737''7497'_2150
       (coe v1)
@@ -503,7 +503,7 @@ d_ledgerEnv_2380 v0 v1
                   MAlonzo.Code.Ledger.Epoch.d_es_2320
                   (coe
                      MAlonzo.Code.Ledger.Epoch.d_epochState_2336
-                     (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0)))))))
+                     (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0)))))))
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
          (coe
@@ -512,56 +512,56 @@ d_ledgerEnv_2380 v0 v1
                MAlonzo.Code.Ledger.Epoch.d_es_2320
                (coe
                   MAlonzo.Code.Ledger.Epoch.d_epochState_2336
-                  (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0))))))
+                  (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0))))))
       (coe
          MAlonzo.Code.Ledger.Epoch.d_es_2320
          (coe
             MAlonzo.Code.Ledger.Epoch.d_epochState_2336
-            (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0))))
+            (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0))))
       (coe
          MAlonzo.Code.Ledger.PParams.d_treasury_152
          (coe
             MAlonzo.Code.Ledger.Epoch.d_acnt_2314
             (coe
                MAlonzo.Code.Ledger.Epoch.d_epochState_2336
-               (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0)))))
+               (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0)))))
 -- Ledger.Properties._.validTxIn₂
-d_validTxIn'8322'_2382 ::
+d_validTxIn'8322'_2384 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   AgdaAny -> MAlonzo.Code.Ledger.Transaction.T_Tx_2898 -> ()
-d_validTxIn'8322'_2382 = erased
+d_validTxIn'8322'_2384 = erased
 -- Ledger.Properties.validTx₁
-d_validTx'8321'_2388 ::
+d_validTx'8321'_2390 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2898 -> ()
-d_validTx'8321'_2388 = erased
+d_validTx'8321'_2390 = erased
 -- Ledger.Properties.ChainInvariant
-d_ChainInvariant_2396 ::
+d_ChainInvariant_2398 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  (MAlonzo.Code.Ledger.Chain.T_ChainState_2248 -> ()) -> ()
-d_ChainInvariant_2396 = erased
+  (MAlonzo.Code.Ledger.Chain.T_ChainState_2250 -> ()) -> ()
+d_ChainInvariant_2398 = erased
 -- Ledger.Properties._._.utxoSt
-d_utxoSt_2442 ::
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+d_utxoSt_2444 ::
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_1970
-d_utxoSt_2442 v0
+d_utxoSt_2444 v0
   = coe
       MAlonzo.Code.Ledger.Ledger.d_utxoSt_2160
       (coe
          MAlonzo.Code.Ledger.Epoch.d_ls_2318
          (coe
             MAlonzo.Code.Ledger.Epoch.d_epochState_2336
-            (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0))))
+            (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0))))
 -- Ledger.Properties._.pparams
-d_pparams_2472 ::
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+d_pparams_2474 ::
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pparams_2472 v0
+d_pparams_2474 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
       (coe
@@ -570,11 +570,11 @@ d_pparams_2472 v0
             MAlonzo.Code.Ledger.Epoch.d_es_2320
             (coe
                MAlonzo.Code.Ledger.Epoch.d_epochState_2336
-               (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0)))))
+               (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0)))))
 -- Ledger.Properties._._.govActionDeposit
-d_govActionDeposit_2500 ::
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 -> Integer
-d_govActionDeposit_2500 v0
+d_govActionDeposit_2502 ::
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 -> Integer
+d_govActionDeposit_2502 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_govActionDeposit_372
       (coe
@@ -585,12 +585,12 @@ d_govActionDeposit_2500 v0
                MAlonzo.Code.Ledger.Epoch.d_es_2320
                (coe
                   MAlonzo.Code.Ledger.Epoch.d_epochState_2336
-                  (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0))))))
+                  (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0))))))
 -- Ledger.Properties._._._.noRefundCert
-d_noRefundCert_2682 ::
+d_noRefundCert_2684 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2898 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -611,12 +611,12 @@ d_noRefundCert_2682 ::
     MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] -> ()
-d_noRefundCert_2682 = erased
+d_noRefundCert_2684 = erased
 -- Ledger.Properties._._.propose-minSpend
-d_propose'45'minSpend_2728 ::
+d_propose'45'minSpend_2730 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2898 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -638,17 +638,17 @@ d_propose'45'minSpend_2728 ::
    MAlonzo.Code.Data.Nat.Base.T__'8804'__22) ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-d_propose'45'minSpend_2728 v0 ~v1 v2 v3 v4 v5 ~v6 ~v7 v8
-  = du_propose'45'minSpend_2728 v0 v2 v3 v4 v5 v8
-du_propose'45'minSpend_2728 ::
+d_propose'45'minSpend_2730 v0 ~v1 v2 v3 v4 v5 ~v6 ~v7 v8
+  = du_propose'45'minSpend_2730 v0 v2 v3 v4 v5 v8
+du_propose'45'minSpend_2730 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2898 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
-du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
+du_propose'45'minSpend_2730 v0 v1 v2 v3 v4 v5
   = case coe v4 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v6 v7
         -> case coe v7 of
@@ -699,7 +699,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                             (coe
                                                                                                                                MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                (coe
-                                                                                                                                  MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                  MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                   (coe
                                                                                                                                      v1))))
                                                                                                                          (coe
@@ -719,7 +719,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                         (coe
                                                                                                                                            MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                            (coe
-                                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                               (coe
                                                                                                                                                  v1)))))))
                                                                                                                             (coe
@@ -731,7 +731,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                      (coe
                                                                                                                                         MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                         (coe
-                                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                            (coe
                                                                                                                                               v1))))))
                                                                                                                             (coe
@@ -739,7 +739,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                (coe
                                                                                                                                   MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                   (coe
-                                                                                                                                     MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                     MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                      (coe
                                                                                                                                         v1))))
                                                                                                                             (coe
@@ -749,7 +749,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                   (coe
                                                                                                                                      MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                      (coe
-                                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                         (coe
                                                                                                                                            v1))))))
                                                                                                                          (coe
@@ -773,7 +773,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                             (coe
                                                                                                                                MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                (coe
-                                                                                                                                  MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                  MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                   (coe
                                                                                                                                      v1))))
                                                                                                                          (coe
@@ -793,7 +793,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                         (coe
                                                                                                                                            MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                            (coe
-                                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                               (coe
                                                                                                                                                  v1)))))))
                                                                                                                             (coe
@@ -805,7 +805,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                      (coe
                                                                                                                                         MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                         (coe
-                                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                            (coe
                                                                                                                                               v1))))))
                                                                                                                             (coe
@@ -813,7 +813,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                (coe
                                                                                                                                   MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                   (coe
-                                                                                                                                     MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                     MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                      (coe
                                                                                                                                         v1))))
                                                                                                                             (coe
@@ -823,7 +823,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                   (coe
                                                                                                                                      MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                      (coe
-                                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                         (coe
                                                                                                                                            v1))))))
                                                                                                                          (coe
@@ -847,7 +847,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                             (coe
                                                                                                                                MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                (coe
-                                                                                                                                  MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                  MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                   (coe
                                                                                                                                      v1))))
                                                                                                                          (coe
@@ -867,7 +867,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                         (coe
                                                                                                                                            MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                            (coe
-                                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                               (coe
                                                                                                                                                  v1)))))))
                                                                                                                             (coe
@@ -879,7 +879,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                      (coe
                                                                                                                                         MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                         (coe
-                                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                            (coe
                                                                                                                                               v1))))))
                                                                                                                             (coe
@@ -887,7 +887,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                (coe
                                                                                                                                   MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                   (coe
-                                                                                                                                     MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                     MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                      (coe
                                                                                                                                         v1))))
                                                                                                                             (coe
@@ -897,7 +897,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                                   (coe
                                                                                                                                      MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                      (coe
-                                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                         (coe
                                                                                                                                            v1))))))
                                                                                                                          (coe
@@ -920,7 +920,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                  (coe
                                                                                                                     MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                       MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                        (coe
                                                                                                                           v1)))))
                                                                                                            (coe
@@ -995,7 +995,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                         (coe
                                                                                                                            v1))))
                                                                                                                (coe
@@ -1015,7 +1015,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                    MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                     (coe
                                                                                                                                        v1)))))))
                                                                                                                   (coe
@@ -1027,7 +1027,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                 MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                  (coe
                                                                                                                                     v1))))))
                                                                                                                   (coe
@@ -1035,7 +1035,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                            (coe
                                                                                                                               v1))))
                                                                                                                   (coe
@@ -1045,7 +1045,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                               (coe
                                                                                                                                  v1))))))
                                                                                                                (coe
@@ -1065,7 +1065,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                         (coe
                                                                                                                            v1))))
                                                                                                                (coe
@@ -1085,7 +1085,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                    MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                     (coe
                                                                                                                                        v1)))))))
                                                                                                                   (coe
@@ -1097,7 +1097,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                 MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                  (coe
                                                                                                                                     v1))))))
                                                                                                                   (coe
@@ -1105,7 +1105,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                            (coe
                                                                                                                               v1))))
                                                                                                                   (coe
@@ -1115,7 +1115,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                               (coe
                                                                                                                                  v1))))))
                                                                                                                (coe
@@ -1135,7 +1135,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                        MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                         (coe
                                                                                                                            v1))))
                                                                                                                (coe
@@ -1155,7 +1155,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                    MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                     (coe
                                                                                                                                        v1)))))))
                                                                                                                   (coe
@@ -1167,7 +1167,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                                 MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                                  (coe
                                                                                                                                     v1))))))
                                                                                                                   (coe
@@ -1175,7 +1175,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                           MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                            (coe
                                                                                                                               v1))))
                                                                                                                   (coe
@@ -1185,7 +1185,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                                              MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                                               (coe
                                                                                                                                  v1))))))
                                                                                                                (coe
@@ -1204,7 +1204,7 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
                                                                                                        (coe
                                                                                                           MAlonzo.Code.Ledger.Epoch.d_epochState_2336
                                                                                                           (coe
-                                                                                                             MAlonzo.Code.Ledger.Chain.d_newEpochState_2252
+                                                                                                             MAlonzo.Code.Ledger.Chain.d_newEpochState_2254
                                                                                                              (coe
                                                                                                                 v1)))))
                                                                                                  (coe
@@ -1241,57 +1241,57 @@ du_propose'45'minSpend_2728 v0 v1 v2 v3 v4 v5
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Properties._._._.isNewEpochBlock
-d_isNewEpochBlock_2756 ::
+d_isNewEpochBlock_2758 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
-  MAlonzo.Code.Ledger.Chain.T_Block_2254 ->
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
+  MAlonzo.Code.Ledger.Chain.T_Block_2256 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d_isNewEpochBlock_2756 = erased
+d_isNewEpochBlock_2758 = erased
 -- Ledger.Properties._._._.newChainState
-d_newChainState_2758 ::
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
-  MAlonzo.Code.Ledger.Chain.T_Block_2254 ->
+d_newChainState_2760 ::
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
+  MAlonzo.Code.Ledger.Chain.T_Block_2256 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248
-d_newChainState_2758 ~v0 ~v1 v2 = du_newChainState_2758 v2
-du_newChainState_2758 ::
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250
+d_newChainState_2760 ~v0 ~v1 v2 = du_newChainState_2760 v2
+du_newChainState_2760 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248
-du_newChainState_2758 v0
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250
+du_newChainState_2760 v0
   = coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v0)
 -- Ledger.Properties._._._.getEnactState
-d_getEnactState_2760 ::
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
-  MAlonzo.Code.Ledger.Chain.T_Block_2254 ->
+d_getEnactState_2762 ::
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
+  MAlonzo.Code.Ledger.Chain.T_Block_2256 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   MAlonzo.Code.Ledger.Enact.T_EnactState_852
-d_getEnactState_2760 ~v0 ~v1 ~v2 v3 = du_getEnactState_2760 v3
-du_getEnactState_2760 ::
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 ->
+d_getEnactState_2762 ~v0 ~v1 ~v2 v3 = du_getEnactState_2762 v3
+du_getEnactState_2762 ::
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 ->
   MAlonzo.Code.Ledger.Enact.T_EnactState_852
-du_getEnactState_2760 v0
+du_getEnactState_2762 v0
   = coe
       MAlonzo.Code.Ledger.Epoch.d_es_2320
       (coe
          MAlonzo.Code.Ledger.Epoch.d_epochState_2336
-         (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2252 (coe v0)))
+         (coe MAlonzo.Code.Ledger.Chain.d_newEpochState_2254 (coe v0)))
 -- Ledger.Properties._.action-deposits≡actions-prop
-d_action'45'deposits'8801'actions'45'prop_2762 ::
+d_action'45'deposits'8801'actions'45'prop_2764 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 -> ()
-d_action'45'deposits'8801'actions'45'prop_2762 = erased
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 -> ()
+d_action'45'deposits'8801'actions'45'prop_2764 = erased
 -- Ledger.Properties._.dom-rwds≡credDeposits
-d_dom'45'rwds'8801'credDeposits_2768 ::
+d_dom'45'rwds'8801'credDeposits_2770 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 -> ()
-d_dom'45'rwds'8801'credDeposits_2768 = erased
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 -> ()
+d_dom'45'rwds'8801'credDeposits_2770 = erased
 -- Ledger.Properties._.pp-wellFormed
-d_pp'45'wellFormed_2770 ::
+d_pp'45'wellFormed_2772 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
-  MAlonzo.Code.Ledger.Chain.T_ChainState_2248 -> ()
-d_pp'45'wellFormed_2770 = erased
+  MAlonzo.Code.Ledger.Chain.T_ChainState_2250 -> ()
+d_pp'45'wellFormed_2772 = erased
