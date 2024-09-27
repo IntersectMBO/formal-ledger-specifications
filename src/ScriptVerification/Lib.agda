@@ -34,10 +34,7 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                ; minUTxOValue = 0
                                ; poolDeposit = 500000000 -- lovelace
                                ; keyDeposit = 500000000 -- lovelace
-                               ; coinsPerUTxOByte = 0  --lovelace
-                               -- ^^^ was 4310, but that value resulted in failed tests once
-                               -- we replaced `minUTxOValue` with `coinsPerUTxOByte`; see `HelloWorld.agda`
-                               -- line 153: `isSuccess succeedExample ≡ true`
+                               ; coinsPerUTxOByte = 4310 --lovelace
                                ; minFeeRefScriptCoinsPerByte = mkℚ+ 15 1 (gcd≡1⇒coprime refl) -- see [1]
                                ; prices = tt -- fix this
                                ; maxRefScriptSizePerTx = 200 * 1024 -- 200KiB
