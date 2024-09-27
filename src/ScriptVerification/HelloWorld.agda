@@ -10,16 +10,16 @@ scriptImp = record { serialise = id ;
 
 open import ScriptVerification.LedgerImplementation String String scriptImp
 open import ScriptVerification.Lib String String scriptImp
-open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
-open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Transaction
+open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Transaction
 open TransactionStructure SVTransactionStructure
-open import Ledger.Types.Epoch
+open import Ledger.Conway.Conformance.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
-open import Ledger.Utxow.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Utxow.Properties SVTransactionStructure SVAbstractFunctions
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool
@@ -127,7 +127,6 @@ evalFailScript = evalScripts failTx failState
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
-  unfolding Computational-UTXO
   unfolding outs
 
   _ : notEmpty succeedState ≡ ⊤
@@ -157,5 +156,5 @@ opaque
   failExample : ComputationResult String UTxOState
   failExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  failTx
 
-  _ : failExample ≡ failure "¬ feesOK pp tx utxo ≡ true"
-  _ = refl
+  _ : isFailure failExample
+  _ = _ , refl

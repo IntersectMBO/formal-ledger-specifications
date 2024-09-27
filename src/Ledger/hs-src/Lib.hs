@@ -11,7 +11,8 @@ import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.PParams     as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Transaction as X
   ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
-  , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Wdrl)
+  , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Wdrl
+  , HashedTimelock(..))
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Cert        as X
   (certStep, certsStep, CertState(..))
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Chain       as X

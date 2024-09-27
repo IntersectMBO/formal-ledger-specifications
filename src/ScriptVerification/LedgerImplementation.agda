@@ -14,10 +14,10 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeM
 open import Relation.Binary.Morphism.Structures
 open import Foreign.Convertible
 import Foreign.Haskell as F
-open import Ledger.Crypto
-open import Ledger.Transaction
-open import Ledger.Types.Epoch
-open import Ledger.Types.GovStructure
+open import Ledger.Conway.Conformance.Crypto
+open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Conway.Conformance.Types.GovStructure
 open import Interface.HasOrder.Instance
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
@@ -72,7 +72,7 @@ module Implementation where
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
-  open import Ledger.TokenAlgebra ℕ
+  open import Ledger.Conway.Conformance.TokenAlgebra ℕ
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
@@ -120,18 +120,14 @@ SVCrypto = record
 
 instance _ = SVCrypto
 
-open import Ledger.Script it it
-
-
+open import Ledger.Conway.Conformance.Script it it
 
 SVScriptStructure : ScriptStructure
 SVScriptStructure = record
   { hashRespectsUnion = hashRespectsUnion
-  ; ps = SVP2ScriptStructure }
+  ; ps = SVP2ScriptStructure
+  }
   where
-
-    instance Hashable-Timelock : Hashable Timelock ℕ
-             Hashable-Timelock = record { hash = λ x → 0 }
 
     instance Hashable-PlutusScript : Hashable Implementation.PlutusScript ℕ
              Hashable-PlutusScript = record { hash = λ x → proj₁ x }
@@ -149,7 +145,7 @@ SVScriptStructure = record
 
 instance _ = SVScriptStructure
 
-open import Ledger.PParams it it it hiding (PParams)
+open import Ledger.Conway.Conformance.PParams it it it hiding (PParams)
 
 SVGovParams : GovParams
 SVGovParams = record
@@ -172,8 +168,8 @@ SVGovStructure = record
   }
 instance _ = SVGovStructure
 
-open import Ledger.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
-open import Ledger.Certs it hiding (PoolParams; DCert)
+open import Ledger.Conway.Conformance.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
+open import Ledger.Conway.Conformance.Certs it hiding (PoolParams; DCert)
 
 SVTransactionStructure : TransactionStructure
 SVTransactionStructure = record
@@ -188,8 +184,8 @@ SVTransactionStructure = record
   }
 instance _ = SVTransactionStructure
 
-open import Ledger.Abstract it
-open import Ledger.Gov it
+open import Ledger.Conway.Conformance.Abstract it
+open import Ledger.Conway.Conformance.Gov it
 
 open TransactionStructure it
 

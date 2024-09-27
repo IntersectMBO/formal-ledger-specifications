@@ -76,3 +76,18 @@ instance
 
 open Computational ⦃...⦄
 
+private variable
+  tx                               : Tx
+  utxo utxo'                       : UTxO
+  Γ                                : UTxOEnv
+  utxoState utxoState'             : UTxOState
+  fees fees' donations donations'  : Coin
+  deposits deposits'               : DepositPurpose ⇀ Coin
+
+UTXO-step : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
+UTXO-step = compute ⦃ Computational-UTXO ⦄
+
+UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ success utxoState'
+                         ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
+UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
+
