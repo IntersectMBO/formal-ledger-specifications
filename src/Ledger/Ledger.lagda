@@ -147,13 +147,13 @@ module _ (let open UTxOState) where
   chkCorInsOuts : List TxBody → UTxO → Set 
   chkCorInsOuts tbl uu = compareLists (foldr (_++_) [] (map (λ p → (map proj₂ (setToList (proj₁ (p .TxBody.spendOuts))))) tbl))  (map proj₂ (setToList (proj₁ uu))) 
 
-  -- no corInputs provided are also provided as regular inputs in any transaction
+  -- no regular inputs in any transaction are in corInputs of the top-level
   chkCorIns : List TxBody → ℙ TxIn → Set
   chkCorIns txbods cins = foldr (λ t l → (t .TxBody.txins ∩ cins ≢ ∅) × l) (true ≡ true) txbods
 
-  -- all corInputs exist in the UTxO set
+  -- all corInputs and inputs are the UTxO
   chkInsInUTxO : List TxBody → ℙ TxIn → Set
-  chkInsInUTxO txbods uins = foldr (λ t l → (t .TxBody.txins ∪ t .TxBody.corInputs ⊆ uins ) × l) (true ≡ true) txbods  
+  chkInsInUTxO txbods uins = foldr (λ t l → (t .TxBody.txins ∪ t .TxBody.corInputs ⊆ uins) × l) (true ≡ true) txbods
 
   depositRefunds : PParams → UTxOState → TxBody → Coin
   depositRefunds pp st txb = let open TxBody in negPart (depositsChange pp txb (st .deposits))
@@ -287,16 +287,17 @@ data
         balanced          = isBalanced ≡ true
         insOK             = chkCorIns (body ∷ txBods) (body .TxBody.corInputs )
         insOutsOK         = chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs)
+        insInUTxO         = chkInsInUTxO txBods (dom utx)
         allScripts        = foldr (λ t l → (t .Tx.wits .TxWitnesses.scripts) ∪ l) ∅ txs 
 
     in
     ∙ feesOK pp tx utx ≡ true         --1      
-    ∙ singleInvalid bd txs ≡ false → balanced × insOK × insOutsOK  --2
-    ∙ txsize ≤ maxTxSize  --3
-    ∙ chkInsInUTxO txBods (dom utx)  --4
-    -- ∙ maxTxExUnits ≥ᵉ totExUnits txs maxTxExUnits   --5 -- TODO this doesnt work!
-    ∙ getIDs subTxs ≡ subTxIds -- TODO can we put subTxs directly in body?
-    ∙ lengthˢ subTxIds ≡ length subTxs -- no repeated transactions 
+    ∙ insOK × insOutsOK × insInUTxO  --2 3 4
+    ∙ singleInvalid bd txs ≡ false → balanced    -- 5
+    ∙ txsize ≤ maxTxSize  --6
+    -- ∙ maxTxExUnits ≥ᵉ totExUnits txs maxTxExUnits   --7 -- TODO this doesnt work!
+    ∙ getIDs subTxs ≡ subTxIds -- TODO can we put subTxs directly in body? --8
+    ∙ lengthˢ subTxIds ≡ length subTxs -- no repeated transactions --9
     ∙ ⟦ Γ , bd ,  body .TxBody.requireBatchObservers , allScripts ⟧ˢᵉ ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , g' , c' ⟧ˡ
        ────────────────────────────────
        Γ ⊢  ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , g' , c' ⟧ˡ

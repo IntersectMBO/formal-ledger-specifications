@@ -28,27 +28,61 @@ instance
   Computational-UTXOS = record {go} where
     module go Γ s tx
       (let H-Yes , ⁇ H-Yes? = Scripts-Yes-premises {Γ} {s} {tx})
-      (let H-No  , ⁇ H-No?  = Scripts-No-premises {Γ} {s} {tx}) where
+      (let H-No , ⁇ H-No? = Scripts-No-premises {Γ} {s} {tx})
+      (let H-No-Top  , ⁇ H-No-Top?  = Scripts-No-Top-premises {Γ} {s} {tx}) where
       open Tx tx renaming (body to txb); open TxBody txb
       open UTxOEnv Γ renaming (pparams to pp)
       open UTxOState s
-      sLst = collectPhaseTwoScriptInputs pp tx utxo
+      sLst = collectPhaseTwoScriptInputs (Γ .UTxOEnv.batchScripts) (Γ .UTxOEnv.batchData) pp tx utxo
 
       computeProof =
-        case H-Yes? ,′ H-No? of λ where
-          (yes p , no _ ) → success (_ , (Scripts-Yes p))
-          (no _  , yes p) → success (_ , (Scripts-No p))
-          (_     , _    ) → failure "isValid check failed"
+        case H-Yes? ,′ H-No? ,′ H-No-Top? of λ where
+          (yes p , no _ , no _) → success (_ , (Scripts-Yes p))
+          (no _  , yes p , no _) → success (_ , (Scripts-No p))
+          (no _  , no _ , yes p) → success (_ , (Scripts-No-TopLevel p))
+          (_     , _   , _ ) → failure "check failed"
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
-      completeness _ (Scripts-Yes p) with H-No? | H-Yes?
-      ... | yes (_ , refl) | _     = case proj₂ p of λ ()
-      ... | no _           | yes _ = refl
-      ... | no _           | no ¬p = case ¬p p of λ ()
-      completeness _ (Scripts-No p) with H-Yes? | H-No?
-      ... | yes (_ , refl) | _     = case proj₂ p of λ ()
-      ... | no _           | yes _ = refl
-      ... | no _           | no ¬p = case ¬p p of λ ()
+      completeness _ (Scripts-Yes p) with H-No-Top? | H-No? | H-Yes? 
+      ... | yes (a , b , refl)   | no _    | no _  =  case proj₂ p of λ ()
+      ... | no _ | yes _ | no _ = {!   !}
+      ... | no _ | no _ | yes _ = {!   !}
+      ... |  _ |  _ |  _ = {!   !}
+      completeness _ (Scripts-No p) with H-No? | H-Yes? | H-No-Top?
+      ... | yes _   | _    | _  =  {!   !}
+      ... | no _   | _    | _  =  {!   !}
+      completeness _ (Scripts-No-TopLevel p) with H-No? | H-No-Top? | H-Yes?
+      ... | yes _   | _    | _  =  {!   !}
+      ... | no _   | _    | _  =  {!   !}
+
+-- what was here before : 
+      -- completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
+      -- completeness _ (Scripts-Yes p) with H-No? | H-Yes?
+      -- ... | yes (_ , refl) | _     = case proj₂ p of λ ()
+      -- ... | no _           | yes _ = refl
+      -- ... | no _           | no ¬p = case ¬p p of λ ()
+      -- completeness _ (Scripts-No p) with H-Yes? | H-No?
+      -- ... | yes (_ , refl) | _     = case proj₂ p of λ ()
+      -- ... | no _           | yes _ = refl
+      -- ... | no _           | no ¬p = case ¬p p of λ ()
+
+
+-- premises of :
+      -- Scripts-Yes
+        -- ∙ evalScripts tx sLst ≡ true
+        -- ∙ validPath bd tx ≡ true
+
+      -- Scripts-No-TopLevel
+        -- ∙ evalScripts tx sLst ≡ isValid
+        -- ∙ isTop bd tx ≡ false
+        -- ∙ validPath bd tx ≡ false
+
+      -- Scripts-No-TopLevel
+        -- ∙ evalScripts tx sLst ≡ isValid
+        -- ∙ isTop bd tx ≡ true
+        -- ∙ validPath bd tx ≡ false
+
+
 
 instance
   Computational-UTXO'' : Computational _⊢_⇀⦇_,UTXO⦈_ String
@@ -71,25 +105,26 @@ instance
                   (inj₂ b₂) → case dec-de-morgan b₂ of λ where
                     (inj₁ a₃) → "¬ feesOK pp tx utxo ≡ true"
                     (inj₂ b₃) → case dec-de-morgan b₃ of λ where
-                        (inj₁ a₄) →
-                          let
-                            pp = UTxOEnv.pparams Γ
-                            txb = Tx.body tx
-                            con = consumed pp s txb
-                            prod = produced pp s txb
-                            showValue = show ∘ coin
-                          in
-                            ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
-                            +ˢ "\n  consumed =\t\t" +ˢ showValue con
-                            +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
-                            +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
-                            +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
-                            +ˢ "\n  produced =\t\t" +ˢ showValue prod
-                            +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
-                            +ˢ "\n    fee  =\t\t" +ˢ show (txb .TxBody.txfee)
-                            +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
-                            +ˢ "\n    donation  =\t\t" +ˢ show (txb .TxBody.txdonation)
-                            )
+                        -- (inj₁ a₄) →
+                          -- let
+                          --   pp = UTxOEnv.pparams Γ
+                          --   txb = Tx.body tx
+                          --   con = consumed pp s txb
+                          --   prod = produced pp s txb
+                          --   showValue = show ∘ coin
+                          -- in
+                          --   ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
+                          --   +ˢ "\n  consumed =\t\t" +ˢ showValue con
+                          --   +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
+                          --   +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
+                          --   +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
+                          --   +ˢ "\n  produced =\t\t" +ˢ showValue prod
+                          --   +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
+                          --   +ˢ "\n    fee  =\t\t" +ˢ show (txb .TxBody.txfee)
+                          --   +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
+                          --   +ˢ "\n    donation  =\t\t" +ˢ show (txb .TxBody.txdonation)
+                          --   )
+                        (inj₁ a₄) → "Whatever wrong TODO"
                         (inj₂ b₄) → case dec-de-morgan b₄ of λ where
                           (inj₁ a₅) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
                           (inj₂ b₅) → case dec-de-morgan b₅ of λ where
@@ -103,18 +138,19 @@ instance
                                       (inj₂ _) → "something else broke"
 
         computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
-        computeProofH (yes (x , y , z , e , k , l , m , v , n , o , p , q , r , t , u)) =
-            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m v n o p q r t u) <$> computeProof' Γ s tx
+        computeProofH (yes (x , y , z , e , k , l , m , v , n , o , p , q , r)) =
+            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m v n o p q r) <$> computeProof' Γ s tx
         computeProofH (no ¬p) = failure $ genErr ¬p
 
         computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProof = computeProofH H?
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m v n o p q r t u h) with H?
-        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u)
-        ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
+        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m v n o p q r t) with H?
+        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , v , n , o , p , q , r)
+        ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ t
         ... | success _ | refl = refl
 
 open Computational ⦃...⦄
 
+ 

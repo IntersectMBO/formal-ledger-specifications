@@ -430,7 +430,7 @@ equal if they are both present.
     -- deal with refInputs correctly here TODO
     ∙ txins  ≢ ∅                         ∙ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅              ∙ inInterval slot txvldt
-    ∙ coin mint ≡ 0
+    ∙ coin mint ≡ 0                      
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
@@ -443,13 +443,16 @@ equal if they are both present.
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
 
+    -- NEW
+    ∙ (isTop (Γ .UTxOEnv.batchData) tx ≡ false → txb .TxBody.corInputs ≡ ∅)
+
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r 
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r )
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

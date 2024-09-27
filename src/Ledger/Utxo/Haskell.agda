@@ -54,18 +54,22 @@ private variable
 
 open PParams
 
-data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
+data
+  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
+
   Scripts-Yes :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          bd = Γ .UTxOEnv.batchData
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ isValid
-        ∙ isValid ≡ true
+        ∙ evalScripts tx sLst ≡ true
+        ∙ validPath bd tx ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ (corInputs)) ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
                               , updateDeposits pp txb deposits
                               , donations + txdonation
@@ -76,16 +80,36 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          bd = Γ .UTxOEnv.batchData
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isValid ≡ false
+        ∙ isTop bd tx ≡ false
+        ∙ validPath bd tx ≡ false
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
+
+  Scripts-No-TopLevel :
+    ∀ {Γ} {s} {tx}
+    → let open Tx tx renaming (body to txb); open TxBody txb
+          open UTxOEnv Γ renaming (pparams to pp)
+          open UTxOState s
+          bd = Γ .UTxOEnv.batchData
+          bs = Γ .UTxOEnv.batchScripts
+          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isTop bd tx ≡ true
+        ∙ validPath bd tx ≡ false
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
                               , fees + cbalance (utxo ∣ collateral)
                               , deposits
                               , donations
                               ⟧ᵘ
+
+
 
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
 
@@ -95,10 +119,10 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)
     in
-    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
-    ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
-    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    -- deal with refInputs correctly here TODO
+    ∙ txins  ≢ ∅                         ∙ refInputs ⊆ dom utxo
+    ∙ txins ∩ refInputs ≡ ∅              ∙ inInterval slot txvldt
+    ∙ coin mint ≡ 0
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
@@ -110,9 +134,76 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
+
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r 
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r )
+
+
+
+
+-- data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
+--   Scripts-Yes :
+--     ∀ {Γ} {s} {tx}
+--     → let open Tx tx renaming (body to txb); open TxBody txb
+--           open UTxOEnv Γ renaming (pparams to pp)
+--           open UTxOState s
+--           sLst = collectPhaseTwoScriptInputs pp tx utxo
+--       in
+--         ∙ evalScripts tx sLst ≡ isValid
+--         ∙ isValid ≡ true
+--           ────────────────────────────────
+--           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
+--                               , fees + txfee
+--                               , updateDeposits pp txb deposits
+--                               , donations + txdonation
+--                               ⟧ᵘ
+
+--   Scripts-No :
+--     ∀ {Γ} {s} {tx}
+--     → let open Tx tx renaming (body to txb); open TxBody txb
+--           open UTxOEnv Γ renaming (pparams to pp)
+--           open UTxOState s
+--           sLst = collectPhaseTwoScriptInputs pp tx utxo
+--       in
+--         ∙ evalScripts tx sLst ≡ isValid
+--         ∙ isValid ≡ false
+--           ────────────────────────────────
+--           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
+--                               , fees + cbalance (utxo ∣ collateral)
+--                               , deposits
+--                               , donations
+--                               ⟧ᵘ
+
+-- data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
+
+--   UTXO-inductive :
+--     let open Tx tx renaming (body to txb); open TxBody txb
+--         open UTxOEnv Γ renaming (pparams to pp)
+--         open UTxOState s
+--         txoutsʰ = (mapValues txOutHash txouts)
+--     in
+--     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
+--     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
+--     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
+--     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+
+--     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+--         inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
+--     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+--         serSize (getValueʰ txout) ≤ maxValSize pp
+--     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
+--         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
+--     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ networkId
+--     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
+--     ∙ txNetworkId ≡? networkId
+--     ∙ curTreasury ≡? treasury
+--     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
+--       ────────────────────────────────
+--       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
+
+-- pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
+--       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
