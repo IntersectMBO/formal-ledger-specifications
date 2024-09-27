@@ -130,20 +130,20 @@ instance
   HSScriptStructure : ScriptStructure
   HSScriptStructure = record
     { hashRespectsUnion = hashRespectsUnion
-    ; ps = HSP2ScriptStructure }
+    ; ps = HSP2ScriptStructure
+    }
     where
-    postulate
-      instance Hashable-Timelock : Hashable Timelock ℕ
-
       hashRespectsUnion : ∀ {A B ℍ}
         → Hashable A ℍ → Hashable B ℍ
         → Hashable (A ⊎ B) ℍ
+      hashRespectsUnion a _ .hash (inj₁ x) = hash ⦃ a ⦄ x
+      hashRespectsUnion _ b .hash (inj₂ y) = hash ⦃ b ⦄ y
 
-    HSP2ScriptStructure : PlutusStructure
-    HSP2ScriptStructure = record
-      { Implementation
-      ; validPlutusScript = λ _ _ _ _ → ⊤
-      }
+      HSP2ScriptStructure : PlutusStructure
+      HSP2ScriptStructure = record
+        { Implementation
+        ; validPlutusScript = λ _ _ _ _ → ⊤
+        }
 
 open import Ledger.Conway.Conformance.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
 
