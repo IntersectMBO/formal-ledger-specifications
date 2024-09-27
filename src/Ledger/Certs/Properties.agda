@@ -220,7 +220,7 @@ module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d�
   CERT-pov (CERT-vdel x) = refl
 
 
-  CERTBASE-pov : {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s' → getCoin s ≡ getCoin s'
+  CERTBASE-pov : {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s' → getCoin s ≡ getCoin s' + wdrls
   CERTBASE-pov  {s = ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ}
                 {⟦ ⟦ voteDelegs , stakeDelegs , rewards' ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ}
                 (CERT-base {pp}{vs}{e}{dreps}{wdrls} x) = goal
