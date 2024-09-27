@@ -7,24 +7,23 @@ open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
 import Data.Integer as ℤ
 open import Data.Integer.Ext
-open import Data.Nat.GeneralisedArithmetic using (iterate)
 
 open import Agda.Builtin.FromNat
 
-open import Ledger.Prelude hiding (iterate)
-open import Ledger.Abstract
-open import Ledger.Transaction
+open import Ledger.Prelude
+open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Conway.Conformance.Transaction
 
-module Ledger.Epoch
+module Ledger.Conway.Conformance.Epoch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Gov txs
-open import Ledger.Enact govStructure
-open import Ledger.Ledger txs abs
-open import Ledger.Ratify txs
-open import Ledger.Utxo txs abs
+open import Ledger.Conway.Conformance.Gov txs
+open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.Conway.Conformance.Ledger txs abs
+open import Ledger.Conway.Conformance.Ratify txs
+open import Ledger.Conway.Conformance.Utxo txs abs
 \end{code}
 \begin{NoConway}
 \begin{figure*}[h]
@@ -127,7 +126,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , ss
   , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards , dDeposits ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
   , fut
   ⟧ᵉ' =
@@ -136,25 +135,13 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , ss
   , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU , dDeposits ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
   , fut ⟧ᵉ'
   where
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
-
-getOrphans : EnactState → GovState → GovState
-getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
-  where
-    step : GovState × GovState → GovState × GovState
-    step (orps , govSt) =
-      let
-        isOrphan? a prev = ¬? (hasParent? es govSt a prev)
-        (orps' , govSt') = partition
-          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? a prev) govSt
-      in
-        (orps ++ orps' , govSt')
 \end{code}
 \end{NoConway}
 
@@ -162,7 +149,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \begin{AgdaSuppressSpace}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo ⟦ _ , stakeDelegs , rewards ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
+stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
   where
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
@@ -228,29 +215,30 @@ its results by carrying out each of the following tasks.
 \end{code}
 \begin{code}
 
-      es                = record esW { withdrawals = ∅ }
-      tmpGovSt          = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
-      orphans           = fromList $ getOrphans es tmpGovSt
-      removed'          = removed ∪ orphans
-      removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
+      removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
         mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
       trWithdrawals   = esW .withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
+      es         = record esW { withdrawals = ∅ }
       retired    = (pState .retiring) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
       refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
       unclaimed  = getCoin payout - getCoin refunds
+      vDeposits  = gState .deposits
 
-      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
+      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
 
       certState' =
         ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
         , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ
         , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps)
-          , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ ⟧ᶜˢ
+          , (gState .ccHotKeys) ∣ ccCreds (es .cc)
+          , vDeposits
+          ⟧ᵛ
+        ⟧ᶜˢ
 
       utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 

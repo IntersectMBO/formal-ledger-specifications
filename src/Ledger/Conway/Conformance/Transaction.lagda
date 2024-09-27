@@ -6,21 +6,21 @@
 --------------------------------------------------------------------------------
 -- NOTE: Everything in this module is part of TransactionStructure
 --------------------------------------------------------------------------------
-module Ledger.Transaction where
+module Ledger.Conway.Conformance.Transaction where
 
 import Data.Maybe.Base as M
 
 open import Ledger.Prelude renaming (filterᵐ to filter)
 
-open import Ledger.Crypto
-open import Ledger.Types.Epoch
-open import Ledger.Types.GovStructure
-import Ledger.PParams
-import Ledger.Script
-import Ledger.GovernanceActions
-import Ledger.Certs
-import Ledger.TokenAlgebra
-import Ledger.Address
+open import Ledger.Conway.Conformance.Crypto
+open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Conway.Conformance.Types.GovStructure
+import Ledger.Conway.Conformance.PParams
+import Ledger.Conway.Conformance.Script
+import Ledger.Conway.Conformance.GovernanceActions
+import Ledger.Conway.Conformance.Certs
+import Ledger.Conway.Conformance.TokenAlgebra
+import Ledger.Conway.Conformance.Address
 
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
@@ -76,16 +76,16 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 
   field crypto : _
   open Crypto crypto public
-  open Ledger.TokenAlgebra ScriptHash public
-  open Ledger.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
+  open Ledger.Conway.Conformance.TokenAlgebra ScriptHash public
+  open Ledger.Conway.Conformance.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
-  open Ledger.Script crypto epochStructure public
+  open Ledger.Conway.Conformance.Script crypto epochStructure public
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public
-  open Ledger.PParams crypto epochStructure scriptStructure public
+  open Ledger.Conway.Conformance.PParams crypto epochStructure scriptStructure public
 
   field govParams : _
   open GovParams govParams public
@@ -107,10 +107,10 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     ; globalConstants = globalConstants
     }
 
-  module GovernanceActions = Ledger.GovernanceActions govStructure
+  module GovernanceActions = Ledger.Conway.Conformance.GovernanceActions govStructure
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
-  open import Ledger.Certs govStructure public
+  open import Ledger.Conway.Conformance.Certs govStructure public
 \end{code}
 \begin{NoConway}
 \emph{Derived types}
