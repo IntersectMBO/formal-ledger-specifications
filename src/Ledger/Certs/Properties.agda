@@ -153,17 +153,35 @@ module _ {A : Type} ⦃ _ : DecEq A ⦄
   getCoin-singleton : ((a , c) : A × Coin) → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
   getCoin-singleton _ = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
 
-  module _ {gc-hom : (d₁ d₂ : A ⇀ Coin) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂} where
-    ∪ˡsingleton≡ : {m : A ⇀ Coin} {(a , c) : A × Coin} → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
-    ∪ˡsingleton≡ {m} {(a , c)} = let open ≡-Reasoning in begin
+  ∪ˡsingleton≡ : (m : A ⇀ Coin) {(a , c) : A × Coin} → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
+  ∪ˡsingleton≡ m {(a , c)} a∈dom = let open ≡-Reasoning in begin
+    getCoin (m ∪ˡ ❴ (a , c) ❵)
+      ≡⟨ {!!} ⟩
+    getCoin m
+      ∎
+
+  module _  {gc-hom : (d₁ d₂ : A ⇀ Coin) → disjoint (dom d₁) (dom d₂) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂}
+    where
+
+    ∪ˡsingleton≡' : (m : A ⇀ Coin) {(a , c) : A × Coin} → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
+    ∪ˡsingleton≡' m {(a , c)} a∉dom = let open ≡-Reasoning in begin
       getCoin (m ∪ˡ ❴ (a , c) ❵)
-        ≡⟨ gc-hom m ❴ (a , c) ❵ ⟩
+        ≡⟨ gc-hom m ❴ (a , c) ❵ᵐ ξ ⟩
       getCoin m + getCoin{A = A ⇀ Coin} ❴ (a , c) ❵
         ≡⟨ cong (getCoin m +_) (getCoin-singleton (a , c)) ⟩
       getCoin m + c ∎
+      where
+      ξ : disjoint (dom m) (dom ❴ a , c ❵ᵐ)
+      ξ a'∈dom a'∈sing = a∉dom (subst (_∈ dom m) (Equivalence.from ∈-dom-singleton-pair a'∈sing) a'∈dom)
 
 
-module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂}
+  ∪ˡsingleton0≡ : (m : A ⇀ Coin) {a : A} → getCoin (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ getCoin m
+  ∪ˡsingleton0≡ m {a} with a ∈? dom m
+  ... | yes a∈dom = ∪ˡsingleton≡ m a∈dom
+  ... | no a∉dom = trans (∪ˡsingleton≡' m a∉dom) (+-identityʳ (getCoin m))
+
+
+module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → disjoint (dom d₁) (dom d₂) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂}
          {sumConstZero : {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → ∑[ x ← constMap X 0 ] x ≡ 0}
          where
   open ≡-Reasoning
@@ -175,9 +193,9 @@ module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d�
     (DELEG-delegate {c = c} {rwds} {d} {mkh} {vDelegs = vDelegs} {sDelegs} {mv} x)) =
     begin
       getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
-        ≡˘⟨ +-identityʳ (getCoin rwds) ⟩
-      getCoin rwds + 0
-        ≡˘⟨ ∪ˡsingleton≡ {A = Credential}{gc-hom} {m = rwds} ⟩
+        ≡⟨ refl ⟩
+      getCoin rwds
+        ≡˘⟨ ∪ˡsingleton0≡ rwds ⟩
       getCoin  ⟦ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ (c , 0) ❵ ⟧ᵈ
                , stᵖ'
                , stᵍ'
@@ -191,7 +209,7 @@ module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d�
     getCoin rwds-∪ˡ-decomp
       ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ)) rwds-∪ˡ≡sing-∪ˡ ⟩
     getCoin (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ) )
-      ≡⟨ gc-hom ❴ (c , 0) ❵ᵐ (rwds ∣ ❴ c ❵ ᶜ) ⟩
+      ≡⟨ gc-hom ❴ c , 0 ❵ᵐ (rwds ∣ ❴ c ❵ ᶜ) disj ⟩
     getCoin ❴ (c , 0) ❵ᵐ  + getCoin (rwds ∣ ❴ c ❵ ᶜ)
       ≡⟨ cong (_+ getCoin (rwds ∣ ❴ c ❵ ᶜ)) (getCoin-singleton (c , 0)) ⟩
     0 + getCoin (rwds ∣ ❴ c ❵ ᶜ)
@@ -201,6 +219,10 @@ module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d�
     where
     open import Relation.Binary using (IsEquivalence)
     module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th  {Credential × Coin})
+    disj : disjoint (dom ❴ c , 0 ❵ᵐ) (dom (rwds ∣ ❴ c ❵ ᶜ))
+    disj = {!!}
+
+
     rwds-∪ˡ-decomp = (rwds ∣ ❴ c ❵ ) ∪ˡ (rwds ∣ ❴ c ❵ ᶜ)
     rwdsˢ-∪-decomp = (rwds ∣ ❴ c ❵)ˢ  ∪ (rwds ∣ ❴ c ❵ ᶜ)ˢ
 
@@ -220,7 +242,7 @@ module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d�
   CERT-pov (CERT-vdel x) = refl
 
 
-  CERTBASE-pov : {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s' → getCoin s ≡ getCoin s' + wdrls
+  CERTBASE-pov : {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s' → getCoin s ≡ getCoin s' -- + wdrls
   CERTBASE-pov  {s = ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ}
                 {⟦ ⟦ voteDelegs , stakeDelegs , rewards' ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ}
                 (CERT-base {pp}{vs}{e}{dreps}{wdrls} x) = goal
@@ -236,7 +258,7 @@ module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d�
       0 + ∑[ x ← rewards ] x
         ≡˘⟨ cong (_+ ∑[ x ← rewards ] x) sumConstZero ⟩
       ∑[ x ← constMap (mapˢ RwdAddr.stake (dom wdrls)) 0 ] x + ∑[ x ← rewards ] x
-        ≡˘⟨ gc-hom (constMap (mapˢ RwdAddr.stake (dom wdrls)) 0) rewards ⟩
+        ≡˘⟨ {!!} ⟩
       getCoin ((constMap (mapˢ RwdAddr.stake (dom wdrls)) 0) ∪ˡ rewards)
       ∎
 
