@@ -2739,7 +2739,7 @@ d_UTXO'45'premises_2896 v0 v1 v2 v3 v4
                                                            MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                            (coe v5)))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.PParams.d_minUTxOValue_350
+                                                        MAlonzo.Code.Ledger.PParams.d_coinsPerUTxOByte_336
                                                         (coe d_pparams_1966 (coe v3)))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Transaction.du_getValue'688'_2932

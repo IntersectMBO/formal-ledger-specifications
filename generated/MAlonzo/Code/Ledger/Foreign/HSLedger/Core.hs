@@ -1312,7 +1312,9 @@ d_ppWF_834 v0
                                    (coe MAlonzo.Code.Ledger.PParams.d_maxValSize_586 (coe v0))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                      (coe MAlonzo.Code.Ledger.PParams.d_minUTxOValue_618 (coe v0))
+                                      (coe
+                                         MAlonzo.Code.Ledger.PParams.d_coinsPerUTxOByte_604
+                                         (coe v0))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe

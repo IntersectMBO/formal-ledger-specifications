@@ -82,43 +82,43 @@ d_NewEpochState_26 = ()
 -- Ledger.Foreign.HSLedger.NewEpoch._.RewardUpdate
 d_RewardUpdate_28 = ()
 -- Ledger.Foreign.HSLedger.NewEpoch._.NewEpochState.epochState
-d_epochState_90 ::
+d_epochState_88 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   MAlonzo.Code.Ledger.Epoch.T_EpochState_2302
-d_epochState_90 v0
+d_epochState_88 v0
   = coe MAlonzo.Code.Ledger.Epoch.d_epochState_2336 (coe v0)
 -- Ledger.Foreign.HSLedger.NewEpoch._.NewEpochState.lastEpoch
-d_lastEpoch_92 ::
+d_lastEpoch_90 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 -> Integer
-d_lastEpoch_92 v0
+d_lastEpoch_90 v0
   = coe MAlonzo.Code.Ledger.Epoch.d_lastEpoch_2334 (coe v0)
 -- Ledger.Foreign.HSLedger.NewEpoch._.NewEpochState.ru
-d_ru_94 ::
+d_ru_92 ::
   MAlonzo.Code.Ledger.Epoch.T_NewEpochState_2326 ->
   Maybe MAlonzo.Code.Ledger.Epoch.T_RewardUpdate_2242
-d_ru_94 v0 = coe MAlonzo.Code.Ledger.Epoch.d_ru_2338 (coe v0)
+d_ru_92 v0 = coe MAlonzo.Code.Ledger.Epoch.d_ru_2338 (coe v0)
 -- Ledger.Foreign.HSLedger.NewEpoch._.RewardUpdate.rs
-d_rs_98 ::
+d_rs_96 ::
   MAlonzo.Code.Ledger.Epoch.T_RewardUpdate_2242 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rs_98 v0 = coe MAlonzo.Code.Ledger.Epoch.d_rs_2262 (coe v0)
+d_rs_96 v0 = coe MAlonzo.Code.Ledger.Epoch.d_rs_2262 (coe v0)
 -- Ledger.Foreign.HSLedger.NewEpoch._.RewardUpdate.zeroSum
-d_zeroSum_100 ::
+d_zeroSum_98 ::
   MAlonzo.Code.Ledger.Epoch.T_RewardUpdate_2242 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_zeroSum_100 = erased
 -- Ledger.Foreign.HSLedger.NewEpoch._.RewardUpdate.Δf
-d_Δf_102 ::
+d_Δf_100 ::
   MAlonzo.Code.Ledger.Epoch.T_RewardUpdate_2242 -> Integer
-d_Δf_102 v0 = coe MAlonzo.Code.Ledger.Epoch.d_Δf_2260 (coe v0)
+d_Δf_100 v0 = coe MAlonzo.Code.Ledger.Epoch.d_Δf_2260 (coe v0)
 -- Ledger.Foreign.HSLedger.NewEpoch._.RewardUpdate.Δr
-d_Δr_104 ::
+d_Δr_102 ::
   MAlonzo.Code.Ledger.Epoch.T_RewardUpdate_2242 -> Integer
-d_Δr_104 v0 = coe MAlonzo.Code.Ledger.Epoch.d_Δr_2258 (coe v0)
+d_Δr_102 v0 = coe MAlonzo.Code.Ledger.Epoch.d_Δr_2258 (coe v0)
 -- Ledger.Foreign.HSLedger.NewEpoch._.RewardUpdate.Δt
-d_Δt_106 ::
+d_Δt_104 ::
   MAlonzo.Code.Ledger.Epoch.T_RewardUpdate_2242 -> Integer
-d_Δt_106 v0 = coe MAlonzo.Code.Ledger.Epoch.d_Δt_2256 (coe v0)
+d_Δt_104 v0 = coe MAlonzo.Code.Ledger.Epoch.d_Δt_2256 (coe v0)
 -- Ledger.Foreign.HSLedger.NewEpoch.HsRewardUpdate
 d_HsRewardUpdate_150 = ()
 type T_HsRewardUpdate_150 = HsRewardUpdate
@@ -263,7 +263,7 @@ d_Conv'45'RewardUpdate_170
                                seq (coe v3)
                                (coe
                                   MAlonzo.Code.Ledger.Epoch.C_'10214'_'44'_'44'_'44'_'10215''691''7512'_2268
-                                  (d_Δt_160 (coe v0)) (d_Δr_162 (coe v0)) (d_Δf_164 (coe v0))
+                                  (d_Δt_158 (coe v0)) (d_Δr_160 (coe v0)) (d_Δf_162 (coe v0))
                                   (coe
                                      MAlonzo.Code.Foreign.Convertible.d_from_20
                                      (coe
@@ -499,7 +499,7 @@ d_Conv'45'NewEpochState_222
                               MAlonzo.Code.Ledger.Epoch.d_feeSS_2298
                               (coe MAlonzo.Code.Ledger.Epoch.d_ss_2316 (coe v2))))
                         (coe
-                           MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkLState_8349
+                           MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkLState_8293
                            (coe
                               MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo.C_MkUTxOState_1713
                               (coe
@@ -622,9 +622,9 @@ d_Conv'45'NewEpochState_222
                               (MAlonzo.Code.Ledger.Ledger.d_govSt_2162
                                  (coe MAlonzo.Code.Ledger.Epoch.d_ls_2318 (coe v2))))
                            (coe
-                              MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4865
+                              MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4809
                               (coe
-                                 MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2169
+                                 MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2113
                                  (coe
                                     MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                     (coe
@@ -738,7 +738,7 @@ d_Conv'45'NewEpochState_222
                                                       MAlonzo.Code.Ledger.Epoch.d_ls_2318
                                                       (coe v2)))))))))
                               (coe
-                                 MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_419
+                                 MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_363
                                  (coe
                                     MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                     (coe
@@ -1254,7 +1254,7 @@ d_Conv'45'NewEpochState_222
                                                                (coe v6)))))))
                                              (coe MAlonzo.Code.Ledger.Epoch.d_feeSS_2298 (coe v6)))
                                           (coe
-                                             MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkLState_8349
+                                             MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkLState_8293
                                              (coe
                                                 MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo.C_MkUTxOState_1713
                                                 (coe
@@ -1376,9 +1376,9 @@ d_Conv'45'NewEpochState_222
                                                          MAlonzo.Code.Ledger.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_326)))
                                                 (MAlonzo.Code.Ledger.Ledger.d_govSt_2162 (coe v7)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4865
+                                                MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4809
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2169
+                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2113
                                                    (coe
                                                       MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                                       (coe
@@ -1482,7 +1482,7 @@ d_Conv'45'NewEpochState_222
                                                                      MAlonzo.Code.Ledger.Ledger.d_certState_2164
                                                                      (coe v7))))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_419
+                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_363
                                                    (coe
                                                       MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                                       (coe
@@ -2351,7 +2351,7 @@ d_Conv'45'NewEpochState_222
                                                       case coe v10 of
                                                         MAlonzo.Code.Ledger.Ledger.C_'10214'_'44'_'44'_'10215''737'_2166 v11 v12 v13
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkLState_8349
+                                                               MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkLState_8293
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Foreign.HSLedger.Utxo.C_MkUTxOState_1713
                                                                   (coe
@@ -2465,9 +2465,9 @@ d_Conv'45'NewEpochState_222
                                                                            MAlonzo.Code.Ledger.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_326)))
                                                                   v12)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4865
+                                                                  MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4809
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2169
+                                                                     MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2113
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                                                         (coe
@@ -2561,7 +2561,7 @@ d_Conv'45'NewEpochState_222
                                                                                     MAlonzo.Code.Ledger.Certs.d_pState_962
                                                                                     (coe v13)))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_419
+                                                                     MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_363
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                                                         (coe
@@ -2604,7 +2604,7 @@ d_Conv'45'NewEpochState_222
                                                 (coe
                                                    (\ v10 ->
                                                       case coe v10 of
-                                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkLState_8349 v11 v12 v13
+                                                        MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkLState_8293 v11 v12 v13
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Ledger.C_'10214'_'44'_'44'_'10215''737'_2166
                                                                (coe
@@ -2836,9 +2836,9 @@ d_Conv'45'NewEpochState_222
                                                                            case coe v14 of
                                                                              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_966 v15 v16 v17
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4865
+                                                                                    MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4809
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2169
+                                                                                       MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2113
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                                                                           (coe
@@ -2927,7 +2927,7 @@ d_Conv'45'NewEpochState_222
                                                                                                    (coe
                                                                                                       v16))))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_419
+                                                                                       MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_363
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                                                                           (coe
@@ -2968,7 +2968,7 @@ d_Conv'45'NewEpochState_222
                                                                      (coe
                                                                         (\ v14 ->
                                                                            case coe v14 of
-                                                                             MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4865 v15 v16 v17
+                                                                             MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkCertState_4809 v15 v16 v17
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_966
                                                                                     (coe
@@ -2981,7 +2981,7 @@ d_Conv'45'NewEpochState_222
                                                                                                        v18 of
                                                                                                   MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496'_926 v19 v20 v21
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2169
+                                                                                                         MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2113
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                                                                                             (coe
@@ -3032,7 +3032,7 @@ d_Conv'45'NewEpochState_222
                                                                                              (\ v18 ->
                                                                                                 case coe
                                                                                                        v18 of
-                                                                                                  MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2169 v19 v20 v21
+                                                                                                  MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkDState_2113 v19 v20 v21
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496'_926
                                                                                                          (coe
@@ -3214,7 +3214,7 @@ d_Conv'45'NewEpochState_222
                                                                                                        v18 of
                                                                                                   MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7515'_950 v19 v20
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_419
+                                                                                                         MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_363
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Foreign.HSTypes.C_MkHSMap_26
                                                                                                             (coe
@@ -3252,7 +3252,7 @@ d_Conv'45'NewEpochState_222
                                                                                              (\ v18 ->
                                                                                                 case coe
                                                                                                        v18 of
-                                                                                                  MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_419 v19 v20
+                                                                                                  MAlonzo.Code.Ledger.Foreign.HSLedger.Ledger.C_MkGState_363 v19 v20
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7515'_950
                                                                                                          (coe
@@ -4258,7 +4258,7 @@ du_newepoch'45'step_224
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Epoch.Properties.du_Computational'45'NEWEPOCH_2342
+            MAlonzo.Code.Ledger.Epoch.Properties.du_Computational'45'NEWEPOCH_2340
             (coe
                MAlonzo.Code.Ledger.Foreign.HSLedger.Core.d_HSTransactionStructure_866))
          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))

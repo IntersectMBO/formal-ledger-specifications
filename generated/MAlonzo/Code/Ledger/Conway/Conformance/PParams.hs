@@ -512,7 +512,7 @@ du_positivePParams_382 v0
                   (coe d_refScriptCostStride_350 (coe v0))
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                     (coe d_minUTxOValue_354 (coe v0))
+                     (coe d_coinsPerUTxOByte_340 (coe v0))
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                         (coe d_poolDeposit_338 (coe v0))
@@ -2645,7 +2645,7 @@ du_paramsUpdateWellFormed'63'_728 v0
                            (coe d_maxValSize_590 (coe v0))
                            (coe
                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                              (coe d_minUTxOValue_622 (coe v0))
+                              (coe d_coinsPerUTxOByte_608 (coe v0))
                               (coe
                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                  (coe d_poolDeposit_606 (coe v0))

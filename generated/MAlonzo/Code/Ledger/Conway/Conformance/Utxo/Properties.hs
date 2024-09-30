@@ -889,7 +889,7 @@ d_computeProofH_2168 v0 v1 v2 v3 v4 v5
                                                                                                                                           (\ v39
                                                                                                                                              v40 ->
                                                                                                                                              coe
-                                                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_UTXO'45'inductive_2784
+                                                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_UTXO'45'inductive_2786
                                                                                                                                                (coe
                                                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                                                   (coe
@@ -1343,15 +1343,20 @@ d_computeProofH_2168 v0 v1 v2 v3 v4 v5
                                                                                                                                                 v0))
                                                                                                                                           (mulInt
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_utxoEntrySize_2644
+                                                                                                                                                addInt
                                                                                                                                                 (coe
-                                                                                                                                                   v0)
+                                                                                                                                                   (160 ::
+                                                                                                                                                      Integer))
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_utxoEntrySize_2644
                                                                                                                                                    (coe
-                                                                                                                                                      v26)))
+                                                                                                                                                      v0)
+                                                                                                                                                   (coe
+                                                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                                                                                                                                      (coe
+                                                                                                                                                         v26))))
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.PParams.d_minUTxOValue_354
+                                                                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.PParams.d_coinsPerUTxOByte_340
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_pparams_1952
                                                                                                                                                    (coe
@@ -1386,7 +1391,7 @@ d_computeProofH_2168 v0 v1 v2 v3 v4 v5
                                                                                                                             v26 of
                                                                                                                        MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v27
                                                                                                                          -> coe
-                                                                                                                              ("\172\nInterface.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 .patternInTele0 \8594\n   (.TransactionStructure.tokenAlgebra txs\n    Ledger.Conway.Conformance.TokenAlgebra.TokenAlgebra.\8804\7511\n    .Ledger.Conway.Conformance.TokenAlgebra.TokenAlgebra.inject\n    (.TransactionStructure.tokenAlgebra txs)\n    (Ledger.Conway.Conformance.Utxo.utxoEntrySize txs abs\n     (.proj\8322 .patternInTele0)\n     *\n     .Ledger.Conway.Conformance.PParams.PParams.minUTxOValue\n     (.Ledger.Conway.Conformance.Utxo.UTxOEnv.pparams \915)))\n   (TransactionStructure.getValue\688 txs (.proj\8322 .patternInTele0)))\n(.proj\8321\n (Axiom.Set.Map.mapValues (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (TransactionStructure.txOutHash txs)\n  (.TransactionStructure.TxBody.txouts\n   (.TransactionStructure.Tx.body tx))))"
+                                                                                                                              ("\172\nInterface.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 .patternInTele0 \8594\n   (.TransactionStructure.tokenAlgebra txs\n    Ledger.Conway.Conformance.TokenAlgebra.TokenAlgebra.\8804\7511\n    .Ledger.Conway.Conformance.TokenAlgebra.TokenAlgebra.inject\n    (.TransactionStructure.tokenAlgebra txs)\n    ((addNat HasAdd.+ 160)\n     (Ledger.Conway.Conformance.Utxo.utxoEntrySize txs abs\n      (.proj\8322 .patternInTele0))\n     *\n     .Ledger.Conway.Conformance.PParams.PParams.coinsPerUTxOByte\n     (.Ledger.Conway.Conformance.Utxo.UTxOEnv.pparams \915)))\n   (TransactionStructure.getValue\688 txs (.proj\8322 .patternInTele0)))\n(.proj\8321\n (Axiom.Set.Map.mapValues (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (TransactionStructure.txOutHash txs)\n  (.TransactionStructure.TxBody.txouts\n   (.TransactionStructure.Tx.body tx))))"
                                                                                                                                ::
                                                                                                                                Data.Text.Text)
                                                                                                                        MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v27
@@ -1681,7 +1686,7 @@ d_computeProof_2206 v0 v1 v2 v3 v4
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_UTXO'45'premises_2828
+               MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_UTXO'45'premises_2830
                (coe v0) (coe v1) (coe v4) (coe v2) (coe v3))))
 -- Ledger.Conway.Conformance.Utxo.Properties._.Go.completeness
 d_completeness_2210 ::

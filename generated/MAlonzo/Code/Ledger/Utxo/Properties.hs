@@ -1931,7 +1931,7 @@ du_genErr_2186 v0 v1 v2 v3 v4
                                                                                               v21 of
                                                                                          MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v22
                                                                                            -> coe
-                                                                                                ("\8704[ (_ , txout) \8712 txouts .proj\8321 ] inject (utxoEntrySize txout * minUTxOValue pp) \8804\7511 getValue txout"
+                                                                                                ("\8704[ (_ , txout) \8712 txouts .proj\8321 ] inject (utxoEntrySize txout * coinsPerUTxOByte pp) \8804\7511 getValue txout"
                                                                                                  ::
                                                                                                  Data.Text.Text)
                                                                                          MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v22
@@ -1971,7 +1971,7 @@ du_genErr_2186 v0 v1 v2 v3 v4
                                                                                                                                           (coe
                                                                                                                                              v24)))
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.PParams.d_minUTxOValue_350
+                                                                                                                                       MAlonzo.Code.Ledger.PParams.d_coinsPerUTxOByte_336
                                                                                                                                        (coe
                                                                                                                                           MAlonzo.Code.Ledger.Utxo.d_pparams_1966
                                                                                                                                           (coe
