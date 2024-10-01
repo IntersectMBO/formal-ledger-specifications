@@ -207,6 +207,39 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
     (∈-∪⁺ ∘′ ⊎.map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
     (∈⇔P ∘′ ⊎.map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
 
+  singleton-∈-∪ˡ :  {m : Map A B}{a : A} → a ∈ dom (m ˢ)
+                    → ∃[ b ] (m ∪ˡ ❴ (a , b) ❵ᵐ)ˢ ≡ᵉ m ˢ
+  singleton-∈-∪ˡ {B = B} {m = m}{a} a∈domm = proj₁ ξ , goal , ∪-⊆ˡ
+    where
+    ξ : Σ B _
+    ξ = from dom∈ a∈domm
+    goal : ((m ∪ˡ ❴ a , proj₁ ξ ❵ᵐ) ˢ) ⊆ (m ˢ)
+    goal {ab} x with from ∈-∪ x
+    ... | inj₁ h = h
+    ... | inj₂ h = ⊥-elim (proj₁ (from ∈-filter h) subgoal)
+      where
+      γ : ab ∈ (❴ (a , proj₁ ξ) ❵ᵐ)ˢ
+      γ = proj₂ (from ∈-filter h)
+
+      subgoal : proj₁ ab ∈ proj₁ (replacement proj₁ (proj₁ m))
+      subgoal = subst (λ u → proj₁ u ∈ proj₁ (replacement proj₁ (proj₁ m))) (sym (from ∈-singleton γ)) a∈domm
+
+  singleton-∈-∪ˡ' :  {m : Map A B}{a : A} → a ∈ dom (m ˢ)
+                    → ∀ {b} → (m ∪ˡ ❴ (a , b) ❵ᵐ)ˢ ≡ᵉ m ˢ
+  singleton-∈-∪ˡ' {B = B} {m = m}{a} a∈domm {b} = goal , ∪-⊆ˡ
+    where
+    goal : ((m ∪ˡ ❴ a , b ❵ᵐ) ˢ) ⊆ (m ˢ)
+    goal {ab} x with (from ∈-∪ x)
+    ... | inj₁ h = h
+    ... | inj₂ h = ⊥-elim (proj₁ (from ∈-filter h) subgoal)
+      where
+      γ : ab ∈ (❴ (a , b) ❵ᵐ)ˢ
+      γ = proj₂ (from ∈-filter h)
+
+      subgoal : proj₁ ab ∈ proj₁ (replacement proj₁ (proj₁ m))
+      subgoal = subst (λ u → proj₁ u ∈ proj₁ (replacement proj₁ (proj₁ m))) (sym (from ∈-singleton γ)) a∈domm
+
+
   insert : Map A B → A → B → Map A B
   insert m a b = ❴ a , b ❵ᵐ ∪ˡ m
 

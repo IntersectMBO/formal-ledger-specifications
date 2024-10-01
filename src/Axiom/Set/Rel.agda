@@ -231,8 +231,16 @@ module Restriction (sp-∈ : spec-∈ A) where
     (yes p) → ∈⇔P (inj₁ (∈⇔P (p , h)))
     (no ¬p) → ∈⇔P (inj₂ (∈⇔P (¬p , h)))
 
+  res-ex-∪' : Decidable (_∈ X) → (R ∣ X ᶜ) ∪ (R ∣ X) ≡ᵉ R
+  res-ex-∪' ∈X? = ∪-⊆ ex-⊆ res-⊆ , λ {a} h → case ∈X? (proj₁ a) of λ where
+    (yes p) → ∈⇔P (inj₂ (∈⇔P (p , h)))
+    (no ¬p) → ∈⇔P (inj₁ (∈⇔P (¬p , h)))
+
   res-ex-disjoint : disjoint (dom (R ∣ X)) (dom (R ∣ X ᶜ))
   res-ex-disjoint h h' = res-comp-dom h' (res-dom h)
+
+  res-ex-disjoint' : disjoint (dom (R ∣ X ᶜ)) (dom (R ∣ X))
+  res-ex-disjoint' h h' = res-comp-dom h (res-dom h')
 
   res-ex-disj-∪ : Decidable (_∈ X) → R ≡ (R ∣ X) ⨿ (R ∣ X ᶜ)
   res-ex-disj-∪ ∈X? = IsEquivalence.sym ≡ᵉ-isEquivalence (res-ex-∪ ∈X?)
