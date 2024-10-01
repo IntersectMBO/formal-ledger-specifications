@@ -13,8 +13,9 @@ module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
 open import Algebra using (CommutativeMonoid)
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Certs gs
+
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)
-open import Axiom.Set.Properties using (≡ᵉ-isEquivalence; disjoint-subst; ∪-cong; Dec-∈-singleton; disjoint-sym)
+open import Axiom.Set.Properties using (≡ᵉ-isEquivalence; disjoint-subst; ∪-cong; Dec-∈-singleton; disjoint-sym; ∪-sym)
 open import Relation.Binary using (IsEquivalence)
 open Computational ⦃...⦄
 
@@ -161,31 +162,25 @@ module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ {m : A ⇀ Coin} {g : A → A'
   gmap : A' ⇀ Coin
   gmap = mapKeys g m {InjOn}
 
+{- -- TODO: prove `indexedSumᵛ'-mapKeys` so we can use it in proof of `CERTBASE-pov` below
   indexedSumᵛ'-mapKeys :  (indexedSumᵛ' id m) ≡ (indexedSumᵛ' id gmap)
   indexedSumᵛ'-mapKeys = {!!}
-
+-- -}
 
 module _  {indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ → ∀ (m m' : A ⇀ Coin) → disjoint (dom m) (dom m')
                              → ∑[ x ← m ∪ˡ m' ] x ≡ ∑[ x ←  m ] x + ∑[ x ←  m' ] x}
           {indexedSumᵛ'-singleton : {A : Type} ⦃ _ : DecEq A ⦄ → {a : A} {c : Coin} → ∑[ x ←  ❴ (a , c) ❵ᵐ ] x ≡ c}
   where
   ∪ˡsingleton≡' : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {(a , c) : A × Coin} → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
-  ∪ˡsingleton≡' m {(a , c)} a∉dom = trans ξ (cong (∑[ x ← m ] x +_) indexedSumᵛ'-singleton)
+  ∪ˡsingleton≡' m {(a , c)} a∉dom = trans (indexedSumᵛ'-∪ m ❴ (a , c) ❵ᵐ γ) (cong (∑[ x ← m ] x +_) indexedSumᵛ'-singleton)
     where
     γ : disjoint (dom m) (dom ❴ a , c ❵ᵐ)
     γ {a'} x y = a∉dom (subst (λ u → u ∈ dom m) (Equivalence.from ∈-dom-singleton-pair y) x)
-
-    ξ : ∑[ x ← (m ∪ˡ ❴ a , c ❵ᵐ) ] x ≡ ∑[ x ← m ] x + ∑[ x ←  ❴ (a , c) ❵ᵐ ] x
-    ξ = indexedSumᵛ'-∪ m ❴ (a , c) ❵ᵐ γ
 
   ∪ˡsingleton0≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {a : A} → getCoin (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ getCoin m
   ∪ˡsingleton0≡ m {a} with a ∈? dom m
   ... | yes a∈dom = ∪ˡsingleton≡ m a∈dom
   ... | no a∉dom = trans (∪ˡsingleton≡' m a∉dom) (+-identityʳ (getCoin m))
-
---
-
-
 
   open ≡-Reasoning
 
@@ -207,35 +202,38 @@ module _  {indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ → ∀ (m m' : 
 
   CERT-pov {stᵈ = stᵈ} {stᵈ'} {stᵖ} {stᵖ'} {stᵍ} {stᵍ'}
     (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
-    getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ  ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds (≡ᵉ.trans rwds-∪ˡ-∪ (res-ex-∪' (Dec-∈-singleton th))) ⟩
-    getCoin rwds-∪ˡ-decomp                                   ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ) rwds-∪ˡ≡sing-∪ˡ  ⟩
-    getCoin ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )              ≡⟨ ∪ˡsingleton0≡ (rwds ∣ ❴ c ❵ ᶜ) ⟩
+    getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+      ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds (≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans (∪-sym th) (res-ex-∪ (Dec-∈-singleton th)))) ⟩
+    getCoin rwds-∪ˡ-decomp
+      ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ) rwds-∪ˡ≡sing-∪ˡ  ⟩
+    getCoin ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )
+      ≡⟨ ∪ˡsingleton0≡ (rwds ∣ ❴ c ❵ ᶜ) ⟩
     getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ , stᵖ' , stᵍ' ⟧ᶜˢ
       ∎
     where
     module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th  {Credential × Coin})
     rwds-∪ˡ-decomp = (rwds ∣ ❴ c ❵ ᶜ) ∪ˡ (rwds ∣ ❴ c ❵ )
 
-    rwds-∪ˡ-∪ : rwds-∪ˡ-decomp ˢ ≡ᵉ  (rwds ∣ ❴ c ❵ ᶜ)ˢ ∪ (rwds ∣ ❴ c ❵)ˢ
-    rwds-∪ˡ-∪ = disjoint-∪ˡ-∪ res-ex-disjoint'
+    rwds-∪ˡ-∪ : rwds-∪ˡ-decomp ˢ ≡ᵉ (rwds ∣ ❴ c ❵ ᶜ)ˢ ∪ (rwds ∣ ❴ c ❵)ˢ
+    rwds-∪ˡ-∪ = disjoint-∪ˡ-∪ (disjoint-sym th res-ex-disjoint)
 
     disj : disjoint (dom ((rwds ∣ ❴ c ❵ˢ ᶜ) ˢ)) (dom (❴ c , 0 ❵ᵐ ˢ))
     disj {a} a∈res a∈dom  = res-comp-dom a∈res (dom-single→single a∈dom)
 
     rwds-∪ˡ≡sing-∪ˡ : rwds-∪ˡ-decomp ˢ ≡ᵉ ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )ˢ
-    rwds-∪ˡ≡sing-∪ˡ = ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans (∪-cong th ≡ᵉ.refl (res-singleton'{m = rwds} (proj₁ x))) (≡ᵉ.sym (disjoint-∪ˡ-∪ disj)))
-
-
-
+    rwds-∪ˡ≡sing-∪ˡ = ≡ᵉ.trans rwds-∪ˡ-∪
+                              ( ≡ᵉ.trans (∪-cong th ≡ᵉ.refl (res-singleton'{m = rwds} $ proj₁ x))
+                                         (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj)
+                              )
 
   CERT-pov (CERT-pool x) = refl
   CERT-pov (CERT-vdel x) = refl
 
---    wdrls     : RwdAddr ⇀ Coin
+{-
+  -- TODO: complete proof of CERTBASE-pov --
 
   module _ {sumConstZero : {A : Type} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → ∑[ x ← constMap X 0 ] x ≡ 0} where
 
-  -- module _ ⦃ _ : IsSet X (A × B) ⦄ where
     CERTBASE-pov : {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s' → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
     CERTBASE-pov  {Γ = Γ}{s = ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ}
                   {⟦ ⟦ voteDelegs , stakeDelegs , rewards' ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ}
@@ -293,3 +291,4 @@ module _  {indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ → ∀ (m m' : 
                 → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ + getCoin (CertEnv.wdrls Γ)
     CERTS-pov (BS-base x) = CERTBASE-pov x
     CERTS-pov (BS-ind  x xs) = trans (CERT-pov x) (CERTS-pov xs)
+-- -}
