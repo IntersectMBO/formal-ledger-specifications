@@ -200,7 +200,6 @@ module Restriction (sp-∈ : spec-∈ A) where
   res-comp-dom a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = proj₁ $ ∈⇔P h
 
-
   res-comp-domᵐ : dom (R ∣ X ᶜ) ⊆ dom R
   res-comp-domᵐ a∈dom with ∈⇔P a∈dom
   ... | _ , refl , h = ∈-map⁺'' (proj₂ (∈⇔P h))

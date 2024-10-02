@@ -19,7 +19,7 @@ opaque
   List-Modelᵈ = L.List-Modelᵈ
 
 private variable
-  A B C : Set
+  A A' B C : Set
 
 open Theoryᵈ List-Modelᵈ public
   renaming (Set to ℙ_; filter to filterˢ?; map to mapˢ)

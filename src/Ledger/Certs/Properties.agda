@@ -153,11 +153,6 @@ instance
 ≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
 ≡ᵉ-getCoin {A} ⦃ decEqA ⦄ s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
 
-{-   -- TODO: prove `≡ᵉ-getCoin'` so we can use it in proof of `CERTBASE-pov` below
-≡ᵉ-getCoin' : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s : A ⇀ Coin)(s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s' → getCoin s ≡ getCoin s'
-≡ᵉ-getCoin' {A} ⦃ decEqA ⦄ s s' s≡s' = {!!}
--- -}
-
 getCoin-singleton : ⦃ _ : DecEq A ⦄ → ((a , c) : A × Coin) → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
 getCoin-singleton _ = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
 
@@ -229,9 +224,17 @@ module _  {indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ → ∀ (m m' : 
   CERT-pov (CERT-pool x) = refl
   CERT-pov (CERT-vdel x) = refl
 
-{-  -- TODO: complete proof of CERTBASE-pov --
+{-
+-- TODO: complete proof of CERTBASE-pov --
 
-  module _ {sumConstZero : {A : Type} ⦃ _ : DecEq A ⦄ → {X : ℙ A} → ∑[ x ← constMap X 0 ] x ≡ 0} where
+  module _ {sumConstZero : {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → ∑[ x ← constMap X 0 ] x ≡ 0}
+           {res-decomp : {A : Type} ⦃ _ : DecEq A ⦄ {m m' : A ⇀ Coin} → ((m ∪ˡ m')ˢ) ≡ᵉ ((m ∪ˡ (m' ∣ (dom (m ˢ)) ᶜ))ˢ)}
+            -- TODO: prove `≡ᵉ-getCoin'` so we can use it in proof of `CERTBASE-pov` below
+           {≡ᵉ-getCoin' : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s' → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s'}
+           {≡ᵉ-getCoinˢ : ∀ {A A'} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'} {injOn : InjectiveOn (dom s) f } → getCoin (mapˢ (map₁ f) s) ≡ getCoin s}
+           {injOn : ∀ {wdls : RwdAddr ⇀ Coin} → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake}
+           {dec∈ : ∀ {wdls : RwdAddr ⇀ Coin} → Decidable¹ (_∈ (dom (mapˢ (map₁ RwdAddr.stake) (wdls ˢ))))}
+    where
 
     CERTBASE-pov : {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s' → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
     CERTBASE-pov  {Γ = Γ}{s = ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ}
@@ -245,7 +248,7 @@ module _  {indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ → ∀ (m m' : 
         getCoin rwds-∪ˡ-decomp                                                 ≡⟨ indexedSumᵛ'-∪ (rewards ∣ dom wdrlsCC ᶜ) (rewards ∣ dom wdrlsCC) disj ⟩ -- indexedSumᵛ'-∪ (rewards ∣ dom wdrlsCC ᶜ) withdrawals disj ⟩
         getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin (rewards ∣ dom wdrlsCC )  ≡⟨ cong (getCoin ((rewards ∣ dom wdrlsCC ᶜ)) +_) resRwds≡wdrlsCC ⟩
         getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin wdrlsCC                   ≡⟨ cong (getCoin ((rewards ∣ dom wdrlsCC ᶜ)) +_) wdrlsCC≡wdrls ⟩
-        getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin wdrls                     ≡⟨ cong (_+ getCoin wdrls) resRwds≡rwds-wdrls ⟩
+        getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin wdrls                     ≡˘⟨ cong (_+ getCoin wdrls) resRwds≡rwds-wdrls ⟩
         getCoin ((constMap stake 0) ∪ˡ rewards) + getCoin wdrls                 ∎
       where
       module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th  {Credential × Coin})
@@ -254,8 +257,11 @@ module _  {indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ → ∀ (m m' : 
       wdrlsCC : ℙ (Credential × Coin)
       wdrlsCC = mapˢ (map₁ RwdAddr.stake) (wdrls ˢ)
 
-      dec∈ : Decidable¹ (_∈ (dom wdrlsCC))
-      dec∈ = {!!}
+      wdrlsCC≡wdrls : getCoin wdrlsCC ≡ getCoin wdrls
+      wdrlsCC≡wdrls = begin
+        getCoin (mapˢ (map₁ RwdAddr.stake) (wdrls ˢ)) ≡⟨ ≡ᵉ-getCoinˢ (wdrls ˢ) {RwdAddr.stake} {injOn} ⟩
+        getCoin (wdrls ˢ) ≡⟨ refl ⟩
+        getCoin wdrls ∎
 
       stake : ℙ Credential
       stake = mapˢ RwdAddr.stake (dom wdrls)
@@ -269,9 +275,6 @@ module _  {indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ → ∀ (m m' : 
       resRwds≡wdrlsCC : getCoin (rewards ∣ dom wdrlsCC) ≡ getCoin wdrlsCC
       resRwds≡wdrlsCC = ≡ᵉ-getCoin' (rewards ∣ dom wdrlsCC) wdrlsCC resRwdsˢ≡wdrlsCC
 
-      wdrlsCC≡wdrls : getCoin wdrlsCC ≡ getCoin wdrls
-      wdrlsCC≡wdrls = {!!}
-
       rwds-∪ˡ-decomp : Credential ⇀ Coin
       rwds-∪ˡ-decomp = (rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC)
 
@@ -281,8 +284,23 @@ module _  {indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ → ∀ (m m' : 
       rwds-∪ˡ-∪ : ((rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC) )ˢ ≡ᵉ ((rewards ∣ dom wdrlsCC ᶜ)ˢ) ∪ ((rewards ∣ dom wdrlsCC )ˢ)
       rwds-∪ˡ-∪ = disjoint-∪ˡ-∪ disj
 
-      resRwds≡rwds-wdrls : getCoin (rewards ∣ dom wdrlsCC ᶜ) ≡ getCoin ((constMap stake 0) ∪ˡ rewards)
-      resRwds≡rwds-wdrls = {!!}
+      ξ : (getCoin ((constMap stake 0) ∪ˡ rewards)) ≡ (getCoin ((constMap stake 0) ∪ˡ (rewards ∣ (dom (constMap stake 0)) ᶜ)))
+      ξ = ≡ᵉ-getCoin ((constMap stake 0) ∪ˡ rewards) ((constMap stake 0) ∪ˡ (rewards ∣ (dom (constMap stake 0)) ᶜ)) (res-decomp {m = (constMap stake 0)}{m' = rewards})
+
+      disj'' : disjoint (dom (constMap stake 0)) (dom (rewards ∣ (dom (constMap stake 0)) ᶜ))
+      disj'' = disjoint-sym th (res-comp-disjoint {m = rewards}{m' = constMap stake 0})
+
+      ξ'' : getCoin ((constMap stake 0) ∪ˡ (rewards ∣ (dom (constMap stake 0)) ᶜ)) ≡ getCoin ((constMap stake 0)) + getCoin (rewards ∣ (dom (constMap stake 0)) ᶜ)
+      ξ'' = indexedSumᵛ'-∪ (constMap stake 0) (rewards ∣ (dom (constMap stake 0)) ᶜ) disj''
+
+      resRwds≡rwds-wdrls : getCoin ((constMap stake 0) ∪ˡ rewards) ≡ getCoin (rewards ∣ dom wdrlsCC ᶜ)
+      resRwds≡rwds-wdrls = begin
+        getCoin ((constMap stake 0) ∪ˡ rewards) ≡⟨ ξ ⟩
+        getCoin ((constMap stake 0) ∪ˡ (rewards ∣ (dom (constMap stake 0)) ᶜ)) ≡⟨ indexedSumᵛ'-∪ (constMap stake 0) (rewards ∣ (dom (constMap stake 0)) ᶜ) disj'' ⟩
+        getCoin (constMap stake 0) + getCoin (rewards ∣ (dom (constMap stake 0)) ᶜ) ≡⟨ cong (λ u → u + getCoin (rewards ∣ (dom (constMap stake 0)) ᶜ)) sumConstZero ⟩
+        0 + getCoin (rewards ∣ (dom (constMap stake 0)) ᶜ) ≡⟨ +-identityˡ (getCoin (rewards ∣ (dom (constMap stake 0)) ᶜ)) ⟩
+        getCoin (rewards ∣ (dom (constMap stake 0)) ᶜ) ≡⟨ {!!} ⟩
+        getCoin (rewards ∣ dom wdrlsCC ᶜ)  ∎
 
     CERTS-pov : {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
                 → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ l ,CERTS⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ

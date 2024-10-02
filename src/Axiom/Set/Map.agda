@@ -376,6 +376,9 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
     ... | b' , ab'∈ = subst  (λ u → (a , u) ∈ (m' ˢ))
                              (proj₂ m (m'⊆m ab'∈) $ R.res-⊆ ab∈) ab'∈
 
+  res-comp-disjoint : {m m' : Map A B} → disjoint (dom ((m ∣ (dom (m' ˢ)) ᶜ) ˢ)) (dom (m' ˢ))
+  res-comp-disjoint = R.res-comp-dom
+
   res-singleton : ∀ {k} → k ∈ dom (m ˢ) → ∃[ v ] m ∣ ❴ k ❵ ≡ᵉᵐ ❴ k , v ❵ᵐ
   res-singleton {m = m@(_ , uniq)} k∈domm
     with (k , v) , (refl , h) ← ∈⇔P k∈domm
