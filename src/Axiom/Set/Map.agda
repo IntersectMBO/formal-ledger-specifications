@@ -13,6 +13,7 @@ open import Axiom.Set.Properties th
 
 import Data.Sum as ⊎
 open import Data.List.Ext.Properties using (AllPairs⇒≡∨R∨Rᵒᵖ)
+open import Data.Product.Base using (swap)
 open import Data.Product.Ext using (×-dup)
 open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
 open import Data.Maybe.Properties using (just-injective)
@@ -348,6 +349,32 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 
   curryᵐ : Map (A × B) C → A → Map B C
   curryᵐ m a = R.curryʳ (m ˢ) a , λ h h' → proj₂ m (R.∈-curryʳ h) (R.∈-curryʳ h')
+
+  res-dom∈ :  {m m' : Map A B}
+              → ((a , b) ∈ (m ∣ dom (m' ˢ))ˢ) ⇔ ((a , b) ∈ m ˢ × a ∈ dom (m' ˢ))
+  res-dom∈ {b = b} = mk⇔  (λ ab∈ → (R.res-⊆ ab∈) , R.res-dom (to dom∈ (b , ab∈)))
+                          ((to ∈-filter) ∘ swap)
+
+  res-dom∈' :  {m : Map A B} {m' : Set (A × B)}
+               → ((a , b) ∈ (m ∣ dom m')ˢ) ⇔ ((a , b) ∈ m ˢ × a ∈ dom m')
+  res-dom∈' {b = b} = mk⇔  (λ ab∈ → (R.res-⊆ ab∈) , R.res-dom (to dom∈ (b , ab∈)))
+                           ((to ∈-filter) ∘ swap)
+
+  res-subset : {m : Map A B}{m' : Set (A × B)} → m' ⊆ (m ˢ) → (m ∣ dom m')ˢ ≡ᵉ m'
+  res-subset {m = m}{m'} m'⊆m = i , (λ ab∈ → from (res-dom∈'{m = m}{m'}) (m'⊆m ab∈ , to dom∈ (_ , ab∈)))
+    where
+    i : ((m ∣ dom m') ˢ) ⊆ m'
+    i {a , b} ab∈ with from dom∈ (R.res-dom $ to dom∈ (b , ab∈))
+    ... | b' , ab'∈ = subst  (λ u → (a , u) ∈ m')
+                             (proj₂ m (m'⊆m ab'∈) $ R.res-⊆ ab∈) ab'∈
+
+  res-submap : {m m' : Map A B} → (m' ˢ) ⊆ (m ˢ) → (m ∣ dom (m' ˢ))ˢ ≡ᵉ (m' ˢ)
+  res-submap {m = m}{m'} m'⊆m = i , (λ ab∈ → from (res-dom∈{m = m}{m'}) (m'⊆m ab∈ , to dom∈ (_ , ab∈)))
+    where
+    i : ((m ∣ dom (m' ˢ)) ˢ) ⊆ (m' ˢ)
+    i {a , b} ab∈ with from dom∈ (R.res-dom $ to dom∈ (b , ab∈))
+    ... | b' , ab'∈ = subst  (λ u → (a , u) ∈ (m' ˢ))
+                             (proj₂ m (m'⊆m ab'∈) $ R.res-⊆ ab∈) ab'∈
 
   res-singleton : ∀ {k} → k ∈ dom (m ˢ) → ∃[ v ] m ∣ ❴ k ❵ ≡ᵉᵐ ❴ k , v ❵ᵐ
   res-singleton {m = m@(_ , uniq)} k∈domm
