@@ -237,20 +237,73 @@ certRefund _                = ∅
 -- updateCertDeposits pp (cert ∷ certs) deposits =
 --   (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 
-updateCertDeposits  : PParams → List DCert → Deposits → Maybe Deposits
+data ValidCertDeposits (ps : ℙ DepositPurpose) : List DCert → Set where
+  []         : ValidCertDeposits ps []
+  delegate   : ∀ {c del kh v certs}
+             → ValidCertDeposits (ps ∪ ❴ CredentialDeposit c ❵) certs
+             → ValidCertDeposits ps (delegate c del kh v ∷ certs)
+  regpool    : ∀ {kh pp certs}
+             → ValidCertDeposits (ps ∪ ❴ PoolDeposit kh ❵) certs
+             → ValidCertDeposits ps (regpool kh pp ∷ certs)
+  regdrep    : ∀ {c v a certs}
+             → ValidCertDeposits (ps ∪ ❴ DRepDeposit c ❵) certs
+             → ValidCertDeposits ps (regdrep c v a ∷ certs)
+  dereg      : ∀ {c v certs}
+             → CredentialDeposit c ∈ ps
+             → ValidCertDeposits (ps ＼ ❴ CredentialDeposit c ❵) certs
+             → ValidCertDeposits ps (dereg c v ∷ certs)
+  deregdrep  : ∀ {c v certs}
+             → DRepDeposit c ∈ ps
+             → ValidCertDeposits (ps ＼ ❴ DRepDeposit c ❵) certs
+             → ValidCertDeposits ps (deregdrep c v ∷ certs)
+  ccreghot   : ∀ {c v certs}
+             → ValidCertDeposits ps certs
+             → ValidCertDeposits ps (ccreghot c v ∷ certs)
+  retirepool : ∀ {kh e certs}
+             → ValidCertDeposits ps certs
+             → ValidCertDeposits ps (retirepool kh e  ∷ certs)
+
+private
+  validCertDeposits? : ∀ ps certs → Dec (ValidCertDeposits ps certs)
+  validCertDeposits? ps [] = yes []
+  validCertDeposits? ps (delegate _ _ _ _ ∷ certs) =
+    mapDec delegate (λ where (delegate p) → p) (validCertDeposits? _ _)
+  validCertDeposits? ps (regpool _ _ ∷ certs) =
+    mapDec regpool (λ where (regpool p) → p) (validCertDeposits? _ _)
+  validCertDeposits? ps (regdrep _ _ _ ∷ certs) =
+    mapDec regdrep (λ where (regdrep p) → p) (validCertDeposits? _ _)
+  validCertDeposits? ps (retirepool _ _ ∷ certs) =
+    mapDec retirepool (λ where (retirepool p) → p) (validCertDeposits? _ _)
+  validCertDeposits? ps (ccreghot _ _ ∷ certs) =
+    mapDec ccreghot (λ where (ccreghot p) → p) (validCertDeposits? _ _)
+  validCertDeposits? ps (dereg c _ ∷ certs) with ¿ CredentialDeposit c ∈ ps ¿
+  ... | yes p = mapDec (dereg p)  (λ where (dereg _ v) → v) (validCertDeposits? _ _)
+  ... | no ¬p = no (λ where (dereg p _) → ¬p p)
+  validCertDeposits? ps (deregdrep c _ ∷ certs) with ¿ DRepDeposit c ∈ ps ¿
+  ... | yes p = mapDec (deregdrep p)  (λ where (deregdrep _ v) → v) (validCertDeposits? _ _)
+  ... | no ¬p = no (λ where (deregdrep p _) → ¬p p)
+
+instance
+  Dec-ValidCertDeposits : ∀ {ps certs} → ValidCertDeposits ps certs ⁇
+  Dec-ValidCertDeposits = ⁇ (validCertDeposits? _ _)
+
+-- Assumes ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) certs.
+updateCertDeposits  : PParams → List DCert → Deposits → Deposits
 updateCertDeposits pp (delegate c _ _ v ∷ certs) deposits =
   updateCertDeposits pp certs (deposits ∪⁺ ❴ CredentialDeposit c , v ❵)
 updateCertDeposits pp (regpool kh _ ∷ certs) deposits =
   updateCertDeposits pp certs (deposits ∪⁺ ❴ PoolDeposit kh , pp .poolDeposit ❵)
 updateCertDeposits pp (regdrep c v _ ∷ certs) deposits =
   updateCertDeposits pp certs (deposits ∪⁺ ❴ DRepDeposit c , v ❵)
-updateCertDeposits pp (dereg c _ ∷ certs) deposits with (CredentialDeposit c) ∈? mapˢ proj₁ (deposits ˢ)
-... | no  _ = nothing
-... | yes _ = updateCertDeposits pp certs (deposits ∣ ❴ CredentialDeposit c ❵ ᶜ)
-updateCertDeposits pp (deregdrep c _ ∷ certs) deposits with (DRepDeposit c) ∈? mapˢ proj₁ (deposits ˢ)
-... | no  _ = nothing
-... | yes _ = updateCertDeposits pp certs (deposits ∣ ❴ DRepDeposit c ❵ ᶜ)
-updateCertDeposits pp _ deposits = just deposits
+updateCertDeposits pp (dereg c _ ∷ certs) deposits =
+  updateCertDeposits pp certs (deposits ∣ ❴ CredentialDeposit c ❵ ᶜ)
+updateCertDeposits pp (deregdrep c _ ∷ certs) deposits =
+  updateCertDeposits pp certs (deposits ∣ ❴ DRepDeposit c ❵ ᶜ)
+updateCertDeposits pp (retirepool _ _ ∷ certs) deposits =
+  updateCertDeposits pp certs deposits
+updateCertDeposits pp (ccreghot _ _ ∷ certs) deposits =
+  updateCertDeposits pp certs deposits
+updateCertDeposits pp [] deposits = deposits
 
 updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
 updateProposalDeposits []        _     _      deposits  = deposits
@@ -258,7 +311,7 @@ updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
   updateProposalDeposits ps txid gaDep deposits
   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
-updateDeposits : PParams → TxBody → Deposits → Maybe Deposits
+updateDeposits : PParams → TxBody → Deposits → Deposits
 updateDeposits pp txb = updateCertDeposits pp txcerts
                         ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
 \end{code}
@@ -271,10 +324,9 @@ proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActi
 \end{code}
 \begin{code}
 
-depositsChange : PParams → TxBody → Deposits → Maybe ℤ
-depositsChange pp txb deposits with (updateDeposits pp txb deposits)
-... | nothing = nothing
-... | just newDeposits = just (getCoin newDeposits - getCoin deposits)
+depositsChange : PParams → TxBody → Deposits → ℤ
+depositsChange pp txb deposits =
+  getCoin (updateDeposits pp txb deposits) - getCoin deposits
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules}
@@ -360,29 +412,20 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 module _ (let open UTxOState; open TxBody) where
 \end{code}
 \begin{code}
-  depositRefunds : PParams → UTxOState → TxBody → Maybe Coin
-  depositRefunds pp st txb with depositsChange pp txb (st .deposits)
-  ... | nothing = nothing
-  ... | just dc = just (negPart dc)
+  depositRefunds : PParams → UTxOState → TxBody → Coin
+  depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
 
-  newDeposits : PParams → UTxOState → TxBody → Maybe Coin
-  newDeposits pp st txb with depositsChange pp txb (st .deposits)
-  ... | nothing = nothing
-  ... | just dc = just (posPart dc)
+  newDeposits : PParams → UTxOState → TxBody → Coin
+  newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
 
-  consumed : PParams → UTxOState → TxBody → Maybe Value
-  consumed pp st txb with depositRefunds pp st txb
-  ... | nothing = nothing
-  ... | just refunds = just (balance (st .utxo ∣ txb .txins) + txb .mint + inject refunds)
+  consumed : PParams → UTxOState → TxBody → Value
+  consumed pp st txb = balance (st .utxo ∣ txb .txins) + txb .mint + inject (depositRefunds pp st txb)
 
-  produced : PParams → UTxOState → TxBody → Maybe Value
-  produced pp st txb with newDeposits pp st txb
-  ... | nothing = nothing
-  ... | just deps = just ( balance (outs txb)
-                         + inject (txb .txfee)
-                         + inject deps
-                         + inject (txb .txdonation)
-                         )
+  produced : PParams → UTxOState → TxBody → Value
+  produced pp st txb = balance (outs txb)
+                     + inject (txb .txfee)
+                     + inject (newDeposits pp st txb)
+                     + inject (txb .txdonation)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -412,13 +455,13 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
-      in {p : ∃[ deps ] updateDeposits pp txb deposits ≡ just deps}
-      →  ∙ evalScripts tx sLst ≡ isValid
+      in ∙ ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) txcerts
+         ∙ evalScripts tx sLst ≡ isValid
          ∙ isValid ≡ true
            ────────────────────────────────
            Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
                                 , fees + txfee
-                                , proj₁ p
+                                , updateDeposits pp txb deposits
                                 , donations + txdonation
                                 ⟧ᵘ
 
