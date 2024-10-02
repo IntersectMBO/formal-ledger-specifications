@@ -34,7 +34,7 @@ import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.NewEpoch    as X
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Ratify      as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep, ratifyDebug)
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Utxo        as X
-  (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer)
+  (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer, utxoDebug)
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes   as X
   (Coin, ExUnits, Epoch)
 
