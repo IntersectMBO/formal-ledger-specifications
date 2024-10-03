@@ -3,18 +3,15 @@
 open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
+module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
+
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
 
 open import Tactic.ReduceDec
 
-module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
-
-open import Algebra using (CommutativeMonoid)
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Certs gs
-open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)
-open import Axiom.Set.Properties using (≡ᵉ-isEquivalence; disjoint-subst; ∪-cong; Dec-∈-singleton)
 open Computational ⦃...⦄
 
 open import Tactic.GenError using (genErrors)
@@ -133,115 +130,3 @@ instance
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
-
-private variable
-  dCert : DCert
-  Γ : CertEnv
-  l : List DCert
-
-instance
-  _ = +-0-monoid
-
-  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = ∑[ x ← s ] x
-
-≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
-≡ᵉ-getCoin {A} ⦃ decEqA ⦄ s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
-
-module _ {A : Type} ⦃ _ : DecEq A ⦄
-  where
-  getCoin-singleton : ((a , c) : A × Coin) → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
-  getCoin-singleton _ = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
-
-  module _ {gc-hom : (d₁ d₂ : A ⇀ Coin) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂} where
-    ∪ˡsingleton≡ : {m : A ⇀ Coin} {(a , c) : A × Coin} → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
-    ∪ˡsingleton≡ {m} {(a , c)} = let open ≡-Reasoning in begin
-      getCoin (m ∪ˡ ❴ (a , c) ❵)
-        ≡⟨ gc-hom m ❴ (a , c) ❵ ⟩
-      getCoin m + getCoin{A = A ⇀ Coin} ❴ (a , c) ❵
-        ≡⟨ cong (getCoin m +_) (getCoin-singleton (a , c)) ⟩
-      getCoin m + c ∎
-
-
-module _ {gc-hom : (d₁ d₂ : Credential ⇀ Coin) → getCoin (d₁ ∪ˡ d₂) ≡ getCoin d₁ + getCoin d₂}
-         {sumConstZero : {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → ∑[ x ← constMap X 0 ] x ≡ 0}
-         where
-  open ≡-Reasoning
-
-  CERT-pov :  {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
-              → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-              → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-  CERT-pov {stᵈ = stᵈ} {stᵈ'} {stᵖ} {stᵖ'} {stᵍ} {stᵍ'} (CERT-deleg {pp} {deps = deps} {e = e} {vs} {wdrls}
-    (DELEG-delegate {c = c} {rwds} {d} {mkh} {vDelegs = vDelegs} {sDelegs} {mv} x)) =
-    begin
-      getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
-        ≡˘⟨ +-identityʳ (getCoin rwds) ⟩
-      getCoin rwds + 0
-        ≡˘⟨ ∪ˡsingleton≡ {A = Credential}{gc-hom} {m = rwds} ⟩
-      getCoin  ⟦ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ (c , 0) ❵ ⟧ᵈ
-               , stᵖ'
-               , stᵍ'
-               ⟧ᶜˢ
-        ∎
-
-  CERT-pov {stᵈ = stᵈ} {stᵈ'} {stᵖ} {stᵖ'} {stᵍ} {stᵍ'}
-    (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
-    getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
-      ≡˘⟨ (≡ᵉ-getCoin rwds-∪ˡ-decomp rwds) (≡ᵉ.trans rwds-∪ˡ-∪ (res-ex-∪ (Dec-∈-singleton th))) ⟩
-    getCoin rwds-∪ˡ-decomp
-      ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ)) rwds-∪ˡ≡sing-∪ˡ ⟩
-    getCoin (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ) )
-      ≡⟨ gc-hom ❴ (c , 0) ❵ᵐ (rwds ∣ ❴ c ❵ ᶜ) ⟩
-    getCoin ❴ (c , 0) ❵ᵐ  + getCoin (rwds ∣ ❴ c ❵ ᶜ)
-      ≡⟨ cong (_+ getCoin (rwds ∣ ❴ c ❵ ᶜ)) (getCoin-singleton (c , 0)) ⟩
-    0 + getCoin (rwds ∣ ❴ c ❵ ᶜ)
-      ≡⟨ +-identityˡ (getCoin (rwds ∣ ❴ c ❵ ᶜ)) ⟩
-    getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ , stᵖ' , stᵍ' ⟧ᶜˢ
-      ∎
-    where
-    open import Relation.Binary using (IsEquivalence)
-    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th  {Credential × Coin})
-    rwds-∪ˡ-decomp = (rwds ∣ ❴ c ❵ ) ∪ˡ (rwds ∣ ❴ c ❵ ᶜ)
-    rwdsˢ-∪-decomp = (rwds ∣ ❴ c ❵)ˢ  ∪ (rwds ∣ ❴ c ❵ ᶜ)ˢ
-
-    rwds≡sing : (rwds ∣ ❴ c ❵ )ˢ ≡ᵉ  (❴ (c , 0) ❵ᵐ)ˢ
-    rwds≡sing = res-singleton'{m = rwds} (proj₁ x)
-
-    rwds-∪ˡ-∪ : rwds-∪ˡ-decomp ˢ ≡ᵉ  rwdsˢ-∪-decomp
-    rwds-∪ˡ-∪ = disjoint-∪ˡ-∪ res-ex-disjoint
-
-    sing-∪ˡ-∪ : (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ))ˢ ≡ᵉ (❴ (c , 0) ❵ᵐ)ˢ  ∪ (rwds ∣ ❴ c ❵ ᶜ)ˢ
-    sing-∪ˡ-∪ = disjoint-∪ˡ-∪ (disjoint-subst th res-ex-disjoint (dom-cong rwds≡sing))
-
-    rwds-∪ˡ≡sing-∪ˡ : rwds-∪ˡ-decomp ˢ ≡ᵉ (❴ (c , 0) ❵ᵐ  ∪ˡ (rwds ∣ ❴ c ❵ ᶜ))ˢ
-    rwds-∪ˡ≡sing-∪ˡ = ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans (∪-cong th rwds≡sing ≡ᵉ.refl) (≡ᵉ.sym sing-∪ˡ-∪))
-
-  CERT-pov (CERT-pool x) = refl
-  CERT-pov (CERT-vdel x) = refl
-
-
-  CERTBASE-pov : {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s' → getCoin s ≡ getCoin s'
-  CERTBASE-pov  {s = ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ}
-                {⟦ ⟦ voteDelegs , stakeDelegs , rewards' ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ}
-                (CERT-base {pp}{vs}{e}{dreps}{wdrls} x) = goal
-    where
-    goal : getCoin ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
-           ≡ getCoin ⟦ ⟦ voteDelegs , stakeDelegs , constMap (mapˢ RwdAddr.stake (dom wdrls)) 0 ∪ˡ rewards ⟧ᵈ
-                     , stᵖ
-                     , ⟦ mapValueRestricted (const (e + (PParams.drepActivity pp))) dreps (mapPartial getDRepVote (fromList vs)) , ccHotKeys ⟧ᵛ
-                     ⟧ᶜˢ
-    goal = begin
-      ∑[ x ← rewards ] x
-        ≡⟨ +-identityˡ (∑[ x ← rewards ] x) ⟩
-      0 + ∑[ x ← rewards ] x
-        ≡˘⟨ cong (_+ ∑[ x ← rewards ] x) sumConstZero ⟩
-      ∑[ x ← constMap (mapˢ RwdAddr.stake (dom wdrls)) 0 ] x + ∑[ x ← rewards ] x
-        ≡˘⟨ gc-hom (constMap (mapˢ RwdAddr.stake (dom wdrls)) 0) rewards ⟩
-      getCoin ((constMap (mapˢ RwdAddr.stake (dom wdrls)) 0) ∪ˡ rewards)
-      ∎
-
-  CERTS-pov : {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
-              → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ l ,CERTS⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-              → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-  CERTS-pov (BS-base x) = CERTBASE-pov x
-  CERTS-pov (BS-ind  x xs) = trans (CERT-pov x) (CERTS-pov xs)

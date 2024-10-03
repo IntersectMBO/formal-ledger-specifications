@@ -20,6 +20,7 @@
 - Add `curTreasury` field to transactions
 - Compute the voting stake distribution
 - Add deposit amount to `dereg` certificate
+- Replace `minUTxOValue` with `coinsPerUTxOByte`
 - Fix CC threshold being incorrect in the case of no-confidence
 - Change logic of `RATIFY` to reject proposals properly
 - Fix total voting stake computation

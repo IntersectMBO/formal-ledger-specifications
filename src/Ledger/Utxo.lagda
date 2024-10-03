@@ -452,6 +452,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)
+        overhead = 160
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
@@ -460,7 +461,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
-        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
+        inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
