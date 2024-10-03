@@ -12,16 +12,14 @@ open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
 open import Axiom.Set.Properties th
 
 import Data.Sum as ⊎
-import Data.Product
 open import Data.List.Ext.Properties using (AllPairs⇒≡∨R∨Rᵒᵖ)
-open import Data.Product.Base using (swap)
+open import Data.Product using (swap)
 open import Data.Product.Ext using (×-dup)
 open import Data.Product.Properties using (×-≡,≡→≡; ×-≡,≡←≡)
 open import Data.Maybe.Properties using (just-injective)
 open import Relation.Unary using (Decidable)
 import Relation.Binary.PropositionalEquality as I
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-open import Relation.Binary using (_Preserves_⟶_)
 
 open Equivalence
 
@@ -210,38 +208,24 @@ module Unionᵐ (sp-∈ : spec-∈ A) where
     (∈-∪⁺ ∘′ ⊎.map₂ (proj₂ ∘′ ∈⇔P) ∘′ ∈⇔P)
     (∈⇔P ∘′ ⊎.map₂ (to ∈-filter ∘′ (λ h → (flip disj (∈-map⁺'' h)) , h)) ∘ ∈⇔P)
 
-  singleton-∈-∪ˡ :  {m : Map A B}{a : A} → a ∈ dom (m ˢ)
+  singleton-∈-∪ˡ :  {m : Map A B} {a : A} → a ∈ dom (m ˢ)
                     → ∃[ b ] (m ∪ˡ ❴ (a , b) ❵ᵐ)ˢ ≡ᵉ m ˢ
-  singleton-∈-∪ˡ {B = B} {m = m}{a} a∈domm = proj₁ ξ , goal , ∪-⊆ˡ
-    where
-    ξ : Σ B _
-    ξ = from dom∈ a∈domm
-    goal : ((m ∪ˡ ❴ a , proj₁ ξ ❵ᵐ) ˢ) ⊆ (m ˢ)
-    goal {ab} x with from ∈-∪ x
-    ... | inj₁ h = h
-    ... | inj₂ h = ⊥-elim (proj₁ (from ∈-filter h) subgoal)
-      where
-      γ : ab ∈ (❴ (a , proj₁ ξ) ❵ᵐ)ˢ
-      γ = proj₂ (from ∈-filter h)
+  singleton-∈-∪ˡ a∈domm .proj₁ = proj₁ $ from dom∈ a∈domm
+  singleton-∈-∪ˡ {m = m} a∈domm .proj₂ .proj₁ {ab} x with from ∈-∪ x
+  ... | inj₁ h = h
+  ... | inj₂ h = ⊥-elim (proj₁ (from ∈-filter h)
+                   (subst (λ u → proj₁ u ∈ proj₁ (replacement proj₁ (proj₁ m)))
+                          (sym (from ∈-singleton (proj₂ (from ∈-filter h)))) a∈domm))
+  singleton-∈-∪ˡ _ .proj₂ .proj₂ = ∪-⊆ˡ
 
-      subgoal : proj₁ ab ∈ proj₁ (replacement proj₁ (proj₁ m))
-      subgoal = subst (λ u → proj₁ u ∈ proj₁ (replacement proj₁ (proj₁ m))) (sym (from ∈-singleton γ)) a∈domm
-
-  singleton-∈-∪ˡ' :  {m : Map A B}{a : A} → a ∈ dom (m ˢ)
-                    → ∀ {b} → (m ∪ˡ ❴ (a , b) ❵ᵐ)ˢ ≡ᵉ m ˢ
-  singleton-∈-∪ˡ' {B = B} {m = m}{a} a∈domm {b} = goal , ∪-⊆ˡ
-    where
-    goal : ((m ∪ˡ ❴ a , b ❵ᵐ) ˢ) ⊆ (m ˢ)
-    goal {ab} x with (from ∈-∪ x)
-    ... | inj₁ h = h
-    ... | inj₂ h = ⊥-elim (proj₁ (from ∈-filter h) subgoal)
-      where
-      γ : ab ∈ (❴ (a , b) ❵ᵐ)ˢ
-      γ = proj₂ (from ∈-filter h)
-
-      subgoal : proj₁ ab ∈ proj₁ (replacement proj₁ (proj₁ m))
-      subgoal = subst (λ u → proj₁ u ∈ proj₁ (replacement proj₁ (proj₁ m))) (sym (from ∈-singleton γ)) a∈domm
-
+  singleton-∈-∪ˡ' :  {m : Map A B} {a : A} → a ∈ dom (m ˢ)
+                     → ∀ {b} → (m ∪ˡ ❴ (a , b) ❵ᵐ)ˢ ≡ᵉ m ˢ
+  singleton-∈-∪ˡ' {B = B} {m = m} {a} a∈domm {b} .proj₁ {ab} x with (from ∈-∪ x)
+  ... | inj₁ h = h
+  ... | inj₂ h = ⊥-elim (proj₁ (from ∈-filter h)
+                   (subst (λ u → proj₁ u ∈ proj₁ (replacement proj₁ (proj₁ m)))
+                          (sym (from ∈-singleton (proj₂ (from ∈-filter h)))) a∈domm))
+  singleton-∈-∪ˡ' _ .proj₂ = ∪-⊆ˡ
 
   insert : Map A B → A → B → Map A B
   insert m a b = ❴ a , b ❵ᵐ ∪ˡ m
@@ -303,13 +287,11 @@ constMap X b = mapˢ (_, b) X , λ x x₁ →
   trans (proj₂ $ ×-≡,≡←≡ $ proj₁ $ proj₂ (∈⇔P x))
         (sym $ proj₂ $ ×-≡,≡←≡ $ proj₁ $ proj₂ (∈⇔P x₁))
 
-constMap-dom : {X : Set A}{b : B} → dom ((constMap X b) ˢ) ≡ᵉ X
-constMap-dom {X = X}{b} = ⊆ , λ a∈X → to dom∈ (b , to ∈-map (_ , refl , a∈X))
-  where
-  ⊆ : dom (constMap X b ˢ) ⊆ X
-  ⊆ {a} a∈dom with from dom∈ a∈dom
-  ... | b' , ab'∈map with from ∈-map ab'∈map
-  ... | a' , ab'≡a'b , a'∈X = subst (_∈ X) (sym (proj₁ (×-≡,≡←≡ ab'≡a'b))) a'∈X
+constMap-dom : {X : Set A} {b : B} → dom (constMap X b ˢ) ≡ᵉ X
+constMap-dom {X = X} .proj₁ {a} a∈dom with from dom∈ a∈dom
+... | b' , ab'∈map with from ∈-map ab'∈map
+... | a' , ab'≡a'b , a'∈X = subst (_∈ X) (sym (proj₁ (×-≡,≡←≡ ab'≡a'b))) a'∈X
+constMap-dom {X = X} .proj₂ a∈X = to dom∈ (_ , to ∈-map (_ , refl , a∈X))
 
 mapPartialLiftKey-just-uniq : ∀ {f : A → B → Maybe B'}
   → left-unique R
@@ -370,27 +352,17 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
   res-dom∈' {b = b} = mk⇔  (λ ab∈ → (R.res-⊆ ab∈) , R.res-dom (to dom∈ (b , ab∈)))
                            ((to ∈-filter) ∘ swap)
 
-  res-subset : {m : Map A B}{m' : Set (A × B)} → m' ⊆ (m ˢ) → (m ∣ dom m')ˢ ≡ᵉ m'
-  res-subset {m = m}{m'} m'⊆m = i , (λ ab∈ → from (res-dom∈'{m = m}{m'}) (m'⊆m ab∈ , to dom∈ (_ , ab∈)))
-    where
-    i : ((m ∣ dom m') ˢ) ⊆ m'
-    i {a , b} ab∈ with from dom∈ (R.res-dom $ to dom∈ (b , ab∈))
-    ... | b' , ab'∈ = subst  (λ u → (a , u) ∈ m')
-                             (proj₂ m (m'⊆m ab'∈) $ R.res-⊆ ab∈) ab'∈
+  res-subset : {m : Map A B} {m' : Set (A × B)} → m' ⊆ (m ˢ) → (m ∣ dom m')ˢ ≡ᵉ m'
+  res-subset {m = m} {m'} m'⊆m .proj₁ {a , b} ab∈ with from dom∈ (R.res-dom $ to dom∈ (b , ab∈))
+  ... | b' , ab'∈ = subst  (λ u → (a , u) ∈ m')
+                           (proj₂ m (m'⊆m ab'∈) $ R.res-⊆ ab∈) ab'∈
+  res-subset {m = m} {m'} m'⊆m .proj₂ ab∈ = from (res-dom∈'{m = m}{m'}) (m'⊆m ab∈ , to dom∈ (_ , ab∈))
 
   res-submap : {m m' : Map A B} → (m' ˢ) ⊆ (m ˢ) → (m ∣ dom (m' ˢ))ˢ ≡ᵉ (m' ˢ)
-  res-submap {m = m}{m'} m'⊆m = i , (λ ab∈ → from (res-dom∈{m = m}{m'}) (m'⊆m ab∈ , to dom∈ (_ , ab∈)))
-    where
-    i : ((m ∣ dom (m' ˢ)) ˢ) ⊆ (m' ˢ)
-    i {a , b} ab∈ with from dom∈ (R.res-dom $ to dom∈ (b , ab∈))
-    ... | b' , ab'∈ = subst  (λ u → (a , u) ∈ (m' ˢ))
-                             (proj₂ m (m'⊆m ab'∈) $ R.res-⊆ ab∈) ab'∈
-
-  res-comp-disjoint : {m m' : Map A B} → disjoint (dom ((m ∣ (dom (m' ˢ)) ᶜ) ˢ)) (dom (m' ˢ))
-  res-comp-disjoint = R.res-comp-dom
-
-  map-res-comp-cong : {m : Map A B}{s s' : Set (A × B)} → (dom s) ≡ᵉ (dom s') → ((m ∣ (dom s) ᶜ) ˢ) ≡ᵉ ((m ∣ (dom s') ᶜ) ˢ)
-  map-res-comp-cong = R.res-comp-cong
+  res-submap {m = m} {m'} m'⊆m .proj₁ {a , b} ab∈ with from dom∈ (R.res-dom $ to dom∈ (b , ab∈))
+  ... | b' , ab'∈ = subst  (λ u → (a , u) ∈ (m' ˢ))
+                           (proj₂ m (m'⊆m ab'∈) $ R.res-⊆ ab∈) ab'∈
+  res-submap {m = m} {m'} m'⊆m .proj₂ ab∈ = from (res-dom∈{m = m}{m'}) (m'⊆m ab∈ , to dom∈ (_ , ab∈))
 
   res-singleton : ∀ {k} → k ∈ dom (m ˢ) → ∃[ v ] m ∣ ❴ k ❵ ≡ᵉᵐ ❴ k , v ❵ᵐ
   res-singleton {m = m@(_ , uniq)} k∈domm
