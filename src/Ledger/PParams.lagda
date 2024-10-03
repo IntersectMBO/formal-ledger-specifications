@@ -158,7 +158,7 @@ record PParams : Type where
 \begin{code}
 positivePParams : PParams → List ℕ
 positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ refScriptCostStride
-                      ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
+                      ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                       ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
 \end{code}
 \begin{code}[hide]
@@ -235,7 +235,7 @@ module PParamsUpdate where
   paramsUpdateWellFormed : PParamsUpdate → Type
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
-                         ∷ minUTxOValue ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
+                         ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                          ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
     where open PParamsUpdate ppu
   
