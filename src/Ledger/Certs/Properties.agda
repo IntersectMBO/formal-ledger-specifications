@@ -144,19 +144,11 @@ private variable
 instance
   _ = +-0-monoid
 
-  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = ∑[ x ← s ] x
-
-  HasCoin-Set : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (ℙ (A × Coin))
-  HasCoin-Set .getCoin s = ∑ˢ[ (a , c) ← s ] c
-
-≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
-≡ᵉ-getCoin {A} ⦃ decEqA ⦄ s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
-
 getCoin-singleton : ⦃ _ : DecEq A ⦄ {(a , c) : A × Coin} → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
 getCoin-singleton = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
 
-∪ˡsingleton≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {(a , c) : A × Coin} → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
+∪ˡsingleton≡ :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
+                → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
 ∪ˡsingleton≡ m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ{m = m} a∈dom)
 
 module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
@@ -169,9 +161,12 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   ∪ˡsingleton≡' :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
                    → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
   ∪ˡsingleton≡' m {(a , c)} a∉dom = begin
-    getCoin (m ∪ˡ ❴ a , c ❵ᵐ) ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ (λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x)) ⟩
-    getCoin m + getCoin ❴ a , c ❵ᵐ ≡⟨ cong (getCoin m +_) getCoin-singleton ⟩
-    getCoin m + c ∎
+    getCoin (m ∪ˡ ❴ a , c ❵ᵐ)
+      ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ (λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x)) ⟩
+    getCoin m + getCoin ❴ a , c ❵ᵐ
+      ≡⟨ cong (getCoin m +_) getCoin-singleton ⟩
+    getCoin m + c
+      ∎
 
   ∪ˡsingleton0≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {a : A} → getCoin (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ getCoin m
   ∪ˡsingleton0≡ m {a} with a ∈? dom m
@@ -182,23 +177,13 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   CERT-pov :  {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
               → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
               → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-  CERT-pov {stᵈ = stᵈ} {stᵈ'} {stᵖ} {stᵖ'} {stᵍ} {stᵍ'} (CERT-deleg {pp} {deps = deps} {e = e} {vs} {wdrls}
-    (DELEG-delegate {c = c} {rwds} {d} {mkh} {vDelegs = vDelegs} {sDelegs} {mv} x)) =
-    begin
-      getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
-        ≡⟨ refl ⟩
-      getCoin rwds
-        ≡˘⟨ ∪ˡsingleton0≡ rwds ⟩
-      getCoin  ⟦ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ (c , 0) ❵ ⟧ᵈ
-               , stᵖ'
-               , stᵍ'
-               ⟧ᶜˢ
-        ∎
+  CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
 
-  CERT-pov {stᵈ = stᵈ} {stᵈ'} {stᵖ} {stᵖ'} {stᵍ} {stᵍ'}
+  CERT-pov {stᵖ = stᵖ} {stᵖ'} {stᵍ} {stᵍ'}
     (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
     getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
-      ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds (≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans (∪-sym th) (res-ex-∪ (Dec-∈-singleton th)))) ⟩
+      ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds
+          ( ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans (∪-sym th) (res-ex-∪ (Dec-∈-singleton th))) ) ⟩
     getCoin rwds-∪ˡ-decomp
       ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ) rwds-∪ˡ≡sing-∪ˡ  ⟩
     getCoin ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )
@@ -227,7 +212,7 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     {sumConstZero  :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → ∑[ x ← constMap X 0 ] x ≡ 0}
     {res-decomp    :  {A : Type} ⦃ _ : DecEq A ⦄ {m m' : A ⇀ Coin }
                       → ((m ∪ˡ m')ˢ) ≡ᵉ ((m ∪ˡ (m' ∣ (dom (m ˢ)) ᶜ))ˢ) }
-    {≡ᵉ-getCoin'   :  ∀ {A} → ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin))
+    {getCoin-cong  :  ∀ {A} → ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin))
                       → s ˢ ≡ᵉ s' → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' }
     {≡ᵉ-getCoinˢ   :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin))
                       {f : A → A'} {injOn : InjectiveOn (dom s) f }
@@ -258,7 +243,7 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
             ≡⟨ indexedSumᵛ'-∪ (rewards ∣ dom wdrlsCC ᶜ) (rewards ∣ dom wdrlsCC) disj ⟩
           getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin (rewards ∣ dom wdrlsCC )
             ≡⟨ cong (getCoin ((rewards ∣ dom wdrlsCC ᶜ)) +_)
-               ( ≡ᵉ-getCoin' (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
+               ( getCoin-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
           getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin wdrlsCC
             ≡⟨ cong (getCoin ((rewards ∣ dom wdrlsCC ᶜ)) +_) wdrlsCC≡wdrls ⟩
           getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin wdrls
