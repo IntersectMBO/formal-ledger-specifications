@@ -12,6 +12,7 @@ open import Axiom.Set.Rel th hiding (_∣'_; _∣^'_)
 open import Axiom.Set.Properties th
 
 import Data.Sum as ⊎
+import Data.Product
 open import Data.List.Ext.Properties using (AllPairs⇒≡∨R∨Rᵒᵖ)
 open import Data.Product.Base using (swap)
 open import Data.Product.Ext using (×-dup)
@@ -20,6 +21,7 @@ open import Data.Maybe.Properties using (just-injective)
 open import Relation.Unary using (Decidable)
 import Relation.Binary.PropositionalEquality as I
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
+open import Relation.Binary using (_Preserves_⟶_)
 
 open Equivalence
 
@@ -301,6 +303,14 @@ constMap X b = mapˢ (_, b) X , λ x x₁ →
   trans (proj₂ $ ×-≡,≡←≡ $ proj₁ $ proj₂ (∈⇔P x))
         (sym $ proj₂ $ ×-≡,≡←≡ $ proj₁ $ proj₂ (∈⇔P x₁))
 
+constMap-dom : {X : Set A}{b : B} → dom ((constMap X b) ˢ) ≡ᵉ X
+constMap-dom {X = X}{b} = ⊆ , λ a∈X → to dom∈ (b , to ∈-map (_ , refl , a∈X))
+  where
+  ⊆ : dom (constMap X b ˢ) ⊆ X
+  ⊆ {a} a∈dom with from dom∈ a∈dom
+  ... | b' , ab'∈map with from ∈-map ab'∈map
+  ... | a' , ab'≡a'b , a'∈X = subst (_∈ X) (sym (proj₁ (×-≡,≡←≡ ab'≡a'b))) a'∈X
+
 mapPartialLiftKey-just-uniq : ∀ {f : A → B → Maybe B'}
   → left-unique R
   → just (a , b)  ∈ mapˢ (mapPartialLiftKey f) R
@@ -378,6 +388,9 @@ module Restrictionᵐ (sp-∈ : spec-∈ A) where
 
   res-comp-disjoint : {m m' : Map A B} → disjoint (dom ((m ∣ (dom (m' ˢ)) ᶜ) ˢ)) (dom (m' ˢ))
   res-comp-disjoint = R.res-comp-dom
+
+  map-res-comp-cong : {m : Map A B}{s s' : Set (A × B)} → (dom s) ≡ᵉ (dom s') → ((m ∣ (dom s) ᶜ) ˢ) ≡ᵉ ((m ∣ (dom s') ᶜ) ˢ)
+  map-res-comp-cong = R.res-comp-cong
 
   res-singleton : ∀ {k} → k ∈ dom (m ˢ) → ∃[ v ] m ∣ ❴ k ❵ ≡ᵉᵐ ❴ k , v ❵ᵐ
   res-singleton {m = m@(_ , uniq)} k∈domm

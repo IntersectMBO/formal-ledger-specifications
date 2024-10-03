@@ -16,7 +16,7 @@ import Data.Product
 open import Data.List.Ext.Properties using (_⊎-cong_)
 open import Data.These hiding (map)
 open import Data.Maybe.Base using () renaming (map to map?)
-open import Data.Product.Properties using (,-injectiveˡ; ×-≡,≡→≡)
+open import Data.Product.Properties using (,-injectiveˡ; ×-≡,≡→≡; ×-≡,≡←≡)
 open import Data.Product.Properties.Ext using (∃-cong′; ∃-distrib-⊎)
 open import Relation.Unary using (Decidable)
 open import Relation.Nullary using (yes; no)
@@ -141,6 +141,20 @@ dom-mapʳ⊆ a∈dmR with from dom∈ a∈dmR
 
 mapʳ-dom : {f : B → B'} → dom R ≡ᵉ dom (mapʳ f R)
 mapʳ-dom = dom-⊆mapʳ , dom-mapʳ⊆
+
+dom-mapˡ≡map-dom : {f : A → A'} → dom (mapˡ f R) ≡ᵉ map f (dom R)
+dom-mapˡ≡map-dom {R = R} {f = f} = ⊆-goal , ⊇-goal
+  where
+  ⊆-goal : dom (mapˡ f R) ⊆ map f (dom R)
+  ⊆-goal {a = a'} a'∈dom with from ∈-map (proj₂ (from dom∈ a'∈dom))
+  ... | (a , b) , a'b≡fab , ab∈R =
+    to ∈-map (a , ((proj₁ (×-≡,≡←≡ a'b≡fab)) , (to dom∈ (b , ab∈R))))
+
+  ⊇-goal : map f (dom R) ⊆ dom (mapˡ f R)
+  ⊇-goal {a = a'} a'∈map with from ∈-map a'∈map
+  ... | a , a'≡fa , a∈domR with from dom∈ a∈domR
+  ... | b , ab∈R =
+    to dom∈ (b , (to ∈-map ((a , b) , (×-≡,≡→≡ (a'≡fa , refl)) , ab∈R)))
 
 dom-∅ : dom R ⊆ ∅ → R ≡ᵉ ∅
 dom-∅ dom⊆∅ = ∅-least (λ {x} x∈R → ⊥-elim $ ∉-∅ $ dom⊆∅ $ to dom∈ (-, x∈R))
