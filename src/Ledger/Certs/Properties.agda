@@ -147,9 +147,9 @@ instance
 getCoin-singleton : ⦃ _ : DecEq A ⦄ {(a , c) : A × Coin} → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
 getCoin-singleton = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
 
-∪ˡsingleton≡ :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
+∪ˡsingleton∈dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
                 → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
-∪ˡsingleton≡ m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ{m = m} a∈dom)
+∪ˡsingleton∈dom m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ{m = m} a∈dom)
 
 module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                               → disjoint (dom m) (dom m')
@@ -158,9 +158,9 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   open ≡-Reasoning
   open Equivalence
 
-  ∪ˡsingleton≡' :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
+  ∪ˡsingleton∉dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
                    → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
-  ∪ˡsingleton≡' m {(a , c)} a∉dom = begin
+  ∪ˡsingleton∉dom m {(a , c)} a∉dom = begin
     getCoin (m ∪ˡ ❴ a , c ❵ᵐ)
       ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ (λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x)) ⟩
     getCoin m + getCoin ❴ a , c ❵ᵐ
@@ -170,8 +170,8 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
   ∪ˡsingleton0≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {a : A} → getCoin (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ getCoin m
   ∪ˡsingleton0≡ m {a} with a ∈? dom m
-  ... | yes a∈dom = ∪ˡsingleton≡ m a∈dom
-  ... | no a∉dom = trans (∪ˡsingleton≡' m a∉dom) (+-identityʳ (getCoin m))
+  ... | yes a∈dom = ∪ˡsingleton∈dom m a∈dom
+  ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
 
 
   CERT-pov :  {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
