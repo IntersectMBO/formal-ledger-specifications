@@ -28,9 +28,6 @@ open PParams
 instance
   _ = +-0-monoid
 
-  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = ∑[ x ← s ] x
-
 certDepositUtxo : DCert → PParams → DepositPurpose ⇀ Coin
 certDepositUtxo (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
 -- This is how RegDeleg certificates are translated in conformance testing

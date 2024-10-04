@@ -32,9 +32,6 @@ open import Ledger.Fees txs using (scriptsCost)
 instance
   _ = +-0-monoid
 
-  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = ∑[ x ← s ] x
-
 infixl 7 _*↓_
 
 -- multiply a natural number with a fraction, rounding down and taking the absolute value
