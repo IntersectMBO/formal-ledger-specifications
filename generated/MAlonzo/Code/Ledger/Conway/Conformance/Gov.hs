@@ -71,7 +71,7 @@ d__'43''7497'__18 ::
   Integer -> AgdaAny -> AgdaAny
 d__'43''7497'__18 v0
   = let v1
-          = MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_govStructure_2398
+          = MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_govStructure_2422
               (coe v0) in
     coe
       (coe
@@ -121,7 +121,7 @@ d_preoEpoch_356 ::
   MAlonzo.Code.Interface.HasOrder.T_HasPreorder_18
 d_preoEpoch_356 v0
   = let v1
-          = MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_govStructure_2398
+          = MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_govStructure_2422
               (coe v0) in
     coe
       (coe
@@ -862,7 +862,7 @@ du_modifyVotes_1150 v0 v1 v2 v3 v4
                MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
                (coe
                   MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased () erased
-                  (MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1220
+                  (MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1232
                      (coe v0))
                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4)) (coe v1))
@@ -885,13 +885,13 @@ du_modifyVotes_1150 v0 v1 v2 v3 v4
                                      (coe
                                         MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_khs_204
                                         (coe
-                                           MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_crypto_1260
+                                           MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_crypto_1272
                                            (coe v0))) in
                            coe
                              (let v7
                                     = MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_DecEq'45'ScriptHash_208
                                         (coe
-                                           MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_crypto_1260
+                                           MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_crypto_1272
                                            (coe v0)) in
                               coe
                                 (coe
@@ -1060,7 +1060,7 @@ d_hasParentE'63'_1316 v0 v1 v2 v3
                 (coe
                    MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                    (coe
-                      MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1220
+                      MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1232
                       (coe v0)))
                 (coe
                    (\ v6 ->
@@ -1104,7 +1104,7 @@ d_hasParent'63'_1350 v0 v1 v2 v3 v4
                               (coe
                                  MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1220
+                                    MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1232
                                     (coe v0)))
                               (coe
                                  (\ v8 ->
@@ -1164,7 +1164,7 @@ d_'91'_connects_to_'63''93'_1422 v0 v1 v2 v3
              (coe
                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                 (coe
-                   MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1220
+                   MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1232
                    (coe v0)))
              (coe
                 (\ v4 ->
@@ -1183,7 +1183,7 @@ d_'91'_connects_to_'63''93'_1422 v0 v1 v2 v3
                           (coe
                              MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                              (coe
-                                MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1220
+                                MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1232
                                 (coe v0)))
                           (coe
                              (\ v8 ->
@@ -1222,12 +1222,12 @@ d_any'63''45'connecting'45'subperm_1446 v0 v1 v2 v3
                           MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased () erased
                           (coe
                              MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased () erased
-                             (MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1220
+                             (MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1232
                                 (coe v0))
                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                           (coe
                              MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased () erased
-                             (MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1220
+                             (MAlonzo.Code.Ledger.Conway.Conformance.Transaction.d_DecEq'45'TxId_1232
                                 (coe v0))
                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))))
                  v4)
