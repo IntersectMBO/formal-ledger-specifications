@@ -104,7 +104,7 @@ du_maximum_686 v0
       (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178)
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-         (coe MAlonzo.Code.Ledger.Set.Theory.du_finiteness_218 v0))
+         (coe MAlonzo.Code.Ledger.Set.Theory.du_finiteness_220 v0))
 -- Ledger.Conway.Conformance.GovernanceActions.GovRole
 d_GovRole_690 a0 = ()
 data T_GovRole_690 = C_CC_692 | C_DRep_694 | C_SPO_696
@@ -181,7 +181,7 @@ d_actionWellFormed'63'_746 v0 v1
                 (coe
                    MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
                    (coe
-                      MAlonzo.Code.Ledger.Set.Theory.du_DecEq'45'ℙ_256
+                      MAlonzo.Code.Ledger.Set.Theory.du_DecEq'45'ℙ_258
                       (coe
                          MAlonzo.Code.Ledger.Conway.Conformance.PParams.du_DecEq'45'PParamGroup_506))
                    (coe
@@ -233,11 +233,11 @@ d_actionWellFormed'63'_746 v0 v1
                                       (coe v0))))))
                      v3))
              (coe
-                MAlonzo.Code.Interface.IsSet.du_dom_540
+                MAlonzo.Code.Interface.IsSet.du_dom_550
                 (coe
                    MAlonzo.Code.Axiom.Set.d_th_1458
                    (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-                (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_548) (coe v2))
+                (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_558) (coe v2))
       C_Info_734
         -> coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_20
       _ -> MAlonzo.RTE.mazUnreachableError

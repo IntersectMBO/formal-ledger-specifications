@@ -79,12 +79,12 @@ d_reserves_158 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.PParams.ProtVer
 d_ProtVer_162 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   ()
 d_ProtVer_162 = erased
 -- Ledger.Conway.Conformance.PParams.Show-ProtVer
 d_Show'45'ProtVer_164 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'ProtVer_164 ~v0 = du_Show'45'ProtVer_164
 du_Show'45'ProtVer_164 :: MAlonzo.Code.Class.Show.Core.T_Show_10
@@ -490,7 +490,7 @@ d_drepActivity_380 v0
 d_positivePParams_382 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParams_248 -> [Integer]
 d_positivePParams_382 ~v0 ~v1 ~v2 v3 = du_positivePParams_382 v3
 du_positivePParams_382 :: T_PParams_248 -> [Integer]
@@ -644,14 +644,14 @@ d_refScriptCostStride_456 v0
 d_paramsWellFormed_458 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParams_248 -> ()
 d_paramsWellFormed_458 = erased
 -- Ledger.Conway.Conformance.PParams.paramsWF-elim
 d_paramsWF'45'elim_466 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParams_248 ->
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
@@ -672,7 +672,7 @@ du_paramsWF'45'elim_466 v0
 d_refScriptCostStride'62'0_488 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParams_248 ->
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
@@ -686,7 +686,7 @@ du_refScriptCostStride'62'0_488 v0
       du_paramsWF'45'elim_466 (coe d_refScriptCostStride_350 (coe v0))
 -- Ledger.Conway.Conformance.PParams.Show-ℚ
 d_Show'45'ℚ_494 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'ℚ_494 ~v0 = du_Show'45'ℚ_494
 du_Show'45'ℚ_494 :: MAlonzo.Code.Class.Show.Core.T_Show_10
@@ -698,7 +698,7 @@ du_Show'45'ℚ_494
 d_DecEq'45'DrepThresholds_500 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'DrepThresholds_500 ~v0 ~v1 ~v2
   = du_DecEq'45'DrepThresholds_500
@@ -817,7 +817,7 @@ du_DecEq'45'DrepThresholds_500
 d_DecEq'45'PoolThresholds_502 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PoolThresholds_502 ~v0 ~v1 ~v2
   = du_DecEq'45'PoolThresholds_502
@@ -893,12 +893,12 @@ du_DecEq'45'PoolThresholds_502
 d_DecEq'45'PParams_504 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParams_504 ~v0 v1 v2 = du_DecEq'45'PParams_504 v1 v2
 du_DecEq'45'PParams_504 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PParams_504 v0 v1
   = coe
@@ -1287,7 +1287,7 @@ du_DecEq'45'PParams_504 v0 v1
                                                                                                                MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                                                                                (MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'CostModel_220
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                                                                      (coe
                                                                                                                         v1)))
                                                                                                                v61
@@ -1350,7 +1350,7 @@ du_DecEq'45'PParams_504 v0 v1
                                                                               MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                                               (MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEQ'45'Prices_230
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                                     (coe v1)))
                                                                               v50 v16))
                                                                         (coe
@@ -1390,14 +1390,14 @@ du_DecEq'45'PParams_504 v0 v1
                                                    MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                    (MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'ExUnits_228
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                          (coe v1)))
                                                    v41 v7))
                                              (coe
                                                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                 (MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'ExUnits_228
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                       (coe v1)))
                                                 v40 v6))
                                           (coe
@@ -1520,7 +1520,7 @@ du_DecEq'45'PParams_504 v0 v1
 d_DecEq'45'PParamGroup_506 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParamGroup_506 ~v0 ~v1 ~v2
   = du_DecEq'45'PParamGroup_506
@@ -1722,7 +1722,7 @@ du_DecEq'45'PParamGroup_506
 d_Show'45'DrepThresholds_508 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'DrepThresholds_508 ~v0 ~v1 ~v2
   = du_Show'45'DrepThresholds_508
@@ -1796,7 +1796,7 @@ du_Show'45'DrepThresholds_508
 d_Show'45'PoolThresholds_510 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'PoolThresholds_510 ~v0 ~v1 ~v2
   = du_Show'45'PoolThresholds_510
@@ -1840,12 +1840,12 @@ du_Show'45'PoolThresholds_510
 d_Show'45'PParams_512 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'PParams_512 ~v0 v1 v2 = du_Show'45'PParams_512 v1 v2
 du_Show'45'PParams_512 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 du_Show'45'PParams_512 v0 v1
   = coe
@@ -1945,7 +1945,7 @@ du_Show'45'PParams_512 v0 v1
                                                                                                                   MAlonzo.Code.Class.Show.Core.d_show_16
                                                                                                                   (MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Show'45'ExUnits_232
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                                                                         (coe
                                                                                                                            v1)))
                                                                                                                   v6)))
@@ -1955,7 +1955,7 @@ du_Show'45'PParams_512 v0 v1
                                                                                                                MAlonzo.Code.Class.Show.Core.d_show_16
                                                                                                                (MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Show'45'ExUnits_232
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                                                                      (coe
                                                                                                                         v1)))
                                                                                                                v7)))
@@ -2021,7 +2021,7 @@ du_Show'45'PParams_512 v0 v1
                                                                                     MAlonzo.Code.Class.Show.Core.d_show_16
                                                                                     (MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Show'45'Prices_234
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                                           (coe v1)))
                                                                                     v16)))
                                                                            (coe
@@ -2080,7 +2080,7 @@ du_Show'45'PParams_512 v0 v1
                                                    MAlonzo.Code.Class.Show.Core.d_show_16
                                                    (MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Show'45'CostModel_224
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                          (coe v1)))
                                                    v27)))
                                           (coe
@@ -2485,7 +2485,7 @@ d_ccMaxTermLength_648 v0
 d_paramsUpdateWellFormed_650 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsUpdate_516 -> ()
 d_paramsUpdateWellFormed_650 = erased
 -- Ledger.Conway.Conformance.PParams.PParamsUpdate._._.Emax
@@ -2605,7 +2605,7 @@ d_refScriptCostStride_724 v0
 d_paramsUpdateWellFormed'63'_728 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsUpdate_516 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_paramsUpdateWellFormed'63'_728 ~v0 ~v1 ~v2 v3
@@ -2671,7 +2671,7 @@ du_paramsUpdateWellFormed'63'_728 v0
 d_modifiesNetworkGroup_732 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsUpdate_516 -> Bool
 d_modifiesNetworkGroup_732 ~v0 ~v1 ~v2 v3
   = du_modifiesNetworkGroup_732 v3
@@ -2837,7 +2837,7 @@ d_refScriptCostStride_802 v0
 d_modifiesEconomicGroup_804 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsUpdate_516 -> Bool
 d_modifiesEconomicGroup_804 ~v0 ~v1 ~v2 v3
   = du_modifiesEconomicGroup_804 v3
@@ -3024,7 +3024,7 @@ d_refScriptCostStride_874 v0
 d_modifiesTechnicalGroup_876 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsUpdate_516 -> Bool
 d_modifiesTechnicalGroup_876 ~v0 ~v1 ~v2 v3
   = du_modifiesTechnicalGroup_876 v3
@@ -3175,7 +3175,7 @@ d_refScriptCostStride_946 v0
 d_modifiesGovernanceGroup_948 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsUpdate_516 -> Bool
 d_modifiesGovernanceGroup_948 ~v0 ~v1 ~v2 v3
   = du_modifiesGovernanceGroup_948 v3
@@ -3341,7 +3341,7 @@ d_refScriptCostStride_1018 v0
 d_modifiedUpdateGroups_1020 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsUpdate_516 -> [T_PParamGroup_172]
 d_modifiedUpdateGroups_1020 ~v0 ~v1 ~v2 v3
   = du_modifiedUpdateGroups_1020 v3
@@ -3379,7 +3379,7 @@ du_modifiedUpdateGroups_1020 v0
 d__'63''9552''8658'__1028 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsUpdate_516 ->
   (T_PParamsUpdate_516 -> Bool) ->
   T_PParamGroup_172 -> [T_PParamGroup_172]
@@ -3399,9 +3399,9 @@ du__'63''9552''8658'__1028 v0 v1 v2
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Interface.HasSingleton.d_'10100'_'10101'_304
+              MAlonzo.Code.Interface.HasSingleton.d_'10100'_'10101'_312
               (coe
-                 MAlonzo.Code.Interface.HasSingleton.du_HasSingletonSet'45'Set_308
+                 MAlonzo.Code.Interface.HasSingleton.du_HasSingletonSet'45'Set_316
                  (coe
                     MAlonzo.Code.Axiom.Set.d_th_1458
                     (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)))
@@ -3410,7 +3410,7 @@ du__'63''9552''8658'__1028 v0 v1 v2
          (\ v3 ->
             MAlonzo.Code.Interface.HasEmptySet.d_'8709'_12
               (coe
-                 MAlonzo.Code.Interface.HasEmptySet.Instances.du_HasEmptySet'45'Set_296
+                 MAlonzo.Code.Interface.HasEmptySet.Instances.du_HasEmptySet'45'Set_304
                  (coe
                     MAlonzo.Code.Axiom.Set.d_th_1458
                     (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)))))
@@ -3418,7 +3418,7 @@ du__'63''9552''8658'__1028 v0 v1 v2
 d__'63''8599'__1036 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   () -> Maybe AgdaAny -> AgdaAny -> AgdaAny
 d__'63''8599'__1036 ~v0 ~v1 ~v2 ~v3 v4 v5
   = du__'63''8599'__1036 v4 v5
@@ -3432,7 +3432,7 @@ du__'63''8599'__1036 v0 v1
 d_'8801''45'update_1050 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   () ->
   Maybe AgdaAny ->
   AgdaAny ->
@@ -3449,7 +3449,7 @@ du_'8801''45'update_1050 v0
 d_to_1070 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   () ->
   Maybe AgdaAny ->
   AgdaAny ->
@@ -3477,7 +3477,7 @@ du_to_1070 v0
 d_from_1082 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   () ->
   Maybe AgdaAny ->
   AgdaAny ->
@@ -3493,7 +3493,7 @@ d_from_1082 = erased
 d_applyPParamsUpdate_1084 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParams_248 -> T_PParamsUpdate_516 -> T_PParams_248
 d_applyPParamsUpdate_1084 ~v0 ~v1 ~v2 v3 v4
   = du_applyPParamsUpdate_1084 v3 v4
@@ -3928,13 +3928,13 @@ d_refScriptCostStride_1228 v0
 d_DecEq'45'PParamsUpdate_1230 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParamsUpdate_1230 ~v0 v1 v2
   = du_DecEq'45'PParamsUpdate_1230 v1 v2
 du_DecEq'45'PParamsUpdate_1230 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PParamsUpdate_1230 v0 v1
   = coe
@@ -4112,7 +4112,7 @@ du_DecEq'45'PParamsUpdate_1230 v0 v1
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'CostModel_220
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                                                                         (coe
                                                                                                                            v1))))
                                                                                                                (coe
@@ -4221,7 +4221,7 @@ du_DecEq'45'PParamsUpdate_1230 v0 v1
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEQ'45'Prices_230
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                                        (coe v1))))
                                                                               (coe v50) (coe v16)))
                                                                         (coe
@@ -4276,7 +4276,7 @@ du_DecEq'45'PParamsUpdate_1230 v0 v1
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'ExUnits_228
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                   (coe v1))))
                                                          (coe v43) (coe v9)))
                                                    (coe
@@ -4286,7 +4286,7 @@ du_DecEq'45'PParamsUpdate_1230 v0 v1
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'ExUnits_228
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
                                                                (coe v1))))
                                                       (coe v42) (coe v8)))
                                                 (coe
@@ -4434,7 +4434,7 @@ du_DecEq'45'PParamsUpdate_1230 v0 v1
 d_pvCanFollow'63'_1236 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
@@ -4959,7 +4959,7 @@ d_ppWF'63'_1308 v0
 d_ppdWellFormed_1310 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsDiff_1284 -> AgdaAny -> ()
 d_ppdWellFormed_1310 = erased
 -- Ledger.Conway.Conformance.PParams.GovParams
@@ -4984,7 +4984,7 @@ d_ppWF'63'_1326 v0 = coe d_ppWF'63'_1308 (coe v0)
 d_ppdWellFormed_1328 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_PParamsDiff_1284 -> AgdaAny -> ()
 d_ppdWellFormed_1328 = erased
 -- Ledger.Conway.Conformance.PParams._.updateGroups
@@ -5015,7 +5015,7 @@ d_ppWF'63'_1356 v0
 d_ppdWellFormed_1358 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406 ->
   T_GovParams_1316 -> AgdaAny -> ()
 d_ppdWellFormed_1358 = erased
 -- Ledger.Conway.Conformance.PParams.GovParams._.updateGroups

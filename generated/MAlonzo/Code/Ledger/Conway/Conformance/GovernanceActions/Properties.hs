@@ -202,12 +202,12 @@ d_Computational'45'ENACT_926 v0
                                                                   v4)))))
                                                  v10))
                                          (coe
-                                            MAlonzo.Code.Interface.IsSet.du_range_542
+                                            MAlonzo.Code.Interface.IsSet.du_range_552
                                             (coe
                                                MAlonzo.Code.Axiom.Set.d_th_1458
                                                (coe
                                                   MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-                                            (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_548)
+                                            (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_558)
                                             (coe v7))) in
                             coe
                               (case coe v10 of
@@ -250,7 +250,7 @@ d_Computational'45'ENACT_926 v0
                                                                                       (coe v15))) in
                                                                       coe
                                                                         (coe
-                                                                           MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1264
+                                                                           MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1382
                                                                            (coe
                                                                               MAlonzo.Code.Axiom.Set.d_th_1458
                                                                               (coe
@@ -284,7 +284,7 @@ d_Computational'45'ENACT_926 v0
                                                                                                v16))) in
                                                                             coe
                                                                               (coe
-                                                                                 MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__884
+                                                                                 MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__888
                                                                                  (coe
                                                                                     MAlonzo.Code.Axiom.Set.d_th_1458
                                                                                     (coe
@@ -304,7 +304,7 @@ d_Computational'45'ENACT_926 v0
                                                                                     (coe
                                                                                        MAlonzo.Code.Interface.HasEmptySet.d_'8709'_12
                                                                                        (coe
-                                                                                          MAlonzo.Code.Interface.HasEmptySet.Instances.du_HasEmptySet'45'Map_302
+                                                                                          MAlonzo.Code.Interface.HasEmptySet.Instances.du_HasEmptySet'45'Map_310
                                                                                           (coe
                                                                                              MAlonzo.Code.Axiom.Set.d_th_1458
                                                                                              (coe
@@ -438,7 +438,7 @@ d_Computational'45'ENACT_926 v0
                                          (coe
                                             MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2802
                                             (coe
-                                               MAlonzo.Code.Ledger.Set.Theory.du_indexedSum'7515'''_1160
+                                               MAlonzo.Code.Ledger.Set.Theory.du_indexedSum'7515'''_1180
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Address.du_DecEq'45'RwdAddr_198
                                                   (coe
@@ -468,7 +468,7 @@ d_Computational'45'ENACT_926 v0
                                                      MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
                                                (coe (\ v8 -> v8))
                                                (coe
-                                                  MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__496
+                                                  MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__504
                                                   MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10
                                                   (coe
                                                      MAlonzo.Code.Interface.IsCommutativeMonoid.du_toCommMonoid''_62
@@ -522,7 +522,7 @@ d_Computational'45'ENACT_926 v0
                                                                MAlonzo.Code.Ledger.Conway.Conformance.Enact.d_pparams_874
                                                                (coe v5))
                                                             (coe
-                                                               MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__496
+                                                               MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__504
                                                                MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10
                                                                MAlonzo.Code.Interface.IsCommutativeMonoid.d_ℕ'45'commMonoid''_78
                                                                (let v12

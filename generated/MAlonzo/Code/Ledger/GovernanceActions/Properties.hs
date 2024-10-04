@@ -241,7 +241,7 @@ d_Computational'45'ENACT_922 v0
                                                                                       (coe v15))) in
                                                                       coe
                                                                         (coe
-                                                                           MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1264
+                                                                           MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1266
                                                                            (coe
                                                                               MAlonzo.Code.Axiom.Set.d_th_1458
                                                                               (coe
@@ -275,7 +275,7 @@ d_Computational'45'ENACT_922 v0
                                                                                                v16))) in
                                                                             coe
                                                                               (coe
-                                                                                 MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__884
+                                                                                 MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__886
                                                                                  (coe
                                                                                     MAlonzo.Code.Axiom.Set.d_th_1458
                                                                                     (coe
@@ -400,7 +400,7 @@ d_Computational'45'ENACT_922 v0
                                          (coe
                                             MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2802
                                             (coe
-                                               MAlonzo.Code.Ledger.Set.Theory.du_indexedSum'7515'''_1160
+                                               MAlonzo.Code.Ledger.Set.Theory.du_indexedSum'7515'''_1162
                                                (coe
                                                   MAlonzo.Code.Ledger.Address.du_DecEq'45'RwdAddr_194
                                                   (coe

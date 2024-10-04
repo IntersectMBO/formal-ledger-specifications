@@ -11,8 +11,7 @@ import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.PParams     as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Transaction as X
   ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
-  , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Wdrl
-  , HashedTimelock(..))
+  , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Wdrl)
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Cert        as X
   (certStep, certsStep, CertState(..))
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Chain       as X
@@ -34,7 +33,7 @@ import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.NewEpoch    as X
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Ratify      as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep, ratifyDebug)
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Utxo        as X
-  (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer, utxoDebug)
+  (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer)
 import MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes   as X
   (Coin, ExUnits, Epoch)
 

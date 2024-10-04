@@ -505,7 +505,7 @@ du_certDeposit_984 ::
 du_certDeposit_984 v0
   = let v1
           = coe
-              MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_564
+              MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_566
               (coe
                  MAlonzo.Code.Axiom.Set.d_th_1458
                  (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)) in
@@ -513,7 +513,7 @@ du_certDeposit_984 v0
       (case coe v0 of
          MAlonzo.Code.Ledger.Certs.C_delegate_858 v2 v3 v4 v5
            -> coe
-                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_732
+                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_734
                 (coe
                    MAlonzo.Code.Axiom.Set.d_th_1458
                    (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
@@ -523,7 +523,7 @@ du_certDeposit_984 v0
                    (coe v5))
          MAlonzo.Code.Ledger.Certs.C_regdrep_866 v2 v3 v4
            -> coe
-                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_732
+                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_734
                 (coe
                    MAlonzo.Code.Axiom.Set.d_th_1458
                    (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
@@ -580,7 +580,7 @@ du_updateCertDeposit_1000 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_updateCertDeposit_1000 v0 v1 v2
   = coe
-      MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1264
+      MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1266
       (coe
          MAlonzo.Code.Axiom.Set.d_th_1458
          (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
@@ -625,7 +625,7 @@ data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1156
 d__'8866'_'8640''10631'_'44'CERT'10632'__1234 a0 a1 a2 a3 a4 = ()
 data T__'8866'_'8640''10631'_'44'CERT'10632'__1234
   = C_CERT'45'deleg_1236 T__'8866'_'8640''10631'_'44'DELEG'10632'__1082 |
-    C_CERT'45'pool_1238 MAlonzo.Code.Ledger.Certs.T__'8866'_'8640''10631'_'44'POOL'10632'__1066 |
+    C_CERT'45'pool_1238 MAlonzo.Code.Ledger.Certs.T__'8866'_'8640''10631'_'44'POOL'10632'__1074 |
     C_CERT'45'vdel_1240 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1156
 -- Ledger.Certs.Haskell._⊢_⇀⦇_,CERTBASE⦈_
 d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1242 a0 a1 a2 a3 a4

@@ -716,7 +716,7 @@ du_modifyVotes_1146 v0 v1 v2 v3 v4
             (coe
                (\ v5 ->
                   coe
-                    MAlonzo.Code.Axiom.Set.Map.du_insert_906
+                    MAlonzo.Code.Axiom.Set.Map.du_insert_908
                     (coe
                        MAlonzo.Code.Axiom.Set.d_th_1458
                        (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
@@ -785,7 +785,7 @@ du_mkGovStatePair_1156 v0 v1 v2 v3 v4
       (coe
          MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_6761
          (coe
-            MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_564
+            MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_566
             (coe
                MAlonzo.Code.Axiom.Set.d_th_1458
                (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)))
@@ -1129,7 +1129,7 @@ d_enactable'63'_1482 v0 v1 v2 v3
                   -> coe
                        MAlonzo.Code.Function.Bundles.d_from_1726
                        (coe
-                          MAlonzo.Code.Axiom.Set.Properties.du_'8707''63''45'sublist'45''8660'_1056
+                          MAlonzo.Code.Axiom.Set.Properties.du_'8707''63''45'sublist'45''8660'_1062
                           (coe
                              MAlonzo.Code.Axiom.Set.d_th_1458
                              (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
