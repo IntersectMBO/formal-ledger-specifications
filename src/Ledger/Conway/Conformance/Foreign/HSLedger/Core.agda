@@ -117,9 +117,9 @@ instance
     HSPKKScheme : PKKScheme
     HSPKKScheme = record
       { Implementation
-      ; isSigned         = λ a b m → a + b ≡ m
-      ; sign             = _+_
-      ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
+      ; isSigned         = λ a b m → ⊤
+      ; sign             = λ _ _ → zero
+      ; isSigned-correct = λ where (sk , sk , refl) _ _ h → tt
       }
 
 -- No P2 scripts for now

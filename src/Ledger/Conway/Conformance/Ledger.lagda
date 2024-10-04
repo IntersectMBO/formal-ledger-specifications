@@ -93,13 +93,16 @@ data
 \begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+  LEDGER-V :
+    let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ
+        utxoSt'' = record utxoSt' { deposits = updateDeposits pparams txb (deposits utxoSt') }
+     in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState' ⟧ˡ
 \end{code}
 \begin{NoConway}
 \begin{code}
