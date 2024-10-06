@@ -15,10 +15,10 @@ import Lib
 (.->) = (,)
 
 drepThresholds :: DrepThresholds
-drepThresholds = DrepThresholds 0 0 0 0 0 0 0 0 0 0
+drepThresholds = MkDrepThresholds 0 0 0 0 0 0 0 0 0 0
 
 poolThresholds :: PoolThresholds
-poolThresholds = PoolThresholds 0 0 0 0 0
+poolThresholds = MkPoolThresholds 0 0 0 0 0
 
 initParams :: PParams
 initParams = MkPParams
@@ -36,7 +36,7 @@ initParams = MkPParams
   , ppPoolDeposit = 10
   , ppEmax = 10
   , ppPv = (1, 0)
-  , ppCoinsPerUTxOByte = 1
+  , ppCoinsPerUTxOByte = 0
   , ppMaxCollateralInputs = 1
   , ppMaxTxExUnits = (10000000000 , 14000000)    -- from ScriptVerification.Lib
   , ppMaxBlockExUnits = (40000000000 , 62000000) -- from ScriptVerification.Lib
