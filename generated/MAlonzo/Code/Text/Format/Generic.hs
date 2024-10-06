@@ -28,7 +28,6 @@ import qualified MAlonzo.Code.Data.Maybe.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Data.Sum.Effectful.Left
 import qualified MAlonzo.Code.Effect.Applicative
-import qualified MAlonzo.Code.Effect.Functor
 import qualified MAlonzo.Code.Function.Base
 import qualified MAlonzo.Code.Function.Strict
 import qualified MAlonzo.Code.Level
@@ -60,13 +59,13 @@ d_unionSpec_24 v0 v1
       C_FormatSpec'46'constructor_27
       (\ v2 ->
          coe
-           MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__84
+           MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80
            (coe
-              MAlonzo.Code.Data.Maybe.Base.du_map_68
+              MAlonzo.Code.Data.Maybe.Base.du_map_64
               (coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38)
               (coe d_lexArg_18 v0 v2))
            (coe
-              MAlonzo.Code.Data.Maybe.Base.du_map_68
+              MAlonzo.Code.Data.Maybe.Base.du_map_64
               (coe MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42)
               (coe d_lexArg_18 v1 v2)))
 -- Text.Format.Generic.Format._.ArgChunk
@@ -95,7 +94,7 @@ du_size_68 :: [T_Chunk_60] -> Integer
 du_size_68
   = coe
       MAlonzo.Code.Function.Base.du__'8728''8242'__216
-      (coe MAlonzo.Code.Data.List.Base.d_sum_300)
+      (coe MAlonzo.Code.Data.List.Base.d_sum_280)
       (coe
          MAlonzo.Code.Data.List.Base.du_map_22
          (coe
@@ -164,7 +163,7 @@ du_toRevString_134
   = coe
       MAlonzo.Code.Function.Base.du__'8728''8242'__216
       (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
-      (coe MAlonzo.Code.Data.List.Base.du_reverse_536)
+      (coe MAlonzo.Code.Data.List.Base.du_reverse_460)
 -- Text.Format.Generic.Format._.push
 d_push_136 ::
   T_FormatSpec_6 ->
@@ -196,8 +195,7 @@ d_loop_144 v0 v1 v2 v3 v4
   = case coe v4 of
       []
         -> coe
-             MAlonzo.Code.Effect.Applicative.d_pure_32
-             (coe MAlonzo.Code.Data.Sum.Effectful.Left.du_applicative_20) erased
+             MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
              (coe du_push_136 (coe v2) (coe v4))
       (:) v5 v6
         -> let v7
@@ -213,10 +211,8 @@ d_loop_144 v0 v1 v2 v3 v4
                 '%'
                   -> let v8
                            = coe
-                               MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
-                               (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30
-                                  (coe MAlonzo.Code.Data.Sum.Effectful.Left.du_applicative_20))
-                               erased erased (coe du_push_136 (coe v2))
+                               MAlonzo.Code.Data.Sum.Base.du_map'8322'_94
+                               (coe du_push_136 (coe v2))
                                (d_type_146
                                   (coe v0) (coe v1)
                                   (coe
@@ -261,10 +257,8 @@ d_type_146 v0 v1 v2 v3
              MAlonzo.Code.Effect.Applicative.du__'8859'__70
              (coe MAlonzo.Code.Data.Sum.Effectful.Left.du_applicative_20)
              (coe
-                MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
-                (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30
-                   (coe MAlonzo.Code.Data.Sum.Effectful.Left.du_applicative_20))
-                erased erased (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22)
+                MAlonzo.Code.Data.Sum.Base.du_map'8322'_94
+                (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22)
                 (coe du_chunk_184 (coe v0) (coe v2) (coe v5) (coe v4)))
              (d_loop_144
                 (coe v0) (coe v1)
@@ -295,9 +289,7 @@ du_chunk_184 v0 v1 v2 v3
       (case coe v4 of
          MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v5
            -> coe
-                MAlonzo.Code.Effect.Applicative.d_pure_32
-                (coe MAlonzo.Code.Data.Sum.Effectful.Left.du_applicative_20) erased
-                (coe C_Arg_62 (coe v5))
+                MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 (coe C_Arg_62 (coe v5))
          MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
            -> coe
                 MAlonzo.Code.Function.Strict.du_force'8242'_56 ()

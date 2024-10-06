@@ -17,6 +17,7 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Algebra.Lattice.Bundles
 import qualified MAlonzo.Code.Reflection.Debug
 
@@ -25,17 +26,10 @@ d_defaultDebugOptionsI_2 ::
   MAlonzo.Code.Reflection.Debug.T_DebugOptions_234
 d_defaultDebugOptionsI_2
   = coe
-      MAlonzo.Code.Reflection.Debug.C_DebugOptions'46'constructor_1911
-      (coe
-         MAlonzo.Code.Reflection.Debug.d_path_246
-         (coe MAlonzo.Code.Reflection.Debug.d_defaultDebugOptions_256))
+      MAlonzo.Code.Reflection.Debug.C_DebugOptions'46'constructor_1907
+      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (coe MAlonzo.Code.Reflection.Debug.C_All_62)
       (coe
-         MAlonzo.Code.Algebra.Lattice.Bundles.d_'8869'_714
+         MAlonzo.Code.Algebra.Lattice.Bundles.d_'8869'_716
          (coe MAlonzo.Code.Reflection.Debug.d_Filter'45'Alg_70))
-      (coe
-         MAlonzo.Code.Reflection.Debug.d_level_252
-         (coe MAlonzo.Code.Reflection.Debug.d_defaultDebugOptions_256))
-      (coe
-         MAlonzo.Code.Reflection.Debug.d_prefix_254
-         (coe MAlonzo.Code.Reflection.Debug.d_defaultDebugOptions_256))
+      (coe (100 :: Integer)) (coe '|')

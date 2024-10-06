@@ -22,9 +22,6 @@ import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
-import qualified MAlonzo.Code.Class.Monad.Core
-import qualified MAlonzo.Code.Class.Monad.Instances
-import qualified MAlonzo.Code.Class.MonadTC
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Reflection.Utils
 
@@ -33,23 +30,19 @@ d_by'45'eq_4 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
 d_by'45'eq_4 v0
   = coe
-      MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-      MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+      MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased
       (coe
-         MAlonzo.Code.Agda.Builtin.Reflection.d_withNormalisation_424 ()
+         MAlonzo.Code.Agda.Builtin.Reflection.d_withNormalisation_428 ()
          erased (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
-         (coe
-            MAlonzo.Code.Class.MonadTC.d_inferType_148
-            MAlonzo.Code.Class.MonadTC.d_MonadTC'45'TC_742 v0))
+         (coe MAlonzo.Code.Agda.Builtin.Reflection.d_inferType_346 v0))
       (\ v1 ->
          coe
-           MAlonzo.Code.Class.MonadTC.d_unify_142
-           MAlonzo.Code.Class.MonadTC.d_MonadTC'45'TC_742 v0
+           MAlonzo.Code.Agda.Builtin.Reflection.d_unify_338 v0
            (coe
               MAlonzo.Code.Agda.Builtin.Reflection.C_pat'45'lam_196
               (coe
-                 MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                 MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                  (coe
                     MAlonzo.Code.Agda.Builtin.Reflection.C_clause_272
                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)

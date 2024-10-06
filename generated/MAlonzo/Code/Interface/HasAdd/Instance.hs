@@ -18,6 +18,7 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
 import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Data.Integer.Base
+import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Interface.HasAdd
 
@@ -33,9 +34,15 @@ d_addNat_8
   = coe
       MAlonzo.Code.Interface.HasAdd.C_HasAdd'46'constructor_7
       (coe addInt)
+-- Interface.HasAdd.Instance.addRat
+d_addRat_10 :: MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
+d_addRat_10
+  = coe
+      MAlonzo.Code.Interface.HasAdd.C_HasAdd'46'constructor_7
+      (coe MAlonzo.Code.Data.Rational.Base.d__'43'__270)
 -- Interface.HasAdd.Instance.addString
-d_addString_10 :: MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
-d_addString_10
+d_addString_12 :: MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
+d_addString_12
   = coe
       MAlonzo.Code.Interface.HasAdd.C_HasAdd'46'constructor_7
       (coe MAlonzo.Code.Data.String.Base.d__'43''43'__20)

@@ -289,11 +289,14 @@ du_linked'63'_186 v0 v1
                        (coe C_'91''45''93'_34))
              (:) v4 v5
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
                     (coe
                        MAlonzo.Code.Data.Product.Base.du_uncurry_244 (coe C__'8759'__42))
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__74
+                       MAlonzo.Code.Data.Product.Base.du_'60'_'44'_'62'_112
+                       (coe du_head_58) (coe du_tail_68))
+                    (coe
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
                        (coe v0 v2 v4) (coe du_linked'63'_186 (coe v0) (coe v3)))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError

@@ -55,7 +55,7 @@ du_just'45'equivalence_52 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_just'45'equivalence_52
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296 (coe C_just_30)
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 (coe C_just_30)
       (coe du_drop'45'just_46)
 -- Data.Maybe.Relation.Unary.Any._.map
 d_map_58 ::

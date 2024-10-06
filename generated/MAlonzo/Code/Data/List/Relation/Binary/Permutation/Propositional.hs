@@ -195,7 +195,7 @@ du_'8621''45'isEquivalence_82 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
 du_'8621''45'isEquivalence_82
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_743
+      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
       (\ v0 -> coe C_refl_20) (coe du_'8621''45'sym_56)
       (\ v0 v1 v2 v3 v4 -> coe du_'8621''45'trans_72 v0 v1 v3 v4)
 -- Data.List.Relation.Binary.Permutation.Propositional.↭-setoid
@@ -207,7 +207,7 @@ du_'8621''45'setoid_84 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_'8621''45'setoid_84
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_727
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
       (coe du_'8621''45'isEquivalence_82)
 -- Data.List.Relation.Binary.Permutation.Propositional.PermutationReasoning.Base._IsRelatedTo_
 d__IsRelatedTo__90 a0 a1 a2 a3 = ()
@@ -461,9 +461,7 @@ du_step'45''8621'_130
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621'_420
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_'8764''45'go_40
-         (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_trans_38
-            (coe du_'8621''45'isEquivalence_82)))
+         (\ v0 v1 v2 v3 v4 -> coe du_'8621''45'trans_72 v0 v1 v3 v4))
 -- Data.List.Relation.Binary.Permutation.Propositional.PermutationReasoning._.step-↭-⟨
 d_step'45''8621''45''10216'_132 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -488,9 +486,7 @@ du_step'45''8621''45''10216'_132
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''45''10216'_418
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_'8764''45'go_40
-         (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_trans_38
-            (coe du_'8621''45'isEquivalence_82)))
+         (\ v0 v1 v2 v3 v4 -> coe du_'8621''45'trans_72 v0 v1 v3 v4))
       (coe du_'8621''45'sym_56)
 -- Data.List.Relation.Binary.Permutation.Propositional.PermutationReasoning._.step-↭-⟩
 d_step'45''8621''45''10217'_134 ::
@@ -516,9 +512,7 @@ du_step'45''8621''45''10217'_134
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''45''10217'_416
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_'8764''45'go_40
-         (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_trans_38
-            (coe du_'8621''45'isEquivalence_82)))
+         (\ v0 v1 v2 v3 v4 -> coe du_'8621''45'trans_72 v0 v1 v3 v4))
 -- Data.List.Relation.Binary.Permutation.Propositional.PermutationReasoning._.step-↭˘
 d_step'45''8621''728'_136 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -542,9 +536,7 @@ du_step'45''8621''728'_136
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''728'_422
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_'8764''45'go_40
-         (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_trans_38
-            (coe du_'8621''45'isEquivalence_82)))
+         (\ v0 v1 v2 v3 v4 -> coe du_'8621''45'trans_72 v0 v1 v3 v4))
       (coe du_'8621''45'sym_56)
 -- Data.List.Relation.Binary.Permutation.Propositional.PermutationReasoning.step-prep
 d_step'45'prep_146 ::

@@ -42,7 +42,6 @@ import qualified MAlonzo.Code.Data.List.NonEmpty.Base
 import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.MetaPrelude
-import qualified MAlonzo.Code.Reflection.AST.Name
 import qualified MAlonzo.Code.Reflection.Debug
 import qualified MAlonzo.Code.Reflection.Utils
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
@@ -309,7 +308,7 @@ du__'45''8729''45'__116 v0 v1 v2 v3 v4 v5
            (coe
               du_apply_38 (coe v0) (coe v1) (coe v2) (coe v3) (coe v6) (coe v4)
               (coe
-                 MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                 MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                  (coe
                     MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
                     (coe
@@ -809,7 +808,7 @@ du_unifyStricts_240 v0 v1 v2 v3 v4 v5
            MAlonzo.Code.Class.MonadError.d_catch_30 v1 () erased v6
            (\ v8 -> v7))
       (coe
-         MAlonzo.Code.Data.List.NonEmpty.Base.du__'8759''691'__276
+         MAlonzo.Code.Data.List.NonEmpty.Base.du__'8759''691'__284
          (coe
             MAlonzo.Code.Data.List.Base.du_map_22
             (coe du_unifyStrict_210 (coe v0) (coe v2) (coe v3) (coe v4))
@@ -890,7 +889,7 @@ du_logTelescope_264 v0 v1 v2 v3 v4
          MAlonzo.Code.Class.MonadError.d_catch_30 v1 () erased
          (coe
             du_helper_272 (coe v0) (coe v2) (coe v3)
-            (coe MAlonzo.Code.Data.List.Base.du_length_304 v4) (coe v4))
+            (coe MAlonzo.Code.Data.List.Base.du_length_284 v4) (coe v4))
          (\ v5 ->
             coe
               MAlonzo.Code.Class.MonadTC.du_debugLog1_596 (coe v0) (coe v3)
@@ -963,7 +962,7 @@ du_helper_272 v0 v1 v2 v3 v4
                                                      (addInt
                                                         (coe (1 :: Integer))
                                                         (coe
-                                                           MAlonzo.Code.Data.List.Base.du_length_304
+                                                           MAlonzo.Code.Data.List.Base.du_length_284
                                                            v6))))
                                              v10)
                                           (coe
@@ -1022,7 +1021,7 @@ du_logContext_296 v0 v1 v2 v3 v4
                MAlonzo.Code.Class.MonadError.d_catch_30 v1 () erased
                (coe
                   du_helper_304 (coe v0) (coe v2) (coe v3)
-                  (coe MAlonzo.Code.Data.List.Base.du_length_304 v4) (coe v4))
+                  (coe MAlonzo.Code.Data.List.Base.du_length_284 v4) (coe v4))
                (\ v5 ->
                   coe
                     MAlonzo.Code.Class.MonadTC.du_debugLog1_596 (coe v0) (coe v3)
@@ -1128,7 +1127,7 @@ du_helper_304 v0 v1 v2 v3 v4
                                           MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22 v3
                                           (addInt
                                              (coe (1 :: Integer))
-                                             (coe MAlonzo.Code.Data.List.Base.du_length_304 v6)))
+                                             (coe MAlonzo.Code.Data.List.Base.du_length_284 v6)))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
                                     (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'Term_24)
                                     (coe
@@ -1145,7 +1144,7 @@ du_helper_304 v0 v1 v2 v3 v4
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22 v3
                                                      (coe
-                                                        MAlonzo.Code.Data.List.Base.du_length_304
+                                                        MAlonzo.Code.Data.List.Base.du_length_284
                                                         v6))
                                                   (coe v11))
                                              v10)
@@ -1211,10 +1210,10 @@ du_inDebugPath_328 v0 v1 v2 v3 v4 v5
             (coe
                MAlonzo.Code.Reflection.Debug.du__'8759''7496'__38
                (coe
-                  MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+                  MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                   (coe ("*****" :: Data.Text.Text))
                   (coe
-                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__46 (coe v4)
+                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__50 (coe v4)
                      (coe ("*****" :: Data.Text.Text))))
                (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22)
                (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -1245,7 +1244,7 @@ du_viewAndReduceTy_334 v0 v1 v2 v3
          erased () erased
          (\ v4 ->
             coe
-              MAlonzo.Code.Data.List.Base.du_length_304
+              MAlonzo.Code.Data.List.Base.du_length_284
               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                  (coe MAlonzo.Code.Reflection.Utils.d_viewTy_146 (coe v4))))
          (coe MAlonzo.Code.Class.MonadTC.d_normalise_152 v2 v3))
@@ -1307,7 +1306,7 @@ du_helper_342 v0 v1 v2 v3 v4
                                               (coe
                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                  (coe
-                                                    MAlonzo.Code.Data.List.Base.du__'43''43'__62
+                                                    MAlonzo.Code.Data.List.Base.du__'43''43'__32
                                                     (coe v7) (coe v11))
                                                  (coe v12))
                                        _ -> MAlonzo.RTE.mazUnreachableError)))
@@ -1384,9 +1383,8 @@ du_getDataDef_380 v0 v1 v2 v3 v4
                                  MAlonzo.Code.Class.MonadTC.du__'8759''7496''7504'__408 (coe v0)
                                  (coe ("Constructor names: " :: Data.Text.Text))
                                  (coe
-                                    MAlonzo.Code.Class.MonadTC.du_IsMErrorPart'45'IsErrorPart_390
-                                    (coe v0)
-                                    (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22))
+                                    MAlonzo.Code.Class.MonadTC.du_IsMErrorPart'45'String_394
+                                    (coe v0))
                                  (coe
                                     MAlonzo.Code.Class.MonadTC.du__'8759''7496''7504'__408 (coe v0)
                                     (coe
@@ -1466,10 +1464,10 @@ du_getDataDef_380 v0 v1 v2 v3 v4
                                               MAlonzo.Code.Reflection.Utils.C_DataDef'46'constructor_181
                                               (coe v4) (coe v9)
                                               (coe
-                                                 MAlonzo.Code.Data.List.Base.du_take_622 (coe v7)
+                                                 MAlonzo.Code.Data.List.Base.du_take_546 (coe v7)
                                                  (coe v10))
                                               (coe
-                                                 MAlonzo.Code.Data.List.Base.du_drop_634 (coe v7)
+                                                 MAlonzo.Code.Data.List.Base.du_drop_558 (coe v7)
                                                  (coe v10)))))))
                     _ -> coe v6))))
 -- Reflection.Utils.TCI.getRecordDef
@@ -1512,7 +1510,7 @@ du_getRecordDef_398 v0 v1 v2 v3 v4
                         coe
                           MAlonzo.Code.Class.Monad.Core.d_return_16 v0 () erased
                           (coe
-                             MAlonzo.Code.Reflection.Utils.C_RecordDef'46'constructor_299
+                             MAlonzo.Code.Reflection.Utils.C_RecordDef'46'constructor_311
                              (coe v7) (coe v8) (coe v9)))
               _ -> coe v6))
 -- Reflection.Utils.TCI.getDataOrRecordDef
@@ -1603,7 +1601,7 @@ du_getParamsAndIndices_422 v0 v1 v2 v3 v4
          (coe
             (\ v5 ->
                coe
-                 MAlonzo.Code.Data.List.Base.du__'43''43'__62
+                 MAlonzo.Code.Data.List.Base.du__'43''43'__32
                  (coe MAlonzo.Code.Reflection.Utils.d_params_26 (coe v5))
                  (coe MAlonzo.Code.Reflection.Utils.d_indices_28 (coe v5))))
          (coe (\ v5 -> MAlonzo.Code.Reflection.Utils.d_params_42 (coe v5))))
@@ -1634,7 +1632,7 @@ du_getFuel_428 v0 v1 v2 v3
          (coe
             (\ v4 ->
                case coe v4 of
-                 MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_243 v5 v6 v7 v8 v9 v10 v11 v12
+                 MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_245 v5 v6 v7 v8 v9 v10 v11 v12
                    -> case coe v12 of
                         MAlonzo.Code.Class.MonadTC.C_TCOptions'46'constructor_89 v13 v14
                           -> coe v14
@@ -1647,7 +1645,7 @@ du_getFuel_428 v0 v1 v2 v3
                    (coe
                       (\ v5 v6 ->
                          coe
-                           MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_112 ()
+                           MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_130 ()
                            erased
                            (coe
                               MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
@@ -1662,10 +1660,10 @@ du_getFuel_428 v0 v1 v2 v3
                      MAlonzo.Code.Class.MonadTC.du_error1_592 (coe v1) (coe ())
                      (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_22)
                      (coe
-                        MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+                        MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                         (coe ("Key" :: Data.Text.Text))
                         (coe
-                           MAlonzo.Code.Data.String.Base.d__'60''43''62'__46 (coe v3)
+                           MAlonzo.Code.Data.String.Base.d__'60''43''62'__50 (coe v3)
                            (coe ("doesn't exist in the fuels map" :: Data.Text.Text))))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Reflection.Utils.TCI.isSort
@@ -1730,12 +1728,12 @@ du_isNArySort_452 v0 v1 v2 v3 v4
                        MAlonzo.Code.Class.Monad.Core.d_return_16 v0 () erased
                        (MAlonzo.Code.Data.Bool.Base.d__'8743'__24
                           (coe
-                             MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_112 ()
+                             MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_130 ()
                              erased
                              (coe
                                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
-                                (coe MAlonzo.Code.Data.List.Base.du_length_304 v6) v3))
+                                (coe MAlonzo.Code.Data.List.Base.du_length_284 v6) v3))
                           (coe v8)))
            _ -> MAlonzo.RTE.mazUnreachableError)
 -- Reflection.Utils.TCI.isDefT
@@ -1768,9 +1766,11 @@ du_isDefT_466 v0 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Class.Monad.Core.d_return_16 v0 () erased
                      (coe
-                        MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_112 ()
+                        MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_130 ()
                         erased
-                        (MAlonzo.Code.Reflection.AST.Name.d__'8799'__12 (coe v2) (coe v6)))
+                        (coe
+                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Name_178 v2 v6))
               _ -> coe v5))
 -- Reflection.Utils.TCI.withSafeReset
 d_withSafeReset_476 ::
@@ -1797,7 +1797,7 @@ du_withSafeReset_476 v0 v1 v2 v3 v4
             coe
               MAlonzo.Code.Data.Bool.Base.du_if_then_else__44
               (coe
-                 MAlonzo.Code.Data.List.Base.du_null_282
+                 MAlonzo.Code.Data.List.Base.du_null_262
                  (coe MAlonzo.Code.Reflection.Utils.d_findMetas_58 (coe v5)))
               (coe MAlonzo.Code.Class.Monad.Core.d_return_16 v0 () erased v5)
               (coe
@@ -1874,7 +1874,7 @@ du_applyWithVisibility_484 v0 v1 v2 v3 v4 v5
                   MAlonzo.Code.Class.MonadTC.du_nameConstr_220 (coe v0) (coe v1)
                   (coe v3) (coe v4)
                   (coe
-                     MAlonzo.Code.Data.List.Base.du_zipWith_134
+                     MAlonzo.Code.Data.List.Base.du_zipWith_104
                      (coe
                         (\ v9 ->
                            case coe v9 of

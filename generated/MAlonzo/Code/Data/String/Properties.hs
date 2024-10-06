@@ -128,7 +128,7 @@ d_'8776''45'isEquivalence_34 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
 d_'8776''45'isEquivalence_34
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_743
+      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
       (coe d_'8776''45'refl_10) (coe d_'8776''45'sym_14)
       (coe d_'8776''45'trans_16)
 -- Data.String.Properties.≈-setoid
@@ -136,21 +136,21 @@ d_'8776''45'setoid_48 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 d_'8776''45'setoid_48
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_727
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
       d_'8776''45'isEquivalence_34
 -- Data.String.Properties.≈-isDecEquivalence
 d_'8776''45'isDecEquivalence_50 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecEquivalence_44
 d_'8776''45'isDecEquivalence_50
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecEquivalence'46'constructor_3075
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecEquivalence'46'constructor_3083
       (coe d_'8776''45'isEquivalence_34) (coe d__'8776''63'__28)
 -- Data.String.Properties.≈-decSetoid
 d_'8776''45'decSetoid_52 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84
 d_'8776''45'decSetoid_52
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1377
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1389
       d_'8776''45'isDecEquivalence_50
 -- Data.String.Properties._≟_
 d__'8799'__54 ::
@@ -159,8 +159,9 @@ d__'8799'__54 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d__'8799'__54 v0 v1
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
-      erased (coe d__'8776''63'__28 (coe v0) (coe v1))
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+      erased (\ v2 -> coe du_'8776''45'reflexive_8 (coe v0))
+      (coe d__'8776''63'__28 (coe v0) (coe v1))
 -- Data.String.Properties.≡-setoid
 d_'8801''45'setoid_60 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
@@ -280,5 +281,5 @@ d__'61''61'__86 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 -> Bool
 d__'61''61'__86 v0 v1
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_isYes_104
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_isYes_122
       (coe d__'8799'__54 (coe v0) (coe v1))

@@ -105,7 +105,7 @@ du_isEquivalence_44 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
 du_isEquivalence_44 v0 v1
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_743
+      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
       (coe
          du_refl_28 (coe v0)
          (coe MAlonzo.Code.Relation.Binary.Structures.d_refl_34 (coe v1)))

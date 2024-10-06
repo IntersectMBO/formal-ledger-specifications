@@ -94,7 +94,7 @@ du_'8801''45'isPreorder_28 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
 du_'8801''45'isPreorder_28
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPreorder'46'constructor_3993
+      MAlonzo.Code.Relation.Binary.Structures.C_IsPreorder'46'constructor_4003
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_isEquivalence_396)
       (coe (\ v0 v1 v2 -> v2)) erased
@@ -107,7 +107,7 @@ du_'8801''45'isPartialOrder_36 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
 du_'8801''45'isPartialOrder_36
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9831
+      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9853
       (coe du_'8801''45'isPreorder_28) erased
 -- Data.Unit.Polymorphic.Properties.≡-isTotalOrder
 d_'8801''45'isTotalOrder_42 ::
@@ -118,7 +118,7 @@ du_'8801''45'isTotalOrder_42 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsTotalOrder_404
 du_'8801''45'isTotalOrder_42
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsTotalOrder'46'constructor_20499
+      MAlonzo.Code.Relation.Binary.Structures.C_IsTotalOrder'46'constructor_20555
       (coe du_'8801''45'isPartialOrder_36)
       (\ v0 v1 -> coe du_'8801''45'total_20)
 -- Data.Unit.Polymorphic.Properties.≡-isDecTotalOrder
@@ -131,7 +131,7 @@ du_'8801''45'isDecTotalOrder_48 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_460
 du_'8801''45'isDecTotalOrder_48
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecTotalOrder'46'constructor_22635
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecTotalOrder'46'constructor_22695
       (coe du_'8801''45'isTotalOrder_42) (\ v0 v1 -> coe du__'8799'__10)
       (\ v0 v1 -> coe du__'8799'__10)
 -- Data.Unit.Polymorphic.Properties.≡-preorder
@@ -143,7 +143,7 @@ du_'8801''45'preorder_54 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132
 du_'8801''45'preorder_54
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Preorder'46'constructor_2249
+      MAlonzo.Code.Relation.Binary.Bundles.C_Preorder'46'constructor_2267
       (coe du_'8801''45'isPreorder_28)
 -- Data.Unit.Polymorphic.Properties.≡-poset
 d_'8801''45'poset_60 ::
@@ -154,7 +154,7 @@ du_'8801''45'poset_60 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
 du_'8801''45'poset_60
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6347
+      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6389
       (coe du_'8801''45'isPartialOrder_36)
 -- Data.Unit.Polymorphic.Properties.≡-totalOrder
 d_'8801''45'totalOrder_66 ::
@@ -165,7 +165,7 @@ du_'8801''45'totalOrder_66 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764
 du_'8801''45'totalOrder_66
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_TotalOrder'46'constructor_15657
+      MAlonzo.Code.Relation.Binary.Bundles.C_TotalOrder'46'constructor_15747
       (coe du_'8801''45'isTotalOrder_42)
 -- Data.Unit.Polymorphic.Properties.≡-decTotalOrder
 d_'8801''45'decTotalOrder_72 ::
@@ -176,7 +176,7 @@ du_'8801''45'decTotalOrder_72 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_866
 du_'8801''45'decTotalOrder_72
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecTotalOrder'46'constructor_17747
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecTotalOrder'46'constructor_17849
       (coe du_'8801''45'isDecTotalOrder_48)
 -- Data.Unit.Polymorphic.Properties.⊤↔⊤*
 d_'8868''8596''8868''42'_76 ::
@@ -187,7 +187,7 @@ du_'8868''8596''8868''42'_76 ::
   MAlonzo.Code.Function.Bundles.T_Inverse_1960
 du_'8868''8596''8868''42'_76
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8596'_2348
+      MAlonzo.Code.Function.Bundles.du_mk'8596'_2350
       (coe (\ v0 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
       (coe
          (\ v0 ->

@@ -117,10 +117,11 @@ du_unAbs'45'dec_46 v0 v1 v2
         -> case coe v1 of
              MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122 v5 v6
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
                     (coe MAlonzo.Code.Data.Product.Base.du_uncurry_244 erased)
+                    (coe du_abs'45'injective_34)
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__74
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
                        (coe
                           MAlonzo.Code.Data.String.Properties.d__'8799'__54 (coe v3)
                           (coe v5))

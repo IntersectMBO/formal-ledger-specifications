@@ -17,7 +17,6 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
-import qualified MAlonzo.Code.Agda.Builtin.Char
 import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Agda.Builtin.String
@@ -72,23 +71,23 @@ d_printfSpec_24
                        -> coe
                             (\ v2 ->
                                coe
-                                 MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
-                                 (coe MAlonzo.Code.Agda.Builtin.Reflection.C_termErr_310 (coe v2)))
+                                 MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
+                                 (coe MAlonzo.Code.Agda.Builtin.Reflection.C_termErr_312 (coe v2)))
                      C_'96'Name_16
                        -> coe
                             (\ v2 ->
                                coe
-                                 MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
-                                 (coe MAlonzo.Code.Agda.Builtin.Reflection.C_nameErr_314 (coe v2)))
+                                 MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
+                                 (coe MAlonzo.Code.Agda.Builtin.Reflection.C_nameErr_316 (coe v2)))
                      C_'96'Parts_18 -> coe (\ v2 -> v2)
                      _ -> MAlonzo.RTE.mazUnreachableError
               MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v1
                 -> coe
                      (\ v2 ->
                         coe
-                          MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                          MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                           (coe
-                             MAlonzo.Code.Agda.Builtin.Reflection.C_strErr_308
+                             MAlonzo.Code.Agda.Builtin.Reflection.C_strErr_310
                              (coe
                                 MAlonzo.Code.Text.Printf.Generic.d_renderArg_50
                                 MAlonzo.Code.Text.Printf.d_printfSpec_4 v1 v2)))
@@ -96,12 +95,8 @@ d_printfSpec_24
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
-              (coe MAlonzo.Code.Agda.Builtin.Reflection.C_strErr_308 (coe v0))))
--- Reflection.TCM.Format._.Chunk
-d_Chunk_42 = ()
--- Reflection.TCM.Format._.Error
-d_Error_44 = ()
+              MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
+              (coe MAlonzo.Code.Agda.Builtin.Reflection.C_strErr_310 (coe v0))))
 -- Reflection.TCM.Format._.lexer
 d_lexer_54 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
@@ -114,23 +109,6 @@ d_Printf_76 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> () -> ()
 d_Printf_76 = erased
--- Reflection.TCM.Format._.map
-d_map_78 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
-  (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_map_78 v0 v1 v2 v3 v4 v5 v6
-  = coe MAlonzo.Code.Text.Printf.Generic.du_map_118 v4 v5 v6
--- Reflection.TCM.Format._.printf
-d_printf_86 ::
-  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> AgdaAny
-d_printf_86
-  = coe
-      MAlonzo.Code.Text.Printf.Generic.du_printf_226
-      (coe d_formatSpec_22) (coe d_printfSpec_24)
 -- Reflection.TCM.Format.typeErrorFmt
 d_typeErrorFmt_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -148,8 +126,8 @@ du_typeErrorFmt_90 v0 v1
       (coe
          (\ v2 ->
             coe
-              MAlonzo.Code.Agda.Builtin.Reflection.d_typeError_342 v0 erased
-              (coe MAlonzo.Code.Data.List.Base.du_concat_270 v2)))
+              MAlonzo.Code.Agda.Builtin.Reflection.d_typeError_344 v0 erased
+              (coe MAlonzo.Code.Data.List.Base.du_concat_244 v2)))
       (coe
          MAlonzo.Code.Text.Printf.Generic.du_printf_226
          (coe d_formatSpec_22) (coe d_printfSpec_24) (coe v1))
@@ -166,8 +144,8 @@ d_debugPrintFmt_96 v0 v1 v2
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Agda.Builtin.Reflection.d_debugPrint_458 v0 v1
-              (coe MAlonzo.Code.Data.List.Base.du_concat_270 v3)))
+              MAlonzo.Code.Agda.Builtin.Reflection.d_debugPrint_462 v0 v1
+              (coe MAlonzo.Code.Data.List.Base.du_concat_244 v3)))
       (coe
          MAlonzo.Code.Text.Printf.Generic.du_printf_226
          (coe d_formatSpec_22) (coe d_printfSpec_24) (coe v2))
@@ -180,7 +158,7 @@ d_errorPartFmt_106 v0
       (coe
          MAlonzo.Code.Text.Format.Generic.d_lexer_88 (coe d_formatSpec_22)
          (coe v0))
-      (coe MAlonzo.Code.Data.List.Base.du_concat_270)
+      (coe MAlonzo.Code.Data.List.Base.du_concat_244)
       (coe
          MAlonzo.Code.Text.Printf.Generic.du_printf_226
          (coe d_formatSpec_22) (coe d_printfSpec_24) (coe v0))

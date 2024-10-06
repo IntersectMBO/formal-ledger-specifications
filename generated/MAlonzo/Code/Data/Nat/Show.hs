@@ -45,7 +45,7 @@ du_readMaybe_10 v0 v1
           = coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
               (coe
-                 MAlonzo.Code.Data.Maybe.Base.du_map_68
+                 MAlonzo.Code.Data.Maybe.Base.du_map_64
                  (coe du_convert_18 (coe v0)))
               (coe
                  MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -66,7 +66,7 @@ d_convert_18 v0 ~v1 = du_convert_18 v0
 du_convert_18 :: Integer -> [Integer] -> Integer
 du_convert_18 v0
   = coe
-      MAlonzo.Code.Data.List.Base.du_foldl_256
+      MAlonzo.Code.Data.List.Base.du_foldl_230
       (coe (\ v1 -> addInt (coe mulInt (coe v0) (coe v1))))
       (coe (0 :: Integer))
 -- Data.Nat.Show._.char0
@@ -102,12 +102,12 @@ du_readDigit_32 ::
   Integer -> MAlonzo.Code.Agda.Builtin.Char.T_Char_6 -> Maybe Integer
 du_readDigit_32 v0 v1
   = coe
-      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__76
+      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
       (coe du_digit_46 (coe v1))
       (coe
          (\ v2 ->
             coe
-              MAlonzo.Code.Data.Maybe.Base.du_when_92
+              MAlonzo.Code.Data.Maybe.Base.du_when_88
               (coe ltInt (coe v2) (coe v0)) (coe v2)))
 -- Data.Nat.Show._._.charc
 d_charc_40 ::
@@ -126,7 +126,7 @@ du_dec_42 ::
   MAlonzo.Code.Agda.Builtin.Char.T_Char_6 -> Maybe Integer
 du_dec_42 v0
   = coe
-      MAlonzo.Code.Data.Maybe.Base.du_when_92
+      MAlonzo.Code.Data.Maybe.Base.du_when_88
       (coe
          MAlonzo.Code.Data.Bool.Base.d__'8743'__24
          (coe
@@ -147,7 +147,7 @@ du_hex_44 ::
   MAlonzo.Code.Agda.Builtin.Char.T_Char_6 -> Maybe Integer
 du_hex_44 v0
   = coe
-      MAlonzo.Code.Data.Maybe.Base.du_when_92
+      MAlonzo.Code.Data.Maybe.Base.du_when_88
       (coe
          MAlonzo.Code.Data.Bool.Base.d__'8743'__24
          (coe
@@ -169,7 +169,7 @@ du_digit_46 ::
   MAlonzo.Code.Agda.Builtin.Char.T_Char_6 -> Maybe Integer
 du_digit_46 v0
   = coe
-      MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__84
+      MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80
       (coe du_dec_42 (coe v0)) (coe du_hex_44 (coe v0))
 -- Data.Nat.Show.toDigitChar
 d_toDigitChar_50 ::
@@ -207,11 +207,11 @@ du_charsInBase_64 ::
 du_charsInBase_64 v0 v1
   = coe
       MAlonzo.Code.Data.List.Base.du_map_22
-      (coe MAlonzo.Code.Data.Digit.du_showDigit_176)
+      (coe MAlonzo.Code.Data.Digit.du_showDigit_198)
       (coe
-         MAlonzo.Code.Data.List.Base.du_reverse_536
+         MAlonzo.Code.Data.List.Base.du_reverse_460
          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-            (coe MAlonzo.Code.Data.Digit.du_toDigits_90 (coe v0) (coe v1))))
+            (coe MAlonzo.Code.Data.Digit.du_toDigits_84 (coe v0) (coe v1))))
 -- Data.Nat.Show.showInBase
 d_showInBase_78 ::
   Integer ->

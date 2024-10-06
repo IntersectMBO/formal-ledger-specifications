@@ -24,3 +24,14 @@ d__'8776'__6 ::
   MAlonzo.Code.Agda.Builtin.Float.T_Float_6 ->
   MAlonzo.Code.Agda.Builtin.Float.T_Float_6 -> ()
 d__'8776'__6 = erased
+-- Data.Float.Base._≤_
+d__'8804'__8 ::
+  MAlonzo.Code.Agda.Builtin.Float.T_Float_6 ->
+  MAlonzo.Code.Agda.Builtin.Float.T_Float_6 -> ()
+d__'8804'__8 = erased
+-- Data.Float.Base.toWord
+d_toWord_14 ::
+  MAlonzo.Code.Agda.Builtin.Float.T_Float_6 ->
+  Maybe MAlonzo.RTE.Word64
+d_toWord_14
+  = coe MAlonzo.Code.Agda.Builtin.Float.d_primFloatToWord64_22

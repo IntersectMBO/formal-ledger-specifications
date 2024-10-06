@@ -36,7 +36,7 @@ d_ε_24 v0 = coe d_ε_20 (coe v0)
 -- Class.Monoid.Core._.MonoidLaws
 d_MonoidLaws_42 a0 a1 a2 a3 a4 a5 = ()
 newtype T_MonoidLaws_42
-  = C_MonoidLaws'46'constructor_2611 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_MonoidLaws'46'constructor_2613 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Class.Monoid.Core._._.Identity
 d_Identity_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -52,7 +52,7 @@ d_ε'45'identity_308 ::
   T_MonoidLaws_42 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_ε'45'identity_308 v0
   = case coe v0 of
-      C_MonoidLaws'46'constructor_2611 v1 -> coe v1
+      C_MonoidLaws'46'constructor_2613 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Monoid.Core._.MonoidLaws.ε-identityˡ
 d_ε'45'identity'737'_310 ::

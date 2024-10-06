@@ -20,6 +20,10 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Primitive
 
 -- Relation.Nullary.Irrelevant
-d_Irrelevant_6 ::
+d_Irrelevant_8 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
-d_Irrelevant_6 = erased
+d_Irrelevant_8 = erased
+-- Relation.Nullary.WeaklyDecidable
+d_WeaklyDecidable_16 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
+d_WeaklyDecidable_16 = erased

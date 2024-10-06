@@ -50,7 +50,7 @@ d__'9671'__24 v0 = coe d__'9671'__16 (coe v0)
 -- Class.Semigroup.Core._.SemigroupLaws
 d_SemigroupLaws_40 a0 a1 a2 a3 a4 = ()
 data T_SemigroupLaws_40
-  = C_SemigroupLaws'46'constructor_2187 (AgdaAny ->
+  = C_SemigroupLaws'46'constructor_2189 (AgdaAny ->
                                          AgdaAny -> AgdaAny)
                                         (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Class.Semigroup.Core._._.Associative
@@ -74,14 +74,14 @@ d_'9671''45'comm_308 ::
   T_SemigroupLaws_40 -> AgdaAny -> AgdaAny -> AgdaAny
 d_'9671''45'comm_308 v0
   = case coe v0 of
-      C_SemigroupLaws'46'constructor_2187 v1 v2 -> coe v1
+      C_SemigroupLaws'46'constructor_2189 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Semigroup.Core._.SemigroupLaws.◇-assocʳ
 d_'9671''45'assoc'691'_310 ::
   T_SemigroupLaws_40 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'9671''45'assoc'691'_310 v0
   = case coe v0 of
-      C_SemigroupLaws'46'constructor_2187 v1 v2 -> coe v2
+      C_SemigroupLaws'46'constructor_2189 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Semigroup.Core._._.◇-assocʳ
 d_'9671''45'assoc'691'_314 ::

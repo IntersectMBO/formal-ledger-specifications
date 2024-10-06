@@ -672,7 +672,7 @@ du_'8805''45'decTotalOrder_218 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_866
 du_'8805''45'decTotalOrder_218 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecTotalOrder'46'constructor_17747
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecTotalOrder'46'constructor_17849
       (coe du_'8805''45'isDecTotalOrder_216 (coe v0))
 -- Relation.Binary.Properties.DecTotalOrder._._≤?_
 d__'8804''63'__222 ::
@@ -723,7 +723,7 @@ du_'60''45'strictTotalOrder_226 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036
 du_'60''45'strictTotalOrder_226 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_StrictTotalOrder'46'constructor_20945
+      MAlonzo.Code.Relation.Binary.Bundles.C_StrictTotalOrder'46'constructor_21059
       (coe du_'60''45'isStrictTotalOrder_224 (coe v0))
 -- Relation.Binary.Properties.DecTotalOrder._._≮_
 d__'8814'__230 ::

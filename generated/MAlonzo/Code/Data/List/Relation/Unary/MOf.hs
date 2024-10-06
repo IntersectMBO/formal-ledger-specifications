@@ -262,15 +262,15 @@ du_'46'extendedlambda1_194 v0 v1 v2 v3 v4 v5 v6
              then case coe v8 of
                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v9
                       -> coe
-                           MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
-                           (coe du_cons_58 (coe v4) (coe v9))
+                           MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+                           (coe du_cons_58 (coe v4) (coe v9)) (coe du_uncons_114 (coe v5))
                            (coe du_MOf'63'_178 (coe v0) (coe v1) (coe v2) (coe v3) (coe v5))
                     _ -> MAlonzo.RTE.mazUnreachableError
              else coe
                     seq (coe v8)
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
-                       (coe du_skip_74)
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+                       (coe du_skip_74) (coe du_unskip_136)
                        (coe
                           du_MOf'63'_178 (coe v0) (coe v1) (coe v2)
                           (coe addInt (coe (1 :: Integer)) (coe v3)) (coe v5)))

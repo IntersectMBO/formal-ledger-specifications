@@ -21,7 +21,6 @@ import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
-import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Relation.Binary.Bundles
 import qualified MAlonzo.Code.Relation.Binary.Structures
 
@@ -156,18 +155,27 @@ du_find_84 v0 v1 v2
         -> case coe v1 of
              (:) v6 v7
                -> coe
-                    MAlonzo.Code.Data.Product.Base.du_map_128 (coe (\ v8 -> v8))
+                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                     (coe
-                       (\ v8 ->
-                          coe
-                            MAlonzo.Code.Data.Product.Base.du_map_128
-                            (coe MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54)
-                            (coe (\ v9 v10 -> v10))))
-                    (coe du_find_84 (coe v0) (coe v7) (coe v5))
+                       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                       (coe du_find_84 (coe v0) (coe v7) (coe v5)))
+                    (coe
+                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                       (coe
+                          MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54
+                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                             (coe
+                                MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                (coe du_find_84 (coe v0) (coe v7) (coe v5)))))
+                       (coe
+                          MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                          (coe
+                             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                             (coe du_find_84 (coe v0) (coe v7) (coe v5)))))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Membership.Setoid._.lose
-d_lose_94 ::
+d_lose_100 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -178,15 +186,15 @@ d_lose_94 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   AgdaAny -> MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
-d_lose_94 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 v9
-  = du_lose_94 v5 v6 v7 v8 v9
-du_lose_94 ::
+d_lose_100 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 v9
+  = du_lose_100 v5 v6 v7 v8 v9
+du_lose_100 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   AgdaAny -> MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
-du_lose_94 v0 v1 v2 v3 v4
+du_lose_100 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Data.List.Relation.Unary.Any.du_map_76
       (coe (\ v5 v6 -> coe v0 v1 v5 v6 v4)) (coe v2) (coe v3)

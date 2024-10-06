@@ -79,7 +79,7 @@ du_reflexive_38 v0 v1 v2 = coe d_refl_30 v0 v1 v2
 -- Relation.Binary.Indexed.Heterogeneous.Structures.IsIndexedPreorder
 d_IsIndexedPreorder_44 a0 a1 a2 a3 a4 a5 a6 a7 = ()
 data T_IsIndexedPreorder_44
-  = C_IsIndexedPreorder'46'constructor_5831 T_IsIndexedEquivalence_22
+  = C_IsIndexedPreorder'46'constructor_5837 T_IsIndexedEquivalence_22
                                             (AgdaAny ->
                                              AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                             (AgdaAny ->
@@ -92,7 +92,7 @@ d_isEquivalence_60 ::
   T_IsIndexedPreorder_44 -> T_IsIndexedEquivalence_22
 d_isEquivalence_60 v0
   = case coe v0 of
-      C_IsIndexedPreorder'46'constructor_5831 v1 v2 v3 -> coe v1
+      C_IsIndexedPreorder'46'constructor_5837 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Indexed.Heterogeneous.Structures.IsIndexedPreorder.reflexive
 d_reflexive_66 ::
@@ -100,7 +100,7 @@ d_reflexive_66 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_reflexive_66 v0
   = case coe v0 of
-      C_IsIndexedPreorder'46'constructor_5831 v1 v2 v3 -> coe v2
+      C_IsIndexedPreorder'46'constructor_5837 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Indexed.Heterogeneous.Structures.IsIndexedPreorder.trans
 d_trans_68 ::
@@ -111,7 +111,7 @@ d_trans_68 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_trans_68 v0
   = case coe v0 of
-      C_IsIndexedPreorder'46'constructor_5831 v1 v2 v3 -> coe v3
+      C_IsIndexedPreorder'46'constructor_5837 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Indexed.Heterogeneous.Structures.IsIndexedPreorder.Eq.refl
 d_refl_72 ::

@@ -508,7 +508,7 @@ d_trans_116 v0
 -- Function.Metric.Bundles.PreMetric
 d_PreMetric_128 a0 a1 a2 a3 a4 = ()
 data T_PreMetric_128
-  = C_PreMetric'46'constructor_4317 AgdaAny
+  = C_PreMetric'46'constructor_4373 AgdaAny
                                     (AgdaAny -> AgdaAny -> AgdaAny)
                                     MAlonzo.Code.Function.Metric.Structures.T_IsPreMetric_102
 -- Function.Metric.Bundles.PreMetric.Carrier
@@ -530,13 +530,13 @@ d__'8804'__164 = erased
 d_0'35'_166 :: T_PreMetric_128 -> AgdaAny
 d_0'35'_166 v0
   = case coe v0 of
-      C_PreMetric'46'constructor_4317 v6 v7 v8 -> coe v6
+      C_PreMetric'46'constructor_4373 v6 v7 v8 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.PreMetric.d
 d_d_168 :: T_PreMetric_128 -> AgdaAny -> AgdaAny -> AgdaAny
 d_d_168 v0
   = case coe v0 of
-      C_PreMetric'46'constructor_4317 v6 v7 v8 -> coe v7
+      C_PreMetric'46'constructor_4373 v6 v7 v8 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.PreMetric.isPreMetric
 d_isPreMetric_170 ::
@@ -544,7 +544,7 @@ d_isPreMetric_170 ::
   MAlonzo.Code.Function.Metric.Structures.T_IsPreMetric_102
 d_isPreMetric_170 v0
   = case coe v0 of
-      C_PreMetric'46'constructor_4317 v6 v7 v8 -> coe v8
+      C_PreMetric'46'constructor_4373 v6 v7 v8 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.PreMetric._.antisym
 d_antisym_174 ::
@@ -1095,7 +1095,7 @@ du_protoMetric_234 v0
 -- Function.Metric.Bundles.QuasiSemiMetric
 d_QuasiSemiMetric_246 a0 a1 a2 a3 a4 = ()
 data T_QuasiSemiMetric_246
-  = C_QuasiSemiMetric'46'constructor_8241 AgdaAny
+  = C_QuasiSemiMetric'46'constructor_8353 AgdaAny
                                           (AgdaAny -> AgdaAny -> AgdaAny)
                                           MAlonzo.Code.Function.Metric.Structures.T_IsQuasiSemiMetric_174
 -- Function.Metric.Bundles.QuasiSemiMetric.Carrier
@@ -1118,13 +1118,13 @@ d__'8804'__282 = erased
 d_0'35'_284 :: T_QuasiSemiMetric_246 -> AgdaAny
 d_0'35'_284 v0
   = case coe v0 of
-      C_QuasiSemiMetric'46'constructor_8241 v6 v7 v8 -> coe v6
+      C_QuasiSemiMetric'46'constructor_8353 v6 v7 v8 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.QuasiSemiMetric.d
 d_d_286 :: T_QuasiSemiMetric_246 -> AgdaAny -> AgdaAny -> AgdaAny
 d_d_286 v0
   = case coe v0 of
-      C_QuasiSemiMetric'46'constructor_8241 v6 v7 v8 -> coe v7
+      C_QuasiSemiMetric'46'constructor_8353 v6 v7 v8 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.QuasiSemiMetric.isQuasiSemiMetric
 d_isQuasiSemiMetric_288 ::
@@ -1132,7 +1132,7 @@ d_isQuasiSemiMetric_288 ::
   MAlonzo.Code.Function.Metric.Structures.T_IsQuasiSemiMetric_174
 d_isQuasiSemiMetric_288 v0
   = case coe v0 of
-      C_QuasiSemiMetric'46'constructor_8241 v6 v7 v8 -> coe v8
+      C_QuasiSemiMetric'46'constructor_8353 v6 v7 v8 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.QuasiSemiMetric._.0⇒≈
 d_0'8658''8776'_292 ::
@@ -1769,7 +1769,7 @@ d_preMetric_356 ~v0 ~v1 ~v2 ~v3 ~v4 v5 = du_preMetric_356 v5
 du_preMetric_356 :: T_QuasiSemiMetric_246 -> T_PreMetric_128
 du_preMetric_356 v0
   = coe
-      C_PreMetric'46'constructor_4317 (d_0'35'_284 (coe v0))
+      C_PreMetric'46'constructor_4373 (d_0'35'_284 (coe v0))
       (d_d_286 (coe v0))
       (MAlonzo.Code.Function.Metric.Structures.d_isPreMetric_182
          (coe d_isQuasiSemiMetric_288 (coe v0)))
@@ -1788,7 +1788,7 @@ du_protoMetric_360 v0
 -- Function.Metric.Bundles.SemiMetric
 d_SemiMetric_372 a0 a1 a2 a3 a4 = ()
 data T_SemiMetric_372
-  = C_SemiMetric'46'constructor_12485 AgdaAny
+  = C_SemiMetric'46'constructor_12653 AgdaAny
                                       (AgdaAny -> AgdaAny -> AgdaAny)
                                       MAlonzo.Code.Function.Metric.Structures.T_IsSemiMetric_250
 -- Function.Metric.Bundles.SemiMetric.Carrier
@@ -1811,13 +1811,13 @@ d__'8804'__408 = erased
 d_0'35'_410 :: T_SemiMetric_372 -> AgdaAny
 d_0'35'_410 v0
   = case coe v0 of
-      C_SemiMetric'46'constructor_12485 v6 v7 v8 -> coe v6
+      C_SemiMetric'46'constructor_12653 v6 v7 v8 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.SemiMetric.d
 d_d_412 :: T_SemiMetric_372 -> AgdaAny -> AgdaAny -> AgdaAny
 d_d_412 v0
   = case coe v0 of
-      C_SemiMetric'46'constructor_12485 v6 v7 v8 -> coe v7
+      C_SemiMetric'46'constructor_12653 v6 v7 v8 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.SemiMetric.isSemiMetric
 d_isSemiMetric_414 ::
@@ -1825,7 +1825,7 @@ d_isSemiMetric_414 ::
   MAlonzo.Code.Function.Metric.Structures.T_IsSemiMetric_250
 d_isSemiMetric_414 v0
   = case coe v0 of
-      C_SemiMetric'46'constructor_12485 v6 v7 v8 -> coe v8
+      C_SemiMetric'46'constructor_12653 v6 v7 v8 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.SemiMetric._.0⇒≈
 d_0'8658''8776'_418 ::
@@ -2559,7 +2559,7 @@ d_quasiSemiMetric_486 ~v0 ~v1 ~v2 ~v3 ~v4 v5
 du_quasiSemiMetric_486 :: T_SemiMetric_372 -> T_QuasiSemiMetric_246
 du_quasiSemiMetric_486 v0
   = coe
-      C_QuasiSemiMetric'46'constructor_8241 (d_0'35'_410 (coe v0))
+      C_QuasiSemiMetric'46'constructor_8353 (d_0'35'_410 (coe v0))
       (d_d_412 (coe v0))
       (MAlonzo.Code.Function.Metric.Structures.d_isQuasiSemiMetric_258
          (coe d_isSemiMetric_414 (coe v0)))
@@ -2591,7 +2591,7 @@ du_protoMetric_492 v0
 -- Function.Metric.Bundles.GeneralMetric
 d_GeneralMetric_504 a0 a1 a2 a3 a4 = ()
 data T_GeneralMetric_504
-  = C_GeneralMetric'46'constructor_17019 AgdaAny
+  = C_GeneralMetric'46'constructor_17243 AgdaAny
                                          (AgdaAny -> AgdaAny -> AgdaAny)
                                          (AgdaAny -> AgdaAny -> AgdaAny)
                                          MAlonzo.Code.Function.Metric.Structures.T_IsGeneralMetric_332
@@ -2615,20 +2615,20 @@ d__'8804'__542 = erased
 d_0'35'_544 :: T_GeneralMetric_504 -> AgdaAny
 d_0'35'_544 v0
   = case coe v0 of
-      C_GeneralMetric'46'constructor_17019 v6 v7 v8 v9 -> coe v6
+      C_GeneralMetric'46'constructor_17243 v6 v7 v8 v9 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.GeneralMetric._∙_
 d__'8729'__546 ::
   T_GeneralMetric_504 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8729'__546 v0
   = case coe v0 of
-      C_GeneralMetric'46'constructor_17019 v6 v7 v8 v9 -> coe v7
+      C_GeneralMetric'46'constructor_17243 v6 v7 v8 v9 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.GeneralMetric.d
 d_d_548 :: T_GeneralMetric_504 -> AgdaAny -> AgdaAny -> AgdaAny
 d_d_548 v0
   = case coe v0 of
-      C_GeneralMetric'46'constructor_17019 v6 v7 v8 v9 -> coe v8
+      C_GeneralMetric'46'constructor_17243 v6 v7 v8 v9 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.GeneralMetric.isGeneralMetric
 d_isGeneralMetric_550 ::
@@ -2636,7 +2636,7 @@ d_isGeneralMetric_550 ::
   MAlonzo.Code.Function.Metric.Structures.T_IsGeneralMetric_332
 d_isGeneralMetric_550 v0
   = case coe v0 of
-      C_GeneralMetric'46'constructor_17019 v6 v7 v8 v9 -> coe v9
+      C_GeneralMetric'46'constructor_17243 v6 v7 v8 v9 -> coe v9
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Metric.Bundles.GeneralMetric._.0⇒≈
 d_0'8658''8776'_554 ::
@@ -3470,7 +3470,7 @@ d_semiMetric_626 ~v0 ~v1 ~v2 ~v3 ~v4 v5 = du_semiMetric_626 v5
 du_semiMetric_626 :: T_GeneralMetric_504 -> T_SemiMetric_372
 du_semiMetric_626 v0
   = coe
-      C_SemiMetric'46'constructor_12485 (d_0'35'_544 (coe v0))
+      C_SemiMetric'46'constructor_12653 (d_0'35'_544 (coe v0))
       (d_d_548 (coe v0))
       (MAlonzo.Code.Function.Metric.Structures.d_isSemiMetric_342
          (coe d_isGeneralMetric_550 (coe v0)))
