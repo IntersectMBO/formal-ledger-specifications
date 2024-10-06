@@ -9301,7 +9301,7 @@ d_gov'45'step_332 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Gov.Properties.d_Computational'45'GOV_1714
+            MAlonzo.Code.Ledger.Conway.Conformance.Gov.Properties.d_Computational'45'GOV_1730
             (coe
                MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Core.d_HSTransactionStructure_888))
          (coe
