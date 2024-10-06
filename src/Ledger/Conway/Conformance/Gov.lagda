@@ -331,6 +331,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ actionWellFormed a
     ∙ d ≡ govActionDeposit
     ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
+    ∙ (¬ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w) → p ≡ nothing)
     ∙ (∀ {new rem q} → a ≡ UpdateCommittee new rem q
        → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ validHFAction prop s enactState
