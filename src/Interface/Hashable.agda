@@ -3,7 +3,6 @@ module Interface.Hashable where
 
 open import Agda.Builtin.Equality
 open import Agda.Primitive using () renaming (Set to Type)
-open import Function.Definitions using (Injective)
 
 record Hashable (T THash : Type) : Type where
   field hash    : T → THash

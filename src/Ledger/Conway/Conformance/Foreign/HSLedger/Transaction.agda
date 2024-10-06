@@ -17,6 +17,9 @@ instance
   {-# TERMINATING #-}
   Conv-Timelock = autoConvert Timelock
 
+  HsTy-HashedTimelock = autoHsType HashedTimelock
+  Conv-HashedTimelock = autoConvert HashedTimelock
+
   HsTy-TxWitnessess = autoHsType TxWitnesses ⊣ withConstructor "MkTxWitnesses"
   Conv-TxWitnessess = autoConvert TxWitnesses
 

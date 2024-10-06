@@ -15,7 +15,7 @@ open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Certs gs
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)
-open import Axiom.Set.Properties
+open import Axiom.Set.Properties th
 open import Relation.Binary using (IsEquivalence)
 open Computational ⦃...⦄
 
@@ -183,7 +183,7 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
     getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
       ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds
-          ( ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans (∪-sym th) (res-ex-∪ (Dec-∈-singleton th))) ) ⟩
+          ( ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton)) ) ⟩
     getCoin rwds-∪ˡ-decomp
       ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ) rwds-∪ˡ≡sing-∪ˡ  ⟩
     getCoin ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )
@@ -191,79 +191,81 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ , stᵖ' , stᵍ' ⟧ᶜˢ
       ∎
     where
-    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th  {Credential × Coin})
+    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
     rwds-∪ˡ-decomp = (rwds ∣ ❴ c ❵ ᶜ) ∪ˡ (rwds ∣ ❴ c ❵ )
 
     rwds-∪ˡ-∪ : rwds-∪ˡ-decomp ˢ ≡ᵉ (rwds ∣ ❴ c ❵ ᶜ)ˢ ∪ (rwds ∣ ❴ c ❵)ˢ
-    rwds-∪ˡ-∪ = disjoint-∪ˡ-∪ (disjoint-sym th res-ex-disjoint)
+    rwds-∪ˡ-∪ = disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
 
     disj : disjoint (dom ((rwds ∣ ❴ c ❵ˢ ᶜ) ˢ)) (dom (❴ c , 0 ❵ᵐ ˢ))
     disj {a} a∈res a∈dom  = res-comp-dom a∈res (dom-single→single a∈dom)
 
     rwds-∪ˡ≡sing-∪ˡ : rwds-∪ˡ-decomp ˢ ≡ᵉ ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )ˢ
     rwds-∪ˡ≡sing-∪ˡ = ≡ᵉ.trans rwds-∪ˡ-∪
-                              ( ≡ᵉ.trans (∪-cong th ≡ᵉ.refl (res-singleton'{m = rwds} $ proj₁ x))
+                              ( ≡ᵉ.trans (∪-cong ≡ᵉ.refl (res-singleton'{m = rwds} $ proj₁ x))
                                          (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj) )
   CERT-pov (CERT-pool x) = refl
   CERT-pov (CERT-vdel x) = refl
 
   module _
-    -- TODO: prove some or all of the following assumptions, needed for proof of `CERTBASE-pov`.
-    {sumConstZero  :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → ∑[ x ← constMap X 0 ] x ≡ 0}
-    {res-decomp    :  {A : Type} ⦃ _ : DecEq A ⦄ {m m' : A ⇀ Coin }
-                      → ((m ∪ˡ m')ˢ) ≡ᵉ ((m ∪ˡ (m' ∣ (dom (m ˢ)) ᶜ))ˢ) }
-    {getCoin-cong  :  ∀ {A} → ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin))
-                      → s ˢ ≡ᵉ s' → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' }
-    {≡ᵉ-getCoinˢ   :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin))
-                      {f : A → A'} {injOn : InjectiveOn (dom s) f }
-                      → getCoin (mapˢ (map₁ f) s) ≡ getCoin s }
-    {injOn         :  {wdls : RwdAddr ⇀ Coin} → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake}
-    {decCC         :  {X : ℙ (Credential × Coin)} → Decidable¹ (λ x → _∈_ {B = Credential} x (dom X))}
+    -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
+    ( sumConstZero : {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
+
+    ( res-decomp : {A : Type} ⦃ _ : DecEq A ⦄ {m m' : A ⇀ Coin}
+                   → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
+
+    ( getCoin-cong : {A : Type} → ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin))
+                     → s ˢ ≡ᵉ s' → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
+
+    ( ≡ᵉ-getCoinˢ : {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                    → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+
+    ( injOn : {wdls : RwdAddr ⇀ Coin} → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake )
     where
 
-    CERTBASE-pov : {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s' → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
+    CERTBASE-pov :  {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
+                    → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 
-    CERTBASE-pov  {Γ = Γ}{s = ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ}
-                  {⟦ ⟦ voteDelegs , stakeDelegs , rewards' ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ}
+    CERTBASE-pov  {s  = ⟦ ⟦ _ , _ , rewards  ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ}
+                  {s' = ⟦ ⟦ _ , _ , rewards' ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ}
                   (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
       let
-        module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence th  {Credential × Coin})
+        module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
         wdrlsCC         = mapˢ (map₁ RwdAddr.stake) (wdrls ˢ)
-        wdrlsCC≡wdrls   = ≡ᵉ-getCoinˢ (wdrls ˢ) {RwdAddr.stake} {injOn{wdls = wdrls}}
-        domWdrls∣stake  = mapˢ RwdAddr.stake (dom wdrls)
-        zeroMap         = (constMap domWdrls∣stake 0)
+        zeroMap         = constMap (mapˢ RwdAddr.stake (dom wdrls)) 0
         rwds-∪ˡ-decomp  = (rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC)
-        disj            = disjoint-sym th res-ex-disjoint
       in
         begin
           getCoin rewards
             ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rewards
-                ( ≡ᵉ.trans (disjoint-∪ˡ-∪ disj) (≡ᵉ.trans (∪-sym th) (res-ex-∪ decCC)) ) ⟩
+                ( ≡ᵉ.trans (disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint))
+                           (≡ᵉ.trans ∪-sym (res-ex-∪ (_∈? dom wdrlsCC))) ) ⟩
           getCoin rwds-∪ˡ-decomp
-            ≡⟨ indexedSumᵛ'-∪ (rewards ∣ dom wdrlsCC ᶜ) (rewards ∣ dom wdrlsCC) disj ⟩
-          getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin (rewards ∣ dom wdrlsCC )
-            ≡⟨ cong (getCoin ((rewards ∣ dom wdrlsCC ᶜ)) +_)
+            ≡⟨ indexedSumᵛ'-∪ (rewards ∣ dom wdrlsCC ᶜ) (rewards ∣ dom wdrlsCC)
+                              (disjoint-sym res-ex-disjoint) ⟩
+          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin (rewards ∣ dom wdrlsCC )
+            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_)
                ( getCoin-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
-          getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin wdrlsCC
-            ≡⟨ cong (getCoin ((rewards ∣ dom wdrlsCC ᶜ)) +_) wdrlsCC≡wdrls ⟩
-          getCoin ((rewards ∣ dom wdrlsCC ᶜ)) + getCoin wdrls
+          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrlsCC
+            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn {wdrls})) ⟩
+          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrls
             ≡˘⟨ cong (_+ getCoin wdrls)
                 ( begin
                   getCoin (zeroMap ∪ˡ rewards)
                     ≡⟨ ≡ᵉ-getCoin (zeroMap ∪ˡ rewards) (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
                                   (res-decomp {m = zeroMap}{rewards}) ⟩
-                  getCoin (zeroMap ∪ˡ (rewards ∣ (dom zeroMap) ᶜ))
-                    ≡⟨ indexedSumᵛ'-∪  zeroMap (rewards ∣ (dom zeroMap) ᶜ)
-                                       (disjoint-sym th res-comp-dom) ⟩
-                  getCoin zeroMap + getCoin (rewards ∣ (dom zeroMap) ᶜ)
-                    ≡⟨ cong (λ u → u + getCoin (rewards ∣ (dom zeroMap) ᶜ)) sumConstZero ⟩
+                  getCoin (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
+                    ≡⟨ indexedSumᵛ'-∪ zeroMap (rewards ∣ dom zeroMap ᶜ)
+                                      (disjoint-sym res-comp-dom) ⟩
+                  getCoin zeroMap + getCoin (rewards ∣ dom zeroMap ᶜ)
+                    ≡⟨ cong (λ u → u + getCoin (rewards ∣ dom zeroMap ᶜ)) sumConstZero ⟩
                   0 + getCoin (rewards ∣ (dom zeroMap) ᶜ)
-                    ≡⟨ +-identityˡ (getCoin (rewards ∣ (dom zeroMap) ᶜ)) ⟩
+                    ≡⟨ +-identityˡ (getCoin (rewards ∣ dom zeroMap ᶜ)) ⟩
                   getCoin (rewards ∣ dom zeroMap ᶜ)
-                    ≡⟨ ≡ᵉ-getCoin (rewards ∣ (dom zeroMap) ᶜ) (rewards ∣ dom wdrlsCC ᶜ)
+                    ≡⟨ ≡ᵉ-getCoin (rewards ∣ dom zeroMap ᶜ) (rewards ∣ dom wdrlsCC ᶜ)
                        ( res-comp-cong
-                         ( ⊆-Transitive th (proj₁ constMap-dom) (proj₂ dom-mapˡ≡map-dom)
-                         , ⊆-Transitive th (proj₁ dom-mapˡ≡map-dom) (proj₂ constMap-dom) ) ) ⟩
+                         ( ⊆-Transitive (proj₁ constMap-dom) (proj₂ dom-mapˡ≡map-dom)
+                         , ⊆-Transitive (proj₁ dom-mapˡ≡map-dom) (proj₂ constMap-dom) ) ) ⟩
                   getCoin (rewards ∣ dom wdrlsCC ᶜ)
                     ∎ ) ⟩
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls

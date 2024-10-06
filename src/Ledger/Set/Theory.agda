@@ -17,7 +17,7 @@ opaque
   List-Modelᵈ = L.List-Modelᵈ
 
 private variable
-  A B C : Set
+  A A' B C : Set
 
 open Theoryᵈ List-Modelᵈ public
   renaming (Set to ℙ_; filter to filterˢ?; map to mapˢ)
@@ -133,7 +133,7 @@ indexedSum' f s = indexedSum ⦃ fromCommMonoid' it ⦄ f (s ᶠˢ)
 syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
 syntax indexedSum'  (λ a → x) m = ∑ˢ[ a ← m ] x
 
-opaque
+opaque 
   unfolding List-Model
 
   singleton-≢-∅ : ∀ {a} {x : a} → ⦃ DecEq a ⦄ → singleton x ≢ ∅

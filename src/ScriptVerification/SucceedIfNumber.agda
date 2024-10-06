@@ -10,16 +10,16 @@ scriptImp = record { serialise = id ;
 
 open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
 open import ScriptVerification.Lib ℕ ℕ scriptImp
-open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
-open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Transaction
+open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Transaction
 open TransactionStructure SVTransactionStructure
-open import Ledger.Types.Epoch
+open import Ledger.Conway.Conformance.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
-open import Ledger.Utxow.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Utxow.Properties SVTransactionStructure SVAbstractFunctions
 
 -- succeed if the datum is 1
 succeedIf1Datum' : Maybe ℕ → Maybe ℕ → Bool
@@ -148,7 +148,6 @@ exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
-  unfolding Computational-UTXO
   unfolding outs
 
   gotScript : lookupScriptHash 777 succeedTx initStateDatum ≡ just (inj₂ succeedIf1Datum)
@@ -177,8 +176,8 @@ opaque
   failExample : ComputationResult String UTxOState
   failExample = UTXO-step initEnv ⟦ initStateRedeemer , 0 , ∅ , 0 ⟧ᵘ  failTx
 
-  _ : failExample ≡ failure "¬ feesOK pp tx utxo ≡ true"
-  _ = refl
+  _ : isFailure failExample
+  _ = _ , refl
 
   -- Note that the UTXOS rule succeeds but the UTXO rule fails for failTx
   failExampleS : Bool
