@@ -50,7 +50,7 @@ data T_GovStructure_10
   = C_GovStructure'46'constructor_2849 MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                                        MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_Crypto_138
                                        MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_EpochStructure_24
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424
                                        MAlonzo.Code.Ledger.Conway.Conformance.PParams.T_GovParams_1316
                                        MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.T_GlobalConstants_260
 -- Ledger.Conway.Conformance.Types.GovStructure._.GovParams
@@ -376,7 +376,7 @@ d_ℕtoEpoch_648 v0
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure.scriptStructure
 d_scriptStructure_650 ::
   T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_406
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_ScriptStructure_424
 d_scriptStructure_650 v0
   = case coe v0 of
       C_GovStructure'46'constructor_2849 v3 v4 v5 v6 v7 v8 -> coe v6
@@ -402,7 +402,7 @@ d_Data'688'_662 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Data'688'_194
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Datum
 d_Datum_664 :: T_GovStructure_10 -> ()
@@ -412,20 +412,18 @@ d_Dec'45'validP1Script_666 ::
   T_GovStructure_10 ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_Timelock_268 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_HashedTimelock_404 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'validP1Script_666 v0
   = let v1 = d_crypto_562 (coe v0) in
     coe
       (let v2 = d_epochStructure_608 (coe v0) in
        coe
-         (let v3 = d_scriptStructure_650 (coe v0) in
-          coe
+         (coe
+            MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Dec'45'validP1Script_112
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Dec'45'validP1Script_112
-               (coe
-                  MAlonzo.Code.Ledger.Conway.Conformance.Script.d_p1s_444 (coe v1)
-                  (coe v2) (coe v3)))))
+               MAlonzo.Code.Ledger.Conway.Conformance.Script.du_p1s_452 (coe v1)
+               (coe v2))))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Dec-validPlutusScript
 d_Dec'45'validPlutusScript_668 ::
   T_GovStructure_10 ->
@@ -437,7 +435,7 @@ d_Dec'45'validPlutusScript_668 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Dec'45'validPlutusScript_260
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.DecEQ-Prices
 d_DecEQ'45'Prices_670 ::
@@ -446,7 +444,7 @@ d_DecEQ'45'Prices_670 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEQ'45'Prices_230
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.DecEq-CostModel
 d_DecEq'45'CostModel_672 ::
@@ -455,7 +453,7 @@ d_DecEq'45'CostModel_672 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'CostModel_220
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.DecEq-ExUnits
 d_DecEq'45'ExUnits_674 ::
@@ -464,7 +462,7 @@ d_DecEq'45'ExUnits_674 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'ExUnits_228
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.DecEq-LangDepView
 d_DecEq'45'LangDepView_676 ::
@@ -473,7 +471,7 @@ d_DecEq'45'LangDepView_676 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'LangDepView_222
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.DecEq-Language
 d_DecEq'45'Language_678 ::
@@ -482,7 +480,7 @@ d_DecEq'45'Language_678 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'Language_218
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.DecEq-P1Script
 d_DecEq'45'P1Script_680 ::
@@ -492,13 +490,11 @@ d_DecEq'45'P1Script_680 v0
     coe
       (let v2 = d_epochStructure_608 (coe v0) in
        coe
-         (let v3 = d_scriptStructure_650 (coe v0) in
-          coe
+         (coe
+            MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'P1Script_116
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Script.d_DecEq'45'P1Script_116
-               (coe
-                  MAlonzo.Code.Ledger.Conway.Conformance.Script.d_p1s_444 (coe v1)
-                  (coe v2) (coe v3)))))
+               MAlonzo.Code.Ledger.Conway.Conformance.Script.du_p1s_452 (coe v1)
+               (coe v2))))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.DecEq-T
 d_DecEq'45'T_682 ::
   T_GovStructure_10 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
@@ -506,7 +502,7 @@ d_DecEq'45'T_682 v0
   = let v1
           = MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Data'688'_194
               (coe
-                 MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+                 MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
                  (coe d_scriptStructure_650 (coe v0))) in
     coe
       (coe
@@ -521,7 +517,7 @@ d_DecEq'45'THash_684 v0
   = let v1
           = MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Data'688'_194
               (coe
-                 MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+                 MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
                  (coe d_scriptStructure_650 (coe v0))) in
     coe
       (coe
@@ -537,7 +533,7 @@ d_ExUnit'45'CommutativeMonoid_686 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ExUnit'45'CommutativeMonoid_214
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.ExUnits
 d_ExUnits_688 :: T_GovStructure_10 -> ()
@@ -547,7 +543,7 @@ d_Hash'45'Timelock_690 ::
   T_GovStructure_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_Hash'45'Timelock_690 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Hash'45'Timelock_442
+      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Hash'45'Timelock_474
       (coe d_scriptStructure_650 (coe v0))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Hashable-P1Script
 d_Hashable'45'P1Script_692 ::
@@ -557,13 +553,11 @@ d_Hashable'45'P1Script_692 v0
     coe
       (let v2 = d_epochStructure_608 (coe v0) in
        coe
-         (let v3 = d_scriptStructure_650 (coe v0) in
-          coe
+         (coe
+            MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Hashable'45'P1Script_114
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Hashable'45'P1Script_114
-               (coe
-                  MAlonzo.Code.Ledger.Conway.Conformance.Script.d_p1s_444 (coe v1)
-                  (coe v2) (coe v3)))))
+               MAlonzo.Code.Ledger.Conway.Conformance.Script.du_p1s_452 (coe v1)
+               (coe v2))))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Hashable-PlutusScript
 d_Hashable'45'PlutusScript_694 ::
   T_GovStructure_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
@@ -571,14 +565,14 @@ d_Hashable'45'PlutusScript_694 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Hashable'45'PlutusScript_216
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Hashable-Script
 d_Hashable'45'Script_696 ::
   T_GovStructure_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_Hashable'45'Script_696 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Hashable'45'Script_532
+      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Hashable'45'Script_550
       (coe d_crypto_562 (coe v0)) (coe d_epochStructure_608 (coe v0))
       (coe d_scriptStructure_650 (coe v0))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.LangDepView
@@ -599,7 +593,7 @@ d_PlutusV1_706 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_PlutusV1_208
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.PlutusV2
 d_PlutusV2_708 :: T_GovStructure_10 -> AgdaAny
@@ -607,7 +601,7 @@ d_PlutusV2_708 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_PlutusV2_210
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.PlutusV3
 d_PlutusV3_710 :: T_GovStructure_10 -> AgdaAny
@@ -615,7 +609,7 @@ d_PlutusV3_710 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_PlutusV3_212
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Prices
 d_Prices_712 :: T_GovStructure_10 -> ()
@@ -633,7 +627,7 @@ d_Show'45'CostModel_718 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Show'45'CostModel_224
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Show-ExUnits
 d_Show'45'ExUnits_720 ::
@@ -642,7 +636,7 @@ d_Show'45'ExUnits_720 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Show'45'ExUnits_232
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Show-Prices
 d_Show'45'Prices_722 ::
@@ -651,7 +645,7 @@ d_Show'45'Prices_722 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Show'45'Prices_234
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.Show-THash
 d_Show'45'THash_724 ::
@@ -660,7 +654,7 @@ d_Show'45'THash_724 v0
   = let v1
           = MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Data'688'_194
               (coe
-                 MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+                 MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
                  (coe d_scriptStructure_650 (coe v0))) in
     coe
       (coe
@@ -675,7 +669,7 @@ d_T'45'Hashable_726 v0
   = let v1
           = MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Data'688'_194
               (coe
-                 MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+                 MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
                  (coe d_scriptStructure_650 (coe v0))) in
     coe
       (coe
@@ -693,7 +687,7 @@ d_T'45'isHashable_728 v0
       (coe
          MAlonzo.Code.Ledger.Conway.Conformance.Script.d_Data'688'_194
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+            MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
             (coe d_scriptStructure_650 (coe v0))))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.hashRespectsUnion
 d_hashRespectsUnion_730 ::
@@ -706,7 +700,7 @@ d_hashRespectsUnion_730 ::
   MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_hashRespectsUnion_730 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_hashRespectsUnion_440
+      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_hashRespectsUnion_472
       (coe d_scriptStructure_650 (coe v0))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.language
 d_language_732 :: T_GovStructure_10 -> AgdaAny -> AgdaAny
@@ -714,7 +708,7 @@ d_language_732 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_language_262
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.p1s
 d_p1s_734 ::
@@ -722,16 +716,15 @@ d_p1s_734 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Script.T_P1ScriptStructure_96
 d_p1s_734 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_p1s_444
+      MAlonzo.Code.Ledger.Conway.Conformance.Script.du_p1s_452
       (coe d_crypto_562 (coe v0)) (coe d_epochStructure_608 (coe v0))
-      (coe d_scriptStructure_650 (coe v0))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.ps
 d_ps_736 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Script.T_PlutusStructure_118
 d_ps_736 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+      MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
       (coe d_scriptStructure_650 (coe v0))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.toData
 d_toData_738 :: T_GovStructure_10 -> () -> AgdaAny -> AgdaAny
@@ -739,14 +732,15 @@ d_toData_738 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_toData_266
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_458
+         MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ps_476
          (coe d_scriptStructure_650 (coe v0)))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.validP1Script
 d_validP1Script_740 ::
   T_GovStructure_10 ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_Timelock_268 -> ()
+  MAlonzo.Code.Ledger.Conway.Conformance.Script.T_HashedTimelock_404 ->
+  ()
 d_validP1Script_740 = erased
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.validPlutusScript
 d_validPlutusScript_742 ::
