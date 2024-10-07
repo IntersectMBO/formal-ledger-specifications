@@ -7399,15 +7399,16 @@ du_aggregateBy_1200 v0 v1 v2 v3 v4 v5
          (MAlonzo.Code.Axiom.Set.d_th_1458 (coe d_List'45'Model'7496'_10))
          v4)
 -- Ledger.Set.Theory._._._≈_
-d__'8776'__1230 ::
+d__'8776'__1232 ::
   () ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10 ->
   AgdaAny -> AgdaAny -> ()
-d__'8776'__1230 = erased
+d__'8776'__1232 = erased
 -- Ledger.Set.Theory._.indexedSumᵛ'-cong
 d_indexedSum'7515''''45'cong_1300 ::
   () ->
@@ -7415,8 +7416,8 @@ d_indexedSum'7515''''45'cong_1300 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10 ->
   (AgdaAny -> AgdaAny) ->
+  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
@@ -7425,8 +7426,8 @@ d_indexedSum'7515''''45'cong_1300 ~v0 ~v1 ~v2 v3 v4 v5 v6 v7 v8 v9
 du_indexedSum'7515''''45'cong_1300 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10 ->
   (AgdaAny -> AgdaAny) ->
+  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
@@ -7435,12 +7436,12 @@ du_indexedSum'7515''''45'cong_1300 v0 v1 v2 v3 v4 v5 v6
       MAlonzo.Code.Axiom.Set.Sum.du_indexedSum'45'cong_912
       (coe
          MAlonzo.Code.Interface.IsCommutativeMonoid.du_fromCommMonoid''_40
-         (coe v2))
+         (coe v3))
       (coe
          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160 (coe v0)
          (coe v1))
       (\ v7 ->
-         coe v3 (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v7)))
+         coe v2 (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v7)))
       (coe
          du__'7584''738'_1142
          (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_538 (coe v4)))
