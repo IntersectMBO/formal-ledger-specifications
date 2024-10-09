@@ -11,15 +11,14 @@ open GovStructure govStructure hiding (epoch)
 
 open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
 
-open import Axiom.Set.Properties using (∃?-sublist-⇔)
+open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
 open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
 open import Ledger.Ratify txs hiding (vote)
 
-open import Data.List using (filter)
 open import Data.List.Ext using (subpermutations; sublists)
-open import Data.List.Ext.Properties
+open import Data.List.Ext.Properties2
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.All using (all?; All)
@@ -28,7 +27,6 @@ open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.Propositional using (↔⇒)
-open import Relation.Nullary.Decidable using (map′)
 
 open GovActionState
 \end{code}
@@ -229,7 +227,7 @@ any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l co
 enactable? : ∀ eState aidPairs aidNew×st → Dec (enactable eState aidPairs aidNew×st)
 enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as)
 ... | nothing = yes tt
-... | just aidOld = from (∃?-sublist-⇔ th) (∃?-connecting-subset aidPairs)
+... | just aidOld = from (map′⇔ ∃-sublist-⇔) (∃?-connecting-subset aidPairs)
 
 allEnactable? : ∀ eState aid×states → Dec (allEnactable eState aid×states)
 allEnactable? eState aid×states =

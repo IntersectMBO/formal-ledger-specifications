@@ -4,7 +4,6 @@ open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ) public
 
 open Computational public
 
-open import Algebra             using (CommutativeMonoid)      public
 open import Algebra.Morphism    using (module MonoidMorphisms) public
 
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid) public
@@ -58,7 +57,7 @@ module Implementation where
 
   PlutusScript = ⊤
   ExUnits      = ℕ × ℕ
-  ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
+  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ExUnits ∋ (Conversion.fromBundle record
     { Carrier = ExUnits
     ; _≈_ = _≈ᵖ_
     ; _∙_ = _∙ᵖ_
@@ -80,7 +79,7 @@ module Implementation where
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
-    .Value-IsCommutativeMonoid' → it
+    .Value-CommutativeMonoid    → it
       -- ^ Agda bug? Without this line, `coinIsMonoidHomomorphism` doesn't type check anymore
     .coin                       → id
     .inject                     → id

@@ -28,12 +28,12 @@ let
     src = fetchFromGitHub {
       repo = "agda-stdlib-classes";
       owner = "omelkonian";
-      rev = "v2.0";
-      sha256 = "sha256-PcieRRnctjCzFCi+gUYAgyIAicMOAZPl8Sw35fZdt0E=";
+      rev = "5d77a54d6cd31da8a65b9cfca691f214d1c05184";
+      sha256 = "sha256-WEQ6UmHFCDq/PyArJ7u0SQ6q+JYzoMHoMG0psGYzZ8A=";
     };
     meta = { };
     libraryFile = "agda-stdlib-classes.agda-lib";
-    everythingFile = "Classes.agda";
+    everythingFile = "standard-library-classes.agda";
     buildInputs = [ agdaStdlib ];
   };
 
@@ -53,7 +53,23 @@ let
     buildInputs = [ agdaStdlib agdaStdlibClasses ];
   };
 
-  deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta ];
+  agdaSets = customAgda.agdaPackages.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    pname = "agda-sets";
+    version = "2.1.1";
+    src = fetchFromGitHub {
+      repo = "agda-sets";
+      owner = "input-output-hk";
+      rev = "6dd8cebbd46090b5909c13a1e8d609a44f02a5d3";
+      sha256 = "sha256-+vrtdoBIoLwXqRt3/L/6k6GVZk7hJk15tMmMVUGJ+TA=";
+    };
+    meta = { };
+    libraryFile = "abstract-set-theory.agda-lib";
+    everythingFile = "src/abstract-set-theory.agda";
+    buildInputs = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta ];
+  };
+
+  deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets ];
   agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
 
 in
