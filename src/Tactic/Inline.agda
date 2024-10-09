@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
-{-# OPTIONS -v tc.unquote:10 #-}
-{-# OPTIONS -v tactic.inline:100 #-}
+-- {-# OPTIONS -v tc.unquote:10 #-}
+-- {-# OPTIONS -v tactic.inline:100 #-}
 
 module Tactic.Inline where
 

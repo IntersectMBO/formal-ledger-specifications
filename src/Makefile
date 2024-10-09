@@ -28,13 +28,13 @@ CONWAY_TEX_FILES=$(patsubst %.lagda, $(CONWAY_TEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 
 # to be postprocessed for vertical vector typesetting
-VV_NAMES=Certs Chain Enact Epoch Ratify Ledger NewPP #Utxo/Properties
+VV_NAMES=Certs Chain Enact Epoch Ratify Ledger NewPP Utxo #Utxo/Properties
 
 VV_TEX_FILES=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
 CONWAY_VV_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
 
 # to be postprocessed for highlighting new symbols in Coway pdf
-HL_NAMES=Transaction
+HL_NAMES=Transaction Utxo
 HL_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(HL_NAMES:%=%.tex))
 
 # General rule for all LaTeX files (with postprocessing for vertical vectors)
@@ -102,9 +102,9 @@ define agdaToHs =
       | sed "s#^$(HS_DIST)/#        #;s#\.hs##;s#/#.#g"\
       >> $(HS_DIST)/$(CABAL_FILE)
 endef
-HS_LEDGER=$(HS_DIR)/$(LEDGER)/$(MALONZO_DIR)/$(LEDGER)/Foreign/HSLedger.hs
+HS_LEDGER=$(HS_DIR)/$(LEDGER)/$(MALONZO_DIR)/$(LEDGER)/Conway/Conformance/Foreign/HSLedger.hs
 HS_MIDNIGHT=$(HS_DIR)/$(MIDNIGHT)/$(MALONZO_DIR)/$(MIDNIGHT)/HSLedger.hs
-$(HS_LEDGER): $(LEDGER)/Foreign/HSLedger.agda
+$(HS_LEDGER): $(LEDGER)/Conway/Conformance/Foreign/HSLedger.agda
 	$(call agdaToHs,cardano-ledger-executable-spec)
 $(HS_MIDNIGHT): $(MIDNIGHT)/HSLedger.agda
 	$(call agdaToHs,midnight-example)

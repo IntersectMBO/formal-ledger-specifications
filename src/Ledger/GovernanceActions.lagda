@@ -22,6 +22,7 @@ open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 open import Tactic.Derive.DecEq
+open import Tactic.Derive.Show
 
 open import Ledger.Prelude hiding (yes; no)
 open import Ledger.Types.GovStructure

@@ -7,10 +7,11 @@ open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
 import Data.Integer as ℤ
 open import Data.Integer.Ext
+open import Data.Nat.GeneralisedArithmetic using (iterate)
 
 open import Agda.Builtin.FromNat
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (iterate)
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -144,6 +145,18 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
+
+getOrphans : EnactState → GovState → GovState
+getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
+  where
+    step : GovState × GovState → GovState × GovState
+    step (orps , govSt) =
+      let
+        isOrphan? a prev = ¬? (hasParent? es govSt a prev)
+        (orps' , govSt') = partition
+          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? a prev) govSt
+      in
+        (orps ++ orps' , govSt')
 \end{code}
 \end{NoConway}
 
@@ -217,20 +230,23 @@ its results by carrying out each of the following tasks.
 \end{code}
 \begin{code}
 
-      removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
+      es                = record esW { withdrawals = ∅ }
+      tmpGovSt          = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
+      orphans           = fromList $ getOrphans es tmpGovSt
+      removed'          = removed ∪ orphans
+      removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
         mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
       trWithdrawals   = esW .withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
-      es         = record esW { withdrawals = ∅ }
       retired    = (pState .retiring) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
       refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
       unclaimed  = getCoin payout - getCoin refunds
 
-      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
+      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
 
       certState' =
         ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }

@@ -5,6 +5,7 @@
 open import Ledger.Prelude
 
 open import Tactic.Derive.DecEq
+open import Tactic.Derive.Show
 
 module Ledger.Address (
 \end{code}
@@ -22,7 +23,7 @@ credential contains a hash, either of a verifying (public) key
   ScriptHash
 \end{code}
 \begin{code}[hide]
-  : Type) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
+  : Type)  ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
 \end{code}
 \emph{Derived types}
 \AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
@@ -148,4 +149,11 @@ instance abstract
     ∷ (quote BootstrapAddr , DecEq-BootstrapAddr)
     ∷ (quote RwdAddr       , DecEq-RwdAddr)
     ∷ [] )
+
+module _ ⦃ _ : Show Network  ⦄ ⦃ _ : Show KeyHash  ⦄ ⦃ _ : Show ScriptHash  ⦄ where
+  instance
+    unquoteDecl Show-Credential = derive-Show [ (quote Credential , Show-Credential) ]
+    unquoteDecl Show-RwdAddr = derive-Show [ (quote RwdAddr , Show-RwdAddr) ]
+    Show-Credential×Coin : Show (Credential × Coin)
+    Show-Credential×Coin = Show-×
 \end{code}

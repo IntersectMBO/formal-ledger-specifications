@@ -97,6 +97,9 @@ record Theory {ℓ} : Type (sucˡ ℓ) where
   finite : Set A → Type ℓ
   finite X = ∃[ l ] ∀ {a} → a ∈ X ⇔ a ∈ˡ l
 
+  Show-finite : ⦃ Show A ⦄ → Show (Σ (Set A) finite)
+  Show.show Show-finite (X , (l , _)) = Show-List .show l
+
   weakly-finite : Set A → Type ℓ
   weakly-finite X = ∃[ l ] ∀ {a} → a ∈ X → a ∈ˡ l
 
@@ -290,6 +293,11 @@ record Theoryᶠ : Type₁ where
 
   lengthˢ : ⦃ DecEq A ⦄ → Set A → ℕ
   lengthˢ X = card (X , DecEq⇒strongly-finite X)
+
+  module _ {A : Type} ⦃ _ : Show A ⦄ where
+    instance
+      Show-Set : Show (Set A)
+      Show-Set .show = λ x → Show-finite .show (x , (finiteness x))
 
 -- set theories with an infinite set (containing all natural numbers)
 record Theoryⁱ : Type₁ where

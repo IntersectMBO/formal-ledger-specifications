@@ -155,6 +155,14 @@ PoolEnv     = PParams
 \caption{Types used for CERTS transition system}
 \end{figure*}
 
+\begin{code}[hide]
+rewardsBalance : DState → Coin
+rewardsBalance ds = ∑[ x ← DState.rewards ds ] x
+
+instance
+  HasCoin-CertState : HasCoin CertState
+  HasCoin-CertState .getCoin = rewardsBalance ∘ CertState.dState
+\end{code}
 
 \begin{code}[hide]
 private variable

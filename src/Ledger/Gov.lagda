@@ -17,6 +17,7 @@ open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Enact govStructure
 open import Ledger.Ratify txs hiding (vote)
 
+open import Data.List using (filter)
 open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
@@ -85,6 +86,37 @@ private variable
 \emph{Functions used in the GOV rules}
 \begin{AgdaMultiCode}
 \begin{code}
+govActionPriority : GovAction → ℕ
+govActionPriority NoConfidence             = 0
+govActionPriority (UpdateCommittee _ _ _)  = 1
+govActionPriority (NewConstitution _ _)    = 2
+govActionPriority (TriggerHF _)            = 3
+govActionPriority (ChangePParams _)        = 4
+govActionPriority (TreasuryWdrl _)         = 5
+govActionPriority Info                     = 6
+
+_∼_ : ℕ → ℕ → Type
+n ∼ m = (n ≡ m) ⊎ (n ≡ 0 × m ≡ 1) ⊎ (n ≡ 1 × m ≡ 0)
+
+_≈_ : GovAction → GovAction → Type
+a ≈ a' = (govActionPriority a) ∼ (govActionPriority a')
+\end{code}
+\begin{code}[hide]
+_∼?_ : (n m : ℕ) → Dec (n ∼ m)
+n ∼? m = n ≟ m ⊎-dec (n ≟ 0 ×-dec m ≟ 1) ⊎-dec (n ≟ 1 ×-dec m ≟ 0)
+
+_≈?_ : (a a' : GovAction) → Dec (a ≈ a')
+a ≈? a' = (govActionPriority a) ∼? (govActionPriority a')
+\end{code}
+\begin{code}
+
+insertGovAction : GovState → GovActionID × GovActionState → GovState
+insertGovAction [] gaPr = [ gaPr ]
+insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
+  =  if (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
+     then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
+     else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
+
 addVote : GovState → GovActionID → Voter → Vote → GovState
 addVote s aid voter v = map modifyVotes s
   where modifyVotes = λ (gid , s') → gid , record s'
@@ -98,7 +130,7 @@ mkGovStatePair e aid addr a prev = (aid , record
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
-addAction s e aid addr a prev = s ∷ʳ mkGovStatePair e aid addr a prev
+addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
 
 validHFAction : GovProposal → GovState → EnactState → Type
 validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
@@ -153,7 +185,8 @@ hasParentE e aid a = case getHashES e a of
 
 hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Type
 hasParent e s a aid with getHash aid
-... | just aid' = hasParentE e aid' a ⊎ Any (λ x → proj₁ x ≡ aid') s
+... | just aid' = hasParentE e aid' a
+                  ⊎ Any (λ (gid , gas) → gid ≡ aid' × action gas ≈ a) s
 ... | nothing = ⊤
 \end{code}
 \begin{code}[hide]
@@ -166,8 +199,9 @@ hasParentE? e aid a with getHashES e a
 
 hasParent? : ∀ e s a aid → Dec (hasParent e s a aid)
 hasParent? e s a aid with getHash aid
-... | just aid' = hasParentE? e aid' a ⊎-dec any? (λ x → proj₁ x ≟ aid') s
-... | nothing = yes tt
+... | just aid' = hasParentE? e aid' a
+                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec action gas ≈? a) s
+... | nothing = yes _
 
 -- newtype to make the instance resolution work
 data hasParent' : EnactState → GovState → (a : GovAction) → NeedsHash a → Type where
@@ -264,6 +298,15 @@ the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list o
 \AgdaFunction{\AgdaUnderscore{}connects\AgdaUnderscore{}to\AgdaUnderscore{}} function to check
 whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
 enacted one.
+
+Additionally, \govActionPriority assigns a priority to the various governance action types.
+This is useful for ordering lists of governance actions as well as grouping governance
+actions by constructor. In particular, the relations
+\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}∼\AgdaUnderscore{}}} and
+\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in
+Figure~\ref{defs:enactable} are used for determining whether two actions are of the same
+``kind'' in the following sense: either the actions arise from the same constructor, or one
+action is \NoConfidence and the other is an \UpdateCommittee action.
 
 \begin{figure*}
 \begin{code}[hide]

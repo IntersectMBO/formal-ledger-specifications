@@ -27,12 +27,10 @@ module Ledger.Utxo
   where
 
 open import Ledger.ScriptValidation txs abs
+open import Ledger.Fees txs using (scriptsCost)
 
 instance
   _ = +-0-monoid
-
-  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = ∑[ x ← s ] x
 
 infixl 7 _*↓_
 
@@ -206,12 +204,13 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
-  minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  =
-    pp .a * tx .body .txsize + pp .b
-    + txscriptfee (pp .prices) (totExUnits tx)
-    + pp .minFeeRefScriptCoinsPerByte
-    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+  refScriptsSize : UTxO → Tx → ℕ
+  refScriptsSize utxo tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+
+  minfee : (pp : PParams) → UTxO → Tx → Coin
+  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
+                     + txscriptfee (pp .prices) (totExUnits tx)
+                     + scriptsCost pp (refScriptsSize utxo tx)
 
 \end{code}
 \begin{code}[hide]
@@ -389,13 +388,13 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 \begin{code}
 
 feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
-                  ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                  =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                      ∧ isAdaOnlyᵇ bal
-                      ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
-                      ∧ not (≟-∅ᵇ collateral)
-                      )
+feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
+                        =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
+                             ∧ isAdaOnlyᵇ bal
+                             ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
+                             ∧ not (≟-∅ᵇ collateral)
+                             )
+                     )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
@@ -419,7 +418,11 @@ module _ (let open UTxOState; open TxBody) where
   newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
 
   consumed : PParams → UTxOState → TxBody → Value
-  consumed pp st txb = balance (st .utxo ∣ txb .txins) + txb .mint + inject (depositRefunds pp st txb)
+  consumed pp st txb
+    =  balance (st .utxo ∣ txb .txins)
+    +  txb .mint
+    +  inject (depositRefunds pp st txb)
+    +  inject (getCoin (txb .txwdrls))
 
   produced : PParams → UTxOState → TxBody → Value
   produced pp st txb = balance (outs txb)
@@ -440,15 +443,18 @@ to \consumed or \produced depending on its sign. This is done via
 \negPart and \posPart, which satisfy the key property that their
 difference is the identity function.
 
+\begin{figure*}[htbp]
 \begin{code}[hide]
 open PParams
-private variable
-  udeps : Deposits
-
 data
+\end{code}
+\begin{code}
   _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
-
+\end{code}
+\begin{code}[hide]
 data _⊢_⇀⦇_,UTXOS⦈_ where
+\end{code}
+\begin{code}
   Scripts-Yes :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
@@ -456,14 +462,10 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in ∙ ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) txcerts
-         ∙ evalScripts tx sLst ≡ isValid
-         ∙ isValid ≡ true
-           ────────────────────────────────
-           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
-                                , fees + txfee
-                                , updateDeposits pp txb deposits
-                                , donations + txdonation
-                                ⟧ᵘ
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ true
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧ᵘ
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -475,12 +477,13 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
-                              , fees + cbalance (utxo ∣ collateral)
-                              , deposits
-                              , donations
-                              ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
+\end{code}
+\caption{UTXOS rule}
+\label{fig:utxos-conway}
+\end{figure*}
 
+\begin{code}[hide]
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
@@ -503,10 +506,6 @@ instance
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
-\begin{NoConway}
-We write \maybeEq to mean that two potentially optional values are
-equal if they are both present.
-
 \begin{figure*}[h]
 \begin{code}
   UTXO-inductive :
@@ -514,14 +513,16 @@ equal if they are both present.
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)
+        overhead = 160
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
-        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
+        inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
@@ -535,11 +536,14 @@ equal if they are both present.
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
-\end{NoConway}
+Figure~\ref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together.
+(The \maybeEq symbol that appears in the figure denotes a special equality where
+the value on the left-handside is optional; equality holds if and only if the value
+on the left is present and equal to the value on the right.)

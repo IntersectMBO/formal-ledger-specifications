@@ -22,8 +22,9 @@ instance
     NoConfidence             → success (_ , Enact-NoConf)
     (UpdateCommittee new rem q) →
       case ¿ ∀[ term ∈ range new ]
-               term ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e ¿ of λ where
-      (yes p) → success (-, Enact-NewComm p)
+               term ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ' e ¿ of λ where
+      (yes p) → success (-, Enact-NewComm
+        (subst (λ x → ∀[ term ∈ range new ] term ≤ x) (sym +ᵉ≡+ᵉ') p))
       (no ¬p) → failure "ENACT failed at ∀[ term ∈ range new ] term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)"
     (NewConstitution dh sh)  → success (-, Enact-NewConst)
     (TriggerHF v)            → success (-, Enact-HF)
@@ -39,7 +40,8 @@ instance
   ... | .UpdateCommittee new rem q | Enact-NewComm p
     rewrite dec-yes
       (¿ ∀[ term ∈ range new ] term
-           ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e ¿) p .proj₂
+           ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ' e ¿)
+      (subst (λ x → ∀[ term ∈ range new ] term ≤ x) +ᵉ≡+ᵉ' p) .proj₂
       = refl
   ... | .NewConstitution dh sh  | Enact-NewConst = refl
   ... | .TriggerHF v            | Enact-HF       = refl

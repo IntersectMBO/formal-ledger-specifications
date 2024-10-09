@@ -185,7 +185,7 @@ map-∪ {X = X} {Y} f = from ≡ᵉ⇔≡ᵉ' λ b →
     (∃[ a ] b ≡ f a × (a ∈ X ⊎ a ∈ Y))
       ↔⟨ ∃-cong′ ×-distribˡ-⊎' ⟩
     (∃[ a ] (b ≡ f a × a ∈ X ⊎ b ≡ f a × a ∈ Y))
-      ↔⟨ ∃-distrib-⊎' ⟩
+      ↔⟨ ∃-distrib-⊎ ⟩
     (∃[ a ] b ≡ f a × a ∈ X ⊎ ∃[ a ] b ≡ f a × a ∈ Y)
       ∼⟨ ∈-map ⊎-cong ∈-map ⟩
     (b ∈ map f X ⊎ b ∈ map f Y)
@@ -356,6 +356,9 @@ fromList-∪-singleton .proj₂ h with ∈-∪⁻ h
 
 disjoint-sym : disjoint X Y → disjoint Y X
 disjoint-sym disj = flip disj
+
+disjoint-subst : disjoint X Y → X ≡ᵉ Z → disjoint Z Y
+disjoint-subst disj X≡Z = disj ∘ (proj₂ X≡Z)
 
 module Intersectionᵖ (sp-∈ : spec-∈ A) where
   open Intersection sp-∈
