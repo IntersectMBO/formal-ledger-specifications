@@ -200,6 +200,14 @@ module _ (let open UTxOState) where
   getIDs : List Tx → ℙ TxId 
   getIDs ls = foldr (λ t → (singleton (t .Tx.body .TxBody.txid) ∪_ )) ∅ ls
 
+  getValidPath : BatchData → Tx → Bool
+  getValidPath (BatchParent _ batchValid) _ = batchValid
+  getValidPath SingularTransaction tx = tx .Tx.isValid
+  getValidPath OldTransaction tx = tx .Tx.isValid
+
+  getIsTop : BatchData → Tx → Bool
+  getIsTop (BatchParent tid batchValid) tx = (tid ≡ᵇ (tx .Tx.body .TxBody.txid)) 
+  getIsTop _ _ = false
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -228,17 +236,17 @@ data
 \begin{code}
   SWAP-V : let open Tx tx renaming (body to txb); open TxBody txb; open SwapEnv Γ' ; open LEnv lenv renaming (slot to sl) 
     in
-    ∙  validPath bdat tx ≡ true
+    ∙  getValidPath bdat tx ≡ true
     ∙  ⟦ epoch sl , pparams , txvote , txwdrls , deposits u ⟧ᶜ ⊢ c ⇀⦇ txcerts ,CERTS⦈ c'
     ∙  ⟦ txid , epoch sl , pparams , ppolicy , enactState ⟧ᵍ ⊢ g ⇀⦇ txgov txb ,GOV⦈ g'
-    ∙  record { LEnv lenv ; batchData = bdat ; bObs = reqObs ; batchScripts = bScripts } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+    ∙  record { LEnv lenv ; batchData = bdat ; bObs = reqObs ; batchScripts = bScripts ; validPath = true ; isTop = getIsTop bdat tx } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
        ────────────────────────────────
        Γ' ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g' , c' ⟧ˡ
 
   SWAP-I : let open SwapEnv Γ' 
     in
-    ∙ validPath bdat tx ≡ false
-    ∙ record { LEnv lenv ; batchData = bdat ; bObs = reqObs ; batchScripts = bScripts } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+    ∙ getValidPath bdat tx ≡ false
+    ∙ record { LEnv lenv ; batchData = bdat ; bObs = reqObs ; batchScripts = bScripts ; validPath = false ; isTop = getIsTop bdat tx } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
       ────────────────────────────────
        Γ' ⊢ ⟦ u , g , c ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , g , c ⟧ˡ
 \end{code}

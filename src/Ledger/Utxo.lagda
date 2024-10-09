@@ -155,6 +155,8 @@ record UTxOEnv : Type where
     treasury  : Coin
     bObs      : ℙ ScriptHash
     batchData : BatchData
+    validPath : Bool
+    isTop     : Bool
     batchScripts : ℙ Script
 \end{code}
 \end{NoConway}
@@ -305,15 +307,6 @@ coinPolicies = policies (inject 1)
 isAdaOnlyᵇ : Value → Bool
 isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 
-validPath : BatchData → Tx → Bool
-validPath (BatchParent _ batchValid) _ = batchValid
-validPath SingularTransaction tx = tx .Tx.isValid
-validPath OldTransaction tx = tx .Tx.isValid
-
-isTop : BatchData → Tx → Bool
-isTop (BatchParent tid batchValid) tx = (tid ≡ᵇ (tx .Tx.body .TxBody.txid)) 
-isTop _ _ = false
-
 -- TODO: this could be a regular property
 -- TODO: using this in UTxO rule below
 \end{code}
@@ -349,8 +342,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           bs = Γ .UTxOEnv.batchScripts
           sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ true
-        ∙ validPath bd tx ≡ true
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ validPath ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ (corInputs)) ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
@@ -368,8 +361,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isTop bd tx ≡ false
-        ∙ validPath bd tx ≡ false
+        ∙ validPath ≡ false
+        ∙ isTop ≡ false
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
 
@@ -383,8 +376,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isTop bd tx ≡ true
-        ∙ validPath bd tx ≡ false
+        ∙ validPath ≡ false
+        ∙ isTop ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
                               , fees + cbalance (utxo ∣ collateral)
@@ -444,7 +437,7 @@ equal if they are both present.
     ∙ curTreasury ≡? treasury
 
     -- NEW
-    ∙ (isTop (Γ .UTxOEnv.batchData) tx ≡ false → txb .TxBody.corInputs ≡ ∅)
+    ∙ (isTop ≡ false → txb .TxBody.corInputs ≡ ∅)
 
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────

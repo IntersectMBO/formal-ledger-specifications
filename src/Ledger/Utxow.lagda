@@ -103,8 +103,8 @@ allowedLanguages bd tx utxo =
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isScriptObj
 
-noSubsInSubs : BatchData → Tx → Bool
-noSubsInSubs bd tx with (isTop bd tx , tx .Tx.subTxs) 
+noSubsInSubs : Bool → Tx → Bool
+noSubsInSubs isT tx with (isT , tx .Tx.subTxs) 
 ... | (true , _) = true
 ... | (false , []) = true 
 ... | (false , _) = false
@@ -191,7 +191,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  txADhash ≡ map hash txAD
     -- NEW 
     ∙  requireBatchObservers ⊆ Γ .UTxOEnv.bObs --3
-    ∙  noSubsInSubs (Γ .UTxOEnv.batchData) tx ≡ true
+    ∙  noSubsInSubs (Γ .UTxOEnv.isTop) tx ≡ true
 
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────

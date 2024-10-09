@@ -66,8 +66,8 @@ data
           bs = Γ .UTxOEnv.batchScripts
           sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ true
-        ∙ validPath bd tx ≡ true
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ validPath ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ (corInputs)) ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
@@ -85,8 +85,8 @@ data
           sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isTop bd tx ≡ false
-        ∙ validPath bd tx ≡ false
+        ∙ validPath ≡ false
+        ∙ isTop ≡ false
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
 
@@ -100,8 +100,8 @@ data
           sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
-        ∙ isTop bd tx ≡ true
-        ∙ validPath bd tx ≡ false
+        ∙ validPath ≡ false
+        ∙ isTop ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
                               , fees + cbalance (utxo ∣ collateral)
@@ -135,12 +135,15 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ txNetworkId ≡? networkId
     ∙ curTreasury ≡? treasury
 
+    -- NEW
+    ∙ (isTop ≡ false → txb .TxBody.corInputs ≡ ∅)
+
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r 
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r )
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t )
 
 
 

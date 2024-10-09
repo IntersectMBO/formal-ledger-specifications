@@ -43,17 +43,24 @@ instance
           (_     , _   , _ ) → failure "check failed"
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
-      completeness _ (Scripts-Yes p) with H-No-Top? | H-No? | H-Yes? 
-      ... | yes (a , b , refl)   | no _    | no _  =  case proj₂ p of λ ()
-      ... | no _ | yes _ | no _ = {!   !}
-      ... | no _ | no _ | yes _ = {!   !}
-      ... |  _ |  _ |  _ = {!   !}
-      completeness _ (Scripts-No p) with H-No? | H-Yes? | H-No-Top?
-      ... | yes _   | _    | _  =  {!   !}
-      ... | no _   | _    | _  =  {!   !}
-      completeness _ (Scripts-No-TopLevel p) with H-No? | H-No-Top? | H-Yes?
-      ... | yes _   | _    | _  =  {!   !}
-      ... | no _   | _    | _  =  {!   !}
+      completeness _ (Scripts-Yes p)
+        with H-No-Top?             | H-No?                  | H-Yes? 
+      ... | yes (_ , refl , _)     | _                      | _      = case proj₂ p of λ ()
+      ... | _                      | yes (_ , refl , _)     | _      = case proj₂ p of λ ()
+      ... | no _                   | no _                   | yes _  = refl
+      ... | no _                   | no _                   | no ¬p  = contradiction p ¬p
+      completeness _ (Scripts-No p) 
+        with H-No-Top?             | H-No?                  | H-Yes? 
+      ... | yes (_ , _ , refl)     | _                      | _                     = case proj₂ p of λ ()
+      ... | _                      | _                      | yes (_ , refl )       = case proj₂ p of λ ()
+      ... | no _                   | yes _                  | no _                  = refl
+      ... | no _                   | no ¬p                  | no _                  = contradiction p ¬p
+      completeness _ (Scripts-No-TopLevel p) 
+        with H-No-Top?             | H-No?                  | H-Yes? 
+      ... | _                      | yes (_ , _ , refl)     | _                     = case proj₂ p of λ ()
+      ... | _                      | _                      | yes (_ , refl )       = case proj₂ p of λ ()
+      ... | yes _                  | no _                   | no _                  = refl
+      ... | no ¬p                  | no _                   | no _                  = contradiction p ¬p
 
 -- what was here before : 
       -- completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s' → map proj₁ computeProof ≡ success s'
