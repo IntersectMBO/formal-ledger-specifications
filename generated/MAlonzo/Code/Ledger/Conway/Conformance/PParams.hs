@@ -2619,7 +2619,7 @@ du_paramsUpdateWellFormed'63'_728 v0
       (coe
          MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
          (coe
-            MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1660
+            MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
             (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)
             (coe
                MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
@@ -2627,9 +2627,9 @@ du_paramsUpdateWellFormed'63'_728 v0
             (coe
                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe (0 :: Integer)))
             (coe
-               MAlonzo.Code.Axiom.Set.du_fromList_416
+               MAlonzo.Code.Axiom.Set.du_fromList_428
                (coe
-                  MAlonzo.Code.Axiom.Set.d_th_1458
+                  MAlonzo.Code.Axiom.Set.d_th_1470
                   (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -3349,25 +3349,25 @@ du_modifiedUpdateGroups_1020 ::
   T_PParamsUpdate_516 -> [T_PParamGroup_172]
 du_modifiedUpdateGroups_1020 v0
   = coe
-      MAlonzo.Code.Axiom.Set.du__'8746'__668
+      MAlonzo.Code.Axiom.Set.du__'8746'__680
       (coe
-         MAlonzo.Code.Axiom.Set.d_th_1458
+         MAlonzo.Code.Axiom.Set.d_th_1470
          (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
       (coe
          du__'63''9552''8658'__1028 (coe v0)
          (coe du_modifiesNetworkGroup_732) (coe C_NetworkGroup_174))
       (coe
-         MAlonzo.Code.Axiom.Set.du__'8746'__668
+         MAlonzo.Code.Axiom.Set.du__'8746'__680
          (coe
-            MAlonzo.Code.Axiom.Set.d_th_1458
+            MAlonzo.Code.Axiom.Set.d_th_1470
             (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
          (coe
             du__'63''9552''8658'__1028 (coe v0)
             (coe du_modifiesEconomicGroup_804) (coe C_EconomicGroup_176))
          (coe
-            MAlonzo.Code.Axiom.Set.du__'8746'__668
+            MAlonzo.Code.Axiom.Set.du__'8746'__680
             (coe
-               MAlonzo.Code.Axiom.Set.d_th_1458
+               MAlonzo.Code.Axiom.Set.d_th_1470
                (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
             (coe
                du__'63''9552''8658'__1028 (coe v0)
@@ -3399,20 +3399,20 @@ du__'63''9552''8658'__1028 v0 v1 v2
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Interface.HasSingleton.d_'10100'_'10101'_312
+              MAlonzo.Code.Interface.HasSingleton.d_'10100'_'10101'_310
               (coe
-                 MAlonzo.Code.Interface.HasSingleton.du_HasSingletonSet'45'Set_316
+                 MAlonzo.Code.Interface.HasSingleton.du_HasSingletonSet'45'Set_314
                  (coe
-                    MAlonzo.Code.Axiom.Set.d_th_1458
+                    MAlonzo.Code.Axiom.Set.d_th_1470
                     (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)))
               v2))
       (coe
          (\ v3 ->
             MAlonzo.Code.Interface.HasEmptySet.d_'8709'_12
               (coe
-                 MAlonzo.Code.Interface.HasEmptySet.Instances.du_HasEmptySet'45'Set_304
+                 MAlonzo.Code.Interface.HasEmptySet.Instances.du_HasEmptySet'45'Set_302
                  (coe
-                    MAlonzo.Code.Axiom.Set.d_th_1458
+                    MAlonzo.Code.Axiom.Set.d_th_1470
                     (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)))))
 -- Ledger.Conway.Conformance.PParams.PParamsUpdate._?↗_
 d__'63''8599'__1036 ::

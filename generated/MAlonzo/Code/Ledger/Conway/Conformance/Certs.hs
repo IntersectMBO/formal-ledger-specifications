@@ -24,6 +24,7 @@ import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Axiom.Set.Map
 import qualified MAlonzo.Code.Axiom.Set.Map.Dec
+import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Data.Irrelevant
@@ -34,7 +35,6 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.HasAdd
-import qualified MAlonzo.Code.Interface.IsCommutativeMonoid
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Address
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Crypto
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions
@@ -903,26 +903,26 @@ du_certDeposit_990 ::
 du_certDeposit_990 v0
   = let v1
           = coe
-              MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_568
+              MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_572
               (coe
-                 MAlonzo.Code.Axiom.Set.d_th_1458
+                 MAlonzo.Code.Axiom.Set.d_th_1470
                  (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)) in
     coe
       (case coe v0 of
          C_delegate_874 v2 v3 v4 v5
            -> coe
-                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_736
+                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_740
                 (coe
-                   MAlonzo.Code.Axiom.Set.d_th_1458
+                   MAlonzo.Code.Axiom.Set.d_th_1470
                    (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                 (coe
                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                    (coe C_CredentialDeposit_842 (coe v2)) (coe v5))
          C_regdrep_882 v2 v3 v4
            -> coe
-                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_736
+                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_740
                 (coe
-                   MAlonzo.Code.Axiom.Set.d_th_1458
+                   MAlonzo.Code.Axiom.Set.d_th_1470
                    (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                 (coe
                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -937,22 +937,22 @@ du_certRefund_1000 :: T_DCert_872 -> [T_DepositPurpose_840]
 du_certRefund_1000 v0
   = let v1
           = coe
-              MAlonzo.Code.Axiom.Set.du_'8709'_430
+              MAlonzo.Code.Axiom.Set.du_'8709'_442
               (coe
-                 MAlonzo.Code.Axiom.Set.d_th_1458
+                 MAlonzo.Code.Axiom.Set.d_th_1470
                  (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10)) in
     coe
       (case coe v0 of
          C_dereg_876 v2 v3
            -> coe
-                MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_440
-                (MAlonzo.Code.Axiom.Set.d_th_1458
+                MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_452
+                (MAlonzo.Code.Axiom.Set.d_th_1470
                    (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                 erased (coe C_CredentialDeposit_842 (coe v2))
          C_deregdrep_884 v2 v3
            -> coe
-                MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_440
-                (MAlonzo.Code.Axiom.Set.d_th_1458
+                MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_452
+                (MAlonzo.Code.Axiom.Set.d_th_1470
                    (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
                 erased (coe C_DRepDeposit_846 (coe v2))
          _ -> coe v1)
@@ -972,19 +972,19 @@ du_updateCertDeposit_1006 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_updateCertDeposit_1006 v0 v1 v2
   = coe
-      MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1382
+      MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1344
       (coe
-         MAlonzo.Code.Axiom.Set.d_th_1458
+         MAlonzo.Code.Axiom.Set.d_th_1470
          (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
       (coe
-         MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1588
+         MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1600
          MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10 erased
          (d_DecEq'45'DepositPurpose_850 (coe v0)))
       (coe
-         MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__504
+         MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__502
          MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10
          (coe
-            MAlonzo.Code.Interface.IsCommutativeMonoid.du_toCommMonoid''_62
+            MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
             (coe
                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
          (d_DecEq'45'DepositPurpose_850 (coe v0)) v2

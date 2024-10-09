@@ -21,6 +21,7 @@ import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.FromNat
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Algebra.Bundles
+import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Show.Core
@@ -36,7 +37,6 @@ import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.HasAdd
 import qualified MAlonzo.Code.Interface.HasOrder
 import qualified MAlonzo.Code.Interface.Hashable
-import qualified MAlonzo.Code.Interface.IsCommutativeMonoid
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Address
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Crypto
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.PParams
@@ -528,7 +528,7 @@ d_DecEq'45'THash_684 v0
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.ExUnit-CommutativeMonoid
 d_ExUnit'45'CommutativeMonoid_686 ::
   T_GovStructure_10 ->
-  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10
+  MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
 d_ExUnit'45'CommutativeMonoid_686 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ExUnit'45'CommutativeMonoid_214
