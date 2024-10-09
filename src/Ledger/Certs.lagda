@@ -55,7 +55,6 @@ data DCert : Type where
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → Coin → DCert
   ccreghot    : Credential → Maybe Credential → DCert
-
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -73,7 +72,7 @@ cwitness (ccreghot c _)      = c
 \caption{Delegation definitions}
 \end{figure*}
 
-\begin{figure*}[h!]
+\begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}
 record CertEnv : Type where
@@ -270,7 +269,7 @@ constitutional committee.
 \end{itemize}
 
 \begin{figure*}[h]
-\begin{AgdaMultiCode}
+\begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data
 \end{code}
@@ -308,7 +307,7 @@ module _ where
   _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
   _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
 \end{code}
-\end{AgdaMultiCode}
+\end{AgdaSuppressSpace}
 \caption{Types for the transition systems relating to certificates}
 \label{fig:sts:certs-types}
 \end{figure*}
@@ -364,7 +363,7 @@ data _⊢_⇀⦇_,POOL⦈_ where
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,GOVCERT⦈_ where
@@ -405,7 +404,7 @@ CERTBASE as the base case. CERTBASE does the following:
   epochs in the future.
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[htbp]
 \emph{CERT transitions}
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
@@ -415,8 +414,7 @@ data _⊢_⇀⦇_,CERT⦈_ where
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢
-        ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
@@ -441,15 +439,10 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
     in
-    ∙ (filterˢ isKeyHash wdrlCreds) ⊆ dom voteDelegs
+    ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
-        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
-        , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
-        ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}
