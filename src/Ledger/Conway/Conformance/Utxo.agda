@@ -30,15 +30,7 @@ instance
 
 certDepositUtxo : DCert → PParams → DepositPurpose ⇀ Coin
 certDepositUtxo (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
--- This is how RegDeleg certificates are translated in conformance testing
-certDepositUtxo (delegate c nothing nothing v) pp = ❴ CredentialDeposit c , pp .keyDeposit ❵
 certDepositUtxo _                  _   = ∅
--- -- Handle the following two cases in Certs.Haskell module:
--- certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
--- certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
-
--- -- Handle refunds in Certs.Haskell module.
--- certRefund : DCert → ℙ DepositPurpose
 
 
 updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
