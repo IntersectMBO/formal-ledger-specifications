@@ -61,6 +61,12 @@ To install Agda locally and use that install with emacs, you can do the followin
 
 `nix-shell` provides Agda complete with the correct dependencies. So you should be able to run your preferred editor within `nix-shell` and it should see the required `agda` executable.
 
+## Working on libraries
+
+To work simultaneously on the ledger and one of its dependencies, the easiest way to do this is to remove the library from the ledger's `.agda-lib` file and add its path to the `include:` section. Then, when finished, push the changes to the library, then update `default.nix` to point to your new commit.
+
+Warning: Don't forget to update the SHA when updating `default.nix`. Nix will fail silently on your local machine if you do that. Just change a few characters, run `nix-build -A ledger` and nix will tell you the correct hash to put there.
+
 ## Building the PDF quickly
 
 The Makefile can be used to build the PDF without having to build everything else. Either run `make` from within `nix-shell`, or use
