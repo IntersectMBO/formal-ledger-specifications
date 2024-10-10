@@ -141,12 +141,12 @@ module _ (tx : Tx) (let open Tx tx; open TxBody body) where
 dpMap : GovState → List DepositPurpose
 dpMap = map (GovActionDeposit ∘ proj₁)
 
-isGADepositᵇ : DepositPurpose → Bool
-isGADepositᵇ (GovActionDeposit _) = true
-isGADepositᵇ _                    = false
-
 isGADeposit : DepositPurpose → Type
 isGADeposit dp = isGADepositᵇ dp ≡ true
+  where
+  isGADepositᵇ : DepositPurpose → Bool
+  isGADepositᵇ (GovActionDeposit _) = true
+  isGADepositᵇ _                    = false
 
 govDepsMatch : LState → Type
 govDepsMatch ⟦ utxoSt , govSt , _ ⟧ˡ =

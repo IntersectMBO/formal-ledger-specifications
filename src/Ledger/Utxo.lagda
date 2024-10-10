@@ -230,12 +230,6 @@ certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
 certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
 certRefund _                = ∅
 
-
--- updateCertDeposits  : PParams → List DCert → Deposits → Deposits
--- updateCertDeposits pp [] deposits = deposits
--- updateCertDeposits pp (cert ∷ certs) deposits =
---   (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
-
 data ValidCertDeposits (ps : ℙ DepositPurpose) : List DCert → Set where
   []         : ValidCertDeposits ps []
   delegate   : ∀ {c del kh v certs}
@@ -286,39 +280,7 @@ instance
   Dec-ValidCertDeposits : ∀ {ps certs} → ValidCertDeposits ps certs ⁇
   Dec-ValidCertDeposits = ⁇ (validCertDeposits? _ _)
 
--- updateCertExpr : PParams → DCert → Deposits
--- updateCertExpr _   (delegate c _ _ v)  = ❴ CredentialDeposit c , v ❵
--- updateCertExpr _   (dereg c v)         = ❴ CredentialDeposit c , v ❵
--- updateCertExpr pp  (regpool x _)       = ❴ PoolDeposit x , PParams.poolDeposit pp ❵
--- updateCertExpr _   (regdrep c v anc)   = ❴ DRepDeposit c , v ❵
--- updateCertExpr _   (deregdrep c v)     = ❴ DRepDeposit c , v ❵
--- updateCertExpr _   _                   = ∅
-
--- updateCertTransform : PParams → DCert → Deposits → Deposits
--- updateCertTransform pp dcert@(delegate c _ _ v)  deps = deps ∪⁺ updateCertExpr pp dcert
--- updateCertTransform pp dcert@(regpool x _)       deps = deps ∪⁺ updateCertExpr pp dcert
--- updateCertTransform pp dcert@(regdrep c v anc)   deps = deps ∪⁺ updateCertExpr pp dcert
--- updateCertTransform pp dcert@(dereg c _)         deps = deps ∣ dom (updateCertExpr pp dcert) ᶜ
--- updateCertTransform pp dcert@(deregdrep c _)     deps = deps ∣ dom (updateCertExpr pp dcert) ᶜ
--- updateCertTransform pp _ = id
-
--- certDeposit : DCert → PParams → Deposits
--- certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
--- certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
--- certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
--- certDeposit _                  _   = ∅
-
--- certRefund : DCert → ℙ DepositPurpose
--- certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
--- certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
--- certRefund _                = ∅
-
-
 -- Assumes ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) certs.
--- updateCertDeposits  : PParams → List DCert → Deposits → Deposits
--- updateCertDeposits pp [] deposits = deposits
--- updateCertDeposits pp (c ∷ certs) deposits = updateCertDeposits pp certs (updateCertTransform pp c deposits)
-
 updateCertDeposits  : PParams → List DCert → Deposits → Deposits
 updateCertDeposits pp [] deposits = deposits
 updateCertDeposits pp (delegate c vd khs v ∷ certs) deposits
@@ -333,14 +295,6 @@ updateCertDeposits pp (deregdrep c v ∷ certs) deposits
   = updateCertDeposits pp certs (deposits ∣ certRefund (deregdrep c v)ᶜ)
 updateCertDeposits pp (_ ∷ certs) deposits
   = updateCertDeposits pp certs deposits
-
--- updateCertDeposits pp (delegate c _ _ v ∷ certs) deposits = updateCertDeposits pp certs (deposits ∪⁺ ❴ CredentialDeposit c , v ❵)
--- updateCertDeposits pp (regpool kh _ ∷ certs) deposits     = updateCertDeposits pp certs (deposits ∪⁺ ❴ PoolDeposit kh , pp .poolDeposit ❵)
--- updateCertDeposits pp (regdrep c v _ ∷ certs) deposits    = updateCertDeposits pp certs (deposits ∪⁺ ❴ DRepDeposit c , v ❵)
--- updateCertDeposits pp (dereg c _ ∷ certs) deposits        = updateCertDeposits pp certs (deposits ∣ ❴ CredentialDeposit c ❵ ᶜ)
--- updateCertDeposits pp (deregdrep c _ ∷ certs) deposits    = updateCertDeposits pp certs (deposits ∣ ❴ DRepDeposit c ❵ ᶜ)
--- updateCertDeposits pp (retirepool _ _ ∷ certs) deposits   = updateCertDeposits pp certs deposits
--- updateCertDeposits pp (ccreghot _ _ ∷ certs) deposits     = updateCertDeposits pp certs deposits
 
 updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
 updateProposalDeposits []        _     _      deposits  = deposits

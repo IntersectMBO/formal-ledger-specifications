@@ -195,7 +195,7 @@ private variable
   voteDelegs : Credential ⇀ VDeleg
   stakeDelegs : Credential ⇀ KeyHash
   rewards : Credential ⇀ Coin
-  deps tdeps : Deposits
+  deps : Deposits
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
