@@ -90,7 +90,7 @@ record DelegEnv : Type where
 
 GovCertEnv  = CertEnv
 
-certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
+certDeposit : DCert → PParams → Deposits
 certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
 certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
 certDeposit _                  _   = ∅
@@ -98,12 +98,11 @@ certDeposit _                  _   = ∅
 -- certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
 
 certRefund : DCert → ℙ DepositPurpose
-certRefund (dereg c _)    = ❴ CredentialDeposit c ❵
+certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
 certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
-certRefund _              = ∅
+certRefund _                = ∅
 
-updateCertDeposit  : PParams → DCert → (DepositPurpose ⇀ Coin)
-                   → DepositPurpose ⇀ Coin
+updateCertDeposit  : PParams → DCert → Deposits → Deposits
 updateCertDeposit pp cert deposits
   = (deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 

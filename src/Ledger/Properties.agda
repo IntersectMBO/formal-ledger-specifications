@@ -127,8 +127,8 @@ module _ (s : ChainState) where
     propose-minSpend : noRefundCert (txcerts txb)
       → coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
     propose-minSpend noRef = case valid of λ where
-      (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc {indexedSum-∪⁺-hom} {indexedSum-⊆} x noRef
-      (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc {indexedSum-∪⁺-hom} {indexedSum-⊆} x noRef
+      (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
+      (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
 
   --   propose-ChangePP-hasGroup : ∀ {up prop}
   --     → prop ∈ txb → prop .GovProposal.action ≡ ChangePParams up → updateGroups up ≢ ∅
