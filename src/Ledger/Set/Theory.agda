@@ -93,13 +93,11 @@ module _ ⦃ _ : DecEq A ⦄ where
   open Lookupᵐ {A} ∈-sp public
   open Lookupᵐᵈ {A} ∈-sp public
 
-open import Algebra
+open import Class.CommutativeMonoid
 
 module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ where
   open Intersectionᵐ {A} {B} ∈-sp public
-
-  module _ ⦃ M : CommutativeMonoid 0ℓ 0ℓ ⦄ where
-    open IndexedSumUnionᵐ {A} {B} ∈-sp (_∈? _) public
+  open IndexedSumUnionᵐ {A} {B} ∈-sp (_∈? _) public
 
 module Properties where
   open import Axiom.Set.Properties th public
@@ -124,13 +122,11 @@ filterKeys P = filterKeys? (to-sp P)
 _∣^'_ : A ⇀ B → (P : B → Type) ⦃ _ : P ⁇¹ ⦄ → A ⇀ B
 s ∣^' P = s ∣^'? to-sp P
 
-open import Interface.IsCommutativeMonoid
+indexedSumᵛ' : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → ⦃ CommutativeMonoid 0ℓ 0ℓ C ⦄ → (B → C) → A ⇀ B → C
+indexedSumᵛ' f m = indexedSumᵛ f (m ᶠᵐ)
 
-indexedSumᵛ' : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → ⦃ IsCommutativeMonoid' 0ℓ 0ℓ C ⦄ → (B → C) → A ⇀ B → C
-indexedSumᵛ' f m = indexedSumᵛ ⦃ fromCommMonoid' it ⦄ f (m ᶠᵐ)
-
-indexedSum' : ⦃ DecEq A ⦄ → ⦃ IsCommutativeMonoid' 0ℓ 0ℓ B ⦄ → (A → B) → ℙ A → B
-indexedSum' f s = indexedSum ⦃ fromCommMonoid' it ⦄ f (s ᶠˢ)
+indexedSum' : ⦃ DecEq A ⦄ → ⦃ CommutativeMonoid 0ℓ 0ℓ B ⦄ → (A → B) → ℙ A → B
+indexedSum' f s = indexedSum f (s ᶠˢ)
 
 syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
 syntax indexedSum'  (λ a → x) m = ∑ˢ[ a ← m ] x
@@ -141,17 +137,19 @@ opaque
   singleton-≢-∅ : ∀ {a} {x : a} → ⦃ DecEq a ⦄ → singleton x ≢ ∅
   singleton-≢-∅ {x = x} ()
 
-aggregateBy : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → ⦃ DecEq C ⦄ → ⦃ IsCommutativeMonoid' 0ℓ 0ℓ C ⦄
+aggregateBy : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → ⦃ DecEq C ⦄ → ⦃ CommutativeMonoid 0ℓ 0ℓ C ⦄
             → Rel A B → A ⇀ C → B ⇀ C
 aggregateBy R m = mapFromFun (λ b → ∑[ x ← m ∣ Rel.dom (R ∣^ʳ ❴ b ❵) ] x) (Rel.range R)
 
+import Algebra
+
 module _ ⦃ decA : DecEq A ⦄ ⦃ decB : DecEq B ⦄ {f : B → C}
-         ⦃ cm : IsCommutativeMonoid' 0ℓ 0ℓ C ⦄
+         ⦃ cm : CommutativeMonoid 0ℓ 0ℓ C ⦄
          where
-  open CommutativeMonoid (fromCommMonoid' cm) renaming (trans to ≈-trans) hiding (refl)
+  open Algebra.CommutativeMonoid (Conversion.toBundle cm) renaming (trans to ≈-trans) hiding (refl)
   import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-  open SetoidReasoning (CommutativeMonoid.setoid (fromCommMonoid' cm))
+  open SetoidReasoning (Algebra.CommutativeMonoid.setoid (Conversion.toBundle cm))
 
   indexedSumᵛ'-cong : indexedSumᵛ' f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵛ'-cong {x} {y} x≡y =
-    indexedSum-cong ⦃ fromCommMonoid' cm ⦄ {A × B} {λ (a , b) → f b} {(x ˢ) ᶠˢ} {(y ˢ) ᶠˢ} x≡y
+    indexedSum-cong {A = A × B} {λ (a , b) → f b} {(x ˢ) ᶠˢ} {(y ˢ) ᶠˢ} x≡y

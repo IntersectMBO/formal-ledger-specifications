@@ -24,7 +24,6 @@ open import Interface.HasOrder.Instance public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
 open import Interface.Hashable public
-open import Interface.IsCommutativeMonoid public
 open import Interface.ToBool public
 open import Ledger.Interface.HasCoin public
 open import MyDebugOptions public
@@ -40,6 +39,8 @@ dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
 dec-de-morgan ⦃ ⁇ yes p ⦄ ¬pq = inj₂ λ q → ¬pq (p , q)
 
 instance
+  CommMonoid-ℕ-+ = NonUniqueInstances.CommMonoid-ℕ-+
+
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
   HasCoin-Map .getCoin s = ∑[ x ← s ] x
 

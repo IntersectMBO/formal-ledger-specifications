@@ -10,9 +10,9 @@ module Ledger.Conway.Conformance.TokenAlgebra.ValueSet (PolicyId AssetName : Typ
 
 open import Ledger.Prelude                         hiding (lookup ; update ; isMagma ; isEquivalence) renaming (TotalMap to _⇒_)
 open _⇒_
-open import Ledger.Conway.Conformance.TokenAlgebra PolicyId           using (TokenAlgebra)
+open import Ledger.TokenAlgebra PolicyId           using (TokenAlgebra)
 
-open import Algebra                                using (CommutativeMonoid ; Op₂ ; IsSemigroup ; IsMonoid ; IsMagma ; IsCommutativeMonoid)
+open import Algebra                                using (Op₂ ; IsSemigroup ; IsMonoid ; IsMagma ; IsCommutativeMonoid)
 open import Algebra.Morphism                       using (IsMonoidHomomorphism ; IsMagmaHomomorphism)
 open import Data.Nat.Properties                    using (+-comm ; +-assoc ; +-identityʳ ; +-0-commutativeMonoid)
 open import Relation.Binary                        using (IsEquivalence)
@@ -57,7 +57,7 @@ record AdaIdType : Type where
 An inhabitant of `Value` is a map denoting a finite collection of quantities of assets.
 
 \begin{code}
-open CommutativeMonoid renaming (_∙_ to _⋆_) hiding (refl ; sym ; trans)
+open Algebra.CommutativeMonoid renaming (_∙_ to _⋆_) hiding (refl ; sym ; trans)
 
 AssetId  = PolicyId × AssetName
 Quantity = ℕ
@@ -156,7 +156,8 @@ We are now in a position to define the commutative monoid.
 
 \begin{code}
   open IsCommutativeMonoid
-  Vcm : CommutativeMonoid 0ℓ 0ℓ
+
+  Vcm : Algebra.CommutativeMonoid 0ℓ 0ℓ
   Vcm .Carrier                        = AssetId ⇒ Quantity
   Vcm ._≈_                            = _≋_
   Vcm ._⋆_                            = _⊕_
@@ -164,7 +165,7 @@ We are now in a position to define the commutative monoid.
   Vcm .isCommutativeMonoid .isMonoid  = ≋-⊕-ι-isMonoid
   Vcm .isCommutativeMonoid .comm      = ⊕-comm
 
-  instance _ = toCommMonoid' Vcm
+  instance _ = Conversion.fromBundle Vcm
 
   Value-TokenAlgebra :
     (specialPolicy : PolicyId)
@@ -205,13 +206,13 @@ We are now in a position to define the commutative monoid.
 
     compose-to-id : totalMap↠coin ∘ coin↪totalMap ≗ id
     compose-to-id _ = lookup-update-id ι
-      where open LookupUpdate {X = X} {specId} {⋁A}
+      where open LookupUpdate {X = X} {specId} {a∈X = ⋁A}
 
-    open CommutativeMonoid Vcm                    using () renaming (rawMonoid to Vcm-mon)
-    open CommutativeMonoid +-0-commutativeMonoid  using () renaming (rawMonoid to ℕ-mon)
-    open IsMonoidHomomorphism                     using (isMagmaHomomorphism ; ε-homo)
-    open IsMagmaHomomorphism                      using (isRelHomomorphism ; homo)
-    open IsRelHomomorphism                        using () renaming (cong to ⟦⟧-cong)
+    open Algebra.CommutativeMonoid Vcm                    using () renaming (rawMonoid to Vcm-mon)
+    open Algebra.CommutativeMonoid +-0-commutativeMonoid  using () renaming (rawMonoid to ℕ-mon)
+    open IsMonoidHomomorphism                             using (isMagmaHomomorphism ; ε-homo)
+    open IsMagmaHomomorphism                              using (isRelHomomorphism ; homo)
+    open IsRelHomomorphism                                using () renaming (cong to ⟦⟧-cong)
 
     CoinMonHom : IsMonoidHomomorphism Vcm-mon ℕ-mon totalMap↠coin
     CoinMonHom .isMagmaHomomorphism .isRelHomomorphism .⟦⟧-cong  = λ x → x
