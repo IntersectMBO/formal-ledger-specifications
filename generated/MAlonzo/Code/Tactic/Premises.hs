@@ -21,9 +21,10 @@ import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
-import qualified MAlonzo.Code.Agda.Builtin.String
 import qualified MAlonzo.Code.Class.Bifunctor
+import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Class.Decidable.Instances
 import qualified MAlonzo.Code.Class.Foldable.Instances
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
@@ -34,28 +35,19 @@ import qualified MAlonzo.Code.Class.MonadTC
 import qualified MAlonzo.Code.Class.Monoid.Core
 import qualified MAlonzo.Code.Class.Semigroup.Core
 import qualified MAlonzo.Code.Class.Semigroup.Instances
+import qualified MAlonzo.Code.Class.Show.Core
+import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Base
-import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.MetaPrelude
 import qualified MAlonzo.Code.Reflection.AST.Abstraction
-import qualified MAlonzo.Code.Reflection.AST.Show
 import qualified MAlonzo.Code.Reflection.Ext
 import qualified MAlonzo.Code.Reflection.Utils
 import qualified MAlonzo.Code.Reflection.Utils.Debug
 
--- Tactic.Premises._.print
-d_print_10 ::
-  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> AgdaAny
-d_print_10
-  = coe
-      MAlonzo.Code.Reflection.Utils.Debug.d_print_20
-      (coe
-         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-         (coe ("tactic.premises" :: Data.Text.Text)) (coe (100 :: Integer)))
 -- Tactic.Premises.genPremises
 d_genPremises_24 :: AgdaAny -> AgdaAny -> AgdaAny
 d_genPremises_24 v0 v1
@@ -69,28 +61,24 @@ d_genPremises_24 v0 v1
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
             (coe ("tactic.premises" :: Data.Text.Text)) (coe (100 :: Integer)))
          (coe
-            MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+            MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
             (coe
                ("*** Generating premises for constructor:" :: Data.Text.Text))
             (coe
-               MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+               MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                (coe MAlonzo.Code.Agda.Builtin.Reflection.d_primShowQName_12 v1)
                (coe ("***" :: Data.Text.Text)))))
       (coe
-         MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-         MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+         MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
          erased
          (coe
             MAlonzo.Code.Class.Monad.Core.du__'61''60''60'__28
             (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
             (coe ()) (coe du_reduceRuleSyntax_34)
-            (coe
-               MAlonzo.Code.Class.MonadTC.d_getType_172
-               MAlonzo.Code.Class.MonadTC.d_MonadTC'45'TC_742 v1))
+            (coe MAlonzo.Code.Agda.Builtin.Reflection.d_getType_406 v1))
          (\ v2 ->
             coe
-              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+              MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
               erased
               (coe
                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -119,8 +107,7 @@ d_genPremises_24 v0 v1
                                 (coe MAlonzo.Code.Reflection.Utils.d_viewTy_146 (coe v2))))))))
               (\ v3 ->
                  coe
-                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-                   MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+                   MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
                    erased
                    (coe
                       MAlonzo.Code.Class.Monad.Core.du_filterM_104
@@ -137,8 +124,7 @@ d_genPremises_24 v0 v1
                       (coe v3))
                    (\ v4 ->
                       coe
-                        MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-                        MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+                        MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
                         erased
                         (coe
                            du_removeUnusedImplicits_74
@@ -167,19 +153,21 @@ d_genPremises_24 v0 v1
                                           MAlonzo.Code.Class.Semigroup.Core.du__'60''62'__18
                                           MAlonzo.Code.Class.Semigroup.Instances.d_Semigroup'45'String_20
                                           ("```\n" :: Data.Text.Text)
-                                          (MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+                                          (MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                              (coe
-                                                MAlonzo.Code.Agda.Builtin.Reflection.d_primShowQName_12
+                                                MAlonzo.Code.Class.Show.Core.d_show_16
+                                                MAlonzo.Code.Class.Show.Instances.d_Show'45'Name_58
                                                 v0)
                                              (coe
-                                                MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
+                                                MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                                 (coe (":" :: Data.Text.Text))
                                                 (coe
                                                    MAlonzo.Code.Class.Semigroup.Core.du__'60''62'__18
                                                    MAlonzo.Code.Class.Semigroup.Instances.d_Semigroup'45'String_20
-                                                   (MAlonzo.Code.Reflection.AST.Show.d_showTerm_38
-                                                      (coe
-                                                         MAlonzo.Code.Reflection.Utils.d_tyView_158
+                                                   (coe
+                                                      MAlonzo.Code.Class.Show.Core.d_show_16
+                                                      MAlonzo.Code.Class.Show.Instances.d_Show'45'Term_82
+                                                      (MAlonzo.Code.Reflection.Utils.d_tyView_158
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe v6)
@@ -202,8 +190,7 @@ d_genPremises_24 v0 v1
                                        (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6)
                                        (coe ()) (coe ())
                                        (coe
-                                          MAlonzo.Code.Class.MonadTC.d_declareDef_166
-                                          MAlonzo.Code.Class.MonadTC.d_MonadTC'45'TC_742
+                                          MAlonzo.Code.Agda.Builtin.Reflection.d_declareDef_392
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
                                              (coe
@@ -233,10 +220,9 @@ d_genPremises_24 v0 v1
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                                        (coe
-                                          MAlonzo.Code.Class.MonadTC.d_defineFun_170
-                                          MAlonzo.Code.Class.MonadTC.d_MonadTC'45'TC_742 v0
+                                          MAlonzo.Code.Agda.Builtin.Reflection.d_defineFun_404 v0
                                           (coe
-                                             MAlonzo.Code.Data.List.Base.du_'91'_'93'_306
+                                             MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_clause_272
                                                 (coe
@@ -263,15 +249,15 @@ d_genPremises_24 v0 v1
                                                               (coe v8))))
                                                    (coe
                                                       MAlonzo.Code.Data.Product.Base.du_uncurry_244
-                                                      (coe MAlonzo.Code.Data.List.Base.du_zip_212)
+                                                      (coe MAlonzo.Code.Data.List.Base.du_zip_182)
                                                       (coe
                                                          MAlonzo.Code.Class.Bifunctor.du_map'8321'_110
                                                          (coe
                                                             MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_152)
                                                          (coe
-                                                            MAlonzo.Code.Data.List.Base.du_reverse_536)
+                                                            MAlonzo.Code.Data.List.Base.du_reverse_460)
                                                          (coe
-                                                            MAlonzo.Code.Data.List.Base.du_unzip_216
+                                                            MAlonzo.Code.Data.List.Base.du_unzip_186
                                                             (coe
                                                                MAlonzo.Code.MetaPrelude.du_enumerate_34
                                                                v6)))))
@@ -340,7 +326,7 @@ du_reduceRuleSyntax_34 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
 du_reduceRuleSyntax_34 v0
   = coe
-      MAlonzo.Code.Agda.Builtin.Reflection.d_withReduceDefs_450 () erased
+      MAlonzo.Code.Agda.Builtin.Reflection.d_withReduceDefs_454 () erased
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
          (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
@@ -393,9 +379,7 @@ du_reduceRuleSyntax_34 v0
                                  (MAlonzo.RTE.Fixity
                                     MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (-501.0 :: Double)))))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
-      (coe
-         MAlonzo.Code.Class.MonadTC.d_normalise_152
-         MAlonzo.Code.Class.MonadTC.d_MonadTC'45'TC_742 v0)
+      (coe MAlonzo.Code.Agda.Builtin.Reflection.d_normalise_350 v0)
 -- Tactic.Premises._.breakImplicits
 d_breakImplicits_40 ::
   AgdaAny ->
@@ -419,7 +403,7 @@ du_breakImplicits_40 v0
               () erased (coe MAlonzo.Code.Reflection.AST.Abstraction.du_unAbs_36)
               v1))
       (coe
-         MAlonzo.Code.Data.List.Base.du_break_852
+         MAlonzo.Code.Data.List.Base.du_break_776
          (\ v1 ->
             coe
               MAlonzo.Code.Reflection.Utils.du_isVisible'63'_400
@@ -433,7 +417,7 @@ d_unbundleHypotheses_42 ::
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154]
 d_unbundleHypotheses_42 v0 v1
   = coe
-      MAlonzo.Code.Data.List.Base.du_concatMap_272
+      MAlonzo.Code.Data.List.Base.du_concatMap_246
       (coe d_go_48 (coe v0) (coe v1))
 -- Tactic.Premises._._.go
 d_go_48 ::
@@ -450,7 +434,7 @@ d_'46'extendedlambda0_50 ::
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154]
 d_'46'extendedlambda0_50 v0 v1 v2
   = let v3
-          = coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_306 (coe v2) in
+          = coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v2) in
     coe
       (case coe v2 of
          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 v4 v5
@@ -602,8 +586,7 @@ du_isDecidable'63'_58 v0 v1
       (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_32)
       (coe MAlonzo.Code.Class.MonadTC.d_MonadTC'45'TC_742) (coe ())
       (coe
-         MAlonzo.Code.Class.MonadTC.d_checkType_150
-         MAlonzo.Code.Class.MonadTC.d_MonadTC'45'TC_742
+         MAlonzo.Code.Agda.Builtin.Reflection.d_checkType_348
          (coe
             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
             (coe
@@ -711,7 +694,7 @@ du_removeUnusedImplicits_74 v0 v1
       du_go_86 (coe v1)
       (coe
          MAlonzo.Code.Data.Nat.Base.d_pred_192
-         (coe MAlonzo.Code.Data.List.Base.du_length_304 v0))
+         (coe MAlonzo.Code.Data.List.Base.du_length_284 v0))
       (coe v0) (coe v1)
 -- Tactic.Premises._._.fvs
 d_fvs_84 ::
@@ -742,8 +725,7 @@ du_go_86 v0 v1 v2 v3
   = case coe v2 of
       []
         -> coe
-             MAlonzo.Code.Class.Monad.Core.d_return_16
-             MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased
+             MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
              (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v3))
       (:) v4 v5
         -> coe
@@ -755,23 +737,26 @@ du_go_86 v0 v1 v2 v3
                    (coe
                       MAlonzo.Code.Class.Decidable.Core.du_dec'185'_108
                       (coe
-                         MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__138
-                         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2558) (coe v1))))
+                         MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
+                         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                         (coe v1))))
                 (coe du_fvs_84 (coe v0)))
              (coe
                 (\ v6 ->
                    coe
-                     MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
-                     MAlonzo.Code.Class.Functor.Instances.d_Functor'45'TC_82 () erased
-                     () erased
-                     (coe
-                        MAlonzo.Code.Class.Bifunctor.du_map'8321'_110
-                        (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_152)
-                        (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v4)))
+                     MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
+                     erased
                      (coe
                         du_go_86 (coe v0)
                         (coe MAlonzo.Code.Data.Nat.Base.d_pred_192 (coe v1)) (coe v5)
-                        (coe v3))))
+                        (coe v3))
+                     (\ v7 ->
+                        coe
+                          MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
+                          (coe
+                             MAlonzo.Code.Class.Bifunctor.du_map'8321'_110
+                             (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_152)
+                             (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v4)) v7))))
              (coe
                 (\ v6 ->
                    coe
@@ -781,3 +766,40 @@ du_go_86 v0 v1 v2 v3
                         MAlonzo.Code.Reflection.Utils.d_mapFreeVars_224
                         MAlonzo.Code.Data.Nat.Base.d_pred_192 v1 v3)))
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Premises.ℝ
+d_ℝ_134 a0 a1 = ()
+data T_ℝ_134 = C_base_136 | C_step_142 T_ℝ_134
+-- Tactic.Premises.ℚ
+d_ℚ_178 a0 a1 a2 a3 a4 = ()
+data T_ℚ_178
+  = C_base_186 |
+    C_step_196 AgdaAny AgdaAny AgdaAny AgdaAny
+               MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+-- Tactic.Premises.ℝ′
+d_ℝ'8242'_240 a0 a1 = ()
+data T_ℝ'8242'_240
+  = C_base_242 |
+    C_step_252 (Integer -> Integer) (Integer -> Integer)
+               MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+-- Tactic.Premises.𝕍
+d_𝕍_336 a0 a1 a2 a3 a4 = ()
+data T_𝕍_336
+  = C_base_344 |
+    C_step_358 AgdaAny AgdaAny AgdaAny AgdaAny
+               MAlonzo.Code.Class.Show.Core.T_Show_10
+               MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+-- Tactic.Premises.𝕍′
+d_𝕍'8242'_408 a0 a1 a2 a3 a4 = ()
+data T_𝕍'8242'_408
+  = C_base_416 |
+    C_step_432 AgdaAny AgdaAny AgdaAny AgdaAny
+               MAlonzo.Code.Class.Show.Core.T_Show_10
+               MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
+               MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+-- Tactic.Premises.ℚ′
+d_ℚ'8242'_482 a0 a1 a2 a3 a4 = ()
+data T_ℚ'8242'_482
+  = C_base_490 |
+    C_step_502 AgdaAny AgdaAny AgdaAny AgdaAny
+               MAlonzo.Code.Class.Show.Core.T_Show_10
+               MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14

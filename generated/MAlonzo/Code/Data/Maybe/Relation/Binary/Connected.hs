@@ -63,7 +63,7 @@ du_just'45'equivalence_62 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_just'45'equivalence_62
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296 (coe C_just_50)
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 (coe C_just_50)
       (coe du_drop'45'just_58)
 -- Data.Maybe.Relation.Binary.Connected.refl
 d_refl_64 ::

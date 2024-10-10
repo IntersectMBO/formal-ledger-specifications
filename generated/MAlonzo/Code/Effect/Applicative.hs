@@ -219,10 +219,12 @@ du__'8855'__76 v0 = coe du_zip_66 (coe v0)
 -- Effect.Applicative._.mkRawApplicative
 d_mkRawApplicative_94 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (() -> ()) ->
   (() -> AgdaAny -> AgdaAny) ->
   (() -> () -> AgdaAny -> AgdaAny -> AgdaAny) -> T_RawApplicative_20
-d_mkRawApplicative_94 ~v0 ~v1 v2 v3 = du_mkRawApplicative_94 v2 v3
+d_mkRawApplicative_94 ~v0 ~v1 ~v2 v3 v4
+  = du_mkRawApplicative_94 v3 v4
 du_mkRawApplicative_94 ::
   (() -> AgdaAny -> AgdaAny) ->
   (() -> () -> AgdaAny -> AgdaAny -> AgdaAny) -> T_RawApplicative_20
@@ -240,21 +242,21 @@ du_mkRawApplicative_94 v0 v1
 -- Effect.Applicative.RawApplicativeZero
 d_RawApplicativeZero_120 a0 a1 a2 = ()
 data T_RawApplicativeZero_120
-  = C_RawApplicativeZero'46'constructor_7747 T_RawApplicative_20
+  = C_RawApplicativeZero'46'constructor_8049 T_RawApplicative_20
                                              MAlonzo.Code.Effect.Empty.T_RawEmpty_16
 -- Effect.Applicative.RawApplicativeZero.rawApplicative
 d_rawApplicative_128 ::
   T_RawApplicativeZero_120 -> T_RawApplicative_20
 d_rawApplicative_128 v0
   = case coe v0 of
-      C_RawApplicativeZero'46'constructor_7747 v1 v2 -> coe v1
+      C_RawApplicativeZero'46'constructor_8049 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Applicative.RawApplicativeZero.rawEmpty
 d_rawEmpty_130 ::
   T_RawApplicativeZero_120 -> MAlonzo.Code.Effect.Empty.T_RawEmpty_16
 d_rawEmpty_130 v0
   = case coe v0 of
-      C_RawApplicativeZero'46'constructor_7747 v1 v2 -> coe v2
+      C_RawApplicativeZero'46'constructor_8049 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Applicative.RawApplicativeZero._._*>_
 d__'42''62'__134 ::
@@ -486,21 +488,21 @@ du_guard_172 v0 v1
 -- Effect.Applicative.RawAlternative
 d_RawAlternative_180 a0 a1 a2 = ()
 data T_RawAlternative_180
-  = C_RawAlternative'46'constructor_9601 T_RawApplicativeZero_120
+  = C_RawAlternative'46'constructor_9897 T_RawApplicativeZero_120
                                          MAlonzo.Code.Effect.Choice.T_RawChoice_16
 -- Effect.Applicative.RawAlternative.rawApplicativeZero
 d_rawApplicativeZero_188 ::
   T_RawAlternative_180 -> T_RawApplicativeZero_120
 d_rawApplicativeZero_188 v0
   = case coe v0 of
-      C_RawAlternative'46'constructor_9601 v1 v2 -> coe v1
+      C_RawAlternative'46'constructor_9897 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Applicative.RawAlternative.rawChoice
 d_rawChoice_190 ::
   T_RawAlternative_180 -> MAlonzo.Code.Effect.Choice.T_RawChoice_16
 d_rawChoice_190 v0
   = case coe v0 of
-      C_RawAlternative'46'constructor_9601 v1 v2 -> coe v2
+      C_RawAlternative'46'constructor_9897 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Applicative.RawAlternative._._*>_
 d__'42''62'__194 ::
@@ -773,7 +775,7 @@ du__'8739'__240 v0 v1
 -- Effect.Applicative.Morphism
 d_Morphism_254 a0 a1 a2 a3 a4 a5 = ()
 newtype T_Morphism_254
-  = C_Morphism'46'constructor_13823 MAlonzo.Code.Effect.Functor.T_Morphism_58
+  = C_Morphism'46'constructor_14129 MAlonzo.Code.Effect.Functor.T_Morphism_58
 -- Effect.Applicative.A₁._*>_
 d__'42''62'__266 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -1650,7 +1652,7 @@ d_functorMorphism_418 ::
   T_Morphism_254 -> MAlonzo.Code.Effect.Functor.T_Morphism_58
 d_functorMorphism_418 v0
   = case coe v0 of
-      C_Morphism'46'constructor_13823 v1 -> coe v1
+      C_Morphism'46'constructor_14129 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Applicative.Morphism._.op
 d_op_422 :: T_Morphism_254 -> () -> AgdaAny -> AgdaAny

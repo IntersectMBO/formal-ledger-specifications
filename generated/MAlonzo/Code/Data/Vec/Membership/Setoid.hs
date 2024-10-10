@@ -140,25 +140,28 @@ du_find_102 v0 v1 v2
       MAlonzo.Code.Data.Vec.Relation.Unary.Any.C_there_54 v6
         -> case coe v1 of
              MAlonzo.Code.Data.Vec.Base.C__'8759'__38 v8 v9
-               -> let v10 = coe du_find_102 (coe v0) (coe v9) (coe v6) in
-                  coe
-                    (case coe v10 of
-                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
-                         -> case coe v12 of
-                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v13 v14
-                                -> coe
-                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v11)
-                                     (coe
-                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                        (coe
-                                           MAlonzo.Code.Data.Vec.Relation.Unary.Any.C_there_54 v13)
-                                        (coe v14))
-                              _ -> MAlonzo.RTE.mazUnreachableError
-                       _ -> MAlonzo.RTE.mazUnreachableError)
+               -> coe
+                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                    (coe
+                       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                       (coe du_find_102 (coe v0) (coe v9) (coe v6)))
+                    (coe
+                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                       (coe
+                          MAlonzo.Code.Data.Vec.Relation.Unary.Any.C_there_54
+                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                             (coe
+                                MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                (coe du_find_102 (coe v0) (coe v9) (coe v6)))))
+                       (coe
+                          MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                          (coe
+                             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                             (coe du_find_102 (coe v0) (coe v9) (coe v6)))))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Vec.Membership.Setoid._.lose
-d_lose_126 ::
+d_lose_120 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -170,15 +173,15 @@ d_lose_126 ::
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Data.Vec.Relation.Unary.Any.T_Any_32 ->
   AgdaAny -> MAlonzo.Code.Data.Vec.Relation.Unary.Any.T_Any_32
-d_lose_126 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 ~v7 v8 v9 v10
-  = du_lose_126 v5 v6 v8 v9 v10
-du_lose_126 ::
+d_lose_120 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 ~v7 v8 v9 v10
+  = du_lose_120 v5 v6 v8 v9 v10
+du_lose_120 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Data.Vec.Relation.Unary.Any.T_Any_32 ->
   AgdaAny -> MAlonzo.Code.Data.Vec.Relation.Unary.Any.T_Any_32
-du_lose_126 v0 v1 v2 v3 v4
+du_lose_120 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Data.Vec.Relation.Unary.Any.du_map_94
       (coe (\ v5 v6 -> coe v0 v1 v5 v6 v4)) (coe v2) (coe v3)

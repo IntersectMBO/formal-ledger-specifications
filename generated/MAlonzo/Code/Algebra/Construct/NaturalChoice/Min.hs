@@ -188,7 +188,7 @@ du_mono'45''8804''45'distrib'45''8851'_180 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_mono'45''8804''45'distrib'45''8851'_180 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_mono'45''8804''45'distrib'45''8851'_2984
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_mono'45''8804''45'distrib'45''8851'_3114
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -206,7 +206,7 @@ du_x'8804'y'8658'x'8851'z'8804'y_182 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_x'8804'y'8658'x'8851'z'8804'y_182 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8804'y'8658'x'8851'z'8804'y_3030
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8804'y'8658'x'8851'z'8804'y_3160
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -224,7 +224,7 @@ du_x'8804'y'8658'z'8851'x'8804'y_184 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_x'8804'y'8658'z'8851'x'8804'y_184 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8804'y'8658'z'8851'x'8804'y_3042
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8804'y'8658'z'8851'x'8804'y_3172
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -242,7 +242,7 @@ du_x'8804'y'8851'z'8658'x'8804'y_186 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_x'8804'y'8851'z'8658'x'8804'y_186 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8804'y'8851'z'8658'x'8804'y_3054
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8804'y'8851'z'8658'x'8804'y_3184
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -260,7 +260,7 @@ du_x'8804'y'8851'z'8658'x'8804'z_188 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_x'8804'y'8851'z'8658'x'8804'z_188 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8804'y'8851'z'8658'x'8804'z_3068
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8804'y'8851'z'8658'x'8804'z_3198
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -278,7 +278,7 @@ du_x'8851'y'8776'x'8658'x'8804'y_190 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_x'8851'y'8776'x'8658'x'8804'y_190 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8776'x'8658'x'8804'y_2938
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8776'x'8658'x'8804'y_3068
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -296,7 +296,7 @@ du_x'8851'y'8776'y'8658'y'8804'x_192 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_x'8851'y'8776'y'8658'y'8804'x_192 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8776'y'8658'y'8804'x_2970
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8776'y'8658'y'8804'x_3100
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -313,7 +313,7 @@ du_x'8851'y'8804'x_194 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_x'8851'y'8804'x_194 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'x_2678
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'x_2808
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -330,7 +330,7 @@ du_x'8851'y'8804'y_196 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_x'8851'y'8804'y_196 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'y_2704
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'y_2834
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -347,7 +347,7 @@ du_'8851''45'assoc_198 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'assoc_198 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'assoc_2814
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'assoc_2944
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -357,14 +357,14 @@ d_'8851''45'band_200 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_Band_536
+  MAlonzo.Code.Algebra.Bundles.T_Band_596
 d_'8851''45'band_200 ~v0 ~v1 ~v2 v3 = du_'8851''45'band_200 v3
 du_'8851''45'band_200 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_Band_536
+  MAlonzo.Code.Algebra.Bundles.T_Band_596
 du_'8851''45'band_200 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'band_2922
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'band_3052
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -381,7 +381,7 @@ du_'8851''45'comm_202 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'comm_202 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'comm_2726
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'comm_2856
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -391,15 +391,15 @@ d_'8851''45'commutativeSemigroup_204 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeSemigroup_602
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeSemigroup_662
 d_'8851''45'commutativeSemigroup_204 ~v0 ~v1 ~v2 v3
   = du_'8851''45'commutativeSemigroup_204 v3
 du_'8851''45'commutativeSemigroup_204 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeSemigroup_602
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeSemigroup_662
 du_'8851''45'commutativeSemigroup_204 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'commutativeSemigroup_2924
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'commutativeSemigroup_3054
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -418,7 +418,7 @@ du_'8851''45'cong_206 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'cong_206 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'cong_2800
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'cong_2930
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -436,7 +436,7 @@ du_'8851''45'cong'691'_208 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'cong'691'_208 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'cong'691'_2790
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'cong'691'_2920
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -454,7 +454,7 @@ du_'8851''45'cong'737'_210 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'cong'737'_210 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'cong'737'_2752
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'cong'737'_2882
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -471,7 +471,7 @@ du_'8851''45'glb_212 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'glb_212 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'glb_3148
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'glb_3278
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -488,7 +488,7 @@ du_'8851''45'idem_214 ::
   AgdaAny -> AgdaAny
 du_'8851''45'idem_214 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'idem_2854
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'idem_2984
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -557,14 +557,14 @@ d_'8851''45'isBand_222 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsBand_476
+  MAlonzo.Code.Algebra.Structures.T_IsBand_508
 d_'8851''45'isBand_222 ~v0 ~v1 ~v2 v3 = du_'8851''45'isBand_222 v3
 du_'8851''45'isBand_222 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsBand_476
+  MAlonzo.Code.Algebra.Structures.T_IsBand_508
 du_'8851''45'isBand_222 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isBand_2904
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isBand_3034
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -574,15 +574,15 @@ d_'8851''45'isCommutativeSemigroup_224 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_516
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_548
 d_'8851''45'isCommutativeSemigroup_224 ~v0 ~v1 ~v2 v3
   = du_'8851''45'isCommutativeSemigroup_224 v3
 du_'8851''45'isCommutativeSemigroup_224 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_516
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_548
 du_'8851''45'isCommutativeSemigroup_224 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isCommutativeSemigroup_2906
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isCommutativeSemigroup_3036
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -592,15 +592,15 @@ d_'8851''45'isMagma_226 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_144
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_176
 d_'8851''45'isMagma_226 ~v0 ~v1 ~v2 v3
   = du_'8851''45'isMagma_226 v3
 du_'8851''45'isMagma_226 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_144
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_176
 du_'8851''45'isMagma_226 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isMagma_2900
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isMagma_3030
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -612,17 +612,17 @@ d_'8851''45'isMonoid_228 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_604
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_686
 d_'8851''45'isMonoid_228 ~v0 ~v1 ~v2 v3
   = du_'8851''45'isMonoid_228 v3
 du_'8851''45'isMonoid_228 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_604
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_686
 du_'8851''45'isMonoid_228 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isMonoid_2912
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isMonoid_3042
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -632,15 +632,15 @@ d_'8851''45'isSelectiveMagma_230 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_404
+  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_436
 d_'8851''45'isSelectiveMagma_230 ~v0 ~v1 ~v2 v3
   = du_'8851''45'isSelectiveMagma_230 v3
 du_'8851''45'isSelectiveMagma_230 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_404
+  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_436
 du_'8851''45'isSelectiveMagma_230 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isSelectiveMagma_2908
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isSelectiveMagma_3038
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -650,15 +650,15 @@ d_'8851''45'isSemigroup_232 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_440
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472
 d_'8851''45'isSemigroup_232 ~v0 ~v1 ~v2 v3
   = du_'8851''45'isSemigroup_232 v3
 du_'8851''45'isSemigroup_232 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_440
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472
 du_'8851''45'isSemigroup_232 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isSemigroup_2902
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'isSemigroup_3032
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -668,14 +668,14 @@ d_'8851''45'magma_234 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_Magma_8
+  MAlonzo.Code.Algebra.Bundles.T_Magma_68
 d_'8851''45'magma_234 ~v0 ~v1 ~v2 v3 = du_'8851''45'magma_234 v3
 du_'8851''45'magma_234 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_Magma_8
+  MAlonzo.Code.Algebra.Bundles.T_Magma_68
 du_'8851''45'magma_234 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'magma_2918
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'magma_3048
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -695,7 +695,7 @@ du_'8851''45'mono'45''8804'_236 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'mono'45''8804'_236 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'mono'45''8804'_3076
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'mono'45''8804'_3206
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -706,15 +706,15 @@ d_'8851''45'monoid_238 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> MAlonzo.Code.Algebra.Bundles.T_Monoid_740
+  (AgdaAny -> AgdaAny) -> MAlonzo.Code.Algebra.Bundles.T_Monoid_882
 d_'8851''45'monoid_238 ~v0 ~v1 ~v2 v3 = du_'8851''45'monoid_238 v3
 du_'8851''45'monoid_238 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> MAlonzo.Code.Algebra.Bundles.T_Monoid_740
+  (AgdaAny -> AgdaAny) -> MAlonzo.Code.Algebra.Bundles.T_Monoid_882
 du_'8851''45'monoid_238 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'monoid_2930
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'monoid_3060
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -732,7 +732,7 @@ du_'8851''45'mono'691''45''8804'_240 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'mono'691''45''8804'_240 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'mono'691''45''8804'_3136
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'mono'691''45''8804'_3266
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -750,7 +750,7 @@ du_'8851''45'mono'737''45''8804'_242 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'mono'737''45''8804'_242 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'mono'737''45''8804'_3126
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'mono'737''45''8804'_3256
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -760,15 +760,15 @@ d_'8851''45'rawMagma_244 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_10
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_36
 d_'8851''45'rawMagma_244 ~v0 ~v1 ~v2 v3
   = du_'8851''45'rawMagma_244 v3
 du_'8851''45'rawMagma_244 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_10
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_36
 du_'8851''45'rawMagma_244 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'rawMagma_2916
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'rawMagma_3046
       (coe du_minOperator_176 (coe v0))
 -- Algebra.Construct.NaturalChoice.Min._.⊓-sel
 d_'8851''45'sel_246 ::
@@ -783,7 +783,7 @@ du_'8851''45'sel_246 ::
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
 du_'8851''45'sel_246 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'sel_2858
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'sel_2988
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -793,15 +793,15 @@ d_'8851''45'selectiveMagma_248 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_SelectiveMagma_62
+  MAlonzo.Code.Algebra.Bundles.T_SelectiveMagma_122
 d_'8851''45'selectiveMagma_248 ~v0 ~v1 ~v2 v3
   = du_'8851''45'selectiveMagma_248 v3
 du_'8851''45'selectiveMagma_248 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_SelectiveMagma_62
+  MAlonzo.Code.Algebra.Bundles.T_SelectiveMagma_122
 du_'8851''45'selectiveMagma_248 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'selectiveMagma_2926
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'selectiveMagma_3056
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -811,15 +811,15 @@ d_'8851''45'semigroup_250 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_Semigroup_476
+  MAlonzo.Code.Algebra.Bundles.T_Semigroup_536
 d_'8851''45'semigroup_250 ~v0 ~v1 ~v2 v3
   = du_'8851''45'semigroup_250 v3
 du_'8851''45'semigroup_250 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
-  MAlonzo.Code.Algebra.Bundles.T_Semigroup_476
+  MAlonzo.Code.Algebra.Bundles.T_Semigroup_536
 du_'8851''45'semigroup_250 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'semigroup_2920
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'semigroup_3050
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))
@@ -837,7 +837,7 @@ du_'8851''45'triangulate_252 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8851''45'triangulate_252 v0
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'triangulate_3162
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'triangulate_3292
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.du_totalPreorder_858 (coe v0))
       (coe du_minOperator_176 (coe v0))

@@ -215,7 +215,7 @@ du_concatMapM_74 v0 v1 v2 v3
                  du__'61''60''60'__28 (coe v0) (coe v4) (coe v6)
                  (coe (\ v10 -> coe d_return_16 v0 v6 erased (coe v8 v10)))
                  (coe v9))))
-      v1 erased v1 erased (coe MAlonzo.Code.Data.List.Base.du_concat_270)
+      v1 erased v1 erased (coe MAlonzo.Code.Data.List.Base.du_concat_244)
       (coe du_mapM_60 (coe v0) (coe v1) (coe v2) (coe v3))
 -- Class.Monad.Core.Monad.forM
 d_forM_80 ::
@@ -276,7 +276,7 @@ du_concatForM_92 v0 v1 v2 v3
                  du__'61''60''60'__28 (coe v0) (coe v4) (coe v6)
                  (coe (\ v10 -> coe d_return_16 v0 v6 erased (coe v8 v10)))
                  (coe v9))))
-      v1 erased v1 erased (coe MAlonzo.Code.Data.List.Base.du_concat_270)
+      v1 erased v1 erased (coe MAlonzo.Code.Data.List.Base.du_concat_244)
       (coe du_forM_80 (coe v0) (coe v1) (coe v2) (coe v3))
 -- Class.Monad.Core.Monad.return⊤
 d_return'8868'_98 ::
@@ -333,10 +333,10 @@ du_filterM_104 v0 v1 v2 v3
                              (coe v12))))
                   v1 erased v1 erased
                   (coe
-                     MAlonzo.Code.Data.List.Base.du__'43''43'__62
+                     MAlonzo.Code.Data.List.Base.du__'43''43'__32
                      (coe
                         MAlonzo.Code.Data.Bool.Base.du_if_then_else__44 (coe v6)
-                        (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_306 (coe v4))
+                        (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4))
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                   (coe du_filterM_104 (coe v0) (coe v1) (coe v2) (coe v5)))
       _ -> MAlonzo.RTE.mazUnreachableError

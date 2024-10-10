@@ -39,6 +39,38 @@ d_IsLeftInverse_36 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 d_IsRightInverse_38 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 -- Function.Structures.Biased._.IsSurjection
 d_IsSurjection_42 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
+-- Function.Structures.Biased._.IsBijection.isInjection
+d_isInjection_186 ::
+  MAlonzo.Code.Function.Structures.T_IsBijection_238 ->
+  MAlonzo.Code.Function.Structures.T_IsInjection_92
+d_isInjection_186 v0
+  = coe MAlonzo.Code.Function.Structures.d_isInjection_246 (coe v0)
+-- Function.Structures.Biased._.IsBijection.surjective
+d_surjective_192 ::
+  MAlonzo.Code.Function.Structures.T_IsBijection_238 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_surjective_192 v0
+  = coe MAlonzo.Code.Function.Structures.d_surjective_248 (coe v0)
+-- Function.Structures.Biased._.IsCongruent.cong
+d_cong_244 ::
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_cong_244 v0
+  = coe MAlonzo.Code.Function.Structures.d_cong_32 (coe v0)
+-- Function.Structures.Biased._.IsCongruent.isEquivalence₁
+d_isEquivalence'8321'_246 ::
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
+d_isEquivalence'8321'_246 v0
+  = coe
+      MAlonzo.Code.Function.Structures.d_isEquivalence'8321'_34 (coe v0)
+-- Function.Structures.Biased._.IsCongruent.isEquivalence₂
+d_isEquivalence'8322'_248 ::
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
+d_isEquivalence'8322'_248 v0
+  = coe
+      MAlonzo.Code.Function.Structures.d_isEquivalence'8322'_36 (coe v0)
 -- Function.Structures.Biased._.IsCongruent.Eq₁._≈_
 d__'8776'__252 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -509,6 +541,78 @@ du_trans_296 v0
          MAlonzo.Code.Relation.Binary.Structures.d_trans_38
          (coe
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v1)))
+-- Function.Structures.Biased._.IsInjection.injective
+d_injective_302 ::
+  MAlonzo.Code.Function.Structures.T_IsInjection_92 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_injective_302 v0
+  = coe MAlonzo.Code.Function.Structures.d_injective_102 (coe v0)
+-- Function.Structures.Biased._.IsInjection.isCongruent
+d_isCongruent_304 ::
+  MAlonzo.Code.Function.Structures.T_IsInjection_92 ->
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22
+d_isCongruent_304 v0
+  = coe MAlonzo.Code.Function.Structures.d_isCongruent_100 (coe v0)
+-- Function.Structures.Biased._.IsInverse.inverseʳ
+d_inverse'691'_364 ::
+  MAlonzo.Code.Function.Structures.T_IsInverse_490 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_inverse'691'_364 v0
+  = coe MAlonzo.Code.Function.Structures.d_inverse'691'_502 (coe v0)
+-- Function.Structures.Biased._.IsInverse.isLeftInverse
+d_isLeftInverse_374 ::
+  MAlonzo.Code.Function.Structures.T_IsInverse_490 ->
+  MAlonzo.Code.Function.Structures.T_IsLeftInverse_322
+d_isLeftInverse_374 v0
+  = coe MAlonzo.Code.Function.Structures.d_isLeftInverse_500 (coe v0)
+-- Function.Structures.Biased._.IsLeftInverse.from-cong
+d_from'45'cong_436 ::
+  MAlonzo.Code.Function.Structures.T_IsLeftInverse_322 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_from'45'cong_436 v0
+  = coe MAlonzo.Code.Function.Structures.d_from'45'cong_336 (coe v0)
+-- Function.Structures.Biased._.IsLeftInverse.inverseˡ
+d_inverse'737'_438 ::
+  MAlonzo.Code.Function.Structures.T_IsLeftInverse_322 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_inverse'737'_438 v0
+  = coe MAlonzo.Code.Function.Structures.d_inverse'737'_338 (coe v0)
+-- Function.Structures.Biased._.IsLeftInverse.isCongruent
+d_isCongruent_440 ::
+  MAlonzo.Code.Function.Structures.T_IsLeftInverse_322 ->
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22
+d_isCongruent_440 v0
+  = coe MAlonzo.Code.Function.Structures.d_isCongruent_334 (coe v0)
+-- Function.Structures.Biased._.IsRightInverse.from-cong
+d_from'45'cong_502 ::
+  MAlonzo.Code.Function.Structures.T_IsRightInverse_408 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_from'45'cong_502 v0
+  = coe MAlonzo.Code.Function.Structures.d_from'45'cong_422 (coe v0)
+-- Function.Structures.Biased._.IsRightInverse.inverseʳ
+d_inverse'691'_504 ::
+  MAlonzo.Code.Function.Structures.T_IsRightInverse_408 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_inverse'691'_504 v0
+  = coe MAlonzo.Code.Function.Structures.d_inverse'691'_424 (coe v0)
+-- Function.Structures.Biased._.IsRightInverse.isCongruent
+d_isCongruent_506 ::
+  MAlonzo.Code.Function.Structures.T_IsRightInverse_408 ->
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22
+d_isCongruent_506 v0
+  = coe MAlonzo.Code.Function.Structures.d_isCongruent_420 (coe v0)
+-- Function.Structures.Biased._.IsSurjection.isCongruent
+d_isCongruent_638 ::
+  MAlonzo.Code.Function.Structures.T_IsSurjection_162 ->
+  MAlonzo.Code.Function.Structures.T_IsCongruent_22
+d_isCongruent_638 v0
+  = coe MAlonzo.Code.Function.Structures.d_isCongruent_170 (coe v0)
+-- Function.Structures.Biased._.IsSurjection.surjective
+d_surjective_646 ::
+  MAlonzo.Code.Function.Structures.T_IsSurjection_162 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_surjective_646 v0
+  = coe MAlonzo.Code.Function.Structures.d_surjective_172 (coe v0)
 -- Function.Structures.Biased.IsStrictSurjection
 d_IsStrictSurjection_698 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
 data T_IsStrictSurjection_698
@@ -1067,7 +1171,7 @@ du_isSurjection_766 ::
   MAlonzo.Code.Function.Structures.T_IsSurjection_162
 du_isSurjection_766 v0 v1
   = coe
-      MAlonzo.Code.Function.Structures.C_IsSurjection'46'constructor_6455
+      MAlonzo.Code.Function.Structures.C_IsSurjection'46'constructor_6463
       (coe d_isCongruent_706 (coe v1))
       (coe
          MAlonzo.Code.Function.Consequences.Setoid.du_strictlySurjective'8658'surjective_84
@@ -1081,7 +1185,7 @@ du_isSurjection_766 v0 v1
 -- Function.Structures.Biased.IsStrictBijection
 d_IsStrictBijection_770 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
 data T_IsStrictBijection_770
-  = C_IsStrictBijection'46'constructor_16373 MAlonzo.Code.Function.Structures.T_IsInjection_92
+  = C_IsStrictBijection'46'constructor_16375 MAlonzo.Code.Function.Structures.T_IsInjection_92
                                              (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14)
 -- Function.Structures.Biased.IsStrictBijection.isInjection
 d_isInjection_778 ::
@@ -1089,7 +1193,7 @@ d_isInjection_778 ::
   MAlonzo.Code.Function.Structures.T_IsInjection_92
 d_isInjection_778 v0
   = case coe v0 of
-      C_IsStrictBijection'46'constructor_16373 v1 v2 -> coe v1
+      C_IsStrictBijection'46'constructor_16375 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictBijection.strictlySurjective
 d_strictlySurjective_780 ::
@@ -1097,7 +1201,7 @@ d_strictlySurjective_780 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_strictlySurjective_780 v0
   = case coe v0 of
-      C_IsStrictBijection'46'constructor_16373 v1 v2 -> coe v2
+      C_IsStrictBijection'46'constructor_16375 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictBijection.isBijection
 d_isBijection_782 ::
@@ -1120,7 +1224,7 @@ du_isBijection_782 ::
   MAlonzo.Code.Function.Structures.T_IsBijection_238
 du_isBijection_782 v0 v1
   = coe
-      MAlonzo.Code.Function.Structures.C_IsBijection'46'constructor_10103
+      MAlonzo.Code.Function.Structures.C_IsBijection'46'constructor_10113
       (coe d_isInjection_778 (coe v1))
       (coe
          MAlonzo.Code.Function.Consequences.Setoid.du_strictlySurjective'8658'surjective_84
@@ -1138,7 +1242,7 @@ du_isBijection_782 v0 v1
 -- Function.Structures.Biased.IsStrictLeftInverse
 d_IsStrictLeftInverse_852 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 data T_IsStrictLeftInverse_852
-  = C_IsStrictLeftInverse'46'constructor_20163 MAlonzo.Code.Function.Structures.T_IsCongruent_22
+  = C_IsStrictLeftInverse'46'constructor_20167 MAlonzo.Code.Function.Structures.T_IsCongruent_22
                                                (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                                (AgdaAny -> AgdaAny)
 -- Function.Structures.Biased.IsStrictLeftInverse.isCongruent
@@ -1147,7 +1251,7 @@ d_isCongruent_864 ::
   MAlonzo.Code.Function.Structures.T_IsCongruent_22
 d_isCongruent_864 v0
   = case coe v0 of
-      C_IsStrictLeftInverse'46'constructor_20163 v1 v2 v3 -> coe v1
+      C_IsStrictLeftInverse'46'constructor_20167 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictLeftInverse.from-cong
 d_from'45'cong_866 ::
@@ -1155,14 +1259,14 @@ d_from'45'cong_866 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_from'45'cong_866 v0
   = case coe v0 of
-      C_IsStrictLeftInverse'46'constructor_20163 v1 v2 v3 -> coe v2
+      C_IsStrictLeftInverse'46'constructor_20167 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictLeftInverse.strictlyInverseˡ
 d_strictlyInverse'737'_868 ::
   T_IsStrictLeftInverse_852 -> AgdaAny -> AgdaAny
 d_strictlyInverse'737'_868 v0
   = case coe v0 of
-      C_IsStrictLeftInverse'46'constructor_20163 v1 v2 v3 -> coe v3
+      C_IsStrictLeftInverse'46'constructor_20167 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictLeftInverse.isLeftInverse
 d_isLeftInverse_870 ::
@@ -1187,7 +1291,7 @@ du_isLeftInverse_870 ::
   MAlonzo.Code.Function.Structures.T_IsLeftInverse_322
 du_isLeftInverse_870 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Structures.C_IsLeftInverse'46'constructor_14351
+      MAlonzo.Code.Function.Structures.C_IsLeftInverse'46'constructor_14363
       (coe d_isCongruent_864 (coe v2)) (coe d_from'45'cong_866 (coe v2))
       (coe
          MAlonzo.Code.Function.Consequences.Setoid.du_strictlyInverse'737''8658'inverse'737'_88
@@ -1721,7 +1825,7 @@ du_trans_930 v0
 -- Function.Structures.Biased.IsStrictRightInverse
 d_IsStrictRightInverse_936 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 data T_IsStrictRightInverse_936
-  = C_IsStrictRightInverse'46'constructor_24615 MAlonzo.Code.Function.Structures.T_IsCongruent_22
+  = C_IsStrictRightInverse'46'constructor_24625 MAlonzo.Code.Function.Structures.T_IsCongruent_22
                                                 (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                                 (AgdaAny -> AgdaAny)
 -- Function.Structures.Biased.IsStrictRightInverse.isCongruent
@@ -1730,7 +1834,7 @@ d_isCongruent_948 ::
   MAlonzo.Code.Function.Structures.T_IsCongruent_22
 d_isCongruent_948 v0
   = case coe v0 of
-      C_IsStrictRightInverse'46'constructor_24615 v1 v2 v3 -> coe v1
+      C_IsStrictRightInverse'46'constructor_24625 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictRightInverse.from-cong
 d_from'45'cong_950 ::
@@ -1738,14 +1842,14 @@ d_from'45'cong_950 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_from'45'cong_950 v0
   = case coe v0 of
-      C_IsStrictRightInverse'46'constructor_24615 v1 v2 v3 -> coe v2
+      C_IsStrictRightInverse'46'constructor_24625 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictRightInverse.strictlyInverseʳ
 d_strictlyInverse'691'_952 ::
   T_IsStrictRightInverse_936 -> AgdaAny -> AgdaAny
 d_strictlyInverse'691'_952 v0
   = case coe v0 of
-      C_IsStrictRightInverse'46'constructor_24615 v1 v2 v3 -> coe v3
+      C_IsStrictRightInverse'46'constructor_24625 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictRightInverse.isRightInverse
 d_isRightInverse_954 ::
@@ -1770,7 +1874,7 @@ du_isRightInverse_954 ::
   MAlonzo.Code.Function.Structures.T_IsRightInverse_408
 du_isRightInverse_954 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Structures.C_IsRightInverse'46'constructor_18819
+      MAlonzo.Code.Function.Structures.C_IsRightInverse'46'constructor_18837
       (coe d_isCongruent_948 (coe v2)) (coe d_from'45'cong_950 (coe v2))
       (coe
          MAlonzo.Code.Function.Consequences.Setoid.du_strictlyInverse'691''8658'inverse'691'_92
@@ -2302,7 +2406,7 @@ du_trans_1014 v0
 -- Function.Structures.Biased.IsStrictInverse
 d_IsStrictInverse_1020 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 = ()
 data T_IsStrictInverse_1020
-  = C_IsStrictInverse'46'constructor_28605 MAlonzo.Code.Function.Structures.T_IsLeftInverse_322
+  = C_IsStrictInverse'46'constructor_28621 MAlonzo.Code.Function.Structures.T_IsLeftInverse_322
                                            (AgdaAny -> AgdaAny)
 -- Function.Structures.Biased.IsStrictInverse.isLeftInverse
 d_isLeftInverse_1030 ::
@@ -2310,14 +2414,14 @@ d_isLeftInverse_1030 ::
   MAlonzo.Code.Function.Structures.T_IsLeftInverse_322
 d_isLeftInverse_1030 v0
   = case coe v0 of
-      C_IsStrictInverse'46'constructor_28605 v1 v2 -> coe v1
+      C_IsStrictInverse'46'constructor_28621 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictInverse.strictlyInverseʳ
 d_strictlyInverse'691'_1032 ::
   T_IsStrictInverse_1020 -> AgdaAny -> AgdaAny
 d_strictlyInverse'691'_1032 v0
   = case coe v0 of
-      C_IsStrictInverse'46'constructor_28605 v1 v2 -> coe v2
+      C_IsStrictInverse'46'constructor_28621 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Structures.Biased.IsStrictInverse.isInverse
 d_isInverse_1034 ::
@@ -2342,7 +2446,7 @@ du_isInverse_1034 ::
   MAlonzo.Code.Function.Structures.T_IsInverse_490
 du_isInverse_1034 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Structures.C_IsInverse'46'constructor_22425
+      MAlonzo.Code.Function.Structures.C_IsInverse'46'constructor_22449
       (coe d_isLeftInverse_1030 (coe v2))
       (coe
          MAlonzo.Code.Function.Consequences.Setoid.du_strictlyInverse'691''8658'inverse'691'_92

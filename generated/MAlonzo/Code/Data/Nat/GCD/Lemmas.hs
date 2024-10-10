@@ -21,12 +21,12 @@ import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 
--- Data.Nat.GCD.Lemmas.distrib-comm
-d_distrib'45'comm_14 ::
+-- Data.Nat.GCD.Lemmas.comm-factor
+d_comm'45'factor_14 ::
   Integer ->
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_distrib'45'comm_14 = erased
+d_comm'45'factor_14 = erased
 -- Data.Nat.GCD.Lemmas.distrib-comm₂
 d_distrib'45'comm'8322'_30 ::
   Integer ->
@@ -35,39 +35,130 @@ d_distrib'45'comm'8322'_30 ::
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_distrib'45'comm'8322'_30 = erased
 -- Data.Nat.GCD.Lemmas.lem₀
-d_lem'8320'_48 ::
+d_lem'8320'_50 ::
   Integer ->
   Integer ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8320'_48 = erased
+d_lem'8320'_50 = erased
 -- Data.Nat.GCD.Lemmas.lem₁
-d_lem'8321'_68 ::
+d_lem'8321'_70 ::
   Integer ->
   Integer -> MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338
-d_lem'8321'_68 v0 v1
+d_lem'8321'_70 v0 v1
   = coe
-      MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''8242'_5950
+      MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''8242'_6128
       (coe addInt (coe addInt (coe (2 :: Integer)) (coe v0)) (coe v1))
       (coe
          MAlonzo.Code.Data.Nat.Base.C_s'8804's_34
          (coe
             MAlonzo.Code.Data.Nat.Base.C_s'8804's_34
             (coe
-               MAlonzo.Code.Data.Nat.Properties.du_m'8804'n'43'm_3364 (coe v0))))
+               MAlonzo.Code.Data.Nat.Properties.du_m'8804'n'43'm_3494 (coe v0))))
+-- Data.Nat.GCD.Lemmas.times2
+d_times2_78 ::
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_times2_78 = erased
+-- Data.Nat.GCD.Lemmas.times2′
+d_times2'8242'_88 ::
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_times2'8242'_88 = erased
 -- Data.Nat.GCD.Lemmas.lem₂
-d_lem'8322'_82 ::
+d_lem'8322'_102 ::
   Integer ->
   Integer ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8322'_82 = erased
+d_lem'8322'_102 = erased
+-- Data.Nat.GCD.Lemmas.distrib₃
+d_distrib'8323'_124 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_distrib'8323'_124 = erased
+-- Data.Nat.GCD.Lemmas.lem₃₁
+d_lem'8323''8321'_142 ::
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_lem'8323''8321'_142 = erased
+-- Data.Nat.GCD.Lemmas.+-assoc-comm
+d_'43''45'assoc'45'comm_160 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'43''45'assoc'45'comm_160 = erased
+-- Data.Nat.GCD.Lemmas.*-on-right
+d_'42''45'on'45'right_184 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'42''45'on'45'right_184 = erased
+-- Data.Nat.GCD.Lemmas.*-on-left
+d_'42''45'on'45'left_206 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'42''45'on'45'left_206 = erased
+-- Data.Nat.GCD.Lemmas.+-on-right
+d_'43''45'on'45'right_228 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'43''45'on'45'right_228 = erased
+-- Data.Nat.GCD.Lemmas.+-on-left
+d_'43''45'on'45'left_250 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'43''45'on'45'left_250 = erased
+-- Data.Nat.GCD.Lemmas.+-assoc-comm′
+d_'43''45'assoc'45'comm'8242'_292 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'43''45'assoc'45'comm'8242'_292 = erased
+-- Data.Nat.GCD.Lemmas.lem₃₂
+d_lem'8323''8322'_314 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_lem'8323''8322'_314 = erased
+-- Data.Nat.GCD.Lemmas.mid-to-right
+d_mid'45'to'45'right_334 ::
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_mid'45'to'45'right_334 = erased
+-- Data.Nat.GCD.Lemmas.mid-to-left
+d_mid'45'to'45'left_350 ::
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_mid'45'to'45'left_350 = erased
 -- Data.Nat.GCD.Lemmas.lem₃
-d_lem'8323'_110 ::
+d_lem'8323'_372 ::
   Integer ->
   Integer ->
   Integer ->
@@ -75,21 +166,21 @@ d_lem'8323'_110 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8323'_110 = erased
+d_lem'8323'_372 = erased
 -- Data.Nat.GCD.Lemmas._.y
-d_y_128 ::
+d_y_390 ::
   Integer ->
   Integer ->
   Integer ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> Integer
-d_y_128 ~v0 v1 v2 ~v3 ~v4 ~v5 = du_y_128 v1 v2
-du_y_128 :: Integer -> Integer -> Integer
-du_y_128 v0 v1
+d_y_390 ~v0 v1 v2 ~v3 ~v4 ~v5 = du_y_390 v1 v2
+du_y_390 :: Integer -> Integer -> Integer
+du_y_390 v0 v1
   = coe addInt (coe addInt (coe (1 :: Integer)) (coe v0)) (coe v1)
 -- Data.Nat.GCD.Lemmas.lem₄
-d_lem'8324'_146 ::
+d_lem'8324'_412 ::
   Integer ->
   Integer ->
   Integer ->
@@ -97,18 +188,18 @@ d_lem'8324'_146 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8324'_146 = erased
+d_lem'8324'_412 = erased
 -- Data.Nat.GCD.Lemmas.lem₅
-d_lem'8325'_174 ::
+d_lem'8325'_438 ::
   Integer ->
   Integer ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8325'_174 = erased
+d_lem'8325'_438 = erased
 -- Data.Nat.GCD.Lemmas.lem₆
-d_lem'8326'_202 ::
+d_lem'8326'_464 ::
   Integer ->
   Integer ->
   Integer ->
@@ -116,21 +207,21 @@ d_lem'8326'_202 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8326'_202 = erased
+d_lem'8326'_464 = erased
 -- Data.Nat.GCD.Lemmas._.y
-d_y_220 ::
+d_y_482 ::
   Integer ->
   Integer ->
   Integer ->
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> Integer
-d_y_220 ~v0 v1 ~v2 v3 ~v4 ~v5 = du_y_220 v1 v3
-du_y_220 :: Integer -> Integer -> Integer
-du_y_220 v0 v1
+d_y_482 ~v0 v1 ~v2 v3 ~v4 ~v5 = du_y_482 v1 v3
+du_y_482 :: Integer -> Integer -> Integer
+du_y_482 v0 v1
   = coe addInt (coe addInt (coe (1 :: Integer)) (coe v0)) (coe v1)
 -- Data.Nat.GCD.Lemmas.lem₇
-d_lem'8327'_240 ::
+d_lem'8327'_498 ::
   Integer ->
   Integer ->
   Integer ->
@@ -138,9 +229,9 @@ d_lem'8327'_240 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8327'_240 = erased
+d_lem'8327'_498 = erased
 -- Data.Nat.GCD.Lemmas.lem₈
-d_lem'8328'_274 ::
+d_lem'8328'_528 ::
   Integer ->
   Integer ->
   Integer ->
@@ -150,9 +241,9 @@ d_lem'8328'_274 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8328'_274 = erased
+d_lem'8328'_528 = erased
 -- Data.Nat.GCD.Lemmas._.lemma
-d_lemma_296 ::
+d_lemma_550 ::
   Integer ->
   Integer ->
   Integer ->
@@ -162,9 +253,9 @@ d_lemma_296 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lemma_296 = erased
+d_lemma_550 = erased
 -- Data.Nat.GCD.Lemmas.lem₉
-d_lem'8329'_334 ::
+d_lem'8329'_570 ::
   Integer ->
   Integer ->
   Integer ->
@@ -174,9 +265,9 @@ d_lem'8329'_334 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8329'_334 = erased
+d_lem'8329'_570 = erased
 -- Data.Nat.GCD.Lemmas._.lem
-d_lem_356 ::
+d_lem_598 ::
   Integer ->
   Integer ->
   Integer ->
@@ -188,9 +279,9 @@ d_lem_356 ::
   Integer ->
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem_356 = erased
+d_lem_598 = erased
 -- Data.Nat.GCD.Lemmas._.lemma
-d_lemma_364 ::
+d_lemma_606 ::
   Integer ->
   Integer ->
   Integer ->
@@ -200,9 +291,9 @@ d_lemma_364 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lemma_364 = erased
+d_lemma_606 = erased
 -- Data.Nat.GCD.Lemmas.lem₁₀
-d_lem'8321''8320'_390 ::
+d_lem'8321''8320'_630 ::
   Integer ->
   Integer ->
   Integer ->
@@ -211,9 +302,9 @@ d_lem'8321''8320'_390 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8321''8320'_390 = erased
+d_lem'8321''8320'_630 = erased
 -- Data.Nat.GCD.Lemmas._.a
-d_a_410 ::
+d_a_650 ::
   Integer ->
   Integer ->
   Integer ->
@@ -221,11 +312,25 @@ d_a_410 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> Integer
-d_a_410 v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 = du_a_410 v0
-du_a_410 :: Integer -> Integer
-du_a_410 v0 = coe addInt (coe (1 :: Integer)) (coe v0)
+d_a_650 v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 = du_a_650 v0
+du_a_650 :: Integer -> Integer
+du_a_650 v0 = coe addInt (coe (1 :: Integer)) (coe v0)
+-- Data.Nat.GCD.Lemmas._.*-assoc₄₃
+d_'42''45'assoc'8324''8323'_660 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'42''45'assoc'8324''8323'_660 = erased
 -- Data.Nat.GCD.Lemmas.lem₁₁
-d_lem'8321''8321'_444 ::
+d_lem'8321''8321'_692 ::
   Integer ->
   Integer ->
   Integer ->
@@ -238,4 +343,4 @@ d_lem'8321''8321'_444 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_lem'8321''8321'_444 = erased
+d_lem'8321''8321'_692 = erased

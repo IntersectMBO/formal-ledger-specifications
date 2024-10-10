@@ -19,7 +19,6 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Agda.Primitive
-import qualified MAlonzo.Code.Class.Monad.Core
 import qualified MAlonzo.Code.Class.Monad.Instances
 import qualified MAlonzo.Code.Class.MonadError
 import qualified MAlonzo.Code.Class.MonadReader
@@ -43,7 +42,7 @@ d_initTacEnv_78 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
 d_initTacEnv_78 v0 v1 v2
   = coe
-      MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_334 () () erased
+      MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased (MAlonzo.Code.Class.MonadTC.d_initTCEnvWithGoal_72 (coe v2))
       (\ v3 -> coe v1 (coe v0 v3))
 -- Reflection.Tactic.initTacOpts
@@ -57,7 +56,7 @@ d_initTacOpts_86 v0 v1
       (coe
          (\ v2 ->
             coe
-              MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_243
+              MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_245
               (coe MAlonzo.Code.Class.MonadTC.d_normalisation_50 (coe v2))
               (coe MAlonzo.Code.Class.MonadTC.d_reconstruction_52 (coe v2))
               (coe MAlonzo.Code.Class.MonadTC.d_noConstraints_54 (coe v2))
@@ -79,13 +78,13 @@ d_initUnquoteWithGoal_104 ::
   (MAlonzo.Code.Class.MonadTC.T_TCEnv_32 -> AgdaAny) -> AgdaAny
 d_initUnquoteWithGoal_104 v0 v1 v2
   = coe
-      MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_334 () () erased
+      MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased (MAlonzo.Code.Class.MonadTC.d_initTCEnvWithGoal_72 (coe v1))
       (\ v3 ->
          coe
            v2
            (coe
-              MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_243
+              MAlonzo.Code.Class.MonadTC.C_TCEnv'46'constructor_245
               (coe MAlonzo.Code.Class.MonadTC.d_normalisation_50 (coe v3))
               (coe MAlonzo.Code.Class.MonadTC.d_reconstruction_52 (coe v3))
               (coe MAlonzo.Code.Class.MonadTC.d_noConstraints_54 (coe v3))
@@ -120,17 +119,12 @@ du_byTC_116 v0 v1 v2
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 () erased ()
+              MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
               erased
               (coe
-                 MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__18
-                 MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6 v1 erased ()
+                 MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 v1 () erased
                  erased (coe v2 v3)
-                 (\ v4 ->
-                    coe
-                      MAlonzo.Code.Class.MonadTC.d_quoteTC_156
-                      MAlonzo.Code.Reflection.TCI.d_MonadTC'45'TCI_156 v1 erased v4 v3))
+                 (\ v4 -> coe MAlonzo.Code.Reflection.TCI.du_quoteTC_120 v1 v4 v3))
               (\ v4 ->
                  coe
                    MAlonzo.Code.Class.MonadTC.du_unifyWithGoal_684

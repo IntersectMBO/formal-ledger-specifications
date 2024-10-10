@@ -179,102 +179,107 @@ data T_Definition_280
   = C_function_284 [T_Clause_160] |
     C_data'45'type_290 Integer [AgdaAny] |
     C_record'45'type_296 AgdaAny [T_Arg_88] |
-    C_data'45'cons_300 AgdaAny | C_axiom_302 | C_prim'45'fun_304
+    C_data'45'cons_302 AgdaAny T_Quantity_62 | C_axiom_304 |
+    C_prim'45'fun_306
 -- Agda.Builtin.Reflection.ErrorPart
-d_ErrorPart_306 = ()
-data T_ErrorPart_306
-  = C_strErr_308 MAlonzo.Code.Agda.Builtin.String.T_String_6 |
-    C_termErr_310 T_Term_154 | C_pattErr_312 T_Pattern_158 |
-    C_nameErr_314 AgdaAny
+d_ErrorPart_308 = ()
+data T_ErrorPart_308
+  = C_strErr_310 MAlonzo.Code.Agda.Builtin.String.T_String_6 |
+    C_termErr_312 T_Term_154 | C_pattErr_314 T_Pattern_158 |
+    C_nameErr_316 AgdaAny
 -- Agda.Builtin.Reflection.TC
-d_TC_318
+d_TC_320
   = error
       "MAlonzo Runtime Error: postulate evaluated: Agda.Builtin.Reflection.TC"
 -- Agda.Builtin.Reflection.returnTC
-d_returnTC_324 = erased
+d_returnTC_326 = erased
 -- Agda.Builtin.Reflection.bindTC
-d_bindTC_334 = erased
+d_bindTC_336 = erased
 -- Agda.Builtin.Reflection.unify
-d_unify_336 = erased
+d_unify_338 = erased
 -- Agda.Builtin.Reflection.typeError
-d_typeError_342 = erased
+d_typeError_344 = erased
 -- Agda.Builtin.Reflection.inferType
-d_inferType_344 = erased
+d_inferType_346 = erased
 -- Agda.Builtin.Reflection.checkType
-d_checkType_346 = erased
+d_checkType_348 = erased
 -- Agda.Builtin.Reflection.normalise
-d_normalise_348 = erased
+d_normalise_350 = erased
 -- Agda.Builtin.Reflection.reduce
-d_reduce_350 = erased
+d_reduce_352 = erased
 -- Agda.Builtin.Reflection.catchTC
-d_catchTC_356 = erased
+d_catchTC_358 = erased
 -- Agda.Builtin.Reflection.quoteTC
-d_quoteTC_362 = erased
+d_quoteTC_364 = erased
 -- Agda.Builtin.Reflection.unquoteTC
-d_unquoteTC_368 = erased
+d_unquoteTC_370 = erased
 -- Agda.Builtin.Reflection.quoteωTC
-d_quoteωTC_372 = erased
+d_quoteωTC_374 = erased
 -- Agda.Builtin.Reflection.getContext
-d_getContext_374 = erased
+d_getContext_376 = erased
 -- Agda.Builtin.Reflection.extendContext
-d_extendContext_380 = erased
+d_extendContext_382 = erased
 -- Agda.Builtin.Reflection.inContext
-d_inContext_386 = erased
+d_inContext_388 = erased
 -- Agda.Builtin.Reflection.freshName
-d_freshName_388 = erased
+d_freshName_390 = erased
 -- Agda.Builtin.Reflection.declareDef
-d_declareDef_390 = erased
+d_declareDef_392 = erased
 -- Agda.Builtin.Reflection.declarePostulate
-d_declarePostulate_392 = erased
+d_declarePostulate_394 = erased
 -- Agda.Builtin.Reflection.declareData
-d_declareData_394 = erased
+d_declareData_396 = erased
 -- Agda.Builtin.Reflection.defineData
-d_defineData_398 = erased
+d_defineData_402 = erased
 -- Agda.Builtin.Reflection.defineFun
-d_defineFun_400 = erased
+d_defineFun_404 = erased
 -- Agda.Builtin.Reflection.getType
-d_getType_402 = erased
+d_getType_406 = erased
 -- Agda.Builtin.Reflection.getDefinition
-d_getDefinition_404 = erased
+d_getDefinition_408 = erased
 -- Agda.Builtin.Reflection.blockTC
-d_blockTC_410 = erased
+d_blockTC_414 = erased
 -- Agda.Builtin.Reflection.commitTC
-d_commitTC_412 = erased
+d_commitTC_416 = erased
 -- Agda.Builtin.Reflection.isMacro
-d_isMacro_414 = erased
+d_isMacro_418 = erased
 -- Agda.Builtin.Reflection.pragmaForeign
-d_pragmaForeign_416 = erased
+d_pragmaForeign_420 = erased
 -- Agda.Builtin.Reflection.pragmaCompile
-d_pragmaCompile_418 = erased
+d_pragmaCompile_422 = erased
 -- Agda.Builtin.Reflection.withNormalisation
-d_withNormalisation_424 = erased
+d_withNormalisation_428 = erased
 -- Agda.Builtin.Reflection.askNormalisation
-d_askNormalisation_426 = erased
+d_askNormalisation_430 = erased
 -- Agda.Builtin.Reflection.withReconstructed
-d_withReconstructed_432 = erased
+d_withReconstructed_436 = erased
 -- Agda.Builtin.Reflection.askReconstructed
-d_askReconstructed_434 = erased
+d_askReconstructed_438 = erased
 -- Agda.Builtin.Reflection.withExpandLast
-d_withExpandLast_440 = erased
+d_withExpandLast_444 = erased
 -- Agda.Builtin.Reflection.askExpandLast
-d_askExpandLast_442 = erased
+d_askExpandLast_446 = erased
 -- Agda.Builtin.Reflection.withReduceDefs
-d_withReduceDefs_450 = erased
+d_withReduceDefs_454 = erased
 -- Agda.Builtin.Reflection.askReduceDefs
-d_askReduceDefs_454 = erased
+d_askReduceDefs_458 = erased
 -- Agda.Builtin.Reflection.formatErrorParts
-d_formatErrorParts_456 = erased
+d_formatErrorParts_460 = erased
 -- Agda.Builtin.Reflection.debugPrint
-d_debugPrint_458 = erased
+d_debugPrint_462 = erased
 -- Agda.Builtin.Reflection.noConstraints
-d_noConstraints_464 = erased
+d_noConstraints_468 = erased
+-- Agda.Builtin.Reflection.workOnTypes
+d_workOnTypes_474 = erased
 -- Agda.Builtin.Reflection.runSpeculative
-d_runSpeculative_472 = erased
+d_runSpeculative_482 = erased
 -- Agda.Builtin.Reflection.getInstances
-d_getInstances_474 = erased
+d_getInstances_484 = erased
+-- Agda.Builtin.Reflection.solveInstanceConstraints
+d_solveInstanceConstraints_486 = erased
 -- Agda.Builtin.Reflection.filter
-d_filter_476 :: (AgdaAny -> Bool) -> [AgdaAny] -> [AgdaAny]
-d_filter_476 v0 v1
+d_filter_488 :: (AgdaAny -> Bool) -> [AgdaAny] -> [AgdaAny]
+d_filter_488 v0 v1
   = case coe v1 of
       [] -> coe v1
       (:) v2 v3
@@ -283,43 +288,43 @@ d_filter_476 v0 v1
              (if coe v4
                 then coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v2)
-                       (coe d_filter_476 (coe v0) (coe v3))
-                else coe d_filter_476 (coe v0) (coe v3))
+                       (coe d_filter_488 (coe v0) (coe v3))
+                else coe d_filter_488 (coe v0) (coe v3))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Agda.Builtin.Reflection._∈_
-d__'8712'__502 :: AgdaAny -> [AgdaAny] -> Bool
-d__'8712'__502 v0 v1
+d__'8712'__514 :: AgdaAny -> [AgdaAny] -> Bool
+d__'8712'__514 v0 v1
   = case coe v1 of
       [] -> coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8
       (:) v2 v3
         -> let v4 = coe d_primQNameEquality_8 v0 v2 in
            coe
-             (if coe v4 then coe v4 else coe d__'8712'__502 (coe v0) (coe v3))
+             (if coe v4 then coe v4 else coe d__'8712'__514 (coe v0) (coe v3))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Agda.Builtin.Reflection._∉_
-d__'8713'__528 :: AgdaAny -> [AgdaAny] -> Bool
-d__'8713'__528 v0 v1
-  = let v2 = d__'8712'__502 (coe v0) (coe v1) in
+d__'8713'__540 :: AgdaAny -> [AgdaAny] -> Bool
+d__'8713'__540 v0 v1
+  = let v2 = d__'8712'__514 (coe v0) (coe v1) in
     coe
       (if coe v2
          then coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8
          else coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
 -- Agda.Builtin.Reflection._++_
-d__'43''43'__546 :: [AgdaAny] -> [AgdaAny] -> [AgdaAny]
-d__'43''43'__546 v0 v1
+d__'43''43'__558 :: [AgdaAny] -> [AgdaAny] -> [AgdaAny]
+d__'43''43'__558 v0 v1
   = case coe v0 of
       [] -> coe v1
       (:) v2 v3
         -> coe
              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v2)
-             (coe d__'43''43'__546 (coe v3) (coe v1))
+             (coe d__'43''43'__558 (coe v3) (coe v1))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Agda.Builtin.Reflection.combineReduceDefs
-d_combineReduceDefs_562 ::
+d_combineReduceDefs_574 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_combineReduceDefs_562 v0 v1
+d_combineReduceDefs_574 v0 v1
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v2 v3
         -> if coe v2
@@ -329,12 +334,12 @@ d_combineReduceDefs_562 v0 v1
                            then coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v4)
                                   (coe
-                                     d_filter_476 (coe (\ v6 -> d__'8712'__502 (coe v6) (coe v3)))
+                                     d_filter_488 (coe (\ v6 -> d__'8712'__514 (coe v6) (coe v3)))
                                      (coe v5))
                            else coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                   (coe
-                                     d_filter_476 (coe (\ v6 -> d__'8713'__528 (coe v6) (coe v5)))
+                                     d_filter_488 (coe (\ v6 -> d__'8713'__540 (coe v6) (coe v5)))
                                      (coe v3))
                     _ -> MAlonzo.RTE.mazUnreachableError
              else (case coe v1 of
@@ -343,58 +348,58 @@ d_combineReduceDefs_562 v0 v1
                             then coe
                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v4)
                                    (coe
-                                      d_filter_476 (coe (\ v6 -> d__'8713'__528 (coe v6) (coe v3)))
+                                      d_filter_488 (coe (\ v6 -> d__'8713'__540 (coe v6) (coe v3)))
                                       (coe v5))
                             else coe
                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v4)
-                                   (coe d__'43''43'__546 (coe v3) (coe v5))
+                                   (coe d__'43''43'__558 (coe v3) (coe v5))
                      _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Agda.Builtin.Reflection.onlyReduceDefs
-d_onlyReduceDefs_590 ::
+d_onlyReduceDefs_602 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> [AgdaAny] -> AgdaAny -> AgdaAny
-d_onlyReduceDefs_590 v0 ~v1 v2 v3 = du_onlyReduceDefs_590 v0 v2 v3
-du_onlyReduceDefs_590 ::
+d_onlyReduceDefs_602 v0 ~v1 v2 v3 = du_onlyReduceDefs_602 v0 v2 v3
+du_onlyReduceDefs_602 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   [AgdaAny] -> AgdaAny -> AgdaAny
-du_onlyReduceDefs_590 v0 v1 v2
+du_onlyReduceDefs_602 v0 v1 v2
   = coe
-      d_bindTC_334 () v0 erased erased d_askReduceDefs_454
+      d_bindTC_336 () v0 erased erased d_askReduceDefs_458
       (\ v3 ->
          coe
-           d_withReduceDefs_450 v0 erased
-           (d_combineReduceDefs_562
+           d_withReduceDefs_454 v0 erased
+           (d_combineReduceDefs_574
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10) (coe v1))
               (coe v3))
            v2)
 -- Agda.Builtin.Reflection.dontReduceDefs
-d_dontReduceDefs_596 ::
+d_dontReduceDefs_608 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> [AgdaAny] -> AgdaAny -> AgdaAny
-d_dontReduceDefs_596 v0 ~v1 v2 v3 = du_dontReduceDefs_596 v0 v2 v3
-du_dontReduceDefs_596 ::
+d_dontReduceDefs_608 v0 ~v1 v2 v3 = du_dontReduceDefs_608 v0 v2 v3
+du_dontReduceDefs_608 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   [AgdaAny] -> AgdaAny -> AgdaAny
-du_dontReduceDefs_596 v0 v1 v2
+du_dontReduceDefs_608 v0 v1 v2
   = coe
-      d_bindTC_334 () v0 erased erased d_askReduceDefs_454
+      d_bindTC_336 () v0 erased erased d_askReduceDefs_458
       (\ v3 ->
          coe
-           d_withReduceDefs_450 v0 erased
-           (d_combineReduceDefs_562
+           d_withReduceDefs_454 v0 erased
+           (d_combineReduceDefs_574
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8) (coe v1))
               (coe v3))
            v2)
 -- Agda.Builtin.Reflection.blockOnMeta
-d_blockOnMeta_614 ::
+d_blockOnMeta_626 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> AgdaAny -> AgdaAny
-d_blockOnMeta_614 v0 ~v1 v2 = du_blockOnMeta_614 v0 v2
-du_blockOnMeta_614 ::
+d_blockOnMeta_626 v0 ~v1 v2 = du_blockOnMeta_626 v0 v2
+du_blockOnMeta_626 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> AgdaAny -> AgdaAny
-du_blockOnMeta_614 v0 v1
-  = coe d_blockTC_410 v0 erased (coe C_blockerMeta_106 (coe v1))
+du_blockOnMeta_626 v0 v1
+  = coe d_blockTC_414 v0 erased (coe C_blockerMeta_106 (coe v1))

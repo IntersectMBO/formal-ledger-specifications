@@ -74,7 +74,7 @@ du_isIndexedPreorder_60 ::
   MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Structures.T_IsIndexedPreorder_44
 du_isIndexedPreorder_60 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Structures.C_IsIndexedPreorder'46'constructor_5831
+      MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Structures.C_IsIndexedPreorder'46'constructor_5837
       (coe
          du_isIndexedEquivalence_32
          (coe
@@ -121,7 +121,7 @@ du_indexedPreorder_142 ::
   MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Bundles.T_IndexedPreorder_60
 du_indexedPreorder_142 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Bundles.C_IndexedPreorder'46'constructor_1981
+      MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Bundles.C_IndexedPreorder'46'constructor_1987
       (coe
          du_isIndexedPreorder_60
          (coe

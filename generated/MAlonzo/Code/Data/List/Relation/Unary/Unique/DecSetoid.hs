@@ -77,7 +77,7 @@ du_unique'63'_64 v0
       (coe
          (\ v1 v2 ->
             coe
-              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_'172''63'_68
+              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_'172''63'_70
               (coe
                  MAlonzo.Code.Relation.Binary.Structures.d__'8799'__52
                  (MAlonzo.Code.Relation.Binary.Bundles.d_isDecEquivalence_100

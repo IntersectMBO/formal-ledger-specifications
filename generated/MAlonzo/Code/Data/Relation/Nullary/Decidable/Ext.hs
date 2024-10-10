@@ -35,10 +35,12 @@ du_map'8242''8660'_16 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_map'8242''8660'_16 v0
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
-         (coe MAlonzo.Code.Function.Bundles.d_to_1724 (coe v0)))
-      (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_150
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+         (coe MAlonzo.Code.Function.Bundles.d_to_1724 (coe v0))
          (coe MAlonzo.Code.Function.Bundles.d_from_1726 (coe v0)))
+      (coe
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+         (coe MAlonzo.Code.Function.Bundles.d_from_1726 (coe v0))
+         (coe MAlonzo.Code.Function.Bundles.d_to_1724 (coe v0)))

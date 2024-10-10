@@ -76,12 +76,12 @@ du_ignore_40 v0
 -- Effect.Functor.Morphism
 d_Morphism_58 a0 a1 a2 a3 a4 a5 a6 = ()
 newtype T_Morphism_58
-  = C_Morphism'46'constructor_3707 (() -> AgdaAny -> AgdaAny)
+  = C_Morphism'46'constructor_3741 (() -> AgdaAny -> AgdaAny)
 -- Effect.Functor.Morphism.op
 d_op_76 :: T_Morphism_58 -> () -> AgdaAny -> AgdaAny
 d_op_76 v0
   = case coe v0 of
-      C_Morphism'46'constructor_3707 v1 -> coe v1
+      C_Morphism'46'constructor_3741 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Functor.Morphism.op-<$>
 d_op'45''60''36''62'_82 ::

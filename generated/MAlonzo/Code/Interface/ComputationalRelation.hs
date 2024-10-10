@@ -110,7 +110,7 @@ du_Bifunctor'45'ComputationResult_126 ::
   MAlonzo.Code.Class.Bifunctor.T_Bifunctor_80
 du_Bifunctor'45'ComputationResult_126
   = coe
-      MAlonzo.Code.Class.Bifunctor.C_Bifunctor'46'constructor_3809
+      MAlonzo.Code.Class.Bifunctor.C_Bifunctor'46'constructor_3915
       (coe
          (\ v0 v1 v2 v3 v4 v5 v6 ->
             case coe v6 of
@@ -297,7 +297,7 @@ du_'8801''45'success'8660'STS_300 v0 v1 v2 v3 v4
            -> case coe v6 of
                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v7 v8
                   -> coe
-                       MAlonzo.Code.Function.Bundles.du_mk'8660'_2296 (coe (\ v9 -> v8))
+                       MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 (coe (\ v9 -> v8))
                        (coe
                           (\ v9 ->
                              coe
@@ -321,7 +321,7 @@ du_'8801''45'success'8660'STS_300 v0 v1 v2 v3 v4
                 _ -> MAlonzo.RTE.mazUnreachableError
          C_failure_44 v6
            -> coe
-                MAlonzo.Code.Function.Bundles.du_mk'8660'_2296 erased
+                MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
                 (coe
                    (\ v7 ->
                       coe
@@ -406,7 +406,7 @@ du_failure'8660''8704''172'STS_398 ::
   AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
 du_failure'8660''8704''172'STS_398 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2296 erased
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
       (\ v4 ->
          coe
            du_'8704''172'STS'8658'failure_360 (coe v0) (coe v1) (coe v2)
@@ -1087,12 +1087,12 @@ du_Computational'8658'Dec''_696 v0 v1 v2 v3
 -- Interface.ComputationalRelation.InjectError
 d_InjectError_716 a0 a1 = ()
 newtype T_InjectError_716
-  = C_InjectError'46'constructor_82995 (AgdaAny -> AgdaAny)
+  = C_InjectError'46'constructor_82123 (AgdaAny -> AgdaAny)
 -- Interface.ComputationalRelation.InjectError.injectError
 d_injectError_724 :: T_InjectError_716 -> AgdaAny -> AgdaAny
 d_injectError_724 v0
   = case coe v0 of
-      C_InjectError'46'constructor_82995 v1 -> coe v1
+      C_InjectError'46'constructor_82123 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.ComputationalRelation.InjectError-⊥
 d_InjectError'45''8869'_726 :: () -> T_InjectError_716
@@ -1100,14 +1100,14 @@ d_InjectError'45''8869'_726 ~v0 = du_InjectError'45''8869'_726
 du_InjectError'45''8869'_726 :: T_InjectError_716
 du_InjectError'45''8869'_726
   = coe
-      C_InjectError'46'constructor_82995
+      C_InjectError'46'constructor_82123
       (coe (\ v0 -> MAlonzo.RTE.mazUnreachableError))
 -- Interface.ComputationalRelation.InjectError-Id
 d_InjectError'45'Id_730 :: () -> T_InjectError_716
 d_InjectError'45'Id_730 ~v0 = du_InjectError'45'Id_730
 du_InjectError'45'Id_730 :: T_InjectError_716
 du_InjectError'45'Id_730
-  = coe C_InjectError'46'constructor_82995 (coe (\ v0 -> v0))
+  = coe C_InjectError'46'constructor_82123 (coe (\ v0 -> v0))
 -- Interface.ComputationalRelation.Computational-Id
 d_Computational'45'Id_738 :: () -> () -> T_Computational_232
 d_Computational'45'Id_738 ~v0 ~v1 = du_Computational'45'Id_738
@@ -1196,7 +1196,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7495'_774 v0 v1 v2
                                              (coe
                                                 d_injectError_724
                                                 (coe
-                                                   C_InjectError'46'constructor_82995
+                                                   C_InjectError'46'constructor_82123
                                                    (coe (\ v15 -> v15)))
                                                 v14)
                                       _ -> MAlonzo.RTE.mazUnreachableError)
@@ -1346,10 +1346,7 @@ du_Computational'45'ReflexiveTransitiveClosure_1108 v0
   = coe
       du_Computational'45'ReflexiveTransitiveClosure'7495'_774
       (coe du_Computational'45'Id_738) (coe v0)
-      (coe
-         C_InjectError'46'constructor_82995
-         (coe (\ v1 -> MAlonzo.RTE.mazUnreachableError)))
-      (coe C_InjectError'46'constructor_82995 (coe (\ v1 -> v1)))
+      (coe du_InjectError'45''8869'_726) (coe du_InjectError'45'Id_730)
 -- Interface.ComputationalRelation.Computational-ReflexiveTransitiveClosureᵢ
 d_Computational'45'ReflexiveTransitiveClosure'7522'_1112 ::
   () ->
@@ -1368,7 +1365,4 @@ du_Computational'45'ReflexiveTransitiveClosure'7522'_1112 v0
   = coe
       du_Computational'45'ReflexiveTransitiveClosure'7522''7495'_1100
       (coe du_Computational'45'Id_738) (coe v0)
-      (coe
-         C_InjectError'46'constructor_82995
-         (coe (\ v1 -> MAlonzo.RTE.mazUnreachableError)))
-      (coe C_InjectError'46'constructor_82995 (coe (\ v1 -> v1)))
+      (coe du_InjectError'45''8869'_726) (coe du_InjectError'45'Id_730)

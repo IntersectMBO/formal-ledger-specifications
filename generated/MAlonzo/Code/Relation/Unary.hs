@@ -222,14 +222,38 @@ d_IUniversal_188 ::
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
 d_IUniversal_188 = erased
--- Relation.Unary.Decidable
-d_Decidable_194 ::
+-- Relation.Unary.Irrelevant
+d_Irrelevant_194 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
-d_Decidable_194 = erased
+d_Irrelevant_194 = erased
+-- Relation.Unary.Recomputable
+d_Recomputable_200 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
+d_Recomputable_200 = erased
+-- Relation.Unary.Stable
+d_Stable_206 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
+d_Stable_206 = erased
+-- Relation.Unary.WeaklyDecidable
+d_WeaklyDecidable_212 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
+d_WeaklyDecidable_212 = erased
+-- Relation.Unary.Decidable
+d_Decidable_218 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
+d_Decidable_218 = erased
 -- Relation.Unary.⌊_⌋
-d_'8970'_'8971'_202 ::
+d_'8970'_'8971'_226 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -237,93 +261,81 @@ d_'8970'_'8971'_202 ::
   (AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   AgdaAny -> ()
-d_'8970'_'8971'_202 = erased
--- Relation.Unary.Irrelevant
-d_Irrelevant_208 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
-d_Irrelevant_208 = erased
--- Relation.Unary.Recomputable
-d_Recomputable_218 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
-d_Recomputable_218 = erased
+d_'8970'_'8971'_226 = erased
 -- Relation.Unary.∁
-d_'8705'_224 ::
+d_'8705'_232 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) -> AgdaAny -> ()
-d_'8705'_224 = erased
+d_'8705'_232 = erased
 -- Relation.Unary._⇒_
-d__'8658'__230 ::
+d__'8658'__238 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) -> (AgdaAny -> ()) -> AgdaAny -> ()
-d__'8658'__230 = erased
+d__'8658'__238 = erased
 -- Relation.Unary._∪_
-d__'8746'__238 ::
+d__'8746'__246 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) -> (AgdaAny -> ()) -> AgdaAny -> ()
-d__'8746'__238 = erased
+d__'8746'__246 = erased
 -- Relation.Unary._∩_
-d__'8745'__246 ::
+d__'8745'__254 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) -> (AgdaAny -> ()) -> AgdaAny -> ()
-d__'8745'__246 = erased
+d__'8745'__254 = erased
 -- Relation.Unary._∖_
-d__'8726'__254 ::
+d__'8726'__262 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) -> (AgdaAny -> ()) -> AgdaAny -> ()
-d__'8726'__254 = erased
+d__'8726'__262 = erased
 -- Relation.Unary.⋃
-d_'8899'_266 ::
+d_'8899'_274 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> ()) -> AgdaAny -> ()
-d_'8899'_266 = erased
+d_'8899'_274 = erased
 -- Relation.Unary.⋂
-d_'8898'_280 ::
+d_'8898'_288 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> ()) -> AgdaAny -> ()
-d_'8898'_280 = erased
+d_'8898'_288 = erased
 -- Relation.Unary._≬_
-d__'8812'__290 ::
+d__'8812'__298 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) -> (AgdaAny -> ()) -> ()
-d__'8812'__290 = erased
+d__'8812'__298 = erased
 -- Relation.Unary._⊢_
-d__'8866'__298 ::
+d__'8866'__306 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> ()) -> AgdaAny -> ()
-d__'8866'__298 = erased
+d__'8866'__306 = erased
 -- Relation.Unary._⟨×⟩_
-d__'10216''215''10217'__306 ::
+d__'10216''215''10217'__314 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -332,9 +344,9 @@ d__'10216''215''10217'__306 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d__'10216''215''10217'__306 = erased
+d__'10216''215''10217'__314 = erased
 -- Relation.Unary._⟨⊎⟩_
-d__'10216''8846''10217'__316 ::
+d__'10216''8846''10217'__324 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -342,9 +354,9 @@ d__'10216''8846''10217'__316 ::
   () ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
-d__'10216''8846''10217'__316 = erased
+d__'10216''8846''10217'__324 = erased
 -- Relation.Unary._⟨⊙⟩_
-d__'10216''8857''10217'__322 ::
+d__'10216''8857''10217'__330 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -353,9 +365,9 @@ d__'10216''8857''10217'__322 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d__'10216''8857''10217'__322 = erased
+d__'10216''8857''10217'__330 = erased
 -- Relation.Unary._⟨→⟩_
-d__'10216''8594''10217'__332 ::
+d__'10216''8594''10217'__340 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -363,9 +375,9 @@ d__'10216''8594''10217'__332 ::
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> ()) -> (AgdaAny -> ()) -> (AgdaAny -> AgdaAny) -> ()
-d__'10216''8594''10217'__332 = erased
+d__'10216''8594''10217'__340 = erased
 -- Relation.Unary._⟨·⟩_
-d__'10216''183''10217'__344 ::
+d__'10216''183''10217'__352 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -376,18 +388,18 @@ d__'10216''183''10217'__344 ::
   (AgdaAny -> ()) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d__'10216''183''10217'__344 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
-  = du__'10216''183''10217'__344 v8 v9
-du__'10216''183''10217'__344 ::
+d__'10216''183''10217'__352 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
+  = du__'10216''183''10217'__352 v8 v9
+du__'10216''183''10217'__352 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du__'10216''183''10217'__344 v0 v1
+du__'10216''183''10217'__352 v0 v1
   = case coe v1 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v2 v3
         -> coe v3 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v0)) v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Unary._~
-d__'126'_354 ::
+d__'126'_362 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -395,9 +407,9 @@ d__'126'_354 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d__'126'_354 = erased
+d__'126'_362 = erased
 -- Relation.Unary._⟨∘⟩_
-d__'10216''8728''10217'__358 ::
+d__'10216''8728''10217'__366 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -409,9 +421,9 @@ d__'10216''8728''10217'__358 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()) ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d__'10216''8728''10217'__358 = erased
+d__'10216''8728''10217'__366 = erased
 -- Relation.Unary._//_
-d__'47''47'__370 ::
+d__'47''47'__378 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -423,9 +435,9 @@ d__'47''47'__370 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()) ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d__'47''47'__370 = erased
+d__'47''47'__378 = erased
 -- Relation.Unary._\\_
-d__'92''92'__384 ::
+d__'92''92'__392 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -437,4 +449,4 @@ d__'92''92'__384 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()) ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d__'92''92'__384 = erased
+d__'92''92'__392 = erased

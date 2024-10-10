@@ -108,7 +108,7 @@ du_applicativeZero_28 ::
   AgdaAny -> MAlonzo.Code.Effect.Applicative.T_RawApplicativeZero_120
 du_applicativeZero_28 v0
   = coe
-      MAlonzo.Code.Effect.Applicative.C_RawApplicativeZero'46'constructor_7747
+      MAlonzo.Code.Effect.Applicative.C_RawApplicativeZero'46'constructor_8049
       (coe du_applicative_20) (coe du_empty_22 (coe v0))
 -- Data.Sum.Effectful.Left.alternative
 d_alternative_32 ::
@@ -121,7 +121,7 @@ du_alternative_32 ::
   AgdaAny -> MAlonzo.Code.Effect.Applicative.T_RawAlternative_180
 du_alternative_32 v0
   = coe
-      MAlonzo.Code.Effect.Applicative.C_RawAlternative'46'constructor_9601
+      MAlonzo.Code.Effect.Applicative.C_RawAlternative'46'constructor_9897
       (coe du_applicativeZero_28 (coe v0)) (coe du_choice_26)
 -- Data.Sum.Effectful.Left.monad
 d_monad_36 ::

@@ -35,7 +35,7 @@ du_functor_22 :: MAlonzo.Code.Effect.Functor.T_RawFunctor_24
 du_functor_22
   = coe
       MAlonzo.Code.Effect.Functor.C_RawFunctor'46'constructor_241
-      (coe (\ v0 v1 v2 -> coe MAlonzo.Code.Data.Maybe.Base.du_map_68 v2))
+      (coe (\ v0 v1 v2 -> coe MAlonzo.Code.Data.Maybe.Base.du_map_64 v2))
 -- Data.Maybe.Effectful.applicative
 d_applicative_24 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -51,8 +51,8 @@ du_applicative_24
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Data.Maybe.Base.du_maybe_36
-              (coe MAlonzo.Code.Data.Maybe.Base.du_map_68)
+              MAlonzo.Code.Data.Maybe.Base.du_maybe_32
+              (coe MAlonzo.Code.Data.Maybe.Base.du_map_64)
               (let v2 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
                coe (coe (\ v3 -> v2)))))
 -- Data.Maybe.Effectful.empty
@@ -75,7 +75,7 @@ du_choice_28
   = coe
       MAlonzo.Code.Effect.Choice.C_RawChoice'46'constructor_149
       (\ v0 v1 v2 ->
-         coe MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__84 v1 v2)
+         coe MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80 v1 v2)
 -- Data.Maybe.Effectful.applicativeZero
 d_applicativeZero_30 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -85,7 +85,7 @@ du_applicativeZero_30 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicativeZero_120
 du_applicativeZero_30
   = coe
-      MAlonzo.Code.Effect.Applicative.C_RawApplicativeZero'46'constructor_7747
+      MAlonzo.Code.Effect.Applicative.C_RawApplicativeZero'46'constructor_8049
       (coe du_applicative_24) (coe du_empty_26)
 -- Data.Maybe.Effectful.alternative
 d_alternative_32 ::
@@ -96,7 +96,7 @@ du_alternative_32 ::
   MAlonzo.Code.Effect.Applicative.T_RawAlternative_180
 du_alternative_32
   = coe
-      MAlonzo.Code.Effect.Applicative.C_RawAlternative'46'constructor_9601
+      MAlonzo.Code.Effect.Applicative.C_RawAlternative'46'constructor_9897
       (coe du_applicativeZero_30) (coe du_choice_28)
 -- Data.Maybe.Effectful.monad
 d_monad_34 ::
@@ -110,7 +110,7 @@ du_monad_34
       (coe du_applicative_24)
       (coe
          (\ v0 v1 v2 v3 ->
-            coe MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__76 v2 v3))
+            coe MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72 v2 v3))
 -- Data.Maybe.Effectful.join
 d_join_36 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -127,7 +127,7 @@ d_monadZero_38 ~v0 = du_monadZero_38
 du_monadZero_38 :: MAlonzo.Code.Effect.Monad.T_RawMonadZero_206
 du_monadZero_38
   = coe
-      MAlonzo.Code.Effect.Monad.C_RawMonadZero'46'constructor_6879
+      MAlonzo.Code.Effect.Monad.C_RawMonadZero'46'constructor_7131
       (coe du_monad_34) (coe du_empty_26)
 -- Data.Maybe.Effectful.monadPlus
 d_monadPlus_40 ::
@@ -137,7 +137,7 @@ d_monadPlus_40 ~v0 = du_monadPlus_40
 du_monadPlus_40 :: MAlonzo.Code.Effect.Monad.T_RawMonadPlus_284
 du_monadPlus_40
   = coe
-      MAlonzo.Code.Effect.Monad.C_RawMonadPlus'46'constructor_8773
+      MAlonzo.Code.Effect.Monad.C_RawMonadPlus'46'constructor_9035
       (coe du_monadZero_38) (coe du_choice_28)
 -- Data.Maybe.Effectful.TraversableA.sequenceA
 d_sequenceA_88 ::
@@ -175,7 +175,7 @@ du_mapA_92 ::
 du_mapA_92 v0 v1 v2
   = coe
       du_sequenceA_88 (coe v0)
-      (coe MAlonzo.Code.Data.Maybe.Base.du_map_68 v1 v2)
+      (coe MAlonzo.Code.Data.Maybe.Base.du_map_64 v1 v2)
 -- Data.Maybe.Effectful.TraversableA.forA
 d_forA_96 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
