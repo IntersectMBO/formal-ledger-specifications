@@ -7,8 +7,6 @@ open import Prelude
 open import Axiom.Set
 import Axiom.Set.List as L
 open import Relation.Binary using (_Preserves_⟶_)
-open import Data.List.Ext.Properties using (dedup-++-↭)
-
 
 opaque
   List-Model : Theory {0ℓ}
@@ -135,7 +133,7 @@ indexedSum' f s = indexedSum ⦃ fromCommMonoid' it ⦄ f (s ᶠˢ)
 syntax indexedSumᵛ' (λ a → x) m = ∑[ a ← m ] x
 syntax indexedSum'  (λ a → x) m = ∑ˢ[ a ← m ] x
 
-opaque
+opaque 
   unfolding List-Model
 
   singleton-≢-∅ : ∀ {a} {x : a} → ⦃ DecEq a ⦄ → singleton x ≢ ∅
@@ -145,12 +143,10 @@ aggregateBy : ⦃ DecEq A ⦄ → ⦃ DecEq B ⦄ → ⦃ DecEq C ⦄ → ⦃ Is
             → Rel A B → A ⇀ C → B ⇀ C
 aggregateBy R m = mapFromFun (λ b → ∑[ x ← m ∣ Rel.dom (R ∣^ʳ ❴ b ❵) ] x) (Rel.range R)
 
-module _ ⦃ decA : DecEq A ⦄ ⦃ decB : DecEq B ⦄ {f : B → C}
+module _ ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ {f : B → C}
          ⦃ cm : IsCommutativeMonoid' 0ℓ 0ℓ C ⦄
          where
-  open CommutativeMonoid (fromCommMonoid' cm) renaming (trans to ≈-trans) hiding (refl)
-  import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-  open SetoidReasoning (CommutativeMonoid.setoid (fromCommMonoid' cm))
+  open CommutativeMonoid (fromCommMonoid' cm)
 
   indexedSumᵛ'-cong : indexedSumᵛ' f Preserves (_≡ᵉ_ on proj₁) ⟶ _≈_
   indexedSumᵛ'-cong {x} {y} x≡y =

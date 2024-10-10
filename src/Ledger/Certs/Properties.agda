@@ -151,9 +151,9 @@ getCoin-singleton = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (fin
                 → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
 ∪ˡsingleton∈dom m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ{m = m} a∈dom)
 
-module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                               → disjoint (dom m) (dom m')
-                              → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' }
+                              → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
   where
   open ≡-Reasoning
   open Equivalence
@@ -162,7 +162,8 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                    → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
   ∪ˡsingleton∉dom m {(a , c)} a∉dom = begin
     getCoin (m ∪ˡ ❴ a , c ❵ᵐ)
-      ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ (λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x)) ⟩
+      ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ
+         ( λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x) ) ⟩
     getCoin m + getCoin ❴ a , c ❵ᵐ
       ≡⟨ cong (getCoin m +_) getCoin-singleton ⟩
     getCoin m + c
@@ -207,20 +208,22 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   CERT-pov (CERT-pool x) = refl
   CERT-pov (CERT-vdel x) = refl
 
-  module _
+  injOn : (wdls : RwdAddr ⇀ Coin)
+          → ∀[ a ∈ dom (wdls ˢ) ] RwdAddr.net a ≡ NetworkId
+          → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake
+  injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
+    cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
+
+  module CERTSpov
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
-    ( sumConstZero : {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
-
-    ( res-decomp : {A : Type} ⦃ _ : DecEq A ⦄ {m m' : A ⇀ Coin}
-                   → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-
-    ( getCoin-cong : {A : Type} → ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin))
-                     → s ˢ ≡ᵉ s' → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-
-    ( ≡ᵉ-getCoinˢ : {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                    → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-
-    ( injOn : {wdls : RwdAddr ⇀ Coin} → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake )
+    ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
+    ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+                         → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
+    ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
+                         → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
+    ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                         → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+    ( constNetworkId  :  (wdls : RwdAddr ⇀ Coin) → ∀[ a ∈ dom (wdls ˢ) ] RwdAddr.net a ≡ NetworkId )
     where
 
     CERTBASE-pov :  {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
@@ -247,13 +250,13 @@ module _  { indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
             ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_)
                ( getCoin-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
           getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrlsCC
-            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn {wdrls})) ⟩
+            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn wdrls (constNetworkId wdrls))) ⟩
           getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrls
             ≡˘⟨ cong (_+ getCoin wdrls)
                 ( begin
                   getCoin (zeroMap ∪ˡ rewards)
                     ≡⟨ ≡ᵉ-getCoin (zeroMap ∪ˡ rewards) (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
-                                  (res-decomp {m = zeroMap}{rewards}) ⟩
+                                  (res-decomp zeroMap rewards) ⟩
                   getCoin (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
                     ≡⟨ indexedSumᵛ'-∪ zeroMap (rewards ∣ dom zeroMap ᶜ)
                                       (disjoint-sym res-comp-dom) ⟩
