@@ -99,6 +99,9 @@ module _ {x : A} {y : B} where
     dom-single→single : a ∈ dom ❴ x , y ❵ → a ∈ ❴ x ❵
     dom-single→single = to ∈-singleton ∘ from ∈-dom-singleton-pair
 
+    ∈-dom-single≡ : a ∈ dom ❴ x , y ❵ → a ≡ x
+    ∈-dom-single≡ = (from ∈-singleton) ∘ dom-single→single
+
     single→dom-single : a ∈ ❴ x ❵ → a ∈ dom ❴ x , y ❵
     single→dom-single = to ∈-dom-singleton-pair ∘ from ∈-singleton
 
