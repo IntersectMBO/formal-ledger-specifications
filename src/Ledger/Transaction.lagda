@@ -94,7 +94,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   open TokenAlgebra tokenAlgebra public
 
   field txidBytes : TxId → Ser
-        networkId : Network
 
   govStructure : GovStructure
   govStructure = record

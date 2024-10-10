@@ -118,36 +118,40 @@ module _
                        → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
   ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                        → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-  ( constNetworkId  :  (wdls : RwdAddr ⇀ Coin) → ∀[ a ∈ dom (wdls ˢ) ] RwdAddr.net a ≡ NetworkId )
   where
 
   private variable
     Γ : LEnv
     l : List Tx
 
+  pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
+
   LEDGER-pov :  {s s' : LState} → FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                 → getCoin s ≡ getCoin s'
-  LEDGER-pov  {s = ⟦ utxoSt , govSt , ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⟧ˡ}
-              {s' = ⟦ utxoSt' , govSt' , ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ ⟧ˡ}
-              h (LEDGER-V {utxoSt' = utxoSt'} (valid , UTXOW⇒UTXO st , h' , _)) =
-    let  open ≡-Reasoning
-         open CERTSpov indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ constNetworkId
-         certState  = ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-         certState' = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-         zeroMap    = constMap (mapˢ RwdAddr.stake (dom txwdrls)) 0
-    in  begin
-        getCoin utxoSt + getCoin certState
-          ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h') ⟩
-        getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
-          ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , u))) valid ⟩
-        getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , isValid))
-          ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
-        getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState')
-          ≡˘⟨ +-assoc (getCoin utxoSt) (φ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
-        getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState'
-          ≡⟨ cong (_+ getCoin certState') (pov h st) ⟩
-        getCoin utxoSt' + getCoin certState'
-          ∎
+  LEDGER-pov
+    {s = ⟦ utxoSt , govSt , ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⟧ˡ}
+    {s' = ⟦ utxoSt' , govSt' , ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ ⟧ˡ}
+    h (LEDGER-V {utxoSt' = utxoSt'} ( valid , UTXOW⇒UTXO st@(UTXO-induction r) , h' , _ )) =
+    let
+      open ≡-Reasoning
+      open CERTSpov indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ r
+      certState  = ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+      certState' = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
+      zeroMap    = constMap (mapˢ RwdAddr.stake (dom txwdrls)) 0
+    in
+    begin
+      getCoin utxoSt + getCoin certState
+        ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h') ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
+        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , u))) valid ⟩
+      getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , isValid))
+        ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
+      getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState')
+        ≡˘⟨ +-assoc (getCoin utxoSt) (φ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
+      getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState'
+        ≡⟨ cong (_+ getCoin certState') (pov h st) ⟩
+      getCoin utxoSt' + getCoin certState'
+        ∎
 
   LEDGER-pov  s@{s = ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ}
               s'@{s' = ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , ⟦ dState' , pState' , gState' ⟧ᶜˢ ⟧ˡ}

@@ -223,7 +223,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                          → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
     ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-    ( constNetworkId  :  (wdls : RwdAddr ⇀ Coin) → ∀[ a ∈ dom (wdls ˢ) ] RwdAddr.net a ≡ NetworkId )
+    ( constNetworkId  :  ∀[ a ∈ dom (CertEnv.wdrls Γ) ] RwdAddr.net a ≡ NetworkId )
     where
 
     CERTBASE-pov :  {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
@@ -250,7 +250,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
             ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_)
                ( getCoin-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
           getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrlsCC
-            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn wdrls (constNetworkId wdrls))) ⟩
+            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn wdrls constNetworkId)) ⟩
           getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrls
             ≡˘⟨ cong (_+ getCoin wdrls)
                 ( begin

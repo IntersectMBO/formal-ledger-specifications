@@ -460,9 +460,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ networkId
-    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
-    ∙ txNetworkId ≡? networkId
+    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
+    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
+    ∙ txNetworkId ≡? NetworkId
     ∙ curTreasury ≡? treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
