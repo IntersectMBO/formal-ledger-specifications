@@ -368,7 +368,7 @@ d_govSt_1956 v0
 -- Ledger.Conway.Conformance.Epoch._.LState.utxoSt
 d_utxoSt_1958 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2148 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1966
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1968
 d_utxoSt_1958 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2156
@@ -421,34 +421,34 @@ d_stakeDistr_2086 v0
 d_UTxOState_2124 a0 a1 = ()
 -- Ledger.Conway.Conformance.Epoch._.UTxOState.deposits
 d_deposits_2220 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1966 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1968 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_deposits_2220 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_deposits_1980
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_deposits_1982
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.UTxOState.donations
 d_donations_2222 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1966 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1968 ->
   Integer
 d_donations_2222 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_donations_1982
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_donations_1984
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.UTxOState.fees
 d_fees_2224 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1966 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1968 ->
   Integer
 d_fees_2224 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_fees_1978 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_fees_1980 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.UTxOState.utxo
 d_utxo_2226 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1966 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1968 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_utxo_2226 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_utxo_1976 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_utxo_1978 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.RewardUpdate
 d_RewardUpdate_2238 a0 a1 = ()
 data T_RewardUpdate_2238
@@ -677,7 +677,7 @@ du_applyRUpd_2392 v0 v1 v2
                       -> case coe v10 of
                            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2162 v15 v16 v17
                              -> case coe v15 of
-                                  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1984 v18 v19 v20 v21
+                                  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1986 v18 v19 v20 v21
                                     -> case coe v17 of
                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_974 v22 v23 v24
                                            -> case coe v22 of
@@ -705,7 +705,7 @@ du_applyRUpd_2392 v0 v1 v2
                                                        (coe
                                                           MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2162
                                                           (coe
-                                                             MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1984
+                                                             MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1986
                                                              (coe v18)
                                                              (coe
                                                                 MAlonzo.Code.Data.Integer.Ext.d_posPart_10
@@ -1013,7 +1013,7 @@ du_m_2460 v0 v1 v2
             coe
               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v4)
               (coe
-                 MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_cbalance_2104
+                 MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_cbalance_2106
                  (coe v0)
                  (coe
                     MAlonzo.Code.Ledger.Set.Theory.du__'8739''94'''__1174 (coe v1)
@@ -1314,11 +1314,11 @@ d_utxoSt_2508 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Abstract.T_AbstractFunctions_1752 ->
   T_GeneralizeTel_23439 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1966
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1968
 d_utxoSt_2508 ~v0 ~v1 v2 = du_utxoSt_2508 v2
 du_utxoSt_2508 ::
   T_GeneralizeTel_23439 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1966
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T_UTxOState_1968
 du_utxoSt_2508 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2156
@@ -1332,7 +1332,7 @@ d_fees_2516 ~v0 ~v1 v2 = du_fees_2516 v2
 du_fees_2516 :: T_GeneralizeTel_23439 -> Integer
 du_fees_2516 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_fees_1978
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_fees_1980
       (coe
          MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2156
          (coe d_'46'generalizedField'45'lstate_23429 (coe v0)))
@@ -1346,7 +1346,7 @@ du_utxo_2518 ::
   T_GeneralizeTel_23439 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_utxo_2518 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_utxo_1976
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_utxo_1978
       (coe
          MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2156
          (coe d_'46'generalizedField'45'lstate_23429 (coe v0)))
