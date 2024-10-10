@@ -300,12 +300,9 @@ data
 \begin{code}
   _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
 \end{code}
-\begin{code}[hide]
-module _ where
-\end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Types for the transition systems relating to certificates}
@@ -442,7 +439,11 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
+        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
+        ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        , stᵖ
+        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}

@@ -122,10 +122,23 @@ open GovActionState using (returnAddr)
 \begin{NoConway}
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd
-  ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
-  ⟦ ⟦ treasury , reserves ⟧ᵃ , ss , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ , es , fut ⟧ᵉ' =
-  ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU') , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ , ss , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ , govSt , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ , es , fut ⟧ᵉ'
+applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
+  ⟦ ⟦ treasury , reserves ⟧ᵃ
+  , ss
+  , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
+    , govSt
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , es
+  , fut
+  ⟧ᵉ' =
+  ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
+    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ
+  , ss
+  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
+    , govSt
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , es
+  , fut ⟧ᵉ'
   where
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
@@ -233,7 +246,11 @@ its results by carrying out each of the following tasks.
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
 
-      certState' = ⟦ record dState { rewards = dState .rewards ∪⁺ refunds } , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps) , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ ⟧ᶜˢ
+      certState' =
+        ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
+        , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ
+        , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps)
+          , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ ⟧ᶜˢ
 
       utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
