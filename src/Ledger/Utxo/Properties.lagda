@@ -673,7 +673,6 @@ module _ -- ASSUMPTION --
 
   ≤updateCertDeps : (cs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
     → noRefundCert cs
-    -- → ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) cs   -- Do we need this? Maybe not.
     → getCoin deposits ≤ getCoin (updateCertDeposits pp cs deposits)
   ≤updateCertDeps [] nrf = ≤-reflexive refl
   ≤updateCertDeps (delegate c _ _ v ∷ cs) {pp} {deposits} (_ All.∷ nrf) =

@@ -230,54 +230,54 @@ certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
 certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
 certRefund _                = ∅
 
-data ValidCertDeposits (ps : ℙ DepositPurpose) : List DCert → Set where
-  []         : ValidCertDeposits ps []
+data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set where
+  []         : ValidCertDeposits pp deps []
   delegate   : ∀ {c del kh v certs}
-             → ValidCertDeposits (ps ∪ ❴ CredentialDeposit c ❵) certs
-             → ValidCertDeposits ps (delegate c del kh v ∷ certs)
-  regpool    : ∀ {kh pp certs}
-             → ValidCertDeposits (ps ∪ ❴ PoolDeposit kh ❵) certs
-             → ValidCertDeposits ps (regpool kh pp ∷ certs)
+             → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , v ❵) certs
+             → ValidCertDeposits pp deps (delegate c del kh v ∷ certs)
+  regpool    : ∀ {kh p certs}
+             → ValidCertDeposits pp (deps ∪⁺ ❴ PoolDeposit kh , pp .poolDeposit ❵) certs
+             → ValidCertDeposits pp deps (regpool kh p ∷ certs)
   regdrep    : ∀ {c v a certs}
-             → ValidCertDeposits (ps ∪ ❴ DRepDeposit c ❵) certs
-             → ValidCertDeposits ps (regdrep c v a ∷ certs)
-  dereg      : ∀ {c v certs}
-             → CredentialDeposit c ∈ ps
-             → ValidCertDeposits (ps ＼ ❴ CredentialDeposit c ❵) certs
-             → ValidCertDeposits ps (dereg c v ∷ certs)
-  deregdrep  : ∀ {c v certs}
-             → DRepDeposit c ∈ ps
-             → ValidCertDeposits (ps ＼ ❴ DRepDeposit c ❵) certs
-             → ValidCertDeposits ps (deregdrep c v ∷ certs)
+             → ValidCertDeposits pp (deps ∪⁺ ❴ DRepDeposit c , v ❵) certs
+             → ValidCertDeposits pp deps (regdrep c v a ∷ certs)
+  dereg      : ∀ {c d certs}
+             → (CredentialDeposit c , d) ∈ deps
+             → ValidCertDeposits pp (deps ∣ ❴ CredentialDeposit c ❵ ᶜ) certs
+             → ValidCertDeposits pp deps (dereg c d ∷ certs)
+  deregdrep  : ∀ {c d certs}
+             → (DRepDeposit c , d) ∈ deps
+             → ValidCertDeposits pp (deps ∣ ❴ DRepDeposit c ❵ ᶜ) certs
+             → ValidCertDeposits pp deps (deregdrep c d ∷ certs)
   ccreghot   : ∀ {c v certs}
-             → ValidCertDeposits ps certs
-             → ValidCertDeposits ps (ccreghot c v ∷ certs)
+             → ValidCertDeposits pp deps certs
+             → ValidCertDeposits pp deps (ccreghot c v ∷ certs)
   retirepool : ∀ {kh e certs}
-             → ValidCertDeposits ps certs
-             → ValidCertDeposits ps (retirepool kh e  ∷ certs)
+             → ValidCertDeposits pp deps certs
+             → ValidCertDeposits pp deps (retirepool kh e  ∷ certs)
 
 private
-  validCertDeposits? : ∀ ps certs → Dec (ValidCertDeposits ps certs)
-  validCertDeposits? ps [] = yes []
-  validCertDeposits? ps (delegate _ _ _ _ ∷ certs) =
+  validCertDeposits? : ∀ {pp} deps certs → Dec (ValidCertDeposits pp deps certs)
+  validCertDeposits? deps [] = yes []
+  validCertDeposits? deps (delegate _ _ _ _ ∷ certs) =
     mapDec delegate (λ where (delegate p) → p) (validCertDeposits? _ _)
-  validCertDeposits? ps (regpool _ _ ∷ certs) =
+  validCertDeposits? deps (regpool _ _ ∷ certs) =
     mapDec regpool (λ where (regpool p) → p) (validCertDeposits? _ _)
-  validCertDeposits? ps (regdrep _ _ _ ∷ certs) =
+  validCertDeposits? deps (regdrep _ _ _ ∷ certs) =
     mapDec regdrep (λ where (regdrep p) → p) (validCertDeposits? _ _)
-  validCertDeposits? ps (retirepool _ _ ∷ certs) =
+  validCertDeposits? deps (retirepool _ _ ∷ certs) =
     mapDec retirepool (λ where (retirepool p) → p) (validCertDeposits? _ _)
-  validCertDeposits? ps (ccreghot _ _ ∷ certs) =
+  validCertDeposits? deps (ccreghot _ _ ∷ certs) =
     mapDec ccreghot (λ where (ccreghot p) → p) (validCertDeposits? _ _)
-  validCertDeposits? ps (dereg c _ ∷ certs) with ¿ CredentialDeposit c ∈ ps ¿
-  ... | yes p = mapDec (dereg p)  (λ where (dereg _ v) → v) (validCertDeposits? _ _)
+  validCertDeposits? deps (dereg c d ∷ certs) with ¿ (CredentialDeposit c , d) ∈ deps ¿
+  ... | yes p = mapDec (dereg p)  (λ where (dereg _ d) → d) (validCertDeposits? _ _)
   ... | no ¬p = no (λ where (dereg p _) → ¬p p)
-  validCertDeposits? ps (deregdrep c _ ∷ certs) with ¿ DRepDeposit c ∈ ps ¿
+  validCertDeposits? deps (deregdrep c d ∷ certs) with ¿ (DRepDeposit c , d) ∈ deps ¿
   ... | yes p = mapDec (deregdrep p)  (λ where (deregdrep _ v) → v) (validCertDeposits? _ _)
   ... | no ¬p = no (λ where (deregdrep p _) → ¬p p)
 
 instance
-  Dec-ValidCertDeposits : ∀ {ps certs} → ValidCertDeposits ps certs ⁇
+  Dec-ValidCertDeposits : ∀ {pp deps certs} → ValidCertDeposits pp deps certs ⁇
   Dec-ValidCertDeposits = ⁇ (validCertDeposits? _ _)
 
 -- Assumes ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) certs.
@@ -453,7 +453,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
-      in ∙ ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) txcerts
+      in
+        ∙ ValidCertDeposits pp deposits txcerts
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
