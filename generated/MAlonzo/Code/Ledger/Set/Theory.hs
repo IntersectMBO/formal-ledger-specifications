@@ -7420,7 +7420,7 @@ d__'8776'__1234 ::
   AgdaAny -> AgdaAny -> ()
 d__'8776'__1234 = erased
 -- Ledger.Set.Theory._.indexedSumᵛ'-cong
-d_indexedSum'7515''''45'cong_1340 ::
+d_indexedSum'7515''''45'cong_1302 ::
   () ->
   () ->
   () ->
@@ -7431,9 +7431,9 @@ d_indexedSum'7515''''45'cong_1340 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSum'7515''''45'cong_1340 ~v0 ~v1 ~v2 v3 v4 v5 v6 v7 v8 v9
-  = du_indexedSum'7515''''45'cong_1340 v3 v4 v5 v6 v7 v8 v9
-du_indexedSum'7515''''45'cong_1340 ::
+d_indexedSum'7515''''45'cong_1302 ~v0 ~v1 ~v2 v3 v4 v5 v6 v7 v8 v9
+  = du_indexedSum'7515''''45'cong_1302 v3 v4 v5 v6 v7 v8 v9
+du_indexedSum'7515''''45'cong_1302 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
@@ -7441,7 +7441,7 @@ du_indexedSum'7515''''45'cong_1340 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum'7515''''45'cong_1340 v0 v1 v2 v3 v4 v5 v6
+du_indexedSum'7515''''45'cong_1302 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Axiom.Set.Sum.du_indexedSum'45'cong_914
       (coe
