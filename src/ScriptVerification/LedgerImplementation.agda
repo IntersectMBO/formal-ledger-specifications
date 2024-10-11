@@ -17,7 +17,6 @@ open import Ledger.Conway.Conformance.Crypto
 open import Ledger.Conway.Conformance.Transaction
 open import Ledger.Conway.Conformance.Types.Epoch
 open import Ledger.Conway.Conformance.Types.GovStructure
-open import Interface.HasOrder.Instance
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
