@@ -60,8 +60,8 @@ let
     src = fetchFromGitHub {
       repo = "agda-sets";
       owner = "input-output-hk";
-      rev = "6dd8cebbd46090b5909c13a1e8d609a44f02a5d3";
-      sha256 = "sha256-+vrtdoBIoLwXqRt3/L/6k6GVZk7hJk15tMmMVUGJ+TA=";
+      rev = "f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6";
+      sha256 = "sha256-OsdDNNJp9NWDgDM0pDOGv98Z+vAS1U8mORWF7/B1D7k=";
     };
     meta = { };
     libraryFile = "abstract-set-theory.agda-lib";
