@@ -28,8 +28,8 @@ let
     src = fetchFromGitHub {
       repo = "agda-stdlib-classes";
       owner = "omelkonian";
-      rev = "5d77a54d6cd31da8a65b9cfca691f214d1c05184";
-      sha256 = "sha256-WEQ6UmHFCDq/PyArJ7u0SQ6q+JYzoMHoMG0psGYzZ8A=";
+      rev = "28df278381c94a25c54f6819524cd9f8cb99f092";
+      sha256 = "sha256-TdPJ3K4jyAIQgX1sUrqd0QeA72n2mkBVzlg8WfrqWWY=";
     };
     meta = { };
     libraryFile = "agda-stdlib-classes.agda-lib";
