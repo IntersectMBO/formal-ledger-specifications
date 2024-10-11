@@ -29,10 +29,7 @@ open import Ledger.Interface.HasCoin public
 open import MyDebugOptions public
 open import Tactic.Premises public
 
-open import Ledger.Set renaming (∅ to ∅ˢ; ❴_❵ to ❴_❵ˢ) public
-open import Interface.HasSingleton th public
-open import Interface.HasEmptySet public
-open import Interface.HasEmptySet.Instances th public
+open import Ledger.Set public
 
 dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p

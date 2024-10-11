@@ -15,7 +15,6 @@ open import Ledger.Conway.Conformance.Types.Epoch
 open EpochStructure SVEpochStructure
 open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)
 open import Data.Nat.Coprimality using (Coprime; gcd≡1⇒coprime)
-open import Ledger.Set.Theory
 open Implementation
 
 createEnv : ℕ → UTxOEnv
