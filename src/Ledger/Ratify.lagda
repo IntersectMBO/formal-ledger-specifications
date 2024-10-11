@@ -376,8 +376,13 @@ actualVotes Γ pparams cc ga votes
                    ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
-  actualSPOVotes (TriggerHF _)  = roleVotes SPO ∪ˡ constMap spos Vote.no
-  actualSPOVotes _              = roleVotes SPO ∪ˡ constMap spos Vote.abstain
+  actualSPOVotes a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
+    where
+    SPODefaultVote : GovAction → VDeleg → Vote
+    SPODefaultVote (TriggerHF _)  _                       = Vote.no
+    SPODefaultVote NoConfidence   VDeleg.noConfidenceRep  = Vote.yes
+    SPODefaultVote _              VDeleg.abstainRep       = Vote.abstain
+    SPODefaultVote _              _                       = Vote.no
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting}
@@ -412,6 +417,26 @@ DReps, regular DReps and SPOs.
 
 \item \actualSPOVotes adds a default vote to all SPOs who didn't vote,
   with the default depending on the action.
+\end{itemize}
+
+Let us discuss the last item above---the way SPO votes are counted---as the ledger
+specification's handling of this has evolved in response to community feedback.
+Previously, if an SPO did not vote, then they would be counted as having voted
+\abstain by default.  Members of the SPO community found this behavior counterintuitive
+and requested that non-voters be assigned a \no vote by default, with the caveat that
+an SPO could change their default setting by delegating their stake to an
+\texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
+More specifically, the agreed upon specification is the following:
+\begin{itemize}
+\item \textit{during the bootstrap period}: if an SPO didn't vote, then their vote is counted as \no;
+\item \textit{after the bootstrap period}: if an SPO didn't vote, then their vote is counted as \no
+except under the following circumstances:
+  \begin{itemize}
+  \item if the SPO has delegated to an \texttt{AlwaysNoConfidence} DRep, then their default vote is
+    \yes for \NoConfidence proposals;
+  \item if the SPO has delegated to an \texttt{AlwaysAbstain} DRep, then their default vote is
+    \abstain.
+  \end{itemize}
 \end{itemize}
 
 \begin{figure*}[h!]
