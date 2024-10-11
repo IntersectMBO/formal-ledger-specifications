@@ -31,6 +31,7 @@
 - Ratify GAs in the correct order
 - Only consider matching GAs in `hasParent`
 - Fix `ccMinSize` check not properly accounting for double delegations
+- Implement proper vote counting for SPOs
 
 ### V0.9
 
@@ -44,7 +45,6 @@
 - Fix that `RATIFY` wasn't total
 - Properly implement treasury withdrawals
 - Remove unused hot credentials at the epoch boundary
-- Implement proper vote counting for SPOs
 - Fix some protocol parameter names
 - Check that `NewCommittee` actions are sensible when they are proposed
 - Fix: treasury withdrawals were included in the wrong map
