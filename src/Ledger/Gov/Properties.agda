@@ -4,7 +4,7 @@ open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Gov.Properties
-  (txs : _) (open TransactionStructure txs using (govStructure; networkId))
+  (txs : _) (open TransactionStructure txs using (govStructure))
   (open GovStructure govStructure hiding (epoch)) where
 
 open import Ledger.Prelude hiding (Any; any?)
@@ -126,7 +126,7 @@ instance
             × validHFAction prop s enactState
             × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
             × hasParent' enactState s a prev
-            × addr .RwdAddr.net ≡ networkId ¿
+            × addr .RwdAddr.net ≡ NetworkId ¿
             ,′ isUpdateCommittee a
 
         computeProof = case H of λ where

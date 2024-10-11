@@ -31,7 +31,7 @@ open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc; length-
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
 open import Data.Product.Properties using (×-≡,≡←≡)
 open import Data.Product.Properties.Ext using (×-⇔-swap)
-open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
+open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm; +-assoc)
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Unary using (Decidable)
 
@@ -99,7 +99,7 @@ Computational-LEDGERS = it
 
 instance
   HasCoin-LState : HasCoin LState
-  HasCoin-LState .getCoin s = getCoin (LState.utxoSt s)
+  HasCoin-LState .getCoin s = getCoin (LState.utxoSt s) + getCoin (LState.certState s)
 
 -- ** Proof that LEDGER preserves values.
 
@@ -107,31 +107,65 @@ FreshTx : Tx → LState → Type
 FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
   where open Tx tx; open TxBody body; open UTxOState; open LState
 
-module _ (tx : Tx) (let open Tx tx; open TxBody body) where
+module _
+  (tx : Tx) (let open Tx tx; open TxBody body)
+  ( indexedSumᵛ'-∪  :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+                       → disjoint (dom m) (dom m') → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
+  ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
+  ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+                       → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
+  ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
+                       → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
+  ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                       → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+  where
 
   private variable
     Γ : LEnv
-    s s' : LState
     l : List Tx
 
-  -- TODO: Fix this after proving pov for CERTS.
-  LEDGER-pov : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s + φ(getCoin txwdrls , isValid) ≡ getCoin s'
-  LEDGER-pov h (LEDGER-V⋯ _ (UTXOW⇒UTXO st) _ _) = pov h st
-  LEDGER-pov h (LEDGER-I⋯ _ (UTXOW⇒UTXO st))     = pov h st
+  pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
 
-  data FreshTxs : LEnv → LState → List Tx → Type where
-    []-Fresh : FreshTxs Γ s []
-    ∷-Fresh  : FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → FreshTxs Γ s' l
-              → FreshTxs Γ s (tx ∷ l)
+  LEDGER-pov :  {s s' : LState} → FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                → getCoin s ≡ getCoin s'
+  LEDGER-pov
+    {s = ⟦ utxoSt , govSt , ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⟧ˡ}
+    {s' = ⟦ utxoSt' , govSt' , ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ ⟧ˡ}
+    h (LEDGER-V {utxoSt' = utxoSt'} ( valid , UTXOW⇒UTXO st@(UTXO-induction r) , h' , _ )) =
+    let
+      open ≡-Reasoning
+      open CERTSpov indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ r
+      certState  = ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+      certState' = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
+      zeroMap    = constMap (mapˢ RwdAddr.stake (dom txwdrls)) 0
+    in
+    begin
+      getCoin utxoSt + getCoin certState
+        ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h') ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
+        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , u))) valid ⟩
+      getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , isValid))
+        ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
+      getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState')
+        ≡˘⟨ +-assoc (getCoin utxoSt) (φ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
+      getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState'
+        ≡⟨ cong (_+ getCoin certState') (pov h st) ⟩
+      getCoin utxoSt' + getCoin certState'
+        ∎
 
-  -- TODO: Fix this after proving pov for CERTS.
-  -- LEDGERS-pov : FreshTxs Γ s l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s' → getCoin s ≡ getCoin s'
-  -- LEDGERS-pov _ (BS-base Id-nop) = refl
-  -- LEDGERS-pov {Γ} {_} {_ ∷ l} (∷-Fresh h h₁ h₂) (BS-ind x st) =
-  --   trans (LEDGER-pov h x) $
-  --     LEDGERS-pov (subst (λ s → FreshTxs Γ s l)
-  --                         (sym $ computational⇒rightUnique Computational-LEDGER x h₁)
-  --                         h₂) st
+  LEDGER-pov  s@{s = ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ}
+              s'@{s' = ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , ⟦ dState' , pState' , gState' ⟧ᶜˢ ⟧ˡ}
+              h (LEDGER-I {utxoSt' = utxoSt'} (invalid , UTXOW⇒UTXO st)) = cong (_+ rewardsBalance dState)
+    ( begin
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ
+        ≡˘⟨ +-identityʳ (getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ) ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + 0
+        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + φ(getCoin txwdrls , x)) invalid ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + φ(getCoin txwdrls , isValid) ≡⟨ pov h st ⟩
+      getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ ∎ )
+    where open ≡-Reasoning
+
+
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
