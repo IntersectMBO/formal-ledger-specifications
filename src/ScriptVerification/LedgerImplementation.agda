@@ -8,7 +8,6 @@ module ScriptVerification.LedgerImplementation
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import Data.Rational using (0ℚ; ½)
-open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid)
 open import Relation.Binary.Morphism.Structures
@@ -18,7 +17,6 @@ open import Ledger.Conway.Conformance.Crypto
 open import Ledger.Conway.Conformance.Transaction
 open import Ledger.Conway.Conformance.Types.Epoch
 open import Ledger.Conway.Conformance.Types.GovStructure
-open import Interface.HasOrder.Instance
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
@@ -55,7 +53,7 @@ module Implementation where
   ScriptHash = ℕ
 
   ExUnits      = ℕ × ℕ
-  ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
+  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ExUnits ∋ (Conversion.fromBundle record
     { Carrier = ExUnits
     ; _≈_ = _≈ᵖ_
     ; _∙_ = _∙ᵖ_
@@ -76,7 +74,7 @@ module Implementation where
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
-    .Value-IsCommutativeMonoid' → it
+    .Value-CommutativeMonoid    → it
       -- ^ Agda bug? Without this line, `coinIsMonoidHomomorphism` doesn't type check anymore
     .coin                       → id
     .inject                     → id

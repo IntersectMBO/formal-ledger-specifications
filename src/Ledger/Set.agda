@@ -2,5 +2,5 @@
 
 module Ledger.Set where
 
-open import Ledger.Set.Theory public
+open import abstract-set-theory.FiniteSetTheory public
 open import Ledger.Set.HashMap public

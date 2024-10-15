@@ -19,7 +19,7 @@ import Data.Integer.Properties as ℤ
 open import Relation.Nullary
 
 instance
-  _ = ℤ.+-0-commutativeMonoid
+  _ = Conversion.fromBundle ℤ.+-0-commutativeMonoid
 
   Hashable-ℕ : Hashable ℕ Hash
   Hashable-ℕ .hash n = hash (+ n)

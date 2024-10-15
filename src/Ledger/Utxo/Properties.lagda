@@ -160,7 +160,7 @@ private
 opaque
   unfolding balance
   balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
-  balance-cong {utxo} {utxo'} eq = indexedSumᵐ-cong {x = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ} (map-≡ᵉ eq)
+  balance-cong {utxo} {utxo'} eq = indexedSumᵐ-cong {M = Value} {x = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ} (map-≡ᵉ eq)
 
   balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → cbalance utxo ≡ cbalance utxo'
   balance-cong-coin {utxo} {utxo'} x =
@@ -172,15 +172,15 @@ opaque
   balance-∪ {utxo} {utxo'} h = begin
     cbalance (utxo ∪ˡ utxo')
       ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-      $ indexedSumᵐ-cong {x = (mapValues txOutHash (utxo ∪ˡ utxo')) ᶠᵐ} {((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)} (disjoint-∪ˡ-mapValues {M = utxo} {utxo'} _ h)
+      $ indexedSumᵐ-cong {f = getValueʰ ∘ proj₂} {x = (mapValues txOutHash (utxo ∪ˡ utxo')) ᶠᵐ} {((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)} (disjoint-∪ˡ-mapValues {M = utxo} {utxo'} _ h)
       ⟩
     coin (indexedSumᵐ _ (((mapValues txOutHash utxo) ᶠᵐ) ∪ˡᶠ ((mapValues txOutHash utxo') ᶠᵐ)))
       ≡⟨ ⟦⟧-cong coinIsMonoidHomomorphism
-       $ indexedSumᵐ-∪ {X = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ}
+       $ indexedSumᵐ-∪ {M = Value} {X = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ}
        (λ x x₁ → h (dom-mapʳ⊆ x) (dom-mapʳ⊆ x₁))
        ⟩
     coin (balance utxo + balance utxo')
-      ≡⟨ ∙-homo-Coin  _ _ ⟩
+      ≡⟨ ∙-homo-Coin _ _ ⟩
     cbalance utxo + cbalance utxo'
       ∎
     where open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
@@ -619,7 +619,7 @@ coin∅ = begin
   where open Prelude.≡-Reasoning
 
 getCoin-singleton : ((dp , c) : DepositPurpose × Coin) → indexedSumᵛ' id ❴ (dp , c) ❵ ≡ c
-getCoin-singleton _ = indexedSum-singleton' ⦃ M = +-0-commutativeMonoid ⦄ (finiteness _)
+getCoin-singleton _ = indexedSum-singleton' {A = DepositPurpose × Coin} {f = proj₂} (finiteness _)
 
 module _ -- ASSUMPTION --
          (gc-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
