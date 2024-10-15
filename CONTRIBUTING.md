@@ -8,7 +8,7 @@ We also have a separate style guide for formatting the PDF: [PDF style guide](PD
 
 ## Setup with emacs
 
-We use Agda version 2.6.4 and various dependencies. You can install the correct version of Agda and the dependencies using `nix-env -iA agda -f .`, but this is a global install which you may not want if you also have other Agda projects.
+We use Agda version 2.7 and various dependencies. You can install the correct version of Agda and the dependencies using `nix-env -iA agda -f .`, but this is a global install which you may not want if you also have other Agda projects.
 
 To install Agda locally and use that install with emacs, you can do the following:
 
@@ -29,8 +29,8 @@ To install Agda locally and use that install with emacs, you can do the followin
    ;; between the two. If there are more entries, it will ask which one
    ;; to choose.
 
-   (setq my/agda-versions `(("Agda"        "2.6.3" "agda")
-                            ("Ledger Agda" "2.6.4" "~/IOHK/ledger-agda/bin/agda")))
+   (setq my/agda-versions `(("Agda"        "2.6.4" "agda")
+                            ("Ledger Agda" "2.7.0" "~/IOHK/ledger-agda/bin/agda")))
 
    (setq my/selected-agda (caar my/agda-versions))
 
@@ -50,7 +50,7 @@ To install Agda locally and use that install with emacs, you can do the followin
    (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
    ```
 
-   *Note*. This assumes that your regular install of Agda is in your path with the name `agda` and version `2.6.3`, otherwise you'll have to edit `my/agda-versions`.
+   *Note*. This assumes that your regular install of Agda is in your path with the name `agda` and version `2.6.4`, otherwise you'll have to edit `my/agda-versions`.
 
    You can then use `M-x my/toggle-ledger-agda`, or `C-c C-x C-t`, to switch between your regular install of Agda and the locally installed version.
 
