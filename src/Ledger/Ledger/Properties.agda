@@ -29,6 +29,7 @@ open import Data.List.Ext using (∈ˡ-map-filter)
 open import Data.List.Ext.Properties using (_×-cong_)
 open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc; length-++)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
+open import Data.Product.Base using (swap)
 open import Data.Product.Properties using (×-≡,≡←≡)
 open import Data.Product.Properties.Ext using (×-⇔-swap)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm; +-assoc)
@@ -188,12 +189,12 @@ govDepsMatch ⟦ utxoSt , govSt , _ ⟧ˡ =
 
 module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
 pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
+open Equivalence
 
 filterGA : ∀ txid n → filterˢ isGADeposit ❴ GovActionDeposit (txid , n) ❵ ≡ᵉ ❴ GovActionDeposit (txid , n) ❵
 proj₁ (filterGA txid n) {a} x = (proj₂ (from ∈-filter x)) where open Equivalence
 proj₂ (filterGA txid n) {a} x = to ∈-filter (ξ (from ∈-singleton x) , x)
   where
-  open Equivalence
   ξ : a ≡ GovActionDeposit (txid , n) → isGADeposit a
   ξ refl = refl
 
@@ -269,7 +270,6 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     ∅ ∪ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ≈⟨ ∪-identityˡ $ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ⟩
     filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ)) ∎
     where
-    open Equivalence
     cr = ❴ CredentialDeposit c ❵
     filter0 = filter-∅ (λ _ → CredDepIsNotGADep ∘ (from ∈-singleton) ∘ res-dom)
   filterCR (deregdrep c _) deps = ≡ᵉ.sym $ begin
@@ -280,7 +280,6 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     ∅ ∪ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ≈⟨ ∪-identityˡ $ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ⟩
     filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ)) ∎
     where
-    open Equivalence
     cr = ❴ DRepDeposit c ❵
     filter0 = filter-∅ (λ _ → DRepDepIsNotGADep ∘ (from ∈-singleton) ∘ res-dom)
   filterCR (delegate _ _ _ _)  deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
@@ -290,14 +289,13 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   filterCR (ccreghot _ _)      deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
 
   filterCD : (c : DCert) (deps : Deposits) → filterˢ isGADeposit (dom (certDeposit c pp ˢ)) ≡ᵉ ∅
-  filterCD (delegate _ _ _ _)  deps = filter-∅ (λ a a∈ → CredDepIsNotGADep (∈-dom-single≡ a∈))
-  filterCD (regpool _ _)       deps = filter-∅ (λ a a∈ → PoolDepIsNotGADep (∈-dom-single≡ a∈))
-  filterCD (regdrep _ _ _)     deps = filter-∅ (λ a a∈ → DRepDepIsNotGADep (∈-dom-single≡ a∈))
-  filterCD (dereg _ _)         deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) (filter-∅ (λ _ a∈ _ → ∉-∅ a∈))
-  filterCD (retirepool _ _)    deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) (filter-∅ (λ _ a∈ _ → ∉-∅ a∈))
-  filterCD (deregdrep _ _)     deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) (filter-∅ (λ _ a∈ _ → ∉-∅ a∈))
-  filterCD (ccreghot _ _)      deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) (filter-∅ (λ _ a∈ _ → ∉-∅ a∈))
-
+  filterCD (delegate _ _ _ _)  deps = filter-∅ λ _ → CredDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
+  filterCD (regpool _ _)       deps = filter-∅ λ _ → PoolDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
+  filterCD (regdrep _ _ _)     deps = filter-∅ λ _ → DRepDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
+  filterCD (dereg _ _)         deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
+  filterCD (retirepool _ _)    deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
+  filterCD (deregdrep _ _)     deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
+  filterCD (ccreghot _ _)      deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
 
   noGACerts : (cs : List DCert) (deps : Deposits)
     → filterˢ isGADeposit (dom (updateCertDeposits pp cs deps)) ≡ᵉ filterˢ isGADeposit (dom deps)
@@ -510,8 +508,6 @@ module EPOCH-PROPS {eps : EpochState} where
     -- utxo deposits restricted to new form of set used in EPOCH rule
     utxoDeps' : Deposits
     utxoDeps' = utxoDeps ∣ χ' ᶜ
-
-    open Equivalence
 
     χ'≡χ : χ' ≡ᵉ χ
     χ'≡χ = χ'⊆χ , χ⊆χ'
