@@ -21,11 +21,8 @@ import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Axiom.Set
-import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
-import qualified MAlonzo.Code.Class.HasOrder.Core
-import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
@@ -34,13 +31,16 @@ import qualified MAlonzo.Code.Data.Maybe.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Function.Bundles
+import qualified MAlonzo.Code.Interface.HasOrder
 import qualified MAlonzo.Code.Interface.Hashable
+import qualified MAlonzo.Code.Interface.IsCommutativeMonoid
+import qualified MAlonzo.Code.Interface.IsSet
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Crypto
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch
+import qualified MAlonzo.Code.Ledger.Set.Theory
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.DecEq
-import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- _.THash
 d_THash_22 ::
@@ -100,7 +100,7 @@ d_PlutusStructure_118 a0 a1 = ()
 data T_PlutusStructure_118
   = C_PlutusStructure'46'constructor_4253 MAlonzo.Code.Ledger.Conway.Conformance.Crypto.T_HashableSet_36
                                           AgdaAny AgdaAny AgdaAny
-                                          MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
+                                          MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10
                                           MAlonzo.Code.Interface.Hashable.T_Hashable_8
                                           MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                                           MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
@@ -130,7 +130,7 @@ d_T_164 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
+  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10 ->
   MAlonzo.Code.Interface.Hashable.T_Hashable_8 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -193,7 +193,7 @@ d_PlutusV3_212 v0
 -- Ledger.Conway.Conformance.Script.PlutusStructure.ExUnit-CommutativeMonoid
 d_ExUnit'45'CommutativeMonoid_214 ::
   T_PlutusStructure_118 ->
-  MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
+  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10
 d_ExUnit'45'CommutativeMonoid_214 v0
   = case coe v0 of
       C_PlutusStructure'46'constructor_4253 v1 v8 v9 v10 v11 v12 v13 v14 v15 v16 v18 v19 v20 v21 v23 v24 v25
@@ -1016,16 +1016,15 @@ d_'46'extendedlambda0_388 v0 v1 v2 v3 v4 v5
                 (coe
                    MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__138
                    (coe
-                      MAlonzo.Code.Axiom.Set.d__'8712''63'__1602
-                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                      erased
+                      MAlonzo.Code.Axiom.Set.d__'8712''63'__1590
+                      MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10 erased
                       (MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_DecEq'45'THash_26
                          (coe
                             MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_khs_204 (coe v0))))
                    (coe v6)
                    (coe
-                      MAlonzo.Code.Class.IsSet.d_toSet_490
-                      (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_552) v2)))
+                      MAlonzo.Code.Interface.IsSet.d_toSet_492
+                      (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Set_554) v2)))
       C_RequireTimeStart_278 v6
         -> coe
              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
@@ -1039,7 +1038,7 @@ d_'46'extendedlambda0_388 v0 v1 v2 v3 v4 v5
                       (coe
                          MAlonzo.Code.Class.Decidable.Core.du_dec'185'_108
                          (coe
-                            MAlonzo.Code.Class.HasOrder.Core.d_dec'45''8804'_232
+                            MAlonzo.Code.Interface.HasOrder.d_dec'45''8804'_230
                             (MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.d_DecPo'45'Slot_68
                                (coe v1))
                             v6)))
@@ -1059,7 +1058,7 @@ d_'46'extendedlambda0_388 v0 v1 v2 v3 v4 v5
                          (coe
                             (\ v7 ->
                                coe
-                                 MAlonzo.Code.Class.HasOrder.Core.d_dec'45''8804'_232
+                                 MAlonzo.Code.Interface.HasOrder.d_dec'45''8804'_230
                                  (MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.d_DecPo'45'Slot_68
                                     (coe v1))
                                  v7 v6))))
@@ -1391,7 +1390,7 @@ d_DecEq'45'THash_506 v0
 -- Ledger.Conway.Conformance.Script.ScriptStructure._.ExUnit-CommutativeMonoid
 d_ExUnit'45'CommutativeMonoid_508 ::
   T_ScriptStructure_424 ->
-  MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
+  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10
 d_ExUnit'45'CommutativeMonoid_508 v0
   = coe d_ExUnit'45'CommutativeMonoid_214 (coe d_ps_476 (coe v0))
 -- Ledger.Conway.Conformance.Script.ScriptStructure._.ExUnits

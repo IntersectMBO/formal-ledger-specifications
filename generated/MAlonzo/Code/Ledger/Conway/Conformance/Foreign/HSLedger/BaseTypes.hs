@@ -26,7 +26,7 @@ import qualified MAlonzo.Code.Foreign.Convertible
 import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSTypes
-import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
+import qualified MAlonzo.Code.Ledger.Set.Theory
 
 type Coin = Integer
 type ExUnits = (Integer, Integer)
@@ -124,11 +124,10 @@ du_Conv'45'HSSet_52 v0
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.Axiom.Set.du_fromList_428
+              MAlonzo.Code.Axiom.Set.du_fromList_416
               (coe
-                 MAlonzo.Code.Axiom.Set.d_th_1470
-                 (coe
-                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                 MAlonzo.Code.Axiom.Set.d_th_1458
+                 (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
               (coe
                  MAlonzo.Code.Foreign.Convertible.d_from_20
                  (coe

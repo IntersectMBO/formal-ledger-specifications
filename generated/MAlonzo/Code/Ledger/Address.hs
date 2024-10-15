@@ -752,14 +752,14 @@ du_Show'45'Credential_206 v0 v1
             case coe v2 of
               C_KeyHashObj_18 v3
                 -> coe
-                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
+                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
                      (coe ("KeyHashObj" :: Data.Text.Text))
                      (coe
                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
                         (coe MAlonzo.Code.Class.Show.Core.d_show_16 v0 v3))
               C_ScriptObj_20 v3
                 -> coe
-                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
+                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
                      (coe ("ScriptObj" :: Data.Text.Text))
                      (coe
                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
@@ -790,11 +790,11 @@ du_Show'45'RwdAddr_208 v0 v1 v2
       (coe
          (\ v3 ->
             case coe v3 of
-              C_RwdAddr'46'constructor_3193 v4 v5
+              C_RwdAddr'46'constructor_3251 v4 v5
                 -> coe
-                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
+                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
                      (coe
-                        MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
+                        MAlonzo.Code.Data.String.Base.d__'60''43''62'__46
                         (coe ("constructor" :: Data.Text.Text))
                         (coe
                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40

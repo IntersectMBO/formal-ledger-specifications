@@ -56,11 +56,21 @@ library
 -- This will be generated automatically when building with nix
     other-modules:
         MAlonzo.RTE
+        MAlonzo.Code.Interface.HasOrder
+        MAlonzo.Code.Interface.HasSingleton
         MAlonzo.Code.Interface.HasSubtract
+        MAlonzo.Code.Interface.HasEmptySet
         MAlonzo.Code.Interface.Hashable
+        MAlonzo.Code.Interface.IsSet
+        MAlonzo.Code.Interface.HasAdd
+        MAlonzo.Code.Interface.HasOrder.Instance
+        MAlonzo.Code.Interface.HasAdd.Instance
+        MAlonzo.Code.Interface.ToBool
+        MAlonzo.Code.Interface.IsCommutativeMonoid
         MAlonzo.Code.Interface.ComputationalRelation
         MAlonzo.Code.Interface.HasSubtract.Instance
         MAlonzo.Code.Interface.STS
+        MAlonzo.Code.Interface.HasEmptySet.Instances
         MAlonzo.Code.MetaPrelude
         MAlonzo.Code.Tactic.ByEq
         MAlonzo.Code.Tactic.ClauseBuilder
@@ -359,7 +369,6 @@ library
         MAlonzo.Code.Data.List.Extrema.Core
         MAlonzo.Code.Data.List.Ext
         MAlonzo.Code.Data.List.Ext.Properties
-        MAlonzo.Code.Data.List.Ext.Properties2
         MAlonzo.Code.Data.List.Extrema
         MAlonzo.Code.Data.List.Base
         MAlonzo.Code.Data.List.NonEmpty
@@ -380,6 +389,7 @@ library
         MAlonzo.Code.Ledger.Interface.HasCoin
         MAlonzo.Code.Ledger.Prelude.Base
         MAlonzo.Code.Ledger.Set.HashMap
+        MAlonzo.Code.Ledger.Set.Theory
         MAlonzo.Code.Ledger.Prelude
         MAlonzo.Code.Ledger.Conway.Conformance.Crypto
         MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties
@@ -511,11 +521,9 @@ library
         MAlonzo.Code.Function
         MAlonzo.Code.Class.Foldable
         MAlonzo.Code.Class.MonadError
-        MAlonzo.Code.Class.HasOrder
         MAlonzo.Code.Class.Decidable.Core
         MAlonzo.Code.Class.Decidable.Instances
         MAlonzo.Code.Class.DecEq
-        MAlonzo.Code.Class.HasSingleton
         MAlonzo.Code.Class.Monoid.Core
         MAlonzo.Code.Class.Monoid.Instances
         MAlonzo.Code.Class.Applicative
@@ -528,33 +536,22 @@ library
         MAlonzo.Code.Class.Functor
         MAlonzo.Code.Class.Applicative.Core
         MAlonzo.Code.Class.Applicative.Instances
-        MAlonzo.Code.Class.CommutativeMonoid
         MAlonzo.Code.Class.Monad.Core
         MAlonzo.Code.Class.Monad.Instances
-        MAlonzo.Code.Class.HasEmptySet
         MAlonzo.Code.Class.MonadTC.Instances
         MAlonzo.Code.Class.Monad
         MAlonzo.Code.Class.Semigroup
         MAlonzo.Code.Class.Monoid
         MAlonzo.Code.Class.Core
-        MAlonzo.Code.Class.IsSet
-        MAlonzo.Code.Class.HasAdd
         MAlonzo.Code.Class.Functor.Core
         MAlonzo.Code.Class.Functor.Instances
         MAlonzo.Code.Class.MonadError.Instances
-        MAlonzo.Code.Class.HasOrder.Core
-        MAlonzo.Code.Class.HasOrder.Instance
-        MAlonzo.Code.Class.HasAdd.Core
-        MAlonzo.Code.Class.HasAdd.Instance
         MAlonzo.Code.Class.Foldable.Core
         MAlonzo.Code.Class.Foldable.Instances
         MAlonzo.Code.Class.Show
         MAlonzo.Code.Class.MonadTC
-        MAlonzo.Code.Class.ToBool
         MAlonzo.Code.Class.Decidable
         MAlonzo.Code.Class.MonadReader
-        MAlonzo.Code.Class.CommutativeMonoid.Core
-        MAlonzo.Code.Class.CommutativeMonoid.Instances
         MAlonzo.Code.Class.Bifunctor
         MAlonzo.Code.Class.Prelude
         MAlonzo.Code.Class.Traversable.Core
@@ -599,8 +596,6 @@ library
         MAlonzo.Code.Algebra
         MAlonzo.Code.MyDebugOptions
         MAlonzo.Code.PreludeMeta
-        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
-        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.Prelude
         MAlonzo.Code.Prelude
         MAlonzo.Code.Foreign.Haskell.Pair
         MAlonzo.Code.Foreign.Haskell.Coerce
