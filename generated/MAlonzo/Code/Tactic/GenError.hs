@@ -198,8 +198,7 @@ d_genErrors''_36 v0 v1
                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                               (coe
                                                  (MAlonzo.RTE.QName
-                                                    (28 :: Integer)
-                                                    (18014622004808103972 :: Integer)
+                                                    (8 :: Integer) (18014622004808103972 :: Integer)
                                                     "Ledger.Prelude.dec-de-morgan"
                                                     (MAlonzo.RTE.Fixity
                                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))

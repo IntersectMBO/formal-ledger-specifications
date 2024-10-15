@@ -23,14 +23,14 @@ import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Algebra.Bundles
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
+import qualified MAlonzo.Code.Class.HasAdd.Core
+import qualified MAlonzo.Code.Class.HasOrder.Core
+import qualified MAlonzo.Code.Class.HasOrder.Instance
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Function.Base
-import qualified MAlonzo.Code.Interface.HasAdd
-import qualified MAlonzo.Code.Interface.HasOrder
-import qualified MAlonzo.Code.Interface.HasOrder.Instance
 import qualified MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties
 import qualified MAlonzo.Code.Relation.Binary.Structures
 
@@ -51,7 +51,7 @@ data T_EpochStructure_24
   = C_EpochStructure'46'constructor_1287 MAlonzo.Code.Algebra.Bundles.T_Semiring_2280
                                          MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                                          MAlonzo.Code.Class.Show.Core.T_Show_10
-                                         MAlonzo.Code.Interface.HasOrder.T_HasDecPartialOrder_220
+                                         MAlonzo.Code.Class.HasOrder.Core.T_HasDecPartialOrder_222
                                          MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                                          (AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny) AgdaAny
                                          (AgdaAny -> AgdaAny) (Integer -> AgdaAny -> AgdaAny)
@@ -88,7 +88,7 @@ d_Slot_66 = erased
 -- Ledger.Conway.Conformance.Types.Epoch.EpochStructure.DecPo-Slot
 d_DecPo'45'Slot_68 ::
   T_EpochStructure_24 ->
-  MAlonzo.Code.Interface.HasOrder.T_HasDecPartialOrder_220
+  MAlonzo.Code.Class.HasOrder.Core.T_HasDecPartialOrder_222
 d_DecPo'45'Slot_68 v0
   = case coe v0 of
       C_EpochStructure'46'constructor_1287 v1 v3 v4 v5 v6 v7 v8 v9 v10 v11
@@ -152,19 +152,19 @@ d_'43''7497''8801''43''7497'''_88 = erased
 -- Ledger.Conway.Conformance.Types.Epoch.EpochStructure.preoEpoch
 d_preoEpoch_90 ::
   T_EpochStructure_24 ->
-  MAlonzo.Code.Interface.HasOrder.T_HasPreorder_18
+  MAlonzo.Code.Class.HasOrder.Core.T_HasPreorder_20
 d_preoEpoch_90 v0
   = coe
-      MAlonzo.Code.Interface.HasOrder.du_hasPreorderFromStrictPartialOrder_438
+      MAlonzo.Code.Class.HasOrder.Core.du_hasPreorderFromStrictPartialOrder_440
       (coe
          MAlonzo.Code.Relation.Binary.Structures.C_IsStrictPartialOrder'46'constructor_14045
          (coe
             MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_isEquivalence_396)
          (\ v1 v2 v3 ->
             coe
-              MAlonzo.Code.Interface.HasOrder.du_'60''45'trans_192
+              MAlonzo.Code.Class.HasOrder.Core.du_'60''45'trans_194
               (coe
-                 MAlonzo.Code.Interface.HasOrder.d_hasPartialOrder_228
+                 MAlonzo.Code.Class.HasOrder.Core.d_hasPartialOrder_230
                  (coe d_DecPo'45'Slot_68 (coe v0)))
               (coe
                  MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
@@ -190,19 +190,19 @@ d_ℕtoEpoch_244 v0 v1
            coe (coe d_suc'7497'_78 v0 (d_ℕtoEpoch_244 (coe v0) (coe v2)))
 -- Ledger.Conway.Conformance.Types.Epoch.EpochStructure.addSlot
 d_addSlot_248 ::
-  T_EpochStructure_24 -> MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
+  T_EpochStructure_24 -> MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
 d_addSlot_248 v0
   = coe
-      MAlonzo.Code.Interface.HasAdd.C_HasAdd'46'constructor_7
+      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_7
       (coe
          MAlonzo.Code.Algebra.Bundles.d__'43'__2304
          (coe d_Slot'691'_58 (coe v0)))
 -- Ledger.Conway.Conformance.Types.Epoch.EpochStructure.addEpoch
 d_addEpoch_250 ::
-  T_EpochStructure_24 -> MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
+  T_EpochStructure_24 -> MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
 d_addEpoch_250 v0
   = coe
-      MAlonzo.Code.Interface.HasAdd.C_HasAdd'46'constructor_7
+      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_7
       (coe
          (\ v1 v2 ->
             coe
@@ -296,7 +296,7 @@ d_ℕEpochStructure_306 v0
       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
-      MAlonzo.Code.Interface.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
+      MAlonzo.Code.Class.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       (\ v1 ->
          coe
