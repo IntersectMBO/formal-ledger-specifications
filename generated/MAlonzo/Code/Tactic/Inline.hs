@@ -30,13 +30,13 @@ import qualified MAlonzo.Code.Class.Monad.Core
 import qualified MAlonzo.Code.Class.Monad.Instances
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Class.Show.Instances
+import qualified MAlonzo.Code.Class.ToBool
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.Ext
 import qualified MAlonzo.Code.Data.Maybe.Base
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.String.Base
-import qualified MAlonzo.Code.Interface.ToBool
 import qualified MAlonzo.Code.Level
 import qualified MAlonzo.Code.Reflection.AST.Argument
 import qualified MAlonzo.Code.Reflection.AST.Name
@@ -93,8 +93,8 @@ d_'36'inline_30 v0 v1 v2
                         (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
                         (coe ())
                         (coe
-                           MAlonzo.Code.Interface.ToBool.du_if_then_else__46
-                           (coe MAlonzo.Code.Interface.ToBool.d_ToBool'45'Bool_94) (coe v0)
+                           MAlonzo.Code.Class.ToBool.du_if_then_else__46
+                           (coe MAlonzo.Code.Class.ToBool.d_ToBool'45'Bool_94) (coe v0)
                            (coe
                               MAlonzo.Code.Level.C_lift_20
                               (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
@@ -481,8 +481,8 @@ d_'46'extendedlambda0_94 v0 v1 v2 v3 v4 v5 v6 v7
              (coe d_go'8727'_78 v0 v1 v2 v3 v4 v5 v6 v9)
       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 v8 v9
         -> coe
-             MAlonzo.Code.Interface.ToBool.du_if_then_else__46
-             (coe MAlonzo.Code.Interface.ToBool.d_ToBool'45'Bool_94)
+             MAlonzo.Code.Class.ToBool.du_if_then_else__46
+             (coe MAlonzo.Code.Class.ToBool.d_ToBool'45'Bool_94)
              (coe
                 MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
                 (coe
