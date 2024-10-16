@@ -46,6 +46,7 @@
 - Fix that `RATIFY` wasn't total
 - Properly implement treasury withdrawals
 - Remove unused hot credentials at the epoch boundary
+- Implement proper vote counting for SPOs
 - Fix some protocol parameter names
 - Check that `NewCommittee` actions are sensible when they are proposed
 - Fix: treasury withdrawals were included in the wrong map

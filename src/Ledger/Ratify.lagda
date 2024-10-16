@@ -202,6 +202,7 @@ record RatifyEnv : Type where
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Coin
+    dState        : DState
 
 record RatifyState : Type where
 \end{code}
@@ -251,7 +252,7 @@ actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
 actualVotes Γ pparams cc ga votes
   =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes ga
-  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes ga
+  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes (DState.voteDelegs (RatifyEnv.dState Γ)) ga
   where
 \end{code}
 \begin{code}[hide]
@@ -306,13 +307,33 @@ actualVotes Γ pparams cc ga votes
   actualDRepVotes  =   roleVotes DRep
                    ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
-  actualSPOVotes : GovAction → VDeleg ⇀ Vote
-  actualSPOVotes a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
+  actualSPOVotes : (Credential ⇀ VDeleg) → GovAction → VDeleg ⇀ Vote
+  actualSPOVotes voteDelegs a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
+\end{code}
+\begin{code}[hide]
     where
+    open VDeleg
+\end{code}
+\begin{code}
     SPODefaultVote : GovAction → VDeleg → Vote
-    SPODefaultVote (TriggerHF _)  _                       = Vote.no
-    SPODefaultVote NoConfidence   VDeleg.noConfidenceRep  = Vote.yes
-    SPODefaultVote _              VDeleg.abstainRep       = Vote.abstain
+    SPODefaultVote (TriggerHF _) _ = Vote.no
+    SPODefaultVote NoConfidence (credVoter SPO c) = case lookupᵐ? voteDelegs c of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+        (just noConfidenceRep)  → Vote.yes
+        (just abstainRep)       → Vote.abstain
+        _                       → Vote.no
+    SPODefaultVote _ (credVoter SPO c) = case lookupᵐ? voteDelegs c of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+        (just abstainRep)  → Vote.abstain
+        _                  → Vote.no
     SPODefaultVote _              _                       = Vote.no
 \end{code}
 \end{AgdaMultiCode}
@@ -364,9 +385,9 @@ More specifically, the agreed upon specification is the following:
 except under the following circumstances:
   \begin{itemize}
   \item if the SPO has delegated to an \texttt{AlwaysNoConfidence} DRep, then their default vote is
-    \yes for \NoConfidence proposals;
+    \yes for \NoConfidence proposals and \no for other proposals;
   \item if the SPO has delegated to an \texttt{AlwaysAbstain} DRep, then their default vote is
-    \abstain.
+    \abstain for all proposals.
   \end{itemize}
 \end{itemize}
 
