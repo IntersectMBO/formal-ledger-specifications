@@ -130,8 +130,12 @@ updating this map, which is split into \updateCertDeposits and
 \updateProposalDeposits, responsible for certificates and proposals
 respectively. Both of these functions iterate over the relevant fields
 of the transaction body and insert or remove deposits depending on the
-information seen. Note that some deposits can only be refunded at the
-epoch boundary and are not removed by these functions.
+information seen.  More precisely, \updateCertDeposits is responsible
+for updating the deposits in the UTxO state based on the certificates
+in the transaction, while \updateProposalDeposits is responsible for
+updating the deposits in the UTxO state based on the governance
+proposals in the transaction.  Note that some deposits can only be
+refunded at the epoch boundary and are not removed by these functions.
 
 There are two equivalent ways to introduce this tracking of the
 deposits. One option would be to populate the \deposits field of
@@ -205,9 +209,9 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{NoConway}
 \begin{code}
   refScriptsSize : UTxO → Tx → ℕ
-  refScriptsSize utxo tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+  refScriptsSize ux tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx ux)) ] x
 
-  minfee : (pp : PParams) → UTxO → Tx → Coin
+  minfee : PParams → UTxO → Tx → Coin
   minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
                      + txscriptfee (pp .prices) (totExUnits tx)
                      + scriptsCost pp (refScriptsSize utxo tx)
@@ -230,7 +234,10 @@ certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
 certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
 certRefund _                = ∅
 
-data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set where
+data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set
+\end{code}
+\begin{code}[hide]
+  where
   []         : ValidCertDeposits pp deps []
   delegate   : ∀ {c del kh v certs}
              → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , v ❵) certs
@@ -279,6 +286,8 @@ private
 instance
   Dec-ValidCertDeposits : ∀ {pp deps certs} → ValidCertDeposits pp deps certs ⁇
   Dec-ValidCertDeposits = ⁇ (validCertDeposits? _ _)
+\end{code}
+\begin{code}
 
 -- Assumes ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) certs.
 updateCertDeposits  : PParams → List DCert → Deposits → Deposits
@@ -434,6 +443,14 @@ correctness proofs. We then add the absolute value of \depositsChange
 to \consumed or \produced depending on its sign. This is done via
 \negPart and \posPart, which satisfy the key property that their
 difference is the identity function.
+
+Figures~\ref{fig:functions:utxo} also shows the signature of an inductive type
+called \ValidCertDeposits.  Inhabitants of this type are constructed in one of eight
+ways, corresponding to seven certificate types plus one for an empty list of
+certificates.  Suffice it to say that \ValidCertDeposits is used to check the
+validity of the deposits in a transaction so that the function \updateCertDeposits
+can correctly register and deregister deposits in the UTxO state based on the
+certificates in the transaction.
 
 \begin{figure*}[htbp]
 \begin{code}[hide]
