@@ -21,8 +21,11 @@ import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.FromNat
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Algebra.Bundles
+import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Class.HasAdd.Core
+import qualified MAlonzo.Code.Class.HasOrder.Core
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Data.Irrelevant
@@ -33,10 +36,7 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Rational.Show
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
-import qualified MAlonzo.Code.Interface.HasAdd
-import qualified MAlonzo.Code.Interface.HasOrder
 import qualified MAlonzo.Code.Interface.Hashable
-import qualified MAlonzo.Code.Interface.IsCommutativeMonoid
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Address
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Crypto
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.PParams
@@ -289,7 +289,7 @@ d_DecEq'45'Slot_620 v0
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.DecPo-Slot
 d_DecPo'45'Slot_622 ::
   T_GovStructure_10 ->
-  MAlonzo.Code.Interface.HasOrder.T_HasDecPartialOrder_220
+  MAlonzo.Code.Class.HasOrder.Core.T_HasDecPartialOrder_222
 d_DecPo'45'Slot_622 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.d_DecPo'45'Slot_68
@@ -329,14 +329,14 @@ d_StabilityWindow_634 v0
       (coe d_epochStructure_608 (coe v0))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.addEpoch
 d_addEpoch_636 ::
-  T_GovStructure_10 -> MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
+  T_GovStructure_10 -> MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
 d_addEpoch_636 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.d_addEpoch_250
       (coe d_epochStructure_608 (coe v0))
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.addSlot
 d_addSlot_638 ::
-  T_GovStructure_10 -> MAlonzo.Code.Interface.HasAdd.T_HasAdd_6
+  T_GovStructure_10 -> MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
 d_addSlot_638 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.d_addSlot_248
@@ -356,7 +356,7 @@ d_firstSlot_642 v0
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.preoEpoch
 d_preoEpoch_644 ::
   T_GovStructure_10 ->
-  MAlonzo.Code.Interface.HasOrder.T_HasPreorder_18
+  MAlonzo.Code.Class.HasOrder.Core.T_HasPreorder_20
 d_preoEpoch_644 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.d_preoEpoch_90
@@ -528,7 +528,7 @@ d_DecEq'45'THash_684 v0
 -- Ledger.Conway.Conformance.Types.GovStructure.GovStructure._.ExUnit-CommutativeMonoid
 d_ExUnit'45'CommutativeMonoid_686 ::
   T_GovStructure_10 ->
-  MAlonzo.Code.Interface.IsCommutativeMonoid.T_IsCommutativeMonoid''_10
+  MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
 d_ExUnit'45'CommutativeMonoid_686 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Script.d_ExUnit'45'CommutativeMonoid_214

@@ -21,18 +21,18 @@ import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Class.DecEq.Core
+import qualified MAlonzo.Code.Class.HasOrder.Core
+import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Sum.Base
-import qualified MAlonzo.Code.Interface.HasOrder
-import qualified MAlonzo.Code.Interface.IsSet
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Address
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure
-import qualified MAlonzo.Code.Ledger.Set.Theory
+import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- _._+ᵉ_
 d__'43''7497'__12 ::
@@ -122,7 +122,7 @@ d_applyUpdate_276 v0
 -- _.preoEpoch
 d_preoEpoch_352 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.HasOrder.T_HasPreorder_18
+  MAlonzo.Code.Class.HasOrder.Core.T_HasPreorder_20
 d_preoEpoch_352 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.d_preoEpoch_90
@@ -501,18 +501,20 @@ du_ccCreds_878 v0
         -> case coe v1 of
              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v3
                -> coe
-                    MAlonzo.Code.Interface.IsSet.du_dom_550
+                    MAlonzo.Code.Class.IsSet.du_dom_548
                     (coe
-                       MAlonzo.Code.Axiom.Set.d_th_1458
-                       (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
-                    (coe MAlonzo.Code.Interface.IsSet.du_IsSet'45'Map_558)
+                       MAlonzo.Code.Axiom.Set.d_th_1470
+                       (coe
+                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                    (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                     (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
              MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                -> coe
-                    MAlonzo.Code.Axiom.Set.du_'8709'_430
+                    MAlonzo.Code.Axiom.Set.du_'8709'_442
                     (coe
-                       MAlonzo.Code.Axiom.Set.d_th_1458
-                       (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
+                       MAlonzo.Code.Axiom.Set.d_th_1470
+                       (coe
+                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Enact.getHash
