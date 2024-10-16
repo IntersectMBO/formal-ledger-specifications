@@ -5,13 +5,13 @@ module Tactic.DeriveComp where
 open import Prelude hiding (Type)
 open import PreludeMeta hiding (TC) renaming (TCI to TC)
 open import MetaPrelude using (zipWithIndex)
+open import Class.HasAdd
 open import Class.Traversable
 
 import Data.List.NonEmpty as NE
 open import Data.Maybe.Properties using (just-injective)
 
 open import Interface.ComputationalRelation
-open import Interface.HasAdd; open import Interface.HasAdd.Instance
 open import Interface.HasSubtract; open import Interface.HasSubtract.Instance
 
 open import Reflection.Ext using (extendContextTel′)

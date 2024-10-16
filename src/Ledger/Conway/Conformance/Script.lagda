@@ -2,7 +2,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra using (CommutativeMonoid)
 open import Algebra.Morphism
 open import Data.List.Relation.Unary.All using (All; []; _∷_; all?; uncons)
 open import Data.List.Relation.Unary.Any
@@ -33,7 +32,7 @@ record PlutusStructure : Type₁ where
   field Dataʰ : HashableSet
         Language PlutusScript CostModel Prices LangDepView ExUnits : Type
         PlutusV1 PlutusV2 PlutusV3   : Language
-        ⦃ ExUnit-CommutativeMonoid ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ ExUnits
+        ⦃ ExUnit-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ ExUnits
         ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
         ⦃ DecEq-Language           ⦄ : DecEq Language
         ⦃ DecEq-CostModel          ⦄ : DecEq CostModel

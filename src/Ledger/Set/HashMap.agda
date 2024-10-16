@@ -3,7 +3,7 @@
 open import Prelude
 open import Data.Product.Ext
 open import Interface.Hashable
-open import Ledger.Set.Theory
+open import abstract-set-theory.FiniteSetTheory
 
 module Ledger.Set.HashMap {A B : Type} ⦃ _ : Hashable A B ⦄ ⦃ _ : DecEq B ⦄ (X : ℙ A) where
 
