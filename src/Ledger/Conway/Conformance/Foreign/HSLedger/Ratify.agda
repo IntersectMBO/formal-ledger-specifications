@@ -2,6 +2,7 @@ module Ledger.Conway.Conformance.Foreign.HSLedger.Ratify where
 
 open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
 open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Conformance.Foreign.HSLedger.Certs
 open import Ledger.Conway.Conformance.Foreign.HSLedger.Enact
 open import Ledger.Conway.Conformance.Foreign.HSLedger.Gov
 

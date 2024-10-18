@@ -202,6 +202,9 @@ record RatifyEnv : Type where
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Coin
+    pools         : KeyHash ⇀ PoolParams
+    delegatees    : Credential ⇀ VDeleg
+    stakeDelegs   : Credential ⇀ KeyHash
 
 record RatifyState : Type where
 \end{code}
@@ -241,11 +244,11 @@ defines some types and functions used in the RATIFY transition
 system. \CCData is simply an alias to define some functions more
 easily.
 
+\begin{figure*}[h!]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 open StakeDistrs
 \end{code}
-\begin{figure*}[h!]
-\begin{AgdaMultiCode}
 \begin{code}
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
@@ -255,8 +258,7 @@ actualVotes Γ pparams cc ga votes
   where
 \end{code}
 \begin{code}[hide]
-  open RatifyEnv Γ
-  open PParams pparams
+  open RatifyEnv Γ; open PParams pparams
 \end{code}
 \begin{code}
   roleVotes : GovRole → VDeleg ⇀ Vote
@@ -272,18 +274,35 @@ actualVotes Γ pparams cc ga votes
     λ where
 \end{code}
 \begin{code}
-      (true , just (just c'))  → just c'
-      _                        → nothing -- expired, no hot key or resigned
-
-  actualCCVote : Credential → Epoch → Vote
-  actualCCVote c e = case getCCHotCred (c , e) of
+    (true , just (just c'))  → just c'
+    _                        → nothing -- expired, no hot key or resigned
 \end{code}
 \begin{code}[hide]
-    λ where
+  getPoolParams : Credential → Maybe PoolParams
+  getPoolParams c = case lookupᵐ? stakeDelegs c of λ where  nothing → nothing
+                                                            (just kh)  → lookupᵐ? pools kh
 \end{code}
 \begin{code}
-      (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
-      _          → Vote.abstain
+
+  SPODefaultVote : GovAction → VDeleg → Vote
+  SPODefaultVote (TriggerHF _) _ = Vote.no
+  SPODefaultVote NoConfidence (credVoter SPO c) = case getPoolParams c of λ where
+    nothing → Vote.no
+    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
+      (just noConfidenceRep)  → Vote.yes
+      (just abstainRep)       → Vote.abstain
+      _                       → Vote.no
+  SPODefaultVote _ (credVoter SPO c) = case getPoolParams c of λ where
+    nothing → Vote.no
+    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
+      (just abstainRep)  → Vote.abstain
+      _                  → Vote.no
+  SPODefaultVote _ _ = Vote.no
+
+  actualCCVote : Credential → Epoch → Vote
+  actualCCVote c e = case getCCHotCred (c , e) of λ where
+    (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+    _          → Vote.abstain
 
   actualCCVotes : Credential ⇀ Vote
   actualCCVotes = case cc of
@@ -292,10 +311,10 @@ actualVotes Γ pparams cc ga votes
     λ where
 \end{code}
 \begin{code}
-      nothing         → ∅
-      (just (m , q))  → if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
-                          then mapWithKey actualCCVote m
-                          else constMap (dom m) Vote.no
+    nothing         →  ∅
+    (just (m , q))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
+                       then mapWithKey actualCCVote m
+                       else constMap (dom m) Vote.no
 
   actualPDRepVotes : GovAction → VDeleg ⇀ Vote
   actualPDRepVotes NoConfidence
@@ -307,8 +326,7 @@ actualVotes Γ pparams cc ga votes
                    ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
-  actualSPOVotes (TriggerHF _)  = roleVotes SPO ∪ˡ constMap spos Vote.no
-  actualSPOVotes _              = roleVotes SPO ∪ˡ constMap spos Vote.abstain
+  actualSPOVotes a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting}
@@ -343,6 +361,26 @@ DReps, regular DReps and SPOs.
 
 \item \actualSPOVotes adds a default vote to all SPOs who didn't vote,
   with the default depending on the action.
+\end{itemize}
+
+Let us discuss the last item above---the way SPO votes are counted---as the ledger
+specification's handling of this has evolved in response to community feedback.
+Previously, if an SPO did not vote, then they would be counted as having voted
+\abstain by default.  Members of the SPO community found this behavior counterintuitive
+and requested that non-voters be assigned a \no vote by default, with the caveat that
+an SPO could change their default setting by delegating their stake to an
+\texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
+More specifically, the agreed upon specification is the following:
+\begin{itemize}
+\item \textit{during the bootstrap period}: if an SPO didn't vote, then their vote is counted as \no;
+\item \textit{after the bootstrap period}: if an SPO didn't vote, then their vote is counted as \no
+except under the following circumstances:
+  \begin{itemize}
+  \item if the SPO has delegated to an \texttt{AlwaysNoConfidence} DRep, then their default vote is
+    \yes for \NoConfidence proposals and \no for other proposals;
+  \item if the SPO has delegated to an \texttt{AlwaysAbstain} DRep, then their default vote is
+    \abstain for all proposals.
+  \end{itemize}
 \end{itemize}
 
 \begin{figure*}[h!]

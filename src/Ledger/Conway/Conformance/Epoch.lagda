@@ -245,10 +245,16 @@ its results by carrying out each of the following tasks.
       acnt' = record acnt
         { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
     in
-    record { currentEpoch = e
-           ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                          (utxoSt' .deposits) (voteDelegs dState)
-           ; treasury = acnt .treasury ; GState gState }
+    record
+     { stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt' (utxoSt' .deposits) (voteDelegs dState)
+     ; currentEpoch = e
+     ; dreps = gState .dreps
+     ; ccHotKeys = gState .ccHotKeys
+     ; treasury = acnt .treasury
+     ; pools = pState .pools
+     ; delegatees = dState .voteDelegs
+     ; stakeDelegs = dState .stakeDelegs
+     }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
