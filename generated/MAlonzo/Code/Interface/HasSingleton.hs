@@ -56,7 +56,7 @@ du_HasSingletonSet'45'Map_322 v0
   = coe
       C_HasSingleton'46'constructor_1131
       (coe
-         MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_736 (coe v0))
+         MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_738 (coe v0))
 -- Interface.HasSingleton._.❴_❵
 d_'10100'_'10101'_326 :: T_HasSingleton_304 -> AgdaAny -> AgdaAny
 d_'10100'_'10101'_326 v0 = coe d_'10100'_'10101'_312 (coe v0)

@@ -47,4 +47,4 @@ du_HasEmptySet'45'Map_310 ::
 du_HasEmptySet'45'Map_310 v0
   = coe
       MAlonzo.Code.Interface.HasEmptySet.C_HasEmptySet'46'constructor_3
-      (coe MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_568 (coe v0))
+      (coe MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_570 (coe v0))

@@ -29,7 +29,7 @@ import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Foreign.Haskell.Coerce
 import qualified MAlonzo.Code.Foreign.HaskellTypes
-import qualified MAlonzo.Code.Ledger.Set.Theory
+import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- Foreign.Convertible.Convertible
 d_Convertible_8 a0 a1 = ()
@@ -238,10 +238,11 @@ du_Convertible'45'FinSet_102 v0
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.Axiom.Set.du_fromList_416
+              MAlonzo.Code.Axiom.Set.du_fromList_428
               (coe
-                 MAlonzo.Code.Axiom.Set.d_th_1458
-                 (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
+                 MAlonzo.Code.Axiom.Set.d_th_1470
+                 (coe
+                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
               (coe
                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
@@ -273,10 +274,11 @@ du_Convertible'45'Map_114 v0 v1 v2
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_572
+              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_582
               (coe
-                 MAlonzo.Code.Axiom.Set.d_th_1458
-                 (coe MAlonzo.Code.Ledger.Set.Theory.d_List'45'Model'7496'_10))
+                 MAlonzo.Code.Axiom.Set.d_th_1470
+                 (coe
+                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
               (coe v0)
               (coe
                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
