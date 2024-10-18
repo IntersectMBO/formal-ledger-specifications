@@ -130,11 +130,7 @@ updating this map, which is split into \updateCertDeposits and
 \updateProposalDeposits, responsible for certificates and proposals
 respectively. Both of these functions iterate over the relevant fields
 of the transaction body and insert or remove deposits depending on the
-information seen.  More precisely, \updateCertDeposits is responsible
-for updating the deposits in the UTxO state based on the certificates
-in the transaction, while \updateProposalDeposits is responsible for
-updating the deposits in the UTxO state based on the governance
-proposals in the transaction.  Note that some deposits can only be
+information seen.  Note that some deposits can only be
 refunded at the epoch boundary and are not removed by these functions.
 
 There are two equivalent ways to introduce this tracking of the
@@ -209,7 +205,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{NoConway}
 \begin{code}
   refScriptsSize : UTxO → Tx → ℕ
-  refScriptsSize ux tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx ux)) ] x
+  refScriptsSize utxo tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
 
   minfee : PParams → UTxO → Tx → Coin
   minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
@@ -289,7 +285,6 @@ instance
 \end{code}
 \begin{code}
 
--- Assumes ValidCertDeposits (mapˢ proj₁ (deposits ˢ)) certs.
 updateCertDeposits  : PParams → List DCert → Deposits → Deposits
 updateCertDeposits pp [] deposits = deposits
 updateCertDeposits pp (delegate c vd khs v ∷ certs) deposits
@@ -444,13 +439,12 @@ to \consumed or \produced depending on its sign. This is done via
 \negPart and \posPart, which satisfy the key property that their
 difference is the identity function.
 
-Figures~\ref{fig:functions:utxo} also shows the signature of an inductive type
-called \ValidCertDeposits.  Inhabitants of this type are constructed in one of eight
-ways, corresponding to seven certificate types plus one for an empty list of
-certificates.  Suffice it to say that \ValidCertDeposits is used to check the
-validity of the deposits in a transaction so that the function \updateCertDeposits
-can correctly register and deregister deposits in the UTxO state based on the
-certificates in the transaction.
+Figures~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
+Inhabitants of this type are constructed in one of eight ways, corresponding to
+seven certificate types plus one for an empty list of certificates.  Suffice it to
+say that \ValidCertDeposits is used to check the validity of the deposits in a
+transaction so that the function \updateCertDeposits can correctly register and
+deregister deposits in the UTxO state based on the certificates in the transaction.
 
 \begin{figure*}[htbp]
 \begin{code}[hide]
