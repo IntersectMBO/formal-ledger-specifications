@@ -78,7 +78,7 @@ cwitness (ccreghot c _)      = c
 record CertEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ᶜ
+  constructor ⟦_,_,_,_⟧ᶜ
   field
 \end{code}
 \begin{code}
@@ -86,7 +86,6 @@ record CertEnv : Type where
     pp        : PParams
     votes     : List GovVote
     wdrls     : RwdAddr ⇀ Coin
-    deposits  : Deposits
 
 record DState : Type where
 \end{code}
@@ -139,13 +138,12 @@ record CertState : Type where
 record DelegEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ᵈᵉ
+  constructor ⟦_,_⟧ᵈᵉ
   field
 \end{code}
 \begin{code}
     pparams  : PParams
     pools    : KeyHash ⇀ PoolParams
-    deposits : Deposits
 
 GovCertEnv  = CertEnv
 PoolEnv     = PParams
@@ -321,15 +319,14 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , deps ⟧ᵈᵉ ⊢
+      ⟦ pp , pools ⟧ᵈᵉ ⊢
         ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
         ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
-    ∙ (CredentialDeposit c , d) ∈ deps
       ────────────────────────────────
-      ⟦ pp , pools , deps ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
+      ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
                           ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 \end{code}
 \end{AgdaSuppressSpace}
@@ -369,14 +366,13 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
                                   ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
-    ∙ (CredentialDeposit c , d) ∈ deps
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
@@ -409,14 +405,14 @@ data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
 \begin{code}
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
@@ -439,7 +435,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps ⟧ᶜ ⊢ ⟦
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦
         ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
         ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ

@@ -68,9 +68,9 @@ instance
       ... | no _           | yes _ = refl
       ... | no _           | no ¬p = case ¬p p of λ ()
       completeness _ (Scripts-No p) with H-Yes? | H-No?
-      ... | yes (_ , refl) | _     = case proj₂ p of λ ()
-      ... | no _           | yes _ = refl
-      ... | no _           | no ¬p = case ¬p p of λ ()
+      ... | yes (_ , _ , refl) | _     = case proj₂ p of λ ()
+      ... | no _               | yes _ = refl
+      ... | no _               | no ¬p = case ¬p p of λ ()
 
 instance
   Computational-UTXO' : Computational _⊢_⇀⦇_,UTXO⦈_ String
@@ -578,7 +578,7 @@ then
 \end{code}
 \begin{code}[hide]
 pov {deposits' = deposits'} h'
-    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , valid))) =
+    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid))) =
     DepositHelpers.pov-scripts step h' refl valid
 
 pov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid))) =
@@ -621,30 +621,9 @@ coin∅ = begin
 getCoin-singleton : ((dp , c) : DepositPurpose × Coin) → indexedSumᵛ' id ❴ (dp , c) ❵ ≡ c
 getCoin-singleton _ = indexedSum-singleton' {A = DepositPurpose × Coin} {f = proj₂} (finiteness _)
 
-module _
-  -- ASSUMPTION --
-  {- 1 -} {gc-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂}
-  {- 2 -} {getCoin-⊆ : (d d' : DepositPurpose ⇀ Coin) → d ˢ ⊆ d' ˢ → getCoin d ≤ getCoin d'}
+module _ -- ASSUMPTION --
+         (gc-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
   where
-  getCoin∪⁺∅≡id : ∀ {d} → getCoin d ≡ getCoin (d ∪⁺ ∅ᵐ)
-  getCoin∪⁺∅≡id {d} = begin
-    getCoin d
-      ≡⟨ sym (+-identityʳ (getCoin d)) ⟩
-    getCoin d + 0
-      ≡⟨ cong (getCoin d +_) (sym coin∅) ⟩
-    getCoin d + getCoin{A = DepositPurpose ⇀ Coin} ∅
-      ≡⟨ sym (gc-hom d ∅) ⟩
-    getCoin (d ∪⁺ ∅ᵐ)
-      ∎
-    where open Prelude.≡-Reasoning
-
-  getCoin∣∅≡id : {d : DepositPurpose ⇀ Coin} → getCoin d ≡ getCoin (d ∣ ∅ ᶜ)
-  getCoin∣∅≡id {d} = ≤-antisym (getCoin-⊆ d (d ∣ ∅ ᶜ) $ proj₁ (swap $ resᵐ-∅ᶜ {M = d}))
-                        (getCoin-⊆ (d ∣ ∅ ᶜ) d $ proj₂ (swap $ resᵐ-∅ᶜ {M = d}))
-
-  getCoin∪⁺∅∣∅id : {d : DepositPurpose ⇀ Coin} → getCoin d ≡ getCoin ((d ∪⁺ ∅) ∣ ∅ ᶜ)
-  getCoin∪⁺∅∣∅id {d} = trans getCoin∪⁺∅≡id (getCoin∣∅≡id {d ∪⁺ ∅})
-
   ∪⁺singleton≡ : {deps : DepositPurpose ⇀ Coin} {(dp , c) : DepositPurpose × Coin}
                  → getCoin (deps ∪⁺ ❴ (dp , c) ❵ᵐ) ≡ getCoin deps + c
   ∪⁺singleton≡ {deps} {(dp , c)} = begin
@@ -684,23 +663,24 @@ module _
 
   ≤certDeps  :  (certs : List DCert)
                 {d : DepositPurpose ⇀ Coin} {(dp , c) : DepositPurpose × Coin}
-             →  getCoin d ≤ getCoin ((d ∪⁺ ❴ (dp , c) ❵) ∣ ∅ ᶜ )
+             →  getCoin d ≤ getCoin (d ∪⁺ ❴ (dp , c) ❵)
 
   ≤certDeps certs {d} = begin
     getCoin d                      ≤⟨ m≤m+n (getCoin d) _ ⟩
     getCoin d + _                  ≡⟨ sym ∪⁺singleton≡ ⟩
-    getCoin (d ∪⁺ ❴ _ ❵)           ≡⟨ getCoin∣∅≡id  {d ∪⁺ ❴ _ ❵} ⟩
-    getCoin ((d ∪⁺ ❴ _ ❵) ∣ ∅ ᶜ )  ∎
+    getCoin (d ∪⁺ ❴ _ ❵)           ∎
     where open ≤-Reasoning
 
   ≤updateCertDeps : (cs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
-    → noRefundCert cs → getCoin deposits ≤ getCoin (updateCertDeposits pp cs deposits)
+    → noRefundCert cs
+    → getCoin deposits ≤ getCoin (updateCertDeposits pp cs deposits)
   ≤updateCertDeps [] nrf = ≤-reflexive refl
-  ≤updateCertDeps (delegate _ _ _ _ ∷ cs)  (_ All.∷ nrf) = ≤-trans (≤updateCertDeps cs nrf) (≤certDeps cs)
-  ≤updateCertDeps (regpool _ _ ∷ cs)       (_ All.∷ nrf) = ≤-trans (≤updateCertDeps cs nrf) (≤certDeps cs)
-  ≤updateCertDeps (retirepool _ _ ∷ cs)    (_ All.∷ nrf) = ≤-trans (≤updateCertDeps cs nrf) (≤-reflexive getCoin∪⁺∅∣∅id)
-  ≤updateCertDeps (regdrep _ _ _ ∷ cs)     (_ All.∷ nrf) = ≤-trans (≤updateCertDeps cs nrf) (≤certDeps cs)
-  ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤-trans (≤updateCertDeps cs nrf) (≤-reflexive getCoin∪⁺∅∣∅id)
+  ≤updateCertDeps (delegate c _ _ v ∷ cs) {pp} {deposits} (_ All.∷ nrf) =
+    ≤-trans (≤certDeps cs) (≤updateCertDeps cs {pp} {deposits ∪⁺ ❴ CredentialDeposit c , v ❵} nrf)
+  ≤updateCertDeps (regpool _ _ ∷ cs)       (_ All.∷ nrf) = ≤-trans (≤certDeps cs) (≤updateCertDeps cs nrf)
+  ≤updateCertDeps (retirepool _ _ ∷ cs)    (_ All.∷ nrf) = ≤updateCertDeps cs nrf
+  ≤updateCertDeps (regdrep _ _ _ ∷ cs)     (_ All.∷ nrf) = ≤-trans (≤certDeps cs) (≤updateCertDeps cs nrf)
+  ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤updateCertDeps cs nrf
 
   -- Main Theorem: General Minimum Spending Condition --
   gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
