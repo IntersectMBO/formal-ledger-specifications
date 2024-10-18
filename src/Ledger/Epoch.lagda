@@ -263,7 +263,7 @@ its results by carrying out each of the following tasks.
      ; dreps = gState .dreps
      ; ccHotKeys = gState .ccHotKeys
      ; treasury = acnt .treasury
-     ; dState = dState
+     ; certState = ⟦ dState , pState , gState ⟧ᶜˢ
      }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'

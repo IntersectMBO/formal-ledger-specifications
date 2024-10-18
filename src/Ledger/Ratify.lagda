@@ -202,7 +202,7 @@ record RatifyEnv : Type where
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Coin
-    dState        : DState
+    certState     : CertState
 
 record RatifyState : Type where
 \end{code}
@@ -252,11 +252,11 @@ actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
 actualVotes Γ pparams cc ga votes
   =  mapKeys (credVoter CC) actualCCVotes ∪ˡ actualPDRepVotes ga
-  ∪ˡ actualDRepVotes ∪ˡ actualSPOVotes voteDelegs ga
+  ∪ˡ actualDRepVotes ∪ˡ actualSPOVotes ga
   where
 \end{code}
 \begin{code}[hide]
-  open RatifyEnv Γ; open DState dState; open PParams pparams
+  open RatifyEnv Γ; open CertState certState; open DState dState; open PState pState; open PParams pparams
 \end{code}
 \begin{code}
   roleVotes : GovRole → VDeleg ⇀ Vote
@@ -274,37 +274,31 @@ actualVotes Γ pparams cc ga votes
 \begin{code}
     (true , just (just c'))  → just c'
     _                        → nothing -- expired, no hot key or resigned
+\end{code}
+\begin{code}[hide]
+  getPoolParams : Credential → Maybe PoolParams
+  getPoolParams c = case lookupᵐ? stakeDelegs c of λ where  nothing → nothing
+                                                            (just kh)  → lookupᵐ? pools kh
+\end{code}
+\begin{code}
 
   SPODefaultVote : GovAction → VDeleg → Vote
   SPODefaultVote (TriggerHF _) _ = Vote.no
-  SPODefaultVote NoConfidence (credVoter SPO c) =
-    case lookupᵐ? voteDelegs c of
-\end{code}
-\begin{code}[hide]
-    λ where
-\end{code}
-\begin{code}
-    (just noConfidenceRep)  → Vote.yes
-    (just abstainRep)       → Vote.abstain
-    _                       → Vote.no
-  SPODefaultVote _ (credVoter SPO c) =
-    case lookupᵐ? voteDelegs c of
-\end{code}
-\begin{code}[hide]
-    λ where
-\end{code}
-\begin{code}
-    (just abstainRep)  → Vote.abstain
-    _                  → Vote.no
+  SPODefaultVote NoConfidence (credVoter SPO c) = case getPoolParams c of λ where
+    nothing → Vote.no
+    (just p) → case lookupᵐ? voteDelegs (PoolParams.rewardAddr p) of λ where
+      (just noConfidenceRep)  → Vote.yes
+      (just abstainRep)       → Vote.abstain
+      _                       → Vote.no
+  SPODefaultVote _ (credVoter SPO c) = case getPoolParams c of λ where
+    nothing → Vote.no
+    (just p) → case lookupᵐ? voteDelegs (PoolParams.rewardAddr p) of λ where
+      (just abstainRep)  → Vote.abstain
+      _                  → Vote.no
   SPODefaultVote _ _ = Vote.no
 
   actualCCVote : Credential → Epoch → Vote
-  actualCCVote c e = case getCCHotCred (c , e) of
-\end{code}
-\begin{code}[hide]
-    λ where
-\end{code}
-\begin{code}
+  actualCCVote c e = case getCCHotCred (c , e) of λ where
     (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
     _          → Vote.abstain
 
@@ -329,8 +323,8 @@ actualVotes Γ pparams cc ga votes
   actualDRepVotes  =  roleVotes DRep
                       ∪ˡ constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
-  actualSPOVotes : (Credential ⇀ VDeleg) → GovAction → VDeleg ⇀ Vote
-  actualSPOVotes voteDelegs a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
+  actualSPOVotes : GovAction → VDeleg ⇀ Vote
+  actualSPOVotes a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting}
