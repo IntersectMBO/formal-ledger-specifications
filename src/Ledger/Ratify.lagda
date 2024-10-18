@@ -242,22 +242,21 @@ defines some types and functions used in the RATIFY transition
 system. \CCData is simply an alias to define some functions more
 easily.
 
+\begin{figure*}[h!]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 open StakeDistrs
 \end{code}
-\begin{figure*}[h!]
-\begin{AgdaMultiCode}
 \begin{code}
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
 actualVotes Γ pparams cc ga votes
-  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes ga
-  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes (DState.voteDelegs (RatifyEnv.dState Γ)) ga
+  =  mapKeys (credVoter CC) actualCCVotes ∪ˡ actualPDRepVotes ga
+  ∪ˡ actualDRepVotes ∪ˡ actualSPOVotes voteDelegs ga
   where
 \end{code}
 \begin{code}[hide]
-  open RatifyEnv Γ
-  open PParams pparams
+  open RatifyEnv Γ; open DState dState; open PParams pparams
 \end{code}
 \begin{code}
   roleVotes : GovRole → VDeleg ⇀ Vote
@@ -273,8 +272,31 @@ actualVotes Γ pparams cc ga votes
     λ where
 \end{code}
 \begin{code}
-      (true , just (just c'))  → just c'
-      _                        → nothing -- expired, no hot key or resigned
+    (true , just (just c'))  → just c'
+    _                        → nothing -- expired, no hot key or resigned
+
+  SPODefaultVote : GovAction → VDeleg → Vote
+  SPODefaultVote (TriggerHF _) _ = Vote.no
+  SPODefaultVote NoConfidence (credVoter SPO c) =
+    case lookupᵐ? voteDelegs c of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+    (just noConfidenceRep)  → Vote.yes
+    (just abstainRep)       → Vote.abstain
+    _                       → Vote.no
+  SPODefaultVote _ (credVoter SPO c) =
+    case lookupᵐ? voteDelegs c of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+    (just abstainRep)  → Vote.abstain
+    _                  → Vote.no
+  SPODefaultVote _ _ = Vote.no
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case getCCHotCred (c , e) of
@@ -283,8 +305,8 @@ actualVotes Γ pparams cc ga votes
     λ where
 \end{code}
 \begin{code}
-      (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
-      _          → Vote.abstain
+    (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+    _          → Vote.abstain
 
   actualCCVotes : Credential ⇀ Vote
   actualCCVotes = case cc of
@@ -293,10 +315,10 @@ actualVotes Γ pparams cc ga votes
     λ where
 \end{code}
 \begin{code}
-      nothing         → ∅
-      (just (m , q))  → if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
-                          then mapWithKey actualCCVote m
-                          else constMap (dom m) Vote.no
+    nothing         →  ∅
+    (just (m , q))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
+                       then mapWithKey actualCCVote m
+                       else constMap (dom m) Vote.no
 
   actualPDRepVotes : GovAction → VDeleg ⇀ Vote
   actualPDRepVotes NoConfidence
@@ -304,37 +326,11 @@ actualVotes Γ pparams cc ga votes
   actualPDRepVotes _  = ❴ abstainRep , Vote.abstain ❵ ∪ˡ ❴ noConfidenceRep , Vote.no ❵
 
   actualDRepVotes : VDeleg ⇀ Vote
-  actualDRepVotes  =   roleVotes DRep
-                   ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
+  actualDRepVotes  =  roleVotes DRep
+                      ∪ˡ constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
   actualSPOVotes : (Credential ⇀ VDeleg) → GovAction → VDeleg ⇀ Vote
   actualSPOVotes voteDelegs a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
-\end{code}
-\begin{code}[hide]
-    where
-    open VDeleg
-\end{code}
-\begin{code}
-    SPODefaultVote : GovAction → VDeleg → Vote
-    SPODefaultVote (TriggerHF _) _ = Vote.no
-    SPODefaultVote NoConfidence (credVoter SPO c) = case lookupᵐ? voteDelegs c of
-\end{code}
-\begin{code}[hide]
-      λ where
-\end{code}
-\begin{code}
-        (just noConfidenceRep)  → Vote.yes
-        (just abstainRep)       → Vote.abstain
-        _                       → Vote.no
-    SPODefaultVote _ (credVoter SPO c) = case lookupᵐ? voteDelegs c of
-\end{code}
-\begin{code}[hide]
-      λ where
-\end{code}
-\begin{code}
-        (just abstainRep)  → Vote.abstain
-        _                  → Vote.no
-    SPODefaultVote _              _                       = Vote.no
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting}
