@@ -263,7 +263,9 @@ its results by carrying out each of the following tasks.
      ; dreps = gState .dreps
      ; ccHotKeys = gState .ccHotKeys
      ; treasury = acnt .treasury
-     ; certState = ⟦ dState , pState , gState ⟧ᶜˢ
+     ; pools = pState .pools
+     ; delegatees = dState .voteDelegs
+     ; stakeDelegs = dState .stakeDelegs
      }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'

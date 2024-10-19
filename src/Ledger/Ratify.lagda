@@ -202,7 +202,9 @@ record RatifyEnv : Type where
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Coin
-    certState     : CertState
+    pools         : KeyHash ⇀ PoolParams
+    delegatees    : Credential ⇀ VDeleg
+    stakeDelegs   : Credential ⇀ KeyHash
 
 record RatifyState : Type where
 \end{code}
@@ -256,7 +258,7 @@ actualVotes Γ pparams cc ga votes
   where
 \end{code}
 \begin{code}[hide]
-  open RatifyEnv Γ; open CertState certState; open DState dState; open PState pState; open PParams pparams
+  open RatifyEnv Γ; open PParams pparams
 \end{code}
 \begin{code}
   roleVotes : GovRole → VDeleg ⇀ Vote
@@ -286,13 +288,13 @@ actualVotes Γ pparams cc ga votes
   SPODefaultVote (TriggerHF _) _ = Vote.no
   SPODefaultVote NoConfidence (credVoter SPO c) = case getPoolParams c of λ where
     nothing → Vote.no
-    (just p) → case lookupᵐ? voteDelegs (PoolParams.rewardAddr p) of λ where
+    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
       (just noConfidenceRep)  → Vote.yes
       (just abstainRep)       → Vote.abstain
       _                       → Vote.no
   SPODefaultVote _ (credVoter SPO c) = case getPoolParams c of λ where
     nothing → Vote.no
-    (just p) → case lookupᵐ? voteDelegs (PoolParams.rewardAddr p) of λ where
+    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
       (just abstainRep)  → Vote.abstain
       _                  → Vote.no
   SPODefaultVote _ _ = Vote.no
