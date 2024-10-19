@@ -77,38 +77,38 @@ d_GovState_36 :: ()
 d_GovState_36 = erased
 -- Ledger.Conway.Conformance.Foreign.HSLedger.Gov._.GovEnv.enactState
 d_enactState_102 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Enact.T_EnactState_856
 d_enactState_102 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_enactState_1042
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_enactState_1048
       (coe v0)
 -- Ledger.Conway.Conformance.Foreign.HSLedger.Gov._.GovEnv.epoch
 d_epoch_104 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 -> Integer
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 -> Integer
 d_epoch_104 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_epoch_1036 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_epoch_1042 (coe v0)
 -- Ledger.Conway.Conformance.Foreign.HSLedger.Gov._.GovEnv.pparams
 d_pparams_106 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 ->
   MAlonzo.Code.Ledger.Conway.Conformance.PParams.T_PParams_248
 d_pparams_106 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_pparams_1038 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_pparams_1044 (coe v0)
 -- Ledger.Conway.Conformance.Foreign.HSLedger.Gov._.GovEnv.ppolicy
 d_ppolicy_108 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 ->
   Maybe Integer
 d_ppolicy_108 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_ppolicy_1040 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_ppolicy_1046 (coe v0)
 -- Ledger.Conway.Conformance.Foreign.HSLedger.Gov._.GovEnv.txid
 d_txid_110 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 -> Integer
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 -> Integer
 d_txid_110 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_txid_1034 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_txid_1040 (coe v0)
 -- Ledger.Conway.Conformance.Foreign.HSLedger.Gov._.Vote
 d_Vote_130 = ()
 -- Ledger.Conway.Conformance.Foreign.HSLedger.Gov.HsTy-GovRole
@@ -513,7 +513,7 @@ d_Conv'45'GovEnv_162
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_'10214'_'44'_'44'_'44'_'44'_'10215''7501'_1044 v1 v2 v3 v4 v5
+              MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_'10214'_'44'_'44'_'44'_'44'_'10215''7501'_1050 v1 v2 v3 v4 v5
                 -> coe
                      C_MkGovEnv_4461 (coe v1) (coe v2)
                      (coe
@@ -1253,7 +1253,7 @@ d_Conv'45'GovEnv_162
             case coe v0 of
               C_MkGovEnv_4461 v1 v2 v3 v4 v5
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_'10214'_'44'_'44'_'44'_'44'_'10215''7501'_1044
+                     MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_'10214'_'44'_'44'_'44'_'44'_'10215''7501'_1050
                      (coe v1) (coe v2)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -9301,7 +9301,7 @@ d_gov'45'step_332 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Gov.Properties.d_Computational'45'GOV_1714
+            MAlonzo.Code.Ledger.Conway.Conformance.Gov.Properties.d_Computational'45'GOV_1720
             (coe
                MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Core.d_HSTransactionStructure_890))
          (coe
