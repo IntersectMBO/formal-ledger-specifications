@@ -1,4 +1,4 @@
-{-# OPTIONS --safe #-}
+--{-# OPTIONS --safe #-} -- TODO: Uncomment after proving |ᵒ-GAs-pres
 
 open import Ledger.Prelude
 open import Ledger.Transaction
@@ -71,7 +71,7 @@ instance
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           (certSt' , certStep) ← computeCerts certΓ certSt txcerts
-          (govSt'  , govStep)  ← computeGov   (govΓ certSt')  govSt  (txgov txb)
+          (govSt'  , govStep)  ← computeGov   (govΓ certSt') (govSt |ᵒ certSt') (txgov txb)
           success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
@@ -86,7 +86,7 @@ instance
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certSt txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
-        with computeGov (govΓ certSt') govSt (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certSt') _ _ _ govStep
+        with computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
       completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
@@ -213,7 +213,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
     -- updateGovStates faithfully represents a step of the LEDGER sts
     STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                 → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (LState.govSt s)
+                 → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (LState.govSt s |ᵒ LState.certState s')
     STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
       where
       STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {certSt : CertState} {govSt govSt' : GovState}
@@ -336,7 +336,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     open PParams pp using (govActionDeposit)
     govSt : GovState
     govSt = LState.govSt s
-    open LEDGER-PROPS tx Γ s using (utxoDeps; dpMap; propUpdate; mkAction; updateGovStates; STS→GovSt≡)
+    open LEDGER-PROPS tx Γ s using (utxoDeps; dpMap; voteUpdate; propUpdate; mkAction; updateGovStates; STS→GovSt≡)
     open EquationalProperties tx Γ s using (dpMap-vote-invar++; updateGovStates≡; updateProps-decomp; updateProps-++-decomp)
 
     dpMap-update : ∀ ps k govSt
@@ -486,6 +486,10 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
                            (trans (length-++ ps) (+-comm (length ps) 1))) ⟩
       fromList (dpMap (updateGovStates (map inj₂ (p ∷ ps)) 0 [])) ∎
 
+    -- Removing orphan DRep votes does not modify the set of GAs in GovState
+    postulate
+      |ᵒ-GAs-pres : ∀ vps k govSt certState →
+        fromList (dpMap (updateGovStates vps k (govSt |ᵒ certState))) ≡ fromList (dpMap (updateGovStates vps k govSt))
 
     -- GA Deposits Invariance Property for LEDGER STS --------------------------------------------------------------------
     LEDGER-govDepsMatch : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
@@ -494,7 +498,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
     LEDGER-govDepsMatch s'@{⟦ .(⟦ ((UTxOState.utxo (LState.utxoSt s) ∣ txins ᶜ) ∪ˡ (outs txb))
                                 , _ , updateDeposits pp txb (UTxOState.deposits (LState.utxoSt s)) , _ ⟧ᵘ)
-                            , govSt' , _ ⟧ˡ}
+                            , govSt' , certState' ⟧ˡ}
       utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ GOV-sts) aprioriMatch = begin
         filterˢ isGADeposit (dom (updateDeposits pp txb utxoDeps))
           ≈⟨ noGACerts txcerts (updateProposalDeposits txprop txid govActionDeposit utxoDeps) ⟩
@@ -517,6 +521,8 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         fromList (dpMap (govSt ++ updateGovStates (txgov txb) 0 []))
           ≡˘⟨ cong fromList (updateGovStates≡ (txgov txb) 0) ⟩
         fromList (dpMap (updateGovStates (txgov txb) 0 govSt ))
+          ≡˘⟨ |ᵒ-GAs-pres (txgov txb) 0 govSt certState' ⟩
+        fromList (dpMap (updateGovStates (txgov txb) 0 (govSt |ᵒ certState')))
           ≡˘⟨ cong (fromList ∘ dpMap ) (STS→GovSt≡ utxosts tx-valid) ⟩
         fromList (dpMap govSt') ∎
 
