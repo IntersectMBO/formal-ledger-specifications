@@ -1,4 +1,4 @@
-module Ledger.Conway.Conformance.Foreign.HSTypes where
+module Ledger.Conway.Foreign.HSTypes where
 
 {-# FOREIGN GHC
   {-# LANGUAGE DeriveGeneric #-}

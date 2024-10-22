@@ -1,6 +1,6 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.PParams where
+module Ledger.Conway.Foreign.HSLedger.PParams where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 
 instance
   HsTy-DrepThresholds = autoHsType DrepThresholds

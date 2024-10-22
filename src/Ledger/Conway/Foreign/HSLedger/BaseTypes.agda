@@ -1,11 +1,11 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes where
+module Ledger.Conway.Foreign.HSLedger.BaseTypes where
 
 open import Data.Rational
 
 open import Ledger.Prelude
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Core public
-import Ledger.Conway.Conformance.Foreign.HSTypes as F
+open import Ledger.Conway.Foreign.HSLedger.Core public
+import Ledger.Conway.Foreign.HSTypes as F
 
 instance
   iConvTop    = Convertible-Refl {⊤}

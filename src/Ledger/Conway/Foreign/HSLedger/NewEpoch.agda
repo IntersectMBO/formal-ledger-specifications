@@ -1,15 +1,15 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.NewEpoch where
+module Ledger.Conway.Foreign.HSLedger.NewEpoch where
 
 import Data.Integer as ℤ
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Epoch
+open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.Epoch
 
 open import Ledger.Conway.Conformance.Epoch it it
 open import Ledger.Conway.Conformance.Epoch.Properties it it
 
-open import Ledger.Conway.Conformance.Foreign.HSTypes hiding (ComputationResult)
+open import Ledger.Conway.Foreign.HSTypes hiding (ComputationResult)
 
 record HsRewardUpdate : Type where
   field Δt Δr Δf : ℤ
@@ -20,8 +20,8 @@ record HsRewardUpdate : Type where
     , deltaR  :: Integer
     , deltaF  :: Integer
     , rs      ::
-        MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSTypes.HSMap
-          MAlonzo.Code.Ledger.Conway.Conformance.Foreign.HSLedger.Address.Credential
+        MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap
+          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential
           Integer
     }
     deriving (Eq, Show)

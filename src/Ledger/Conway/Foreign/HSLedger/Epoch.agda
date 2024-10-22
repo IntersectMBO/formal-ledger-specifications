@@ -1,11 +1,11 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Epoch where
+module Ledger.Conway.Foreign.HSLedger.Epoch where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Enact
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Ledger
-open import Ledger.Conway.Conformance.Foreign.HSLedger.PParams
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Ratify
+open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.Enact
+open import Ledger.Conway.Foreign.HSLedger.Ledger
+open import Ledger.Conway.Foreign.HSLedger.PParams
+open import Ledger.Conway.Foreign.HSLedger.Ratify
 
 open import Ledger.Conway.Conformance.Epoch it it
 open import Ledger.Conway.Conformance.Epoch.Properties it it

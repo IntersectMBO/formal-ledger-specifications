@@ -3,7 +3,7 @@ module Everything where
 -- ** Cardano ledger
 import Ledger.PDF
 import Ledger.Conway.Conformance.PDF
-import Ledger.Conway.Conformance.Foreign.HSLedger
+import Ledger.Conway.Foreign.HSLedger
 
 import Ledger.NewPP
 import Ledger.NewPP.Properties

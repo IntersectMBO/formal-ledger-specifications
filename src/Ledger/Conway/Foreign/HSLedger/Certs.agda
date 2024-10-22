@@ -1,9 +1,9 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Certs where
+module Ledger.Conway.Foreign.HSLedger.Certs where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GState)
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Gov
-open import Ledger.Conway.Conformance.Foreign.HSLedger.PParams
+open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GState)
+open import Ledger.Conway.Foreign.HSLedger.Gov
+open import Ledger.Conway.Foreign.HSLedger.PParams
 
 open import Ledger.Conway.Conformance.Certs govStructure using (⟦_,_,_,_⟧ᵈ; DState; GState)
 

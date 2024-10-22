@@ -1,14 +1,14 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Ledger where
+module Ledger.Conway.Foreign.HSLedger.Ledger where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Certs
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Enact
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Gov
-open import Ledger.Conway.Conformance.Foreign.HSLedger.PParams
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Transaction
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Utxo
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Cert
+open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.Certs
+open import Ledger.Conway.Foreign.HSLedger.Enact
+open import Ledger.Conway.Foreign.HSLedger.Gov
+open import Ledger.Conway.Foreign.HSLedger.PParams
+open import Ledger.Conway.Foreign.HSLedger.Transaction
+open import Ledger.Conway.Foreign.HSLedger.Utxo
+open import Ledger.Conway.Foreign.HSLedger.Cert
 
 open import Ledger.Conway.Conformance.Ledger it it
 open import Ledger.Conway.Conformance.Ledger.Properties it it

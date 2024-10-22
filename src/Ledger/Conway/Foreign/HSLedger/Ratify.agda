@@ -1,9 +1,9 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Ratify where
+module Ledger.Conway.Foreign.HSLedger.Ratify where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Enact
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Gov
+open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.Enact
+open import Ledger.Conway.Foreign.HSLedger.Gov
 
 open import Ledger.Conway.Conformance.Enact govStructure
 
@@ -34,7 +34,7 @@ ratify-debug env st sig =
   where
     open RatifyEnv (from env)
     govActionInfo : HsType (GovActionID × GovActionState) → String
-    govActionInfo (gaId F., gas) = 
+    govActionInfo (gaId F., gas) =
       let
         open GovActionState (from gas)
         open RatifyState (from st)
@@ -44,7 +44,7 @@ ratify-debug env st sig =
         showIsAccepted role = case acceptedBy? (from env) es (from gas) role of λ where
           (yes _) → "✓"
           (no  _) → "×"
-      in 
+      in
         "SPO: \t"  +ˢ showAcceptedStakeRatio SPO  +ˢ "\t" +ˢ showIsAccepted SPO  +ˢ "\n" +ˢ
         "DRep: \t" +ˢ showAcceptedStakeRatio DRep +ˢ "\t" +ˢ showIsAccepted DRep +ˢ "\n" +ˢ
         "CC: \t"   +ˢ showAcceptedStakeRatio CC   +ˢ "\t" +ˢ showIsAccepted CC   +ˢ "\n"
