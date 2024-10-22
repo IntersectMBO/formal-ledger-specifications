@@ -1,12 +1,12 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude renaming (filterᵐ to filter)
+open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
 module Ledger.Certs.Properties (gs : _) (open GovStructure gs) where
 
 open import Data.Maybe.Properties
-open import Relation.Nullary.Decidable hiding (map)
+open import Relation.Nullary.Decidable
 
 open import Tactic.ReduceDec
 
@@ -22,28 +22,25 @@ open Computational ⦃...⦄
 open import Tactic.GenError using (genErrors)
 
 instance
-  -- Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
-  -- Computational-DELEG .computeProof ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ = λ where
-  --   (delegate c mc mkh d) →
-  --     let registeredDReps = filterˢ isKeyHash (dom delegatees)
-  --     in
-  --       case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
-  --                               × (c ∈ dom rwds → d ≡ 0)
-  --                               × mc ∈ mapˢ just (❴ c ❵ ∩ registeredDReps) ∪ ❴ nothing ❵
-  --                               × mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
-  --     (yes p) → success (-, DELEG-delegate ?)
-  --     (no ¬p) → failure (genErrors ¬p)
-  --   (dereg c d) → case ¿ (c , 0) ∈ rwds ¿ of λ where
-  --     (yes p) → success (-, DELEG-dereg p)
-  --     (no ¬p) → failure (genErrors ¬p)
-  --   _ → failure "Unexpected certificate in DELEG"
-  -- Computational-DELEG .completeness ⟦ pp , pools , voteDelegs ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (delegate c mvd mc d)
-  --   s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
-  --                               × (c ∈ dom rwds → d ≡ 0)
-  --                               × mvd ∈ mapˢ just (filterˢ isKeyHash (dom voteDelegs)) ∪ ❴ nothing ❵
-  --                               × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = ? -- refl
-  -- Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
-  --   rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
+  Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
+  Computational-DELEG .computeProof ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ = λ where
+    (delegate c mv mc d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
+                                × (c ∈ dom rwds → d ≡ 0)
+                                × (c , mv) ∈ mapValues just delegatees
+                                × (mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵) ¿ of λ where
+      (yes p) → success (-, DELEG-delegate p)
+      (no ¬p) → failure (genErrors ¬p)
+    (dereg c d) → case ¿ (c , 0) ∈ rwds ¿ of λ where
+      (yes p) → success (-, DELEG-dereg p)
+      (no ¬p) → failure (genErrors ¬p)
+    _ → failure "Unexpected certificate in DELEG"
+  Computational-DELEG .completeness ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (delegate c mv mc d)
+    s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
+                                   × (c ∈ dom rwds → d ≡ 0)
+                                   × (c , mv) ∈ mapValues just delegatees
+                                   × (mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵) ¿) p .proj₂ = refl
+  Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
+    rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ ⟦ pools , _ ⟧ᵖ (regpool c _) =
@@ -85,44 +82,44 @@ instance
     (ccreghot c _) _ (GOVCERT-ccreghot ¬p)
     rewrite dec-no ((c , nothing) ∈? (ccKeys ˢ)) ¬p = refl
 
-  -- Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
-  -- Computational-CERT .computeProof Γ@(⟦ e , pp , vs , _ ⟧ᶜ) ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ dCert
-  --   with computeProof ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ stᵈ dCert
-  --      | computeProof pp stᵖ dCert | computeProof Γ stᵍ dCert
-  -- ... | success (_ , h) | _               | _               = success (-, CERT-deleg h)
-  -- ... | failure _       | success (_ , h) | _               = success (-, CERT-pool h)
-  -- ... | failure _       | failure _       | success (_ , h) = success (-, CERT-vdel h)
-  -- ... | failure e₁      | failure e₂      | failure e₃      = failure $
-  --   "DELEG: " <> e₁ <> "\nPOOL: " <> e₂ <> "\nVDEL: " <> e₃
-  -- Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-  --   dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
-  --   with computeProof ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
-  -- ... | success _ | refl = refl
-  -- Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-  --   dCert@(dereg c _) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
-  --   with computeProof ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
-  -- ... | success _ | refl = refl
-  -- Computational-CERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-  --   dCert@(regpool c poolParams) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
-  --   with computeProof pp stᵖ dCert | completeness _ _ _ _ h
-  -- ... | success _ | refl = refl
-  -- Computational-CERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-  --   dCert@(retirepool c e) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
-  --   with completeness _ _ _ _ h
-  -- ... | refl = refl
-  -- Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-  --   dCert@(regdrep c d an)
-  --   ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
-  --   with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
-  -- ... | success _ | refl = refl
-  -- Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-  --   dCert@(deregdrep c _) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
-  --   with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
-  -- ... | success _ | refl = refl
-  -- Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-  --   dCert@(ccreghot c mkh) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
-  --   with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
-  -- ... | success _ | refl = refl
+  Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
+  Computational-CERT .computeProof Γ@(⟦ e , pp , vs , _ ⟧ᶜ) ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ dCert
+    with computeProof ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ stᵈ dCert
+       | computeProof pp stᵖ dCert | computeProof Γ stᵍ dCert
+  ... | success (_ , h) | _               | _               = success (-, CERT-deleg h)
+  ... | failure _       | success (_ , h) | _               = success (-, CERT-pool h)
+  ... | failure _       | failure _       | success (_ , h) = success (-, CERT-vdel h)
+  ... | failure e₁      | failure e₂      | failure e₃      = failure $
+    "DELEG: " <> e₁ <> "\nPOOL: " <> e₂ <> "\nVDEL: " <> e₃
+  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
+    with computeProof ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(dereg c _) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
+    with computeProof ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(regpool c poolParams) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
+    with computeProof pp stᵖ dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(retirepool c e) ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ (CERT-pool h)
+    with completeness _ _ _ _ h
+  ... | refl = refl
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(regdrep c d an)
+    ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
+    with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(deregdrep c _) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
+    with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness Γ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(ccreghot c mkh) ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ (CERT-vdel h)
+    with computeProof Γ stᵍ dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
 
   Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
   Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls ⟧ᶜ st _ =
@@ -138,14 +135,14 @@ instance
                 × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
--- Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
--- Computational-CERTS = it
+Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
+Computational-CERTS = it
 
 private variable
   dCert : DCert
   Γ : CertEnv
   l : List DCert
-  A A' : Type
+  A A' B : Type
 instance
   _ = +-0-monoid
 

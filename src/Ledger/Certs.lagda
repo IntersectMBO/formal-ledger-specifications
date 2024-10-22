@@ -3,7 +3,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude renaming (filterᵐ to filter)
+open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
@@ -164,32 +164,34 @@ instance
 
 \begin{code}[hide]
 private variable
-  an         : Anchor
-  d          : Coin
-  dCert      : DCert
-  e          : Epoch
-
-  stᵍ stᵍ'   : GState
-  stᵈ stᵈ'   : DState
-  stᵖ stᵖ'   : PState
-
-  Γ          : CertEnv
-  pp         : PParams
-  vs         : List GovVote
+  an : Anchor
+  dReps : Credential ⇀ Epoch
+  pools : KeyHash ⇀ PoolParams
+  vDelegs : Credential ⇀ VDeleg
+  sDelegs : Credential ⇀ KeyHash
+  retiring : KeyHash ⇀ Epoch
+  ccKeys : Credential ⇀ Maybe Credential
+  rwds : Credential ⇀ Coin
+  dCert : DCert
+  c : Credential
+  mc : Maybe Credential
+  mv : Maybe VDeleg
+  d : Coin
+  e : Epoch
+  kh : KeyHash
+  mkh : Maybe KeyHash
+  stᵍ stᵍ' : GState
+  stᵈ stᵈ' : DState
+  stᵖ stᵖ' : PState
+  Γ : CertEnv
+  pp : PParams
+  vs : List GovVote
   poolParams : PoolParams
-  c          : Credential
-  mc         : Maybe Credential
-  kh         : KeyHash
-  mkh        : Maybe KeyHash
-
-  rwds rewards                  : Credential ⇀ Coin
-  dReps                         : Credential ⇀ Epoch
-  sDelegs stakeDelegs           : Credential ⇀ KeyHash
-  ccKeys ccHotKeys              : Credential ⇀ Maybe Credential
-  vDelegs voteDelegs delegatees : Credential ⇀ VDeleg
-  pools                         : KeyHash ⇀ PoolParams
-  retiring                      : KeyHash ⇀ Epoch
-  wdrls                         : RwdAddr ⇀ Coin
+  wdrls  : RwdAddr ⇀ Coin
+  ccHotKeys : Credential ⇀ Maybe Credential
+  voteDelegs delegatees : Credential ⇀ VDeleg
+  stakeDelegs : Credential ⇀ KeyHash
+  rewards : Credential ⇀ Coin
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -307,22 +309,18 @@ _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
-
 data _⊢_⇀⦇_,DELEG⦈_ where
 \end{code}
 \begin{code}
-  DELEG-delegate : let
-    open PParams pp
-    registeredDReps = filterˢ isKeyHash (dom delegatees)
-    in
+  DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mc ∈ mapˢ just (❴ c ❵ ∩ registeredDReps) ∪ ❴ nothing ❵
+    ∙ (c , mv) ∈ mapValues just delegatees
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c (map (credVoter DRep) mc) mkh d ,DELEG⦈
-        ⟦ insertIfJust c (map (credVoter DRep) mc) vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
+        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
