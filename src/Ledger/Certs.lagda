@@ -3,7 +3,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude renaming (filterᵐ to filter)
 open import Ledger.Types.GovStructure
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
@@ -138,12 +138,13 @@ record CertState : Type where
 record DelegEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_⟧ᵈᵉ
+  constructor ⟦_,_,_⟧ᵈᵉ
   field
 \end{code}
 \begin{code}
-    pparams  : PParams
-    pools    : KeyHash ⇀ PoolParams
+    pparams       : PParams
+    pools         : KeyHash ⇀ PoolParams
+    delegatees    : Credential ⇀ VDeleg
 
 GovCertEnv  = CertEnv
 PoolEnv     = PParams
@@ -163,37 +164,32 @@ instance
 
 \begin{code}[hide]
 private variable
-  an : Anchor
-  dReps dReps' : Credential ⇀ Epoch
-  pools : KeyHash ⇀ PoolParams
-  vDelegs : Credential ⇀ VDeleg
-  sDelegs : Credential ⇀ KeyHash
-  retiring : KeyHash ⇀ Epoch
-  ccKeys : Credential ⇀ Maybe Credential
-  rwds : Credential ⇀ Coin
-  dCert : DCert
-  c c' : Credential
-  mc : Maybe Credential
-  mv : Maybe VDeleg
-  d : Coin
-  e : Epoch
-  kh kh' : KeyHash
-  mkh : Maybe KeyHash
-  st st' : CertState
-  stᵍ stᵍ' : GState
-  stᵈ stᵈ' : DState
-  stᵖ stᵖ' : PState
-  Γ : CertEnv
-  pp : PParams
-  vs : List GovVote
+  an         : Anchor
+  d          : Coin
+  dCert      : DCert
+  e          : Epoch
+
+  stᵍ stᵍ'   : GState
+  stᵈ stᵈ'   : DState
+  stᵖ stᵖ'   : PState
+
+  Γ          : CertEnv
+  pp         : PParams
+  vs         : List GovVote
   poolParams : PoolParams
-  wdrls  : RwdAddr ⇀ Coin
-  dreps : Credential ⇀ Epoch
-  ccHotKeys : Credential ⇀ Maybe Credential
-  voteDelegs : Credential ⇀ VDeleg
-  stakeDelegs : Credential ⇀ KeyHash
-  rewards : Credential ⇀ Coin
-  deps : Deposits
+  c          : Credential
+  mc         : Maybe Credential
+  kh         : KeyHash
+  mkh        : Maybe KeyHash
+
+  rwds rewards                  : Credential ⇀ Coin
+  dReps                         : Credential ⇀ Epoch
+  sDelegs stakeDelegs           : Credential ⇀ KeyHash
+  ccKeys ccHotKeys              : Credential ⇀ Maybe Credential
+  vDelegs voteDelegs delegatees : Credential ⇀ VDeleg
+  pools                         : KeyHash ⇀ PoolParams
+  retiring                      : KeyHash ⇀ Epoch
+  wdrls                         : RwdAddr ⇀ Coin
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -311,22 +307,27 @@ _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
+
 data _⊢_⇀⦇_,DELEG⦈_ where
 \end{code}
 \begin{code}
-  DELEG-delegate : let open PParams pp in
+  DELEG-delegate : let
+    open PParams pp
+    registeredDReps = filterˢ isKeyHash (dom delegatees)
+    in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
+    ∙ mc ∈ mapˢ just (❴ c ❵ ∩ registeredDReps) ∪ ❴ nothing ❵
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c (map (credVoter DRep) mc) mkh d ,DELEG⦈
+        ⟦ insertIfJust c (map (credVoter DRep) mc) vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
                           ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 \end{code}
 \end{AgdaSuppressSpace}
@@ -405,7 +406,7 @@ data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
 \begin{code}
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
@@ -429,14 +430,14 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
   CERT-base :
     let open PParams pp
         refresh         = mapPartial getDRepVote (fromList vs)
-        refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
+        refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dReps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
     in
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦
-        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
+        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
         ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
