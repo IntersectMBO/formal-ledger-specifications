@@ -1,5 +1,4 @@
-\section{Cryptographic Primitives}
-\begin{code}[hide]
+
 {-# OPTIONS --safe #-}
 module Ledger.Conway.Conformance.Crypto where
 
@@ -21,30 +20,19 @@ record HashableSet : Type₁ where
 
 record PKKScheme : Type₁ where
   field
-\end{code}
-We rely on a public key signing scheme for verification of spending.
-\begin{figure*}[h]
-\emph{Types \& functions}
-\begin{code}
+
         SKey VKey Sig Ser  : Type
         isKeyPair          : SKey → VKey → Type
         isSigned           : VKey → Ser → Sig → Type
         sign               : SKey → Ser → Sig
 
   KeyPair = Σ[ sk ∈ SKey ] Σ[ vk ∈ VKey ] isKeyPair sk vk
-\end{code}
-\emph{Property of signatures}
-\begin{code}[hide]
+
   field ⦃ Dec-isSigned ⦄ : isSigned ⁇³
         isSigned-correct :
-\end{code}
-\begin{code}
+
           ((sk , vk , _) : KeyPair) (d : Ser) (σ : Sig) → sign sk d ≡ σ → isSigned vk d σ
-\end{code}
-\caption{Definitions for the public key signature scheme}
-\label{fig:defs:crypto}
-\end{figure*}
-\begin{code}[hide]
+
         ⦃ DecEq-Sig  ⦄ : DecEq Sig
         ⦃ DecEq-Ser  ⦄ : DecEq Ser
 
@@ -59,4 +47,4 @@ record Crypto : Type₁ where
   open isHashableSet khs renaming (THash to KeyHash) hiding (DecEq-T) public
 
 -- TODO: KES and VRF
-\end{code}
+

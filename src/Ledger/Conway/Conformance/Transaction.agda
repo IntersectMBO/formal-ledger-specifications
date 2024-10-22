@@ -1,7 +1,4 @@
-\section{Transactions}
-\label{sec:transactions}
 
-\begin{code}[hide]
 {-# OPTIONS --safe #-}
 --------------------------------------------------------------------------------
 -- NOTE: Everything in this module is part of TransactionStructure
@@ -32,40 +29,9 @@ unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Type₁ where
   field
-\end{code}
 
-Transactions are defined in Figure~\ref{fig:defs:transactions}. A
-transaction is made up of a transaction body, a collection of
-witnesses and some optional auxiliary data.
-\begin{NoConway}
-Some key ingredients in the transaction body are:
-\begin{itemize}
-  \item A set \txins of transaction inputs, each of which identifies an output from a previous transaction.
-    A transaction input consists of a transaction id and an index to uniquely identify the output.
-  \item An indexed collection \txouts of transaction outputs.
-    The \TxOut type is an address paired with a coin value.
-  \item A transaction fee. This value will be added to the fee pot.
-  \item The size \txsize and the hash \txid of the serialized form of the transaction that was included in the block.
-\end{itemize}
-\end{NoConway}
-\begin{Conway}
-Ingredients of the transaction body introduced in the Conway era are the following:
-\begin{itemize}
-  \item \txvote, the list of votes for goverance actions;
-  \item \txprop, the list of governance proposals;
-  \item \txdonation, the treasury donation amount;
-  \item \curTreasury, the current value of the treasury.
-  \item \txsize and \txid, the size and hash of the serialized form of the transaction that was included in the block.
-\end{itemize}
-\end{Conway}
-
-\begin{figure*}[h]
-\emph{Abstract types}
-\begin{AgdaMultiCode}
-\begin{code}
         Ix TxId AuxiliaryData : Type
-\end{code}
-\begin{code}[hide]
+
         ⦃ DecEq-Ix   ⦄ : DecEq Ix
         ⦃ DecEq-TxId ⦄ : DecEq TxId
         adHashingScheme : isHashableSet AuxiliaryData
@@ -111,10 +77,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Conway.Conformance.Certs govStructure public
-\end{code}
-\begin{NoConway}
-\emph{Derived types}
-\begin{code}
+
   TxIn     = TxId × Ix
   TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
   UTxO     = TxIn ⇀ TxOut
@@ -123,16 +86,11 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
-\end{code}
-\end{NoConway}
-\emph{Transaction types}
-\begin{code}
+
   record TxBody : Type where
-\end{code}
-\begin{code}[hide]
+
     field
-\end{code}
-\begin{code}
+
       txins          : ℙ TxIn
       refInputs      : ℙ TxIn
       txouts         : Ix ⇀ TxOut
@@ -153,15 +111,11 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       collateral     : ℙ TxIn
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash
-\end{code}
-\begin{NoConway}
-\begin{code}
+
   record TxWitnesses : Type where
-\end{code}
-\begin{code}[hide]
+
     field
-\end{code}
-\begin{code}
+
       vkSigs   : VKey ⇀ Sig
       scripts  : ℙ Script
       txdats   : DataHash ⇀ Datum
@@ -171,26 +125,14 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     scriptsP1 = mapPartial isInj₁ scripts
 
   record Tx : Type where
-\end{code}
-\begin{code}[hide]
+
     field
-\end{code}
-\begin{code}
+
       body     : TxBody
       wits     : TxWitnesses
       isValid  : Bool
       txAD     : Maybe AuxiliaryData
-\end{code}
-\end{NoConway}
-\end{AgdaMultiCode}
-\caption{Transactions and related types}
-\label{fig:defs:transactions}
-\end{figure*}
 
-\begin{NoConway}
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
@@ -227,18 +169,11 @@ Ingredients of the transaction body introduced in the Conway era are the followi
     else
       nothing
     where m = setToHashMap (txscripts tx utxo)
-\end{code}
-\end{AgdaMultiCode}
-\caption{Functions related to transactions}
-\label{fig:defs:transaction-funs}
-\end{figure*}
-\end{NoConway}
 
-\begin{code}[hide]
   isP2Script : Script → Bool
   isP2Script = is-just ∘ isInj₂
 
   instance
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
-\end{code}
+

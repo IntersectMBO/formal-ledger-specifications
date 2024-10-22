@@ -1,6 +1,4 @@
-\section{Blockchain Layer}
 
-\begin{code}[hide]
 {-# OPTIONS --safe #-}
 
 open import Algebra
@@ -20,31 +18,20 @@ open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Conformance.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
+
 record ChainState : Type where
-\end{code}
-\begin{code}[hide]
+
   field
-\end{code}
-\begin{code}
+
     newEpochState  : NewEpochState
 
 record Block : Type where
-\end{code}
-\begin{code}[hide]
+
   field
-\end{code}
-\begin{code}
+
     ts    : List Tx
     slot  : Slot
-\end{code}
-\end{AgdaMultiCode}
-\caption{Definitions CHAIN transition system}
-\end{figure*}
-\begin{code}[hide]
+
 private variable
   s : ChainState
   b : Block
@@ -98,21 +85,11 @@ calculateStakeDistrs ls =
 
 
 data
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
+
   _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{Type of the CHAIN transition system}
-\end{figure*}
-\begin{code}[hide]
+
   where
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
+
   CHAIN :
     let open ChainState s; open Block b; open NewEpochState nes
         open EpochState epochState; open EnactState es
@@ -123,7 +100,4 @@ data
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{CHAIN transition system}
-\end{figure*}
+

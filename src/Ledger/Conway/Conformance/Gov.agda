@@ -1,6 +1,3 @@
-\section{Governance}
-
-\begin{code}[hide]
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Conformance.Types.GovStructure
@@ -29,44 +26,28 @@ open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
 open import Function.Related.Propositional using (↔⇒)
 
 open GovActionState
-\end{code}
 
-\begin{figure*}[h]
-\emph{Derived types}
-\begin{AgdaMultiCode}
-\begin{code}[hide]
 GovState : Type
-\end{code}
-\begin{code}
+
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Type where
-\end{code}
-\begin{code}[hide]
+
   constructor ⟦_,_,_,_,_⟧ᵍ
   field
-\end{code}
-\begin{code}
+
     txid        : TxId
     epoch       : Epoch
     pparams     : PParams
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
-\end{code}
-\end{AgdaMultiCode}
-\emph{Transition relation types}
-\begin{code}[hide]
+
 data
-\end{code}
-\begin{AgdaSuppressSpace}
-\begin{code}
+
   _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
-\end{code}
-\begin{code}
+
 _⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
-\end{code}
-\end{AgdaSuppressSpace}
-\begin{code}[hide]
+
 private variable
   Γ : GovEnv
   s s' : GovState
@@ -80,10 +61,7 @@ private variable
   prev : NeedsHash a
   k : ℕ
   p : Maybe ScriptHash
-\end{code}
-\emph{Functions used in the GOV rules}
-\begin{AgdaMultiCode}
-\begin{code}
+
 govActionPriority : GovAction → ℕ
 govActionPriority NoConfidence             = 0
 govActionPriority (UpdateCommittee _ _ _)  = 1
@@ -98,15 +76,13 @@ n ∼ m = (n ≡ m) ⊎ (n ≡ 0 × m ≡ 1) ⊎ (n ≡ 1 × m ≡ 0)
 
 _≈_ : GovAction → GovAction → Type
 a ≈ a' = (govActionPriority a) ∼ (govActionPriority a')
-\end{code}
-\begin{code}[hide]
+
 _∼?_ : (n m : ℕ) → Dec (n ∼ m)
 n ∼? m = n ≟ m ⊎-dec (n ≟ 0 ×-dec m ≟ 1) ⊎-dec (n ≟ 1 ×-dec m ≟ 0)
 
 _≈?_ : (a a' : GovAction) → Dec (a ≈ a')
 a ≈? a' = (govActionPriority a) ∼? (govActionPriority a')
-\end{code}
-\begin{code}
+
 
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
@@ -135,15 +111,7 @@ validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
   (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
   ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
 validHFAction _ _ _ = ⊤
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types and functions used in the GOV transition system}
-\label{defs:gov-defs}
-\end{figure*}
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
 -- Convert list of (GovActionID,GovActionState)-pairs to list of GovActionID pairs.
 getAidPairsList : GovState → List (GovActionID × GovActionID)
 getAidPairsList aid×states =
@@ -154,16 +122,13 @@ _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionI
 [] connects aidNew to aidOld = aidNew ≡ aidOld
 ((aid , aidPrev) ∷ s) connects aidNew to aidOld  =
   aid ≡ aidNew × s connects aidPrev to aidOld ⊎ s connects aidNew to aidOld
-\end{code}
-\begin{code}
+
 enactable  : EnactState → List (GovActionID × GovActionID)
            → GovActionID × GovActionState → Type
 enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
-\end{code}
-\begin{code}[hide]
+
   λ where
-\end{code}
-\begin{code}
+
    nothing        → ⊤
    (just aidOld)  → ∃[ t ]  fromList t ⊆ fromList aidPairs
                             × Unique t × t connects aidNew to aidOld
@@ -173,11 +138,9 @@ allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid
 
 hasParentE : EnactState → GovActionID → GovAction → Type
 hasParentE e aid a = case getHashES e a of
-\end{code}
-\begin{code}[hide]
+
   λ where
-\end{code}
-\begin{code}
+
    nothing    → ⊤
    (just id)  → id ≡ aid
 
@@ -186,8 +149,7 @@ hasParent e s a aid with getHash aid
 ... | just aid' = hasParentE e aid' a
                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × action gas ≈ a) s
 ... | nothing = ⊤
-\end{code}
-\begin{code}[hide]
+
 open Equivalence
 
 hasParentE? : ∀ e aid a → Dec (hasParentE e aid a)
@@ -265,52 +227,9 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
     subst (length l ≤_)
           (sym (proj₂ (∈-filter⁻ (λ l → length l ≟ maxlen ls) {xs = ls} l'∈)))
           (∈-maxlen-≤ l (∈-filter⁺ (allEnactable? e) l∈ el))
-\end{code}
-\end{AgdaMultiCode}
-\caption{Enactability predicate}
-\label{defs:enactable}
-\end{figure*}
 
-The behavior of \GovState is similar to that of a queue. New proposals are appended at
-the end, but any proposal can be removed at the epoch
-boundary. However, for the purposes of enactment, earlier proposals
-take priority. Note that \EnactState used in \GovEnv is defined later,
-in Section~\ref{sec:enactment}.
-
-\begin{itemize}
-\item \addVote inserts (and potentially overrides) a vote made for a
-particular governance action (identified by its ID) by a credential with a role.
-
-\item \addAction adds a new proposed action at the end of a given \GovState.
-
-\item The \validHFAction property indicates whether a given proposal, if it is a
-\TriggerHF action, can potentially be enacted in the future. For this to be the
-case, its \prevAction needs to exist, be another \TriggerHF action and have a
-compatible version.
-\end{itemize}
-
-Figure~\ref{defs:enactable} shows some of the functions used to determine whether certain
-actions are enactable in a given state.  Specifically, \AgdaFunction{allEnactable} passes
-the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list of
-\AgdaFunction{GovActionID}-pairs which is then passed to \AgdaFunction{enactable}. The latter uses the
-\AgdaFunction{\AgdaUnderscore{}connects\AgdaUnderscore{}to\AgdaUnderscore{}} function to check
-whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
-enacted one.
-
-Additionally, \govActionPriority assigns a priority to the various governance action types.
-This is useful for ordering lists of governance actions as well as grouping governance
-actions by constructor. In particular, the relations
-\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}∼\AgdaUnderscore{}}} and
-\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in
-Figure~\ref{defs:enactable} are used for determining whether two actions are of the same
-``kind'' in the following sense: either the actions arise from the same constructor, or one
-action is \NoConfidence and the other is an \UpdateCommittee action.
-
-\begin{figure*}
-\begin{code}[hide]
 data _⊢_⇀⦇_,GOV'⦈_ where
-\end{code}
-\begin{code}
+
   GOV-Vote : ∀ {x ast} → let
       open GovEnv Γ
       vote = record { gid = aid ; voter = voter ; vote = v ; anchor = x }
@@ -339,28 +258,3 @@ data _⊢_⇀⦇_,GOV'⦈_ where
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
 _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
-\end{code}
-\caption{Rules for the GOV transition system}
-\label{defs:gov-rules}
-\end{figure*}
-
-The GOV transition system is now given as the reflexitive-transitive
-closure of the system GOV', described in
-Figure~\ref{defs:gov-rules}.
-
-For \GOVVote, we check that the governance action being voted on
-exists and the role is allowed to vote. \canVote is defined in
-Figure~\ref{fig:ratification-requirements}. Note that there are no
-checks on whether the credential is actually associated with the
-role. This means that anyone can vote for, e.g., the \CC role. However,
-during ratification those votes will only carry weight if they are
-properly associated with members of the constitutional committee.
-
-For \GOVPropose, we check well-formedness, correctness of the deposit
-and some conditions depending on the type of the action:
-\begin{itemize}
-\item for \ChangePParams or \TreasuryWdrl, the proposal policy needs to be provided;
-\item for \UpdateCommittee, no proposals with members expiring in the present or past
-  epoch are allowed, and candidates cannot be added and removed at the same time;
-\item and we check the validity of hard-fork actions via \validHFAction.
-\end{itemize}

@@ -1,5 +1,4 @@
-\subsection{Witnessing}
-\begin{code}[hide]
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
@@ -13,27 +12,7 @@ module Ledger.Conway.Conformance.Utxow
   where
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.ScriptValidation txs abs
-\end{code}
 
-The purpose of witnessing is make sure the intended action is
-authorized by the holder of the signing key.  (For details see
-the Formal Ledger Specification for the Shelley Era~\cite[Sec.~8.3]{cardano_shelley_spec}.)
-Figure~\ref{fig:functions:utxow} defines functions used for witnessing.
-\witsVKeyNeeded and \scriptsNeeded are now defined by projecting the same information out of
-\credsNeeded. Note that the last component of \credsNeeded adds the script in the proposal policy
-only if it is present.
-
-\allowedLanguages has additional conditions for new features in
-Conway. If a transaction contains any votes, proposals, a treasury
-donation or asserts the treasury amount, it is only allowed to contain
-Plutus V3 scripts. Additionally, the presence of reference scripts or
-inline scripts does not prevent Plutus V1 scripts from being used in a
-transaction anymore. Only inline datums are now disallowed from
-appearing together with a Plutus V1 script.
-
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
 module _ (o : TxOut) where
   d = proj₁ (proj₂ (proj₂ o))
   data HasInlineDatum : Set where
@@ -74,8 +53,7 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
     getLanguage : Script → Maybe Language
     getLanguage (inj₁ _) = nothing
     getLanguage (inj₂ s) = just (language s)
-\end{code}
-\begin{code}
+
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isKeyHashObj
 
@@ -104,52 +82,32 @@ credsNeeded utxo txb
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
   ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList (map voter txvote))
   ∪  mapPartial (λ p  → case  p .policy of
-\end{code}
-\begin{code}[hide]
+
     λ where
-\end{code}
-\begin{code}
+
                               (just sh)  → just (Propose  p , ScriptObj sh)
                               nothing    → nothing) (fromList txprop)
-\end{code}
-\begin{code}[hide]
+
   where open TxBody txb; open GovVote; open RwdAddr; open GovProposal
-\end{code}
-\begin{code}
+
 
 witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
 witsVKeyNeeded = getVKeys ∘ mapˢ proj₂ ∘ credsNeeded
 
 scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
 scriptsNeeded = getScripts ∘ mapˢ proj₂ ∘ credsNeeded
-\end{code}
-\end{AgdaMultiCode}
-\caption{Functions used for witnessing}
-\label{fig:functions:utxow}
-\end{figure*}
 
-\begin{NoConway}
-\begin{figure*}[h]
-\begin{code}[hide]
 data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
-\end{code}
-\caption{UTxOW transition-system types}
-\label{fig:ts-types:utxow}
-\end{figure*}
 
-\begin{figure*}[h]
-\begin{code}[hide]
+  _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
+
 private variable
   Γ : UTxOEnv
   s s' : UTxOState
   tx : Tx
 
 data _⊢_⇀⦇_,UTXOW⦈_ where
-\end{code}
-\begin{code}
+
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
@@ -172,16 +130,11 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-\end{code}
-\caption{UTXOW inference rules}
-\label{fig:rules:utxow}
-\end{figure*}
-\begin{code}[hide]
+
 pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h
       = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h)
 pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
-\end{code}
-\end{NoConway}
+
