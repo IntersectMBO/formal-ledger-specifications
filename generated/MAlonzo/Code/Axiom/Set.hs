@@ -310,46 +310,6 @@ d_DecEq'8743'finite'8658'strongly'45'finite_318 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_Theory_94 ->
   () ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'finite_280 ~v0 ~v1 ~v2 v3 = du_Show'45'finite_280 v3
-du_Show'45'finite_280 ::
-  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
-  MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'finite_280 v0
-  = coe
-      MAlonzo.Code.Class.Show.Core.C_mkShow_18
-      (coe
-         (\ v1 ->
-            case coe v1 of
-              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v2 v3
-                -> case coe v3 of
-                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
-                       -> coe
-                            MAlonzo.Code.Data.String.Base.d_braces_48
-                            (coe
-                               MAlonzo.Code.Data.String.Base.d_intersperse_30
-                               (", " :: Data.Text.Text)
-                               (coe
-                                  MAlonzo.Code.Data.List.Base.du_map_22
-                                  (coe MAlonzo.Code.Class.Show.Core.d_show_16 (coe v0)) (coe v4)))
-                     _ -> MAlonzo.RTE.mazUnreachableError
-              _ -> MAlonzo.RTE.mazUnreachableError))
--- Axiom.Set.Theory.weakly-finite
-d_weakly'45'finite_286 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_Theory_82 -> () -> AgdaAny -> ()
-d_weakly'45'finite_286 = erased
--- Axiom.Set.Theory.strongly-finite
-d_strongly'45'finite_294 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_Theory_82 -> () -> AgdaAny -> ()
-d_strongly'45'finite_294 = erased
--- Axiom.Set.Theory.DecEq∧finite⇒strongly-finite
-d_DecEq'8743'finite'8658'strongly'45'finite_306 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_Theory_94 ->
-  () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
