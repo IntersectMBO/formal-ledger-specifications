@@ -35,12 +35,12 @@ import qualified MAlonzo.Code.Data.Product.Properties
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
-import qualified MAlonzo.Code.Ledger.Conway.Conformance.Address
-import qualified MAlonzo.Code.Ledger.Conway.Conformance.Crypto
+import qualified MAlonzo.Code.Ledger.Address
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.PParams
-import qualified MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure
+import qualified MAlonzo.Code.Ledger.Crypto
+import qualified MAlonzo.Code.Ledger.Types.Epoch
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.DecEq
@@ -63,8 +63,8 @@ du_DecEq'45'Credential_58 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Credential_58 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Address.du_DecEq'45'Credential_146
-      (coe v0) (coe v1)
+      MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142 (coe v0)
+      (coe v1)
 -- _.Epoch
 d_Epoch_112 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.T_GovStructure_10 ->
@@ -85,7 +85,7 @@ d_addEpoch_272 ::
   MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
 d_addEpoch_272 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Types.Epoch.d_addEpoch_250
+      MAlonzo.Code.Ledger.Types.Epoch.d_addEpoch_246
       (coe
          MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.d_epochStructure_608
          (coe v0))
@@ -95,8 +95,7 @@ d_isKeyHash_302 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20 ->
-  ()
+  MAlonzo.Code.Ledger.Address.T_Credential_16 -> ()
 d_isKeyHash_302 = erased
 -- _.PParams.Emax
 d_Emax_478 ::
@@ -357,19 +356,14 @@ d_refScriptCostStride_542 v0
       MAlonzo.Code.Ledger.Conway.Conformance.PParams.d_refScriptCostStride_350
       (coe v0)
 -- _.RwdAddr.net
-d_net_664 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Address.T_RwdAddr_80 ->
-  AgdaAny
-d_net_664 v0
-  = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Address.d_net_86 (coe v0)
+d_net_664 :: MAlonzo.Code.Ledger.Address.T_RwdAddr_76 -> AgdaAny
+d_net_664 v0 = coe MAlonzo.Code.Ledger.Address.d_net_82 (coe v0)
 -- _.RwdAddr.stake
 d_stake_666 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Address.T_RwdAddr_80 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  MAlonzo.Code.Ledger.Address.T_RwdAddr_76 ->
+  MAlonzo.Code.Ledger.Address.T_Credential_16
 d_stake_666 v0
-  = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Address.d_stake_88 (coe v0)
+  = coe MAlonzo.Code.Ledger.Address.d_stake_84 (coe v0)
 -- Ledger.Conway.Conformance.Certs._.Anchor
 d_Anchor_688 a0 = ()
 -- Ledger.Conway.Conformance.Certs._.GovActionID
@@ -385,13 +379,11 @@ d_VDeleg_732 a0 = ()
 d_getDRepVote_748 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions.T_GovVote_762 ->
-  Maybe
-    MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 d_getDRepVote_748 ~v0 = du_getDRepVote_748
 du_getDRepVote_748 ::
   MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions.T_GovVote_762 ->
-  Maybe
-    MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 du_getDRepVote_748
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions.du_getDRepVote_834
@@ -447,9 +439,9 @@ d_voter_822 v0
 -- Ledger.Conway.Conformance.Certs.DepositPurpose
 d_DepositPurpose_840 a0 = ()
 data T_DepositPurpose_840
-  = C_CredentialDeposit_842 MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20 |
+  = C_CredentialDeposit_842 MAlonzo.Code.Ledger.Address.T_Credential_16 |
     C_PoolDeposit_844 AgdaAny |
-    C_DRepDeposit_846 MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20 |
+    C_DRepDeposit_846 MAlonzo.Code.Ledger.Address.T_Credential_16 |
     C_GovActionDeposit_848 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Conformance.Certs.DecEq-DepositPurpose
 d_DecEq'45'DepositPurpose_850 ::
@@ -479,16 +471,16 @@ d_DecEq'45'DepositPurpose_850 v0
                                     (coe
                                        MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Address.du_DecEq'45'Credential_146
+                                          MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_DecEq'45'THash_26
+                                             MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_khs_204
+                                                MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.d_crypto_562
                                                    (coe v0))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_DecEq'45'ScriptHash_208
+                                             MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.d_crypto_562
                                                 (coe v0))))
@@ -538,9 +530,9 @@ d_DecEq'45'DepositPurpose_850 v0
                                           (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                     (coe
                                        MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                                       (MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_DecEq'45'THash_26
+                                       (MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_khs_204
+                                             MAlonzo.Code.Ledger.Crypto.d_khs_200
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.d_crypto_562
                                                 (coe v0))))
@@ -591,16 +583,16 @@ d_DecEq'45'DepositPurpose_850 v0
                                     (coe
                                        MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Address.du_DecEq'45'Credential_146
+                                          MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_DecEq'45'THash_26
+                                             MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_khs_204
+                                                MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.d_crypto_562
                                                    (coe v0))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Crypto.d_DecEq'45'ScriptHash_208
+                                             MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Types.GovStructure.d_crypto_562
                                                 (coe v0))))
@@ -678,11 +670,10 @@ d_Deposits_852 = erased
 -- Ledger.Conway.Conformance.Certs.PoolParams
 d_PoolParams_854 a0 = ()
 newtype T_PoolParams_854
-  = C_PoolParams'46'constructor_12945 MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  = C_PoolParams'46'constructor_12945 MAlonzo.Code.Ledger.Address.T_Credential_16
 -- Ledger.Conway.Conformance.Certs.PoolParams.rewardAddr
 d_rewardAddr_858 ::
-  T_PoolParams_854 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  T_PoolParams_854 -> MAlonzo.Code.Ledger.Address.T_Credential_16
 d_rewardAddr_858 v0
   = case coe v0 of
       C_PoolParams'46'constructor_12945 v1 -> coe v1
@@ -709,38 +700,30 @@ d_retiring_868 v0
 -- Ledger.Conway.Conformance.Certs.DCert
 d_DCert_872 a0 = ()
 data T_DCert_872
-  = C_delegate_874 MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  = C_delegate_874 MAlonzo.Code.Ledger.Address.T_Credential_16
                    (Maybe
                       MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions.T_VDeleg_702)
                    (Maybe AgdaAny) Integer |
-    C_dereg_876 MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
-                Integer |
+    C_dereg_876 MAlonzo.Code.Ledger.Address.T_Credential_16 Integer |
     C_regpool_878 AgdaAny T_PoolParams_854 |
     C_retirepool_880 AgdaAny AgdaAny |
-    C_regdrep_882 MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
-                  Integer
+    C_regdrep_882 MAlonzo.Code.Ledger.Address.T_Credential_16 Integer
                   MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions.T_Anchor_710 |
-    C_deregdrep_884 MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+    C_deregdrep_884 MAlonzo.Code.Ledger.Address.T_Credential_16
                     Integer |
-    C_ccreghot_886 MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
-                   (Maybe
-                      MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20)
+    C_ccreghot_886 MAlonzo.Code.Ledger.Address.T_Credential_16
+                   (Maybe MAlonzo.Code.Ledger.Address.T_Credential_16)
 -- Ledger.Conway.Conformance.Certs.cwitness
 d_cwitness_888 ::
-  T_DCert_872 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  T_DCert_872 -> MAlonzo.Code.Ledger.Address.T_Credential_16
 d_cwitness_888 v0
   = case coe v0 of
       C_delegate_874 v1 v2 v3 v4 -> coe v1
       C_dereg_876 v1 v2 -> coe v1
       C_regpool_878 v1 v2
-        -> coe
-             MAlonzo.Code.Ledger.Conway.Conformance.Address.C_KeyHashObj_22
-             (coe v1)
+        -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v1)
       C_retirepool_880 v1 v2
-        -> coe
-             MAlonzo.Code.Ledger.Conway.Conformance.Address.C_KeyHashObj_22
-             (coe v1)
+        -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v1)
       C_regdrep_882 v1 v2 v3 -> coe v1
       C_deregdrep_884 v1 v2 -> coe v1
       C_ccreghot_886 v1 v2 -> coe v1
@@ -1067,7 +1050,7 @@ d_'46'generalizedField'45'pp_26067 v0
 -- Ledger.Conway.Conformance.Certs..generalizedField-c
 d_'46'generalizedField'45'c_26069 ::
   T_GeneralizeTel_26087 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  MAlonzo.Code.Ledger.Address.T_Credential_16
 d_'46'generalizedField'45'c_26069 v0
   = case coe v0 of
       C_mkGeneralizeTel_26089 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 -> coe v2
@@ -1134,7 +1117,7 @@ d_'46'generalizedField'45'mv_26085 v0
 d_GeneralizeTel_26087 a0 = ()
 data T_GeneralizeTel_26087
   = C_mkGeneralizeTel_26089 MAlonzo.Code.Ledger.Conway.Conformance.PParams.T_PParams_248
-                            MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+                            MAlonzo.Code.Ledger.Address.T_Credential_16
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 Integer (Maybe AgdaAny)
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -1152,7 +1135,7 @@ d_'46'generalizedField'45'd_34853 v0
 -- Ledger.Conway.Conformance.Certs..generalizedField-c
 d_'46'generalizedField'45'c_34855 ::
   T_GeneralizeTel_34871 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+  MAlonzo.Code.Ledger.Address.T_Credential_16
 d_'46'generalizedField'45'c_34855 v0
   = case coe v0 of
       C_mkGeneralizeTel_34873 v1 v2 v3 v4 v5 v6 v7 v8 v9 -> coe v2
@@ -1212,7 +1195,7 @@ d_'46'generalizedField'45'an_34869 v0
 d_GeneralizeTel_34871 a0 = ()
 data T_GeneralizeTel_34871
   = C_mkGeneralizeTel_34873 Integer
-                            MAlonzo.Code.Ledger.Conway.Conformance.Address.T_Credential_20
+                            MAlonzo.Code.Ledger.Address.T_Credential_16
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 AgdaAny
                             [MAlonzo.Code.Ledger.Conway.Conformance.GovernanceActions.T_GovVote_762]
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
