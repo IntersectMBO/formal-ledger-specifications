@@ -1,12 +1,12 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Utxo where
+module Ledger.Conway.Foreign.HSLedger.Utxo where
 
 open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length)
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Certs
-open import Ledger.Conway.Conformance.Foreign.HSLedger.PParams
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Transaction
+open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.Certs
+open import Ledger.Conway.Foreign.HSLedger.PParams
+open import Ledger.Conway.Foreign.HSLedger.Transaction
 
 open import Ledger.Conway.Conformance.Utxo it it
 open import Ledger.Conway.Conformance.Utxo.Properties it it

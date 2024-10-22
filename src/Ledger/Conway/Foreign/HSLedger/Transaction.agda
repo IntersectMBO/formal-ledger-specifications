@@ -1,10 +1,10 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Transaction where
+module Ledger.Conway.Foreign.HSLedger.Transaction where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Certs
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Gov
-open import Ledger.Conway.Conformance.Foreign.HSLedger.PParams
+open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.Certs
+open import Ledger.Conway.Foreign.HSLedger.Gov
+open import Ledger.Conway.Foreign.HSLedger.PParams
 
 instance
   HsTy-Tag = autoHsType Tag

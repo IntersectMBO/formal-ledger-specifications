@@ -1,9 +1,9 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Gov where
+module Ledger.Conway.Foreign.HSLedger.Gov where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Address
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Enact
-open import Ledger.Conway.Conformance.Foreign.HSLedger.PParams
+open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.Enact
+open import Ledger.Conway.Foreign.HSLedger.PParams
 
 open import Ledger.Conway.Conformance.Gov it
 open import Ledger.Conway.Conformance.Gov.Properties it

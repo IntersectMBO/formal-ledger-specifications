@@ -1,4 +1,4 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Core where
+module Ledger.Conway.Foreign.HSLedger.Core where
 
 open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ) public
 

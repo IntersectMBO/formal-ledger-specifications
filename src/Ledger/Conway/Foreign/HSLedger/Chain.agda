@@ -1,8 +1,8 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Chain where
+module Ledger.Conway.Foreign.HSLedger.Chain where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Conformance.Foreign.HSLedger.NewEpoch
-open import Ledger.Conway.Conformance.Foreign.HSLedger.Transaction
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.NewEpoch
+open import Ledger.Conway.Foreign.HSLedger.Transaction
 
 open import Ledger.Conway.Conformance.Chain it it
 open import Ledger.Conway.Conformance.Chain.Properties it it

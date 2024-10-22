@@ -1,6 +1,6 @@
-module Ledger.Conway.Conformance.Foreign.HSLedger.Address where
+module Ledger.Conway.Foreign.HSLedger.Address where
 
-open import Ledger.Conway.Conformance.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 
 instance
   HsTy-Credential = autoHsType Credential
