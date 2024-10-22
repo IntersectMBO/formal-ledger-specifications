@@ -1,5 +1,4 @@
-\section{Addresses}
-\begin{code}[hide]
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
@@ -8,32 +7,17 @@ open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
 
 module Ledger.Conway.Conformance.Address (
-\end{code}
 
-We define credentials and various types of addresses here. A
-credential contains a hash, either of a verifying (public) key
-(\isVKey) or of a (\isScript).
-
-\begin{figure*}[h!]
-\begin{AgdaMultiCode}
-\emph{Abstract types}
-\begin{code}
   Network
   KeyHash
   ScriptHash
-\end{code}
-\begin{code}[hide]
+
   : Type)  ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
-\end{code}
-\emph{Derived types}
-\AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
-VKeyBaseAddr, VKeyBoostrapAddr, ScriptBaseAddr, ScriptBootstrapAddr, VKeyAddr, ScriptAddr}
-\begin{code}
+
 data Credential : Type where
   KeyHashObj : KeyHash → Credential
   ScriptObj  : ScriptHash → Credential
-\end{code}
-\begin{code}[hide]
+
 isKeyHashObj : Credential → Maybe KeyHash
 isKeyHashObj (KeyHashObj h) = just h
 isKeyHashObj (ScriptObj _)  = nothing
@@ -53,8 +37,7 @@ data isVKey : Credential → Type where
   VKeyisVKey : (kh : KeyHash) → isVKey (KeyHashObj kh)
 data isScript : Credential → Type where
   SHisScript : (sh : ScriptHash) → isScript (ScriptObj sh)
-\end{code}
-\begin{code}
+
 
 record BaseAddr : Type where
   field net    : Network
@@ -69,11 +52,9 @@ record BootstrapAddr : Type where
 record RwdAddr : Type where
   field net    : Network
         stake  : Credential
-\end{code}
-\begin{code}[hide]
+
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
-\end{code}
-\begin{code}
+
 
 VKeyBaseAddr         = Σ[ addr ∈ BaseAddr       ] isVKey    (addr .pay)
 VKeyBootstrapAddr    = Σ[ addr ∈ BootstrapAddr  ] isVKey    (addr .pay)
@@ -83,11 +64,7 @@ ScriptBootstrapAddr  = Σ[ addr ∈ BootstrapAddr  ] isScript  (addr .pay)
 Addr        = BaseAddr        ⊎ BootstrapAddr
 VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
 ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
-\end{code}
-\\
-\emph{Helper functions}
-\AgdaTarget{payCred, isVKeyAddr}
-\begin{code}
+
 payCred       : Addr → Credential
 stakeCred     : Addr → Maybe Credential
 netId         : Addr → Network
@@ -97,12 +74,7 @@ isScriptAddr  : Addr → Type
 isVKeyAddr       = isVKey ∘ payCred
 isScriptAddr     = isScript ∘ payCred
 isScriptRwdAddr  = isScript ∘ RwdAddr.stake
-\end{code}
-\end{AgdaMultiCode}
-\caption{Definitions used in Addresses}
-\label{fig:defs:addresses}
-\end{figure*}
-\begin{code}[hide]
+
 payCred (inj₁ record {pay = pay}) = pay
 payCred (inj₂ record {pay = pay}) = pay
 
@@ -156,4 +128,4 @@ module _ ⦃ _ : Show Network  ⦄ ⦃ _ : Show KeyHash  ⦄ ⦃ _ : Show Script
     unquoteDecl Show-RwdAddr = derive-Show [ (quote RwdAddr , Show-RwdAddr) ]
     Show-Credential×Coin : Show (Credential × Coin)
     Show-Credential×Coin = Show-×
-\end{code}
+

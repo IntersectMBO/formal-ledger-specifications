@@ -1,18 +1,7 @@
-\section{Token Algebras}
-\label{sec:token-algebra}
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
+
 {-# OPTIONS --safe #-}
 open import Prelude using (Type)
-module Ledger.Conway.Conformance.TokenAlgebra (
-\end{code}
-\emph{Abstract types}
-\begin{code}
-  PolicyId
-\end{code}
-\begin{code}[hide]
-  : Type) where
+module Ledger.Conway.Conformance.TokenAlgebra (PolicyId : Type) where
 open import Ledger.Prelude
 
 open import Algebra              using (Monoid)
@@ -23,29 +12,21 @@ open import Relation.Unary       using (Pred)
 
 MemoryEstimate : Set
 MemoryEstimate = ℕ
-\end{code}
-\emph{Derived types}
-\AgdaTarget{TokenAlgebra}
-\begin{code}
+
 record TokenAlgebra : Type₁ where
-\end{code}
-\begin{code}[hide]
+
   field
-\end{code}
-\begin{code}
+
     Value : Set
     ⦃ Value-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ Value
 
-\end{code}
-\begin{code}[hide]
+
   open Algebra.CommutativeMonoid (Conversion.toBundle Value-CommutativeMonoid) public
     using (_≈_ ; ε ; monoid ; rawMonoid)
     renaming (_∙_ to _+ᵛ_)
 
   open MonoidMorphisms (rawMonoid) (Monoid.rawMonoid +-0-monoid) public
   field
-\end{code}
-\begin{code}
     coin                      : Value → Coin
     inject                    : Coin → Value
     policies                  : Value → ℙ PolicyId
@@ -55,8 +36,7 @@ record TokenAlgebra : Type₁ where
     specialAsset              : AssetName
     property                  : coin ∘ inject ≗ id -- FIXME: rename!
     coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
-\end{code}
-\begin{code}[hide]
+
     ⦃ DecEq-Value ⦄ : DecEq Value
     ⦃ Dec-≤ᵗ ⦄      : _≤ᵗ_ ⁇²
 
@@ -72,14 +52,8 @@ record TokenAlgebra : Type₁ where
     where
     open ≡-Reasoning
     open MonoidMorphisms.IsMonoidHomomorphism
-\end{code}
-\emph{Helper functions}
-\AgdaTarget{sumᵛ}
-\begin{code}
+
   sumᵛ : List Value → Value
   sumᵛ [] = inject 0
   sumᵛ (x ∷ l) = x + sumᵛ l
-\end{code}
-\end{AgdaMultiCode}
-\caption{Token algebras, used for multi-assets}
-\end{figure*}
+

@@ -1,5 +1,4 @@
-\section{Scripts}
-\begin{code}[hide]
+
 {-# OPTIONS --safe #-}
 
 open import Algebra.Morphism
@@ -55,10 +54,7 @@ record PlutusStructure : Type₁ where
         ⦃ Dec-validPlutusScript ⦄ : ∀ {x} → (validPlutusScript x ⁇³)
         language : PlutusScript → Language
         toData : ∀ {A : Type} → A → Data
-\end{code}
-We define \Timelock scripts here. They can verify the presence of keys and whether a transaction happens in a certain slot interval. These scripts are executed as part of the regular witnessing.
-\begin{figure*}[h]
-\begin{code}
+
 data Timelock : Type where
   RequireAllOf       : List Timelock      → Timelock
   RequireAnyOf       : List Timelock      → Timelock
@@ -66,8 +62,7 @@ data Timelock : Type where
   RequireSig         : KeyHash            → Timelock
   RequireTimeStart   : Slot               → Timelock
   RequireTimeExpire  : Slot               → Timelock
-\end{code}
-\begin{code}[hide]
+
 unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 
 private variable
@@ -80,11 +75,9 @@ private variable
 open import Data.List.Relation.Binary.Sublist.Ext
 open import Data.List.Relation.Binary.Sublist.Propositional as S
 import Data.Maybe.Relation.Unary.Any as M
-\end{code}
-\begin{code}[hide]
+
 data
-\end{code}
-\begin{code}
+
   evalTimelock (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) : Timelock → Type where
   evalAll  : All (evalTimelock khs I) ss
            → (evalTimelock khs I) (RequireAllOf ss)
@@ -98,12 +91,7 @@ data
            → (evalTimelock khs I) (RequireTimeStart a)
   evalTEx  : M.Any (_≤ a) (I .proj₂)
            → (evalTimelock khs I) (RequireTimeExpire a)
-\end{code}
-\caption{Timelock scripts and their evaluation}
-\label{fig:defs:timelock}
-\end{figure*}
 
-\begin{code}[hide]
 instance
   Dec-evalTimelock : evalTimelock ⁇³
   Dec-evalTimelock {khs} {I} {tl} .dec = go? tl
@@ -191,4 +179,4 @@ record ScriptStructure : Type₁ where
   instance
     Hashable-Script : Hashable Script ScriptHash
     Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
-\end{code}
+

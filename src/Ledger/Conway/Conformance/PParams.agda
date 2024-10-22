@@ -1,9 +1,4 @@
-\section{Protocol Parameters}
-\label{sec:protocol-parameters}
-This section defines the adjustable protocol parameters of the Cardano ledger.
-These parameters are used in block validation and can affect various features of the system,
-such as minimum fees, maximum and minimum sizes of certain components, and more.
-\begin{code}[hide]
+
 {-# OPTIONS --safe #-}
 
 open import Data.Product.Properties
@@ -28,23 +23,12 @@ module Ledger.Conway.Conformance.PParams
 
 private variable
   m n : ℕ
-\end{code}
 
-\begin{NoConway}
-The \AgdaRecord{Acnt} record has two fields, \AgdaField{treasury} and \AgdaField{reserves}, so
-the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the total assets that
-remain in treasury and reserves.
-
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
 record Acnt : Type where
-\end{code}
-\begin{code}[hide]
+
   constructor ⟦_,_⟧ᵃ
   field
-\end{code}
-\begin{code}
+
     treasury reserves : Coin
 
 ProtVer : Type
@@ -57,16 +41,7 @@ instance
 data pvCanFollow : ProtVer → ProtVer → Type where
   canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
   canFollowMinor : pvCanFollow (m , n) (m , n + 1)
-\end{code}
-\end{AgdaMultiCode}
-\caption{Definitions related to protocol parameters}
-\label{fig:protocol-parameter-defs}
-\end{figure*}
-\end{NoConway}
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
 data PParamGroup : Type where
   NetworkGroup     : PParamGroup
   EconomicGroup    : PParamGroup
@@ -75,28 +50,21 @@ data PParamGroup : Type where
   SecurityGroup    : PParamGroup
 
 record DrepThresholds : Type where
-\end{code}
-\begin{code}[hide]
+
   field
-\end{code}
-\begin{code}
+
     P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
 
 record PoolThresholds : Type where
-\end{code}
-\begin{code}[hide]
+
   field
-\end{code}
-\begin{code}
+
     Q1 Q2a Q2b Q4 Q5e : ℚ
 
 record PParams : Type where
-\end{code}
-\begin{code}[hide]
+
   field
-\end{code}
-\emph{Network group}
-\begin{code}
+
         maxBlockSize                  : ℕ
         maxTxSize                     : ℕ
         maxHeaderSize                 : ℕ
@@ -104,12 +72,9 @@ record PParams : Type where
         maxBlockExUnits               : ExUnits
         maxValSize                    : ℕ
         maxCollateralInputs           : ℕ
-\end{code}
-\begin{code}[hide]
+
         pv                            : ProtVer -- retired, keep for now
-\end{code}
-\emph{Economic group}
-\begin{code}
+
         a                             : ℕ
         b                             : ℕ
         keyDeposit                    : Coin
@@ -121,25 +86,18 @@ record PParams : Type where
         maxRefScriptSizePerBlock      : ℕ
         refScriptCostStride           : ℕ
         refScriptCostMultiplier       : ℚ
-\end{code}
-\begin{code}[hide]
+
         minUTxOValue                  : Coin -- retired, keep for now
-\end{code}
-\emph{Technical group}
-\begin{code}
+
         Emax                          : Epoch
         nopt                          : ℕ
         a0                            : ℚ
         collateralPercentage          : ℕ
-\end{code}
-\begin{code}[hide]
+
         -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
-\end{code}
-\begin{code}
+
         costmdls                      : CostModel
-\end{code}
-\emph{Governance group}
-\begin{code}
+
         poolThresholds                : PoolThresholds
         drepThresholds                : DrepThresholds
         ccMinSize                     : ℕ
@@ -148,39 +106,24 @@ record PParams : Type where
         govActionDeposit              : Coin
         drepDeposit                   : Coin
         drepActivity                  : Epoch
-\end{code}
-\end{AgdaMultiCode}
-\caption{Protocol parameter definitions}
-\label{fig:protocol-parameter-declarations}
-\end{figure*}
-\begin{figure*}
-\begin{AgdaMultiCode}
-\begin{code}
+
 positivePParams : PParams → List ℕ
 positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ refScriptCostStride
                       ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                       ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
-\end{code}
-\begin{code}[hide]
+
   where open PParams pp
-\end{code}
-\begin{code}
+
 paramsWellFormed : PParams → Type
 paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
-\end{code}
-\begin{code}[hide]
+
 paramsWF-elim : (pp : PParams) → paramsWellFormed pp → (n : ℕ) → n ∈ˡ (positivePParams pp) → n > 0
 paramsWF-elim pp pwf (suc n) x = z<s
 paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
   where open Equivalence
 refScriptCostStride>0 : (pp : PParams) → paramsWellFormed pp → (PParams.refScriptCostStride pp) > 0
 refScriptCostStride>0 pp pwf = paramsWF-elim pp pwf (PParams.refScriptCostStride pp) (there (there (there (there (here refl)))))
-\end{code}
-\end{AgdaMultiCode}
-\caption{Protocol parameter well-formedness}
-\label{fig:protocol-parameter-well-formedness}
-\end{figure*}
-\begin{code}[hide]
+
 instance
   Show-ℚ = Show _ ∋ record {M}
     where import Data.Rational.Show as M
@@ -229,17 +172,17 @@ module PParamsUpdate where
           govActionDeposit drepDeposit  : Maybe Coin
           drepActivity                  : Maybe Epoch
           ccMinSize ccMaxTermLength     : Maybe ℕ
-  
+
   paramsUpdateWellFormed : PParamsUpdate → Type
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                          ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                          ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
     where open PParamsUpdate ppu
-  
+
   paramsUpdateWellFormed? : ( u : PParamsUpdate ) → Dec (paramsUpdateWellFormed u)
   paramsUpdateWellFormed? u = ¿ paramsUpdateWellFormed u ¿
-  
+
   modifiesNetworkGroup : PParamsUpdate → Bool
   modifiesNetworkGroup ppu = let open PParamsUpdate ppu in
     or
@@ -252,7 +195,7 @@ module PParamsUpdate where
       ∷ is-just maxBlockExUnits
       ∷ is-just pv
       ∷ [])
-  
+
   modifiesEconomicGroup : PParamsUpdate → Bool
   modifiesEconomicGroup ppu = let open PParamsUpdate ppu in
     or
@@ -269,7 +212,7 @@ module PParamsUpdate where
       ∷ is-just prices
       ∷ is-just minUTxOValue
       ∷ [])
-  
+
   modifiesTechnicalGroup : PParamsUpdate → Bool
   modifiesTechnicalGroup ppu = let open PParamsUpdate ppu in
     or
@@ -279,7 +222,7 @@ module PParamsUpdate where
       ∷ is-just collateralPercentage
       ∷ is-just costmdls
       ∷ [])
-  
+
   modifiesGovernanceGroup : PParamsUpdate → Bool
   modifiesGovernanceGroup ppu = let open PParamsUpdate ppu in
     or
@@ -292,7 +235,7 @@ module PParamsUpdate where
       ∷ is-just ccMinSize
       ∷ is-just ccMaxTermLength
       ∷ [])
-  
+
   modifiedUpdateGroups : PParamsUpdate → ℙ PParamGroup
   modifiedUpdateGroups ppu =
     ( modifiesNetworkGroup    ?═⇒ NetworkGroup
@@ -303,22 +246,22 @@ module PParamsUpdate where
     where
       _?═⇒_ : (PParamsUpdate → Bool) → PParamGroup → ℙ PParamGroup
       pred ?═⇒ grp = if pred ppu then ❴ grp ❵ else ∅
-  
+
   _?↗_ : ∀ {A : Type} → Maybe A → A → A
   just x ?↗ _ = x
   nothing ?↗ x = x
-  
+
   ≡-update : ∀ {A : Type} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x ⇔ (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
   ≡-update {u} {p} {x} = mk⇔ to from
     where
       to : ∀ {A} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x → (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
       to {u = just x} refl = inj₁ refl
       to {u = nothing} refl = inj₂ (refl , refl)
-  
+
       from : ∀ {A} {u : Maybe A} {p : A} {x : A} → u ≡ just x ⊎ (p ≡ x × u ≡ nothing) → u ?↗ p ≡ x
       from (inj₁ refl) = refl
       from (inj₂ (refl , refl)) = refl
-  
+
   applyPParamsUpdate : PParams → PParamsUpdate → PParams
   applyPParamsUpdate pp ppu =
     record
@@ -363,57 +306,7 @@ module PParamsUpdate where
   instance
     unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
-\end{code}
-% Retiring ProtVer's documentation since ProtVer is retired.
-% \ProtVer represents the protocol version used in the Cardano ledger.
-% It is a pair of natural numbers, representing the major and minor version,
-% respectively.
 
-\PParams contains parameters used in the Cardano ledger, which we group according
-to the general purpose that each parameter serves.
-\begin{itemize}
-  \item \NetworkGroup: parameters related to the network settings;
-  \item \EconomicGroup: parameters related to the economic aspects of the ledger;
-  \item \TechnicalGroup: parameters related to technical settings;
-  \item \GovernanceGroup: parameters related to governance settings;
-  \item \SecurityGroup: parameters that can impact the security of the system.
-\end{itemize}
-
-The first four groups have the property that every protocol parameter
-is associated to precisely one of these groups. The \SecurityGroup is
-special: a protocol parameter may or may not be in the
-\SecurityGroup. So, each protocol parameter belongs to at least one
-and at most two groups. Note that in \cite{cip1694} there is no
-\SecurityGroup, but there is the concept of security-relevant protocol
-parameters. The difference between these notions is only social, so we
-implement security-relevant protocol parameters as a group.
-
-The purpose of the groups is to determine voting thresholds for
-proposals aiming to change parameters. The thresholds depend on the
-groups of the parameters contained in such a proposal.
-
-These new parameters are declared in
-Figure~\ref{fig:protocol-parameter-declarations} and denote the
-following concepts.
-
-\begin{itemize}
-  \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
-  named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
-  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfivee;
-  \item \ccMinSize: minimum constitutional committee size;
-  \item \ccMaxTermLength: maximum term limit (in epochs) of constitutional committee members;
-  \item \govActionLifetime: governance action expiration;
-  \item \govActionDeposit: governance action deposit;
-  \item \drepDeposit: \DRep deposit amount;
-  \item \drepActivity: \DRep activity period;
-  \item \minimumAVS: the minimum active voting threshold.
-\end{itemize}
-
-Figure~\ref{fig:protocol-parameter-declarations} also defines the
-function \paramsWellFormed. It performs some sanity checks on protocol
-parameters.
-
-\begin{code}[hide]
 instance
   pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
   pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
@@ -422,41 +315,22 @@ instance
   ... | no ¬p    | yes refl = yes canFollowMinor
   ... | yes refl | no ¬p    = yes canFollowMajor
   ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
-\end{code}
 
-Finally, to update parameters we introduce an abstract type. An update
-can be applied and it has a set of groups associated with it. An
-update is well formed if it has at least one group (i.e. if it updates
-something) and if it preserves well-formedness.
-
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
 record PParamsDiff : Type₁ where
   field
-\end{code}
-\emph{Abstract types \& functions}
-\begin{code}
+
     UpdateT : Type
     applyUpdate : PParams → UpdateT → PParams
     updateGroups : UpdateT → ℙ PParamGroup
 
-\end{code}
-\begin{code}[hide]
+
     ⦃ ppWF? ⦄ : ∀ {u} → (∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)) ⁇
-\end{code}
-\emph{Well-formedness condition}
-\begin{code}
+
 
   ppdWellFormed : UpdateT → Type
   ppdWellFormed u = updateGroups u ≢ ∅
     × ∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)
-\end{code}
-\end{AgdaMultiCode}
-\caption{Abstract type for parameter updates}
-\label{fig:pp-update-type}
-\end{figure*}
-\begin{code}[hide]
+
 record GovParams : Type₁ where
   field ppUpd : PParamsDiff
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
@@ -464,4 +338,4 @@ record GovParams : Type₁ where
   open isHashableSet ppHashingScheme renaming (THash to PPHash) public
   field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
 --         ⦃ Show-UpdT ⦄ : Show PParamsUpdate
-\end{code}
+
