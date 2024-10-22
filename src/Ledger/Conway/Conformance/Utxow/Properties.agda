@@ -3,7 +3,7 @@
 import Data.Maybe as M
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Crypto
+open import Ledger.Crypto
 open import Ledger.Conway.Conformance.Abstract
 open import Ledger.Conway.Conformance.Transaction
 

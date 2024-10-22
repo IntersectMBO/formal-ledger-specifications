@@ -13,9 +13,9 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeM
 open import Relation.Binary.Morphism.Structures
 open import Foreign.Convertible
 import Foreign.Haskell as F
-open import Ledger.Conway.Conformance.Crypto
+open import Ledger.Crypto
 open import Ledger.Conway.Conformance.Transaction
-open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Types.Epoch
 open import Ledger.Conway.Conformance.Types.GovStructure
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
@@ -70,7 +70,7 @@ module Implementation where
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
-  open import Ledger.Conway.Conformance.TokenAlgebra ℕ
+  open import Ledger.TokenAlgebra ℕ
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ

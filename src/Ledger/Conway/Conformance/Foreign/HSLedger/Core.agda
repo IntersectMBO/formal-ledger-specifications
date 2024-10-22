@@ -13,8 +13,8 @@ open import Foreign.Convertible.Deriving  public
 open import Foreign.HaskellTypes          public
 open import Foreign.HaskellTypes.Deriving public
 
-open import Ledger.Conway.Conformance.Crypto
-open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Crypto
+open import Ledger.Types.Epoch
 
 open import Ledger.Conway.Conformance.Transaction renaming (Vote to VoteTag) public
 
@@ -75,7 +75,7 @@ module Implementation where
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
-  open import Ledger.Conway.Conformance.TokenAlgebra ℕ
+  open import Ledger.TokenAlgebra ℕ
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
@@ -215,4 +215,4 @@ instance
     ; scriptSize = λ _ → 0
     }
 
-open import Ledger.Conway.Conformance.Address Network KeyHash ScriptHash using () public
+open import Ledger.Address Network KeyHash ScriptHash using () public

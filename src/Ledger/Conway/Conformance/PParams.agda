@@ -11,9 +11,9 @@ open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Crypto
+open import Ledger.Crypto
 open import Ledger.Conway.Conformance.Script
-open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Types.Epoch
 
 module Ledger.Conway.Conformance.PParams
   (crypto : Crypto )

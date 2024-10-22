@@ -3,10 +3,6 @@
 
 module Ledger.Conway.Conformance.PDF where
 
-open import Ledger.Conway.Conformance.BaseTypes
-open import Ledger.Conway.Conformance.Crypto
-open import Ledger.Conway.Conformance.Types.Epoch
-open import Ledger.Conway.Conformance.Address
 open import Ledger.Conway.Conformance.Script
 open import Ledger.Conway.Conformance.ScriptValidation
 open import Ledger.Conway.Conformance.PParams
@@ -15,8 +11,6 @@ open import Ledger.Conway.Conformance.Types.GovStructure
 open import Ledger.Conway.Conformance.GovernanceActions
 open import Ledger.Conway.Conformance.Certs
 
-open import Ledger.Conway.Conformance.TokenAlgebra
-open import Ledger.Conway.Conformance.TokenAlgebra.ValueSet
 open import Ledger.Conway.Conformance.Transaction
 
 open import Ledger.Conway.Conformance.Utxo
