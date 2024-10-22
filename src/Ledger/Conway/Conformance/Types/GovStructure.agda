@@ -4,9 +4,9 @@ module Ledger.Conway.Conformance.Types.GovStructure where
 
 open import Prelude using (Type)
 open import Class.DecEq
-open import Ledger.Conway.Conformance.Crypto
+open import Ledger.Crypto
 open import Ledger.Conway.Conformance.Script
-open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Types.Epoch
 import Ledger.Conway.Conformance.PParams
 
 record GovStructure : Type₁ where
@@ -30,4 +30,4 @@ record GovStructure : Type₁ where
   field globalConstants : _
   open GlobalConstants globalConstants public
 
-  open import Ledger.Conway.Conformance.Address Network KeyHash ScriptHash public
+  open import Ledger.Address Network KeyHash ScriptHash public

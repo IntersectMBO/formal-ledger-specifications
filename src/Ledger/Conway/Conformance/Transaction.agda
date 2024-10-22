@@ -9,15 +9,15 @@ import Data.Maybe.Base as M
 
 open import Ledger.Prelude renaming (filterᵐ to filter)
 
-open import Ledger.Conway.Conformance.Crypto
-open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Crypto
+open import Ledger.Types.Epoch
 open import Ledger.Conway.Conformance.Types.GovStructure
 import Ledger.Conway.Conformance.PParams
 import Ledger.Conway.Conformance.Script
 import Ledger.Conway.Conformance.GovernanceActions
 import Ledger.Conway.Conformance.Certs
-import Ledger.Conway.Conformance.TokenAlgebra
-import Ledger.Conway.Conformance.Address
+import Ledger.TokenAlgebra
+import Ledger.Address
 
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
@@ -42,8 +42,8 @@ record TransactionStructure : Type₁ where
 
   field crypto : _
   open Crypto crypto public
-  open Ledger.Conway.Conformance.TokenAlgebra ScriptHash public
-  open Ledger.Conway.Conformance.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
+  open Ledger.TokenAlgebra ScriptHash public
+  open Ledger.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
