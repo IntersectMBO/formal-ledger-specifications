@@ -11,6 +11,7 @@ module Ledger.Epoch.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Certs govStructure
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs

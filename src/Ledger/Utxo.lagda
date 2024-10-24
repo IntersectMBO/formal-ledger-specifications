@@ -28,6 +28,7 @@ module Ledger.Utxo
 
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Fees txs using (scriptsCost)
+open import Ledger.Certs govStructure
 
 instance
   _ = +-0-monoid

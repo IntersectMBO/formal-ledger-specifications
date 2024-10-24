@@ -6,14 +6,16 @@ open import Tactic.AnyOf
 open import Tactic.Assumption
 
 open import Ledger.Prelude; open Properties
-open import Ledger.Conway.Conformance.Transaction
-open import Ledger.Conway.Conformance.Abstract
-open import Ledger.Conway.Conformance.Crypto
+open import Ledger.Transaction
+open import Ledger.Abstract
+open import Ledger.Crypto
 
 module Ledger.Conway.Conformance.ScriptValidation
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
+
+open import Ledger.Certs govStructure
 
 instance
   _ = DecEq-Slot
@@ -180,5 +182,5 @@ open Tx
 evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
 evalScripts tx [] = true
 evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) =
-  ¿ evalTimelock (reqSigHash (body tx)) (txvldt (body tx)) (HashedTimelock.timelock tl) ¿ᵇ ∧ evalScripts tx Γ
+  ¿ validP1Script (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
 evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ

@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Transaction
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Transaction
+open import Ledger.Abstract
 
 open import Agda.Builtin.FromNat
 
@@ -15,6 +15,7 @@ open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Conformance.Ratify txs
 open import Ledger.Conway.Conformance.Ratify.Properties txs
+open import Ledger.Conway.Conformance.Certs govStructure
 
 open import Data.List using (filter)
 

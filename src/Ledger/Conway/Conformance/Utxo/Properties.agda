@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Conformance.Abstract using (AbstractFunctions)
-open import Ledger.Conway.Conformance.Transaction using (TransactionStructure)
+open import Ledger.Abstract using (AbstractFunctions)
+open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Utxo.Properties
   (txs : _) (open TransactionStructure txs)
@@ -14,6 +14,7 @@ open import Interface.ComputationalRelation
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
 open import Ledger.Conway.Conformance.ScriptValidation txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
+open import Ledger.Conway.Conformance.Certs govStructure
 open import Prelude
 open import Tactic.GenError
 
@@ -70,7 +71,7 @@ instance
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (UTXO-inductive⋯ _ _ _ x y z e k l m v j n o p q r t u h) with H?
-        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , e , k , l , m , v , j , n , o , p , q , r , t , u ) 
+        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , e , k , l , m , v , j , n , o , p , q , r , t , u )
         ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
         ... | success _ | refl = refl
 
@@ -90,4 +91,3 @@ UTXO-step = compute ⦃ Computational-UTXO ⦄
 UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ success utxoState'
                          ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
 UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
-
