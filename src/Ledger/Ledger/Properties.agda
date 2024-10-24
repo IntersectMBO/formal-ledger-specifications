@@ -1,4 +1,4 @@
---{-# OPTIONS --safe #-} -- TODO: Uncomment after proving |ᵒ-GAs-pres
+{-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
 open import Ledger.Transaction
@@ -169,6 +169,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     open Tx tx renaming (body to txb); open TxBody txb
     open LEnv Γ renaming (pparams to pp)
     open PParams pp using (govActionDeposit)
+    open ≡-Reasoning
 
     -- Mapping a list of `GovActionID × GovActionState`s to a list of
     -- `DepositPurpose`s is so common, we give it a name `dpMap`.
@@ -276,6 +277,34 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
 
     opaque
       unfolding addVote
+
+      |ᵒ-[] : ∀ certState → [] |ᵒ certState ≡ []
+      |ᵒ-[] certState = refl
+
+      |ᵒ-++ : ∀ gs gs′ certState → (gs ++ gs′) |ᵒ certState ≡ (gs |ᵒ certState) ++ (gs′ |ᵒ certState)
+      |ᵒ-++ gs gs′ certState = map-++ _ gs gs′
+
+      |ᵒ-singleton : ∀ gid gas certState → ∃[ gas′ ] [ (gid , gas) ] |ᵒ certState ≡ [ (gid , gas′) ]
+      |ᵒ-singleton gid gas certState = (removeOrphanDRepVotes certState gas , refl)
+
+      dpMap-|ᵒ-singleton : ∀ g certState → dpMap ([ g ] |ᵒ certState) ≡ dpMap [ g ]
+      dpMap-|ᵒ-singleton (gid , gas) certState rewrite |ᵒ-singleton gid gas certState .proj₂ = refl
+
+      dpMap-|ᵒ : ∀ govSt certState → dpMap (govSt |ᵒ certState) ≡ dpMap govSt
+      dpMap-|ᵒ [] certState = cong dpMap (|ᵒ-[] certState)
+      dpMap-|ᵒ (g ∷ govSt) certState = begin
+        dpMap ((g ∷ govSt) |ᵒ certState)
+          ≡⟨ cong dpMap (|ᵒ-++ [ g ] govSt certState) ⟩
+        dpMap (([ g ] |ᵒ certState) ++ (govSt |ᵒ certState))
+          ≡⟨ map-++ _ ([ g ] |ᵒ certState) (govSt |ᵒ certState) ⟩
+        dpMap ([ g ] |ᵒ certState) ++ dpMap (govSt |ᵒ certState)
+          ≡⟨ cong (dpMap ([ g ] |ᵒ certState) ++_) (dpMap-|ᵒ govSt certState) ⟩
+        dpMap ([ g ] |ᵒ certState) ++ dpMap govSt
+          ≡⟨ cong (_++ dpMap govSt) (dpMap-|ᵒ-singleton g certState) ⟩
+        dpMap [ g ] ++ dpMap govSt
+          ≡˘⟨ map-++ _ [ g ] govSt ⟩
+        dpMap (g ∷ govSt) ∎
+
       -- dpMap of GovState is invariant under updating with one GovVote
       dpMap-vote-invar : (v : GovVote) (vps : List (GovVote ⊎ GovProposal)) {k : ℕ} {govSt : GovState}
         → dpMap (updateGovStates (inj₁ v ∷ vps) k govSt ) ≡ dpMap (updateGovStates vps (suc k) govSt)
@@ -336,8 +365,8 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
     open PParams pp using (govActionDeposit)
     govSt : GovState
     govSt = LState.govSt s
-    open LEDGER-PROPS tx Γ s using (utxoDeps; dpMap; voteUpdate; propUpdate; mkAction; updateGovStates; STS→GovSt≡)
-    open EquationalProperties tx Γ s using (dpMap-vote-invar++; updateGovStates≡; updateProps-decomp; updateProps-++-decomp)
+    open LEDGER-PROPS tx Γ s using (utxoDeps; dpMap; propUpdate; mkAction; updateGovStates; STS→GovSt≡)
+    open EquationalProperties tx Γ s using (dpMap-vote-invar++; updateGovStates≡; updateProps-decomp; updateProps-++-decomp; dpMap-|ᵒ)
 
     dpMap-update : ∀ ps k govSt
       → dpMap (updateGovStates (map inj₂ ps) k govSt)
@@ -379,6 +408,22 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
       dpMap [] ++ applyUpTo (λ i → GovActionDeposit (txid , 0 + i)) (length ps')
         ≡˘⟨ dpMap-update ps' 0 [] ⟩
       dpMap (updateGovStates (map inj₂ ps') 0 []) ∎
+
+    -- Removing orphan DRep votes does not modify the set of GAs in GovState
+    |ᵒ-GAs-pres : ∀ vps k govSt certState →
+        dpMap (updateGovStates vps k (govSt |ᵒ certState)) ≡ dpMap (updateGovStates vps k govSt)
+    |ᵒ-GAs-pres vps k govSt certState = let open ≡-Reasoning in begin
+      dpMap (updateGovStates vps k (govSt |ᵒ certState))
+        ≡⟨ updateGovStates≡ vps k ⟩
+      dpMap ((govSt |ᵒ certState) ++ updateGovStates vps k [])
+        ≡⟨ map-++ _ (govSt |ᵒ certState) (updateGovStates vps k []) ⟩
+      dpMap (govSt |ᵒ certState) ++ dpMap (updateGovStates vps k [])
+        ≡⟨ cong (_++ dpMap (updateGovStates vps k [])) (dpMap-|ᵒ govSt certState) ⟩
+      dpMap govSt ++ dpMap (updateGovStates vps k [])
+        ≡˘⟨ map-++ _ govSt (updateGovStates vps k []) ⟩
+      dpMap (govSt ++ updateGovStates vps k [])
+        ≡˘⟨ updateGovStates≡ vps k ⟩
+      dpMap (updateGovStates vps k govSt) ∎
 
     open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 
@@ -486,11 +531,6 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
                            (trans (length-++ ps) (+-comm (length ps) 1))) ⟩
       fromList (dpMap (updateGovStates (map inj₂ (p ∷ ps)) 0 [])) ∎
 
-    -- Removing orphan DRep votes does not modify the set of GAs in GovState
-    postulate
-      |ᵒ-GAs-pres : ∀ vps k govSt certState →
-        fromList (dpMap (updateGovStates vps k (govSt |ᵒ certState))) ≡ fromList (dpMap (updateGovStates vps k govSt))
-
     -- GA Deposits Invariance Property for LEDGER STS --------------------------------------------------------------------
     LEDGER-govDepsMatch : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                           → govDepsMatch s → govDepsMatch s'
@@ -521,7 +561,7 @@ module _  -- ASSUMPTIONS (TODO: eliminate/prove these) --
         fromList (dpMap (govSt ++ updateGovStates (txgov txb) 0 []))
           ≡˘⟨ cong fromList (updateGovStates≡ (txgov txb) 0) ⟩
         fromList (dpMap (updateGovStates (txgov txb) 0 govSt ))
-          ≡˘⟨ |ᵒ-GAs-pres (txgov txb) 0 govSt certState' ⟩
+          ≡˘⟨ cong fromList (|ᵒ-GAs-pres (txgov txb) 0 govSt certState') ⟩
         fromList (dpMap (updateGovStates (txgov txb) 0 (govSt |ᵒ certState')))
           ≡˘⟨ cong (fromList ∘ dpMap ) (STS→GovSt≡ utxosts tx-valid) ⟩
         fromList (dpMap govSt') ∎

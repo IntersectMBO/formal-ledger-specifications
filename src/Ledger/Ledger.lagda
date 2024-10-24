@@ -59,15 +59,16 @@ txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
 
+isUnregisteredDRep : CertState → Voter → Type
+isUnregisteredDRep ⟦ _ , _ , gState ⟧ᶜˢ (r , c) = r ≡ DRep × c ∉ dom (gState .dreps)
+
+removeOrphanDRepVotes : CertState → GovActionState → GovActionState
+removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
+  where
+    votes′ = filterKeys (¬_ ∘ isUnregisteredDRep certState) (votes gas)
+
 _|ᵒ_ : GovState → CertState → GovState
 govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
-  where
-    removeOrphanDRepVotes : CertState → GovActionState → GovActionState
-    removeOrphanDRepVotes ⟦ _ , _ , gState ⟧ᶜˢ gas = record gas { votes = votes′ }
-      where
-        isUnregisteredDRep : Voter → Type
-        isUnregisteredDRep (r , c) = r ≡ DRep × c ∉ dom (gState .dreps)
-        votes′ = filterKeys (¬_ ∘ isUnregisteredDRep) (votes gas)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types and functions for the LEDGER transition system}
@@ -103,9 +104,7 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-V : let
-      open LState s; txb = tx .body; open TxBody txb; open LEnv Γ
-    in
+  LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls , deposits utxoSt ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
