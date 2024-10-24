@@ -5,7 +5,7 @@ open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.Gov
 
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.Enact govStructure
 
 open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length)
 import Data.Rational.Show as Rational

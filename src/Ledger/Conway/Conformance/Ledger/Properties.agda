@@ -11,7 +11,7 @@ module Ledger.Conway.Conformance.Ledger.Properties
 
 open import Axiom.Set.Properties th
 open import Ledger.Conway.Conformance.Chain txs abs
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
 open import Ledger.Conway.Conformance.Gov txs

@@ -9,7 +9,7 @@ module Ledger.Conway.Conformance.Certs
 
 open import Tactic.Derive.DecEq
 
-open import Ledger.Conway.Conformance.GovernanceActions gs
+open import Ledger.GovernanceActions gs
 open RwdAddr
 
 data DepositPurpose : Type where

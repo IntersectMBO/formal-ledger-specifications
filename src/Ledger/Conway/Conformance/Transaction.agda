@@ -14,7 +14,7 @@ open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
 import Ledger.PParams
 import Ledger.Script
-import Ledger.Conway.Conformance.GovernanceActions
+import Ledger.GovernanceActions
 import Ledger.Conway.Conformance.Certs
 import Ledger.TokenAlgebra
 import Ledger.Address
@@ -73,7 +73,7 @@ record TransactionStructure : Type₁ where
     ; globalConstants = globalConstants
     }
 
-  module GovernanceActions = Ledger.Conway.Conformance.GovernanceActions govStructure
+  module GovernanceActions = Ledger.GovernanceActions govStructure
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Conway.Conformance.Certs govStructure public

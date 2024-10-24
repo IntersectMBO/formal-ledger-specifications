@@ -8,7 +8,7 @@ open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Conformance.Gov it
 open import Ledger.Conway.Conformance.Gov.Properties it
 
-open import Ledger.Conway.Conformance.GovernanceActions govStructure using (Vote) public
+open import Ledger.GovernanceActions govStructure using (Vote) public
 
 instance
   HsTy-GovRole = autoHsType GovRole

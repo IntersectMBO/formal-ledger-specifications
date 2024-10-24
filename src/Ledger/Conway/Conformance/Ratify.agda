@@ -11,8 +11,8 @@ open import Ledger.Conway.Conformance.Transaction hiding (Vote)
 
 module Ledger.Conway.Conformance.Ratify (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.Conway.Conformance.Enact govStructure
-open import Ledger.Conway.Conformance.GovernanceActions govStructure using (Vote)
+open import Ledger.Enact govStructure
+open import Ledger.GovernanceActions govStructure using (Vote)
 
 infixr 2 _∧_
 _∧_ = _×_

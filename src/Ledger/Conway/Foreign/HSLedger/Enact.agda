@@ -4,8 +4,8 @@ open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
-open import Ledger.Conway.Conformance.Enact govStructure
-open import Ledger.Conway.Conformance.GovernanceActions.Properties govStructure
+open import Ledger.Enact govStructure
+open import Ledger.GovernanceActions.Properties govStructure
 
 instance
   HsTy-EnactState = autoHsType EnactState ⊣ withConstructor "MkEnactState"
