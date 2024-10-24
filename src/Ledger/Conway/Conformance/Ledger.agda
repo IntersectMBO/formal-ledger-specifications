@@ -12,7 +12,7 @@ module Ledger.Conway.Conformance.Ledger
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Gov txs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs

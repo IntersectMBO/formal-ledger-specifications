@@ -11,9 +11,9 @@ open import Ledger.Prelude hiding (Any; any?)
 
 open import Axiom.Set.Properties
 
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Gov txs
-open import Ledger.Conway.Conformance.GovernanceActions govStructure hiding (yes; no)
+open import Ledger.GovernanceActions govStructure hiding (yes; no)
 open import Ledger.Conway.Conformance.Ratify txs
 
 import Data.List.Membership.Propositional as P

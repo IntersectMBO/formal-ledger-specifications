@@ -18,7 +18,7 @@ module Ledger.Conway.Conformance.Epoch
   where
 
 open import Ledger.Conway.Conformance.Gov txs
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Conformance.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs

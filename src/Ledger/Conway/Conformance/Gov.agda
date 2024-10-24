@@ -10,8 +10,8 @@ open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
-open import Ledger.Conway.Conformance.GovernanceActions govStructure hiding (yes; no)
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.GovernanceActions govStructure hiding (yes; no)
+open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Ratify txs hiding (vote)
 
 open import Data.List.Ext using (subpermutations; sublists)

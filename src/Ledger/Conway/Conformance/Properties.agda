@@ -13,7 +13,7 @@ open import Ledger.Conway.Conformance.Chain txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Gov txs
 
 isCredDeposit : DepositPurpose → Type

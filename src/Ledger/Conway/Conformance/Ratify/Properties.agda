@@ -6,8 +6,8 @@ open import Ledger.Conway.Conformance.Transaction
 module Ledger.Conway.Conformance.Ratify.Properties (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Conway.Conformance.Gov txs
-open import Ledger.Conway.Conformance.GovernanceActions.Properties govStructure
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.GovernanceActions.Properties govStructure
+open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Ratify txs
 
 open Computational ⦃...⦄ hiding (computeProof; completeness)
