@@ -145,7 +145,7 @@ SVScriptStructure = record
 
 instance _ = SVScriptStructure
 
-open import Ledger.Conway.Conformance.PParams it it it hiding (PParams)
+open import Ledger.PParams it it it hiding (PParams)
 
 SVGovParams : GovParams
 SVGovParams = record

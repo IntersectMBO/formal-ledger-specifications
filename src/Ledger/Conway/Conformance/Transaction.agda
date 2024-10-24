@@ -12,7 +12,7 @@ open import Ledger.Prelude renaming (filterᵐ to filter)
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
 open import Ledger.Conway.Conformance.Types.GovStructure
-import Ledger.Conway.Conformance.PParams
+import Ledger.PParams
 import Ledger.Script
 import Ledger.Conway.Conformance.GovernanceActions
 import Ledger.Conway.Conformance.Certs
@@ -51,7 +51,7 @@ record TransactionStructure : Type₁ where
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public
-  open Ledger.Conway.Conformance.PParams crypto epochStructure scriptStructure public
+  open Ledger.PParams crypto epochStructure scriptStructure public
 
   field govParams : _
   open GovParams govParams public
