@@ -12,7 +12,7 @@ import Data.Rational as ℚ
 open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Abstract
 open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.Utxo
@@ -21,7 +21,7 @@ module Ledger.Conway.Conformance.Utxo
   where
 
 open import Ledger.Conway.Conformance.ScriptValidation txs abs
-open import Ledger.Conway.Conformance.Fees txs using (scriptsCost)
+open import Ledger.Fees txs using (scriptsCost)
 open import Ledger.Conway.Conformance.Certs govStructure
 
 open PParams

@@ -2,7 +2,7 @@
 
 open import Ledger.Prelude
 open import Ledger.Transaction
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Abstract
 import Ledger.Conway.Conformance.Certs
 
 module Ledger.Conway.Conformance.Ledger.Properties
