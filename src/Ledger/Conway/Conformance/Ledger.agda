@@ -5,7 +5,7 @@ import Data.List as L
 
 open import Ledger.Prelude
 open import Ledger.Conway.Conformance.Abstract
-open import Ledger.Conway.Conformance.Transaction using (TransactionStructure)
+open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Ledger
   (txs : _) (open TransactionStructure txs)
@@ -16,6 +16,7 @@ open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Gov txs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs
+open import Ledger.Conway.Conformance.Certs govStructure
 
 open Tx
 
@@ -85,4 +86,3 @@ pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
-

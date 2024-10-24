@@ -7,7 +7,7 @@ open import Data.Nat.Properties hiding (_≟_; _≤?_)
 open import Data.Nat.Properties.Ext
 
 open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter)
-open import Ledger.Conway.Conformance.Transaction hiding (Vote)
+open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Conway.Conformance.Ratify (txs : _) (open TransactionStructure txs) where
 

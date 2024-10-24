@@ -10,7 +10,7 @@ open import Agda.Builtin.FromNat
 
 open import Ledger.Prelude
 open import Ledger.Conway.Conformance.Abstract
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.Epoch
   (txs : _) (open TransactionStructure txs)
@@ -22,6 +22,7 @@ open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Conformance.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
+open import Ledger.Conway.Conformance.Certs govStructure
 
 record RewardUpdate : Set where
   constructor ⟦_,_,_,_⟧ʳᵘ
@@ -215,4 +216,3 @@ data
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
       _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧ⁿᵉ
-

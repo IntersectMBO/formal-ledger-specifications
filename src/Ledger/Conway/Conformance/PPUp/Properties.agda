@@ -2,7 +2,7 @@
 
 open import Ledger.Prelude hiding (_*_)
 open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.PPUp.Properties (txs : _) (open TransactionStructure txs) where
 

@@ -4,7 +4,7 @@
 open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
 open import Ledger.Crypto
 open import Ledger.Conway.Conformance.Abstract
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.Utxow
   (txs : _) (open TransactionStructure txs)
@@ -12,6 +12,7 @@ module Ledger.Conway.Conformance.Utxow
   where
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.ScriptValidation txs abs
+open import Ledger.Certs govStructure
 
 module _ (o : TxOut) where
   d = proj₁ (proj₂ (proj₂ o))
@@ -137,4 +138,3 @@ pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
-

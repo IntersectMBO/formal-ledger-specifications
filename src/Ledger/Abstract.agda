@@ -6,6 +6,7 @@ open import Ledger.Transaction
 module Ledger.Abstract (txs : TransactionStructure) where
 
 open TransactionStructure txs
+open import Ledger.Certs govStructure
 
 record indexOf : Type where
   field

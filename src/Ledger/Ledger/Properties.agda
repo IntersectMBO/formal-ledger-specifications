@@ -3,9 +3,10 @@
 open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract
+import Ledger.Certs
 
 module Ledger.Ledger.Properties
-  (txs : _) (open TransactionStructure txs)
+  (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 

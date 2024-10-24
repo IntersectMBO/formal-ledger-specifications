@@ -1,11 +1,12 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.Abstract (txs : TransactionStructure) where
 
 open TransactionStructure txs
+open import Ledger.Certs govStructure
 
 record indexOf : Type where
   field

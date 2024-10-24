@@ -13,7 +13,7 @@ open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude
 open import Ledger.Conway.Conformance.Abstract
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.Utxo
   (txs : _) (open TransactionStructure txs)
@@ -22,6 +22,7 @@ module Ledger.Conway.Conformance.Utxo
 
 open import Ledger.Conway.Conformance.ScriptValidation txs abs
 open import Ledger.Conway.Conformance.Fees txs using (scriptsCost)
+open import Ledger.Conway.Conformance.Certs govStructure
 
 open PParams
 
@@ -283,9 +284,9 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ networkId
-    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
-    ∙ txNetworkId ≡? networkId
+    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
+    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
+    ∙ txNetworkId ≡? NetworkId
     ∙ curTreasury ≡? treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────

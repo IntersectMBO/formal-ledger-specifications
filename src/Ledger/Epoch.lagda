@@ -25,6 +25,7 @@ open import Ledger.Enact govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
+open import Ledger.Certs govStructure
 \end{code}
 \begin{NoConway}
 \begin{figure*}[h]
