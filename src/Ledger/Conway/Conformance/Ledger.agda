@@ -4,7 +4,7 @@
 import Data.List as L
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Ledger

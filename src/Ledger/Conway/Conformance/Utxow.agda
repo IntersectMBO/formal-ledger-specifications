@@ -3,7 +3,7 @@
 
 open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
 open import Ledger.Crypto
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Abstract
 open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.Utxow

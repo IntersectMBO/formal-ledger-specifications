@@ -9,7 +9,7 @@ open import Data.Integer.Ext
 open import Agda.Builtin.FromNat
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Abstract
 open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.Epoch

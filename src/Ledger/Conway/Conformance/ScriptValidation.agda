@@ -7,7 +7,7 @@ open import Tactic.Assumption
 
 open import Ledger.Prelude; open Properties
 open import Ledger.Transaction
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Abstract
 open import Ledger.Crypto
 
 module Ledger.Conway.Conformance.ScriptValidation

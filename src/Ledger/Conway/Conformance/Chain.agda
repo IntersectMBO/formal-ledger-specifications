@@ -6,7 +6,7 @@ open import Data.Nat.Properties using (+-0-monoid)
 
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Abstract
 
 module Ledger.Conway.Conformance.Chain
   (txs : _) (open TransactionStructure txs)
