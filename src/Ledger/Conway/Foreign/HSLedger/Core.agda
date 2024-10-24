@@ -146,7 +146,7 @@ instance
         ; validPlutusScript = λ _ _ _ _ → ⊤
         }
 
-open import Ledger.Conway.Conformance.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
+open import Ledger.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
 
 HsGovParams : GovParams
 HsGovParams = record

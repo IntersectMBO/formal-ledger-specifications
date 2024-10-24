@@ -5,7 +5,7 @@ module Ledger.Conway.Conformance.PDF where
 
 open import Ledger.Conway.Conformance.Script
 open import Ledger.Conway.Conformance.ScriptValidation
-open import Ledger.Conway.Conformance.PParams
+open import Ledger.PParams
 
 open import Ledger.Conway.Conformance.Types.GovStructure
 open import Ledger.Conway.Conformance.GovernanceActions
