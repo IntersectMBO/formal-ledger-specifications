@@ -12,7 +12,7 @@ open import Tactic.Derive.Show
 
 open import Ledger.Prelude
 open import Ledger.Crypto
-open import Ledger.Conway.Conformance.Script
+open import Ledger.Script
 open import Ledger.Types.Epoch
 
 module Ledger.Conway.Conformance.PParams
@@ -338,4 +338,3 @@ record GovParams : Type₁ where
   open isHashableSet ppHashingScheme renaming (THash to PPHash) public
   field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
 --         ⦃ Show-UpdT ⦄ : Show PParamsUpdate
-
