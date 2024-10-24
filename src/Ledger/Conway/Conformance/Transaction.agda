@@ -11,7 +11,7 @@ open import Ledger.Prelude renaming (filterᵐ to filter)
 
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
-open import Ledger.Conway.Conformance.Types.GovStructure
+open import Ledger.Types.GovStructure
 import Ledger.PParams
 import Ledger.Script
 import Ledger.Conway.Conformance.GovernanceActions

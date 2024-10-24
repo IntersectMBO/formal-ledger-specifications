@@ -8,7 +8,7 @@ open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude hiding (yes; no)
-open import Ledger.Conway.Conformance.Types.GovStructure
+open import Ledger.Types.GovStructure
 
 module Ledger.Conway.Conformance.GovernanceActions (gs : _) (open GovStructure gs) where
 

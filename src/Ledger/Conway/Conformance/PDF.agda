@@ -7,7 +7,7 @@ open import Ledger.Conway.Conformance.Script
 open import Ledger.Conway.Conformance.ScriptValidation
 open import Ledger.PParams
 
-open import Ledger.Conway.Conformance.Types.GovStructure
+open import Ledger.Types.GovStructure
 open import Ledger.Conway.Conformance.GovernanceActions
 open import Ledger.Conway.Conformance.Certs
 
