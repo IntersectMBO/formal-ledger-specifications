@@ -63,7 +63,7 @@ $(CONWAY_TEX_FILES): $(CONWAY_TEX_DIR)/%.tex: %.lagda
 		$(PYTHON) $(HL_SCRIPT) $@ $@ $(HL_LIST); \
 	fi
 
-define latexToPdf =
+define latexToPdf
     @echo "Generating $@"
     $(eval PDF=$(notdir $@))
     mkdir -p $(dir $@)
@@ -79,7 +79,7 @@ $(PDF_DIR)/midnight-example.pdf: $(LATEX_DIR)/$(MIDNIGHT)/PDF.tex $(latexFiles) 
 	$(latexToPdf)
 
 # Agda -> HTML
-define agdaToHtml =
+define agdaToHtml
     @echo "Generating $@"
     $(AGDA_RUN) --html --html-dir $(HTML_DIR) $<
 endef
@@ -89,7 +89,7 @@ $(HTML_DIR)/$(MIDNIGHT).PDF.html : $(MIDNIGHT)/PDF.lagda
 	$(agdaToHtml)
 
 # Agda -> Haskell
-define agdaToHs =
+define agdaToHs
     @echo "Generating $@"
     $(eval CABAL_FILE=$(1).cabal)
     $(eval PROJECT=$(firstword $(subst /, ,$(@:$(HS_DIR)/%=%))))
@@ -110,7 +110,7 @@ $(HS_MIDNIGHT): $(MIDNIGHT)/HSLedger.agda
 	$(call agdaToHs,midnight-example)
 
 # Haskell -> HTML
-define hsToHtml =
+define hsToHtml
 	@echo "Generating $@"
 	cd $$(dirname $@)\
 	  && cabal haddock --haddock-hyperlink-source\
@@ -123,7 +123,7 @@ $(HS_DIR)/$(MIDNIGHT)/html/: # $(HS_MIDNIGHT)
 	$(hsToHtml)
 
 # Main website
-define indexHtml =
+define indexHtml
 <!DOCTYPE html>
 <html>
 <body>
