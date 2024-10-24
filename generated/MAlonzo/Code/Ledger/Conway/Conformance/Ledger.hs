@@ -704,7 +704,7 @@ d_withdrawals_1800 v0
 d__'8866'_'8640''10631'_'44'GOV'10632'__1816 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Abstract.T_AbstractFunctions_1748 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> ()
@@ -719,38 +719,38 @@ d_GovState_1826 ::
 d_GovState_1826 = erased
 -- Ledger.Conway.Conformance.Ledger._.GovEnv.enactState
 d_enactState_1892 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Enact.T_EnactState_856
 d_enactState_1892 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_enactState_1042
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_enactState_1048
       (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.GovEnv.epoch
 d_epoch_1894 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 -> AgdaAny
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 -> AgdaAny
 d_epoch_1894 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_epoch_1036 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_epoch_1042 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.GovEnv.pparams
 d_pparams_1896 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 ->
   MAlonzo.Code.Ledger.Conway.Conformance.PParams.T_PParams_248
 d_pparams_1896 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_pparams_1038 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_pparams_1044 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.GovEnv.ppolicy
 d_ppolicy_1898 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 ->
   Maybe AgdaAny
 d_ppolicy_1898 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_ppolicy_1040 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_ppolicy_1046 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.GovEnv.txid
 d_txid_1900 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1022 -> AgdaAny
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_1028 -> AgdaAny
 d_txid_1900 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_txid_1034 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.d_txid_1040 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.UTxOState
 d_UTxOState_1946 a0 a1 = ()
 -- Ledger.Conway.Conformance.Ledger._.updateDeposits
