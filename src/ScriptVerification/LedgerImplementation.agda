@@ -118,11 +118,13 @@ SVCrypto = record
 
 instance _ = SVCrypto
 
+open import Ledger.Script it it
 open import Ledger.Conway.Conformance.Script it it
 
 SVScriptStructure : ScriptStructure
 SVScriptStructure = record
-  { hashRespectsUnion = hashRespectsUnion
+  { p1s = P1ScriptStructure-HTL
+  ; hashRespectsUnion = hashRespectsUnion
   ; ps = SVP2ScriptStructure
   }
   where

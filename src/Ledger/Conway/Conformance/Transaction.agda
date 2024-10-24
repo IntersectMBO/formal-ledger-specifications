@@ -13,7 +13,7 @@ open import Ledger.Crypto
 open import Ledger.Types.Epoch
 open import Ledger.Conway.Conformance.Types.GovStructure
 import Ledger.Conway.Conformance.PParams
-import Ledger.Conway.Conformance.Script
+import Ledger.Script
 import Ledger.Conway.Conformance.GovernanceActions
 import Ledger.Conway.Conformance.Certs
 import Ledger.TokenAlgebra
@@ -47,7 +47,7 @@ record TransactionStructure : Type₁ where
 
   field epochStructure : _
   open EpochStructure epochStructure public
-  open Ledger.Conway.Conformance.Script crypto epochStructure public
+  open Ledger.Script crypto epochStructure public
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public

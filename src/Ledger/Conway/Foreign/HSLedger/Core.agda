@@ -123,12 +123,14 @@ instance
 
 -- No P2 scripts for now
 
-open import Ledger.Conway.Conformance.Script it it
+open import Ledger.Script it it
+open import Ledger.Conway.Conformance.Script it it public
 
 instance
   HSScriptStructure : ScriptStructure
   HSScriptStructure = record
-    { hashRespectsUnion = hashRespectsUnion
+    { p1s = P1ScriptStructure-HTL
+    ; hashRespectsUnion = hashRespectsUnion
     ; ps = HSP2ScriptStructure
     }
     where

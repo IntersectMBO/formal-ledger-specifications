@@ -22,8 +22,7 @@ module Ledger.Conway.Conformance.Script
   (es     : _) (open EpochStructure es)
   where
 
-module Script = Ledger.Script crypto es
-open Script public hiding (P1ScriptStructure-TL; ScriptStructure)
+open Ledger.Script crypto es
 
 record HashedTimelock : Type where
   field
@@ -36,28 +35,7 @@ instance
 
 unquoteDecl DecEq-HashedTimelock = derive-DecEq ((quote HashedTimelock , DecEq-HashedTimelock) ∷ [])
 
-P1ScriptStructure-TL : P1ScriptStructure
-P1ScriptStructure-TL = record
+P1ScriptStructure-HTL : P1ScriptStructure
+P1ScriptStructure-HTL = record
   { P1Script = HashedTimelock
   ; validP1Script = λ x y → evalTimelock x y ∘ HashedTimelock.timelock }
-
-record ScriptStructure : Type₁ where
-  p1s : P1ScriptStructure
-  p1s = P1ScriptStructure-TL
-  open P1ScriptStructure p1s public
-
-  field hashRespectsUnion :
-          {A B Hash : Type} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
-        ⦃ Hash-Timelock ⦄ : Hashable P1Script ScriptHash
-
-  field ps : PlutusStructure
-  open PlutusStructure ps public
-    renaming ( PlutusScript       to P2Script
-             ; validPlutusScript  to validP2Script
-             )
-
-  Script = P1Script ⊎ P2Script
-
-  instance
-    Hashable-Script : Hashable Script ScriptHash
-    Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
