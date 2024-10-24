@@ -16,7 +16,7 @@ open import Foreign.HaskellTypes.Deriving public
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
 
-open import Ledger.Conway.Conformance.Transaction renaming (Vote to VoteTag) public
+open import Ledger.Transaction renaming (Vote to VoteTag) public
 
 postulate
   error : {A : Set} → String → A
@@ -99,7 +99,6 @@ module Implementation where
   Ix              = ℕ
   AuxiliaryData   = ⊤
   DocHash         = ℕ
-  networkId       = tt
   tokenAlgebra    = coinTokenAlgebra
 
 HSGlobalConstants = GlobalConstants ∋ record {Implementation}
@@ -196,6 +195,7 @@ instance
     }
 
 open TransactionStructure HSTransactionStructure public
+open import Ledger.Certs govStructure public
 
 open import Ledger.Conway.Conformance.Abstract it
 

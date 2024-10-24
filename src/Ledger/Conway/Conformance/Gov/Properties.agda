@@ -1,10 +1,10 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Types.GovStructure
-open import Ledger.Conway.Conformance.Transaction using (TransactionStructure)
+open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Gov.Properties
-  (txs : _) (open TransactionStructure txs using (govStructure; networkId))
+  (txs : _) (open TransactionStructure txs using (govStructure))
   (open GovStructure govStructure hiding (epoch)) where
 
 open import Ledger.Prelude hiding (Any; any?)
@@ -127,7 +127,7 @@ instance
             × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
             × (¬ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w) → p ≡ nothing)
             × hasParent' enactState s a prev
-            × addr .RwdAddr.net ≡ networkId ¿
+            × addr .RwdAddr.net ≡ NetworkId ¿
             ,′ isUpdateCommittee a
 
         computeProof = case H of λ where

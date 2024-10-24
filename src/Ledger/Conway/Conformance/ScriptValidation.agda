@@ -6,7 +6,7 @@ open import Tactic.AnyOf
 open import Tactic.Assumption
 
 open import Ledger.Prelude; open Properties
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 open import Ledger.Conway.Conformance.Abstract
 open import Ledger.Crypto
 
@@ -14,6 +14,8 @@ module Ledger.Conway.Conformance.ScriptValidation
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
+
+open import Ledger.Certs govStructure
 
 instance
   _ = DecEq-Slot

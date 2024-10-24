@@ -14,7 +14,7 @@ open import Relation.Binary.Morphism.Structures
 open import Foreign.Convertible
 import Foreign.Haskell as F
 open import Ledger.Crypto
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
 
@@ -94,7 +94,6 @@ module Implementation where
   Ix              = ℕ
   AuxiliaryData   = ⊤
   DocHash         = ℕ
-  networkId       = tt
   tokenAlgebra    = coinTokenAlgebra
 
 SVGlobalConstants = GlobalConstants ∋ record {Implementation}

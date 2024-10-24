@@ -3,7 +3,7 @@
 
 open import Ledger.Prelude hiding (_%_; _*_)
 open import Ledger.Conway.Conformance.Abstract
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 
 module Ledger.Conway.Conformance.Fees
   (txs : _) (open TransactionStructure txs)

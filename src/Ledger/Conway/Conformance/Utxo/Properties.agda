@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Conformance.Abstract using (AbstractFunctions)
-open import Ledger.Conway.Conformance.Transaction using (TransactionStructure)
+open import Ledger.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Utxo.Properties
   (txs : _) (open TransactionStructure txs)
@@ -14,6 +14,7 @@ open import Interface.ComputationalRelation
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
 open import Ledger.Conway.Conformance.ScriptValidation txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
+open import Ledger.Conway.Conformance.Certs govStructure
 open import Prelude
 open import Tactic.GenError
 
@@ -90,4 +91,3 @@ UTXO-step = compute ⦃ Computational-UTXO ⦄
 UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ success utxoState'
                          ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
 UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
-

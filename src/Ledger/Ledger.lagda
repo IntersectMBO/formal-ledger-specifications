@@ -18,6 +18,7 @@ open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.Utxo txs abs
 open import Ledger.Utxow txs abs
+open import Ledger.Certs govStructure
 
 open Tx
 \end{code}

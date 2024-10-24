@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 open import Ledger.Conway.Conformance.Abstract
 
 module Ledger.Conway.Conformance.Chain.Properties

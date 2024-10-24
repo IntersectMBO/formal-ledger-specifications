@@ -11,7 +11,7 @@ open import Ledger.Types.GovStructure
 open import Ledger.GovernanceActions
 open import Ledger.Conway.Conformance.Certs
 
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 
 open import Ledger.Conway.Conformance.Utxo
 open import Ledger.Conway.Conformance.Utxo.Properties

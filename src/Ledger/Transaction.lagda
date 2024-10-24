@@ -109,7 +109,8 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   module GovernanceActions = Ledger.GovernanceActions govStructure
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
-  open import Ledger.Certs govStructure public
+  open import Ledger.Certs govStructure using (DCert)
+
 \end{code}
 \begin{NoConway}
 \emph{Derived types}

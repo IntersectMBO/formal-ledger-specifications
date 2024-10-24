@@ -5,7 +5,7 @@ open import Algebra
 open import Data.Nat.Properties using (+-0-monoid)
 
 open import Ledger.Prelude; open Equivalence
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 open import Ledger.Conway.Conformance.Abstract
 
 module Ledger.Conway.Conformance.Chain
@@ -18,6 +18,7 @@ open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Conformance.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
+open import Ledger.Conway.Conformance.Certs govStructure
 
 record ChainState : Type where
 
@@ -100,4 +101,3 @@ data
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
         record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
-
