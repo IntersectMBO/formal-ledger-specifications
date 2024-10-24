@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Types.GovStructure using (GovStructure)
+open import Ledger.Types.GovStructure using (GovStructure)
 
 module Ledger.Conway.Conformance.Certs.Properties (gs : _) (open GovStructure gs) where
 

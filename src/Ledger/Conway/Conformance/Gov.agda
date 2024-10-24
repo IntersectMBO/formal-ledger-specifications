@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Conformance.Types.GovStructure
+open import Ledger.Types.GovStructure
 open import Ledger.Conway.Conformance.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Gov (txs : _) (open TransactionStructure txs using (govStructure; networkId)) where
