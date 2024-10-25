@@ -266,17 +266,19 @@ actualVotes Γ pparams cc ga votes
   roleVotes r = mapKeys (uncurry credVoter) (filter (λ (x , _) → r ≡ proj₁ x) votes)
 
   activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
-  spos = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
+  spos  = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
+\end{code}
+\begin{code}
 
   getCCHotCred : Credential × Epoch → Maybe Credential
   getCCHotCred (c , e) = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
 \end{code}
 \begin{code}[hide]
-    λ where
+      λ where
 \end{code}
 \begin{code}
-      (true , just (just c'))  → just c'
-      _                        → nothing -- expired, no hot key or resigned
+        (true , just (just c'))  → just c'
+        _                        → nothing -- expired, no hot key or resigned
 \end{code}
 \begin{code}[hide]
   getPoolParams : Credential → Maybe PoolParams
@@ -287,35 +289,60 @@ actualVotes Γ pparams cc ga votes
 
   SPODefaultVote : GovAction → VDeleg → Vote
   SPODefaultVote (TriggerHF _) _ = Vote.no
-  SPODefaultVote NoConfidence (credVoter SPO c) = case getPoolParams c of λ where
-    nothing → Vote.no
-    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
-      (just noConfidenceRep)  → Vote.yes
-      (just abstainRep)       → Vote.abstain
-      _                       → Vote.no
-  SPODefaultVote _ (credVoter SPO c) = case getPoolParams c of λ where
-    nothing → Vote.no
-    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
-      (just abstainRep)  → Vote.abstain
-      _                  → Vote.no
+  SPODefaultVote NoConfidence (credVoter SPO c) = case getPoolParams c of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+        nothing → Vote.no
+        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of
+\end{code}
+\begin{code}[hide]
+               λ where
+\end{code}
+\begin{code}
+               (just noConfidenceRep)  → Vote.yes
+               (just abstainRep)       → Vote.abstain
+               _                       → Vote.no
+  SPODefaultVote _ (credVoter SPO c) = case getPoolParams c of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+        nothing → Vote.no
+        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of
+\end{code}
+\begin{code}[hide]
+               λ where
+\end{code}
+\begin{code}
+               (just abstainRep)  → Vote.abstain
+               _                  → Vote.no
   SPODefaultVote _ _ = Vote.no
 
   actualCCVote : Credential → Epoch → Vote
-  actualCCVote c e = case getCCHotCred (c , e) of λ where
-    (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
-    _          → Vote.abstain
+  actualCCVote c e = case getCCHotCred (c , e) of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+        (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+        _          → Vote.abstain
 
   actualCCVotes : Credential ⇀ Vote
   actualCCVotes = case cc of
 \end{code}
 \begin{code}[hide]
-    λ where
+      λ where
 \end{code}
 \begin{code}
-      nothing         → ∅
-      (just (m , q))  → if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
-                          then mapWithKey actualCCVote m
-                          else constMap (dom m) Vote.no
+        nothing         →  ∅
+        (just (m , q))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
+                           then mapWithKey actualCCVote m
+                           else constMap (dom m) Vote.no
 
   actualPDRepVotes : GovAction → VDeleg ⇀ Vote
   actualPDRepVotes NoConfidence
