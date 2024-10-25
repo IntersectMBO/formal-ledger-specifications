@@ -32,7 +32,6 @@
 - Only consider matching GAs in `hasParent`
 - Fix `ccMinSize` check not properly accounting for double delegations
 - Check `proposal ≡ nothing` if action not `ChangePParams` or `TreasuryWdrl`
-- Implement proper vote counting for SPOs
 
 ### V0.9
 
