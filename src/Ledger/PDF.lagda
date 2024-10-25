@@ -43,9 +43,9 @@ open import Ledger.Utxow
 open import Ledger.Utxow.Properties
 
 open import Ledger.Ledger
---open import Ledger.Ledger.Properties -- TODO: Uncomment after completing proofs
+open import Ledger.Ledger.Properties
 open import Ledger.Ratify.Properties
---open import Ledger.Chain.Properties -- TODO: Uncomment after completing proofs in Ledger.Ledger.Properties
+open import Ledger.Chain.Properties
 
 open import Ledger.Gov
 open import Ledger.Enact
