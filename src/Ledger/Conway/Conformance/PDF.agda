@@ -21,12 +21,12 @@ open import Ledger.Conway.Conformance.Utxow.Properties
 
 open import Ledger.Conway.Conformance.Ledger
 open import Ledger.Conway.Conformance.Ledger.Properties
-open import Ledger.Conway.Conformance.Ratify.Properties
+open import Ledger.Ratify.Properties
 open import Ledger.Conway.Conformance.Chain.Properties
 
 open import Ledger.Conway.Conformance.Gov
 open import Ledger.Enact
-open import Ledger.Conway.Conformance.Ratify
+open import Ledger.Ratify
 
 open import Ledger.Conway.Conformance.Chain
 

@@ -14,7 +14,7 @@ open import Axiom.Set.Properties
 open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Gov txs
 open import Ledger.GovernanceActions govStructure hiding (yes; no)
-open import Ledger.Conway.Conformance.Ratify txs
+open import Ledger.Ratify txs
 
 import Data.List.Membership.Propositional as P
 open import Data.List.Membership.Propositional.Properties

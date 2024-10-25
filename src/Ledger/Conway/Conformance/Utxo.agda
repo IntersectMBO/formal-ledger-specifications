@@ -56,19 +56,8 @@ updateDeposits pp txb = updateCertDeposits pp txcerts
                         ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
   where open TxBody txb
 
-record UTxOEnv : Type where
-  field
-    slot      : Slot
-    pparams   : PParams
-    treasury  : Coin
-
-record UTxOState : Type where
-  constructor ⟦_,_,_,_⟧ᵘ
-  field
-    utxo       : UTxO
-    fees       : Coin
-    deposits   : Deposits
-    donations  : Coin
+open import Ledger.Utxo txs abs public
+  using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ)
 
 private variable
   Γ : UTxOEnv

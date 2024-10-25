@@ -3,12 +3,12 @@
 open import Ledger.Prelude
 open import Ledger.Transaction
 
-module Ledger.Conway.Conformance.Ratify.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.Ratify.Properties (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Conway.Conformance.Gov txs
 open import Ledger.GovernanceActions.Properties govStructure
 open import Ledger.Enact govStructure
-open import Ledger.Conway.Conformance.Ratify txs
+open import Ledger.Ratify txs
 
 open Computational ⦃...⦄ hiding (computeProof; completeness)
 
