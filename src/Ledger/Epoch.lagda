@@ -261,7 +261,8 @@ its results by carrying out each of the following tasks.
     record { currentEpoch = e
            ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
                                           (utxoSt' .deposits) (voteDelegs dState)
-           ; treasury = acnt .treasury ; GState gState }
+           ; treasury = acnt .treasury ; GState gState
+           ; pools = pState .pools ; delegatees = dState .voteDelegs }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────

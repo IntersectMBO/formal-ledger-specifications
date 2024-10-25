@@ -11,6 +11,7 @@ open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Conway.Conformance.Ratify (txs : _) (open TransactionStructure txs) where
 
+open import Ledger.Certs govStructure
 open import Ledger.Enact govStructure
 open import Ledger.GovernanceActions govStructure using (Vote)
 
@@ -103,6 +104,8 @@ record RatifyEnv : Type where
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Coin
+    pools         : KeyHash ⇀ PoolParams
+    delegatees    : Credential ⇀ VDeleg
 
 record RatifyState : Type where
 
@@ -152,6 +155,25 @@ actualVotes Γ pparams cc ga votes
       (true , just (just c'))  → just c'
       _                        → nothing -- expired, no hot key or resigned
 
+  getPoolParams : Credential → Maybe PoolParams
+  getPoolParams (KeyHashObj kh) = lookupᵐ? pools kh
+  getPoolParams _ = nothing
+
+  SPODefaultVote : GovAction → VDeleg → Vote
+  SPODefaultVote (TriggerHF _) _ = Vote.no
+  SPODefaultVote NoConfidence (credVoter SPO c) = case getPoolParams c of λ where
+    nothing → Vote.no
+    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
+      (just noConfidenceRep)  → Vote.yes
+      (just abstainRep)       → Vote.abstain
+      _                       → Vote.no
+  SPODefaultVote _ (credVoter SPO c) = case getPoolParams c of λ where
+    nothing → Vote.no
+    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
+      (just abstainRep)  → Vote.abstain
+      _                  → Vote.no
+  SPODefaultVote _ _ = Vote.no
+
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case getCCHotCred (c , e) of
 
@@ -180,8 +202,7 @@ actualVotes Γ pparams cc ga votes
                    ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
-  actualSPOVotes (TriggerHF _)  = roleVotes SPO ∪ˡ constMap spos Vote.no
-  actualSPOVotes _              = roleVotes SPO ∪ˡ constMap spos Vote.abstain
+  actualSPOVotes a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
 
 open RatifyEnv using (stakeDistrs)
 
