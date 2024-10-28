@@ -372,21 +372,26 @@ DReps, regular DReps and SPOs.
 
 Let us discuss the last item above---the way SPO votes are counted---as the ledger
 specification's handling of this has evolved in response to community feedback.
-Previously, if an SPO did not vote, then they would be counted as having voted
+Previously, if an SPO did not vote, then it would be counted as having voted
 \abstain by default.  Members of the SPO community found this behavior counterintuitive
 and requested that non-voters be assigned a \no vote by default, with the caveat that
-an SPO could change their default setting by delegating their stake to an
-\texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
+an SPO could change its default setting by delegating its reward account credential
+to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
 (This change applies only after the bootstrap period; during the bootstrap period
 the logic is unchanged; see Appendix Section~\ref{sec:conway-bootstrap}.)
-More specifically, the agreed upon specification is the following: an SPO that did
+To be precise, the agreed upon specification is the following: an SPO that did
 not vote is assumed to have vote \no, except under the following circumstances:
 \begin{itemize}
-\item if the SPO has delegated to an \texttt{AlwaysNoConfidence} DRep, then their default vote is
-  \yes for \NoConfidence proposals and \no for other proposals;
-\item if the SPO has delegated to an \texttt{AlwaysAbstain} DRep, then their default vote is
-  \abstain for all proposals.
+\item if the SPO has delegated its reward credential to an \texttt{AlwaysNoConfidence}
+DRep, then their default vote is \yes for \NoConfidence proposals and \no for other proposals;
+\item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain} DRep,
+then its default vote is \abstain for all proposals.
 \end{itemize}
+It is important to note that the credential that can now be used to set a default
+voting behavior is the credential used to withdraw staking rewards, which is not
+(in general) the same as the credential used for voting.
+%% And as a second layer, this means that if that credential is a script, it may need
+%% to have explicit logic written to be able to set a default at all.
 
 \begin{figure*}[h!]
 \begin{code}[hide]
