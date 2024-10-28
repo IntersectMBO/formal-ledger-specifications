@@ -155,23 +155,16 @@ actualVotes Γ pparams cc ga votes
       (true , just (just c'))  → just c'
       _                        → nothing -- expired, no hot key or resigned
 
-  getPoolParams : Credential → Maybe PoolParams
-  getPoolParams (KeyHashObj kh) = lookupᵐ? pools kh
-  getPoolParams _ = nothing
-
   SPODefaultVote : GovAction → VDeleg → Vote
-  SPODefaultVote (TriggerHF _) _ = Vote.no
-  SPODefaultVote NoConfidence (credVoter SPO c) = case getPoolParams c of λ where
-    nothing → Vote.no
-    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
-      (just noConfidenceRep)  → Vote.yes
-      (just abstainRep)       → Vote.abstain
-      _                       → Vote.no
-  SPODefaultVote _ (credVoter SPO c) = case getPoolParams c of λ where
-    nothing → Vote.no
-    (just p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) of λ where
-      (just abstainRep)  → Vote.abstain
-      _                  → Vote.no
+  SPODefaultVote ga (credVoter SPO (KeyHashObj kh)) = case lookupᵐ? pools kh of
+      λ where
+        nothing → Vote.no
+        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) , ga of
+               λ where
+               (just noConfidenceRep , NoConfidence)  → Vote.yes
+               (_ , TriggerHF _)                      → Vote.no
+               (just abstainRep , _)                  → Vote.abstain
+               _                                      → Vote.no
   SPODefaultVote _ _ = Vote.no
 
   actualCCVote : Credential → Epoch → Vote
