@@ -32,12 +32,7 @@ open Implementation
 open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 open import Ledger.Utxow.Properties SVTransactionStructure SVAbstractFunctions
 
--- Actions
--- Create MultiSig params
--- pay into multisig no validation needed
--- redeem requires signatories more than params
-
--- Make this get all output datums 
+-- Make this get all output datums
 getInlineOutputDatum : STxOut → List MultiSigData → Maybe Datum
 getInlineOutputDatum (a , b , just (inj₁ (inj₁ x))) dats = just (inj₁ (inj₁ x))
 getInlineOutputDatum (a , b , just (inj₁ (inj₂ y))) dats = nothing
@@ -50,11 +45,6 @@ newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee
 ... | [] = nothing
 ... | inj₁ (inj₁ x) ∷ [] = just x
 ... | _ = nothing
-
--- You get the Ix input of spend script
--- Then you lookup the realized inputs
--- Then you lookup the txouts
---
 
 -- TODO: Look into this
 getPaymentCredential : STxOut → ℕ
@@ -92,36 +82,46 @@ matchIx? n (inj₁ record { net = net ; pay = (inj₂ y) ; stake = stake }) = n 
 matchIx? n (inj₂ record { net = net ; pay = (inj₁ x) ; attrsSize = attrsSize }) = n ≟ x
 matchIx? n (inj₂ record { net = net ; pay = (inj₂ y) ; attrsSize = attrsSize }) = n ≟ y
 
+
+totalOuts : ScriptContext → PubKeyHash → Value
+totalOuts (txinfo , _) ph  = balanceSTxOut (filter (λ { (fst , snd) → matchIx? ph fst}) (map proj₂ (STxInfo.txouts txinfo)))
+
+totalIns : ScriptContext → PubKeyHash → Value
+totalIns (txinfo , _) ph  = balanceSTxOut (filter (λ { (fst , snd) → matchIx? ph fst}) (map proj₂ (STxInfo.realizedInputs txinfo)))
+
 -- Get the value of txouts for own script
 newValue : ScriptContext → Maybe Value
 newValue sc@(txinfo , sp) with getScriptCredential sc
 ... | nothing = nothing
-... | just sh = just (balanceSTxOut (filter (λ { (fst , snd) → matchIx? sh fst}) (map proj₂ (STxInfo.txouts txinfo))))
+... | just sh = just (totalOuts sc sh)
 
 oldValue : ScriptContext → Maybe Value
 oldValue sc@(txinfo , sp) with getScriptCredential sc
 ... | nothing = nothing
-... | just sh = just (balanceSTxOut (filter (λ { (fst , snd) → matchIx? sh fst}) (map proj₂ (STxInfo.realizedInputs txinfo))))
+... | just sh = just (totalIns sc sh)
 
 compareScriptValues : {ℓ : Level}{r : REL ℕ ℕ ℓ} → Decidable r → Maybe Value → Maybe Value → Bool
 compareScriptValues r (just ov) (just nv) = ⌊ r ov nv ⌋
 compareScriptValues r _ _ = false
 
--- TODO: Implement this
+
+open import Relation.Nullary.Decidable
+
+-- I think the signatories should just contain the signature
+-- The agda implementation has  sig == signature ctx
 checkSigned : PubKeyHash → ScriptContext → Bool
-checkSigned = λ x x₁ → true
+checkSigned ph (txinfo , _) = ⌊ (ph ∈? (STxInfo.vkey txinfo)) ⌋
 
--- TODO: Implement this
 query : PubKeyHash → List PubKeyHash → Bool
-query = λ x x₁ → true
+query ph xs = any (λ k →  ⌊ ph ≟ k ⌋) xs
 
--- TODO: Implement this
 checkPayment : PubKeyHash -> Value -> ScriptContext -> Bool
-checkPayment pkh v ctx = true
+checkPayment pkh v ctx = ⌊ totalOuts ctx pkh ≟ (_+_ {{addValue}} (totalIns ctx pkh) v) ⌋
 
--- TODO: Implement this
 expired : ℕ -> ScriptContext -> Bool
-expired slot ctx = true
+expired slot (txinfo , _) = maybe (λ deadline →  ⌊ slot >? deadline ⌋)
+                                     false
+                                     (proj₂ (STxInfo.txvldt txinfo))
 
 multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
 
@@ -155,15 +155,12 @@ multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
         ∧ (slot == slot')
         ∧ (sigs' == sig ∷ sigs)) -- Make this an order agnostic comparison?
 
--- Originally Pay does not take in a value
--- multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
 multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
   (length sigs) ≥ᵇ MultiSig.minNumSignatures param
    ∧ (case (newLabel ctx) of λ where
       nothing → false
       (just Holding) → checkPayment pkh v ctx
                        ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} v) (newValue ctx))
-                       ∧ false
 
       (just (Collecting _ _ _ _)) → false)
 

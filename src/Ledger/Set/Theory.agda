@@ -50,6 +50,12 @@ opaque
   setToList : ℙ A → List A
   setToList = id
 
+  listToSet : List A → ℙ A
+  listToSet = id
+
+  _⊆?_ : ⦃ _ : DecEq A ⦄ → (n m : ℙ A) → Dec (n ⊆ m)
+  n ⊆? m = all? (λ x → x ∈? m)
+
   instance
     DecEq-ℙ : ⦃ _ : DecEq A ⦄ → DecEq (ℙ A)
     DecEq-ℙ = L.Decˡ.DecEq-Set

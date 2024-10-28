@@ -91,7 +91,9 @@ succeedTx = record { body = record
                                 scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
                                 txdats =  fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
                                 txrdmrs = fromListᵐ (((Spend , 6) ,
-                                                      inj₁ (inj₂ (Propose 100000000000 2 3)) ,
+                                                      inj₁ (inj₂ (Propose 100000000000 -- amount
+                                                                          2 -- wallet pkh
+                                                                          3)) , -- End Slot
                                                       (5 , 5)) ∷ []) } ;
                 isValid = true ;
                 txAD = nothing }
@@ -130,7 +132,10 @@ failTx = record { body = record
                                 scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
                                 txdats = fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
                                 txrdmrs = fromListᵐ (((Spend , 6) ,
-                                                      inj₁ (inj₂ (Propose 1 2 3)) ,
+                                                      inj₁ (inj₂ (Propose
+                                                                 1 -- Target Value
+                                                                 2 -- Target PubKeyHash
+                                                                 3)) , -- End Slot
                                                       (5 , 5)) ∷ []) } ;
                 isValid = true ;
                 txAD = nothing }
@@ -153,7 +158,9 @@ succeedTx' = record { body = record
                                                                     pay = inj₁ 5 ;
                                                                     stake = inj₁ 5 }))
                                                -- , 10000000000 , nothing , nothing))
-                                               , (1090000000000 - 10000000000) , nothing , nothing))
+                                               , (1000000000000 - 20000000000) , nothing , nothing))
+                                               ∷ (2 , ((inj₁ (record { net = tt ; pay = inj₁ 2 ; stake = inj₁ 2 })) ,
+                                               (100000000000 , nothing , nothing)))
                                                ∷ [])
                          ; txfee = 10000000000
                          ; mint = 0
@@ -245,7 +252,7 @@ opaque
   se = letsGo succeedExample
 
   _ : isSuccess se ≡ true
-  _ = {!!}
+  _ = refl
 
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   failExample : ComputationResult String UTxOState

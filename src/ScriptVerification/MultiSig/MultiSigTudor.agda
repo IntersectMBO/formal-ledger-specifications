@@ -77,6 +77,8 @@ insert pkh (x ∷ l') = if (pkh == x)
 {-# COMPILE AGDA2HS query #-}
 {-# COMPILE AGDA2HS insert #-}
 
+-- I think the signatories should just contain the signature
+-- The agda implementation has  sig == signature ctx
 checkSigned : PubKeyHash -> ScriptContext -> Bool
 checkSigned sig ctx = sig == signature ctx
 
