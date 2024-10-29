@@ -253,8 +253,8 @@ open StakeDistrs
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
 actualVotes Γ pparams cc ga votes
-  =  mapKeys (credVoter CC) actualCCVotes ∪ˡ actualPDRepVotes ga
-  ∪ˡ actualDRepVotes ∪ˡ actualSPOVotes ga
+  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes ga
+  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes ga
   where
 \end{code}
 \begin{code}[hide]
@@ -294,12 +294,11 @@ actualVotes Γ pparams cc ga votes
                λ where
 \end{code}
 \begin{code}
-               (just noConfidenceRep , NoConfidence)  → Vote.yes
-               (_ , TriggerHF _)                      → Vote.no
-               (just abstainRep , _)                  → Vote.abstain
-               _                                      → Vote.no
+               (_                     , TriggerHF _   )  → Vote.no
+               (just noConfidenceRep  , NoConfidence  )  → Vote.yes
+               (just abstainRep       , _             )  → Vote.abstain
+               _                                         → Vote.no
   SPODefaultVote _ _ = Vote.no
-
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case getCCHotCred (c , e) of
