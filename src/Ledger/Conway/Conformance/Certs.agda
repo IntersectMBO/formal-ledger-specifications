@@ -57,33 +57,35 @@ updateCertDeposit pp cert deposits
   = (deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 
 private variable
-  an                  : Anchor
-  dReps               : Credential ⇀ Epoch
-  pools               : KeyHash ⇀ PoolParams
-  retiring            : KeyHash ⇀ Epoch
-  vDelegs             : Credential ⇀ VDeleg
-  sDelegs stakeDelegs : Credential ⇀ KeyHash
-  rewards rwds        : Credential ⇀ Coin
-  dreps               : Credential ⇀ Epoch
-  voteDelegs          : Credential ⇀ VDeleg
-  ccKeys ccHotKeys    : Credential ⇀ Maybe Credential
-  dCert               : DCert
-  c                   : Credential
-  mc                  : Maybe Credential
-  d                   : Coin
-  e                   : Epoch
-  kh kh'              : KeyHash
-  mv                  : Maybe VDeleg
-  mkh                 : Maybe KeyHash
-  stᵍ stᵍ'            : GState
-  stᵈ stᵈ'            : DState
-  stᵖ stᵖ'            : PState
-  Γ                   : CertEnv
-  pp                  : PParams
-  dep gdep ddep edeps : Deposits
-  vs                  : List GovVote
-  poolParams          : PoolParams
-  wdrls               : RwdAddr ⇀ Coin
+  an : Anchor
+  dReps : Credential ⇀ Epoch
+  pools : KeyHash ⇀ PoolParams
+  vDelegs : Credential ⇀ VDeleg
+  sDelegs : Credential ⇀ KeyHash
+  retiring : KeyHash ⇀ Epoch
+  ccKeys : Credential ⇀ Maybe Credential
+  rwds : Credential ⇀ Coin
+  dCert : DCert
+  c : Credential
+  mc : Maybe Credential
+  mv : Maybe VDeleg
+  d : Coin
+  e : Epoch
+  kh : KeyHash
+  mkh : Maybe KeyHash
+  stᵍ stᵍ' : GState
+  stᵈ stᵈ' : DState
+  stᵖ stᵖ' : PState
+  Γ : CertEnv
+  pp : PParams
+  dep ddep gdep : Deposits
+  vs : List GovVote
+  poolParams : PoolParams
+  wdrls  : RwdAddr ⇀ Coin
+  ccHotKeys : Credential ⇀ Maybe Credential
+  voteDelegs delegatees : Credential ⇀ VDeleg
+  stakeDelegs : Credential ⇀ KeyHash
+  rewards : Credential ⇀ Coin
 
 data _⊢_⇀⦇_,POOL⦈_  : PoolEnv → PState → DCert → PState → Type
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type
@@ -103,9 +105,10 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
+    ∙ (c , mv) ∈ mapValues just delegatees
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
       ⇀⦇ delegate c mv mkh d ,DELEG⦈
       ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵
@@ -115,7 +118,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ (c , 0) ∈ rwds
     ∙ (CredentialDeposit c , d) ∈ dep
       ────────────────────────────────
-      ⟦ pp , pools ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
       ⇀⦇ dereg c d ,DELEG⦈
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
@@ -148,7 +151,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
@@ -166,7 +169,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
   CERT-base :
     let open PParams pp
         refresh         = mapPartial getDRepVote (fromList vs)
-        refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
+        refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dReps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
     in
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
@@ -175,7 +178,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢
       ⟦ ⟦ voteDelegs , stakeDelegs , rewards , ddep ⟧ᵈ
       , stᵖ
-      , ⟦ dreps , ccHotKeys , gdep ⟧ᵛ
+      , ⟦ dReps , ccHotKeys , gdep ⟧ᵛ
       ⟧ᶜˢ
       ⇀⦇ _ ,CERTBASE⦈
       ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , ddep ⟧ᵈ

@@ -402,8 +402,6 @@ abstract
   -- activeVotingStake cc dists votes =
   --   ∑[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
-  -- TODO: explain this notation in the prose and it's purpose:
-  -- if there's no stake, accept only if threshold is zero
   _/₀_ : ℕ → ℕ → ℚ
   x /₀ 0 = 0ℚ
   x /₀ y@(suc _) = ℤ.+ x ℚ./ y
