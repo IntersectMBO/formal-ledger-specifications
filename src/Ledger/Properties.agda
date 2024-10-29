@@ -14,6 +14,7 @@ open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Enact govStructure
+open import Ledger.Certs govStructure
 open import Ledger.Gov txs
 
 isCredDeposit : DepositPurpose → Type

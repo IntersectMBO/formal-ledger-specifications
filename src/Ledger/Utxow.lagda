@@ -13,6 +13,7 @@ module Ledger.Utxow
   where
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
+open import Ledger.Certs govStructure
 \end{code}
 
 The purpose of witnessing is make sure the intended action is

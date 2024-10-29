@@ -9,9 +9,9 @@ open import ScriptVerification.LedgerImplementation A D scriptImp
 open import Ledger.Conway.Conformance.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
-open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
 open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)
 open import Data.Nat.Coprimality using (Coprime; gcd≡1⇒coprime)

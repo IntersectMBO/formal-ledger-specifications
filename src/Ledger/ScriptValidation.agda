@@ -15,6 +15,8 @@ module Ledger.ScriptValidation
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
+open import Ledger.Certs govStructure
+
 instance
   _ = DecEq-Slot
 
@@ -180,5 +182,5 @@ open Tx
 evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
 evalScripts tx [] = true
 evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) =
-  ¿ evalTimelock (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
+  ¿ validP1Script (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
 evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ

@@ -1,17 +1,18 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Transaction
-open import Ledger.Conway.Conformance.Abstract
+open import Ledger.Transaction
+open import Ledger.Abstract
+import Ledger.Conway.Conformance.Certs
 
 module Ledger.Conway.Conformance.Ledger.Properties
-  (txs : _) (open TransactionStructure txs)
+  (txs : _) (open TransactionStructure txs) (open Ledger.Conway.Conformance.Certs govStructure)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Axiom.Set.Properties th
 open import Ledger.Conway.Conformance.Chain txs abs
-open import Ledger.Conway.Conformance.Enact govStructure
+open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
 open import Ledger.Conway.Conformance.Gov txs

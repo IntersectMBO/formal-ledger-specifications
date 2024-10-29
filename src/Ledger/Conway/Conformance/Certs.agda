@@ -1,7 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Conformance.Types.GovStructure
+open import Ledger.Types.GovStructure
+import Ledger.Certs
 
 module Ledger.Conway.Conformance.Certs
   (gs : _) (open GovStructure gs)
@@ -9,56 +10,13 @@ module Ledger.Conway.Conformance.Certs
 
 open import Tactic.Derive.DecEq
 
-open import Ledger.Conway.Conformance.GovernanceActions gs
+open import Ledger.GovernanceActions gs
+private module Certs = Ledger.Certs gs
+open Certs public
+  hiding (DState; ⟦_,_,_⟧ᵈ; GState; ⟦_,_⟧ᵛ; CertState;
+          _⊢_⇀⦇_,POOL⦈_; _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
+          _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,CERTBASE⦈_; _⊢_⇀⦇_,CERTS⦈_)
 open RwdAddr
-
-data DepositPurpose : Type where
-  CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : KeyHash      → DepositPurpose
-  DRepDeposit        : Credential   → DepositPurpose
-  GovActionDeposit   : GovActionID  → DepositPurpose
-
-instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
-
-Deposits = DepositPurpose ⇀ Coin
-
-record PoolParams : Type where
-  field
-    rewardAddr : Credential
-
-record PState : Type where
-  constructor ⟦_,_⟧ᵖ
-  field
-    pools     : KeyHash ⇀ PoolParams
-    retiring  : KeyHash ⇀ Epoch
-
-data DCert : Type where
-  delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
-  dereg       : Credential → Coin → DCert
-  regpool     : KeyHash → PoolParams → DCert
-  retirepool  : KeyHash → Epoch → DCert
-  regdrep     : Credential → Coin → Anchor → DCert
-  deregdrep   : Credential → Coin → DCert
-  ccreghot    : Credential → Maybe Credential → DCert
-
-cwitness : DCert → Credential
-cwitness (delegate c _ _ _)  = c
-cwitness (dereg c _)         = c
-cwitness (regpool kh _)      = KeyHashObj kh
-cwitness (retirepool kh _)   = KeyHashObj kh
-cwitness (regdrep c _ _)     = c
-cwitness (deregdrep c _)     = c
-cwitness (ccreghot c _)      = c
-
-record CertEnv : Type where
-  constructor ⟦_,_,_,_⟧ᶜ
-  field
-    epoch     : Epoch
-    pp        : PParams
-    votes     : List GovVote
-    wdrls     : RwdAddr ⇀ Coin
 
 record DState : Type where
   constructor ⟦_,_,_,_⟧ᵈ
@@ -81,14 +39,6 @@ record CertState : Type where
     dState : DState
     pState : PState
     gState : GState
-
-record DelegEnv : Type where
-  constructor ⟦_,_⟧ᵈᵉ
-  field
-    pparams  : PParams
-    pools    : KeyHash ⇀ PoolParams
-
-GovCertEnv  = CertEnv
 
 certDeposit : DCert → PParams → Deposits
 certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
@@ -135,13 +85,8 @@ private variable
   poolParams          : PoolParams
   wdrls               : RwdAddr ⇀ Coin
 
-PoolEnv     = PParams
-
-data
-  _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Type
-
-data
-  _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type
+data _⊢_⇀⦇_,POOL⦈_  : PoolEnv → PState → DCert → PState → Type
+data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type
 
 data _⊢_⇀⦇_,POOL⦈_ where
   POOL-regpool :

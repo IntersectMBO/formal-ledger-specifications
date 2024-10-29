@@ -13,9 +13,9 @@ open import ScriptVerification.Lib ℕ ℕ scriptImp
 open import Ledger.Conway.Conformance.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Conformance.Transaction
+open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
-open import Ledger.Conway.Conformance.Types.Epoch
+open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
 open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
