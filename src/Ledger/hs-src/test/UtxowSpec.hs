@@ -152,7 +152,7 @@ testTx2 = MkTx
   }
 
 utxowSteps :: UTxOEnv -> UTxOState -> [Tx] -> ComputationResult Text UTxOState
-utxowSteps = foldM . utxowStep
+utxowSteps = foldM . utxowStep dummyExternalFunctions
 
 spec :: Spec
 spec = do
