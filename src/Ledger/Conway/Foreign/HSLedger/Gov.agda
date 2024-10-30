@@ -1,5 +1,7 @@
 module Ledger.Conway.Foreign.HSLedger.Gov where
 
+open import Ledger.Prelude using (Type)
+
 open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
