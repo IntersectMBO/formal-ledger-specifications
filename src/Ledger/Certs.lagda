@@ -174,7 +174,6 @@ private variable
   rwds : Credential ⇀ Coin
   dCert : DCert
   c : Credential
-  curEpoch : Epoch
   mc : Maybe Credential
   mv : Maybe VDeleg
   d : Coin

@@ -24,23 +24,22 @@ open import Tactic.GenError using (genErrors)
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
-  Computational-DELEG .computeProof ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ =
-    λ where
-      (delegate c mc mkh d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
-                                  × (c ∈ dom rwds → d ≡ 0)
-                                  × mc ∈ mapˢ just (dom delegatees) ∪ ❴ nothing ❵
-                                  × mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
-        (yes p) → success (-, DELEG-delegate p)
-        (no ¬p) → failure (genErrors ¬p)
-      (dereg c d) → case ¿ (c , 0) ∈ rwds ¿ of λ where
-        (yes p) → success (-, DELEG-dereg p)
-        (no ¬p) → failure (genErrors ¬p)
-      _ → failure "Unexpected certificate in DELEG"
+  Computational-DELEG .computeProof ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ = λ where
+    (delegate c mc mkh d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
+                                 × (c ∈ dom rwds → d ≡ 0)
+                                 × mc ∈ mapˢ just (dom delegatees) ∪ ❴ nothing ❵
+                                 × mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
+      (yes p) → success (-, DELEG-delegate p)
+      (no ¬p) → failure (genErrors ¬p)
+    (dereg c d) → case ¿ (c , 0) ∈ rwds ¿ of λ where
+      (yes p) → success (-, DELEG-dereg p)
+      (no ¬p) → failure (genErrors ¬p)
+    _ → failure "Unexpected certificate in DELEG"
   Computational-DELEG .completeness ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (delegate c mc mkh d)
     s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
                                            × (c ∈ dom rwds → d ≡ 0)
-                                           × (mc ∈ mapˢ just (dom delegatees) ∪ ❴ nothing ❵)
-                                           × (mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵) ¿) p .proj₂ = refl
+                                           × mc ∈ mapˢ just (dom delegatees) ∪ ❴ nothing ❵
+                                           × mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
     rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
 

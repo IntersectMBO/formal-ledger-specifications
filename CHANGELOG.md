@@ -33,6 +33,7 @@
 - Fix `ccMinSize` check not properly accounting for double delegations
 - Check `proposal ≡ nothing` if action not `ChangePParams` or `TreasuryWdrl`
 - Implement proper vote counting for SPOs
+- Check a DRep exists before delegating to it.
 
 ### V0.9
 
