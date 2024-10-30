@@ -20,10 +20,10 @@ open DCert ; open PState
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
   Computational-DELEG .computeProof ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ = λ where
-    (delegate c mv mkh d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
-                                 × (c ∈ dom rwds → d ≡ 0)
-                                 × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
-                                 × mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
+    (delegate c mv mc d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
+                                × (c ∈ dom rwds → d ≡ 0)
+                                × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
+                                × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
       (yes p) → success (-, DELEG-delegate p )
       (no ¬p) → failure (genErrors ¬p)
     (dereg c d) → case ¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ dep ¿ of λ where
@@ -31,11 +31,11 @@ instance
       (no ¬p) → failure (genErrors ¬p)
     _ → failure "Unexpected certificate in DELEG"
 
-  Computational-DELEG .completeness ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ (delegate c mv mkh d)
+  Computational-DELEG .completeness ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ (delegate c mv mc d)
     s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
                                            × (c ∈ dom rwds → d ≡ 0)
                                            × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
-                                           × mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
+                                           × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
     rewrite dec-yes (¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ dep ¿) p .proj₂ = refl
 

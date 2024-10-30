@@ -13,7 +13,6 @@ open import Tactic.ReduceDec
 open import Algebra using (CommutativeMonoid)
 open import Ledger.GovernanceActions gs hiding (yes; no)
 open import Ledger.Certs gs
--- open import Ledger.Types.Epoch
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)
 open import Axiom.Set.Properties th
@@ -25,21 +24,21 @@ open import Tactic.GenError using (genErrors)
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
   Computational-DELEG .computeProof ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ = λ where
-    (delegate c mv mkh d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
-                                 × (c ∈ dom rwds → d ≡ 0)
-                                 × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
-                                 × mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
+    (delegate c mv mc d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
+                                × (c ∈ dom rwds → d ≡ 0)
+                                × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
+                                × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
       (yes p) → success (-, DELEG-delegate p)
       (no ¬p) → failure (genErrors ¬p)
     (dereg c d) → case ¿ (c , 0) ∈ rwds ¿ of λ where
       (yes p) → success (-, DELEG-dereg p)
       (no ¬p) → failure (genErrors ¬p)
     _ → failure "Unexpected certificate in DELEG"
-  Computational-DELEG .completeness ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (delegate c mv mkh d)
+  Computational-DELEG .completeness ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (delegate c mv mc d)
     s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
                                            × (c ∈ dom rwds → d ≡ 0)
                                            × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
-                                           × mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
+                                           × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
     rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
 
