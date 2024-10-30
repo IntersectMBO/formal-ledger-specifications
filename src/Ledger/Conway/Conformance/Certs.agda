@@ -105,20 +105,20 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ (c , mv) ∈ mapValues just delegatees
+    ∙ mc ∈ mapˢ just (dom dReps) ∪ ❴ nothing ❵
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , dReps ⟧ᵈᵉ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
-      ⇀⦇ delegate c mv mkh d ,DELEG⦈
-      ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵
-      , updateCertDeposit pp (delegate c mv mkh d) dep ⟧ᵈ
+      ⇀⦇ delegate c mc mkh d ,DELEG⦈
+      ⟦ insertIfJust c (credVoter DRep <$> mc) vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵
+      , updateCertDeposit pp (delegate c mc mkh d) dep ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
     ∙ (CredentialDeposit c , d) ∈ dep
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , dReps ⟧ᵈᵉ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
       ⇀⦇ dereg c d ,DELEG⦈
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
@@ -151,7 +151,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , DState.voteDelegs stᵈ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , GState.dreps stᵍ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
