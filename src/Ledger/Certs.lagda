@@ -48,7 +48,7 @@ record PoolParams : Type where
 \end{NoConway}
 \begin{code}
 data DCert : Type where
-  delegate    : Credential → Maybe Credential → Maybe KeyHash → Coin → DCert
+  delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
   dereg       : Credential → Coin → DCert
   regpool     : KeyHash → PoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
@@ -144,7 +144,7 @@ record DelegEnv : Type where
 \begin{code}
     pparams       : PParams
     pools         : KeyHash ⇀ PoolParams
-    delegatees    : Credential ⇀ Epoch
+    delegatees    : ℙ Credential
 
 GovCertEnv  = CertEnv
 PoolEnv     = PParams
@@ -172,6 +172,7 @@ private variable
   retiring : KeyHash ⇀ Epoch
   ccKeys : Credential ⇀ Maybe Credential
   rwds : Credential ⇀ Coin
+  delegatees : ℙ Credential
   dCert : DCert
   c : Credential
   mc : Maybe Credential
@@ -315,17 +316,17 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mc ∈ mapˢ just (dom dReps) ∪ ❴ nothing ❵
+    ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , dReps ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mc mkh d ,DELEG⦈
-        ⟦ insertIfJust c (credVoter DRep <$> mc) vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
+        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , dReps ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
                           ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 \end{code}
 \end{AgdaSuppressSpace}
@@ -404,7 +405,7 @@ data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
 \begin{code}
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , GState.dreps stᵍ ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
