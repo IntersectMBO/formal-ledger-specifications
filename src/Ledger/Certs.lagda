@@ -426,20 +426,25 @@ data _⊢_⇀⦇_,CERT⦈_ where
 data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
 \begin{code}
-  CERT-base :
-    let open PParams pp
-        refresh         = mapPartial getDRepVote (fromList vs)
-        refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dReps refresh
-        wdrlCreds       = mapˢ stake (dom wdrls)
+  CERT-base : let
+    open PParams pp
+    refresh          = mapPartial getDRepVote (fromList vs)
+    refreshedDReps   = mapValueRestricted (const (e + drepActivity)) dReps refresh
+    wdrlCreds        = mapˢ stake (dom wdrls)
+    freshVoteDelegs  = voteDelegs ∣^ mapˢ (credVoter DRep) (dom refreshedDReps)
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦
-        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
-        ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢
+        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
         , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
+        , ⟦ dReps , ccHotKeys ⟧ᵛ
+        ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
+        ⟦ ⟦ freshVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        , stᵖ
+        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
+        ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}

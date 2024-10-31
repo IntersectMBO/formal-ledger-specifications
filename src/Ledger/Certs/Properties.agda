@@ -27,7 +27,8 @@ instance
     (delegate c mv mc d) → case ¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
                                 × (c ∈ dom rwds → d ≡ 0)
                                 × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
-                                × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
+                                × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
+                                ¿ of λ where
       (yes p) → success (-, DELEG-delegate p)
       (no ¬p) → failure (genErrors ¬p)
     (dereg c d) → case ¿ (c , 0) ∈ rwds ¿ of λ where
@@ -38,7 +39,8 @@ instance
     s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
                                            × (c ∈ dom rwds → d ≡ 0)
                                            × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
-                                           × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
+                                           × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
+                                           ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
     rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
 
@@ -122,9 +124,10 @@ instance
   ... | success _ | refl = refl
 
   Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
-  Computational-CERTBASE .computeProof ⟦ e , pp , vs , wdrls ⟧ᶜ st _ =
+  Computational-CERTBASE .computeProof  ⟦ e , pp , vs , wdrls ⟧ᶜ st _ =
     let open PParams pp; open CertState st; open GState gState; open DState dState
         refresh = mapPartial getDRepVote (fromList vs)
+        refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
     in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
               × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
       (yes p) → success (-, CERT-base p)
@@ -281,3 +284,6 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                 → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ + getCoin (CertEnv.wdrls Γ)
     CERTS-pov (BS-base x) = CERTBASE-pov x
     CERTS-pov (BS-ind  x xs) = trans (CERT-pov x) (CERTS-pov xs)
+
+-- TODO: Prove the following property.
+-- range vDelegs ⊆ map (credVoter DRep) (dom DReps)
