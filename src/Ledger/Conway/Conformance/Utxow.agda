@@ -10,11 +10,13 @@ module Ledger.Conway.Conformance.Utxow
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-open import Ledger.Conway.Conformance.Utxo txs abs
+open import Ledger.Conway.Conformance.Utxo txs abs hiding (module L)
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Certs govStructure
 
-import Ledger.Utxow txs abs as L
+module L where
+  open import Ledger.Utxow txs abs public
+  open import Ledger.Utxo txs abs public
 
 data
 
@@ -32,18 +34,18 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
-        inputHashes       = getInputHashes tx utxo
+        inputHashes       = L.getInputHashes tx utxo
         refScriptHashes   = mapˢ hash (refScripts tx utxo)
         neededHashes      = L.scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
-        allOutHashes      = getDataHashes (range txouts)
+        allOutHashes      = L.getDataHashes (range txouts)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
     ∙  L.witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
+    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ L.getDataHashes (range (utxo ∣ refInputs))
     ∙  L.languages tx utxo ⊆ L.allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

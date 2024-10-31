@@ -119,7 +119,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
 stakeDistr : UTxO → DState → PState → Snapshot
 stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
   where
-    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
+    m = mapˢ (λ a → (a , L.cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
