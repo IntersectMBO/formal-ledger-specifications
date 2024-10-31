@@ -10,7 +10,7 @@ scriptImp = record { serialise = id ;
 
 open import ScriptVerification.LedgerImplementation String String scriptImp
 open import ScriptVerification.Lib String String scriptImp
-open import Ledger.Conway.Conformance.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Transaction
