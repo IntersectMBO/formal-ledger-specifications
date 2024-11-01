@@ -429,6 +429,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     refresh          = mapPartial getDRepVote (fromList vs)
     refreshedDReps   = mapValueRestricted (const (e + drepActivity)) dReps refresh
     wdrlCreds        = mapˢ stake (dom wdrls)
+    validVoteDelegs  = voteDelegs ∣^ mapˢ (credVoter DRep) (dom dReps)
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
@@ -438,7 +439,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         , stᵖ
         , ⟦ dReps , ccHotKeys ⟧ᵛ
         ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ voteDelegs ∣^ mapˢ (credVoter DRep) (dom dReps) , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
         ⟧ᶜˢ
