@@ -164,35 +164,33 @@ instance
 
 \begin{code}[hide]
 private variable
-  an : Anchor
-  dReps : Credential ⇀ Epoch
-  pools : KeyHash ⇀ PoolParams
-  vDelegs : Credential ⇀ VDeleg
-  sDelegs : Credential ⇀ KeyHash
-  retiring : KeyHash ⇀ Epoch
-  ccKeys : Credential ⇀ Maybe Credential
-  rwds : Credential ⇀ Coin
-  delegatees : ℙ Credential
-  dCert : DCert
-  c : Credential
-  mc : Maybe Credential
-  mv : Maybe VDeleg
-  d : Coin
-  e : Epoch
-  kh : KeyHash
-  mkh : Maybe KeyHash
-  stᵍ stᵍ' : GState
+  rwds rewards           : Credential ⇀ Coin
+  dReps                  : Credential ⇀ Epoch
+  sDelegs stakeDelegs    : Credential ⇀ KeyHash
+  ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
+  vDelegs voteDelegs     : Credential ⇀ VDeleg
+  pools                  : KeyHash ⇀ PoolParams
+  retiring               : KeyHash ⇀ Epoch
+  wdrls                  : RwdAddr ⇀ Coin
+
+  an          : Anchor
+  Γ           : CertEnv
+  d           : Coin
+  c           : Credential
+  mc          : Maybe Credential
+  delegatees  : ℙ Credential
+  dCert       : DCert
+  e           : Epoch
+  vs          : List GovVote
+  kh          : KeyHash
+  mkh         : Maybe KeyHash
+  poolParams  : PoolParams
+  pp          : PParams
+  mv          : Maybe VDeleg
+
   stᵈ stᵈ' : DState
+  stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
-  Γ : CertEnv
-  pp : PParams
-  vs : List GovVote
-  poolParams : PoolParams
-  wdrls  : RwdAddr ⇀ Coin
-  ccHotKeys : Credential ⇀ Maybe Credential
-  voteDelegs : Credential ⇀ VDeleg
-  stakeDelegs : Credential ⇀ KeyHash
-  rewards : Credential ⇀ Coin
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -431,7 +429,6 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     refresh          = mapPartial getDRepVote (fromList vs)
     refreshedDReps   = mapValueRestricted (const (e + drepActivity)) dReps refresh
     wdrlCreds        = mapˢ stake (dom wdrls)
-    freshVoteDelegs  = voteDelegs ∣^ mapˢ (credVoter DRep) (dom refreshedDReps)
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
@@ -441,7 +438,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         , stᵖ
         , ⟦ dReps , ccHotKeys ⟧ᵛ
         ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ freshVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        ⟦ ⟦ voteDelegs ∣^ mapˢ (credVoter DRep) (dom dReps) , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
         ⟧ᶜˢ
