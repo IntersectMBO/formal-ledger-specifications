@@ -57,36 +57,34 @@ updateCertDeposit pp cert deposits
   = (deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 
 private variable
-  an : Anchor
-  dReps : Credential ⇀ Epoch
-  pools : KeyHash ⇀ PoolParams
-  vDelegs : Credential ⇀ VDeleg
-  sDelegs : Credential ⇀ KeyHash
-  retiring : KeyHash ⇀ Epoch
-  ccKeys : Credential ⇀ Maybe Credential
-  rwds : Credential ⇀ Coin
-  delegatees : ℙ Credential
-  dCert : DCert
-  c : Credential
-  mc : Maybe Credential
-  mv : Maybe VDeleg
-  d : Coin
-  e : Epoch
-  kh : KeyHash
-  mkh : Maybe KeyHash
-  stᵍ stᵍ' : GState
+  rwds rewards           : Credential ⇀ Coin
+  dReps                  : Credential ⇀ Epoch
+  sDelegs stakeDelegs    : Credential ⇀ KeyHash
+  ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
+  vDelegs voteDelegs     : Credential ⇀ VDeleg
+  pools                  : KeyHash ⇀ PoolParams
+  retiring               : KeyHash ⇀ Epoch
+  wdrls                  : RwdAddr ⇀ Coin
+
+  an             : Anchor
+  Γ              : CertEnv
+  d              : Coin
+  c              : Credential
+  mc             : Maybe Credential
+  delegatees     : ℙ Credential
+  dCert          : DCert
+  dep ddep gdep  : Deposits
+  e              : Epoch
+  vs             : List GovVote
+  kh             : KeyHash
+  mkh            : Maybe KeyHash
+  poolParams     : PoolParams
+  pp             : PParams
+  mv             : Maybe VDeleg
+
   stᵈ stᵈ' : DState
+  stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
-  Γ : CertEnv
-  pp : PParams
-  dep ddep gdep : Deposits
-  vs : List GovVote
-  poolParams : PoolParams
-  wdrls  : RwdAddr ⇀ Coin
-  ccHotKeys : Credential ⇀ Maybe Credential
-  voteDelegs : Credential ⇀ VDeleg
-  stakeDelegs : Credential ⇀ KeyHash
-  rewards : Credential ⇀ Coin
 
 data _⊢_⇀⦇_,POOL⦈_  : PoolEnv → PState → DCert → PState → Type
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type
@@ -172,6 +170,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
         refresh         = mapPartial getDRepVote (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dReps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
+        validVoteDelegs  = voteDelegs ∣^ mapˢ (credVoter DRep) (dom dReps)
     in
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
@@ -182,7 +181,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
       , ⟦ dReps , ccHotKeys , gdep ⟧ᵛ
       ⟧ᶜˢ
       ⇀⦇ _ ,CERTBASE⦈
-      ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , ddep ⟧ᵈ
+      ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , ddep ⟧ᵈ
       , stᵖ
       , ⟦ refreshedDReps , ccHotKeys , gdep ⟧ᵛ
       ⟧ᶜˢ
