@@ -6,16 +6,16 @@
 open import Ledger.Types.GovStructure
 open import Ledger.Transaction using (TransactionStructure)
 
-module Ledger.Gov (txs : _) (open TransactionStructure txs using (govStructure)) where
-open GovStructure govStructure hiding (epoch)
+module Ledger.Gov (txs : _) (open TransactionStructure txs hiding (epoch)) where
 
 open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
-open import Ledger.GovernanceActions govStructure hiding (yes; no)
+open import Ledger.GovernanceActions govStructure using (Vote)
 open import Ledger.Enact govStructure
 open import Ledger.Ratify txs hiding (vote)
+open import Ledger.Certs govStructure
 
 open import Data.List.Ext using (subpermutations; sublists)
 open import Data.List.Ext.Properties2
@@ -43,7 +43,7 @@ GovState = List (GovActionID × GovActionState)
 record GovEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ᵍ
+  constructor ⟦_,_,_,_,_,_⟧ᵍ
   field
 \end{code}
 \begin{code}
@@ -52,20 +52,9 @@ record GovEnv : Type where
     pparams     : PParams
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
+    certState   : CertState
 \end{code}
 \end{AgdaMultiCode}
-\emph{Transition relation types}
-\begin{code}[hide]
-data
-\end{code}
-\begin{AgdaSuppressSpace}
-\begin{code}
-  _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
-\end{code}
-\begin{code}
-_⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
-\end{code}
-\end{AgdaSuppressSpace}
 \begin{code}[hide]
 private variable
   Γ : GovEnv
@@ -80,9 +69,12 @@ private variable
   prev : NeedsHash a
   k : ℕ
   p : Maybe ScriptHash
+
+open GState
+open PState
 \end{code}
 \emph{Functions used in the GOV rules}
-\begin{AgdaMultiCode}
+\begin{AgdaSuppressSpace}
 \begin{code}
 govActionPriority : GovAction → ℕ
 govActionPriority NoConfidence             = 0
@@ -96,14 +88,14 @@ govActionPriority Info                     = 6
 _∼_ : ℕ → ℕ → Type
 n ∼ m = (n ≡ m) ⊎ (n ≡ 0 × m ≡ 1) ⊎ (n ≡ 1 × m ≡ 0)
 
-_≈_ : GovAction → GovAction → Type
-a ≈ a' = (govActionPriority a) ∼ (govActionPriority a')
+_≈ᵍ_ : GovAction → GovAction → Type
+a ≈ᵍ a' = (govActionPriority a) ∼ (govActionPriority a')
 \end{code}
 \begin{code}[hide]
 _∼?_ : (n m : ℕ) → Dec (n ∼ m)
 n ∼? m = n ≟ m ⊎-dec (n ≟ 0 ×-dec m ≟ 1) ⊎-dec (n ≟ 1 ×-dec m ≟ 0)
 
-_≈?_ : (a a' : GovAction) → Dec (a ≈ a')
+_≈?_ : (a a' : GovAction) → Dec (a ≈ᵍ a')
 a ≈? a' = (govActionPriority a) ∼? (govActionPriority a')
 \end{code}
 \begin{code}
@@ -115,11 +107,6 @@ insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
-addVote : GovState → GovActionID → Voter → Vote → GovState
-addVote s aid voter v = map modifyVotes s
-  where modifyVotes = λ (gid , s') → gid , record s'
-          { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
-
 mkGovStatePair : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
                  → GovActionID × GovActionState
 mkGovStatePair e aid addr a prev = (aid , record
@@ -129,14 +116,42 @@ addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
           → GovState
 addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
-
-validHFAction : GovProposal → GovState → EnactState → Type
-validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
-  (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
-  ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
-validHFAction _ _ _ = ⊤
 \end{code}
-\end{AgdaMultiCode}
+\begin{code}[hide]
+opaque
+\end{code}
+\begin{code}
+  addVote : GovState → GovActionID → Voter → Vote → GovState
+  addVote s aid voter v = map modifyVotes s
+    where modifyVotes : GovActionID × GovActionState → GovActionID × GovActionState
+          modifyVotes = λ (gid , s') → gid , record s'
+            { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
+
+  isRegistered : GovEnv → Voter → Type
+  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ ⟧ᵍ (r , c) = case r of λ where
+    CC    → just c ∈ range (gState .ccHotKeys)
+    DRep  → c ∈ dom (gState .dreps)
+    SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
+
+  validHFAction : GovProposal → GovState → EnactState → Type
+  validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
+    (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
+    ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
+  validHFAction _ _ _ = ⊤
+\end{code}
+\end{AgdaSuppressSpace}
+\emph{Transition relation types}
+\begin{code}[hide]
+data
+\end{code}
+\begin{AgdaSuppressSpace}
+\begin{code}
+  _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
+\end{code}
+\begin{code}
+_⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
+\end{code}
+\end{AgdaSuppressSpace}
 \caption{Types and functions used in the GOV transition system}
 \label{defs:gov-defs}
 \end{figure*}
@@ -184,7 +199,7 @@ hasParentE e aid a = case getHashES e a of
 hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Type
 hasParent e s a aid with getHash aid
 ... | just aid' = hasParentE e aid' a
-                  ⊎ Any (λ (gid , gas) → gid ≡ aid' × action gas ≈ a) s
+                  ⊎ Any (λ (gid , gas) → gid ≡ aid' × action gas ≈ᵍ a) s
 ... | nothing = ⊤
 \end{code}
 \begin{code}[hide]
@@ -317,6 +332,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     in
     ∙ (aid , ast) ∈ fromList s
     ∙ canVote pparams (action ast) (proj₁ voter)
+    ∙ isRegistered Γ voter
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV'⦈ addVote s aid voter v
 

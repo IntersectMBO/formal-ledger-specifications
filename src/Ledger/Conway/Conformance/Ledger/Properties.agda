@@ -64,14 +64,15 @@ instance
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
-      govΓ  = GovEnv  ∋ ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ
+      govΓ : CertState → GovEnv
+      govΓ = ⟦ txid , epoch slot , pparams , ppolicy , enactState ,_⟧ᵍ
 
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
       computeProof = case isValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           (certSt' , certStep) ← computeCerts certΓ certSt txcerts
-          (govSt'  , govStep)  ← computeGov   govΓ  govSt  (txgov txb)
+          (govSt'  , govStep)  ← computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb)
           success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
@@ -86,7 +87,7 @@ instance
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certSt txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
-        with computeGov govΓ govSt (txgov txb) | complete govΓ _ _ _ govStep
+        with computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
       completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
