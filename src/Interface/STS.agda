@@ -53,6 +53,21 @@ module _ (_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type) (_⊢_⇀⟦_⟧
         ───────────────────────────────────────
         Γ ⊢ s  ⇀⟦ sig ∷ sigs ⟧* s''
 
+module _ (_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type) (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
+  data _⊢_⇀⟦_⟧*ʳ_ : C → S → List Sig → S → Type where
+
+    BS-baseʳ :
+      Γ ⊢ s ⇀⟦ _ ⟧ᵇ s'
+      ───────────────────────────────────────
+      Γ ⊢ s ⇀⟦ [] ⟧*ʳ s'
+
+    BS-indʳ :
+        Γ ⊢ s  ⇀⟦ sig  ⟧   s'
+      → Γ ⊢ s' ⇀⟦ sigs ⟧*ʳ s''
+        ───────────────────────────────────────
+        Γ ⊢ s  ⇀⟦ sigs ∷ʳ sig ⟧*ʳ s''
+
+
 module _ (_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type) (_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Type) where
   data _⊢_⇀⟦_⟧ᵢ*'_ : C × ℕ → S → List Sig → S → Type where
 
@@ -101,7 +116,7 @@ ReflexiveTransitiveClosureᵢ-total SS-total = helper SS-total
       case SS-total of λ where
         (s' , Ps') → map₂′ (BS-ind Ps') $ helper SS-total
 
--- with a given base case
+ReflexiveTransitiveClosureᵣᵇ = _⊢_⇀⟦_⟧*ʳ_
 ReflexiveTransitiveClosureᵢᵇ = _⊢_⇀⟦_⟧ᵢ*_
 ReflexiveTransitiveClosureᵇ  = _⊢_⇀⟦_⟧*_
 
