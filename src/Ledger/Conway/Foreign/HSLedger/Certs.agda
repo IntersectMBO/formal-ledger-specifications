@@ -13,8 +13,7 @@ open import Ledger.Conway.Conformance.Certs.Properties govStructure
         ; Computational-POOL
         )
 
-open import Ledger.Conway.Conformance.Certs govStructure
-  using (⟦_,_⟧ᵈᵉ; CertEnv; ⟦_,_,_,_⟧ᶜ; ⟦_,_,_⟧ᵛ)
+open import Ledger.Conway.Conformance.Certs govStructure using (CertEnv)
 
 instance
   HsTy-PoolParams = autoHsType PoolParams
