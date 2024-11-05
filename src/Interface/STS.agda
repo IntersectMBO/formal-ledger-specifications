@@ -53,7 +53,7 @@ module _ (_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type) (_⊢_⇀⟦_⟧
         ───────────────────────────────────────
         Γ ⊢ s  ⇀⟦ sig ∷ sigs ⟧* s''
 
-module _ (_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type) (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
+module _ {_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type} {_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type} where
   data _⊢_⇀⟦_⟧*ʳ_ : C → S → List Sig → S → Type where
 
     BS-baseʳ :

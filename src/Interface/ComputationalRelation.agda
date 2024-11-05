@@ -232,15 +232,28 @@ module _ {BSTS : C → S → ⊤ → S → Type} ⦃ _ : Computational BSTS Err�
     Computational-ReflexiveTransitiveClosureᵢᵇ .completeness c =
       Computational-ReflexiveTransitiveClosureᵢᵇ' .completeness (c , 0)
 
-  module _ {STS : C → S → Sig → S → Type} ⦃ _ : Computational STS Err₂ ⦄
-     ⦃ _ : InjectError Err₁ Err ⦄ ⦃ _ : InjectError Err₂ Err ⦄ where instance
-    Computational-ReflexiveTransitiveClosureᵣᵇ : Computational (ReflexiveTransitiveClosureᵣᵇ BSTS STS) (Err)
-    Computational-ReflexiveTransitiveClosureᵣᵇ .computeProof c s [] = {!!}
-    Computational-ReflexiveTransitiveClosureᵣᵇ .computeProof c s (sig ∷ sigs) = {!!}
-    Computational-ReflexiveTransitiveClosureᵣᵇ .completeness c s [] s' x = {!!}
-    Computational-ReflexiveTransitiveClosureᵣᵇ .completeness c s (sig ∷ sigs) s' x = {!!}
+  module _ {STS : C → S → Sig → S → Type} ⦃ Computational-STS : Computational STS Err₂ ⦄
+    ⦃ InjectError-Err₁ : InjectError Err₁ Err ⦄ ⦃ InjectError-Err₂ : InjectError Err₂ Err ⦄
+    where instance
+    Computational-ReflexiveTransitiveClosureᵣᵇ : Computational (_⊢_⇀⟦_⟧*ʳ_ {_⊢_⇀⟦_⟧ᵇ_ = BSTS}{_⊢_⇀⟦_⟧_ = STS}) Err
+    Computational-ReflexiveTransitiveClosureᵣᵇ .computeProof c s ss with initLast ss
+    ... | []       = bimap (injectError it) (map₂′ BS-baseʳ) (computeProof c s tt)
+    ... | sig ∷ʳ′ z with computeProof c s z
+    ...   | success (s₁ , h) with computeProof c s₁ sig
+    ...   | success (s₂ , hs) = success (s₂ , BS-indʳ h hs)
+    ...   | failure a = failure a
+    Computational-ReflexiveTransitiveClosureᵣᵇ .computeProof c s .(sig ∷ʳ z) | sig ∷ʳ′ z | failure a = failure (injectError it a)
+    Computational-ReflexiveTransitiveClosureᵣᵇ .completeness c s .([]) s' (BS-baseʳ p)
+      with computeProof {STS = BSTS} c s tt | completeness _ _ _ _ p
+    ... | success x | refl = refl
+    Computational-ReflexiveTransitiveClosureᵣᵇ .completeness c s .(sigs ∷ʳ sig) s' (BS-indʳ {sig = sig}{sigs = sigs} h hs)
+      with computeProof {STS = STS} c s sig | completeness _ _ _ _ h
+    ... | success (s₁ , _) | qq
+      with computeProof {STS = STS} c s₁ sig | completeness _ _ _ _ hs
+    ...   | success (s₂ , _) | p = {!!}
 
-
+    Computational-ReflexiveTransitiveClosureᵣᵇ .completeness c s .(_ ∷ʳ _) s' (BS-indʳ h hs) | success (s₁ , _) | refl | failure x | w = {!!}
+    Computational-ReflexiveTransitiveClosureᵣᵇ .completeness c s .(_ ∷ʳ _) s' (BS-indʳ h hs) | failure x | ()
 
 Computational-ReflexiveTransitiveClosure : {STS : C → S → Sig → S → Type} → ⦃ Computational STS Err ⦄
   → Computational (ReflexiveTransitiveClosure STS) Err
