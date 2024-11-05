@@ -21,6 +21,8 @@ open import Ledger.Utxow txs abs
 open import Ledger.Certs govStructure
 
 open Tx
+open GState
+open GovActionState
 \end{code}
 
 The entire state transformation of the ledger state caused by a valid
@@ -57,6 +59,17 @@ record LState : Type where
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
+
+isUnregisteredDRep : CertState → Voter → Type
+isUnregisteredDRep ⟦ _ , _ , gState ⟧ᶜˢ (r , c) = r ≡ DRep × c ∉ dom (gState .dreps)
+
+removeOrphanDRepVotes : CertState → GovActionState → GovActionState
+removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
+  where
+    votes′ = filterKeys (¬_ ∘ isUnregisteredDRep certState) (votes gas)
+
+_|ᵒ_ : GovState → CertState → GovState
+govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types and functions for the LEDGER transition system}
@@ -98,7 +111,7 @@ data
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}

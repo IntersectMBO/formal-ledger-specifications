@@ -2,8 +2,7 @@ module Ledger.Conway.Foreign.HSLedger.BaseTypes where
 
 open import Data.Rational
 
-open import Ledger.Prelude
-
+open import Ledger.Conway.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.HSLedger.Core public
 import Ledger.Conway.Foreign.HSTypes as F
 
@@ -65,7 +64,12 @@ instance
   Conv-ComputationResult : ConvertibleType ComputationResult F.ComputationResult
   Conv-ComputationResult = autoConvertible
 
-
+open ExternalStructures dummyExternalFunctions
+  renaming
+    ( HSTransactionStructure to DummyTransactionStructure
+    ; HSAbstractFunctions to DummyAbstractFunctions
+    )
+  public
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
 
 unquoteDecl = do

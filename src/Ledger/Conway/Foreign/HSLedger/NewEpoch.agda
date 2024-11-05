@@ -11,6 +11,8 @@ open import Ledger.Conway.Conformance.Epoch.Properties it it
 
 open import Ledger.Conway.Foreign.HSTypes hiding (ComputationResult)
 
+open import Ledger.Conway.Foreign.Util
+
 record HsRewardUpdate : Type where
   field Δt Δr Δf : ℤ
         rs : HsType (Credential ⇀ Coin)

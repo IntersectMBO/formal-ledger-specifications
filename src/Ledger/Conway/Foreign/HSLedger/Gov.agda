@@ -1,31 +1,18 @@
 module Ledger.Conway.Foreign.HSLedger.Gov where
 
+open import Ledger.Prelude using (Type)
+
 open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.PParams
+open import Ledger.Conway.Foreign.HSLedger.Gov.Core
+open import Ledger.Conway.Foreign.HSLedger.Cert
 
 open import Ledger.Conway.Conformance.Gov it
 open import Ledger.Conway.Conformance.Gov.Properties it
 
-open import Ledger.GovernanceActions govStructure using (Vote) public
-
 instance
-  HsTy-GovRole = autoHsType GovRole
-  Conv-GovRole = autoConvert GovRole
-
-  HsTy-Anchor = autoHsType Anchor
-  Conv-Anchor = autoConvert Anchor
-
-  HsTy-VDeleg = autoHsType VDeleg
-  Conv-VDeleg = autoConvert VDeleg
-
-  HsTy-Vote = autoHsType Vote
-  Conv-Vote = autoConvert Vote
-
-  HsTy-GovVote = autoHsType GovVote
-  Conv-GovVote = autoConvert GovVote
-
   HsTy-GovEnv = autoHsType GovEnv ⊣ withConstructor "MkGovEnv"
                                   • fieldPrefix "ge"
   Conv-GovEnv = autoConvert GovEnv

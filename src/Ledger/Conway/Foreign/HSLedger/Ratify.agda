@@ -4,6 +4,7 @@ open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Certs
 open import Ledger.Conway.Foreign.HSLedger.Enact
+open import Ledger.Conway.Foreign.HSLedger.Gov.Core
 open import Ledger.Conway.Foreign.HSLedger.Gov
 
 open import Ledger.Enact govStructure
