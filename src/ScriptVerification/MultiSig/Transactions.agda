@@ -44,7 +44,8 @@ succeedTxOut : TxOut
 succeedTxOut = inj₁ (record { net = tt ;
                            pay = inj₂ 777 ;
                            stake = inj₂ 777 })
-                           , 800000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 100000000000 2 3 [])))) , nothing
+                           , 800000000000
+                           , just (inj₁ (inj₁ (inj₁ (Collecting 100000000000 2 3 [])))) , nothing
 
 
 failTxOut : TxOut
