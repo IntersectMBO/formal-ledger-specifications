@@ -1084,13 +1084,27 @@ d_Deposits_270 :: ()
 d_Deposits_270 = erased
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.DrepThresholds
 d_DrepThresholds_272 = ()
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HSAbstractFunctions
+d_HSAbstractFunctions_274 ::
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1724
+d_HSAbstractFunctions_274
+  = coe
+      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSAbstractFunctions_2620
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HSTransactionStructure
+d_HSTransactionStructure_276 ::
+  MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20
+d_HSTransactionStructure_276
+  = coe
+      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_894
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14)
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.Epoch
-d_Epoch_276 :: ()
-d_Epoch_276 = erased
+d_Epoch_280 :: ()
+d_Epoch_280 = erased
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.ExUnit-CommutativeMonoid
-d_ExUnit'45'CommutativeMonoid_278 ::
+d_ExUnit'45'CommutativeMonoid_282 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
-d_ExUnit'45'CommutativeMonoid_278
+d_ExUnit'45'CommutativeMonoid_282
   = let v0
           = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
     coe
@@ -1105,67 +1119,53 @@ d_ExUnit'45'CommutativeMonoid_278
                (coe
                   MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1816 (coe v1)))))
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.ExUnits
-d_ExUnits_280 :: ()
-d_ExUnits_280 = erased
+d_ExUnits_284 :: ()
+d_ExUnits_284 = erased
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GState
-d_GState_288 = ()
+d_GState_292 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovAction
-d_GovAction_290 = ()
+d_GovAction_294 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovActionID
-d_GovActionID_294 :: ()
-d_GovActionID_294 = erased
+d_GovActionID_298 :: ()
+d_GovActionID_298 = erased
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovActionState
-d_GovActionState_296 = ()
+d_GovActionState_300 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovCertEnv
-d_GovCertEnv_298 :: ()
-d_GovCertEnv_298 = erased
+d_GovCertEnv_302 :: ()
+d_GovCertEnv_302 = erased
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovParams
-d_GovParams_300 = ()
+d_GovParams_304 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovProposal
-d_GovProposal_302 = ()
+d_GovProposal_306 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovRole
-d_GovRole_304 = ()
+d_GovRole_308 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovVote
-d_GovVote_306 = ()
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HSAbstractFunctions
-d_HSAbstractFunctions_310 ::
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1724
-d_HSAbstractFunctions_310
-  = coe
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSAbstractFunctions_2620
+d_GovVote_310 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HSCrypto
-d_HSCrypto_312 :: MAlonzo.Code.Ledger.Crypto.T_Crypto_134
-d_HSCrypto_312
+d_HSCrypto_314 :: MAlonzo.Code.Ledger.Crypto.T_Crypto_134
+d_HSCrypto_314
   = coe
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSCrypto_254
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14)
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HSEpochStructure
-d_HSEpochStructure_314 ::
+d_HSEpochStructure_316 ::
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20
-d_HSEpochStructure_314
+d_HSEpochStructure_316
   = coe
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSEpochStructure_252
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HSGlobalConstants
-d_HSGlobalConstants_316 ::
+d_HSGlobalConstants_318 ::
   MAlonzo.Code.Ledger.Types.Epoch.T_GlobalConstants_256
-d_HSGlobalConstants_316
+d_HSGlobalConstants_318
   = coe
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSGlobalConstants_250
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HSScriptStructure
-d_HSScriptStructure_318 ::
+d_HSScriptStructure_320 ::
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400
-d_HSScriptStructure_318
+d_HSScriptStructure_320
   = coe
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSScriptStructure_542
-      (coe
-         MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14)
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HSTransactionStructure
-d_HSTransactionStructure_320 ::
-  MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20
-d_HSTransactionStructure_320
-  = coe
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_894
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14)
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasCoin-CertState

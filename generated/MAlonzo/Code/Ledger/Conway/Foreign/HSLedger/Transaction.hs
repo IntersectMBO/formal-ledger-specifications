@@ -39,6 +39,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
 import qualified MAlonzo.Code.Ledger.Crypto
@@ -57,7 +58,7 @@ data HashedTimelock = HashedTimelock {timelock :: MAlonzo.Code.Ledger.Conway.For
   deriving (Show, Eq, Generic)
 data TxWitnesses = MkTxWitnesses {vkSigs :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap Integer Integer), scripts :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HashedTimelock ())), txdats :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap () ()), txrdmrs :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.Tag, Integer) ((), (Integer, Integer)))}
   deriving (Show, Eq, Generic)
-data TxBody = MkTxBody {txins :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet (Integer, Integer)), refInputs :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet (Integer, Integer)), txouts :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap Integer ((Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr), (Integer, ((Maybe (Either () ())), (Maybe (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HashedTimelock ())))))), txfee :: Integer, mint :: Integer, txvldt :: ((Maybe Integer), (Maybe Integer)), txcerts :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.DCert], txwdrls :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr Integer), txvote :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.GovVote], txprop :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.GovProposal], txdonation :: Integer, txup :: (Maybe ((MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap Integer MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParamsUpdate), Integer)), txADhash :: (Maybe ()), txNetworkId :: (Maybe ()), curTreasury :: (Maybe Integer), txsize :: Integer, txid :: Integer, collateral :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet (Integer, Integer)), reqSigHash :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet Integer), scriptIntHash :: (Maybe Integer)}
+data TxBody = MkTxBody {txins :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet (Integer, Integer)), refInputs :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet (Integer, Integer)), txouts :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap Integer ((Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr), (Integer, ((Maybe (Either () ())), (Maybe (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HashedTimelock ())))))), txfee :: Integer, mint :: Integer, txvldt :: ((Maybe Integer), (Maybe Integer)), txcerts :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.DCert], txwdrls :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr Integer), txvote :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote], txprop :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.GovProposal], txdonation :: Integer, txup :: (Maybe ((MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap Integer MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParamsUpdate), Integer)), txADhash :: (Maybe ()), txNetworkId :: (Maybe ()), curTreasury :: (Maybe Integer), txsize :: Integer, txid :: Integer, collateral :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet (Integer, Integer)), reqSigHash :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSSet Integer), scriptIntHash :: (Maybe Integer)}
   deriving (Show, Eq, Generic)
 data Tx = MkTx {body :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.TxBody, wits :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.TxWitnesses, isValid :: Bool, txAD :: (Maybe ())}
   deriving (Show, Eq, Generic)
@@ -490,7 +491,7 @@ d_Conv'45'TxBody_28
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_to_18
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovVote_156))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_42))
                         v9)
                      (coe
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -498,7 +499,7 @@ d_Conv'45'TxBody_28
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_to_18
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_324))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_300))
                         v10)
                      (coe v11)
                      (coe
@@ -744,7 +745,7 @@ d_Conv'45'TxBody_28
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_from_20
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovVote_156))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_42))
                         v9)
                      (coe
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -752,7 +753,7 @@ d_Conv'45'TxBody_28
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_from_20
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_324))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_300))
                         v10)
                      (coe v11)
                      (coe
@@ -996,7 +997,7 @@ d_Conv'45'Tx_32
                            () erased
                            (MAlonzo.Code.Foreign.Convertible.d_to_18
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovVote_156))
+                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_42))
                            (MAlonzo.Code.Ledger.Transaction.d_txvote_2626 (coe v1)))
                         (coe
                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -1004,7 +1005,7 @@ d_Conv'45'Tx_32
                            () erased
                            (MAlonzo.Code.Foreign.Convertible.d_to_18
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_324))
+                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_300))
                            (MAlonzo.Code.Ledger.Transaction.d_txprop_2628 (coe v1)))
                         (coe MAlonzo.Code.Ledger.Transaction.d_txdonation_2630 (coe v1))
                         (coe
@@ -1329,7 +1330,7 @@ d_Conv'45'Tx_32
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovVote_156))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_42))
                                              v14)
                                           (coe
                                              MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -1337,7 +1338,7 @@ d_Conv'45'Tx_32
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_324))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_300))
                                              v15)
                                           (coe v16)
                                           (coe
@@ -1610,7 +1611,7 @@ d_Conv'45'Tx_32
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovVote_156))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_42))
                                              v14)
                                           (coe
                                              MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -1618,7 +1619,7 @@ d_Conv'45'Tx_32
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_324))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_300))
                                              v15)
                                           (coe v16)
                                           (coe
@@ -2157,10 +2158,10 @@ check_MkTxBody_10859 ::
     Integer ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovVote_1813 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovVote_1611 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovProposal_8627 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovProposal_5191 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
     ()
