@@ -104,7 +104,13 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪ ❴ nothing ❵
+    ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
+        fromList
+          ( nothing
+          ∷ just abstainRep
+          ∷ just noConfidenceRep
+          ∷ []
+          )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
@@ -170,7 +176,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
         refresh         = mapPartial getDRepVote (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dReps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
-        validVoteDelegs  = voteDelegs ∣^ mapˢ (credVoter DRep) (dom dReps)
+        validVoteDelegs  = voteDelegs ∣^ (mapˢ (credVoter DRep) (dom dReps) ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []))
     in
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ

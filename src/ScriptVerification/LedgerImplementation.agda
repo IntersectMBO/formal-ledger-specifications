@@ -30,11 +30,11 @@ instance
   Hashable-⊤ = λ where .hash tt → 0
 
 module Implementation where
-  Network          = ⊤
+  Network          = ℕ
   SlotsPerEpochᶜ   = 100
   StabilityWindowᶜ = 10
   Quorum           = 1
-  NetworkId        = tt
+  NetworkId        = 0
 
   SKey = ℕ
   VKey = ℕ
@@ -92,7 +92,7 @@ module Implementation where
 
   TxId            = ℕ
   Ix              = ℕ
-  AuxiliaryData   = ⊤
+  AuxiliaryData   = ℕ
   DocHash         = ℕ
   tokenAlgebra    = coinTokenAlgebra
 
