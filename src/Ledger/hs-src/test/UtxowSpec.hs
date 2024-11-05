@@ -64,7 +64,7 @@ initEnv :: UTxOEnv
 initEnv = MkUTxOEnv {ueSlot = 0, uePparams = initParams, ueTreasury = 0}
 
 baseAddr :: Integer -> Addr
-baseAddr n = Left BaseAddr{baseNet = (), basePay = KeyHashObj n, baseStake = KeyHashObj n}
+baseAddr n = Left BaseAddr{baseNet = 0, basePay = KeyHashObj n, baseStake = KeyHashObj n}
 
 a0 :: Addr
 a0 = baseAddr 0
@@ -106,7 +106,7 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
   , txdonation    = 0
   , txup          = Nothing
   , txADhash      = Nothing
-  , txNetworkId   = Just ()
+  , txNetworkId   = Just 0
   , curTreasury   = Nothing
   , collateral    = MkHSSet []
   , reqSigHash    = MkHSSet []
