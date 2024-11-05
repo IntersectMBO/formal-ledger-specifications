@@ -414,6 +414,8 @@ library
         MAlonzo.Code.Ledger.Conway.Conformance.Utxow
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger
         MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
+        MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions
+        MAlonzo.Code.Ledger.Conway.Foreign.Util
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs

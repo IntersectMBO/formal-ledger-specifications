@@ -37,4 +37,6 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo        as X
   (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer, utxoDebug)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes   as X
   (Coin, ExUnits, Epoch)
+import MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions    as X
+  (ExternalFunctions(..), dummyExternalFunctions)
 
