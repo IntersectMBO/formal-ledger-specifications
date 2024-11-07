@@ -221,3 +221,4 @@ module ExternalStructures (externalFunctions : ExternalFunctions) where
       }
   
   open import Ledger.Address Network KeyHash ScriptHash using () public
+  
