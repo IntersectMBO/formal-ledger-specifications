@@ -55,12 +55,13 @@ instance
     where
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
     computeUtxow = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
+    computeCert  = comp {STS = _⊢_⇀⦇_,CERTBASE⦈_}
     computeCerts = comp {STS = _⊢_⇀⦇_,CERTS⦈_}
     computeGov   = comp {STS = _⊢_⇀⦇_,GOV⦈_}
 
     module go
       (Γ : LEnv)   (let ⟦ slot , ppolicy , pparams , enactState , _ ⟧ˡᵉ = Γ)
-      (s : LState) (let ⟦ utxoSt , govSt , certSt ⟧ˡ = s)
+      (s : LState) (let ⟦ utxoSt , govSt , certState₀ ⟧ˡ = s)
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
@@ -71,24 +72,27 @@ instance
       computeProof = case isValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
-          (certSt' , certStep) ← computeCerts certΓ certSt txcerts
+          (certState₁ , certStep) ← computeCert certΓ certState₀ _
+          (certState' , certStep') ← computeCerts certΓ certState₁ txcerts
           (govSt'  , govStep)  ← computeGov   govΓ  govSt  (txgov txb)
-          success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
+          success (_ , LEDGER-V⋯ p utxoStep certStep certStep' govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           success (_ , LEDGER-I⋯ (¬-not ¬p) utxoStep)
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ success s'
-      completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER-V⋯ v utxoStep certStep govStep)
+      completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER-V⋯ v utxoStep certStep certStep' govStep)
         with isValid ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeCerts certΓ certSt txcerts | complete _ _ _ _ certStep
-      ... | success (certSt' , _) | refl
+        with computeCerts certΓ certState₀ _ | complete certΓ _ _ _ certStep
+      ... | success (certState₁ , _) | refl
+        with computeCerts certΓ certState₁ txcerts | complete certΓ _ _ _ certStep'
+      ... | success (certState' , _) | refl
         with computeGov govΓ govSt (txgov txb) | complete govΓ _ _ _ govStep
-      ... | success (govSt' , _) | refl = refl
+      ... | success (govSt' , _) | refl
       completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
       ... | yes refl = case i of λ ()
@@ -128,12 +132,13 @@ module _
 
   pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
 
+
   LEDGER-pov :  {s s' : LState} → FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                 → getCoin s ≡ getCoin s'
   LEDGER-pov
     {s = ⟦ utxoSt , govSt , ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⟧ˡ}
     {s' = ⟦ utxoSt' , govSt' , ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ ⟧ˡ}
-    h (LEDGER-V {utxoSt' = utxoSt'} ( valid , UTXOW⇒UTXO st@(UTXO-induction r) , h' , _ )) =
+    h (LEDGER-V {utxoSt' = utxoSt'} ( valid , UTXOW⇒UTXO st@(UTXO-induction r) , h' , h'' , _ )) =
     let
       open ≡-Reasoning
       open CERTSpov indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ r
@@ -143,7 +148,7 @@ module _
     in
     begin
       getCoin utxoSt + getCoin certState
-        ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h') ⟩
+        ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h'') ⟩
       getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
         ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , u))) valid ⟩
       getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , isValid))
@@ -166,7 +171,6 @@ module _
       getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + φ(getCoin txwdrls , isValid) ≡⟨ pov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ ∎ )
     where open ≡-Reasoning
-
 
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
@@ -233,7 +237,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   -- updateGovStates faithfully represents a step of the LEDGER sts
   STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (LState.govSt s)
-  STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
+  STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ (proj₂ x))))
     where
     STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {govSt govSt' : GovState}
       → (_⊢_⇀⟦_⟧ᵢ*'_ IdSTS _⊢_⇀⦇_,GOV'⦈_ (⟦ txid , epoch slot , pp , ppolicy , enactState ⟧ᵍ , k) govSt vps govSt')
@@ -445,7 +449,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   LEDGER-govDepsMatch s'@{⟦ .(⟦ ((UTxOState.utxo (LState.utxoSt s) ∣ txins ᶜ) ∪ˡ (outs txb))
                               , _ , updateDeposits pp txb (UTxOState.deposits (LState.utxoSt s)) , _ ⟧ᵘ)
                           , govSt' , _ ⟧ˡ}
-    utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ GOV-sts) aprioriMatch = begin
+    utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ _ GOV-sts) aprioriMatch = begin
       filterˢ isGADeposit (dom (updateDeposits pp txb utxoDeps))
         ≈⟨ noGACerts txcerts (updateProposalDeposits txprop txid govActionDeposit utxoDeps) ⟩
       filterˢ isGADeposit (dom (updateProposalDeposits txprop txid govActionDeposit utxoDeps))

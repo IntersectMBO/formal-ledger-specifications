@@ -300,7 +300,7 @@ data
 \end{code}
 \begin{code}
 _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵣᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,CERT⦈_
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Types for the transition systems relating to certificates}

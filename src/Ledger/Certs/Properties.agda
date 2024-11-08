@@ -133,12 +133,12 @@ instance
                 × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
-Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
+Computational-CERTS : Computational (ReflexiveTransitiveClosure _⊢_⇀⦇_,CERT⦈_) String
 Computational-CERTS = it
 
 private variable
   dCert : DCert
-  Γ : CertEnv
+  Γ Γ' : CertEnv
   l : List DCert
   A A' B : Type
 instance
@@ -274,8 +274,6 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
             ∎
 
-    CERTS-pov : {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
-                → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ l ,CERTS⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-                → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ + getCoin (CertEnv.wdrls Γ)
-    CERTS-pov (BS-base x) = CERTBASE-pov x
-    CERTS-pov (BS-ind  x xs) = trans (CERT-pov x) (CERTS-pov xs)
+    CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ
+    CERTS-pov (BS-base Id-nop) = refl
+    CERTS-pov (BS-ind x xs) = trans (CERT-pov x) (CERTS-pov xs)
