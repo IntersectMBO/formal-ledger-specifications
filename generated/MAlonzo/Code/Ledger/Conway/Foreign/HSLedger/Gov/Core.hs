@@ -19,7 +19,6 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.String
-import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Foreign.Convertible
@@ -34,7 +33,7 @@ import qualified MAlonzo.Code.Ledger.GovernanceActions
 import GHC.Generics (Generic)
 data GovRole = CC  | DRep  | SPO 
   deriving (Show, Eq, Generic)
-data Anchor = Anchor {url :: Data.Text.Text, hash :: ()}
+data Anchor = Anchor {url :: Data.Text.Text, hash :: Integer}
   deriving (Show, Eq, Generic)
 data VDeleg = CredVoter MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential | AbstainRep  | NoConfidenceRep 
   deriving (Show, Eq, Generic)
@@ -100,8 +99,7 @@ d_Conv'45'Anchor_30
          (\ v0 ->
             case coe v0 of
               MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2107 v1 v2
-                -> coe
-                     C_Anchor_145 (coe v1) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                -> coe C_Anchor_145 (coe v1) (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
@@ -109,7 +107,7 @@ d_Conv'45'Anchor_30
               C_Anchor_145 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2107
-                     (coe v1) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                     (coe v1) (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.HsTy-VDeleg
 d_HsTy'45'VDeleg_32 ::
@@ -126,7 +124,7 @@ d_Conv'45'VDeleg_34
             case coe v0 of
               MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_700 v1 v2
                 -> coe
-                     C_CredVoter_771
+                     C_CredVoter_691
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -172,14 +170,14 @@ d_Conv'45'VDeleg_34
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
               MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_702
-                -> coe C_AbstainRep_933
+                -> coe C_AbstainRep_853
               MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_704
-                -> coe C_NoConfidenceRep_935
+                -> coe C_NoConfidenceRep_855
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_CredVoter_771 v1 v2
+              C_CredVoter_691 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_700
                      (coe
@@ -226,9 +224,9 @@ d_Conv'45'VDeleg_34
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v4)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
-              C_AbstainRep_933
+              C_AbstainRep_853
                 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_702
-              C_NoConfidenceRep_935
+              C_NoConfidenceRep_855
                 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_704
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.HsTy-Vote
@@ -244,17 +242,17 @@ d_Conv'45'Vote_38
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_yes_752 -> coe C_Yes_1487
-              MAlonzo.Code.Ledger.GovernanceActions.C_no_754 -> coe C_No_1489
+              MAlonzo.Code.Ledger.GovernanceActions.C_yes_752 -> coe C_Yes_1407
+              MAlonzo.Code.Ledger.GovernanceActions.C_no_754 -> coe C_No_1409
               MAlonzo.Code.Ledger.GovernanceActions.C_abstain_756
-                -> coe C_Abstain_1491
+                -> coe C_Abstain_1411
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_Yes_1487 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_752
-              C_No_1489 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_754
-              C_Abstain_1491
+              C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_752
+              C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_754
+              C_Abstain_1411
                 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_756
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.HsTy-GovVote
@@ -272,7 +270,7 @@ d_Conv'45'GovVote_42
             case coe v0 of
               MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_6249 v1 v2 v3 v4
                 -> coe
-                     C_GovVote_1613
+                     C_GovVote_1533
                      (coe
                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -309,17 +307,17 @@ d_Conv'45'GovVote_42
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_yes_752 -> coe C_Yes_1487
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_no_754 -> coe C_No_1489
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_yes_752 -> coe C_Yes_1407
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_no_754 -> coe C_No_1409
                                    MAlonzo.Code.Ledger.GovernanceActions.C_abstain_756
-                                     -> coe C_Abstain_1491
+                                     -> coe C_Abstain_1411
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   C_Yes_1487 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_752
-                                   C_No_1489 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_754
-                                   C_Abstain_1491
+                                   C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_752
+                                   C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_754
+                                   C_Abstain_1411
                                      -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_756
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v3)
@@ -334,7 +332,7 @@ d_Conv'45'GovVote_42
       (coe
          (\ v0 ->
             case coe v0 of
-              C_GovVote_1613 v1 v2 v3 v4
+              C_GovVote_1533 v1 v2 v3 v4
                 -> coe
                      MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_6249
                      (coe
@@ -371,17 +369,17 @@ d_Conv'45'GovVote_42
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_yes_752 -> coe C_Yes_1487
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_no_754 -> coe C_No_1489
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_yes_752 -> coe C_Yes_1407
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_no_754 -> coe C_No_1409
                                    MAlonzo.Code.Ledger.GovernanceActions.C_abstain_756
-                                     -> coe C_Abstain_1491
+                                     -> coe C_Abstain_1411
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   C_Yes_1487 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_752
-                                   C_No_1489 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_754
-                                   C_Abstain_1491
+                                   C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_752
+                                   C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_754
+                                   C_Abstain_1411
                                      -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_756
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v3)
@@ -399,66 +397,66 @@ type T_Anchor_143 = Anchor
 pattern C_Anchor_145 a0 a1 = Anchor a0 a1
 check_Anchor_145 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 -> T_Anchor_143
+  Integer -> T_Anchor_143
 check_Anchor_145 = Anchor
 cover_Anchor_143 :: Anchor -> ()
 cover_Anchor_143 x
   = case x of
       Anchor _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.VDeleg
-d_VDeleg_769 = ()
-type T_VDeleg_769 = VDeleg
-pattern C_CredVoter_771 a0 a1 = CredVoter a0 a1
-pattern C_AbstainRep_933 = AbstainRep
-pattern C_NoConfidenceRep_935 = NoConfidenceRep
-check_CredVoter_771 ::
+d_VDeleg_689 = ()
+type T_VDeleg_689 = VDeleg
+pattern C_CredVoter_691 a0 a1 = CredVoter a0 a1
+pattern C_AbstainRep_853 = AbstainRep
+pattern C_NoConfidenceRep_855 = NoConfidenceRep
+check_CredVoter_691 ::
   T_GovRole_17 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_27 ->
-  T_VDeleg_769
-check_CredVoter_771 = CredVoter
-check_AbstainRep_933 :: T_VDeleg_769
-check_AbstainRep_933 = AbstainRep
-check_NoConfidenceRep_935 :: T_VDeleg_769
-check_NoConfidenceRep_935 = NoConfidenceRep
-cover_VDeleg_769 :: VDeleg -> ()
-cover_VDeleg_769 x
+  T_VDeleg_689
+check_CredVoter_691 = CredVoter
+check_AbstainRep_853 :: T_VDeleg_689
+check_AbstainRep_853 = AbstainRep
+check_NoConfidenceRep_855 :: T_VDeleg_689
+check_NoConfidenceRep_855 = NoConfidenceRep
+cover_VDeleg_689 :: VDeleg -> ()
+cover_VDeleg_689 x
   = case x of
       CredVoter _ _ -> ()
       AbstainRep -> ()
       NoConfidenceRep -> ()
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote
-d_Vote_1485 = ()
-type T_Vote_1485 = Vote
-pattern C_Yes_1487 = Yes
-pattern C_No_1489 = No
-pattern C_Abstain_1491 = Abstain
-check_Yes_1487 :: T_Vote_1485
-check_Yes_1487 = Yes
-check_No_1489 :: T_Vote_1485
-check_No_1489 = No
-check_Abstain_1491 :: T_Vote_1485
-check_Abstain_1491 = Abstain
-cover_Vote_1485 :: Vote -> ()
-cover_Vote_1485 x
+d_Vote_1405 = ()
+type T_Vote_1405 = Vote
+pattern C_Yes_1407 = Yes
+pattern C_No_1409 = No
+pattern C_Abstain_1411 = Abstain
+check_Yes_1407 :: T_Vote_1405
+check_Yes_1407 = Yes
+check_No_1409 :: T_Vote_1405
+check_No_1409 = No
+check_Abstain_1411 :: T_Vote_1405
+check_Abstain_1411 = Abstain
+cover_Vote_1405 :: Vote -> ()
+cover_Vote_1405 x
   = case x of
       Yes -> ()
       No -> ()
       Abstain -> ()
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote
-d_GovVote_1611 = ()
-type T_GovVote_1611 = GovVote
-pattern C_GovVote_1613 a0 a1 a2 a3 = GovVote a0 a1 a2 a3
-check_GovVote_1613 ::
+d_GovVote_1531 = ()
+type T_GovVote_1531 = GovVote
+pattern C_GovVote_1533 a0 a1 a2 a3 = GovVote a0 a1 a2 a3
+check_GovVote_1533 ::
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     () () Integer Integer ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     () () T_GovRole_17
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_27 ->
-  T_Vote_1485 ->
+  T_Vote_1405 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_Anchor_143 ->
-  T_GovVote_1611
-check_GovVote_1613 = GovVote
-cover_GovVote_1611 :: GovVote -> ()
-cover_GovVote_1611 x
+  T_GovVote_1531
+check_GovVote_1533 = GovVote
+cover_GovVote_1531 :: GovVote -> ()
+cover_GovVote_1531 x
   = case x of
       GovVote _ _ _ _ -> ()

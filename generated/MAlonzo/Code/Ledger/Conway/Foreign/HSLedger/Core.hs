@@ -129,8 +129,8 @@ d_StabilityWindow'7580'_36 = coe (10 :: Integer)
 d_Quorum_38 :: Integer
 d_Quorum_38 = coe (1 :: Integer)
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.NetworkId
-d_NetworkId_40 :: MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
-d_NetworkId_40 = coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8
+d_NetworkId_40 :: Integer
+d_NetworkId_40 = coe (0 :: Integer)
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.SKey
 d_SKey_42 :: ()
 d_SKey_42 = erased
@@ -172,18 +172,17 @@ d_Data'688'_58
       MAlonzo.Code.Ledger.Crypto.C_mkHashableSet_54
       (coe
          MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
-         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
-         MAlonzo.Code.Class.Show.Instances.d_Show'45''8868'_16
-         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+         MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
          (coe
             MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
             (coe (\ v0 -> v0))))
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.toData
-d_toData_62 ::
-  () -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+d_toData_62 :: () -> AgdaAny -> Integer
 d_toData_62 ~v0 ~v1 = du_toData_62
-du_toData_62 :: MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
-du_toData_62 = coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8
+du_toData_62 :: Integer
+du_toData_62 = coe (0 :: Integer)
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.PlutusScript
 d_PlutusScript_64 :: ()
 d_PlutusScript_64 = erased
@@ -383,10 +382,10 @@ du_HSGlobalConstants_250
       MAlonzo.Code.Ledger.Types.Epoch.C_GlobalConstants'46'constructor_6069
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-         (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
-         (coe (\ v0 -> seq (coe v0) (coe ("tt" :: Data.Text.Text)))))
+         (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
       d_SlotsPerEpoch'7580'_34
       (coe
          MAlonzo.Code.Data.Nat.Base.C_NonZero'46'constructor_3575
@@ -1508,9 +1507,9 @@ d_HSTransactionStructure_894 v0
          (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
       (coe
          MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
-         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
-         MAlonzo.Code.Class.Show.Instances.d_Show'45''8868'_16
-         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+         MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
+         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
          (coe
             MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
             (coe (\ v1 -> v1))))
@@ -1710,7 +1709,7 @@ d_Dec'45'validP1Script_954 v0
 d_Dec'45'validPlutusScript_956 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  [MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6] ->
+  [Integer] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
@@ -2330,7 +2329,7 @@ d_Network_1096 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.NetworkId
 d_NetworkId_1100 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  Integer
 d_NetworkId_1100 v0
   = let v1 = d_HSTransactionStructure_894 (coe v0) in
     coe
@@ -2969,9 +2968,9 @@ du_adHashingScheme_1300 ::
 du_adHashingScheme_1300
   = coe
       MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
-      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
-      MAlonzo.Code.Class.Show.Instances.d_Show'45''8868'_16
-      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45''8868'_10
+      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+      MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
+      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       (coe
          MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
          (coe (\ v0 -> v0)))
@@ -3327,12 +3326,10 @@ d_monoid_1400 v0
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.netId
 d_netId_1402 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer
 d_netId_1402 ~v0 = du_netId_1402
 du_netId_1402 ::
-  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer
 du_netId_1402 = coe MAlonzo.Code.Ledger.Address.du_netId_112
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.p1s
 d_p1s_1406 ::
@@ -3616,7 +3613,7 @@ d_sum'7515'_1458 v0
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.toData
 d_toData_1460 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  () -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  () -> AgdaAny -> Integer
 d_toData_1460 v0
   = let v1 = d_HSTransactionStructure_894 (coe v0) in
     coe
@@ -3705,7 +3702,7 @@ d_validP1Script_1476 = erased
 d_validPlutusScript_1478 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  [MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6] ->
+  [Integer] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 -> ()
 d_validPlutusScript_1478 = erased
@@ -3764,8 +3761,7 @@ d_treasury_1494 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasury_152 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.Anchor.hash
 d_hash_1498 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_706 ->
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_706 -> Integer
 d_hash_1498 v0
   = coe MAlonzo.Code.Ledger.GovernanceActions.d_hash_714 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.Anchor.url
@@ -3775,9 +3771,7 @@ d_url_1500 ::
 d_url_1500 v0
   = coe MAlonzo.Code.Ledger.GovernanceActions.d_url_712 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.BaseAddr.net
-d_net_1504 ::
-  MAlonzo.Code.Ledger.Address.T_BaseAddr_48 ->
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+d_net_1504 :: MAlonzo.Code.Ledger.Address.T_BaseAddr_48 -> Integer
 d_net_1504 v0 = coe MAlonzo.Code.Ledger.Address.d_net_56 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.BaseAddr.pay
 d_pay_1506 ::
@@ -3797,8 +3791,7 @@ d_attrsSize_1512 v0
   = coe MAlonzo.Code.Ledger.Address.d_attrsSize_74 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.BootstrapAddr.net
 d_net_1514 ::
-  MAlonzo.Code.Ledger.Address.T_BootstrapAddr_62 ->
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  MAlonzo.Code.Ledger.Address.T_BootstrapAddr_62 -> Integer
 d_net_1514 v0 = coe MAlonzo.Code.Ledger.Address.d_net_70 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.BootstrapAddr.pay
 d_pay_1516 ::
@@ -5169,9 +5162,7 @@ d_Q5e_2060 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_Q5e_2060 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q5e_242 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.RwdAddr.net
-d_net_2064 ::
-  MAlonzo.Code.Ledger.Address.T_RwdAddr_76 ->
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+d_net_2064 :: MAlonzo.Code.Ledger.Address.T_RwdAddr_76 -> Integer
 d_net_2064 v0 = coe MAlonzo.Code.Ledger.Address.d_net_82 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.RwdAddr.stake
 d_stake_2066 ::
@@ -5956,8 +5947,7 @@ d_isValid_2288 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_isValid_2684 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.Tx.txAD
 d_txAD_2290 ::
-  MAlonzo.Code.Ledger.Transaction.T_Tx_2670 ->
-  Maybe MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  MAlonzo.Code.Ledger.Transaction.T_Tx_2670 -> Maybe Integer
 d_txAD_2290 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txAD_2686 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.Tx.wits
@@ -6000,14 +5990,12 @@ d_scriptIntHash_2306 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_scriptIntHash_2648 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.TxBody.txADhash
 d_txADhash_2308 ::
-  MAlonzo.Code.Ledger.Transaction.T_TxBody_2568 ->
-  Maybe MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  MAlonzo.Code.Ledger.Transaction.T_TxBody_2568 -> Maybe Integer
 d_txADhash_2308 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txADhash_2634 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.TxBody.txNetworkId
 d_txNetworkId_2310 ::
-  MAlonzo.Code.Ledger.Transaction.T_TxBody_2568 ->
-  Maybe MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
+  MAlonzo.Code.Ledger.Transaction.T_TxBody_2568 -> Maybe Integer
 d_txNetworkId_2310 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txNetworkId_2636 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.TxBody.txcerts
@@ -6320,8 +6308,7 @@ d_runPLCScript_2600 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1726 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6] -> Bool
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [Integer] -> Bool
 d_runPLCScript_2600 v0
   = coe MAlonzo.Code.Ledger.Abstract.d_runPLCScript_1744 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.AbstractFunctions.scriptSize

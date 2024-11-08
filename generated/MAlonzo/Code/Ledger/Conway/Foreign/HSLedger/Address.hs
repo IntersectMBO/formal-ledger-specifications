@@ -17,7 +17,6 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
-import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Foreign.Convertible
 import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Ledger.Address
@@ -25,11 +24,11 @@ import qualified MAlonzo.Code.Ledger.Address
 import GHC.Generics (Generic)
 data Credential = KeyHashObj Integer | ScriptObj Integer
   deriving (Show, Eq, Generic)
-data BaseAddr = BaseAddr {baseNet :: (), basePay :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential, baseStake :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential}
+data BaseAddr = BaseAddr {baseNet :: Integer, basePay :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential, baseStake :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential}
   deriving (Show, Eq, Generic)
-data BootstrapAddr = BootstrapAddr {bootNet :: (), bootPay :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential, bootAttrsSize :: Integer}
+data BootstrapAddr = BootstrapAddr {bootNet :: Integer, bootPay :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential, bootAttrsSize :: Integer}
   deriving (Show, Eq, Generic)
-data RwdAddr = RwdAddr {rwdNet :: (), rwdStake :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential}
+data RwdAddr = RwdAddr {rwdNet :: Integer, rwdStake :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential}
   deriving (Show, Eq, Generic)
 type Addr = (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr)
 -- Ledger.Conway.Foreign.HSLedger.Address.HsTy-Credential
@@ -73,7 +72,7 @@ d_Conv'45'BaseAddr_16
             case coe v0 of
               MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2765 v1 v2 v3
                 -> coe
-                     C_BaseAddr_737 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                     C_BaseAddr_737 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -122,8 +121,7 @@ d_Conv'45'BaseAddr_16
             case coe v0 of
               C_BaseAddr_737 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2765
-                     (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                     MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2765 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -182,7 +180,7 @@ d_Conv'45'BootstrapAddr_20
             case coe v0 of
               MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2987 v1 v2 v3
                 -> coe
-                     C_BootstrapAddr_2499 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                     C_BootstrapAddr_2403 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -209,10 +207,10 @@ d_Conv'45'BootstrapAddr_20
       (coe
          (\ v0 ->
             case coe v0 of
-              C_BootstrapAddr_2499 v1 v2 v3
+              C_BootstrapAddr_2403 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_2987
-                     (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                     (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -251,7 +249,7 @@ d_Conv'45'RwdAddr_24
             case coe v0 of
               MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3193 v1 v2
                 -> coe
-                     C_RwdAddr_3955 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                     C_RwdAddr_3763 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -277,10 +275,9 @@ d_Conv'45'RwdAddr_24
       (coe
          (\ v0 ->
             case coe v0 of
-              C_RwdAddr_3955 v1 v2
+              C_RwdAddr_3763 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3193
-                     (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                     MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3193 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -322,34 +319,30 @@ d_BaseAddr_735 = ()
 type T_BaseAddr_735 = BaseAddr
 pattern C_BaseAddr_737 a0 a1 a2 = BaseAddr a0 a1 a2
 check_BaseAddr_737 ::
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  T_Credential_27 -> T_Credential_27 -> T_BaseAddr_735
+  Integer -> T_Credential_27 -> T_Credential_27 -> T_BaseAddr_735
 check_BaseAddr_737 = BaseAddr
 cover_BaseAddr_735 :: BaseAddr -> ()
 cover_BaseAddr_735 x
   = case x of
       BaseAddr _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr
-d_BootstrapAddr_2497 = ()
-type T_BootstrapAddr_2497 = BootstrapAddr
-pattern C_BootstrapAddr_2499 a0 a1 a2 = BootstrapAddr a0 a1 a2
-check_BootstrapAddr_2499 ::
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  T_Credential_27 -> Integer -> T_BootstrapAddr_2497
-check_BootstrapAddr_2499 = BootstrapAddr
-cover_BootstrapAddr_2497 :: BootstrapAddr -> ()
-cover_BootstrapAddr_2497 x
+d_BootstrapAddr_2401 = ()
+type T_BootstrapAddr_2401 = BootstrapAddr
+pattern C_BootstrapAddr_2403 a0 a1 a2 = BootstrapAddr a0 a1 a2
+check_BootstrapAddr_2403 ::
+  Integer -> T_Credential_27 -> Integer -> T_BootstrapAddr_2401
+check_BootstrapAddr_2403 = BootstrapAddr
+cover_BootstrapAddr_2401 :: BootstrapAddr -> ()
+cover_BootstrapAddr_2401 x
   = case x of
       BootstrapAddr _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Address.RwdAddr
-d_RwdAddr_3953 = ()
-type T_RwdAddr_3953 = RwdAddr
-pattern C_RwdAddr_3955 a0 a1 = RwdAddr a0 a1
-check_RwdAddr_3955 ::
-  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  T_Credential_27 -> T_RwdAddr_3953
-check_RwdAddr_3955 = RwdAddr
-cover_RwdAddr_3953 :: RwdAddr -> ()
-cover_RwdAddr_3953 x
+d_RwdAddr_3761 = ()
+type T_RwdAddr_3761 = RwdAddr
+pattern C_RwdAddr_3763 a0 a1 = RwdAddr a0 a1
+check_RwdAddr_3763 :: Integer -> T_Credential_27 -> T_RwdAddr_3761
+check_RwdAddr_3763 = RwdAddr
+cover_RwdAddr_3761 :: RwdAddr -> ()
+cover_RwdAddr_3761 x
   = case x of
       RwdAddr _ _ -> ()

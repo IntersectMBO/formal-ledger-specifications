@@ -5338,7 +5338,7 @@ d_Conv'45'DCert_84
                      (coe
                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.C_Anchor_145
                         (coe MAlonzo.Code.Ledger.GovernanceActions.d_url_712 (coe v3))
-                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
+                        (coe MAlonzo.Code.Ledger.GovernanceActions.d_hash_714 (coe v3)))
               MAlonzo.Code.Ledger.Certs.C_deregdrep_868 v1 v2
                 -> coe
                      C_Deregdrep_12477
@@ -5603,7 +5603,7 @@ d_Conv'45'DCert_84
                                    MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2107 v5 v6
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.C_Anchor_145
-                                          (coe v5) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                                          (coe v5) (coe v6)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v4 ->
@@ -5611,7 +5611,7 @@ d_Conv'45'DCert_84
                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.C_Anchor_145 v5 v6
                                      -> coe
                                           MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2107
-                                          (coe v5) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
+                                          (coe v5) (coe v6)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v3)
               C_Deregdrep_12477 v1 v2
@@ -6032,9 +6032,9 @@ check_MkCertEnv_4791 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_PParams_10199 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovVote_1611 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovVote_1531 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3953
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3761
     Integer ->
   T_CertEnv_4789
 check_MkCertEnv_4791 = MkCertEnv
@@ -6049,7 +6049,7 @@ pattern C_MkDState_7365 a0 a1 a2 a3 = MkDState a0 a1 a2 a3
 check_MkDState_7365 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_27
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_VDeleg_769 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_VDeleg_689 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_27
     Integer ->
@@ -6078,7 +6078,7 @@ check_Delegate_11661 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_27 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_VDeleg_769 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_VDeleg_689 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   Integer -> T_DCert_11659
 check_Delegate_11661 = Delegate

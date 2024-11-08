@@ -19,6 +19,7 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.Equality
+import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.String
@@ -354,13 +355,29 @@ d_Computational'45'DELEG_1102 v0
                                                                                (coe v16)))
                                                                        v4)
                                                                     (coe
-                                                                       MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_452
-                                                                       (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                       MAlonzo.Code.Axiom.Set.du_fromList_428
+                                                                       (coe
+                                                                          MAlonzo.Code.Axiom.Set.d_th_1470
                                                                           (coe
                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                       erased
                                                                        (coe
-                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))))
+                                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                          (coe
+                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                          (coe
+                                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                             (coe
+                                                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_702))
+                                                                             (coe
+                                                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                (coe
+                                                                                   MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_704))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                               (coe
                                                                  MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                                  (coe
@@ -710,20 +727,36 @@ d_Computational'45'DELEG_1102 v0
                                                                                                                     v23)))
                                                                                                          v4)
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_452
-                                                                                                         (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                         MAlonzo.Code.Axiom.Set.du_fromList_428
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1470
                                                                                                             (coe
                                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                                         erased
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))))
+                                                                                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_702))
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_704))
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                                                                 erased in
                                                                                       coe
                                                                                         (case coe
                                                                                                 v23 of
                                                                                            MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v24
                                                                                              -> coe
-                                                                                                  ("\172\n(Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n Class.IsSet.IsSet.\8712 mv)\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594 just (credVoter DRep x)) delegatees)\n (Class.HasSingleton.HasSingleton.\10100\n  Class.HasSingleton.HasSingletonSet-Set\n  (.Axiom.Set.Theory\7496.th List-Model\7496)\n  \10101\n  nothing))"
+                                                                                                  ("\172\n(Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n Class.IsSet.IsSet.\8712 mv)\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594 just (credVoter DRep x)) delegatees)\n (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (nothing \8759 just abstainRep \8759 just noConfidenceRep \8759 [])))"
                                                                                                    ::
                                                                                                    Data.Text.Text)
                                                                                            MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v24
@@ -1792,13 +1825,29 @@ d_Computational'45'CERT_1424 v0
                                                                                                        v23)))
                                                                                             v14)
                                                                                          (coe
-                                                                                            MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_452
-                                                                                            (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                            MAlonzo.Code.Axiom.Set.du_fromList_428
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Axiom.Set.d_th_1470
                                                                                                (coe
                                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                            erased
                                                                                             (coe
-                                                                                               MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))))
+                                                                                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_702))
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_704))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                                                    (coe
                                                                                       MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                                                       (coe
@@ -2194,20 +2243,36 @@ d_Computational'45'CERT_1424 v0
                                                                                                                                                   v30)))
                                                                                                                                        v14)
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_452
-                                                                                                                                       (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                                                       MAlonzo.Code.Axiom.Set.du_fromList_428
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Axiom.Set.d_th_1470
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                                                                       erased
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))))
+                                                                                                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                                (coe
+                                                                                                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_702))
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                                                (coe
+                                                                                                                                                   MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                                   (coe
+                                                                                                                                                      MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_704))
+                                                                                                                                                (coe
+                                                                                                                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                                                                                               erased in
                                                                                                                     coe
                                                                                                                       (case coe
                                                                                                                               v30 of
                                                                                                                          MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v31
                                                                                                                            -> coe
-                                                                                                                                ("\172\n(Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n Class.IsSet.IsSet.\8712 mv)\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594 just (credVoter DRep x)) delegatees)\n (Class.HasSingleton.HasSingleton.\10100\n  Class.HasSingleton.HasSingletonSet-Set\n  (.Axiom.Set.Theory\7496.th List-Model\7496)\n  \10101\n  nothing))"
+                                                                                                                                ("\172\n(Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n Class.IsSet.IsSet.\8712 mv)\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594 just (credVoter DRep x)) delegatees)\n (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (nothing \8759 just abstainRep \8759 just noConfidenceRep \8759 [])))"
                                                                                                                                  ::
                                                                                                                                  Data.Text.Text)
                                                                                                                          MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v31
@@ -3384,25 +3449,50 @@ du_goal_1940 v0 v1 v2 v3 v4 v5
                                                     = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
                                               coe
                                                 (coe
-                                                   MAlonzo.Code.Axiom.Set.du_map_398
-                                                   (MAlonzo.Code.Axiom.Set.d_th_1470 (coe v11))
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_700
+                                                   MAlonzo.Code.Axiom.Set.du__'8746'__680
+                                                   (coe MAlonzo.Code.Axiom.Set.d_th_1470 (coe v11))
+                                                   (let v12
+                                                          = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
+                                                    coe
                                                       (coe
-                                                         MAlonzo.Code.Ledger.GovernanceActions.C_DRep_690))
-                                                   (coe
-                                                      MAlonzo.Code.Class.IsSet.du_dom_548
-                                                      (coe
-                                                         MAlonzo.Code.Axiom.Set.d_th_1470
+                                                         MAlonzo.Code.Axiom.Set.du_map_398
+                                                         (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                            (coe v12))
                                                          (coe
-                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                      (coe
-                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
-                                                      (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1078
+                                                            MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_700
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.GovernanceActions.C_DRep_690))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1098
-                                                            (coe v5))))))))
+                                                            MAlonzo.Code.Class.IsSet.du_dom_548
+                                                            (coe
+                                                               MAlonzo.Code.Axiom.Set.d_th_1470
+                                                               (coe
+                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                            (coe
+                                                               MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1078
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1098
+                                                                  (coe v5))))))
+                                                   (let v12
+                                                          = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
+                                                    coe
+                                                      (coe
+                                                         MAlonzo.Code.Axiom.Set.du_fromList_428
+                                                         (coe
+                                                            MAlonzo.Code.Axiom.Set.d_th_1470
+                                                            (coe v12))
+                                                         (coe
+                                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_704)
+                                                            (coe
+                                                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_702)
+                                                               (coe
+                                                                  MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1062
                                           (coe
@@ -3516,7 +3606,7 @@ du_goal_1940 v0 v1 v2 v3 v4 v5
                                                         v1
                                                         (let v11
                                                                = coe
-                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_32259
+                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_31965
                                                                    (coe v2) (coe v3) (coe v1)
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1078
@@ -3560,7 +3650,7 @@ du_goal_1940 v0 v1 v2 v3 v4 v5
                                                          coe
                                                            (MAlonzo.Code.Ledger.PParams.d_drepActivity_376
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_32233
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_31939
                                                                  (coe v11)))) in
                                               coe (coe (\ v12 -> v11)))
                                              (coe

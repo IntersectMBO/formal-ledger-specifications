@@ -21,7 +21,6 @@ import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.String
-import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.IsSet
@@ -69,7 +68,7 @@ type T_StakeDistrs_95 = StakeDistrs
 pattern C_StakeDistrs_97 a0 = StakeDistrs a0
 check_StakeDistrs_97 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_VDeleg_769
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_VDeleg_689
     Integer ->
   T_StakeDistrs_95
 check_StakeDistrs_97 = StakeDistrs
@@ -565,9 +564,7 @@ d_Conv'45'RatifyState_216
                                  (coe
                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_92
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
-                                       (coe (\ v4 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
-                                       (coe (\ v4 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
+                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                     (coe
                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_88
                                        (coe
@@ -737,15 +734,7 @@ d_Conv'45'RatifyState_216
                                                    (coe
                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_92
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
-                                                         (coe
-                                                            (\ v10 ->
-                                                               coe
-                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
-                                                         (coe
-                                                            (\ v10 ->
-                                                               coe
-                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
+                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                                       (coe
                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_88
                                                          (coe
@@ -886,15 +875,7 @@ d_Conv'45'RatifyState_216
                                                 (coe
                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_92
                                                    (coe
-                                                      MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
-                                                      (coe
-                                                         (\ v10 ->
-                                                            coe
-                                                              MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
-                                                      (coe
-                                                         (\ v10 ->
-                                                            coe
-                                                              MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
+                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                                    (coe
                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_88
                                                       (coe
@@ -3191,7 +3172,7 @@ check_MkRatifyEnv_567 ::
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_PoolParams_85 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_27
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_VDeleg_769 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_VDeleg_689 ->
   T_RatifyEnv_565
 check_MkRatifyEnv_567 = MkRatifyEnv
 cover_RatifyEnv_565 :: RatifyEnv -> ()
