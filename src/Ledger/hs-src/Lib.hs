@@ -29,7 +29,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core    as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov         as X
   ( GovEnv(..), GovProposal(..), GovActionState(..), govStep, GovState, GovActionID, Voter)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger      as X
-  (LEnv(..), LState(..), ledgerStep)
+  (LEnv(..), LState(..), ledgerStep, ledgersStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.NewEpoch    as X
   (NewEpochState(..), newEpochStep, HsRewardUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify      as X
