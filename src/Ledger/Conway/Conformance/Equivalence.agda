@@ -41,10 +41,10 @@ record _⊢_⭆ⁱ_ (I L : Set) (C : I → L → Set) : Set where
   field
     convⁱ : (i : I) (l : L) → C i l
 
-open _⊢_⭆ⁱ_ ⦃ ... ⦄
+open _⊢_⭆ⁱ_
 
 _⊢conv_ : ∀ {I L C} → ⦃ I ⊢ L ⭆ⁱ C ⦄ → ∀ i l → C i l
-Γ ⊢conv l = convⁱ Γ l
+Γ ⊢conv l = it .convⁱ Γ l
 
 _⊢_⭆_ : (I L C : Set) → Set
 I ⊢ L ⭆ C = I ⊢ L ⭆ⁱ λ _ _ → C
@@ -72,18 +72,6 @@ instance
   GStateFromConf : C.GState ⭆ L.GState
   GStateFromConf .convⁱ deposits C.⟦ dreps , ccHotKeys , _ ⟧ᵛ =
     L.⟦ dreps , ccHotKeys ⟧ᵛ
-
-  CertStToConf : L.Deposits ⊢ L.CertState ⭆ C.CertState
-  CertStToConf .convⁱ deposits L.⟦ dState , pState , gState ⟧ᶜˢ =
-    C.⟦ deposits ⊢conv dState , pState , deposits ⊢conv gState ⟧ᶜˢ
-
-  CertStFromConf : C.CertState ⭆ L.CertState
-  CertStFromConf .convⁱ _ C.⟦ dState , pState , gState ⟧ᶜˢ =
-    L.⟦ conv dState , pState , conv gState ⟧ᶜˢ
-
-  LStateToConf : L.LState ⭆ C.LState
-  LStateToConf .convⁱ _ L.⟦ utxoSt , govSt , certState ⟧ˡ =
-    C.⟦ utxoSt , govSt , L.UTxOState.deposits utxoSt ⊢conv certState ⟧ˡ
 
 -- UTXO ----------------------------------
 
@@ -184,6 +172,13 @@ instance
 -- CERT ----------------------------------
 
 data ValidCertDeposit (pp : PParams) (deps : L.Deposits) : L.DCert → Set where
+  delegate   : ∀ {c del kh b} → ValidCertDeposit pp deps (L.delegate c del kh b)
+  regpool    : ∀ {kh p} → ValidCertDeposit pp deps (L.regpool kh p)
+  regdrep    : ∀ {c v a} → ValidCertDeposit pp deps (L.regdrep c v a)
+  dereg      : ∀ {c d} → (L.CredentialDeposit c , d) ∈ deps → ValidCertDeposit pp deps (L.dereg c d)
+  deregdrep  : ∀ {c d} → (L.DRepDeposit c , d) ∈ deps → ValidCertDeposit pp deps (L.deregdrep c d)
+  ccreghot   : ∀ {c v} → ValidCertDeposit pp deps (L.ccreghot c v)
+  retirepool : ∀ {kh e} → ValidCertDeposit pp deps (L.retirepool kh e)
 
 ValidDeposit : (pp : PParams) → L.DCert → Set
 ValidDeposit pp cert = Σ L.Deposits λ deps → ValidCertDeposit pp deps cert
@@ -194,13 +189,35 @@ ValidDeposits pp certs = Σ L.Deposits λ deps → L.ValidCertDeposits pp deps c
 unconsValidDeposits : ∀ {pp deposits cert certs}
                     → L.ValidCertDeposits pp deposits (cert ∷ certs)
                     → ValidCertDeposit pp deposits cert × L.ValidCertDeposits pp (C.updateCertDeposit pp cert deposits) certs
-unconsValidDeposits v = {!!}
+unconsValidDeposits (L.delegate v)    = delegate , v
+unconsValidDeposits (L.regpool v)     = regpool , v
+unconsValidDeposits (L.regdrep v)     = regdrep , v
+unconsValidDeposits (L.dereg h v)     = dereg h , v
+unconsValidDeposits (L.deregdrep h v) = deregdrep h , v
+unconsValidDeposits (L.ccreghot v)    = ccreghot , v
+unconsValidDeposits (L.retirepool v)  = retirepool , v
 
 updateCertDeposits : PParams → List L.DCert → L.Deposits → L.Deposits
 updateCertDeposits pp [] deposits = deposits
 updateCertDeposits pp (cert ∷ certs) deposits = updateCertDeposits pp certs (C.updateCertDeposit pp cert deposits)
 
+record CertDeps (pp : PParams) (dcert : L.DCert) : Set where
+  field
+    depsᵈ : L.Deposits
+    depsᵍ : L.Deposits
+    -- Invariants
+    validᵈ : ValidCertDeposit pp depsᵈ dcert
+    validᵍ : ValidCertDeposit pp depsᵍ dcert
+
 instance
+
+  CertStToConf : L.Deposits ⊢ L.CertState ⭆ C.CertState
+  CertStToConf .convⁱ deposits L.⟦ dState , pState , gState ⟧ᶜˢ =
+    C.⟦ deposits ⊢conv dState , pState , deposits ⊢conv gState ⟧ᶜˢ
+
+  CertStFromConf : C.CertState ⭆ L.CertState
+  CertStFromConf .convⁱ _ C.⟦ dState , pState , gState ⟧ᶜˢ =
+    L.⟦ conv dState , pState , conv gState ⟧ᶜˢ
 
   CERTBASEToConf : ∀ {Γ s s'}
                  → L.Deposits ⊢ Γ L.⊢ s ⇀⦇ _ ,CERTBASE⦈ s' ⭆ⁱ λ deposits _ →
@@ -217,107 +234,118 @@ instance
                  Γ L.⊢ s ⇀⦇ dcert ,DELEG⦈ s' ⭆ⁱ λ (pp , deposits , _) _ →
                  Γ C.⊢ (deposits ⊢conv s) ⇀⦇ dcert ,DELEG⦈ (C.updateCertDeposit pp dcert deposits ⊢conv s')
   DELEGToConf .convⁱ _ (L.DELEG-delegate h) = C.DELEG-delegate h
-  DELEGToConf .convⁱ (pp , deposits , valid) (L.DELEG-dereg h) = C.DELEG-dereg (h , {!!})
+  DELEGToConf .convⁱ (pp , deposits , dereg v) (L.DELEG-dereg h) = C.DELEG-dereg (h , v)
 
   CERTToConf : ∀ {Γ s dcert s'}
              → Σ PParams (λ pp → ValidDeposit pp dcert) ⊢
                 Γ L.⊢ s ⇀⦇ dcert ,CERT⦈ s' ⭆ⁱ λ (pp , deposits , _) _ →
                 Γ C.⊢ (deposits ⊢conv s) ⇀⦇ dcert ,CERT⦈ (C.updateCertDeposit pp dcert deposits ⊢conv s')
-  CERTToConf .convⁱ deposits (L.CERT-deleg x) = {!!}
+  CERTToConf {Γ} {s@(L.⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ)} {dcert} {s'@(L.⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ)} .convⁱ i@(pp , deposits , _) (L.CERT-deleg deleg) =
+    let cert' : Γ C.⊢ deposits ⊢conv s ⇀⦇ dcert ,CERT⦈ C.⟦ C.updateCertDeposit pp dcert deposits ⊢conv stᵈ'
+                                                         , stᵖ
+                                                         , deposits ⊢conv stᵍ   -- This is wild! The GState has different deposits now!
+                                                         ⟧ᶜˢ                     -- Meaning this isn't actually true!
+        cert' = C.CERT-deleg (i ⊢conv deleg)
+    in
+    {!!}
   CERTToConf .convⁱ deposits (L.CERT-pool x) = {!!}
   CERTToConf .convⁱ deposits (L.CERT-vdel x) = {!!}
 
-  CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
-              → ValidDeposits pp dcerts
-                ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ (deposits , _) _ →
-                  Γ C.⊢ (deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈ (updateCertDeposits pp dcerts deposits ⊢conv s')
-  CERTSToConf .convⁱ (deposits , _) (BS-base certBase)  = BS-base (deposits ⊢conv certBase)
-  CERTSToConf {Γ = Γ} .convⁱ (deposits , valid) (BS-ind cert certs) with unconsValidDeposits valid
-  ... | valid₁ , valids = BS-ind ((L.CertEnv.pp Γ , deposits , valid₁) ⊢conv cert)
-                                 ((_ , valids) ⊢conv certs)
+--   CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
+--               → ValidDeposits pp dcerts
+--                 ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ (deposits , _) _ →
+--                   Γ C.⊢ (deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈ (updateCertDeposits pp dcerts deposits ⊢conv s')
+--   CERTSToConf .convⁱ (deposits , _) (BS-base certBase)  = BS-base (deposits ⊢conv certBase)
+--   CERTSToConf {Γ = Γ} .convⁱ (deposits , valid) (BS-ind cert certs) with unconsValidDeposits valid
+--   ... | valid₁ , valids = BS-ind ((L.CertEnv.pp Γ , deposits , valid₁) ⊢conv cert)
+--                                  ((_ , valids) ⊢conv certs)
 
-  CERTSFromConf : ∀ {Γ s dcerts s'}
-                → Γ C.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆
-                  Γ L.⊢ conv s ⇀⦇ dcerts ,CERTS⦈ conv s'
-  CERTSFromConf .convⁱ deposits (BS-base certBase)  = BS-base (conv certBase)
-  CERTSFromConf .convⁱ deposits (BS-ind cert certs) = {!!}
+--   CERTSFromConf : ∀ {Γ s dcerts s'}
+--                 → Γ C.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆
+--                   Γ L.⊢ conv s ⇀⦇ dcerts ,CERTS⦈ conv s'
+--   CERTSFromConf .convⁱ deposits (BS-base certBase)  = BS-base (conv certBase)
+--   CERTSFromConf .convⁱ deposits (BS-ind cert certs) = {!!}
 
--- Invalid transactions don't change the deposits
-lemInvalidDepositsL : ∀ {Γ utxoSt utxoSt' tx}
-                    → isValid tx ≡ false
-                    → Γ L.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-                    → L.UTxOState.deposits utxoSt ≡ L.UTxOState.deposits utxoSt'
-lemInvalidDepositsL refl (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
-                          (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-                            (L.Scripts-No _))) = refl
+-- -- Invalid transactions don't change the deposits
+-- lemInvalidDepositsL : ∀ {Γ utxoSt utxoSt' tx}
+--                     → isValid tx ≡ false
+--                     → Γ L.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+--                     → L.UTxOState.deposits utxoSt ≡ L.UTxOState.deposits utxoSt'
+-- lemInvalidDepositsL refl (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
+--                           (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+--                             (L.Scripts-No _))) = refl
 
-lemInvalidDepositsC : ∀ {Γ utxoSt utxoSt' tx}
-                    → isValid tx ≡ false
-                    → (h : Γ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt')
-                    → utxowDeposits h ≡ L.UTxOState.deposits utxoSt
-lemInvalidDepositsC refl (C.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
-                          (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-                            (C.Scripts-No _))) = refl
+-- lemInvalidDepositsC : ∀ {Γ utxoSt utxoSt' tx}
+--                     → isValid tx ≡ false
+--                     → (h : Γ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt')
+--                     → utxowDeposits h ≡ L.UTxOState.deposits utxoSt
+-- lemInvalidDepositsC refl (C.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
+--                           (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+--                             (C.Scripts-No _))) = refl
 
-validCertDeposits : ∀ {Γ s tx s'}
-                    (let open TxBody (Tx.body tx)
-                         open L.UTxOEnv Γ
-                         open L.UTxOState s)
-                  → isValid tx ≡ true
-                  → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-                  → L.ValidCertDeposits pparams deposits txcerts
-validCertDeposits refl (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
-                          (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-                            (L.Scripts-Yes (valid , _)))) = valid
+-- validCertDeposits : ∀ {Γ s tx s'}
+--                     (let open TxBody (Tx.body tx)
+--                          open L.UTxOEnv Γ
+--                          open L.UTxOState s)
+--                   → isValid tx ≡ true
+--                   → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
+--                   → L.ValidCertDeposits pparams deposits txcerts
+-- validCertDeposits refl (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
+--                           (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+--                             (L.Scripts-Yes (valid , _)))) = valid
 
--- TODO: this isn't true!
-lemUpdateCertDeposits : ∀ {pp deposits} certs → C.updateCertDepositsUtxo pp certs deposits ≡ L.updateCertDeposits pp certs deposits
-lemUpdateCertDeposits certs = {!!}
+-- -- TODO: this isn't true!
+-- lemUpdateCertDeposits : ∀ {pp deposits} certs → C.updateCertDepositsUtxo pp certs deposits ≡ L.updateCertDeposits pp certs deposits
+-- lemUpdateCertDeposits certs = {!!}
 
-lemUpdateDeposits : ∀ {Γ s tx s'} (open L.UTxOEnv Γ)
-                  → isValid tx ≡ true
-                  → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-                  → C.updateDeposits pparams (body tx) (L.UTxOState.deposits s) ≡ L.UTxOState.deposits s'
-lemUpdateDeposits {tx = tx} refl
-  (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
-    (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-      (L.Scripts-Yes (valid , _)))) = lemUpdateCertDeposits (TxBody.txcerts (body tx))
+-- lemUpdateDeposits : ∀ {Γ s tx s'} (open L.UTxOEnv Γ)
+--                   → isValid tx ≡ true
+--                   → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
+--                   → C.updateDeposits pparams (body tx) (L.UTxOState.deposits s) ≡ L.UTxOState.deposits s'
+-- lemUpdateDeposits {tx = tx} refl
+--   (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
+--     (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+--       (L.Scripts-Yes (valid , _)))) = lemUpdateCertDeposits (TxBody.txcerts (body tx))
 
--- Also not true?
-lemUpdateDeposits' : ∀ {Γ s tx s'} (open L.UTxOEnv Γ)
-                   → isValid tx ≡ true
-                   → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-                   → updateCertDeposits pparams (TxBody.txcerts (body tx)) (L.UTxOState.deposits s) ≡ L.UTxOState.deposits s'
-lemUpdateDeposits' = {!!}
+-- -- Also not true?
+-- lemUpdateDeposits' : ∀ {Γ s tx s'} (open L.UTxOEnv Γ)
+--                    → isValid tx ≡ true
+--                    → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
+--                    → updateCertDeposits pparams (TxBody.txcerts (body tx)) (L.UTxOState.deposits s) ≡ L.UTxOState.deposits s'
+-- lemUpdateDeposits' = {!!}
 
-instance
-  LEDGERToConf : ∀ {Γ s tx s'} → Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s' ⭆ Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ conv s'
-  LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ (L.LEDGER-V⋯ valid utxow certs gov) =
-    let open L.LEnv Γ
-        open L.LState s
-        open L.LState s' renaming (utxoSt to utxoSt'; certState to certState'; govSt to govSt')
-        open TxBody (body tx) using (txcerts)
-        deposits = L.UTxOState.deposits utxoSt
-        utxow' : _ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ setDeposits deposits utxoSt'
-        utxow' = conv utxow
-        utxoStC'    = setDeposits (C.updateDeposits pparams (body tx) deposits) utxoSt'
-        certStateC' = updateCertDeposits pparams txcerts deposits ⊢conv certState'
-        certs' : _ C.⊢ (deposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
-        certs' = (deposits , validCertDeposits valid utxow) ⊢conv certs
-        ledger' : Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
-        ledger' = C.LEDGER-V⋯ valid utxow' certs' gov
-        utxoEq  : utxoStC' ≡ utxoSt'
-        utxoEq  = cong (λ • → L.⟦ _ , _ , • , _ ⟧ᵘ)
-                       (lemUpdateDeposits valid utxow)
-        certsEq : certStateC' ≡ L.UTxOState.deposits utxoSt' ⊢conv certState'
-        certsEq = cong (λ • → C.⟦ C.⟦ _ , _ , _ , • ⟧ᵈ , _ , C.⟦ _ , _ , • ⟧ᵛ ⟧ᶜˢ)
-                       (lemUpdateDeposits' valid utxow)
-    in
-    subst₂ (λ • ◆ → Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ • , _ , ◆ ⟧ˡ) utxoEq certsEq ledger'
-  LEDGERToConf .convⁱ _ (L.LEDGER-I⋯ invalid utxow) with conv utxow
-  ... | utxow' rewrite lemInvalidDepositsL invalid utxow = C.LEDGER-I⋯ invalid utxow'
+-- instance
+--   LStateToConf : L.LState ⭆ C.LState
+--   LStateToConf .convⁱ _ L.⟦ utxoSt , govSt , certState ⟧ˡ =
+--     C.⟦ utxoSt , govSt , L.UTxOState.deposits utxoSt ⊢conv certState ⟧ˡ
 
-  LEDGERFromConf : ∀ {Γ s tx s'} → Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ conv s' ⭆ Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-  LEDGERFromConf .convⁱ _ (C.LEDGER-V⋯ valid utxow certs gov) = {!!}
-  LEDGERFromConf .convⁱ _ (C.LEDGER-I⋯ invalid utxow) with inj₁ invalid ⊢conv utxow
-  ... | utxow' rewrite lemInvalidDepositsC invalid utxow = L.LEDGER-I⋯ invalid utxow'
+--   LEDGERToConf : ∀ {Γ s tx s'} → Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s' ⭆ Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ conv s'
+--   LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ (L.LEDGER-V⋯ valid utxow certs gov) =
+--     let open L.LEnv Γ
+--         open L.LState s
+--         open L.LState s' renaming (utxoSt to utxoSt'; certState to certState'; govSt to govSt')
+--         open TxBody (body tx) using (txcerts)
+--         deposits = L.UTxOState.deposits utxoSt
+--         utxow' : _ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ setDeposits deposits utxoSt'
+--         utxow' = conv utxow
+--         utxoStC'    = setDeposits (C.updateDeposits pparams (body tx) deposits) utxoSt'
+--         certStateC' = updateCertDeposits pparams txcerts deposits ⊢conv certState'
+--         certs' : _ C.⊢ (deposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
+--         certs' = (deposits , validCertDeposits valid utxow) ⊢conv certs
+--         ledger' : Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
+--         ledger' = C.LEDGER-V⋯ valid utxow' certs' gov
+--         utxoEq  : utxoStC' ≡ utxoSt'
+--         utxoEq  = cong (λ • → L.⟦ _ , _ , • , _ ⟧ᵘ)
+--                        (lemUpdateDeposits valid utxow)
+--         certsEq : certStateC' ≡ L.UTxOState.deposits utxoSt' ⊢conv certState'
+--         certsEq = cong (λ • → C.⟦ C.⟦ _ , _ , _ , • ⟧ᵈ , _ , C.⟦ _ , _ , • ⟧ᵛ ⟧ᶜˢ)
+--                        (lemUpdateDeposits' valid utxow)
+--     in
+--     subst₂ (λ • ◆ → Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ • , _ , ◆ ⟧ˡ) utxoEq certsEq ledger'
+--   LEDGERToConf .convⁱ _ (L.LEDGER-I⋯ invalid utxow) with conv utxow
+--   ... | utxow' rewrite lemInvalidDepositsL invalid utxow = C.LEDGER-I⋯ invalid utxow'
+
+--   LEDGERFromConf : ∀ {Γ s tx s'} → Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ conv s' ⭆ Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+--   LEDGERFromConf .convⁱ _ (C.LEDGER-V⋯ valid utxow certs gov) = {!!}
+--   LEDGERFromConf .convⁱ _ (C.LEDGER-I⋯ invalid utxow) with inj₁ invalid ⊢conv utxow
+--   ... | utxow' rewrite lemInvalidDepositsC invalid utxow = L.LEDGER-I⋯ invalid utxow'
