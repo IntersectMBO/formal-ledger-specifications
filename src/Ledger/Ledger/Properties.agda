@@ -87,7 +87,7 @@ instance
       ... | yes refl
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeCerts certΓ certState₀ _ | complete certΓ _ _ _ certStep
+        with computeCert certΓ certState₀ _ | complete certΓ _ _ _ certStep
       ... | success (certState₁ , _) | refl
         with computeCerts certΓ certState₁ txcerts | complete certΓ _ _ _ certStep'
       ... | success (certState' , _) | refl
