@@ -2724,15 +2724,7 @@ d_Conv'45'GovEnv_136
                                                    (coe
                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_92
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
-                                                         (coe
-                                                            (\ v13 ->
-                                                               coe
-                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
-                                                         (coe
-                                                            (\ v13 ->
-                                                               coe
-                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
+                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                                       (coe
                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_88
                                                          (coe
@@ -2873,15 +2865,7 @@ d_Conv'45'GovEnv_136
                                                 (coe
                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_92
                                                    (coe
-                                                      MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
-                                                      (coe
-                                                         (\ v13 ->
-                                                            coe
-                                                              MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
-                                                      (coe
-                                                         (\ v13 ->
-                                                            coe
-                                                              MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
+                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                                    (coe
                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_88
                                                       (coe
