@@ -152,14 +152,14 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
           ⇀⦇ deregdrep c d ,GOVCERT⦈
-          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit pp (deregdrep c d) dep ⟧ᵛ
+          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit (CertEnv.pp Γ) (deregdrep c d) dep ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
           ⇀⦇ ccreghot c mc ,GOVCERT⦈
-          ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit pp (ccreghot c mc) dep ⟧ᵛ
+          ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit (CertEnv.pp Γ) (ccreghot c mc) dep ⟧ᵛ
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
   CERT-deleg :
