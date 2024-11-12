@@ -53,8 +53,15 @@ certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
 certRefund _                = ∅
 
 updateCertDeposit  : PParams → DCert → Deposits → Deposits
-updateCertDeposit pp cert deposits
-  = (deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
+updateCertDeposit pp (delegate c _ _ v) deposits = deposits ∪⁺ ❴ CredentialDeposit c , v ❵
+updateCertDeposit pp (regdrep c v _)    deposits = deposits ∪⁺ ❴ DRepDeposit c , v ❵
+updateCertDeposit pp (dereg c _)        deposits = deposits ∣ ❴ CredentialDeposit c ❵ ᶜ
+updateCertDeposit pp (deregdrep c _)    deposits = deposits ∣ ❴ DRepDeposit c ❵ ᶜ
+updateCertDeposit pp (regpool kh _)     deposits = deposits ∪⁺ ❴ PoolDeposit kh , pp .PParams.poolDeposit ❵
+updateCertDeposit _ (retirepool _ _)    deposits = deposits
+updateCertDeposit _ (ccreghot _ _)      deposits = deposits
+-- updateCertDeposit pp cert deposits
+--   = (deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 
 private variable
   rwds rewards           : Credential ⇀ Coin
