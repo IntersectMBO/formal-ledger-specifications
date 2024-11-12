@@ -64,7 +64,7 @@ initEnv :: UTxOEnv
 initEnv = MkUTxOEnv {ueSlot = 0, uePparams = initParams, ueTreasury = 0}
 
 baseAddr :: Integer -> Addr
-baseAddr n = Left BaseAddr{baseNet = 0, basePay = KeyHashObj n, baseStake = KeyHashObj n}
+baseAddr n = Left BaseAddr{baseNet = 0, basePay = KeyHashObj n, baseStake = Just (KeyHashObj n)}
 
 a0 :: Addr
 a0 = baseAddr 0
