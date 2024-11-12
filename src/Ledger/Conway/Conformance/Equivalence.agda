@@ -171,57 +171,140 @@ instance
 
 -- CERT ----------------------------------
 
-data ValidCertDeposit (pp : PParams) (deps : L.Deposits) : L.DCert → Set where
-  delegate   : ∀ {c del kh b} → ValidCertDeposit pp deps (L.delegate c del kh b)
-  regpool    : ∀ {kh p} → ValidCertDeposit pp deps (L.regpool kh p)
-  regdrep    : ∀ {c v a} → ValidCertDeposit pp deps (L.regdrep c v a)
-  dereg      : ∀ {c d} → (L.CredentialDeposit c , d) ∈ deps → ValidCertDeposit pp deps (L.dereg c d)
-  deregdrep  : ∀ {c d} → (L.DRepDeposit c , d) ∈ deps → ValidCertDeposit pp deps (L.deregdrep c d)
-  ccreghot   : ∀ {c v} → ValidCertDeposit pp deps (L.ccreghot c v)
-  retirepool : ∀ {kh e} → ValidCertDeposit pp deps (L.retirepool kh e)
+-- data ValidCertDeposit (pp : PParams) (deps : L.Deposits) : L.DCert → Set where
+--   delegate   : ∀ {c del kh b} → ValidCertDeposit pp deps (L.delegate c del kh b)
+--   regpool    : ∀ {kh p} → ValidCertDeposit pp deps (L.regpool kh p)
+--   regdrep    : ∀ {c v a} → ValidCertDeposit pp deps (L.regdrep c v a)
+--   dereg      : ∀ {c d} → (L.CredentialDeposit c , d) ∈ deps → ValidCertDeposit pp deps (L.dereg c d)
+--   deregdrep  : ∀ {c d} → (L.DRepDeposit c , d) ∈ deps → ValidCertDeposit pp deps (L.deregdrep c d)
+--   ccreghot   : ∀ {c v} → ValidCertDeposit pp deps (L.ccreghot c v)
+--   retirepool : ∀ {kh e} → ValidCertDeposit pp deps (L.retirepool kh e)
 
-ValidDeposit : (pp : PParams) → L.DCert → Set
-ValidDeposit pp cert = Σ L.Deposits λ deps → ValidCertDeposit pp deps cert
+-- ValidDeposit : (pp : PParams) → L.DCert → Set
+-- ValidDeposit pp cert = Σ L.Deposits λ deps → ValidCertDeposit pp deps cert
 
-ValidDeposits : (pp : PParams) → List L.DCert → Set
-ValidDeposits pp certs = Σ L.Deposits λ deps → L.ValidCertDeposits pp deps certs
+-- ValidDeposits : (pp : PParams) → List L.DCert → Set
+-- ValidDeposits pp certs = Σ L.Deposits λ deps → L.ValidCertDeposits pp deps certs
 
-unconsValidDeposits : ∀ {pp deposits cert certs}
-                    → L.ValidCertDeposits pp deposits (cert ∷ certs)
-                    → ValidCertDeposit pp deposits cert × L.ValidCertDeposits pp (C.updateCertDeposit pp cert deposits) certs
-unconsValidDeposits (L.delegate v)    = delegate , v
-unconsValidDeposits (L.regpool v)     = regpool , v
-unconsValidDeposits (L.regdrep v)     = regdrep , v
-unconsValidDeposits (L.dereg h v)     = dereg h , v
-unconsValidDeposits (L.deregdrep h v) = deregdrep h , v
-unconsValidDeposits (L.ccreghot v)    = ccreghot , v
-unconsValidDeposits (L.retirepool v)  = retirepool , v
+-- unconsValidDeposits : ∀ {pp deposits cert certs}
+--                     → L.ValidCertDeposits pp deposits (cert ∷ certs)
+--                     → ValidCertDeposit pp deposits cert × L.ValidCertDeposits pp (C.updateCertDeposit pp cert deposits) certs
+-- unconsValidDeposits (L.delegate v)    = delegate , v
+-- unconsValidDeposits (L.regpool v)     = regpool , v
+-- unconsValidDeposits (L.regdrep v)     = regdrep , v
+-- unconsValidDeposits (L.dereg h v)     = dereg h , v
+-- unconsValidDeposits (L.deregdrep h v) = deregdrep h , v
+-- unconsValidDeposits (L.ccreghot v)    = ccreghot , v
+-- unconsValidDeposits (L.retirepool v)  = retirepool , v
 
-updateCertDeposits : PParams → List L.DCert → L.Deposits → L.Deposits
-updateCertDeposits pp [] deposits = deposits
-updateCertDeposits pp (cert ∷ certs) deposits = updateCertDeposits pp certs (C.updateCertDeposit pp cert deposits)
+-- updateCertDeposits : PParams → List L.DCert → L.Deposits → L.Deposits
+-- updateCertDeposits pp [] deposits = deposits
+-- updateCertDeposits pp (cert ∷ certs) deposits = updateCertDeposits pp certs (C.updateCertDeposit pp cert deposits)
 
-record CertDeps (pp : PParams) (dcert : L.DCert) : Set where
+-- record CertDeps (pp : PParams) (dcert : L.DCert) : Set where
+--   field
+--     depsᵈ : L.Deposits
+--     depsᵍ : L.Deposits
+--     -- Invariants
+--     validᵈ : ValidCertDeposit pp depsᵈ dcert
+--     validᵍ : ValidCertDeposit pp depsᵍ dcert
+
+-- open CertDeps
+
+-- getCertDeps : ∀ {pp dcert} → CertDeps pp dcert → L.Deposits × L.Deposits
+-- getCertDeps deps = deps .depsᵈ , deps .depsᵍ
+
+data ValidDepsᵈ (pp : PParams) (deps : L.Deposits) : List L.DCert → Set where
+  []         : ValidDepsᵈ pp deps []
+  delegate   : ∀ {c del kh v certs}
+             → ValidDepsᵈ pp (C.updateCertDeposit pp (L.delegate c del kh v) deps) certs
+             → ValidDepsᵈ pp deps (L.delegate c del kh v ∷ certs)
+  dereg      : ∀ {c d certs}
+             → (L.CredentialDeposit c , d) ∈ deps
+             → ValidDepsᵈ pp (C.updateCertDeposit pp (L.dereg c d) deps) certs
+             → ValidDepsᵈ pp deps (L.dereg c d ∷ certs)
+  regdrep    : ∀ {c v a certs}
+             → ValidDepsᵈ pp deps certs
+             → ValidDepsᵈ pp deps (L.regdrep c v a ∷ certs)
+  deregdrep  : ∀ {c d certs}
+             → ValidDepsᵈ pp deps certs
+             → ValidDepsᵈ pp deps (L.deregdrep c d ∷ certs)
+  regpool    : ∀ {kh p certs}
+             → ValidDepsᵈ pp deps certs
+             → ValidDepsᵈ pp deps (L.regpool kh p ∷ certs)
+  retirepool : ∀ {kh e certs}
+             → ValidDepsᵈ pp deps certs
+             → ValidDepsᵈ pp deps (L.retirepool kh e  ∷ certs)
+  ccreghot   : ∀ {c v certs}
+             → ValidDepsᵈ pp deps certs
+             → ValidDepsᵈ pp deps (L.ccreghot c v ∷ certs)
+
+data ValidDepsᵍ (pp : PParams) (deps : L.Deposits) : List L.DCert → Set where
+  []         : ValidDepsᵍ pp deps []
+  regdrep    : ∀ {c v a certs}
+             → ValidDepsᵍ pp (C.updateCertDeposit pp (L.regdrep c v a) deps) certs
+             → ValidDepsᵍ pp deps (L.regdrep c v a ∷ certs)
+  deregdrep  : ∀ {c d certs}
+             → (L.DRepDeposit c , d) ∈ deps
+             → ValidDepsᵍ pp (C.updateCertDeposit pp (L.deregdrep c d) deps) certs
+             → ValidDepsᵍ pp deps (L.deregdrep c d ∷ certs)
+  delegate   : ∀ {c del kh v certs}
+             → ValidDepsᵍ pp deps certs
+             → ValidDepsᵍ pp deps (L.delegate c del kh v ∷ certs)
+  dereg      : ∀ {c d certs}
+             → ValidDepsᵍ pp deps certs
+             → ValidDepsᵍ pp deps (L.dereg c d ∷ certs)
+  regpool    : ∀ {kh p certs}
+             → ValidDepsᵍ pp deps certs
+             → ValidDepsᵍ pp deps (L.regpool kh p ∷ certs)
+  retirepool : ∀ {kh e certs}
+             → ValidDepsᵍ pp deps certs
+             → ValidDepsᵍ pp deps (L.retirepool kh e  ∷ certs)
+  ccreghot   : ∀ {c v certs}
+             → ValidDepsᵍ pp deps certs
+             → ValidDepsᵍ pp deps (L.ccreghot c v ∷ certs)
+
+record CertDeps* (pp : PParams) (dcerts : List L.DCert) : Set where
+  constructor ⟦_,_,_,_⟧*
   field
     depsᵈ : L.Deposits
     depsᵍ : L.Deposits
     -- Invariants
-    validᵈ : ValidCertDeposit pp depsᵈ dcert
-    validᵍ : ValidCertDeposit pp depsᵍ dcert
+    validᵈ : ValidDepsᵈ pp depsᵈ dcerts
+    validᵍ : ValidDepsᵍ pp depsᵍ dcerts
+
+open CertDeps*
+
+getCertDeps* : ∀ {pp dcert} → CertDeps* pp dcert → L.Deposits × L.Deposits
+getCertDeps* deps = deps .depsᵈ , deps .depsᵍ
+
+updateCertDeps : ∀ {pp dcert dcerts} → CertDeps* pp (dcert ∷ dcerts) → CertDeps* pp dcerts
+updateCertDeps ⟦ _ , _ , delegate ddeps   , delegate gdeps    ⟧* = ⟦ _ , _ , ddeps , gdeps ⟧*
+updateCertDeps ⟦ _ , _ , dereg _ ddeps    , dereg gdeps       ⟧* = ⟦ _ , _ , ddeps , gdeps ⟧*
+updateCertDeps ⟦ _ , _ , regpool ddeps    , regpool gdeps     ⟧* = ⟦ _ , _ , ddeps , gdeps ⟧*
+updateCertDeps ⟦ _ , _ , retirepool ddeps , retirepool gdeps  ⟧* = ⟦ _ , _ , ddeps , gdeps ⟧*
+updateCertDeps ⟦ _ , _ , regdrep ddeps    , regdrep gdeps     ⟧* = ⟦ _ , _ , ddeps , gdeps ⟧*
+updateCertDeps ⟦ _ , _ , deregdrep ddeps  , deregdrep _ gdeps ⟧* = ⟦ _ , _ , ddeps , gdeps ⟧*
+updateCertDeps ⟦ _ , _ , ccreghot ddeps   , ccreghot gdeps    ⟧* = ⟦ _ , _ , ddeps , gdeps ⟧*
+
+updateCertDeps* : ∀ {pp} dcerts → CertDeps* pp dcerts → CertDeps* pp []
+updateCertDeps* []               deps = deps
+updateCertDeps* (dcert ∷ dcerts) deps = updateCertDeps* dcerts (updateCertDeps deps)
 
 instance
 
-  CertStToConf : L.Deposits ⊢ L.CertState ⭆ C.CertState
-  CertStToConf .convⁱ deposits L.⟦ dState , pState , gState ⟧ᶜˢ =
-    C.⟦ deposits ⊢conv dState , pState , deposits ⊢conv gState ⟧ᶜˢ
+  CertStToConf : L.Deposits × L.Deposits ⊢ L.CertState ⭆ C.CertState
+  CertStToConf .convⁱ (ddeps , gdeps) L.⟦ dState , pState , gState ⟧ᶜˢ =
+    C.⟦ ddeps ⊢conv dState , pState , gdeps ⊢conv gState ⟧ᶜˢ
 
   CertStFromConf : C.CertState ⭆ L.CertState
   CertStFromConf .convⁱ _ C.⟦ dState , pState , gState ⟧ᶜˢ =
     L.⟦ conv dState , pState , conv gState ⟧ᶜˢ
 
   CERTBASEToConf : ∀ {Γ s s'}
-                 → L.Deposits ⊢ Γ L.⊢ s ⇀⦇ _ ,CERTBASE⦈ s' ⭆ⁱ λ deposits _ →
-                                Γ C.⊢ (deposits ⊢conv s) ⇀⦇ _ ,CERTBASE⦈ (deposits ⊢conv s')
+                 → L.Deposits × L.Deposits
+                   ⊢ Γ L.⊢ s ⇀⦇ _ ,CERTBASE⦈ s' ⭆ⁱ λ deposits _ →
+                     Γ C.⊢ (deposits ⊢conv s) ⇀⦇ _ ,CERTBASE⦈ (deposits ⊢conv s')
   CERTBASEToConf .convⁱ deposits (L.CERT-base h) = C.CERT-base h
 
   CERTBASEFromConf : ∀ {Γ s s'}
@@ -229,36 +312,31 @@ instance
                      Γ L.⊢ (conv s) ⇀⦇ _ ,CERTBASE⦈ (conv s')
   CERTBASEFromConf .convⁱ _ (C.CERT-base h) = L.CERT-base h
 
-  DELEGToConf : ∀ {Γ s dcert s'}
-              → Σ PParams (λ pp → ValidDeposit pp dcert) ⊢
-                 Γ L.⊢ s ⇀⦇ dcert ,DELEG⦈ s' ⭆ⁱ λ (pp , deposits , _) _ →
-                 Γ C.⊢ (deposits ⊢conv s) ⇀⦇ dcert ,DELEG⦈ (C.updateCertDeposit pp dcert deposits ⊢conv s')
-  DELEGToConf .convⁱ _ (L.DELEG-delegate h) = C.DELEG-delegate h
-  DELEGToConf .convⁱ (pp , deposits , dereg v) (L.DELEG-dereg h) = C.DELEG-dereg (h , v)
+  DELEGToConf : ∀ {Γ s dcert dcerts s'}
+              → Σ PParams (λ pp → CertDeps* pp (dcert ∷ dcerts)) ⊢
+                 Γ L.⊢ s ⇀⦇ dcert ,DELEG⦈ s' ⭆ⁱ λ (pp , deposits) _ →
+                 Γ C.⊢ (deposits .depsᵈ ⊢conv s) ⇀⦇ dcert ,DELEG⦈ (updateCertDeps deposits .depsᵈ ⊢conv s')
+  DELEGToConf .convⁱ (_ , ⟦ _ , _ , delegate _ , delegate _ ⟧*) (L.DELEG-delegate h) = C.DELEG-delegate h
+  DELEGToConf .convⁱ (_ , ⟦ _ , _ , dereg v _  , dereg _    ⟧*)  (L.DELEG-dereg h)   = C.DELEG-dereg (h , v)
 
-  CERTToConf : ∀ {Γ s dcert s'}
-             → Σ PParams (λ pp → ValidDeposit pp dcert) ⊢
-                Γ L.⊢ s ⇀⦇ dcert ,CERT⦈ s' ⭆ⁱ λ (pp , deposits , _) _ →
-                Γ C.⊢ (deposits ⊢conv s) ⇀⦇ dcert ,CERT⦈ (C.updateCertDeposit pp dcert deposits ⊢conv s')
-  CERTToConf {Γ} {s@(L.⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ)} {dcert} {s'@(L.⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ)} .convⁱ i@(pp , deposits , _) (L.CERT-deleg deleg) =
-    let cert' : Γ C.⊢ deposits ⊢conv s ⇀⦇ dcert ,CERT⦈ C.⟦ C.updateCertDeposit pp dcert deposits ⊢conv stᵈ'
-                                                         , stᵖ
-                                                         , deposits ⊢conv stᵍ   -- This is wild! The GState has different deposits now!
-                                                         ⟧ᶜˢ                     -- Meaning this isn't actually true!
-        cert' = C.CERT-deleg (i ⊢conv deleg)
-    in
-    {!!}
+instance
+  CERTToConf : ∀ {Γ s dcert dcerts s'} (open L.CertEnv Γ using (pp))
+             → CertDeps* pp (dcert ∷ dcerts) ⊢
+                Γ L.⊢ s ⇀⦇ dcert ,CERT⦈ s' ⭆ⁱ λ deposits _ →
+                Γ C.⊢ (getCertDeps* deposits ⊢conv s) ⇀⦇ dcert ,CERT⦈ (getCertDeps* (updateCertDeps deposits) ⊢conv s')
+  CERTToConf .convⁱ deposits@(⟦ _ , _ , delegate _ , delegate _ ⟧*) (L.CERT-deleg deleg) = C.CERT-deleg ((_ , deposits) ⊢conv deleg)
+  CERTToConf .convⁱ deposits@(⟦ _ , _ , dereg _ _  , dereg _    ⟧*) (L.CERT-deleg deleg) = C.CERT-deleg ((_ , deposits) ⊢conv deleg)
   CERTToConf .convⁱ deposits (L.CERT-pool x) = {!!}
   CERTToConf .convⁱ deposits (L.CERT-vdel x) = {!!}
 
---   CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
---               → ValidDeposits pp dcerts
---                 ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ (deposits , _) _ →
---                   Γ C.⊢ (deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈ (updateCertDeposits pp dcerts deposits ⊢conv s')
---   CERTSToConf .convⁱ (deposits , _) (BS-base certBase)  = BS-base (deposits ⊢conv certBase)
---   CERTSToConf {Γ = Γ} .convⁱ (deposits , valid) (BS-ind cert certs) with unconsValidDeposits valid
---   ... | valid₁ , valids = BS-ind ((L.CertEnv.pp Γ , deposits , valid₁) ⊢conv cert)
---                                  ((_ , valids) ⊢conv certs)
+  CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
+              → CertDeps* pp dcerts
+                ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ deposits _ →
+                  Γ C.⊢ (getCertDeps* deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈
+                        (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
+  CERTSToConf .convⁱ deposits (BS-base certBase)  = BS-base (getCertDeps* deposits ⊢conv certBase)
+  CERTSToConf .convⁱ deposits (BS-ind {sig = dcert} cert certs) =
+    BS-ind (deposits ⊢conv cert) (updateCertDeps deposits ⊢conv certs)
 
 --   CERTSFromConf : ∀ {Γ s dcerts s'}
 --                 → Γ C.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆
