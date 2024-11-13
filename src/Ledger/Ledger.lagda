@@ -80,7 +80,7 @@ private variable
   s s' s'' : LState
   utxoSt' : UTxOState
   govSt' : GovState
-  certState₀ certState₁ certState' : CertState
+  certState' certState'' : CertState
   tx : Tx
 \end{code}
 
@@ -111,11 +111,11 @@ data
                  Γᶜ = ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ  in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  Γᶜ ⊢ certState ⇀⦇ _ ,CERTBASE⦈ certState₁
-    ∙  Γᶜ ⊢ certState₁ ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  Γᶜ ⊢ certState ⇀⦇ _ ,CERTBASE⦈ certState'
+    ∙  Γᶜ ⊢ certState' ⇀⦇ txcerts ,CERTS⦈ certState''
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState'' ⟧ᵍ ⊢ govSt |ᵒ certState'' ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState'' ⟧ˡ
 \end{code}
 \begin{NoConway}
 \begin{code}

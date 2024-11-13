@@ -221,7 +221,11 @@ module CERTSpov  (Γ : CertEnv)
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
-  module _
+  CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ
+  CERTS-pov (BS-base Id-nop) = refl
+  CERTS-pov (BS-ind x xs) = trans (CERT-pov x) (CERTS-pov xs)
+
+  module CERTBASEpov
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
     ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
     ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
@@ -280,10 +284,6 @@ module CERTSpov  (Γ : CertEnv)
                     ∎ ) ⟩
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
             ∎
-
-    CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ
-    CERTS-pov (BS-base Id-nop) = refl
-    CERTS-pov (BS-ind x xs) = trans (CERT-pov x) (CERTS-pov xs)
 
 -- TODO: Prove the following property.
 -- range vDelegs ⊆ map (credVoter DRep) (dom DReps)

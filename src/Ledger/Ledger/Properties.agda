@@ -73,9 +73,9 @@ instance
       computeProof = case isValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
-          (certState₁ , certStep) ← computeCert certΓ certState _
-          (certState' , certStep') ← computeCerts certΓ certState₁ txcerts
-          (govSt'  , govStep)  ← computeGov (govΓ certState') (govSt |ᵒ certState') (txgov txb)
+          (certState' , certStep) ← computeCert certΓ certState _
+          (certState'' , certStep') ← computeCerts certΓ certState' txcerts
+          (govSt'  , govStep)  ← computeGov (govΓ certState'') (govSt |ᵒ certState'') (txgov txb)
           success (_ , LEDGER-V⋯ p utxoStep certStep certStep' govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
@@ -89,12 +89,12 @@ instance
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
         with computeCert certΓ certState _ | complete certΓ _ _ _ certStep
-      ... | success (certState₁ , _) | refl
-        with computeCerts certΓ certState₁ txcerts | complete certΓ _ _ _ certStep'
       ... | success (certState' , _) | refl
-        with computeGov (govΓ certState') (govSt |ᵒ certState') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certState') _ _ _ govStep
+        with computeCerts certΓ certState' txcerts | complete certΓ _ _ _ certStep'
+      ... | success (certState'' , _) | refl
+        with computeGov (govΓ certState'') (govSt |ᵒ certState'') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certState'') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
-      completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER-I⋯ i utxoStep)
+      completeness ⟦ utxoSt' , govSt' , certState'' ⟧ˡ (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
       ... | yes refl = case i of λ ()
       ... | no ¬v
@@ -138,34 +138,35 @@ module _
   LEDGER-pov
     {s = ⟦ utxoSt , govSt , ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⟧ˡ}
     {s' = ⟦ utxoSt' , govSt' , ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ ⟧ˡ}
-    h (LEDGER-V {s = s} {utxoSt' = utxoSt'} {certState₁} ( valid , UTXOW⇒UTXO st@(UTXO-induction r) , h' , h'' , _ )) =
+    h (LEDGER-V {s = s} {utxoSt' = utxoSt'} {certState'} ( valid , UTXOW⇒UTXO st@(UTXO-induction r) , h' , h'' , _ )) =
       let
         open ≡-Reasoning
         open LState s using (certState)
         open CERTSpov ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ indexedSumᵛ'-∪
-        certState' = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
+        open CERTBASEpov sumConstZero  res-decomp getCoin-cong ≡ᵉ-getCoinˢ r
+        certState'' = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
         zeroMap    = constMap (mapˢ RwdAddr.stake (dom txwdrls)) 0
       in
       begin
         getCoin utxoSt + getCoin certState
           ≡⟨ cong (getCoin utxoSt +_)
              ( begin rewardsBalance stᵈ
-                 ≡⟨ CERTBASE-pov sumConstZero  res-decomp getCoin-cong ≡ᵉ-getCoinˢ r  h' ⟩
-               getCoin certState₁ + getCoin txwdrls
-                 ≡⟨ cong (_+ getCoin txwdrls) (CERTS-pov sumConstZero  res-decomp getCoin-cong ≡ᵉ-getCoinˢ r h'') ⟩
-               rewardsBalance (CertState.dState certState') + getCoin txwdrls
+                 ≡⟨ CERTBASE-pov h' ⟩
+               getCoin certState' + getCoin txwdrls
+                 ≡⟨ cong (_+ getCoin txwdrls) (CERTS-pov h'') ⟩
+               rewardsBalance (CertState.dState certState'') + getCoin txwdrls
                  ∎
              )
            ⟩
-        getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
-          ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , u))) valid ⟩
-        getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , isValid))
-          ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
-        getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState')
-          ≡˘⟨ +-assoc (getCoin utxoSt) (φ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
-        getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState'
-          ≡⟨ cong (_+ getCoin certState') (pov h st) ⟩
-        getCoin utxoSt' + getCoin certState'
+        getCoin utxoSt + (getCoin certState'' + getCoin txwdrls)
+          ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState'' + φ (getCoin txwdrls , u))) valid ⟩
+        getCoin utxoSt + (getCoin certState'' + φ (getCoin txwdrls , isValid))
+          ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState'') _) ⟩
+        getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState'')
+          ≡˘⟨ +-assoc (getCoin utxoSt) (φ (getCoin txwdrls , isValid)) (getCoin certState'') ⟩
+        getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState''
+          ≡⟨ cong (_+ getCoin certState'') (pov h st) ⟩
+        getCoin utxoSt' + getCoin certState''
           ∎
 
   LEDGER-pov  s@{s = ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ}
@@ -252,7 +253,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
       → (_⊢_⇀⟦_⟧ᵢ*'_ IdSTS _⊢_⇀⦇_,GOV'⦈_ (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt ⟧ᵍ , k) govSt vps govSt')
       → govSt' ≡ updateGovStates vps k govSt
     STS→updateGovSt≡ [] _ (BS-base Id-nop) = refl
-    STS→updateGovSt≡ (inj₁ v ∷ vps) k {govSt}(BS-ind (GOV-Vote x) h)
+    STS→updateGovSt≡ (inj₁ v ∷ vps) k (BS-ind (GOV-Vote x) h)
       = STS→updateGovSt≡ vps (suc k) h
     STS→updateGovSt≡ (inj₂ p ∷ vps) k (BS-ind (GOV-Propose x) h) = STS→updateGovSt≡ vps (suc k) h
 
@@ -544,7 +545,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
 
   LEDGER-govDepsMatch s'@{⟦ .(⟦ ((UTxOState.utxo (LState.utxoSt s) ∣ txins ᶜ) ∪ˡ (outs txb))
                               , _ , updateDeposits pp txb (UTxOState.deposits (LState.utxoSt s)) , _ ⟧ᵘ)
-                          , govSt' , certState' ⟧ˡ}
+                          , govSt' , certState'' ⟧ˡ}
     utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ _ GOV-sts) aprioriMatch = begin
       filterˢ isGADeposit (dom (updateDeposits pp txb utxoDeps))
         ≈⟨ noGACerts txcerts (updateProposalDeposits txprop txid govActionDeposit utxoDeps) ⟩
@@ -553,8 +554,8 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       fromList (dpMap (updateGovStates (map inj₂ txprop) 0 govSt))
         ≈˘⟨ props-dpMap-votes-invar txvote txprop ⟩
       fromList (dpMap (updateGovStates (txgov txb) 0 govSt ))
-        ≈˘⟨ |ᵒ-GAs-pres 0 govSt certState' ⟩
-      fromList (dpMap (updateGovStates (txgov txb) 0 (govSt |ᵒ certState')))
+        ≈˘⟨ |ᵒ-GAs-pres 0 govSt certState'' ⟩
+      fromList (dpMap (updateGovStates (txgov txb) 0 (govSt |ᵒ certState'')))
         ≡˘⟨ cong (fromList ∘ dpMap ) (STS→GovSt≡ utxosts tx-valid) ⟩
       fromList (dpMap govSt') ∎
 
