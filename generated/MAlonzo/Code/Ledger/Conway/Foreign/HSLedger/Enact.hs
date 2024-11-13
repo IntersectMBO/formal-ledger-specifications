@@ -92,7 +92,7 @@ check_MkEnactState_57 ::
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () () Integer Integer) ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3761
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3969
     Integer ->
   T_EnactState_55
 check_MkEnactState_57 = MkEnactState
@@ -1803,7 +1803,7 @@ check_ChangePParams_12859 ::
 check_ChangePParams_12859 = ChangePParams
 check_TreasuryWdrl_12889 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3761
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3969
     Integer ->
   T_GovAction_12371
 check_TreasuryWdrl_12889 = TreasuryWdrl

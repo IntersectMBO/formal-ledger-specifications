@@ -5144,7 +5144,7 @@ d_Conv'45'GovProposal''_292
                         v3)
                      (coe v4)
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3763
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3971
                         (coe MAlonzo.Code.Ledger.Address.d_net_82 (coe v5))
                         (coe
                            MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -6513,9 +6513,9 @@ d_Conv'45'GovProposal''_292
                            (coe
                               (\ v7 ->
                                  case coe v7 of
-                                   MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3193 v8 v9
+                                   MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243 v8 v9
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3763
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3971
                                           (coe v8)
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -6550,9 +6550,9 @@ d_Conv'45'GovProposal''_292
                            (coe
                               (\ v7 ->
                                  case coe v7 of
-                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3763 v8 v9
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3971 v8 v9
                                      -> coe
-                                          MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3193
+                                          MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243
                                           (coe v8)
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -6641,7 +6641,7 @@ d_Conv'45'GovActionState''_296
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'Vote_38)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v1))))
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3763
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3971
                         (coe MAlonzo.Code.Ledger.Address.d_net_82 (coe v2))
                         (coe
                            MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -8037,9 +8037,9 @@ d_Conv'45'GovActionState''_296
                            (coe
                               (\ v6 ->
                                  case coe v6 of
-                                   MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3193 v7 v8
+                                   MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243 v7 v8
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3763
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3971
                                           (coe v7)
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -8074,9 +8074,9 @@ d_Conv'45'GovActionState''_296
                            (coe
                               (\ v6 ->
                                  case coe v6 of
-                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3763 v7 v8
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.C_RwdAddr_3971 v7 v8
                                      -> coe
-                                          MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3193
+                                          MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243
                                           (coe v7)
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -9551,7 +9551,7 @@ check_MkGovProposal_5193 ::
     () () Integer Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3761 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3969 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_Anchor_143 ->
   T_GovProposal_5191
 check_MkGovProposal_5193 = MkGovProposal
@@ -9570,7 +9570,7 @@ check_MkGovActionState_9077 ::
        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovRole_17
        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_27)
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_Vote_1405 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3761 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3969 ->
   Integer ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.T_GovAction_12371 ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22

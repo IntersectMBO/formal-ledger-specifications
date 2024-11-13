@@ -3781,7 +3781,7 @@ d_pay_1506 v0 = coe MAlonzo.Code.Ledger.Address.d_pay_58 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.BaseAddr.stake
 d_stake_1508 ::
   MAlonzo.Code.Ledger.Address.T_BaseAddr_48 ->
-  MAlonzo.Code.Ledger.Address.T_Credential_16
+  Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 d_stake_1508 v0
   = coe MAlonzo.Code.Ledger.Address.d_stake_60 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.ExternalStructures._.BootstrapAddr.attrsSize

@@ -1947,7 +1947,7 @@ check_MkTxBody_10595 ::
        (MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
           () ()
           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_BaseAddr_735
-          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_BootstrapAddr_2401)
+          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_BootstrapAddr_2609)
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
           () () Integer
           (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
@@ -1970,7 +1970,7 @@ check_MkTxBody_10595 ::
     ()
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_11659 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3761
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3969
     Integer ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()

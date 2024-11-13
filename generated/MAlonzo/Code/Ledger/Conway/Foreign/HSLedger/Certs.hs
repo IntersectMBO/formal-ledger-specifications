@@ -6034,7 +6034,7 @@ check_MkCertEnv_4791 ::
     ()
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovVote_1531 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3761
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_3969
     Integer ->
   T_CertEnv_4789
 check_MkCertEnv_4791 = MkCertEnv

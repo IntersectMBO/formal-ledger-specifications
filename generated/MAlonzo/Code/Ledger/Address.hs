@@ -25,6 +25,7 @@ import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Class.Show.Instances
+import qualified MAlonzo.Code.Data.Maybe.Properties
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Data.String.Base
@@ -111,64 +112,64 @@ data T_isScript_42 = C_SHisScript_46
 -- Ledger.Address.BaseAddr
 d_BaseAddr_48 a0 a1 a2 a3 a4 a5 = ()
 data T_BaseAddr_48
-  = C_BaseAddr'46'constructor_2765 AgdaAny T_Credential_16
-                                   T_Credential_16
+  = C_BaseAddr'46'constructor_2815 AgdaAny T_Credential_16
+                                   (Maybe T_Credential_16)
 -- Ledger.Address.BaseAddr.net
 d_net_56 :: T_BaseAddr_48 -> AgdaAny
 d_net_56 v0
   = case coe v0 of
-      C_BaseAddr'46'constructor_2765 v1 v2 v3 -> coe v1
+      C_BaseAddr'46'constructor_2815 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.BaseAddr.pay
 d_pay_58 :: T_BaseAddr_48 -> T_Credential_16
 d_pay_58 v0
   = case coe v0 of
-      C_BaseAddr'46'constructor_2765 v1 v2 v3 -> coe v2
+      C_BaseAddr'46'constructor_2815 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.BaseAddr.stake
-d_stake_60 :: T_BaseAddr_48 -> T_Credential_16
+d_stake_60 :: T_BaseAddr_48 -> Maybe T_Credential_16
 d_stake_60 v0
   = case coe v0 of
-      C_BaseAddr'46'constructor_2765 v1 v2 v3 -> coe v3
+      C_BaseAddr'46'constructor_2815 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.BootstrapAddr
 d_BootstrapAddr_62 a0 a1 a2 a3 a4 a5 = ()
 data T_BootstrapAddr_62
-  = C_BootstrapAddr'46'constructor_2987 AgdaAny T_Credential_16
+  = C_BootstrapAddr'46'constructor_3037 AgdaAny T_Credential_16
                                         Integer
 -- Ledger.Address.BootstrapAddr.net
 d_net_70 :: T_BootstrapAddr_62 -> AgdaAny
 d_net_70 v0
   = case coe v0 of
-      C_BootstrapAddr'46'constructor_2987 v1 v2 v3 -> coe v1
+      C_BootstrapAddr'46'constructor_3037 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.BootstrapAddr.pay
 d_pay_72 :: T_BootstrapAddr_62 -> T_Credential_16
 d_pay_72 v0
   = case coe v0 of
-      C_BootstrapAddr'46'constructor_2987 v1 v2 v3 -> coe v2
+      C_BootstrapAddr'46'constructor_3037 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.BootstrapAddr.attrsSize
 d_attrsSize_74 :: T_BootstrapAddr_62 -> Integer
 d_attrsSize_74 v0
   = case coe v0 of
-      C_BootstrapAddr'46'constructor_2987 v1 v2 v3 -> coe v3
+      C_BootstrapAddr'46'constructor_3037 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.RwdAddr
 d_RwdAddr_76 a0 a1 a2 a3 a4 a5 = ()
 data T_RwdAddr_76
-  = C_RwdAddr'46'constructor_3193 AgdaAny T_Credential_16
+  = C_RwdAddr'46'constructor_3243 AgdaAny T_Credential_16
 -- Ledger.Address.RwdAddr.net
 d_net_82 :: T_RwdAddr_76 -> AgdaAny
 d_net_82 v0
   = case coe v0 of
-      C_RwdAddr'46'constructor_3193 v1 v2 -> coe v1
+      C_RwdAddr'46'constructor_3243 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.RwdAddr.stake
 d_stake_84 :: T_RwdAddr_76 -> T_Credential_16
 d_stake_84 v0
   = case coe v0 of
-      C_RwdAddr'46'constructor_3193 v1 v2 -> coe v2
+      C_RwdAddr'46'constructor_3243 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.VKeyBaseAddr
 d_VKeyBaseAddr_86 ::
@@ -249,11 +250,11 @@ du_payCred_108 v0
   = case coe v0 of
       MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v1
         -> case coe v1 of
-             C_BaseAddr'46'constructor_2765 v2 v3 v4 -> coe v3
+             C_BaseAddr'46'constructor_2815 v2 v3 v4 -> coe v3
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v1
         -> case coe v1 of
-             C_BootstrapAddr'46'constructor_2987 v2 v3 v4 -> coe v3
+             C_BootstrapAddr'46'constructor_3037 v2 v3 v4 -> coe v3
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.stakeCred
@@ -272,8 +273,7 @@ du_stakeCred_110 v0
   = case coe v0 of
       MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v1
         -> case coe v1 of
-             C_BaseAddr'46'constructor_2765 v2 v3 v4
-               -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v4)
+             C_BaseAddr'46'constructor_2815 v2 v3 v4 -> coe v4
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v1
         -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
@@ -293,11 +293,11 @@ du_netId_112 v0
   = case coe v0 of
       MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v1
         -> case coe v1 of
-             C_BaseAddr'46'constructor_2765 v2 v3 v4 -> coe v2
+             C_BaseAddr'46'constructor_2815 v2 v3 v4 -> coe v2
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v1
         -> case coe v1 of
-             C_BootstrapAddr'46'constructor_2987 v2 v3 v4 -> coe v2
+             C_BootstrapAddr'46'constructor_3037 v2 v3 v4 -> coe v2
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Address.isVKeyAddr
@@ -527,7 +527,7 @@ du_getScriptHash_184 v0 v1
         -> coe
              seq (coe v1)
              (case coe v2 of
-                C_BaseAddr'46'constructor_2765 v3 v4 v5
+                C_BaseAddr'46'constructor_2815 v3 v4 v5
                   -> case coe v4 of
                        C_ScriptObj_20 v6 -> coe v6
                        _ -> MAlonzo.RTE.mazUnreachableError
@@ -536,7 +536,7 @@ du_getScriptHash_184 v0 v1
         -> coe
              seq (coe v1)
              (case coe v2 of
-                C_BootstrapAddr'46'constructor_2987 v3 v4 v5
+                C_BootstrapAddr'46'constructor_3037 v3 v4 v5
                   -> case coe v4 of
                        C_ScriptObj_20 v6 -> coe v6
                        _ -> MAlonzo.RTE.mazUnreachableError
@@ -564,11 +564,11 @@ du_DecEq'45'BaseAddr_190 v0 v1 v2
       (coe
          (\ v3 ->
             case coe v3 of
-              C_BaseAddr'46'constructor_2765 v4 v5 v6
+              C_BaseAddr'46'constructor_2815 v4 v5 v6
                 -> coe
                      (\ v7 ->
                         case coe v7 of
-                          C_BaseAddr'46'constructor_2765 v8 v9 v10
+                          C_BaseAddr'46'constructor_2815 v8 v9 v10
                             -> coe
                                  MAlonzo.Code.Tactic.Derive.DecEq.du_map''_38
                                  (coe
@@ -584,9 +584,11 @@ du_DecEq'45'BaseAddr_190 v0 v1 v2
                                                 MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                                 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                           (coe
-                                             MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                                             (coe du_DecEq'45'Credential_142 (coe v1) (coe v2)) v10
-                                             v6))
+                                             MAlonzo.Code.Data.Maybe.Properties.du_'8801''45'dec_24
+                                             (coe
+                                                MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                (coe du_DecEq'45'Credential_142 (coe v1) (coe v2)))
+                                             (coe v10) (coe v6)))
                                        (coe
                                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                           (coe du_DecEq'45'Credential_142 (coe v1) (coe v2)) v9 v5))
@@ -629,11 +631,11 @@ du_DecEq'45'BootstrapAddr_192 v0 v1 v2
       (coe
          (\ v3 ->
             case coe v3 of
-              C_BootstrapAddr'46'constructor_2987 v4 v5 v6
+              C_BootstrapAddr'46'constructor_3037 v4 v5 v6
                 -> coe
                      (\ v7 ->
                         case coe v7 of
-                          C_BootstrapAddr'46'constructor_2987 v8 v9 v10
+                          C_BootstrapAddr'46'constructor_3037 v8 v9 v10
                             -> coe
                                  MAlonzo.Code.Tactic.Derive.DecEq.du_map''_38
                                  (coe
@@ -693,11 +695,11 @@ du_DecEq'45'RwdAddr_194 v0 v1 v2
       (coe
          (\ v3 ->
             case coe v3 of
-              C_RwdAddr'46'constructor_3193 v4 v5
+              C_RwdAddr'46'constructor_3243 v4 v5
                 -> coe
                      (\ v6 ->
                         case coe v6 of
-                          C_RwdAddr'46'constructor_3193 v7 v8
+                          C_RwdAddr'46'constructor_3243 v7 v8
                             -> coe
                                  MAlonzo.Code.Tactic.Derive.DecEq.du_map''_38
                                  (coe
@@ -790,7 +792,7 @@ du_Show'45'RwdAddr_208 v0 v1 v2
       (coe
          (\ v3 ->
             case coe v3 of
-              C_RwdAddr'46'constructor_3193 v4 v5
+              C_RwdAddr'46'constructor_3243 v4 v5
                 -> coe
                      MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                      (coe

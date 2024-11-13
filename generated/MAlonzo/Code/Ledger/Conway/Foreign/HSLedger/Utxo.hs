@@ -2530,7 +2530,7 @@ check_MkUTxOState_1151 ::
        (MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
           () ()
           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_BaseAddr_735
-          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_BootstrapAddr_2401)
+          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_BootstrapAddr_2609)
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
           () () Integer
           (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22

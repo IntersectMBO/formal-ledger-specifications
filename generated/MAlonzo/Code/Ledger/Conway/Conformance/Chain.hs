@@ -387,7 +387,7 @@ du_govActionDeposits_2364 v0 v1
                 -> case coe v4 of
                      MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_7003 v5 v6 v7 v8 v9
                        -> case coe v6 of
-                            MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3193 v10 v11
+                            MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243 v10 v11
                               -> coe
                                    MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
                                    (coe

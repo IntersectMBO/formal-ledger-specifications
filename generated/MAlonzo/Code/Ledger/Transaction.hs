@@ -1472,7 +1472,7 @@ d_pay_1496 v0 = coe MAlonzo.Code.Ledger.Address.d_pay_58 (coe v0)
 -- Ledger.Transaction.TransactionStructure._.BaseAddr.stake
 d_stake_1498 ::
   MAlonzo.Code.Ledger.Address.T_BaseAddr_48 ->
-  MAlonzo.Code.Ledger.Address.T_Credential_16
+  Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 d_stake_1498 v0
   = coe MAlonzo.Code.Ledger.Address.d_stake_60 (coe v0)
 -- Ledger.Transaction.TransactionStructure._.BootstrapAddr.attrsSize
