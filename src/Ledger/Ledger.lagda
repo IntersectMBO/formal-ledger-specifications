@@ -98,7 +98,7 @@ data
                  Γᶜ = ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ  in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  Γᶜ ⊢ certState₀ ⇀⦇ _ ,CERTBASE⦈ certState₁
+    ∙  Γᶜ ⊢ certState ⇀⦇ _ ,CERTBASE⦈ certState₁
     ∙  Γᶜ ⊢ certState₁ ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────

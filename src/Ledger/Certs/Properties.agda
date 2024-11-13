@@ -138,7 +138,6 @@ Computational-CERTS = it
 
 private variable
   dCert : DCert
-  Γ Γ' : CertEnv
   l : List DCert
   A A' B : Type
 instance
@@ -151,9 +150,10 @@ getCoin-singleton = indexedSum-singleton' {M = Coin} (finiteness _)
                 → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
 ∪ˡsingleton∈dom m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ {m = m} a∈dom)
 
-module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                              → disjoint (dom m) (dom m')
-                              → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
+module CERTSpov  (Γ : CertEnv)
+                 ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+                                     → disjoint (dom m) (dom m')
+                                     → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
   where
   open ≡-Reasoning
   open Equivalence
@@ -214,7 +214,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
-  module CERTSpov
+  module _
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
     ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
     ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
