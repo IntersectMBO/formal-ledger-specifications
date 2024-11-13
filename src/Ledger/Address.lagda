@@ -59,7 +59,7 @@ data isScript : Credential → Type where
 record BaseAddr : Type where
   field net    : Network
         pay    : Credential
-        stake  : Credential
+        stake  : Maybe Credential
 
 record BootstrapAddr : Type where
   field net        : Network
@@ -106,7 +106,7 @@ isScriptRwdAddr  = isScript ∘ RwdAddr.stake
 payCred (inj₁ record {pay = pay}) = pay
 payCred (inj₂ record {pay = pay}) = pay
 
-stakeCred (inj₁ record {stake = stake}) = just stake
+stakeCred (inj₁ record {stake = stake}) = stake
 stakeCred (inj₂ _) = nothing
 
 netId (inj₁ record {net = net}) = net

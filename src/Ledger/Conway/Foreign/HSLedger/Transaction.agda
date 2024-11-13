@@ -3,6 +3,7 @@ module Ledger.Conway.Foreign.HSLedger.Transaction where
 open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Certs
+open import Ledger.Conway.Foreign.HSLedger.Gov.Core
 open import Ledger.Conway.Foreign.HSLedger.Gov
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
