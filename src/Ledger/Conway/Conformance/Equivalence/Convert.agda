@@ -19,5 +19,5 @@ I ⊢ L ⭆ C = I ⊢ L ⭆ⁱ λ _ _ → C
 _⭆_ : (L C : Set) → Set
 L ⭆ C = ⊤ ⊢ L ⭆ C
 
-conv : ∀ {L C} → ⦃ L ⭆ C ⦄ → L → C
+conv : ∀ {L C} → ⦃ ⊤ ⊢ L ⭆ⁱ C ⦄ → ∀ l → C _ l
 conv l = _ ⊢conv l
