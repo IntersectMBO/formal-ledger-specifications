@@ -29,23 +29,20 @@ open PParams
 instance
   _ = +-0-monoid
 
-certDepositUtxo : DCert → PParams → DepositPurpose ⇀ Coin
-certDepositUtxo (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
-certDepositUtxo (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
-certDepositUtxo (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
-certDepositUtxo _                  _   = ∅
-
-updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
-                    → DepositPurpose ⇀ Coin
-updateCertDeposits _   []              deposits = deposits
-updateCertDeposits pp  (cert ∷ certs)  deposits
-  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
-
-updateCertDepositsUtxo  : PParams → List DCert → (DepositPurpose ⇀ Coin)
-                        → DepositPurpose ⇀ Coin
-updateCertDepositsUtxo _   []              deposits = deposits
-updateCertDepositsUtxo pp  (cert ∷ certs)  deposits
-  = updateCertDepositsUtxo pp certs deposits ∪⁺ certDepositUtxo cert pp
+updateCertDeposits  : PParams → List DCert → Deposits → Deposits
+updateCertDeposits pp [] deposits = deposits
+updateCertDeposits pp (delegate c vd khs v ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (delegate c vd khs v) pp)
+updateCertDeposits pp (regpool kh p ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∪⁺ ❴ PoolDeposit kh , pp .poolDeposit ❵)
+updateCertDeposits pp (regdrep c v a ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (regdrep c v a) pp)
+updateCertDeposits pp (dereg c v ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∣ certRefund (dereg c v)ᶜ)
+updateCertDeposits pp (deregdrep c v ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∣ certRefund (deregdrep c v)ᶜ)
+updateCertDeposits pp (_ ∷ certs) deposits
+  = updateCertDeposits pp certs deposits
 
 -- -- Unchanged/defined in Utxo module:
 updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
@@ -55,7 +52,7 @@ updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
 updateDeposits : PParams → TxBody → Deposits → Deposits
-updateDeposits pp txb = updateCertDepositsUtxo pp txcerts
+updateDeposits pp txb = updateCertDeposits pp txcerts
                         ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
   where open TxBody txb
 
