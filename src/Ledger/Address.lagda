@@ -6,6 +6,7 @@ open import Ledger.Prelude
 
 open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
+import Data.Sum.Relation.Unary.All as Sum
 
 module Ledger.Address (
 \end{code}
@@ -59,7 +60,11 @@ data isScript : Credential → Type where
 record BaseAddr : Type where
   field net    : Network
         pay    : Credential
-        stake  : Maybe Credential
+        stake  : Credential
+
+record EnterpriseAddr : Type where
+  field net    : Network
+        pay    : Credential
 
 record BootstrapAddr : Type where
   field net        : Network
@@ -71,18 +76,21 @@ record RwdAddr : Type where
         stake  : Credential
 \end{code}
 \begin{code}[hide]
-open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
+open BaseAddr; open EnterpriseAddr; open BootstrapAddr
+open BootstrapAddr using (attrsSize) public
 \end{code}
 \begin{code}
 
-VKeyBaseAddr         = Σ[ addr ∈ BaseAddr       ] isVKey    (addr .pay)
-VKeyBootstrapAddr    = Σ[ addr ∈ BootstrapAddr  ] isVKey    (addr .pay)
-ScriptBaseAddr       = Σ[ addr ∈ BaseAddr       ] isScript  (addr .pay)
-ScriptBootstrapAddr  = Σ[ addr ∈ BootstrapAddr  ] isScript  (addr .pay)
+VKeyBaseAddr          = Σ[ addr ∈ BaseAddr        ] isVKey    (addr .pay)
+VKeyEnterpriseAddr    = Σ[ addr ∈ EnterpriseAddr  ] isVKey    (addr .pay)
+VKeyBootstrapAddr     = Σ[ addr ∈ BootstrapAddr   ] isVKey    (addr .pay)
+ScriptBaseAddr        = Σ[ addr ∈ BaseAddr        ] isScript  (addr .pay)
+ScriptEnterpriseAddr  = Σ[ addr ∈ EnterpriseAddr  ] isScript  (addr .pay)
+ScriptBootstrapAddr   = Σ[ addr ∈ BootstrapAddr   ] isScript  (addr .pay)
 
-Addr        = BaseAddr        ⊎ BootstrapAddr
-VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
-ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
+Addr        = BaseAddr        ⊎ EnterpriseAddr        ⊎ BootstrapAddr
+VKeyAddr    = VKeyBaseAddr    ⊎ VKeyEnterpriseAddr    ⊎ VKeyBootstrapAddr
+ScriptAddr  = ScriptBaseAddr  ⊎ ScriptEnterpriseAddr  ⊎ ScriptBootstrapAddr
 \end{code}
 \\
 \emph{Helper functions}
@@ -104,13 +112,15 @@ isScriptRwdAddr  = isScript ∘ RwdAddr.stake
 \end{figure*}
 \begin{code}[hide]
 payCred (inj₁ record {pay = pay}) = pay
-payCred (inj₂ record {pay = pay}) = pay
+payCred (inj₂ (inj₁ record {pay = pay})) = pay
+payCred (inj₂ (inj₂ record {pay = pay})) = pay
 
-stakeCred (inj₁ record {stake = stake}) = stake
+stakeCred (inj₁ record {stake = stake}) = just stake
 stakeCred (inj₂ _) = nothing
 
 netId (inj₁ record {net = net}) = net
-netId (inj₂ record {net = net}) = net
+netId (inj₂ (inj₁ record {net = net})) = net
+netId (inj₂ (inj₂ record {net = net})) = net
 
 data isBootstrapAddr : Addr → Set where
  IsBootstrapAddr : ∀ a → isBootstrapAddr (inj₂ a)
@@ -119,6 +129,9 @@ instance
   isBootstrapAddr? : ∀ {a} → isBootstrapAddr a ⁇
   isBootstrapAddr? {inj₁ _} = ⁇ no λ ()
   isBootstrapAddr? {inj₂ a} = ⁇ yes (IsBootstrapAddr a)
+
+if_isBootstrapAddr_ : Addr → (BootstrapAddr → Set) → Set
+if a isBootstrapAddr P = Sum.All (const ⊤) (Sum.All (const ⊤) P) a
 
 instance
   unquoteDecl DecEq-Credential = derive-DecEq ((quote Credential , DecEq-Credential) ∷ [])
@@ -141,13 +154,15 @@ _ = isScriptRwdAddr ⁇¹ ∋ it
 
 getScriptHash : ∀ a → isScriptAddr a → ScriptHash
 getScriptHash (inj₁ _) (SHisScript sh) = sh
-getScriptHash (inj₂ _) (SHisScript sh) = sh
+getScriptHash (inj₂ (inj₁ _)) (SHisScript sh) = sh
+getScriptHash (inj₂ (inj₂ _)) (SHisScript sh) = sh
 
 instance abstract
-  unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RwdAddr = derive-DecEq
-    ( (quote BaseAddr      , DecEq-BaseAddr)
-    ∷ (quote BootstrapAddr , DecEq-BootstrapAddr)
-    ∷ (quote RwdAddr       , DecEq-RwdAddr)
+  unquoteDecl DecEq-BaseAddr DecEq-EnterpriseAddr DecEq-BootstrapAddr DecEq-RwdAddr = derive-DecEq
+    ( (quote BaseAddr       , DecEq-BaseAddr)
+    ∷ (quote EnterpriseAddr , DecEq-EnterpriseAddr)
+    ∷ (quote BootstrapAddr  , DecEq-BootstrapAddr)
+    ∷ (quote RwdAddr        , DecEq-RwdAddr)
     ∷ [] )
 
 module _ ⦃ _ : Show Network  ⦄ ⦃ _ : Show KeyHash  ⦄ ⦃ _ : Show ScriptHash  ⦄ where

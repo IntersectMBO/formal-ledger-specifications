@@ -9,6 +9,9 @@ instance
   HsTy-BaseAddr = autoHsType BaseAddr ⊣ fieldPrefix "base"
   Conv-BaseAddr = autoConvert BaseAddr
 
+  HsTy-EnterpriseAddr = autoHsType EnterpriseAddr ⊣ fieldPrefix "enterprise"
+  Conv-EnterpriseAddr = autoConvert EnterpriseAddr
+
   HsTy-BootstrapAddr = autoHsType BootstrapAddr ⊣ fieldPrefix "boot"
   Conv-BootstrapAddr = autoConvert BootstrapAddr
 

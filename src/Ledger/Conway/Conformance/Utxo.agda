@@ -280,7 +280,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
-        Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
+        if a isBootstrapAddr (λ a → a .attrsSize ≤ 64)
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
     ∙ txNetworkId ≡? NetworkId

@@ -81,7 +81,7 @@ createUTxO : (index : ℕ)
            → Maybe (D ⊎ DataHash)
            → TxIn × TxOut
 createUTxO index wallet value d = (index , index)
-                                , (inj₁ (record { net = 0 ; pay = KeyHashObj wallet ; stake = just (KeyHashObj wallet) })
+                                , (inj₁ (record { net = 0 ; pay = KeyHashObj wallet ; stake = KeyHashObj wallet })
                                   , value , d , nothing)
 
 createInitUtxoState : (wallets : ℕ)

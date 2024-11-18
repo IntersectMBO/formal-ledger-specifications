@@ -44,14 +44,14 @@ initEnv = createEnv 0
 initTxOut : TxOut
 initTxOut = inj₁ (record { net = 0 ;
                            pay = ScriptObj 777 ;
-                           stake = just (ScriptObj 777) })
+                           stake = ScriptObj 777 })
                            , 10 , just (inj₂ 99) , nothing
 
 -- initTxOut for script without datum reference
 initTxOut' : TxOut
 initTxOut' = inj₁ (record { net = 0 ;
                            pay = ScriptObj 888 ;
-                           stake = just (ScriptObj 888) })
+                           stake = ScriptObj 888 })
                            , 10 , nothing , nothing
 
 scriptDatum : TxIn × TxOut
@@ -74,7 +74,7 @@ succeedTx = record { body = record
                                                 ∷ (5
                                                   , ((inj₁ (record { net = 0 ;
                                                                      pay = KeyHashObj 5 ;
-                                                                     stake = just (KeyHashObj 5) }))
+                                                                     stake = KeyHashObj 5 }))
                                                   , (1000000000000 - 10000000000) , nothing , nothing))
                                                 ∷ [])
                          ; txfee = 10000000000
