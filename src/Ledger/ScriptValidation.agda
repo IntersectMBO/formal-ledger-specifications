@@ -16,6 +16,7 @@ module Ledger.ScriptValidation
   where
 
 open import Ledger.Certs govStructure
+open import Tactic.Derive.Show
 
 instance
   _ = DecEq-Slot
