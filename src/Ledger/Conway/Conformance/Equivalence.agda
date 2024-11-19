@@ -40,25 +40,14 @@ lemInvalidDepositsC refl (C.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
                           (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                             (C.Scripts-No _))) = refl
 
--- -- TODO: this isn't true!
-lemUpdateCertDeposits : ∀ {pp} deposits certs → C.updateCertDeposits pp certs deposits ≡ L.updateCertDeposits pp certs deposits
-lemUpdateCertDeposits deposits [] = refl
-lemUpdateCertDeposits deposits (L.delegate x x₁ x₂ x₃ ∷ certs) = {!!}
-lemUpdateCertDeposits deposits (L.dereg x x₁ ∷ certs) = {!!}
-lemUpdateCertDeposits deposits (L.regpool x x₁ ∷ certs) = {!!}
-lemUpdateCertDeposits deposits (L.retirepool x x₁ ∷ certs) = {!!}
-lemUpdateCertDeposits deposits (L.regdrep x x₁ x₂ ∷ certs) = {!!}
-lemUpdateCertDeposits deposits (L.deregdrep x x₁ ∷ certs) = {!!}
-lemUpdateCertDeposits deposits (L.ccreghot x x₁ ∷ certs) = {!!}
-
 lemUpdateDeposits : ∀ {Γ s tx s'} (open L.UTxOEnv Γ)
                   → isValid tx ≡ true
                   → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-                  → C.updateDeposits pparams (body tx) (L.UTxOState.deposits s) ≡ L.UTxOState.deposits s'
+                  → L.updateDeposits pparams (body tx) (L.UTxOState.deposits s) ≡ L.UTxOState.deposits s'
 lemUpdateDeposits {tx = tx} refl
   (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
     (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-      (L.Scripts-Yes (valid , _)))) = lemUpdateCertDeposits _ (TxBody.txcerts (body tx))
+      (L.Scripts-Yes _))) = refl
 
 updateDDeps : PParams → List L.DCert → L.Deposits → L.Deposits
 updateDDeps _ []                                   deps = deps
@@ -105,6 +94,32 @@ lem-gdeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
 lem-gdeps = {!!}
 
 instance
+  GovEnvToConf : L.Deposits × L.Deposits ⊢ L.GovEnv ⭆ C.GovEnv
+  GovEnvToConf .convⁱ deposits L.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
+    C.⟦ txid , epoch , pp , policy , enactState , deposits ⊢conv certState ⟧ᵍ
+
+  opaque
+    unfolding L.isRegistered C.isRegistered
+
+    isRegisteredToConf : ∀ {Γ voter} → L.Deposits × L.Deposits ⊢ L.isRegistered Γ voter ⭆ⁱ λ deposits _ → C.isRegistered (deposits ⊢conv Γ) voter
+    isRegisteredToConf {voter = CC   , c} .convⁱ _ h = h
+    isRegisteredToConf {voter = DRep , c} .convⁱ _ h = h
+    isRegisteredToConf {voter = SPO  , c} .convⁱ _ h = h
+
+  GOV'ToConf : ∀ {Γ s votes s' n}
+            → L.Deposits × L.Deposits
+              ⊢ (Γ , n) L.⊢ s ⇀⦇ votes ,GOV'⦈ s' ⭆ⁱ λ deposits _ →
+                (deposits ⊢conv Γ , n) C.⊢ s ⇀⦇ votes ,GOV'⦈ s'
+  GOV'ToConf .convⁱ deposits (L.GOV-Vote (a , b , c)) = C.GOV-Vote (a , b , deposits ⊢conv c)
+  GOV'ToConf .convⁱ deposits (L.GOV-Propose h) = C.GOV-Propose h
+
+  GOVToConf : ∀ {Γ s votes s' n}
+            → L.Deposits × L.Deposits
+              ⊢ _⊢_⇀⟦_⟧ᵢ*'_ IdSTS L._⊢_⇀⦇_,GOV'⦈_ (Γ , n) s votes s' ⭆ⁱ λ deposits _ →
+                _⊢_⇀⟦_⟧ᵢ*'_ IdSTS C._⊢_⇀⦇_,GOV'⦈_ (deposits ⊢conv Γ , n) s votes s'
+  GOVToConf .convⁱ deposits (BS-base Id-nop) = BS-base Id-nop
+  GOVToConf .convⁱ deposits (BS-ind h r) = BS-ind (deposits ⊢conv h) (deposits ⊢conv r)
+
   LStateToConf : L.Deposits × L.Deposits ⊢ L.LState ⭆ C.LState
   LStateToConf .convⁱ deposits L.⟦ utxoSt , govSt , certState ⟧ˡ =
     C.⟦ utxoSt , govSt , deposits ⊢conv certState ⟧ˡ
@@ -121,12 +136,13 @@ instance
         deposits = L.UTxOState.deposits utxoSt
         utxow' : _ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ setDeposits deposits utxoSt'
         utxow' = conv utxow
-        utxoStC'    = setDeposits (C.updateDeposits pparams (body tx) deposits) utxoSt'
-        certStateC' = getCertDeps* (updateCertDeps* txcerts cdeposits) ⊢conv certState'
+        utxoStC'    = setDeposits (L.updateDeposits pparams (body tx) deposits) utxoSt'
+        cdeposits' = updateCertDeps* txcerts cdeposits
+        certStateC' = getCertDeps* cdeposits' ⊢conv certState'
         certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
         certs' = cdeposits ⊢conv certs
-        gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOV⦈ _
-        gov' = {!!}
+        gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOV⦈ govSt'
+        gov' = getCertDeps* cdeposits' ⊢conv gov
         ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
         ledger' = C.LEDGER-V⋯ refl utxow' certs' gov'
         utxoEq  : utxoStC' ≡ utxoSt'
