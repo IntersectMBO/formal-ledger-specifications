@@ -1,4 +1,4 @@
-{-# OPTIONS --allow-unsolved-metas #-}
+
 open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
@@ -61,12 +61,6 @@ instance
   UTXOSFromConf .convⁱ (inj₂ validCerts) (C.Scripts-Yes (eval , txValid)) = L.Scripts-Yes (validCerts , eval , txValid)
   UTXOSFromConf .convⁱ _ (C.Scripts-No h) = L.Scripts-No h
 
-lemConsumed : ∀ pp s txb → L.consumed pp s txb ≡ C.consumed pp s txb
-lemConsumed pp s txb = {!!}
-
-lemProduced : ∀ pp s txb → L.produced pp s txb ≡ C.produced pp s txb
-lemProduced pp s txb = {!!}
-
 instance
   -- It's a little weird that UTXO still has a bunch of preconditions
   -- for consumed and produced (using updateDeposits) when the
@@ -74,12 +68,7 @@ instance
   -- In conformance the update happens in GOVCERT (under CERT).
   UTXOToConf : ∀ {Γ s tx s'} → Γ L.⊢ s ⇀⦇ tx ,UTXO⦈ s' ⭆ Γ C.⊢ s ⇀⦇ tx ,UTXO⦈ (withDepositsFrom s s')
   UTXOToConf {s = s} {tx = tx} .convⁱ _ (L.UTXO-inductive (a , b , c , d , e , f , g , h , i , j , k , l , m , n , o , p , utxo)) =
-    let f' = begin
-             C.consumed _ s (body tx) ≡⟨ lemConsumed _ s (body tx) ⟨
-             L.consumed _ s (body tx) ≡⟨ f ⟩
-             L.produced _ s (body tx) ≡⟨ lemProduced _ s _ ⟩
-             C.produced _ s (body tx) ∎ in
-    C.UTXO-inductive (a , b , c , d , e , f' , g , h , i , j , k , l , m , n , o , p , conv utxo)
+    C.UTXO-inductive (a , b , c , d , e , f , g , h , i , j , k , l , m , n , o , p , conv utxo)
 
   UTXOFromConf : ∀ {Γ s tx s'}
                    (let open L.UTxOEnv Γ using () renaming (pparams to pp)
@@ -90,12 +79,7 @@ instance
                  ⊢ Γ C.⊢ s ⇀⦇ tx ,UTXO⦈ s' ⭆ⁱ λ _ h →
                    Γ L.⊢ s ⇀⦇ tx ,UTXO⦈ (setDeposits (utxoDeposits h) s')
   UTXOFromConf {s = s} {tx = tx} .convⁱ validCerts (C.UTXO-inductive (a , b , c , d , e , f , g , h , i , j , k , l , m , n , o , p , utxo)) =
-    let f' = begin
-             L.consumed _ s (body tx) ≡⟨ lemConsumed _ s (body tx) ⟩
-             C.consumed _ s (body tx) ≡⟨ f ⟩
-             C.produced _ s (body tx) ≡⟨ lemProduced _ s _ ⟨
-             L.produced _ s (body tx) ∎ in
-    L.UTXO-inductive (a , b , c , d , e , f' , g , h , i , j , k , l , m , n , o , p , (validCerts ⊢conv utxo))
+    L.UTXO-inductive (a , b , c , d , e , f , g , h , i , j , k , l , m , n , o , p , (validCerts ⊢conv utxo))
 
   UTXOWToConf : ∀ {Γ s tx s'} → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s' ⭆ Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ (withDepositsFrom s s')
   UTXOWToConf .convⁱ _ (L.UTXOW-inductive⋯ a b c d e f g h utxo) =
