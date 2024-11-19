@@ -165,7 +165,7 @@ multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
       (just (Collecting _ _ _ _)) → false)
 
 multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
-  (newValue ctx == oldValue ctx)
+  compareScriptValues _≟_ (oldValue ctx) (newValue ctx)
   ∧ (case (newLabel ctx) of λ where
       nothing → false
       (just Holding) → expired slot ctx
