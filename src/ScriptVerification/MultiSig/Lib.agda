@@ -165,7 +165,7 @@ makePayTx id state script@(sh , _) w with getScriptUTxO sh (UTxOState.utxo state
                                 -- first number is needs to be the id for the script
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
                                 txdats =  fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
-                                txrdmrs = fromListᵐ (((Spend , (proj₁ scIn )) ,
+                                txrdmrs = fromListᵐ (((Spend , (proj₁ scIn)) ,
                                                       inj₁ (inj₂ Pay) ,
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 isValid = true ;
@@ -175,42 +175,38 @@ makePayTx id state script@(sh , _) w with getScriptUTxO sh (UTxOState.utxo state
   (getLabel scOut)
 ... | _ | _ = nothing
 
-succeedTxOut : TxOut
-succeedTxOut = inj₁ (record { net = tt ;
-                           pay = inj₂ 777 ;
-                           stake = inj₂ 777 })
-                           , 800000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 100000000000 2 3 [])))) , nothing
 
-succeedTx : Tx
-succeedTx = record { body = record defaultTxBody
-                         { txins = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
-                         ; txouts = fromListIx ((6 , succeedTxOut)
-                                               ∷ (5
-                                                 , ((inj₁ (record { net = tt ;
-                                                                    pay = inj₁ 5 ;
-                                                                    stake = inj₁ 5 }))
-                                               -- , 10000000000 , nothing , nothing))
-                                               , (1000000000000 - 10000000000) , nothing , nothing))
-                                               ∷ [])
-                         ; txsize = 10
-                         ; txid = 7
-                         ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
+-- TODO: Add error handling
+makeProposeTxOut : Label → (scriptIx : ℕ) → TxOut → (v tw d : ℕ) → List (ℕ × TxOut)
+makeProposeTxOut Holding ix (fst , txValue , snd) v tw d = (ix , (fst , txValue , (just (inj₁ (inj₁ (inj₁ (Collecting v tw d []))))) , nothing)) ∷ []
+makeProposeTxOut _ _ _ _ _ _ = []
+
+makeProposeTx : (id : ℕ) → UTxOState → PlutusScript → (w v tw d : ℕ) → Maybe Tx
+makeProposeTx id state script@(sh , _) w v tw d with getScriptUTxO sh (UTxOState.utxo state) | getWalletUTxO w (UTxOState.utxo state)
+... | just (scIn , scOut) | wutxo = maybe (λ label →
+  just (
+  record { body = record defaultTxBody
+                         { txins = Ledger.Prelude.fromList ((scIn ∷ []) ++ (map proj₁ wutxo))
+                         ; txouts = fromListIx (makeFeeTxOut wutxo ++ makeProposeTxOut label (proj₂ scIn) scOut v tw d )
+                         ; txid = id
+                         ; collateral = Ledger.Prelude.fromList (map proj₁ wutxo)
                          } ;
-                wits = record { vkSigs = fromListᵐ ((5 , 12) ∷ []) ;
+                wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addValue}} (getTxId wutxo) w)) ∷ []) ;
                                 -- signature now is first number + txId ≡ second number
                                 -- first number is needs to be the id for the script
-                                scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
+                                scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
                                 txdats =  fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
-                                txrdmrs = fromListᵐ (((Spend , 6) ,
-                                                      inj₁ (inj₂ (Propose 100000000000 -- amount
-                                                                          2 -- wallet pkh
-                                                                          3)) , -- End Slot
-                                                      (5 , 5)) ∷ []) } ;
+                                txrdmrs = fromListᵐ (((Spend , (proj₁ scIn)) ,
+                                                      inj₁ (inj₂ (Propose v -- amount
+                                                                          tw -- wallet pkh
+                                                                          d)) , -- End Slot
+                                                      ((getTxId wutxo) , w)) ∷ []) } ;
                 isValid = true ;
                 txAD = nothing }
-
--- Pay
-
+                ))
+  nothing
+  (getLabel scOut)
+... | _ | _ = nothing
 
 initEnv : UTxOEnv
 initEnv = createEnv 0
@@ -227,15 +223,22 @@ script = (6 , 6) , initTxOut
 initState : UTxO
 initState = fromList' (script ∷ (createInitUtxoState 5 1000000000000))
 
--- Compute the result of running the UTXO rules on the succeedTx transaction
-succeedExample : ComputationResult String UTxOState
-succeedExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  succeedTx
+initState' : UTxO
+initState' = fromList' (createInitUtxoState 5 1000000000000)
 
--- test = evalScripts' succeedTx succeedState
--- letsGo : ComputationResult String UTxOState → ComputationResult String UTxOState
--- letsGo (success x) = UTXO-step initEnv x succeedTx'
--- letsGo (failure x) = failure x
---
+
+-- Compute the result of running the UTXO rules on the succeedTx transaction
+succeedExample' : ComputationResult String UTxOState → ComputationResult String UTxOState
+succeedExample' (success state) = maybe (λ tx → UTXO-step initEnv state tx)
+                       (failure "unable to create transaction bla")
+                       (makeProposeTx 7
+                                      state
+                                      multiSigScript
+                                      5
+                                      100000000000
+                                      2
+                                      3)
+succeedExample' (failure x) = failure x
 
 letsGo : ComputationResult String UTxOState → ComputationResult String UTxOState
 letsGo (success x) = maybe (λ tx → UTXO-step initEnv x tx)
@@ -243,21 +246,57 @@ letsGo (success x) = maybe (λ tx → UTXO-step initEnv x tx)
                            (makePayTx 8 x multiSigScript 5)
 letsGo (failure x) = failure x
 
+
+succeedTxOut : TxOut
+succeedTxOut = inj₁ (record { net = tt ;
+                           pay = inj₂ 777 ;
+                           stake = inj₂ 777 })
+                           , 800000000000
+                           , just (inj₁ (inj₁ (inj₁ Holding))) , nothing
+
+succeedTx : Tx
+succeedTx = record { body = record defaultTxBody
+                         { txins = Ledger.Prelude.fromList ((5 , 5) ∷ [])
+                         ; txouts = fromListIx ((6 , succeedTxOut)
+                                               ∷ (5
+                                                 , ((inj₁ (record { net = tt ;
+                                                                    pay = inj₁ 5 ;
+                                                                    stake = inj₁ 5 }))
+                                               -- , 10000000000 , nothing , nothing))
+                                               , (1000000000000 - 810000000000) , nothing , nothing))
+                                               ∷ [])
+                         ; txid = 5
+                         ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
+                         } ;
+                wits = record { vkSigs = fromListᵐ ((5 , 10) ∷ []) ;
+                                -- signature now is first number + txId ≡ second number
+                                -- first number is needs to be the id for the script
+                                scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
+                                txdats =  ∅ ;
+                                txrdmrs = ∅ } ;
+                isValid = true ;
+                txAD = nothing }
+
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
   unfolding Computational-UTXO
   unfolding outs
 
-  _ : isSuccess succeedExample ≡ true
-  _  = refl
+  t1 : ComputationResult String UTxOState
+  t1 = UTXO-step initEnv ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ  succeedTx
+  
+  _ : isSuccess t1 ≡ true
+  _ = refl
 
- -- _ : letsGo succeedExample ≡ true
- -- _ = refl
+  t2 : ComputationResult String UTxOState
+  t2 = succeedExample' t1
 
-  se : ComputationResult String UTxOState
-  se = letsGo succeedExample
+  _ : isSuccess t2 ≡ true
+  _ = refl
 
+  t3 : ComputationResult String UTxOState
+  t3 = letsGo t2
 
-  _ : isSuccess se ≡ true
+  _ : isSuccess t3 ≡ true
   _ = refl
