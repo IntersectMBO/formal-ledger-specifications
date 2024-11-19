@@ -1,4 +1,4 @@
-
+{-# OPTIONS --allow-unsolved-metas #-}
 -- Proof that the rules under Ledger.Conway.Conformance are equivalent
 -- to the rules under Ledger.
 
