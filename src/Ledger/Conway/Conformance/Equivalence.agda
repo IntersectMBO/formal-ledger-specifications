@@ -41,7 +41,7 @@ lemInvalidDepositsC refl (C.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
                             (C.Scripts-No _))) = refl
 
 -- -- TODO: this isn't true!
-lemUpdateCertDeposits : ∀ {pp} deposits certs → C.updateCertDepositsUtxo pp certs deposits ≡ L.updateCertDeposits pp certs deposits
+lemUpdateCertDeposits : ∀ {pp} deposits certs → C.updateCertDeposits pp certs deposits ≡ L.updateCertDeposits pp certs deposits
 lemUpdateCertDeposits deposits [] = refl
 lemUpdateCertDeposits deposits (L.delegate x x₁ x₂ x₃ ∷ certs) = {!!}
 lemUpdateCertDeposits deposits (L.dereg x x₁ ∷ certs) = {!!}
@@ -125,8 +125,10 @@ instance
         certStateC' = getCertDeps* (updateCertDeps* txcerts cdeposits) ⊢conv certState'
         certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
         certs' = cdeposits ⊢conv certs
+        gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOV⦈ _
+        gov' = {!!}
         ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
-        ledger' = C.LEDGER-V⋯ refl utxow' certs' gov
+        ledger' = C.LEDGER-V⋯ refl utxow' certs' gov'
         utxoEq  : utxoStC' ≡ utxoSt'
         utxoEq  = cong (λ • → L.⟦ _ , _ , • , _ ⟧ᵘ)
                        (lemUpdateDeposits refl utxow)

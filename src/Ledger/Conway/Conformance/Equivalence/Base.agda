@@ -13,12 +13,14 @@ module L where
   open import Ledger.Ledger txs abs public
   open import Ledger.Utxo txs abs public
   open import Ledger.Utxow txs abs public
+  open import Ledger.Gov txs public
   open import Ledger.Certs govStructure public
 
 module C where
   open import Ledger.Conway.Conformance.Ledger txs abs public
   open import Ledger.Conway.Conformance.Utxo txs abs public hiding (module L)
   open import Ledger.Conway.Conformance.Utxow txs abs public
+  open import Ledger.Conway.Conformance.Gov txs public
   open import Ledger.Conway.Conformance.Certs govStructure public
 
 open Tx public
