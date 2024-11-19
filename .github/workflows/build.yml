@@ -17,11 +17,18 @@ jobs:
   MAlonzo:
     runs-on: ubuntu-latest
     steps:
+      - name: Check if ${{ env.MAlonzo_branch }} exists
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.MAlonzo_branch }}
+        id: MAlonzo-exists
+        continue-on-error: true
+        if: github.ref != 'refs/heads/master'
       - uses: actions/checkout@v4
         with:
           ref: MAlonzo-code
       - name: Create branch ${{ env.MAlonzo_branch }} for generated code
-        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        if: github.ref != 'refs/heads/master' && steps.MAlonzo-exists.outcome == 'failure'
         run: |
           git checkout -b ${{ env.MAlonzo_branch }} origin/MAlonzo-code
           git push origin ${{ env.MAlonzo_branch }}
