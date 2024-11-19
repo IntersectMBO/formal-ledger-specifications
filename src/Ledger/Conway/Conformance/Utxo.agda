@@ -32,26 +32,6 @@ open PParams
 instance
   _ = +-0-monoid
 
-updateCertDeposits  : PParams → List DCert → Deposits → Deposits
-updateCertDeposits pp [] deposits = deposits
-updateCertDeposits pp (delegate c vd khs v ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (delegate c vd khs v) pp)
-updateCertDeposits pp (regpool kh p ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∪⁺ ❴ PoolDeposit kh , pp .poolDeposit ❵)
-updateCertDeposits pp (regdrep c v a ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (regdrep c v a) pp)
-updateCertDeposits pp (dereg c v ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∣ certRefund (dereg c v)ᶜ)
-updateCertDeposits pp (deregdrep c v ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∣ certRefund (deregdrep c v)ᶜ)
-updateCertDeposits pp (_ ∷ certs) deposits
-  = updateCertDeposits pp certs deposits
-
-updateDeposits : PParams → TxBody → Deposits → Deposits
-updateDeposits pp txb = updateCertDeposits pp txcerts
-                        ∘ L.updateProposalDeposits txprop txid (pp .govActionDeposit)
-  where open TxBody txb
-
 open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ)
 
 private variable
@@ -97,31 +77,6 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
-depositsChange : PParams → TxBody → Deposits → ℤ
-depositsChange pp txb deposits =
-  getCoin (updateDeposits pp txb deposits) - getCoin deposits
-
-module _ (let open UTxOState; open TxBody) where
-  depositRefunds : PParams → UTxOState → TxBody → Coin
-  depositRefunds pp st txb = negPart (depositsChange pp txb (st .deposits))
-
-  newDeposits : PParams → UTxOState → TxBody → Coin
-  newDeposits pp st txb = posPart (depositsChange pp txb (st .deposits))
-
-  consumed : PParams → UTxOState → TxBody → Value
-  consumed pp st txb
-    =  L.balance (st .utxo ∣ txb .txins)
-    +  txb .mint
-    +  inject (depositRefunds pp st txb)
-    +  inject (getCoin (txb .txwdrls))
-
-  produced : PParams → UTxOState → TxBody → Value
-  produced pp st txb
-    =  L.balance (L.outs txb)
-    +  inject (txb .txfee)
-    +  inject (newDeposits pp st txb)
-    +  inject (txb .txdonation)
-
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
 
   UTXO-inductive :
@@ -133,7 +88,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txvldt
-    ∙ L.feesOK pp tx utxo ≡ true             ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ L.feesOK pp tx utxo ≡ true             ∙ L.consumed pp s txb ≡ L.produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
