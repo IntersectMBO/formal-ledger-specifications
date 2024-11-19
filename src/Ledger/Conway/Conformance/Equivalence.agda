@@ -1,4 +1,4 @@
-{-# OPTIONS --allow-unsolved-metas #-}
+
 -- Proof that the rules under Ledger.Conway.Conformance are equivalent
 -- to the rules under Ledger.
 
@@ -21,6 +21,7 @@ module Ledger.Conway.Conformance.Equivalence
 
 open import Ledger.Conway.Conformance.Equivalence.Base txs abs
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
+open import Ledger.Conway.Conformance.Equivalence.Gov txs abs
 open import Ledger.Conway.Conformance.Equivalence.Utxo txs abs
 
 -- Invalid transactions don't change the deposits
@@ -87,39 +88,27 @@ validCertDeposits refl (validDeps _ deps) = deps
 
 lem-ddeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
           → updateCertDeps* certs deposits .CertDeps*.depsᵈ ≡ updateDDeps pp certs (deposits .CertDeps*.depsᵈ)
-lem-ddeps = {!!}
+lem-ddeps {certs = []} _ = refl
+lem-ddeps (delegate*    ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (dereg*    v  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (regpool*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (retirepool*  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (regdrep*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (deregdrep* v ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (ccreghot*    ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 
 lem-gdeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
           → updateCertDeps* certs deposits .CertDeps*.depsᵍ ≡ updateGDeps pp certs (deposits .CertDeps*.depsᵍ)
-lem-gdeps = {!!}
+lem-gdeps {certs = []} _ = refl
+lem-gdeps (delegate*    ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (dereg*    v  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (regpool*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (retirepool*  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (regdrep*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (deregdrep* v ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (ccreghot*    ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 
 instance
-  GovEnvToConf : L.Deposits × L.Deposits ⊢ L.GovEnv ⭆ C.GovEnv
-  GovEnvToConf .convⁱ deposits L.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
-    C.⟦ txid , epoch , pp , policy , enactState , deposits ⊢conv certState ⟧ᵍ
-
-  opaque
-    unfolding L.isRegistered C.isRegistered
-
-    isRegisteredToConf : ∀ {Γ voter} → L.Deposits × L.Deposits ⊢ L.isRegistered Γ voter ⭆ⁱ λ deposits _ → C.isRegistered (deposits ⊢conv Γ) voter
-    isRegisteredToConf {voter = CC   , c} .convⁱ _ h = h
-    isRegisteredToConf {voter = DRep , c} .convⁱ _ h = h
-    isRegisteredToConf {voter = SPO  , c} .convⁱ _ h = h
-
-  GOV'ToConf : ∀ {Γ s votes s' n}
-            → L.Deposits × L.Deposits
-              ⊢ (Γ , n) L.⊢ s ⇀⦇ votes ,GOV'⦈ s' ⭆ⁱ λ deposits _ →
-                (deposits ⊢conv Γ , n) C.⊢ s ⇀⦇ votes ,GOV'⦈ s'
-  GOV'ToConf .convⁱ deposits (L.GOV-Vote (a , b , c)) = C.GOV-Vote (a , b , deposits ⊢conv c)
-  GOV'ToConf .convⁱ deposits (L.GOV-Propose h) = C.GOV-Propose h
-
-  GOVToConf : ∀ {Γ s votes s' n}
-            → L.Deposits × L.Deposits
-              ⊢ _⊢_⇀⟦_⟧ᵢ*'_ IdSTS L._⊢_⇀⦇_,GOV'⦈_ (Γ , n) s votes s' ⭆ⁱ λ deposits _ →
-                _⊢_⇀⟦_⟧ᵢ*'_ IdSTS C._⊢_⇀⦇_,GOV'⦈_ (deposits ⊢conv Γ , n) s votes s'
-  GOVToConf .convⁱ deposits (BS-base Id-nop) = BS-base Id-nop
-  GOVToConf .convⁱ deposits (BS-ind h r) = BS-ind (deposits ⊢conv h) (deposits ⊢conv r)
-
   LStateToConf : L.Deposits × L.Deposits ⊢ L.LState ⭆ C.LState
   LStateToConf .convⁱ deposits L.⟦ utxoSt , govSt , certState ⟧ˡ =
     C.⟦ utxoSt , govSt , deposits ⊢conv certState ⟧ˡ
