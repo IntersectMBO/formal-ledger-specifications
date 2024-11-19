@@ -17,7 +17,7 @@ open EpochStructure SVEpochStructure
 open Implementation
 open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 
-module ScriptVerification.MultiSig.Transactions where
+module ScriptVerification.MultiSig.Test.Transactions where
 
 impMultiSig : MultiSig
 impMultiSig = record { signatories = [] ; minNumSignatures = 0 }
