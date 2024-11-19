@@ -43,7 +43,7 @@ makeProposeTx id state script@(sh , _) w v tw d =
                                 -- signature now is first number + txId ≡ second number
                                 -- first number is needs to be the id for the script
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                txdats = fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
+                                txdats = ∅ ; -- fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
                                                       inj₁ (inj₂ (Propose v -- amount
                                                                           tw -- wallet pkh

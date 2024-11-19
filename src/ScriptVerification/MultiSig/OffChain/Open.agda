@@ -47,7 +47,7 @@ openTx id w v tw script = record { body = record defaultTxBody
                                 -- signature now is first number + txId ≡ second number
                                 -- first number is needs to be the id for the script
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                txdats = fromListᵐ ((inj₁ (inj₁ Holding) , (inj₁ (inj₁ Holding))) ∷ []) ;
+                                txdats = ∅ ; -- fromListᵐ ((inj₁ (inj₁ Holding) , (inj₁ (inj₁ Holding))) ∷ []) ;
                                 txrdmrs = ∅ } ;
                                 {-
                                   ; --  fromListᵐ (((Propose , (proj₁ script)) ,

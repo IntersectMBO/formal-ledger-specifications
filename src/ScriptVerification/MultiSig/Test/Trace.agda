@@ -23,7 +23,7 @@ module ScriptVerification.MultiSig.Test.Trace where
 open import ScriptVerification.MultiSig.OffChain.OffChain
 
 impMultiSig : MultiSig
-impMultiSig = record { signatories = [] ; minNumSignatures = 0 }
+impMultiSig = record { signatories = 5 ∷ [] ; minNumSignatures = 0 }
 
 multiSigScript : PlutusScript
 multiSigScript = 777 , applyScriptWithContext (multiSigValidator impMultiSig)
@@ -79,80 +79,6 @@ txe (success x) = maybe (λ tx →
                         (makeAddSigTx 8 x multiSigScript 5)
 txe (failure x) = []
 
-defaultTxBody : TxBody
-defaultTxBody = record
-                  { txins = ∅
-                  ; refInputs = ∅
-                  ; txouts =  ∅
-                  ; txfee = 10000000000
-                  ; mint = 0
-                  ; txvldt = nothing , nothing
-                  ; txcerts = []
-                  ; txwdrls = ∅
-                  ; txvote = []
-                  ; txprop = []
-                  ; txdonation = 0
-                  ; txup = nothing
-                  ; txADhash = nothing
-                  ; netwrk = just tt
-                  ; txsize = 10
-                  ; txid = 0
-                  ; collateral = ∅
-                  ; reqSigHash = ∅
-                  ; scriptIntHash = nothing
-                  }
-
-succeedTxOut : TxOut
-succeedTxOut = inj₁ (record { net = tt ;
-                           pay = inj₂ 777 ;
-                           stake = inj₂ 777 })
-                           , 800000000000 , just (inj₁ (inj₁ (inj₁ (Collecting 100000000000 2 3 [])))) , nothing
-
-
-succeedTx : Tx
-succeedTx = record { body = record defaultTxBody
-                         { txins = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
-                         ; txouts = fromListIx ((6 , succeedTxOut)
-                                               ∷ (5
-                                                 , ((inj₁ (record { net = tt ;
-                                                                    pay = inj₁ 5 ;
-                                                                    stake = inj₁ 5 }))
-                                               -- , 10000000000 , nothing , nothing))
-                                               , (1000000000000 - 10000000000) , nothing , nothing))
-                                               ∷ [])
-                         ; txfee = 10000000000
-                         ; txid = 7
-                         ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
-                         } ;
-                wits = record { vkSigs = fromListᵐ ((5 , 12) ∷ []) ;
-                                -- signature now is first number + txId ≡ second number
-                                -- first number is needs to be the id for the script
-                                scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
-                                txdats =  fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
-                                txrdmrs = fromListᵐ (((Spend , 6) ,
-                                                      inj₁ (inj₂ (Propose 100000000000 -- amount
-                                                                          2 -- wallet pkh
-                                                                          3)) , -- End Slot
-                                                      (5 , 5)) ∷ []) } ;
-                isValid = true ;
-                txAD = nothing }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
@@ -172,12 +98,13 @@ opaque
   t2 = succeedExample' t1
 
   _ : isSuccess t2 ≡ true
-  _ = ?
+  _ = refl
 
+  t3' : ComputationResult String UTxOState
+  t3' = letsGo' t2
 
-
-
-
+  _ : isSuccess t3' ≡ true
+  _ = refl
 
 {-
   t1 : ComputationResult String UTxOState
