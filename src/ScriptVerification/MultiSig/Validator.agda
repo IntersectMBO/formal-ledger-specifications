@@ -123,10 +123,16 @@ expired slot (txinfo , _) = maybe (λ deadline →  ⌊ slot >? deadline ⌋)
                                      false
                                      (proj₂ (STxInfo.txvldt txinfo))
 
+
+
+-- multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
+-- multiSigValidator' _ _ _ _ = false
+
+
 multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
 
-multiSigValidator' param Holding (Propose v pkh slot) ctx =
-  compareScriptValues _≟_ (oldValue ctx) (newValue ctx)
+multiSigValidator' param Holding (Propose v pkh slot) ctx = false
+ {-  compareScriptValues _≟_ (oldValue ctx) (newValue ctx)
   ∧ compareScriptValues _≥?_ (oldValue ctx) (just v)
   ∧ ⌊ v ≥? 0 ⌋
   ∧ (case (newLabel ctx) of λ where
@@ -136,14 +142,14 @@ multiSigValidator' param Holding (Propose v pkh slot) ctx =
                                       (v == v')
                                       ∧ (pkh == pkh')
                                       ∧ (slot == slot')
-                                      ∧ (sigs' == []) )
+                                      ∧ (sigs' == []) ) -}
 
 multiSigValidator' param Holding _ ctx = false
 
 multiSigValidator' param (Collecting _ _ _ _) (Propose _ _ _) ctx = false
 
-multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
-  compareScriptValues _≟_ (oldValue ctx) (newValue ctx) -- should this be equal or _≤_
+multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx = false
+ {- compareScriptValues _≟_ (oldValue ctx) (newValue ctx) -- should this be equal or _≤_
   ∧ checkSigned sig ctx
   ∧ query sig (MultiSig.signatories param)
   ∧ (case (newLabel ctx) of λ where
@@ -154,15 +160,15 @@ multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
         ∧ (pkh == pkh')
         ∧ (slot == slot')
         ∧ (sigs' == sig ∷ sigs)) -- Make this an order agnostic comparison?
-
-multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
-  (length sigs) ≥ᵇ MultiSig.minNumSignatures param
+-}
+multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx = false
+ {- (length sigs) ≥ᵇ MultiSig.minNumSignatures param
    ∧ (case (newLabel ctx) of λ where
       nothing → false
       (just Holding) → checkPayment pkh v ctx
                        ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} v) (newValue ctx))
 
-      (just (Collecting _ _ _ _)) → false)
+      (just (Collecting _ _ _ _)) → false) -}
 
 multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
   compareScriptValues _≟_ (oldValue ctx) (newValue ctx)
@@ -171,8 +177,8 @@ multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
       (just Holding) → expired slot ctx
       (just (Collecting _ _ _ _)) → false)
 
+
 multiSigValidator : MultiSig → Maybe SData → Maybe SData → List SData → Bool
 multiSigValidator m (just (inj₁ (inj₁ x))) (just (inj₁ (inj₂ y))) (inj₂ y₁ ∷ []) =
   multiSigValidator' m x y y₁
 multiSigValidator _ _ _ _ = false
-

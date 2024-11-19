@@ -112,12 +112,6 @@ succeedTxOut' = inj₁ (record { net = tt ;
                            stake = inj₂ 777 })
                            , 700000000000 , just (inj₁ (inj₁ (inj₁ Holding))) , nothing
 
-impMultiSig : MultiSig
-impMultiSig = record { signatories = [] ; minNumSignatures = 0 }
-
-multiSigScript : PlutusScript
-multiSigScript = 777 , applyScriptWithContext (multiSigValidator impMultiSig)
-
 getLabel : TxOut → Maybe Label
 getLabel (fst , fst₁ , just (inj₁ (inj₁ (inj₁ x))) , snd) = just x
 getLabel (fst , fst₁ , just (inj₁ (inj₁ (inj₂ y))) , snd) = nothing

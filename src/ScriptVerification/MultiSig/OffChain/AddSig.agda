@@ -19,15 +19,15 @@ open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 open import Data.List using (filter)
 open import ScriptVerification.MultiSig.OffChain.Lib
 
-module ScriptVerification.MultiSig.OffChain.Propose where
+module ScriptVerification.MultiSig.OffChain.AddSig where
 
--- TODO: Add error handling
-makeProposeTxOut : Label → (scriptIx : ℕ) → TxOut → (v tw d : ℕ) → List (ℕ × TxOut)
-makeProposeTxOut Holding ix (fst , txValue , snd) v tw d = (ix , (fst , txValue , (just (inj₁ (inj₁ (inj₁ (Collecting v tw d []))))) , nothing)) ∷ []
-makeProposeTxOut _ _ _ _ _ _ = []
+makeAddSigTxOut : Label → (scriptIx w : ℕ) → TxOut → List (ℕ × TxOut)
+makeAddSigTxOut Holding ix w txo = []
+makeAddSigTxOut (Collecting vl pkh d sigs) ix w (fst , fst₁ , snd) =
+  (ix , (fst , fst₁ ,  just (inj₁ (inj₁ (inj₁ (Collecting vl pkh d [])))) , nothing)) ∷ []
 
-makeProposeTx : (id : ℕ) → UTxOState → PlutusScript → (w v tw d : ℕ) → Maybe Tx
-makeProposeTx id state script@(sh , _) w v tw d =
+makeAddSigTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
+makeAddSigTx id state script@(sh , _) w =
   let
     wutxo = getWalletUTxO w (UTxOState.utxo state)
   in
@@ -35,7 +35,7 @@ makeProposeTx id state script@(sh , _) w v tw d =
     just (
           record { body = record defaultTxBody
                          { txins = Ledger.Prelude.fromList ((scIn ∷ []) ++ (map proj₁ wutxo))
-                         ; txouts = fromListIx (makeFeeTxOut wutxo ++ makeProposeTxOut label (proj₂ scIn) scOut v tw d )
+                         ; txouts = fromListIx (makeFeeTxOut wutxo ++ makeAddSigTxOut label (proj₂ scIn) w scOut )
                          ; txid = id
                          ; collateral = Ledger.Prelude.fromList (map proj₁ wutxo)
                          } ;
@@ -43,11 +43,9 @@ makeProposeTx id state script@(sh , _) w v tw d =
                                 -- signature now is first number + txId ≡ second number
                                 -- first number is needs to be the id for the script
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                txdats = fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
-                                txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ (Propose v -- amount
-                                                                          tw -- wallet pkh
-                                                                          d)) , -- End Slot
+                                txdats = ∅ ; -- fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
+                                txrdmrs = fromListᵐ (((Spend , (proj₁ scIn)) ,
+                                                      inj₁ (inj₂ (Add w)) , 
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 isValid = true ;
                 txAD = nothing }
@@ -56,3 +54,4 @@ makeProposeTx id state script@(sh , _) w v tw d =
             (getLabel scOut)})
           nothing
           (getScriptUTxO sh (UTxOState.utxo state))
+

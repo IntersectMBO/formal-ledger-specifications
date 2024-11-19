@@ -21,34 +21,37 @@ open import ScriptVerification.MultiSig.OffChain.Lib
 
 module ScriptVerification.MultiSig.OffChain.Open where
 
--- TODO: Parameterise this code
-
-openTxOut : TxOut
-openTxOut = inj₁ (record { net = tt ;
-                           pay = inj₂ 777 ;
-                           stake = inj₂ 777 })
-                           , 800000000000
+openTxOut : Value → PlutusScript → TxOut
+openTxOut v script = inj₁ (record { net = tt ;
+                           pay = inj₂ (proj₁ script) ;
+                           stake = inj₂ (proj₁ script) })
+                           , v
                            , just (inj₁ (inj₁ (inj₁ Holding))) , nothing
 
-openTx : Tx
-openTx = record { body = record defaultTxBody
-                         { txins = Ledger.Prelude.fromList ((5 , 5) ∷ [])
-                         ; txouts = fromListIx ((6 , openTxOut)
-                                               ∷ (5
+-- txid, wallet, value at script, script index
+openTx : (id w v tw : ℕ) → PlutusScript → Tx
+openTx id w v tw script = record { body = record defaultTxBody
+                         { txins = Ledger.Prelude.fromList ((w , w) ∷ [])
+                         ; txouts = fromListIx ((tw , openTxOut v script)
+                                               ∷ (w
                                                  , ((inj₁ (record { net = tt ;
-                                                                    pay = inj₁ 5 ;
-                                                                    stake = inj₁ 5 }))
+                                                                    pay = inj₁ w ;
+                                                                    stake = inj₁ w }))
                                                -- , 10000000000 , nothing , nothing))
-                                               , (1000000000000 - 810000000000) , nothing , nothing))
+                                               , ((1000000000000 - 10000000000) - v) , nothing , nothing))
                                                ∷ [])
-                         ; txid = 5
-                         ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
+                         ; txid = id
+                         ; collateral = Ledger.Prelude.fromList ((w , w) ∷ [])
                          } ;
-                wits = record { vkSigs = fromListᵐ ((5 , 10) ∷ []) ;
+                wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addValue}} w w)) ∷ []) ;
                                 -- signature now is first number + txId ≡ second number
                                 -- first number is needs to be the id for the script
-                                scripts = Ledger.Prelude.fromList ((inj₂ multiSigScript) ∷ []) ;
-                                txdats =  ∅ ;
+                                scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
+                                txdats = fromListᵐ ((inj₁ (inj₁ Holding) , (inj₁ (inj₁ Holding))) ∷ []) ;
                                 txrdmrs = ∅ } ;
+                                {-
+                                  ; --  fromListᵐ (((Propose , (proj₁ script)) ,
+                                                 --                inj₁ (inj₂ Pay) ,
+                                                    --            (5 , w)) ∷ []) } ; -}
                 isValid = true ;
                 txAD = nothing }
