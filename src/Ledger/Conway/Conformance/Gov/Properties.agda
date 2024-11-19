@@ -27,6 +27,10 @@ open import Relation.Binary using (IsEquivalence)
 open import Tactic.Defaults
 open import Tactic.GenError
 
+private module L where
+  open import Ledger.Gov txs public
+  open import Ledger.Gov.Properties txs public
+
 open Equivalence
 open GovActionState
 open Inverse
@@ -76,25 +80,7 @@ private
   hasPrev record { action = Info }                    v = no λ ()
 
 opaque
-  unfolding validHFAction isRegistered
-
-  instance
-    validHFAction? : ∀ {p s e} → validHFAction p s e ⁇
-    validHFAction? {record { action = NoConfidence }} = Dec-⊤
-    validHFAction? {record { action = UpdateCommittee _ _ _ }} = Dec-⊤
-    validHFAction? {record { action = NewConstitution _ _ }} = Dec-⊤
-    validHFAction? {record { action = TriggerHF v ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
-      with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
-    ... | yes p | _ = ⁇ yes (inj₁ p)
-    ... | no _ | yes p with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p = ⁇ yes (inj₂
-      (x , v , to ∈-fromList x∈xs , h))
-    ... | no ¬p₁ | no ¬p₂ = ⁇ no λ
-      { (inj₁ x) → ¬p₁ x
-      ; (inj₂ (s , v , (h₁ , h₂ , h₃))) → ¬p₂ $
-        ∃∈-Any ((prev , s) , (from ∈-fromList h₁ , refl , (v , h₂ , h₃))) }
-    validHFAction? {record { action = ChangePParams _ }} = Dec-⊤
-    validHFAction? {record { action = TreasuryWdrl _ }} = Dec-⊤
-    validHFAction? {record { action = Info }} = Dec-⊤
+  unfolding isRegistered
 
   isRegistered? : ∀ Γ v → Dec (isRegistered Γ v)
   isRegistered? _ (CC   , _) = ¿ _ ∈ _ ¿
@@ -134,27 +120,27 @@ instance
 
         H = ¿ actionWellFormed a
             × d ≡ govActionDeposit
-            × validHFAction prop s enactState
+            × L.validHFAction prop s enactState
             × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
             × (¬ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w) → p ≡ nothing)
-            × hasParent' enactState s a prev
+            × L.hasParent' enactState s a prev
             × addr .RwdAddr.net ≡ NetworkId ¿
             ,′ isUpdateCommittee a
 
         computeProof = case H of λ where
-          (yes (wf , dep , vHFA , pol , ¬pol , HasParent' en , goodAddr) , yes (new , rem , q , refl)) →
+          (yes (wf , dep , vHFA , pol , ¬pol , L.HasParent' en , goodAddr) , yes (new , rem , q , refl)) →
             case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
               (yes newOk) → success (_ , GOV-Propose (wf , dep , pol , ¬pol , (λ where refl → newOk) , vHFA , en , goodAddr))
               (no ¬p)     → failure (genErrors ¬p)
-          (yes (wf , dep , vHFA , pol , ¬pol , HasParent' en , goodAddr) , no notNewComm) → success
+          (yes (wf , dep , vHFA , pol , ¬pol , L.HasParent' en , goodAddr) , no notNewComm) → success
             (-, GOV-Propose (wf , dep , pol , ¬pol , (λ isNewComm → ⊥-elim (notNewComm (-, -, -, isNewComm))) , vHFA , en , goodAddr))
           (no ¬p , _) → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Propose (wf , dep , pol , ¬pol , newOk , vHFA , en , goodAddr)) with H
-        ... | (no ¬p , _) = ⊥-elim (¬p (wf , dep , vHFA , pol , ¬pol , HasParent' en , goodAddr))
-        ... | (yes (_ , _ , _ , _ , _ , HasParent' _ , _) , no notNewComm) = refl
-        ... | (yes (_ , _ , _ , _ , _ , HasParent' _ , _) , yes (new , rem , q , refl))
+        ... | (no ¬p , _) = ⊥-elim (¬p (wf , dep , vHFA , pol , ¬pol , L.HasParent' en , goodAddr))
+        ... | (yes (_ , _ , _ , _ , _ , L.HasParent' _ , _) , no notNewComm) = refl
+        ... | (yes (_ , _ , _ , _ , _ , L.HasParent' _ , _) , yes (new , rem , q , refl))
           rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
 
       computeProof : (sig : GovVote ⊎ GovProposal) → _
@@ -167,16 +153,3 @@ instance
 
 Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ String
 Computational-GOV = it
-
-allEnactable-singleton : ∀ {aid s es} → getHash (s .prevAction) ≡ getHashES es (s .action)
-  → allEnactable es [ (aid , s) ]
-allEnactable-singleton {aid} {s} {es} eq = helper All.∷ All.[]
-  where
-    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th)
-
-    helper : enactable es (getAidPairsList [ (aid , s) ]) (aid , s)
-    helper with getHashES es (s .action) | getHash (s .prevAction)
-    ... | just x | just x' with refl <- just-injective eq =
-      [ (aid , x) ] , proj₁ ≡ᵉ.refl , All.[] ∷ [] , inj₁ (refl , refl)
-    ... | just x | nothing = case eq of λ ()
-    ... | nothing | _ = _
