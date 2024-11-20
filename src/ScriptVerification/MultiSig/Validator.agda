@@ -123,12 +123,6 @@ expired slot (txinfo , _) = maybe (λ deadline →  ⌊ slot >? deadline ⌋)
                                      false
                                      (proj₂ (STxInfo.txvldt txinfo))
 
-
-
--- multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
--- multiSigValidator' _ _ _ _ = false
-
-
 multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
 
 multiSigValidator' param Holding (Propose v pkh slot) ctx =

@@ -21,10 +21,15 @@ open import ScriptVerification.MultiSig.OffChain.Lib
 
 module ScriptVerification.MultiSig.OffChain.AddSig where
 
+
+-- TODO: Invesitgate what is going on with vkSigs vs reqSigHash in terms of
+-- transaction not failing vkSigs
+-- txinfo only gets reqSigHash
+
 makeAddSigTxOut : Label → (scriptIx w : ℕ) → TxOut → List (ℕ × TxOut)
 makeAddSigTxOut Holding ix w txo = []
 makeAddSigTxOut (Collecting vl pkh d sigs) ix w (fst , fst₁ , snd) =
-  (ix , (fst , fst₁ ,  just (inj₁ (inj₁ (inj₁ (Collecting vl pkh d (w ∷ []))))) , nothing)) ∷ []
+  (ix , (fst , fst₁ ,  just (inj₁ (inj₁ (inj₁ (Collecting vl pkh d (w ∷ sigs))))) , nothing)) ∷ []
 
 makeAddSigTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
 makeAddSigTx id state script@(sh , _) w =
@@ -38,6 +43,7 @@ makeAddSigTx id state script@(sh , _) w =
                          ; txouts = fromListIx (makeFeeTxOut wutxo ++ makeAddSigTxOut label (proj₂ scIn) w scOut )
                          ; txid = id
                          ; collateral = Ledger.Prelude.fromList (map proj₁ wutxo)
+                         ; reqSigHash = listToSet (w ∷ [])
                          } ;
                 wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addValue}} (getTxId wutxo) w)) ∷ []) ;
                                 -- signature now is first number + txId ≡ second number

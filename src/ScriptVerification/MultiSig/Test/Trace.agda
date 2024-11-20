@@ -23,7 +23,7 @@ module ScriptVerification.MultiSig.Test.Trace where
 open import ScriptVerification.MultiSig.OffChain.OffChain
 
 impMultiSig : MultiSig
-impMultiSig = record { signatories = 5 ∷ [] ; minNumSignatures = 0 }
+impMultiSig = record { signatories = 5 ∷ [] ; minNumSignatures = 1 }
 
 multiSigScript : PlutusScript
 multiSigScript = 777 , applyScriptWithContext (multiSigValidator impMultiSig)
@@ -46,136 +46,47 @@ initState = fromList' (script ∷ (createInitUtxoState 5 1000000000000))
 initState' : UTxO
 initState' = fromList' (createInitUtxoState 5 1000000000000)
 
+-- Hack to have partial Transactions
+data Tx' : Set where
+    openContract : ℕ → ℕ → ℕ → ℕ → Tx'
+    addSig       : ℕ → ℕ → Tx'
+    pay          : ℕ → ℕ → Tx'
+    propose      : ℕ → ℕ → ℕ → ℕ → ℕ → Tx'
 
--- Compute the result of running the UTXO rules on the succeedTx transaction
-succeedExample' : ComputationResult String UTxOState → ComputationResult String UTxOState
-succeedExample' (success state) = maybe (λ tx → UTXO-step initEnv state tx)
-                       (failure "unable to create transaction bla")
-                       (makeProposeTx 7
-                                      state
-                                      multiSigScript
-                                      5
-                                      100000000000
-                                      2
-                                      3)
-succeedExample' (failure x) = failure x
+makeTx : UTxOState → PlutusScript → Tx' → Maybe Tx
+makeTx s script (openContract id w v tw) = just (openTx id w v tw script)
+makeTx s script (addSig id w) = makeAddSigTx id s script w
+makeTx s script (pay id w) = makePayTx id s script w
+makeTx s script (propose id w v tw d) = makeProposeTx id s script w v tw d
 
-letsGo : ComputationResult String UTxOState → ComputationResult String UTxOState
-letsGo (success x) = maybe (λ tx → UTXO-step initEnv x tx)
-                           (failure "unable to create transaction")
-                           (makePayTx 8 x multiSigScript 5)
-letsGo (failure x) = failure x
+evalTransanctions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ComputationResult String UTxOState
+evalTransanctions env s [] = s
+evalTransanctions env state@(failure s) (x ∷ xs) = state
+evalTransanctions env (success s) (tx' ∷ txs') =
+  maybe
+    (λ tx → evalTransanctions
+              initEnv
+              (UTXO-step initEnv s tx)
+              txs')
+    (failure "failed to generate tx")
+    (makeTx s multiSigScript tx')
 
-letsGo' : ComputationResult String UTxOState → ComputationResult String UTxOState
-letsGo' (success x) = maybe (λ tx → UTXO-step initEnv x tx)
-                           (failure "unable to create transaction")
-                           (makeAddSigTx 8 x multiSigScript 5)
-letsGo' (failure x) = failure x
-
-txe : ComputationResult String UTxOState → List Script
-txe (success x) = maybe (λ tx →
-  map proj₁ (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) tx (UTxOState.utxo x)))
-                        []
-                        (makeAddSigTx 8 x multiSigScript 5)
-txe (failure x) = []
-
+-- Add Sig trace
+addSigTrace : List Tx'
+addSigTrace = openContract 6 5 800000000000 6
+              ∷ propose 7 5 100000000000 2 3
+              ∷ addSig 8 5
+              ∷ pay 9 5
+              ∷ []
+              
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
   unfolding Computational-UTXO
   unfolding outs
 
- -- _ : isSuccess t3 ≡ true
- -- _ = refl
+  t0 : ComputationResult String UTxOState
+  t0 = evalTransanctions initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) addSigTrace
 
-  t1 : ComputationResult String UTxOState
-  t1 = UTXO-step initEnv ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ (openTx 6 5 800000000000 6 multiSigScript)
-
-  _ : isSuccess t1 ≡ true
+  _ : isSuccess t0 ≡ true
   _ = refl
-  
-  t2 : ComputationResult String UTxOState
-  t2 = succeedExample' t1
-
-  _ : isSuccess t2 ≡ true
-  _ = refl
-
-  t3' : ComputationResult String UTxOState
-  t3' = letsGo' t2
-
-  _ : isSuccess t3' ≡ true
-  _ = refl
-
-{-
-  t1 : ComputationResult String UTxOState
-  t1 = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ (openTx 6 5 800000000000 6 multiSigScript)
-
-  _ : isSuccess t1 ≡ true
-  _ = refl
-
-  t6 : ComputationResult String UTxOState
-  t6 = succeedExample' (success (⟦ initState' , 0 , ∅ , 0 ⟧ᵘ))
-
-  t2 : ComputationResult String UTxOState
-  t2 = succeedExample' t1
-
-  tr : List Script
-  tr = txe t1
-
-  _ : tr ≡ []
-  _ = refl
-
-  _ : isSuccess t2 ≡ true
-  _ = {!!}
-
-  t3 : ComputationResult String UTxOState
-  t3 = letsGo t2
-
-  _ : isSuccess t3 ≡ true
-  _ = {!!}
-
-  t3' : ComputationResult String UTxOState
-  t3' = letsGo' t2
-
-  _ : isSuccess t3' ≡ true
-  _ = {!!} -- refl
-  --
-  tr' : ComputationResult String UTxOState
-  tr' = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ succeedTx
-
-  _ : isSuccess tr' ≡ true
-  _ = refl
-
-  t3 : ComputationResult String UTxOState
-  t3 = letsGo tr'
-
-
-
--}
-
-
-{-
-  collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
-    → Maybe (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs' pp tx utxo (sp , sh)
-    with lookupScriptHash sh tx utxo
-  ... | nothing = nothing
-  ... | just s
-    with isInj₂ s | indexedRdmrs tx sp
-  ... | just p2s | just (rdmr , eu)
-      = just (s ,
-          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (txInfo (language p2s) pp utxo tx) sp ∷ [])
-          , eu
-          , PParams.costmdls pp)
-        )
-  ... | x | y = nothing
-
-  collectPhaseTwoScriptInputs : PParams → Tx → UTxO
-    → List (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs pp tx utxo
-    = setToList
-    $ mapPartial (collectPhaseTwoScriptInputs' pp tx utxo)
-    $ scriptsNeeded utxo (tx .Tx.body)
-
-
--}
