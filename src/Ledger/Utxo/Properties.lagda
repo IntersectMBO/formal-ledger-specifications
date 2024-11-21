@@ -662,25 +662,27 @@ module _ -- ASSUMPTION --
           ∎
         where open Prelude.≡-Reasoning
 
-  ≤certDeps  :  (certs : List DCert)
-                {d : DepositPurpose ⇀ Coin} {(dp , c) : DepositPurpose × Coin}
+  ≤certDeps  :  {d : DepositPurpose ⇀ Coin} {(dp , c) : DepositPurpose × Coin}
              →  getCoin d ≤ getCoin (d ∪⁺ ❴ (dp , c) ❵)
 
-  ≤certDeps certs {d} = begin
+  ≤certDeps {d} = begin
     getCoin d                      ≤⟨ m≤m+n (getCoin d) _ ⟩
     getCoin d + _                  ≡⟨ sym ∪⁺singleton≡ ⟩
     getCoin (d ∪⁺ ❴ _ ❵)           ∎
     where open ≤-Reasoning
 
+
   ≤updateCertDeps : (cs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
     → noRefundCert cs
     → getCoin deposits ≤ getCoin (updateCertDeposits pp cs deposits)
   ≤updateCertDeps [] nrf = ≤-reflexive refl
+  ≤updateCertDeps (reg c v ∷ cs) {pp} {deposits} (_ All.∷ nrf) =
+    ≤-trans ≤certDeps (≤updateCertDeps cs {pp} {deposits ∪⁺ ❴ CredentialDeposit c , pp .PParams.keyDeposit ❵} nrf)
   ≤updateCertDeps (delegate c _ _ v ∷ cs) {pp} {deposits} (_ All.∷ nrf) =
-    ≤-trans (≤certDeps cs) (≤updateCertDeps cs {pp} {deposits ∪⁺ ❴ CredentialDeposit c , v ❵} nrf)
-  ≤updateCertDeps (regpool _ _ ∷ cs)       (_ All.∷ nrf) = ≤-trans (≤certDeps cs) (≤updateCertDeps cs nrf)
+    ≤-trans ≤certDeps (≤updateCertDeps cs {pp} {deposits ∪⁺ ❴ CredentialDeposit c , v ❵} nrf)
+  ≤updateCertDeps (regpool _ _ ∷ cs)       (_ All.∷ nrf) = ≤-trans ≤certDeps (≤updateCertDeps cs nrf)
   ≤updateCertDeps (retirepool _ _ ∷ cs)    (_ All.∷ nrf) = ≤updateCertDeps cs nrf
-  ≤updateCertDeps (regdrep _ _ _ ∷ cs)     (_ All.∷ nrf) = ≤-trans (≤certDeps cs) (≤updateCertDeps cs nrf)
+  ≤updateCertDeps (regdrep _ _ _ ∷ cs)     (_ All.∷ nrf) = ≤-trans ≤certDeps (≤updateCertDeps cs nrf)
   ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤updateCertDeps cs nrf
 
   -- Main Theorem: General Minimum Spending Condition --

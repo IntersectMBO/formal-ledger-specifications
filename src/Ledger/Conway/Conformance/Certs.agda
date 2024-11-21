@@ -54,6 +54,7 @@ certRefund _                = ∅
 
 updateCertDeposit  : PParams → DCert → Deposits → Deposits
 updateCertDeposit pp (delegate c _ _ v) deposits = deposits ∪⁺ ❴ CredentialDeposit c , v ❵
+updateCertDeposit pp (reg c _)          deposits = deposits ∪⁺ ❴ CredentialDeposit c , pp .PParams.keyDeposit ❵
 updateCertDeposit pp (regdrep c v _)    deposits = deposits ∪⁺ ❴ DRepDeposit c , v ❵
 updateCertDeposit pp (dereg c _)        deposits = deposits ∣ ❴ CredentialDeposit c ❵ ᶜ
 updateCertDeposit pp (deregdrep c _)    deposits = deposits ∣ ❴ DRepDeposit c ❵ ᶜ

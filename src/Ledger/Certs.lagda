@@ -56,16 +56,22 @@ data DCert : Type where
   deregdrep   : Credential → Coin → DCert
   ccreghot    : Credential → Maybe Credential → DCert
 \end{code}
+\begin{code}[hide]
+  reg         : Credential → Coin → DCert
+\end{code}
 \begin{NoConway}
 \begin{code}
-cwitness : DCert → Credential
-cwitness (delegate c _ _ _)  = c
-cwitness (dereg c _)         = c
-cwitness (regpool kh _)      = KeyHashObj kh
-cwitness (retirepool kh _)   = KeyHashObj kh
-cwitness (regdrep c _ _)     = c
-cwitness (deregdrep c _)     = c
-cwitness (ccreghot c _)      = c
+cwitness : DCert → Maybe Credential
+cwitness (delegate c _ _ _)  = just c
+cwitness (dereg c _)         = just c
+cwitness (regpool kh _)      = just $ KeyHashObj kh
+cwitness (retirepool kh _)   = just $ KeyHashObj kh
+cwitness (regdrep c _ _)     = just c
+cwitness (deregdrep c _)     = just c
+cwitness (ccreghot c _)      = just c
+\end{code}
+\begin{code}[hide]
+cwitness (reg _ _)           = nothing
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -326,6 +332,15 @@ data _⊢_⇀⦇_,DELEG⦈_ where
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
         ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+\end{code}
+\begin{code}[hide]
+  DELEG-reg : let open PParams pp in
+    ∙ c ∉ dom rwds
+    ∙ d ≡ keyDeposit
+      ────────────────────────────────
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
+        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}

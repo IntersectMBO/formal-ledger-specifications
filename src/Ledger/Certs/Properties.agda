@@ -35,6 +35,11 @@ instance
     (dereg c d) → case ¿ (c , 0) ∈ rwds ¿ of λ where
       (yes p) → success (-, DELEG-dereg p)
       (no ¬p) → failure (genErrors ¬p)
+    (reg c d) → case ¿ c ∉ dom rwds
+                     × d ≡ pp .PParams.keyDeposit
+                     ¿ of λ where
+      (yes p) → success (-, DELEG-reg p)
+      (no ¬p) → failure (genErrors ¬p)
     _ → failure "Unexpected certificate in DELEG"
   Computational-DELEG .completeness ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (delegate c mv mc d)
     s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ pp .PParams.keyDeposit)
@@ -45,6 +50,8 @@ instance
                                            ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
     rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
+  Computational-DELEG .completeness ⟦ pp , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (reg c d) _ (DELEG-reg p)
+    rewrite dec-yes (¿ c ∉ dom rwds × d ≡ pp .PParams.keyDeposit ¿) p .proj₂ = refl
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ ⟦ pools , _ ⟧ᵖ (regpool c _) =
@@ -97,6 +104,10 @@ instance
     "DELEG: " <> e₁ <> "\nPOOL: " <> e₂ <> "\nVDEL: " <> e₃
   Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
     dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
+    with computeProof ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(reg c d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
     with computeProof ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
@@ -186,7 +197,7 @@ module _  {Γ : CertEnv}
               → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
               → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
-
+  CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov {stᵖ = stᵖ} {stᵖ'} {stᵍ} {stᵍ'}
     (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
     getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
