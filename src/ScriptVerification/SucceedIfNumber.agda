@@ -10,7 +10,7 @@ scriptImp = record { serialise = id ;
 
 open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
 open import ScriptVerification.Lib ℕ ℕ scriptImp
-open import Ledger.Conway.Conformance.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Transaction
@@ -148,7 +148,7 @@ exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
-  unfolding outs
+  unfolding L.outs
 
   gotScript : lookupScriptHash 777 succeedTx initStateDatum ≡ just (inj₂ succeedIf1Datum)
   gotScript = refl

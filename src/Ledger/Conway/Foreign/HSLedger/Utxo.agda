@@ -36,14 +36,14 @@ module _ (ext : ExternalFunctions) where
 
   utxo-step : HsType (UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState)
   utxo-step = to (coerce ⦃ TrustMe ⦄ $ compute Computational-UTXO)
-  
+
   {-# COMPILE GHC utxo-step as utxoStep #-}
 
   utxow-step : HsType (UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState)
   utxow-step = to (coerce ⦃ TrustMe ⦄ $ compute Computational-UTXOW)
-  
+
   {-# COMPILE GHC utxow-step as utxowStep #-}
-  
+
   utxo-debug : HsType (UTxOEnv → UTxOState → Tx → String)
   utxo-debug env st tx =
     let open Tx (from tx)
@@ -52,17 +52,17 @@ module _ (ext : ExternalFunctions) where
         open UTxOEnv (from env)
      in unlines $
           "Consumed:" ∷
-          ("\tInputs:      \t" +ˢ show (balance (utxo ∣ txins))) ∷
+          ("\tInputs:      \t" +ˢ show (L.balance (utxo ∣ txins))) ∷
           ("\tMint:        \t" +ˢ show mint) ∷
           ("\tRefunds:     \t" +ˢ show (inject (depositRefunds pparams (from st) body))) ∷
           ("\tWithdrawals: \t" +ˢ show (inject (getCoin txwdrls))) ∷
           ("\tTotal:       \t" +ˢ show (consumed pparams (from st) body)) ∷
           "Produced:" ∷
-          ("\tOutputs:     \t" +ˢ show (balance (outs body))) ∷
+          ("\tOutputs:     \t" +ˢ show (L.balance (L.outs body))) ∷
           ("\tDonations:   \t" +ˢ show (inject txdonation)) ∷
           ("\tDeposits:    \t" +ˢ show (inject (newDeposits pparams (from st) body))) ∷
           ("\tFees:        \t" +ˢ show (inject txfee)) ∷
           ("\tTotal:       \t" +ˢ show (produced pparams (from st) body)) ∷
           []
-  
+
   {-# COMPILE GHC utxo-debug as utxoDebug #-}

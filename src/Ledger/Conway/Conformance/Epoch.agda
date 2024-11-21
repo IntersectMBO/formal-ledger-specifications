@@ -20,7 +20,7 @@ module Ledger.Conway.Conformance.Epoch
 open import Ledger.Conway.Conformance.Gov txs
 open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Conformance.Ratify txs
+open import Ledger.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
@@ -119,7 +119,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
 stakeDistr : UTxO → DState → PState → Snapshot
 stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
   where
-    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
+    m = mapˢ (λ a → (a , L.cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin

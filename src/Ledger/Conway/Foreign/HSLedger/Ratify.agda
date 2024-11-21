@@ -13,8 +13,8 @@ open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length)
 import Data.Rational.Show as Rational
 
 import Foreign.Haskell.Pair as F
-open import Ledger.Conway.Conformance.Ratify it
-open import Ledger.Conway.Conformance.Ratify.Properties it
+open import Ledger.Ratify it
+open import Ledger.Ratify.Properties it
 
 instance
   HsTy-StakeDistrs = autoHsType StakeDistrs

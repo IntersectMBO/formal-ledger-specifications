@@ -61,11 +61,11 @@ instance
       (no ¬p) → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ dReps , _ , dep ⟧ᵛ (deregdrep c _) =
     case c ∈? dom dReps of λ where
-      (yes p) → success (-, GOVCERT-deregdrep {pp = pp} p)
+      (yes p) → success (-, GOVCERT-deregdrep p)
       (no ¬p)  → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ _ , ccKeys , dep ⟧ᵛ (ccreghot c _) =
     case ¬? ((c , nothing) ∈? (ccKeys ˢ)) of λ where
-      (yes p) → success (-, GOVCERT-ccreghot{pp = pp} p)
+      (yes p) → success (-, GOVCERT-ccreghot p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof _ _ _ = failure "Unexpected certificate in GOVCERT"
   Computational-GOVCERT .completeness ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ dReps , _ , dep ⟧ᵛ
