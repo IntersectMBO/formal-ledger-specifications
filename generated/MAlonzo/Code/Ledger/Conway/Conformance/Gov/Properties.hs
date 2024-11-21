@@ -49,12 +49,12 @@ import qualified MAlonzo.Code.Ledger.Address
 import qualified MAlonzo.Code.Ledger.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Gov
-import qualified MAlonzo.Code.Ledger.Conway.Conformance.Ratify
 import qualified MAlonzo.Code.Ledger.Crypto
 import qualified MAlonzo.Code.Ledger.Enact
 import qualified MAlonzo.Code.Ledger.GovernanceActions
 import qualified MAlonzo.Code.Ledger.PParams
 import qualified MAlonzo.Code.Ledger.Prelude
+import qualified MAlonzo.Code.Ledger.Ratify
 import qualified MAlonzo.Code.Ledger.Transaction
 import qualified MAlonzo.Code.Ledger.Types.Epoch
 import qualified MAlonzo.Code.Ledger.Types.GovStructure
@@ -463,8 +463,8 @@ d_lookupActionId_1148 v0 v1 v2 v3
                        (\ v5 ->
                           MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_20))
                     (coe
-                       MAlonzo.Code.Ledger.Conway.Conformance.Ratify.d_threshold_1836 v0
-                       v1 (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                       MAlonzo.Code.Ledger.Ratify.d_threshold_1832 v0 v1
+                       (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                        (MAlonzo.Code.Ledger.GovernanceActions.d_action_820
                           (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4)))
                        v2)))))
