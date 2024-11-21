@@ -79,6 +79,7 @@ txInfo l pp utxo tx = record
   } where open Tx tx; open TxBody body
 
 data DelegateOrDeReg : DCert → Type where instance
+  reg       : ∀ {x y} →     DelegateOrDeReg (reg x y)
   delegate  : ∀ {x y z w} → DelegateOrDeReg (delegate x y z w)
   dereg     : ∀ {x y} →     DelegateOrDeReg (dereg x y)
   regdrep   : ∀ {x y z} →   DelegateOrDeReg (regdrep x y z)
@@ -88,6 +89,7 @@ instance
   Dec-DelegateOrDeReg : DelegateOrDeReg ⁇¹
   Dec-DelegateOrDeReg {dc} .dec with dc
   ... | delegate _ _ _ _ = yes it
+  ... | reg _ _          = yes it
   ... | dereg _ _        = yes it
   ... | regdrep _ _ _    = yes it
   ... | deregdrep _ _    = yes it
@@ -126,6 +128,8 @@ certScripts d with ¿ DelegateOrDeReg d ¿
 ... | no ¬p = nothing
 certScripts c@(delegate  (KeyHashObj x) _ _ _) | yes p = nothing
 certScripts c@(delegate  (ScriptObj  y) _ _ _) | yes p = just (Cert c , y)
+certScripts c@(reg       (KeyHashObj x) _)     | yes p = nothing
+certScripts c@(reg       (ScriptObj  y) _)     | yes p = just (Cert c , y)
 certScripts c@(dereg     (KeyHashObj x) _)     | yes p = nothing
 certScripts c@(dereg     (ScriptObj  y) _)     | yes p = just (Cert c , y)
 certScripts c@(regdrep   (KeyHashObj x) _ _)   | yes p = nothing

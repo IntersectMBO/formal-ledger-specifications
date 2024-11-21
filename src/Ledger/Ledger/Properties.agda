@@ -319,9 +319,11 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   filterCR (regdrep _ _ _)     deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
   filterCR (retirepool _ _)    deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
   filterCR (ccreghot _ _)      deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
+  filterCR (reg _ _)           deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
 
   filterCD : (c : DCert) (deps : Deposits) → filterˢ isGADeposit (dom (certDeposit c pp ˢ)) ≡ᵉ ∅
   filterCD (delegate _ _ _ _)  deps = filter-∅ λ _ → CredDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
+  filterCD (reg _ _)           deps = filter-∅ λ _ → CredDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
   filterCD (regpool _ _)       deps = filter-∅ λ _ → PoolDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
   filterCD (regdrep _ _ _)     deps = filter-∅ λ _ → DRepDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
   filterCD (dereg _ _)         deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
@@ -333,6 +335,16 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     → filterˢ isGADeposit (dom (updateCertDeposits pp cs deps)) ≡ᵉ filterˢ isGADeposit (dom deps)
   noGACerts [] _ = filter-pres-≡ᵉ ≡ᵉ.refl
   noGACerts (dcert@(delegate _ _ _ _) ∷ cs) deps = begin
+    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
+    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
+    filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
+    filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl $ filterCD dcert deps ⟩
+    filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩
+    filterˢ isGADeposit (dom deps) ∎
+    where
+      cd = certDeposit dcert pp
+      filter0 = filterCD dcert deps
+  noGACerts (dcert@(reg _ _) ∷ cs) deps = begin
     filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
     filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
