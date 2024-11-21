@@ -578,7 +578,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type
-_⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,RATIFY'⦈_
+_⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY'⦈_}
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{The RATIFY transition system}

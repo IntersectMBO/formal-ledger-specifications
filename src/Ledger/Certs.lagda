@@ -296,7 +296,9 @@ data
     _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
 
 _⊢_⇀⦇_,CERTS⦈_       : CertEnv → CertState → List DCert → CertState → Type
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⟦_⟧_ = _⊢_⇀⦇_,CERT⦈_}
+
+
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}

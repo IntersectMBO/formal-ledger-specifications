@@ -155,5 +155,7 @@ instance
                 × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
+{- TODO: Uncomment once CERTS computation proofs complete.
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
+-- -}

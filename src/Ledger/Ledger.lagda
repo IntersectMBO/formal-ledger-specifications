@@ -111,11 +111,10 @@ data
                  Γᶜ = ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ  in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  Γᶜ ⊢ certState ⇀⦇ _ ,CERTBASE⦈ certState'
-    ∙  Γᶜ ⊢ certState' ⇀⦇ txcerts ,CERTS⦈ certState''
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState'' ⟧ᵍ ⊢ govSt |ᵒ certState'' ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  Γᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState'' ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -139,7 +138,7 @@ pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
-_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
+_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}

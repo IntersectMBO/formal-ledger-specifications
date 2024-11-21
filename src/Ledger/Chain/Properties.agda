@@ -27,6 +27,7 @@ module _
   refScriptSize≤?Bound : Dec (totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock)
   refScriptSize≤?Bound = totalRefScriptsSize ls ts ≤? maxRefScriptSizePerBlock
 
+{- TODO: uncomment this once CERTS computation proofs are complete.
 instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
   Computational-CHAIN .computeProof Γ s record { ts = ts } = do
@@ -44,3 +45,4 @@ instance
     with refScriptSize≤?Bound nes (Block.ts b)
   ... | yes p = refl
   ... | no ¬p = ⊥-elim (¬p p)
+-- -}

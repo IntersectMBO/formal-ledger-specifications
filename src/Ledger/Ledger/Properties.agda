@@ -50,6 +50,7 @@ open import Interface.ComputationalRelation
 instance
   _ = Monad-ComputationResult
 
+{- TODO: uncomment/fix this once CERTS computation proofs are complete.
   Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_ String
   Computational-LEDGER = record {go}
     where
@@ -103,6 +104,7 @@ instance
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
 Computational-LEDGERS = it
+-- -}
 
 instance
   HasCoin-LState : HasCoin LState
@@ -114,6 +116,7 @@ FreshTx : Tx → LState → Type
 FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
   where open Tx tx; open TxBody body; open UTxOState; open LState
 
+{- TODO: uncomment this module once CERTS computation proofs are complete.
 module _
   (Γ : LEnv)   (let ⟦ slot , ppolicy , pparams , enactState , _ ⟧ˡᵉ = Γ)
   (tx : Tx) (let open Tx tx; open TxBody body)
@@ -180,7 +183,7 @@ module _
       getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + φ(getCoin txwdrls , isValid) ≡⟨ pov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ ∎ )
     where open ≡-Reasoning
-
+-- -}
 
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
@@ -247,10 +250,10 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   -- updateGovStates faithfully represents a step of the LEDGER sts
   STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (LState.govSt s |ᵒ LState.certState s')
-  STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ (proj₂ x))))
+  STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
     where
     STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {certSt : CertState} {govSt govSt' : GovState}
-      → (_⊢_⇀⟦_⟧ᵢ*'_ IdSTS _⊢_⇀⦇_,GOV'⦈_ (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt ⟧ᵍ , k) govSt vps govSt')
+      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV'⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt ⟧ᵍ , k) govSt vps govSt')
       → govSt' ≡ updateGovStates vps k govSt
     STS→updateGovSt≡ [] _ (BS-base Id-nop) = refl
     STS→updateGovSt≡ (inj₁ v ∷ vps) k (BS-ind (GOV-Vote x) h)
@@ -539,6 +542,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     fromList (dpMap (updateGovStates (txgov txb) k govSt)) ∎
 
   -- GA Deposits Invariance Property for LEDGER STS ----------------------------------------------------
+{- TODO: uncomment/fix this once CERTS computation proofs are complete.
   LEDGER-govDepsMatch : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                         → govDepsMatch s → govDepsMatch s'
   LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
@@ -560,7 +564,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       fromList (dpMap govSt') ∎
 
   LEDGER-govDepsMatch utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
-
+-- -}
 module EPOCH-Body (eps : EpochState) where
   open EpochState eps hiding (es) public
   open RatifyState fut using (removed) renaming (es to esW) public
@@ -677,7 +681,7 @@ module EPOCH-PROPS {eps : EpochState} where
 module _ (b : Block) (cs : ChainState) where
   open Block b; open ChainState cs
   open NewEpochState newEpochState
-  open SetoidProperties using (LEDGER-govDepsMatch)
+--   open SetoidProperties using (LEDGER-govDepsMatch)
   open EPOCH-Body epochState
   open EnactState es using (pparams)
   pp = pparams .proj₁
@@ -691,6 +695,7 @@ module _ (b : Block) (cs : ChainState) where
       }
     }
 
+{- TODO: uncomment/fix this once CERTS computation proofs are complete.
   CHAIN-govDepsMatch : {nes : NewEpochState}
     → mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (UTxOState.deposits (LState.utxoSt ls) ˢ)
     → totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
@@ -707,3 +712,4 @@ module _ (b : Block) (cs : ChainState) where
   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
+-- -}

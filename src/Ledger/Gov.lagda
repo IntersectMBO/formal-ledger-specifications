@@ -354,7 +354,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
-_⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ _⊢_⇀⦇_,GOV'⦈_
+_⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV'⦈_}
 \end{code}
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}

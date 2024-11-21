@@ -40,7 +40,7 @@ instance
   Bifunctor-ComputationResult : ∀ {a : Level} → Bifunctor {_} {a} ComputationResult
   Bifunctor-ComputationResult .bimap _ f (success x) = success $ f x
   Bifunctor-ComputationResult .bimap f _ (failure x) = failure $ f x
-  
+
   Functor-ComputationResult : ∀ {E : Type} → Functor (ComputationResult E)
   Functor-ComputationResult ._<$>_ f (success x) = success $ f x
   Functor-ComputationResult ._<$>_ _ (failure x) = failure x
@@ -135,7 +135,7 @@ module _ {STS : C → S → Sig → S → Type} (comp : Computational STS Err) w
   ExtendedRel-rightUnique {s' = success x}  {success x'} h h'
     with trans (sym $ Equivalence.from ≡-success⇔STS h) (Equivalence.from ≡-success⇔STS h')
   ... | refl = refl
-    
+
   ExtendedRel-rightUnique {s' = success x} {failure _}  h h' = ⊥-elim $ h' x h
   ExtendedRel-rightUnique {s' = failure _} {success x'} h h' = ⊥-elim $ h x' h'
   ExtendedRel-rightUnique {s' = failure a} {failure b}  h h' = refl
@@ -190,7 +190,7 @@ instance
 module _ {BSTS : C → S → ⊤ → S → Type} ⦃ _ : Computational BSTS Err₁ ⦄ where
   module _ {STS : C → S → Sig → S → Type} ⦃ _ : Computational STS Err₂ ⦄
      ⦃ _ : InjectError Err₁ Err ⦄ ⦃ _ : InjectError Err₂ Err ⦄ where instance
-    Computational-ReflexiveTransitiveClosureᵇ : Computational (ReflexiveTransitiveClosureᵇ BSTS STS) (Err)
+    Computational-ReflexiveTransitiveClosureᵇ : Computational (ReflexiveTransitiveClosureᵇ {_⊢_⇀⟦_⟧ᵇ_ = BSTS}{STS}) (Err)
     Computational-ReflexiveTransitiveClosureᵇ .computeProof c s [] = bimap (injectError it) (map₂′ BS-base) (computeProof c s tt)
     Computational-ReflexiveTransitiveClosureᵇ .computeProof c s (sig ∷ sigs) with computeProof c s sig
     ... | success (s₁ , h) with computeProof c s₁ sigs
@@ -206,10 +206,36 @@ module _ {BSTS : C → S → ⊤ → S → Type} ⦃ _ : Computational BSTS Err�
       with computeProof ⦃ Computational-ReflexiveTransitiveClosureᵇ ⦄ c s₁ sigs | completeness _ _ _ _ hs
     ... | success (s₂ , _) | p = p
 
+{-
+    Computational-ReflexiveTransitiveClosureᵇ' : Computational (ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = BSTS} {STS}) (Err)
+    Computational-ReflexiveTransitiveClosureᵇ' .computeProof c s []
+      with (computeProof{STS = BSTS} c s tt)
+    ... | failure a = failure (injectError it a)
+    ... | success (s' , h) = success (s' , (RTC (h , (BS-base Id-nop))))
+    Computational-ReflexiveTransitiveClosureᵇ' .computeProof c s (sig ∷ sigs)
+      with (computeProof{STS = BSTS} c s tt)
+    ... | failure a = failure (injectError it a)
+    ... | success (s' , h)
+      with (computeProof {STS = STS}  c s' sig)
+    ... | failure a = failure (injectError it a)
+    ... | success (s'' , hs)
+      with (computeProof {STS = ReflexiveTransitiveClosureᵇ} c s'' sigs)
+    ... | failure a = failure (injectError it a)
+    ... | success (s''' , hss) = success (s''' , RTC (h , (BS-ind hs {!hss!})))
+
+    Computational-ReflexiveTransitiveClosureᵇ' .completeness c s [] s'' (RTC (s→s' , BS-base Id-nop))
+      with computeProof {STS = BSTS} c s tt | completeness _ _ _ _ s→s'
+    ... | success (s₁ , z) | refl = refl
+    Computational-ReflexiveTransitiveClosureᵇ' .completeness c s (sig ∷ sigs) s'' (RTC (s→s' , BS-ind h hs))
+      with computeProof c s sig | completeness _ _ _ _ s→s'
+    ... | success (s' , y) | p = {!!}
+    ... | failure w | p = {!!}
+-- -}
+
   module _ {STS : C × ℕ → S → Sig → S → Type} ⦃ Computational-STS : Computational STS Err₂ ⦄
     ⦃ InjectError-Err₁ : InjectError Err₁ Err ⦄ ⦃ InjectError-Err₂ : InjectError Err₂ Err ⦄
     where instance
-    Computational-ReflexiveTransitiveClosureᵢᵇ' : Computational (_⊢_⇀⟦_⟧ᵢ*'_ BSTS STS) Err
+    Computational-ReflexiveTransitiveClosureᵢᵇ' : Computational (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = BSTS}{STS}) Err
     Computational-ReflexiveTransitiveClosureᵢᵇ' .computeProof c s [] =
       bimap (injectError it) (map₂′ BS-base) (computeProof (proj₁ c) s tt)
     Computational-ReflexiveTransitiveClosureᵢᵇ' .computeProof c s (sig ∷ sigs) with computeProof c s sig
@@ -226,16 +252,18 @@ module _ {BSTS : C → S → ⊤ → S → Type} ⦃ _ : Computational BSTS Err�
       with computeProof (proj₁ c , suc (proj₂ c)) s₁ sigs | completeness _ _ _ _ hs
     ...   | success (s₂ , _) | p = p
 
-    Computational-ReflexiveTransitiveClosureᵢᵇ : Computational (ReflexiveTransitiveClosureᵢᵇ BSTS STS) Err
+    Computational-ReflexiveTransitiveClosureᵢᵇ : Computational (ReflexiveTransitiveClosureᵢᵇ {_⊢_⇀⟦_⟧ᵇ_ = BSTS}{STS}) Err
     Computational-ReflexiveTransitiveClosureᵢᵇ .computeProof c =
       Computational-ReflexiveTransitiveClosureᵢᵇ' .computeProof (c , 0)
     Computational-ReflexiveTransitiveClosureᵢᵇ .completeness c =
       Computational-ReflexiveTransitiveClosureᵢᵇ' .completeness (c , 0)
 
 Computational-ReflexiveTransitiveClosure : {STS : C → S → Sig → S → Type} → ⦃ Computational STS Err ⦄
-  → Computational (ReflexiveTransitiveClosure STS) Err
+  → Computational (ReflexiveTransitiveClosure {sts = STS}) Err
 Computational-ReflexiveTransitiveClosure = it
 
 Computational-ReflexiveTransitiveClosureᵢ : {STS : C × ℕ → S → Sig → S → Type} → ⦃ Computational STS Err ⦄
-  → Computational (ReflexiveTransitiveClosureᵢ STS) Err
+  → Computational (ReflexiveTransitiveClosureᵢ {sts = STS}) Err
 Computational-ReflexiveTransitiveClosureᵢ = it
+
+

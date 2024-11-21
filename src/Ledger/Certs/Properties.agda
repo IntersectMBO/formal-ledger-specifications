@@ -140,7 +140,7 @@ instance
                 × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
-Computational-CERTS : Computational (ReflexiveTransitiveClosure _⊢_⇀⦇_,CERT⦈_) String
+Computational-CERTS : Computational (ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_}) String
 Computational-CERTS = it
 
 private variable
@@ -221,10 +221,11 @@ module CERTSpov  (Γ : CertEnv)
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
+{-
   CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ
   CERTS-pov (BS-base Id-nop) = refl
   CERTS-pov (BS-ind x xs) = trans (CERT-pov x) (CERTS-pov xs)
-
+-- -}
   module CERTBASEpov
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
     ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
