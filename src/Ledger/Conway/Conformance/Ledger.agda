@@ -18,20 +18,12 @@ open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
+open import Ledger.Ledger txs abs public
+  using (LEnv; ⟦_,_,_,_,_⟧ˡᵉ)
+
 open Tx
 open GState
 open GovActionState
-
-record LEnv : Type where
-
-  constructor ⟦_,_,_,_,_⟧ˡᵉ
-  field
-
-    slot        : Slot
-    ppolicy     : Maybe ScriptHash
-    pparams     : PParams
-    enactState  : EnactState
-    treasury    : Coin
 
 record LState : Type where
 

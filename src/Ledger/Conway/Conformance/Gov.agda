@@ -11,7 +11,7 @@ open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
 open import Ledger.GovernanceActions govStructure using (Vote)
 open import Ledger.Enact govStructure
-open import Ledger.Conway.Conformance.Ratify txs hiding (vote)
+open import Ledger.Ratify txs hiding (vote)
 open import Ledger.Conway.Conformance.Certs govStructure
 
 open import Data.List.Ext using (subpermutations; sublists)
