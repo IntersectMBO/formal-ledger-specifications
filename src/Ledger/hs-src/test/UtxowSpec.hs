@@ -127,7 +127,7 @@ testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
 testTx1 :: Tx
 testTx1 = MkTx
   { body = testTxBody1
-  , wits = MkTxWitnesses { vkSigs = MkHSMap [(0, 1)], scripts = MkHSSet [], txdats = MkHSMap [], txrdmrs = MkHSMap [] }
+  , wits = MkTxWitnesses { vkSigs = MkHSMap [(MkHSVKey 0 0, 1)], scripts = MkHSSet [], txdats = MkHSMap [], txrdmrs = MkHSMap [] }
   , txAD = Nothing
   , isValid = True
   }
@@ -146,7 +146,7 @@ testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
 testTx2 :: Tx
 testTx2 = MkTx
   { body = testTxBody2
-  , wits = MkTxWitnesses { vkSigs = MkHSMap [(1, 3)], scripts = MkHSSet [], txdats = MkHSMap [], txrdmrs = MkHSMap [] }
+  , wits = MkTxWitnesses { vkSigs = MkHSMap [(MkHSVKey 1 1, 3)], scripts = MkHSSet [], txdats = MkHSMap [], txrdmrs = MkHSMap [] }
   , txAD = Nothing
   , isValid = True
   }

@@ -36,7 +36,7 @@ instance
       (yes p) → success (-, DELEG-dereg p)
       (no ¬p) → failure (genErrors ¬p)
     (reg c d) → case ¿ c ∉ dom rwds
-                     × d ≡ pp .PParams.keyDeposit
+                     × (d ≡ pp .PParams.keyDeposit ⊎ d ≡ 0)
                      ¿ of λ where
       (yes p) → success (-, DELEG-reg p)
       (no ¬p) → failure (genErrors ¬p)
@@ -51,7 +51,7 @@ instance
   Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
     rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ pp , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds ⟧ᵈ (reg c d) _ (DELEG-reg p)
-    rewrite dec-yes (¿ c ∉ dom rwds × d ≡ pp .PParams.keyDeposit ¿) p .proj₂ = refl
+    rewrite dec-yes (¿ c ∉ dom rwds × (d ≡ pp .PParams.keyDeposit ⊎ d ≡ 0) ¿) p .proj₂ = refl
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ ⟦ pools , _ ⟧ᵖ (regpool c _) =

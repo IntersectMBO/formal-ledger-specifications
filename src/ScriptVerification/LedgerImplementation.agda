@@ -154,7 +154,6 @@ SVGovParams = record
       .updateGroups           → λ _ → ∅
       .applyUpdate            → λ p _ → p
       .ppWF?                  → ⁇ yes λ _ → id
-  ; ppHashingScheme = it
   }
 
 SVGovStructure : GovStructure

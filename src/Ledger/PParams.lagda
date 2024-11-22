@@ -462,8 +462,6 @@ record PParamsDiff : Type₁ where
 record GovParams : Type₁ where
   field ppUpd : PParamsDiff
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
-  field ppHashingScheme : isHashableSet PParams
-  open isHashableSet ppHashingScheme renaming (THash to PPHash) public
   field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
 --         ⦃ Show-UpdT ⦄ : Show PParamsUpdate
 \end{code}
