@@ -22,9 +22,12 @@ import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Foreign.Convertible
 import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Ledger.Address
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core
 
 import GHC.Generics (Generic)
-data Credential = KeyHashObj Integer | ScriptObj Integer
+data HSVKey = MkHSVKey {vkey :: Integer, storedHash :: Integer}
+  deriving (Show, Eq, Generic)
+data Credential = KeyHashObj MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.HSVKey | ScriptObj Integer
   deriving (Show, Eq, Generic)
 data BaseAddr = BaseAddr {baseNet :: Integer, basePay :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential, baseStake :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential)}
   deriving (Show, Eq, Generic)
@@ -33,40 +36,103 @@ data BootstrapAddr = BootstrapAddr {bootNet :: Integer, bootPay :: MAlonzo.Code.
 data RwdAddr = RwdAddr {rwdNet :: Integer, rwdStake :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential}
   deriving (Show, Eq, Generic)
 type Addr = (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr)
--- Ledger.Conway.Foreign.HSLedger.Address.HsTy-Credential
-d_HsTy'45'Credential_10 ::
+-- Ledger.Conway.Foreign.HSLedger.Address.HsTy-HSVKey
+d_HsTy'45'HSVKey_10 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
-d_HsTy'45'Credential_10 = erased
--- Ledger.Conway.Foreign.HSLedger.Address.Conv-Credential
-d_Conv'45'Credential_12 ::
+d_HsTy'45'HSVKey_10 = erased
+-- Ledger.Conway.Foreign.HSLedger.Address.Conv-HSVKey
+d_Conv'45'HSVKey_12 ::
   MAlonzo.Code.Foreign.Convertible.T_Convertible_8
-d_Conv'45'Credential_12
+d_Conv'45'HSVKey_12
+  = coe
+      MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+      (coe
+         (\ v0 ->
+            case coe v0 of
+              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40 v1 v2
+                -> coe C_MkHSVKey_17 (coe v1) (coe v2)
+              _ -> MAlonzo.RTE.mazUnreachableError))
+      (coe
+         (\ v0 ->
+            case coe v0 of
+              C_MkHSVKey_17 v1 v2
+                -> coe
+                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40
+                     (coe v1) (coe v2)
+              _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Conway.Foreign.HSLedger.Address.HsTy-Credential
+d_HsTy'45'Credential_14 ::
+  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+d_HsTy'45'Credential_14 = erased
+-- Ledger.Conway.Foreign.HSLedger.Address.HSVKey
+d_HSVKey_15 = ()
+type T_HSVKey_15 = HSVKey
+pattern C_MkHSVKey_17 a0 a1 = MkHSVKey a0 a1
+check_MkHSVKey_17 :: Integer -> Integer -> T_HSVKey_15
+check_MkHSVKey_17 = MkHSVKey
+cover_HSVKey_15 :: HSVKey -> ()
+cover_HSVKey_15 x
+  = case x of
+      MkHSVKey _ _ -> ()
+-- Ledger.Conway.Foreign.HSLedger.Address.Conv-Credential
+d_Conv'45'Credential_16 ::
+  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+d_Conv'45'Credential_16
   = coe
       MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
       (coe
          (\ v0 ->
             case coe v0 of
               MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v1
-                -> coe C_KeyHashObj_29 (coe v1)
+                -> coe
+                     C_KeyHashObj_535
+                     (coe
+                        C_MkHSVKey_17
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_vkey_36
+                           (coe v1))
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_38
+                           (coe v1)))
               MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v1
-                -> coe C_ScriptObj_63 (coe v1)
+                -> coe C_ScriptObj_569 (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_KeyHashObj_29 v1
-                -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v1)
-              C_ScriptObj_63 v1
+              C_KeyHashObj_535 v1
+                -> coe
+                     MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
+                     (coe
+                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        (coe
+                           MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                           (coe
+                              (\ v2 ->
+                                 case coe v2 of
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40 v3 v4
+                                     -> coe C_MkHSVKey_17 (coe v3) (coe v4)
+                                   _ -> MAlonzo.RTE.mazUnreachableError))
+                           (coe
+                              (\ v2 ->
+                                 case coe v2 of
+                                   C_MkHSVKey_17 v3 v4
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40
+                                          (coe v3) (coe v4)
+                                   _ -> MAlonzo.RTE.mazUnreachableError)))
+                        v1)
+              C_ScriptObj_569 v1
                 -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Address.HsTy-BaseAddr
-d_HsTy'45'BaseAddr_14 ::
+d_HsTy'45'BaseAddr_18 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
-d_HsTy'45'BaseAddr_14 = erased
+d_HsTy'45'BaseAddr_18 = erased
 -- Ledger.Conway.Foreign.HSLedger.Address.Conv-BaseAddr
-d_Conv'45'BaseAddr_16 ::
+d_Conv'45'BaseAddr_20 ::
   MAlonzo.Code.Foreign.Convertible.T_Convertible_8
-d_Conv'45'BaseAddr_16
+d_Conv'45'BaseAddr_20
   = coe
       MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
       (coe
@@ -74,7 +140,7 @@ d_Conv'45'BaseAddr_16
             case coe v0 of
               MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2815 v1 v2 v3
                 -> coe
-                     C_BaseAddr_737 (coe v1)
+                     C_BaseAddr_1243 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -83,16 +149,45 @@ d_Conv'45'BaseAddr_16
                               (\ v4 ->
                                  case coe v4 of
                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v5
-                                     -> coe C_KeyHashObj_29 (coe v5)
+                                     -> coe
+                                          C_KeyHashObj_535
+                                          (coe
+                                             C_MkHSVKey_17
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_vkey_36
+                                                (coe v5))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_38
+                                                (coe v5)))
                                    MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v5
-                                     -> coe C_ScriptObj_63 (coe v5)
+                                     -> coe C_ScriptObj_569 (coe v5)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   C_KeyHashObj_29 v5
-                                     -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v5)
-                                   C_ScriptObj_63 v5
+                                   C_KeyHashObj_535 v5
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                                                (coe
+                                                   (\ v6 ->
+                                                      case coe v6 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40 v7 v8
+                                                          -> coe C_MkHSVKey_17 (coe v7) (coe v8)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v6 ->
+                                                      case coe v6 of
+                                                        C_MkHSVKey_17 v7 v8
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40
+                                                               (coe v7) (coe v8)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v5)
+                                   C_ScriptObj_569 v5
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v5)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
@@ -101,13 +196,13 @@ d_Conv'45'BaseAddr_16
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                           (coe d_Conv'45'Credential_12))
+                           (coe d_Conv'45'Credential_16))
                         v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_BaseAddr_737 v1 v2 v3
+              C_BaseAddr_1243 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Address.C_BaseAddr'46'constructor_2815 (coe v1)
                      (coe
@@ -118,16 +213,45 @@ d_Conv'45'BaseAddr_16
                               (\ v4 ->
                                  case coe v4 of
                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v5
-                                     -> coe C_KeyHashObj_29 (coe v5)
+                                     -> coe
+                                          C_KeyHashObj_535
+                                          (coe
+                                             C_MkHSVKey_17
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_vkey_36
+                                                (coe v5))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_38
+                                                (coe v5)))
                                    MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v5
-                                     -> coe C_ScriptObj_63 (coe v5)
+                                     -> coe C_ScriptObj_569 (coe v5)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   C_KeyHashObj_29 v5
-                                     -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v5)
-                                   C_ScriptObj_63 v5
+                                   C_KeyHashObj_535 v5
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                                                (coe
+                                                   (\ v6 ->
+                                                      case coe v6 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40 v7 v8
+                                                          -> coe C_MkHSVKey_17 (coe v7) (coe v8)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v6 ->
+                                                      case coe v6 of
+                                                        C_MkHSVKey_17 v7 v8
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40
+                                                               (coe v7) (coe v8)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v5)
+                                   C_ScriptObj_569 v5
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v5)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
@@ -136,17 +260,17 @@ d_Conv'45'BaseAddr_16
                         (coe
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                           (coe d_Conv'45'Credential_12))
+                           (coe d_Conv'45'Credential_16))
                         v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Address.HsTy-BootstrapAddr
-d_HsTy'45'BootstrapAddr_18 ::
+d_HsTy'45'BootstrapAddr_22 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
-d_HsTy'45'BootstrapAddr_18 = erased
+d_HsTy'45'BootstrapAddr_22 = erased
 -- Ledger.Conway.Foreign.HSLedger.Address.Conv-BootstrapAddr
-d_Conv'45'BootstrapAddr_20 ::
+d_Conv'45'BootstrapAddr_24 ::
   MAlonzo.Code.Foreign.Convertible.T_Convertible_8
-d_Conv'45'BootstrapAddr_20
+d_Conv'45'BootstrapAddr_24
   = coe
       MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
       (coe
@@ -154,7 +278,7 @@ d_Conv'45'BootstrapAddr_20
             case coe v0 of
               MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3037 v1 v2 v3
                 -> coe
-                     C_BootstrapAddr_2611 (coe v1)
+                     C_BootstrapAddr_3117 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -163,16 +287,45 @@ d_Conv'45'BootstrapAddr_20
                               (\ v4 ->
                                  case coe v4 of
                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v5
-                                     -> coe C_KeyHashObj_29 (coe v5)
+                                     -> coe
+                                          C_KeyHashObj_535
+                                          (coe
+                                             C_MkHSVKey_17
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_vkey_36
+                                                (coe v5))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_38
+                                                (coe v5)))
                                    MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v5
-                                     -> coe C_ScriptObj_63 (coe v5)
+                                     -> coe C_ScriptObj_569 (coe v5)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   C_KeyHashObj_29 v5
-                                     -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v5)
-                                   C_ScriptObj_63 v5
+                                   C_KeyHashObj_535 v5
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                                                (coe
+                                                   (\ v6 ->
+                                                      case coe v6 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40 v7 v8
+                                                          -> coe C_MkHSVKey_17 (coe v7) (coe v8)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v6 ->
+                                                      case coe v6 of
+                                                        C_MkHSVKey_17 v7 v8
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40
+                                                               (coe v7) (coe v8)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v5)
+                                   C_ScriptObj_569 v5
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v5)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
@@ -181,7 +334,7 @@ d_Conv'45'BootstrapAddr_20
       (coe
          (\ v0 ->
             case coe v0 of
-              C_BootstrapAddr_2611 v1 v2 v3
+              C_BootstrapAddr_3117 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Address.C_BootstrapAddr'46'constructor_3037
                      (coe v1)
@@ -193,29 +346,58 @@ d_Conv'45'BootstrapAddr_20
                               (\ v4 ->
                                  case coe v4 of
                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v5
-                                     -> coe C_KeyHashObj_29 (coe v5)
+                                     -> coe
+                                          C_KeyHashObj_535
+                                          (coe
+                                             C_MkHSVKey_17
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_vkey_36
+                                                (coe v5))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_38
+                                                (coe v5)))
                                    MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v5
-                                     -> coe C_ScriptObj_63 (coe v5)
+                                     -> coe C_ScriptObj_569 (coe v5)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   C_KeyHashObj_29 v5
-                                     -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v5)
-                                   C_ScriptObj_63 v5
+                                   C_KeyHashObj_535 v5
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                                                (coe
+                                                   (\ v6 ->
+                                                      case coe v6 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40 v7 v8
+                                                          -> coe C_MkHSVKey_17 (coe v7) (coe v8)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v6 ->
+                                                      case coe v6 of
+                                                        C_MkHSVKey_17 v7 v8
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40
+                                                               (coe v7) (coe v8)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v5)
+                                   C_ScriptObj_569 v5
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v5)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
                      (coe v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Address.HsTy-RwdAddr
-d_HsTy'45'RwdAddr_22 ::
+d_HsTy'45'RwdAddr_26 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
-d_HsTy'45'RwdAddr_22 = erased
+d_HsTy'45'RwdAddr_26 = erased
 -- Ledger.Conway.Foreign.HSLedger.Address.Conv-RwdAddr
-d_Conv'45'RwdAddr_24 ::
+d_Conv'45'RwdAddr_28 ::
   MAlonzo.Code.Foreign.Convertible.T_Convertible_8
-d_Conv'45'RwdAddr_24
+d_Conv'45'RwdAddr_28
   = coe
       MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
       (coe
@@ -223,7 +405,7 @@ d_Conv'45'RwdAddr_24
             case coe v0 of
               MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243 v1 v2
                 -> coe
-                     C_RwdAddr_3971 (coe v1)
+                     C_RwdAddr_4477 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -232,16 +414,45 @@ d_Conv'45'RwdAddr_24
                               (\ v3 ->
                                  case coe v3 of
                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v4
-                                     -> coe C_KeyHashObj_29 (coe v4)
+                                     -> coe
+                                          C_KeyHashObj_535
+                                          (coe
+                                             C_MkHSVKey_17
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_vkey_36
+                                                (coe v4))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_38
+                                                (coe v4)))
                                    MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v4
-                                     -> coe C_ScriptObj_63 (coe v4)
+                                     -> coe C_ScriptObj_569 (coe v4)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   C_KeyHashObj_29 v4
-                                     -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v4)
-                                   C_ScriptObj_63 v4
+                                   C_KeyHashObj_535 v4
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                                                (coe
+                                                   (\ v5 ->
+                                                      case coe v5 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40 v6 v7
+                                                          -> coe C_MkHSVKey_17 (coe v6) (coe v7)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v5 ->
+                                                      case coe v5 of
+                                                        C_MkHSVKey_17 v6 v7
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40
+                                                               (coe v6) (coe v7)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v4)
+                                   C_ScriptObj_569 v4
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v4)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
@@ -249,7 +460,7 @@ d_Conv'45'RwdAddr_24
       (coe
          (\ v0 ->
             case coe v0 of
-              C_RwdAddr_3971 v1 v2
+              C_RwdAddr_4477 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243 (coe v1)
                      (coe
@@ -260,66 +471,95 @@ d_Conv'45'RwdAddr_24
                               (\ v3 ->
                                  case coe v3 of
                                    MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 v4
-                                     -> coe C_KeyHashObj_29 (coe v4)
+                                     -> coe
+                                          C_KeyHashObj_535
+                                          (coe
+                                             C_MkHSVKey_17
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_vkey_36
+                                                (coe v4))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_38
+                                                (coe v4)))
                                    MAlonzo.Code.Ledger.Address.C_ScriptObj_20 v4
-                                     -> coe C_ScriptObj_63 (coe v4)
+                                     -> coe C_ScriptObj_569 (coe v4)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   C_KeyHashObj_29 v4
-                                     -> coe MAlonzo.Code.Ledger.Address.C_KeyHashObj_18 (coe v4)
-                                   C_ScriptObj_63 v4
+                                   C_KeyHashObj_535 v4
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Address.C_KeyHashObj_18
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                                                (coe
+                                                   (\ v5 ->
+                                                      case coe v5 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40 v6 v7
+                                                          -> coe C_MkHSVKey_17 (coe v6) (coe v7)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v5 ->
+                                                      case coe v5 of
+                                                        C_MkHSVKey_17 v6 v7
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.C_MkHSVKey_40
+                                                               (coe v6) (coe v7)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v4)
+                                   C_ScriptObj_569 v4
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v4)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Address.Credential
-d_Credential_27 = ()
-type T_Credential_27 = Credential
-pattern C_KeyHashObj_29 a0 = KeyHashObj a0
-pattern C_ScriptObj_63 a0 = ScriptObj a0
-check_KeyHashObj_29 :: Integer -> T_Credential_27
-check_KeyHashObj_29 = KeyHashObj
-check_ScriptObj_63 :: Integer -> T_Credential_27
-check_ScriptObj_63 = ScriptObj
-cover_Credential_27 :: Credential -> ()
-cover_Credential_27 x
+d_Credential_533 = ()
+type T_Credential_533 = Credential
+pattern C_KeyHashObj_535 a0 = KeyHashObj a0
+pattern C_ScriptObj_569 a0 = ScriptObj a0
+check_KeyHashObj_535 :: T_HSVKey_15 -> T_Credential_533
+check_KeyHashObj_535 = KeyHashObj
+check_ScriptObj_569 :: Integer -> T_Credential_533
+check_ScriptObj_569 = ScriptObj
+cover_Credential_533 :: Credential -> ()
+cover_Credential_533 x
   = case x of
       KeyHashObj _ -> ()
       ScriptObj _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Address.BaseAddr
-d_BaseAddr_735 = ()
-type T_BaseAddr_735 = BaseAddr
-pattern C_BaseAddr_737 a0 a1 a2 = BaseAddr a0 a1 a2
-check_BaseAddr_737 ::
+d_BaseAddr_1241 = ()
+type T_BaseAddr_1241 = BaseAddr
+pattern C_BaseAddr_1243 a0 a1 a2 = BaseAddr a0 a1 a2
+check_BaseAddr_1243 ::
   Integer ->
-  T_Credential_27 ->
-  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_Credential_27 ->
-  T_BaseAddr_735
-check_BaseAddr_737 = BaseAddr
-cover_BaseAddr_735 :: BaseAddr -> ()
-cover_BaseAddr_735 x
+  T_Credential_533 ->
+  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_Credential_533 ->
+  T_BaseAddr_1241
+check_BaseAddr_1243 = BaseAddr
+cover_BaseAddr_1241 :: BaseAddr -> ()
+cover_BaseAddr_1241 x
   = case x of
       BaseAddr _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr
-d_BootstrapAddr_2609 = ()
-type T_BootstrapAddr_2609 = BootstrapAddr
-pattern C_BootstrapAddr_2611 a0 a1 a2 = BootstrapAddr a0 a1 a2
-check_BootstrapAddr_2611 ::
-  Integer -> T_Credential_27 -> Integer -> T_BootstrapAddr_2609
-check_BootstrapAddr_2611 = BootstrapAddr
-cover_BootstrapAddr_2609 :: BootstrapAddr -> ()
-cover_BootstrapAddr_2609 x
+d_BootstrapAddr_3115 = ()
+type T_BootstrapAddr_3115 = BootstrapAddr
+pattern C_BootstrapAddr_3117 a0 a1 a2 = BootstrapAddr a0 a1 a2
+check_BootstrapAddr_3117 ::
+  Integer -> T_Credential_533 -> Integer -> T_BootstrapAddr_3115
+check_BootstrapAddr_3117 = BootstrapAddr
+cover_BootstrapAddr_3115 :: BootstrapAddr -> ()
+cover_BootstrapAddr_3115 x
   = case x of
       BootstrapAddr _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Address.RwdAddr
-d_RwdAddr_3969 = ()
-type T_RwdAddr_3969 = RwdAddr
-pattern C_RwdAddr_3971 a0 a1 = RwdAddr a0 a1
-check_RwdAddr_3971 :: Integer -> T_Credential_27 -> T_RwdAddr_3969
-check_RwdAddr_3971 = RwdAddr
-cover_RwdAddr_3969 :: RwdAddr -> ()
-cover_RwdAddr_3969 x
+d_RwdAddr_4475 = ()
+type T_RwdAddr_4475 = RwdAddr
+pattern C_RwdAddr_4477 a0 a1 = RwdAddr a0 a1
+check_RwdAddr_4477 :: Integer -> T_Credential_533 -> T_RwdAddr_4475
+check_RwdAddr_4477 = RwdAddr
+cover_RwdAddr_4475 :: RwdAddr -> ()
+cover_RwdAddr_4475 x
   = case x of
       RwdAddr _ _ -> ()
