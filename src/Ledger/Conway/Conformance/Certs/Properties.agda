@@ -30,6 +30,9 @@ instance
     (dereg c d) → case ¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ dep ¿ of λ where
       (yes p) → success (-, DELEG-dereg p)
       (no ¬p) → failure (genErrors ¬p)
+    (reg c d) → case ¿ c ∉ dom rwds × (d ≡ pp .PParams.keyDeposit ⊎ d ≡ 0) ¿ of λ where
+      (yes p) → success (-, DELEG-reg p)
+      (no ¬p) → failure (genErrors ¬p)
     _ → failure "Unexpected certificate in DELEG"
 
   Computational-DELEG .completeness ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ (delegate c mv mc d)
@@ -40,6 +43,8 @@ instance
                                            × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
   Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
     rewrite dec-yes (¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ dep ¿) p .proj₂ = refl
+  Computational-DELEG .completeness ⟦ pp , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ (reg c d) _ (DELEG-reg p)
+    rewrite dec-yes (¿ c ∉ dom rwds × (d ≡ pp .PParams.keyDeposit ⊎ d ≡ 0) ¿) p .proj₂ = refl
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ ps (regpool c _) =
@@ -92,6 +97,10 @@ instance
     "DELEG: " <> e₁ <> "\nPOOL: " <> e₂ <> "\nVDEL: " <> e₃
   Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
     dCert@(delegate c mv mc d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
+    with computeProof ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    dCert@(reg c d) ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ (CERT-deleg h)
     with computeProof ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ stᵈ dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness ⟦ _ , pp , _ , wdrls ⟧ᶜ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ

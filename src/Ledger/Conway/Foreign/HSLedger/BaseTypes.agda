@@ -64,7 +64,7 @@ instance
   Conv-ComputationResult : ConvertibleType ComputationResult F.ComputationResult
   Conv-ComputationResult = autoConvertible
 
-open ExternalStructures dummyExternalFunctions
+open import Ledger.Conway.Foreign.HSLedger.ExternalStructures dummyExternalFunctions
   renaming
     ( HSTransactionStructure to DummyTransactionStructure
     ; HSAbstractFunctions to DummyAbstractFunctions

@@ -336,7 +336,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
 \begin{code}[hide]
   DELEG-reg : let open PParams pp in
     ∙ c ∉ dom rwds
-    ∙ d ≡ keyDeposit
+    ∙ d ≡ keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
         ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈

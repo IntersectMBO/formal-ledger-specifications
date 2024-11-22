@@ -3,6 +3,9 @@ module Ledger.Conway.Foreign.HSLedger.Address where
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 
 instance
+  HsTy-HSVKey = autoHsType HSVKey
+  Conv-HSVKey = autoConvert HSVKey
+
   HsTy-Credential = autoHsType Credential
   Conv-Credential = autoConvert Credential
 
