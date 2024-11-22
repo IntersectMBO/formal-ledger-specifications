@@ -145,7 +145,6 @@ Computational-CERTS = it
 
 private variable
   dCert : DCert
-  Γ : CertEnv
   l : List DCert
   A A' B : Type
 instance
@@ -158,7 +157,8 @@ getCoin-singleton = indexedSum-singleton' {M = Coin} (finiteness _)
                 → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
 ∪ˡsingleton∈dom m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ {m = m} a∈dom)
 
-module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+module _  {Γ : CertEnv}
+          ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                               → disjoint (dom m) (dom m')
                               → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
   where
@@ -281,11 +281,16 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
             ∎
 
-    CERTS-pov : {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
-                → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ l ,CERTS⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-                → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ + getCoin (CertEnv.wdrls Γ)
-    CERTS-pov (BS-base x) = CERTBASE-pov x
-    CERTS-pov (BS-ind  x xs) = trans (CERT-pov x) (CERTS-pov xs)
+    sts-pov  : {s₁ sₙ : CertState} → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
+             → getCoin s₁ ≡ getCoin sₙ
+    sts-pov (BS-base Id-nop) = refl
+    sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
+
+    CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
+    CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts
+    CERTS-pov (RTC (bsts , BS-ind x sts)) = trans  (CERTBASE-pov bsts)
+                                                   (cong  (_+ getCoin (CertEnv.wdrls Γ))
+                                                          (trans (CERT-pov x) (sts-pov sts)))
 
 -- TODO: Prove the following property.
 -- range vDelegs ⊆ map (credVoter DRep) (dom DReps)

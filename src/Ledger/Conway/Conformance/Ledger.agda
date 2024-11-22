@@ -90,4 +90,4 @@ pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
 pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
-_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
+_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}

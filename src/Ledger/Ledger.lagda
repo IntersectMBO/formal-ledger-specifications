@@ -137,7 +137,7 @@ pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
-_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
+_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}

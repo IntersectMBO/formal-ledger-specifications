@@ -264,42 +264,41 @@ constitutional committee.
 \end{itemize}
 
 \begin{figure*}[h]
-\begin{AgdaSuppressSpace}
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Type
+    _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Type
+    _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERT⦈_      : CertEnv → CertState → DCert → CertState → Type
+    _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
+    _⊢_⇀⦇_,CERT⦈_      : CertEnv → CertState → DCert → CertState → Type
+\end{code}
+\begin{code}[hide]
+data
 \end{code}
 \begin{code}
-_⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+    _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
+
+_⊢_⇀⦇_,CERTS⦈_       : CertEnv → CertState → List DCert → CertState → Type
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
 \end{code}
-\end{AgdaSuppressSpace}
+\end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}
 \label{fig:sts:certs-types}
 \end{figure*}
@@ -318,15 +317,15 @@ data _⊢_⇀⦇_,DELEG⦈_ where
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
+        ⇀⦇ delegate c mv mkh d ,DELEG⦈
         ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
-                          ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
+        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}
@@ -430,7 +429,8 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     refresh          = mapPartial getDRepVote (fromList vs)
     refreshedDReps   = mapValueRestricted (const (e + drepActivity)) dReps refresh
     wdrlCreds        = mapˢ stake (dom wdrls)
-    validVoteDelegs  = voteDelegs ∣^ (mapˢ (credVoter DRep) (dom dReps) ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []))
+    validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
+                                        ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []) )
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
