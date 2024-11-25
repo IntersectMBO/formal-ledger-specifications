@@ -29,6 +29,7 @@ import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Class.Show.Core
+import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
@@ -81,37 +82,37 @@ d_UTxOEnv_94 = ()
 d_UTxOState_96 = ()
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.L.UTxOEnv.pparams
 d_pparams_206 ::
-  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1934 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1910 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
 d_pparams_206 v0
-  = coe MAlonzo.Code.Ledger.Utxo.d_pparams_1944 (coe v0)
+  = coe MAlonzo.Code.Ledger.Utxo.d_pparams_1920 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.L.UTxOEnv.slot
-d_slot_208 :: MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1934 -> Integer
-d_slot_208 v0 = coe MAlonzo.Code.Ledger.Utxo.d_slot_1942 (coe v0)
+d_slot_208 :: MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1910 -> Integer
+d_slot_208 v0 = coe MAlonzo.Code.Ledger.Utxo.d_slot_1918 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.L.UTxOEnv.treasury
 d_treasury_210 ::
-  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1934 -> Integer
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1910 -> Integer
 d_treasury_210 v0
-  = coe MAlonzo.Code.Ledger.Utxo.d_treasury_1946 (coe v0)
+  = coe MAlonzo.Code.Ledger.Utxo.d_treasury_1922 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.L.UTxOState.deposits
 d_deposits_214 ::
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1948 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1924 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_deposits_214 v0
-  = coe MAlonzo.Code.Ledger.Utxo.d_deposits_1962 (coe v0)
+  = coe MAlonzo.Code.Ledger.Utxo.d_deposits_1938 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.L.UTxOState.donations
 d_donations_216 ::
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1948 -> Integer
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1924 -> Integer
 d_donations_216 v0
-  = coe MAlonzo.Code.Ledger.Utxo.d_donations_1964 (coe v0)
+  = coe MAlonzo.Code.Ledger.Utxo.d_donations_1940 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.L.UTxOState.fees
-d_fees_218 :: MAlonzo.Code.Ledger.Utxo.T_UTxOState_1948 -> Integer
-d_fees_218 v0 = coe MAlonzo.Code.Ledger.Utxo.d_fees_1960 (coe v0)
+d_fees_218 :: MAlonzo.Code.Ledger.Utxo.T_UTxOState_1924 -> Integer
+d_fees_218 v0 = coe MAlonzo.Code.Ledger.Utxo.d_fees_1936 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.L.UTxOState.utxo
 d_utxo_220 ::
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1948 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_1924 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_utxo_220 v0 = coe MAlonzo.Code.Ledger.Utxo.d_utxo_1958 (coe v0)
+d_utxo_220 v0 = coe MAlonzo.Code.Ledger.Utxo.d_utxo_1934 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo.HsTy-UTxOEnv
 d_HsTy'45'UTxOEnv_516 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
@@ -125,7 +126,7 @@ d_Conv'45'UTxOEnv_518
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_8665 v1 v2 v3
+              MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_8653 v1 v2 v3
                 -> coe
                      C_MkUTxOEnv_583 (coe v1)
                      (coe
@@ -648,7 +649,7 @@ d_Conv'45'UTxOEnv_518
             case coe v0 of
               C_MkUTxOEnv_583 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_8665 (coe v1)
+                     MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_8653 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2342,7 +2343,7 @@ d_Conv'45'UTxOState_522
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966 v1 v2 v3 v4
+              MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942 v1 v2 v3 v4
                 -> coe
                      C_MkUTxOState_1573
                      (coe
@@ -2418,7 +2419,7 @@ d_Conv'45'UTxOState_522
             case coe v0 of
               C_MkUTxOState_1573 v1 v2 v3 v4
                 -> coe
-                     MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966
+                     MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2480,11 +2481,11 @@ d_Conv'45'UTxOState_522
                                   = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                             coe
                               (coe
-                                 MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                 MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_824
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_govStructure_2378
+                                    MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                        (coe v5)))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_64)
@@ -2552,15 +2553,15 @@ utxoStep ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_UTxOState_1571
-utxoStep = coe d_utxo'45'step_2214
-d_utxo'45'step_2214 ::
+utxoStep = coe d_utxo'45'step_2190
+d_utxo'45'step_2190 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   T_UTxOEnv_581 ->
   T_UTxOState_1571 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_UTxOState_1571
-d_utxo'45'step_2214 v0 v1
+d_utxo'45'step_2190 v0 v1
   = coe
       MAlonzo.Code.Foreign.Convertible.d_to_18
       (coe
@@ -2581,12 +2582,12 @@ d_utxo'45'step_2214 v0 v1
          (coe
             MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_Computational'45'UTXO_2252
+               MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_Computational'45'UTXO_2228
                (coe
-                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                   (coe v0))
                (coe
-                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSAbstractFunctions_2650)))
+                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSAbstractFunctions_2610)))
          (coe
             MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'UTxOEnv_518
             v1))
@@ -2598,15 +2599,15 @@ utxowStep ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_UTxOState_1571
-utxowStep = coe d_utxow'45'step_2216
-d_utxow'45'step_2216 ::
+utxowStep = coe d_utxow'45'step_2192
+d_utxow'45'step_2192 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   T_UTxOEnv_581 ->
   T_UTxOState_1571 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_UTxOState_1571
-d_utxow'45'step_2216 v0 v1
+d_utxow'45'step_2192 v0 v1
   = coe
       MAlonzo.Code.Foreign.Convertible.d_to_18
       (coe
@@ -2627,12 +2628,12 @@ d_utxow'45'step_2216 v0 v1
          (coe
             MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Utxow.Properties.d_Computational'45'UTXOW_2026
+               MAlonzo.Code.Ledger.Conway.Conformance.Utxow.Properties.d_Computational'45'UTXOW_2002
                (coe
-                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                   (coe v0))
                (coe
-                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSAbstractFunctions_2650)))
+                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSAbstractFunctions_2610)))
          (coe
             MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'UTxOEnv_518
             v1))
@@ -2643,20 +2644,20 @@ utxoDebug ::
   T_UTxOState_1571 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-utxoDebug = coe d_utxo'45'debug_2218
-d_utxo'45'debug_2218 ::
+utxoDebug = coe d_utxo'45'debug_2194
+d_utxo'45'debug_2194 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   T_UTxOEnv_581 ->
   T_UTxOState_1571 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_utxo'45'debug_2218 ~v0 v1 v2 v3 = du_utxo'45'debug_2218 v1 v2 v3
-du_utxo'45'debug_2218 ::
+d_utxo'45'debug_2194 ~v0 v1 v2 v3 = du_utxo'45'debug_2194 v1 v2 v3
+du_utxo'45'debug_2194 ::
   T_UTxOEnv_581 ->
   T_UTxOState_1571 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_utxo'45'debug_2218 v0 v1 v2
+du_utxo'45'debug_2194 v0 v1 v2
   = coe
       MAlonzo.Code.Data.String.Base.d_unlines_36
       (coe
@@ -2670,9 +2671,9 @@ du_utxo'45'debug_2218 v0 v1 v2
                (coe
                   MAlonzo.Code.Data.Nat.Show.d_show_56
                   (coe
-                     MAlonzo.Code.Ledger.Utxo.du_balance_1984
+                     MAlonzo.Code.Ledger.Utxo.du_balance_1960
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
                      (coe
@@ -2690,14 +2691,14 @@ du_utxo'45'debug_2218 v0 v1 v2
                               (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                               (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
                         (coe
-                           MAlonzo.Code.Ledger.Utxo.d_utxo_1958
+                           MAlonzo.Code.Ledger.Utxo.d_utxo_1934
                            (coe
                               MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'UTxOState_522
                               v1))
                         (coe
-                           MAlonzo.Code.Ledger.Transaction.d_txins_2612
+                           MAlonzo.Code.Ledger.Transaction.d_txins_2564
                            (coe
-                              MAlonzo.Code.Ledger.Transaction.d_body_2682
+                              MAlonzo.Code.Ledger.Transaction.d_body_2634
                               (coe
                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -2709,9 +2710,9 @@ du_utxo'45'debug_2218 v0 v1 v2
                   ("\tMint:        \t" :: Data.Text.Text)
                   (coe
                      MAlonzo.Code.Data.Nat.Show.d_show_56
-                     (MAlonzo.Code.Ledger.Transaction.d_mint_2620
+                     (MAlonzo.Code.Ledger.Transaction.d_mint_2572
                         (coe
-                           MAlonzo.Code.Ledger.Transaction.d_body_2682
+                           MAlonzo.Code.Ledger.Transaction.d_body_2634
                            (coe
                               MAlonzo.Code.Foreign.Convertible.d_from_20
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -2724,21 +2725,21 @@ du_utxo'45'debug_2218 v0 v1 v2
                      (coe
                         MAlonzo.Code.Data.Nat.Show.d_show_56
                         (let v3
-                               = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                               = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                    (coe
                                       MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
                          coe
                            (coe
                               MAlonzo.Code.Ledger.TokenAlgebra.d_inject_202
-                              (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2264 (coe v3))
+                              (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2216 (coe v3))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_depositRefunds_2380
+                                 MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_depositRefunds_2356
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
                                  (coe
-                                    MAlonzo.Code.Ledger.Utxo.d_pparams_1944
+                                    MAlonzo.Code.Ledger.Utxo.d_pparams_1920
                                     (coe
                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                        d_Conv'45'UTxOEnv_518 v0))
@@ -2749,7 +2750,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                        (coe
                                           (\ v4 ->
                                              case coe v4 of
-                                               MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966 v5 v6 v7 v8
+                                               MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942 v5 v6 v7 v8
                                                  -> coe
                                                       C_MkUTxOState_1573
                                                       (coe
@@ -2828,7 +2829,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                              case coe v4 of
                                                C_MkUTxOState_1573 v5 v6 v7 v8
                                                  -> coe
-                                                      MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966
+                                                      MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942
                                                       (coe
                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                                          (coe
@@ -2893,11 +2894,11 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                              coe
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                                                  MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_824
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Transaction.d_govStructure_2378
+                                                                     MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                                         (coe v9)))))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_64)
@@ -2909,7 +2910,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                _ -> MAlonzo.RTE.mazUnreachableError)))
                                     v1)
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_body_2682
+                                    MAlonzo.Code.Ledger.Transaction.d_body_2634
                                     (coe
                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -2922,20 +2923,20 @@ du_utxo'45'debug_2218 v0 v1 v2
                         (coe
                            MAlonzo.Code.Data.Nat.Show.d_show_56
                            (let v3
-                                  = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                  = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
                             coe
                               (coe
                                  MAlonzo.Code.Ledger.TokenAlgebra.d_inject_202
-                                 (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2264 (coe v3))
+                                 (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2216 (coe v3))
                                  (coe
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1190
                                     (let v4
                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                      coe
                                        (let v5
-                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                   (coe v4) in
                                         coe
                                           (coe
@@ -2943,19 +2944,19 @@ du_utxo'45'debug_2218 v0 v1 v2
                                              (coe
                                                 MAlonzo.Code.Ledger.Types.Epoch.d_DecEq'45'Netw_276
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Transaction.d_globalConstants_1224
+                                                   MAlonzo.Code.Ledger.Transaction.d_globalConstants_1200
                                                    (coe v5)))
                                              (coe
                                                 MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
                                                 (coe
                                                    MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1248
+                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1224
                                                       (coe v5))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Transaction.d_crypto_1248
+                                                   MAlonzo.Code.Ledger.Transaction.d_crypto_1224
                                                    (coe v5))))))
                                     (coe
                                        MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
@@ -2966,9 +2967,9 @@ du_utxo'45'debug_2218 v0 v1 v2
                                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
                                     (coe (\ v4 -> v4))
                                     (coe
-                                       MAlonzo.Code.Ledger.Transaction.d_txwdrls_2626
+                                       MAlonzo.Code.Ledger.Transaction.d_txwdrls_2578
                                        (coe
-                                          MAlonzo.Code.Ledger.Transaction.d_body_2682
+                                          MAlonzo.Code.Ledger.Transaction.d_body_2634
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_from_20
                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -2981,13 +2982,13 @@ du_utxo'45'debug_2218 v0 v1 v2
                            (coe
                               MAlonzo.Code.Data.Nat.Show.d_show_56
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_consumed_2396
+                                 MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_consumed_2372
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
                                  (coe
-                                    MAlonzo.Code.Ledger.Utxo.d_pparams_1944
+                                    MAlonzo.Code.Ledger.Utxo.d_pparams_1920
                                     (coe
                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                        d_Conv'45'UTxOEnv_518 v0))
@@ -2998,7 +2999,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                        (coe
                                           (\ v3 ->
                                              case coe v3 of
-                                               MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966 v4 v5 v6 v7
+                                               MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942 v4 v5 v6 v7
                                                  -> coe
                                                       C_MkUTxOState_1573
                                                       (coe
@@ -3077,7 +3078,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                              case coe v3 of
                                                C_MkUTxOState_1573 v4 v5 v6 v7
                                                  -> coe
-                                                      MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966
+                                                      MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942
                                                       (coe
                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                                          (coe
@@ -3142,11 +3143,11 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                              coe
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                                                  MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_824
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Transaction.d_govStructure_2378
+                                                                     MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                                         (coe v8)))))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_64)
@@ -3158,7 +3159,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                _ -> MAlonzo.RTE.mazUnreachableError)))
                                     v1)
                                  (coe
-                                    MAlonzo.Code.Ledger.Transaction.d_body_2682
+                                    MAlonzo.Code.Ledger.Transaction.d_body_2634
                                     (coe
                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -3174,15 +3175,15 @@ du_utxo'45'debug_2218 v0 v1 v2
                                  (coe
                                     MAlonzo.Code.Data.Nat.Show.d_show_56
                                     (coe
-                                       MAlonzo.Code.Ledger.Utxo.du_balance_1984
+                                       MAlonzo.Code.Ledger.Utxo.du_balance_1960
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
                                        (coe
-                                          MAlonzo.Code.Ledger.Utxo.du_outs_1978
+                                          MAlonzo.Code.Ledger.Utxo.du_outs_1954
                                           (coe
-                                             MAlonzo.Code.Ledger.Transaction.d_body_2682
+                                             MAlonzo.Code.Ledger.Transaction.d_body_2634
                                              (coe
                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -3195,17 +3196,17 @@ du_utxo'45'debug_2218 v0 v1 v2
                                     (coe
                                        MAlonzo.Code.Data.Nat.Show.d_show_56
                                        (let v3
-                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
                                         coe
                                           (coe
                                              MAlonzo.Code.Ledger.TokenAlgebra.d_inject_202
-                                             (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2264
+                                             (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2216
                                                 (coe v3))
-                                             (MAlonzo.Code.Ledger.Transaction.d_txdonation_2632
+                                             (MAlonzo.Code.Ledger.Transaction.d_txdonation_2584
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Transaction.d_body_2682
+                                                   MAlonzo.Code.Ledger.Transaction.d_body_2634
                                                    (coe
                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -3218,22 +3219,22 @@ du_utxo'45'debug_2218 v0 v1 v2
                                        (coe
                                           MAlonzo.Code.Data.Nat.Show.d_show_56
                                           (let v3
-                                                 = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                                 = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
                                            coe
                                              (coe
                                                 MAlonzo.Code.Ledger.TokenAlgebra.d_inject_202
-                                                (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2264
+                                                (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2216
                                                    (coe v3))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_newDeposits_2388
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_newDeposits_2364
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Utxo.d_pparams_1944
+                                                      MAlonzo.Code.Ledger.Utxo.d_pparams_1920
                                                       (coe
                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                                          d_Conv'45'UTxOEnv_518 v0))
@@ -3244,7 +3245,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                          (coe
                                                             (\ v4 ->
                                                                case coe v4 of
-                                                                 MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966 v5 v6 v7 v8
+                                                                 MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942 v5 v6 v7 v8
                                                                    -> coe
                                                                         C_MkUTxOState_1573
                                                                         (coe
@@ -3323,7 +3324,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                                case coe v4 of
                                                                  C_MkUTxOState_1573 v5 v6 v7 v8
                                                                    -> coe
-                                                                        MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966
+                                                                        MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942
                                                                         (coe
                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                            (coe
@@ -3388,11 +3389,11 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                                                      = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                coe
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                                                                    MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_824
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Transaction.d_govStructure_2378
+                                                                                       MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                                                           (coe
                                                                                              v9)))))
                                                                               (coe
@@ -3405,7 +3406,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                                  _ -> MAlonzo.RTE.mazUnreachableError)))
                                                       v1)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Transaction.d_body_2682
+                                                      MAlonzo.Code.Ledger.Transaction.d_body_2634
                                                       (coe
                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -3418,17 +3419,17 @@ du_utxo'45'debug_2218 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Data.Nat.Show.d_show_56
                                              (let v3
-                                                    = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                                    = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
                                               coe
                                                 (coe
                                                    MAlonzo.Code.Ledger.TokenAlgebra.d_inject_202
-                                                   (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2264
+                                                   (MAlonzo.Code.Ledger.Transaction.d_tokenAlgebra_2216
                                                       (coe v3))
-                                                   (MAlonzo.Code.Ledger.Transaction.d_txfee_2618
+                                                   (MAlonzo.Code.Ledger.Transaction.d_txfee_2570
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Transaction.d_body_2682
+                                                         MAlonzo.Code.Ledger.Transaction.d_body_2634
                                                          (coe
                                                             MAlonzo.Code.Foreign.Convertible.d_from_20
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -3441,13 +3442,13 @@ du_utxo'45'debug_2218 v0 v1 v2
                                              (coe
                                                 MAlonzo.Code.Data.Nat.Show.d_show_56
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_produced_2404
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_produced_2380
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Utxo.d_pparams_1944
+                                                      MAlonzo.Code.Ledger.Utxo.d_pparams_1920
                                                       (coe
                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                                          d_Conv'45'UTxOEnv_518 v0))
@@ -3458,7 +3459,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                          (coe
                                                             (\ v3 ->
                                                                case coe v3 of
-                                                                 MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966 v4 v5 v6 v7
+                                                                 MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942 v4 v5 v6 v7
                                                                    -> coe
                                                                         C_MkUTxOState_1573
                                                                         (coe
@@ -3537,7 +3538,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                                case coe v3 of
                                                                  C_MkUTxOState_1573 v4 v5 v6 v7
                                                                    -> coe
-                                                                        MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1966
+                                                                        MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_1942
                                                                         (coe
                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                            (coe
@@ -3602,11 +3603,11 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                                                      = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                coe
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                                                                    MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_824
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Transaction.d_govStructure_2378
+                                                                                       MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                                                                           (coe
                                                                                              v8)))))
                                                                               (coe
@@ -3619,7 +3620,7 @@ du_utxo'45'debug_2218 v0 v1 v2
                                                                  _ -> MAlonzo.RTE.mazUnreachableError)))
                                                       v1)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Transaction.d_body_2682
+                                                      MAlonzo.Code.Ledger.Transaction.d_body_2634
                                                       (coe
                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -3633,19 +3634,19 @@ utxowDebug ::
   T_UTxOState_1571 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-utxowDebug = coe d_utxow'45'debug_2296
-d_utxow'45'debug_2296 ::
+utxowDebug = coe d_utxow'45'debug_2272
+d_utxow'45'debug_2272 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   T_UTxOEnv_581 ->
   T_UTxOState_1571 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_utxow'45'debug_2296 ~v0 ~v1 v2 v3 = du_utxow'45'debug_2296 v2 v3
-du_utxow'45'debug_2296 ::
+d_utxow'45'debug_2272 ~v0 ~v1 v2 v3 = du_utxow'45'debug_2272 v2 v3
+du_utxow'45'debug_2272 ::
   T_UTxOState_1571 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_108875 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_utxow'45'debug_2296 v0 v1
+du_utxow'45'debug_2272 v0 v1
   = coe
       MAlonzo.Code.Data.String.Base.d_unlines_36
       (coe
@@ -3662,22 +3663,21 @@ du_utxow'45'debug_2296 v0 v1
                      MAlonzo.Code.Data.List.Base.du_map_22
                      (coe
                         MAlonzo.Code.Class.Show.Core.d_show_16
-                        (coe
-                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_Show'45'HSVKey_44))
+                        (coe MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32))
                      (coe
                         MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                         (coe
                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1104
                            (coe
-                              MAlonzo.Code.Ledger.Utxow.du_witsVKeyNeeded_2296
-                              (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_914
+                              MAlonzo.Code.Ledger.Utxow.du_witsVKeyNeeded_2272
+                              (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
-                              (MAlonzo.Code.Ledger.Utxo.d_utxo_1958
+                              (MAlonzo.Code.Ledger.Utxo.d_utxo_1934
                                  (coe
                                     MAlonzo.Code.Foreign.Convertible.d_from_20
                                     d_Conv'45'UTxOState_522 v0))
-                              (MAlonzo.Code.Ledger.Transaction.d_body_2682
+                              (MAlonzo.Code.Ledger.Transaction.d_body_2634
                                  (coe
                                     MAlonzo.Code.Foreign.Convertible.d_from_20
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
@@ -3696,8 +3696,7 @@ du_utxow'45'debug_2296 v0 v1
                            MAlonzo.Code.Data.List.Base.du_map_22
                            (coe
                               MAlonzo.Code.Class.Show.Core.d_show_16
-                              (coe
-                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_Show'45'HSVKey_44))
+                              (coe MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32))
                            (coe
                               MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                               (coe
@@ -3707,7 +3706,9 @@ du_utxow'45'debug_2296 v0 v1
                                     (MAlonzo.Code.Axiom.Set.d_th_1470
                                        (coe
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                    (\ v2 -> v2)
+                                    (\ v2 ->
+                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_22
+                                         (coe v2))
                                     (coe
                                        MAlonzo.Code.Class.IsSet.du_dom_548
                                        (coe
@@ -3716,12 +3717,12 @@ du_utxow'45'debug_2296 v0 v1
                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                        (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                        (coe
-                                          MAlonzo.Code.Ledger.Transaction.d_vkSigs_2662
+                                          MAlonzo.Code.Ledger.Transaction.d_vkSigs_2614
                                           (coe
                                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
                                              erased () erased
                                              (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
-                                             (MAlonzo.Code.Ledger.Transaction.d_wits_2684
+                                             (MAlonzo.Code.Ledger.Transaction.d_wits_2636
                                                 (coe
                                                    MAlonzo.Code.Foreign.Convertible.d_from_20
                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'Tx_32
