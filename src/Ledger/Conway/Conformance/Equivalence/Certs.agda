@@ -172,14 +172,22 @@ instance
   CERTToConf .convⁱ deposits@(deregdrep* _ _ _) (L.CERT-vdel govcert) = C.CERT-vdel (deposits ⊢conv govcert)
   CERTToConf .convⁱ deposits@(ccreghot* _ _)    (L.CERT-vdel govcert) = C.CERT-vdel (deposits ⊢conv govcert)
 
+  CERTS'ToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
+              → CertDeps* pp dcerts
+                ⊢ ReflexiveTransitiveClosure {sts = L._⊢_⇀⦇_,CERT⦈_} Γ s dcerts s' ⭆ⁱ λ deposits _ →
+                  ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_}
+                            Γ (getCertDeps* deposits ⊢conv s) dcerts
+                              (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
+  CERTS'ToConf .convⁱ deposits (BS-base Id-nop) = BS-base Id-nop
+  CERTS'ToConf .convⁱ deposits (BS-ind r rs)    = BS-ind (deposits ⊢conv r) (updateCertDeps deposits ⊢conv rs)
+
   CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
               → CertDeps* pp dcerts
                 ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ deposits _ →
                   Γ C.⊢ (getCertDeps* deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈
                         (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
-  CERTSToConf .convⁱ deposits (BS-base certBase)  = BS-base (getCertDeps* deposits ⊢conv certBase)
-  CERTSToConf .convⁱ deposits (BS-ind {sig = dcert} cert certs) =
-    BS-ind (deposits ⊢conv cert) (updateCertDeps deposits ⊢conv certs)
+  CERTSToConf .convⁱ deposits (RTC (base , step)) =
+    RTC (getCertDeps* deposits ⊢conv base , deposits ⊢conv step)
 
 --   CERTSFromConf : ∀ {Γ s dcerts s'}
 --                 → Γ C.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆

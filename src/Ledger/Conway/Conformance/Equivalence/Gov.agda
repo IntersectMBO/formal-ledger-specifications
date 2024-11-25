@@ -35,7 +35,7 @@ instance
 
   GOVToConf : ∀ {Γ s votes s' n}
             → L.Deposits × L.Deposits
-              ⊢ _⊢_⇀⟦_⟧ᵢ*'_ IdSTS L._⊢_⇀⦇_,GOV'⦈_ (Γ , n) s votes s' ⭆ⁱ λ deposits _ →
-                _⊢_⇀⟦_⟧ᵢ*'_ IdSTS C._⊢_⇀⦇_,GOV'⦈_ (deposits ⊢conv Γ , n) s votes s'
+              ⊢ _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = L._⊢_⇀⦇_,GOV'⦈_} (Γ , n) s votes s' ⭆ⁱ λ deposits _ →
+                _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = C._⊢_⇀⦇_,GOV'⦈_} (deposits ⊢conv Γ , n) s votes s'
   GOVToConf .convⁱ deposits (BS-base Id-nop) = BS-base Id-nop
   GOVToConf .convⁱ deposits (BS-ind r rs)     = BS-ind (deposits ⊢conv r) (deposits ⊢conv rs)
