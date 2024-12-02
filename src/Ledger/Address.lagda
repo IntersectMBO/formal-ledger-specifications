@@ -14,11 +14,11 @@ We define credentials and various types of addresses here. A
 credential contains a hash, either of a verifying (public) key
 (\isVKey) or of a (\isScript).
 
-Note that, in the Shelley era, the type of the \AgdaField{stake}
-field of the \AgdaRecord{BaseAddr} record was \AgdaType{Credential};
-to specify an address with no stake, we would use an "enterprise" address.
-In contrast, in the Conway era, the type of \AgdaField{stake} is
-\AgdaType{Maybe Credential}, so that we can specify an address with no
+N.B. in the Shelley era the type of the \AgdaField{stake} field
+of the \AgdaRecord{BaseAddr} record was \AgdaType{Credential};
+to specify an address with no stake, we would use an ``enterprise'' address.
+In contrast, in the Conway era the type of \AgdaField{stake} is
+\AgdaType{Maybe Credential}, so we can specify an address with no
 stake using the \AgdaRecord{BaseAddr} record with
 \AgdaInductiveConstructor{nothing} in the stake field.
 
