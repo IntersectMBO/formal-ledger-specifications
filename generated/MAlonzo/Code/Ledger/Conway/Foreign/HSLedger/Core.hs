@@ -80,6 +80,10 @@ import qualified MAlonzo.Code.Tactic.Derive.DecEq
 import qualified MAlonzo.Code.Tactic.Derive.Show
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
+data HSVKey = MkHSVKey
+  { hvkVKey :: Integer
+  , hvkStoredHash :: Integer
+  }
 -- Ledger.Conway.Foreign.HSLedger.Core.Hashable-⊤
 d_Hashable'45''8868'_10 ::
   MAlonzo.Code.Interface.Hashable.T_Hashable_8
@@ -89,7 +93,14 @@ d_Hashable'45''8868'_10
       (coe (\ v0 -> seq (coe v0) (coe (0 :: Integer))))
 -- Ledger.Conway.Foreign.HSLedger.Core.HSVKey
 d_HSVKey_14 = ()
-data T_HSVKey_14 = C_MkHSVKey_24 Integer Integer
+type T_HSVKey_14 = HSVKey
+pattern C_MkHSVKey_24 a0 a1 = MkHSVKey a0 a1
+check_MkHSVKey_24 :: Integer -> Integer -> T_HSVKey_14
+check_MkHSVKey_24 = MkHSVKey
+cover_HSVKey_14 :: HSVKey -> ()
+cover_HSVKey_14 x
+  = case x of
+      MkHSVKey _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Core.HSVKey.vkey
 d_vkey_20 :: T_HSVKey_14 -> Integer
 d_vkey_20 v0
