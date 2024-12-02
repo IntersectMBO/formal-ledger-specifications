@@ -42,9 +42,9 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs
-import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Epoch
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger
@@ -653,7 +653,7 @@ d_Conv'45'ChainState_50
                                                        = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                  coe
                                                    (let v3
-                                                          = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                          = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                               (coe v2) in
                                                     coe
                                                       (coe
@@ -819,7 +819,7 @@ d_Conv'45'ChainState_50
                                                           = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                     coe
                                                       (let v3
-                                                             = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                             = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                  (coe v2) in
                                                        coe
                                                          (coe
@@ -1524,7 +1524,7 @@ d_Conv'45'ChainState_50
                                                                          = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                    coe
                                                                      (let v7
-                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                 (coe v6) in
                                                                       coe
                                                                         (coe
@@ -1687,7 +1687,7 @@ d_Conv'45'ChainState_50
                                                                             = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                       coe
                                                                         (let v7
-                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                    (coe v6) in
                                                                          coe
                                                                            (coe
@@ -2343,7 +2343,7 @@ d_Conv'45'ChainState_50
                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                      coe
                                                                                        (let v13
-                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                   (coe
                                                                                                      v12) in
                                                                                         coe
@@ -2499,7 +2499,7 @@ d_Conv'45'ChainState_50
                                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                         coe
                                                                                           (let v13
-                                                                                                 = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                 = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                      (coe
                                                                                                         v12) in
                                                                                            coe
@@ -2876,7 +2876,7 @@ d_Conv'45'ChainState_50
                                                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                 coe
                                                                                                                   (let v21
-                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                              (coe
                                                                                                                                 v20) in
                                                                                                                    coe
@@ -2911,7 +2911,7 @@ d_Conv'45'ChainState_50
                                                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                 coe
                                                                                                                   (let v21
-                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                              (coe
                                                                                                                                 v20) in
                                                                                                                    coe
@@ -2997,7 +2997,7 @@ d_Conv'45'ChainState_50
                                                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                 coe
                                                                                                                   (let v21
-                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                              (coe
                                                                                                                                 v20) in
                                                                                                                    coe
@@ -3032,7 +3032,7 @@ d_Conv'45'ChainState_50
                                                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                 coe
                                                                                                                   (let v21
-                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                              (coe
                                                                                                                                 v20) in
                                                                                                                    coe
@@ -3118,7 +3118,7 @@ d_Conv'45'ChainState_50
                                                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                 coe
                                                                                                                   (let v21
-                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                              (coe
                                                                                                                                 v20) in
                                                                                                                    coe
@@ -3153,7 +3153,7 @@ d_Conv'45'ChainState_50
                                                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                 coe
                                                                                                                   (let v21
-                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                              (coe
                                                                                                                                 v20) in
                                                                                                                    coe
@@ -3649,7 +3649,7 @@ d_Conv'45'ChainState_50
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                            (coe
                                                                                                                               v21)))))
                                                                                                                (coe
@@ -3947,7 +3947,7 @@ d_Conv'45'ChainState_50
                                                                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                                      coe
                                                                                                                                        (let v26
-                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                                   (coe
                                                                                                                                                      v25) in
                                                                                                                                         coe
@@ -3982,7 +3982,7 @@ d_Conv'45'ChainState_50
                                                                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                                      coe
                                                                                                                                        (let v26
-                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                                   (coe
                                                                                                                                                      v25) in
                                                                                                                                         coe
@@ -4017,7 +4017,7 @@ d_Conv'45'ChainState_50
                                                                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                                      coe
                                                                                                                                        (let v26
-                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                                   (coe
                                                                                                                                                      v25) in
                                                                                                                                         coe
@@ -4056,7 +4056,7 @@ d_Conv'45'ChainState_50
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                                 (coe
                                                                                                                                                    v25)))))
                                                                                                                                     (coe
@@ -4219,7 +4219,7 @@ d_Conv'45'ChainState_50
                                                                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                                      coe
                                                                                                                                        (let v25
-                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                                   (coe
                                                                                                                                                      v24) in
                                                                                                                                         coe
@@ -4254,7 +4254,7 @@ d_Conv'45'ChainState_50
                                                                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                                      coe
                                                                                                                                        (let v25
-                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                                   (coe
                                                                                                                                                      v24) in
                                                                                                                                         coe
@@ -4295,7 +4295,7 @@ d_Conv'45'ChainState_50
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                                 (coe
                                                                                                                                                    v24)))))
                                                                                                                                     (coe
@@ -4341,7 +4341,7 @@ d_Conv'45'ChainState_50
                                                                                                              = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                        coe
                                                                                                          (let v19
-                                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                     (coe
                                                                                                                        v18) in
                                                                                                           coe
@@ -4493,7 +4493,7 @@ d_Conv'45'ChainState_50
                                                                                                           = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                     coe
                                                                                                       (let v19
-                                                                                                             = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                             = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                  (coe
                                                                                                                     v18) in
                                                                                                        coe
@@ -4619,7 +4619,7 @@ d_Conv'45'ChainState_50
                                                                                                  = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                            coe
                                                                                              (let v19
-                                                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                         (coe
                                                                                                            v18) in
                                                                                               coe
@@ -4686,7 +4686,7 @@ d_Conv'45'ChainState_50
                                                                                                                 = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                           coe
                                                                                                             (let v17
-                                                                                                                   = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                   = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                        (coe
                                                                                                                           v16) in
                                                                                                              coe
@@ -4885,7 +4885,7 @@ d_Conv'45'ChainState_50
                                                                                                                                   = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                             coe
                                                                                                                               (let v23
-                                                                                                                                     = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                     = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                          (coe
                                                                                                                                             v22) in
                                                                                                                                coe
@@ -5044,7 +5044,7 @@ d_Conv'45'ChainState_50
                                                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                          coe
                                                                                                                            (let v23
-                                                                                                                                  = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                                  = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                                       (coe
                                                                                                                                          v22) in
                                                                                                                             coe
@@ -5178,7 +5178,7 @@ d_Conv'45'ChainState_50
                                                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                 coe
                                                                                                                   (let v23
-                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+                                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                                                                                                                              (coe
                                                                                                                                 v22) in
                                                                                                                    coe
@@ -5334,11 +5334,11 @@ du_chain'45'step_56
          (coe
             MAlonzo.Code.Ledger.Conway.Conformance.Chain.Properties.d_Computational'45'CHAIN_1694
             (coe
-               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_HSTransactionStructure_898
+               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_644
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
             (coe
-               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.du_HSAbstractFunctions_2610))
+               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.du_HSAbstractFunctions_2356))
          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
 -- Ledger.Conway.Foreign.HSLedger.Chain.ChainState
 d_ChainState_73 = ()
