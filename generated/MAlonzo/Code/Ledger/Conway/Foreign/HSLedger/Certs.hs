@@ -5928,7 +5928,7 @@ d_deleg'45'step_90 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'DELEG_1084
+            MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'DELEG_1088
             (coe
                MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                (coe
@@ -5969,7 +5969,7 @@ d_pool'45'step_92 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'POOL_1162
+            MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'POOL_1192
             (coe
                MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                (coe
@@ -6011,7 +6011,7 @@ d_govcert'45'step_94 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'GOVCERT_1188
+            MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'GOVCERT_1218
             (coe
                MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
                (coe
