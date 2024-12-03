@@ -10,7 +10,6 @@ open import Data.Unit using (⊤)
 open import Data.Product using (_×_; _,_)
 open import Function.Bundles using (_⇔_; mk⇔; Equivalence)
 open import Relation.Binary.PropositionalEquality
-open ≡-Reasoning
 
 open import Ledger.Conway.Conformance.Equivalence.Convert
 
@@ -23,6 +22,7 @@ open import Ledger.Conway.Conformance.Equivalence.Base txs abs
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Ledger.Conway.Conformance.Equivalence.Gov txs abs
 open import Ledger.Conway.Conformance.Equivalence.Utxo txs abs
+open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
 
 -- Invalid transactions don't change the deposits
 lemInvalidDepositsL : ∀ {Γ utxoSt utxoSt' tx}
@@ -49,68 +49,6 @@ lemUpdateDeposits refl
   (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
     (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
       (L.Scripts-Yes _))) = refl
-
-updateDDeps : PParams → List L.DCert → L.Deposits → L.Deposits
-updateDDeps _ []                                   deps = deps
-updateDDeps pp (cert@(L.delegate _ _ _ _) ∷ certs) deps = updateDDeps pp certs (C.updateCertDeposit pp cert deps)
-updateDDeps pp (cert@(L.dereg _ _)        ∷ certs) deps = updateDDeps pp certs (C.updateCertDeposit pp cert deps)
-updateDDeps pp (_                         ∷ certs) deps = updateDDeps pp certs deps
-
-updateGDeps : PParams → List L.DCert → L.Deposits → L.Deposits
-updateGDeps _ []                                deps = deps
-updateGDeps pp (cert@(L.regdrep _ _ _) ∷ certs) deps = updateGDeps pp certs (C.updateCertDeposit pp cert deps)
-updateGDeps pp (cert@(L.deregdrep _ _) ∷ certs) deps = updateGDeps pp certs (C.updateCertDeposit pp cert deps)
-updateGDeps pp (_                      ∷ certs) deps = updateGDeps pp certs deps
-
-data DPurpose : L.DepositPurpose → Set where
-  CredentialDeposit : ∀ {c} → DPurpose (L.CredentialDeposit c)
-
-data GPurpose : L.DepositPurpose → Set where
-  DRepDeposit : ∀ {c} → GPurpose (L.DRepDeposit c)
-
-instance
-  Dec-DPurpose? : ∀ {p} → DPurpose p ⁇
-  Dec-DPurpose? {L.CredentialDeposit _} = ⁇ yes CredentialDeposit
-  Dec-DPurpose? {L.PoolDeposit       _} = ⁇ no λ ()
-  Dec-DPurpose? {L.DRepDeposit       _} = ⁇ no λ ()
-  Dec-DPurpose? {L.GovActionDeposit  _} = ⁇ no λ ()
-
-  Dec-GPurpose? : ∀ {p} → GPurpose p ⁇
-  Dec-GPurpose? {L.CredentialDeposit _} = ⁇ no λ ()
-  Dec-GPurpose? {L.PoolDeposit       _} = ⁇ no λ ()
-  Dec-GPurpose? {L.DRepDeposit       _} = ⁇ yes DRepDeposit
-  Dec-GPurpose? {L.GovActionDeposit  _} = ⁇ no λ ()
-
--- Compute DDeps for the CertState from full Deposits
-certDDeps : L.Deposits → L.Deposits
-certDDeps deps = filterᵐ (λ (k , _) → DPurpose k) deps
-
--- Compute GDeps for the CertState from full Deposits
-certGDeps : L.Deposits → L.Deposits
-certGDeps deps = filterᵐ (λ (k , _) → GPurpose k) deps
-
-castValidDepsᵈ : ∀ {pp deps₁ deps₂ certs} → deps₁ ≡ᵐ deps₂ → ValidDepsᵈ pp deps₁ certs → ValidDepsᵈ pp deps₂ certs
-castValidDepsᵈ eq [] = []
-castValidDepsᵈ eq (delegate deps)   = delegate   (castValidDepsᵈ {!!} deps)
-castValidDepsᵈ eq (dereg x deps)    = dereg (proj₁ eq x) (castValidDepsᵈ {!!} deps)
-castValidDepsᵈ eq (regdrep deps)    = regdrep    (castValidDepsᵈ eq deps)
-castValidDepsᵈ eq (deregdrep deps)  = deregdrep  (castValidDepsᵈ eq deps)
-castValidDepsᵈ eq (regpool deps)    = regpool    (castValidDepsᵈ eq deps)
-castValidDepsᵈ eq (retirepool deps) = retirepool (castValidDepsᵈ eq deps)
-castValidDepsᵈ eq (ccreghot deps)   = ccreghot   (castValidDepsᵈ eq deps)
-
-validDDeps : ∀ {pp certs deposits} → L.ValidCertDeposits pp deposits certs → ValidDepsᵈ pp (certDDeps deposits) certs
-validDDeps L.[] = []
-validDDeps (L.delegate    v) = delegate (castValidDepsᵈ {!!} (validDDeps v))
-validDDeps (L.regpool     v) = {!regpool (validDDeps v)!}
-validDDeps (L.regdrep     v) = {!regdrep (validDDeps v)!}
-validDDeps (L.dereg _     v) = {!dereg (validDDeps v)!}
-validDDeps (L.deregdrep _ v) = {!deregdrep (validDDeps v)!}
-validDDeps (L.ccreghot    v) = ccreghot (validDDeps v)
-validDDeps (L.retirepool  v) = retirepool (validDDeps v)
-
-validGDeps : ∀ {pp certs deposits} → L.ValidCertDeposits pp deposits certs → ValidDepsᵍ pp (certGDeps deposits) certs
-validGDeps v = {!!}
 
 getValidCertDeposits : ∀ {Γ s tx s'}
                      → (let open L.UTxOEnv Γ using (pparams)
