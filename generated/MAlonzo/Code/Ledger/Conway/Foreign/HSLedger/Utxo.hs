@@ -3708,7 +3708,7 @@ du_utxow'45'debug_2272 v0 v1
                                        (coe
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                     (\ v2 ->
-                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_22
+                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_hvkStoredHash_22
                                          (coe v2))
                                     (coe
                                        MAlonzo.Code.Class.IsSet.du_dom_548

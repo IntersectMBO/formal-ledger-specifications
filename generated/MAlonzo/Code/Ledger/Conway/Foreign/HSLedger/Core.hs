@@ -68,15 +68,15 @@ cover_HSVKey_14 :: HSVKey -> ()
 cover_HSVKey_14 x
   = case x of
       MkHSVKey _ _ -> ()
--- Ledger.Conway.Foreign.HSLedger.Core.HSVKey.vkey
-d_vkey_20 :: T_HSVKey_14 -> Integer
-d_vkey_20 v0
+-- Ledger.Conway.Foreign.HSLedger.Core.HSVKey.hvkVKey
+d_hvkVKey_20 :: T_HSVKey_14 -> Integer
+d_hvkVKey_20 v0
   = case coe v0 of
       C_MkHSVKey_24 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Foreign.HSLedger.Core.HSVKey.storedHash
-d_storedHash_22 :: T_HSVKey_14 -> Integer
-d_storedHash_22 v0
+-- Ledger.Conway.Foreign.HSLedger.Core.HSVKey.hvkStoredHash
+d_hvkStoredHash_22 :: T_HSVKey_14 -> Integer
+d_hvkStoredHash_22 v0
   = case coe v0 of
       C_MkHSVKey_24 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -129,7 +129,7 @@ d_Hashable'45'HSVKey_28 ::
 d_Hashable'45'HSVKey_28
   = coe
       MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
-      (coe (\ v0 -> d_storedHash_22 (coe v0)))
+      (coe (\ v0 -> d_hvkStoredHash_22 (coe v0)))
 -- Ledger.Conway.Foreign.HSLedger.Core.isHashableSet-HSVKey
 d_isHashableSet'45'HSVKey_32 ::
   MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
@@ -145,7 +145,7 @@ d_isHashableSet'45'HSVKey_32
       d_DecEq'45'HSVKey_26
       (coe
          MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
-         (coe (\ v0 -> d_storedHash_22 (coe v0))))
+         (coe (\ v0 -> d_hvkStoredHash_22 (coe v0))))
 -- Ledger.Conway.Foreign.HSLedger.Core.Hashable-ℕ
 d_Hashable'45'ℕ_34 :: MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_Hashable'45'ℕ_34

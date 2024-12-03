@@ -25,7 +25,7 @@ import qualified MAlonzo.Code.Ledger.Address
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core
 
 import GHC.Generics (Generic)
-data HSVKey = MkHSVKey {vkey :: Integer, storedHash :: Integer}
+data HSVKey = MkHSVKey {hvkVKey :: Integer, hvkStoredHash :: Integer}
   deriving (Show, Eq, Generic)
 data Credential = KeyHashObj Integer | ScriptObj Integer
   deriving (Show, Eq, Generic)

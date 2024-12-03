@@ -131,7 +131,7 @@ d_HSCrypto_16 v0
             MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
             (coe
                (\ v1 ->
-                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_storedHash_22
+                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_hvkStoredHash_22
                     (coe v1)))))
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_32
@@ -151,7 +151,7 @@ d_HSPKKScheme_26 v0
               (coe
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_extIsSigned_12
                  v0
-                 (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_vkey_20
+                 (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_hvkVKey_20
                     (coe v1))
                  v2 v3)
               (coe
