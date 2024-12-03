@@ -399,7 +399,7 @@ du_updateDeposits_1696 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_updateDeposits_1696 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_updateDeposits_2114
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.du_updateDeposits_2124
       (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.L.UTxOState
 d_UTxOState_1748 a0 a1 = ()
