@@ -1059,7 +1059,7 @@ du_updateCertDeposits_2050 v0 v1 v2 v3
                           v3
                           (coe
                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_certDeposit_1086
-                             (coe v4)))
+                             (coe v4) (coe v1)))
                 MAlonzo.Code.Ledger.Certs.C_dereg_836 v7 v8
                   -> coe
                        du_updateCertDeposits_2050 (coe v0) (coe v1) (coe v5)
@@ -1078,7 +1078,7 @@ du_updateCertDeposits_2050 v0 v1 v2 v3
                                    MAlonzo.Code.Ledger.Transaction.d_govStructure_2330 (coe v0))))
                           (coe v3)
                           (coe
-                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_certRefund_1096
+                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_certRefund_1102
                              (coe v4)))
                 MAlonzo.Code.Ledger.Certs.C_regpool_838 v7 v8
                   -> coe
@@ -1118,7 +1118,7 @@ du_updateCertDeposits_2050 v0 v1 v2 v3
                           v3
                           (coe
                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_certDeposit_1086
-                             (coe v4)))
+                             (coe v4) (coe v1)))
                 MAlonzo.Code.Ledger.Certs.C_deregdrep_844 v7 v8
                   -> coe
                        du_updateCertDeposits_2050 (coe v0) (coe v1) (coe v5)
@@ -1137,7 +1137,7 @@ du_updateCertDeposits_2050 v0 v1 v2 v3
                                    MAlonzo.Code.Ledger.Transaction.d_govStructure_2330 (coe v0))))
                           (coe v3)
                           (coe
-                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_certRefund_1096
+                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_certRefund_1102
                              (coe v4)))
                 MAlonzo.Code.Ledger.Certs.C_reg_848 v7 v8
                   -> coe
@@ -1154,7 +1154,7 @@ du_updateCertDeposits_2050 v0 v1 v2 v3
                           v3
                           (coe
                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_certDeposit_1086
-                             (coe v4)))
+                             (coe v4) (coe v1)))
                 _ -> coe v6)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Utxo.updateDeposits

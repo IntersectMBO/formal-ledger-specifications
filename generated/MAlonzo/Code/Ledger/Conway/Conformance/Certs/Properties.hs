@@ -553,11 +553,11 @@ d_Computational'45'DELEG_1088 v0
                                                                                           (0 ::
                                                                                              Integer))))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                               (coe v0) (coe v2)
                                                                               (coe v10) (coe v9)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1294
+                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1300
                                                                            v19))
                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                        else coe
@@ -973,7 +973,7 @@ d_Computational'45'DELEG_1088 v0
                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
                                                                                     v12)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                               (coe v0) (coe v2)
                                                                               (coe v10)
                                                                               (coe
@@ -985,7 +985,7 @@ d_Computational'45'DELEG_1088 v0
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                     (coe v9)))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'dereg_1296
+                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'dereg_1302
                                                                            v17))
                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                        else coe
@@ -1161,11 +1161,11 @@ d_Computational'45'DELEG_1088 v0
                                                                                           (0 ::
                                                                                              Integer))))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                               (coe v0) (coe v2)
                                                                               (coe v10) (coe v9)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'reg_1366
+                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'reg_1372
                                                                            v17))
                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                        else coe
@@ -1317,7 +1317,7 @@ d_Computational'45'POOL_1192 v0
                                                   MAlonzo.Code.Ledger.Certs.d_retiring_910
                                                   (coe v2)))
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'regpool_1222)))
+                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'regpool_1228)))
                                else coe
                                       seq (coe v9)
                                       (coe
@@ -1366,7 +1366,7 @@ d_Computational'45'POOL_1192 v0
                                        (coe v6)))
                                  (coe MAlonzo.Code.Ledger.Certs.d_retiring_910 (coe v2)))))
                         (coe
-                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'retirepool_1224))
+                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'retirepool_1230))
               _ -> coe v4))
 -- Ledger.Conway.Conformance.Certs.Properties.Computational-GOVCERT
 d_Computational'45'GOVCERT_1218 ::
@@ -1553,11 +1553,11 @@ d_Computational'45'GOVCERT_1218 v0
                                                                                  (coe v7)))
                                                                            (coe v8)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                               (coe v0) (coe v3)
                                                                               (coe v10) (coe v9)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'regdrep_1440
+                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'regdrep_1446
                                                                            v18))
                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                        else coe
@@ -1657,11 +1657,11 @@ d_Computational'45'GOVCERT_1218 v0
                                                                                     v12)))
                                                                            (coe v8)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                               (coe v0) (coe v3)
                                                                               (coe v10) (coe v9)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'deregdrep_1442
+                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'deregdrep_1448
                                                                            v17))
                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                        else coe
@@ -1787,11 +1787,11 @@ d_Computational'45'GOVCERT_1218 v0
                                                                                    (coe v13)))
                                                                              (coe v8)))
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                           (coe v0) (coe v3)
                                                                           (coe v10) (coe v9)))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'ccreghot_1444)))
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'ccreghot_1450)))
                                                        else coe
                                                               seq (coe v16)
                                                               (coe
@@ -2217,7 +2217,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                     (0 ::
                                                                                                                        Integer))))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                                                         (coe
                                                                                                            v0)
                                                                                                         (coe
@@ -2227,7 +2227,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                         (coe
                                                                                                            v18)))
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1294
+                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1300
                                                                                                      v26) in
                                                                                         coe
                                                                                           (case coe
@@ -2246,7 +2246,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                           (coe
                                                                                                              v9))
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1448
+                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1454
                                                                                                           v29))
                                                                                              _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                    _ -> MAlonzo.RTE.mazUnreachableError
@@ -2481,7 +2481,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                            (coe
                                                                                                               v9))
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1448
+                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1454
                                                                                                            v29))
                                                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                                                        MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v27
@@ -2504,7 +2504,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                   (coe
                                                                                                                      v9))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1450
+                                                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1456
                                                                                                                   v30))
                                                                                                      _ -> MAlonzo.RTE.mazUnreachableError
                                                                                               MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v28
@@ -2527,7 +2527,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                          (coe
                                                                                                                             v30))
                                                                                                                       (coe
-                                                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1452
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1458
                                                                                                                          v31))
                                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                                                                      MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v29
@@ -2788,7 +2788,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
                                                                                                               v19)))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                                                         (coe
                                                                                                            v0)
                                                                                                         (coe
@@ -2806,7 +2806,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                               (coe
                                                                                                                  v18)))))
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'dereg_1296
+                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'dereg_1302
                                                                                                      v24) in
                                                                                         coe
                                                                                           (case coe
@@ -2825,7 +2825,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                           (coe
                                                                                                              v9))
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1448
+                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1454
                                                                                                           v27))
                                                                                              _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                    _ -> MAlonzo.RTE.mazUnreachableError
@@ -2916,7 +2916,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                            (coe
                                                                                                               v9))
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1448
+                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1454
                                                                                                            v27))
                                                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                                                        MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v25
@@ -2939,7 +2939,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                   (coe
                                                                                                                      v9))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1450
+                                                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1456
                                                                                                                   v28))
                                                                                                      _ -> MAlonzo.RTE.mazUnreachableError
                                                                                               MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v26
@@ -2962,7 +2962,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                          (coe
                                                                                                                             v28))
                                                                                                                       (coe
-                                                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1452
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1458
                                                                                                                          v29))
                                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                                                                      MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v27
@@ -3121,7 +3121,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                     (0 ::
                                                                                                                        Integer))))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1102
+                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1108
                                                                                                         (coe
                                                                                                            v0)
                                                                                                         (coe
@@ -3131,7 +3131,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                         (coe
                                                                                                            v18)))
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'reg_1366
+                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'reg_1372
                                                                                                      v24) in
                                                                                         coe
                                                                                           (case coe
@@ -3150,7 +3150,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                           (coe
                                                                                                              v9))
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1448
+                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1454
                                                                                                           v27))
                                                                                              _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                    _ -> MAlonzo.RTE.mazUnreachableError
@@ -3239,7 +3239,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                            (coe
                                                                                                               v9))
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1448
+                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1454
                                                                                                            v27))
                                                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                                                        MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v25
@@ -3262,7 +3262,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                   (coe
                                                                                                                      v9))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1450
+                                                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1456
                                                                                                                   v28))
                                                                                                      _ -> MAlonzo.RTE.mazUnreachableError
                                                                                               MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v26
@@ -3285,7 +3285,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                                          (coe
                                                                                                                             v28))
                                                                                                                       (coe
-                                                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1452
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1458
                                                                                                                          v29))
                                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                                                                      MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v27
@@ -3341,7 +3341,7 @@ d_Computational'45'CERT_1436 v0
                                                                                          (coe v21)
                                                                                          (coe v9))
                                                                                       (coe
-                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1450
+                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1456
                                                                                          v22))
                                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                                      MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v20
@@ -3362,7 +3362,7 @@ d_Computational'45'CERT_1436 v0
                                                                                                 (coe
                                                                                                    v22))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1452
+                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1458
                                                                                                 v23))
                                                                                    _ -> MAlonzo.RTE.mazUnreachableError
                                                                             MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v21
@@ -4110,7 +4110,7 @@ du_goal_1996 v0 v1 v2 v3 v4 v5
                                                         v1
                                                         (let v11
                                                                = coe
-                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_39067
+                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_39523
                                                                    (coe v2) (coe v3) (coe v1)
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1062
@@ -4154,7 +4154,7 @@ du_goal_1996 v0 v1 v2 v3 v4 v5
                                                          coe
                                                            (MAlonzo.Code.Ledger.PParams.d_drepActivity_376
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_39041
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_39497
                                                                  (coe v11)))) in
                                               coe (coe (\ v12 -> v11)))
                                              (coe
@@ -4190,7 +4190,7 @@ du_goal_1996 v0 v1 v2 v3 v4 v5
                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1082
                                              (coe v5)))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'base_1532
+                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'base_1538
                                     v9))
                        _ -> MAlonzo.RTE.mazUnreachableError
                 else coe
