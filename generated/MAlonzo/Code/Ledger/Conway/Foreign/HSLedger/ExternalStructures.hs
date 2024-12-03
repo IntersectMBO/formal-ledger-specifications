@@ -5797,7 +5797,7 @@ du_HSAbstractFunctions_2356 ::
 du_HSAbstractFunctions_2356
   = coe
       MAlonzo.Code.Ledger.Abstract.C_AbstractFunctions'46'constructor_2981
-      (coe (\ v0 v1 -> 0 :: Integer)) (coe (\ v0 -> v0))
+      (coe (\ v0 v1 -> 0 :: Integer)) (coe (\ v0 -> 0 :: Integer))
       (coe
          MAlonzo.Code.Ledger.Abstract.C_indexOf'46'constructor_2689
          (coe (\ v0 v1 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
