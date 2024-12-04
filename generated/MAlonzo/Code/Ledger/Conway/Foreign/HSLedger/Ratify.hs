@@ -626,7 +626,7 @@ d_Conv'45'RatifyState_216
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304)))
+                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226)))
                            v2))
                      (coe v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
@@ -974,7 +974,7 @@ d_Conv'45'RatifyState_216
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304)))
+                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226)))
                            (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.d_elems_38 (coe v2))))
                      (coe v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
@@ -987,7 +987,7 @@ ratifyDebug ::
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () ()
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
-       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_9075) ->
+       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915) ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
 ratifyDebug = coe d_ratify'45'debug_218
 d_ratify'45'debug_218 ::
@@ -997,7 +997,7 @@ d_ratify'45'debug_218 ::
      AgdaAny AgdaAny
      (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
         AgdaAny AgdaAny Integer Integer)
-     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_9075] ->
+     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915] ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
 d_ratify'45'debug_218 v0 v1 v2
   = coe
@@ -1027,12 +1027,12 @@ d_govActionInfo_246 ::
      AgdaAny AgdaAny
      (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
         AgdaAny AgdaAny Integer Integer)
-     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_9075] ->
+     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915] ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     AgdaAny AgdaAny
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        AgdaAny AgdaAny Integer Integer)
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_9075 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
 d_govActionInfo_246 v0 v1 ~v2 v3 = du_govActionInfo_246 v0 v1 v3
 du_govActionInfo_246 ::
@@ -1042,7 +1042,7 @@ du_govActionInfo_246 ::
     AgdaAny AgdaAny
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        AgdaAny AgdaAny Integer Integer)
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_9075 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
 du_govActionInfo_246 v0 v1 v2
   = case coe v2 of
@@ -1358,13 +1358,13 @@ du_govActionInfo_246 v0 v1 v2
                                MAlonzo.Code.Ledger.GovernanceActions.d_action_796
                                (coe
                                   MAlonzo.Code.Foreign.Convertible.d_from_20
-                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                   v4))
                             (coe
                                MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
                                (coe
                                   MAlonzo.Code.Foreign.Convertible.d_from_20
-                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                   v4))))
                       (coe
                          MAlonzo.Code.Ledger.Ratify.d_stakeDistrs_1974
@@ -1660,13 +1660,13 @@ du_govActionInfo_246 v0 v1 v2
                             MAlonzo.Code.Ledger.GovernanceActions.d_action_796
                             (coe
                                MAlonzo.Code.Foreign.Convertible.d_from_20
-                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                v4))
                          (coe
                             MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
                             (coe
                                MAlonzo.Code.Foreign.Convertible.d_from_20
-                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                v4)))))
                 (coe
                    MAlonzo.Code.Data.String.Base.d__'43''43'__20
@@ -1689,7 +1689,7 @@ du_govActionInfo_246 v0 v1 v2
                                        d_Conv'45'RatifyState_216 v1))
                                  (coe
                                     MAlonzo.Code.Foreign.Convertible.d_from_20
-                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                     v4)
                                  (coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_668) in
                        coe
@@ -2015,13 +2015,13 @@ du_govActionInfo_246 v0 v1 v2
                                               MAlonzo.Code.Ledger.GovernanceActions.d_action_796
                                               (coe
                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                  v4))
                                            (coe
                                               MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
                                               (coe
                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                  v4))))
                                      (coe
                                         MAlonzo.Code.Ledger.Ratify.d_stakeDistrs_1974
@@ -2320,13 +2320,13 @@ du_govActionInfo_246 v0 v1 v2
                                            MAlonzo.Code.Ledger.GovernanceActions.d_action_796
                                            (coe
                                               MAlonzo.Code.Foreign.Convertible.d_from_20
-                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                               v4))
                                         (coe
                                            MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
                                            (coe
                                               MAlonzo.Code.Foreign.Convertible.d_from_20
-                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                               v4)))))
                                (coe
                                   MAlonzo.Code.Data.String.Base.d__'43''43'__20
@@ -2349,7 +2349,7 @@ du_govActionInfo_246 v0 v1 v2
                                                       d_Conv'45'RatifyState_216 v1))
                                                 (coe
                                                    MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                    v4)
                                                 (coe
                                                    MAlonzo.Code.Ledger.GovernanceActions.C_DRep_666) in
@@ -2696,13 +2696,13 @@ du_govActionInfo_246 v0 v1 v2
                                                              MAlonzo.Code.Ledger.GovernanceActions.d_action_796
                                                              (coe
                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                                 v4))
                                                           (coe
                                                              MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
                                                              (coe
                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                                 v4))))
                                                     (coe
                                                        MAlonzo.Code.Ledger.Ratify.d_stakeDistrs_1974
@@ -3014,13 +3014,13 @@ du_govActionInfo_246 v0 v1 v2
                                                           MAlonzo.Code.Ledger.GovernanceActions.d_action_796
                                                           (coe
                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                              v4))
                                                        (coe
                                                           MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
                                                           (coe
                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                              v4)))))
                                               (coe
                                                  MAlonzo.Code.Data.String.Base.d__'43''43'__20
@@ -3043,7 +3043,7 @@ du_govActionInfo_246 v0 v1 v2
                                                                      d_Conv'45'RatifyState_216 v1))
                                                                (coe
                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304
+                                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                                   v4)
                                                                (coe
                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_664) in
@@ -3075,7 +3075,7 @@ ratifyStep ::
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () ()
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
-       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_9075) ->
+       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915) ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
     MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Empty_8
     T_RatifyState_9421
@@ -3087,7 +3087,7 @@ d_ratify'45'step_300 ::
      AgdaAny AgdaAny
      (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
         AgdaAny AgdaAny Integer Integer)
-     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_9075] ->
+     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915] ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
     MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Empty_8
     T_RatifyState_9421
@@ -3110,7 +3110,7 @@ d_ratify'45'step_300 v0
                      (coe
                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                   (coe
-                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_304)))
+                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226)))
             (coe
                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.du_Conv'45'ComputationResult_88
                (coe
@@ -3165,7 +3165,7 @@ check_MkRatifyState_9423 ::
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () ()
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
-       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_9075) ->
+       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915) ->
   Bool -> T_RatifyState_9421
 check_MkRatifyState_9423 = MkRatifyState
 cover_RatifyState_9421 :: RatifyState -> ()

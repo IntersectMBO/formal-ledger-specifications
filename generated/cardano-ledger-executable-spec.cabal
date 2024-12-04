@@ -391,6 +391,7 @@ library
         MAlonzo.Code.Ledger.Script
         MAlonzo.Code.Ledger.Abstract
         MAlonzo.Code.Ledger.Ratify.Properties
+        MAlonzo.Code.Ledger.Gov.Properties
         MAlonzo.Code.Ledger.Transaction
         MAlonzo.Code.Ledger.GovernanceActions
         MAlonzo.Code.Ledger.Types.GovStructure
