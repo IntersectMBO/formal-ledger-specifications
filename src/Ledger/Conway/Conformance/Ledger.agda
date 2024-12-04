@@ -14,7 +14,7 @@ module Ledger.Conway.Conformance.Ledger
 
 open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Gov txs
-open import Ledger.Conway.Conformance.Utxo txs abs
+open import Ledger.Conway.Conformance.Utxo txs abs hiding (module L)
 open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
@@ -70,7 +70,7 @@ data
 
   LEDGER-V :
     let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ
-        utxoSt'' = record utxoSt' { deposits = updateDeposits pparams txb (deposits utxoSt') }
+        utxoSt'' = record utxoSt' { deposits = L.updateDeposits pparams txb (deposits utxoSt') }
      in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'

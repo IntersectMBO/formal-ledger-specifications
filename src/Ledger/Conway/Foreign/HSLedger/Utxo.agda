@@ -54,15 +54,15 @@ module _ (ext : ExternalFunctions) where
           "Consumed:" ∷
           ("\tInputs:      \t" +ˢ show (L.balance (utxo ∣ txins))) ∷
           ("\tMint:        \t" +ˢ show mint) ∷
-          ("\tRefunds:     \t" +ˢ show (inject (depositRefunds pparams (from st) body))) ∷
+          ("\tRefunds:     \t" +ˢ show (inject (L.depositRefunds pparams (from st) body))) ∷
           ("\tWithdrawals: \t" +ˢ show (inject (getCoin txwdrls))) ∷
-          ("\tTotal:       \t" +ˢ show (consumed pparams (from st) body)) ∷
+          ("\tTotal:       \t" +ˢ show (L.consumed pparams (from st) body)) ∷
           "Produced:" ∷
           ("\tOutputs:     \t" +ˢ show (L.balance (L.outs body))) ∷
           ("\tDonations:   \t" +ˢ show (inject txdonation)) ∷
-          ("\tDeposits:    \t" +ˢ show (inject (newDeposits pparams (from st) body))) ∷
+          ("\tDeposits:    \t" +ˢ show (inject (L.newDeposits pparams (from st) body))) ∷
           ("\tFees:        \t" +ˢ show (inject txfee)) ∷
-          ("\tTotal:       \t" +ˢ show (produced pparams (from st) body)) ∷
+          ("\tTotal:       \t" +ˢ show (L.produced pparams (from st) body)) ∷
           []
 
   {-# COMPILE GHC utxo-debug as utxoDebug #-}
