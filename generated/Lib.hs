@@ -6,7 +6,7 @@ module Lib
 import MAlonzo.Code.Ledger.Conway.Foreign.HSTypes              as X
   (HSSet(..), HSMap(..), ComputationResult(..), Rational(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address     as X
-  (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr)
+  (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr, HSVKey (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams     as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction as X
@@ -35,7 +35,8 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.NewEpoch    as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify      as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep, ratifyDebug)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo        as X
-  (UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer, utxoDebug)
+  ( UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer
+  , utxoDebug, utxowDebug)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes   as X
   (Coin, ExUnits, Epoch)
 import MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions    as X

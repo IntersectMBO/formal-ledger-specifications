@@ -49,7 +49,6 @@ import qualified MAlonzo.Code.Data.Rational.Show
 import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
-import qualified MAlonzo.Code.Interface.Hashable
 import qualified MAlonzo.Code.Ledger.Crypto
 import qualified MAlonzo.Code.Ledger.Script
 import qualified MAlonzo.Code.Ledger.Types.Epoch
@@ -4967,8 +4966,7 @@ d_ppdWellFormed_1306 = erased
 -- Ledger.PParams.GovParams
 d_GovParams_1312 a0 a1 a2 = ()
 data T_GovParams_1312
-  = C_GovParams'46'constructor_1472151 T_PParamsDiff_1280
-                                       MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
+  = C_GovParams'46'constructor_1472063 T_PParamsDiff_1280
                                        MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 -- Ledger.PParams._.UpdateT
 d_UpdateT_1318 :: T_PParamsDiff_1280 -> ()
@@ -4994,79 +4992,41 @@ d_updateGroups_1326 ::
   T_PParamsDiff_1280 -> AgdaAny -> [T_PParamGroup_168]
 d_updateGroups_1326 v0 = coe d_updateGroups_1298 (coe v0)
 -- Ledger.PParams.GovParams.ppUpd
-d_ppUpd_1344 :: T_GovParams_1312 -> T_PParamsDiff_1280
-d_ppUpd_1344 v0
+d_ppUpd_1330 :: T_GovParams_1312 -> T_PParamsDiff_1280
+d_ppUpd_1330 v0
   = case coe v0 of
-      C_GovParams'46'constructor_1472151 v1 v2 v3 -> coe v1
+      C_GovParams'46'constructor_1472063 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.PParams.GovParams._.UpdateT
-d_UpdateT_1348 :: T_GovParams_1312 -> ()
-d_UpdateT_1348 = erased
+d_UpdateT_1334 :: T_GovParams_1312 -> ()
+d_UpdateT_1334 = erased
 -- Ledger.PParams.GovParams._.applyUpdate
-d_applyUpdate_1350 ::
+d_applyUpdate_1336 ::
   T_GovParams_1312 -> T_PParams_244 -> AgdaAny -> T_PParams_244
-d_applyUpdate_1350 v0
-  = coe d_applyUpdate_1296 (coe d_ppUpd_1344 (coe v0))
+d_applyUpdate_1336 v0
+  = coe d_applyUpdate_1296 (coe d_ppUpd_1330 (coe v0))
 -- Ledger.PParams.GovParams._.ppWF?
-d_ppWF'63'_1352 ::
+d_ppWF'63'_1338 ::
   T_GovParams_1312 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_ppWF'63'_1352 v0
-  = coe d_ppWF'63'_1304 (coe d_ppUpd_1344 (coe v0))
+d_ppWF'63'_1338 v0
+  = coe d_ppWF'63'_1304 (coe d_ppUpd_1330 (coe v0))
 -- Ledger.PParams.GovParams._.ppdWellFormed
-d_ppdWellFormed_1354 ::
+d_ppdWellFormed_1340 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
   T_GovParams_1312 -> AgdaAny -> ()
-d_ppdWellFormed_1354 = erased
+d_ppdWellFormed_1340 = erased
 -- Ledger.PParams.GovParams._.updateGroups
-d_updateGroups_1356 ::
+d_updateGroups_1342 ::
   T_GovParams_1312 -> AgdaAny -> [T_PParamGroup_168]
-d_updateGroups_1356 v0
-  = coe d_updateGroups_1298 (coe d_ppUpd_1344 (coe v0))
--- Ledger.PParams.GovParams.ppHashingScheme
-d_ppHashingScheme_1358 ::
-  T_GovParams_1312 -> MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
-d_ppHashingScheme_1358 v0
-  = case coe v0 of
-      C_GovParams'46'constructor_1472151 v1 v2 v3 -> coe v2
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.PParams.GovParams._.DecEq-T
-d_DecEq'45'T_1362 ::
-  T_GovParams_1312 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'T_1362 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_DecEq'45'T_26
-      (coe d_ppHashingScheme_1358 (coe v0))
--- Ledger.PParams.GovParams._.DecEq-THash
-d_DecEq'45'THash_1364 ::
-  T_GovParams_1312 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'THash_1364 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
-      (coe d_ppHashingScheme_1358 (coe v0))
--- Ledger.PParams.GovParams._.THash
-d_THash_1366 :: T_GovParams_1312 -> ()
-d_THash_1366 = erased
--- Ledger.PParams.GovParams._.Show-THash
-d_Show'45'THash_1368 ::
-  T_GovParams_1312 -> MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'THash_1368 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_Show'45'THash_24
-      (coe d_ppHashingScheme_1358 (coe v0))
--- Ledger.PParams.GovParams._.T-Hashable
-d_T'45'Hashable_1370 ::
-  T_GovParams_1312 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
-d_T'45'Hashable_1370 v0
-  = coe
-      MAlonzo.Code.Ledger.Crypto.d_T'45'Hashable_28
-      (coe d_ppHashingScheme_1358 (coe v0))
+d_updateGroups_1342 v0
+  = coe d_updateGroups_1298 (coe d_ppUpd_1330 (coe v0))
 -- Ledger.PParams.GovParams.DecEq-UpdT
-d_DecEq'45'UpdT_1372 ::
+d_DecEq'45'UpdT_1344 ::
   T_GovParams_1312 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'UpdT_1372 v0
+d_DecEq'45'UpdT_1344 v0
   = case coe v0 of
-      C_GovParams'46'constructor_1472151 v1 v2 v3 -> coe v3
+      C_GovParams'46'constructor_1472063 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
