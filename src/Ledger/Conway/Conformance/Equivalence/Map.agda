@@ -4,8 +4,10 @@ module Ledger.Conway.Conformance.Equivalence.Map where
 
 open import Ledger.Prelude
 open import Axiom.Set.Properties th
--- import Relation.Binary.Reasoning.Setoid as SetoidReasoning
--- open module SetReasoning {A} = SetoidReasoning (≡ᵉ-Setoid {A})
+open import Data.These using (These; this; that; these; fold)
+open import Data.Product using (swap)
+import Relation.Binary.Reasoning.Setoid as SetoidReasoning
+open import Relation.Binary using (IsEquivalence)
 open import Relation.Binary.Bundles
 open module SetSetoid {A} = Setoid (≡ᵉ-Setoid {A}) using () renaming (refl to ≈-refl; trans to infixr 1 _⟨≈⟩_)
 
@@ -31,23 +33,97 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
     opaque
       -- unfolding List-Model List-Modelᵈ to-sp
 
+      open Equivalence
+
       filterᵐ-∪⁺-distr : (m₁ m₂ : A ⇀ B) → filterᵐ P (m₁ ∪⁺ m₂) ≡ᵐ filterᵐ P m₁ ∪⁺ filterᵐ P m₂
       filterᵐ-∪⁺-distr m₁ m₂ = {!!}
+      -- I don't think `filterᵐ-∪⁺-distr` is true.
+      -- Counter-example:
+      -- Suppose `m₁ˢ = m₂ˢ = {(0, 1)}`, `P (0, 1)`, and `¬ P (0, 2)`.
+      -- Then `m₁ ∪⁺ m₂ ≡ {(0, 2)}` so (lhs) `filterᵐ P (m₁ ∪⁺ m₂)` is empty,
+      -- but `(filterᵐ P m₁)ˢ ≡ (filterᵐ P m₂)ˢ = {(0, 1)}` so (rhs) `filterᵐ P m₁ ∪⁺ filterᵐ P m₂` contains {(0, 2)}.
+
+      ------------------------------------------------------------------------------------------------
+      -- ∪⁺ is simply reduce by key; we should probably write helper functions to
+      -- make ∪⁺ easier to reason about.
+      --
+      -- These are not used below; they're just for reference.
+      F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ x → x ∈ dom (m₁ ˢ) ∪ dom (m₂ ˢ)) → A × B
+      F[ m₁ , m₂ ] = λ (x , x∈) → x , (fold id id _◇_) (unionThese m₁ m₂ x x∈)
+
+      _⊕_ : (m₁ m₂ : A ⇀ B) → ℙ (A × B)
+      m₁ ⊕ m₂ = mapˢ F[ m₁ , m₂ ] (incl-set (dom (m₁ ˢ) ∪ dom (m₂ ˢ)))
+
+      ∪⁺-def : {m₁ m₂ : A ⇀ B} {x : A × B} → x ∈ (m₁ ∪⁺ m₂) ˢ ⇔ x ∈ m₁ ⊕ m₂
+      ∪⁺-def = mk⇔ id id
+      ------------------------------------------------------------------------------------------------
+
 
       filterᵐ-singleton-true : ∀ {k v} → P (k , v) → filterᵐ P ❴ k , v ❵ ≡ᵐ ❴ k , v ❵
-      filterᵐ-singleton-true p = {!!}
+      filterᵐ-singleton-true p .proj₁ = proj₂ ∘ (from ∈-filter)
+      filterᵐ-singleton-true {k}{v} p .proj₂ {a} x = to ∈-filter (subst P (sym (from ∈-singleton x)) p , x)
 
       filterᵐ-singleton-false : ∀ {k v} → ¬ P (k , v) → filterᵐ P ❴ k , v ❵ ≡ᵐ ∅
-      filterᵐ-singleton-false p = {!!}
+      filterᵐ-singleton-false ¬p .proj₁ x =
+        ⊥-elim $ ¬p $ subst P (from ∈-singleton $ proj₂ (from ∈-filter x)) (proj₁ $ from ∈-filter x)
+      filterᵐ-singleton-false _ .proj₂ = ⊥-elim ∘ ∉-∅
+
+      resᶜ-dom∉⁻ : ∀ m {ks}{a : A}{b : B} → (a , b) ∈ (m ∣ ks ᶜ) ˢ → ((a , b) ∈ m ˢ × a ∉ ks)
+      resᶜ-dom∉⁻ m x = (ex-⊆ x) , proj₁ (∈-resᶜ-dom⁻ (∈-dom x))
+
+      resᶜ-dom∉⁺ : ∀ m {ks}{a : A}{b : B} → ((a , b) ∈ m ˢ × a ∉ ks) → (a , b) ∈ (m ∣ ks ᶜ) ˢ
+      resᶜ-dom∉⁺ m = to ∈-filter ∘ swap
 
       filterᵐ-restrict : ∀ m {ks} → filterᵐ P (m ∣ ks ᶜ) ≡ᵐ filterᵐ P m ∣ ks ᶜ
-      filterᵐ-restrict m = {!!}
+
+      -- I'm sure there's a slicker way to prove this; the proof here is straight-forward.
+      filterᵐ-restrict m {ks} .proj₁ {(a , b)} h = Goal
+        where
+        ξ : P (a , b) × (a , b) ∈ (m ∣ ks ᶜ)ˢ
+        ξ = from ∈-filter h
+
+        ξ' : (a , b) ∈ m ˢ × a ∉ ks
+        ξ' = resᶜ-dom∉⁻ m {ks}{a}{b} (proj₂ ξ)
+
+        Goal : (a , b) ∈ (filterᵐ P m ∣ ks ᶜ) ˢ
+        Goal = resᶜ-dom∉⁺ (filterᵐ P m) ((to ∈-filter ((proj₁ ξ) , (proj₁ ξ'))) , (proj₂ ξ'))
+
+      filterᵐ-restrict m {ks} .proj₂ {(a , b)} h = Goal
+        where
+        ξ : (a , b) ∈ ((filterᵐ P m) ˢ) × a ∉ ks
+        ξ = resᶜ-dom∉⁻ (filterᵐ P m) {ks}{a}{b} h
+
+        ξ' : P (a , b) × (a , b) ∈ m ˢ
+        ξ' = from ∈-filter (proj₁ ξ)
+
+        Goal : (a , b) ∈ (filterᵐ P (m ∣ ks ᶜ))ˢ
+        Goal = to ∈-filter ((proj₁ ξ') , (resᶜ-dom∉⁺ m ((proj₂ ξ') , (proj₂ ξ))))
+
+
+      open SetoidReasoning (≡ᵉ-Setoid{Σ A (λ x → B)})
+      module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Σ A (λ x → B)})
+
+      ∈-filter-res- : {m : A ⇀ B} {x : A × B} {k : A} → x ∈ (filterᵐ P m ∣ ❴ k ❵ˢ) ˢ → P x × ∃[ b ] x ≡ (k , b)
+      ∈-filter-res- {m} x∈ = (proj₁ (from ∈-filter (res-⊆ x∈))) , (res-singleton''{m = filterᵐ P m} x∈)
 
       restrict-singleton-filterᵐ-false : ∀ m {k} → (∀ {v} → ¬ P (k , v)) → filterᵐ P m ∣ ❴ k ❵ ᶜ ≡ᵐ filterᵐ P m
-      restrict-singleton-filterᵐ-false m ¬p = {!!}
+      restrict-singleton-filterᵐ-false m {k} ¬p = ≡ᵉ.sym (begin
+        (filterᵐ P m)ˢ
+          ≈⟨ ≡ᵉ.sym (res-ex-∪ Dec-∈-singleton) ⟩
+        ((filterᵐ P m ∣ ❴ k ❵ˢ) ˢ) ∪ ((filterᵐ P m ∣ ❴ k ❵ˢ ᶜ) ˢ)
+          ≈⟨ ∪-cong ¬P→res-∅ ≡ᵉ.refl ⟩
+        (∅ ˢ) ∪ ((filterᵐ P m ∣ ❴ k ❵ˢ ᶜ) ˢ)
+          ≈⟨ ∪-identityˡ _ ⟩
+        (filterᵐ P m ∣ ❴ k ❵ˢ ᶜ) ˢ
+          ∎)
+          where
+          ¬P→res-∅ :  (filterᵐ P m ∣ ❴ k ❵)ˢ ≡ᵉ (∅ᵐ ˢ)
+          ¬P→res-∅ .proj₁ {a} x with ∈-filter-res- {m} x
+          ... | px , b , refl = ⊥-elim (¬p {b} px)
+          ¬P→res-∅ .proj₂ = ⊥-elim ∘ ∉-∅
 
       filterᵐ-∈ : ∀ m {k v} → P (k , v) → (k , v) ∈ m → (k , v) ∈ filterᵐ P m
-      filterᵐ-∈ m p i = {!!}
+      filterᵐ-∈ m = curry $ to ∈-filter
 
     opaque
       lem-add-included : ∀ {m k v} → P (k , v) → filterᵐ P (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P m ∪⁺ ❴ k , v ❵
