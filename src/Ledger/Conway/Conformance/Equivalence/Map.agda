@@ -10,14 +10,38 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Binary.Bundles
 open module SetSetoid {A} = Setoid (≡ᵉ-Setoid {A}) using () renaming (refl to ≈-refl; trans to infixr 1 _⟨≈⟩_)
+open import Data.Product.Properties using (×-≡,≡←≡; ×-≡,≡→≡)
 
 module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ where
 
   opaque
     -- unfolding List-Model List-Modelᵈ to-sp
 
+    open Equivalence
+
+    ------------------------------------------------------------------------------------------------
+    -- ∪⁺ is simply reduce by key; we should probably write helper functions to
+    -- make ∪⁺ easier to reason about.
+    --
+    -- These are not used below; they're just for reference.
+    F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ x → x ∈ dom (m₁ ˢ) ∪ dom (m₂ ˢ)) → A × B
+    F[ m₁ , m₂ ] = λ (x , x∈) → x , (fold id id _◇_) (unionThese m₁ m₂ x x∈)
+
+    _⊕_ : (m₁ m₂ : A ⇀ B) → ℙ (A × B)
+    m₁ ⊕ m₂ = mapˢ F[ m₁ , m₂ ] (incl-set (dom (m₁ ˢ) ∪ dom (m₂ ˢ)))
+
+    ∪⁺-def : {m₁ m₂ : A ⇀ B} {x : A × B} → x ∈ (m₁ ∪⁺ m₂) ˢ ⇔ x ∈ m₁ ⊕ m₂
+    ∪⁺-def = mk⇔ id id
+    ------------------------------------------------------------------------------------------------
+
+    resᶜ-dom∉⁻ : ∀ m {ks}{a : A}{b : B} → (a , b) ∈ (m ∣ ks ᶜ) ˢ → ((a , b) ∈ m ˢ × a ∉ ks)
+    resᶜ-dom∉⁻ m x = (ex-⊆ x) , proj₁ (∈-resᶜ-dom⁻ (∈-dom x))
+
+    resᶜ-dom∉⁺ : ∀ m {ks}{a : A}{b : B} → ((a , b) ∈ m ˢ × a ∉ ks) → (a , b) ∈ (m ∣ ks ᶜ) ˢ
+    resᶜ-dom∉⁺ m = to ∈-filter ∘ swap
+
     ∪⁺-cong-l : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m ∪⁺ m₁ ≡ᵐ m ∪⁺ m₂
-    ∪⁺-cong-l m m₁ m₂ = {!!}
+    ∪⁺-cong-l m m₁ m₂ m₁≡m₂ = {!!}
 
     ∪⁺-cong-r : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m₁ ∪⁺ m ≡ᵐ m₂ ∪⁺ m
     ∪⁺-cong-r m m₁ m₂ = {!!}
@@ -26,7 +50,10 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
     ∪⁺-id-r m = {!!}
 
     restrict-cong : (m₁ m₂ : A ⇀ B) (ks : ℙ A) → m₁ ≡ᵐ m₂ → (m₁ ∣ ks ᶜ) ≡ᵐ (m₂ ∣ ks ᶜ)
-    restrict-cong m₁ m₂ ks eq = {!!}
+    restrict-cong m₁ m₂ ks (m₁⊆m₂ , _) .proj₁ ab∈ with resᶜ-dom∉⁻ m₁ ab∈
+    ... | ab∈ , a∉ = resᶜ-dom∉⁺ m₂ (m₁⊆m₂ ab∈ , a∉)
+    restrict-cong m₁ m₂ ks (m₁⊆m₂ , m₂⊆m₁) .proj₂ ab∈ with resᶜ-dom∉⁻ m₂ ab∈
+    ... | ab∈ , a∉ = resᶜ-dom∉⁺ m₁ (m₂⊆m₁ ab∈ , a∉)
 
   module _ {P : A × B → Type} ⦃ _ : P ⁇¹ ⦄ where
 
@@ -43,20 +70,6 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
       -- Then `m₁ ∪⁺ m₂ ≡ {(0, 2)}` so (lhs) `filterᵐ P (m₁ ∪⁺ m₂)` is empty,
       -- but `(filterᵐ P m₁)ˢ ≡ (filterᵐ P m₂)ˢ = {(0, 1)}` so (rhs) `filterᵐ P m₁ ∪⁺ filterᵐ P m₂` contains {(0, 2)}.
 
-      ------------------------------------------------------------------------------------------------
-      -- ∪⁺ is simply reduce by key; we should probably write helper functions to
-      -- make ∪⁺ easier to reason about.
-      --
-      -- These are not used below; they're just for reference.
-      F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ x → x ∈ dom (m₁ ˢ) ∪ dom (m₂ ˢ)) → A × B
-      F[ m₁ , m₂ ] = λ (x , x∈) → x , (fold id id _◇_) (unionThese m₁ m₂ x x∈)
-
-      _⊕_ : (m₁ m₂ : A ⇀ B) → ℙ (A × B)
-      m₁ ⊕ m₂ = mapˢ F[ m₁ , m₂ ] (incl-set (dom (m₁ ˢ) ∪ dom (m₂ ˢ)))
-
-      ∪⁺-def : {m₁ m₂ : A ⇀ B} {x : A × B} → x ∈ (m₁ ∪⁺ m₂) ˢ ⇔ x ∈ m₁ ⊕ m₂
-      ∪⁺-def = mk⇔ id id
-      ------------------------------------------------------------------------------------------------
 
 
       filterᵐ-singleton-true : ∀ {k v} → P (k , v) → filterᵐ P ❴ k , v ❵ ≡ᵐ ❴ k , v ❵
@@ -67,12 +80,6 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
       filterᵐ-singleton-false ¬p .proj₁ x =
         ⊥-elim $ ¬p $ subst P (from ∈-singleton $ proj₂ (from ∈-filter x)) (proj₁ $ from ∈-filter x)
       filterᵐ-singleton-false _ .proj₂ = ⊥-elim ∘ ∉-∅
-
-      resᶜ-dom∉⁻ : ∀ m {ks}{a : A}{b : B} → (a , b) ∈ (m ∣ ks ᶜ) ˢ → ((a , b) ∈ m ˢ × a ∉ ks)
-      resᶜ-dom∉⁻ m x = (ex-⊆ x) , proj₁ (∈-resᶜ-dom⁻ (∈-dom x))
-
-      resᶜ-dom∉⁺ : ∀ m {ks}{a : A}{b : B} → ((a , b) ∈ m ˢ × a ∉ ks) → (a , b) ∈ (m ∣ ks ᶜ) ˢ
-      resᶜ-dom∉⁺ m = to ∈-filter ∘ swap
 
       filterᵐ-restrict : ∀ m {ks} → filterᵐ P (m ∣ ks ᶜ) ≡ᵐ filterᵐ P m ∣ ks ᶜ
 
