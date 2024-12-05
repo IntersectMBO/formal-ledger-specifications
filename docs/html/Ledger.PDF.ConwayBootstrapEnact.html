@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.PDF.ConwayBootstrapEnact</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Background">\section{Bootstrapping EnactState}
+
+</a><a id="37" class="Markup">\begin{code}[hide]</a>
+<a id="56" class="Symbol">{-#</a> <a id="60" class="Keyword">OPTIONS</a> <a id="68" class="Pragma">--safe</a> <a id="75" class="Symbol">#-}</a>
+<a id="79" class="Keyword">module</a> <a id="86" href="Ledger.PDF.ConwayBootstrapEnact.html" class="Module">Ledger.PDF.ConwayBootstrapEnact</a> <a id="118" class="Keyword">where</a>
+<a id="124" class="Markup">\end{code}</a><a id="134" class="Background">
+
+To form an \EnactState, some governance action IDs need to be
+provided. However, at the time of the initial hard fork into Conway
+there are no such previous actions. There are effectively two ways to
+solve this issue:
+
+\begin{itemize}
+\item populate those fields with IDs chosen in some manner (e.g. random, all zeros, etc.), or
+\item add a special value to the types to indicate this situation.
+\end{itemize}
+
+In the Haskell implementation the latter solution was chosen. This
+means that everything that deals with \GovActionID needs to be aware
+of this special case and handle it properly.
+
+This specification could have mirrored this choice, but it is not
+necessary here: since it is already necessary to assume the absence of
+hash-collisions (specifically first pre-image resistance) for various
+properties, we could pick arbitrary initial values to mirror this
+situation. Then, since \GovActionID contains a hash, that arbitrary
+initial value behaves just like a special case.
+</a></pre></body></html>
