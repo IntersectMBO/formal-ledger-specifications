@@ -62,7 +62,7 @@ unquoteDecl Show-HSVKey = derive-Show
 
 module Implementation where
   Network          = ℕ
-  SlotsPerEpochᶜ   = 100
+  SlotsPerEpochᶜ   = 4320 -- TODO pass this externally instead of hardcoding
   StabilityWindowᶜ = 10
   Quorum           = 1
   NetworkId        = 0 -- Testnet
