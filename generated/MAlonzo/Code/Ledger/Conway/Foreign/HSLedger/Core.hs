@@ -196,7 +196,7 @@ d_Network_44 :: ()
 d_Network_44 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.SlotsPerEpochᶜ
 d_SlotsPerEpoch'7580'_46 :: Integer
-d_SlotsPerEpoch'7580'_46 = coe (100 :: Integer)
+d_SlotsPerEpoch'7580'_46 = coe (4320 :: Integer)
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.StabilityWindowᶜ
 d_StabilityWindow'7580'_48 :: Integer
 d_StabilityWindow'7580'_48 = coe (10 :: Integer)
