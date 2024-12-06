@@ -72,6 +72,7 @@ castValidDepsᵈ {pp} {certs = cert ∷ _} eq (delegate   deps) = delegate      
 castValidDepsᵈ {pp} {deps₁} {deps₂}
                     {certs = cert ∷ _} eq (dereg h    deps) = dereg (proj₁ eq h) (castValidDepsᵈ (cong-updateCertDeposit
                                                                                                     pp cert {deps₁} {deps₂} eq) deps)
+castValidDepsᵈ {pp} {certs = cert ∷ _} eq (reg        deps) = reg (castValidDepsᵈ (cong-updateCertDeposit pp cert eq) deps)
 castValidDepsᵈ                         eq (regdrep    deps) = regdrep            (castValidDepsᵈ eq deps)
 castValidDepsᵈ                         eq (deregdrep  deps) = deregdrep          (castValidDepsᵈ eq deps)
 castValidDepsᵈ                         eq (regpool    deps) = regpool            (castValidDepsᵈ eq deps)
@@ -89,6 +90,7 @@ castValidDepsᵍ {pp} {deps₁} {deps₂}
 castValidDepsᵍ                         eq (regpool     deps) = regpool                (castValidDepsᵍ eq deps)
 castValidDepsᵍ                         eq (retirepool  deps) = retirepool             (castValidDepsᵍ eq deps)
 castValidDepsᵍ                         eq (ccreghot    deps) = ccreghot               (castValidDepsᵍ eq deps)
+castValidDepsᵍ                         eq (reg         deps) = reg (castValidDepsᵍ eq deps)
 
 validDDeps : ∀ {pp certs deps} → L.ValidCertDeposits pp deps certs → ValidDepsᵈ pp (certDDeps deps) certs
 validDDeps                L.[]             = []
@@ -100,7 +102,7 @@ validDDeps {deps = deps} (L.dereg h     v) = dereg      (filterᵐ-∈ deps Cred
 validDDeps {deps = deps} (L.deregdrep _ v) = deregdrep  (castValidDepsᵈ (lem-del-excluded deps λ ()) (validDDeps v))
 validDDeps               (L.ccreghot    v) = ccreghot   (validDDeps v)
 validDDeps               (L.retirepool  v) = retirepool (validDDeps v)
-validDDeps               (L.reg         v) = {!!} -- reg        (castValidDepsᵈ (lem-add-excluded λ ()) (validDDeps v))
+validDDeps {deps = deps} (L.reg         v) = reg ?
 
 validGDeps : ∀ {pp certs deps} → L.ValidCertDeposits pp deps certs → ValidDepsᵍ pp (certGDeps deps) certs
 validGDeps                L.[]             = []
@@ -112,4 +114,4 @@ validGDeps {deps = deps} (L.deregdrep h v) = deregdrep  (filterᵐ-∈ deps DRep
                                                         (castValidDepsᵍ (filterᵐ-restrict deps) (validGDeps v))
 validGDeps               (L.ccreghot    v) = ccreghot   (validGDeps v)
 validGDeps               (L.retirepool  v) = retirepool (validGDeps v)
-validGDeps (L.reg x) = {!!}
+validGDeps               (L.reg         v) = reg (castValidDepsᵍ (lem-add-excluded λ ()) (validGDeps v))
