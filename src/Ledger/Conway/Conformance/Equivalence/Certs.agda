@@ -57,6 +57,10 @@ data ValidDepsᵈ (pp : PParams) (deps : L.Deposits) : List L.DCert → Set wher
   ccreghot   : ∀ {c v certs}
              → ValidDepsᵈ pp deps certs
              → ValidDepsᵈ pp deps (L.ccreghot c v ∷ certs)
+  reg        : ∀ {kh p certs}
+             → ValidDepsᵈ pp deps certs
+             → ValidDepsᵈ pp deps (L.reg kh p ∷ certs)
+
 
 data ValidDepsᵍ (pp : PParams) (deps : L.Deposits) : List L.DCert → Set where
   []         : ValidDepsᵍ pp deps []
@@ -82,6 +86,9 @@ data ValidDepsᵍ (pp : PParams) (deps : L.Deposits) : List L.DCert → Set wher
   ccreghot   : ∀ {c v certs}
              → ValidDepsᵍ pp deps certs
              → ValidDepsᵍ pp deps (L.ccreghot c v ∷ certs)
+  reg        : ∀ {kh p certs}
+             → ValidDepsᵍ pp deps certs
+             → ValidDepsᵍ pp deps (L.reg kh p ∷ certs)
 
 record CertDeps* (pp : PParams) (dcerts : List L.DCert) : Set where
   constructor ⟦_,_,_,_⟧*
@@ -99,6 +106,7 @@ pattern retirepool*  ddeps gdeps = ⟦ _ , _ , retirepool ddeps , retirepool  gd
 pattern regdrep*     ddeps gdeps = ⟦ _ , _ , regdrep    ddeps , regdrep     gdeps ⟧*
 pattern deregdrep* v ddeps gdeps = ⟦ _ , _ , deregdrep  ddeps , deregdrep v gdeps ⟧*
 pattern ccreghot*    ddeps gdeps = ⟦ _ , _ , ccreghot   ddeps , ccreghot    gdeps ⟧*
+pattern reg*         ddeps gdeps = ⟦ _ , _ , reg        ddeps , reg         gdeps ⟧*
 
 open CertDeps*
 
@@ -113,6 +121,7 @@ updateCertDeps (retirepool*  ddeps gdeps) = ⟦ _ , _ , ddeps , gdeps ⟧*
 updateCertDeps (regdrep*     ddeps gdeps) = ⟦ _ , _ , ddeps , gdeps ⟧*
 updateCertDeps (deregdrep* _ ddeps gdeps) = ⟦ _ , _ , ddeps , gdeps ⟧*
 updateCertDeps (ccreghot*    ddeps gdeps) = ⟦ _ , _ , ddeps , gdeps ⟧*
+updateCertDeps (reg*         ddeps gdeps) = ⟦ _ , _ , ddeps , gdeps ⟧*
 
 updateCertDeps* : ∀ {pp} dcerts → CertDeps* pp dcerts → CertDeps* pp []
 updateCertDeps* []               deps = deps
@@ -146,6 +155,7 @@ instance
                  Γ C.⊢ (deposits .depsᵈ ⊢conv s) ⇀⦇ dcert ,DELEG⦈ (updateCertDeps deposits .depsᵈ ⊢conv s')
   DELEGToConf .convⁱ (delegate* _ _) (L.DELEG-delegate h) = C.DELEG-delegate h
   DELEGToConf .convⁱ (dereg* v _ _)  (L.DELEG-dereg h)    = C.DELEG-dereg (h , v)
+  DELEGToConf .convⁱ ⟦ depsᵈ₁ , depsᵍ₁ , reg v , reg w ⟧* (L.DELEG-reg h) = {!!}
 
   POOLToConf : ∀ {pp s dcert s'} → pp L.⊢ s ⇀⦇ dcert ,POOL⦈ s' ⭆ pp C.⊢ s ⇀⦇ dcert ,POOL⦈ s'
   POOLToConf .convⁱ _ (L.POOL-regpool h) = C.POOL-regpool h
@@ -171,6 +181,7 @@ instance
   CERTToConf .convⁱ deposits@(regdrep* _ _)     (L.CERT-vdel govcert) = C.CERT-vdel (deposits ⊢conv govcert)
   CERTToConf .convⁱ deposits@(deregdrep* _ _ _) (L.CERT-vdel govcert) = C.CERT-vdel (deposits ⊢conv govcert)
   CERTToConf .convⁱ deposits@(ccreghot* _ _)    (L.CERT-vdel govcert) = C.CERT-vdel (deposits ⊢conv govcert)
+  CERTToConf .convⁱ deposits@(reg* _ _)         (L.CERT-deleg deleg)  = C.CERT-deleg (deposits ⊢conv deleg)
 
   CERTS'ToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
               → CertDeps* pp dcerts
