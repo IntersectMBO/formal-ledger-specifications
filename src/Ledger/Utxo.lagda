@@ -222,6 +222,7 @@ instance
 \begin{code}
 certDeposit : DCert → PParams → Deposits
 certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
+certDeposit (reg c _)          pp  = ❴ CredentialDeposit c , pp .keyDeposit ❵
 certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
 certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
 certDeposit _                  _   = ∅
@@ -245,6 +246,9 @@ data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set
   regdrep    : ∀ {c v a certs}
              → ValidCertDeposits pp (deps ∪⁺ ❴ DRepDeposit c , v ❵) certs
              → ValidCertDeposits pp deps (regdrep c v a ∷ certs)
+  reg        : ∀ {c v certs}
+             → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , v ❵) certs
+             → ValidCertDeposits pp deps (reg c v ∷ certs)
   dereg      : ∀ {c d certs}
              → (CredentialDeposit c , d) ∈ deps
              → ValidCertDeposits pp (deps ∣ ❴ CredentialDeposit c ❵ ᶜ) certs
@@ -273,6 +277,8 @@ private
     mapDec retirepool (λ where (retirepool p) → p) (validCertDeposits? _ _)
   validCertDeposits? deps (ccreghot _ _ ∷ certs) =
     mapDec ccreghot (λ where (ccreghot p) → p) (validCertDeposits? _ _)
+  validCertDeposits? deps (reg _ _ ∷ certs) =
+    mapDec reg (λ where (reg p) → p) (validCertDeposits? _ _)
   validCertDeposits? deps (dereg c d ∷ certs) with ¿ (CredentialDeposit c , d) ∈ deps ¿
   ... | yes p = mapDec (dereg p)  (λ where (dereg _ d) → d) (validCertDeposits? _ _)
   ... | no ¬p = no (λ where (dereg p _) → ¬p p)
@@ -288,6 +294,12 @@ instance
 
 updateCertDeposits  : PParams → List DCert → Deposits → Deposits
 updateCertDeposits pp [] deposits = deposits
+\end{code}
+\begin{code}[hide]
+updateCertDeposits pp (reg c v ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (reg c v) pp)
+\end{code}
+\begin{code}
 updateCertDeposits pp (delegate c vd khs v ∷ certs) deposits
   = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (delegate c vd khs v) pp)
 updateCertDeposits pp (regpool kh p ∷ certs) deposits

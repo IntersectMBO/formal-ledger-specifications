@@ -22,10 +22,6 @@ in {
     nativeBuildInputs = [
       specs.agda
       cabal-install
-      (haskellPackages.ghcWithPackages (pkgs: with pkgs; [
-        specs.ledger.hsExe
-        specs.midnight.hsExe
-      ]))
     ];
   };
 }

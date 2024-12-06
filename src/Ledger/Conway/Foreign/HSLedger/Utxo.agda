@@ -14,8 +14,10 @@ open import Ledger.Conway.Foreign.HSLedger.Transaction
 
 open import Foreign.Haskell.Coerce
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (TxWitnesses)
 open import Ledger.Conway.Conformance.Utxo DummyTransactionStructure DummyAbstractFunctions
+open import Ledger.Conway.Conformance.Utxow DummyTransactionStructure DummyAbstractFunctions
+  renaming (module L to LW)
 
 instance
   HsTy-UTxOEnv = autoHsType UTxOEnv ⊣ withConstructor "MkUTxOEnv"
@@ -30,7 +32,7 @@ unquoteDecl = do
   hsTypeAlias Redeemer
 
 module _ (ext : ExternalFunctions) where
-  open ExternalStructures ext hiding (Tx; TxBody; inject)
+  open import Ledger.Conway.Foreign.HSLedger.ExternalStructures ext hiding (Tx; TxBody; inject)
   open import Ledger.Conway.Conformance.Utxow.Properties HSTransactionStructure HSAbstractFunctions
   open import Ledger.Conway.Conformance.Utxo.Properties HSTransactionStructure HSAbstractFunctions
 
@@ -66,3 +68,19 @@ module _ (ext : ExternalFunctions) where
           []
 
   {-# COMPILE GHC utxo-debug as utxoDebug #-}
+
+  utxow-debug : HsType (UTxOEnv → UTxOState → Tx → String)
+  utxow-debug env st tx =
+    let open Tx (from tx)
+        open TxBody body
+        open UTxOState (from st)
+        open UTxOEnv (from env)
+        open TxWitnesses (coerce ⦃ TrustMe ⦄ wits)
+     in unlines
+       $ "witsVKeyNeeded utxo txb = "
+       ∷ show (LW.witsVKeyNeeded utxo body)
+       ∷ "\nwitsKeyHashes = "
+       ∷ show (mapˢ hash (dom vkSigs))
+       ∷ []
+
+  {-# COMPILE GHC utxow-debug as utxowDebug #-}

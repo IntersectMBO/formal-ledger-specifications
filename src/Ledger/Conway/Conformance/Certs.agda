@@ -43,6 +43,7 @@ record CertState : Type where
 certDeposit : DCert → PParams → Deposits
 certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
 certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
+certDeposit (reg c v)          pp  = ❴ CredentialDeposit c , pp .PParams.keyDeposit ❵
 certDeposit _                  _   = ∅
 -- handled in the Utxo module:
 -- certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
@@ -54,6 +55,7 @@ certRefund _                = ∅
 
 updateCertDeposit  : PParams → DCert → Deposits → Deposits
 updateCertDeposit pp (delegate c _ _ v) deposits = deposits ∪⁺ ❴ CredentialDeposit c , v ❵
+updateCertDeposit pp (reg c _)          deposits = deposits ∪⁺ ❴ CredentialDeposit c , pp .PParams.keyDeposit ❵
 updateCertDeposit pp (regdrep c v _)    deposits = deposits ∪⁺ ❴ DRepDeposit c , v ❵
 updateCertDeposit pp (dereg c _)        deposits = deposits ∣ ❴ CredentialDeposit c ❵ ᶜ
 updateCertDeposit pp (deregdrep c _)    deposits = deposits ∣ ❴ DRepDeposit c ❵ ᶜ
@@ -136,6 +138,14 @@ data _⊢_⇀⦇_,DELEG⦈_ where
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
       , updateCertDeposit pp (dereg c d) dep ⟧ᵈ
 
+  DELEG-reg : let open PParams pp in
+    ∙ c ∉ dom rwds
+    ∙ d ≡ keyDeposit ⊎ d ≡ 0
+      ────────────────────────────────
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+        ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
+        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ 
+        , updateCertDeposit pp (reg c d) dep ⟧ᵈ
 
 data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Type where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
