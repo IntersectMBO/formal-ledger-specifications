@@ -92,6 +92,7 @@ lem-ddeps (retirepool*  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps
 lem-ddeps (regdrep*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-ddeps (deregdrep* v ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-ddeps (ccreghot*    ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (reg*         ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 
 lem-gdeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
           → updateCertDeps* certs deposits .CertDeps*.depsᵍ ≡ updateGDeps pp certs (deposits .CertDeps*.depsᵍ)
@@ -103,6 +104,7 @@ lem-gdeps (retirepool*  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps
 lem-gdeps (regdrep*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-gdeps (deregdrep* v ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-gdeps (ccreghot*    ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (reg*         ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 
 certDeposits : L.LState → L.Deposits × L.Deposits
 certDeposits s = certDDeps deps , certGDeps deps
