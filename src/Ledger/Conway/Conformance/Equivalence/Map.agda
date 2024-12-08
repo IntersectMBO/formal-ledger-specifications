@@ -4,13 +4,17 @@ module Ledger.Conway.Conformance.Equivalence.Map where
 
 open import Ledger.Prelude
 open import Axiom.Set.Properties th
+open import Axiom.Set.Map.Dec
+open import Data.List.Relation.Unary.Any using (Any)
 open import Data.These using (These; this; that; these; fold)
 open import Data.Product using (swap)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-open import Relation.Binary using (IsEquivalence)
+open import Relation.Binary using (IsEquivalence; _Preserves_⟶_)
 open import Relation.Binary.Bundles
 open module SetSetoid {A} = Setoid (≡ᵉ-Setoid {A}) using () renaming (refl to ≈-refl; trans to infixr 1 _⟨≈⟩_)
 open import Data.Product.Properties using (×-≡,≡←≡; ×-≡,≡→≡)
+
+open Any
 
 module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ where
 
@@ -20,10 +24,8 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
     open Equivalence
 
     ------------------------------------------------------------------------------------------------
-    -- ∪⁺ is simply reduce by key; we should probably write helper functions to
-    -- make ∪⁺ easier to reason about.
+    -- We should probably write helper functions to make ∪⁺ easier to reason about.
     --
-    -- These are not used below; they're just for reference.
     F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ x → x ∈ dom (m₁ ˢ) ∪ dom (m₂ ˢ)) → A × B
     F[ m₁ , m₂ ] = λ (x , x∈) → x , (fold id id _◇_) (unionThese m₁ m₂ x x∈)
 
@@ -40,14 +42,82 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
     resᶜ-dom∉⁺ : ∀ m {ks}{a : A}{b : B} → ((a , b) ∈ m ˢ × a ∉ ks) → (a , b) ∈ (m ∣ ks ᶜ) ˢ
     resᶜ-dom∉⁺ m = to ∈-filter ∘ swap
 
+    cong-⊆⇒congᵐ : {f : (A ⇀ B) → (A ⇀ B)} → f Preserves _⊆_ ⟶ _⊆_ → f Preserves _≡ᵐ_ ⟶ _≡ᵐ_
+    cong-⊆⇒congᵐ h m≡ᵐm' = h (proj₁ m≡ᵐm') , h (proj₂ m≡ᵐm')
+
+    ∪⁺-pres-⊆-l : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _⊆_ ⟶ _⊆_
+    ∪⁺-pres-⊆-l {m} {m₁} {m₂} m₁⊆m₂ {a} {b} ab∈ with from ∈-map ab∈
+    ... | q , r , s =  to (∈-map{f = F[ m , m₂ ]}) ((a , a∈-∪dom₂) , ab≡ , ζ)
+      where
+
+      lmm₁ lmm₂ : List (ℙ A)
+      lmm₁ = dom (m ˢ) ∷ dom (m₁ ˢ) ∷ []
+      lmm₂ = dom (m ˢ) ∷ dom (m₂ ˢ) ∷ []
+
+      ∃lmm₁ : Σ (ℙ (ℙ A)) (λ X → ∀ {a} → a ∈ˡ lmm₁ ⇔ a ∈ X)
+      ∃lmm₁ = listing lmm₁
+
+      ℙlmm₁ ℙlmm₂ : ℙ (ℙ A)
+      ℙlmm₁ = fromList lmm₁
+      ℙlmm₂ = fromList lmm₂
+
+      ∃-dom-m∪m₁ : Σ (ℙ A) (λ Y → {a : A} → Σ (ℙ A) (λ T → T ∈ ℙlmm₁ × a ∈ T) ⇔ a ∈ Y)
+      ∃-dom-m∪m₁ = unions (fromList lmm₁)
+
+      ∃-dom-m∪m₂ : Σ (ℙ A) (λ Y → {a : A} → Σ (ℙ A) (λ T → T ∈ ℙlmm₂ × a ∈ T) ⇔ a ∈ Y)
+      ∃-dom-m∪m₂ = unions (fromList lmm₂)
+
+      m∪m₁⊆m∪m₂ : proj₁ ∃-dom-m∪m₁ ⊆ proj₁ ∃-dom-m∪m₂
+      m∪m₁⊆m∪m₂ {a'} x with from ∈-unions x | from ∈-fromList $ proj₁ (proj₂ (from ∈-unions x))
+      ... | (T , T∈ , a∈ˡ) |  here refl = to (proj₂ ∃-dom-m∪m₂) $ T , to ∈-fromList (here refl) , a∈ˡ
+      ... | (T , T∈ , a∈ˡ) | there (here refl) =
+        to (proj₂ ∃-dom-m∪m₂) $ dom (m₂ ˢ) , to ∈-fromList (there $ here refl) , dom⊆ m₁⊆m₂ a∈ˡ
+
+      -- TODO: delete this and the next 4 comment lines after proof is complete; it's just for reference.
+      -- dom∪⁺⇔∪dom : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
+      -- dom∪⁺⊆∪dom : dom ((m ∪⁺ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
+      -- a∈-dom∪ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)
+      -- dom∈ : ∀ {a} → (∃[ b ] (a , b) ∈ R) ⇔ a ∈ dom R
+
+      a∈-dom∪ : a ∈ dom (m ∪⁺ m₁)
+      a∈-dom∪ = to dom∈ (b , ab∈)
+
+      a∈-∪dom₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)
+      a∈-∪dom₁ = dom∪⁺⊆∪dom a∈-dom∪
+
+      dom₁⊆dom₂ : dom (m₁ ˢ) ⊆ dom (m₂ ˢ)
+      dom₁⊆dom₂ = dom⊆ m₁⊆m₂
+
+      a∈-∪dom₂ : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ)
+      a∈-∪dom₂ = ∪-cong-⊆ id dom₁⊆dom₂ a∈-∪dom₁
+
+      Gl : incl-set' (dom (m ˢ) ∪ dom (m₂ ˢ)) a ≡ just (a , a∈-∪dom₂)
+      Gl = {!!}
+
+      ζ : (a , a∈-∪dom₂) ∈ (incl-set (dom (m ˢ) ∪ dom (m₂ ˢ)))
+      ζ = to (∈-mapPartial{f = (incl-set' (dom (m ˢ) ∪ dom (m₂ ˢ)))}) (a , a∈-∪dom₂ , Gl)
+
+      ab≡ : (a , b) ≡ F[ m , m₂ ] (a , a∈-∪dom₂)
+      ab≡ = {!!}
+
+    -- TODO: prove the following (maybe by commutativity of ∪⁺ and `∪⁺-pres-⊆-l` lemma above).
+    ∪⁺-pres-⊆-r : {m : A ⇀ B} → (λ m' → m' ∪⁺ m) Preserves _⊆_ ⟶ _⊆_
+    ∪⁺-pres-⊆-r {m} {m₁} {m₂} m₁⊆m₂ {a} {b} ab∈ = {!!}
+
+    ∪⁺-cong-l' : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _≡ᵐ_ ⟶ _≡ᵐ_
+    ∪⁺-cong-l' {m} = (cong-⊆⇒congᵐ {f = λ m' → m ∪⁺ m'}) ∪⁺-pres-⊆-l
+
     ∪⁺-cong-l : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m ∪⁺ m₁ ≡ᵐ m ∪⁺ m₂
-    ∪⁺-cong-l m m₁ m₂ m₁≡m₂ = {!!}
+    ∪⁺-cong-l m m₁ m₂ = ∪⁺-cong-l'
+
+    ∪⁺-cong-r' : {m : A ⇀ B} → (λ m' → m' ∪⁺ m) Preserves _≡ᵐ_ ⟶ _≡ᵐ_
+    ∪⁺-cong-r' {m} = (cong-⊆⇒congᵐ {f = λ m' → m' ∪⁺ m}) ∪⁺-pres-⊆-r
 
     ∪⁺-cong-r : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m₁ ∪⁺ m ≡ᵐ m₂ ∪⁺ m
-    ∪⁺-cong-r m m₁ m₂ = {!!}
+    ∪⁺-cong-r m m₁ m₂ = ∪⁺-cong-r'
 
     ∪⁺-id-r : (m : A ⇀ B) → m ∪⁺ ∅ ≡ᵐ m
-    ∪⁺-id-r m = {!!}
+    ∪⁺-id-r m = ?
 
     restrict-cong : (m₁ m₂ : A ⇀ B) (ks : ℙ A) → m₁ ≡ᵐ m₂ → (m₁ ∣ ks ᶜ) ≡ᵐ (m₂ ∣ ks ᶜ)
     restrict-cong m₁ m₂ ks (m₁⊆m₂ , _) .proj₁ ab∈ with resᶜ-dom∉⁻ m₁ ab∈
