@@ -45,79 +45,39 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
     cong-⊆⇒congᵐ : {f : (A ⇀ B) → (A ⇀ B)} → f Preserves _⊆_ ⟶ _⊆_ → f Preserves _≡ᵐ_ ⟶ _≡ᵐ_
     cong-⊆⇒congᵐ h m≡ᵐm' = h (proj₁ m≡ᵐm') , h (proj₂ m≡ᵐm')
 
-    ∪⁺-pres-⊆-l : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _⊆_ ⟶ _⊆_
-    ∪⁺-pres-⊆-l {m} {m₁} {m₂} m₁⊆m₂ {a} {b} ab∈ with from ∈-map ab∈
-    ... | q , r , s =  to (∈-map{f = F[ m , m₂ ]}) ((a , a∈-∪dom₂) , ab≡ , ζ)
-      where
+    lem : (m₁ m₂ : A ⇀ B) → m₁ ⊆ m₂ → (a : A) → a ∈ dom m₁
+      →   Σ B (λ b → (a , b) ∈ (m₁ ˢ) × (a , b) ∈ (m₁ ˢ))
+    lem = {!!}
 
-      lmm₁ lmm₂ : List (ℙ A)
-      lmm₁ = dom (m ˢ) ∷ dom (m₁ ˢ) ∷ []
-      lmm₂ = dom (m ˢ) ∷ dom (m₂ ˢ) ∷ []
-
-      ∃lmm₁ : Σ (ℙ (ℙ A)) (λ X → ∀ {a} → a ∈ˡ lmm₁ ⇔ a ∈ X)
-      ∃lmm₁ = listing lmm₁
-
-      ℙlmm₁ ℙlmm₂ : ℙ (ℙ A)
-      ℙlmm₁ = fromList lmm₁
-      ℙlmm₂ = fromList lmm₂
-
-      ∃-dom-m∪m₁ : Σ (ℙ A) (λ Y → {a : A} → Σ (ℙ A) (λ T → T ∈ ℙlmm₁ × a ∈ T) ⇔ a ∈ Y)
-      ∃-dom-m∪m₁ = unions (fromList lmm₁)
-
-      ∃-dom-m∪m₂ : Σ (ℙ A) (λ Y → {a : A} → Σ (ℙ A) (λ T → T ∈ ℙlmm₂ × a ∈ T) ⇔ a ∈ Y)
-      ∃-dom-m∪m₂ = unions (fromList lmm₂)
-
-      m∪m₁⊆m∪m₂ : proj₁ ∃-dom-m∪m₁ ⊆ proj₁ ∃-dom-m∪m₂
-      m∪m₁⊆m∪m₂ {a'} x with from ∈-unions x | from ∈-fromList $ proj₁ (proj₂ (from ∈-unions x))
-      ... | (T , T∈ , a∈ˡ) |  here refl = to (proj₂ ∃-dom-m∪m₂) $ T , to ∈-fromList (here refl) , a∈ˡ
-      ... | (T , T∈ , a∈ˡ) | there (here refl) =
-        to (proj₂ ∃-dom-m∪m₂) $ dom (m₂ ˢ) , to ∈-fromList (there $ here refl) , dom⊆ m₁⊆m₂ a∈ˡ
-
-      -- TODO: delete this and the next 4 comment lines after proof is complete; it's just for reference.
-      -- dom∪⁺⇔∪dom : ∀ {a} → a ∈ dom ((m ∪⁺ m')ˢ) ⇔ a ∈ dom (m ˢ) ∪ dom (m' ˢ)
-      -- dom∪⁺⊆∪dom : dom ((m ∪⁺ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
-      -- a∈-dom∪ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)
-      -- dom∈ : ∀ {a} → (∃[ b ] (a , b) ∈ R) ⇔ a ∈ dom R
-
-      a∈-dom∪ : a ∈ dom (m ∪⁺ m₁)
-      a∈-dom∪ = to dom∈ (b , ab∈)
-
-      a∈-∪dom₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)
-      a∈-∪dom₁ = dom∪⁺⊆∪dom a∈-dom∪
-
-      dom₁⊆dom₂ : dom (m₁ ˢ) ⊆ dom (m₂ ˢ)
-      dom₁⊆dom₂ = dom⊆ m₁⊆m₂
-
-      a∈-∪dom₂ : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ)
-      a∈-∪dom₂ = ∪-cong-⊆ id dom₁⊆dom₂ a∈-∪dom₁
-
-      Gl : incl-set' (dom (m ˢ) ∪ dom (m₂ ˢ)) a ≡ just (a , a∈-∪dom₂)
-      Gl = {!!}
-
-      ζ : (a , a∈-∪dom₂) ∈ (incl-set (dom (m ˢ) ∪ dom (m₂ ˢ)))
-      ζ = to (∈-mapPartial{f = (incl-set' (dom (m ˢ) ∪ dom (m₂ ˢ)))}) (a , a∈-∪dom₂ , Gl)
-
-      ab≡ : (a , b) ≡ F[ m , m₂ ] (a , a∈-∪dom₂)
-      ab≡ = {!!}
+    -- THE NEXT TWO ARE FALSE!
+    --
+    -- ∪⁺-pres-⊆-l : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _⊆_ ⟶ _⊆_
+    -- ∪⁺-pres-⊆-l {m} {m₁} {m₂} m₁⊆m₂ {a} {b} ab∈ = NO!!!
+    --
+    -- ∪⁺-pres-⊆-r : {m : A ⇀ B} → (λ m' → m' ∪⁺ m) Preserves _⊆_ ⟶ _⊆_
+    -- ∪⁺-pres-⊆-r {m} {m₁} {m₂} m₁⊆m₂ {a} {b} ab∈ = NO!!!
+    --
+    -- i.e., `∪⁺` does not preserve `⊆` in one operand.
+    -- Consider the case `a ∈ dom m ∩ dom m₂` and `a ∉ dom m₁`.
+    -- e.g., mˢ = {(a , 0)}, m₁ˢ = ∅, m₂ˢ = {(a, 1)}, then (a, 1) ∈ (m ∪⁺ m₂)ˢ,
+    -- (a, 0) ∈ (m ∪⁺ m₁)ˢ, but (a, 0) ∉ (m ∪⁺ m₂)ˢ, so (m ∪⁺ m₁)ˢ ̸⊆ (m ∪⁺ m₂)ˢ.
 
     -- TODO: prove the following (maybe by commutativity of ∪⁺ and `∪⁺-pres-⊆-l` lemma above).
-    ∪⁺-pres-⊆-r : {m : A ⇀ B} → (λ m' → m' ∪⁺ m) Preserves _⊆_ ⟶ _⊆_
-    ∪⁺-pres-⊆-r {m} {m₁} {m₂} m₁⊆m₂ {a} {b} ab∈ = {!!}
 
     ∪⁺-cong-l' : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _≡ᵐ_ ⟶ _≡ᵐ_
-    ∪⁺-cong-l' {m} = (cong-⊆⇒congᵐ {f = λ m' → m ∪⁺ m'}) ∪⁺-pres-⊆-l
+    ∪⁺-cong-l' {m} = {!!}
 
     ∪⁺-cong-l : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m ∪⁺ m₁ ≡ᵐ m ∪⁺ m₂
     ∪⁺-cong-l m m₁ m₂ = ∪⁺-cong-l'
 
     ∪⁺-cong-r' : {m : A ⇀ B} → (λ m' → m' ∪⁺ m) Preserves _≡ᵐ_ ⟶ _≡ᵐ_
-    ∪⁺-cong-r' {m} = (cong-⊆⇒congᵐ {f = λ m' → m' ∪⁺ m}) ∪⁺-pres-⊆-r
+    ∪⁺-cong-r' {m} = {!!}
 
     ∪⁺-cong-r : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m₁ ∪⁺ m ≡ᵐ m₂ ∪⁺ m
     ∪⁺-cong-r m m₁ m₂ = ∪⁺-cong-r'
 
     ∪⁺-id-r : (m : A ⇀ B) → m ∪⁺ ∅ ≡ᵐ m
-    ∪⁺-id-r m = ?
+    ∪⁺-id-r m = {!!}
 
     restrict-cong : (m₁ m₂ : A ⇀ B) (ks : ℙ A) → m₁ ≡ᵐ m₂ → (m₁ ∣ ks ᶜ) ≡ᵐ (m₂ ∣ ks ᶜ)
     restrict-cong m₁ m₂ ks (m₁⊆m₂ , _) .proj₁ ab∈ with resᶜ-dom∉⁻ m₁ ab∈
@@ -132,9 +92,10 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
 
       open Equivalence
 
-      filterᵐ-∪⁺-distr : (m₁ m₂ : A ⇀ B) → filterᵐ P (m₁ ∪⁺ m₂) ≡ᵐ filterᵐ P m₁ ∪⁺ filterᵐ P m₂
-      filterᵐ-∪⁺-distr m₁ m₂ = {!!}
-      -- I don't think `filterᵐ-∪⁺-distr` is true.
+      -- filterᵐ-∪⁺-distr : (m₁ m₂ : A ⇀ B) → filterᵐ P (m₁ ∪⁺ m₂) ≡ᵐ filterᵐ P m₁ ∪⁺ filterᵐ P m₂
+      -- filterᵐ-∪⁺-distr m₁ m₂ = {!!}
+      --
+      -- `filterᵐ-∪⁺-distr` is false!
       -- Counter-example:
       -- Suppose `m₁ˢ = m₂ˢ = {(0, 1)}`, `P (0, 1)`, and `¬ P (0, 2)`.
       -- Then `m₁ ∪⁺ m₂ ≡ {(0, 2)}` so (lhs) `filterᵐ P (m₁ ∪⁺ m₂)` is empty,
@@ -204,13 +165,14 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
 
     opaque
       lem-add-included : ∀ {m k v} → P (k , v) → filterᵐ P (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P m ∪⁺ ❴ k , v ❵
-      lem-add-included p =  filterᵐ-∪⁺-distr _ _
-                        ⟨≈⟩ ∪⁺-cong-l _ _ _ (filterᵐ-singleton-true p)
+      lem-add-included p = {!!}
+      -- filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l _ _ _ (filterᵐ-singleton-true p)
+      -- (`filterᵐ-∪⁺-distr` is false)
 
       lem-add-excluded : ∀ {m k v} → ¬ P (k , v) → filterᵐ P (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P m
-      lem-add-excluded p =  filterᵐ-∪⁺-distr _ _
-                        ⟨≈⟩ ∪⁺-cong-l _ _ ∅ (filterᵐ-singleton-false p)
-                        ⟨≈⟩ ∪⁺-id-r _
+      lem-add-excluded p =  {!!}
+      -- filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l _ _ ∅ (filterᵐ-singleton-false p) ⟨≈⟩ ∪⁺-id-r _
+      -- (`filterᵐ-∪⁺-distr` is false)
 
       lem-del-excluded : ∀ m {k} → (∀ {v} → ¬ P (k , v)) → filterᵐ P (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
