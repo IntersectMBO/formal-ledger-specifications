@@ -64,8 +64,45 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
 
     -- TODO: prove the following (maybe by commutativity of ∪⁺ and `∪⁺-pres-⊆-l` lemma above).
 
+    lemma : {m m₁ m₂ : A ⇀ B} {a : A}
+      → (a∈ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ))
+      → (a∈' : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ))
+      → m₁ ≡ᵐ m₂
+      → (fold id id _◇_) (unionThese m m₁ a a∈) ≡ (fold id id _◇_) (unionThese m m₂ a a∈')
+    lemma = {!!}
+
     ∪⁺-cong-l' : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _≡ᵐ_ ⟶ _≡ᵐ_
-    ∪⁺-cong-l' {m} = {!!}
+    ∪⁺-cong-l' {m} {m₁} {m₂} (m₁⊆m₂ , m₂⊆m₁) .proj₁ {(a , b)} ab∈ with from ∈-map ab∈
+    ... | (.a , a∈) , refl , s = to (∈-map {f = F[ m , m₂ ]}) ((a , a∈') , ≡F , ∈inclset)
+      where
+      ξ : b ≡ (fold id id _◇_) (unionThese m m₁ a a∈)
+      ξ = refl
+
+      a∈-dom∪ : a ∈ dom (m ∪⁺ m₁)
+      a∈-dom∪ = to dom∈ (b , ab∈)
+
+      a∈-∪dom₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)
+      a∈-∪dom₁ = dom∪⁺⊆∪dom a∈-dom∪
+
+      dom₁⊆dom₂ : dom (m₁ ˢ) ⊆ dom (m₂ ˢ)
+      dom₁⊆dom₂ = dom⊆ m₁⊆m₂
+
+      a∈' : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ)
+      a∈' = ∪-cong-⊆ id dom₁⊆dom₂ a∈-∪dom₁
+
+      b' : B
+      b' = (fold id id _◇_) (unionThese m m₂ a a∈')
+
+      b≡b' : b ≡ b'
+      b≡b' = lemma a∈ a∈' (m₁⊆m₂ , m₂⊆m₁)
+
+      ≡F : (a , b) ≡ F[ m , m₂ ] (a , a∈')
+      ≡F = ×-≡,≡→≡ (refl , b≡b')
+
+      ∈inclset : (a , a∈') ∈ (incl-set (dom (m ˢ) ∪ dom (m₂ ˢ)))
+      ∈inclset = to (∈-mapPartial {f = incl-set' (dom (m ˢ) ∪ dom (m₂ ˢ))}) (a , (a∈' , {!!}))
+
+    ∪⁺-cong-l' {m} {m₁} {m₂} (m₁⊆m₂ , m₂⊆m₁) .proj₂ = {!!}
 
     ∪⁺-cong-l : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m ∪⁺ m₁ ≡ᵐ m ∪⁺ m₂
     ∪⁺-cong-l m m₁ m₂ = ∪⁺-cong-l'
