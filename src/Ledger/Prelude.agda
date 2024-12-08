@@ -22,12 +22,15 @@ open import Data.Product.Ext public
 open import Interface.ComputationalRelation public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
+open import Interface.HasSubset public
+open import Interface.HasSubset.Instance public
 open import Interface.Hashable public
 open import Ledger.Interface.HasCoin public
 open import MyDebugOptions public
 open import Tactic.Premises public
 
 open import Ledger.Set public
+    renaming (_⊆_ to _⊆ˢ_)
 
 dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
@@ -41,6 +44,9 @@ instance
 
   HasCoin-Set : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (ℙ (A × Coin))
   HasCoin-Set .getCoin s = ∑ˢ[ (a , c) ← s ] c
+
+  HasSubset-Set : ∀ {A} → HasSubset (ℙ A)
+  HasSubset-Set ._⊆_ = _⊆ˢ_
 
 ≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
 ≡ᵉ-getCoin {A} ⦃ decEqA ⦄ s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
