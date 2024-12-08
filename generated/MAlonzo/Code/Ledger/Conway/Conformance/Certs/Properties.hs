@@ -3917,7 +3917,7 @@ du_goal_1996 v0 v1 v2 v3 v4 v5
                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                             (coe v6)
                             (coe
-                               MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                               MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                (coe
                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1048
                                   (coe
@@ -4127,7 +4127,7 @@ du_goal_1996 v0 v1 v2 v3 v4 v5
                                                         v1
                                                         (let v11
                                                                = coe
-                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_39579
+                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_39643
                                                                    (coe v2) (coe v3) (coe v1)
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1062
@@ -4171,7 +4171,7 @@ du_goal_1996 v0 v1 v2 v3 v4 v5
                                                          coe
                                                            (MAlonzo.Code.Ledger.PParams.d_drepActivity_376
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_39553
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_39617
                                                                  (coe v11)))) in
                                               coe (coe (\ v12 -> v11)))
                                              (coe

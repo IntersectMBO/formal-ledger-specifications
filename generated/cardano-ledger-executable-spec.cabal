@@ -57,7 +57,9 @@ library
     other-modules:
         MAlonzo.RTE
         MAlonzo.Code.Interface.HasSubtract
+        MAlonzo.Code.Interface.HasSubset.Instance
         MAlonzo.Code.Interface.Hashable
+        MAlonzo.Code.Interface.HasSubset
         MAlonzo.Code.Interface.ComputationalRelation
         MAlonzo.Code.Interface.HasSubtract.Instance
         MAlonzo.Code.Interface.STS
