@@ -5,6 +5,10 @@ module Ledger.Conway.Conformance.Equivalence.Map where
 open import Ledger.Prelude
 open import Axiom.Set.Properties th
 open import Axiom.Set.Map.Dec
+
+import Algebra.Definitions as AlgDefs
+-- Cancellative _•_ = (LeftCancellative _•_) × (RightCancellative _•_)
+
 open import Data.List.Relation.Unary.Any using (Any)
 open import Data.These using (These; this; that; these; fold)
 open import Data.Product using (swap)
@@ -16,8 +20,7 @@ open import Data.Product.Properties using (×-≡,≡←≡; ×-≡,≡→≡)
 
 open Any
 
-module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ where
-
+module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ where
   opaque
     -- unfolding List-Model List-Modelᵈ to-sp
 
@@ -45,44 +48,34 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
     cong-⊆⇒congᵐ : {f : (A ⇀ B) → (A ⇀ B)} → f Preserves _⊆_ ⟶ _⊆_ → f Preserves _≡ᵐ_ ⟶ _≡ᵐ_
     cong-⊆⇒congᵐ h m≡ᵐm' = h (proj₁ m≡ᵐm') , h (proj₂ m≡ᵐm')
 
-    lem : (m₁ m₂ : A ⇀ B) → m₁ ⊆ m₂ → (a : A) → a ∈ dom m₁
-      →   Σ B (λ b → (a , b) ∈ (m₁ ˢ) × (a , b) ∈ (m₁ ˢ))
-    lem = {!!}
-
-    -- THE NEXT TWO ARE FALSE!
-    --
-    -- ∪⁺-pres-⊆-l : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _⊆_ ⟶ _⊆_
-    -- ∪⁺-pres-⊆-l {m} {m₁} {m₂} m₁⊆m₂ {a} {b} ab∈ = NO!!!
-    --
-    -- ∪⁺-pres-⊆-r : {m : A ⇀ B} → (λ m' → m' ∪⁺ m) Preserves _⊆_ ⟶ _⊆_
-    -- ∪⁺-pres-⊆-r {m} {m₁} {m₂} m₁⊆m₂ {a} {b} ab∈ = NO!!!
-    --
-    -- i.e., `∪⁺` does not preserve `⊆` in one operand.
-    -- Consider the case `a ∈ dom m ∩ dom m₂` and `a ∉ dom m₁`.
-    -- e.g., mˢ = {(a , 0)}, m₁ˢ = ∅, m₂ˢ = {(a, 1)}, then (a, 1) ∈ (m ∪⁺ m₂)ˢ,
-    -- (a, 0) ∈ (m ∪⁺ m₁)ˢ, but (a, 0) ∉ (m ∪⁺ m₂)ˢ, so (m ∪⁺ m₁)ˢ ̸⊆ (m ∪⁺ m₂)ˢ.
-
-    -- TODO: prove the following (maybe by commutativity of ∪⁺ and `∪⁺-pres-⊆-l` lemma above).
-
-    lemma : {m m₁ m₂ : A ⇀ B} {a : A}
-      → (a∈ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ))
-      → (a∈' : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ))
+    deconstruct-∪⁺ : {m m₁ m₂ : A ⇀ B} {a : A}
+      → (a∈₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ))
+      → (a∈₂ : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ))
       → m₁ ≡ᵐ m₂
-      → (fold id id _◇_) (unionThese m m₁ a a∈) ≡ (fold id id _◇_) (unionThese m m₂ a a∈')
-    lemma = {!!}
+      → (fold id id _◇_) (unionThese m m₁ a a∈₁) ≡ (fold id id _◇_) (unionThese m m₂ a a∈₂)
+
+    deconstruct-∪⁺ {m} {m₁} {m₂} {a} a∈₁ a∈₂ m₁≡m₂ with a ∈? dom (m ˢ) | a ∈? dom (m₁ ˢ) | a ∈? dom (m₂ ˢ)
+
+    ... | yes a∈m | yes a∈m₁ | yes a∈m₂ = cong (λ (u : B) → (lookupᵐ m a) ◇ u) (proj₂ m₂
+                                          (proj₁ m₁≡m₂ (proj₂ $ from dom∈ a∈m₁))  -- : (a , lookupᵐ m₁ a) ∈ (m₂ ˢ)
+                                          (proj₂ (from dom∈ a∈m₂)))               -- : (a , lookupᵐ m₂ a) ∈ (m₂ ˢ)
+
+    ... | no  a∉m | yes a∈m₁ | yes a∈m₂ = proj₂ m₂ (proj₁ m₁≡m₂ (proj₂ (from dom∈ a∈m₁)))
+                                                   (proj₂ (from dom∈ a∈m₂))
+    ... | yes a∈m | no  a∉m₁ | no a∉m₂ = refl
+    ... | _ | yes a∈m₁ | no a∉m₂ = ⊥-elim (a∉m₂ (dom⊆ (proj₁ m₁≡m₂) a∈m₁))
+    ... | _ | no  a∉m₁ | yes a∈m₂ = ⊥-elim (a∉m₁ (dom⊆ (proj₂ m₁≡m₂) a∈m₂))
+    ... | no  a∉m | no  a∉m₁ | no a∉m₂ with from ∈-∪ a∈₁
+    ... | inj₁ a∈m = ⊥-elim (a∉m a∈m)
+    ... | inj₂ a∈m₁ = ⊥-elim (a∉m₁ a∈m₁)
+
 
     ∪⁺-cong-l' : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _≡ᵐ_ ⟶ _≡ᵐ_
-    ∪⁺-cong-l' {m} {m₁} {m₂} (m₁⊆m₂ , m₂⊆m₁) .proj₁ {(a , b)} ab∈ with from ∈-map ab∈
+    ∪⁺-cong-l' {m} {m₁} {m₂} m₁≡m₂@(m₁⊆m₂ , m₂⊆m₁) .proj₁ {(a , b)} ab∈ with from ∈-map ab∈
     ... | (.a , a∈) , refl , s = to (∈-map {f = F[ m , m₂ ]}) ((a , a∈') , ≡F , ∈inclset)
       where
-      ξ : b ≡ (fold id id _◇_) (unionThese m m₁ a a∈)
-      ξ = refl
-
-      a∈-dom∪ : a ∈ dom (m ∪⁺ m₁)
-      a∈-dom∪ = to dom∈ (b , ab∈)
-
       a∈-∪dom₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)
-      a∈-∪dom₁ = dom∪⁺⊆∪dom a∈-dom∪
+      a∈-∪dom₁ = dom∪⁺⊆∪dom (to dom∈ (b , ab∈))
 
       dom₁⊆dom₂ : dom (m₁ ˢ) ⊆ dom (m₂ ˢ)
       dom₁⊆dom₂ = dom⊆ m₁⊆m₂
@@ -90,19 +83,13 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ wh
       a∈' : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ)
       a∈' = ∪-cong-⊆ id dom₁⊆dom₂ a∈-∪dom₁
 
-      b' : B
-      b' = (fold id id _◇_) (unionThese m m₂ a a∈')
-
-      b≡b' : b ≡ b'
-      b≡b' = lemma a∈ a∈' (m₁⊆m₂ , m₂⊆m₁)
-
       ≡F : (a , b) ≡ F[ m , m₂ ] (a , a∈')
-      ≡F = ×-≡,≡→≡ (refl , b≡b')
-
+      ≡F = ×-≡,≡→≡ (refl , deconstruct-∪⁺ a∈ a∈' m₁≡m₂)  -- deconstruct-∪⁺ a∈ a∈' m₁≡m₂ : b ≡ (fold id id _◇_) (unionThese m m₂ a a∈')
+                                                         --                       i.e., : b≡b'
       ∈inclset : (a , a∈') ∈ (incl-set (dom (m ˢ) ∪ dom (m₂ ˢ)))
       ∈inclset = to (∈-mapPartial {f = incl-set' (dom (m ˢ) ∪ dom (m₂ ˢ))}) (a , (a∈' , {!!}))
 
-    ∪⁺-cong-l' {m} {m₁} {m₂} (m₁⊆m₂ , m₂⊆m₁) .proj₂ = {!!}
+    ∪⁺-cong-l' {m} {m₁} {m₂} m₁≡m₂@(m₁⊆m₂ , m₂⊆m₁) .proj₂ = {!!}
 
     ∪⁺-cong-l : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m ∪⁺ m₁ ≡ᵐ m ∪⁺ m₂
     ∪⁺-cong-l m m₁ m₂ = ∪⁺-cong-l'
