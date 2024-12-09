@@ -2,7 +2,7 @@
 
 module Ledger.Conway.Conformance.Equivalence.Map where
 
-open import Ledger.Prelude
+open import Ledger.Prelude renaming (trans to infixr 1 _⟨≡⟩_)
 open import Axiom.Set.Properties th
 open import Axiom.Set.Map.Dec
 
@@ -18,8 +18,6 @@ open import Relation.Binary using (IsEquivalence; _Preserves_⟶_)
 open import Relation.Binary.Bundles
 open module SetSetoid {A} = Setoid (≡ᵉ-Setoid {A}) using () renaming (refl to ≈-refl; trans to infixr 1 _⟨≈⟩_)
 open import Data.Product.Properties using (×-≡,≡←≡; ×-≡,≡→≡)
-
-open ≡-Reasoning
 
 open Any
 
@@ -39,6 +37,9 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     -- unfolding List-Model List-Modelᵈ to-sp
 
     open Equivalence
+
+    lookupᵐ∈ : (m : A ⇀ B) → k ∈ dom m → B
+    lookupᵐ∈ m p = ∈-map .from p .proj₁ .proj₂
 
     ------------------------------------------------------------------------------------------------
     -- We should probably write helper functions to make ∪⁺ easier to reason about.
@@ -132,9 +133,28 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     ... | ab∈ , a∉ = resᶜ-dom∉⁺ m₁ (m₂⊆m₁ ab∈ , a∉)
 
     val-∪⁺ : ∀ (m₁ m₂ : A ⇀ B)
-           → (p : (k , v) ∈ m₁ ∪⁺ m₂)
-           → v ≡ F[ m₁ , m₂ ] (k , dom∪⁺⊆∪dom (∈-map′ p)) .proj₂
+           → (k , v) ∈ m₁ ∪⁺ m₂
+           → (p : These (k ∈ dom m₁) (k ∈ dom m₂))
+           → v ≡ fold id id _◇_ (These.map (lookupᵐ∈ m₁) (lookupᵐ∈ m₂) p)
     val-∪⁺ m₁ m₂ p = {!!}
+
+    dom-⊆ : (m₁ m₂ : A ⇀ B) → m₁ ⊆ m₂ → dom m₁ ⊆ dom m₂
+    dom-⊆ m₁ m₂ inc = {!!}
+
+    lemma : ∀ (m₁ m₁′ m₂ m₂′ : A ⇀ B)
+          → m₁′ ⊆ m₁ → m₂′ ⊆ m₂
+          → (k , v) ∈ m₁′ ∪⁺ m₂′
+          → (k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂)
+          → These (k ∈ dom m₁′) (k ∈ dom m₂′)
+          → v ≡ fold id id _◇_ (unionThese m₁ m₂ k k∈m₁m₂)
+    lemma {k = k} m₁ m₁′ m₂ m₂′ inc₁ inc₂ kv∈m₁m₂′ k∈m₁m₂ p with k ∈? dom m₁ | k ∈? dom m₂
+    ... | no ∉₁ | no ∉₂ = ⊥-elim $ fold (λ ∈₁   → ∉₁ (dom-⊆ m₁′ m₁ inc₁ ∈₁))
+                                        (λ ∈₂   → ∉₂ (dom-⊆ m₂′ m₂ inc₂ ∈₂))
+                                        (λ ∈₁ _ → ∉₁ (dom-⊆ m₁′ m₁ inc₁ ∈₁))
+                                        p
+    ... | no  ∉₁ | yes ∈₂ = {!!}
+    ... | yes ∈₁ | no  ∉₂ = {!!}
+    ... | yes ∈₁ | yes ∈₂ = {!!}
 
   module _ {P : A → Type} ⦃ _ : P ⁇¹ ⦄ where
 
@@ -154,35 +174,59 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
       filterᵐ-∪⁺-distr m₁ m₂ .proj₁ kv∈Pm₁m₂  = {!!}
       filterᵐ-∪⁺-distr m₁ m₂ .proj₂ {a = k , v} kv∈Pm₁Pm₂ =
         case ¿ P k ¿ of λ where
-          (yes pk) →
-            let k∈m₁∨k∈m₂ : k ∈ dom m₁ ⊎ k ∈ dom m₂
-                k∈m₁∨k∈m₂ = map-⊎ (dom-filter-inc m₁) (dom-filter-inc m₂) k∈Pm₁∨k∈Pm₂
-                k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂
-                k∈m₁m₂ = ∈-∪ .to k∈m₁∨k∈m₂
-                k∈m₁m₂⁺ : k ∈ dom (m₁ ∪⁺ m₂)
-                k∈m₁m₂⁺ = ∪dom⊆dom∪⁺ k∈m₁m₂
-                mkv : k ∈ dom m₁ ∪ dom m₂ → B
-                mkv = λ p → fold id id _◇_ (unionThese m₁ m₂ k p)
-                [kv′∈m₁m₂] : Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈m₁m₂′ → (k , mkv k∈m₁m₂′) ∈ (m₁ ∪⁺ m₂)ˢ
-                [kv′∈m₁m₂] = _ , ∈-map′ (∈-incl-set k∈m₁m₂ .proj₂)
-                k∈m₁m₂′ , kv′∈m₁m₂ = [kv′∈m₁m₂]
-                v′ = mkv k∈m₁m₂′
-                v′=v : v′ ≡ v
-                v′=v = begin v′ ≡⟨ {!!} ⟩
-                             v ∎
-                kv∈m₁m₂ : (k , v) ∈ m₁ ∪⁺ m₂
-                kv∈m₁m₂ = subst (λ • → (k , •) ∈ m₁ ∪⁺ m₂) v′=v kv′∈m₁m₂
-            in ∈-filter .to (pk , kv∈m₁m₂)
+          (yes pk) → yes-case pk
           (no ¬pk) → ⊥-elim (¬pk ([ dom-filter-P m₁ , dom-filter-P m₂ ]′ k∈Pm₁∨k∈Pm₂))
         where
+          open ≡-Reasoning
           k∈Pm₁∨k∈Pm₂ : k ∈ dom (filterᵐ P′ m₁) ⊎ k ∈ dom (filterᵐ P′ m₂)
           k∈Pm₁∨k∈Pm₂ = ∈-∪ .from (dom∪⁺⊆∪dom (∈-map′ kv∈Pm₁Pm₂))
 
+          k∈Pm₁⊕k∈Pm₂ : These (k ∈ dom (filterᵐ P′ m₁)) (k ∈ dom (filterᵐ P′ m₂))
+          k∈Pm₁⊕k∈Pm₂ with k ∈? dom (filterᵐ P′ m₁) | k ∈? dom (filterᵐ P′ m₂) | k∈Pm₁∨k∈Pm₂
+          ... | yes ∈₁ | yes ∈₂ | _       = these ∈₁ ∈₂
+          ... | yes ∈₁ | no  _  | _       = this ∈₁
+          ... | no  _  | yes ∈₂ | _       = that ∈₂
+          ... | no  ∉₁ | no  _  | inj₁ ∈₁ = ⊥-elim (∉₁ ∈₁)
+          ... | no  _  | no  ∉₂ | inj₂ ∈₂ = ⊥-elim (∉₂ ∈₂)
+
           dom-filter-inc : ∀ m → dom (filterᵐ P′ m) ⊆ dom m
-          dom-filter-inc m k∈Pm = dom∈ .to (_ , ∈-filter .from (dom∈ .from k∈Pm .proj₂) .proj₂)
+          dom-filter-inc m k∈Pm = dom∈ .to (_ , filter-⊆ (dom∈ .from k∈Pm .proj₂))
 
           dom-filter-P : ∀ m → k ∈ dom (filterᵐ P′ m) → P k
           dom-filter-P m k∈Pm = ∈-filter .from (dom∈ .from k∈Pm .proj₂) .proj₁
+
+          yes-case : P k → (k , v) ∈ filterᵐ P′ (m₁ ∪⁺ m₂)
+          yes-case pk = ∈-filter .to (pk , kv∈m₁m₂)
+            where
+              k∈m₁∨k∈m₂ : k ∈ dom m₁ ⊎ k ∈ dom m₂
+              k∈m₁∨k∈m₂ = map-⊎ (dom-filter-inc m₁) (dom-filter-inc m₂) k∈Pm₁∨k∈Pm₂
+
+              k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂
+              k∈m₁m₂ = ∈-∪ .to k∈m₁∨k∈m₂
+
+              k∈m₁m₂⁺ : k ∈ dom (m₁ ∪⁺ m₂)
+              k∈m₁m₂⁺ = ∪dom⊆dom∪⁺ k∈m₁m₂
+
+              mkv : k ∈ dom m₁ ∪ dom m₂ → B
+              mkv = λ p → fold id id _◇_ (unionThese m₁ m₂ k p)
+
+              [kv′∈m₁m₂] : Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈m₁m₂′ → (k , mkv k∈m₁m₂′) ∈ (m₁ ∪⁺ m₂)ˢ
+              [kv′∈m₁m₂] = _ , ∈-map′ (∈-incl-set k∈m₁m₂ .proj₂)
+
+              k∈m₁m₂′ : k ∈ dom m₁ ∪ dom m₂
+              k∈m₁m₂′  = [kv′∈m₁m₂] .proj₁
+
+              v′ : B
+              v′ = mkv k∈m₁m₂′
+
+              kv′∈m₁m₂ : (k , v′) ∈ m₁ ∪⁺ m₂
+              kv′∈m₁m₂ = [kv′∈m₁m₂] .proj₂
+
+              v=v′ : v ≡ v′
+              v=v′ = lemma m₁ (filterᵐ P′ m₁) m₂ (filterᵐ P′ m₂) filter-⊆ filter-⊆ kv∈Pm₁Pm₂ k∈m₁m₂′ k∈Pm₁⊕k∈Pm₂
+
+              kv∈m₁m₂ : (k , v) ∈ m₁ ∪⁺ m₂
+              kv∈m₁m₂ = subst (λ • → (k , •) ∈ m₁ ∪⁺ m₂) (sym v=v′) kv′∈m₁m₂
 
       filterᵐ-singleton-true : P k → filterᵐ P′ ❴ k , v ❵ ≡ᵐ ❴ k , v ❵
       filterᵐ-singleton-true p .proj₁ = proj₂ ∘ (from ∈-filter)
