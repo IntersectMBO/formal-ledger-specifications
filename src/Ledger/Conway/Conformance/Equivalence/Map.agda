@@ -10,17 +10,31 @@ import Algebra.Definitions as AlgDefs
 -- Cancellative _•_ = (LeftCancellative _•_) × (RightCancellative _•_)
 
 open import Data.List.Relation.Unary.Any using (Any)
-open import Data.These using (These; this; that; these; fold)
+open import Data.These as These using (These; this; that; these; fold)
 open import Data.Product using (swap)
+open import Data.Sum using () renaming (map to map-⊎)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Relation.Binary using (IsEquivalence; _Preserves_⟶_)
 open import Relation.Binary.Bundles
 open module SetSetoid {A} = Setoid (≡ᵉ-Setoid {A}) using () renaming (refl to ≈-refl; trans to infixr 1 _⟨≈⟩_)
 open import Data.Product.Properties using (×-≡,≡←≡; ×-≡,≡→≡)
 
+open ≡-Reasoning
+
 open Any
 
+import Axiom.Set
+import Axiom.Set.Rel
+{-# DISPLAY Axiom.Set.Theory._∈_ th a b = a ∈ b #-}
+{-# DISPLAY Axiom.Set.Rel.dom th a = dom a #-}
+
 module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ where
+  private
+    variable
+      k : A
+      v : B
+      m m₁ m₂ : A ⇀ B
+
   opaque
     -- unfolding List-Model List-Modelᵈ to-sp
 
@@ -30,7 +44,7 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     -- We should probably write helper functions to make ∪⁺ easier to reason about.
     --
     F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ x → x ∈ dom (m₁ ˢ) ∪ dom (m₂ ˢ)) → A × B
-    F[ m₁ , m₂ ] = λ (x , x∈) → x , (fold id id _◇_) (unionThese m₁ m₂ x x∈)
+    F[ m₁ , m₂ ] (x , x∈) = x , (fold id id _◇_) (unionThese m₁ m₂ x x∈)
 
     _⊕_ : (m₁ m₂ : A ⇀ B) → ℙ (A × B)
     m₁ ⊕ m₂ = mapˢ F[ m₁ , m₂ ] (incl-set (dom (m₁ ˢ) ∪ dom (m₂ ˢ)))
@@ -70,9 +84,23 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     ... | inj₂ a∈m₁ = ⊥-elim (a∉m₁ a∈m₁)
 
 
+    ∈-incl-set : ∀ {X : ℙ A} {a : A} (a∈X : a ∈ X) → Σ (a ∈ X) λ a∈X′ → (a , a∈X′) ∈ incl-set X
+    ∈-incl-set {X} {a} a∈X =
+      Data.Product.map₂ (λ {a∈X′} eq → ∈-mapPartial {f = incl-set' X} .to (a , a∈X′ , eq))
+                        lem
+      where
+        lem : Σ (a ∈ X) λ a∈X′ → incl-set' X a ≡ just (a , a∈X′)
+        lem with a ∈? X
+        ... | yes a∈X′ = a∈X′ , refl
+        ... | no  a∉X  = ⊥-elim (a∉X a∈X)
+
     ∪⁺-cong-l' : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _≡ᵐ_ ⟶ _≡ᵐ_
     ∪⁺-cong-l' {m} {m₁} {m₂} m₁≡m₂@(m₁⊆m₂ , m₂⊆m₁) .proj₁ {(a , b)} ab∈ with from ∈-map ab∈
-    ... | (.a , a∈) , refl , s = to (∈-map {f = F[ m , m₂ ]}) ((a , a∈') , ≡F , ∈inclset)
+    ... | (.a , a∈) , refl , s =
+      let a∈'' , ∈inclset = ∈-incl-set a∈'
+          ≡F : (a , b) ≡ F[ m , m₂ ] (a , a∈'')
+          ≡F = ×-≡,≡→≡ (refl , deconstruct-∪⁺ a∈ a∈'' m₁≡m₂)
+      in  to (∈-map {f = F[ m , m₂ ]}) ((a , a∈'') , ≡F , ∈inclset)
       where
       a∈-∪dom₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)
       a∈-∪dom₁ = dom∪⁺⊆∪dom (to dom∈ (b , ab∈))
@@ -82,12 +110,6 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
 
       a∈' : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ)
       a∈' = ∪-cong-⊆ id dom₁⊆dom₂ a∈-∪dom₁
-
-      ≡F : (a , b) ≡ F[ m , m₂ ] (a , a∈')
-      ≡F = ×-≡,≡→≡ (refl , deconstruct-∪⁺ a∈ a∈' m₁≡m₂)  -- deconstruct-∪⁺ a∈ a∈' m₁≡m₂ : b ≡ (fold id id _◇_) (unionThese m m₂ a a∈')
-                                                         --                       i.e., : b≡b'
-      ∈inclset : (a , a∈') ∈ (incl-set (dom (m ˢ) ∪ dom (m₂ ˢ)))
-      ∈inclset = to (∈-mapPartial {f = incl-set' (dom (m ˢ) ∪ dom (m₂ ˢ))}) (a , (a∈' , {!!}))
 
     ∪⁺-cong-l' {m} {m₁} {m₂} m₁≡m₂@(m₁⊆m₂ , m₂⊆m₁) .proj₂ = {!!}
 
@@ -109,94 +131,127 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     restrict-cong m₁ m₂ ks (m₁⊆m₂ , m₂⊆m₁) .proj₂ ab∈ with resᶜ-dom∉⁻ m₂ ab∈
     ... | ab∈ , a∉ = resᶜ-dom∉⁺ m₁ (m₂⊆m₁ ab∈ , a∉)
 
-  module _ {P : A × B → Type} ⦃ _ : P ⁇¹ ⦄ where
+    val-∪⁺ : ∀ (m₁ m₂ : A ⇀ B)
+           → (p : (k , v) ∈ m₁ ∪⁺ m₂)
+           → v ≡ F[ m₁ , m₂ ] (k , dom∪⁺⊆∪dom (∈-map′ p)) .proj₂
+    val-∪⁺ m₁ m₂ p = {!!}
+
+  module _ {P : A → Type} ⦃ _ : P ⁇¹ ⦄ where
+
+    P′ : A × B → Type
+    P′ (k , _) = P k
+
 
     opaque
-      -- unfolding List-Model List-Modelᵈ to-sp
-
       open Equivalence
 
-      -- filterᵐ-∪⁺-distr : (m₁ m₂ : A ⇀ B) → filterᵐ P (m₁ ∪⁺ m₂) ≡ᵐ filterᵐ P m₁ ∪⁺ filterᵐ P m₂
-      -- filterᵐ-∪⁺-distr m₁ m₂ = {!!}
-      --
-      -- `filterᵐ-∪⁺-distr` is false!
-      -- Counter-example:
-      -- Suppose `m₁ˢ = m₂ˢ = {(0, 1)}`, `P (0, 1)`, and `¬ P (0, 2)`.
-      -- Then `m₁ ∪⁺ m₂ ≡ {(0, 2)}` so (lhs) `filterᵐ P (m₁ ∪⁺ m₂)` is empty,
-      -- but `(filterᵐ P m₁)ˢ ≡ (filterᵐ P m₂)ˢ = {(0, 1)}` so (rhs) `filterᵐ P m₁ ∪⁺ filterᵐ P m₂` contains {(0, 2)}.
+      -- Note: this property only holds because P′ is not looking at the value.
+      -- Counter-example if it does look at the value:
+      -- Suppose `m₁ˢ = m₂ˢ = {(0, 1)}`, `P′ (0, 1)`, and `¬ P′ (0, 2)`.
+      -- Then `m₁ ∪⁺ m₂ ≡ {(0, 2)}` so (lhs) `filterᵐ P′ (m₁ ∪⁺ m₂)` is empty,
+      -- but `(filterᵐ P′ m₁)ˢ ≡ (filterᵐ P′ m₂)ˢ = {(0, 1)}` so (rhs) `filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂` contains {(0, 2)}.
+      filterᵐ-∪⁺-distr : (m₁ m₂ : A ⇀ B) → filterᵐ P′ (m₁ ∪⁺ m₂) ≡ᵐ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂
+      filterᵐ-∪⁺-distr m₁ m₂ .proj₁ kv∈Pm₁m₂  = {!!}
+      filterᵐ-∪⁺-distr m₁ m₂ .proj₂ {a = k , v} kv∈Pm₁Pm₂ =
+        case ¿ P k ¿ of λ where
+          (yes pk) →
+            let k∈m₁∨k∈m₂ : k ∈ dom m₁ ⊎ k ∈ dom m₂
+                k∈m₁∨k∈m₂ = map-⊎ (dom-filter-inc m₁) (dom-filter-inc m₂) k∈Pm₁∨k∈Pm₂
+                k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂
+                k∈m₁m₂ = ∈-∪ .to k∈m₁∨k∈m₂
+                k∈m₁m₂⁺ : k ∈ dom (m₁ ∪⁺ m₂)
+                k∈m₁m₂⁺ = ∪dom⊆dom∪⁺ k∈m₁m₂
+                mkv : k ∈ dom m₁ ∪ dom m₂ → B
+                mkv = λ p → fold id id _◇_ (unionThese m₁ m₂ k p)
+                [kv′∈m₁m₂] : Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈m₁m₂′ → (k , mkv k∈m₁m₂′) ∈ (m₁ ∪⁺ m₂)ˢ
+                [kv′∈m₁m₂] = _ , ∈-map′ (∈-incl-set k∈m₁m₂ .proj₂)
+                k∈m₁m₂′ , kv′∈m₁m₂ = [kv′∈m₁m₂]
+                v′ = mkv k∈m₁m₂′
+                v′=v : v′ ≡ v
+                v′=v = begin v′ ≡⟨ {!!} ⟩
+                             v ∎
+                kv∈m₁m₂ : (k , v) ∈ m₁ ∪⁺ m₂
+                kv∈m₁m₂ = subst (λ • → (k , •) ∈ m₁ ∪⁺ m₂) v′=v kv′∈m₁m₂
+            in ∈-filter .to (pk , kv∈m₁m₂)
+          (no ¬pk) → ⊥-elim (¬pk ([ dom-filter-P m₁ , dom-filter-P m₂ ]′ k∈Pm₁∨k∈Pm₂))
+        where
+          k∈Pm₁∨k∈Pm₂ : k ∈ dom (filterᵐ P′ m₁) ⊎ k ∈ dom (filterᵐ P′ m₂)
+          k∈Pm₁∨k∈Pm₂ = ∈-∪ .from (dom∪⁺⊆∪dom (∈-map′ kv∈Pm₁Pm₂))
 
+          dom-filter-inc : ∀ m → dom (filterᵐ P′ m) ⊆ dom m
+          dom-filter-inc m k∈Pm = dom∈ .to (_ , ∈-filter .from (dom∈ .from k∈Pm .proj₂) .proj₂)
 
+          dom-filter-P : ∀ m → k ∈ dom (filterᵐ P′ m) → P k
+          dom-filter-P m k∈Pm = ∈-filter .from (dom∈ .from k∈Pm .proj₂) .proj₁
 
-      filterᵐ-singleton-true : ∀ {k v} → P (k , v) → filterᵐ P ❴ k , v ❵ ≡ᵐ ❴ k , v ❵
+      filterᵐ-singleton-true : P k → filterᵐ P′ ❴ k , v ❵ ≡ᵐ ❴ k , v ❵
       filterᵐ-singleton-true p .proj₁ = proj₂ ∘ (from ∈-filter)
-      filterᵐ-singleton-true {k}{v} p .proj₂ {a} x = to ∈-filter (subst P (sym (from ∈-singleton x)) p , x)
+      filterᵐ-singleton-true {k}{v} p .proj₂ {a} x = to ∈-filter (subst P′ (sym (from ∈-singleton x)) p , x)
 
-      filterᵐ-singleton-false : ∀ {k v} → ¬ P (k , v) → filterᵐ P ❴ k , v ❵ ≡ᵐ ∅
+      filterᵐ-singleton-false : ¬ P k → filterᵐ P′ ❴ k , v ❵ ≡ᵐ ∅
       filterᵐ-singleton-false ¬p .proj₁ x =
-        ⊥-elim $ ¬p $ subst P (from ∈-singleton $ proj₂ (from ∈-filter x)) (proj₁ $ from ∈-filter x)
+        ⊥-elim $ ¬p $ subst P′ (from ∈-singleton $ proj₂ (from ∈-filter x)) (proj₁ $ from ∈-filter x)
       filterᵐ-singleton-false _ .proj₂ = ⊥-elim ∘ ∉-∅
 
-      filterᵐ-restrict : ∀ m {ks} → filterᵐ P (m ∣ ks ᶜ) ≡ᵐ filterᵐ P m ∣ ks ᶜ
+      filterᵐ-restrict : ∀ m {ks} → filterᵐ P′ (m ∣ ks ᶜ) ≡ᵐ filterᵐ P′ m ∣ ks ᶜ
 
       -- I'm sure there's a slicker way to prove this; the proof here is straight-forward.
-      filterᵐ-restrict m {ks} .proj₁ {(a , b)} h = Goal
+      filterᵐ-restrict m {ks} .proj₁ {a , b} h = Goal
         where
-        ξ : P (a , b) × (a , b) ∈ (m ∣ ks ᶜ)ˢ
+        ξ : P a × (a , b) ∈ (m ∣ ks ᶜ)ˢ
         ξ = from ∈-filter h
 
         ξ' : (a , b) ∈ m ˢ × a ∉ ks
         ξ' = resᶜ-dom∉⁻ m {ks}{a}{b} (proj₂ ξ)
 
-        Goal : (a , b) ∈ (filterᵐ P m ∣ ks ᶜ) ˢ
-        Goal = resᶜ-dom∉⁺ (filterᵐ P m) ((to ∈-filter ((proj₁ ξ) , (proj₁ ξ'))) , (proj₂ ξ'))
+        Goal : (a , b) ∈ (filterᵐ P′ m ∣ ks ᶜ) ˢ
+        Goal = resᶜ-dom∉⁺ (filterᵐ P′ m) ((to ∈-filter ((proj₁ ξ) , (proj₁ ξ'))) , (proj₂ ξ'))
 
-      filterᵐ-restrict m {ks} .proj₂ {(a , b)} h = Goal
+      filterᵐ-restrict m {ks} .proj₂ {a , b} h = Goal
         where
-        ξ : (a , b) ∈ ((filterᵐ P m) ˢ) × a ∉ ks
-        ξ = resᶜ-dom∉⁻ (filterᵐ P m) {ks}{a}{b} h
+        ξ : (a , b) ∈ ((filterᵐ P′ m) ˢ) × a ∉ ks
+        ξ = resᶜ-dom∉⁻ (filterᵐ P′ m) {ks}{a}{b} h
 
-        ξ' : P (a , b) × (a , b) ∈ m ˢ
+        ξ' : P a × (a , b) ∈ m ˢ
         ξ' = from ∈-filter (proj₁ ξ)
 
-        Goal : (a , b) ∈ (filterᵐ P (m ∣ ks ᶜ))ˢ
+        Goal : (a , b) ∈ (filterᵐ P′ (m ∣ ks ᶜ))ˢ
         Goal = to ∈-filter ((proj₁ ξ') , (resᶜ-dom∉⁺ m ((proj₂ ξ') , (proj₂ ξ))))
 
 
       open SetoidReasoning (≡ᵉ-Setoid{Σ A (λ x → B)})
       module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Σ A (λ x → B)})
 
-      ∈-filter-res- : {m : A ⇀ B} {x : A × B} {k : A} → x ∈ (filterᵐ P m ∣ ❴ k ❵ˢ) ˢ → P x × ∃[ b ] x ≡ (k , b)
-      ∈-filter-res- {m} x∈ = (proj₁ (from ∈-filter (res-⊆ x∈))) , (res-singleton''{m = filterᵐ P m} x∈)
+      ∈-filter-res- : {x : A × B} (m : A ⇀ B) → x ∈ (filterᵐ P′ m ∣ ❴ k ❵ˢ) ˢ → P′ x × ∃[ b ] x ≡ (k , b)
+      ∈-filter-res- m x∈ = (proj₁ (from ∈-filter (res-⊆ x∈))) , (res-singleton''{m = filterᵐ P′ m} x∈)
 
-      restrict-singleton-filterᵐ-false : ∀ m {k} → (∀ {v} → ¬ P (k , v)) → filterᵐ P m ∣ ❴ k ❵ ᶜ ≡ᵐ filterᵐ P m
-      restrict-singleton-filterᵐ-false m {k} ¬p = ≡ᵉ.sym (begin
-        (filterᵐ P m)ˢ
+      restrict-singleton-filterᵐ-false : ∀ m → ¬ P k → filterᵐ P′ m ∣ ❴ k ❵ ᶜ ≡ᵐ filterᵐ P′ m
+      restrict-singleton-filterᵐ-false {k} m ¬p = ≡ᵉ.sym (begin
+        (filterᵐ P′ m)ˢ
           ≈⟨ ≡ᵉ.sym (res-ex-∪ Dec-∈-singleton) ⟩
-        ((filterᵐ P m ∣ ❴ k ❵ˢ) ˢ) ∪ ((filterᵐ P m ∣ ❴ k ❵ˢ ᶜ) ˢ)
+        ((filterᵐ P′ m ∣ ❴ k ❵ˢ) ˢ) ∪ ((filterᵐ P′ m ∣ ❴ k ❵ˢ ᶜ) ˢ)
           ≈⟨ ∪-cong ¬P→res-∅ ≡ᵉ.refl ⟩
-        (∅ ˢ) ∪ ((filterᵐ P m ∣ ❴ k ❵ˢ ᶜ) ˢ)
+        (∅ ˢ) ∪ ((filterᵐ P′ m ∣ ❴ k ❵ˢ ᶜ) ˢ)
           ≈⟨ ∪-identityˡ _ ⟩
-        (filterᵐ P m ∣ ❴ k ❵ˢ ᶜ) ˢ
+        (filterᵐ P′ m ∣ ❴ k ❵ˢ ᶜ) ˢ
           ∎)
           where
-          ¬P→res-∅ :  (filterᵐ P m ∣ ❴ k ❵)ˢ ≡ᵉ (∅ᵐ ˢ)
-          ¬P→res-∅ .proj₁ {a} x with ∈-filter-res- {m} x
-          ... | px , b , refl = ⊥-elim (¬p {b} px)
+          ¬P→res-∅ :  (filterᵐ P′ m ∣ ❴ k ❵)ˢ ≡ᵉ (∅ᵐ ˢ)
+          ¬P→res-∅ .proj₁ {a} x with ∈-filter-res- m x
+          ... | px , b , refl = ⊥-elim (¬p px)
           ¬P→res-∅ .proj₂ = ⊥-elim ∘ ∉-∅
 
-      filterᵐ-∈ : ∀ m {k v} → P (k , v) → (k , v) ∈ m → (k , v) ∈ filterᵐ P m
+      filterᵐ-∈ : ∀ m {k} {v : B} → P k → (k , v) ∈ m → (k , v) ∈ filterᵐ P′ m
       filterᵐ-∈ m = curry $ to ∈-filter
 
     opaque
-      lem-add-included : ∀ {m k v} → P (k , v) → filterᵐ P (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P m ∪⁺ ❴ k , v ❵
-      lem-add-included p = {!!}
-      -- filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l _ _ _ (filterᵐ-singleton-true p)
-      -- (`filterᵐ-∪⁺-distr` is false)
+      lem-add-included : P k → filterᵐ P′ (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P′ m ∪⁺ ❴ k , v ❵
+      lem-add-included p =
+        filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l _ _ _ (filterᵐ-singleton-true p)
 
-      lem-add-excluded : ∀ {m k v} → ¬ P (k , v) → filterᵐ P (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P m
-      lem-add-excluded p =  {!!}
-      -- filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l _ _ ∅ (filterᵐ-singleton-false p) ⟨≈⟩ ∪⁺-id-r _
-      -- (`filterᵐ-∪⁺-distr` is false)
+      lem-add-excluded : ¬ P k → filterᵐ P′ (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P′ m
+      lem-add-excluded p =
+        filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l _ _ ∅ (filterᵐ-singleton-false p) ⟨≈⟩ ∪⁺-id-r _
 
-      lem-del-excluded : ∀ m {k} → (∀ {v} → ¬ P (k , v)) → filterᵐ P (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P m
+      lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
