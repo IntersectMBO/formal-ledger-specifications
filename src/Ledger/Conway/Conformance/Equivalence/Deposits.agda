@@ -6,6 +6,8 @@ open import Ledger.Transaction using (TransactionStructure)
 open import Data.Unit using (⊤)
 open import Data.Product using (_×_; _,_)
 open import Relation.Binary.PropositionalEquality
+import Relation.Binary.Reasoning.Setoid as SetoidReasoning
+open import Relation.Binary using (Setoid)
 
 module Ledger.Conway.Conformance.Equivalence.Deposits
   (txs : _) (open TransactionStructure txs)
@@ -16,6 +18,7 @@ open import Ledger.Conway.Conformance.Equivalence.Map
 
 open import Ledger.Conway.Conformance.Equivalence.Base txs abs
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
+open import Axiom.Set.Properties th using (≡ᵉ-Setoid)
 
 updateDDeps : PParams → List L.DCert → L.Deposits → L.Deposits
 updateDDeps _ []                                   deps = deps
@@ -29,6 +32,11 @@ updateGDeps _ []                                deps = deps
 updateGDeps pp (cert@(L.regdrep _ _ _) ∷ certs) deps = updateGDeps pp certs (C.updateCertDeposit pp cert deps)
 updateGDeps pp (cert@(L.deregdrep _ _) ∷ certs) deps = updateGDeps pp certs (C.updateCertDeposit pp cert deps)
 updateGDeps pp (_                      ∷ certs) deps = updateGDeps pp certs deps
+
+updateLedgerDeps : PParams → Tx → L.Deposits × L.Deposits → L.Deposits × L.Deposits
+updateLedgerDeps pp tx deps@(ddeps , gdeps) = updateDDeps pp certs ddeps , updateGDeps pp certs gdeps
+  where
+    certs = tx .Tx.body .TxBody.txcerts
 
 data DPurpose : L.DepositPurpose → Set where
   CredentialDeposit : ∀ {c} → DPurpose (L.CredentialDeposit c)
@@ -57,7 +65,9 @@ certDDeps deps = filterᵐ (λ (k , _) → DPurpose k) deps
 certGDeps : L.Deposits → L.Deposits
 certGDeps deps = filterᵐ (λ (k , _) → GPurpose k) deps
 
-cong-updateCertDeposit : ∀ pp cert {deps₁ deps₂} → deps₁ ≡ᵐ deps₂ → C.updateCertDeposit pp cert deps₁ ≡ᵐ C.updateCertDeposit pp cert deps₂
+cong-updateCertDeposit : ∀ pp cert {deps₁ deps₂}
+                       → deps₁ ≡ᵐ deps₂
+                       → C.updateCertDeposit pp cert deps₁ ≡ᵐ C.updateCertDeposit pp cert deps₂
 cong-updateCertDeposit pp (L.delegate c kh del v)            eq = ∪⁺-cong-r _ _ _ eq
 cong-updateCertDeposit pp (L.dereg x x₁) {deps₁} {deps₂}     eq = restrict-cong deps₁ deps₂ _ eq
 cong-updateCertDeposit pp (L.regpool x x₁)                   eq = ∪⁺-cong-r _ _ _ eq
@@ -66,6 +76,12 @@ cong-updateCertDeposit pp (L.regdrep x x₁ x₂)                eq = ∪⁺-con
 cong-updateCertDeposit pp (L.deregdrep x x₁) {deps₁} {deps₂} eq = restrict-cong deps₁ deps₂ _ eq
 cong-updateCertDeposit pp (L.ccreghot x x₁)                  eq = eq
 cong-updateCertDeposit pp (L.reg x x₁)                       eq = ∪⁺-cong-r _ _ _ eq
+
+cong-certDDeps : ∀ deps₁ deps₂ → deps₁ ≡ᵐ deps₂ → certDDeps deps₁ ≡ᵐ certDDeps deps₂
+cong-certDDeps = cong-filterᵐ
+
+cong-certGDeps : ∀ deps₁ deps₂ → deps₁ ≡ᵐ deps₂ → certGDeps deps₁ ≡ᵐ certGDeps deps₂
+cong-certGDeps = cong-filterᵐ
 
 castValidDepsᵈ : ∀ {pp deps₁ deps₂ certs} → deps₁ ≡ᵐ deps₂ → ValidDepsᵈ pp deps₁ certs → ValidDepsᵈ pp deps₂ certs
 castValidDepsᵈ                         eq [] = []
@@ -116,3 +132,179 @@ validGDeps {deps = deps} (L.deregdrep h v) = deregdrep  (filterᵐ-∈ deps DRep
 validGDeps               (L.ccreghot    v) = ccreghot   (validGDeps v)
 validGDeps               (L.retirepool  v) = retirepool (validGDeps v)
 validGDeps               (L.reg         v) = reg (castValidDepsᵍ (lem-add-excluded λ ()) (validGDeps v))
+
+lem-upd-prop-ddeps : ∀ {txid} {gaDep} props deps
+                   → certDDeps deps ≡ᵐ certDDeps (L.updateProposalDeposits props txid gaDep deps)
+lem-upd-prop-ddeps [] deps = id , id
+lem-upd-prop-ddeps {txid} {gaDep} (_ ∷ props) deps = begin
+    certDDeps deps ˢ
+      ≈⟨ lem-upd-prop-ddeps props deps ⟩
+    certDDeps (L.updateProposalDeposits props txid gaDep deps) ˢ
+      ≈⟨ lem-add-excluded (λ ()) ⟨
+    certDDeps (L.updateProposalDeposits props txid gaDep deps ∪⁺ ❴ L.GovActionDeposit _ , _ ❵) ˢ
+      ∎
+  where
+    open module R {A} = SetoidReasoning (≡ᵉ-Setoid {A = A})
+
+lem-upd-prop-gdeps : ∀ {txid} {gaDep} props deps
+                   → certGDeps deps ≡ᵐ certGDeps (L.updateProposalDeposits props txid gaDep deps)
+lem-upd-prop-gdeps [] deps = id , id
+lem-upd-prop-gdeps {txid} {gaDep} (_ ∷ props) deps = begin
+    certGDeps deps ˢ
+      ≈⟨ lem-upd-prop-gdeps props deps ⟩
+    certGDeps (L.updateProposalDeposits props txid gaDep deps) ˢ
+      ≈⟨ lem-add-excluded (λ ()) ⟨
+    certGDeps (L.updateProposalDeposits props txid gaDep deps ∪⁺ ❴ L.GovActionDeposit _ , _ ❵) ˢ
+      ∎
+  where
+    open module R {A} = SetoidReasoning (≡ᵉ-Setoid {A = A})
+
+lem-ddeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
+          → updateCertDeps* certs deposits .CertDeps*.depsᵈ ≡ updateDDeps pp certs (deposits .CertDeps*.depsᵈ)
+lem-ddeps {certs = []} _ = refl
+lem-ddeps (delegate*    ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (dereg*    v  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (regpool*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (retirepool*  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (regdrep*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (deregdrep* v ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (ccreghot*    ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (reg*         ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+
+lem-gdeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
+          → updateCertDeps* certs deposits .CertDeps*.depsᵍ ≡ updateGDeps pp certs (deposits .CertDeps*.depsᵍ)
+lem-gdeps {certs = []} _ = refl
+lem-gdeps (delegate*    ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (dereg*    v  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (regpool*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (retirepool*  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (regdrep*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (deregdrep* v ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (ccreghot*    ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (reg*         ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+
+certDeposits : L.LState → L.Deposits × L.Deposits
+certDeposits s = certDDeps deps , certGDeps deps
+  where deps = s .L.LState.utxoSt .L.UTxOState.deposits
+
+cong-updateDDeps : ∀ {pp} certs {deps₁ deps₂}
+                 → deps₁ ≡ᵐ deps₂
+                 → updateDDeps pp certs deps₁ ≡ᵐ updateDDeps pp certs deps₂
+cong-updateDDeps      []                                     eq = eq
+cong-updateDDeps {pp} (cert@(L.delegate c del kh v) ∷ certs) eq = cong-updateDDeps certs (cong-updateCertDeposit pp cert eq)
+cong-updateDDeps {pp} (cert@(L.dereg c v)           ∷ certs) {deps₁} {deps₂}
+                                                             eq = cong-updateDDeps certs (cong-updateCertDeposit pp cert {deps₁} {deps₂} eq)
+cong-updateDDeps {pp} (cert@(L.reg c v)             ∷ certs) eq = cong-updateDDeps certs (cong-updateCertDeposit pp cert eq)
+cong-updateDDeps      (L.regpool _ _                ∷ certs) eq = cong-updateDDeps certs eq
+cong-updateDDeps      (L.regdrep _ _ _              ∷ certs) eq = cong-updateDDeps certs eq
+cong-updateDDeps      (L.deregdrep _ _              ∷ certs) eq = cong-updateDDeps certs eq
+cong-updateDDeps      (L.retirepool _ _             ∷ certs) eq = cong-updateDDeps certs eq
+cong-updateDDeps      (L.ccreghot _ _               ∷ certs) eq = cong-updateDDeps certs eq
+
+cong-updateGDeps : ∀ {pp} certs {deps₁ deps₂}
+                 → deps₁ ≡ᵐ deps₂
+                 → updateGDeps pp certs deps₁ ≡ᵐ updateGDeps pp certs deps₂
+cong-updateGDeps      []                                     eq = eq
+cong-updateGDeps      (L.delegate _ _ _ _     ∷ certs) eq = cong-updateGDeps certs eq
+cong-updateGDeps      (L.dereg _ _            ∷ certs) eq = cong-updateGDeps certs eq
+cong-updateGDeps      (L.reg _ _              ∷ certs) eq = cong-updateGDeps certs eq
+cong-updateGDeps      (L.regpool _ _          ∷ certs) eq = cong-updateGDeps certs eq
+cong-updateGDeps {pp} (cert@(L.regdrep _ _ _) ∷ certs) eq = cong-updateGDeps certs (cong-updateCertDeposit pp cert eq)
+cong-updateGDeps {pp} (cert@(L.deregdrep _ _) ∷ certs) {deps₁} {deps₂}
+                                                       eq = cong-updateGDeps certs (cong-updateCertDeposit pp cert {deps₁} {deps₂} eq)
+cong-updateGDeps      (L.retirepool _ _       ∷ certs) eq = cong-updateGDeps certs eq
+cong-updateGDeps      (L.ccreghot _ _         ∷ certs) eq = cong-updateGDeps certs eq
+
+private open module S {A} = Setoid (≡ᵉ-Setoid {A = A}) using () renaming (sym to ≈-sym; trans to _⟨≈⟩_)
+
+-- This proof takes quite a long time to check. Way longer if we tried to use nice equational reasoning.
+-- I suspect making filterᵐ and _∪⁺_ opaque would speed things up a million times.
+lem-upd-cert-ddeps : ∀ {pp} deps certs
+                  → updateDDeps pp certs (certDDeps deps) ≡ᵐ certDDeps (L.updateCertDeposits pp certs deps)
+lem-upd-cert-ddeps deps [] = id , id
+lem-upd-cert-ddeps {pp} deps (L.delegate c del kh v ∷ certs) =
+  ≈-sym (cong-updateDDeps certs (lem-add-included CredentialDeposit)) ⟨≈⟩
+  lem-upd-cert-ddeps (deps ∪⁺ dep) certs
+  where dep = ❴ L.CredentialDeposit c , v ❵
+lem-upd-cert-ddeps {pp} deps (L.dereg c v ∷ certs) =
+  ≈-sym (cong-updateDDeps certs (filterᵐ-restrict deps)) ⟨≈⟩
+  lem-upd-cert-ddeps (deps ∣ cs ᶜ) certs
+  where cs = ❴ L.CredentialDeposit c ❵
+lem-upd-cert-ddeps {pp} deps (L.reg c v ∷ certs) =
+  ≈-sym (cong-updateDDeps certs (lem-add-included CredentialDeposit)) ⟨≈⟩
+  lem-upd-cert-ddeps (deps ∪⁺ dep) certs
+  where dep = ❴ L.CredentialDeposit c , pp .PParams.keyDeposit ❵
+lem-upd-cert-ddeps {pp} deps (L.regpool kh p ∷ certs) =
+  ≈-sym (cong-updateDDeps certs (lem-add-excluded λ ())) ⟨≈⟩
+  lem-upd-cert-ddeps (deps ∪⁺ dep) certs
+  where dep = ❴ L.PoolDeposit kh , pp .PParams.poolDeposit ❵
+lem-upd-cert-ddeps {pp} deps (L.regdrep c v a ∷ certs) =
+  ≈-sym (cong-updateDDeps certs (lem-add-excluded λ ())) ⟨≈⟩
+  lem-upd-cert-ddeps (deps ∪⁺ dep) certs
+  where dep = ❴ L.DRepDeposit c , v ❵
+lem-upd-cert-ddeps {pp} deps (L.deregdrep c v ∷ certs) =
+  ≈-sym (cong-updateDDeps certs (lem-del-excluded deps λ ())) ⟨≈⟩
+  lem-upd-cert-ddeps (deps ∣ cs ᶜ) certs
+  where cs = ❴ L.DRepDeposit c ❵
+lem-upd-cert-ddeps deps (L.retirepool _ _ ∷ certs) = lem-upd-cert-ddeps deps certs
+lem-upd-cert-ddeps deps (L.ccreghot _ _ ∷ certs) = lem-upd-cert-ddeps deps certs
+
+lem-upd-cert-gdeps : ∀ {pp} deps certs
+                  → updateGDeps pp certs (certGDeps deps) ≡ᵐ certGDeps (L.updateCertDeposits pp certs deps)
+lem-upd-cert-gdeps deps [] = id , id
+lem-upd-cert-gdeps {pp} deps (L.delegate c del kh v ∷ certs) =
+  ≈-sym (cong-updateGDeps certs (lem-add-excluded λ ())) ⟨≈⟩
+  lem-upd-cert-gdeps (deps ∪⁺ dep) certs
+  where dep = ❴ L.CredentialDeposit c , v ❵
+lem-upd-cert-gdeps {pp} deps (L.dereg c v ∷ certs) =
+  ≈-sym (cong-updateGDeps certs (lem-del-excluded deps λ ())) ⟨≈⟩
+  lem-upd-cert-gdeps (deps ∣ cs ᶜ) certs
+  where cs = ❴ L.CredentialDeposit c ❵
+lem-upd-cert-gdeps {pp} deps (L.reg c v ∷ certs) =
+  ≈-sym (cong-updateGDeps certs (lem-add-excluded λ ())) ⟨≈⟩
+  lem-upd-cert-gdeps (deps ∪⁺ dep) certs
+  where dep = ❴ L.CredentialDeposit c , pp .PParams.keyDeposit ❵
+lem-upd-cert-gdeps {pp} deps (L.regpool kh p ∷ certs) =
+  ≈-sym (cong-updateGDeps certs (lem-add-excluded λ ())) ⟨≈⟩
+  lem-upd-cert-gdeps (deps ∪⁺ dep) certs
+  where dep = ❴ L.PoolDeposit kh , pp .PParams.poolDeposit ❵
+lem-upd-cert-gdeps {pp} deps (L.regdrep c v a ∷ certs) =
+  ≈-sym (cong-updateGDeps certs (lem-add-included DRepDeposit)) ⟨≈⟩
+  lem-upd-cert-gdeps (deps ∪⁺ dep) certs
+  where dep = ❴ L.DRepDeposit c , v ❵
+lem-upd-cert-gdeps {pp} deps (L.deregdrep c v ∷ certs) =
+  ≈-sym (cong-updateGDeps certs (filterᵐ-restrict deps)) ⟨≈⟩
+  lem-upd-cert-gdeps (deps ∣ cs ᶜ) certs
+  where cs = ❴ L.DRepDeposit c ❵
+lem-upd-cert-gdeps deps (L.retirepool _ _ ∷ certs) = lem-upd-cert-gdeps deps certs
+lem-upd-cert-gdeps deps (L.ccreghot _ _ ∷ certs) = lem-upd-cert-gdeps deps certs
+
+lem-upd-ddeps : ∀ pparams deps tx (open TxBody (body tx) using (txcerts))
+              → updateDDeps pparams txcerts (certDDeps deps) ≡ᵐ certDDeps (L.updateDeposits pparams (body tx) deps)
+lem-upd-ddeps pparams deps tx = begin
+    updateDDeps pparams txcerts (certDDeps deps) ˢ
+      ≈⟨ cong-updateDDeps txcerts (lem-upd-prop-ddeps txprop deps) ⟩
+    updateDDeps pparams txcerts (certDDeps (updateProp deps)) ˢ
+      ≈⟨ lem-upd-cert-ddeps (updateProp deps) txcerts ⟩
+    certDDeps (L.updateDeposits pparams (body tx) deps) ˢ
+      ∎
+  where
+    open TxBody (body tx)
+    open module R {A} = SetoidReasoning (≡ᵉ-Setoid {A = A})
+    updateCert = L.updateCertDeposits pparams txcerts
+    updateProp = L.updateProposalDeposits txprop txid (pparams .PParams.govActionDeposit)
+
+lem-upd-gdeps : ∀ pparams deps tx (open TxBody (body tx) using (txcerts))
+              → updateGDeps pparams txcerts (certGDeps deps) ≡ᵐ certGDeps (L.updateDeposits pparams (body tx) deps)
+lem-upd-gdeps pparams deps tx = begin
+    updateGDeps pparams txcerts (certGDeps deps) ˢ
+      ≈⟨ cong-updateGDeps txcerts (lem-upd-prop-gdeps txprop deps) ⟩
+    updateGDeps pparams txcerts (certGDeps (updateProp deps)) ˢ
+      ≈⟨ lem-upd-cert-gdeps (updateProp deps) txcerts ⟩
+    certGDeps (L.updateDeposits pparams (body tx) deps) ˢ
+      ∎
+  where
+    open TxBody (body tx)
+    open module R {A} = SetoidReasoning (≡ᵉ-Setoid {A = A})
+    updateCert = L.updateCertDeposits pparams txcerts
+    updateProp = L.updateProposalDeposits txprop txid (pparams .PParams.govActionDeposit)

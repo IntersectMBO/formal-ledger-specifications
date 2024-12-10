@@ -8,6 +8,7 @@ open import Ledger.Transaction using (TransactionStructure)
 
 open import Data.Unit using (⊤)
 open import Data.Product using (_×_; _,_)
+open import Data.Product.Relation.Binary.Pointwise.NonDependent using (Pointwise)
 open import Function.Bundles using (_⇔_; mk⇔; Equivalence)
 open import Relation.Binary.PropositionalEquality
 
@@ -23,6 +24,7 @@ open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Ledger.Conway.Conformance.Equivalence.Gov txs abs
 open import Ledger.Conway.Conformance.Equivalence.Utxo txs abs
 open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
+open import Axiom.Set.Properties th using (≡ᵉ-Setoid)
 
 -- Invalid transactions don't change the deposits
 lemInvalidDepositsL : ∀ {Γ utxoSt utxoSt' tx}
@@ -74,85 +76,75 @@ makeCertDeps* {s = s} valid r = ⟦ certDDeps deposits , certGDeps deposits , va
     open L.UTxOState s using (deposits)
     validDeps = getValidCertDeposits valid r
 
-updateLedgerDeps : PParams → Tx → L.Deposits × L.Deposits → L.Deposits × L.Deposits
-updateLedgerDeps pp tx deps@(ddeps , gdeps) =
-  if isValid tx
-  then updateDDeps pp certs ddeps , updateGDeps pp certs gdeps
-  else deps
+_≡ᵈ_ : (x y : L.Deposits × L.Deposits) → Type
+_≡ᵈ_ = Pointwise _≡ᵐ_ _≡ᵐ_
+
+lem-cert-deposits-valid : ∀ {Γ s tx s'} (open L.LEnv Γ using (pparams))
+                        → isValid tx ≡ true
+                        → Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                        → updateLedgerDeps pparams tx (certDeposits s) ≡ᵈ certDeposits s'
+lem-cert-deposits-valid {Γ} {s} {tx} {s'} refl (L.LEDGER-V⋯ refl utxow certs gov) rewrite sym (lemUpdateDeposits refl utxow) =
+  lem-upd-ddeps pparams deps tx ,
+  lem-upd-gdeps pparams deps tx
   where
-    certs = tx .Tx.body .TxBody.txcerts
+    open L.LEnv Γ using (pparams)
+    deps = s .L.LState.utxoSt . L.UTxOState.deposits
 
-lem-ddeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
-          → updateCertDeps* certs deposits .CertDeps*.depsᵈ ≡ updateDDeps pp certs (deposits .CertDeps*.depsᵈ)
-lem-ddeps {certs = []} _ = refl
-lem-ddeps (delegate*    ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-ddeps (dereg*    v  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-ddeps (regpool*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-ddeps (retirepool*  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-ddeps (regdrep*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-ddeps (deregdrep* v ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-ddeps (ccreghot*    ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-ddeps (reg*         ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-
-lem-gdeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
-          → updateCertDeps* certs deposits .CertDeps*.depsᵍ ≡ updateGDeps pp certs (deposits .CertDeps*.depsᵍ)
-lem-gdeps {certs = []} _ = refl
-lem-gdeps (delegate*    ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-gdeps (dereg*    v  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-gdeps (regpool*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-gdeps (retirepool*  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-gdeps (regdrep*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-gdeps (deregdrep* v ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-gdeps (ccreghot*    ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-gdeps (reg*         ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-
-certDeposits : L.LState → L.Deposits × L.Deposits
-certDeposits s = certDDeps deps , certGDeps deps
-  where deps = s .L.LState.utxoSt .L.UTxOState.deposits
+lem-cert-deposits-invalid : ∀ {Γ s tx s'} (open L.LEnv Γ using (pparams))
+                        → isValid tx ≡ false
+                        → Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                        → certDeposits s ≡ᵈ certDeposits s'
+lem-cert-deposits-invalid refl (L.LEDGER-I⋯ _ utxow) rewrite lemInvalidDepositsL refl utxow =
+  (id , id) , (id , id)
 
 instance
   LStateToConf : L.Deposits × L.Deposits ⊢ L.LState ⭆ C.LState
   LStateToConf .convⁱ deposits L.⟦ utxoSt , govSt , certState ⟧ˡ =
     C.⟦ utxoSt , govSt , deposits ⊢conv certState ⟧ˡ
 
-  -- Idea: can I throw in a ≡ᵐ equality in the conformance rule, allowing fudging deposits?
+  -- Idea: can we throw in a ≡ᵐ equality in the conformance rule, allowing fudging deposits?
   -- Won't work going the other direction, but maybe not necessary?
 
   LEDGERToConf : ∀ {Γ s tx s'}
-                 -- TODO: show cert deposits in s' match the updated ones from s
-                 --       won't be on the nose because update does not commute with restriction
                → Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s' ⭆
-                 Γ C.⊢ (certDeposits s ⊢conv s) ⇀⦇ tx ,LEDGER⦈ (updateLedgerDeps (Γ .L.LEnv.pparams) tx (certDeposits s) ⊢conv s')
+                 ∃[ certDeposits-s' ]
+                    certDeposits-s' ≡ᵈ certDeposits s'
+                  × Γ C.⊢ (certDeposits s ⊢conv s) ⇀⦇ tx ,LEDGER⦈ (certDeposits-s' ⊢conv s')
   LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-V⋯ refl utxow certs gov) =
-    let open L.LEnv Γ
-        open L.LState s
-        open L.LState s' renaming (utxoSt to utxoSt'; certState to certState'; govSt to govSt')
-        open TxBody (body tx) using (txcerts)
-        deposits = L.UTxOState.deposits utxoSt
-        utxow' : _ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ setDeposits deposits utxoSt'
-        utxow' = conv utxow
-        utxoStC'    = setDeposits (L.updateDeposits pparams (body tx) deposits) utxoSt'
-        cdeposits  = makeCertDeps* refl utxow
-        cdeposits' = updateCertDeps* txcerts cdeposits
-        certStateC' = getCertDeps* cdeposits' ⊢conv certState'
-        certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
-        certs' = cdeposits ⊢conv certs
-        gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOV⦈ govSt'
-        gov' = getCertDeps* cdeposits' ⊢conv gov
-        ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
-        ledger' = C.LEDGER-V⋯ refl utxow' certs' gov'
-        utxoEq  : utxoStC' ≡ utxoSt'
-        utxoEq  = cong (λ • → L.⟦ _ , _ , • , _ ⟧ᵘ)
-                       (lemUpdateDeposits refl utxow)
-        ddeps , gdeps = getCertDeps* cdeposits
-        certsEq : certStateC' ≡ (updateDDeps pparams txcerts ddeps , updateGDeps pparams txcerts gdeps) ⊢conv certState'
-        certsEq = cong₂ (λ • ◆ → C.⟦ C.⟦ _ , _ , _ , • ⟧ᵈ , _ , C.⟦ _ , _ , ◆ ⟧ᵛ ⟧ᶜˢ)
-                       (lem-ddeps cdeposits)
-                       (lem-gdeps cdeposits)
-    in
-    subst₂ (λ • ◆ → Γ C.⊢ getCertDeps* cdeposits ⊢conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ • , _ , ◆ ⟧ˡ)
-           utxoEq certsEq ledger'
-  LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ (L.LEDGER-I⋯ refl utxow) =
+    updateLedgerDeps pparams tx (certDeposits s)
+    , lem-cert-deposits-valid refl r
+    , subst₂ (λ • ◆ → Γ C.⊢ getCertDeps* cdeposits ⊢conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ • , _ , ◆ ⟧ˡ)
+             utxoEq certsEq ledger'
+    where
+      open L.LEnv Γ
+      open L.LState s
+      open L.LState s' renaming (utxoSt to utxoSt'; certState to certState'; govSt to govSt')
+      open TxBody (body tx) using (txcerts)
+      deposits = L.UTxOState.deposits utxoSt
+      utxow' : _ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ setDeposits deposits utxoSt'
+      utxow' = conv utxow
+      utxoStC'    = setDeposits (L.updateDeposits pparams (body tx) deposits) utxoSt'
+      cdeposits  = makeCertDeps* refl utxow
+      cdeposits' = updateCertDeps* txcerts cdeposits
+      certStateC' = getCertDeps* cdeposits' ⊢conv certState'
+      certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
+      certs' = cdeposits ⊢conv certs
+      gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOV⦈ govSt'
+      gov' = getCertDeps* cdeposits' ⊢conv gov
+      ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
+      ledger' = C.LEDGER-V⋯ refl utxow' certs' gov'
+      utxoEq  : utxoStC' ≡ utxoSt'
+      utxoEq  = cong (λ • → L.⟦ _ , _ , • , _ ⟧ᵘ)
+                     (lemUpdateDeposits refl utxow)
+      ddeps = getCertDeps* cdeposits .proj₁
+      gdeps = getCertDeps* cdeposits .proj₂
+      certsEq : certStateC' ≡ (updateDDeps pparams txcerts ddeps , updateGDeps pparams txcerts gdeps) ⊢conv certState'
+      certsEq = cong₂ (λ • ◆ → C.⟦ C.⟦ _ , _ , _ , • ⟧ᵈ , _ , C.⟦ _ , _ , ◆ ⟧ᵛ ⟧ᶜˢ)
+                     (lem-ddeps cdeposits)
+                     (lem-gdeps cdeposits)
+
+  LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-I⋯ refl utxow) =
+    certDeposits s , lem-cert-deposits-invalid refl r ,
     subst (λ • → Γ C.⊢ _ ⊢conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ C.⟦ _ , _ , • , _ ⟧ᵘ , _ , _ ⟧ˡ)
           (lemInvalidDepositsL refl utxow)
           (C.LEDGER-I⋯ refl (conv utxow))

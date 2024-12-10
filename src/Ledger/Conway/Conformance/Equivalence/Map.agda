@@ -211,6 +211,12 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     opaque
       open Equivalence
 
+      dom-filter-P : ∀ m → k ∈ dom (filterᵐ P′ m) → P k
+      dom-filter-P m k∈Pm = ∈-filter .from (dom∈ .from k∈Pm .proj₂) .proj₁
+
+      dom-filter-inc : ∀ m → dom (filterᵐ P′ m) ⊆ dom m
+      dom-filter-inc m k∈Pm = dom∈ .to (_ , filter-⊆ (dom∈ .from k∈Pm .proj₂))
+
       -- Note: this property only holds because P′ is not looking at the value.
       -- Counter-example if it does look at the value:
       -- Suppose `m₁ˢ = m₂ˢ = {(0, 1)}`, `P′ (0, 1)`, and `¬ P′ (0, 2)`.
@@ -234,12 +240,6 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
           ... | no  _  | yes ∈₂ | _       = that ∈₂
           ... | no  ∉₁ | no  _  | inj₁ ∈₁ = ⊥-elim (∉₁ ∈₁)
           ... | no  _  | no  ∉₂ | inj₂ ∈₂ = ⊥-elim (∉₂ ∈₂)
-
-          dom-filter-inc : ∀ m → dom (filterᵐ P′ m) ⊆ dom m
-          dom-filter-inc m k∈Pm = dom∈ .to (_ , filter-⊆ (dom∈ .from k∈Pm .proj₂))
-
-          dom-filter-P : ∀ m → k ∈ dom (filterᵐ P′ m) → P k
-          dom-filter-P m k∈Pm = ∈-filter .from (dom∈ .from k∈Pm .proj₂) .proj₁
 
           yes-case : P k → (k , v) ∈ filterᵐ P′ (m₁ ∪⁺ m₂)
           yes-case pk = ∈-filter .to (pk , kv∈m₁m₂)
@@ -333,6 +333,10 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
 
       filterᵐ-∈ : ∀ m {k} {v : B} → P k → (k , v) ∈ m → (k , v) ∈ filterᵐ P′ m
       filterᵐ-∈ m = curry $ to ∈-filter
+
+      cong-filterᵐ : ∀ m₁ m₂ → m₁ ≡ᵐ m₂ → filterᵐ P′ m₁ ≡ᵐ filterᵐ P′ m₂
+      cong-filterᵐ m₁ m₂ eq .proj₁ {a = k , v} ∈Pm₁ = filterᵐ-∈ m₂ (dom-filter-P m₁ (∈-dom ∈Pm₁)) (eq .proj₁ (∈-filter .from ∈Pm₁ .proj₂))
+      cong-filterᵐ m₁ m₂ eq .proj₂ {a = k , v} ∈Pm₂ = filterᵐ-∈ m₁ (dom-filter-P m₂ (∈-dom ∈Pm₂)) (eq .proj₂ (∈-filter .from ∈Pm₂ .proj₂))
 
     opaque
       lem-add-included : P k → filterᵐ P′ (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P′ m ∪⁺ ❴ k , v ❵
