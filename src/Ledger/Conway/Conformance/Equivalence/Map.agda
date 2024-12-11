@@ -35,33 +35,97 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
 
   open Equivalence
 
-  join-val : (m₁ m₂ : A ⇀ B) → (Σ A (λ x → x ∈ dom m₁ ∪ dom m₂)) → B
-  join-val m₁ m₂ (k , p) = fold id id _◇_ (unionThese m₁ m₂ k p)
+  dom∈-∪⁺ : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂ → Σ B (λ v → (k , v) ∈ m₁ ∪⁺ m₂)
+  dom∈-∪⁺ k∈ = from dom∈ (∪dom⊆dom∪⁺ k∈)
 
-  join-val≡ : {m₁ m₂ : A ⇀ B}{k : A}{k∈ : k ∈ dom m₁ ∪ dom m₂}{k∈⁺ : k ∈ dom (m₁ ∪⁺ m₂)}
-    → lookupᵐ (m₁ ∪⁺ m₂) k ≡ join-val m₁ m₂ (k , k∈)
-  join-val≡ = {!!}
+  -- Values associated with a key k in the domain of `m₁ ∪⁺ m₂` can be computed in two ways:
 
-  ∪⁺→dom∪ : {m₁ m₂ : A ⇀ B}{k : A} {v : B} → (k , v) ∈ m₁ ∪⁺ m₂ → k ∈ dom m₁ ∪ dom m₂
-  ∪⁺→dom∪ {v = v} kv∈ = dom∪⁺⊆∪dom (to dom∈ (v , kv∈))
+  -- 1. from the property of a map (there must be a value associated with k in domain---look it up!)
+  ∥_∪⁺_∥ : (m₁ m₂ : A ⇀ B) → k ∈ dom m₁ ∪ dom m₂ → B
+  ∥ m₁ ∪⁺ m₂ ∥ k∈ = proj₁ (dom∈-∪⁺{m₁ = m₁}{m₂}  k∈)
 
-  opaque
-    -- unfolding List-Model List-Modelᵈ to-sp
+  -- 2. from the definition of ∪⁺ (fold over the union of the two maps).
+  ∥_∪⁺_∥ᵈᵉᶠ : (m₁ m₂ : A ⇀ B) → k ∈ dom m₁ ∪ dom m₂ → B
+  ∥_∪⁺_∥ᵈᵉᶠ {k} m₁ m₂ p = fold id id _◇_ (unionThese m₁ m₂ k p)
+
+  F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ x → x ∈ dom m₁ ∪ dom m₂) → A × B
+  F[ m₁ , m₂ ] (x , x∈) = x , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ x∈
+
+  _⊕_ : (m₁ m₂ : A ⇀ B) → ℙ (A × B)
+  m₁ ⊕ m₂ = mapˢ F[ m₁ , m₂ ] (incl-set (dom (m₁ ˢ) ∪ dom (m₂ ˢ)))
+
+  opaque  -- unfolding List-Model List-Modelᵈ to-sp
+
+    -- Properties of values of ∪⁺ ----------------------
+
+    -- 0. The following lemma (∈-incl-set) will be useful for proving some ∪⁺ properties.
+    ∈-incl-set : {X : ℙ A} {a : A} (a∈X : a ∈ X) → Σ (a ∈ X) λ a∈X′ → (a , a∈X′) ∈ incl-set X
+    ∈-incl-set {X} {a} a∈X =
+      Data.Product.map₂ (λ {a∈X′} eq → ∈-mapPartial {f = incl-set' X} .to (a , a∈X′ , eq))
+                        lem
+      where
+        lem : Σ (a ∈ X) λ a∈X′ → incl-set' X a ≡ just (a , a∈X′)
+        lem with a ∈? X
+        ... | yes a∈X′ = a∈X′ , refl
+        ... | no  a∉X  = ⊥-elim (a∉X a∈X)
+
+    -- 1. If v is the value obtained using the property of maps (i.e., v = ∥ m₁ ∪⁺ m₂ ∥ k∈)
+    --    then (k , v) ∈ m₁ ∪⁺ m₂.
+    k×∥∪⁺∥∈∪⁺ : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
+              → (k , ∥ m₁ ∪⁺ m₂ ∥ k∈) ∈ m₁ ∪⁺ m₂
+    k×∥∪⁺∥∈∪⁺ {m₁ = m₁} {m₂} k∈ = from dom∈ (∪dom⊆dom∪⁺{m = m₁}{m₂} k∈) .proj₂
+
+    -- 2. If v is any value such that (k , v) ∈ m₁ ∪⁺ m₂, then v = ∥ m₁ ∪⁺ m₂ ∥ k∈.
+    ∪⁺-val≡  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
+             → (k , v) ∈ m₁ ∪⁺ m₂ → v ≡ ∥ m₁ ∪⁺ m₂ ∥ k∈
+    ∪⁺-val≡ {m₁ = m₁} {m₂} k∈ kv∈ = (m₁ ∪⁺ m₂) .proj₂ kv∈ (k×∥∪⁺∥∈∪⁺ k∈)
+
+    -- val-∪⁺ : ∀ (m₁ m₂ : A ⇀ B)
+    --        → (k , v) ∈ m₁ ∪⁺ m₂
+    --        → (p : These (k ∈ dom m₁) (k ∈ dom m₂))
+    --        → v ≡ fold id id _◇_ (These.map (lookupᵐ∈ m₁) (lookupᵐ∈ m₂) p)
+    -- val-∪⁺ m₁ m₂ p = {!!}
+
+    -- 3. If `k ∈ dom m₁ ∪ dom m₂` then there is a proof `k∈′` of `dom m₁ ∪ dom m₂`
+    --    such that, if `v` is the val obtained using the def of `∪⁺` with `k∈′`
+    --    (i.e., `v = ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′`), then `(k, v) ∈ m₁ ∪⁺ m₂`.
+    k×∥∪⁺∥ᵈᵉᶠ∈∪⁺  : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂
+                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → (k , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′) ∈ m₁ ∪⁺ m₂
+    k×∥∪⁺∥ᵈᵉᶠ∈∪⁺ {k = k} k∈ with ∈-incl-set k∈
+    ... | k∈′ , kk∈ = k∈′ , to ∈-map ((k , k∈′) , refl , kk∈)
+
+    --  Another way to express the goal `(k , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′) ∈ m₁ ∪⁺ m₂` above
+    --  is `F[ m₁ , m₂ ] (k , k∈′) ∈ mapˢ F[ m₁ , m₂ ] (incl-set (dom m₁ ∪ dom m₂))`.
+
+
+    -- 4. If (k , v) ∈ m₁ ∪⁺ m₂, then there is a proof `k∈′` of `dom m₁ ∪ dom m₂`
+    --    such that `v ≡ ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′`.
+    ∪⁺-def-val-lem  : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂ → (k , v) ∈ m₁ ∪⁺ m₂
+                    → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′
+    ∪⁺-def-val-lem {k = k} {m₁ = m₁} {m₂} k∈ kv∈ with ∈-incl-set k∈
+    ... | k∈′ , kk∈ = k∈′ , (m₁ ∪⁺ m₂) .proj₂ kv∈ (to ∈-map ((k , k∈′) , refl , kk∈))
+
+    -- 5. Vals obtained using the property of maps and the def of ∪⁺ are equal.
+    ∥∪⁺∥ᵈᵉᶠ≡∥∪⁺∥  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
+                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′ ≡ ∥ m₁ ∪⁺ m₂ ∥ k∈
+    ∥∪⁺∥ᵈᵉᶠ≡∥∪⁺∥  {k = k} {m₁ = m₁} {m₂} k∈ with k×∥∪⁺∥ᵈᵉᶠ∈∪⁺{m₁ = m₁}{m₂} k∈
+    ... | k∈′ , kk∈ = k∈′ , ∪⁺-val≡ k∈ kk∈
 
     lookupᵐ∈ : (m : A ⇀ B) → k ∈ dom m → B
     lookupᵐ∈ m p = ∈-map .from p .proj₁ .proj₂
 
-    ------------------------------------------------------------------------------------------------
-    -- We should probably write helper functions to make ∪⁺ easier to reason about.
-    --
-    F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ x → x ∈ dom m₁ ∪ dom m₂) → A × B
-    F[ m₁ , m₂ ] (x , x∈) = x , join-val m₁ m₂ (x , x∈)
+    -- Properties of domains of maps of type m₁ ∪⁺ m₂ ---------------------
 
-    _⊕_ : (m₁ m₂ : A ⇀ B) → ℙ (A × B)
-    m₁ ⊕ m₂ = mapˢ F[ m₁ , m₂ ] (incl-set (dom (m₁ ˢ) ∪ dom (m₂ ˢ)))
+    ∪⁺→dom∪ : {m₁ m₂ : A ⇀ B}{k : A} {v : B} → (k , v) ∈ m₁ ∪⁺ m₂ → k ∈ dom m₁ ∪ dom m₂
+    ∪⁺→dom∪ {v = v} kv∈ = dom∪⁺⊆∪dom (to dom∈ (v , kv∈))
+
+    dom∪→∪⁺ : {m₁ m₂ : A ⇀ B}{k : A} → (k∈ : k ∈ dom m₁ ∪ dom m₂) → Σ B (λ v → (k , v) ∈ m₁ ∪⁺ m₂)
+    dom∪→∪⁺ k∈ = from dom∈ (∪dom⊆dom∪⁺ k∈)
+
 
     ∪⁺-def : {m₁ m₂ : A ⇀ B} {x : A × B} → x ∈ (m₁ ∪⁺ m₂) ˢ ⇔ x ∈ m₁ ⊕ m₂
     ∪⁺-def = mk⇔ id id
+
     ------------------------------------------------------------------------------------------------
 
     resᶜ-dom∉⁻ : ∀ m {ks}{a : A}{b : B} → (a , b) ∈ (m ∣ ks ᶜ) ˢ → ((a , b) ∈ m ˢ × a ∉ ks)
@@ -77,7 +141,7 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
       → (a∈₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ))
       → (a∈₂ : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ))
       → m₁ ≡ᵐ m₂
-      → join-val m m₁ (a , a∈₁) ≡ join-val m m₂ (a , a∈₂)
+      → ∥ m ∪⁺ m₁ ∥ᵈᵉᶠ a∈₁ ≡ ∥ m ∪⁺ m₂ ∥ᵈᵉᶠ a∈₂
 
     deconstruct-∪⁺ {m} {m₁} {m₂} {a} a∈₁ a∈₂ m₁≡m₂ with a ∈? dom (m ˢ) | a ∈? dom (m₁ ˢ) | a ∈? dom (m₂ ˢ)
 
@@ -94,16 +158,6 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     ... | inj₁ a∈m = ⊥-elim (a∉m a∈m)
     ... | inj₂ a∈m₁ = ⊥-elim (a∉m₁ a∈m₁)
 
-
-    ∈-incl-set : ∀ {X : ℙ A} {a : A} (a∈X : a ∈ X) → Σ (a ∈ X) λ a∈X′ → (a , a∈X′) ∈ incl-set X
-    ∈-incl-set {X} {a} a∈X =
-      Data.Product.map₂ (λ {a∈X′} eq → ∈-mapPartial {f = incl-set' X} .to (a , a∈X′ , eq))
-                        lem
-      where
-        lem : Σ (a ∈ X) λ a∈X′ → incl-set' X a ≡ just (a , a∈X′)
-        lem with a ∈? X
-        ... | yes a∈X′ = a∈X′ , refl
-        ... | no  a∉X  = ⊥-elim (a∉X a∈X)
 
     ∪⁺-comm : {m₁ m₂ : A ⇀ B} → m₁ ∪⁺ m₂ ≡ᵐ m₂ ∪⁺ m₁
     ∪⁺-comm = {!!}
@@ -139,8 +193,16 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     ∪⁺-cong-r : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m₁ ∪⁺ m ≡ᵐ m₂ ∪⁺ m
     ∪⁺-cong-r m m₁ m₂ = ∪⁺-cong-r'
 
-    ∪⁺-id-r : (m : A ⇀ B) → m ∪⁺ ∅ ≡ᵐ m
-    ∪⁺-id-r m = {!!}
+    ∪⁺-id-r : (m : A ⇀ B) → m ∪⁺ ∅{A ⇀ B} ≡ᵐ m
+    ∪⁺-id-r m .proj₁ {(k , v)} kv∈m∅ with k ∈? dom (m ˢ) | k ∈? dom (∅{A ⇀ B} ˢ)
+    ... | _ | yes  k∈∅ = ⊥-elim (⊥-elim (∉-dom∅ k∈∅))
+    ... | no  k∉m | no  k∉∅ = case from ∈-∪ (∪⁺→dom∪ kv∈m∅) of λ where
+      (inj₁ k∈m) → ⊥-elim (k∉m k∈m)
+      (inj₂ k∈∅) → ⊥-elim (k∉∅ k∈∅)
+    ... | yes k∈m | no  k∉∅ with from ∈-map kv∈m∅
+    ... | (k , k∈) , refl , snd = {!!}
+
+    ∪⁺-id-r m .proj₂ {(k , v)} kv∈m = {!!}
 
     restrict-cong : (m₁ m₂ : A ⇀ B) (ks : ℙ A) → m₁ ≡ᵐ m₂ → (m₁ ∣ ks ᶜ) ≡ᵐ (m₂ ∣ ks ᶜ)
     restrict-cong m₁ m₂ ks (m₁⊆m₂ , _) .proj₁ ab∈ with resᶜ-dom∉⁻ m₁ ab∈
@@ -148,11 +210,6 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
     restrict-cong m₁ m₂ ks (m₁⊆m₂ , m₂⊆m₁) .proj₂ ab∈ with resᶜ-dom∉⁻ m₂ ab∈
     ... | ab∈ , a∉ = resᶜ-dom∉⁺ m₁ (m₂⊆m₁ ab∈ , a∉)
 
-    -- val-∪⁺ : ∀ (m₁ m₂ : A ⇀ B)
-    --        → (k , v) ∈ m₁ ∪⁺ m₂
-    --        → (p : These (k ∈ dom m₁) (k ∈ dom m₂))
-    --        → v ≡ fold id id _◇_ (These.map (lookupᵐ∈ m₁) (lookupᵐ∈ m₂) p)
-    -- val-∪⁺ m₁ m₂ p = {!!}
 
     -- lemma : ∀ (m₁ m₁′ m₂ m₂′ : A ⇀ B)
     --       → m₁′ ⊆ m₁ → m₂′ ⊆ m₂
@@ -179,7 +236,7 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
           → (k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂)
           → (k∈m₁∪⁺m₂ : k ∈ dom ((m₁ ∪⁺ m₂) ˢ))
           → These (k ∈ dom(filterᵐ P′ m₁)) (k ∈ dom(filterᵐ P′ m₂))
-          → v ≡ join-val m₁ m₂ (k , k∈m₁m₂)
+          → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈m₁m₂
     lemma {k = k} {v = v} m₁ m₂ kv∈m₁m₂' k∈m₁m₂ k∈m₁∪⁺m₂ (this k∈m₁′) with k ∈? dom m₁ | k ∈? dom m₂
     ... | no ∉₁ | _ = ⊥-elim $ ∉₁ $ to dom∈ ( ( proj₁ (from dom∈ k∈m₁′))
                                               , proj₂ (from ∈-filter (proj₂ (from dom∈ k∈m₁′)))
@@ -189,9 +246,18 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
       ξ : k ∈ dom (filterᵐ P′ m₁) ∪ dom (filterᵐ P′ m₂)
       ξ = dom∪⁺⊆∪dom (to dom∈ (v , kv∈m₁m₂'))
 
-      ξ' : {_ : k ∈ dom ((filterᵐ P′ m₁) ∪⁺ (filterᵐ P′ m₂))}
-        → lookupᵐ (filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂) k ≡ join-val (filterᵐ P′ m₁) (filterᵐ P′ m₂) (k , ξ)
-      ξ' = join-val≡
+      v' : {k∈′ : k ∈ dom (filterᵐ P′ m₁) ∪ dom (filterᵐ P′ m₂)} → B
+      v' {k∈′} = lookupᵐ∈ (filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂) (∪dom⊆dom∪⁺ k∈′)
+
+      v'' : B
+      v'' = lookupᵐ∈ (filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂) (∪dom⊆dom∪⁺ ξ)
+
+      kv'∈ : (k , v'') ∈ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂
+      kv'∈ = {!!}
+
+      ξ' : Σ (k ∈ dom (filterᵐ P′ m₁) ∪ dom (filterᵐ P′ m₂))
+             λ k∈′ → v'' ≡ ∥ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂ ∥ᵈᵉᶠ k∈′
+      ξ' = ∪⁺-def-val-lem{m₁ = filterᵐ P′ m₁}{filterᵐ P′ m₂} ξ kv'∈
 
       γ : ∃[ v' ] (k , v') ∈ filterᵐ P′ m₂ → k ∈ dom m₂
       γ (v' , kv'∈) = to dom∈ (v' , (proj₂ (from ∈-filter kv'∈)))
@@ -253,7 +319,7 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
               k∈m₁m₂⁺ : k ∈ dom (m₁ ∪⁺ m₂)
               k∈m₁m₂⁺ = ∪dom⊆dom∪⁺ k∈m₁m₂
 
-              [kv′∈m₁m₂] : Σ (k ∈ dom m₁ ∪ dom m₂) (λ k∈m₁m₂′ → (k , join-val _ _ (k , k∈m₁m₂′)) ∈ (m₁ ∪⁺ m₂)ˢ)
+              [kv′∈m₁m₂] : Σ (k ∈ dom m₁ ∪ dom m₂) (λ k∈m₁m₂′ → (k , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈m₁m₂′) ∈ (m₁ ∪⁺ m₂)ˢ)
               [kv′∈m₁m₂] = _ , ∈-map′ (∈-incl-set k∈m₁m₂ .proj₂)
 
               k∈m₁m₂′ : k ∈ dom m₁ ∪ dom m₂
@@ -263,7 +329,7 @@ module _  {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ ⦃ _ : Commutati
               k∈m₁∪⁺m₂  = ∪dom⊆dom∪⁺ k∈m₁m₂′
 
               v′ : B
-              v′ = join-val _ _ (k , k∈m₁m₂′)
+              v′ = ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈m₁m₂′
 
               kv′∈m₁m₂ : (k , v′) ∈ m₁ ∪⁺ m₂
               kv′∈m₁m₂ = [kv′∈m₁m₂] .proj₂
