@@ -1,4 +1,4 @@
-
+{-# OPTIONS --allow-unsolved-metas #-}
 -- Proof that the rules under Ledger.Conway.Conformance are equivalent
 -- to the rules under Ledger.
 
@@ -38,7 +38,7 @@ lemInvalidDepositsL refl (L.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
 lemInvalidDepositsC : ∀ {Γ utxoSt utxoSt' tx}
                     → isValid tx ≡ false
                     → (h : Γ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt')
-                    → utxowDeposits h ≡ L.UTxOState.deposits utxoSt
+                    → utxowDeposits h ≡ L.UTxOState.deposits utxoSt'
 lemInvalidDepositsC refl (C.UTXOW-inductive⋯ _ _ _ _ _ _ _ _
                           (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                             (C.Scripts-No _))) = refl
@@ -149,7 +149,47 @@ instance
           (lemInvalidDepositsL refl utxow)
           (C.LEDGER-I⋯ refl (conv utxow))
 
---   LEDGERFromConf : ∀ {Γ s tx s'} → Γ C.⊢ conv s ⇀⦇ tx ,LEDGER⦈ conv s' ⭆ Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s'
---   LEDGERFromConf .convⁱ _ (C.LEDGER-V⋯ valid utxow certs gov) = {!!}
---   LEDGERFromConf .convⁱ _ (C.LEDGER-I⋯ invalid utxow) with inj₁ invalid ⊢conv utxow
---   ... | utxow' rewrite lemInvalidDepositsC invalid utxow = L.LEDGER-I⋯ invalid utxow'
+-- getValidCertDepositsC : ∀ {Γ s tx s'}
+--                      → (let open L.UTxOEnv Γ using (pparams)
+--                             open L.UTxOState s using (deposits)
+--                             open TxBody (tx .Tx.body) using (txcerts))
+--                      → isValid tx ≡ true
+--                      → Γ C.⊢ s ⇀⦇ tx ,CERTS⦈ s'
+--                      → L.ValidCertDeposits pparams deposits txcerts
+-- getValidCertDepositsC refl
+
+instance
+
+  LStateFromConf : C.LState ⭆ L.LState
+  LStateFromConf .convⁱ _ C.⟦ utxoSt , govSt , certState ⟧ˡ =
+    L.⟦ utxoSt , govSt , conv certState ⟧ˡ
+
+record WellformedLState (s : C.LState) : Type where
+  field
+    certDeps : L.Deposits × L.Deposits
+    eqDeps   : certDeps ≡ᵈ certDeposits (conv s)
+    eqSt     : s ≡ certDeps ⊢conv (conv s)
+
+wellformedConv : ∀ (s : L.LState) deps → deps ≡ᵈ certDeposits s → WellformedLState (deps ⊢conv s)
+wellformedConv s deps eq = record { certDeps = deps; eqDeps = eq; eqSt = refl }
+
+lemWellformed : ∀ {Γ s tx s'} → WellformedLState s → Γ C.⊢ s ⇀⦇ tx ,LEDGER⦈ s' → WellformedLState s'
+lemWellformed wf r = {!!}
+
+-- C.CERTS → ValidCertDeposits
+
+instance
+
+  LEDGERFromConf : ∀ {Γ s tx s'} → WellformedLState s
+                                    ⊢ Γ C.⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                                    ⭆ Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ conv s'
+  LEDGERFromConf .convⁱ _ (C.LEDGER-I⋯ invalid utxow) with inj₁ invalid ⊢conv utxow
+  ... | utxow' rewrite lemInvalidDepositsC invalid utxow = L.LEDGER-I⋯ invalid utxow'
+  LEDGERFromConf {Γ} {s} {tx} {s'} .convⁱ wf (C.LEDGER-V⋯ valid utxow certs gov) = {!!}
+    where
+      open C.LState s
+      open C.LState s' using () renaming (utxoSt to utxoSt'; govSt to govSt'; certState to certSt')
+      utxow' : _ L.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ _
+      utxow' = inj₂ {!!} ⊢conv utxow
+
+      -- valid-deps

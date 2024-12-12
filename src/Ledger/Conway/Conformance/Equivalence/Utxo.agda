@@ -92,6 +92,6 @@ instance
                          open TxBody txb using (txcerts))
                 → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txcerts)
                   ⊢ Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ s' ⭆ⁱ λ _ h →
-                    Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ (setDeposits (utxowDeposits h) s')
+                    Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ (setDeposits (utxowDeposits h) s')  -- Conformance doesn't update deposits in UTXOW
   UTXOWFromConf .convⁱ validCerts (C.UTXOW-inductive⋯ a b c d e f g h utxo) =
     L.UTXOW-inductive⋯ a b c d e f g h (validCerts ⊢conv utxo)
