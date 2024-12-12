@@ -247,7 +247,7 @@ data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set
              → ValidCertDeposits pp (deps ∪⁺ ❴ DRepDeposit c , v ❵) certs
              → ValidCertDeposits pp deps (regdrep c v a ∷ certs)
   reg        : ∀ {c v certs}
-             → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , v ❵) certs
+             → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , pp .keyDeposit ❵) certs
              → ValidCertDeposits pp deps (reg c v ∷ certs)
   dereg      : ∀ {c d certs}
              → (CredentialDeposit c , d) ∈ deps
