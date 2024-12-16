@@ -8,6 +8,7 @@ open import Data.Product using (_×_; _,_)
 open import Relation.Binary.PropositionalEquality
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Relation.Binary using (Setoid)
+import Algebra.Structures as AlgStruct
 
 module Ledger.Conway.Conformance.Equivalence.Deposits
   (txs : _) (open TransactionStructure txs)
@@ -19,6 +20,14 @@ open import Ledger.Conway.Conformance.Equivalence.Map
 open import Ledger.Conway.Conformance.Equivalence.Base txs abs
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Axiom.Set.Properties th using (≡ᵉ-Setoid)
+
+-- TODO: some hoop-jumping required since the Map proofs needs the
+-- stdlib IsCommutativeSemigroup for Coin.
+open AlgStruct {A = Coin} _≡_ using (IsCommutativeSemigroup)
+open import Data.Nat.Properties using (+-isCommutativeSemigroup)
+instance
+  Coin-Semigroup : IsCommutativeSemigroup _+_
+  Coin-Semigroup = +-isCommutativeSemigroup
 
 updateDDeps : PParams → List L.DCert → L.Deposits → L.Deposits
 updateDDeps _ []                                   deps = deps
