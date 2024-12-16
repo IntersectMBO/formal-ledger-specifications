@@ -20,7 +20,7 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
 
 data ExternalFunctions = MkExternalFunctions
-  { extIsSigned :: Integer -> Integer -> Integer -> Bool
+  { extIsSigned :: Integerr -> Integer -> Integer -> Bool
   }
 -- Ledger.Conway.Foreign.ExternalFunctions.ExternalFunctions
 d_ExternalFunctions_8 = ()
