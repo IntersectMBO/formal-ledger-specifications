@@ -57,6 +57,11 @@ data DCert : Type where
   ccreghot    : Credential → Maybe Credential → DCert
 \end{code}
 \begin{code}[hide]
+  -- The `reg` cert is deprecated in Conway, but it's still present in this era 
+  -- for backwards compatibility. This has been added to the spec to make 
+  -- conformance testing work properly. We don't talk about this certificate
+  -- in the pdf because it has been deprecated and we want to discourage people 
+  -- from using it.
   reg         : Credential → Coin → DCert
 \end{code}
 \begin{NoConway}
@@ -71,7 +76,12 @@ cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
 \end{code}
 \begin{code}[hide]
-cwitness (reg _ _)           = nothing
+-- The implementation requires the `reg` cert to be witnessed only if the 
+-- deposit is set. There didn't use to be a field for the deposit, but that was 
+-- added in the Conway era to make it easier to determine, just by looking at 
+-- the transaction, how much deposit was paid for that certificate. 
+cwitness (reg _ zero)        = nothing
+cwitness (reg c (suc _))     = just c
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
