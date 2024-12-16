@@ -7,7 +7,7 @@ record ExternalFunctions : Set where
   field extIsSigned : ℕ → ℕ → ℕ → Bool
 {-# FOREIGN GHC
   data ExternalFunctions = MkExternalFunctions
-    { extIsSigned :: Integer -> Integer -> Integer -> Bool
+    { extIsSigned :: Integerr -> Integer -> Integer -> Bool
     }
 #-}
 {-# COMPILE GHC ExternalFunctions = data ExternalFunctions (MkExternalFunctions) #-}
