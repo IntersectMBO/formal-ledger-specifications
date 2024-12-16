@@ -4,6 +4,8 @@
 
 ### WIP
 
+- Require witnessing of `reg` credential if the deposit is non-zero
+- Add witnessing of collaterals
 - Rename `ccTermLimit` to `ccMaxTermLength`
 - Add `Vote` and `Propose` script purposes
 - Well-formed parameter updates can't be empty
