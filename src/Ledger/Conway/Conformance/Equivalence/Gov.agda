@@ -17,6 +17,10 @@ instance
   GovEnvToConf .convⁱ deposits L.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
     C.⟦ txid , epoch , pp , policy , enactState , deposits ⊢conv certState ⟧ᵍ
 
+  GovEnvFromConf : C.GovEnv ⭆ L.GovEnv
+  GovEnvFromConf .convⁱ _ C.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
+    L.⟦ txid , epoch , pp , policy , enactState , conv certState ⟧ᵍ
+
   opaque
     unfolding L.isRegistered C.isRegistered
 
@@ -25,6 +29,11 @@ instance
     isRegisteredToConf {voter = CC   , c} .convⁱ _ h = h
     isRegisteredToConf {voter = DRep , c} .convⁱ _ h = h
     isRegisteredToConf {voter = SPO  , c} .convⁱ _ h = h
+
+    isRegisteredFromConf : ∀ {Γ voter} → C.isRegistered Γ voter ⭆ L.isRegistered (conv Γ) voter
+    isRegisteredFromConf {voter = CC   , c} .convⁱ _ h = h
+    isRegisteredFromConf {voter = DRep , c} .convⁱ _ h = h
+    isRegisteredFromConf {voter = SPO  , c} .convⁱ _ h = h
 
   GOV'ToConf : ∀ {Γ s votes s' n}
             → L.Deposits × L.Deposits
@@ -39,3 +48,14 @@ instance
                 _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = C._⊢_⇀⦇_,GOV'⦈_} (deposits ⊢conv Γ , n) s votes s'
   GOVToConf .convⁱ deposits (BS-base Id-nop) = BS-base Id-nop
   GOVToConf .convⁱ deposits (BS-ind r rs)     = BS-ind (deposits ⊢conv r) (deposits ⊢conv rs)
+
+  GOV'FromConf : ∀ {Γ s votes s' n}
+            → (Γ , n) C.⊢ s ⇀⦇ votes ,GOV'⦈ s' ⭆ (conv Γ , n) L.⊢ s ⇀⦇ votes ,GOV'⦈ s'
+  GOV'FromConf .convⁱ _ (C.GOV-Vote (a , b , c)) = L.GOV-Vote (a , b , conv c)
+  GOV'FromConf .convⁱ _ (C.GOV-Propose h)        = L.GOV-Propose h
+
+  GOVFromConf : ∀ {Γ s votes s' n}
+            → _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = C._⊢_⇀⦇_,GOV'⦈_} (Γ , n) s votes s' ⭆
+              _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = L._⊢_⇀⦇_,GOV'⦈_} (conv Γ , n) s votes s'
+  GOVFromConf .convⁱ _ (BS-base Id-nop) = BS-base Id-nop
+  GOVFromConf .convⁱ _ (BS-ind r rs)    = BS-ind (conv r) (conv rs)

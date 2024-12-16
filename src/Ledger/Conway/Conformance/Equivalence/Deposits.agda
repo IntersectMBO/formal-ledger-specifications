@@ -5,6 +5,7 @@ open import Ledger.Transaction using (TransactionStructure)
 
 open import Data.Unit using (⊤)
 open import Data.Product using (_×_; _,_)
+open import Data.Product.Relation.Binary.Pointwise.NonDependent using (Pointwise)
 open import Relation.Binary.PropositionalEquality
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Relation.Binary using (Setoid)
@@ -29,18 +30,29 @@ instance
   Coin-Semigroup : IsCommutativeSemigroup _+_
   Coin-Semigroup = +-isCommutativeSemigroup
 
+-- TODO: The proofs in this module are kind of a mess! They've grown organically based on
+--       the specific needs of the equivalence proof and could really use some cleaning up.
+--       Both when it comes to naming and when it comes to not proving the same thing several
+--       times.
+
+updateDDep : PParams → L.DCert → L.Deposits → L.Deposits
+updateDDep pp cert@(L.delegate _ _ _ _) deps = C.updateCertDeposit pp cert deps
+updateDDep pp cert@(L.dereg _ _)        deps = C.updateCertDeposit pp cert deps
+updateDDep pp cert@(L.reg _ _)          deps = C.updateCertDeposit pp cert deps
+updateDDep pp cert                      deps = deps
+
 updateDDeps : PParams → List L.DCert → L.Deposits → L.Deposits
-updateDDeps _ []                                   deps = deps
-updateDDeps pp (cert@(L.delegate _ _ _ _) ∷ certs) deps = updateDDeps pp certs (C.updateCertDeposit pp cert deps)
-updateDDeps pp (cert@(L.dereg _ _)        ∷ certs) deps = updateDDeps pp certs (C.updateCertDeposit pp cert deps)
-updateDDeps pp (cert@(L.reg _ _)          ∷ certs) deps = updateDDeps pp certs (C.updateCertDeposit pp cert deps)
-updateDDeps pp (_                         ∷ certs) deps = updateDDeps pp certs deps
+updateDDeps pp []             deps = deps
+updateDDeps pp (cert ∷ certs) deps = updateDDeps pp certs (updateDDep pp cert deps)
+
+updateGDep : PParams → L.DCert → L.Deposits → L.Deposits
+updateGDep pp cert@(L.regdrep _ _ _) deps = C.updateCertDeposit pp cert deps
+updateGDep pp cert@(L.deregdrep _ _) deps = C.updateCertDeposit pp cert deps
+updateGDep pp cert                   deps = deps
 
 updateGDeps : PParams → List L.DCert → L.Deposits → L.Deposits
-updateGDeps _ []                                deps = deps
-updateGDeps pp (cert@(L.regdrep _ _ _) ∷ certs) deps = updateGDeps pp certs (C.updateCertDeposit pp cert deps)
-updateGDeps pp (cert@(L.deregdrep _ _) ∷ certs) deps = updateGDeps pp certs (C.updateCertDeposit pp cert deps)
-updateGDeps pp (_                      ∷ certs) deps = updateGDeps pp certs deps
+updateGDeps pp []             deps = deps
+updateGDeps pp (cert ∷ certs) deps = updateGDeps pp certs (updateGDep pp cert deps)
 
 updateLedgerDeps : PParams → Tx → L.Deposits × L.Deposits → L.Deposits × L.Deposits
 updateLedgerDeps pp tx deps@(ddeps , gdeps) = updateDDeps pp certs ddeps , updateGDeps pp certs gdeps
@@ -196,6 +208,9 @@ certDeposits : L.LState → L.Deposits × L.Deposits
 certDeposits s = certDDeps deps , certGDeps deps
   where deps = s .L.LState.utxoSt .L.UTxOState.deposits
 
+_≡ᵈ_ : (x y : L.Deposits × L.Deposits) → Type
+_≡ᵈ_ = Pointwise _≡ᵐ_ _≡ᵐ_
+
 cong-updateDDeps : ∀ {pp} certs {deps₁ deps₂}
                  → deps₁ ≡ᵐ deps₂
                  → updateDDeps pp certs deps₁ ≡ᵐ updateDDeps pp certs deps₂
@@ -317,3 +332,27 @@ lem-upd-gdeps pparams deps tx = begin
     open module R {A} = SetoidReasoning (≡ᵉ-Setoid {A = A})
     updateCert = L.updateCertDeposits pparams txcerts
     updateProp = L.updateProposalDeposits txprop txid (pparams .PParams.govActionDeposit)
+
+lemUpdCert : ∀ pp ((ddeps , gdeps) : L.Deposits × L.Deposits) deps cert
+           → (ddeps , gdeps) ≡ᵈ (certDDeps deps , certGDeps deps)
+           → (updateDDep pp cert ddeps , updateGDep pp cert gdeps) ≡ᵈ
+             (certDDeps (C.updateCertDeposit pp cert deps) , certGDeps (C.updateCertDeposit pp cert deps))
+lemUpdCert pp (ddeps , gdeps) deps (L.delegate _ _ _ _) (deq , geq) = ∪⁺-cong-r _ ddeps (certDDeps deps) deq
+                                                                      ⟨≈⟩ ≈-sym (lem-add-included CredentialDeposit)
+                                                                    , geq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
+lemUpdCert pp (ddeps , gdeps) deps (L.dereg _ _)        (deq , geq) = restrict-cong ddeps (certDDeps deps) _ deq
+                                                                      ⟨≈⟩ ≈-sym (filterᵐ-restrict deps)
+                                                                    , geq ⟨≈⟩ ≈-sym (lem-del-excluded deps λ ())
+lemUpdCert pp (ddeps , gdeps) deps (L.reg _ _)          (deq , geq) = (∪⁺-cong-r _ ddeps (certDDeps deps) deq
+                                                                      ⟨≈⟩ ≈-sym (lem-add-included CredentialDeposit))
+                                                                    , geq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
+lemUpdCert pp (ddeps , gdeps) deps (L.regpool x x₁)     (deq , geq) = deq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
+                                                                    , geq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
+lemUpdCert pp (ddeps , gdeps) deps (L.regdrep _ _ _)    (deq , geq) = deq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
+                                                                    , ∪⁺-cong-r _ gdeps (certGDeps deps) geq
+                                                                      ⟨≈⟩ ≈-sym (lem-add-included DRepDeposit)
+lemUpdCert pp (ddeps , gdeps) deps (L.deregdrep _ _)    (deq , geq) = deq ⟨≈⟩ ≈-sym (lem-del-excluded deps λ ())
+                                                                    , (restrict-cong gdeps (certGDeps deps) _ geq
+                                                                      ⟨≈⟩ ≈-sym (filterᵐ-restrict deps))
+lemUpdCert pp (ddeps , gdeps) deps (L.retirepool _ _)   (deq , geq) = deq , geq
+lemUpdCert pp (ddeps , gdeps) deps (L.ccreghot _ _)     (deq , geq) = deq , geq
