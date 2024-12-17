@@ -101,8 +101,8 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
   ∈-lookupᵐ : {m : A ⇀ B} {k∈ : k ∈ dom m} → (k , lookupᵐ m k) ∈ m
   ∈-lookupᵐ {k = k}{m = m}{k∈}  = subst (λ x → (k , x) ∈ m) (lookupᵐ∈≡ m) (proj₂ (from dom∈ k∈))
 
-
-
+  ∈-lookupᵐ≡ : (m : A ⇀ B) {k∈m : k ∈ dom m} → (k , v) ∈ m → v ≡ lookupᵐ∈ m k∈m
+  ∈-lookupᵐ≡ m {k∈m} kv∈ = m .proj₂ kv∈ (∈-lookupᵐ∈ m k∈m)
 
   opaque  -- unfolding List-Model List-Modelᵈ to-sp
 
@@ -386,14 +386,28 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
     lookup-filter-lookup m k∈ k∈′ =
       (m .proj₂) (∈-lookupᵐ∈ m k∈) (proj₂ (from ∈-filter (∈-lookupᵐ∈ (filterᵐ P′ m) k∈′)))
 
-    ∈-∪⁺-l  : (m₁ m₂ : A ⇀ B) {a : A} {b : B} (a∈₁ : a ∈ dom m₁)
-            → (a , b) ∈ m₁ ∪⁺ m₂ → a ∉ dom m₂
-            → b ≡ lookupᵐ∈ m₁ a∈₁
-    ∈-∪⁺-l m₁ m₂ {a}{b} a∈₁ ab∈ a∉₂ with a ∈? dom m₁ | a ∈? dom (m₂ ˢ)
+    ∈-∪⁺-l'  : {m₁ m₂ : A ⇀ B} {k∈m₁ : k ∈ dom m₁} {k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂}
+            → (k , v) ∈ m₁ ∪⁺ m₂ → k ∉ dom m₂
+            → ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set k∈m₁m₂ .proj₁) ≡ lookupᵐ∈ m₁ k∈m₁
+    ∈-∪⁺-l' {k = k} {m₁ = m₁} {m₂} {k∈m₁} {k∈m₁m₂} kv∈m₁m₂ k∉m₂ with k ∈? dom (m₁ ˢ) | k ∈? dom (m₂ ˢ)
+    ... | _ | yes k∈₂ = ⊥-elim (k∉m₂ k∈₂)
+    ... | no k∉₁ | _ = ⊥-elim (k∉₁ k∈m₁)
+    ... | yes k∈₁ | no k∉₂ with from ∈-map k∈m₁
+    ... | (.k , v) , refl , kv∈m₁ = m₁ .proj₂ (∈-lookupᵐ∈ m₁ k∈₁) kv∈m₁
 
-    ... | _ | yes a∈₂ = ⊥-elim (a∉₂ a∈₂)
-    ... | no a∉₁ | _ = ⊥-elim (a∉₁ a∈₁)
-    ... | yes a∈₁' | no a∉₂' = {!!}
+    ∈-∪⁺-l  : (m₁ m₂ : A ⇀ B) (k∈m₁ : k ∈ dom m₁)
+            → (k , v) ∈ m₁ ∪⁺ m₂ → k ∉ dom m₂
+            → v ≡ lookupᵐ∈ m₁ k∈m₁
+    ∈-∪⁺-l {k = k}{v} m₁ m₂ k∈m₁ kv∈₁₂ k∉m₂ with k ∈? dom (m₁ ˢ) | k ∈? dom (m₂ ˢ)
+    ... | _ | yes k∈m₂ = ⊥-elim (k∉m₂ k∈m₂)
+    ... | no k∉m₁ | _ = ⊥-elim (k∉m₁ k∈m₁)
+    ... | yes k∈m₁' | no k∉m₂' with from ∈-map k∈m₁
+    ... | (.k , v') , refl , kv∈m₁ = begin
+      v                                                    ≡⟨ ∪⁺-def-val-lem' (∪⁺-dom∪ kv∈₁₂) kv∈₁₂ ⟩
+      ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set (∪⁺-dom∪ kv∈₁₂) .proj₁)  ≡⟨ ∈-∪⁺-l'  kv∈₁₂ k∉m₂' ⟩
+      lookupᵐ∈ m₁ k∈m₁                                     ≡˘⟨ ∈-lookupᵐ≡ m₁ kv∈m₁ ⟩
+      v'                                                   ∎
+      where open ≡-Reasoning
 
     ∪⁺-filter-lem : ∀ (m₁ m₂ : A ⇀ B) {a : A} {b : B}
           → (a , b) ∈ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂
