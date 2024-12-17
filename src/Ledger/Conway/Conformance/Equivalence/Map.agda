@@ -290,16 +290,54 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
     ∪⁺-cong-r : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m₁ ∪⁺ m ≡ᵐ m₂ ∪⁺ m
     ∪⁺-cong-r m m₁ m₂ = ∪⁺-cong-r'
 
-    ∪⁺-id-r : (m : A ⇀ B) → m ∪⁺ ∅{A ⇀ B} ≡ᵐ m
-    ∪⁺-id-r m .proj₁ {(k , v)} kv∈m∅ with k ∈? dom (m ˢ) | k ∈? dom (∅{A ⇀ B} ˢ)
+    ∪⁺-dom-id : (m : A ⇀ B) → dom m ≡ᵉ dom m ∪ dom (∅{A ⇀ B} ˢ)
+    ∪⁺-dom-id m = begin
+      dom m ≈˘⟨ ∪-identityʳ (dom m) ⟩
+      dom m ∪ ∅ ≈˘⟨ ∪-cong ≡ᵉ.refl dom∅ ⟩
+      dom m ∪ dom (∅{A ⇀ B} ˢ)
+      ∎
+      where
+      open SetoidReasoning (≡ᵉ-Setoid{A})
+      module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {A})
+
+    ∪⁺-id-dom∈ :  (m : A ⇀ B) → k ∈ dom m  ⇔  k ∈ dom m ∪ dom(∅{A ⇀ B}ˢ)
+    ∪⁺-id-dom∈ m = mk⇔ (proj₁ (∪⁺-dom-id m)) (proj₂ (∪⁺-dom-id m))
+
+
+    ∪⁺-id-lemma  :  (m : A ⇀ B)
+                    (k∈m : k ∈ dom m)
+                    (k∈ : k ∈ dom m ∪ dom(∅{A ⇀ B}ˢ))
+                 →  lookupᵐ∈ m k∈m ≡ ∥ m ∪⁺ ∅{A ⇀ B} ∥ᵈᵉᶠ k∈
+
+    ∪⁺-id-lemma {k} m k∈domm k∈domm∪ with k ∈? dom (m ˢ) | k ∈? dom (∅{A ⇀ B} ˢ)
     ... | _ | yes  k∈∅ = ⊥-elim (⊥-elim (∉-dom∅ k∈∅))
-    ... | no  k∉m | no  k∉∅ = case from ∈-∪ (∪⁺-dom∪ kv∈m∅) of λ where
+    ... | no  k∉m | no  k∉∅ = case from ∈-∪ k∈domm∪ of λ where
       (inj₁ k∈m) → ⊥-elim (k∉m k∈m)
       (inj₂ k∈∅) → ⊥-elim (k∉∅ k∈∅)
-    ... | yes k∈m | no  k∉∅ with from ∈-map kv∈m∅
-    ... | (k , k∈) , refl , snd = {!!}
+    ... | yes k∈m | no  k∉∅ with from ∈-map k∈domm
+    ... | (.k , v) , refl , kv∈m = m .proj₂ kv∈m (∈-lookupᵐ∈ m k∈m)
+                                  -- goal : v ≡ lookupᵐ∈ m k∈m --
 
-    ∪⁺-id-r m .proj₂ {(k , v)} kv∈m = {!!}
+    ∪⁺-id-r : (m : A ⇀ B) → m ∪⁺ ∅{A ⇀ B} ≡ᵐ m
+    ∪⁺-id-r m .proj₁ {(k , v)} kv∈m∅ with from ∈-map kv∈m∅
+    ... | (.k , k∈) , refl , snd =
+      subst (λ x → (k , x) ∈ m)
+            (∪⁺-id-lemma m (from (∪⁺-id-dom∈ m) k∈) k∈)
+            (∈-lookupᵐ∈ m (from (∪⁺-id-dom∈ m) k∈))
+
+    ∪⁺-id-r m .proj₂ {(k , v)} kv∈m with to dom∈ (v , kv∈m)
+    ... | k∈m =
+      subst (λ x → (k , x) ∈ m ∪⁺ ∅{A ⇀ B}) (trans (sym lu≡) (sym v≡)) (k×∥∪⁺∥ᵈᵉᶠ∈∪⁺' k∈)
+      where
+      k∈ : k ∈ dom m ∪ dom(∅{A ⇀ B}ˢ)
+      k∈ = to (∪⁺-id-dom∈ m) k∈m
+
+      lu≡ : lookupᵐ∈ m (∈-incl-set k∈m .proj₁) ≡ ∥ m ∪⁺ (∅{A ⇀ B}) ∥ᵈᵉᶠ (∈-incl-set k∈ .proj₁)
+      lu≡ = ∪⁺-id-lemma m (∈-incl-set k∈m .proj₁) (∈-incl-set k∈ .proj₁)
+
+      v≡ : v ≡ lookupᵐ∈ m (∈-incl-set k∈m .proj₁)
+      v≡ = m .proj₂ kv∈m (∈-lookupᵐ∈ m (∈-incl-set k∈m .proj₁))
+
 
     restrict-cong : (m₁ m₂ : A ⇀ B) (ks : ℙ A) → m₁ ≡ᵐ m₂ → (m₁ ∣ ks ᶜ) ≡ᵐ (m₂ ∣ ks ᶜ)
     restrict-cong m₁ m₂ ks (m₁⊆m₂ , _) .proj₁ ab∈ with resᶜ-dom∉⁻ m₁ ab∈
@@ -408,8 +446,6 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
 
     ... | yes ∈₁ | yes ∈₂ = goal
       where
-    -- ∪⁺-def-val-lem'  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂) → (k , v) ∈ m₁ ∪⁺ m₂
-    --                  → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set k∈ .proj₁)
       ξ : v ≡ ∥ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂ ∥ᵈᵉᶠ (∈-incl-set (∪⁺-dom∪ kv∈) .proj₁)
       ξ = ∪⁺-def-val-lem' {m₁ = filterᵐ P′ m₁}{m₂ = filterᵐ P′ m₂} (∪⁺-dom∪ kv∈) kv∈
 
@@ -541,11 +577,11 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
         Goal = to ∈-filter ((proj₁ ξ') , (resᶜ-dom∉⁺ m ((proj₂ ξ') , (proj₂ ξ))))
 
 
-      open SetoidReasoning (≡ᵉ-Setoid{Σ A (λ x → B)})
-      module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Σ A (λ x → B)})
-
       ∈-filter-res- : {x : A × B} (m : A ⇀ B) → x ∈ (filterᵐ P′ m ∣ ❴ k ❵ˢ) ˢ → P′ x × ∃[ b ] x ≡ (k , b)
       ∈-filter-res- m x∈ = (proj₁ (from ∈-filter (res-⊆ x∈))) , (res-singleton''{m = filterᵐ P′ m} x∈)
+
+      module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Σ A (λ x → B)})
+      open SetoidReasoning (≡ᵉ-Setoid{Σ A (λ x → B)})
 
       restrict-singleton-filterᵐ-false : ∀ m → ¬ P k → filterᵐ P′ m ∣ ❴ k ❵ ᶜ ≡ᵐ filterᵐ P′ m
       restrict-singleton-filterᵐ-false {k} m ¬p = ≡ᵉ.sym (begin
@@ -581,4 +617,3 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
 
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
--- -}
