@@ -20,6 +20,7 @@ import Ledger.Conway.Conformance.Utxo
 import Ledger.Conway.Conformance.Utxo.Properties
 import Ledger.Conway.Conformance.Certs
 import Ledger.Conway.Conformance.Certs.Properties
+import Ledger.Conway.Conformance.Equivalence
 
 -- ** Midnight example
 import MidnightExample.PDF

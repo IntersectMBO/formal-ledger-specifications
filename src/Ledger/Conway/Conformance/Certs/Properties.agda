@@ -64,8 +64,8 @@ instance
          ⊎ (d ≡ 0 × c ∈ dom dReps) ¿ of λ where
       (yes p) → success (-, GOVCERT-regdrep p)
       (no ¬p) → failure (genErrors ¬p)
-  Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ dReps , _ , dep ⟧ᵛ (deregdrep c _) =
-    case c ∈? dom dReps of λ where
+  Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ dReps , _ , dep ⟧ᵛ (deregdrep c d) =
+    case ¿ c ∈ dom dReps × (DRepDeposit c , d) ∈ dep ¿ of λ where
       (yes p) → success (-, GOVCERT-deregdrep p)
       (no ¬p)  → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ ⟧ᶜ ⟦ _ , ccKeys , dep ⟧ᵛ (ccreghot c _) =
@@ -79,9 +79,9 @@ instance
       ¿ (let open PParams pp in
         (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps))
       ¿ p .proj₂ = refl
-  Computational-GOVCERT .completeness _ ⟦ dReps , _ , _ ⟧ᵛ
-    (deregdrep c _) _ (GOVCERT-deregdrep p)
-    rewrite dec-yes (c ∈? dom dReps) p .proj₂ = refl
+  Computational-GOVCERT .completeness _ ⟦ dReps , _ , dep ⟧ᵛ
+    (deregdrep c d) _ (GOVCERT-deregdrep p)
+    rewrite dec-yes ¿ c ∈ dom dReps × (DRepDeposit c , d) ∈ dep ¿ p .proj₂ = refl
   Computational-GOVCERT .completeness _ ⟦ _ , ccKeys , _ ⟧ᵛ
     (ccreghot c _) _ (GOVCERT-ccreghot ¬p)
     rewrite dec-no ((c , nothing) ∈? (ccKeys ˢ)) ¬p = refl

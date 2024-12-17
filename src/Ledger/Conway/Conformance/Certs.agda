@@ -144,7 +144,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
         ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
-        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ 
+        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵
         , updateCertDeposit pp (reg c d) dep ⟧ᵈ
 
 data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Type where
@@ -159,6 +159,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
+    ∙ (DRepDeposit c , d) ∈ dep
       ────────────────────────────────
       Γ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
           ⇀⦇ deregdrep c d ,GOVCERT⦈
