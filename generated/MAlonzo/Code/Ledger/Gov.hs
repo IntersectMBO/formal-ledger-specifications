@@ -479,22 +479,22 @@ d_canVote_1592 = erased
 d_CertState_1684 a0 = ()
 -- Ledger.Gov._.CertState.dState
 d_dState_1812 ::
-  MAlonzo.Code.Ledger.Certs.T_CertState_928 ->
-  MAlonzo.Code.Ledger.Certs.T_DState_888
+  MAlonzo.Code.Ledger.Certs.T_CertState_926 ->
+  MAlonzo.Code.Ledger.Certs.T_DState_886
 d_dState_1812 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_dState_936 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_dState_934 (coe v0)
 -- Ledger.Gov._.CertState.gState
 d_gState_1814 ::
-  MAlonzo.Code.Ledger.Certs.T_CertState_928 ->
-  MAlonzo.Code.Ledger.Certs.T_GState_916
+  MAlonzo.Code.Ledger.Certs.T_CertState_926 ->
+  MAlonzo.Code.Ledger.Certs.T_GState_914
 d_gState_1814 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_gState_940 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_gState_938 (coe v0)
 -- Ledger.Gov._.CertState.pState
 d_pState_1816 ::
-  MAlonzo.Code.Ledger.Certs.T_CertState_928 ->
-  MAlonzo.Code.Ledger.Certs.T_PState_904
+  MAlonzo.Code.Ledger.Certs.T_CertState_926 ->
+  MAlonzo.Code.Ledger.Certs.T_PState_902
 d_pState_1816 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_pState_938 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_pState_936 (coe v0)
 -- Ledger.Gov.GovState
 d_GovState_1878 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
@@ -507,7 +507,7 @@ data T_GovEnv_1880
                                                           MAlonzo.Code.Ledger.PParams.T_PParams_244
                                                           (Maybe AgdaAny)
                                                           MAlonzo.Code.Ledger.Enact.T_EnactState_828
-                                                          MAlonzo.Code.Ledger.Certs.T_CertState_928
+                                                          MAlonzo.Code.Ledger.Certs.T_CertState_926
 -- Ledger.Gov.GovEnv.txid
 d_txid_1894 :: T_GovEnv_1880 -> AgdaAny
 d_txid_1894 v0
@@ -547,7 +547,7 @@ d_enactState_1902 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Gov.GovEnv.certState
 d_certState_1904 ::
-  T_GovEnv_1880 -> MAlonzo.Code.Ledger.Certs.T_CertState_928
+  T_GovEnv_1880 -> MAlonzo.Code.Ledger.Certs.T_CertState_926
 d_certState_1904 v0
   = case coe v0 of
       C_'10214'_'44'_'44'_'44'_'44'_'44'_'10215''7501'_1906 v1 v2 v3 v4 v5 v6
@@ -1301,10 +1301,10 @@ d_certState_2468 ::
   T_GeneralizeTel_45787 ->
   Maybe MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovActionState_778 ->
-  MAlonzo.Code.Ledger.Certs.T_CertState_928
+  MAlonzo.Code.Ledger.Certs.T_CertState_926
 d_certState_2468 ~v0 v1 ~v2 ~v3 = du_certState_2468 v1
 du_certState_2468 ::
-  T_GeneralizeTel_45787 -> MAlonzo.Code.Ledger.Certs.T_CertState_928
+  T_GeneralizeTel_45787 -> MAlonzo.Code.Ledger.Certs.T_CertState_926
 du_certState_2468 v0
   = coe
       d_certState_1904 (coe d_'46'generalizedField'45'Γ_45775 (coe v0))
@@ -1373,10 +1373,10 @@ d_certState_2488 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   T_GeneralizeTel_48589 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682 ->
-  MAlonzo.Code.Ledger.Certs.T_CertState_928
+  MAlonzo.Code.Ledger.Certs.T_CertState_926
 d_certState_2488 ~v0 v1 ~v2 = du_certState_2488 v1
 du_certState_2488 ::
-  T_GeneralizeTel_48589 -> MAlonzo.Code.Ledger.Certs.T_CertState_928
+  T_GeneralizeTel_48589 -> MAlonzo.Code.Ledger.Certs.T_CertState_926
 du_certState_2488 v0
   = coe
       d_certState_1904 (coe d_'46'generalizedField'45'Γ_48573 (coe v0))

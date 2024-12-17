@@ -744,7 +744,7 @@ d_isRegistered'63'_1294 v0 v1 v2
                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                 (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                 (coe
-                                   MAlonzo.Code.Ledger.Certs.d_pools_910
+                                   MAlonzo.Code.Ledger.Certs.d_pools_908
                                    (coe
                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1080
                                       (coe

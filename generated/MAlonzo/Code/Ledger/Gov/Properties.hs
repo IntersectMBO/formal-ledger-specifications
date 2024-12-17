@@ -958,9 +958,9 @@ d_isRegistered'63'_1332 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                 (coe
-                                   MAlonzo.Code.Ledger.Certs.d_ccHotKeys_924
+                                   MAlonzo.Code.Ledger.Certs.d_ccHotKeys_922
                                    (coe
-                                      MAlonzo.Code.Ledger.Certs.d_gState_940
+                                      MAlonzo.Code.Ledger.Certs.d_gState_938
                                       (coe MAlonzo.Code.Ledger.Gov.d_certState_1904 (coe v1))))))))
              MAlonzo.Code.Ledger.GovernanceActions.C_DRep_666
                -> coe
@@ -1001,9 +1001,9 @@ d_isRegistered'63'_1332 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                 (coe
-                                   MAlonzo.Code.Ledger.Certs.d_dreps_922
+                                   MAlonzo.Code.Ledger.Certs.d_dreps_920
                                    (coe
-                                      MAlonzo.Code.Ledger.Certs.d_gState_940
+                                      MAlonzo.Code.Ledger.Certs.d_gState_938
                                       (coe MAlonzo.Code.Ledger.Gov.d_certState_1904 (coe v1))))))))
              MAlonzo.Code.Ledger.GovernanceActions.C_SPO_668
                -> coe
@@ -1048,9 +1048,9 @@ d_isRegistered'63'_1332 v0 v1 v2
                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                 (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                 (coe
-                                   MAlonzo.Code.Ledger.Certs.d_pools_910
+                                   MAlonzo.Code.Ledger.Certs.d_pools_908
                                    (coe
-                                      MAlonzo.Code.Ledger.Certs.d_pState_938
+                                      MAlonzo.Code.Ledger.Certs.d_pState_936
                                       (coe MAlonzo.Code.Ledger.Gov.d_certState_1904 (coe v1))))))))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError

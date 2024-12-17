@@ -130,23 +130,23 @@ d_dreps_34 v0
 -- Ledger.Conway.Foreign.HSLedger.Certs._.CertEnv
 d_CertEnv_46 = ()
 -- Ledger.Conway.Foreign.HSLedger.Certs._.CertEnv.epoch
-d_epoch_50 :: MAlonzo.Code.Ledger.Certs.T_CertEnv_868 -> Integer
-d_epoch_50 v0 = coe MAlonzo.Code.Ledger.Certs.d_epoch_878 (coe v0)
+d_epoch_50 :: MAlonzo.Code.Ledger.Certs.T_CertEnv_866 -> Integer
+d_epoch_50 v0 = coe MAlonzo.Code.Ledger.Certs.d_epoch_876 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Certs._.CertEnv.pp
 d_pp_52 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_52 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_880 (coe v0)
+d_pp_52 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_878 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Certs._.CertEnv.votes
 d_votes_54 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
-d_votes_54 v0 = coe MAlonzo.Code.Ledger.Certs.d_votes_882 (coe v0)
+d_votes_54 v0 = coe MAlonzo.Code.Ledger.Certs.d_votes_880 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Certs._.CertEnv.wdrls
 d_wdrls_56 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_wdrls_56 v0 = coe MAlonzo.Code.Ledger.Certs.d_wdrls_884 (coe v0)
+d_wdrls_56 v0 = coe MAlonzo.Code.Ledger.Certs.d_wdrls_882 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Certs.HsTy-PoolParams
 d_HsTy'45'PoolParams_58 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
@@ -403,7 +403,7 @@ d_Conv'45'DelegEnv_68
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_958 v1 v2 v3
+              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_956 v1 v2 v3
                 -> coe
                      C_MkDelegEnv_1631
                      (coe
@@ -946,7 +946,7 @@ d_Conv'45'DelegEnv_68
             case coe v0 of
               C_MkDelegEnv_1631 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_958
+                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7496''7497'_956
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2662,7 +2662,7 @@ d_Conv'45'PState_72
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7510'_914 v1 v2
+              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7510'_912 v1 v2
                 -> coe
                      C_MkPState_3487
                      (coe
@@ -2696,7 +2696,7 @@ d_Conv'45'PState_72
             case coe v0 of
               C_MkPState_3487 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7510'_914
+                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'10215''7510'_912
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2732,7 +2732,7 @@ d_Conv'45'CertEnv_76
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'44'_'10215''7580'_886 v1 v2 v3 v4
+              MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'44'_'10215''7580'_884 v1 v2 v3 v4
                 -> coe
                      C_MkCertEnv_4791 (coe v1)
                      (coe
@@ -3275,7 +3275,7 @@ d_Conv'45'CertEnv_76
             case coe v0 of
               C_MkCertEnv_4791 v1 v2 v3 v4
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'44'_'10215''7580'_886
+                     MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'44'_'10215''7580'_884
                      (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20

@@ -5558,10 +5558,10 @@ d__'8866'_'8640''10631'_'44'CERTBASE'10632'__2108 a0 a1 a2 a3 a4
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._._⊢_⇀⦇_,CERTS⦈_
 d__'8866'_'8640''10631'_'44'CERTS'10632'__2110 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
-  MAlonzo.Code.Ledger.Certs.T_CertState_928 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertState_926 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_832] ->
-  MAlonzo.Code.Ledger.Certs.T_CertState_928 -> ()
+  MAlonzo.Code.Ledger.Certs.T_CertState_926 -> ()
 d__'8866'_'8640''10631'_'44'CERTS'10632'__2110 = erased
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._._⊢_⇀⦇_,CERT⦈_
 d__'8866'_'8640''10631'_'44'CERT'10632'__2112 a0 a1 a2 a3 a4 = ()
@@ -5612,7 +5612,7 @@ d_HasCoin'45'CertState_2166 ::
   MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
 d_HasCoin'45'CertState_2166 v0
   = coe
-      MAlonzo.Code.Ledger.Certs.d_HasCoin'45'CertState_970
+      MAlonzo.Code.Ledger.Certs.d_HasCoin'45'CertState_968
       (coe
          MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
          (coe d_HSTransactionStructure_644 (coe v0)))
@@ -5638,112 +5638,112 @@ du_cwitness_2182 = coe MAlonzo.Code.Ledger.Certs.du_cwitness_850
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.rewardsBalance
 d_rewardsBalance_2198 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Certs.T_DState_888 -> Integer
+  MAlonzo.Code.Ledger.Certs.T_DState_886 -> Integer
 d_rewardsBalance_2198 v0
   = coe
-      MAlonzo.Code.Ledger.Certs.d_rewardsBalance_964
+      MAlonzo.Code.Ledger.Certs.d_rewardsBalance_962
       (coe
          MAlonzo.Code.Ledger.Transaction.d_govStructure_2330
          (coe d_HSTransactionStructure_644 (coe v0)))
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.CertEnv.epoch
-d_epoch_2248 :: MAlonzo.Code.Ledger.Certs.T_CertEnv_868 -> Integer
+d_epoch_2248 :: MAlonzo.Code.Ledger.Certs.T_CertEnv_866 -> Integer
 d_epoch_2248 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_epoch_878 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_epoch_876 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.CertEnv.pp
 d_pp_2250 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_2250 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_880 (coe v0)
+d_pp_2250 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_878 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.CertEnv.votes
 d_votes_2252 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
 d_votes_2252 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_votes_882 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_votes_880 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.CertEnv.wdrls
 d_wdrls_2254 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_wdrls_2254 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_wdrls_884 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_wdrls_882 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.CertState.dState
 d_dState_2258 ::
-  MAlonzo.Code.Ledger.Certs.T_CertState_928 ->
-  MAlonzo.Code.Ledger.Certs.T_DState_888
+  MAlonzo.Code.Ledger.Certs.T_CertState_926 ->
+  MAlonzo.Code.Ledger.Certs.T_DState_886
 d_dState_2258 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_dState_936 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_dState_934 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.CertState.gState
 d_gState_2260 ::
-  MAlonzo.Code.Ledger.Certs.T_CertState_928 ->
-  MAlonzo.Code.Ledger.Certs.T_GState_916
+  MAlonzo.Code.Ledger.Certs.T_CertState_926 ->
+  MAlonzo.Code.Ledger.Certs.T_GState_914
 d_gState_2260 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_gState_940 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_gState_938 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.CertState.pState
 d_pState_2262 ::
-  MAlonzo.Code.Ledger.Certs.T_CertState_928 ->
-  MAlonzo.Code.Ledger.Certs.T_PState_904
+  MAlonzo.Code.Ledger.Certs.T_CertState_926 ->
+  MAlonzo.Code.Ledger.Certs.T_PState_902
 d_pState_2262 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_pState_938 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_pState_936 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.DState.rewards
 d_rewards_2284 ::
-  MAlonzo.Code.Ledger.Certs.T_DState_888 ->
+  MAlonzo.Code.Ledger.Certs.T_DState_886 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_rewards_2284 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_rewards_900 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_rewards_898 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.DState.stakeDelegs
 d_stakeDelegs_2286 ::
-  MAlonzo.Code.Ledger.Certs.T_DState_888 ->
+  MAlonzo.Code.Ledger.Certs.T_DState_886 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_stakeDelegs_2286 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_stakeDelegs_898 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_stakeDelegs_896 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.DState.voteDelegs
 d_voteDelegs_2288 ::
-  MAlonzo.Code.Ledger.Certs.T_DState_888 ->
+  MAlonzo.Code.Ledger.Certs.T_DState_886 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_voteDelegs_2288 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_voteDelegs_896 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_voteDelegs_894 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.DelegEnv.delegatees
 d_delegatees_2292 ::
-  MAlonzo.Code.Ledger.Certs.T_DelegEnv_944 ->
+  MAlonzo.Code.Ledger.Certs.T_DelegEnv_942 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16]
 d_delegatees_2292 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_delegatees_956 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_delegatees_954 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.DelegEnv.pools
 d_pools_2294 ::
-  MAlonzo.Code.Ledger.Certs.T_DelegEnv_944 ->
+  MAlonzo.Code.Ledger.Certs.T_DelegEnv_942 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pools_2294 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_pools_954 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_pools_952 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.DelegEnv.pparams
 d_pparams_2296 ::
-  MAlonzo.Code.Ledger.Certs.T_DelegEnv_944 ->
+  MAlonzo.Code.Ledger.Certs.T_DelegEnv_942 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
 d_pparams_2296 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_pparams_952 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_pparams_950 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.GState.ccHotKeys
 d_ccHotKeys_2310 ::
-  MAlonzo.Code.Ledger.Certs.T_GState_916 ->
+  MAlonzo.Code.Ledger.Certs.T_GState_914 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_ccHotKeys_2310 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_ccHotKeys_924 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_ccHotKeys_922 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.GState.dreps
 d_dreps_2312 ::
-  MAlonzo.Code.Ledger.Certs.T_GState_916 ->
+  MAlonzo.Code.Ledger.Certs.T_GState_914 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_dreps_2312 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_dreps_922 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_dreps_920 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.PState.pools
 d_pools_2316 ::
-  MAlonzo.Code.Ledger.Certs.T_PState_904 ->
+  MAlonzo.Code.Ledger.Certs.T_PState_902 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pools_2316 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_pools_910 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_pools_908 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.PState.retiring
 d_retiring_2318 ::
-  MAlonzo.Code.Ledger.Certs.T_PState_904 ->
+  MAlonzo.Code.Ledger.Certs.T_PState_902 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_retiring_2318 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_retiring_912 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_retiring_910 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.PoolParams.rewardAddr
 d_rewardAddr_2322 ::
   MAlonzo.Code.Ledger.Certs.T_PoolParams_826 ->
