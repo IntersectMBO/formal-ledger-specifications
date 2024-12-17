@@ -2,6 +2,8 @@ module Ledger.Conway.Foreign.ExternalFunctions where
 
 open import Ledger.Prelude
 open import Foreign.HaskellTypes.Deriving
+open import Ledger.Script it it 
+open import Ledger.Conway.Conformance.Script it it public
 
 record ExternalFunctions : Set where
   field extIsSigned : ℕ → ℕ → ℕ → Bool
