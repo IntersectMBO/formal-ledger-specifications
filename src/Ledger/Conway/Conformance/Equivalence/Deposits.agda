@@ -8,7 +8,7 @@ open import Data.Product using (_×_; _,_)
 open import Data.Product.Relation.Binary.Pointwise.NonDependent using (Pointwise)
 open import Relation.Binary.PropositionalEquality
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-open import Relation.Binary using (Setoid)
+open import Relation.Binary using (Setoid; IsEquivalence)
 import Algebra.Structures as AlgStruct
 
 module Ledger.Conway.Conformance.Equivalence.Deposits
@@ -20,7 +20,7 @@ open import Ledger.Conway.Conformance.Equivalence.Map
 
 open import Ledger.Conway.Conformance.Equivalence.Base txs abs
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
-open import Axiom.Set.Properties th using (≡ᵉ-Setoid)
+open import Axiom.Set.Properties th using (≡ᵉ-Setoid; ≡ᵉ-isEquivalence)
 
 -- TODO: some hoop-jumping required since the Map proofs needs the
 -- stdlib IsCommutativeSemigroup for Coin.
@@ -210,34 +210,53 @@ certDeposits s = certDDeps deps , certGDeps deps
 
 _≡ᵈ_ : (x y : L.Deposits × L.Deposits) → Type
 _≡ᵈ_ = Pointwise _≡ᵐ_ _≡ᵐ_
+{-# INJECTIVE_FOR_INFERENCE _≡ᵈ_ #-}
+
+≡ᵈ-isEquivalence : IsEquivalence _≡ᵈ_
+≡ᵈ-isEquivalence .IsEquivalence.refl = (id , id) , (id , id)
+≡ᵈ-isEquivalence .IsEquivalence.sym (deq , geq) = ≡ᵉ-isEquivalence .IsEquivalence.sym deq , ≡ᵉ-isEquivalence .IsEquivalence.sym geq
+≡ᵈ-isEquivalence .IsEquivalence.trans (deq₁ , geq₁) (deq₂ , geq₂) =
+  ≡ᵉ-isEquivalence .IsEquivalence.trans deq₁ deq₂ ,
+  ≡ᵉ-isEquivalence .IsEquivalence.trans geq₁ geq₂
+
+cong-updateDDep : ∀ {pp} cert {deps₁ deps₂}
+                → deps₁ ≡ᵐ deps₂
+                → updateDDep pp cert deps₁ ≡ᵐ updateDDep pp cert deps₂
+cong-updateDDep {pp} cert@(L.delegate c del kh v)
+                                        eq = cong-updateCertDeposit pp cert eq
+cong-updateDDep {pp} cert@(L.dereg c v) {deps₁} {deps₂}
+                                        eq = cong-updateCertDeposit pp cert {deps₁} {deps₂} eq
+cong-updateDDep {pp} cert@(L.reg c v)   eq = cong-updateCertDeposit pp cert eq
+cong-updateDDep      (L.regpool _ _)    eq = eq
+cong-updateDDep      (L.regdrep _ _ _)  eq = eq
+cong-updateDDep      (L.deregdrep _ _)  eq = eq
+cong-updateDDep      (L.retirepool _ _) eq = eq
+cong-updateDDep      (L.ccreghot _ _)   eq = eq
 
 cong-updateDDeps : ∀ {pp} certs {deps₁ deps₂}
                  → deps₁ ≡ᵐ deps₂
                  → updateDDeps pp certs deps₁ ≡ᵐ updateDDeps pp certs deps₂
-cong-updateDDeps      []                                     eq = eq
-cong-updateDDeps {pp} (cert@(L.delegate c del kh v) ∷ certs) eq = cong-updateDDeps certs (cong-updateCertDeposit pp cert eq)
-cong-updateDDeps {pp} (cert@(L.dereg c v)           ∷ certs) {deps₁} {deps₂}
-                                                             eq = cong-updateDDeps certs (cong-updateCertDeposit pp cert {deps₁} {deps₂} eq)
-cong-updateDDeps {pp} (cert@(L.reg c v)             ∷ certs) eq = cong-updateDDeps certs (cong-updateCertDeposit pp cert eq)
-cong-updateDDeps      (L.regpool _ _                ∷ certs) eq = cong-updateDDeps certs eq
-cong-updateDDeps      (L.regdrep _ _ _              ∷ certs) eq = cong-updateDDeps certs eq
-cong-updateDDeps      (L.deregdrep _ _              ∷ certs) eq = cong-updateDDeps certs eq
-cong-updateDDeps      (L.retirepool _ _             ∷ certs) eq = cong-updateDDeps certs eq
-cong-updateDDeps      (L.ccreghot _ _               ∷ certs) eq = cong-updateDDeps certs eq
+cong-updateDDeps []             eq = eq
+cong-updateDDeps (cert ∷ certs) eq = cong-updateDDeps certs (cong-updateDDep cert eq)
+
+cong-updateGDep : ∀ {pp} cert {deps₁ deps₂}
+                → deps₁ ≡ᵐ deps₂
+                → updateGDep pp cert deps₁ ≡ᵐ updateGDep pp cert deps₂
+cong-updateGDep      (L.delegate _ _ _ _)   eq = eq
+cong-updateGDep      (L.dereg _ _)          eq = eq
+cong-updateGDep      (L.reg _ _)            eq = eq
+cong-updateGDep      (L.regpool _ _)        eq = eq
+cong-updateGDep {pp} cert@(L.regdrep _ _ _) eq = cong-updateCertDeposit pp cert eq
+cong-updateGDep {pp} cert@(L.deregdrep _ _) {deps₁} {deps₂}
+                                            eq = cong-updateCertDeposit pp cert {deps₁} {deps₂} eq
+cong-updateGDep      (L.retirepool _ _)     eq = eq
+cong-updateGDep      (L.ccreghot _ _  )     eq = eq
 
 cong-updateGDeps : ∀ {pp} certs {deps₁ deps₂}
                  → deps₁ ≡ᵐ deps₂
                  → updateGDeps pp certs deps₁ ≡ᵐ updateGDeps pp certs deps₂
-cong-updateGDeps      []                                     eq = eq
-cong-updateGDeps      (L.delegate _ _ _ _     ∷ certs) eq = cong-updateGDeps certs eq
-cong-updateGDeps      (L.dereg _ _            ∷ certs) eq = cong-updateGDeps certs eq
-cong-updateGDeps      (L.reg _ _              ∷ certs) eq = cong-updateGDeps certs eq
-cong-updateGDeps      (L.regpool _ _          ∷ certs) eq = cong-updateGDeps certs eq
-cong-updateGDeps {pp} (cert@(L.regdrep _ _ _) ∷ certs) eq = cong-updateGDeps certs (cong-updateCertDeposit pp cert eq)
-cong-updateGDeps {pp} (cert@(L.deregdrep _ _) ∷ certs) {deps₁} {deps₂}
-                                                       eq = cong-updateGDeps certs (cong-updateCertDeposit pp cert {deps₁} {deps₂} eq)
-cong-updateGDeps      (L.retirepool _ _       ∷ certs) eq = cong-updateGDeps certs eq
-cong-updateGDeps      (L.ccreghot _ _         ∷ certs) eq = cong-updateGDeps certs eq
+cong-updateGDeps []             eq = eq
+cong-updateGDeps (cert ∷ certs) eq = cong-updateGDeps certs (cong-updateGDep cert eq)
 
 private open module S {A} = Setoid (≡ᵉ-Setoid {A = A}) using () renaming (sym to ≈-sym; trans to _⟨≈⟩_)
 
