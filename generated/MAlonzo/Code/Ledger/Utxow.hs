@@ -737,10 +737,10 @@ du_os_2190 v0 v1 v2
                      (coe
                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                   (coe
-                     MAlonzo.Code.Ledger.Transaction.d_refInputs_2566
+                     MAlonzo.Code.Ledger.Transaction.d_txins_2564
                      (coe du_txb_2146 (coe v1)))
                   (coe
-                     MAlonzo.Code.Ledger.Transaction.d_txins_2564
+                     MAlonzo.Code.Ledger.Transaction.d_refInputs_2566
                      (coe du_txb_2146 (coe v1)))))))
 -- Ledger.Utxow.getScripts
 d_getScripts_2196 ::
