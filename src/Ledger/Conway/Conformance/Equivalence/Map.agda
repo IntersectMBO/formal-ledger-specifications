@@ -107,8 +107,7 @@ module _  {A B : Type}
   ∈-lookupᵐ : {m : A ⇀ B} {k∈ : k ∈ dom m} → (k , lookupᵐ m k) ∈ m
   ∈-lookupᵐ {k = k}{m = m}{k∈}  = subst (λ x → (k , x) ∈ m) (lookupᵐ∈≡ m) (proj₂ (from dom∈ k∈))
 
-  opaque
-    -- unfolding List-Model List-Modelᵈ to-sp
+  opaque  -- unfolding List-Model List-Modelᵈ to-sp
 
     -- 0. The `∈-incl-set` lemma is useful for proving some properties of `_∪⁺_`.
     ∈-incl-set : {X : ℙ A} {a : A} (a∈X : a ∈ X) → Σ (a ∈ X) λ a∈X′ → (a , a∈X′) ∈ incl-set X
@@ -164,7 +163,8 @@ module _  {A B : Type}
     ... | yes k∈m₁ | yes k∈m₂ = refl
     ... | yes k∈m₁ | no k∉m₂  = refl
     ... | no k∉m₁  | yes k∈m₂ = refl
-    ... | no k∉m₁  | no k∉m₂ with from ∈-∪ k∈₁
+    ... | no k∉m₁  | no k∉m₂
+      with from ∈-∪ k∈₁
     ... | inj₁ k∈m₁ = ⊥-elim (k∉m₁ k∈m₁)
     ... | inj₂ k∈m₂ = ⊥-elim (k∉m₂ k∈m₂)
 
@@ -184,7 +184,7 @@ module _  {A B : Type}
     -- 7. Vals obtained using the property of maps and the def of ∪⁺ are equal.
     ∥∪⁺∥ᶠ≡∥∪⁺∥  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈′ ≡ ∥ m₁ ∪⁺ m₂ ∥ k∈
-    ∥∪⁺∥ᶠ≡∥∪⁺∥  {k = k} {m₁ = m₁} {m₂} k∈ with k×∥∪⁺∥ᶠ∈∪⁺{m₁ = m₁}{m₂} k∈
+    ∥∪⁺∥ᶠ≡∥∪⁺∥ k∈ with k×∥∪⁺∥ᶠ∈∪⁺ k∈
     ... | k∈′ , kk∈ = k∈′ , ∪⁺-val≡ k∈ kk∈
 
 
@@ -215,7 +215,7 @@ module _  {A B : Type}
     ------------------------------------------------------------------------------------------------
 
     resᶜ-dom∉⁻ : ∀ m {ks}{a : A}{b : B} → (a , b) ∈ (m ∣ ks ᶜ) ˢ → ((a , b) ∈ m ˢ × a ∉ ks)
-    resᶜ-dom∉⁻ m x = (ex-⊆ x) , proj₁ (∈-resᶜ-dom⁻ (∈-dom x))
+    resᶜ-dom∉⁻ m x = ex-⊆ x , (∈-resᶜ-dom⁻ $ ∈-dom x) .proj₁
 
     resᶜ-dom∉⁺ : ∀ m {ks}{a : A}{b : B} → ((a , b) ∈ m ˢ × a ∉ ks) → (a , b) ∈ (m ∣ ks ᶜ) ˢ
     resᶜ-dom∉⁺ m = to ∈-filter ∘ swap
@@ -223,10 +223,10 @@ module _  {A B : Type}
     cong-⊆⇒congᵐ : {f : (A ⇀ B) → (A ⇀ B)} → f Preserves _⊆_ ⟶ _⊆_ → f Preserves _≡ᵐ_ ⟶ _≡ᵐ_
     cong-⊆⇒congᵐ h m≡ᵐm' = h (proj₁ m≡ᵐm') , h (proj₂ m≡ᵐm')
 
-    deconstruct-∪⁺ : {m m₁ m₂ : A ⇀ B} {a : A}
-                     {a∈₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)}
-                     {a∈₂ : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ)}
-                     → m₁ ≡ᵐ m₂ → ∥ m ∪⁺ m₁ ∥ᶠ a∈₁ ≡ ∥ m ∪⁺ m₂ ∥ᶠ a∈₂
+    deconstruct-∪⁺  :  {m m₁ m₂ : A ⇀ B} {a : A}
+                       {a∈₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)}
+                       {a∈₂ : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ)}
+                    →  m₁ ≡ᵐ m₂ → ∥ m ∪⁺ m₁ ∥ᶠ a∈₁ ≡ ∥ m ∪⁺ m₂ ∥ᶠ a∈₂
 
     deconstruct-∪⁺ {m} {m₁} {m₂} {a} {a∈₁} m₁≡m₂
       with a ∈? dom (m ˢ) | a ∈? dom (m₁ ˢ) | a ∈? dom (m₂ ˢ)
@@ -252,7 +252,7 @@ module _  {A B : Type}
                        →  ∥ m₁ ∪⁺ m₂ ∥ᶠ (∈-incl-set a∈₁ .proj₁)
                        ≡  ∥ m₂ ∪⁺ m₁ ∥ᶠ (∈-incl-set a∈₂ .proj₁)
 
-    fold-◇-union-comm {m₁} {m₂} {a} {a∈₁} {a∈₂} with a ∈? dom (m₁ ˢ) | a ∈? dom (m₂ ˢ)
+    fold-◇-union-comm {m₁} {m₂} {a} {a∈₁} with a ∈? dom (m₁ ˢ) | a ∈? dom (m₂ ˢ)
     ... | yes a∈m₁ | yes a∈m₂ = ◇comm (lookupᵐ m₁ a) (lookupᵐ m₂ a)
     ... | no  a∉m₁ | yes a∈m₂ = refl
     ... | yes a∈m₁ | no  a∉m₂ = refl
@@ -303,13 +303,13 @@ module _  {A B : Type}
           ≡F = ×-≡,≡→≡ (refl , deconstruct-∪⁺ {a∈₁ = k∈} m₁≡m₂)
       in  to (∈-map {f = F[ m , m₂ ]}) ((k , k∈'') , ≡F , ∈inclset)
       where
-      a∈-∪dom₁ : k ∈ dom (m ˢ) ∪ dom (m₁ ˢ)
+      a∈-∪dom₁ : k ∈ dom m ∪ dom m₁
       a∈-∪dom₁ = dom∪⁺⊆∪dom (to dom∈ (v , kv∈))
 
-      dom₁⊆dom₂ : dom (m₁ ˢ) ⊆ dom (m₂ ˢ)
+      dom₁⊆dom₂ : dom m₁ ⊆ dom m₂
       dom₁⊆dom₂ = dom⊆ m₁⊆m₂
 
-      k∈' : k ∈ dom (m ˢ) ∪ dom (m₂ ˢ)
+      k∈' : k ∈ dom m ∪ dom m₂
       k∈' = ∪-cong-⊆ id dom₁⊆dom₂ a∈-∪dom₁
 
     ∪⁺-cong-l' : {m : A ⇀ B} → (λ m' → m ∪⁺ m') Preserves _≡ᵐ_ ⟶ _≡ᵐ_
@@ -323,8 +323,8 @@ module _  {A B : Type}
     ∪⁺-cong-r' m₁≡m₂@(m₁⊆m₂ , m₂⊆m₁) .proj₂ kv∈m₂m =
       proj₁ ∪⁺-comm (∪⁺-cong-⊆ˡ (m₂⊆m₁ , m₁⊆m₂) (proj₁ ∪⁺-comm kv∈m₂m))
 
-    ∪⁺-cong-r : (m m₁ m₂ : A ⇀ B) → m₁ ≡ᵐ m₂ → m₁ ∪⁺ m ≡ᵐ m₂ ∪⁺ m
-    ∪⁺-cong-r m m₁ m₂ = ∪⁺-cong-r'
+    ∪⁺-cong-r : {m m₁ m₂ : A ⇀ B} → m₁ ≡ᵐ m₂ → m₁ ∪⁺ m ≡ᵐ m₂ ∪⁺ m
+    ∪⁺-cong-r = ∪⁺-cong-r'
 
     ∪⁺-dom-id : (m : A ⇀ B) → dom m ≡ᵉ dom m ∪ dom (∅{A ⇀ B} ˢ)
     ∪⁺-dom-id m = begin
@@ -337,7 +337,7 @@ module _  {A B : Type}
       module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {A})
 
     ∪⁺-id-dom∈ :  (m : A ⇀ B) → k ∈ dom m  ⇔  k ∈ dom m ∪ dom(∅{A ⇀ B}ˢ)
-    ∪⁺-id-dom∈ m = mk⇔ (proj₁ (∪⁺-dom-id m)) (proj₂ (∪⁺-dom-id m))
+    ∪⁺-id-dom∈ m = mk⇔ (∪⁺-dom-id m .proj₁) (∪⁺-dom-id m .proj₂)
 
 
     ∪⁺-id-lemma  :  (m : A ⇀ B)
@@ -356,46 +356,30 @@ module _  {A B : Type}
 
     ∪⁺-id-r : (m : A ⇀ B) → m ∪⁺ ∅{A ⇀ B} ≡ᵐ m
     ∪⁺-id-r m .proj₁ {(k , v)} kv∈m∅ with from ∈-map kv∈m∅
-    ... | (.k , k∈) , refl , snd =
-      subst (λ x → (k , x) ∈ m)
-            (∪⁺-id-lemma m (from (∪⁺-id-dom∈ m) k∈) k∈)
-            (∈-lookupᵐ∈ m (from (∪⁺-id-dom∈ m) k∈))
+    ... | (.k , k∈) , refl , snd = subst  (λ x → (k , x) ∈ m)
+                                          (∪⁺-id-lemma m (from (∪⁺-id-dom∈ m) k∈) k∈)
+                                          (∈-lookupᵐ∈ m $ from (∪⁺-id-dom∈ m) k∈)
 
     ∪⁺-id-r m .proj₂ {(k , v)} kv∈m with to dom∈ (v , kv∈m)
     ... | k∈m =
-      subst (λ x → (k , x) ∈ m ∪⁺ ∅{A ⇀ B}) (trans (sym lu≡) (sym v≡)) (k×∥∪⁺∥ᶠ∈∪⁺' k∈)
+      subst (λ x → (k , x) ∈ m ∪⁺ ∅{A ⇀ B}) (trans lu≡ v≡) (k×∥∪⁺∥ᶠ∈∪⁺' k∈)
       where
       k∈ : k ∈ dom m ∪ dom(∅{A ⇀ B}ˢ)
       k∈ = to (∪⁺-id-dom∈ m) k∈m
 
-      lu≡ : lookupᵐ∈ m (∈-incl-set k∈m .proj₁) ≡ ∥ m ∪⁺ (∅{A ⇀ B}) ∥ᶠ (∈-incl-set k∈ .proj₁)
-      lu≡ = ∪⁺-id-lemma m (∈-incl-set k∈m .proj₁) (∈-incl-set k∈ .proj₁)
+      lu≡ : ∥ m ∪⁺ (∅{A ⇀ B}) ∥ᶠ (∈-incl-set k∈ .proj₁) ≡ lookupᵐ∈ m (∈-incl-set k∈m .proj₁)
+      lu≡ = sym $ ∪⁺-id-lemma m (∈-incl-set k∈m .proj₁) (∈-incl-set k∈ .proj₁)
 
-      v≡ : v ≡ lookupᵐ∈ m (∈-incl-set k∈m .proj₁)
-      v≡ = m .proj₂ kv∈m (∈-lookupᵐ∈ m (∈-incl-set k∈m .proj₁))
+      v≡ : lookupᵐ∈ m (∈-incl-set k∈m .proj₁) ≡ v
+      v≡ = sym $ m .proj₂ kv∈m (∈-lookupᵐ∈ m (∈-incl-set k∈m .proj₁))
 
 
-    restrict-cong : (m₁ m₂ : A ⇀ B) (ks : ℙ A) → m₁ ≡ᵐ m₂ → (m₁ ∣ ks ᶜ) ≡ᵐ (m₂ ∣ ks ᶜ)
-    restrict-cong m₁ m₂ ks (m₁⊆m₂ , _) .proj₁ ab∈ with resᶜ-dom∉⁻ m₁ ab∈
+    restrict-cong : (m₁ m₂ : A ⇀ B) {ks : ℙ A} → m₁ ≡ᵐ m₂ → (m₁ ∣ ks ᶜ) ≡ᵐ (m₂ ∣ ks ᶜ)
+    restrict-cong m₁ m₂ (m₁⊆m₂ , _) .proj₁ ab∈ with resᶜ-dom∉⁻ m₁ ab∈
     ... | ab∈ , a∉ = resᶜ-dom∉⁺ m₂ (m₁⊆m₂ ab∈ , a∉)
-    restrict-cong m₁ m₂ ks (m₁⊆m₂ , m₂⊆m₁) .proj₂ ab∈ with resᶜ-dom∉⁻ m₂ ab∈
+    restrict-cong m₁ m₂ (_ , m₂⊆m₁) .proj₂ ab∈ with resᶜ-dom∉⁻ m₂ ab∈
     ... | ab∈ , a∉ = resᶜ-dom∉⁺ m₁ (m₂⊆m₁ ab∈ , a∉)
 
-
-    -- lemma : ∀ (m₁ m₁′ m₂ m₂′ : A ⇀ B)
-    --       → m₁′ ⊆ m₁ → m₂′ ⊆ m₂
-    --       → (k , v) ∈ m₁′ ∪⁺ m₂′
-    --       → (k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂)
-    --       → These (k ∈ dom m₁′) (k ∈ dom m₂′)
-    --       → v ≡ join-val m₁ m₂ (k , k∈m₁m₂)
-    -- lemma {k = k} m₁ m₁′ m₂ m₂′ inc₁ inc₂ kv∈m₁m₂′ k∈m₁m₂ p with k ∈? dom m₁ | k ∈? dom m₂
-    -- ... | no ∉₁ | no ∉₂ = ⊥-elim $ fold (λ ∈₁   → ∉₁ (dom⊆ inc₁ ∈₁))
-    --                                     (λ ∈₂   → ∉₂ (dom⊆ inc₂ ∈₂))
-    --                                     (λ ∈₁ _ → ∉₁ (dom⊆ inc₁ ∈₁))
-    --                                     p
-    -- ... | no  ∉₁ | yes ∈₂ = {!!}
-    -- ... | yes ∈₁ | no  ∉₂ = {!!}
-    -- ... | yes ∈₁ | yes ∈₂ = {!!}
 
   module _ {P : A → Type} ⦃ _ : P ⁇¹ ⦄ where
 
@@ -556,17 +540,23 @@ module _  {A B : Type}
       dom-filter-P : ∀ m → k ∈ dom (filterᵐ P′ m) → P k
       dom-filter-P m k∈Pm = ∈-filter .from (dom∈ .from k∈Pm .proj₂) .proj₁
 
-      dom-filter-inc : ∀ m → dom (filterᵐ P′ m) ⊆ dom m
-      dom-filter-inc m k∈Pm = dom∈ .to (_ , filter-⊆ (dom∈ .from k∈Pm .proj₂))
+      dom-filter-⊆ : ∀ m → dom (filterᵐ P′ m) ⊆ dom m
+      dom-filter-⊆ m k∈Pm = dom∈ .to (_ , filter-⊆ (dom∈ .from k∈Pm .proj₂))
 
+      ∈-dom-filter : ∀ m → P k × k ∈ dom m → k ∈ dom (filterᵐ P′ m)
+      ∈-dom-filter m (pk , k∈) = dom∈ .to ((from dom∈ k∈) .proj₁ , to ∈-filter (pk , (from dom∈ k∈) .proj₂ ) )
+
+
+      --------------------------------------------------------------------------------------------------
+      -- filterᵐ-∪⁺-distr  -----------------------------------------------------------------------------
       -- Note: this property only holds because P′ is not looking at the value.
       -- Counter-example if it does look at the value:
       -- Suppose `m₁ˢ = m₂ˢ = {(0, 1)}`, `P′ (0, 1)`, and `¬ P′ (0, 2)`.
       -- Then `m₁ ∪⁺ m₂ ≡ {(0, 2)}` so (lhs) `filterᵐ P′ (m₁ ∪⁺ m₂)` is empty,
       -- but `(filterᵐ P′ m₁)ˢ ≡ (filterᵐ P′ m₂)ˢ = {(0, 1)}` so (rhs) `filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂` contains {(0, 2)}.
-      filterᵐ-∪⁺-distr : (m₁ m₂ : A ⇀ B) → filterᵐ P′ (m₁ ∪⁺ m₂) ≡ᵐ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂
-      filterᵐ-∪⁺-distr m₁ m₂ .proj₁ kv∈Pm₁m₂  = {!!}
-      filterᵐ-∪⁺-distr m₁ m₂ .proj₂ {a = k , v} kv∈Pm₁Pm₂ =
+
+      filterᵐ-∪⁺-distr-⊇ : (m₁ m₂ : A ⇀ B) → filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂ ⊆ filterᵐ P′ (m₁ ∪⁺ m₂)
+      filterᵐ-∪⁺-distr-⊇ m₁ m₂ {k} {v} kv∈Pm₁Pm₂ =
         case ¿ P k ¿ of λ where
           (yes pk) → yes-case pk
           (no ¬pk) → ⊥-elim (¬pk ([ dom-filter-P m₁ , dom-filter-P m₂ ]′ k∈Pm₁∨k∈Pm₂))
@@ -587,7 +577,7 @@ module _  {A B : Type}
           yes-case pk = ∈-filter .to (pk , kv∈m₁m₂)
             where
               k∈m₁∨k∈m₂ : k ∈ dom m₁ ⊎ k ∈ dom m₂
-              k∈m₁∨k∈m₂ = map-⊎ (dom-filter-inc m₁) (dom-filter-inc m₂) k∈Pm₁∨k∈Pm₂
+              k∈m₁∨k∈m₂ = map-⊎ (dom-filter-⊆ m₁) (dom-filter-⊆ m₂) k∈Pm₁∨k∈Pm₂
 
               k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂
               k∈m₁m₂ = ∈-∪ .to k∈m₁∨k∈m₂
@@ -616,9 +606,87 @@ module _  {A B : Type}
               kv∈m₁m₂ : (k , v) ∈ m₁ ∪⁺ m₂
               kv∈m₁m₂ = subst (λ • → (k , •) ∈ m₁ ∪⁺ m₂) (sym v=v′) kv′∈m₁m₂
 
+      filterᵐ-∪⁺-distr-⊆ : (m₁ m₂ : A ⇀ B) → filterᵐ P′ (m₁ ∪⁺ m₂) ⊆ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂
+      filterᵐ-∪⁺-distr-⊆ m₁ m₂ {k} {v} kv∈Pm₁m₂ with from ∈-filter kv∈Pm₁m₂
+      ... | Pkv , kv∈ with k ∈? dom m₁ | k ∈? dom m₂
+      ... | yes k∈₁ | yes k∈₂ =
+        subst (λ x → (k , x) ∈ m₁′ ∪⁺ m₂′) ((m₁ ∪⁺ m₂) .proj₂ kb∈ kv∈) (∃b .proj₂)
+          where
+          open ≡-Reasoning
+          m₁′ m₂′ : A ⇀ B; m₁′ = filterᵐ P′ m₁; m₂′ = filterᵐ P′ m₂
+
+          k∈∪dom′ : k ∈ dom m₁′ ∪ dom m₂′
+          k∈∪dom′ = to ∈-∪ $ inj₁ (∈-dom-filter m₁ (Pkv , k∈₁))
+
+          ∃b : Σ B λ b → (k , b) ∈ m₁′ ∪⁺ m₂′
+          ∃b = ∥ m₁′ ∪⁺ m₂′ ∥ᶠ (∈-incl-set k∈∪dom′ .proj₁) , k×∥∪⁺∥ᶠ∈∪⁺' k∈∪dom′
+
+          b : B
+          b = ∃b .proj₁
+
+          kb∈′ : (k , b) ∈ filterᵐ P′ (m₁ ∪⁺ m₂)
+          kb∈′ = filterᵐ-∪⁺-distr-⊇ m₁ m₂ (∃b .proj₂)
+
+          kb∈ : (k , b) ∈ m₁ ∪⁺ m₂
+          kb∈ = (from ∈-filter kb∈′) .proj₂
+
+      ... | no k∉₁ | yes k∈₂ =
+        subst (λ x → (k , x) ∈ m₁′ ∪⁺ m₂′) ((m₁ ∪⁺ m₂) .proj₂ kb∈ kv∈) (∃b .proj₂)
+          where
+          open ≡-Reasoning
+          m₁′ m₂′ : A ⇀ B; m₁′ = filterᵐ P′ m₁; m₂′ = filterᵐ P′ m₂
+
+          k∈∪dom′ : k ∈ dom m₁′ ∪ dom m₂′
+          k∈∪dom′ = to ∈-∪ $ inj₂ (∈-dom-filter m₂ (Pkv , k∈₂))
+
+          ∃b : Σ B λ b → (k , b) ∈ m₁′ ∪⁺ m₂′
+          ∃b = ∥ m₁′ ∪⁺ m₂′ ∥ᶠ (∈-incl-set k∈∪dom′ .proj₁) , k×∥∪⁺∥ᶠ∈∪⁺' k∈∪dom′
+
+          b : B
+          b = ∃b .proj₁
+
+          kb∈′ : (k , b) ∈ filterᵐ P′ (m₁ ∪⁺ m₂)
+          kb∈′ = filterᵐ-∪⁺-distr-⊇ m₁ m₂ (∃b .proj₂)
+
+          kb∈ : (k , b) ∈ m₁ ∪⁺ m₂
+          kb∈ = (from ∈-filter kb∈′) .proj₂
+
+
+      ... | yes k∈₁ | no k∉₂ =
+        subst (λ x → (k , x) ∈ m₁′ ∪⁺ m₂′) ((m₁ ∪⁺ m₂) .proj₂ kb∈ kv∈) (∃b .proj₂)
+          where
+          open ≡-Reasoning
+          m₁′ m₂′ : A ⇀ B; m₁′ = filterᵐ P′ m₁; m₂′ = filterᵐ P′ m₂
+
+          k∈∪dom′ : k ∈ dom m₁′ ∪ dom m₂′
+          k∈∪dom′ = to ∈-∪ $ inj₁ (∈-dom-filter m₁ (Pkv , k∈₁))
+
+          ∃b : Σ B λ b → (k , b) ∈ m₁′ ∪⁺ m₂′
+          ∃b = ∥ m₁′ ∪⁺ m₂′ ∥ᶠ (∈-incl-set k∈∪dom′ .proj₁) , k×∥∪⁺∥ᶠ∈∪⁺' k∈∪dom′
+
+          b : B
+          b = ∃b .proj₁
+
+          kb∈′ : (k , b) ∈ filterᵐ P′ (m₁ ∪⁺ m₂)
+          kb∈′ = filterᵐ-∪⁺-distr-⊇ m₁ m₂ (∃b .proj₂)
+
+          kb∈ : (k , b) ∈ m₁ ∪⁺ m₂
+          kb∈ = (from ∈-filter kb∈′) .proj₂
+
+      ... | no k∉₁ | no k∉₂ with from ∈-∪ (∪⁺-dom∪ kv∈)
+      ... | inj₁ k∈₁ = ⊥-elim (k∉₁ k∈₁)
+      ... | inj₂ k∈₂ = ⊥-elim (k∉₂ k∈₂)
+
+
+      -- MAIN LEMMA --
+      filterᵐ-∪⁺-distr : (m₁ m₂ : A ⇀ B) → filterᵐ P′ (m₁ ∪⁺ m₂) ≡ᵐ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂
+      filterᵐ-∪⁺-distr m₁ m₂ = filterᵐ-∪⁺-distr-⊆ m₁ m₂ , filterᵐ-∪⁺-distr-⊇ m₁ m₂
+
+
       filterᵐ-singleton-true : P k → filterᵐ P′ ❴ k , v ❵ ≡ᵐ ❴ k , v ❵
       filterᵐ-singleton-true p .proj₁ = proj₂ ∘ (from ∈-filter)
       filterᵐ-singleton-true {k}{v} p .proj₂ {a} x = to ∈-filter (subst P′ (sym (from ∈-singleton x)) p , x)
+
 
       filterᵐ-singleton-false : ¬ P k → filterᵐ P′ ❴ k , v ❵ ≡ᵐ ∅
       filterᵐ-singleton-false ¬p .proj₁ x =
@@ -680,4 +748,3 @@ module _  {A B : Type}
 
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
--- -}

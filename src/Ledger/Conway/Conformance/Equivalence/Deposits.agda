@@ -89,14 +89,14 @@ certGDeps deps = filterᵐ (λ (k , _) → GPurpose k) deps
 cong-updateCertDeposit : ∀ pp cert {deps₁ deps₂}
                        → deps₁ ≡ᵐ deps₂
                        → C.updateCertDeposit pp cert deps₁ ≡ᵐ C.updateCertDeposit pp cert deps₂
-cong-updateCertDeposit pp (L.delegate c kh del v)            eq = ∪⁺-cong-r _ _ _ eq
-cong-updateCertDeposit pp (L.dereg x x₁) {deps₁} {deps₂}     eq = restrict-cong deps₁ deps₂ _ eq
-cong-updateCertDeposit pp (L.regpool x x₁)                   eq = ∪⁺-cong-r _ _ _ eq
+cong-updateCertDeposit pp (L.delegate c kh del v)            eq = ∪⁺-cong-r eq
+cong-updateCertDeposit pp (L.dereg x x₁) {deps₁} {deps₂}     eq = restrict-cong deps₁ deps₂ eq
+cong-updateCertDeposit pp (L.regpool x x₁)                   eq = ∪⁺-cong-r eq
 cong-updateCertDeposit pp (L.retirepool x x₁)                eq = eq
-cong-updateCertDeposit pp (L.regdrep x x₁ x₂)                eq = ∪⁺-cong-r _ _ _ eq
-cong-updateCertDeposit pp (L.deregdrep x x₁) {deps₁} {deps₂} eq = restrict-cong deps₁ deps₂ _ eq
+cong-updateCertDeposit pp (L.regdrep x x₁ x₂)                eq = ∪⁺-cong-r eq
+cong-updateCertDeposit pp (L.deregdrep x x₁) {deps₁} {deps₂} eq = restrict-cong deps₁ deps₂ eq
 cong-updateCertDeposit pp (L.ccreghot x x₁)                  eq = eq
-cong-updateCertDeposit pp (L.reg x x₁)                       eq = ∪⁺-cong-r _ _ _ eq
+cong-updateCertDeposit pp (L.reg x x₁)                       eq = ∪⁺-cong-r eq
 
 cong-certDDeps : ∀ deps₁ deps₂ → deps₁ ≡ᵐ deps₂ → certDDeps deps₁ ≡ᵐ certDDeps deps₂
 cong-certDDeps = cong-filterᵐ
@@ -337,8 +337,9 @@ lem-upd-ddeps pparams deps tx = begin
     updateCert = L.updateCertDeposits pparams txcerts
     updateProp = L.updateProposalDeposits txprop txid (pparams .PParams.govActionDeposit)
 
-lem-upd-gdeps : ∀ pparams deps tx (open TxBody (body tx) using (txcerts))
-              → updateGDeps pparams txcerts (certGDeps deps) ≡ᵐ certGDeps (L.updateDeposits pparams (body tx) deps)
+lem-upd-gdeps  :   ∀ pparams deps tx (open TxBody (body tx) using (txcerts))
+               →   updateGDeps pparams txcerts (certGDeps deps)
+               ≡ᵐ  certGDeps (L.updateDeposits pparams (body tx) deps)
 lem-upd-gdeps pparams deps tx = begin
     updateGDeps pparams txcerts (certGDeps deps) ˢ
       ≈⟨ cong-updateGDeps txcerts (lem-upd-prop-gdeps txprop deps) ⟩
@@ -356,22 +357,22 @@ lemUpdCert : ∀ pp ((ddeps , gdeps) : L.Deposits × L.Deposits) deps cert
            → (ddeps , gdeps) ≡ᵈ (certDDeps deps , certGDeps deps)
            → (updateDDep pp cert ddeps , updateGDep pp cert gdeps) ≡ᵈ
              (certDDeps (C.updateCertDeposit pp cert deps) , certGDeps (C.updateCertDeposit pp cert deps))
-lemUpdCert pp (ddeps , gdeps) deps (L.delegate _ _ _ _) (deq , geq) = ∪⁺-cong-r _ ddeps (certDDeps deps) deq
+lemUpdCert pp (ddeps , gdeps) deps (L.delegate _ _ _ _) (deq , geq) = ∪⁺-cong-r deq
                                                                       ⟨≈⟩ ≈-sym (lem-add-included CredentialDeposit)
                                                                     , geq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
-lemUpdCert pp (ddeps , gdeps) deps (L.dereg _ _)        (deq , geq) = restrict-cong ddeps (certDDeps deps) _ deq
+lemUpdCert pp (ddeps , gdeps) deps (L.dereg _ _)        (deq , geq) = restrict-cong ddeps (certDDeps deps) deq
                                                                       ⟨≈⟩ ≈-sym (filterᵐ-restrict deps)
                                                                     , geq ⟨≈⟩ ≈-sym (lem-del-excluded deps λ ())
-lemUpdCert pp (ddeps , gdeps) deps (L.reg _ _)          (deq , geq) = (∪⁺-cong-r _ ddeps (certDDeps deps) deq
+lemUpdCert pp (ddeps , gdeps) deps (L.reg _ _)          (deq , geq) = (∪⁺-cong-r deq
                                                                       ⟨≈⟩ ≈-sym (lem-add-included CredentialDeposit))
                                                                     , geq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
 lemUpdCert pp (ddeps , gdeps) deps (L.regpool x x₁)     (deq , geq) = deq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
                                                                     , geq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
 lemUpdCert pp (ddeps , gdeps) deps (L.regdrep _ _ _)    (deq , geq) = deq ⟨≈⟩ ≈-sym (lem-add-excluded λ ())
-                                                                    , ∪⁺-cong-r _ gdeps (certGDeps deps) geq
+                                                                    , ∪⁺-cong-r geq
                                                                       ⟨≈⟩ ≈-sym (lem-add-included DRepDeposit)
 lemUpdCert pp (ddeps , gdeps) deps (L.deregdrep _ _)    (deq , geq) = deq ⟨≈⟩ ≈-sym (lem-del-excluded deps λ ())
-                                                                    , (restrict-cong gdeps (certGDeps deps) _ geq
+                                                                    , (restrict-cong gdeps (certGDeps deps) geq
                                                                       ⟨≈⟩ ≈-sym (filterᵐ-restrict deps))
 lemUpdCert pp (ddeps , gdeps) deps (L.retirepool _ _)   (deq , geq) = deq , geq
 lemUpdCert pp (ddeps , gdeps) deps (L.ccreghot _ _)     (deq , geq) = deq , geq
