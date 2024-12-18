@@ -71,7 +71,8 @@ cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
 \end{code}
 \begin{code}[hide]
-cwitness (reg _ _)           = nothing
+cwitness (reg _ zero)        = nothing
+cwitness (reg c (suc _))     = just c
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
