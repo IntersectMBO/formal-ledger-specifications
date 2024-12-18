@@ -497,8 +497,61 @@ module _  {A B : Type}
     ... | no ∉₁ | _ = ⊥-elim $ ∉₁ $ to dom∈ ( from dom∈ k∈m₁′ .proj₁
                                             , from ∈-filter (proj₂ $ from dom∈ k∈m₁′) .proj₂ )
     ... | yes ∈₁ | no  ∉₂ = trans (lemma' m₁ m₂ kv∈′ ∈₁ ∉₂) (lookupᵐ∈≡ m₁)
-    ... | yes ∈₁ | yes ∈₂ = {!!}
-    lemma {k = k} {v = v} m₁ m₂ kv∈′ k∈∪dom k∈dom∪⁺ (that k∈m₂′) = {!!}
+    ... | yes ∈₁ | yes ∈₂ =
+      begin
+      v
+        ≡⟨ ∪⁺-unique-val' (∪⁺-dom∪ kv∈′) kv∈′ ⟩
+      ∥ m₁′ ∪⁺ m₂′ ∥ᶠ (∈-incl-set (∪⁺-dom∪ kv∈′) .proj₁)
+        ≡⟨ ∥∪⁺∥ᶠ≡lu◇lu' kv∈′ ⟩
+      (lookupᵐ∈ m₁′ k∈m₁′) ◇ (lookupᵐ∈ m₂′ k∈m₂′)
+        ≡˘⟨ cong (lookupᵐ∈ m₁′ k∈m₁′ ◇_) (lookup≡lookup-filter m₂ ∈₂ k∈m₂′) ⟩
+      (lookupᵐ∈ m₁′ k∈m₁′) ◇ (lookupᵐ∈ m₂ ∈₂)
+        ≡˘⟨ cong (_◇ lookupᵐ∈ m₂ ∈₂) (lookup≡lookup-filter m₁ ∈₁ k∈m₁′) ⟩
+      (lookupᵐ∈ m₁ ∈₁) ◇ (lookupᵐ∈ m₂ ∈₂)
+        ∎
+      where
+        open ≡-Reasoning
+        m₁′ m₂′ : A ⇀ B; m₁′ = filterᵐ P′ m₁; m₂′ = filterᵐ P′ m₂
+
+        v' : B
+        v' = from dom∈ ∈₂ .proj₁
+
+        Pkv : P′ (k , v')
+        Pkv = from ∈-filter (from dom∈ k∈m₁′ .proj₂) .proj₁
+
+        k∈m₂′ : k ∈ dom (filterᵐ P′ m₂)
+        k∈m₂′ = to dom∈ (v' , to ∈-filter (Pkv , from dom∈ ∈₂ .proj₂))
+
+
+    lemma {k = k} {v = v} m₁ m₂ kv∈′ k∈∪dom k∈dom∪⁺ (that k∈m₂′) with k ∈? dom m₁ | k ∈? dom m₂
+    ... | _ | no ∉₂ = ⊥-elim $ ∉₂ $ to dom∈ ( from dom∈ k∈m₂′ .proj₁
+                                            , from ∈-filter (proj₂ $ from dom∈ k∈m₂′) .proj₂ )
+    ... | no  ∉₁ | yes ∈₂  = trans (lemma' m₂ m₁ (∪⁺-comm-⊆ kv∈′) ∈₂ ∉₁) (lookupᵐ∈≡ m₂)
+    ... | yes ∈₁ | yes ∈₂ =
+      begin
+      v
+        ≡⟨ ∪⁺-unique-val' (∪⁺-dom∪ kv∈′) kv∈′ ⟩
+      ∥ m₁′ ∪⁺ m₂′ ∥ᶠ (∈-incl-set (∪⁺-dom∪ kv∈′) .proj₁)
+        ≡⟨ ∥∪⁺∥ᶠ≡lu◇lu' kv∈′ ⟩
+      (lookupᵐ∈ m₁′ k∈m₁′) ◇ (lookupᵐ∈ m₂′ k∈m₂′)
+        ≡˘⟨ cong (lookupᵐ∈ m₁′ k∈m₁′ ◇_) (lookup≡lookup-filter m₂ ∈₂ k∈m₂′) ⟩
+      (lookupᵐ∈ m₁′ k∈m₁′) ◇ (lookupᵐ∈ m₂ ∈₂)
+        ≡˘⟨ cong (_◇ lookupᵐ∈ m₂ ∈₂) (lookup≡lookup-filter m₁ ∈₁ k∈m₁′) ⟩
+      (lookupᵐ∈ m₁ ∈₁) ◇ (lookupᵐ∈ m₂ ∈₂)
+        ∎
+      where
+        open ≡-Reasoning
+        m₁′ m₂′ : A ⇀ B; m₁′ = filterᵐ P′ m₁; m₂′ = filterᵐ P′ m₂
+
+        v' : B
+        v' = from dom∈ ∈₁ .proj₁
+
+        Pkv : P′ (k , v')
+        Pkv = from ∈-filter (from dom∈ k∈m₂′ .proj₂) .proj₁
+
+        k∈m₁′ : k ∈ dom (filterᵐ P′ m₁)
+        k∈m₁′ = to dom∈ (v' , to ∈-filter (Pkv , from dom∈ ∈₁ .proj₂))
+
     lemma {k = k} {v = v} m₁ m₂ kv∈′ k∈∪dom k∈dom∪⁺ (these k∈m₁′ k∈m₂′) with k ∈? dom m₁ | k ∈? dom m₂
     ... | no ∉₁ | _ = ⊥-elim $ ∉₁ $ to dom∈ ( from dom∈ k∈m₁′ .proj₁
                                             , from ∈-filter (proj₂ $ from dom∈ k∈m₁′) .proj₂ )
@@ -515,6 +568,7 @@ module _  {A B : Type}
         ≡˘⟨ cong (_◇ lookupᵐ∈ m₂ ∈₂) (lookup≡lookup-filter m₁ ∈₁ k∈m₁′) ⟩
       (lookupᵐ∈ m₁ ∈₁) ◇ (lookupᵐ∈ m₂ ∈₂)
         ∎
+
 
     opaque
       open Equivalence
