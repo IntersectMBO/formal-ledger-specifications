@@ -71,26 +71,26 @@ d_CertEnv_1502 a0 = ()
 -- _.CertState
 d_CertState_1504 a0 = ()
 -- _.CertEnv.epoch
-d_epoch_1646 :: MAlonzo.Code.Ledger.Certs.T_CertEnv_866 -> AgdaAny
+d_epoch_1646 :: MAlonzo.Code.Ledger.Certs.T_CertEnv_868 -> AgdaAny
 d_epoch_1646 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_epoch_876 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_epoch_878 (coe v0)
 -- _.CertEnv.pp
 d_pp_1648 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_1648 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_878 (coe v0)
+d_pp_1648 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_880 (coe v0)
 -- _.CertEnv.votes
 d_votes_1650 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
 d_votes_1650 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_votes_880 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_votes_882 (coe v0)
 -- _.CertEnv.wdrls
 d_wdrls_1652 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_wdrls_1652 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_wdrls_882 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_wdrls_884 (coe v0)
 -- _.CertState.dState
 d_dState_1656 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 ->
@@ -108,7 +108,7 @@ d_gState_1658 v0
 -- _.CertState.pState
 d_pState_1660 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 ->
-  MAlonzo.Code.Ledger.Certs.T_PState_902
+  MAlonzo.Code.Ledger.Certs.T_PState_904
 d_pState_1660 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1080 (coe v0)
@@ -318,14 +318,14 @@ d_computeCerts_2718 ::
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1710 ->
   () ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_832] ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeCerts_2718 ~v0 ~v1 ~v2 v3 = du_computeCerts_2718 v3
 du_computeCerts_2718 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_832] ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
@@ -379,16 +379,16 @@ d_certΓ_2816 ::
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2130 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2176 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2624 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868
 d_certΓ_2816 v0 ~v1 v2 ~v3 v4 = du_certΓ_2816 v0 v2 v4
 du_certΓ_2816 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2130 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2624 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868
 du_certΓ_2816 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'44'_'10215''7580'_884
+      MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'44'_'10215''7580'_886
       (coe
          MAlonzo.Code.Ledger.Types.Epoch.d_epoch_68
          (MAlonzo.Code.Ledger.Transaction.d_epochStructure_1508 (coe v0))
