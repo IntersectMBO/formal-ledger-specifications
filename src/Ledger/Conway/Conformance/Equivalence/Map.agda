@@ -687,7 +687,6 @@ module _  {A B : Type}
       filterᵐ-singleton-true p .proj₁ = proj₂ ∘ (from ∈-filter)
       filterᵐ-singleton-true {k}{v} p .proj₂ {a} x = to ∈-filter (subst P′ (sym (from ∈-singleton x)) p , x)
 
-
       filterᵐ-singleton-false : ¬ P k → filterᵐ P′ ❴ k , v ❵ ≡ᵐ ∅
       filterᵐ-singleton-false ¬p .proj₁ x =
         ⊥-elim $ ¬p $ subst P′ (from ∈-singleton $ proj₂ (from ∈-filter x)) (proj₁ $ from ∈-filter x)
