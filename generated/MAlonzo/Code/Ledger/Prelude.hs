@@ -27,6 +27,7 @@ import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Sum.Base
+import qualified MAlonzo.Code.Interface.HasSubset
 import qualified MAlonzo.Code.Ledger.Interface.HasCoin
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -125,12 +126,16 @@ du_HasCoin'45'Set_32 v0
                     MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
               (coe (\ v2 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2)))
               (coe v1)))
+-- Ledger.Prelude.HasSubset-Set
+d_HasSubset'45'Set_44 ::
+  () -> MAlonzo.Code.Interface.HasSubset.T_HasSubset_8
+d_HasSubset'45'Set_44 = erased
 -- Ledger.Prelude.≡ᵉ-getCoin
-d_'8801''7497''45'getCoin_50 ::
+d_'8801''7497''45'getCoin_54 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''7497''45'getCoin_50 = erased
+d_'8801''7497''45'getCoin_54 = erased
