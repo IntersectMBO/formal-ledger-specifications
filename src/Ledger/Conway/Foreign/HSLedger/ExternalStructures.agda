@@ -1,6 +1,9 @@
 open import Ledger.Conway.Foreign.ExternalFunctions
 
-module Ledger.Conway.Foreign.HSLedger.ExternalStructures (externalFunctions : ExternalFunctions) where
+module Ledger.Conway.Foreign.HSLedger.ExternalStructures 
+  {Script} 
+  (externalFunctions : ExternalFunctions Script) 
+  where
 
 open import Ledger.Crypto
 open import Ledger.Types.Epoch

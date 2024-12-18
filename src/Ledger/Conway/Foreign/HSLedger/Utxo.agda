@@ -31,7 +31,7 @@ unquoteDecl = do
   hsTypeAlias UTxO
   hsTypeAlias Redeemer
 
-module _ (ext : ExternalFunctions) where
+module _ {Script} (ext : ExternalFunctions Script) where
   open import Ledger.Conway.Foreign.HSLedger.ExternalStructures ext hiding (Tx; TxBody; inject)
   open import Ledger.Conway.Conformance.Utxow.Properties HSTransactionStructure HSAbstractFunctions
   open import Ledger.Conway.Conformance.Utxo.Properties HSTransactionStructure HSAbstractFunctions
