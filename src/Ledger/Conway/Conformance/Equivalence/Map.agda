@@ -2,16 +2,13 @@
 
 module Ledger.Conway.Conformance.Equivalence.Map where
 
-open import Ledger.Prelude  -- renaming (trans to infixr 1 _⟨≡⟩_)
+open import Ledger.Prelude
 open import Axiom.Set.Properties th
 open import Axiom.Set.Map.Dec
 
 import Algebra as Alg
 import Algebra.Definitions as AlgDefs
 import Algebra.Structures as AlgStrucs
-
--- Cancellative _•_ = (LeftCancellative _•_) × (RightCancellative _•_)
--- open import Class.Semigroup
 
 open import Data.List.Relation.Unary.Any using (Any)
 open import Data.These as These using (These; this; that; these; fold)
@@ -32,7 +29,7 @@ import Axiom.Set.Rel
 
 
 
-module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
+module _  {A B : Type}
   (open AlgStrucs {A = B} _≡_)
   ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄
   ⦃ _ : CommutativeMonoid _ _ B ⦄
@@ -57,43 +54,54 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
 
   -- Properties of domains of maps of type m₁ ∪⁺ m₂ ---------------------
 
+  -- 1. If `k ∈ dom m₁ ∪ dom m₂` (for m₁, m₂ maps), then `(k , v) ∈ m₁ ∪⁺ m₂` for some `v`.
   dom∪-∃∪⁺ : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂ → Σ B (λ v → (k , v) ∈ m₁ ∪⁺ m₂)
   dom∪-∃∪⁺ k∈ = from dom∈ (∪dom⊆dom∪⁺ k∈)
 
+  -- 2. If `(k , v) ∈ m₁ ∪⁺ m₂`, then `k ∈ dom m₁ ∪ dom m₂`.
   ∪⁺-dom∪ : {m₁ m₂ : A ⇀ B}{k : A} {v : B} → (k , v) ∈ m₁ ∪⁺ m₂ → k ∈ dom m₁ ∪ dom m₂
   ∪⁺-dom∪ {v = v} kv∈ = dom∪⁺⊆∪dom (to dom∈ (v , kv∈))
 
+  -- 3. Values associated with a key k ∈ dom m₁ ∪ dom m₂ can be computed in two ways:
 
-  -- Values associated with a key k in the domain of `m₁ ∪⁺ m₂` can be computed in two ways:
-
-  -- 1. from the property of a map (there must be a value associated with k in domain---look it up!)
+  --    * 3.1. from the property of a map
   ∥_∪⁺_∥ : (m₁ m₂ : A ⇀ B) → k ∈ dom m₁ ∪ dom m₂ → B
-  ∥ m₁ ∪⁺ m₂ ∥ k∈ = proj₁ (dom∪-∃∪⁺{m₁ = m₁}{m₂}  k∈)
+  ∥ m₁ ∪⁺ m₂ ∥ = proj₁ ∘ dom∪-∃∪⁺{m₁ = m₁}{m₂}
 
-  -- 2. from the definition of ∪⁺ (fold over the union of the two maps).
-  ∥_∪⁺_∥ᵈᵉᶠ : (m₁ m₂ : A ⇀ B) → k ∈ dom m₁ ∪ dom m₂ → B
-  ∥_∪⁺_∥ᵈᵉᶠ {k} m₁ m₂ p = fold id id _◇_ (unionThese m₁ m₂ k p)
 
-  F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ x → x ∈ dom m₁ ∪ dom m₂) → A × B
-  F[ m₁ , m₂ ] (x , x∈) = x , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ x∈
+  --    * 3.2. from the definition of ∪⁺ (a fold over the union of the two maps).
+  ∥_∪⁺_∥ᶠ : (m₁ m₂ : A ⇀ B) → k ∈ dom m₁ ∪ dom m₂ → B
+  ∥_∪⁺_∥ᶠ {k} m₁ m₂ p = fold id id _◇_ (unionThese m₁ m₂ k p)
 
+  -- 4. F[ m₁ , m₂ ] takes a key `k` and a proof of `k ∈ dom m₁ ∪ dom m₂` and returns
+  --    the pair `(k , v)` where `v` is the unique image of `k` under `m₁ ∪⁺ m₂`.
+  --    i.e., `(k , v) ∈ m₁ ∪⁺ m₂`.
+  F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (λ k → k ∈ dom m₁ ∪ dom m₂) → A × B
+  F[ m₁ , m₂ ] (x , x∈) = x , ∥ m₁ ∪⁺ m₂ ∥ᶠ x∈
+
+  -- 5. A binary opertor on maps which is equivalent to `_∪⁺_`.
   _⊕_ : (m₁ m₂ : A ⇀ B) → ℙ (A × B)
   m₁ ⊕ m₂ = mapˢ F[ m₁ , m₂ ] (incl-set (dom (m₁ ˢ) ∪ dom (m₂ ˢ)))
 
-  ∪⁺-def : {m₁ m₂ : A ⇀ B} {x : A × B} → x ∈ (m₁ ∪⁺ m₂) ˢ ⇔ x ∈ m₁ ⊕ m₂
-  ∪⁺-def = mk⇔ id id
+  ∪⁺-⊕-equiv : {m₁ m₂ : A ⇀ B} {x : A × B} → x ∈ (m₁ ∪⁺ m₂) ˢ ⇔ x ∈ m₁ ⊕ m₂
+  ∪⁺-⊕-equiv = mk⇔ id id
 
-  -- lookupᵐ∈ : (m : A ⇀ B) → k ∈ dom m → B
-  -- lookupᵐ∈ _ p = ∈-map .from p .proj₁ .proj₂
-
-  -- ∈-lookupᵐ∈ : (m : A ⇀ B)(k∈ : k ∈ dom m) → (k , lookupᵐ∈ m k∈) ∈ m
-  -- ∈-lookupᵐ∈ m k∈ = {!!} -- proj₂ (from dom∈ k∈)
-
+  -- 6. A simpler version of `lookupᵐ`; it doesn't require tactics.
   lookupᵐ∈ : (m : A ⇀ B) → k ∈ dom m → B
   lookupᵐ∈ _ = proj₁ ∘ (from dom∈)
 
+  -- 7. Proof that the value you get from `lookupᵐ∈` is in the image of the map.
   ∈-lookupᵐ∈ : (m : A ⇀ B)(k∈ : k ∈ dom m) → (k , lookupᵐ∈ m k∈) ∈ m
   ∈-lookupᵐ∈ m k∈ = proj₂ (from dom∈ k∈)
+
+  -- 8. Irrelevance of the proof of `k ∈ dom m` used in `lookupᵐ∈`.
+  lookupᵐ∈-irrelevance : (m : A ⇀ B) {k∈ k∈′ : k ∈ dom m}
+                       → lookupᵐ∈ m k∈ ≡ lookupᵐ∈ m k∈′
+  lookupᵐ∈-irrelevance m {k∈} {k∈′} = m .proj₂ (∈-lookupᵐ∈ m k∈) (∈-lookupᵐ∈ m k∈′)
+
+  -- 9. If `v` is the image of `k` under `m`, then it must be `lookupᵐ∈ m k∈m`!
+  ∈-lookupᵐ≡ : (m : A ⇀ B) {k∈m : k ∈ dom m} → (k , v) ∈ m → v ≡ lookupᵐ∈ m k∈m
+  ∈-lookupᵐ≡ m {k∈m} kv∈ = m .proj₂ kv∈ (∈-lookupᵐ∈ m k∈m)
 
   lookupᵐ∈≡ : (m : A ⇀ B) {k∈ : k ∈ dom m} → lookupᵐ∈ m k∈ ≡ lookupᵐ m k
   lookupᵐ∈≡ {k = k} _ {k∈} = refl
@@ -101,14 +109,10 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
   ∈-lookupᵐ : {m : A ⇀ B} {k∈ : k ∈ dom m} → (k , lookupᵐ m k) ∈ m
   ∈-lookupᵐ {k = k}{m = m}{k∈}  = subst (λ x → (k , x) ∈ m) (lookupᵐ∈≡ m) (proj₂ (from dom∈ k∈))
 
-  ∈-lookupᵐ≡ : (m : A ⇀ B) {k∈m : k ∈ dom m} → (k , v) ∈ m → v ≡ lookupᵐ∈ m k∈m
-  ∈-lookupᵐ≡ m {k∈m} kv∈ = m .proj₂ kv∈ (∈-lookupᵐ∈ m k∈m)
+  opaque
+    -- unfolding List-Model List-Modelᵈ to-sp
 
-  opaque  -- unfolding List-Model List-Modelᵈ to-sp
-
-    -- Properties of values of ∪⁺ ----------------------
-
-    -- 0. The following lemma (∈-incl-set) will be useful for proving some ∪⁺ properties.
+    -- 0. The `∈-incl-set` lemma is useful for proving some properties of `_∪⁺_`.
     ∈-incl-set : {X : ℙ A} {a : A} (a∈X : a ∈ X) → Σ (a ∈ X) λ a∈X′ → (a , a∈X′) ∈ incl-set X
     ∈-incl-set {X} {a} a∈X =
       Data.Product.map₂ (λ {a∈X′} eq → ∈-mapPartial {f = incl-set' X} .to (a , a∈X′ , eq))
@@ -119,56 +123,85 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
         ... | yes a∈X′ = a∈X′ , refl
         ... | no  a∉X  = ⊥-elim (a∉X a∈X)
 
-    -- 1. If v is the value obtained using the property of maps (i.e., v = ∥ m₁ ∪⁺ m₂ ∥ k∈)
-    --    then (k , v) ∈ m₁ ∪⁺ m₂.
+    -- Properties of values of ∪⁺ --------------------------------------------------
+
+    -- 1. If `k∈` is a proof of `k ∈ dom m₁ ∪ dom m₂`, then `∥ m₁ ∪⁺ m₂ ∥ k∈` is
+    --    the image of `k` under `m₁ ∪⁺ m₂`.
     k×∥∪⁺∥∈∪⁺ : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
               → (k , ∥ m₁ ∪⁺ m₂ ∥ k∈) ∈ m₁ ∪⁺ m₂
     k×∥∪⁺∥∈∪⁺ {m₁ = m₁} {m₂} k∈ = dom∪-∃∪⁺ k∈ .proj₂
 
-
-    -- 2. If v is any value such that (k , v) ∈ m₁ ∪⁺ m₂, then v = ∥ m₁ ∪⁺ m₂ ∥ k∈.
+    -- 2. If `v` is the image of `k` under `m₁ ∪⁺ m₂`, then `v ≡ ∥ m₁ ∪⁺ m₂ ∥ k∈`.
     ∪⁺-val≡  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
              → (k , v) ∈ m₁ ∪⁺ m₂ → v ≡ ∥ m₁ ∪⁺ m₂ ∥ k∈
     ∪⁺-val≡ {m₁ = m₁} {m₂} k∈ kv∈ = (m₁ ∪⁺ m₂) .proj₂ kv∈ (k×∥∪⁺∥∈∪⁺ k∈)
 
 
-    -- 3. If `k ∈ dom m₁ ∪ dom m₂` then there is a proof `k∈′` of `dom m₁ ∪ dom m₂`
-    --    such that, if `v` is the val obtained using the def of `∪⁺` with `k∈′`
-    --    (i.e., `v = ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′`), then `(k, v) ∈ m₁ ∪⁺ m₂`.
-    k×∥∪⁺∥ᵈᵉᶠ∈∪⁺  : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂
-                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → (k , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′) ∈ m₁ ∪⁺ m₂
-    k×∥∪⁺∥ᵈᵉᶠ∈∪⁺ {k = k} k∈ with ∈-incl-set k∈
+    -- 3. If `k ∈ dom m₁ ∪ dom m₂` holds, then there is a particular proof `k∈′`
+    --    of that fact such that `(k , ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈′) ∈ m₁ ∪⁺ m₂`.
+    k×∥∪⁺∥ᶠ∈∪⁺  : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂
+                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → (k , ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈′) ∈ m₁ ∪⁺ m₂
+    k×∥∪⁺∥ᶠ∈∪⁺ {k = k} k∈ with ∈-incl-set k∈
     ... | k∈′ , kk∈ = k∈′ , to ∈-map ((k , k∈′) , refl , kk∈)
 
-    k×∥∪⁺∥ᵈᵉᶠ∈∪⁺'  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
-                 → (k , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set k∈ .proj₁)) ∈ m₁ ∪⁺ m₂
-    k×∥∪⁺∥ᵈᵉᶠ∈∪⁺' {k = k} k∈ = let
+
+    -- 4. We can obtain the particular proof mentioned in 3. using `∈-incl-set`.
+    k×∥∪⁺∥ᶠ∈∪⁺'  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ (dom m₁ ∪ dom m₂))
+                 → (k , ∥ m₁ ∪⁺ m₂ ∥ᶠ (∈-incl-set k∈ .proj₁)) ∈ m₁ ∪⁺ m₂
+    k×∥∪⁺∥ᶠ∈∪⁺' {k = k} {m₁} {m₂} k∈ = goal
+      where
+      k∈′ : k ∈ dom m₁ ∪ dom m₂ --  <= the particular proof mentioned in 3
       k∈′ = ∈-incl-set k∈ .proj₁
+
+      kk∈ : (k , ∈-incl-set k∈ .proj₁) ∈ incl-set (dom m₁ ∪ dom m₂)
       kk∈ = ∈-incl-set k∈ .proj₂
-      in to ∈-map ((k , k∈′) , refl , kk∈)
-      --  Another way to express the goal `(k , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′) ∈ m₁ ∪⁺ m₂` above
-      --  is `F[ m₁ , m₂ ] (k , k∈′) ∈ mapˢ F[ m₁ , m₂ ] (incl-set (dom m₁ ∪ dom m₂))`.
+
+      goal : F[ m₁ , m₂ ] (k , ∈-incl-set k∈ .proj₁) ∈ mapˢ F[ m₁ , m₂ ] (incl-set (dom m₁ ∪ dom m₂))
+                                                     -- this ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ is `(m₁ ∪⁺ m₂)ˢ`
+      goal = to ∈-map ((k , k∈′) , refl , kk∈)
 
 
-    -- 4. If (k , v) ∈ m₁ ∪⁺ m₂, then there is a proof `k∈′` of `dom m₁ ∪ dom m₂`
-    --    such that `v ≡ ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′`.
-    ∪⁺-def-val-lem  : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂ → (k , v) ∈ m₁ ∪⁺ m₂
-                    → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′
-    ∪⁺-def-val-lem {k = k} {m₁ = m₁} {m₂} k∈ kv∈ with ∈-incl-set k∈
+    -- 5. If `(k , v) ∈ m₁ ∪⁺ m₂`, then there is a particular proof `k∈′` of
+    --    `k ∈ dom m₁ ∪ dom m₂` such that `v ≡ ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈′`.
+    ∪⁺-unique-val  : {m₁ m₂ : A ⇀ B} → (k , v) ∈ m₁ ∪⁺ m₂
+                    → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈′
+    ∪⁺-unique-val {k = k} {m₁ = m₁} {m₂} kv∈ with ∈-incl-set (∪⁺-dom∪ kv∈)
     ... | k∈′ , kk∈ = k∈′ , (m₁ ∪⁺ m₂) .proj₂ kv∈ (to ∈-map ((k , k∈′) , refl , kk∈))
 
-    ∪⁺-def-val-lem'  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂) → (k , v) ∈ m₁ ∪⁺ m₂
-                     → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set k∈ .proj₁)
-    ∪⁺-def-val-lem' {k = k} {m₁ = m₁} {m₂} k∈ kv∈ = let  k∈′ = ∈-incl-set k∈ .proj₁
-                                                         kk∈ = ∈-incl-set k∈ .proj₂
+    -- ∪⁺-def-val-lem  : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂ → (k , v) ∈ m₁ ∪⁺ m₂
+    --                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈′
+    -- ∪⁺-def-val-lem {k = k} {m₁ = m₁} {m₂} k∈ kv∈ with ∈-incl-set k∈
+    -- ... | k∈′ , kk∈ = k∈′ , (m₁ ∪⁺ m₂) .proj₂ kv∈ (to ∈-map ((k , k∈′) , refl , kk∈))
+
+    ∪⁺-unique-val'  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂) → (k , v) ∈ m₁ ∪⁺ m₂
+                     → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᶠ (∈-incl-set k∈ .proj₁)
+    ∪⁺-unique-val' {k = k} {m₁ = m₁} {m₂} k∈ kv∈ = let  k∈′ = ∈-incl-set k∈ .proj₁
+                                                        kk∈ = ∈-incl-set k∈ .proj₂
       in (m₁ ∪⁺ m₂) .proj₂ kv∈ (to ∈-map ((k , k∈′) , refl , kk∈))
 
 
-    -- 5. Vals obtained using the property of maps and the def of ∪⁺ are equal.
-    ∥∪⁺∥ᵈᵉᶠ≡∥∪⁺∥  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
-                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈′ ≡ ∥ m₁ ∪⁺ m₂ ∥ k∈
-    ∥∪⁺∥ᵈᵉᶠ≡∥∪⁺∥  {k = k} {m₁ = m₁} {m₂} k∈ with k×∥∪⁺∥ᵈᵉᶠ∈∪⁺{m₁ = m₁}{m₂} k∈
+    -- 6. Vals obtained using the property of maps and the def of ∪⁺ are equal.
+    ∥∪⁺∥ᶠ≡∥∪⁺∥  : {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
+                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈′ ≡ ∥ m₁ ∪⁺ m₂ ∥ k∈
+    ∥∪⁺∥ᶠ≡∥∪⁺∥  {k = k} {m₁ = m₁} {m₂} k∈ with k×∥∪⁺∥ᶠ∈∪⁺{m₁ = m₁}{m₂} k∈
     ... | k∈′ , kk∈ = k∈′ , ∪⁺-val≡ k∈ kk∈
+
+
+    -- 7.
+    ∥∪⁺∥ᶠ≡lu◇lu :  {m₁ m₂ : A ⇀ B} (k∈ : k ∈ dom m₁ ∪ dom m₂)
+                  {k∈m₁ : k ∈ dom m₁} {k∈m₂ : k ∈ dom m₂}
+                 → Σ (k ∈ dom m₁ ∪ dom m₂) λ k∈′ → ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈′ ≡ (lookupᵐ∈ m₁ k∈m₁) ◇ (lookupᵐ∈ m₂ k∈m₂)
+    ∥∪⁺∥ᶠ≡lu◇lu {k} {m₁} {m₂} k∈ {k∈m₁} {k∈m₂} with k ∈? dom m₁ | k ∈? dom m₂
+    ... | no k∉m₁   | _       = ⊥-elim (k∉m₁ k∈m₁)
+    ... | _         | no k∉m₂ = ⊥-elim (k∉m₂ k∈m₂)
+    ... | yes k∈m₁′ | yes k∈m₂′ = k∈ , goal
+      where
+      open ≡-Reasoning
+      goal : (lookupᵐ∈ m₁ k∈m₁′) ◇ (lookupᵐ∈ m₂ k∈m₂′) ≡ (lookupᵐ∈ m₁ k∈m₁) ◇ (lookupᵐ∈ m₂ k∈m₂)
+      goal = begin
+        (lookupᵐ∈ m₁ k∈m₁′) ◇ (lookupᵐ∈ m₂ k∈m₂′) ≡⟨ cong (_◇ lookupᵐ∈ m₂ k∈m₂′) (lookupᵐ∈-irrelevance m₁) ⟩
+        (lookupᵐ∈ m₁ k∈m₁) ◇ (lookupᵐ∈ m₂ k∈m₂′) ≡⟨ cong (lookupᵐ∈ m₁ k∈m₁ ◇_ ) (lookupᵐ∈-irrelevance m₂) ⟩
+        (lookupᵐ∈ m₁ k∈m₁) ◇ (lookupᵐ∈ m₂ k∈m₂) ∎
 
 
     ------------------------------------------------------------------------------------------------
@@ -185,7 +218,7 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
     deconstruct-∪⁺ : {m m₁ m₂ : A ⇀ B} {a : A}
                      {a∈₁ : a ∈ dom (m ˢ) ∪ dom (m₁ ˢ)}
                      {a∈₂ : a ∈ dom (m ˢ) ∪ dom (m₂ ˢ)}
-                     → m₁ ≡ᵐ m₂ → ∥ m ∪⁺ m₁ ∥ᵈᵉᶠ a∈₁ ≡ ∥ m ∪⁺ m₂ ∥ᵈᵉᶠ a∈₂
+                     → m₁ ≡ᵐ m₂ → ∥ m ∪⁺ m₁ ∥ᶠ a∈₁ ≡ ∥ m ∪⁺ m₂ ∥ᶠ a∈₂
 
     deconstruct-∪⁺ {m} {m₁} {m₂} {a} {a∈₁} m₁≡m₂
       with a ∈? dom (m ˢ) | a ∈? dom (m₁ ˢ) | a ∈? dom (m₂ ˢ)
@@ -204,16 +237,16 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
     ... | inj₁ a∈m = ⊥-elim (a∉m a∈m)
     ... | inj₂ a∈m₁ = ⊥-elim (a∉m₁ a∈m₁)
 
---   ∥_∪⁺_∥ᵈᵉᶠ {k} m₁ m₂ p = fold id id _◇_ (unionThese m₁ m₂ k p)
+--   ∥_∪⁺_∥ᶠ {k} m₁ m₂ p = fold id id _◇_ (unionThese m₁ m₂ k p)
 
     fold-◇-union-comm : {m₁ m₂ : A ⇀ B} {a : A}
                         {a∈₁ : a ∈ dom (m₁ ˢ) ∪ dom (m₂ ˢ)}
                         {a∈₂ : a ∈ dom (m₂ ˢ) ∪ dom (m₁ ˢ)}
 
-                      → ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set a∈₁ .proj₁)
-                      ≡ ∥ m₂ ∪⁺ m₁ ∥ᵈᵉᶠ (∈-incl-set a∈₂ .proj₁)
+                      → ∥ m₁ ∪⁺ m₂ ∥ᶠ (∈-incl-set a∈₁ .proj₁)
+                      ≡ ∥ m₂ ∪⁺ m₁ ∥ᶠ (∈-incl-set a∈₂ .proj₁)
     -- N.B.
-    -- `∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set a∈₁ .proj₁)` is, by def,
+    -- `∥ m₁ ∪⁺ m₂ ∥ᶠ (∈-incl-set a∈₁ .proj₁)` is, by def,
     -- `fold id id _◇_ (unionThese m₁ m₂ a (∈-incl-set a∈₁ .proj₁))`
 
     fold-◇-union-comm {m₁} {m₂} {a} {a∈₁} {a∈₂} with a ∈? dom (m₁ ˢ) | a ∈? dom (m₂ ˢ)
@@ -237,7 +270,7 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
       a∈˘ = to ∈-∪ (inj₂ a∈m₁)
 
       b≡ : b ≡ fold id id _◇_ (unionThese m₂ m₁ a (∈-incl-set a∈˘ .proj₁))
-      b≡ = trans (∪⁺-def-val-lem' (to ∈-∪ (inj₁ a∈m₁)) ab∈) fold-◇-union-comm
+      b≡ = trans (∪⁺-unique-val' (to ∈-∪ (inj₁ a∈m₁)) ab∈) fold-◇-union-comm
 
     ... | no a∉m₁ | yes a∈m₂ = to ∈-map $ (a , ∈-incl-set a∈˘ .proj₁)
                                         , ×-≡,≡→≡ (refl , b≡) , ∈-incl-set a∈₂ .proj₂
@@ -249,7 +282,7 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
       a∈˘ = to ∈-∪ (inj₁ a∈m₂)
 
       b≡ : b ≡ fold id id _◇_ (unionThese m₂ m₁ a (∈-incl-set a∈˘ .proj₁))
-      b≡ = trans (∪⁺-def-val-lem' (to ∈-∪ (inj₂ a∈m₂)) ab∈) fold-◇-union-comm
+      b≡ = trans (∪⁺-unique-val' (to ∈-∪ (inj₂ a∈m₂)) ab∈) fold-◇-union-comm
 
     ... | no  a∉m₁ | no a∉m₂ with from ∈-∪ (∪⁺-dom∪ ab∈)
     ... | inj₁ a∈m₁ = ⊥-elim (a∉m₁ a∈m₁)
@@ -307,7 +340,7 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
     ∪⁺-id-lemma  :  (m : A ⇀ B)
                     (k∈m : k ∈ dom m)
                     (k∈ : k ∈ dom m ∪ dom(∅{A ⇀ B}ˢ))
-                 →  lookupᵐ∈ m k∈m ≡ ∥ m ∪⁺ ∅{A ⇀ B} ∥ᵈᵉᶠ k∈
+                 →  lookupᵐ∈ m k∈m ≡ ∥ m ∪⁺ ∅{A ⇀ B} ∥ᶠ k∈
 
     ∪⁺-id-lemma {k} m k∈domm k∈domm∪ with k ∈? dom (m ˢ) | k ∈? dom (∅{A ⇀ B} ˢ)
     ... | _ | yes  k∈∅ = ⊥-elim (⊥-elim (∉-dom∅ k∈∅))
@@ -327,12 +360,12 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
 
     ∪⁺-id-r m .proj₂ {(k , v)} kv∈m with to dom∈ (v , kv∈m)
     ... | k∈m =
-      subst (λ x → (k , x) ∈ m ∪⁺ ∅{A ⇀ B}) (trans (sym lu≡) (sym v≡)) (k×∥∪⁺∥ᵈᵉᶠ∈∪⁺' k∈)
+      subst (λ x → (k , x) ∈ m ∪⁺ ∅{A ⇀ B}) (trans (sym lu≡) (sym v≡)) (k×∥∪⁺∥ᶠ∈∪⁺' k∈)
       where
       k∈ : k ∈ dom m ∪ dom(∅{A ⇀ B}ˢ)
       k∈ = to (∪⁺-id-dom∈ m) k∈m
 
-      lu≡ : lookupᵐ∈ m (∈-incl-set k∈m .proj₁) ≡ ∥ m ∪⁺ (∅{A ⇀ B}) ∥ᵈᵉᶠ (∈-incl-set k∈ .proj₁)
+      lu≡ : lookupᵐ∈ m (∈-incl-set k∈m .proj₁) ≡ ∥ m ∪⁺ (∅{A ⇀ B}) ∥ᶠ (∈-incl-set k∈ .proj₁)
       lu≡ = ∪⁺-id-lemma m (∈-incl-set k∈m .proj₁) (∈-incl-set k∈ .proj₁)
 
       v≡ : v ≡ lookupᵐ∈ m (∈-incl-set k∈m .proj₁)
@@ -381,14 +414,14 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
     ∈-dom-filter-dom m k∈domf with from dom∈ k∈domf
     ... | b , kb∈filter = to dom∈ (b , proj₂ ((from ∈-filter) kb∈filter))
 
-    lookup-filter-lookup  : (m : A ⇀ B) (k∈ : k ∈ dom m) (k∈′ : k ∈ dom (filterᵐ P′ m))
+    lookup≡lookup-filter  : (m : A ⇀ B) (k∈ : k ∈ dom m) (k∈′ : k ∈ dom (filterᵐ P′ m))
                           → lookupᵐ∈ m k∈ ≡ lookupᵐ∈ (filterᵐ P′ m) k∈′
-    lookup-filter-lookup m k∈ k∈′ =
+    lookup≡lookup-filter m k∈ k∈′ =
       (m .proj₂) (∈-lookupᵐ∈ m k∈) (proj₂ (from ∈-filter (∈-lookupᵐ∈ (filterᵐ P′ m) k∈′)))
 
     ∈-∪⁺-l'  : {m₁ m₂ : A ⇀ B} {k∈m₁ : k ∈ dom m₁} {k∈m₁m₂ : k ∈ dom m₁ ∪ dom m₂}
             → (k , v) ∈ m₁ ∪⁺ m₂ → k ∉ dom m₂
-            → ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set k∈m₁m₂ .proj₁) ≡ lookupᵐ∈ m₁ k∈m₁
+            → ∥ m₁ ∪⁺ m₂ ∥ᶠ (∈-incl-set k∈m₁m₂ .proj₁) ≡ lookupᵐ∈ m₁ k∈m₁
     ∈-∪⁺-l' {k = k} {m₁ = m₁} {m₂} {k∈m₁} {k∈m₁m₂} kv∈m₁m₂ k∉m₂ with k ∈? dom (m₁ ˢ) | k ∈? dom (m₂ ˢ)
     ... | _ | yes k∈₂ = ⊥-elim (k∉m₂ k∈₂)
     ... | no k∉₁ | _ = ⊥-elim (k∉₁ k∈m₁)
@@ -403,8 +436,8 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
     ... | no k∉m₁ | _ = ⊥-elim (k∉m₁ k∈m₁)
     ... | yes k∈m₁' | no k∉m₂' with from ∈-map k∈m₁
     ... | (.k , v') , refl , kv∈m₁ = begin
-      v                                                    ≡⟨ ∪⁺-def-val-lem' (∪⁺-dom∪ kv∈₁₂) kv∈₁₂ ⟩
-      ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ (∈-incl-set (∪⁺-dom∪ kv∈₁₂) .proj₁)  ≡⟨ ∈-∪⁺-l'  kv∈₁₂ k∉m₂' ⟩
+      v                                                    ≡⟨ ∪⁺-unique-val' (∪⁺-dom∪ kv∈₁₂) kv∈₁₂ ⟩
+      ∥ m₁ ∪⁺ m₂ ∥ᶠ (∈-incl-set (∪⁺-dom∪ kv∈₁₂) .proj₁)  ≡⟨ ∈-∪⁺-l'  kv∈₁₂ k∉m₂' ⟩
       lookupᵐ∈ m₁ k∈m₁                                     ≡˘⟨ ∈-lookupᵐ≡ m₁ kv∈m₁ ⟩
       v'                                                   ∎
       where open ≡-Reasoning
@@ -445,49 +478,43 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
       ζ : (a , b) ∈ m₁
       ζ = proj₂ (from ∈-filter ξ)
 
-    lemma : ∀ (m₁ m₂ : A ⇀ B)
-          → (k , v) ∈ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂
-          → (k∈ : k ∈ dom m₁ ∪ dom m₂)
-          → k ∈ dom (m₁ ∪⁺ m₂)
-          → These (k ∈ dom(filterᵐ P′ m₁)) (k ∈ dom(filterᵐ P′ m₂))
-          → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈
+    lemma  : (m₁ m₂ : A ⇀ B)
+           → (k , v) ∈ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂
+           → (k∈∪dom : k ∈ dom m₁ ∪ dom m₂)
+           → k ∈ dom (m₁ ∪⁺ m₂)
+           → These (k ∈ dom(filterᵐ P′ m₁)) (k ∈ dom(filterᵐ P′ m₂))
+           → v ≡ ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈∪dom
 
-    lemma {k = k} {v} m₁ m₂ kv∈ k∈dom∪ k∈dom∪⁺ (this k∈m₁′) with k ∈? dom m₁ | k ∈? dom m₂
+    lemma {k = k} {v} m₁ m₂ kv∈′ k∈∪dom k∈dom∪⁺ (this k∈m₁′) with k ∈? dom m₁ | k ∈? dom m₂
     ... | no ∉₁ | _ = ⊥-elim $ ∉₁ $ to dom∈ ( ( proj₁ (from dom∈ k∈m₁′))
-                                              , proj₂ (from ∈-filter (proj₂ (from dom∈ k∈m₁′)))
-                                            )
-    ... | yes ∈₁ | no  ∉₂ = trans (lemma' m₁ m₂ kv∈ ∈₁ ∉₂) (lookupᵐ∈≡ m₁)
-
+                                              , proj₂ (from ∈-filter (proj₂ (from dom∈ k∈m₁′))) )
+    ... | yes ∈₁ | no  ∉₂ = trans (lemma' m₁ m₂ kv∈′ ∈₁ ∉₂) (lookupᵐ∈≡ m₁)
+    ... | yes ∈₁ | yes ∈₂ = {!!}
+    lemma {k = k} {v = v} m₁ m₂ kv∈′ k∈∪dom k∈dom∪⁺ (that k∈m₂′) = {!!}
+    lemma {k = k} {v = v} m₁ m₂ kv∈′ k∈∪dom k∈dom∪⁺ {- k∈m₁m₂ k∈m₁∪⁺m₂ -}
+      (these k∈m₁′ k∈m₂′) with k ∈? dom m₁ | k ∈? dom m₂
+    ... | no ∉₁ | _ = ⊥-elim $ ∉₁ $ to dom∈ ( ( proj₁ (from dom∈ k∈m₁′))
+                                              , proj₂ (from ∈-filter (proj₂ (from dom∈ k∈m₁′))) )
+    ... | yes ∈₁ | no  ∉₂ = trans (lemma' m₁ m₂ kv∈′ ∈₁ ∉₂) (lookupᵐ∈≡ m₁)
     ... | yes ∈₁ | yes ∈₂ = goal
       where
-      ξ : v ≡ ∥ filterᵐ P′ m₁ ∪⁺ filterᵐ P′ m₂ ∥ᵈᵉᶠ (∈-incl-set (∪⁺-dom∪ kv∈) .proj₁)
-      ξ = ∪⁺-def-val-lem' {m₁ = filterᵐ P′ m₁}{m₂ = filterᵐ P′ m₂} (∪⁺-dom∪ kv∈) kv∈
-
-      b : ∃[ b ] (k , b) ∈ m₁ ∪⁺ m₂
-      b = from dom∈ k∈dom∪⁺
-
-      goal : v ≡ (lookupᵐ m₁ k) ◇ (lookupᵐ m₂ k)
-      goal = {!!}
-
-
-    lemma {k = k} {v = v} m₁ m₂ kv∈ k∈m₁m₂ k∈m₁∪⁺m₂ (that k∈m₂′) = {!!}
-    lemma {k = k} {v = v} m₁ m₂ kv∈ k∈m₁m₂ k∈m₁∪⁺m₂ (these k∈m₁′ k∈m₂′) with k ∈? dom m₁ | k ∈? dom m₂
-    ... | no ∉₁ | _ = ⊥-elim $ ∉₁ $ to dom∈ ( ( proj₁ (from dom∈ k∈m₁′))
-                                              , proj₂ (from ∈-filter (proj₂ (from dom∈ k∈m₁′)))
-                                            )
-    ... | yes ∈₁ | no  ∉₂ = trans (lemma' m₁ m₂ kv∈ ∈₁ ∉₂) (lookupᵐ∈≡ m₁)
-
-    ... | yes ∈₁ | yes ∈₂ = {!!}
-      where
       open ≡-Reasoning
-      goal' : (lookupᵐ∈ m₁ ∈₁) ◇ (lookupᵐ∈ m₂ ∈₂) ≡ (lookupᵐ∈ (filterᵐ P′ m₁) k∈m₁′) ◇ (lookupᵐ∈ (filterᵐ P′ m₂) k∈m₂′)
-      goal' = begin
-        (lookupᵐ∈ m₁ ∈₁) ◇ (lookupᵐ∈ m₂ ∈₂)
-          ≡⟨ cong (_◇ (lookupᵐ∈ m₂ ∈₂)) (lookup-filter-lookup m₁ ∈₁ k∈m₁′) ⟩
-        (lookupᵐ∈ (filterᵐ P′ m₁) k∈m₁′) ◇ (lookupᵐ∈ m₂ ∈₂)
-          ≡⟨ cong ((lookupᵐ∈ (filterᵐ P′ m₁) k∈m₁′) ◇_) (lookup-filter-lookup m₂ ∈₂ k∈m₂′) ⟩
-        (lookupᵐ∈ (filterᵐ P′ m₁) k∈m₁′) ◇ (lookupᵐ∈ (filterᵐ P′ m₂) k∈m₂′)
-          ∎
+      m₁′ m₂′ : A ⇀ B
+      m₁′ = filterᵐ P′ m₁
+      m₂′ = filterᵐ P′ m₂
+
+      ξ : v ≡ ∥ m₁′ ∪⁺ m₂′ ∥ᶠ (∈-incl-set (∪⁺-dom∪ kv∈′) .proj₁)
+      ξ = ∪⁺-unique-val' {m₁ = m₁′ }{m₂ = m₂′ } (∪⁺-dom∪ kv∈′) kv∈′
+
+      ζ : Σ (k ∈ dom m₁′ ∪ dom m₂′) λ k∈′ → ∥ m₁′ ∪⁺ m₂′ ∥ᶠ k∈′ ≡ (lookupᵐ∈ m₁′ k∈m₁′) ◇ (lookupᵐ∈ m₂′  k∈m₂′)
+      ζ = ∥∪⁺∥ᶠ≡lu◇lu (∪⁺-dom∪ kv∈′)
+
+      goal : v ≡ (lookupᵐ∈ m₁ ∈₁) ◇ (lookupᵐ∈ m₂ ∈₂)
+      goal = begin
+        v                                        ≡⟨ {!!} ⟩
+        (lookupᵐ∈ m₁′ k∈m₁′) ◇ (lookupᵐ∈ m₂′ k∈m₂′) ≡˘⟨ cong ((lookupᵐ∈ m₁′ k∈m₁′) ◇_) (lookup≡lookup-filter m₂ ∈₂ k∈m₂′) ⟩
+        (lookupᵐ∈ m₁′ k∈m₁′) ◇ (lookupᵐ∈ m₂ ∈₂) ≡˘⟨ cong (_◇ (lookupᵐ∈ m₂ ∈₂)) (lookup≡lookup-filter m₁ ∈₁ k∈m₁′) ⟩
+        (lookupᵐ∈ m₁ ∈₁) ◇ (lookupᵐ∈ m₂ ∈₂)      ∎
 
 
     opaque
@@ -535,7 +562,7 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
               k∈m₁m₂⁺ : k ∈ dom (m₁ ∪⁺ m₂)
               k∈m₁m₂⁺ = ∪dom⊆dom∪⁺ k∈m₁m₂
 
-              [kv′∈m₁m₂] : Σ (k ∈ dom m₁ ∪ dom m₂) (λ k∈m₁m₂′ → (k , ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈m₁m₂′) ∈ (m₁ ∪⁺ m₂)ˢ)
+              [kv′∈m₁m₂] : Σ (k ∈ dom m₁ ∪ dom m₂) (λ k∈m₁m₂′ → (k , ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈m₁m₂′) ∈ (m₁ ∪⁺ m₂)ˢ)
               [kv′∈m₁m₂] = _ , ∈-map′ (∈-incl-set k∈m₁m₂ .proj₂)
 
               k∈m₁m₂′ : k ∈ dom m₁ ∪ dom m₂
@@ -545,7 +572,7 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
               k∈m₁∪⁺m₂  = ∪dom⊆dom∪⁺ k∈m₁m₂′
 
               v′ : B
-              v′ = ∥ m₁ ∪⁺ m₂ ∥ᵈᵉᶠ k∈m₁m₂′
+              v′ = ∥ m₁ ∪⁺ m₂ ∥ᶠ k∈m₁m₂′
 
               kv′∈m₁m₂ : (k , v′) ∈ m₁ ∪⁺ m₂
               kv′∈m₁m₂ = [kv′∈m₁m₂] .proj₂
@@ -631,3 +658,4 @@ module _  {A B : Type} -- {_◇_ : Alg.Op₂ B}
 
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
+-- -}
