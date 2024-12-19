@@ -10,6 +10,9 @@ open import Ledger.Types.Epoch
 open import Ledger.Conway.Foreign.HSLedger.Core
 
 HSGlobalConstants = GlobalConstants ∋ record {Implementation}
+
+open ExternalFunctions externalFunctions
+
 instance
   HSEpochStructure = EpochStructure  ∋ ℕEpochStructure HSGlobalConstants
 
@@ -19,7 +22,6 @@ instance
     ; pkk = HSPKKScheme
     }
     where
-    open ExternalFunctions externalFunctions
     HSPKKScheme : PKKScheme
     HSPKKScheme = record
       { Implementation
@@ -123,7 +125,7 @@ instance
       ; indexOfProposal = λ _ _ → nothing
       }
     ; runPLCScript = λ _ _ _ _ → false
-    ; scriptSize = λ _ → 0
+    ; scriptSize = extScriptSize
     }
 
 open import Ledger.Address Network KeyHash ScriptHash using () public
