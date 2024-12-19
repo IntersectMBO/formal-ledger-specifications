@@ -29,11 +29,12 @@ open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
 open import Ledger.Abstract
 open import Ledger.Transaction
+open import Ledger.Types
 open import Interface.ComputationalRelation
 
 module Ledger.Utxo.Properties
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : _) (open TransactionStructure txs) (open TypesStructure types)
+  (abs : AbstractFunctions types txs) (open AbstractFunctions abs)
   where
 
 open import Ledger.Utxo txs abs

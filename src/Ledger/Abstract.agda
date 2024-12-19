@@ -2,8 +2,12 @@
 
 open import Ledger.Prelude
 open import Ledger.Transaction
+open import Ledger.Types
 
-module Ledger.Abstract (txs : TransactionStructure) where
+module Ledger.Abstract 
+  (types : _) (open TypesStructure types)
+  (txs : TransactionStructure) 
+  where
 
 open TransactionStructure txs
 open import Ledger.Certs govStructure
@@ -21,5 +25,5 @@ record AbstractFunctions : Type where
   field txscriptfee  : Prices → ExUnits → Coin
         serSize      : Value → MemoryEstimate
         indexOfImp   : indexOf
-        runPLCScript : CostModel → P2Script → ExUnits → List Data → Bool
+        runPLCScript : CostModel → PlutusScript → ExUnits → List Data → Bool
         scriptSize   : Script → ℕ

@@ -15,22 +15,23 @@ open import Tactic.Inline
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
+open import Ledger.Types
 
 module Ledger.Script
+  (ts     : _) (open TypesStructure ts)
   (crypto : _) (open Crypto crypto)
   (es     : _) (open EpochStructure es)
   where
 
 record P1ScriptStructure : Type₁ where
-  field P1Script : Type
-        validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Type
+  field validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Type
         ⦃ Dec-validP1Script ⦄ : validP1Script ⁇³
         ⦃ Hashable-P1Script ⦄ : Hashable P1Script ScriptHash
         ⦃ DecEq-P1Script    ⦄ : DecEq P1Script
 
 record PlutusStructure : Type₁ where
   field Dataʰ : HashableSet
-        Language PlutusScript CostModel Prices LangDepView ExUnits : Type
+        Language CostModel Prices LangDepView ExUnits : Type
         PlutusV1 PlutusV2 PlutusV3   : Language
         ⦃ ExUnit-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ ExUnits
         ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
@@ -163,11 +164,8 @@ record ScriptStructure : Type₁ where
 
   field ps : PlutusStructure
   open PlutusStructure ps public
-    renaming ( PlutusScript       to P2Script
-             ; validPlutusScript  to validP2Script
+    renaming ( validPlutusScript  to validP2Script
              )
-
-  Script = P1Script ⊎ P2Script
 
   open import Data.Empty
   open import Agda.Builtin.Equality

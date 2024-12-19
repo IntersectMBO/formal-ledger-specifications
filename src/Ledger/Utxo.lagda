@@ -20,10 +20,11 @@ open import Tactic.Derive.DecEq
 open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
+open import Ledger.Types
 
 module Ledger.Utxo
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : _) (open TransactionStructure txs) (open TypesStructure types)
+  (abs : AbstractFunctions types txs) (open AbstractFunctions abs)
   where
 
 open import Ledger.ScriptValidation txs abs

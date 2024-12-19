@@ -19,11 +19,13 @@ open import Ledger.Prelude
 open import Ledger.Crypto
 open import Ledger.Script
 open import Ledger.Types.Epoch
+open import Ledger.Types
 
 module Ledger.PParams
-  (crypto : Crypto )
+  (types  : TypesStructure)
+  (crypto : Crypto)
   (es     : _) (open EpochStructure es)
-  (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
+  (ss     : ScriptStructure types crypto es) (open ScriptStructure ss)
   where
 
 private variable

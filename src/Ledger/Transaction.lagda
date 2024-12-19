@@ -15,6 +15,7 @@ open import Ledger.Prelude renaming (filterᵐ to filter)
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
+open import Ledger.Types
 import Ledger.PParams
 import Ledger.Script
 import Ledger.GovernanceActions
@@ -74,6 +75,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   field globalConstants : _
   open GlobalConstants globalConstants public
 
+  field types : _
+  open TypesStructure types
+
   field crypto : _
   open Crypto crypto public
   open Ledger.TokenAlgebra ScriptHash public
@@ -81,11 +85,11 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 
   field epochStructure : _
   open EpochStructure epochStructure public
-  open Ledger.Script crypto epochStructure public
+  open Ledger.Script types crypto epochStructure public
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public
-  open Ledger.PParams crypto epochStructure scriptStructure public
+  open Ledger.PParams types crypto epochStructure scriptStructure public
 
   field govParams : _
   open GovParams govParams public

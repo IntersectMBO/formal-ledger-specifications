@@ -2,8 +2,9 @@ module Ledger.Conway.Foreign.ExternalFunctions where
 
 open import Ledger.Prelude
 open import Foreign.HaskellTypes.Deriving
+open import Ledger.Conway.Foreign.Types
 
-record ExternalFunctions (Script : Type) : Type where
+record ExternalFunctions : Type where
   field extIsSigned : ℕ → ℕ → ℕ → Bool
         extScriptSize : Script → ℕ
 {-# FOREIGN GHC

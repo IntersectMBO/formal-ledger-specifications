@@ -9,10 +9,11 @@ open import Ledger.Prelude; open Properties
 open import Ledger.Transaction
 open import Ledger.Abstract
 open import Ledger.Crypto
+open import Ledger.Types
 
 module Ledger.ScriptValidation
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
+  (txs : _) (open TransactionStructure txs) (open TypesStructure types)
+  (abs : AbstractFunctions types txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
 open import Ledger.Certs govStructure
@@ -181,7 +182,7 @@ opaque
 open TxBody
 open Tx
 
-⟦_⟧,_,_,_ : P2Script → CostModel → ExUnits → List Data → Bool
+⟦_⟧,_,_,_ : PlutusScript → CostModel → ExUnits → List Data → Bool
 ⟦ s ⟧, cm , eu , d = runPLCScript cm s eu d
 
 evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
