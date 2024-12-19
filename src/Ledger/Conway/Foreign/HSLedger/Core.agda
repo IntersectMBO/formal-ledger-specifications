@@ -1,5 +1,3 @@
-open import Ledger.Conway.Foreign.ExternalFunctions
-
 module Ledger.Conway.Foreign.HSLedger.Core where
 
 open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ) public
@@ -81,7 +79,7 @@ module Implementation where
   toData : ∀ {A : Type} → A → Data
   toData _ = 0
 
-  PlutusScript = ⊤
+  PlutusScript = ℕ × ⊤
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ExUnits ∋ (Conversion.fromBundle record
     { Carrier = ExUnits
@@ -96,6 +94,9 @@ module Implementation where
   instance
     Show-ExUnits : Show ExUnits
     Show-ExUnits = Show-×
+    
+    Hashable-PlutusScript : Hashable PlutusScript ℕ
+    Hashable-PlutusScript .hash (h , _) = h
 
   CostModel    = ⊤
   Language     = ⊤
