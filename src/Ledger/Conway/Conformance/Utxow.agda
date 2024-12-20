@@ -18,15 +18,6 @@ module L where
   open import Ledger.Utxow txs abs public
   open import Ledger.Utxo txs abs public
 
-instance
-  -- This is probably not the best place to introduce this instance,
-  -- but it works. Probably better to put
-  -- `open Hashable Hashable-P1Script public`
-  -- after the `P1Script` field in the `P1ScriptStructure` record,
-  -- but that conflicts with other things.
-  r : Hashable P1Script ScriptHash
-  r = Hashable-P1Script
-
 data
 
   _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
@@ -48,9 +39,10 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         neededHashes      = L.scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = L.getDataHashes (range txouts)
+        nonRefScripts     = mapPartial isInj₁ (txscripts tx utxo)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] (hash ⦃ r ⦄ s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
+    ∙  ∀[ s ∈ nonRefScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
     ∙  L.witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
