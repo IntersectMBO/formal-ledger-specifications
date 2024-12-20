@@ -132,15 +132,6 @@ scriptsNeeded = getScripts ∘ mapˢ proj₂ ∘ credsNeeded
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}[hide]
-instance
-  -- This is probably not the best place to introduce this instance,
-  -- but it works. Probably better to put
-  -- `open Hashable Hashable-P1Script public`
-  -- after the `P1Script` field in the `P1ScriptStructure` record,
-  -- but that conflicts with other things.
-  r : Hashable P1Script ScriptHash
-  r = Hashable-P1Script
-
 data
 \end{code}
 \begin{code}
@@ -157,14 +148,12 @@ private variable
   s s' : UTxOState
   tx : Tx
 
-
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
-
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
         inputHashes       = getInputHashes tx utxo
@@ -172,9 +161,10 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         neededHashes      = scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = getDataHashes (range txouts)
+        nonRefScripts     = mapPartial isInj₁ (txscripts tx utxo)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] (hash ⦃ r ⦄ s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
+    ∙  ∀[ s ∈ nonRefScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
