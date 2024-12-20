@@ -24,18 +24,28 @@ module Ledger.Conway.Conformance.Script
 
 open Ledger.Script crypto es
 
-record HashedTimelock : Type where
+record HSTimelock : Type where
   field
     timelock : Timelock
     storedHash : ScriptHash
 
 instance
-  Hashable-HashedTimelock : Hashable HashedTimelock ScriptHash
-  Hashable-HashedTimelock .hash = HashedTimelock.storedHash
+  Hashable-HSTimelock : Hashable HSTimelock ScriptHash
+  Hashable-HSTimelock .hash = HSTimelock.storedHash
 
-unquoteDecl DecEq-HashedTimelock = derive-DecEq ((quote HashedTimelock , DecEq-HashedTimelock) ∷ [])
+unquoteDecl DecEq-HSTimelock = derive-DecEq ((quote HSTimelock , DecEq-HSTimelock) ∷ [])
+
+record HSPlutusScript : Type where
+  constructor MkHSPlutusScript
+  field scriptHash : ScriptHash
+        serSize    : ℕ
+
+instance
+  Hashable-HSPlutusScript : Hashable HSPlutusScript ScriptHash
+  Hashable-HSPlutusScript .hash = HSPlutusScript.scriptHash
 
 P1ScriptStructure-HTL : P1ScriptStructure
 P1ScriptStructure-HTL = record
-  { P1Script = HashedTimelock
-  ; validP1Script = λ x y → evalTimelock x y ∘ HashedTimelock.timelock }
+  { P1Script = HSTimelock
+  ; validP1Script = λ x y → evalTimelock x y ∘ HSTimelock.timelock }
+
