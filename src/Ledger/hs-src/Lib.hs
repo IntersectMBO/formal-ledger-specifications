@@ -12,7 +12,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams     as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction as X
   ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
   , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Wdrl
-  , HashedTimelock(..))
+  , HSTimelock (..), HSPlutusScript (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert        as X
   (certStep, certsStep, CertState(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Chain       as X

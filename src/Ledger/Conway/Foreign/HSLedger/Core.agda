@@ -79,7 +79,6 @@ module Implementation where
   toData : ∀ {A : Type} → A → Data
   toData _ = 0
 
-  PlutusScript = ℕ × ⊤
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ExUnits ∋ (Conversion.fromBundle record
     { Carrier = ExUnits
@@ -94,9 +93,6 @@ module Implementation where
   instance
     Show-ExUnits : Show ExUnits
     Show-ExUnits = Show-×
-    
-    Hashable-PlutusScript : Hashable PlutusScript ℕ
-    Hashable-PlutusScript .hash (h , _) = h
 
   CostModel    = ⊤
   Language     = ⊤
