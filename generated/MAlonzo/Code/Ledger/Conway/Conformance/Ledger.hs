@@ -424,7 +424,7 @@ du_updateDeposits_1800 v0
 d__'8866'_'8640''10631'_'44'CERTS'10632'__1908 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1710 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_832] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 -> ()
@@ -434,26 +434,26 @@ d_CertEnv_1934 a0 a1 = ()
 -- Ledger.Conway.Conformance.Ledger._.CertState
 d_CertState_1936 a0 a1 = ()
 -- Ledger.Conway.Conformance.Ledger._.CertEnv.epoch
-d_epoch_2078 :: MAlonzo.Code.Ledger.Certs.T_CertEnv_866 -> AgdaAny
+d_epoch_2078 :: MAlonzo.Code.Ledger.Certs.T_CertEnv_868 -> AgdaAny
 d_epoch_2078 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_epoch_876 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_epoch_878 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.CertEnv.pp
 d_pp_2080 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_2080 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_878 (coe v0)
+d_pp_2080 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_880 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.CertEnv.votes
 d_votes_2082 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
 d_votes_2082 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_votes_880 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_votes_882 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.CertEnv.wdrls
 d_wdrls_2084 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_866 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_wdrls_2084 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_wdrls_882 (coe v0)
+  = coe MAlonzo.Code.Ledger.Certs.d_wdrls_884 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.CertState.dState
 d_dState_2088 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 ->
@@ -471,7 +471,7 @@ d_gState_2090 v0
 -- Ledger.Conway.Conformance.Ledger._.CertState.pState
 d_pState_2092 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 ->
-  MAlonzo.Code.Ledger.Certs.T_PState_902
+  MAlonzo.Code.Ledger.Certs.T_PState_904
 d_pState_2092 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1080 (coe v0)
