@@ -206,7 +206,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{NoConway}
 \begin{code}
   refScriptsSize : UTxO → Tx → ℕ
-  refScriptsSize utxo tx = ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+  refScriptsSize utxo tx = sum $ map scriptSize (refScripts tx utxo)
 
   minfee : PParams → UTxO → Tx → Coin
   minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b

@@ -50,6 +50,7 @@ instance
       HSP2ScriptStructure = record
         { Implementation
         ; validPlutusScript = λ _ _ _ _ → ⊤
+        ; PlutusScript = HSPlutusScript
         }
 
 open import Ledger.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
@@ -120,7 +121,9 @@ instance
       ; indexOfProposal = λ _ _ → nothing
       }
     ; runPLCScript = λ _ _ _ _ → false
-    ; scriptSize = λ _ → 0
+    ; scriptSize = λ where 
+        (inj₁ x) → HSTimelock.tlScriptSize x
+        (inj₂ x) → HSPlutusScript.psScriptSize x
     }
 
 open import Ledger.Address Network KeyHash ScriptHash using () public

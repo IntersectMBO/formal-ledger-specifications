@@ -211,13 +211,13 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  refScripts : Tx → UTxO → ℙ Script
+  refScripts : Tx → UTxO → List Script
   refScripts tx utxo =
-    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) $ setToList (range (utxo ∣ (txins ∪ refInputs)))
     where open Tx; open TxBody (tx .body)
 
   txscripts : Tx → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+  txscripts tx utxo = scripts (tx .wits) ∪ fromList (refScripts tx utxo)
     where open Tx; open TxWitnesses
 
   lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
