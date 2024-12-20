@@ -392,8 +392,8 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
                                   ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
 
-  GOVCERT-deregdrep :
-    ∙ c ∈ dom dReps
+  GOVCERT-deregdrep : ∀ {pp} → let open PParams pp in
+    ∙ (d ≡ drepDeposit × c ∈ dom dReps)
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
