@@ -28,6 +28,22 @@ record P1ScriptStructure : Type₁ where
         ⦃ Hashable-P1Script ⦄ : Hashable P1Script ScriptHash
         ⦃ DecEq-P1Script    ⦄ : DecEq P1Script
 
+  -- open Hashable Hashable-P1Script public
+  -- I think `Hashable Hashable-P1Script` should be opened publicly here,
+  -- but (probably because that wasn't done to begin with), it now conflicts
+  -- with other instances, e.g., the `hash` in line 200 of `Ledger.Transaction`
+  -- would produce the following type-checking error:
+  -- ```
+  -- Cannot resolve overloaded projection hash because principal argument
+  -- has type (P1Script ⊎ P2Script) while it should be of record type
+  --   candidates in scope:
+  -- - hash : ({T = T₁ : Type} {THash : Type}
+  --           ⦃ r : Hashable T₁ THash ⦄ →
+  --           T₁ → THash)
+  -- - hash : (P1Script → ScriptHash)
+  -- when checking that the expression hash has type Script → ScriptHash
+  -- ```
+
 record PlutusStructure : Type₁ where
   field Dataʰ : HashableSet
         Language PlutusScript CostModel Prices LangDepView ExUnits : Type
