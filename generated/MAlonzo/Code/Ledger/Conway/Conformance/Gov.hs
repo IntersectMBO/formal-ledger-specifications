@@ -452,7 +452,7 @@ d_gState_1850 v0
 -- Ledger.Conway.Conformance.Gov._.CertState.pState
 d_pState_1852 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1070 ->
-  MAlonzo.Code.Ledger.Certs.T_PState_902
+  MAlonzo.Code.Ledger.Certs.T_PState_904
 d_pState_1852 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1080 (coe v0)
