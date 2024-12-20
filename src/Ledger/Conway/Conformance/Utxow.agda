@@ -39,9 +39,10 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         neededHashes      = L.scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = L.getDataHashes (range txouts)
+        nonRefScripts     = mapPartial isInj₁ (txscripts tx utxo)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ nonRefScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
     ∙  L.witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
