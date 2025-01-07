@@ -549,7 +549,7 @@ d_computeProof_2824 v0 v1 v2 v3 v4
                                                                               MAlonzo.Code.Ledger.Utxo.d_fees_1936
                                                                               (coe v10))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Utxo.du_updateDeposits_2330
+                                                                              MAlonzo.Code.Ledger.Utxo.du_updateDeposits_2328
                                                                               (coe v0)
                                                                               (let v18
                                                                                      = coe

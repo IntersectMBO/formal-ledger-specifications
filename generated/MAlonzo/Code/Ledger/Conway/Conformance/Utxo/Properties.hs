@@ -96,7 +96,7 @@ du_Dec'45'inInterval_1648 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 du_Dec'45'inInterval_1648 v0
-  = coe MAlonzo.Code.Ledger.Utxo.du_Dec'45'inInterval_2466 (coe v0)
+  = coe MAlonzo.Code.Ledger.Utxo.du_Dec'45'inInterval_2464 (coe v0)
 -- Ledger.Conway.Conformance.Utxo.Properties._.L.UTxOEnv
 d_UTxOEnv_1666 a0 a1 = ()
 -- Ledger.Conway.Conformance.Utxo.Properties._.L.UTxOState
@@ -118,7 +118,7 @@ du_'8799''63'_1752 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 du_'8799''63'_1752 v0 v1 v2 v3
-  = coe MAlonzo.Code.Ledger.Utxo.du_'8799''63'_2988 v1 v2 v3
+  = coe MAlonzo.Code.Ledger.Utxo.du_'8799''63'_2986 v1 v2 v3
 -- Ledger.Conway.Conformance.Utxo.Properties._.L.UTxOEnv.pparams
 d_pparams_1778 ::
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1910 ->
@@ -1176,7 +1176,7 @@ d_computeProofH_2258 v0 v1 v2 v3 v4 v5
                                                             = coe
                                                                 MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Utxo.du_Dec'45'inInterval_2466
+                                                                   MAlonzo.Code.Ledger.Utxo.du_Dec'45'inInterval_2464
                                                                    (coe v0)
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Utxo.d_slot_1918
@@ -1203,7 +1203,7 @@ d_computeProofH_2258 v0 v1 v2 v3 v4 v5
                                                                              (coe
                                                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16)
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Utxo.d_feesOK_2602
+                                                                                MAlonzo.Code.Ledger.Utxo.d_feesOK_2600
                                                                                 (coe v0) (coe v1)
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Utxo.d_pparams_1920
@@ -1235,7 +1235,7 @@ d_computeProofH_2258 v0 v1 v2 v3 v4 v5
                                                                                              (coe
                                                                                                 v0)))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Utxo.du_consumed_2778
+                                                                                          MAlonzo.Code.Ledger.Utxo.du_consumed_2776
                                                                                           (coe v0)
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Utxo.d_pparams_1920
@@ -1247,7 +1247,7 @@ d_computeProofH_2258 v0 v1 v2 v3 v4 v5
                                                                                              (coe
                                                                                                 v4)))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Utxo.du_produced_2786
+                                                                                          MAlonzo.Code.Ledger.Utxo.du_produced_2784
                                                                                           (coe v0)
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Utxo.d_pparams_1920
@@ -1658,7 +1658,7 @@ d_computeProofH_2258 v0 v1 v2 v3 v4 v5
                                                                                                                                                                           = coe
                                                                                                                                                                               MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
                                                                                                                                                                               (coe
-                                                                                                                                                                                 MAlonzo.Code.Ledger.Utxo.du_'8799''63'_2988
+                                                                                                                                                                                 MAlonzo.Code.Ledger.Utxo.du_'8799''63'_2986
                                                                                                                                                                                  (coe
                                                                                                                                                                                     MAlonzo.Code.Ledger.Transaction.d_txNetworkId_2590
                                                                                                                                                                                     (coe

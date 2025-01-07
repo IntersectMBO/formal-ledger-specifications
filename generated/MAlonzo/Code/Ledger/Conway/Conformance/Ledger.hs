@@ -419,7 +419,7 @@ du_updateDeposits_1800 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_updateDeposits_1800 v0
-  = coe MAlonzo.Code.Ledger.Utxo.du_updateDeposits_2330 (coe v0)
+  = coe MAlonzo.Code.Ledger.Utxo.du_updateDeposits_2328 (coe v0)
 -- Ledger.Conway.Conformance.Ledger._._⊢_⇀⦇_,CERTS⦈_
 d__'8866'_'8640''10631'_'44'CERTS'10632'__1908 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->

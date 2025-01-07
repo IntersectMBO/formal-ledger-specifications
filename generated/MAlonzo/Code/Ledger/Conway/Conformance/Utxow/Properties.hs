@@ -26,6 +26,7 @@ import qualified MAlonzo.Code.Class.Bifunctor
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Decidable.Instances
 import qualified MAlonzo.Code.Class.Functor.Core
+import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Data.Sum
 import qualified MAlonzo.Code.Data.Sum.Base
@@ -404,21 +405,47 @@ d_computeProof_2028 v0 v1 v2 v3 v4
                                                                                (MAlonzo.Code.Ledger.Transaction.d_body_2634
                                                                                   (coe v4)))
                                                                             (coe
-                                                                               MAlonzo.Code.Axiom.Set.du_map_398
-                                                                               (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                               MAlonzo.Code.Axiom.Set.du_fromList_428
+                                                                               (coe
+                                                                                  MAlonzo.Code.Axiom.Set.d_th_1470
                                                                                   (coe
                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                               (MAlonzo.Code.Interface.Hashable.d_hash_16
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Ledger.Script.du_Hashable'45'Script_526
+                                                                               (coe
+                                                                                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20
+                                                                                  MAlonzo.Code.Agda.Primitive.d_lzero_20
+                                                                                  erased
+                                                                                  MAlonzo.Code.Agda.Primitive.d_lzero_20
+                                                                                  erased
+                                                                                  (MAlonzo.Code.Interface.Hashable.d_hash_16
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1792
-                                                                                        (coe v0))))
-                                                                               (MAlonzo.Code.Ledger.Transaction.d_refScripts_2682
-                                                                                  (coe v0) (coe v4)
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Ledger.Utxo.d_utxo_1934
-                                                                                     (coe v3))))))
+                                                                                        MAlonzo.Code.Ledger.Script.d_hashRespectsUnion_448
+                                                                                        (MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1792
+                                                                                           (coe v0))
+                                                                                        erased
+                                                                                        erased
+                                                                                        erased
+                                                                                        (MAlonzo.Code.Ledger.Script.d_Hashable'45'P1Script_110
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Ledger.Script.d_p1s_428
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1792
+                                                                                                 (coe
+                                                                                                    v0))))
+                                                                                        (MAlonzo.Code.Ledger.Script.d_Hashable'45'PlutusScript_212
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Ledger.Script.d_ps_452
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1792
+                                                                                                 (coe
+                                                                                                    v0))))))
+                                                                                  (MAlonzo.Code.Ledger.Transaction.d_refScripts_2682
+                                                                                     (coe v0)
+                                                                                     (coe v4)
+                                                                                     (coe
+                                                                                        MAlonzo.Code.Ledger.Utxo.d_utxo_1934
+                                                                                        (coe
+                                                                                           v3)))))))
                                                                       (coe
                                                                          MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
                                                                          (coe
@@ -458,24 +485,50 @@ d_computeProof_2028 v0 v1 v2 v3 v4
                                                                                        (MAlonzo.Code.Ledger.Transaction.d_body_2634
                                                                                           (coe v4)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.du_map_398
-                                                                                       (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                       MAlonzo.Code.Axiom.Set.du_fromList_428
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Axiom.Set.d_th_1470
                                                                                           (coe
                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                       (MAlonzo.Code.Interface.Hashable.d_hash_16
-                                                                                          (coe
-                                                                                             MAlonzo.Code.Ledger.Script.du_Hashable'45'Script_526
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20
+                                                                                          MAlonzo.Code.Agda.Primitive.d_lzero_20
+                                                                                          erased
+                                                                                          MAlonzo.Code.Agda.Primitive.d_lzero_20
+                                                                                          erased
+                                                                                          (MAlonzo.Code.Interface.Hashable.d_hash_16
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1792
+                                                                                                MAlonzo.Code.Ledger.Script.d_hashRespectsUnion_448
+                                                                                                (MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1792
+                                                                                                   (coe
+                                                                                                      v0))
+                                                                                                erased
+                                                                                                erased
+                                                                                                erased
+                                                                                                (MAlonzo.Code.Ledger.Script.d_Hashable'45'P1Script_110
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Script.d_p1s_428
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1792
+                                                                                                         (coe
+                                                                                                            v0))))
+                                                                                                (MAlonzo.Code.Ledger.Script.d_Hashable'45'PlutusScript_212
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Script.d_ps_452
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1792
+                                                                                                         (coe
+                                                                                                            v0))))))
+                                                                                          (MAlonzo.Code.Ledger.Transaction.d_refScripts_2682
+                                                                                             (coe
+                                                                                                v0)
+                                                                                             (coe
+                                                                                                v4)
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Utxo.d_utxo_1934
                                                                                                 (coe
-                                                                                                   v0))))
-                                                                                       (MAlonzo.Code.Ledger.Transaction.d_refScripts_2682
-                                                                                          (coe v0)
-                                                                                          (coe v4)
-                                                                                          (coe
-                                                                                             MAlonzo.Code.Ledger.Utxo.d_utxo_1934
-                                                                                             (coe
-                                                                                                v3)))))))
+                                                                                                   v3))))))))
                                                                          (coe
                                                                             MAlonzo.Code.Axiom.Set.du_map_398
                                                                             (MAlonzo.Code.Axiom.Set.d_th_1470
@@ -496,7 +549,7 @@ d_computeProof_2028 v0 v1 v2 v3 v4
                                                            (case coe v14 of
                                                               MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v15
                                                                 -> coe
-                                                                     ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8801\7497\n (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.Intersection.\65340\n  .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n (Ledger.Utxow.scriptsNeeded txs abs (.Ledger.Utxo.UTxOState.utxo s)\n  (.TransactionStructure.Tx.body tx))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.Hashable.hash\n   (Ledger.Script.ScriptStructure.Hashable-Script\n    (.TransactionStructure.scriptStructure txs)))\n  (TransactionStructure.refScripts txs tx\n   (.Ledger.Utxo.UTxOState.utxo s))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (Ledger.Script.ScriptStructure.Hashable-Script\n   (.TransactionStructure.scriptStructure txs)))\n (.TransactionStructure.TxWitnesses.scripts\n  (.TransactionStructure.Tx.wits tx)))"
+                                                                     ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8801\7497\n (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.Intersection.\65340\n  .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n (Ledger.Utxow.scriptsNeeded txs abs (.Ledger.Utxo.UTxOState.utxo s)\n  (.TransactionStructure.Tx.body tx))\n (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (Functor.fmap Functor-List\n   (.Hashable.hash\n    (.Ledger.Script.ScriptStructure.hashRespectsUnion\n     (.TransactionStructure.scriptStructure txs)\n     (.Ledger.Script.P1ScriptStructure.Hashable-P1Script\n      (.Ledger.Script.ScriptStructure.p1s\n       (.TransactionStructure.scriptStructure txs)))\n     (.Ledger.Script.PlutusStructure.Hashable-PlutusScript\n      (.Ledger.Script.ScriptStructure.ps\n       (.TransactionStructure.scriptStructure txs)))))\n   (TransactionStructure.refScripts txs tx\n    (.Ledger.Utxo.UTxOState.utxo s)))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (Ledger.Script.ScriptStructure.Hashable-Script\n   (.TransactionStructure.scriptStructure txs)))\n (.TransactionStructure.TxWitnesses.scripts\n  (.TransactionStructure.Tx.wits tx)))"
                                                                       ::
                                                                       Data.Text.Text)
                                                               MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v15
