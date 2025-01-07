@@ -107,9 +107,12 @@ cong-certGDeps = cong-filterᵐ
 castValidDepsᵈ : ∀ {pp deps₁ deps₂ certs} → deps₁ ≡ᵐ deps₂ → ValidDepsᵈ pp deps₁ certs → ValidDepsᵈ pp deps₂ certs
 castValidDepsᵈ                         eq [] = []
 castValidDepsᵈ {pp} {certs = cert ∷ _} eq (delegate   deps) = delegate           (castValidDepsᵈ (cong-updateCertDeposit pp cert eq) deps)
-castValidDepsᵈ {pp} {deps₁} {deps₂}
-                    {certs = cert ∷ _} eq (dereg h    deps) = dereg (proj₁ eq h) (castValidDepsᵈ (cong-updateCertDeposit
-                                                                                                    pp cert {deps₁} {deps₂} eq) deps)
+castValidDepsᵈ {pp} {deps₁} {deps₂} {certs = cert ∷ _} eq (dereg h h' deps) = 
+  dereg (proj₁ eq h) h' 
+        (castValidDepsᵈ (cong-updateCertDeposit pp cert {deps₁} {deps₂} eq) deps)
+--castValidDepsᵈ {pp} {deps₁} {deps₂}
+--                    {certs = cert ∷ _} eq (dereg h    deps) = dereg (map₂ (proj₁ eq) h) (castValidDepsᵈ (cong-updateCertDeposit
+--                                                                                                    pp cert {deps₁} {deps₂} eq) deps)
 castValidDepsᵈ {pp} {certs = cert ∷ _} eq (reg        deps) = reg (castValidDepsᵈ (cong-updateCertDeposit pp cert eq) deps)
 castValidDepsᵈ                         eq (regdrep    deps) = regdrep            (castValidDepsᵈ eq deps)
 castValidDepsᵈ                         eq (deregdrep  deps) = deregdrep          (castValidDepsᵈ eq deps)
@@ -135,7 +138,7 @@ validDDeps                L.[]             = []
 validDDeps               (L.delegate    v) = delegate   (castValidDepsᵈ (lem-add-included CredentialDeposit) (validDDeps v))
 validDDeps               (L.regpool     v) = regpool    (castValidDepsᵈ (lem-add-excluded λ ()) (validDDeps v))
 validDDeps               (L.regdrep     v) = regdrep    (castValidDepsᵈ (lem-add-excluded λ ()) (validDDeps v))
-validDDeps {deps = deps} (L.dereg h     v) = dereg      (filterᵐ-∈ deps CredentialDeposit h)
+validDDeps {deps = deps} (L.dereg h h'  v) = dereg      (filterᵐ-∈ deps CredentialDeposit h) h'
                                                         (castValidDepsᵈ (filterᵐ-restrict deps) (validDDeps v))
 validDDeps {deps = deps} (L.deregdrep _ v) = deregdrep  (castValidDepsᵈ (lem-del-excluded deps λ ()) (validDDeps v))
 validDDeps               (L.ccreghot    v) = ccreghot   (validDDeps v)
@@ -147,7 +150,7 @@ validGDeps                L.[]             = []
 validGDeps               (L.delegate    v) = delegate   (castValidDepsᵍ (lem-add-excluded λ ()) (validGDeps v))
 validGDeps               (L.regpool     v) = regpool    (castValidDepsᵍ (lem-add-excluded λ ()) (validGDeps v))
 validGDeps               (L.regdrep     v) = regdrep    (castValidDepsᵍ (lem-add-included DRepDeposit) (validGDeps v))
-validGDeps {deps = deps} (L.dereg _     v) = dereg      (castValidDepsᵍ (lem-del-excluded deps λ ()) (validGDeps v))
+validGDeps {deps = deps} (L.dereg _ _   v) = dereg      (castValidDepsᵍ (lem-del-excluded deps λ ()) (validGDeps v))
 validGDeps {deps = deps} (L.deregdrep h v) = deregdrep  (filterᵐ-∈ deps DRepDeposit h)
                                                         (castValidDepsᵍ (filterᵐ-restrict deps) (validGDeps v))
 validGDeps               (L.ccreghot    v) = ccreghot   (validGDeps v)
@@ -184,7 +187,7 @@ lem-ddeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
           → updateCertDeps* certs deposits .CertDeps*.depsᵈ ≡ updateDDeps pp certs (deposits .CertDeps*.depsᵈ)
 lem-ddeps {certs = []} _ = refl
 lem-ddeps (delegate*    ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-ddeps (dereg*    v  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-ddeps (dereg* v v'  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-ddeps (regpool*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-ddeps (retirepool*  ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-ddeps (regdrep*     ddeps gdeps) rewrite lem-ddeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
@@ -196,7 +199,7 @@ lem-gdeps : ∀ {pp certs} (deposits : CertDeps* pp certs)
           → updateCertDeps* certs deposits .CertDeps*.depsᵍ ≡ updateGDeps pp certs (deposits .CertDeps*.depsᵍ)
 lem-gdeps {certs = []} _ = refl
 lem-gdeps (delegate*    ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
-lem-gdeps (dereg*    v  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
+lem-gdeps (dereg* v v'  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-gdeps (regpool*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-gdeps (retirepool*  ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
 lem-gdeps (regdrep*     ddeps gdeps) rewrite lem-gdeps ⟦ _ , _ , ddeps , gdeps ⟧* = refl
