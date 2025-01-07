@@ -111,6 +111,7 @@ notEmpty : ∀ {A : Set} → List A → Set
 notEmpty [] = ⊥
 notEmpty (x ∷ xs) = ⊤
 
+
 isSuccess : ComputationResult String UTxOState → Bool
 isSuccess (success x) = true
 isSuccess (failure x) = false

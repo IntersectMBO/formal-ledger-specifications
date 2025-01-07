@@ -43,10 +43,10 @@ openTx id w v tw script = record { body = record defaultTxBody
                          ; txid = id
                          ; collateral = Ledger.Prelude.fromList ((w , w) ∷ [])
                          } ;
-                wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addValue}} w w)) ∷ []) ;
+                wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addValue}} w id)) ∷ []) ;
                                 -- signature now is first number + txId ≡ second number
                                 -- first number is needs to be the id for the script
-                                scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
+                                scripts = ∅ ; -- Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
                                 txdats = ∅ ; -- fromListᵐ ((inj₁ (inj₁ Holding) , (inj₁ (inj₁ Holding))) ∷ []) ;
                                 txrdmrs = ∅ } ;
                                 {-
