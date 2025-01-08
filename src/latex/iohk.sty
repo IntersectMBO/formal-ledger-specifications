@@ -4,7 +4,24 @@
 % \RequirePackage{amssymb}
 \RequirePackage{extarrows}
 \RequirePackage{slashed}
+
+\Requirepackage{caption}
+
+%% tikz stuff %%
 \RequirePackage[tikz]{bclogo}
+\RequirePackage{tkz-graph}
+\usetikzlibrary{arrows.meta, positioning, shadows, shapes.geometric, fit, backgrounds, shapes.misc}
+
+\RequirePackage[dvipsnames]{xcolor}
+\def\AlonzoColor{Periwinkle}
+\def\BabbageColor{Tan}
+\def\ConwayColor{yellow!50}
+\def\ShelleyColor{lightgray}
+
+\newcommand{\legendbox}[1]{%
+  \textcolor{#1}{\rule{\fontcharht\font`X}{\fontcharht\font`X}}%
+}
+
 \RequirePackage{stmaryrd}
 \usepackage{fontspec}
 
