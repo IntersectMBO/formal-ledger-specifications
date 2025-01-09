@@ -298,17 +298,6 @@ d_Show'45'ExUnits_110
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
--- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Hashable-PlutusScript
-d_Hashable'45'PlutusScript_114 ::
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
-d_Hashable'45'PlutusScript_114
-  = coe
-      MAlonzo.Code.Interface.Hashable.C_Hashable'46'constructor_9
-      (coe
-         (\ v0 ->
-            case coe v0 of
-              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v1 v2 -> coe v1
-              _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.CostModel
 d_CostModel_112 :: ()
 d_CostModel_112 = erased
