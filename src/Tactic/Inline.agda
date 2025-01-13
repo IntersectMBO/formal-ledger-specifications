@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
-{-# OPTIONS -v tc.unquote:10 #-}
-{-# OPTIONS -v tactic.inline:100 #-}
+-- {-# OPTIONS -v tc.unquote:10 #-}
+-- {-# OPTIONS -v tactic.inline:100 #-}
 
 module Tactic.Inline where
 
@@ -9,7 +9,7 @@ import Data.Nat as ℕ; import Data.Nat.Properties as ℕ
 import Data.List as L
 import Data.Fin as F
 open import PreludeMeta hiding (All)
-open import Interface.ToBool
+open import Class.ToBool
 open import Data.List.Ext using (_⁉_)
 open import Reflection.Ext using (apply∗)
 

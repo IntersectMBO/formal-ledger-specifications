@@ -1,4 +1,5 @@
 \section{Bootstrapping the Governance System}
+\label{sec:conway-bootstrap}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -7,7 +8,7 @@ module Ledger.PDF.ConwayBootstrap where
 
 As described in \cite{cip1694}, the governance system needs to be
 bootstrapped. During the bootstrap period, the following changes will
-be made to the ledger described in this document:
+be made to the ledger described in this document.
 
 \begin{itemize}
 \item Transactions containing any proposal except \TriggerHF,
@@ -16,6 +17,7 @@ be made to the ledger described in this document:
       a \SPO vote on a \TriggerHF action or any vote on an \Info
       action will be rejected.
 \item \Qfour, \Pfive and \Qfivee are set to $0$.
+\item An SPO that does not vote is assumed to have voted \abstain.
 \end{itemize}
 
 This allows for a governance mechanism similar to the old, Shelley-era

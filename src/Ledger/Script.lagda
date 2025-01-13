@@ -2,7 +2,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra using (CommutativeMonoid)
 open import Algebra.Morphism
 open import Data.List.Relation.Unary.All using (All; []; _∷_; all?; uncons)
 open import Data.List.Relation.Unary.Any
@@ -33,15 +32,18 @@ record PlutusStructure : Type₁ where
   field Dataʰ : HashableSet
         Language PlutusScript CostModel Prices LangDepView ExUnits : Type
         PlutusV1 PlutusV2 PlutusV3   : Language
-        ⦃ ExUnit-CommutativeMonoid ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ ExUnits
+        ⦃ ExUnit-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ ExUnits
         ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
         ⦃ DecEq-Language           ⦄ : DecEq Language
         ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
         ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
+        ⦃ Show-CostModel           ⦄ : Show CostModel
 
   field  _≥ᵉ_              : ExUnits → ExUnits → Type
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
          ⦃ DecEQ-Prices  ⦄ : DecEq Prices
+         ⦃ Show-ExUnits  ⦄ : Show ExUnits
+         ⦃ Show-Prices   ⦄ : Show Prices
 
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
 
@@ -149,19 +151,14 @@ instance
         (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
         (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
 
-P1ScriptStructure-TL : ⦃ Hashable Timelock ScriptHash ⦄ → P1ScriptStructure
-P1ScriptStructure-TL = record
-  { P1Script = Timelock
-  ; validP1Script = evalTimelock }
-
 record ScriptStructure : Type₁ where
+
+  field p1s : P1ScriptStructure
+
+  open P1ScriptStructure p1s public
+
   field hashRespectsUnion :
           {A B Hash : Type} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
-        ⦃ Hash-Timelock ⦄ : Hashable Timelock ScriptHash
-
-  p1s : P1ScriptStructure
-  p1s = P1ScriptStructure-TL
-  open P1ScriptStructure p1s public
 
   field ps : PlutusStructure
   open PlutusStructure ps public

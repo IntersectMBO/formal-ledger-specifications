@@ -6,7 +6,7 @@
 module Ledger.Notation where
 \end{code}
 
-In this section, we introduce some notations used in this document.
+This section introduces some of the notation we use in this document and in our Agda formalization.
 
 \begin{description}
 \item[Propositions, sets and types.] In this document the abstract notions of ``set''
@@ -20,6 +20,11 @@ throughout this document and in our Agda code we call this primitive \Type,
 reserving the name \AgdaDatatype{Set} for our set type.
 All of our sets are finite, and when we need to convert
 a list \AgdaBound{l} to its set of elements, we write \fromList~\AgdaBound{l}.
+\item[Lists] We use the notation \AgdaBound{a}~\AgdaInductiveConstructor{∷}~\AgdaBound{as} for
+  the list with \textit{head} \AgdaBound{a} and \textit{tail} \AgdaBound{as};
+  \AgdaInductiveConstructor{[]} denotes the empty list, and
+  \AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends the element \AgdaBound{x}
+  to the end of the list \AgdaBound{l}.
 \item[Sums and products.] The sum (or disjoint union, coproduct, etc.) of \AgdaBound{A} and
   \AgdaBound{B} is denoted by \AgdaBound{A} \coproduct \AgdaBound{B}, and their product
   is denoted by \AgdaBound{A} \agdatimes \AgdaBound{B}. The projection functions from products
@@ -44,7 +49,7 @@ of the map \AgdaFunction{m}.
   \AgdaBound{f} to some domain \AgdaBound{A} is denoted by \AgdaBound{f}~\AgdaFunction{|}~\AgdaBound{A},
   and the restriction to the complement of \AgdaBound{A} is written
   \AgdaBound{f}~\AgdaFunction{|}~\AgdaBound{A}~\AgdaFunction{ᶜ}. Corestriction or range restriction is
-  denoted the same, except that \AgdaFunction{|} is replaced by \corestriction.
+  denoted similarly, except that \AgdaFunction{|} is replaced by \corestriction.
 \item[Inverse image.] The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the
   inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.
 \item[Left-biased union.] For maps \AgdaBound{m} and \AgdaBound{m'}, we write
@@ -71,11 +76,6 @@ represents an optional value and can either be
 (indicating the absence of a value).  If \AgdaBound{x} has type \AgdaDatatype{X}, then
 \AgdaInductiveConstructor{just}\AgdaSpace{}\AgdaBound{x} has type
 \AgdaDatatype{Maybe}\AgdaSpace{}\AgdaDatatype{X}.
-\item[The \AgdaFunction{\$} symbol] is used as a function application operator that has the lowest precedence;
-it allows for the elimination of parentheses in expressions. For example,
-\AgdaFunction{f}\AgdaSpace{}\AgdaFunction{\$}\AgdaSpace{}\AgdaFunction{g}\AgdaSpace{}%
-\AgdaFunction{\$}\AgdaSpace{}\AgdaFunction{h}\AgdaSpace{}\AgdaBound{x} is equivalent to
-\AgdaFunction{f}\AgdaSpace{}(\AgdaFunction{g}\AgdaSpace{}(\AgdaFunction{h}\AgdaSpace{}\AgdaBound{x})).
 \item[The unit type] \AgdaRecord{⊤} has a single inhabitant \AgdaInductiveConstructor{tt} and may be thought
 of as a type that carries no information; it is useful for signifying the completion of an action, the
 presence of a trivial value, a trivially satisfied requirement, etc.

@@ -5,6 +5,7 @@
 open import Ledger.Prelude
 
 open import Tactic.Derive.DecEq
+open import Tactic.Derive.Show
 
 module Ledger.Address (
 \end{code}
@@ -12,6 +13,13 @@ module Ledger.Address (
 We define credentials and various types of addresses here. A
 credential contains a hash, either of a verifying (public) key
 (\isVKey) or of a (\isScript).
+
+N.B.~in the Shelley era the type of the \stake field of the
+\BaseAddr record was \CredentialType; to specify an address with
+no stake, we would use an ``enterprise'' address. In contrast,
+the type of \stake in the Conway era is \Maybe~\CredentialType,
+so we can now use \BaseAddr to specify an address with no stake
+by setting \stake to \nothing.
 
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
@@ -22,7 +30,7 @@ credential contains a hash, either of a verifying (public) key
   ScriptHash
 \end{code}
 \begin{code}[hide]
-  : Type) ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
+  : Type)  ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
 \end{code}
 \emph{Derived types}
 \AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
@@ -36,6 +44,13 @@ data Credential : Type where
 isKeyHashObj : Credential → Maybe KeyHash
 isKeyHashObj (KeyHashObj h) = just h
 isKeyHashObj (ScriptObj _)  = nothing
+
+isKeyHashObjᵇ : Credential → Bool
+isKeyHashObjᵇ (KeyHashObj _) = true
+isKeyHashObjᵇ _ = false
+
+isKeyHash : Credential → Type
+isKeyHash x = isKeyHashObjᵇ x ≡ true
 
 isScriptObj : Credential → Maybe ScriptHash
 isScriptObj (KeyHashObj _) = nothing
@@ -51,7 +66,7 @@ data isScript : Credential → Type where
 record BaseAddr : Type where
   field net    : Network
         pay    : Credential
-        stake  : Credential
+        stake  : Maybe Credential
 
 record BootstrapAddr : Type where
   field net        : Network
@@ -98,7 +113,7 @@ isScriptRwdAddr  = isScript ∘ RwdAddr.stake
 payCred (inj₁ record {pay = pay}) = pay
 payCred (inj₂ record {pay = pay}) = pay
 
-stakeCred (inj₁ record {stake = stake}) = just stake
+stakeCred (inj₁ record {stake = stake}) = stake
 stakeCred (inj₂ _) = nothing
 
 netId (inj₁ record {net = net}) = net
@@ -141,4 +156,11 @@ instance abstract
     ∷ (quote BootstrapAddr , DecEq-BootstrapAddr)
     ∷ (quote RwdAddr       , DecEq-RwdAddr)
     ∷ [] )
+
+module _ ⦃ _ : Show Network  ⦄ ⦃ _ : Show KeyHash  ⦄ ⦃ _ : Show ScriptHash  ⦄ where
+  instance
+    unquoteDecl Show-Credential = derive-Show [ (quote Credential , Show-Credential) ]
+    unquoteDecl Show-RwdAddr = derive-Show [ (quote RwdAddr , Show-RwdAddr) ]
+    Show-Credential×Coin : Show (Credential × Coin)
+    Show-Credential×Coin = Show-×
 \end{code}

@@ -160,6 +160,8 @@
 \newcommand{\Anchor}{\AgdaRecord{Anchor}\xspace}
 \newcommand{\as}{\AgdaSymbol{as}\xspace}
 
+
+\newcommand{\BaseAddr}{\AgdaRecord{BaseAddr}\xspace}
 \newcommand{\beginstrict}{\AgdaFunction{begin-strict}\xspace}
 \newcommand{\Bool}{\AgdaDatatype{Bool}\xspace}
 
@@ -169,6 +171,7 @@
 \newcommand{\Coin}{\AgdaFunction{Coin}\xspace}
 \newcommand{\Computational}{\AgdaRecord{Computational}\xspace}
 \newcommand{\Credential}{\AgdaFunction{Credential}\xspace}
+\newcommand{\CredentialType}{\AgdaDatatype{Credential}\xspace}
 \newcommand{\Crypto}{\AgdaRecord{Crypto}\xspace}
 \newcommand{\canVote}{\AgdaFunction{canVote}\xspace}
 \newcommand{\case}{\AgdaFunction{case}\xspace}
@@ -192,6 +195,7 @@
 \newcommand{\cupsupermsuperl}{\AgdaFunction{∪ˡ}\xspace}
 \newcommand{\cupsuperplus}{\AgdaFunction{∪⁺}\xspace}
 \newcommand{\currentEpoch}{\AgdaField{currentEpoch}\xspace}
+\newcommand{\curTreasury}{\AgdaField{curTreasury}\xspace}
 \newcommand{\consumed}{\AgdaFunction{consumed}\xspace}
 \newcommand{\credsNeeded}{\AgdaFunction{credsNeeded}\xspace}
 
@@ -272,22 +276,23 @@
 \newcommand{\getStakeDist}{\AgdaFunction{getStakeDist}\xspace}
 \newcommand{\gid}{\AgdaField{gid}\xspace}
 \newcommand{\GovAction}{\AgdaDatatype{GovAction}\xspace}
+\newcommand{\govActionDeposit}{\AgdaField{govActionDeposit}\xspace}
 \newcommand{\GovActionID}{\AgdaDatatype{GovActionID}\xspace}
 \newcommand{\GovActionIDFunction}{\AgdaFunction{GovActionID}\xspace}
-\newcommand{\GovActionState}{\AgdaRecord{GovActionState}\xspace}
-\newcommand{\govActionDeposit}{\AgdaField{govActionDeposit}\xspace}
-\newcommand{\GovernanceGroup}{\AgdaInductiveConstructor{GovernanceGroup}\xspace}
 \newcommand{\govActionLifetime}{\AgdaField{govActionLifetime}\xspace}
+\newcommand{\govActionPriority}{\AgdaFunction{govActionPriority}\xspace}
+\newcommand{\GovActionState}{\AgdaRecord{GovActionState}\xspace}
+\newcommand{\GOVCERTccreghot}{\AgdaInductiveConstructor{GOVCERT-ccreghot}\xspace}
+\newcommand{\GOVCERTderegdrep}{\AgdaInductiveConstructor{GOVCERT-deregdrep}\xspace}
+\newcommand{\GOVCERTregdrep}{\AgdaInductiveConstructor{GOVCERT-regdrep}\xspace}
 \newcommand{\GovEnv}{\AgdaRecord{GovEnv}\xspace}
+\newcommand{\GovernanceGroup}{\AgdaInductiveConstructor{GovernanceGroup}\xspace}
+\newcommand{\GOVPropose}{\AgdaInductiveConstructor{GOV-Propose}\xspace}
 \newcommand{\GovProposal}{\AgdaRecord{GovProposal}\xspace}
 \newcommand{\GovRole}{\AgdaDatatype{GovRole}\xspace}
-\newcommand{\GovVote}{\AgdaRecord{GovVote}\xspace}
 \newcommand{\GovState}{\AgdaFunction{GovState}\xspace}
-\newcommand{\GOVPropose}{\AgdaInductiveConstructor{GOV-Propose}\xspace}
 \newcommand{\GOVVote}{\AgdaInductiveConstructor{GOV-Vote}\xspace}
-\newcommand{\GOVCERTregdrep}{\AgdaInductiveConstructor{GOVCERT-regdrep}\xspace}
-\newcommand{\GOVCERTderegdrep}{\AgdaInductiveConstructor{GOVCERT-deregdrep}\xspace}
-\newcommand{\GOVCERTccreghot}{\AgdaInductiveConstructor{GOVCERT-ccreghot}\xspace}
+\newcommand{\GovVote}{\AgdaRecord{GovVote}\xspace}
 
 \newcommand{\hash}{\AgdaField{hash}\xspace}
 \newcommand{\HashProtected}{\AgdaFunction{HashProtected}\xspace}
@@ -326,7 +331,6 @@
 \newcommand{\LedgerRatify}{\AgdaModule{Ledger.Ratify}\xspace}
 \newcommand{\LedgerTransaction}{\AgdaModule{Ledger.Transaction}\xspace}
 \newcommand{\lengthsupers}{\AgdaFunction{lengthˢ}\xspace}
-\newcommand{\lengthsupersempty}{\AgdaFunction{lengthˢ-∅}\xspace}
 \newcommand{\lengthsupersequivsupere}{\AgdaFunction{lengthˢ-≡ᵉ}\xspace}
 \newcommand{\List}{\AgdaDatatype{List}\xspace}
 \newcommand{\lookupsupermhuh}{\AgdaFunction{lookupᵐ?}\xspace}
@@ -339,6 +343,8 @@
 \newcommand{\mapWithKey}{\AgdaFunction{mapWithKey}\xspace}
 \newcommand{\mapsubtwo}{\AgdaFunction{map₂}\xspace}
 \newcommand{\maximum}{\AgdaFunction{maximum}\xspace}
+\newcommand{\maxRefScriptPerTx}{\AgdaField{maxRefScriptPerTx}\xspace}
+\newcommand{\maxRefScriptPerBlock}{\AgdaField{maxRefScriptPerBlock}\xspace}
 \newcommand{\maybe}{\AgdaFunction{maybe}\xspace}
 \newcommand{\maybeprime}{\AgdaFunction{maybe′}\xspace}
 \newcommand{\meetsMinAVS}{\AgdaFunction{meetsMinAVS}\xspace}
@@ -434,6 +440,8 @@
 \newcommand{\record}{\AgdaKeyword{record}\xspace}
 \newcommand{\redStakeDistr}{\AgdaFunction{redStakeDistr}\xspace}
 \newcommand{\refl}{\AgdaInductiveConstructor{refl}\xspace}
+\newcommand{\refScriptCostStride}{\AgdaField{refScriptCostStride}\xspace}
+\newcommand{\refScriptCostMultiplier}{\AgdaField{refScriptCostMultiplier}\xspace}
 \newcommand{\RelationNullaryDecidable}{\AgdaModule{Relation.Nullary.Decidable}\xspace}
 \newcommand{\rem}{\AgdaGeneralizable{rem}\xspace}
 \newcommand{\removed}{\AgdaField{removed}\xspace}
@@ -458,6 +466,7 @@
 \newcommand{\specProperty}{\AgdaFunction{specProperty}\xspace}
 \newcommand{\sprime}{\AgdaGeneralizable{s'}\xspace}
 \newcommand{\spring}{\AgdaFunction{sp-∘}\xspace}
+\newcommand{\stake}{\AgdaField{stake}\xspace}
 \newcommand{\stakeDistrs}{\AgdaField{stakeDistrs}\xspace}
 \newcommand{\stakeDistr}{\AgdaField{stakeDistr}\xspace}
 \newcommand{\subst}{\AgdaFunction{subst}\xspace}
@@ -483,8 +492,15 @@
 \newcommand{\twoRational}{\AgdaFunction{2ℚ}\xspace}
 \newcommand{\Tx}{\AgdaRecord{Tx}\xspace}
 \newcommand{\TxBody}{\AgdaRecord{TxBody}\xspace}
+\newcommand{\txdonation}{\AgdaField{txdonation}\xspace}
 \newcommand{\TxId}{\AgdaDatatype{TxId}\xspace}
+\newcommand{\txid}{\AgdaField{txid}\xspace}
+\newcommand{\txins}{\AgdaField{txins}\xspace}
 \newcommand{\TxOut}{\AgdaFunction{TxOut}\xspace}
+\newcommand{\txouts}{\AgdaField{txouts}\xspace}
+\newcommand{\txprop}{\AgdaField{txprop}\xspace}
+\newcommand{\txsize}{\AgdaField{txsize}\xspace}
+\newcommand{\txvote}{\AgdaField{txvote}\xspace}
 \newcommand{\Type}{\AgdaPrimitive{Type}\xspace}
 
 \newcommand{\uncurry}{\AgdaFunction{uncurry}\xspace}
@@ -501,6 +517,7 @@
 \newcommand{\updateCertDeposits}{\AgdaFunction{updateCertDeposits}\xspace}
 \newcommand{\updateProposalDeposits}{\AgdaFunction{updateProposalDeposits}\xspace}
 
+\newcommand{\ValidCertDeposits}{\AgdaDatatype{ValidCertDeposits}\xspace}
 \newcommand{\variable}{\AgdaKeyword{variable}\xspace}
 \newcommand{\VDeleg}{\AgdaDatatype{VDeleg}\xspace}
 \newcommand{\verifyPrev}{\AgdaFunction{verifyPrev}\xspace}

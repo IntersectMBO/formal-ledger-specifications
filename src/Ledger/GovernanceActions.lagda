@@ -3,11 +3,11 @@
 We introduce three distinct bodies that have specific functions in the new governance framework:
 \begin{enumerate}
 \item
-  a constitutional committee  (henceforth called \CC)
+  a constitutional committee  (henceforth called \CC);
 \item
-  a group of delegate representatives (henceforth called \DReps)
+  a group of delegate representatives (henceforth called \DReps);
 \item
-  the stake pool operators (henceforth called \SPOs)
+  the stake pool operators (henceforth called \SPOs).
 
 In the following figure, \DocHash is abstract but in the
 implementation it will be instantiated with a 32-bit hash type (like
@@ -22,6 +22,7 @@ open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 open import Tactic.Derive.DecEq
+open import Tactic.Derive.Show
 
 open import Ledger.Prelude hiding (yes; no)
 open import Ledger.Types.GovStructure
@@ -90,7 +91,7 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   \item \GovRole (\defn{governance role})---one of three available voter roles defined above (\CC, \DRep, \SPO);
   \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
   \item \Anchor---a url and a document hash;
-  \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions).
+  \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions);
   \item \actionWellFormed---in the case of protocol parameter changes,
     an action is well-formed if it preserves the well-formedness of parameters.
     \ppdWellFormed is effectively the same as \paramsWellFormed, except that it
@@ -123,10 +124,9 @@ The governance actions carry the following information:
 \label{fig:types-of-governance-actions}
 \end{figure*}
 \footnotetext{There are many varying definitions of the term ``hard fork'' in the blockchain industry. Hard forks typically refer
-  to non-backwards compatible updates of a network. In Cardano, we formalize the definition slightly more by calling any upgrade that
+  to non-backwards compatible updates of a network. In Cardano, we attach a bit more meaning to the definition by calling any upgrade that
   would lead to \emph{more blocks} being validated a ``hard fork'' and force nodes to comply with the new protocol version, effectively
-  obsoleting nodes that are unable to handle the upgrade.}
-
+  rendering a node obsolete if it is unable to handle the upgrade.}
 
 % \subsection{Voting and Ratification}
 % \label{sec:voting-and-ratification}
@@ -137,9 +137,10 @@ The governance actions carry the following information:
 \subsection{Hash Protection}
 \label{sec:hash-protection}
 
-For some types of governance actions, enactment requires a second
-condition on top of the necessary votes, which is that the state after
-enacting the proposal was intended when the action was submitted. This
+For some governance actions, in addition to obtaining the necessary votes,
+enactment requires that the following condition is also satisfied: the state
+obtained by enacting the proposal is in fact the state that was intended when
+the proposal was submitted.  This
 is achieved by requiring actions to unambiguously link to the state
 they are modifying via a pointer to the previous modification. A
 proposal can only be enacted if it contains the \GovActionID of the
@@ -174,7 +175,7 @@ HashProtected A = A × GovActionID
 \label{fig:needshash-and-hashprotected-types}
 \end{figure*}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}
 data Vote : Type where
@@ -228,7 +229,7 @@ instance
 \end{figure*}
 \subsection{Votes and Proposals}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{code}
 getDRepVote : GovVote → Maybe Credential
 getDRepVote record { voter = (DRep , credential) }  = just credential
@@ -262,7 +263,7 @@ stake key deposits. It is also counted towards the voting stake (but
 not the block production stake) of the reward address to which it will
 be returned, so as not to reduce the submitter's voting power when
 voting on their own (and competing) actions. For a proposal to be
-valid, the proposal must be set to the current value of
+valid, the deposit must be set to the current value of
 \govActionDeposit. The deposit will be returned when the action is
 removed from the state in any way.
 

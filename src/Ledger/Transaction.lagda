@@ -22,7 +22,6 @@ import Ledger.Certs
 import Ledger.TokenAlgebra
 import Ledger.Address
 
-
 open import Tactic.Derive.DecEq
 open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
@@ -37,17 +36,28 @@ record TransactionStructure : Type₁ where
 
 Transactions are defined in Figure~\ref{fig:defs:transactions}. A
 transaction is made up of a transaction body, a collection of
-witnesses and some optional auxiliary data. Some key ingredients in
-the transaction body are:
-
+witnesses and some optional auxiliary data.
+\begin{NoConway}
+Some key ingredients in the transaction body are:
 \begin{itemize}
-  \item A set \AgdaField{txins} of transaction inputs, each of which identifies an output from a previous transaction.
+  \item A set \txins of transaction inputs, each of which identifies an output from a previous transaction.
     A transaction input consists of a transaction id and an index to uniquely identify the output.
-  \item An indexed collection \AgdaField{txouts} of transaction outputs.
+  \item An indexed collection \txouts of transaction outputs.
     The \TxOut type is an address paired with a coin value.
   \item A transaction fee. This value will be added to the fee pot.
-  \item The size and the hash of the serialized form of the transaction that was included in the block.
+  \item The size \txsize and the hash \txid of the serialized form of the transaction that was included in the block.
 \end{itemize}
+\end{NoConway}
+\begin{Conway}
+Ingredients of the transaction body introduced in the Conway era are the following:
+\begin{itemize}
+  \item \txvote, the list of votes for goverance actions;
+  \item \txprop, the list of governance proposals;
+  \item \txdonation, the treasury donation amount;
+  \item \curTreasury, the current value of the treasury.
+  \item \txsize and \txid, the size and hash of the serialized form of the transaction that was included in the block.
+\end{itemize}
+\end{Conway}
 
 \begin{figure*}[h]
 \emph{Abstract types}
@@ -84,7 +94,6 @@ the transaction body are:
   open TokenAlgebra tokenAlgebra public
 
   field txidBytes : TxId → Ser
-        networkId : Network
 
   govStructure : GovStructure
   govStructure = record
@@ -97,8 +106,11 @@ the transaction body are:
     ; globalConstants = globalConstants
     }
 
-  open Ledger.GovernanceActions govStructure hiding (Vote; yes; no; abstain) public
-  open Ledger.Certs             govStructure public
+  module GovernanceActions = Ledger.GovernanceActions govStructure
+  open GovernanceActions hiding (Vote; yes; no; abstain) public
+
+  open import Ledger.Certs govStructure using (DCert)
+
 \end{code}
 \begin{NoConway}
 \emph{Derived types}
@@ -199,13 +211,13 @@ the transaction body are:
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  refScripts : Tx → UTxO → ℙ Script
+  refScripts : Tx → UTxO → List Script
   refScripts tx utxo =
-    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) $ setToList (range (utxo ∣ (txins ∪ refInputs)))
     where open Tx; open TxBody (tx .body)
 
   txscripts : Tx → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+  txscripts tx utxo = scripts (tx .wits) ∪ fromList (refScripts tx utxo)
     where open Tx; open TxWitnesses
 
   lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
@@ -229,5 +241,4 @@ the transaction body are:
   instance
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
-
 \end{code}

@@ -15,6 +15,9 @@ module Ledger.ScriptValidation
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
+open import Ledger.Certs govStructure
+open import Tactic.Derive.Show
+
 instance
   _ = DecEq-Slot
 
@@ -76,18 +79,20 @@ txInfo l pp utxo tx = record
   } where open Tx tx; open TxBody body
 
 data DelegateOrDeReg : DCert → Type where instance
+  reg       : ∀ {x y} →     DelegateOrDeReg (reg x y)
   delegate  : ∀ {x y z w} → DelegateOrDeReg (delegate x y z w)
   dereg     : ∀ {x y} →     DelegateOrDeReg (dereg x y)
   regdrep   : ∀ {x y z} →   DelegateOrDeReg (regdrep x y z)
-  deregdrep : ∀ {x} →       DelegateOrDeReg (deregdrep x)
+  deregdrep : ∀ {x y} →     DelegateOrDeReg (deregdrep x y)
 
 instance
   Dec-DelegateOrDeReg : DelegateOrDeReg ⁇¹
   Dec-DelegateOrDeReg {dc} .dec with dc
   ... | delegate _ _ _ _ = yes it
+  ... | reg _ _          = yes it
   ... | dereg _ _        = yes it
   ... | regdrep _ _ _    = yes it
-  ... | deregdrep _      = yes it
+  ... | deregdrep _ _    = yes it
   ... | regpool _ _      = no λ ()
   ... | retirepool _ _   = no λ ()
   ... | ccreghot _ _     = no λ ()
@@ -123,12 +128,14 @@ certScripts d with ¿ DelegateOrDeReg d ¿
 ... | no ¬p = nothing
 certScripts c@(delegate  (KeyHashObj x) _ _ _) | yes p = nothing
 certScripts c@(delegate  (ScriptObj  y) _ _ _) | yes p = just (Cert c , y)
+certScripts c@(reg       (KeyHashObj x) _)     | yes p = nothing
+certScripts c@(reg       (ScriptObj  y) _)     | yes p = just (Cert c , y)
 certScripts c@(dereg     (KeyHashObj x) _)     | yes p = nothing
 certScripts c@(dereg     (ScriptObj  y) _)     | yes p = just (Cert c , y)
 certScripts c@(regdrep   (KeyHashObj x) _ _)   | yes p = nothing
 certScripts c@(regdrep   (ScriptObj  y) _ _)   | yes p = just (Cert c , y)
-certScripts c@(deregdrep (KeyHashObj x))       | yes p = nothing
-certScripts c@(deregdrep (ScriptObj  y))       | yes p = just (Cert c , y)
+certScripts c@(deregdrep (KeyHashObj x) _)     | yes p = nothing
+certScripts c@(deregdrep (ScriptObj  y) _)     | yes p = just (Cert c , y)
 
 private
   scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
@@ -180,5 +187,5 @@ open Tx
 evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
 evalScripts tx [] = true
 evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) =
-  ¿ evalTimelock (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
+  ¿ validP1Script (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
 evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ

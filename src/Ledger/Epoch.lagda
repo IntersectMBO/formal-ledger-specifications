@@ -7,10 +7,11 @@ open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
 import Data.Integer as ℤ
 open import Data.Integer.Ext
+open import Data.Nat.GeneralisedArithmetic using (iterate)
 
 open import Agda.Builtin.FromNat
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (iterate)
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -24,6 +25,7 @@ open import Ledger.Enact govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
+open import Ledger.Certs govStructure
 \end{code}
 \begin{NoConway}
 \begin{figure*}[h]
@@ -73,7 +75,6 @@ record EpochState : Type where
     ls         : LState
     es         : EnactState
     fut        : RatifyState
-
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -118,7 +119,9 @@ getStakeCred (a , _ , _ , _) = stakeCred a
 
 open RwdAddr using (stake)
 open GovActionState using (returnAddr)
-
+\end{code}
+\begin{NoConway}
+\begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   ⟦ ⟦ treasury , reserves ⟧ᵃ
@@ -141,7 +144,20 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
+
+getOrphans : EnactState → GovState → GovState
+getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
+  where
+    step : GovState × GovState → GovState × GovState
+    step (orps , govSt) =
+      let
+        isOrphan? a prev = ¬? (hasParent? es govSt a prev)
+        (orps' , govSt') = partition
+          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? a prev) govSt
+      in
+        (orps ++ orps' , govSt')
 \end{code}
+\end{NoConway}
 
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
@@ -188,8 +204,7 @@ system. Currently, this contains some logic that is handled by
 POOLREAP in the Shelley specification, since POOLREAP is not implemented here.
 
 The EPOCH rule now also needs to invoke RATIFY and properly deal with
-its results, i.e:
-
+its results by carrying out each of the following tasks.
 \begin{itemize}
 \item Pay out all the enacted treasury withdrawals.
 \item Remove expired and enacted governance actions \& refund deposits.
@@ -214,20 +229,23 @@ its results, i.e:
 \end{code}
 \begin{code}
 
-      removedGovActions = flip concatMapˢ removed λ (gaid , gaSt) →
+      es                = record esW { withdrawals = ∅ }
+      tmpGovSt          = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
+      orphans           = fromList $ getOrphans es tmpGovSt
+      removed'          = removed ∪ orphans
+      removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
         mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
       trWithdrawals   = esW .withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
-      es         = record esW { withdrawals = ∅ }
       retired    = (pState .retiring) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
       refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
       unclaimed  = getCoin payout - getCoin refunds
 
-      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
+      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
 
       certState' =
         ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
@@ -243,7 +261,8 @@ its results, i.e:
     record { currentEpoch = e
            ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
                                           (utxoSt' .deposits) (voteDelegs dState)
-           ; treasury = acnt .treasury ; GState gState }
+           ; treasury = acnt .treasury ; GState gState
+           ; pools = pState .pools ; delegatees = dState .voteDelegs }
         ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────

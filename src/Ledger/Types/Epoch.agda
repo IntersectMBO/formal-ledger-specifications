@@ -9,9 +9,13 @@ open import Algebra using (Semiring)
 open import Relation.Binary
 open import Data.Nat.Properties using (+-*-semiring)
 
+additionVia : ∀{A : Set} → (A → A) → ℕ → A → A
+additionVia sucFun zero r = r
+additionVia sucFun (suc l) r = sucFun (additionVia sucFun l r)
+
 record EpochStructure : Type₁ where
   field Slotʳ : Semiring 0ℓ 0ℓ
-        Epoch : Type; ⦃ DecEq-Epoch ⦄ : DecEq Epoch
+        Epoch : Type; ⦃ DecEq-Epoch ⦄ : DecEq Epoch; ⦃ Show-Epoch ⦄ : Show Epoch
 
   Slot = Semiring.Carrier Slotʳ
 
@@ -22,6 +26,12 @@ record EpochStructure : Type₁ where
         firstSlot       : Epoch → Slot
         StabilityWindow : Slot
         sucᵉ            : Epoch → Epoch
+
+  _+ᵉ_ = additionVia sucᵉ
+
+  field
+        _+ᵉ'_           : ℕ → Epoch → Epoch
+        +ᵉ≡+ᵉ'          : ∀ {a b} → a +ᵉ b ≡ a +ᵉ' b
 
   -- preorders and partial orders
 
@@ -48,10 +58,6 @@ record EpochStructure : Type₁ where
   ℕtoEpoch zero    = epoch 0#
   ℕtoEpoch (suc n) = sucᵉ (ℕtoEpoch n)
 
-  _+ᵉ_ : ℕ → Epoch → Epoch
-  zero  +ᵉ e = e
-  suc n +ᵉ e = sucᵉ (n +ᵉ e)
-
   instance
     addSlot : HasAdd Slot
     addSlot ._+_ = _+ˢ_
@@ -64,11 +70,15 @@ record EpochStructure : Type₁ where
     Number-Epoch .Number.fromNat    x = ℕtoEpoch x
 
 record GlobalConstants : Type₁ where
-  field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network
+  field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network; ⦃ Show-Network ⦄ : Show Network
          SlotsPerEpochᶜ : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
          StabilityWindowᶜ : ℕ
          Quorum : ℕ
          NetworkId : Network
+
+  ℕ+ᵉ≡+ᵉ' : ∀ {a b} → additionVia suc a b ≡ a + b
+  ℕ+ᵉ≡+ᵉ' {zero} {b} = refl
+  ℕ+ᵉ≡+ᵉ' {suc a} {b} = cong suc (ℕ+ᵉ≡+ᵉ' {a} {b})
 
   ℕEpochStructure : EpochStructure
   ℕEpochStructure = λ where
@@ -78,6 +88,8 @@ record GlobalConstants : Type₁ where
     .firstSlot e     → e * SlotsPerEpochᶜ
     .StabilityWindow → StabilityWindowᶜ
     .sucᵉ            → suc
+    ._+ᵉ'_           → _+_
+    .+ᵉ≡+ᵉ' {a} {b}  → ℕ+ᵉ≡+ᵉ' {a} {b}
 
    where open EpochStructure
 

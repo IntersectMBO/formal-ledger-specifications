@@ -14,6 +14,7 @@ open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Enact govStructure
+open import Ledger.Certs govStructure
 open import Ledger.Gov txs
 
 isCredDeposit : DepositPurpose → Type
@@ -116,7 +117,7 @@ module _ (s : ChainState) where
   -- Transaction properties
 
   module _ {slot} {tx} (let txb = body tx) (valid : validTxIn₂ s slot tx)
-    (indexedSum-∪⁺-hom : ∀ {A V : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄ ⦃ mon : IsCommutativeMonoid' 0ℓ 0ℓ V ⦄
+    (indexedSum-∪⁺-hom : ∀ {A V : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄ ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄
       → (d₁ d₂ : A ⇀ V) → indexedSumᵛ' id (d₁ ∪⁺ d₂) ≡ indexedSumᵛ' id d₁ ◇ indexedSumᵛ' id d₂)
     (indexedSum-⊆ : ∀ {A : Type} ⦃ _ : DecEq A ⦄ (d d' : A ⇀ ℕ) → d ˢ ⊆ d' ˢ
       → indexedSumᵛ' id d ≤ indexedSumᵛ' id d') -- technically we could use an ordered monoid instead of ℕ
@@ -127,8 +128,8 @@ module _ (s : ChainState) where
     propose-minSpend : noRefundCert (txcerts txb)
       → coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
     propose-minSpend noRef = case valid of λ where
-      (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc {indexedSum-∪⁺-hom} {indexedSum-⊆} x noRef
-      (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc {indexedSum-∪⁺-hom} {indexedSum-⊆} x noRef
+      (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
+      (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
 
   --   propose-ChangePP-hasGroup : ∀ {up prop}
   --     → prop ∈ txb → prop .GovProposal.action ≡ ChangePParams up → updateGroups up ≢ ∅

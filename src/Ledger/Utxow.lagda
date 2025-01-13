@@ -13,12 +13,15 @@ module Ledger.Utxow
   where
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
+open import Ledger.Certs govStructure
 \end{code}
 
-Figure~\ref{fig:functions:utxow} defines functions used for
-witnessing. \witsVKeyNeeded and \scriptsNeeded are now defined by
-projecting the same information out of \credsNeeded. Note that the
-last component of \credsNeeded adds the script in the proposal policy
+The purpose of witnessing is make sure the intended action is
+authorized by the holder of the signing key.  (For details see
+the Formal Ledger Specification for the Shelley Era~\cite[Sec.~8.3]{cardano_shelley_spec}.)
+Figure~\ref{fig:functions:utxow} defines functions used for witnessing.
+\witsVKeyNeeded and \scriptsNeeded are now defined by projecting the same information out of
+\credsNeeded. Note that the last component of \credsNeeded adds the script in the proposal policy
 only if it is present.
 
 \allowedLanguages has additional conditions for new features in
@@ -88,8 +91,7 @@ allowedLanguages tx utxo =
   else
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
   where
-    txb = tx .Tx.body
-    open TxBody txb
+    txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
 
 getScripts : ℙ Credential → ℙ ScriptHash
@@ -97,11 +99,11 @@ getScripts = mapPartial isScriptObj
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
-  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
+  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txins ∪ collateral)) ˢ)
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
-  ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
+  ∪  mapPartial (λ c  → (Cert   c ,_) <$> cwitness c) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
-  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList $ map voter txvote)
+  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList (map voter txvote))
   ∪  mapPartial (λ p  → case  p .policy of
 \end{code}
 \begin{code}[hide]
@@ -155,13 +157,14 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
         inputHashes       = getInputHashes tx utxo
-        refScriptHashes   = mapˢ hash (refScripts tx utxo)
+        refScriptHashes   = fromList $ map hash (refScripts tx utxo)
         neededHashes      = scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = getDataHashes (range txouts)
+        nativeScripts     = mapPartial isInj₁ (txscripts tx utxo)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ mapPartial isInj₁ (txscripts tx utxo) ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes

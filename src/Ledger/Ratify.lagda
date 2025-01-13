@@ -13,6 +13,7 @@ open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
 
+open import Ledger.Certs govStructure
 open import Ledger.Enact govStructure
 open import Ledger.GovernanceActions govStructure using (Vote)
 
@@ -32,7 +33,7 @@ committee, a constitutional change, or a hard-fork delays ratification of
 all other governance actions until the first epoch after their
 enactment. This gives a new constitutional committee enough time to vote
 on current proposals, re-evaluate existing proposals with respect to a
-new constitution, and ensures that the in principle arbitrary semantic
+new constitution, and ensures that the (in principle arbitrary) semantic
 changes caused by enacting a hard-fork do not have unintended
 consequences in combination with other actions.
 
@@ -49,7 +50,7 @@ in that order.
 The symbols mean the following:
 \begin{itemize}
 \item
-  \AgdaFunction{vote} x: To pass the action, the \yes votes need to be over the threshold x.
+  \AgdaFunction{vote} x: For an action to pass, the stake associated with the yes votes must exceed the threshold x.
 \item
   \AgdaFunction{─}: The body of governance does not participate in voting.
 \item
@@ -81,7 +82,7 @@ required. A protocol parameter may or may not be in the
 
 Finally, each of the \AgdaFunction{P}$_x$ and \AgdaFunction{Q}$_x$ in
 Figure~\ref{fig:ratification-requirements} are protocol parameters.
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 private
@@ -132,7 +133,7 @@ threshold pp ccThreshold =
         open DrepThresholds drepThresholds
         open PoolThresholds poolThresholds
 
-        ✓ = ccThreshold
+        ✓ = maybe just ✓† ccThreshold
 \end{code}
 \begin{code}
         P/Q2a/b : Maybe ℚ × Maybe ℚ
@@ -180,7 +181,7 @@ by at least half of the SPO stake.
 
 \subsection{Ratification Restrictions}
 \label{sec:ratification-restrictions}
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record StakeDistrs : Type where
@@ -202,6 +203,8 @@ record RatifyEnv : Type where
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Coin
+    pools         : KeyHash ⇀ PoolParams
+    delegatees    : Credential ⇀ VDeleg
 
 record RatifyState : Type where
 \end{code}
@@ -241,80 +244,11 @@ defines some types and functions used in the RATIFY transition
 system. \CCData is simply an alias to define some functions more
 easily.
 
-\begin{code}[hide]
-open StakeDistrs
-
--- TODO: remove these or put them into RatifyState
-coinThreshold rankThreshold : ℕ
-coinThreshold = 1000000000
-rankThreshold = 1000
-
--- DReps with at least `c` coins
-mostStakeDRepDist : Credential ⇀ Coin → Coin → Credential ⇀ Coin
-mostStakeDRepDist dist c = dist ∣^' (_≥ c)
-
--- mostStakeDRepDist-homomorphic : ∀ {dist} → Homomorphic₂ _ _ _>_ (_⊆_ on _ˢ) (mostStakeDRepDist dist)
--- mostStakeDRepDist-homomorphic x>y = impl⇒cores⊆ _ _ {!!} --(<-trans x>y)
-
-mostStakeDRepDist-0 : ∀ {dist} → mostStakeDRepDist dist 0 ≡ᵉᵐ dist
-mostStakeDRepDist-0 = (proj₂ ∘ Equivalence.from ∈-filter)
-                    , λ x → Equivalence.to ∈-filter (z≤n , x)
-
--- TODO: maybe this can be proven easier with the maximum?
-mostStakeDRepDist-∅ : ∀ {dist} → ∃[ N ] mostStakeDRepDist dist N ˢ ≡ᵉ ∅
-mostStakeDRepDist-∅ {dist} = suc (∑[ x ← dist ] x) , Properties.∅-least
-  (⊥-elim ∘ uncurry helper ∘ Equivalence.from ∈-filter)
-  where
-    open ≤-Reasoning
-
-    helper : ∀ {k v} → v > ∑[ x ← dist ] x → (k , v) ∉ dist
-    helper {k} {v} v>sum kv∈dist = 1+n≰n $ begin-strict
-      v
-        ≡˘⟨ indexedSum-singleton' $ finiteness ❴ k , v ❵ ⟩
-      ∑[ x ← ❴ k , v ❵ ] x
-        ≡˘⟨ indexedSumᵐ-cong {x = (dist ∣ ❴ k ❵) ᶠᵐ} {y = ❴ k , v ❵ ᶠᵐ}
-          $ res-singleton' {m = dist} kv∈dist ⟩
-      ∑[ x ← (dist ∣ ❴ k ❵) ] x
-        ≤⟨ m≤m+n _ _ ⟩
-      ∑[ x ← (dist ∣ ❴ k ❵) ] x +ℕ ∑[ x ← (dist ∣ ❴ k ❵ ᶜ) ] x
-        ≡˘⟨ indexedSumᵐ-partition {m = dist ᶠᵐ} {(dist ∣ ❴ k ❵) ᶠᵐ} {(dist ∣ ❴ k ❵ ᶜ) ᶠᵐ}
-          $ res-ex-disj-∪ Properties.Dec-∈-singleton ⟩
-      ∑[ x ← dist ] x
-        <⟨ v>sum ⟩
-      v ∎
-
-∃topNDRepDist : ∀ {n dist} → n ≤ lengthˢ (dist ˢ) → n > 0
-                → ∃[ c ] n ≤ lengthˢ (mostStakeDRepDist dist c ˢ)
-                       × lengthˢ (mostStakeDRepDist dist (suc c) ˢ) < n
-∃topNDRepDist {n} {dist} length≥n n>0 =
-  let
-    c , h , h' =
-      negInduction (λ _ → _ ≥? n)
-        (subst (n ≤_) (sym $ lengthˢ-≡ᵉ _ _ (mostStakeDRepDist-0 {dist})) length≥n)
-        (map₂′ (λ h h'
-                  → ≤⇒≯ (subst (n ≤_) (trans (lengthˢ-≡ᵉ _ _ h) lengthˢ-∅) h') n>0)
-               (mostStakeDRepDist-∅ {dist}))
-  in
-   c , h , ≰⇒> h'
-
-topNDRepDist : ℕ → Credential ⇀ Coin → Credential ⇀ Coin
-topNDRepDist n dist = case (lengthˢ (dist ˢ) ≥? n) ,′ (n >? 0) of λ where
-  (_     , no  _)  → ∅ᵐ
-  (no _  , yes _)  → dist
-  (yes p , yes p₁) → mostStakeDRepDist dist (proj₁ (∃topNDRepDist {dist = dist} p p₁))
-
--- restrict the DRep stake distribution
--- commented out for now, since we don't know if that'll actually be implemented
-restrictedDists : ℕ → ℕ → StakeDistrs → StakeDistrs
-restrictedDists coins rank dists = dists
-  -- record dists { drepStakeDistr = restrict drepStakeDistr }
-  where open StakeDistrs dists
-        -- one always includes the other
-        restrict : Credential ⇀ Coin → Credential ⇀ Coin
-        restrict dist = topNDRepDist rank dist ∪ˡ mostStakeDRepDist dist coins
-\end{code}
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
+\begin{code}[hide]
+open StakeDistrs
+\end{code}
 \begin{code}
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
@@ -332,42 +266,61 @@ actualVotes Γ pparams cc ga votes
   roleVotes r = mapKeys (uncurry credVoter) (filter (λ (x , _) → r ≡ proj₁ x) votes)
 
   activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
-  spos = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
+  spos  = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
+\end{code}
+\begin{code}
 
   getCCHotCred : Credential × Epoch → Maybe Credential
   getCCHotCred (c , e) = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
 \end{code}
 \begin{code}[hide]
-    λ where
+      λ where
 \end{code}
 \begin{code}
-      (true , just (just c'))  → just c'
-      _                        → nothing -- expired, no hot key or resigned
+        (true , just (just c'))  → just c'
+        _                        → nothing -- expired, no hot key or resigned
+
+  SPODefaultVote : GovAction → VDeleg → Vote
+  SPODefaultVote ga (credVoter SPO (KeyHashObj kh)) = case lookupᵐ? pools kh of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+        nothing → Vote.no
+        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) , ga of
+\end{code}
+\begin{code}[hide]
+               λ where
+\end{code}
+\begin{code}
+               (_                     , TriggerHF _   )  → Vote.no
+               (just noConfidenceRep  , NoConfidence  )  → Vote.yes
+               (just abstainRep       , _             )  → Vote.abstain
+               _                                         → Vote.no
+  SPODefaultVote _ _ = Vote.no
 
   actualCCVote : Credential → Epoch → Vote
   actualCCVote c e = case getCCHotCred (c , e) of
 \end{code}
 \begin{code}[hide]
-    λ where
+      λ where
 \end{code}
 \begin{code}
-      (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
-      _          → Vote.abstain
-
-  activeCC : (Credential ⇀ Epoch) → ℙ Credential
-  activeCC m = mapPartial getCCHotCred (m ˢ)
+        (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+        _          → Vote.abstain
 
   actualCCVotes : Credential ⇀ Vote
   actualCCVotes = case cc of
 \end{code}
 \begin{code}[hide]
-    λ where
+      λ where
 \end{code}
 \begin{code}
-      nothing         → ∅
-      (just (m , q))  → if ccMinSize ≤ lengthˢ (activeCC m)
-                          then mapWithKey actualCCVote m
-                          else constMap (dom m) Vote.no
+        nothing         →  ∅
+        (just (m , q))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
+                           then mapWithKey actualCCVote m
+                           else constMap (dom m) Vote.no
 
   actualPDRepVotes : GovAction → VDeleg ⇀ Vote
   actualPDRepVotes NoConfidence
@@ -379,8 +332,7 @@ actualVotes Γ pparams cc ga votes
                    ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
   actualSPOVotes : GovAction → VDeleg ⇀ Vote
-  actualSPOVotes (TriggerHF _)  = roleVotes SPO ∪ˡ constMap spos Vote.no
-  actualSPOVotes _              = roleVotes SPO ∪ˡ constMap spos Vote.abstain
+  actualSPOVotes a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting}
@@ -417,6 +369,29 @@ DReps, regular DReps and SPOs.
   with the default depending on the action.
 \end{itemize}
 
+Let us discuss the last item above---the way SPO votes are counted---as the ledger
+specification's handling of this has evolved in response to community feedback.
+Previously, if an SPO did not vote, then it would be counted as having voted
+\abstain by default.  Members of the SPO community found this behavior counterintuitive
+and requested that non-voters be assigned a \no vote by default, with the caveat that
+an SPO could change its default setting by delegating its reward account credential
+to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
+(This change applies only after the bootstrap period; during the bootstrap period
+the logic is unchanged; see Appendix Section~\ref{sec:conway-bootstrap}.)
+To be precise, the agreed upon specification is the following: an SPO that did
+not vote is assumed to have vote \no, except under the following circumstances:
+\begin{itemize}
+\item if the SPO has delegated its reward credential to an \texttt{AlwaysNoConfidence}
+DRep, then their default vote is \yes for \NoConfidence proposals and \no for other proposals;
+\item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain} DRep,
+then its default vote is \abstain for all proposals.
+\end{itemize}
+It is important to note that the credential that can now be used to set a default
+voting behavior is the credential used to withdraw staking rewards, which is not
+(in general) the same as the credential used for voting.
+%% And as a second layer, this means that if that credential is a script, it may need
+%% to have explicit logic written to be able to set a default at all.
+
 \begin{figure*}[h!]
 \begin{code}[hide]
 open RatifyEnv using (stakeDistrs)
@@ -427,8 +402,6 @@ abstract
   -- activeVotingStake cc dists votes =
   --   ∑[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
-  -- TODO: explain this notation in the prose and it's purpose:
-  -- if there's no stake, accept only if threshold is zero
   _/₀_ : ℕ → ℕ → ℚ
   x /₀ 0 = 0ℚ
   x /₀ y@(suc _) = ℤ.+ x ℚ./ y
@@ -442,16 +415,20 @@ abstract
   acceptedStakeRatio : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → ℚ
   acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
     where
+      dist : VDeleg ⇀ Coin
+      dist = getStakeDist r cc dists
       acceptedStake totalStake : Coin
-      acceptedStake  = ∑[ x ← getStakeDist r cc dists ∣ votes ⁻¹ Vote.yes        ] x
-      totalStake     = ∑[ x ← getStakeDist r cc dists ∣ votes ⁻¹ Vote.abstain ᶜ  ] x
+      acceptedStake  = ∑[ x ← dist ∣ votes ⁻¹ Vote.yes                              ] x
+      totalStake     = ∑[ x ← dist ∣ dom (votes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵))  ] x
 
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Type
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
-    let open GovActionState gs
+    let open GovActionState gs; open PParams pparams
         votes'  = actualVotes Γ pparams cc action votes
-        t       = maybe id 0ℚ (threshold pparams (proj₂ <$> cc) action role)
+        mbyT    = threshold pparams (proj₂ <$> cc) action role
+        t       = maybe id 0ℚ mbyT
     in acceptedStakeRatio role (dom votes') (stakeDistrs Γ) votes' ≥ t
+     ∧ (role ≡ CC → maybe (λ (m , _) → lengthˢ m) 0 cc ≥ ccMinSize ⊎ Is-nothing mbyT)
 
   accepted : RatifyEnv → EnactState → GovActionState → Type
   accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
@@ -489,7 +466,7 @@ RATIFY.
   \item \accepted then checks if an action is accepted by all roles; and
   \item \expired checks whether a governance action is expired in a given epoch.
 \end{itemize}
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{code}[hide]
 open EnactState
 \end{code}
@@ -514,6 +491,12 @@ delayingAction Info                     = false
 
 delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
+
+acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
+acceptConds Γ ⟦ es , removed , d ⟧ʳ (id , st) = let open RatifyEnv Γ; open GovActionState st in
+       accepted Γ es st
+    ×  ¬ delayed action prevAction es d
+    × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
 abstract
@@ -529,33 +512,40 @@ abstract
   delayed? : ∀ a h es d → Dec (delayed a h es d)
   delayed? a h es d = let instance _ = ⁇ verifyPrev? a h es in dec
 
+  Is-nothing? : ∀ {A : Set} {x : Maybe A} → Dec (Is-nothing x)
+  Is-nothing? {x = x} = All.dec (const $ no id) x
+    where
+        import Data.Maybe.Relation.Unary.All as All
+
   acceptedBy? : ∀ Γ es st role → Dec (acceptedBy Γ es st role)
-  acceptedBy? Γ record{ cc = cc , _ ; pparams = pparams , _ } st role = _ ℚ.≤? _
+  acceptedBy? _ _ _ _ = _ ℚ.≤? _ ×-dec _ ≟ _ →-dec (_ ≥? _ ⊎-dec Is-nothing?)
+    where
+      import Relation.Nullary.Decidable as Dec
 
   accepted? : ∀ Γ es st → Dec (accepted Γ es st)
-  accepted? Γ es st = let instance _ = ⁇¹ acceptedBy? Γ es st in dec
+  accepted? Γ es st = let a = λ {x} → acceptedBy? Γ es st x in a ×-dec a ×-dec a
 
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
 \end{code}
-\caption{Functions relating to delays}
+\caption{Functions related to ratification}
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-defs-ii} defines functions that
-deal with delays. A given action can either be delayed if the action
-contained in \EnactState isn't the one the given action is building on top
-of, which is checked by \verifyPrev, or if a previous action was a
-\delayingAction. Note that \delayingAction affects the future: whenever a
-\delayingAction is accepted all future actions are delayed. \delayed then
-expresses the condition whether an action is delayed. This happens either
-because the previous action doesn't match the current one, or because the
-previous action was a delaying one. This information is passed in as an
-argument.
+Figure~\ref{fig:defs:ratify-defs-ii} defines functions that deal with
+delays and the acceptance criterion for ratification. A given action
+can either be delayed if the action contained in \EnactState isn't the
+one the given action is building on top of, which is checked by
+\verifyPrev, or if a previous action was a \delayingAction. Note that
+\delayingAction affects the future: whenever a \delayingAction is
+accepted all future actions are delayed. \delayed then expresses the
+condition whether an action is delayed. This happens either because
+the previous action doesn't match the current one, or because the
+previous action was a delaying one. This information is passed in as
+an argument.
 
 \begin{code}[hide]
 private variable
-  Γ : RatifyEnv
   es es' : EnactState
   a : GovActionID × GovActionState
   removed : ℙ (GovActionID × GovActionState)
@@ -564,34 +554,31 @@ private variable
 data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
 
 \end{code}
-\begin{figure*}[h!]
+\begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  RATIFY-Accept : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
-       accepted Γ es st
-    →  ¬ delayed action prevAction es d
-    →  ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+  RATIFY-Accept : ∀ {Γ} {es} {removed} {d} {a} {es'} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+     ∙ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
             ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
 
-  RATIFY-Reject : let open RatifyEnv Γ; st = a .proj₂ in
-       ¬ accepted Γ es st
-    →  expired currentEpoch st
+  RATIFY-Reject : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+     ∙ expired currentEpoch st
        ────────────────────────────────
        Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
 
-  RATIFY-Continue : let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
-       ¬ accepted Γ es st × ¬ expired currentEpoch st
-    ⊎  accepted Γ es st
-       × ( delayed action prevAction es d
-         ⊎ (∀ es' → ¬ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'))
-    ────────────────────────────────
-    Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
+  RATIFY-Continue : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+     ∙ ¬ expired currentEpoch st
+       ────────────────────────────────
+       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type
-_⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,RATIFY'⦈_
+_⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY'⦈_}
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{The RATIFY transition system}

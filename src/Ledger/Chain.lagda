@@ -20,6 +20,7 @@ open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
+open import Ledger.Certs govStructure
 \end{code}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -96,6 +97,9 @@ calculateStakeDistrs ls =
     { stakeDistr = govActionDeposits ls
     }
 
+totalRefScriptsSize : LState → List Tx → ℕ
+totalRefScriptsSize lst txs = sum $ map (refScriptsSize utxo) txs
+  where open UTxOState (LState.utxoSt lst)
 
 data
 \end{code}
@@ -114,15 +118,21 @@ data
 \begin{AgdaSuppressSpace}
 \begin{code}
   CHAIN :
+\end{code}
+\begin{code}[hide]
     let open ChainState s; open Block b; open NewEpochState nes
         open EpochState epochState; open EnactState es
+        pp = pparams .proj₁; open PParams pp using (maxRefScriptSizePerBlock)
     in
-       _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt
-       ⟧ˡᵉ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+\end{code}
+\begin{code}
+    totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
+    →  _   ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    →  ⟦ slot , constitution .proj₁ .proj₂ , pp , es , Acnt.treasury acnt ⟧ˡᵉ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
-    _ ⊢ s ⇀⦇ b ,CHAIN⦈
-        record s { newEpochState = record nes { epochState = record epochState { ls = ls'} } }
+    _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s {  newEpochState =
+                                   record nes {  epochState =
+                                                 record epochState { ls = ls'} } }
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CHAIN transition system}

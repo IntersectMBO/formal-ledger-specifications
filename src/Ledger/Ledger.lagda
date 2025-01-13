@@ -18,8 +18,10 @@ open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.Utxo txs abs
 open import Ledger.Utxow txs abs
+open import Ledger.Certs govStructure
 
 open Tx
+open GState
 open GovActionState
 open EnactState using (cc)
 \end{code}
@@ -59,6 +61,16 @@ txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
 
+isUnregisteredDRep : CertState → Voter → Type
+isUnregisteredDRep ⟦ _ , _ , gState ⟧ᶜˢ (r , c) = r ≡ DRep × c ∉ dom (gState .dreps)
+
+removeOrphanDRepVotes : CertState → GovActionState → GovActionState
+removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
+  where
+    votes′ = filterKeys (¬_ ∘ isUnregisteredDRep certState) (votes gas)
+
+_|ᵒ_ : GovState → CertState → GovState
+govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (st .action)) (fromList govSt)
@@ -76,6 +88,7 @@ private variable
   tx : Tx
 \end{code}
 
+\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}[hide]
 open RwdAddr
@@ -93,17 +106,21 @@ data
 \end{code}
 \caption{The type of the LEDGER transition system}
 \end{figure*}
+\end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
 \begin{code}
   LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , deposits utxoSt , allColdCreds govSt enactState ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ⟧ᵍ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+\end{code}
+\begin{NoConway}
+\begin{code}
 
   LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ false
@@ -111,6 +128,7 @@ data
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
 \end{code}
+\end{NoConway}
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
 \end{figure*}
@@ -123,7 +141,7 @@ pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 \begin{figure*}[h]
 \begin{code}
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
-_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
+_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
 \end{code}
 \caption{LEDGERS transition system}
 \end{figure*}

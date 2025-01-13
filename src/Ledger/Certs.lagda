@@ -3,7 +3,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Prelude renaming (filterˢ to filter)
 open import Ledger.Types.GovStructure
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
@@ -53,32 +53,49 @@ data DCert : Type where
   regpool     : KeyHash → PoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
-  deregdrep   : Credential → DCert
+  deregdrep   : Credential → Coin → DCert
+  -- deregdrep   : Credential → DCert
   ccreghot    : Credential → Maybe Credential → DCert
+\end{code}
+\begin{code}[hide]
+  -- The `reg` cert is deprecated in Conway, but it's still present in this era 
+  -- for backwards compatibility. This has been added to the spec to make 
+  -- conformance testing work properly. We don't talk about this certificate
+  -- in the pdf because it has been deprecated and we want to discourage people 
+  -- from using it.
+  reg         : Credential → Coin → DCert
 \end{code}
 \begin{NoConway}
 \begin{code}
-cwitness : DCert → Credential
-cwitness (delegate c _ _ _)  = c
-cwitness (dereg c _)         = c
-cwitness (regpool kh _)      = KeyHashObj kh
-cwitness (retirepool kh _)   = KeyHashObj kh
-cwitness (regdrep c _ _)     = c
-cwitness (deregdrep c)       = c
-cwitness (ccreghot c _)      = c
+cwitness : DCert → Maybe Credential
+cwitness (delegate c _ _ _)  = just c
+cwitness (dereg c _)         = just c
+cwitness (regpool kh _)      = just $ KeyHashObj kh
+cwitness (retirepool kh _)   = just $ KeyHashObj kh
+cwitness (regdrep c _ _)     = just c
+cwitness (deregdrep c _)     = just c
+cwitness (ccreghot c _)      = just c
+\end{code}
+\begin{code}[hide]
+-- The implementation requires the `reg` cert to be witnessed only if the 
+-- deposit is set. There didn't use to be a field for the deposit, but that was 
+-- added in the Conway era to make it easier to determine, just by looking at 
+-- the transaction, how much deposit was paid for that certificate. 
+cwitness (reg _ zero)        = nothing
+cwitness (reg c (suc _))     = just c
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
 \caption{Delegation definitions}
 \end{figure*}
 
-\begin{figure*}[h!]
+\begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}
 record CertEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_,_⟧ᶜ
+  constructor ⟦_,_,_,_,_⟧ᶜ
   field
 \end{code}
 \begin{code}
@@ -86,7 +103,7 @@ record CertEnv : Type where
     pp        : PParams
     votes     : List GovVote
     wdrls     : RwdAddr ⇀ Coin
-    deposits  : Deposits
+    -- deposits  : Deposits
     coldCreds : ℙ Credential
 
 record DState : Type where
@@ -144,9 +161,9 @@ record DelegEnv : Type where
   field
 \end{code}
 \begin{code}
-    pparams  : PParams
-    pools    : KeyHash ⇀ PoolParams
-    deposits : Deposits
+    pparams       : PParams
+    pools         : KeyHash ⇀ PoolParams
+    delegatees    : ℙ Credential
 
 GovCertEnv  = CertEnv
 PoolEnv     = PParams
@@ -155,40 +172,44 @@ PoolEnv     = PParams
 \caption{Types used for CERTS transition system}
 \end{figure*}
 
+\begin{code}[hide]
+rewardsBalance : DState → Coin
+rewardsBalance ds = ∑[ x ← DState.rewards ds ] x
+
+instance
+  HasCoin-CertState : HasCoin CertState
+  HasCoin-CertState .getCoin = rewardsBalance ∘ CertState.dState
+\end{code}
 
 \begin{code}[hide]
 private variable
-  an : Anchor
-  dReps dReps' : Credential ⇀ Epoch
-  pools : KeyHash ⇀ PoolParams
-  vDelegs : Credential ⇀ VDeleg
-  sDelegs : Credential ⇀ KeyHash
-  retiring : KeyHash ⇀ Epoch
-  ccKeys : Credential ⇀ Maybe Credential
-  rwds : Credential ⇀ Coin
-  dCert : DCert
-  c c' : Credential
-  mc : Maybe Credential
-  mv : Maybe VDeleg
-  d : Coin
-  e : Epoch
-  kh kh' : KeyHash
-  mkh : Maybe KeyHash
-  st st' : CertState
-  stᵍ stᵍ' : GState
+  rwds rewards           : Credential ⇀ Coin
+  dReps                  : Credential ⇀ Epoch
+  sDelegs stakeDelegs    : Credential ⇀ KeyHash
+  ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
+  vDelegs voteDelegs     : Credential ⇀ VDeleg
+  pools                  : KeyHash ⇀ PoolParams
+  retiring               : KeyHash ⇀ Epoch
+  wdrls                  : RwdAddr ⇀ Coin
+
+  an          : Anchor
+  Γ           : CertEnv
+  d           : Coin
+  c           : Credential
+  mc          : Maybe Credential
+  delegatees  : ℙ Credential
+  dCert       : DCert
+  e           : Epoch
+  vs          : List GovVote
+  kh          : KeyHash
+  mkh         : Maybe KeyHash
+  poolParams  : PoolParams
+  pp          : PParams
+  mv          : Maybe VDeleg
+
   stᵈ stᵈ' : DState
+  stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
-  Γ : CertEnv
-  pp : PParams
-  vs : List GovVote
-  poolParams : PoolParams
-  wdrls  : RwdAddr ⇀ Coin
-  dreps : Credential ⇀ Epoch
-  ccHotKeys : Credential ⇀ Maybe Credential
-  voteDelegs : Credential ⇀ VDeleg
-  stakeDelegs : Credential ⇀ KeyHash
-  rewards : Credential ⇀ Coin
-  deps : Deposits
   cc : ℙ Credential
 \end{code}
 
@@ -206,7 +227,7 @@ stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
 the \TreasuryWdrl governance action in case of the MIR certificates.
 
-\subsection{Explicit deposits}
+\subsection{Explicit Deposits}
 
 Registration and deregistration of staking credentials are now
 required to explicitly state the deposit that is being paid or
@@ -229,8 +250,14 @@ honest stake holders.
 \subsection{Governance Certificate Rules}
 
 The rules for transition systems dealing with individual certificates
-are defined in Figures~\ref{fig:sts:aux-cert-deleg},
-\ref{fig:sts:aux-cert-pool} and \ref{fig:sts:aux-cert-gov}. GOVCERT
+are defined in
+\begin{NoConway}
+Figures~\ref{fig:sts:aux-cert-deleg}, \ref{fig:sts:aux-cert-pool}
+\end{NoConway}
+\begin{Conway}
+Figures~\ref{fig:sts:aux-cert-deleg}
+\end{Conway}
+\ and~\ref{fig:sts:aux-cert-gov}. GOVCERT
 deals with the new certificates relating to DReps and the
 constitutional committee.
 
@@ -239,8 +266,14 @@ constitutional committee.
   registation, a deposit needs to be paid. Either way, the activity
   period of the DRep is reset.
 \item \GOVCERTderegdrep deregisters a DRep.
-\item \GOVCERTccreghot registers a hot credential for constitutional
-  committee members. We check that the cold key did not previously
+\item \GOVCERTccreghot registers a ``hot'' credential for constitutional
+  committee members.\footnote{By ``hot'' and ``cold'' credentials we mean
+    the following: a cold credential is used to register a hot credential,
+    and then the hot credential is used for voting. The idea is that the
+    access to the cold credential is kept in a secure location, while the
+    hot credential is more conveniently accessed.  If the hot credential
+    is compromised, it can be changed using the cold credential.}
+  We check that the cold key did not previously
   resign from the committee. We allow this delegation for any cold
   credential that is either part of \EnactState or is is a proposal.
   This allows a newly elected member of the constitutional committee to
@@ -255,38 +288,34 @@ constitutional committee.
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Type
+    _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Type
+    _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Type
+    _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERT⦈_      : CertEnv → CertState → DCert → CertState → Type
+    _⊢_⇀⦇_,CERT⦈_      : CertEnv → CertState → DCert → CertState → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
-\end{code}
-\begin{code}[hide]
-module _ where
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+    _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
+
+_⊢_⇀⦇_,CERTS⦈_       : CertEnv → CertState → List DCert → CertState → Type
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}
@@ -303,18 +332,28 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
+    ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
+        fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , deps ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ delegate c mv mkh d ,DELEG⦈
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
+        ⇀⦇ delegate c mv mkh d ,DELEG⦈
         ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
-    ∙ (CredentialDeposit c , d) ∈ deps
       ────────────────────────────────
-      ⟦ pp , pools , deps ⟧ᵈᵉ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
-                          ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
+        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+\end{code}
+\begin{code}[hide]
+  DELEG-reg : let open PParams pp in
+    ∙ c ∉ dom rwds
+    ∙ d ≡ keyDeposit ⊎ d ≡ 0
+      ────────────────────────────────
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
+        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}
@@ -344,28 +383,28 @@ data _⊢_⇀⦇_,POOL⦈_ where
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
 \begin{code}
-  GOVCERT-regdrep : let open PParams pp in
+  GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
                                   ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
@@ -385,7 +424,7 @@ CERTBASE as the base case. CERTBASE does the following:
   epochs in the future.
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[htbp]
 \emph{CERT transitions}
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
@@ -393,14 +432,14 @@ data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
 \begin{code}
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , deps ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
@@ -414,20 +453,26 @@ data _⊢_⇀⦇_,CERT⦈_ where
 data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
 \begin{code}
-  CERT-base :
-    let open PParams pp
-        refresh         = mapPartial getDRepVote (fromList vs)
-        refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dreps refresh
-        wdrlCreds       = mapˢ stake (dom wdrls)
+  CERT-base : let
+    open PParams pp
+    refresh          = mapPartial getDRepVote (fromList vs)
+    refreshedDReps   = mapValueRestricted (const (e + drepActivity)) dReps refresh
+    wdrlCreds        = mapˢ stake (dom wdrls)
+    validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
+                                        ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []) )
     in
-    ∙ wdrlCreds ⊆ dom voteDelegs
+    ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , deps , cc ⟧ᶜ ⊢ ⟦
-        ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈ ⟦
-        ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
+        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
         , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ ⟧ᶜˢ
+        , ⟦ dReps , ccHotKeys ⟧ᵛ
+        ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
+        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        , stᵖ
+        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
+        ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}

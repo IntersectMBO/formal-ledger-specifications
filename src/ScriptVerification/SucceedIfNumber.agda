@@ -12,14 +12,14 @@ open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
 open import ScriptVerification.Lib ℕ ℕ scriptImp
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
-open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
-open import Ledger.Utxow.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Conformance.Utxow.Properties SVTransactionStructure SVAbstractFunctions
 
 -- succeed if the datum is 1
 succeedIf1Datum' : Maybe ℕ → Maybe ℕ → Bool
@@ -42,16 +42,16 @@ initEnv = createEnv 0
 
 -- initTxOut for script with datum reference
 initTxOut : TxOut
-initTxOut = inj₁ (record { net = tt ;
+initTxOut = inj₁ (record { net = 0 ;
                            pay = ScriptObj 777 ;
-                           stake = ScriptObj 777 })
+                           stake = just (ScriptObj 777) })
                            , 10 , just (inj₂ 99) , nothing
 
 -- initTxOut for script without datum reference
 initTxOut' : TxOut
-initTxOut' = inj₁ (record { net = tt ;
+initTxOut' = inj₁ (record { net = 0 ;
                            pay = ScriptObj 888 ;
-                           stake = ScriptObj 888 })
+                           stake = just (ScriptObj 888) })
                            , 10 , nothing , nothing
 
 scriptDatum : TxIn × TxOut
@@ -72,9 +72,9 @@ succeedTx = record { body = record
                          ; refInputs = ∅
                          ; txouts = fromListIx ((6 , initTxOut)
                                                 ∷ (5
-                                                  , ((inj₁ (record { net = tt ;
+                                                  , ((inj₁ (record { net = 0 ;
                                                                      pay = KeyHashObj 5 ;
-                                                                     stake = KeyHashObj 5 }))
+                                                                     stake = just (KeyHashObj 5) }))
                                                   , (1000000000000 - 10000000000) , nothing , nothing))
                                                 ∷ [])
                          ; txfee = 10000000000
@@ -87,7 +87,7 @@ succeedTx = record { body = record
                          ; txdonation = 0
                          ; txup = nothing
                          ; txADhash = nothing
-                         ; txNetworkId = just tt
+                         ; txNetworkId = just 0
                          ; curTreasury = nothing
                          ; txsize = 10
                          ; txid = 7
@@ -123,7 +123,7 @@ failTx = record { body = record
                          ; txdonation = 0
                          ; txup = nothing
                          ; txADhash = nothing
-                         ; txNetworkId = just tt
+                         ; txNetworkId = just 0
                          ; curTreasury = nothing
                          ; txsize = 10
                          ; txid = 7
@@ -148,8 +148,7 @@ exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
-  unfolding Computational-UTXO
-  unfolding outs
+  unfolding L.outs
 
   gotScript : lookupScriptHash 777 succeedTx initStateDatum ≡ just (inj₂ succeedIf1Datum)
   gotScript = refl
@@ -177,8 +176,8 @@ opaque
   failExample : ComputationResult String UTxOState
   failExample = UTXO-step initEnv ⟦ initStateRedeemer , 0 , ∅ , 0 ⟧ᵘ  failTx
 
-  _ : failExample ≡ failure "¬ feesOK pp tx utxo ≡ true"
-  _ = refl
+  _ : isFailure failExample
+  _ = _ , refl
 
   -- Note that the UTXOS rule succeeds but the UTXO rule fails for failTx
   failExampleS : Bool

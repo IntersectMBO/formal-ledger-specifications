@@ -15,7 +15,7 @@ module Ledger.TokenAlgebra (
   : Type) where
 open import Ledger.Prelude
 
-open import Algebra              using (CommutativeMonoid ; Monoid)
+open import Algebra              using (Monoid)
 open import Algebra.Morphism     using (module MonoidMorphisms )
 open import Data.Nat.Properties  using (+-0-monoid)
 open import Relation.Binary      using (Rel)
@@ -34,12 +34,11 @@ record TokenAlgebra : Type₁ where
 \end{code}
 \begin{code}
     Value : Set
-    ⦃ Value-IsCommutativeMonoid' ⦄ : IsCommutativeMonoid' 0ℓ 0ℓ Value
+    ⦃ Value-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ Value
 
 \end{code}
 \begin{code}[hide]
-  Value-CommutativeMonoid = fromCommMonoid' Value-IsCommutativeMonoid'
-  open CommutativeMonoid Value-CommutativeMonoid public
+  open Algebra.CommutativeMonoid (Conversion.toBundle Value-CommutativeMonoid) public
     using (_≈_ ; ε ; monoid ; rawMonoid)
     renaming (_∙_ to _+ᵛ_)
 

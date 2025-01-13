@@ -28,24 +28,24 @@ let
     src = fetchFromGitHub {
       repo = "agda-stdlib-classes";
       owner = "omelkonian";
-      rev = "v2.0";
-      sha256 = "sha256-PcieRRnctjCzFCi+gUYAgyIAicMOAZPl8Sw35fZdt0E=";
+      rev = "28df278381c94a25c54f6819524cd9f8cb99f092";
+      sha256 = "sha256-TdPJ3K4jyAIQgX1sUrqd0QeA72n2mkBVzlg8WfrqWWY=";
     };
     meta = { };
     libraryFile = "agda-stdlib-classes.agda-lib";
-    everythingFile = "Classes.agda";
+    everythingFile = "standard-library-classes.agda";
     buildInputs = [ agdaStdlib ];
   };
 
   agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-meta";
-    version = "2.0";
+    version = "2.1.1";
     src = fetchFromGitHub {
       repo = "stdlib-meta";
-      owner = "input-output-hk";
-      rev = "4fc4b1ed6e47d180516917d04be87cbacbf7d314";
-      sha256 = "T+9vwccbDO1IGBcGLjgV/fOt+IN14KEV9ct/J6nQCsM=";
+      owner = "omelkonian";
+      rev = "v2.1.1";
+      sha256 = "qOoThYMG0dzjKvwmzzVZmGcerfb++MApbaGRzLEq3/4=";
     };
     meta = { };
     libraryFile = "agda-stdlib-meta.agda-lib";
@@ -53,7 +53,23 @@ let
     buildInputs = [ agdaStdlib agdaStdlibClasses ];
   };
 
-  deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta ];
+  agdaSets = customAgda.agdaPackages.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    pname = "agda-sets";
+    version = "2.1.1";
+    src = fetchFromGitHub {
+      repo = "agda-sets";
+      owner = "input-output-hk";
+      rev = "f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6";
+      sha256 = "sha256-OsdDNNJp9NWDgDM0pDOGv98Z+vAS1U8mORWF7/B1D7k=";
+    };
+    meta = { };
+    libraryFile = "abstract-set-theory.agda-lib";
+    everythingFile = "src/abstract-set-theory.agda";
+    buildInputs = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta ];
+  };
+
+  deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets ];
   agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
 
 in

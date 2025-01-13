@@ -27,12 +27,11 @@ module Ledger.Utxo
   where
 
 open import Ledger.ScriptValidation txs abs
+open import Ledger.Fees txs using (scriptsCost)
+open import Ledger.Certs govStructure
 
 instance
   _ = +-0-monoid
-
-  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = ∑[ x ← s ] x
 
 infixl 7 _*↓_
 
@@ -91,7 +90,8 @@ and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition sy
 \end{NoConway}
 %
 \begin{Conway}
-Figure~\ref{fig:functions:utxo} defines functions needed for the UTxO transition system.
+Figures~\ref{fig:ts-types:utxo}--\ref{fig:functions:utxo-conway}
+define types and functions needed for the UTxO transition system.
 \end{Conway}
 %
 \ Note the special multiplication symbol \AgdaFunction{*↓} used in
@@ -99,7 +99,7 @@ Figure~\ref{fig:functions:utxo}: it means multiply and take the absolute value o
 result, rounded down to the nearest integer.
 
 \begin{NoConway}
-Figure~\ref{fig:ts-types:utxo-shelley} defines the types needed for the UTxO transition system.
+Figure~\ref{fig:ts-types:utxo} defines the types needed for the UTxO transition system.
 The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
 
 \begin{itemize}
@@ -131,16 +131,16 @@ updating this map, which is split into \updateCertDeposits and
 \updateProposalDeposits, responsible for certificates and proposals
 respectively. Both of these functions iterate over the relevant fields
 of the transaction body and insert or remove deposits depending on the
-information seen. Note that some deposits can only be refunded at the
-epoch boundary and are not removed by these functions.
+information seen.  Note that some deposits can only be
+refunded at the epoch boundary and are not removed by these functions.
 
 There are two equivalent ways to introduce this tracking of the
 deposits. One option would be to populate the \deposits field of
 \UTxOState with the correct keys and values that can be extracted from
-the state of the previous era at the transition into the Conway
-era. Alternatively, this logic can be implemented in older eras and
-replaying the chain with that implementation, effectively treating it
-as an erratum to the Shelley specification.
+the state of the previous era at the transition into the Conway era.
+Alternatively, we can effectively treat the old handling of deposits
+as an erratum in the Shelley specification, which we fix by implementing
+the new deposits logic in older eras and then replaying the chain.
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -184,10 +184,10 @@ data
 \end{NoConway}
 \end{AgdaMultiCode}
 \caption{UTxO transition-system types}
-\label{fig:ts-types:utxo-shelley}
+\label{fig:ts-types:utxo}
 \end{figure*}
 
-\begin{figure*}[h]
+\begin{figure*}[htbp]
 \begin{code}[hide]
 module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
@@ -205,12 +205,13 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
+  refScriptsSize : UTxO → Tx → ℕ
+  refScriptsSize utxo tx = sum $ map scriptSize (refScripts tx utxo)
+
   minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  =
-    pp .a * tx .body .txsize + pp .b
-    + txscriptfee (pp .prices) (totExUnits tx)
-    + pp .minFeeRefScriptCoinsPerByte
-    *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
+  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
+                     + txscriptfee (pp .prices) (totExUnits tx)
+                     + scriptsCost pp (refScriptsSize utxo tx)
 
 \end{code}
 \begin{code}[hide]
@@ -219,22 +220,98 @@ instance
   HasCoin-UTxO .getCoin = cbalance
 \end{code}
 \begin{code}
-certDeposit : DCert → PParams → DepositPurpose ⇀ Coin
+certDeposit : DCert → PParams → Deposits
 certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
+certDeposit (reg c _)          pp  = ❴ CredentialDeposit c , pp .keyDeposit ❵
 certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
 certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
 certDeposit _                  _   = ∅
 
 certRefund : DCert → ℙ DepositPurpose
-certRefund (dereg c _)    = ❴ CredentialDeposit c ❵
-certRefund (deregdrep c)  = ❴ DRepDeposit c ❵
-certRefund _              = ∅
+certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
+certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
+certRefund _                = ∅
 
-updateCertDeposits  : PParams → List DCert → (DepositPurpose ⇀ Coin)
-                    → DepositPurpose ⇀ Coin
-updateCertDeposits _   []              deposits = deposits
-updateCertDeposits pp  (cert ∷ certs)  deposits
-  = (updateCertDeposits pp certs deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
+data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set
+\end{code}
+\begin{code}[hide]
+  where
+  []         : ValidCertDeposits pp deps []
+  delegate   : ∀ {c del kh v certs}
+             → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , v ❵) certs
+             → ValidCertDeposits pp deps (delegate c del kh v ∷ certs)
+  regpool    : ∀ {kh p certs}
+             → ValidCertDeposits pp (deps ∪⁺ ❴ PoolDeposit kh , pp .poolDeposit ❵) certs
+             → ValidCertDeposits pp deps (regpool kh p ∷ certs)
+  regdrep    : ∀ {c v a certs}
+             → ValidCertDeposits pp (deps ∪⁺ ❴ DRepDeposit c , v ❵) certs
+             → ValidCertDeposits pp deps (regdrep c v a ∷ certs)
+  reg        : ∀ {c v certs}
+             → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , pp .keyDeposit ❵) certs
+             → ValidCertDeposits pp deps (reg c v ∷ certs)
+  dereg      : ∀ {c d certs}
+             → (CredentialDeposit c , d) ∈ deps
+             → ValidCertDeposits pp (deps ∣ ❴ CredentialDeposit c ❵ ᶜ) certs
+             → ValidCertDeposits pp deps (dereg c d ∷ certs)
+  deregdrep  : ∀ {c d certs}
+             → (DRepDeposit c , d) ∈ deps
+             → ValidCertDeposits pp (deps ∣ ❴ DRepDeposit c ❵ ᶜ) certs
+             → ValidCertDeposits pp deps (deregdrep c d ∷ certs)
+  ccreghot   : ∀ {c v certs}
+             → ValidCertDeposits pp deps certs
+             → ValidCertDeposits pp deps (ccreghot c v ∷ certs)
+  retirepool : ∀ {kh e certs}
+             → ValidCertDeposits pp deps certs
+             → ValidCertDeposits pp deps (retirepool kh e  ∷ certs)
+
+private
+  validCertDeposits? : ∀ {pp} deps certs → Dec (ValidCertDeposits pp deps certs)
+  validCertDeposits? deps [] = yes []
+  validCertDeposits? deps (delegate _ _ _ _ ∷ certs) =
+    mapDec delegate (λ where (delegate p) → p) (validCertDeposits? _ _)
+  validCertDeposits? deps (regpool _ _ ∷ certs) =
+    mapDec regpool (λ where (regpool p) → p) (validCertDeposits? _ _)
+  validCertDeposits? deps (regdrep _ _ _ ∷ certs) =
+    mapDec regdrep (λ where (regdrep p) → p) (validCertDeposits? _ _)
+  validCertDeposits? deps (retirepool _ _ ∷ certs) =
+    mapDec retirepool (λ where (retirepool p) → p) (validCertDeposits? _ _)
+  validCertDeposits? deps (ccreghot _ _ ∷ certs) =
+    mapDec ccreghot (λ where (ccreghot p) → p) (validCertDeposits? _ _)
+  validCertDeposits? deps (reg _ _ ∷ certs) =
+    mapDec reg (λ where (reg p) → p) (validCertDeposits? _ _)
+  validCertDeposits? deps (dereg c d ∷ certs) with ¿ (CredentialDeposit c , d) ∈ deps ¿
+  ... | yes p = mapDec (dereg p)  (λ where (dereg _ d) → d) (validCertDeposits? _ _)
+  ... | no ¬p = no (λ where (dereg p _) → ¬p p)
+  validCertDeposits? deps (deregdrep c d ∷ certs) with ¿ (DRepDeposit c , d) ∈ deps ¿
+  ... | yes p = mapDec (deregdrep p)  (λ where (deregdrep _ v) → v) (validCertDeposits? _ _)
+  ... | no ¬p = no (λ where (deregdrep p _) → ¬p p)
+
+instance
+  Dec-ValidCertDeposits : ∀ {pp deps certs} → ValidCertDeposits pp deps certs ⁇
+  Dec-ValidCertDeposits = ⁇ (validCertDeposits? _ _)
+\end{code}
+\begin{code}
+
+updateCertDeposits  : PParams → List DCert → Deposits → Deposits
+updateCertDeposits pp [] deposits = deposits
+\end{code}
+\begin{code}[hide]
+updateCertDeposits pp (reg c v ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (reg c v) pp)
+\end{code}
+\begin{code}
+updateCertDeposits pp (delegate c vd khs v ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (delegate c vd khs v) pp)
+updateCertDeposits pp (regpool kh p ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (regpool kh p) pp)
+updateCertDeposits pp (regdrep c v a ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (regdrep c v a) pp)
+updateCertDeposits pp (dereg c v ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∣ certRefund (dereg c v)ᶜ)
+updateCertDeposits pp (deregdrep c v ∷ certs) deposits
+  = updateCertDeposits pp certs (deposits ∣ certRefund (deregdrep c v)ᶜ)
+updateCertDeposits pp (_ ∷ certs) deposits
+  = updateCertDeposits pp certs deposits
 
 updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
 updateProposalDeposits []        _     _      deposits  = deposits
@@ -249,7 +326,7 @@ updateDeposits pp txb = updateCertDeposits pp txcerts
 \begin{code}[hide]
   where open TxBody txb
 
-proposalDepositsΔ : List GovProposal → PParams → TxBody → DepositPurpose ⇀ Coin
+proposalDepositsΔ : List GovProposal → PParams → TxBody → Deposits
 proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActionDeposit) ∅
   where open TxBody txb
 \end{code}
@@ -320,13 +397,13 @@ isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
 \begin{code}
 
 feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
-                  ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                  =>ᵇ ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                      ∧ isAdaOnlyᵇ bal
-                      ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
-                      ∧ not (≟-∅ᵇ collateral)
-                      )
+feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
+                        =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
+                             ∧ isAdaOnlyᵇ bal
+                             ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
+                             ∧ not (≟-∅ᵇ collateral)
+                             )
+                     )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
@@ -338,15 +415,7 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ txfee
 \end{figure*}
 \end{NoConway}
 
-We redefine \depositRefunds and \newDeposits via \depositsChange,
-which computes the difference between the total deposits before and
-after their application. This simplifies their definitions and some
-correctness proofs. We then add the absolute value of \depositsChange
-to \consumed or \produced depending on its sign. This is done via
-\negPart and \posPart, which satisfy the key property that their
-difference is the identity function.
-
-\begin{figure*}
+\begin{figure*}[htbp]
 \begin{code}[hide]
 module _ (let open UTxOState; open TxBody) where
 \end{code}
@@ -362,24 +431,46 @@ module _ (let open UTxOState; open TxBody) where
     =  balance (st .utxo ∣ txb .txins)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
+    +  inject (getCoin (txb .txwdrls))
 
   produced : PParams → UTxOState → TxBody → Value
-  produced pp st txb
-    =  balance (outs txb)
-    +  inject (txb .txfee)
-    +  inject (newDeposits pp st txb)
-    +  inject (txb .txdonation)
+  produced pp st txb = balance (outs txb)
+                     + inject (txb .txfee)
+                     + inject (newDeposits pp st txb)
+                     + inject (txb .txdonation)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
-\label{fig:functions:utxo-2}
+\label{fig:functions:utxo-conway}
 \end{figure*}
 
+As seen in Figures~\ref{fig:functions:utxo} and~\ref{fig:functions:utxo-conway},
+we redefine \depositRefunds and \newDeposits via \depositsChange,
+which computes the difference between the total deposits before and
+after their application. This simplifies their definitions and some
+correctness proofs. We then add the absolute value of \depositsChange
+to \consumed or \produced depending on its sign. This is done via
+\negPart and \posPart, which satisfy the key property that their
+difference is the identity function.
+
+Figures~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
+Inhabitants of this type are constructed in one of eight ways, corresponding to
+seven certificate types plus one for an empty list of certificates.  Suffice it to
+say that \ValidCertDeposits is used to check the validity of the deposits in a
+transaction so that the function \updateCertDeposits can correctly register and
+deregister deposits in the UTxO state based on the certificates in the transaction.
+
+\begin{figure*}[htbp]
 \begin{code}[hide]
 open PParams
 data
+\end{code}
+\begin{code}
   _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
-
+\end{code}
+\begin{code}[hide]
 data _⊢_⇀⦇_,UTXOS⦈_ where
+\end{code}
+\begin{code}
   Scripts-Yes :
     ∀ {Γ} {s} {tx}
     → let open Tx tx renaming (body to txb); open TxBody txb
@@ -387,14 +478,11 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
+        ∙ ValidCertDeposits pp deposits txcerts
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
-                              , fees + txfee
-                              , updateDeposits pp txb deposits
-                              , donations + txdonation
-                              ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧ᵘ
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -406,12 +494,13 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
-                              , fees + cbalance (utxo ∣ collateral)
-                              , deposits
-                              , donations
-                              ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
+\end{code}
+\caption{UTXOS rule}
+\label{fig:utxos-conway}
+\end{figure*}
 
+\begin{code}[hide]
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
@@ -434,10 +523,6 @@ instance
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
-\begin{NoConway}
-We write \maybeEq to mean that two potentially optional values are
-equal if they are both present.
-
 \begin{figure*}[h]
 \begin{code}
   UTXO-inductive :
@@ -445,32 +530,37 @@ equal if they are both present.
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)
+        overhead = 160
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
-        inject (utxoEntrySize txout * minUTxOValue pp) ≤ᵗ getValueʰ txout
+        inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ networkId
-    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ networkId
-    ∙ txNetworkId ≡? networkId
+    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
+    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
+    ∙ txNetworkId ≡? NetworkId
     ∙ curTreasury ≡? treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
-\end{NoConway}
+Figure~\ref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together.
+(The \maybeEq symbol that appears in the figure denotes a special equality where
+the value on the left-handside is optional; equality holds if and only if the value
+on the left is present and equal to the value on the right.)

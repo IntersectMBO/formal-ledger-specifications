@@ -8,20 +8,17 @@ module ScriptVerification.LedgerImplementation
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import Data.Rational using (0ℚ; ½)
-open import Algebra             using (CommutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 open import Foreign.Convertible
 import Foreign.Haskell as F
-import Ledger.Foreign.LedgerTypes as F
 open import Ledger.Crypto
 open import Ledger.Transaction
 open import Ledger.Types.Epoch
 open import Ledger.Types.GovStructure
-open import Interface.HasOrder.Instance
 
-module _ {A : Type} ⦃ _ : DecEq A ⦄ where instance
+module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id
 
@@ -33,11 +30,11 @@ instance
   Hashable-⊤ = λ where .hash tt → 0
 
 module Implementation where
-  Network          = ⊤
+  Network          = ℕ
   SlotsPerEpochᶜ   = 100
   StabilityWindowᶜ = 10
   Quorum           = 1
-  NetworkId        = tt
+  NetworkId        = 0
 
   SKey = ℕ
   VKey = ℕ
@@ -56,7 +53,7 @@ module Implementation where
   ScriptHash = ℕ
 
   ExUnits      = ℕ × ℕ
-  ExUnit-CommutativeMonoid = IsCommutativeMonoid' 0ℓ 0ℓ ExUnits ∋ (toCommMonoid' record
+  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ExUnits ∋ (Conversion.fromBundle record
     { Carrier = ExUnits
     ; _≈_ = _≈ᵖ_
     ; _∙_ = _∙ᵖ_
@@ -65,6 +62,10 @@ module Implementation where
     }) where open import Algebra.PairOp ℕ zero _≡_ _+_
   _≥ᵉ_ : ExUnits → ExUnits → Type
   _≥ᵉ_ = _≡_
+  instance
+    Show-ExUnits : Show ExUnits
+    Show-ExUnits = Show-×
+
   CostModel    = ⊤ -- changed from ⊥
   Language     = ⊤
   LangDepView  = ⊤
@@ -73,7 +74,7 @@ module Implementation where
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
-    .Value-IsCommutativeMonoid' → it
+    .Value-CommutativeMonoid    → it
       -- ^ Agda bug? Without this line, `coinIsMonoidHomomorphism` doesn't type check anymore
     .coin                       → id
     .inject                     → id
@@ -91,9 +92,8 @@ module Implementation where
 
   TxId            = ℕ
   Ix              = ℕ
-  AuxiliaryData   = ⊤
+  AuxiliaryData   = ℕ
   DocHash         = ℕ
-  networkId       = tt
   tokenAlgebra    = coinTokenAlgebra
 
 SVGlobalConstants = GlobalConstants ∋ record {Implementation}
@@ -110,25 +110,23 @@ SVCrypto = record
   SVPKKScheme : PKKScheme
   SVPKKScheme = record
     { Implementation
-    ; isSigned         = λ a b m → a + b ≡ m
-    ; sign             = _+_
-    ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
+    ; isSigned         = λ a b m → ⊤
+    ; sign             = λ _ _ → zero
+    ; isSigned-correct = λ where (sk , sk , refl) _ _ h → tt
     }
 
 instance _ = SVCrypto
 
 open import Ledger.Script it it
-
-
+open import Ledger.Conway.Conformance.Script it it
 
 SVScriptStructure : ScriptStructure
 SVScriptStructure = record
-  { hashRespectsUnion = hashRespectsUnion
-  ; ps = SVP2ScriptStructure }
+  { p1s = P1ScriptStructure-HTL
+  ; hashRespectsUnion = hashRespectsUnion
+  ; ps = SVP2ScriptStructure
+  }
   where
-
-    instance Hashable-Timelock : Hashable Timelock ℕ
-             Hashable-Timelock = record { hash = λ x → 0 }
 
     instance Hashable-PlutusScript : Hashable Implementation.PlutusScript ℕ
              Hashable-PlutusScript = record { hash = λ x → proj₁ x }
@@ -156,7 +154,6 @@ SVGovParams = record
       .updateGroups           → λ _ → ∅
       .applyUpdate            → λ p _ → p
       .ppWF?                  → ⁇ yes λ _ → id
-  ; ppHashingScheme = it
   }
 
 SVGovStructure : GovStructure
@@ -170,7 +167,7 @@ SVGovStructure = record
 instance _ = SVGovStructure
 
 open import Ledger.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
-open import Ledger.Certs it hiding (PoolParams; DCert)
+open import Ledger.Conway.Conformance.Certs it hiding (PoolParams; DCert)
 
 SVTransactionStructure : TransactionStructure
 SVTransactionStructure = record
@@ -186,7 +183,7 @@ SVTransactionStructure = record
 instance _ = SVTransactionStructure
 
 open import Ledger.Abstract it
-open import Ledger.Gov it
+open import Ledger.Conway.Conformance.Gov it
 
 open TransactionStructure it
 
@@ -210,4 +207,3 @@ SVAbstractFunctions = record
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions
-
