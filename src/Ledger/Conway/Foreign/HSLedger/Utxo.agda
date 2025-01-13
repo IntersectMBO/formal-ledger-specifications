@@ -2,9 +2,11 @@
 
 module Ledger.Conway.Foreign.HSLedger.Utxo where
 
+open import Ledger.Prelude
+
 open import Ledger.Conway.Foreign.ExternalFunctions
 
-open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length)
+open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length; map; fromList)
 
 open import Ledger.Conway.Foreign.HSLedger.Core
 open import Ledger.Conway.Foreign.HSLedger.Address
@@ -65,6 +67,9 @@ module _ (ext : ExternalFunctions) where
           ("\tDeposits:    \t" +ˢ show (inject (L.newDeposits pparams (from st) body))) ∷
           ("\tFees:        \t" +ˢ show (inject txfee)) ∷
           ("\tTotal:       \t" +ˢ show (L.produced pparams (from st) body)) ∷
+          "" ∷
+          "Reference Scripts Info:" ∷
+          ("\tTotal size: \t" +ˢ show (L.refScriptsSize utxo (from tx))) ∷
           []
 
   {-# COMPILE GHC utxo-debug as utxoDebug #-}
@@ -77,7 +82,7 @@ module _ (ext : ExternalFunctions) where
         open UTxOEnv (from env)
         open TxWitnesses (coerce ⦃ TrustMe ⦄ wits)
         neededHashes = LW.scriptsNeeded utxo body
-        refScriptHashes = mapˢ 
+        refScriptHashes = fromList $ map
           hash 
           (refScripts (coerce ⦃ TrustMe ⦄ (from tx)) (coerce ⦃ TrustMe ⦄ utxo))
         witsScriptHashes  = mapˢ hash scripts

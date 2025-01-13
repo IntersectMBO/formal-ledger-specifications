@@ -159,7 +159,6 @@ record ScriptStructure : Type₁ where
 
   field hashRespectsUnion :
           {A B Hash : Type} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
-        ⦃ Hash-P1Script ⦄ : Hashable P1Script ScriptHash
 
   field ps : PlutusStructure
   open PlutusStructure ps public
