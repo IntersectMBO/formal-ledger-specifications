@@ -101,7 +101,7 @@ rec {
     '';
     postInstall = ''
       cp -r latex/ Makefile typecheck.time $out
-      sh checkTypeChecked.sh
+      sh checkTypeChecked.sh -m
     '';
     extraExtensions = [ "hs" "cabal" "py" ];
   };
