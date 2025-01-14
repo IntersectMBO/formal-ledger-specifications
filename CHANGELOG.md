@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Change the `DELEG-dereg` transition so that the deposit field can be empty
 - Require witnessing of `reg` credential if the deposit is non-zero
 - Add witnessing of collaterals
 - Rename `ccTermLimit` to `ccMaxTermLength`

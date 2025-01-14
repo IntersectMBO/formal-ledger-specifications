@@ -78,6 +78,7 @@ private variable
   an             : Anchor
   Γ              : CertEnv
   d              : Coin
+  md             : Maybe Coin
   c              : Credential
   mc             : Maybe Credential
   delegatees cc  : ℙ Credential
@@ -131,12 +132,13 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
     ∙ (CredentialDeposit c , d) ∈ dep
+    ∙ md ≡ nothing ⊎ md ≡ just d
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
-      ⇀⦇ dereg c d ,DELEG⦈
+      ⇀⦇ dereg c md ,DELEG⦈
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
-      , updateCertDeposit pp (dereg c d) dep ⟧ᵈ
+      , updateCertDeposit pp (dereg c md) dep ⟧ᵈ
 
   DELEG-reg : let open PParams pp in
     ∙ c ∉ dom rwds

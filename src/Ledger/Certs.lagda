@@ -49,7 +49,7 @@ record PoolParams : Type where
 \begin{code}
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
-  dereg       : Credential → Coin → DCert
+  dereg       : Credential → Maybe Coin → DCert
   regpool     : KeyHash → PoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
@@ -193,6 +193,7 @@ private variable
   an          : Anchor
   Γ           : CertEnv
   d           : Coin
+  md          : Maybe Coin
   c           : Credential
   mc          : Maybe Credential
   delegatees  : ℙ Credential
@@ -341,7 +342,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c md ,DELEG⦈
         ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 \end{code}
 \begin{code}[hide]

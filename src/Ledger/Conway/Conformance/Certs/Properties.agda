@@ -17,6 +17,12 @@ open import Tactic.GenError using (genErrors)
 
 open DCert ; open PState
 
+
+lookupDeposit : 
+  (dep : DepositPurpose ⇀ Coin) (c : DepositPurpose) → 
+  Dec (Any (λ (c' , _) → c ≡ c') (dep ˢ))
+lookupDeposit dep c = any? (λ { _ → ¿ _ ¿ }) (dep ˢ)
+
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
   Computational-DELEG .computeProof ⟦ pp , pools , delegatees ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ = λ where
@@ -27,8 +33,15 @@ instance
                                 × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿ of λ where
       (yes p) → success (-, DELEG-delegate p )
       (no ¬p) → failure (genErrors ¬p)
-    (dereg c d) → case ¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ dep ¿ of λ where
-      (yes p) → success (-, DELEG-dereg p)
+    (dereg c md) → case lookupDeposit dep (CredentialDeposit c) of λ where
+      (yes ((k , d) , _)) → 
+        case 
+          ¿ (c , 0) ∈ rwds 
+          × (CredentialDeposit c , d) ∈ dep 
+          × (md ≡ nothing ⊎ md ≡ just d)
+          ¿ of λ where
+            (yes q) → success (-, DELEG-dereg q)
+            (no ¬q) → failure (genErrors ¬q)
       (no ¬p) → failure (genErrors ¬p)
     (reg c d) → case ¿ c ∉ dom rwds × (d ≡ pp .PParams.keyDeposit ⊎ d ≡ 0) ¿ of λ where
       (yes p) → success (-, DELEG-reg p)
@@ -41,8 +54,23 @@ instance
                                            × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
                                                fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
                                            × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
-  Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
-    rewrite dec-yes (¿ (c , 0) ∈ rwds × (CredentialDeposit c , d) ∈ dep ¿) p .proj₂ = refl
+  Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ds@(⟦ _ , _ , rwds , dep@(depˢ , dep-uniq) ⟧ᵈ) (dereg c nothing) _ (DELEG-dereg h@(p , q , r)) 
+    with lookupDeposit dep (CredentialDeposit c) 
+  ... | (yes ((_ , d') , s₂ , refl)) rewrite dec-yes
+          (¿ (c , 0) ∈ rwds 
+           × (CredentialDeposit c , d') ∈ dep 
+           × (nothing ≡ nothing {A = ℕ} ⊎ nothing ≡ just d')
+           ¿) (p , s₂ , inj₁ refl) .proj₂ = refl
+  Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ds@(⟦ _ , _ , rwds , dep ⟧ᵈ) (dereg c nothing) _ (DELEG-dereg h@(p , q , r)) 
+      | (no ¬s) = ⊥-elim (¬s (_ , q , refl))
+  Computational-DELEG .completeness ⟦ _ , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds , dep@(depˢ , dep-uniq) ⟧ᵈ (dereg c (just d)) _ (DELEG-dereg h@(p , q , inj₂ refl)) 
+    with lookupDeposit dep (CredentialDeposit c) 
+  ... | (yes ((_ , d') , q' , refl)) rewrite dec-yes
+          (¿ (c , 0) ∈ rwds 
+           × (CredentialDeposit c , d') ∈ dep 
+           × (just d ≡ nothing {A = ℕ} ⊎ just d ≡ just d')
+           ¿) (p , q' , inj₂ (cong just (dep-uniq q q'))) .proj₂ = refl
+  ... | (no ¬s) = ⊥-elim (¬s (_ , q , refl))
   Computational-DELEG .completeness ⟦ pp , _ , _ ⟧ᵈᵉ ⟦ _ , _ , rwds , dep ⟧ᵈ (reg c d) _ (DELEG-reg p)
     rewrite dec-yes (¿ c ∉ dom rwds × (d ≡ pp .PParams.keyDeposit ⊎ d ≡ 0) ¿) p .proj₂ = refl
 
