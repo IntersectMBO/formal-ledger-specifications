@@ -65,7 +65,56 @@ module Implementation where
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
+
   open import Ledger.TokenAlgebra ℕ
+  open import Ledger.TokenAlgebra.ValueSet ℕ String
+  open import Class.DecEq.Instances
+
+  should : DecEq AssetId
+  should = DecEq-×
+
+  open import Tactic.Derive.DecEq
+  open import Relation.Binary.PropositionalEquality as PropEq
+  open import Relation.Nullary
+  open import Axiom.Set.Properties
+
+  _⊆?_ : ∀ {A : Set} ⦃ _ : DecEq A ⦄ → (n m : ℙ A) → Dec (n ⊆ m)
+  X ⊆? Y = all? (λ x → x ∈? Y)
+
+  setoidEqualityIsDecidable : ∀ (n m : TotalMap AssetId ℕ) → Dec ((TotalMap.rel n) ≡ᵉ (TotalMap.rel m))
+  setoidEqualityIsDecidable n m with _⊆?_ (TotalMap.rel n) (TotalMap.rel m)
+                                    | _⊆?_ (TotalMap.rel m) (TotalMap.rel n)
+  ... | no ¬a | _ =  no (λ { (fst , snd) → ¬a fst})
+  ... | yes a | no ¬a = no (λ { (fst , snd) → ¬a snd})
+  ... | yes a | yes a₁ = yes (a , a₁) 
+
+  postulate
+    setoidIsEq : (n m : TotalMap AssetId ℕ) → Dec ((TotalMap.rel n) ≡ᵉ (TotalMap.rel m)) → Dec (n ≡ m)
+
+  instance
+    _ : DecEq (TotalMap AssetId ℕ)
+    _ = record { _≟_ = λ x y → setoidIsEq x y (setoidEqualityIsDecidable x y) }
+
+  lookupImp : {u v : TotalMap AssetId ℕ} →
+              ({a : ℕ} {p q : String} →
+              (ℕ-hasPreorder HasPreorder.≤ TotalMap.lookup u (a , p))
+              (TotalMap.lookup v (a , q))) ⁇ 
+  lookupImp = ⁇ {!!}
+
+  sizeImp : TotalMap AssetId Quantity → ℕ
+  sizeImp x = 0
+
+  assetIds : ℙ AssetId
+  assetIds = listToSet ((0 , "nft0") ∷ ((1 , "nft1") ∷ []))
+
+  assetIdsIsMaximal : isMaximal assetIds
+  assetIdsIsMaximal {a} = {!!}
+
+  nftTokenAlgebra : TokenAlgebra
+  nftTokenAlgebra = Value-TokenAlgebra {assetIds} {{!!}}
+                    {!!} 1 "Hello" sizeImp
+
+
   coinTokenAlgebra : TokenAlgebra
   coinTokenAlgebra = λ where
     .Value                      → ℕ
