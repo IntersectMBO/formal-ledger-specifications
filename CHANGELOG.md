@@ -36,6 +36,9 @@
 - Check `proposal ≡ nothing` if action not `ChangePParams` or `TreasuryWdrl`
 - Implement proper vote counting for SPOs
 - Check a DRep exists before delegating to it.
+- Prevent older Plutus versions in transaction with Conway features
+- Allow reference scripts and inputs to be used with Plutus V1
+- Add sanity checks for delegating hot credentials
 
 ### V0.9
 
