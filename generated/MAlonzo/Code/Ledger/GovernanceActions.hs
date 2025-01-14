@@ -685,3 +685,29 @@ du_getDRepVote_804 v0
                        _ -> coe v7)
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Ledger.GovernanceActions.proposedCC
+d_proposedCC_808 ::
+  MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
+  T_GovAction_690 -> [MAlonzo.Code.Ledger.Address.T_Credential_16]
+d_proposedCC_808 ~v0 v1 = du_proposedCC_808 v1
+du_proposedCC_808 ::
+  T_GovAction_690 -> [MAlonzo.Code.Ledger.Address.T_Credential_16]
+du_proposedCC_808 v0
+  = let v1
+          = coe
+              MAlonzo.Code.Axiom.Set.du_'8709'_442
+              (coe
+                 MAlonzo.Code.Axiom.Set.d_th_1470
+                 (coe
+                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)) in
+    coe
+      (case coe v0 of
+         C_UpdateCommittee_694 v2 v3 v4
+           -> coe
+                MAlonzo.Code.Class.IsSet.du_dom_548
+                (coe
+                   MAlonzo.Code.Axiom.Set.d_th_1470
+                   (coe
+                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556) (coe v2)
+         _ -> coe v1)
