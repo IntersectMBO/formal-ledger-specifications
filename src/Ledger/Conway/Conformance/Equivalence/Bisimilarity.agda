@@ -1,3 +1,4 @@
+{-# OPTIONS --safe #-}
 
 module Ledger.Conway.Conformance.Equivalence.Bisimilarity where
 

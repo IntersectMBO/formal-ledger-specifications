@@ -1,4 +1,4 @@
-{-# OPTIONS --allow-unsolved-metas #-}
+{-# OPTIONS --safe #-}
 
 module Ledger.Conway.Conformance.Equivalence.Map where
 
