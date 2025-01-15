@@ -93,6 +93,6 @@ open import Ledger.PDF.ConwayBootstrap
 \input{Ledger/EssentialAgda}
 \input{Ledger/PDF/ConwayBootstrapEnact}
 \input{Ledger/PDF/ConwayBootstrap}
-\input{Ledger/PDF/Diagrams}
+\input{Diagrams}
 
 \end{document}
