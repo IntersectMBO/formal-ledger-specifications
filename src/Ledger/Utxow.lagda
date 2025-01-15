@@ -129,7 +129,6 @@ scriptsNeeded = getScripts ∘ mapˢ proj₂ ∘ credsNeeded
 \label{fig:functions:utxow}
 \end{figure*}
 
-\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}[hide]
 data
@@ -142,6 +141,7 @@ data
 \end{figure*}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 private variable
   Γ : UTxOEnv
@@ -152,29 +152,38 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
-    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-        open UTxOState s
-        witsKeyHashes     = mapˢ hash (dom vkSigs)
-        witsScriptHashes  = mapˢ hash scripts
-        inputHashes       = getInputHashes tx utxo
-        refScriptHashes   = fromList $ map hash (refScripts tx utxo)
-        neededHashes      = scriptsNeeded utxo txb
-        txdatsHashes      = dom txdats
-        allOutHashes      = getDataHashes (range txouts)
-        nativeScripts     = mapPartial isInj₁ (txscripts tx utxo)
-    in
-    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
-    ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
-    ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
-    ∙  languages tx utxo ⊆ allowedLanguages tx utxo
-    ∙  txADhash ≡ map hash txAD
-    ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 \end{code}
+\begin{code}[hide]
+    let  open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+         open UTxOState s
+\end{code}
+\begin{code}
+         witsKeyHashes     = mapˢ hash (dom vkSigs)
+         witsScriptHashes  = mapˢ hash scripts
+         inputHashes       = getInputHashes tx utxo
+         refScriptHashes   = fromList $ map hash (refScripts tx utxo)
+         neededHashes      = scriptsNeeded utxo txb
+         txdatsHashes      = dom txdats
+         allOutHashes      = getDataHashes (range txouts)
+         nativeScripts     = mapPartial isInj₁ (txscripts tx utxo)
+\end{code}
+\begin{code}[hide]
+    in
+\end{code}
+\begin{code}
+         ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
+         ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
+         ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
+         ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
+         ∙  inputHashes ⊆ txdatsHashes
+         ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
+         ∙  languages tx utxo ⊆ allowedLanguages tx utxo
+         ∙  txADhash ≡ map hash txAD
+         ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
+            ────────────────────────────────
+            Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
+\end{code}
+\end{AgdaMultiCode}
 \caption{UTXOW inference rules}
 \label{fig:rules:utxow}
 \end{figure*}
@@ -186,4 +195,24 @@ pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}
-\end{NoConway}
+
+\href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-0069}{CIP-0069}
+unifies the arguments given to all types of Plutus scripts currently available
+(spending, certifying, rewarding, minting) by removing the argument of a datum.
+This aims to address the mutual dependency issue (two validators that need to
+know each other's hash), which arises when designing dapps and is widely
+considered a substantial barrier to safe protocols and a considerable limitation
+on our design space.
+
+According to CIP-0069, every validator must take the redeemer and script
+context as arguments.  Datums are provided by either looking them up in the
+\texttt{ScriptContext} or extending the \texttt{Spending} constructor of
+\texttt{TxInfo} to carry (\texttt{TxOutRef}, \texttt{Datum}).
+
+The formal specification (in the Conway era) permits empty datums.
+In Figure~\ref{fig:rules:utxow}, for example, the line
+\inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
+\PowerSet~\DataHash.\footnote{In the original Alonzo spec, these two terms would
+have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out.
+In original spec, however, the right-hand side (\txdatsHashes) could never
+contain \nothing, hence the left-hand side (\inputHashes) could never contain \nothing.}
