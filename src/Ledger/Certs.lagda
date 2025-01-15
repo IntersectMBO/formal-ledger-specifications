@@ -49,7 +49,7 @@ record PoolParams : Type where
 \begin{code}
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
-  dereg       : Credential → Coin → DCert
+  dereg       : Credential → Maybe Coin → DCert
   regpool     : KeyHash → PoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
@@ -57,10 +57,10 @@ data DCert : Type where
   ccreghot    : Credential → Maybe Credential → DCert
 \end{code}
 \begin{code}[hide]
-  -- The `reg` cert is deprecated in Conway, but it's still present in this era 
-  -- for backwards compatibility. This has been added to the spec to make 
+  -- The `reg` cert is deprecated in Conway, but it's still present in this era
+  -- for backwards compatibility. This has been added to the spec to make
   -- conformance testing work properly. We don't talk about this certificate
-  -- in the pdf because it has been deprecated and we want to discourage people 
+  -- in the pdf because it has been deprecated and we want to discourage people
   -- from using it.
   reg         : Credential → Coin → DCert
 \end{code}
@@ -76,10 +76,10 @@ cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
 \end{code}
 \begin{code}[hide]
--- The implementation requires the `reg` cert to be witnessed only if the 
--- deposit is set. There didn't use to be a field for the deposit, but that was 
--- added in the Conway era to make it easier to determine, just by looking at 
--- the transaction, how much deposit was paid for that certificate. 
+-- The implementation requires the `reg` cert to be witnessed only if the
+-- deposit is set. There didn't use to be a field for the deposit, but that was
+-- added in the Conway era to make it easier to determine, just by looking at
+-- the transaction, how much deposit was paid for that certificate.
 cwitness (reg _ zero)        = nothing
 cwitness (reg c (suc _))     = just c
 \end{code}
@@ -94,7 +94,7 @@ cwitness (reg c (suc _))     = just c
 record CertEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ᶜ
+  constructor ⟦_,_,_,_,_⟧ᶜ
   field
 \end{code}
 \begin{code}
@@ -102,6 +102,7 @@ record CertEnv : Type where
     pp        : PParams
     votes     : List GovVote
     wdrls     : RwdAddr ⇀ Coin
+    coldCreds : ℙ Credential
 
 record DState : Type where
 \end{code}
@@ -192,6 +193,7 @@ private variable
   an          : Anchor
   Γ           : CertEnv
   d           : Coin
+  md          : Maybe Coin
   c           : Credential
   mc          : Maybe Credential
   delegatees  : ℙ Credential
@@ -207,6 +209,7 @@ private variable
   stᵈ stᵈ' : DState
   stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
+  cc : ℙ Credential
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -270,10 +273,9 @@ constitutional committee.
     hot credential is more conveniently accessed.  If the hot credential
     is compromised, it can be changed using the cold credential.}
   We check that the cold key did not previously
-  resign from the committee. Note that we intentionally do not check
-  if the cold key is actually part of the committee; if it isn't, then
-  the corresponding hot key does not carry any voting power. By allowing
-  this, a newly elected member of the constitutional committee can
+  resign from the committee. We allow this delegation for any cold
+  credential that is either part of \EnactState or is is a proposal.
+  This allows a newly elected member of the constitutional committee to
   immediately delegate their vote to a hot key and use it to vote. Since
   votes are counted after previous actions have been enacted, this allows
   constitutional committee members to act without a delay of one epoch.
@@ -340,7 +342,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c d ,DELEG⦈
+      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c md ,DELEG⦈
         ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
 \end{code}
 \begin{code}[hide]
@@ -389,18 +391,19 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
                                   ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
+    ∙ c ∈ cc
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
@@ -430,12 +433,12 @@ data _⊢_⇀⦇_,CERT⦈_ where
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
@@ -460,7 +463,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
         ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
         , stᵖ
         , ⟦ dReps , ccHotKeys ⟧ᵛ

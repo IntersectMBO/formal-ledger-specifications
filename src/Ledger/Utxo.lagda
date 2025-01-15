@@ -249,10 +249,11 @@ data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set
   reg        : ∀ {c v certs}
              → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , pp .keyDeposit ❵) certs
              → ValidCertDeposits pp deps (reg c v ∷ certs)
-  dereg      : ∀ {c d certs}
+  dereg      : ∀ {c md d certs}
              → (CredentialDeposit c , d) ∈ deps
+             → md ≡ nothing ⊎ md ≡ just d
              → ValidCertDeposits pp (deps ∣ ❴ CredentialDeposit c ❵ ᶜ) certs
-             → ValidCertDeposits pp deps (dereg c d ∷ certs)
+             → ValidCertDeposits pp deps (dereg c md ∷ certs)
   deregdrep  : ∀ {c d certs}
              → (DRepDeposit c , d) ∈ deps
              → ValidCertDeposits pp (deps ∣ ❴ DRepDeposit c ❵ ᶜ) certs
@@ -279,9 +280,12 @@ private
     mapDec ccreghot (λ where (ccreghot p) → p) (validCertDeposits? _ _)
   validCertDeposits? deps (reg _ _ ∷ certs) =
     mapDec reg (λ where (reg p) → p) (validCertDeposits? _ _)
-  validCertDeposits? deps (dereg c d ∷ certs) with ¿ (CredentialDeposit c , d) ∈ deps ¿
-  ... | yes p = mapDec (dereg p)  (λ where (dereg _ d) → d) (validCertDeposits? _ _)
-  ... | no ¬p = no (λ where (dereg p _) → ¬p p)
+  validCertDeposits? deps (dereg c nothing ∷ certs) with ¿ CredentialDeposit c ∈ dom deps ¿ 
+  ... | yes p = mapDec (dereg (proj₂ (Equivalence.from dom∈ p)) (inj₁ refl)) (λ { (dereg _ _ p) → p }) (validCertDeposits? _ _)
+  ... | no ¬p = no λ { (dereg x _ _) → ¬p (Equivalence.to dom∈ (_ , x)) }
+  validCertDeposits? deps (dereg c (just d) ∷ certs) with ¿ (CredentialDeposit c , d) ∈ deps ¿ 
+  ... | yes p = mapDec (dereg p (inj₂ refl)) (λ { (dereg _ _ p) → p }) (validCertDeposits? _ _)
+  ... | no ¬p = no λ { (dereg x (inj₂ refl) _) → ¬p x }
   validCertDeposits? deps (deregdrep c d ∷ certs) with ¿ (DRepDeposit c , d) ∈ deps ¿
   ... | yes p = mapDec (deregdrep p)  (λ where (deregdrep _ v) → v) (validCertDeposits? _ _)
   ... | no ¬p = no (λ where (deregdrep p _) → ¬p p)

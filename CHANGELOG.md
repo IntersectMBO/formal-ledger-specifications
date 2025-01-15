@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Change the `DELEG-dereg` transition so that the deposit field can be empty
 - Require witnessing of `reg` credential if the deposit is non-zero
 - Add witnessing of collaterals
 - Rename `ccTermLimit` to `ccMaxTermLength`
@@ -36,6 +37,9 @@
 - Check `proposal ≡ nothing` if action not `ChangePParams` or `TreasuryWdrl`
 - Implement proper vote counting for SPOs
 - Check a DRep exists before delegating to it.
+- Prevent older Plutus versions in transaction with Conway features
+- Allow reference scripts and inputs to be used with Plutus V1
+- Add sanity checks for delegating hot credentials
 
 ### V0.9
 

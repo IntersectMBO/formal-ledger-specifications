@@ -23,6 +23,7 @@ open import Ledger.Certs govStructure
 open Tx
 open GState
 open GovActionState
+open EnactState using (cc)
 \end{code}
 
 The entire state transformation of the ledger state caused by a valid
@@ -70,6 +71,9 @@ removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
 
 _|ᵒ_ : GovState → CertState → GovState
 govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
+allColdCreds : GovState → EnactState → ℙ Credential
+allColdCreds govSt es =
+  ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (st .action)) (fromList govSt)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types and functions for the LEDGER transition system}
@@ -110,7 +114,7 @@ data
   LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
