@@ -47,7 +47,7 @@ isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
 isTwoPhaseScriptAddress tx utxo a =
   if isScriptAddr a then
     (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
-                 then (λ {s} → isP2Script s)
+                 then (λ {s} → isYes (isP2Script? {s}))
                  else false)
   else
     false
