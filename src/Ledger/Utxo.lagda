@@ -43,14 +43,24 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
+isTwoPhaseScriptAddress : Tx → UTxO → Addr → Type
 isTwoPhaseScriptAddress tx utxo a =
   if isScriptAddr a then
     (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
-                 then (λ {s} → isYes (isP2Script? {s}))
-                 else false)
+                 then (λ {s} → isP2Script s)
+                 else ⊥)
   else
-    false
+    ⊥
+\end{code}
+\begin{code}[hide]
+isTwoPhaseScriptAddress? : ∀ {tx utxo a} → isTwoPhaseScriptAddress tx utxo a ⁇
+isTwoPhaseScriptAddress? {tx} {utxo} {a} .dec
+  with decide (isScriptAddr a)
+... | inj₂ _ = false because ofⁿ λ ()
+... | inj₁ p
+  with decide (lookupScriptHash (getScriptHash a p) tx utxo)
+... | inj₂ _ = false because ofⁿ λ ()
+... | inj₁ s = isP2Script? {s} .dec
 \end{code}
 \begin{code}[hide]
 opaque
@@ -61,8 +71,9 @@ opaque
 
   getInputHashes : Tx → UTxO → ℙ DataHash
   getInputHashes tx utxo = getDataHashes
-    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ txins)))
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a)
+             ⦃ λ {(a , _)} → isTwoPhaseScriptAddress? {tx} {utxo} {a} ⦄
+             (range (utxo ∣ txins)))
     where open Tx; open TxBody (tx .body)
 
 totExUnits : Tx → ExUnits
