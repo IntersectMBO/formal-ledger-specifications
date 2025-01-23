@@ -385,12 +385,13 @@ isAdaOnlyᵇ v = policies v ≡ᵉ coinPolicies
 \end{code}
 \begin{code}
 feesOK : PParams → Tx → UTxO → Type
-feesOK pp tx utxo = ( minfee pp utxo tx ≤ txfee × txrdmrs ˢ ≢ ∅
+feesOK pp tx utxo = ( minfee pp utxo tx ≤ txfee × (txrdmrs ˢ ≢ ∅
                       → ( All (λ (addr , _) → isVKeyAddr addr) collateralRange
                         × isAdaOnlyᵇ bal
                         × coin bal * 100 ≥ txfee * pp .collateralPercentage
                         × collateral ≢ ∅
                         )
+                      )
                     )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
