@@ -377,18 +377,6 @@ instance
                                + getCoin (UTxOState.deposits s)
                                + UTxOState.donations s
 
--- Boolean implication
-_=>ᵇ_ : Bool → Bool → Bool
-a =>ᵇ b = if a then b else true
-
--- Boolean-valued inequalities on natural numbers
-_≤ᵇ_ _≥ᵇ_ : ℕ → ℕ → Bool
-m ≤ᵇ n = ¿ m ≤ n ¿ᵇ
-_≥ᵇ_ = flip _≤ᵇ_
-
-≟-∅ᵇ : {A : Type} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
-≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
-
 coinPolicies : ℙ ScriptHash
 coinPolicies = policies (inject 1)
 
@@ -396,15 +384,14 @@ isAdaOnlyᵇ : Value → Type
 isAdaOnlyᵇ v = policies v ≡ᵉ coinPolicies
 \end{code}
 \begin{code}
-
-feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                        =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                             ∧ toBool (isAdaOnlyᵇ bal)
-                             ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
-                             ∧ not (≟-∅ᵇ collateral)
-                             )
-                     )
+feesOK : PParams → Tx → UTxO → Type
+feesOK pp tx utxo = ( minfee pp utxo tx ≤ txfee × txrdmrs ˢ ≢ ∅
+                      → ( All (λ (addr , _) → isVKeyAddr addr) collateralRange
+                        × isAdaOnlyᵇ bal
+                        × coin bal * 100 ≥ txfee * pp .collateralPercentage
+                        × collateral ≢ ∅
+                        )
+                    )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
@@ -535,7 +522,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ feesOK pp tx utxo                      ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
