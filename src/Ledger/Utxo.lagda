@@ -392,18 +392,15 @@ _≥ᵇ_ = flip _≤ᵇ_
 coinPolicies : ℙ ScriptHash
 coinPolicies = policies (inject 1)
 
-isAdaOnlyᵇ : Value → Bool
-isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
-
--- TODO: this could be a regular property
--- TODO: using this in UTxO rule below
+isAdaOnlyᵇ : Value → Type
+isAdaOnlyᵇ v = policies v ≡ᵉ coinPolicies
 \end{code}
 \begin{code}
 
 feesOK : PParams → Tx → UTxO → Bool
 feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
                         =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                             ∧ isAdaOnlyᵇ bal
+                             ∧ toBool (isAdaOnlyᵇ bal)
                              ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
                              ∧ not (≟-∅ᵇ collateral)
                              )
