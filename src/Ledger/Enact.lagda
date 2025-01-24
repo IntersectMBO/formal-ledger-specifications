@@ -31,7 +31,7 @@ Note that all other fields of \EnactState also contain a \GovActionID
 since they are \HashProtected.
 
 \begin{figure*}[h]
-\begin{AgdaSuppressSpace}
+\begin{AgdaMultiCode}
 \begin{code}
 record EnactEnv : Type where
 \end{code}
@@ -90,7 +90,7 @@ data
 \begin{code}
   _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type
 \end{code}
-\end{AgdaSuppressSpace}
+\end{AgdaMultiCode}
 \caption{Types and function used for the ENACT transition system}
 \label{fig:enact-defs}
 \end{figure*}

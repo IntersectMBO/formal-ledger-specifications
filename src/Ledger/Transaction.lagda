@@ -61,7 +61,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 
 \begin{figure*}[h]
 \emph{Abstract types}
-\begin{AgdaMultiCode}
 \begin{code}
         Ix TxId AuxiliaryData : Type
 \end{code}
@@ -110,7 +109,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Certs govStructure using (DCert)
-
 \end{code}
 \begin{NoConway}
 \emph{Derived types}
@@ -126,6 +124,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \end{code}
 \end{NoConway}
 \emph{Transaction types}
+\begin{AgdaMultiCode}
 \begin{code}
   record TxBody : Type where
 \end{code}
