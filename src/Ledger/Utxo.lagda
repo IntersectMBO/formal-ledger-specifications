@@ -61,6 +61,15 @@ isTwoPhaseScriptAddress? {tx} {utxo} {a} .dec
   with decide (lookupScriptHash (getScriptHash a p) tx utxo)
 ... | inj₂ _ = false because ofⁿ λ ()
 ... | inj₁ s = isP2Script? {s} .dec
+
+record isTwoPhaseScriptAddress′ (tx : Tx) (utxo : UTxO) (a : Addr) : Type where
+  constructor wrap
+  field unwrap : isTwoPhaseScriptAddress tx utxo a
+
+instance
+  isTwoPhaseScriptAddress′? : ∀ {tx utxo a} → isTwoPhaseScriptAddress′ tx utxo a ⁇
+  isTwoPhaseScriptAddress′? {tx} {utxo} {a} = ⁇ (map′ wrap unwrap (isTwoPhaseScriptAddress? {tx} {utxo} {a} .dec))
+    where open isTwoPhaseScriptAddress′
 \end{code}
 \begin{code}[hide]
 opaque
@@ -71,8 +80,7 @@ opaque
 
   getInputHashes : Tx → UTxO → ℙ DataHash
   getInputHashes tx utxo = getDataHashes
-    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a)
-             ⦃ λ {(a , _)} → isTwoPhaseScriptAddress? {tx} {utxo} {a} ⦄
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress′ tx utxo a)
              (range (utxo ∣ txins)))
     where open Tx; open TxBody (tx .body)
 
