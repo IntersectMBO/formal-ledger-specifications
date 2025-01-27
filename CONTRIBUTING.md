@@ -61,6 +61,8 @@ To install Agda locally and use that install with emacs, you can do the followin
 
 `nix-shell` provides Agda complete with the correct dependencies. So you should be able to run your preferred editor within `nix-shell` and it should see the required `agda` executable.
 
+For instructions _not using_ `nix-shell`, check [Setup without nix-shell](setup-without-nix-shell).
+
 ## Working on libraries
 
 To work simultaneously on the ledger and one of its dependencies, the easiest way to do this is to remove the library from the ledger's `.agda-lib` file and add its path to the `include:` section. Then, when finished, push the changes to the library, then update `default.nix` to point to your new commit.
@@ -109,6 +111,33 @@ For example:
 niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c
 niv update nixpkgs -v 21.11.337905.902d91def1e
 ```
+
+## Setup without nix-shell
+
+- Install Agda version `2.7.0` (e.g. follow the instructions in <https://agda.readthedocs.io/en/latest/getting-started/installation.html#step-1-install-agda>).
+- In a folder `LIB`, clone the dependencies
+    + [agda-stdlib](https://github.com/agda/agda-stdlib)
+    + [agda-stdlib-classes](https://github.com/agda/agda-stdlib-classes)
+    + [agda-stdlib-meta](https://github.com/agda/agda-stdlib-meta)
+    + [agda-sets](https://github.com/input-output-hk/agda-sets)
+and checkout the commits/tags found in `default.nix` (e.g. `v2.1.1` for `agda-stdlib-meta`).
+- Create a file `LIB/libraries` with the following content:
+```
+LIB/agda-stdlib/standard-library.agda-lib
+LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
+LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
+LIB/agda-sets/abstract-set-theory.agda-lib
+```
+- Instead of `agda` use `agda --library-file LIB/libraries`. For example, to typecheck `Everything.agda`:
+  ```
+  cd src/
+  agda --library-file LIB/libraries Everything.agda
+  ```
+
+  To build targets from the Makefile (e.g. see [Building other artifacts](building-other-artifacts)), use:
+  ```
+  AGDA="agda --library-file LIB/libraries" make html
+  ```
 
 ## Maintainer
 
