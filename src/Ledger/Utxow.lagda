@@ -154,34 +154,34 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
   UTXOW-inductive :
 \end{code}
 \begin{code}[hide]
-    let  open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-         open UTxOState s
+    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+        open UTxOState s
 \end{code}
 \begin{code}
-         witsKeyHashes     = mapˢ hash (dom vkSigs)
-         witsScriptHashes  = mapˢ hash scripts
-         inputHashes       = getInputHashes tx utxo
-         refScriptHashes   = fromList $ map hash (refScripts tx utxo)
-         neededHashes      = scriptsNeeded utxo txb
-         txdatsHashes      = dom txdats
-         allOutHashes      = getDataHashes (range txouts)
-         nativeScripts     = mapPartial isInj₁ (txscripts tx utxo)
+        witsKeyHashes     = mapˢ hash (dom vkSigs)
+        witsScriptHashes  = mapˢ hash scripts
+        inputHashes       = getInputHashes tx utxo
+        refScriptHashes   = fromList $ map hash (refScripts tx utxo)
+        neededHashes      = scriptsNeeded utxo txb
+        txdatsHashes      = dom txdats
+        allOutHashes      = getDataHashes (range txouts)
+        nativeScripts     = mapPartial isInj₁ (txscripts tx utxo)
 \end{code}
 \begin{code}[hide]
     in
 \end{code}
 \begin{code}
-         ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-         ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
-         ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-         ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
-         ∙  inputHashes ⊆ txdatsHashes
-         ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
-         ∙  languages tx utxo ⊆ allowedLanguages tx utxo
-         ∙  txADhash ≡ map hash txAD
-         ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-            ────────────────────────────────
-            Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
+    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
+    ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
+    ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
+    ∙  inputHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
+    ∙  languages tx utxo ⊆ allowedLanguages tx utxo
+    ∙  txADhash ≡ map hash txAD
+    ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
+       ────────────────────────────────
+       Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 \end{code}
 \end{AgdaMultiCode}
 \caption{UTXOW inference rules}
