@@ -210,7 +210,7 @@ context as arguments.  Datums are provided by either looking them up in the
 \texttt{TxInfo} to carry (\texttt{TxOutRef}, \texttt{Datum}).
 
 The formal specification permits running spending scripts in the absence datums in the Conway era.
-In Figure~\ref{fig:rules:utxow}, for example, the line
+In Figure~\ref{fig:rules:utxow}, the line
 \inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
 \PowerSet~\DataHash.\footnote{In the original Alonzo spec, these two terms would
 have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out.
