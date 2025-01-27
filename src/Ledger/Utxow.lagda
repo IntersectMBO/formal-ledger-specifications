@@ -201,9 +201,17 @@ unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}
 
-\href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-0069}{CIP-0069}
+\subsection{Plutus script context}
+\href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-0069}{CIP-69}
 unifies the arguments given to all types of Plutus scripts currently available
 (spending, certifying, rewarding, minting, voting, proposing).
+
+The formal specification permits running spending scripts in the absence datums
+in the Conway era.  However, since the interface with Plutus is kept abstract
+in this specification, changes to the representation of the script context which
+are part of CIP-69 are not included here.  To provide a CIP-69-conformant
+implementation of Plutus to this specification, an additional step processing
+the \List \Data argument we provide would be required.
 
 In Figure~\ref{fig:rules:utxow}, the line
 \inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
@@ -213,9 +221,3 @@ In original spec, however, the right-hand side (\txdatsHashes) could never
 contain \nothing, hence the left-hand side (\inputHashes) could never
 contain \nothing.
 
-The formal specification permits running spending scripts in the absence datums
-in the Conway era.  However, since the interface with Plutus is kept abstract
-in this specification, changes to the representation of the script context which
-are part of CIP-69 are not included here.  To provide a CIP-0069-conformant
-implementation of Plutus to this specification, an additional step processing
-the \List \Data argument we provide would be required.
