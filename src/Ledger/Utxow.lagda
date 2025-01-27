@@ -198,7 +198,7 @@ unquoteDecl UTXOW-inductive-premises =
 
 \href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-0069}{CIP-0069}
 unifies the arguments given to all types of Plutus scripts currently available
-(spending, certifying, rewarding, minting) by removing the argument of a datum.
+(spending, certifying, rewarding, minting, voting, proposing).
 This aims to address the mutual dependency issue (two validators that need to
 know each other's hash), which arises when designing dapps and is widely
 considered a substantial barrier to safe protocols and a considerable limitation
@@ -209,8 +209,8 @@ context as arguments.  Datums are provided by either looking them up in the
 \texttt{ScriptContext} or extending the \texttt{Spending} constructor of
 \texttt{TxInfo} to carry (\texttt{TxOutRef}, \texttt{Datum}).
 
-The formal specification (in the Conway era) permits empty datums.
-In Figure~\ref{fig:rules:utxow}, for example, the line
+The formal specification permits running spending scripts in the absence datums in the Conway era.
+In Figure~\ref{fig:rules:utxow}, the line
 \inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
 \PowerSet~\DataHash.\footnote{In the original Alonzo spec, these two terms would
 have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out.
