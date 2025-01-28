@@ -13,7 +13,7 @@ open import Tactic.Derive.DecEq
 open import Ledger.GovernanceActions gs
 private module Certs = Ledger.Certs gs
 open Certs public
-  hiding (DState; ⟦_,_,_⟧ᵈ; GState; ⟦_,_⟧ᵛ; CertState;
+  hiding (DState; ⟦_,_,_⟧ᵈ; GState; CertState;
           _⊢_⇀⦇_,POOL⦈_; _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
           _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,CERTBASE⦈_; _⊢_⇀⦇_,CERTS⦈_)
 open RwdAddr

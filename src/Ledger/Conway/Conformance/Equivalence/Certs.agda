@@ -27,12 +27,13 @@ instance
     L.⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
 
   GStateToConf : L.Deposits ⊢ L.GState ⭆ C.GState
-  GStateToConf .convⁱ deposits L.⟦ dreps , ccHotKeys ⟧ᵛ =
+  GStateToConf .convⁱ deposits stᵍ =
+    let open L.GState stᵍ in
     C.⟦ dreps , ccHotKeys , deposits ⟧ᵛ
 
   GStateFromConf : C.GState ⭆ L.GState
   GStateFromConf .convⁱ deposits C.⟦ dreps , ccHotKeys , _ ⟧ᵛ =
-    L.⟦ dreps , ccHotKeys ⟧ᵛ
+    ⟦ dreps , ccHotKeys ⟧
 
 data ValidDepsᵈ (pp : PParams) (deps : L.Deposits) : List L.DCert → Set where
   []         : ValidDepsᵈ pp deps []

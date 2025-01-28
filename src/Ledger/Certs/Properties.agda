@@ -65,33 +65,35 @@ instance
   Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
 
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_ String
-  Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ , _ ⟧ᶜ ⟦ dReps , _ ⟧ᵛ (regdrep c d _) =
+  Computational-GOVCERT .computeProof ⟦ _ , pp , _ , _ , _ ⟧ᶜ stᵍ (regdrep c d _) =
     let open PParams pp in
-    case ¿ (d ≡ drepDeposit × c ∉ dom dReps)
-         ⊎ (d ≡ 0 × c ∈ dom dReps) ¿ of λ where
+    case ¿ (d ≡ drepDeposit × c ∉ dom (GState.dreps stᵍ))
+         ⊎ (d ≡ 0 × c ∈ dom (GState.dreps stᵍ)) ¿ of λ where
       (yes p) → success (-, GOVCERT-regdrep p)
       (no ¬p) → failure (genErrors ¬p)
-  Computational-GOVCERT .computeProof _ ⟦ dReps , _ ⟧ᵛ (deregdrep c _) =
-    case c ∈? dom dReps of λ where
+  Computational-GOVCERT .computeProof _ stᵍ (deregdrep c _) =
+    let open GState stᵍ in
+    case c ∈? dom dreps of λ where
       (yes p) → success (-, GOVCERT-deregdrep p)
       (no ¬p)  → failure (genErrors ¬p)
-  Computational-GOVCERT .computeProof ⟦ _ , _ , _ , _ , cc ⟧ᶜ ⟦ _ , ccKeys ⟧ᵛ (ccreghot c _) =
-    case ¿ ((c , nothing) ∉ ccKeys ˢ) × c ∈ cc ¿ of λ where
+  Computational-GOVCERT .computeProof ⟦ _ , _ , _ , _ , cc ⟧ᶜ stᵍ (ccreghot c _) =
+    let open GState stᵍ in
+    case ¿ ((c , nothing) ∉ ccHotKeys ˢ) × c ∈ cc ¿ of λ where
       (yes p) → success (-, GOVCERT-ccreghot p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof _ _ _ = failure "Unexpected certificate in GOVCERT"
-  Computational-GOVCERT .completeness ⟦ _ , pp , _ , _ , _ ⟧ᶜ ⟦ dReps , _ ⟧ᵛ
+  Computational-GOVCERT .completeness ⟦ _ , pp , _ , _ , _ ⟧ᶜ stᵍ
     (regdrep c d _) _ (GOVCERT-regdrep p)
     rewrite dec-yes
-      ¿ (let open PParams pp in
-        (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps))
+      ¿ (let open PParams pp; open GState stᵍ in
+        (d ≡ drepDeposit × c ∉ dom dreps) ⊎ (d ≡ 0 × c ∈ dom dreps))
       ¿ p .proj₂ = refl
-  Computational-GOVCERT .completeness _ ⟦ dReps , _ ⟧ᵛ
+  Computational-GOVCERT .completeness _ stᵍ
     (deregdrep c _) _ (GOVCERT-deregdrep p)
-    rewrite dec-yes (c ∈? dom dReps) p .proj₂ = refl
-  Computational-GOVCERT .completeness ⟦ _ , _ , _ , _ , cc ⟧ᶜ ⟦ _ , ccKeys ⟧ᵛ
+    rewrite dec-yes (c ∈? dom (GState.dreps stᵍ)) p .proj₂ = refl
+  Computational-GOVCERT .completeness ⟦ _ , _ , _ , _ , cc ⟧ᶜ stᵍ
     (ccreghot c _) _ (GOVCERT-ccreghot p)
-    rewrite dec-yes (¿ (((c , nothing) ∉ ccKeys ˢ) × c ∈ cc) ¿) p .proj₂ = refl
+    rewrite dec-yes (¿ (((c , nothing) ∉ (GState.ccHotKeys stᵍ) ˢ) × c ∈ cc) ¿) p .proj₂ = refl
 
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
   Computational-CERT .computeProof Γ@(⟦ e , pp , vs , _ , _ ⟧ᶜ) ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ dCert
@@ -247,8 +249,8 @@ module _  {Γ : CertEnv}
     CERTBASE-pov :  {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
                     → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 
-    CERTBASE-pov  {s  = ⟦ ⟦ _ , _ , rewards  ⟧ᵈ , stᵖ , ⟦ dreps , ccHotKeys ⟧ᵛ ⟧ᶜˢ}
-                  {s' = ⟦ ⟦ _ , _ , rewards' ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ}
+    CERTBASE-pov  {s  = ⟦ ⟦ _ , _ , rewards  ⟧ᵈ , stᵖ , _ ⟧ᶜˢ}
+                  {s' = ⟦ ⟦ _ , _ , rewards' ⟧ᵈ , stᵖ , _ ⟧ᶜˢ}
                   (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
       let
         module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
