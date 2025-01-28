@@ -10,6 +10,8 @@ module Ledger.Certs (gs : _) (open GovStructure gs) where
 
 open import Tactic.Derive.DecEq
 
+open import Data.Product.Nary.NonDependent using (uncurryₙ)
+
 open import Ledger.GovernanceActions gs
 open RwdAddr
 \end{code}
@@ -210,6 +212,28 @@ private variable
   stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
   cc : ℙ Credential
+
+instance
+  ToRecord-CertEnv : ToRecord (Epoch × PParams × List GovVote × (RwdAddr ⇀ Coin) × ℙ Credential) CertEnv
+  ToRecord-CertEnv = record { ⟦_⟧ = uncurryₙ 5 λ z z₁ z₂ z₃ z₄ →
+                                   record
+                                   { epoch = z ; pp = z₁ ; votes = z₂ ; wdrls = z₃ ; coldCreds = z₄ } }
+
+  ToRecord-DState : ToRecord ((Credential ⇀ VDeleg) × (Credential ⇀ KeyHash) × (Credential ⇀ Coin)) DState
+  ToRecord-DState = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ →
+                                   record { voteDelegs = z ; stakeDelegs = z₁ ; rewards = z₂ } }
+
+  ToRecord-PState : ToRecord ((KeyHash ⇀ PoolParams) × (KeyHash ⇀ Epoch)) PState
+  ToRecord-PState = record { ⟦_⟧ = uncurryₙ 2 λ z z₁ → record { pools = z ; retiring = z₁ } }
+
+  ToRecord-GState : ToRecord ((Credential ⇀ Epoch) × (Credential ⇀ Maybe Credential)) GState
+  ToRecord-GState = record { ⟦_⟧ = uncurryₙ 2 λ z z₁ → record { dreps = z ; ccHotKeys = z₁ } }
+
+  ToRecord-CertState : ToRecord (DState × PState × GState) CertState
+  ToRecord-CertState = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ → record { dState = z ; pState = z₁ ; gState = z₂ } }
+
+  ToRecord-DelegEnv : ToRecord (PParams × (KeyHash ⇀ PoolParams) × ℙ Credential) DelegEnv
+  ToRecord-DelegEnv = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ → record { pparams = z ; pools = z₁ ; delegatees = z₂ } }
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
