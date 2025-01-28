@@ -10,8 +10,6 @@ module Ledger.Certs (gs : _) (open GovStructure gs) where
 
 open import Tactic.Derive.DecEq
 
-open import Data.Product.Nary.NonDependent using (uncurryₙ)
-
 open import Ledger.GovernanceActions gs
 open RwdAddr
 \end{code}
@@ -123,7 +121,6 @@ record DState : Type where
 record PState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_⟧ᵖ
   field
 \end{code}
 \begin{code}
@@ -393,12 +390,12 @@ data _⊢_⇀⦇_,POOL⦈_ where
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
+      pp ⊢  ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
+            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
+    pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary POOL transition system}

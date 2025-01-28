@@ -249,7 +249,7 @@ its results by carrying out each of the following tasks.
 
       certState' =
         ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
-        , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ
+        , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧
         , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps)
           , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ᵛ ⟧ᶜˢ
 

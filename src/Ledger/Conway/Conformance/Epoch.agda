@@ -170,7 +170,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
       certState' =
         ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
-        , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧ᵖ
+        , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧
         , ⟦ if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps)
           , (gState .ccHotKeys) ∣ ccCreds (es .cc)
           , vDeposits

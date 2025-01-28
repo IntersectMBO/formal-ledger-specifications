@@ -103,12 +103,12 @@ data _⊢_⇀⦇_,POOL⦈_ where
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
+      pp ⊢  ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
+            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
+    pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧
 
 data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
