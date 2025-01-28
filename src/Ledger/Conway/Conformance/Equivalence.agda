@@ -209,7 +209,7 @@ getValidCertDepositsC : ∀ Γ s {s'} tx
                        )
                      → WellformedLState s
                      → isValid tx ≡ true
-                     → C.⟦ epoch slot , pparams , txvote , txwdrls , cc ⟧ᶜ C.⊢ certState ⇀⦇ txcerts ,CERTS⦈ s'
+                     → ⟦ epoch slot , pparams , txvote , txwdrls , cc ⟧ C.⊢ certState ⇀⦇ txcerts ,CERTS⦈ s'
                      → L.ValidCertDeposits pparams deposits txcerts
 getValidCertDepositsC Γ s tx wf refl (RTC (C.CERT-base _ , step)) =
   getValidCertDepositsCERTS (C.L.UTxOState.deposits (C.LState.utxoSt s)) wf step
