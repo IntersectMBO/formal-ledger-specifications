@@ -107,7 +107,6 @@ record CertEnv : Type where
 record DState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ᵈ
   field
 \end{code}
 \begin{code}
@@ -354,15 +353,15 @@ data _⊢_⇀⦇_,DELEG⦈_ where
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧
         ⇀⦇ delegate c mv mkh d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c md ,DELEG⦈
-        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈
+        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
 \end{code}
 \begin{code}[hide]
   DELEG-reg : let open PParams pp in
@@ -370,8 +369,8 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ d ≡ keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
-        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+        ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈
+        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}
@@ -483,11 +482,11 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
-        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
+        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧
         , stᵖ
         , ⟦ dReps , ccHotKeys ⟧
         ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧
         ⟧ᶜˢ

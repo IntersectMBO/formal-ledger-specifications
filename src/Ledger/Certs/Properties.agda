@@ -23,36 +23,36 @@ open import Tactic.GenError using (genErrors)
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
-  Computational-DELEG .computeProof de ⟦ _ , _ , rwds ⟧ᵈ =
-    let open DelegEnv de in
+  Computational-DELEG .computeProof de stᵈ =
+    let open DelegEnv de; open DState stᵈ in
     λ where
-    (delegate c mv mc d) → case ¿ (c ∉ dom rwds → d ≡ pparams .PParams.keyDeposit)
-                                × (c ∈ dom rwds → d ≡ 0)
+    (delegate c mv mc d) → case ¿ (c ∉ dom rewards → d ≡ pparams .PParams.keyDeposit)
+                                × (c ∈ dom rewards → d ≡ 0)
                                 × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
                                     fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
                                 × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
                                 ¿ of λ where
       (yes p) → success (-, DELEG-delegate p)
       (no ¬p) → failure (genErrors ¬p)
-    (dereg c d) → case ¿ (c , 0) ∈ rwds ¿ of λ where
+    (dereg c d) → case ¿ (c , 0) ∈ rewards ¿ of λ where
       (yes p) → success (-, DELEG-dereg p)
       (no ¬p) → failure (genErrors ¬p)
-    (reg c d) → case ¿ c ∉ dom rwds
+    (reg c d) → case ¿ c ∉ dom rewards
                      × (d ≡ pparams .PParams.keyDeposit ⊎ d ≡ 0)
                      ¿ of λ where
       (yes p) → success (-, DELEG-reg p)
       (no ¬p) → failure (genErrors ¬p)
     _ → failure "Unexpected certificate in DELEG"
-  Computational-DELEG .completeness de ⟦ _ , _ , rwds ⟧ᵈ (delegate c mv mc d)
-    s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom rwds → d ≡ DelegEnv.pparams de .PParams.keyDeposit)
-                                × (c ∈ dom rwds → d ≡ 0)
+  Computational-DELEG .completeness de stᵈ (delegate c mv mc d)
+    s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom (DState.rewards stᵈ) → d ≡ DelegEnv.pparams de .PParams.keyDeposit)
+                                × (c ∈ dom (DState.rewards stᵈ) → d ≡ 0)
                                 × mv ∈ mapˢ (just ∘ credVoter DRep) (DelegEnv.delegatees de) ∪ fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
                                 × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵
                                            ¿) p .proj₂ = refl
-  Computational-DELEG .completeness de ⟦ _ , _ , rwds ⟧ᵈ (dereg c d) _ (DELEG-dereg p)
-    rewrite dec-yes (¿ (c , 0) ∈ rwds ¿) p .proj₂ = refl
-  Computational-DELEG .completeness de ⟦ _ , _ , rwds ⟧ᵈ (reg c d) _ (DELEG-reg p)
-    rewrite dec-yes (¿ c ∉ dom rwds × (d ≡ DelegEnv.pparams de .PParams.keyDeposit ⊎ d ≡ 0) ¿) p .proj₂ = refl
+  Computational-DELEG .completeness de stᵈ (dereg c d) _ (DELEG-dereg p)
+    rewrite dec-yes (¿ (c , 0) ∈ (DState.rewards stᵈ) ¿) p .proj₂ = refl
+  Computational-DELEG .completeness de stᵈ (reg c d) _ (DELEG-reg p)
+    rewrite dec-yes (¿ c ∉ dom (DState.rewards stᵈ) × (d ≡ DelegEnv.pparams de .PParams.keyDeposit ⊎ d ≡ 0) ¿) p .proj₂ = refl
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ stᵖ (regpool c _) =
@@ -204,14 +204,14 @@ module _  {Γ : CertEnv}
   CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov {stᵖ = stᵖ} {stᵖ'} {stᵍ} {stᵍ'}
     (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
-    getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , stᵍ ⟧ᶜˢ
+    getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ , stᵖ , stᵍ ⟧ᶜˢ
       ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds
           ( ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton)) ) ⟩
     getCoin rwds-∪ˡ-decomp
       ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ) rwds-∪ˡ≡sing-∪ˡ  ⟩
     getCoin ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )
       ≡⟨ ∪ˡsingleton0≡ (rwds ∣ ❴ c ❵ ᶜ) ⟩
-    getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ , stᵖ' , stᵍ' ⟧ᶜˢ
+    getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ , stᵖ' , stᵍ' ⟧ᶜˢ
       ∎
     where
     module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
@@ -251,10 +251,12 @@ module _  {Γ : CertEnv}
     CERTBASE-pov :  {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
                     → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 
-    CERTBASE-pov  {s  = ⟦ ⟦ _ , _ , rewards  ⟧ᵈ , stᵖ , _ ⟧ᶜˢ}
-                  {s' = ⟦ ⟦ _ , _ , rewards' ⟧ᵈ , stᵖ , _ ⟧ᶜˢ}
+    CERTBASE-pov  {s  = ⟦ stᵈ  , _ , _ ⟧ᶜˢ}
+                  {s' = ⟦ stᵈ' , _ , _ ⟧ᶜˢ}
                   (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
       let
+        open DState stᵈ
+        open DState stᵈ renaming (rewards to rewards')
         module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
         wdrlsCC         = mapˢ (map₁ RwdAddr.stake) (wdrls ˢ)
         zeroMap         = constMap (mapˢ RwdAddr.stake (dom wdrls)) 0

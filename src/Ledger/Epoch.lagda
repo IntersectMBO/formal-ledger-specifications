@@ -128,7 +128,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , ss
   , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+    , ⟦ stᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
   , fut
   ⟧ᵉ' =
@@ -137,10 +137,11 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , ss
   , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
   , fut ⟧ᵉ'
   where
+    open DState stᵈ
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
@@ -163,8 +164,9 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \begin{AgdaSuppressSpace}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo ⟦ _ , stakeDelegs , rewards ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
+stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
   where
+    open DState stᵈ
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
 

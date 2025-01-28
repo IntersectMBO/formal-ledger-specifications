@@ -19,12 +19,13 @@ open import Ledger.Conway.Conformance.Equivalence.Base txs abs
 instance
 
   DStateToConf : L.Deposits ⊢ L.DState ⭆ C.DState
-  DStateToConf .convⁱ deposits L.⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ =
+  DStateToConf .convⁱ deposits stᵈ =
+    let open L.DState stᵈ in
     C.⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ᵈ
 
   DStateFromConf : C.DState ⭆ L.DState
   DStateFromConf .convⁱ _ C.⟦ voteDelegs , stakeDelegs , rewards , _ ⟧ᵈ =
-    L.⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
+    ⟦ voteDelegs , stakeDelegs , rewards ⟧
 
   GStateToConf : L.Deposits ⊢ L.GState ⭆ C.GState
   GStateToConf .convⁱ deposits stᵍ =
