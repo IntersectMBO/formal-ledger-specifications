@@ -123,7 +123,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
           )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , delegatees ⟧ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
       ⇀⦇ delegate c mv mkh d ,DELEG⦈
       ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵
@@ -134,7 +134,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ (CredentialDeposit c , d) ∈ dep
     ∙ md ≡ nothing ⊎ md ≡ just d
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , delegatees ⟧ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
       ⇀⦇ dereg c md ,DELEG⦈
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
@@ -144,7 +144,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ c ∉ dom rwds
     ∙ d ≡ keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , delegatees ⟧ ⊢
         ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
         ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵
         , updateCertDeposit pp (reg c d) dep ⟧ᵈ
@@ -177,7 +177,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
