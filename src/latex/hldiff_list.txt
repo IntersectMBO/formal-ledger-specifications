@@ -6,3 +6,5 @@
 \AgdaFunction{treasury}
 \AgdaField{txsize}
 \AgdaField{txId}
+\AgdaBound{inputHashes}
+\AgdaBound{txdatsHashes}

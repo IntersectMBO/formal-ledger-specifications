@@ -129,7 +129,6 @@ scriptsNeeded = getScripts ∘ mapˢ proj₂ ∘ credsNeeded
 \label{fig:functions:utxow}
 \end{figure*}
 
-\begin{NoConway}
 \begin{figure*}[h]
 \begin{code}[hide]
 data
@@ -142,27 +141,41 @@ data
 \end{figure*}
 
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 private variable
-  Γ : UTxOEnv
-  s s' : UTxOState
-  tx : Tx
+  Γ           : UTxOEnv
+  s s'        : UTxOState
+  utxo utxo'  : UTxO
+  tx          : Tx
+  fees fees'  : Coin
+  deps deps'  : Deposits
+  dons dons'  : Coin
 
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
+\end{code}
+\begin{code}[hide]
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-        open UTxOState s
-        witsKeyHashes     = mapˢ hash (dom vkSigs)
-        witsScriptHashes  = mapˢ hash scripts
-        inputHashes       = getInputHashes tx utxo
-        refScriptHashes   = fromList $ map hash (refScripts tx utxo)
-        neededHashes      = scriptsNeeded utxo txb
-        txdatsHashes      = dom txdats
-        allOutHashes      = getDataHashes (range txouts)
-        nativeScripts     = mapPartial isInj₁ (txscripts tx utxo)
+\end{code}
+\begin{code}
+        ⟦ utxo , fees , deps , dons ⟧ᵘ      = s
+        ⟦ utxo' , fees' , deps' , dons' ⟧ᵘ  = s'
+        witsKeyHashes                       = mapˢ hash (dom vkSigs)
+        witsScriptHashes                    = mapˢ hash scripts
+        inputHashes                         = getInputHashes tx utxo
+        refScriptHashes                     = fromList $ map hash (refScripts tx utxo)
+        neededHashes                        = scriptsNeeded utxo txb
+        txdatsHashes                        = dom txdats
+        allOutHashes                        = getDataHashes (range txouts)
+        nativeScripts                       = mapPartial isInj₁ (txscripts tx utxo)
+\end{code}
+\begin{code}[hide]
     in
+\end{code}
+\begin{code}
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
@@ -175,6 +188,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 \end{code}
+\end{AgdaMultiCode}
 \caption{UTXOW inference rules}
 \label{fig:rules:utxow}
 \end{figure*}
@@ -186,4 +200,24 @@ pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}
-\end{NoConway}
+
+\subsection{Plutus script context}
+\href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-0069}{CIP-69}
+unifies the arguments given to all types of Plutus scripts currently available
+(spending, certifying, rewarding, minting, voting, proposing).
+
+The formal specification permits running spending scripts in the absence datums
+in the Conway era.  However, since the interface with Plutus is kept abstract
+in this specification, changes to the representation of the script context which
+are part of CIP-69 are not included here.  To provide a CIP-69-conformant
+implementation of Plutus to this specification, an additional step processing
+the \List \Data argument we provide would be required.
+
+In Figure~\ref{fig:rules:utxow}, the line
+\inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
+\PowerSet~\DataHash.  In the original Alonzo spec, these two terms would
+have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out.
+In original spec, however, the right-hand side (\txdatsHashes) could never
+contain \nothing, hence the left-hand side (\inputHashes) could never
+contain \nothing.
+
