@@ -27,6 +27,8 @@ open import Relation.Binary using (IsEquivalence)
 open import Tactic.Defaults
 open import Tactic.GenError
 
+open import Data.List.Relation.Unary.All.Properties using (¬Any⇒All¬)
+
 private module L where
   open import Ledger.Gov txs public
   open import Ledger.Gov.Properties txs public
@@ -97,19 +99,22 @@ instance
       module GoVote sig where
         open GovVote sig
 
-        computeProof = case lookupActionId pparams (proj₁ voter) gid s ,′ isRegistered? (proj₁ Γ) voter of λ where
-            (yes p , yes p') → case Any↔ .from p of λ where
-              (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem , cV , p'))
-            (yes _ , no ¬p) → failure (genErrors ¬p)
-            (no ¬p , _)     → failure (genErrors ¬p)
+        computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ inj₁ sig ,GOV'⦈ s')
+        computeProof with lookupActionId pparams (proj₁ voter) gid s
+        ... | yes p with isRegistered? (proj₁ Γ) voter
+        ...   | yes q with Any↔ .from p 
+        ...     | (_ , mem , refl , cV) = success (_ , GOV-Vote (∈-fromList .to mem , cV , q))
+        computeProof | yes _ | no ¬q = failure (genErrors ¬q)
+        computeProof | no ¬p = failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₁ sig ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Vote (mem , cV , reg))
-          with lookupActionId pparams (proj₁ voter) gid s | isRegistered? (proj₁ Γ) voter
-        ... | no ¬p | _ = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
-        ... | yes _ | no ¬p = ⊥-elim $ ¬p reg
-        ... | yes p | yes p' with Any↔ .from p
-        ... | (_ , mem , refl , cV) = refl
+          with lookupActionId pparams (proj₁ voter) gid s 
+        ... | no ¬p = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
+        ... | yes p with isRegistered? (proj₁ Γ) voter
+        ...   | no ¬q = ⊥-elim (¬q reg)
+        ...   | yes q with Any↔ .from p
+        ...     | _ , mem , refl , cV = refl
 
       module GoProp prop where
         open GovProposal prop

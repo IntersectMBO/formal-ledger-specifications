@@ -4,13 +4,14 @@ This section defines the adjustable protocol parameters of the Cardano ledger.
 These parameters are used in block validation and can affect various features of the system,
 such as minimum fees, maximum and minimum sizes of certain components, and more.
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+{-# OPTIONS --rewriting #-}
 
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
 open import Data.Rational using (ℚ)
 open import Relation.Nullary.Decidable
 open import Data.List.Relation.Unary.Any using (Any; here; there)
+open import Debug.Trace
 
 open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
@@ -73,6 +74,14 @@ data PParamGroup : Type where
   TechnicalGroup   : PParamGroup
   GovernanceGroup  : PParamGroup
   SecurityGroup    : PParamGroup
+
+instance
+  Show-PParamGroup : Show PParamGroup
+  Show-PParamGroup .show NetworkGroup    = "NetworkGroup"
+  Show-PParamGroup .show EconomicGroup   = "EconomicGroup"
+  Show-PParamGroup .show TechnicalGroup  = "TechnicalGroup"
+  Show-PParamGroup .show GovernanceGroup = "GovernanceGroup"
+  Show-PParamGroup .show SecurityGroup   = "SecurityGroup"
 
 record DrepThresholds : Type where
 \end{code}
@@ -296,15 +305,16 @@ module PParamsUpdate where
       ∷ [])
   
   modifiedUpdateGroups : PParamsUpdate → ℙ PParamGroup
-  modifiedUpdateGroups ppu =
-    ( modifiesNetworkGroup    ?═⇒ NetworkGroup
-    ∪ modifiesEconomicGroup   ?═⇒ EconomicGroup
-    ∪ modifiesTechnicalGroup  ?═⇒ TechnicalGroup
-    ∪ modifiesGovernanceGroup ?═⇒ GovernanceGroup
-    )
+  modifiedUpdateGroups ppu = trace (show res) res
     where
       _?═⇒_ : (PParamsUpdate → Bool) → PParamGroup → ℙ PParamGroup
       pred ?═⇒ grp = if pred ppu then ❴ grp ❵ else ∅
+      res =
+        ( modifiesNetworkGroup    ?═⇒ NetworkGroup
+        ∪ modifiesEconomicGroup   ?═⇒ EconomicGroup
+        ∪ modifiesTechnicalGroup  ?═⇒ TechnicalGroup
+        ∪ modifiesGovernanceGroup ?═⇒ GovernanceGroup
+        )
   
   _?↗_ : ∀ {A : Type} → Maybe A → A → A
   just x ?↗ _ = x

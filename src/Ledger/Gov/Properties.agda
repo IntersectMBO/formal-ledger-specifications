@@ -22,6 +22,7 @@ open import Data.List.Relation.Unary.All using (all?; All)
 open import Data.List.Relation.Unary.Any hiding (map)
 open import Data.List.Relation.Unary.Unique.Propositional
 open import Data.Maybe.Properties
+open import Data.String renaming (_++_ to _+ˢ_) using ()
 open import Relation.Binary using (IsEquivalence)
 
 open import Tactic.Defaults
@@ -115,7 +116,8 @@ instance
             (yes p , yes p') → case Any↔ .from p of λ where
               (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem , cV , p'))
             (yes _ , no ¬p) → failure (genErrors ¬p)
-            (no ¬p , _)     → failure (genErrors ¬p)
+            (no ¬p , yes _) → failure (genErrors ¬p)
+            (no ¬p , no ¬q) → failure (genErrors (¬p , ¬q))
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₁ sig ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Vote (mem , cV , reg))
