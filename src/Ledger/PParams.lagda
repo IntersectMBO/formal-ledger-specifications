@@ -4,14 +4,13 @@ This section defines the adjustable protocol parameters of the Cardano ledger.
 These parameters are used in block validation and can affect various features of the system,
 such as minimum fees, maximum and minimum sizes of certain components, and more.
 \begin{code}[hide]
-{-# OPTIONS --rewriting #-}
+{-# OPTIONS --safe #-}
 
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
 open import Data.Rational using (ℚ)
 open import Relation.Nullary.Decidable
 open import Data.List.Relation.Unary.Any using (Any; here; there)
-open import Debug.Trace
 
 open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
@@ -305,16 +304,15 @@ module PParamsUpdate where
       ∷ [])
   
   modifiedUpdateGroups : PParamsUpdate → ℙ PParamGroup
-  modifiedUpdateGroups ppu = trace (show res) res
+  modifiedUpdateGroups ppu = 
+    ( modifiesNetworkGroup    ?═⇒ NetworkGroup
+    ∪ modifiesEconomicGroup   ?═⇒ EconomicGroup
+    ∪ modifiesTechnicalGroup  ?═⇒ TechnicalGroup
+    ∪ modifiesGovernanceGroup ?═⇒ GovernanceGroup
+    )
     where
       _?═⇒_ : (PParamsUpdate → Bool) → PParamGroup → ℙ PParamGroup
       pred ?═⇒ grp = if pred ppu then ❴ grp ❵ else ∅
-      res =
-        ( modifiesNetworkGroup    ?═⇒ NetworkGroup
-        ∪ modifiesEconomicGroup   ?═⇒ EconomicGroup
-        ∪ modifiesTechnicalGroup  ?═⇒ TechnicalGroup
-        ∪ modifiesGovernanceGroup ?═⇒ GovernanceGroup
-        )
   
   _?↗_ : ∀ {A : Type} → Maybe A → A → A
   just x ?↗ _ = x
@@ -474,4 +472,5 @@ record GovParams : Type₁ where
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
   field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
 --         ⦃ Show-UpdT ⦄ : Show PParamsUpdate
+
 \end{code}
