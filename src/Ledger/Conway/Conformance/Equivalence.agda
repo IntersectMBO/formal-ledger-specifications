@@ -148,7 +148,7 @@ instance
       ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
       ledger' = C.LEDGER-V⋯ refl utxow' certs' gov'
       utxoEq  : utxoStC' ≡ utxoSt'
-      utxoEq  = cong (λ • → L.⟦ _ , _ , • , _ ⟧ᵘ)
+      utxoEq  = cong (λ • → ⟦ _ , _ , • , _ ⟧)
                      (lemUpdateDeposits refl utxow)
       ddeps = getCertDeps* cdeposits .proj₁
       gdeps = getCertDeps* cdeposits .proj₂
@@ -160,7 +160,7 @@ instance
   -- LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ (cdeps , cdeps-eq) r@(L.LEDGER-I⋯ refl utxow) =
   LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-I⋯ refl utxow) =
     certDeposits s , lem-cert-deposits-invalid refl r ,
-    subst (λ • → Γ C.⊢ _ ⊢conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ C.⟦ _ , _ , • , _ ⟧ᵘ , _ , _ ⟧ˡ)
+    subst (λ • → Γ C.⊢ _ ⊢conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ ⟦ _ , _ , • , _ ⟧ , _ , _ ⟧ˡ)
           (lemInvalidDepositsL refl utxow)
           (C.LEDGER-I⋯ refl (conv utxow))
 
@@ -248,7 +248,7 @@ instance
       utxow' = inj₂ valid-deps ⊢conv utxow
 
       eqUtxo : setDeposits (utxowDeposits utxow) utxoSt' ≡ utxoSt'
-      eqUtxo = cong (λ • → L.⟦ _ , _ , • , _ ⟧ᵘ) (lemUtxowDeposits refl utxow)
+      eqUtxo = cong (λ • → ⟦ _ , _ , • , _ ⟧) (lemUtxowDeposits refl utxow)
 
       ledger' : Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ L.⟦ setDeposits (utxowDeposits utxow) utxoSt'
                                               , govSt'

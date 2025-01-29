@@ -146,11 +146,7 @@ data
 private variable
   Γ           : UTxOEnv
   s s'        : UTxOState
-  utxo utxo'  : UTxO
   tx          : Tx
-  fees fees'  : Coin
-  deps deps'  : Deposits
-  dons dons'  : Coin
 
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
@@ -161,8 +157,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
 \end{code}
 \begin{code}
-        ⟦ utxo , fees , deps , dons ⟧ᵘ      = s
-        ⟦ utxo' , fees' , deps' , dons' ⟧ᵘ  = s'
+        open UTxOState s  renaming (deposits to deps; donations to dons)
+        open UTxOState s' renaming (utxo to utxo'; fees to fees'; deposits to deps'; donations to dons')
         witsKeyHashes                       = mapˢ hash (dom vkSigs)
         witsScriptHashes                    = mapˢ hash scripts
         inputHashes                         = getInputHashes tx utxo

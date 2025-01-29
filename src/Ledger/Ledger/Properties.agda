@@ -156,16 +156,20 @@ module _
       getCoin utxoSt' + getCoin certState'
         ∎
 
-  LEDGER-pov  s@{s = ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ}
-              s'@{s' = ⟦ ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ , govSt' , ⟦ dState' , pState' , gState' ⟧ᶜˢ ⟧ˡ}
-              h (LEDGER-I {utxoSt' = utxoSt'} (invalid , UTXOW⇒UTXO st)) = cong (_+ rewardsBalance dState)
+  LEDGER-pov  s@{s = ⟦ utxoSt , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ}
+              s'@{s' = ⟦ utxoSt' , govSt' , ⟦ dState' , pState' , gState' ⟧ᶜˢ ⟧ˡ}
+              h (LEDGER-I {utxoSt' = utxoSt''} (invalid , UTXOW⇒UTXO st)) =
+    let open UTxOState utxoSt
+        open UTxOState utxoSt' renaming (utxo to utxo'; fees to fees'
+                                        ; deposits to deposits'; donations to donations') in
+    cong (_+ rewardsBalance dState)
     ( begin
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ
-        ≡˘⟨ +-identityʳ (getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ) ⟩
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + 0
-        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + φ(getCoin txwdrls , x)) invalid ⟩
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + φ(getCoin txwdrls , isValid) ≡⟨ pov h st ⟩
-      getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ ∎ )
+      getCoin ⟦ utxo , fees , deposits , donations ⟧
+        ≡˘⟨ +-identityʳ (getCoin ⟦ utxo , fees , deposits , donations ⟧) ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + 0
+        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , x)) invalid ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , isValid) ≡⟨ pov h st ⟩
+      getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning
 
 
@@ -542,7 +546,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
   LEDGER-govDepsMatch s'@{⟦ .(⟦ ((UTxOState.utxo (LState.utxoSt s) ∣ txins ᶜ) ∪ˡ (outs txb))
-                              , _ , updateDeposits pp txb (UTxOState.deposits (LState.utxoSt s)) , _ ⟧ᵘ)
+                              , _ , updateDeposits pp txb (UTxOState.deposits (LState.utxoSt s)) , _ ⟧)
                           , govSt' , certState' ⟧ˡ}
     utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ GOV-sts) aprioriMatch = begin
       filterˢ isGADeposit (dom (updateDeposits pp txb utxoDeps))

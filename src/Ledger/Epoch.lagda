@@ -126,7 +126,7 @@ applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   ⟦ ⟦ treasury , reserves ⟧ᵃ
   , ss
-  , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
+  , ⟦ utxoSt
     , govSt
     , ⟦ stᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
@@ -135,12 +135,13 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
     , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ
   , ss
-  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
+  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧
     , govSt
     , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
   , fut ⟧ᵉ'
   where
+    open UTxOState utxoSt
     open DState stᵈ
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
@@ -255,7 +256,7 @@ its results by carrying out each of the following tasks.
         , ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
           , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ ⟧ᶜˢ
 
-      utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
+      utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
 
       acnt' = record acnt
         { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }

@@ -163,7 +163,6 @@ record UTxOEnv : Type where
 record UTxOState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ᵘ
   field
 \end{code}
 \begin{code}
@@ -171,6 +170,12 @@ record UTxOState : Type where
     fees       : Coin
     deposits   : Deposits
     donations  : Coin
+\end{code}
+\begin{code}[hide]
+instance
+  ToRecord-UTxOState : ToRecord (UTxO × Coin × Deposits × Coin) UTxOState
+  ToRecord-UTxOState = record { ⟦_⟧ = uncurryₙ 4 λ z z₁ z₂ z₃ →
+                                                    record { utxo = z ; fees = z₁ ; deposits = z₂ ; donations = z₃ } }
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}
@@ -486,7 +491,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -498,7 +503,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
 \end{code}
 \caption{UTXOS rule}
 \label{fig:utxos-conway}
