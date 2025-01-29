@@ -126,9 +126,9 @@ d_stake_1154 v0
 -- Ledger.Abstract._.DCert
 d_DCert_1494 a0 = ()
 -- Ledger.Abstract.indexOf
-d_indexOf_1686 a0 = ()
-data T_indexOf_1686
-  = C_indexOf'46'constructor_2693 (MAlonzo.Code.Ledger.Certs.T_DCert_832 ->
+d_indexOf_1688 a0 = ()
+data T_indexOf_1688
+  = C_indexOf'46'constructor_2931 (MAlonzo.Code.Ledger.Certs.T_DCert_832 ->
                                    [MAlonzo.Code.Ledger.Certs.T_DCert_832] -> Maybe AgdaAny)
                                   (MAlonzo.Code.Ledger.Address.T_RwdAddr_76 ->
                                    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny)
@@ -141,98 +141,98 @@ data T_indexOf_1686
                                    [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_750] ->
                                    Maybe AgdaAny)
 -- Ledger.Abstract.indexOf.indexOfDCert
-d_indexOfDCert_1700 ::
-  T_indexOf_1686 ->
+d_indexOfDCert_1702 ::
+  T_indexOf_1688 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_832 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_832] -> Maybe AgdaAny
-d_indexOfDCert_1700 v0
+d_indexOfDCert_1702 v0
   = case coe v0 of
-      C_indexOf'46'constructor_2693 v1 v2 v3 v4 v5 v6 -> coe v1
+      C_indexOf'46'constructor_2931 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.indexOf.indexOfRwdAddr
-d_indexOfRwdAddr_1702 ::
-  T_indexOf_1686 ->
+d_indexOfRwdAddr_1704 ::
+  T_indexOf_1688 ->
   MAlonzo.Code.Ledger.Address.T_RwdAddr_76 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny
-d_indexOfRwdAddr_1702 v0
+d_indexOfRwdAddr_1704 v0
   = case coe v0 of
-      C_indexOf'46'constructor_2693 v1 v2 v3 v4 v5 v6 -> coe v2
+      C_indexOf'46'constructor_2931 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.indexOf.indexOfTxIn
-d_indexOfTxIn_1704 ::
-  T_indexOf_1686 ->
+d_indexOfTxIn_1706 ::
+  T_indexOf_1688 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny
-d_indexOfTxIn_1704 v0
+d_indexOfTxIn_1706 v0
   = case coe v0 of
-      C_indexOf'46'constructor_2693 v1 v2 v3 v4 v5 v6 -> coe v3
+      C_indexOf'46'constructor_2931 v1 v2 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.indexOf.indexOfPolicyId
-d_indexOfPolicyId_1706 ::
-  T_indexOf_1686 -> AgdaAny -> [AgdaAny] -> Maybe AgdaAny
-d_indexOfPolicyId_1706 v0
+d_indexOfPolicyId_1708 ::
+  T_indexOf_1688 -> AgdaAny -> [AgdaAny] -> Maybe AgdaAny
+d_indexOfPolicyId_1708 v0
   = case coe v0 of
-      C_indexOf'46'constructor_2693 v1 v2 v3 v4 v5 v6 -> coe v4
+      C_indexOf'46'constructor_2931 v1 v2 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.indexOf.indexOfVote
-d_indexOfVote_1708 ::
-  T_indexOf_1686 ->
+d_indexOfVote_1710 ::
+  T_indexOf_1688 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny
-d_indexOfVote_1708 v0
+d_indexOfVote_1710 v0
   = case coe v0 of
-      C_indexOf'46'constructor_2693 v1 v2 v3 v4 v5 v6 -> coe v5
+      C_indexOf'46'constructor_2931 v1 v2 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.indexOf.indexOfProposal
-d_indexOfProposal_1710 ::
-  T_indexOf_1686 ->
+d_indexOfProposal_1712 ::
+  T_indexOf_1688 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_750 ->
   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_750] ->
   Maybe AgdaAny
-d_indexOfProposal_1710 v0
+d_indexOfProposal_1712 v0
   = case coe v0 of
-      C_indexOf'46'constructor_2693 v1 v2 v3 v4 v5 v6 -> coe v6
+      C_indexOf'46'constructor_2931 v1 v2 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.AbstractFunctions
-d_AbstractFunctions_1712 a0 = ()
-data T_AbstractFunctions_1712
-  = C_AbstractFunctions'46'constructor_2985 (AgdaAny ->
+d_AbstractFunctions_1714 a0 = ()
+data T_AbstractFunctions_1714
+  = C_AbstractFunctions'46'constructor_3223 (AgdaAny ->
                                              AgdaAny -> Integer)
-                                            (AgdaAny -> Integer) T_indexOf_1686
+                                            (AgdaAny -> Integer) T_indexOf_1688
                                             (AgdaAny -> AgdaAny -> AgdaAny -> [AgdaAny] -> Bool)
                                             (MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer)
 -- Ledger.Abstract.AbstractFunctions.txscriptfee
-d_txscriptfee_1724 ::
-  T_AbstractFunctions_1712 -> AgdaAny -> AgdaAny -> Integer
-d_txscriptfee_1724 v0
+d_txscriptfee_1726 ::
+  T_AbstractFunctions_1714 -> AgdaAny -> AgdaAny -> Integer
+d_txscriptfee_1726 v0
   = case coe v0 of
-      C_AbstractFunctions'46'constructor_2985 v1 v2 v3 v4 v5 -> coe v1
+      C_AbstractFunctions'46'constructor_3223 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.AbstractFunctions.serSize
-d_serSize_1726 :: T_AbstractFunctions_1712 -> AgdaAny -> Integer
-d_serSize_1726 v0
+d_serSize_1728 :: T_AbstractFunctions_1714 -> AgdaAny -> Integer
+d_serSize_1728 v0
   = case coe v0 of
-      C_AbstractFunctions'46'constructor_2985 v1 v2 v3 v4 v5 -> coe v2
+      C_AbstractFunctions'46'constructor_3223 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.AbstractFunctions.indexOfImp
-d_indexOfImp_1728 :: T_AbstractFunctions_1712 -> T_indexOf_1686
-d_indexOfImp_1728 v0
+d_indexOfImp_1730 :: T_AbstractFunctions_1714 -> T_indexOf_1688
+d_indexOfImp_1730 v0
   = case coe v0 of
-      C_AbstractFunctions'46'constructor_2985 v1 v2 v3 v4 v5 -> coe v3
+      C_AbstractFunctions'46'constructor_3223 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.AbstractFunctions.runPLCScript
-d_runPLCScript_1730 ::
-  T_AbstractFunctions_1712 ->
+d_runPLCScript_1732 ::
+  T_AbstractFunctions_1714 ->
   AgdaAny -> AgdaAny -> AgdaAny -> [AgdaAny] -> Bool
-d_runPLCScript_1730 v0
+d_runPLCScript_1732 v0
   = case coe v0 of
-      C_AbstractFunctions'46'constructor_2985 v1 v2 v3 v4 v5 -> coe v4
+      C_AbstractFunctions'46'constructor_3223 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Abstract.AbstractFunctions.scriptSize
-d_scriptSize_1732 ::
-  T_AbstractFunctions_1712 ->
+d_scriptSize_1734 ::
+  T_AbstractFunctions_1714 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer
-d_scriptSize_1732 v0
+d_scriptSize_1734 v0
   = case coe v0 of
-      C_AbstractFunctions'46'constructor_2985 v1 v2 v3 v4 v5 -> coe v5
+      C_AbstractFunctions'46'constructor_3223 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
