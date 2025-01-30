@@ -222,17 +222,18 @@ its results by carrying out each of the following tasks.
 \begin{AgdaMultiCode}
 \begin{code}
   EPOCH : let
-      ⟦ esW , removed , _ ⟧ʳ = fut
+      -- ⟦ esW , removed , _ ⟧ʳ = fut
       ⟦ utxoSt , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ = ls
 \end{code}
 \begin{code}[hide]
+      open RatifyState fut
       open UTxOState
       open PState; open DState; open GState
       open Acnt; open EnactState; open GovActionState
 \end{code}
 \begin{code}
 
-      es                = record esW { withdrawals = ∅ }
+      es                = record es { withdrawals = ∅ }
       tmpGovSt          = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
       orphans           = fromList $ getOrphans es tmpGovSt
       removed'          = removed ∪ orphans
@@ -240,7 +241,7 @@ its results by carrying out each of the following tasks.
         mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-      trWithdrawals   = esW .withdrawals
+      trWithdrawals   = es .withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
       retired    = (pState .retiring) ⁻¹ e
@@ -266,7 +267,7 @@ its results by carrying out each of the following tasks.
                                           (utxoSt' .deposits) (voteDelegs dState)
            ; treasury = acnt .treasury ; GState gState
            ; pools = pState .pools ; delegatees = dState .voteDelegs }
-        ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
+        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
     _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈

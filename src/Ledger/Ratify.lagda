@@ -209,7 +209,6 @@ record RatifyEnv : Type where
 record RatifyState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ʳ
   field
 \end{code}
 \begin{code}
@@ -247,6 +246,10 @@ easily.
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
+instance
+  ToRecord-RatifyState : ToRecord (EnactState × ℙ (GovActionID × GovActionState) × Bool) RatifyState
+  ToRecord-RatifyState = record { ⟦_⟧ = uncurryₙ 3 (λ x x₁ x₂ → record { es = x ; removed = x₁ ; delay = x₂ }) }
+
 open StakeDistrs
 \end{code}
 \begin{code}
@@ -493,9 +496,9 @@ delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 
 acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
-acceptConds Γ ⟦ es , removed , d ⟧ʳ (id , st) = let open RatifyEnv Γ; open GovActionState st in
+acceptConds Γ stʳ (id , st) = let open RatifyEnv Γ; open RatifyState stʳ; open GovActionState st in
        accepted Γ es st
-    ×  ¬ delayed action prevAction es d
+    ×  ¬ delayed action prevAction es delay
     × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
@@ -557,24 +560,24 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  RATIFY-Accept : ∀ {Γ} {es} {removed} {d} {a} {es'} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
-     ∙ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+  RATIFY-Accept : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+     ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
-       Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
-            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
+       Γ ⊢  ⟦ es   , removed          , d                      ⟧ ⇀⦇ a ,RATIFY'⦈
+            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧
 
-  RATIFY-Reject : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
-     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+  RATIFY-Reject : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ expired currentEpoch st
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
 
-  RATIFY-Continue : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
-     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+  RATIFY-Continue : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ ¬ expired currentEpoch st
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type

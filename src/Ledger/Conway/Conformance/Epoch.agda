@@ -145,9 +145,9 @@ data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 
   EPOCH : let
-      ⟦ esW , removed , _ ⟧ʳ = fut
       ⟦ utxoSt , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ = ls
 
+      open RatifyState fut
       open UTxOState
       open PState; open DState; open GState
       open Acnt; open EnactState; open GovActionState
@@ -157,10 +157,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
         mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-      trWithdrawals   = esW .withdrawals
+      trWithdrawals   = es .withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
-      es         = record esW { withdrawals = ∅ }
+      es         = record es { withdrawals = ∅ }
       retired    = (pState .retiring) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
       refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
@@ -188,7 +188,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
                                           (utxoSt' .deposits) (voteDelegs dState)
            ; treasury = acnt .treasury ; GState gState
            ; pools = pState .pools ; delegatees = dState .voteDelegs }
-        ⊢ ⟦ es , ∅ , false ⟧ʳ ⇀⦇ govSt' ,RATIFY⦈ fut'
+        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
     _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈
