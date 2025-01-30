@@ -36,6 +36,10 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.ToRecord
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
+-- _.GovActionID
+d_GovActionID_152 ::
+  MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
+d_GovActionID_152 = erased
 -- Ledger.Ratify.Properties._._⊢_⇀⦇_,RATIFY'⦈_
 d__'8866'_'8640''10631'_'44'RATIFY'''10632'__1656 a0 a1 a2 a3 a4
   = ()
@@ -74,7 +78,7 @@ d_delay_1756 v0
 -- Ledger.Ratify.Properties._.RatifyState.es
 d_es_1758 ::
   MAlonzo.Code.Ledger.Ratify.T_RatifyState_1992 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826
 d_es_1758 v0 = coe MAlonzo.Code.Ledger.Ratify.d_es_2000 (coe v0)
 -- Ledger.Ratify.Properties._.RatifyState.removed
 d_removed_1760 ::
@@ -144,10 +148,15 @@ du_acceptConds'63'_1840 v0 v1 v2 v3
          (coe
             MAlonzo.Code.Interface.ComputationalRelation.du_Computational'8658'Dec''_696
             (coe
-               MAlonzo.Code.Ledger.Enact.C_'10214'_'44'_'44'_'10215''7497'_826
-               (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
-               (coe MAlonzo.Code.Ledger.Ratify.d_treasury_1986 (coe v1))
-               (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1980 (coe v1)))
+               MAlonzo.Code.ToRecord.d_'10214'_'10215'_14
+               (coe MAlonzo.Code.Ledger.Enact.du_ToRecord'45'EnactEnv_848)
+               (coe
+                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                  (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
+                  (coe
+                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                     (coe MAlonzo.Code.Ledger.Ratify.d_treasury_1986 (coe v1))
+                     (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1980 (coe v1)))))
             (coe MAlonzo.Code.Ledger.Ratify.d_es_2000 (coe v2))
             (coe
                MAlonzo.Code.Ledger.GovernanceActions.d_action_794
@@ -192,7 +201,7 @@ d_RATIFY'''45'total_1844 v0 v1 v2 v3
                                                          (3 :: Integer)
                                                          (\ v15 v16 v17 ->
                                                             coe
-                                                              MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_11979
+                                                              MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12011
                                                               (coe v15) (coe v16) (coe v17))
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -249,7 +258,7 @@ d_RATIFY'''45'total_1844 v0 v1 v2 v3
                                                      (3 :: Integer)
                                                      (\ v11 v12 v13 ->
                                                         coe
-                                                          MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_11979
+                                                          MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12011
                                                           (coe v11) (coe v12) (coe v13))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -296,7 +305,7 @@ d_RATIFY'''45'total_1844 v0 v1 v2 v3
                                                  (3 :: Integer)
                                                  (\ v10 v11 v12 ->
                                                     coe
-                                                      MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_11979
+                                                      MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12011
                                                       (coe v10) (coe v11) (coe v12))
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32

@@ -267,27 +267,27 @@ d_refScriptCostStride_516 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_refScriptCostStride_344 (coe v0)
 -- Ledger.Gov.Properties._.getHash
-d_getHash_684 ::
+d_getHash_686 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_690 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_getHash_684 ~v0 = du_getHash_684
-du_getHash_684 ::
+d_getHash_686 ~v0 = du_getHash_686
+du_getHash_686 ::
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_690 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_getHash_684 = coe MAlonzo.Code.Ledger.Enact.du_getHash_856
+du_getHash_686 = coe MAlonzo.Code.Ledger.Enact.du_getHash_862
 -- Ledger.Gov.Properties._.getHashES
-d_getHashES_686 ::
+d_getHashES_688 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_690 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_getHashES_686 ~v0 = du_getHashES_686
-du_getHashES_686 ::
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+d_getHashES_688 ~v0 = du_getHashES_688
+du_getHashES_688 ::
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_690 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_getHashES_686 = coe MAlonzo.Code.Ledger.Enact.du_getHashES_868
+du_getHashES_688 = coe MAlonzo.Code.Ledger.Enact.du_getHashES_874
 -- Ledger.Gov.Properties._._⊢_⇀⦇_,GOV'⦈_
 d__'8866'_'8640''10631'_'44'GOV'''10632'__738 a0 a1 a2 a3 a4 = ()
 -- Ledger.Gov.Properties._._⊢_⇀⦇_,GOV⦈_
@@ -305,13 +305,13 @@ d_GovState_750 = erased
 -- Ledger.Gov.Properties._.allEnactable
 d_allEnactable_760 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> ()
 d_allEnactable_760 = erased
 -- Ledger.Gov.Properties._.enactable
 d_enactable_770 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
 d_enactable_770 = erased
@@ -331,7 +331,7 @@ d_hasParent''_780 a0 a1 a2 a3 a4 = ()
 -- Ledger.Gov.Properties._.hasParent?'
 d_hasParent'63'''_784 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_690 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
@@ -348,7 +348,7 @@ d_validHFAction_798 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_750 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 -> ()
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 -> ()
 d_validHFAction_798 = erased
 -- Ledger.Gov.Properties._.GovAction
 d_GovAction_854 a0 = ()
@@ -728,7 +728,7 @@ d_validHFAction'63'_1240 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_750 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_validHFAction'63'_1240 v0 v1 v2 v3
   = case coe v1 of
@@ -742,7 +742,7 @@ d_validHFAction'63'_1240 v0 v1 v2 v3
                -> coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_20
              MAlonzo.Code.Ledger.GovernanceActions.C_TriggerHF_698 v10
                -> case coe v3 of
-                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2151 v11 v12 v13 v14 v15
+                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153 v11 v12 v13 v14 v15
                       -> case coe v13 of
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v16 v17
                              -> let v18
@@ -2128,7 +2128,7 @@ d_allEnactable'45'singleton_1734 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovActionState_776 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
 d_allEnactable'45'singleton_1734 ~v0 v1 v2 v3 ~v4
@@ -2136,7 +2136,7 @@ d_allEnactable'45'singleton_1734 ~v0 v1 v2 v3 ~v4
 du_allEnactable'45'singleton_1734 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovActionState_776 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
 du_allEnactable'45'singleton_1734 v0 v1 v2
   = coe
@@ -2148,23 +2148,23 @@ d_helper_1760 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovActionState_776 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
 d_helper_1760 ~v0 v1 v2 v3 ~v4 = du_helper_1760 v1 v2 v3
 du_helper_1760 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovActionState_776 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 -> AgdaAny
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 -> AgdaAny
 du_helper_1760 v0 v1 v2
   = let v3
           = coe
-              MAlonzo.Code.Ledger.Enact.du_getHashES_868 (coe v2)
+              MAlonzo.Code.Ledger.Enact.du_getHashES_874 (coe v2)
               (coe
                  MAlonzo.Code.Ledger.GovernanceActions.d_action_794 (coe v1)) in
     coe
       (let v4
              = coe
-                 MAlonzo.Code.Ledger.Enact.du_getHash_856
+                 MAlonzo.Code.Ledger.Enact.du_getHash_862
                  (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_794 (coe v1))
                  (coe
                     MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_796 (coe v1)) in

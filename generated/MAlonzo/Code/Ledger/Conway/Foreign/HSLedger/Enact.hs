@@ -57,49 +57,6 @@ data GovAction = NoConfidence  | UpdateCommittee (MAlonzo.Code.Ledger.Conway.For
 d_EnactEnv_28 = ()
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactState
 d_EnactState_30 = ()
--- Ledger.Conway.Foreign.HSLedger.Enact.EnactState
-d_EnactState_55 = ()
-type T_EnactState_55 = EnactState
-pattern C_MkEnactState_57 a0 a1 a2 a3 a4 = MkEnactState a0 a1 a2 a3 a4
-check_MkEnactState_57 ::
-  MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-    () ()
-    (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
-       ()
-       (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-          () ()
-          (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
-             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_533
-             Integer)
-          MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Rational_10))
-    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-       () () Integer Integer) ->
-  MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-    () ()
-    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-       () () Integer
-       (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer))
-    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-       () () Integer Integer) ->
-  MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-    () ()
-    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
-    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-       () () Integer Integer) ->
-  MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-    () ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_PParams_10199
-    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-       () () Integer Integer) ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_4475
-    Integer ->
-  T_EnactState_55
-check_MkEnactState_57 = MkEnactState
-cover_EnactState_55 :: EnactState -> ()
-cover_EnactState_55 x
-  = case x of
-      MkEnactState _ _ _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactEnv.epoch
 d_epoch_58 :: MAlonzo.Code.Ledger.Enact.T_EnactEnv_812 -> Integer
 d_epoch_58 v0 = coe MAlonzo.Code.Ledger.Enact.d_epoch_824 (coe v0)
@@ -115,32 +72,32 @@ d_treasury_62 v0
   = coe MAlonzo.Code.Ledger.Enact.d_treasury_822 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactState.cc
 d_cc_66 ::
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_cc_66 v0 = coe MAlonzo.Code.Ledger.Enact.d_cc_840 (coe v0)
+d_cc_66 v0 = coe MAlonzo.Code.Ledger.Enact.d_cc_838 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactState.constitution
 d_constitution_68 ::
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_constitution_68 v0
-  = coe MAlonzo.Code.Ledger.Enact.d_constitution_842 (coe v0)
+  = coe MAlonzo.Code.Ledger.Enact.d_constitution_840 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactState.pparams
 d_pparams_70 ::
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pparams_70 v0
-  = coe MAlonzo.Code.Ledger.Enact.d_pparams_846 (coe v0)
+  = coe MAlonzo.Code.Ledger.Enact.d_pparams_844 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactState.pv
 d_pv_72 ::
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pv_72 v0 = coe MAlonzo.Code.Ledger.Enact.d_pv_844 (coe v0)
+d_pv_72 v0 = coe MAlonzo.Code.Ledger.Enact.d_pv_842 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactState.withdrawals
 d_withdrawals_74 ::
-  MAlonzo.Code.Ledger.Enact.T_EnactState_828 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_withdrawals_74 v0
-  = coe MAlonzo.Code.Ledger.Enact.d_withdrawals_848 (coe v0)
+  = coe MAlonzo.Code.Ledger.Enact.d_withdrawals_846 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Enact.HsTy-EnactState
 d_HsTy'45'EnactState_80 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
@@ -154,9 +111,9 @@ d_Conv'45'EnactState_82
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2151 v1 v2 v3 v4 v5
+              MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153 v1 v2 v3 v4 v5
                 -> coe
-                     C_MkEnactState_57
+                     C_MkEnactState_89
                      (coe
                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -291,9 +248,9 @@ d_Conv'45'EnactState_82
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkEnactState_57 v1 v2 v3 v4 v5
+              C_MkEnactState_89 v1 v2 v3 v4 v5
                 -> coe
-                     MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2151
+                     MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153
                      (coe
                         MAlonzo.Code.Data.Product.Base.du_map_128
                         (coe
@@ -457,9 +414,9 @@ d_Conv'45'EnactEnv_86
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Enact.C_'10214'_'44'_'44'_'10215''7497'_826 v1 v2 v3
+              MAlonzo.Code.Ledger.Enact.C_EnactEnv'46'constructor_1609 v1 v2 v3
                 -> coe
-                     C_MkEnactEnv_11077
+                     C_MkEnactEnv_11109
                      (coe
                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -480,9 +437,9 @@ d_Conv'45'EnactEnv_86
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkEnactEnv_11077 v1 v2 v3
+              C_MkEnactEnv_11109 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Enact.C_'10214'_'44'_'44'_'10215''7497'_826
+                     MAlonzo.Code.Ledger.Enact.C_EnactEnv'46'constructor_1609
                      (coe
                         MAlonzo.Code.Data.Product.Base.du_map_128
                         (coe
@@ -499,6 +456,49 @@ d_Conv'45'EnactEnv_86
                            (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40) v1))
                      (coe v2) (coe v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Conway.Foreign.HSLedger.Enact.EnactState
+d_EnactState_87 = ()
+type T_EnactState_87 = EnactState
+pattern C_MkEnactState_89 a0 a1 a2 a3 a4 = MkEnactState a0 a1 a2 a3 a4
+check_MkEnactState_89 ::
+  MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+    () ()
+    (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
+       ()
+       (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+          () ()
+          (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
+             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_533
+             Integer)
+          MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Rational_10))
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       () () Integer Integer) ->
+  MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+    () ()
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       () () Integer
+       (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer))
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       () () Integer Integer) ->
+  MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+    () ()
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       () () Integer Integer) ->
+  MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+    () ()
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_PParams_10199
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       () () Integer Integer) ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_4475
+    Integer ->
+  T_EnactState_87
+check_MkEnactState_89 = MkEnactState
+cover_EnactState_87 :: EnactState -> ()
+cover_EnactState_87 x
+  = case x of
+      MkEnactState _ _ _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Enact.HsTy-GovAction
 d_HsTy'45'GovAction_88 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
@@ -513,10 +513,10 @@ d_Conv'45'GovAction_90
          (\ v0 ->
             case coe v0 of
               MAlonzo.Code.Ledger.GovernanceActions.C_NoConfidence_692
-                -> coe C_NoConfidence_12373
+                -> coe C_NoConfidence_12405
               MAlonzo.Code.Ledger.GovernanceActions.C_UpdateCommittee_694 v1 v2 v3
                 -> coe
-                     C_UpdateCommittee_12375
+                     C_UpdateCommittee_12407
                      (coe
                         MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                         (coe
@@ -564,7 +564,7 @@ d_Conv'45'GovAction_90
                         v3)
               MAlonzo.Code.Ledger.GovernanceActions.C_NewConstitution_696 v1 v2
                 -> coe
-                     C_NewConstitution_12723 (coe v1)
+                     C_NewConstitution_12755 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -575,7 +575,7 @@ d_Conv'45'GovAction_90
                         v2)
               MAlonzo.Code.Ledger.GovernanceActions.C_TriggerHF_698 v1
                 -> coe
-                     C_TriggerHF_12823
+                     C_TriggerHF_12855
                      (coe
                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -593,7 +593,7 @@ d_Conv'45'GovAction_90
                            (coe v1)))
               MAlonzo.Code.Ledger.GovernanceActions.C_ChangePParams_700 v1
                 -> coe
-                     C_ChangePParams_12859
+                     C_ChangePParams_12891
                      (coe
                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkPParamsUpdate_104745
                         (coe
@@ -881,7 +881,7 @@ d_Conv'45'GovAction_90
                            (MAlonzo.Code.Ledger.PParams.d_ccMaxTermLength_642 (coe v1))))
               MAlonzo.Code.Ledger.GovernanceActions.C_TreasuryWdrl_702 v1
                 -> coe
-                     C_TreasuryWdrl_12889
+                     C_TreasuryWdrl_12921
                      (coe
                         MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                         (coe
@@ -896,14 +896,14 @@ d_Conv'45'GovAction_90
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v1))))
               MAlonzo.Code.Ledger.GovernanceActions.C_Info_704
-                -> coe C_Info_13007
+                -> coe C_Info_13039
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_NoConfidence_12373
+              C_NoConfidence_12405
                 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_NoConfidence_692
-              C_UpdateCommittee_12375 v1 v2 v3
+              C_UpdateCommittee_12407 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.GovernanceActions.C_UpdateCommittee_694
                      (coe
@@ -973,7 +973,7 @@ d_Conv'45'GovAction_90
                                                  (coe v5) (coe v6)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v3)
-              C_NewConstitution_12723 v1 v2
+              C_NewConstitution_12755 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.GovernanceActions.C_NewConstitution_696
                      (coe v1)
@@ -985,7 +985,7 @@ d_Conv'45'GovAction_90
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                         v2)
-              C_TriggerHF_12823 v1
+              C_TriggerHF_12855 v1
                 -> coe
                      MAlonzo.Code.Ledger.GovernanceActions.C_TriggerHF_698
                      (coe
@@ -1002,7 +1002,7 @@ d_Conv'45'GovAction_90
                         (coe
                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                            (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40) v1))
-              C_ChangePParams_12859 v1
+              C_ChangePParams_12891 v1
                 -> coe
                      MAlonzo.Code.Ledger.GovernanceActions.C_ChangePParams_700
                      (coe
@@ -1670,7 +1670,7 @@ d_Conv'45'GovAction_90
                                              v35)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
-              C_TreasuryWdrl_12889 v1
+              C_TreasuryWdrl_12921 v1
                 -> coe
                      MAlonzo.Code.Ledger.GovernanceActions.C_TreasuryWdrl_702
                      (coe
@@ -1709,23 +1709,23 @@ d_Conv'45'GovAction_90
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                         (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.d_assocList_26
                            (coe v1)))
-              C_Info_13007
+              C_Info_13039
                 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_Info_704
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Enact.enact-step
 enactStep ::
-  T_EnactEnv_11075 ->
-  T_EnactState_55 ->
-  T_GovAction_12371 ->
+  T_EnactEnv_11107 ->
+  T_EnactState_87 ->
+  T_GovAction_12403 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_EnactState_55
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_EnactState_87
 enactStep = coe d_enact'45'step_92
 d_enact'45'step_92 ::
-  T_EnactEnv_11075 ->
-  T_EnactState_55 ->
-  T_GovAction_12371 ->
+  T_EnactEnv_11107 ->
+  T_EnactState_87 ->
+  T_GovAction_12403 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_EnactState_55
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_EnactState_87
 d_enact'45'step_92 v0
   = coe
       MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -1754,63 +1754,63 @@ d_enact'45'step_92 v0
             MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'EnactEnv_86
             v0))
 -- Ledger.Conway.Foreign.HSLedger.Enact.EnactEnv
-d_EnactEnv_11075 = ()
-type T_EnactEnv_11075 = EnactEnv
-pattern C_MkEnactEnv_11077 a0 a1 a2 = MkEnactEnv a0 a1 a2
-check_MkEnactEnv_11077 ::
+d_EnactEnv_11107 = ()
+type T_EnactEnv_11107 = EnactEnv
+pattern C_MkEnactEnv_11109 a0 a1 a2 = MkEnactEnv a0 a1 a2
+check_MkEnactEnv_11109 ::
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     () () Integer Integer ->
-  Integer -> Integer -> T_EnactEnv_11075
-check_MkEnactEnv_11077 = MkEnactEnv
-cover_EnactEnv_11075 :: EnactEnv -> ()
-cover_EnactEnv_11075 x
+  Integer -> Integer -> T_EnactEnv_11107
+check_MkEnactEnv_11109 = MkEnactEnv
+cover_EnactEnv_11107 :: EnactEnv -> ()
+cover_EnactEnv_11107 x
   = case x of
       MkEnactEnv _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Enact.GovAction
-d_GovAction_12371 = ()
-type T_GovAction_12371 = GovAction
-pattern C_NoConfidence_12373 = NoConfidence
-pattern C_UpdateCommittee_12375 a0 a1 a2 = UpdateCommittee a0 a1 a2
-pattern C_NewConstitution_12723 a0 a1 = NewConstitution a0 a1
-pattern C_TriggerHF_12823 a0 = TriggerHF a0
-pattern C_ChangePParams_12859 a0 = ChangePParams a0
-pattern C_TreasuryWdrl_12889 a0 = TreasuryWdrl a0
-pattern C_Info_13007 = Info
-check_NoConfidence_12373 :: T_GovAction_12371
-check_NoConfidence_12373 = NoConfidence
-check_UpdateCommittee_12375 ::
+d_GovAction_12403 = ()
+type T_GovAction_12403 = GovAction
+pattern C_NoConfidence_12405 = NoConfidence
+pattern C_UpdateCommittee_12407 a0 a1 a2 = UpdateCommittee a0 a1 a2
+pattern C_NewConstitution_12755 a0 a1 = NewConstitution a0 a1
+pattern C_TriggerHF_12855 a0 = TriggerHF a0
+pattern C_ChangePParams_12891 a0 = ChangePParams a0
+pattern C_TreasuryWdrl_12921 a0 = TreasuryWdrl a0
+pattern C_Info_13039 = Info
+check_NoConfidence_12405 :: T_GovAction_12403
+check_NoConfidence_12405 = NoConfidence
+check_UpdateCommittee_12407 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_533
     Integer ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSSet_32
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_533 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Rational_10 ->
-  T_GovAction_12371
-check_UpdateCommittee_12375 = UpdateCommittee
-check_NewConstitution_12723 ::
+  T_GovAction_12403
+check_UpdateCommittee_12407 = UpdateCommittee
+check_NewConstitution_12755 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
-  T_GovAction_12371
-check_NewConstitution_12723 = NewConstitution
-check_TriggerHF_12823 ::
+  T_GovAction_12403
+check_NewConstitution_12755 = NewConstitution
+check_TriggerHF_12855 ::
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     () () Integer Integer ->
-  T_GovAction_12371
-check_TriggerHF_12823 = TriggerHF
-check_ChangePParams_12859 ::
+  T_GovAction_12403
+check_TriggerHF_12855 = TriggerHF
+check_ChangePParams_12891 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_PParamsUpdate_104743 ->
-  T_GovAction_12371
-check_ChangePParams_12859 = ChangePParams
-check_TreasuryWdrl_12889 ::
+  T_GovAction_12403
+check_ChangePParams_12891 = ChangePParams
+check_TreasuryWdrl_12921 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_4475
     Integer ->
-  T_GovAction_12371
-check_TreasuryWdrl_12889 = TreasuryWdrl
-check_Info_13007 :: T_GovAction_12371
-check_Info_13007 = Info
-cover_GovAction_12371 :: GovAction -> ()
-cover_GovAction_12371 x
+  T_GovAction_12403
+check_TreasuryWdrl_12921 = TreasuryWdrl
+check_Info_13039 :: T_GovAction_12403
+check_Info_13039 = Info
+cover_GovAction_12403 :: GovAction -> ()
+cover_GovAction_12403 x
   = case x of
       NoConfidence -> ()
       UpdateCommittee _ _ _ -> ()
