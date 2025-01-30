@@ -48,11 +48,7 @@ data VDeleg : Type where
   noConfidenceRep  :                         VDeleg
 
 record Anchor : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     url   : String
     hash  : DocHash
 
@@ -182,22 +178,14 @@ data Vote : Type where
   yes no abstain  : Vote
 
 record GovVote : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     gid         : GovActionID
     voter       : Voter
     vote        : Vote
     anchor      : Maybe Anchor
 
 record GovProposal : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     action      : GovAction
     prevAction  : NeedsHash action
     policy      : Maybe ScriptHash
@@ -206,11 +194,7 @@ record GovProposal : Type where
     anchor      : Anchor
 
 record GovActionState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     votes       : Voter ⇀ Vote
     returnAddr  : RwdAddr
     expiresIn   : Epoch
