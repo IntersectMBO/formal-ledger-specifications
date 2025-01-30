@@ -217,7 +217,8 @@ private variable
 In the Conway era, support for pointer addresses, genesis delegations
 and MIR certificates is removed. In \DState, this means that the four
 fields relating to those features are no longer present, and \DelegEnv
-contains none of the fields it used to in the Shelley era.
+contains none of the fields it used to in the Shelley
+era~(\cite[Sec.~9.2]{cardano_shelley_spec}).
 
 Note that pointer addresses are still usable, only their staking
 functionality has been retired. So all funds locked behind pointer
