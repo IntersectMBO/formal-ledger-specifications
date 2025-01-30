@@ -65,7 +65,7 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                                     ; Q2a = ½
                                                     ; Q2b = ½
                                                     ; Q4 = ½
-                                                    ; Q5e = ½
+                                                    ; Q5 = ½
                                                     }
                                ; govActionLifetime = 10 -- unknown
                                ; govActionDeposit = 1000000 -- unknown (set to 1 ada)
