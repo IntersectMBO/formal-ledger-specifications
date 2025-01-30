@@ -402,7 +402,7 @@ d_Conv'45'LEnv_72
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v7) (coe v8)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.PParams.d_Q5e_240
+                              (MAlonzo.Code.Ledger.PParams.d_Q5_240
                                  (coe MAlonzo.Code.Ledger.PParams.d_poolThresholds_360 (coe v3)))))
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkDrepThresholds_29
@@ -1087,7 +1087,7 @@ d_Conv'45'LEnv_72
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                                          (coe v41) (coe v42)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.PParams.d_Q5e_240 (coe v32))))
+                                                (MAlonzo.Code.Ledger.PParams.d_Q5_240 (coe v32))))
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkDrepThresholds_29
                                              (coe

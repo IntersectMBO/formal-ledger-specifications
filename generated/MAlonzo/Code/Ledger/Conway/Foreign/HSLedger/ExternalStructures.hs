@@ -4648,11 +4648,11 @@ d_Q4_1798 ::
   MAlonzo.Code.Ledger.PParams.T_PoolThresholds_220 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_Q4_1798 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q4_238 (coe v0)
--- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.PoolThresholds.Q5e
-d_Q5e_1800 ::
+-- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.PoolThresholds.Q5
+d_Q5_1800 ::
   MAlonzo.Code.Ledger.PParams.T_PoolThresholds_220 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_Q5e_1800 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q5e_240 (coe v0)
+d_Q5_1800 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q5_240 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.RwdAddr.net
 d_net_1804 :: MAlonzo.Code.Ledger.Address.T_RwdAddr_76 -> Integer
 d_net_1804 v0 = coe MAlonzo.Code.Ledger.Address.d_net_82 (coe v0)

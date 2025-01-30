@@ -1451,11 +1451,11 @@ d_Q4_1014 ::
   MAlonzo.Code.Ledger.PParams.T_PoolThresholds_220 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_Q4_1014 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q4_238 (coe v0)
--- Ledger.Types.GovStructure.GovStructure._.PoolThresholds.Q5e
-d_Q5e_1016 ::
+-- Ledger.Types.GovStructure.GovStructure._.PoolThresholds.Q5
+d_Q5_1016 ::
   MAlonzo.Code.Ledger.PParams.T_PoolThresholds_220 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_Q5e_1016 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q5e_240 (coe v0)
+d_Q5_1016 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q5_240 (coe v0)
 -- Ledger.Types.GovStructure.GovStructure.govParams
 d_govParams_1024 ::
   T_GovStructure_6 -> MAlonzo.Code.Ledger.PParams.T_GovParams_1310
