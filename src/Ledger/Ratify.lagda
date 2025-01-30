@@ -499,7 +499,7 @@ acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Ty
 acceptConds Γ stʳ (id , st) = let open RatifyEnv Γ; open RatifyState stʳ; open GovActionState st in
        accepted Γ es st
     ×  ¬ delayed action prevAction es delay
-    × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+    × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
 abstract
@@ -562,7 +562,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × Gov
 \begin{code}
   RATIFY-Accept : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
      ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
-     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
        Γ ⊢  ⟦ es   , removed          , d                      ⟧ ⇀⦇ a ,RATIFY'⦈
             ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧

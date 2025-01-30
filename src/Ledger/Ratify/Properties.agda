@@ -14,12 +14,12 @@ open Computational ⦃...⦄ hiding (computeProof; completeness)
 
 private
   module Implementation
-    Γ (s : RatifyState) (sig : _ × _)
+    Γ (s : RatifyState) (sig : GovActionID × _)
     (let gid , st = sig)
     where
     open RatifyState s
     open RatifyEnv Γ; open GovActionState st
-    es'  = compute ⟦ gid , treasury , currentEpoch ⟧ᵉ es action
+    es'  = compute ⟦ gid , treasury , currentEpoch ⟧ es action
     acc? = accepted? Γ es st
     exp? = expired? currentEpoch st
     del? = delayed? action prevAction es delay
