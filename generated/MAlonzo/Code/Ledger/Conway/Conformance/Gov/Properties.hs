@@ -354,12 +354,12 @@ d_voter_902 ::
 d_voter_902 v0
   = coe MAlonzo.Code.Ledger.GovernanceActions.d_voter_744 (coe v0)
 -- Ledger.Conway.Conformance.Gov.Properties._.canVote
-d_canVote_966 ::
+d_canVote_968 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_690 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovRole_660 -> ()
-d_canVote_966 = erased
+d_canVote_968 = erased
 -- Ledger.Conway.Conformance.Gov.Properties.L._.hasParent'
 d_hasParent''_1092 a0 a1 a2 a3 a4 = ()
 -- Ledger.Conway.Conformance.Gov.Properties.L._.hasParent?'

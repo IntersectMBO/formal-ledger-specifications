@@ -423,12 +423,12 @@ d_voter_972 ::
 d_voter_972 v0
   = coe MAlonzo.Code.Ledger.GovernanceActions.d_voter_744 (coe v0)
 -- Ledger.Gov.Properties._.canVote
-d_canVote_1036 ::
+d_canVote_1038 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_690 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovRole_660 -> ()
-d_canVote_1036 = erased
+d_canVote_1038 = erased
 -- Ledger.Gov.Properties.lookupActionId
 d_lookupActionId_1120 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
