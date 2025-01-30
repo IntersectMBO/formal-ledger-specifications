@@ -42,14 +42,14 @@ current status of each individual era is described in Table \ref{fig:eras-progre
 
 \begin{longtable}[h!]{|l l l l|}
 \hline
-Era  & Figures & Prose & Cleanup \\
+Era (doc) & Figures & Prose & Cleanup \\
 \hline
 \endhead
-Shelley & Partial & Partial & Not started \\
-Shelley-MA & Partial & Partial & Not started \\
-Alonzo & Partial & Partial & Not started \\
-Babbage & Not started & Not started & Not started \\
-Conway \cite{cip1694} & Complete & Partial & Partial \\
+Shelley (\cite{cardano_shelley_spec}) & Partial & Partial & Not started \\
+Shelley-MA (\cite{cardano_shelley_ma_spec}) & Partial & Partial & Not started \\
+Alonzo (\cite{cardano_alonzo_spec}) & Partial & Partial & Not started \\
+Babbage (\cite{cardano_babbage_spec}) & Not started & Not started & Not started \\
+Conway (\cite{cip1694}) & Complete & Partial & Partial \\
 \hline
 \caption{Specification progress}
 \label{fig:eras-progress}
@@ -59,7 +59,7 @@ Conway \cite{cip1694} & Complete & Partial & Partial \\
 \subsection{A Note on Agda}
 
 This specification is written using the Agda programming language and
-proof assistant \cite{agda2023}. We have spent a lot of time on making
+proof assistant~\cite{agda2023}. We have spent a lot of time on making
 this document readable for people unfamiliar with Agda (or other proof
 assistants, functional programming languages, etc.). However, by the
 nature of working in a formal language we have to play by its rules,

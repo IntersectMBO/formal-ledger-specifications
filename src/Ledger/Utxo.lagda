@@ -141,6 +141,8 @@ the state of the previous era at the transition into the Conway era.
 Alternatively, we can effectively treat the old handling of deposits
 as an erratum in the Shelley specification, which we fix by implementing
 the new deposits logic in older eras and then replaying the chain.
+(The handling of deposits in the Shelley era is discussed
+in~\cite[Sec.~8]{cardano_shelley_spec} and~\cite[Sec.~B.2]{delegation_design}.)
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}

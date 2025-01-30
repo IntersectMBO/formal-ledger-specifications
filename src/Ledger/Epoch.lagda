@@ -200,8 +200,9 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 \end{NoConway}
 
 Figure~\ref{fig:epoch:sts} defines the rule for the EPOCH transition
-system. Currently, this contains some logic that is handled by
-POOLREAP in the Shelley specification, since POOLREAP is not implemented here.
+system.  Currently, this contains some logic that is handled by
+POOLREAP in the Shelley specification~(\cite[Sec.~11.6]{cardano_shelley_spec}),
+since POOLREAP is not implemented here.
 
 The EPOCH rule now also needs to invoke RATIFY and properly deal with
 its results by carrying out each of the following tasks.
