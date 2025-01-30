@@ -22,6 +22,7 @@ be made to the ledger described in this document.
 
 This allows for a governance mechanism similar to the old, Shelley-era
 governance during the bootstrap phase, where the constitutional
-committee is mostly in charge. These restrictions will be removed
-during a subsequent hard fork, once enough DRep stake is present in
-the system to properly govern and secure itself.
+committee is mostly in charge (see~\cite{delegation_design}).
+These restrictions will be removed during a subsequent hard fork,
+once enough DRep stake is present in the system to properly govern
+and secure itself.

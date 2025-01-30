@@ -216,8 +216,12 @@ the \List \Data argument we provide would be required.
 In Figure~\ref{fig:rules:utxow}, the line
 \inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
 \PowerSet~\DataHash.  In the original Alonzo spec, these two terms would
-have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out.
+have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out
+(see~\cite[Sec.~3.1]{cardano_alonzo_spec}).
 In original spec, however, the right-hand side (\txdatsHashes) could never
 contain \nothing, hence the left-hand side (\inputHashes) could never
 contain \nothing.
-
+% TODO: Say what "original spec" refers to?
+% What was txdat called previously?
+% Add reference to the place in a previous spec where we can see that
+% (the analog of) txdat can not contain a nothing.
