@@ -128,7 +128,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record s { cc = nothing , gid }
 
-  Enact-NewComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
+  Enact-UpdComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
                       maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
