@@ -56,7 +56,7 @@ record StrucSimulation S I (_⊢_⇀⦇_,STRUC⦈_ : SSRel ⊤ S I) : Type₁ wh
 
     -- only for PlutusV3
   _~ᵉ_ : LEnv × Tx × LState → ⊤ × I → Type
-  (le , tx , u) ~ᵉ (tt , i) = πⁱ (txInfo PlutusV3 (le .LEnv.pparams) (u .LState.utxoSt .UTxOState.utxo) tx) ≡ i
+  _~ᵉ_ = λ (le , tx , u) (tt , i) → πⁱ (txInfo PlutusV3 (le .LEnv.pparams) (u .LState.utxoSt .UTxOState.utxo) tx) ≡ i
 
   field
     simulates : ∀ Γ s u tx i′ u′ → extraAssmp Γ u tx →
