@@ -489,7 +489,7 @@ du_getHashES_868 v0 v1
 d__'8866'_'8640''10631'_'44'ENACT'10632'__884 a0 a1 a2 a3 a4 = ()
 data T__'8866'_'8640''10631'_'44'ENACT'10632'__884
   = C_Enact'45'NoConf_912 |
-    C_Enact'45'NewComm_920 (AgdaAny ->
+    C_Enact'45'UpdComm_920 (AgdaAny ->
                             MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
                             MAlonzo.Code.Data.Sum.Base.T__'8846'__30) |
     C_Enact'45'NewConst_922 | C_Enact'45'HF_924 |

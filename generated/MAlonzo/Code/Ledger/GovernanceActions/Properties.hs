@@ -322,7 +322,7 @@ d_Computational'45'ENACT_898 v0
                                                                MAlonzo.Code.Ledger.Enact.d_withdrawals_848
                                                                (coe v5)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Enact.C_Enact'45'NewComm_920
+                                                            MAlonzo.Code.Ledger.Enact.C_Enact'45'UpdComm_920
                                                             (\ v14 -> coe v13 v14)))
                                                _ -> MAlonzo.RTE.mazUnreachableError
                                         else coe
