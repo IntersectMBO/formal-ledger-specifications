@@ -15,14 +15,14 @@ open Computational ⦃...⦄ hiding (computeProof; completeness)
 private
   module Implementation
     Γ (s : RatifyState) (sig : _ × _)
-    (let ⟦ es , removed , d ⟧ʳ = s)
     (let gid , st = sig)
     where
+    open RatifyState s
     open RatifyEnv Γ; open GovActionState st
     es'  = compute ⟦ gid , treasury , currentEpoch ⟧ᵉ es action
     acc? = accepted? Γ es st
     exp? = expired? currentEpoch st
-    del? = delayed? action prevAction es d
+    del? = delayed? action prevAction es delay
 
     opaque
       acceptConds? : ∀ a → Dec (acceptConds Γ s a)
@@ -39,9 +39,9 @@ private
     computeProof = success {Err = ⊥} RATIFY'-total
 
     RATIFY'-completeness : ∀ s' → Γ ⊢ s ⇀⦇ sig ,RATIFY'⦈ s' → RATIFY'-total .proj₁ ≡ s'
-    RATIFY'-completeness ⟦ x , _ , _ ⟧ʳ (RATIFY-Accept (p , a)) with acceptConds? sig
+    RATIFY'-completeness stʳ (RATIFY-Accept (p , a)) with acceptConds? sig
     ... | no ¬h = ⊥-elim (¬h p)
-    ... | yes (_ , _ , _ , h) = cong ⟦_, _ , _ ⟧ʳ $ computational⇒rightUnique Computational-ENACT h a
+    ... | yes (_ , _ , _ , h) = cong (λ stᵉ → ⟦ stᵉ , _ , _ ⟧) $ computational⇒rightUnique Computational-ENACT h a
     RATIFY'-completeness s' (RATIFY-Reject (¬p , a))
       rewrite dec-no (acceptConds? _) ¬p | dec-yes exp? a .proj₂ = refl
     RATIFY'-completeness s' (RATIFY-Continue (¬p , ¬a))
