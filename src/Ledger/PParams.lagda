@@ -76,7 +76,7 @@ record DrepThresholds : Type where
 
 record PoolThresholds : Type where
   field
-    Q1 Q2a Q2b Q4 Q5e : ℚ
+    Q1 Q2a Q2b Q4 Q5 : ℚ
 
 record PParams : Type where
   field
@@ -404,7 +404,7 @@ following concepts.
 \begin{itemize}
   \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
   named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
-  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfivee;
+  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfive;
   \item \ccMinSize: minimum constitutional committee size;
   \item \ccMaxTermLength: maximum term limit (in epochs) of constitutional committee members;
   \item \govActionLifetime: governance action expiration;
