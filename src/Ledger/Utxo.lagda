@@ -56,10 +56,10 @@ isTwoPhaseScriptAddress tx utxo a =
 isTwoPhaseScriptAddress? : ∀ {tx utxo a} → isTwoPhaseScriptAddress tx utxo a ⁇
 isTwoPhaseScriptAddress? {tx} {utxo} {a} .dec
   with decide (isScriptAddr a)
-... | inj₂ _ = false because ofⁿ λ ()
+... | inj₂ _ = no λ ()
 ... | inj₁ p
   with decide (lookupScriptHash (getScriptHash a p) tx utxo)
-... | inj₂ _ = false because ofⁿ λ ()
+... | inj₂ _ = no λ ()
 ... | inj₁ s = isP2Script? {s} .dec
 
 record isTwoPhaseScriptAddress′ (tx : Tx) (utxo : UTxO) (a : Addr) : Type where
