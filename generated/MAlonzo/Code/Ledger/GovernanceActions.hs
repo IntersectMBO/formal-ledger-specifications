@@ -50,7 +50,7 @@ d_DecEq'45'PParamGroup_70 ~v0 = du_DecEq'45'PParamGroup_70
 du_DecEq'45'PParamGroup_70 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PParamGroup_70
-  = coe MAlonzo.Code.Ledger.PParams.du_DecEq'45'PParamGroup_500
+  = coe MAlonzo.Code.Ledger.PParams.du_DecEq'45'PParamGroup_504
 -- _.Epoch
 d_Epoch_104 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 -> ()
@@ -117,20 +117,20 @@ data T_VDeleg_672
 -- Ledger.GovernanceActions.Anchor
 d_Anchor_680 a0 = ()
 data T_Anchor_680
-  = C_Anchor'46'constructor_2095 MAlonzo.Code.Agda.Builtin.String.T_String_6
+  = C_Anchor'46'constructor_2115 MAlonzo.Code.Agda.Builtin.String.T_String_6
                                  AgdaAny
 -- Ledger.GovernanceActions.Anchor.url
 d_url_686 ::
   T_Anchor_680 -> MAlonzo.Code.Agda.Builtin.String.T_String_6
 d_url_686 v0
   = case coe v0 of
-      C_Anchor'46'constructor_2095 v1 v2 -> coe v1
+      C_Anchor'46'constructor_2115 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.Anchor.hash
 d_hash_688 :: T_Anchor_680 -> AgdaAny
 d_hash_688 v0
   = case coe v0 of
-      C_Anchor'46'constructor_2095 v1 v2 -> coe v2
+      C_Anchor'46'constructor_2115 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovAction
 d_GovAction_690 a0 = ()
@@ -172,10 +172,10 @@ d_actionWellFormed'63'_716 v0 v1
                    MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
                    (coe
                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1138
-                      (coe MAlonzo.Code.Ledger.PParams.du_DecEq'45'PParamGroup_500))
+                      (coe MAlonzo.Code.Ledger.PParams.du_DecEq'45'PParamGroup_504))
                    (coe
-                      MAlonzo.Code.Ledger.PParams.d_updateGroups_1296
-                      (MAlonzo.Code.Ledger.PParams.d_ppUpd_1328
+                      MAlonzo.Code.Ledger.PParams.d_updateGroups_1300
+                      (MAlonzo.Code.Ledger.PParams.d_ppUpd_1332
                          (coe
                             MAlonzo.Code.Ledger.Types.GovStructure.d_govParams_1024 (coe v0)))
                       v2)
@@ -187,8 +187,8 @@ d_actionWellFormed'63'_716 v0 v1
                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))))
                 (coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
              (coe
-                MAlonzo.Code.Ledger.PParams.d_ppWF'63'_1302
-                (MAlonzo.Code.Ledger.PParams.d_ppUpd_1328
+                MAlonzo.Code.Ledger.PParams.d_ppWF'63'_1306
+                (MAlonzo.Code.Ledger.PParams.d_ppUpd_1332
                    (coe
                       MAlonzo.Code.Ledger.Types.GovStructure.d_govParams_1024 (coe v0)))
                 v2)
@@ -244,7 +244,7 @@ data T_Vote_724 = C_yes_726 | C_no_728 | C_abstain_730
 -- Ledger.GovernanceActions.GovVote
 d_GovVote_732 a0 = ()
 data T_GovVote_732
-  = C_GovVote'46'constructor_6237 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_GovVote'46'constructor_6257 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 T_Vote_724
                                   (Maybe T_Anchor_680)
 -- Ledger.GovernanceActions.GovVote.gid
@@ -252,74 +252,74 @@ d_gid_742 ::
   T_GovVote_732 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gid_742 v0
   = case coe v0 of
-      C_GovVote'46'constructor_6237 v1 v2 v3 v4 -> coe v1
+      C_GovVote'46'constructor_6257 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovVote.voter
 d_voter_744 ::
   T_GovVote_732 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_voter_744 v0
   = case coe v0 of
-      C_GovVote'46'constructor_6237 v1 v2 v3 v4 -> coe v2
+      C_GovVote'46'constructor_6257 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovVote.vote
 d_vote_746 :: T_GovVote_732 -> T_Vote_724
 d_vote_746 v0
   = case coe v0 of
-      C_GovVote'46'constructor_6237 v1 v2 v3 v4 -> coe v3
+      C_GovVote'46'constructor_6257 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovVote.anchor
 d_anchor_748 :: T_GovVote_732 -> Maybe T_Anchor_680
 d_anchor_748 v0
   = case coe v0 of
-      C_GovVote'46'constructor_6237 v1 v2 v3 v4 -> coe v4
+      C_GovVote'46'constructor_6257 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovProposal
 d_GovProposal_750 a0 = ()
 data T_GovProposal_750
-  = C_GovProposal'46'constructor_6625 T_GovAction_690 AgdaAny
+  = C_GovProposal'46'constructor_6645 T_GovAction_690 AgdaAny
                                       (Maybe AgdaAny) Integer
                                       MAlonzo.Code.Ledger.Address.T_RwdAddr_76 T_Anchor_680
 -- Ledger.GovernanceActions.GovProposal.action
 d_action_764 :: T_GovProposal_750 -> T_GovAction_690
 d_action_764 v0
   = case coe v0 of
-      C_GovProposal'46'constructor_6625 v1 v2 v3 v4 v5 v6 -> coe v1
+      C_GovProposal'46'constructor_6645 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovProposal.prevAction
 d_prevAction_766 :: T_GovProposal_750 -> AgdaAny
 d_prevAction_766 v0
   = case coe v0 of
-      C_GovProposal'46'constructor_6625 v1 v2 v3 v4 v5 v6 -> coe v2
+      C_GovProposal'46'constructor_6645 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovProposal.policy
 d_policy_768 :: T_GovProposal_750 -> Maybe AgdaAny
 d_policy_768 v0
   = case coe v0 of
-      C_GovProposal'46'constructor_6625 v1 v2 v3 v4 v5 v6 -> coe v3
+      C_GovProposal'46'constructor_6645 v1 v2 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovProposal.deposit
 d_deposit_770 :: T_GovProposal_750 -> Integer
 d_deposit_770 v0
   = case coe v0 of
-      C_GovProposal'46'constructor_6625 v1 v2 v3 v4 v5 v6 -> coe v4
+      C_GovProposal'46'constructor_6645 v1 v2 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovProposal.returnAddr
 d_returnAddr_772 ::
   T_GovProposal_750 -> MAlonzo.Code.Ledger.Address.T_RwdAddr_76
 d_returnAddr_772 v0
   = case coe v0 of
-      C_GovProposal'46'constructor_6625 v1 v2 v3 v4 v5 v6 -> coe v5
+      C_GovProposal'46'constructor_6645 v1 v2 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovProposal.anchor
 d_anchor_774 :: T_GovProposal_750 -> T_Anchor_680
 d_anchor_774 v0
   = case coe v0 of
-      C_GovProposal'46'constructor_6625 v1 v2 v3 v4 v5 v6 -> coe v6
+      C_GovProposal'46'constructor_6645 v1 v2 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovActionState
 d_GovActionState_776 a0 = ()
 data T_GovActionState_776
-  = C_GovActionState'46'constructor_6991 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_GovActionState'46'constructor_7011 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                          MAlonzo.Code.Ledger.Address.T_RwdAddr_76 AgdaAny
                                          T_GovAction_690 AgdaAny
 -- Ledger.GovernanceActions.GovActionState.votes
@@ -327,32 +327,32 @@ d_votes_788 ::
   T_GovActionState_776 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_votes_788 v0
   = case coe v0 of
-      C_GovActionState'46'constructor_6991 v1 v2 v3 v4 v5 -> coe v1
+      C_GovActionState'46'constructor_7011 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovActionState.returnAddr
 d_returnAddr_790 ::
   T_GovActionState_776 -> MAlonzo.Code.Ledger.Address.T_RwdAddr_76
 d_returnAddr_790 v0
   = case coe v0 of
-      C_GovActionState'46'constructor_6991 v1 v2 v3 v4 v5 -> coe v2
+      C_GovActionState'46'constructor_7011 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovActionState.expiresIn
 d_expiresIn_792 :: T_GovActionState_776 -> AgdaAny
 d_expiresIn_792 v0
   = case coe v0 of
-      C_GovActionState'46'constructor_6991 v1 v2 v3 v4 v5 -> coe v3
+      C_GovActionState'46'constructor_7011 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovActionState.action
 d_action_794 :: T_GovActionState_776 -> T_GovAction_690
 d_action_794 v0
   = case coe v0 of
-      C_GovActionState'46'constructor_6991 v1 v2 v3 v4 v5 -> coe v4
+      C_GovActionState'46'constructor_7011 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.GovActionState.prevAction
 d_prevAction_796 :: T_GovActionState_776 -> AgdaAny
 d_prevAction_796 v0
   = case coe v0 of
-      C_GovActionState'46'constructor_6991 v1 v2 v3 v4 v5 -> coe v5
+      C_GovActionState'46'constructor_7011 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.GovernanceActions.DecEq-GovRole
 d_DecEq'45'GovRole_798 ::
@@ -674,7 +674,7 @@ du_getDRepVote_804 ::
   T_GovVote_732 -> Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 du_getDRepVote_804 v0
   = case coe v0 of
-      C_GovVote'46'constructor_6237 v1 v2 v3 v4
+      C_GovVote'46'constructor_6257 v1 v2 v3 v4
         -> case coe v2 of
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v5 v6
                -> let v7 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in

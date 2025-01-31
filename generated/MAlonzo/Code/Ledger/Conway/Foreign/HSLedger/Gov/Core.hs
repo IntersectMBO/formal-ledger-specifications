@@ -98,7 +98,7 @@ d_Conv'45'Anchor_30
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2095 v1 v2
+              MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2115 v1 v2
                 -> coe C_Anchor_145 (coe v1) (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
@@ -106,7 +106,7 @@ d_Conv'45'Anchor_30
             case coe v0 of
               C_Anchor_145 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2095
+                     MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2115
                      (coe v1) (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.HsTy-VDeleg
@@ -268,7 +268,7 @@ d_Conv'45'GovVote_42
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_6237 v1 v2 v3 v4
+              MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_6257 v1 v2 v3 v4
                 -> coe
                      C_GovVote_1533
                      (coe
@@ -334,7 +334,7 @@ d_Conv'45'GovVote_42
             case coe v0 of
               C_GovVote_1533 v1 v2 v3 v4
                 -> coe
-                     MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_6237
+                     MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_6257
                      (coe
                         MAlonzo.Code.Data.Product.Base.du_map_128
                         (coe

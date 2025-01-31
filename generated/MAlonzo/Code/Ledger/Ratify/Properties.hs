@@ -201,7 +201,7 @@ d_RATIFY'''45'total_1844 v0 v1 v2 v3
                                                          (3 :: Integer)
                                                          (\ v15 v16 v17 ->
                                                             coe
-                                                              MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12011
+                                                              MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12031
                                                               (coe v15) (coe v16) (coe v17))
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -258,7 +258,7 @@ d_RATIFY'''45'total_1844 v0 v1 v2 v3
                                                      (3 :: Integer)
                                                      (\ v11 v12 v13 ->
                                                         coe
-                                                          MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12011
+                                                          MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12031
                                                           (coe v11) (coe v12) (coe v13))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -305,7 +305,7 @@ d_RATIFY'''45'total_1844 v0 v1 v2 v3
                                                  (3 :: Integer)
                                                  (\ v10 v11 v12 ->
                                                     coe
-                                                      MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12011
+                                                      MAlonzo.Code.Ledger.Ratify.C_RatifyState'46'constructor_12031
                                                       (coe v10) (coe v11) (coe v12))
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32

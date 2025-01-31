@@ -118,13 +118,13 @@ du_Show'45'Credential'215'Coin_202 v0 v1 v2
       MAlonzo.Code.Ledger.Address.du_Show'45'Credential'215'Coin_210 v1
       v2
 -- _.isKeyHash
-d_isKeyHash_292 ::
+d_isKeyHash_294 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Address.T_Credential_16 -> ()
-d_isKeyHash_292 = erased
+d_isKeyHash_294 = erased
 -- Ledger.Conway.Conformance.Certs.Properties._.DecEq-VDeleg
 d_DecEq'45'VDeleg_674 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
@@ -272,7 +272,7 @@ d_Computational'45'DELEG_1112 v0
                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                   (coe v12)
                                                   (coe
-                                                     MAlonzo.Code.Ledger.PParams.d_keyDeposit_330
+                                                     MAlonzo.Code.Ledger.PParams.d_keyDeposit_334
                                                      (coe
                                                         MAlonzo.Code.Ledger.Certs.d_pparams_948
                                                         (coe v1)))))
@@ -603,7 +603,7 @@ d_Computational'45'DELEG_1112 v0
                                                                          MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                       (coe v12)
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.PParams.d_keyDeposit_330
+                                                                         MAlonzo.Code.Ledger.PParams.d_keyDeposit_334
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Certs.d_pparams_948
                                                                             (coe v1)))))
@@ -1213,7 +1213,7 @@ d_Computational'45'DELEG_1112 v0
                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                   (coe v10)
                                                   (coe
-                                                     MAlonzo.Code.Ledger.PParams.d_keyDeposit_330
+                                                     MAlonzo.Code.Ledger.PParams.d_keyDeposit_334
                                                      (coe
                                                         MAlonzo.Code.Ledger.Certs.d_pparams_948
                                                         (coe v1))))
@@ -1525,7 +1525,7 @@ d_Computational'45'GOVCERT_1374 v0
                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                   (coe v9)
                                                   (coe
-                                                     MAlonzo.Code.Ledger.PParams.d_drepDeposit_372
+                                                     MAlonzo.Code.Ledger.PParams.d_drepDeposit_376
                                                      (coe
                                                         MAlonzo.Code.Ledger.Certs.d_pp_882
                                                         (coe v1))))
@@ -1664,7 +1664,7 @@ d_Computational'45'GOVCERT_1374 v0
                                                                                     (coe v0)))
                                                                               (MAlonzo.Code.Ledger.Certs.d_epoch_880
                                                                                  (coe v1))
-                                                                              (MAlonzo.Code.Ledger.PParams.d_drepActivity_374
+                                                                              (MAlonzo.Code.Ledger.PParams.d_drepActivity_378
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Certs.d_pp_882
                                                                                     (coe v1))))))
@@ -2138,7 +2138,7 @@ d_Computational'45'CERT_1636 v0
                                      (3 :: Integer)
                                      (\ v9 v10 v11 ->
                                         coe
-                                          MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_18329
+                                          MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_18349
                                           (coe v9) (coe v10) (coe v11))
                                      (coe
                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2225,7 +2225,7 @@ d_Computational'45'CERT_1636 v0
                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                     (coe v17)
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.PParams.d_keyDeposit_330
+                                                                       MAlonzo.Code.Ledger.PParams.d_keyDeposit_334
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Certs.d_pparams_948
                                                                           (coe v9)))))
@@ -2608,7 +2608,7 @@ d_Computational'45'CERT_1636 v0
                                                                                                  (coe
                                                                                                     v17)
                                                                                                  (coe
-                                                                                                    MAlonzo.Code.Ledger.PParams.d_keyDeposit_330
+                                                                                                    MAlonzo.Code.Ledger.PParams.d_keyDeposit_334
                                                                                                     (coe
                                                                                                        MAlonzo.Code.Ledger.Certs.d_pparams_948
                                                                                                        (coe
@@ -3552,7 +3552,7 @@ d_Computational'45'CERT_1636 v0
                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                     (coe v15)
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.PParams.d_keyDeposit_330
+                                                                       MAlonzo.Code.Ledger.PParams.d_keyDeposit_334
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Certs.d_pparams_948
                                                                           (coe v9))))
@@ -3900,11 +3900,11 @@ d_pp_2046 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  MAlonzo.Code.Ledger.PParams.T_PParams_242
+  MAlonzo.Code.Ledger.PParams.T_PParams_246
 d_pp_2046 ~v0 v1 ~v2 ~v3 = du_pp_2046 v1
 du_pp_2046 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_868 ->
-  MAlonzo.Code.Ledger.PParams.T_PParams_242
+  MAlonzo.Code.Ledger.PParams.T_PParams_246
 du_pp_2046 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_882 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._._.votes
 d_votes_2048 ::
@@ -4618,7 +4618,7 @@ du_goal_2160 v0 v1 v2
                                                            (coe v1))
                                                         (let v8
                                                                = coe
-                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_60573
+                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_60593
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Certs.d_pp_882
                                                                       (coe v1))
@@ -4673,9 +4673,9 @@ du_goal_2160 v0 v1 v2
                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1086
                                                                          (coe v2))) in
                                                          coe
-                                                           (MAlonzo.Code.Ledger.PParams.d_drepActivity_374
+                                                           (MAlonzo.Code.Ledger.PParams.d_drepActivity_378
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_60545
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_60565
                                                                  (coe v8)))) in
                                               coe (coe (\ v9 -> v8)))
                                              (coe
