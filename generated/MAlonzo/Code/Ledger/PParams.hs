@@ -3333,17 +3333,194 @@ d_refScriptCostMultiplier_1010 v0
 d_refScriptCostStride_1012 :: T_PParamsUpdate_510 -> Maybe Integer
 d_refScriptCostStride_1012 v0
   = coe d_refScriptCostStride_612 (coe v0)
+-- Ledger.PParams.PParamsUpdate.modifiesSecurityGroup
+d_modifiesSecurityGroup_1014 ::
+  MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
+  MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
+  T_PParamsUpdate_510 -> Bool
+d_modifiesSecurityGroup_1014 ~v0 ~v1 ~v2 v3
+  = du_modifiesSecurityGroup_1014 v3
+du_modifiesSecurityGroup_1014 :: T_PParamsUpdate_510 -> Bool
+du_modifiesSecurityGroup_1014 v0
+  = coe
+      MAlonzo.Code.Data.List.Base.d_or_270
+      (coe
+         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+         (coe
+            MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+            (coe d_maxBlockSize_578 (coe v0)))
+         (coe
+            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+            (coe
+               MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+               (coe d_maxTxSize_580 (coe v0)))
+            (coe
+               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+               (coe
+                  MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+                  (coe d_maxHeaderSize_582 (coe v0)))
+               (coe
+                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                  (coe
+                     MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+                     (coe d_maxValSize_584 (coe v0)))
+                  (coe
+                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                     (coe
+                        MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+                        (coe d_maxBlockExUnits_590 (coe v0)))
+                     (coe
+                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                        (coe
+                           MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+                           (coe d_b_596 (coe v0)))
+                        (coe
+                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                           (coe
+                              MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+                              (coe d_a_594 (coe v0)))
+                           (coe
+                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                              (coe
+                                 MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+                                 (coe d_coinsPerUTxOByte_602 (coe v0)))
+                              (coe
+                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                 (coe
+                                    MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+                                    (coe d_govActionDeposit_634 (coe v0)))
+                                 (coe
+                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                    (coe
+                                       MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
+                                       (coe d_minFeeRefScriptCoinsPerByte_606 (coe v0)))
+                                    (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))
+-- Ledger.PParams.PParamsUpdate._.Emax
+d_Emax_1020 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_Emax_1020 v0 = coe d_Emax_620 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.a
+d_a_1022 :: T_PParamsUpdate_510 -> Maybe Integer
+d_a_1022 v0 = coe d_a_594 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.a0
+d_a0_1024 ::
+  T_PParamsUpdate_510 -> Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
+d_a0_1024 v0 = coe d_a0_618 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.b
+d_b_1026 :: T_PParamsUpdate_510 -> Maybe Integer
+d_b_1026 v0 = coe d_b_596 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.ccMaxTermLength
+d_ccMaxTermLength_1028 :: T_PParamsUpdate_510 -> Maybe Integer
+d_ccMaxTermLength_1028 v0 = coe d_ccMaxTermLength_642 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.ccMinSize
+d_ccMinSize_1030 :: T_PParamsUpdate_510 -> Maybe Integer
+d_ccMinSize_1030 v0 = coe d_ccMinSize_640 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.coinsPerUTxOByte
+d_coinsPerUTxOByte_1032 :: T_PParamsUpdate_510 -> Maybe Integer
+d_coinsPerUTxOByte_1032 v0 = coe d_coinsPerUTxOByte_602 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.collateralPercentage
+d_collateralPercentage_1034 :: T_PParamsUpdate_510 -> Maybe Integer
+d_collateralPercentage_1034 v0
+  = coe d_collateralPercentage_624 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.costmdls
+d_costmdls_1036 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_costmdls_1036 v0 = coe d_costmdls_626 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.drepActivity
+d_drepActivity_1038 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_drepActivity_1038 v0 = coe d_drepActivity_638 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.drepDeposit
+d_drepDeposit_1040 :: T_PParamsUpdate_510 -> Maybe Integer
+d_drepDeposit_1040 v0 = coe d_drepDeposit_636 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.drepThresholds
+d_drepThresholds_1042 ::
+  T_PParamsUpdate_510 -> Maybe T_DrepThresholds_178
+d_drepThresholds_1042 v0 = coe d_drepThresholds_628 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.govActionDeposit
+d_govActionDeposit_1044 :: T_PParamsUpdate_510 -> Maybe Integer
+d_govActionDeposit_1044 v0 = coe d_govActionDeposit_634 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.govActionLifetime
+d_govActionLifetime_1046 :: T_PParamsUpdate_510 -> Maybe Integer
+d_govActionLifetime_1046 v0 = coe d_govActionLifetime_632 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.keyDeposit
+d_keyDeposit_1048 :: T_PParamsUpdate_510 -> Maybe Integer
+d_keyDeposit_1048 v0 = coe d_keyDeposit_598 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxBlockExUnits
+d_maxBlockExUnits_1050 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_maxBlockExUnits_1050 v0 = coe d_maxBlockExUnits_590 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxBlockSize
+d_maxBlockSize_1052 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxBlockSize_1052 v0 = coe d_maxBlockSize_578 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxCollateralInputs
+d_maxCollateralInputs_1054 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxCollateralInputs_1054 v0
+  = coe d_maxCollateralInputs_586 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxHeaderSize
+d_maxHeaderSize_1056 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxHeaderSize_1056 v0 = coe d_maxHeaderSize_582 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxRefScriptSizePerBlock
+d_maxRefScriptSizePerBlock_1058 ::
+  T_PParamsUpdate_510 -> Maybe Integer
+d_maxRefScriptSizePerBlock_1058 v0
+  = coe d_maxRefScriptSizePerBlock_610 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxRefScriptSizePerTx
+d_maxRefScriptSizePerTx_1060 ::
+  T_PParamsUpdate_510 -> Maybe Integer
+d_maxRefScriptSizePerTx_1060 v0
+  = coe d_maxRefScriptSizePerTx_608 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxTxExUnits
+d_maxTxExUnits_1062 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_maxTxExUnits_1062 v0 = coe d_maxTxExUnits_588 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxTxSize
+d_maxTxSize_1064 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxTxSize_1064 v0 = coe d_maxTxSize_580 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.maxValSize
+d_maxValSize_1066 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxValSize_1066 v0 = coe d_maxValSize_584 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.minFeeRefScriptCoinsPerByte
+d_minFeeRefScriptCoinsPerByte_1068 ::
+  T_PParamsUpdate_510 -> Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
+d_minFeeRefScriptCoinsPerByte_1068 v0
+  = coe d_minFeeRefScriptCoinsPerByte_606 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.minUTxOValue
+d_minUTxOValue_1070 :: T_PParamsUpdate_510 -> Maybe Integer
+d_minUTxOValue_1070 v0 = coe d_minUTxOValue_616 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.nopt
+d_nopt_1072 :: T_PParamsUpdate_510 -> Maybe Integer
+d_nopt_1072 v0 = coe d_nopt_622 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.poolDeposit
+d_poolDeposit_1074 :: T_PParamsUpdate_510 -> Maybe Integer
+d_poolDeposit_1074 v0 = coe d_poolDeposit_600 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.poolThresholds
+d_poolThresholds_1076 ::
+  T_PParamsUpdate_510 -> Maybe T_PoolThresholds_220
+d_poolThresholds_1076 v0 = coe d_poolThresholds_630 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.prices
+d_prices_1078 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_prices_1078 v0 = coe d_prices_604 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.pv
+d_pv_1080 ::
+  T_PParamsUpdate_510 -> Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_pv_1080 v0 = coe d_pv_592 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.refScriptCostMultiplier
+d_refScriptCostMultiplier_1082 ::
+  T_PParamsUpdate_510 -> Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
+d_refScriptCostMultiplier_1082 v0
+  = coe d_refScriptCostMultiplier_614 (coe v0)
+-- Ledger.PParams.PParamsUpdate._.refScriptCostStride
+d_refScriptCostStride_1084 :: T_PParamsUpdate_510 -> Maybe Integer
+d_refScriptCostStride_1084 v0
+  = coe d_refScriptCostStride_612 (coe v0)
 -- Ledger.PParams.PParamsUpdate.modifiedUpdateGroups
-d_modifiedUpdateGroups_1014 ::
+d_modifiedUpdateGroups_1086 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
   T_PParamsUpdate_510 -> [T_PParamGroup_166]
-d_modifiedUpdateGroups_1014 ~v0 ~v1 ~v2 v3
-  = du_modifiedUpdateGroups_1014 v3
-du_modifiedUpdateGroups_1014 ::
+d_modifiedUpdateGroups_1086 ~v0 ~v1 ~v2 v3
+  = du_modifiedUpdateGroups_1086 v3
+du_modifiedUpdateGroups_1086 ::
   T_PParamsUpdate_510 -> [T_PParamGroup_166]
-du_modifiedUpdateGroups_1014 v0
+du_modifiedUpdateGroups_1086 v0
   = coe
       MAlonzo.Code.Axiom.Set.du__'8746'__680
       (coe
@@ -3351,7 +3528,7 @@ du_modifiedUpdateGroups_1014 v0
          (coe
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
       (coe
-         du__'63''9552''8658'__1022 (coe v0)
+         du__'63''9552''8658'__1094 (coe v0)
          (coe du_modifiesNetworkGroup_726) (coe C_NetworkGroup_168))
       (coe
          MAlonzo.Code.Axiom.Set.du__'8746'__680
@@ -3360,7 +3537,7 @@ du_modifiedUpdateGroups_1014 v0
             (coe
                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
          (coe
-            du__'63''9552''8658'__1022 (coe v0)
+            du__'63''9552''8658'__1094 (coe v0)
             (coe du_modifiesEconomicGroup_798) (coe C_EconomicGroup_170))
          (coe
             MAlonzo.Code.Axiom.Set.du__'8746'__680
@@ -3369,26 +3546,35 @@ du_modifiedUpdateGroups_1014 v0
                (coe
                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
             (coe
-               du__'63''9552''8658'__1022 (coe v0)
+               du__'63''9552''8658'__1094 (coe v0)
                (coe du_modifiesTechnicalGroup_870) (coe C_TechnicalGroup_172))
             (coe
-               du__'63''9552''8658'__1022 (coe v0)
-               (coe du_modifiesGovernanceGroup_942) (coe C_GovernanceGroup_174))))
+               MAlonzo.Code.Axiom.Set.du__'8746'__680
+               (coe
+                  MAlonzo.Code.Axiom.Set.d_th_1470
+                  (coe
+                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+               (coe
+                  du__'63''9552''8658'__1094 (coe v0)
+                  (coe du_modifiesGovernanceGroup_942) (coe C_GovernanceGroup_174))
+               (coe
+                  du__'63''9552''8658'__1094 (coe v0)
+                  (coe du_modifiesSecurityGroup_1014) (coe C_SecurityGroup_176)))))
 -- Ledger.PParams.PParamsUpdate._._?═⇒_
-d__'63''9552''8658'__1022 ::
+d__'63''9552''8658'__1094 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
   T_PParamsUpdate_510 ->
   (T_PParamsUpdate_510 -> Bool) ->
   T_PParamGroup_166 -> [T_PParamGroup_166]
-d__'63''9552''8658'__1022 ~v0 ~v1 ~v2 v3 v4 v5
-  = du__'63''9552''8658'__1022 v3 v4 v5
-du__'63''9552''8658'__1022 ::
+d__'63''9552''8658'__1094 ~v0 ~v1 ~v2 v3 v4 v5
+  = du__'63''9552''8658'__1094 v3 v4 v5
+du__'63''9552''8658'__1094 ::
   T_PParamsUpdate_510 ->
   (T_PParamsUpdate_510 -> Bool) ->
   T_PParamGroup_166 -> [T_PParamGroup_166]
-du__'63''9552''8658'__1022 v0 v1 v2
+du__'63''9552''8658'__1094 v0 v1 v2
   = coe
       MAlonzo.Code.Class.ToBool.du_if_then_else__46
       (coe MAlonzo.Code.Class.ToBool.d_ToBool'45'Bool_94) (coe v1 v0)
@@ -3416,21 +3602,21 @@ du__'63''9552''8658'__1022 v0 v1 v2
                     (coe
                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))))
 -- Ledger.PParams.PParamsUpdate._?↗_
-d__'63''8599'__1030 ::
+d__'63''8599'__1102 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
   () -> Maybe AgdaAny -> AgdaAny -> AgdaAny
-d__'63''8599'__1030 ~v0 ~v1 ~v2 ~v3 v4 v5
-  = du__'63''8599'__1030 v4 v5
-du__'63''8599'__1030 :: Maybe AgdaAny -> AgdaAny -> AgdaAny
-du__'63''8599'__1030 v0 v1
+d__'63''8599'__1102 ~v0 ~v1 ~v2 ~v3 v4 v5
+  = du__'63''8599'__1102 v4 v5
+du__'63''8599'__1102 :: Maybe AgdaAny -> AgdaAny -> AgdaAny
+du__'63''8599'__1102 v0 v1
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v2 -> coe v2
       MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.PParams.PParamsUpdate.≡-update
-d_'8801''45'update_1044 ::
+d_'8801''45'update_1116 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
@@ -3438,16 +3624,16 @@ d_'8801''45'update_1044 ::
   Maybe AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
-d_'8801''45'update_1044 ~v0 ~v1 ~v2 ~v3 v4 ~v5 ~v6
-  = du_'8801''45'update_1044 v4
-du_'8801''45'update_1044 ::
+d_'8801''45'update_1116 ~v0 ~v1 ~v2 ~v3 v4 ~v5 ~v6
+  = du_'8801''45'update_1116 v4
+du_'8801''45'update_1116 ::
   Maybe AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
-du_'8801''45'update_1044 v0
+du_'8801''45'update_1116 v0
   = coe
       MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
-      (\ v1 -> coe du_to_1064 (coe v0)) erased
+      (\ v1 -> coe du_to_1136 (coe v0)) erased
 -- Ledger.PParams.PParamsUpdate._.to
-d_to_1064 ::
+d_to_1136 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
@@ -3461,11 +3647,11 @@ d_to_1064 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30
-d_to_1064 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 ~v9 ~v10 ~v11
-  = du_to_1064 v8
-du_to_1064 ::
+d_to_1136 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 ~v9 ~v10 ~v11
+  = du_to_1136 v8
+du_to_1136 ::
   Maybe AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
-du_to_1064 v0
+du_to_1136 v0
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v1
         -> coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 erased
@@ -3475,7 +3661,7 @@ du_to_1064 v0
              (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.PParams.PParamsUpdate._.from
-d_from_1076 ::
+d_from_1148 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
@@ -3489,455 +3675,455 @@ d_from_1076 ::
   AgdaAny ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_from_1076 = erased
+d_from_1148 = erased
 -- Ledger.PParams.PParamsUpdate.applyPParamsUpdate
-d_applyPParamsUpdate_1078 ::
+d_applyPParamsUpdate_1150 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
   T_PParams_242 -> T_PParamsUpdate_510 -> T_PParams_242
-d_applyPParamsUpdate_1078 ~v0 ~v1 ~v2 v3 v4
-  = du_applyPParamsUpdate_1078 v3 v4
-du_applyPParamsUpdate_1078 ::
+d_applyPParamsUpdate_1150 ~v0 ~v1 ~v2 v3 v4
+  = du_applyPParamsUpdate_1150 v3 v4
+du_applyPParamsUpdate_1150 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> T_PParams_242
-du_applyPParamsUpdate_1078 v0 v1
+du_applyPParamsUpdate_1150 v0 v1
   = coe
       C_PParams'46'constructor_3851
       (coe
-         du__'63''8599'__1030 (coe d_maxBlockSize_578 (coe v1))
+         du__'63''8599'__1102 (coe d_maxBlockSize_578 (coe v1))
          (coe d_maxBlockSize_310 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_maxTxSize_580 (coe v1))
+         du__'63''8599'__1102 (coe d_maxTxSize_580 (coe v1))
          (coe d_maxTxSize_312 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_maxHeaderSize_582 (coe v1))
+         du__'63''8599'__1102 (coe d_maxHeaderSize_582 (coe v1))
          (coe d_maxHeaderSize_314 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_maxTxExUnits_588 (coe v1))
+         du__'63''8599'__1102 (coe d_maxTxExUnits_588 (coe v1))
          (coe d_maxTxExUnits_316 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_maxBlockExUnits_590 (coe v1))
+         du__'63''8599'__1102 (coe d_maxBlockExUnits_590 (coe v1))
          (coe d_maxBlockExUnits_318 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_maxValSize_584 (coe v1))
+         du__'63''8599'__1102 (coe d_maxValSize_584 (coe v1))
          (coe d_maxValSize_320 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_maxCollateralInputs_586 (coe v1))
+         du__'63''8599'__1102 (coe d_maxCollateralInputs_586 (coe v1))
          (coe d_maxCollateralInputs_322 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_pv_592 (coe v1))
+         du__'63''8599'__1102 (coe d_pv_592 (coe v1))
          (coe d_pv_324 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_a_594 (coe v1)) (coe d_a_326 (coe v0)))
+         du__'63''8599'__1102 (coe d_a_594 (coe v1)) (coe d_a_326 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_b_596 (coe v1)) (coe d_b_328 (coe v0)))
+         du__'63''8599'__1102 (coe d_b_596 (coe v1)) (coe d_b_328 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_keyDeposit_598 (coe v1))
+         du__'63''8599'__1102 (coe d_keyDeposit_598 (coe v1))
          (coe d_keyDeposit_330 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_poolDeposit_600 (coe v1))
+         du__'63''8599'__1102 (coe d_poolDeposit_600 (coe v1))
          (coe d_poolDeposit_332 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_coinsPerUTxOByte_602 (coe v1))
+         du__'63''8599'__1102 (coe d_coinsPerUTxOByte_602 (coe v1))
          (coe d_coinsPerUTxOByte_334 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_prices_604 (coe v1))
+         du__'63''8599'__1102 (coe d_prices_604 (coe v1))
          (coe d_prices_336 (coe v0)))
       (coe
-         du__'63''8599'__1030
+         du__'63''8599'__1102
          (coe d_minFeeRefScriptCoinsPerByte_606 (coe v1))
          (coe d_minFeeRefScriptCoinsPerByte_338 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_maxRefScriptSizePerTx_608 (coe v1))
+         du__'63''8599'__1102 (coe d_maxRefScriptSizePerTx_608 (coe v1))
          (coe d_maxRefScriptSizePerTx_340 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_maxRefScriptSizePerBlock_610 (coe v1))
+         du__'63''8599'__1102 (coe d_maxRefScriptSizePerBlock_610 (coe v1))
          (coe d_maxRefScriptSizePerBlock_342 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_refScriptCostStride_612 (coe v1))
+         du__'63''8599'__1102 (coe d_refScriptCostStride_612 (coe v1))
          (coe d_refScriptCostStride_344 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_refScriptCostMultiplier_614 (coe v1))
+         du__'63''8599'__1102 (coe d_refScriptCostMultiplier_614 (coe v1))
          (coe d_refScriptCostMultiplier_346 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_minUTxOValue_616 (coe v1))
+         du__'63''8599'__1102 (coe d_minUTxOValue_616 (coe v1))
          (coe d_minUTxOValue_348 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_Emax_620 (coe v1))
+         du__'63''8599'__1102 (coe d_Emax_620 (coe v1))
          (coe d_Emax_350 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_nopt_622 (coe v1))
+         du__'63''8599'__1102 (coe d_nopt_622 (coe v1))
          (coe d_nopt_352 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_a0_618 (coe v1))
+         du__'63''8599'__1102 (coe d_a0_618 (coe v1))
          (coe d_a0_354 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_collateralPercentage_624 (coe v1))
+         du__'63''8599'__1102 (coe d_collateralPercentage_624 (coe v1))
          (coe d_collateralPercentage_356 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_costmdls_626 (coe v1))
+         du__'63''8599'__1102 (coe d_costmdls_626 (coe v1))
          (coe d_costmdls_358 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_poolThresholds_630 (coe v1))
+         du__'63''8599'__1102 (coe d_poolThresholds_630 (coe v1))
          (coe d_poolThresholds_360 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_drepThresholds_628 (coe v1))
+         du__'63''8599'__1102 (coe d_drepThresholds_628 (coe v1))
          (coe d_drepThresholds_362 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_ccMinSize_640 (coe v1))
+         du__'63''8599'__1102 (coe d_ccMinSize_640 (coe v1))
          (coe d_ccMinSize_364 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_ccMaxTermLength_642 (coe v1))
+         du__'63''8599'__1102 (coe d_ccMaxTermLength_642 (coe v1))
          (coe d_ccMaxTermLength_366 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_govActionLifetime_632 (coe v1))
+         du__'63''8599'__1102 (coe d_govActionLifetime_632 (coe v1))
          (coe d_govActionLifetime_368 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_govActionDeposit_634 (coe v1))
+         du__'63''8599'__1102 (coe d_govActionDeposit_634 (coe v1))
          (coe d_govActionDeposit_370 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_drepDeposit_636 (coe v1))
+         du__'63''8599'__1102 (coe d_drepDeposit_636 (coe v1))
          (coe d_drepDeposit_372 (coe v0)))
       (coe
-         du__'63''8599'__1030 (coe d_drepActivity_638 (coe v1))
+         du__'63''8599'__1102 (coe d_drepActivity_638 (coe v1))
          (coe d_drepActivity_374 (coe v0)))
 -- Ledger.PParams.PParamsUpdate._.P.Emax
-d_Emax_1090 :: T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
-d_Emax_1090 v0 ~v1 = du_Emax_1090 v0
-du_Emax_1090 :: T_PParams_242 -> AgdaAny
-du_Emax_1090 v0 = coe d_Emax_350 (coe v0)
+d_Emax_1162 :: T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
+d_Emax_1162 v0 ~v1 = du_Emax_1162 v0
+du_Emax_1162 :: T_PParams_242 -> AgdaAny
+du_Emax_1162 v0 = coe d_Emax_350 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.a
-d_a_1092 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_a_1092 v0 ~v1 = du_a_1092 v0
-du_a_1092 :: T_PParams_242 -> Integer
-du_a_1092 v0 = coe d_a_326 (coe v0)
+d_a_1164 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
+d_a_1164 v0 ~v1 = du_a_1164 v0
+du_a_1164 :: T_PParams_242 -> Integer
+du_a_1164 v0 = coe d_a_326 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.a0
-d_a0_1094 ::
+d_a0_1166 ::
   T_PParams_242 ->
   T_PParamsUpdate_510 -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_a0_1094 v0 ~v1 = du_a0_1094 v0
-du_a0_1094 ::
+d_a0_1166 v0 ~v1 = du_a0_1166 v0
+du_a0_1166 ::
   T_PParams_242 -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-du_a0_1094 v0 = coe d_a0_354 (coe v0)
+du_a0_1166 v0 = coe d_a0_354 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.b
-d_b_1096 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_b_1096 v0 ~v1 = du_b_1096 v0
-du_b_1096 :: T_PParams_242 -> Integer
-du_b_1096 v0 = coe d_b_328 (coe v0)
+d_b_1168 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
+d_b_1168 v0 ~v1 = du_b_1168 v0
+du_b_1168 :: T_PParams_242 -> Integer
+du_b_1168 v0 = coe d_b_328 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.ccMaxTermLength
-d_ccMaxTermLength_1098 ::
+d_ccMaxTermLength_1170 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_ccMaxTermLength_1098 v0 ~v1 = du_ccMaxTermLength_1098 v0
-du_ccMaxTermLength_1098 :: T_PParams_242 -> Integer
-du_ccMaxTermLength_1098 v0 = coe d_ccMaxTermLength_366 (coe v0)
+d_ccMaxTermLength_1170 v0 ~v1 = du_ccMaxTermLength_1170 v0
+du_ccMaxTermLength_1170 :: T_PParams_242 -> Integer
+du_ccMaxTermLength_1170 v0 = coe d_ccMaxTermLength_366 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.ccMinSize
-d_ccMinSize_1100 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_ccMinSize_1100 v0 ~v1 = du_ccMinSize_1100 v0
-du_ccMinSize_1100 :: T_PParams_242 -> Integer
-du_ccMinSize_1100 v0 = coe d_ccMinSize_364 (coe v0)
+d_ccMinSize_1172 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
+d_ccMinSize_1172 v0 ~v1 = du_ccMinSize_1172 v0
+du_ccMinSize_1172 :: T_PParams_242 -> Integer
+du_ccMinSize_1172 v0 = coe d_ccMinSize_364 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.coinsPerUTxOByte
-d_coinsPerUTxOByte_1102 ::
+d_coinsPerUTxOByte_1174 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_coinsPerUTxOByte_1102 v0 ~v1 = du_coinsPerUTxOByte_1102 v0
-du_coinsPerUTxOByte_1102 :: T_PParams_242 -> Integer
-du_coinsPerUTxOByte_1102 v0 = coe d_coinsPerUTxOByte_334 (coe v0)
+d_coinsPerUTxOByte_1174 v0 ~v1 = du_coinsPerUTxOByte_1174 v0
+du_coinsPerUTxOByte_1174 :: T_PParams_242 -> Integer
+du_coinsPerUTxOByte_1174 v0 = coe d_coinsPerUTxOByte_334 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.collateralPercentage
-d_collateralPercentage_1104 ::
+d_collateralPercentage_1176 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_collateralPercentage_1104 v0 ~v1
-  = du_collateralPercentage_1104 v0
-du_collateralPercentage_1104 :: T_PParams_242 -> Integer
-du_collateralPercentage_1104 v0
+d_collateralPercentage_1176 v0 ~v1
+  = du_collateralPercentage_1176 v0
+du_collateralPercentage_1176 :: T_PParams_242 -> Integer
+du_collateralPercentage_1176 v0
   = coe d_collateralPercentage_356 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.costmdls
-d_costmdls_1106 :: T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
-d_costmdls_1106 v0 ~v1 = du_costmdls_1106 v0
-du_costmdls_1106 :: T_PParams_242 -> AgdaAny
-du_costmdls_1106 v0 = coe d_costmdls_358 (coe v0)
+d_costmdls_1178 :: T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
+d_costmdls_1178 v0 ~v1 = du_costmdls_1178 v0
+du_costmdls_1178 :: T_PParams_242 -> AgdaAny
+du_costmdls_1178 v0 = coe d_costmdls_358 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.drepActivity
-d_drepActivity_1108 ::
+d_drepActivity_1180 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
-d_drepActivity_1108 v0 ~v1 = du_drepActivity_1108 v0
-du_drepActivity_1108 :: T_PParams_242 -> AgdaAny
-du_drepActivity_1108 v0 = coe d_drepActivity_374 (coe v0)
+d_drepActivity_1180 v0 ~v1 = du_drepActivity_1180 v0
+du_drepActivity_1180 :: T_PParams_242 -> AgdaAny
+du_drepActivity_1180 v0 = coe d_drepActivity_374 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.drepDeposit
-d_drepDeposit_1110 ::
+d_drepDeposit_1182 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_drepDeposit_1110 v0 ~v1 = du_drepDeposit_1110 v0
-du_drepDeposit_1110 :: T_PParams_242 -> Integer
-du_drepDeposit_1110 v0 = coe d_drepDeposit_372 (coe v0)
+d_drepDeposit_1182 v0 ~v1 = du_drepDeposit_1182 v0
+du_drepDeposit_1182 :: T_PParams_242 -> Integer
+du_drepDeposit_1182 v0 = coe d_drepDeposit_372 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.drepThresholds
-d_drepThresholds_1112 ::
+d_drepThresholds_1184 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> T_DrepThresholds_178
-d_drepThresholds_1112 v0 ~v1 = du_drepThresholds_1112 v0
-du_drepThresholds_1112 :: T_PParams_242 -> T_DrepThresholds_178
-du_drepThresholds_1112 v0 = coe d_drepThresholds_362 (coe v0)
+d_drepThresholds_1184 v0 ~v1 = du_drepThresholds_1184 v0
+du_drepThresholds_1184 :: T_PParams_242 -> T_DrepThresholds_178
+du_drepThresholds_1184 v0 = coe d_drepThresholds_362 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.govActionDeposit
-d_govActionDeposit_1114 ::
+d_govActionDeposit_1186 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_govActionDeposit_1114 v0 ~v1 = du_govActionDeposit_1114 v0
-du_govActionDeposit_1114 :: T_PParams_242 -> Integer
-du_govActionDeposit_1114 v0 = coe d_govActionDeposit_370 (coe v0)
+d_govActionDeposit_1186 v0 ~v1 = du_govActionDeposit_1186 v0
+du_govActionDeposit_1186 :: T_PParams_242 -> Integer
+du_govActionDeposit_1186 v0 = coe d_govActionDeposit_370 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.govActionLifetime
-d_govActionLifetime_1116 ::
+d_govActionLifetime_1188 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_govActionLifetime_1116 v0 ~v1 = du_govActionLifetime_1116 v0
-du_govActionLifetime_1116 :: T_PParams_242 -> Integer
-du_govActionLifetime_1116 v0 = coe d_govActionLifetime_368 (coe v0)
+d_govActionLifetime_1188 v0 ~v1 = du_govActionLifetime_1188 v0
+du_govActionLifetime_1188 :: T_PParams_242 -> Integer
+du_govActionLifetime_1188 v0 = coe d_govActionLifetime_368 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.keyDeposit
-d_keyDeposit_1118 ::
+d_keyDeposit_1190 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_keyDeposit_1118 v0 ~v1 = du_keyDeposit_1118 v0
-du_keyDeposit_1118 :: T_PParams_242 -> Integer
-du_keyDeposit_1118 v0 = coe d_keyDeposit_330 (coe v0)
+d_keyDeposit_1190 v0 ~v1 = du_keyDeposit_1190 v0
+du_keyDeposit_1190 :: T_PParams_242 -> Integer
+du_keyDeposit_1190 v0 = coe d_keyDeposit_330 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxBlockExUnits
-d_maxBlockExUnits_1120 ::
+d_maxBlockExUnits_1192 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
-d_maxBlockExUnits_1120 v0 ~v1 = du_maxBlockExUnits_1120 v0
-du_maxBlockExUnits_1120 :: T_PParams_242 -> AgdaAny
-du_maxBlockExUnits_1120 v0 = coe d_maxBlockExUnits_318 (coe v0)
+d_maxBlockExUnits_1192 v0 ~v1 = du_maxBlockExUnits_1192 v0
+du_maxBlockExUnits_1192 :: T_PParams_242 -> AgdaAny
+du_maxBlockExUnits_1192 v0 = coe d_maxBlockExUnits_318 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxBlockSize
-d_maxBlockSize_1122 ::
+d_maxBlockSize_1194 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_maxBlockSize_1122 v0 ~v1 = du_maxBlockSize_1122 v0
-du_maxBlockSize_1122 :: T_PParams_242 -> Integer
-du_maxBlockSize_1122 v0 = coe d_maxBlockSize_310 (coe v0)
+d_maxBlockSize_1194 v0 ~v1 = du_maxBlockSize_1194 v0
+du_maxBlockSize_1194 :: T_PParams_242 -> Integer
+du_maxBlockSize_1194 v0 = coe d_maxBlockSize_310 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxCollateralInputs
-d_maxCollateralInputs_1124 ::
+d_maxCollateralInputs_1196 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_maxCollateralInputs_1124 v0 ~v1 = du_maxCollateralInputs_1124 v0
-du_maxCollateralInputs_1124 :: T_PParams_242 -> Integer
-du_maxCollateralInputs_1124 v0
+d_maxCollateralInputs_1196 v0 ~v1 = du_maxCollateralInputs_1196 v0
+du_maxCollateralInputs_1196 :: T_PParams_242 -> Integer
+du_maxCollateralInputs_1196 v0
   = coe d_maxCollateralInputs_322 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxHeaderSize
-d_maxHeaderSize_1126 ::
+d_maxHeaderSize_1198 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_maxHeaderSize_1126 v0 ~v1 = du_maxHeaderSize_1126 v0
-du_maxHeaderSize_1126 :: T_PParams_242 -> Integer
-du_maxHeaderSize_1126 v0 = coe d_maxHeaderSize_314 (coe v0)
+d_maxHeaderSize_1198 v0 ~v1 = du_maxHeaderSize_1198 v0
+du_maxHeaderSize_1198 :: T_PParams_242 -> Integer
+du_maxHeaderSize_1198 v0 = coe d_maxHeaderSize_314 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxRefScriptSizePerBlock
-d_maxRefScriptSizePerBlock_1128 ::
+d_maxRefScriptSizePerBlock_1200 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_maxRefScriptSizePerBlock_1128 v0 ~v1
-  = du_maxRefScriptSizePerBlock_1128 v0
-du_maxRefScriptSizePerBlock_1128 :: T_PParams_242 -> Integer
-du_maxRefScriptSizePerBlock_1128 v0
+d_maxRefScriptSizePerBlock_1200 v0 ~v1
+  = du_maxRefScriptSizePerBlock_1200 v0
+du_maxRefScriptSizePerBlock_1200 :: T_PParams_242 -> Integer
+du_maxRefScriptSizePerBlock_1200 v0
   = coe d_maxRefScriptSizePerBlock_342 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxRefScriptSizePerTx
-d_maxRefScriptSizePerTx_1130 ::
+d_maxRefScriptSizePerTx_1202 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_maxRefScriptSizePerTx_1130 v0 ~v1
-  = du_maxRefScriptSizePerTx_1130 v0
-du_maxRefScriptSizePerTx_1130 :: T_PParams_242 -> Integer
-du_maxRefScriptSizePerTx_1130 v0
+d_maxRefScriptSizePerTx_1202 v0 ~v1
+  = du_maxRefScriptSizePerTx_1202 v0
+du_maxRefScriptSizePerTx_1202 :: T_PParams_242 -> Integer
+du_maxRefScriptSizePerTx_1202 v0
   = coe d_maxRefScriptSizePerTx_340 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxTxExUnits
-d_maxTxExUnits_1132 ::
+d_maxTxExUnits_1204 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
-d_maxTxExUnits_1132 v0 ~v1 = du_maxTxExUnits_1132 v0
-du_maxTxExUnits_1132 :: T_PParams_242 -> AgdaAny
-du_maxTxExUnits_1132 v0 = coe d_maxTxExUnits_316 (coe v0)
+d_maxTxExUnits_1204 v0 ~v1 = du_maxTxExUnits_1204 v0
+du_maxTxExUnits_1204 :: T_PParams_242 -> AgdaAny
+du_maxTxExUnits_1204 v0 = coe d_maxTxExUnits_316 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxTxSize
-d_maxTxSize_1134 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_maxTxSize_1134 v0 ~v1 = du_maxTxSize_1134 v0
-du_maxTxSize_1134 :: T_PParams_242 -> Integer
-du_maxTxSize_1134 v0 = coe d_maxTxSize_312 (coe v0)
+d_maxTxSize_1206 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
+d_maxTxSize_1206 v0 ~v1 = du_maxTxSize_1206 v0
+du_maxTxSize_1206 :: T_PParams_242 -> Integer
+du_maxTxSize_1206 v0 = coe d_maxTxSize_312 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.maxValSize
-d_maxValSize_1136 ::
+d_maxValSize_1208 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_maxValSize_1136 v0 ~v1 = du_maxValSize_1136 v0
-du_maxValSize_1136 :: T_PParams_242 -> Integer
-du_maxValSize_1136 v0 = coe d_maxValSize_320 (coe v0)
+d_maxValSize_1208 v0 ~v1 = du_maxValSize_1208 v0
+du_maxValSize_1208 :: T_PParams_242 -> Integer
+du_maxValSize_1208 v0 = coe d_maxValSize_320 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.minFeeRefScriptCoinsPerByte
-d_minFeeRefScriptCoinsPerByte_1138 ::
+d_minFeeRefScriptCoinsPerByte_1210 ::
   T_PParams_242 ->
   T_PParamsUpdate_510 -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_minFeeRefScriptCoinsPerByte_1138 v0 ~v1
-  = du_minFeeRefScriptCoinsPerByte_1138 v0
-du_minFeeRefScriptCoinsPerByte_1138 ::
+d_minFeeRefScriptCoinsPerByte_1210 v0 ~v1
+  = du_minFeeRefScriptCoinsPerByte_1210 v0
+du_minFeeRefScriptCoinsPerByte_1210 ::
   T_PParams_242 -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-du_minFeeRefScriptCoinsPerByte_1138 v0
+du_minFeeRefScriptCoinsPerByte_1210 v0
   = coe d_minFeeRefScriptCoinsPerByte_338 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.minUTxOValue
-d_minUTxOValue_1140 ::
+d_minUTxOValue_1212 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_minUTxOValue_1140 v0 ~v1 = du_minUTxOValue_1140 v0
-du_minUTxOValue_1140 :: T_PParams_242 -> Integer
-du_minUTxOValue_1140 v0 = coe d_minUTxOValue_348 (coe v0)
+d_minUTxOValue_1212 v0 ~v1 = du_minUTxOValue_1212 v0
+du_minUTxOValue_1212 :: T_PParams_242 -> Integer
+du_minUTxOValue_1212 v0 = coe d_minUTxOValue_348 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.nopt
-d_nopt_1142 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_nopt_1142 v0 ~v1 = du_nopt_1142 v0
-du_nopt_1142 :: T_PParams_242 -> Integer
-du_nopt_1142 v0 = coe d_nopt_352 (coe v0)
+d_nopt_1214 :: T_PParams_242 -> T_PParamsUpdate_510 -> Integer
+d_nopt_1214 v0 ~v1 = du_nopt_1214 v0
+du_nopt_1214 :: T_PParams_242 -> Integer
+du_nopt_1214 v0 = coe d_nopt_352 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.poolDeposit
-d_poolDeposit_1144 ::
+d_poolDeposit_1216 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_poolDeposit_1144 v0 ~v1 = du_poolDeposit_1144 v0
-du_poolDeposit_1144 :: T_PParams_242 -> Integer
-du_poolDeposit_1144 v0 = coe d_poolDeposit_332 (coe v0)
+d_poolDeposit_1216 v0 ~v1 = du_poolDeposit_1216 v0
+du_poolDeposit_1216 :: T_PParams_242 -> Integer
+du_poolDeposit_1216 v0 = coe d_poolDeposit_332 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.poolThresholds
-d_poolThresholds_1146 ::
+d_poolThresholds_1218 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> T_PoolThresholds_220
-d_poolThresholds_1146 v0 ~v1 = du_poolThresholds_1146 v0
-du_poolThresholds_1146 :: T_PParams_242 -> T_PoolThresholds_220
-du_poolThresholds_1146 v0 = coe d_poolThresholds_360 (coe v0)
+d_poolThresholds_1218 v0 ~v1 = du_poolThresholds_1218 v0
+du_poolThresholds_1218 :: T_PParams_242 -> T_PoolThresholds_220
+du_poolThresholds_1218 v0 = coe d_poolThresholds_360 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.prices
-d_prices_1148 :: T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
-d_prices_1148 v0 ~v1 = du_prices_1148 v0
-du_prices_1148 :: T_PParams_242 -> AgdaAny
-du_prices_1148 v0 = coe d_prices_336 (coe v0)
+d_prices_1220 :: T_PParams_242 -> T_PParamsUpdate_510 -> AgdaAny
+d_prices_1220 v0 ~v1 = du_prices_1220 v0
+du_prices_1220 :: T_PParams_242 -> AgdaAny
+du_prices_1220 v0 = coe d_prices_336 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.pv
-d_pv_1150 ::
+d_pv_1222 ::
   T_PParams_242 ->
   T_PParamsUpdate_510 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pv_1150 v0 ~v1 = du_pv_1150 v0
-du_pv_1150 ::
+d_pv_1222 v0 ~v1 = du_pv_1222 v0
+du_pv_1222 ::
   T_PParams_242 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_pv_1150 v0 = coe d_pv_324 (coe v0)
+du_pv_1222 v0 = coe d_pv_324 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.refScriptCostMultiplier
-d_refScriptCostMultiplier_1152 ::
+d_refScriptCostMultiplier_1224 ::
   T_PParams_242 ->
   T_PParamsUpdate_510 -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_refScriptCostMultiplier_1152 v0 ~v1
-  = du_refScriptCostMultiplier_1152 v0
-du_refScriptCostMultiplier_1152 ::
+d_refScriptCostMultiplier_1224 v0 ~v1
+  = du_refScriptCostMultiplier_1224 v0
+du_refScriptCostMultiplier_1224 ::
   T_PParams_242 -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-du_refScriptCostMultiplier_1152 v0
+du_refScriptCostMultiplier_1224 v0
   = coe d_refScriptCostMultiplier_346 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.P.refScriptCostStride
-d_refScriptCostStride_1154 ::
+d_refScriptCostStride_1226 ::
   T_PParams_242 -> T_PParamsUpdate_510 -> Integer
-d_refScriptCostStride_1154 v0 ~v1 = du_refScriptCostStride_1154 v0
-du_refScriptCostStride_1154 :: T_PParams_242 -> Integer
-du_refScriptCostStride_1154 v0
+d_refScriptCostStride_1226 v0 ~v1 = du_refScriptCostStride_1226 v0
+du_refScriptCostStride_1226 :: T_PParams_242 -> Integer
+du_refScriptCostStride_1226 v0
   = coe d_refScriptCostStride_344 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.Emax
-d_Emax_1158 :: T_PParamsUpdate_510 -> Maybe AgdaAny
-d_Emax_1158 v0 = coe d_Emax_620 (coe v0)
+d_Emax_1230 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_Emax_1230 v0 = coe d_Emax_620 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.a
-d_a_1160 :: T_PParamsUpdate_510 -> Maybe Integer
-d_a_1160 v0 = coe d_a_594 (coe v0)
+d_a_1232 :: T_PParamsUpdate_510 -> Maybe Integer
+d_a_1232 v0 = coe d_a_594 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.a0
-d_a0_1162 ::
+d_a0_1234 ::
   T_PParamsUpdate_510 -> Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_a0_1162 v0 = coe d_a0_618 (coe v0)
+d_a0_1234 v0 = coe d_a0_618 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.b
-d_b_1164 :: T_PParamsUpdate_510 -> Maybe Integer
-d_b_1164 v0 = coe d_b_596 (coe v0)
+d_b_1236 :: T_PParamsUpdate_510 -> Maybe Integer
+d_b_1236 v0 = coe d_b_596 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.ccMaxTermLength
-d_ccMaxTermLength_1166 :: T_PParamsUpdate_510 -> Maybe Integer
-d_ccMaxTermLength_1166 v0 = coe d_ccMaxTermLength_642 (coe v0)
+d_ccMaxTermLength_1238 :: T_PParamsUpdate_510 -> Maybe Integer
+d_ccMaxTermLength_1238 v0 = coe d_ccMaxTermLength_642 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.ccMinSize
-d_ccMinSize_1168 :: T_PParamsUpdate_510 -> Maybe Integer
-d_ccMinSize_1168 v0 = coe d_ccMinSize_640 (coe v0)
+d_ccMinSize_1240 :: T_PParamsUpdate_510 -> Maybe Integer
+d_ccMinSize_1240 v0 = coe d_ccMinSize_640 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.coinsPerUTxOByte
-d_coinsPerUTxOByte_1170 :: T_PParamsUpdate_510 -> Maybe Integer
-d_coinsPerUTxOByte_1170 v0 = coe d_coinsPerUTxOByte_602 (coe v0)
+d_coinsPerUTxOByte_1242 :: T_PParamsUpdate_510 -> Maybe Integer
+d_coinsPerUTxOByte_1242 v0 = coe d_coinsPerUTxOByte_602 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.collateralPercentage
-d_collateralPercentage_1172 :: T_PParamsUpdate_510 -> Maybe Integer
-d_collateralPercentage_1172 v0
+d_collateralPercentage_1244 :: T_PParamsUpdate_510 -> Maybe Integer
+d_collateralPercentage_1244 v0
   = coe d_collateralPercentage_624 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.costmdls
-d_costmdls_1174 :: T_PParamsUpdate_510 -> Maybe AgdaAny
-d_costmdls_1174 v0 = coe d_costmdls_626 (coe v0)
+d_costmdls_1246 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_costmdls_1246 v0 = coe d_costmdls_626 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.drepActivity
-d_drepActivity_1176 :: T_PParamsUpdate_510 -> Maybe AgdaAny
-d_drepActivity_1176 v0 = coe d_drepActivity_638 (coe v0)
+d_drepActivity_1248 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_drepActivity_1248 v0 = coe d_drepActivity_638 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.drepDeposit
-d_drepDeposit_1178 :: T_PParamsUpdate_510 -> Maybe Integer
-d_drepDeposit_1178 v0 = coe d_drepDeposit_636 (coe v0)
+d_drepDeposit_1250 :: T_PParamsUpdate_510 -> Maybe Integer
+d_drepDeposit_1250 v0 = coe d_drepDeposit_636 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.drepThresholds
-d_drepThresholds_1180 ::
+d_drepThresholds_1252 ::
   T_PParamsUpdate_510 -> Maybe T_DrepThresholds_178
-d_drepThresholds_1180 v0 = coe d_drepThresholds_628 (coe v0)
+d_drepThresholds_1252 v0 = coe d_drepThresholds_628 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.govActionDeposit
-d_govActionDeposit_1182 :: T_PParamsUpdate_510 -> Maybe Integer
-d_govActionDeposit_1182 v0 = coe d_govActionDeposit_634 (coe v0)
+d_govActionDeposit_1254 :: T_PParamsUpdate_510 -> Maybe Integer
+d_govActionDeposit_1254 v0 = coe d_govActionDeposit_634 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.govActionLifetime
-d_govActionLifetime_1184 :: T_PParamsUpdate_510 -> Maybe Integer
-d_govActionLifetime_1184 v0 = coe d_govActionLifetime_632 (coe v0)
+d_govActionLifetime_1256 :: T_PParamsUpdate_510 -> Maybe Integer
+d_govActionLifetime_1256 v0 = coe d_govActionLifetime_632 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.keyDeposit
-d_keyDeposit_1186 :: T_PParamsUpdate_510 -> Maybe Integer
-d_keyDeposit_1186 v0 = coe d_keyDeposit_598 (coe v0)
+d_keyDeposit_1258 :: T_PParamsUpdate_510 -> Maybe Integer
+d_keyDeposit_1258 v0 = coe d_keyDeposit_598 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxBlockExUnits
-d_maxBlockExUnits_1188 :: T_PParamsUpdate_510 -> Maybe AgdaAny
-d_maxBlockExUnits_1188 v0 = coe d_maxBlockExUnits_590 (coe v0)
+d_maxBlockExUnits_1260 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_maxBlockExUnits_1260 v0 = coe d_maxBlockExUnits_590 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxBlockSize
-d_maxBlockSize_1190 :: T_PParamsUpdate_510 -> Maybe Integer
-d_maxBlockSize_1190 v0 = coe d_maxBlockSize_578 (coe v0)
+d_maxBlockSize_1262 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxBlockSize_1262 v0 = coe d_maxBlockSize_578 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxCollateralInputs
-d_maxCollateralInputs_1192 :: T_PParamsUpdate_510 -> Maybe Integer
-d_maxCollateralInputs_1192 v0
+d_maxCollateralInputs_1264 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxCollateralInputs_1264 v0
   = coe d_maxCollateralInputs_586 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxHeaderSize
-d_maxHeaderSize_1194 :: T_PParamsUpdate_510 -> Maybe Integer
-d_maxHeaderSize_1194 v0 = coe d_maxHeaderSize_582 (coe v0)
+d_maxHeaderSize_1266 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxHeaderSize_1266 v0 = coe d_maxHeaderSize_582 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxRefScriptSizePerBlock
-d_maxRefScriptSizePerBlock_1196 ::
+d_maxRefScriptSizePerBlock_1268 ::
   T_PParamsUpdate_510 -> Maybe Integer
-d_maxRefScriptSizePerBlock_1196 v0
+d_maxRefScriptSizePerBlock_1268 v0
   = coe d_maxRefScriptSizePerBlock_610 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxRefScriptSizePerTx
-d_maxRefScriptSizePerTx_1198 ::
+d_maxRefScriptSizePerTx_1270 ::
   T_PParamsUpdate_510 -> Maybe Integer
-d_maxRefScriptSizePerTx_1198 v0
+d_maxRefScriptSizePerTx_1270 v0
   = coe d_maxRefScriptSizePerTx_608 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxTxExUnits
-d_maxTxExUnits_1200 :: T_PParamsUpdate_510 -> Maybe AgdaAny
-d_maxTxExUnits_1200 v0 = coe d_maxTxExUnits_588 (coe v0)
+d_maxTxExUnits_1272 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_maxTxExUnits_1272 v0 = coe d_maxTxExUnits_588 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxTxSize
-d_maxTxSize_1202 :: T_PParamsUpdate_510 -> Maybe Integer
-d_maxTxSize_1202 v0 = coe d_maxTxSize_580 (coe v0)
+d_maxTxSize_1274 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxTxSize_1274 v0 = coe d_maxTxSize_580 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.maxValSize
-d_maxValSize_1204 :: T_PParamsUpdate_510 -> Maybe Integer
-d_maxValSize_1204 v0 = coe d_maxValSize_584 (coe v0)
+d_maxValSize_1276 :: T_PParamsUpdate_510 -> Maybe Integer
+d_maxValSize_1276 v0 = coe d_maxValSize_584 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.minFeeRefScriptCoinsPerByte
-d_minFeeRefScriptCoinsPerByte_1206 ::
+d_minFeeRefScriptCoinsPerByte_1278 ::
   T_PParamsUpdate_510 -> Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_minFeeRefScriptCoinsPerByte_1206 v0
+d_minFeeRefScriptCoinsPerByte_1278 v0
   = coe d_minFeeRefScriptCoinsPerByte_606 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.minUTxOValue
-d_minUTxOValue_1208 :: T_PParamsUpdate_510 -> Maybe Integer
-d_minUTxOValue_1208 v0 = coe d_minUTxOValue_616 (coe v0)
+d_minUTxOValue_1280 :: T_PParamsUpdate_510 -> Maybe Integer
+d_minUTxOValue_1280 v0 = coe d_minUTxOValue_616 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.nopt
-d_nopt_1210 :: T_PParamsUpdate_510 -> Maybe Integer
-d_nopt_1210 v0 = coe d_nopt_622 (coe v0)
+d_nopt_1282 :: T_PParamsUpdate_510 -> Maybe Integer
+d_nopt_1282 v0 = coe d_nopt_622 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.poolDeposit
-d_poolDeposit_1212 :: T_PParamsUpdate_510 -> Maybe Integer
-d_poolDeposit_1212 v0 = coe d_poolDeposit_600 (coe v0)
+d_poolDeposit_1284 :: T_PParamsUpdate_510 -> Maybe Integer
+d_poolDeposit_1284 v0 = coe d_poolDeposit_600 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.poolThresholds
-d_poolThresholds_1214 ::
+d_poolThresholds_1286 ::
   T_PParamsUpdate_510 -> Maybe T_PoolThresholds_220
-d_poolThresholds_1214 v0 = coe d_poolThresholds_630 (coe v0)
+d_poolThresholds_1286 v0 = coe d_poolThresholds_630 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.prices
-d_prices_1216 :: T_PParamsUpdate_510 -> Maybe AgdaAny
-d_prices_1216 v0 = coe d_prices_604 (coe v0)
+d_prices_1288 :: T_PParamsUpdate_510 -> Maybe AgdaAny
+d_prices_1288 v0 = coe d_prices_604 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.pv
-d_pv_1218 ::
+d_pv_1290 ::
   T_PParamsUpdate_510 -> Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pv_1218 v0 = coe d_pv_592 (coe v0)
+d_pv_1290 v0 = coe d_pv_592 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.refScriptCostMultiplier
-d_refScriptCostMultiplier_1220 ::
+d_refScriptCostMultiplier_1292 ::
   T_PParamsUpdate_510 -> Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_refScriptCostMultiplier_1220 v0
+d_refScriptCostMultiplier_1292 v0
   = coe d_refScriptCostMultiplier_614 (coe v0)
 -- Ledger.PParams.PParamsUpdate._.U.refScriptCostStride
-d_refScriptCostStride_1222 :: T_PParamsUpdate_510 -> Maybe Integer
-d_refScriptCostStride_1222 v0
+d_refScriptCostStride_1294 :: T_PParamsUpdate_510 -> Maybe Integer
+d_refScriptCostStride_1294 v0
   = coe d_refScriptCostStride_612 (coe v0)
 -- Ledger.PParams.PParamsUpdate.DecEq-PParamsUpdate
-d_DecEq'45'PParamsUpdate_1224 ::
+d_DecEq'45'PParamsUpdate_1296 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'PParamsUpdate_1224 ~v0 v1 v2
-  = du_DecEq'45'PParamsUpdate_1224 v1 v2
-du_DecEq'45'PParamsUpdate_1224 ::
+d_DecEq'45'PParamsUpdate_1296 ~v0 v1 v2
+  = du_DecEq'45'PParamsUpdate_1296 v1 v2
+du_DecEq'45'PParamsUpdate_1296 ::
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'PParamsUpdate_1224 v0 v1
+du_DecEq'45'PParamsUpdate_1296 v0 v1
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
       (coe
@@ -4432,20 +4618,20 @@ du_DecEq'45'PParamsUpdate_1224 v0 v1
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.PParams.pvCanFollow?
-d_pvCanFollow'63'_1230 ::
+d_pvCanFollow'63'_1302 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_pvCanFollow'63'_1230 ~v0 ~v1 ~v2 v3 v4
-  = du_pvCanFollow'63'_1230 v3 v4
-du_pvCanFollow'63'_1230 ::
+d_pvCanFollow'63'_1302 ~v0 ~v1 ~v2 v3 v4
+  = du_pvCanFollow'63'_1302 v3 v4
+du_pvCanFollow'63'_1302 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_pvCanFollow'63'_1230 v0 v1
+du_pvCanFollow'63'_1302 v0 v1
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v2 v3
         -> let v4
@@ -4925,108 +5111,108 @@ du_pvCanFollow'63'_1230 v0 v1
                       _ -> MAlonzo.RTE.mazUnreachableError)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.PParams.PParamsDiff
-d_PParamsDiff_1278 a0 a1 a2 = ()
-data T_PParamsDiff_1278
-  = C_PParamsDiff'46'constructor_1471355 (T_PParams_242 ->
+d_PParamsDiff_1350 a0 a1 a2 = ()
+data T_PParamsDiff_1350
+  = C_PParamsDiff'46'constructor_1472739 (T_PParams_242 ->
                                           AgdaAny -> T_PParams_242)
                                          (AgdaAny -> [T_PParamGroup_166])
                                          (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10)
 -- Ledger.PParams.PParamsDiff.UpdateT
-d_UpdateT_1292 :: T_PParamsDiff_1278 -> ()
-d_UpdateT_1292 = erased
+d_UpdateT_1364 :: T_PParamsDiff_1350 -> ()
+d_UpdateT_1364 = erased
 -- Ledger.PParams.PParamsDiff.applyUpdate
-d_applyUpdate_1294 ::
-  T_PParamsDiff_1278 -> T_PParams_242 -> AgdaAny -> T_PParams_242
-d_applyUpdate_1294 v0
+d_applyUpdate_1366 ::
+  T_PParamsDiff_1350 -> T_PParams_242 -> AgdaAny -> T_PParams_242
+d_applyUpdate_1366 v0
   = case coe v0 of
-      C_PParamsDiff'46'constructor_1471355 v2 v3 v4 -> coe v2
+      C_PParamsDiff'46'constructor_1472739 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.PParams.PParamsDiff.updateGroups
-d_updateGroups_1296 ::
-  T_PParamsDiff_1278 -> AgdaAny -> [T_PParamGroup_166]
-d_updateGroups_1296 v0
+d_updateGroups_1368 ::
+  T_PParamsDiff_1350 -> AgdaAny -> [T_PParamGroup_166]
+d_updateGroups_1368 v0
   = case coe v0 of
-      C_PParamsDiff'46'constructor_1471355 v2 v3 v4 -> coe v3
+      C_PParamsDiff'46'constructor_1472739 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.PParams.PParamsDiff.ppWF?
-d_ppWF'63'_1302 ::
-  T_PParamsDiff_1278 ->
+d_ppWF'63'_1374 ::
+  T_PParamsDiff_1350 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_ppWF'63'_1302 v0
+d_ppWF'63'_1374 v0
   = case coe v0 of
-      C_PParamsDiff'46'constructor_1471355 v2 v3 v4 -> coe v4
+      C_PParamsDiff'46'constructor_1472739 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.PParams.PParamsDiff.ppdWellFormed
-d_ppdWellFormed_1304 ::
+d_ppdWellFormed_1376 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
-  T_PParamsDiff_1278 -> AgdaAny -> ()
-d_ppdWellFormed_1304 = erased
+  T_PParamsDiff_1350 -> AgdaAny -> ()
+d_ppdWellFormed_1376 = erased
 -- Ledger.PParams.GovParams
-d_GovParams_1310 a0 a1 a2 = ()
-data T_GovParams_1310
-  = C_GovParams'46'constructor_1472059 T_PParamsDiff_1278
+d_GovParams_1382 a0 a1 a2 = ()
+data T_GovParams_1382
+  = C_GovParams'46'constructor_1473443 T_PParamsDiff_1350
                                        MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 -- Ledger.PParams._.UpdateT
-d_UpdateT_1316 :: T_PParamsDiff_1278 -> ()
-d_UpdateT_1316 = erased
+d_UpdateT_1388 :: T_PParamsDiff_1350 -> ()
+d_UpdateT_1388 = erased
 -- Ledger.PParams._.applyUpdate
-d_applyUpdate_1318 ::
-  T_PParamsDiff_1278 -> T_PParams_242 -> AgdaAny -> T_PParams_242
-d_applyUpdate_1318 v0 = coe d_applyUpdate_1294 (coe v0)
+d_applyUpdate_1390 ::
+  T_PParamsDiff_1350 -> T_PParams_242 -> AgdaAny -> T_PParams_242
+d_applyUpdate_1390 v0 = coe d_applyUpdate_1366 (coe v0)
 -- Ledger.PParams._.ppWF?
-d_ppWF'63'_1320 ::
-  T_PParamsDiff_1278 ->
+d_ppWF'63'_1392 ::
+  T_PParamsDiff_1350 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_ppWF'63'_1320 v0 = coe d_ppWF'63'_1302 (coe v0)
+d_ppWF'63'_1392 v0 = coe d_ppWF'63'_1374 (coe v0)
 -- Ledger.PParams._.ppdWellFormed
-d_ppdWellFormed_1322 ::
+d_ppdWellFormed_1394 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
-  T_PParamsDiff_1278 -> AgdaAny -> ()
-d_ppdWellFormed_1322 = erased
+  T_PParamsDiff_1350 -> AgdaAny -> ()
+d_ppdWellFormed_1394 = erased
 -- Ledger.PParams._.updateGroups
-d_updateGroups_1324 ::
-  T_PParamsDiff_1278 -> AgdaAny -> [T_PParamGroup_166]
-d_updateGroups_1324 v0 = coe d_updateGroups_1296 (coe v0)
+d_updateGroups_1396 ::
+  T_PParamsDiff_1350 -> AgdaAny -> [T_PParamGroup_166]
+d_updateGroups_1396 v0 = coe d_updateGroups_1368 (coe v0)
 -- Ledger.PParams.GovParams.ppUpd
-d_ppUpd_1328 :: T_GovParams_1310 -> T_PParamsDiff_1278
-d_ppUpd_1328 v0
+d_ppUpd_1400 :: T_GovParams_1382 -> T_PParamsDiff_1350
+d_ppUpd_1400 v0
   = case coe v0 of
-      C_GovParams'46'constructor_1472059 v1 v2 -> coe v1
+      C_GovParams'46'constructor_1473443 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.PParams.GovParams._.UpdateT
-d_UpdateT_1332 :: T_GovParams_1310 -> ()
-d_UpdateT_1332 = erased
+d_UpdateT_1404 :: T_GovParams_1382 -> ()
+d_UpdateT_1404 = erased
 -- Ledger.PParams.GovParams._.applyUpdate
-d_applyUpdate_1334 ::
-  T_GovParams_1310 -> T_PParams_242 -> AgdaAny -> T_PParams_242
-d_applyUpdate_1334 v0
-  = coe d_applyUpdate_1294 (coe d_ppUpd_1328 (coe v0))
+d_applyUpdate_1406 ::
+  T_GovParams_1382 -> T_PParams_242 -> AgdaAny -> T_PParams_242
+d_applyUpdate_1406 v0
+  = coe d_applyUpdate_1366 (coe d_ppUpd_1400 (coe v0))
 -- Ledger.PParams.GovParams._.ppWF?
-d_ppWF'63'_1336 ::
-  T_GovParams_1310 ->
+d_ppWF'63'_1408 ::
+  T_GovParams_1382 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_ppWF'63'_1336 v0
-  = coe d_ppWF'63'_1302 (coe d_ppUpd_1328 (coe v0))
+d_ppWF'63'_1408 v0
+  = coe d_ppWF'63'_1374 (coe d_ppUpd_1400 (coe v0))
 -- Ledger.PParams.GovParams._.ppdWellFormed
-d_ppdWellFormed_1338 ::
+d_ppdWellFormed_1410 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
-  T_GovParams_1310 -> AgdaAny -> ()
-d_ppdWellFormed_1338 = erased
+  T_GovParams_1382 -> AgdaAny -> ()
+d_ppdWellFormed_1410 = erased
 -- Ledger.PParams.GovParams._.updateGroups
-d_updateGroups_1340 ::
-  T_GovParams_1310 -> AgdaAny -> [T_PParamGroup_166]
-d_updateGroups_1340 v0
-  = coe d_updateGroups_1296 (coe d_ppUpd_1328 (coe v0))
+d_updateGroups_1412 ::
+  T_GovParams_1382 -> AgdaAny -> [T_PParamGroup_166]
+d_updateGroups_1412 v0
+  = coe d_updateGroups_1368 (coe d_ppUpd_1400 (coe v0))
 -- Ledger.PParams.GovParams.DecEq-UpdT
-d_DecEq'45'UpdT_1342 ::
-  T_GovParams_1310 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'UpdT_1342 v0
+d_DecEq'45'UpdT_1414 ::
+  T_GovParams_1382 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+d_DecEq'45'UpdT_1414 v0
   = case coe v0 of
-      C_GovParams'46'constructor_1472059 v1 v2 -> coe v2
+      C_GovParams'46'constructor_1473443 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
