@@ -33,4 +33,5 @@ import Foreign.Convertible.DerivingTest
 
 -- ** Verifying Script Examples
 import ScriptVerification.Examples
+import ScriptVerification.StructuredContracts
 import ScriptVerification.Lib
