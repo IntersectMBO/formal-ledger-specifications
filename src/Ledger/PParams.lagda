@@ -88,7 +88,7 @@ record PoolThresholds : Type where
   field
 \end{code}
 \begin{code}
-    Q1 Q2a Q2b Q4 Q5e : ℚ
+    Q1 Q2a Q2b Q4 Q5 : ℚ
 
 record PParams : Type where
 \end{code}
@@ -148,6 +148,22 @@ record PParams : Type where
         govActionDeposit              : Coin
         drepDeposit                   : Coin
         drepActivity                  : Epoch
+\end{code}
+\emph{Security group}
+\begin{code}
+SecurityGroupParams : PParams → ℕ × ℕ × ℕ × ℕ × ExUnits × ℕ × ℕ × ℚ × ℕ × ℕ
+SecurityGroupParams pp = maxBlockSize
+                       , maxTxSize
+                       , maxHeaderSize
+                       , maxValSize
+                       , maxBlockExUnits
+                       , a
+                       , b
+                       , minFeeRefScriptCoinsPerByte
+                       , coinsPerUTxOByte
+                       , govActionDeposit
+  where
+    open PParams pp
 \end{code}
 \end{AgdaMultiCode}
 \caption{Protocol parameter definitions}
@@ -418,7 +434,7 @@ following concepts.
 \begin{itemize}
   \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
   named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
-  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfivee;
+  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfive;
   \item \ccMinSize: minimum constitutional committee size;
   \item \ccMaxTermLength: maximum term limit (in epochs) of constitutional committee members;
   \item \govActionLifetime: governance action expiration;
