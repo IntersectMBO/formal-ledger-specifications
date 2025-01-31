@@ -126,9 +126,10 @@ applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   ⟦ acnt
   , ss
-  , ⟦ utxoSt
-    , govSt
-    , ⟦ stᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , ledgerSt
+  -- , ⟦ utxoSt
+  --   , govSt
+  --   , ⟦ stᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
   , fut
   ⟧ᵉ' =
@@ -137,13 +138,15 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , ss
   , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ᶜˢ ⟧ˡ
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ᶜˢ ⟧
   , es
   , fut ⟧ᵉ'
   where
     open Acnt acnt
+    open LState ledgerSt
     open UTxOState utxoSt
-    open DState stᵈ
+    open CertState certState
+    open DState dState
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
@@ -223,9 +226,10 @@ its results by carrying out each of the following tasks.
 \begin{AgdaMultiCode}
 \begin{code}
   EPOCH : let
-      ⟦ utxoSt , govSt , ⟦ dState , pState , gState ⟧ᶜˢ ⟧ˡ = ls
 \end{code}
 \begin{code}[hide]
+      open LState ls
+      open CertState certState
       open RatifyState fut renaming (es to esW)
       open UTxOState
       open PState; open DState; open GState
@@ -271,7 +275,7 @@ its results by carrying out each of the following tasks.
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
     _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈
-        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ˡ , es , fut' ⟧ᵉ'
+        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ , es , fut' ⟧ᵉ'
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}

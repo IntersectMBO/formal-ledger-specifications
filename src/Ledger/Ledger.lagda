@@ -36,7 +36,6 @@ defined transition systems.
 record LEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ˡᵉ
   field
 \end{code}
 \begin{code}
@@ -49,7 +48,6 @@ record LEnv : Type where
 record LState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ˡ
   field
 \end{code}
 \begin{code}
@@ -79,6 +77,19 @@ allColdCreds govSt es =
 \caption{Types and functions for the LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
+instance
+  ToRecord-LEnv : ToRecord (Slot × Maybe ScriptHash × PParams × EnactState × Coin) LEnv
+  ToRecord-LEnv = record { ⟦_⟧ = uncurryₙ 5 (λ x x₁ x₂ x₃ x₄ → record
+                                                                { slot = x
+                                                                ; ppolicy = x₁
+                                                                ; pparams = x₂
+                                                                ; enactState = x₃
+                                                                ; treasury = x₄
+                                                                }) }
+
+  ToRecord-LState : ToRecord (UTxOState × GovState × CertState) LState
+  ToRecord-LState = record { ⟦_⟧ = uncurryₙ 3 (λ x x₁ x₂ → record { utxoSt = x ; govSt = x₁ ; certState = x₂ }) }
+
 private variable
   Γ : LEnv
   s s' s'' : LState
@@ -117,7 +128,7 @@ data
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -126,7 +137,7 @@ data
     ∙  isValid tx ≡ false
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
 \end{code}
 \end{NoConway}
 \end{AgdaSuppressSpace}

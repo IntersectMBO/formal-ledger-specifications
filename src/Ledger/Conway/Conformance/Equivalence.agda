@@ -108,7 +108,8 @@ lem-cert-deposits-invalid refl (L.LEDGER-I⋯ _ utxow) rewrite lemInvalidDeposit
 
 instance
   LStateToConf : L.Deposits × L.Deposits ⊢ L.LState ⭆ C.LState
-  LStateToConf .convⁱ deposits L.⟦ utxoSt , govSt , certState ⟧ˡ =
+  LStateToConf .convⁱ deposits ledgerSt =
+    let open L.LState ledgerSt in
     C.⟦ utxoSt , govSt , deposits ⊢conv certState ⟧ˡ
 
 instance
@@ -168,7 +169,7 @@ instance
 
   LStateFromConf : C.LState ⭆ L.LState
   LStateFromConf .convⁱ _ C.⟦ utxoSt , govSt , certState ⟧ˡ =
-    L.⟦ utxoSt , govSt , conv certState ⟧ˡ
+    ⟦ utxoSt , govSt , conv certState ⟧
 
 certDepositsC : C.CertState → L.Deposits × L.Deposits
 certDepositsC C.⟦ dState , _ , gState ⟧ᶜˢ = C.DState.deposits dState , C.GState.deposits gState
@@ -231,7 +232,7 @@ instance
   LEDGERFromConf .convⁱ _ (C.LEDGER-I⋯ invalid utxow) with inj₁ invalid ⊢conv utxow
   ... | utxow' rewrite lemInvalidDepositsC invalid utxow = L.LEDGER-I⋯ invalid utxow'
   LEDGERFromConf {Γ} {s} {tx} {s'} .convⁱ wf (C.LEDGER-V⋯ refl utxow certs gov) =
-    subst (λ • → Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ L.⟦ • , govSt' , conv certSt' ⟧ˡ) eqUtxo ledger'
+    subst (λ • → Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ ⟦ • , govSt' , conv certSt' ⟧) eqUtxo ledger'
     where
       open C.LEnv Γ
 
@@ -250,9 +251,9 @@ instance
       eqUtxo : setDeposits (utxowDeposits utxow) utxoSt' ≡ utxoSt'
       eqUtxo = cong (λ • → ⟦ _ , _ , • , _ ⟧) (lemUtxowDeposits refl utxow)
 
-      ledger' : Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ L.⟦ setDeposits (utxowDeposits utxow) utxoSt'
-                                              , govSt'
-                                              , conv certSt' ⟧ˡ
+      ledger' : Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ ⟦ setDeposits (utxowDeposits utxow) utxoSt'
+                                            , govSt'
+                                            , conv certSt' ⟧
       ledger' = L.LEDGER-V⋯ refl utxow' (conv certs) (conv gov)
 
 open IsEquivalence ≡ᵈ-isEquivalence renaming (refl to ≡ᵈ-refl; sym to ≡ᵈ-sym; trans to ≡ᵈ-trans)
@@ -408,7 +409,7 @@ opaque
             → deps₁ ≡ᵈ deps₂
             → Γ C.⊢ deps₁ ⊢conv s ⇀⦇ tx ,LEDGER⦈ (deps₁' ⊢conv s')
             → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂' × Γ C.⊢ deps₂ ⊢conv s ⇀⦇ tx ,LEDGER⦈ (deps₂' ⊢conv s')
-  castLEDGER {Γ} {tx} {s@(L.⟦ utxoSt , govSt , certSt ⟧ˡ)} {s'@(L.⟦ utxoSt' , govSt' , certSt' ⟧ˡ)} deps₁ deps₂ deps₁' eqd (C.LEDGER-V⋯ refl utxo certs gov) =
+  castLEDGER {Γ} {tx} {s} {s'} deps₁ deps₂ deps₁' eqd (C.LEDGER-V⋯ refl utxo certs gov) =
     let deps₂' , eqd' , certs' = castCERTS deps₁ deps₂ deps₁' eqd certs
     in  deps₂' , eqd' , C.LEDGER-V⋯ refl utxo certs' (castGOV deps₂' gov)
   castLEDGER deps₁ deps₂ deps₁' eqd (C.LEDGER-I⋯ refl utxo) = _ , eqd , C.LEDGER-I⋯ refl utxo
