@@ -94,7 +94,6 @@ cwitness (reg c (suc _))     = just c
 record CertEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ᶜ
   field
 \end{code}
 \begin{code}
@@ -107,7 +106,6 @@ record CertEnv : Type where
 record DState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ᵈ
   field
 \end{code}
 \begin{code}
@@ -121,7 +119,6 @@ record DState : Type where
 record PState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_⟧ᵖ
   field
 \end{code}
 \begin{code}
@@ -134,7 +131,6 @@ record PState : Type where
 record GState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_⟧ᵛ
   field
 \end{code}
 \begin{code}
@@ -155,7 +151,6 @@ record CertState : Type where
 record DelegEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ᵈᵉ
   field
 \end{code}
 \begin{code}
@@ -210,6 +205,28 @@ private variable
   stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
   cc : ℙ Credential
+
+instance
+  ToRecord-CertEnv : ToRecord (Epoch × PParams × List GovVote × (RwdAddr ⇀ Coin) × ℙ Credential) CertEnv
+  ToRecord-CertEnv = record { ⟦_⟧ = uncurryₙ 5 λ z z₁ z₂ z₃ z₄ →
+                                   record
+                                   { epoch = z ; pp = z₁ ; votes = z₂ ; wdrls = z₃ ; coldCreds = z₄ } }
+
+  ToRecord-DState : ToRecord ((Credential ⇀ VDeleg) × (Credential ⇀ KeyHash) × (Credential ⇀ Coin)) DState
+  ToRecord-DState = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ →
+                                   record { voteDelegs = z ; stakeDelegs = z₁ ; rewards = z₂ } }
+
+  ToRecord-PState : ToRecord ((KeyHash ⇀ PoolParams) × (KeyHash ⇀ Epoch)) PState
+  ToRecord-PState = record { ⟦_⟧ = uncurryₙ 2 λ z z₁ → record { pools = z ; retiring = z₁ } }
+
+  ToRecord-GState : ToRecord ((Credential ⇀ Epoch) × (Credential ⇀ Maybe Credential)) GState
+  ToRecord-GState = record { ⟦_⟧ = uncurryₙ 2 λ z z₁ → record { dreps = z ; ccHotKeys = z₁ } }
+
+  ToRecord-CertState : ToRecord (DState × PState × GState) CertState
+  ToRecord-CertState = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ → record { dState = z ; pState = z₁ ; gState = z₂ } }
+
+  ToRecord-DelegEnv : ToRecord (PParams × (KeyHash ⇀ PoolParams) × ℙ Credential) DelegEnv
+  ToRecord-DelegEnv = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ → record { pparams = z ; pools = z₁ ; delegatees = z₂ } }
 \end{code}
 
 \subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
@@ -335,24 +352,24 @@ data _⊢_⇀⦇_,DELEG⦈_ where
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧
         ⇀⦇ delegate c mv mkh d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c md ,DELEG⦈
-        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈
+        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
 \end{code}
 \begin{code}[hide]
   DELEG-reg : let open PParams pp in
     ∙ c ∉ dom rwds
     ∙ d ≡ keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
-        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ ⊢
+        ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈
+        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}
@@ -369,12 +386,12 @@ data _⊢_⇀⦇_,POOL⦈_ where
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
+      pp ⊢  ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
+            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
+    pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary POOL transition system}
@@ -391,19 +408,19 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢  ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
+                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
@@ -431,14 +448,14 @@ data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
 \begin{code}
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
@@ -463,14 +480,14 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
-        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
+        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧
         , stᵖ
-        , ⟦ dReps , ccHotKeys ⟧ᵛ
+        , ⟦ dReps , ccHotKeys ⟧
         ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧
         , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
+        , ⟦ refreshedDReps , ccHotKeys ⟧
         ⟧ᶜˢ
 \end{code}
 \end{AgdaSuppressSpace}

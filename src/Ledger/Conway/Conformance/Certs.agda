@@ -13,7 +13,7 @@ open import Tactic.Derive.DecEq
 open import Ledger.GovernanceActions gs
 private module Certs = Ledger.Certs gs
 open Certs public
-  hiding (DState; ⟦_,_,_⟧ᵈ; GState; ⟦_,_⟧ᵛ; CertState;
+  hiding (DState; GState; CertState;
           _⊢_⇀⦇_,POOL⦈_; _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
           _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,CERTBASE⦈_; _⊢_⇀⦇_,CERTS⦈_)
 open RwdAddr
@@ -103,12 +103,12 @@ data _⊢_⇀⦇_,POOL⦈_ where
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
+      pp ⊢  ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
+            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
+    pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧
 
 data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
@@ -123,7 +123,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
           )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , delegatees ⟧ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
       ⇀⦇ delegate c mv mkh d ,DELEG⦈
       ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵
@@ -134,7 +134,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ (CredentialDeposit c , d) ∈ dep
     ∙ md ≡ nothing ⊎ md ≡ just d
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , delegatees ⟧ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
       ⇀⦇ dereg c md ,DELEG⦈
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
@@ -144,7 +144,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
     ∙ c ∉ dom rwds
     ∙ d ≡ keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
+      ⟦ pp , pools , delegatees ⟧ ⊢
         ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
         ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵
         , updateCertDeposit pp (reg c d) dep ⟧ᵈ
@@ -153,7 +153,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
       ⟦ dReps , ccKeys , dep ⟧ᵛ
         ⇀⦇ regdrep c d an ,GOVCERT⦈
       ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys
@@ -163,7 +163,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
     ∙ c ∈ dom dReps
     ∙ (DRepDeposit c , d) ∈ dep
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
           ⇀⦇ deregdrep c d ,GOVCERT⦈
           ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit pp (deregdrep c d) dep ⟧ᵛ
 
@@ -171,20 +171,20 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
           ⇀⦇ ccreghot c mc ,GOVCERT⦈
           ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit pp (ccreghot c mc) dep ⟧ᵛ
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
@@ -202,7 +202,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
       ⟦ ⟦ voteDelegs , stakeDelegs , rewards , ddep ⟧ᵈ
       , stᵖ
       , ⟦ dReps , ccHotKeys , gdep ⟧ᵛ

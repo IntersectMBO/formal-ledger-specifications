@@ -12,6 +12,7 @@ open import ScriptVerification.LedgerImplementation String String scriptImp
 open import ScriptVerification.Lib String String scriptImp
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
+open import ToRecord
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
@@ -147,14 +148,14 @@ opaque
 
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   succeedExample : ComputationResult String UTxOState
-  succeedExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  succeedTx
+  succeedExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧  succeedTx
 
   _ : isSuccess succeedExample ≡ true
   _  = refl
 
   -- Compute the result of running the UTXO rules on the failTx transaction
   failExample : ComputationResult String UTxOState
-  failExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧ᵘ  failTx
+  failExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧  failTx
 
   _ : isFailure failExample
   _ = _ , refl

@@ -12,6 +12,7 @@ open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
 open import ScriptVerification.Lib ℕ ℕ scriptImp
 open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
+open import ToRecord
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
@@ -167,21 +168,21 @@ opaque
 
   -- Compute the result of running the UTXO rules on the succeedTx transaction
   succeedExample : ComputationResult String UTxOState
-  succeedExample = UTXO-step initEnv ⟦ initStateDatum , 0 , ∅ , 0 ⟧ᵘ  succeedTx
+  succeedExample = UTXO-step initEnv ⟦ initStateDatum , 0 , ∅ , 0 ⟧  succeedTx
 
   _ : isSuccess succeedExample ≡ true
   _  = refl
 
   -- Compute the result of running the UTXO rules on the failTx transaction
   failExample : ComputationResult String UTxOState
-  failExample = UTXO-step initEnv ⟦ initStateRedeemer , 0 , ∅ , 0 ⟧ᵘ  failTx
+  failExample = UTXO-step initEnv ⟦ initStateRedeemer , 0 , ∅ , 0 ⟧  failTx
 
   _ : isFailure failExample
   _ = _ , refl
 
   -- Note that the UTXOS rule succeeds but the UTXO rule fails for failTx
   failExampleS : Bool
-  failExampleS = case compute Computational-UTXOS initEnv ⟦ initStateRedeemer , 0 , ∅ , 0 ⟧ᵘ failTx of λ where
+  failExampleS = case compute Computational-UTXOS initEnv ⟦ initStateRedeemer , 0 , ∅ , 0 ⟧ failTx of λ where
     (success x) → true
     (failure x) → false
 
@@ -189,7 +190,7 @@ opaque
   _ = refl
 
   failExampleU : Bool
-  failExampleU = case compute Computational-UTXO initEnv ⟦ initStateRedeemer , 0 , ∅ , 0 ⟧ᵘ failTx of λ where
+  failExampleU = case compute Computational-UTXO initEnv ⟦ initStateRedeemer , 0 , ∅ , 0 ⟧ failTx of λ where
     (success x) → true
     (failure x) → false
 

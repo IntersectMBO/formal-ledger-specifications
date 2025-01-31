@@ -20,10 +20,10 @@ module Ledger.Conway.Conformance.Equivalence.Utxo
 open import Ledger.Conway.Conformance.Equivalence.Base txs abs
 
 setDeposits : L.Deposits → L.UTxOState → L.UTxOState
-setDeposits deposits L.⟦ utxo , fees , _ , donations ⟧ᵘ = L.⟦ utxo , fees , deposits , donations ⟧ᵘ
+setDeposits deposits utxoSt = record utxoSt { deposits = deposits }
 
 withDepositsFrom : L.UTxOState → L.UTxOState → L.UTxOState
-withDepositsFrom L.⟦ _ , _ , deposits , _ ⟧ᵘ = setDeposits deposits
+withDepositsFrom utxoSt = setDeposits (L.UTxOState.deposits utxoSt)
 
 instance
 

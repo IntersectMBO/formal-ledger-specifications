@@ -41,7 +41,6 @@ remain in treasury and reserves.
 record Acnt : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_⟧ᵃ
   field
 \end{code}
 \begin{code}
@@ -63,6 +62,11 @@ data pvCanFollow : ProtVer → ProtVer → Type where
 \label{fig:protocol-parameter-defs}
 \end{figure*}
 \end{NoConway}
+\begin{code}[hide]
+instance
+  ToRecord-Acnt : ToRecord (Coin × Coin) Acnt
+  ToRecord-Acnt = record { ⟦_⟧ = uncurryₙ 2 (λ z z₁ → record { treasury = z ; reserves = z₁ }) }
+\end{code}
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}

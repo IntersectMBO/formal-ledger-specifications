@@ -58,12 +58,12 @@ instance
     computeGov   = comp {STS = _⊢_⇀⦇_,GOV⦈_}
 
     module go
-      (Γ : LEnv)   (let ⟦ slot , ppolicy , pparams , enactState , _ ⟧ˡᵉ = Γ)
+      (Γ : LEnv)   (let open LEnv Γ)
       (s : LState) (let ⟦ utxoSt , govSt , certSt ⟧ˡ = s)
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
-      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , _ ⟧ᶜ
+      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , _ ⟧
       govΓ : CertState → GovEnv
       govΓ = ⟦ txid , epoch slot , pparams , ppolicy , enactState ,_⟧ᵍ
 

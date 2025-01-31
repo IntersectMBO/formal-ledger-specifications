@@ -287,15 +287,15 @@ module DepositHelpers
   {donations donations' : Coin}
   {tx : Tx} (let open Tx tx renaming (body to txb); open TxBody txb)
   {Γ : UTxOEnv}
-  (step  : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-               ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ)
+  (step  : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXO⦈
+               ⟦ utxo' , fees' , deposits' , donations' ⟧)
   (h' : txid ∉ mapˢ proj₁ (dom utxo))
   where
   open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
   private
-    stepS : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ᵘ ⇀⦇ tx ,UTXOS⦈
-                ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+    stepS : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXOS⦈
+                ⟦ utxo' , fees' , deposits' , donations' ⟧
     stepS = case step of λ where
       (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
 
@@ -308,7 +308,7 @@ module DepositHelpers
     Δdep : ℤ
     Δdep = depositsChange pp txb deposits
     utxoSt : UTxOState
-    utxoSt = ⟦ utxo , fees , deposits , donations ⟧ᵘ
+    utxoSt = ⟦ utxo , fees , deposits , donations ⟧
     ref tot : Coin
     ref = depositRefunds pp utxoSt txb
     wdls = getCoin txwdrls
@@ -316,14 +316,14 @@ module DepositHelpers
     h : disjoint (dom (utxo ∣ txins ᶜ)) (dom (outs txb))
     h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {txb} {utxo} h')
                       $ to ∈-∩ (res-comp-domᵐ h₁ , h₂)
-    newBal' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-                  ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+    newBal' : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXO⦈
+                  ⟦ utxo' , fees' , deposits' , donations' ⟧
             → consumed pp utxoSt txb ≡ produced pp utxoSt txb
     newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _ _) = x
     newBal : consumed pp utxoSt txb ≡ produced pp utxoSt txb
     newBal = newBal' step
-    noMintAda' : Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-                     ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+    noMintAda' : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXO⦈
+                     ⟦ utxo' , fees' , deposits' , donations' ⟧
                → coin (mint) ≡ 0
     noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _) = x
     noMintAda : coin mint ≡ 0
@@ -565,8 +565,8 @@ and
   →
 \end{code}
 \begin{code}
-  Γ ⊢  ⟦ utxo   , fees   , deposits   , donations   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-       ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
+  Γ ⊢  ⟦ utxo   , fees   , deposits   , donations   ⟧ ⇀⦇ tx ,UTXO⦈
+       ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧
 \end{code}
 
 then
@@ -574,8 +574,8 @@ then
   →
 \end{code}
 \begin{code}
-  getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + φ(getCoin txwdrls , isValid)
-  ≡ getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ
+  getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , isValid)
+  ≡ getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧
 \end{code}
 \begin{code}[hide]
 pov {deposits' = deposits'} h'
@@ -691,8 +691,8 @@ module _ -- ASSUMPTION --
               open UTxOState utxoState
                 renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
           in
-    Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ᵘ ⇀⦇ tx ,UTXO⦈
-         ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧ᵘ
+    Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ ⇀⦇ tx ,UTXO⦈
+         ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧
 
     → noRefundCert txcerts -- FINAL ASSUMPTION --
 

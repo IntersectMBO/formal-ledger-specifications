@@ -94,7 +94,7 @@ module _ (s : ChainState) (slot : Slot) where
   open EpochState epochState; open EnactState es
 
   private
-    ledgerEnv = ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧ˡᵉ
+    ledgerEnv = ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧
 
   validTxIn₂ : Tx → Type
   validTxIn₂ tx = ∃[ ls' ] ledgerEnv ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'
