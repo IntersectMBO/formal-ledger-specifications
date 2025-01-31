@@ -128,9 +128,9 @@ d_Conv'45'LEnv_72
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Ledger.C_'10214'_'44'_'44'_'44'_'44'_'10215''737''7497'_2156 v1 v2 v3 v4 v5
+              MAlonzo.Code.Ledger.Ledger.C_LEnv'46'constructor_4745 v1 v2 v3 v4 v5
                 -> coe
-                     C_MkLEnv_77 (coe v1)
+                     C_MkLEnv_131 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -790,10 +790,9 @@ d_Conv'45'LEnv_72
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkLEnv_77 v1 v2 v3 v4 v5
+              C_MkLEnv_131 v1 v2 v3 v4 v5
                 -> coe
-                     MAlonzo.Code.Ledger.Ledger.C_'10214'_'44'_'44'_'44'_'44'_'10215''737''7497'_2156
-                     (coe v1)
+                     MAlonzo.Code.Ledger.Ledger.C_LEnv'46'constructor_4745 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2805,21 +2804,6 @@ d_Conv'45'LEnv_72
 d_HsTy'45'LState_74 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
 d_HsTy'45'LState_74 = erased
--- Ledger.Conway.Foreign.HSLedger.Ledger.LEnv
-d_LEnv_75 = ()
-type T_LEnv_75 = LEnv
-pattern C_MkLEnv_77 a0 a1 a2 a3 a4 = MkLEnv a0 a1 a2 a3 a4
-check_MkLEnv_77 ::
-  Integer ->
-  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_PParams_10199 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.T_EnactState_87 ->
-  Integer -> T_LEnv_75
-check_MkLEnv_77 = MkLEnv
-cover_LEnv_75 :: LEnv -> ()
-cover_LEnv_75 x
-  = case x of
-      MkLEnv _ _ _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Ledger.Conv-LState
 d_Conv'45'LState_76 ::
   MAlonzo.Code.Foreign.Convertible.T_Convertible_8
@@ -2831,7 +2815,7 @@ d_Conv'45'LState_76
             case coe v0 of
               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2198 v1 v2 v3
                 -> coe
-                     C_MkLState_2611
+                     C_MkLState_2665
                      (coe
                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1673
                         (coe
@@ -3088,7 +3072,7 @@ d_Conv'45'LState_76
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkLState_2611 v1 v2 v3
+              C_MkLState_2665 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2198
                      (coe
@@ -3837,18 +3821,18 @@ d_Conv'45'LState_76
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Ledger.ledger-step
 ledgerStep ::
-  T_LEnv_75 ->
-  T_LState_2609 ->
+  T_LEnv_129 ->
+  T_LState_2663 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_109479 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2609
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2663
 ledgerStep = coe d_ledger'45'step_78
 d_ledger'45'step_78 ::
-  T_LEnv_75 ->
-  T_LState_2609 ->
+  T_LEnv_129 ->
+  T_LState_2663 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_109479 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2609
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2663
 d_ledger'45'step_78 v0
   = coe
       MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -3878,20 +3862,20 @@ d_ledger'45'step_78 v0
             MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'LEnv_72 v0))
 -- Ledger.Conway.Foreign.HSLedger.Ledger.ledgers-step
 ledgersStep ::
-  T_LEnv_75 ->
-  T_LState_2609 ->
+  T_LEnv_129 ->
+  T_LState_2663 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_109479 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2609
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2663
 ledgersStep = coe d_ledgers'45'step_80
 d_ledgers'45'step_80 ::
-  T_LEnv_75 ->
-  T_LState_2609 ->
+  T_LEnv_129 ->
+  T_LState_2663 ->
   [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_109479] ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2609
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2663
 d_ledgers'45'step_80 v0
   = coe
       MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -3912,7 +3896,7 @@ d_ledgers'45'step_80 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGERS_3038
+            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGERS_3042
             (coe
                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_656
                (coe
@@ -3921,11 +3905,26 @@ d_ledgers'45'step_80 v0
                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.du_HSAbstractFunctions_2372))
          (coe
             MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'LEnv_72 v0))
+-- Ledger.Conway.Foreign.HSLedger.Ledger.LEnv
+d_LEnv_129 = ()
+type T_LEnv_129 = LEnv
+pattern C_MkLEnv_131 a0 a1 a2 a3 a4 = MkLEnv a0 a1 a2 a3 a4
+check_MkLEnv_131 ::
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_PParams_10199 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.T_EnactState_87 ->
+  Integer -> T_LEnv_129
+check_MkLEnv_131 = MkLEnv
+cover_LEnv_129 :: LEnv -> ()
+cover_LEnv_129 x
+  = case x of
+      MkLEnv _ _ _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Ledger.LState
-d_LState_2609 = ()
-type T_LState_2609 = LState
-pattern C_MkLState_2611 a0 a1 a2 = MkLState a0 a1 a2
-check_MkLState_2611 ::
+d_LState_2663 = ()
+type T_LState_2663 = LState
+pattern C_MkLState_2665 a0 a1 a2 = MkLState a0 a1 a2
+check_MkLState_2665 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.T_UTxOState_1671 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
@@ -3934,9 +3933,9 @@ check_MkLState_2611 ::
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_8915) ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.T_CertState_315 ->
-  T_LState_2609
-check_MkLState_2611 = MkLState
-cover_LState_2609 :: LState -> ()
-cover_LState_2609 x
+  T_LState_2663
+check_MkLState_2665 = MkLState
+cover_LState_2663 :: LState -> ()
+cover_LState_2663 x
   = case x of
       MkLState _ _ _ -> ()

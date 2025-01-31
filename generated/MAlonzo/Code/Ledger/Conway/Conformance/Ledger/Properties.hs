@@ -301,7 +301,7 @@ d_Computational'45'LEDGER_2700 ::
 d_Computational'45'LEDGER_2700 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_2834 (coe v0) (coe v1))
+      (d_computeProof_2838 (coe v0) (coe v1))
 -- Ledger.Conway.Conformance.Ledger.Properties._.computeUtxow
 d_computeUtxow_2726 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -366,39 +366,39 @@ du_computeGov_2730 v0
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe v0)
 -- Ledger.Conway.Conformance.Ledger.Properties._._.go.utxoΓ
-d_utxoΓ_2810 ::
+d_utxoΓ_2814 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2184 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2618 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1914
-d_utxoΓ_2810 ~v0 ~v1 v2 ~v3 ~v4 = du_utxoΓ_2810 v2
-du_utxoΓ_2810 ::
+d_utxoΓ_2814 ~v0 ~v1 v2 ~v3 ~v4 = du_utxoΓ_2814 v2
+du_utxoΓ_2814 ::
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_1914
-du_utxoΓ_2810 v0
+du_utxoΓ_2814 v0
   = coe
       MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_8941
       (coe MAlonzo.Code.Ledger.Ledger.d_slot_2146 (coe v0))
       (coe MAlonzo.Code.Ledger.Ledger.d_pparams_2150 (coe v0))
       (coe MAlonzo.Code.Ledger.Ledger.d_treasury_2154 (coe v0))
 -- Ledger.Conway.Conformance.Ledger.Properties._._.go.certΓ
-d_certΓ_2826 ::
+d_certΓ_2830 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2184 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2618 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_868
-d_certΓ_2826 v0 ~v1 v2 v3 v4 = du_certΓ_2826 v0 v2 v3 v4
-du_certΓ_2826 ::
+d_certΓ_2830 v0 ~v1 v2 v3 v4 = du_certΓ_2830 v0 v2 v3 v4
+du_certΓ_2830 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2184 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2618 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_868
-du_certΓ_2826 v0 v1 v2 v3
+du_certΓ_2830 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
       (5 :: Integer)
@@ -483,7 +483,7 @@ du_certΓ_2826 v0 v1 v2 v3
                                                          (coe v2))))))))
                                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))
 -- Ledger.Conway.Conformance.Ledger.Properties._._.go.govΓ
-d_govΓ_2828 ::
+d_govΓ_2832 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
@@ -491,14 +491,14 @@ d_govΓ_2828 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2618 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_2040
-d_govΓ_2828 v0 ~v1 v2 ~v3 v4 v5 = du_govΓ_2828 v0 v2 v4 v5
-du_govΓ_2828 ::
+d_govΓ_2832 v0 ~v1 v2 ~v3 v4 v5 = du_govΓ_2832 v0 v2 v4 v5
+du_govΓ_2832 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2618 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_2040
-du_govΓ_2828 v0 v1 v2 v3
+du_govΓ_2832 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_'10214'_'44'_'44'_'44'_'44'_'44'_'10215''7501'_2066
       (coe
@@ -513,14 +513,14 @@ du_govΓ_2828 v0 v1 v2 v3
       (coe MAlonzo.Code.Ledger.Ledger.d_enactState_2152 (coe v1))
       (coe v3)
 -- Ledger.Conway.Conformance.Ledger.Properties._._.go.computeProof
-d_computeProof_2834 ::
+d_computeProof_2838 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2184 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2618 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_2834 v0 v1 v2 v3 v4
+d_computeProof_2838 v0 v1 v2 v3 v4
   = let v5
           = MAlonzo.Code.Data.Bool.Properties.d__'8799'__3082
               (coe MAlonzo.Code.Ledger.Transaction.d_isValid_2632 (coe v4))
@@ -540,7 +540,7 @@ d_computeProof_2834 v0 v1 v2 v3 v4
                                  du_computeUtxow_2726
                                  (MAlonzo.Code.Ledger.Conway.Conformance.Utxow.Properties.d_Computational'45'UTXOW_1986
                                     (coe v0) (coe v1))
-                                 (coe du_utxoΓ_2810 (coe v2))
+                                 (coe du_utxoΓ_2814 (coe v2))
                                  (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2192
                                     (coe v3))
                                  v4)
@@ -570,7 +570,7 @@ d_computeProof_2834 v0 v1 v2 v3 v4
                                                    MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_730)
                                                 (coe
                                                    MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_730))
-                                             (coe du_certΓ_2826 (coe v0) (coe v2) (coe v3) (coe v4))
+                                             (coe du_certΓ_2830 (coe v0) (coe v2) (coe v3) (coe v4))
                                              (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2196
                                                 (coe v3))
                                              (MAlonzo.Code.Ledger.Transaction.d_txcerts_2570
@@ -599,7 +599,7 @@ d_computeProof_2834 v0 v1 v2 v3 v4
                                                             (coe
                                                                MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_730))
                                                          (coe
-                                                            du_govΓ_2828 (coe v0) (coe v2) (coe v4)
+                                                            du_govΓ_2832 (coe v0) (coe v2) (coe v4)
                                                             (coe v13))
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Conformance.Ledger.du__'124''7506'__2270
@@ -635,7 +635,7 @@ d_computeProof_2834 v0 v1 v2 v3 v4
                                                                               (coe v0)
                                                                               (let v18
                                                                                      = coe
-                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_mkGeneralizeTel_11671
+                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_mkGeneralizeTel_11729
                                                                                          (coe v3)
                                                                                          (coe v4)
                                                                                          (coe v2)
@@ -647,7 +647,7 @@ d_computeProof_2834 v0 v1 v2 v3 v4
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Ledger.d_pparams_2150
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_'46'generalizedField'45'Γ_11661
+                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_'46'generalizedField'45'Γ_11719
                                                                                        (coe v18))))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Transaction.d_body_2628
@@ -687,7 +687,7 @@ d_computeProof_2834 v0 v1 v2 v3 v4
                              du_computeUtxow_2726
                              (MAlonzo.Code.Ledger.Conway.Conformance.Utxow.Properties.d_Computational'45'UTXOW_1986
                                 (coe v0) (coe v1))
-                             (coe du_utxoΓ_2810 (coe v2))
+                             (coe du_utxoΓ_2814 (coe v2))
                              (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2192
                                 (coe v3))
                              v4)
@@ -703,23 +703,23 @@ d_computeProof_2834 v0 v1 v2 v3 v4
                                             (coe v9)
                                             (let v11
                                                    = coe
-                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_mkGeneralizeTel_13575
+                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_mkGeneralizeTel_13633
                                                        (coe v3) (coe v4) (coe v2) (coe v9) in
                                              coe
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2194
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_'46'generalizedField'45's_13565
+                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_'46'generalizedField'45's_13623
                                                      (coe v11))))
                                             (let v11
                                                    = coe
-                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_mkGeneralizeTel_13575
+                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_mkGeneralizeTel_13633
                                                        (coe v3) (coe v4) (coe v2) (coe v9) in
                                              coe
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2196
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_'46'generalizedField'45's_13565
+                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_'46'generalizedField'45's_13623
                                                      (coe v11)))))
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_LEDGER'45'I_2454
@@ -729,7 +729,7 @@ d_computeProof_2834 v0 v1 v2 v3 v4
                                _ -> MAlonzo.RTE.mazUnreachableError))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Conformance.Ledger.Properties._._.go.completeness
-d_completeness_2868 ::
+d_completeness_2872 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
@@ -738,13 +738,13 @@ d_completeness_2868 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2184 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T__'8866'_'8640''10631'_'44'LEDGER'10632'__2292 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_2868 = erased
+d_completeness_2872 = erased
 -- Ledger.Conway.Conformance.Ledger.Properties.Computational-LEDGERS
-d_Computational'45'LEDGERS_3038 ::
+d_Computational'45'LEDGERS_3042 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'LEDGERS_3038 v0 v1
+d_Computational'45'LEDGERS_3042 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_774
       (coe
