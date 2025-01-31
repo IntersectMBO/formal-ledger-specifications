@@ -36,7 +36,6 @@ defined transition systems.
 record LEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ˡᵉ
   field
 \end{code}
 \begin{code}
@@ -79,6 +78,16 @@ allColdCreds govSt es =
 \caption{Types and functions for the LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
+instance
+  ToRecord-LEnv : ToRecord (Slot × Maybe ScriptHash × PParams × EnactState × Coin) LEnv
+  ToRecord-LEnv = record { ⟦_⟧ = uncurryₙ 5 (λ x x₁ x₂ x₃ x₄ → record
+                                                                { slot = x
+                                                                ; ppolicy = x₁
+                                                                ; pparams = x₂
+                                                                ; enactState = x₃
+                                                                ; treasury = x₄
+                                                                }) }
+
 private variable
   Γ : LEnv
   s s' s'' : LState
