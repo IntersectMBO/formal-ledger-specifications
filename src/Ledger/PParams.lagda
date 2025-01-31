@@ -136,6 +136,11 @@ record PParams : Type where
         drepActivity                  : Epoch
 \end{code}
 \end{AgdaMultiCode}
+\emph{Security group}
+
+\maxBlockSize{} \maxTxSize{} \maxHeaderSize{} \maxValSize{}
+\maxBlockExUnits{} \AgdaField{a}{} \AgdaField{b}{}
+\minFeeRefScriptCoinsPerByte{} \coinsPerUTxOByte{} \govActionDeposit{}
 \caption{Protocol parameter definitions}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
