@@ -95,7 +95,7 @@ open GovActionState using (returnAddr)
 
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
-  ⟦ ⟦ treasury , reserves ⟧ᵃ
+  ⟦ acnt
   , ss
   , ⟦ utxoSt
     , govSt
@@ -104,7 +104,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , fut
   ⟧ᵉ' =
   ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
-    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ
+    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧
   , ss
   , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧
     , govSt
@@ -112,6 +112,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , es
   , fut ⟧ᵉ'
   where
+    open Acnt acnt
     open UTxOState utxoSt
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
