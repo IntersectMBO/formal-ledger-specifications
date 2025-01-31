@@ -4,7 +4,7 @@ import sys
 def write_file(filename, lines):
     with open(filename, 'w') as file:
         for line in lines:
-            if (line[-1] == '\n'):
+            if (line.endswith("\n")):
                 file.write(line)
             else:
                 file.write(line + '\n')
