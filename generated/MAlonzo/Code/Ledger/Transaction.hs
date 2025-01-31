@@ -4823,19 +4823,39 @@ du_m_2754 v0 v1 v2
 -- Ledger.Transaction.TransactionStructure.isP2Script
 d_isP2Script_2756 ::
   T_TransactionStructure_20 ->
-  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Bool
-d_isP2Script_2756 ~v0 v1 = du_isP2Script_2756 v1
-du_isP2Script_2756 ::
-  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Bool
-du_isP2Script_2756 v0
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
+d_isP2Script_2756 = erased
+-- Ledger.Transaction.TransactionStructure.isP2Script?
+d_isP2Script'63'_2760 ::
+  T_TransactionStructure_20 ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+d_isP2Script'63'_2760 ~v0 v1 = du_isP2Script'63'_2760 v1
+du_isP2Script'63'_2760 ::
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+du_isP2Script'63'_2760 v0
   = coe
-      MAlonzo.Code.Data.Maybe.Base.du_is'45'just_20
-      (coe MAlonzo.Code.Data.Sum.du_isInj'8322'_30 (coe v0))
+      MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
+      (case coe v0 of
+         MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v1
+           -> coe
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+         MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v1
+           -> coe
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
+                (coe
+                   MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                   (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
+         _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Transaction.TransactionStructure.HasCoin-TxOut
-d_HasCoin'45'TxOut_2758 ::
+d_HasCoin'45'TxOut_2766 ::
   T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
-d_HasCoin'45'TxOut_2758 v0
+d_HasCoin'45'TxOut_2766 v0
   = coe
       MAlonzo.Code.Ledger.Interface.HasCoin.C_HasCoin'46'constructor_9
       (coe
