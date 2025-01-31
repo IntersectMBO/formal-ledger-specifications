@@ -28,11 +28,7 @@ MemoryEstimate = ℕ
 \AgdaTarget{TokenAlgebra}
 \begin{code}
 record TokenAlgebra : Type₁ where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     Value : Set
     ⦃ Value-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ Value
 
@@ -44,8 +40,6 @@ record TokenAlgebra : Type₁ where
 
   open MonoidMorphisms (rawMonoid) (Monoid.rawMonoid +-0-monoid) public
   field
-\end{code}
-\begin{code}
     coin                      : Value → Coin
     inject                    : Coin → Value
     policies                  : Value → ℙ PolicyId

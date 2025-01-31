@@ -38,11 +38,7 @@ instance
 \begin{NoConway}
 \begin{code}
 record PoolParams : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     rewardAddr : Credential
 \end{code}
 \end{NoConway}
@@ -92,12 +88,8 @@ cwitness (reg c (suc _))     = just c
 \begin{AgdaMultiCode}
 \begin{code}
 record CertEnv : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_,_,_⟧ᶜ
   field
-\end{code}
-\begin{code}
     epoch     : Epoch
     pp        : PParams
     votes     : List GovVote
@@ -105,12 +97,8 @@ record CertEnv : Type where
     coldCreds : ℙ Credential
 
 record DState : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_⟧ᵈ
   field
-\end{code}
-\begin{code}
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ KeyHash
     rewards      : Credential ⇀ Coin
@@ -119,12 +107,8 @@ record DState : Type where
 \begin{code}
 
 record PState : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_⟧ᵖ
   field
-\end{code}
-\begin{code}
     pools     : KeyHash ⇀ PoolParams
     retiring  : KeyHash ⇀ Epoch
 \end{code}
@@ -132,33 +116,21 @@ record PState : Type where
 \begin{code}
 
 record GState : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_⟧ᵛ
   field
-\end{code}
-\begin{code}
     dreps      : Credential ⇀ Epoch
     ccHotKeys  : Credential ⇀ Maybe Credential
 
 record CertState : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_⟧ᶜˢ
   field
-\end{code}
-\begin{code}
     dState : DState
     pState : PState
     gState : GState
 
 record DelegEnv : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_⟧ᵈᵉ
   field
-\end{code}
-\begin{code}
     pparams       : PParams
     pools         : KeyHash ⇀ PoolParams
     delegatees    : ℙ Credential

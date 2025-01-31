@@ -20,11 +20,7 @@ record NewPParamEnv : Type where
 \begin{code}
 record NewPParamState : Type where
   constructor ⟦_,_⟧ⁿᵖ
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     pparams  : PParams
     ppup     : PPUpdateState
 
