@@ -472,7 +472,7 @@ d_ToRecord'45'LEnv_2168 ::
 d_ToRecord'45'LEnv_2168 ~v0 ~v1 = du_ToRecord'45'LEnv_2168
 du_ToRecord'45'LEnv_2168 :: MAlonzo.Code.ToRecord.T_ToRecord_6
 du_ToRecord'45'LEnv_2168
-  = coe MAlonzo.Code.Ledger.Ledger.du_ToRecord'45'LEnv_2258
+  = coe MAlonzo.Code.Ledger.Ledger.du_ToRecord'45'LEnv_2256
 -- Ledger.Conway.Conformance.Ledger._.allColdCreds
 d_allColdCreds_2170 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -486,7 +486,7 @@ du_allColdCreds_2170 ::
   MAlonzo.Code.Ledger.Enact.T_EnactState_826 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16]
 du_allColdCreds_2170
-  = coe MAlonzo.Code.Ledger.Ledger.du_allColdCreds_2248
+  = coe MAlonzo.Code.Ledger.Ledger.du_allColdCreds_2246
 -- Ledger.Conway.Conformance.Ledger._.LEnv.enactState
 d_enactState_2174 ::
   MAlonzo.Code.Ledger.Ledger.T_LEnv_2134 ->
