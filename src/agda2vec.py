@@ -4,7 +4,7 @@ import sys
 def write_file(filename, lines):
     with open(filename, 'w') as file:
         for line in lines:
-            file.write(line + '\n')
+            file.write(line)
 
 def read_file(filename):
     with open(filename, 'r') as file:
