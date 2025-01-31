@@ -399,14 +399,14 @@ instance
 coinPolicies : ℙ ScriptHash
 coinPolicies = policies (inject 1)
 
-isAdaOnlyᵇ : Value → Type
-isAdaOnlyᵇ v = policies v ≡ᵉ coinPolicies
+isAdaOnly : Value → Type
+isAdaOnly v = policies v ≡ᵉ coinPolicies
 \end{code}
 \begin{code}
 feesOK : PParams → Tx → UTxO → Type
-feesOK pp tx utxo = ( minfee pp utxo tx ≤ txfee × (txrdmrs ˢ ≢ ∅
+feesOK pp tx utxo = ( minfee pp utxo tx ≤ txfee × (txrdmrs ≢ ∅
                       → ( All (λ (addr , _) → isVKeyAddr addr) collateralRange
-                        × isAdaOnlyᵇ bal
+                        × isAdaOnly bal
                         × coin bal * 100 ≥ txfee * pp .collateralPercentage
                         × collateral ≢ ∅
                         )
