@@ -149,6 +149,22 @@ record PParams : Type where
         drepDeposit                   : Coin
         drepActivity                  : Epoch
 \end{code}
+\emph{Security group}
+\begin{code}
+SecurityGroupParams : PParams → ℕ × ℕ × ℕ × ℕ × ExUnits × ℕ × ℕ × ℚ × ℕ × ℕ
+SecurityGroupParams pp = maxBlockSize
+                       , maxTxSize
+                       , maxHeaderSize
+                       , maxValSize
+                       , maxBlockExUnits
+                       , a
+                       , b
+                       , minFeeRefScriptCoinsPerByte
+                       , coinsPerUTxOByte
+                       , govActionDeposit
+  where
+    open PParams pp
+\end{code}
 \end{AgdaMultiCode}
 \caption{Protocol parameter definitions}
 \label{fig:protocol-parameter-declarations}
