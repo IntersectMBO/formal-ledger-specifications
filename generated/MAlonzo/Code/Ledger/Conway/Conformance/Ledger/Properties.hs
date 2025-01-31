@@ -92,7 +92,7 @@ d_pp_1652 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_884 (coe v0)
 -- _.CertEnv.votes
 d_votes_1654 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_870 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_votes_1654 v0
   = coe MAlonzo.Code.Ledger.Certs.d_votes_886 (coe v0)
 -- _.CertEnv.wdrls
@@ -452,9 +452,9 @@ du_certΓ_2824 v0 v1 v2 v3
                                     erased erased
                                     (\ v4 ->
                                        coe
-                                         MAlonzo.Code.Ledger.GovernanceActions.du_proposedCC_810
+                                         MAlonzo.Code.Ledger.GovernanceActions.du_proposedCC_812
                                          (coe
-                                            MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                                            MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28

@@ -3707,21 +3707,21 @@ d_mkGovProposal''_144
          (\ v0 ->
             coe
               C_GovProposal'''46'constructor_4529
-              (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_766 (coe v0))
+              (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_768 (coe v0))
               (coe
                  d_fromNeedsHash_80
-                 (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_766 (coe v0))
+                 (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_768 (coe v0))
                  (coe
-                    MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_768 (coe v0)))
-              (coe MAlonzo.Code.Ledger.GovernanceActions.d_policy_770 (coe v0))
-              (coe MAlonzo.Code.Ledger.GovernanceActions.d_deposit_772 (coe v0))
+                    MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_770 (coe v0)))
+              (coe MAlonzo.Code.Ledger.GovernanceActions.d_policy_772 (coe v0))
+              (coe MAlonzo.Code.Ledger.GovernanceActions.d_deposit_774 (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_774 (coe v0))
-              (coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_776 (coe v0))))
+                 MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_776 (coe v0))
+              (coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_778 (coe v0))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.GovernanceActions.C_GovProposal'46'constructor_6627
+              MAlonzo.Code.Ledger.GovernanceActions.C_GovProposal'46'constructor_7765
               (coe d_action_110 (coe v0))
               (coe
                  d_toNeedsHash_62 (coe d_action_110 (coe v0))
@@ -3762,21 +3762,21 @@ d_mkGovActionState''_180
          (\ v0 ->
             coe
               C_GovActionState'''46'constructor_4673
-              (coe MAlonzo.Code.Ledger.GovernanceActions.d_votes_790 (coe v0))
+              (coe MAlonzo.Code.Ledger.GovernanceActions.d_votes_792 (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_792 (coe v0))
+                 MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_794 (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.GovernanceActions.d_expiresIn_794 (coe v0))
-              (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_796 (coe v0))
+                 MAlonzo.Code.Ledger.GovernanceActions.d_expiresIn_796 (coe v0))
+              (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_798 (coe v0))
               (coe
                  d_fromNeedsHash_80
-                 (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_796 (coe v0))
+                 (coe MAlonzo.Code.Ledger.GovernanceActions.d_action_798 (coe v0))
                  (coe
-                    MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_798 (coe v0)))))
+                    MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_800 (coe v0)))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_6993
+              MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_8131
               (coe d_votes_134 (coe v0)) (coe d_returnAddr_136 (coe v0))
               (coe d_expiresIn_138 (coe v0)) (coe d_action_140 (coe v0))
               (coe
@@ -7998,7 +7998,7 @@ d_Conv'45'GovActionState''_218
                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_114
                            (coe
                               MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased () erased
-                              (coe MAlonzo.Code.Ledger.GovernanceActions.du_DecEq'45'GovRole_800)
+                              (coe MAlonzo.Code.Ledger.GovernanceActions.du_DecEq'45'GovRole_802)
                               (let v6
                                      = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                coe

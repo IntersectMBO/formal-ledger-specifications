@@ -117,10 +117,10 @@ du_acceptConds'63'_1840 v0 v1 v2 v3
             (coe
                MAlonzo.Code.Ledger.Ratify.d_delayed'63'_2490 (coe v0)
                (coe
-                  MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                  MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                (coe
-                  MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_798
+                  MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_800
                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                (coe MAlonzo.Code.Ledger.Ratify.d_es_2000 (coe v2))
                (coe MAlonzo.Code.Ledger.Ratify.d_delay_2004 (coe v2)))
@@ -137,7 +137,7 @@ du_acceptConds'63'_1840 v0 v1 v2 v3
                (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1980 (coe v1)))
             (coe MAlonzo.Code.Ledger.Ratify.d_es_2000 (coe v2))
             (coe
-               MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+               MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
             (coe
                MAlonzo.Code.Ledger.GovernanceActions.Properties.d_Computational'45'ENACT_900
@@ -197,7 +197,7 @@ d_RATIFY'''45'total_1844 v0 v1 v2 v3
                                                          (coe
                                                             MAlonzo.Code.Ledger.Ratify.du_delayingAction_2372
                                                             (coe
-                                                               MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                                                               MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                   (coe v3)))))

@@ -78,40 +78,40 @@ d_Wdrl_390 ::
 d_Wdrl_390 = erased
 -- Ledger.Abstract._.GovProposal.action
 d_action_690 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_692
 d_action_690 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_action_766 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_action_768 (coe v0)
 -- Ledger.Abstract._.GovProposal.anchor
 d_anchor_692 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682
 d_anchor_692 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_776 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_778 (coe v0)
 -- Ledger.Abstract._.GovProposal.deposit
 d_deposit_694 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 -> Integer
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 -> Integer
 d_deposit_694 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_deposit_772 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_deposit_774 (coe v0)
 -- Ledger.Abstract._.GovProposal.policy
 d_policy_696 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   Maybe AgdaAny
 d_policy_696 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_policy_770 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_policy_772 (coe v0)
 -- Ledger.Abstract._.GovProposal.prevAction
 d_prevAction_698 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 -> AgdaAny
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 -> AgdaAny
 d_prevAction_698 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_768 (coe v0)
+      MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_770 (coe v0)
 -- Ledger.Abstract._.GovProposal.returnAddr
 d_returnAddr_700 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.Address.T_RwdAddr_76
 d_returnAddr_700 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_774 (coe v0)
+      MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_776 (coe v0)
 -- Ledger.Abstract._.GovernanceActions.GovProposal
 d_GovProposal_742 a0 = ()
 -- Ledger.Abstract._.RwdAddr.net
@@ -137,8 +137,8 @@ data T_indexOf_1688
                                   (AgdaAny -> [AgdaAny] -> Maybe AgdaAny)
                                   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
                                    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny)
-                                  (MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
-                                   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+                                  (MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
+                                   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
                                    Maybe AgdaAny)
 -- Ledger.Abstract.indexOf.indexOfDCert
 d_indexOfDCert_1702 ::
@@ -186,8 +186,8 @@ d_indexOfVote_1710 v0
 -- Ledger.Abstract.indexOf.indexOfProposal
 d_indexOfProposal_1712 ::
   T_indexOf_1688 ->
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   Maybe AgdaAny
 d_indexOfProposal_1712 v0
   = case coe v0 of

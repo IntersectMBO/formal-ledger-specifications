@@ -1132,7 +1132,7 @@ du_govSt''_2484 v0
             (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_152)
             (coe
                (\ v2 ->
-                  MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_792 (coe v2))))
+                  MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_794 (coe v2))))
          (coe
             MAlonzo.Code.Axiom.Set.du_fromList_428
             (coe
@@ -1176,7 +1176,7 @@ du_mkStakeDistrs_2496 v0 v1 v2 v3 v4
                       MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                       (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1222 (coe v0))))
                 (coe
-                   MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                   MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                    (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2326 (coe v0)))
                 (coe
                    MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62

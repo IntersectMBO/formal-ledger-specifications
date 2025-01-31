@@ -149,40 +149,40 @@ d_Wdrl_390 ::
 d_Wdrl_390 = erased
 -- _.GovProposal.action
 d_action_690 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_692
 d_action_690 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_action_766 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_action_768 (coe v0)
 -- _.GovProposal.anchor
 d_anchor_692 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682
 d_anchor_692 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_776 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_778 (coe v0)
 -- _.GovProposal.deposit
 d_deposit_694 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 -> Integer
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 -> Integer
 d_deposit_694 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_deposit_772 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_deposit_774 (coe v0)
 -- _.GovProposal.policy
 d_policy_696 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   Maybe AgdaAny
 d_policy_696 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_policy_770 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_policy_772 (coe v0)
 -- _.GovProposal.prevAction
 d_prevAction_698 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 -> AgdaAny
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 -> AgdaAny
 d_prevAction_698 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_768 (coe v0)
+      MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_770 (coe v0)
 -- _.GovProposal.returnAddr
 d_returnAddr_700 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.Address.T_RwdAddr_76
 d_returnAddr_700 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_774 (coe v0)
+      MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_776 (coe v0)
 -- _.GovernanceActions.GovProposal
 d_GovProposal_742 a0 = ()
 -- _.PParams.Emax
@@ -462,7 +462,7 @@ d_txouts_1410 v0
 -- _.TxBody.txprop
 d_txprop_1412 ::
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754]
 d_txprop_1412 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txprop_2580 (coe v0)
 -- _.TxBody.txsize
@@ -485,7 +485,7 @@ d_txvldt_1418 v0
 -- _.TxBody.txvote
 d_txvote_1420 ::
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_txvote_1420 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txvote_2578 (coe v0)
 -- _.TxBody.txwdrls
@@ -504,7 +504,7 @@ data T_ScriptPurpose_1718
     C_Mint_1724 AgdaAny |
     C_Spend_1726 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
     C_Vote_1728 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_Propose_1730 MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752
+    C_Propose_1730 MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754
 -- Ledger.ScriptValidation.rdptr
 d_rdptr_1732 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -576,7 +576,7 @@ d_rdptr_1732 v0 v1 v2 v3
                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
                    () erased
                    (\ v5 ->
-                      MAlonzo.Code.Ledger.GovernanceActions.d_voter_746 (coe v5))
+                      MAlonzo.Code.Ledger.GovernanceActions.d_voter_748 (coe v5))
                    (MAlonzo.Code.Ledger.Transaction.d_txvote_2578 (coe v2))))
       C_Propose_1730 v4
         -> coe
@@ -1486,7 +1486,7 @@ d_collectPhaseTwoScriptInputs''_2280 v0 v1 v2 v3 v4 v5
                                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20
                                                                       () erased () erased
                                                                       (\ v16 ->
-                                                                         MAlonzo.Code.Ledger.GovernanceActions.d_voter_746
+                                                                         MAlonzo.Code.Ledger.GovernanceActions.d_voter_748
                                                                            (coe v16))
                                                                       (MAlonzo.Code.Ledger.Transaction.d_txvote_2578
                                                                          (coe v14))))
@@ -1718,7 +1718,7 @@ d_collectPhaseTwoScriptInputs''_2280 v0 v1 v2 v3 v4 v5
                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20
                                                                           () erased () erased
                                                                           (\ v17 ->
-                                                                             MAlonzo.Code.Ledger.GovernanceActions.d_voter_746
+                                                                             MAlonzo.Code.Ledger.GovernanceActions.d_voter_748
                                                                                (coe v17))
                                                                           (MAlonzo.Code.Ledger.Transaction.d_txvote_2578
                                                                              (coe v15))))

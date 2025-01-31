@@ -129,7 +129,7 @@ d_DecEq'45'VDeleg_676 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'VDeleg_676 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+      MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
       (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._.GovRole
 d_GovRole_688 a0 = ()
@@ -182,7 +182,7 @@ d_pp_994 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_884 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._.CertEnv.votes
 d_votes_996 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_870 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_votes_996 v0 = coe MAlonzo.Code.Ledger.Certs.d_votes_886 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._.CertEnv.wdrls
 d_wdrls_998 ::
@@ -354,7 +354,7 @@ d_Computational'45'DELEG_1108 v0
                                                                  (coe
                                                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                       MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                        (coe v0)))
                                                                  (coe v13)
                                                                  (coe
@@ -723,7 +723,7 @@ d_Computational'45'DELEG_1108 v0
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                                         MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                                          (coe
                                                                                                             v0)))
                                                                                                    (coe
@@ -2340,7 +2340,7 @@ d_Computational'45'CERT_1598 v0
                                                                                       (coe
                                                                                          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                            MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                             (coe
                                                                                                v0)))
                                                                                       (coe v21)
@@ -2759,7 +2759,7 @@ d_Computational'45'CERT_1598 v0
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                                                                       MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                                                                        (coe
                                                                                                                                           v0)))
                                                                                                                                  (coe
@@ -4008,7 +4008,7 @@ d_rewards_2138 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
@@ -4029,7 +4029,7 @@ d_voteDelegs_2142 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
@@ -4051,7 +4051,7 @@ d_sep_2144 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
@@ -4065,7 +4065,7 @@ d_genErr_2148 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
@@ -4378,7 +4378,7 @@ d_goal_2158 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
@@ -4390,7 +4390,7 @@ du_goal_2158 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Ledger.Address.T_Credential_16] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1074 ->
@@ -4527,7 +4527,7 @@ du_goal_2158 v0 v1 v2 v3 v4 v5 v6
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1056
                                        (let v11
-                                              = MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                              = MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                   (coe v0) in
                                         coe
                                           (coe
@@ -4766,7 +4766,7 @@ du_goal_2158 v0 v1 v2 v3 v4 v5 v6
                                                    MAlonzo.Code.Axiom.Set.du_mapPartial_576
                                                    (MAlonzo.Code.Axiom.Set.d_th_1470 (coe v12))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.GovernanceActions.du_getDRepVote_806)
+                                                      MAlonzo.Code.Ledger.GovernanceActions.du_getDRepVote_808)
                                                    (let v13
                                                           = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
                                                     coe

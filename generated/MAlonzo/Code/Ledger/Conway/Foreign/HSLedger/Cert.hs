@@ -80,7 +80,7 @@ d_pp_194 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_884 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Cert._.CertEnv.votes
 d_votes_196 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_870 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_votes_196 v0 = coe MAlonzo.Code.Ledger.Certs.d_votes_886 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Cert._.CertEnv.wdrls
 d_wdrls_198 ::

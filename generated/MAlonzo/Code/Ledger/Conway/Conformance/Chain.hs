@@ -353,7 +353,7 @@ du_govActionDeposits_2434 v0 v1
             (coe
                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
          (coe
-            MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+            MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
             (coe
                MAlonzo.Code.Ledger.Transaction.d_govStructure_2326 (coe v0))))
       (coe
@@ -371,7 +371,7 @@ du_govActionDeposits_2434 v0 v1
             case coe v2 of
               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
                 -> case coe v4 of
-                     MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_6993 v5 v6 v7 v8 v9
+                     MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_8131 v5 v6 v7 v8 v9
                        -> case coe v6 of
                             MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243 v10 v11
                               -> coe

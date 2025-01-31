@@ -233,7 +233,7 @@ d_txouts_1410 v0
 -- _.TxBody.txprop
 d_txprop_1412 ::
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754]
 d_txprop_1412 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txprop_2580 (coe v0)
 -- _.TxBody.txsize
@@ -256,7 +256,7 @@ d_txvldt_1418 v0
 -- _.TxBody.txvote
 d_txvote_1420 ::
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_txvote_1420 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txvote_2578 (coe v0)
 -- _.TxBody.txwdrls
@@ -920,7 +920,7 @@ du_credsNeeded_2202 v0 v1 v2
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
                            () erased
                            (\ v3 ->
-                              MAlonzo.Code.Ledger.GovernanceActions.d_voter_746 (coe v3))
+                              MAlonzo.Code.Ledger.GovernanceActions.d_voter_748 (coe v3))
                            (MAlonzo.Code.Ledger.Transaction.d_txvote_2578 (coe v2)))))
                   (coe
                      MAlonzo.Code.Axiom.Set.du_mapPartial_576
@@ -929,7 +929,7 @@ du_credsNeeded_2202 v0 v1 v2
                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                      (\ v3 ->
                         let v4
-                              = MAlonzo.Code.Ledger.GovernanceActions.d_policy_770 (coe v3) in
+                              = MAlonzo.Code.Ledger.GovernanceActions.d_policy_772 (coe v3) in
                         coe
                           (case coe v4 of
                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v5

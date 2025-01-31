@@ -274,7 +274,7 @@ d_DecEq'45'VDeleg_674 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'VDeleg_674 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+      MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
       (coe v0)
 -- Ledger.Conway.Conformance.Certs._.GovRole
 d_GovRole_686 a0 = ()
@@ -285,14 +285,14 @@ d_VDeleg_708 a0 = ()
 -- Ledger.Conway.Conformance.Certs._.getDRepVote
 d_getDRepVote_724 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 d_getDRepVote_724 ~v0 = du_getDRepVote_724
 du_getDRepVote_724 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 du_getDRepVote_724
-  = coe MAlonzo.Code.Ledger.GovernanceActions.du_getDRepVote_806
+  = coe MAlonzo.Code.Ledger.GovernanceActions.du_getDRepVote_808
 -- Ledger.Conway.Conformance.Certs._.Anchor.hash
 d_hash_738 ::
   MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682 -> AgdaAny
@@ -306,28 +306,28 @@ d_url_740 v0
   = coe MAlonzo.Code.Ledger.GovernanceActions.d_url_688 (coe v0)
 -- Ledger.Conway.Conformance.Certs._.GovVote.anchor
 d_anchor_794 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   Maybe MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682
 d_anchor_794 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_750 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_752 (coe v0)
 -- Ledger.Conway.Conformance.Certs._.GovVote.gid
 d_gid_796 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gid_796 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_gid_744 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_gid_746 (coe v0)
 -- Ledger.Conway.Conformance.Certs._.GovVote.vote
 d_vote_798 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
-  MAlonzo.Code.Ledger.GovernanceActions.T_Vote_726
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_Vote_728
 d_vote_798 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_vote_748 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_vote_750 (coe v0)
 -- Ledger.Conway.Conformance.Certs._.GovVote.voter
 d_voter_800 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_voter_800 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_voter_746 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_voter_748 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Certs._⊢_⇀⦇_,CERTBASE⦈_
 d__'8866'_'8640''10631'_'44'CERTBASE'10632'__820 a0 a1 a2 a3 a4
   = ()
@@ -411,7 +411,7 @@ d_pp_964 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_884 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Certs.CertEnv.votes
 d_votes_966 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_870 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_votes_966 v0 = coe MAlonzo.Code.Ledger.Certs.d_votes_886 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Certs.CertEnv.wdrls
 d_wdrls_968 ::
@@ -1056,7 +1056,7 @@ d_'46'generalizedField'45'e_31247 v0
 -- Ledger.Conway.Conformance.Certs..generalizedField-vs
 d_'46'generalizedField'45'vs_31249 ::
   T_GeneralizeTel_31261 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_'46'generalizedField'45'vs_31249 v0
   = case coe v0 of
       C_mkGeneralizeTel_31263 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 -> coe v5
@@ -1104,7 +1104,7 @@ data T_GeneralizeTel_31261
   = C_mkGeneralizeTel_31263 Integer
                             MAlonzo.Code.Ledger.Address.T_Credential_16
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 AgdaAny
-                            [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+                            [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                             [MAlonzo.Code.Ledger.Address.T_Credential_16]
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -1121,7 +1121,7 @@ d_'46'generalizedField'45'pp_42457 v0
 -- Ledger.Conway.Conformance.Certs..generalizedField-vs
 d_'46'generalizedField'45'vs_42459 ::
   T_GeneralizeTel_42483 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_'46'generalizedField'45'vs_42459 v0
   = case coe v0 of
       C_mkGeneralizeTel_42485 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13
@@ -1220,7 +1220,7 @@ d_'46'generalizedField'45'gdep_42481 v0
 d_GeneralizeTel_42483 a0 = ()
 data T_GeneralizeTel_42483
   = C_mkGeneralizeTel_42485 MAlonzo.Code.Ledger.PParams.T_PParams_242
-                            [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734] AgdaAny
+                            [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736] AgdaAny
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14

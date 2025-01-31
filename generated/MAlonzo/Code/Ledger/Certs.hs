@@ -280,7 +280,7 @@ d_DecEq'45'VDeleg_670 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'VDeleg_670 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+      MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
       (coe v0)
 -- Ledger.Certs._.GovActionID
 d_GovActionID_676 ::
@@ -295,14 +295,14 @@ d_VDeleg_704 a0 = ()
 -- Ledger.Certs._.getDRepVote
 d_getDRepVote_720 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 d_getDRepVote_720 ~v0 = du_getDRepVote_720
 du_getDRepVote_720 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   Maybe MAlonzo.Code.Ledger.Address.T_Credential_16
 du_getDRepVote_720
-  = coe MAlonzo.Code.Ledger.GovernanceActions.du_getDRepVote_806
+  = coe MAlonzo.Code.Ledger.GovernanceActions.du_getDRepVote_808
 -- Ledger.Certs._.Anchor.hash
 d_hash_734 ::
   MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682 -> AgdaAny
@@ -316,28 +316,28 @@ d_url_736 v0
   = coe MAlonzo.Code.Ledger.GovernanceActions.d_url_688 (coe v0)
 -- Ledger.Certs._.GovVote.anchor
 d_anchor_790 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   Maybe MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682
 d_anchor_790 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_750 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_752 (coe v0)
 -- Ledger.Certs._.GovVote.gid
 d_gid_792 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gid_792 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_gid_744 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_gid_746 (coe v0)
 -- Ledger.Certs._.GovVote.vote
 d_vote_794 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
-  MAlonzo.Code.Ledger.GovernanceActions.T_Vote_726
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_Vote_728
 d_vote_794 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_vote_748 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_vote_750 (coe v0)
 -- Ledger.Certs._.GovVote.voter
 d_voter_796 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_voter_796 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_voter_746 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_voter_748 (coe v0)
 -- Ledger.Certs.DepositPurpose
 d_DepositPurpose_814 a0 = ()
 data T_DepositPurpose_814
@@ -633,7 +633,7 @@ d_CertEnv_870 a0 = ()
 data T_CertEnv_870
   = C_'10214'_'44'_'44'_'44'_'44'_'10215''7580'_892 AgdaAny
                                                     MAlonzo.Code.Ledger.PParams.T_PParams_242
-                                                    [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+                                                    [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
                                                     MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                                     [MAlonzo.Code.Ledger.Address.T_Credential_16]
 -- Ledger.Certs.CertEnv.epoch
@@ -654,7 +654,7 @@ d_pp_884 v0
 -- Ledger.Certs.CertEnv.votes
 d_votes_886 ::
   T_CertEnv_870 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_votes_886 v0
   = case coe v0 of
       C_'10214'_'44'_'44'_'44'_'44'_'10215''7580'_892 v1 v2 v3 v4 v5
@@ -1084,7 +1084,7 @@ d_'46'generalizedField'45'e_35719 v0
 -- Ledger.Certs..generalizedField-vs
 d_'46'generalizedField'45'vs_35721 ::
   T_GeneralizeTel_35731 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_'46'generalizedField'45'vs_35721 v0
   = case coe v0 of
       C_mkGeneralizeTel_35733 v1 v2 v3 v4 v5 v6 v7 v8 v9 -> coe v5
@@ -1125,7 +1125,7 @@ data T_GeneralizeTel_35731
   = C_mkGeneralizeTel_35733 Integer
                             MAlonzo.Code.Ledger.Address.T_Credential_16
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 AgdaAny
-                            [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+                            [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                             [MAlonzo.Code.Ledger.Address.T_Credential_16]
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -1141,7 +1141,7 @@ d_'46'generalizedField'45'pp_43915 v0
 -- Ledger.Certs..generalizedField-vs
 d_'46'generalizedField'45'vs_43917 ::
   T_GeneralizeTel_43937 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_'46'generalizedField'45'vs_43917 v0
   = case coe v0 of
       C_mkGeneralizeTel_43939 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
@@ -1224,7 +1224,7 @@ d_'46'generalizedField'45'ccHotKeys_43935 v0
 d_GeneralizeTel_43937 a0 = ()
 data T_GeneralizeTel_43937
   = C_mkGeneralizeTel_43939 MAlonzo.Code.Ledger.PParams.T_PParams_242
-                            [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734] AgdaAny
+                            [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736] AgdaAny
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14

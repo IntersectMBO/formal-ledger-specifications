@@ -192,7 +192,7 @@ d_Conv'45'StakeDistrs_208
                                          (coe v2) in
                                coe
                                  (coe
-                                    MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                    MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                     (coe
                                        MAlonzo.Code.Ledger.Transaction.d_govStructure_2326
                                        (coe v3)))))
@@ -341,7 +341,7 @@ d_Conv'45'RatifyEnv_212
                                                               (coe v10) in
                                                     coe
                                                       (coe
-                                                         MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                         MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                          (coe
                                                             MAlonzo.Code.Ledger.Transaction.d_govStructure_2326
                                                             (coe v11)))))
@@ -1212,7 +1212,7 @@ du_govActionInfo_246 v0 v1 v2
                                                                                              v15) in
                                                                                 coe
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                     MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                      (coe
                                                                                         MAlonzo.Code.Ledger.Transaction.d_govStructure_2326
                                                                                         (coe
@@ -1355,13 +1355,13 @@ du_govActionInfo_246 v0 v1 v2
                                         MAlonzo.Code.Foreign.Convertible.d_from_20
                                         d_Conv'45'RatifyState_216 v1))))
                             (coe
-                               MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                               MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                                (coe
                                   MAlonzo.Code.Foreign.Convertible.d_from_20
                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                   v4))
                             (coe
-                               MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
+                               MAlonzo.Code.Ledger.GovernanceActions.d_votes_792
                                (coe
                                   MAlonzo.Code.Foreign.Convertible.d_from_20
                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
@@ -1515,7 +1515,7 @@ du_govActionInfo_246 v0 v1 v2
                                                                                        (coe v15) in
                                                                              coe
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                  MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                   (coe
                                                                                      MAlonzo.Code.Ledger.Transaction.d_govStructure_2326
                                                                                      (coe v16)))))
@@ -1657,13 +1657,13 @@ du_govActionInfo_246 v0 v1 v2
                                      MAlonzo.Code.Foreign.Convertible.d_from_20
                                      d_Conv'45'RatifyState_216 v1))))
                          (coe
-                            MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                            MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                             (coe
                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                v4))
                          (coe
-                            MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
+                            MAlonzo.Code.Ledger.GovernanceActions.d_votes_792
                             (coe
                                MAlonzo.Code.Foreign.Convertible.d_from_20
                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
@@ -1868,7 +1868,7 @@ du_govActionInfo_246 v0 v1 v2
                                                                                                             v15) in
                                                                                                coe
                                                                                                  (coe
-                                                                                                    MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                                    MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                                     (coe
                                                                                                        MAlonzo.Code.Ledger.Transaction.d_govStructure_2326
                                                                                                        (coe
@@ -2012,13 +2012,13 @@ du_govActionInfo_246 v0 v1 v2
                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                        d_Conv'45'RatifyState_216 v1))))
                                            (coe
-                                              MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                                              MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                                               (coe
                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                  v4))
                                            (coe
-                                              MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
+                                              MAlonzo.Code.Ledger.GovernanceActions.d_votes_792
                                               (coe
                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
@@ -2174,7 +2174,7 @@ du_govActionInfo_246 v0 v1 v2
                                                                                                          v15) in
                                                                                             coe
                                                                                               (coe
-                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                                 MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                                  (coe
                                                                                                     MAlonzo.Code.Ledger.Transaction.d_govStructure_2326
                                                                                                     (coe
@@ -2317,13 +2317,13 @@ du_govActionInfo_246 v0 v1 v2
                                                     MAlonzo.Code.Foreign.Convertible.d_from_20
                                                     d_Conv'45'RatifyState_216 v1))))
                                         (coe
-                                           MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                                           MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                                            (coe
                                               MAlonzo.Code.Foreign.Convertible.d_from_20
                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                               v4))
                                         (coe
-                                           MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
+                                           MAlonzo.Code.Ledger.GovernanceActions.d_votes_792
                                            (coe
                                               MAlonzo.Code.Foreign.Convertible.d_from_20
                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
@@ -2538,7 +2538,7 @@ du_govActionInfo_246 v0 v1 v2
                                                                                                                            v15) in
                                                                                                               coe
                                                                                                                 (coe
-                                                                                                                   MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                                                   MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                                                    (coe
                                                                                                                       MAlonzo.Code.Ledger.Transaction.d_govStructure_2326
                                                                                                                       (coe
@@ -2693,13 +2693,13 @@ du_govActionInfo_246 v0 v1 v2
                                                                       d_Conv'45'RatifyState_216
                                                                       v1))))
                                                           (coe
-                                                             MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                                                             MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                                                              (coe
                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                                 v4))
                                                           (coe
-                                                             MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
+                                                             MAlonzo.Code.Ledger.GovernanceActions.d_votes_792
                                                              (coe
                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
@@ -2858,7 +2858,7 @@ du_govActionInfo_246 v0 v1 v2
                                                                                                                         v15) in
                                                                                                            coe
                                                                                                              (coe
-                                                                                                                MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_804
+                                                                                                                MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_806
                                                                                                                 (coe
                                                                                                                    MAlonzo.Code.Ledger.Transaction.d_govStructure_2326
                                                                                                                    (coe
@@ -3011,13 +3011,13 @@ du_govActionInfo_246 v0 v1 v2
                                                                    MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                    d_Conv'45'RatifyState_216 v1))))
                                                        (coe
-                                                          MAlonzo.Code.Ledger.GovernanceActions.d_action_796
+                                                          MAlonzo.Code.Ledger.GovernanceActions.d_action_798
                                                           (coe
                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
                                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226
                                                              v4))
                                                        (coe
-                                                          MAlonzo.Code.Ledger.GovernanceActions.d_votes_790
+                                                          MAlonzo.Code.Ledger.GovernanceActions.d_votes_792
                                                           (coe
                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
                                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_226

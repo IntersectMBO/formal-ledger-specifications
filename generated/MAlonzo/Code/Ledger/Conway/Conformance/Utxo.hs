@@ -513,14 +513,14 @@ du_produced_1950 v0
 d_proposalDepositsΔ_1952 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_proposalDepositsΔ_1952 v0 ~v1 = du_proposalDepositsΔ_1952 v0
 du_proposalDepositsΔ_1952 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -584,7 +584,7 @@ du_updateDeposits_1968 v0
 d_updateProposalDeposits_1970 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   AgdaAny ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -593,7 +593,7 @@ d_updateProposalDeposits_1970 v0 ~v1
   = du_updateProposalDeposits_1970 v0
 du_updateProposalDeposits_1970 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   AgdaAny ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->

@@ -239,40 +239,40 @@ d_txOutHash_562 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txOutHash_2646 (coe v0)
 -- _.GovProposal.action
 d_action_690 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_GovAction_692
 d_action_690 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_action_766 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_action_768 (coe v0)
 -- _.GovProposal.anchor
 d_anchor_692 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.GovernanceActions.T_Anchor_682
 d_anchor_692 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_776 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_anchor_778 (coe v0)
 -- _.GovProposal.deposit
 d_deposit_694 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 -> Integer
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 -> Integer
 d_deposit_694 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_deposit_772 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_deposit_774 (coe v0)
 -- _.GovProposal.policy
 d_policy_696 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   Maybe AgdaAny
 d_policy_696 v0
-  = coe MAlonzo.Code.Ledger.GovernanceActions.d_policy_770 (coe v0)
+  = coe MAlonzo.Code.Ledger.GovernanceActions.d_policy_772 (coe v0)
 -- _.GovProposal.prevAction
 d_prevAction_698 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 -> AgdaAny
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 -> AgdaAny
 d_prevAction_698 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_768 (coe v0)
+      MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_770 (coe v0)
 -- _.GovProposal.returnAddr
 d_returnAddr_700 ::
-  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754 ->
   MAlonzo.Code.Ledger.Address.T_RwdAddr_76
 d_returnAddr_700 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_774 (coe v0)
+      MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_776 (coe v0)
 -- _.GovernanceActions.GovProposal
 d_GovProposal_742 a0 = ()
 -- _.PParams.Emax
@@ -543,7 +543,7 @@ d_txouts_1410 v0
 -- _.TxBody.txprop
 d_txprop_1412 ::
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754]
 d_txprop_1412 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txprop_2580 (coe v0)
 -- _.TxBody.txsize
@@ -566,7 +566,7 @@ d_txvldt_1418 v0
 -- _.TxBody.txvote
 d_txvote_1420 ::
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_734]
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_736]
 d_txvote_1420 v0
   = coe MAlonzo.Code.Ledger.Transaction.d_txvote_2578 (coe v0)
 -- _.TxBody.txwdrls
@@ -1771,7 +1771,7 @@ du_updateCertDeposits_2278 v0 v1 v2 v3
 d_updateProposalDeposits_2356 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   AgdaAny ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -1780,7 +1780,7 @@ d_updateProposalDeposits_2356 v0 ~v1 v2 v3 v4 v5
   = du_updateProposalDeposits_2356 v0 v2 v3 v4 v5
 du_updateProposalDeposits_2356 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   AgdaAny ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -1846,7 +1846,7 @@ du_updateDeposits_2368 v0 v1 v2 v3
 d_proposalDepositsΔ_2420 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1714 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -1854,7 +1854,7 @@ d_proposalDepositsΔ_2420 v0 ~v1 v2 v3 v4
   = du_proposalDepositsΔ_2420 v0 v2 v3 v4
 du_proposalDepositsΔ_2420 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_752] ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_754] ->
   MAlonzo.Code.Ledger.PParams.T_PParams_242 ->
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2520 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
