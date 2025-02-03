@@ -162,8 +162,8 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo ⟦ _ , stakeDelegs , rewards ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
+stakeDistr : UTxO → DState → Snapshot
+stakeDistr utxo ⟦ _ , stakeDelegs , rewards ⟧ᵈ = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
   where
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
@@ -191,7 +191,7 @@ opaque
 \begin{code}
 data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
   SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
-             stake = stakeDistr utxo dState pState
+             stake = stakeDistr utxo dState
     in
     lstate ⊢ ⟦ mark , set , go , feeSS ⟧ˢˢ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧ˢˢ
 
