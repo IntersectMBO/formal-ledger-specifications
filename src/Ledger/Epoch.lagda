@@ -66,7 +66,6 @@ record Snapshots : Set where
 record EpochState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ᵉ'
   field
 \end{code}
 \begin{code}
@@ -94,20 +93,9 @@ record NewEpochState : Type where
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]
-private variable
-  nes nes' : NewEpochState
-  e lastEpoch : Epoch
-  fut fut' : RatifyState
-  eps eps' eps'' : EpochState
-  ls : LState
-  acnt : Acnt
-  es₀ : EnactState
-  mark set go : Snapshot
-  feeSS : Coin
-  lstate : LState
-  ss ss' : Snapshots
-  ru : RewardUpdate
-  mru : Maybe RewardUpdate
+instance
+  ToRecord-EpochState : ToRecord (Acnt × Snapshots × LState × EnactState × RatifyState) EpochState
+  ToRecord-EpochState = record { ⟦_⟧ = uncurryₙ 5 λ z z₁ z₂ z₃ z₄ → record { acnt = z ; ss = z₁ ; ls = z₂ ; es = z₃ ; fut = z₄ } }
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
@@ -123,16 +111,7 @@ open GovActionState using (returnAddr)
 \begin{NoConway}
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
-  ⟦ acnt
-  , ss
-  , ledgerSt
-  -- , ⟦ utxoSt
-  --   , govSt
-  --   , ⟦ stᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
-  , es
-  , fut
-  ⟧ᵉ' =
+applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ epochState =
   ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
     , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧
   , ss
@@ -140,10 +119,11 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
     , govSt
     , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ᶜˢ ⟧
   , es
-  , fut ⟧ᵉ'
+  , fut ⟧
   where
+    open EpochState epochState
     open Acnt acnt
-    open LState ledgerSt
+    open LState ls
     open UTxOState utxoSt
     open CertState certState
     open DState dState
@@ -193,6 +173,24 @@ opaque
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}
 \end{figure*}
+
+\begin{code}[hide]
+private variable
+  nes nes' : NewEpochState
+  e lastEpoch : Epoch
+  fut fut' : RatifyState
+  eps eps' eps'' : EpochState
+  ls : LState
+  acnt : Acnt
+  es₀ : EnactState
+  mark set go : Snapshot
+  feeSS : Coin
+  lstate : LState
+  ss ss' : Snapshots
+  ru : RewardUpdate
+  mru : Maybe RewardUpdate
+\end{code}
+
 
 \begin{NoConway}
 \begin{code}
@@ -274,8 +272,8 @@ its results by carrying out each of the following tasks.
         ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFY⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
-    _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ᵉ' ⇀⦇ e ,EPOCH⦈
-        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ , es , fut' ⟧ᵉ'
+    _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
+        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ , es , fut' ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}

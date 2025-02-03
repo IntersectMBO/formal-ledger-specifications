@@ -40,7 +40,7 @@ module _ {eps : EpochState} {e : Epoch} where
   EPOCH-total = -, EPOCH (RATIFY-total' .proj₂) (SNAP-total ls ss .proj₂)
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
-  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ ⟦ _ ,_, _ , _ ,_⟧ᵉ' (SNAP-complete _ _ _ p₂)
+  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut }) (SNAP-complete _ _ _ p₂)
     (RATIFY-complete' (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
     where
       ty : Snapshot → Set
