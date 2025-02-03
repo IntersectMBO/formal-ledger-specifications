@@ -116,7 +116,9 @@ instance
           renaming (action to a; deposit to d; policy to p; returnAddr to addr; prevAction to prev)
         open PParams pparams hiding (a)
 
-        instance _ = actionWellFormed?
+        instance 
+          Dec-actionWellFormed = actionWellFormed?
+        {-# INCOHERENT Dec-actionWellFormed #-}
 
         H = ¿ actionWellFormed a
             × d ≡ govActionDeposit
