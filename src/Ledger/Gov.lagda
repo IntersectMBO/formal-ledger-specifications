@@ -43,7 +43,6 @@ GovState = List (GovActionID × GovActionState)
 record GovEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_,_⟧ᵍ
   field
 \end{code}
 \begin{code}
@@ -56,6 +55,17 @@ record GovEnv : Type where
 \end{code}
 \end{AgdaMultiCode}
 \begin{code}[hide]
+instance
+  ToRecord-GovEnv : ToRecord (TxId × Epoch × PParams × Maybe ScriptHash × EnactState × CertState) GovEnv
+  ToRecord-GovEnv = record { ⟦_⟧ = uncurryₙ 6 λ z z₁ z₂ z₃ z₄ z₅ → record
+                                                                    { txid = z
+                                                                    ; epoch = z₁
+                                                                    ; pparams = z₂
+                                                                    ; ppolicy = z₃
+                                                                    ; enactState = z₄
+                                                                    ; certState = z₅
+                                                                    } }
+
 private variable
   Γ : GovEnv
   s s' : GovState
@@ -128,10 +138,13 @@ opaque
             { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
 
   isRegistered : GovEnv → Voter → Type
-  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ ⟧ᵍ (r , c) = case r of λ where
-    CC    → just c ∈ range (gState .ccHotKeys)
-    DRep  → c ∈ dom (gState .dreps)
-    SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
+  isRegistered Γ (r , c) =
+    let open GovEnv Γ
+        open CertState certState
+    in case r of λ where
+         CC    → just c ∈ range (gState .ccHotKeys)
+         DRep  → c ∈ dom (gState .dreps)
+         SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
 
   validHFAction : GovProposal → GovState → EnactState → Type
   validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =

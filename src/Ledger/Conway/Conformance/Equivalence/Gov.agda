@@ -16,12 +16,13 @@ open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 
 instance
   GovEnvToConf : L.Deposits × L.Deposits ⊢ L.GovEnv ⭆ C.GovEnv
-  GovEnvToConf .convⁱ deposits L.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
-    C.⟦ txid , epoch , pp , policy , enactState , deposits ⊢conv certState ⟧ᵍ
+  GovEnvToConf .convⁱ deposits Γ =
+    let open L.GovEnv Γ renaming (epoch to e) in
+    C.⟦ txid , e , pparams , ppolicy , enactState , deposits ⊢conv certState ⟧ᵍ
 
   GovEnvFromConf : C.GovEnv ⭆ L.GovEnv
   GovEnvFromConf .convⁱ _ C.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
-    L.⟦ txid , epoch , pp , policy , enactState , conv certState ⟧ᵍ
+    ⟦ txid , epoch , pp , policy , enactState , conv certState ⟧
 
   opaque
     unfolding L.isRegistered C.isRegistered
