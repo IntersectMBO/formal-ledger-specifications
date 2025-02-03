@@ -31,6 +31,7 @@ instance
     ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
 \end{code}
 \caption{Deposit types}
+\label{fig:certs:deposit-types}
 \end{figure*}
 
 \begin{figure*}[h!]
