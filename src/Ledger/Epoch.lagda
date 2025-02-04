@@ -54,7 +54,6 @@ record Snapshot : Set where
     -- poolParameters : KeyHash ⇀ PoolParam
 
 record Snapshots : Set where
-  constructor ⟦_,_,_,_⟧ˢˢ
   field
     mark set go  : Snapshot
     feeSS        : Coin
@@ -100,6 +99,9 @@ instance
 
   ToRecord-Snapshot : ToRecord ((Credential ⇀ Coin) × (Credential ⇀ KeyHash)) Snapshot
   ToRecord-Snapshot = record { ⟦_⟧ = uncurryₙ 2 λ z z₁ → record { stake = z ; delegations = z₁ } }
+
+  ToRecord-Snapshots : ToRecord (Snapshot × Snapshot × Snapshot × Coin) Snapshots
+  ToRecord-Snapshots = record { ⟦_⟧ = uncurryₙ 4 λ z z₁ z₂ z₃ → record { mark = z ; set = z₁ ; go = z₂ ; feeSS = z₃ } }
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
@@ -202,7 +204,7 @@ data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type
   SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
              stake = stakeDistr utxo dState pState
     in
-    lstate ⊢ ⟦ mark , set , go , feeSS ⟧ˢˢ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧ˢˢ
+    lstate ⊢ ⟦ mark , set , go , feeSS ⟧ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧
 
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 \end{code}
