@@ -10,6 +10,7 @@ module Ledger.TokenAlgebra (
 \emph{Abstract types}
 \begin{code}
   PolicyId
+
 \end{code}
 \begin{code}[hide]
   : Type) where

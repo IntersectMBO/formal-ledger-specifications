@@ -34,22 +34,25 @@ explanations may be missing or wrong.
 \end{Conway}
 
 \begin{NoConway}
+This is the work-in-progress specification of the Cardano ledger.
+The Agda source code with which we formalize the ledger specification and which
+generates this pdf document is open source and resides at the following
 \begin{center}
-Repository: \url{https://github.com/IntersectMBO/formal-ledger-specifications}
+repository URL: \url{https://github.com/IntersectMBO/formal-ledger-specifications}
 \end{center}
-This is the work-in-progress specification of the Cardano ledger. The
-current status of each individual era is described in Table \ref{fig:eras-progress}.
+
+The current status of each individual era is described in Table \ref{fig:eras-progress}.
 
 \begin{longtable}[h!]{|l l l l|}
 \hline
 Era  & Figures & Prose & Cleanup \\
 \hline
 \endhead
-Shelley & Partial & Partial & Not started \\
-Shelley-MA & Partial & Partial & Not started \\
-Alonzo & Partial & Partial & Not started \\
-Babbage & Not started & Not started & Not started \\
-Conway \cite{cip1694} & Complete & Partial & Partial \\
+Shelley~\cite{cardano_shelley_spec} & Partial & Partial & Not started \\
+Shelley-MA~\cite{cardano_shelley_ma_spec} & Partial & Partial & Not started \\
+Alonzo~\cite{cardano_alonzo_spec} & Partial & Partial & Not started \\
+Babbage~\cite{cardano_babbage_spec} & Not started & Not started & Not started \\
+Conway~\cite{cip1694} & Complete & Partial & Partial \\
 \hline
 \caption{Specification progress}
 \label{fig:eras-progress}
@@ -106,16 +109,16 @@ The closure \RTCI of a relation \RTCB is defined in Figure
 operation is called \RTC.
 
 \begin{figure*}[htb]
-\begin{code}[hide]
+\caption{Reflexive transitive closure\protect\footnotemark}
+\begin{AgdaMultiCode}
+\begin{code}
 module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
-  data
+
 \end{code}
 \emph{Closure type}
 \begin{code}
-    _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type
-\end{code}
-\begin{code}[hide]
-    where
+  data _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type where
+
 \end{code}
 \emph{Closure rules}
 \begin{code}
@@ -128,9 +131,11 @@ module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
       ───────────────────────────────────────
       Γ ⊢ s ⇀⟦ sig ∷ sigs ⟧* s''
 \end{code}
-\caption{Reflexive transitive closure}
+\end{AgdaMultiCode}
 \label{fig:rt-closure}
 \end{figure*}
+\footnotetext{The source code that appears in the figures is this section are excerpts from the Agda module
+\LedgerIntroduction.}
 
 \subsection{Computational}
 
@@ -155,7 +160,7 @@ record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Typ
   nothing⇒∀¬STS : compute Γ s b ≡ nothing → ∀ s' → ¬ Γ ⊢ s ⇀⦇ b ,X⦈ s'
 \end{code}
 \end{AgdaMultiCode}
-\caption{Computational relations}
+\caption{Computational relations\footnotemark}
 \label{fig:computational}
 \end{figure*}
 \begin{code}[hide]
