@@ -42,14 +42,14 @@ current status of each individual era is described in Table \ref{fig:eras-progre
 
 \begin{longtable}[h!]{|l l l l|}
 \hline
-Era (doc) & Figures & Prose & Cleanup \\
+Era  & Figures & Prose & Cleanup \\
 \hline
 \endhead
-Shelley (\cite{cardano_shelley_spec}) & Partial & Partial & Not started \\
-Shelley-MA (\cite{cardano_shelley_ma_spec}) & Partial & Partial & Not started \\
-Alonzo (\cite{cardano_alonzo_spec}) & Partial & Partial & Not started \\
-Babbage (\cite{cardano_babbage_spec}) & Not started & Not started & Not started \\
-Conway (\cite{cip1694}) & Complete & Partial & Partial \\
+Shelley~\cite{cardano_shelley_spec}) & Partial & Partial & Not started \\
+Shelley-MA~\cite{cardano_shelley_ma_spec} & Partial & Partial & Not started \\
+Alonzo~\cite{cardano_alonzo_spec} & Partial & Partial & Not started \\
+Babbage~\cite{cardano_babbage_spec} & Not started & Not started & Not started \\
+Conway~\cite{cip1694} & Complete & Partial & Partial \\
 \hline
 \caption{Specification progress}
 \label{fig:eras-progress}

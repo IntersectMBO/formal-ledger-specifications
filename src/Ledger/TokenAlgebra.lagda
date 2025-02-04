@@ -8,8 +8,10 @@ open import Prelude using (Type)
 module Ledger.TokenAlgebra (
 \end{code}
 \emph{Abstract types}
+\AgdaTarget{PolicyId}
 \begin{code}
   PolicyId
+
 \end{code}
 \begin{code}[hide]
   : Type) where
@@ -24,6 +26,7 @@ open import Relation.Unary       using (Pred)
 MemoryEstimate : Set
 MemoryEstimate = ℕ
 \end{code}
+
 \emph{Derived types}
 \AgdaTarget{TokenAlgebra}
 \begin{code}
@@ -55,6 +58,7 @@ record TokenAlgebra : Type₁ where
     specialAsset              : AssetName
     property                  : coin ∘ inject ≗ id -- FIXME: rename!
     coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
+
 \end{code}
 \begin{code}[hide]
     ⦃ DecEq-Value ⦄ : DecEq Value
@@ -73,6 +77,7 @@ record TokenAlgebra : Type₁ where
     open ≡-Reasoning
     open MonoidMorphisms.IsMonoidHomomorphism
 \end{code}
+
 \emph{Helper functions}
 \AgdaTarget{sumᵛ}
 \begin{code}
