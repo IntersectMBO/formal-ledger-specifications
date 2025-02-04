@@ -31,14 +31,9 @@ open import Ledger.Certs govStructure
 \begin{figure*}[h]
 \begin{code}
 record RewardUpdate : Set where
-  constructor ⟦_,_,_,_⟧ʳᵘ
   field
     Δt Δr Δf : ℤ
     rs : Credential ⇀ Coin
-\end{code}
-\begin{code}[hide]
-    -- more convient here than doing checks
-    {zeroSum} : Δt + Δr + Δf + ℤ.+ ∑[ x ← rs ] x ≡ ℤ.0ℤ
 \end{code}
 \end{figure*}
 \end{NoConway}
@@ -91,6 +86,9 @@ record NewEpochState : Type where
 \end{figure*}
 \begin{code}[hide]
 instance
+  ToRecord-RewardUpdate : ToRecord (ℤ × ℤ × ℤ × (Credential ⇀ Coin)) RewardUpdate
+  ToRecord-RewardUpdate = record { ⟦_⟧ = uncurryₙ 4 (λ z z₁ z₂ z₃ → record { Δt = z ; Δr = z₁ ; Δf = z₂ ; rs = z₃ }) }
+
   ToRecord-EpochState : ToRecord (Acnt × Snapshots × LState × EnactState × RatifyState) EpochState
   ToRecord-EpochState = record { ⟦_⟧ = uncurryₙ 5 λ z z₁ z₂ z₃ z₄ → record { acnt = z ; ss = z₁ ; ls = z₂ ; es = z₃ ; fut = z₄ } }
 
@@ -117,7 +115,7 @@ open GovActionState using (returnAddr)
 \begin{NoConway}
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ epochState =
+applyRUpd ru epochState =
   ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
     , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧
   , ss
@@ -127,6 +125,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ epochState =
   , es
   , fut ⟧
   where
+    open RewardUpdate ru
     open EpochState epochState
     open Acnt acnt
     open LState ls
