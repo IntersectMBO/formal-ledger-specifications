@@ -22,9 +22,9 @@ instance
       { Implementation
       ; isSigned         = λ a b m → extIsSigned (HSVKey.hvkVKey a) b m ≡ true
       ; sign             = λ _ _ → zero
-        -- we can't prove these properties since the functions are provided by the Haskell implementation
+        -- we can't prove correctness since the function is provided by the Haskell implementation
       ; isSigned-correct = error "isSigned-correct evaluated"
-      ; Dec-isSigned     = λ { {vk} {ser} {sig} → ⁇ (extIsSigned (HSVKey.hvkVKey vk) ser sig because error "Dec-isSigned evaluated") }
+      ; Dec-isSigned     = ⁇ (_ ≟ _)
       }
 
 -- No P2 scripts for now

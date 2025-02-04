@@ -63,7 +63,9 @@ data GovAction : Type where
 
 actionWellFormed : GovAction → Type
 actionWellFormed (ChangePParams x)  = ppdWellFormed x
-actionWellFormed (TreasuryWdrl x)   = ∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId
+actionWellFormed (TreasuryWdrl x)   = 
+  (∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId)
+  × (∃[ v ∈ range x ] ¬ (v ≡ 0))
 actionWellFormed _                  = ⊤
 \end{code}
 \begin{code}[hide]
