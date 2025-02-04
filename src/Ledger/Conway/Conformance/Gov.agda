@@ -33,7 +33,7 @@ GovState : Type
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Type where
-  constructor ⟦_,_,_,_,_,_⟧ᵍ
+  constructor ⟦_,_,_,_,_,_,_⟧ᵍ
   field
 
     txid        : TxId
@@ -42,6 +42,7 @@ record GovEnv : Type where
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
     certState   : CertState
+    stakeCreds  : Credential ⇀ KeyHash
 
 private variable
   Γ : GovEnv
@@ -62,7 +63,7 @@ open PState
 
 opaque
   isRegistered : GovEnv → Voter → Type
-  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ ⟧ᵍ (r , c) = case r of λ where
+  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ , _ ⟧ᵍ (r , c) = case r of λ where
     CC    → just c ∈ range (gState .ccHotKeys)
     DRep  → c ∈ dom (gState .dreps)
     SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
@@ -85,12 +86,8 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = L.addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-    ∙ actionWellFormed a
+    ∙ L.actionWellFormed stakeCreds p ppolicy epoch a
     ∙ d ≡ govActionDeposit
-    ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
-    ∙ (¬ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w) → p ≡ nothing)
-    ∙ (∀ {new rem q} → a ≡ UpdateCommittee new rem q
-       → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ L.validHFAction prop s enactState
     ∙ L.hasParent enactState s a prev
     ∙ addr .RwdAddr.net ≡ NetworkId

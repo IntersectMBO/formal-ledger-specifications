@@ -117,33 +117,31 @@ instance
         open PParams pparams hiding (a)
 
         instance 
-          Dec-actionWellFormed = actionWellFormed?
+          Dec-actionWellFormed = L.actionWellFormed?
         {-# INCOHERENT Dec-actionWellFormed #-}
 
-        H = ¿ actionWellFormed a
+        H = ¿ L.actionWellFormed stakeCreds p ppolicy epoch a
             × d ≡ govActionDeposit
             × L.validHFAction prop s enactState
-            × (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
-            × (¬ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w) → p ≡ nothing)
             × L.hasParent' enactState s a prev
             × addr .RwdAddr.net ≡ NetworkId ¿
             ,′ isUpdateCommittee a
 
         computeProof = case H of λ where
-          (yes (wf , dep , vHFA , pol , ¬pol , L.HasParent' en , goodAddr) , yes (new , rem , q , refl)) →
+          (yes (wf , dep , vHFA , L.HasParent' en , goodAddr) , yes (new , rem , q , refl)) →
             case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
-              (yes newOk) → success (_ , GOV-Propose (wf , dep , pol , ¬pol , (λ where refl → newOk) , vHFA , en , goodAddr))
+              (yes newOk) → success (_ , GOV-Propose (wf , dep , vHFA , en , goodAddr))
               (no ¬p)     → failure (genErrors ¬p)
-          (yes (wf , dep , vHFA , pol , ¬pol , L.HasParent' en , goodAddr) , no notNewComm) → success
-            (-, GOV-Propose (wf , dep , pol , ¬pol , (λ isNewComm → ⊥-elim (notNewComm (-, -, -, isNewComm))) , vHFA , en , goodAddr))
+          (yes (wf , dep , vHFA , L.HasParent' en , goodAddr) , no notNewComm) → success
+            (-, GOV-Propose (wf , dep , vHFA , en , goodAddr))
           (no ¬p , _) → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (GOV-Propose (wf , dep , pol , ¬pol , newOk , vHFA , en , goodAddr)) with H
-        ... | (no ¬p , _) = ⊥-elim (¬p (wf , dep , vHFA , pol , ¬pol , L.HasParent' en , goodAddr))
-        ... | (yes (_ , _ , _ , _ , _ , L.HasParent' _ , _) , no notNewComm) = refl
-        ... | (yes (_ , _ , _ , _ , _ , L.HasParent' _ , _) , yes (new , rem , q , refl))
-          rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (newOk refl) .proj₂ = refl
+        completeness s' (GOV-Propose (wf , dep , vHFA , en , goodAddr)) with H
+        ... | (no ¬p , _) = ⊥-elim (¬p (wf , dep , vHFA , L.HasParent' en , goodAddr))
+        ... | (yes (_ , _ , _ , L.HasParent' _ , _) , no notNewComm) = refl
+        ... | (yes ((_ , allOk) , _ , _ , L.HasParent' _ , _) , yes (new , rem , q , refl))
+          rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ allOk .proj₂ = refl
 
       computeProof : (sig : GovVote ⊎ GovProposal) → _
       computeProof (inj₁ s) = GoVote.computeProof s

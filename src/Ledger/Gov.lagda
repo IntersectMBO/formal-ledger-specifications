@@ -41,7 +41,7 @@ GovState : Type
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Type where
-  constructor ⟦_,_,_,_,_,_⟧ᵍ
+  constructor ⟦_,_,_,_,_,_,_⟧ᵍ
   field
     txid        : TxId
     epoch       : Epoch
@@ -49,6 +49,7 @@ record GovEnv : Type where
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
     certState   : CertState
+    stakeCreds  : Credential ⇀ KeyHash
 \end{code}
 \end{AgdaMultiCode}
 \begin{code}[hide]
@@ -124,7 +125,7 @@ opaque
             { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
 
   isRegistered : GovEnv → Voter → Type
-  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ ⟧ᵍ (r , c) = case r of λ where
+  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ , _ ⟧ᵍ (r , c) = case r of λ where
     CC    → just c ∈ range (gState .ccHotKeys)
     DRep  → c ∈ dom (gState .dreps)
     SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
@@ -319,6 +320,30 @@ action is \NoConfidence and the other is an \UpdateCommittee action.
 
 \begin{figure*}
 \begin{code}[hide]
+actionWellFormed : Credential ⇀ KeyHash → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
+actionWellFormed _ p ppolicy _ (ChangePParams x)     = 
+  ∙ ppdWellFormed x
+  ∙ p ≡ ppolicy
+actionWellFormed stakeCreds p ppolicy _ (TreasuryWdrl x)      = 
+  ∙ ∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId
+  ∙ ∃[ v ∈ range x ] ¬ (v ≡ 0)
+  ∙ p ≡ ppolicy
+  ∙ mapˢ RwdAddr.stake (dom x) ⊆ dom stakeCreds
+actionWellFormed _ p _ epoch (UpdateCommittee new rem q) =
+  ∙ p ≡ nothing
+  ∙ ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅
+actionWellFormed _ p _ _ _                         =
+  ∙ p ≡ nothing
+
+actionWellFormed? : ∀ {Γ a p ppolicy epoch} → actionWellFormed Γ p ppolicy epoch a ⁇
+actionWellFormed? {_} {NoConfidence}          = it
+actionWellFormed? {_} {UpdateCommittee _ _ _} = it
+actionWellFormed? {_} {NewConstitution _ _}   = it
+actionWellFormed? {_} {TriggerHF _}           = it
+actionWellFormed? {_} {ChangePParams _}       = it
+actionWellFormed? {_} {TreasuryWdrl _}        = it
+actionWellFormed? {_} {Info}                  = it
+
 data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
 \begin{code}
@@ -338,12 +363,8 @@ data _⊢_⇀⦇_,GOV'⦈_ where
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-    ∙ actionWellFormed a
+    ∙ actionWellFormed stakeCreds p ppolicy epoch a
     ∙ d ≡ govActionDeposit
-    ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
-    ∙ (¬ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w) → p ≡ nothing)
-    ∙ (∀ {new rem q} → a ≡ UpdateCommittee new rem q
-       → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s a prev
     ∙ addr .RwdAddr.net ≡ NetworkId

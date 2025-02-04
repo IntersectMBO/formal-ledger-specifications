@@ -60,23 +60,6 @@ data GovAction : Type where
   ChangePParams    : PParamsUpdate                            →  GovAction
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction
   Info             :                                             GovAction
-
-actionWellFormed : GovAction → Type
-actionWellFormed (ChangePParams x)  = ppdWellFormed x
-actionWellFormed (TreasuryWdrl x)   = 
-  (∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId)
-  × (∃[ v ∈ range x ] ¬ (v ≡ 0))
-actionWellFormed _                  = ⊤
-\end{code}
-\begin{code}[hide]
-actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
-actionWellFormed? {NoConfidence}          = it
-actionWellFormed? {UpdateCommittee _ _ _} = it
-actionWellFormed? {NewConstitution _ _}   = it
-actionWellFormed? {TriggerHF _}           = it
-actionWellFormed? {ChangePParams _}       = it
-actionWellFormed? {TreasuryWdrl _}        = it
-actionWellFormed? {Info}                  = it
 \end{code}
 \end{AgdaMultiCode}
 \caption{Governance actions}
