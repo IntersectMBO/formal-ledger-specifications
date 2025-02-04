@@ -65,9 +65,9 @@ record TransactionStructure : Type₁ where
     Ix TxId AuxiliaryData : Type
 \end{code}
 \begin{code}[hide]
-        ⦃ DecEq-Ix   ⦄ : DecEq Ix
-        ⦃ DecEq-TxId ⦄ : DecEq TxId
-        adHashingScheme : isHashableSet AuxiliaryData
+    ⦃ DecEq-Ix   ⦄ : DecEq Ix
+    ⦃ DecEq-TxId ⦄ : DecEq TxId
+    adHashingScheme : isHashableSet AuxiliaryData
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
   field globalConstants : _
