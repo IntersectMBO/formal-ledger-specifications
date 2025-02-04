@@ -12,7 +12,7 @@ module Ledger.Address (
 
 We define credentials and various types of addresses here. A
 credential contains a hash, either of a verifying (public) key
-(\isVKey) or of a (\isScript).
+(\isVKey) or of a script (\isScript).
 
 N.B.~in the Shelley era the type of the \stake field of the
 \BaseAddr record was \CredentialType; to specify an address with
