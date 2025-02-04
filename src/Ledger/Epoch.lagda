@@ -36,10 +36,6 @@ record RewardUpdate : Set where
     Δt Δr Δf : ℤ
     rs : Credential ⇀ Coin
 \end{code}
-\begin{code}[hide]
-    -- more convient here than doing checks
-    {zeroSum} : Δt + Δr + Δf + ℤ.+ ∑[ x ← rs ] x ≡ ℤ.0ℤ
-\end{code}
 \end{figure*}
 \end{NoConway}
 
