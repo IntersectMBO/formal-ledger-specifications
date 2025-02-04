@@ -80,7 +80,6 @@ record EpochState : Type where
 record NewEpochState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ⁿᵉ
   field
 \end{code}
 \begin{code}
@@ -96,6 +95,9 @@ record NewEpochState : Type where
 instance
   ToRecord-EpochState : ToRecord (Acnt × Snapshots × LState × EnactState × RatifyState) EpochState
   ToRecord-EpochState = record { ⟦_⟧ = uncurryₙ 5 λ z z₁ z₂ z₃ z₄ → record { acnt = z ; ss = z₁ ; ls = z₂ ; es = z₃ ; fut = z₄ } }
+
+  ToRecord-NewEpochState : ToRecord (Epoch × EpochState × Maybe RewardUpdate) NewEpochState
+  ToRecord-NewEpochState = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ → record { lastEpoch = z ; epochState = z₁ ; ru = z₂ } }
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
@@ -298,18 +300,18 @@ data
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧ⁿᵉ
+      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
 
   NEWEPOCH-Not-New :
     ∙ e ≢ lastEpoch + 1
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧ⁿᵉ
+      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
 
   NEWEPOCH-No-Reward-Update :
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ⁿᵉ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧ⁿᵉ
+      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}
