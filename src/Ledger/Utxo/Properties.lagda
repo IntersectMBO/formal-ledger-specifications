@@ -92,7 +92,7 @@ instance
                 (inj₂ b₂') → case dec-de-morgan b₂' of λ where
                   (inj₁ a₂) → "¬ inInterval (UTxOEnv.slot Γ) (txvldt (Tx.body tx))"
                   (inj₂ b₂) → case dec-de-morgan b₂ of λ where
-                    (inj₁ a₃) → "¬ feesOK pp tx utxo ≡ true"
+                    (inj₁ a₃) → "¬ feesOK pp tx utxo"
                     (inj₂ b₃) → case dec-de-morgan b₃ of λ where
                         (inj₁ a₄) →
                           let
