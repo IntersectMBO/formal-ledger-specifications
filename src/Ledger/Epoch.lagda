@@ -48,7 +48,6 @@ record RewardUpdate : Set where
 \begin{NoConway}
 \begin{code}
 record Snapshot : Set where
-  constructor ⟦_,_⟧ˢ
   field
     stake        : Credential ⇀ Coin
     delegations  : Credential ⇀ KeyHash
@@ -98,6 +97,9 @@ instance
 
   ToRecord-NewEpochState : ToRecord (Epoch × EpochState × Maybe RewardUpdate) NewEpochState
   ToRecord-NewEpochState = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ → record { lastEpoch = z ; epochState = z₁ ; ru = z₂ } }
+
+  ToRecord-Snapshot : ToRecord ((Credential ⇀ Coin) × (Credential ⇀ KeyHash)) Snapshot
+  ToRecord-Snapshot = record { ⟦_⟧ = uncurryₙ 2 λ z z₁ → record { stake = z ; delegations = z₁ } }
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
@@ -151,7 +153,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \begin{AgdaSuppressSpace}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
+stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
   where
     open DState stᵈ
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
@@ -169,8 +171,8 @@ opaque
 \end{code}
 \begin{code}
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
-  mkStakeDistrs ⟦ stake , _ ⟧ˢ govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy (proj₁ delegations) (stake ∪⁺ gaDepositStake govSt ds)
+  mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
+    aggregateBy (proj₁ delegations) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}
