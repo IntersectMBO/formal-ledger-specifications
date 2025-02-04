@@ -371,7 +371,7 @@ du_govActionDeposits_2440 v0 v1
             case coe v2 of
               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
                 -> case coe v4 of
-                     MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_8131 v5 v6 v7 v8 v9
+                     MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_7881 v5 v6 v7 v8 v9
                        -> case coe v6 of
                             MAlonzo.Code.Ledger.Address.C_RwdAddr'46'constructor_3243 v10 v11
                               -> coe

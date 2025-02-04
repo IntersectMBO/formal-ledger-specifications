@@ -706,7 +706,7 @@ du_mkGovStatePair_1990 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v1)
       (coe
-         MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_8131
+         MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_7881
          (coe
             MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_578
             (coe
@@ -775,7 +775,7 @@ du_modifyVotes_2032 v0 v1 v2 v3 v4
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))
       (coe
-         MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_8131
+         MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_7881
          (coe
             MAlonzo.Code.Class.ToBool.du_if_then_else__46
             (coe MAlonzo.Code.Class.ToBool.du_ToBool'45''8263'_112) erased

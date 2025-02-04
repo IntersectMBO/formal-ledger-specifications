@@ -268,7 +268,7 @@ d_Conv'45'GovVote_42
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_7377 v1 v2 v3 v4
+              MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_7127 v1 v2 v3 v4
                 -> coe
                      C_GovVote_1533
                      (coe
@@ -334,7 +334,7 @@ d_Conv'45'GovVote_42
             case coe v0 of
               C_GovVote_1533 v1 v2 v3 v4
                 -> coe
-                     MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_7377
+                     MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_7127
                      (coe
                         MAlonzo.Code.Data.Product.Base.du_map_128
                         (coe

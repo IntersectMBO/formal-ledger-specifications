@@ -776,7 +776,7 @@ du_removeOrphanDRepVotes_2238 ::
   MAlonzo.Code.Ledger.GovernanceActions.T_GovActionState_780
 du_removeOrphanDRepVotes_2238 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_8131
+      MAlonzo.Code.Ledger.GovernanceActions.C_GovActionState'46'constructor_7881
       (coe du_votes'8242'_2248 (coe v0) (coe v1) (coe v2))
       (coe
          MAlonzo.Code.Ledger.GovernanceActions.d_returnAddr_794 (coe v2))
