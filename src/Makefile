@@ -28,7 +28,7 @@ CONWAY_TEX_FILES=$(patsubst %.lagda, $(CONWAY_TEX_DIR)/%.tex,\
              $(shell find . -name '*.lagda' | sed 's|\.\/||g'))
 
 # to be postprocessed for vertical vector typesetting
-VV_NAMES=Certs Chain Enact Epoch Ratify Ledger NewPP Utxo #Utxo/Properties
+# VV_NAMES=Certs Chain Enact Epoch Ratify Ledger NewPP Utxo #Utxo/Properties
 
 VV_TEX_FILES=$(addprefix $(LATEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
 CONWAY_VV_TEX_FILES=$(addprefix $(CONWAY_TEX_DIR)/$(LEDGER)/,$(VV_NAMES:%=%.tex))
