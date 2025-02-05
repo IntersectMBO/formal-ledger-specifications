@@ -31,11 +31,13 @@ open Equivalence
 open GovActionState
 open Inverse
 
-private
-  lookupActionId : (pparams : PParams) (role : GovRole) (aid : GovActionID) (s : GovState) →
-                   Dec (Any (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role) s)
-  lookupActionId pparams role aid = any? λ _ → ¿ _ ¿
+lookupActionId : (pparams : PParams) (role : GovRole) (aid : GovActionID) (epoch : Epoch) (s : GovState) →
+                 Dec (Any (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role × ¬ (expired epoch ast)) s)
+lookupActionId pparams role aid epoch = 
+  let instance _ = λ {e ga} → ⁇ (expired? e ga) 
+   in any? λ _ → ¿ _ ¿
 
+private
   isUpdateCommittee : (a : GovAction) → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ UpdateCommittee new rem q)
   isUpdateCommittee NoConfidence                = no λ()
   isUpdateCommittee (UpdateCommittee new rem q) = yes (new , rem , q , refl)
@@ -111,19 +113,19 @@ instance
       module GoVote sig where
         open GovVote sig
 
-        computeProof = case lookupActionId pparams (proj₁ voter) gid s ,′ isRegistered? (proj₁ Γ) voter of λ where
+        computeProof = case lookupActionId pparams (proj₁ voter) gid epoch s ,′ isRegistered? (proj₁ Γ) voter of λ where
             (yes p , yes p') → case Any↔ .from p of λ where
-              (_ , mem , refl , cV) → success (_ , GOV-Vote (∈-fromList .to mem , cV , p'))
+              (_ , mem , refl , cV , ¬exp) → success (_ , GOV-Vote (∈-fromList .to mem , cV , p' , ¬exp))
             (yes _ , no ¬p) → failure (genErrors ¬p)
-            (no ¬p , _)     → failure (genErrors ¬p)
+            (no ¬p , _    ) → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₁ sig ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (GOV-Vote (mem , cV , reg))
-          with lookupActionId pparams (proj₁ voter) gid s | isRegistered? (proj₁ Γ) voter
-        ... | no ¬p | _ = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV)))
+        completeness s' (GOV-Vote {ast = ast} (mem , cV , reg , ¬expired))
+          with lookupActionId pparams (proj₁ voter) gid epoch s | isRegistered? (proj₁ Γ) voter
+        ... | no ¬p | _ = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV , ¬expired)))
         ... | yes _ | no ¬p = ⊥-elim $ ¬p reg
-        ... | yes p | yes p' with Any↔ .from p
-        ... | (_ , mem , refl , cV) = refl
+        ... | yes p | yes q with Any↔ .from p 
+        ... | ((_ , ast') , mem , refl , cV) = refl
 
       module GoProp prop where
         open GovProposal prop
@@ -132,30 +134,34 @@ instance
 
         instance 
           Dec-actionWellFormed = actionWellFormed?
+          Dec-actionValid = actionValid?
         {-# INCOHERENT Dec-actionWellFormed #-}
+        {-# INCOHERENT Dec-actionValid #-}
 
-        H = ¿ actionWellFormed rewardCreds p ppolicy epoch a
+        H = ¿ actionWellFormed a
+            × actionValid rewardCreds p ppolicy epoch a
             × d ≡ govActionDeposit
             × validHFAction prop s enactState
             × hasParent' enactState s a prev
-            × addr .RwdAddr.net ≡ NetworkId ¿
+            × addr .RwdAddr.net ≡ NetworkId
+            × addr .RwdAddr.stake ∈ rewardCreds ¿
             ,′ isUpdateCommittee a
 
         computeProof = case H of λ where
-          (yes (wf , dep , vHFA , HasParent' en , goodAddr) , yes (new , rem , q , refl)) →
+          (yes (wf , av , dep , vHFA , HasParent' en , goodAddr , regReturn) , yes (new , rem , q , refl)) →
             case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
-              (yes newOk) → success (_ , GOV-Propose (wf , dep , vHFA , en , goodAddr))
+              (yes newOk) → success (_ , GOV-Propose (wf , av , dep , vHFA , en , goodAddr , regReturn))
               (no ¬p)     → failure (genErrors ¬p)
-          (yes (wf , dep , vHFA , HasParent' en , goodAddr) , no notNewComm) → success
-            (-, GOV-Propose (wf , dep , vHFA , en , goodAddr))
+          (yes (wf , av , dep , vHFA , HasParent' en , goodAddr , returnReg) , no notNewComm) → success
+            (-, GOV-Propose (wf , av , dep , vHFA , en , goodAddr , returnReg))
           (no ¬p , _) → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (GOV-Propose (wf , dep , vHFA , en , goodAddr)) with H
-        ... | (no ¬p , _) = ⊥-elim (¬p (wf , dep , vHFA , HasParent' en , goodAddr))
-        ... | (yes (_ , _ , _ , HasParent' _ , _) , no notNewComm) = refl
-        ... | (yes ((_ , allOk) , _ , _ , HasParent' _ , _) , yes (new , rem , q , refl))
-          rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ allOk .proj₂ = refl
+        completeness s' (GOV-Propose (wf , av , dep , vHFA , en , goodAddr)) with H
+        ... | (no ¬p , _) = ⊥-elim (¬p (wf , av , dep , vHFA , HasParent' en , goodAddr))
+        ... | (yes (_ , _ , _ , _ , HasParent' _ , _) , no notNewComm) = refl
+        ... | (yes (_ , (_ , (av₁ , av₂)) , _ , _ , HasParent' _ , _) , yes (new , rem , q , refl))
+          rewrite dec-yes ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ (λ { x → av₁ x , av₂ }) .proj₂ = refl
 
       computeProof : (sig : GovVote ⊎ GovProposal) → _
       computeProof (inj₁ s) = GoVote.computeProof s

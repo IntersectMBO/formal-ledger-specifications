@@ -77,6 +77,7 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
     ∙ (aid , ast) ∈ fromList s
     ∙ canVote pparams (action ast) (proj₁ voter)
     ∙ isRegistered Γ voter
+    ∙ ¬ (expired epoch ast)
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV'⦈ L.addVote s aid voter v
 
@@ -86,11 +87,13 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = L.addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-    ∙ L.actionWellFormed rewardCreds p ppolicy epoch a
+    ∙ L.actionWellFormed a
+    ∙ L.actionValid rewardCreds p ppolicy epoch a
     ∙ d ≡ govActionDeposit
     ∙ L.validHFAction prop s enactState
     ∙ L.hasParent enactState s a prev
     ∙ addr .RwdAddr.net ≡ NetworkId
+    ∙ addr .RwdAddr.stake ∈ rewardCreds
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 

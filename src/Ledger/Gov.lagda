@@ -320,29 +320,39 @@ action is \NoConfidence and the other is an \UpdateCommittee action.
 
 \begin{figure*}
 \begin{code}[hide]
-actionWellFormed : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
-actionWellFormed _ p ppolicy _ (ChangePParams x)     = 
-  ∙ ppdWellFormed x
-  ∙ p ≡ ppolicy
-actionWellFormed rewardCreds p ppolicy _ (TreasuryWdrl x)      = 
-  ∙ ∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId
-  ∙ ∃[ v ∈ range x ] ¬ (v ≡ 0)
-  ∙ p ≡ ppolicy
-  ∙ mapˢ RwdAddr.stake (dom x) ⊆ rewardCreds
-actionWellFormed _ p _ epoch (UpdateCommittee new rem q) =
-  ∙ p ≡ nothing
-  ∙ ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅
-actionWellFormed _ p _ _ _                         =
-  ∙ p ≡ nothing
+actionValid : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
+actionValid rewardCreds p ppolicy epoch (ChangePParams x) =
+  p ≡ ppolicy
+actionValid rewardCreds p ppolicy epoch (TreasuryWdrl x) =
+  p ≡ ppolicy × mapˢ RwdAddr.stake (dom x) ⊆ rewardCreds
+actionValid rewardCreds p ppolicy epoch (UpdateCommittee new rem q) =
+  p ≡ nothing × (∀[ e ∈ range new ]  epoch < e) × (dom new ∩ rem ≡ᵉ ∅)
+actionValid rewardCreds p ppolicy epoch _ =
+  p ≡ nothing
 
-actionWellFormed? : ∀ {Γ a p ppolicy epoch} → actionWellFormed Γ p ppolicy epoch a ⁇
-actionWellFormed? {_} {NoConfidence}          = it
-actionWellFormed? {_} {UpdateCommittee _ _ _} = it
-actionWellFormed? {_} {NewConstitution _ _}   = it
-actionWellFormed? {_} {TriggerHF _}           = it
-actionWellFormed? {_} {ChangePParams _}       = it
-actionWellFormed? {_} {TreasuryWdrl _}        = it
-actionWellFormed? {_} {Info}                  = it
+actionValid? : ∀ {rewardCreds p ppolicy epoch a} → actionValid rewardCreds p ppolicy epoch a ⁇
+actionValid? {a = NoConfidence}          = it
+actionValid? {a = UpdateCommittee _ _ _} = it
+actionValid? {a = NewConstitution _ _}   = it
+actionValid? {a = TriggerHF _}           = it
+actionValid? {a = ChangePParams _}       = it
+actionValid? {a = TreasuryWdrl _}        = it
+actionValid? {a = Info}                  = it
+
+actionWellFormed : GovAction → Type
+actionWellFormed (ChangePParams x) = ppdWellFormed x
+actionWellFormed (TreasuryWdrl x)  = 
+  (∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
+actionWellFormed _                 = ⊤
+
+actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
+actionWellFormed? {NoConfidence}          = it
+actionWellFormed? {UpdateCommittee _ _ _} = it
+actionWellFormed? {NewConstitution _ _}   = it
+actionWellFormed? {TriggerHF _}           = it
+actionWellFormed? {ChangePParams _}       = it
+actionWellFormed? {TreasuryWdrl _}        = it
+actionWellFormed? {Info}                  = it
 
 data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
@@ -354,6 +364,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ (aid , ast) ∈ fromList s
     ∙ canVote pparams (action ast) (proj₁ voter)
     ∙ isRegistered Γ voter
+    ∙ ¬ (expired epoch ast)
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV'⦈ addVote s aid voter v
 
@@ -363,11 +374,13 @@ data _⊢_⇀⦇_,GOV'⦈_ where
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-    ∙ actionWellFormed rewardCreds p ppolicy epoch a
+    ∙ actionWellFormed a
+    ∙ actionValid rewardCreds p ppolicy epoch a
     ∙ d ≡ govActionDeposit
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s a prev
     ∙ addr .RwdAddr.net ≡ NetworkId
+    ∙ addr .RwdAddr.stake ∈ rewardCreds
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
