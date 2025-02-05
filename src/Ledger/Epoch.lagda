@@ -86,20 +86,12 @@ record NewEpochState : Type where
 \end{figure*}
 \begin{code}[hide]
 instance
-  ToRecord-RewardUpdate : ToRecord (ℤ × ℤ × ℤ × (Credential ⇀ Coin)) RewardUpdate
-  ToRecord-RewardUpdate = record { ⟦_⟧ = uncurryₙ 4 (λ z z₁ z₂ z₃ → record { Δt = z ; Δr = z₁ ; Δf = z₂ ; rs = z₃ }) }
-
-  ToRecord-EpochState : ToRecord (Acnt × Snapshots × LState × EnactState × RatifyState) EpochState
-  ToRecord-EpochState = record { ⟦_⟧ = uncurryₙ 5 λ z z₁ z₂ z₃ z₄ → record { acnt = z ; ss = z₁ ; ls = z₂ ; es = z₃ ; fut = z₄ } }
-
-  ToRecord-NewEpochState : ToRecord (Epoch × EpochState × Maybe RewardUpdate) NewEpochState
-  ToRecord-NewEpochState = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ → record { lastEpoch = z ; epochState = z₁ ; ru = z₂ } }
-
-  ToRecord-Snapshot : ToRecord ((Credential ⇀ Coin) × (Credential ⇀ KeyHash)) Snapshot
-  ToRecord-Snapshot = record { ⟦_⟧ = uncurryₙ 2 λ z z₁ → record { stake = z ; delegations = z₁ } }
-
-  ToRecord-Snapshots : ToRecord (Snapshot × Snapshot × Snapshot × Coin) Snapshots
-  ToRecord-Snapshots = record { ⟦_⟧ = uncurryₙ 4 λ z z₁ z₂ z₃ → record { mark = z ; set = z₁ ; go = z₂ ; feeSS = z₃ } }
+  unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState = derive-To
+    (   (quote RewardUpdate   , To-RewardUpdate)
+    ∷   (quote Snapshot       , To-Snapshot)
+    ∷   (quote Snapshots      , To-Snapshots)
+    ∷   (quote EpochState     , To-EpochState)
+    ∷ [ (quote NewEpochState  , To-NewEpochState)])
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 

@@ -173,9 +173,8 @@ record UTxOState : Type where
 \end{code}
 \begin{code}[hide]
 instance
-  ToRecord-UTxOState : ToRecord (UTxO × Coin × Deposits × Coin) UTxOState
-  ToRecord-UTxOState = record { ⟦_⟧ = uncurryₙ 4 λ z z₁ z₂ z₃ →
-                                                    record { utxo = z ; fees = z₁ ; deposits = z₂ ; donations = z₃ } }
+  unquoteDecl To-UTxOState = derive-To
+    [ (quote UTxOState , To-UTxOState) ]
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}

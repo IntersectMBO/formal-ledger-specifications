@@ -49,8 +49,8 @@ votedValue pup pparams quorum =
 \end{figure*}
 \begin{code}[hide]
 instance
-  ToRecord-NewPParamState : ToRecord (PParams × PPUpdateState) NewPParamState
-  ToRecord-NewPParamState = record { ⟦_⟧ = uncurryₙ 2 λ z z₁ → record { pparams = z ; ppup = z₁ } }
+  unquoteDecl To-NewPParamState = derive-To
+    [ (quote NewPParamState , To-NewPParamState) ]
 
 private variable
   Γ : NewPParamEnv

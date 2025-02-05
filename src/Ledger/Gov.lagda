@@ -56,15 +56,8 @@ record GovEnv : Type where
 \end{AgdaMultiCode}
 \begin{code}[hide]
 instance
-  ToRecord-GovEnv : ToRecord (TxId × Epoch × PParams × Maybe ScriptHash × EnactState × CertState) GovEnv
-  ToRecord-GovEnv = record { ⟦_⟧ = uncurryₙ 6 λ z z₁ z₂ z₃ z₄ z₅ → record
-                                                                    { txid = z
-                                                                    ; epoch = z₁
-                                                                    ; pparams = z₂
-                                                                    ; ppolicy = z₃
-                                                                    ; enactState = z₄
-                                                                    ; certState = z₅
-                                                                    } }
+  unquoteDecl To-GovEnv = derive-To
+    [ (quote GovEnv , To-GovEnv) ]
 
 private variable
   Γ : GovEnv

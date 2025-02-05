@@ -19,7 +19,7 @@ open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 open import Ledger.Ledger txs abs public
-  using (LEnv; ToRecord-LEnv; allColdCreds)
+  using (LEnv; To-LEnv; allColdCreds)
 
 open Tx
 open GState

@@ -57,8 +57,9 @@ record EnactState : Type where
 \end{code}
 \begin{code}[hide]
 instance
-  ToRecord-EnactEnv : ToRecord (GovActionID × Coin × Epoch) EnactEnv
-  ToRecord-EnactEnv = record { ⟦_⟧ = uncurryₙ 3 λ z z₁ z₂ → record { gid = z ; treasury = z₁ ; epoch = z₂ } }
+  unquoteDecl To-EnactEnv = derive-To
+    [ (quote EnactEnv , To-EnactEnv) ]
+
 open EnactState
 \end{code}
 \begin{code}

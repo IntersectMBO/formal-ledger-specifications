@@ -80,17 +80,8 @@ allColdCreds govSt es =
 \end{figure*}
 \begin{code}[hide]
 instance
-  ToRecord-LEnv : ToRecord (Slot × Maybe ScriptHash × PParams × EnactState × Coin) LEnv
-  ToRecord-LEnv = record { ⟦_⟧ = uncurryₙ 5 (λ x x₁ x₂ x₃ x₄ → record
-                                                                { slot = x
-                                                                ; ppolicy = x₁
-                                                                ; pparams = x₂
-                                                                ; enactState = x₃
-                                                                ; treasury = x₄
-                                                                }) }
-
-  ToRecord-LState : ToRecord (UTxOState × GovState × CertState) LState
-  ToRecord-LState = record { ⟦_⟧ = uncurryₙ 3 (λ x x₁ x₂ → record { utxoSt = x ; govSt = x₁ ; certState = x₂ }) }
+  unquoteDecl To-LEnv To-LState = derive-To
+    ((quote LEnv , To-LEnv) ∷ (quote LState , To-LState) ∷ [])
 
 private variable
   Γ : LEnv

@@ -64,8 +64,8 @@ data pvCanFollow : ProtVer → ProtVer → Type where
 \end{NoConway}
 \begin{code}[hide]
 instance
-  ToRecord-Acnt : ToRecord (Coin × Coin) Acnt
-  ToRecord-Acnt = record { ⟦_⟧ = uncurryₙ 2 (λ z z₁ → record { treasury = z ; reserves = z₁ }) }
+  unquoteDecl To-Acnt = derive-To
+    [ (quote Acnt , To-Acnt) ]
 \end{code}
 
 \begin{figure*}[ht]

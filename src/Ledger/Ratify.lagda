@@ -247,8 +247,8 @@ easily.
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 instance
-  ToRecord-RatifyState : ToRecord (EnactState × ℙ (GovActionID × GovActionState) × Bool) RatifyState
-  ToRecord-RatifyState = record { ⟦_⟧ = uncurryₙ 3 (λ x x₁ x₂ → record { es = x ; removed = x₁ ; delay = x₂ }) }
+  unquoteDecl To-RatifyState = derive-To
+    [ (quote RatifyState , To-RatifyState) ]
 
 open StakeDistrs
 \end{code}
