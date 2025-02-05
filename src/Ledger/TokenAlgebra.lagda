@@ -10,6 +10,7 @@ module Ledger.TokenAlgebra (
 \emph{Abstract types}
 \begin{code}
   PolicyId
+
 \end{code}
 \begin{code}[hide]
   : Type) where
@@ -40,6 +41,8 @@ record TokenAlgebra : Type₁ where
 
   open MonoidMorphisms (rawMonoid) (Monoid.rawMonoid +-0-monoid) public
   field
+\end{code}
+\begin{code}
     coin                      : Value → Coin
     inject                    : Coin → Value
     policies                  : Value → ℙ PolicyId

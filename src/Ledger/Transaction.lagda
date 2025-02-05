@@ -61,8 +61,11 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{code}
 record TransactionStructure : Type₁ where
   field
-    -- Abstract types
+\end{code}
+\emph{Abstract types}
+\begin{code}
     Ix TxId AuxiliaryData : Type
+
 \end{code}
 \begin{code}[hide]
     ⦃ DecEq-Ix   ⦄ : DecEq Ix

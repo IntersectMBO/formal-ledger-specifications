@@ -23,7 +23,7 @@ record HashableSet : Type₁ where
 We rely on a public key signing scheme for verification of spending.
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
-\begin{code}
+\begin{code}[hide]
 record PKKScheme : Type₁ where
   field
 \end{code}
@@ -35,6 +35,7 @@ record PKKScheme : Type₁ where
     sign               : SKey → Ser → Sig
 
   KeyPair = Σ[ sk ∈ SKey ] Σ[ vk ∈ VKey ] isKeyPair sk vk
+
 \end{code}
 \begin{code}[hide]
   field

@@ -436,7 +436,7 @@ something) and if it preserves well-formedness.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
-\begin{code}
+\begin{code}[hide]
 record PParamsDiff : Type₁ where
   field
 \end{code}
