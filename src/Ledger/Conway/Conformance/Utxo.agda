@@ -88,7 +88,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txvldt
-    ∙ L.feesOK pp tx utxo ≡ true             ∙ L.consumed pp s txb ≡ L.produced pp s txb
+    ∙ L.feesOK pp tx utxo                    ∙ L.consumed pp s txb ≡ L.produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 

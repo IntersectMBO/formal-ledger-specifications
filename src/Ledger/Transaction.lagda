@@ -234,8 +234,12 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \end{NoConway}
 
 \begin{code}[hide]
-  isP2Script : Script → Bool
-  isP2Script = is-just ∘ isInj₂
+  isP2Script : Script → Type
+  isP2Script = T ∘ is-just ∘ isInj₂
+
+  isP2Script? : ∀ {s} → isP2Script s ⁇
+  isP2Script? {inj₁ x} .dec = no λ ()
+  isP2Script? {inj₂ y} .dec = yes tt
 
   instance
     HasCoin-TxOut : HasCoin TxOut

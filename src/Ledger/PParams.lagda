@@ -298,6 +298,22 @@ module PParamsUpdate where
       ∷ is-just ccMinSize
       ∷ is-just ccMaxTermLength
       ∷ [])
+
+  modifiesSecurityGroup : PParamsUpdate → Bool
+  modifiesSecurityGroup ppu = let open PParamsUpdate ppu in
+    or
+      ( is-just maxBlockSize
+      ∷ is-just maxTxSize
+      ∷ is-just maxHeaderSize
+      ∷ is-just maxValSize
+      ∷ is-just maxBlockExUnits
+      ∷ is-just b
+      ∷ is-just a
+      ∷ is-just coinsPerUTxOByte
+      ∷ is-just govActionDeposit
+      ∷ is-just minFeeRefScriptCoinsPerByte
+      ∷ []
+      )
   
   modifiedUpdateGroups : PParamsUpdate → ℙ PParamGroup
   modifiedUpdateGroups ppu =
@@ -305,6 +321,7 @@ module PParamsUpdate where
     ∪ modifiesEconomicGroup   ?═⇒ EconomicGroup
     ∪ modifiesTechnicalGroup  ?═⇒ TechnicalGroup
     ∪ modifiesGovernanceGroup ?═⇒ GovernanceGroup
+    ∪ modifiesSecurityGroup   ?═⇒ SecurityGroup
     )
     where
       _?═⇒_ : (PParamsUpdate → Bool) → PParamGroup → ℙ PParamGroup
