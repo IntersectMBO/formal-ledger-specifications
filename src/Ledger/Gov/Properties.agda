@@ -134,7 +134,7 @@ instance
           Dec-actionWellFormed = actionWellFormed?
         {-# INCOHERENT Dec-actionWellFormed #-}
 
-        H = ¿ actionWellFormed stakeCreds p ppolicy epoch a
+        H = ¿ actionWellFormed rewardCreds p ppolicy epoch a
             × d ≡ govActionDeposit
             × validHFAction prop s enactState
             × hasParent' enactState s a prev

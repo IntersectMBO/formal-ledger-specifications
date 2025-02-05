@@ -120,12 +120,21 @@ instance
           Dec-actionWellFormed = L.actionWellFormed?
         {-# INCOHERENT Dec-actionWellFormed #-}
 
-        H = ¿ L.actionWellFormed stakeCreds p ppolicy epoch a
+        H = ¿ L.actionWellFormed rewardCreds p ppolicy epoch a
             × d ≡ govActionDeposit
             × L.validHFAction prop s enactState
             × L.hasParent' enactState s a prev
             × addr .RwdAddr.net ≡ NetworkId ¿
             ,′ isUpdateCommittee a
+
+        genErrorsWellFormed : ∀ {a} → ¬ (L.actionWellFormed rewardCreds p ppolicy epoch a) → String
+        genErrorsWellFormed {NoConfidence} ¬p          = genErrors ¬p
+        genErrorsWellFormed {UpdateCommittee _ _ _} ¬p = genErrors ¬p
+        genErrorsWellFormed {NewConstitution _ _} ¬p   = genErrors ¬p
+        genErrorsWellFormed {TriggerHF _} ¬p           = genErrors ¬p
+        genErrorsWellFormed {ChangePParams _} ¬p       = genErrors ¬p
+        genErrorsWellFormed {TreasuryWdrl _} ¬p        = genErrors ¬p
+        genErrorsWellFormed {Info} ¬p                  = genErrors ¬p
 
         computeProof = case H of λ where
           (yes (wf , dep , vHFA , L.HasParent' en , goodAddr) , yes (new , rem , q , refl)) →
@@ -134,7 +143,9 @@ instance
               (no ¬p)     → failure (genErrors ¬p)
           (yes (wf , dep , vHFA , L.HasParent' en , goodAddr) , no notNewComm) → success
             (-, GOV-Propose (wf , dep , vHFA , en , goodAddr))
-          (no ¬p , _) → failure (genErrors ¬p)
+          (no ¬p , _) → case dec-de-morgan ¬p of λ where
+            (inj₁ q) → failure (genErrorsWellFormed q)
+            (inj₂ q) → failure (genErrors q)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Propose (wf , dep , vHFA , en , goodAddr)) with H

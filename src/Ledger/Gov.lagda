@@ -49,7 +49,7 @@ record GovEnv : Type where
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
     certState   : CertState
-    stakeCreds  : Credential ⇀ KeyHash
+    rewardCreds : ℙ Credential
 \end{code}
 \end{AgdaMultiCode}
 \begin{code}[hide]
@@ -320,15 +320,15 @@ action is \NoConfidence and the other is an \UpdateCommittee action.
 
 \begin{figure*}
 \begin{code}[hide]
-actionWellFormed : Credential ⇀ KeyHash → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
+actionWellFormed : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
 actionWellFormed _ p ppolicy _ (ChangePParams x)     = 
   ∙ ppdWellFormed x
   ∙ p ≡ ppolicy
-actionWellFormed stakeCreds p ppolicy _ (TreasuryWdrl x)      = 
+actionWellFormed rewardCreds p ppolicy _ (TreasuryWdrl x)      = 
   ∙ ∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId
   ∙ ∃[ v ∈ range x ] ¬ (v ≡ 0)
   ∙ p ≡ ppolicy
-  ∙ mapˢ RwdAddr.stake (dom x) ⊆ dom stakeCreds
+  ∙ mapˢ RwdAddr.stake (dom x) ⊆ rewardCreds
 actionWellFormed _ p _ epoch (UpdateCommittee new rem q) =
   ∙ p ≡ nothing
   ∙ ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅
@@ -363,7 +363,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-    ∙ actionWellFormed stakeCreds p ppolicy epoch a
+    ∙ actionWellFormed rewardCreds p ppolicy epoch a
     ∙ d ≡ govActionDeposit
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s a prev

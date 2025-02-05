@@ -42,7 +42,7 @@ record GovEnv : Type where
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
     certState   : CertState
-    stakeCreds  : Credential ⇀ KeyHash
+    rewardCreds : ℙ Credential
 
 private variable
   Γ : GovEnv
@@ -86,7 +86,7 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = L.addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-    ∙ L.actionWellFormed stakeCreds p ppolicy epoch a
+    ∙ L.actionWellFormed rewardCreds p ppolicy epoch a
     ∙ d ≡ govActionDeposit
     ∙ L.validHFAction prop s enactState
     ∙ L.hasParent enactState s a prev
