@@ -140,7 +140,6 @@ record GState : Type where
 record CertState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ᶜˢ
   field
 \end{code}
 \begin{code}
@@ -450,17 +449,17 @@ data _⊢_⇀⦇_,CERT⦈_ where
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
-      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
+      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \emph{CERTBASE transition}
@@ -484,11 +483,11 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧
         , stᵖ
         , ⟦ dReps , ccHotKeys ⟧
-        ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
+        ⟧ ⇀⦇ _ ,CERTBASE⦈
         ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧
-        ⟧ᶜˢ
+        ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}

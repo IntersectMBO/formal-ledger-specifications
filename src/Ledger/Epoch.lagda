@@ -121,7 +121,7 @@ applyRUpd ru epochState =
   , ss
   , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ᶜˢ ⟧
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ ⟧
   , es
   , fut ⟧
   where
@@ -258,11 +258,18 @@ its results by carrying out each of the following tasks.
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
 
-      certState' =
-        ⟦ record dState { rewards = dState .rewards ∪⁺ refunds }
-        , ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧
-        , ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
-          , (gState .ccHotKeys) ∣ ccCreds (es .cc) ⟧ ⟧ᶜˢ
+      dState' : DState
+      dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
+
+      pState' : PState
+      pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
+
+      gState' : GState
+      gState' = ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
+                , gState .ccHotKeys ∣ ccCreds (es .cc) ⟧
+
+      certState' : CertState
+      certState' = ⟦ dState' , pState' , gState' ⟧
 
       utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
 

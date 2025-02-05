@@ -60,7 +60,9 @@ txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
 
 isUnregisteredDRep : CertState → Voter → Type
-isUnregisteredDRep ⟦ _ , _ , gState ⟧ᶜˢ (r , c) = r ≡ DRep × c ∉ dom (gState .dreps)
+isUnregisteredDRep certState (r , c) =
+  let open CertState certState in
+  r ≡ DRep × c ∉ dom (gState .dreps)
 
 removeOrphanDRepVotes : CertState → GovActionState → GovActionState
 removeOrphanDRepVotes certState gas = record gas { votes = votes′ }

@@ -133,12 +133,13 @@ updateCertDeps* (dcert ∷ dcerts) deps = updateCertDeps* dcerts (updateCertDeps
 instance
 
   CertStToConf : L.Deposits × L.Deposits ⊢ L.CertState ⭆ C.CertState
-  CertStToConf .convⁱ (ddeps , gdeps) L.⟦ dState , pState , gState ⟧ᶜˢ =
+  CertStToConf .convⁱ (ddeps , gdeps) certState =
+    let open L.CertState certState in
     C.⟦ ddeps ⊢conv dState , pState , gdeps ⊢conv gState ⟧ᶜˢ
 
   CertStFromConf : C.CertState ⭆ L.CertState
   CertStFromConf .convⁱ _ C.⟦ dState , pState , gState ⟧ᶜˢ =
-    L.⟦ conv dState , pState , conv gState ⟧ᶜˢ
+    ⟦ conv dState , pState , conv gState ⟧
 
   CERTBASEToConf : ∀ {Γ s s'}
                  → L.Deposits × L.Deposits
