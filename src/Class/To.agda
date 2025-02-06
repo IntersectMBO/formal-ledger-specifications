@@ -48,14 +48,14 @@ getCodPi ty = ty
 -- 1. its constructor
 -- 2. the type of its fields
 -- 3. the number of fields
-fromNERecDef : Definition → TC (Name × List⁺ Type × ℕ)
-fromNERecDef (record′ c (f ∷ fs)) =
-  do ty  ← fmap ⦃ Functor-M ⦄ getCodPi (getType (unArg f))
-     tys ← traverse (λ f → fmap ⦃ Functor-M ⦄ getCodPi (getType (unArg f))) fs
-     return (c , ty ∷ tys , 1 + length fs)
-fromNERecDef (record′ c [])       = typeError [ strErr "Expected a nonempty record type" ]
-fromNERecDef d                    = typeError [ strErr "Expected a record type" ]
+fromRecDef : Definition → TC (Name × List Type)
+fromRecDef (record′ c fs) =
+  do tys ← traverse (λ f → fmap ⦃ Functor-M ⦄ getCodPi (getType (unArg f))) fs
+     return (c , tys)
+fromRecDef d  = typeError [ strErr "Expected a record type" ]
 
+-- Map a record to its name.
+-- This will be superseeded in 2.8.0 by `quote R.constructor`
 getRecConstrName : Name → TC Name
 getRecConstrName rn =
   do d ← getDefinition rn
@@ -68,14 +68,15 @@ derive-To-single : Name -- name of the record type
                  → Name -- name of the instance to be defined
                  → TC ⊤
 derive-To-single recTyName instName =
-  do To-ctrName             ← getRecConstrName (quote To)
-     recDef                 ← getDefinition recTyName
-     (ctrName , fTys , nfs) ← fromNERecDef recDef
-     arity                  ← quoteTC nfs
-     arity'                 ← normalise arity
-     let tyProd = NE.foldr₁ (λ ty tys → (quote _×_) ∙⟦ ty ∣ tys ⟧) fTys
+  do (To-ctrName , _) ← getDefinition (quote To) >>= fromRecDef -- this will be superseeded by 'quote To.constructor' in Agda 2.8.0
+     (ctrName , fTys) ← getDefinition recTyName  >>= fromRecDef
+     arity            ← quoteTC (length fTys)
+     bot              ← quoteTC ⊥
+     let tyProd = case fTys of λ where
+                    []           → bot
+                    (fTy ∷ fTys) → NE.foldr₁ (λ ty tys → (quote _×_) ∙⟦ ty ∣ tys ⟧) (fTy ∷ fTys)
      let defTm  = (quote To) ∙⟦ tyProd ∣ recTyName ∙ ⟧
-     let instTm = To-ctrName ◆⟦ quote uncurryₙ ∙⟦ arity' ∣ ctrName ◆ ⟧ ⟧
+     let instTm = To-ctrName ◆⟦ quote uncurryₙ ∙⟦ arity ∣ ctrName ◆ ⟧ ⟧
      declareDef (iArg instName) defTm
      defineFun instName [ ⟦⇒ instTm ⟧ ]
 
