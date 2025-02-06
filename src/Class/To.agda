@@ -69,12 +69,11 @@ derive-To-single : Name -- name of the record type
                  → TC ⊤
 derive-To-single recTyName instName =
   do (To-ctrName , _) ← getDefinition (quote To) >>= fromRecDef -- this will be superseeded by 'quote To.constructor' in Agda 2.8.0
-     (ctrName , fTys) ← getDefinition recTyName  >>= fromRecDef
+     (ctrName , fTys@(fTy ∷ fTys')) ← getDefinition recTyName  >>= fromRecDef
+       where (_ , []) → typeError [ strErr "Expecting a nonempty record type" ]
      arity            ← quoteTC (length fTys)
      bot              ← quoteTC ⊥
-     let tyProd = case fTys of λ where
-                    []           → bot
-                    (fTy ∷ fTys) → NE.foldr₁ (λ ty tys → (quote _×_) ∙⟦ ty ∣ tys ⟧) (fTy ∷ fTys)
+     let tyProd = NE.foldr₁ (λ ty tys → (quote _×_) ∙⟦ ty ∣ tys ⟧) (fTy ∷ fTys')
      let defTm  = (quote To) ∙⟦ tyProd ∣ recTyName ∙ ⟧
      let instTm = To-ctrName ◆⟦ quote uncurryₙ ∙⟦ arity ∣ ctrName ◆ ⟧ ⟧
      declareDef (iArg instName) defTm
