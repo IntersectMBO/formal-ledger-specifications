@@ -26,24 +26,23 @@ open import Data.Product.Nary.NonDependent using (uncurryₙ)
 open MonadTCI
 
 getCodPi : Type → Type
-getCodPi ty =
-  let as , ty_v = stripPis ty
-  in unbumpTerm (length as) ty_v
+getCodPi (pi a b) = adjustTerm 1 (unAbs b)
   where
-    -- readjust De Bruijn indexes 
-    unbumpTerm : ℕ → Term → Term
-    unbumpArg : ℕ → Arg Term → Arg Term
-    unbumpArgs : ℕ → List (Arg Term) → List (Arg Term)
+    -- adjust De Bruijn indexes
+    adjustTerm : ℕ → Term → Term
+    adjustArg : ℕ → Arg Term → Arg Term
+    adjustArgs : ℕ → List (Arg Term) → List (Arg Term)
 
-    unbumpTerm n (var n' args) = var (n' ∸ n) (unbumpArgs n args)
-    unbumpTerm n (con c args) = con c (unbumpArgs n args)
-    unbumpTerm n (def f args) = def f (unbumpArgs n args)
-    unbumpTerm n d = d
+    adjustTerm n (var n' args) = var (n' ∸ n) (adjustArgs n args)
+    adjustTerm n (con c args) = con c (adjustArgs n args)
+    adjustTerm n (def f args) = def f (adjustArgs n args)
+    adjustTerm n d = d
 
-    unbumpArg n (arg i x) = arg i (unbumpTerm n x)
+    adjustArg n (arg i x) = arg i (adjustTerm n x)
 
-    unbumpArgs n [] = []
-    unbumpArgs n (x ∷ xs) = unbumpArg n x ∷ unbumpArgs n xs
+    adjustArgs n [] = []
+    adjustArgs n (x ∷ xs) = adjustArg n x ∷ adjustArgs n xs
+getCodPi ty = ty
 
 -- Map a nonempty record def. to
 -- 1. its constructor
@@ -91,12 +90,15 @@ private
 
   record R' : Set where
     field x : Bool
-          y : ℕ
+          y : ℕ → ℕ
 
   unquoteDecl To-R To-R' = derive-To ⦃ defaultTCOptions ⦄ ((quote R , To-R) ∷ (quote R' , To-R') ∷ [])
 
   p : R
   p = ⟦ true ⟧
+
+  q : R'
+  q = ⟦ true , (λ x → x) ⟧
 
   module _ (x : Set) where
     record R'' : Set where
