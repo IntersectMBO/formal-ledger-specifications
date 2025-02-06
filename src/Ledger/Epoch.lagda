@@ -57,11 +57,7 @@ record Snapshots : Set where
 \end{NoConway}
 \begin{code}
 record EpochState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     acnt       : Acnt
     ss         : Snapshots
     ls         : LState
@@ -71,11 +67,7 @@ record EpochState : Type where
 \begin{NoConway}
 \begin{code}
 record NewEpochState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     lastEpoch   : Epoch
     epochState  : EpochState
     ru          : Maybe RewardUpdate

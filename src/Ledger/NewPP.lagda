@@ -19,11 +19,7 @@ record NewPParamEnv : Type where
 \begin{AgdaMultiCode}
 \begin{code}
 record NewPParamState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     pparams  : PParams
     ppup     : PPUpdateState
 

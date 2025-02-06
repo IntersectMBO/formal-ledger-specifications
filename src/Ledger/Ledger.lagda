@@ -34,11 +34,7 @@ defined transition systems.
 \begin{AgdaMultiCode}
 \begin{code}
 record LEnv : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     slot        : Slot
     ppolicy     : Maybe ScriptHash
     pparams     : PParams
@@ -46,11 +42,7 @@ record LEnv : Type where
     treasury    : Coin
 
 record LState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     utxoSt     : UTxOState
     govSt      : GovState
     certState  : CertState

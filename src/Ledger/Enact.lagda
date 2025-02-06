@@ -34,21 +34,13 @@ since they are \HashProtected.
 \begin{AgdaMultiCode}
 \begin{code}
 record EnactEnv : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     gid       : GovActionID
     treasury  : Coin
     epoch     : Epoch
 
 record EnactState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
     constitution  : HashProtected (DocHash × Maybe ScriptHash)
     pv            : HashProtected ProtVer

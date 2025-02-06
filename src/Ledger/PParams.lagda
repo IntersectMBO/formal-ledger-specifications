@@ -39,11 +39,7 @@ remain in treasury and reserves.
 \begin{AgdaMultiCode}
 \begin{code}
 record Acnt : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     treasury reserves : Coin
 
 ProtVer : Type
@@ -79,24 +75,14 @@ data PParamGroup : Type where
   SecurityGroup    : PParamGroup
 
 record DrepThresholds : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
 
 record PoolThresholds : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     Q1 Q2a Q2b Q4 Q5e : ℚ
 
 record PParams : Type where
-\end{code}
-\begin{code}[hide]
   field
 \end{code}
 \emph{Network group}

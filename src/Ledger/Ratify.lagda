@@ -185,19 +185,11 @@ by at least half of the SPO stake.
 \begin{AgdaMultiCode}
 \begin{code}
 record StakeDistrs : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     stakeDistr  : VDeleg ⇀ Coin
 
 record RatifyEnv : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     stakeDistrs   : StakeDistrs
     currentEpoch  : Epoch
     dreps         : Credential ⇀ Epoch
@@ -207,11 +199,7 @@ record RatifyEnv : Type where
     delegatees    : Credential ⇀ VDeleg
 
 record RatifyState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     es              : EnactState
     removed         : ℙ (GovActionID × GovActionState)
     delay           : Bool

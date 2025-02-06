@@ -167,11 +167,7 @@ the new deposits logic in older eras and then replaying the chain.
 \emph{UTxO environment}
 \begin{code}
 record UTxOEnv : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     slot      : Slot
     pparams   : PParams
     treasury  : Coin
@@ -180,11 +176,7 @@ record UTxOEnv : Type where
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     utxo       : UTxO
     fees       : Coin
     deposits   : Deposits
