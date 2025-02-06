@@ -110,7 +110,7 @@ instance
   LStateToConf : L.Deposits × L.Deposits ⊢ L.LState ⭆ C.LState
   LStateToConf .convⁱ deposits ledgerSt =
     let open L.LState ledgerSt in
-    C.⟦ utxoSt , govSt , deposits ⊢conv certState ⟧ˡ
+    ⟦ utxoSt , govSt , deposits ⊢conv certState ⟧
 
 instance
   -- LEDGERToConf : ∀ {Γ s tx s'}
@@ -128,7 +128,7 @@ instance
   LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-V⋯ refl utxow certs gov) =
     updateLedgerDeps pparams tx (certDeposits s)
     , lem-cert-deposits-valid refl r
-    , subst₂ (λ • ◆ → Γ C.⊢ getCertDeps* cdeposits ⊢conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ • , _ , ◆ ⟧ˡ)
+    , subst₂ (λ • ◆ → Γ C.⊢ getCertDeps* cdeposits ⊢conv s ⇀⦇ tx ,LEDGER⦈ ⟦ • , _ , ◆ ⟧)
              utxoEq certsEq ledger'
     where
       open L.LEnv Γ
@@ -146,7 +146,7 @@ instance
       certs' = cdeposits ⊢conv certs
       gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOV⦈ govSt'
       gov' = getCertDeps* cdeposits' ⊢conv gov
-      ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
+      ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ ⟦ utxoStC' , govSt' , certStateC' ⟧
       ledger' = C.LEDGER-V⋯ refl utxow' certs' gov'
       utxoEq  : utxoStC' ≡ utxoSt'
       utxoEq  = cong (λ • → ⟦ _ , _ , • , _ ⟧)
@@ -154,25 +154,26 @@ instance
       ddeps = getCertDeps* cdeposits .proj₁
       gdeps = getCertDeps* cdeposits .proj₂
       certsEq : certStateC' ≡ (updateDDeps pparams txcerts ddeps , updateGDeps pparams txcerts gdeps) ⊢conv certState'
-      certsEq = cong₂ (λ • ◆ → C.⟦ C.⟦ _ , _ , _ , • ⟧ᵈ , _ , C.⟦ _ , _ , ◆ ⟧ᵛ ⟧ᶜˢ)
+      certsEq = cong₂ (λ • ◆ → ⟦ ⟦ _ , _ , _ , • ⟧ , _ , ⟦ _ , _ , ◆ ⟧ ⟧)
                      (lem-ddeps cdeposits)
                      (lem-gdeps cdeposits)
 
   -- LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ (cdeps , cdeps-eq) r@(L.LEDGER-I⋯ refl utxow) =
   LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-I⋯ refl utxow) =
     certDeposits s , lem-cert-deposits-invalid refl r ,
-    subst (λ • → Γ C.⊢ _ ⊢conv s ⇀⦇ tx ,LEDGER⦈ C.⟦ ⟦ _ , _ , • , _ ⟧ , _ , _ ⟧ˡ)
+    subst (λ • → Γ C.⊢ _ ⊢conv s ⇀⦇ tx ,LEDGER⦈ ⟦ ⟦ _ , _ , • , _ ⟧ , _ , _ ⟧)
           (lemInvalidDepositsL refl utxow)
           (C.LEDGER-I⋯ refl (conv utxow))
 
 instance
 
   LStateFromConf : C.LState ⭆ L.LState
-  LStateFromConf .convⁱ _ C.⟦ utxoSt , govSt , certState ⟧ˡ =
+  LStateFromConf .convⁱ _ ls =
+    let open C.LState ls in
     ⟦ utxoSt , govSt , conv certState ⟧
 
 certDepositsC : C.CertState → L.Deposits × L.Deposits
-certDepositsC C.⟦ dState , _ , gState ⟧ᶜˢ = C.DState.deposits dState , C.GState.deposits gState
+certDepositsC cs = let open C.CertState cs in C.DState.deposits dState , C.GState.deposits gState
 
 WellformedLState : C.LState → Type
 WellformedLState s = certDepositsC (C.LState.certState s) ≡ᵈ certDeposits (conv s)
@@ -277,8 +278,10 @@ lemCERTSDepositsC : ∀ {Γ s txcerts s'} (open C.CertEnv Γ using (pp))
 lemCERTSDepositsC (RTC (C.CERT-base _ , step)) = lemCERTS'DepositsC step
 
 lemWellformed : ∀ {Γ s tx s'} → WellformedLState s → Γ C.⊢ s ⇀⦇ tx ,LEDGER⦈ s' → WellformedLState s'
-lemWellformed {Γ} {s = s@(C.⟦ utxoSt , govSt , certSt ⟧ˡ)} {tx} {s' = s'@(C.⟦ utxoSt' , govSt' , certSt' ⟧ˡ)} wf (C.LEDGER-V⋯ refl utxo certs gov) = goal
+lemWellformed {Γ} {s = ls} {tx} {s' = ls'} wf (C.LEDGER-V⋯ refl utxo certs gov) = goal
   where
+    open C.LState ls  renaming (certState to certSt)
+    open C.LState ls' renaming (utxoSt to utxoSt'; certState to certSt')
     open L.LEnv Γ using (pparams)
     open TxBody (body tx)
 
@@ -316,7 +319,9 @@ lemWellformed {Γ} {s = s@(C.⟦ utxoSt , govSt , certSt ⟧ˡ)} {tx} {s' = s'@(
 lemWellformed wf (C.LEDGER-I⋯ refl utxo) rewrite lemDepositsC utxo = wf
 
 setCertDeposits : L.Deposits × L.Deposits → C.CertState → C.CertState
-setCertDeposits (ddeps , gdeps) C.⟦ dstate , pstate , gstate ⟧ᶜˢ = C.⟦ record dstate {deposits = ddeps} , pstate , record gstate {deposits = gdeps} ⟧ᶜˢ
+setCertDeposits (ddeps , gdeps) cs =
+  let open C.CertState cs in
+  ⟦ record dState {deposits = ddeps} , pState , record gState {deposits = gdeps} ⟧
 
 _⊢_⇀⦇_,CERTS'⦈_ : C.CertEnv → C.CertState → List L.DCert → C.CertState → Type
 _⊢_⇀⦇_,CERTS'⦈_ = ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_}

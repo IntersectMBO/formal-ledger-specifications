@@ -18,11 +18,12 @@ instance
   GovEnvToConf : L.Deposits × L.Deposits ⊢ L.GovEnv ⭆ C.GovEnv
   GovEnvToConf .convⁱ deposits Γ =
     let open L.GovEnv Γ renaming (epoch to e) in
-    C.⟦ txid , e , pparams , ppolicy , enactState , deposits ⊢conv certState ⟧ᵍ
+    ⟦ txid , e , pparams , ppolicy , enactState , deposits ⊢conv certState ⟧
 
   GovEnvFromConf : C.GovEnv ⭆ L.GovEnv
-  GovEnvFromConf .convⁱ _ C.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
-    ⟦ txid , epoch , pp , policy , enactState , conv certState ⟧
+  GovEnvFromConf .convⁱ _ Γ =
+    let open C.GovEnv Γ renaming (epoch to e) in
+    ⟦ txid , e , pparams , ppolicy , enactState , conv certState ⟧
 
   opaque
     unfolding L.isRegistered C.isRegistered

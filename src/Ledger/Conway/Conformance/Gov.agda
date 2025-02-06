@@ -33,15 +33,17 @@ GovState : Type
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Type where
-  constructor ⟦_,_,_,_,_,_⟧ᵍ
   field
-
     txid        : TxId
     epoch       : Epoch
     pparams     : PParams
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
     certState   : CertState
+
+instance
+  unquoteDecl To-GovEnv = derive-To
+    [ (quote GovEnv , To-GovEnv) ]
 
 private variable
   Γ : GovEnv
@@ -62,10 +64,12 @@ open PState
 
 opaque
   isRegistered : GovEnv → Voter → Type
-  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ ⟧ᵍ (r , c) = case r of λ where
-    CC    → just c ∈ range (gState .ccHotKeys)
-    DRep  → c ∈ dom (gState .dreps)
-    SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
+  isRegistered Γ (r , c) =
+    let open GovEnv Γ; open CertState certState in
+    case r of λ where
+      CC    → just c ∈ range (gState .ccHotKeys)
+      DRep  → c ∈ dom (gState .dreps)
+      SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
 
 data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type where
 

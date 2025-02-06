@@ -21,19 +21,21 @@ instance
   DStateToConf : L.Deposits ⊢ L.DState ⭆ C.DState
   DStateToConf .convⁱ deposits stᵈ =
     let open L.DState stᵈ in
-    C.⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ᵈ
+    ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧
 
   DStateFromConf : C.DState ⭆ L.DState
-  DStateFromConf .convⁱ _ C.⟦ voteDelegs , stakeDelegs , rewards , _ ⟧ᵈ =
+  DStateFromConf .convⁱ _ dState =
+    let open C.DState dState in
     ⟦ voteDelegs , stakeDelegs , rewards ⟧
 
   GStateToConf : L.Deposits ⊢ L.GState ⭆ C.GState
   GStateToConf .convⁱ deposits stᵍ =
     let open L.GState stᵍ in
-    C.⟦ dreps , ccHotKeys , deposits ⟧ᵛ
+    ⟦ dreps , ccHotKeys , deposits ⟧
 
   GStateFromConf : C.GState ⭆ L.GState
-  GStateFromConf .convⁱ deposits C.⟦ dreps , ccHotKeys , _ ⟧ᵛ =
+  GStateFromConf .convⁱ deposits gState =
+    let open C.GState gState in
     ⟦ dreps , ccHotKeys ⟧
 
 data ValidDepsᵈ (pp : PParams) (deps : L.Deposits) : List L.DCert → Set where
@@ -135,10 +137,11 @@ instance
   CertStToConf : L.Deposits × L.Deposits ⊢ L.CertState ⭆ C.CertState
   CertStToConf .convⁱ (ddeps , gdeps) certState =
     let open L.CertState certState in
-    C.⟦ ddeps ⊢conv dState , pState , gdeps ⊢conv gState ⟧ᶜˢ
+    ⟦ ddeps ⊢conv dState , pState , gdeps ⊢conv gState ⟧
 
   CertStFromConf : C.CertState ⭆ L.CertState
-  CertStFromConf .convⁱ _ C.⟦ dState , pState , gState ⟧ᶜˢ =
+  CertStFromConf .convⁱ _ certState =
+    let open C.CertState certState in
     ⟦ conv dState , pState , conv gState ⟧
 
   CERTBASEToConf : ∀ {Γ s s'}

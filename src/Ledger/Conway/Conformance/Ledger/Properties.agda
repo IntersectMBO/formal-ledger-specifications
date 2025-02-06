@@ -59,19 +59,19 @@ instance
 
     module go
       (Γ : LEnv)   (let open LEnv Γ)
-      (s : LState) (let ⟦ utxoSt , govSt , certSt ⟧ˡ = s)
+      (s : LState) (let open LState s)
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , _ ⟧
       govΓ : CertState → GovEnv
-      govΓ = ⟦ txid , epoch slot , pparams , ppolicy , enactState ,_⟧ᵍ
+      govΓ = λ cs → ⟦ txid , epoch slot , pparams , ppolicy , enactState , cs ⟧
 
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
       computeProof = case isValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
-          (certSt' , certStep) ← computeCerts certΓ certSt txcerts
+          (certSt' , certStep) ← computeCerts certΓ certState txcerts
           (govSt'  , govStep)  ← computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb)
           success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
         (no ¬p) → do
@@ -79,17 +79,17 @@ instance
           success (_ , LEDGER-I⋯ (¬-not ¬p) utxoStep)
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ success s'
-      completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER-V⋯ v utxoStep certStep govStep)
+      completeness  ls' (LEDGER-V⋯ v utxoStep certStep govStep)
         with isValid ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeCerts certΓ certSt txcerts | complete _ _ _ _ certStep
+        with computeCerts certΓ certState txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
         with computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
-      completeness ⟦ utxoSt' , govSt' , certState' ⟧ˡ (LEDGER-I⋯ i utxoStep)
+      completeness ls' (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
       ... | yes refl = case i of λ ()
       ... | no ¬v
