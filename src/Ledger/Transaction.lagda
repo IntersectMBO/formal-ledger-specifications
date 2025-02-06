@@ -51,8 +51,8 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{itemize}
   \item \txvote, the list of votes for goverance actions;
   \item \txprop, the list of governance proposals;
-  \item \txdonation, the treasury donation amount;
-  \item \curTreasury, the current value of the treasury.
+  \item \txdonation, amount of \Coin to donate to treasury, e.g., to return money to the treasury after a governance action;
+  \item \curTreasury, the current value of the treasury. This field serves as a precondition to executing Plutus scripts;
   \item \txsize and \txid, the size and hash of the serialized form of the transaction that was included in the block.
 \end{itemize}
 \end{Conway}
