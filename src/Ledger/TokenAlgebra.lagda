@@ -10,6 +10,7 @@ module Ledger.TokenAlgebra (
 \emph{Abstract types}
 \begin{code}
   PolicyId
+
 \end{code}
 \begin{code}[hide]
   : Type) where
@@ -28,11 +29,7 @@ MemoryEstimate = ℕ
 \AgdaTarget{TokenAlgebra}
 \begin{code}
 record TokenAlgebra : Type₁ where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     Value : Set
     ⦃ Value-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ Value
 

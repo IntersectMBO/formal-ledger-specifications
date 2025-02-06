@@ -41,12 +41,8 @@ GovState : Type
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_,_,_,_⟧ᵍ
   field
-\end{code}
-\begin{code}
     txid        : TxId
     epoch       : Epoch
     pparams     : PParams
