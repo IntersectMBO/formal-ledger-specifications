@@ -393,7 +393,7 @@ special: a protocol parameter may or may not be in the \SecurityGroup.
 So, each protocol parameter belongs to at least one and at most two groups.
 Note that in \href{https://cips.cardano.org/cip/CIP-1694}{CIP-1694}
 there is no \SecurityGroup, but there is the concept of security-relevant
-protocol parameters~\cite{cip1694}.  The difference between these notions
+protocol parameters~(\cite{cip1694}).  The difference between these notions
 is only social, so we implement security-relevant protocol parameters as
 a group.
 

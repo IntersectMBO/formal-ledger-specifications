@@ -62,7 +62,7 @@ Conway~\cite{cip1694} & Complete & Partial & Partial \\
 \subsection{A Note on Agda}
 
 This specification is written using the Agda programming language and
-proof assistant~\cite{agda2023}. We have spent a lot of time on making
+proof assistant~(\cite{agda2023}). We have spent a lot of time on making
 this document readable for people unfamiliar with Agda (or other proof
 assistants, functional programming languages, etc.). However, by the
 nature of working in a formal language we have to play by its rules,
@@ -73,8 +73,7 @@ section is complete.  If the meaning of an expression is confusing
 or unclear, please
 \href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}%
      {open an issue} in
-\href{https://github.com/IntersectMBO/formal-ledger-specifications}%
-     {our GitHub repository} with the `notation' label.
+\href{\repourl}{our GitHub repository} with the `notation' label.
 
 \subsection{Separation of Concerns}
 
