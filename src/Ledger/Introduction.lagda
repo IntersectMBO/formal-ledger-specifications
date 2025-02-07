@@ -69,12 +69,12 @@ nature of working in a formal language we have to play by its rules,
 meaning that some instances of uncommon notation are very difficult or
 impossible to avoid. Some are explained in
 Section~\ref{sec:notation}, but there is no guarantee that this
-section is complete.  Anyone who is confused by the meaning of an expression, please
-feel free to
-\href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}{open an issue}
-in
-\href{https://github.com/IntersectMBO/formal-ledger-specifications}{our GitHub repository}
-with the `notation' label.
+section is complete.  If the meaning of an expression is confusing
+or unclear, please
+\href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}%
+     {open an issue} in
+\href{https://github.com/IntersectMBO/formal-ledger-specifications}%
+     {our GitHub repository} with the `notation' label.
 
 \subsection{Separation of Concerns}
 
