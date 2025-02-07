@@ -6,7 +6,7 @@
 module Ledger.PDF.ConwayBootstrap where
 \end{code}
 
-As described in \cite{cip1694}, the governance system needs to be
+As described in~\cite{cip1694}, the governance system needs to be
 bootstrapped. During the bootstrap period, the following changes will
 be made to the ledger described in this document.
 
@@ -22,7 +22,7 @@ be made to the ledger described in this document.
 
 This allows for a governance mechanism similar to the old, Shelley-era
 governance during the bootstrap phase, where the constitutional
-committee is mostly in charge (see~\cite{delegation_design}).
+committee is mostly in charge (see~\cite{shelley-delegation-design}).
 These restrictions will be removed during a subsequent hard fork,
 once enough DRep stake is present in the system to properly govern
 and secure itself.

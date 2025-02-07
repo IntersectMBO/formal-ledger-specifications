@@ -1,5 +1,7 @@
 \section{Ratification}
 \label{sec:ratification}
+\modulenote{\LedgerRatify}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 

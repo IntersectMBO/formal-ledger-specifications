@@ -1,4 +1,6 @@
 \section{Ledger State Transition}
+\label{sec:ledger-state-transition}
+\modulenote{\LedgerLedger}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

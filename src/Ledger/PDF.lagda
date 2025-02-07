@@ -20,7 +20,6 @@ module Ledger.PDF where
 
 open import Ledger.BaseTypes
 open import Ledger.Introduction
-open import Ledger.Notation
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
 open import Ledger.Address
@@ -45,12 +44,13 @@ open import Ledger.Utxow.Properties
 open import Ledger.Ledger
 open import Ledger.Ledger.Properties
 open import Ledger.Ratify.Properties
+open import Ledger.Epoch.Properties
 open import Ledger.Chain.Properties
 
 open import Ledger.Gov
 open import Ledger.Enact
 open import Ledger.Ratify
-
+open import Ledger.Epoch
 open import Ledger.Chain
 
 open import Ledger.Properties
@@ -61,7 +61,7 @@ open import Ledger.PDF.ConwayBootstrap
 \end{code}
 
 \include{Ledger/Introduction}
-\include{Ledger/Notation}
+\include{Notation}
 \include{Ledger/Crypto}
 \include{Ledger/BaseTypes}
 \include{Ledger/TokenAlgebra}

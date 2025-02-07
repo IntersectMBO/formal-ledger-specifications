@@ -1,5 +1,7 @@
 \section{Protocol Parameters}
 \label{sec:protocol-parameters}
+\modulenote{\LedgerPParams}
+
 This section defines the adjustable protocol parameters of the Cardano ledger.
 These parameters are used in block validation and can affect various features of the system,
 such as minimum fees, maximum and minimum sizes of certain components, and more.
@@ -143,9 +145,10 @@ record PParams : Type where
 \begin{AgdaMultiCode}
 \begin{code}
 positivePParams : PParams → List ℕ
-positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ refScriptCostStride
-                      ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
+                      ∷ refScriptCostStride ∷ coinsPerUTxOByte ∷ poolDeposit
+                      ∷ collateralPercentage ∷ ccMaxTermLength ∷ govActionLifetime
+                      ∷ govActionDeposit ∷ drepDeposit ∷ [] )
 \end{code}
 \begin{code}[hide]
   where open PParams pp
@@ -384,14 +387,14 @@ to the general purpose that each parameter serves.
   \item \SecurityGroup: parameters that can impact the security of the system.
 \end{itemize}
 
-The first four groups have the property that every protocol parameter
-is associated to precisely one of these groups. The \SecurityGroup is
-special: a protocol parameter may or may not be in the
-\SecurityGroup. So, each protocol parameter belongs to at least one
-and at most two groups. Note that in \cite{cip1694} there is no
-\SecurityGroup, but there is the concept of security-relevant protocol
-parameters. The difference between these notions is only social, so we
-implement security-relevant protocol parameters as a group.
+The first four groups have the property that every protocol parameter is associated
+to precisely one of these groups.  The \SecurityGroup is special: a protocol
+parameter may or may not be in the \SecurityGroup. So, each protocol parameter
+belongs to at least one and at most two groups.  Note that in
+\href{https://cips.cardano.org/cip/CIP-1694}{CIP-1694} there is no \SecurityGroup,
+but there is the concept of security-relevant protocol parameters~\cite{cip1694}.
+The difference between these notions is only social, so we implement
+security-relevant protocol parameters as a group.
 
 The purpose of the groups is to determine voting thresholds for
 proposals aiming to change parameters. The thresholds depend on the

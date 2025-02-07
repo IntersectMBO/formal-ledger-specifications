@@ -1,4 +1,7 @@
 \subsection{Witnessing}
+\label{sec:withnessing}
+\modulenote{\LedgerUtxow}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -16,13 +19,13 @@ open import Ledger.ScriptValidation txs abs
 open import Ledger.Certs govStructure
 \end{code}
 
-The purpose of witnessing is make sure the intended action is
-authorized by the holder of the signing key.  (For details see
-the Formal Ledger Specification for the Shelley Era~\cite[Sec.~8.3]{cardano_shelley_spec}.)
-Figure~\ref{fig:functions:utxow} defines functions used for witnessing.
-\witsVKeyNeeded and \scriptsNeeded are now defined by projecting the same information out of
-\credsNeeded. Note that the last component of \credsNeeded adds the script in the proposal policy
-only if it is present.
+The purpose of witnessing is make sure the intended action is authorized by the
+holder of the signing key.  (For details see the formal ledger specification for the
+Shelley era~\cite[Sec.~8.3]{shelley-ledger-spec}.)  Figure~\ref{fig:functions:utxow}
+defines functions used for witnessing.  \witsVKeyNeeded and \scriptsNeeded are now
+defined by projecting the same information out of \credsNeeded. Note that the last
+component of \credsNeeded adds the script in the proposal policy only if it is
+present.
 
 \allowedLanguages has additional conditions for new features in
 Conway. If a transaction contains any votes, proposals, a treasury
@@ -217,7 +220,7 @@ In Figure~\ref{fig:rules:utxow}, the line
 \inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
 \PowerSet~\DataHash.  In the original Alonzo spec, these two terms would
 have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out
-(see~\cite[Sec.~3.1]{cardano_alonzo_spec}).
+(see~\cite[Sec.~3.1]{alonzo-ledger-spec}).
 In original spec, however, the right-hand side (\txdatsHashes) could never
 contain \nothing, hence the left-hand side (\inputHashes) could never
 contain \nothing.

@@ -1,5 +1,7 @@
 \section{Enactment}
 \label{sec:enactment}
+\modulenote{\LedgerEnact}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 

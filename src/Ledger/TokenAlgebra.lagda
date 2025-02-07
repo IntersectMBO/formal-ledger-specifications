@@ -1,5 +1,7 @@
 \section{Token Algebras}
 \label{sec:token-algebra}
+\modulenote{\LedgerTokenAlgebra}
+
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}[hide]

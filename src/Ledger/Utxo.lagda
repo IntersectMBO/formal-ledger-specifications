@@ -1,8 +1,8 @@
 \section{UTxO}
 \label{sec:utxo}
+\modulenote{\LedgerUtxo}
 
 \subsection{Accounting}
-
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -161,7 +161,8 @@ Alternatively, we can effectively treat the old handling of deposits
 as an erratum in the Shelley specification, which we fix by implementing
 the new deposits logic in older eras and then replaying the chain.
 (The handling of deposits in the Shelley era is discussed
-in~\cite[Sec.~8]{cardano_shelley_spec} and~\cite[Sec.~B.2]{delegation_design}.)
+in~\cite[Sec.~8]{shelley-ledger-spec}
+and~\cite[Sec.~B.2]{shelley-delegation-design}.)
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}

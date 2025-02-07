@@ -325,15 +325,48 @@
 
 \newcommand{\just}{\AgdaInductiveConstructor{just}\xspace}
 
-\newcommand{\LedgerAddress}{\AgdaModule{Ledger.Address}\xspace}
-\newcommand{\LedgerCrypto}{\AgdaModule{Ledger.Crypto}\xspace}
-\newcommand{\LedgerEpoch}{\AgdaModule{Ledger.Epoch}\xspace}
-\newcommand{\LedgerGov}{\AgdaModule{Ledger.Gov}\xspace}
-\newcommand{\LedgerGovernanceActions}{\AgdaModule{Ledger.GovernanceActions}\xspace}
-\newcommand{\LedgerPParams}{\AgdaModule{Ledger.PParams}\xspace}
-\newcommand{\LedgerPrelude}{\AgdaModule{Ledger.Prelude}\xspace}
-\newcommand{\LedgerRatify}{\AgdaModule{Ledger.Ratify}\xspace}
-\newcommand{\LedgerTransaction}{\AgdaModule{Ledger.Transaction}\xspace}
+%% TODO: replace the following 30 or so definitions with a single macro,
+%%       something like this:
+%%           \newcommand{\LedgerURL}[1]{%
+%%           \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}%
+%%                {\AgdaModule{Ledger.#1}}%
+%%           }
+%%       then we can just use, e.g., \LedgerURL{Chain} instead of requiring a special \LedgerChain macro.
+%%       Unfortunatley, I get a strange LaTeX error when I try the above.
+%%       (Maybe make this an issue later; not urgent enough to do now.)
+\newcommand{\LedgerLedger}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Ledger.lagda}{\AgdaModule{Ledger.Ledger}}\xspace}
+\newcommand{\LedgerAddress}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Address.lagda}{\AgdaModule{Ledger.Address}}\xspace}
+\newcommand{\LedgerBaseTypes}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/BaseTypes.lagda}{\AgdaModule{Ledger.BaseTypes}}\xspace}
+\newcommand{\LedgerCerts}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Certs.lagda}{\AgdaModule{Ledger.Certs}}\xspace}
+\newcommand{\LedgerChain}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Ledger.lagda}{\AgdaModule{Ledger.Chain}}\xspace}
+\newcommand{\LedgerChainProperties}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Chain/Properties.lagda}{\AgdaModule{Ledger.Chain.Properties}}\xspace}
+\newcommand{\LedgerCrypto}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Crypto.lagda}{\AgdaModule{Ledger.Crypto}}\xspace}
+\newcommand{\LedgerEnact}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Enact.lagda}{\AgdaModule{Ledger.Enact}}\xspace}
+\newcommand{\LedgerEpoch}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Epoch.lagda}{\AgdaModule{Ledger.Epoch}}\xspace}
+\newcommand{\LedgerEssentialAgda}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/EssentialAgda.lagda}{\AgdaModule{Ledger.EssentialAgda}}\xspace}
+\newcommand{\LedgerGov}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Gov.lagda}{\AgdaModule{Ledger.Gov}}\xspace}
+\newcommand{\LedgerGovernanceActions}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/GovernanceActions.lagda}{\AgdaModule{Ledger.GovernanceActions}}\xspace}
+\newcommand{\LedgerIntroduction}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Introduction.lagda}{\AgdaModule{Ledger.Introduction}}\xspace}
+\newcommand{\LedgerLedgerProperties}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Ledger/Properties.lagda}{\AgdaModule{Ledger.Ledger.Properties}}\xspace}
+\newcommand{\LedgerPDFConwayBootstrap}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/PDF/ConwayBootstrap.lagda}{\AgdaModule{Ledger.PDF.ConwayBootstrap}}\xspace}
+\newcommand{\LedgerPDFConwayBootstrapEnact}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/PDF/ConwayBootstrapEnact.lagda}{\AgdaModule{Ledger.PDF.ConwayBootstrapEnact}}\xspace}
+\newcommand{\LedgerPParams}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/PParams.lagda}{\AgdaModule{Ledger.PParams}}\xspace}
+\newcommand{\LedgerPrelude}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Prelude.lagda}{\AgdaModule{Ledger.Prelude}}\xspace}
+\newcommand{\LedgerProperties}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Properties.lagda}{\AgdaModule{Ledger.Properties}}\xspace}
+\newcommand{\LedgerRatify}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Ratify.lagda}{\AgdaModule{Ledger.Ratify}}\xspace}
+\newcommand{\LedgerRatifyProperties}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Ratify/Properties.lagda}{\AgdaModule{Ledger.Ratify.Properties}}\xspace}
+\newcommand{\LedgerScript}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Script.lagda}{\AgdaModule{Ledger.Script}}\xspace}
+\newcommand{\LedgerScriptValidation}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/ScriptValidation.lagda}{\AgdaModule{Ledger.ScriptValidation}}\xspace}
+\newcommand{\LedgerTokenAlgebra}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/TokenAlgebra.lagda}{\AgdaModule{Ledger.TokenAlgebra}}\xspace}
+\newcommand{\LedgerTokenAlgebraValueSet}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/TokenAlgebra/ValueSet.lagda}{\AgdaModule{Ledger.TokenAlgebra.ValueSet}}\xspace}
+\newcommand{\LedgerTransaction}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Transaction.lagda}{\AgdaModule{Ledger.Transaction}}\xspace}
+\newcommand{\LedgerTypesEpoch}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Types/Epoch.lagda}{\AgdaModule{Ledger.Types.Epoch}}\xspace}
+\newcommand{\LedgerTypesGovStructure}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Types/GovStructure.lagda}{\AgdaModule{Ledger.Types.GovStructure}}\xspace}
+\newcommand{\LedgerUtxo}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Utxo.lagda}{\AgdaModule{Ledger.Utxo}}\xspace}
+\newcommand{\LedgerUtxoProperties}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Utxo/Properties.lagda}{\AgdaModule{Ledger.Utxo.Properties}}\xspace}
+\newcommand{\LedgerUtxow}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Utxow.lagda}{\AgdaModule{Ledger.Utxow}}\xspace}
+\newcommand{\LedgerUtxowProperties}{\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Utxow/Properties.lagda}{\AgdaModule{Ledger.Utxow.Properties}}\xspace}
+
 \newcommand{\lengthsupers}{\AgdaFunction{lengthˢ}\xspace}
 \newcommand{\lengthsupersequivsupere}{\AgdaFunction{lengthˢ-≡ᵉ}\xspace}
 \newcommand{\List}{\AgdaDatatype{List}\xspace}

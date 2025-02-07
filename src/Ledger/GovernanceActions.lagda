@@ -1,5 +1,7 @@
 \section{Governance Actions}
 \label{sec:governance-actions}
+\modulenote{\LedgerGovernanceActions}
+
 We introduce three distinct bodies that have specific functions in the new governance framework:
 \begin{enumerate}
 \item
@@ -62,11 +64,10 @@ data GovAction : Type where
   Info             :                                             GovAction
 
 actionWellFormed : GovAction → Type
-actionWellFormed (ChangePParams x)  = ppdWellFormed x
-actionWellFormed (TreasuryWdrl x)   = 
-  (∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId)
-  × (∃[ v ∈ range x ] ¬ (v ≡ 0))
-actionWellFormed _                  = ⊤
+actionWellFormed (ChangePParams x)  =  ppdWellFormed x
+actionWellFormed (TreasuryWdrl x)   =  ∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId
+                                       × ∃[ v ∈ range x ] ¬ (v ≡ 0)
+actionWellFormed _                  =  ⊤
 \end{code}
 \begin{code}[hide]
 actionWellFormed? : ∀ {a} → actionWellFormed a ⁇

@@ -1,4 +1,7 @@
 \section{Introduction}
+\label{sec:introduction}
+\modulenote{\LedgerIntroduction}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -35,7 +38,7 @@ explanations may be missing or wrong.
 
 \begin{NoConway}
 \begin{center}
-Repository: \url{https://github.com/IntersectMBO/formal-ledger-specifications}
+Repository: \url{\repourl}
 \end{center}
 This is the work-in-progress specification of the Cardano ledger. The
 current status of each individual era is described in Table \ref{fig:eras-progress}.
@@ -45,10 +48,10 @@ current status of each individual era is described in Table \ref{fig:eras-progre
 Era  & Figures & Prose & Cleanup \\
 \hline
 \endhead
-Shelley~\cite{cardano_shelley_spec}) & Partial & Partial & Not started \\
-Shelley-MA~\cite{cardano_shelley_ma_spec} & Partial & Partial & Not started \\
-Alonzo~\cite{cardano_alonzo_spec} & Partial & Partial & Not started \\
-Babbage~\cite{cardano_babbage_spec} & Not started & Not started & Not started \\
+Shelley~\cite{shelley-ledger-spec}) & Partial & Partial & Not started \\
+Shelley-MA~\cite{shelley-ma-spec} & Partial & Partial & Not started \\
+Alonzo~\cite{alonzo-ledger-spec} & Partial & Partial & Not started \\
+Babbage~\cite{babbage-ledger-spec} & Not started & Not started & Not started \\
 Conway~\cite{cip1694} & Complete & Partial & Partial \\
 \hline
 \caption{Specification progress}
@@ -66,9 +69,11 @@ nature of working in a formal language we have to play by its rules,
 meaning that some instances of uncommon notation are very difficult or
 impossible to avoid. Some are explained in
 Section~\ref{sec:notation}, but there is no guarantee that this
-section is complete. Anyone who is confused by the meaning of an
-expression, please feel free to open an issue in our
-\href{https://github.com/input-output-hk/formal-ledger-specifications/issues}{repository}
+section is complete.  Anyone who is confused by the meaning of an expression, please
+feel free to
+\href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}{open an issue}
+in
+\href{https://github.com/IntersectMBO/formal-ledger-specifications}{our GitHub repository}
 with the `notation' label.
 
 \subsection{Separation of Concerns}
