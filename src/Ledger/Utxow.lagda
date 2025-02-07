@@ -1,5 +1,5 @@
 \subsection{Witnessing}
-\label{sec:withnessing}
+\label{sec:witnessing}
 \modulenote{\LedgerUtxow}
 
 \begin{code}[hide]
