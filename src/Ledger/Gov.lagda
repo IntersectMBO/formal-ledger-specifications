@@ -438,13 +438,11 @@ The GOV transition system is now given as the reflexitive-transitive
 closure of the system GOV', described in
 Figure~\ref{defs:gov-rules}.
 
-For \GOVVote{}, we check that the governance action being voted on
-exists and the role is allowed to vote. \canVote{} is defined in
-Figure~\ref{fig:ratification-requirements}. Note that there are no
-checks on whether the credential is actually associated with the
-role. This means that anyone can vote for, e.g., the \CC{} role. However,
-during ratification those votes will only carry weight if they are
-properly associated with members of the constitutional committee.
+For \GOVVote, we check that the governance action being voted on
+exists; that the voter's role is allowed to vote (see \canVote{} in
+Figure~\ref{fig:ratification-requirements}); and that the voter's
+credential is actually associated with their role (see
+\isRegistered{} in Figure~\ref{defs:gov-defs}).
 
 For \GOVPropose{}, we check the correctness of the deposit along with some
 and some conditions that ensure the action is well-formed and valid;
