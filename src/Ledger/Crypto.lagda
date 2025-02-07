@@ -19,34 +19,40 @@ record HashableSet : Type₁ where
   field T : Type; ⦃ T-isHashable ⦄ : isHashableSet T
   open isHashableSet T-isHashable public
 
-record PKKScheme : Type₁ where
-  field
 \end{code}
 We rely on a public key signing scheme for verification of spending.
 \begin{figure*}[h]
+\begin{AgdaMultiCode}
+\begin{code}[hide]
+record PKKScheme : Type₁ where
+  field
+\end{code}
 \emph{Types \& functions}
 \begin{code}
-        SKey VKey Sig Ser  : Type
-        isKeyPair          : SKey → VKey → Type
-        isSigned           : VKey → Ser → Sig → Type
-        sign               : SKey → Ser → Sig
+    SKey VKey Sig Ser  : Type
+    isKeyPair          : SKey → VKey → Type
+    isSigned           : VKey → Ser → Sig → Type
+    sign               : SKey → Ser → Sig
 
   KeyPair = Σ[ sk ∈ SKey ] Σ[ vk ∈ VKey ] isKeyPair sk vk
+
+\end{code}
+\begin{code}[hide]
+  field
+    ⦃ Dec-isSigned ⦄ : isSigned ⁇³
 \end{code}
 \emph{Property of signatures}
-\begin{code}[hide]
-  field ⦃ Dec-isSigned ⦄ : isSigned ⁇³
-        isSigned-correct :
-\end{code}
 \begin{code}
-          ((sk , vk , _) : KeyPair) (d : Ser) (σ : Sig) → sign sk d ≡ σ → isSigned vk d σ
+    isSigned-correct  : ((sk , vk , _) : KeyPair) (d : Ser) (σ : Sig)
+                      → sign sk d ≡ σ → isSigned vk d σ
 \end{code}
+\end{AgdaMultiCode}
 \caption{Definitions for the public key signature scheme}
 \label{fig:defs:crypto}
 \end{figure*}
 \begin{code}[hide]
-        ⦃ DecEq-Sig  ⦄ : DecEq Sig
-        ⦃ DecEq-Ser  ⦄ : DecEq Ser
+    ⦃ DecEq-Sig  ⦄ : DecEq Sig
+    ⦃ DecEq-Ser  ⦄ : DecEq Ser
 
 record Crypto : Type₁ where
   field pkk : PKKScheme

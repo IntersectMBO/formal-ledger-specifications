@@ -31,11 +31,7 @@ MemoryEstimate = ℕ
 \AgdaTarget{TokenAlgebra}
 \begin{code}
 record TokenAlgebra : Type₁ where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     Value : Set
     ⦃ Value-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ Value
 

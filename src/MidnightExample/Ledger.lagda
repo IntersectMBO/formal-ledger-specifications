@@ -46,8 +46,9 @@ points in the chain.
 \AgdaTarget{Point, slot, blockHash, slotsInEpoch, epochOf}
 \begin{code}
 record Point : Type where
-  field  slot       : Maybe ℕ
-         blockHash  : Hash
+  field
+    slot       : Maybe ℕ
+    blockHash  : Hash
 
 slotsInEpoch : ℕ
 slotsInEpoch = 50
@@ -95,15 +96,17 @@ instance
 \AgdaTarget{Header, slotNo, blockNo, blockHash, prev, nodeId, Block, header, body, blockPoint, computeBlockHash, addBlockHash}
 \begin{code}
 record Header : Type where
-  field  slotNo     : ℕ
-         blockNo    : ℕ
-         blockHash  : Hash
-         prev       : ℕ
-         nodeId     : ℕ
+  field
+    slotNo     : ℕ
+    blockNo    : ℕ
+    blockHash  : Hash
+    prev       : ℕ
+    nodeId     : ℕ
 
 record Block : Type where
-  field  header  : Header
-         body    : List Tx
+  field
+    header  : Header
+    body    : List Tx
 
   open Header header public
 
@@ -133,9 +136,10 @@ The ledger state consists of a pointer to the previous block as well as a counte
 \begin{AgdaSuppressSpace}
 \begin{code}
 record LedgerState : Type where
-  field  tip                  : Point
-         count                : ℤ
-         snapshot1 snapshot2  : ℤ
+  field
+    tip                  : Point
+    count                : ℤ
+    snapshot1 snapshot2  : ℤ
 
 \end{code}
 \begin{code}[hide]
