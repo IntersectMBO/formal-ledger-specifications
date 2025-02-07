@@ -6,7 +6,7 @@
 module Ledger.PDF.ConwayBootstrap where
 \end{code}
 
-As described in~\cite{cip1694}, the governance system needs to be
+As described in \cipIGgA{}, the governance system needs to be
 bootstrapped. During the bootstrap period, the following changes will
 be made to the ledger described in this document.
 

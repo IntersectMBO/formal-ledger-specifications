@@ -21,10 +21,7 @@ record HashableSet : Type₁ where
   constructor mkHashableSet
   field T : Type; ⦃ T-isHashable ⦄ : isHashableSet T
   open isHashableSet T-isHashable public
-
 \end{code}
-
-We rely on a public key signing scheme for verification of spending.
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -72,3 +69,6 @@ record Crypto : Type₁ where
 
 -- TODO: KES and VRF
 \end{code}
+
+We rely on a public key signing scheme for verification of spending.
+Figure~\ref{fig:defs:crypto} shows some of the types, functions and properties of this scheme.
