@@ -1,6 +1,6 @@
 \section{Addresses}
 \label{sec:addresses}
-\modulenote{\LedgerAddress}
+\modulenote{\LedgerModule{Address}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

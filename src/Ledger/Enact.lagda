@@ -1,6 +1,6 @@
 \section{Enactment}
 \label{sec:enactment}
-\modulenote{\LedgerEnact}
+\modulenote{\LedgerModule{Enact}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

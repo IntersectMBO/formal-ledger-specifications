@@ -1,6 +1,6 @@
 \section{UTxO}
 \label{sec:utxo}
-\modulenote{\LedgerUtxo}
+\modulenote{\LedgerModule{Utxo}}
 
 \subsection{Accounting}
 \begin{code}[hide]

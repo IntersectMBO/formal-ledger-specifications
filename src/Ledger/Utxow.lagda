@@ -1,6 +1,6 @@
 \subsection{Witnessing}
 \label{sec:witnessing}
-\modulenote{\LedgerUtxow}
+\modulenote{\LedgerModule{Utxow}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

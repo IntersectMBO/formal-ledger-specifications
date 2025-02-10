@@ -1,6 +1,6 @@
 \section{Cryptographic Primitives}
 \label{sec:cryptographic-primitives}
-\modulenote{\LedgerCrypto}
+\modulenote{\LedgerModule{Crypto}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

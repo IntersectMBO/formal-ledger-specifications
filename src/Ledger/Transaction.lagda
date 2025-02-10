@@ -1,6 +1,6 @@
 \section{Transactions}
 \label{sec:transactions}
-\modulenote{\LedgerTransaction}
+\modulenote{\LedgerModule{Transaction}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

@@ -1,6 +1,6 @@
 \section{Ratification}
 \label{sec:ratification}
-\modulenote{\LedgerRatify}
+\modulenote{\LedgerModule{Ratify}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

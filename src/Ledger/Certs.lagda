@@ -1,6 +1,6 @@
 \section{Certificates}
 \label{sec:certificates}
-\modulenote{\LedgerCerts}
+\modulenote{\LedgerModule{Certs}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

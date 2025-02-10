@@ -1,6 +1,6 @@
 \section{Protocol Parameters}
 \label{sec:protocol-parameters}
-\modulenote{\LedgerPParams}
+\modulenote{\LedgerModule{PParams}}
 
 This section defines the adjustable protocol parameters of the Cardano ledger.
 These parameters are used in block validation and can affect various features of the system,

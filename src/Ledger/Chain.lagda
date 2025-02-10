@@ -1,6 +1,6 @@
 \section{Blockchain Layer}
 \label{sec:blockchain-layer}
-\modulenote{\LedgerChain}
+\modulenote{\LedgerModule{Chain}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

@@ -1,6 +1,6 @@
 \section{Scripts}
 \label{sec:scripts}
-\modulenote{\LedgerScript}
+\modulenote{\LedgerModule{Script}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

@@ -1,6 +1,6 @@
 \section{Governance Actions}
 \label{sec:governance-actions}
-\modulenote{\LedgerGovernanceActions}
+\modulenote{\LedgerModule{GovernanceActions}}
 
 We introduce three distinct bodies that have specific functions in the new governance framework:
 \begin{enumerate}

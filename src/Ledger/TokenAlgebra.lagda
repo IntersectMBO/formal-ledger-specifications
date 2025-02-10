@@ -1,6 +1,6 @@
 \section{Token Algebras}
 \label{sec:token-algebra}
-\modulenote{\LedgerTokenAlgebra}
+\modulenote{\LedgerModule{TokenAlgebra}}
 
 \begin{figure*}[h]
 \begin{AgdaMultiCode}

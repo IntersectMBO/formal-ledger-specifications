@@ -1,6 +1,6 @@
 \section{Introduction}
 \label{sec:introduction}
-\modulenote{\LedgerIntroduction}
+\modulenote{\LedgerModule{Introduction}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

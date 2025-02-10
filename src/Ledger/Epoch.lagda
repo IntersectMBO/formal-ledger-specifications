@@ -1,6 +1,6 @@
 \section{Epoch Boundary}
 \label{sec:epoch-boundary}
-\modulenote{\LedgerEpoch}
+\modulenote{\LedgerModule{Epoch}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
