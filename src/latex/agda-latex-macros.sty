@@ -327,19 +327,9 @@
 
 \newcommand{\just}{\AgdaInductiveConstructor{just}\xspace}
 
-%% TODO: replace the following 30 or so definitions with a single macro,
-%%       something like this:
-%%           \newcommand{\LedgerURL}[1]{%
-%%           \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}%
-%%                {\AgdaModule{Ledger.#1}}%
-%%           }
-%%       then we can just use, e.g., \LedgerURL{Chain} instead of requiring a special \LedgerChain macro.
-%%       Unfortunatley, I get a strange LaTeX error when I try the above.
-%%       (Maybe make this an issue later; not urgent enough to do now.)
 \NewDocumentCommand\LedgerModule{m}{%
   \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\AgdaModule{Ledger.#1}}%
 }
-
 \newcommand{\lengthsupers}{\AgdaFunction{lengthˢ}\xspace}
 \newcommand{\lengthsupersequivsupere}{\AgdaFunction{lengthˢ-≡ᵉ}\xspace}
 \newcommand{\List}{\AgdaDatatype{List}\xspace}
