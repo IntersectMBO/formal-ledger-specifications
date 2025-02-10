@@ -73,10 +73,6 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
   \item \Anchor---a url and a document hash;
   \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions);
-  \item \actionWellFormed---in the case of protocol parameter changes,
-    an action is well-formed if it preserves the well-formedness of parameters.
-    \ppdWellFormed is effectively the same as \paramsWellFormed, except that it
-    only applies to the parameters that are being changed.
 \end{itemize}
 The governance actions carry the following information:
 \begin{itemize}
