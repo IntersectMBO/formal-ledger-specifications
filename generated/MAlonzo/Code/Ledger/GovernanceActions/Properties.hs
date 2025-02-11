@@ -62,37 +62,37 @@ d_preoEpoch_336 v0
          MAlonzo.Code.Ledger.Types.GovStructure.d_epochStructure_580
          (coe v0))
 -- Ledger.GovernanceActions.Properties._._⊢_⇀⦇_,ENACT⦈_
-d__'8866'_'8640''10631'_'44'ENACT'10632'__814 a0 a1 a2 a3 a4 = ()
+d__'8866'_'8640''10631'_'44'ENACT'10632'__810 a0 a1 a2 a3 a4 = ()
 -- Ledger.GovernanceActions.Properties._.completeness
-d_completeness_882 ::
+d_completeness_878 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_882 = erased
+d_completeness_878 = erased
 -- Ledger.GovernanceActions.Properties._.computeProof
-d_computeProof_888 ::
+d_computeProof_884 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_888 v0
+d_computeProof_884 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe v0)
 -- Ledger.GovernanceActions.Properties.Computational-ENACT
-d_Computational'45'ENACT_900 ::
+d_Computational'45'ENACT_896 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'ENACT_900 v0
+d_Computational'45'ENACT_896 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v1 ->
          case coe v1 of
-           MAlonzo.Code.Ledger.Enact.C_'10214'_'44'_'44'_'10215''7497'_828 v2 v3 v4
+           MAlonzo.Code.Ledger.Enact.C_'10214'_'44'_'44'_'10215''7497'_824 v2 v3 v4
              -> coe
                   (\ v5 v6 ->
                      case coe v6 of
@@ -102,15 +102,15 @@ d_Computational'45'ENACT_900 v0
                               (coe
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                  (coe
-                                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153
+                                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2139
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18) (coe v2))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_constitution_844 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_pv_846 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_pparams_848 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_withdrawals_850 (coe v5)))
-                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'NoConf_914))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_constitution_840 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_pv_842 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_pparams_844 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_withdrawals_846 (coe v5)))
+                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'NoConf_910))
                        MAlonzo.Code.Ledger.GovernanceActions.C_UpdateCommittee_696 v7 v8 v9
                          -> let v10
                                   = coe
@@ -150,7 +150,7 @@ d_Computational'45'ENACT_900 v0
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Enact.d_pparams_848
+                                                                              MAlonzo.Code.Ledger.Enact.d_pparams_844
                                                                               (coe v5))))
                                                                      v4))
                                                                (coe
@@ -169,7 +169,7 @@ d_Computational'45'ENACT_900 v0
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Enact.d_pparams_848
+                                                                              MAlonzo.Code.Ledger.Enact.d_pparams_844
                                                                               (coe v5))))
                                                                      v4)))
                                                             (coe
@@ -188,7 +188,7 @@ d_Computational'45'ENACT_900 v0
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Enact.d_pparams_848
+                                                                           MAlonzo.Code.Ledger.Enact.d_pparams_844
                                                                            (coe v5))))
                                                                   v4)))))
                                                  v10))
@@ -211,7 +211,7 @@ d_Computational'45'ENACT_900 v0
                                                       (coe
                                                          MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153
+                                                            MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2139
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
@@ -303,26 +303,26 @@ d_Computational'45'ENACT_900 v0
                                                                                     (coe
                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Enact.d_cc_842
+                                                                                          MAlonzo.Code.Ledger.Enact.d_cc_838
                                                                                           (coe
                                                                                              v5))))))
                                                                            (coe v8)))
                                                                      (coe v9)))
                                                                (coe v2))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Enact.d_constitution_844
+                                                               MAlonzo.Code.Ledger.Enact.d_constitution_840
                                                                (coe v5))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Enact.d_pv_846
+                                                               MAlonzo.Code.Ledger.Enact.d_pv_842
                                                                (coe v5))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Enact.d_pparams_848
+                                                               MAlonzo.Code.Ledger.Enact.d_pparams_844
                                                                (coe v5))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Enact.d_withdrawals_850
+                                                               MAlonzo.Code.Ledger.Enact.d_withdrawals_846
                                                                (coe v5)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Enact.C_Enact'45'NewComm_922
+                                                            MAlonzo.Code.Ledger.Enact.C_Enact'45'NewComm_918
                                                             (\ v14 -> coe v13 v14)))
                                                _ -> MAlonzo.RTE.mazUnreachableError
                                         else coe
@@ -340,43 +340,43 @@ d_Computational'45'ENACT_900 v0
                               (coe
                                  MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                  (coe
-                                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153
-                                    (coe MAlonzo.Code.Ledger.Enact.d_cc_842 (coe v5))
+                                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2139
+                                    (coe MAlonzo.Code.Ledger.Enact.d_cc_838 (coe v5))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v7)
                                           (coe v8))
                                        (coe v2))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_pv_846 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_pparams_848 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_withdrawals_850 (coe v5)))
-                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'NewConst_924))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_pv_842 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_pparams_844 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_withdrawals_846 (coe v5)))
+                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'NewConst_920))
                        MAlonzo.Code.Ledger.GovernanceActions.C_TriggerHF_700 v7
                          -> coe
                               MAlonzo.Code.Interface.ComputationalRelation.C_success_42
                               (coe
                                  MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                  (coe
-                                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153
-                                    (coe MAlonzo.Code.Ledger.Enact.d_cc_842 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_constitution_844 (coe v5))
+                                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2139
+                                    (coe MAlonzo.Code.Ledger.Enact.d_cc_838 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_constitution_840 (coe v5))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v7)
                                        (coe v2))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_pparams_848 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_withdrawals_850 (coe v5)))
-                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'HF_926))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_pparams_844 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_withdrawals_846 (coe v5)))
+                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'HF_922))
                        MAlonzo.Code.Ledger.GovernanceActions.C_ChangePParams_702 v7
                          -> coe
                               MAlonzo.Code.Interface.ComputationalRelation.C_success_42
                               (coe
                                  MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                  (coe
-                                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153
-                                    (coe MAlonzo.Code.Ledger.Enact.d_cc_842 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_constitution_844 (coe v5))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_pv_846 (coe v5))
+                                    MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2139
+                                    (coe MAlonzo.Code.Ledger.Enact.d_cc_838 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_constitution_840 (coe v5))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_pv_842 (coe v5))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
@@ -386,11 +386,11 @@ d_Computational'45'ENACT_900 v0
                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_govParams_1028
                                                 (coe v0)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                             (coe MAlonzo.Code.Ledger.Enact.d_pparams_848 (coe v5)))
+                                             (coe MAlonzo.Code.Ledger.Enact.d_pparams_844 (coe v5)))
                                           v7)
                                        (coe v2))
-                                    (coe MAlonzo.Code.Ledger.Enact.d_withdrawals_850 (coe v5)))
-                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'PParams_928))
+                                    (coe MAlonzo.Code.Ledger.Enact.d_withdrawals_846 (coe v5)))
+                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'PParams_924))
                        MAlonzo.Code.Ledger.GovernanceActions.C_TreasuryWdrl_704 v7
                          -> let v8
                                   = coe
@@ -455,7 +455,7 @@ d_Computational'45'ENACT_900 v0
                                                         (coe
                                                            MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_534
                                                            (coe v0))))
-                                                  (MAlonzo.Code.Ledger.Enact.d_withdrawals_850
+                                                  (MAlonzo.Code.Ledger.Enact.d_withdrawals_846
                                                      (coe v5))
                                                   v7))
                                             (coe v3))) in
@@ -470,18 +470,18 @@ d_Computational'45'ENACT_900 v0
                                                       (coe
                                                          MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2153
+                                                            MAlonzo.Code.Ledger.Enact.C_EnactState'46'constructor_2139
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Enact.d_cc_842
+                                                               MAlonzo.Code.Ledger.Enact.d_cc_838
                                                                (coe v5))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Enact.d_constitution_844
+                                                               MAlonzo.Code.Ledger.Enact.d_constitution_840
                                                                (coe v5))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Enact.d_pv_846
+                                                               MAlonzo.Code.Ledger.Enact.d_pv_842
                                                                (coe v5))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Enact.d_pparams_848
+                                                               MAlonzo.Code.Ledger.Enact.d_pparams_844
                                                                (coe v5))
                                                             (coe
                                                                MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__502
@@ -511,11 +511,11 @@ d_Computational'45'ENACT_900 v0
                                                                            MAlonzo.Code.Ledger.Address.du_DecEq'45'RwdAddr_194
                                                                            (coe v12) (coe v13)
                                                                            (coe v14)))))
-                                                               (MAlonzo.Code.Ledger.Enact.d_withdrawals_850
+                                                               (MAlonzo.Code.Ledger.Enact.d_withdrawals_846
                                                                   (coe v5))
                                                                v7))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Enact.C_Enact'45'Wdrl_934
+                                                            MAlonzo.Code.Ledger.Enact.C_Enact'45'Wdrl_930
                                                             v11))
                                                _ -> MAlonzo.RTE.mazUnreachableError
                                         else coe
@@ -532,6 +532,6 @@ d_Computational'45'ENACT_900 v0
                               MAlonzo.Code.Interface.ComputationalRelation.C_success_42
                               (coe
                                  MAlonzo.Code.Data.Product.Base.du_'45''44'__92 (coe v5)
-                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'Info_936))
+                                 (coe MAlonzo.Code.Ledger.Enact.C_Enact'45'Info_932))
                        _ -> MAlonzo.RTE.mazUnreachableError)
            _ -> MAlonzo.RTE.mazUnreachableError)
