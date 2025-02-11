@@ -60,23 +60,6 @@ data GovAction : Type where
   ChangePParams    : PParamsUpdate                            →  GovAction
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction
   Info             :                                             GovAction
-
-actionWellFormed : GovAction → Type
-actionWellFormed (ChangePParams x)  = ppdWellFormed x
-actionWellFormed (TreasuryWdrl x)   = 
-  (∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId)
-  × (∃[ v ∈ range x ] ¬ (v ≡ 0))
-actionWellFormed _                  = ⊤
-\end{code}
-\begin{code}[hide]
-actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
-actionWellFormed? {NoConfidence}          = it
-actionWellFormed? {UpdateCommittee _ _ _} = it
-actionWellFormed? {NewConstitution _ _}   = it
-actionWellFormed? {TriggerHF _}           = it
-actionWellFormed? {ChangePParams _}       = it
-actionWellFormed? {TreasuryWdrl _}        = it
-actionWellFormed? {Info}                  = it
 \end{code}
 \end{AgdaMultiCode}
 \caption{Governance actions}
@@ -90,10 +73,6 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
   \item \Anchor---a url and a document hash;
   \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions);
-  \item \actionWellFormed---in the case of protocol parameter changes,
-    an action is well-formed if it preserves the well-formedness of parameters.
-    \ppdWellFormed is effectively the same as \paramsWellFormed, except that it
-    only applies to the parameters that are being changed.
 \end{itemize}
 The governance actions carry the following information:
 \begin{itemize}

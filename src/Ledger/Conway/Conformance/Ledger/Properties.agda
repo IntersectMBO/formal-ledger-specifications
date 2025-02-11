@@ -65,7 +65,7 @@ instance
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , _ ⟧ᶜ
       govΓ : CertState → GovEnv
-      govΓ = ⟦ txid , epoch slot , pparams , ppolicy , enactState ,_⟧ᵍ
+      govΓ certState = ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState , _ ⟧ᵍ
 
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
       computeProof = case isValid ≟ true of λ where

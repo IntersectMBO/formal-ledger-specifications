@@ -83,11 +83,6 @@ private variable
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}[hide]
-open RwdAddr
-open DState
-open CertState
-open UTxOState
-
 data
 \end{code}
 \begin{code}
@@ -103,11 +98,19 @@ data
 \begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-V : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
+  LEDGER-V : 
+    let 
+      open LState s
+      txb = tx .body
+      open TxBody txb
+      open LEnv Γ
+      open CertState certState
+      open DState dState
+    in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' , dom rewards ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧ˡ
 \end{code}

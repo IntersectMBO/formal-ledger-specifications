@@ -396,8 +396,8 @@ opaque
           → (record Γ { certState = certState' } , n)
             ⊢ s ⇀⦇ txgov ,GOVn⦈ s'
   castGOV deps (BS-base Id-nop) = BS-base Id-nop
-  castGOV {Γ} deps (BS-ind (C.GOV-Vote {voter = voter} (a , b , c)) rs) =
-    BS-ind (C.GOV-Vote (a , b , cast-isRegistered Γ deps voter c))
+  castGOV {Γ} deps (BS-ind (C.GOV-Vote {voter = voter} (a , b , c , d)) rs) =
+    BS-ind (C.GOV-Vote (a , b , cast-isRegistered Γ deps voter c , d))
            (castGOV deps rs)
   castGOV deps (BS-ind (C.GOV-Propose h) rs) =
     BS-ind (C.GOV-Propose h)
