@@ -144,11 +144,7 @@ over the state transition relation.
 \begin{AgdaMultiCode}
 \begin{code}
 record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     compute     : C → S → Sig → Maybe S
     ≡-just⇔STS  : compute Γ s b ≡ just s' ⇔ Γ ⊢ s ⇀⦇ b ,X⦈ s'
 

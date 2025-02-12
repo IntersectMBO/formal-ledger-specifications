@@ -26,19 +26,11 @@ open import Ledger.Certs govStructure
 \begin{AgdaMultiCode}
 \begin{code}
 record ChainState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     newEpochState  : NewEpochState
 
 record Block : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     ts    : List Tx
     slot  : Slot
 \end{code}

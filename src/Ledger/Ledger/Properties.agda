@@ -66,7 +66,7 @@ instance
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , _ ⟧ᶜ
       govΓ : CertState → GovEnv
-      govΓ = ⟦ txid , epoch slot , pparams , ppolicy , enactState ,_⟧ᵍ
+      govΓ certState = ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState , _ ⟧ᵍ
 
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
       computeProof = case isValid ≟ true of λ where
@@ -203,6 +203,9 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   open Tx tx renaming (body to txb); open TxBody txb
   open LEnv Γ renaming (pparams to pp)
   open PParams pp using (govActionDeposit)
+  open LState s
+  open CertState certState
+  open DState dState
 
   -- initial utxo deposits
   utxoDeps : DepositPurpose ⇀ Coin
@@ -233,10 +236,10 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   -- updateGovStates faithfully represents a step of the LEDGER sts
   STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (LState.govSt s |ᵒ LState.certState s')
-  STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
+  STS→GovSt≡ (LEDGER-V ( _ , _ , _ , x )) refl = STS→updateGovSt≡ (txgov txb) 0 x
     where
     STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {certSt : CertState} {govSt govSt' : GovState}
-      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV'⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt ⟧ᵍ , k) govSt vps govSt')
+      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV'⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ᵍ , k) govSt vps govSt')
       → govSt' ≡ updateGovStates vps k govSt
     STS→updateGovSt≡ [] _ (BS-base Id-nop) = refl
     STS→updateGovSt≡ (inj₁ v ∷ vps) k (BS-ind (GOV-Vote x) h)
