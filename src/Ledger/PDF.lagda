@@ -27,6 +27,7 @@ open import Ledger.Address
 open import Ledger.Script
 open import Ledger.ScriptValidation
 open import Ledger.PParams
+open import Ledger.Fees
 
 open import Ledger.Types.GovStructure
 open import Ledger.GovernanceActions
@@ -68,6 +69,7 @@ open import Ledger.PDF.ConwayBootstrap
 \include{Ledger/Address}
 \include{Ledger/Script}
 \include{Ledger/PParams}
+\include{Ledger/Fees}
 \include{Ledger/GovernanceActions}
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
