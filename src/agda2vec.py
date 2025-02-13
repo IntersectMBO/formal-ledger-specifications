@@ -38,8 +38,6 @@ def rm_weird_agda_patterns(lines: StrVec) -> StrVec:
     """
     # The pattern to match the specified form
     pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[1-9][0-9]*I\]'
-    
-    # list to store lines that do not match the pattern
     filtered_lines = [line for line in lines if not re.match(pattern, line)]
     return filtered_lines
 
@@ -393,13 +391,13 @@ def endswith_endcode(l: StrVec) -> bool:
 
 def process_inline_block(inl: StrVec, unwanted: StrVec) -> StrVec:
     inl = remove_suffixes(remove_prefixes(inl, unwanted), unwanted)
-    inl = rm_weird_agda_patterns(inl)
+    # inl = rm_weird_agda_patterns(inl)
 
     semicolon_after = "\\AgdaGeneralizable{fut}"
     space_before = [gamma, "\\AgdaBound{utxoSt'}", "\\AgdaFunction{mkStakeDistrs}", "\\AgdaFunction{stakeDistr}", agda_arrow]
-    space_after = [agda_arrow, "\\AgdaGeneralizable{fut}", agda_dot, entailment1] #, entailment2]
+    space_after = [agda_arrow, "\\AgdaGeneralizable{fut}", agda_dot, entailment1, entailment2]
     newline_before = [agda_dot, "\\AgdaBound{ls'}", "\\AgdaBound{utxoSt'}"]
-
+    tab_before = [agda_dot, "\\AgdaFunction{×}", "\\AgdaBound{Γ}"]
     if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
         return []
     if strvec_has_substring_from(inl, semicolon_after):
@@ -408,10 +406,10 @@ def process_inline_block(inl: StrVec, unwanted: StrVec) -> StrVec:
         inl = ["~" + agda_space] + inl
     if strvec_has_substring_from_strvec(inl, space_after):
         inl = inl + [agda_space]
+    if strvec_has_substring_from_strvec(inl, tab_before):
+        inl = ["\\phantom{XX}%"] + inl
 
     inl = inline(inl)
-    if strvec_has_substring_from(inl, agda_dot):
-        inl = ["\\phantom{XX}%"] + inl
     if strvec_has_substring_from_strvec(inl, newline_before):
         inl =  [newline] + inl
     return inl        
