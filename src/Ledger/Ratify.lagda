@@ -50,7 +50,9 @@ in that order.
 The symbols mean the following:
 \begin{itemize}
 \item
-  \AgdaFunction{vote} x: For an action to pass, the stake associated with the yes votes must exceed the threshold x.
+  \AgdaFunction{vote} x: For an action to pass, the fraction of stake
+  associated with yes votes with respect to that associated
+  with yes and no votes must exceed the threshold x.
 \item
   \AgdaFunction{─}: The body of governance does not participate in voting.
 \item
