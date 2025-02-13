@@ -113,7 +113,7 @@ rec {
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
-      buildInputs = [ agdaWithDeps latex python3 ];
+      buildInputs = [ agdaWithDeps latex python310 ];
       buildPhase = ''
         OUT_DIR=$out make "${project}".docs
       '';
