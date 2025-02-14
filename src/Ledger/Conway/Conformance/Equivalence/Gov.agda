@@ -17,13 +17,13 @@ open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 instance
   GovEnvToConf : L.Deposits × L.Deposits ⊢ L.GovEnv ⭆ C.GovEnv
   GovEnvToConf .convⁱ deposits Γ =
-    let open L.GovEnv Γ renaming (epoch to e) in
-    ⟦ txid , e , pparams , ppolicy , enactState , deposits ⊢conv certState ⟧
+    let open L.GovEnv Γ renaming (epoch to e; rewardCreds to stakeDelegs) in
+    ⟦ txid , e , pparams , ppolicy , enactState , deposits ⊢conv certState , stakeDelegs ⟧
 
   GovEnvFromConf : C.GovEnv ⭆ L.GovEnv
   GovEnvFromConf .convⁱ _ Γ =
-    let open C.GovEnv Γ renaming (epoch to e) in
-    ⟦ txid , e , pparams , ppolicy , enactState , conv certState ⟧
+    let open C.GovEnv Γ renaming (epoch to e; rewardCreds to stakeDelegs) in
+    ⟦ txid , e , pparams , ppolicy , enactState , conv certState , stakeDelegs ⟧
 
   opaque
     unfolding L.isRegistered C.isRegistered
@@ -43,8 +43,7 @@ instance
             → L.Deposits × L.Deposits
               ⊢ (Γ , n) L.⊢ s ⇀⦇ votes ,GOV'⦈ s' ⭆ⁱ λ deposits _ →
                 (deposits ⊢conv Γ , n) C.⊢ s ⇀⦇ votes ,GOV'⦈ s'
-  -- GOV'ToConf .convⁱ deposits (L.GOV-Vote (a , b , c , d)) = C.GOV-Vote (a , b , deposits ⊢conv c , d)
-  GOV'ToConf .convⁱ deposits (L.GOV-Vote (a , b , c)) = C.GOV-Vote (a , b , deposits ⊢conv c)
+  GOV'ToConf .convⁱ deposits (L.GOV-Vote (a , b , c , d)) = C.GOV-Vote (a , b , deposits ⊢conv c , d)
   GOV'ToConf .convⁱ deposits (L.GOV-Propose h) = C.GOV-Propose h
 
   GOVToConf : ∀ {Γ s votes s' n}
@@ -56,8 +55,7 @@ instance
 
   GOV'FromConf : ∀ {Γ s votes s' n}
             → (Γ , n) C.⊢ s ⇀⦇ votes ,GOV'⦈ s' ⭆ (conv Γ , n) L.⊢ s ⇀⦇ votes ,GOV'⦈ s'
-  -- GOV'FromConf .convⁱ _ (C.GOV-Vote (a , b , c , d)) = L.GOV-Vote (a , b , conv c , d)
-  GOV'FromConf .convⁱ _ (C.GOV-Vote (a , b , c)) = L.GOV-Vote (a , b , conv c)
+  GOV'FromConf .convⁱ _ (C.GOV-Vote (a , b , c , d)) = L.GOV-Vote (a , b , conv c , d)
   GOV'FromConf .convⁱ _ (C.GOV-Propose h)        = L.GOV-Propose h
 
   GOVFromConf : ∀ {Γ s votes s' n}

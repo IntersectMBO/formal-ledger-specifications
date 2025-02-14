@@ -84,37 +84,19 @@ private variable
   tx : Tx
 \end{code}
 
-\begin{NoConway}
 \begin{figure*}[h]
-\begin{code}[hide]
-open RwdAddr
-open DState
-open CertState
-open UTxOState
-
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\caption{The type of the LEDGER transition system}
-\end{figure*}
-\end{NoConway}
-
-\begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-V : 
+data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
+
+  LEDGER-V :
     let 
       open LState s
       txb = tx .body
       open TxBody txb
       open LEnv Γ
-      -- open CertState certState
-      -- open DState dState
+      open CertState certState
+      open DState dState
     in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
@@ -122,9 +104,6 @@ data
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
-\end{code}
-\begin{NoConway}
-\begin{code}
 
   LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ false
@@ -132,7 +111,6 @@ data
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
 \end{code}
-\end{NoConway}
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
 \end{figure*}

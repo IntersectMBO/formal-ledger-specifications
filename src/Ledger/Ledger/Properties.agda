@@ -66,7 +66,7 @@ instance
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
       certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , _ ⟧
       govΓ : CertState → GovEnv
-      govΓ = λ certState → ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState ⟧
+      govΓ = λ certState → ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState , _ ⟧
 
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
       computeProof = case isValid ≟ true of λ where
@@ -217,7 +217,9 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   open Tx tx renaming (body to txb); open TxBody txb
   open LEnv Γ renaming (pparams to pp)
   open PParams pp using (govActionDeposit)
-  -- open LState s; open CertState certState; open DState dState
+  open LState s
+  open CertState certState
+  open DState dState
 
   -- initial utxo deposits
   utxoDeps : DepositPurpose ⇀ Coin

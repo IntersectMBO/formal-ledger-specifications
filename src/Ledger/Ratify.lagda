@@ -23,7 +23,6 @@ _∧_ = _×_
 instance
   _ = +-0-commutativeMonoid
 \end{code}
-
 Governance actions are \defn{ratified} through on-chain votes.
 Different kinds of governance actions have different ratification requirements
 but always involve at least two of the three governance bodies.

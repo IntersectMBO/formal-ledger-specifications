@@ -97,6 +97,7 @@ open RwdAddr using (stake)
 open GovActionState using (returnAddr)
 \end{code}
 \begin{NoConway}
+\begin{figure*}[h]
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd ru epochState =
@@ -132,6 +133,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
       in
         (orps ++ orps' , govSt')
 \end{code}
+\end{figure*}
 \end{NoConway}
 
 \begin{figure*}[h]
@@ -182,6 +184,7 @@ private variable
 
 
 \begin{NoConway}
+\begin{figure*}[h]
 \begin{code}
 data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
   SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
@@ -191,6 +194,7 @@ data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type
 
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 \end{code}
+\end{figure*}
 \end{NoConway}
 
 Figure~\ref{fig:epoch:sts} defines the rule for the EPOCH transition
