@@ -19,12 +19,25 @@ module Ledger.Conway.Conformance.Equivalence
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Conformance.Equivalence.Base txs abs
+module L where
+  open import Ledger.Ledger txs abs public
+  open import Ledger.Utxo txs abs public
+  open import Ledger.Utxow txs abs public
+  open import Ledger.Certs govStructure public
+
+module C where
+  open import Ledger.Conway.Conformance.Ledger txs abs public
+  open import Ledger.Conway.Conformance.Utxo txs abs public
+  open import Ledger.Conway.Conformance.Utxow txs abs public
+  open import Ledger.Conway.Conformance.Gov txs public
+  open import Ledger.Conway.Conformance.Certs govStructure public
+
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Ledger.Conway.Conformance.Equivalence.Gov txs abs
 open import Ledger.Conway.Conformance.Equivalence.Utxo txs abs
 open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
 
+open Tx
 open import Axiom.Set.Properties th using (≡ᵉ-Setoid)
 
 -- Invalid transactions don't change the deposits
@@ -214,7 +227,7 @@ getValidCertDepositsC : ∀ Γ s {s'} tx
                      → ⟦ epoch slot , pparams , txvote , txwdrls , cc ⟧ C.⊢ certState ⇀⦇ txcerts ,CERTS⦈ s'
                      → L.ValidCertDeposits pparams deposits txcerts
 getValidCertDepositsC Γ s tx wf refl (RTC (C.CERT-base _ , step)) =
-  getValidCertDepositsCERTS (C.L.UTxOState.deposits (C.LState.utxoSt s)) wf step
+  getValidCertDepositsCERTS (C.UTxOState.deposits (C.LState.utxoSt s)) wf step
 
 lemUtxowDeposits : ∀ {Γ s s' tx}
                       (let open C.UTxOEnv Γ using (pparams))
@@ -389,7 +402,7 @@ _⊢_⇀⦇_,GOVn⦈_ : C.GovEnv × ℕ → C.GovState → List (GovVote ⊎ Gov
 _⊢_⇀⦇_,GOVn⦈_ = _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = C._⊢_⇀⦇_,GOV'⦈_}
 
 opaque
-  unfolding L.addVote C.isRegistered
+  unfolding C.isRegistered
 
   cast-isRegistered : ∀ Γ deps voter → C.isRegistered Γ voter → C.isRegistered (record Γ { certState = setCertDeposits deps (C.GovEnv.certState Γ) }) voter
   cast-isRegistered _ _ (CC , _)   r = r

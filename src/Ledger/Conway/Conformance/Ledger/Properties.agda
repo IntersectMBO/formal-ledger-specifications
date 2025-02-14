@@ -19,7 +19,7 @@ open import Ledger.Conway.Conformance.Gov txs
 open import Ledger.Conway.Conformance.Gov.Properties txs
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Ratify txs hiding (vote)
-open import Ledger.Conway.Conformance.Utxo txs abs hiding (module L)
+open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxo.Properties txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Utxow.Properties txs abs

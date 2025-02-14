@@ -24,15 +24,18 @@ open import Ledger.ScriptValidation txs abs
 open import Ledger.Fees txs using (scriptsCost)
 open import Ledger.Conway.Conformance.Certs govStructure
 
-module L where
-  open import Ledger.Utxo txs abs public
+private
+  module L where
+    open import Ledger.Utxo txs abs public
 
 open PParams
 
 instance
   _ = +-0-monoid
 
-open L public using (UTxOEnv; UTxOState)
+open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; updateDeposits
+                    ; cbalance; balance; depositRefunds; consumed
+                    ; produced; outs; newDeposits; refScriptsSize )
 
 private variable
   Γ : UTxOEnv
