@@ -16,11 +16,9 @@ module Ledger.Conway.Conformance.Equivalence.Certs
 
 private
   module L where
-    open import Ledger.Ledger txs abs public
     open import Ledger.Certs govStructure public
 
   module C where
-    open import Ledger.Conway.Conformance.Ledger txs abs public
     open import Ledger.Conway.Conformance.Certs govStructure public
 
 instance

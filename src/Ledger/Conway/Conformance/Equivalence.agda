@@ -23,17 +23,16 @@ module L where
   open import Ledger.Ledger txs abs public
   open import Ledger.Utxo txs abs public
   open import Ledger.Utxow txs abs public
+  open import Ledger.Gov txs public
   open import Ledger.Certs govStructure public
 
 module C where
   open import Ledger.Conway.Conformance.Ledger txs abs public
   open import Ledger.Conway.Conformance.Utxo txs abs public
   open import Ledger.Conway.Conformance.Utxow txs abs public
-  open import Ledger.Conway.Conformance.Gov txs public
   open import Ledger.Conway.Conformance.Certs govStructure public
 
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
-open import Ledger.Conway.Conformance.Equivalence.Gov txs abs
 open import Ledger.Conway.Conformance.Equivalence.Utxo txs abs
 open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
 
@@ -157,10 +156,8 @@ instance
       certStateC' = getCertDeps* cdeposits' ⊢conv certState'
       certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
       certs' = cdeposits ⊢conv certs
-      gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOV⦈ govSt'
-      gov' = getCertDeps* cdeposits' ⊢conv gov
-      ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ ⟦ utxoStC' , govSt' , certStateC' ⟧
-      ledger' = C.LEDGER-V⋯ refl utxow' certs' gov'
+      ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
+      ledger' = C.LEDGER-V⋯ refl utxow' certs' gov
       utxoEq  : utxoStC' ≡ utxoSt'
       utxoEq  = cong (λ • → ⟦ _ , _ , • , _ ⟧)
                      (lemUpdateDeposits refl utxow)
@@ -265,10 +262,10 @@ instance
       eqUtxo : setDeposits (utxowDeposits utxow) utxoSt' ≡ utxoSt'
       eqUtxo = cong (λ • → ⟦ _ , _ , • , _ ⟧) (lemUtxowDeposits refl utxow)
 
-      ledger' : Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ ⟦ setDeposits (utxowDeposits utxow) utxoSt'
-                                            , govSt'
-                                            , conv certSt' ⟧
-      ledger' = L.LEDGER-V⋯ refl utxow' (conv certs) (conv gov)
+      ledger' : Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ L.⟦ setDeposits (utxowDeposits utxow) utxoSt'
+                                              , govSt'
+                                              , conv certSt' ⟧ˡ
+      ledger' = L.LEDGER-V⋯ refl utxow' (conv certs) gov
 
 open IsEquivalence ≡ᵈ-isEquivalence renaming (refl to ≡ᵈ-refl; sym to ≡ᵈ-sym; trans to ≡ᵈ-trans)
 
@@ -398,29 +395,8 @@ opaque
     let deps₂' , eqd' , step' = castCERTS' deps₁ deps₂ deps₁' eqd step
     in  deps₂' , eqd' , RTC (C.CERT-base h , step')
 
-_⊢_⇀⦇_,GOVn⦈_ : C.GovEnv × ℕ → C.GovState → List (GovVote ⊎ GovProposal) → C.GovState → Type
-_⊢_⇀⦇_,GOVn⦈_ = _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = C._⊢_⇀⦇_,GOV'⦈_}
-
-opaque
-  unfolding C.isRegistered
-
-  cast-isRegistered : ∀ Γ deps voter → C.isRegistered Γ voter → C.isRegistered (record Γ { certState = setCertDeposits deps (C.GovEnv.certState Γ) }) voter
-  cast-isRegistered _ _ (CC , _)   r = r
-  cast-isRegistered _ _ (DRep , _) r = r
-  cast-isRegistered _ _ (SPO , _)  r = r
-
-  castGOV : ∀ {Γ n s txgov s'} deps (open C.GovEnv Γ)
-          → (let certState' = setCertDeposits deps certState)
-          → (Γ , n) ⊢ s ⇀⦇ txgov ,GOVn⦈ s'
-          → (record Γ { certState = certState' } , n)
-            ⊢ s ⇀⦇ txgov ,GOVn⦈ s'
-  castGOV deps (BS-base Id-nop) = BS-base Id-nop
-  castGOV {Γ} deps (BS-ind (C.GOV-Vote {voter = voter} (a , b , c , d)) rs) =
-    BS-ind (C.GOV-Vote (a , b , cast-isRegistered Γ deps voter c , d))
-           (castGOV deps rs)
-  castGOV deps (BS-ind (C.GOV-Propose h) rs) =
-    BS-ind (C.GOV-Propose h)
-           (castGOV deps rs)
+_⊢_⇀⦇_,GOVn⦈_ : L.GovEnv × ℕ → L.GovState → List (GovVote ⊎ GovProposal) → L.GovState → Type
+_⊢_⇀⦇_,GOVn⦈_ = _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = L._⊢_⇀⦇_,GOV'⦈_}
 
 opaque
   castLEDGER : ∀ {Γ tx} {s s' : L.LState} deps₁ deps₂ deps₁'
@@ -429,7 +405,7 @@ opaque
             → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂' × Γ C.⊢ deps₂ ⊢conv s ⇀⦇ tx ,LEDGER⦈ (deps₂' ⊢conv s')
   castLEDGER {Γ} {tx} {s} {s'} deps₁ deps₂ deps₁' eqd (C.LEDGER-V⋯ refl utxo certs gov) =
     let deps₂' , eqd' , certs' = castCERTS deps₁ deps₂ deps₁' eqd certs
-    in  deps₂' , eqd' , C.LEDGER-V⋯ refl utxo certs' (castGOV deps₂' gov)
+    in  deps₂' , eqd' , C.LEDGER-V⋯ refl utxo certs' gov
   castLEDGER deps₁ deps₂ deps₁' eqd (C.LEDGER-I⋯ refl utxo) = _ , eqd , C.LEDGER-I⋯ refl utxo
 
 ---------------------------------------------------------------------------

@@ -115,6 +115,7 @@ record PState : Type where
 \begin{code}
 
 record GState : Type where
+  constructor ⟦_,_⟧ᵛ
   field
     dreps      : Credential ⇀ Epoch
     ccHotKeys  : Credential ⇀ Maybe Credential

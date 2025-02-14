@@ -17,7 +17,7 @@ module Ledger.Conway.Conformance.Epoch
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Conformance.Gov txs
+open import Ledger.Gov txs
 open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Ratify txs
@@ -25,6 +25,7 @@ open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 record RewardUpdate : Set where
+  constructor ⟦_,_,_,_⟧ʳᵘ
   field
     Δt Δr Δf : ℤ
     rs : Credential ⇀ Coin
@@ -41,6 +42,7 @@ record Snapshots : Set where
     feeSS        : Coin
 
 record EpochState : Type where
+  constructor ⟦_,_,_,_,_⟧ᵉ'
   field
     acnt       : Acnt
     ss         : Snapshots
@@ -97,7 +99,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
     unregRU'  = ∑[ x ← unregRU ] x
 
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧ˢ
+stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
   where
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
@@ -112,8 +114,8 @@ gaDepositStake govSt ds = aggregateBy
 opaque
 
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
-  mkStakeDistrs ⟦ stake , _ ⟧ˢ govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy (proj₁ delegations) (stake ∪⁺ gaDepositStake govSt ds)
+  mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
+    aggregateBy (proj₁ delegations) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 
 private variable
   nes nes' : NewEpochState

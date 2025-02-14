@@ -33,7 +33,7 @@ open PParams
 instance
   _ = +-0-monoid
 
-open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; updateDeposits
+open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; To-UTxOState; updateDeposits
                     ; cbalance; balance; depositRefunds; consumed
                     ; produced; outs; newDeposits; refScriptsSize )
 

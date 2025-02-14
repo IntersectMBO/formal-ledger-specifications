@@ -13,19 +13,18 @@ module Ledger.Conway.Conformance.Ledger
   where
 
 open import Ledger.Enact govStructure
-open import Ledger.Conway.Conformance.Gov txs
+open import Ledger.Conway.Conformance.Gov txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 open import Ledger.Ledger txs abs public
-  using (LEnv; To-LEnv; allColdCreds)
+  using (LEnv; To-LEnv; allColdCreds; _|ᵒ_; txgov)
 
 open Tx
-open GState
-open GovActionState
 
 record LState : Type where
+  constructor ⟦_,_,_⟧ˡ
   field
     utxoSt     : UTxOState
     govSt      : GovState
@@ -35,22 +34,6 @@ instance
   unquoteDecl To-LState = derive-To
     [ (quote LState , To-LState) ]
 
-txgov : TxBody → List (GovVote ⊎ GovProposal)
-txgov txb = map inj₂ txprop ++ map inj₁ txvote
-  where open TxBody txb
-
-ifDRepIsRegistered : CertState → Voter → Type
-ifDRepIsRegistered certState (r , c) = r ≡ DRep → c ∈ dom (gState .dreps)
-  where open CertState certState
-
-removeOrphanDRepVotes : CertState → GovActionState → GovActionState
-removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
-  where
-    votes′ = filterKeys (ifDRepIsRegistered certState) (votes gas)
-
-_|ᵒ_ : GovState → CertState → GovState
-govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
-
 private variable
   Γ : LEnv
   s s' s'' : LState
@@ -59,7 +42,6 @@ private variable
   certState' : CertState
   tx : Tx
 
-open RwdAddr
 open UTxOState
 
 data
@@ -76,7 +58,7 @@ data
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ,  certState' , dom rewards ⟧ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState' ⟧
 
