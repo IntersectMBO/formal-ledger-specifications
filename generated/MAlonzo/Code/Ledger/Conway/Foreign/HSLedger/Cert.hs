@@ -46,7 +46,7 @@ import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 import GHC.Generics (Generic)
 data CertState = MkCertState {dState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.DState, pState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.PState, gState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.GState}
   deriving (Show, Eq, Generic)
-data LCertState = MkLCertState {dState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.LDState, pState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.PState, gState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.LGState}
+data LCertState = MkLCertState {lDState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.LDState, lPState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.PState, lGState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.LGState}
   deriving (Show, Eq, Generic)
 -- Ledger.Conway.Foreign.HSLedger.Cert._.CertEnv
 d_CertEnv_46 = ()
@@ -706,7 +706,7 @@ d_Conv'45'CertState''_278
             case coe v0 of
               MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_944 v1 v2 v3
                 -> coe
-                     C_MkLCertState_1081
+                     C_MkLCertState_1087
                      (coe
                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkLDState_24711
                         (coe
@@ -817,7 +817,7 @@ d_Conv'45'CertState''_278
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkLCertState_1081 v1 v2 v3
+              C_MkLCertState_1087 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_944
                      (coe
@@ -1311,16 +1311,16 @@ d_cert'45'step_296 v0
             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'CertEnv_78
             v0))
 -- Ledger.Conway.Foreign.HSLedger.Cert.LCertState
-d_LCertState_1079 = ()
-type T_LCertState_1079 = LCertState
-pattern C_MkLCertState_1081 a0 a1 a2 = MkLCertState a0 a1 a2
-check_MkLCertState_1081 ::
+d_LCertState_1085 = ()
+type T_LCertState_1085 = LCertState
+pattern C_MkLCertState_1087 a0 a1 a2 = MkLCertState a0 a1 a2
+check_MkLCertState_1087 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_LDState_24709 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_PState_3483 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_LGState_22869 ->
-  T_LCertState_1079
-check_MkLCertState_1081 = MkLCertState
-cover_LCertState_1079 :: LCertState -> ()
-cover_LCertState_1079 x
+  T_LCertState_1085
+check_MkLCertState_1087 = MkLCertState
+cover_LCertState_1085 :: LCertState -> ()
+cover_LCertState_1085 x
   = case x of
       MkLCertState _ _ _ -> ()
