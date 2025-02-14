@@ -458,6 +458,7 @@ RATIFY.
   \item \expired checks whether a governance action is expired in a given epoch.
 \end{itemize}
 \begin{figure*}[ht]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 open EnactState
 \end{code}
@@ -519,6 +520,7 @@ abstract
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
 \end{code}
+\end{AgdaMultiCode}
 \caption{Functions related to ratification}
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
@@ -542,18 +544,26 @@ private variable
   removed : ℙ (GovActionID × GovActionState)
   d : Bool
 
-data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
-
 \end{code}
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  RATIFY-Accept : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+data _⊢_⇀⦇_,RATIFY'⦈_ :
+  RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
+
+  RATIFY-Accept :  {Γ        : RatifyEnv}
+                   {es es'   : EnactState}
+                   {removed  : ℙ (GovActionID × GovActionState)}
+                   {d        : Bool}
+                   {a        : GovActionID × GovActionState}
+
+     → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+
      ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
-       Γ ⊢  ⟦ es   , removed          , d                      ⟧ ⇀⦇ a ,RATIFY'⦈
-            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧
+       Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY'⦈
+           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧
 
   RATIFY-Reject : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a

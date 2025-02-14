@@ -86,8 +86,8 @@ instance
       ... | yes refl
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeCerts certΓ  certState txcerts | complete _ _ _ _ certStep
-      ... | success (certSt' , _) |  refl
+        with computeCerts certΓ certState txcerts | complete _ _ _ _ certStep
+      ... | success (certSt' , _) | refl
         with computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
       completeness ledgerSt (LEDGER-I⋯ i utxoStep)
@@ -142,6 +142,8 @@ module _
       open CertState certState'
       open ≡-Reasoning
       open CERTSpov indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ r
+      -- certState  = ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
+      -- certState' = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
       zeroMap    = constMap (mapˢ RwdAddr.stake (dom txwdrls)) 0
     in
     begin
@@ -215,6 +217,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   open Tx tx renaming (body to txb); open TxBody txb
   open LEnv Γ renaming (pparams to pp)
   open PParams pp using (govActionDeposit)
+  -- open LState s; open CertState certState; open DState dState
 
   -- initial utxo deposits
   utxoDeps : DepositPurpose ⇀ Coin
@@ -245,10 +248,11 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   -- updateGovStates faithfully represents a step of the LEDGER sts
   STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (LState.govSt s |ᵒ LState.certState s')
+  -- STS→GovSt≡ (LEDGER-V ( _ , _ , _ , x )) refl = STS→updateGovSt≡ (txgov txb) 0 x
   STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
     where
     STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {certSt : CertState} {govSt govSt' : GovState}
-      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV'⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt ⟧ , k) govSt vps govSt')
+      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV'⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
       → govSt' ≡ updateGovStates vps k govSt
     STS→updateGovSt≡ [] _ (BS-base Id-nop) = refl
     STS→updateGovSt≡ (inj₁ v ∷ vps) k (BS-ind (GOV-Vote x) h)

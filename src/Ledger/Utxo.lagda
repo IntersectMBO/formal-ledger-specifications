@@ -456,7 +456,11 @@ to \consumed or \produced depending on its sign. This is done via
 \negPart and \posPart, which satisfy the key property that their
 difference is the identity function.
 
-Figures~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
+Figure~\ref{fig:functions:utxo} defines the function \minfee{}. In
+Conway, \minfee{} includes the cost for reference scripts. This is
+calculated using \scriptsCost{} (see Figure~\ref{fig:scriptsCost}).
+
+Figure~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
 Inhabitants of this type are constructed in one of eight ways, corresponding to
 seven certificate types plus one for an empty list of certificates.  Suffice it to
 say that \ValidCertDeposits is used to check the validity of the deposits in a

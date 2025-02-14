@@ -73,6 +73,7 @@ data
 
   LEDGER-V :
     let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ
+        -- open CertState certState; open DState dState
         utxoSt'' = record utxoSt' { deposits = L.updateDeposits pparams txb (deposits utxoSt') }
      in
     ∙  isValid tx ≡ true

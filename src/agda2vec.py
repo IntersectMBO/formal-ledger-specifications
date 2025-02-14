@@ -1,56 +1,65 @@
 import re
 import sys
 
-def write_file(filename, lines):
+from typing import List, TypeAlias
+
+StrVec: TypeAlias = List[str]
+DEBUGGING_INFO: bool = False
+
+def write_file(filename: str, lines: StrVec) -> None:
     with open(filename, 'w') as file:
         for line in lines:
-            file.write(line + '\n')
+            if (line.endswith("\n")):
+                file.write(line)
+            else:
+                file.write(line + '\n')
 
-def read_file(filename):
+def read_file(filename: str) -> StrVec:
     with open(filename, 'r') as file:
         return file.readlines()
 
 ### General Helper functions #########################################################################
-def is_slash_gt_number(s: str) -> bool:
-    pattern = r'\\>\[(?:[1-9]?\d)\]'
-    return bool(re.fullmatch(pattern, s))
-
-def replace_suffix(x, s1, s2):
+def replace_suffix(x: str, s1: str, s2: str) -> str:
+    """
+    If x ends with suffix s1, then replace that part of x with s2.
+    @param x: string to process.
+    @param s1: suffix to replace.
+    @param s2: replacement suffix.
+    """
     if x.endswith(s1):
-        return x[:-len(s1)] + s2
+        return x[:len(x)-len(s1)] + s2
     return x
 
-def rm_weird_agda_patterns(lines):
+def rm_weird_agda_patterns(lines: StrVec) -> StrVec:
+    """
+    Remove weird Agda patterns from the list of strings.
+    @param lines: list of strings to process.
+    @return: list of strings with weird Agda patterns removed.
+    """
     # The pattern to match the specified form
     pattern = r'\\>\[\.\]\[@\{\}l@\{\}\]\\<\[[1-9][0-9]*I\]'
-    
-    # List to store lines that do not match the pattern
     filtered_lines = [line for line in lines if not re.match(pattern, line)]
-    
     return filtered_lines
 
-def rm_prefixes(s, l):
+def rm_prefixes(s: str, l: StrVec) -> str:
     """
-    Repeatedly remove any prefix from the string `s` if that prefix appears in the list of strings `l`.
+    Repeatedly remove from s any prefix that appears in the list l.
+    @param s: string to process.
+    @param l: list of prefixes to remove.
+    @return: string with all prefixes from l removed.
     """
     for prefix in l:
         if s.startswith(prefix):
             s = rm_prefixes(s[len(prefix):], l)
     return s
 
-def rm_suffixes(s, l):
+def remove_prefixes(ls1: StrVec, ls2: StrVec) -> StrVec:
     """
-    Repeatedly remove any suffix from the string `s` if that suffix appears in the list of strings `l`.
-    """
-    for suffix in l:
-        if s.endswith(suffix):
-            s = rm_suffixes(s[:-len(suffix)], l)
-    return s
-
-def remove_prefixes(ls1, ls2):
-    """
-    Remove any prefix from the first string in `ls1` if that prefix is an element of `ls2`.
-    If the first element of `ls1` is fully removed, then proceed to the next element, and so on.
+    Remove from the first element of ls1 any element of ls2 that is a prefix of that element.
+    If the first element of ls1 is fully removed, then proceed to the next element, and so on.
+    @param ls1: list of strings to process.
+    @param ls2: list of prefixes to remove.
+    @return: list of strings with prefixes from ls2 removed.
     """
     while ls1 and ls1[0]:  # While there's a non-empty string in the first position
         new_first = rm_prefixes(ls1[0], ls2)
@@ -61,11 +70,26 @@ def remove_prefixes(ls1, ls2):
             ls1.pop(0)
     return ls1
 
-def remove_suffixes(ls1, ls2):
+def rm_suffixes(s: str, l: StrVec) -> str:
     """
-    Remove any suffix from the last string in `ls1` if that suffix is an element of `ls2`.  
-    If the last element of `ls1` is fully removed, repeat this suffix removal procedure 
-    on the previous (new last) element of `ls1`, and so on.
+    Repeatedly remove from s any suffix that appears in the list l.
+    @param s: string to process.
+    @param l: list of suffixes to remove.
+    @return: string with all suffixes from l removed.
+    """
+    for suffix in l:
+        if s.endswith(suffix):
+            s = rm_suffixes(s[:-len(suffix)], l)
+    return s
+
+def remove_suffixes(ls1: StrVec, ls2: StrVec) -> StrVec:
+    """
+    Remove from the last string in ls1 any suffix that appears in ls2.
+    If the last element of ls1 is fully removed, repeat suffix removal on the 
+    previous (new last) element of ls1, and so on.
+    @param ls1: list of strings to process.
+    @param ls2: list of suffixes to remove.
+    @return: list of strings with suffixes from ls2 removed.
     """
     while ls1 and ls1[-1]:  # While there's a non-empty string in the last position
         new_last = rm_suffixes(ls1[-1], ls2)
@@ -76,74 +100,120 @@ def remove_suffixes(ls1, ls2):
             ls1.pop()
     return ls1
 
-def get_until_match_from(ls1, ls2, to=False):
+def has_substring_from_strvec(s: str, ls2: StrVec) -> bool:
     """
-    Return a tuple of two lists:
-    1. ls1[:n] where `ls1[n]` is the first element in `ls1` containing any string 
-       from `ls2` as a substring.
-    2. ls1[n:], the remaining elements of `ls1`, the first of which has an element 
-       of ls2 as a substring.
-
-    Parameters:
-    ls1 (list of str): list of strings, the first `n-1` of which will be returned, 
-                       followed by the remaining elements of ls1, which will be 
-                       returned in a second, separate list.
-    ls2 (list of str): list of "halting" substrings
-    to (bool):         if True, the halting substring is included in the first list
+    @param s: string to search within.
+    @param ls2: list of strings to search for (as substring of s).
+    @return: True if there is an element in ls2 that is a substring of s.
     """
-    if not ls1:
-        return ls1, []
+    return any(substring in s for substring in ls2)
 
-    for index, element in enumerate(ls1):
-        if any(substring in element for substring in ls2):
-            if to:
-                index = index + 1
-            return [line.strip() for line in ls1[:index]], [line.strip() for line in ls1[index:]]
-    return ls1, []  # no match found
-
-def get_back_until_match_from(ls1, ls2):
+def strvec_has_substring_from(ls: StrVec, ss: str) -> bool:
     """
-    Return a tuple of two lists:
-    1. ls1[:n] where `ls1[n]` is the last element in `ls1` containing any string 
-       from `ls2` as a substring.
-    2. ls1[n:], the remaining elements of `ls1`, the first of which has an element 
-       of ls2 as a substring.
-
-    Parameters: ls1 (list of str), list of strings to be split.
-                ls2 (list of str), list of substrings to search for in ls1.
-    Return (pair of lists of strings):
-      - The first returned list has elements from ls1 up to and including the last match.
-      - The second has the remaining elements, after the last match, from ls1.
+    @param ls: list of strings to search within.
+    @param ss: string to search for (as substring of some element of ls).
+    @return: True iff there is an element in ls that contains ss as a substring.
     """
+    return any(ss in s for s in ls)
+
+def strvec_has_substring_from_strvec(ls1: StrVec, ls2: StrVec) -> bool:
+    """
+    @param ls1: list of strings to search within.
+    @param ls2: list of strings to search for (as substring of string in ls1).
+    @return: True iff an element of ls1 contains an element of ls2 as a substring.
+    """
+    return any(has_substring_from_strvec(s, ls2) for s in ls1)
+
+def index_of_first_matching_substring(ls1: StrVec, ls2: StrVec) -> int:
+    """
+    @param ls1: list of strings to search within.
+    @param ls2: list of strings to search for (as substring of string in ls1).
+    @return: index of the first string in ls1 that contains an element of ls2 as a substring.
+    """
+    if (not ls1) | (not ls2):
+        return -1
+
+    for index, s in enumerate(ls1):
+        if has_substring_from_strvec(s, ls2):
+            return index
+
+    return -1
+
+def index_of_last_matching_substring(ls1: StrVec, ls2: StrVec) -> int:
+    """
+    @param ls1: list of strings to search within.
+    @param ls2: list of strings to search for (as substring of string in ls1).
+    @return: index of the last string in ls1 that contains an element of ls2 as a substring.
+    """
+    if (not ls1) | (not ls2):
+        return -1
+
     last_match_index = -1
 
     # Iterate over the indices and elements of ls1
-    for index, element in enumerate(ls1):
-        if any(substring in element for substring in ls2):
+    for index, s in enumerate(ls1):
+        if has_substring_from_strvec(s, ls2):
             last_match_index = index
 
-    # If a match is found, split the list accordingly
-    if last_match_index != -1:
-        return ls1[:last_match_index + 1], ls1[last_match_index + 1:]
+    return last_match_index
 
-    return [], ls1 # no match found
+def get_until_match(ls1: StrVec, ls2: StrVec, to: bool=False) -> tuple[StrVec, StrVec]:
+    """
+    @param ls1: list of strings to be split into two lists.
+    @param ls2: list of "halting" strings used to decide at which index to split ls1.
+    @param to: a boolean used to decide where to put the boundary of the split.
+               If `to == True`, then match will be part of the first list returned.
+               If `to == False`, then match will be part of the second list returned.
 
-def find_match(ls1, ls2):
-    """
-    Return the index of the first element in `ls1` that contains any string from `ls2` as a substring.
-    """
-    for index, element in enumerate(ls1):
-        if any(substring in element for substring in ls2):
-            return index
-    return -1
+    @return: a pair (fst, snd) of lists of strings where
+             if to == True:
+               fst = ls1[:n+1] (the last element has an element of ls2 as a substring)
+               snd = ls1[n+1:]
+             if to == False:
+               fst = ls1[:n]
+               snd = ls1[n:] (the first element has an element of ls2 as a substring).
 
-def are_all_substrings(list1, list2):
+    @note: If no element of ls2 is a substring of a string in ls1, then the first list
+           of the returned pair will be the same as ls1, the second list will be empty.
     """
-    Returns true iff every string in `list2` is a substring of some string in `list1`.
-    Parameters:  list1 (list of str): The list of strings to search within.
-                 list2 (list of str): The list of strings to search for.
+    n = index_of_first_matching_substring(ls1, ls2)
+    if n == -1:
+        return ls1, []
+    if to:
+        return ls1[:n + 1], ls1[n + 1:]
+    return [line.strip() for line in ls1[:n]], [line.strip() for line in ls1[n:]]
+
+def get_to_last_match(ls1: StrVec, ls2: StrVec) -> tuple[StrVec, StrVec]:
     """
-    return all(any(s2 in s1 for s1 in list1) for s2 in list2)
+    @param ls1: list of strings to be split into two lists.
+    @param ls2: list of strings to look for (as substring) in elements of ls1.
+    @return: a pair of lists of strings (fst, snd) where
+             fst: list of strings from ls1 from ls1[0] up to and including the
+             last element of ls1 that contains a string from ls2 as a substring.
+             snd: the remaining elements of ls1.
+    @note: If no element of ls2 appears as a substring of a string in ls1, then
+           the first list of returned pair will be empty, the second will be ls1.
+    """
+    n = index_of_last_matching_substring(ls1, ls2)
+    if n == -1:
+        return [], ls1
+    return ls1[:n + 1], ls1[n + 1:]
+
+def are_all_substrings(l1: StrVec, l2: StrVec) -> bool:
+    """
+    @param l1: list of strings to search within.
+    @param l2: list of strings to search for.
+    @return: True iff every string in l2 is a substring of some string in l1.
+    """
+    return all(any(s2 in s1 for s1 in l1) for s2 in l2)
+
+def is_slash_gt_number(s: str) -> bool:
+    """
+    @param s: string to check.
+    @return: True iff s is of the form "\\>[n]" where n is a number.
+    """
+    pattern = r'\\>\[(?:[1-9]?\d)\]'
+    return bool(re.fullmatch(pattern, s))
 
 
 ### String constants #########################################################################
@@ -176,84 +246,89 @@ agda_dot = "\\AgdaFunction{∙}"
 # latter will match all varieties of closing brackets.
 
 ### Helper functions #########################################################################
-def inline_text(element):
-    if not element:
-        return []
-    return [begin_code_inline + "\\text{"] + element + ["}" + end_code + newline]
-
-def should_be_inlined(str):
+def should_be_inlined(s: str) -> bool:
+    """
+    @param s: string to check.
+    @return: True iff s contains any element of inline_patters as a substring
+             and does not contain any element of outline_patterns as a substring.
+    """
     inline_patterns = [entailment1, entailment2 , sts1, sts2]
-    return any(substr in str for substr in inline_patterns) and not any(substr in str for substr in [deduction])
+    outline_patterns = [deduction]
+    return any(substr in s for substr in inline_patterns) \
+        and not any(substr in s for substr in outline_patterns)
 
-def replace_backslashes(input_string):
+def inline_text(s: str) -> StrVec:
     """
-    Replaces all occurrences of '\\\\' in the input string with ',' and returns the modified string
-    along with the count of replacements made.
-    (This function is useful for converting a string representing a LaTeX vertical vector 
-    to that of a horizontal vector.)
-    Parameters: input_string (str), the string to process.
-    Returns: A tuple containing the modified string and the number of replacements made.
+    Prepend and append strings needed to make given string s an inline code block.
+    @param s: the string to be converted to an inline code block.
+    @return: a list containing the string s and comprising an inline code block.
     """
-    replacements = input_string.count("\\\\")
-    modified_string = input_string.replace("\\\\", "&")
-    return modified_string, replacements
+    if not s:
+        return []
+    if DEBUGGING_INFO & (not should_be_inlined(s)):
+        print("Warning: Converting to inline codeblock a string that probably should not be inlined.")
+        print(">>>> The string is: ", s)
+    return [begin_code_inline + "\\text{"] + s + ["}" + end_code + newline]
 
-def replace_backslashes_in_list(string_list):
+def replace_backslashes_in_list(s: StrVec) -> tuple[StrVec, int]:
     """
-    Replaces all occurrences of '\\\\' in each string of the input list with '&' and returns 
+    For each element e of the input list s,
+    if e does not include the string "\\begin{code}[inline]" as a substring
+
+     Replace all "\\\\" with '&' and returns 
     the list of modified strings along with the total number of replacements.
     Parameter: string_list (list of str), the list of strings to process.
     Return: A tuple containing the list of modified strings along with the number of replacements.
     """
     total_replacements = 0
     modified_list = []
-    for s in string_list:
-        if find_match([s], ["\\begin{code}[inline]"]) == -1:
-            replacements = s.count(newline)
+    for t in s:
+        if "\\begin{code}[inline]" not in t:
+            replacements = t.count(newline)
             total_replacements += replacements
-            s = s.replace(newline, "&")
-        modified_list.append(s)
+            t = t.replace(newline, "&")
+        modified_list.append(t)
     return modified_list, total_replacements
 
-def make_horizontal_array(ls):
+def make_horizontal_array(ls: StrVec) -> StrVec:
     if not ls:
         return []
     ls = remove_suffixes(ls, [newline])
     ls, n = replace_backslashes_in_list(ls)
     return ["%START HORIZONTAL VEC%", "\\(" + "\\left(\\begin{array}{" + ('c' * (n + 1)) + "}"] + ls + ["\\end{array}\\right)^T\\)", "%END HORIZONTAL VEC%"]
 
-def make_array(ls):
+def make_array(ls: StrVec) -> StrVec:
     if not ls:
         return []
     ls = remove_suffixes(ls, [newline])
     return ["%START VEC%", "\\(" + begin_array] + ls + [end_array + "\\)", "%END VEC%"]
 
-def make_inner_array(ls):
+def make_inner_array(ls: StrVec) -> StrVec:
     if not ls:
         return []
     ls = remove_suffixes(ls, ["%"])
     return [begin_array] + ls + [end_array]
 
-def format_vector(vector_block):
+def format_vector(vector_block: StrVec) -> StrVec:
     if not vector_block:
         return []
     unwanted_suffixes = [newline, "%", "\\<", "\\>"]
     element_halt = [aic, begin_array, left_brace, right_bracket]
 
-    def get_next_element(vector_block, acc):
+    def get_next_element(vector_block: StrVec, acc: StrVec) -> tuple[StrVec, StrVec]:
         if not vector_block:
             return acc, []
 
-        next_element, vector_block = get_until_match_from(vector_block, element_halt)
+        next_element, vector_block = get_until_match(vector_block, element_halt)
 
         # ignore "AgdaInductiveConstructor{,}" appearing inside ❴_❵; don't split vector element at that `,`
         if vector_block and left_brace in vector_block[0]:
-            ne, vector_block = get_until_match_from(vector_block, [right_brace], True)
+            ne, vector_block = get_until_match(vector_block, [right_brace], True)
             return get_next_element(vector_block, acc + next_element + ne)
 
         return acc + next_element, vector_block
 
-    def format_vector_tr(vector_block, acc):
+    def format_vector_tr(vector_block: StrVec, acc: StrVec) -> StrVec:
         if not vector_block:
             return acc
 
@@ -274,17 +349,30 @@ def format_vector(vector_block):
 
     return format_vector_tr(vector_block, [])
 
-def flatten(l):
-    if not l:
-        return ""
-    return l[0] + flatten(l[1:])
+def flatten(l: StrVec) -> str:
+    """
+    Flatten a list of strings into a single string.
+    @param l: list of strings to flatten.
+    @return: a single string containing all elements of l concatenated.
+    """
+    def flatten_aux(l: StrVec, acc: str) -> str:
+        if not l:
+            return acc
+        return flatten_aux(l[1:], acc + l[0])
+    return flatten_aux(l, "")
 
-def inline(l):
-    if not l:
+def inline(ls: StrVec) -> StrVec:
+    """
+    If the given list of strings ls is non-empty, then prepend and append strings needed 
+    for an inline code block.  If ls is empty, then return the empty string.
+    @param ls: list of strings to be wrapped.
+    @return: a list of strings where the first and last elements are the strings needed for an inline code block.
+    """
+    if not ls:
         return []
-    return [begin_code_inline] + l + [end_code]
+    return [begin_code_inline] + ls + [end_code]
 
-def add_begin(l):
+def add_begin(l: StrVec) -> StrVec:
     if not l:
         return []
     if l[-1].startswith(begin_code):
@@ -298,33 +386,35 @@ def add_end(l):
         return l
     return l + [end_code]
 
-def process_inline_block(inl, unwanted):
+def endswith_endcode(l: StrVec) -> bool:
+    return l and l[-1].endswith(end_code)
+
+def process_inline_block(inl: StrVec, unwanted: StrVec) -> StrVec:
     inl = remove_suffixes(remove_prefixes(inl, unwanted), unwanted)
-    inl = rm_weird_agda_patterns(inl)
+    # inl = rm_weird_agda_patterns(inl)
 
-    semicolon_after = ["\\AgdaGeneralizable{fut}"]
-    tab_before = [agda_dot]
+    semicolon_after = "\\AgdaGeneralizable{fut}"
     space_before = [gamma, "\\AgdaBound{utxoSt'}", "\\AgdaFunction{mkStakeDistrs}", "\\AgdaFunction{stakeDistr}", agda_arrow]
-    space_after = [agda_arrow, "\\AgdaGeneralizable{fut}", agda_dot, entailment1] #, entailment2]
+    space_after = [agda_arrow, "\\AgdaGeneralizable{fut}", agda_dot, entailment1, entailment2]
     newline_before = [agda_dot, "\\AgdaBound{ls'}", "\\AgdaBound{utxoSt'}"]
-
+    tab_before = [agda_dot, "\\AgdaFunction{×}", "\\AgdaBound{Γ}"]
     if not inl or (len(inl) == 1 and is_slash_gt_number(inl[0])):
         return []
-    if find_match(inl, semicolon_after) != -1:
+    if strvec_has_substring_from(inl, semicolon_after):
         inl = inl + [";"]
-    if find_match(inl, space_before) != -1:
+    if strvec_has_substring_from_strvec(inl, space_before):
         inl = ["~" + agda_space] + inl
-    if find_match(inl, space_after) != -1:
+    if strvec_has_substring_from_strvec(inl, space_after):
         inl = inl + [agda_space]
+    if strvec_has_substring_from_strvec(inl, tab_before):
+        inl = ["\\phantom{XX}%"] + inl
 
     inl = inline(inl)
-    if find_match(inl, tab_before) != -1:
-        inl = ["\\phantom{XX}%"] + inl
-    if find_match(inl, newline_before) != -1:
+    if strvec_has_substring_from_strvec(inl, newline_before):
         inl =  [newline] + inl
     return inl        
 
-def safe_add(l1, l2):
+def safe_add(l1: StrVec, l2: StrVec) -> StrVec:
     if not l1:
         return l2
     if not l2:
@@ -343,7 +433,7 @@ def safe_add(l1, l2):
         return l1 + add_begin(l2)
     return l1 + l2            
 
-def get_vector_block(lines, acc):
+def get_vector_block(lines: StrVec, acc: StrVec) -> tuple[StrVec, StrVec]:
     if not lines:   
         return acc, []
     if left_bracket in lines[0]:  # this must be an inner vector
@@ -354,7 +444,7 @@ def get_vector_block(lines, acc):
     else:
         return get_vector_block(lines[1:], acc + [lines[0]])
 
-def process_vector(lines):
+def process_vector(lines: StrVec) -> tuple[StrVec, StrVec]:
     vec_block, nextlines = get_vector_block(lines, [])
     return format_vector(vec_block), nextlines
 
@@ -377,13 +467,13 @@ def process_lines(lines):
 
         # aac: Agda code block up to the next left bracket (start of vector)
         # bb: Agda code block from the left bracket to the end of the vector
-        aac, bb = get_until_match_from(ls, [left_bracket])
+        aac, bb = get_until_match(ls, [left_bracket])
         if not bb:
             return safe_add(acc, aac)
 
         # aa: Agda code block before the inlined block preceding the vector
         # c: Agda code block preceding the vector that should be inlined
-        aa , c = get_back_until_match_from(aac, inline_halt_back)
+        aa , c = get_to_last_match(aac, inline_halt_back)
         aa = remove_suffixes(aa, unwanted)
         c = process_inline_block(c, unwanted_inline) # pre
 
@@ -393,7 +483,7 @@ def process_lines(lines):
         else:
             acc = safe_add(acc, add_end(aa)) + c + make_array(vec_block)          
 
-        inl, newls = get_until_match_from(newls, inline_halt)
+        inl, newls = get_until_match(newls, inline_halt)
         inl = process_inline_block(inl, unwanted_inline) # postx
         acc = acc + inl
         if newls[0] == newline and newls[1] == "%" and newls[2] == newline + extra_skip + "%":

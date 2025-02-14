@@ -40,6 +40,7 @@ record GovEnv : Type where
     ppolicy     : Maybe ScriptHash
     enactState  : EnactState
     certState   : CertState
+    rewardCreds : ℙ Credential
 
 instance
   unquoteDecl To-GovEnv = derive-To
@@ -80,6 +81,7 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
     ∙ (aid , ast) ∈ fromList s
     ∙ canVote pparams (action ast) (proj₁ voter)
     ∙ isRegistered Γ voter
+    ∙ ¬ (expired epoch ast)
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV'⦈ L.addVote s aid voter v
 
@@ -89,15 +91,14 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = L.addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
-    ∙ actionWellFormed a
+    -- ∙ actionWellFormed a
+    ∙ L.actionWellFormed a
+    ∙ L.actionValid rewardCreds p ppolicy epoch a
     ∙ d ≡ govActionDeposit
-    ∙ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w → p ≡ ppolicy)
-    ∙ (¬ (∃[ u ] a ≡ ChangePParams u ⊎ ∃[ w ] a ≡ TreasuryWdrl w) → p ≡ nothing)
-    ∙ (∀ {new rem q} → a ≡ UpdateCommittee new rem q
-       → ∀[ e ∈ range new ]  epoch < e  ×  dom new ∩ rem ≡ᵉ ∅)
     ∙ L.validHFAction prop s enactState
     ∙ L.hasParent enactState s a prev
     ∙ addr .RwdAddr.net ≡ NetworkId
+    ∙ addr .RwdAddr.stake ∈ rewardCreds
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
 
