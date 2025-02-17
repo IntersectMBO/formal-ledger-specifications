@@ -155,8 +155,9 @@ record PParams : Type where
 \begin{AgdaMultiCode}
 \begin{code}
 positivePParams : PParams → List ℕ
-positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ refScriptCostStride
-                      ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
+positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
+                      ∷ maxValSize ∷ refScriptCostStride ∷ coinsPerUTxOByte
+                      ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                       ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
 \end{code}
 \begin{code}[hide]
