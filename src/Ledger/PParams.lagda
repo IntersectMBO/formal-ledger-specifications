@@ -61,7 +61,6 @@ data pvCanFollow : ProtVer → ProtVer → Type where
 \end{NoConway}
 
 \begin{figure*}[ht]
-\begin{AgdaMultiCode}
 \begin{code}
 data PParamGroup : Type where
   NetworkGroup     : PParamGroup
@@ -69,7 +68,13 @@ data PParamGroup : Type where
   TechnicalGroup   : PParamGroup
   GovernanceGroup  : PParamGroup
   SecurityGroup    : PParamGroup
+\end{code}
+\caption{Protocol parameter group definition}
+\label{fig:protocol-parameter-groups}
+\end{figure*}
 
+\begin{figure*}[ht]
+\begin{code}
 record DrepThresholds : Type where
   field
     P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
@@ -77,7 +82,14 @@ record DrepThresholds : Type where
 record PoolThresholds : Type where
   field
     Q1 Q2a Q2b Q4 Q5e : ℚ
+\end{code}
+\caption{Protocol parameter threshold definitions}
+\label{fig:protocol-parameter-thresholds}
+\end{figure*}
 
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
 record PParams : Type where
   field
 \end{code}
