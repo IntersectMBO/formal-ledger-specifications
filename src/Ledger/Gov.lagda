@@ -93,7 +93,6 @@ open PState
 
 \begin{figure*}
 \begin{AgdaMultiCode}
-\emph{Functions used in the GOV rules}
 \begin{code}
 govActionPriority : GovAction → ℕ
 govActionPriority NoConfidence             = 0
