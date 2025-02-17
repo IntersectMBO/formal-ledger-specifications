@@ -484,10 +484,13 @@ delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 
 acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
-acceptConds Γ stʳ (id , st) = let open RatifyEnv Γ; open RatifyState stʳ; open GovActionState st in
+acceptConds Γ stʳ (id , st) =
        accepted Γ es st
     ×  ¬ delayed action prevAction es delay
     × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+    where open RatifyEnv Γ
+          open RatifyState stʳ
+          open GovActionState st
 \end{code}
 \begin{code}[hide]
 abstract

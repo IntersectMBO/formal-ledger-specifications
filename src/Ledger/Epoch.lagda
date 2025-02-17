@@ -142,7 +142,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 stakeDistr : UTxO → DState → PState → Snapshot
 stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
   where
-    open DState stᵈ
+    open DState stᵈ using (stakeDelegs; rewards)
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
 
@@ -246,13 +246,10 @@ its results by carrying out each of the following tasks.
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
 
-      dState' : DState
       dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
 
-      pState' : PState
       pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
 
-      gState' : GState
       gState' = ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
                 , gState .ccHotKeys ∣ ccCreds (es .cc) ⟧
 

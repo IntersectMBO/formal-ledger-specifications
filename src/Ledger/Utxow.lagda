@@ -155,10 +155,10 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}[hide]
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+        open UTxOState
 \end{code}
 \begin{code}
-        open UTxOState s  renaming (deposits to deps; donations to dons)
-        open UTxOState s' renaming (utxo to utxo'; fees to fees'; deposits to deps'; donations to dons')
+        utxo                                = s .utxo
         witsKeyHashes                       = mapˢ hash (dom vkSigs)
         witsScriptHashes                    = mapˢ hash scripts
         inputHashes                         = getInputHashes tx utxo
