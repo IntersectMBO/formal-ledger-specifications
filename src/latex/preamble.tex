@@ -71,10 +71,11 @@ module of the \href{\repourl}{formal ledger specification}.}
 \ExplSyntaxOn
 \NewDocumentCommand\hrefCIP{m}{%
   \clist_if_in:nnTF {0069,1694} {#1}
-  {%
-    \href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-#1}{CIP-#1}%
-  }{%
-    \PackageError{agda-latex-macros}{CIP-#1~undefined.}{}
+  {\href{\detokenize{https://cips.cardano.org/cip/CIP-#1}}{CIP-#1}}%
+  {\msg_warning:nnn {agda-latex-macros} {invalid-cip} {#1}
+    CIP-#1 % Still prints the text but without a hyperlink
   }%
 }
+\msg_new:nnn {agda-latex-macros} {invalid-cip}
+  {CIP-#1 is not a known CIP. The hyperlink will not be created.}
 \ExplSyntaxOff
