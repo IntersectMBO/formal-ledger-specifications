@@ -14,6 +14,7 @@
 \newcommand{\acceptedStakeRatio}{\AgdaFunction{acceptedStakeRatio}\xspace}
 \newcommand{\action}{\AgdaField{action}\xspace}
 \newcommand{\actionWellFormed}{\AgdaFunction{actionWellFormed}\xspace}
+\newcommand{\actionValid}{\AgdaFunction{actionValid}\xspace}
 \newcommand{\activeDReps}{\AgdaFunction{activeDReps}\xspace}
 \newcommand{\activeVotingStake}{\AgdaFunction{activeVotingStake}\xspace}
 \newcommand{\actualCCVote}{\AgdaFunction{actualCCVote}\xspace}
@@ -184,6 +185,7 @@
 \newcommand{\ccThreshold}{\AgdaFunction{ccThreshold}\xspace}
 \newcommand{\cc}{\AgdaField{cc}\xspace}
 \newcommand{\coinThreshold}{\AgdaFunction{coinThreshold}\xspace}
+\newcommand{\coinsPerUTxOByte}{\AgdaField{coinsPerUTxOByte}\xspace}
 \newcommand{\commaENACTrightBoldParen}{\AgdaDatatype{,ENACT⦈}\xspace}
 \newcommand{\compute}{\AgdaField{compute}\xspace}
 \newcommand{\constMap}{\AgdaFunction{constMap}\xspace}
@@ -237,6 +239,7 @@
 \newcommand{\DrepThresholds}{\AgdaRecord{DrepThresholds}\xspace}
 \newcommand{\drepThresholds}{\AgdaField{drepThresholds}\xspace}
 \newcommand{\DocHash}{\AgdaField{DocHash}\xspace}
+\newcommand{\Deposits}{\AgdaDatatype{Deposits}\xspace}
 \newcommand{\deposits}{\AgdaField{deposits}\xspace}
 \newcommand{\depositRefunds}{\AgdaFunction{depositRefunds}\xspace}
 \newcommand{\depositsChange}{\AgdaFunction{depositsChange}\xspace}
@@ -250,7 +253,7 @@
 \newcommand{\EnactEnv}{\AgdaRecord{EnactEnv}\xspace}
 \newcommand{\EnactHF}{\AgdaInductiveConstructor{Enact-HF}\xspace}
 \newcommand{\EnactInfo}{\AgdaInductiveConstructor{Enact-Info}\xspace}
-\newcommand{\EnactNewComm}{\AgdaInductiveConstructor{Enact-NewComm}\xspace}
+\newcommand{\EnactUpdComm}{\AgdaInductiveConstructor{Enact-UpdComm}\xspace}
 \newcommand{\EnactNewConst}{\AgdaInductiveConstructor{Enact-NewConst}\xspace}
 \newcommand{\EnactNoConf}{\AgdaInductiveConstructor{Enact-NoConf}\xspace}
 \newcommand{\EnactPParams}{\AgdaInductiveConstructor{Enact-PParams}\xspace}
@@ -324,6 +327,7 @@
 \newcommand{\isScript}{\AgdaDatatype{isScript}\xspace}
 \newcommand{\isInl}{\AgdaFunction{isInj₁}\xspace}
 \newcommand{\isInr}{\AgdaFunction{isInj₂}\xspace}
+\newcommand{\isRegistered}{\AgdaFunction{isRegistered}\xspace}
 
 \newcommand{\just}{\AgdaInductiveConstructor{just}\xspace}
 
@@ -343,12 +347,19 @@
 \newcommand{\mapWithKey}{\AgdaFunction{mapWithKey}\xspace}
 \newcommand{\mapsubtwo}{\AgdaFunction{map₂}\xspace}
 \newcommand{\maximum}{\AgdaFunction{maximum}\xspace}
+\newcommand{\maxBlockSize}{\AgdaField{maxBlockSize}\xspace}
+\newcommand{\maxBlockExUnits}{\AgdaField{maxBlockExUnits}\xspace}
+\newcommand{\maxHeaderSize}{\AgdaField{maxHeaderSize}\xspace}
 \newcommand{\maxRefScriptPerTx}{\AgdaField{maxRefScriptPerTx}\xspace}
 \newcommand{\maxRefScriptPerBlock}{\AgdaField{maxRefScriptPerBlock}\xspace}
+\newcommand{\maxTxSize}{\AgdaField{maxTxSize}\xspace}
+\newcommand{\maxValSize}{\AgdaField{maxValSize}\xspace}
 \newcommand{\maybe}{\AgdaFunction{maybe}\xspace}
 \newcommand{\maybeprime}{\AgdaFunction{maybe′}\xspace}
 \newcommand{\meetsMinAVS}{\AgdaFunction{meetsMinAVS}\xspace}
+\newcommand{\minFeeRefScriptCoinsPerByte}{\AgdaField{minFeeRefScriptCoinsPerByte}\xspace}
 \newcommand{\minimumAVS}{\AgdaField{minimumAVS}\xspace}
+\newcommand{\minfee}{\AgdaFunction{minfee}\xspace}
 \newcommand{\ccMinSize}{\AgdaField{ccMinSize}\xspace}
 \newcommand{\mleqmplusn}{\AgdaFunction{m≤m+n}\xspace}
 \newcommand{\module}{\AgdaKeyword{module}\xspace}
@@ -422,7 +433,7 @@
 \newcommand{\Qtwob}{\AgdaField{Q2b}\xspace}
 \newcommand{\Qthree}{\AgdaField{Q3}\xspace}
 \newcommand{\Qfour}{\AgdaField{Q4}\xspace}
-\newcommand{\Qfivee}{\AgdaField{Q5e}\xspace}
+\newcommand{\Qfive}{\AgdaField{Q5}\xspace}
 
 \newcommand{\rankThreshold}{\AgdaFunction{rankThreshold}\xspace}
 \newcommand{\RATIFYAccept}{\AgdaInductiveConstructor{RATIFY-Accept}\xspace}
@@ -455,15 +466,16 @@
 \newcommand{\role}{\AgdaField{role}\xspace}
 \newcommand{\roleVotes}{\AgdaFunction{roleVotes}\xspace}
 
-\newcommand{\SPOs}{\AgdaInductiveConstructor{SPOs}\xspace}
-\newcommand{\SPO}{\AgdaInductiveConstructor{SPO}\xspace}
 \newcommand{\RTC}{\AgdaFunction{ReflexiveTransitiveClosure}\xspace}
 \newcommand{\RTCI}{\AgdaOperator{\AgdaBound{\AgdaUnderscore{}⊢\AgdaUnderscore{}⇀⟦\AgdaUnderscore{}⟧*\AgdaUnderscore{}}}}
 \newcommand{\RTCB}{\AgdaOperator{\AgdaBound{\AgdaUnderscore{}⊢\AgdaUnderscore{}⇀⟦\AgdaUnderscore{}⟧\AgdaUnderscore{}}}}
+\newcommand{\RwdAddrToCoinMap}{\AgdaRecord{RwdAddr}~\AgdaFunction{⇀}~\AgdaFunction{Coin}}
 \newcommand{\SecurityGroup}{\AgdaInductiveConstructor{SecurityGroup}\xspace}
 \newcommand{\StakeDistrs}{\AgdaRecord{StakeDistrs}\xspace}
 \newcommand{\snd}{\AgdaField{proj₂}\xspace}
 \newcommand{\specProperty}{\AgdaFunction{specProperty}\xspace}
+\newcommand{\SPO}{\AgdaInductiveConstructor{SPO}\xspace}
+\newcommand{\SPOs}{\AgdaInductiveConstructor{SPOs}\xspace}
 \newcommand{\sprime}{\AgdaGeneralizable{s'}\xspace}
 \newcommand{\spring}{\AgdaFunction{sp-∘}\xspace}
 \newcommand{\stake}{\AgdaField{stake}\xspace}
@@ -475,6 +487,7 @@
 \newcommand{\sym}{\AgdaFunction{sym}\xspace}
 \newcommand{\ScriptHash}{\AgdaFunction{ScriptHash}\xspace}
 \newcommand{\ScriptPurpose}{\AgdaDatatype{ScriptPurpose}\xspace}
+\newcommand{\scriptsCost}{\AgdaFunction{scriptsCost}\xspace}
 \newcommand{\scriptsNeeded}{\AgdaFunction{scriptsNeeded}\xspace}
 
 \newcommand{\TacticDeriveDecEq}{\AgdaModule{Tactic.Derive.DecEq}\xspace}

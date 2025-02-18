@@ -78,7 +78,7 @@ record DrepThresholds : Type where
 
 record PoolThresholds : Type where
   field
-    Q1 Q2a Q2b Q4 Q5e : ℚ
+    Q1 Q2a Q2b Q4 Q5 : ℚ
 
 record PParams : Type where
   field
@@ -138,6 +138,11 @@ record PParams : Type where
         drepActivity                  : Epoch
 \end{code}
 \end{AgdaMultiCode}
+\emph{Security group}
+
+\maxBlockSize{} \maxTxSize{} \maxHeaderSize{} \maxValSize{}
+\maxBlockExUnits{} \AgdaField{a}{} \AgdaField{b}{}
+\minFeeRefScriptCoinsPerByte{} \coinsPerUTxOByte{} \govActionDeposit{}
 \caption{Protocol parameter definitions}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
@@ -408,7 +413,7 @@ following concepts.
 \begin{itemize}
   \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
   named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
-  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfivee;
+  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfive;
   \item \ccMinSize: minimum constitutional committee size;
   \item \ccMaxTermLength: maximum term limit (in epochs) of constitutional committee members;
   \item \govActionLifetime: governance action expiration;
@@ -433,10 +438,21 @@ instance
   ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
 \end{code}
 
-Finally, to update parameters we introduce an abstract type. An update
-can be applied and it has a set of groups associated with it. An
-update is well formed if it has at least one group (i.e. if it updates
-something) and if it preserves well-formedness.
+Figure~\ref{fig:pp-update-type} defines types and functions to update
+parameters. These consist of an abstract type \AgdaField{UpdateT} and
+two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
+The type \AgdaField{UpdateT} is to be instantiated by a type that
+%
+\begin{itemize}
+  \item can be used to update parameters, via the
+    function~\AgdaField{applyUpdate}
+  \item can be queried about what parameter groups it updates, via the
+    function~\AgdaField{updateGroups}
+\end{itemize}
+%
+An element of the type~\AgdaField{UpdateT} is well formed if it
+updates at least one group and applying the update preserves
+well-formedness.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}

@@ -145,7 +145,8 @@ is gone with the new design.
 
 Similar to \ScriptPurpose, \DepositPurpose carries the information
 what the deposit is being made for. The deposits are stored in the
-\deposits field of \UTxOState. \updateDeposits is responsible for
+\deposits field of \UTxOState (the type \Deposits{} is defined in
+Figure~\ref{fig:certs:deposit-types}). \updateDeposits is responsible for
 updating this map, which is split into \updateCertDeposits and
 \updateProposalDeposits, responsible for certificates and proposals
 respectively. Both of these functions iterate over the relevant fields
@@ -455,7 +456,11 @@ to \consumed or \produced depending on its sign. This is done via
 \negPart and \posPart, which satisfy the key property that their
 difference is the identity function.
 
-Figures~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
+Figure~\ref{fig:functions:utxo} defines the function \minfee{}. In
+Conway, \minfee{} includes the cost for reference scripts. This is
+calculated using \scriptsCost{} (see Figure~\ref{fig:scriptsCost}).
+
+Figure~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
 Inhabitants of this type are constructed in one of eight ways, corresponding to
 seven certificate types plus one for an empty list of certificates.  Suffice it to
 say that \ValidCertDeposits is used to check the validity of the deposits in a
