@@ -50,7 +50,9 @@ in that order.
 The symbols mean the following:
 \begin{itemize}
 \item
-  \AgdaFunction{vote} x: For an action to pass, the stake associated with the yes votes must exceed the threshold x.
+  \AgdaFunction{vote} x: For an action to pass, the fraction of stake
+  associated with yes votes with respect to that associated
+  with yes and no votes must exceed the threshold x.
 \item
   \AgdaFunction{─}: The body of governance does not participate in voting.
 \item
@@ -151,7 +153,7 @@ threshold pp ccThreshold =
         pparamThreshold EconomicGroup    = (vote P5b  , ─         )
         pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
         pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
-        pparamThreshold SecurityGroup    = (─         , vote Q5e  )
+        pparamThreshold SecurityGroup    = (─         , vote Q5   )
 
         P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
         P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
