@@ -48,11 +48,7 @@ data VDeleg : Type where
   noConfidenceRep  :                         VDeleg
 
 record Anchor : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     url   : String
     hash  : DocHash
 
@@ -64,21 +60,6 @@ data GovAction : Type where
   ChangePParams    : PParamsUpdate                            →  GovAction
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction
   Info             :                                             GovAction
-
-actionWellFormed : GovAction → Type
-actionWellFormed (ChangePParams x)  = ppdWellFormed x
-actionWellFormed (TreasuryWdrl x)   = ∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId
-actionWellFormed _                  = ⊤
-\end{code}
-\begin{code}[hide]
-actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
-actionWellFormed? {NoConfidence}          = it
-actionWellFormed? {UpdateCommittee _ _ _} = it
-actionWellFormed? {NewConstitution _ _}   = it
-actionWellFormed? {TriggerHF _}           = it
-actionWellFormed? {ChangePParams _}       = it
-actionWellFormed? {TreasuryWdrl _}        = it
-actionWellFormed? {Info}                  = it
 \end{code}
 \end{AgdaMultiCode}
 \caption{Governance actions}
@@ -92,10 +73,6 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
   \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
   \item \Anchor---a url and a document hash;
   \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions);
-  \item \actionWellFormed---in the case of protocol parameter changes,
-    an action is well-formed if it preserves the well-formedness of parameters.
-    \ppdWellFormed is effectively the same as \paramsWellFormed, except that it
-    only applies to the parameters that are being changed.
 \end{itemize}
 The governance actions carry the following information:
 \begin{itemize}
@@ -182,22 +159,14 @@ data Vote : Type where
   yes no abstain  : Vote
 
 record GovVote : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     gid         : GovActionID
     voter       : Voter
     vote        : Vote
     anchor      : Maybe Anchor
 
 record GovProposal : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     action      : GovAction
     prevAction  : NeedsHash action
     policy      : Maybe ScriptHash
@@ -206,11 +175,7 @@ record GovProposal : Type where
     anchor      : Anchor
 
 record GovActionState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     votes       : Voter ⇀ Vote
     returnAddr  : RwdAddr
     expiresIn   : Epoch

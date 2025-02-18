@@ -2,7 +2,11 @@
 \AgdaField{txprop}
 \AgdaField{txdonation}
 \AgdaField{curTreasury}
+\AgdaField{txid}
+\AgdaFunction{txid}
 \AgdaFunction{curTreasury}
 \AgdaFunction{treasury}
 \AgdaField{txsize}
 \AgdaField{txId}
+\AgdaBound{inputHashes}
+\AgdaBound{txdatsHashes}

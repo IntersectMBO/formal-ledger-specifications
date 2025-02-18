@@ -43,14 +43,33 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-isTwoPhaseScriptAddress : Tx → UTxO → Addr → Bool
+isTwoPhaseScriptAddress : Tx → UTxO → Addr → Type
 isTwoPhaseScriptAddress tx utxo a =
   if isScriptAddr a then
     (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
                  then (λ {s} → isP2Script s)
-                 else false)
+                 else ⊥)
   else
-    false
+    ⊥
+\end{code}
+\begin{code}[hide]
+isTwoPhaseScriptAddress? : ∀ {tx utxo a} → isTwoPhaseScriptAddress tx utxo a ⁇
+isTwoPhaseScriptAddress? {tx} {utxo} {a} .dec
+  with decide (isScriptAddr a)
+... | inj₂ _ = no λ ()
+... | inj₁ p
+  with decide (lookupScriptHash (getScriptHash a p) tx utxo)
+... | inj₂ _ = no λ ()
+... | inj₁ s = isP2Script? {s} .dec
+
+record isTwoPhaseScriptAddress′ (tx : Tx) (utxo : UTxO) (a : Addr) : Type where
+  constructor wrap
+  field unwrap : isTwoPhaseScriptAddress tx utxo a
+
+instance
+  isTwoPhaseScriptAddress′? : ∀ {tx utxo a} → isTwoPhaseScriptAddress′ tx utxo a ⁇
+  isTwoPhaseScriptAddress′? {tx} {utxo} {a} = ⁇ (map′ wrap unwrap (isTwoPhaseScriptAddress? {tx} {utxo} {a} .dec))
+    where open isTwoPhaseScriptAddress′
 \end{code}
 \begin{code}[hide]
 opaque
@@ -61,8 +80,8 @@ opaque
 
   getInputHashes : Tx → UTxO → ℙ DataHash
   getInputHashes tx utxo = getDataHashes
-    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress tx utxo a ≡ true)
-            (range (utxo ∣ txins)))
+    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress′ tx utxo a)
+             (range (utxo ∣ txins)))
     where open Tx; open TxBody (tx .body)
 
 totExUnits : Tx → ExUnits
@@ -126,7 +145,8 @@ is gone with the new design.
 
 Similar to \ScriptPurpose, \DepositPurpose carries the information
 what the deposit is being made for. The deposits are stored in the
-\deposits field of \UTxOState. \updateDeposits is responsible for
+\deposits field of \UTxOState (the type \Deposits{} is defined in
+Figure~\ref{fig:certs:deposit-types}). \updateDeposits is responsible for
 updating this map, which is split into \updateCertDeposits and
 \updateProposalDeposits, responsible for certificates and proposals
 respectively. Both of these functions iterate over the relevant fields
@@ -148,11 +168,7 @@ the new deposits logic in older eras and then replaying the chain.
 \emph{UTxO environment}
 \begin{code}
 record UTxOEnv : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     slot      : Slot
     pparams   : PParams
     treasury  : Coin
@@ -161,12 +177,8 @@ record UTxOEnv : Type where
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᵘ
   field
-\end{code}
-\begin{code}
     utxo       : UTxO
     fees       : Coin
     deposits   : Deposits
@@ -377,37 +389,22 @@ instance
                                + getCoin (UTxOState.deposits s)
                                + UTxOState.donations s
 
--- Boolean implication
-_=>ᵇ_ : Bool → Bool → Bool
-a =>ᵇ b = if a then b else true
-
--- Boolean-valued inequalities on natural numbers
-_≤ᵇ_ _≥ᵇ_ : ℕ → ℕ → Bool
-m ≤ᵇ n = ¿ m ≤ n ¿ᵇ
-_≥ᵇ_ = flip _≤ᵇ_
-
-≟-∅ᵇ : {A : Type} ⦃ _ : DecEq A ⦄ → (X : ℙ A) → Bool
-≟-∅ᵇ X = ¿ X ≡ ∅ ¿ᵇ
-
 coinPolicies : ℙ ScriptHash
 coinPolicies = policies (inject 1)
 
-isAdaOnlyᵇ : Value → Bool
-isAdaOnlyᵇ v = toBool (policies v ≡ᵉ coinPolicies)
-
--- TODO: this could be a regular property
--- TODO: using this in UTxO rule below
+isAdaOnly : Value → Type
+isAdaOnly v = policies v ≡ᵉ coinPolicies
 \end{code}
 \begin{code}
-
-feesOK : PParams → Tx → UTxO → Bool
-feesOK pp tx utxo =  (  minfee pp utxo tx ≤ᵇ txfee ∧ not (≟-∅ᵇ (txrdmrs ˢ))
-                        =>ᵇ  ( allᵇ (λ (addr , _) → ¿ isVKeyAddr addr ¿) collateralRange
-                             ∧ isAdaOnlyᵇ bal
-                             ∧ (coin bal * 100) ≥ᵇ (txfee * pp .collateralPercentage)
-                             ∧ not (≟-∅ᵇ collateral)
-                             )
-                     )
+feesOK : PParams → Tx → UTxO → Type
+feesOK pp tx utxo = ( minfee pp utxo tx ≤ txfee × (txrdmrs ˢ ≢ ∅
+                      → ( All (λ (addr , _) → isVKeyAddr addr) collateralRange
+                        × isAdaOnly bal
+                        × coin bal * 100 ≥ txfee * pp .collateralPercentage
+                        × collateral ≢ ∅
+                        )
+                      )
+                    )
   where
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
@@ -456,7 +453,11 @@ to \consumed or \produced depending on its sign. This is done via
 \negPart and \posPart, which satisfy the key property that their
 difference is the identity function.
 
-Figures~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
+Figure~\ref{fig:functions:utxo} defines the function \minfee{}. In
+Conway, \minfee{} includes the cost for reference scripts. This is
+calculated using \scriptsCost{} (see Figure~\ref{fig:scriptsCost}).
+
+Figure~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
 Inhabitants of this type are constructed in one of eight ways, corresponding to
 seven certificate types plus one for an empty list of certificates.  Suffice it to
 say that \ValidCertDeposits is used to check the validity of the deposits in a
@@ -538,7 +539,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxo ≡ true               ∙ consumed pp s txb ≡ produced pp s txb
+    ∙ feesOK pp tx utxo                      ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 

@@ -1,3 +1,5 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
@@ -14,12 +16,12 @@ open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 
 instance
   GovEnvToConf : L.Deposits × L.Deposits ⊢ L.GovEnv ⭆ C.GovEnv
-  GovEnvToConf .convⁱ deposits L.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
-    C.⟦ txid , epoch , pp , policy , enactState , deposits ⊢conv certState ⟧ᵍ
+  GovEnvToConf .convⁱ deposits L.⟦ txid , epoch , pp , policy , enactState , certState , stakeDelegs ⟧ᵍ =
+    C.⟦ txid , epoch , pp , policy , enactState , deposits ⊢conv certState , stakeDelegs ⟧ᵍ
 
   GovEnvFromConf : C.GovEnv ⭆ L.GovEnv
-  GovEnvFromConf .convⁱ _ C.⟦ txid , epoch , pp , policy , enactState , certState ⟧ᵍ =
-    L.⟦ txid , epoch , pp , policy , enactState , conv certState ⟧ᵍ
+  GovEnvFromConf .convⁱ _ C.⟦ txid , epoch , pp , policy , enactState , certState , stakeDelegs ⟧ᵍ =
+    L.⟦ txid , epoch , pp , policy , enactState , conv certState , stakeDelegs ⟧ᵍ
 
   opaque
     unfolding L.isRegistered C.isRegistered
@@ -39,7 +41,7 @@ instance
             → L.Deposits × L.Deposits
               ⊢ (Γ , n) L.⊢ s ⇀⦇ votes ,GOV'⦈ s' ⭆ⁱ λ deposits _ →
                 (deposits ⊢conv Γ , n) C.⊢ s ⇀⦇ votes ,GOV'⦈ s'
-  GOV'ToConf .convⁱ deposits (L.GOV-Vote (a , b , c)) = C.GOV-Vote (a , b , deposits ⊢conv c)
+  GOV'ToConf .convⁱ deposits (L.GOV-Vote (a , b , c , d)) = C.GOV-Vote (a , b , deposits ⊢conv c , d)
   GOV'ToConf .convⁱ deposits (L.GOV-Propose h) = C.GOV-Propose h
 
   GOVToConf : ∀ {Γ s votes s' n}
@@ -51,7 +53,7 @@ instance
 
   GOV'FromConf : ∀ {Γ s votes s' n}
             → (Γ , n) C.⊢ s ⇀⦇ votes ,GOV'⦈ s' ⭆ (conv Γ , n) L.⊢ s ⇀⦇ votes ,GOV'⦈ s'
-  GOV'FromConf .convⁱ _ (C.GOV-Vote (a , b , c)) = L.GOV-Vote (a , b , conv c)
+  GOV'FromConf .convⁱ _ (C.GOV-Vote (a , b , c , d)) = L.GOV-Vote (a , b , conv c , d)
   GOV'FromConf .convⁱ _ (C.GOV-Propose h)        = L.GOV-Propose h
 
   GOVFromConf : ∀ {Γ s votes s' n}

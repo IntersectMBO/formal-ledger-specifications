@@ -39,12 +39,8 @@ remain in treasury and reserves.
 \begin{AgdaMultiCode}
 \begin{code}
 record Acnt : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_⟧ᵃ
   field
-\end{code}
-\begin{code}
     treasury reserves : Coin
 
 ProtVer : Type
@@ -75,24 +71,14 @@ data PParamGroup : Type where
   SecurityGroup    : PParamGroup
 
 record DrepThresholds : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
 
 record PoolThresholds : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
-    Q1 Q2a Q2b Q4 Q5e : ℚ
+    Q1 Q2a Q2b Q4 Q5 : ℚ
 
 record PParams : Type where
-\end{code}
-\begin{code}[hide]
   field
 \end{code}
 \emph{Network group}
@@ -150,6 +136,11 @@ record PParams : Type where
         drepActivity                  : Epoch
 \end{code}
 \end{AgdaMultiCode}
+\emph{Security group}
+
+\maxBlockSize{} \maxTxSize{} \maxHeaderSize{} \maxValSize{}
+\maxBlockExUnits{} \AgdaField{a}{} \AgdaField{b}{}
+\minFeeRefScriptCoinsPerByte{} \coinsPerUTxOByte{} \govActionDeposit{}
 \caption{Protocol parameter definitions}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
@@ -294,6 +285,22 @@ module PParamsUpdate where
       ∷ is-just ccMinSize
       ∷ is-just ccMaxTermLength
       ∷ [])
+
+  modifiesSecurityGroup : PParamsUpdate → Bool
+  modifiesSecurityGroup ppu = let open PParamsUpdate ppu in
+    or
+      ( is-just maxBlockSize
+      ∷ is-just maxTxSize
+      ∷ is-just maxHeaderSize
+      ∷ is-just maxValSize
+      ∷ is-just maxBlockExUnits
+      ∷ is-just b
+      ∷ is-just a
+      ∷ is-just coinsPerUTxOByte
+      ∷ is-just govActionDeposit
+      ∷ is-just minFeeRefScriptCoinsPerByte
+      ∷ []
+      )
   
   modifiedUpdateGroups : PParamsUpdate → ℙ PParamGroup
   modifiedUpdateGroups ppu =
@@ -301,6 +308,7 @@ module PParamsUpdate where
     ∪ modifiesEconomicGroup   ?═⇒ EconomicGroup
     ∪ modifiesTechnicalGroup  ?═⇒ TechnicalGroup
     ∪ modifiesGovernanceGroup ?═⇒ GovernanceGroup
+    ∪ modifiesSecurityGroup   ?═⇒ SecurityGroup
     )
     where
       _?═⇒_ : (PParamsUpdate → Bool) → PParamGroup → ℙ PParamGroup
@@ -401,7 +409,7 @@ following concepts.
 \begin{itemize}
   \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
   named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
-  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfivee;
+  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfive;
   \item \ccMinSize: minimum constitutional committee size;
   \item \ccMaxTermLength: maximum term limit (in epochs) of constitutional committee members;
   \item \govActionLifetime: governance action expiration;
@@ -426,10 +434,21 @@ instance
   ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
 \end{code}
 
-Finally, to update parameters we introduce an abstract type. An update
-can be applied and it has a set of groups associated with it. An
-update is well formed if it has at least one group (i.e. if it updates
-something) and if it preserves well-formedness.
+Figure~\ref{fig:pp-update-type} defines types and functions to update
+parameters. These consist of an abstract type \AgdaField{UpdateT} and
+two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
+The type \AgdaField{UpdateT} is to be instantiated by a type that
+%
+\begin{itemize}
+  \item can be used to update parameters, via the
+    function~\AgdaField{applyUpdate}
+  \item can be queried about what parameter groups it updates, via the
+    function~\AgdaField{updateGroups}
+\end{itemize}
+%
+An element of the type~\AgdaField{UpdateT} is well formed if it
+updates at least one group and applying the update preserves
+well-formedness.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}

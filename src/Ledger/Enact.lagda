@@ -31,25 +31,17 @@ Note that all other fields of \EnactState also contain a \GovActionID
 since they are \HashProtected.
 
 \begin{figure*}[h]
-\begin{AgdaSuppressSpace}
+\begin{AgdaMultiCode}
 \begin{code}
 record EnactEnv : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_⟧ᵉ
   field
-\end{code}
-\begin{code}
     gid       : GovActionID
     treasury  : Coin
     epoch     : Epoch
 
 record EnactState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
     constitution  : HashProtected (DocHash × Maybe ScriptHash)
     pv            : HashProtected ProtVer
@@ -90,7 +82,7 @@ data
 \begin{code}
   _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type
 \end{code}
-\end{AgdaSuppressSpace}
+\end{AgdaMultiCode}
 \caption{Types and function used for the ENACT transition system}
 \label{fig:enact-defs}
 \end{figure*}
@@ -136,7 +128,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record s { cc = nothing , gid }
 
-  Enact-NewComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
+  Enact-UpdComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
                       maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm

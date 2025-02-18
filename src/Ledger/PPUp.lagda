@@ -24,20 +24,12 @@ private variable m n : ℕ
 GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
 record PPUpdateState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     pup   : ProposedPPUpdates
     fpup  : ProposedPPUpdates
 
 record PPUpdateEnv : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     slot       : Slot
     pparams    : PParams
     genDelegs  : GenesisDelegation

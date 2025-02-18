@@ -1,3 +1,4 @@
+{-# OPTIONS --safe #-}
 
 open import Ledger.Abstract
 open import Ledger.Transaction using (TransactionStructure)
