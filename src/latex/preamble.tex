@@ -68,10 +68,13 @@ Scale=0.80
 module of the \href{\repourl}{formal ledger specification}.}
 \newcommand{\modulefootnotetext}[1]{\footnotetext{\modulenote{#1}}}
 
-% cipGg = cip69
-\newcommand{\cipGgurl}{https://github.com/cardano-foundation/CIPs/tree/master/CIP-0069}
-\newcommand{\cipGg}{\href{\cipGgurl}{CIP-69}}
-
-% cipIGgA = cip1694
-\newcommand{\cipIGgAurl}{https://cips.cardano.org/cip/CIP-1694}
-\newcommand{\cipIGgA}{\href{\cipIGgAurl}{CIP-1694}}
+\ExplSyntaxOn
+\NewDocumentCommand\hrefCIP{m}{%
+  \clist_if_in:nnTF {0069,1694} {#1}
+  {%
+    \href{https://github.com/cardano-foundation/CIPs/tree/master/CIP-#1}{CIP-#1}%
+  }{%
+    \PackageError{agda-latex-macros}{CIP-#1~undefined.}{}
+  }%
+}
+\ExplSyntaxOff

@@ -205,14 +205,14 @@ unquoteDecl UTXOW-inductive-premises =
 \end{code}
 
 \subsection{Plutus script context}
-\cipGg{}
+\hrefCIP{0069}
 unifies the arguments given to all types of Plutus scripts currently available
 (spending, certifying, rewarding, minting, voting, proposing).
 
 The formal specification permits running spending scripts in the absence datums
 in the Conway era.  However, since the interface with Plutus is kept abstract
 in this specification, changes to the representation of the script context which
-are part of \cipGg{} are not included here.  To provide a \cipGg{}-conformant
+are part of \hrefCIP{0069} are not included here.  To provide a \hrefCIP{0069}-conformant
 implementation of Plutus to this specification, an additional step processing
 the \List \Data argument we provide would be required.
 
@@ -221,10 +221,3 @@ In Figure~\ref{fig:rules:utxow}, the line
 \PowerSet~\DataHash.  In the Alonzo spec, these two terms would
 have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out
 (see~\cite[Sec.~3.1]{alonzo-ledger-spec}).
-In original spec, however, the right-hand side (\txdatsHashes) could never
-contain \nothing, hence the left-hand side (\inputHashes) could never
-contain \nothing.
-% TODO: re. "In the original spec, however,...", replace "original" with
-% the era name (Shelley?).  If Shelley, what was `txdat` called in that era?
-% Add reference to the place in a previous spec where we can see that
-% (the analog of) `txdat` cannot contain a nothing.

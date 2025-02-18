@@ -393,14 +393,13 @@ to the general purpose that each parameter serves.
 \end{itemize}
 
 The first four groups have the property that every protocol parameter
-is associated to precisely one of these groups.  The \SecurityGroup is
-special: a protocol parameter may or may not be in the \SecurityGroup.
+is associated to precisely one of these groups.  The \SecurityGroup{} is
+special: a protocol parameter may or may not be in the \SecurityGroup{}.
 So, each protocol parameter belongs to at least one and at most two groups.
-Note that in \cipIGgA{}
-there is no \SecurityGroup, but there is the concept of security-relevant
-protocol parameters~(\cite{cip1694}).  The difference between these notions
-is only social, so we implement security-relevant protocol parameters as
-a group.
+Note that in \hrefCIP{1694} there is no \SecurityGroup{}, but there is the
+concept of security-relevant protocol parameters~(\cite{cip1694}).
+The difference between these notions is only social, so we implement
+security-relevant protocol parameters as a group.
 
 The purpose of the groups is to determine voting thresholds for
 proposals aiming to change parameters. The thresholds depend on the
