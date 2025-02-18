@@ -78,9 +78,10 @@ private variable
   an             : Anchor
   Γ              : CertEnv
   d              : Coin
+  md             : Maybe Coin
   c              : Credential
   mc             : Maybe Credential
-  delegatees     : ℙ Credential
+  delegatees cc  : ℙ Credential
   dCert          : DCert
   dep ddep gdep  : Deposits
   e              : Epoch
@@ -131,12 +132,13 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
     ∙ (CredentialDeposit c , d) ∈ dep
+    ∙ md ≡ nothing ⊎ md ≡ just d
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
       ⟦ vDelegs , sDelegs , rwds , dep ⟧ᵈ
-      ⇀⦇ dereg c d ,DELEG⦈
+      ⇀⦇ dereg c md ,DELEG⦈
       ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ
-      , updateCertDeposit pp (dereg c d) dep ⟧ᵈ
+      , updateCertDeposit pp (dereg c md) dep ⟧ᵈ
 
   DELEG-reg : let open PParams pp in
     ∙ c ∉ dom rwds
@@ -151,7 +153,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
       ⟦ dReps , ccKeys , dep ⟧ᵛ
         ⇀⦇ regdrep c d an ,GOVCERT⦈
       ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys
@@ -161,27 +163,28 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
     ∙ c ∈ dom dReps
     ∙ (DRepDeposit c , d) ∈ dep
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
           ⇀⦇ deregdrep c d ,GOVCERT⦈
-          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit (CertEnv.pp Γ) (deregdrep c d) dep ⟧ᵛ
+          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit pp (deregdrep c d) dep ⟧ᵛ
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
+    ∙ c ∈ cc
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys , dep ⟧ᵛ
           ⇀⦇ ccreghot c mc ,GOVCERT⦈
-          ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit (CertEnv.pp Γ) (ccreghot c mc) dep ⟧ᵛ
+          ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit pp (ccreghot c mc) dep ⟧ᵛ
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
@@ -199,7 +202,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls ⟧ᶜ ⊢
+      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
       ⟦ ⟦ voteDelegs , stakeDelegs , rewards , ddep ⟧ᵈ
       , stᵖ
       , ⟦ dReps , ccHotKeys , gdep ⟧ᵛ

@@ -64,7 +64,7 @@ instance
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
-      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ
+      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , _ ⟧ᶜ
       govΓ : CertState → GovEnv
       govΓ = ⟦ txid , epoch slot , pparams , ppolicy , enactState ,_⟧ᵍ
 
@@ -167,7 +167,6 @@ module _
       getCoin ⟦ utxo , fees , deposits , donations ⟧ᵘ + φ(getCoin txwdrls , isValid) ≡⟨ pov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ᵘ ∎ )
     where open ≡-Reasoning
-
 
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.

@@ -182,8 +182,8 @@ getValidCertDepositsCERTS : ∀ {Γ s certs s'} deposits (open L.CertEnv Γ usin
 getValidCertDepositsCERTS deposits wf (BS-base Id-nop) = L.[]
 getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-deleg (C.DELEG-delegate (a , b))) rs) =
   L.delegate (getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
-getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-deleg (C.DELEG-dereg (_ , h))) rs) =
-  L.dereg (∈-filter .Equivalence.from (wf .proj₁ .proj₁ h) .proj₂ )
+getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-deleg (C.DELEG-dereg (_ , h , h'))) rs) =
+  L.dereg (∈-filter .Equivalence.from (wf .proj₁ .proj₁ h) .proj₂) h'
           (getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
 getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-deleg (C.DELEG-reg x)) rs) =
   L.reg (getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
@@ -200,14 +200,15 @@ getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-vdel
   L.ccreghot(getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
 
 getValidCertDepositsC : ∀ Γ s {s'} tx
-                     → (let open C.LEnv Γ using (pparams; slot)
+                     → (let open C.LEnv Γ using (pparams; slot; enactState)
                             open TxBody (tx .Tx.body) using (txcerts; txvote; txwdrls)
                             open C.LState s
                             open C.UTxOState utxoSt using (deposits)
+                            cc = C.allColdCreds govSt enactState
                        )
                      → WellformedLState s
                      → isValid tx ≡ true
-                     → C.⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ C.⊢ certState ⇀⦇ txcerts ,CERTS⦈ s'
+                     → C.⟦ epoch slot , pparams , txvote , txwdrls , cc ⟧ᶜ C.⊢ certState ⇀⦇ txcerts ,CERTS⦈ s'
                      → L.ValidCertDeposits pparams deposits txcerts
 getValidCertDepositsC Γ s tx wf refl (RTC (C.CERT-base _ , step)) =
   getValidCertDepositsCERTS (C.L.UTxOState.deposits (C.LState.utxoSt s)) wf step
@@ -333,12 +334,12 @@ opaque
                                          (⟨ cong-updateDDep {pp} cert {deps₁ .proj₁} {deps₂ .proj₁}
                                           , cong-updateGDep {pp} cert {deps₁ .proj₂} {deps₂ .proj₂} ⟩ eqd) rs
     in  deps₂' , eqd' , BS-ind (C.CERT-deleg (C.DELEG-delegate h)) rs'
-  castCERTS' {Γ} deps₁ deps₂ deps₁' eqd (BS-ind (C.CERT-deleg {dCert = cert} (C.DELEG-dereg (a , b))) rs) =
+  castCERTS' {Γ} deps₁ deps₂ deps₁' eqd (BS-ind (C.CERT-deleg {dCert = cert} (C.DELEG-dereg (a , b , c))) rs) =
     let open C.CertEnv Γ using (pp)
         deps₂' , eqd' , rs' = castCERTS' (updateCDep pp cert deps₁) (updateCDep pp cert deps₂) deps₁'
                                          (⟨ cong-updateDDep {pp} cert {deps₁ .proj₁} {deps₂ .proj₁}
                                           , cong-updateGDep {pp} cert {deps₁ .proj₂} {deps₂ .proj₂} ⟩ eqd) rs
-    in  deps₂' , eqd' , BS-ind (C.CERT-deleg (C.DELEG-dereg (a , eqd .proj₁ .proj₁ b))) rs'
+    in  deps₂' , eqd' , BS-ind (C.CERT-deleg (C.DELEG-dereg (a , eqd .proj₁ .proj₁ b , c))) rs'
                                                               -- ^^^^^^^^^^^^^^^^^^^ Actual work
   castCERTS' {Γ} deps₁ deps₂ deps₁' eqd (BS-ind (C.CERT-deleg {dCert = cert} (C.DELEG-reg h))         rs) =
     let open C.CertEnv Γ using (pp)
