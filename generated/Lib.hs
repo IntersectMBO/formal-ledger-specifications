@@ -14,7 +14,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction as X
   , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Wdrl
   , HSTimelock (..), HSPlutusScript (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert        as X
-  (certStep, certsStep, CertState(..))
+  (certStep, certsStep, CertState(..), LCertState(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Chain       as X
   (ChainState(..), Block(..), chainStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs       as X
