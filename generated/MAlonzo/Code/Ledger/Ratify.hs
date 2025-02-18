@@ -686,7 +686,7 @@ du_pparamThreshold_1932 v0 v1
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe du_'9472'_1810)
              (coe
                 du_vote_1788
-                (MAlonzo.Code.Ledger.PParams.d_Q5e_240
+                (MAlonzo.Code.Ledger.PParams.d_Q5_240
                    (coe MAlonzo.Code.Ledger.PParams.d_poolThresholds_360 (coe v0))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Ratify._.P/Q5

@@ -232,10 +232,10 @@ d_Q4_238 v0
   = case coe v0 of
       C_PoolThresholds'46'constructor_2403 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.PParams.PoolThresholds.Q5e
-d_Q5e_240 ::
+-- Ledger.PParams.PoolThresholds.Q5
+d_Q5_240 ::
   T_PoolThresholds_220 -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_Q5e_240 v0
+d_Q5_240 v0
   = case coe v0 of
       C_PoolThresholds'46'constructor_2403 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -1211,11 +1211,11 @@ du_DecEq'45'PParams_498 v0 v1
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Data.Rational.Properties.d__'8799'__2684
                                                                                                                                     (coe
-                                                                                                                                       d_Q5e_240
+                                                                                                                                       d_Q5_240
                                                                                                                                        (coe
                                                                                                                                           v28))
                                                                                                                                     (coe
-                                                                                                                                       d_Q5e_240
+                                                                                                                                       d_Q5_240
                                                                                                                                        (coe
                                                                                                                                           v62))))
                                                                                                                               (coe
@@ -2116,7 +2116,7 @@ du_Show'45'PParams_506 v0 v1
                                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
                                                    (coe
                                                       MAlonzo.Code.Data.Rational.Show.d_show_6
-                                                      (coe d_Q5e_240 (coe v28)))))))
+                                                      (coe d_Q5_240 (coe v28)))))))
                                        (coe
                                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
                                           (coe
