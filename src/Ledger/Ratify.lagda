@@ -23,7 +23,6 @@ _∧_ = _×_
 instance
   _ = +-0-commutativeMonoid
 \end{code}
-
 Governance actions are \defn{ratified} through on-chain votes.
 Different kinds of governance actions have different ratification requirements
 but always involve at least two of the three governance bodies.
@@ -457,6 +456,7 @@ RATIFY.
   \item \expired checks whether a governance action is expired in a given epoch.
 \end{itemize}
 \begin{figure*}[ht]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 open EnactState
 \end{code}
@@ -483,10 +483,15 @@ delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 
 acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
-acceptConds Γ ⟦ es , removed , d ⟧ʳ (id , st) = let open RatifyEnv Γ; open GovActionState st in
-       accepted Γ es st
-    ×  ¬ delayed action prevAction es d
-    × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+acceptConds Γ ⟦ es , removed , d ⟧ʳ (id , st) =
+\end{code}
+\begin{code}[hide]
+  let open RatifyEnv Γ; open GovActionState st in
+\end{code}
+\begin{code}
+    accepted Γ es st
+    × ¬ delayed action prevAction es d
+    × ∃[ es' ] ⟦ id , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
 abstract
@@ -518,6 +523,7 @@ abstract
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
 \end{code}
+\end{AgdaMultiCode}
 \caption{Functions related to ratification}
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
@@ -541,18 +547,26 @@ private variable
   removed : ℙ (GovActionID × GovActionState)
   d : Bool
 
-data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
-
 \end{code}
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  RATIFY-Accept : ∀ {Γ} {es} {removed} {d} {a} {es'} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+data _⊢_⇀⦇_,RATIFY'⦈_ :
+  RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
+
+  RATIFY-Accept :  {Γ        : RatifyEnv}
+                   {es es'   : EnactState}
+                   {removed  : ℙ (GovActionID × GovActionState)}
+                   {d        : Bool}
+                   {a        : GovActionID × GovActionState}
+
+     → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+
      ∙ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
      ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
-       Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
-            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
+       Γ ⊢ ⟦ es  , removed         , d                     ⟧ʳ ⇀⦇ a ,RATIFY'⦈
+           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧ʳ
 
   RATIFY-Reject : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
