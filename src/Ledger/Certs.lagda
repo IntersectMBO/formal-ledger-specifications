@@ -31,6 +31,7 @@ instance
     ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
 \end{code}
 \caption{Deposit types}
+\label{fig:certs:deposit-types}
 \end{figure*}
 
 \begin{figure*}[h!]
@@ -187,9 +188,22 @@ private variable
   cc : ℙ Credential
 \end{code}
 
-\subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
+\subsection{Changes Introduced in Conway Era}
 
-In the Conway era, support for pointer addresses, genesis delegations
+\subsubsection{Delegation}
+
+Registered credentials can now delegate to a DRep as well as to a
+stake pool. This is achieved by giving the \delegate certificate two
+optional fields, corresponding to a DRep and stake pool.
+
+Stake can be delegated for voting and block production simultaneously,
+since these are two separate features. In fact, preventing this could
+weaken the security of the chain, since security relies on high
+participation of honest stake holders.
+
+\subsubsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
+
+Support for pointer addresses, genesis delegations
 and MIR certificates is removed. In \DState, this means that the four
 fields relating to those features are no longer present, and \DelegEnv
 contains none of the fields it used to in the Shelley era.
@@ -201,25 +215,18 @@ stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
 the \TreasuryWdrl governance action in case of the MIR certificates.
 
-\subsection{Explicit Deposits}
+\subsubsection{Explicit Deposits}
 
 Registration and deregistration of staking credentials are now
 required to explicitly state the deposit that is being paid or
-refunded. This aligns them better with other design decisions such as
-having explicit transaction fees and helps make this information
-visible to light clients and hardware wallets. While not shown in the
-figures, the old certificates without explicit deposits will still be
-supported for some time for backwards compatibility.
+refunded. This deposit is used for checking correctness of transactions
+with certificates. Including the deposit aligns better with other
+design decisions such as having explicit transaction fees and helps
+make this information visible to light clients and hardware wallets.
 
-\subsection{Delegation}
-
-Registered credentials can now delegate to a DRep as well as to a
-stake pool. This is achieved by giving the \delegate certificate two
-optional fields, corresponding to a DRep and stake pool. Stake can be
-delegated for voting and block production simultaneously, since these
-are two separate features. In fact, preventing this could weaken the
-security of the chain, since security relies on high participation of
-honest stake holders.
+While not shown in the figures, the old certificates without explicit
+deposits will still be supported for some time for backwards
+compatibility.
 
 \subsection{Governance Certificate Rules}
 

@@ -49,7 +49,9 @@ in that order.
 The symbols mean the following:
 \begin{itemize}
 \item
-  \AgdaFunction{vote} x: For an action to pass, the stake associated with the yes votes must exceed the threshold x.
+  \AgdaFunction{vote} x: For an action to pass, the fraction of stake
+  associated with yes votes with respect to that associated
+  with yes and no votes must exceed the threshold x.
 \item
   \AgdaFunction{─}: The body of governance does not participate in voting.
 \item
@@ -150,7 +152,7 @@ threshold pp ccThreshold =
         pparamThreshold EconomicGroup    = (vote P5b  , ─         )
         pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
         pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
-        pparamThreshold SecurityGroup    = (─         , vote Q5e  )
+        pparamThreshold SecurityGroup    = (─         , vote Q5   )
 
         P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
         P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
@@ -488,11 +490,11 @@ acceptConds Γ stʳ (id , st) =
        accepted Γ es st
     ×  ¬ delayed action prevAction es delay
     × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+\end{code}
+\begin{code}[hide]
     where open RatifyEnv Γ
           open RatifyState stʳ
           open GovActionState st
-\end{code}
-\begin{code}[hide]
 abstract
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
   verifyPrev? NoConfidence              h es = dec

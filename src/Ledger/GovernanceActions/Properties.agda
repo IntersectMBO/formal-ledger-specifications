@@ -25,7 +25,7 @@ instance
     (UpdateCommittee new rem q) →
       case ¿ ∀[ term ∈ range new ]
                term ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ' e ¿ of λ where
-      (yes p) → success (-, Enact-NewComm
+      (yes p) → success (-, Enact-UpdComm
         (subst (λ x → ∀[ term ∈ range new ] term ≤ x) (sym +ᵉ≡+ᵉ') p))
       (no ¬p) → failure "ENACT failed at ∀[ term ∈ range new ] term ≤ (s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ e)"
     (NewConstitution dh sh)  → success (-, Enact-NewConst)
@@ -39,7 +39,7 @@ instance
   Computational-ENACT .completeness Γᵉ s action _ p
     with action | p
   ... | .NoConfidence           | Enact-NoConf   = refl
-  ... | .UpdateCommittee new rem q | Enact-NewComm p
+  ... | .UpdateCommittee new rem q | Enact-UpdComm p
     rewrite dec-yes
       (¿ ∀[ term ∈ range new ] term
            ≤ s .pparams .proj₁ .PParams.ccMaxTermLength +ᵉ' EnactEnv.epoch Γᵉ ¿)

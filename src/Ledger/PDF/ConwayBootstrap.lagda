@@ -16,7 +16,7 @@ be made to the ledger described in this document.
 \item Transactions containing a vote other than a \CC vote,
       a \SPO vote on a \TriggerHF action or any vote on an \Info
       action will be rejected.
-\item \Qfour, \Pfive and \Qfivee are set to $0$.
+\item \Qfour, \Pfive and \Qfive are set to $0$.
 \item An SPO that does not vote is assumed to have voted \abstain.
 \end{itemize}
 

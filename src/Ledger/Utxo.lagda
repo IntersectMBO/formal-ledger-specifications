@@ -145,7 +145,8 @@ is gone with the new design.
 
 Similar to \ScriptPurpose, \DepositPurpose carries the information
 what the deposit is being made for. The deposits are stored in the
-\deposits field of \UTxOState. \updateDeposits is responsible for
+\deposits field of \UTxOState (the type \Deposits{} is defined in
+Figure~\ref{fig:certs:deposit-types}). \updateDeposits is responsible for
 updating this map, which is split into \updateCertDeposits and
 \updateProposalDeposits, responsible for certificates and proposals
 respectively. Both of these functions iterate over the relevant fields
