@@ -3365,11 +3365,11 @@ d_Q4_2184 ::
   MAlonzo.Code.Ledger.PParams.T_PoolThresholds_220 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_Q4_2184 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q4_238 (coe v0)
--- Ledger.Transaction.TransactionStructure._.PoolThresholds.Q5e
-d_Q5e_2186 ::
+-- Ledger.Transaction.TransactionStructure._.PoolThresholds.Q5
+d_Q5_2186 ::
   MAlonzo.Code.Ledger.PParams.T_PoolThresholds_220 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_Q5e_2186 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q5e_240 (coe v0)
+d_Q5_2186 v0 = coe MAlonzo.Code.Ledger.PParams.d_Q5_240 (coe v0)
 -- Ledger.Transaction.TransactionStructure.govParams
 d_govParams_2194 ::
   T_TransactionStructure_20 ->

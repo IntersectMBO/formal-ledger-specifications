@@ -33,7 +33,7 @@ import qualified MAlonzo.Code.Ledger.PParams
 import GHC.Generics (Generic)
 data DrepThresholds = MkDrepThresholds {p1 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p2a :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p2b :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p3 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p4 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p5a :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p5b :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p5c :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p5d :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, p6 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational}
   deriving (Show, Eq, Generic)
-data PoolThresholds = MkPoolThresholds {q1 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, q2a :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, q2b :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, q4 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, q5e :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational}
+data PoolThresholds = MkPoolThresholds {q1 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, q2a :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, q2b :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, q4 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, q5 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational}
   deriving (Show, Eq, Generic)
 data Acnt = MkAcnt {treasury :: Integer, reserves :: Integer}
   deriving (Show, Eq, Generic)
@@ -1055,7 +1055,7 @@ d_Conv'45'PParams_24
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v35) (coe v36)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.PParams.d_Q5e_240 (coe v26))))
+                           (MAlonzo.Code.Ledger.PParams.d_Q5_240 (coe v26))))
                      (coe
                         C_MkDrepThresholds_29
                         (coe
