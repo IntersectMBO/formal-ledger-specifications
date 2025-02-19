@@ -54,6 +54,7 @@ txgov txb = map inj₂ txprop ++ map inj₁ txvote
 
 ifDRepIsRegistered : CertState → Voter → Type
 ifDRepIsRegistered certState (r , c) = r ≡ DRep → c ∈ dom (gState .dreps)
+  where open CertState certState
 
 removeOrphanDRepVotes : CertState → GovActionState → GovActionState
 removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
