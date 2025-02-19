@@ -39,15 +39,14 @@ txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
 
-isUnregisteredDRep : CertState → Voter → Type
-isUnregisteredDRep cs (r , c) =
-  let open CertState cs in
-  r ≡ DRep × c ∉ dom (gState .dreps)
+ifDRepIsRegistered : CertState → Voter → Type
+ifDRepIsRegistered certState (r , c) = r ≡ DRep → c ∈ dom (gState .dreps)
+  where open CertState certState
 
 removeOrphanDRepVotes : CertState → GovActionState → GovActionState
 removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
   where
-    votes′ = filterKeys (¬_ ∘ isUnregisteredDRep certState) (votes gas)
+    votes′ = filterKeys (ifDRepIsRegistered certState) (votes gas)
 
 _|ᵒ_ : GovState → CertState → GovState
 govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
