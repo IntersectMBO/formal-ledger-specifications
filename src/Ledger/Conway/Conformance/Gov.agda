@@ -33,9 +33,7 @@ GovState : Type
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Type where
-  constructor ⟦_,_,_,_,_,_,_⟧ᵍ
   field
-
     txid        : TxId
     epoch       : Epoch
     pparams     : PParams
@@ -43,6 +41,10 @@ record GovEnv : Type where
     enactState  : EnactState
     certState   : CertState
     rewardCreds : ℙ Credential
+
+instance
+  unquoteDecl To-GovEnv = derive-To
+    [ (quote GovEnv , To-GovEnv) ]
 
 private variable
   Γ : GovEnv
@@ -63,10 +65,12 @@ open PState
 
 opaque
   isRegistered : GovEnv → Voter → Type
-  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ , _ ⟧ᵍ (r , c) = case r of λ where
-    CC    → just c ∈ range (gState .ccHotKeys)
-    DRep  → c ∈ dom (gState .dreps)
-    SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
+  isRegistered Γ (r , c) =
+    let open GovEnv Γ; open CertState certState in
+    case r of λ where
+      CC    → just c ∈ range (gState .ccHotKeys)
+      DRep  → c ∈ dom (gState .dreps)
+      SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
 
 data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type where
 
@@ -87,6 +91,7 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
                     ; policy = p ; deposit = d ; prevAction = prev }
       s' = L.addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
     in
+    -- ∙ actionWellFormed a
     ∙ L.actionWellFormed a
     ∙ L.actionValid rewardCreds p ppolicy epoch a
     ∙ d ≡ govActionDeposit

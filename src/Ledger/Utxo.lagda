@@ -184,6 +184,11 @@ record UTxOState : Type where
     deposits   : Deposits
     donations  : Coin
 \end{code}
+\begin{code}[hide]
+instance
+  unquoteDecl To-UTxOState = derive-To
+    [ (quote UTxOState , To-UTxOState) ]
+\end{code}
 \begin{NoConway}
 \emph{UTxO transitions}
 
@@ -487,7 +492,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -499,7 +504,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
 \end{code}
 \caption{UTXOS rule}
 \label{fig:utxos-conway}

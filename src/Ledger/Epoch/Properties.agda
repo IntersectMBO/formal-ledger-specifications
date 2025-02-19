@@ -18,6 +18,7 @@ open import Ledger.Ratify txs
 open import Ledger.Ratify.Properties txs
 
 open import Data.List using (filter)
+import Relation.Binary.PropositionalEquality as PE
 
 open Computational ⦃...⦄
 
@@ -40,7 +41,7 @@ module _ {eps : EpochState} {e : Epoch} where
   EPOCH-total = -, EPOCH (RATIFY-total' .proj₂) (SNAP-total ls ss .proj₂)
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
-  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ ⟦ _ ,_, _ , _ ,_⟧ᵉ' (SNAP-complete _ _ _ p₂)
+  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut }) (SNAP-complete _ _ _ p₂)
     (RATIFY-complete' (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
     where
       ty : Snapshot → Set
@@ -67,21 +68,22 @@ instance
 module _ {e : Epoch} where
 
   NEWEPOCH-total : ∀ nes'' → ∃[ nes' ] _ ⊢ nes'' ⇀⦇ e ,NEWEPOCH⦈ nes'
-  NEWEPOCH-total ⟦ lastEpoch , _ , ru ⟧ⁿᵉ with e ≟ lastEpoch + 1 | ru
-  ... | yes p | just ru = ⟦ e , proj₁ EPOCH-total' , nothing ⟧ⁿᵉ
-                        , NEWEPOCH-New (p , EPOCH-total' .proj₂)
-  ... | yes p | nothing = ⟦ e , proj₁ EPOCH-total' , nothing ⟧ⁿᵉ
-                        , NEWEPOCH-No-Reward-Update (p , EPOCH-total' .proj₂)
-  ... | no ¬p | _ = -, NEWEPOCH-Not-New ¬p
+  NEWEPOCH-total nes with e ≟ NewEpochState.lastEpoch nes + 1 | NewEpochState.ru nes | inspect NewEpochState.ru nes
+  ... | yes p | just ru | PE.[ refl ] =  ⟦ e , EPOCH-total' .proj₁ , nothing ⟧
+                                      , NEWEPOCH-New (p , EPOCH-total' .proj₂)
+  ... | yes p | nothing | PE.[ refl ] = ⟦ e , proj₁ EPOCH-total' , nothing ⟧
+                                      , NEWEPOCH-No-Reward-Update (p , EPOCH-total' .proj₂)
+  ... | no ¬p | _ | _ = -, NEWEPOCH-Not-New ¬p
 
   NEWEPOCH-complete : ∀ nes nes' → _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes' → proj₁ (NEWEPOCH-total nes) ≡ nes'
-  NEWEPOCH-complete ⟦ lastEpoch , _ , ru ⟧ⁿᵉ nes' h with e ≟ lastEpoch + 1 | ru | h
-  ... | yes p | just ru | NEWEPOCH-New (x , x₁) rewrite EPOCH-complete' _ x₁ = refl
-  ... | yes p | ru | NEWEPOCH-Not-New x = ⊥-elim $ x p
-  ... | yes p | nothing | NEWEPOCH-No-Reward-Update (x , x₁) rewrite EPOCH-complete' _ x₁ = refl
-  ... | no ¬p | ru | NEWEPOCH-New (x , x₁)  = ⊥-elim $ ¬p x
-  ... | no ¬p | ru | NEWEPOCH-Not-New x = refl
-  ... | no ¬p | nothing | NEWEPOCH-No-Reward-Update (x , x₁) = ⊥-elim $ ¬p x
+  -- NEWEPOCH-complete nes nes' h with e ≟ NewEpochState.lastEpoch nes + 1 | NewEpochState.ru nes | h
+  NEWEPOCH-complete nes nes' h with e ≟ NewEpochState.lastEpoch nes + 1 | NewEpochState.ru nes | inspect NewEpochState.ru nes | h 
+  ... | yes p | just ru | PE.[ refl ] | NEWEPOCH-New (x , x₁) rewrite EPOCH-complete' _ x₁ = refl
+  ... | yes p | ru | PE.[ refl ] | NEWEPOCH-Not-New x = ⊥-elim $ x p
+  ... | yes p | nothing | PE.[ refl ] | NEWEPOCH-No-Reward-Update (x , x₁) rewrite EPOCH-complete' _ x₁ = refl
+  ... | no ¬p | ru | PE.[ refl ] | NEWEPOCH-New (x , x₁)  = ⊥-elim $ ¬p x
+  ... | no ¬p | ru | PE.[ refl ] | NEWEPOCH-Not-New x = refl
+  ... | no ¬p | nothing | PE.[ refl ] | NEWEPOCH-No-Reward-Update (x , x₁) = ⊥-elim $ ¬p x
 
 instance
   Computational-NEWEPOCH : Computational _⊢_⇀⦇_,NEWEPOCH⦈_ ⊥
