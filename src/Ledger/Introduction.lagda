@@ -49,7 +49,7 @@ Era  & Figures & Prose & Cleanup \\
 \hline
 \endhead
 Shelley~\cite{shelley-ledger-spec} & Partial & Partial & Not started \\
-Shelley-MA~\cite{shelley-ma-spec} & Partial & Partial & Not started \\
+Shelley-MA~\cite{shelley-ma-ledger-spec} & Partial & Partial & Not started \\
 Alonzo~\cite{alonzo-ledger-spec} & Partial & Partial & Not started \\
 Babbage~\cite{babbage-ledger-spec} & Not started & Not started & Not started \\
 Conway~\cite{cip1694} & Complete & Partial & Partial \\
