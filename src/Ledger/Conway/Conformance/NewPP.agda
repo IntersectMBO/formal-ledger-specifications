@@ -14,12 +14,13 @@ record NewPParamEnv : Type where
 --  field
 
 record NewPParamState : Type where
-  constructor ⟦_,_⟧ⁿᵖ
-
   field
-
     pparams  : PParams
     ppup     : PPUpdateState
+
+instance
+  unquoteDecl To-NewPParamState = derive-To
+    [ (quote NewPParamState , To-NewPParamState) ]
 
 updatePPUp : PParams → PPUpdateState → PPUpdateState
 updatePPUp pparams record { fpup = fpup }
@@ -30,9 +31,7 @@ updatePPUp pparams record { fpup = fpup }
 votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate
 votedValue pup pparams quorum =
   case any? (λ u → lengthˢ (pup ∣^ fromList [ u ]) ≥? quorum) (range pup) of
-
     λ  where
-
        (no  _)        → nothing
        (yes (u , _))  → just u
 
@@ -46,7 +45,7 @@ data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsU
   NEWPP-Accept : ∀ {Γ} → let open NewPParamState s; newpp = applyUpdate pparams upd in
     viablePParams newpp
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧ⁿᵖ
+    Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧
 
   NEWPP-Reject : ∀ {Γ} →
     Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s
