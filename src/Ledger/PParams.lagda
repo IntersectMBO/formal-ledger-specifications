@@ -39,6 +39,7 @@ remain in treasury and reserves.
 \begin{AgdaMultiCode}
 \begin{code}
 record Acnt : Type where
+  constructor ⟦_,_⟧ᵃ
   field
     treasury reserves : Coin
 

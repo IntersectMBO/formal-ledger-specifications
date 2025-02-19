@@ -42,6 +42,7 @@ record LEnv : Type where
     treasury    : Coin
 
 record LState : Type where
+  constructor ⟦_,_,_⟧ˡ
   field
     utxoSt     : UTxOState
     govSt      : GovState

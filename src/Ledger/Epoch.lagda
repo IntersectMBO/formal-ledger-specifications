@@ -31,6 +31,7 @@ open import Ledger.Certs govStructure
 \begin{figure*}[h]
 \begin{code}
 record RewardUpdate : Set where
+  constructor ⟦_,_,_,_⟧ʳᵘ
   field
     Δt Δr Δf : ℤ
     rs : Credential ⇀ Coin
@@ -57,6 +58,7 @@ record Snapshots : Set where
 \end{NoConway}
 \begin{code}
 record EpochState : Type where
+  constructor ⟦_,_,_,_,_⟧ᵉ'
   field
     acnt       : Acnt
     ss         : Snapshots
@@ -100,23 +102,24 @@ open GovActionState using (returnAddr)
 \begin{figure*}[h]
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd ru epochState =
-  ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
-    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧
+applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
+  ⟦ ⟦ treasury , reserves ⟧ᵃ
   , ss
-  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧
+  , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ ⟧
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
-  , fut ⟧
+  , fut
+  ⟧ᵉ' =
+  ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
+    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ
+  , ss
+  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
+    , govSt
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , es
+  , fut ⟧ᵉ'
   where
-    open RewardUpdate ru
-    open EpochState epochState
-    open Acnt acnt
-    open LState ls
-    open UTxOState utxoSt
-    open CertState certState
-    open DState dState
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
