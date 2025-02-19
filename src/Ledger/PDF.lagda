@@ -56,7 +56,7 @@ open import Ledger.Chain
 
 open import Ledger.Properties
 
-open import Ledger.EssentialAgda
+open import EssentialAgda
 open import Ledger.PDF.ConwayBootstrapEnact
 open import Ledger.PDF.ConwayBootstrap
 \end{code}
@@ -95,7 +95,7 @@ open import Ledger.PDF.ConwayBootstrap
 
 \appendix
 
-\input{Ledger/EssentialAgda}
+\input{EssentialAgda}
 \input{Ledger/PDF/ConwayBootstrapEnact}
 \input{Ledger/PDF/ConwayBootstrap}
 

@@ -3,12 +3,12 @@
 Here we describe some of the essential concepts and syntax of the Agda programming language and proof assistant.
 The goal is to provide some background for readers who are not already familiar with Agda, to help them
 understand the other sections of the specification.  For more details, the reader is
-encouraged to consult the official Agda documentation~(\cite{agda2024}).
+encouraged to consult the official \hrefAgdaDocs{}~(\cite{agda2024}).
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-module Ledger.EssentialAgda where
+module EssentialAgda where
 
 open import Prelude using (Type)
 open import Data.Nat
@@ -53,4 +53,4 @@ p24 = record p23 { snd = 4 }
 This results a new record, \AgdaFunction{p24}, which denotes the pair
 \AgdaInductiveConstructor{⦅}~\AgdaNumber{2}~\AgdaInductiveConstructor{,}~\AgdaNumber{4}~\AgdaInductiveConstructor{⦆}.
 \\[6pt]
-See also \url{https://agda.readthedocs.io/en/\AgdaVersion/language/record-types.html}.
+See also \hrefAgdaDocs[language/record-types.html][agda.readthedocs.io/record-types].

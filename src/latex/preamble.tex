@@ -79,3 +79,13 @@ module of the \href{\repourl}{formal ledger specification}.}
 \msg_new:nnn {agda-latex-macros} {invalid-cip}
   {CIP-#1 is not a known CIP. The hyperlink will not be created.}
 \ExplSyntaxOff
+
+\NewDocumentCommand{\hrefAgdaDocs}{O{} O{Agda documentation}}{%
+  \href{https://agda.readthedocs.io/en/\AgdaVersion/#1}{#2}%
+}
+% For a link to the main Agda documentation website, just use \hrefAgdaDocs{}.
+% For a link to a specific section of the Agda docs, use
+% \hrefAgdaDocs[URLsuffix]{Link text}.
+% For example, \hrefAgdaDocs[language/record-types.html][agda.readthedocs.io/record-types],
+% produces a link to url https://agda.readthedocs.io/en/\AgdaVersion/language/record-types.html
+% with link text "agda.readthedocs.io/record-types".

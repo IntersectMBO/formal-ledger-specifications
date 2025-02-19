@@ -189,10 +189,10 @@ private variable
 
 \subsection{Changes Introduced in Conway Era}
 
-% In the Conway era, support for pointer addresses, genesis delegations and MIR
-% certificates is removed (see~\cite{cip1694}).  In \DState, this means that the four
-% fields relating to those features are no longer present, and \DelegEnv contains none
-% of the fields it used to in the Shelley era~(\cite[Sec.~9.2]{shelley-ledger-spec}).
+In the Conway era, support for pointer addresses, genesis delegations and MIR
+certificates is removed (see~\cite{cip1694}).  In \DState, this means that the four
+fields relating to those features are no longer present, and \DelegEnv contains none
+of the fields it used to in the Shelley era~(\cite[Sec.~9.2]{shelley-ledger-spec}).
 
 \subsubsection{Delegation}
 
