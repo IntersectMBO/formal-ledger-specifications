@@ -15,6 +15,14 @@
 \usepackage[links]{agda}
 \setlength{\mathindent}{10pt}
 
+
+\usepackage[utf8]{inputenc} % For UTF-8 encoding (recommended)
+\usepackage[style=authoryear, backend=biber]{biblatex} % use biblatex
+\addbibresource{references}  % make references.bib file available
+
+\usepackage{cleveref}
+\usepackage{xparse}
+
 \usepackage{fontspec}
 \newcommand\agdaFont{StrippedJuliaMono}
 \newcommand\agdaFontOptions{

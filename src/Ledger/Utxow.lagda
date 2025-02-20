@@ -20,11 +20,11 @@ The purpose of witnessing is make sure the intended action is
 authorized by the holder of the signing key.  (For details see
 the Formal Ledger Specification for the Shelley Era~\cite[Sec.~8.3]{cardano_shelley_spec}.)
 Figure~\ref{fig:functions:utxow} defines functions used for witnessing.
-\witsVKeyNeeded and \scriptsNeeded are now defined by projecting the same information out of
-\credsNeeded. Note that the last component of \credsNeeded adds the script in the proposal policy
+\witsVKeyNeeded{} and \scriptsNeeded{} are now defined by projecting the same information out of
+\credsNeeded{}. Note that the last component of \credsNeeded{} adds the script in the proposal policy
 only if it is present.
 
-\allowedLanguages has additional conditions for new features in
+\allowedLanguages{} has additional conditions for new features in
 Conway. If a transaction contains any votes, proposals, a treasury
 donation or asserts the treasury amount, it is only allowed to contain
 Plutus V3 scripts. Additionally, the presence of reference scripts or

@@ -9,6 +9,8 @@ HL_LIST=$(LATEX_DIR)/hldiff_list.txt
 PRE=$(addprefix $(LATEX_DIR)/,\
   agda.sty agda-latex-macros.sty iohk.sty fonts/* preamble.tex references.bib)
 PDF_DIR=$(OUT_DIR)/pdfs
+LATEXMK = latexmk -xelatex -shell-escape -halt-on-error -output-directory=$(PDF_DIR)
+
 PYTHON=python
 HTML_DIR=$(OUT_DIR)/html
 HS_DIR=$(OUT_DIR)/haskell
@@ -18,6 +20,11 @@ LEDGER=Ledger
 MIDNIGHT=MidnightExample
 VV_SCRIPT=agda2vec.py
 HL_SCRIPT=hldiff.py
+TEX_AUX=cardano-ledger.bcf cardano-ledger.fls cardano-ledger.log cardano-ledger.out\
+cardano-ledger.ptb cardano-ledger.run.xml cardano-ledger.xdv cardano-ledger.fdb_latexmk\
+midnight-example.fls midnight-example.log midnight-example.out midnight-example.ptb\
+midnight-example.run.xml midnight-example.xdv midnight-example.fdb_latexmk
+
 
 # Agda -> LaTeX -> PDF
 latexFiles=$(patsubst %.lagda, $(LATEX_DIR)/%.tex,\
@@ -64,11 +71,11 @@ $(CONWAY_TEX_FILES): $(CONWAY_TEX_DIR)/%.tex: %.lagda
 	fi
 
 define latexToPdf
-    @echo "Generating $@"
-    $(eval PDF=$(notdir $@))
-    mkdir -p $(dir $@)
-    cd $(LATEX_DIR) && $(LATEX) -jobname=$(PDF:.pdf=) $(subst $(LATEX_DIR)/,, $<)
-    mv $(LATEX_DIR)/$(PDF) $@
+	@echo "Generating $@"
+	$(eval PDF=$(notdir $@))
+	mkdir -p $(dir $@)
+	cd $(LATEX_DIR) && $(LATEXMK) -jobname=$(PDF:.pdf=) $(subst $(LATEX_DIR)/,, $<)
+	mv $(LATEX_DIR)/$(PDF) $@  # <- Remove this line?
 endef
 
 $(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PRE)
@@ -188,10 +195,13 @@ hsDocs: ledger.hsDocs midnight.hsDocs
 
 staticWebsite: $(OUT_DIR)/index.html
 
+# clean:
+# 	rm -rf $(PDF_DIR)/conway-ledger.pdf $(PDF_DIR)/cardano-ledger.pdf\
+#            $(LATEX_DIR)/$(LEDGER)/PDF.tex $(CONWAY_TEX_DIR)/$(LEDGER)/PDF.tex
+
 clean:
-	rm -rf $(PDF_DIR)/conway-ledger.pdf $(PDF_DIR)/cardano-ledger.pdf\
-           $(LATEX_DIR)/$(LEDGER)/PDF.tex $(CONWAY_TEX_DIR)/$(LEDGER)/PDF.tex
+	latexmk -c $(LATEX_DIR)/$(LEDGER)/PDF.tex # Clean up generated files
 
 wipe: clean
-	rm -rf $(LATEX_DIR)/$(LEDGER) $(LATEX_DIR)/$(MIDNIGHT) $(CONWAY_TEX_DIR)/$(LEDGER)\
-	       $(OUT_DIR)/\
+	rm -rf $(LATEX_DIR)/$(TEX_AUX) $(LATEX_DIR)/$(LEDGER) $(LATEX_DIR)/$(MIDNIGHT)\
+	       $(CONWAY_TEX_DIR)/$(LEDGER) $(OUT_DIR)/*

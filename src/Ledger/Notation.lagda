@@ -27,7 +27,7 @@ a list \AgdaBound{l} to its set of elements, we write \fromList~\AgdaBound{l}.
   to the end of the list \AgdaBound{l}.
 \item[Sums and products.] The sum (or disjoint union, coproduct, etc.) of \AgdaBound{A} and
   \AgdaBound{B} is denoted by \AgdaBound{A} \coproduct \AgdaBound{B}, and their product
-  is denoted by \AgdaBound{A} \agdatimes \AgdaBound{B}. The projection functions from products
+  is denoted by \AgdaBound{A} \agdatimes{} \AgdaBound{B}. The projection functions from products
   are denoted \fst and \snd, and the injections are denoted \inl and \inr respectively. The
   properties whether an element of a coproduct is in the left or right component are called
   \isInl and \isInr.

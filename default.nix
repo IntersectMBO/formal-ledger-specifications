@@ -86,6 +86,7 @@ rec {
       collection-latexrecommended
       collection-mathscience
       bclogo
+      biblatex
       latexmk;
   };
 

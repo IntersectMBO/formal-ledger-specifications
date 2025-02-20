@@ -85,8 +85,9 @@ open import Ledger.PDF.ConwayBootstrap
 \section{Properties}
 \input{Ledger/Utxo/Properties}
 
-\bibliographystyle{abbrv}
-\bibliography{references}
+\clearpage
+
+\printbibliography
 
 \clearpage
 

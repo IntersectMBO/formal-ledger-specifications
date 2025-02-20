@@ -327,40 +327,40 @@ actualVotes Γ pparams cc ga votes
 \label{fig:defs:ratify-actualvotes}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-actualvotes} defines the \actualVotes
+Figure~\ref{fig:defs:ratify-actualvotes} defines the \actualVotes{}
 function. Given the current state about votes and other parts of the
 system it calculates a new mapping of votes, which is the mapping that
 will actually be used during ratification. Things such as default
 votes or resignation/expiry are implemented in this way.
 
-\actualVotes is defined as the union of four voting maps,
+\actualVotes{} is defined as the union of four voting maps,
 corresponding to the constitutional committee, predefined (or auto)
 DReps, regular DReps and SPOs.
 
 \begin{itemize}
 
-\item \roleVotes filters the votes based on the given governance role
+\item \roleVotes{} filters the votes based on the given governance role
   and is a helper for definitions further down.
 
-\item if a \CC member has not yet registered a hot key, has \expired,
-  or has resigned, then \actualCCVote returns \abstain; if none
+\item if a \CC{} member has not yet registered a hot key, has \expired{},
+  or has resigned, then \actualCCVote{} returns \abstain{}; if none
   of these conditions is met, then
   \begin{itemize}
-    \item if the \CC member has voted, then that vote is returned;
-    \item if the \CC member has not voted, then the default value of \no is returned.
+    \item if the \CC{} member has voted, then that vote is returned;
+    \item if the \CC{} member has not voted, then the default value of \no{} is returned.
   \end{itemize}
 
-\item \actualDRepVotes adds a default vote of \no to all active DReps
+\item \actualDRepVotes{} adds a default vote of \no{} to all active DReps
   that didn't vote.
 
-\item \actualSPOVotes adds a default vote to all SPOs who didn't vote,
+\item \actualSPOVotes{} adds a default vote to all SPOs who didn't vote,
   with the default depending on the action.
 \end{itemize}
 
 Let us discuss the last item above---the way SPO votes are counted---as the ledger
 specification's handling of this has evolved in response to community feedback.
 Previously, if an SPO did not vote, then it would be counted as having voted
-\abstain by default.  Members of the SPO community found this behavior counterintuitive
+\abstain{} by default.  Members of the SPO community found this behavior counterintuitive
 and requested that non-voters be assigned a \no vote by default, with the caveat that
 an SPO could change its default setting by delegating its reward account credential
 to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
@@ -372,7 +372,7 @@ not vote is assumed to have vote \no, except under the following circumstances:
 \item if the SPO has delegated its reward credential to an \texttt{AlwaysNoConfidence}
 DRep, then their default vote is \yes for \NoConfidence proposals and \no for other proposals;
 \item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain} DRep,
-then its default vote is \abstain for all proposals.
+then its default vote is \abstain{} for all proposals.
 \end{itemize}
 It is important to note that the credential that can now be used to set a default
 voting behavior is the credential used to withdraw staking rewards, which is not
@@ -428,7 +428,7 @@ abstract
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-defs-i} defines the \accepted and \expired
+Figure~\ref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
 functions (together with some helpers) that are used in the rules of
 RATIFY.
 
@@ -440,19 +440,19 @@ RATIFY.
     CC members can delegate to the same hot key, giving that hot key
     the power of those multiple votes with a single actual vote.
 
-  \item \acceptedStakeRatio is the ratio of accepted stake. It is
+  \item \acceptedStakeRatio{} is the ratio of accepted stake. It is
     computed as the ratio of \yes votes over the votes that didn't
-    \abstain. The latter is equivalent to the sum of \yes and \no votes. The
+    \abstain{}. The latter is equivalent to the sum of \yes and \no votes. The
     special division symbol \AgdaFunction{/₀} indicates that in case
     of a division by 0, the numbers 0 should be returned. This implies
     that in the absence of stake, an action can only pass if the
     threshold is also set to 0.
 
-  \item \acceptedBy looks up the threshold in the \threshold table and
-    compares it to the result of \acceptedStakeRatio.
+  \item \acceptedBy{} looks up the threshold in the \threshold{} table and
+    compares it to the result of \acceptedStakeRatio{}.
 
-  \item \accepted then checks if an action is accepted by all roles; and
-  \item \expired checks whether a governance action is expired in a given epoch.
+  \item \accepted{} then checks if an action is accepted by all roles; and
+  \item \expired{} checks whether a governance action is expired in a given epoch.
 \end{itemize}
 \begin{figure*}[ht]
 \begin{code}[hide]
@@ -582,7 +582,7 @@ Figure~\ref{fig:sts:ratify}.
         acceptance, that the action is accepted and not delayed,
         and \RATIFYAccept ratifies the action.
 
-  \item \RATIFYReject asserts that the given \GovAction is not \accepted and \expired;
+  \item \RATIFYReject asserts that the given \GovAction is not \accepted{} and \expired{};
         it removes the governance action.
   \item \RATIFYContinue covers the remaining cases and keeps the \GovAction around for further voting.
 \end{itemize}

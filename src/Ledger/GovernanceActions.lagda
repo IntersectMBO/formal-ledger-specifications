@@ -69,10 +69,10 @@ Figure~\ref{defs:governance} defines several data types used to represent govern
 \begin{itemize}
   \item \GovActionID---a unique identifier for a governance action,
     consisting of the \TxId of the proposing transaction and an index to identify a proposal within a transaction;
-  \item \GovRole (\defn{governance role})---one of three available voter roles defined above (\CC, \DRep, \SPO);
-  \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
-  \item \Anchor---a url and a document hash;
-  \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions);
+  \item \GovRole{} (\defn{governance role})---one of three available voter roles defined above (\CC{}, \DRep{}, \SPO{});
+  \item \VDeleg{} (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter{}, \abstainRep{}, or \noConfidenceRep{});
+  \item \Anchor{}---a url and a document hash;
+  \item \GovAction{} (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions);
 \end{itemize}
 The governance actions carry the following information:
 \begin{itemize}
@@ -207,20 +207,20 @@ proposedCC _                       = ∅
 \caption{Governance helper function}
 \end{figure*}
 
-The data type \Vote represents the different voting options: \yes,
-\no, or \abstain. For a \Vote to be cast, it must be packaged together
+The data type \Vote{} represents the different voting options: \yes{},
+\no{}, or \abstain{}. For a \Vote{} to be cast, it must be packaged together
 with further information, such as who votes and for which governance
-action. This information is combined in the \GovVote record. An
-optional \Anchor can be provided to give context about why a vote was
+action. This information is combined in the \GovVote{} record. An
+optional \Anchor{} can be provided to give context about why a vote was
 cast in a certain manner.
 
-To propose a governance action, a \GovProposal needs to be
+To propose a governance action, a \GovProposal{} needs to be
 submitted. Beside the proposed action, it requires:
 \begin{itemize}
 \item potentially a pointer to the previous action (see Section~\ref{sec:hash-protection}),
 \item potentially a pointer to the proposal policy (if one is required),
-\item a deposit, which will be returned to \returnAddr, and
-\item an \Anchor, providing further information about the proposal.
+\item a deposit, which will be returned to \returnAddr{}, and
+\item an \Anchor{}, providing further information about the proposal.
 \end{itemize}
 
 While the deposit is held, it is added to the deposit pot, similar to
