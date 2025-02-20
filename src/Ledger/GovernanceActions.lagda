@@ -1,5 +1,7 @@
 \section{Governance Actions}
 \label{sec:governance-actions}
+\modulenote{\LedgerModule{GovernanceActions}}
+
 We introduce three distinct bodies that have specific functions in the new governance framework:
 \begin{enumerate}
 \item
@@ -33,7 +35,7 @@ module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
 maximum : ℙ ℚ → ℚ
 maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 data GovRole : Type where

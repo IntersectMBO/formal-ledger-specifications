@@ -1,4 +1,6 @@
 \section{Epoch Boundary}
+\label{sec:epoch-boundary}
+\modulenote{\LedgerModule{Epoch}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -28,7 +30,7 @@ open import Ledger.Utxo txs abs
 open import Ledger.Certs govStructure
 \end{code}
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
 record RewardUpdate : Set where
   constructor ⟦_,_,_,_⟧ʳᵘ
@@ -39,7 +41,7 @@ record RewardUpdate : Set where
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
@@ -139,7 +141,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
@@ -201,8 +203,9 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 \end{NoConway}
 
 Figure~\ref{fig:epoch:sts} defines the rule for the EPOCH transition
-system. Currently, this contains some logic that is handled by
-POOLREAP in the Shelley specification, since POOLREAP is not implemented here.
+system.  Currently, this contains some logic that is handled by
+POOLREAP in the Shelley specification~(\cite[Sec.~11.6]{shelley-ledger-spec}),
+since POOLREAP is not implemented here.
 
 The EPOCH rule now also needs to invoke RATIFY and properly deal with
 its results by carrying out each of the following tasks.
@@ -216,7 +219,7 @@ its results by carrying out each of the following tasks.
   store the resulting enact state \AgdaBound{fut'}.
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
   EPOCH : let
@@ -281,7 +284,7 @@ its results by carrying out each of the following tasks.
 \end{figure*}
 
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}[hide]
 data
 \end{code}

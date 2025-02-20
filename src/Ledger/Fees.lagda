@@ -20,7 +20,6 @@ open import Induction.WellFounded using (Acc; acc)
 \end{code}
 
 \section{Fee Calculation}
-
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
@@ -69,7 +68,6 @@ scriptsCost pp scSz with (PParams.refScriptCostStride pp)
 \caption{Calculation of fees for reference scripts}
 \label{fig:scriptsCost}
 \end{figure*}
-
 The function \scriptsCost{} (Fig.~\ref{fig:scriptsCost}) calculates
 the fee for reference scripts in the transaction using a function that
 is piece-wise linear in the size, where the linear constant multiple
@@ -77,7 +75,6 @@ grows with each \refScriptCostStride{} bytes. Thus, the \scriptsCost{}
 function depends on the \AgdaFunction{scriptsTotalSize} function,
 which returns an integer that is the total size of the reference
 script in bytes, as well as the following protocol parameters:
-%
 \begin{itemize}
   \item \refScriptCostMultiplier{}, a rational number, the growth factor
   or step multiplier that determines how much the price per byte

@@ -1,8 +1,8 @@
 \section{UTxO}
 \label{sec:utxo}
+\modulenote{\LedgerModule{Utxo}}
 
 \subsection{Accounting}
-
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -41,7 +41,7 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \end{code}
 
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
 isTwoPhaseScriptAddress : Tx → UTxO → Addr → Type
 isTwoPhaseScriptAddress tx utxo a =
@@ -161,8 +161,11 @@ the state of the previous era at the transition into the Conway era.
 Alternatively, we can effectively treat the old handling of deposits
 as an erratum in the Shelley specification, which we fix by implementing
 the new deposits logic in older eras and then replaying the chain.
+(The handling of deposits in the Shelley era is discussed
+in~\cite[Sec.~8]{shelley-ledger-spec}
+and~\cite[Sec.~B.2]{shelley-delegation-design}.)
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \emph{UTxO environment}
@@ -533,7 +536,7 @@ instance
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb

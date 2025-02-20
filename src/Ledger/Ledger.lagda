@@ -1,4 +1,6 @@
 \section{Ledger State Transition}
+\label{sec:ledger-state-transition}
+\modulenote{\LedgerModule{Ledger}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -30,7 +32,7 @@ The entire state transformation of the ledger state caused by a valid
 transaction can now be given as a combination of the previously
 defined transition systems.
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record LEnv : Type where
@@ -84,7 +86,7 @@ private variable
   tx : Tx
 \end{code}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
