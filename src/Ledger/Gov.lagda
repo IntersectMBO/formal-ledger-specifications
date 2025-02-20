@@ -1,4 +1,6 @@
 \section{Governance}
+\label{sec:governance}
+\modulenote{\LedgerModule{Gov}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
