@@ -41,7 +41,7 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \end{code}
 
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
 isTwoPhaseScriptAddress : Tx → UTxO → Addr → Type
 isTwoPhaseScriptAddress tx utxo a =
@@ -165,7 +165,7 @@ the new deposits logic in older eras and then replaying the chain.
 in~\cite[Sec.~8]{shelley-ledger-spec}
 and~\cite[Sec.~B.2]{shelley-delegation-design}.)
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \emph{UTxO environment}
@@ -531,7 +531,7 @@ instance
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb

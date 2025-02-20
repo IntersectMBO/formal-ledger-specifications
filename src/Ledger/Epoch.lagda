@@ -30,7 +30,7 @@ open import Ledger.Utxo txs abs
 open import Ledger.Certs govStructure
 \end{code}
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
 record RewardUpdate : Set where
   constructor ⟦_,_,_,_⟧ʳᵘ
@@ -45,7 +45,7 @@ record RewardUpdate : Set where
 \end{figure*}
 \end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
@@ -153,7 +153,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \end{code}
 \end{NoConway}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
@@ -210,7 +210,7 @@ its results by carrying out each of the following tasks.
   store the resulting enact state \AgdaBound{fut'}.
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
   EPOCH : let
@@ -270,7 +270,7 @@ its results by carrying out each of the following tasks.
 \end{figure*}
 
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}[hide]
 data
 \end{code}

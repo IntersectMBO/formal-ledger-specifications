@@ -32,7 +32,7 @@ this field will be reset.
 Note that all other fields of \EnactState also contain a \GovActionID
 since they are \HashProtected.
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record EnactEnv : Type where
@@ -118,7 +118,7 @@ required). The exceptions are \UpdateCommittee and \TreasuryWdrl:
 \item \TreasuryWdrl requires that the treasury is able to cover the sum of all withdrawals (old and new).
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 open PParams using (ccMaxTermLength)

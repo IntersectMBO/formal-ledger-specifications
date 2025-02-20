@@ -16,7 +16,7 @@ open import Ledger.GovernanceActions gs
 open RwdAddr
 \end{code}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \emph{Derived types}
 \begin{code}
 data DepositPurpose : Type where
@@ -267,7 +267,7 @@ constitutional committee.
   constitutional committee members to act without a delay of one epoch.
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 data

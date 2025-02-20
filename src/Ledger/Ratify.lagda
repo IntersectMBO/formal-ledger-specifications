@@ -235,7 +235,7 @@ defines some types and functions used in the RATIFY transition
 system. \CCData is simply an alias to define some functions more
 easily.
 
-\begin{figure*}[h!]
+\begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 open StakeDistrs
@@ -383,7 +383,7 @@ voting behavior is the credential used to withdraw staking rewards, which is not
 %% And as a second layer, this means that if that credential is a script, it may need
 %% to have explicit logic written to be able to set a default at all.
 
-\begin{figure*}[h!]
+\begin{figure*}[!ht]
 \begin{code}[hide]
 open RatifyEnv using (stakeDistrs)
 

@@ -32,7 +32,7 @@ The entire state transformation of the ledger state caused by a valid
 transaction can now be given as a combination of the previously
 defined transition systems.
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record LEnv : Type where
@@ -83,7 +83,7 @@ private variable
 \end{code}
 
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}[hide]
 data
 \end{code}

@@ -24,7 +24,7 @@ In contrast, the type of \stake in the Conway era is \Maybe~\CredentialType,
 so we can now use \BaseAddr to specify an address with no stake
 by setting \stake to \nothing.
 
-\begin{figure*}[h!]
+\begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \emph{Abstract types}
 \begin{code}
