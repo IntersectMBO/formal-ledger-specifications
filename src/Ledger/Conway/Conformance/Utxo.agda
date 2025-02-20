@@ -32,7 +32,7 @@ open PParams
 instance
   _ = +-0-monoid
 
-open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ)
+open L public using (UTxOEnv; UTxOState)
 
 private variable
   Γ : UTxOEnv
@@ -56,7 +56,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
                               , fees + txfee
                               , deposits
                               , donations + txdonation
-                              ⟧ᵘ
+                              ⟧
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -72,7 +72,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
                               , fees + L.cbalance (utxo ∣ collateral)
                               , deposits
                               , donations
-                              ⟧ᵘ
+                              ⟧
 
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)

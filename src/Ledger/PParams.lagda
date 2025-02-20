@@ -1,5 +1,7 @@
 \section{Protocol Parameters}
 \label{sec:protocol-parameters}
+\modulenote{\LedgerModule{PParams}}
+
 This section defines the adjustable protocol parameters of the Cardano ledger.
 These parameters are used in block validation and can affect various features of the system,
 such as minimum fees, maximum and minimum sizes of certain components, and more.
@@ -59,6 +61,11 @@ data pvCanFollow : ProtVer → ProtVer → Type where
 \label{fig:protocol-parameter-defs}
 \end{figure*}
 \end{NoConway}
+\begin{code}[hide]
+instance
+  unquoteDecl To-Acnt = derive-To
+    [ (quote Acnt , To-Acnt) ]
+\end{code}
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
@@ -76,7 +83,7 @@ record DrepThresholds : Type where
 
 record PoolThresholds : Type where
   field
-    Q1 Q2a Q2b Q4 Q5e : ℚ
+    Q1 Q2a Q2b Q4 Q5 : ℚ
 
 record PParams : Type where
   field
@@ -136,6 +143,11 @@ record PParams : Type where
         drepActivity                  : Epoch
 \end{code}
 \end{AgdaMultiCode}
+\emph{Security group}
+
+\maxBlockSize{} \maxTxSize{} \maxHeaderSize{} \maxValSize{}
+\maxBlockExUnits{} \AgdaField{a}{} \AgdaField{b}{}
+\minFeeRefScriptCoinsPerByte{} \coinsPerUTxOByte{} \govActionDeposit{}
 \caption{Protocol parameter definitions}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
@@ -143,9 +155,10 @@ record PParams : Type where
 \begin{AgdaMultiCode}
 \begin{code}
 positivePParams : PParams → List ℕ
-positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize ∷ refScriptCostStride
-                      ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
+                      ∷ refScriptCostStride ∷ coinsPerUTxOByte ∷ poolDeposit
+                      ∷ collateralPercentage ∷ ccMaxTermLength ∷ govActionLifetime
+                      ∷ govActionDeposit ∷ drepDeposit ∷ [] )
 \end{code}
 \begin{code}[hide]
   where open PParams pp
@@ -385,13 +398,13 @@ to the general purpose that each parameter serves.
 \end{itemize}
 
 The first four groups have the property that every protocol parameter
-is associated to precisely one of these groups. The \SecurityGroup is
-special: a protocol parameter may or may not be in the
-\SecurityGroup. So, each protocol parameter belongs to at least one
-and at most two groups. Note that in \cite{cip1694} there is no
-\SecurityGroup, but there is the concept of security-relevant protocol
-parameters. The difference between these notions is only social, so we
-implement security-relevant protocol parameters as a group.
+is associated to precisely one of these groups.  The \SecurityGroup{} is
+special: a protocol parameter may or may not be in the \SecurityGroup{}.
+So, each protocol parameter belongs to at least one and at most two groups.
+Note that in \hrefCIP{1694} there is no \SecurityGroup{}, but there is the
+concept of security-relevant protocol parameters~(\cite{cip1694}).
+The difference between these notions is only social, so we implement
+security-relevant protocol parameters as a group.
 
 The purpose of the groups is to determine voting thresholds for
 proposals aiming to change parameters. The thresholds depend on the
@@ -404,7 +417,7 @@ following concepts.
 \begin{itemize}
   \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
   named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
-  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfivee;
+  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfive;
   \item \ccMinSize: minimum constitutional committee size;
   \item \ccMaxTermLength: maximum term limit (in epochs) of constitutional committee members;
   \item \govActionLifetime: governance action expiration;
@@ -429,10 +442,21 @@ instance
   ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
 \end{code}
 
-Finally, to update parameters we introduce an abstract type. An update
-can be applied and it has a set of groups associated with it. An
-update is well formed if it has at least one group (i.e. if it updates
-something) and if it preserves well-formedness.
+Figure~\ref{fig:pp-update-type} defines types and functions to update
+parameters. These consist of an abstract type \AgdaField{UpdateT} and
+two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
+The type \AgdaField{UpdateT} is to be instantiated by a type that
+%
+\begin{itemize}
+  \item can be used to update parameters, via the
+    function~\AgdaField{applyUpdate}
+  \item can be queried about what parameter groups it updates, via the
+    function~\AgdaField{updateGroups}
+\end{itemize}
+%
+An element of the type~\AgdaField{UpdateT} is well formed if it
+updates at least one group and applying the update preserves
+well-formedness.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}

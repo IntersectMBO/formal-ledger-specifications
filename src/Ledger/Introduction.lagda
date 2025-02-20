@@ -1,4 +1,7 @@
 \section{Introduction}
+\label{sec:introduction}
+\modulenote{\LedgerModule{Introduction}}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -35,7 +38,7 @@ explanations may be missing or wrong.
 
 \begin{NoConway}
 \begin{center}
-Repository: \url{https://github.com/IntersectMBO/formal-ledger-specifications}
+Repository: \url{\repourl}
 \end{center}
 This is the work-in-progress specification of the Cardano ledger. The
 current status of each individual era is described in Table \ref{fig:eras-progress}.
@@ -45,11 +48,11 @@ current status of each individual era is described in Table \ref{fig:eras-progre
 Era  & Figures & Prose & Cleanup \\
 \hline
 \endhead
-Shelley & Partial & Partial & Not started \\
-Shelley-MA & Partial & Partial & Not started \\
-Alonzo & Partial & Partial & Not started \\
-Babbage & Not started & Not started & Not started \\
-Conway \cite{cip1694} & Complete & Partial & Partial \\
+Shelley~\cite{shelley-ledger-spec} & Partial & Partial & Not started \\
+Shelley-MA~\cite{shelley-ma-ledger-spec} & Partial & Partial & Not started \\
+Alonzo~\cite{alonzo-ledger-spec} & Partial & Partial & Not started \\
+Babbage~\cite{babbage-ledger-spec} & Not started & Not started & Not started \\
+Conway~\cite{cip1694} & Complete & Partial & Partial \\
 \hline
 \caption{Specification progress}
 \label{fig:eras-progress}
@@ -59,17 +62,18 @@ Conway \cite{cip1694} & Complete & Partial & Partial \\
 \subsection{A Note on Agda}
 
 This specification is written using the Agda programming language and
-proof assistant \cite{agda2023}. We have spent a lot of time on making
+proof assistant~(\cite{agda2023}). We have spent a lot of time on making
 this document readable for people unfamiliar with Agda (or other proof
 assistants, functional programming languages, etc.). However, by the
 nature of working in a formal language we have to play by its rules,
 meaning that some instances of uncommon notation are very difficult or
 impossible to avoid. Some are explained in
 Section~\ref{sec:notation}, but there is no guarantee that this
-section is complete. Anyone who is confused by the meaning of an
-expression, please feel free to open an issue in our
-\href{https://github.com/input-output-hk/formal-ledger-specifications/issues}{repository}
-with the `notation' label.
+section is complete.  If the meaning of an expression is confusing
+or unclear, please
+\href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}%
+     {open an issue} in
+\href{\repourl}{our GitHub repository} with the `notation' label.
 
 \subsection{Separation of Concerns}
 

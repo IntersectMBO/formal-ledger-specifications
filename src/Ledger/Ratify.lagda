@@ -1,5 +1,7 @@
 \section{Ratification}
 \label{sec:ratification}
+\modulenote{\LedgerModule{Ratify}}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -23,7 +25,6 @@ _∧_ = _×_
 instance
   _ = +-0-commutativeMonoid
 \end{code}
-
 Governance actions are \defn{ratified} through on-chain votes.
 Different kinds of governance actions have different ratification requirements
 but always involve at least two of the three governance bodies.
@@ -50,7 +51,9 @@ in that order.
 The symbols mean the following:
 \begin{itemize}
 \item
-  \AgdaFunction{vote} x: For an action to pass, the stake associated with the yes votes must exceed the threshold x.
+  \AgdaFunction{vote} x: For an action to pass, the fraction of stake
+  associated with yes votes with respect to that associated
+  with yes and no votes must exceed the threshold x.
 \item
   \AgdaFunction{─}: The body of governance does not participate in voting.
 \item
@@ -151,7 +154,7 @@ threshold pp ccThreshold =
         pparamThreshold EconomicGroup    = (vote P5b  , ─         )
         pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
         pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
-        pparamThreshold SecurityGroup    = (─         , vote Q5e  )
+        pparamThreshold SecurityGroup    = (─         , vote Q5   )
 
         P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
         P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
@@ -199,7 +202,6 @@ record RatifyEnv : Type where
     delegatees    : Credential ⇀ VDeleg
 
 record RatifyState : Type where
-  constructor ⟦_,_,_⟧ʳ
   field
     es              : EnactState
     removed         : ℙ (GovActionID × GovActionState)
@@ -232,9 +234,13 @@ defines some types and functions used in the RATIFY transition
 system. \CCData is simply an alias to define some functions more
 easily.
 
-\begin{figure*}[h!]
+\begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
+instance
+  unquoteDecl To-RatifyState = derive-To
+    [ (quote RatifyState , To-RatifyState) ]
+
 open StakeDistrs
 \end{code}
 \begin{code}
@@ -380,7 +386,7 @@ voting behavior is the credential used to withdraw staking rewards, which is not
 %% And as a second layer, this means that if that credential is a script, it may need
 %% to have explicit logic written to be able to set a default at all.
 
-\begin{figure*}[h!]
+\begin{figure*}[!ht]
 \begin{code}[hide]
 open RatifyEnv using (stakeDistrs)
 
@@ -455,6 +461,7 @@ RATIFY.
   \item \expired{} checks whether a governance action is expired in a given epoch.
 \end{itemize}
 \begin{figure*}[ht]
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 open EnactState
 \end{code}
@@ -481,12 +488,15 @@ delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 
 acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
-acceptConds Γ ⟦ es , removed , d ⟧ʳ (id , st) = let open RatifyEnv Γ; open GovActionState st in
+acceptConds Γ stʳ (id , st) =
        accepted Γ es st
-    ×  ¬ delayed action prevAction es d
-    × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+    ×  ¬ delayed action prevAction es delay
+    × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
+    where open RatifyEnv Γ
+          open RatifyState stʳ
+          open GovActionState st
 abstract
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
   verifyPrev? NoConfidence              h es = dec
@@ -516,6 +526,7 @@ abstract
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
 \end{code}
+\end{AgdaMultiCode}
 \caption{Functions related to ratification}
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
@@ -539,30 +550,38 @@ private variable
   removed : ℙ (GovActionID × GovActionState)
   d : Bool
 
-data _⊢_⇀⦇_,RATIFY'⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
-
 \end{code}
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  RATIFY-Accept : ∀ {Γ} {es} {removed} {d} {a} {es'} → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
-     ∙ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
-     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
-       ────────────────────────────────
-       Γ ⊢  ⟦ es   , removed          , d                      ⟧ʳ ⇀⦇ a ,RATIFY'⦈
-            ⟦ es'  , ❴ a ❵ ∪ removed  , delayingAction action  ⟧ʳ
+data _⊢_⇀⦇_,RATIFY'⦈_ :
+  RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
 
-  RATIFY-Reject : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
-     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+  RATIFY-Accept :  {Γ        : RatifyEnv}
+                   {es es'   : EnactState}
+                   {removed  : ℙ (GovActionID × GovActionState)}
+                   {d        : Bool}
+                   {a        : GovActionID × GovActionState}
+
+     → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+
+     ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
+     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+       ────────────────────────────────
+       Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY'⦈
+           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧
+
+  RATIFY-Reject : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ expired currentEpoch st
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
 
-  RATIFY-Continue : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
-     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+  RATIFY-Continue : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ ¬ expired currentEpoch st
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type

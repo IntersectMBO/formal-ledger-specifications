@@ -3,6 +3,7 @@
 \RequirePackage{xspace}
 \RequirePackage{pifont}  %% needed for checkmark (\ding{51}).
 
+\newcommand{\AgdaVersion}{v2.7.0}
 \newcommand{\abstain}{\AgdaInductiveConstructor{abstain}}
 \newcommand{\abstainRep}{\AgdaInductiveConstructor{abstainRep}}
 \newcommand{\accepted}{\AgdaFunction{accepted}}
@@ -26,6 +27,18 @@
 \newcommand{\Anchor}{\AgdaRecord{Anchor}}
 %% \newcommand{\as}{\AgdaSymbol{as}\xspace}
 
+\newcommand{\agdageneralizablea}{\AgdaGeneralizable{a}\xspace}
+\newcommand{\agdageneralizabled}{\AgdaGeneralizable{d}\xspace}
+\newcommand{\agdageneralizabledh}{\AgdaGeneralizable{dh}\xspace}
+\newcommand{\agdageneralizablees}{\AgdaGeneralizable{es}\xspace}
+\newcommand{\agdageneralizableesprime}{\AgdaGeneralizable{es'}\xspace}
+\newcommand{\agdageneralizablef}{\AgdaGeneralizable{f}\xspace}
+\newcommand{\agdageneralizablegid}{\AgdaGeneralizable{gid}\xspace}
+\newcommand{\agdageneralizableh}{\AgdaGeneralizable{h}\xspace}
+\newcommand{\agdageneralizablel}{\AgdaGeneralizable{l}\xspace}
+\newcommand{\agdageneralizableq}{\AgdaGeneralizable{q}\xspace}
+\newcommand{\agdageneralizables}{\AgdaGeneralizable{s}\xspace}
+\newcommand{\agdageneralizablev}{\AgdaGeneralizable{v}\xspace}
 
 \newcommand{\BaseAddr}{\AgdaRecord{BaseAddr}}
 %% \newcommand{\beginstrict}{\AgdaFunction{begin-strict}\xspace}
@@ -48,6 +61,7 @@
 \newcommand{\ccThreshold}{\AgdaFunction{ccThreshold}\xspace}
 \newcommand{\cc}{\AgdaField{cc}\xspace}
 \newcommand{\coinThreshold}{\AgdaFunction{coinThreshold}\xspace}
+\newcommand{\coinsPerUTxOByte}{\AgdaField{coinsPerUTxOByte}\xspace}
 \newcommand{\commaENACTrightBoldParen}{\AgdaDatatype{,ENACT⦈}\xspace}
 \newcommand{\compute}{\AgdaField{compute}\xspace}
 \newcommand{\constMap}{\AgdaFunction{constMap}\xspace}
@@ -101,6 +115,7 @@
 \newcommand{\DrepThresholds}{\AgdaRecord{DrepThresholds}\xspace}
 \newcommand{\drepThresholds}{\AgdaField{drepThresholds}\xspace}
 \newcommand{\DocHash}{\AgdaField{DocHash}\xspace}
+\newcommand{\Deposits}{\AgdaDatatype{Deposits}\xspace}
 \newcommand{\deposits}{\AgdaField{deposits}\xspace}
 \newcommand{\depositRefunds}{\AgdaFunction{depositRefunds}\xspace}
 \newcommand{\depositsChange}{\AgdaFunction{depositsChange}\xspace}
@@ -114,7 +129,7 @@
 \newcommand{\EnactEnv}{\AgdaRecord{EnactEnv}\xspace}
 \newcommand{\EnactHF}{\AgdaInductiveConstructor{Enact-HF}\xspace}
 \newcommand{\EnactInfo}{\AgdaInductiveConstructor{Enact-Info}\xspace}
-\newcommand{\EnactNewComm}{\AgdaInductiveConstructor{Enact-NewComm}\xspace}
+\newcommand{\EnactUpdComm}{\AgdaInductiveConstructor{Enact-UpdComm}\xspace}
 \newcommand{\EnactNewConst}{\AgdaInductiveConstructor{Enact-NewConst}\xspace}
 \newcommand{\EnactNoConf}{\AgdaInductiveConstructor{Enact-NoConf}\xspace}
 \newcommand{\EnactPParams}{\AgdaInductiveConstructor{Enact-PParams}\xspace}
@@ -188,18 +203,13 @@
 \newcommand{\isScript}{\AgdaDatatype{isScript}\xspace}
 \newcommand{\isInl}{\AgdaFunction{isInj₁}\xspace}
 \newcommand{\isInr}{\AgdaFunction{isInj₂}\xspace}
+\newcommand{\isRegistered}{\AgdaFunction{isRegistered}\xspace}
 
 \newcommand{\just}{\AgdaInductiveConstructor{just}\xspace}
 
-\newcommand{\LedgerAddress}{\AgdaModule{Ledger.Address}\xspace}
-\newcommand{\LedgerCrypto}{\AgdaModule{Ledger.Crypto}\xspace}
-\newcommand{\LedgerEpoch}{\AgdaModule{Ledger.Epoch}\xspace}
-\newcommand{\LedgerGov}{\AgdaModule{Ledger.Gov}\xspace}
-\newcommand{\LedgerGovernanceActions}{\AgdaModule{Ledger.GovernanceActions}\xspace}
-\newcommand{\LedgerPParams}{\AgdaModule{Ledger.PParams}\xspace}
-\newcommand{\LedgerPrelude}{\AgdaModule{Ledger.Prelude}\xspace}
-\newcommand{\LedgerRatify}{\AgdaModule{Ledger.Ratify}\xspace}
-\newcommand{\LedgerTransaction}{\AgdaModule{Ledger.Transaction}\xspace}
+\NewDocumentCommand\LedgerModule{m}{%
+  \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\AgdaModule{Ledger.#1}}%
+}
 \newcommand{\lengthsupers}{\AgdaFunction{lengthˢ}\xspace}
 \newcommand{\lengthsupersequivsupere}{\AgdaFunction{lengthˢ-≡ᵉ}\xspace}
 \newcommand{\List}{\AgdaDatatype{List}\xspace}
@@ -213,13 +223,18 @@
 \newcommand{\mapWithKey}{\AgdaFunction{mapWithKey}\xspace}
 \newcommand{\mapsubtwo}{\AgdaFunction{map₂}\xspace}
 \newcommand{\maximum}{\AgdaFunction{maximum}\xspace}
+\newcommand{\maxBlockSize}{\AgdaField{maxBlockSize}\xspace}
+\newcommand{\maxBlockExUnits}{\AgdaField{maxBlockExUnits}\xspace}
+\newcommand{\maxHeaderSize}{\AgdaField{maxHeaderSize}\xspace}
 \newcommand{\maxRefScriptPerTx}{\AgdaField{maxRefScriptPerTx}\xspace}
 \newcommand{\maxRefScriptPerBlock}{\AgdaField{maxRefScriptPerBlock}\xspace}
+\newcommand{\maxTxSize}{\AgdaField{maxTxSize}\xspace}
+\newcommand{\maxValSize}{\AgdaField{maxValSize}\xspace}
 \newcommand{\maybe}{\AgdaFunction{maybe}\xspace}
 \newcommand{\maybeprime}{\AgdaFunction{maybe′}\xspace}
 \newcommand{\meetsMinAVS}{\AgdaFunction{meetsMinAVS}\xspace}
-\newcommand{\minimumAVS}{\AgdaField{minimumAVS}\xspace}
 \newcommand{\minFeeRefScriptCoinsPerByte}{\AgdaField{minFeeRefScriptCoinsPerByte}\xspace}
+\newcommand{\minimumAVS}{\AgdaField{minimumAVS}\xspace}
 \newcommand{\minfee}{\AgdaFunction{minfee}\xspace}
 \newcommand{\ccMinSize}{\AgdaField{ccMinSize}\xspace}
 \newcommand{\mleqmplusn}{\AgdaFunction{m≤m+n}\xspace}
@@ -294,6 +309,7 @@
 \newcommand{\Qtwob}{\AgdaField{Q2b}\xspace}
 \newcommand{\Qthree}{\AgdaField{Q3}\xspace}
 \newcommand{\Qfour}{\AgdaField{Q4}\xspace}
+\newcommand{\Qfive}{\AgdaField{Q5}\xspace}
 \newcommand{\Qfivee}{\AgdaField{Q5e}\xspace}
 
 \newcommand{\rankThreshold}{\AgdaFunction{rankThreshold}\xspace}

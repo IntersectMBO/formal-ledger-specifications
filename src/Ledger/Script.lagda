@@ -1,4 +1,7 @@
 \section{Scripts}
+\label{sec:scripts}
+\modulenote{\LedgerModule{Script}}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 

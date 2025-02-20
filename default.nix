@@ -102,7 +102,7 @@ rec {
     '';
     postInstall = ''
       cp -r latex/ Makefile typecheck.time $out
-      sh checkTypeChecked.sh
+      sh checkTypeChecked.sh -m
     '';
     extraExtensions = [ "hs" "cabal" "py" ];
   };
@@ -114,7 +114,7 @@ rec {
       version = "0.1";
       src = "${formalLedger}";
       meta = { };
-      buildInputs = [ agdaWithDeps latex python3 ];
+      buildInputs = [ agdaWithDeps latex python310 ];
       buildPhase = ''
         OUT_DIR=$out make "${project}".docs
       '';
@@ -189,7 +189,7 @@ rec {
     version = version;
     src = "${formalLedger}";
     meta = { };
-    buildInputs = [ agdaWithDeps latex python3 ];
+    buildInputs = [ agdaWithDeps latex python310 ];
     buildPhase = ''
         OUT_DIR=$out make ${project}
       '';

@@ -1,4 +1,7 @@
 \section{Cryptographic Primitives}
+\label{sec:cryptographic-primitives}
+\modulenote{\LedgerModule{Crypto}}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 module Ledger.Crypto where
@@ -18,9 +21,8 @@ record HashableSet : Type₁ where
   constructor mkHashableSet
   field T : Type; ⦃ T-isHashable ⦄ : isHashableSet T
   open isHashableSet T-isHashable public
-
 \end{code}
-We rely on a public key signing scheme for verification of spending.
+
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
@@ -50,6 +52,7 @@ record PKKScheme : Type₁ where
 \caption{Definitions for the public key signature scheme}
 \label{fig:defs:crypto}
 \end{figure*}
+
 \begin{code}[hide]
     ⦃ DecEq-Sig  ⦄ : DecEq Sig
     ⦃ DecEq-Ser  ⦄ : DecEq Ser
@@ -66,3 +69,6 @@ record Crypto : Type₁ where
 
 -- TODO: KES and VRF
 \end{code}
+
+We rely on a public key signing scheme for verification of spending.
+Figure~\ref{fig:defs:crypto} shows some of the types, functions and properties of this scheme.
