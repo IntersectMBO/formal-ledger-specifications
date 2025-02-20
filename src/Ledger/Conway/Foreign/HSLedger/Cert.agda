@@ -1,6 +1,6 @@
 module Ledger.Conway.Foreign.HSLedger.Cert where
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (CertState; CertEnv; ⟦_,_,_⟧ᶜˢ; DCert)
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (CertState; CertEnv; DCert)
 open import Ledger.Conway.Foreign.HSLedger.Certs
 
 open import Ledger.Conway.Conformance.Certs.Properties govStructure

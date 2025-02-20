@@ -61,6 +61,11 @@ data pvCanFollow : ProtVer → ProtVer → Type where
 \label{fig:protocol-parameter-defs}
 \end{figure*}
 \end{NoConway}
+\begin{code}[hide]
+instance
+  unquoteDecl To-Acnt = derive-To
+    [ (quote Acnt , To-Acnt) ]
+\end{code}
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
