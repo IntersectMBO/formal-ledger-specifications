@@ -10,13 +10,16 @@ module Ledger.Conway.Conformance.Utxow
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-open import Ledger.Conway.Conformance.Utxo txs abs hiding (module L)
+open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Certs govStructure
 
-module L where
-  open import Ledger.Utxow txs abs public
-  open import Ledger.Utxo txs abs public
+private
+  module L where
+    open import Ledger.Utxow txs abs public
+    open import Ledger.Utxo txs abs public
+
+open L using (scriptsNeeded; witsVKeyNeeded) public
 
 data
 

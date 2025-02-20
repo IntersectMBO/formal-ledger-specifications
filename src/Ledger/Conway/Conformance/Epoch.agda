@@ -17,7 +17,7 @@ module Ledger.Conway.Conformance.Epoch
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Conformance.Gov txs
+open import Ledger.Gov txs
 open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Ratify txs
@@ -25,6 +25,7 @@ open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 record RewardUpdate : Set where
+  constructor ⟦_,_,_,_⟧ʳᵘ
   field
     Δt Δr Δf : ℤ
     rs : Credential ⇀ Coin
@@ -41,6 +42,7 @@ record Snapshots : Set where
     feeSS        : Coin
 
 record EpochState : Type where
+  constructor ⟦_,_,_,_,_⟧ᵉ'
   field
     acnt       : Acnt
     ss         : Snapshots
@@ -74,32 +76,32 @@ open RwdAddr using (stake)
 open GovActionState using (returnAddr)
 
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd ru epochState =
-  ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
-    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧
+applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
+  ⟦ ⟦ treasury , reserves ⟧ᵃ
   , ss
-  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧
+  , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU , deposits ⟧ , pState , gState ⟧ ⟧
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards , dDeposits ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
   , es
-  , fut ⟧
+  , fut
+  ⟧ᵉ' =
+  ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
+    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ
+  , ss
+  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
+    , govSt
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU , dDeposits ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+  , es
+  , fut ⟧ᵉ'
   where
-    open RewardUpdate ru
-    open EpochState epochState
-    open LState ls
-    open CertState certState
-    open DState dState hiding (deposits)
-    open Acnt acnt
-    open UTxOState utxoSt
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
 
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo dState pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
+stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
   where
-    open DState dState
-    m = mapˢ (λ a → (a , L.cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
+    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
@@ -110,6 +112,7 @@ gaDepositStake govSt ds = aggregateBy
 
 
 opaque
+
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
     aggregateBy (proj₁ delegations) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)

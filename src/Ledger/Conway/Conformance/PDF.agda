@@ -24,7 +24,7 @@ open import Ledger.Conway.Conformance.Ledger.Properties
 open import Ledger.Ratify.Properties
 open import Ledger.Conway.Conformance.Chain.Properties
 
-open import Ledger.Conway.Conformance.Gov
+open import Ledger.Gov
 open import Ledger.Enact
 open import Ledger.Ratify
 

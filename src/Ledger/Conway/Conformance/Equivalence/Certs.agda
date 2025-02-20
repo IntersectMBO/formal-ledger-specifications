@@ -14,7 +14,12 @@ module Ledger.Conway.Conformance.Equivalence.Certs
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Conformance.Equivalence.Base txs abs
+private
+  module L where
+    open import Ledger.Certs govStructure public
+
+  module C where
+    open import Ledger.Conway.Conformance.Certs govStructure public
 
 instance
 

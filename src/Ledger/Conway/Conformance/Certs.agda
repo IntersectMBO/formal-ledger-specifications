@@ -15,10 +15,11 @@ private module Certs = Ledger.Certs gs
 open Certs public
   hiding (DState; GState; CertState; To-DState; To-GState; To-CertState;
           _⊢_⇀⦇_,POOL⦈_; _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
-          _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,CERTBASE⦈_; _⊢_⇀⦇_,CERTS⦈_)
+          _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,CERTBASE⦈_; _⊢_⇀⦇_,CERTS⦈_; ⟦_,_,_⟧ᵈ)
 open RwdAddr
 
 record DState : Type where
+  constructor ⟦_,_,_,_⟧ᵈ
   field
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ KeyHash
@@ -26,12 +27,14 @@ record DState : Type where
     deposits     : Deposits
 
 record GState : Type where
+  constructor ⟦_,_,_⟧ᵛ
   field
     dreps      : Credential ⇀ Epoch
     ccHotKeys  : Credential ⇀ Maybe Credential
     deposits   : Deposits
 
 record CertState : Type where
+  constructor ⟦_,_,_⟧ᶜˢ
   field
     dState : DState
     pState : PState
