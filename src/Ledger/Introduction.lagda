@@ -41,7 +41,7 @@ explanations may be missing or wrong.
 Repository: \url{\repourl}
 \end{center}
 This is the work-in-progress specification of the Cardano ledger. The
-current status of each individual era is described in Table \ref{fig:eras-progress}.
+current status of each individual era is described in Table~\ref{fig:eras-progress}.
 
 \begin{longtable}[h!]{|l l l l|}
 \hline
