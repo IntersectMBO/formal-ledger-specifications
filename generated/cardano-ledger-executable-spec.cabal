@@ -105,6 +105,7 @@ library
         MAlonzo.Code.Ledger.Conway.Conformance.Epoch
         MAlonzo.Code.Ledger.Conway.Conformance.Utxo
         MAlonzo.Code.Ledger.Conway.Conformance.Utxow
+        MAlonzo.Code.Ledger.Conway.Conformance.Gov
         MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties
         MAlonzo.Code.Ledger.Conway.Conformance.Chain
         MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties
@@ -344,6 +345,7 @@ library
         MAlonzo.Code.Class.Semigroup.Instances
         MAlonzo.Code.Class.Semigroup.Core
         MAlonzo.Code.Class.MonadError
+        MAlonzo.Code.Class.To
         MAlonzo.Code.Class.Decidable.Instances
         MAlonzo.Code.Class.Decidable.Core
         MAlonzo.Code.Class.Decidable
