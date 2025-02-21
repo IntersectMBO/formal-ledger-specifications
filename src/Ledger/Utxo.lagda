@@ -522,17 +522,6 @@ private variable
   s s' : UTxOState
   tx : Tx
 
-data _≡?_ {A : Type} : Maybe A → A → Type where
-  ≡?-nothing : ∀ {x : A} → nothing  ≡? x
-  ≡?-just    : ∀ {x : A} → (just x) ≡? x
-
-instance
-  ≟? : {A : Type} {x : Maybe A} {y : A} → ⦃ DecEq A ⦄ → (x ≡? y) ⁇
-  ≟? {x = just x} {y} with x ≟ y
-  ... | yes refl = ⁇ yes ≡?-just
-  ... | no ¬p    = ⁇ no λ where ≡?-just → ¬p refl
-  ≟? {x = nothing} = ⁇ yes ≡?-nothing
-
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
@@ -559,8 +548,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
-    ∙ txNetworkId ≡? NetworkId
-    ∙ curTreasury ≡? treasury
+    ∙ txNetworkId ≡? just NetworkId
+    ∙ curTreasury ≡? just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

@@ -18,6 +18,8 @@ open import Data.List.Membership.Propositional public
   using () renaming (_∈_ to _∈ˡ_; _∉_ to _∉ˡ_)
 open import Data.Maybe public
   hiding (_>>=_; align; alignWith; ap; fromMaybe; map; zip; zipWith)
+open import Data.Maybe.Relation.Binary.Connected
+  using (Connected; connected?)
 open import Data.Unit public
   using (⊤; tt)
 open import Data.Unit.Polymorphic public
@@ -76,3 +78,11 @@ syntax ∃₂-syntax (λ x y → C) = ∃₂[ x , y ] C
 import Data.Nat.Literals as ℕ
 
 instance Number-ℕ = ℕ.number
+
+-- (pseudo)equality (for Maybe)
+_≡?_ : {A : Type} → Maybe A → Maybe A → Type
+_≡?_ = Connected _≡_
+
+instance
+  ≟? : {A : Type} {x y : Maybe A} → ⦃ DecEq A ⦄ → (x ≡? y) ⁇
+  ≟? {A} {x} {y} ⦃ deqEq ⦄ = ⁇ (connected? (DecEq._≟_ deqEq) x y)
