@@ -16,10 +16,20 @@ module Ledger.Conway.Conformance.Equivalence.Deposits
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+ 
+private
+  module L where
+    open import Ledger.Ledger txs abs public
+    open import Ledger.Utxo txs abs public
+    open import Ledger.Certs govStructure public
+  
+  module C where
+    open import Ledger.Conway.Conformance.Ledger txs abs public
+    open import Ledger.Conway.Conformance.Utxo txs abs public
+    open import Ledger.Conway.Conformance.Certs govStructure public
 
+open Tx
 open import Ledger.Conway.Conformance.Equivalence.Map
-
-open import Ledger.Conway.Conformance.Equivalence.Base txs abs
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Axiom.Set.Properties th using (≡ᵉ-Setoid; ≡ᵉ-isEquivalence)
 
