@@ -18,7 +18,7 @@ open import Ledger.Gov.Properties it
 instance
 
   HsTy-GovEnv = autoHsType GovEnv ⊣ withConstructor "MkGovEnv"
-                                    • fieldPrefix "ge"
+                                  • fieldPrefix "ge"
   Conv-GovEnv = autoConvert GovEnv
 
 
