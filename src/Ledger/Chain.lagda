@@ -1,4 +1,6 @@
 \section{Blockchain Layer}
+\label{sec:blockchain-layer}
+\modulenote{\LedgerModule{Chain}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -120,7 +122,7 @@ data
 \begin{code}
     totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
     →  _   ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pp , es , Acnt.treasury acnt ⟧ˡᵉ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+    →  ⟦ slot , constitution .proj₁ .proj₂ , pp , es , Acnt.treasury acnt ⟧ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s {  newEpochState =
                                    record nes {  epochState =

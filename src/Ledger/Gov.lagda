@@ -1,4 +1,6 @@
 \section{Governance}
+\label{sec:governance}
+\modulenote{\LedgerModule{Gov}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -58,7 +60,6 @@ GovState : Type
 GovState = List (GovActionID × GovActionState)
 
 record GovEnv : Type where
-  constructor ⟦_,_,_,_,_,_,_⟧ᵍ
   field
     txid        : TxId
     epoch       : Epoch
@@ -73,6 +74,10 @@ record GovEnv : Type where
 \end{figure*}
 
 \begin{code}[hide]
+instance
+  unquoteDecl To-GovEnv = derive-To
+    [ (quote GovEnv , To-GovEnv) ]
+
 private variable
   Γ : GovEnv
   s s' : GovState
@@ -146,10 +151,12 @@ opaque
             { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
 
   isRegistered : GovEnv → Voter → Type
-  isRegistered ⟦ _ , _ , _ , _ , _ , ⟦ _ , pState , gState ⟧ᶜˢ , _ ⟧ᵍ (r , c) = case r of λ where
+  isRegistered Γ (r , c) = case r of λ where
     CC    → just c ∈ range (gState .ccHotKeys)
     DRep  → c ∈ dom (gState .dreps)
     SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
+      where
+        open CertState (GovEnv.certState Γ) using (gState; pState)
 
   validHFAction : GovProposal → GovState → EnactState → Type
   validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
@@ -437,13 +444,11 @@ The GOV transition system is now given as the reflexitive-transitive
 closure of the system GOV', described in
 Figure~\ref{defs:gov-rules}.
 
-For \GOVVote{}, we check that the governance action being voted on
-exists and the role is allowed to vote. \canVote{} is defined in
-Figure~\ref{fig:ratification-requirements}. Note that there are no
-checks on whether the credential is actually associated with the
-role. This means that anyone can vote for, e.g., the \CC{} role. However,
-during ratification those votes will only carry weight if they are
-properly associated with members of the constitutional committee.
+For \GOVVote, we check that the governance action being voted on
+exists; that the voter's role is allowed to vote (see \canVote{} in
+Figure~\ref{fig:ratification-requirements}); and that the voter's
+credential is actually associated with their role (see
+\isRegistered{} in Figure~\ref{defs:gov-defs}).
 
 For \GOVPropose{}, we check the correctness of the deposit along with some
 and some conditions that ensure the action is well-formed and valid;

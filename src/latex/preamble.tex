@@ -62,3 +62,30 @@ Scale=0.80
 \newcommand{\defn}[1]{\textit{#1}}   %  defined terms are typeset in italics
 %% \newcommand{\defn}[1]{\textbf{#1}}   %  defined terms are typeset in bold
 \newunicodechar{ˢ}{\ensuremath{}}
+
+\newcommand{\repourl}{https://github.com/IntersectMBO/formal-ledger-specifications}
+\newcommand{\modulenote}[1]{Code in this section is part of the #1
+module of the \href{\repourl}{formal ledger specification}.}
+\newcommand{\modulefootnotetext}[1]{\footnotetext{\modulenote{#1}}}
+
+\ExplSyntaxOn
+\NewDocumentCommand\hrefCIP{m}{%
+  \clist_if_in:nnTF {0069,1694} {#1}
+  {\href{\detokenize{https://cips.cardano.org/cip/CIP-#1}}{CIP-#1}}%
+  {\msg_warning:nnn {agda-latex-macros} {invalid-cip} {#1}
+    CIP-#1 % Still prints the text but without a hyperlink
+  }%
+}
+\msg_new:nnn {agda-latex-macros} {invalid-cip}
+  {CIP-#1 is not a known CIP. The hyperlink will not be created.}
+\ExplSyntaxOff
+
+\NewDocumentCommand{\hrefAgdaDocs}{O{} O{Agda documentation}}{%
+  \href{https://agda.readthedocs.io/en/\AgdaVersion/#1}{#2}%
+}
+% For a link to the main Agda documentation website, just use \hrefAgdaDocs{}.
+% For a link to a specific section of the Agda docs, use
+% \hrefAgdaDocs[URLsuffix]{Link text}.
+% For example, \hrefAgdaDocs[language/record-types.html][agda.readthedocs.io/record-types],
+% produces a link to url https://agda.readthedocs.io/en/\AgdaVersion/language/record-types.html
+% with link text "agda.readthedocs.io/record-types".

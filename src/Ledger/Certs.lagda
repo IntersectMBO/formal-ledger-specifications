@@ -1,4 +1,6 @@
 \section{Certificates}
+\label{sec:certificates}
+\modulenote{\LedgerModule{Certs}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -14,7 +16,7 @@ open import Ledger.GovernanceActions gs
 open RwdAddr
 \end{code}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \emph{Derived types}
 \begin{code}
 data DepositPurpose : Type where
@@ -31,6 +33,7 @@ instance
     ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
 \end{code}
 \caption{Deposit types}
+\label{fig:certs:deposit-types}
 \end{figure*}
 
 \begin{figure*}[h!]
@@ -88,7 +91,6 @@ cwitness (reg c (suc _))     = just c
 \begin{AgdaMultiCode}
 \begin{code}
 record CertEnv : Type where
-  constructor ⟦_,_,_,_,_⟧ᶜ
   field
     epoch     : Epoch
     pp        : PParams
@@ -107,7 +109,6 @@ record DState : Type where
 \begin{code}
 
 record PState : Type where
-  constructor ⟦_,_⟧ᵖ
   field
     pools     : KeyHash ⇀ PoolParams
     retiring  : KeyHash ⇀ Epoch
@@ -116,7 +117,6 @@ record PState : Type where
 \begin{code}
 
 record GState : Type where
-  constructor ⟦_,_⟧ᵛ
   field
     dreps      : Credential ⇀ Epoch
     ccHotKeys  : Credential ⇀ Maybe Credential
@@ -129,7 +129,6 @@ record CertState : Type where
     gState : GState
 
 record DelegEnv : Type where
-  constructor ⟦_,_,_⟧ᵈᵉ
   field
     pparams       : PParams
     pools         : KeyHash ⇀ PoolParams
@@ -152,6 +151,15 @@ instance
 \end{code}
 
 \begin{code}[hide]
+instance
+  unquoteDecl To-CertEnv To-DState To-PState To-GState To-CertState To-DelegEnv = derive-To
+    (   (quote CertEnv , To-CertEnv)
+    ∷   (quote DState , To-DState)
+    ∷   (quote PState , To-PState)
+    ∷   (quote GState , To-GState)
+    ∷   (quote CertState , To-CertState)
+    ∷ [ (quote DelegEnv , To-DelegEnv) ])
+
 private variable
   rwds rewards           : Credential ⇀ Coin
   dReps                  : Credential ⇀ Epoch
@@ -184,12 +192,26 @@ private variable
   cc : ℙ Credential
 \end{code}
 
-\subsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
+\subsection{Changes Introduced in Conway Era}
 
-In the Conway era, support for pointer addresses, genesis delegations
-and MIR certificates is removed. In \DState, this means that the four
-fields relating to those features are no longer present, and \DelegEnv
-contains none of the fields it used to in the Shelley era.
+\subsubsection{Delegation}
+
+Registered credentials can now delegate to a DRep as well as to a
+stake pool. This is achieved by giving the \delegate certificate two
+optional fields, corresponding to a DRep and stake pool.
+
+Stake can be delegated for voting and block production simultaneously,
+since these are two separate features. In fact, preventing this could
+weaken the security of the chain, since security relies on high
+participation of honest stake holders.
+
+\subsubsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
+
+Support for pointer addresses, genesis delegations and MIR
+certificates is removed (see~\cite{cip1694}). In \DState, this means
+that the four fields relating to those features are no longer present,
+and \DelegEnv contains none of the fields it used to in the Shelley
+era~(\cite[Sec.~9.2]{shelley-ledger-spec}).
 
 Note that pointer addresses are still usable, only their staking
 functionality has been retired. So all funds locked behind pointer
@@ -198,25 +220,18 @@ stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
 the \TreasuryWdrl governance action in case of the MIR certificates.
 
-\subsection{Explicit Deposits}
+\subsubsection{Explicit Deposits}
 
 Registration and deregistration of staking credentials are now
 required to explicitly state the deposit that is being paid or
-refunded. This aligns them better with other design decisions such as
-having explicit transaction fees and helps make this information
-visible to light clients and hardware wallets. While not shown in the
-figures, the old certificates without explicit deposits will still be
-supported for some time for backwards compatibility.
+refunded. This deposit is used for checking correctness of transactions
+with certificates. Including the deposit aligns better with other
+design decisions such as having explicit transaction fees and helps
+make this information visible to light clients and hardware wallets.
 
-\subsection{Delegation}
-
-Registered credentials can now delegate to a DRep as well as to a
-stake pool. This is achieved by giving the \delegate certificate two
-optional fields, corresponding to a DRep and stake pool. Stake can be
-delegated for voting and block production simultaneously, since these
-are two separate features. In fact, preventing this could weaken the
-security of the chain, since security relies on high participation of
-honest stake holders.
+While not shown in the figures, the old certificates without explicit
+deposits will still be supported for some time for backwards
+compatibility.
 
 \subsection{Governance Certificate Rules}
 
@@ -253,7 +268,7 @@ constitutional committee.
   constitutional committee members to act without a delay of one epoch.
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 data
@@ -307,24 +322,24 @@ data _⊢_⇀⦇_,DELEG⦈_ where
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧
         ⇀⦇ delegate c mv mkh d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ dereg c md ,DELEG⦈
-        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈
+        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
 \end{code}
 \begin{code}[hide]
   DELEG-reg : let open PParams pp in
     ∙ c ∉ dom rwds
     ∙ d ≡ keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ᵈᵉ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ᵈ ⇀⦇ reg c d ,DELEG⦈
-        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧ᵈ
+      ⟦ pp , pools , delegatees ⟧ ⊢
+        ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈
+        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}
@@ -341,12 +356,12 @@ data _⊢_⇀⦇_,POOL⦈_ where
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ᵖ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧ᵖ
+      pp ⊢  ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
+            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ᵖ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧ᵖ
+    pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary POOL transition system}
@@ -363,19 +378,19 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢  ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢  ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
+                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ dReps , ccKeys ⟧ᵛ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ᵛ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
@@ -403,19 +418,19 @@ data _⊢_⇀⦇_,CERT⦈_ where
 \end{code}
 \begin{code}
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ᵈᵉ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧ᶜˢ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 
   CERT-vdel :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
-      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧ᶜˢ
+      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \emph{CERTBASE transition}
@@ -435,15 +450,15 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ᶜ ⊢
-        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
+        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧
         , stᵖ
-        , ⟦ dReps , ccHotKeys ⟧ᵛ
-        ⟧ᶜˢ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ᵈ
+        , ⟦ dReps , ccHotKeys ⟧
+        ⟧ ⇀⦇ _ ,CERTBASE⦈
+        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧
         , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧ᵛ
-        ⟧ᶜˢ
+        , ⟦ refreshedDReps , ccHotKeys ⟧
+        ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}

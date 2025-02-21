@@ -5,7 +5,7 @@ open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GS
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
-open import Ledger.Conway.Conformance.Certs govStructure using (⟦_,_,_,_⟧ᵈ; DState; GState)
+open import Ledger.Conway.Conformance.Certs govStructure using (DState; GState)
 
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
   using ( Computational-DELEG

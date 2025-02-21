@@ -80,7 +80,6 @@ scriptsCost pp scriptSize
 \caption{Calculation of fees for reference scripts}
 \label{fig:scriptsCost}
 \end{figure*}
-
 The function \scriptsCost{} (Fig.~\ref{fig:scriptsCost}) calculates
 the fee for reference scripts in the transaction using a function that
 is piece-wise linear in the size, where the linear constant multiple

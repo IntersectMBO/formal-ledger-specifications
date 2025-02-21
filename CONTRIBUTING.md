@@ -114,7 +114,8 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
 ## Setup without nix-shell
 
-- Install Agda version `2.7.0` (e.g. follow the instructions in <https://agda.readthedocs.io/en/latest/getting-started/installation.html#step-1-install-agda>).
+- Install Agda version `2.7.0` (e.g. follow the instructions in <https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda>
+).
 - In a folder `LIB`, clone the dependencies
     + [agda-stdlib](https://github.com/agda/agda-stdlib)
     + [agda-stdlib-classes](https://github.com/agda/agda-stdlib-classes)
