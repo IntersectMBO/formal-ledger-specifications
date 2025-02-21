@@ -1671,14 +1671,7 @@ du_regRU_2328 v0 v1 v2
             MAlonzo.Code.Axiom.Set.d_th_1470
             (coe
                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-         (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
-         (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1054
-            (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1080
-               (coe
-                  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2198
-                  (coe d_ls_2310 (coe v2))))))
+         (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556) (coe v2))
 -- Ledger.Conway.Conformance.Epoch._.unregRU
 d_unregRU_2330 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -1740,14 +1733,7 @@ du_unregRU_2330 v0 v1 v2
             MAlonzo.Code.Axiom.Set.d_th_1470
             (coe
                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-         (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
-         (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1054
-            (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1080
-               (coe
-                  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2198
-                  (coe d_ls_2310 (coe v2))))))
+         (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556) (coe v2))
 -- Ledger.Conway.Conformance.Epoch._.unregRU'
 d_unregRU''_2332 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -2018,14 +2004,13 @@ d_m_2350 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1040 ->
   MAlonzo.Code.Ledger.Certs.T_PState_906 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_m_2350 v0 ~v1 v2 ~v3 ~v4 v5 ~v6 ~v7 = du_m_2350 v0 v2 v5
 du_m_2350 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1040 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_m_2350 v0 v1 v2
   = let v3
@@ -2072,10 +2057,7 @@ du_m_2350 v0 v1 v2
                MAlonzo.Code.Axiom.Set.d_th_1470
                (coe
                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-            (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
-            (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1054
-               (coe v2))))
+            (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556) (coe v2)))
 -- Ledger.Conway.Conformance.Epoch._.stakeRelation
 d_stakeRelation_2356 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -2085,7 +2067,6 @@ d_stakeRelation_2356 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1040 ->
   MAlonzo.Code.Ledger.Certs.T_PState_906 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_stakeRelation_2356 v0 ~v1 v2 ~v3 ~v4 v5 ~v6 ~v7
@@ -2093,7 +2074,7 @@ d_stakeRelation_2356 v0 ~v1 v2 ~v3 ~v4 v5 ~v6 ~v7
 du_stakeRelation_2356 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1040 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_stakeRelation_2356 v0 v1 v2
   = let v3
