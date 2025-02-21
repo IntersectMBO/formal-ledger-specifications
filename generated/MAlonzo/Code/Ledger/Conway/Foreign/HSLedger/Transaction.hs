@@ -484,7 +484,7 @@ d_Conv'45'TxBody_32
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_to_18
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_224))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_668))
                         v10)
                      (coe v11)
                      (coe
@@ -714,7 +714,7 @@ d_Conv'45'TxBody_32
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_from_20
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_224))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_668))
                         v10)
                      (coe v11)
                      (coe
@@ -907,7 +907,7 @@ d_Conv'45'Tx_36
                            () erased
                            (MAlonzo.Code.Foreign.Convertible.d_to_18
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DCert_84))
+                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DCert_86))
                            (MAlonzo.Code.Ledger.Transaction.d_txcerts_2574 (coe v1)))
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -937,7 +937,7 @@ d_Conv'45'Tx_36
                            () erased
                            (MAlonzo.Code.Foreign.Convertible.d_to_18
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_224))
+                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_668))
                            (MAlonzo.Code.Ledger.Transaction.d_txprop_2580 (coe v1)))
                         (coe MAlonzo.Code.Ledger.Transaction.d_txdonation_2582 (coe v1))
                         (coe
@@ -1230,7 +1230,7 @@ d_Conv'45'Tx_36
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_224))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_668))
                                              v15)
                                           (coe v16)
                                           (coe
@@ -1473,7 +1473,7 @@ d_Conv'45'Tx_36
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_224))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_668))
                                              v15)
                                           (coe v16)
                                           (coe
@@ -1934,7 +1934,7 @@ check_MkTxBody_11479 ::
     (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer) ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_13053 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_13049 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_HSMap_18
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_4475
     Integer ->
@@ -1943,7 +1943,7 @@ check_MkTxBody_11479 ::
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovVote_1531 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovProposal_6585 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovProposal_7317 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
     ()

@@ -114,7 +114,8 @@ library
         MAlonzo.Code.Ledger.Conway.Conformance.Certs
         MAlonzo.Code.Ledger.Conway.Conformance.Chain.Properties
         MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties
-        MAlonzo.Code.Ledger.Conway.Conformance.Gov.Properties
+        MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert
+        MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Certs
         MAlonzo.Code.Ledger.Address
         MAlonzo.Code.Ledger.Interface.HasCoin
         MAlonzo.Code.Ledger.Types.Epoch

@@ -69,68 +69,68 @@ d_LEnv_22 = ()
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LState
 d_LState_24 = ()
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LEnv.enactState
-d_enactState_46 ::
-  MAlonzo.Code.Ledger.Ledger.T_LEnv_2150 ->
+d_enactState_44 ::
+  MAlonzo.Code.Ledger.Ledger.T_LEnv_2152 ->
   MAlonzo.Code.Ledger.Enact.T_EnactState_826
-d_enactState_46 v0
-  = coe MAlonzo.Code.Ledger.Ledger.d_enactState_2168 (coe v0)
+d_enactState_44 v0
+  = coe MAlonzo.Code.Ledger.Ledger.d_enactState_2170 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LEnv.pparams
-d_pparams_48 ::
-  MAlonzo.Code.Ledger.Ledger.T_LEnv_2150 ->
+d_pparams_46 ::
+  MAlonzo.Code.Ledger.Ledger.T_LEnv_2152 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pparams_48 v0
-  = coe MAlonzo.Code.Ledger.Ledger.d_pparams_2166 (coe v0)
+d_pparams_46 v0
+  = coe MAlonzo.Code.Ledger.Ledger.d_pparams_2168 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LEnv.ppolicy
-d_ppolicy_50 ::
-  MAlonzo.Code.Ledger.Ledger.T_LEnv_2150 -> Maybe Integer
-d_ppolicy_50 v0
-  = coe MAlonzo.Code.Ledger.Ledger.d_ppolicy_2164 (coe v0)
+d_ppolicy_48 ::
+  MAlonzo.Code.Ledger.Ledger.T_LEnv_2152 -> Maybe Integer
+d_ppolicy_48 v0
+  = coe MAlonzo.Code.Ledger.Ledger.d_ppolicy_2166 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LEnv.slot
-d_slot_52 :: MAlonzo.Code.Ledger.Ledger.T_LEnv_2150 -> Integer
-d_slot_52 v0 = coe MAlonzo.Code.Ledger.Ledger.d_slot_2162 (coe v0)
+d_slot_50 :: MAlonzo.Code.Ledger.Ledger.T_LEnv_2152 -> Integer
+d_slot_50 v0 = coe MAlonzo.Code.Ledger.Ledger.d_slot_2164 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LEnv.treasury
-d_treasury_54 :: MAlonzo.Code.Ledger.Ledger.T_LEnv_2150 -> Integer
-d_treasury_54 v0
-  = coe MAlonzo.Code.Ledger.Ledger.d_treasury_2170 (coe v0)
+d_treasury_52 :: MAlonzo.Code.Ledger.Ledger.T_LEnv_2152 -> Integer
+d_treasury_52 v0
+  = coe MAlonzo.Code.Ledger.Ledger.d_treasury_2172 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LState.certState
-d_certState_58 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2186 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1072
-d_certState_58 v0
+d_certState_56 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_1950 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1078
+d_certState_56 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2198
+      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_1962
       (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LState.govSt
-d_govSt_60 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2186 ->
+d_govSt_58 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_1950 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_govSt_60 v0
+d_govSt_58 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2196 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_1960 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ledger._.LState.utxoSt
-d_utxoSt_62 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2186 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_2020
-d_utxoSt_62 v0
+d_utxoSt_60 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_1950 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_2022
+d_utxoSt_60 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2194
+      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_1958
       (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ledger.HsTy-LEnv
-d_HsTy'45'LEnv_70 ::
+d_HsTy'45'LEnv_68 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
-d_HsTy'45'LEnv_70 = erased
+d_HsTy'45'LEnv_68 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ledger.Conv-LEnv
-d_Conv'45'LEnv_72 ::
+d_Conv'45'LEnv_70 ::
   MAlonzo.Code.Foreign.Convertible.T_Convertible_8
-d_Conv'45'LEnv_72
+d_Conv'45'LEnv_70
   = coe
       MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Ledger.C_LEnv'46'constructor_4931 v1 v2 v3 v4 v5
+              MAlonzo.Code.Ledger.Ledger.C_LEnv'46'constructor_4929 v1 v2 v3 v4 v5
                 -> coe
-                     C_MkLEnv_185 (coe v1)
+                     C_MkLEnv_183 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -790,9 +790,9 @@ d_Conv'45'LEnv_72
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkLEnv_185 v1 v2 v3 v4 v5
+              C_MkLEnv_183 v1 v2 v3 v4 v5
                 -> coe
-                     MAlonzo.Code.Ledger.Ledger.C_LEnv'46'constructor_4931 (coe v1)
+                     MAlonzo.Code.Ledger.Ledger.C_LEnv'46'constructor_4929 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2801,23 +2801,23 @@ d_Conv'45'LEnv_72
                      (coe v5)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Ledger.HsTy-LState
-d_HsTy'45'LState_74 ::
+d_HsTy'45'LState_72 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
-d_HsTy'45'LState_74 = erased
+d_HsTy'45'LState_72 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ledger.Conv-LState
-d_Conv'45'LState_76 ::
+d_Conv'45'LState_74 ::
   MAlonzo.Code.Foreign.Convertible.T_Convertible_8
-d_Conv'45'LState_76
+d_Conv'45'LState_74
   = coe
       MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_LState'46'constructor_4739 v1 v2 v3
+              MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_1964 v1 v2 v3
                 -> coe
-                     C_MkLState_2719
+                     C_MkLState_2717
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1793
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1099
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                            (coe
@@ -2863,8 +2863,8 @@ d_Conv'45'LState_76
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'HSPlutusScript_24))))))))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                 (coe MAlonzo.Code.Ledger.Utxo.d_utxo_2030 (coe v1)))))
-                        (coe MAlonzo.Code.Ledger.Utxo.d_fees_2032 (coe v1))
+                                 (coe MAlonzo.Code.Ledger.Utxo.d_utxo_2032 (coe v1)))))
+                        (coe MAlonzo.Code.Ledger.Utxo.d_fees_2034 (coe v1))
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                            (coe
@@ -2878,8 +2878,8 @@ d_Conv'45'LState_76
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                 (coe MAlonzo.Code.Ledger.Utxo.d_deposits_2034 (coe v1)))))
-                        (coe MAlonzo.Code.Ledger.Utxo.d_donations_2036 (coe v1)))
+                                 (coe MAlonzo.Code.Ledger.Utxo.d_deposits_2036 (coe v1)))))
+                        (coe MAlonzo.Code.Ledger.Utxo.d_donations_2038 (coe v1)))
                      (coe
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20 () erased
@@ -2894,12 +2894,12 @@ d_Conv'45'LState_76
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_228)))
+                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_672)))
                         v2)
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.C_MkCertState_357
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.C_MkCertState_351
                         (coe
-                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_8759
+                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_8755
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                               (coe
@@ -2914,9 +2914,9 @@ d_Conv'45'LState_76
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'VDeleg_34)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1050
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1052
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1080
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1086
                                           (coe v3))))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -2932,9 +2932,9 @@ d_Conv'45'LState_76
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1052
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1054
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1080
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1086
                                           (coe v3))))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -2950,9 +2950,9 @@ d_Conv'45'LState_76
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1054
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1056
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1080
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1086
                                           (coe v3))))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -2968,12 +2968,12 @@ d_Conv'45'LState_76
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1056
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1058
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1080
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1086
                                           (coe v3)))))))
                         (coe
-                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3489
+                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3485
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                               (coe
@@ -2990,7 +2990,7 @@ d_Conv'45'LState_76
                                     (coe
                                        MAlonzo.Code.Ledger.Certs.d_pools_912
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1082
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1088
                                           (coe v3))))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -3008,10 +3008,10 @@ d_Conv'45'LState_76
                                     (coe
                                        MAlonzo.Code.Ledger.Certs.d_retiring_914
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1082
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1088
                                           (coe v3)))))))
                         (coe
-                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_19809
+                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_19805
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                               (coe
@@ -3026,9 +3026,9 @@ d_Conv'45'LState_76
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1066
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1070
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1084
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1090
                                           (coe v3))))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -3046,9 +3046,9 @@ d_Conv'45'LState_76
                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16))))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1068
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1072
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1084
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1090
                                           (coe v3))))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -3064,17 +3064,17 @@ d_Conv'45'LState_76
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1070
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1074
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1084
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1090
                                           (coe v3))))))))
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkLState_2719 v1 v2 v3
+              C_MkLState_2717 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_LState'46'constructor_4739
+                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_1964
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -3082,9 +3082,9 @@ d_Conv'45'LState_76
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2038 v5 v6 v7 v8
+                                   MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2040 v5 v6 v7 v8
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1793
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1099
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                                              (coe
@@ -3151,9 +3151,9 @@ d_Conv'45'LState_76
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1793 v5 v6 v7 v8
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1099 v5 v6 v7 v8
                                      -> coe
-                                          MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2038
+                                          MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2040
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_from_20
                                              (coe
@@ -3239,7 +3239,7 @@ d_Conv'45'LState_76
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_228)))
+                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_672)))
                         v2)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -3248,11 +3248,11 @@ d_Conv'45'LState_76
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CertState'46'constructor_3223 v5 v6 v7
+                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1092 v5 v6 v7
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.C_MkCertState_357
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.C_MkCertState_351
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_8759
+                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_8755
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                                                 (coe
@@ -3267,7 +3267,7 @@ d_Conv'45'LState_76
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'VDeleg_34)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1050
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1052
                                                          (coe v5)))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -3283,7 +3283,7 @@ d_Conv'45'LState_76
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1052
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1054
                                                          (coe v5)))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -3299,7 +3299,7 @@ d_Conv'45'LState_76
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1054
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1056
                                                          (coe v5)))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -3315,10 +3315,10 @@ d_Conv'45'LState_76
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1056
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1058
                                                          (coe v5))))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3489
+                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3485
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                                                 (coe
@@ -3352,7 +3352,7 @@ d_Conv'45'LState_76
                                                          MAlonzo.Code.Ledger.Certs.d_retiring_914
                                                          (coe v6))))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_19809
+                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_19805
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                                                 (coe
@@ -3367,7 +3367,7 @@ d_Conv'45'LState_76
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1066
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1070
                                                          (coe v7)))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -3385,7 +3385,7 @@ d_Conv'45'LState_76
                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16))))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1068
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1072
                                                          (coe v7)))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
@@ -3401,15 +3401,15 @@ d_Conv'45'LState_76
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1070
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1074
                                                          (coe v7))))))
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.C_MkCertState_357 v5 v6 v7
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.C_MkCertState_351 v5 v6 v7
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CertState'46'constructor_3223
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1092
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_from_20
                                              (coe
@@ -3417,9 +3417,9 @@ d_Conv'45'LState_76
                                                 (coe
                                                    (\ v8 ->
                                                       case coe v8 of
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DState'46'constructor_2567 v9 v10 v11 v12
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1060 v9 v10 v11 v12
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_8759
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_8755
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                                                                   (coe
@@ -3480,9 +3480,9 @@ d_Conv'45'LState_76
                                                 (coe
                                                    (\ v8 ->
                                                       case coe v8 of
-                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_8759 v9 v10 v11 v12
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_8755 v9 v10 v11 v12
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DState'46'constructor_2567
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1060
                                                                (coe
                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                   (coe
@@ -3607,7 +3607,7 @@ d_Conv'45'LState_76
                                                       case coe v8 of
                                                         MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17493 v9 v10
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3489
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3485
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                                                                   (coe
@@ -3640,7 +3640,7 @@ d_Conv'45'LState_76
                                                 (coe
                                                    (\ v8 ->
                                                       case coe v8 of
-                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3489 v9 v10
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3485 v9 v10
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17493
                                                                (coe
@@ -3676,9 +3676,9 @@ d_Conv'45'LState_76
                                                 (coe
                                                    (\ v8 ->
                                                       case coe v8 of
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GState'46'constructor_3151 v9 v10 v11
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1076 v9 v10 v11
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_19809
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_19805
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C_MkHSMap_28
                                                                   (coe
@@ -3727,9 +3727,9 @@ d_Conv'45'LState_76
                                                 (coe
                                                    (\ v8 ->
                                                       case coe v8 of
-                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_19809 v9 v10 v11
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_19805 v9 v10 v11
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GState'46'constructor_3151
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1076
                                                                (coe
                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                   (coe
@@ -3821,24 +3821,24 @@ d_Conv'45'LState_76
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Ledger.ledger-step
 ledgerStep ::
-  T_LEnv_183 ->
-  T_LState_2717 ->
+  T_LEnv_181 ->
+  T_LState_2715 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_109479 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2717
-ledgerStep = coe d_ledger'45'step_78
-d_ledger'45'step_78 ::
-  T_LEnv_183 ->
-  T_LState_2717 ->
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2715
+ledgerStep = coe d_ledger'45'step_76
+d_ledger'45'step_76 ::
+  T_LEnv_181 ->
+  T_LState_2715 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_109479 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2717
-d_ledger'45'step_78 v0
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2715
+d_ledger'45'step_76 v0
   = coe
       MAlonzo.Code.Foreign.Convertible.d_to_18
       (coe
          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_130
-         (coe d_Conv'45'LState_76)
+         (coe d_Conv'45'LState_74)
          (coe
             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_130
             (coe
@@ -3847,41 +3847,41 @@ d_ledger'45'step_78 v0
                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.du_Conv'45'ComputationResult_88
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvString_14)
-               (coe d_Conv'45'LState_76))))
+               (coe d_Conv'45'LState_74))))
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGER_2700
+            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGER_2706
             (coe
                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_652
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
             (coe
-               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.du_HSAbstractFunctions_2368))
+               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.du_HSAbstractFunctions_2370))
          (coe
-            MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'LEnv_72 v0))
+            MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'LEnv_70 v0))
 -- Ledger.Conway.Foreign.HSLedger.Ledger.ledgers-step
 ledgersStep ::
-  T_LEnv_183 ->
-  T_LState_2717 ->
+  T_LEnv_181 ->
+  T_LState_2715 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_109479 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2717
-ledgersStep = coe d_ledgers'45'step_80
-d_ledgers'45'step_80 ::
-  T_LEnv_183 ->
-  T_LState_2717 ->
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2715
+ledgersStep = coe d_ledgers'45'step_78
+d_ledgers'45'step_78 ::
+  T_LEnv_181 ->
+  T_LState_2715 ->
   [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.T_Tx_109479] ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2717
-d_ledgers'45'step_80 v0
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_LState_2715
+d_ledgers'45'step_78 v0
   = coe
       MAlonzo.Code.Foreign.Convertible.d_to_18
       (coe
          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_130
-         (coe d_Conv'45'LState_76)
+         (coe d_Conv'45'LState_74)
          (coe
             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_130
             (coe
@@ -3892,50 +3892,50 @@ d_ledgers'45'step_80 v0
                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.du_Conv'45'ComputationResult_88
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvString_14)
-               (coe d_Conv'45'LState_76))))
+               (coe d_Conv'45'LState_74))))
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGERS_3004
+            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGERS_3010
             (coe
                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_652
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
             (coe
-               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.du_HSAbstractFunctions_2368))
+               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.du_HSAbstractFunctions_2370))
          (coe
-            MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'LEnv_72 v0))
+            MAlonzo.Code.Foreign.Convertible.d_from_20 d_Conv'45'LEnv_70 v0))
 -- Ledger.Conway.Foreign.HSLedger.Ledger.LEnv
-d_LEnv_183 = ()
-type T_LEnv_183 = LEnv
-pattern C_MkLEnv_185 a0 a1 a2 a3 a4 = MkLEnv a0 a1 a2 a3 a4
-check_MkLEnv_185 ::
+d_LEnv_181 = ()
+type T_LEnv_181 = LEnv
+pattern C_MkLEnv_183 a0 a1 a2 a3 a4 = MkLEnv a0 a1 a2 a3 a4
+check_MkLEnv_183 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_PParams_10199 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.T_EnactState_87 ->
-  Integer -> T_LEnv_183
-check_MkLEnv_185 = MkLEnv
-cover_LEnv_183 :: LEnv -> ()
-cover_LEnv_183 x
+  Integer -> T_LEnv_181
+check_MkLEnv_183 = MkLEnv
+cover_LEnv_181 :: LEnv -> ()
+cover_LEnv_181 x
   = case x of
       MkLEnv _ _ _ _ _ -> ()
 -- Ledger.Conway.Foreign.HSLedger.Ledger.LState
-d_LState_2717 = ()
-type T_LState_2717 = LState
-pattern C_MkLState_2719 a0 a1 a2 = MkLState a0 a1 a2
-check_MkLState_2719 ::
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.T_UTxOState_1791 ->
+d_LState_2715 = ()
+type T_LState_2715 = LState
+pattern C_MkLState_2717 a0 a1 a2 = MkLState a0 a1 a2
+check_MkLState_2717 ::
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.T_UTxOState_1097 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () ()
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
-       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_10469) ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.T_CertState_355 ->
-  T_LState_2717
-check_MkLState_2719 = MkLState
-cover_LState_2717 :: LState -> ()
-cover_LState_2717 x
+       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovActionState_11201) ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.T_CertState_349 ->
+  T_LState_2715
+check_MkLState_2717 = MkLState
+cover_LState_2715 :: LState -> ()
+cover_LState_2715 x
   = case x of
       MkLState _ _ _ -> ()
