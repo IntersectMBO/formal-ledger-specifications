@@ -61,10 +61,11 @@ Conway~\cite{cip1694} & Complete & Partial & Partial \\
 
 \subsection{A Note on Agda}
 
-This specification is written using the Agda programming language and
-proof assistant~(\cite{agda2023}). We have spent a lot of time on making
-this document readable for people unfamiliar with Agda (or other proof
-assistants, functional programming languages, etc.). However, by the
+This specification is written using the
+\hrefAgdaWiki[Agda programming language and proof assistant]~(\cite{agda2024}).
+We have made a considerable effort to ensure
+that this document is readable by people unfamiliar with Agda (or other proof
+assistants, functional programming languages, etc.).  However, by the
 nature of working in a formal language we have to play by its rules,
 meaning that some instances of uncommon notation are very difficult or
 impossible to avoid. Some are explained in

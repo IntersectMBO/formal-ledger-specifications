@@ -10,8 +10,26 @@
 \input{preamble}
 
 \begin{document}
+\title{Formal Specification of the Cardano Blockchain Ledger}
+\author{}
+\date{\today}
+\maketitle
+
+\section*{List of Contributors}
+\label{acknowledgements}
+
+Jared Corduan,
+Carlos Tom\'{e} Corti\~{n}as,
+William DeMeo,
+Alasdair Hill,
+Joosep Jääger,\\
+Andre Knispel,
+Alexey Kuleshevich,
+Orestis Melkonian,
+Ulf Norell
 
 \tableofcontents
+
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -94,7 +112,7 @@ open import Ledger.PDF.ConwayBootstrap
 
 \appendix
 
-\input{Ledger/EssentialAgda}
+\input{EssentialAgda}
 \input{Ledger/PDF/ConwayBootstrapEnact}
 \input{Ledger/PDF/ConwayBootstrap}
 

@@ -21,11 +21,12 @@ open import Ledger.Certs govStructure
 
 The purpose of witnessing is make sure the intended action is
 authorized by the holder of the signing key.  (For details see
-the formal ledger specification for the Shelley era~\cite[Sec.~8.3]{shelley-ledger-spec}.)
-Figure~\ref{fig:functions:utxow} defines functions used for witnessing.
-\witsVKeyNeeded{} and \scriptsNeeded{} are now defined by projecting the same information out of
-\credsNeeded{}. Note that the last component of \credsNeeded{} adds the script in the proposal policy
-only if it is present.
+the formal ledger specification for the Shelley
+era, \cite[\sectionname~8.3]{shelley-ledger-spec}.)
+\Cref{fig:functions:utxow} defines functions used for witnessing.
+\witsVKeyNeeded{} and \scriptsNeeded{} are now defined by projecting the same
+information out of \credsNeeded{}.  Note that the last component of \credsNeeded{}
+adds the script in the proposal policy only if it is present.
 
 \allowedLanguages{} has additional conditions for new features in
 Conway. If a transaction contains any votes, proposals, a treasury
@@ -216,4 +217,4 @@ In Figure~\ref{fig:rules:utxow}, the line
 \inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
 \PowerSet~\DataHash.  In the Alonzo spec, these two terms would
 have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out
-(see~\cite[Sec.~3.1]{alonzo-ledger-spec}).
+(see~\cite[\sectionname~3.1]{alonzo-ledger-spec}).

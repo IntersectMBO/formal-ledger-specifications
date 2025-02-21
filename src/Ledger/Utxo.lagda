@@ -104,22 +104,22 @@ utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValueʰ o)
 open PParams
 \end{code}
 
-Figures~\ref{fig:supportfunctions:utxo},~\ref{fig:functions:utxo},
-and~\ref{fig:functions:utxo2} define functions needed for the UTxO transition system.
+\Crefrange{fig:supportfunctions:utxo}{fig:functions:utxo2} define
+functions needed for the UTxO transition system.
 \end{NoConway}
 %
 \begin{Conway}
-Figures~\ref{fig:ts-types:utxo}--\ref{fig:functions:utxo-conway}
+\Crefrange{fig:ts-types:utxo}{fig:functions:utxo-conway}
 define types and functions needed for the UTxO transition system.
 \end{Conway}
 %
 \ Note the special multiplication symbol \AgdaFunction{*↓} used in
-Figure~\ref{fig:functions:utxo}: it means multiply and take the absolute value of the
+\cref{fig:functions:utxo}; it means multiply and take the absolute value of the
 result, rounded down to the nearest integer.
 
 \begin{NoConway}
-Figure~\ref{fig:ts-types:utxo} defines the types needed for the UTxO transition system.
-The UTxO transition system is given in Figure~\ref{fig:rules:utxo-shelley}.
+\Cref{fig:ts-types:utxo} defines the types needed for the UTxO transition system.
+The UTxO transition system is given in \cref{fig:rules:utxo-shelley}.
 
 \begin{itemize}
 
@@ -143,27 +143,27 @@ they are enacted, this comes at zero risk for an attacker. This means
 the deposit amounts could realistically never be increased. This issue
 is gone with the new design.
 
-Similar to \ScriptPurpose, \DepositPurpose carries the information
-what the deposit is being made for. The deposits are stored in the
-\deposits field of \UTxOState (the type \Deposits{} is defined in
-Figure~\ref{fig:certs:deposit-types}). \updateDeposits is responsible for
-updating this map, which is split into \updateCertDeposits and
-\updateProposalDeposits, responsible for certificates and proposals
-respectively. Both of these functions iterate over the relevant fields
+Similar to \ScriptPurpose{}, \DepositPurpose{} carries the information
+what the deposit is being made for.  The deposits are stored in the
+\deposits{} field of \UTxOState{} (the type \Deposits{} is defined in
+\cref{fig:certs:deposit-types}).  \updateDeposits{} is responsible for
+updating this map, which is split into \updateCertDeposits{} and
+\updateProposalDeposits{}, responsible for certificates and proposals
+respectively.  Both of these functions iterate over the relevant fields
 of the transaction body and insert or remove deposits depending on the
 information seen.  Note that some deposits can only be
 refunded at the epoch boundary and are not removed by these functions.
 
 There are two equivalent ways to introduce this tracking of the
-deposits. One option would be to populate the \deposits field of
-\UTxOState with the correct keys and values that can be extracted from
+deposits. One option would be to populate the \deposits{} field of
+\UTxOState{} with the correct keys and values that can be extracted from
 the state of the previous era at the transition into the Conway era.
 Alternatively, we can effectively treat the old handling of deposits
 as an erratum in the Shelley specification, which we fix by implementing
 the new deposits logic in older eras and then replaying the chain.
 (The handling of deposits in the Shelley era is discussed
-in~\cite[Sec.~8]{shelley-ledger-spec}
-and~\cite[Sec.~B.2]{shelley-delegation-design}.)
+in~\cite[\sectionname~8]{shelley-ledger-spec}
+and~\cite[\sectionname~B.2]{shelley-delegation-design}.)
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}

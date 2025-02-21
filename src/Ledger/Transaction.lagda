@@ -33,18 +33,18 @@ unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 \end{code}
 
-Transactions are defined in Figure~\ref{fig:defs:transactions}. A
+Transactions are defined in \cref{fig:defs:transactions}.  A
 transaction is made up of a transaction body, a collection of
 witnesses and some optional auxiliary data.
 \begin{NoConway}
 Some key ingredients in the transaction body are:
 \begin{itemize}
-  \item A set \txins of transaction inputs, each of which identifies an output from a previous transaction.
+  \item A set \txins{} of transaction inputs, each of which identifies an output from a previous transaction.
     A transaction input consists of a transaction id and an index to uniquely identify the output.
-  \item An indexed collection \txouts of transaction outputs.
-    The \TxOut type is an address paired with a coin value.
+  \item An indexed collection \txouts{} of transaction outputs.
+    The \TxOut{} type is an address paired with a coin value.
   \item A transaction fee. This value will be added to the fee pot.
-  \item The size \txsize and the hash \txid of the serialized form of the transaction that was included in the block.
+  \item The size \txsize{} and the hash \txid{} of the serialized form of the transaction that was included in the block.
 \end{itemize}
 \end{NoConway}
 \begin{Conway}

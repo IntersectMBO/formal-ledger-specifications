@@ -86,8 +86,10 @@ rec {
       collection-latexrecommended
       collection-mathscience
       bclogo
+      biber
       biblatex
-      latexmk;
+      latexmk
+      environ;
   };
 
   formalLedger = customAgda.agdaPackages.mkDerivation {

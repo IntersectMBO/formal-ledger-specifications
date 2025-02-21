@@ -10,38 +10,43 @@
 \input{preamble}
 
 \begin{document}
+
 \title{Formal Specification of the Cardano Ledger for the Conway era}
 
-\author{
-   Carlos Tom\'{e} Corti\~{n}as \\ {\small \texttt{carlos.tome-cortinas@iohk.io}} \\
-   William DeMeo                \\ {\small \texttt{william.demeo@iohk.io}} \\
-   Joosep Jääger                \\ {\small \texttt{joosep.jaager@iohk.io}} \\
-   Andre Knispel                \\ {\small \texttt{andre.knispel@iohk.io}} \\
-   }
+\author{}
 
-\date{}
+\date{\today}
 
 \maketitle
+
+\section*{List of Contributors}
+\label{acknowledgements}
+
+Jared Corduan,
+Carlos Tom\'{e} Corti\~{n}as,
+William DeMeo,
+Alasdair Hill,
+Joosep Jääger,\\
+Andre Knispel,
+Alexey Kuleshevich,
+Orestis Melkonian,
+Ulf Norell
 
 \begin{abstract}
   This document presents the modifications to the previous
   specifications of the Cardano ledger (see
   \cite{shelley-ledger-spec,shelley-ma-ledger-spec,alonzo-ledger-spec,babbage-ledger-spec})
-  for the Conway era.
-
-  The additions mostly relate to the implementation of the governance
+  for the Conway era.  The additions mostly relate to the implementation of the governance
   framework described in \cite{cip1694}.
 \end{abstract}
 
-\section*{List of Contributors}
-\label{acknowledgements}
-
-Jared Corduan, Alasdair Hill, Alexey Kuleshevich, Orestis Melkonian, Ulf Norell
-
 \tableofcontents
 
-\include{Conway/Ledger/Introduction}
-\include{Notation}
+\clearpage
+
+\input{Conway/Ledger/Introduction}
+\input{Notation}
+
 \include{Conway/Ledger/PParams}
 \include{Conway/Ledger/Fees}
 \include{Conway/Ledger/GovernanceActions}
