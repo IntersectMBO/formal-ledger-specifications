@@ -14,7 +14,7 @@ open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Enact govStructure
-open import Ledger.Conway.Conformance.Gov txs
+open import Ledger.Gov txs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 isCredDeposit : DepositPurpose → Type
