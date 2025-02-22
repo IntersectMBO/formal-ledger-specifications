@@ -33,10 +33,10 @@ open import Function.Related.Propositional using (↔⇒)
 open GovActionState
 \end{code}
 
-The behavior of \GovState is similar to that of a queue. New proposals are appended at
-the end, but any proposal can be removed at the epoch
+The behavior of \GovState{} is similar to that of a queue. New proposals are
+appended at the end, but any proposal can be removed at the epoch
 boundary. However, for the purposes of enactment, earlier proposals
-take priority. Note that \EnactState used in \GovEnv is defined later,
+take priority. Note that \EnactState{} used in \GovEnv{} is defined later,
 in Section~\ref{sec:enactment}.
 
 \begin{itemize}
@@ -195,14 +195,14 @@ the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list o
 whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
 enacted one.
 
-Additionally, \govActionPriority assigns a priority to the various governance action types.
+Additionally, \govActionPriority{} assigns a priority to the various governance action types.
 This is useful for ordering lists of governance actions as well as grouping governance
 actions by constructor. In particular, the relations
 \AgdaOperator{\AgdaFunction{\AgdaUnderscore{}∼\AgdaUnderscore{}}} and
 \AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in
 Figure~\ref{defs:enactable} are used for determining whether two actions are of the same
 ``kind'' in the following sense: either the actions arise from the same constructor, or one
-action is \NoConfidence and the other is an \UpdateCommittee action.
+action is \NoConfidence{} and the other is an \UpdateCommittee{} action.
 
 \begin{figure*}
 \begin{AgdaMultiCode}
@@ -442,16 +442,15 @@ _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV'⦈
 \end{figure*}
 
 The GOV transition system is now given as the reflexitive-transitive
-closure of the system GOV', described in
-Figure~\ref{defs:gov-rules}.
+closure of the system GOV', described in~\cref{defs:gov-rules}.
 
-For \GOVVote, we check that the governance action being voted on
+For \GOVVote{}, we check that the governance action being voted on
 exists; that the voter's role is allowed to vote (see \canVote{} in
 Figure~\ref{fig:ratification-requirements}); and that the voter's
 credential is actually associated with their role (see
-\isRegistered{} in Figure~\ref{defs:gov-defs}).
+\isRegistered{} in~\cref{defs:gov-defs}).
 
 For \GOVPropose{}, we check the correctness of the deposit along with some
 and some conditions that ensure the action is well-formed and valid;
 naturally, these checks depend on the type of action being proposed
-(see Figure~\ref{fig:valid-and-wellformed}).
+(see~\cref{fig:valid-and-wellformed}).

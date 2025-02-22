@@ -211,10 +211,10 @@ in the Conway era.  However, since the interface with Plutus is kept abstract
 in this specification, changes to the representation of the script context which
 are part of \hrefCIP{0069} are not included here.  To provide a \hrefCIP{0069}-conformant
 implementation of Plutus to this specification, an additional step processing
-the \List \Data argument we provide would be required.
+the \List{} \Data{} argument we provide would be required.
 
 In Figure~\ref{fig:rules:utxow}, the line
-\inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
-\PowerSet~\DataHash.  In the Alonzo spec, these two terms would
-have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out
+\inputHashes{}~\subseteqfield{}~\txdatsHashes{} compares two inhabitants of
+\PowerSet{}~\DataHash{}.  In the Alonzo spec, these two terms would
+have inhabited \PowerSet{}~(\Maybe{}~\DataHash{}), where a \nothing{} is thrown out
 (see~\cite[\sectionname~3.1]{alonzo-ledger-spec}).

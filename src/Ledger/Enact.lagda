@@ -16,21 +16,21 @@ module Ledger.Enact (gs : _) (open GovStructure gs) where
 open import Ledger.GovernanceActions gs
 \end{code}
 
-Figure~\ref{fig:enact-defs} contains some definitions required to
-define the ENACT transition system. \EnactEnv is the environment and
-\EnactState the state of ENACT, which enacts a governance action. All
-governance actions except \TreasuryWdrl and \Info modify \EnactState
+\Cref{fig:enact-defs} contains some definitions required to
+define the ENACT transition system.  \EnactEnv{} is the environment and
+\EnactState{} the state of ENACT, which enacts a governance action. All
+governance actions except \TreasuryWdrl{} and \Info{} modify \EnactState{}
 permanently, which of course can have further
-consequences. \TreasuryWdrl accumulates withdrawal temporarily in \EnactState,
+consequences.  \TreasuryWdrl{} accumulates withdrawal temporarily in \EnactState{},
 but this information is applied and discarded immediately in EPOCH.
 Also, enacting these governance actions is the
-\emph{only} way of modifying \EnactState. The \withdrawals field of
-\EnactState is special in that it is ephemeral---ENACT accumulates
+\emph{only} way of modifying \EnactState{}.  The \withdrawals{} field of
+\EnactState{} is special in that it is ephemeral---ENACT accumulates
 withdrawals there which are paid out at the next epoch boundary where
 this field will be reset.
 
-Note that all other fields of \EnactState also contain a \GovActionID
-since they are \HashProtected.
+Note that all other fields of \EnactState{} also contain a \GovActionID{}
+since they are \HashProtected{}.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
@@ -112,13 +112,13 @@ instance
   _ = +-0-monoid
 \end{code}
 
-Figures~\ref{fig:sts:enact} and~\ref{fig:sts:enact-cont} define the rules of the ENACT transition
+\Cref{fig:sts:enact,fig:sts:enact-cont} define the rules of the ENACT transition
 system. Usually no preconditions are checked and the state is simply
-updated (including the \GovActionID for the hash protection scheme, if
-required). The exceptions are \UpdateCommittee and \TreasuryWdrl:
+updated (including the \GovActionID{} for the hash protection scheme, if
+required). The exceptions are \UpdateCommittee and \TreasuryWdrl{}:
 \begin{itemize}
-\item \UpdateCommittee requires that maximum terms are respected, and
-\item \TreasuryWdrl requires that the treasury is able to cover the sum of all withdrawals (old and new).
+\item \UpdateCommittee{} requires that maximum terms are respected, and
+\item \TreasuryWdrl{} requires that the treasury is able to cover the sum of all withdrawals (old and new).
 \end{itemize}
 
 \begin{figure*}[ht]

@@ -198,7 +198,7 @@ private variable
 \subsubsection{Delegation}
 
 Registered credentials can now delegate to a DRep as well as to a
-stake pool. This is achieved by giving the \delegate certificate two
+stake pool. This is achieved by giving the \delegate{} certificate two
 optional fields, corresponding to a DRep and stake pool.
 
 Stake can be delegated for voting and block production simultaneously,
@@ -209,9 +209,9 @@ participation of honest stake holders.
 \subsubsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
 
 Support for pointer addresses, genesis delegations and MIR
-certificates is removed (see~\cite{cip1694}). In \DState, this means
+certificates is removed (see~\cite{cip1694}). In \DState{}, this means
 that the four fields relating to those features are no longer present,
-and \DelegEnv contains none of the fields it used to in the Shelley
+and \DelegEnv{} contains none of the fields it used to in the Shelley
 era~(\cite[\sectionname~9.2]{shelley-ledger-spec}).
 
 Note that pointer addresses are still usable, only their staking
@@ -262,7 +262,7 @@ constitutional committee.
     is compromised, it can be changed using the cold credential.}
   We check that the cold key did not previously
   resign from the committee. We allow this delegation for any cold
-  credential that is either part of \EnactState or is is a proposal.
+  credential that is either part of \EnactState{} or is is a proposal.
   This allows a newly elected member of the constitutional committee to
   immediately delegate their vote to a hot key and use it to vote. Since
   votes are counted after previous actions have been enacted, this allows
@@ -413,8 +413,8 @@ CERTBASE as the base case. CERTBASE does the following:
 \item check the correctness of withdrawals and ensure that withdrawals
   only happen from credentials that have delegated their voting power;
 \item set the rewards of the credentials that withdrew funds to zero;
-\item and set the activity timer of all DReps that voted to \drepActivity{}
-  epochs in the future.
+\item and set the activity timer of all DReps that voted to
+  \drepActivity{} epochs in the future.
 \end{itemize}
 
 \begin{figure*}[htbp]

@@ -106,9 +106,8 @@ many times as they can to arrive at a final state. Since we use this
 pattern multiple times, we define a closure operation which takes a
 STS relation and applies it as many times as possible.
 
-The closure \RTCI of a relation \RTCB is defined in Figure
-\ref{fig:rt-closure}. In the remainder of the text, the closure
-operation is called \RTC.
+The closure \RTCI{} of a relation \RTCB{} is defined in~\cref{fig:rt-closure}.
+In the remainder of the text, the closure operation is called \RTC{}.
 
 \begin{figure*}[htb]
 \begin{code}[hide]
@@ -164,29 +163,26 @@ record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Typ
     case comp≡nothing of λ ()
 \end{code}
 
-Unpacking this, we have a \compute function that computes a final
+Unpacking this, we have a \compute{} function that computes a final
 state from a given environment, state and signal. The second piece is
-correctness: \compute succeeds with some final state if and only if
+correctness: \compute{} succeeds with some final state if and only if
 that final state is in relation to the inputs.
 
 This has two further implications:
 
 \begin{itemize}
-
-\item Since \compute is a function, the state transition relation is necessarily
+\item Since \compute{} is a function, the state transition relation is necessarily
 a (partial) function; i.e., there is at most one possible final state for each
-input data. Otherwise, we could prove that \compute could evaluates to
+input data.  Otherwise, we could prove that \compute{} could evaluates to
 two different states on the same inputs, which is impossible since it
 is a function.
-
-\item The actual definition of \compute is irrelevant---any two
-implementations of \compute have to produce the same result on any
+\item The actual definition of \compute{} is irrelevant---any two
+implementations of \compute{} have to produce the same result on any
 input. This is because we can simply chain the equivalences for two
-different \compute functions together.
-
+different \compute{} functions together.
 \end{itemize}
 
-What this all means in the end is that if we give a \Computational
+What this all means in the end is that if we give a \Computational{}
 instance for every relation defined in the ledger, we also have an
 executable version of the rules which is guaranteed to be
 correct. This is indeed something we have done, and the same source
@@ -208,7 +204,7 @@ many places. We usually think of maps as partial functions
 (i.e., functions not necessarily defined everywhere---equivalently, "left-unique"
 relations) and we use the harpoon arrow \AgdaFunction{⇀} to
 distinguish such maps from standard Agda functions which use \AgdaSymbol{→}.
-The figure below also gives notation for the powerset operation, \PowerSet,
+The figure below also gives notation for the powerset operation, \PowerSet{},
 used to form a type of sets with elements in a given type,
 as well as the subset relation and the equality relation for sets.
 \begin{figure*}[h]

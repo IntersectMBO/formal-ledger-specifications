@@ -383,18 +383,18 @@ module PParamsUpdate where
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
 \end{code}
 % Retiring ProtVer's documentation since ProtVer is retired.
-% \ProtVer represents the protocol version used in the Cardano ledger.
+% \ProtVer{} represents the protocol version used in the Cardano ledger.
 % It is a pair of natural numbers, representing the major and minor version,
 % respectively.
 
-\PParams contains parameters used in the Cardano ledger, which we group according
+\PParams{} contains parameters used in the Cardano ledger, which we group according
 to the general purpose that each parameter serves.
 \begin{itemize}
-  \item \NetworkGroup: parameters related to the network settings;
-  \item \EconomicGroup: parameters related to the economic aspects of the ledger;
-  \item \TechnicalGroup: parameters related to technical settings;
-  \item \GovernanceGroup: parameters related to governance settings;
-  \item \SecurityGroup: parameters that can impact the security of the system.
+  \item \NetworkGroup{}: parameters related to the network settings;
+  \item \EconomicGroup{}: parameters related to the economic aspects of the ledger;
+  \item \TechnicalGroup{}: parameters related to technical settings;
+  \item \GovernanceGroup{}: parameters related to governance settings;
+  \item \SecurityGroup{}: parameters that can impact the security of the system.
 \end{itemize}
 
 The first four groups have the property that every protocol parameter
@@ -402,7 +402,7 @@ is associated to precisely one of these groups.  The \SecurityGroup{} is
 special: a protocol parameter may or may not be in the \SecurityGroup{}.
 So, each protocol parameter belongs to at least one and at most two groups.
 Note that in \hrefCIP{1694} there is no \SecurityGroup{}, but there is the
-concept of security-relevant protocol parameters~(\cite{cip1694}).
+concept of security-relevant protocol parameters~\parencite{cip1694}.
 The difference between these notions is only social, so we implement
 security-relevant protocol parameters as a group.
 
@@ -415,20 +415,23 @@ Figure~\ref{fig:protocol-parameter-declarations} and denote the
 following concepts.
 
 \begin{itemize}
-  \item \drepThresholds: governance thresholds for \DReps; these are rational numbers
-  named \Pone, \Ptwoa, \Ptwob, \Pthree, \Pfour, \Pfivea, \Pfiveb, \Pfivec, \Pfived, and \Psix;
-  \item \poolThresholds: pool-related governance thresholds; these are rational numbers named \Qone, \Qtwoa, \Qtwob, \Qfour and \Qfive;
-  \item \ccMinSize: minimum constitutional committee size;
-  \item \ccMaxTermLength: maximum term limit (in epochs) of constitutional committee members;
-  \item \govActionLifetime: governance action expiration;
-  \item \govActionDeposit: governance action deposit;
-  \item \drepDeposit: \DRep deposit amount;
-  \item \drepActivity: \DRep activity period;
-  \item \minimumAVS: the minimum active voting threshold.
+  \item \drepThresholds{}: governance thresholds for \DReps{}; these are rational
+    numbers named \Pone{}, \Ptwoa{}, \Ptwob{}, \Pthree{}, \Pfour{}, \Pfivea{},
+    \Pfiveb{}, \Pfivec{}, \Pfived{}, and \Psix{};
+  \item \poolThresholds: pool-related governance thresholds; these are rational
+    numbers named \Qone{}, \Qtwoa{}, \Qtwob{}, \Qfour{} and \Qfive{};
+  \item \ccMinSize{}: minimum constitutional committee size;
+  \item \ccMaxTermLength{}: maximum term limit (in epochs) of constitutional
+    committee members;
+  \item \govActionLifetime{}: governance action expiration;
+  \item \govActionDeposit{}: governance action deposit;
+  \item \drepDeposit{}: \DRep{} deposit amount;
+  \item \drepActivity{}: \DRep{} activity period;
+  \item \minimumAVS{}: the minimum active voting threshold.
 \end{itemize}
 
 Figure~\ref{fig:protocol-parameter-declarations} also defines the
-function \paramsWellFormed. It performs some sanity checks on protocol
+function \paramsWellFormed{}. It performs some sanity checks on protocol
 parameters.
 
 \begin{code}[hide]
