@@ -41,7 +41,7 @@ explanations may be missing or wrong.
 Repository: \url{\repourl}
 \end{center}
 This is the work-in-progress specification of the Cardano ledger. The
-current status of each individual era is described in Table~\ref{fig:eras-progress}.
+current status of each individual era is described in \cref{fig:eras-progress}.
 
 \begin{longtable}[h!]{|l l l l|}
 \hline
@@ -62,14 +62,14 @@ Conway~\cite{cip1694} & Complete & Partial & Partial \\
 \subsection{A Note on Agda}
 
 This specification is written using the
-\hrefAgdaWiki[Agda programming language and proof assistant]~(\cite{agda2024}).
+\hrefAgdaWiki[Agda programming language and proof assistant]~\parencite{agda2024}.
 We have made a considerable effort to ensure
 that this document is readable by people unfamiliar with Agda (or other proof
 assistants, functional programming languages, etc.).  However, by the
 nature of working in a formal language we have to play by its rules,
 meaning that some instances of uncommon notation are very difficult or
 impossible to avoid. Some are explained in
-Section~\ref{sec:notation}, but there is no guarantee that this
+\cref{sec:notation}, but there is no guarantee that this
 section is complete.  If the meaning of an expression is confusing
 or unclear, please
 \href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}%
@@ -141,7 +141,7 @@ module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
 Since all such state machines need to be evaluated by the nodes and all
 nodes should compute the same states, the relations specified by them
 should be computable by functions. This can be captured by the
-definition in Figure \ref{fig:computational} which is parametrized
+definition in \cref{fig:computational} which is parametrized
 over the state transition relation.
 
 \begin{figure*}[htb]
@@ -241,12 +241,13 @@ In type theory we represent propositions as types and proofs of a proposition as
 elements of the corresponding type.
 A unary predicate is a function that takes each \AgdaBound{x} (of some type \AgdaBound{A}) and
 returns a proposition \AgdaFunction{P}(\AgdaBound{x}). Thus, a predicate is a function of type
-\AgdaBound{A}~\AgdaSymbol{→}~\Type.
+\AgdaBound{A}~\AgdaSymbol{→}~\Type{}.
 A \textit{binary relation} \AgdaFunction{R} between \AgdaBound{A} and \AgdaBound{B} is a
 function that takes a pair of values \AgdaBound{x} and \AgdaBound{y} and returns a proposition
 asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \AgdaBound{y}.
-Thus, such a relation is a function of type \AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type
-or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type.
+Thus, such a relation is a function of type
+\AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}
+or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}.
 
 \subsection{Superscripts and Other Special Notations}
 

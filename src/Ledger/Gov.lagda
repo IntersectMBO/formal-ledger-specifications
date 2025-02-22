@@ -37,7 +37,7 @@ The behavior of \GovState{} is similar to that of a queue. New proposals are
 appended at the end, but any proposal can be removed at the epoch
 boundary. However, for the purposes of enactment, earlier proposals
 take priority. Note that \EnactState{} used in \GovEnv{} is defined later,
-in Section~\ref{sec:enactment}.
+in \cref{sec:enactment}.
 
 \begin{itemize}
 \item \addVote{} inserts (and potentially overrides) a vote made for a
@@ -187,7 +187,7 @@ _⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal
 \label{defs:gov-defs}
 \end{figure*}
 
-Figure~\ref{defs:enactable} shows some of the functions used to determine whether certain
+\Cref{defs:enactable} shows some of the functions used to determine whether certain
 actions are enactable in a given state.  Specifically, \AgdaFunction{allEnactable} passes
 the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list of
 \AgdaFunction{GovActionID}-pairs which is then passed to \AgdaFunction{enactable}. The latter uses the
@@ -200,7 +200,7 @@ This is useful for ordering lists of governance actions as well as grouping gove
 actions by constructor. In particular, the relations
 \AgdaOperator{\AgdaFunction{\AgdaUnderscore{}∼\AgdaUnderscore{}}} and
 \AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in
-Figure~\ref{defs:enactable} are used for determining whether two actions are of the same
+\cref{defs:enactable} are used for determining whether two actions are of the same
 ``kind'' in the following sense: either the actions arise from the same constructor, or one
 action is \NoConfidence{} and the other is an \UpdateCommittee{} action.
 
@@ -358,7 +358,7 @@ actionWellFormed _                 = ⊤
 \label{fig:valid-and-wellformed}
 \end{figure*}
 
-Figure~\ref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
+\Cref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
 of the GOV rule to ensure that a governance action is valid and well-formed.
 \begin{itemize}
   \item \actionValid{} ensures that the proposed action is valid given the current state of the system:
@@ -446,7 +446,7 @@ closure of the system GOV', described in~\cref{defs:gov-rules}.
 
 For \GOVVote{}, we check that the governance action being voted on
 exists; that the voter's role is allowed to vote (see \canVote{} in
-Figure~\ref{fig:ratification-requirements}); and that the voter's
+\cref{fig:ratification-requirements}); and that the voter's
 credential is actually associated with their role (see
 \isRegistered{} in~\cref{defs:gov-defs}).
 

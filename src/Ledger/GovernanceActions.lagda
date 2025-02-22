@@ -67,7 +67,7 @@ data GovAction : Type where
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
-Figure~\ref{defs:governance} defines several data types used to represent governance actions including:
+\Cref{defs:governance} defines several data types used to represent governance actions including:
 \begin{itemize}
   \item \GovActionID{}: a unique identifier for a governance action, consisting of the
     \TxId{} of the proposing transaction and an index to identify a proposal within a transaction;
@@ -115,7 +115,7 @@ The governance actions carry the following information:
 % \label{sec:voting-and-ratification}
 % Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
 % The type of action and the state of the governance system determines which bodies must ratify it.
-% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
+% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see \cref{sec:enactment} and \cref{fig:enactment-types}).
 
 \subsection{Hash Protection}
 \label{sec:hash-protection}
@@ -223,7 +223,7 @@ cast in a certain manner.
 To propose a governance action, a \GovProposal{} needs to be
 submitted. Beside the proposed action, it requires:
 \begin{itemize}
-\item potentially a pointer to the previous action (see Section~\ref{sec:hash-protection}),
+\item potentially a pointer to the previous action (see \cref{sec:hash-protection}),
 \item potentially a pointer to the proposal policy (if one is required),
 \item a deposit, which will be returned to \returnAddr{}, and
 \item an \Anchor{}, providing further information about the proposal.

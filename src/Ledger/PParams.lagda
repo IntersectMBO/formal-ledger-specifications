@@ -410,8 +410,7 @@ The purpose of the groups is to determine voting thresholds for
 proposals aiming to change parameters. The thresholds depend on the
 groups of the parameters contained in such a proposal.
 
-These new parameters are declared in
-Figure~\ref{fig:protocol-parameter-declarations} and denote the
+These new parameters are declared in \cref{fig:protocol-parameter-declarations} and denote the
 following concepts.
 
 \begin{itemize}
@@ -430,7 +429,7 @@ following concepts.
   \item \minimumAVS{}: the minimum active voting threshold.
 \end{itemize}
 
-Figure~\ref{fig:protocol-parameter-declarations} also defines the
+\Cref{fig:protocol-parameter-declarations} also defines the
 function \paramsWellFormed{}. It performs some sanity checks on protocol
 parameters.
 
@@ -445,7 +444,7 @@ instance
   ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
 \end{code}
 
-Figure~\ref{fig:pp-update-type} defines types and functions to update
+\Cref{fig:pp-update-type} defines types and functions to update
 parameters. These consist of an abstract type \AgdaField{UpdateT} and
 two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
 The type \AgdaField{UpdateT} is to be instantiated by a type that

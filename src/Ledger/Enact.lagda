@@ -115,7 +115,7 @@ instance
 \Cref{fig:sts:enact,fig:sts:enact-cont} define the rules of the ENACT transition
 system. Usually no preconditions are checked and the state is simply
 updated (including the \GovActionID{} for the hash protection scheme, if
-required). The exceptions are \UpdateCommittee and \TreasuryWdrl{}:
+required). The exceptions are \UpdateCommittee{} and \TreasuryWdrl{}:
 \begin{itemize}
 \item \UpdateCommittee{} requires that maximum terms are respected, and
 \item \TreasuryWdrl{} requires that the treasury is able to cover the sum of all withdrawals (old and new).

@@ -40,11 +40,11 @@ consequences in combination with other actions.
 
 \subsection{Ratification Requirements}
 \label{sec:ratification-requirements}
-Figure~\ref{fig:ratification-requirements} details the ratification
+\Cref{fig:ratification-requirements} details the ratification
 requirements for each governance action scenario. For a governance
 action to be ratified, all of these requirements must be satisfied, on
 top of other conditions that are explained further down. The
-\threshold function is defined as a table, with a row for each type of
+\threshold{} function is defined as a table, with a row for each type of
 \GovAction{} and the colums representing the \CC{}, \DRep{} and \SPO{} roles
 in that order.
 
@@ -85,7 +85,7 @@ required. A protocol parameter may or may not be in the
 \SecurityGroup{}, so an \SPO{} vote may not be required.
 
 Finally, each of the \AgdaFunction{P}$_x$ and \AgdaFunction{Q}$_x$ in
-Figure~\ref{fig:ratification-requirements} are protocol parameters.
+\cref{fig:ratification-requirements} are protocol parameters.
 \begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
@@ -230,7 +230,7 @@ for the most recently enacted action of its given type. Consequently, two action
 same type can be enacted at the same time, but they must be \emph{deliberately}
 designed to do so.
 
-Figure~\ref{fig:types-and-functions-for-the-ratify-transition-system}
+\Cref{fig:types-and-functions-for-the-ratify-transition-system}
 defines some types and functions used in the RATIFY transition
 system. \CCData{} is simply an alias to define some functions more
 easily.
@@ -334,7 +334,7 @@ actualVotes Γ pparams cc ga votes
 \label{fig:defs:ratify-actualvotes}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-actualvotes} defines the \actualVotes{}
+\Cref{fig:defs:ratify-actualvotes} defines the \actualVotes{}
 function. Given the current state about votes and other parts of the
 system it calculates a new mapping of votes, which is the mapping that
 will actually be used during ratification. Things such as default
@@ -372,12 +372,12 @@ and requested that non-voters be assigned a \no{} vote by default, with the cave
 an SPO could change its default setting by delegating its reward account credential
 to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
 (This change applies only after the bootstrap period; during the bootstrap period
-the logic is unchanged; see Appendix Section~\ref{sec:conway-bootstrap}.)
+the logic is unchanged; see Appendix \cref{sec:conway-bootstrap}.)
 To be precise, the agreed upon specification is the following: an SPO that did
 not vote is assumed to have vote \no{}, except under the following circumstances:
 \begin{itemize}
 \item if the SPO has delegated its reward credential to an \texttt{AlwaysNoConfidence}
-DRep, then their default vote is \yes for \NoConfidence{} proposals and \no for other proposals;
+DRep, then their default vote is \yes{} for \NoConfidence{} proposals and \no{} for other proposals;
 \item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain} DRep,
 then its default vote is \abstain{} for all proposals.
 \end{itemize}
@@ -435,7 +435,7 @@ abstract
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
+\Cref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
 functions (together with some helpers) that are used in the rules of
 RATIFY.
 
@@ -595,7 +595,7 @@ _⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY'
 
 The RATIFY transition system is defined as the reflexive-transitive
 closure of RATIFY', which is defined via three rules, defined in
-Figure~\ref{fig:sts:ratify}.
+\cref{fig:sts:ratify}.
 %
 \begin{itemize}
   \item \RATIFYAccept{} checks if the votes for a given \GovAction{} meet the

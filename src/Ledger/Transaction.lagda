@@ -39,12 +39,14 @@ witnesses and some optional auxiliary data.
 \begin{NoConway}
 Some key ingredients in the transaction body are:
 \begin{itemize}
-  \item A set \txins{} of transaction inputs, each of which identifies an output from a previous transaction.
-    A transaction input consists of a transaction id and an index to uniquely identify the output.
+  \item A set \txins{} of transaction inputs, each of which identifies an output from
+    a previous transaction.  A transaction input consists of a transaction id and an
+    index to uniquely identify the output.
   \item An indexed collection \txouts{} of transaction outputs.
     The \TxOut{} type is an address paired with a coin value.
   \item A transaction fee. This value will be added to the fee pot.
-  \item The size \txsize{} and the hash \txid{} of the serialized form of the transaction that was included in the block.
+  \item The size \txsize{} and the hash \txid{} of the serialized form of the
+    transaction that was included in the block.
 \end{itemize}
 \end{NoConway}
 \begin{Conway}
@@ -52,9 +54,12 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{itemize}
   \item \txvote{}, the list of votes for goverance actions;
   \item \txprop{}, the list of governance proposals;
-  \item \txdonation{}, amount of \Coin{} to donate to treasury, e.g., to return money to the treasury after a governance action;
-  \item \curTreasury{}, the current value of the treasury. This field serves as a precondition to executing Plutus scripts that access the value of the treasury;
-  \item \txsize{} and \txid{}, the size and hash of the serialized form of the transaction that was included in the block.
+  \item \txdonation{}, amount of \Coin{} to donate to treasury, e.g., to return money
+    to the treasury after a governance action;
+  \item \curTreasury{}, the current value of the treasury. This field serves as a
+    precondition to executing Plutus scripts that access the value of the treasury;
+  \item \txsize{} and \txid{}, the size and hash of the serialized form of the
+    transaction that was included in the block.
 \end{itemize}
 \end{Conway}
 

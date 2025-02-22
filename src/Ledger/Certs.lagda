@@ -209,17 +209,17 @@ participation of honest stake holders.
 \subsubsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
 
 Support for pointer addresses, genesis delegations and MIR
-certificates is removed (see~\cite{cip1694}). In \DState{}, this means
+certificates is removed (see \hrefCIP{1694}~\cite{cip1694}). In \DState{}, this means
 that the four fields relating to those features are no longer present,
 and \DelegEnv{} contains none of the fields it used to in the Shelley
-era~(\cite[\sectionname~9.2]{shelley-ledger-spec}).
+era~\parencite[\sectionname~9.2]{shelley-ledger-spec}.
 
 Note that pointer addresses are still usable, only their staking
 functionality has been retired. So all funds locked behind pointer
 addresses are still accessible, they just don't count towards the
 stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
-the \TreasuryWdrl governance action in case of the MIR certificates.
+the \TreasuryWdrl{} governance action in case of the MIR certificates.
 
 \subsubsection{Explicit Deposits}
 
