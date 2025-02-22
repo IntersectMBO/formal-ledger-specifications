@@ -13,41 +13,26 @@ module Ledger.Conway.Conformance.Ledger
   where
 
 open import Ledger.Enact govStructure
-open import Ledger.Conway.Conformance.Gov txs
-open import Ledger.Conway.Conformance.Utxo txs abs hiding (module L)
+open import Ledger.Conway.Conformance.Gov txs abs
+open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 open import Ledger.Ledger txs abs public
-  using (LEnv; ⟦_,_,_,_,_⟧ˡᵉ; allColdCreds)
+  using (LEnv; To-LEnv; allColdCreds; _|ᵒ_; txgov)
 
 open Tx
-open GState
-open GovActionState
 
 record LState : Type where
-
   constructor ⟦_,_,_⟧ˡ
   field
-
     utxoSt     : UTxOState
     govSt      : GovState
     certState  : CertState
 
-txgov : TxBody → List (GovVote ⊎ GovProposal)
-txgov txb = map inj₂ txprop ++ map inj₁ txvote
-  where open TxBody txb
-
-isUnregisteredDRep : CertState → Voter → Type
-isUnregisteredDRep ⟦ _ , _ , gState ⟧ᶜˢ (r , c) = r ≡ DRep × c ∉ dom (gState .dreps)
-
-removeOrphanDRepVotes : CertState → GovActionState → GovActionState
-removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
-  where
-    votes′ = filterKeys (¬_ ∘ isUnregisteredDRep certState) (votes gas)
-
-_|ᵒ_ : GovState → CertState → GovState
-govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
+instance
+  unquoteDecl To-LState = derive-To
+    [ (quote LState , To-LState) ]
 
 private variable
   Γ : LEnv
@@ -57,7 +42,6 @@ private variable
   certState' : CertState
   tx : Tx
 
-open RwdAddr
 open UTxOState
 
 data
@@ -69,21 +53,21 @@ data
   LEDGER-V :
     let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ
         open CertState certState; open DState dState
-        utxoSt'' = record utxoSt' { deposits = L.updateDeposits pparams txb (deposits utxoSt') }
+        utxoSt'' = record utxoSt' { deposits = updateDeposits pparams txb (deposits utxoSt') }
      in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' , dom rewards ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ,  certState' , dom rewards ⟧ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState' ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState' ⟧
 
 
   LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
     ∙  isValid tx ≡ false
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧ˡ
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
 
 pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
 pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)

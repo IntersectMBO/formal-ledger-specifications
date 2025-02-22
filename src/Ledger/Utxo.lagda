@@ -1,8 +1,8 @@
 \section{UTxO}
 \label{sec:utxo}
+\modulenote{\LedgerModule{Utxo}}
 
 \subsection{Accounting}
-
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -41,7 +41,7 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \end{code}
 
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
 isTwoPhaseScriptAddress : Tx → UTxO → Addr → Type
 isTwoPhaseScriptAddress tx utxo a =
@@ -161,8 +161,11 @@ the state of the previous era at the transition into the Conway era.
 Alternatively, we can effectively treat the old handling of deposits
 as an erratum in the Shelley specification, which we fix by implementing
 the new deposits logic in older eras and then replaying the chain.
+(The handling of deposits in the Shelley era is discussed
+in~\cite[Sec.~8]{shelley-ledger-spec}
+and~\cite[Sec.~B.2]{shelley-delegation-design}.)
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \emph{UTxO environment}
@@ -183,6 +186,11 @@ record UTxOState : Type where
     fees       : Coin
     deposits   : Deposits
     donations  : Coin
+\end{code}
+\begin{code}[hide]
+instance
+  unquoteDecl To-UTxOState = derive-To
+    [ (quote UTxOState , To-UTxOState) ]
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}
@@ -487,7 +495,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -499,7 +507,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
 \end{code}
 \caption{UTXOS rule}
 \label{fig:utxos-conway}
@@ -528,7 +536,7 @@ instance
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb

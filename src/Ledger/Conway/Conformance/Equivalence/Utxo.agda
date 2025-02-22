@@ -17,13 +17,24 @@ module Ledger.Conway.Conformance.Equivalence.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Conformance.Equivalence.Base txs abs
+private
+  module L where
+    open import Ledger.Utxo txs abs public
+    open import Ledger.Utxow txs abs public
+    open import Ledger.Certs govStructure public
+
+  module C where
+    open import Ledger.Conway.Conformance.Utxo txs abs public
+    open import Ledger.Conway.Conformance.Utxow txs abs public
+    open import Ledger.Conway.Conformance.Certs govStructure public
+
+open Tx
 
 setDeposits : L.Deposits → L.UTxOState → L.UTxOState
-setDeposits deposits L.⟦ utxo , fees , _ , donations ⟧ᵘ = L.⟦ utxo , fees , deposits , donations ⟧ᵘ
+setDeposits deposits utxoSt = record utxoSt { deposits = deposits }
 
 withDepositsFrom : L.UTxOState → L.UTxOState → L.UTxOState
-withDepositsFrom L.⟦ _ , _ , deposits , _ ⟧ᵘ = setDeposits deposits
+withDepositsFrom utxoSt = setDeposits (L.UTxOState.deposits utxoSt)
 
 instance
 

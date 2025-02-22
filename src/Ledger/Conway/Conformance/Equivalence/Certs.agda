@@ -14,25 +14,34 @@ module Ledger.Conway.Conformance.Equivalence.Certs
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Conformance.Equivalence.Base txs abs
+private
+  module L where
+    open import Ledger.Certs govStructure public
+
+  module C where
+    open import Ledger.Conway.Conformance.Certs govStructure public
 
 instance
 
   DStateToConf : L.Deposits ⊢ L.DState ⭆ C.DState
-  DStateToConf .convⁱ deposits L.⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ =
-    C.⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ᵈ
+  DStateToConf .convⁱ deposits stᵈ =
+    let open L.DState stᵈ in
+    ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧
 
   DStateFromConf : C.DState ⭆ L.DState
-  DStateFromConf .convⁱ _ C.⟦ voteDelegs , stakeDelegs , rewards , _ ⟧ᵈ =
-    L.⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ
+  DStateFromConf .convⁱ _ dState =
+    let open C.DState dState in
+    ⟦ voteDelegs , stakeDelegs , rewards ⟧
 
   GStateToConf : L.Deposits ⊢ L.GState ⭆ C.GState
-  GStateToConf .convⁱ deposits L.⟦ dreps , ccHotKeys ⟧ᵛ =
-    C.⟦ dreps , ccHotKeys , deposits ⟧ᵛ
+  GStateToConf .convⁱ deposits stᵍ =
+    let open L.GState stᵍ in
+    ⟦ dreps , ccHotKeys , deposits ⟧
 
   GStateFromConf : C.GState ⭆ L.GState
-  GStateFromConf .convⁱ deposits C.⟦ dreps , ccHotKeys , _ ⟧ᵛ =
-    L.⟦ dreps , ccHotKeys ⟧ᵛ
+  GStateFromConf .convⁱ deposits gState =
+    let open C.GState gState in
+    ⟦ dreps , ccHotKeys ⟧
 
 data ValidDepsᵈ (pp : PParams) (deps : L.Deposits) : List L.DCert → Set where
   []         : ValidDepsᵈ pp deps []
@@ -131,12 +140,14 @@ updateCertDeps* (dcert ∷ dcerts) deps = updateCertDeps* dcerts (updateCertDeps
 instance
 
   CertStToConf : L.Deposits × L.Deposits ⊢ L.CertState ⭆ C.CertState
-  CertStToConf .convⁱ (ddeps , gdeps) L.⟦ dState , pState , gState ⟧ᶜˢ =
-    C.⟦ ddeps ⊢conv dState , pState , gdeps ⊢conv gState ⟧ᶜˢ
+  CertStToConf .convⁱ (ddeps , gdeps) certState =
+    let open L.CertState certState in
+    ⟦ ddeps ⊢conv dState , pState , gdeps ⊢conv gState ⟧
 
   CertStFromConf : C.CertState ⭆ L.CertState
-  CertStFromConf .convⁱ _ C.⟦ dState , pState , gState ⟧ᶜˢ =
-    L.⟦ conv dState , pState , conv gState ⟧ᶜˢ
+  CertStFromConf .convⁱ _ certState =
+    let open C.CertState certState in
+    ⟦ conv dState , pState , conv gState ⟧
 
   CERTBASEToConf : ∀ {Γ s s'}
                  → L.Deposits × L.Deposits

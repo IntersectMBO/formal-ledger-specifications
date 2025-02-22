@@ -14,7 +14,7 @@ open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Enact govStructure
-open import Ledger.Conway.Conformance.Gov txs
+open import Ledger.Gov txs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 isCredDeposit : DepositPurpose → Type
@@ -94,7 +94,7 @@ module _ (s : ChainState) (slot : Slot) where
   open EpochState epochState; open EnactState es
 
   private
-    ledgerEnv = ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧ˡᵉ
+    ledgerEnv = ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧
 
   validTxIn₂ : Tx → Type
   validTxIn₂ tx = ∃[ ls' ] ledgerEnv ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'

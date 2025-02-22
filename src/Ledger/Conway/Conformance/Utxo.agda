@@ -24,15 +24,18 @@ open import Ledger.ScriptValidation txs abs
 open import Ledger.Fees txs using (scriptsCost)
 open import Ledger.Conway.Conformance.Certs govStructure
 
-module L where
-  open import Ledger.Utxo txs abs public
+private
+  module L where
+    open import Ledger.Utxo txs abs public
 
 open PParams
 
 instance
   _ = +-0-monoid
 
-open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ)
+open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; To-UTxOState; updateDeposits
+                    ; cbalance; balance; depositRefunds; consumed
+                    ; produced; outs; newDeposits; refScriptsSize )
 
 private variable
   Γ : UTxOEnv
@@ -56,7 +59,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
                               , fees + txfee
                               , deposits
                               , donations + txdonation
-                              ⟧ᵘ
+                              ⟧
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -72,7 +75,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
                               , fees + L.cbalance (utxo ∣ collateral)
                               , deposits
                               , donations
-                              ⟧ᵘ
+                              ⟧
 
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)

@@ -1,5 +1,7 @@
 \section{Ratification}
 \label{sec:ratification}
+\modulenote{\LedgerModule{Ratify}}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -200,7 +202,6 @@ record RatifyEnv : Type where
     delegatees    : Credential ⇀ VDeleg
 
 record RatifyState : Type where
-  constructor ⟦_,_,_⟧ʳ
   field
     es              : EnactState
     removed         : ℙ (GovActionID × GovActionState)
@@ -233,9 +234,13 @@ defines some types and functions used in the RATIFY transition
 system. \CCData is simply an alias to define some functions more
 easily.
 
-\begin{figure*}[h!]
+\begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
+instance
+  unquoteDecl To-RatifyState = derive-To
+    [ (quote RatifyState , To-RatifyState) ]
+
 open StakeDistrs
 \end{code}
 \begin{code}
@@ -381,7 +386,7 @@ voting behavior is the credential used to withdraw staking rewards, which is not
 %% And as a second layer, this means that if that credential is a script, it may need
 %% to have explicit logic written to be able to set a default at all.
 
-\begin{figure*}[h!]
+\begin{figure*}[!ht]
 \begin{code}[hide]
 open RatifyEnv using (stakeDistrs)
 
@@ -483,17 +488,15 @@ delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 
 acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
-acceptConds Γ ⟦ es , removed , d ⟧ʳ (id , st) =
+acceptConds Γ stʳ (id , st) =
+       accepted Γ es st
+    ×  ¬ delayed action prevAction es delay
+    × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
-  let open RatifyEnv Γ; open GovActionState st in
-\end{code}
-\begin{code}
-    accepted Γ es st
-    × ¬ delayed action prevAction es d
-    × ∃[ es' ] ⟦ id , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
-\end{code}
-\begin{code}[hide]
+    where open RatifyEnv Γ
+          open RatifyState stʳ
+          open GovActionState st
 abstract
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
   verifyPrev? NoConfidence              h es = dec
@@ -562,23 +565,23 @@ data _⊢_⇀⦇_,RATIFY'⦈_ :
 
      → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
 
-     ∙ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
-     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ᵉ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+     ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
+     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
-       Γ ⊢ ⟦ es  , removed         , d                     ⟧ʳ ⇀⦇ a ,RATIFY'⦈
-           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧ʳ
+       Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY'⦈
+           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧
 
-  RATIFY-Reject : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
-     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+  RATIFY-Reject : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ expired currentEpoch st
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧ʳ
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
 
-  RATIFY-Continue : ∀ {Γ} {es} {removed} {d} {a} → let open RatifyEnv Γ; st = a .proj₂ in
-     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ʳ a
+  RATIFY-Continue : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ ¬ expired currentEpoch st
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ʳ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧ʳ
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧
 
 _⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type

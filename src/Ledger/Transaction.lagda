@@ -1,5 +1,6 @@
 \section{Transactions}
 \label{sec:transactions}
+\modulenote{\LedgerModule{Transaction}}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -57,7 +58,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \end{itemize}
 \end{Conway}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
 record TransactionStructure : Type₁ where
   field
@@ -178,7 +179,7 @@ record TransactionStructure : Type₁ where
 \end{figure*}
 
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
   getValue : TxOut → Value
