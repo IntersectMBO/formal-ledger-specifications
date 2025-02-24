@@ -69,7 +69,7 @@ record GovEnv : Type where
     certState   : CertState
     rewardCreds : ℙ Credential
 \end{code}
-\caption{Derived used in the GOV transition system}
+\caption{Types used in the GOV transition system}
 \label{defs:gov-derived-types}
 \end{figure*}
 
