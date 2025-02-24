@@ -77,7 +77,7 @@ instance
   Computational-UTXO' : Computational _⊢_⇀⦇_,UTXO⦈_ String
   Computational-UTXO' = record {Go}
     where
-      module Go Γ s tx (let H , ⁇ H? = UTXO-premises {tx}{Γ}{s}) where
+      module Go Γ s tx (let H , ⁇ H? = UTXO-premises {Γ = Γ} {s = s} {tx = tx}) where
 
         open Computational Computational-UTXOS
           renaming (computeProof to computeProof'; completeness to completeness')

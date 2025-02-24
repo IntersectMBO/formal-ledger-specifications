@@ -566,7 +566,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \end{AgdaMultiCode}
 \begin{code}[hide]
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
+      = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
