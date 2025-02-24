@@ -475,47 +475,6 @@ deregister deposits in the UTxO state based on the certificates in the transacti
 \begin{figure*}[htbp]
 \begin{code}[hide]
 open PParams
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
-\end{code}
-\begin{code}[hide]
-data _⊢_⇀⦇_,UTXOS⦈_ where
-\end{code}
-\begin{code}
-  Scripts-Yes :
-    ∀ {Γ} {s} {tx}
-    → let open Tx tx renaming (body to txb); open TxBody txb
-          open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
-      in
-        ∙ ValidCertDeposits pp deposits txcerts
-        ∙ evalScripts tx sLst ≡ isValid
-        ∙ isValid ≡ true
-          ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
-
-  Scripts-No :
-    ∀ {Γ} {s} {tx}
-    → let open Tx tx renaming (body to txb); open TxBody txb
-          open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
-      in
-        ∙ evalScripts tx sLst ≡ isValid
-        ∙ isValid ≡ false
-          ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
-\end{code}
-\caption{UTXOS rule}
-\label{fig:utxos-conway}
-\end{figure*}
-
-\begin{code}[hide]
-unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
-unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
 private variable
   Γ : UTxOEnv
@@ -524,6 +483,61 @@ private variable
 
 open UTxOEnv
 open UTxOState
+
+data
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
+\end{code}
+\begin{code}[hide]
+data _⊢_⇀⦇_,UTXOS⦈_ where
+\end{code}
+\begin{AgdaMultiCode}
+\begin{code}
+  Scripts-Yes :
+    let  pp         = Γ .pparams
+         utxo       = s .utxo
+         fees       = s .fees
+         deposits   = s .deposits
+         donations  = s .donations
+\end{code}
+\begin{code}[hide]
+         open Tx tx renaming (body to txb); open TxBody txb
+\end{code}
+\begin{code}
+         sLst       = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ ValidCertDeposits pp deposits txcerts
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ true
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
+  Scripts-No :
+    let  pp         = Γ .pparams
+         utxo       = s .utxo
+         fees       = s .fees
+         deposits   = s .deposits
+         donations  = s .donations
+\end{code}
+\begin{code}[hide]
+         open Tx tx renaming (body to txb); open TxBody txb
+\end{code}
+\begin{code}
+         sLst       = collectPhaseTwoScriptInputs pp tx utxo
+      in
+        ∙ evalScripts tx sLst ≡ isValid
+        ∙ isValid ≡ false
+          ────────────────────────────────
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
+\end{code}
+\end{AgdaMultiCode}
+\caption{UTXOS rule}
+\label{fig:utxos-conway}
+\end{figure*}
+
+\begin{code}[hide]
+unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
+unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}

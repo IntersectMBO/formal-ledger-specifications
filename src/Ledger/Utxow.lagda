@@ -151,7 +151,6 @@ private variable
   s s'        : UTxOState
   tx          : Tx
 
-open UTxOEnv
 open UTxOState
 
 data _⊢_⇀⦇_,UTXOW⦈_ where
