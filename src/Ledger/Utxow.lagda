@@ -151,30 +151,30 @@ private variable
   s s'        : UTxOState
   tx          : Tx
 
+open UTxOEnv
+open UTxOState
+
 data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
+    let  utxo                                = s .utxo
 \end{code}
 \begin{code}[hide]
-    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-        open UTxOState
+         open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
 \end{code}
 \begin{code}
-        utxo                                = s .utxo
-        witsKeyHashes                       = mapˢ hash (dom vkSigs)
-        witsScriptHashes                    = mapˢ hash scripts
-        inputHashes                         = getInputHashes tx utxo
-        refScriptHashes                     = fromList $ map hash (refScripts tx utxo)
-        neededHashes                        = scriptsNeeded utxo txb
-        txdatsHashes                        = dom txdats
-        allOutHashes                        = getDataHashes (range txouts)
-        nativeScripts                       = mapPartial isInj₁ (txscripts tx utxo)
+         witsKeyHashes                       = mapˢ hash (dom vkSigs)
+         witsScriptHashes                    = mapˢ hash scripts
+         inputHashes                         = getInputHashes tx utxo
+         refScriptHashes                     = fromList $ map hash (refScripts tx utxo)
+         neededHashes                        = scriptsNeeded utxo txb
+         txdatsHashes                        = dom txdats
+         allOutHashes                        = getDataHashes (range txouts)
+         nativeScripts                       = mapPartial isInj₁ (txscripts tx utxo)
 \end{code}
-\begin{code}[hide]
+\begin{code}
     in
-\end{code}
-\begin{code}
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
