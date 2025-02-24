@@ -189,8 +189,9 @@ record UTxOState : Type where
 \end{code}
 \begin{code}[hide]
 instance
-  unquoteDecl To-UTxOState = derive-To
-    [ (quote UTxOState , To-UTxOState) ]
+  unquoteDecl To-UTxOEnv To-UTxOState = derive-To
+    ( (quote UTxOEnv   , To-UTxOEnv  ) ∷
+    [ (quote UTxOState , To-UTxOState) ])
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}

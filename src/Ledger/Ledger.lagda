@@ -80,40 +80,55 @@ instance
 private variable
   Γ : LEnv
   s s' s'' : LState
-  utxoSt' : UTxOState
-  govSt' : GovState
-  certState' : CertState
+  utxoSt utxoSt' : UTxOState
+  govSt govSt' : GovState
+  certState certState' : CertState
   tx : Tx
+
+open LEnv
+open CertState
+open DState
 \end{code}
 
 \begin{figure*}[ht]
-\begin{AgdaSuppressSpace}
+\begin{AgdaMultiCode}
 \begin{code}
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
 
   LEDGER-V :
-    let 
-      open LState s
-      txb = tx .body
-      open TxBody txb
-      open LEnv Γ
-      open CertState certState
-      open DState dState
-    in
-    ∙  isValid tx ≡ true
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
-
-  LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
-    ∙  isValid tx ≡ false
-    ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
+    let  txb         = tx .body
 \end{code}
-\end{AgdaSuppressSpace}
+\begin{code}[hide]
+         open TxBody txb
+\end{code}
+\begin{code}
+         pp          = Γ .pparams
+         slot        = Γ .slot
+         ppolicy     = Γ .ppolicy
+         enactState  = Γ .enactState
+         rewards     = certState .dState .rewards
+    in
+    ∙ isValid tx ≡ true
+    ∙ ⟦ slot , pp , Γ .treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    ∙ ⟦ epoch slot , pp , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙ ⟦ txid , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOVS⦈ govSt'
+      ────────────────────────────────
+      Γ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
+
+  LEDGER-I :
+    let txb = tx .body
+\end{code}
+\begin{code}[hide]
+        open TxBody txb
+\end{code}
+\begin{code}
+    in
+    ∙ isValid tx ≡ false
+    ∙ record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+      ────────────────────────────────
+      Γ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
+\end{code}
+\end{AgdaMultiCode}
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
