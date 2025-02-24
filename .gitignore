@@ -53,5 +53,6 @@ result*
 dist/
 
 src/latex/Ledger/*
+src/latex/Conway/*
 src/latex/MidnightExample/*
 src/latex/bclogo.sty
