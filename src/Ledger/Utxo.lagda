@@ -572,7 +572,5 @@ unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
-Figure~\ref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together.
-(The \maybeEq symbol that appears in the figure denotes a special equality where
-the value on the left-handside is optional; equality holds if and only if the value
-on the left is present and equal to the value on the right.)
+Figure~\ref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together
+(The symbol~\AgdaDatatype{≡?} is explained in Sec.~\ref{sec:notation}).
