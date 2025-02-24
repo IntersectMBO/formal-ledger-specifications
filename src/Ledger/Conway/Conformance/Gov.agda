@@ -72,7 +72,7 @@ opaque
       DRep  → c ∈ dom (gState .dreps)
       SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
 
-data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type where
+data _⊢_⇀⦇_,GOV⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type where
 
   GOV-Vote : ∀ {x ast} → let
       open GovEnv Γ
@@ -83,7 +83,7 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
     ∙ isRegistered Γ voter
     ∙ ¬ (expired epoch ast)
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV'⦈ L.addVote s aid voter v
+      (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV⦈ L.addVote s aid voter v
 
   GOV-Propose : ∀ {x} → let
       open GovEnv Γ; open PParams pparams hiding (a)
@@ -100,7 +100,7 @@ data _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProp
     ∙ addr .RwdAddr.net ≡ NetworkId
     ∙ addr .RwdAddr.stake ∈ rewardCreds
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
+      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ s'
 
-_⊢_⇀⦇_,GOV⦈_   : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
-_⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV'⦈_}
+_⊢_⇀⦇_,GOVS⦈_   : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
+_⊢_⇀⦇_,GOVS⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV⦈_}

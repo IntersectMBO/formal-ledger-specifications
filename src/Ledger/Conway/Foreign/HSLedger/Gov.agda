@@ -105,6 +105,6 @@ unquoteDecl = do
 -- Computational function
 
 gov-step : HsType (GovEnv → GovState → List (GovVote ⊎ GovProposal) → ComputationResult String GovState)
-gov-step = to (compute Computational-GOV)
+gov-step = to (compute Computational-GOVS)
 
 {-# COMPILE GHC gov-step as govStep #-}

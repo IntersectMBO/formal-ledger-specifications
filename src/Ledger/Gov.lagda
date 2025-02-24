@@ -176,10 +176,10 @@ opaque
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
+  _⊢_⇀⦇_,GOV⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
 \end{code}
 \begin{code}
-_⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
+_⊢_⇀⦇_,GOVS⦈_   : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
 \end{code}
 \end{AgdaMultiCode}
 \caption{Type signature of the transition relation of the GOV transition system}
@@ -417,7 +417,7 @@ variable
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{code}
-data _⊢_⇀⦇_,GOV'⦈_ where
+data _⊢_⇀⦇_,GOV⦈_ where
 \end{code}
 \begin{code}
   GOV-Vote :
@@ -426,7 +426,7 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ isRegistered Γ voter
     ∙ ¬ expired (Γ .epoch) ast
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ inj₁ ⟦ aid , voter , v , machr ⟧ ,GOV'⦈ addVote s aid voter v
+      (Γ , k) ⊢ s ⇀⦇ inj₁ ⟦ aid , voter , v , machr ⟧ ,GOV⦈ addVote s aid voter v
 
   GOV-Propose :
     let pp           = Γ .pparams
@@ -444,18 +444,18 @@ data _⊢_⇀⦇_,GOV'⦈_ where
     ∙ addr .RwdAddr.net ≡ NetworkId
     ∙ addr .RwdAddr.stake ∈ rewardCreds
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ addAction s (pp .govActionLifetime +ᵉ e)
-                                                  (Γ .txid , k) addr a prev
+      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ addAction s (pp .govActionLifetime +ᵉ e)
+                                                 (Γ .txid , k) addr a prev
 
-_⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV'⦈_}
+_⊢_⇀⦇_,GOVS⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV⦈_}
 \end{code}
 \end{AgdaMultiCode}
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}
 \end{figure*}
 
-The GOV transition system is now given as the reflexitive-transitive
-closure of the system GOV', described in
+The GOVS transition system is now given as the reflexitive-transitive
+closure of the system GOV, described in
 Figure~\ref{defs:gov-rules}.
 
 For \GOVVote, we check that the governance action being voted on

@@ -84,8 +84,8 @@ opaque
   isRegistered? _ (SPO  , _) = ¿ _ ∈ _ ¿
 
 instance
-  Computational-GOV' : Computational _⊢_⇀⦇_,GOV'⦈_ String
-  Computational-GOV' = record {Go} where
+  Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ String
+  Computational-GOV = record {Go} where
     module Go Γ s where
       open GovEnv (proj₁ Γ)
       k = proj₂ Γ
@@ -99,7 +99,7 @@ instance
             (yes _ , no ¬p) → failure (genErrors ¬p)
             (no ¬p , _)     → failure (genErrors ¬p)
 
-        completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₁ sig ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
+        completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₁ sig ,GOV⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Vote (mem , cV , reg , ¬exp))
           with L.lookupActionId pparams (proj₁ voter) gid epoch s | isRegistered? (proj₁ Γ) voter
         ... | no ¬p | _ = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV , ¬exp)))
@@ -158,7 +158,7 @@ instance
               (inj₁ r) → failure (genErrorsActionValid r)
               (inj₂ r) → failure (genErrors r)
 
-        completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
+        completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Propose (wf , av , dep , vHFA , en , goodAddr)) with H
         ... | (no ¬p , _) = ⊥-elim (¬p (wf , av , dep , vHFA , L.HasParent' en , goodAddr))
         ... | (yes (_ , _ , _ , _ , L.HasParent' _ , _) , no notNewComm) = refl
@@ -169,9 +169,9 @@ instance
       computeProof (inj₁ s) = GoVote.computeProof s
       computeProof (inj₂ s) = GoProp.computeProof s
 
-      completeness : ∀ sig s' → Γ ⊢ s ⇀⦇ sig ,GOV'⦈ s' → _
+      completeness : ∀ sig s' → Γ ⊢ s ⇀⦇ sig ,GOV⦈ s' → _
       completeness (inj₁ s) = GoVote.completeness s
       completeness (inj₂ s) = GoProp.completeness s
 
-Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ String
-Computational-GOV = it
+Computational-GOVS : Computational _⊢_⇀⦇_,GOVS⦈_ String
+Computational-GOVS = it

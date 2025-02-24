@@ -56,7 +56,7 @@ instance
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
     computeUtxow = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
     computeCerts = comp {STS = _⊢_⇀⦇_,CERTS⦈_}
-    computeGov   = comp {STS = _⊢_⇀⦇_,GOV⦈_}
+    computeGov   = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
 
     module go
       (Γ : LEnv)   (let open LEnv Γ)
@@ -88,7 +88,7 @@ instance
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certState txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
-        with computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certSt') _ _ _ govStep
+        with computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
       completeness ledgerSt (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
@@ -254,7 +254,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
     where
     STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {certSt : CertState} {govSt govSt' : GovState}
-      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV'⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
+      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
       → govSt' ≡ updateGovStates vps k govSt
     STS→updateGovSt≡ [] _ (BS-base Id-nop) = refl
     STS→updateGovSt≡ (inj₁ v ∷ vps) k (BS-ind (GOV-Vote x) h)

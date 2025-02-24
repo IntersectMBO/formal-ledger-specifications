@@ -76,7 +76,7 @@ data
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOVS⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState' ⟧
 

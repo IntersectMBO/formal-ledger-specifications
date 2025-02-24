@@ -144,7 +144,7 @@ instance
       certStateC' = getCertDeps* cdeposits' ⊢conv certState'
       certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
       certs' = cdeposits ⊢conv certs
-      gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOV⦈ govSt'
+      gov' : _ C.⊢ _ ⇀⦇ C.txgov (body tx) ,GOVS⦈ govSt'
       gov' = getCertDeps* cdeposits' ⊢conv gov
       ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ ⟦ utxoStC' , govSt' , certStateC' ⟧
       ledger' = C.LEDGER-V⋯ refl utxow' certs' gov'
@@ -386,7 +386,7 @@ opaque
     in  deps₂' , eqd' , RTC (C.CERT-base h , step')
 
 _⊢_⇀⦇_,GOVn⦈_ : C.GovEnv × ℕ → C.GovState → List (GovVote ⊎ GovProposal) → C.GovState → Type
-_⊢_⇀⦇_,GOVn⦈_ = _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = C._⊢_⇀⦇_,GOV'⦈_}
+_⊢_⇀⦇_,GOVn⦈_ = _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = C._⊢_⇀⦇_,GOV⦈_}
 
 opaque
   unfolding L.addVote C.isRegistered
