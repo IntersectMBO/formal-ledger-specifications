@@ -244,10 +244,15 @@ hasParentE e aid a = case getHashES e a of
    (just id)  → id ≡ aid
 
 hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Type
-hasParent e s a aid with getHash aid
-... | just aid' = hasParentE e aid' a
-                  ⊎ Any (λ (gid , gas) → gid ≡ aid' × action gas ≈ᵍ a) s
-... | nothing = ⊤
+hasParent e s a aid = case getHash aid of
+\end{code}
+\begin{code}[hide]
+  λ where
+\end{code}
+\begin{code}
+    nothing      → ⊤
+    (just aid')  → hasParentE e aid' a
+                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × action gas ≈ᵍ a) s
 \end{code}
 \begin{code}[hide]
 open Equivalence
