@@ -522,24 +522,33 @@ private variable
   s s' : UTxOState
   tx : Tx
 
+open UTxOEnv
+open UTxOState
+
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
 \begin{figure*}[ht]
+\begin{AgdaMultiCode}
 \begin{code}
   UTXO-inductive :
-    let open Tx tx renaming (body to txb); open TxBody txb
-        open UTxOEnv Γ renaming (pparams to pp)
-        open UTxOState s
-        txoutsʰ = (mapValues txOutHash txouts)
-        overhead = 160
+    let pp        = Γ .pparams
+        slot      = Γ .slot
+        treasury  = Γ .treasury
+        utxo      = s .utxo
+\end{code}
+\begin{code}[hide]
+        open Tx tx renaming (body to txb); open TxBody txb
+\end{code}
+\begin{code}
+        txoutsʰ   = mapValues txOutHash txouts
+        overhead  = 160
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo                      ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
-
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
@@ -548,12 +557,13 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
-    ∙ txNetworkId ≡? just NetworkId
-    ∙ curTreasury ≡? just treasury
+    ∙ txNetworkId  ≡? just NetworkId
+    ∙ curTreasury  ≡? just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
+\end{AgdaMultiCode}
 \begin{code}[hide]
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
       = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
