@@ -189,6 +189,8 @@ instance
   unquoteDecl DecEq-GovRole = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])
   unquoteDecl DecEq-Vote    = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg  = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
+
+  unquoteDecl To-GovVote = derive-To [ (quote GovVote     , To-GovVote) ]
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote and proposal types}

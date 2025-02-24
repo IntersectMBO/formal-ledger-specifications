@@ -405,38 +405,47 @@ actionWellFormed? {Info}                  = it
 
 \clearpage
 
+\begin{code}[hide]
+open GovEnv
+open PParams hiding (a)
+
+variable
+  machr : Maybe Anchor
+  achr : Anchor
+  ast  : GovActionState
+\end{code}
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{code}
 data _⊢_⇀⦇_,GOV'⦈_ where
 \end{code}
 \begin{code}
-  GOV-Vote : ∀ {x ast} → let
-      open GovEnv Γ
-      vote = record { gid = aid ; voter = voter ; vote = v ; anchor = x }
-    in
+  GOV-Vote :
     ∙ (aid , ast) ∈ fromList s
-    ∙ canVote pparams (action ast) (proj₁ voter)
+    ∙ canVote (Γ .pparams) (action ast) (proj₁ voter)
     ∙ isRegistered Γ voter
-    ∙ ¬ (expired epoch ast)
+    ∙ ¬ expired (Γ .epoch) ast
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV'⦈ addVote s aid voter v
+      (Γ , k) ⊢ s ⇀⦇ inj₁ ⟦ aid , voter , v , machr ⟧ ,GOV'⦈ addVote s aid voter v
 
-  GOV-Propose : ∀ {x} → let
-      open GovEnv Γ; open PParams pparams hiding (a)
-      prop = record { returnAddr = addr ; action = a ; anchor = x
-                    ; policy = p ; deposit = d ; prevAction = prev }
-      s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+  GOV-Propose :
+    let pp           = Γ .pparams
+        e            = Γ .epoch
+        enactState   = Γ .enactState
+        rewardCreds  = Γ .rewardCreds
+        prop         = record { returnAddr = addr ; action = a ; anchor = achr
+                              ; policy = p ; deposit = d ; prevAction = prev }
     in
     ∙ actionWellFormed a
-    ∙ actionValid rewardCreds p ppolicy epoch a
-    ∙ d ≡ govActionDeposit
+    ∙ actionValid rewardCreds p (Γ .ppolicy) e a
+    ∙ d ≡ pp .govActionDeposit
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s a prev
     ∙ addr .RwdAddr.net ≡ NetworkId
     ∙ addr .RwdAddr.stake ∈ rewardCreds
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
+      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ addAction s (pp .govActionLifetime +ᵉ e)
+                                                  (Γ .txid , k) addr a prev
 
 _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV'⦈_}
 \end{code}
