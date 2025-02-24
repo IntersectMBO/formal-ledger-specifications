@@ -80,23 +80,27 @@ scriptsCost pp scriptSize
 \caption{Calculation of fees for reference scripts}
 \label{fig:scriptsCost}
 \end{figure*}
+
 The function \scriptsCost{} (Fig.~\ref{fig:scriptsCost}) calculates
-the fee for reference scripts in the transaction using a function that
-is piece-wise linear in the size, where the linear constant multiple
-grows with each \AgdaFunction{refScriptCostStride} bytes.
+the fee for reference scripts in a transaction. It takes as input the
+total size of the reference scripts in bytes, which can be calculated
+using \AgdaFunction{refScriptsSize}~(Fig.\ref{fig:functions:utxo-conway}).
 %
-This function takes as input the total size of the reference script in
-bytes. The function \AgdaFunction{scriptsTotalSize} is used to
-calculate the total size.
-%
-In addition, \scriptsCost{} depends on the following protocol parameters:
+In addition, \scriptsCost{} depends on the following constants (which
+are bundled with the protocol parameters, see
+Fig.~\ref{fig:protocol-parameter-declarations}):
 %
 \begin{itemize}
-  \item \AgdaFunction{refScriptCostMultiplier}, a rational number, the growth factor
-  or step multiplier that determines how much the price per byte
-  increases after each increment;
+  \item \AgdaFunction{refScriptCostMultiplier}, a rational number, the
+   growth factor or step multiplier that determines how much the price
+   per byte increases after each increment;
   \item \AgdaFunction{refScriptCostStride}, an integer, the size in bytes at which
-  the price per byte grows linearly;
-  \item \AgdaFunction{minFeeRefScriptCoinsPerByte}, a rational number, the base
-  fee or initial price per byte.
+   the price per byte grows linearly;
+  \item \AgdaFunction{minFeeRefScriptCoinsPerByte}, a rational number,
+   the base fee or initial price per byte.
 \end{itemize}
+
+The function \scriptsCost{} calculates the fee using a function,
+\AgdaFunction{scriptsCostAux}, that is piece-wise linear in the size,
+where the linear constant multiple grows with each
+\AgdaFunction{refScriptCostStride} bytes.
