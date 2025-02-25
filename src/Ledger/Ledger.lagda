@@ -49,22 +49,30 @@ record LState : Type where
     utxoSt     : UTxOState
     govSt      : GovState
     certState  : CertState
+\end{code}
+\begin{code}[hide]
+open LEnv
+open CertState
+open DState
 
+instance
+  unquoteDecl To-LEnv To-LState = derive-To
+    ((quote LEnv , To-LEnv) ∷ (quote LState , To-LState) ∷ [])
+\end{code}
+\begin{code}
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txprop ++ map inj₁ txvote
   where open TxBody txb
 
-ifDRepIsRegistered : CertState → Voter → Type
-ifDRepIsRegistered certState (r , c) = r ≡ DRep → c ∈ dom (gState .dreps)
-  where open CertState certState
-
-removeOrphanDRepVotes : CertState → GovActionState → GovActionState
-removeOrphanDRepVotes certState gas = record gas { votes = votes′ }
+rmOrphanDRepVotes : CertState → GovState → GovState
+rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
   where
-    votes′ = filterKeys (ifDRepIsRegistered certState) (votes gas)
+   ifDRepRegistered : Voter → Type
+   ifDRepRegistered (r , c) = r ≡ DRep → c ∈ dom (cs .gState .dreps)
 
-_|ᵒ_ : GovState → CertState → GovState
-govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
+   go : GovActionState → GovActionState
+   go gas = record gas { votes = filterKeys ifDRepRegistered (gas .votes) }
+
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (st .action)) (fromList govSt)
@@ -73,10 +81,6 @@ allColdCreds govSt es =
 \caption{Types and functions for the LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
-instance
-  unquoteDecl To-LEnv To-LState = derive-To
-    ((quote LEnv , To-LEnv) ∷ (quote LState , To-LState) ∷ [])
-
 private variable
   Γ : LEnv
   s s' s'' : LState
@@ -85,9 +89,6 @@ private variable
   certState certState' : CertState
   tx : Tx
 
-open LEnv
-open CertState
-open DState
 \end{code}
 
 \begin{figure*}[ht]
@@ -111,7 +112,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
     ∙ isValid tx ≡ true
     ∙ ⟦ slot , pp , Γ .treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙ ⟦ epoch slot , pp , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙ ⟦ txid , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOVS⦈ govSt'
+    ∙ ⟦ txid , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
       Γ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 

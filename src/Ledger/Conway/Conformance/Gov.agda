@@ -38,5 +38,5 @@ instance
 _⊢_⇀⦇_,GOVS⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
 Γ ⊢ govSt ⇀⦇ gvps ,GOVS⦈ govSt'
   = ⟦ txid , epoch , pparams , ppolicy , enactState , conv certState ,
-  rewardCreds ⟧ L.⊢ govSt |ᵒ conv certState ⇀⦇ gvps ,GOVS⦈ govSt'
+  rewardCreds ⟧ L.⊢ rmOrphanDRepVotes (conv certState) govSt  ⇀⦇ gvps ,GOVS⦈ govSt'
   where open GovEnv Γ
