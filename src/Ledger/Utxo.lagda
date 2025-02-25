@@ -160,8 +160,7 @@ Alternatively, we can effectively treat the old handling of deposits
 as an erratum in the Shelley specification, which we fix by implementing
 the new deposits logic in older eras and then replaying the chain.
 (The handling of deposits in the Shelley era is discussed
-in~\cite[\sectionname~8]{shelley-ledger-spec}
-and~\cite[\sectionname~B.2]{shelley-delegation-design}.)
+in~\cite[\sectionname~8]{shelley-ledger-spec} and~\cite[\sectionname~B.2]{shelley-delegation-design}.)
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
@@ -570,7 +569,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}[hide]
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
+  = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

@@ -18,7 +18,7 @@ credential contains a hash, either of a verifying (public) key
 (\isVKey{}) or of a script (\isScript{}).
 
 N.B.~in the Shelley era the type of the \stake{} field of the
-\BaseAddr{} record was \CredentialType{}~\parencite[\sectionname~4]{shelley-ledger-spec};
+\BaseAddr{} record was \CredentialType{}~\cite[\sectionname~4]{shelley-ledger-spec};
 to specify an address with no stake, we would use an ``enterprise'' address.
 In contrast, the type of \stake{} in the Conway era is \Maybe{}~\CredentialType{},
 so we can now use \BaseAddr{} to specify an address with no stake

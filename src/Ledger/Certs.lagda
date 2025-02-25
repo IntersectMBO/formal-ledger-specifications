@@ -209,10 +209,10 @@ participation of honest stake holders.
 \subsubsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
 
 Support for pointer addresses, genesis delegations and MIR
-certificates is removed (see \hrefCIP{1694}~\cite{cip1694}). In \DState{}, this means
+certificates is removed (see \hrefCIP{1694} and~\cite*{cip1694}). In \DState{}, this means
 that the four fields relating to those features are no longer present,
 and \DelegEnv{} contains none of the fields it used to in the Shelley
-era~\parencite[\sectionname~9.2]{shelley-ledger-spec}.
+era (see~\cite[\sectionname~9.2]{shelley-ledger-spec}).
 
 Note that pointer addresses are still usable, only their staking
 functionality has been retired. So all funds locked behind pointer
