@@ -221,7 +221,7 @@ IsDRep  v = govRole v ≡ DRep
 IsSPO   v = govRole v ≡ SPO
 \end{code}
 \end{AgdaMultiCode}
-\caption{Types and functions for the RATIFY transition system}
+\caption{Types and functions for the RATIFIES transition system}
 \label{fig:types-and-functions-for-the-ratify-transition-system}
 \end{figure*}
 As mentioned earlier, most governance actions must include a \GovActionID
@@ -230,7 +230,7 @@ same type can be enacted at the same time, but they must be \emph{deliberately}
 designed to do so.
 
 Figure~\ref{fig:types-and-functions-for-the-ratify-transition-system}
-defines some types and functions used in the RATIFY transition
+defines some types and functions used in the RATIFIES transition
 system. \CCData is simply an alias to define some functions more
 easily.
 
@@ -430,13 +430,13 @@ abstract
   expired : Epoch → GovActionState → Type
   expired current record { expiresIn = expiresIn } = expiresIn < current
 \end{code}
-\caption{Functions used in RATIFY rules, without delay}
+\caption{Functions used in RATIFIES rules, without delay}
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 
 Figure~\ref{fig:defs:ratify-defs-i} defines the \accepted and \expired
 functions (together with some helpers) that are used in the rules of
-RATIFY.
+RATIFIES.
 
 \begin{itemize}
   \item \getStakeDist computes the stake distribution based on the
@@ -557,10 +557,10 @@ open GovActionState
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
-data _⊢_⇀⦇_,RATIFY'⦈_ :
+data _⊢_⇀⦇_,RATIFIES'⦈_ :
   RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
 
-  RATIFY-Accept :
+  RATIFIES-Accept :
     let treasury       = Γ .treasury
         e              = Γ .currentEpoch
         (gaId , gaSt)  = a
@@ -569,52 +569,52 @@ data _⊢_⇀⦇_,RATIFY'⦈_ :
     ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
     ∙ ⟦ gaId , treasury , e ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
       ────────────────────────────────
-      Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY'⦈
+      Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFIES'⦈
           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧
 
-  RATIFY-Reject :
+  RATIFIES-Reject :
     let e              = Γ .currentEpoch
         (gaId , gaSt)  = a
     in
     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
     ∙ expired e gaSt
       ────────────────────────────────
-      Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
+      Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFIES'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
 
-  RATIFY-Continue :
+  RATIFIES-Continue :
      let e              = Γ .currentEpoch
          (gaId , gaSt)  = a
      in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ ¬ expired e gaSt
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFIES'⦈ ⟦ es , removed , d ⟧
 
-_⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
+_⊢_⇀⦇_,RATIFIES⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type
-_⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY'⦈_}
+_⊢_⇀⦇_,RATIFIES⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFIES'⦈_}
 \end{code}
 \end{AgdaSuppressSpace}
-\caption{The RATIFY transition system}
+\caption{The RATIFIES transition system}
 \label{fig:sts:ratify}
 \end{figure*}
 
-The RATIFY transition system is defined as the reflexive-transitive
-closure of RATIFY', which is defined via three rules, defined in
+The RATIFIES transition system is defined as the reflexive-transitive
+closure of RATIFIES', which is defined via three rules, defined in
 Figure~\ref{fig:sts:ratify}.
 
 \begin{itemize}
-  \item \RATIFYAccept checks if the votes for a given \GovAction meet the threshold required for
+  \item \RATIFIESAccept checks if the votes for a given \GovAction meet the threshold required for
         acceptance, that the action is accepted and not delayed,
-        and \RATIFYAccept ratifies the action.
+        and \RATIFIESAccept ratifies the action.
 
-  \item \RATIFYReject asserts that the given \GovAction is not \accepted and \expired;
+  \item \RATIFIESReject asserts that the given \GovAction is not \accepted and \expired;
         it removes the governance action.
-  \item \RATIFYContinue covers the remaining cases and keeps the \GovAction around for further voting.
+  \item \RATIFIESContinue covers the remaining cases and keeps the \GovAction around for further voting.
 \end{itemize}
 
-Note that all governance actions eventually either get accepted and enacted via \RATIFYAccept or
-rejected via \RATIFYReject. If an action satisfies all criteria to be accepted but cannot be
+Note that all governance actions eventually either get accepted and enacted via \RATIFIESAccept or
+rejected via \RATIFIESReject. If an action satisfies all criteria to be accepted but cannot be
 enacted anyway, it is kept around and tried again at the next epoch boundary.
 
 We never remove actions that do not attract sufficient \yes votes before they expire, even if it
