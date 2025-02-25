@@ -1,5 +1,5 @@
-\section{Ledger State Transition}
-\label{sec:ledger-state-transition}
+\section{Ledger}
+\label{sec:ledger}
 \modulenote{\LedgerModule{Ledger}}
 
 \begin{code}[hide]
