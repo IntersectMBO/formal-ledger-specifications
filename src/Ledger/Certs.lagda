@@ -14,6 +14,7 @@ open import Tactic.Derive.DecEq
 
 open import Ledger.GovernanceActions gs
 open RwdAddr
+open PParams
 \end{code}
 
 \begin{figure*}[ht]
@@ -309,15 +310,14 @@ _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _
 \label{fig:sts:certs-types}
 \end{figure*}
 
-
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
 data _⊢_⇀⦇_,DELEG⦈_ where
 \end{code}
 \begin{code}
-  DELEG-delegate : let open PParams pp in
-    ∙ (c ∉ dom rwds → d ≡ keyDeposit)
+  DELEG-delegate :
+    ∙ (c ∉ dom rwds → d ≡ pp .keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
@@ -332,11 +332,10 @@ data _⊢_⇀⦇_,DELEG⦈_ where
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈
         ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
-\end{code}
-\begin{code}[hide]
-  DELEG-reg : let open PParams pp in
+
+  DELEG-reg :
     ∙ c ∉ dom rwds
-    ∙ d ≡ keyDeposit ⊎ d ≡ 0
+    ∙ d ≡ pp .keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ ⊢
         ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈
@@ -376,11 +375,11 @@ data _⊢_⇀⦇_,POOL⦈_ where
 data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
 \begin{code}
-  GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
-    ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
+  GOVCERT-regdrep :
+    ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢  ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+                                  ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
@@ -441,9 +440,8 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
 \begin{code}
   CERT-base : let
-    open PParams pp
     refresh          = mapPartial getDRepVote (fromList vs)
-    refreshedDReps   = mapValueRestricted (const (e + drepActivity)) dReps refresh
+    refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
     wdrlCreds        = mapˢ stake (dom wdrls)
     validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
                                         ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []) )
