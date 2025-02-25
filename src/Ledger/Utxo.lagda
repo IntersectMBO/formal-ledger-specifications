@@ -209,6 +209,7 @@ data
 \begin{code}[hide]
 module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
+\AgdaNoSpaceAroundCode{}
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
@@ -223,6 +224,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
+
   refScriptsSize : UTxO → Tx → ℕ
   refScriptsSize utxo tx = sum $ map scriptSize (refScripts tx utxo)
 
@@ -232,6 +234,8 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
                      + scriptsCost pp (refScriptsSize utxo tx)
 
 \end{code}
+\end{AgdaMultiCode}
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 instance
   HasCoin-UTxO : HasCoin UTxO
@@ -359,6 +363,7 @@ depositsChange pp txb deposits =
   getCoin (updateDeposits pp txb deposits) - getCoin deposits
 \end{code}
 \end{AgdaMultiCode}
+\AgdaSpaceAroundCode{}
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
 \end{figure*}
