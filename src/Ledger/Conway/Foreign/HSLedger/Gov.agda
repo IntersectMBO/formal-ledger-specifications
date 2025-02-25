@@ -9,13 +9,18 @@ open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
 open import Ledger.Conway.Foreign.HSLedger.Cert
 
-open import Ledger.Conway.Conformance.Gov it
-open import Ledger.Conway.Conformance.Gov.Properties it
+open import Ledger.Conway.Conformance.Certs govStructure
+open import Ledger.Enact govStructure
+open import Ledger.Conway.Conformance.Gov it it
+import Ledger.Gov it as L
+open import Ledger.Gov.Properties it
 
 instance
+
   HsTy-GovEnv = autoHsType GovEnv ⊣ withConstructor "MkGovEnv"
                                   • fieldPrefix "ge"
   Conv-GovEnv = autoConvert GovEnv
+
 
 -- NeedsHash depends on a GovAction, so a little bit of manual work is
 -- required to get the types using it into Haskell.
@@ -105,6 +110,7 @@ unquoteDecl = do
 -- Computational function
 
 gov-step : HsType (GovEnv → GovState → List (GovVote ⊎ GovProposal) → ComputationResult String GovState)
-gov-step = to (compute Computational-GOVS)
+gov-step Γ govSt gvps = to (compute Computational-GOVS ⟦ txid , e' , pparams , ppolicy , enactState , to certState , rewardCreds ⟧ (from govSt) (from gvps))
+  where open GovEnv (from Γ) renaming (epoch to e')
 
 {-# COMPILE GHC gov-step as govStep #-}

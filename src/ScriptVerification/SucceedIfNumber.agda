@@ -149,7 +149,7 @@ exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
-  unfolding L.outs
+  unfolding outs
 
   gotScript : lookupScriptHash 777 succeedTx initStateDatum ≡ just (inj₂ succeedIf1Datum)
   gotScript = refl

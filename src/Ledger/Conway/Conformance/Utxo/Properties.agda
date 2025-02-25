@@ -18,6 +18,10 @@ open import Ledger.Conway.Conformance.Certs govStructure
 open import Prelude
 open import Tactic.GenError
 
+private
+  module L where
+    open import Ledger.Utxo txs abs public
+
 open Equivalence
 
 instance

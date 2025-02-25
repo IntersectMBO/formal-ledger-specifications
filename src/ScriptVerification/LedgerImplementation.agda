@@ -183,7 +183,7 @@ SVTransactionStructure = record
 instance _ = SVTransactionStructure
 
 open import Ledger.Abstract it
-open import Ledger.Conway.Conformance.Gov it
+open import Ledger.Gov it
 
 open TransactionStructure it
 

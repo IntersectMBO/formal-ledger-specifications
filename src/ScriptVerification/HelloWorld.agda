@@ -128,7 +128,7 @@ evalFailScript = evalScripts failTx failState
 opaque
   unfolding collectPhaseTwoScriptInputs
   unfolding setToList
-  unfolding L.outs
+  unfolding outs
 
   _ : notEmpty succeedState ≡ ⊤
   _ = refl
