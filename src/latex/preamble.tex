@@ -32,18 +32,21 @@
   %% style=authoryear-icomp,
   %% style=authoryear-ibid,
   %% style=authoryear-terse,
-  backend=biber
+  backend=biber,
+  ibidtracker=constrict,
+  pagetracker=page,
+  datamodel=software,
   ]{biblatex}
 %% \usepackage[style=alphabeticnumeric-comp, backend=biber]{biblatex}
   %% style=alphabetic,
   %% sorting=ynt
-
+\usepackage{software-biblatex}
 \addbibresource{references.bib}
 
 %%
 %% For more consistent and robust cross references...
 %%
-\usepackage[capitalize]{cleveref}
+\usepackage[capitalize,nameinlink]{cleveref}
 %% Wherever we previously used \ref, we now use \cref instead
 %% (except at the beginning of a sentence, where we use \Cref) so we
 %% no longer need to explicitly name the kind of thing being referenced.
@@ -53,8 +56,6 @@
 %% + To refer to multiple things at once, combine them all into one:
 %%   `\cref{eq2,eq1,eq3,eq5,thm2,def1}` produces:
 %%   "Eqs.~(1) to~(3) and~(5), Theorem~5, and Definition~1".
-
-\usepackage{xparse}
 
 \usepackage{fontspec}
 
