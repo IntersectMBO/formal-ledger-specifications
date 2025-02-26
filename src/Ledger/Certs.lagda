@@ -317,15 +317,16 @@ data _⊢_⇀⦇_,DELEG⦈_ where
 \end{code}
 \begin{code}
   DELEG-delegate :
+    let Γ = ⟦ pp , pools , delegatees ⟧
+    in
     ∙ (c ∉ dom rwds → d ≡ pp .keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧
-        ⇀⦇ delegate c mv mkh d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      Γ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mv mkh d ,DELEG⦈
+           ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
@@ -376,10 +377,12 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
 \begin{code}
   GOVCERT-regdrep :
+    let Γ = ⟦ e , pp , vs , wdrls , cc ⟧
+    in
     ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢  ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                                  ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
+          ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
@@ -439,11 +442,11 @@ data _⊢_⇀⦇_,CERT⦈_ where
 data _⊢_⇀⦇_,CERTBASE⦈_ where
 \end{code}
 \begin{code}
-  CERT-base : let
-    refresh          = mapPartial getDRepVote (fromList vs)
-    refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
-    wdrlCreds        = mapˢ stake (dom wdrls)
-    validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
+  CERT-base :
+    let refresh          = mapPartial getDRepVote (fromList vs)
+        refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
+        wdrlCreds        = mapˢ stake (dom wdrls)
+        validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
                                         ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []) )
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
