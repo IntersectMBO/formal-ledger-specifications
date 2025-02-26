@@ -316,16 +316,19 @@ _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _
 data _⊢_⇀⦇_,DELEG⦈_ where
 \end{code}
 \begin{code}
-  DELEG-delegate : let open PParams pp in
+  DELEG-delegate : let  open PParams pp
+                        Γ = record  { pparams = pp
+                                    ; pools = pools
+                                    ; delegatees = delegatees } in
+
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧
-        ⇀⦇ delegate c mv mkh d ,DELEG⦈
-        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      Γ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mv mkh d ,DELEG⦈
+          ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
