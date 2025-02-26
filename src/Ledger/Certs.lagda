@@ -376,22 +376,43 @@ data _⊢_⇀⦇_,POOL⦈_ where
 data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
 \begin{code}
-  GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
+  GOVCERT-regdrep :
+    ∀ {pp} → let  open PParams pp
+                  Γ = record  { epoch      = e
+                              ; pp         = pp
+                              ; votes      = vs
+                              ; wdrls      = wdrls
+                              ; coldCreds  = cc } in
+
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢  ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
-                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
+          ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
+    ∀ {pp} → let  open PParams pp
+                  Γ = record  { epoch      = e
+                              ; pp         = pp
+                              ; votes      = vs
+                              ; wdrls      = wdrls
+                              ; coldCreds  = cc } in
+
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧
 
   GOVCERT-ccreghot :
+    ∀ {pp} → let  open PParams pp
+                  Γ = record  { epoch      = e
+                              ; pp         = pp
+                              ; votes      = vs
+                              ; wdrls      = wdrls
+                              ; coldCreds  = cc } in
+
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
