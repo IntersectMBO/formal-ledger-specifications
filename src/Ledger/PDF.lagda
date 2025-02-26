@@ -11,25 +11,38 @@
 
 \begin{document}
 \title{Formal Specification of the Cardano Blockchain Ledger}
-\author{}
+
+\author{%
+  James Chapman \\ {\small \url{james.chapman@iohk.io}}
+  \and
+  Jared Corduan \\ {\small \url{jared.corduan@iohk.io}}
+  \and
+  William DeMeo \\ {\small \url{william.demeo@iohk.io}}
+  \and
+  Javier Diaz \\ {\small \url{javier.diaz@iohk.io}}
+  \and
+  Alasdair Hill \\ {\small \url{alasdair.hill@iohk.io}}
+  \and
+  Joosep Jääger \\ {\small \url{joosep.jaager@iohk.io}}
+  \and
+  Andre Knispel \\ {\small \url{andre.knispel@iohk.io}}
+  \and
+  Alexey Kuleshevich \\ {\small \url{alexey.kuleshevich@iohk.io}}
+  \and
+  Orestis Melkonian \\ {\small \url{orestis.melkonian@iohk.io}}
+  \and
+  Ulf Norell \\ {\small \url{ulf.norell@quviq.com}}
+  \and
+  Carlos Tom\'{e} Corti\~{n}as \\ {\small \url{carlos.tome-cortinas@iohk.io}}
+  \and
+  Polina Vinogradova \\ {\small \url{polina.vinogradova@iohk.io}}
+}
+
 \date{\today}
+
 \maketitle
 
-\section*{List of Contributors}
-\label{acknowledgements}
-
-Jared Corduan,
-Carlos Tom\'{e} Corti\~{n}as,
-William DeMeo,
-Alasdair Hill,
-Joosep Jääger,\\
-Andre Knispel,
-Alexey Kuleshevich,
-Orestis Melkonian,
-Ulf Norell
-
 \tableofcontents
-
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
