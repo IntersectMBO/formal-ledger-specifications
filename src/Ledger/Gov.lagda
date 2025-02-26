@@ -108,18 +108,16 @@ govActionPriority (ChangePParams _)        = 4
 govActionPriority (TreasuryWdrl _)         = 5
 govActionPriority Info                     = 6
 
-_∼_ : ℕ → ℕ → Type
-n ∼ m = (n ≡ m) ⊎ (n ≡ 0 × m ≡ 1) ⊎ (n ≡ 1 × m ≡ 0)
-
-_≈ᵍ_ : GovAction → GovAction → Type
-a ≈ᵍ a' = (govActionPriority a) ∼ (govActionPriority a')
+Overlap : GovAction → GovAction → Type
+Overlap a a' = let n = govActionPriority a
+                   m = govActionPriority a'
+               in (n ≡ m) ⊎ (n ≡ 0 × m ≡ 1) ⊎ (n ≡ 1 × m ≡ 0)
 \end{code}
 \begin{code}[hide]
-_∼?_ : (n m : ℕ) → Dec (n ∼ m)
-n ∼? m = n ≟ m ⊎-dec (n ≟ 0 ×-dec m ≟ 1) ⊎-dec (n ≟ 1 ×-dec m ≟ 0)
-
-_≈?_ : (a a' : GovAction) → Dec (a ≈ᵍ a')
-a ≈? a' = (govActionPriority a) ∼? (govActionPriority a')
+Overlap? : (a a' : GovAction) → Dec (Overlap a a')
+Overlap? a a' = let n = govActionPriority a
+                    m = govActionPriority a'
+                in n ≟ m ⊎-dec (n ≟ 0 ×-dec m ≟ 1) ⊎-dec (n ≟ 1 ×-dec m ≟ 0)
 \end{code}
 \begin{code}
 
@@ -194,14 +192,12 @@ the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list o
 whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
 enacted one.
 
-Additionally, \govActionPriority assigns a priority to the various governance action types.
-This is useful for ordering lists of governance actions as well as grouping governance
-actions by constructor. In particular, the relations
-\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}∼\AgdaUnderscore{}}} and
-\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in
-Figure~\ref{defs:enactable} are used for determining whether two actions are of the same
-``kind'' in the following sense: either the actions arise from the same constructor, or one
-action is \NoConfidence and the other is an \UpdateCommittee action.
+The function \govActionPriority assigns a priority to the various types of governance actions.
+This is useful for ordering lists of governance actions (see \AgdaFunction{insertGovAction}
+in Fig.~\ref{defs:gov-functions}).
+%
+Priority is also used to check if two actions \AgdaFunction{Overlap}: that is,
+they potentially modify the same piece of \AgdaDatatype{EnactState}.
 
 \begin{figure*}
 \begin{AgdaMultiCode}
@@ -252,7 +248,7 @@ hasParent e s a aid = case getHash aid of
 \begin{code}
     nothing      → ⊤
     (just aid')  → hasParentE e aid' a
-                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × action gas ≈ᵍ a) s
+                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × Overlap (gas .action) a) s
 \end{code}
 \begin{code}[hide]
 open Equivalence
@@ -265,7 +261,7 @@ hasParentE? e aid a with getHashES e a
 hasParent? : ∀ e s a aid → Dec (hasParent e s a aid)
 hasParent? e s a aid with getHash aid
 ... | just aid' = hasParentE? e aid' a
-                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec action gas ≈? a) s
+                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec Overlap? (gas .action) a) s
 ... | nothing = yes _
 
 -- newtype to make the instance resolution work
