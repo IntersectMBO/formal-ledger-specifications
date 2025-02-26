@@ -1,5 +1,7 @@
 \section{Token Algebras}
 \label{sec:token-algebra}
+\modulenote{\LedgerModule{TokenAlgebra}}
+
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
@@ -8,6 +10,7 @@ open import Prelude using (Type)
 module Ledger.TokenAlgebra (
 \end{code}
 \emph{Abstract types}
+\AgdaTarget{PolicyId}
 \begin{code}
   PolicyId
 
@@ -25,15 +28,12 @@ open import Relation.Unary       using (Pred)
 MemoryEstimate : Set
 MemoryEstimate = ℕ
 \end{code}
+
 \emph{Derived types}
 \AgdaTarget{TokenAlgebra}
 \begin{code}
 record TokenAlgebra : Type₁ where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     Value : Set
     ⦃ Value-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ Value
 
@@ -56,6 +56,7 @@ record TokenAlgebra : Type₁ where
     specialAsset              : AssetName
     property                  : coin ∘ inject ≗ id -- FIXME: rename!
     coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
+
 \end{code}
 \begin{code}[hide]
     ⦃ DecEq-Value ⦄ : DecEq Value
@@ -74,6 +75,7 @@ record TokenAlgebra : Type₁ where
     open ≡-Reasoning
     open MonoidMorphisms.IsMonoidHomomorphism
 \end{code}
+
 \emph{Helper functions}
 \AgdaTarget{sumᵛ}
 \begin{code}

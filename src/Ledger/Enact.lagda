@@ -1,5 +1,7 @@
 \section{Enactment}
 \label{sec:enactment}
+\modulenote{\LedgerModule{Enact}}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -30,26 +32,17 @@ this field will be reset.
 Note that all other fields of \EnactState also contain a \GovActionID
 since they are \HashProtected.
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record EnactEnv : Type where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_⟧ᵉ
   field
-\end{code}
-\begin{code}
     gid       : GovActionID
     treasury  : Coin
     epoch     : Epoch
 
 record EnactState : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     cc            : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ))
     constitution  : HashProtected (DocHash × Maybe ScriptHash)
     pv            : HashProtected ProtVer
@@ -57,6 +50,10 @@ record EnactState : Type where
     withdrawals   : RwdAddr ⇀ Coin
 \end{code}
 \begin{code}[hide]
+instance
+  unquoteDecl To-EnactEnv = derive-To
+    [ (quote EnactEnv , To-EnactEnv) ]
+
 open EnactState
 \end{code}
 \begin{code}
@@ -124,7 +121,7 @@ required). The exceptions are \UpdateCommittee and \TreasuryWdrl:
 \item \TreasuryWdrl requires that the treasury is able to cover the sum of all withdrawals (old and new).
 \end{itemize}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 open PParams using (ccMaxTermLength)
@@ -134,19 +131,19 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \begin{code}
   Enact-NoConf :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record s { cc = nothing , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record s { cc = nothing , gid }
 
-  Enact-NewComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
+  Enact-UpdComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
                       maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ UpdateCommittee new rem q ,ENACT⦈
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ UpdateCommittee new rem q ,ENACT⦈
       record s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
 
   Enact-NewConst :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈ record s { constitution = (dh , sh) , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈ record s { constitution = (dh , sh) , gid }
 \end{code}
 \end{AgdaMultiCode}
 \caption{ENACT transition system}
@@ -157,21 +154,21 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \begin{code}
   Enact-HF :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈ record s { pv = v , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈ record s { pv = v , gid }
 
   Enact-PParams :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
       record s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
 
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
     ∑[ x ← newWdrls ] x ≤ t
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ TreasuryWdrl wdrl ,ENACT⦈ record s { withdrawals = newWdrls }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ TreasuryWdrl wdrl ,ENACT⦈ record s { withdrawals = newWdrls }
 
   Enact-Info :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ᵉ ⊢ s ⇀⦇ Info ,ENACT⦈ s
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ Info ,ENACT⦈ s
 \end{code}
 \end{AgdaMultiCode}
 \caption{ENACT transition system (continued)}

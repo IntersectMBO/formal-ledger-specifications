@@ -1,4 +1,5 @@
 \section{Base Types}
+\label{sec:base-types}
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -6,7 +7,6 @@ module Ledger.BaseTypes where
 
 open import Prelude using (ℕ)
 \end{code}
-
 
 \begin{code}[hide]
 private

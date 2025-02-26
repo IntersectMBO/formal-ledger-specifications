@@ -1,19 +1,18 @@
 module Ledger.Conway.Foreign.HSLedger.Certs where
 
 open import Ledger.Conway.Foreign.HSLedger.Address
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (DState; CertEnv; GState)
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes renaming (⟦_,_,_⟧ᵈ to ⟦_,_,_⟧ᵈ'; DState to DState'
+                                                              ; ⟦_,_⟧ᵛ to ⟦_,_⟧ᵛ'; GState to GState') hiding (CertEnv)
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
-open import Ledger.Conway.Conformance.Certs govStructure using (⟦_,_,_,_⟧ᵈ; DState; GState)
+open import Ledger.Conway.Conformance.Certs govStructure using (⟦_,_,_,_⟧ᵈ; ⟦_,_,_⟧ᵛ; DState; GState; CertEnv)
 
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
   using ( Computational-DELEG
         ; Computational-GOVCERT
         ; Computational-POOL
         )
-
-open import Ledger.Conway.Conformance.Certs govStructure using (CertEnv)
 
 instance
   HsTy-PoolParams = autoHsType PoolParams
@@ -50,6 +49,14 @@ instance
     ⊣ withConstructor "MkGState"
     • fieldPrefix "gs"
   Conv-GState = autoConvert GState
+
+  Conv-DState-DState' : Convertible DState DState'
+  Conv-DState-DState' .to ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ᵈ = ⟦ voteDelegs , stakeDelegs , stakeDelegs ⟧ᵈ'
+  Conv-DState-DState' .from ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ'         = ⟦ voteDelegs , stakeDelegs , stakeDelegs , ∅ ⟧ᵈ
+
+  Conv-GState-GState' : Convertible GState GState'
+  Conv-GState-GState' .to ⟦ dreps , ccHotKeys , deposits ⟧ᵛ = ⟦ dreps , ccHotKeys ⟧ᵛ'
+  Conv-GState-GState' .from ⟦ dreps , ccHotKeys ⟧ᵛ'         = ⟦ dreps , ccHotKeys , ∅ ⟧ᵛ
 
 -- deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
 -- deleg-step = to (compute Computational-DELEG)

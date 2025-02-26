@@ -19,12 +19,7 @@ record NewPParamEnv : Type where
 \begin{AgdaMultiCode}
 \begin{code}
 record NewPParamState : Type where
-  constructor ⟦_,_⟧ⁿᵖ
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     pparams  : PParams
     ppup     : PPUpdateState
 
@@ -49,6 +44,10 @@ votedValue pup pparams quorum =
 \caption{Types and functions for the NEWPP transition system}
 \end{figure*}
 \begin{code}[hide]
+instance
+  unquoteDecl To-NewPParamState = derive-To
+    [ (quote NewPParamState , To-NewPParamState) ]
+
 private variable
   Γ : NewPParamEnv
   s s' : NewPParamState
@@ -61,7 +60,7 @@ data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsU
   NEWPP-Accept : ∀ {Γ} → let open NewPParamState s; newpp = applyUpdate pparams upd in
     viablePParams newpp
     ────────────────────────────────
-    Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧ⁿᵖ
+    Γ ⊢ s ⇀⦇ just upd ,NEWPP⦈ ⟦ newpp , updatePPUp newpp ppup ⟧
 
   NEWPP-Reject : ∀ {Γ} →
     Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s

@@ -38,8 +38,8 @@ instance
   Conv-RewardUpdate : Convertible RewardUpdate HsRewardUpdate
   Conv-RewardUpdate .to   ru = record { RewardUpdate ru; rs = to (ru .RewardUpdate.rs) }
   Conv-RewardUpdate .from ru =
-    case (let open HsRewardUpdate ru in ¿ Δt + Δr + Δf + ℤ.+ ∑[ x ← from rs ] x ≡ ℤ.0ℤ ¿) of λ where
-      (yes p) → record { HsRewardUpdate ru ; rs = from (ru .HsRewardUpdate.rs) ; zeroSum = p }
+    case (let open HsRewardUpdate ru in ¿ Δt + Δr + Δf + ℤ.+ (indexedSumᵛ' {A = Credential} (λ x → x) (from rs)) ≡ ℤ.0ℤ ¿) of λ where
+      (yes p) → record { HsRewardUpdate ru ; rs = from (ru .HsRewardUpdate.rs) }
       (no ¬p) → error "Formal Spec: cannot make a non-zero reward update"
 
   HsTy-NewEpochState = autoHsType NewEpochState ⊣ withConstructor "MkNewEpochState"

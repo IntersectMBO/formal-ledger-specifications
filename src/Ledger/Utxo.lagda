@@ -1,8 +1,8 @@
 \section{UTxO}
 \label{sec:utxo}
+\modulenote{\LedgerModule{Utxo}}
 
 \subsection{Accounting}
-
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -41,7 +41,7 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \end{code}
 
 \begin{NoConway}
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
 isTwoPhaseScriptAddress : Tx → UTxO → Addr → Type
 isTwoPhaseScriptAddress tx utxo a =
@@ -145,7 +145,8 @@ is gone with the new design.
 
 Similar to \ScriptPurpose, \DepositPurpose carries the information
 what the deposit is being made for. The deposits are stored in the
-\deposits field of \UTxOState. \updateDeposits is responsible for
+\deposits field of \UTxOState (the type \Deposits{} is defined in
+Figure~\ref{fig:certs:deposit-types}). \updateDeposits is responsible for
 updating this map, which is split into \updateCertDeposits and
 \updateProposalDeposits, responsible for certificates and proposals
 respectively. Both of these functions iterate over the relevant fields
@@ -160,18 +161,17 @@ the state of the previous era at the transition into the Conway era.
 Alternatively, we can effectively treat the old handling of deposits
 as an erratum in the Shelley specification, which we fix by implementing
 the new deposits logic in older eras and then replaying the chain.
+(The handling of deposits in the Shelley era is discussed
+in~\cite[Sec.~8]{shelley-ledger-spec}
+and~\cite[Sec.~B.2]{shelley-delegation-design}.)
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \emph{UTxO environment}
 \begin{code}
 record UTxOEnv : Type where
-\end{code}
-\begin{code}[hide]
   field
-\end{code}
-\begin{code}
     slot      : Slot
     pparams   : PParams
     treasury  : Coin
@@ -180,16 +180,17 @@ record UTxOEnv : Type where
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᵘ
   field
-\end{code}
-\begin{code}
     utxo       : UTxO
     fees       : Coin
     deposits   : Deposits
     donations  : Coin
+\end{code}
+\begin{code}[hide]
+instance
+  unquoteDecl To-UTxOState = derive-To
+    [ (quote UTxOState , To-UTxOState) ]
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}
@@ -210,6 +211,7 @@ data
 \begin{code}[hide]
 module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
+\AgdaNoSpaceAroundCode{}
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
@@ -224,6 +226,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \end{NoConway}
 \begin{code}
+
   refScriptsSize : UTxO → Tx → ℕ
   refScriptsSize utxo tx = sum $ map scriptSize (refScripts tx utxo)
 
@@ -233,6 +236,8 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
                      + scriptsCost pp (refScriptsSize utxo tx)
 
 \end{code}
+\end{AgdaMultiCode}
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 instance
   HasCoin-UTxO : HasCoin UTxO
@@ -360,6 +365,7 @@ depositsChange pp txb deposits =
   getCoin (updateDeposits pp txb deposits) - getCoin deposits
 \end{code}
 \end{AgdaMultiCode}
+\AgdaSpaceAroundCode{}
 \caption{Functions used in UTxO rules}
 \label{fig:functions:utxo}
 \end{figure*}
@@ -460,7 +466,11 @@ to \consumed or \produced depending on its sign. This is done via
 \negPart and \posPart, which satisfy the key property that their
 difference is the identity function.
 
-Figures~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
+Figure~\ref{fig:functions:utxo} defines the function \minfee{}. In
+Conway, \minfee{} includes the cost for reference scripts. This is
+calculated using \scriptsCost{} (see Figure~\ref{fig:scriptsCost}).
+
+Figure~\ref{fig:functions:utxo} also shows the signature of \ValidCertDeposits.
 Inhabitants of this type are constructed in one of eight ways, corresponding to
 seven certificate types plus one for an empty list of certificates.  Suffice it to
 say that \ValidCertDeposits is used to check the validity of the deposits in a
@@ -490,7 +500,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
@@ -502,7 +512,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
 \end{code}
 \caption{UTXOS rule}
 \label{fig:utxos-conway}
@@ -531,7 +541,7 @@ instance
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
 \begin{code}
   UTXO-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb

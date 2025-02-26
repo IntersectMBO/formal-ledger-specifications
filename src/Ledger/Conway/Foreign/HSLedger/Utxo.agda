@@ -19,7 +19,6 @@ open import Foreign.Haskell.Coerce
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (TxWitnesses; refScripts)
 open import Ledger.Conway.Conformance.Utxo DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxow DummyTransactionStructure DummyAbstractFunctions
-  renaming (module L to LW)
 
 instance
   HsTy-UTxOEnv = autoHsType UTxOEnv ⊣ withConstructor "MkUTxOEnv"
@@ -56,20 +55,20 @@ module _ (ext : ExternalFunctions) where
         open UTxOEnv (from env)
      in unlines $
           "Consumed:" ∷
-          ("\tInputs:      \t" +ˢ show (L.balance (utxo ∣ txins))) ∷
+          ("\tInputs:      \t" +ˢ show (balance (utxo ∣ txins))) ∷
           ("\tMint:        \t" +ˢ show mint) ∷
-          ("\tRefunds:     \t" +ˢ show (inject (L.depositRefunds pparams (from st) body))) ∷
+          ("\tRefunds:     \t" +ˢ show (inject (depositRefunds pparams (from st) body))) ∷
           ("\tWithdrawals: \t" +ˢ show (inject (getCoin txwdrls))) ∷
-          ("\tTotal:       \t" +ˢ show (L.consumed pparams (from st) body)) ∷
+          ("\tTotal:       \t" +ˢ show (consumed pparams (from st) body)) ∷
           "Produced:" ∷
-          ("\tOutputs:     \t" +ˢ show (L.balance (L.outs body))) ∷
+          ("\tOutputs:     \t" +ˢ show (balance (outs body))) ∷
           ("\tDonations:   \t" +ˢ show (inject txdonation)) ∷
-          ("\tDeposits:    \t" +ˢ show (inject (L.newDeposits pparams (from st) body))) ∷
+          ("\tDeposits:    \t" +ˢ show (inject (newDeposits pparams (from st) body))) ∷
           ("\tFees:        \t" +ˢ show (inject txfee)) ∷
-          ("\tTotal:       \t" +ˢ show (L.produced pparams (from st) body)) ∷
+          ("\tTotal:       \t" +ˢ show (produced pparams (from st) body)) ∷
           "" ∷
           "Reference Scripts Info:" ∷
-          ("\tTotal size: \t" +ˢ show (L.refScriptsSize utxo (from tx))) ∷
+          ("\tTotal size: \t" +ˢ show (refScriptsSize utxo (from tx))) ∷
           []
 
   {-# COMPILE GHC utxo-debug as utxoDebug #-}
@@ -81,14 +80,14 @@ module _ (ext : ExternalFunctions) where
         open UTxOState (from st)
         open UTxOEnv (from env)
         open TxWitnesses (coerce ⦃ TrustMe ⦄ wits)
-        neededHashes = LW.scriptsNeeded utxo body
+        neededHashes = scriptsNeeded utxo body
         refScriptHashes = fromList $ map
           hash 
           (refScripts (coerce ⦃ TrustMe ⦄ (from tx)) (coerce ⦃ TrustMe ⦄ utxo))
         witsScriptHashes  = mapˢ hash scripts
      in unlines
        $ "witsVKeyNeeded utxo txb = "
-       ∷ show (LW.witsVKeyNeeded utxo body)
+       ∷ show (witsVKeyNeeded utxo body)
        ∷ "\nwitsKeyHashes = "
        ∷ show (mapˢ hash (dom vkSigs))
        ∷ "\nneededHashes = "

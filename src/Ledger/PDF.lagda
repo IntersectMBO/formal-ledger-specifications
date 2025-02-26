@@ -20,13 +20,13 @@ module Ledger.PDF where
 
 open import Ledger.BaseTypes
 open import Ledger.Introduction
-open import Ledger.Notation
 open import Ledger.Crypto
 open import Ledger.Types.Epoch
 open import Ledger.Address
 open import Ledger.Script
 open import Ledger.ScriptValidation
 open import Ledger.PParams
+open import Ledger.Fees
 
 open import Ledger.Types.GovStructure
 open import Ledger.GovernanceActions
@@ -45,29 +45,31 @@ open import Ledger.Utxow.Properties
 open import Ledger.Ledger
 open import Ledger.Ledger.Properties
 open import Ledger.Ratify.Properties
+open import Ledger.Epoch.Properties
 open import Ledger.Chain.Properties
 
 open import Ledger.Gov
 open import Ledger.Enact
 open import Ledger.Ratify
-
+open import Ledger.Epoch
 open import Ledger.Chain
 
 open import Ledger.Properties
 
-open import Ledger.EssentialAgda
+open import EssentialAgda
 open import Ledger.PDF.ConwayBootstrapEnact
 open import Ledger.PDF.ConwayBootstrap
 \end{code}
 
 \include{Ledger/Introduction}
-\include{Ledger/Notation}
+\include{Notation}
 \include{Ledger/Crypto}
 \include{Ledger/BaseTypes}
 \include{Ledger/TokenAlgebra}
 \include{Ledger/Address}
 \include{Ledger/Script}
 \include{Ledger/PParams}
+\include{Ledger/Fees}
 \include{Ledger/GovernanceActions}
 \include{Ledger/Transaction}
 \include{Ledger/Utxo}
@@ -83,6 +85,9 @@ open import Ledger.PDF.ConwayBootstrap
 \section{Properties}
 \input{Ledger/Utxo/Properties}
 
+\clearpage
+
+\addcontentsline{toc}{section}{References}
 \bibliographystyle{abbrv}
 \bibliography{references}
 
@@ -90,7 +95,7 @@ open import Ledger.PDF.ConwayBootstrap
 
 \appendix
 
-\input{Ledger/EssentialAgda}
+\input{EssentialAgda}
 \input{Ledger/PDF/ConwayBootstrapEnact}
 \input{Ledger/PDF/ConwayBootstrap}
 
