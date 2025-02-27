@@ -38,54 +38,54 @@ lookupActionId pparams role aid epoch =
    in any? λ _ → ¿ _ ¿
 
 private
-  isUpdateCommittee : (a : GovAction) → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ UpdateCommittee new rem q)
-  isUpdateCommittee NoConfidence                = no λ()
-  isUpdateCommittee (UpdateCommittee new rem q) = yes (new , rem , q , refl)
-  isUpdateCommittee (NewConstitution x x₁)      = no λ()
-  isUpdateCommittee (TriggerHF x)               = no λ()
-  isUpdateCommittee (ChangePParams x)           = no λ()
-  isUpdateCommittee (TreasuryWdrl x)            = no λ()
-  isUpdateCommittee Info                        = no λ()
+  isUpdateCommittee : (a : GovAction) → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ (UpdateCommittee , new , rem , q))
+  isUpdateCommittee (NoConfidence , _)                = no λ()
+  isUpdateCommittee (UpdateCommittee , new , rem , q) = yes (new , rem , q , refl)
+  isUpdateCommittee (NewConstitution , _)             = no λ()
+  isUpdateCommittee (TriggerHF , x)                   = no λ()
+  isUpdateCommittee (ChangePParams , x)               = no λ()
+  isUpdateCommittee (TreasuryWdrl , x)                = no λ()
+  isUpdateCommittee (Info , _)                        = no λ()
 
   instance
-    needsPolicy₁ : {a : GovAction} → (∃[ u ] a ≡ ChangePParams u) ⁇
-    needsPolicy₁ {NoConfidence}              = ⁇ no λ()
-    needsPolicy₁ {UpdateCommittee new rem q} = ⁇ no λ()
-    needsPolicy₁ {NewConstitution x x₁}      = ⁇ no λ()
-    needsPolicy₁ {TriggerHF x}               = ⁇ no λ()
-    needsPolicy₁ {ChangePParams x}           = ⁇ yes (-, refl)
-    needsPolicy₁ {TreasuryWdrl x}            = ⁇ no λ()
-    needsPolicy₁ {Info}                      = ⁇ no λ()
+    needsPolicy₁ : {a : GovAction} → (∃[ u ] a ≡ (ChangePParams , u)) ⁇
+    needsPolicy₁ {NoConfidence , _}              = ⁇ no λ()
+    needsPolicy₁ {UpdateCommittee , _} = ⁇ no λ()
+    needsPolicy₁ {NewConstitution , _}      = ⁇ no λ()
+    needsPolicy₁ {TriggerHF , _}               = ⁇ no λ()
+    needsPolicy₁ {ChangePParams , x}          = ⁇ yes (-, refl)
+    needsPolicy₁ {TreasuryWdrl  , _}            = ⁇ no λ()
+    needsPolicy₁ {Info , _}                      = ⁇ no λ()
 
-    needsPolicy₂ : {a : GovAction} → (∃[ w ] a ≡ TreasuryWdrl w) ⁇
-    needsPolicy₂ {NoConfidence}              = ⁇ no λ()
-    needsPolicy₂ {UpdateCommittee new rem q} = ⁇ no λ()
-    needsPolicy₂ {NewConstitution x x₁}      = ⁇ no λ()
-    needsPolicy₂ {TriggerHF x}               = ⁇ no λ()
-    needsPolicy₂ {ChangePParams x}           = ⁇ no λ()
-    needsPolicy₂ {TreasuryWdrl x}            = ⁇ yes (-, refl)
-    needsPolicy₂ {Info}                      = ⁇ no λ()
+    needsPolicy₂ : {a : GovAction} → (∃[ w ] a ≡ (TreasuryWdrl , w)) ⁇
+    needsPolicy₂ {NoConfidence , _}    = ⁇ no λ()
+    needsPolicy₂ {UpdateCommittee , _} = ⁇ no λ()
+    needsPolicy₂ {NewConstitution , _} = ⁇ no λ()
+    needsPolicy₂ {TriggerHF , _}       = ⁇ no λ()
+    needsPolicy₂ {ChangePParams , _}   = ⁇ no λ()
+    needsPolicy₂ {TreasuryWdrl , x}    = ⁇ yes (-, refl)
+    needsPolicy₂ {Info , _}            = ⁇ no λ()
 
-  hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ TriggerHF v' × pvCanFollow v' v)
-  hasPrev record { action = NoConfidence }            v = no λ ()
-  hasPrev record { action = (UpdateCommittee _ _ _) } v = no λ ()
-  hasPrev record { action = (NewConstitution _ _) }   v = no λ ()
-  hasPrev record { action = (TriggerHF v') }          v = case pvCanFollow? {v'} {v} of λ where
+  hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ (TriggerHF , v') × pvCanFollow v' v)
+  hasPrev record { action = NoConfidence , _}       v = no λ ()
+  hasPrev record { action = (UpdateCommittee , _) } v = no λ ()
+  hasPrev record { action = (NewConstitution , _) } v = no λ ()
+  hasPrev record { action = (TriggerHF , v') }      v = case pvCanFollow? {v'} {v} of λ where
     (yes p) → yes (-, refl , p)
     (no ¬p) → no  (λ where (_ , refl , h) → ¬p h)
-  hasPrev record { action = (ChangePParams _) }       v = no λ ()
-  hasPrev record { action = (TreasuryWdrl _) }        v = no λ ()
-  hasPrev record { action = Info }                    v = no λ ()
+  hasPrev record { action = (ChangePParams , _) }       v = no λ ()
+  hasPrev record { action = (TreasuryWdrl , _) }        v = no λ ()
+  hasPrev record { action = Info , _}                   v = no λ ()
 
 opaque
   unfolding validHFAction isRegistered
 
   instance
     validHFAction? : ∀ {p s e} → validHFAction p s e ⁇
-    validHFAction? {record { action = NoConfidence }} = Dec-⊤
-    validHFAction? {record { action = UpdateCommittee _ _ _ }} = Dec-⊤
-    validHFAction? {record { action = NewConstitution _ _ }} = Dec-⊤
-    validHFAction? {record { action = TriggerHF v ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
+    validHFAction? {record { action = NoConfidence , _ }} = Dec-⊤
+    validHFAction? {record { action = UpdateCommittee , _ }} = Dec-⊤
+    validHFAction? {record { action = NewConstitution , _ }} = Dec-⊤
+    validHFAction? {record { action = (TriggerHF , v) ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
       with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
     ... | yes p | _ = ⁇ yes (inj₁ p)
     ... | no _ | yes p with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p = ⁇ yes (inj₂
@@ -94,9 +94,9 @@ opaque
       { (inj₁ x) → ¬p₁ x
       ; (inj₂ (s , v , (h₁ , h₂ , h₃))) → ¬p₂ $
         ∃∈-Any ((prev , s) , (from ∈-fromList h₁ , refl , (v , h₂ , h₃))) }
-    validHFAction? {record { action = ChangePParams _ }} = Dec-⊤
-    validHFAction? {record { action = TreasuryWdrl _ }} = Dec-⊤
-    validHFAction? {record { action = Info }} = Dec-⊤
+    validHFAction? {record { action = ChangePParams , _ }} = Dec-⊤
+    validHFAction? {record { action = TreasuryWdrl , _ }} = Dec-⊤
+    validHFAction? {record { action = Info , _ }} = Dec-⊤
 
   isRegistered? : ∀ Γ v → Dec (isRegistered Γ v)
   isRegistered? _ (CC   , _) = ¿ _ ∈ _ ¿
@@ -150,10 +150,10 @@ instance
         computeProof = case H of λ where
           (yes (wf , av , dep , vHFA , HasParent' en , goodAddr , regReturn) , yes (new , rem , q , refl)) →
             case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
-              (yes newOk) → success (_ , GOV-Propose (wf , av , dep , vHFA , en , goodAddr , regReturn))
+              (yes newOk) → success (-, GOV-Propose {_} {_} {_} {_} {_} {_} {_} {_} {(new , rem , q)} {_} (wf , av , dep , vHFA , en , goodAddr , regReturn))
               (no ¬p)     → failure (genErrors ¬p)
           (yes (wf , av , dep , vHFA , HasParent' en , goodAddr , returnReg) , no notNewComm) → success
-            (-, GOV-Propose (wf , av , dep , vHFA , en , goodAddr , returnReg))
+            (-, GOV-Propose {_} {_} {_} {_} {_} {_} {_} {_} {a .proj₂} {_} (wf , av , dep , vHFA , en , goodAddr , returnReg))
           (no ¬p , _) → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s' → map proj₁ computeProof ≡ success s'
@@ -174,14 +174,14 @@ instance
 Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ String
 Computational-GOV = it
 
-allEnactable-singleton : ∀ {aid s es} → getHash (s .prevAction) ≡ getHashES es (s .action)
+allEnactable-singleton : ∀ {aid s es} → getHash (s .prevAction) ≡ getHashES es (s .action .proj₁)
   → allEnactable es [ (aid , s) ]
 allEnactable-singleton {aid} {s} {es} eq = helper All.∷ All.[]
   where
     module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th)
 
     helper : enactable es (getAidPairsList [ (aid , s) ]) (aid , s)
-    helper with getHashES es (s .action) | getHash (s .prevAction)
+    helper with getHashES es (s .action .proj₁) | getHash (s .prevAction)
     ... | just x | just x' with refl <- just-injective eq =
       [ (aid , x) ] , proj₁ ≡ᵉ.refl , All.[] ∷ [] , inj₁ (refl , refl)
     ... | just x | nothing = case eq of λ ()

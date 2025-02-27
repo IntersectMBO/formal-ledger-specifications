@@ -63,22 +63,22 @@ ccCreds (just x   , _)  = dom (x .proj₁)
 ccCreds (nothing  , _)  = ∅
 
 getHash : ∀ {a} → NeedsHash a → Maybe GovActionID
-getHash {NoConfidence}           h = just h
-getHash {UpdateCommittee _ _ _}  h = just h
-getHash {NewConstitution _ _}    h = just h
-getHash {TriggerHF _}            h = just h
-getHash {ChangePParams _}        h = just h
-getHash {TreasuryWdrl _}         _ = nothing
-getHash {Info}                   _ = nothing
+getHash {NoConfidence}     h = just h
+getHash {UpdateCommittee}  h = just h
+getHash {NewConstitution}  h = just h
+getHash {TriggerHF}        h = just h
+getHash {ChangePParams}    h = just h
+getHash {TreasuryWdrl}     _ = nothing
+getHash {Info}             _ = nothing
 
-getHashES : EnactState → GovAction → Maybe GovActionID
-getHashES es NoConfidence             = just (es .cc .proj₂)
-getHashES es (UpdateCommittee _ _ _)  = just (es .cc .proj₂)
-getHashES es (NewConstitution _ _)    = just (es .constitution .proj₂)
-getHashES es (TriggerHF _)            = just (es .pv .proj₂)
-getHashES es (ChangePParams _)        = just (es .pparams .proj₂)
-getHashES es (TreasuryWdrl _)         = nothing
-getHashES es Info                     = nothing
+getHashES : EnactState → GovActionType → Maybe GovActionID
+getHashES es NoConfidence       = just (es .cc .proj₂)
+getHashES es (UpdateCommittee)  = just (es .cc .proj₂)
+getHashES es (NewConstitution)  = just (es .constitution .proj₂)
+getHashES es (TriggerHF)        = just (es .pv .proj₂)
+getHashES es (ChangePParams)    = just (es .pparams .proj₂)
+getHashES es (TreasuryWdrl)     = nothing
+getHashES es Info               = nothing
 \end{code}
 \emph{Type of the ENACT transition system}
 \begin{code}[hide]
@@ -131,19 +131,19 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \begin{code}
   Enact-NoConf :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ NoConfidence ,ENACT⦈ record s { cc = nothing , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ NoConfidence , tt ,ENACT⦈ record s { cc = nothing , gid }
 
   Enact-UpdComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
                       maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ UpdateCommittee new rem q ,ENACT⦈
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ UpdateCommittee , new , rem , q ,ENACT⦈
       record s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
 
   Enact-NewConst :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ NewConstitution dh sh ,ENACT⦈ record s { constitution = (dh , sh) , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ NewConstitution , dh , sh ,ENACT⦈ record s { constitution = (dh , sh) , gid }
 \end{code}
 \end{AgdaMultiCode}
 \caption{ENACT transition system}
@@ -154,21 +154,21 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \begin{code}
   Enact-HF :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ TriggerHF v ,ENACT⦈ record s { pv = v , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ TriggerHF , v ,ENACT⦈ record s { pv = v , gid }
 
   Enact-PParams :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ChangePParams up ,ENACT⦈
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ChangePParams , up ,ENACT⦈
       record s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
 
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
     ∑[ x ← newWdrls ] x ≤ t
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ TreasuryWdrl wdrl ,ENACT⦈ record s { withdrawals = newWdrls }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ TreasuryWdrl , wdrl ,ENACT⦈ record s { withdrawals = newWdrls }
 
   Enact-Info :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ Info ,ENACT⦈ s
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ Info , tt ,ENACT⦈ s
 \end{code}
 \end{AgdaMultiCode}
 \caption{ENACT transition system (continued)}
