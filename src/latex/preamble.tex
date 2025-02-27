@@ -20,27 +20,14 @@
 
 \setlength{\mathindent}{10pt}
 
-\usepackage[utf8]{inputenc} % For UTF-8 encoding (recommended)
-%% \usepackage[style=abbrv, backend=biber]{biblatex}
 \usepackage[
-  %% style=alphabetic,
-  style=numeric-comp,
-  %% style=authortitle,
-  %% style=authortitle-terse,
-  %% style=authortitle-comp,
-  %% style=authoryear-comp,
-  %% style=authoryear-icomp,
-  %% style=authoryear-ibid,
-  %% style=authoryear-terse,
+  style=lncs,
   backend=biber,
   ibidtracker=constrict,
   pagetracker=page,
   datamodel=software,
   ]{biblatex}
-%% \usepackage[style=alphabeticnumeric-comp, backend=biber]{biblatex}
-  %% style=alphabetic,
-  %% sorting=ynt
-%% \usepackage{software-biblatex}
+\usepackage{software-biblatex}
 \addbibresource{references.bib}
 
 %%
@@ -131,3 +118,6 @@
 %% The above help enforce consistency among citations that mention sections;
 %% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
 %%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
+\NewDocumentCommand{\email}{m}{%
+  \href{mailto:#1}{#1}
+}

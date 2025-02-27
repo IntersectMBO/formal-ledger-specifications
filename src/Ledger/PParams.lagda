@@ -402,7 +402,7 @@ is associated to precisely one of these groups.  The \SecurityGroup{} is
 special: a protocol parameter may or may not be in the \SecurityGroup{}.
 So, each protocol parameter belongs to at least one and at most two groups.
 Note that in \hrefCIP{1694} there is no \SecurityGroup{}, but there is the
-concept of security-relevant protocol parameters~\parencite(see)(){cip1694}.
+concept of security-relevant protocol parameters~(see \textcite{cip1694}).
 The difference between these notions is only social, so we implement
 security-relevant protocol parameters as a group.
 

@@ -77,7 +77,7 @@ data GovAction : Type where
     abstention, or no confidence (\credVoter{}, \abstainRep{}, or \noConfidenceRep{});
   \item \Anchor{}: a url and a document hash;
   \item \GovAction{} (\defn{governance action}): one of seven possible actions
-    (see~\cref{fig:types-of-governance-actions} for definitions);
+    (see \cref{fig:types-of-governance-actions} for definitions);
 \end{itemize}
 The governance actions carry the following information:
 \begin{itemize}
@@ -115,7 +115,7 @@ The governance actions carry the following information:
 % \label{sec:voting-and-ratification}
 % Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
 % The type of action and the state of the governance system determines which bodies must ratify it.
-% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see \cref{sec:enactment} and \cref{fig:enactment-types}).
+% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
 
 \subsection{Hash Protection}
 \label{sec:hash-protection}

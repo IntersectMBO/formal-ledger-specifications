@@ -119,7 +119,7 @@ result, rounded down to the nearest integer.
 
 \begin{NoConway}
 \Cref{fig:ts-types:utxo} defines the types needed for the UTxO transition system.
-The UTxO transition system is given in~\cref{fig:rules:utxo-shelley}.
+The UTxO transition system is given in \cref{fig:rules:utxo-shelley}.
 %
 \begin{itemize}
   \item
@@ -160,7 +160,7 @@ Alternatively, we can effectively treat the old handling of deposits
 as an erratum in the Shelley specification, which we fix by implementing
 the new deposits logic in older eras and then replaying the chain.
 (The handling of deposits in the Shelley era is discussed
-in~\cite[\sectionname~8]{shelley-ledger-spec} and~\cite[\sectionname~B.2]{shelley-delegation-design}.)
+in~\textcites[\sectionname~8]{shelley-ledger-spec}[\sectionname~B.2]{shelley-delegation-design}.)
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
