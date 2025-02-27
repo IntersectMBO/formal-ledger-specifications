@@ -80,9 +80,9 @@ import Data.Nat.Literals as ℕ
 instance Number-ℕ = ℕ.number
 
 -- (pseudo)equality (for Maybe)
-_≡?_ : {A : Type} → Maybe A → Maybe A → Type
-_≡?_ = Connected _≡_
+_~_ : {A : Type} → Maybe A → Maybe A → Type
+_~_ = Connected _≡_
 
 instance
-  ≟? : {A : Type} {x y : Maybe A} → ⦃ DecEq A ⦄ → (x ≡? y) ⁇
-  ≟? {A} {x} {y} ⦃ deqEq ⦄ = ⁇ (connected? (DecEq._≟_ deqEq) x y)
+  ~? : {A : Type} {x y : Maybe A} → ⦃ DecEq A ⦄ → (x ~ y) ⁇
+  ~? {A} {x} {y} ⦃ deqEq ⦄ = ⁇ (connected? (DecEq._≟_ deqEq) x y)
