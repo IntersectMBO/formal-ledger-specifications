@@ -31,6 +31,7 @@ by setting \stake{} to \nothing{}.
   Network
   KeyHash
   ScriptHash
+
 \end{code}
 \begin{code}[hide]
   : Type)  ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where

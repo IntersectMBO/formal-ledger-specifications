@@ -165,13 +165,14 @@ in~\textcites[\sectionname~8]{shelley-ledger-spec}[\sectionname~B.2]{shelley-del
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}
-\emph{UTxO environment}
+\emph{UTxO environment}%
 \begin{code}
 record UTxOEnv : Type where
   field
     slot      : Slot
     pparams   : PParams
     treasury  : Coin
+
 \end{code}
 \end{NoConway}
 \emph{UTxO states}
@@ -183,6 +184,7 @@ record UTxOState : Type where
     fees       : Coin
     deposits   : Deposits
     donations  : Coin
+
 \end{code}
 \begin{code}[hide]
 instance
@@ -255,6 +257,12 @@ certRefund _                = ∅
 
 data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set
 \end{code}
+\end{AgdaMultiCode}
+\AgdaSpaceAroundCode{}
+\caption{Functions used in UTxO rules}
+\label{fig:functions:utxo}
+\end{figure*}
+
 \begin{code}[hide]
   where
   []         : ValidCertDeposits pp deps []
@@ -315,8 +323,12 @@ instance
   Dec-ValidCertDeposits : ∀ {pp deps certs} → ValidCertDeposits pp deps certs ⁇
   Dec-ValidCertDeposits = ⁇ (validCertDeposits? _ _)
 \end{code}
-\begin{code}
 
+\begin{NoConway}
+\begin{figure*}[htbp]
+\AgdaNoSpaceAroundCode{}
+\begin{AgdaMultiCode}
+\begin{code}
 updateCertDeposits  : PParams → List DCert → Deposits → Deposits
 updateCertDeposits pp [] deposits = deposits
 \end{code}
@@ -363,11 +375,10 @@ depositsChange pp txb deposits =
 \end{code}
 \end{AgdaMultiCode}
 \AgdaSpaceAroundCode{}
-\caption{Functions used in UTxO rules}
+\caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo}
 \end{figure*}
 
-\begin{NoConway}
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{code}

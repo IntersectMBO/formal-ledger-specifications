@@ -37,11 +37,14 @@ explanations may be missing or wrong.
 \end{Conway}
 
 \begin{NoConway}
+This is the work-in-progress specification of the Cardano ledger.
+The Agda source code with which we formalize the ledger specification and which
+generates this pdf document is open source and resides at the following
 \begin{center}
-Repository: \url{\repourl}
+repository: \url{\repourl}
 \end{center}
-This is the work-in-progress specification of the Cardano ledger. The
-current status of each individual era is described in \cref{fig:eras-progress}.
+
+The current status of each individual era is described in Table \ref{fig:eras-progress}.
 
 \begin{longtable}[h!]{|l l l l|}
 \hline
@@ -110,16 +113,16 @@ The closure \RTCI{} of a relation \RTCB{} is defined in \cref{fig:rt-closure}.
 In the remainder of the text, the closure operation is called \RTC{}.
 
 \begin{figure*}[htb]
-\begin{code}[hide]
+\caption{Reflexive transitive closure}
+\begin{AgdaMultiCode}
+\begin{code}
 module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
-  data
+
 \end{code}
 \emph{Closure type}
 \begin{code}
-    _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type
-\end{code}
-\begin{code}[hide]
-    where
+  data _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type where
+
 \end{code}
 \emph{Closure rules}
 \begin{code}
@@ -132,7 +135,7 @@ module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
       ───────────────────────────────────────
       Γ ⊢ s ⇀⟦ sig ∷ sigs ⟧* s''
 \end{code}
-\caption{Reflexive transitive closure}
+\end{AgdaMultiCode}
 \label{fig:rt-closure}
 \end{figure*}
 
