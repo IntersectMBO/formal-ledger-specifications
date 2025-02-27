@@ -4451,64 +4451,64 @@ du_To'45'DelegEnv_980
 -- Ledger.Certs._⊢_⇀⦇_,DELEG⦈_
 d__'8866'_'8640''10631'_'44'DELEG'10632'__1050 a0 a1 a2 a3 a4 = ()
 data T__'8866'_'8640''10631'_'44'DELEG'10632'__1050
-  = C_DELEG'45'delegate_1130 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_DELEG'45'dereg_1132 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
-    C_DELEG'45'reg_1202 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_DELEG'45'delegate_1134 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_DELEG'45'dereg_1136 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
+    C_DELEG'45'reg_1206 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Certs._⊢_⇀⦇_,POOL⦈_
 d__'8866'_'8640''10631'_'44'POOL'10632'__1052 a0 a1 a2 a3 a4 = ()
 data T__'8866'_'8640''10631'_'44'POOL'10632'__1052
-  = C_POOL'45'regpool_1204 | C_POOL'45'retirepool_1206
+  = C_POOL'45'regpool_1208 | C_POOL'45'retirepool_1210
 -- Ledger.Certs._⊢_⇀⦇_,GOVCERT⦈_
 d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1054 a0 a1 a2 a3 a4
   = ()
 data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1054
-  = C_GOVCERT'45'regdrep_1278 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
-    C_GOVCERT'45'deregdrep_1280 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
-    C_GOVCERT'45'ccreghot_1282 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_GOVCERT'45'regdrep_1282 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
+    C_GOVCERT'45'deregdrep_1284 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
+    C_GOVCERT'45'ccreghot_1286 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Certs._⊢_⇀⦇_,CERT⦈_
 d__'8866'_'8640''10631'_'44'CERT'10632'__1056 a0 a1 a2 a3 a4 = ()
 data T__'8866'_'8640''10631'_'44'CERT'10632'__1056
-  = C_CERT'45'deleg_1284 T__'8866'_'8640''10631'_'44'DELEG'10632'__1050 |
-    C_CERT'45'pool_1286 T__'8866'_'8640''10631'_'44'POOL'10632'__1052 |
-    C_CERT'45'vdel_1288 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1054
+  = C_CERT'45'deleg_1288 T__'8866'_'8640''10631'_'44'DELEG'10632'__1050 |
+    C_CERT'45'pool_1290 T__'8866'_'8640''10631'_'44'POOL'10632'__1052 |
+    C_CERT'45'vdel_1292 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1054
 -- Ledger.Certs._⊢_⇀⦇_,CERTBASE⦈_
 d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1058 a0 a1 a2 a3 a4
   = ()
 newtype T__'8866'_'8640''10631'_'44'CERTBASE'10632'__1058
-  = C_CERT'45'base_1366 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
--- Ledger.Certs._⊢_⇀⦇_,CERTS⦈_
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1060 ::
+  = C_CERT'45'base_1370 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+-- Ledger.Certs._._⊢_⇀⦇_,CERTS⦈_
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1064 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   T_CertEnv_868 ->
   T_CertState_928 -> [T_DCert_832] -> T_CertState_928 -> ()
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1060 = erased
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1064 = erased
 -- Ledger.Certs._.keyDeposit
-d_keyDeposit_1092 ::
+d_keyDeposit_1096 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   T_GeneralizeTel_29633 -> Integer
-d_keyDeposit_1092 ~v0 v1 = du_keyDeposit_1092 v1
-du_keyDeposit_1092 :: T_GeneralizeTel_29633 -> Integer
-du_keyDeposit_1092 v0
+d_keyDeposit_1096 ~v0 v1 = du_keyDeposit_1096 v1
+du_keyDeposit_1096 :: T_GeneralizeTel_29633 -> Integer
+du_keyDeposit_1096 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_keyDeposit_332
       (coe d_'46'generalizedField'45'pp_29613 (coe v0))
 -- Ledger.Certs._.keyDeposit
-d_keyDeposit_1164 ::
+d_keyDeposit_1168 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   T_GeneralizeTel_43317 -> Integer
-d_keyDeposit_1164 ~v0 v1 = du_keyDeposit_1164 v1
-du_keyDeposit_1164 :: T_GeneralizeTel_43317 -> Integer
-du_keyDeposit_1164 v0
+d_keyDeposit_1168 ~v0 v1 = du_keyDeposit_1168 v1
+du_keyDeposit_1168 :: T_GeneralizeTel_43317 -> Integer
+du_keyDeposit_1168 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_keyDeposit_332
       (coe d_'46'generalizedField'45'pp_43301 (coe v0))
 -- Ledger.Certs._.drepActivity
-d_drepActivity_1310 ::
+d_drepActivity_1314 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   T_GeneralizeTel_84141 -> AgdaAny
-d_drepActivity_1310 ~v0 v1 = du_drepActivity_1310 v1
-du_drepActivity_1310 :: T_GeneralizeTel_84141 -> AgdaAny
-du_drepActivity_1310 v0
+d_drepActivity_1314 ~v0 v1 = du_drepActivity_1314 v1
+du_drepActivity_1314 :: T_GeneralizeTel_84141 -> AgdaAny
+du_drepActivity_1314 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_drepActivity_376
       (coe d_'46'generalizedField'45'pp_84119 (coe v0))
