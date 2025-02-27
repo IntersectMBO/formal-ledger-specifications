@@ -88,7 +88,7 @@ rec {
       bclogo
       biber
       biblatex
-      biblatex-lncs
+      biblatex-ieee
       biblatex-software
       latexmk
       environ;

@@ -1,7 +1,130 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{agda-latex-macros}[2023/08/28]
-\RequirePackage{xspace}
+\ProvidesPackage{macros}[2025/02/26]
 \RequirePackage{pifont}  %% needed for checkmark (\ding{51}).
+\RequirePackage{extarrows}
+\RequirePackage{slashed}
+\RequirePackage[tikz]{bclogo}
+\RequirePackage{stmaryrd}
+\RequirePackage{fontspec}
+
+%%
+%% Environments
+%%
+\newtheorem{property}{Property}[section]
+\newenvironment{question}
+  {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}
+  {\end{bclogo}}
+\newenvironment{note}
+  {\begin{bclogo}[logo=\bcattention, couleur=orange!10, arrondi=0.2]{ NOTE}}
+  {\end{bclogo}}
+
+%%
+%% Typesetting defined terms consistently.
+%%
+\newcommand{\defn}[1]{\textit{#1}}   %  defined terms are typeset in italics
+%% \newcommand{\defn}[1]{\textbf{#1}}   %  defined terms are typeset in bold
+%%  ^^^^^^ Set the desired typeface for new/defined terms;
+%%         at first occurrence of a term, enclose it in `\defn{...}`.
+
+%%
+%% Consistent references to GitHub repo and Agda modules.
+%%
+\newcommand{\repourl}{https://github.com/IntersectMBO/formal-ledger-specifications}
+\newcommand{\modulenote}[1]{Code in this section is part of the #1 module
+                            of the \href{\repourl}{formal ledger specification}.}
+\newcommand{\modulefootnotetext}[1]{\footnotetext{\modulenote{#1}}}
+
+%%
+%% Highlighting text with a yellow background.
+%%
+\newcommand{\hldiff}[1]{\colorbox{yellow}{#1}}
+
+%%
+%% Macros for consistent referencing
+%%
+\ExplSyntaxOn
+\NewDocumentCommand\hrefCIP{m}{%
+  \clist_if_in:nnTF {0069,1694} {#1}
+  {\href{\detokenize{https://cips.cardano.org/cip/CIP-#1}}{CIP-#1}}%
+  {\msg_warning:nnn {agda-latex-macros} {invalid-cip} {#1}
+    CIP-#1 % Still prints the text but without a hyperlink
+  }%
+}
+\msg_new:nnn {agda-latex-macros} {invalid-cip}
+  {CIP-#1 is not a known CIP. The hyperlink will not be created.}
+\ExplSyntaxOff
+
+\NewDocumentCommand{\hrefAgdaWiki}{O{Agda Wiki}}{%
+  \href{https://wiki.portal.chalmers.se/agda/pmwiki.php}{#1}%
+}
+
+\NewDocumentCommand{\hrefAgdaDocs}{O{} O{Agda documentation}}{%
+  \href{https://agda.readthedocs.io/en/\AgdaVersion/#1}{#2}%
+}
+% For a link to the main Agda documentation website, just use \hrefAgdaDocs{}.
+% For a link to a specific section of the Agda docs, use
+% \hrefAgdaDocs[URLsuffix]{Link text}.
+% For example, \hrefAgdaDocs[language/record-types.html][agda.readthedocs.io/record-types],
+% produces a link to url https://agda.readthedocs.io/en/\AgdaVersion/language/record-types.html
+% with link text "agda.readthedocs.io/record-types".
+
+\NewDocumentCommand{\sectionname}{}{Section}
+\crefname{section}{\sectionname}{\sectionname{}s}
+%% The above help enforce consistency among citations that mention sections;
+%% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
+%%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
+\NewDocumentCommand{\email}{m}{%
+  \href{mailto:#1}{#1}
+}
+
+
+
+
+%%
+%% Miscellaneous functions and math symbols
+%%
+\newcommand{\outs}[1]{\fun{outs}~ \var{#1}}
+\newcommand{\balance}[1]{\fun{balance}~ \var{#1}}
+\newcommand{\txfee}[1]{\fun{txfee}~ \var{#1}}
+
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\range}{range}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+%% \newunicodechar{ˢ}{\ensuremath{}}
+
+\newcommand{\powerset}[1]{\ensuremath{\mathbb{P}~#1}}
+\newcommand{\restrictdom}{\ensuremath{\lhd}}
+\newcommand{\subtractdom}{\ensuremath{\mathbin{\slashed{\restrictdom}}}}
+\newcommand{\restrictrange}{\ensuremath{\rhd}}
+\newcommand{\subtractrange}{\ensuremath{\mathbin{\slashed{\restrictrange}}}}
+\newcommand{\union}{\ensuremath{\cup}}
+\newcommand{\unionoverrideRight}{\ensuremath{\mathbin{\underrightarrow\cup}}}
+\newcommand{\unionoverrideLeft}{\ensuremath{\mathbin{\underleftarrow\cup}}}
+\newcommand{\unionoverridePlus}{\ensuremath{\mathbin{\cup_{+}}}}
+\newcommand{\unionoverrideZero}{\ensuremath{\mathbin{\cup_{0}}}}
+\newcommand{\uniondistinct}{\ensuremath{\uplus}}
+\newcommand{\var}[1]{\ensuremath{\mathit{#1}}}
+\newcommand{\fun}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\type}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\signed}[2]{\ensuremath{\llbracket #1 \rrbracket_{#2}}}
+\newcommand{\size}[1]{\ensuremath{\left| #1 \right|}}
+\newcommand{\trans}[2]{\ensuremath{\xlongrightarrow[\textsc{#1}]{#2}}}
+\newcommand{\seqof}[1]{\ensuremath{#1^{*}}}
+\newcommand{\nextdef}{\ensuremath{\\[1em]}}
+\newcommand{\where}{\ensuremath{~ ~ \mathbf{where}~ ~ }}
+
+\newcommand{\varUpdate}[1]{\boldsymbol{\color{Violet}#1}}
+% Make the ⇀ symbol a bit larger
+\usepackage{scalerel}
+\usepackage{newunicodechar}
+\newcommand{\largerightharpoonup}{\ensuremath{\mathrel{\scaleto{\rightharpoonup}{1.2ex}}}}
+\newunicodechar{⇀}{\largerightharpoonup}
+
+
+%%
+%% Agda macros
+%%
+\newcommand{\AgdaVersion}{v2.7.0}  % <= Change this when updating Agda version!
 
 \newcommand\agdaFont{StrippedJuliaMono}
 \newcommand\agdaFontOptions{
@@ -15,6 +138,11 @@ BoldItalicFont=*-BoldItalic,
 Scale=0.80
 %% Scale=MatchUppercase
 }
+
+\NewDocumentCommand\LedgerModule{m}{% usage: \LedgerModule{Utxo}
+\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\AgdaModule{Ledger.#1}}%
+}
+
 \newfontfamily{\AgdaSerifFont}{\agdaFont}[\agdaFontOptions]
 \newfontfamily{\AgdaSansSerifFont}{\agdaFont}[\agdaFontOptions]
 \newfontfamily{\AgdaTypewriterFont}{\agdaFont}[\agdaFontOptions]
@@ -24,7 +152,6 @@ Scale=0.80
 \renewcommand{\AgdaCommentFontStyle}[1]{{\AgdaTypewriterFont{}#1}}
 \renewcommand{\AgdaBoundFontStyle}[1]{{\emph{\AgdaTypewriterFont{}#1}}}
 
-\newcommand{\AgdaVersion}{v2.7.0}
 \newcommand{\abstain}{\AgdaInductiveConstructor{abstain}}
 \newcommand{\abstainRep}{\AgdaInductiveConstructor{abstainRep}}
 \newcommand{\accepted}{\AgdaFunction{accepted}}
@@ -122,9 +249,6 @@ Scale=0.80
 \newcommand{\isInr}{\AgdaFunction{isInj₂}}
 \newcommand{\isRegistered}{\AgdaFunction{isRegistered}}
 
-\NewDocumentCommand\LedgerModule{m}{%
-  \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\AgdaModule{Ledger.#1}}%
-}
 \newcommand{\List}{\AgdaDatatype{List}}
 
 \newcommand{\mapPartial}{\AgdaFunction{mapPartial}}
@@ -171,12 +295,12 @@ Scale=0.80
 \newcommand{\produced}{\AgdaFunction{produced}}
 \newcommand{\posPart}{\AgdaFunction{posPart}}
 
-\newcommand{\Qone}{\AgdaField{Q1}\xspace}
-\newcommand{\Qtwoa}{\AgdaField{Q2a}\xspace}
-\newcommand{\Qtwob}{\AgdaField{Q2b}\xspace}
-\newcommand{\Qfour}{\AgdaField{Q4}\xspace}
-\newcommand{\Qfive}{\AgdaField{Q5}\xspace}
-\newcommand{\Qfivee}{\AgdaField{Q5e}\xspace}
+\newcommand{\Qone}{\AgdaField{Q1}}
+\newcommand{\Qtwoa}{\AgdaField{Q2a}}
+\newcommand{\Qtwob}{\AgdaField{Q2b}}
+\newcommand{\Qfour}{\AgdaField{Q4}}
+\newcommand{\Qfive}{\AgdaField{Q5}}
+\newcommand{\Qfivee}{\AgdaField{Q5e}}
 
 \newcommand{\RATIFYAccept}{\AgdaInductiveConstructor{RATIFY-Accept}}
 \newcommand{\RATIFYContinue}{\AgdaInductiveConstructor{RATIFY-Continue}}
@@ -239,4 +363,4 @@ Scale=0.80
 
 \newcommand{\yes}{\AgdaInductiveConstructor{yes}}
 
-\newcommand{\∈}{\ensuremath{\in}}
+\endinput

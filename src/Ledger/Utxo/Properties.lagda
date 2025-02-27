@@ -549,8 +549,8 @@ UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
 
 \begin{property}[\textbf{Preserve Balance}]~\\
 \noindent
-For all \AgdaBound{Γ} \∈ \UTxOEnv{}, \AgdaBound{utxo}, \AgdaBound{utxo'}~\∈{}~\UTxO{},
-\AgdaBound{fees}, \AgdaBound{fees'}~\∈{}~\Coin{} and \AgdaBound{tx}~\∈{}~\Tx{},
+For all \AgdaBound{Γ} ∈ \UTxOEnv{}, \AgdaBound{utxo}, \AgdaBound{utxo'}~∈~\UTxO{},
+\AgdaBound{fees}, \AgdaBound{fees'}~∈~\Coin{} and \AgdaBound{tx}~∈~\Tx{},
 
 if
 \begin{code}[hide]
