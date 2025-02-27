@@ -122,13 +122,13 @@ threshold pp ccThreshold =
   λ where
 \end{code}
 \begin{code}
-      NoConfidence             → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
-      (UpdateCommittee _ _ _)  → ∣ ─   ∥ P/Q2a/b                 ∣
-      (NewConstitution _ _)    → ∣ ✓   ∣ vote P3      ∣ ─        ∣
-      (TriggerHF _)            → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
-      (ChangePParams x)        → ∣ ✓   ∥ P/Q5 x                  ∣
-      (TreasuryWdrl _)         → ∣ ✓   ∣ vote P6      ∣ ─        ∣
-      Info                     → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
+      (NoConfidence     , _) → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
+      (UpdateCommittee  , _) → ∣ ─   ∥ P/Q2a/b                 ∣
+      (NewConstitution  , _) → ∣ ✓   ∣ vote P3      ∣ ─        ∣
+      (TriggerHF        , _) → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
+      (ChangePParams    , x) → ∣ ✓   ∥ P/Q5 x                  ∣
+      (TreasuryWdrl     , _) → ∣ ✓   ∣ vote P6      ∣ ─        ∣
+      (Info             , _) → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
         where
 \end{code}
 \begin{code}[hide]
@@ -247,7 +247,7 @@ open StakeDistrs
 actualVotes  : RatifyEnv → PParams → CCData → GovAction
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
 actualVotes Γ pparams cc ga votes
-  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes ga
+  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes (ga .proj₁)
   ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes ga
   where
 \end{code}
@@ -282,16 +282,16 @@ actualVotes Γ pparams cc ga votes
 \end{code}
 \begin{code}
         nothing → Vote.no
-        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) , ga of
+        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) , proj₁ ga of
 \end{code}
 \begin{code}[hide]
                λ where
 \end{code}
 \begin{code}
-               (_                     , TriggerHF _   )  → Vote.no
-               (just noConfidenceRep  , NoConfidence  )  → Vote.yes
-               (just abstainRep       , _             )  → Vote.abstain
-               _                                         → Vote.no
+               (_                     , TriggerHF)     → Vote.no
+               (just noConfidenceRep  , NoConfidence)  → Vote.yes
+               (just abstainRep       , _           )  → Vote.abstain
+               _                                       → Vote.no
   SPODefaultVote _ _ = Vote.no
 
   actualCCVote : Credential → Epoch → Vote
@@ -316,7 +316,7 @@ actualVotes Γ pparams cc ga votes
                            then mapWithKey actualCCVote m
                            else constMap (dom m) Vote.no
 
-  actualPDRepVotes : GovAction → VDeleg ⇀ Vote
+  actualPDRepVotes : GovActionType → VDeleg ⇀ Vote
   actualPDRepVotes NoConfidence
                       = ❴ abstainRep , Vote.abstain ❵ ∪ˡ ❴ noConfidenceRep , Vote.yes ❵
   actualPDRepVotes _  = ❴ abstainRep , Vote.abstain ❵ ∪ˡ ❴ noConfidenceRep , Vote.no ❵
@@ -466,31 +466,31 @@ RATIFY.
 open EnactState
 \end{code}
 \begin{code}
-verifyPrev : (a : GovAction) → NeedsHash a → EnactState → Type
-verifyPrev NoConfidence             h es  = h ≡ es .cc .proj₂
-verifyPrev (UpdateCommittee _ _ _)  h es  = h ≡ es .cc .proj₂
-verifyPrev (NewConstitution _ _)    h es  = h ≡ es .constitution .proj₂
-verifyPrev (TriggerHF _)            h es  = h ≡ es .pv .proj₂
-verifyPrev (ChangePParams _)        h es  = h ≡ es .pparams .proj₂
-verifyPrev (TreasuryWdrl _)         _ _   = ⊤
-verifyPrev Info                     _ _   = ⊤
+verifyPrev : (a : GovActionType) → NeedsHash a → EnactState → Type
+verifyPrev NoConfidence     h es  = h ≡ es .cc .proj₂
+verifyPrev UpdateCommittee  h es  = h ≡ es .cc .proj₂
+verifyPrev NewConstitution  h es  = h ≡ es .constitution .proj₂
+verifyPrev TriggerHF        h es  = h ≡ es .pv .proj₂
+verifyPrev ChangePParams    h es  = h ≡ es .pparams .proj₂
+verifyPrev TreasuryWdrl     _ _   = ⊤
+verifyPrev Info             _ _   = ⊤
 
-delayingAction : GovAction → Bool
-delayingAction NoConfidence             = true
-delayingAction (UpdateCommittee _ _ _)  = true
-delayingAction (NewConstitution _ _)    = true
-delayingAction (TriggerHF _)            = true
-delayingAction (ChangePParams _)        = false
-delayingAction (TreasuryWdrl _)         = false
-delayingAction Info                     = false
+delayingAction : GovActionType → Bool
+delayingAction NoConfidence     = true
+delayingAction UpdateCommittee  = true
+delayingAction NewConstitution  = true
+delayingAction TriggerHF        = true
+delayingAction ChangePParams    = false
+delayingAction TreasuryWdrl     = false
+delayingAction Info             = false
 
-delayed : (a : GovAction) → NeedsHash a → EnactState → Bool → Type
+delayed : (a : GovActionType) → NeedsHash a → EnactState → Bool → Type
 delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
 
 acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
 acceptConds Γ stʳ (id , st) =
        accepted Γ es st
-    ×  ¬ delayed action prevAction es delay
+    ×  ¬ delayed (action .proj₁) prevAction es delay
     × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
@@ -500,12 +500,12 @@ acceptConds Γ stʳ (id , st) =
 abstract
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
   verifyPrev? NoConfidence              h es = dec
-  verifyPrev? (UpdateCommittee x x₁ x₂) h es = dec
-  verifyPrev? (NewConstitution x x₁)    h es = dec
-  verifyPrev? (TriggerHF x)             h es = dec
-  verifyPrev? (ChangePParams x)         h es = dec
-  verifyPrev? (TreasuryWdrl x)          h es = dec
-  verifyPrev? Info                      h es = dec
+  verifyPrev? UpdateCommittee h es = dec
+  verifyPrev? NewConstitution h es = dec
+  verifyPrev? TriggerHF       h es = dec
+  verifyPrev? ChangePParams   h es = dec
+  verifyPrev? TreasuryWdrl    h es = dec
+  verifyPrev? Info             h es = dec
 
   delayed? : ∀ a h es d → Dec (delayed a h es d)
   delayed? a h es d = let instance _ = ⁇ verifyPrev? a h es in dec
@@ -569,7 +569,7 @@ data _⊢_⇀⦇_,RATIFY'⦈_ :
      ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
        ────────────────────────────────
        Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY'⦈
-           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧
+           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction (action .proj₁) ⟧
 
   RATIFY-Reject : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a

@@ -54,14 +54,27 @@ record Anchor : Type where
     url   : String
     hash  : DocHash
 
-data GovAction : Type where
-  NoConfidence     :                                             GovAction
-  UpdateCommittee  : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction
-  NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction
-  TriggerHF        : ProtVer                                  →  GovAction
-  ChangePParams    : PParamsUpdate                            →  GovAction
-  TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction
-  Info             :                                             GovAction
+data GovActionType : Type where
+  NoConfidence     : GovActionType
+  UpdateCommittee  : GovActionType
+  NewConstitution  : GovActionType
+  TriggerHF        : GovActionType
+  ChangePParams    : GovActionType
+  TreasuryWdrl     : GovActionType
+  Info             : GovActionType
+
+GovActionData : GovActionType → Type
+GovActionData = λ where
+  NoConfidence     → ⊤
+  UpdateCommittee  → (Credential ⇀ Epoch) × ℙ Credential × ℚ
+  NewConstitution  → DocHash × Maybe ScriptHash
+  TriggerHF        → ProtVer
+  ChangePParams    → PParamsUpdate
+  TreasuryWdrl     → RwdAddr ⇀ Coin
+  Info             → ⊤
+
+GovAction : Type
+GovAction = Σ GovActionType GovActionData
 \end{code}
 \end{AgdaMultiCode}
 \caption{Governance actions}
@@ -138,14 +151,14 @@ Figure~\ref{fig:needshash-and-hashprotected-types}.
 
 \begin{figure*}[h]
 \begin{code}
-NeedsHash : GovAction → Type
-NeedsHash NoConfidence             = GovActionID
-NeedsHash (UpdateCommittee _ _ _)  = GovActionID
-NeedsHash (NewConstitution _ _)    = GovActionID
-NeedsHash (TriggerHF _)            = GovActionID
-NeedsHash (ChangePParams _)        = GovActionID
-NeedsHash (TreasuryWdrl _)         = ⊤
-NeedsHash Info                     = ⊤
+NeedsHash : GovActionType → Type
+NeedsHash NoConfidence     = GovActionID
+NeedsHash UpdateCommittee  = GovActionID
+NeedsHash NewConstitution  = GovActionID
+NeedsHash TriggerHF        = GovActionID
+NeedsHash ChangePParams    = GovActionID
+NeedsHash TreasuryWdrl     = ⊤
+NeedsHash Info             = ⊤
 
 HashProtected : Type → Type
 HashProtected A = A × GovActionID
@@ -170,7 +183,7 @@ record GovVote : Type where
 record GovProposal : Type where
   field
     action      : GovAction
-    prevAction  : NeedsHash action
+    prevAction  : NeedsHash (proj₁ action)
     policy      : Maybe ScriptHash
     deposit     : Coin
     returnAddr  : RwdAddr
@@ -182,7 +195,7 @@ record GovActionState : Type where
     returnAddr  : RwdAddr
     expiresIn   : Epoch
     action      : GovAction
-    prevAction  : NeedsHash action
+    prevAction  : NeedsHash (proj₁ action)
 \end{code}
 \begin{code}[hide]
 instance
@@ -203,8 +216,8 @@ getDRepVote record { voter = (DRep , credential) }  = just credential
 getDRepVote _                                       = nothing
 
 proposedCC : GovAction → ℙ Credential
-proposedCC (UpdateCommittee x _ _) = dom x
-proposedCC _                       = ∅
+proposedCC (UpdateCommittee , (x , _ , _))  = dom x
+proposedCC _                                = ∅
 \end{code}
 \caption{Governance helper function}
 \end{figure*}
