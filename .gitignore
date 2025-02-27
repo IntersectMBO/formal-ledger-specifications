@@ -51,8 +51,8 @@ result*
 ## Other
 *.agdai
 dist/
-
-src/latex/Ledger/*
-src/latex/Conway/*
-src/latex/MidnightExample/*
-src/latex/bclogo.sty
+src/latex/Conway/
+src/latex/EssentialAgda.tex
+src/latex/Ledger/
+src/latex/MidnightExample/
+src/latex/ScriptVerification/
