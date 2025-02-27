@@ -222,7 +222,7 @@ IsDRep  v = govRole v ≡ DRep
 IsSPO   v = govRole v ≡ SPO
 \end{code}
 \end{AgdaMultiCode}
-\caption{Types and functions for the RATIFIES transition system}
+\caption{Types and functions for the RATIFY transition system}
 \label{fig:types-and-functions-for-the-ratify-transition-system}
 \end{figure*}
 As mentioned earlier, most governance actions must include a \GovActionID{}
@@ -431,13 +431,13 @@ abstract
   expired : Epoch → GovActionState → Type
   expired current record { expiresIn = expiresIn } = expiresIn < current
 \end{code}
-\caption{Functions used in RATIFIES rules, without delay}
+\caption{Functions used in RATIFY rules, without delay}
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 
 \Cref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
 functions (together with some helpers) that are used in the rules of
-RATIFIES.
+RATIFY.
 
 \begin{itemize}
   \item \getStakeDist{} computes the stake distribution based on the
@@ -558,10 +558,10 @@ open GovActionState
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
-data _⊢_⇀⦇_,RATIFIES'⦈_ :
+data _⊢_⇀⦇_,RATIFY⦈_ :
   RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
 
-  RATIFIES-Accept :
+  RATIFY-Accept :
     let treasury       = Γ .treasury
         e              = Γ .currentEpoch
         (gaId , gaSt)  = a
@@ -570,33 +570,33 @@ data _⊢_⇀⦇_,RATIFIES'⦈_ :
     ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
     ∙ ⟦ gaId , treasury , e ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
       ────────────────────────────────
-      Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFIES'⦈
+      Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY⦈
           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧
 
-  RATIFIES-Reject :
+  RATIFY-Reject :
     let e              = Γ .currentEpoch
         (gaId , gaSt)  = a
     in
     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
     ∙ expired e gaSt
       ────────────────────────────────
-      Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFIES'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
+      Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
 
-  RATIFIES-Continue :
+  RATIFY-Continue :
      let e              = Γ .currentEpoch
          (gaId , gaSt)  = a
      in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
      ∙ ¬ expired e gaSt
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFIES'⦈ ⟦ es , removed , d ⟧
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY⦈ ⟦ es , removed , d ⟧
 
 _⊢_⇀⦇_,RATIFIES⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type
-_⊢_⇀⦇_,RATIFIES⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFIES'⦈_}
+_⊢_⇀⦇_,RATIFIES⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY⦈_}
 \end{code}
 \end{AgdaSuppressSpace}
-\caption{The RATIFIES transition system}
+\caption{The RATIFY transition system}
 \label{fig:sts:ratify}
 \end{figure*}
 
