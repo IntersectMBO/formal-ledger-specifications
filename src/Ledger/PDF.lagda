@@ -88,8 +88,7 @@ open import Ledger.PDF.ConwayBootstrap
 \clearpage
 
 \addcontentsline{toc}{section}{References}
-\bibliographystyle{abbrv}
-\bibliography{references}
+\printbibliography
 
 \clearpage
 

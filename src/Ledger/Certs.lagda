@@ -198,7 +198,7 @@ private variable
 \subsubsection{Delegation}
 
 Registered credentials can now delegate to a DRep as well as to a
-stake pool. This is achieved by giving the \delegate certificate two
+stake pool. This is achieved by giving the \delegate{} certificate two
 optional fields, corresponding to a DRep and stake pool.
 
 Stake can be delegated for voting and block production simultaneously,
@@ -209,17 +209,17 @@ participation of honest stake holders.
 \subsubsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
 
 Support for pointer addresses, genesis delegations and MIR
-certificates is removed (see~\cite{cip1694}). In \DState, this means
-that the four fields relating to those features are no longer present,
-and \DelegEnv contains none of the fields it used to in the Shelley
-era~(\cite[Sec.~9.2]{shelley-ledger-spec}).
+certificates is removed (see \hrefCIP{1694} and \textcite{cip1694}).
+In \DState{}, this means that the four fields relating to those features
+are no longer present, and \DelegEnv{} contains none of the fields it used
+to in the Shelley era (see \textcite[\sectionname~9.2]{shelley-ledger-spec}).
 
 Note that pointer addresses are still usable, only their staking
 functionality has been retired. So all funds locked behind pointer
 addresses are still accessible, they just don't count towards the
 stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
-the \TreasuryWdrl governance action in case of the MIR certificates.
+the \TreasuryWdrl{} governance action in case of the MIR certificates.
 
 \subsubsection{Explicit Deposits}
 
@@ -239,21 +239,21 @@ compatibility.
 The rules for transition systems dealing with individual certificates
 are defined in
 \begin{NoConway}
-Figures~\ref{fig:sts:aux-cert-deleg}, \ref{fig:sts:aux-cert-pool}
+\Cref{fig:sts:aux-cert-deleg,fig:sts:aux-cert-pool}
 \end{NoConway}
 \begin{Conway}
-Figures~\ref{fig:sts:aux-cert-deleg}
+\Cref{fig:sts:aux-cert-deleg}
 \end{Conway}
-\ and~\ref{fig:sts:aux-cert-gov}. GOVCERT
-deals with the new certificates relating to DReps and the
+and \cref{fig:sts:aux-cert-gov}.
+GOVCERT deals with the new certificates relating to DReps and the
 constitutional committee.
 
 \begin{itemize}
-\item \GOVCERTregdrep registers (or re-registers) a DRep. In case of
+\item \GOVCERTregdrep{} registers (or re-registers) a DRep. In case of
   registation, a deposit needs to be paid. Either way, the activity
   period of the DRep is reset.
-\item \GOVCERTderegdrep deregisters a DRep.
-\item \GOVCERTccreghot registers a ``hot'' credential for constitutional
+\item \GOVCERTderegdrep{} deregisters a DRep.
+\item \GOVCERTccreghot{} registers a ``hot'' credential for constitutional
   committee members.\footnote{By ``hot'' and ``cold'' credentials we mean
     the following: a cold credential is used to register a hot credential,
     and then the hot credential is used for voting. The idea is that the
@@ -262,7 +262,7 @@ constitutional committee.
     is compromised, it can be changed using the cold credential.}
   We check that the cold key did not previously
   resign from the committee. We allow this delegation for any cold
-  credential that is either part of \EnactState or is is a proposal.
+  credential that is either part of \EnactState{} or is is a proposal.
   This allows a newly elected member of the constitutional committee to
   immediately delegate their vote to a hot key and use it to vote. Since
   votes are counted after previous actions have been enacted, this allows
@@ -275,34 +275,40 @@ constitutional committee.
 data
 \end{code}
 \begin{code}
-    _⊢_⇀⦇_,DELEG⦈_     : DelegEnv → DState → DCert → DState → Type
+  _⊢_⇀⦇_,DELEG⦈_     : DelegEnv    → DState     → DCert       → DState     → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-    _⊢_⇀⦇_,POOL⦈_      : PoolEnv → PState → DCert → PState → Type
+  _⊢_⇀⦇_,POOL⦈_      : PoolEnv     → PState     → DCert       → PState     → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-    _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv → GState → DCert → GState → Type
+  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv  → GState     → DCert       → GState     → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-    _⊢_⇀⦇_,CERT⦈_      : CertEnv → CertState → DCert → CertState → Type
+  _⊢_⇀⦇_,CERT⦈_      : CertEnv     → CertState  → DCert       → CertState  → Type
 \end{code}
 \begin{code}[hide]
 data
 \end{code}
 \begin{code}
-    _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv → CertState → ⊤ → CertState → Type
-
-_⊢_⇀⦇_,CERTS⦈_       : CertEnv → CertState → List DCert → CertState → Type
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
+  _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv     → CertState  → ⊤           → CertState  → Type
+\end{code}
+\begin{code}[hide]
+module _ where  -- achieves uniform (but perhaps misleading) alignment of type signatures in fig
+\end{code}
+\begin{code}
+  _⊢_⇀⦇_,CERTS⦈_     : CertEnv     → CertState  → List DCert  → CertState  → Type
+\end{code}
+\begin{code}[hide]
+  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}
@@ -422,7 +428,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
 \label{fig:sts:aux-cert-gov}
 \end{figure*}
 
-Figure~\ref{fig:sts:certs} assembles the CERTS transition system by
+\Cref{fig:sts:certs} assembles the CERTS transition system by
 bundling the previously defined pieces together into the CERT system,
 and then taking the reflexive-transitive closure of CERT together with
 CERTBASE as the base case. CERTBASE does the following:
@@ -431,8 +437,8 @@ CERTBASE as the base case. CERTBASE does the following:
 \item check the correctness of withdrawals and ensure that withdrawals
   only happen from credentials that have delegated their voting power;
 \item set the rewards of the credentials that withdrew funds to zero;
-\item and set the activity timer of all DReps that voted to \drepActivity
-  epochs in the future.
+\item and set the activity timer of all DReps that voted to
+  \drepActivity{} epochs in the future.
 \end{itemize}
 
 \begin{figure*}[htbp]

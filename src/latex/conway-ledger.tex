@@ -10,7 +10,6 @@
 \input{preamble}
 
 \begin{document}
-
 \title{Formal Specification of the Cardano Ledger for the Conway era}
 
 \author{%
@@ -23,7 +22,7 @@
   Carlos Tom\'{e} Corti\~{n}as \\ {\small \href{mailto:carlos.tome-cortinas@iohk.io}{carlos.tome-cortinas@iohk.io}}
 }
 
-\date{\today}
+\date{}
 
 \maketitle
 
@@ -31,10 +30,8 @@
   This document presents the modifications to the previous
   specifications of the Cardano ledger (see
   \cite{shelley-ledger-spec,shelley-ma-ledger-spec,alonzo-ledger-spec,babbage-ledger-spec})
-  for the Conway era.
-
-  The additions mostly relate to the implementation of the governance
-  framework described in \cite{cip1694}.
+  for the Conway era.  The additions mostly relate to the implementation of the governance
+  framework described in \hrefCIP{1694}~\parencite{cip1694}.
 \end{abstract}
 
 \section*{List of Contributors}
@@ -44,8 +41,11 @@ Alasdair Hill, Ulf Norell, Orestis Melkonian, Jared Corduan, Alexey Kuleshevich
 
 \tableofcontents
 
-\include{Conway/Ledger/Introduction}
-\include{Notation}
+\clearpage
+
+\input{Conway/Ledger/Introduction}
+\input{Notation}
+
 \include{Conway/Ledger/PParams}
 \include{Conway/Ledger/Fees}
 \include{Conway/Ledger/GovernanceActions}
@@ -59,8 +59,9 @@ Alasdair Hill, Ulf Norell, Orestis Melkonian, Jared Corduan, Alexey Kuleshevich
 \include{Conway/Ledger/Ratify}
 \include{Conway/Ledger/Epoch}
 
-\bibliographystyle{abbrv}
-\bibliography{references}
+\clearpage
+
+\printbibliography
 
 \clearpage
 
