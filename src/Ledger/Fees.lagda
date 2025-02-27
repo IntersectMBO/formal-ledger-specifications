@@ -68,7 +68,7 @@ scriptsCost pp scSz with (PParams.refScriptCostStride pp)
 \caption{Calculation of fees for reference scripts}
 \label{fig:scriptsCost}
 \end{figure*}
-The function \scriptsCost{}~(\cref{fig:scriptsCost}) calculates
+The function \scriptsCost{} (\cref{fig:scriptsCost}) calculates
 the fee for reference scripts in the transaction using a function that
 is piece-wise linear in the size, where the linear constant multiple
 grows with each \refScriptCostStride{} bytes. Thus, the \scriptsCost{}

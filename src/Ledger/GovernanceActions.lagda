@@ -115,7 +115,7 @@ The governance actions carry the following information:
 % \label{sec:voting-and-ratification}
 % Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
 % The type of action and the state of the governance system determines which bodies must ratify it.
-% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
+% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see \cref{sec:enactment,fig:enactment-types}).
 
 \subsection{Hash Protection}
 \label{sec:hash-protection}
@@ -138,7 +138,7 @@ protection.  For \TreasuryWdrl{} and \Info{}, enacting them does not change
 the state in non-commutative ways, so they can always be enacted.
 
 Types related to this hash protection scheme are defined
-in~\cref{fig:needshash-and-hashprotected-types}.
+in \cref{fig:needshash-and-hashprotected-types}.
 
 \begin{figure*}[h]
 \begin{code}

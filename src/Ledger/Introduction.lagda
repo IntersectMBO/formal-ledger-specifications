@@ -106,7 +106,7 @@ many times as they can to arrive at a final state. Since we use this
 pattern multiple times, we define a closure operation which takes a
 STS relation and applies it as many times as possible.
 
-The closure \RTCI{} of a relation \RTCB{} is defined in~\cref{fig:rt-closure}.
+The closure \RTCI{} of a relation \RTCB{} is defined in \cref{fig:rt-closure}.
 In the remainder of the text, the closure operation is called \RTC{}.
 
 \begin{figure*}[htb]

@@ -21,7 +21,7 @@ open import Ledger.Certs govStructure
 
 The purpose of witnessing is make sure the intended action is
 authorized by the holder of the signing key.  (For details
-see~\textcite[\sectionname~8.3]{shelley-ledger-spec}.)
+see \textcite[\sectionname~8.3]{shelley-ledger-spec}.)
 \Cref{fig:functions:utxow} defines functions used for witnessing.
 \witsVKeyNeeded{} and \scriptsNeeded{} are now defined by projecting the same
 information out of \credsNeeded{}.  Note that the last component of \credsNeeded{}

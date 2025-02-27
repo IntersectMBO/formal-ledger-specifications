@@ -454,7 +454,7 @@ module _ (let open UTxOState; open TxBody) where
 \label{fig:functions:utxo-conway}
 \end{figure*}
 
-As seen in~\cref{fig:functions:utxo,fig:functions:utxo-conway},
+As seen in \cref{fig:functions:utxo,fig:functions:utxo-conway},
 we redefine \depositRefunds{} and \newDeposits{} via \depositsChange{},
 which computes the difference between the total deposits before and
 after their application. This simplifies their definitions and some
@@ -465,7 +465,7 @@ difference is the identity function.
 
 \Cref{fig:functions:utxo} defines the function \minfee{}. In
 Conway, \minfee{} includes the cost for reference scripts. This is
-calculated using \scriptsCost{} (see~\cref{fig:scriptsCost}).
+calculated using \scriptsCost{} (see \cref{fig:scriptsCost}).
 
 \Cref{fig:functions:utxo} also shows the signature of \ValidCertDeposits{}.
 Inhabitants of this type are constructed in one of eight ways, corresponding to

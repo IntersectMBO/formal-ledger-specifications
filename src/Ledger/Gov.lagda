@@ -442,15 +442,15 @@ _⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV'⦈
 \end{figure*}
 
 The GOV transition system is now given as the reflexitive-transitive
-closure of the system GOV', described in~\cref{defs:gov-rules}.
+closure of the system GOV', described in \cref{defs:gov-rules}.
 
 For \GOVVote{}, we check that the governance action being voted on
 exists; that the voter's role is allowed to vote (see \canVote{} in
 \cref{fig:ratification-requirements}); and that the voter's
 credential is actually associated with their role (see
-\isRegistered{} in~\cref{defs:gov-defs}).
+\isRegistered{} in \cref{defs:gov-defs}).
 
 For \GOVPropose{}, we check the correctness of the deposit along with some
 and some conditions that ensure the action is well-formed and valid;
 naturally, these checks depend on the type of action being proposed
-(see~\cref{fig:valid-and-wellformed}).
+(see \cref{fig:valid-and-wellformed}).

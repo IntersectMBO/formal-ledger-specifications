@@ -402,7 +402,7 @@ is associated to precisely one of these groups.  The \SecurityGroup{} is
 special: a protocol parameter may or may not be in the \SecurityGroup{}.
 So, each protocol parameter belongs to at least one and at most two groups.
 Note that in \hrefCIP{1694} there is no \SecurityGroup{}, but there is the
-concept of security-relevant protocol parameters~(see \textcite{cip1694}).
+concept of security-relevant protocol parameters (see \textcite{cip1694}).
 The difference between these notions is only social, so we implement
 security-relevant protocol parameters as a group.
 
@@ -451,12 +451,12 @@ The type \AgdaField{UpdateT} is to be instantiated by a type that
 %
 \begin{itemize}
   \item can be used to update parameters, via the
-    function~\AgdaField{applyUpdate}
+    function \AgdaField{applyUpdate}
   \item can be queried about what parameter groups it updates, via the
-    function~\AgdaField{updateGroups}
+    function \AgdaField{updateGroups}
 \end{itemize}
 %
-An element of the type~\AgdaField{UpdateT} is well formed if it
+An element of the type \AgdaField{UpdateT} is well formed if it
 updates at least one group and applying the update preserves
 well-formedness.
 
