@@ -322,19 +322,16 @@ module _ where  -- achieves uniform (but perhaps misleading) alignment of type s
 data _⊢_⇀⦇_,DELEG⦈_ where
 \end{code}
 \begin{code}
-  DELEG-delegate : let  open PParams pp
-                        Γ = record  { pparams = pp
-                                    ; pools = pools
-                                    ; delegatees = delegatees } in
-
+  DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      Γ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mv mkh d ,DELEG⦈
-          ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧
+        ⇀⦇ delegate c mv mkh d ,DELEG⦈
+        ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
@@ -385,43 +382,22 @@ data _⊢_⇀⦇_,POOL⦈_ where
 data _⊢_⇀⦇_,GOVCERT⦈_ where
 \end{code}
 \begin{code}
-  GOVCERT-regdrep :
-    ∀ {pp} → let  open PParams pp
-                  Γ = record  { epoch      = e
-                              ; pp         = pp
-                              ; votes      = vs
-                              ; wdrls      = wdrls
-                              ; coldCreds  = cc } in
-
+  GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
-          ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢  ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
+                                  ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
-    ∀ {pp} → let  open PParams pp
-                  Γ = record  { epoch      = e
-                              ; pp         = pp
-                              ; votes      = vs
-                              ; wdrls      = wdrls
-                              ; coldCreds  = cc } in
-
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧
 
   GOVCERT-ccreghot :
-    ∀ {pp} → let  open PParams pp
-                  Γ = record  { epoch      = e
-                              ; pp         = pp
-                              ; votes      = vs
-                              ; wdrls      = wdrls
-                              ; coldCreds  = cc } in
-
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
