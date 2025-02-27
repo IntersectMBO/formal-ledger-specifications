@@ -20,14 +20,14 @@ open import Ledger.Certs govStructure
 \end{code}
 
 The purpose of witnessing is make sure the intended action is
-authorized by the holder of the signing key.  (For details see
-the formal ledger specification for the Shelley era~\cite[Sec.~8.3]{shelley-ledger-spec}.)
-Figure~\ref{fig:functions:utxow} defines functions used for witnessing.
-\witsVKeyNeeded and \scriptsNeeded are now defined by projecting the same information out of
-\credsNeeded.  Note that the last component of \credsNeeded adds the script in the proposal policy
-only if it is present.
+authorized by the holder of the signing key.  (For details
+see \textcite[\sectionname~8.3]{shelley-ledger-spec}.)
+\Cref{fig:functions:utxow} defines functions used for witnessing.
+\witsVKeyNeeded{} and \scriptsNeeded{} are now defined by projecting the same
+information out of \credsNeeded{}.  Note that the last component of \credsNeeded{}
+adds the script in the proposal policy only if it is present.
 
-\allowedLanguages has additional conditions for new features in
+\allowedLanguages{} has additional conditions for new features in
 Conway. If a transaction contains any votes, proposals, a treasury
 donation or asserts the treasury amount, it is only allowed to contain
 Plutus V3 scripts. Additionally, the presence of reference scripts or
@@ -209,10 +209,10 @@ in the Conway era.  However, since the interface with Plutus is kept abstract
 in this specification, changes to the representation of the script context which
 are part of \hrefCIP{0069} are not included here.  To provide a \hrefCIP{0069}-conformant
 implementation of Plutus to this specification, an additional step processing
-the \List \Data argument we provide would be required.
+the \List{} \Data{} argument we provide would be required.
 
-In Figure~\ref{fig:rules:utxow}, the line
-\inputHashes~\subseteqfield~\txdatsHashes compares two inhabitants of
-\PowerSet~\DataHash.  In the Alonzo spec, these two terms would
-have inhabited \PowerSet~(\Maybe~\DataHash), where a \nothing is thrown out
-(see~\cite[Sec.~3.1]{alonzo-ledger-spec}).
+In \cref{fig:rules:utxow}, the line
+\inputHashes{}~\subseteqfield{}~\txdatsHashes{} compares two inhabitants of
+\PowerSet{}~\DataHash{}.  In the Alonzo spec, these two terms would
+have inhabited \PowerSet{}~(\Maybe{}~\DataHash{}), where a \nothing{} is thrown
+out~\parencite[\sectionname~3.1]{alonzo-ledger-spec}.

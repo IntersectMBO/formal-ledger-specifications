@@ -81,14 +81,14 @@ scriptsCost pp scriptSize
 \label{fig:scriptsCost}
 \end{figure*}
 
-The function \scriptsCost{} (Fig.~\ref{fig:scriptsCost}) calculates
+The function \scriptsCost{} (\cref{fig:scriptsCost}) calculates
 the fee for reference scripts in a transaction. It takes as input the
 total size of the reference scripts in bytes, which can be calculated
-using \AgdaFunction{refScriptsSize}~(Fig.\ref{fig:functions:utxo-conway}).
+using \AgdaFunction{refScriptsSize}~(cref{fig:functions:utxo-conway}).
 %
 In addition, \scriptsCost{} depends on the following constants (which
 are bundled with the protocol parameters, see
-Fig.~\ref{fig:protocol-parameter-declarations}):
+\cref{fig:protocol-parameter-declarations}):
 %
 \begin{itemize}
   \item \AgdaFunction{refScriptCostMultiplier}, a rational number, the

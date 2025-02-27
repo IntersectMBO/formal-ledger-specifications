@@ -33,21 +33,21 @@ open import Function.Related.Propositional using (↔⇒)
 open GovActionState
 \end{code}
 
-The behavior of \GovState is similar to that of a queue. New proposals are appended at
-the end, but any proposal can be removed at the epoch
+The behavior of \GovState{} is similar to that of a queue. New proposals are
+appended at the end, but any proposal can be removed at the epoch
 boundary. However, for the purposes of enactment, earlier proposals
-take priority. Note that \EnactState used in \GovEnv is defined later,
-in Section~\ref{sec:enactment}.
+take priority. Note that \EnactState{} used in \GovEnv{} is defined later,
+in \cref{sec:enactment}.
 
 \begin{itemize}
-\item \addVote inserts (and potentially overrides) a vote made for a
+\item \addVote{} inserts (and potentially overrides) a vote made for a
 particular governance action (identified by its ID) by a credential with a role.
 
-\item \addAction adds a new proposed action at the end of a given \GovState.
+\item \addAction{} adds a new proposed action at the end of a given \GovState{}.
 
-\item The \validHFAction property indicates whether a given proposal, if it is a
-\TriggerHF action, can potentially be enacted in the future. For this to be the
-case, its \prevAction needs to exist, be another \TriggerHF action and have a
+\item The \validHFAction{} property indicates whether a given proposal, if it is a
+\TriggerHF{} action, can potentially be enacted in the future. For this to be the
+case, its \prevAction{} needs to exist, be another \TriggerHF{} action and have a
 compatible version.
 \end{itemize}
 
@@ -184,7 +184,7 @@ _⊢_⇀⦇_,GOVS⦈_   : GovEnv → GovState → List (GovVote ⊎ GovProposal)
 \label{defs:gov-defs}
 \end{figure*}
 
-Figure~\ref{defs:enactable} shows some of the functions used to determine whether certain
+\Cref{defs:enactable} shows some of the functions used to determine whether certain
 actions are enactable in a given state.  Specifically, \AgdaFunction{allEnactable} passes
 the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list of
 \AgdaFunction{GovActionID}-pairs which is then passed to \AgdaFunction{enactable}. The latter uses the
@@ -192,9 +192,9 @@ the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list o
 whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
 enacted one.
 
-The function \govActionPriority assigns a priority to the various types of governance actions.
+The function \govActionPriority{} assigns a priority to the various types of governance actions.
 This is useful for ordering lists of governance actions (see \AgdaFunction{insertGovAction}
-in Fig.~\ref{defs:gov-functions}).
+in \cref{defs:gov-functions}).
 %
 Priority is also used to check if two actions \AgdaFunction{Overlap}: that is,
 they potentially modify the same piece of \AgdaDatatype{EnactState}.
@@ -358,7 +358,7 @@ actionWellFormed _                 = ⊤
 \label{fig:valid-and-wellformed}
 \end{figure*}
 
-Figure~\ref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
+\Cref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
 of the GOV rule to ensure that a governance action is valid and well-formed.
 \begin{itemize}
   \item \actionValid{} ensures that the proposed action is valid given the current state of the system:
@@ -451,16 +451,15 @@ _⊢_⇀⦇_,GOVS⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV⦈
 \end{figure*}
 
 The GOVS transition system is now given as the reflexitive-transitive
-closure of the system GOV, described in
-Figure~\ref{defs:gov-rules}.
+closure of the system GOV, described in \Cref{defs:gov-rules}.
 
-For \GOVVote, we check that the governance action being voted on
+For \GOVVote{}, we check that the governance action being voted on
 exists; that the voter's role is allowed to vote (see \canVote{} in
-Figure~\ref{fig:ratification-requirements}); and that the voter's
+\cref{fig:ratification-requirements}); and that the voter's
 credential is actually associated with their role (see
-\isRegistered{} in Figure~\ref{defs:gov-defs}).
+\isRegistered{} in \cref{defs:gov-defs}).
 
 For \GOVPropose{}, we check the correctness of the deposit along with some
 and some conditions that ensure the action is well-formed and valid;
 naturally, these checks depend on the type of action being proposed
-(see Figure~\ref{fig:valid-and-wellformed}).
+(see \cref{fig:valid-and-wellformed}).

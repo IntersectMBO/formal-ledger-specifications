@@ -5,15 +5,15 @@
 We introduce three distinct bodies that have specific functions in the new governance framework:
 \begin{enumerate}
 \item
-  a constitutional committee  (henceforth called \CC);
+  a constitutional committee  (henceforth called \CC{});
 \item
-  a group of delegate representatives (henceforth called \DReps);
+  a group of delegate representatives (henceforth called \DReps{});
 \item
-  the stake pool operators (henceforth called \SPOs).
+  the stake pool operators (henceforth called \SPOs{}).
 
-In the following figure, \DocHash is abstract but in the
+In the following figure, \DocHash{} is abstract but in the
 implementation it will be instantiated with a 32-bit hash type (like
-e.g. \ScriptHash). We keep it separate because it is used for a
+e.g. \ScriptHash{}). We keep it separate because it is used for a
 different purpose.
 
 \end{enumerate}
@@ -67,22 +67,26 @@ data GovAction : Type where
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
-Figure~\ref{defs:governance} defines several data types used to represent governance actions including:
+\Cref{defs:governance} defines several data types used to represent governance actions including:
 \begin{itemize}
-  \item \GovActionID---a unique identifier for a governance action,
-    consisting of the \TxId of the proposing transaction and an index to identify a proposal within a transaction;
-  \item \GovRole (\defn{governance role})---one of three available voter roles defined above (\CC, \DRep, \SPO);
-  \item \VDeleg (\defn{voter delegation})---one of three ways to delegate votes: by credential, abstention, or no confidence (\credVoter, \abstainRep, or \noConfidenceRep);
-  \item \Anchor---a url and a document hash;
-  \item \GovAction (\defn{governance action})---one of seven possible actions (see Figure~\ref{fig:types-of-governance-actions} for definitions);
+  \item \GovActionID{}: a unique identifier for a governance action, consisting of the
+    \TxId{} of the proposing transaction and an index to identify a proposal within a transaction;
+  \item \GovRole{} (\defn{governance role}): one of three available voter roles
+    defined above (\CC{}, \DRep{}, \SPO{});
+  \item \VDeleg{} (\defn{voter delegation}): one of three ways to delegate votes: by credential,
+    abstention, or no confidence (\credVoter{}, \abstainRep{}, or \noConfidenceRep{});
+  \item \Anchor{}: a url and a document hash;
+  \item \GovAction{} (\defn{governance action}): one of seven possible actions
+    (see \cref{fig:types-of-governance-actions} for definitions);
 \end{itemize}
 The governance actions carry the following information:
 \begin{itemize}
-  \item \UpdateCommittee: a map of credentials and terms to add and a set of credentials to remove from the committee;
-  \item \NewConstitution: a hash of the new constitution document and an optional proposal policy;
-  \item \TriggerHF: the protocol version of the epoch to hard fork into;
-  \item \ChangePParams: the updates to the parameters; and
-  \item \TreasuryWdrl: a map of withdrawals.
+  \item \UpdateCommittee{}: a map of credentials and terms to add and a set of
+    credentials to remove from the committee;
+  \item \NewConstitution{}: a hash of the new constitution document and an optional proposal policy;
+  \item \TriggerHF{}: the protocol version of the epoch to hard fork into;
+  \item \ChangePParams{}: the updates to the parameters; and
+  \item \TreasuryWdrl{}: a map of withdrawals.
 \end{itemize}
 \begin{figure*}[h]
 \begin{longtable}[]{@{}
@@ -90,14 +94,14 @@ The governance actions carry the following information:
  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.75}}@{}}
 \textbf{Action}  & \textbf{Description}\\
 \hline
-\endhead
-\NoConfidence            & a motion to create a \emph{state of no-confidence} in the current constitutional committee \\[10pt]
-\UpdateCommittee         & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
-\NewConstitution         & a modification to the off-chain Constitution and the proposal policy script \\[10pt]
-\TriggerHF\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\[10pt]
-\ChangePParams           & a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\[10pt]
-\TreasuryWdrl            & movements from the treasury\\
-\Info                    & an action that has no effect on-chain, other than an on-chain record
+\endhead{}
+\NoConfidence{}            & a motion to create a \emph{state of no-confidence} in the current constitutional committee \\[10pt]
+\UpdateCommittee{}         & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
+\NewConstitution{}         & a modification to the off-chain Constitution and the proposal policy script \\[10pt]
+\TriggerHF{}\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\[10pt]
+\ChangePParams{}           & a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\[10pt]
+\TreasuryWdrl{}            & movements from the treasury\\
+\Info{}                    & an action that has no effect on-chain, other than an on-chain record
 \end{longtable}
 \caption{Types of governance actions}
 \label{fig:types-of-governance-actions}
@@ -111,7 +115,7 @@ The governance actions carry the following information:
 % \label{sec:voting-and-ratification}
 % Every governance action must be ratified by at least two of these three bodies using their on-chain \defn{votes}.
 % The type of action and the state of the governance system determines which bodies must ratify it.
-% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see Section~\ref{sec:enactment} and Figure~\ref{fig:enactment-types}).
+% Ratified actions are then \defn{enacted} on-chain, following a set of rules (see \cref{sec:enactment,fig:enactment-types}).
 
 \subsection{Hash Protection}
 \label{sec:hash-protection}
@@ -122,19 +126,19 @@ obtained by enacting the proposal is in fact the state that was intended when
 the proposal was submitted.  This
 is achieved by requiring actions to unambiguously link to the state
 they are modifying via a pointer to the previous modification. A
-proposal can only be enacted if it contains the \GovActionID of the
+proposal can only be enacted if it contains the \GovActionID{} of the
 previously enacted proposal modifying the same piece of
-state. \NoConfidence and \UpdateCommittee modify the same state, while
+state.  \NoConfidence{} and \UpdateCommittee{} modify the same state, while
 every other type of governance action has its own state that isn't
 shared with any other action. This means that the enactibility of a
 proposal can change when other proposals are enacted.
 
 However, not all types of governance actions require this strict
-protection. For \TreasuryWdrl and \Info, enacting them does not change
+protection.  For \TreasuryWdrl{} and \Info{}, enacting them does not change
 the state in non-commutative ways, so they can always be enacted.
 
-Types related to this hash protection scheme are defined in
-Figure~\ref{fig:needshash-and-hashprotected-types}.
+Types related to this hash protection scheme are defined
+in \cref{fig:needshash-and-hashprotected-types}.
 
 \begin{figure*}[h]
 \begin{code}
@@ -211,20 +215,20 @@ proposedCC _                       = ∅
 \caption{Governance helper function}
 \end{figure*}
 
-The data type \Vote represents the different voting options: \yes,
-\no, or \abstain. For a \Vote to be cast, it must be packaged together
+The data type \Vote{} represents the different voting options: \yes{},
+\no{}, or \abstain{}. For a \Vote{} to be cast, it must be packaged together
 with further information, such as who votes and for which governance
-action. This information is combined in the \GovVote record. An
-optional \Anchor can be provided to give context about why a vote was
+action. This information is combined in the \GovVote{} record. An
+optional \Anchor{} can be provided to give context about why a vote was
 cast in a certain manner.
 
-To propose a governance action, a \GovProposal needs to be
+To propose a governance action, a \GovProposal{} needs to be
 submitted. Beside the proposed action, it requires:
 \begin{itemize}
-\item potentially a pointer to the previous action (see Section~\ref{sec:hash-protection}),
+\item potentially a pointer to the previous action (see \cref{sec:hash-protection}),
 \item potentially a pointer to the proposal policy (if one is required),
-\item a deposit, which will be returned to \returnAddr, and
-\item an \Anchor, providing further information about the proposal.
+\item a deposit, which will be returned to \returnAddr{}, and
+\item an \Anchor{}, providing further information about the proposal.
 \end{itemize}
 
 While the deposit is held, it is added to the deposit pot, similar to
@@ -233,9 +237,9 @@ not the block production stake) of the reward address to which it will
 be returned, so as not to reduce the submitter's voting power when
 voting on their own (and competing) actions. For a proposal to be
 valid, the deposit must be set to the current value of
-\govActionDeposit. The deposit will be returned when the action is
+\govActionDeposit{}. The deposit will be returned when the action is
 removed from the state in any way.
 
-\GovActionState is the state of an individual governance action. It
+\GovActionState{} is the state of an individual governance action. It
 contains the individual votes, its lifetime, and information necessary
 to enact the action and to repay the deposit.
