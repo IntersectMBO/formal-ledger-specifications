@@ -157,6 +157,7 @@ library
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.NewEpoch
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction
+        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.GovernanceActions
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact
