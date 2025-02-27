@@ -1,3 +1,6 @@
+% -*- TeX-master: "PDF.lagda" -*-
+% -*- coding: utf-8 -*-
+% !TEX root = PDF.tex
 \section{Introduction}
 \label{sec:introduction}
 \modulenote{\LedgerModule{Introduction}}
@@ -57,6 +60,76 @@ Conway~\cite{cip1694} & Complete & Partial & Partial \\
 \caption{Specification progress}
 \label{fig:eras-progress}
 \end{longtable}
+
+\subsection{Overview}
+\label{sec:overview}
+This document describes, in a precise and executable way, the behavior of a ledger
+that can be updated in response to a series of events.  Because of the precise nature
+of the document, it can be dense and difficult to read at times, and it can be
+helpful to have a high-level understanding of what it is trying to describe, which we
+present below.  Keep in mind that this section focuses on intuition, using
+terms (set in italics) which may be unfamiliar to some readers, but rest assured that
+later sections of the document will make the intuition and italicized terms precise.
+
+By \textit{ledger}, we mean a record of a data structure at a specific point in time.
+This data structure contains, for example, an accounting of how funds in the system
+are distributed among different accounts; the ADA currently held in the reserves; a
+list of \textit{stake pools} operating the network, and so on.
+
+This ledger can be updated in response to certain signals, such as receiving a new
+transaction, time passing and crossing an \textit{epoch boundary}, enacting a
+\textit{governance proposal}, to name a few.  Thus, the ledger also defines a set of
+rules for what signals are valid to apply, and exactly how the state should be
+updated in response to those signals.  A description of this state, the possible
+signals, and the aforementioned rules is exactly what this document seeks to make
+precise.
+
+We will model this via a number of \textit{state transition systems} (STS) that
+describe different subsets of the behavior, and can be composed into the full
+description of the protocol.  Each STS will consist of
+\begin{itemize}
+  \item an \textit{environment}, which consists of data read from the ledger or
+        outside world that should be considered constant and unchanging for the
+        purposes of the rule;
+  \item an \textit{initial state}, which consists of the subset of the full ledger
+        state that the transition can update;
+  \item a \textit{signal}, with associated data, that the transition system can
+        receive;
+  \item a set of \textit{preconditions} that must be met in order for the transition
+        to be valid;
+  \item a new state that results from said transition.
+\end{itemize}
+For example, the \UTXOW{} transition system defined in~\cref{XXX} checks that, among
+other things, the transaction is signed by the appropriate parties.
+
+These transition systems can be composed by requiring another transition system to
+hold as part of the preconditions.  For example, the \UTXOW{} transition system
+mentioned above also requires the \UTXO{} transition, which checks that the
+inputs to the transaction exist, that the transaction is balanced, and several other
+rules.
+
+A brief description of each transition system is provided below, with a link to
+an Agda module and reference to a section where the transition relation is formally defined.
+
+\begin{itemize}
+\item \LedgerModText[Utxo][UTXOS]: Checks that any relevant scripts needed by the transaction evaluate to true
+\item \LedgerModText[Utxo][UTXO]: Checks core invariants for an individual transaction to be valid, such as the transaction being balanced, fees being paid, etc; includes the UTXOS transition system.
+\item \LedgerModText[Utxow][UTXOW]: Checks that a transaction is witnessed correctly with the appropriate signatures, datums, and scripts; includes the UTXO transition system.
+\item \LedgerModText[Gov][GOV]: Handles voting and submitting governance proposals
+\item \LedgerModText[Certs][DELEG]: Handles registering stake addresses and delegating to a stake pool
+\item \LedgerModText[Certs][POOL]: Handles registering and retiring stake pools
+\item \LedgerModText[Certs][GOVCERT]: Handles registering and delegating to DReps
+\item \LedgerModText[Certs][CERT]: Combines DELEG, POOL, GOVCERT transitions systems, as well as some additional rules shared by all three
+\item \LedgerModText[Certs][CERTS]: Applies CERT repeatedly for each certificate in the transaction
+\item \LedgerModText[Ledger][LEDGER]: The full state update in response to a single transaction; includes the UTXOW, GOV, and CERTS rules
+\item \LedgerModText[Ledger][LEDGERS]: Applies LEDGER repeatedly as needed, for each transaction in a list of transactions
+\item \LedgerModText[Enact][ENACT]: Applies the result of a previously ratified governance action, such as triggering a hard fork or updating the protocol parameters.
+\item \LedgerModText[Ratify][RATIFY]: Decides whether a pending governance action has reached the thresholds it needs to be ratified.
+\item \LedgerModText[Epoch][SNAP]: Computes new stake distribution snapshots
+\item \LedgerModText[Epoch][EPOCH]: Computes the new state as of the end of an epoch; includes the ENACT, RATIFY, and SNAP transition systems.
+\item \LedgerModText[Epoch][NEWEPOCH]: Computes the new state as of the start of a new epoch; includes the previous EPOCH transition.
+\item \LedgerModText[Chain][CHAIN]: The top level transition in response to a new block that applies the NEWEPOCH transition when crossing an epoch boundary, and the LEDGERS transition on the list of transactions in the body.
+\end{itemize}
 \end{NoConway}
 
 \subsection{A Note on Agda}
