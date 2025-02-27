@@ -71,4 +71,4 @@ record Crypto : Type₁ where
 \end{code}
 
 We rely on a public key signing scheme for verification of spending.
-Figure~\ref{fig:defs:crypto} shows some of the types, functions and properties of this scheme.
+\Cref{fig:defs:crypto} shows some of the types, functions and properties of this scheme.

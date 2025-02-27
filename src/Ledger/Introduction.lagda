@@ -40,11 +40,14 @@ explanations may be missing or wrong.
 \end{Conway}
 
 \begin{NoConway}
+This is the work-in-progress specification of the Cardano ledger.
+The Agda source code with which we formalize the ledger specification and which
+generates this pdf document is open source and resides at the following
 \begin{center}
-Repository: \url{\repourl}
+repository: \url{\repourl}
 \end{center}
-This is the work-in-progress specification of the Cardano ledger. The
-current status of each individual era is described in Table \ref{fig:eras-progress}.
+
+The current status of each individual era is described in Table \ref{fig:eras-progress}.
 
 \begin{longtable}[h!]{|l l l l|}
 \hline
@@ -134,14 +137,15 @@ an Agda module and reference to a section where the transition relation is forma
 
 \subsection{A Note on Agda}
 
-This specification is written using the Agda programming language and
-proof assistant~(\cite{agda2023}). We have spent a lot of time on making
-this document readable for people unfamiliar with Agda (or other proof
-assistants, functional programming languages, etc.). However, by the
+This specification is written using the
+\hrefAgdaWiki[Agda programming language and proof assistant]~\parencite{agda2024}.
+We have made a considerable effort to ensure
+that this document is readable by people unfamiliar with Agda (or other proof
+assistants, functional programming languages, etc.).  However, by the
 nature of working in a formal language we have to play by its rules,
 meaning that some instances of uncommon notation are very difficult or
 impossible to avoid. Some are explained in
-Section~\ref{sec:notation}, but there is no guarantee that this
+\cref{sec:notation}, but there is no guarantee that this
 section is complete.  If the meaning of an expression is confusing
 or unclear, please
 \href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}%
@@ -178,21 +182,20 @@ many times as they can to arrive at a final state. Since we use this
 pattern multiple times, we define a closure operation which takes a
 STS relation and applies it as many times as possible.
 
-The closure \RTCI of a relation \RTCB is defined in Figure
-\ref{fig:rt-closure}. In the remainder of the text, the closure
-operation is called \RTC.
+The closure \RTCI{} of a relation \RTCB{} is defined in \cref{fig:rt-closure}.
+In the remainder of the text, the closure operation is called \RTC{}.
 
 \begin{figure*}[htb]
-\begin{code}[hide]
+\caption{Reflexive transitive closure}
+\begin{AgdaMultiCode}
+\begin{code}
 module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
-  data
+
 \end{code}
 \emph{Closure type}
 \begin{code}
-    _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type
-\end{code}
-\begin{code}[hide]
-    where
+  data _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type where
+
 \end{code}
 \emph{Closure rules}
 \begin{code}
@@ -205,7 +208,7 @@ module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
       ───────────────────────────────────────
       Γ ⊢ s ⇀⟦ sig ∷ sigs ⟧* s''
 \end{code}
-\caption{Reflexive transitive closure}
+\end{AgdaMultiCode}
 \label{fig:rt-closure}
 \end{figure*}
 
@@ -214,7 +217,7 @@ module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
 Since all such state machines need to be evaluated by the nodes and all
 nodes should compute the same states, the relations specified by them
 should be computable by functions. This can be captured by the
-definition in Figure \ref{fig:computational} which is parametrized
+definition in \cref{fig:computational} which is parametrized
 over the state transition relation.
 
 \begin{figure*}[htb]
@@ -236,29 +239,26 @@ record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Typ
     case comp≡nothing of λ ()
 \end{code}
 
-Unpacking this, we have a \compute function that computes a final
+Unpacking this, we have a \compute{} function that computes a final
 state from a given environment, state and signal. The second piece is
-correctness: \compute succeeds with some final state if and only if
+correctness: \compute{} succeeds with some final state if and only if
 that final state is in relation to the inputs.
 
 This has two further implications:
 
 \begin{itemize}
-
-\item Since \compute is a function, the state transition relation is necessarily
+\item Since \compute{} is a function, the state transition relation is necessarily
 a (partial) function; i.e., there is at most one possible final state for each
-input data. Otherwise, we could prove that \compute could evaluates to
+input data.  Otherwise, we could prove that \compute{} could evaluates to
 two different states on the same inputs, which is impossible since it
 is a function.
-
-\item The actual definition of \compute is irrelevant---any two
-implementations of \compute have to produce the same result on any
+\item The actual definition of \compute{} is irrelevant---any two
+implementations of \compute{} have to produce the same result on any
 input. This is because we can simply chain the equivalences for two
-different \compute functions together.
-
+different \compute{} functions together.
 \end{itemize}
 
-What this all means in the end is that if we give a \Computational
+What this all means in the end is that if we give a \Computational{}
 instance for every relation defined in the ledger, we also have an
 executable version of the rules which is guaranteed to be
 correct. This is indeed something we have done, and the same source
@@ -280,7 +280,7 @@ many places. We usually think of maps as partial functions
 (i.e., functions not necessarily defined everywhere---equivalently, "left-unique"
 relations) and we use the harpoon arrow \AgdaFunction{⇀} to
 distinguish such maps from standard Agda functions which use \AgdaSymbol{→}.
-The figure below also gives notation for the powerset operation, \PowerSet,
+The figure below also gives notation for the powerset operation, \PowerSet{},
 used to form a type of sets with elements in a given type,
 as well as the subset relation and the equality relation for sets.
 \begin{figure*}[h]
@@ -317,12 +317,13 @@ In type theory we represent propositions as types and proofs of a proposition as
 elements of the corresponding type.
 A unary predicate is a function that takes each \AgdaBound{x} (of some type \AgdaBound{A}) and
 returns a proposition \AgdaFunction{P}(\AgdaBound{x}). Thus, a predicate is a function of type
-\AgdaBound{A}~\AgdaSymbol{→}~\Type.
+\AgdaBound{A}~\AgdaSymbol{→}~\Type{}.
 A \textit{binary relation} \AgdaFunction{R} between \AgdaBound{A} and \AgdaBound{B} is a
 function that takes a pair of values \AgdaBound{x} and \AgdaBound{y} and returns a proposition
 asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \AgdaBound{y}.
-Thus, such a relation is a function of type \AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type
-or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type.
+Thus, such a relation is a function of type
+\AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}
+or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}.
 
 \subsection{Superscripts and Other Special Notations}
 

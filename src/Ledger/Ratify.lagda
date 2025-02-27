@@ -40,12 +40,12 @@ consequences in combination with other actions.
 
 \subsection{Ratification Requirements}
 \label{sec:ratification-requirements}
-Figure~\ref{fig:ratification-requirements} details the ratification
+\Cref{fig:ratification-requirements} details the ratification
 requirements for each governance action scenario. For a governance
 action to be ratified, all of these requirements must be satisfied, on
 top of other conditions that are explained further down. The
-\threshold function is defined as a table, with a row for each type of
-\GovAction and the colums representing the \CC, \DRep and \SPO roles
+\threshold{} function is defined as a table, with a row for each type of
+\GovAction{} and the colums representing the \CC{}, \DRep{} and \SPO{} roles
 in that order.
 
 The symbols mean the following:
@@ -65,26 +65,27 @@ The symbols mean the following:
 \end{itemize}
 
 Two rows in this table contain functions that compute the
-\DRep and \SPO thresholds simultaneously: the rows for \UpdateCommittee
-and \ChangePParams.
+\DRep{} and \SPO{} thresholds simultaneously: the rows for \UpdateCommittee{}
+and \ChangePParams{}.
 
-For \UpdateCommittee, there can be different thresholds depending on whether the
+For \UpdateCommittee{}, there can be different thresholds depending on whether the
 system is in a state of no-confidence or not. This information is
-provided via the \AgdaArgument{ccThreshold} argument: if the system is in a state of no-confidence, then \AgdaArgument{ccThreshold} is set to \nothing.
+provided via the \AgdaArgument{ccThreshold} argument: if the system is in a
+state of no-confidence, then \AgdaArgument{ccThreshold} is set to \nothing{}.
 
-In case of the \ChangePParams action, the thresholds further depend on
-what groups that action is associated with. \pparamThreshold
+In case of the \ChangePParams{} action, the thresholds further depend on
+what groups that action is associated with. \pparamThreshold{}
 associates a pair of thresholds to each individual group. Since an
 individual update can contain multiple groups, the actual thresholds
 are then given by taking the maximum of all those thresholds.
 
 Note that each protocol parameter belongs to exactly one of the four
-groups that have a \DRep threshold, so a \DRep vote will always be
+groups that have a \DRep{} threshold, so a \DRep{} vote will always be
 required. A protocol parameter may or may not be in the
-\SecurityGroup, so an \SPO vote may not be required.
+\SecurityGroup{}, so an \SPO{} vote may not be required.
 
 Finally, each of the \AgdaFunction{P}$_x$ and \AgdaFunction{Q}$_x$ in
-Figure~\ref{fig:ratification-requirements} are protocol parameters.
+\cref{fig:ratification-requirements} are protocol parameters.
 \begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
@@ -177,7 +178,7 @@ parameter governance action be confined to a single group. In case a governance 
 for multiple parameters from different groups, the maximum threshold of all the groups involved will
 apply to any given such governance action.
 
-The purpose of the \SecurityGroup is to add an additional check to
+The purpose of the \SecurityGroup{} is to add an additional check to
 security-relevant protocol parameters. Any proposal that includes a
 change to a security-relevant protocol parameter must also be accepted
 by at least half of the SPO stake.
@@ -224,14 +225,14 @@ IsSPO   v = govRole v ≡ SPO
 \caption{Types and functions for the RATIFY transition system}
 \label{fig:types-and-functions-for-the-ratify-transition-system}
 \end{figure*}
-As mentioned earlier, most governance actions must include a \GovActionID
+As mentioned earlier, most governance actions must include a \GovActionID{}
 for the most recently enacted action of its given type. Consequently, two actions of the
 same type can be enacted at the same time, but they must be \emph{deliberately}
 designed to do so.
 
-Figure~\ref{fig:types-and-functions-for-the-ratify-transition-system}
+\Cref{fig:types-and-functions-for-the-ratify-transition-system}
 defines some types and functions used in the RATIFY transition
-system. \CCData is simply an alias to define some functions more
+system. \CCData{} is simply an alias to define some functions more
 easily.
 
 \begin{figure*}[!ht]
@@ -333,52 +334,52 @@ actualVotes Γ pparams cc ga votes
 \label{fig:defs:ratify-actualvotes}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-actualvotes} defines the \actualVotes
+\Cref{fig:defs:ratify-actualvotes} defines the \actualVotes{}
 function. Given the current state about votes and other parts of the
 system it calculates a new mapping of votes, which is the mapping that
 will actually be used during ratification. Things such as default
 votes or resignation/expiry are implemented in this way.
 
-\actualVotes is defined as the union of four voting maps,
+\actualVotes{} is defined as the union of four voting maps,
 corresponding to the constitutional committee, predefined (or auto)
 DReps, regular DReps and SPOs.
 
 \begin{itemize}
 
-\item \roleVotes filters the votes based on the given governance role
+\item \roleVotes{} filters the votes based on the given governance role
   and is a helper for definitions further down.
 
-\item if a \CC member has not yet registered a hot key, has \expired,
-  or has resigned, then \actualCCVote returns \abstain; if none
+\item if a \CC{} member has not yet registered a hot key, has \expired{},
+  or has resigned, then \actualCCVote{} returns \abstain{}; if none
   of these conditions is met, then
   \begin{itemize}
-    \item if the \CC member has voted, then that vote is returned;
-    \item if the \CC member has not voted, then the default value of \no is returned.
+    \item if the \CC{} member has voted, then that vote is returned;
+    \item if the \CC{} member has not voted, then the default value of \no{} is returned.
   \end{itemize}
 
-\item \actualDRepVotes adds a default vote of \no to all active DReps
+\item \actualDRepVotes{} adds a default vote of \no{} to all active DReps
   that didn't vote.
 
-\item \actualSPOVotes adds a default vote to all SPOs who didn't vote,
+\item \actualSPOVotes{} adds a default vote to all SPOs who didn't vote,
   with the default depending on the action.
 \end{itemize}
 
 Let us discuss the last item above---the way SPO votes are counted---as the ledger
 specification's handling of this has evolved in response to community feedback.
 Previously, if an SPO did not vote, then it would be counted as having voted
-\abstain by default.  Members of the SPO community found this behavior counterintuitive
-and requested that non-voters be assigned a \no vote by default, with the caveat that
+\abstain{} by default.  Members of the SPO community found this behavior counterintuitive
+and requested that non-voters be assigned a \no{} vote by default, with the caveat that
 an SPO could change its default setting by delegating its reward account credential
 to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
 (This change applies only after the bootstrap period; during the bootstrap period
-the logic is unchanged; see Appendix Section~\ref{sec:conway-bootstrap}.)
+the logic is unchanged; see \cref{sec:conway-bootstrap}.)
 To be precise, the agreed upon specification is the following: an SPO that did
-not vote is assumed to have vote \no, except under the following circumstances:
+not vote is assumed to have vote \no{}, except under the following circumstances:
 \begin{itemize}
 \item if the SPO has delegated its reward credential to an \texttt{AlwaysNoConfidence}
-DRep, then their default vote is \yes for \NoConfidence proposals and \no for other proposals;
+DRep, then their default vote is \yes{} for \NoConfidence{} proposals and \no{} for other proposals;
 \item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain} DRep,
-then its default vote is \abstain for all proposals.
+then its default vote is \abstain{} for all proposals.
 \end{itemize}
 It is important to note that the credential that can now be used to set a default
 voting behavior is the credential used to withdraw staking rewards, which is not
@@ -434,31 +435,31 @@ abstract
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-defs-i} defines the \accepted and \expired
+\Cref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
 functions (together with some helpers) that are used in the rules of
 RATIFY.
 
 \begin{itemize}
-  \item \getStakeDist computes the stake distribution based on the
+  \item \getStakeDist{} computes the stake distribution based on the
     given governance role and the corresponding delegations. Note that
     every constitutional committe member has a stake of 1, giving them
     equal voting power. However, just as with other delegation, multiple
     CC members can delegate to the same hot key, giving that hot key
     the power of those multiple votes with a single actual vote.
 
-  \item \acceptedStakeRatio is the ratio of accepted stake. It is
-    computed as the ratio of \yes votes over the votes that didn't
-    \abstain. The latter is equivalent to the sum of \yes and \no votes. The
-    special division symbol \AgdaFunction{/₀} indicates that in case
+  \item \acceptedStakeRatio{} is the ratio of accepted stake. It is
+    computed as the ratio of \yes{} votes over the votes that didn't
+    \abstain{}. The latter is equivalent to the sum of \yes{} and \no{} votes.
+    The special division symbol \AgdaFunction{/₀} indicates that in case
     of a division by 0, the numbers 0 should be returned. This implies
     that in the absence of stake, an action can only pass if the
     threshold is also set to 0.
 
-  \item \acceptedBy looks up the threshold in the \threshold table and
-    compares it to the result of \acceptedStakeRatio.
+  \item \acceptedBy{} looks up the threshold in the \threshold{} table and
+    compares it to the result of \acceptedStakeRatio{}.
 
-  \item \accepted then checks if an action is accepted by all roles; and
-  \item \expired checks whether a governance action is expired in a given epoch.
+  \item \accepted{} then checks if an action is accepted by all roles; and
+  \item \expired{} checks whether a governance action is expired in a given epoch.
 \end{itemize}
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
@@ -531,13 +532,13 @@ abstract
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
 
-Figure~\ref{fig:defs:ratify-defs-ii} defines functions that deal with
-delays and the acceptance criterion for ratification. A given action
-can either be delayed if the action contained in \EnactState isn't the
+\Cref{fig:defs:ratify-defs-ii} defines functions that deal with
+delays and the acceptance criterion for ratification.  A given action
+can either be delayed if the action contained in \EnactState{} isn't the
 one the given action is building on top of, which is checked by
-\verifyPrev, or if a previous action was a \delayingAction. Note that
-\delayingAction affects the future: whenever a \delayingAction is
-accepted all future actions are delayed. \delayed then expresses the
+\verifyPrev{}, or if a previous action was a \delayingAction{}.  Note that
+\delayingAction{} affects the future: whenever a \delayingAction{} is
+accepted all future actions are delayed.  \delayed{} then expresses the
 condition whether an action is delayed. This happens either because
 the previous action doesn't match the current one, or because the
 previous action was a delaying one. This information is passed in as
@@ -594,22 +595,24 @@ _⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY'
 
 The RATIFY transition system is defined as the reflexive-transitive
 closure of RATIFY', which is defined via three rules, defined in
-Figure~\ref{fig:sts:ratify}.
-
+\cref{fig:sts:ratify}.
+%
 \begin{itemize}
-  \item \RATIFYAccept checks if the votes for a given \GovAction meet the threshold required for
-        acceptance, that the action is accepted and not delayed,
-        and \RATIFYAccept ratifies the action.
-
-  \item \RATIFYReject asserts that the given \GovAction is not \accepted and \expired;
-        it removes the governance action.
-  \item \RATIFYContinue covers the remaining cases and keeps the \GovAction around for further voting.
+  \item \RATIFYAccept{} checks if the votes for a given \GovAction{} meet the
+    threshold required for acceptance, that the action is accepted and not delayed,
+    and \RATIFYAccept{} ratifies the action.
+%
+  \item \RATIFYReject{} asserts that the given \GovAction{} is not \accepted{}
+    and \expired{}; it removes the governance action.
+%
+  \item \RATIFYContinue{} covers the remaining cases and keeps the \GovAction{}
+    around for further voting.
 \end{itemize}
-
-Note that all governance actions eventually either get accepted and enacted via \RATIFYAccept or
-rejected via \RATIFYReject. If an action satisfies all criteria to be accepted but cannot be
+%
+Note that all governance actions eventually either get accepted and enacted via \RATIFYAccept{} or
+rejected via \RATIFYReject{}. If an action satisfies all criteria to be accepted but cannot be
 enacted anyway, it is kept around and tried again at the next epoch boundary.
 
-We never remove actions that do not attract sufficient \yes votes before they expire, even if it
+We never remove actions that do not attract sufficient \yes{} votes before they expire, even if it
 is clear to an outside observer that this action will never be enacted. Such an action will simply
 keep getting checked every epoch until it expires.
