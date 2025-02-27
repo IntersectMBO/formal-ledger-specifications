@@ -117,13 +117,6 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
       Γ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 
   LEDGER-I :
-    let txb = tx .body
-\end{code}
-\begin{code}[hide]
-        open TxBody txb
-\end{code}
-\begin{code}
-    in
     ∙ isValid tx ≡ false
     ∙ record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
       ────────────────────────────────
