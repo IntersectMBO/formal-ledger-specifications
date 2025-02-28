@@ -63,3 +63,29 @@
 \usepackage{macros}
 
 \usepackage{enumitem}
+
+%%
+%% for diagrams
+%%
+\usepackage{pgfplots}
+\usepackage[tikz]{bclogo}
+\usepackage{tikz-cd}
+\usetikzlibrary{ arrows.meta
+               , backgrounds
+               , calc
+               , decorations.pathreplacing
+               , fit
+               , positioning
+               , shadows
+               , shapes.geometric
+               , shapes.misc
+               }
+\usepackage[dvipsnames]{xcolor}
+\usepackage{caption}
+\def\AlonzoColor{Periwinkle}
+\def\BabbageColor{Tan}
+\def\ConwayColor{yellow!50}
+\def\ShelleyColor{lightgray}
+\newcommand{\legendbox}[1]{%
+  \textcolor{#1}{\rule{\fontcharht\font`X}{\fontcharht\font`X}}%
+}

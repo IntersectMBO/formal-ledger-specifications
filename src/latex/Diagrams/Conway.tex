@@ -11,8 +11,8 @@
   \node (CHAIN) {\small CHAIN};
 
   % LEVEL -1
-  \node (NEWEPOCH) [below left=1.5cm and 0mm of CHAIN] {\small NEWEPOCH};
-  \node (LEDGERS) [below right=1.5cm and 0mm of CHAIN] {\small LEDGERS};
+  \node (NEWEPOCH) [below left=2cm and 0mm of CHAIN] {\small NEWEPOCH};
+  \node (LEDGERS) [below right=2cm and 0mm of CHAIN] {\small LEDGERS};
 
   % LEVEL -2
   \node (EPOCH) [below=of NEWEPOCH] {\small EPOCH};
@@ -57,11 +57,11 @@
 
   % Dependencies (Dotted edges)
   \draw[dotted edge]
-  (ENACT)    edge                   (EPOCH)
-  (RATIFY)   edge                   (EPOCH)
-  (SNAP)     edge                   (EPOCH)
-  (UTXOS)    edge                   (UTXO)
-  (CERTS)    edge                   (LEDGER);
+  (ENACT)    edge [bend left]       (EPOCH)
+  (RATIFY)   edge [bend right]      (EPOCH)
+  (SNAP)     edge [bend right]      (EPOCH)
+  (UTXOS)    edge [bend left]       (UTXO)
+  (CERTS)    edge [bend right]      (LEDGER);
 
   \end{tikzpicture}
   \caption{State transition systems of the latest blockchain ledger version.

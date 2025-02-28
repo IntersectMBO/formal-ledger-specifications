@@ -105,7 +105,7 @@ the appropriate parties.
 
 \input{Diagrams/Shelley}
 
-\input{Diagrams/Conway}
+\input{Diagrams/NewChain}
 
 These transition systems can be composed by requiring another transition system to
 hold as part of the preconditions.  For example, the UTXOW transition system
@@ -166,10 +166,8 @@ meaning that some instances of uncommon notation are very difficult or
 impossible to avoid. Some are explained in
 \cref{sec:notation}, but there is no guarantee that this
 section is complete.  If the meaning of an expression is confusing
-or unclear, please
-\href{\repourl{}/issues}%
-     {open an issue} in
-\href{\repourl{}}{our GitHub repository} with the `notation' label.
+or unclear, please \href{\repourl/issues}{open an issue} in
+\href{\repourl}{the formal ledger GitHub repository} with the `notation' label.
 
 \subsection{Separation of Concerns}
 
