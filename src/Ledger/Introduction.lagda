@@ -105,6 +105,8 @@ the appropriate parties.
 
 \input{Diagrams/Shelley}
 
+\input{Diagrams/Conway}
+
 These transition systems can be composed by requiring another transition system to
 hold as part of the preconditions.  For example, the UTXOW transition system
 mentioned above also requires the UTXO transition, which checks that the
