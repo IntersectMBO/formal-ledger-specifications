@@ -188,8 +188,9 @@ record UTxOState : Type where
 \end{code}
 \begin{code}[hide]
 instance
-  unquoteDecl To-UTxOState = derive-To
-    [ (quote UTxOState , To-UTxOState) ]
+  unquoteDecl To-UTxOEnv To-UTxOState = derive-To
+    ( (quote UTxOEnv   , To-UTxOEnv  ) ∷
+    [ (quote UTxOState , To-UTxOState) ])
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}
@@ -488,6 +489,17 @@ deregister deposits in the UTxO state based on the certificates in the transacti
 \begin{figure*}[htbp]
 \begin{code}[hide]
 open PParams
+
+private variable
+  Γ : UTxOEnv
+  s s' : UTxOState
+  tx : Tx
+  utxo : UTxO
+  fees donations : Coin
+  deposits : Deposits
+
+open UTxOEnv
+
 data
 \end{code}
 \begin{code}
@@ -496,32 +508,37 @@ data
 \begin{code}[hide]
 data _⊢_⇀⦇_,UTXOS⦈_ where
 \end{code}
+\begin{AgdaMultiCode}
 \begin{code}
   Scripts-Yes :
-    ∀ {Γ} {s} {tx}
-    → let open Tx tx renaming (body to txb); open TxBody txb
-          open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+    let  pp         = Γ .pparams
+\end{code}
+\begin{code}[hide]
+         open Tx tx renaming (body to txb); open TxBody txb
+\end{code}
+\begin{code}
+         sLst       = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ ValidCertDeposits pp deposits txcerts
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
-
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
   Scripts-No :
-    ∀ {Γ} {s} {tx}
-    → let open Tx tx renaming (body to txb); open TxBody txb
-          open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+    let  pp         = Γ .pparams
+\end{code}
+\begin{code}[hide]
+         open Tx tx renaming (body to txb); open TxBody txb
+\end{code}
+\begin{code}
+         sLst       = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
 \end{code}
+\end{AgdaMultiCode}
 \caption{UTXOS rule}
 \label{fig:utxos-conway}
 \end{figure*}
@@ -530,40 +547,30 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 
-private variable
-  Γ : UTxOEnv
-  s s' : UTxOState
-  tx : Tx
-
-data _≡?_ {A : Type} : Maybe A → A → Type where
-  ≡?-nothing : ∀ {x : A} → nothing  ≡? x
-  ≡?-just    : ∀ {x : A} → (just x) ≡? x
-
-instance
-  ≟? : {A : Type} {x : Maybe A} {y : A} → ⦃ DecEq A ⦄ → (x ≡? y) ⁇
-  ≟? {x = just x} {y} with x ≟ y
-  ... | yes refl = ⁇ yes ≡?-just
-  ... | no ¬p    = ⁇ no λ where ≡?-just → ¬p refl
-  ≟? {x = nothing} = ⁇ yes ≡?-nothing
-
 data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 
 \begin{figure*}[ht]
+\begin{AgdaMultiCode}
 \begin{code}
   UTXO-inductive :
-    let open Tx tx renaming (body to txb); open TxBody txb
-        open UTxOEnv Γ renaming (pparams to pp)
-        open UTxOState s
-        txoutsʰ = (mapValues txOutHash txouts)
-        overhead = 160
+    let pp        = Γ .pparams
+        slot      = Γ .slot
+        treasury  = Γ .treasury
+        utxo      = s .UTxOState.utxo
+\end{code}
+\begin{code}[hide]
+        open Tx tx renaming (body to txb); open TxBody txb
+\end{code}
+\begin{code}
+        txoutsʰ   = mapValues txOutHash txouts
+        overhead  = 160
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
     ∙ feesOK pp tx utxo                      ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
-
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
@@ -572,21 +579,20 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
-    ∙ txNetworkId ≡? NetworkId
-    ∙ curTreasury ≡? treasury
+    ∙ txNetworkId  ~ just NetworkId
+    ∙ curTreasury  ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}
+\end{AgdaMultiCode}
 \begin{code}[hide]
 pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
-  = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
+  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
-\Cref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together.
-(The \maybeEq{} symbol that appears in the figure denotes a special equality where
-the value on the left-handside is optional; equality holds if and only if the value
-on the left is present and equal to the value on the right.)
+\Cref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together
+(The symbol~\AgdaDatatype{≡?} is explained in \cref{sec:notation}).

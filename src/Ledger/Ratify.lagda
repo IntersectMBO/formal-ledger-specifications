@@ -546,55 +546,62 @@ an argument.
 
 \begin{code}[hide]
 private variable
+  Γ : RatifyEnv
   es es' : EnactState
   a : GovActionID × GovActionState
   removed : ℙ (GovActionID × GovActionState)
   d : Bool
 
+open RatifyEnv
+open GovActionState
 \end{code}
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}
-data _⊢_⇀⦇_,RATIFY'⦈_ :
+data _⊢_⇀⦇_,RATIFY⦈_ :
   RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
 
-  RATIFY-Accept :  {Γ        : RatifyEnv}
-                   {es es'   : EnactState}
-                   {removed  : ℙ (GovActionID × GovActionState)}
-                   {d        : Bool}
-                   {a        : GovActionID × GovActionState}
+  RATIFY-Accept :
+    let treasury       = Γ .treasury
+        e              = Γ .currentEpoch
+        (gaId , gaSt)  = a
+        action         = gaSt .action
+    in
+    ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
+    ∙ ⟦ gaId , treasury , e ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
+      ────────────────────────────────
+      Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY⦈
+          ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧
 
-     → let open RatifyEnv Γ; st = a .proj₂; open GovActionState st in
+  RATIFY-Reject :
+    let e              = Γ .currentEpoch
+        (gaId , gaSt)  = a
+    in
+    ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
+    ∙ expired e gaSt
+      ────────────────────────────────
+      Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
 
-     ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
-     ∙ ⟦ a .proj₁ , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
-       ────────────────────────────────
-       Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY'⦈
-           ⟦ es' , ❴ a ❵ ∪ removed , delayingAction action ⟧
-
-  RATIFY-Reject : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
+  RATIFY-Continue :
+     let e              = Γ .currentEpoch
+         (gaId , gaSt)  = a
+     in
      ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
-     ∙ expired currentEpoch st
+     ∙ ¬ expired e gaSt
        ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , ❴ a ❵ ∪ removed , d ⟧
+       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY⦈ ⟦ es , removed , d ⟧
 
-  RATIFY-Continue : ∀ {Γ} {a} → let open RatifyEnv Γ; st = a .proj₂ in
-     ∙ ¬ acceptConds Γ ⟦ es , removed , d ⟧ a
-     ∙ ¬ expired currentEpoch st
-       ────────────────────────────────
-       Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY'⦈ ⟦ es , removed , d ⟧
-
-_⊢_⇀⦇_,RATIFY⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
+_⊢_⇀⦇_,RATIFIES⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
                  → RatifyState → Type
-_⊢_⇀⦇_,RATIFY⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY'⦈_}
+_⊢_⇀⦇_,RATIFIES⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY⦈_}
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{The RATIFY transition system}
 \label{fig:sts:ratify}
 \end{figure*}
 
-The RATIFY transition system is defined as the reflexive-transitive
-closure of RATIFY', which is defined via three rules, defined in
+The RATIFIES transition system is defined as the reflexive-transitive
+closure of RATIFY, which is defined via three rules, defined in
 \cref{fig:sts:ratify}.
 %
 \begin{itemize}

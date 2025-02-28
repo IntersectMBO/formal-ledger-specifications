@@ -54,6 +54,6 @@ ratify-debug env st sig =
 {-# COMPILE GHC ratify-debug as ratifyDebug #-}
 
 ratify-step : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → ComputationResult ⊥ RatifyState)
-ratify-step = to (compute Computational-RATIFY)
+ratify-step = to (compute Computational-RATIFIES)
 
 {-# COMPILE GHC ratify-step as ratifyStep #-}

@@ -191,7 +191,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
                                           (utxoSt' .deposits) (voteDelegs dState)
            ; treasury = acnt .treasury ; GState gState
            ; pools = pState .pools ; delegatees = dState .voteDelegs }
-        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFY⦈ fut'
+        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
     _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
