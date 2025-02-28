@@ -257,6 +257,7 @@ library
         MAlonzo.Code.Agda.Builtin.Word.Properties
         MAlonzo.Code.Agda.Builtin.Reflection.Properties
         MAlonzo.Code.Agda.Builtin.Float.Properties
+        MAlonzo.Code.Agda.Builtin.FromNeg
         MAlonzo.Code.Agda.Builtin.Maybe
         MAlonzo.Code.Agda.Builtin.String.Properties
         MAlonzo.Code.Agda.Builtin.Bool
@@ -607,6 +608,7 @@ library
         MAlonzo.Code.Data.Integer.Base
         MAlonzo.Code.Data.Integer.Properties.NatLemmas
         MAlonzo.Code.Data.Integer.Divisibility
+        MAlonzo.Code.Data.Rational.Literals
         MAlonzo.Code.Data.Rational.Unnormalised.Properties
         MAlonzo.Code.Data.Rational.Unnormalised.Base
         MAlonzo.Code.Data.Rational.Show

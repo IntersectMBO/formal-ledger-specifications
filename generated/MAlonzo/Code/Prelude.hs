@@ -21,6 +21,8 @@ import qualified MAlonzo.Code.Agda.Builtin.FromNat
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
+import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Data.Maybe.Relation.Binary.Connected
 import qualified MAlonzo.Code.Data.Nat.Literals
 import qualified MAlonzo.Code.Data.Unit.Polymorphic.Base
 import qualified MAlonzo.Code.Level
@@ -56,3 +58,26 @@ d_'8707''8322''45'syntax_24 = erased
 -- Prelude.Number-ℕ
 d_Number'45'ℕ_32 :: MAlonzo.Code.Agda.Builtin.FromNat.T_Number_10
 d_Number'45'ℕ_32 = coe MAlonzo.Code.Data.Nat.Literals.d_number_6
+-- Prelude._~_
+d__'126'__36 :: () -> Maybe AgdaAny -> Maybe AgdaAny -> ()
+d__'126'__36 = erased
+-- Prelude.~?
+d_'126''63'_44 ::
+  () ->
+  Maybe AgdaAny ->
+  Maybe AgdaAny ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+d_'126''63'_44 ~v0 v1 v2 v3 = du_'126''63'_44 v1 v2 v3
+du_'126''63'_44 ::
+  Maybe AgdaAny ->
+  Maybe AgdaAny ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+du_'126''63'_44 v0 v1 v2
+  = coe
+      MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
+      (coe
+         MAlonzo.Code.Data.Maybe.Relation.Binary.Connected.du_connected'63'_86
+         (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v2)) (coe v0)
+         (coe v1))
