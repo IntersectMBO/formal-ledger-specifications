@@ -51,7 +51,6 @@ record LState : Type where
     certState  : CertState
 \end{code}
 \begin{code}[hide]
-open LEnv
 open CertState
 open DState
 
@@ -88,7 +87,11 @@ private variable
   govSt govSt' : GovState
   certState certState' : CertState
   tx : Tx
-
+  slot : Slot
+  ppolicy : Maybe ScriptHash
+  pp : PParams
+  enactState : EnactState
+  treasury : Coin
 \end{code}
 
 \begin{figure*}[ht]
@@ -103,24 +106,20 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
          open TxBody txb
 \end{code}
 \begin{code}
-         pp          = Γ .pparams
-         slot        = Γ .slot
-         ppolicy     = Γ .ppolicy
-         enactState  = Γ .enactState
          rewards     = certState .dState .rewards
     in
     ∙ isValid tx ≡ true
-    ∙ ⟦ slot , pp , Γ .treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙ ⟦ epoch slot , pp , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙ ⟦ txid , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
-      Γ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
+      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 
   LEDGER-I :
     ∙ isValid tx ≡ false
-    ∙ record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+    ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
       ────────────────────────────────
-      Γ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
+      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{LEDGER transition system}

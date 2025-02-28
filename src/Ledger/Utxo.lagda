@@ -483,9 +483,11 @@ private variable
   Γ : UTxOEnv
   s s' : UTxOState
   tx : Tx
+  utxo : UTxO
+  fees donations : Coin
+  deposits : Deposits
 
 open UTxOEnv
-open UTxOState
 
 data
 \end{code}
@@ -499,10 +501,6 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
 \begin{code}
   Scripts-Yes :
     let  pp         = Γ .pparams
-         utxo       = s .utxo
-         fees       = s .fees
-         deposits   = s .deposits
-         donations  = s .donations
 \end{code}
 \begin{code}[hide]
          open Tx tx renaming (body to txb); open TxBody txb
@@ -514,13 +512,9 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
   Scripts-No :
     let  pp         = Γ .pparams
-         utxo       = s .utxo
-         fees       = s .fees
-         deposits   = s .deposits
-         donations  = s .donations
 \end{code}
 \begin{code}[hide]
          open Tx tx renaming (body to txb); open TxBody txb
@@ -531,7 +525,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{UTXOS rule}
@@ -552,7 +546,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     let pp        = Γ .pparams
         slot      = Γ .slot
         treasury  = Γ .treasury
-        utxo      = s .utxo
+        utxo      = s .UTxOState.utxo
 \end{code}
 \begin{code}[hide]
         open Tx tx renaming (body to txb); open TxBody txb

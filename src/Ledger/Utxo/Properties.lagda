@@ -49,12 +49,12 @@ instance
 instance
   Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_ String
   Computational-UTXOS = record {go} where
-    module go Γ s tx
-      (let H-Yes , ⁇ H-Yes? = Scripts-Yes-premises {Γ} {s} {tx})
-      (let H-No  , ⁇ H-No?  = Scripts-No-premises {Γ} {s} {tx}) where
+    module go (Γ : UTxOEnv) (s : UTxOState) (tx : Tx)
+      (let open UTxOState s)
+      (let H-Yes , ⁇ H-Yes? = Scripts-Yes-premises {Γ} {tx} {utxo} {deposits})
+      (let H-No  , ⁇ H-No?  = Scripts-No-premises  {Γ} {tx} {utxo}) where
       open Tx tx renaming (body to txb); open TxBody txb
       open UTxOEnv Γ renaming (pparams to pp)
-      open UTxOState s
       sLst = collectPhaseTwoScriptInputs pp tx utxo
 
       computeProof =
