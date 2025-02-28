@@ -1,6 +1,3 @@
-% -*- TeX-master: "PDF.lagda" -*-
-% -*- coding: utf-8 -*-
-% !TEX root = PDF.tex
 \section{Introduction}
 \label{sec:introduction}
 \modulenote{\LedgerModule{Introduction}}
@@ -102,8 +99,11 @@ description of the protocol.  Each STS will consist of
         to be valid;
   \item a new state that results from said transition.
 \end{itemize}
-For example, the UTXOW transition system defined in~\cref{XXX} checks that, among
-other things, the transaction is signed by the appropriate parties.
+For example, the UTXOW transition system defined in \cref{fig:rules:utxow} of
+\cref{sec:witnessing} checks that, among other things, the transaction is signed by
+the appropriate parties.
+
+\input{Diagrams/Shelley}
 
 These transition systems can be composed by requiring another transition system to
 hold as part of the preconditions.  For example, the UTXOW transition system
@@ -114,24 +114,41 @@ rules.
 A brief description of each transition system is provided below, with a link to
 an Agda module and reference to a section where the transition relation is formally defined.
 
-\begin{itemize}
-\item \LedgerModText[Utxo][UTXOS]: Checks that any relevant scripts needed by the transaction evaluate to true
-\item \LedgerModText[Utxo][UTXO]: Checks core invariants for an individual transaction to be valid, such as the transaction being balanced, fees being paid, etc; includes the UTXOS transition system.
-\item \LedgerModText[Utxow][UTXOW]: Checks that a transaction is witnessed correctly with the appropriate signatures, datums, and scripts; includes the UTXO transition system.
-\item \LedgerModText[Gov][GOV]: Handles voting and submitting governance proposals
-\item \LedgerModText[Certs][DELEG]: Handles registering stake addresses and delegating to a stake pool
-\item \LedgerModText[Certs][POOL]: Handles registering and retiring stake pools
-\item \LedgerModText[Certs][GOVCERT]: Handles registering and delegating to DReps
-\item \LedgerModText[Certs][CERT]: Combines DELEG, POOL, GOVCERT transitions systems, as well as some additional rules shared by all three
-\item \LedgerModText[Certs][CERTS]: Applies CERT repeatedly for each certificate in the transaction
-\item \LedgerModText[Ledger][LEDGER]: The full state update in response to a single transaction; includes the UTXOW, GOV, and CERTS rules
-\item \LedgerModText[Ledger][LEDGERS]: Applies LEDGER repeatedly as needed, for each transaction in a list of transactions
-\item \LedgerModText[Enact][ENACT]: Applies the result of a previously ratified governance action, such as triggering a hard fork or updating the protocol parameters.
-\item \LedgerModText[Ratify][RATIFY]: Decides whether a pending governance action has reached the thresholds it needs to be ratified.
-\item \LedgerModText[Epoch][SNAP]: Computes new stake distribution snapshots
-\item \LedgerModText[Epoch][EPOCH]: Computes the new state as of the end of an epoch; includes the ENACT, RATIFY, and SNAP transition systems.
-\item \LedgerModText[Epoch][NEWEPOCH]: Computes the new state as of the start of a new epoch; includes the previous EPOCH transition.
-\item \LedgerModText[Chain][CHAIN]: The top level transition in response to a new block that applies the NEWEPOCH transition when crossing an epoch boundary, and the LEDGERS transition on the list of transactions in the body.
+\begin{itemize}[itemsep=1pt]
+\item \LedgerModText{Utxo}{UTXOS} checks that any relevant scripts needed by the
+  transaction evaluate to true (\cref{sec:utxo}).
+\item \LedgerModText{Utxo}{UTXO} checks core invariants for an individual transaction
+  to be valid, such as the transaction being balanced, fees being paid, etc; include
+  the UTXOS transition system (\cref{sec:utxo}).
+\item \LedgerModText{Utxow}{UTXOW} checks that a transaction is witnessed correctly
+  with the appropriate signatures, datums, and scripts; includes the UTXO transitio
+  system (\cref{sec:witnessing}).
+\item \LedgerModText{Gov}{GOV} handles voting and submitting governance proposals (\cref{sec:governance}).
+\item \LedgerModText{Certs}{DELEG} handles registering stake addresses and delegating
+  to a stake pool (\cref{sec:certificates}).
+\item \LedgerModText{Certs}{POOL} handles registering and retiring stake pools (\cref{sec:certificates}).
+\item \LedgerModText{Certs}{GOVCERT} handles registering and delegating to DReps (\cref{sec:certificates}).
+\item \LedgerModText{Certs}{CERT} combines DELEG, POOL, GOVCERT transitions systems,
+  as well as some additional rules shared by all three (\cref{sec:certificates}).
+\item \LedgerModText{Certs}{CERTS} applies CERT repeatedly for each certificate in
+  the transaction (\cref{sec:certificates}).
+\item \LedgerModText{Ledger}{LEDGER} is the full state update in response to a
+  single transaction; it includes the UTXOW, GOV, and CERTS rules (\cref{sec:ledger-state-transition}).
+\item \LedgerModText{Ledger}{LEDGERS} applies LEDGER repeatedly as needed, for each
+  transaction in a list of transactions (\cref{sec:ledger-state-transition}).
+\item \LedgerModText{Enact}{ENACT} applies the result of a previously ratified
+  governance action, such as triggering a hard fork or updating the protocol
+  parameters (\cref{sec:enactment}).
+\item \LedgerModText{Ratify}{RATIFY} decides whether a pending governance action has
+  reached the thresholds it needs to be ratified (\cref{sec:ratification}).
+\item \LedgerModText{Epoch}{SNAP} computes new stake distribution snapshots (\cref{sec:epoch-boundary}).
+\item \LedgerModText{Epoch}{EPOCH} computes the new state as of the end of an epoch;
+  includes the ENACT, RATIFY, and SNAP transition systems (\cref{sec:epoch-boundary}).
+\item \LedgerModText{Epoch}{NEWEPOCH} computes the new state as of the start of a new
+  epoch; includes the previous EPOCH transition (\cref{sec:epoch-boundary}).
+\item \LedgerModText{Chain}{CHAIN} is the top level transition in response to a new
+  block that applies the NEWEPOCH transition when crossing an epoch boundary, and the
+  LEDGERS transition on the list of transactions in the body (\cref{sec:blockchain-layer}).
 \end{itemize}
 \end{NoConway}
 

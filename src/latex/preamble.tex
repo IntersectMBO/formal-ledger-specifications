@@ -4,7 +4,7 @@
 \floatstyle{boxed}
 \restylefloat{figure}
 
-\usepackage{hyperref}
+\usepackage[bookmarksopen=true]{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -28,8 +28,9 @@
 \usepackage{fontspec}
 
 \usepackage{amsmath}
+
 %%
-%% For more consistent and robust cross references...
+%% cleveref (for more consistent and robust cross references)
 %%
 \usepackage[capitalize,nameinlink]{cleveref}
 %% Wherever we previously used \ref, we now use \cref instead
@@ -41,6 +42,16 @@
 %% + To refer to multiple things at once, combine them all into one:
 %%   `\cref{eq2,eq1,eq3,eq5,thm2,def1}` produces:
 %%   "Eqs.~(1) to~(3) and~(5), Theorem~5, and Definition~1".
+\Crefname{figure}{Fig.}{Figs.}
+\Crefname{equation}{Eq.}{Eqs.}
+\Crefname{tabular}{Tab.}{Tabs.}
+\NewDocumentCommand{\sectionname}{}{Sec}
+\crefname{section}{\sectionname.}{\sectionname{}s.}
+\Crefname{section}{\sectionname.}{\sectionname{}s.}
+%% The above help enforce consistency among citations that mention sections;
+%% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
+%%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
+
 
 %%
 %% Math fonts, unicode symbols, and new theorem environments
@@ -50,3 +61,5 @@
 \setmathfont{XITSMath-Regular.otf}
 
 \usepackage{macros}
+
+\usepackage{enumitem}

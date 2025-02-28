@@ -3,7 +3,12 @@
 \RequirePackage{pifont}  %% needed for checkmark (\ding{51}).
 \RequirePackage{extarrows}
 \RequirePackage{slashed}
+\RequirePackage{pgfplots}
 \RequirePackage[tikz]{bclogo}
+\RequirePackage{tikz-cd}
+\usetikzlibrary{decorations.pathreplacing, positioning, arrows.meta, calc, shapes.geometric}
+% For drawing simple diagrams involving arrows between LaTeX symbols
+
 \RequirePackage{stmaryrd}
 \RequirePackage{fontspec}
 
@@ -68,17 +73,9 @@
 % produces a link to url https://agda.readthedocs.io/en/\AgdaVersion/language/record-types.html
 % with link text "agda.readthedocs.io/record-types".
 
-\NewDocumentCommand{\sectionname}{}{Section}
-\crefname{section}{\sectionname}{\sectionname{}s}
-%% The above help enforce consistency among citations that mention sections;
-%% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
-%%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
 \NewDocumentCommand{\email}{m}{%
   \href{mailto:#1}{#1}
 }
-
-
-
 
 %%
 %% Miscellaneous functions and math symbols
@@ -141,6 +138,9 @@ Scale=0.80
 
 \NewDocumentCommand\LedgerModule{m}{% usage: \LedgerModule{Utxo}
 \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\AgdaModule{Ledger.#1}}%
+}
+\NewDocumentCommand\LedgerModText{mm}{% usage: \LedgerModText{Utxo}{UTXO}
+\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\texttt{#2}}%
 }
 
 \newfontfamily{\AgdaSerifFont}{\agdaFont}[\agdaFontOptions]
