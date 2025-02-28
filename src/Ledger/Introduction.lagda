@@ -102,12 +102,12 @@ description of the protocol.  Each STS will consist of
         to be valid;
   \item a new state that results from said transition.
 \end{itemize}
-For example, the \UTXOW{} transition system defined in~\cref{XXX} checks that, among
+For example, the UTXOW transition system defined in~\cref{XXX} checks that, among
 other things, the transaction is signed by the appropriate parties.
 
 These transition systems can be composed by requiring another transition system to
-hold as part of the preconditions.  For example, the \UTXOW{} transition system
-mentioned above also requires the \UTXO{} transition, which checks that the
+hold as part of the preconditions.  For example, the UTXOW transition system
+mentioned above also requires the UTXO transition, which checks that the
 inputs to the transaction exist, that the transaction is balanced, and several other
 rules.
 
@@ -148,9 +148,9 @@ impossible to avoid. Some are explained in
 \cref{sec:notation}, but there is no guarantee that this
 section is complete.  If the meaning of an expression is confusing
 or unclear, please
-\href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}%
+\href{\repourl{}/issues}%
      {open an issue} in
-\href{\repourl}{our GitHub repository} with the `notation' label.
+\href{\repourl{}}{our GitHub repository} with the `notation' label.
 
 \subsection{Separation of Concerns}
 

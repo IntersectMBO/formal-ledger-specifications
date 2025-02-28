@@ -1,6 +1,7 @@
 # Constants
 AGDA?=agda
 AGDA_RUN=$(AGDA) --transliterate
+AGDA_NO_TYPECHECK=$(AGDA) --transliterate --only-scope-checking
 OUT_DIR?=../dist
 LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
@@ -71,7 +72,7 @@ define latexToPdf
     mv $(LATEX_DIR)/$(PDF) $@
 endef
 
-$(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PRE)
+$(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexNoTypeCheck) $(PRE)
 	$(latexToPdf)
 $(PDF_DIR)/conway-ledger.pdf: $(LATEX_DIR)/conway-ledger.tex $(CONWAY_TEX_FILES) $(PRE)
 	$(latexToPdf)
@@ -163,7 +164,7 @@ $(OUT_DIR)/index.html:
   ledger.hsDocs midnight.hsDocs hsDocs \
   staticWebsite
 
-ledger.docs: $(PDF_DIR)/cardano-ledger.pdf $(latexFiles)
+ledger.docs: $(PDF_DIR)/cardano-ledger.pdf $(latexNoTypeCheck)
 ledger.conway.docs: $(PDF_DIR)/conway-ledger.pdf
 midnight.docs: $(PDF_DIR)/midnight-example.pdf
 docs: ledger.docs midnight.docs
