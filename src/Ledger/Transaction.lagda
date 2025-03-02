@@ -64,7 +64,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \end{Conway}
 
 \begin{figure*}[ht]
-\begin{code}
+\begin{code}[hide]
 record TransactionStructure : Type₁ where
   field
 \end{code}

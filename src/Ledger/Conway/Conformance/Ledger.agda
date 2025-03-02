@@ -19,7 +19,7 @@ open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 open import Ledger.Ledger txs abs public
-  using (LEnv; To-LEnv; allColdCreds; _|ᵒ_; txgov)
+  using (LEnv; To-LEnv; allColdCreds; rmOrphanDRepVotes; txgov)
 
 open Tx
 
@@ -58,7 +58,8 @@ data
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ,  certState' , dom rewards ⟧ ⊢ govSt ⇀⦇ txgov txb ,GOV⦈ govSt'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ,  certState' , dom
+    rewards ⟧ ⊢ govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState' ⟧
 

@@ -38,12 +38,12 @@ module _ {eps : EpochState} {e : Epoch} where
   govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-  EPOCH-total = -, EPOCH (RATIFY-total' .proj₂) (SNAP-total ls ss .proj₂)
+  EPOCH-total = -, EPOCH (RATIFIES-total' .proj₂) (SNAP-total ls ss .proj₂)
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut })
     (SNAP-complete _ _ _ p₂)
-    (RATIFY-complete' (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
+    (RATIFIES-complete' (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
     where
       ty : Snapshot → Set
       ty x = record
@@ -52,7 +52,7 @@ module _ {eps : EpochState} {e : Epoch} where
         ; dreps = _
         ; ccHotKeys = _
         ; treasury = _
-        } ⊢ _ ⇀⦇ _ ,RATIFY⦈ _
+        } ⊢ _ ⇀⦇ _ ,RATIFIES⦈ _
 
   abstract
     EPOCH-total' : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'

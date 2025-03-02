@@ -35,7 +35,8 @@ instance
   unquoteDecl To-GovEnv = derive-To
     [ (quote GovEnv , To-GovEnv) ]
 
-_⊢_⇀⦇_,GOV⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
-Γ ⊢ govSt ⇀⦇ gvps ,GOV⦈ govSt'
-  = ⟦ txid , epoch , pparams , ppolicy , enactState , conv certState , rewardCreds ⟧ L.⊢ govSt |ᵒ conv certState ⇀⦇ gvps ,GOV⦈ govSt'
+_⊢_⇀⦇_,GOVS⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
+Γ ⊢ govSt ⇀⦇ gvps ,GOVS⦈ govSt'
+  = ⟦ txid , epoch , pparams , ppolicy , enactState , conv certState ,
+  rewardCreds ⟧ L.⊢ rmOrphanDRepVotes (conv certState) govSt  ⇀⦇ gvps ,GOVS⦈ govSt'
   where open GovEnv Γ

@@ -58,7 +58,7 @@ instance
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
     computeUtxow = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
     computeCerts = comp {STS = _⊢_⇀⦇_,CERTS⦈_}
-    computeGov   = comp {STS = _⊢_⇀⦇_,GOV⦈_}
+    computeGov   = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
 
     module go
       (Γ : LEnv)   (let open LEnv Γ)
@@ -75,7 +75,7 @@ instance
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           (certSt' , certStep) ← computeCerts certΓ certState txcerts
-          (govSt'  , govStep)  ← computeGov (govΓ certSt') (govSt |ᵒ conv certSt') (txgov txb)
+          (govSt'  , govStep)  ← computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt) (txgov txb)
           success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
@@ -90,7 +90,7 @@ instance
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certState txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
-        with computeGov (govΓ certSt') (govSt |ᵒ conv certSt') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certSt') _ _ _ govStep
+        with computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt) (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
       completeness ls' (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
