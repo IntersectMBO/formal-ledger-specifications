@@ -105,7 +105,22 @@ the appropriate parties.
 
 \input{Diagrams/Shelley}
 
-\input{Diagrams/NewChain}
+\begin{figure}
+  \centering
+  \input{Diagrams/NewChain}
+  \caption{State transition systems of the latest ledger specification.
+  Each node in the graph represents a transition rule, with \textbf{solid arrows} indicating
+  sub-rule inclusion (the source rule applies the target rule as part of its
+  definition); \textbf{dotted arrows} represent dependencies where the target rule's
+  output is used in the source rule’s input, state, or environment. Recursive rules
+  such as LEDGERS and CERTS apply their sub-rules repeatedly over lists of transactions
+  or certificates
+    (\legendbox{\ShelleyColor}~Shelley,
+     \legendbox{\ConwayColor}~Conway,
+     \legendbox{\BabbageColor}~Babbage)}
+  \label{fig:new-chain-diagram}
+
+\end{figure}
 
 These transition systems can be composed by requiring another transition system to
 hold as part of the preconditions.  For example, the UTXOW transition system

@@ -1,5 +1,3 @@
-\begin{figure}
-  \centering
   \begin{tikzpicture} [
     conway/.style = {draw, fill=white, minimum size=1cm, align=right, fill=\ConwayColor},
     shelley/.style = {draw, fill=white, minimum size=1cm, align=right, fill=\ShelleyColor},
@@ -147,16 +145,3 @@
   %% \draw[semithick,->, -Stealth] (cert) to [looseness=8, out=50,in=15] (cert);
 
   \end{tikzpicture}
-  \caption{State transition systems of the latest blockchain ledger version.
-  Each node represents a transition rule, with \textbf{solid arrows} indicating
-  sub-rule inclusion (i.e., the source rule applies the target rule as part of its
-  definition); \textbf{dotted arrows} represent dependencies where the target rule's
-  output is used in the source rule’s input, state, or environment. Recursive rules
-  such as LEDGERS and CERTS apply their sub-rules repeatedly over lists of transactions
-  or certificates
-    (\legendbox{\ShelleyColor}~Shelley,
-     \legendbox{\ConwayColor}~Conway,
-     \legendbox{\BabbageColor}~Babbage)}
-  \label{fig:new-chain-diagram}
-
-\end{figure}
