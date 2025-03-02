@@ -103,7 +103,22 @@ For example, the UTXOW transition system defined in \cref{fig:rules:utxow} of
 \cref{sec:witnessing} checks that, among other things, the transaction is signed by
 the appropriate parties.
 
-\input{Diagrams/Shelley}
+\begin{figure}[h!]
+  \centering
+  \input{Diagrams/Shelley}
+  \caption{All STS rules, the sub-rules they
+    use and possible dependencies (circa Shelley era); each node in the graph represents
+    one rule, the top rule being CHAIN; a straight arrow from one node to another one
+    represents a sub-rule relationship; the two recursive rules, LEDGERS and DELEGS, have
+    self loops; a dotted arrow represents a dependency in the sense that the output of
+    the target node is an input to the source node, either as part of the source state,
+    the environment or the signal.  In most cases these dependencies are between
+    sub-rules of a rule.  In the case of recursive rules, the sub-rule can also have a
+    dependency on the super-rule.  Those recursively call themselves while traversing the
+    input signal sequence until reaching the base case with an empty input sequence.
+  }
+  \label{fig:shelley-diagram}
+\end{figure}
 
 \begin{figure}
   \centering
