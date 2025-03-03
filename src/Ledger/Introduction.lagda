@@ -68,7 +68,7 @@ that can be updated in response to a series of events.  Because of the precise n
 of the document, it can be dense and difficult to read at times, and it can be
 helpful to have a high-level understanding of what it is trying to describe, which we
 present below.  Keep in mind that this section focuses on intuition, using
-terms (set in italics) which may be unfamiliar to some readers, but rest assured that
+terms (set in \textit{italics}) which may be unfamiliar to some readers, but rest assured that
 later sections of the document will make the intuition and italicized terms precise.
 
 By \textit{ledger}, we mean a record of a data structure at a specific point in time.
