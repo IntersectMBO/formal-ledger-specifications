@@ -71,37 +71,45 @@ present below.  Keep in mind that this section focuses on intuition, using
 terms (set in \textit{italics}) which may be unfamiliar to some readers, but rest assured that
 later sections of the document will make the intuition and italicized terms precise.
 
-By \textit{ledger}, we mean a record of a data structure at a specific point in time.
-This data structure contains, for example, an accounting of how funds in the system
-are distributed among different accounts; the ADA currently held in the reserves; a
+By \textit{ledger} we mean a structure that contains information about
+how funds in the system are distributed accross accounts---that is, account
+balances, how such balances should be adjusted when transactions and
+proposals are processed, the ADA currently held in the treasury reserve, a
 list of \textit{stake pools} operating the network, and so on.
 
-This ledger can be updated in response to certain signals, such as receiving a new
+The ledger can be updated in response to certain events, such as receiving a new
 transaction, time passing and crossing an \textit{epoch boundary}, enacting a
 \textit{governance proposal}, to name a few.  Thus, the ledger also defines a set of
-rules for what signals are valid to apply, and exactly how the state should be
-updated in response to those signals.  A description of this state, the possible
-signals, and the aforementioned rules is exactly what this document seeks to make
-precise.
+rules that determine which events are valid and exactly how the state of the ledger
+should be updated in response to those events.  The primary aim of this document
+is to provide a precise description of this system---the ledger state, valid events
+and the rules for processing them.
 
-We will model this via a number of \textit{state transition systems} (STS) that
-describe different subsets of the behavior, and can be composed into the full
-description of the protocol.  Each STS will consist of
+We will model this via a number of \textit{state transition systems} (STS) which
+from now on we refer to as ``transition rules'' or just ``rules.''
+These rules describe the different behaviors that determine how the whole system
+evolves and, taken together, they comprise a full description of the ledger protocol.
+Each transition rule consists of the following components:
 \begin{itemize}
-  \item an \textit{environment}, which consists of data read from the ledger or
-        outside world that should be considered constant and unchanging for the
+  \item an \textit{environment} consisting of data, read from the ledger state
+        or the outside world, which should be considered constant for the
         purposes of the rule;
-  \item an \textit{initial state}, which consists of the subset of the full ledger
-        state that the transition can update;
-  \item a \textit{signal}, with associated data, that the transition system can
-        receive;
+  \item an \textit{initial state}, consisting of the subset of the full ledger
+        state that is relevant to the rule and which the rule can update;
+  \item a \textit{signal} or \textit{event}, with associated data, that the
+        rule can receive or observe;
   \item a set of \textit{preconditions} that must be met in order for the transition
         to be valid;
-  \item a new state that results from said transition.
+  \item a new state that results from the transition rule.
 \end{itemize}
-For example, the UTXOW transition system defined in \cref{fig:rules:utxow} of
-\cref{sec:witnessing} checks that, among other things, the transaction is signed by
-the appropriate parties.
+For example, the UTXOW transition rule defined in \cref{fig:rules:utxow} of
+\cref{sec:witnessing} checks that, among other things, a given transaction is signed
+by the appropriate parties.
+
+The transition rules can be composed in the sense that they may require other
+transition rules to hold as part of their preconditions.  For example, the UTXOW rule
+mentioned above requires the UTXO rule, which checks that the inputs to the
+transaction exist, that the transaction is balanced, and several other conditions.
 
 \begin{figure}[h!]
   \centering
@@ -149,7 +157,7 @@ the appropriate parties.
   (utxow)    edge  (utxo)
   (utxo)     edge  (utxos);
   \end{tikzpicture}
-  \caption{State transition systems of the ledger specification, presented as a
+  \caption{State transition rules of the ledger specification, presented as a
   directed graph; each node represents a transition rule; an arrow from rule A to
   rule B indicates that B appears among the premises of A.}
   \label{fig:latest-sts-diagram}
@@ -183,33 +191,28 @@ the appropriate parties.
   \BinaryInfC{CHAIN}
 \end{prooftree}
 }
-\caption{State transition systems of the ledger specification, presented as a deduction tree.}
+\caption{State transition rules of the ledger specification, presented as a deduction tree.}
 \label{fig:new-chain-diagram}
 \end{figure}
-These transition systems can be composed by requiring another transition system to
-hold as part of the preconditions.  For example, the UTXOW transition system
-mentioned above also requires the UTXO transition, which checks that the
-inputs to the transaction exist, that the transaction is balanced, and several other
-rules.
 
-A brief description of each transition system is provided below, with a link to
-an Agda module and reference to a section where the transition relation is formally defined.
+A brief description of each transition rule is provided below, with a link to
+an Agda module and reference to a section where the rule is formally defined.
 
 \begin{itemize}[itemsep=1pt]
 \item \LedgerModText{Utxo}{UTXOS} checks that any relevant scripts needed by the
   transaction evaluate to true (\cref{sec:utxo}).
 \item \LedgerModText{Utxo}{UTXO} checks core invariants for an individual transaction
   to be valid, such as the transaction being balanced, fees being paid, etc; include
-  the UTXOS transition system (\cref{sec:utxo}).
+  the UTXOS transition rule (\cref{sec:utxo}).
 \item \LedgerModText{Utxow}{UTXOW} checks that a transaction is witnessed correctly
-  with the appropriate signatures, datums, and scripts; includes the UTXO transitio
-  system (\cref{sec:witnessing}).
+  with the appropriate signatures, datums, and scripts; includes the UTXO transition
+  rule (\cref{sec:witnessing}).
 \item \LedgerModText{Gov}{GOV} handles voting and submitting governance proposals (\cref{sec:governance}).
 \item \LedgerModText{Certs}{DELEG} handles registering stake addresses and delegating
   to a stake pool (\cref{sec:certificates}).
 \item \LedgerModText{Certs}{POOL} handles registering and retiring stake pools (\cref{sec:certificates}).
 \item \LedgerModText{Certs}{GOVCERT} handles registering and delegating to DReps (\cref{sec:certificates}).
-\item \LedgerModText{Certs}{CERT} combines DELEG, POOL, GOVCERT transitions systems,
+\item \LedgerModText{Certs}{CERT} combines DELEG, POOL, GOVCERT transition rules,
   as well as some additional rules shared by all three (\cref{sec:certificates}).
 \item \LedgerModText{Certs}{CERTS} applies CERT repeatedly for each certificate in
   the transaction (\cref{sec:certificates}).
@@ -224,7 +227,7 @@ an Agda module and reference to a section where the transition relation is forma
   reached the thresholds it needs to be ratified (\cref{sec:ratification}).
 \item \LedgerModText{Epoch}{SNAP} computes new stake distribution snapshots (\cref{sec:epoch-boundary}).
 \item \LedgerModText{Epoch}{EPOCH} computes the new state as of the end of an epoch;
-  includes the ENACT, RATIFY, and SNAP transition systems (\cref{sec:epoch-boundary}).
+  includes the ENACT, RATIFY, and SNAP transition rules (\cref{sec:epoch-boundary}).
 \item \LedgerModText{Epoch}{NEWEPOCH} computes the new state as of the start of a new
   epoch; includes the previous EPOCH transition (\cref{sec:epoch-boundary}).
 \item \LedgerModText{Chain}{CHAIN} is the top level transition in response to a new
@@ -273,10 +276,9 @@ for the name of the transition rule.
 
 \subsection{Reflexive-transitive Closure}
 
-Some STS (state transition system) relations need to be applied as
-many times as they can to arrive at a final state. Since we use this
-pattern multiple times, we define a closure operation which takes a
-STS relation and applies it as many times as possible.
+Some state transition rules need to be applied as many times as possible to arrive at
+a final state.  Since we use this pattern multiple times, we define a closure
+operation which takes a transition rule and applies it as many times as possible.
 
 The closure \RTCI{} of a relation \RTCB{} is defined in \cref{fig:rt-closure}.
 In the remainder of the text, the closure operation is called \RTC{}.
