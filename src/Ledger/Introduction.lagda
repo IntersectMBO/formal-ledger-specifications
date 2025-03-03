@@ -105,38 +105,87 @@ the appropriate parties.
 
 \begin{figure}[h!]
   \centering
-  \input{Diagrams/Shelley}
-  \caption{All STS rules, the sub-rules they
-    use and possible dependencies (circa Shelley era); each node in the graph represents
-    one rule, the top rule being CHAIN; a straight arrow from one node to another one
-    represents a sub-rule relationship; the two recursive rules, LEDGERS and DELEGS, have
-    self loops; a dotted arrow represents a dependency in the sense that the output of
-    the target node is an input to the source node, either as part of the source state,
-    the environment or the signal.  In most cases these dependencies are between
-    sub-rules of a rule.  In the case of recursive rules, the sub-rule can also have a
-    dependency on the super-rule.  Those recursively call themselves while traversing the
-    input signal sequence until reaching the base case with an empty input sequence.
-  }
-  \label{fig:shelley-diagram}
+  \begin{tikzpicture} [
+    conway/.style = {draw, fill=white, minimum size=1cm, align=right},
+    dcs/.style = {double copy shadow, shadow xshift=2pt, shadow yshift=-2pt},
+    every edge/.style={draw, ->, >=Latex, semithick},
+    ]
+  \node[conway]       (chain)                                       {\small CHAIN};
+  \node[conway]       (newepoch)[below left =5mm and 2cm of chain]  {\small NEWEPOCH};
+  \node[conway]       (epoch)   [below = of newepoch]               {\small EPOCH};
+  \node[conway]       (snap)    [below right = of epoch]            {\small SNAP};
+  \node[conway]       (ratifies)[below left = of epoch]             {\small RATIFIES};
+  \node[conway, dcs]  (ratify)  [below = of ratifies]               {\small RATIFY};
+  \node[conway]       (enact)   [below = of ratify]                 {\small ENACT};
+  \node[conway]       (ledgers) [below right =5mm and 2cm of chain] {\small LEDGERS};
+  \node[conway, dcs]  (ledger)  [below =of ledgers]                 {\small LEDGER};
+  \node[conway]       (certs)   [below left =of ledger]             {\small CERTS};
+  \node[conway]       (govs)    [below      =of ledger]             {\small GOVS};
+  \node[conway]       (utxow)   [below right=of ledger]             {\small UTXOW};
+  \node[conway, dcs]  (cert)    [below =of certs]                   {\small CERT};
+  \node[conway]       (utxo)    [below =of utxow]                   {\small UTXO};
+  \node[conway, dcs]  (gov)     [below =of govs]                    {\small GOV};
+  \node[conway]       (deleg)   [below left =5mm and 5mm of cert]   {\small DELEG};
+  \node[conway]       (pool)    [below      =15mm        of cert]   {\small POOL};
+  \node[conway]       (govcert) [below right=5mm and 5mm of cert]   {\small GOVCERT};
+  \node[conway]       (utxos)   [below      =            of utxo]   {\small UTXOS};
+  \draw
+  (chain)    edge  (newepoch)
+  (newepoch) edge  (epoch)
+  (epoch)    edge  (snap)
+  (epoch)    edge  (ratifies)
+  (ratifies) edge  (ratify)
+  (ratify)   edge  (enact)
+  (chain)    edge  (ledgers)
+  (ledgers)  edge  (ledger)
+  (ledger)   edge  (certs)
+  (ledger)   edge  (govs)
+  (govs)     edge  (gov)
+  (ledger)   edge  (utxow)
+  (certs)    edge  (cert)
+  (cert)     edge  (deleg)
+  (cert)     edge  (pool)
+  (cert)     edge  (govcert)
+  (utxow)    edge  (utxo)
+  (utxo)     edge  (utxos);
+  \end{tikzpicture}
+  \caption{State transition systems of the ledger specification, presented as a
+  directed graph; each node represents a transition rule; an arrow from rule A to
+  rule B indicates that B appears among the premises of A.}
+  \label{fig:latest-sts-diagram}
 \end{figure}
 
-\begin{figure}
-  \centering
-  \input{Diagrams/NewChain}
-  \caption{State transition systems of the latest ledger specification.
-  Each node in the graph represents a transition rule, with \textbf{solid arrows} indicating
-  sub-rule inclusion (the source rule applies the target rule as part of its
-  definition); \textbf{dotted arrows} represent dependencies where the target rule's
-  output is used in the source rule’s input, state, or environment. Recursive rules
-  such as LEDGERS and CERTS apply their sub-rules repeatedly over lists of transactions
-  or certificates
-    (\legendbox{\ShelleyColor}~Shelley,
-     \legendbox{\ConwayColor}~Conway,
-     \legendbox{\BabbageColor}~Babbage)}
-  \label{fig:new-chain-diagram}
-
+\begin{figure}[h!]
+{\small
+\begin{prooftree}
+  \AxiomC{ENACT}
+  %% \AxiomC{acceptConds}
+  %% \BinaryInfC{RATIFY...RATIFY}
+  \UnaryInfC{RATIFY...RATIFY}
+  \UnaryInfC{RATIFIES}
+  \AxiomC{SNAP}
+  \BinaryInfC{EPOCH}
+  %% \AxiomC{applyRUpd}
+  %% \BinaryInfC{NEWEPOCH}
+  \UnaryInfC{NEWEPOCH}
+  \AxiomC{UTXOS}
+  \UnaryInfC{UTXO}
+  \UnaryInfC{UTXOW}
+  \AxiomC{GOV...GOV}
+  \UnaryInfC{GOVS}
+  \AxiomC{DELEG}
+  \AxiomC{GOVCERT}
+  \AxiomC{POOL}
+  \TrinaryInfC{CERT...CERT}
+  \UnaryInfC{CERTS}
+  \TrinaryInfC{LEDGER...LEDGER}
+  \UnaryInfC{LEDGERS}
+  \BinaryInfC{CHAIN}
+\end{prooftree}
+}
+\caption{State transition systems of the ledger specification, presented as a deduction tree.}
+\label{fig:new-chain-diagram}
 \end{figure}
-
 These transition systems can be composed by requiring another transition system to
 hold as part of the preconditions.  For example, the UTXOW transition system
 mentioned above also requires the UTXO transition, which checks that the
@@ -165,9 +214,9 @@ an Agda module and reference to a section where the transition relation is forma
 \item \LedgerModText{Certs}{CERTS} applies CERT repeatedly for each certificate in
   the transaction (\cref{sec:certificates}).
 \item \LedgerModText{Ledger}{LEDGER} is the full state update in response to a
-  single transaction; it includes the UTXOW, GOV, and CERTS rules (\cref{sec:ledger-state-transition}).
+  single transaction; it includes the UTXOW, GOV, and CERTS rules (\cref{sec:ledger}).
 \item \LedgerModText{Ledger}{LEDGERS} applies LEDGER repeatedly as needed, for each
-  transaction in a list of transactions (\cref{sec:ledger-state-transition}).
+  transaction in a list of transactions (\cref{sec:ledger}).
 \item \LedgerModText{Enact}{ENACT} applies the result of a previously ratified
   governance action, such as triggering a hard fork or updating the protocol
   parameters (\cref{sec:enactment}).
