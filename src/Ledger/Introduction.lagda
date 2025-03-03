@@ -63,7 +63,7 @@ Conway~\cite{cip1694} & Complete & Partial & Partial \\
 
 \subsection{Overview}
 \label{sec:overview}
-This document describes, in a precise and executable way, the behavior of a ledger
+This document describes, in a precise and executable way, the behavior of the Cardano ledger
 that can be updated in response to a series of events.  Because of the precise nature
 of the document, it can be dense and difficult to read at times, and it can be
 helpful to have a high-level understanding of what it is trying to describe, which we
