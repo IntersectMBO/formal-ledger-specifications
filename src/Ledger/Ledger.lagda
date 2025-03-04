@@ -44,7 +44,11 @@ record LEnv : Type where
     treasury    : Coin
 
 record LState : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_⟧ˡ
+\end{code}
+\begin{code}
   field
     utxoSt     : UTxOState
     govSt      : GovState

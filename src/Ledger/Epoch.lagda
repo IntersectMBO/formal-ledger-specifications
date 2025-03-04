@@ -7,7 +7,7 @@
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
-import Data.Integer as ℤ
+open import Data.Integer using () renaming (+_ to pos)
 open import Data.Integer.Ext
 open import Data.Nat.GeneralisedArithmetic using (iterate)
 
@@ -31,13 +31,19 @@ open import Ledger.Certs govStructure
 \end{code}
 \begin{NoConway}
 \begin{figure*}[ht]
+\begin{AgdaMultiCode}
 \begin{code}
 record RewardUpdate : Set where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_,_⟧ʳᵘ
+\end{code}
+\begin{code}
   field
     Δt Δr Δf : ℤ
     rs : Credential ⇀ Coin
 \end{code}
+\end{AgdaMultiCode}
 \end{figure*}
 \end{NoConway}
 
@@ -60,7 +66,11 @@ record Snapshots : Set where
 \end{NoConway}
 \begin{code}
 record EpochState : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_,_,_⟧ᵉ'
+\end{code}
+\begin{code}
   field
     acnt       : Acnt
     ss         : Snapshots
@@ -102,6 +112,7 @@ open GovActionState using (returnAddr)
 \end{code}
 \begin{NoConway}
 \begin{figure*}[h]
+{\small
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
@@ -113,14 +124,14 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , es
   , fut
   ⟧ᵉ' =
-  ⟦ ⟦ posPart (ℤ.+ treasury ℤ.+ Δt ℤ.+ ℤ.+ unregRU')
-    , posPart (ℤ.+ reserves ℤ.+ Δr) ⟧ᵃ
+  ⟦ ⟦ posPart (pos treasury + Δt + pos unregRU')
+    , posPart (pos reserves + Δr) ⟧
   , ss
-  , ⟦ ⟦ utxo , posPart (ℤ.+ fees ℤ.+ Δf) , deposits , donations ⟧ᵘ
+  , ⟦ ⟦ utxo , posPart (pos fees + Δf) , deposits , donations ⟧
     , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ ⟧
   , es
-  , fut ⟧ᵉ'
+  , fut ⟧
   where
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
@@ -138,6 +149,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
       in
         (orps ++ orps' , govSt')
 \end{code}
+}
 \end{figure*}
 \end{NoConway}
 
@@ -202,10 +214,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 \end{figure*}
 \end{NoConway}
 
-\Cref{fig:epoch:sts} defines the rule for the EPOCH transition
-system.  Currently, this contains some logic that is handled by
-POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec},
-since POOLREAP is not implemented here.
+\Cref{fig:epoch:sts} defines the EPOCH transition rule.
+Currently, this incorporates logic that was previously handled by
+POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec};
+POOLREAP is not implemented here.
 
 The EPOCH rule now also needs to invoke RATIFIES and properly deal with
 its results by carrying out each of the following tasks.

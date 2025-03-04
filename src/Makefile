@@ -1,13 +1,19 @@
+##
+# Formal Ledger Specification
+#
+# @file
+# @version 0.1
+
 # Constants
 AGDA?=agda
 AGDA_RUN=$(AGDA) --transliterate
 OUT_DIR?=../dist
-LATEX?=latexmk -xelatex -shell-escape -halt-on-error
+LATEX?=latexmk -xelatex -shell-escape -halt-on-error -gg
 LATEX_DIR=latex
 CONWAY_TEX_DIR=latex/Conway
 HL_LIST=$(LATEX_DIR)/hldiff_list.txt
 PRE=$(addprefix $(LATEX_DIR)/,\
-  agda.sty macros.sty fonts/* preamble.tex references.bib)
+  agda.sty macros.sty fonts/* preamble.tex Diagrams/CardanoLedger.tex references.bib)
 PDF_DIR=$(OUT_DIR)/pdfs
 PYTHON=python
 HTML_DIR=$(OUT_DIR)/html
@@ -195,3 +201,7 @@ clean:
 wipe: clean
 	rm -rf $(LATEX_DIR)/$(LEDGER) $(LATEX_DIR)/$(MIDNIGHT) $(CONWAY_TEX_DIR)/$(LEDGER)\
 	       $(OUT_DIR)/\
+
+
+
+# end
