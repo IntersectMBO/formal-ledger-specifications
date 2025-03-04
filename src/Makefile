@@ -13,7 +13,7 @@ LATEX_DIR=latex
 CONWAY_TEX_DIR=latex/Conway
 HL_LIST=$(LATEX_DIR)/hldiff_list.txt
 PRE=$(addprefix $(LATEX_DIR)/,\
-  agda.sty macros.sty fonts/* preamble.tex references.bib)
+  agda.sty macros.sty fonts/* preamble.tex Diagrams/CardanoLedger.tex references.bib)
 PDF_DIR=$(OUT_DIR)/pdfs
 PYTHON=python
 HTML_DIR=$(OUT_DIR)/html

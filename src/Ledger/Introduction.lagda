@@ -113,78 +113,30 @@ transaction exist, that the transaction is balanced, and several other condition
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture} [
-    conway/.style = {draw, minimum size=1cm, align=right, fill=\ConwayColor},
-    shelley/.style = {draw, minimum size=1cm, align=right},
-    modified/.style = {draw, minimum size=1cm, align=right, fill=\BabbageColor},
-    dcs/.style = {double copy shadow, shadow xshift=2pt, shadow yshift=-2pt},
-    every edge/.style={draw, ->, >=Latex, semithick}
-    ]
-  \node[shelley]       (chain)                                       {\small CHAIN};
-  \node[shelley]       (tick)[below left = of chain]      {\small TICK};
-  \node[shelley]       (rupd)[below right = of tick]                 {\small RUPD};
-  \node[modified]      (newepoch)[below left =of tick]   {\small NEWEPOCH};
-  \node[modified]      (epoch)   [below = of newepoch]               {\small EPOCH};
-  \node[shelley]       (snap)    [below right = of epoch]            {\small SNAP};
-  \node[conway]        (ratifies)[below left = of epoch]             {\small RATIFIES};
-  \node[conway, dcs]   (ratify)  [below = of ratifies]               {\small RATIFY};
-  \node[conway]        (enact)   [below = of ratify]                 {\small ENACT};
-  \node[shelley]       (ledgers) [below right =5mm and 2cm of chain] {\small LEDGERS};
-  \node[modified, dcs] (ledger)  [below =of ledgers]                 {\small LEDGER};
-  \node[conway]        (certs)   [below left =of ledger]             {\small CERTS};
-  \node[conway]        (govs)    [below      =of ledger]             {\small GOVS};
-  \node[shelley]       (utxow)   [below right=of ledger]             {\small UTXOW};
-  \node[conway, dcs]   (cert)    [below =of certs]                   {\small CERT};
-  \node[shelley]       (utxo)    [below =of utxow]                   {\small UTXO};
-  \node[conway, dcs]   (gov)     [below =of govs]                    {\small GOV};
-  \node[shelley]       (deleg)   [below left =5mm and 5mm of cert]   {\small DELEG};
-  \node[shelley]       (pool)    [below      =15mm        of cert]   {\small POOL};
-  \node[conway]        (govcert) [below right=5mm and 5mm of cert]   {\small GOVCERT};
-  \node[modified]      (utxos)   [below      =            of utxo]   {\small UTXOS};
-  \draw
-  (chain)    edge  (tick)
-  (tick)     edge  (newepoch)
-  (tick)     edge  (rupd)
-  (newepoch) edge  (epoch)
-  (epoch)    edge  (snap)
-  (epoch)    edge  (ratifies)
-  (ratifies) edge  (ratify)
-  (ratify)   edge  (enact)
-  (chain)    edge  (ledgers)
-  (ledgers)  edge  (ledger)
-  (ledger)   edge  (certs)
-  (ledger)   edge  (govs)
-  (govs)     edge  (gov)
-  (ledger)   edge  (utxow)
-  (certs)    edge  (cert)
-  (cert)     edge  (deleg)
-  (cert)     edge  (pool)
-  (cert)     edge  (govcert)
-  (utxow)    edge  (utxo)
-  (utxo)     edge  (utxos);
-  \end{tikzpicture}
+  \input{Diagrams/CardanoLedger}
   \caption{State transition rules of the ledger specification, presented as a
   directed graph; each node represents a transition rule; an arrow from rule A to
-  rule B indicates that B appears among the premises of A
+  rule B indicates that B appears among the premises of A; a dotted arrow represents
+  a dependency in the sense that the output of the target node is an input to the
+  source node, either as part of the source state, the environment or the event
     (\legendbox{\ConwayColor}~rules added in Conway;
-     \legendbox{\BabbageColor}~rules modified in Conway)
+     \legendbox{\BabbageColor}~rules modified in Conway; dotted ellipses represent rules
+  that are not yet formalized in Agda)
   }
   \label{fig:latest-sts-diagram}
 \end{figure}
 
 \begin{figure}[h!]
-{\small
+{\footnotesize
 \begin{prooftree}
+  \AxiomC{\applyRUpd}
+  \AxiomC{\acceptConds}
   \AxiomC{ENACT}
-  %% \AxiomC{acceptConds}
-  %% \BinaryInfC{RATIFY...RATIFY}
-  \UnaryInfC{RATIFY...RATIFY}
+  \BinaryInfC{RATIFY...RATIFY}
   \UnaryInfC{RATIFIES}
   \AxiomC{SNAP}
   \BinaryInfC{EPOCH}
-  %% \AxiomC{applyRUpd}
-  %% \BinaryInfC{NEWEPOCH}
-  \UnaryInfC{NEWEPOCH}
+  \BinaryInfC{NEWEPOCH}
   \AxiomC{UTXOS}
   \UnaryInfC{UTXO}
   \UnaryInfC{UTXOW}
