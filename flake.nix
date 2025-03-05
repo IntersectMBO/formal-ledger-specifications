@@ -25,7 +25,6 @@
           formalLedger;
       } //
         specsDerivationsPackages "ledger" //
-        specsDerivationsPackages "midnight";
     in jobs // {
       required = pkgs.releaseTools.aggregate {
         name = "required";

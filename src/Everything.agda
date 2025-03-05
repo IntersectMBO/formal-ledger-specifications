@@ -22,11 +22,6 @@ import Ledger.Conway.Conformance.Certs
 import Ledger.Conway.Conformance.Certs.Properties
 import Ledger.Conway.Conformance.Equivalence
 
--- ** Midnight example
-import MidnightExample.PDF
-import MidnightExample.HSLedger
-import MidnightExample.Types
-
 -- ** not currently used
 import Tactic.DeriveComp
 import Foreign.Convertible.DerivingTest
