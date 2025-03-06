@@ -4,88 +4,49 @@
 \floatstyle{boxed}
 \restylefloat{figure}
 
-\usepackage{iohk}
-\usepackage{agda-latex-macros}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     urlcolor=blue
  }
+
 \usepackage[links]{agda}
+
 \setlength{\mathindent}{10pt}
 
+\usepackage[
+  style=ieee,
+  backend=biber,
+  ibidtracker=constrict,
+  pagetracker=page,
+  datamodel=software,
+  ]{biblatex}
+\usepackage{software-biblatex}
+\addbibresource{references.bib}
+
 \usepackage{fontspec}
-\newcommand\agdaFont{StrippedJuliaMono}
-\newcommand\agdaFontOptions{
-Path=fonts/,
-Extension=.ttf,
-UprightFont=*-Regular,
-BoldFont=*-Bold,
-ItalicFont=*-RegularItalic,
-BoldItalicFont=*-BoldItalic,
-%% Scale=MatchLowercase
-Scale=0.80
-%% Scale=MatchUppercase
-}
-\newfontfamily{\AgdaSerifFont}{\agdaFont}[\agdaFontOptions]
-\newfontfamily{\AgdaSansSerifFont}{\agdaFont}[\agdaFontOptions]
-\newfontfamily{\AgdaTypewriterFont}{\agdaFont}[\agdaFontOptions]
-\renewcommand{\AgdaFontStyle}[1]{{\AgdaSansSerifFont{}#1}}
-\renewcommand{\AgdaKeywordFontStyle}[1]{{\AgdaSansSerifFont{}#1}}
-\renewcommand{\AgdaStringFontStyle}[1]{{\AgdaTypewriterFont{}#1}}
-\renewcommand{\AgdaCommentFontStyle}[1]{{\AgdaTypewriterFont{}#1}}
-\renewcommand{\AgdaBoundFontStyle}[1]{{\emph{\AgdaTypewriterFont{}#1}}}
 
-% Define the \hldiff macro to highlight text with a yellow background
-\newcommand{\hldiff}[1]{\colorbox{yellow}{#1}}
+\usepackage{amsmath}
+%%
+%% For more consistent and robust cross references...
+%%
+\usepackage[capitalize,nameinlink]{cleveref}
+%% Wherever we previously used \ref, we now use \cref instead
+%% (except at the beginning of a sentence, where we use \Cref) so we
+%% no longer need to explicitly name the kind of thing being referenced.
+%% + Use "\cref{eq1}" instead of "Eq.~(\ref{eq1})".
+%% + For a range of labels, use the \crefrange command:
+%%   `\crefrange{eq1}{eq5}` produces "Eqs.~(1) to~(5)".
+%% + To refer to multiple things at once, combine them all into one:
+%%   `\cref{eq2,eq1,eq3,eq5,thm2,def1}` produces:
+%%   "Eqs.~(1) to~(3) and~(5), Theorem~5, and Definition~1".
 
-% Math fonts
+%%
+%% Math fonts, unicode symbols, and new theorem environments
+%%
 \usepackage{unicode-math}
 \setsansfont{XITSMath-Regular.otf}
 \setmathfont{XITSMath-Regular.otf}
 
-\newcommand{\N}{\ensuremath{\mathbb{N}}}
-
-%%
-%% Functions
-%%
-\newcommand{\outs}[1]{\fun{outs}~ \var{#1}}
-\newcommand{\balance}[1]{\fun{balance}~ \var{#1}}
-\newcommand{\txfee}[1]{\fun{txfee}~ \var{#1}}
-
-\newtheorem{property}{Property}[section]
-
-%% -- DEFINITIONS -----------------------------------------------------------
-%% Set the desired typeface of defined terms here and, at the
-%% first occurrence of such a term, enclose it in `\defn{...}`.
-\newcommand{\defn}[1]{\textit{#1}}   %  defined terms are typeset in italics
-%% \newcommand{\defn}[1]{\textbf{#1}}   %  defined terms are typeset in bold
-\newunicodechar{ˢ}{\ensuremath{}}
-
-\newcommand{\repourl}{https://github.com/IntersectMBO/formal-ledger-specifications}
-\newcommand{\modulenote}[1]{Code in this section is part of the #1
-module of the \href{\repourl}{formal ledger specification}.}
-\newcommand{\modulefootnotetext}[1]{\footnotetext{\modulenote{#1}}}
-
-\ExplSyntaxOn
-\NewDocumentCommand\hrefCIP{m}{%
-  \clist_if_in:nnTF {0069,1694} {#1}
-  {\href{\detokenize{https://cips.cardano.org/cip/CIP-#1}}{CIP-#1}}%
-  {\msg_warning:nnn {agda-latex-macros} {invalid-cip} {#1}
-    CIP-#1 % Still prints the text but without a hyperlink
-  }%
-}
-\msg_new:nnn {agda-latex-macros} {invalid-cip}
-  {CIP-#1 is not a known CIP. The hyperlink will not be created.}
-\ExplSyntaxOff
-
-\NewDocumentCommand{\hrefAgdaDocs}{O{} O{Agda documentation}}{%
-  \href{https://agda.readthedocs.io/en/\AgdaVersion/#1}{#2}%
-}
-% For a link to the main Agda documentation website, just use \hrefAgdaDocs{}.
-% For a link to a specific section of the Agda docs, use
-% \hrefAgdaDocs[URLsuffix]{Link text}.
-% For example, \hrefAgdaDocs[language/record-types.html][agda.readthedocs.io/record-types],
-% produces a link to url https://agda.readthedocs.io/en/\AgdaVersion/language/record-types.html
-% with link text "agda.readthedocs.io/record-types".
+\usepackage{macros}

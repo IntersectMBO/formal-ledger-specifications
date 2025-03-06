@@ -56,7 +56,7 @@ instance
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
     computeUtxow = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
     computeCerts = comp {STS = _⊢_⇀⦇_,CERTS⦈_}
-    computeGov   = comp {STS = _⊢_⇀⦇_,GOV⦈_}
+    computeGov   = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
 
     module go
       (Γ : LEnv)   (let open LEnv Γ)
@@ -73,7 +73,7 @@ instance
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           (certSt' , certStep) ← computeCerts certΓ certState txcerts
-          (govSt'  , govStep)  ← computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb)
+          (govSt'  , govStep)  ← computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt) (txgov txb)
           success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
@@ -88,7 +88,7 @@ instance
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certState txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
-        with computeGov (govΓ certSt') (govSt |ᵒ certSt') (txgov txb) | complete {STS = _⊢_⇀⦇_,GOV⦈_} (govΓ certSt') _ _ _ govStep
+        with computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt ) (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
       completeness ledgerSt (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
@@ -249,12 +249,12 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
 
   -- updateGovStates faithfully represents a step of the LEDGER sts
   STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-               → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (LState.govSt s |ᵒ LState.certState s')
+               → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (rmOrphanDRepVotes (LState.certState s') (LState.govSt s))
   -- STS→GovSt≡ (LEDGER-V ( _ , _ , _ , x )) refl = STS→updateGovSt≡ (txgov txb) 0 x
   STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
     where
     STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {certSt : CertState} {govSt govSt' : GovState}
-      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV'⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
+      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
       → govSt' ≡ updateGovStates vps k govSt
     STS→updateGovSt≡ [] _ (BS-base Id-nop) = refl
     STS→updateGovSt≡ (inj₁ v ∷ vps) k (BS-ind (GOV-Vote x) h)
@@ -264,32 +264,8 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   opaque
     unfolding addVote
 
-    |ᵒ-[] : ∀ certState → [] |ᵒ certState ≡ []
-    |ᵒ-[] certState = refl
-
-    |ᵒ-++ : ∀ gs gs′ certState → (gs ++ gs′) |ᵒ certState ≡ (gs |ᵒ certState) ++ (gs′ |ᵒ certState)
-    |ᵒ-++ gs gs′ certState = map-++ _ gs gs′
-
-    |ᵒ-singleton : ∀ gid gas certState → ∃[ gas′ ] [ (gid , gas) ] |ᵒ certState ≡ [ (gid , gas′) ]
-    |ᵒ-singleton gid gas certState = (removeOrphanDRepVotes certState gas , refl)
-
-    dpMap-|ᵒ-singleton : ∀ g certState → dpMap ([ g ] |ᵒ certState) ≡ dpMap [ g ]
-    dpMap-|ᵒ-singleton (gid , gas) certState rewrite |ᵒ-singleton gid gas certState .proj₂ = refl
-
-    dpMap-|ᵒ : ∀ govSt certState → dpMap (govSt |ᵒ certState) ≡ dpMap govSt
-    dpMap-|ᵒ [] certState = cong dpMap (|ᵒ-[] certState)
-    dpMap-|ᵒ (g ∷ govSt) certState = let open ≡-Reasoning in begin
-      dpMap ((g ∷ govSt) |ᵒ certState)
-        ≡⟨ cong dpMap (|ᵒ-++ [ g ] govSt certState) ⟩
-      dpMap (([ g ] |ᵒ certState) ++ (govSt |ᵒ certState))
-        ≡⟨ map-++ _ ([ g ] |ᵒ certState) (govSt |ᵒ certState) ⟩
-      dpMap ([ g ] |ᵒ certState) ++ dpMap (govSt |ᵒ certState)
-        ≡⟨ cong (dpMap ([ g ] |ᵒ certState) ++_) (dpMap-|ᵒ govSt certState) ⟩
-      dpMap ([ g ] |ᵒ certState) ++ dpMap govSt
-        ≡⟨ cong (_++ dpMap govSt) (dpMap-|ᵒ-singleton g certState) ⟩
-      dpMap [ g ] ++ dpMap govSt
-        ≡˘⟨ map-++ _ [ g ] govSt ⟩
-      dpMap (g ∷ govSt) ∎
+    dpMap-rmOrphanDRepVotes : ∀ certState govSt → dpMap (rmOrphanDRepVotes certState govSt) ≡ dpMap govSt
+    dpMap-rmOrphanDRepVotes certState govSt = sym (fmap-∘ govSt) -- map proj₁ ∘ map (map₂ _) ≡ map (proj₁ ∘ map₂ _) ≡ map proj₁
 
 module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   open Tx tx renaming (body to txb); open TxBody txb
@@ -297,7 +273,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   open PParams pp using (govActionDeposit; poolDeposit)
   govSt : GovState
   govSt = LState.govSt s
-  open LEDGER-PROPS tx Γ s using (utxoDeps; propUpdate; mkAction; updateGovStates; STS→GovSt≡; voteUpdate; dpMap-|ᵒ)
+  open LEDGER-PROPS tx Γ s using (utxoDeps; propUpdate; mkAction; updateGovStates; STS→GovSt≡; voteUpdate; dpMap-rmOrphanDRepVotes)
   open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 
   CredDepIsNotGADep : ∀ {a c} → a ≡ CredentialDeposit c → ¬ isGADeposit a
@@ -538,16 +514,16 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
 
   -- Removing orphan DRep votes does not modify the set of GAs in GovState
   |ᵒ-GAs-pres : ∀ k govSt certState →
-    fromList (dpMap (updateGovStates (txgov txb) k (govSt |ᵒ certState)))
+    fromList (dpMap (updateGovStates (txgov txb) k (rmOrphanDRepVotes certState govSt)))
     ≡ᵉ
     fromList (dpMap (updateGovStates (txgov txb) k govSt))
   |ᵒ-GAs-pres k govSt certState = begin
-    fromList (dpMap (updateGovStates (txgov txb) k (govSt |ᵒ certState)))
-      ≈⟨ props-dpMap-votes-invar txvote txprop {k} {govSt |ᵒ certState} ⟩
-    fromList (dpMap (updateGovStates (map inj₂ txprop) k (govSt |ᵒ certState)))
-      ≈⟨ connex-lemma-rep k (govSt |ᵒ certState) txprop ⟩
-    fromList (dpMap (govSt |ᵒ certState)) ∪ fromList (map (λ i → GovActionDeposit (txid , k + i)) ⟦0:< length txprop ⟧)
-      ≡⟨ cong (λ x → fromList x ∪ fromList (map (λ i → GovActionDeposit (txid , k + i)) ⟦0:< length txprop ⟧)) (dpMap-|ᵒ govSt certState) ⟩
+    fromList (dpMap (updateGovStates (txgov txb) k (rmOrphanDRepVotes certState govSt)))
+      ≈⟨ props-dpMap-votes-invar txvote txprop {k} {rmOrphanDRepVotes certState govSt} ⟩
+    fromList (dpMap (updateGovStates (map inj₂ txprop) k (rmOrphanDRepVotes certState govSt)))
+      ≈⟨ connex-lemma-rep k (rmOrphanDRepVotes certState govSt) txprop ⟩
+    fromList (dpMap (rmOrphanDRepVotes certState govSt)) ∪ fromList (map (λ i → GovActionDeposit (txid , k + i)) ⟦0:< length txprop ⟧)
+      ≡⟨ cong (λ x → fromList x ∪ fromList (map (λ i → GovActionDeposit (txid , k + i)) ⟦0:< length txprop ⟧)) (dpMap-rmOrphanDRepVotes certState govSt) ⟩
     fromList (dpMap govSt) ∪ fromList (map (λ i → GovActionDeposit (txid , k + i)) ⟦0:< length txprop ⟧)
       ≈˘⟨ connex-lemma-rep k govSt txprop ⟩
     fromList (dpMap (updateGovStates (map inj₂ txprop) k govSt))
@@ -571,7 +547,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
         ≈˘⟨ props-dpMap-votes-invar txvote txprop ⟩
       fromList (dpMap (updateGovStates (txgov txb) 0 govSt ))
         ≈˘⟨ |ᵒ-GAs-pres 0 govSt certState' ⟩
-      fromList (dpMap (updateGovStates (txgov txb) 0 (govSt |ᵒ certState')))
+      fromList (dpMap (updateGovStates (txgov txb) 0 (rmOrphanDRepVotes certState' govSt)))
         ≡˘⟨ cong (fromList ∘ dpMap ) (STS→GovSt≡ utxosts tx-valid) ⟩
       fromList (dpMap govSt') ∎
 

@@ -33,21 +33,21 @@ open import Function.Related.Propositional using (↔⇒)
 open GovActionState
 \end{code}
 
-The behavior of \GovState is similar to that of a queue. New proposals are appended at
-the end, but any proposal can be removed at the epoch
+The behavior of \GovState{} is similar to that of a queue. New proposals are
+appended at the end, but any proposal can be removed at the epoch
 boundary. However, for the purposes of enactment, earlier proposals
-take priority. Note that \EnactState used in \GovEnv is defined later,
-in Section~\ref{sec:enactment}.
+take priority. Note that \EnactState{} used in \GovEnv{} is defined later,
+in \cref{sec:enactment}.
 
 \begin{itemize}
-\item \addVote inserts (and potentially overrides) a vote made for a
+\item \addVote{} inserts (and potentially overrides) a vote made for a
 particular governance action (identified by its ID) by a credential with a role.
 
-\item \addAction adds a new proposed action at the end of a given \GovState.
+\item \addAction{} adds a new proposed action at the end of a given \GovState{}.
 
-\item The \validHFAction property indicates whether a given proposal, if it is a
-\TriggerHF action, can potentially be enacted in the future. For this to be the
-case, its \prevAction needs to exist, be another \TriggerHF action and have a
+\item The \validHFAction{} property indicates whether a given proposal, if it is a
+\TriggerHF{} action, can potentially be enacted in the future. For this to be the
+case, its \prevAction{} needs to exist, be another \TriggerHF{} action and have a
 compatible version.
 \end{itemize}
 
@@ -69,7 +69,7 @@ record GovEnv : Type where
     certState   : CertState
     rewardCreds : ℙ Credential
 \end{code}
-\caption{Derived used in the GOV transition system}
+\caption{Types used in the GOV transition system}
 \label{defs:gov-derived-types}
 \end{figure*}
 
@@ -98,7 +98,6 @@ open PState
 
 \begin{figure*}
 \begin{AgdaMultiCode}
-\emph{Functions used in the GOV rules}
 \begin{code}
 govActionPriority : GovActionType → ℕ
 govActionPriority NoConfidence     = 0
@@ -109,18 +108,63 @@ govActionPriority ChangePParams    = 4
 govActionPriority TreasuryWdrl     = 5
 govActionPriority Info             = 6
 
-_∼_ : ℕ → ℕ → Type
-n ∼ m = (n ≡ m) ⊎ (n ≡ 0 × m ≡ 1) ⊎ (n ≡ 1 × m ≡ 0)
-
-_≈ᵍ_ : GovAction → GovAction → Type
-a ≈ᵍ a' = (govActionPriority (a .proj₁)) ∼ (govActionPriority (a' .proj₁))
+Overlap : GovActionType → GovActionType → Type
+Overlap NoConfidence    UpdateCommittee  = ⊤
+Overlap UpdateCommittee NoConfidence     = ⊤
+Overlap a               a'               = a ≡ a'
 \end{code}
 \begin{code}[hide]
-_∼?_ : (n m : ℕ) → Dec (n ∼ m)
-n ∼? m = n ≟ m ⊎-dec (n ≟ 0 ×-dec m ≟ 1) ⊎-dec (n ≟ 1 ×-dec m ≟ 0)
-
-_≈?_ : (a a' : GovAction) → Dec (a ≈ᵍ a')
-a ≈? a' = (govActionPriority (a .proj₁)) ∼? (govActionPriority (a' .proj₁))
+-- TODO: cleanup this
+Overlap? : (a a' : GovActionType) → Dec (Overlap a a')
+Overlap? NoConfidence    UpdateCommittee  = Dec-⊤ .dec
+Overlap? UpdateCommittee NoConfidence     = Dec-⊤ .dec
+Overlap? NoConfidence NoConfidence = yes refl
+Overlap? NoConfidence NewConstitution = no (λ ())
+Overlap? NoConfidence TriggerHF = no (λ ())
+Overlap? NoConfidence ChangePParams = no (λ ())
+Overlap? NoConfidence TreasuryWdrl = no (λ ())
+Overlap? NoConfidence Info = no (λ ())
+Overlap? UpdateCommittee UpdateCommittee = yes refl
+Overlap? UpdateCommittee NewConstitution = no (λ ())
+Overlap? UpdateCommittee TriggerHF = no (λ ())
+Overlap? UpdateCommittee ChangePParams = no (λ ())
+Overlap? UpdateCommittee TreasuryWdrl = no (λ ())
+Overlap? UpdateCommittee Info = no (λ ())
+Overlap? NewConstitution NoConfidence = no (λ ())
+Overlap? NewConstitution UpdateCommittee = no (λ ())
+Overlap? NewConstitution NewConstitution = yes refl
+Overlap? NewConstitution TriggerHF = no (λ ())
+Overlap? NewConstitution ChangePParams = no (λ ())
+Overlap? NewConstitution TreasuryWdrl = no (λ ())
+Overlap? NewConstitution Info = no (λ ())
+Overlap? TriggerHF NoConfidence = no (λ ())
+Overlap? TriggerHF UpdateCommittee = no (λ ())
+Overlap? TriggerHF NewConstitution = no (λ ())
+Overlap? TriggerHF TriggerHF = yes refl
+Overlap? TriggerHF ChangePParams = no (λ ())
+Overlap? TriggerHF TreasuryWdrl = no (λ ())
+Overlap? TriggerHF Info = no (λ ())
+Overlap? ChangePParams NoConfidence = no (λ ())
+Overlap? ChangePParams UpdateCommittee = no (λ ())
+Overlap? ChangePParams NewConstitution = no (λ ())
+Overlap? ChangePParams TriggerHF = no (λ ())
+Overlap? ChangePParams ChangePParams = yes refl
+Overlap? ChangePParams TreasuryWdrl = no (λ ())
+Overlap? ChangePParams Info = no (λ ())
+Overlap? TreasuryWdrl NoConfidence = no (λ ())
+Overlap? TreasuryWdrl UpdateCommittee = no (λ ())
+Overlap? TreasuryWdrl NewConstitution = no (λ ())
+Overlap? TreasuryWdrl TriggerHF = no (λ ())
+Overlap? TreasuryWdrl ChangePParams = no (λ ())
+Overlap? TreasuryWdrl TreasuryWdrl = yes refl
+Overlap? TreasuryWdrl Info = no (λ ())
+Overlap? Info NoConfidence = no (λ ())
+Overlap? Info UpdateCommittee = no (λ ())
+Overlap? Info NewConstitution = no (λ ())
+Overlap? Info TriggerHF = no (λ ())
+Overlap? Info ChangePParams = no (λ ())
+Overlap? Info TreasuryWdrl = no (λ ())
+Overlap? Info Info = yes refl
 \end{code}
 \begin{code}
 
@@ -177,17 +221,17 @@ opaque
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOV'⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
+  _⊢_⇀⦇_,GOV⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
 \end{code}
 \begin{code}
-_⊢_⇀⦇_,GOV⦈_     : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
+_⊢_⇀⦇_,GOVS⦈_   : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
 \end{code}
 \end{AgdaMultiCode}
 \caption{Type signature of the transition relation of the GOV transition system}
 \label{defs:gov-defs}
 \end{figure*}
 
-Figure~\ref{defs:enactable} shows some of the functions used to determine whether certain
+\Cref{defs:enactable} shows some of the functions used to determine whether certain
 actions are enactable in a given state.  Specifically, \AgdaFunction{allEnactable} passes
 the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list of
 \AgdaFunction{GovActionID}-pairs which is then passed to \AgdaFunction{enactable}. The latter uses the
@@ -195,14 +239,12 @@ the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list o
 whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
 enacted one.
 
-Additionally, \govActionPriority assigns a priority to the various governance action types.
-This is useful for ordering lists of governance actions as well as grouping governance
-actions by constructor. In particular, the relations
-\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}∼\AgdaUnderscore{}}} and
-\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}≈\AgdaUnderscore{}}} defined in
-Figure~\ref{defs:enactable} are used for determining whether two actions are of the same
-``kind'' in the following sense: either the actions arise from the same constructor, or one
-action is \NoConfidence and the other is an \UpdateCommittee action.
+The function \govActionPriority{} assigns a priority to the various types of governance actions.
+This is useful for ordering lists of governance actions (see \AgdaFunction{insertGovAction}
+in \cref{defs:gov-functions}).
+%
+Priority is also used to check if two actions \AgdaFunction{Overlap}: that is,
+they potentially modify the same piece of \AgdaDatatype{EnactState}.
 
 \begin{figure*}
 \begin{AgdaMultiCode}
@@ -245,10 +287,15 @@ hasParentE e aid a = case getHashES e (a .proj₁) of
    (just id)  → id ≡ aid
 
 hasParent : EnactState → GovState → (a : GovAction) → NeedsHash (a .proj₁) → Type
-hasParent e s a aid with getHash aid
-... | just aid' = hasParentE e aid' a
-                  ⊎ Any (λ (gid , gas) → gid ≡ aid' × action gas ≈ᵍ a) s
-... | nothing = ⊤
+hasParent e s a aid = case getHash aid of
+\end{code}
+\begin{code}[hide]
+  λ where
+\end{code}
+\begin{code}
+    nothing      → ⊤
+    (just aid')  → hasParentE e aid' a
+                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × Overlap (gas .action .proj₁) (a .proj₁)) s
 \end{code}
 \begin{code}[hide]
 open Equivalence
@@ -261,7 +308,7 @@ hasParentE? e aid a with getHashES e (a .proj₁)
 hasParent? : ∀ e s a aid → Dec (hasParent e s a aid)
 hasParent? e s a aid with getHash aid
 ... | just aid' = hasParentE? e aid' a
-                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec action gas ≈? a) s
+                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec Overlap? (gas .action .proj₁) (a .proj₁)) s
 ... | nothing = yes _
 
 -- newtype to make the instance resolution work
@@ -358,7 +405,7 @@ actionWellFormed _                 = ⊤
 \label{fig:valid-and-wellformed}
 \end{figure*}
 
-Figure~\ref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
+\Cref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
 of the GOV rule to ensure that a governance action is valid and well-formed.
 \begin{itemize}
   \item \actionValid{} ensures that the proposed action is valid given the current state of the system:
@@ -401,57 +448,65 @@ actionWellFormed? {Info , _}            = it
 
 \clearpage
 
+\begin{code}[hide]
+open GovEnv
+open PParams hiding (a)
+
+variable
+  machr : Maybe Anchor
+  achr : Anchor
+  ast  : GovActionState
+\end{code}
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{code}
-data _⊢_⇀⦇_,GOV'⦈_ where
+data _⊢_⇀⦇_,GOV⦈_ where
 \end{code}
 \begin{code}
-  GOV-Vote : ∀ {x ast} → let
-      open GovEnv Γ
-      vote = record { gid = aid ; voter = voter ; vote = v ; anchor = x }
-    in
+  GOV-Vote :
     ∙ (aid , ast) ∈ fromList s
-    ∙ canVote pparams (action ast) (proj₁ voter)
+    ∙ canVote (Γ .pparams) (action ast) (proj₁ voter)
     ∙ isRegistered Γ voter
-    ∙ ¬ (expired epoch ast)
+    ∙ ¬ expired (Γ .epoch) ast
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ inj₁ vote ,GOV'⦈ addVote s aid voter v
+      (Γ , k) ⊢ s ⇀⦇ inj₁ ⟦ aid , voter , v , machr ⟧ ,GOV⦈ addVote s aid voter v
 
-  GOV-Propose : ∀ {x} → let
-      open GovEnv Γ; open PParams pparams hiding (a)
-      prop = record { returnAddr = addr ; action = a ; anchor = x
-                    ; policy = p ; deposit = d ; prevAction = prev }
-      s' = addAction s (govActionLifetime +ᵉ epoch) (txid , k) addr a prev
+  GOV-Propose :
+    let pp           = Γ .pparams
+        e            = Γ .epoch
+        enactState   = Γ .enactState
+        rewardCreds  = Γ .rewardCreds
+        prop         = record { returnAddr = addr ; action = a ; anchor = achr
+                              ; policy = p ; deposit = d ; prevAction = prev }
     in
     ∙ actionWellFormed a
-    ∙ actionValid rewardCreds p ppolicy epoch a
-    ∙ d ≡ govActionDeposit
+    ∙ actionValid rewardCreds p (Γ .ppolicy) e a
+    ∙ d ≡ pp .govActionDeposit
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s a prev
     ∙ addr .RwdAddr.net ≡ NetworkId
     ∙ addr .RwdAddr.stake ∈ rewardCreds
       ───────────────────────────────────────
-      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV'⦈ s'
+      (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ addAction s (pp .govActionLifetime +ᵉ e)
+                                                 (Γ .txid , k) addr a prev
 
-_⊢_⇀⦇_,GOV⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV'⦈_}
+_⊢_⇀⦇_,GOVS⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV⦈_}
 \end{code}
 \end{AgdaMultiCode}
 \caption{Rules for the GOV transition system}
 \label{defs:gov-rules}
 \end{figure*}
 
-The GOV transition system is now given as the reflexitive-transitive
-closure of the system GOV', described in
-Figure~\ref{defs:gov-rules}.
+The GOVS transition system is now given as the reflexitive-transitive
+closure of the system GOV, described in \Cref{defs:gov-rules}.
 
-For \GOVVote, we check that the governance action being voted on
+For \GOVVote{}, we check that the governance action being voted on
 exists; that the voter's role is allowed to vote (see \canVote{} in
-Figure~\ref{fig:ratification-requirements}); and that the voter's
+\cref{fig:ratification-requirements}); and that the voter's
 credential is actually associated with their role (see
-\isRegistered{} in Figure~\ref{defs:gov-defs}).
+\isRegistered{} in \cref{defs:gov-defs}).
 
 For \GOVPropose{}, we check the correctness of the deposit along with some
 and some conditions that ensure the action is well-formed and valid;
 naturally, these checks depend on the type of action being proposed
-(see Figure~\ref{fig:valid-and-wellformed}).
+(see \cref{fig:valid-and-wellformed}).

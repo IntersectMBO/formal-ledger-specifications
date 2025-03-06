@@ -202,12 +202,12 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 \end{figure*}
 \end{NoConway}
 
-Figure~\ref{fig:epoch:sts} defines the rule for the EPOCH transition
+\Cref{fig:epoch:sts} defines the rule for the EPOCH transition
 system.  Currently, this contains some logic that is handled by
-POOLREAP in the Shelley specification~(\cite[Sec.~11.6]{shelley-ledger-spec}),
+POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec},
 since POOLREAP is not implemented here.
 
-The EPOCH rule now also needs to invoke RATIFY and properly deal with
+The EPOCH rule now also needs to invoke RATIFIES and properly deal with
 its results by carrying out each of the following tasks.
 \begin{itemize}
 \item Pay out all the enacted treasury withdrawals.
@@ -272,7 +272,7 @@ its results by carrying out each of the following tasks.
                                           (utxoSt' .deposits) (voteDelegs dState)
            ; treasury = acnt .treasury ; GState gState
            ; pools = pState .pools ; delegatees = dState .voteDelegs }
-        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFY⦈ fut'
+        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
     _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈

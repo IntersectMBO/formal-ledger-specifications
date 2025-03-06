@@ -3,7 +3,7 @@
 Here we describe some of the essential concepts and syntax of the Agda programming language and proof assistant.
 The goal is to provide some background for readers who are not already familiar with Agda, to help them
 understand the other sections of the specification.  For more details, the reader is
-encouraged to consult the official \hrefAgdaDocs{}~(\cite{agda2024}).
+encouraged to consult the official \hrefAgdaDocs{}~\parencite{agda2024}.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

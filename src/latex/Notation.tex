@@ -7,24 +7,24 @@ This section introduces some of the notation we use in this document and in our 
 and ``type'' are essentially the same, despite having different formal definitions
 in our Agda code. We represent sets as a special type, which we denote by
 \AgdaDatatype{Set}~\AgdaBound{A}, for \AgdaBound{A} an arbitrary type.
-(See Section~\ref{sec:sets-maps} for details and~\cite[Chapter 19]{NPS:1990-open} for
+(See \cref{sec:sets-maps} for details and~\textcite[Ch.~19]{NPS:1990-open} for
 background.)
 Agda denotes the primitive notion of type by \AgdaPrimitive{Set}.  To avoid confusion,
-throughout this document and in our Agda code we call this primitive \Type,
+throughout this document and in our Agda code we call this primitive \Type{},
 reserving the name \AgdaDatatype{Set} for our set type.
 All of our sets are finite, and when we need to convert
-a list \AgdaBound{l} to its set of elements, we write \fromList~\AgdaBound{l}.
+a list \AgdaBound{l} to its set of elements, we write \fromList{}~\AgdaBound{l}.
 \item[Lists] We use the notation \AgdaBound{a}~\AgdaInductiveConstructor{∷}~\AgdaBound{as} for
   the list with \textit{head} \AgdaBound{a} and \textit{tail} \AgdaBound{as};
   \AgdaInductiveConstructor{[]} denotes the empty list, and
   \AgdaBound{l}~\AgdaFunction{∷ʳ}~\AgdaBound{x} appends the element \AgdaBound{x}
   to the end of the list \AgdaBound{l}.
 \item[Sums and products.] The sum (or disjoint union, coproduct, etc.) of \AgdaBound{A} and
-  \AgdaBound{B} is denoted by \AgdaBound{A} \coproduct \AgdaBound{B}, and their product
-  is denoted by \AgdaBound{A} \agdatimes \AgdaBound{B}. The projection functions from products
-  are denoted \fst and \snd, and the injections are denoted \inl and \inr respectively. The
+  \AgdaBound{B} is denoted by \AgdaBound{A} \coproduct{} \AgdaBound{B}, and their product
+  is denoted by \AgdaBound{A} \agdatimes{} \AgdaBound{B}. The projection functions from products
+  are denoted \fst{} and \snd{}, and the injections are denoted \inl{} and \inr{} respectively. The
   properties whether an element of a coproduct is in the left or right component are called
-  \isInl and \isInr.
+  \isInl{} and \isInr{}.
 \item[Addition of map values.] The expression
 \AgdaFunction{∑[}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
@@ -35,7 +35,7 @@ a list \AgdaBound{l} to its set of elements, we write \fromList~\AgdaBound{l}.
 \AgdaBound{x}
 denotes the sum of the values obtained by applying the function \AgdaFunction{f} to the values
 of the map \AgdaFunction{m}.
-\item[Record types] are explained in Appendix~\ref{sec:appendix-agda-essentials}.
+\item[Record types] are explained in \cref{sec:appendix-agda-essentials}.
 \item[Postfix projections.] Projections can be written using postfix notation. For example, we may
   write \AgdaBound{x}\AgdaSpace{}\AgdaSymbol{.}\AgdaField{proj₁} instead of
   \AgdaField{proj₁}\AgdaSpace{}\AgdaBound{x}.
@@ -43,7 +43,7 @@ of the map \AgdaFunction{m}.
   \AgdaBound{f} to some domain \AgdaBound{A} is denoted by \AgdaBound{f}~\AgdaFunction{|}~\AgdaBound{A},
   and the restriction to the complement of \AgdaBound{A} is written
   \AgdaBound{f}~\AgdaFunction{|}~\AgdaBound{A}~\AgdaFunction{ᶜ}. Corestriction or range restriction is
-  denoted similarly, except that \AgdaFunction{|} is replaced by \corestriction.
+  denoted similarly, except that \AgdaFunction{|} is replaced by \corestriction{}.
 \item[Inverse image.] The expression \AgdaBound{m}~\AgdaFunction{⁻¹}~\AgdaBound{B} denotes the
   inverse image of the set \AgdaBound{B} under the map \AgdaBound{m}.
 \item[Left-biased union.] For maps \AgdaBound{m} and \AgdaBound{m'}, we write
@@ -70,6 +70,14 @@ represents an optional value and can either be
 (indicating the absence of a value).  If \AgdaBound{x} has type \AgdaDatatype{X}, then
 \AgdaInductiveConstructor{just}\AgdaSpace{}\AgdaBound{x} has type
 \AgdaDatatype{Maybe}\AgdaSpace{}\AgdaDatatype{X}.
+
+The symbol~\AgdaDatatype{\sim} denotes (pseudo)equality of two values \AgdaBound{x} and
+\AgdaBound{y} of type~\AgdaDatatype{Maybe}\AgdaSpace{}\AgdaDatatype{X}: if
+\AgdaBound{x} is of the form
+\AgdaInductiveConstructor{just}\AgdaSpace{}\AgdaBound{x'} and \AgdaBound{y} is
+of the form \AgdaInductiveConstructor{just}\AgdaSpace{}\AgdaBound{y'}, then
+\AgdaBound{x'} and \AgdaBound{y'} have to be equal. Otherwise, they are
+considered ``equal''.
 \item[The unit type] \AgdaRecord{⊤} has a single inhabitant \AgdaInductiveConstructor{tt} and may be thought
 of as a type that carries no information; it is useful for signifying the completion of an action, the
 presence of a trivial value, a trivially satisfied requirement, etc.

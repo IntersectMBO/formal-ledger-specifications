@@ -1,6 +1,7 @@
 \AgdaField{txvote}
 \AgdaField{txprop}
 \AgdaField{txdonation}
+\AgdaFunction{txdonation}
 \AgdaField{curTreasury}
 \AgdaField{txid}
 \AgdaFunction{txid}

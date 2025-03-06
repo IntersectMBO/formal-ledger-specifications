@@ -7,80 +7,100 @@ open import Ledger.Transaction
 
 module Ledger.Fees
   (txs : _) (open TransactionStructure txs)
-  -- (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Data.Rational using (0ℚ; ℚ; mkℚ+; _*_; floor)
-open import Data.Nat.Coprimality using (1-coprimeTo)
+open import Data.Rational.Literals using (number)
 open import Data.Nat.Induction using (<′-wellFounded)
-open import Data.Nat.Properties using (<⇒<′; ≰⇒>)
+open import Data.Nat.Properties using (≤′-trans; <⇒<′; ≰⇒>)
 open import Data.Integer using (∣_∣)
-open import Data.Product using (swap)
 open import Induction.WellFounded using (Acc; acc)
+open import Agda.Builtin.FromNat using (Number)
+
+open Number number renaming (fromNat to fromℕ)
 \end{code}
 
 \section{Fee Calculation}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
-\begin{code}[hide]
-_↑ℚ : ℕ → ℚ
-n ↑ℚ = mkℚ+ n 1 (1-coprimeTo n ∘ swap)
-\end{code}
 \begin{code}
 scriptsCost : (pp : PParams) → ℕ → Coin
-scriptsCost pp scSz with (PParams.refScriptCostStride pp)
+scriptsCost pp scriptSize
+\end{code}
+\begin{code}[hide]
+  with (PParams.refScriptCostStride pp)
 ... | 0 = 0  -- This case should never occur; refScriptCostStride should always be > 0.
-... | suc m =
-  scriptsCostAux  0ℚ
-                  minFeeRefScriptCoinsPerByte scSz
-                  (<′-wellFounded scSz)
+... | suc m
+\end{code}
+\begin{code}
+  = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte scriptSize
+\end{code}
+\begin{code}[hide]
+                  (<′-wellFounded scriptSize)
 \end{code}
 \begin{code}[hide]
   where
-  open PParams pp
-  multiplier = refScriptCostMultiplier
+    open PParams pp hiding (refScriptCostStride)
+    refScriptCostStride = suc m
 \end{code}
 \begin{code}
-  sizeIncrement = suc m
-  sizeIncrementRational = sizeIncrement ↑ℚ
-
-  scriptsCostAux : ℚ → ℚ → (n : ℕ) → Acc _<′_ n → Coin
-  scriptsCostAux acl curTierPrice n (acc rs) with n ≤? sizeIncrement
-  ... | yes _ = ∣ floor (acl + (n ↑ℚ * curTierPrice)) ∣
-  ... | no p = scriptsCostAux (acl + (sizeIncrementRational * curTierPrice))
-                              (multiplier * curTierPrice)
-                              (n - sizeIncrement)
-                              (rs $ suc∸≤′ (>′-trans (<⇒<′ $ ≰⇒> p) (<⇒<′ z<s)) (<⇒<′ z<s))
+    scriptsCostAux : ℚ        -- accumulator
+                   → ℚ        -- current tier price
+                   → (n : ℕ)  -- remaining script size
 \end{code}
 \begin{code}[hide]
-    where
-    >′-trans : ∀ {l m n} → n >′ m → m >′ l → n >′ l
-    >′-trans {l} {m} {.(suc m)} <′-base m>l = ≤′-step m>l
-    >′-trans {l} {m} {.(suc _)} (≤′-step n>m) m>l = ≤′-step (>′-trans n>m m>l)
-
-    suc∸≤′ : ∀ {n m} → n >′ 0 → m >′ 0 → suc (n ∸ m) ≤′ n
-    suc∸≤′ {suc .0} {suc zero} <′-base x = x
-    suc∸≤′ {suc .0} {2+ m} <′-base _ = <′-base
-    suc∸≤′ {suc _} {suc .0} (≤′-step _) <′-base = <′-base
-    suc∸≤′ {suc _} {suc _} (≤′-step x) (≤′-step y) = ≤′-step (suc∸≤′ x y)
+                   → Acc _<′_ n
+\end{code}
+\begin{code}
+                   → Coin
+    scriptsCostAux acl curTierPrice n
+\end{code}
+\begin{code}[hide]
+      (acc rs)
+\end{code}
+\begin{code}
+        = case n ≤? refScriptCostStride of λ where
+            (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
+            (no  p)  → scriptsCostAux (acl + (fromℕ refScriptCostStride * curTierPrice))
+                                      (refScriptCostMultiplier * curTierPrice)
+                                      (n - refScriptCostStride)
+\end{code}
+\begin{code}[hide]
+                                     (rs $ suc∸≤′ (≤′-trans (<⇒<′ z<s) (<⇒<′ $ ≰⇒> p)) (<⇒<′ z<s))
+\end{code}
+\begin{code}[hide]
+      where
+        suc∸≤′ : ∀ {n m} → n >′ 0 → m >′ 0 → n ∸ m <′ n
+        suc∸≤′ {suc .0} {suc zero} <′-base x = x
+        suc∸≤′ {suc .0} {2+ m} <′-base _ = <′-base
+        suc∸≤′ {suc _} {suc .0} (≤′-step _) <′-base = <′-base
+        suc∸≤′ {suc _} {suc _} (≤′-step x) (≤′-step y) = ≤′-step (suc∸≤′ x y)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Calculation of fees for reference scripts}
 \label{fig:scriptsCost}
 \end{figure*}
-The function \scriptsCost{} (Fig.~\ref{fig:scriptsCost}) calculates
-the fee for reference scripts in the transaction using a function that
-is piece-wise linear in the size, where the linear constant multiple
-grows with each \refScriptCostStride{} bytes. Thus, the \scriptsCost{}
-function depends on the \AgdaFunction{scriptsTotalSize} function,
-which returns an integer that is the total size of the reference
-script in bytes, as well as the following protocol parameters:
+
+The function \scriptsCost{} (\cref{fig:scriptsCost}) calculates
+the fee for reference scripts in a transaction. It takes as input the
+total size of the reference scripts in bytes, which can be calculated
+using \AgdaFunction{refScriptsSize}~(cref{fig:functions:utxo-conway}).
+%
+In addition, \scriptsCost{} depends on the following constants (which
+are bundled with the protocol parameters, see
+\cref{fig:protocol-parameter-declarations}):
+%
 \begin{itemize}
-  \item \refScriptCostMultiplier{}, a rational number, the growth factor
-  or step multiplier that determines how much the price per byte
-  increases after each increment;
-  \item \refScriptCostStride{}, an integer, the size in bytes at which
-  the price per byte grows linearly;
-  \item \minFeeRefScriptCoinsPerByte{}, a rational number, the base
-  fee or initial price per byte.
+  \item \AgdaFunction{refScriptCostMultiplier}, a rational number, the
+   growth factor or step multiplier that determines how much the price
+   per byte increases after each increment;
+  \item \AgdaFunction{refScriptCostStride}, an integer, the size in bytes at which
+   the price per byte grows linearly;
+  \item \AgdaFunction{minFeeRefScriptCoinsPerByte}, a rational number,
+   the base fee or initial price per byte.
 \end{itemize}
+
+The function \scriptsCost{} calculates the fee using a function,
+\AgdaFunction{scriptsCostAux}, that is piece-wise linear in the size,
+where the linear constant multiple grows with each
+\AgdaFunction{refScriptCostStride} bytes.
