@@ -150,10 +150,10 @@ instance
         computeProof = case H of λ where
           (yes (wf , av , dep , vHFA , HasParent' en , goodAddr , regReturn) , yes (new , rem , q , refl)) →
             case ¿ ∀[ e ∈ range new ] epoch < e × dom new ∩ rem ≡ᵉ ∅ ¿ of λ where
-              (yes newOk) → success (-, GOV-Propose {_} {_} {_} {_} {_} {_} {_} {_} {(new , rem , q)} {_} (wf , av , dep , vHFA , en , goodAddr , regReturn))
+              (yes newOk) → success (-, GOV-Propose {_} {_} {_} {_} {_} {_} {_} {_} {_} {(new , rem , q)} (wf , av , dep , vHFA , en , goodAddr , regReturn))
               (no ¬p)     → failure (genErrors ¬p)
           (yes (wf , av , dep , vHFA , HasParent' en , goodAddr , returnReg) , no notNewComm) → success
-            (-, GOV-Propose {_} {_} {_} {_} {_} {_} {_} {_} {a .proj₂} {_} (wf , av , dep , vHFA , en , goodAddr , returnReg))
+            (-, GOV-Propose {_} {_} {_} {_} {_} {_} {_} {_} {_} {a .proj₂} (wf , av , dep , vHFA , en , goodAddr , returnReg))
           (no ¬p , _) → failure (genErrors ¬p)
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ s' → map proj₁ computeProof ≡ success s'
