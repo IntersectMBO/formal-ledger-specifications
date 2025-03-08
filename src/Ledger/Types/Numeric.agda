@@ -8,12 +8,15 @@ open import Prelude
 
 open import Class.DecEq
   using (DecEq; _≟_)
+open import Class.Show
+  using (Show; show)
 open import Data.Irrelevant
   using ([_])
 import Data.Rational as ℚ
 import Data.Rational.Properties as ℚ
 open import Data.Rational
   using (ℚ; 0ℚ; 1ℚ; _≤_; _≤?_)
+import Data.Rational.Show as ℚshow
 open import Data.Refinement
   using (Refinement-syntax; Refinement; value; _,_)
 
@@ -91,6 +94,10 @@ DeqEq-Refinement A P ._≟_ (x , px) (y , py)
 instance
   DecEq-UnitInterval : DecEq UnitInterval
   DecEq-UnitInterval = DeqEq-Refinement ℚ inUnitInterval
+
+instance
+  Show-UnitInterval : Show UnitInterval
+  Show-UnitInterval .show = ℚshow.show ∘ value
 
 -- In the cardano-ledger codebase:
 --  unboundRational
