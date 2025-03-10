@@ -26,10 +26,6 @@ open import Ledger.Prelude hiding (yes; no)
 open import Ledger.Types.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
-
--- TODO: this could be generic
-maximum : ℙ ℚ → ℚ
-maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
