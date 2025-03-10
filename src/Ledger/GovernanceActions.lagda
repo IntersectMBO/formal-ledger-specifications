@@ -4,19 +4,15 @@
 
 We introduce three distinct bodies that have specific functions in the new governance framework:
 \begin{enumerate}
-\item
-  a constitutional committee  (henceforth called \CC{});
-\item
-  a group of delegate representatives (henceforth called \DReps{});
-\item
-  the stake pool operators (henceforth called \SPOs{}).
-
-In the following figure, \DocHash{} is abstract but in the
-implementation it will be instantiated with a 32-bit hash type (like
-e.g. \ScriptHash{}). We keep it separate because it is used for a
-different purpose.
-
+  \item a constitutional committee (henceforth called \CC{});
+  \item a group of delegate representatives (henceforth called \DReps{});
+  \item the stake pool operators (henceforth called \SPOs{}).
 \end{enumerate}
+
+In \cref{defs:governance}, the type \DocHash{} is abstract but in the
+implementation it will be instantiated with a 32-bit hash type (like
+e.g.\@ \ScriptHash{}). We keep it separate because it is used for a
+different purpose.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
