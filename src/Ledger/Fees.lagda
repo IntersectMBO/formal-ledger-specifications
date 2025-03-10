@@ -1,3 +1,10 @@
+\section{Fee Calculation}
+\label{sec:fees}
+\modulenote{\LedgerModule{Fees}}
+
+This section defines the functions used to compute the fees associated with
+reference scripts.
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -20,8 +27,7 @@ open import Agda.Builtin.FromNat using (Number)
 open Number number renaming (fromNat to fromℕ)
 \end{code}
 
-\section{Fee Calculation}
-\begin{figure*}[h]
+\begin{figure}
 \begin{AgdaMultiCode}
 \begin{code}
 scriptsCost : (pp : PParams) → ℕ → Coin
@@ -79,12 +85,12 @@ scriptsCost pp scriptSize
 \end{AgdaMultiCode}
 \caption{Calculation of fees for reference scripts}
 \label{fig:scriptsCost}
-\end{figure*}
+\end{figure}
 
 The function \scriptsCost{} (\cref{fig:scriptsCost}) calculates
 the fee for reference scripts in a transaction. It takes as input the
 total size of the reference scripts in bytes, which can be calculated
-using \AgdaFunction{refScriptsSize}~(cref{fig:functions:utxo-conway}).
+using \AgdaFunction{refScriptsSize}~(\cref{fig:functions:utxo-conway}).
 %
 In addition, \scriptsCost{} depends on the following constants (which
 are bundled with the protocol parameters, see
