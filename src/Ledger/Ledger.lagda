@@ -49,6 +49,7 @@ record LState : Type where
     utxoSt     : UTxOState
     govSt      : GovState
     certState  : CertState
+
 \end{code}
 \begin{code}[hide]
 open CertState
