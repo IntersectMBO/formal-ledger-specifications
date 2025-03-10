@@ -79,11 +79,11 @@ list of \textit{stake pools} operating the network, and so on.
 
 The ledger can be updated in response to certain events, such as receiving a new
 transaction, time passing and crossing an \textit{epoch boundary}, enacting a
-\textit{governance proposal}, to name a few.  Thus, the ledger also defines a set of
-rules that determine which events are valid and exactly how the state of the ledger
-should be updated in response to those events.  The primary aim of this document
-is to provide a precise description of this system---the ledger state, valid events
-and the rules for processing them.
+\textit{governance proposal}, to name a few.  This document defines, as part of the
+behaior of the ledger, a set of rules that determine which events are valid and
+exactly how the state of the ledger should be updated in response to those events.
+The primary aim of this document is to provide a precise description of this
+system---the ledger state, valid events and the rules for processing them.
 
 We will model this via a number of \textit{state transition systems} (STS) which
 from now on we refer to as ``transition rules'' or just ``rules.''
@@ -121,39 +121,9 @@ transaction exist, that the transaction is balanced, and several other condition
   source node, either as part of the source state, the environment or the event
     (\legendbox{\ConwayColor}~rules added in Conway;
      \legendbox{\BabbageColor}~rules modified in Conway; dotted ellipses represent rules
-  that are not yet formalized in Agda)
+  that are not yet formalized in Agda).
   }
   \label{fig:latest-sts-diagram}
-\end{figure}
-
-\begin{figure}[h!]
-{\footnotesize
-\begin{prooftree}
-  \AxiomC{\applyRUpd}
-  \AxiomC{\acceptConds}
-  \AxiomC{ENACT}
-  \BinaryInfC{RATIFY...RATIFY}
-  \UnaryInfC{RATIFIES}
-  \AxiomC{SNAP}
-  \BinaryInfC{EPOCH}
-  \BinaryInfC{NEWEPOCH}
-  \AxiomC{UTXOS}
-  \UnaryInfC{UTXO}
-  \UnaryInfC{UTXOW}
-  \AxiomC{GOV...GOV}
-  \UnaryInfC{GOVS}
-  \AxiomC{DELEG}
-  \AxiomC{GOVCERT}
-  \AxiomC{POOL}
-  \TrinaryInfC{CERT...CERT}
-  \UnaryInfC{CERTS}
-  \TrinaryInfC{LEDGER...LEDGER}
-  \UnaryInfC{LEDGERS}
-  \BinaryInfC{CHAIN}
-\end{prooftree}
-}
-\caption{State transition rules of the ledger specification, presented as a deduction tree.}
-\label{fig:new-chain-diagram}
 \end{figure}
 
 A brief description of each transition rule is provided below, with a link to

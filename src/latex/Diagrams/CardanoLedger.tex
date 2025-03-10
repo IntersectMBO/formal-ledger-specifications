@@ -21,7 +21,7 @@
   \node[modified]      (epoch)   [below = 15mm of newepoch]               {\small EPOCH};
   \node[conway]        (ratifies)[below right = 5mm and 5mm of epoch]             {\small RATIFIES};
   \node[conway, dcs]   (ratify)  [below = 5mm of ratifies]               {\small RATIFY};
-  \node[conway]        (enact)   [below = of ratify]                 {\small ENACT};
+  \node[conway]        (enact)   [below = 5mm of ratify]                 {\small ENACT};
   \node[shelley]       (ledgers) [below right = 15mm and 0cm of bbody] {\small LEDGERS};
   \node[modified, dcs] (ledger)  [below =5mm of ledgers]                 {\small LEDGER};
   \node[conway]        (certs)   [below left =of ledger]             {\small CERTS};
@@ -32,8 +32,8 @@
   \node[conway, dcs]   (gov)     [below =5mm of govs]                    {\small GOV};
   \node[missing]       (delegs)  [below left = 5mm and 0mm of cert]   {\small DELEGS};
   \node[missing]       (delpl)  [below right = 5mm and 0mm of delegs]   {\small DELPL};
-  \node[shelley]       (pool)    [below = of delpl]   {\small POOL};
-  \node[shelley]       (deleg)   [below right = of delpl]   {\small DELEG};
+  \node[shelley]       (pool)    [below right = of delpl]   {\small POOL};
+  \node[shelley]       (deleg)   [below = of delpl]   {\small DELEG};
   \node[conway]        (govcert) [below right=5mm and 5mm of cert]   {\small GOVCERT};
   \node[modified]      (utxos)   [below left = 1cm and -5mm of utxo]   {\small UTXOS};
   \node[missing]       (ppup)    [below right = 1cm and 0mm  of utxo]   {\small PPUP};
