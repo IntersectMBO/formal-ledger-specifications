@@ -240,12 +240,11 @@ compatibility.
 The rules for transition systems dealing with individual certificates
 are defined in
 \begin{NoConway}
-\Cref{fig:sts:aux-cert-deleg,fig:sts:aux-cert-pool}
+\Cref{fig:sts:aux-cert-deleg,fig:sts:aux-cert-pool,fig:sts:aux-cert-gov}.
 \end{NoConway}
 \begin{Conway}
-\Cref{fig:sts:aux-cert-deleg}
+\Cref{fig:sts:aux-cert-deleg,fig:sts:aux-cert-gov}.
 \end{Conway}
-and \cref{fig:sts:aux-cert-gov}.
 GOVCERT deals with the new certificates relating to DReps and the
 constitutional committee.
 
