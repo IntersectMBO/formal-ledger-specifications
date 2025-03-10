@@ -250,7 +250,7 @@ constitutional committee.
 
 \begin{itemize}
 \item \GOVCERTregdrep{} registers (or re-registers) a DRep. In case of
-  registation, a deposit needs to be paid. Either way, the activity
+  registration, a deposit needs to be paid. Either way, the activity
   period of the DRep is reset.
 \item \GOVCERTderegdrep{} deregisters a DRep.
 \item \GOVCERTccreghot{} registers a ``hot'' credential for constitutional
