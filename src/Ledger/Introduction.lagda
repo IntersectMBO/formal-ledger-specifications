@@ -130,40 +130,57 @@ A brief description of each transition rule is provided below, with a link to
 an Agda module and reference to a section where the rule is formally defined.
 
 \begin{itemize}[itemsep=1pt]
-\item \LedgerModText{Utxo}{UTXOS} checks that any relevant scripts needed by the
-  transaction evaluate to true (\cref{sec:utxo}).
-\item \LedgerModText{Utxo}{UTXO} checks core invariants for an individual transaction
-  to be valid, such as the transaction being balanced, fees being paid, etc; include
-  the UTXOS transition rule (\cref{sec:utxo}).
-\item \LedgerModText{Utxow}{UTXOW} checks that a transaction is witnessed correctly
-  with the appropriate signatures, datums, and scripts; includes the UTXO transition
-  rule (\cref{sec:witnessing}).
-\item \LedgerModText{Gov}{GOV} handles voting and submitting governance proposals (\cref{sec:governance}).
-\item \LedgerModText{Certs}{DELEG} handles registering stake addresses and delegating
-  to a stake pool (\cref{sec:certificates}).
-\item \LedgerModText{Certs}{POOL} handles registering and retiring stake pools (\cref{sec:certificates}).
-\item \LedgerModText{Certs}{GOVCERT} handles registering and delegating to DReps (\cref{sec:certificates}).
-\item \LedgerModText{Certs}{CERT} combines DELEG, POOL, GOVCERT transition rules,
-  as well as some additional rules shared by all three (\cref{sec:certificates}).
-\item \LedgerModText{Certs}{CERTS} applies CERT repeatedly for each certificate in
-  the transaction (\cref{sec:certificates}).
-\item \LedgerModText{Ledger}{LEDGER} is the full state update in response to a
-  single transaction; it includes the UTXOW, GOV, and CERTS rules (\cref{sec:ledger}).
-\item \LedgerModText{Ledger}{LEDGERS} applies LEDGER repeatedly as needed, for each
-  transaction in a list of transactions (\cref{sec:ledger}).
-\item \LedgerModText{Enact}{ENACT} applies the result of a previously ratified
-  governance action, such as triggering a hard fork or updating the protocol
-  parameters (\cref{sec:enactment}).
-\item \LedgerModText{Ratify}{RATIFY} decides whether a pending governance action has
-  reached the thresholds it needs to be ratified (\cref{sec:ratification}).
-\item \LedgerModText{Epoch}{SNAP} computes new stake distribution snapshots (\cref{sec:epoch-boundary}).
-\item \LedgerModText{Epoch}{EPOCH} computes the new state as of the end of an epoch;
-  includes the ENACT, RATIFY, and SNAP transition rules (\cref{sec:epoch-boundary}).
-\item \LedgerModText{Epoch}{NEWEPOCH} computes the new state as of the start of a new
-  epoch; includes the previous EPOCH transition (\cref{sec:epoch-boundary}).
-\item \LedgerModText{Chain}{CHAIN} is the top level transition in response to a new
+\item
+  \LedgerModText{Chain}{CHAIN} is the top level transition in response to a new
   block that applies the NEWEPOCH transition when crossing an epoch boundary, and the
   LEDGERS transition on the list of transactions in the body (\cref{sec:blockchain-layer}).
+\item
+  \LedgerModText{Epoch}{NEWEPOCH} computes the new state as of the start of a new
+  epoch; includes the previous EPOCH transition (\cref{sec:epoch-boundary}).
+\item
+  \LedgerModText{Epoch}{EPOCH} computes the new state as of the end of an epoch;
+  includes the ENACT, RATIFY, and SNAP transition rules (\cref{sec:epoch-boundary}).
+\item
+  \LedgerModText{Ratify}{RATIFY} decides whether a pending governance action has
+  reached the thresholds it needs to be ratified (\cref{sec:ratification}).
+\item
+  \LedgerModText{Enact}{ENACT} applies the result of a previously ratified
+  governance action, such as triggering a hard fork or updating the protocol
+  parameters (\cref{sec:enactment}).
+\item
+  \LedgerModText{Epoch}{SNAP} computes new stake distribution snapshots (\cref{sec:epoch-boundary}).
+\item
+  \LedgerModText{Ledger}{LEDGERS} applies LEDGER repeatedly as needed, for each
+  transaction in a list of transactions (\cref{sec:ledger}).
+\item
+  \LedgerModText{Ledger}{LEDGER} is the full state update in response to a
+  single transaction; it includes the UTXOW, GOV, and CERTS rules (\cref{sec:ledger}).
+\item
+  \LedgerModText{Certs}{CERTS} applies CERT repeatedly for each certificate in
+  the transaction (\cref{sec:certificates}).
+\item
+  \LedgerModText{Certs}{CERT} combines DELEG, POOL, GOVCERT transition rules,
+  as well as some additional rules shared by all three (\cref{sec:certificates}).
+\item
+  \LedgerModText{Certs}{DELEG} handles registering stake addresses and delegating
+  to a stake pool (\cref{sec:certificates}).
+\item
+  \LedgerModText{Certs}{GOVCERT} handles registering and delegating to DReps (\cref{sec:certificates}).
+\item
+  \LedgerModText{Certs}{POOL} handles registering and retiring stake pools (\cref{sec:certificates}).
+\item
+  \LedgerModText{Gov}{GOV} handles voting and submitting governance proposals (\cref{sec:governance}).
+\item
+  \LedgerModText{Utxow}{UTXOW} checks that a transaction is witnessed correctly
+  with the appropriate signatures, datums, and scripts; includes the UTXO transition
+  rule (\cref{sec:witnessing}).
+\item
+  \LedgerModText{Utxo}{UTXO} checks core invariants for an individual transaction
+  to be valid, such as the transaction being balanced, fees being paid, etc; include
+  the UTXOS transition rule (\cref{sec:utxo}).
+\item
+  \LedgerModText{Utxo}{UTXOS} checks that any relevant scripts needed by the
+  transaction evaluate to true (\cref{sec:utxo}).
 \end{itemize}
 \end{NoConway}
 
