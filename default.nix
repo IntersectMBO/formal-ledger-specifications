@@ -210,8 +210,4 @@ rec {
   } // {
     conway = mkPdfDerivation "conway-formal-spec" "0.9" "ledger.conway.docs";
   };
-  midnight = mkSpecDerivation {
-    project = "midnight";
-    main = "MidnightExample";
-  };
 }

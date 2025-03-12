@@ -21,7 +21,6 @@ HS_DIR=$(OUT_DIR)/haskell
 MALONZO_DIR=MAlonzo/Code
 CABAL_TEST=cabal run test
 LEDGER=Ledger
-MIDNIGHT=MidnightExample
 VV_SCRIPT=agda2vec.py
 HL_SCRIPT=hldiff.py
 
@@ -81,8 +80,6 @@ $(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PR
 	$(latexToPdf)
 $(PDF_DIR)/conway-ledger.pdf: $(LATEX_DIR)/conway-ledger.tex $(CONWAY_TEX_FILES) $(PRE)
 	$(latexToPdf)
-$(PDF_DIR)/midnight-example.pdf: $(LATEX_DIR)/$(MIDNIGHT)/PDF.tex $(latexFiles) $(PRE)
-	$(latexToPdf)
 
 # Agda -> HTML
 define agdaToHtml
@@ -112,8 +109,6 @@ HS_LEDGER=$(HS_DIR)/$(LEDGER)/$(MALONZO_DIR)/$(LEDGER)/Conway/Foreign/HSLedger.h
 HS_MIDNIGHT=$(HS_DIR)/$(MIDNIGHT)/$(MALONZO_DIR)/$(MIDNIGHT)/HSLedger.hs
 $(HS_LEDGER): $(LEDGER)/Conway/Foreign/HSLedger.agda
 	$(call agdaToHs,cardano-ledger-executable-spec)
-$(HS_MIDNIGHT): $(MIDNIGHT)/HSLedger.agda
-	$(call agdaToHs,midnight-example)
 
 # Haskell -> HTML
 define hsToHtml
@@ -162,35 +157,29 @@ $(OUT_DIR)/index.html:
 
 # User commands
 .PHONY: default clean \
-  ledger.docs ledger.conway.docs midnight.docs docs \
-  ledger.html midnight.html html \
-  ledger.hs midnight.hs hs \
-  ledger.hsTest midnight.hsTest hsTest \
-  ledger.hsDocs midnight.hsDocs hsDocs \
+  ledger.docs ledger.conway.docs docs \
+  ledger.html html \
+  ledger.hs hs \
+  ledger.hsTest hsTest \
+  ledger.hsDocs hsDocs \
   staticWebsite
 
 ledger.docs: $(PDF_DIR)/cardano-ledger.pdf $(latexFiles)
 ledger.conway.docs: $(PDF_DIR)/conway-ledger.pdf
-midnight.docs: $(PDF_DIR)/midnight-example.pdf
-docs: ledger.docs midnight.docs
+docs: ledger.docs
 
 ledger.html: $(HTML_DIR)/$(LEDGER).PDF.html
-midnight.html: $(HTML_DIR)/$(MIDNIGHT).PDF.html
-html: ledger.html midnight.html
+html: ledger.html
 
 ledger.hs: $(HS_LEDGER)
-midnight.hs: $(HS_MIDNIGHT)
-hs: ledger.hs midnight.hs
+hs: ledger.hs
 
 ledger.hsTest: $(HS_LEDGER)
 	cd $(HS_DIR)/$(LEDGER)   && $(CABAL_TEST)
-midnight.hsTest: $(HS_MIDNIGHT)
-	cd $(HS_DIR)/$(MIDNIGHT) && $(CABAL_TEST)
-hsTest: ledger.hsTest midnight.hsTest
+hsTest: ledger.hsTest
 
 ledger.hsDocs: $(HS_DIR)/$(LEDGER)/html/
-midnight.hsDocs: $(HS_DIR)/$(MIDNIGHT)/html/
-hsDocs: ledger.hsDocs midnight.hsDocs
+hsDocs: ledger.hsDocs
 
 staticWebsite: $(OUT_DIR)/index.html
 
