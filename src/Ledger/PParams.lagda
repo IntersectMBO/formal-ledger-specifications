@@ -446,20 +446,8 @@ following concepts.
 \end{itemize}
 
 \Cref{fig:protocol-parameter-declarations} also defines the
-function \paramsWellFormed{}. It performs some sanity checks on protocol
+function \paramsWellFormed{} which performs some sanity checks on protocol
 parameters.
-
-\begin{code}[hide]
-instance
-  pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
-  pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
-  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
-                                           canFollowMinor → ¬p₁ refl
-  ... | no ¬p    | yes refl = yes canFollowMinor
-  ... | yes refl | no ¬p    = yes canFollowMajor
-  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
-\end{code}
-
 \Cref{fig:pp-update-type} defines types and functions to update
 parameters. These consist of an abstract type \AgdaField{UpdateT} and
 two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
@@ -479,6 +467,15 @@ well-formedness.
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
+instance
+  pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
+  pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
+  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
+                                           canFollowMinor → ¬p₁ refl
+  ... | no ¬p    | yes refl = yes canFollowMinor
+  ... | yes refl | no ¬p    = yes canFollowMajor
+  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
+
 record PParamsDiff : Type₁ where
   field
 \end{code}
