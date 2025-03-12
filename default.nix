@@ -73,8 +73,6 @@ let
   agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
   agdaWithDeps = agdaWithPkgs deps;
 
-in rec
-{
   latex = texlive.combine {
     inherit (texlive)
       scheme-small
@@ -90,6 +88,9 @@ in rec
       latexmk
       environ;
   };
+
+in rec
+{
 
   formalLedger = customAgda.agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
