@@ -320,7 +320,7 @@ module _ where  -- achieves uniform (but perhaps misleading) alignment of type s
   _⊢_⇀⦇_,CERTS⦈_     : CertEnv     → CertState  → List DCert  → CertState  → Type
 \end{code}
 \begin{code}[hide]
-  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
+  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}
