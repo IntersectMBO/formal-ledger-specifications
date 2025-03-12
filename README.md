@@ -2,7 +2,7 @@
 
 This repository contains the formal ledger specifications that are intended to eventually replace the existing formal specifications of the Cardano ledger found [here](https://github.com/IntersectMBO/cardano-ledger). This project is currently incomplete and work in progress.
 
-This repository currently contains the work in progress specification for Cardano (up to and including the Conway era). The specification is executable and contains some documentation in the form of a PDF document. It can be built by following the steps below.
+This repository currently contains the work-in-progress specification for Cardano (up to and including the Conway era). The specification is executable and contains some documentation in the form of a PDF document. It can be built by following the steps below.
 
 Formal Specification | HTML Version | Haskell Tests |
 ----------------------|--------------|---------------|
