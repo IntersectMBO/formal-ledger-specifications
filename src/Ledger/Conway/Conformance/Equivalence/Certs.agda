@@ -204,8 +204,8 @@ instance
                 ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ deposits _ →
                   Γ C.⊢ (getCertDeps* deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈
                         (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
-  CERTSToConf .convⁱ deposits (RTC (base , step)) =
-    RTC (getCertDeps* deposits ⊢conv base , deposits ⊢conv step)
+  CERTSToConf .convⁱ ⟦ depsᵈ , depsᵍ , _ , _ ⟧* (BS-base x) = BS-base ((depsᵈ , depsᵍ) ⊢conv x)
+  CERTSToConf .convⁱ deposits (BS-ind x y) = BS-ind (deposits ⊢conv x) (updateCertDeps deposits ⊢conv y)
 
 -- Converting form Conformance is easier since the deposit tracking disappears.
 instance
@@ -246,4 +246,5 @@ instance
   CERTSFromConf : ∀ {Γ s dcerts s'}
                 → Γ C.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆
                   Γ L.⊢ conv s ⇀⦇ dcerts ,CERTS⦈ conv s'
-  CERTSFromConf .convⁱ _ (RTC (base , step)) = RTC (conv base , conv step)
+  CERTSFromConf .convⁱ _ (BS-base x) = BS-base (conv x)
+  CERTSFromConf .convⁱ _ (BS-ind x x₁) = BS-ind (conv x) (conv x₁)

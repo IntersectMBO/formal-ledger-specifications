@@ -301,16 +301,9 @@ module _  {Γ : CertEnv}
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
             ∎
 
-    sts-pov  : {s₁ sₙ : CertState} → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
-             → getCoin s₁ ≡ getCoin sₙ
-    sts-pov (BS-base Id-nop) = refl
-    sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
-
     CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
-    CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts
-    CERTS-pov (RTC (bsts , BS-ind x sts)) = trans  (CERTBASE-pov bsts)
-                                                   (cong  (_+ getCoin (CertEnv.wdrls Γ))
-                                                          (trans (CERT-pov x) (sts-pov sts)))
+    CERTS-pov (BS-base x) = CERTBASE-pov x
+    CERTS-pov {s₁ = s₁} {sₙ} (BS-ind x y) = trans (CERT-pov x) (CERTS-pov y)
 
 -- TODO: Prove the following property.
 -- range vDelegs ⊆ map (credVoter DRep) (dom DReps)
