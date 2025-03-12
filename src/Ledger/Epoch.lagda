@@ -221,7 +221,7 @@ POOLREAP is not implemented here.
 
 The EPOCH rule now also needs to invoke RATIFIES and properly deal with
 its results by carrying out each of the following tasks.
-\begin{itemize}
+\begin{itemize}[itemsep=\itmsep]
 \item Pay out all the enacted treasury withdrawals.
 \item Remove expired and enacted governance actions \& refund deposits.
 \item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.

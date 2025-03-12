@@ -1,6 +1,13 @@
 \section{Ledger}
 \label{sec:ledger}
-\modulenote{\LedgerModule{Ledger}}
+\modulenote{\LedgerModule{Ledger}}, where the entire state transformation of the
+ledger state caused by a valid transaction can now be given as a combination of the
+previously defined transition systems.
+\begin{Conway}
+As there is nothing new to the Conway era in this part of the ledger, we do not
+present any details of the Agda formalization.
+%% TODO: we need a way to reference the latest full spec
+\end{Conway}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -27,10 +34,6 @@ open GState
 open GovActionState
 open EnactState using (cc)
 \end{code}
-
-The entire state transformation of the ledger state caused by a valid
-transaction can now be given as a combination of the previously
-defined transition systems.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}

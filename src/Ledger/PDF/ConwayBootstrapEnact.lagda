@@ -10,7 +10,7 @@ provided. However, at the time of the initial hard fork into Conway
 there are no such previous actions. There are effectively two ways to
 solve this issue:
 
-\begin{itemize}
+\begin{itemize}[itemsep=\itmsep]
 \item populate those fields with IDs chosen in some manner (e.g. random, all zeros, etc.), or
 \item add a special value to the types to indicate this situation.
 \end{itemize}

@@ -1,10 +1,10 @@
 \section{Protocol Parameters}
 \label{sec:protocol-parameters}
-\modulenote{\LedgerModule{PParams}}
+\modulenote{\LedgerModule{PParams}}, in which we define the adjustable protocol
+parameters of the Cardano ledger.  These parameters are used in block validation and
+can affect various features of the system, such as minimum fees, maximum and minimum
+sizes of certain components, and more.
 
-This section defines the adjustable protocol parameters of the Cardano ledger.
-These parameters are used in block validation and can affect various features of the system,
-such as minimum fees, maximum and minimum sizes of certain components, and more.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -405,13 +405,20 @@ module PParamsUpdate where
 
 \PParams{} contains parameters used in the Cardano ledger, which we group according
 to the general purpose that each parameter serves.
-\begin{itemize}
+\begin{itemize}[itemsep=\itmsep]
   \item \NetworkGroup{}: parameters related to the network settings;
   \item \EconomicGroup{}: parameters related to the economic aspects of the ledger;
   \item \TechnicalGroup{}: parameters related to technical settings;
   \item \GovernanceGroup{}: parameters related to governance settings;
   \item \SecurityGroup{}: parameters that can impact the security of the system.
 \end{itemize}
+The purpose of these groups is to determine voting thresholds for
+proposals aiming to change parameters.  Given a proposal to change a certain set of
+parameters, we look at which groups those parameters fall into and from this we
+determine the voting threshold for that proposal.  (The voting threshold
+calculation is described in detail in \cref{sec:ratification-requirements}; in
+particular, the definition of the \threshold{} function appears in
+\cref{fig:ratification-requirements}.)
 
 The first four groups have the property that every protocol parameter
 is associated to precisely one of these groups.  The \SecurityGroup{} is
@@ -422,14 +429,9 @@ concept of security-relevant protocol parameters (see \textcite{cip1694}).
 The difference between these notions is only social, so we implement
 security-relevant protocol parameters as a group.
 
-The purpose of the groups is to determine voting thresholds for
-proposals aiming to change parameters. The thresholds depend on the
-groups of the parameters contained in such a proposal.
-
-These new parameters are declared in \cref{fig:protocol-parameter-declarations} and denote the
-following concepts.
-
-\begin{itemize}
+The new protocol parameters are declared in \cref{fig:protocol-parameter-declarations}
+and denote the following concepts:
+\begin{itemize}[itemsep=\itmsep]
   \item \drepThresholds{}: governance thresholds for \DReps{}; these are rational
     numbers named \Pone{}, \Ptwoa{}, \Ptwob{}, \Pthree{}, \Pfour{}, \Pfivea{},
     \Pfiveb{}, \Pfivec{}, \Pfived{}, and \Psix{};
@@ -444,7 +446,6 @@ following concepts.
   \item \drepActivity{}: \DRep{} activity period;
   \item \minimumAVS{}: the minimum active voting threshold.
 \end{itemize}
-
 \Cref{fig:protocol-parameter-declarations} also defines the
 function \paramsWellFormed{} which performs some sanity checks on protocol
 parameters.
@@ -453,7 +454,7 @@ parameters. These consist of an abstract type \AgdaField{UpdateT} and
 two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
 The type \AgdaField{UpdateT} is to be instantiated by a type that
 %
-\begin{itemize}
+\begin{itemize}[itemsep=\itmsep]
   \item can be used to update parameters, via the
     function \AgdaField{applyUpdate}
   \item can be queried about what parameter groups it updates, via the

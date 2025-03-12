@@ -1,6 +1,8 @@
 \section{Transactions}
 \label{sec:transactions}
-\modulenote{\LedgerModule{Transaction}}
+\modulenote{\LedgerModule{Transaction}}, where we define a transaction, which is
+made up of a transaction body, a collection of witnesses and some optional auxiliary
+data.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -33,12 +35,9 @@ unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 \end{code}
 
-Transactions are defined in \cref{fig:defs:transactions}.  A
-transaction is made up of a transaction body, a collection of
-witnesses and some optional auxiliary data.
 \begin{NoConway}
 Some key ingredients in the transaction body are:
-\begin{itemize}
+\begin{itemize}[itemsep=\itmsep]
   \item A set \txins{} of transaction inputs, each of which identifies an output from
     a previous transaction.  A transaction input consists of a transaction id and an
     index to uniquely identify the output.
@@ -51,7 +50,7 @@ Some key ingredients in the transaction body are:
 \end{NoConway}
 \begin{Conway}
 Ingredients of the transaction body introduced in the Conway era are the following:
-\begin{itemize}
+\begin{itemize}[itemsep=\itmsep]
   \item \txvote{}, the list of votes for goverance actions;
   \item \txprop{}, the list of governance proposals;
   \item \txdonation{}, amount of \Coin{} to donate to treasury, e.g., to return money

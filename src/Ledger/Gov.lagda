@@ -1,6 +1,23 @@
 \section{Governance}
 \label{sec:governance}
-\modulenote{\LedgerModule{Gov}}
+\modulenote{\LedgerModule{Gov}}, where we define the types required for ledger governance.
+In particular, the behavior of \GovState{} is similar to that of a queue.  New proposals are
+appended at the end, but any proposal can be removed at the epoch boundary.  However,
+for the purposes of enactment, earlier proposals take priority.  Note that
+\EnactState{} used in \GovEnv{} is defined later, in \cref{sec:enactment}.
+
+\begin{itemize}[itemsep=\itmsep]
+  \item
+    \addVote{} inserts (and potentially overrides) a vote made for a
+    particular governance action (identified by its ID) by a credential with a role.
+  \item
+    \addAction{} adds a new proposed action at the end of a given \GovState{}.
+  \item
+    The \validHFAction{} property indicates whether a given proposal, if it is a
+    \TriggerHF{} action, can potentially be enacted in the future. For this to be the
+    case, its \prevAction{} needs to exist, be another \TriggerHF{} action and have a
+    compatible version.
+\end{itemize}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -32,24 +49,6 @@ open import Function.Related.Propositional using (↔⇒)
 
 open GovActionState
 \end{code}
-
-The behavior of \GovState{} is similar to that of a queue. New proposals are
-appended at the end, but any proposal can be removed at the epoch
-boundary. However, for the purposes of enactment, earlier proposals
-take priority. Note that \EnactState{} used in \GovEnv{} is defined later,
-in \cref{sec:enactment}.
-
-\begin{itemize}
-\item \addVote{} inserts (and potentially overrides) a vote made for a
-particular governance action (identified by its ID) by a credential with a role.
-
-\item \addAction{} adds a new proposed action at the end of a given \GovState{}.
-
-\item The \validHFAction{} property indicates whether a given proposal, if it is a
-\TriggerHF{} action, can potentially be enacted in the future. For this to be the
-case, its \prevAction{} needs to exist, be another \TriggerHF{} action and have a
-compatible version.
-\end{itemize}
 
 \begin{figure*}
 \emph{Derived types}
@@ -360,9 +359,9 @@ actionWellFormed _                 = ⊤
 
 \Cref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
 of the GOV rule to ensure that a governance action is valid and well-formed.
-\begin{itemize}
+\begin{itemize}[itemsep=\itmsep]
   \item \actionValid{} ensures that the proposed action is valid given the current state of the system:
-        \begin{itemize}
+        \begin{itemize}[itemsep=\itmsep]
           \item a \ChangePParams{} action is valid if the proposal policy is provided;
           \item a \TreasuryWdrl{} action is valid if the proposal policy is provided and the reward stake
                 credential is registered;
@@ -371,7 +370,7 @@ of the GOV rule to ensure that a governance action is valid and well-formed.
                 remove the same candidate.
         \end{itemize}
   \item \actionWellFormed{} ensures that the proposed action is well-formed:
-        \begin{itemize}
+        \begin{itemize}[itemsep=\itmsep]
           \item a \ChangePParams{} action must preserves well-formedness of the protocol parameters;
           \item a \TreasuryWdrl{} action is well-formed if the network ID is correct and
                 there is at least one non-zero withdrawal amount in the given \RwdAddrToCoinMap{} map.
