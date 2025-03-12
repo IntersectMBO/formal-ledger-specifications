@@ -88,12 +88,6 @@ Apart from the PDF specification, the `Makefile` can be used to also generate th
 - `make hsTest`: run the Haskell tests of each Agda formalisation
 - `make staticWebsite`: gather all resources above in a central webpage `dist/index.html`
 
-If you only want to command to affect a single project, prefix with `<project>.`, e.g.
-```
-$ make ledger.html
-$ make midnight.hs
-```
-
 ## Updating nixpkgs
 
 To update the default nixpkgs used to build the derivations, run
