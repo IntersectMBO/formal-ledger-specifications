@@ -168,7 +168,11 @@ record UTxOEnv : Type where
 \emph{UTxO states}
 \begin{code}
 record UTxOState : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᵘ
+\end{code}
+\begin{code}
   field
     utxo       : UTxO
     fees       : Coin

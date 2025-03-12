@@ -228,7 +228,10 @@ sts2 = "\\AgdaDatatype{⇀⦇}"
 left_brace = "\\AgdaOperator{\\AgdaField{❴}}"
 right_brace = "\\AgdaOperator{\\AgdaField{❵}}"
 left_bracket = "\\AgdaField{⟦}"
-right_bracket = "\\AgdaField{⟧}"
+right_bracket = "\\AgdaField{⟧"
+left_bracket_aic = "\\AgdaInductiveConstructor{⟦}"
+right_bracket = "\\AgdaField{⟧"
+right_bracket_aic = "\\AgdaInductiveConstructor{⟧"
 
 newline = "\\\\"
 begin_code = "\\begin{code}"
@@ -313,7 +316,7 @@ def format_vector(vector_block: StrVec) -> StrVec:
     if not vector_block:
         return []
     unwanted_suffixes = [newline, "%", "\\<", "\\>"]
-    element_halt = [aic, begin_array, left_brace, right_bracket]
+    element_halt = [aic, begin_array, left_brace, right_bracket, right_bracket_aic]
 
     def get_next_element(vector_block: StrVec, acc: StrVec) -> tuple[StrVec, StrVec]:
         if not vector_block:
@@ -436,10 +439,10 @@ def safe_add(l1: StrVec, l2: StrVec) -> StrVec:
 def get_vector_block(lines: StrVec, acc: StrVec) -> tuple[StrVec, StrVec]:
     if not lines:   
         return acc, []
-    if left_bracket in lines[0]:  # this must be an inner vector
+    if (left_bracket in lines[0]) or (left_bracket_aic in lines[0]):  # this must be an inner vector
         vec_block, nextlines = get_vector_block(lines[1:], [])
         return get_vector_block(nextlines, acc + [flatten(make_inner_array(format_vector(vec_block)))])
-    if right_bracket in lines[0]:
+    if (right_bracket in lines[0]) or (right_bracket_aic in lines[0]):
         return acc, lines[1:]
     else:
         return get_vector_block(lines[1:], acc + [lines[0]])
@@ -452,7 +455,7 @@ def process_vector(lines: StrVec) -> tuple[StrVec, StrVec]:
 
 def process_lines(lines):
 
-    inline_halt_back = [deduction, extra_skip, newline, left_bracket, begin_code, end_code, "\\>[6][@{}l@{\\AgdaIndent{0}}]%", "\\>[981I][@{}l@{\\AgdaIndent{0}}]"]
+    inline_halt_back = [deduction, extra_skip, newline, left_bracket, left_bracket_aic, begin_code, end_code, "\\>[6][@{}l@{\\AgdaIndent{0}}]%", "\\>[981I][@{}l@{\\AgdaIndent{0}}]"]
     inline_halt = inline_halt_back + ["\\AgdaFunction{∙}" , "\\>[981I][@{}l@{\\AgdaIndent{0}}]"]
 
     unwanted = ["%", begin_code, newline, extra_skip, "\\>[4]", "\\>[6]", "[@{}l@{\\AgdaIndent{0}}]", "\\>[981I][@{}l@{\\AgdaIndent{0}}]"]
@@ -467,7 +470,7 @@ def process_lines(lines):
 
         # aac: Agda code block up to the next left bracket (start of vector)
         # bb: Agda code block from the left bracket to the end of the vector
-        aac, bb = get_until_match(ls, [left_bracket])
+        aac, bb = get_until_match(ls, [left_bracket, left_bracket_aic])
         if not bb:
             return safe_add(acc, aac)
 

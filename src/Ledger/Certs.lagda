@@ -100,7 +100,11 @@ record CertEnv : Type where
     coldCreds : ℙ Credential
 
 record DState : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_⟧ᵈ
+\end{code}
+\begin{code}
   field
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ KeyHash
@@ -118,13 +122,21 @@ record PState : Type where
 \begin{code}
 
 record GState : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_⟧ᵛ
+\end{code}
+\begin{code}
   field
     dreps      : Credential ⇀ Epoch
     ccHotKeys  : Credential ⇀ Maybe Credential
 
 record CertState : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_,_⟧ᶜˢ
+\end{code}
+\begin{code}
   field
     dState : DState
     pState : PState
