@@ -193,9 +193,9 @@ that this document is readable by people unfamiliar with Agda (or other proof
 assistants, functional programming languages, etc.).  However, by the
 nature of working in a formal language we have to play by its rules,
 meaning that some instances of uncommon notation are very difficult or
-impossible to avoid. Some are explained in
-\cref{sec:notation}, but there is no guarantee that this
-section is complete.  If the meaning of an expression is confusing
+impossible to avoid.  Some are explained in \cref{sec:notation} and others in
+\cref{sec:appendix-agda-essentials}, but there is no guarantee that those
+sections are complete.  If the meaning of an expression is confusing
 or unclear, please \href{\repourl/issues}{open an issue} in
 \href{\repourl}{the formal ledger GitHub repository} with the `notation' label.
 
@@ -204,9 +204,9 @@ or unclear, please \href{\repourl/issues}{open an issue} in
 The \emph{Cardano Node} consists of three pieces:
 
 \begin{itemize}
-  \item Networking layer, which deals with sending messages across the internet;
-  \item Consensus layer, which establishes a common order of valid blocks;
-  \item Ledger layer, which decides whether a sequence of blocks is valid.
+  \item a \textit{networking layer} responsible for sending messages across the internet,
+  \item a \textit{consensus layer} establishing a common order of valid blocks, and
+  \item a \textit{ledger layer} which determines whether a sequence of blocks is valid.
 \end{itemize}
 
 Because of this separation, the ledger gets to be a state machine:
