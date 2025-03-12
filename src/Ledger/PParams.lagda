@@ -23,6 +23,7 @@ open import Ledger.Prelude
 open import Ledger.Crypto
 open import Ledger.Script
 open import Ledger.Types.Epoch
+open import Ledger.Types.Numeric using (UnitInterval)
 
 module Ledger.PParams
   (crypto : Crypto )
@@ -125,6 +126,8 @@ record PParams : Type where
         b                             : ℕ
         keyDeposit                    : Coin
         poolDeposit                   : Coin
+        monetaryExpansion             : UnitInterval -- formerly: rho
+        treasuryCut                   : UnitInterval -- formerly: tau
         coinsPerUTxOByte              : Coin
         prices                        : Prices
         minFeeRefScriptCoinsPerByte   : ℚ
@@ -229,6 +232,8 @@ module PParamsUpdate where
           a b                           : Maybe ℕ
           keyDeposit                    : Maybe Coin
           poolDeposit                   : Maybe Coin
+          monetaryExpansion             : Maybe UnitInterval
+          treasuryCut                   : Maybe UnitInterval
           coinsPerUTxOByte              : Maybe Coin
           prices                        : Maybe Prices
           minFeeRefScriptCoinsPerByte   : Maybe ℚ
@@ -279,6 +284,8 @@ module PParamsUpdate where
       ∷ is-just b
       ∷ is-just keyDeposit
       ∷ is-just poolDeposit
+      ∷ is-just monetaryExpansion
+      ∷ is-just treasuryCut
       ∷ is-just coinsPerUTxOByte
       ∷ is-just minFeeRefScriptCoinsPerByte
       ∷ is-just maxRefScriptSizePerTx
@@ -370,6 +377,8 @@ module PParamsUpdate where
       ; b                           = U.b ?↗ P.b
       ; keyDeposit                  = U.keyDeposit ?↗ P.keyDeposit
       ; poolDeposit                 = U.poolDeposit ?↗ P.poolDeposit
+      ; monetaryExpansion           = U.monetaryExpansion ?↗ P.monetaryExpansion
+      ; treasuryCut                 = U.treasuryCut ?↗ P.treasuryCut
       ; coinsPerUTxOByte            = U.coinsPerUTxOByte ?↗ P.coinsPerUTxOByte
       ; minFeeRefScriptCoinsPerByte = U.minFeeRefScriptCoinsPerByte ?↗ P.minFeeRefScriptCoinsPerByte
       ; maxRefScriptSizePerTx       = U.maxRefScriptSizePerTx ?↗ P.maxRefScriptSizePerTx
