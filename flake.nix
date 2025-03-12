@@ -24,7 +24,7 @@
           latex
           formalLedger;
       } //
-        specsDerivationsPackages "ledger"
+        specsDerivationsPackages "ledger";
     in jobs // {
       required = pkgs.releaseTools.aggregate {
         name = "required";
