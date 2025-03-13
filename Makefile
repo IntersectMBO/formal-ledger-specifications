@@ -8,7 +8,7 @@
 AGDA?=agda
 AGDA_RUN=$(AGDA) --transliterate
 OUT_DIR?=dist
-LATEX?=latexmk -xelatex -shell-escape -halt-on-error -gg
+LATEX?=latexmk -xelatex -shell-escape -halt-on-error
 LATEX_DIR=latex
 CONWAY_TEX_DIR=latex/Conway
 HL_LIST=$(LATEX_DIR)/hldiff_list.txt
