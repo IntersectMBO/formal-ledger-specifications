@@ -98,8 +98,8 @@ define agdaToHs
     $(eval PROJECT=$(firstword $(subst /, ,$(@:$(HS_DIR)/%=%))))
     $(eval HS_DIST=$(HS_DIR)/$(PROJECT))
     mkdir -p $(HS_DIST)
-    cp -r $(PROJECT)/hs-src/* $(HS_DIST)/
-    cp $(PROJECT)/hs-src/$(CABAL_FILE) $(HS_DIST)/
+    cp -r src/$(PROJECT)/hs-src/* $(HS_DIST)/
+    cp src/$(PROJECT)/hs-src/$(CABAL_FILE) $(HS_DIST)/
     $(AGDA_RUN) -c --ghc-dont-call-ghc --compile-dir $(HS_DIST) $<
     find $(HS_DIST)/MAlonzo -name "*.hs" -print\
       | sed "s#^$(HS_DIST)/#        #;s#\.hs##;s#/#.#g"\
@@ -107,7 +107,7 @@ define agdaToHs
 endef
 HS_LEDGER=$(HS_DIR)/$(LEDGER)/$(MALONZO_DIR)/$(LEDGER)/Conway/Foreign/HSLedger.hs
 HS_MIDNIGHT=$(HS_DIR)/$(MIDNIGHT)/$(MALONZO_DIR)/$(MIDNIGHT)/HSLedger.hs
-$(HS_LEDGER): $(LEDGER)/Conway/Foreign/HSLedger.agda
+$(HS_LEDGER): src/$(LEDGER)/Conway/Foreign/HSLedger.agda
 	$(call agdaToHs,cardano-ledger-executable-spec)
 
 # Haskell -> HTML
