@@ -141,7 +141,7 @@ d_Conv'45'GovEnv_506
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_GovEnv'46'constructor_5987 v1 v2 v3 v4 v5 v6 v7
+              MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_GovEnv'46'constructor_5963 v1 v2 v3 v4 v5 v6 v7
                 -> coe
                      C_MkGovEnv_769 (coe v1) (coe v2)
                      (coe
@@ -985,7 +985,7 @@ d_Conv'45'GovEnv_506
             case coe v0 of
               C_MkGovEnv_769 v1 v2 v3 v4 v5 v6 v7
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_GovEnv'46'constructor_5987
+                     MAlonzo.Code.Ledger.Conway.Conformance.Gov.C_GovEnv'46'constructor_5963
                      (coe v1) (coe v2)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
