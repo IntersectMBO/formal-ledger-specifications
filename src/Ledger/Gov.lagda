@@ -5,7 +5,7 @@
 The behavior of \GovState{} is similar to that of a queue.  New proposals are
 appended at the end, but any proposal can be removed at the epoch boundary.  However,
 for the purposes of enactment, earlier proposals take priority.  Note that
-\EnactState{} used in \GovEnv{} is defined later, in \cref{sec:enactment}.
+\EnactState{} used in \GovEnv{} is defined in \cref{sec:enactment}.
 
 \begin{itemize}
   \item
