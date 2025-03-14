@@ -94,6 +94,7 @@ open import Ledger.PDF.ConwayBootstrap
 
 \appendix
 
+\input{definitions}
 \input{EssentialAgda}
 \input{Ledger/PDF/ConwayBootstrapEnact}
 \input{Ledger/PDF/ConwayBootstrap}
