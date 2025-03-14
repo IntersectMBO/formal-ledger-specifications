@@ -205,7 +205,6 @@ data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState →
         wdrlCreds       = mapˢ stake (dom wdrls)
         validVoteDelegs  = voteDelegs ∣^ (mapˢ (credVoter DRep) (dom dReps) ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []))
     in
-    ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢

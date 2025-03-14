@@ -148,15 +148,13 @@ instance
         open GState (gState cs); open DState (dState cs)
         refresh = mapPartial getDRepVote (fromList votes)
         refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
-    in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
-              × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-      (yes p) → success (-, CERT-base p)
+    in case ¿ mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
+      (yes p) → success (-, CERT-base (p {_}))
       (no ¬p) → failure (genErrors ¬p)
-  Computational-CERTBASE .completeness ce st _ st' (CERT-base p)
-    rewrite let dState = CertState.dState st; open DState dState in
-      dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
-                × mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
-        p .proj₂ = refl
+  Computational-CERTBASE .completeness ce st _ st' (CERT-base p) with 
+    ¿ mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ (st .CertState.dState .DState.rewards) ˢ ¿
+  ... | yes _ = refl
+  ... | no ¬q = ⊥-elim (¬q p)
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
@@ -256,7 +254,7 @@ module _  {Γ : CertEnv}
 
     CERTBASE-pov  {s  = cs}
                   {s' = cs'}
-                  (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
+                  (CERT-base {pp}{vs}{e}{dreps}{wdrls} wdrlsCC⊆rwds) =
       let
         open DState (dState cs )
         open DState (dState cs') renaming (rewards to rewards')

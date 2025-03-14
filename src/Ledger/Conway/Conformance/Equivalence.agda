@@ -104,7 +104,7 @@ lem-cert-deposits-valid : ∀ {Γ s tx s'} (open L.LEnv Γ using (pparams))
                         → isValid tx ≡ true
                         → Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                         → updateLedgerDeps pparams tx (certDeposits s) ≡ᵈ certDeposits s'
-lem-cert-deposits-valid {Γ} {s} {tx} {s'} refl (L.LEDGER-V⋯ refl utxow certs gov) rewrite sym (lemUpdateDeposits refl utxow) =
+lem-cert-deposits-valid {Γ} {s} {tx} {s'} refl (L.LEDGER-V⋯ refl utxow certs u gov) rewrite sym (lemUpdateDeposits refl utxow) =
   lem-upd-ddeps pparams deps tx ,
   lem-upd-gdeps pparams deps tx
   where
@@ -137,7 +137,7 @@ instance
                     certDeposits-s' ≡ᵈ certDeposits s'
                   × Γ C.⊢ (certDeposits s ⊢conv s) ⇀⦇ tx ,LEDGER⦈ (certDeposits-s' ⊢conv s')
   -- LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ (cdeps , eq-cdeps) r@(L.LEDGER-V⋯ refl utxow certs gov) =
-  LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-V⋯ refl utxow certs gov) =
+  LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-V⋯ refl utxow certs u gov) =
     updateLedgerDeps pparams tx (certDeposits s)
     , lem-cert-deposits-valid refl r
     , subst₂ (λ • ◆ → Γ C.⊢ getCertDeps* cdeposits ⊢conv s ⇀⦇ tx ,LEDGER⦈ ⟦ • , _ , ◆ ⟧)
@@ -157,7 +157,7 @@ instance
       certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
       certs' = cdeposits ⊢conv certs
       ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
-      ledger' = C.LEDGER-V⋯ refl utxow' certs' gov
+      ledger' = C.LEDGER-V⋯ refl utxow' certs' u gov
       utxoEq  : utxoStC' ≡ utxoSt'
       utxoEq  = cong (λ • → ⟦ _ , _ , • , _ ⟧)
                      (lemUpdateDeposits refl utxow)
@@ -228,7 +228,7 @@ instance
                                     ⭆ Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ conv s'
   LEDGERFromConf .convⁱ _ (C.LEDGER-I⋯ invalid utxow) with inj₁ invalid ⊢conv utxow
   ... | utxow' rewrite lemInvalidDepositsC invalid utxow = L.LEDGER-I⋯ invalid utxow'
-  LEDGERFromConf {Γ} {s} {tx} {s'} .convⁱ wf (C.LEDGER-V⋯ refl utxow certs gov) =
+  LEDGERFromConf {Γ} {s} {tx} {s'} .convⁱ wf (C.LEDGER-V⋯ refl utxow certs u gov) =
     subst (λ • → Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ ⟦ • , govSt' , conv certSt' ⟧) eqUtxo ledger'
     where
       open C.LEnv Γ
@@ -251,7 +251,7 @@ instance
       ledger' : Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ L.⟦ setDeposits (utxowDeposits utxow) utxoSt'
                                               , govSt'
                                               , conv certSt' ⟧ˡ
-      ledger' = L.LEDGER-V⋯ refl utxow' (conv certs) gov
+      ledger' = L.LEDGER-V⋯ refl utxow' (conv certs) u gov
 
 open IsEquivalence ≡ᵈ-isEquivalence renaming (refl to ≡ᵈ-refl; sym to ≡ᵈ-sym; trans to ≡ᵈ-trans)
 
@@ -269,7 +269,7 @@ lemCERTS'DepositsC (BS-ind (C.CERT-vdel (C.GOVCERT-deregdrep _)) rs) = lemCERTS'
 lemCERTS'DepositsC (BS-ind (C.CERT-vdel (C.GOVCERT-ccreghot  _)) rs) = lemCERTS'DepositsC rs
 
 lemWellformed : ∀ {Γ s tx s'} → WellformedLState s → Γ C.⊢ s ⇀⦇ tx ,LEDGER⦈ s' → WellformedLState s'
-lemWellformed {Γ} {s = ls} {tx} {s' = ls'} wf (C.LEDGER-V⋯ refl utxo certs gov) = goal
+lemWellformed {Γ} {s = ls} {tx} {s' = ls'} wf (C.LEDGER-V⋯ refl utxo certs u gov) = goal
   where
     open C.LState ls  renaming (certState to certSt)
     open C.LState ls' renaming (utxoSt to utxoSt'; certState to certSt')
@@ -377,9 +377,9 @@ opaque
             → deps₁ ≡ᵈ deps₂
             → Γ C.⊢ deps₁ ⊢conv s ⇀⦇ tx ,LEDGER⦈ (deps₁' ⊢conv s')
             → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂' × Γ C.⊢ deps₂ ⊢conv s ⇀⦇ tx ,LEDGER⦈ (deps₂' ⊢conv s')
-  castLEDGER {Γ} {tx} {s} {s'} deps₁ deps₂ deps₁' eqd (C.LEDGER-V⋯ refl utxo certs gov) =
+  castLEDGER {Γ} {tx} {s} {s'} deps₁ deps₂ deps₁' eqd (C.LEDGER-V⋯ refl utxo certs u gov) =
     let deps₂' , eqd' , certs' = castCERTS' deps₁ deps₂ deps₁' eqd certs
-    in  deps₂' , eqd' , C.LEDGER-V⋯ refl utxo certs' gov
+    in  deps₂' , eqd' , C.LEDGER-V⋯ refl utxo certs' u gov
   castLEDGER deps₁ deps₂ deps₁' eqd (C.LEDGER-I⋯ refl utxo) = _ , eqd , C.LEDGER-I⋯ refl utxo
 
 ---------------------------------------------------------------------------
