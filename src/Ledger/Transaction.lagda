@@ -37,7 +37,7 @@ unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 \begin{NoConway}
 Some key ingredients in the transaction body are:
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item A set \txins{} of transaction inputs, each of which identifies an output from
     a previous transaction.  A transaction input consists of a transaction id and an
     index to uniquely identify the output.
