@@ -10,7 +10,7 @@ As described in \hrefCIP{1694}, the governance system needs to be
 bootstrapped. During the bootstrap period, the following changes will
 be made to the ledger described in this document.
 
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item Transactions containing any proposal except \TriggerHF{},
       \ChangePParams{} or \Info{} will be rejected.
 \item Transactions containing a vote other than a \CC{} vote,

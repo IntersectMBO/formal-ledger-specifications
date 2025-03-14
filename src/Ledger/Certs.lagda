@@ -260,7 +260,7 @@ are defined in
 GOVCERT deals with the new certificates relating to DReps and the
 constitutional committee.
 
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item \GOVCERTregdrep{} registers (or re-registers) a DRep. In case of
   registration, a deposit needs to be paid. Either way, the activity
   period of the DRep is reset.
@@ -422,7 +422,7 @@ bundling the previously defined pieces together into the CERT system,
 and then taking the reflexive-transitive closure of CERT together with
 CERTBASE as the base case. CERTBASE does the following:
 
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item check the correctness of withdrawals and ensure that withdrawals
   only happen from credentials that have delegated their voting power;
 \item set the rewards of the credentials that withdrew funds to zero;

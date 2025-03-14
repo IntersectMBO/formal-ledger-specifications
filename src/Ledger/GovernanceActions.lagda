@@ -2,7 +2,7 @@
 \label{sec:governance-actions}
 \modulenote{\LedgerModule{GovernanceActions}}, in which
 we introduce the following distinct bodies with specific functions in the new governance framework:
-\begin{enumerate}[itemsep=1pt]
+\begin{enumerate}
   \item a constitutional committee (henceforth called \CC{});
   \item a group of delegate representatives (henceforth called \DReps{});
   \item the stake pool operators (henceforth called \SPOs{}).
@@ -61,7 +61,7 @@ implementation it will be instantiated with a 32-bit hash type (like
 e.g.\@ \ScriptHash{}). We keep it separate because it is used for a
 different purpose.
 %
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \GovActionID{}: a unique identifier for a governance action, consisting of the
     \TxId{} of the proposing transaction and an index to identify a proposal within a transaction;
   \item \GovRole{} (\defn{governance role}): one of three available voter roles
@@ -75,7 +75,7 @@ different purpose.
 
 The governance actions carry the following information:
 %
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \UpdateCommittee{}: a map of credentials and terms to add and a set of
     credentials to remove from the committee;
   \item \NewConstitution{}: a hash of the new constitution document and an optional proposal policy;
@@ -219,7 +219,7 @@ cast in a certain manner.
 
 To propose a governance action, a \GovProposal{} needs to be
 submitted. Beside the proposed action, it requires:
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item potentially a pointer to the previous action (see \cref{sec:hash-protection}),
 \item potentially a pointer to the proposal policy (if one is required),
 \item a deposit, which will be returned to \returnAddr{}, and

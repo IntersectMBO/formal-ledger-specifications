@@ -49,7 +49,7 @@ top of other conditions that are explained further down. The
 in that order.
 
 The symbols mean the following:
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item
   \AgdaFunction{vote} x: For an action to pass, the fraction of stake
   associated with yes votes with respect to that associated
@@ -343,13 +343,13 @@ votes or resignation/expiry are implemented in this way.
 \actualVotes{} is defined as the union of four voting maps,
 corresponding to the constitutional committee, predefined (or auto)
 DReps, regular DReps and SPOs.
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item \roleVotes{} filters the votes based on the given governance role
   and is a helper for definitions further down.
 \item if a \CC{} member has not yet registered a hot key, has \expired{},
   or has resigned, then \actualCCVote{} returns \abstain{}; if none
   of these conditions is met, then
-  \begin{itemize}[itemsep=\itmsep]
+  \begin{itemize}
     \item if the \CC{} member has voted, then that vote is returned;
     \item if the \CC{} member has not voted, then the default value of \no{} is returned.
   \end{itemize}
@@ -369,7 +369,7 @@ to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
 the logic is unchanged; see \cref{sec:conway-bootstrap}.)
 To be precise, the agreed upon specification is the following: an SPO that did
 not vote is assumed to have vote \no{}, except under the following circumstances:
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item if the SPO has delegated its reward credential to an
   \texttt{AlwaysNoConfidence} DRep, then their default vote is \yes{} for
   \NoConfidence{} proposals and \no{} for other proposals;
@@ -433,7 +433,7 @@ abstract
 \Cref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
 functions (together with some helpers) that are used in the rules of
 RATIFY.
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \getStakeDist{} computes the stake distribution based on the
     given governance role and the corresponding delegations. Note that
     every constitutional committe member has a stake of 1, giving them
@@ -595,7 +595,7 @@ The RATIFIES transition system is defined as the reflexive-transitive
 closure of RATIFY, which is defined via three rules, defined in
 \cref{fig:sts:ratify}.
 %
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \RATIFYAccept{} checks if the votes for a given \GovAction{} meet the
     threshold required for acceptance, that the action is accepted and not delayed,
     and \RATIFYAccept{} ratifies the action.

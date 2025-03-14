@@ -405,7 +405,7 @@ module PParamsUpdate where
 
 \PParams{} contains parameters used in the Cardano ledger, which we group according
 to the general purpose that each parameter serves.
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \NetworkGroup{}: parameters related to the network settings;
   \item \EconomicGroup{}: parameters related to the economic aspects of the ledger;
   \item \TechnicalGroup{}: parameters related to technical settings;
@@ -431,7 +431,7 @@ security-relevant protocol parameters as a group.
 
 The new protocol parameters are declared in \cref{fig:protocol-parameter-declarations}
 and denote the following concepts:
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \drepThresholds{}: governance thresholds for \DReps{}; these are rational
     numbers named \Pone{}, \Ptwoa{}, \Ptwob{}, \Pthree{}, \Pfour{}, \Pfivea{},
     \Pfiveb{}, \Pfivec{}, \Pfived{}, and \Psix{};
@@ -454,7 +454,7 @@ parameters. These consist of an abstract type \AgdaField{UpdateT} and
 two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
 The type \AgdaField{UpdateT} is to be instantiated by a type that
 %
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item can be used to update parameters, via the
     function \AgdaField{applyUpdate}
   \item can be queried about what parameter groups it updates, via the

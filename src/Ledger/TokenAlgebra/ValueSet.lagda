@@ -29,7 +29,7 @@ import Relation.Binary.Core  as stdlib
 \href{https://github.com/input-output-hk/cardano-ledger/releases/latest/download/mary-ledger.pdf}%
 {Mary ledger specification}.)
 
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item \AgdaBound{AssetName} is a byte string used to distinguish different assets with the same \AgdaBound{PolicyId}.
 \item \AgdaBound{AssetId} is a product type consisting of a \AgdaBound{PolicyId} and an \AgdaBound{AssetName}.
 \item \AgdaBound{AdaId} is the Id for the asset Ada.

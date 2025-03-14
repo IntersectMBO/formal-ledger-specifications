@@ -15,7 +15,7 @@ In addition, \scriptsCost{} depends on the following constants (which
 are bundled with the protocol parameters; see
 \cref{fig:protocol-parameter-declarations}):
 %
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \AgdaFunction{refScriptCostMultiplier}, a rational number, the
    growth factor or step multiplier that determines how much the price
    per byte increases after each increment;

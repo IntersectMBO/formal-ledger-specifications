@@ -6,7 +6,7 @@ appended at the end, but any proposal can be removed at the epoch boundary.  How
 for the purposes of enactment, earlier proposals take priority.  Note that
 \EnactState{} used in \GovEnv{} is defined later, in \cref{sec:enactment}.
 
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item
     \addVote{} inserts (and potentially overrides) a vote made for a
     particular governance action (identified by its ID) by a credential with a role.
@@ -359,9 +359,9 @@ actionWellFormed _                 = ⊤
 
 \Cref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
 of the GOV rule to ensure that a governance action is valid and well-formed.
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \actionValid{} ensures that the proposed action is valid given the current state of the system:
-        \begin{itemize}[itemsep=\itmsep]
+        \begin{itemize}
           \item a \ChangePParams{} action is valid if the proposal policy is provided;
           \item a \TreasuryWdrl{} action is valid if the proposal policy is provided and the reward stake
                 credential is registered;
@@ -370,7 +370,7 @@ of the GOV rule to ensure that a governance action is valid and well-formed.
                 remove the same candidate.
         \end{itemize}
   \item \actionWellFormed{} ensures that the proposed action is well-formed:
-        \begin{itemize}[itemsep=\itmsep]
+        \begin{itemize}
           \item a \ChangePParams{} action must preserves well-formedness of the protocol parameters;
           \item a \TreasuryWdrl{} action is well-formed if the network ID is correct and
                 there is at least one non-zero withdrawal amount in the given \RwdAddrToCoinMap{} map.

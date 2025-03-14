@@ -85,7 +85,7 @@ expression is confusing or unclear, please \href{\repourl/issues}{open an issue}
 
 \subsection{Separation of Concerns}
 The \emph{Cardano Node} consists of three pieces,
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item a \textit{networking layer} responsible for sending messages across the internet,
   \item a \textit{consensus layer} establishing a common order of valid blocks, and
   \item a \textit{ledger layer} which determines whether a sequence of blocks is valid.
@@ -132,7 +132,7 @@ from now on we refer to as ``transition rules'' or just ``rules.''
 These rules describe the different behaviors that determine how the whole system
 evolves and, taken together, they comprise a full description of the ledger protocol.
 Each transition rule consists of the following components:
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item an \textit{environment} consisting of data, read from the ledger state
         or the outside world, which should be considered constant for the
         purposes of the rule;
@@ -171,7 +171,7 @@ transaction exist, that the transaction is balanced, and several other condition
 A brief description of each transition rule is provided below, with a link to
 an Agda module and reference to a section where the rule is formally defined.
 
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item
   \LedgerModText{Chain}{CHAIN} is the top level transition in response to a new
   block that applies the NEWEPOCH transition when crossing an epoch boundary, and the
@@ -296,7 +296,7 @@ that final state is in relation to the inputs.
 
 This has two further implications:
 
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
 \item Since \compute{} is a function, the state transition relation is necessarily
 a (partial) function; i.e., there is at most one possible final state for each
 input data.  Otherwise, we could prove that \compute{} could evaluates to
