@@ -2,6 +2,7 @@ module Ledger.Conway.Foreign.HSLedger.BaseTypes where
 
 open import Data.Rational
 
+open import Ledger.Types.Numeric
 open import Ledger.Conway.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.HSLedger.Core public
 import Ledger.Conway.Foreign.HSTypes as F
@@ -77,3 +78,25 @@ unquoteDecl = do
   hsTypeAlias ExUnits
   hsTypeAlias Epoch
   hsTypeAlias ScriptHash
+
+{-----------------------------------------------------------------------------
+    UnitInterval
+------------------------------------------------------------------------------}
+-- 'UnitInterval' without the invariant.
+record HsUnitInterval : Type where
+  field getHsUnitInterval : ℚ
+open HsUnitInterval
+
+instance
+  HsTy-HsUnitInterval : HasHsType HsUnitInterval
+  HsTy-HsUnitInterval = autoHsType HsUnitInterval
+
+  HsTy-UnitInterval : HasHsType UnitInterval
+  HsTy-UnitInterval .HasHsType.HsType = HsUnitInterval
+
+  Conv-UnitInterval : Convertible UnitInterval HsUnitInterval
+  Conv-UnitInterval .to x = record { getHsUnitInterval = fromUnitInterval x }
+  Conv-UnitInterval .from x =
+    case toUnitInterval (getHsUnitInterval x) of λ where
+      (just x) → x
+      nothing → error "Formal Spec: rational outside of unit interval"
