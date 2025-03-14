@@ -1843,7 +1843,9 @@ d_computeProof_2852 v0 v1 v2 v3 v4
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1088
                                                                                                 (coe
-                                                                                                   v13)))))))
+                                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_1966
+                                                                                                   (coe
+                                                                                                      v3))))))))
                                                                             v15))
                                                                     (coe
                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1160
@@ -1892,7 +1894,7 @@ d_computeProof_2852 v0 v1 v2 v3 v4
                                                                           (coe
                                                                              MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                                                              (coe
-                                                                                ("\172\n(HasSubset-Set HasSubset.\8838\n filter\738\n (Ledger.Address.isKeyHash\n  (.Ledger.Types.Epoch.GlobalConstants.Network\n   (.TransactionStructure.globalConstants txs))\n  (.Ledger.Crypto.isHashableSet.THash\n   (.Ledger.Crypto.Crypto.khs (.TransactionStructure.crypto txs)))\n  (.Ledger.Crypto.Crypto.ScriptHash\n   (.TransactionStructure.crypto txs)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 r \8594 .Ledger.Address.RwdAddr.stake r)\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.TransactionStructure.TxBody.txwdrls\n    (.TransactionStructure.Tx.body tx)))))\n(Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Ledger.Conway.Conformance.Certs.DState.voteDelegs\n  (.Ledger.Conway.Conformance.Certs.CertState.dState certSt')))"
+                                                                                ("\172\n(HasSubset-Set HasSubset.\8838\n filter\738\n (Ledger.Address.isKeyHash\n  (.Ledger.Types.Epoch.GlobalConstants.Network\n   (.TransactionStructure.globalConstants txs))\n  (.Ledger.Crypto.isHashableSet.THash\n   (.Ledger.Crypto.Crypto.khs (.TransactionStructure.crypto txs)))\n  (.Ledger.Crypto.Crypto.ScriptHash\n   (.TransactionStructure.crypto txs)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 r \8594 .Ledger.Address.RwdAddr.stake r)\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.TransactionStructure.TxBody.txwdrls\n    (.TransactionStructure.Tx.body tx)))))\n(Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Ledger.Conway.Conformance.Certs.DState.voteDelegs\n  (.Ledger.Conway.Conformance.Certs.CertState.dState\n   (.Ledger.Conway.Conformance.Ledger.LState.certState s))))"
                                                                                  ::
                                                                                  Data.Text.Text)))
                                                             _ -> MAlonzo.RTE.mazUnreachableError))
