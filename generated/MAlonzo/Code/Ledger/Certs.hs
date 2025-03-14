@@ -4466,10 +4466,8 @@ data T__'8866'_'8640''10631'_'44'CERT'10632'__1058
 -- Ledger.Certs._⊢_⇀⦇_,CERTBASE⦈_
 d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1060 a0 a1 a2 a3 a4
   = ()
-newtype T__'8866'_'8640''10631'_'44'CERTBASE'10632'__1060
-  = C_CERT'45'base_1102 (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-                         MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
-                         MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34)
+data T__'8866'_'8640''10631'_'44'CERTBASE'10632'__1060
+  = C_CERT'45'base_1102
 -- Ledger.Certs._._⊢_⇀⦇_,CERTS⦈_
 d__'8866'_'8640''10631'_'44'CERTS'10632'__1066 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
