@@ -39,7 +39,7 @@ private variable
   s s' s'' : LState
   utxoSt' : UTxOState
   govSt' : GovState
-  certState' : CertState
+  certState' certState'' : CertState
   tx : Tx
 
 open UTxOState
@@ -52,18 +52,23 @@ data
 
   LEDGER-V :
     let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ
-        open CertState certState; open DState dState
         utxoSt'' = record utxoSt' { deposits = updateDeposits pparams txb (deposits utxoSt') }
         wdrlCreds   = mapˢ RwdAddr.stake (dom txwdrls)
+        voteDelegs = certState .CertState.dState .DState.voteDelegs
+        rewards = certState .CertState.dState .DState.rewards
+        rewards' = constMap wdrlCreds 0 ∪ˡ rewards
+        dState = certState .CertState.dState
+        dState' = record dState { rewards = rewards' }
+        certState' = record certState { dState = dState' }
      in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState' ⇀⦇ txcerts ,CERTS⦈ certState''
     ∙  filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ,  certState' , dom
-    rewards ⟧ ⊢ govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ,  certState'' , dom rewards' ⟧ ⊢ govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+    ∙  mapˢ (map₁ RwdAddr.stake) (txwdrls ˢ) ⊆ rewards ˢ
        ────────────────────────────────
-       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState' ⟧
+       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState'' ⟧
 
 
   LEDGER-I : let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ in
@@ -72,8 +77,8 @@ data
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
 
-pattern LEDGER-V⋯ w x y z t = LEDGER-V (w , x , y , z , t)
-pattern LEDGER-I⋯ y z       = LEDGER-I (y , z)
+pattern LEDGER-V⋯ w x y z t u = LEDGER-V (w , x , y , z , t , u)
+pattern LEDGER-I⋯ y z         = LEDGER-I (y , z)
 
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
