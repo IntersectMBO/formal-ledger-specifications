@@ -7,6 +7,7 @@ open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
+open import Ledger.Conway.Foreign.HSLedger.GovernanceActions
 open import Ledger.Conway.Foreign.HSLedger.Cert
 
 open import Ledger.Conway.Conformance.Certs govStructure
@@ -21,7 +22,6 @@ instance
                                   • fieldPrefix "ge"
   Conv-GovEnv = autoConvert GovEnv
 
-
 -- NeedsHash depends on a GovAction, so a little bit of manual work is
 -- required to get the types using it into Haskell.
 
@@ -29,29 +29,29 @@ instance
 -- dummy GovActionID.
 
 toNeedsHash : ∀ {action} → GovActionID → NeedsHash action
-toNeedsHash {NoConfidence}           x = x
-toNeedsHash {UpdateCommittee _ _ _}  x = x
-toNeedsHash {NewConstitution _ _}    x = x
-toNeedsHash {TriggerHF _}            x = x
-toNeedsHash {ChangePParams _}        x = x
-toNeedsHash {TreasuryWdrl _}         x = tt
-toNeedsHash {Info}                   x = tt
+toNeedsHash {NoConfidence}     x = x
+toNeedsHash {UpdateCommittee}  x = x
+toNeedsHash {NewConstitution}  x = x
+toNeedsHash {TriggerHF}        x = x
+toNeedsHash {ChangePParams}    x = x
+toNeedsHash {TreasuryWdrl}     x = tt
+toNeedsHash {Info}             x = tt
 
 fromNeedsHash : ∀ {action} → NeedsHash action → GovActionID
-fromNeedsHash {NoConfidence}           x = x
-fromNeedsHash {UpdateCommittee _ _ _}  x = x
-fromNeedsHash {NewConstitution _ _}    x = x
-fromNeedsHash {TriggerHF _}            x = x
-fromNeedsHash {ChangePParams _}        x = x
-fromNeedsHash {TreasuryWdrl _}         x = 0 , 0
-fromNeedsHash {Info}                   x = 0 , 0
+fromNeedsHash {NoConfidence}     x = x
+fromNeedsHash {UpdateCommittee}  x = x
+fromNeedsHash {NewConstitution}  x = x
+fromNeedsHash {TriggerHF}        x = x
+fromNeedsHash {ChangePParams}    x = x
+fromNeedsHash {TreasuryWdrl}     x = 0 , 0
+fromNeedsHash {Info}             x = 0 , 0
 
 -- Then we define non-dependent versions of the types that use
 -- NeedsHash.
 
 record GovProposal' : Type where
   field
-    action      : GovAction
+    action      : GovAction'
     prevAction  : GovActionID       -- NeedsHash action
     policy      : Maybe ScriptHash
     deposit     : Coin
@@ -63,7 +63,7 @@ record GovActionState' : Type where
     votes       : Voter ⇀ Vote
     returnAddr  : RwdAddr
     expiresIn   : Epoch
-    action      : GovAction
+    action      : GovAction'
     prevAction  : GovActionID       -- NeedsHash action
 
 -- We can convert between the dependent and non-dependent versions
@@ -72,13 +72,13 @@ record GovActionState' : Type where
 private
   mkGovProposal' : Convertible GovProposal GovProposal'
   mkGovProposal' = λ where
-    .to   p → let module p = GovProposal  p in record{ p; prevAction = fromNeedsHash p.prevAction }
-    .from p → let module p = GovProposal' p in record{ p; prevAction = toNeedsHash   p.prevAction }
+    .to   p → let module p = GovProposal  p in record { p; action = to p.action  ; prevAction = fromNeedsHash p.prevAction }
+    .from p → let module p = GovProposal' p in record { p; action = from p.action; prevAction = toNeedsHash   p.prevAction }
 
   mkGovActionState' : Convertible GovActionState GovActionState'
   mkGovActionState' = λ where
-    .to   s → let module s = GovActionState  s in record{ s; prevAction = fromNeedsHash s.prevAction }
-    .from s → let module s = GovActionState' s in record{ s; prevAction = toNeedsHash   s.prevAction }
+    .to   s → let module s = GovActionState  s in record{ s; action = to s.action  ; prevAction = fromNeedsHash s.prevAction }
+    .from s → let module s = GovActionState' s in record{ s; action = from s.action; prevAction = toNeedsHash   s.prevAction }
 
 -- Auto-generated conversions for the non-dependent types
 
