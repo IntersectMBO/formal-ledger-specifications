@@ -1,7 +1,8 @@
 \section{Transactions}
 \label{sec:transactions}
-\modulenote{\LedgerModule{Transaction}}, where we define a transaction, which is
-made up of a transaction body, a collection of witnesses and some optional auxiliary
+\modulenote{\LedgerModule{Transaction}}, where we define transactions.
+
+ A transaction consists of a transaction body, a collection of witnesses and some optional auxiliary
 data.
 
 \begin{code}[hide]
