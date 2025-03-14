@@ -86,9 +86,7 @@ define agdaToHtml
     @echo "Generating $@"
     $(AGDA_RUN) --html --html-dir $(HTML_DIR) $<
 endef
-$(HTML_DIR)/$(LEDGER).PDF.html : $(LEDGER)/PDF.lagda
-	$(agdaToHtml)
-$(HTML_DIR)/$(MIDNIGHT).PDF.html : $(MIDNIGHT)/PDF.lagda
+$(HTML_DIR)/$(LEDGER).PDF.html : src/$(LEDGER)/PDF.lagda
 	$(agdaToHtml)
 
 # Agda -> Haskell
@@ -106,7 +104,6 @@ define agdaToHs
       >> $(HS_DIST)/$(CABAL_FILE)
 endef
 HS_LEDGER=$(HS_DIR)/$(LEDGER)/$(MALONZO_DIR)/$(LEDGER)/Conway/Foreign/HSLedger.hs
-HS_MIDNIGHT=$(HS_DIR)/$(MIDNIGHT)/$(MALONZO_DIR)/$(MIDNIGHT)/HSLedger.hs
 $(HS_LEDGER): src/$(LEDGER)/Conway/Foreign/HSLedger.agda
 	$(call agdaToHs,cardano-ledger-executable-spec)
 
@@ -119,8 +116,6 @@ define hsToHtml
 	     | xargs -I{} mv {} html/
 endef
 $(HS_DIR)/$(LEDGER)/html/: # $(HS_LEDGER)
-	$(hsToHtml)
-$(HS_DIR)/$(MIDNIGHT)/html/: # $(HS_MIDNIGHT)
 	$(hsToHtml)
 
 # Main website
@@ -188,7 +183,7 @@ clean:
            $(LATEX_DIR)/$(LEDGER)/PDF.tex $(CONWAY_TEX_DIR)/$(LEDGER)/PDF.tex
 
 wipe: clean
-	rm -rf $(LATEX_DIR)/$(LEDGER) $(LATEX_DIR)/$(MIDNIGHT) $(CONWAY_TEX_DIR)/$(LEDGER)\
+	rm -rf $(LATEX_DIR)/$(LEDGER) $(CONWAY_TEX_DIR)/$(LEDGER)\
 	       $(OUT_DIR)/\
 
 
