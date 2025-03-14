@@ -372,7 +372,7 @@ and requested that non-voters be assigned a \no{} vote by default, with the cave
 an SPO could change its default setting by delegating its reward account credential
 to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
 (This change applies only after the bootstrap period; during the bootstrap period
-the logic is unchanged; see \cref{sec:conway-bootstrap}.)
+the logic is unchanged; see \cref{sec:conway-bootstrap-gov}.)
 To be precise, the agreed upon specification is the following: an SPO that did
 not vote is assumed to have vote \no{}, except under the following circumstances:
 \begin{itemize}
