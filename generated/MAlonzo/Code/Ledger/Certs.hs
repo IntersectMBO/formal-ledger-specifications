@@ -91,14 +91,6 @@ d_addEpoch_258 v0
       (coe
          MAlonzo.Code.Ledger.Types.GovStructure.d_epochStructure_582
          (coe v0))
--- _.isKeyHash
-d_isKeyHash_288 ::
-  MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Address.T_Credential_16 -> ()
-d_isKeyHash_288 = erased
 -- _.PParams.Emax
 d_Emax_450 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> AgdaAny
 d_Emax_450 v0 = coe MAlonzo.Code.Ledger.PParams.d_Emax_352 (coe v0)
@@ -4475,7 +4467,9 @@ data T__'8866'_'8640''10631'_'44'CERT'10632'__1058
 d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1060 a0 a1 a2 a3 a4
   = ()
 newtype T__'8866'_'8640''10631'_'44'CERTBASE'10632'__1060
-  = C_CERT'45'base_1102 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_CERT'45'base_1102 (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+                         MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+                         MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34)
 -- Ledger.Certs._._⊢_⇀⦇_,CERTS⦈_
 d__'8866'_'8640''10631'_'44'CERTS'10632'__1066 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
