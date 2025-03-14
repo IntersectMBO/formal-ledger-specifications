@@ -1,7 +1,8 @@
 \section{Governance}
 \label{sec:governance}
 \modulenote{\LedgerModule{Gov}}, where we define the types required for ledger governance.
-In particular, the behavior of \GovState{} is similar to that of a queue.  New proposals are
+
+The behavior of \GovState{} is similar to that of a queue.  New proposals are
 appended at the end, but any proposal can be removed at the epoch boundary.  However,
 for the purposes of enactment, earlier proposals take priority.  Note that
 \EnactState{} used in \GovEnv{} is defined later, in \cref{sec:enactment}.
