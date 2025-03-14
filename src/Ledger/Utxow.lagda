@@ -1,6 +1,7 @@
 \subsection{Witnessing}
 \label{sec:witnessing}
 \modulenote{\LedgerModule{Utxow}}, in which we define witnessing.
+
 The purpose of witnessing is make sure the intended action is
 authorized by the holder of the signing key.  (For details
 see \textcite[\sectionname~8.3]{shelley-ledger-spec}.)
