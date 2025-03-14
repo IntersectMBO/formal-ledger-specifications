@@ -54,10 +54,12 @@ data
     let open LState s; txb = tx .body; open TxBody txb; open LEnv Γ
         open CertState certState; open DState dState
         utxoSt'' = record utxoSt' { deposits = updateDeposits pparams txb (deposits utxoSt') }
+        wdrlCreds   = mapˢ RwdAddr.stake (dom txwdrls)
      in
     ∙  isValid tx ≡ true
     ∙  record { LEnv Γ } ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙  filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState ,  certState' , dom
     rewards ⟧ ⊢ govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
        ────────────────────────────────
@@ -70,8 +72,8 @@ data
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
 
-pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
-pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
+pattern LEDGER-V⋯ w x y z t = LEDGER-V (w , x , y , z , t)
+pattern LEDGER-I⋯ y z       = LEDGER-I (y , z)
 
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}

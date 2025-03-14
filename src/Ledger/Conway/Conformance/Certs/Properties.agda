@@ -194,15 +194,13 @@ instance
 
     goal : ComputationResult String
            (∃-syntax (_⊢_⇀⦇_,CERTBASE⦈_ ⟦ CertEnv.epoch ce , pp , votes , wdrls , _ ⟧ st sig))
-    goal = case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
-              × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-      (yes p) → success (-, CERT-base p)
-      (no ¬p) → failure (genErr ¬p)
-  Computational-CERTBASE .completeness ce st _ st' (CERT-base p)
-    rewrite let dState = CertState.dState st; open DState dState; open CertEnv ce in
-      dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
-                × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
-        p .proj₂ = refl
+    goal = case ¿ mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
+      (yes p) → success (-, CERT-base (p {_}))
+      (no ¬p) → failure (genErrors ¬p)
+  Computational-CERTBASE .completeness ce st _ st' (CERT-base p) with
+    ¿ mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ (st .CertState.dState .DState.rewards) ˢ ¿
+  ... | yes _ = refl
+  ... | no ¬q = ⊥-elim (¬q p)
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it

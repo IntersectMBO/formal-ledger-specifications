@@ -36,6 +36,8 @@ open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Unary using (Decidable)
 
+open import Tactic.GenError using (genErrors)
+
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Ledger.Conway.Conformance.Equivalence.Convert
 
@@ -75,14 +77,18 @@ instance
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           (certSt' , certStep) ← computeCerts certΓ certState txcerts
+          let wdrlCreds = mapˢ RwdAddr.stake (dom txwdrls)
+          wdrlsCheck ← case ¿ filterˢ isKeyHash wdrlCreds ⊆ dom (certState .CertState.dState .DState.voteDelegs) ¿ of λ where
+            (yes q) → success q
+            (no ¬q) → failure (genErrors ¬q)
           (govSt'  , govStep)  ← computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt) (txgov txb)
-          success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
+          success (_ , LEDGER-V⋯ p utxoStep certStep wdrlsCheck govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           success (_ , LEDGER-I⋯ (¬-not ¬p) utxoStep)
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ success s'
-      completeness  ls' (LEDGER-V⋯ v utxoStep certStep govStep)
+      completeness  ls' (LEDGER-V⋯ v utxoStep certStep u govStep)
         with isValid ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
@@ -90,8 +96,10 @@ instance
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certState txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
-        with computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt) (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
-      ... | success (govSt' , _) | refl = refl
+        with dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom txwdrls)) ⊆ dom (certState .CertState.dState .DState.voteDelegs) ¿ (λ { x → u x })
+      ... | (_ , p)
+        with computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt ) (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
+      ... | success (govSt' , _) | refl rewrite p = refl
       completeness ls' (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
       ... | yes refl = case i of λ ()
