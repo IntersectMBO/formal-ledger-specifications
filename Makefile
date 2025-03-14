@@ -76,7 +76,7 @@ define latexToPdf
     mv $(LATEX_DIR)/$(PDF) $@
 endef
 
-$(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/$(LEDGER)/PDF.tex $(latexFiles) $(PRE)
+$(PDF_DIR)/cardano-ledger.pdf: $(LATEX_DIR)/cardano-ledger.tex $(latexFiles) $(PRE)
 	$(latexToPdf)
 $(PDF_DIR)/conway-ledger.pdf: $(LATEX_DIR)/conway-ledger.tex $(CONWAY_TEX_FILES) $(PRE)
 	$(latexToPdf)
@@ -86,7 +86,7 @@ define agdaToHtml
     @echo "Generating $@"
     $(AGDA_RUN) --html --html-dir $(HTML_DIR) $<
 endef
-$(HTML_DIR)/$(LEDGER).PDF.html : src/$(LEDGER)/PDF.lagda
+$(HTML_DIR)/Html.html : src/Html.agda
 	$(agdaToHtml)
 
 # Agda -> Haskell
@@ -163,7 +163,7 @@ ledger.docs: $(PDF_DIR)/cardano-ledger.pdf $(latexFiles)
 ledger.conway.docs: $(PDF_DIR)/conway-ledger.pdf
 docs: ledger.docs
 
-ledger.html: $(HTML_DIR)/$(LEDGER).PDF.html
+ledger.html: $(HTML_DIR)/Html.html
 html: ledger.html
 
 ledger.hs: $(HS_LEDGER)
