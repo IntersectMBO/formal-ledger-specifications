@@ -1,8 +1,9 @@
 \section{Fee Calculation}
 \label{sec:fees}
 \modulenote{\LedgerModule{Fees}}, where we define the functions used to compute the
-fees associated with reference scripts.  The function
-\scriptsCost{}~(\cref{fig:scriptsCost}) calculates the fee for reference scripts in a
+fees associated with reference scripts.
+
+The function \scriptsCost{}~(\cref{fig:scriptsCost}) calculates the fee for reference scripts in a
 transaction.  It takes as input the total size of the reference scripts in
 bytes---which can be calculated using
 \AgdaFunction{refScriptsSize}~(\cref{fig:functions:utxo-conway})---and uses a
