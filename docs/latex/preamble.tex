@@ -1,0 +1,92 @@
+\usepackage{longtable}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+\usepackage{bussproofs}
+
+\usepackage[bookmarksopen=true]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+ }
+
+\usepackage[links]{agda}
+
+\setlength{\mathindent}{10pt}
+
+\usepackage[
+  style=ieee,
+  backend=biber,
+  ibidtracker=constrict,
+  pagetracker=page,
+  datamodel=software,
+  ]{biblatex}
+\usepackage{software-biblatex}
+\addbibresource{references.bib}
+
+\usepackage{fontspec}
+
+\usepackage{amsmath}
+
+%%
+%% cleveref (for more consistent and robust cross references)
+%%
+\usepackage[capitalize,nameinlink]{cleveref}
+%% Wherever we previously used \ref, we now use \cref instead
+%% (except at the beginning of a sentence, where we use \Cref) so we
+%% no longer need to explicitly name the kind of thing being referenced.
+%% + Use "\cref{eq1}" instead of "Eq.~(\ref{eq1})".
+%% + For a range of labels, use the \crefrange command:
+%%   `\crefrange{eq1}{eq5}` produces "Eqs.~(1) to~(5)".
+%% + To refer to multiple things at once, combine them all into one:
+%%   `\cref{eq2,eq1,eq3,eq5,thm2,def1}` produces:
+%%   "Eqs.~(1) to~(3) and~(5), Theorem~5, and Definition~1".
+\Crefname{figure}{Fig.}{Figs.}
+\Crefname{equation}{Eq.}{Eqs.}
+\Crefname{tabular}{Tab.}{Tabs.}
+\NewDocumentCommand{\sectionname}{}{Sec}
+\crefname{section}{\sectionname.}{\sectionname{}s.}
+\Crefname{section}{\sectionname.}{\sectionname{}s.}
+%% The above help enforce consistency among citations that mention sections;
+%% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
+%%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
+
+
+%%
+%% Math fonts, unicode symbols, and new theorem environments
+%%
+\usepackage{unicode-math}
+\setsansfont{XITSMath-Regular.otf}
+\setmathfont{XITSMath-Regular.otf}
+
+\usepackage{macros}
+
+\usepackage{enumitem}
+
+%%
+%% for diagrams
+%%
+\usepackage{pgfplots}
+\usepackage[tikz]{bclogo}
+\usepackage{tikz-cd}
+\usetikzlibrary{ arrows.meta
+               , backgrounds
+               , calc
+               , decorations.pathreplacing
+               , fit
+               , positioning
+               , shadows
+               , shapes.geometric
+               , shapes.misc
+               }
+\usepackage[dvipsnames]{xcolor}
+\usepackage{caption}
+\def\AlonzoColor{Periwinkle}
+\def\BabbageColor{Tan}
+\def\ConwayColor{yellow!50}
+\def\ShelleyColor{lightgray}
+\newcommand{\legendbox}[1]{%
+  \textcolor{#1}{\rule{\fontcharht\font`X}{\fontcharht\font`X}}%
+}
