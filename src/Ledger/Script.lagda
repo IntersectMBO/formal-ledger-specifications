@@ -1,7 +1,8 @@
 \section{Scripts}
 \label{sec:scripts}
-\modulenote{\LedgerModule{Script}}, in which we define \Timelock{} scripts.  These
-can verify the presence of keys and whether a transaction happens in a certain slot
+\modulenote{\LedgerModule{Script}}, in which we define \Timelock{} scripts.  
+
+\Timelock{} scripts can verify the presence of keys and whether a transaction happens in a certain slot
 interval.  The scripts are executed as part of the regular witnessing.
 
 \begin{code}[hide]
