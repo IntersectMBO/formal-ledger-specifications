@@ -50,7 +50,7 @@ Some key ingredients in the transaction body are:
 \end{NoConway}
 \begin{Conway}
 Ingredients of the transaction body introduced in the Conway era are the following:
-\begin{itemize}[itemsep=\itmsep]
+\begin{itemize}
   \item \txvote{}, the list of votes for goverance actions;
   \item \txprop{}, the list of governance proposals;
   \item \txdonation{}, amount of \Coin{} to donate to treasury, e.g., to return money
