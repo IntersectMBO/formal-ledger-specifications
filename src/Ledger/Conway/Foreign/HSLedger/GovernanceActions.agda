@@ -24,20 +24,20 @@ data GovAction' : Type where
 instance
   mkGovAction' : Convertible GovAction GovAction'
   mkGovAction' = λ where
-    .to (NoConfidence , _)            → NoConfidence
-    .to (UpdateCommittee , m , p , q) → (UpdateCommittee m p q)
-    .to (NewConstitution , dh , s)    → (NewConstitution dh s)
-    .to (TriggerHF , p)               → (TriggerHF p)
-    .to (ChangePParams , pu)          → (ChangePParams pu)
-    .to (TreasuryWdrl , m)            → ((TreasuryWdrl m))
-    .to (Info , _)                    → Info
-    .from NoConfidence                → NoConfidence , tt
-    .from (UpdateCommittee m p q)     → UpdateCommittee , m , p , q
-    .from (NewConstitution dh s)      → NewConstitution , dh , s
-    .from (TriggerHF p)               → TriggerHF , p
-    .from (ChangePParams pu)          → ChangePParams , pu
-    .from (TreasuryWdrl m)            → TreasuryWdrl , m
-    .from Info                        → Info , tt
+    .to ⟦ NoConfidence    , _           ⟧ᵍᵃ → NoConfidence
+    .to ⟦ UpdateCommittee , (m , p , q) ⟧ᵍᵃ → (UpdateCommittee m p q)
+    .to ⟦ NewConstitution , (dh , s )   ⟧ᵍᵃ → (NewConstitution dh s)
+    .to ⟦ TriggerHF       , p           ⟧ᵍᵃ → (TriggerHF p)
+    .to ⟦ ChangePParams   , pu          ⟧ᵍᵃ → (ChangePParams pu)
+    .to ⟦ TreasuryWdrl    , m           ⟧ᵍᵃ → ((TreasuryWdrl m))
+    .to ⟦ Info            , _           ⟧ᵍᵃ → Info
+    .from NoConfidence                → ⟦ NoConfidence    , tt          ⟧ᵍᵃ
+    .from (UpdateCommittee m p q)     → ⟦ UpdateCommittee , (m , p , q) ⟧ᵍᵃ
+    .from (NewConstitution dh s)      → ⟦ NewConstitution , (dh , s)    ⟧ᵍᵃ
+    .from (TriggerHF p)               → ⟦ TriggerHF       , p           ⟧ᵍᵃ
+    .from (ChangePParams pu)          → ⟦ ChangePParams   , pu          ⟧ᵍᵃ
+    .from (TreasuryWdrl m)            → ⟦ TreasuryWdrl    , m           ⟧ᵍᵃ
+    .from Info                        → ⟦ Info , tt ⟧ᵍᵃ
 
   HsTy-GovAction' = autoHsType GovAction' ⊣ withName "GovAction"
   Conv-GovAction' = autoConvert GovAction'

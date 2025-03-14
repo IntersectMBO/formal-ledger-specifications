@@ -131,19 +131,19 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \begin{code}
   Enact-NoConf :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ NoConfidence , tt ,ENACT⦈ record s { cc = nothing , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ NoConfidence , _ ⟧ᵍᵃ ,ENACT⦈ record s { cc = nothing , gid }
 
   Enact-UpdComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
                       maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ UpdateCommittee , new , rem , q ,ENACT⦈
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ ,ENACT⦈
       record s { cc = just ((new ∪ˡ old) ∣ rem ᶜ , q) , gid }
 
   Enact-NewConst :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ NewConstitution , dh , sh ,ENACT⦈ record s { constitution = (dh , sh) , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ NewConstitution , (dh , sh) ⟧ᵍᵃ ,ENACT⦈ record s { constitution = (dh , sh) , gid }
 \end{code}
 \end{AgdaMultiCode}
 \caption{ENACT transition system}
@@ -154,21 +154,21 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \begin{code}
   Enact-HF :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ TriggerHF , v ,ENACT⦈ record s { pv = v , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ TriggerHF , v ⟧ᵍᵃ ,ENACT⦈ record s { pv = v , gid }
 
   Enact-PParams :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ChangePParams , up ,ENACT⦈
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ ChangePParams , up ⟧ᵍᵃ ,ENACT⦈
       record s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
 
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
     ∑[ x ← newWdrls ] x ≤ t
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ TreasuryWdrl , wdrl ,ENACT⦈ record s { withdrawals = newWdrls }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ TreasuryWdrl , wdrl ⟧ᵍᵃ ,ENACT⦈ record s { withdrawals = newWdrls }
 
   Enact-Info :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ Info , tt ,ENACT⦈ s
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ Info , _ ⟧ᵍᵃ ,ENACT⦈ s
 \end{code}
 \end{AgdaMultiCode}
 \caption{ENACT transition system (continued)}

@@ -134,7 +134,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
       let
         isOrphan? a prev = ¬? (hasParent? es govSt a prev)
         (orps' , govSt') = partition
-          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? a prev) govSt
+          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? (a .gaType) prev) govSt
       in
         (orps ++ orps' , govSt')
 \end{code}

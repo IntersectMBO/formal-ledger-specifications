@@ -123,13 +123,13 @@ threshold pp ccThreshold =
   λ where
 \end{code}
 \begin{code}
-      (NoConfidence     , _) → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
-      (UpdateCommittee  , _) → ∣ ─   ∥ P/Q2a/b                 ∣
-      (NewConstitution  , _) → ∣ ✓   ∣ vote P3      ∣ ─        ∣
-      (TriggerHF        , _) → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
-      (ChangePParams    , x) → ∣ ✓   ∥ P/Q5 x                  ∣
-      (TreasuryWdrl     , _) → ∣ ✓   ∣ vote P6      ∣ ─        ∣
-      (Info             , _) → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
+      ⟦ NoConfidence     , _ ⟧ᵍᵃ → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
+      ⟦ UpdateCommittee  , _ ⟧ᵍᵃ → ∣ ─   ∥ P/Q2a/b                 ∣
+      ⟦ NewConstitution  , _ ⟧ᵍᵃ → ∣ ✓   ∣ vote P3      ∣ ─        ∣
+      ⟦ TriggerHF        , _ ⟧ᵍᵃ → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
+      ⟦ ChangePParams    , x ⟧ᵍᵃ → ∣ ✓   ∥ P/Q5 x                  ∣
+      ⟦ TreasuryWdrl     , _ ⟧ᵍᵃ → ∣ ✓   ∣ vote P6      ∣ ─        ∣
+      ⟦ Info             , _ ⟧ᵍᵃ → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
         where
 \end{code}
 \begin{code}[hide]
@@ -245,11 +245,11 @@ instance
 open StakeDistrs
 \end{code}
 \begin{code}
-actualVotes  : RatifyEnv → PParams → CCData → GovAction
+actualVotes  : RatifyEnv → PParams → CCData → GovActionType
              → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
-actualVotes Γ pparams cc ga votes
-  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes (ga .proj₁)
-  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes ga
+actualVotes Γ pparams cc gaTy votes
+  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes gaTy
+  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes gaTy
   where
 \end{code}
 \begin{code}[hide]
@@ -275,15 +275,15 @@ actualVotes Γ pparams cc ga votes
         (true , just (just c'))  → just c'
         _                        → nothing -- expired, no hot key or resigned
 
-  SPODefaultVote : GovAction → VDeleg → Vote
-  SPODefaultVote ga (credVoter SPO (KeyHashObj kh)) = case lookupᵐ? pools kh of
+  SPODefaultVote : GovActionType → VDeleg → Vote
+  SPODefaultVote gaT (credVoter SPO (KeyHashObj kh)) = case lookupᵐ? pools kh of
 \end{code}
 \begin{code}[hide]
       λ where
 \end{code}
 \begin{code}
         nothing → Vote.no
-        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) , proj₁ ga of
+        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) , gaTy of
 \end{code}
 \begin{code}[hide]
                λ where
@@ -326,8 +326,8 @@ actualVotes Γ pparams cc ga votes
   actualDRepVotes  =   roleVotes DRep
                    ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
 
-  actualSPOVotes : GovAction → VDeleg ⇀ Vote
-  actualSPOVotes a = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote a) spos
+  actualSPOVotes : GovActionType → VDeleg ⇀ Vote
+  actualSPOVotes gaTy = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote gaTy) spos
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting}
@@ -419,7 +419,7 @@ abstract
   acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Type
   acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
     let open GovActionState gs; open PParams pparams
-        votes'  = actualVotes Γ pparams cc action votes
+        votes'  = actualVotes Γ pparams cc (gaType action) votes
         mbyT    = threshold pparams (proj₂ <$> cc) action role
         t       = maybe id 0ℚ mbyT
     in acceptedStakeRatio role (dom votes') (stakeDistrs Γ) votes' ≥ t
@@ -486,12 +486,12 @@ delayingAction TreasuryWdrl     = false
 delayingAction Info             = false
 
 delayed : (a : GovActionType) → NeedsHash a → EnactState → Bool → Type
-delayed a h es d = ¬ verifyPrev a h es ⊎ d ≡ true
+delayed gaTy h es d = ¬ verifyPrev gaTy h es ⊎ d ≡ true
 
 acceptConds : RatifyEnv → RatifyState → GovActionID × GovActionState → Type
 acceptConds Γ stʳ (id , st) =
        accepted Γ es st
-    ×  ¬ delayed (action .proj₁) prevAction es delay
+    ×  ¬ delayed (gaType action) prevAction es delay
     × ∃[ es' ]  ⟦ id , treasury , currentEpoch ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
 \end{code}
 \begin{code}[hide]
@@ -506,7 +506,7 @@ abstract
   verifyPrev? TriggerHF       h es = dec
   verifyPrev? ChangePParams   h es = dec
   verifyPrev? TreasuryWdrl    h es = dec
-  verifyPrev? Info             h es = dec
+  verifyPrev? Info            h es = dec
 
   delayed? : ∀ a h es d → Dec (delayed a h es d)
   delayed? a h es d = let instance _ = ⁇ verifyPrev? a h es in dec
@@ -571,7 +571,7 @@ data _⊢_⇀⦇_,RATIFY⦈_ :
     ∙ ⟦ gaId , treasury , e ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
       ────────────────────────────────
       Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY⦈
-          ⟦ es' , ❴ a ❵ ∪ removed , delayingAction (proj₁ action) ⟧
+          ⟦ es' , ❴ a ❵ ∪ removed , delayingAction (gaType action) ⟧
 
   RATIFY-Reject :
     let e              = Γ .currentEpoch

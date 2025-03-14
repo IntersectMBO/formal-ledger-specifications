@@ -22,7 +22,7 @@ private
     es'  = compute ⟦ gid , treasury , currentEpoch ⟧ es action
     acc? = accepted? Γ es st
     exp? = expired? currentEpoch st
-    del? = delayed? (action .proj₁) prevAction es delay
+    del? = delayed? (action .gaType) prevAction es delay
 
     opaque
       acceptConds? : ∀ a → Dec (acceptConds Γ s a)

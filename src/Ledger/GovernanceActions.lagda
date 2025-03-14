@@ -64,17 +64,21 @@ data GovActionType : Type where
   Info             : GovActionType
 
 GovActionData : GovActionType → Type
-GovActionData = λ where
-  NoConfidence     → ⊤
-  UpdateCommittee  → (Credential ⇀ Epoch) × ℙ Credential × ℚ
-  NewConstitution  → DocHash × Maybe ScriptHash
-  TriggerHF        → ProtVer
-  ChangePParams    → PParamsUpdate
-  TreasuryWdrl     → RwdAddr ⇀ Coin
-  Info             → ⊤
+GovActionData NoConfidence     = ⊤
+GovActionData UpdateCommittee  = (Credential ⇀ Epoch) × ℙ Credential × ℚ
+GovActionData NewConstitution  = DocHash × Maybe ScriptHash
+GovActionData TriggerHF        = ProtVer
+GovActionData ChangePParams    = PParamsUpdate
+GovActionData TreasuryWdrl     = RwdAddr ⇀ Coin
+GovActionData Info             = ⊤
 
-GovAction : Type
-GovAction = Σ GovActionType GovActionData
+record GovAction : Type where
+  constructor ⟦_,_⟧ᵍᵃ
+  field
+    gaType : GovActionType
+    gaData : GovActionData gaType
+
+open GovAction public
 \end{code}
 \end{AgdaMultiCode}
 \caption{Governance actions}
@@ -187,7 +191,7 @@ record GovVote : Type where
 record GovProposal : Type where
   field
     action      : GovAction
-    prevAction  : NeedsHash (proj₁ action)
+    prevAction  : NeedsHash (gaType action)
     policy      : Maybe ScriptHash
     deposit     : Coin
     returnAddr  : RwdAddr
@@ -199,7 +203,7 @@ record GovActionState : Type where
     returnAddr  : RwdAddr
     expiresIn   : Epoch
     action      : GovAction
-    prevAction  : NeedsHash (proj₁ action)
+    prevAction  : NeedsHash (gaType action)
 \end{code}
 \begin{code}[hide]
 instance
@@ -223,8 +227,8 @@ getDRepVote record { voter = (DRep , credential) }  = just credential
 getDRepVote _                                       = nothing
 
 proposedCC : GovAction → ℙ Credential
-proposedCC (UpdateCommittee , (x , _ , _))  = dom x
-proposedCC _                                = ∅
+proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ  = dom x
+proposedCC _                                    = ∅
 \end{code}
 \caption{Governance helper function}
 \end{figure*}
